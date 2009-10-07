@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<?php echo $html->charset(); ?>
+<title><?php echo $this->pageTitle; ?></title>
+<style>
+p { text-align:center; font:bold 1.1em sans-serif; }
+a { color:#444; text-decoration:none; }
+a:hover { text-decoration: underline; color:#44E; }
+</style>
+</head>
+<body>
+<p><?php __('Site down for maintenance.'); ?></p>
+</body>
+</html>
+<?php Configure::write('debug', 0); ?>
