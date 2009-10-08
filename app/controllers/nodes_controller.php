@@ -247,7 +247,7 @@ class NodesController extends AppController {
         }
 
         if ($action == 'delete' &&
-            $this->Node->deleteAll(array('Node.id' => $ids))) {
+            $this->Node->deleteAll(array('Node.id' => $ids), true, true)) {
             $this->Session->setFlash(__('Nodes deleted.', true));
         } elseif ($action == 'publish' &&
             $this->Node->updateAll(array('Node.status' => 1), array('Node.id' => $ids))) {

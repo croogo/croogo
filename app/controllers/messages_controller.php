@@ -103,7 +103,7 @@ class MessagesController extends AppController {
         }
 
         if ($action == 'delete' &&
-            $this->Message->deleteAll(array('Message.id' => $ids))) {
+            $this->Message->deleteAll(array('Message.id' => $ids), true, true)) {
             $this->Session->setFlash(__('Messages deleted.', true));
         } elseif ($action == 'read' &&
             $this->Message->updateAll(array('Message.status' => 1), array('Message.id' => $ids))) {

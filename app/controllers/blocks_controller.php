@@ -131,7 +131,7 @@ class BlocksController extends AppController {
         }
 
         if ($action == 'delete' &&
-            $this->Block->deleteAll(array('Block.id' => $ids))) {
+            $this->Block->deleteAll(array('Block.id' => $ids), true, true)) {
             $this->Session->setFlash(__('Blocks deleted.', true));
         } elseif ($action == 'publish' &&
             $this->Block->updateAll(array('Block.status' => 1), array('Block.id' => $ids))) {

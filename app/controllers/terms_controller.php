@@ -143,7 +143,7 @@ class TermsController extends AppController {
         }
 
         if ($action == 'delete' &&
-            $this->Term->deleteAll(array('Term.id' => $ids))) {
+            $this->Term->deleteAll(array('Term.id' => $ids), true, true)) {
             $this->Session->setFlash(__('Terms deleted.', true));
         } elseif ($action == 'publish' &&
             $this->Term->updateAll(array('Term.status' => 1), array('Term.id' => $ids))) {

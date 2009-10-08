@@ -173,7 +173,7 @@ class LinksController extends AppController {
         }
 
         if ($action == 'delete' &&
-            $this->Link->deleteAll(array('Link.id' => $ids))) {
+            $this->Link->deleteAll(array('Link.id' => $ids), true, true)) {
             $this->Session->setFlash(__('Links deleted.', true));
         } elseif ($action == 'publish' &&
             $this->Link->updateAll(array('Link.status' => 1), array('Link.id' => $ids))) {
