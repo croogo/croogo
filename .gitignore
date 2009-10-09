@@ -1,0 +1,10 @@
+# IDE
+nbproject/
+
+# Cake cache
+app/tmp/cache/cake_*
+app/tmp/cache/models/cake_*
+app/tmp/cache/persistent/cake_*
+ 
+# Cake logs
+app/tmp/logs/*.log
