@@ -112,7 +112,10 @@ class UsersController extends AppController {
         exit();
     }
 
-    function index() {}
+    function index() {
+        $this->pageTitle = __('Users', true);
+    }
+
     function add() {}
     function activate() {}
     function edit() {}
