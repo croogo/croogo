@@ -39,15 +39,36 @@ class User extends AppModel {
  * @access public
  */
     var $belongsTo = array('Role');
-
-    function beforeSave() {
-        // activation_key
-        if (!isset($this->data['User']['id'])) {
-            $this->data['User']['activation_key'] = rand(10000, 99999);
-        }
-        
-        return true;
-    }
+/**
+ * Validation
+ *
+ * @var array
+ * @access public
+ */
+    var $validate = array(
+        'username' => array(
+            'rule' => 'isUnique',
+            'message' => 'The username has already been taken.',
+        ),
+        'email' => array(
+            'email' => array(
+                'rule' => 'email',
+                'message' => 'Please provide a valid email address.',
+            ),
+            'isUnique' => array(
+                'rule' => 'isUnique',
+                'message' => 'Email address already in use.',
+            ),
+        ),
+        'password' => array(
+            'rule' => array('minLength', 6),
+            'message' => 'Passwords must be at least 6 characters long.',
+        ),
+        'name' => array(
+            'rule' => 'notEmpty',
+            'message' => 'This field cannot be left blank.',
+        ),
+    );
 
     function parentNode() {
         if (!$this->id && empty($this->data)) {

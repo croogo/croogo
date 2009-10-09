@@ -116,8 +116,52 @@ class UsersController extends AppController {
         $this->pageTitle = __('Users', true);
     }
 
-    function add() {}
-    function activate() {}
+    function add() {
+        $this->pageTitle = __('Register', true);
+        if (!empty($this->data)) {
+            $this->User->create();
+            $this->data['User']['role_id'] = 2; // Registered
+            $this->data['User']['activation_key'] = md5(uniqid());
+            if ($this->User->save($this->data)) {
+                $this->data['User']['password'] = null;
+                $this->Email->from = 'no-reply';
+                $this->Email->to = $this->data['User']['email'];
+                $this->Email->subject = __('[' . Configure::read('Site.title') . '] Please activate your account', true);
+                $this->Email->template = 'register';
+                $this->set('user', $this->data);
+                $this->Email->send();
+
+                $this->Session->setFlash(__('You have successfully registered an account. An email has been sent with further instructions.', true));
+                $this->redirect(array('action' => 'login'));
+            } else {
+                $this->Session->setFlash(__('The User could not be saved. Please, try again.', true));
+            }
+        }
+    }
+
+    function activate($username = null, $key = null) {
+        if ($username == null || $key == null) {
+            $this->redirect(array('action' => 'login'));
+            exit();
+        }
+
+        if ($this->User->hasAny(array(
+                'User.username' => $username,
+                'User.activation_key' => $key,
+                'User.status' => 0,
+            ))) {
+            $user = $this->User->findByUsername($username);
+            $this->User->id = $user['User']['id'];
+            $this->User->saveField('status', 1);
+            $this->Session->setFlash(__('Account activated successfully.', true));
+        } else {
+            $this->Session->setFlash(__('An error occurred.', true));
+        }
+
+        $this->redirect(array('action' => 'login'));
+        exit();
+    }
+
     function edit() {}
     function forgot() {}
     function reset() {}
