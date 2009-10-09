@@ -1,6 +1,9 @@
 # IDE
 nbproject/
 
+# Database
+app/config/database.php
+
 # Cake cache
 app/tmp/cache/cake_*
 app/tmp/cache/models/cake_*
