@@ -1,5 +1,5 @@
 <div class="roles form">
-    <h2><? echo $this->pageTitle; ?></h2>
+    <h2><?php echo $this->pageTitle; ?></h2>
     <?php echo $form->create('Role');?>
         <fieldset>
         <?php
