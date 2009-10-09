@@ -3,7 +3,6 @@ nbproject/
 
 # App
 app/config/database.php
-app/webroot/uploads/
 
 # Cake cache
 app/tmp/cache/cake_*
