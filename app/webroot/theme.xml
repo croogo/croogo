@@ -15,6 +15,6 @@
     </menus>
 
     <regions>
-        <region>sidebar</region>
+        <region>right</region>
     </regions>
 </theme>
