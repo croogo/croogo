@@ -3,14 +3,14 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 10, 2009 at 07:06 AM
+-- Generation Time: Oct 11, 2009 at 04:46 AM
 -- Server version: 5.0.51
 -- PHP Version: 5.2.6
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Database: `p_croogo`
+-- Database: `croogo_main`
 --
 
 --
