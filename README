@@ -12,7 +12,7 @@ Installation
 ============
 
     * Extract the archive. Upload the content to your server.
-    * Create a database, and use these two SQL dump files in given order:
+    * Create a new MySQL database ('utf8_unicode_ci' collation), and use these two SQL dump files in given order:
         /app/config/sql/croogo.sql
         /app/config/sql/croogo_data.sql
     * Rename /app/config/database.php.default to database.php and edit the details.
