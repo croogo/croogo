@@ -32,9 +32,11 @@ class AclFilterComponent extends Object {
 	    $this->controller->Auth->loginAction = array('plugin' => 0, 'controller' => 'users', 'action' => 'login');
 	    $this->controller->Auth->logoutRedirect = array('plugin' => 0, 'controller' => 'users', 'action' => 'login');
 	    $this->controller->Auth->loginRedirect = array('plugin' => 0, 'controller' => 'users', 'action' => 'index');
+        $this->controller->Auth->userScope = array('User.status' => 1);
 		$this->controller->Auth->actionPath = 'controllers/';
 
-        if ($this->controller->Auth->user() && $this->controller->Auth->user('role_id') == 1) {
+        if ($this->controller->Auth->user() &&
+            $this->controller->Auth->user('role_id') == 1) {
             // Role: Admin
             $this->controller->Auth->allowedActions = array('*');
         } else {

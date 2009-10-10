@@ -50,6 +50,7 @@
     Router::connect('/about', array('controller' => 'nodes', 'action' => 'view', 'type' => 'page', 'slug' => 'about'));
 
     // Users
+    Router::connect('/register', array('controller' => 'users', 'action' => 'add'));
     Router::connect('/user/:username', array('controller' => 'users', 'action' => 'view'), array('pass' => array('username')));
 
     // Contact

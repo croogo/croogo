@@ -122,6 +122,7 @@ class UsersController extends AppController {
             $this->User->create();
             $this->data['User']['role_id'] = 2; // Registered
             $this->data['User']['activation_key'] = md5(uniqid());
+            $this->data['User']['status'] = 0;
             if ($this->User->save($this->data)) {
                 $this->data['User']['password'] = null;
                 $this->Email->from = 'no-reply';
