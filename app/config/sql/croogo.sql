@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 11, 2009 at 04:45 AM
+-- Generation Time: Oct 13, 2009 at 07:23 AM
 -- Server version: 5.0.51
 -- PHP Version: 5.2.6
 
@@ -376,7 +376,7 @@ CREATE TABLE IF NOT EXISTS `types` (
   `comment_approve` tinyint(1) NOT NULL default '1',
   `comment_spam_protection` tinyint(1) NOT NULL default '0',
   `comment_captcha` tinyint(1) NOT NULL default '0',
-  `meta_fields` text collate utf8_unicode_ci NOT NULL,
+  `params` text collate utf8_unicode_ci NOT NULL,
   `plugin` varchar(255) collate utf8_unicode_ci NOT NULL,
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,

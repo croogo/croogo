@@ -8,6 +8,7 @@
                     <li><a href="#type-taxonomy"><?php __('Taxonomy'); ?></a></li>
                     <li><a href="#type-format"><?php __('Format'); ?></a></li>
                     <li><a href="#type-comments"><?php __('Comments'); ?></a></li>
+                    <li><a href="#type-params"><?php __('Params'); ?></a></li>
                 </ul>
 
                 <div id="type">
@@ -68,6 +69,12 @@
                         ));
                     ?>
                     </p>
+                </div>
+
+                <div id="type-params">
+                <?php
+                    echo $form->input('Type.params');
+                ?>
                 </div>
             </div>
         </fieldset>
