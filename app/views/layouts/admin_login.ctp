@@ -27,13 +27,7 @@
         <div id="main">
             <div id="login">
             <?php
-                $messages = $session->read('Message');
-                if (is_array($messages)) {
-                    foreach (array_keys($messages) AS $key) {
-                        $session->flash($key);
-                    }
-                }
-
+                $layout->sessionFlash();
                 echo $content_for_layout;
             ?>
             </div>

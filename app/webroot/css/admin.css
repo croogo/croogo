@@ -201,7 +201,7 @@ p#backtosite { padding: 0px 0px 0px 20px; }
 #login input[type=text],
 #login input[type=password] { width: 95%; }
 
-#login form { padding: 0px 20px 20px 20px; background: #fff; border: 1px solid #e5e5e5; }
+#login form { margin: 30px 0px 0px 0px; padding: 0px 20px 20px 20px; background: #fff; border: 1px solid #e5e5e5; }
 #login form { -moz-box-shadow: rgba(200,200,200,1) 0 4px 18px; -webkit-box-shadow: rgba(200,200,200,1) 0 4px 18px; }
 #login form { -moz-border-radius: 10px; -webkit-border-radius: 10px; }
 
