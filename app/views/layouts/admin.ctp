@@ -14,7 +14,6 @@
             'thickbox',
         ));
         echo $javascript->link(array(
-            'default',
             'jquery/jquery-1.3.1.min',
             'jquery/jquery-ui-1.7.min',
             'jquery/jquery.uuid',

@@ -30,7 +30,6 @@ Admin.navigation = function() {
  * @return void
  */
 Admin.form = function() {
-	// form
 	$("form input[type=submit]").addClass("ui-state-default ui-corner-all").hover(
 		function(){
 			$(this).addClass("ui-state-hover");
@@ -60,12 +59,18 @@ Admin.form = function() {
  * @return void
  */
 Admin.extra = function() {
-	// extra
 	$("table tr:nth-child(even)").not('.controller-row').addClass("striped");
 	$("div.message").addClass("notice");
-	//$("table th:first-child, table td:first-child").css('display', 'none');
-	$("	#navigation ul li, #navigation ul li ul, table, .notice, .success, .error, input, select, textarea, div.actions ul li a, div.meta").addClass('ui-corner-all');
 	$('#loading p').addClass('ui-corner-bl ui-corner-br');
+}
+
+/**
+ * Rounded corners
+ *
+ * @return void
+ */
+Admin.roundedCorners = function() {
+    $("#navigation ul li, #navigation ul li ul, table, .notice, .success, .error, input, select, textarea, div.actions ul li a, div.meta").addClass('ui-corner-all');
 }
 
 /**
@@ -77,6 +82,7 @@ $(document).ready(function() {
     Admin.navigation();
 	Admin.form();
     Admin.extra();
+    Admin.roundedCorners();
 
 	$('.tabs').tabs();
     $('a.tooltip').tipsy({gravity: 's'});

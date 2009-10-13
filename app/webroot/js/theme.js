@@ -1,5 +1,5 @@
 /**
- * Javascript for Classic Theme
+ * Javascript for Default Theme
  */
 $(document).ready(function(){
     $("ul.sf-menu").supersubs({
