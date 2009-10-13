@@ -154,6 +154,7 @@ class UsersController extends AppController {
             $user = $this->User->findByUsername($username);
             $this->User->id = $user['User']['id'];
             $this->User->saveField('status', 1);
+            $this->User->saveField('activation_key', md5(uniqid()));
             $this->Session->setFlash(__('Account activated successfully.', true));
         } else {
             $this->Session->setFlash(__('An error occurred.', true));
@@ -164,8 +165,73 @@ class UsersController extends AppController {
     }
 
     function edit() {}
-    function forgot() {}
-    function reset() {}
+
+    function forgot() {
+        $this->pageTitle = __('Forgot Password', true);
+
+        if (!empty($this->data) && isset($this->data['User']['username'])) {
+            $user = $this->User->findByUsername($this->data['User']['username']);
+            if (!isset($user['User']['id'])) {
+                $this->Session->setFlash(__('Invalid username.', true));
+                $this->redirect(array('action' => 'login'));
+                exit();
+            }
+
+            $this->User->id = $user['User']['id'];
+            $activationKey = md5(uniqid());
+            $this->User->saveField('activation_key', $activationKey);
+            $this->set(compact('user', 'activationKey'));
+
+            $this->Email->from = 'no-reply';
+            $this->Email->to = $user['User']['email'];
+            $this->Email->subject = '[' . Configure::read('Site.title') . '] ' . __('Reset Password', true);
+            $this->Email->template = 'forgot_password';
+            if ($this->Email->send()) {
+                $this->Session->setFlash(__('An email has been sent with instructions for resetting your password.', true));
+                $this->redirect(array('action' => 'login'));
+                exit();
+            } else {
+                $this->Session->setFlash(__('An error occurred. Please try again.', true));
+            }
+        }
+    }
+
+    function reset($username = null, $key = null) {
+        $this->pageTitle = __('Reset Password', true);
+
+        if ($username == null || $key == null) {
+            $this->Session->setFlash(__('An error occurred.', true));
+            $this->redirect(array('action' => 'login'));
+            exit();
+        }
+
+        $user = $this->User->find('first', array(
+            'conditions' => array(
+                'User.username' => $username,
+                'User.activation_key' => $key,
+            ),
+        ));
+        if (!isset($user['User']['id'])) {
+            $this->Session->setFlash(__('An error occurred.', true));
+            $this->redirect(array('action' => 'login'));
+            exit();
+        }
+
+        if (!empty($this->data) && isset($this->data['User']['password'])) {
+            $this->User->id = $user['User']['id'];
+            $user['User']['password'] = Security::hash($this->data['User']['password'], null, true);
+            $user['User']['activation_key'] = md5(uniqid());
+            if ($this->User->save($user['User'])) {
+                $this->Session->setFlash(__('Your password has been reset successfully.', true));
+                $this->redirect(array('action' => 'login'));
+                exit();
+            } else {
+                $this->Session->setFlash(__('An error occurred. Please try again.', true));
+            }
+        }
+
+        $this->set(compact('user', 'username', 'key'));
+    }
 
     function login() {
         $this->pageTitle = __('Log in', true);

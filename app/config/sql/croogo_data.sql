@@ -1,17 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 2.11.7
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Oct 13, 2009 at 07:24 AM
--- Server version: 5.0.51
--- PHP Version: 5.2.6
-
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
---
--- Database: `croogo_main`
---
 
 --
 -- Dumping data for table `acos`
@@ -214,7 +201,8 @@ INSERT INTO `aros_acos` (`id`, `aro_id`, `aco_id`, `_create`, `_read`, `_update`
 (37, 3, 165, '1', '1', '1', '1'),
 (38, 2, 166, '1', '1', '1', '1'),
 (39, 3, 167, '1', '1', '1', '1'),
-(40, 2, 168, '1', '1', '1', '1');
+(40, 2, 168, '0', '0', '0', '0'),
+(41, 3, 168, '1', '1', '1', '1');
 
 --
 -- Dumping data for table `blocks`
