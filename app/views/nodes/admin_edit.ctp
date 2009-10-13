@@ -71,6 +71,7 @@
                 <?php
                     echo $form->input('status', array('label' => __('Published', true)));
                     echo $form->input('promote', array('label' => __('Promoted to front page', true)));
+                    echo $form->input('created');
                 ?>
                 </div>
                 <div class="clear">&nbsp;</div>

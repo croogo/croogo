@@ -63,6 +63,7 @@ label { margin: 0px 0px 0px 3px; font-size: 16px; color: #464646; font-weight: b
 .textarea label,
 .select label,
 .file label,
+.datetime label,
 .password label { display: block; }
 
 form input[type=text],
