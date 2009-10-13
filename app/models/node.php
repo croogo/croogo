@@ -56,6 +56,10 @@ class Node extends AppModel {
  * @access public
  */
     var $validate = array(
+        'title' => array(
+            'rule' => 'notEmpty',
+            'message' => 'This field cannot be left blank.',
+        ),
         'slug' => array(
             'rule' => 'isUnique',
             'message' => 'This slug has already been taken',
