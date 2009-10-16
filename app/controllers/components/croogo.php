@@ -73,10 +73,12 @@ class CroogoComponent extends Object {
             $this->roleId = $this->Session->read('Auth.User.id');
         }
 
-        $this->blocks();
-        $this->menus();
-        $this->vocabularies();
-        $this->types();
+        if (!isset($this->params['admin']) || $this->params['admin'] === false) {
+            $this->blocks();
+            $this->menus();
+            $this->vocabularies();
+            $this->types();
+        }
     }
 /**
  * Blocks

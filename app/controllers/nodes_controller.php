@@ -57,10 +57,11 @@ class NodesController extends AppController {
                 }
                 $this->paginate['Node']['conditions'][$filterKey] = $filterValue;
             }
+            $this->set('filters', $filters);
         }
 
         $nodes = $this->paginate();
-        $this->set(compact('nodes', 'typeAliases'));
+        $this->set(compact('nodes', 'types', 'typeAliases'));
 
         if (isset($this->params['named']['links'])) {
             $this->layout = 'ajax';

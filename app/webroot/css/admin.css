@@ -125,6 +125,9 @@ div.meta .input textarea { height: 60px; }
 div.nodes .type h3 { font-size: 14px; }
 div.nodes .type p { margin: 10px 10px 10px 20px; }
 
+div.filter { margin: 10px 0px 20px 0px; background: #efefef; padding: 10px; }
+div.filter form select { width: 200px; }
+
 
 /**
  * Themes

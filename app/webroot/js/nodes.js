@@ -13,10 +13,57 @@ var Nodes = {};
  * @return void
  */
 Nodes.documentReady = function() {
+    Nodes.filter();
     Nodes.addMeta();
     Nodes.removeMeta();
 }
+/**
+ * Submits form for filtering Nodes
+ *
+ * @return void
+ */
+Nodes.filter = function() {
+    if (typeof(window['filter']) == 'undefined') {
+        $('.nodes div.filter').hide();
+    }
 
+    $('.nodes div.actions a.filter').click(function() {
+        $('.nodes div.filter').slideToggle();
+        return false;
+    });
+
+    $('#FilterAddForm div.submit input').click(function() {
+        $('#FilterAddForm').submit();
+        return false;
+    });
+
+    $('#FilterAddForm').submit(function() {
+        var filter = '';
+
+        // type
+        if ($('#FilterType').val() != '') {
+            filter += 'type:' + $('#FilterType').val() + ';';
+        }
+
+        // status
+        if ($('#FilterStatus').val() != '') {
+            filter += 'status:' + $('#FilterStatus').val() + ';';
+        }
+
+        // promoted
+        if ($('#FilterPromote').val() != '') {
+            filter += 'promote:' + $('#FilterPromote').val() + ';';
+        }
+
+        var loadUrl = baseUrl + 'admin/nodes/index/';
+        if (filter != '') {
+            loadUrl += 'filter:' + filter;
+        }
+
+        window.location = loadUrl;
+        return false;
+    });
+}
 /**
  * add meta field
  *

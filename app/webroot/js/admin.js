@@ -30,7 +30,7 @@ Admin.navigation = function() {
  * @return void
  */
 Admin.form = function() {
-	$("form input[type=submit]").addClass("ui-state-default ui-corner-all").hover(
+	$("form input[type=submit]").not('.filter input[type=submit]').addClass("ui-state-default ui-corner-all").hover(
 		function(){
 			$(this).addClass("ui-state-hover");
 		},
@@ -70,7 +70,7 @@ Admin.extra = function() {
  * @return void
  */
 Admin.roundedCorners = function() {
-    $("#navigation ul li, #navigation ul li ul, table, .notice, .success, .error, input, select, textarea, div.actions ul li a, div.meta").addClass('ui-corner-all');
+    $("#navigation ul li, #navigation ul li ul, table, .notice, .success, .error, input, select, textarea, div.actions ul li a, div.meta, div.filter").addClass('ui-corner-all');
 }
 
 /**

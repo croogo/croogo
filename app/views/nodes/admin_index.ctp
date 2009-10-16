@@ -1,9 +1,16 @@
+<?php
+    $javascript->link(array('nodes'), false);
+    if (isset($this->params['named']['filter'])) {
+        $javascript->codeBlock('var filter = 1;', array('inline' => false));
+    }
+?>
 <div class="nodes index">
     <h2><?php echo $this->pageTitle; ?></h2>
 
     <div class="actions">
         <ul>
             <li><?php echo $html->link(__('Create content', true), array('action'=>'create')); ?></li>
+            <li><?php echo $html->link(__('Filter', true), '#', array('class' => 'filter')); ?></li>
         </ul>
     </div>
 
@@ -13,6 +20,8 @@
                 $paginator->options['url'][] = $nn . ':' . $nv;
             }
         }
+
+        echo $this->element('admin/nodes_filter');
     ?>
 
     <?php echo $form->create('Node', array('url' => array('controller' => 'nodes', 'action' => 'process'))); ?>
