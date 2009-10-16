@@ -6,5 +6,14 @@
             echo $form->input('password');
         ?>
         </fieldset>
-    <?php echo $form->end('Log In');?>
+    <?php
+        echo $html->link(__('Forgot password?', true), array(
+            'admin' => false,
+            'controller' => 'users',
+            'action' => 'forgot',
+        ), array(
+            'class' => 'forgot',
+        ));
+        echo $form->end('Log In');
+    ?>
 </div>

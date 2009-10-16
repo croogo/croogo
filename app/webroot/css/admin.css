@@ -199,6 +199,7 @@ p#backtosite { padding: 0px 0px 0px 20px; }
 
 #login { margin: 0px auto; width: 320px; padding: 50px 0px 0px 0px; }
 #login h2 { border-bottom: 0px; }
+#login .forgot { float: right; }
 #login input[type=text],
 #login input[type=password] { width: 95%; }
 
