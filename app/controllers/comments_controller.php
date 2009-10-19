@@ -123,6 +123,10 @@ class CommentsController extends AppController {
         exit();
     }
 
+    function index() {
+
+    }
+
     function add($nodeId = null, $parentId = null) {
         if (!$nodeId) {
             $this->Session->setFlash(__('Invalid Node', true));
@@ -140,6 +144,15 @@ class CommentsController extends AppController {
             $this->Session->setFlash(__('Invalid Node', true));
             $this->redirect('/');
             exit();
+        }
+        if ($parentId) {
+            $commentPath = $this->Comment->getpath($parentId, array('Comment.id'));
+            $commentLevel = count($commentPath);
+            if ($commentLevel > Configure::read('Comment.level')) {
+                $this->Session->setFlash(__('Maximum level reached. You cannot reply to that comment.', true));
+                $this->redirect($node['Node']['url']);
+                exit();
+            }
         }
         $type = $this->Type->findByAlias($node['Node']['type']);
         $continue = false;

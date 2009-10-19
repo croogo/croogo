@@ -15,19 +15,21 @@
     <div class="comment-body"><?php echo nl2br($comment['Comment']['body']); ?></div>
     <div class="comment-reply">
     <?php
-        echo $html->link(__('Reply', true), array(
-            'controller' => 'comments',
-            'action' => 'add',
-            $node['Node']['id'],
-            $comment['Comment']['id'],
-        ));
+        if ($level <= Configure::read('Comment.level')) {
+            echo $html->link(__('Reply', true), array(
+                'controller' => 'comments',
+                'action' => 'add',
+                $node['Node']['id'],
+                $comment['Comment']['id'],
+            ));
+        }
     ?>
     </div>
     
     <?php
         if (isset($comment['children']) && count($comment['children']) > 0) {
             foreach ($comment['children'] AS $childComment) {
-                echo $this->element('comment', array('comment' => $childComment));
+                echo $this->element('comment', array('comment' => $childComment, 'level' => $level + 1));
             }
         }
     ?>

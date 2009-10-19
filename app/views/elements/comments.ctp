@@ -9,7 +9,7 @@
     echo $html->tag('h3', $commentHeading);
 
     foreach ($comments AS $comment) {
-        echo $this->element('comment', array('comment' => $comment));
+        echo $this->element('comment', array('comment' => $comment, 'level' => 1));
     }
 ?>
 </div>
