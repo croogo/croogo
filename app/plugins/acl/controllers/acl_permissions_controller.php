@@ -19,22 +19,21 @@ class AclPermissionsController extends AclAppController {
 		$this->pageTitle = __('Permissions', true);
 
         $acoConditions = array(
-                       'NOT' => array(
-                                 'parent_id' => $this->topLevelAcos,
-                                 'id'        => $this->topLevelAcos,
-                                ),
-                      );
-
+            'parent_id !=' => null,
+            'model' => null,
+            'foreign_key' => null,
+            'alias !=' => null,
+        );
         $acos  = $this->Acl->Aco->generatetreelist($acoConditions, '{n}.Aco.id', '{n}.Aco.alias');
         $roles = $this->Role->find('list');
         $this->set(compact('acos', 'roles'));
 
         $rolesAros = $this->AclAro->find('all', array(
-                      'conditions' => array(
-                       'AclAro.model' => 'Role',
-                       'AclAro.foreign_key' => array_keys($roles),
-                      ),
-                     ));
+            'conditions' => array(
+                'AclAro.model' => 'Role',
+                'AclAro.foreign_key' => array_keys($roles),
+            ),
+        ));
         $rolesAros = Set::combine($rolesAros, '{n}.AclAro.foreign_key', '{n}.AclAro.id');
 
         $permissions = array(); // acoId => roleId => bool
@@ -43,33 +42,31 @@ class AclPermissionsController extends AclAppController {
                 $permission = array();
                 foreach ($roles AS $roleId => $roleTitle) {
                     $hasAny = array(
-                               'aco_id'  => $acoId,
-                               'aro_id'  => $rolesAros[$roleId],
-                               '_create' => 1,
-                               '_read'   => 1,
-                               '_update' => 1,
-                               '_delete' => 1,
-                              );
+                        'aco_id'  => $acoId,
+                        'aro_id'  => $rolesAros[$roleId],
+                        '_create' => 1,
+                        '_read'   => 1,
+                        '_update' => 1,
+                        '_delete' => 1,
+                    );
                     if ($this->AclArosAco->hasAny($hasAny)) {
                         $permission[$roleId] = 1;
                     } else {
                         $permission[$roleId] = 0;
                     }
-
                     $permissions[$acoId] = $permission;
                 }
             }
         }
-
         $this->set(compact('rolesAros', 'permissions'));
     }
 
     function admin_toggle($acoId, $aroId) {
         // see if acoId and aroId combination exists
         $conditions = array(
-                   'AclArosAco.aco_id' => $acoId,
-                   'AclArosAco.aro_id' => $aroId,
-                  );
+            'AclArosAco.aco_id' => $acoId,
+            'AclArosAco.aro_id' => $aroId,
+        );
         if ($this->AclArosAco->hasAny($conditions)) {
             $data = $this->AclArosAco->find('first', array('conditions' => $conditions));
             if ($data['AclArosAco']['_create'] == 1 &&

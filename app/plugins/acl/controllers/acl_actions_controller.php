@@ -20,11 +20,11 @@ class AclActionsController extends AclAppController {
 		$this->pageTitle = __('Actions', true);
 
         $conditions = array(
-                       'NOT' => array(
-                                 'parent_id' => $this->topLevelAcos,
-                                 'id'        => $this->topLevelAcos,
-                                ),
-                      );
+            'parent_id !=' => null,
+            'model' => null,
+            'foreign_key' => null,
+            'alias !=' => null,
+        );
 		$this->set('acos', $this->Acl->Aco->generatetreelist($conditions, '{n}.Aco.id', '{n}.Aco.alias'));
 	}
 
@@ -51,12 +51,19 @@ class AclActionsController extends AclAppController {
 		}
 
         $conditions = array(
-                       'NOT' => array(
-                                 'alias' => array('nodes', 'blocks'),
-                                ),
-                       'parent_id' => array(null, 1),
-                      );
-        //$conditions = null;
+            'model' => null,
+        );
+        $controllersAco = $this->Acl->Aco->find('first', array(
+            'conditions' => array(
+                'alias' => 'controllers',
+                'parent_id' => null,
+                'model' => null,
+                'foreign_key' => null,
+            ),
+        ));
+        if (isset($controllersAco['Aco']['id'])) {
+            $conditions['parent_id'] = $controllersAco['Aco']['id'];
+        }
         $acos = $this->Acl->Aco->generatetreelist($conditions, '{n}.Aco.id', '{n}.Aco.alias');
         $this->set(compact('acos'));
 	}
@@ -80,7 +87,21 @@ class AclActionsController extends AclAppController {
 			$this->data = $this->Acl->Aco->read(null, $id);
 		}
 
-        $acos = $this->Acl->Aco->generatetreelist("Aco.id = '1' OR Aco.parent_id = '1'", '{n}.Aco.id', '{n}.Aco.alias');
+        $conditions = array(
+            'model' => null,
+        );
+        $controllersAco = $this->Acl->Aco->find('first', array(
+            'conditions' => array(
+                'alias' => 'controllers',
+                'parent_id' => null,
+                'model' => null,
+                'foreign_key' => null,
+            ),
+        ));
+        if (isset($controllersAco['Aco']['id'])) {
+            $conditions['parent_id'] = $controllersAco['Aco']['id'];
+        }
+        $acos = $this->Acl->Aco->generatetreelist($conditions, '{n}.Aco.id', '{n}.Aco.alias');
         $this->set(compact('acos'));
 	}
 
@@ -117,7 +138,11 @@ class AclActionsController extends AclAppController {
         $aco =& $this->Acl->Aco;
         $root = $aco->node('controllers');
         if (!$root) {
-            $aco->create(array('parent_id' => null, 'model' => null, 'alias' => 'controllers'));
+            $aco->create(array(
+                'parent_id' => null,
+                'model' => null,
+                'alias' => 'controllers',
+            ));
             $root = $aco->save();
             $root['Aco']['id'] = $aco->id;
         } else {
@@ -125,12 +150,14 @@ class AclActionsController extends AclAppController {
         }
 
         $controllerPaths = $this->AclGenerate->listControllers();
-
         foreach ($controllerPaths AS $controllerName => $controllerPath) {
-            // find / make controller node
             $controllerNode = $aco->node('controllers/'.$controllerName);
             if (!$controllerNode) {
-                $aco->create(array('parent_id' => $root['Aco']['id'], 'model' => null, 'alias' => $controllerName));
+                $aco->create(array(
+                    'parent_id' => $root['Aco']['id'],
+                    'model' => null,
+                    'alias' => $controllerName,
+                ));
                 $controllerNode = $aco->save();
                 $controllerNode['Aco']['id'] = $aco->id;
                 $log[] = 'Created Aco node for '.$controllerName;
@@ -142,7 +169,11 @@ class AclActionsController extends AclAppController {
             foreach ($methods AS $method) {
                 $methodNode = $aco->node('controllers/'.$controllerName.'/'.$method);
                 if (!$methodNode) {
-                    $aco->create(array('parent_id' => $controllerNode['Aco']['id'], 'model' => null, 'alias' => $method));
+                    $aco->create(array(
+                        'parent_id' => $controllerNode['Aco']['id'],
+                        'model' => null,
+                        'alias' => $method,
+                    ));
                     $methodNode = $aco->save();
                 }
             }

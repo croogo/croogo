@@ -50,6 +50,7 @@ img.permission-toggle:hover { cursor: pointer; }
 img.permission-disabled { }
 
 .controller-row { background: #6f6f6f; color: #fff; font-weight: bold; }
+.controller-row a { color: #efefef; }
 .controller:hover { cursor: pointer; }
 .collapse { background: url('../img/icons/bullet_arrow_down.png') no-repeat; padding-left: 15px; }
 .expand { background: url('../img/icons/bullet_arrow_right.png') no-repeat; padding-left: 15px; }

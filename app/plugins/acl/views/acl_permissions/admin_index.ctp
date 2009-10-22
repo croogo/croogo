@@ -17,9 +17,9 @@
         $roleIds   = array_keys($roles);
 
         $tableHeaders = array(
-                         __('Id', true),
-                         __('Alias', true),
-                        );
+            __('Id', true),
+            __('Alias', true),
+        );
         $tableHeaders = array_merge($tableHeaders, $roleTitles);
         $tableHeaders =  $html->tableHeaders($tableHeaders);
         echo $tableHeaders;
@@ -42,9 +42,9 @@
             }
             
             $row = array(
-                       $id,
-                       $html->div($class, $alias),
-                      );
+                $id,
+                $html->div($class, $alias),
+            );
 
             foreach ($roles AS $roleId => $roleTitle) {
                 if ($level != 0) {

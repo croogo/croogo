@@ -1,13 +1,13 @@
 <?php
     $javascript->link('/acl/js/acl_permissions.js', false);
-    $javascript->codeBlock("$(document).ready(function(){ AclPermissions.tableToggle(); });", array('inline' => false));
+    $javascript->codeBlock("$(document).ready(function(){ AclPermissions.documentReady(); });", array('inline' => false));
 ?>
 <div class="acos index">
     <h2><?php echo $this->pageTitle; ?></h2>
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('New Aco', true), array('action'=>'add')); ?></li>
+            <li><?php echo $html->link(__('New Action', true), array('action'=>'add')); ?></li>
             <li><?php echo $html->link(__('Generate Actions', true), array('action'=>'generate')); ?></li>
         </ul>
     </div>
@@ -15,10 +15,10 @@
     <table cellpadding="0" cellspacing="0">
     <?php
         $tableHeaders =  $html->tableHeaders(array(
-                                              __('Id', true),
-                                              __('Alias', true),
-                                              __('Actions', true),
-                                             ));
+            __('Id', true),
+            __('Alias', true),
+            __('Actions', true),
+        ));
         echo $tableHeaders;
 
         $currentController = '';
@@ -44,10 +44,10 @@
             $actions .= ' ' . $html->link(__('Move down', true), array('action' => 'move', $id, 'down'));
 
             $row = array(
-                       $id,
-                       $html->div($class, $alias),
-                       $actions,
-                      );
+                $id,
+                $html->div($class, $alias),
+                $actions,
+            );
 
             echo $html->tableCells(array($row), $oddOptions, $evenOptions);
         }
