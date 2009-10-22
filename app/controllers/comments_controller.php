@@ -124,7 +124,21 @@ class CommentsController extends AppController {
     }
 
     function index() {
+        $this->pageTitle = __('Comments', true);
 
+        if (!isset($this->params['url']['ext']) ||
+            $this->params['url']['ext'] != 'rss') {
+            $this->redirect('/');
+            exit();
+        }
+
+        $this->paginate['Comment']['order'] = 'Comment.created DESC';
+        $this->paginate['Comment']['limit'] = Configure::read('Comment.feed_limit');
+        $this->paginate['Comment']['conditions'] = array(
+            'Comment.status' => 1,
+        );
+        $comments = $this->paginate();
+        $this->set(compact('comments'));
     }
 
     function add($nodeId = null, $parentId = null) {

@@ -5,12 +5,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 INSERT INTO `acos` (`id`, `parent_id`, `model`, `foreign_key`, `alias`, `lft`, `rght`) VALUES
-(9, NULL, 'Link', 4, '', 1, 2),
-(10, NULL, 'Block', 3, '', 3, 4),
 (11, NULL, 'Node', 20, '', 5, 6),
 (12, NULL, 'Node', 21, '', 7, 8),
-(13, NULL, 'Node', 22, '', 9, 10),
-(17, NULL, 'Node', 26, '', 11, 12),
 (18, NULL, NULL, NULL, 'controllers', 13, 316),
 (19, 18, NULL, NULL, 'Attachments', 14, 25),
 (20, 19, NULL, NULL, 'admin_index', 15, 16),
@@ -341,7 +337,8 @@ INSERT INTO `settings` (`id`, `key`, `value`, `title`, `description`, `input_typ
 (21, 'Site.feed_url', '', '', '', '', 0, 15, ''),
 (22, 'Reading.nodes_per_page', '5', '', '', '', 1, 16, ''),
 (23, 'Writing.wysiwyg', '1', 'Enable WYSIWYG editor', '', 'checkbox', 1, 17, ''),
-(24, 'Comment.level', '1', '', '', '', 1, 18, '');
+(24, 'Comment.level', '1', '', 'levels deep (threaded comments)', '', 1, 18, ''),
+(25, 'Comment.feed_limit', '10', '', 'number of comments to show in feed', '', 1, 19, '');
 
 --
 -- Dumping data for table `terms`
