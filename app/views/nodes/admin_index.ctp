@@ -1,8 +1,5 @@
 <?php
     $javascript->link(array('nodes'), false);
-    if (isset($this->params['named']['filter'])) {
-        $javascript->codeBlock('var filter = 1;', array('inline' => false));
-    }
 ?>
 <div class="nodes index">
     <h2><?php echo $this->pageTitle; ?></h2>
