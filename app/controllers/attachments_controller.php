@@ -169,7 +169,7 @@ class AttachmentsController extends AppController {
     }
 
     function admin_browse() {
-        $this->layout = 'admin_login';
+        $this->layout = 'admin_full';
         $this->admin_index();
     }
 
