@@ -11,6 +11,11 @@ Requirements
 Installation
 ============
 
+  Web based installer:
+    * Extract the archive. Upload the content to your server.
+    * visit http://your-site.com/install from your browser and follow the instructions
+
+  Manual installation:
     * Extract the archive. Upload the content to your server.
     * Create a new MySQL database ('utf8_unicode_ci' collation), and use these two SQL dump files in given order:
         /app/config/sql/croogo.sql
