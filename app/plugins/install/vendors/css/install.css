@@ -1,0 +1,14 @@
+.install h1 { padding: 0px 0px 0px 20px;  }
+
+#install { margin: 0px auto; width: 500px; padding: 50px 0px 0px 0px; }
+#install h2 { border-bottom: 0px; margin: 20px 0px 20px 0px; }
+#install .forgot { float: right; }
+#install input[type=text],
+#install input[type=password] { width: 95%; }
+
+#install .install { margin: 30px 0px 0px 0px; padding: 0px 20px 20px 20px; background: #fff; border: 1px solid #e5e5e5; }
+#install .install { -moz-box-shadow: rgba(200,200,200,1) 0 4px 18px; -webkit-box-shadow: rgba(200,200,200,1) 0 4px 18px; }
+#install .install { -moz-border-radius: 10px; -webkit-border-radius: 10px; }
+
+.install #footer { background: none; color: #444; }
+.install #footer a { color: #444; }

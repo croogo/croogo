@@ -46,7 +46,7 @@ class InstallController extends InstallAppController {
             //exit();
         }
 
-        $this->layout = 'default';
+        $this->layout = 'install';
         App::import('Component', 'Session');
         $this->Session = new SessionComponent;
     }
