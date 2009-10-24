@@ -43,11 +43,13 @@ class AclGenerateComponent extends Object {
         $this->folder->path = APP.'plugins'.DS;
         $plugins = $this->folder->read();
         foreach ($plugins['0'] AS $p) {
-            $this->folder->path = APP.'plugins'.DS.$p.DS.'controllers'.DS;
-            $pluginControllers = $this->folder->read();
-            foreach ($pluginControllers['1'] AS $pc) {
-                $pcName = Inflector::camelize(str_replace('_controller.php', '', $pc));
-                $controllerPaths[$pcName] = APP.'plugins'.DS.$p.DS.'controllers'.DS.$pc;
+            if ($p != 'install') {
+                $this->folder->path = APP.'plugins'.DS.$p.DS.'controllers'.DS;
+                $pluginControllers = $this->folder->read();
+                foreach ($pluginControllers['1'] AS $pc) {
+                    $pcName = Inflector::camelize(str_replace('_controller.php', '', $pc));
+                    $controllerPaths[$pcName] = APP.'plugins'.DS.$p.DS.'controllers'.DS.$pc;
+                }
             }
         }
 
