@@ -64,20 +64,20 @@ class AclGenerateComponent extends Object {
      * @return array
      */
     function listActions($name, $path) {
-        $controllerName = $name.'Controller';
-        App::import('Controller', $controllerName, null, null, $path);
-        $methods = get_class_methods($controllerName);
-
         // base methods
         if (strpos($path, 'app'.DS.'plugins')) {
             $plugin = $this->getPluginFromPath($path);
-            $pacName = $plugin.'AppController'; // pac - PluginAppController
-            $pacPath = APP.'plugins'.DS.$pacName.DS.$pacName.'_app_controller.php';
+            $pacName = Inflector::camelize($plugin) . 'AppController'; // pac - PluginAppController
+            $pacPath = APP.'plugins'.DS.$plugin.DS.$plugin.'_app_controller.php';
             App::import('Controller', $pacName, null, null, $pacPath);
             $baseMethods = get_class_methods($pacName);
         } else {
             $baseMethods = get_class_methods('AppController');
         }
+
+        $controllerName = $name.'Controller';
+        App::import('Controller', $controllerName, null, null, $path);
+        $methods = get_class_methods($controllerName);
 
         // filter out methods
         foreach ($methods AS $k => $method) {
