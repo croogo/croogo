@@ -25,7 +25,7 @@ class TermsController extends AppController {
  * @var array
  * @access public
  */
-    var $uses = array('Term', 'Vocabulary');
+    var $uses = array('Term');
 
     function beforeFilter() {
         parent::beforeFilter();

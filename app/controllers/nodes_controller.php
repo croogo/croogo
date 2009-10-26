@@ -25,7 +25,7 @@ class NodesController extends AppController {
  * @var array
  * @access public
  */
-    var $uses = array('Node', 'Type');
+    var $uses = array('Node');
 
     function beforeFilter() {
         parent::beforeFilter();
@@ -45,7 +45,7 @@ class NodesController extends AppController {
         $this->paginate['Node']['order'] = 'Node.id DESC';
         $this->paginate['Node']['conditions'] = array();
 
-        $types = $this->Type->find('all');
+        $types = $this->Node->Term->Vocabulary->Type->find('all');
         $typeAliases = Set::extract('/Type/alias', $types);
         $this->paginate['Node']['conditions']['Node.type'] = $typeAliases;
 
@@ -72,7 +72,7 @@ class NodesController extends AppController {
     function admin_create() {
         $this->pageTitle = __('Create content', true);
 
-        $types = $this->Type->find('all', array(
+        $types = $this->Node->Term->Vocabulary->Type->find('all', array(
             'order' => array(
                 'Type.alias' => 'ASC',
             ),
@@ -81,7 +81,7 @@ class NodesController extends AppController {
     }
 
     function admin_add($typeAlias = 'node') {
-        $type = $this->Type->findByAlias($typeAlias);
+        $type = $this->Node->Term->Vocabulary->Type->findByAlias($typeAlias);
         if (!isset($type['Type']['alias'])) {
             $this->Session->setFlash(__('Content type does not exist.', true));
             $this->redirect(array('action' => 'create'));
@@ -115,7 +115,7 @@ class NodesController extends AppController {
         foreach ($type['Vocabulary'] AS $vocabulary) {
             $vocabularyTitle = $vocabulary['title'];
             $termsConditions = array('Term.vocabulary_id' => $vocabulary['id']);
-            $terms[$vocabularyTitle] = $this->Type->Vocabulary->Term->generatetreelist($termsConditions);
+            $terms[$vocabularyTitle] = $this->Node->Term->generatetreelist($termsConditions);
         }
         $this->set(compact('typeAlias', 'type', 'nodes', 'terms'));
     }
@@ -129,7 +129,7 @@ class NodesController extends AppController {
         $this->Node->id = $id;
         $typeAlias = $this->Node->field('type');
         
-        $type = $this->Type->findByAlias($typeAlias);
+        $type = $this->Node->Term->Vocabulary->Type->findByAlias($typeAlias);
         if (!isset($type['Type']['alias'])) {
             $this->Session->setFlash(__('Content type does not exist.', true));
             $this->redirect(array('action' => 'create'));
@@ -165,13 +165,13 @@ class NodesController extends AppController {
         foreach ($type['Vocabulary'] AS $vocabulary) {
             $vocabularyTitle = $vocabulary['title'];
             $termsConditions = array('Term.vocabulary_id' => $vocabulary['id']);
-            $terms[$vocabularyTitle] = $this->Type->Vocabulary->Term->generatetreelist($termsConditions);
+            $terms[$vocabularyTitle] = $this->Node->Term->generatetreelist($termsConditions);
         }
         $this->set(compact('typeAlias', 'type', 'nodes', 'terms'));
     }
 
     function admin_update_paths() {
-        $types = $this->Type->find('list', array(
+        $types = $this->Node->Term->Vocabulary->Type->find('list', array(
             'fields' => array(
                 'Type.id',
                 'Type.alias',
@@ -281,7 +281,7 @@ class NodesController extends AppController {
             'Node.status' => 1,
         );
         if (isset($this->params['named']['type'])) {
-            $type = $this->Type->findByAlias($this->params['named']['type']);
+            $type = $this->Node->Term->Vocabulary->Type->findByAlias($this->params['named']['type']);
             if (!isset($type['Type']['id'])) {
                 $this->Session->setFlash(__('Invalid content type.', true));
                 $this->redirect('/');
@@ -314,7 +314,7 @@ class NodesController extends AppController {
             'Node.terms LIKE' => '%"' . $this->params['named']['slug'] . '"%',
         );
         if (isset($this->params['named']['type'])) {
-            $type = $this->Type->findByAlias($this->params['named']['type']);
+            $type = $this->Node->Term->Vocabulary->Type->findByAlias($this->params['named']['type']);
             if (!isset($type['Type']['id'])) {
                 $this->Session->setFlash(__('Invalid content type.', true));
                 $this->redirect('/');
@@ -340,7 +340,7 @@ class NodesController extends AppController {
         );
 
         if (isset($this->params['named']['type'])) {
-            $type = $this->Type->findByAlias($this->params['named']['type']);
+            $type = $this->Node->Term->Vocabulary->Type->findByAlias($this->params['named']['type']);
             if (!isset($type['Type']['id'])) {
                 $this->Session->setFlash(__('Invalid content type.', true));
                 $this->redirect('/');
@@ -359,7 +359,7 @@ class NodesController extends AppController {
     function view($id = null) {
         if (isset($this->params['named']['slug']) && isset($this->params['named']['type'])) {
             $this->Node->type = $this->params['named']['type'];
-            $type = $this->Type->findByAlias($this->Node->type);
+            $type = $this->Node->Term->Vocabulary->Type->findByAlias($this->Node->type);
             $node = $this->Node->find('first', array(
                 'conditions' => array(
                     'Node.slug' => $this->params['named']['slug'],
@@ -413,27 +413,6 @@ class NodesController extends AppController {
             $this->render($node['CustomFields']['view']);
         }
     }
-
-    /*function find() {
-        if (!isset($this->params['named']['salt']) || $this->params['named']['salt'] != Configure::read('Security.salt')) {
-            Configure::write('debug', 0);
-            die('Access denied');
-        }
-
-        $_named = array(
-            'model' => 'Node',
-            'type' => 'first',
-            'options' => array(),
-        );
-        $named = array_merge($_named, $this->params['named']);
-
-        $modelName = $named['model'];
-        if (isset($this->{$modelName})) {
-            return $this->{$modelName}->find($named['type'], $named['options']);
-        } else {
-            return ClassRegistry::init($modelName)->find($named['type'], $named['options']);
-        }
-    }*/
 
 }
 ?>

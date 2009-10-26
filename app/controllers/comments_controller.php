@@ -25,11 +25,7 @@ class CommentsController extends AppController {
  * @var array
  * @access public
  */
-    var $uses = array(
-        'Comment',
-        'Node',
-        'Type',
-    );
+    var $uses = array('Comment');
 
     function admin_index() {
         $this->pageTitle = __('Comments', true);
@@ -148,7 +144,7 @@ class CommentsController extends AppController {
             exit();
         }
 
-        $node = $this->Node->find('first', array(
+        $node = $this->Comment->Node->find('first', array(
             'conditions' => array(
                 'Node.id' => $nodeId,
                 'Node.status' => 1,
@@ -168,7 +164,7 @@ class CommentsController extends AppController {
                 exit();
             }
         }
-        $type = $this->Type->findByAlias($node['Node']['type']);
+        $type = $this->Comment->Node->Term->Vocabulary->Type->findByAlias($node['Node']['type']);
         $continue = false;
         if ($type['Type']['comment_status'] && $node['Node']['comment_status']) {
             $continue = true;

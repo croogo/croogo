@@ -25,10 +25,7 @@ class ContactsController extends AppController {
  * @var array
  * @access public
  */
-    var $uses = array(
-        'Contact',
-        'Message',
-    );
+    var $uses = array('Contact');
 
     function admin_index() {
         $this->pageTitle = __('Contacts', true);
@@ -123,11 +120,11 @@ class ContactsController extends AppController {
     }
 
     function __validation($continue, $contact) {
-        if ($this->Message->set($this->data) && 
-            $this->Message->validates() &&
+        if ($this->Contact->Message->set($this->data) &&
+            $this->Contact->Message->validates() &&
             $continue === true) {
             if ($contact['Contact']['message_archive'] &&
-                !$this->Message->save($this->data['Message'])) {
+                !$this->Contact->Message->save($this->data['Message'])) {
                 $continue = false;
             }
         } else {
