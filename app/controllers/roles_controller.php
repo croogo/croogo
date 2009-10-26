@@ -80,16 +80,5 @@ class RolesController extends AppController {
         }
     }
 
-    function admin_permissions() {
-        $this->pageTitle = __('Permissions', true);
-
-        //debug($this->Acl->Aco->query('SELECT * FROM aros_acos AS p'));
-
-        $acos = $this->Acl->Aco->generatetreelist(array('NOT' => array('Aco.id' => array('2', '3'), array('Aco.parent_id' => array('2', '3')))), '{n}.Aco.id', '{n}.Aco.alias');
-        $roles = $this->Role->find('list');
-        //$roles = Set::combine($roles, '{n}.Aro.id', '{n}.Role.title');
-        $this->set(compact('acos', 'roles'));
-    }
-
 }
 ?>
