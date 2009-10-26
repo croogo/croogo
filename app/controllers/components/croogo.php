@@ -88,7 +88,7 @@ class CroogoComponent extends Object {
  * @return void
  */
     function blocks() {
-        $regions = $this->controller->Region->find('list', array(
+        $regions = $this->controller->Block->Region->find('list', array(
             'conditions' => array(
                 'Region.block_count >' => '0',
             ),
@@ -170,7 +170,7 @@ class CroogoComponent extends Object {
         }
 
         foreach ($menus AS $menuAlias) {
-            $menu = $this->controller->Menu->find('first', array(
+            $menu = $this->controller->Link->Menu->find('first', array(
                 'conditions' => array(
                     'Menu.status' => 1,
                     'Menu.alias' => $menuAlias,
@@ -234,7 +234,7 @@ class CroogoComponent extends Object {
         }
 
         foreach ($vocabularies AS $vocabularyAlias => $options) {
-            $vocabulary = $this->controller->Node->Term->Vocabulary->find('first', array(
+            $vocabulary = $this->controller->Type->Vocabulary->find('first', array(
                 'conditions' => array(
                     'Vocabulary.alias' => $vocabularyAlias,
                 ),
@@ -242,7 +242,7 @@ class CroogoComponent extends Object {
             ));
 
             if (isset($vocabulary['Vocabulary']['id'])) {
-                $terms = $this->controller->Node->Term->find('list', array(
+                $terms = $this->controller->Type->Vocabulary->Term->find('list', array(
                     'conditions' => array(
                         'Term.vocabulary_id' => $vocabulary['Vocabulary']['id'],
                         'Term.status' => 1,

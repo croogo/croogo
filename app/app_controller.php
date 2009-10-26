@@ -25,9 +25,6 @@ class AppController extends Controller {
     var $uses = array(
         'Block',
         'Link',
-        'Menu',
-        'Node',
-        'Region',
         'Setting',
         'Type',
     );
