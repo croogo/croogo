@@ -78,7 +78,7 @@ class AttachmentsController extends AppController {
         $this->pageTitle = __("Add Attachment", true);
 
         if (isset($this->params['named']['editor'])) {
-            $this->layout = 'admin_login';
+            $this->layout = 'admin_full';
         }
 
         if (!empty($this->data)) {
