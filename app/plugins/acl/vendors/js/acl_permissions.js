@@ -30,10 +30,10 @@ AclPermissions.permissionToggle = function() {
         var aroId = rel_e[1];
 
         // show loader
-        $(this).attr('src', baseUrl+'img/ajax/circle_ball.gif');
+        $(this).attr('src', Croogo.basePath+'img/ajax/circle_ball.gif');
 
         // prepare loadUrl
-        var loadUrl = baseUrl+'admin/acl/acl_permissions/toggle/';
+        var loadUrl = Croogo.basePath+'admin/acl/acl_permissions/toggle/';
         loadUrl    += acoId+'/'+aroId+'/';
 
         // now load it
@@ -69,7 +69,7 @@ AclPermissions.tableToggle = function() {
  * @return void
  */
 $(document).ready(function() {
-    if (params.controller == 'acl_permissions') {
+    if (Croogo.params.controller == 'acl_permissions') {
         AclPermissions.documentReady();
     }
 });

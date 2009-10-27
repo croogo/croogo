@@ -18,7 +18,12 @@ class LayoutHelper extends AppHelper {
  * @var array
  * @access public
  */
-    var $helpers = array('Html', 'Form', 'Session', 'Javascript');
+    var $helpers = array(
+        'Html',
+        'Form',
+        'Session',
+        'Javascript',
+    );
 /**
  * Constructor
  *
@@ -34,16 +39,17 @@ class LayoutHelper extends AppHelper {
  *
  * @return string
  */
-    function jsVars() {
-        $output = '';
+    function js() {
+        $output = $this->Javascript->link('croogo');
 
-        $output .= $this->Javascript->codeBlock("var baseUrl = '" . Router::url('/') . "';");
-        $params = array(
+        $croogo = array();
+        $croogo['basePath'] = Router::url('/');
+        $croogo['params'] = array(
             'controller' => $this->params['controller'],
             'action' => $this->params['action'],
             'named' => $this->params['named'],
         );
-        $output .= $this->Javascript->codeBlock("var params = " . $this->Javascript->object($params) . ";");
+        $output .= $this->Javascript->codeBlock('$.extend(Croogo, ' . $this->Javascript->object($croogo) . ');');
 
         echo $output;
     }

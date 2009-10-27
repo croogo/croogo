@@ -4,13 +4,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title><?php echo $title_for_layout; ?> - <?php __('Croogo'); ?></title>
     <?php
-        echo $javascript->codeBlock("var baseUrl = '" . $html->url('/') . "';");
-        echo $javascript->codeBlock("var params = " . $javascript->object($this->params) . ";");
         echo $html->css(array(
-                         'reset',
-                         '960',
-                         'admin'
-                        ));
+            'reset',
+            '960',
+            'admin',
+        ));
         echo $scripts_for_layout;
     ?>
 </head>

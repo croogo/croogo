@@ -55,7 +55,7 @@ Nodes.filter = function() {
             filter += 'promote:' + $('#FilterPromote').val() + ';';
         }
 
-        var loadUrl = baseUrl + 'admin/nodes/index/';
+        var loadUrl = Croogo.basePath + 'admin/nodes/index/';
         if (filter != '') {
             loadUrl += 'filter:' + filter;
         }
@@ -71,7 +71,7 @@ Nodes.filter = function() {
  */
 Nodes.addMeta = function() {
     $('a.add-meta').click(function() {
-        $.get(baseUrl+'admin/nodes/add_meta/', function(data) {
+        $.get(Croogo.basePath+'admin/nodes/add_meta/', function(data) {
             $('#meta-fields div.clear').before(data);
             $('div.meta a.remove-meta').unbind();
             Admin.roundedCorners();
@@ -90,7 +90,7 @@ Nodes.removeMeta = function() {
     $('div.meta a.remove-meta').click(function() {
         var aRemoveMeta = $(this);
         if (aRemoveMeta.attr('rel') != '') {
-            $.getJSON(baseUrl+'admin/nodes/delete_meta/'+$(this).attr('rel')+'.json', function(data) {
+            $.getJSON(Croogo.basePath+'admin/nodes/delete_meta/'+$(this).attr('rel')+'.json', function(data) {
                 if (data.success) {
                     aRemoveMeta.parents('.meta').remove();
                 } else {
@@ -110,7 +110,7 @@ Nodes.removeMeta = function() {
  * @return void
  */
 $(document).ready(function() {
-    if (params.controller == 'nodes') {
+    if (Croogo.params.controller == 'nodes') {
         Nodes.documentReady();
     }
 });

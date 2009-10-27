@@ -4,8 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title><?php echo $title_for_layout; ?> - <?php __('Croogo'); ?></title>
     <?php
-        echo $javascript->codeBlock("var baseUrl = '" . $html->url('/') . "';");
-        echo $javascript->codeBlock("var params = " . $javascript->object($this->params) . ";");
+        echo $javascript->link(array('jquery/jquery-1.3.1.min'));
+        echo $layout->js();
         echo $html->css(array(
             'reset',
             '960',
@@ -14,7 +14,6 @@
             'thickbox',
         ));
         echo $javascript->link(array(
-            'jquery/jquery-1.3.1.min',
             'jquery/jquery-ui-1.7.min',
             'jquery/jquery.uuid',
             'jquery/jquery.cookie',
