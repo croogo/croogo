@@ -44,7 +44,7 @@ class AppController extends Controller {
             $this->layout = 'ajax';
         }
 
-        if (Configure::read('Site.theme')) {
+        if (Configure::read('Site.theme') && !isset($this->params['admin'])) {
             $this->theme = Configure::read('Site.theme');
         }
 
