@@ -18,6 +18,7 @@
                         echo $form->input('region_id', array('rel' => __('if you are not sure, choose \'none\'', true)));
                         echo $form->input('body');
                         echo $form->input('class');
+                        echo $form->input('element');
                         echo $form->input('status');
                     ?>
                 </div>
