@@ -41,11 +41,6 @@ class InstallController extends InstallAppController {
     function beforeFilter() {
         parent::beforeFilter();
 
-        if(file_exists(APP.'config'.DS.'installed.txt')) {
-            //$this->redirect('/');
-            //exit();
-        }
-
         $this->layout = 'install';
         App::import('Component', 'Session');
         $this->Session = new SessionComponent;
@@ -121,7 +116,7 @@ class InstallController extends InstallAppController {
         }
     }
 /**
- * Step 5: finish
+ * Step 3: finish
  *
  * Remind the user to delete 'install' plugin.
  *
@@ -129,10 +124,17 @@ class InstallController extends InstallAppController {
  */
     function finish() {
         $this->pageTitle = __('Installation completed successfully', true);
-        touch(APP.'config'.DS.'installed.txt');
 
         if (isset($this->params['named']['delete'])) {
-            // delete APP/plugins/install
+            App::import('Core', 'Folder');
+            $this->folder = new Folder;
+            if ($this->folder->delete(APP.'plugins'.DS.'install')) {
+                $this->Session->setFlash(__('Installataion files deleted successfully.', true));
+                $this->redirect('/');
+                exit();
+            } else {
+                $this->Session->setFlash(__('Could not delete installation files.', true));
+            }
         }
     }
 /**

@@ -14,12 +14,15 @@
         Delete the installation directory <strong>/app/plugins/install</strong>.
     </p>
 
+    <br />
+    <br />
+
     <?php
-        /*echo $html->link(__('Click here to delete installation files', true), array(
+        echo $html->link(__('Click here to delete installation files', true), array(
             'plugin' => 'install',
             'controller' => 'install',
             'action' => 'finish',
             'delete' => 1,
-        ));*/
+        ));
     ?>
 </div>
