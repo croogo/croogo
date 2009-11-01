@@ -4,6 +4,7 @@ nbproject/
 # App
 app/config/database.php
 app/plugins/debug_kit/
+app/vendors/simpletest/
 
 # Cake cache
 app/tmp/cache/cake_*
