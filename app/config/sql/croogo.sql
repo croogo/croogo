@@ -143,6 +143,24 @@ CREATE TABLE IF NOT EXISTS `contacts` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `languages`
+--
+
+CREATE TABLE IF NOT EXISTS `languages` (
+  `id` int(11) NOT NULL auto_increment,
+  `title` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `native` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `alias` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL default '1',
+  `weight` int(11) default NULL,
+  `updated` datetime NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `links`
 --
 

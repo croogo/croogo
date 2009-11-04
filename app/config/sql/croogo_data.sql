@@ -227,6 +227,13 @@ INSERT INTO `contacts` (`id`, `title`, `alias`, `body`, `name`, `position`, `add
 (1, 'Contact', 'contact', '', '', '', '', '', '', '', '', '', '', 'you@your-site.com', 1, 0, 0, 0, 0, 1, 1, '2009-10-07 22:07:49', '2009-09-16 01:45:17');
 
 --
+-- Dumping data for table `languages`
+--
+
+INSERT INTO `languages` (`id`, `title`, `native`, `alias`, `status`, `weight`, `updated`, `created`) VALUES
+(1, 'English', 'English', 'en', 1, 1, '2009-11-02 21:37:38', '2009-11-02 20:52:00');
+
+--
 -- Dumping data for table `links`
 --
 

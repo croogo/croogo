@@ -63,6 +63,7 @@
                         echo '</li>';
                     }
                 ?>
+                <li><?php echo $html->link(__('Languages', true), array('plugin' => 0, 'controller' => 'languages', 'action' => 'index')); ?></li>
             </ul>
         </li>
 	</ul>
