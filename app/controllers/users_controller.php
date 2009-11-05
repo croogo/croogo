@@ -46,7 +46,10 @@ class UsersController extends AppController {
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The User could not be saved. Please, try again.', true));
+                unset($this->data['User']['password']);
             }
+        } else {
+            $this->data['User']['role_id'] = 2; // default Role: Registered
         }
         $roles = $this->User->Role->find('list');
         $this->set(compact('roles'));
