@@ -70,7 +70,7 @@ class CroogoComponent extends Object {
         App::import('Xml');
 
         if ($this->Session->check('Auth.User.id')) {
-            $this->roleId = $this->Session->read('Auth.User.id');
+            $this->roleId = $this->Session->read('Auth.User.role_id');
         }
 
         if (!isset($this->params['admin']) || $this->params['admin'] === false) {
