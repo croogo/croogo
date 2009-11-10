@@ -25,7 +25,10 @@ class NodesController extends AppController {
  * @var array
  * @access public
  */
-    var $uses = array('Node');
+    var $uses = array(
+        'Node',
+        'Language',
+    );
 
     function beforeFilter() {
         parent::beforeFilter();
@@ -60,7 +63,7 @@ class NodesController extends AppController {
             $this->set('filters', $filters);
         }
 
-        $nodes = $this->paginate();
+        $nodes = $this->paginate('Node');
         $this->set(compact('nodes', 'types', 'typeAliases'));
 
         if (isset($this->params['named']['links'])) {
@@ -168,6 +171,70 @@ class NodesController extends AppController {
             $terms[$vocabularyTitle] = $this->Node->Term->generatetreelist($termsConditions);
         }
         $this->set(compact('typeAlias', 'type', 'nodes', 'terms'));
+    }
+
+    function admin_translate($id = null) {
+        if (!$id && empty($this->data)) {
+            $this->Session->setFlash(__('Invalid content', true));
+            $this->redirect(array('action'=>'index'));
+            exit();
+        }
+
+        if (!isset($this->params['named']['locale'])) {
+            $this->Session->setFlash(__('Invalid locale', true));
+            $this->redirect(array('action' => 'index'));
+            exit();
+        }
+
+        $language = $this->Language->find('first', array(
+            'conditions' => array(
+                'Language.alias' => $this->params['named']['locale'],
+                'Language.status' => 1,
+            ),
+        ));
+        if (!isset($language['Language']['id'])) {
+            $this->Session->setFlash(__('Invalid Language', true));
+            $this->redirect(array('action' => 'index'));
+            exit();
+        }
+
+        $this->Node->id = $id;
+        $typeAlias = $this->Node->field('type');
+
+        $type = $this->Node->Term->Vocabulary->Type->findByAlias($typeAlias);
+        if (!isset($type['Type']['alias'])) {
+            $this->Session->setFlash(__('Content type does not exist.', true));
+            $this->redirect(array('action' => 'create'));
+            exit();
+        }
+
+        $this->pageTitle  = __('Translate content:', true) . ' ';
+        $this->pageTitle .= $language['Language']['title'] . ' (' . $language['Language']['native'] . ')';
+
+        $this->Node->type = $type['Type']['alias'];
+        $this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
+
+        $this->Node->locale = $this->params['named']['locale'];
+        $fields = $this->Node->getTranslationFields();
+        if (!empty($this->data)) {
+            if ($this->Node->saveTranslation($this->data)) {
+                $this->Session->setFlash(__($type['Type']['title'] . ' has been translated', true));
+                $this->redirect(array('action'=>'index'));
+            } else {
+                $this->Session->setFlash(__($type['Type']['title'] . ' could not be translated. Please, try again.', true));
+            }
+        }
+        if (empty($this->data)) {
+            $this->data = $this->Node->read(null, $id);
+        }
+        $this->set(compact('typeAlias', 'type', 'fields', 'language'));
+    }
+
+    function admin_translations($id = null) {
+        if ($id == null) {
+            $this->redirect(array('action' => 'index'));
+            exit();
+        }
     }
 
     function admin_update_paths() {

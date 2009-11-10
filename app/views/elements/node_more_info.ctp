@@ -32,7 +32,7 @@
         } else {
             $commentCount = $node['Node']['comment_count'] . ' ' . __('Comments', true);
         }
-        echo $html->link($commentCount, Router::url($node['Node']['url'], true) . '#comments');
+        echo $html->link($commentCount, $html->url($node['Node']['url'], true) . '#comments');
     }
 ?>
 </div>

@@ -32,7 +32,7 @@
             $paginator->sort('user_id'),
             $paginator->sort('status'),
             $paginator->sort('promote'),
-            $paginator->sort('created'),
+            //$paginator->sort('created'),
             __('Actions', true),
         ));
         echo $tableHeaders;
@@ -40,6 +40,7 @@
         $rows = array();
         foreach ($nodes AS $node) {
             $actions  = $html->link(__('Edit', true), array('action' => 'edit', $node['Node']['id']));
+            $actions .= $html->link(__('Translate', true), array('controller' => 'languages', 'action' => 'select', 'nodes', 'translate', $node['Node']['id']));
             $actions .= ' ' . $html->link(__('Delete', true), array('action' => 'delete', $node['Node']['id']), null, __('Are you sure?', true));
 
             $rows[] = array(
@@ -56,7 +57,7 @@
                 $node['User']['username'],
                 $layout->status($node['Node']['status']),
                 $layout->status($node['Node']['promote']),
-                $node['Node']['created'],
+                //$node['Node']['created'],
                 $actions,
             );
         }

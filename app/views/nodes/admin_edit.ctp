@@ -7,6 +7,23 @@
 ?>
 <div class="nodes form">
     <h2><?php echo $this->pageTitle; ?></h2>
+
+    <div class="actions">
+        <ul>
+            <li>
+            <?php
+                echo $html->link(__('Translate', true), array(
+                    'controller' => 'languages',
+                    'action'=>'select',
+                    'nodes',
+                    'translate',
+                    $this->data['Node']['id'],
+                ));
+            ?>
+            </li>
+        </ul>
+    </div>
+
     <?php echo $form->create('Node', array('url' => array('action' => 'edit')));?>
         <fieldset>
             <div class="tabs">

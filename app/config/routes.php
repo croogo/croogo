@@ -26,33 +26,34 @@
  * @lastmodified  $Date: 2008-12-18 18:16:01 -0800 (Thu, 18 Dec 2008) $
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+    include(APP.'config'.DS.'croogo_router.php');
     Router::parseExtensions('json', 'rss');
 
     // Basic
-    Router::connect('/', array('controller' => 'nodes', 'action' => 'promoted'));
-    Router::connect('/promoted/*', array('controller' => 'nodes', 'action' => 'promoted'));
-    Router::connect('/admin', array('admin' => true, 'controller' => 'settings', 'action' => 'dashboard'));
+    CroogoRouter::connect('/', array('controller' => 'nodes', 'action' => 'promoted'));
+    CroogoRouter::connect('/promoted/*', array('controller' => 'nodes', 'action' => 'promoted'));
+    CroogoRouter::connect('/admin', array('admin' => true, 'controller' => 'settings', 'action' => 'dashboard'));
 
     // Blog
-    Router::connect('/blog', array('controller' => 'nodes', 'action' => 'index', 'type' => 'blog'));
-    Router::connect('/blog/archives/*', array('controller' => 'nodes', 'action' => 'index', 'type' => 'blog'));
-    Router::connect('/blog/:slug', array('controller' => 'nodes', 'action' => 'view', 'type' => 'blog'));
-    Router::connect('/blog/term/:slug/*', array('controller' => 'nodes', 'action' => 'term', 'type' => 'blog'));
+    CroogoRouter::connect('/blog', array('controller' => 'nodes', 'action' => 'index', 'type' => 'blog'));
+    CroogoRouter::connect('/blog/archives/*', array('controller' => 'nodes', 'action' => 'index', 'type' => 'blog'));
+    CroogoRouter::connect('/blog/:slug', array('controller' => 'nodes', 'action' => 'view', 'type' => 'blog'));
+    CroogoRouter::connect('/blog/term/:slug/*', array('controller' => 'nodes', 'action' => 'term', 'type' => 'blog'));
 
     // Node
-    Router::connect('/node', array('controller' => 'nodes', 'action' => 'index', 'type' => 'node'));
-    Router::connect('/node/archives/*', array('controller' => 'nodes', 'action' => 'index', 'type' => 'node'));
-    Router::connect('/node/:slug', array('controller' => 'nodes', 'action' => 'view', 'type' => 'node'));
-    Router::connect('/node/term/:slug/*', array('controller' => 'nodes', 'action' => 'term', 'type' => 'node'));
+    CroogoRouter::connect('/node', array('controller' => 'nodes', 'action' => 'index', 'type' => 'node'));
+    CroogoRouter::connect('/node/archives/*', array('controller' => 'nodes', 'action' => 'index', 'type' => 'node'));
+    CroogoRouter::connect('/node/:slug', array('controller' => 'nodes', 'action' => 'view', 'type' => 'node'));
+    CroogoRouter::connect('/node/term/:slug/*', array('controller' => 'nodes', 'action' => 'term', 'type' => 'node'));
 
     // Page
-    Router::connect('/page/:slug', array('controller' => 'nodes', 'action' => 'view', 'type' => 'page'));
-    Router::connect('/about', array('controller' => 'nodes', 'action' => 'view', 'type' => 'page', 'slug' => 'about'));
+    CroogoRouter::connect('/page/:slug', array('controller' => 'nodes', 'action' => 'view', 'type' => 'page'));
+    CroogoRouter::connect('/about', array('controller' => 'nodes', 'action' => 'view', 'type' => 'page', 'slug' => 'about'));
 
     // Users
-    Router::connect('/register', array('controller' => 'users', 'action' => 'add'));
-    Router::connect('/user/:username', array('controller' => 'users', 'action' => 'view'), array('pass' => array('username')));
+    CroogoRouter::connect('/register', array('controller' => 'users', 'action' => 'add'));
+    CroogoRouter::connect('/user/:username', array('controller' => 'users', 'action' => 'view'), array('pass' => array('username')));
 
     // Contact
-    Router::connect('/contact', array('controller' => 'contacts', 'action' => 'view', 'contact'));
+    CroogoRouter::connect('/contact', array('controller' => 'contacts', 'action' => 'view', 'contact'));
 ?>

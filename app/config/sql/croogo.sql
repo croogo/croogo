@@ -143,6 +143,26 @@ CREATE TABLE IF NOT EXISTS `contacts` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `i18n`
+--
+
+CREATE TABLE IF NOT EXISTS `i18n` (
+  `id` int(10) NOT NULL auto_increment,
+  `locale` varchar(6) collate utf8_unicode_ci NOT NULL,
+  `model` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `foreign_key` int(10) NOT NULL,
+  `field` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `content` mediumtext collate utf8_unicode_ci,
+  PRIMARY KEY  (`id`),
+  KEY `locale` (`locale`),
+  KEY `model` (`model`),
+  KEY `row_id` (`foreign_key`),
+  KEY `field` (`field`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `languages`
 --
 

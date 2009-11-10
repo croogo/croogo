@@ -1,0 +1,2009 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from file: Revision: 7945 \app\webroot\test.php
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2009-11-10 04:17+0700\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: \app_controller.php:55
+msgid "Site down for maintenance"
+msgstr ""
+
+#: \controllers\attachments_controller.php:70
+#: \views\elements\admin\navigation.ctp:30
+msgid "Attachments"
+msgstr ""
+
+#: \controllers\attachments_controller.php:78
+msgid "Add Attachment"
+msgstr ""
+
+#: \controllers\attachments_controller.php:116;138
+msgid "The Attachment has been saved"
+msgstr ""
+
+#: \controllers\attachments_controller.php:124;141
+msgid "The Attachment could not be saved. Please, try again."
+msgstr ""
+
+#: \controllers\attachments_controller.php:130
+msgid "Edit Attachment"
+msgstr ""
+
+#: \controllers\attachments_controller.php:133
+msgid "Invalid Attachment"
+msgstr ""
+
+#: \controllers\attachments_controller.php:151;166
+msgid "Invalid id for Attachment"
+msgstr ""
+
+#: \controllers\attachments_controller.php:162
+msgid "Attachment deleted"
+msgstr ""
+
+#: \controllers\blocks_controller.php:31
+#: \views\elements\admin\navigation.ctp:21;23
+msgid "Blocks"
+msgstr ""
+
+#: \controllers\blocks_controller.php:39
+#: \views\blocks\admin_add.ctp:2
+msgid "Add Block"
+msgstr ""
+
+#: \controllers\blocks_controller.php:46;68
+msgid "The Block has been saved"
+msgstr ""
+
+#: \controllers\blocks_controller.php:49;71
+msgid "The Block could not be saved. Please, try again."
+msgstr ""
+
+#: \controllers\blocks_controller.php:58
+#: \views\blocks\admin_edit.ctp:2
+msgid "Edit Block"
+msgstr ""
+
+#: \controllers\blocks_controller.php:61
+msgid "Invalid Block"
+msgstr ""
+
+#: \controllers\blocks_controller.php:89
+msgid "Invalid id for Block"
+msgstr ""
+
+#: \controllers\blocks_controller.php:93
+msgid "Block deleted"
+msgstr ""
+
+#: \controllers\blocks_controller.php:100
+#: \controllers\languages_controller.php:85
+#: \controllers\links_controller.php:142
+#: \controllers\settings_controller.php:131
+#: \controllers\terms_controller.php:112
+msgid "Moved up succuessfully"
+msgstr ""
+
+#: \controllers\blocks_controller.php:102
+#: \controllers\languages_controller.php:87
+#: \controllers\links_controller.php:144
+#: \controllers\settings_controller.php:133
+#: \controllers\terms_controller.php:114
+msgid "Could not move up"
+msgstr ""
+
+#: \controllers\blocks_controller.php:110
+#: \controllers\languages_controller.php:95
+#: \controllers\links_controller.php:152
+#: \controllers\settings_controller.php:141
+#: \controllers\terms_controller.php:122
+msgid "Moved down succuessfully"
+msgstr ""
+
+#: \controllers\blocks_controller.php:112
+#: \controllers\languages_controller.php:97
+#: \controllers\links_controller.php:154
+#: \controllers\settings_controller.php:143
+#: \controllers\terms_controller.php:124
+msgid "Could not move down"
+msgstr ""
+
+#: \controllers\blocks_controller.php:128
+#: \controllers\comments_controller.php:100
+#: \controllers\links_controller.php:170
+#: \controllers\messages_controller.php:100
+#: \controllers\nodes_controller.php:312
+#: \controllers\terms_controller.php:140
+msgid "No items selected."
+msgstr ""
+
+#: \controllers\blocks_controller.php:135
+msgid "Blocks deleted."
+msgstr ""
+
+#: \controllers\blocks_controller.php:138
+msgid "Blocks published"
+msgstr ""
+
+#: \controllers\blocks_controller.php:141
+msgid "Blocks unpublished"
+msgstr ""
+
+#: \controllers\blocks_controller.php:143
+#: \controllers\comments_controller.php:115
+#: \controllers\links_controller.php:185
+#: \controllers\messages_controller.php:115
+#: \controllers\nodes_controller.php:333
+#: \controllers\terms_controller.php:155
+#: \controllers\users_controller.php:163;206;218
+msgid "An error occurred."
+msgstr ""
+
+#: \controllers\comments_controller.php:31;123
+#: \views\elements\comments.ctp:7
+#: \views\elements\node_more_info.ctp:33
+#: \views\elements\admin\navigation.ctp:10
+#: \views\nodes\admin_add.ctp:16
+#: \views\nodes\admin_edit.ctp:33
+#: \views\types\admin_add.ctp:10
+#: \views\types\admin_edit.ctp:11
+msgid "Comments"
+msgstr ""
+
+#: \controllers\comments_controller.php:50
+#: \views\comments\admin_edit.ctp:17
+#: \views\comments\admin_index.ctp:14
+#: \views\elements\admin\nodes_filter.ctp:24
+#: \views\nodes\admin_add.ctp:73
+#: \views\nodes\admin_edit.ctp:89
+msgid "Published"
+msgstr ""
+
+#: \controllers\comments_controller.php:52
+#: \views\comments\admin_index.ctp:15
+msgid "Approval"
+msgstr ""
+
+#: \controllers\comments_controller.php:60
+msgid "Edit Comment"
+msgstr ""
+
+#: \controllers\comments_controller.php:63
+msgid "Invalid Comment"
+msgstr ""
+
+#: \controllers\comments_controller.php:68
+msgid "The Comment has been saved"
+msgstr ""
+
+#: \controllers\comments_controller.php:71
+msgid "The Comment could not be saved. Please, try again."
+msgstr ""
+
+#: \controllers\comments_controller.php:81
+msgid "Invalid id for Comment"
+msgstr ""
+
+#: \controllers\comments_controller.php:85
+msgid "Comment deleted"
+msgstr ""
+
+#: \controllers\comments_controller.php:107
+msgid "Comments deleted."
+msgstr ""
+
+#: \controllers\comments_controller.php:110
+msgid "Comments published"
+msgstr ""
+
+#: \controllers\comments_controller.php:113
+msgid "Comments unpublished"
+msgstr ""
+
+#: \controllers\comments_controller.php:142;154
+msgid "Invalid Node"
+msgstr ""
+
+#: \controllers\comments_controller.php:162
+msgid "Maximum level reached. You cannot reply to that comment."
+msgstr ""
+
+#: \controllers\comments_controller.php:211
+msgid "Your comment has been added successfully."
+msgstr ""
+
+#: \controllers\comments_controller.php:213
+msgid "Your comment will appear after moderation."
+msgstr ""
+
+#: \controllers\comments_controller.php:219
+msgid "New comment posted under"
+msgstr ""
+
+#: \controllers\comments_controller.php:242
+msgid "Sorry, the comment appears to be spam."
+msgstr ""
+
+#: \controllers\comments_controller.php:255
+#: \controllers\contacts_controller.php:159
+msgid "Invalid captcha entry"
+msgstr ""
+
+#: \controllers\contacts_controller.php:31
+#: \views\elements\admin\navigation.ctp:35;37
+msgid "Contacts"
+msgstr ""
+
+#: \controllers\contacts_controller.php:39
+msgid "Add Contact"
+msgstr ""
+
+#: \controllers\contacts_controller.php:44;61
+msgid "The Contact has been saved"
+msgstr ""
+
+#: \controllers\contacts_controller.php:47;64
+msgid "The Contact could not be saved. Please, try again."
+msgstr ""
+
+#: \controllers\contacts_controller.php:53
+msgid "Edit Contact"
+msgstr ""
+
+#: \controllers\contacts_controller.php:56
+msgid "Invalid Contact"
+msgstr ""
+
+#: \controllers\contacts_controller.php:74
+msgid "Invalid id for Contact"
+msgstr ""
+
+#: \controllers\contacts_controller.php:78
+msgid "Contact deleted"
+msgstr ""
+
+#: \controllers\contacts_controller.php:115
+msgid "Your message has been received..."
+msgstr ""
+
+#: \controllers\contacts_controller.php:146
+msgid "Sorry, the message appears to be spam."
+msgstr ""
+
+#: \controllers\filemanager_controller.php:86
+msgid "File saved successfully"
+msgstr ""
+
+#: \controllers\filemanager_controller.php:96
+#: \views\attachments\admin_add.ctp:12
+msgid "Upload"
+msgstr ""
+
+#: \controllers\filemanager_controller.php:110
+msgid "File uploaded successfully."
+msgstr ""
+
+#: \controllers\filemanager_controller.php:126
+msgid "File deleted"
+msgstr ""
+
+#: \controllers\filemanager_controller.php:128;151;199;224
+msgid "An error occured"
+msgstr ""
+
+#: \controllers\filemanager_controller.php:149
+msgid "Directory deleted"
+msgstr ""
+
+#: \controllers\filemanager_controller.php:183
+msgid "New Directory"
+msgstr ""
+
+#: \controllers\filemanager_controller.php:195
+msgid "Directory created successfully."
+msgstr ""
+
+#: \controllers\filemanager_controller.php:207
+msgid "New File"
+msgstr ""
+
+#: \controllers\filemanager_controller.php:220
+msgid "File created successfully."
+msgstr ""
+
+#: \controllers\languages_controller.php:31
+#: \views\elements\admin\navigation.ctp:66
+msgid "Languages"
+msgstr ""
+
+#: \controllers\languages_controller.php:39
+msgid "Add Language"
+msgstr ""
+
+#: \controllers\languages_controller.php:44;61
+msgid "The Language has been saved"
+msgstr ""
+
+#: \controllers\languages_controller.php:47;64
+msgid "The Language could not be saved. Please, try again."
+msgstr ""
+
+#: \controllers\languages_controller.php:53
+msgid "Edit Language"
+msgstr ""
+
+#: \controllers\languages_controller.php:56
+#: \controllers\nodes_controller.php:196
+msgid "Invalid Language"
+msgstr ""
+
+#: \controllers\languages_controller.php:74
+msgid "Invalid id for Language"
+msgstr ""
+
+#: \controllers\languages_controller.php:78
+msgid "Language deleted"
+msgstr ""
+
+#: \controllers\languages_controller.php:111
+msgid "Select a language"
+msgstr ""
+
+#: \controllers\links_controller.php:54
+msgid "Links"
+msgstr ""
+
+#: \controllers\links_controller.php:76
+msgid "Add Link"
+msgstr ""
+
+#: \controllers\links_controller.php:82;108
+msgid "The Link has been saved"
+msgstr ""
+
+#: \controllers\links_controller.php:85;111
+msgid "The Link could not be saved. Please, try again."
+msgstr ""
+
+#: \controllers\links_controller.php:99
+msgid "Edit Link"
+msgstr ""
+
+#: \controllers\links_controller.php:102
+msgid "Invalid Link"
+msgstr ""
+
+#: \controllers\links_controller.php:131
+msgid "Invalid id for Link"
+msgstr ""
+
+#: \controllers\links_controller.php:135
+msgid "Link deleted"
+msgstr ""
+
+#: \controllers\links_controller.php:177
+msgid "Links deleted."
+msgstr ""
+
+#: \controllers\links_controller.php:180
+msgid "Links published"
+msgstr ""
+
+#: \controllers\links_controller.php:183
+msgid "Links unpublished"
+msgstr ""
+
+#: \controllers\menus_controller.php:31
+#: \views\elements\admin\navigation.ctp:14;16
+msgid "Menus"
+msgstr ""
+
+#: \controllers\menus_controller.php:39
+#: \views\elements\admin\navigation.ctp:17
+msgid "Add Menu"
+msgstr ""
+
+#: \controllers\menus_controller.php:44;61
+msgid "The Menu has been saved"
+msgstr ""
+
+#: \controllers\menus_controller.php:47;64
+msgid "The Menu could not be saved. Please, try again."
+msgstr ""
+
+#: \controllers\menus_controller.php:53
+msgid "Edit Menu"
+msgstr ""
+
+#: \controllers\menus_controller.php:56
+msgid "Invalid Menu"
+msgstr ""
+
+#: \controllers\menus_controller.php:74
+msgid "Invalid id for Menu"
+msgstr ""
+
+#: \controllers\menus_controller.php:78
+msgid "Menu deleted"
+msgstr ""
+
+#: \controllers\messages_controller.php:31
+#: \views\elements\admin\navigation.ctp:38
+msgid "Messages"
+msgstr ""
+
+#: \controllers\messages_controller.php:50
+#: \views\messages\admin_index.ctp:7
+msgid "Read"
+msgstr ""
+
+#: \controllers\messages_controller.php:52
+#: \views\messages\admin_index.ctp:6
+msgid "Unread"
+msgstr ""
+
+#: \controllers\messages_controller.php:60
+msgid "Edit Message"
+msgstr ""
+
+#: \controllers\messages_controller.php:63
+msgid "Invalid Message"
+msgstr ""
+
+#: \controllers\messages_controller.php:68
+msgid "The Message has been saved"
+msgstr ""
+
+#: \controllers\messages_controller.php:71
+msgid "The Message could not be saved. Please, try again."
+msgstr ""
+
+#: \controllers\messages_controller.php:81
+msgid "Invalid id for Message"
+msgstr ""
+
+#: \controllers\messages_controller.php:85
+msgid "Message deleted"
+msgstr ""
+
+#: \controllers\messages_controller.php:107
+msgid "Messages deleted."
+msgstr ""
+
+#: \controllers\messages_controller.php:110
+msgid "Messages marked as read"
+msgstr ""
+
+#: \controllers\messages_controller.php:113
+msgid "Messages marked as unread"
+msgstr ""
+
+#: \controllers\nodes_controller.php:45
+#: \views\elements\admin\navigation.ctp:4
+msgid "Content"
+msgstr ""
+
+#: \controllers\nodes_controller.php:76
+#: \views\elements\admin\navigation.ctp:7
+#: \views\nodes\admin_index.ctp:9
+msgid "Create content"
+msgstr ""
+
+#: \controllers\nodes_controller.php:89;137;206
+msgid "Content type does not exist."
+msgstr ""
+
+#: \controllers\nodes_controller.php:94
+msgid "Create content: "
+msgstr ""
+
+#: \controllers\nodes_controller.php:128;178;438;451
+msgid "Invalid content"
+msgstr ""
+
+#: \controllers\nodes_controller.php:142
+msgid "Edit content: "
+msgstr ""
+
+#: \controllers\nodes_controller.php:184
+msgid "Invalid locale"
+msgstr ""
+
+#: \controllers\nodes_controller.php:211
+msgid "Translate content:"
+msgstr ""
+
+#: \controllers\nodes_controller.php:273
+msgid "Paths updated."
+msgstr ""
+
+#: \controllers\nodes_controller.php:280
+msgid "Invalid id for Node"
+msgstr ""
+
+#: \controllers\nodes_controller.php:284
+msgid "Node deleted"
+msgstr ""
+
+#: \controllers\nodes_controller.php:319
+msgid "Nodes deleted."
+msgstr ""
+
+#: \controllers\nodes_controller.php:322
+msgid "Nodes published"
+msgstr ""
+
+#: \controllers\nodes_controller.php:325
+msgid "Nodes unpublished"
+msgstr ""
+
+#: \controllers\nodes_controller.php:328
+msgid "Nodes promoted"
+msgstr ""
+
+#: \controllers\nodes_controller.php:331
+msgid "Nodes unpromoted"
+msgstr ""
+
+#: \controllers\nodes_controller.php:353;386;412
+msgid "Invalid content type."
+msgstr ""
+
+#: \controllers\nodes_controller.php:369
+msgid "Invalid Term."
+msgstr ""
+
+#: \controllers\nodes_controller.php:400
+msgid "Nodes"
+msgstr ""
+
+#: \controllers\regions_controller.php:31
+msgid "Region"
+msgstr ""
+
+#: \controllers\regions_controller.php:39
+msgid "Add Region"
+msgstr ""
+
+#: \controllers\regions_controller.php:44;61
+msgid "The Region has been saved"
+msgstr ""
+
+#: \controllers\regions_controller.php:47;64
+msgid "The Region could not be saved. Please, try again."
+msgstr ""
+
+#: \controllers\regions_controller.php:53
+msgid "Edit Region"
+msgstr ""
+
+#: \controllers\regions_controller.php:56
+msgid "Invalid Region"
+msgstr ""
+
+#: \controllers\regions_controller.php:74
+msgid "Invalid id for Region"
+msgstr ""
+
+#: \controllers\regions_controller.php:78
+msgid "Region deleted"
+msgstr ""
+
+#: \controllers\roles_controller.php:31
+#: \views\elements\admin\navigation.ctp:45
+msgid "Roles"
+msgstr ""
+
+#: \controllers\roles_controller.php:39
+msgid "Add Role"
+msgstr ""
+
+#: \controllers\roles_controller.php:44;61
+msgid "The Role has been saved"
+msgstr ""
+
+#: \controllers\roles_controller.php:47;64
+msgid "The Role could not be saved. Please, try again."
+msgstr ""
+
+#: \controllers\roles_controller.php:53
+msgid "Edit Role"
+msgstr ""
+
+#: \controllers\roles_controller.php:56
+msgid "Invalid Role"
+msgstr ""
+
+#: \controllers\roles_controller.php:74
+msgid "Invalid id for Role"
+msgstr ""
+
+#: \controllers\roles_controller.php:78
+msgid "Role deleted"
+msgstr ""
+
+#: \controllers\settings_controller.php:38
+msgid "Dashboard"
+msgstr ""
+
+#: \controllers\settings_controller.php:54
+msgid "Invalid Setting."
+msgstr ""
+
+#: \controllers\settings_controller.php:66;83
+msgid "The Setting has been saved"
+msgstr ""
+
+#: \controllers\settings_controller.php:69;86
+msgid "The Setting could not be saved. Please, try again."
+msgstr ""
+
+#: \controllers\settings_controller.php:78
+msgid "Invalid Setting"
+msgstr ""
+
+#: \controllers\settings_controller.php:96
+msgid "Invalid id for Setting"
+msgstr ""
+
+#: \controllers\settings_controller.php:100
+msgid "Setting deleted"
+msgstr ""
+
+#: \controllers\settings_controller.php:106
+#: \views\elements\admin\navigation.ctp:57
+#: \views\settings\admin_add.ctp:7
+#: \views\settings\admin_edit.ctp:7
+msgid "Settings"
+msgstr ""
+
+#: \controllers\settings_controller.php:109
+msgid "Settings updated successfully"
+msgstr ""
+
+#: \controllers\settings_controller.php:123
+msgid "Invalid Setting key"
+msgstr ""
+
+#: \controllers\terms_controller.php:40
+#: \views\nodes\admin_add.ctp:15
+#: \views\nodes\admin_edit.ctp:32
+msgid "Terms"
+msgstr ""
+
+#: \controllers\terms_controller.php:56
+msgid "Add Term"
+msgstr ""
+
+#: \controllers\terms_controller.php:61;85
+msgid "The Term has been saved"
+msgstr ""
+
+#: \controllers\terms_controller.php:64;88
+msgid "The Term could not be saved. Please, try again."
+msgstr ""
+
+#: \controllers\terms_controller.php:77
+msgid "Edit Term"
+msgstr ""
+
+#: \controllers\terms_controller.php:80
+msgid "Invalid Term"
+msgstr ""
+
+#: \controllers\terms_controller.php:101
+msgid "Invalid id for Term"
+msgstr ""
+
+#: \controllers\terms_controller.php:105
+msgid "Term deleted"
+msgstr ""
+
+#: \controllers\terms_controller.php:147
+msgid "Terms deleted."
+msgstr ""
+
+#: \controllers\terms_controller.php:150
+msgid "Terms published"
+msgstr ""
+
+#: \controllers\terms_controller.php:153
+msgid "Terms unpublished"
+msgstr ""
+
+#: \controllers\themes_controller.php:37
+#: \views\elements\admin\navigation.ctp:50;52
+msgid "Themes"
+msgstr ""
+
+#: \controllers\themes_controller.php:58
+msgid "Theme activated."
+msgstr ""
+
+#: \controllers\themes_controller.php:64
+#: \views\elements\admin\navigation.ctp:53
+msgid "Add a new theme"
+msgstr ""
+
+#: \controllers\types_controller.php:31
+#: \views\types\admin_add.ctp:7
+#: \views\types\admin_edit.ctp:8
+msgid "Type"
+msgstr ""
+
+#: \controllers\types_controller.php:39
+msgid "Add Type"
+msgstr ""
+
+#: \controllers\types_controller.php:44;64
+msgid "The Type has been saved"
+msgstr ""
+
+#: \controllers\types_controller.php:47;67
+msgid "The Type could not be saved. Please, try again."
+msgstr ""
+
+#: \controllers\types_controller.php:56
+msgid "Edit Type"
+msgstr ""
+
+#: \controllers\types_controller.php:59
+msgid "Invalid Type"
+msgstr ""
+
+#: \controllers\types_controller.php:80
+msgid "Invalid id for Type"
+msgstr ""
+
+#: \controllers\types_controller.php:84
+msgid "Tyoe deleted"
+msgstr ""
+
+#: \controllers\users_controller.php:35;119
+#: \views\elements\admin\navigation.ctp:42;44
+#: \views\users\admin_index.ctp:2
+msgid "Users"
+msgstr ""
+
+#: \controllers\users_controller.php:45;65
+msgid "The User has been saved"
+msgstr ""
+
+#: \controllers\users_controller.php:48;68;141
+msgid "The User could not be saved. Please, try again."
+msgstr ""
+
+#: \controllers\users_controller.php:60;80
+msgid "Invalid User"
+msgstr ""
+
+#: \controllers\users_controller.php:85
+msgid "Password has been reset."
+msgstr ""
+
+#: \controllers\users_controller.php:88
+msgid "Password could not be reset. Please, try again."
+msgstr ""
+
+#: \controllers\users_controller.php:98
+msgid "Invalid id for User"
+msgstr ""
+
+#: \controllers\users_controller.php:102
+msgid "User deleted"
+msgstr ""
+
+#: \controllers\users_controller.php:108
+msgid "Admin Login"
+msgstr ""
+
+#: \controllers\users_controller.php:113;244
+msgid "Log out successful."
+msgstr ""
+
+#: \controllers\users_controller.php:123
+msgid "Register"
+msgstr ""
+
+#: \controllers\users_controller.php:138
+msgid "You have successfully registered an account. An email has been sent with further instructions."
+msgstr ""
+
+#: \controllers\users_controller.php:161
+msgid "Account activated successfully."
+msgstr ""
+
+#: \controllers\users_controller.php:173
+msgid "Forgot Password"
+msgstr ""
+
+#: \controllers\users_controller.php:178
+msgid "Invalid username."
+msgstr ""
+
+#: \controllers\users_controller.php:190;203
+msgid "Reset Password"
+msgstr ""
+
+#: \controllers\users_controller.php:193
+msgid "An email has been sent with instructions for resetting your password."
+msgstr ""
+
+#: \controllers\users_controller.php:197;232
+msgid "An error occurred. Please try again."
+msgstr ""
+
+#: \controllers\users_controller.php:228
+msgid "Your password has been reset successfully."
+msgstr ""
+
+#: \controllers\users_controller.php:240
+msgid "Log in"
+msgstr ""
+
+#: \controllers\users_controller.php:252
+msgid "Invalid User."
+msgstr ""
+
+#: \controllers\vocabularies_controller.php:31
+#: \views\vocabularies\admin_add.ctp:7
+#: \views\vocabularies\admin_edit.ctp:8
+msgid "Vocabulary"
+msgstr ""
+
+#: \controllers\vocabularies_controller.php:39
+msgid "Add Vocabulary"
+msgstr ""
+
+#: \controllers\vocabularies_controller.php:44;64
+msgid "The Vocabulary has been saved"
+msgstr ""
+
+#: \controllers\vocabularies_controller.php:47;67
+msgid "The Vocabulary could not be saved. Please, try again."
+msgstr ""
+
+#: \controllers\vocabularies_controller.php:56
+msgid "Edit Vocabulary"
+msgstr ""
+
+#: \controllers\vocabularies_controller.php:59
+msgid "Invalid Vocabulary"
+msgstr ""
+
+#: \controllers\vocabularies_controller.php:80
+msgid "Invalid id for Vocabulary"
+msgstr ""
+
+#: \controllers\vocabularies_controller.php:84
+msgid "Vocabulary deleted"
+msgstr ""
+
+#: \models\behaviors\croogo_translate.php:71
+msgid "Datasource %s for CroogoTranslateBehavior of model %s is not connected"
+msgstr ""
+
+#: \models\behaviors\croogo_translate.php:470
+msgid "Association %s is already binded to model %s"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_acos_controller.php:19
+#: \plugins\acl\views\acl_acos\admin_index.ctp:2
+msgid "Acos"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_acos_controller.php:26
+#: \plugins\acl\views\acl_acos\admin_add.ctp:2
+#: \plugins\acl\views\acl_acos\admin_edit.ctp:2
+msgid "Add Aco"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_acos_controller.php:31;48
+msgid "The Aco has been saved"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_acos_controller.php:34;51
+msgid "The Aco could not be saved. Please, try again."
+msgstr ""
+
+#: \plugins\acl\controllers\acl_acos_controller.php:40
+msgid "Edit Aco"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_acos_controller.php:43
+msgid "Invalid Aco"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_acos_controller.php:61
+msgid "Invalid id for Aco"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_acos_controller.php:65
+msgid "Aco deleted"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_actions_controller.php:20
+#: \plugins\acl\views\acl_acos\admin_index.ctp:18
+#: \plugins\acl\views\acl_actions\admin_index.ctp:20
+#: \plugins\acl\views\acl_aros\admin_index.ctp:18
+#: \views\attachments\admin_browse.ctp:19
+#: \views\attachments\admin_index.ctp:17
+#: \views\blocks\admin_index.ctp:20
+#: \views\comments\admin_index.ctp:31
+#: \views\contacts\admin_index.ctp:17
+#: \views\filemanager\admin_browse.ctp:30
+#: \views\languages\admin_index.ctp:18
+#: \views\links\admin_index.ctp:26
+#: \views\menus\admin_index.ctp:17
+#: \views\messages\admin_index.ctp:30
+#: \views\nodes\admin_index.ctp:36
+#: \views\regions\admin_index.ctp:16
+#: \views\roles\admin_index.ctp:16
+#: \views\settings\admin_index.ctp:17
+#: \views\terms\admin_index.ctp:25
+#: \views\types\admin_index.ctp:17
+#: \views\users\admin_index.ctp:18
+#: \views\vocabularies\admin_index.ctp:16
+msgid "Actions"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_actions_controller.php:32
+msgid "Add Action"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_actions_controller.php:72
+msgid "Edit Action"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_actions_controller.php:75
+msgid "Invalid Action"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_actions_controller.php:80
+msgid "The Action has been saved"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_actions_controller.php:83
+msgid "The Action could not be saved. Please, try again."
+msgstr ""
+
+#: \plugins\acl\controllers\acl_actions_controller.php:110;121
+msgid "Invalid id for Action"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_actions_controller.php:114
+msgid "Action deleted"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_actions_controller.php:126
+msgid "Action moved up"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_actions_controller.php:131
+msgid "Action moved down"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_aros_controller.php:19
+#: \plugins\acl\views\acl_aros\admin_index.ctp:2
+msgid "Aros"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_aros_controller.php:26
+#: \plugins\acl\views\acl_aros\admin_add.ctp:2
+#: \plugins\acl\views\acl_aros\admin_edit.ctp:2
+msgid "Add Aro"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_aros_controller.php:31;48
+msgid "The Aro has been saved"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_aros_controller.php:34;51
+msgid "The Aro could not be saved. Please, try again."
+msgstr ""
+
+#: \plugins\acl\controllers\acl_aros_controller.php:40
+msgid "Edit Aro"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_aros_controller.php:43
+msgid "Invalid Aro"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_aros_controller.php:61
+msgid "Invalid id for Aro"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_aros_controller.php:65
+msgid "Aro deleted"
+msgstr ""
+
+#: \plugins\acl\controllers\acl_permissions_controller.php:19
+#: \views\elements\admin\navigation.ctp:46
+msgid "Permissions"
+msgstr ""
+
+#: \plugins\acl\views\acl_acos\admin_index.ctp:6
+msgid "New Aco"
+msgstr ""
+
+#: \plugins\acl\views\acl_acos\admin_index.ctp:24
+#: \plugins\acl\views\acl_actions\admin_index.ctp:41
+#: \plugins\acl\views\acl_aros\admin_index.ctp:24
+#: \views\attachments\admin_browse.ctp:25
+#: \views\attachments\admin_index.ctp:23
+#: \views\blocks\admin_index.ctp:28
+#: \views\comments\admin_index.ctp:37
+#: \views\contacts\admin_index.ctp:25
+#: \views\languages\admin_index.ctp:26
+#: \views\links\admin_index.ctp:34
+#: \views\menus\admin_index.ctp:24
+#: \views\messages\admin_index.ctp:36
+#: \views\nodes\admin_index.ctp:42
+#: \views\regions\admin_index.ctp:22
+#: \views\roles\admin_index.ctp:22
+#: \views\settings\admin_index.ctp:25
+#: \views\terms\admin_index.ctp:33
+#: \views\types\admin_index.ctp:23
+#: \views\users\admin_index.ctp:24
+#: \views\vocabularies\admin_index.ctp:23
+msgid "Edit"
+msgstr ""
+
+#: \plugins\acl\views\acl_acos\admin_index.ctp:25
+#: \plugins\acl\views\acl_actions\admin_index.ctp:42
+#: \plugins\acl\views\acl_aros\admin_index.ctp:25
+#: \views\attachments\admin_browse.ctp:26
+#: \views\attachments\admin_index.ctp:24
+#: \views\blocks\admin_index.ctp:29;53
+#: \views\comments\admin_index.ctp:38;70
+#: \views\contacts\admin_index.ctp:26
+#: \views\filemanager\admin_browse.ctp:37;51
+#: \views\languages\admin_index.ctp:27
+#: \views\links\admin_index.ctp:35;57
+#: \views\menus\admin_index.ctp:25
+#: \views\messages\admin_index.ctp:37;62
+#: \views\nodes\admin_index.ctp:44;79
+#: \views\regions\admin_index.ctp:23
+#: \views\roles\admin_index.ctp:23
+#: \views\settings\admin_index.ctp:26
+#: \views\terms\admin_index.ctp:34;55
+#: \views\types\admin_index.ctp:24
+#: \views\users\admin_index.ctp:25
+#: \views\vocabularies\admin_index.ctp:24
+msgid "Delete"
+msgstr ""
+
+#: \plugins\acl\views\acl_acos\admin_index.ctp:25
+#: \plugins\acl\views\acl_actions\admin_index.ctp:42
+#: \plugins\acl\views\acl_aros\admin_index.ctp:25
+#: \views\attachments\admin_browse.ctp:26
+#: \views\attachments\admin_index.ctp:24
+#: \views\blocks\admin_index.ctp:29
+#: \views\comments\admin_index.ctp:38
+#: \views\contacts\admin_index.ctp:26
+#: \views\languages\admin_index.ctp:27
+#: \views\links\admin_index.ctp:35
+#: \views\menus\admin_index.ctp:25
+#: \views\messages\admin_index.ctp:37
+#: \views\nodes\admin_index.ctp:44
+#: \views\regions\admin_index.ctp:23
+#: \views\roles\admin_index.ctp:23
+#: \views\settings\admin_index.ctp:26
+#: \views\terms\admin_index.ctp:34
+#: \views\types\admin_index.ctp:24
+#: \views\users\admin_index.ctp:25
+#: \views\vocabularies\admin_index.ctp:24
+msgid "Are you sure?"
+msgstr ""
+
+#: \plugins\acl\views\acl_acos\admin_index.ctp:44
+#: \plugins\acl\views\acl_aros\admin_index.ctp:44
+#: \views\attachments\admin_browse.ctp:56
+#: \views\attachments\admin_index.ctp:50
+#: \views\blocks\admin_index.ctp:63
+#: \views\comments\admin_index.ctp:80
+#: \views\contacts\admin_index.ctp:49
+#: \views\languages\admin_index.ctp:46
+#: \views\menus\admin_index.ctp:43
+#: \views\messages\admin_index.ctp:72
+#: \views\nodes\admin_index.ctp:89
+#: \views\regions\admin_index.ctp:40
+#: \views\roles\admin_index.ctp:40
+#: \views\settings\admin_index.ctp:53
+#: \views\types\admin_index.ctp:42
+#: \views\users\admin_index.ctp:44
+#: \views\vocabularies\admin_index.ctp:41
+msgid "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
+msgstr ""
+
+#: \plugins\acl\views\acl_actions\admin_add.ctp:9
+#: \plugins\acl\views\acl_actions\admin_edit.ctp:11
+msgid "Choose none if the Aco is a controller."
+msgstr ""
+
+#: \plugins\acl\views\acl_actions\admin_index.ctp:10
+msgid "New Action"
+msgstr ""
+
+#: \plugins\acl\views\acl_actions\admin_index.ctp:11
+#: \plugins\acl\views\acl_permissions\admin_index.ctp:9
+msgid "Generate Actions"
+msgstr ""
+
+#: \plugins\acl\views\acl_actions\admin_index.ctp:18
+#: \plugins\acl\views\acl_permissions\admin_index.ctp:20
+#: \views\links\admin_index.ctp:23
+#: \views\settings\admin_view.ctp:4
+#: \views\terms\admin_index.ctp:23
+msgid "Id"
+msgstr ""
+
+#: \plugins\acl\views\acl_actions\admin_index.ctp:19
+#: \plugins\acl\views\acl_permissions\admin_index.ctp:21
+msgid "Alias"
+msgstr ""
+
+#: \plugins\acl\views\acl_actions\admin_index.ctp:43
+#: \views\blocks\admin_index.ctp:26
+#: \views\languages\admin_index.ctp:24
+#: \views\links\admin_index.ctp:32
+#: \views\settings\admin_index.ctp:23
+#: \views\terms\admin_index.ctp:31
+msgid "Move up"
+msgstr ""
+
+#: \plugins\acl\views\acl_actions\admin_index.ctp:44
+#: \views\blocks\admin_index.ctp:27
+#: \views\languages\admin_index.ctp:25
+#: \views\links\admin_index.ctp:33
+#: \views\settings\admin_index.ctp:24
+#: \views\terms\admin_index.ctp:32
+msgid "Move down"
+msgstr ""
+
+#: \plugins\acl\views\acl_aros\admin_index.ctp:6
+msgid "New Aro"
+msgstr ""
+
+#: \plugins\acl\views\acl_permissions\admin_index.ctp:10
+msgid "Edit Actions"
+msgstr ""
+
+#: \plugins\acl\views\acl_permissions\admin_toggle.ctp:9
+msgid "error"
+msgstr ""
+
+#: \plugins\debug_kit\controllers\components\toolbar.php:85
+msgid "Component initialization and startup"
+msgstr ""
+
+#: \plugins\debug_kit\controllers\components\toolbar.php:123
+msgid "Controller Action"
+msgstr ""
+
+#: \plugins\debug_kit\controllers\components\toolbar.php:150
+msgid "Render Controller Action"
+msgstr ""
+
+#: \plugins\debug_kit\controllers\components\toolbar.php:163
+msgid "Could not load DebugToolbar panel %s"
+msgstr ""
+
+#: \plugins\debug_kit\vendors\fire_cake.php:298
+msgid "Headers already sent in %s on line %s. Cannot send log data to FirePHP."
+msgstr ""
+
+#: \plugins\debug_kit\vendors\fire_cake.php:319
+msgid "Incorrect parameter count for FireCake::fb()"
+msgstr ""
+
+#: \plugins\debug_kit\vendors\fire_cake.php:392
+msgid "Maximum number (99,999) of messages reached!"
+msgstr ""
+
+#: \plugins\debug_kit\views\debug.php:57
+msgid "Rendering %s"
+msgstr ""
+
+#: \plugins\debug_kit\views\debug.php:79
+msgid "Rendering View"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\debug_toolbar.ctp:32
+msgid "There are no active panels. You must enable a panel to see its output."
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\log_panel.ctp:29
+msgid "Logs"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\log_panel.ctp:36
+msgid "Time"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\log_panel.ctp:36
+#: \plugins\debug_kit\views\elements\timer_panel.ctp:42
+#: \views\contacts\admin_add.ctp:9
+#: \views\contacts\admin_edit.ctp:9
+#: \views\contacts\view.ctp:20
+msgid "Message"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\log_panel.ctp:45
+msgid "There were no log entries made this request"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\memory_panel.ctp:30
+msgid "Memory"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\memory_panel.ctp:33
+msgid "Current Memory Use"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\memory_panel.ctp:40
+msgid "Peak Memory Use"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\request_panel.ctp:30
+msgid "Request"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\request_panel.ctp:44
+msgid "Current Route"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\session_panel.ctp:30
+msgid "Session"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\sql_log_panel.ctp:30
+msgid "Sql Logs"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\sql_log_panel.ctp:39
+msgid "No active database connections"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\timer_panel.ctp:31
+msgid "Timers"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\timer_panel.ctp:33
+msgid "%s (seconds)"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\timer_panel.ctp:34
+msgid "Total Request Time:"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\timer_panel.ctp:42
+msgid "time in seconds"
+msgstr ""
+
+#: \plugins\debug_kit\views\elements\variables_panel.ctp:30
+msgid "View Variables"
+msgstr ""
+
+#: \plugins\install\controllers\install_controller.php:56
+msgid "Installation: Welcome"
+msgstr ""
+
+#: \plugins\install\controllers\install_controller.php:64
+msgid "Step 1: Database"
+msgstr ""
+
+#: \plugins\install\controllers\install_controller.php:85
+msgid "Could not write database.php file."
+msgstr ""
+
+#: \plugins\install\controllers\install_controller.php:88;108
+msgid "Could not connect to database."
+msgstr ""
+
+#: \plugins\install\controllers\install_controller.php:98
+msgid "Step 2: Run SQL"
+msgstr ""
+
+#: \plugins\install\controllers\install_controller.php:126
+msgid "Installation completed successfully"
+msgstr ""
+
+#: \plugins\install\controllers\install_controller.php:132
+msgid "Installataion files deleted successfully."
+msgstr ""
+
+#: \plugins\install\controllers\install_controller.php:136
+msgid "Could not delete installation files."
+msgstr ""
+
+#: \plugins\install\views\install\data.ctp:5
+msgid "Click here to build your database"
+msgstr ""
+
+#: \plugins\install\views\install\finish.ctp:21
+msgid "Click here to delete installation files"
+msgstr ""
+
+#: \plugins\install\views\layouts\install.ctp:5
+#: \views\layouts\admin.ctp:5
+#: \views\layouts\admin_full.ctp:5
+#: \views\layouts\admin_login.ctp:5
+msgid "Croogo"
+msgstr ""
+
+#: \plugins\install\views\layouts\install.ctp:21
+msgid "Install Croogo"
+msgstr ""
+
+#: \views\attachments\admin_browse.ctp:7
+#: \views\attachments\admin_index.ctp:6
+msgid "New Attachment"
+msgstr ""
+
+#: \views\attachments\admin_browse.ctp:18
+#: \views\attachments\admin_index.ctp:16
+msgid "URL"
+msgstr ""
+
+#: \views\attachments\admin_browse.ctp:37
+msgid "Insert"
+msgstr ""
+
+#: \views\attachments\admin_edit.ctp:9
+msgid "Attachment"
+msgstr ""
+
+#: \views\attachments\admin_edit.ctp:10
+msgid "Info"
+msgstr ""
+
+#: \views\attachments\admin_edit.ctp:29
+msgid "Caption"
+msgstr ""
+
+#: \views\attachments\admin_edit.ctp:36
+msgid "File URL"
+msgstr ""
+
+#: \views\attachments\admin_edit.ctp:37
+msgid "Mime Type"
+msgstr ""
+
+#: \views\blocks\admin_add.ctp:7
+#: \views\blocks\admin_edit.ctp:7
+msgid "Block"
+msgstr ""
+
+#: \views\blocks\admin_add.ctp:8
+#: \views\blocks\admin_edit.ctp:8
+#: \views\links\admin_add.ctp:8
+#: \views\links\admin_edit.ctp:8
+msgid "Access"
+msgstr ""
+
+#: \views\blocks\admin_add.ctp:9
+#: \views\blocks\admin_edit.ctp:9
+msgid "Visibilities"
+msgstr ""
+
+#: \views\blocks\admin_add.ctp:16
+#: \views\blocks\admin_edit.ctp:17
+msgid "unique name for your block"
+msgstr ""
+
+#: \views\blocks\admin_add.ctp:17
+#: \views\blocks\admin_edit.ctp:18
+msgid "if you are not sure, choose 'none'"
+msgstr ""
+
+#: \views\blocks\admin_add.ctp:35
+#: \views\blocks\admin_edit.ctp:36
+msgid "Enter one URL per line. Leave blank if you want this Block to appear in all pages."
+msgstr ""
+
+#: \views\blocks\admin_index.ctp:6
+msgid "New Block"
+msgstr ""
+
+#: \views\blocks\admin_index.ctp:51
+#: \views\comments\admin_index.ctp:68
+#: \views\links\admin_index.ctp:55
+#: \views\nodes\admin_index.ctp:75
+msgid "Publish"
+msgstr ""
+
+#: \views\blocks\admin_index.ctp:52
+#: \views\comments\admin_index.ctp:69
+#: \views\links\admin_index.ctp:56
+#: \views\nodes\admin_index.ctp:76
+msgid "Unpublish"
+msgstr ""
+
+#: \views\blocks\admin_index.ctp:57
+#: \views\comments\admin_index.ctp:74
+#: \views\links\admin_index.ctp:61
+#: \views\messages\admin_index.ctp:66
+#: \views\nodes\admin_index.ctp:83
+#: \views\terms\admin_index.ctp:59
+msgid "Submit"
+msgstr ""
+
+#: \views\comments\admin_edit.ctp:8
+#: \views\elements\comments.ctp:5
+#: \views\elements\node_more_info.ctp:31
+msgid "Comment"
+msgstr ""
+
+#: \views\comments\admin_edit.ctp:9
+msgid "Contact Info"
+msgstr ""
+
+#: \views\comments\rss\index.ctp:16
+msgid "Comment on"
+msgstr ""
+
+#: \views\comments\rss\index.ctp:16
+#: \views\elements\node_info.ctp:9
+#: \views\themes\admin_index.ctp:15;33
+msgid "by"
+msgstr ""
+
+#: \views\contacts\admin_add.ctp:7
+#: \views\contacts\admin_edit.ctp:7
+msgid "Contact"
+msgstr ""
+
+#: \views\contacts\admin_add.ctp:8
+#: \views\contacts\admin_edit.ctp:8
+msgid "Details"
+msgstr ""
+
+#: \views\contacts\admin_add.ctp:39
+#: \views\contacts\admin_edit.ctp:40
+msgid "Let users leave a message"
+msgstr ""
+
+#: \views\contacts\admin_add.ctp:42
+#: \views\contacts\admin_edit.ctp:43
+msgid "Save messages in database"
+msgstr ""
+
+#: \views\contacts\admin_add.ctp:45
+#: \views\contacts\admin_edit.ctp:46
+msgid "Notify by email instantly"
+msgstr ""
+
+#: \views\contacts\admin_add.ctp:48
+#: \views\contacts\admin_edit.ctp:49
+#: \views\types\admin_add.ctp:56
+msgid "Spam protection (requires Akismet API key)"
+msgstr ""
+
+#: \views\contacts\admin_add.ctp:51
+#: \views\contacts\admin_edit.ctp:52
+#: \views\types\admin_add.ctp:59
+msgid "Use captcha? (requires Recaptcha API key)"
+msgstr ""
+
+#: \views\contacts\admin_add.ctp:56
+#: \views\contacts\admin_edit.ctp:57
+#: \views\types\admin_add.ctp:65
+#: \views\types\admin_edit.ctp:66
+msgid "You can manage your API keys here."
+msgstr ""
+
+#: \views\contacts\admin_index.ctp:6
+msgid "New Contact"
+msgstr ""
+
+#: \views\contacts\view.ctp:17
+msgid "Your name"
+msgstr ""
+
+#: \views\contacts\view.ctp:18
+msgid "Your email"
+msgstr ""
+
+#: \views\contacts\view.ctp:19
+msgid "Subject"
+msgstr ""
+
+#: \views\contacts\view.ctp:24
+msgid "Send"
+msgstr ""
+
+#: \views\elements\comment.ctp:13
+msgid "said on"
+msgstr ""
+
+#: \views\elements\comment.ctp:19
+msgid "Reply"
+msgstr ""
+
+#: \views\elements\comments_form.ctp:2
+msgid "Add new comment"
+msgstr ""
+
+#: \views\elements\comments_form.ctp:7
+msgid "Go back to original post"
+msgstr ""
+
+#: \views\elements\comments_form.ctp:23;39
+msgid "Name"
+msgstr ""
+
+#: \views\elements\comments_form.ctp:28;40
+msgid "Email"
+msgstr ""
+
+#: \views\elements\comments_form.ctp:33;41
+msgid "Website"
+msgstr ""
+
+#: \views\elements\comments_form.ctp:48
+msgid "Post comment"
+msgstr ""
+
+#: \views\elements\node_info.ctp:6
+msgid "Posted"
+msgstr ""
+
+#: \views\elements\node_info.ctp:20
+msgid "on"
+msgstr ""
+
+#: \views\elements\node_more_info.ctp:17
+msgid "Posted in"
+msgstr ""
+
+#: \views\elements\node_more_info.ctp:29
+msgid "Leave a comment"
+msgstr ""
+
+#: \views\elements\admin\logo.ctp:2
+msgid "Admin Panel"
+msgstr ""
+
+#: \views\elements\admin\logo.ctp:4
+msgid "Visit website"
+msgstr ""
+
+#: \views\elements\admin\navigation.ctp:6
+msgid "List"
+msgstr ""
+
+#: \views\elements\admin\navigation.ctp:8
+msgid "Content types"
+msgstr ""
+
+#: \views\elements\admin\navigation.ctp:9
+#: \views\types\admin_add.ctp:8
+#: \views\types\admin_edit.ctp:9
+msgid "Taxonomy"
+msgstr ""
+
+#: \views\elements\admin\navigation.ctp:24
+msgid "Regions"
+msgstr ""
+
+#: \views\elements\admin\navigation.ctp:28
+msgid "Media"
+msgstr ""
+
+#: \views\elements\admin\navigation.ctp:31
+msgid "File Manager"
+msgstr ""
+
+#: \views\elements\admin\nodes_filter.ctp:25
+msgid "Unpublished"
+msgstr ""
+
+#: \views\elements\admin\nodes_filter.ctp:35
+msgid "Promoted"
+msgstr ""
+
+#: \views\elements\admin\nodes_filter.ctp:37
+msgid "Yes"
+msgstr ""
+
+#: \views\elements\admin\nodes_filter.ctp:38
+msgid "No"
+msgstr ""
+
+#: \views\elements\admin\nodes_filter.ctp:43
+#: \views\nodes\admin_index.ctp:10
+msgid "Filter"
+msgstr ""
+
+#: \views\elements\admin\quick.ctp:4
+msgid "You are logged in as "
+msgstr ""
+
+#: \views\elements\admin\quick.ctp:5
+msgid "Log Out"
+msgstr ""
+
+#: \views\elements\email\text\comment.ctp:1
+msgid "A new comment has been posted under: "
+msgstr ""
+
+#: \views\elements\email\text\forgot_password.ctp:1
+#: \views\elements\email\text\register.ctp:1
+msgid "Hello"
+msgstr ""
+
+#: \views\elements\email\text\forgot_password.ctp:4
+msgid "Please visit this link to reset your password"
+msgstr ""
+
+#: \views\elements\email\text\forgot_password.ctp:14
+msgid "If you did not request a password reset, then please ignore this email."
+msgstr ""
+
+#: \views\elements\email\text\register.ctp:4
+msgid "Please visit this link to activate your account"
+msgstr ""
+
+#: \views\errors\missing_action.ctp:1
+#: \views\errors\missing_controller.ctp:1
+msgid "Page not found"
+msgstr ""
+
+#: \views\errors\missing_action.ctp:2
+#: \views\errors\missing_controller.ctp:2
+msgid "Error"
+msgstr ""
+
+#: \views\errors\missing_action.ctp:4
+#: \views\errors\missing_controller.ctp:4
+msgid "The requested address was not found on this server."
+msgstr ""
+
+#: \views\filemanager\admin_browse.ctp:6
+msgid "Upload here"
+msgstr ""
+
+#: \views\filemanager\admin_browse.ctp:7
+msgid "Create directory"
+msgstr ""
+
+#: \views\filemanager\admin_browse.ctp:8
+msgid "Create file"
+msgstr ""
+
+#: \views\filemanager\admin_browse.ctp:14
+#: \views\filemanager\admin_create_directory.ctp:6
+#: \views\filemanager\admin_create_file.ctp:6
+#: \views\filemanager\admin_editfile.ctp:6
+#: \views\filemanager\admin_upload.ctp:6
+msgid "You are here:"
+msgstr ""
+
+#: \views\filemanager\admin_browse.ctp:29
+msgid "Directory content"
+msgstr ""
+
+#: \views\helpers\meta.php:34
+#: \views\settings\admin_view.ctp:9
+msgid "Key"
+msgstr ""
+
+#: \views\helpers\meta.php:38
+#: \views\settings\admin_view.ctp:14
+msgid "Value"
+msgstr ""
+
+#: \views\helpers\meta.php:53
+msgid "Remove"
+msgstr ""
+
+#: \views\languages\admin_index.ctp:6
+#: \views\languages\admin_select.ctp:6
+msgid "New Language"
+msgstr ""
+
+#: \views\layouts\admin_login.ctp:21
+msgid "Back to"
+msgstr ""
+
+#: \views\layouts\maintenance.ctp:13
+msgid "Site down for maintenance."
+msgstr ""
+
+#: \views\links\admin_add.ctp:7
+#: \views\links\admin_edit.ctp:7
+msgid "Link"
+msgstr ""
+
+#: \views\links\admin_add.ctp:9
+#: \views\links\admin_edit.ctp:9
+#: \views\menus\admin_add.ctp:8
+#: \views\menus\admin_edit.ctp:8
+#: \views\settings\admin_add.ctp:8
+#: \views\settings\admin_edit.ctp:8
+msgid "Misc."
+msgstr ""
+
+#: \views\links\admin_add.ctp:16
+#: \views\links\admin_edit.ctp:17
+msgid "Parent"
+msgstr ""
+
+#: \views\links\admin_add.ctp:22
+#: \views\links\admin_edit.ctp:23
+msgid "Link to a Node"
+msgstr ""
+
+#: \views\links\admin_index.ctp:6
+msgid "New Link"
+msgstr ""
+
+#: \views\links\admin_index.ctp:24
+#: \views\terms\admin_index.ctp:24
+msgid "Title"
+msgstr ""
+
+#: \views\links\admin_index.ctp:25
+msgid "Status"
+msgstr ""
+
+#: \views\menus\admin_add.ctp:7
+#: \views\menus\admin_edit.ctp:7
+msgid "Menu"
+msgstr ""
+
+#: \views\menus\admin_index.ctp:6
+msgid "New Menu"
+msgstr ""
+
+#: \views\menus\admin_index.ctp:23
+msgid "View links"
+msgstr ""
+
+#: \views\messages\admin_index.ctp:60
+msgid "Mark as read"
+msgstr ""
+
+#: \views\messages\admin_index.ctp:61
+msgid "Mark as unread"
+msgstr ""
+
+#: \views\nodes\admin_add.ctp:17
+#: \views\nodes\admin_edit.ctp:34
+msgid "Custom fields"
+msgstr ""
+
+#: \views\nodes\admin_add.ctp:18
+#: \views\nodes\admin_edit.ctp:35
+msgid "Publishing"
+msgstr ""
+
+#: \views\nodes\admin_add.ctp:44
+#: \views\nodes\admin_edit.ctp:62
+#: \views\types\admin_add.ctp:42
+#: \views\types\admin_edit.ctp:44
+msgid "Disabled"
+msgstr ""
+
+#: \views\nodes\admin_add.ctp:45
+#: \views\nodes\admin_edit.ctp:63
+#: \views\types\admin_add.ctp:43
+#: \views\types\admin_edit.ctp:45
+msgid "Read only"
+msgstr ""
+
+#: \views\nodes\admin_add.ctp:46
+#: \views\nodes\admin_edit.ctp:64
+#: \views\types\admin_add.ctp:44
+#: \views\types\admin_edit.ctp:46
+msgid "Read/Write"
+msgstr ""
+
+#: \views\nodes\admin_add.ctp:68
+#: \views\nodes\admin_edit.ctp:84
+msgid "Add another field"
+msgstr ""
+
+#: \views\nodes\admin_add.ctp:74
+#: \views\nodes\admin_edit.ctp:90
+msgid "Promoted to front page"
+msgstr ""
+
+#: \views\nodes\admin_edit.ctp:15
+#: \views\nodes\admin_index.ctp:43
+msgid "Translate"
+msgstr ""
+
+#: \views\nodes\admin_index.ctp:77
+msgid "Promote"
+msgstr ""
+
+#: \views\nodes\admin_index.ctp:78
+msgid "Unpromote"
+msgstr ""
+
+#: \views\nodes\admin_links.ctp:24
+msgid "Sort by:"
+msgstr ""
+
+#: \views\nodes\index.ctp:4
+#: \views\nodes\promoted.ctp:4
+#: \views\nodes\term.ctp:6
+msgid "No items found."
+msgstr ""
+
+#: \views\nodes\term.ctp:2
+msgid "Term:"
+msgstr ""
+
+#: \views\regions\admin_index.ctp:6
+msgid "New Region"
+msgstr ""
+
+#: \views\roles\admin_index.ctp:6
+msgid "New Role"
+msgstr ""
+
+#: \views\settings\admin_add.ctp:13
+#: \views\settings\admin_edit.ctp:14
+msgid "e.g., 'Site.title'"
+msgstr ""
+
+#: \views\settings\admin_add.ctp:22
+#: \views\settings\admin_edit.ctp:23
+msgid "e.g., 'text' or 'textarea'"
+msgstr ""
+
+#: \views\settings\admin_index.ctp:6
+#: \views\settings\admin_view.ctp:46
+msgid "New Setting"
+msgstr ""
+
+#: \views\settings\admin_view.ctp:2
+msgid "Setting"
+msgstr ""
+
+#: \views\settings\admin_view.ctp:19
+msgid "Description"
+msgstr ""
+
+#: \views\settings\admin_view.ctp:24
+msgid "Input Type"
+msgstr ""
+
+#: \views\settings\admin_view.ctp:29
+msgid "Weight"
+msgstr ""
+
+#: \views\settings\admin_view.ctp:34
+#: \views\types\admin_add.ctp:11
+#: \views\types\admin_edit.ctp:12
+msgid "Params"
+msgstr ""
+
+#: \views\settings\admin_view.ctp:43
+msgid "Edit Setting"
+msgstr ""
+
+#: \views\settings\admin_view.ctp:44
+msgid "Delete Setting"
+msgstr ""
+
+#: \views\settings\admin_view.ctp:44
+msgid "Are you sure you want to delete # %s?"
+msgstr ""
+
+#: \views\settings\admin_view.ctp:45
+msgid "List Settings"
+msgstr ""
+
+#: \views\terms\admin_index.ctp:6
+msgid "New Term"
+msgstr ""
+
+#: \views\themes\admin_index.ctp:5
+msgid "Current Theme"
+msgstr ""
+
+#: \views\themes\admin_index.ctp:17;35
+msgid "Regions supported: "
+msgstr ""
+
+#: \views\themes\admin_index.ctp:22
+msgid "Available Themes"
+msgstr ""
+
+#: \views\themes\admin_index.ctp:36
+msgid "Activate"
+msgstr ""
+
+#: \views\types\admin_add.ctp:9
+#: \views\types\admin_edit.ctp:10
+msgid "Format"
+msgstr ""
+
+#: \views\types\admin_add.ctp:31
+#: \views\types\admin_edit.ctp:33
+msgid "Show author's name"
+msgstr ""
+
+#: \views\types\admin_add.ctp:34
+#: \views\types\admin_edit.ctp:36
+msgid "Show date"
+msgstr ""
+
+#: \views\types\admin_index.ctp:6
+msgid "New Type"
+msgstr ""
+
+#: \views\users\admin_add.ctp:2
+msgid "Add User"
+msgstr ""
+
+#: \views\users\admin_edit.ctp:2
+msgid "Edit User"
+msgstr ""
+
+#: \views\users\admin_edit.ctp:6
+#: \views\users\admin_reset_password.ctp:2
+msgid "Reset password"
+msgstr ""
+
+#: \views\users\admin_index.ctp:6
+msgid "New User"
+msgstr ""
+
+#: \views\users\admin_index.ctp:14
+msgid "Role"
+msgstr ""
+
+#: \views\users\admin_login.ctp:10
+msgid "Forgot password?"
+msgstr ""
+
+#: \views\users\admin_reset_password.ctp:8
+msgid "New Password"
+msgstr ""
+
+#: \views\users\index.ctp:4
+msgid "You are currently logged in as:"
+msgstr ""
+
+#: \views\users\login.ctp:2
+msgid "Login"
+msgstr ""
+
+#: \views\users\reset.ctp:6
+msgid "New password"
+msgstr ""
+
+#: \views\vocabularies\admin_add.ctp:8
+#: \views\vocabularies\admin_edit.ctp:9
+msgid "Options"
+msgstr ""
+
+#: \views\vocabularies\admin_index.ctp:6
+msgid "New Vocabulary"
+msgstr ""
+
+#: \views\vocabularies\admin_index.ctp:22
+msgid "View terms"
+msgstr ""
+
+#: \webroot\test.php:99
+msgid "Debug setting does not allow access to this url."
+msgstr ""
+

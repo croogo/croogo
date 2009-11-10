@@ -54,6 +54,10 @@ class AppController extends Controller {
             $this->pageTitle = __('Site down for maintenance', true);
             $this->render('../elements/blank');
         }
+
+        if (isset($this->params['locale'])) {
+            Configure::write('Config.language', $this->params['locale']);
+        }
     }
 
 }
