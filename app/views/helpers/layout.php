@@ -205,7 +205,7 @@ class LayoutHelper extends AppHelper {
             $blocks = $this->View->viewVars['blocks_for_layout'][$regionAlias];
             foreach ($blocks AS $block) {
                 if ($block['Block']['element'] != null) {
-                    $element = $block['Block']['file'];
+                    $element = $block['Block']['element'];
                 } else {
                     $element = 'block';
                 }
