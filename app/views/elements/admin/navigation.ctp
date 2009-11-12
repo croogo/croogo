@@ -50,7 +50,7 @@
 			<a href="#"><?php __('Themes'); ?></a>
 			<ul>
 				<li><?php echo $html->link(__('Themes', true), array('plugin' => 0, 'controller' => 'themes', 'action' => 'index')); ?></li>
-				<!--<li><?php echo $html->link(__('Add a new theme', true), array('plugin' => 0, 'controller' => 'themes', 'action' => 'add')); ?></li>-->
+				<li><?php echo $html->link(__('Upload', true), array('plugin' => 0, 'controller' => 'themes', 'action' => 'add')); ?></li>
             </ul>
 		</li>
         <li>
