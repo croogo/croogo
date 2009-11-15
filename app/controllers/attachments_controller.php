@@ -89,6 +89,7 @@ class AttachmentsController extends AppController {
             $destination = WWW_ROOT . $this->uploadsDir . DS . $file['name'];
             if (file_exists($destination)) {
                 $newFileName = String::uuid() . '-' . $file['name'];
+                $destination = WWW_ROOT . $this->uploadsDir . DS . $newFileName;
             } else {
                 $newFileName = $file['name'];
             }
