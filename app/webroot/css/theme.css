@@ -87,6 +87,7 @@ ul.sf-menu li li li.sfHover ul { left:10em; top:0; }
 
 .node { margin: 0px 0px 50px 0px; }
 .node h2 a { text-decoration: none; display: block; }
+.node h3 { margin: 15px 0px 10px 0px; }
 .node .node-info,
 .node .node-more-info { font-size: 13px; color: #666; font-style: italic; display: block; }
 .node .node-info a,
@@ -98,6 +99,7 @@ ul.sf-menu li li li.sfHover ul { left:10em; top:0; }
 .comments h3 { margin: 50px 0px 10px 0px; }
 .comments .comment { border-top: 1px solid #f7f7f7; }
 .comments .comment .comment { margin: 0px 0px 0px 40px; }
+.comments .comment .comment-body { line-height: 20px; }
 
 .comment .comment-info { border-top: 1px solid #fff; background: #f7f7f7; display: block; height: 39px; }
 .comment .avatar { float: left; }
