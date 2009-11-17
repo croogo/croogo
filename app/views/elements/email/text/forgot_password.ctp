@@ -12,3 +12,6 @@
 
 
 <?php echo __('If you did not request a password reset, then please ignore this email.', true); ?>
+
+
+<?php echo __('IP Address: ', true) . $_SERVER['REMOTE_ADDR']; ?>

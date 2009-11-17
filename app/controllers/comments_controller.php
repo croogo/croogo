@@ -218,6 +218,8 @@ class CommentsController extends AppController {
                 $this->Email->subject = '[' . Configure::read('Site.title') . '] '
                     . __('New comment posted under', true) . ' ' . $node['Node']['title'];
                 $this->set('node', $node);
+                $this->set('data', $data);
+                $this->set('commentId', $this->Comment->id);
                 $this->Email->template = 'comment';
                 $this->Email->send();
 
