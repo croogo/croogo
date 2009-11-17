@@ -29,6 +29,11 @@
     include(APP.'config'.DS.'croogo_router.php');
     Router::parseExtensions('json', 'rss');
 
+    // Installer
+    if (!file_exists(APP.'config'.DS.'database.php')) {
+        CroogoRouter::connect('/', array('plugin' => 'install' ,'controller' => 'install'));
+    }
+
     // Basic
     CroogoRouter::connect('/', array('controller' => 'nodes', 'action' => 'promoted'));
     CroogoRouter::connect('/promoted/*', array('controller' => 'nodes', 'action' => 'promoted'));
