@@ -86,5 +86,5 @@ $(document).ready(function() {
 
 	$('.tabs').tabs();
     $('a.tooltip').tipsy({gravity: 's'});
-    $('textarea').elastic();
+    $('textarea').not('.file-content').elastic();
 });

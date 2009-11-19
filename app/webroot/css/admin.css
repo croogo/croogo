@@ -133,11 +133,11 @@ div.filter form select { width: 200px; }
 /**
  * Themes
  */
-div.themes h3 { font-size: 16px; margin: 10px 0px 10px 0px; }
-div.themes .current-theme .screenshot { float: left; margin: 0px 70px 0px 0px; }
-div.themes .available-themes { border-top: 1px dashed #ccc; margin: 50px 0px 0px 0px; }
-div.themes .available-themes ul li { float: left; margin: 0px 70px 0px 0px; display: block; }
-
+div.extensions-themes h3 { font-size: 16px; margin: 10px 0px 10px 0px; }
+div.extensions-themes .current-theme .screenshot { float: left; margin: 0px 70px 0px 0px; }
+div.extensions-themes .available-themes { border-top: 1px dashed #ccc; margin: 50px 0px 0px 0px; }
+div.extensions-themes .available-themes ul li { float: left; margin: 0px 70px 0px 0px; display: block; }
+div.extensions-themes .available-themes .actions a { margin-right: 10px; }
 
 /**
  * File Manager

@@ -47,11 +47,11 @@
             </ul>
 		</li>
         <li>
-			<a href="#"><?php __('Themes'); ?></a>
+			<a href="#"><?php __('Extensions'); ?></a>
 			<ul>
-				<li><?php echo $html->link(__('Themes', true), array('plugin' => 0, 'controller' => 'themes', 'action' => 'index')); ?></li>
-				<li><?php echo $html->link(__('Upload', true), array('plugin' => 0, 'controller' => 'themes', 'action' => 'add')); ?></li>
-            </ul>
+				<li><?php echo $html->link(__('Themes', true), array('plugin' => 'extensions', 'controller' => 'extensions_themes', 'action' => 'index')); ?></li>
+				<li><?php echo $html->link(__('Locales', true), array('plugin' => 'extensions', 'controller' => 'extensions_locales', 'action' => 'index')); ?></li>
+			</ul>
 		</li>
         <li>
             <a href="#"><?php __('Settings'); ?></a>

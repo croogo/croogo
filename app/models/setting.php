@@ -39,19 +39,65 @@ class Setting extends AppModel {
             'field'         => 'weight',
             'foreign_key'     => false
         ));
-
+/**
+ * afterSave callback
+ *
+ * @return void
+ */
     function afterSave() {
         $settings = $this->find('all', array('fields' => array('Setting.key', 'Setting.value')));
         Cache::write("settings", $settings);
         $this->writeConfiguration();
     }
-
+/**
+ * afterDelete callback
+ *
+ * @return void
+ */
     function afterDelete() {
         $settings = $this->find('all', array('fields' => array('Setting.key', 'Setting.value')));
         Cache::write("settings", $settings);
         $this->writeConfiguration();
     }
+/**
+ * Creates a new record with key/value pair if key does not exist.
+ *
+ * @param string $key
+ * @param string $value
+ * @param array $options
+ * @return boolean
+ */
+    function write($key, $value, $options = array()) {
+        $_options = array(
+            'editable' => 0,
+        );
+        $options = array_merge($_options, $options);
 
+        $setting = $this->findByKey($key);
+        if (isset($setting['Setting']['id'])) {
+            $setting['Setting']['id'] = $setting['Setting']['id'];
+            $setting['Setting']['value'] = $value;
+            $setting['Setting']['editable'] = $options['editable'];
+        } else {
+            $setting = array();
+            $setting['key'] = $key;
+            $setting['value'] = $value;
+            $setting['editable'] = $options['editable'];
+        }
+
+        $this->id = false;
+        if ($this->save($setting)) {
+            Configure::write($key, $value);
+            return true;
+        } else {
+            return false;
+        }
+    }
+/**
+ * All key/value pairs are made accessible from Configure class
+ *
+ * @return void
+ */
     function writeConfiguration() {
         /*if( $this->useCache == false || ($settings = Cache::read("settings")) === false ) {
             $settings = $this->find('all', array('fields' => array('Setting.key', 'Setting.value')));
