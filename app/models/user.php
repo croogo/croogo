@@ -78,7 +78,7 @@ class User extends AppModel {
         if (empty($this->data)) {
             $data = $this->read();
         }
-        if (!$data['User']['role_id']) {
+        if (!isset($data['User']['role_id']) || !$data['User']['role_id']) {
             return null;
         } else {
             return array('Role' => array('id' => $data['User']['role_id']));
