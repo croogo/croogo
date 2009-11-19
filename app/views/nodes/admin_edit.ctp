@@ -12,11 +12,8 @@
         <ul>
             <li>
             <?php
-                echo $html->link(__('Translate', true), array(
-                    'controller' => 'languages',
-                    'action'=>'select',
-                    'nodes',
-                    'translate',
+                echo $html->link(__('Translations', true), array(
+                    'action'=>'translations',
                     $this->data['Node']['id'],
                 ));
             ?>

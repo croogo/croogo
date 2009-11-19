@@ -232,9 +232,60 @@ class NodesController extends AppController {
 
     function admin_translations($id = null) {
         if ($id == null) {
+            $this->Session->setFlash(__('Invalid Node.', true));
             $this->redirect(array('action' => 'index'));
             exit();
         }
+
+        $node = $this->Node->findById($id);
+        if (!isset($node['Node']['id'])) {
+            $this->Session->setFlash(__('Invalid Node.', true));
+            $this->redirect(array('action' => 'index'));
+            exit();
+        }
+        $this->pageTitle = __('Translations: ', true) . $node['Node']['title'];
+
+        $runtimeModel =& $this->Node->translateModel();
+        $runtimeModelAlias = $runtimeModel->alias;
+        $translations = $runtimeModel->find('all', array(
+            'conditions' => array(
+                $runtimeModelAlias.'.model' => $this->Node->name,
+                $runtimeModelAlias.'.foreign_key' => $id,
+                $runtimeModelAlias.'.field' => 'title',
+            ),
+        ));
+
+        $this->set(compact('runtimeModelAlias', 'translations', 'node', 'id'));
+    }
+
+    function admin_delete_translation($locale = null, $id = null) {
+        if ($locale == null || $id == null) {
+            $this->Session->setFlash(__('Invalid Locale or Node', true));
+            $this->redirect(array('action' => 'index'));
+            exit();
+        }
+
+        $node = $this->Node->findById($id);
+        if (!isset($node['Node']['id'])) {
+            $this->Session->setFlash(__('Invalid Node', true));
+            $this->redirect(array('action' => 'index'));
+            exit();
+        }
+
+        $runtimeModel =& $this->Node->translateModel();
+        $runtimeModelAlias = $runtimeModel->alias;
+        if ($runtimeModel->deleteAll(array(
+                $runtimeModelAlias.'.model' => $this->Node->name,
+                $runtimeModelAlias.'.foreign_key' => $id,
+                $runtimeModelAlias.'.locale' => $locale,
+            ))) {
+            $this->Session->setFlash(__('Translation for the locale deleted successfully.', true));
+        } else {
+            $this->Session->setFlash(__('Translation for the locale could not be deleted.', true));
+        }
+
+        $this->redirect(array('action' => 'translations', $id));
+        exit();
     }
 
     function admin_update_paths() {
@@ -358,7 +409,7 @@ class NodesController extends AppController {
             $this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
             $this->pageTitle = $type['Type']['title'];
         }
-        $nodes = $this->paginate();
+        $nodes = $this->paginate('Node');
 
         $this->set(compact('type', 'nodes'));
     }
@@ -391,7 +442,7 @@ class NodesController extends AppController {
             $this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
             $this->pageTitle = $type['Type']['title'];
         }
-        $nodes = $this->paginate();
+        $nodes = $this->paginate('Node');
 
         $this->set(compact('term', 'type', 'nodes'));
     }
@@ -419,7 +470,7 @@ class NodesController extends AppController {
             $this->set(compact('type'));
         }
 
-        $nodes = $this->paginate();
+        $nodes = $this->paginate('Node');
         $this->set(compact('nodes'));
     }
 

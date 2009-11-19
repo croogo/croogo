@@ -40,7 +40,7 @@
         $rows = array();
         foreach ($nodes AS $node) {
             $actions  = $html->link(__('Edit', true), array('action' => 'edit', $node['Node']['id']));
-            $actions .= $html->link(__('Translate', true), array('controller' => 'languages', 'action' => 'select', 'nodes', 'translate', $node['Node']['id']));
+            $actions .= $html->link(__('Translations', true), array('action' => 'translations', $node['Node']['id']));
             $actions .= ' ' . $html->link(__('Delete', true), array('action' => 'delete', $node['Node']['id']), null, __('Are you sure?', true));
 
             $rows[] = array(
