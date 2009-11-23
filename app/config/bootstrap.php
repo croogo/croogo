@@ -41,5 +41,5 @@
  *
  */
 //EOF
-include(APP.'config'.DS.'croogo_bootstrap.php');
+require_once APP.'config'.DS.'croogo_bootstrap.php';
 ?>

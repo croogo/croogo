@@ -88,7 +88,7 @@ div.input span.description { margin-left: 10px; }
 /**
  * Header
  */
-#header { width: auto; background-color: #464646; padding: 15px 0px 15px 0px; color: #ccc; margin: 0px 0px 10px 0px; }
+#header { width: auto; background-color: #464646; padding: 15px 0px 15px 0px; color: #ccc; margin: 0px 0px 10px 0px; height: 20px; }
 #header .logo { font-weight: bold; }
 #header a { color: #ccc; text-decoration: none; }
 #header a:hover { text-decoration: underline; }
@@ -156,7 +156,7 @@ textarea.file-content { width: 100%; height: 350px; }
 /**
  * Footer
  */
-#footer { width: auto; text-align: center; background-color: #464646; padding: 15px 0px 15px 0px; color: #ccc; margin: 20px 0px 0px 0px; }
+#footer { width: auto; text-align: center; background-color: #464646; padding: 15px 0px 15px 0px; color: #ccc; margin: 20px 0px 0px 0px; height: 20px; }
 #footer a { color: #ccc; text-decoration: none; }
 #footer a:hover { text-decoration: underline; }
 
