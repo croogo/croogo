@@ -51,6 +51,7 @@
 			<ul>
 				<li><?php echo $html->link(__('Themes', true), array('plugin' => 'extensions', 'controller' => 'extensions_themes', 'action' => 'index')); ?></li>
 				<li><?php echo $html->link(__('Locales', true), array('plugin' => 'extensions', 'controller' => 'extensions_locales', 'action' => 'index')); ?></li>
+				<li><?php echo $html->link(__('Plugins', true), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index')); ?></li>
 			</ul>
 		</li>
         <li>
