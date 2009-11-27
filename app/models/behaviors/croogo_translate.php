@@ -128,10 +128,11 @@ class CroogoTranslateBehavior extends ModelBehavior {
         if ($primary && isset($results[0][$model->alias])) {
             $i = 0;
             foreach ($results AS $result) {
+								if (!isset($result[$model->alias][$model->primaryKey])) continue;
                 $translations = $RuntimeModel->find('all', array(
                     'conditions' => array(
                         $RuntimeModel->alias.'.model' => $model->alias,
-                        $RuntimeModel->alias.'.foreign_key' => $result[$model->alias]['id'],
+                        $RuntimeModel->alias.'.foreign_key' => $result[$model->alias][$model->primaryKey],
                         $RuntimeModel->alias.'.field' => $fields,
                     ),
                 ));
