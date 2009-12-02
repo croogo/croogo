@@ -1,3 +1,3 @@
 <div class="node-body">
-<?php echo $layout->filter($node['Node']['body']); ?>
+    <?php echo $layout->node('body'); ?>
 </div>

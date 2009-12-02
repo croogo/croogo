@@ -9,16 +9,21 @@
         }
     ?>
 
-    <?php foreach ($nodes AS $node) { ?>
-    <div id="node-<?php echo $node['Node']['id']; ?>" class="node node-type-<?php echo $node['Node']['type']; ?>">
-        <h2><?php echo $html->link($node['Node']['title'], $node['Node']['url']); ?></h2>
-        <?php 
-            echo $this->element('node_info', array('node' => $node));
-            echo $this->element('node_body', array('node' => $node));
-            echo $this->element('node_more_info', array('node' => $node));
+    <?php 
+        foreach ($nodes AS $node) {
+            $layout->setNode($node);
+    ?>
+    <div id="node-<?php echo $layout->node('id'); ?>" class="node node-type-<?php echo $layout->node('type'); ?>">
+        <h2><?php echo $html->link($layout->node('title'), $layout->node('url')); ?></h2>
+        <?php
+            echo $layout->nodeInfo();
+            echo $layout->nodeBody();
+            echo $layout->nodeMoreInfo();
         ?>
     </div>
-    <?php } ?>
+    <?php 
+        }
+    ?>
 
     <div class="paging"><?php echo $paginator->numbers(); ?></div>
 </div>

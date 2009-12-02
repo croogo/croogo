@@ -47,7 +47,7 @@ div.level-0 { }
 div.level-1 { margin-left: 30px; }
 
 img.permission-toggle:hover { cursor: pointer; }
-img.permission-disabled { }
+img.hook-toggle:hover { cursor: pointer; }
 
 .controller-row { background: #6f6f6f; color: #fff; font-weight: bold; }
 .controller-row a { color: #efefef; }

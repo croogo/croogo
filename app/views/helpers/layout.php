@@ -25,6 +25,20 @@ class LayoutHelper extends AppHelper {
         'Javascript',
     );
 /**
+ * Current Node
+ *
+ * @var array
+ * @access public
+ */
+    var $node = null;
+/**
+ * Hook helpers
+ *
+ * @var array
+ * @access public
+ */
+    var $hooks = array();
+/**
  * Constructor
  *
  * @param array $options options
@@ -32,7 +46,41 @@ class LayoutHelper extends AppHelper {
  */
     function __construct($options = array()) {
         $this->View =& ClassRegistry::getObject('view');
+        $this->__loadHooks();
+
         return parent::__construct($options);
+    }
+/**
+ * Load hooks as helpers
+ *
+ * @return void
+ */
+    function __loadHooks() {
+        if (Configure::read('Hook.helpers')) {
+            // Set hooks
+            $hooks = Configure::read('Hook.helpers');
+            $hooksE = explode(',', $hooks);
+            foreach ($hooksE AS $hook) {
+                if (strstr($hook, '.')) {
+                    $hookE = explode('.', $hook);
+                    $plugin = $hookE['0'];
+                    $hookHelper = $hookE['1'];
+                    $filePath = APP.'plugins'.DS.$plugin.DS.'views'.DS.'helpers'.DS.Inflector::underscore($hookHelper).'.php';
+                } else {
+                    $plugin = null;
+                    $filePath = APP.'views'.DS.'helpers'.DS.Inflector::underscore($hook).'.php';
+                }
+
+                if (file_exists($filePath)) {
+                    $this->hooks[] = $hook;
+                }
+            }
+
+            // Set hooks as helpers
+            foreach ($this->hooks AS $hook) {
+                $this->helpers[] = $hook;
+            }
+        }
     }
 /**
  * Javascript variables
@@ -138,7 +186,7 @@ class LayoutHelper extends AppHelper {
  */
     function feed($returnUrl = false) {
         if (Configure::read('Site.feed_url')) {
-            $url = COnfigure::read('Site.feed_url');
+            $url = Configure::read('Site.feed_url');
         } else {
             /*$url = Router::url(array(
                 'controller' => 'nodes',
@@ -446,6 +494,145 @@ class LayoutHelper extends AppHelper {
             $content = str_replace($tagMatches[0][$i], $this->vocabulary($vocabularyAlias,$options), $content);
         }
         return $content;
+    }
+/**
+ * Set current Node
+ *
+ * @param array $node
+ * @return void
+ */
+    function setNode($node) {
+        $this->node = $node;
+        $this->hook('afterSetNode');
+    }
+/**
+ * Set value of a field
+ *
+ * @param string $field
+ * @param string $value
+ * @return void
+ */
+    function setNodeField($field, $value) {
+        $model = 'Node';
+        if (strstr($field, '.')) {
+            $fieldE = explode('.', $field);
+            $model = $fieldE['0'];
+            $field = $fieldE['1'];
+        }
+
+        $this->node[$model][$field] = $value;
+    }
+/**
+ * Get value of a Node field
+ *
+ * @param string $field
+ * @return string
+ */
+    function node($field = 'id') {
+        $model = 'Node';
+        if (strstr($field, '.')) {
+            $fieldE = explode('.', $field);
+            $model = $fieldE['0'];
+            $field = $fieldE['1'];
+        }
+
+        if (isset($this->node[$model][$field])) {
+            return $this->node[$model][$field];
+        } else {
+            return false;
+        }
+    }
+/**
+ * Node info
+ *
+ * @param array $options
+ * @return string
+ */
+    function nodeInfo($options = array()) {
+        $_options = array(
+            'element' => 'node_info',
+        );
+        $options = array_merge($_options, $options);
+        
+        $output  = $this->hook('beforeNodeInfo');
+        $output .= $this->View->element($options['element']);
+        $output .= $this->hook('afterNodeInfo');
+        return $output;
+    }
+/**
+ * Node excerpt (summary)
+ *
+ * @param array $options
+ * @return string
+ */
+    function nodeExcerpt($options = array()) {
+        $_options = array(
+            'element' => 'node_excerpt',
+        );
+        $options = array_merge($_options, $options);
+
+        $output  = $this->hook('beforeNodeExcerpt');
+        $output .= $this->View->element($options['element']);
+        $output .= $this->hook('afterNodeExcerpt');
+        return $output;
+    }
+/**
+ * Node body
+ *
+ * @param array $options
+ * @return string
+ */
+    function nodeBody($options = array()) {
+        $_options = array(
+            'element' => 'node_body',
+        );
+        $options = array_merge($_options, $options);
+
+        $output  = $this->hook('beforeNodeBody');
+        $output .= $this->View->element($options['element']);
+        $output .= $this->hook('afterNodeBody');
+        return $output;
+    }
+/**
+ * Node more info
+ *
+ * @param array $options
+ * @return string
+ */
+    function nodeMoreInfo($options = array()) {
+        $_options = array(
+            'element' => 'node_more_info',
+        );
+        $options = array_merge($_options, $options);
+
+        $output  = $this->hook('beforeNodeMoreInfo');
+        $output .= $this->View->element($options['element']);
+        $output .= $this->hook('afterNodeMoreInfo');
+        return $output;
+    }
+/**
+ * Hook
+ *
+ * Used for calling hook methods from other HookHelpers
+ *
+ * @param string $methodName
+ * @return string
+ */
+    function hook($methodName) {
+        $output = '';
+
+        foreach ($this->hooks AS $hook) {
+            if (strstr($hook, '.')) {
+                $hookE = explode('.', $hook);
+                $hook = $hookE['1'];
+            }
+
+            if (method_exists($this->{$hook}, $methodName)) {
+                $output .= $this->{$hook}->$methodName();
+            }
+        }
+
+        return $output;
     }
 
 }
