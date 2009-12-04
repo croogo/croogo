@@ -82,8 +82,23 @@ class ExtensionsHooksController extends AppController {
                 $hooks[] = $item;
             }
         }
+        sort($hooks);
 
-        $this->set(compact('hooks'));
+        // Configuration
+        $siteHookComponents = explode(',', Configure::read('Hook.components'));
+        $siteHookHelpers = explode(',', Configure::read('Hook.helpers'));
+        //$siteHooks = array_merge($hookComponents, $hookHelpers);
+        $siteHooks = array();
+        foreach ($siteHookComponents AS $siteHookComponent) {
+            if (!$siteHookComponent) continue;
+            $siteHooks[] = $siteHookComponent.'Component';
+        }
+        foreach ($siteHookHelpers AS $siteHookHelper) {
+            if (!$siteHookHelper) continue;
+            $siteHooks[] = $siteHookHelper.'Helper';
+        }
+
+        $this->set(compact('hooks', 'siteHookComponents', 'siteHookHelpers', 'siteHooks'));
     }
 
     function admin_toggle($hook = null) {

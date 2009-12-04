@@ -23,6 +23,13 @@ class CroogoComponent extends Object {
         'Theme',
     );
 /**
+ * Hook components
+ *
+ * @var array
+ * @access public
+ */
+    var $hooks = array();
+/**
  * Role ID of current user
  *
  * Default is 3 (public)
@@ -66,6 +73,8 @@ class CroogoComponent extends Object {
  * @return void
  */
     function startup(&$controller) {
+        $this->__loadHooks();
+
         $this->controller =& $controller;
         App::import('Xml');
 
@@ -73,11 +82,55 @@ class CroogoComponent extends Object {
             $this->roleId = $this->Session->read('Auth.User.role_id');
         }
 
-        if (!isset($this->params['admin']) || $this->params['admin'] === false) {
+        if (!isset($this->controller->params['admin'])) {
             $this->blocks();
             $this->menus();
             $this->vocabularies();
             $this->types();
+        }
+
+        $this->hook('startup');
+    }
+/**
+ * Load hooks as components
+ *
+ * @return void
+ */
+    function __loadHooks() {
+        if (Configure::read('Hook.components')) {
+            // Set hooks
+            $hooks = Configure::read('Hook.components');
+            $hooksE = explode(',', $hooks);
+
+            foreach ($hooksE AS $hook) {
+                if (strstr($hook, '.')) {
+                    $hookE = explode('.', $hook);
+                    $plugin = $hookE['0'];
+                    $hookComponent = $hookE['1'];
+                    $filePath = APP.'plugins'.DS.$plugin.DS.'controllers'.DS.'components'.DS.Inflector::underscore($hookComponent).'.php';
+                } else {
+                    $plugin = null;
+                    $filePath = APP.'controllers'.DS.'components'.DS.Inflector::underscore($hook).'.php';
+                }
+
+                if (file_exists($filePath)) {
+                    $this->hooks[] = $hook;
+                }
+            }
+
+            // Set hooks as components
+            foreach ($this->hooks AS $hook) {
+                $componentName = $hook;
+                if (strstr($hook, '.')) {
+                    $hookE = explode('.', $hook);
+                    $componentName = $hookE['0'];
+                }
+                $componentClassName = $componentName.'Component';
+
+                $this->components[] = $hook;
+                App::import('Component', $hook);
+                $this->{$componentName} =& new $componentClassName;
+            }
         }
     }
 /**
@@ -288,6 +341,8 @@ class CroogoComponent extends Object {
         $this->controller->set('menus_for_layout', $this->menus_for_layout);
         $this->controller->set('vocabularies_for_layout', $this->vocabularies_for_layout);
         $this->controller->set('types_for_layout', $this->types_for_layout);
+
+        $this->hook('beforeRender');
     }
 /**
  * Extracts parameters from 'filter' named parameter.
@@ -320,6 +375,39 @@ class CroogoComponent extends Object {
         }
         $path = '/' . str_replace(Router::url('/', true), '', $absoluteUrl);
         return $path;
+    }
+/**
+ * Hook
+ *
+ * Used for calling hook methods from other HookComponents
+ *
+ * @param string $methodName
+ * @return void
+ */
+    function hook($methodName) {
+        if (isset($this->controller->params['admin'])) {
+            return;
+        }
+
+        foreach ($this->hooks AS $hook) {
+            if (strstr($hook, '.')) {
+                $hookE = explode('.', $hook);
+                $hook = $hookE['1'];
+            }
+
+            if (method_exists($this->{$hook}, $methodName)) {
+                $this->{$hook}->$methodName($this->controller);
+            }
+        }
+    }
+/**
+ * Shutdown
+ *
+ * @param object $controller instance of controller
+ * @return void
+ */
+    function shutdown(&$controller) {
+        $this->hook('shutdown');
     }
 
 }

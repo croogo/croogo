@@ -12,10 +12,6 @@
 
     <table cellpadding="0" cellspacing="0">
     <?php
-        $hookComponents = explode(',', Configure::read('Hook.components'));
-        $hookHelpers = explode(',', Configure::read('Hook.helpers'));
-        $siteHooks = array_merge($hookComponents, $hookHelpers);
-
         $tableHeaders =  $html->tableHeaders(array(
             '',
             __('Hook', true),
@@ -34,7 +30,7 @@
                 $hookTitle = str_replace($hookType, '', $hook);
             }
 
-            if (array_search($hookTitle, $siteHooks)) {
+            if (array_search($hook, $siteHooks) !== false) {
                 $status = 1;
                 $icon = 'tick.png';
             } else {
