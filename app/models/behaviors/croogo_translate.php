@@ -177,40 +177,19 @@ class CroogoTranslateBehavior extends ModelBehavior {
  */
     function saveTranslation(&$model, $data = null, $validate = true) {
         $model->data = $data;
+        if (!isset($model->data[$model->alias])) {
+            return false;
+        }
 
-        // beforeValidate of TranslateBehavior
 		$locale = $this->_getLocale($model);
 		if (empty($locale)) {
-			return true;
+			return false;
 		}
-		$fields = array_merge($this->settings[$model->alias], $this->runtime[$model->alias]['fields']);
-		$tempData = array();
 
-		foreach ($fields as $key => $value) {
-			$field = (is_numeric($key)) ? $value : $key;
-
-			if (isset($model->data[$model->alias][$field])) {
-				$tempData[$field] = $model->data[$model->alias][$field];
-				if (is_array($model->data[$model->alias][$field])) {
-					if (is_string($locale) && !empty($model->data[$model->alias][$field][$locale])) {
-						$model->data[$model->alias][$field] = $model->data[$model->alias][$field][$locale];
-					} else {
-						$values = array_values($model->data[$model->alias][$field]);
-						$model->data[$model->alias][$field] = $values[0];
-					}
-				}
-			}
-		}
-		$this->runtime[$model->alias]['beforeSave'] = $tempData;
-
-        // afterSave of TranslateBehavior
-        $locale = $this->_getLocale($model);
-		$tempData = $this->runtime[$model->alias]['beforeSave'];
-		unset($this->runtime[$model->alias]['beforeSave']);
-		$conditions = array('model' => $model->alias, 'foreign_key' => $model->id);
 		$RuntimeModel =& $this->translateModel($model);
+        $conditions = array('model' => $model->alias, 'foreign_key' => $model->id);
 
-		foreach ($tempData as $field => $value) {
+		foreach ($model->data[$model->alias] as $field => $value) {
 			unset($conditions['content']);
 			$conditions['field'] = $field;
 			if (is_array($value)) {
@@ -224,14 +203,18 @@ class CroogoTranslateBehavior extends ModelBehavior {
 				}
 			}
 			$translations = $RuntimeModel->find('list', array('conditions' => $conditions, 'fields' => array($RuntimeModel->alias . '.locale', $RuntimeModel->alias . '.id')));
-			foreach ($value as $_locale => $_value) {
+            foreach ($value as $_locale => $_value) {
 				$RuntimeModel->create();
 				$conditions['locale'] = $_locale;
 				$conditions['content'] = $_value;
 				if (array_key_exists($_locale, $translations)) {
-					$RuntimeModel->save(array($RuntimeModel->alias => array_merge($conditions, array('id' => $translations[$_locale]))));
+					if (!$RuntimeModel->save(array($RuntimeModel->alias => array_merge($conditions, array('id' => $translations[$_locale]))))) {
+                        return false;
+                    }
 				} else {
-					$RuntimeModel->save(array($RuntimeModel->alias => $conditions));
+					if (!$RuntimeModel->save(array($RuntimeModel->alias => $conditions))) {
+                        return false;
+                    }
 				}
 			}
         }

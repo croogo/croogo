@@ -219,7 +219,7 @@ class NodesController extends AppController {
         if (!empty($this->data)) {
             if ($this->Node->saveTranslation($this->data)) {
                 $this->Session->setFlash(__($type['Type']['title'] . ' has been translated', true));
-                $this->redirect(array('action'=>'index'));
+                $this->redirect(array('action'=>'translations', $id));
             } else {
                 $this->Session->setFlash(__($type['Type']['title'] . ' could not be translated. Please, try again.', true));
             }
