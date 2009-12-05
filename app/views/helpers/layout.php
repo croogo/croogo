@@ -65,7 +65,7 @@ class LayoutHelper extends AppHelper {
                     $hookE = explode('.', $hook);
                     $plugin = $hookE['0'];
                     $hookHelper = $hookE['1'];
-                    $filePath = APP.'plugins'.DS.$plugin.DS.'views'.DS.'helpers'.DS.Inflector::underscore($hookHelper).'.php';
+                    $filePath = APP.'plugins'.DS.Inflector::underscore($plugin).DS.'views'.DS.'helpers'.DS.Inflector::underscore($hookHelper).'.php';
                 } else {
                     $plugin = null;
                     $filePath = APP.'views'.DS.'helpers'.DS.Inflector::underscore($hook).'.php';

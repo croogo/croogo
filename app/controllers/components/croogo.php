@@ -107,7 +107,7 @@ class CroogoComponent extends Object {
                     $hookE = explode('.', $hook);
                     $plugin = $hookE['0'];
                     $hookComponent = $hookE['1'];
-                    $filePath = APP.'plugins'.DS.$plugin.DS.'controllers'.DS.'components'.DS.Inflector::underscore($hookComponent).'.php';
+                    $filePath = APP.'plugins'.DS.Inflector::underscore($plugin).DS.'controllers'.DS.'components'.DS.Inflector::underscore($hookComponent).'.php';
                 } else {
                     $plugin = null;
                     $filePath = APP.'controllers'.DS.'components'.DS.Inflector::underscore($hook).'.php';
