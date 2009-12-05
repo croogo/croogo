@@ -84,7 +84,6 @@ class ExtensionsThemesController extends AppController {
             if ($xmlContent == '') {
                 $this->Session->setFlash(__('Invalid XML file', true));
                 $this->redirect(array('action' => 'index'));
-                exit();
             }
 
             // check if alias already exists
@@ -95,14 +94,12 @@ class ExtensionsThemesController extends AppController {
                 $xmlData['Theme']['alias'] == '') {
                 $this->Session->setFlash(__('Invalid XML file', true));
                 $this->redirect(array('action' => 'index'));
-                exit();
             }
             $themeAlias = $xmlData['Theme']['alias'];
             if (is_dir(APP.'views'.DS.'themed'.DS.$themeAlias) ||
                 is_dir(APP.'webroot'.DS.'themed'.DS.$themeAlias)) {
                 $this->Session->setFlash(__('Directory with theme alias already exists.', true));
                 $this->redirect(array('action' => 'add'));
-                exit();
             }
 
             // extract it
@@ -141,7 +138,6 @@ class ExtensionsThemesController extends AppController {
                 }
                 zip_close($zip);
                 $this->redirect(array('action' => 'index'));
-                exit();
             }
         }
     }
@@ -158,13 +154,11 @@ class ExtensionsThemesController extends AppController {
         if ($alias == null) {
             $this->Session->setFlash(__('Invalid Theme.', true));
             $this->redirect(array('action' => 'index'));
-            exit();
         }
 
         if ($alias == 'default') {
             $this->Session->setFlash(__('Default theme cannot be deleted.', true));
             $this->redirect(array('action' => 'index'));
-            exit();
         }
 
         $paths = array(
@@ -189,7 +183,6 @@ class ExtensionsThemesController extends AppController {
         }
 
         $this->redirect(array('action' => 'index'));
-        exit();
     }
 
 }

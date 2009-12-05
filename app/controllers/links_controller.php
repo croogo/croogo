@@ -169,7 +169,6 @@ class LinksController extends AppController {
         if (count($ids) == 0 || $action == null) {
             $this->Session->setFlash(__('No items selected.', true));
             $this->redirect(array('action' => 'index', 'menu' => $this->menuId));
-            exit();
         }
 
         if ($action == 'delete' &&
@@ -186,7 +185,6 @@ class LinksController extends AppController {
         }
 
         $this->redirect(array('action' => 'index', 'menu' => $this->menuId));
-        exit();
     }
 
 }

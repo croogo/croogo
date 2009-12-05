@@ -105,7 +105,6 @@ class LanguagesController extends AppController {
             $action == null ||
             $id == null) {
             $this->redirect(array('action' => 'index'));
-            exit();
         }
 
         $this->pageTitle = __('Select a language', true);

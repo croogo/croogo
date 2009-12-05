@@ -88,7 +88,6 @@ class NodesController extends AppController {
         if (!isset($type['Type']['alias'])) {
             $this->Session->setFlash(__('Content type does not exist.', true));
             $this->redirect(array('action' => 'create'));
-            exit();
         }
 
         $this->pageTitle = __("Create content: ", true) . $type['Type']['title'];
@@ -136,7 +135,6 @@ class NodesController extends AppController {
         if (!isset($type['Type']['alias'])) {
             $this->Session->setFlash(__('Content type does not exist.', true));
             $this->redirect(array('action' => 'create'));
-            exit();
         }
 
         $this->pageTitle = __("Edit content: ", true) . $type['Type']['title'];
@@ -177,13 +175,11 @@ class NodesController extends AppController {
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid content', true));
             $this->redirect(array('action'=>'index'));
-            exit();
         }
 
         if (!isset($this->params['named']['locale'])) {
             $this->Session->setFlash(__('Invalid locale', true));
             $this->redirect(array('action' => 'index'));
-            exit();
         }
 
         $language = $this->Language->find('first', array(
@@ -195,7 +191,6 @@ class NodesController extends AppController {
         if (!isset($language['Language']['id'])) {
             $this->Session->setFlash(__('Invalid Language', true));
             $this->redirect(array('action' => 'index'));
-            exit();
         }
 
         $this->Node->id = $id;
@@ -205,7 +200,6 @@ class NodesController extends AppController {
         if (!isset($type['Type']['alias'])) {
             $this->Session->setFlash(__('Content type does not exist.', true));
             $this->redirect(array('action' => 'create'));
-            exit();
         }
 
         $this->pageTitle  = __('Translate content:', true) . ' ';
@@ -234,14 +228,12 @@ class NodesController extends AppController {
         if ($id == null) {
             $this->Session->setFlash(__('Invalid Node.', true));
             $this->redirect(array('action' => 'index'));
-            exit();
         }
 
         $node = $this->Node->findById($id);
         if (!isset($node['Node']['id'])) {
             $this->Session->setFlash(__('Invalid Node.', true));
             $this->redirect(array('action' => 'index'));
-            exit();
         }
         $this->pageTitle = __('Translations: ', true) . $node['Node']['title'];
 
@@ -262,14 +254,12 @@ class NodesController extends AppController {
         if ($locale == null || $id == null) {
             $this->Session->setFlash(__('Invalid Locale or Node', true));
             $this->redirect(array('action' => 'index'));
-            exit();
         }
 
         $node = $this->Node->findById($id);
         if (!isset($node['Node']['id'])) {
             $this->Session->setFlash(__('Invalid Node', true));
             $this->redirect(array('action' => 'index'));
-            exit();
         }
 
         $runtimeModel =& $this->Node->translateModel();
@@ -285,7 +275,6 @@ class NodesController extends AppController {
         }
 
         $this->redirect(array('action' => 'translations', $id));
-        exit();
     }
 
     function admin_update_paths() {
@@ -323,7 +312,6 @@ class NodesController extends AppController {
 
         $this->Session->setFlash(__('Paths updated.', true));
         $this->redirect(array('action' => 'index'));
-        exit();
     }
 
     function admin_delete($id = null) {
@@ -362,7 +350,6 @@ class NodesController extends AppController {
         if (count($ids) == 0 || $action == null) {
             $this->Session->setFlash(__('No items selected.', true));
             $this->redirect(array('action' => 'index'));
-            exit();
         }
 
         if ($action == 'delete' &&
@@ -385,7 +372,6 @@ class NodesController extends AppController {
         }
 
         $this->redirect(array('action' => 'index'));
-        exit();
     }
 
     function index() {
@@ -403,7 +389,6 @@ class NodesController extends AppController {
             if (!isset($type['Type']['id'])) {
                 $this->Session->setFlash(__('Invalid content type.', true));
                 $this->redirect('/');
-                exit();
             }
 
             $this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
@@ -436,7 +421,6 @@ class NodesController extends AppController {
             if (!isset($type['Type']['id'])) {
                 $this->Session->setFlash(__('Invalid content type.', true));
                 $this->redirect('/');
-                exit();
             }
 
             $this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
@@ -462,7 +446,6 @@ class NodesController extends AppController {
             if (!isset($type['Type']['id'])) {
                 $this->Session->setFlash(__('Invalid content type.', true));
                 $this->redirect('/');
-                exit();
             }
 
             $this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
@@ -488,7 +471,6 @@ class NodesController extends AppController {
         } elseif ($id == null) {
             $this->Session->setFlash(__('Invalid content', true));
             $this->redirect('/');
-            exit();
         } else {
             $node = $this->Node->find('first', array(
                 'conditions' => array(
@@ -501,7 +483,6 @@ class NodesController extends AppController {
         if (!isset($node['Node']['id'])) {
             $this->Session->setFlash(__('Invalid content', true));
             $this->redirect('/');
-            exit();
         }
 
         if ($node['Node']['comment_count'] > 0) {

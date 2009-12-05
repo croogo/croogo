@@ -119,7 +119,6 @@ class FilemanagerController extends AppController {
             $path = $this->params['url']['path'];
         } else {
             $this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
-            exit();
         }
 
         if (file_exists($path) && unlink($path)) {
@@ -142,7 +141,6 @@ class FilemanagerController extends AppController {
             $path = $this->params['url']['path'];
         } else {
             $this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
-            exit();
         }
 
         if (is_dir($path) && rmdir($path)) {
@@ -165,7 +163,6 @@ class FilemanagerController extends AppController {
             $path = $this->params['url']['path'];
         } else {
             $this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
-            exit();
         }
 
         if (isset($this->params['url']['newpath'])) {
@@ -186,7 +183,6 @@ class FilemanagerController extends AppController {
             $path = $this->params['url']['path'];
         } else {
             $this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
-            exit();
         }
 
         if (!empty($this->data)) {
@@ -210,7 +206,6 @@ class FilemanagerController extends AppController {
             $path = $this->params['url']['path'];
         } else {
             $this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
-            exit();
         }
 
         if (!empty($this->data)) {

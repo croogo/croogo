@@ -83,7 +83,6 @@ class ContactsController extends AppController {
     function view($alias = null) {
         if (!$alias) {
             $this->redirect('/');
-            exit();
         }
 
         $contact = $this->Contact->find('first', array(
@@ -92,7 +91,6 @@ class ContactsController extends AppController {
         ));
         if (!isset($contact['Contact']['id'])) {
             $this->redirect('/');
-            exit();
         }
         $this->set('contact', $contact);
 

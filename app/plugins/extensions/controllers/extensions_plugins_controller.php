@@ -75,13 +75,11 @@ class ExtensionsPluginsController extends AppController {
             if (!$plugin) {
                 $this->Session->setFlash(__('Invalid plugin.', true));
                 $this->redirect(array('action' => 'add'));
-                exit();
             }
 
             if (is_dir(APP . 'plugins' . DS . $plugin)) {
                 $this->Session->setFlash(__('Plugin already exists.', true));
                 $this->redirect(array('action' => 'add'));
-                exit();
             }
 
             // extract
@@ -117,7 +115,6 @@ class ExtensionsPluginsController extends AppController {
             zip_close($zip);
 
             $this->redirect(array('action' => 'index'));
-            exit();
         }
     }
 
@@ -125,7 +122,6 @@ class ExtensionsPluginsController extends AppController {
         if (!$plugin) {
             $this->Session->setFlash(__('Invalid plugin', true));
             $this->redirect(array('action' => 'index'));
-            exit();
         }
 
         $folder =& new Folder;
@@ -136,7 +132,6 @@ class ExtensionsPluginsController extends AppController {
         }
 
         $this->redirect(array('action' => 'index'));
-        exit();
     }
 
 }

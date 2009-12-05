@@ -47,7 +47,6 @@ class ExtensionsLocalesController extends AppController {
         if ($locale == null || !is_dir(APP . 'locale' . DS . $locale)) {
             $this->Session->setFlash(__('Locale does not exist.', true));
             $this->redirect(array('action' => 'index'));
-            exit();
         }
 
         $file =& new File(APP . 'config' . DS . 'croogo_bootstrap.php', true);
@@ -62,7 +61,6 @@ class ExtensionsLocalesController extends AppController {
             $this->Session->setFlash(__('Could not edit croogo_bootstrap.php file.', true));
         }
         $this->redirect(array('action' => 'index'));
-        exit();
     }
 
     function admin_add() {
@@ -94,13 +92,11 @@ class ExtensionsLocalesController extends AppController {
             if (!$locale) {
                 $this->Session->setFlash(__('Invalid locale.', true));
                 $this->redirect(array('action' => 'add'));
-                exit();
             }
 
             if (is_dir(APP . 'locale' . DS . $locale)) {
                 $this->Session->setFlash(__('Locale already exists.', true));
                 $this->redirect(array('action' => 'add'));
-                exit();
             }
 
             // extract
@@ -136,7 +132,6 @@ class ExtensionsLocalesController extends AppController {
             zip_close($zip);
 
             $this->redirect(array('action' => 'index'));
-            exit();
         }
     }
 
@@ -146,13 +141,11 @@ class ExtensionsLocalesController extends AppController {
         if (!$locale) {
             $this->Session->setFlash(__('Invalid locale.', true));
             $this->redirect(array('action' => 'index'));
-            exit();
         }
 
         if (!file_exists(APP . 'locale' . DS . $locale . DS . 'LC_MESSAGES' . DS . 'default.po')) {
             $this->Session->setFlash(__('The file default.po does not exist.', true));
             $this->redirect(array('action' => 'index'));
-            exit();
         }
 
         $file =& new File(APP . 'locale' . DS . $locale . DS . 'LC_MESSAGES' . DS . 'default.po', true);
@@ -163,7 +156,6 @@ class ExtensionsLocalesController extends AppController {
             if ($file->write($this->data['Locale']['content'])) {
                 $this->Session->setFlash(__('Locale updated successfully', true));
                 $this->redirect(array('action' => 'index'));
-                exit();
             }
         }
 
@@ -174,7 +166,6 @@ class ExtensionsLocalesController extends AppController {
         if (!$locale) {
             $this->Session->setFlash(__('Invalid locale', true));
             $this->redirect(array('action' => 'index'));
-            exit();
         }
 
         $folder =& new Folder;
@@ -185,7 +176,6 @@ class ExtensionsLocalesController extends AppController {
         }
 
         $this->redirect(array('action' => 'index'));
-        exit();
     }
 
 }

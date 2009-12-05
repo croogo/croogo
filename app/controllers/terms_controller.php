@@ -139,7 +139,6 @@ class TermsController extends AppController {
         if (count($ids) == 0 || $action == null) {
             $this->Session->setFlash(__('No items selected.', true));
             $this->redirect(array('action' => 'index', 'vocabulary' => $this->vocabularyId));
-            exit();
         }
 
         if ($action == 'delete' &&
@@ -156,7 +155,6 @@ class TermsController extends AppController {
         }
 
         $this->redirect(array('action' => 'index', 'vocabulary' => $this->vocabularyId));
-        exit();
     }
 
 }

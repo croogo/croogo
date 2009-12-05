@@ -111,7 +111,6 @@ class InstallController extends InstallAppController {
                 $this->__executeSQLScript($db, CONFIGS.'sql'.DS.'croogo_data.sql');
 
                 $this->redirect(array('action' => 'finish'));
-                exit();
             }
         }
     }
@@ -131,7 +130,6 @@ class InstallController extends InstallAppController {
             if ($this->folder->delete(APP.'plugins'.DS.'install')) {
                 $this->Session->setFlash(__('Installataion files deleted successfully.', true));
                 $this->redirect('/');
-                exit();
             } else {
                 $this->Session->setFlash(__('Could not delete installation files.', true));
             }
