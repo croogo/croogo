@@ -10,7 +10,7 @@
             }
         ?>
         </span>
-        <span class="date"><?php echo __('said on', true) . ' ' . $time->nice($comment['Comment']['created']); ?></span>
+        <span class="date"><?php echo __('said on', true) . ' ' . $time->format(Configure::read('Comment.date_time_format'), $comment['Comment']['created']); ?></span>
     </div>
     <div class="comment-body"><?php echo nl2br($comment['Comment']['body']); ?></div>
     <div class="comment-reply">

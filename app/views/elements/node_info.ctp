@@ -18,7 +18,7 @@
     }
     if ($type['Type']['format_show_date']) {
         echo ' ' . __('on', true) . ' ';
-        echo $html->tag('span', $time->nice($layout->node('created')), array('class' => 'date'));
+        echo $html->tag('span', $time->format(Configure::read('Reading.date_time_format'), $layout->node('created')), array('class' => 'date'));
     }
 ?>
 </div>

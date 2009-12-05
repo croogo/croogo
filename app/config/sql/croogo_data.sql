@@ -343,7 +343,9 @@ INSERT INTO `settings` (`id`, `key`, `value`, `title`, `description`, `input_typ
 (23, 'Writing.wysiwyg', '1', 'Enable WYSIWYG editor', '', 'checkbox', 1, 17, ''),
 (24, 'Comment.level', '1', '', 'levels deep (threaded comments)', '', 1, 18, ''),
 (25, 'Comment.feed_limit', '10', '', 'number of comments to show in feed', '', 1, 19, ''),
-(26, 'Site.locale', 'eng', '', '', 'text', 0, 20, '');
+(26, 'Site.locale', 'eng', '', '', 'text', 0, 20, ''),
+(27, 'Reading.date_time_format', 'D, M d Y', '', '', '', 1, 21, ''),
+(28, 'Comment.date_time_format', 'M d, Y', '', '', '', 1, 22, '');
 
 --
 -- Dumping data for table `terms`
