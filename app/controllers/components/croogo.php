@@ -123,7 +123,7 @@ class CroogoComponent extends Object {
                 $componentName = $hook;
                 if (strstr($hook, '.')) {
                     $hookE = explode('.', $hook);
-                    $componentName = $hookE['0'];
+                    $componentName = $hookE['1'];
                 }
                 $componentClassName = $componentName.'Component';
 
