@@ -13,6 +13,22 @@
  */
 class ExampleHookComponent extends Object {
 /**
+ * Called after activating the hook in ExtensionsHooksController::admin_toggle()
+ *
+ * @param object $controller Controller
+ * @return void
+ */
+    function onActivate(&$controller) {
+    }
+/**
+ * Called after deactivating the hook in ExtensionsHooksController::admin_toggle()
+ *
+ * @param object $controller Controller
+ * @return void
+ */
+    function onDeactivate(&$controller) {
+    }
+/**
  * Called after the Controller::beforeFilter() and before the controller action
  *
  * @param object $controller Controller with components to startup

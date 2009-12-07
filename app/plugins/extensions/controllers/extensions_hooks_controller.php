@@ -107,12 +107,11 @@ class ExtensionsHooksController extends AppController {
         if (strstr(Inflector::underscore($hook), '_helper')) {
             $configureKey = 'Hook.helpers';
             $hookType = 'Helper';
-            $hookTitle = str_replace($hookType, '', $hook);
         } else {
             $configureKey = 'Hook.components';
             $hookType = 'Component';
-            $hookTitle = str_replace($hookType, '', $hook);
         }
+        $hookTitle = str_replace($hookType, '', $hook);
 
         // toggle hook
         $status = 0;
@@ -133,6 +132,32 @@ class ExtensionsHooksController extends AppController {
                 $this->Setting->write($configureKey, $hookItems);
                 $status = 1;
             }
+        }
+
+        // callback for activate/deactivate
+        App::import($hookType, $hookTitle);
+        if (strstr($hookTitle, '.')) {
+            $hookTitleE = explode('.', $hookTitle);
+            $hookTitle = $hookTitleE['1'];
+        }
+        if ($status == 1) {
+            $method = 'onActivate';
+        } else {
+            $method = 'onDeactivate';
+        }
+        if ($hookType == 'Component') {
+            if (isset($this->Croogo->{$hookTitle})) {
+                $hookInstance = $this->Croogo->{$hookTitle};
+            } else {
+                $hookClassName = $hookTitle.'Component';
+                $hookInstance =& new $hookClassName;
+            }
+        } else {
+            $hookClassName = $hookTitle.'Helper';
+            $hookInstance =& new $hookClassName;
+        }
+        if (method_exists($hookInstance, $method)) {
+            $hookInstance->$method($this);
         }
 
         $this->set(compact('status', 'hook', 'hookTitle'));
