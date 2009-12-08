@@ -252,12 +252,23 @@ class LayoutHelper extends AppHelper {
         if (!$this->regionIsEmpty($regionAlias)) {
             $blocks = $this->View->viewVars['blocks_for_layout'][$regionAlias];
             foreach ($blocks AS $block) {
+                $plugin = false;
                 if ($block['Block']['element'] != null) {
-                    $element = $block['Block']['element'];
+                    if (strstr($block['Block']['element'], '.')) {
+                        $plugin_element = explode('.', $block['Block']['element']);
+                        $plugin  = $plugin_element[0];
+                        $element = $plugin_element[1];
+                    } else {
+                        $element = $block['Block']['element'];
+                    }
                 } else {
                     $element = 'block';
                 }
-                $output .= $this->View->element($element, array('block' => $block));
+                if ($plugin) {
+                    $output .= $this->View->element($element, array('block' => $block, 'plugin' => $plugin));
+                } else {
+                    $output .= $this->View->element($element, array('block' => $block));
+                }
             }
         }
 
