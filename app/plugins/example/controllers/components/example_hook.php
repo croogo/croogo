@@ -19,6 +19,8 @@ class ExampleHookComponent extends Object {
  * @return void
  */
     function onActivate(&$controller) {
+        // admin_menu element of Example plugin will be shown in admin panel's navigation
+        $controller->Croogo->addAdminMenu('Example');
     }
 /**
  * Called after deactivating the hook in ExtensionsHooksController::admin_toggle()
@@ -27,6 +29,7 @@ class ExampleHookComponent extends Object {
  * @return void
  */
     function onDeactivate(&$controller) {
+        $controller->Croogo->removeAdminMenu('Example');
     }
 /**
  * Called after the Controller::beforeFilter() and before the controller action
