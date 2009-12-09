@@ -50,19 +50,27 @@ class AclFilterComponent extends Object {
             if ($thisControllerNode) {
                 $thisControllerNode = $thisControllerNode['0'];
                 $thisControllerActions = $this->controller->Acl->Aco->find('list', array(
-                                           'conditions' => array('Aco.parent_id' => $thisControllerNode['Aco']['id']),
-                                           'fields' => array('Aco.id', 'Aco.alias'),
-                                         ));
+                    'conditions' => array(
+                        'Aco.parent_id' => $thisControllerNode['Aco']['id'],
+                    ),
+                    'fields' => array(
+                        'Aco.id',
+                        'Aco.alias',
+                    ),
+                ));
                 $thisControllerActionsIds = array_keys($thisControllerActions);
                 $conditions = array(
-                               'AclArosAco.aro_id' => $roleId,
-                               'AclArosAco.aco_id' => $thisControllerActionsIds,
-                               'AclArosAco._create' => 1,
-                               'AclArosAco._read' => 1,
-                               'AclArosAco._update' => 1,
-                               'AclArosAco._delete' => 1,
-                              );
-                $allowedActions = ClassRegistry::init('Acl.AclArosAco')->find('all', array('recursive' => '-1', 'conditions' => $conditions));
+                    'AclArosAco.aro_id' => $roleId,
+                    'AclArosAco.aco_id' => $thisControllerActionsIds,
+                    'AclArosAco._create' => 1,
+                    'AclArosAco._read' => 1,
+                    'AclArosAco._update' => 1,
+                    'AclArosAco._delete' => 1,
+                );
+                $allowedActions = ClassRegistry::init('Acl.AclArosAco')->find('all', array(
+                    'recursive' => '-1',
+                    'conditions' => $conditions,
+                ));
                 $allowedActionsIds = Set::extract('/AclArosAco/aco_id', $allowedActions);
             }
 

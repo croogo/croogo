@@ -19,8 +19,21 @@ class ExampleHookComponent extends Object {
  * @return void
  */
     function onActivate(&$controller) {
-        // admin_menu element of Example plugin will be shown in admin panel's navigation
+        // ACL: set ACOs with permissions
+        $controller->Croogo->addAco('Example'); // ExampleController
+        $controller->Croogo->addAco('Example/index', array('registered', 'public')); // ExampleController::index()
+
+        // Admin menu: admin_menu element of Example plugin will be shown in admin panel's navigation
         $controller->Croogo->addAdminMenu('Example');
+
+        // Main menu: add an Example link
+        $mainMenu = $controller->Link->Menu->findByAlias('main');
+        $controller->Link->save(array(
+            'menu_id' => $mainMenu['Menu']['id'],
+            'title' => 'Example',
+            'link' => 'controller:example/action:index',
+            'status' => 1,
+        ));
     }
 /**
  * Called after deactivating the hook in ExtensionsHooksController::admin_toggle()
@@ -29,7 +42,22 @@ class ExampleHookComponent extends Object {
  * @return void
  */
     function onDeactivate(&$controller) {
+        // ACL: remove ACOs with permissions
+        $controller->Croogo->removeAco('Example'); // ExampleController ACO and it's actions will be removed
+
+        // Admin menu: remove
         $controller->Croogo->removeAdminMenu('Example');
+
+        // Main menu: delete Example link
+        $link = $controller->Link->find('first', array(
+            'conditions' => array(
+                'Menu.alias' => 'main',
+                'Link.link' => 'controller:example/action:index',
+            ),
+        ));
+        if (isset($link['Link']['id'])) {
+            $controller->Link->delete($link['Link']['id']);
+        }
     }
 /**
  * Called after the Controller::beforeFilter() and before the controller action
@@ -38,10 +66,7 @@ class ExampleHookComponent extends Object {
  * @return void
  */
     function startup(&$controller) {
-        echo '<p>ExampleHook startup</p>';
-
-        // set variables for views
-        $controller->set('variableFromHook', 'value here');
+        $controller->set('exampleHookStartup', 'ExampleHook startup');
     }
 /**
  * Called after the Controller::beforeRender(), after the view class is loaded, and before the
@@ -51,7 +76,7 @@ class ExampleHookComponent extends Object {
  * @return void
  */
     function beforeRender(&$controller) {
-        echo '<p>ExampleHook beforeRender</p>';
+        $controller->set('exampleHookBeforeRender', 'ExampleHook beforeRender');
     }
 /**
  * Called after Controller::render() and before the output is printed to the browser.
@@ -60,7 +85,6 @@ class ExampleHookComponent extends Object {
  * @return void
  */
     function shutdown(&$controller) {
-        echo '<p>ExampleHook shutdown</p>';
     }
     
 }
