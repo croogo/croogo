@@ -94,6 +94,20 @@ class Setting extends AppModel {
         }
     }
 /**
+ * Deletes setting record for given key
+ *
+ * @param string $key
+ * @return boolean
+ */
+    function deleteKey($key) {
+        $setting = $this->findByKey($key);
+        if (isset($setting['Setting']['id']) &&
+            $this->delete($setting['Setting']['id'])) {
+            return true;
+        }
+        return false;
+    }
+/**
  * All key/value pairs are made accessible from Configure class
  *
  * @return void
