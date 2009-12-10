@@ -80,7 +80,7 @@ class VocabulariesController extends AppController {
             $this->Session->setFlash(__('Invalid id for Vocabulary', true));
             $this->redirect(array('action'=>'index'));
         }
-        if ($this->Vocabulary->del($id)) {
+        if ($this->Vocabulary->delete($id)) {
             $this->Session->setFlash(__('Vocabulary deleted', true));
             $this->redirect(array('action'=>'index'));
         }

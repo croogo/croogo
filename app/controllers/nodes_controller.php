@@ -319,7 +319,7 @@ class NodesController extends AppController {
             $this->Session->setFlash(__('Invalid id for Node', true));
             $this->redirect(array('action'=>'index'));
         }
-        if ($this->Node->del($id)) {
+        if ($this->Node->delete($id)) {
             $this->Session->setFlash(__('Node deleted', true));
             $this->redirect(array('action'=>'index'));
         }

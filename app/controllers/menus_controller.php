@@ -74,7 +74,7 @@ class MenusController extends AppController {
             $this->Session->setFlash(__('Invalid id for Menu', true));
             $this->redirect(array('action'=>'index'));
         }
-        if ($this->Menu->del($id)) {
+        if ($this->Menu->delete($id)) {
             $this->Session->setFlash(__('Menu deleted', true));
             $this->redirect(array('action'=>'index'));
         }

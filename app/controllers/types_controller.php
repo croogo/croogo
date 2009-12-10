@@ -80,7 +80,7 @@ class TypesController extends AppController {
             $this->Session->setFlash(__('Invalid id for Type', true));
             $this->redirect(array('action'=>'index'));
         }
-        if ($this->Type->del($id)) {
+        if ($this->Type->delete($id)) {
             $this->Session->setFlash(__('Tyoe deleted', true));
             $this->redirect(array('action'=>'index'));
         }

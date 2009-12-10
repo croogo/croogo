@@ -131,7 +131,7 @@ class LinksController extends AppController {
             $this->Session->setFlash(__('Invalid id for Link', true));
             $this->redirect(array('action'=>'index', 'menu' => $this->menuId));
         }
-        if ($this->Link->del($id)) {
+        if ($this->Link->delete($id)) {
             $this->Session->setFlash(__('Link deleted', true));
             $this->redirect(array('action'=>'index', 'menu' => $this->menuId));
         }

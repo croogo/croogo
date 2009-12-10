@@ -156,7 +156,7 @@ class AttachmentsController extends AppController {
         // get Node
         $attachment = $this->Node->find('first', array('conditions' => array('Node.id' => $id, 'Node.type' => $this->type)));
         if (isset($attachment['Node'])) {
-            if ($this->Node->del($id)) {
+            if ($this->Node->delete($id)) {
                 // delete the file
                 unlink(WWW_ROOT . $this->uploadsDir . DS . $attachment['Node']['slug']);
 

@@ -81,7 +81,7 @@ class CommentsController extends AppController {
             $this->Session->setFlash(__('Invalid id for Comment', true));
             $this->redirect(array('action'=>'index'));
         }
-        if ($this->Comment->del($id)) {
+        if ($this->Comment->delete($id)) {
             $this->Session->setFlash(__('Comment deleted', true));
             $this->redirect(array('action'=>'index'));
         }
@@ -266,7 +266,7 @@ class CommentsController extends AppController {
             ));
 
             if (isset($comment['Comment']['id']) &&
-                $this->Comment->del($id)) {
+                $this->Comment->delete($id)) {
                 $success = 1;
             }
         }

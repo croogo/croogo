@@ -74,7 +74,7 @@ class RegionsController extends AppController {
             $this->Session->setFlash(__('Invalid id for Region', true));
             $this->redirect(array('action'=>'index'));
         }
-        if ($this->Region->del($id)) {
+        if ($this->Region->delete($id)) {
             $this->Session->setFlash(__('Region deleted', true));
             $this->redirect(array('action'=>'index'));
         }

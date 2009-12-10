@@ -61,7 +61,7 @@ class AclAcosController extends AclAppController {
 			$this->Session->setFlash(__('Invalid id for Aco', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		if ($this->AclAco->del($id)) {
+		if ($this->AclAco->delete($id)) {
 			$this->Session->setFlash(__('Aco deleted', true));
 			$this->redirect(array('action' => 'index'));
 		}

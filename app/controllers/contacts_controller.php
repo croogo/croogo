@@ -74,7 +74,7 @@ class ContactsController extends AppController {
             $this->Session->setFlash(__('Invalid id for Contact', true));
             $this->redirect(array('action'=>'index'));
         }
-        if ($this->Contact->del($id)) {
+        if ($this->Contact->delete($id)) {
             $this->Session->setFlash(__('Contact deleted', true));
             $this->redirect(array('action'=>'index'));
         }

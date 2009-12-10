@@ -81,7 +81,7 @@ class MessagesController extends AppController {
             $this->Session->setFlash(__('Invalid id for Message', true));
             $this->redirect(array('action'=>'index'));
         }
-        if ($this->Message->del($id)) {
+        if ($this->Message->delete($id)) {
             $this->Session->setFlash(__('Message deleted', true));
             $this->redirect(array('action'=>'index'));
         }

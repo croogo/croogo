@@ -89,7 +89,7 @@ class BlocksController extends AppController {
             $this->Session->setFlash(__('Invalid id for Block', true));
             $this->redirect(array('action'=>'index'));
         }
-        if ($this->Block->del($id)) {
+        if ($this->Block->delete($id)) {
             $this->Session->setFlash(__('Block deleted', true));
             $this->redirect(array('action'=>'index'));
         }

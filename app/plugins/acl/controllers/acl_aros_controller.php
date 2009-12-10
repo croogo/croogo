@@ -61,7 +61,7 @@ class AclArosController extends AclAppController {
 			$this->Session->setFlash(__('Invalid id for Aro', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		if ($this->AclAro->del($id)) {
+		if ($this->AclAro->delete($id)) {
 			$this->Session->setFlash(__('Aro deleted', true));
 			$this->redirect(array('action' => 'index'));
 		}

@@ -110,7 +110,7 @@ class AclActionsController extends AclAppController {
 			$this->Session->setFlash(__('Invalid id for Action', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->Acl->Aco->del($id)) {
+		if ($this->Acl->Aco->delete($id)) {
 			$this->Session->setFlash(__('Action deleted', true));
 			$this->redirect(array('action'=>'index'));
 		}

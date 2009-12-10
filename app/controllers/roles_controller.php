@@ -74,7 +74,7 @@ class RolesController extends AppController {
             $this->Session->setFlash(__('Invalid id for Role', true));
             $this->redirect(array('action'=>'index'));
         }
-        if ($this->Role->del($id)) {
+        if ($this->Role->delete($id)) {
             $this->Session->setFlash(__('Role deleted', true));
             $this->redirect(array('action'=>'index'));
         }
