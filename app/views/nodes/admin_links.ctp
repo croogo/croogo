@@ -1,6 +1,6 @@
 <?php
     echo $html->css('admin');
-    echo $javascript->link('jquery/jquery-1.3.1.min');
+    echo $javascript->link('jquery/jquery.min');
 ?>
 <script type="text/javascript">
     $(document).ready(function() {

@@ -14,7 +14,7 @@
     <?php
         echo $layout->meta();
         echo $layout->feed();
-        echo $javascript->link(array('jquery/jquery-1.3.1.min'));
+        echo $javascript->link(array('jquery/jquery.min'));
         echo $layout->js();
         echo $html->css(array(
             'reset',
