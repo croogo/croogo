@@ -30,7 +30,7 @@ class FilemanagerHelper extends AppHelper {
 		//$exts = split("[/\\.]", $filename) ;
 		//$n = count($exts)-1;
 		$filename_e = explode(".", $filename);
-		if( $filename_e == 1 ) {
+		if ($filename_e == 1) {
 			return "file";
 		} else {
 			$n = count($filename_e) - 1;
@@ -92,8 +92,8 @@ class FilemanagerHelper extends AppHelper {
 		
 		$output = array();
 		$current_path = "";
-		foreach($path_e AS $p) {
-			if( $p != null ) {
+		foreach ($path_e AS $p) {
+			if ($p != null) {
 				$current_path .= $p.DS;
 				$output[$p] = $current_path;
 			}
@@ -182,6 +182,21 @@ class FilemanagerHelper extends AppHelper {
         }
 
         return $output;
+    }
+/**
+ * Checks if searched location is under any of the paths
+ *
+ * @param array $paths
+ * @param string $search
+ * @return boolean
+ */
+    function inPath($paths, $search) {
+        foreach ($paths AS $path) {
+            if (strpos($search, $path) !== false) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

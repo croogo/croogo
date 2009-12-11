@@ -34,8 +34,19 @@ class FilemanagerController extends AppController {
  */
     var $helpers = array('Html', 'Form', 'Filemanager');
 
+    var $deletablePaths = array();
+
     function beforeFilter() {
         parent::beforeFilter();
+
+        $this->deletablePaths = array(
+            APP.'views'.DS.'themed'.DS,
+            WWW_ROOT.'css'.DS,
+            WWW_ROOT.'img'.DS,
+            WWW_ROOT.'js'.DS,
+            WWW_ROOT.'themed'.DS,
+        );
+        $this->set('deletablePaths', $this->deletablePaths);
 
         //App::import('Core', 'Folder');
         App::import('Core', 'File');
