@@ -18,6 +18,8 @@
 
         $rows = array();
         foreach ($plugins AS $plugin) {
+            if (in_array($plugin, $corePlugins)) continue;
+
             $actions  = '';
             $actions .= ' ' . $html->link(__('Delete', true), array('action' => 'delete', $plugin), null, __('Are you sure?', true));
 

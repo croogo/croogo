@@ -25,10 +25,24 @@ class ExtensionsPluginsController extends AppController {
  * @var array
  * @access public
  */
-    var $uses = array('Setting', 'User');
+    var $uses = array(
+        'Setting',
+        'User',
+    );
+/**
+ * Core plugins
+ *
+ * @var array
+ * @access public
+ */
+    var $corePlugins = array(
+        'acl',
+        'extensions',
+    );
 
     function beforeFilter() {
         parent::beforeFilter();
+
         App::import('Core', 'File');
         APP::import('Core', 'Folder');
     }
@@ -40,6 +54,7 @@ class ExtensionsPluginsController extends AppController {
         $folder->path = APP . 'plugins';
         $content = $folder->read();
         $plugins = $content['0'];
+        $this->set('corePlugins', $this->corePlugins);
         $this->set(compact('content', 'plugins'));
     }
 
