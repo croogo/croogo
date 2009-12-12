@@ -19,6 +19,7 @@ class AppController extends Controller {
         'Javascript',
         'Time',
         'Layout',
+        'Custom',
         'Meta',
         'Tinymce',
     );

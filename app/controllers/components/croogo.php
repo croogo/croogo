@@ -342,6 +342,12 @@ class CroogoComponent extends Object {
         $this->controller->set('vocabularies_for_layout', $this->vocabularies_for_layout);
         $this->controller->set('types_for_layout', $this->types_for_layout);
 
+        $helperPaths = Configure::read('helperPaths');
+        if ($controller->theme) {
+            array_unshift($helperPaths, APP.'views'.DS.'themed'.DS.$controller->theme.DS.'helpers'.DS);
+            Configure::write('helperPaths', $helperPaths);
+        }
+
         $this->hook('beforeRender');
     }
 /**
