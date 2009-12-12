@@ -15,6 +15,7 @@
         ));
         echo $javascript->link(array(
             'jquery/jquery-ui-1.7.min',
+            'jquery/jquery.slug',
             'jquery/jquery.uuid',
             'jquery/jquery.cookie',
             'jquery/jquery.collapsor',

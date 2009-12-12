@@ -1,3 +1,6 @@
+<?php
+    $javascript->link(array('terms'), false);
+?>
 <div class="terms form">
     <h2><?php echo $this->pageTitle; ?></h2>
 
@@ -7,7 +10,7 @@
                 echo $form->input('vocabulary_id', array('value' => $vocabulary));
                 echo $form->input('parent_id', array('type' => 'select', 'options' => $terms, 'empty' => true));
                 echo $form->input('title');
-                echo $form->input('slug');
+                echo $form->input('slug', array('class' => 'slug'));
                 echo $form->input('status', array());
             ?>
         </fieldset>

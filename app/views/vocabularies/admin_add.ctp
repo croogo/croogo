@@ -1,3 +1,6 @@
+<?php
+    $javascript->link(array('vocabularies'), false);
+?>
 <div class="vocabularies form">
     <h2><?php echo $this->pageTitle; ?></h2>
     <?php echo $form->create('Vocabulary');?>
@@ -11,7 +14,7 @@
                 <div id="vocabulary-basic">
                     <?php
                         echo $form->input('title');
-                        echo $form->input('alias');
+                        echo $form->input('alias', array('class' => 'alias'));
                         echo $form->input('description');
                         echo $form->input('Type.Type');
                     ?>

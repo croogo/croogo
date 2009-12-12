@@ -8,7 +8,7 @@ var Nodes = {};
 /**
  * functions to execute when document is ready
  *
- * only for PagesController
+ * only for NodesController
  *
  * @return void
  */
@@ -17,6 +17,7 @@ Nodes.documentReady = function() {
     Nodes.addMeta();
     Nodes.removeMeta();
 }
+
 /**
  * Submits form for filtering Nodes
  *
@@ -64,6 +65,7 @@ Nodes.filter = function() {
         return false;
     });
 }
+
 /**
  * add meta field
  *
@@ -105,6 +107,18 @@ Nodes.removeMeta = function() {
 }
 
 /**
+ * Create slugs based on title field
+ *
+ * @return void
+ */
+Nodes.slug = function() {
+    $("#NodeTitle").slug({
+        slug:'slug',
+        hide: false
+    });
+}
+
+/**
  * document ready
  *
  * @return void
@@ -112,5 +126,8 @@ Nodes.removeMeta = function() {
 $(document).ready(function() {
     if (Croogo.params.controller == 'nodes') {
         Nodes.documentReady();
+        if (Croogo.params.action == 'admin_add') {
+            Nodes.slug();
+        }
     }
 });
