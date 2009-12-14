@@ -100,10 +100,9 @@ class LanguagesController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    function admin_select($controller = null, $action = null, $id = null) {
-        if ($controller == null ||
-            $action == null ||
-            $id == null) {
+    function admin_select($id = null, $modelAlias = null) {
+        if ($id == null ||
+            $modelAlias == null) {
             $this->redirect(array('action' => 'index'));
         }
 
@@ -114,7 +113,7 @@ class LanguagesController extends AppController {
             ),
             'order' => 'Language.weight ASC',
         ));
-        $this->set(compact('controller', 'action', 'id', 'languages'));
+        $this->set(compact('id', 'modelAlias', 'languages'));
     }
 
 }

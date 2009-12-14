@@ -32,6 +32,7 @@
             $actions  = $html->link(__('Move up', true), array('controller' => 'links', 'action' => 'moveup', 'menu' => $menu, $linkId));
             $actions .= ' ' . $html->link(__('Move down', true), array('controller' => 'links', 'action' => 'movedown', 'menu' => $menu, $linkId));
             $actions .= ' ' . $html->link(__('Edit', true), array('controller' => 'links', 'action' => 'edit', 'menu' => $menu, $linkId));
+            $actions .= ' ' . $layout->adminRowActions($linkId);
             $actions .= ' ' . $html->link(__('Delete', true), array('controller' => 'links', 'action' => 'delete', 'menu' => $menu, $linkId), null, __('Are you sure?', true));
 
             $rows[] = array(

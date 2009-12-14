@@ -26,6 +26,7 @@
             $actions  = $html->link(__('Move up', true), array('controller' => 'blocks', 'action' => 'moveup', $block['Block']['id']));
             $actions .= ' ' . $html->link(__('Move down', true), array('controller' => 'blocks', 'action' => 'movedown', $block['Block']['id']));
             $actions .= ' ' . $html->link(__('Edit', true), array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id']));
+            $actions .= ' ' . $layout->adminRowActions($block['Block']['id']);
             $actions .= ' ' . $html->link(__('Delete', true), array('controller' => 'blocks', 'action' => 'delete', $block['Block']['id']), null, __('Are you sure?', true));
 
             $rows[] = array(

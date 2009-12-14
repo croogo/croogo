@@ -81,6 +81,7 @@ class CroogoComponent extends Object {
         if ($this->Session->check('Auth.User.id')) {
             $this->roleId = $this->Session->read('Auth.User.role_id');
         }
+        $this->hook('startup');
 
         if (!isset($this->controller->params['admin'])) {
             $this->blocks();
@@ -88,8 +89,6 @@ class CroogoComponent extends Object {
             $this->vocabularies();
             $this->types();
         }
-
-        $this->hook('startup');
     }
 /**
  * Load hooks as components
@@ -560,10 +559,6 @@ class CroogoComponent extends Object {
  * @return void
  */
     function hook($methodName) {
-        if (isset($this->controller->params['admin'])) {
-            return;
-        }
-
         foreach ($this->hooks AS $hook) {
             if (strstr($hook, '.')) {
                 $hookE = explode('.', $hook);

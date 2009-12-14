@@ -27,7 +27,6 @@ class NodesController extends AppController {
  */
     var $uses = array(
         'Node',
-        'Language',
     );
 
     function beforeFilter() {
@@ -169,112 +168,6 @@ class NodesController extends AppController {
             $terms[$vocabularyTitle] = $this->Node->Term->generatetreelist($termsConditions);
         }
         $this->set(compact('typeAlias', 'type', 'nodes', 'terms'));
-    }
-
-    function admin_translate($id = null) {
-        if (!$id && empty($this->data)) {
-            $this->Session->setFlash(__('Invalid content', true));
-            $this->redirect(array('action'=>'index'));
-        }
-
-        if (!isset($this->params['named']['locale'])) {
-            $this->Session->setFlash(__('Invalid locale', true));
-            $this->redirect(array('action' => 'index'));
-        }
-
-        $language = $this->Language->find('first', array(
-            'conditions' => array(
-                'Language.alias' => $this->params['named']['locale'],
-                'Language.status' => 1,
-            ),
-        ));
-        if (!isset($language['Language']['id'])) {
-            $this->Session->setFlash(__('Invalid Language', true));
-            $this->redirect(array('action' => 'index'));
-        }
-
-        $this->Node->id = $id;
-        $typeAlias = $this->Node->field('type');
-
-        $type = $this->Node->Term->Vocabulary->Type->findByAlias($typeAlias);
-        if (!isset($type['Type']['alias'])) {
-            $this->Session->setFlash(__('Content type does not exist.', true));
-            $this->redirect(array('action' => 'create'));
-        }
-
-        $this->pageTitle  = __('Translate content:', true) . ' ';
-        $this->pageTitle .= $language['Language']['title'] . ' (' . $language['Language']['native'] . ')';
-
-        $this->Node->type = $type['Type']['alias'];
-        $this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
-
-        $this->Node->locale = $this->params['named']['locale'];
-        $fields = $this->Node->getTranslationFields();
-        if (!empty($this->data)) {
-            if ($this->Node->saveTranslation($this->data)) {
-                $this->Session->setFlash(__($type['Type']['title'] . ' has been translated', true));
-                $this->redirect(array('action'=>'translations', $id));
-            } else {
-                $this->Session->setFlash(__($type['Type']['title'] . ' could not be translated. Please, try again.', true));
-            }
-        }
-        if (empty($this->data)) {
-            $this->data = $this->Node->read(null, $id);
-        }
-        $this->set(compact('typeAlias', 'type', 'fields', 'language'));
-    }
-
-    function admin_translations($id = null) {
-        if ($id == null) {
-            $this->Session->setFlash(__('Invalid Node.', true));
-            $this->redirect(array('action' => 'index'));
-        }
-
-        $node = $this->Node->findById($id);
-        if (!isset($node['Node']['id'])) {
-            $this->Session->setFlash(__('Invalid Node.', true));
-            $this->redirect(array('action' => 'index'));
-        }
-        $this->pageTitle = __('Translations: ', true) . $node['Node']['title'];
-
-        $runtimeModel =& $this->Node->translateModel();
-        $runtimeModelAlias = $runtimeModel->alias;
-        $translations = $runtimeModel->find('all', array(
-            'conditions' => array(
-                $runtimeModelAlias.'.model' => $this->Node->name,
-                $runtimeModelAlias.'.foreign_key' => $id,
-                $runtimeModelAlias.'.field' => 'title',
-            ),
-        ));
-
-        $this->set(compact('runtimeModelAlias', 'translations', 'node', 'id'));
-    }
-
-    function admin_delete_translation($locale = null, $id = null) {
-        if ($locale == null || $id == null) {
-            $this->Session->setFlash(__('Invalid Locale or Node', true));
-            $this->redirect(array('action' => 'index'));
-        }
-
-        $node = $this->Node->findById($id);
-        if (!isset($node['Node']['id'])) {
-            $this->Session->setFlash(__('Invalid Node', true));
-            $this->redirect(array('action' => 'index'));
-        }
-
-        $runtimeModel =& $this->Node->translateModel();
-        $runtimeModelAlias = $runtimeModel->alias;
-        if ($runtimeModel->deleteAll(array(
-                $runtimeModelAlias.'.model' => $this->Node->name,
-                $runtimeModelAlias.'.foreign_key' => $id,
-                $runtimeModelAlias.'.locale' => $locale,
-            ))) {
-            $this->Session->setFlash(__('Translation for the locale deleted successfully.', true));
-        } else {
-            $this->Session->setFlash(__('Translation for the locale could not be deleted.', true));
-        }
-
-        $this->redirect(array('action' => 'translations', $id));
     }
 
     function admin_update_paths() {

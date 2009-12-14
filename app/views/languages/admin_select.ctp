@@ -11,10 +11,12 @@
         foreach ($languages AS $language) {
             $title = $language['Language']['title'] . ' (' . $language['Language']['native'] . ')';
             $link = $html->link($title, array(
-                'controller' => $controller,
-                'action' => $action,
-                'locale' => $language['Language']['alias'],
+                'plugin' => 'translate',
+                'controller' => 'translate',
+                'action' => 'edit',
                 $id,
+                $modelAlias,
+                'locale' => $language['Language']['alias'],
             ));
             echo '<h3>' . $link . '</h3>';
         }

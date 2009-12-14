@@ -450,12 +450,12 @@ class LayoutHelper extends AppHelper {
  */
     function filterElements($content) {
         preg_match_all('/\[(element|e):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
-        for($i=0; $i < count($tagMatches[1]); $i++){
+        for ($i=0; $i < count($tagMatches[1]); $i++) {
             $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
             preg_match_all($regex, $tagMatches[3][$i], $attributes);
             $element = $tagMatches[2][$i];
             $options = array();
-            for($j=0; $j < count($attributes[0]); $j++){
+            for ($j=0; $j < count($attributes[0]); $j++) {
                 $options[$attributes[1][$j]] = $attributes[2][$j];
             }
             $content = str_replace($tagMatches[0][$i], $this->View->element($element,$options), $content);
@@ -472,12 +472,12 @@ class LayoutHelper extends AppHelper {
  */
     function filterMenus($content) {
         preg_match_all('/\[(menu|m):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
-        for($i=0; $i < count($tagMatches[1]); $i++){
+        for ($i=0; $i < count($tagMatches[1]); $i++) {
             $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
             preg_match_all($regex, $tagMatches[3][$i], $attributes);
             $menuAlias = $tagMatches[2][$i];
             $options = array();
-            for($j=0; $j < count($attributes[0]); $j++){
+            for ($j=0; $j < count($attributes[0]); $j++) {
                 $options[$attributes[1][$j]] = $attributes[2][$j];
             }
             $content = str_replace($tagMatches[0][$i], $this->menu($menuAlias,$options), $content);
@@ -494,17 +494,40 @@ class LayoutHelper extends AppHelper {
  */
     function filterVocabularies($content) {
         preg_match_all('/\[(vocabulary|v):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
-        for($i=0; $i < count($tagMatches[1]); $i++){
+        for ($i=0; $i < count($tagMatches[1]); $i++) {
             $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
             preg_match_all($regex, $tagMatches[3][$i], $attributes);
             $vocabularyAlias = $tagMatches[2][$i];
             $options = array();
-            for($j=0; $j < count($attributes[0]); $j++){
+            for ($j=0; $j < count($attributes[0]); $j++) {
                 $options[$attributes[1][$j]] = $attributes[2][$j];
             }
             $content = str_replace($tagMatches[0][$i], $this->vocabulary($vocabularyAlias,$options), $content);
         }
         return $content;
+    }
+/**
+ * Show links under Actions column
+ *
+ * @param integer $id
+ * @param array $options
+ * @return string
+ */
+    function adminRowActions($id, $options = array()) {
+        $_options = array();
+        $options = array_merge($_options, $options);
+
+        $output = '';
+        if (Configure::read('Admin.rowActions')) {
+            foreach (Configure::read('Admin.rowActions') AS $action => $link) {
+                if ($output != '') {
+                    $output .= ' ';
+                }
+                $link = $this->linkStringToArray(str_replace(':id', $id, $link));
+                $output .= $this->Html->link($action, $link);
+            }
+        }
+        return $output;
     }
 /**
  * Set current Node

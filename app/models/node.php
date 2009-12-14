@@ -31,11 +31,6 @@ class Node extends AppModel {
         'Encoder',
         'Meta',
         'Url',
-        'CroogoTranslate' => array(
-            'title' => 'titleTranslation',
-            'excerpt' => 'excerptTranslation',
-            'body' => 'bodyTranslation',
-        ),
         'Acl' => array(
             'type' => 'controlled',
         ),
