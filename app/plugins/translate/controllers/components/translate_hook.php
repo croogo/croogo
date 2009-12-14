@@ -18,7 +18,20 @@ class TranslateHookComponent extends Object {
  * @var array
  * @access public
  */
-    var $translateModels = array();
+    var $translateModels = array(
+        'Node' => array(
+            'title' => 'titleTranslation',
+            'excerpt' => 'excerptTranslation',
+            'body' => 'bodyTranslation',
+        ),
+        'Link' => array(
+            'title' => 'titleTranslation',
+        ),
+        'Block' => array(
+            'title' => 'titleTranslation',
+            'body' => 'bodyTranslation',
+        ),
+    );
 /**
  * Called after activating the hook in ExtensionsHooksController::admin_toggle()
  *
