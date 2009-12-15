@@ -31,7 +31,7 @@ class BlocksController extends AppController {
         $this->pageTitle = __('Blocks', true);
 
         $this->Block->recursive = 0;
-        $this->paginate['Block']['order'] = array('Block.region_id' => 'ASC', 'Block.weight' => 'ASC');
+        $this->paginate['Block']['order'] = array('Block.weight' => 'ASC');
         $this->set('blocks', $this->paginate());
     }
 

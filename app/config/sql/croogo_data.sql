@@ -203,10 +203,10 @@ INSERT INTO `aros_acos` (`id`, `aro_id`, `aco_id`, `_create`, `_read`, `_update`
 --
 
 INSERT INTO `blocks` (`id`, `region_id`, `title`, `alias`, `body`, `show_title`, `class`, `status`, `weight`, `element`, `visibility_roles`, `visibility_paths`, `visibility_php`, `params`, `updated`, `created`) VALUES
-(3, 4, 'About', 'about', 'This is the content of your block. Can be modified in admin panel.', 1, '', 1, NULL, '', '', '', '', '', '2009-10-30 19:10:34', '2009-07-26 17:13:14'),
-(5, 4, 'Meta', 'meta', '[menu:meta]', 1, '', 1, 3, '', '', '', '', '', '2009-10-06 21:13:27', '2009-09-12 06:36:22'),
-(6, 4, 'Blogroll', 'blogroll', '[menu:blogroll]', 1, '', 1, 2, '', '', '', '', '', '2009-10-06 21:13:30', '2009-09-12 23:33:27'),
-(7, 4, 'Categories', 'categories', '[vocabulary:categories type="blog"]', 1, '', 1, 1, '', '', '', '', '', '2009-10-06 21:13:30', '2009-10-03 16:52:50');
+(3, 4, 'About', 'about', 'This is the content of your block. Can be modified in admin panel.', 1, '', 1, 1, '', '', '', '', '', '2009-10-30 19:10:34', '2009-07-26 17:13:14'),
+(5, 4, 'Meta', 'meta', '[menu:meta]', 1, '', 1, 4, '', '', '', '', '', '2009-10-06 21:13:27', '2009-09-12 06:36:22'),
+(6, 4, 'Blogroll', 'blogroll', '[menu:blogroll]', 1, '', 1, 3, '', '', '', '', '', '2009-10-06 21:13:30', '2009-09-12 23:33:27'),
+(7, 4, 'Categories', 'categories', '[vocabulary:categories type="blog"]', 1, '', 1, 2, '', '', '', '', '', '2009-10-06 21:13:30', '2009-10-03 16:52:50');
 
 --
 -- Dumping data for table `comments`
