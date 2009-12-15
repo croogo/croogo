@@ -20,6 +20,24 @@ class Vocabulary extends AppModel {
  */
     var $name = 'Vocabulary';
 /**
+ * Validation
+ *
+ * @var array
+ * @access public
+ */
+    var $validate = array(
+        'alias' => array(
+            'isUnique' => array(
+                'rule' => 'isUnique',
+                'message' => 'This alias has already been taken.',
+            ),
+            'minLength' => array(
+                'rule' => array('minLength', 1),
+                'message' => 'Alias cannot be empty.',
+            ),
+        ),
+    );
+/**
  * Model associations: hasMany
  *
  * @var array

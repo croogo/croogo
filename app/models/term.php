@@ -34,8 +34,14 @@ class Term extends AppModel {
  */
     var $validate = array(
         'slug' => array(
-            'rule' => 'isUnique',
-            'message' => 'This slug has already been taken.',
+            'isUnique' => array(
+                'rule' => 'isUnique',
+                'message' => 'This slug has already been taken.',
+            ),
+            'minLength' => array(
+                'rule' => array('minLength', 1),
+                'message' => 'Slug cannot be empty.',
+            ),
         ),
     );
 /**
