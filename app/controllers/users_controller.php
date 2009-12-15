@@ -41,6 +41,7 @@ class UsersController extends AppController {
     function admin_add() {
         if (!empty($this->data)) {
             $this->User->create();
+            $this->data['User']['activation_key'] = md5(uniqid());
             if ($this->User->save($this->data)) {
                 $this->Session->setFlash(__('The User has been saved', true));
                 $this->redirect(array('action' => 'index'));
