@@ -25,7 +25,9 @@ class Term extends AppModel {
  * @var array
  * @access public
  */
-    var $actsAs = array('Tree');
+    var $actsAs = array(
+        'Tree',
+    );
 /**
  * Validation
  *
@@ -51,7 +53,9 @@ class Term extends AppModel {
  * @access public
  */
     var $belongsTo = array(
-        'Vocabulary' => array('counterCache' => true)
+        'Vocabulary' => array(
+            'counterCache' => true,
+        ),
     );
 
 }

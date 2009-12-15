@@ -30,6 +30,22 @@ class Link extends AppModel {
         'Tree',
     );
 /**
+ * Validation
+ *
+ * @var array
+ * @access public
+ */
+    var $validate = array(
+        'title' => array(
+            'rule' => array('minLength', 1),
+            'message' => 'Title cannot be empty.',
+        ),
+        'link' => array(
+            'rule' => array('minLength', 1),
+            'message' => 'Link cannot be empty.',
+        ),
+    );
+/**
  * Model associations: belongsTo
  *
  * @var array

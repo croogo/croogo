@@ -26,9 +26,19 @@ class Type extends AppModel {
  * @access public
  */
     var $validate = array(
+        'title' => array(
+            'rule' => array('minLength', 1),
+            'message' => 'Title cannot be empty.',
+        ),
         'alias' => array(
-            'rule' => 'isUnique',
-            'message' => 'This alias has already been taken.',
+            'isUnique' => array(
+                'rule' => 'isUnique',
+                'message' => 'This alias has already been taken.',
+            ),
+            'minLength' => array(
+                'rule' => array('minLength', 1),
+                'message' => 'Alias cannot be empty.',
+            ),
         ),
     );
 /**
@@ -38,20 +48,21 @@ class Type extends AppModel {
  * @access public
  */
     var $hasAndBelongsToMany = array(
-            'Vocabulary' => array('className' => 'Vocabulary',
-                        'joinTable' => 'types_vocabularies',
-                        'foreignKey' => 'type_id',
-                        'associationForeignKey' => 'vocabulary_id',
-                        'unique' => true,
-                        'conditions' => '',
-                        'fields' => '',
-                        'order' => '',
-                        'limit' => '',
-                        'offset' => '',
-                        'finderQuery' => '',
-                        'deleteQuery' => '',
-                        'insertQuery' => ''
-            )
+        'Vocabulary' => array(
+            'className' => 'Vocabulary',
+            'joinTable' => 'types_vocabularies',
+            'foreignKey' => 'type_id',
+            'associationForeignKey' => 'vocabulary_id',
+            'unique' => true,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'finderQuery' => '',
+            'deleteQuery' => '',
+            'insertQuery' => '',
+        ),
     );
 }
 ?>

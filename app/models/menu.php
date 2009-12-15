@@ -26,9 +26,19 @@ class Menu extends AppModel {
  * @access public
  */
     var $validate = array(
+        'title' => array(
+            'rule' => array('minLength', 1),
+            'message' => 'Title cannot be empty.',
+        ),
         'alias' => array(
-            'rule' => 'isUnique',
-            'message' => 'This alias has already been taken.',
+            'isUnique' => array(
+                'rule' => 'isUnique',
+                'message' => 'This alias has already been taken.',
+            ),
+            'minLength' => array(
+                'rule' => array('minLength', 1),
+                'message' => 'Alias cannot be empty.',
+            ),
         ),
     );
 /**
@@ -38,18 +48,19 @@ class Menu extends AppModel {
  * @access public
  */
     var $hasMany = array(
-            'Link' => array('className' => 'Link',
-                                'foreignKey' => 'menu_id',
-                                'dependent' => false,
-                                'conditions' => '',
-                                'fields' => '',
-                                'order' => 'Link.lft ASC',
-                                'limit' => '',
-                                'offset' => '',
-                                'exclusive' => '',
-                                'finderQuery' => '',
-                                'counterQuery' => ''
-            )
-        );
+        'Link' => array(
+            'className' => 'Link',
+            'foreignKey' => 'menu_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => 'Link.lft ASC',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => '',
+        ),
+    );
 }
 ?>

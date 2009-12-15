@@ -80,12 +80,13 @@ class Node extends AppModel {
  * @access public
  */
     var $belongsTo = array(
-            'User' => array('className' => 'User',
-                                'foreignKey' => 'user_id',
-                                'conditions' => '',
-                                'fields' => '',
-                                'order' => ''
-            )
+        'User' => array(
+            'className' => 'User',
+            'foreignKey' => 'user_id',
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+        ),
     );
 /**
  * Model associations: hasMany
@@ -94,30 +95,32 @@ class Node extends AppModel {
  * @access public
  */
     var $hasMany = array(
-            'Comment' => array('className' => 'Comment',
-                                'foreignKey' => 'node_id',
-                                'dependent' => false,
-                                'conditions' => array('Comment.status' => 1),
-                                'fields' => '',
-                                'order' => '',
-                                'limit' => '5',
-                                'offset' => '',
-                                'exclusive' => '',
-                                'finderQuery' => '',
-                                'counterQuery' => ''
-            ),
-            'Meta' => array('className' => 'Meta',
-                                'foreignKey' => 'foreign_key',
-                                'dependent' => false,
-                                'conditions' => array('Meta.model' => 'Node'),
-                                'fields' => '',
-                                'order' => 'Meta.key ASC',
-                                'limit' => '',
-                                'offset' => '',
-                                'exclusive' => '',
-                                'finderQuery' => '',
-                                'counterQuery' => ''
-            )
+        'Comment' => array(
+            'className' => 'Comment',
+            'foreignKey' => 'node_id',
+            'dependent' => false,
+            'conditions' => array('Comment.status' => 1),
+            'fields' => '',
+            'order' => '',
+            'limit' => '5',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => '',
+        ),
+        'Meta' => array(
+            'className' => 'Meta',
+            'foreignKey' => 'foreign_key',
+            'dependent' => false,
+            'conditions' => array('Meta.model' => 'Node'),
+            'fields' => '',
+            'order' => 'Meta.key ASC',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => '',
+        ),
     );
 /**
  * Model associations: hasAndBelongsToMany
@@ -126,20 +129,21 @@ class Node extends AppModel {
  * @access public
  */
     var $hasAndBelongsToMany = array(
-            'Term' => array('className' => 'Term',
-                        'joinTable' => 'nodes_terms',
-                        'foreignKey' => 'node_id',
-                        'associationForeignKey' => 'term_id',
-                        'unique' => true,
-                        'conditions' => '',
-                        'fields' => '',
-                        'order' => '',
-                        'limit' => '',
-                        'offset' => '',
-                        'finderQuery' => '',
-                        'deleteQuery' => '',
-                        'insertQuery' => ''
-            )
+        'Term' => array(
+            'className' => 'Term',
+            'joinTable' => 'nodes_terms',
+            'foreignKey' => 'node_id',
+            'associationForeignKey' => 'term_id',
+            'unique' => true,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'finderQuery' => '',
+            'deleteQuery' => '',
+            'insertQuery' => '',
+        ),
     );
 
     function parentNode() {
@@ -160,10 +164,6 @@ class Node extends AppModel {
         $this->__cache_terms();
 
         return true;
-    }
-
-    function afterSave($created) {
-
     }
 
     function __cache_terms() {

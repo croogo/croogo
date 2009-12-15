@@ -27,10 +27,6 @@ class User extends AppModel {
  */
     var $actsAs = array(
         'Acl' => array('type' => 'requester'),
-        /*'Url' => array(
-            'url' => array('controller' => 'users', 'action' => 'view'),
-            'fields' => array('username'),
-        ),*/
     );
 /**
  * Model associations: belongsTo

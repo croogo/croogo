@@ -31,8 +31,14 @@ class Contact extends AppModel {
             'message' => 'This field cannot be left blank.',
         ),
         'alias' => array(
-            'rule' => 'isUnique',
-            'message' => 'Alias is already in use.',
+            'isUnique' => array(
+                'rule' => 'isUnique',
+                'message' => 'This alias has already been taken.',
+            ),
+            'minLength' => array(
+                'rule' => array('minLength', 1),
+                'message' => 'Alias cannot be empty.',
+            ),
         ),
         'email' => array(
             'rule' => 'email',
@@ -46,18 +52,19 @@ class Contact extends AppModel {
  * @access public
  */
     var $hasMany = array(
-            'Message' => array('className' => 'Message',
-                                'foreignKey' => 'contact_id',
-                                'dependent' => false,
-                                'conditions' => '',
-                                'fields' => '',
-                                'order' => '',
-                                'limit' => '3',
-                                'offset' => '',
-                                'exclusive' => '',
-                                'finderQuery' => '',
-                                'counterQuery' => ''
-            )
-        );
+        'Message' => array(
+            'className' => 'Message',
+            'foreignKey' => 'contact_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '3',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => '',
+        ),
+    );
 }
 ?>

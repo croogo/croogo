@@ -33,12 +33,13 @@ class Meta extends AppModel {
  * @access public
  */
     var $belongsTo = array(
-            'Node' => array('className' => 'Node',
-                                'foreignKey' => 'foreign_key',
-                                'conditions' => '',
-                                'fields' => '',
-                                'order' => ''
-            )
+        'Node' => array(
+            'className' => 'Node',
+            'foreignKey' => 'foreign_key',
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+        ),
     );
 
 }
