@@ -17,6 +17,7 @@
             __('Hook', true),
             __('Hook type', true),
             __('Status', true),
+            __('Actions', true),
         ));
         echo $tableHeaders;
 
@@ -30,11 +31,25 @@
                 $hookTitle = str_replace($hookType, '', $hook);
             }
 
+            $filePath = APP;
+            if (strstr($hook, '.')) {
+                $pluginHook = explode('.', $hook);
+                $plugin = $pluginHook['0'];
+                $filePath .= 'plugins'.DS.Inflector::underscore($plugin).DS;
+                $hookTitleE = explode('.', $hookTitle);
+                $hookFile = Inflector::underscore($hookTitleE['1']).'.php';
+            } else {
+                $hookFile = Inflector::underscore($hookTitle).'.php';
+            }
+            if ($hookType == 'Component') {
+                $filePath .= 'controllers'.DS.'components'.DS.$hookFile;
+            } else {
+                $filePath .= 'views'.DS.'helpers'.DS.$hookFile;
+            }
+
             if (array_search($hook, $siteHooks) !== false) {
-                $status = 1;
                 $icon = 'tick.png';
             } else {
-                $status = 0;
                 $icon = 'cross.png';
             }
 
@@ -42,8 +57,8 @@
                 '',
                 $hookTitle,
                 $hookType,
-                //$html->tag('span', $layout->status($status), array('class' => 'hook-toggle', 'rel' => $hook)),
                 $html->image('icons/'.$icon, array('class' => 'hook-toggle', 'rel' => $hook)),
+                $html->link(__('Edit', true), '/admin/filemanager/editfile?path='.urlencode($filePath)),
             );
         }
 
