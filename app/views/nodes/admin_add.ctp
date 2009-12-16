@@ -15,6 +15,7 @@
                     <?php if (count($terms) > 0) { ?><li><a href="#node-terms"><span><?php __('Terms'); ?></span></a></li><?php } ?>
                     <?php if ($type['Type']['comment_status'] != 0) { ?><li><a href="#node-comments"><span><?php __('Comments'); ?></span></a></li><?php } ?>
                     <li><a href="#node-meta"><span><?php __('Custom fields'); ?></span></a></li>
+                    <li><a href="#node-access"><span><?php __('Access'); ?></span></a></li>
                     <li><a href="#node-publishing"><span><?php __('Publishing'); ?></span></a></li>
                 </ul>
 
@@ -66,6 +67,12 @@
                         <div class="clear">&nbsp;</div>
                     </div>
                     <a href="#" class="add-meta"><?php __('Add another field'); ?></a>
+                </div>
+
+                <div id="node-access">
+                    <?php
+                        echo $form->input('Role.Role');
+                    ?>
                 </div>
 
                 <div id="node-publishing">

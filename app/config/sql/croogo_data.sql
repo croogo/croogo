@@ -278,9 +278,9 @@ INSERT INTO `meta` (`id`, `model`, `foreign_key`, `key`, `value`, `weight`) VALU
 -- Dumping data for table `nodes`
 --
 
-INSERT INTO `nodes` (`id`, `parent_id`, `user_id`, `title`, `slug`, `body`, `excerpt`, `status`, `mime_type`, `comment_status`, `comment_count`, `promote`, `path`, `terms`, `sticky`, `lft`, `rght`, `type`, `updated`, `created`) VALUES
-(20, NULL, 1, 'About', 'about', '<p>This is an example of a Croogo page, you could edit this to put information about yourself or your site.</p>', '', 1, '', 0, 0, 0, '/page/about', '', 0, 1, 2, 'page', '2009-10-07 23:15:24', '2009-08-11 05:47:03'),
-(21, NULL, 1, 'Hello World', 'hello-world', '<p>Welcome to Croogo. This is your first post. You can edit or delete it from the admin panel.</p>', '', 1, '', 2, 1, 1, '/blog/hello-world', '{"1":"uncategorized","5":"random"}', 0, 1, 2, 'blog', '2009-10-07 20:42:37', '2009-09-02 19:50:56');
+INSERT INTO `nodes` (`id`, `parent_id`, `user_id`, `title`, `slug`, `body`, `excerpt`, `status`, `mime_type`, `comment_status`, `comment_count`, `promote`, `path`, `terms`, `sticky`, `lft`, `rght`, `visibility_roles`, `type`, `updated`, `created`) VALUES
+(20, NULL, 1, 'About', 'about', '<p>This is an example of a Croogo page, you could edit this to put information about yourself or your site.</p>', '', 1, '', 0, 0, 0, '/page/about', '', 0, 1, 2, '', 'page', '2009-10-07 23:15:24', '2009-08-11 05:47:03'),
+(21, NULL, 1, 'Hello World', 'hello-world', '<p>Welcome to Croogo. This is your first post. You can edit or delete it from the admin panel.</p>', '', 1, '', 2, 1, 1, '/blog/hello-world', '{"1":"uncategorized","5":"random"}', 0, 1, 2, '', 'blog', '2009-10-07 20:42:37', '2009-09-02 19:50:56');
 
 --
 -- Dumping data for table `nodes_terms`

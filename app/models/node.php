@@ -31,9 +31,6 @@ class Node extends AppModel {
         'Encoder',
         'Meta',
         'Url',
-        'Acl' => array(
-            'type' => 'controlled',
-        ),
     );
 /**
  * Node type
@@ -145,18 +142,23 @@ class Node extends AppModel {
             'insertQuery' => '',
         ),
     );
-
-    function parentNode() {
-        return null;
-    }
-
+/**
+ * beforeFind callback
+ *
+ * @param array $q
+ * @return array
+ */
     function beforeFind($q) {
         if($this->type != null) {
             $q['conditions']['Node.type'] = $this->type;
         }
         return $q;
     }
-
+/**
+ * beforeSave callback
+ *
+ * @return boolean
+ */
     function beforeSave() {
         if ($this->type != null) {
             $this->data['Node']['type'] = $this->type;
@@ -165,7 +167,11 @@ class Node extends AppModel {
 
         return true;
     }
-
+/**
+ * Caches Term in Node.terms field
+ *
+ * @return void
+ */
     function __cache_terms() {
         if (isset($this->data['Term']['Term']) && count($this->data['Term']['Term']) > 0) {
             $termIds = $this->data['Term']['Term'];

@@ -103,6 +103,7 @@ class NodesController extends AppController {
                 'type' => $this->Node->type,
                 'slug' => $this->data['Node']['slug'],
             ));
+            $this->data['Node']['visibility_roles'] = $this->Node->encodeData($this->data['Role']['Role']);
             if ($this->Node->saveWithMeta($this->data)) {
                 $this->Session->setFlash(__($type['Type']['title'] . ' has been saved', true));
                 $this->redirect(array('action'=>'index'));
@@ -112,13 +113,14 @@ class NodesController extends AppController {
         }
 
         $nodes = $this->Node->generatetreelist();
+        $roles   = $this->Node->User->Role->find('list');
         $terms = array();
         foreach ($type['Vocabulary'] AS $vocabulary) {
             $vocabularyTitle = $vocabulary['title'];
             $termsConditions = array('Term.vocabulary_id' => $vocabulary['id']);
             $terms[$vocabularyTitle] = $this->Node->Term->generatetreelist($termsConditions);
         }
-        $this->set(compact('typeAlias', 'type', 'nodes', 'terms'));
+        $this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'terms'));
     }
 
     function admin_edit($id = null) {
@@ -149,6 +151,7 @@ class NodesController extends AppController {
                 'type' => $this->Node->type,
                 'slug' => $this->data['Node']['slug'],
             ));
+            $this->data['Node']['visibility_roles'] = $this->Node->encodeData($this->data['Role']['Role']);
             if ($this->Node->saveWithMeta($this->data)) {
                 $this->Session->setFlash(__($type['Type']['title'] . ' has been saved', true));
                 $this->redirect(array('action'=>'index'));
@@ -157,17 +160,20 @@ class NodesController extends AppController {
             }
         }
         if (empty($this->data)) {
-            $this->data = $this->Node->read(null, $id);
+            $data = $this->Node->read(null, $id);
+            $data['Role']['Role'] = $this->Node->decodeData($data['Node']['visibility_roles']);
+            $this->data = $data;
         }
 
         $nodes = $this->Node->generatetreelist();
+        $roles   = $this->Node->User->Role->find('list');
         $terms = array();
         foreach ($type['Vocabulary'] AS $vocabulary) {
             $vocabularyTitle = $vocabulary['title'];
             $termsConditions = array('Term.vocabulary_id' => $vocabulary['id']);
             $terms[$vocabularyTitle] = $this->Node->Term->generatetreelist($termsConditions);
         }
-        $this->set(compact('typeAlias', 'type', 'nodes', 'terms'));
+        $this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'terms'));
     }
 
     function admin_update_paths() {
@@ -276,6 +282,10 @@ class NodesController extends AppController {
         $this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
         $this->paginate['Node']['conditions'] = array(
             'Node.status' => 1,
+            'OR' => array(
+                'Node.visibility_roles' => '',
+                'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
+            ),
         );
         if (isset($this->params['named']['type'])) {
             $type = $this->Node->Term->Vocabulary->Type->findByAlias($this->params['named']['type']);
@@ -308,6 +318,10 @@ class NodesController extends AppController {
         $this->paginate['Node']['conditions'] = array(
             'Node.status' => 1,
             'Node.terms LIKE' => '%"' . $this->params['named']['slug'] . '"%',
+            'OR' => array(
+                'Node.visibility_roles' => '',
+                'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
+            ),
         );
         if (isset($this->params['named']['type'])) {
             $type = $this->Node->Term->Vocabulary->Type->findByAlias($this->params['named']['type']);
@@ -332,6 +346,10 @@ class NodesController extends AppController {
         $this->paginate['Node']['conditions'] = array(
             'Node.status' => 1,
             'Node.promote' => 1,
+            'OR' => array(
+                'Node.visibility_roles' => '',
+                'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
+            ),
         );
 
         if (isset($this->params['named']['type'])) {
@@ -359,6 +377,10 @@ class NodesController extends AppController {
                     'Node.slug' => $this->params['named']['slug'],
                     'Node.type' => $this->params['named']['type'],
                     'Node.status' => 1,
+                    'OR' => array(
+                        'Node.visibility_roles' => '',
+                        'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
+                    ),
                 ),
             ));
         } elseif ($id == null) {

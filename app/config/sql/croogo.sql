@@ -287,6 +287,7 @@ CREATE TABLE IF NOT EXISTS `nodes` (
   `sticky` tinyint(1) NOT NULL default '0',
   `lft` int(11) default NULL,
   `rght` int(11) default NULL,
+  `visibility_roles` text collate utf8_unicode_ci NOT NULL,
   `type` varchar(100) collate utf8_unicode_ci NOT NULL default 'node',
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,
