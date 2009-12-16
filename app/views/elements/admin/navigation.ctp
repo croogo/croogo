@@ -69,11 +69,13 @@
             </ul>
         </li>
         <?php
-            foreach (explode(',', Configure::read('Admin.menus')) AS $plugin) {
-                if (file_exists(APP.'plugins'.DS.Inflector::underscore($plugin).DS.'views'.DS.'elements'.DS.'admin_menu.ctp')) {
-                    echo '<li>';
-                    echo $this->element('admin_menu', array('plugin' => Inflector::underscore($plugin)));
-                    echo '</li>';
+            if (Configure::read('Admin.menus')) {
+                foreach (array_keys(Configure::read('Admin.menus')) AS $plugin) {
+                    if (file_exists(APP.'plugins'.DS.Inflector::underscore($plugin).DS.'views'.DS.'elements'.DS.'admin_menu.ctp')) {
+                        echo '<li>';
+                        echo $this->element('admin_menu', array('plugin' => Inflector::underscore($plugin)));
+                        echo '</li>';
+                    }
                 }
             }
         ?>

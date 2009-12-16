@@ -23,9 +23,6 @@ class ExampleHookComponent extends Object {
         $controller->Croogo->addAco('Example'); // ExampleController
         $controller->Croogo->addAco('Example/index', array('registered', 'public')); // ExampleController::index()
 
-        // Admin menu: admin_menu element of Example plugin will be shown in admin panel's navigation
-        $controller->Croogo->addAdminMenu('Example');
-
         // Main menu: add an Example link
         $mainMenu = $controller->Link->Menu->findByAlias('main');
         $controller->Link->save(array(
@@ -44,9 +41,6 @@ class ExampleHookComponent extends Object {
     function onDeactivate(&$controller) {
         // ACL: remove ACOs with permissions
         $controller->Croogo->removeAco('Example'); // ExampleController ACO and it's actions will be removed
-
-        // Admin menu: remove
-        $controller->Croogo->removeAdminMenu('Example');
 
         // Main menu: delete Example link
         $link = $controller->Link->find('first', array(
@@ -76,6 +70,9 @@ class ExampleHookComponent extends Object {
  * @return void
  */
     function beforeRender(&$controller) {
+        // Admin menu: admin_menu element of Example plugin will be shown in admin panel's navigation
+        Configure::write('Admin.menus.example', 1);
+
         $controller->set('exampleHookBeforeRender', 'ExampleHook beforeRender');
     }
 /**
