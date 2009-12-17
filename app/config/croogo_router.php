@@ -30,6 +30,24 @@ class CroogoRouter {
         Router::connect($route, $default, $params);
         Router::connect('/:locale' . $route, $default, array_merge(array('locale' => '[a-z]{3}'), $params));
     }
+/**
+ * Load plugin routes (as found in plugin_routes.txt file)
+ *
+ * @return void
+ */
+    function plugins() {
+        $pluginRoutes = file_get_contents(APP.'config'.DS.'plugin_routes.txt');
+        if ($pluginRoutes == null) {
+            return;
+        }
+
+        $plugins = explode(',', $pluginRoutes);
+        foreach ($plugins AS $plugin) {
+            if (file_exists(APP.'plugins'.DS.$plugin.DS.'config'.DS.'routes.php')) {
+                require_once APP.'plugins'.DS.$plugin.DS.'config'.DS.'routes.php';
+            }
+        }
+    }
 
 }
 ?>
