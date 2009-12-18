@@ -31,7 +31,7 @@ class TinymceHelper extends AppHelper {
         $output = "function fileBrowserCallBack(field_name, url, type, win) {
             browserField = field_name;
             browserWin = win;
-            window.open('".Helper::url(array('controller' => 'attachments', 'action' => 'browse'))."', 'browserWindow', 'modal,width=960,height=700,scrollbars=yes');
+            window.open('".$this->Html->url(array('controller' => 'attachments', 'action' => 'browse'))."', 'browserWindow', 'modal,width=960,height=700,scrollbars=yes');
         }";
 
         return $output;
@@ -41,7 +41,7 @@ class TinymceHelper extends AppHelper {
         $output = "function selectURL(url) {
             if (url == '') return false;
 
-            url = '".Helper::url('/uploads/')."' + url;
+            url = '".Router::url('/uploads/')."' + url;
 
             field = window.top.opener.browserWin.document.forms[0].elements[window.top.opener.browserField];
             field.value = url;
@@ -64,6 +64,7 @@ class TinymceHelper extends AppHelper {
 				mode: "exact",
 				elements: "' . $elements . '",
 				theme : "advanced",
+				relative_urls : false,
 				plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
 
 				// Theme options
