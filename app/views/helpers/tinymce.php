@@ -41,7 +41,7 @@ class TinymceHelper extends AppHelper {
         $output = "function selectURL(url) {
             if (url == '') return false;
 
-            url = '".Router::url('/uploads/')."' + url;
+            url = '".Router::url('/uploads/', true)."' + url;
 
             field = window.top.opener.browserWin.document.forms[0].elements[window.top.opener.browserField];
             field.value = url;
