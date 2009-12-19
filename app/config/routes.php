@@ -39,6 +39,7 @@
     CroogoRouter::connect('/', array('controller' => 'nodes', 'action' => 'promoted'));
     CroogoRouter::connect('/promoted/*', array('controller' => 'nodes', 'action' => 'promoted'));
     CroogoRouter::connect('/admin', array('admin' => true, 'controller' => 'settings', 'action' => 'dashboard'));
+    CroogoRouter::connect('/search/*', array('controller' => 'nodes', 'action' => 'search'));
 
     // Blog
     CroogoRouter::connect('/blog', array('controller' => 'nodes', 'action' => 'index', 'type' => 'blog'));

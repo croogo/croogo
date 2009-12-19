@@ -368,6 +368,43 @@ class NodesController extends AppController {
         $this->set(compact('nodes'));
     }
 
+    function search($type = null) {
+        if (!isset($this->params['named']['q'])) {
+            $this->redirect('/');
+        }
+
+        App::import('Core', 'Sanitize');
+        $q = Sanitize::clean($this->params['named']['q']);
+        $this->paginate['Node']['order'] = 'Node.id DESC';
+        $this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
+        $this->paginate['Node']['conditions'] = array(
+            'Node.status' => 1,
+            'AND' => array(
+                array(
+                    'OR' => array(
+                        'Node.title LIKE' => '%' . $q . '%',
+                        'Node.excerpt LIKE' => '%' . $q . '%',
+                        'Node.body LIKE' => '%' . $q . '%',
+                        //'Node.terms LIKE' => '%"' . $q . '"%',
+                    ),
+                ),
+                array(
+                    'OR' => array(
+                        'Node.visibility_roles' => '',
+                        'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
+                    ),
+                ),
+            ),
+        );
+        if ($type) {
+            $this->paginate['Node']['conditions']['Node.type'] = $type;
+        }
+
+        $nodes = $this->paginate('Node');
+        $this->pageTitle = __('Search Results: ', true) . $q;
+        $this->set(compact('q', 'nodes'));
+    }
+
     function view($id = null) {
         if (isset($this->params['named']['slug']) && isset($this->params['named']['type'])) {
             $this->Node->type = $this->params['named']['type'];

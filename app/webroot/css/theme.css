@@ -121,6 +121,8 @@ ul.sf-menu li li li.sfHover ul { left:10em; top:0; }
 .block .block-body { line-height: 25px; }
 .block ul li { list-style-type: disc; margin: 0px 0px 0px 25px; }
 
+.block-search input[type=text] { width: 200px; float: left; margin: 2px; }
+
 
 /**
  * Footer
