@@ -10,7 +10,7 @@
     <h3><?php echo $b['title']; ?></h3>
 <?php } ?>
     <div class="block-body">
-        <form name="searchform" method="post" action="javascript: document.location.href=''+Croogo.basePath+'search/q:'+encodeURI(document.searchform.q.value);">
+        <form id="searchform" method="post" action="javascript: document.location.href=''+Croogo.basePath+'search/q:'+encodeURI($('#searchform #q').val());">
         <?php
             $qValue = null;
             if (isset($this->params['named']['q'])) {

@@ -332,6 +332,12 @@ class LayoutHelper extends AppHelper {
                 'title' => $link['Link']['description'],
             );
 
+            foreach ($linkAttr AS $attrKey => $attrValue) {
+                if ($attrValue == null) {
+                    unset($linkAttr[$attrKey]);
+                }
+            }
+
             // if link is in the format: controller:contacts/action:view
             if (strstr($link['Link']['link'], 'controller:')) {
                 $link['Link']['link'] = $this->linkStringToArray($link['Link']['link']);
