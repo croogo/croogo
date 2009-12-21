@@ -432,6 +432,50 @@ class LayoutHelper extends AppHelper {
         return $output;
     }
 /**
+ * Show nodes list
+ *
+ * @param string $alias Node query alias
+ * @param array $options (optional)
+ * @return string
+ */
+    function nodeList($alias, $options = array()) {
+        $_options = array(
+            'tag' => 'ul',
+            'tagAttr' => array(),
+            'containerTag' => 'div',
+            'containerTagAttr' => array(
+                'class' => 'node-list',
+            ),
+            'link' => true,
+        );
+        $options = array_merge($_options, $options);
+
+        $output = '';
+        if (isset($this->View->viewVars['nodes_for_layout'][$alias])) {
+            $nodes = $this->View->viewVars['nodes_for_layout'][$alias];
+            foreach ($nodes AS $node) {
+                if ($options['link']) {
+                    $li = '<li>' . $this->Html->link($node['Node']['title'], array(
+                        'controller' => 'nodes',
+                        'action' => 'view',
+                        'type' => $node['Node']['type'],
+                        'slug' => $node['Node']['slug'],
+                    )) . '</li>';
+                } else {
+                    $li = '<li>' . $node['Node']['title'] . '</li>';
+                }
+                $output .= $li;
+            }
+            if ($output != '') {
+                $options['containerTagAttr']['id'] = 'node-list-'.$alias;
+                $output = $this->Html->tag($options['tag'], $output, $options['tagAttr']);
+                $output = $this->Html->tag($options['containerTag'], $output, $options['containerTagAttr']);
+            }
+        }
+
+        return $output;
+    }
+/**
  * Filter content
  *
  * Replaces bbcode-like element tags
@@ -443,6 +487,7 @@ class LayoutHelper extends AppHelper {
         $content = $this->filterElements($content);
         $content = $this->filterMenus($content);
         $content = $this->filterVocabularies($content);
+        $content = $this->filterNodes($content);
         return $content;
     }
 /**
@@ -509,6 +554,28 @@ class LayoutHelper extends AppHelper {
                 $options[$attributes[1][$j]] = $attributes[2][$j];
             }
             $content = str_replace($tagMatches[0][$i], $this->vocabulary($vocabularyAlias,$options), $content);
+        }
+        return $content;
+    }
+/**
+ * Filter content for Nodes
+ *
+ * Replaces [node:unique_name_for_query] or [n:unique_name_for_query] with Nodes list
+ *
+ * @param string $content
+ * @return string
+ */
+    function filterNodes($content) {
+        preg_match_all('/\[(node|n):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
+        for ($i=0; $i < count($tagMatches[1]); $i++) {
+            $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
+            preg_match_all($regex, $tagMatches[3][$i], $attributes);
+            $alias = $tagMatches[2][$i];
+            $options = array();
+            for ($j=0; $j < count($attributes[0]); $j++) {
+                $options[$attributes[1][$j]] = $attributes[2][$j];
+            }
+            $content = str_replace($tagMatches[0][$i], $this->nodeList($alias,$options), $content);
         }
         return $content;
     }

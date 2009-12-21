@@ -66,6 +66,13 @@ class CroogoComponent extends Object {
  * @access public
  */
     var $types_for_layout = array();
+ /**
+ * Nodes for layout
+ *
+ * @var string
+ * @access public
+ */
+    var $nodes_for_layout = array();
 /**
  * Startup
  *
@@ -88,6 +95,7 @@ class CroogoComponent extends Object {
             $this->menus();
             $this->vocabularies();
             $this->types();
+            $this->nodes();
         }
     }
 /**
@@ -286,7 +294,7 @@ class CroogoComponent extends Object {
         }
 
         foreach ($vocabularies AS $vocabularyAlias => $options) {
-            $vocabulary = $this->controller->Type->Vocabulary->find('first', array(
+            $vocabulary = $this->controller->Node->Term->Vocabulary->find('first', array(
                 'conditions' => array(
                     'Vocabulary.alias' => $vocabularyAlias,
                 ),
@@ -294,7 +302,7 @@ class CroogoComponent extends Object {
             ));
 
             if (isset($vocabulary['Vocabulary']['id'])) {
-                $terms = $this->controller->Type->Vocabulary->Term->find('list', array(
+                $terms = $this->controller->Node->Term->find('list', array(
                     'conditions' => array(
                         'Term.vocabulary_id' => $vocabulary['Vocabulary']['id'],
                         'Term.status' => 1,
@@ -320,13 +328,87 @@ class CroogoComponent extends Object {
  * @return void
  */
     function types() {
-        $types = $this->controller->Type->find('all', array(
+        $types = $this->controller->Node->Term->Vocabulary->Type->find('all', array(
             'recursive' => '-1',
         ));
         foreach ($types AS $type) {
             $alias = $type['Type']['alias'];
             $this->types_for_layout[$alias] = $type;
         }
+    }
+/**
+ * Nodes
+ *
+ * Nodes will be available in this variable in views: $nodes_for_layout
+ *
+ * @return void
+ */
+    function nodes() {
+        $nodes = array();
+        $_nodeOptions = array(
+            'find' => 'all',
+            'conditions' => array(),
+            'order' => 'Node.id DESC',
+            'limit' => 5,
+        );
+
+        // check for [node:random_unique_name] in blocks
+        foreach ($this->blocks_for_layout AS $alias => $blocks) {
+            foreach ($blocks AS $block) {
+                preg_match_all('/\[(node|n):([A-Za-z0-9_\-]*)(.*?)\]/i', $block['Block']['body'], $tagMatches);
+                for($i=0; $i < count($tagMatches[1]); $i++){
+                    $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
+                    preg_match_all($regex, $tagMatches[3][$i], $attributes);
+                    $alias = $tagMatches[2][$i];
+                    $options = array();
+                    for($j=0; $j < count($attributes[0]); $j++){
+                        $options[$attributes[1][$j]] = $attributes[2][$j];
+                    }
+                    if (!in_array($alias, $nodes)) {
+                        foreach ($options AS $optionKey => $optionValue) {
+                            if (!is_array($optionValue) && strpos($optionValue, ':') !== false) {
+                                $options[$optionKey] = $this->stringToArray($optionValue);
+                            }
+                        }
+                        $nodes[$alias] = array_merge($_nodeOptions, $options);
+                    }
+                }
+            }
+        }
+
+        foreach ($nodes AS $alias => $options) {
+            $node = $this->controller->Node->find($options['find'], array(
+                'conditions' => $options['conditions'],
+                'order' => $options['order'],
+                'limit' => $options['limit'],
+            ));
+            $this->nodes_for_layout[$alias] = $node;
+        }
+    }
+/**
+ * Converts formatted string to array
+ *
+ * A string formatted like 'Node.type:blog;' will be converted to
+ * array('Node.type' => 'blog');
+ *
+ * @param string $string in this format: Node.type:blog;Node.user_id:1;
+ * @return array
+ */
+    function stringToArray($string) {
+        $string = explode(';', $string);
+        $stringArr = array();
+        foreach ($string AS $stringElement) {
+            if ($stringElement != null) {
+                $stringElementE = explode(':', $stringElement);
+                if (isset($stringElementE['1'])) {
+                    $stringArr[$stringElementE['0']] = $stringElementE['1'];
+                } else {
+                    $stringArr[] = $stringElement;
+                }
+            }
+        }
+
+        return $stringArr;
     }
 /**
  * beforeRender
@@ -340,9 +422,10 @@ class CroogoComponent extends Object {
         $this->controller->set('menus_for_layout', $this->menus_for_layout);
         $this->controller->set('vocabularies_for_layout', $this->vocabularies_for_layout);
         $this->controller->set('types_for_layout', $this->types_for_layout);
+        $this->controller->set('nodes_for_layout', $this->nodes_for_layout);
 
-        $helperPaths = Configure::read('helperPaths');
         if ($controller->theme) {
+            $helperPaths = Configure::read('helperPaths');
             array_unshift($helperPaths, APP.'views'.DS.'themed'.DS.$controller->theme.DS.'helpers'.DS);
             Configure::write('helperPaths', $helperPaths);
         }

@@ -27,7 +27,7 @@ class AppController extends Controller {
         'Block',
         'Link',
         'Setting',
-        'Type',
+        'Node',
     );
     var $view = 'Theme';
     var $theme;
