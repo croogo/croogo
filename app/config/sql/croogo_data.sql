@@ -232,9 +232,10 @@ INSERT INTO `aros_acos` (`id`, `aro_id`, `aco_id`, `_create`, `_read`, `_update`
 INSERT INTO `blocks` (`id`, `region_id`, `title`, `alias`, `body`, `show_title`, `class`, `status`, `weight`, `element`, `visibility_roles`, `visibility_paths`, `visibility_php`, `params`, `updated`, `created`) VALUES
 (3, 4, 'About', 'about', 'This is the content of your block. Can be modified in admin panel.', 1, '', 1, 2, '', '', '', '', '', '2009-12-20 03:07:39', '2009-07-26 17:13:14'),
 (8, 4, 'Search', 'search', '', 0, '', 1, 1, 'search', '', '', '', '', '2009-12-20 03:07:39', '2009-12-20 03:07:27'),
-(5, 4, 'Meta', 'meta', '[menu:meta]', 1, '', 1, 5, '', '', '', '', '', '2009-12-20 03:07:30', '2009-09-12 06:36:22'),
+(5, 4, 'Meta', 'meta', '[menu:meta]', 1, '', 1, 6, '', '', '', '', '', '2009-12-22 05:17:39', '2009-09-12 06:36:22'),
 (6, 4, 'Blogroll', 'blogroll', '[menu:blogroll]', 1, '', 1, 4, '', '', '', '', '', '2009-12-20 03:07:33', '2009-09-12 23:33:27'),
-(7, 4, 'Categories', 'categories', '[vocabulary:categories type="blog"]', 1, '', 1, 3, '', '', '', '', '', '2009-12-20 03:07:36', '2009-10-03 16:52:50');
+(7, 4, 'Categories', 'categories', '[vocabulary:categories type="blog"]', 1, '', 1, 3, '', '', '', '', '', '2009-12-20 03:07:36', '2009-10-03 16:52:50'),
+(9, 4, 'Recent Posts', 'recent_posts', '[node:recent_posts conditions="Node.type:blog" order="Node.id DESC"]', 1, '', 1, 5, '', '', '', '', '', '2009-12-22 05:17:39', '2009-12-22 05:17:32');
 
 --
 -- Dumping data for table `comments`
@@ -324,7 +325,7 @@ INSERT INTO `nodes_terms` (`id`, `node_id`, `vocabulary_id`, `term_id`, `weight`
 
 INSERT INTO `regions` (`id`, `title`, `alias`, `description`, `block_count`) VALUES
 (3, 'none', '', '', 0),
-(4, 'right', 'right', '', 5),
+(4, 'right', 'right', '', 6),
 (6, 'left', 'left', '', 0),
 (7, 'header', 'header', '', 0),
 (8, 'footer', 'footer', '', 0),
