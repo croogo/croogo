@@ -347,7 +347,12 @@ class CroogoComponent extends Object {
         $nodes = array();
         $_nodeOptions = array(
             'find' => 'all',
-            'conditions' => array(),
+            'conditions' => array(
+                'OR' => array(
+                    'Node.visibility_roles' => '',
+                    'Node.visibility_roles LIKE' => '%"' . $this->roleId . '"%',
+                ),
+            ),
             'order' => 'Node.id DESC',
             'limit' => 5,
         );
