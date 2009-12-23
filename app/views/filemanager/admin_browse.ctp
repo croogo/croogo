@@ -11,7 +11,7 @@
 
 	<div class="breadcrumb">
 	<?php
-        __('You are here:');
+        echo __('You are here:', true) . ' ';
 		$breadcrumb = $filemanager->breadcrumb($path);
 		foreach ($breadcrumb AS $pathname => $p) {
             echo $filemanager->linkDirectory($pathname, $p);
