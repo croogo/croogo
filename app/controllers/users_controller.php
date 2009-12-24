@@ -128,7 +128,8 @@ class UsersController extends AppController {
             $this->data['User']['status'] = 0;
             if ($this->User->save($this->data)) {
                 $this->data['User']['password'] = null;
-                $this->Email->from = 'no-reply';
+                $this->Email->from = Configure::read('Site.title') . ' '
+                    . '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])).'>';
                 $this->Email->to = $this->data['User']['email'];
                 $this->Email->subject = __('[' . Configure::read('Site.title') . '] Please activate your account', true);
                 $this->Email->template = 'register';
@@ -182,7 +183,8 @@ class UsersController extends AppController {
             $this->User->saveField('activation_key', $activationKey);
             $this->set(compact('user', 'activationKey'));
 
-            $this->Email->from = 'no-reply';
+            $this->Email->from = Configure::read('Site.title') . ' '
+                    . '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])).'>';
             $this->Email->to = $user['User']['email'];
             $this->Email->subject = '[' . Configure::read('Site.title') . '] ' . __('Reset Password', true);
             $this->Email->template = 'forgot_password';

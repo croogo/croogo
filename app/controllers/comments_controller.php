@@ -208,6 +208,8 @@ class CommentsController extends AppController {
                 }
 
                 // Email notification
+                $this->Email->from = Configure::read('Site.title') . ' '
+                    . '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])).'>';
                 $this->Email->to = Configure::read('Site.email');
                 $this->Email->subject = '[' . Configure::read('Site.title') . '] '
                     . __('New comment posted under', true) . ' ' . $node['Node']['title'];
