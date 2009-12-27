@@ -89,7 +89,7 @@ class NodesController extends AppController {
             $this->redirect(array('action' => 'create'));
         }
 
-        $this->pageTitle = __("Create content: ", true) . $type['Type']['title'];
+        $this->pageTitle = sprintf(__('Create content: %s', true), $type['Type']['title']);
         $this->Node->type = $type['Type']['alias'];
         $this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
 
@@ -105,10 +105,10 @@ class NodesController extends AppController {
             ));
             $this->data['Node']['visibility_roles'] = $this->Node->encodeData($this->data['Role']['Role']);
             if ($this->Node->saveWithMeta($this->data)) {
-                $this->Session->setFlash(__($type['Type']['title'] . ' has been saved', true));
+                $this->Session->setFlash(sprintf(__('%s has been saved', true), $type['Type']['title']));
                 $this->redirect(array('action'=>'index'));
             } else {
-                $this->Session->setFlash(__($type['Type']['title'] . ' could not be saved. Please, try again.', true));
+                $this->Session->setFlash(sprintf(__('%s could not be saved. Please, try again.', true), $type['Type']['title']));
             }
         }
 
@@ -138,7 +138,7 @@ class NodesController extends AppController {
             $this->redirect(array('action' => 'create'));
         }
 
-        $this->pageTitle = __("Edit content: ", true) . $type['Type']['title'];
+        $this->pageTitle = sprintf(__('Edit content: %s', true), $type['Type']['title']);
         $this->Node->type = $type['Type']['alias'];
         $this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
 
@@ -153,10 +153,10 @@ class NodesController extends AppController {
             ));
             $this->data['Node']['visibility_roles'] = $this->Node->encodeData($this->data['Role']['Role']);
             if ($this->Node->saveWithMeta($this->data)) {
-                $this->Session->setFlash(__($type['Type']['title'] . ' has been saved', true));
+                $this->Session->setFlash(sprintf(__('%s has been saved', true), $type['Type']['title']));
                 $this->redirect(array('action'=>'index'));
             } else {
-                $this->Session->setFlash(__($type['Type']['title'] . ' could not be saved. Please, try again.', true));
+                $this->Session->setFlash(sprintf(__('%s could not be saved. Please, try again.', true), $type['Type']['title']));
             }
         }
         if (empty($this->data)) {
@@ -331,7 +331,7 @@ class NodesController extends AppController {
             }
 
             $this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
-            $this->pageTitle = $type['Type']['title'];
+            $this->pageTitle = $term['Term']['title'];
         }
         $nodes = $this->paginate('Node');
 
@@ -401,7 +401,7 @@ class NodesController extends AppController {
         }
 
         $nodes = $this->paginate('Node');
-        $this->pageTitle = __('Search Results: ', true) . $q;
+        $this->pageTitle = sprintf(__('Search Results: %s', true), $q);
         $this->set(compact('q', 'nodes'));
     }
 

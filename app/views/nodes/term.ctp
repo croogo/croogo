@@ -1,5 +1,5 @@
 <div class="nodes">
-    <h2><?php echo __('Term:', true) . ' ' . $term['Term']['title']; ?></h2>
+    <h2><?php echo $this->pageTitle; ?></h2>
 
     <?php
         if (count($nodes) == 0) {
