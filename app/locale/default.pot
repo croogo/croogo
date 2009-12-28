@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2009-12-28 05:13+0700\n"
+"POT-Creation-Date: 2009-12-28 19:45+0700\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1908,45 +1908,60 @@ msgid "Log Out"
 msgstr ""
 
 #: \views\elements\email\text\comment.ctp:2
-msgid "A new comment has been posted under: "
+msgid "A new comment has been posted under: %s"
 msgstr ""
 
 #: \views\elements\email\text\comment.ctp:6
-msgid "Name: "
+#: \views\elements\email\text\contact.ctp:8
+msgid "Name: %s"
 msgstr ""
 
 #: \views\elements\email\text\comment.ctp:7
-msgid "Email: "
+#: \views\elements\email\text\contact.ctp:9
+msgid "Email: %s"
 msgstr ""
 
 #: \views\elements\email\text\comment.ctp:8
-msgid "Website: "
+msgid "Website: %s"
 msgstr ""
 
 #: \views\elements\email\text\comment.ctp:9
+#: \views\elements\email\text\contact.ctp:11
 #: \views\elements\email\text\forgot_password.ctp:17
-msgid "IP Address: "
+msgid "IP Address: %s"
 msgstr ""
 
 #: \views\elements\email\text\comment.ctp:10
-msgid "Comment: "
+msgid "Comment: %s"
+msgstr ""
+
+#: \views\elements\email\text\contact.ctp:7
+msgid "You have received a new message at: %s"
+msgstr ""
+
+#: \views\elements\email\text\contact.ctp:10
+msgid "Subject: %s"
+msgstr ""
+
+#: \views\elements\email\text\contact.ctp:12
+msgid "Message: %s"
 msgstr ""
 
 #: \views\elements\email\text\forgot_password.ctp:1
 #: \views\elements\email\text\register.ctp:1
-msgid "Hello"
+msgid "Hello %s"
 msgstr ""
 
-#: \views\elements\email\text\forgot_password.ctp:4
-msgid "Please visit this link to reset your password"
+#: \views\elements\email\text\forgot_password.ctp:10
+msgid "Please visit this link to reset your password: %s"
 msgstr ""
 
 #: \views\elements\email\text\forgot_password.ctp:14
 msgid "If you did not request a password reset, then please ignore this email."
 msgstr ""
 
-#: \views\elements\email\text\register.ctp:4
-msgid "Please visit this link to activate your account"
+#: \views\elements\email\text\register.ctp:10
+msgid "Please visit this link to activate your account: %s"
 msgstr ""
 
 #: \views\errors\missing_action.ctp:1

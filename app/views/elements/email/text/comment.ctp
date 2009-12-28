@@ -1,11 +1,11 @@
 <?php
-    echo __('A new comment has been posted under: ', true) . $node['Node']['title'] . "\n \n";
+    echo sprintf(__('A new comment has been posted under: %s', true),$node['Node']['title']) . "\n \n";
 
     echo Router::url($node['Node']['url'], true) . '#comment-' . $commentId . "\n \n";
     
-    echo __('Name: ', true) . $data['name'] . "\n";
-    echo __('Email: ', true) . $data['email'] . "\n";
-    echo __('Website: ', true) . $data['website'] . "\n";
-    echo __('IP Address: ', true) . $data['ip'] . "\n";
-    echo __('Comment: ', true) . $data['body'] . "\n";
+    echo sprintf(__('Name: %s', true), $data['name']) . "\n";
+    echo sprintf(__('Email: %s', true), $data['email']) . "\n";
+    echo sprintf( __('Website: %s', true), $data['website']) . "\n";
+    echo sprintf(__('IP Address: %s', true), $data['ip']) . "\n";
+    echo sprintf(__('Comment: %s', true), $data['body']) . "\n";
 ?>
