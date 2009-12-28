@@ -440,6 +440,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `website` varchar(100) collate utf8_unicode_ci NOT NULL,
   `activation_key` varchar(60) collate utf8_unicode_ci NOT NULL,
   `image` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `bio` text collate utf8_unicode_ci NOT NULL,
+  `timezone` varchar(10) collate utf8_unicode_ci NOT NULL default '0',
   `status` tinyint(1) NOT NULL default '0',
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,

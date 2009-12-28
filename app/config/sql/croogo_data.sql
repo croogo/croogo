@@ -308,16 +308,15 @@ INSERT INTO `meta` (`id`, `model`, `foreign_key`, `key`, `value`, `weight`) VALU
 --
 
 INSERT INTO `nodes` (`id`, `parent_id`, `user_id`, `title`, `slug`, `body`, `excerpt`, `status`, `mime_type`, `comment_status`, `comment_count`, `promote`, `path`, `terms`, `sticky`, `lft`, `rght`, `visibility_roles`, `type`, `updated`, `created`) VALUES
-(20, NULL, 1, 'About', 'about', '<p>This is an example of a Croogo page, you could edit this to put information about yourself or your site.</p>', '', 1, '', 0, 0, 0, '/page/about', '', 0, 1, 2, '', 'page', '2009-10-07 23:15:24', '2009-08-11 05:47:03'),
-(21, NULL, 1, 'Hello World', 'hello-world', '<p>Welcome to Croogo. This is your first post. You can edit or delete it from the admin panel.</p>', '', 1, '', 2, 1, 1, '/blog/hello-world', '{"1":"uncategorized","5":"random"}', 0, 1, 2, '', 'blog', '2009-10-07 20:42:37', '2009-09-02 19:50:56');
+(20, NULL, 1, 'About', 'about', '<p>This is an example of a Croogo page, you could edit this to put information about yourself or your site.</p>', '', 1, '', 0, 0, 0, '/about', '', 0, 1, 2, '', 'page', '2009-12-28 21:54:31', '2009-12-25 22:00:00'),
+(21, NULL, 1, 'Hello World', 'hello-world', '<p>Welcome to Croogo. This is your first post. You can edit or delete it from the admin panel.</p>', '', 1, '', 2, 1, 1, '/blog/hello-world', '{"1":"uncategorized"}', 0, 1, 2, '', 'blog', '2009-12-28 21:55:09', '2009-12-25 11:00:00');
 
 --
 -- Dumping data for table `nodes_terms`
 --
 
 INSERT INTO `nodes_terms` (`id`, `node_id`, `vocabulary_id`, `term_id`, `weight`) VALUES
-(6406, 21, 0, 5, NULL),
-(6405, 21, 0, 1, NULL);
+(6407, 21, 0, 1, NULL);
 
 --
 -- Dumping data for table `regions`
@@ -357,24 +356,25 @@ INSERT INTO `settings` (`id`, `key`, `value`, `title`, `description`, `input_typ
 (6, 'Site.title', 'Croogo', '', '', '', 1, 2, ''),
 (7, 'Site.tagline', 'A CakePHP powered Content Management System.', '', '', 'textarea', 1, 3, ''),
 (8, 'Site.email', 'you@your-site.com', '', '', '', 1, 4, ''),
-(9, 'Site.status', '1', '', '', 'checkbox', 1, 5, ''),
-(12, 'Meta.robots', 'index, follow', '', '', '', 1, 6, ''),
-(13, 'Meta.keywords', 'croogo, Croogo', '', '', 'textarea', 1, 7, ''),
-(14, 'Meta.description', 'Croogo - A CakePHP powered Content Management System', '', '', 'textarea', 1, 8, ''),
-(15, 'Meta.generator', 'Croogo - Content Management System', '', '', '', 0, 9, ''),
-(16, 'Service.akismet_key', 'your-key', '', '', '', 1, 11, ''),
-(17, 'Service.recaptcha_public_key', 'your-public-key', '', '', '', 1, 12, ''),
-(18, 'Service.recaptcha_private_key', 'your-private-key', '', '', '', 1, 13, ''),
-(19, 'Service.akismet_url', 'http://your-blog.com', '', '', '', 1, 10, ''),
-(20, 'Site.theme', '', '', '', '', 0, 14, ''),
-(21, 'Site.feed_url', '', '', '', '', 0, 15, ''),
-(22, 'Reading.nodes_per_page', '5', '', '', '', 1, 16, ''),
-(23, 'Writing.wysiwyg', '1', 'Enable WYSIWYG editor', '', 'checkbox', 1, 17, ''),
-(24, 'Comment.level', '1', '', 'levels deep (threaded comments)', '', 1, 18, ''),
-(25, 'Comment.feed_limit', '10', '', 'number of comments to show in feed', '', 1, 19, ''),
-(26, 'Site.locale', 'eng', '', '', 'text', 0, 20, ''),
-(27, 'Reading.date_time_format', 'D, M d Y', '', '', '', 1, 21, ''),
-(28, 'Comment.date_time_format', 'M d, Y', '', '', '', 1, 22, '');
+(9, 'Site.status', '1', '', '', 'checkbox', 1, 6, ''),
+(12, 'Meta.robots', 'index, follow', '', '', '', 1, 7, ''),
+(13, 'Meta.keywords', 'croogo, Croogo', '', '', 'textarea', 1, 8, ''),
+(14, 'Meta.description', 'Croogo - A CakePHP powered Content Management System', '', '', 'textarea', 1, 9, ''),
+(15, 'Meta.generator', 'Croogo - Content Management System', '', '', '', 0, 10, ''),
+(16, 'Service.akismet_key', 'your-key', '', '', '', 1, 12, ''),
+(17, 'Service.recaptcha_public_key', 'your-public-key', '', '', '', 1, 13, ''),
+(18, 'Service.recaptcha_private_key', 'your-private-key', '', '', '', 1, 14, ''),
+(19, 'Service.akismet_url', 'http://your-blog.com', '', '', '', 1, 11, ''),
+(20, 'Site.theme', '', '', '', '', 0, 15, ''),
+(21, 'Site.feed_url', '', '', '', '', 0, 16, ''),
+(22, 'Reading.nodes_per_page', '5', '', '', '', 1, 17, ''),
+(23, 'Writing.wysiwyg', '1', 'Enable WYSIWYG editor', '', 'checkbox', 1, 18, ''),
+(24, 'Comment.level', '1', '', 'levels deep (threaded comments)', '', 1, 19, ''),
+(25, 'Comment.feed_limit', '10', '', 'number of comments to show in feed', '', 1, 20, ''),
+(26, 'Site.locale', 'eng', '', '', 'text', 0, 21, ''),
+(27, 'Reading.date_time_format', 'D, M d Y H:i:s', '', '', '', 1, 22, ''),
+(28, 'Comment.date_time_format', 'M d, Y', '', '', '', 1, 23, ''),
+(29, 'Site.timezone', '0', '', 'zero (0) for GMT', '', 1, 5, '');
 
 --
 -- Dumping data for table `terms`
@@ -409,8 +409,8 @@ INSERT INTO `types_vocabularies` (`id`, `type_id`, `vocabulary_id`, `weight`) VA
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `username`, `password`, `name`, `email`, `website`, `activation_key`, `image`, `status`, `updated`, `created`) VALUES
-(1, 1, 'admin', 'c054b152596745efa1d197b809fa7fc70ce586e5', 'Administrator', 'you@your-site.com', '/about', '', '', 1, '2009-10-07 22:23:27', '2009-04-05 00:20:34');
+INSERT INTO `users` (`id`, `role_id`, `username`, `password`, `name`, `email`, `website`, `activation_key`, `image`, `bio`, `timezone`, `status`, `updated`, `created`) VALUES
+(1, 1, 'admin', 'c054b152596745efa1d197b809fa7fc70ce586e5', 'Administrator', 'you@your-site.com', '/about', '', '', '', '0', 1, '2009-10-07 22:23:27', '2009-04-05 00:20:34');
 
 --
 -- Dumping data for table `vocabularies`
