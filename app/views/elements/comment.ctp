@@ -12,7 +12,7 @@
         </span>
         <span class="date"><?php echo sprintf(__('said on %s', true), $time->format(Configure::read('Comment.date_time_format'), $comment['Comment']['created'], null, Configure::read('Site.timezone'))); ?></span>
     </div>
-    <div class="comment-body"><?php echo nl2br($comment['Comment']['body']); ?></div>
+    <div class="comment-body"><?php echo nl2br($text->autoLink($comment['Comment']['body'])); ?></div>
     <div class="comment-reply">
     <?php
         if ($level <= Configure::read('Comment.level')) {
