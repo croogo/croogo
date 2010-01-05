@@ -7,7 +7,7 @@
         $user['User']['username'],
         $activationKey,
     ), true);
-    echo sprtintf(__('Please visit this link to reset your password: %s', true), $url);
+    echo sprintf(__('Please visit this link to reset your password: %s', true), $url);
 ?>
 
 
