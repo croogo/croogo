@@ -25,6 +25,7 @@
                     echo $form->input('id');
                     echo $form->input('parent_id', array('type' => 'select', 'options' => $nodes, 'empty' => true));
                     echo $form->input('title');
+                    echo $form->input('user_id');
                     echo $form->input('slug');
                     echo $form->input('excerpt');
                     echo $form->input('body');

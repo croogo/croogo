@@ -20,6 +20,13 @@ class User extends AppModel {
  */
     var $name = 'User';
 /**
+ * Model name
+ *
+ * @var string
+ * @access public
+ */
+    var $order = 'name ASC';
+/**
  * Behaviors used by the Model
  *
  * @var array

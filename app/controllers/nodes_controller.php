@@ -95,7 +95,6 @@ class NodesController extends AppController {
 
         if (!empty($this->data)) {
             $this->Node->create();
-            $this->data['Node']['user_id'] = $this->Session->read('Auth.User.id');
             $this->data['Node']['path'] = $this->Croogo->getRelativePath(array(
                 'admin' => false,
                 'controller' => 'nodes',
@@ -110,17 +109,20 @@ class NodesController extends AppController {
             } else {
                 $this->Session->setFlash(sprintf(__('%s could not be saved. Please, try again.', true), $type['Type']['title']));
             }
+        } else {
+            $this->data['Node']['user_id'] = $this->Session->read('Auth.User.id');
         }
 
         $nodes = $this->Node->generatetreelist();
         $roles   = $this->Node->User->Role->find('list');
+        $users = $this->Node->User->find('list');
         $terms = array();
         foreach ($type['Vocabulary'] AS $vocabulary) {
             $vocabularyTitle = $vocabulary['title'];
             $termsConditions = array('Term.vocabulary_id' => $vocabulary['id']);
             $terms[$vocabularyTitle] = $this->Node->Term->generatetreelist($termsConditions);
         }
-        $this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'terms'));
+        $this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'terms', 'users'));
     }
 
     function admin_edit($id = null) {
@@ -143,7 +145,6 @@ class NodesController extends AppController {
         $this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
 
         if (!empty($this->data)) {
-            $this->data['Node']['user_id'] = $this->Session->read('Auth.User.id');
             $this->data['Node']['path'] = $this->Croogo->getRelativePath(array(
                 'admin' => false,
                 'controller' => 'nodes',
@@ -167,13 +168,14 @@ class NodesController extends AppController {
 
         $nodes = $this->Node->generatetreelist();
         $roles   = $this->Node->User->Role->find('list');
+        $users = $this->Node->User->find('list');
         $terms = array();
         foreach ($type['Vocabulary'] AS $vocabulary) {
             $vocabularyTitle = $vocabulary['title'];
             $termsConditions = array('Term.vocabulary_id' => $vocabulary['id']);
             $terms[$vocabularyTitle] = $this->Node->Term->generatetreelist($termsConditions);
         }
-        $this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'terms'));
+        $this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'terms', 'users'));
     }
 
     function admin_update_paths() {
