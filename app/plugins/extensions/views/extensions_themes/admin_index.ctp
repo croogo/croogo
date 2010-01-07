@@ -31,7 +31,7 @@
         <?php
             foreach ($themesData AS $theme) {
                 if ($theme['Theme']['alias'] != $currentTheme['Theme']['alias'] &&
-										(!isset($theme['Theme']['adminOnly']) || $theme['Theme']['adminOnly'] != 'true')) {
+                    (!isset($theme['Theme']['adminOnly']) || $theme['Theme']['adminOnly'] != 'true')) {
                     echo '<li>';
                         if ($theme['Theme']['alias'] == 'default') {
                             echo $html->tag('div', $html->image($theme['Theme']['screenshot']), array('class' => 'screenshot'));

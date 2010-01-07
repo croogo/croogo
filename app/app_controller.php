@@ -48,8 +48,8 @@ class AppController extends Controller {
         if (Configure::read('Site.theme') && !isset($this->params['admin'])) {
             $this->theme = Configure::read('Site.theme');
         } elseif (Configure::read('Site.admin_theme') && isset($this->params['admin'])) {
-						$this->theme = Configure::read('Site.admin_theme');
-				}
+            $this->theme = Configure::read('Site.admin_theme');
+        }
 
         if (!isset($this->params['admin']) && 
             Configure::read('Site.status') == 0) {
