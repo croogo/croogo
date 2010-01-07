@@ -20,7 +20,7 @@ class User extends AppModel {
  */
     var $name = 'User';
 /**
- * Model name
+ * Order
  *
  * @var string
  * @access public

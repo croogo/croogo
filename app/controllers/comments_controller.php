@@ -232,7 +232,7 @@ class CommentsController extends AppController {
             $continue === true) {
             $this->Akismet->setCommentAuthor($this->data['Comment']['name']);
             $this->Akismet->setCommentAuthorEmail($this->data['Comment']['email']);
-            $this->Akismet->setCommentAuthorURL($this->data['Comment']['url']);
+            $this->Akismet->setCommentAuthorURL($this->data['Comment']['website']);
             $this->Akismet->setCommentContent($this->data['Comment']['body']);
             //$this->Akismet->setPermalink(Router::url($node['Node']['url'], true));
             if ($this->Akismet->isCommentSpam()) {
