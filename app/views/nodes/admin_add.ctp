@@ -23,7 +23,6 @@
                 <?php
                     echo $form->input('parent_id', array('type' => 'select', 'options' => $nodes, 'empty' => true));
                     echo $form->input('title');
-                    echo $form->input('user_id');
                     echo $form->input('slug', array('class' => 'slug'));
                     echo $form->input('excerpt');
                     echo $form->input('body');
@@ -80,6 +79,7 @@
                 <?php
                     echo $form->input('status', array('label' => __('Published', true)));
                     echo $form->input('promote', array('label' => __('Promoted to front page', true)));
+                    echo $form->input('user_id');
                     echo $form->input('created');
                 ?>
                 </div>
