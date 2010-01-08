@@ -92,7 +92,12 @@ class ExtensionsPluginsController extends AppController {
                 $this->redirect(array('action' => 'add'));
             }
 
-            if (is_dir(APP . 'plugins' . DS . $plugin)) {
+            $pluginName = $plugin;
+            if(preg_match('/^[\w\n]+-([\w\n_]+)-[0-9a-f]{7}$/', $plugin, $matches)) {
+                $pluginName = $matches[1];
+            }
+						
+            if (is_dir(APP . 'plugins' . DS . $pluginName)) {
                 $this->Session->setFlash(__('Plugin already exists.', true));
                 $this->redirect(array('action' => 'add'));
             }
@@ -105,9 +110,9 @@ class ExtensionsPluginsController extends AppController {
                     if (strstr($zipEntryName, $plugin . '/')) {
                         $zipEntryNameE = explode($plugin . '/', $zipEntryName);
                         if (isset($zipEntryNameE['1'])) {
-                            $path = APP . 'plugins' . DS . $plugin . DS . str_replace('/', DS, $zipEntryNameE['1']);
+                            $path = APP . 'plugins' . DS . $pluginName . DS . str_replace('/', DS, $zipEntryNameE['1']);
                         } else {
-                            $path = APP . 'plugins' . DS . $plugin . DS;
+                            $path = APP . 'plugins' . DS . $pluginName . DS;
                         }
 
                         if (substr($path, strlen($path) - 1) == DS) {
