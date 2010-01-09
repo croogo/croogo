@@ -78,7 +78,7 @@ class EncoderBehavior extends ModelBehavior {
         if ($data == '') {
             $output = '';
         } else {
-            $output = json_decode($data);
+            $output = json_decode($data, true);
         }
 
         return $output;
