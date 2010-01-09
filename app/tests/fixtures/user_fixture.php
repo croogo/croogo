@@ -1,0 +1,26 @@
+<?php
+
+class UserFixture extends CakeTestFixture {
+	var $name = 'User';
+	var $import = 'User';
+	var $records = array(
+		array(
+			'id' => '1',
+			'role_id' => '1',
+			'username' => 'admin',
+			'password' => 'c054b152596745efa1d197b809fa7fc70ce586e5',
+			'name' => 'Administrator',
+			'email' => 'you@your-site.com',
+			'website' => '/about',
+			'activation_key' => '',
+			'image' => '',
+			'bio' => '',
+			'timezone' => '0',
+			'status' => '1',
+			'updated' => '2009-10-07 22:23:27',
+			'created' => '2009-04-05 00:20:34',
+		),
+	);
+}
+
+?>
