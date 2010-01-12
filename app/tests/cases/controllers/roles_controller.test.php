@@ -111,11 +111,11 @@ class RolesControllerTestCase extends CakeTestCase {
         ));
         $this->Roles->beforeFilter();
         $this->Roles->Component->startup($this->Roles);
-        $this->Roles->admin_delete(3); // ID of Public
+        $this->Roles->admin_delete(1); // ID of Admin
         $this->assertEqual($this->Roles->redirectUrl, array('action' => 'index'));
         
         $hasAny = $this->Roles->Role->hasAny(array(
-            'Role.alias' => 'public',
+            'Role.alias' => 'admin',
         ));
         $this->assertFalse($hasAny);
     }
