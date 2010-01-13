@@ -269,6 +269,7 @@ class TermsControllerTestCase extends CakeTestCase {
 
         $this->__testAdminProcessUnpublish();
         $this->__testAdminProcessPublish();
+        $this->__testAdminProcessDelete();
     }
 
     function __testAdminProcessUnpublish() {
@@ -321,6 +322,30 @@ class TermsControllerTestCase extends CakeTestCase {
             ),
         ));
         $this->assertTrue($count, 2);
+    }
+
+    function __testAdminProcessDelete() {
+        $this->Terms->data = array(
+            'Term' => array(
+                'action' => 'delete',
+                '1' => array(
+                    'id' => 1,
+                ),
+                '2' => array(
+                    'id' => 1,
+                ),
+            ),
+        );
+        $this->Terms->admin_process();
+        $this->assertEqual($this->Terms->redirectUrl, array(
+            'action' => 'index',
+            'vocabulary' => 1,
+        ));
+
+        $hasAny = $this->Terms->Term->hasAny(array(
+            'Term.id' => array(1, 2),
+        ));
+        $this->assertFalse($hasAny);
     }
 
     function endTest() {
