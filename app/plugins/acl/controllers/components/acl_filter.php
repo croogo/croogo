@@ -13,27 +13,27 @@
  */
 class AclFilterComponent extends Object {
 
-    /**
-     * @param object $controller controller
-     * @param array  $settings   settings
-     */
+/**
+ * @param object $controller controller
+ * @param array  $settings   settings
+ */
     function initialize(&$controller, $settings = array()) {
-		$this->controller =& $controller;
-	}
+        $this->controller =& $controller;
+    }
 
-    /**
-     * acl and auth
-     *
-     * @return void
-     */
+/**
+ * acl and auth
+ *
+ * @return void
+ */
     function auth() {
         //Configure AuthComponent
-	    $this->controller->Auth->authorize = 'actions';
-	    $this->controller->Auth->loginAction = array('plugin' => 0, 'controller' => 'users', 'action' => 'login');
-	    $this->controller->Auth->logoutRedirect = array('plugin' => 0, 'controller' => 'users', 'action' => 'login');
-	    $this->controller->Auth->loginRedirect = array('plugin' => 0, 'controller' => 'users', 'action' => 'index');
+        $this->controller->Auth->authorize = 'actions';
+        $this->controller->Auth->loginAction = array('plugin' => 0, 'controller' => 'users', 'action' => 'login');
+        $this->controller->Auth->logoutRedirect = array('plugin' => 0, 'controller' => 'users', 'action' => 'login');
+        $this->controller->Auth->loginRedirect = array('plugin' => 0, 'controller' => 'users', 'action' => 'index');
         $this->controller->Auth->userScope = array('User.status' => 1);
-		$this->controller->Auth->actionPath = 'controllers/';
+        $this->controller->Auth->actionPath = 'controllers/';
 
         if ($this->controller->Auth->user() &&
             $this->controller->Auth->user('role_id') == 1) {
@@ -85,7 +85,6 @@ class AclFilterComponent extends Object {
             $this->controller->Auth->allowedActions = $allow;
         }
     }
-
 
 }
 ?>

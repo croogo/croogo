@@ -32,13 +32,13 @@
 </head>
 <body>
     <div id="wrapper">
-		<div id="header" class="container_16">
-			<div class="grid_16">
+        <div id="header" class="container_16">
+            <div class="grid_16">
                 <h1 class="site-title"><?php echo $html->link(Configure::read('Site.title'), '/'); ?></h1>
                 <span class="site-tagline"><?php echo Configure::read('Site.tagline'); ?></span>
             </div>
             <div class="clear"></div>
-		</div>
+        </div>
 
         <div id="nav">
             <div class="container_16">

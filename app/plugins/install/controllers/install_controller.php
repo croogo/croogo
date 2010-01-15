@@ -18,7 +18,7 @@ class InstallController extends InstallAppController {
  * @var string
  * @access public
  */
-	var $name = 'Install';
+    var $name = 'Install';
 /**
  * No models required
  *

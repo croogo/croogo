@@ -18,7 +18,7 @@ class TinymceHelper extends AppHelper {
  * @var array
  * @access public
  */
-	var $helpers = array('Html');
+    var $helpers = array('Html');
 /**
  * Default settings for this helper
  *
@@ -53,11 +53,11 @@ class TinymceHelper extends AppHelper {
         return $output;
     }
 
-	function init($elements, $options = array()) {
+    function init($elements, $options = array()) {
         $options = Set::merge($this->settings, $options);
 
-		$output = '';
-		$output .= '
+        $output = '';
+            $output .= '
 			tinyMCE.init({
 				// General options
 				//mode : "textareas",
@@ -96,8 +96,8 @@ class TinymceHelper extends AppHelper {
 			});
 			';
 
-		return $output;
-	}
+        return $output;
+    }
 }
 
 ?>

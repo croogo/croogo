@@ -16,7 +16,7 @@ class AclPermissionsController extends AclAppController {
     var $uses = array('Acl.AclAco', 'Acl.AclAro', 'Acl.AclArosAco', 'Role');
 
     function admin_index() {
-		$this->pageTitle = __('Permissions', true);
+        $this->pageTitle = __('Permissions', true);
 
         $acoConditions = array(
             'parent_id !=' => null,

@@ -18,25 +18,25 @@ class FilemanagerHelper extends AppHelper {
  * @var array
  * @access public
  */
-	var $helpers = array('Html');
+    var $helpers = array('Html');
 /**
  * Get extension from a file name.
  *
  * @param string $filename file name
  * @return string
  */
-	function filename2ext($filename) {
-		$filename = strtolower($filename) ;
-		//$exts = split("[/\\.]", $filename) ;
-		//$n = count($exts)-1;
-		$filename_e = explode(".", $filename);
-		if ($filename_e == 1) {
-			return "file";
-		} else {
-			$n = count($filename_e) - 1;
-			return $filename_e[$n];
-		}
-	}
+    function filename2ext($filename) {
+        $filename = strtolower($filename) ;
+        //$exts = split("[/\\.]", $filename) ;
+        //$n = count($exts)-1;
+        $filename_e = explode(".", $filename);
+        if ($filename_e == 1) {
+            return "file";
+        } else {
+            $n = count($filename_e) - 1;
+            return $filename_e[$n];
+        }
+    }
 /**
  * Get icon from file extension
  *
@@ -87,20 +87,20 @@ class FilemanagerHelper extends AppHelper {
  * @param string $path absolute path
  * @return string
  */
-	function breadcrumb($path) {
-		$path_e = explode(DS, $path);
-		
-		$output = array();
-		$current_path = DS;
-		foreach ($path_e AS $p) {
-			if ($p != null) {
-				$current_path .= $p.DS;
-				$output[$p] = $current_path;
-			}
-		}
-		
-		return $output;
-	}
+    function breadcrumb($path) {
+        $path_e = explode(DS, $path);
+
+        $output = array();
+        $current_path = DS;
+        foreach ($path_e AS $p) {
+            if ($p != null) {
+                $current_path .= $p.DS;
+                $output[$p] = $current_path;
+            }
+        }
+
+        return $output;
+    }
 /**
  * Generate anchor tag for a file/directory
  *

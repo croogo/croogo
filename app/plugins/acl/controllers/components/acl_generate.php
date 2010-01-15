@@ -13,21 +13,21 @@
  */
 class AclGenerateComponent extends Object {
 
-    /**
-     * @param object $controller controller
-     * @param array  $settings   settings
-     */
+/**
+ * @param object $controller controller
+ * @param array  $settings   settings
+ */
     function initialize(&$controller, $settings = array()) {
-		$this->controller =& $controller;
+        $this->controller =& $controller;
         App::import('Core', 'File');
         $this->folder = new Folder;
-	}
+    }
 
-    /**
-     * List all controllers (including plugin controllers)
-     *
-     * @return array
-     */
+/**
+ * List all controllers (including plugin controllers)
+ *
+ * @return array
+ */
     function listControllers() {
         $controllerPaths = array();
 
@@ -56,15 +56,15 @@ class AclGenerateComponent extends Object {
         return $controllerPaths;
     }
 
-    /**
-     * List actions of a particular Controller.
-     *
-     * @param string  $name Controller name (the name only, without having Controller at the end)
-     * @param string  $path full path to the controller file including file extension
-     * @param boolean $all  default is false. it true, private actions will be returned too.
-     *
-     * @return array
-     */
+/**
+ * List actions of a particular Controller.
+ *
+ * @param string  $name Controller name (the name only, without having Controller at the end)
+ * @param string  $path full path to the controller file including file extension
+ * @param boolean $all  default is false. it true, private actions will be returned too.
+ *
+ * @return array
+ */
     function listActions($name, $path) {
         // base methods
         if (strpos($path, 'app'.DS.'plugins')) {
@@ -96,13 +96,13 @@ class AclGenerateComponent extends Object {
         return $methods;
     }
 
-    /**
-     * Get plugin name from path
-     *
-     * @param string $path file path
-     *
-     * @return string
-     */
+/**
+ * Get plugin name from path
+ *
+ * @param string $path file path
+ *
+ * @return string
+ */
     function getPluginFromPath($path) {
         $pathE = explode(DS, $path);
         $pluginsK = array_search('plugins', $pathE);

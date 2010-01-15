@@ -96,7 +96,7 @@ class ExtensionsPluginsController extends AppController {
             if(preg_match('/^[\w\n]+-([\w\n_]+)-[0-9a-f]{7}$/', $plugin, $matches)) {
                 $pluginName = $matches[1];
             }
-						
+
             if (is_dir(APP . 'plugins' . DS . $pluginName)) {
                 $this->Session->setFlash(__('Plugin already exists.', true));
                 $this->redirect(array('action' => 'add'));
