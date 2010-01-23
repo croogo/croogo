@@ -20,16 +20,6 @@ class Setting extends AppModel {
  */
     var $name = 'Setting';
 /**
- * Use cache for Configuration
- *
- * if true, it will cache the model find when writing configuration for global use.
- * see Setting::writeConfiguration()
- *
- * @var boolean
- * @access public
- */
-    var $cacheConfiguration = false;
-/**
  * Behaviors used by the Model
  *
  * @var array
@@ -65,15 +55,6 @@ class Setting extends AppModel {
  * @return void
  */
     function afterSave() {
-        if ($this->cacheConfiguration) {
-            $settings = $this->find('all', array(
-                'fields' => array(
-                    'Setting.key',
-                    'Setting.value',
-                ),
-            ));
-            Cache::write('settings', $settings);
-        }
         $this->writeConfiguration();
     }
 /**
@@ -82,15 +63,6 @@ class Setting extends AppModel {
  * @return void
  */
     function afterDelete() {
-        if ($this->cacheConfiguration) {
-            $settings = $this->find('all', array(
-                'fields' => array(
-                    'Setting.key',
-                    'Setting.value',
-                ),
-            ));
-            Cache::write("settings", $settings);
-        }
         $this->writeConfiguration();
     }
 /**
@@ -147,17 +119,16 @@ class Setting extends AppModel {
  * @return void
  */
     function writeConfiguration() {
-        /*if (!$this->cacheConfiguration || ($settings = Cache::read("settings")) === false) {
-            $settings = $this->find('all', array(
-                'fields' => array(
-                    'Setting.key',
-                    'Setting.value',
-                ),
-            ));
-            Cache::write('settings', $settings);
-        }*/
-
-        $settings = $this->find('all', array('fields' => array('Setting.key', 'Setting.value')));
+        $settings = $this->find('all', array(
+            'fields' => array(
+                'Setting.key',
+                'Setting.value',
+            ),
+            'cache' => array(
+                'name' => 'setting_write_configuration',
+                'config' => 'setting_write_configuration',
+            ),
+        ));
         foreach($settings AS $setting) {
             Configure::write($setting['Setting']['key'], $setting['Setting']['value']);
         }

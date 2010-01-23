@@ -290,7 +290,16 @@ class NodesController extends AppController {
             ),
         );
         if (isset($this->params['named']['type'])) {
-            $type = $this->Node->Term->Vocabulary->Type->findByAlias($this->params['named']['type']);
+            //$type = $this->Node->Term->Vocabulary->Type->findByAlias($this->params['named']['type']);
+            $type = $this->Node->Term->Vocabulary->Type->find('first', array(
+                'conditions' => array(
+                    'Type.alias' => $this->params['named']['type'],
+                ),
+                'cache' => array(
+                    'name' => 'type_'.$this->params['named']['type'],
+                    'config' => 'nodes_index',
+                ),
+            ));
             if (!isset($type['Type']['id'])) {
                 $this->Session->setFlash(__('Invalid content type.', true));
                 $this->redirect('/');
@@ -299,13 +308,42 @@ class NodesController extends AppController {
             $this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
             $this->pageTitle = $type['Type']['title'];
         }
-        $nodes = $this->paginate('Node');
+
+        if ($this->usePaginationCache) {
+            $cacheNamePrefix = 'nodes_index';
+            if (isset($type)) {
+                $cacheNamePrefix .= '_'.$type['Type']['alias'];
+            }
+            $cacheName = $cacheNamePrefix.'_'.$this->params['named']['type'].'_'.$this->paginate['page'].'_'.$this->paginate['Node']['limit'];
+            $cacheNamePaging = $cacheNamePrefix.'_'.$this->params['named']['type'].'_'.$this->paginate['page'].'_'.$this->paginate['Node']['limit'].'_paging';
+            $cacheConfig = 'nodes_index';
+            $nodes = Cache::read($cacheName, $cacheConfig);
+            if (!$nodes) {
+                $nodes = $this->paginate('Node');
+                Cache::write($cacheName, $nodes, $cacheConfig);
+                Cache::write($cacheNamePaging, $this->params['paging'], $cacheConfig);
+            } else {
+                $paging = Cache::read($cacheNamePaging, $cacheConfig);
+                $this->params['paging'] = $paging;
+                $this->helpers[] = 'Paginator';
+            }
+        } else {
+            $nodes = $this->paginate('Node');
+        }
 
         $this->set(compact('type', 'nodes'));
     }
 
     function term() {
-        $term = $this->Node->Term->findBySlug($this->params['named']['slug']);
+        $term = $this->Node->Term->find('first', array(
+            'conditions' => array(
+                'Term.slug' => $this->params['named']['slug'],
+            ),
+            'cache' => array(
+                'name' => 'term_'.$this->params['named']['slug'],
+                'config' => 'nodes_term',
+            ),
+        ));
         if (!isset($term['Term']['id'])) {
             $this->Session->setFlash(__('Invalid Term.', true));
             $this->redirect('/');
@@ -326,7 +364,15 @@ class NodesController extends AppController {
             ),
         );
         if (isset($this->params['named']['type'])) {
-            $type = $this->Node->Term->Vocabulary->Type->findByAlias($this->params['named']['type']);
+            $type = $this->Node->Term->Vocabulary->Type->find('first', array(
+                'conditions' => array(
+                    'Type.alias' => $this->params['named']['type'],
+                ),
+                'cache' => array(
+                    'name' => 'type_'.$this->params['named']['type'],
+                    'config' => 'nodes_term',
+                ),
+            ));
             if (!isset($type['Type']['id'])) {
                 $this->Session->setFlash(__('Invalid content type.', true));
                 $this->redirect('/');
@@ -335,7 +381,28 @@ class NodesController extends AppController {
             $this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
             $this->pageTitle = $term['Term']['title'];
         }
-        $nodes = $this->paginate('Node');
+
+        if ($this->usePaginationCache) {
+            $cacheNamePrefix = 'nodes_term';
+            if (isset($type)) {
+                $cacheNamePrefix .= '_'.$type['Type']['alias'];
+            }
+            $cacheName = $cacheNamePrefix.'_'.$this->paginate['page'].'_'.$this->paginate['Node']['limit'];
+            $cacheNamePaging = $cacheNamePrefix.'_'.$this->paginate['page'].'_'.$this->paginate['Node']['limit'].'_paging';
+            $cacheConfig = 'nodes_term';
+            $nodes = Cache::read($cacheName, $cacheConfig);
+            if (!$nodes) {
+                $nodes = $this->paginate('Node');
+                Cache::write($cacheName, $nodes, $cacheConfig);
+                Cache::write($cacheNamePaging, $this->params['paging'], $cacheConfig);
+            } else {
+                $paging = Cache::read($cacheNamePaging, $cacheConfig);
+                $this->params['paging'] = $paging;
+                $this->helpers[] = 'Paginator';
+            }
+        } else {
+            $nodes = $this->paginate('Node');
+        }
 
         $this->set(compact('term', 'type', 'nodes'));
     }
@@ -366,7 +433,27 @@ class NodesController extends AppController {
             $this->set(compact('type'));
         }
 
-        $nodes = $this->paginate('Node');
+        if ($this->usePaginationCache) {
+            $cacheNamePrefix = 'nodes_term';
+            if (isset($type)) {
+                $cacheNamePrefix .= '_'.$type['Type']['alias'];
+            }
+            $cacheName = $cacheNamePrefix.'_'.$this->paginate['page'].'_'.$this->paginate['Node']['limit'];
+            $cacheNamePaging = $cacheNamePrefix.'_'.$this->paginate['page'].'_'.$this->paginate['Node']['limit'].'_paging';
+            $cacheConfig = 'nodes_promoted';
+            $nodes = Cache::read($cacheName, $cacheConfig);
+            if (!$nodes) {
+                $nodes = $this->paginate('Node');
+                Cache::write($cacheName, $nodes, $cacheConfig);
+                Cache::write($cacheNamePaging, $this->params['paging'], $cacheConfig);
+            } else {
+                $paging = Cache::read($cacheNamePaging, $cacheConfig);
+                $this->params['paging'] = $paging;
+                $this->helpers[] = 'Paginator';
+            }
+        } else {
+            $nodes = $this->paginate('Node');
+        }
         $this->set(compact('nodes'));
     }
 
@@ -410,7 +497,15 @@ class NodesController extends AppController {
     function view($id = null) {
         if (isset($this->params['named']['slug']) && isset($this->params['named']['type'])) {
             $this->Node->type = $this->params['named']['type'];
-            $type = $this->Node->Term->Vocabulary->Type->findByAlias($this->Node->type);
+            $type = $this->Node->Term->Vocabulary->Type->find('first', array(
+                'conditions' => array(
+                    'Type.alias' => $this->Node->type,
+                ),
+                'cache' => array(
+                    'name' => 'type_'.$this->Node->type,
+                    'config' => 'nodes_view',
+                ),
+            ));
             $node = $this->Node->find('first', array(
                 'conditions' => array(
                     'Node.slug' => $this->params['named']['slug'],
@@ -421,6 +516,10 @@ class NodesController extends AppController {
                         'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
                     ),
                 ),
+                'cache' => array(
+                    'name' => 'node_'.$this->params['named']['slug'],
+                    'config' => 'nodes_view',
+                ),
             ));
         } elseif ($id == null) {
             $this->Session->setFlash(__('Invalid content', true));
@@ -430,6 +529,10 @@ class NodesController extends AppController {
                 'conditions' => array(
                     'Node.id' => $id,
                     'Node.status' => 1,
+                ),
+                'cache' => array(
+                    'name' => 'node_'.$id,
+                    'config' => 'nodes_view',
                 ),
             ));
         }
@@ -447,6 +550,10 @@ class NodesController extends AppController {
                 ),
                 'contain' => array(
                     'User',
+                ),
+                'cache' => array(
+                    'name' => 'comment_node_'.$node['Node']['id'],
+                    'config' => 'nodes_view',
                 ),
             ));
         } else {

@@ -1,6 +1,11 @@
 <?php
 class AppController extends Controller {
-
+/**
+ * Components
+ *
+ * @var array
+ * @access public
+ */
     var $components = array(
         'Croogo',
         'Acl',
@@ -12,6 +17,12 @@ class AppController extends Controller {
         'Recaptcha',
         'Theme',
     );
+/**
+ * Helpers
+ *
+ * @var array
+ * @access public
+ */
     var $helpers = array(
         'Html',
         'Form',
@@ -23,15 +34,44 @@ class AppController extends Controller {
         'Meta',
         'Tinymce',
     );
+/**
+ * Models
+ *
+ * @var array
+ * @access public
+ */
     var $uses = array(
         'Block',
         'Link',
         'Setting',
         'Node',
     );
+/**
+ * Cache pagination results
+ *
+ * @var boolean
+ * @access public
+ */
+    var $usePaginationCache = true;
+/**
+ * View
+ *
+ * @var string
+ * @access public
+ */
     var $view = 'Theme';
+/**
+ * Theme
+ *
+ * @var string
+ * @access public
+ */
     var $theme;
-
+/**
+ * beforeFilter
+ *
+ * @return void
+ */
     function beforeFilter() {
         $this->AclFilter->auth();
         $this->Setting->writeConfiguration();

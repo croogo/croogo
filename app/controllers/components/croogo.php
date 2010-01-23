@@ -39,6 +39,13 @@ class CroogoComponent extends Object {
  */
     var $roleId = 3;
 /**
+ * Cache Theme XML
+ *
+ * @var boolean
+ * @access plugin
+ */
+    var $cacheThemeXml = true;
+/**
  * Menus for layout
  *
  * @var string
@@ -156,6 +163,10 @@ class CroogoComponent extends Object {
                 'Region.id',
                 'Region.alias'
             ),
+            'cache' => array(
+                'name' => 'croogo_regions',
+                'config' => 'croogo_blocks',
+            ),
         ));
         foreach ($regions AS $regionId => $regionAlias) {
             $this->blocks_for_layout[$regionAlias] = array();
@@ -183,6 +194,10 @@ class CroogoComponent extends Object {
                 'order' => array(
                     'Block.weight' => 'ASC'
                 ),
+                'cache' => array(
+                    'name' => 'block_'.$this->roleId.'_'.$this->controller->params['url']['url'],
+                    'config' => 'croogo_blocks',
+                ),
                 'recursive' => '-1',
             );
             $this->blocks_for_layout[$regionAlias] = $this->controller->Block->find('all', $findOptions);
@@ -198,11 +213,21 @@ class CroogoComponent extends Object {
     function menus() {
         if (Configure::read('Site.theme') == 'default' ||
             Configure::read('Site.theme') == null) {
-            $themeXml =& new XML(WWW_ROOT . 'theme.xml');
+            $cacheName = 'theme_default_xml';
+            $xmlLocation = WWW_ROOT . 'theme.xml';
         } else {
-            $themeXml =& new XML(WWW_ROOT . 'themed' . DS . Configure::read('Site.theme') . DS . 'theme.xml');
+            $cacheName = 'theme_'.Configure::read('Site.theme').'_xml';
+            $xmlLocation = WWW_ROOT . 'themed' . DS . Configure::read('Site.theme') . DS . 'theme.xml';
         }
-        $themeXmlArray = $themeXml->toArray(false);
+        if ($this->cacheThemeXml) {
+            $themeXmlArray = Cache::read($cacheName, 'theme_xml');
+        }
+        if (!isset($themeXmlArray) || !$themeXmlArray) {
+            $themeXml =& new XML($xmlLocation);
+            $themeXmlArray = $themeXml->toArray(false);
+            Cache::write($cacheName, $themeXmlArray, 'theme_xml');
+        }
+        
         $menus = array();
         if (is_array($themeXmlArray['theme']['menus']['menu'])) {
             $menus = $themeXmlArray['theme']['menus']['menu'];
@@ -236,6 +261,10 @@ class CroogoComponent extends Object {
                     'Menu.alias' => $menuAlias,
                     'Menu.link_count >' => 0,
                 ),
+                'cache' => array(
+                    'name' => 'croogo_menu_'.$menuAlias,
+                    'config' => 'croogo_menus',
+                ),
                 'recursive' => '-1',
             ));
             if (isset($menu['Menu']['id'])) {
@@ -256,6 +285,10 @@ class CroogoComponent extends Object {
                     ),
                     'order' => array(
                         'Link.lft' => 'ASC',
+                    ),
+                    'cache' => array(
+                        'name' => 'croogo_menu_'.$menu['Menu']['id'].'_links_'.$this->roleId,
+                        'config' => 'croogo_menus',
                     ),
                     'recursive' => -1,
                 );
@@ -298,6 +331,10 @@ class CroogoComponent extends Object {
                 'conditions' => array(
                     'Vocabulary.alias' => $vocabularyAlias,
                 ),
+                'cache' => array(
+                    'name' => 'croogo_vocabularies_'.$vocabularyAlias,
+                    'config' => 'croogo_vocabularies',
+                ),
                 'recursive' => '-1',
             ));
 
@@ -312,6 +349,10 @@ class CroogoComponent extends Object {
                         'Term.title',
                     ),
                     'order' => 'Term.slug ASC',
+                    'cache' => array(
+                        'name' => 'croogo_vocabularies_'.$vocabulary['Vocabulary']['id'].'_terms',
+                        'config' => 'croogo_vocabularies',
+                    ),
                     'recursive' => '-1',
                 ));
                 $this->vocabularies_for_layout[$vocabularyAlias] = array();
@@ -329,6 +370,10 @@ class CroogoComponent extends Object {
  */
     function types() {
         $types = $this->controller->Node->Term->Vocabulary->Type->find('all', array(
+            'cache' => array(
+                'name' => 'croogo_types',
+                'config' => 'croogo_types',
+            ),
             'recursive' => '-1',
         ));
         foreach ($types AS $type) {
@@ -386,6 +431,10 @@ class CroogoComponent extends Object {
                 'conditions' => $options['conditions'],
                 'order' => $options['order'],
                 'limit' => $options['limit'],
+                'cache' => array(
+                    'name' => 'croogo_node_'.$alias,
+                    'config' => 'croogo_nodes',
+                ),
             ));
             $this->nodes_for_layout[$alias] = $node;
         }

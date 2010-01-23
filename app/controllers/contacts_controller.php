@@ -86,8 +86,14 @@ class ContactsController extends AppController {
         }
 
         $contact = $this->Contact->find('first', array(
-            'Contact.alias' => $alias,
-            'Contact.status' => 1,
+            'conditions' => array(
+                'Contact.alias' => $alias,
+                'Contact.status' => 1,
+            ),
+            'cache' => array(
+                'name' => 'contact_'.$alias,
+                'config' => 'contacts_view',
+            ),
         ));
         if (!isset($contact['Contact']['id'])) {
             $this->redirect('/');
