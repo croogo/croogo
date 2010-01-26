@@ -1,15 +1,26 @@
 # IDE
 nbproject/
+*.tmproj
 
 # App
 app/config/database.php
 app/plugins/debug_kit/
 app/vendors/simpletest/
+app/webroot/uploads/*.jpg
+app/webroot/uploads/*.jpeg
+app/webroot/uploads/*.gif
+app/webroot/uploads/*.png
+app/webroot/uploads/*.pdf
+app/webroot/uploads/resized/*.jpg
+app/webroot/uploads/resized/*.jpeg
+app/webroot/uploads/resized/*.gif
+app/webroot/uploads/resized/*.png
 
 # Cake cache
 app/tmp/cache/cake_*
 app/tmp/cache/models/cake_*
 app/tmp/cache/persistent/cake_*
  
-# Cake logs
+# Cake tmp dir
 app/tmp/logs/*.log
+app/tmp/sessions/*

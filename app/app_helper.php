@@ -1,4 +1,18 @@
 <?php
+/**
+ * Application helper
+ *
+ * This file is the base helper of all other helpers
+ *
+ * PHP version 5
+ *
+ * @category Helpers
+ * @package  Croogo
+ * @version  1.0
+ * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
+ * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link     http://www.croogo.org
+ */
 class AppHelper extends Helper {
 
     function url($url = null, $full = false) {
@@ -7,6 +21,5 @@ class AppHelper extends Helper {
         }
         return parent::url($url, $full);
     }
-
 }
 ?>
