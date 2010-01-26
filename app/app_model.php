@@ -15,8 +15,21 @@
  */
 class AppModel extends Model {
 
+/**
+ * use Caching
+ *
+ * @var string
+ */
     var $useCache = true;
 
+/**
+ * Override find function to use caching
+ *
+ * @param mixed $type 
+ * @param array $options 
+ * @return mixed
+ * @access public
+ */
     function find($type, $options = array()) {
         if ($this->useCache) {
             $cachedResults = $this->_findCached($type, $options);
@@ -35,6 +48,14 @@ class AppModel extends Model {
         return $results;
     }
 
+/**
+ * Check if find() was already cached
+ *
+ * @param mixed $type 
+ * @param array $options 
+ * @return void
+ * @access private
+ */
     function _findCached($type, $options) {
         if (isset($options['cache']['name']) &&
             isset($options['cache']['config'])) {
@@ -47,6 +68,5 @@ class AppModel extends Model {
         }
         return false;
     }
-
 }
 ?>

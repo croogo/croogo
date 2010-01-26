@@ -55,6 +55,12 @@ class AttachmentsController extends AppController {
  */
     var $uploadsDir = 'uploads';
 
+/**
+ * Before executing controller actions
+ *
+ * @return void
+ * @access public
+ */
     function beforeFilter() {
         parent::beforeFilter();
 
@@ -66,6 +72,12 @@ class AttachmentsController extends AppController {
         $this->set('type', $this->type);
     }
 
+/**
+ * Admin index
+ *
+ * @return void
+ * @access public
+ */
     function admin_index() {
         $this->pageTitle = __('Attachments', true);
 
@@ -74,6 +86,12 @@ class AttachmentsController extends AppController {
         $this->set('attachments', $this->paginate());
     }
 
+/**
+ * Admin add
+ *
+ * @return void
+ * @access public
+ */
     function admin_add() {
         $this->pageTitle = __("Add Attachment", true);
 
@@ -127,6 +145,13 @@ class AttachmentsController extends AppController {
         }
     }
 
+/**
+ * Admin edit
+ *
+ * @param int $id 
+ * @return void
+ * @access public
+ */
     function admin_edit($id = null) {
         $this->pageTitle = __("Edit Attachment", true);
 
@@ -147,6 +172,13 @@ class AttachmentsController extends AppController {
         }
     }
 
+/**
+ * Admin delete
+ *
+ * @param int $id 
+ * @return void
+ * @access public
+ */
     function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Attachment', true));
