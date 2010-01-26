@@ -6,15 +6,8 @@ nbproject/
 app/config/database.php
 app/plugins/debug_kit/
 app/vendors/simpletest/
-app/webroot/uploads/*.jpg
-app/webroot/uploads/*.jpeg
-app/webroot/uploads/*.gif
-app/webroot/uploads/*.png
-app/webroot/uploads/*.pdf
-app/webroot/uploads/resized/*.jpg
-app/webroot/uploads/resized/*.jpeg
-app/webroot/uploads/resized/*.gif
-app/webroot/uploads/resized/*.png
+app/webroot/uploads/resized/*
+app/webroot/uploads/*
 
 # Cake cache
 app/tmp/cache/cake_*
