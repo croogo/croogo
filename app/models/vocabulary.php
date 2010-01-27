@@ -30,7 +30,7 @@ class Vocabulary extends AppModel {
             'prefix' => array(
                 'vocabulary_',
                 'croogo_vocabulary_',
-                'croogo_vocabluaries_',
+                'croogo_vocabularies_',
             ),
         ),
     );
