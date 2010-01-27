@@ -57,21 +57,25 @@ class AclFilterComponent extends Object {
                         'Aco.id',
                         'Aco.alias',
                     ),
+                    'recursive' => '-1',
                 ));
                 $thisControllerActionsIds = array_keys($thisControllerActions);
-                $conditions = array(
-                    'AclArosAco.aro_id' => $roleId,
-                    'AclArosAco.aco_id' => $thisControllerActionsIds,
-                    'AclArosAco._create' => 1,
-                    'AclArosAco._read' => 1,
-                    'AclArosAco._update' => 1,
-                    'AclArosAco._delete' => 1,
-                );
-                $allowedActions = ClassRegistry::init('Acl.AclArosAco')->find('all', array(
+                $allowedActions = $this->controller->Acl->Aco->Permission->find('list', array(
+                    'conditions' => array(
+                        'Permission.aro_id' => $roleId,
+                        'Permission.aco_id' => $thisControllerActionsIds,
+                        'Permission._create' => 1,
+                        'Permission._read' => 1,
+                        'Permission._update' => 1,
+                        'Permission._delete' => 1,
+                    ),
+                    'fields' => array(
+                        'id',
+                        'aco_id',
+                    ),
                     'recursive' => '-1',
-                    'conditions' => $conditions,
                 ));
-                $allowedActionsIds = Set::extract('/AclArosAco/aco_id', $allowedActions);
+                $allowedActionsIds = array_values($allowedActions);
             }
 
             $allow = array();
