@@ -31,6 +31,13 @@ class Block extends AppModel {
             'field' => 'weight',
             'foreign_key' => false,
         ),
+        'Cached' => array(
+            'prefix' => array(
+                'block_',
+                'blocks_',
+                'croogo_blocks_',
+            ),
+        ),
     );
 /**
  * Validation

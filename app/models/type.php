@@ -20,6 +20,19 @@ class Type extends AppModel {
  */
     var $name = 'Type';
 /**
+ * Behaviors used by the Model
+ *
+ * @var array
+ * @access public
+ */
+    var $actsAs = array(
+        'Cached' => array(
+            'prefix' => array(
+                'type_',
+            ),
+        ),
+    );
+/**
  * Validation
  *
  * @var array

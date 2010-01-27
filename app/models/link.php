@@ -28,6 +28,13 @@ class Link extends AppModel {
     var $actsAs = array(
         'Encoder',
         'Tree',
+        'Cached' => array(
+            'prefix' => array(
+                'link_',
+                'menu_',
+                'croogo_menu_',
+            ),
+        ),
     );
 /**
  * Validation

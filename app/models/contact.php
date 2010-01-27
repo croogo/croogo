@@ -20,6 +20,19 @@ class Contact extends AppModel {
  */
     var $name = 'Contact';
 /**
+ * Behaviors used by the Model
+ *
+ * @var array
+ * @access public
+ */
+    var $actsAs = array(
+        'Cached' => array(
+            'prefix' => array(
+                'contact_',
+            ),
+        ),
+    );
+/**
  * Validation
  *
  * @var array

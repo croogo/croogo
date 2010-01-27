@@ -20,6 +20,21 @@ class Menu extends AppModel {
  */
     var $name = 'Menu';
 /**
+ * Behaviors used by the Model
+ *
+ * @var array
+ * @access public
+ */
+    var $actsAs = array(
+        'Cached' => array(
+            'prefix' => array(
+                'link_',
+                'menu_',
+                'croogo_menu_',
+            ),
+        ),
+    );
+/**
  * Validation
  *
  * @var array

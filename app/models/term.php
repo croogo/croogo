@@ -27,6 +27,12 @@ class Term extends AppModel {
  */
     var $actsAs = array(
         'Tree',
+        'Cached' => array(
+            'prefix' => array(
+                'term_',
+                'croogo_vocabularies_',
+            ),
+        ),
     );
 /**
  * Validation

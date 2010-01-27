@@ -30,6 +30,11 @@ class Setting extends AppModel {
             'field' => 'weight',
             'foreign_key' => false,
         ),
+        'Cached' => array(
+            'prefix' => array(
+                'setting_',
+            ),
+        ),
     );
 /**
  * Validation

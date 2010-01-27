@@ -195,7 +195,7 @@ class CroogoComponent extends Object {
                     'Block.weight' => 'ASC'
                 ),
                 'cache' => array(
-                    'name' => 'block_'.$this->roleId.'_'.$this->controller->params['url']['url'],
+                    'name' => 'croogo_blocks_'.$this->roleId.'_'.$this->controller->params['url']['url'],
                     'config' => 'croogo_blocks',
                 ),
                 'recursive' => '-1',
@@ -332,7 +332,7 @@ class CroogoComponent extends Object {
                     'Vocabulary.alias' => $vocabularyAlias,
                 ),
                 'cache' => array(
-                    'name' => 'croogo_vocabularies_'.$vocabularyAlias,
+                    'name' => 'croogo_vocabulary_'.$vocabularyAlias,
                     'config' => 'croogo_vocabularies',
                 ),
                 'recursive' => '-1',
@@ -432,7 +432,7 @@ class CroogoComponent extends Object {
                 'order' => $options['order'],
                 'limit' => $options['limit'],
                 'cache' => array(
-                    'name' => 'croogo_node_'.$alias,
+                    'name' => 'croogo_nodes_'.$options['find'].'_'.$alias,
                     'config' => 'croogo_nodes',
                 ),
             ));

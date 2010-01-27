@@ -28,6 +28,13 @@ class Comment extends AppModel {
     var $actsAs = array(
         'Tree',
         'Containable',
+        'Cached' => array(
+            'prefix' => array(
+                'comment_',
+                'nodes_',
+                'node_',
+            ),
+        ),
     );
 /**
  * Validation

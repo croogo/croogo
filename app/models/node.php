@@ -31,6 +31,12 @@ class Node extends AppModel {
         'Encoder',
         'Meta',
         'Url',
+        'Cached' => array(
+            'prefix' => array(
+                'node_',
+                'nodes_',
+            ),
+        ),
     );
 /**
  * Node type

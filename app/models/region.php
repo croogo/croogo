@@ -20,6 +20,22 @@ class Region extends AppModel {
  */
     var $name = 'Region';
 /**
+ * Behaviors used by the Model
+ *
+ * @var array
+ * @access public
+ */
+    var $actsAs = array(
+        'Cached' => array(
+            'prefix' => array(
+                'region_',
+                'croogo_regions',
+                'block_',
+                'croogo_blocks_',
+            ),
+        ),
+    );
+/**
  * Validation
  *
  * @var array
