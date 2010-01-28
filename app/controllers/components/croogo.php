@@ -44,7 +44,7 @@ class CroogoComponent extends Object {
  * @var boolean
  * @access plugin
  */
-    var $cacheThemeXml = true;
+    var $cacheThemeXml = false;
 /**
  * Menus for layout
  *

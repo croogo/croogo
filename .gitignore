@@ -13,6 +13,7 @@ app/webroot/uploads/*
 app/tmp/cache/cake_*
 app/tmp/cache/models/cake_*
 app/tmp/cache/persistent/cake_*
+app/tmp/cache/queries/cake_*
  
 # Cake tmp dir
 app/tmp/logs/*.log
