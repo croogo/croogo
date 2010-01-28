@@ -35,6 +35,7 @@ class Node extends AppModel {
             'prefix' => array(
                 'node_',
                 'nodes_',
+                'croogo_nodes_',
             ),
         ),
     );

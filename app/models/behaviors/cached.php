@@ -37,17 +37,6 @@ class CachedBehavior extends ModelBehavior {
         $this->_deleteCachedFiles($model);
     }
 /**
- * I wish it worked
- *
- * @param object $model
- * @param array  $fields
- * @param array  $conditions
- * @return void
- */
-    function afterUpdateAll(&$model, $fields, $conditions = true) {
-        $this->_deleteCachedFiles($model);
-    }
-/**
  * afterDelete callback
  *
  * @param object $model

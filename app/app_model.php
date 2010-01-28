@@ -68,5 +68,32 @@ class AppModel extends Model {
         }
         return false;
     }
+/**
+ * Updates multiple model records based on a set of conditions.
+ *
+ * call afterSave() callback after successful update.
+ *
+ * @param array $fields     Set of fields and values, indexed by fields.
+ *                          Fields are treated as SQL snippets, to insert literal values manually escape your data.
+ * @param mixed $conditions Conditions to match, true for all records
+ * @return boolean True on success, false on failure
+ * @access public
+ */
+    function updateAll($fields, $conditions = true) {
+        $output = parent::updateAll($fields, $conditions);
+        if ($output) {
+            $created = false;
+            $options = array();
+            $this->Behaviors->trigger($this, 'afterSave', array(
+                $created,
+                $options,
+            ));
+            $this->afterSave($created);
+            $this->_clearCache();
+            $this->id = false;
+            return true;
+        }
+        return false;
+    }
 }
 ?>
