@@ -20,6 +20,15 @@ class UsersController extends AppController {
  */
     var $name = 'Users';
 /**
+ * Components
+ *
+ * @var array
+ * @access public
+ */
+    var $components = array(
+        'Email',
+    );
+/**
  * Models used by the Controller
  *
  * @var array

@@ -195,7 +195,7 @@ class CroogoComponent extends Object {
                     'Block.weight' => 'ASC'
                 ),
                 'cache' => array(
-                    'name' => 'croogo_blocks_'.$this->roleId.'_'.$this->controller->params['url']['url'],
+                    'name' => 'croogo_blocks_'.$regionAlias.'_'.$this->roleId.'_'.$this->controller->params['url']['url'],
                     'config' => 'croogo_blocks',
                 ),
                 'recursive' => '-1',
@@ -239,12 +239,12 @@ class CroogoComponent extends Object {
         foreach ($this->blocks_for_layout AS $regionAlias => $blocks) {
             foreach ($blocks AS $block) {
                 preg_match_all('/\[(menu|m):([A-Za-z0-9_\-]*)(.*?)\]/i', $block['Block']['body'], $tagMatches);
-                for($i=0; $i < count($tagMatches[1]); $i++){
+                for ($i=0; $i < count($tagMatches[1]); $i++) {
                     $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
                     preg_match_all($regex, $tagMatches[3][$i], $attributes);
                     $menuAlias = $tagMatches[2][$i];
                     $options = array();
-                    for($j=0; $j < count($attributes[0]); $j++){
+                    for ($j=0; $j < count($attributes[0]); $j++) {
                         $options[$attributes[1][$j]] = $attributes[2][$j];
                     }
                     if (!in_array($menuAlias, $menus)) {
@@ -311,12 +311,12 @@ class CroogoComponent extends Object {
         foreach ($this->blocks_for_layout AS $regionAlias => $blocks) {
             foreach ($blocks AS $block) {
                 preg_match_all('/\[(vocabulary|v):([A-Za-z0-9_\-]*)(.*?)\]/i', $block['Block']['body'], $tagMatches);
-                for($i=0; $i < count($tagMatches[1]); $i++){
+                for ($i=0; $i < count($tagMatches[1]); $i++) {
                     $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
                     preg_match_all($regex, $tagMatches[3][$i], $attributes);
                     $vocabularyAlias = $tagMatches[2][$i];
                     $options = array();
-                    for($j=0; $j < count($attributes[0]); $j++){
+                    for ($j=0; $j < count($attributes[0]); $j++) {
                         $options[$attributes[1][$j]] = $attributes[2][$j];
                     }
                     if (!in_array($vocabularyAlias, $vocabularies)) {
@@ -411,7 +411,7 @@ class CroogoComponent extends Object {
                     preg_match_all($regex, $tagMatches[3][$i], $attributes);
                     $alias = $tagMatches[2][$i];
                     $options = array();
-                    for($j=0; $j < count($attributes[0]); $j++){
+                    for ($j=0; $j < count($attributes[0]); $j++) {
                         $options[$attributes[1][$j]] = $attributes[2][$j];
                     }
                     if (!in_array($alias, $nodes)) {

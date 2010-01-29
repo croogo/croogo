@@ -26,9 +26,6 @@ class AppController extends Controller {
         'Auth',
         'Acl.AclFilter',
         'RequestHandler',
-        'Email',
-        'Akismet',
-        'Recaptcha',
         'Theme',
     );
 /**

@@ -20,6 +20,17 @@ class ContactsController extends AppController {
  */
     var $name = 'Contacts';
 /**
+ * Components
+ *
+ * @var array
+ * @access public
+ */
+    var $components = array(
+        'Akismet',
+        'Email',
+        'Recaptcha',
+    );
+/**
  * Models used by the Controller
  *
  * @var array

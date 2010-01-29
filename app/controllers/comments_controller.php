@@ -20,6 +20,17 @@ class CommentsController extends AppController {
  */
     var $name = 'Comments';
 /**
+ * Components
+ *
+ * @var array
+ * @access public
+ */
+    var $components = array(
+        'Akismet',
+        'Email',
+        'Recaptcha',
+    );
+/**
  * Models used by the Controller
  *
  * @var array
