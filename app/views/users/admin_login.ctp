@@ -14,6 +14,6 @@
         ), array(
             'class' => 'forgot',
         ));
-        echo $form->end('Log In');
+        echo $form->end(__('Log In', true));
     ?>
 </div>
