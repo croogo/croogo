@@ -314,6 +314,7 @@ class NodesController extends AppController {
             if (isset($type)) {
                 $cacheNamePrefix .= '_'.$type['Type']['alias'];
             }
+            $this->paginate['page'] = isset($this->params['named']['page']) ? $this->params['named']['page'] : 1;
             $cacheName = $cacheNamePrefix.'_'.$this->params['named']['type'].'_'.$this->paginate['page'].'_'.$this->paginate['Node']['limit'];
             $cacheNamePaging = $cacheNamePrefix.'_'.$this->params['named']['type'].'_'.$this->paginate['page'].'_'.$this->paginate['Node']['limit'].'_paging';
             $cacheConfig = 'nodes_index';
@@ -387,6 +388,7 @@ class NodesController extends AppController {
             if (isset($type)) {
                 $cacheNamePrefix .= '_'.$type['Type']['alias'];
             }
+            $this->paginate['page'] = isset($this->params['named']['page']) ? $this->params['named']['page'] : 1;
             $cacheName = $cacheNamePrefix.'_'.$this->paginate['page'].'_'.$this->paginate['Node']['limit'];
             $cacheNamePaging = $cacheNamePrefix.'_'.$this->paginate['page'].'_'.$this->paginate['Node']['limit'].'_paging';
             $cacheConfig = 'nodes_term';
@@ -434,10 +436,11 @@ class NodesController extends AppController {
         }
 
         if ($this->usePaginationCache) {
-            $cacheNamePrefix = 'nodes_term';
+            $cacheNamePrefix = 'nodes_promoted';
             if (isset($type)) {
                 $cacheNamePrefix .= '_'.$type['Type']['alias'];
             }
+            $this->paginate['page'] = isset($this->params['named']['page']) ? $this->params['named']['page'] : 1;
             $cacheName = $cacheNamePrefix.'_'.$this->paginate['page'].'_'.$this->paginate['Node']['limit'];
             $cacheNamePaging = $cacheNamePrefix.'_'.$this->paginate['page'].'_'.$this->paginate['Node']['limit'].'_paging';
             $cacheConfig = 'nodes_promoted';
