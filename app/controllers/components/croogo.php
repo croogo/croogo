@@ -42,7 +42,7 @@ class CroogoComponent extends Object {
  * Cache Theme XML
  *
  * @var boolean
- * @access plugin
+ * @access public
  */
     var $cacheThemeXml = false;
 /**
@@ -80,6 +80,17 @@ class CroogoComponent extends Object {
  * @access public
  */
     var $nodes_for_layout = array();
+/**
+ * Blocks data: contains parsed value of bb-code like strings
+ *
+ * @var array
+ * @access public
+ */
+    var $blocksData = array(
+        'menus' => array(),
+        'vocabularies' => array(),
+        'nodes' => array(),
+    );
 /**
  * Startup
  *
@@ -161,7 +172,7 @@ class CroogoComponent extends Object {
             ),
             'fields' => array(
                 'Region.id',
-                'Region.alias'
+                'Region.alias',
             ),
             'cache' => array(
                 'name' => 'croogo_regions',
@@ -200,7 +211,24 @@ class CroogoComponent extends Object {
                 ),
                 'recursive' => '-1',
             );
-            $this->blocks_for_layout[$regionAlias] = $this->controller->Block->find('all', $findOptions);
+            $blocks = $this->controller->Block->find('all', $findOptions);
+            $this->processBlocksData($blocks);
+            $this->blocks_for_layout[$regionAlias] = $blocks;
+        }
+    }
+/**
+ * Process blocks for bb-code like strings
+ *
+ * @param array $blocks
+ * @return void
+ */
+    function processBlocksData($blocks) {
+        foreach ($blocks AS $block) {
+            $this->blocksData['menus'] = Set::merge($this->blocksData['menus'], $this->parseString('menu|m', $block['Block']['body']));
+            $this->blocksData['vocabularies'] = Set::merge($this->blocksData['vocabularies'], $this->parseString('vocabulary|v', $block['Block']['body']));
+            $this->blocksData['nodes'] = Set::merge($this->blocksData['nodes'], $this->parseString('node|n', $block['Block']['body'], array(
+                'convertOptionsToArray' => true,
+            )));
         }
     }
 /**
@@ -234,25 +262,7 @@ class CroogoComponent extends Object {
         } else {
             $menus = array($themeXmlArray['theme']['menus']['menu']);
         }
-
-        // check for [menu:alias] in blocks
-        foreach ($this->blocks_for_layout AS $regionAlias => $blocks) {
-            foreach ($blocks AS $block) {
-                preg_match_all('/\[(menu|m):([A-Za-z0-9_\-]*)(.*?)\]/i', $block['Block']['body'], $tagMatches);
-                for ($i=0; $i < count($tagMatches[1]); $i++) {
-                    $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
-                    preg_match_all($regex, $tagMatches[3][$i], $attributes);
-                    $menuAlias = $tagMatches[2][$i];
-                    $options = array();
-                    for ($j=0; $j < count($attributes[0]); $j++) {
-                        $options[$attributes[1][$j]] = $attributes[2][$j];
-                    }
-                    if (!in_array($menuAlias, $menus)) {
-                        $menus[] = $menuAlias;
-                    }
-                }
-            }
-        }
+        $menus = Set::merge($menus, array_keys($this->blocksData['menus']));
 
         foreach ($menus AS $menuAlias) {
             $menu = $this->controller->Link->Menu->find('first', array(
@@ -305,27 +315,7 @@ class CroogoComponent extends Object {
  * @return void
  */
     function vocabularies() {
-        $vocabularies = array();
-
-        // check for [vocabulary:alias] in blocks
-        foreach ($this->blocks_for_layout AS $regionAlias => $blocks) {
-            foreach ($blocks AS $block) {
-                preg_match_all('/\[(vocabulary|v):([A-Za-z0-9_\-]*)(.*?)\]/i', $block['Block']['body'], $tagMatches);
-                for ($i=0; $i < count($tagMatches[1]); $i++) {
-                    $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
-                    preg_match_all($regex, $tagMatches[3][$i], $attributes);
-                    $vocabularyAlias = $tagMatches[2][$i];
-                    $options = array();
-                    for ($j=0; $j < count($attributes[0]); $j++) {
-                        $options[$attributes[1][$j]] = $attributes[2][$j];
-                    }
-                    if (!in_array($vocabularyAlias, $vocabularies)) {
-                        $vocabularies[$vocabularyAlias] = $options;
-                    }
-                }
-            }
-        }
-
+        $vocabularies = $this->blocksData['vocabularies'];
         foreach ($vocabularies AS $vocabularyAlias => $options) {
             $vocabulary = $this->controller->Node->Term->Vocabulary->find('first', array(
                 'conditions' => array(
@@ -389,7 +379,7 @@ class CroogoComponent extends Object {
  * @return void
  */
     function nodes() {
-        $nodes = array();
+        $nodes = $this->blocksData['nodes'];
         $_nodeOptions = array(
             'find' => 'all',
             'conditions' => array(
@@ -402,31 +392,8 @@ class CroogoComponent extends Object {
             'limit' => 5,
         );
 
-        // check for [node:random_unique_name] in blocks
-        foreach ($this->blocks_for_layout AS $alias => $blocks) {
-            foreach ($blocks AS $block) {
-                preg_match_all('/\[(node|n):([A-Za-z0-9_\-]*)(.*?)\]/i', $block['Block']['body'], $tagMatches);
-                for($i=0; $i < count($tagMatches[1]); $i++){
-                    $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
-                    preg_match_all($regex, $tagMatches[3][$i], $attributes);
-                    $alias = $tagMatches[2][$i];
-                    $options = array();
-                    for ($j=0; $j < count($attributes[0]); $j++) {
-                        $options[$attributes[1][$j]] = $attributes[2][$j];
-                    }
-                    if (!in_array($alias, $nodes)) {
-                        foreach ($options AS $optionKey => $optionValue) {
-                            if (!is_array($optionValue) && strpos($optionValue, ':') !== false) {
-                                $options[$optionKey] = $this->stringToArray($optionValue);
-                            }
-                        }
-                        $nodes[$alias] = array_merge($_nodeOptions, $options);
-                    }
-                }
-            }
-        }
-
         foreach ($nodes AS $alias => $options) {
+            $options = array_merge($_nodeOptions, $options);
             $node = $this->controller->Node->find($options['find'], array(
                 'conditions' => $options['conditions'],
                 'order' => $options['order'],
@@ -691,6 +658,51 @@ class CroogoComponent extends Object {
         }
 
         $file->write($plugins);
+    }
+/**
+ * Parses bb-code like string.
+ *
+ * Example: string containing [menu:main option1="value"] will return an array like
+ *
+ * Array
+ * (
+ *     [main] => Array
+ *         (
+ *             [option1] => value
+ *         )
+ * )
+ *
+ * @param string $exp
+ * @param string $text
+ * @param array  $options
+ * @return array
+ */
+    function parseString($exp, $text, $options = array()) {
+        $_options = array(
+            'convertOptionsToArray' => false,
+        );
+        $options = array_merge($_options, $options);
+
+        $output = array();
+        preg_match_all('/\[('.$exp.'):([A-Za-z0-9_\-]*)(.*?)\]/i', $text, $tagMatches);
+        for ($i=0; $i < count($tagMatches[1]); $i++) {
+            $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
+            preg_match_all($regex, $tagMatches[3][$i], $attributes);
+            $alias = $tagMatches[2][$i];
+            $aliasOptions = array();
+            for ($j=0; $j < count($attributes[0]); $j++) {
+                $aliasOptions[$attributes[1][$j]] = $attributes[2][$j];
+            }
+            if ($options['convertOptionsToArray']) {
+                foreach ($aliasOptions AS $optionKey => $optionValue) {
+                    if (!is_array($optionValue) && strpos($optionValue, ':') !== false) {
+                        $aliasOptions[$optionKey] = $this->stringToArray($optionValue);
+                    }
+                }
+            }
+            $output[$alias] = $aliasOptions;
+        }
+        return $output;
     }
 /**
  * Hook
