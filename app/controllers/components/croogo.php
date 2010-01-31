@@ -246,6 +246,9 @@ class CroogoComponent extends Object {
         } else {
             $cacheName = 'theme_'.Configure::read('Site.theme').'_xml';
             $xmlLocation = WWW_ROOT . 'themed' . DS . Configure::read('Site.theme') . DS . 'theme.xml';
+            if (!file_exists($xmlLocation)) {
+                $xmlLocation = WWW_ROOT . 'theme.xml';
+            }
         }
         if ($this->cacheThemeXml) {
             $themeXmlArray = Cache::read($cacheName, 'theme_xml');
@@ -257,9 +260,10 @@ class CroogoComponent extends Object {
         }
         
         $menus = array();
-        if (is_array($themeXmlArray['theme']['menus']['menu'])) {
+        if (isset($themeXmlArray['theme']['menus']['menu']) &&
+            is_array($themeXmlArray['theme']['menus']['menu'])) {
             $menus = $themeXmlArray['theme']['menus']['menu'];
-        } else {
+        } elseif (isset($themeXmlArray['theme']['menus']['menu'])) {
             $menus = array($themeXmlArray['theme']['menus']['menu']);
         }
         $menus = Set::merge($menus, array_keys($this->blocksData['menus']));

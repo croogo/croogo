@@ -47,10 +47,14 @@ class ThemeComponent extends Object {
  */
     function getData($alias = null) {
         if ($alias == null) {
-            $themeXml =& new XML(WWW_ROOT . 'theme.xml');
+            $xmlLocation = WWW_ROOT . 'theme.xml';
         } else {
-            $themeXml =& new XML(WWW_ROOT . 'themed' . DS . $alias . DS . 'theme.xml');
+            $xmlLocation = WWW_ROOT . 'themed' . DS . $alias . DS . 'theme.xml';
+            if (!file_exists($xmlLocation)) {
+                $xmlLocation = WWW_ROOT . 'theme.xml';
+            }
         }
+        $themeXml =& new XML($xmlLocation);
         $themeData = Set::reverse($themeXml);
         return $themeData;
     }
