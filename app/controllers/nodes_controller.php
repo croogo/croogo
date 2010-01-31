@@ -20,6 +20,15 @@ class NodesController extends AppController {
  */
     var $name = 'Nodes';
 /**
+ * Components
+ *
+ * @var array
+ * @access public
+ */
+    var $components = array(
+        'Recaptcha',
+    );
+/**
  * Models used by the Controller
  *
  * @var array
