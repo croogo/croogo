@@ -1,0 +1,37 @@
+# Croogo
+
+**Croogo** is a free, open source, content management system for PHP, released under [MIT License](http://github.com/croogo/croogo/blob/master/LICENSE.txt).
+
+It is powered by [CakePHP](http://cakephp.org) MVC framework.
+
+## Requirements
+  * Apache with mod_rewrite
+  * PHP 5.2 or higher
+  * MySQL 4.1 or higher
+
+## Installation
+
+#### Web based installer
+
+  * Extract the archive. Upload the content to your server.
+  * visit http://your-site.com/ from your browser and follow the instructions
+
+#### Manual installation
+
+  * Extract the archive. Upload the content to your server.
+  * Create a new MySQL database ('utf8_unicode_ci' collation), and use these two SQL dump files in given order:
+    * /app/config/sql/croogo.sql
+    * /app/config/sql/croogo_data.sql
+  * Rename /app/config/database.php.default to database.php and edit the details.
+  * You can access your admin panel at http://your-site.com/admin. Login details below:
+    * username: admin
+    * password: password
+
+## Links
+
+  * **Official website**: [http://croogo.org](http://croogo.org)
+  * **Blog**: [http://fahad19.com/blog/term/croogo](http://fahad19.com/blog/term/croogo)
+  * **Downloads**: [http://wiki.github.com/croogo/croogo/downloads](http://wiki.github.com/croogo/croogo/downloads)
+  * **Issue Tracker**: [http://croogo.lighthouseapp.com](http://croogo.lighthouseapp.com)
+  * **Wiki**: [http://wiki.github.com/croogo/croogo/](http://wiki.github.com/croogo/croogo/)
+  * **Google Group**: [http://groups.google.com/group/croogo](http://groups.google.com/group/croogo)
