@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: test.php 7945 2008-12-19 02:16:01Z gwoo $ */
+/* SVN FILE: $Id$ */
 /**
  * Short description for file.
  *
@@ -19,12 +19,19 @@
  * @package       cake
  * @subpackage    cake.cake.tests.libs
  * @since         CakePHP(tm) v 1.2.0.4433
- * @version       $Revision: 7945 $
- * @modifiedby    $LastChangedBy: gwoo $
- * @lastmodified  $Date: 2008-12-18 18:16:01 -0800 (Thu, 18 Dec 2008) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/opengroup.php The Open Group Test Suite License
  */
-error_reporting(E_ALL);
+/**
+ * PHP 5.3 raises many notices in bootstrap.
+ */
+if (!defined('E_DEPRECATED')) {
+   define('E_DEPRECATED', 8192);
+}
+error_reporting(E_ALL & ~E_DEPRECATED);
+
 set_time_limit(0);
 ini_set('memory_limit','128M');
 ini_set('display_errors', 1);
@@ -86,7 +93,7 @@ if (!include(CORE_PATH . 'cake' . DS . 'bootstrap.php')) {
 	trigger_error("CakePHP core could not be found.  Check the value of CAKE_CORE_INCLUDE_PATH in APP/webroot/index.php.  It should point to the directory containing your " . DS . "cake core directory and your " . DS . "vendors root directory.", E_USER_ERROR);
 }
 
-$corePath = Configure::corePaths('cake');
+$corePath = App::core('cake');
 if (isset($corePath[0])) {
 	define('TEST_CAKE_CORE_INCLUDE_PATH', rtrim($corePath[0], DS) . DS);
 } else {

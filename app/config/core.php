@@ -1,5 +1,5 @@
 <?php
-/* SVN FILE: $Id: core.php 7945 2008-12-19 02:16:01Z gwoo $ */
+/* SVN FILE: $Id$ */
 /**
  * This is core configuration file.
  *
@@ -19,9 +19,9 @@
  * @package       cake
  * @subpackage    cake.app.config
  * @since         CakePHP(tm) v 0.2.9
- * @version       $Revision: 7945 $
- * @modifiedby    $LastChangedBy: gwoo $
- * @lastmodified  $Date: 2008-12-18 18:16:01 -0800 (Thu, 18 Dec 2008) $
+ * @version       $Revision$
+ * @modifiedby    $LastChangedBy$
+ * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 /**
@@ -64,8 +64,7 @@
  * 'admin' 		-> admin_index() and /admin/controller/index
  * 'superuser' -> superuser_index() and /superuser/controller/index
  */
-	Configure::write('Routing.admin', 'admin');
-
+	//Configure::write('Routing.admin', 'admin');
 /**
  * Turn off all caching application-wide.
  *
@@ -96,16 +95,30 @@
  * To define a custom session handler, save it at /app/config/<name>.php.
  * Set the value of 'Session.save' to <name> to utilize it in CakePHP.
  *
- * To use database sessions, execute the SQL file found at /app/config/sql/sessions.sql.
+ * To use database sessions, run the app/config/schema/sessions.php schema using
+ * the cake shell command: cake schema run create Sessions
  *
  */
 	Configure::write('Session.save', 'php');
+/**
+ * The model name to be used for the session model.
+ *
+ * 'Session.save' must be set to 'database' in order to utilize this constant.
+ *
+ * The model name set here should *not* be used elsewhere in your application.
+ */
+	//Configure::write('Session.model', 'Session');
 /**
  * The name of the table used to store CakePHP database sessions.
  *
  * 'Session.save' must be set to 'database' in order to utilize this constant.
  *
  * The table name set here should *not* include any table prefix defined elsewhere.
+ *
+ * Please note that if you set a value for Session.model (above), any value set for
+ * Session.table will be ignored.
+ *
+ * [Note: Session.table is deprecated as of CakePHP 1.3]
  */
 	//Configure::write('Session.table', 'cake_sessions');
 /**
@@ -170,13 +183,11 @@
  */
 	Configure::write('Acl.classname', 'DbAcl');
 	Configure::write('Acl.database', 'default');
-
 /**
  * If you are on PHP 5.3 uncomment this line and correct your server timezone
  * to fix the date & time related errors.
  */
 	//date_default_timezone_set('UTC');
-
 /**
  *
  * Cache Engine Configuration
