@@ -25,7 +25,7 @@ class AppController extends Controller {
         'Acl',
         'Auth',
         'Acl.AclFilter',
-		'Session',
+        'Session',
         'RequestHandler',
         'Theme',
     );
@@ -38,7 +38,7 @@ class AppController extends Controller {
     var $helpers = array(
         'Html',
         'Form',
-		'Session',
+        'Session',
         'Text',
         'Javascript',
         'Time',
