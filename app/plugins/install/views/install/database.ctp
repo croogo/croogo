@@ -1,5 +1,5 @@
 <div class="install form">
-    <h2><?php echo $this->pageTitle; ?></h2>
+    <h2><?php echo $title_for_layout; ?></h2>
     <?php
         echo $form->create('Install', array('url' => array('plugin' => 'install', 'controller' => 'install', 'action' => 'database')));
         echo $form->input('Install.host', array('label' => 'Host', 'value' => 'localhost'));

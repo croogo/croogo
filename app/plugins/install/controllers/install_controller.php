@@ -53,7 +53,7 @@ class InstallController extends InstallAppController {
  * @return void
  */
     function index() {
-        $this->pageTitle = __('Installation: Welcome', true);
+        $this->set('title_for_layout', __('Installation: Welcome', true));
     }
 /**
  * Step 1: database
@@ -61,13 +61,13 @@ class InstallController extends InstallAppController {
  * @return void
  */
     function database() {
-        $this->pageTitle = __('Step 1: Database', true);
+        $this->set('title_for_layout', __('Step 1: Database', true));
         if (!empty($this->data)) {
             // test database connection
             if (mysql_connect($this->data['Install']['host'], $this->data['Install']['login'], $this->data['Install']['password']) &&
                 mysql_select_db($this->data['Install']['database'])) {
-                // rename database.php.install
-                rename(APP.'config'.DS.'database.php.install', APP.'config'.DS.'database.php');
+                // copy database.php.install
+                copy(APP.'config'.DS.'database.php.install', APP.'config'.DS.'database.php');
 
                 // open database.php file
                 App::import('Core', 'File');
@@ -95,10 +95,7 @@ class InstallController extends InstallAppController {
  * @return void
  */
     function data() {
-        $this->pageTitle = __('Step 2: Run SQL', true);
-        //App::import('Core', 'Model');
-        //$Model = new Model;
-
+        $this->set('title_for_layout', __('Step 2: Run SQL', true));
         if (isset($this->params['named']['run'])) {
             App::import('Core', 'File');
             App::import('Model', 'ConnectionManager');
@@ -122,8 +119,7 @@ class InstallController extends InstallAppController {
  * @return void
  */
     function finish() {
-        $this->pageTitle = __('Installation completed successfully', true);
-
+        $this->set('title_for_layout', __('Installation completed successfully', true));
         if (isset($this->params['named']['delete'])) {
             App::import('Core', 'Folder');
             $this->folder = new Folder;
@@ -138,9 +134,9 @@ class InstallController extends InstallAppController {
 /**
  * Execute SQL file
  *
- * @link http://cakebaker.42dh.com/2007/04/16/writing-an-installer-for-your-cakephp-application/
- * @param object $db Database
- * @param string $fileName sql file
+ * @link   http://cakebaker.42dh.com/2007/04/16/writing-an-installer-for-your-cakephp-application/
+ * @param  object $db Database
+ * @param  string $fileName sql file
  * @return void
  */
     function __executeSQLScript($db, $fileName) {
