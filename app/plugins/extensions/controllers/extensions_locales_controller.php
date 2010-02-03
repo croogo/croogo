@@ -34,7 +34,7 @@ class ExtensionsLocalesController extends AppController {
     }
 
     function admin_index() {
-        $this->pageTitle = __('Locales', true);
+        $this->set('title_for_layout', __('Locales', true));
 
         $folder =& new Folder;
         $folder->path = APP . 'locale';
@@ -64,7 +64,7 @@ class ExtensionsLocalesController extends AppController {
     }
 
     function admin_add() {
-        $this->pageTitle = __('Upload a new locale', true);
+        $this->set('title_for_layout', __('Upload a new locale', true));
 
         if (!empty($this->data)) {
             $file = $this->data['Locale']['file'];
@@ -136,7 +136,7 @@ class ExtensionsLocalesController extends AppController {
     }
 
     function admin_edit($locale = null) {
-        $this->pageTitle = __('Edit locale: ' . $locale, true);
+        $this->set('title_for_layout', sprintf(__('Edit locale: %s', true), $locale));
 
         if (!$locale) {
             $this->Session->setFlash(__('Invalid locale.', true));

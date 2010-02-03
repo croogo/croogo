@@ -60,7 +60,7 @@ class TranslateController extends TranslateAppController {
                 'action' => 'index',
             ));
         }
-        $this->pageTitle = __('Translations: ', true) . $record[$modelAlias]['title'];
+        $this->set('title_for_layout', sprintf(__('Translations: %s', true), $record[$modelAlias]['title']));
 
         $runtimeModel =& $model->translateModel();
         $runtimeModelAlias = $runtimeModel->alias;
@@ -120,9 +120,7 @@ class TranslateController extends TranslateAppController {
                 'action' => 'index',
             ));
         }
-
-        $this->pageTitle  = __('Translate content:', true) . ' ';
-        $this->pageTitle .= $language['Language']['title'] . ' (' . $language['Language']['native'] . ')';
+        $this->set('title_for_layout', sprintf(__('Translate content: %s (%s)', true), $language['Language']['title'], $language['Language']['native']));
 
         $model->id = $id;
         $model->locale = $this->params['named']['locale'];

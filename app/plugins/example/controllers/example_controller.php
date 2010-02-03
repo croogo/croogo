@@ -28,8 +28,7 @@ class ExampleController extends ExampleAppController {
     var $uses = array('Setting');
 
     function index() {
-        $this->pageTitle = __('Example', true);
-
+        $this->set('title_for_layout', __('Example', true));
         $this->set('exampleVariable', 'value here');
     }
 

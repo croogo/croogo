@@ -39,7 +39,7 @@ class ContactsController extends AppController {
     var $uses = array('Contact');
 
     function admin_index() {
-        $this->pageTitle = __('Contacts', true);
+        $this->set('title_for_layout', __('Contacts', true));
 
         $this->Contact->recursive = 0;
         $this->paginate['Contact']['order'] = 'Contact.title ASC';
@@ -47,7 +47,7 @@ class ContactsController extends AppController {
     }
 
     function admin_add() {
-        $this->pageTitle = __("Add Contact", true);
+        $this->set('title_for_layout', __('Add Contact', true));
 
         if (!empty($this->data)) {
             $this->Contact->create();
@@ -61,7 +61,7 @@ class ContactsController extends AppController {
     }
 
     function admin_edit($id = null) {
-        $this->pageTitle = __("Edit Contact", true);
+        $this->set('title_for_layout', __('Edit Contact', true));
 
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid Contact', true));
@@ -133,7 +133,7 @@ class ContactsController extends AppController {
             }
         }
 
-        $this->pageTitle = $contact['Contact']['title'];
+        $this->set('title_for_layout', $contact['Contact']['title']);
     }
 
     function __validation($continue, $contact) {

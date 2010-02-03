@@ -34,7 +34,7 @@ class ExtensionsHooksController extends AppController {
     }
 
     function admin_index() {
-        $this->pageTitle = __('Hooks', true);
+        $this->set('title_for_layout', __('Hooks', true));
 
         $hooks = array();
         $plugins = Configure::listObjects('plugin');

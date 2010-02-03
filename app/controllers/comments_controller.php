@@ -39,7 +39,7 @@ class CommentsController extends AppController {
     var $uses = array('Comment');
 
     function admin_index() {
-        $this->pageTitle = __('Comments', true);
+        $this->set('title_for_layout', __('Comments', true));
 
         $this->Comment->recursive = 0;
         $this->paginate['Comment']['order'] = 'Comment.created DESC';
@@ -58,9 +58,9 @@ class CommentsController extends AppController {
         }
 
         if ($this->paginate['Comment']['conditions']['Comment.status'] == 1) {
-            $this->pageTitle .= ': ' . __('Published', true);
+            $this->set('title_for_layout', __('Comments: Published', true));
         } else {
-            $this->pageTitle .= ': ' . __('Approval', true);
+            $this->set('title_for_layout', __('Comments: Approval', true));
         }
 
         $comments = $this->paginate();
@@ -68,7 +68,7 @@ class CommentsController extends AppController {
     }
 
     function admin_edit($id = null) {
-        $this->pageTitle = __("Edit Comment", true);
+        $this->set('title_for_layout', __('Edit Comment', true));
 
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid Comment', true));
@@ -129,7 +129,7 @@ class CommentsController extends AppController {
     }
 
     function index() {
-        $this->pageTitle = __('Comments', true);
+        $this->set('title_for_layout', __('Comments', true));
 
         if (!isset($this->params['url']['ext']) ||
             $this->params['url']['ext'] != 'rss') {

@@ -28,7 +28,7 @@ class MessagesController extends AppController {
     var $uses = array('Message');
 
     function admin_index() {
-        $this->pageTitle = __('Messages', true);
+        $this->set('title_for_layout', __('Messages', true));
 
         $this->Message->recursive = 0;
         $this->paginate['Message']['conditions'] = array('Message.status' => 0);
@@ -47,9 +47,9 @@ class MessagesController extends AppController {
         }
 
         if ($this->paginate['Message']['conditions']['Message.status'] == 1) {
-            $this->pageTitle .= ': ' . __('Read', true);
+            $this->set('title_for_layout', __('Messages: Read', true));
         } else {
-            $this->pageTitle .= ': ' . __('Unread', true);
+            $this->set('title_for_layout', __('Messages: Unread', true));
         }
 
         $this->paginate['Message']['order'] = 'Message.title ASC';
@@ -57,7 +57,7 @@ class MessagesController extends AppController {
     }
 
     function admin_edit($id = null) {
-        $this->pageTitle = __("Edit Message", true);
+        $this->set('title_for_layout', __('Edit Message', true));
 
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid Message', true));

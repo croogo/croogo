@@ -51,12 +51,12 @@ class LinksController extends AppController {
     }
 
     function admin_index() {
-        $this->pageTitle = __('Links', true);
+        $this->set('title_for_layout', __('Links', true));
 
         $conditions = array();
         if ($this->menuId != null) {
             $menu = $this->Link->Menu->findById($this->menuId);
-            $this->pageTitle .= ': ' . $menu['Menu']['title'];
+            $this->set('title_for_layout', sprintf(__('Links: %s', true), $menu['Menu']['title']));
             $conditions['Link.menu_id'] = $this->menuId;
         }
 
@@ -73,7 +73,7 @@ class LinksController extends AppController {
     }
 
     function admin_add() {
-        $this->pageTitle = __("Add Link", true);
+        $this->set('title_for_layout', __('Add Link', true));
 
         if (!empty($this->data)) {
             $this->Link->create();
@@ -96,7 +96,7 @@ class LinksController extends AppController {
     }
 
     function admin_edit($id = null) {
-        $this->pageTitle = __("Edit Link", true);
+        $this->set('title_for_layout', __('Edit Link', true));
 
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid Link', true));

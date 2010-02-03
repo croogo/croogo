@@ -1,5 +1,5 @@
 <div class="attachments form">
-    <h2><?php echo $this->pageTitle; ?></h2>
+    <h2><?php echo $title_for_layout; ?></h2>
 
     <?php echo $form->create('Node', array('url' => array('controller' => 'attachments', 'action' => 'edit')));?>
         <fieldset>

@@ -1,5 +1,5 @@
 <div class="settings form">
-    <h2><?php echo $this->pageTitle; ?></h2>
+    <h2><?php echo $title_for_layout; ?></h2>
 
     <form method="post" action="<?php echo $html->url(array('controller' => 'settings', 'action' => 'prefix', $prefix)); ?>">
         <fieldset>

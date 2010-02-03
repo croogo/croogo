@@ -2,7 +2,7 @@
     echo $javascript->link('/extensions/js/extensions_hooks.js');
 ?>
 <div class="extensions-hooks">
-    <h2><?php echo $this->pageTitle; ?></h2>
+    <h2><?php echo $title_for_layout; ?></h2>
 
     <div class="actions">
         <ul>

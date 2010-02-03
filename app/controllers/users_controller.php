@@ -41,7 +41,7 @@ class UsersController extends AppController {
     }
 
     function admin_index() {
-        $this->pageTitle = __('Users', true);
+        $this->set('title_for_layout', __('Users', true));
 
         $this->User->recursive = 0;
         $this->set('users', $this->paginate());
@@ -115,7 +115,7 @@ class UsersController extends AppController {
     }
 
     function admin_login() {
-        $this->pageTitle = __('Admin Login', true);
+        $this->set('title_for_layout', __('Admin Login', true));
         $this->layout = "admin_login";
     }
 
@@ -125,11 +125,11 @@ class UsersController extends AppController {
     }
 
     function index() {
-        $this->pageTitle = __('Users', true);
+        $this->set('title_for_layout', __('Users', true));
     }
 
     function add() {
-        $this->pageTitle = __('Register', true);
+        $this->set('title_for_layout', __('Register', true));
         if (!empty($this->data)) {
             $this->User->create();
             $this->data['User']['role_id'] = 2; // Registered
@@ -178,7 +178,7 @@ class UsersController extends AppController {
     function edit() {}
 
     function forgot() {
-        $this->pageTitle = __('Forgot Password', true);
+        $this->set('title_for_layout', __('Forgot Password', true));
 
         if (!empty($this->data) && isset($this->data['User']['username'])) {
             $user = $this->User->findByUsername($this->data['User']['username']);
@@ -207,7 +207,7 @@ class UsersController extends AppController {
     }
 
     function reset($username = null, $key = null) {
-        $this->pageTitle = __('Reset Password', true);
+        $this->set('title_for_layout', __('Reset Password', true));
 
         if ($username == null || $key == null) {
             $this->Session->setFlash(__('An error occurred.', true));
@@ -241,7 +241,7 @@ class UsersController extends AppController {
     }
 
     function login() {
-        $this->pageTitle = __('Log in', true);
+        $this->set('title_for_layout', __('Log in', true));
     }
 
     function logout() {
@@ -256,7 +256,7 @@ class UsersController extends AppController {
             $this->redirect('/');
         }
 
-        $this->pageTitle = $user['User']['name'];
+        $this->set('title_for_layout', $user['User']['name']);
         $this->set(compact('user'));
     }
     

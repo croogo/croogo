@@ -28,7 +28,7 @@ class RegionsController extends AppController {
     var $uses = array('Region');
 
     function admin_index() {
-        $this->pageTitle = __('Region', true);
+        $this->set('title_for_layout', __('Region', true));
 
         $this->Region->recursive = 0;
         $this->paginate['Region']['order'] = 'Region.title ASC';
@@ -36,7 +36,7 @@ class RegionsController extends AppController {
     }
 
     function admin_add() {
-        $this->pageTitle = __("Add Region", true);
+        $this->set('title_for_layout', __('Add Region', true));
 
         if (!empty($this->data)) {
             $this->Region->create();
@@ -50,7 +50,7 @@ class RegionsController extends AppController {
     }
 
     function admin_edit($id = null) {
-        $this->pageTitle = __("Edit Region", true);
+        $this->set('title_for_layout', __('Edit Region', true));
 
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid Region', true));

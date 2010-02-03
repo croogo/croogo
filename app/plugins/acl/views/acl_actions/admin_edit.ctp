@@ -1,5 +1,5 @@
 <div class="acl_actions form">
-    <h2><?php echo $this->pageTitle; ?></h2>
+    <h2><?php echo $title_for_layout; ?></h2>
 
     <?php echo $form->create('Aco', array('url' => array('controller' => 'acl_actions', 'action' => 'edit'))); ?>
         <fieldset>

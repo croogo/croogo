@@ -1,5 +1,5 @@
 <div class="settings form">
-    <h2><? echo $this->pageTitle; ?></h2>
+    <h2><? echo $title_for_layout; ?></h2>
     <?php echo $form->create('Setting');?>
 	<fieldset>
         <div class="tabs">

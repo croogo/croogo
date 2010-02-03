@@ -35,11 +35,11 @@ class SettingsController extends AppController {
     var $helpers = array('Html', 'Form');
 
     function admin_dashboard() {
-        $this->pageTitle = __('Dashboard', true);
+        $this->set('title_for_layout', __('Dashboard', true));
     }
 
     function admin_index() {
-        $this->pageTitle = "Settings";
+        $this->set('title_for_layout', __('Settings', true));
 
         $this->Setting->recursive = 0;
         $this->paginate['Setting']['order'] = "Setting.weight ASC";
@@ -58,7 +58,7 @@ class SettingsController extends AppController {
     }
 
     function admin_add() {
-        $this->pageTitle = "Add Setting";
+        $this->set('title_for_layout', __('Add Setting', true));
 
         if (!empty($this->data)) {
             $this->Setting->create();
@@ -72,7 +72,7 @@ class SettingsController extends AppController {
     }
 
     function admin_edit($id = null) {
-        $this->pageTitle = "Edit Setting";
+        $this->set('title_for_layout', __('Edit Setting', true));
 
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid Setting', true));
@@ -103,7 +103,7 @@ class SettingsController extends AppController {
     }
 
     function admin_prefix($prefix = null) {
-        $this->pageTitle = sprintf(__('Settings: %s', true), $prefix);
+        $this->set('title_for_layout', sprintf(__('Settings: %s', true), $prefix));
 
         if(!empty($this->data) && $this->Setting->saveAll($this->data['Setting'])) {
             $this->Session->setFlash(__("Settings updated successfully", true));

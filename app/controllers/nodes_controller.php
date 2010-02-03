@@ -50,7 +50,7 @@ class NodesController extends AppController {
     }
 
     function admin_index() {
-        $this->pageTitle = __('Content', true);
+        $this->set('title_for_layout', __('Content', true));
 
         $this->Node->recursive = 0;
         $this->paginate['Node']['order'] = 'Node.id DESC';
@@ -81,7 +81,7 @@ class NodesController extends AppController {
     }
 
     function admin_create() {
-        $this->pageTitle = __('Create content', true);
+        $this->set('title_for_layout', __('Create content', true));
 
         $types = $this->Node->Term->Vocabulary->Type->find('all', array(
             'order' => array(
@@ -98,7 +98,7 @@ class NodesController extends AppController {
             $this->redirect(array('action' => 'create'));
         }
 
-        $this->pageTitle = sprintf(__('Create content: %s', true), $type['Type']['title']);
+        $this->set('title_for_layout', sprintf(__('Create content: %s', true), $type['Type']['title']));
         $this->Node->type = $type['Type']['alias'];
         $this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
 
@@ -149,7 +149,7 @@ class NodesController extends AppController {
             $this->redirect(array('action' => 'create'));
         }
 
-        $this->pageTitle = sprintf(__('Edit content: %s', true), $type['Type']['title']);
+        $this->set('title_for_layout', sprintf(__('Edit content: %s', true), $type['Type']['title']));
         $this->Node->type = $type['Type']['alias'];
         $this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
 
@@ -315,7 +315,7 @@ class NodesController extends AppController {
             }
 
             $this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
-            $this->pageTitle = $type['Type']['title'];
+            $this->set('title_for_layout', $type['Type']['title']);
         }
 
         if ($this->usePaginationCache) {
@@ -389,7 +389,7 @@ class NodesController extends AppController {
             }
 
             $this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
-            $this->pageTitle = $term['Term']['title'];
+            $this->set('title_for_layout', $term['Term']['title']);
         }
 
         if ($this->usePaginationCache) {
@@ -419,7 +419,7 @@ class NodesController extends AppController {
     }
 
     function promoted() {
-        $this->pageTitle = __('Nodes', true);
+        $this->set('title_for_layout', __('Nodes', true));
 
         $this->paginate['Node']['order'] = 'Node.id DESC';
         $this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
@@ -440,7 +440,7 @@ class NodesController extends AppController {
             }
 
             $this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
-            $this->pageTitle = $type['Type']['title'];
+            $this->set('title_for_layout', $type['Type']['title']);
             $this->set(compact('type'));
         }
 
@@ -502,7 +502,7 @@ class NodesController extends AppController {
         }
 
         $nodes = $this->paginate('Node');
-        $this->pageTitle = sprintf(__('Search Results: %s', true), $q);
+        $this->set('title_for_layout', sprintf(__('Search Results: %s', true), $q));
         $this->set(compact('q', 'nodes'));
     }
 
@@ -572,7 +572,7 @@ class NodesController extends AppController {
             $comments = array();
         }
 
-        $this->pageTitle = $node['Node']['title'];
+        $this->set('title_for_layout', $node['Node']['title']);
         $this->set(compact('node', 'type', 'comments'));
 
         if (isset($node['CustomFields']['theme'])) {

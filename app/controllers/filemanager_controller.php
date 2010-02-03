@@ -66,7 +66,7 @@ class FilemanagerController extends AppController {
             $path = APP;
         }
 
-        $this->pageTitle = "File Manager";
+        $this->set('title_for_layout', __('File Manager', true));
         $this->folder->path = $path;
 
         $content = $this->folder->read();
@@ -81,8 +81,7 @@ class FilemanagerController extends AppController {
         } else {
             $this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
         }
-
-        $this->pageTitle = "Edit File: " . $path;
+        $this->set('title_for_layout', sprintf(__('Edit file: %s', true), $path));
 
         $path_e = explode(DS, $path);
         $n = count($path_e) - 1;
@@ -104,7 +103,7 @@ class FilemanagerController extends AppController {
     }
 
     function admin_upload() {
-        $this->pageTitle = __('Upload', true);
+        $this->set('title_for_layout', __('Upload', true));
 
         if (isset($this->params['url']['path'])) {
             $path = $this->params['url']['path'];
@@ -188,7 +187,7 @@ class FilemanagerController extends AppController {
     }
 
     function admin_create_directory() {
-        $this->pageTitle = __('New Directory', true);
+        $this->set('title_for_layout', __('New Directory', true));
 
         if (isset($this->params['url']['path'])) {
             $path = $this->params['url']['path'];
@@ -211,7 +210,7 @@ class FilemanagerController extends AppController {
     }
 
     function admin_create_file() {
-        $this->pageTitle = __('New File', true);
+        $this->set('title_for_layout', __('New File', true));
 
         if (isset($this->params['url']['path'])) {
             $path = $this->params['url']['path'];

@@ -37,11 +37,11 @@ class TermsController extends AppController {
     }
 
     function admin_index() {
-        $this->pageTitle = __('Terms', true);
+        $this->set('title_for_layout', __('Terms', true));
 
         if ($this->vocabularyId != null) {
             $vocabulary = $this->Term->Vocabulary->findById($this->vocabularyId);
-            $this->pageTitle .= ': ' . $vocabulary['Vocabulary']['title'];
+            $this->set('title_for_layout', sprintf(__('Terms: %s', true), $vocabulary['Vocabulary']['title']));
             $this->paginate['Term']['conditions']['vocabulary_id'] = $this->vocabularyId;
         }
 
@@ -53,7 +53,7 @@ class TermsController extends AppController {
     }
 
     function admin_add() {
-        $this->pageTitle = __("Add Term", true);
+        $this->set('title_for_layout', __('Add Term', true));
 
         if (!empty($this->data)) {
             $this->Term->create();
@@ -74,7 +74,7 @@ class TermsController extends AppController {
     }
 
     function admin_edit($id = null) {
-        $this->pageTitle = __("Edit Term", true);
+        $this->set('title_for_layout', __('Edit Term', true));
 
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid Term', true));

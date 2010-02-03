@@ -79,7 +79,7 @@ class AttachmentsController extends AppController {
  * @access public
  */
     function admin_index() {
-        $this->pageTitle = __('Attachments', true);
+        $this->set('title_for_layout', __('Attachments', true));
 
         $this->Node->recursive = 0;
         $this->paginate['Node']['order'] = 'Node.created DESC';
@@ -93,7 +93,7 @@ class AttachmentsController extends AppController {
  * @access public
  */
     function admin_add() {
-        $this->pageTitle = __("Add Attachment", true);
+        $this->set('title_for_layout', __('Add Attachment', true));
 
         if (isset($this->params['named']['editor'])) {
             $this->layout = 'admin_full';
@@ -153,7 +153,7 @@ class AttachmentsController extends AppController {
  * @access public
  */
     function admin_edit($id = null) {
-        $this->pageTitle = __("Edit Attachment", true);
+        $this->set('title_for_layout', __('Edit Attachment', true));
 
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid Attachment', true));

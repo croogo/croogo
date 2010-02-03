@@ -48,7 +48,7 @@ class ExtensionsPluginsController extends AppController {
     }
 
     function admin_index() {
-        $this->pageTitle = __('Plugins', true);
+        $this->set('title_for_layout', __('Plugins', true));
 
         $folder =& new Folder;
         $folder->path = APP . 'plugins';
@@ -59,7 +59,7 @@ class ExtensionsPluginsController extends AppController {
     }
 
     function admin_add() {
-        $this->pageTitle = __('Upload a new plugin', true);
+        $this->set('title_for_layout', __('Upload a new plugin', true));
 
         if (!empty($this->data)) {
             $file = $this->data['Plugin']['file'];

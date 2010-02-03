@@ -17,7 +17,7 @@ class AclActionsController extends AclAppController {
     var $components = array('Acl.AclGenerate');
 
     function admin_index() {
-        $this->pageTitle = __('Actions', true);
+        $this->set('title_for_layout', __('Actions', true));
 
         $conditions = array(
             'parent_id !=' => null,
@@ -29,7 +29,7 @@ class AclActionsController extends AclAppController {
     }
 
     function admin_add() {
-        $this->pageTitle = __("Add Action", true);
+        $this->set('title_for_layout', __('Add Action', true));
 
         if (!empty($this->data)) {
             $this->Acl->Aco->create();
@@ -69,7 +69,7 @@ class AclActionsController extends AclAppController {
     }
 
     function admin_edit($id = null) {
-        $this->pageTitle = __("Edit Action", true);
+        $this->set('title_for_layout', __('Edit Action', true));
 
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid Action', true));

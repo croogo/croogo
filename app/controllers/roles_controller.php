@@ -28,7 +28,7 @@ class RolesController extends AppController {
     var $uses = array('Role');
 
     function admin_index() {
-        $this->pageTitle = __('Roles', true);
+        $this->set('title_for_layout', __('Roles', true));
 
         $this->Role->recursive = 0;
         $this->paginate['Role']['order'] = "Role.id ASC";
@@ -36,7 +36,7 @@ class RolesController extends AppController {
     }
 
     function admin_add() {
-        $this->pageTitle = __("Add Role", true);
+        $this->set('title_for_layout', __('Add Role', true));
 
         if (!empty($this->data)) {
             $this->Role->create();
@@ -50,7 +50,7 @@ class RolesController extends AppController {
     }
 
     function admin_edit($id = null) {
-        $this->pageTitle = __("Edit Role", true);
+        $this->set('title_for_layout', __('Edit Role', true));
 
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid Role', true));

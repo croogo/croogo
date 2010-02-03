@@ -28,7 +28,7 @@ class LanguagesController extends AppController {
     var $uses = array('Language');
 
     function admin_index() {
-        $this->pageTitle = __('Languages', true);
+        $this->set('title_for_layout', __('Languages', true));
 
         $this->Language->recursive = 0;
         $this->paginate['Language']['order'] = 'Language.weight ASC';
@@ -36,7 +36,7 @@ class LanguagesController extends AppController {
     }
 
     function admin_add() {
-        $this->pageTitle = __("Add Language", true);
+        $this->set('title_for_layout', __("Add Language", true));
 
         if (!empty($this->data)) {
             $this->Language->create();
@@ -50,7 +50,7 @@ class LanguagesController extends AppController {
     }
 
     function admin_edit($id = null) {
-        $this->pageTitle = __("Edit Language", true);
+        $this->set('title_for_layout', __("Edit Language", true));
 
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid Language', true));
@@ -106,7 +106,7 @@ class LanguagesController extends AppController {
             $this->redirect(array('action' => 'index'));
         }
 
-        $this->pageTitle = __('Select a language', true);
+        $this->set('title_for_layout', __('Select a language', true));
         $languages = $this->Language->find('all', array(
             'conditions' => array(
                 'Language.status' => 1,

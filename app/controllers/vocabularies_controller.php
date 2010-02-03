@@ -28,7 +28,7 @@ class VocabulariesController extends AppController {
     var $uses = array('Vocabulary');
 
     function admin_index() {
-        $this->pageTitle = __('Vocabulary', true);
+        $this->set('title_for_layout', __('Vocabulary', true));
 
         $this->Vocabulary->recursive = 0;
         $this->paginate['Vocabulary']['order'] = 'Vocabulary.title ASC';
@@ -36,7 +36,7 @@ class VocabulariesController extends AppController {
     }
 
     function admin_add() {
-        $this->pageTitle = __("Add Vocabulary", true);
+        $this->set('title_for_layout', __('Add Vocabulary', true));
 
         if (!empty($this->data)) {
             $this->Vocabulary->create();
@@ -53,7 +53,7 @@ class VocabulariesController extends AppController {
     }
 
     function admin_edit($id = null) {
-        $this->pageTitle = __("Edit Vocabulary", true);
+        $this->set('title_for_layout', __('Edit Vocabulary', true));
 
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid Vocabulary', true));

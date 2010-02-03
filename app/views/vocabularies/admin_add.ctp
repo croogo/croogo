@@ -2,7 +2,7 @@
     $javascript->link(array('vocabularies'), false);
 ?>
 <div class="vocabularies form">
-    <h2><?php echo $this->pageTitle; ?></h2>
+    <h2><?php echo $title_for_layout; ?></h2>
     <?php echo $form->create('Vocabulary');?>
         <fieldset>
             <div class="tabs">

@@ -35,7 +35,7 @@ class ExtensionsThemesController extends AppController {
     }
 
     function admin_index() {
-        $this->pageTitle = __('Themes', true);
+        $this->set('title_for_layout', __('Themes', true));
 
         $themes = $this->Theme->getThemes();
         $themesData = array();
@@ -62,7 +62,7 @@ class ExtensionsThemesController extends AppController {
     }
 
     function admin_add() {
-        $this->pageTitle = __('Upload a new theme', true);
+        $this->set('title_for_layout', __('Upload a new theme', true));
 
         if (!empty($this->data)) {
             $file = $this->data['Theme']['file'];
@@ -143,7 +143,7 @@ class ExtensionsThemesController extends AppController {
     }
 
     function admin_editor() {
-        $this->pageTitle = __('Theme Editor', true);
+        $this->set('title_for_layout', __('Theme Editor', true));
     }
 
     function admin_save() {
