@@ -126,7 +126,7 @@ class LayoutHelper extends AppHelper {
         $messages = $this->Session->read('Message');
         if( is_array($messages) ) {
             foreach(array_keys($messages) AS $key) {
-                $this->Session->flash($key);
+                echo $this->Session->flash($key);
             }
         }
     }
@@ -308,7 +308,7 @@ class LayoutHelper extends AppHelper {
         $links = $this->View->viewVars['menus_for_layout'][$menuAlias]['threaded'];
         $linksList = $this->nestedLinks($links, $options);
         $output = $this->Html->tag($options['containerTag'], $linksList, $options['containerTagAttr']);
-    
+
         return $output;
     }
 /**
@@ -322,7 +322,7 @@ class LayoutHelper extends AppHelper {
     function nestedLinks($links, $options = array(), $depth = 1) {
         $_options = array();
         $options = array_merge($_options, $options);
-        
+
         $output = '';
         foreach ($links AS $link) {
             $linkAttr = array(
@@ -665,7 +665,7 @@ class LayoutHelper extends AppHelper {
             'element' => 'node_info',
         );
         $options = array_merge($_options, $options);
-        
+
         $output  = $this->hook('beforeNodeInfo');
         $output .= $this->View->element($options['element']);
         $output .= $this->hook('afterNodeInfo');

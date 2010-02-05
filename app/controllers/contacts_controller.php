@@ -129,7 +129,7 @@ class ContactsController extends AppController {
                 //$this->Session->setFlash(__('Your message has been received.', true));
                 //unset($this->data['Message']);
 
-                $this->flash(__('Your message has been received...', true), '/');
+                echo $this->flash(__('Your message has been received...', true), '/');
             }
         }
 
