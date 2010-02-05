@@ -383,6 +383,9 @@ class LayoutHelper extends AppHelper {
                 }
             }
         }
+        if (!isset($linkArr['plugin'])) {
+            $linkArr['plugin'] = false;
+        }
 
         return $linkArr;
     }
@@ -412,6 +415,7 @@ class LayoutHelper extends AppHelper {
             foreach ($vocabulary['list'] AS $termSlug => $termTitle) {
                 if ($options['link']) {
                     $li = '<li>' . $this->Html->link($termTitle, array(
+                        'plugin' => false,
                         'controller' => 'nodes',
                         'action' => 'term',
                         'type' => $options['type'],
@@ -456,6 +460,7 @@ class LayoutHelper extends AppHelper {
             foreach ($nodes AS $node) {
                 if ($options['link']) {
                     $li = '<li>' . $this->Html->link($node['Node']['title'], array(
+                        'plugin' => false,
                         'controller' => 'nodes',
                         'action' => 'view',
                         'type' => $node['Node']['type'],
