@@ -36,7 +36,7 @@ class CroogoRouter {
  * @return void
  */
     function plugins() {
-        $pluginRoutes = file_get_contents(APP.'config'.DS.'plugin_routes.txt');
+        $pluginRoutes = Configure::read('Hook.routes');
         if ($pluginRoutes == null) {
             return;
         }

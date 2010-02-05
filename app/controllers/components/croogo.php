@@ -616,23 +616,20 @@ class CroogoComponent extends Object {
  * @return void
  */
     function addPluginRoutes($plugin) {
-        App::import('Core', 'File');
-        $file = new File(APP.'config'.DS.'plugin_routes.txt', true);
-        $content = $file->read();
-
-        if ($content == null) {
+        $hookRoutes = Configure::read('Hook.routes');
+        if (!$hookRoutes) {
             $plugins = array();
         } else {
-            $plugins = explode(',', $content);
+            $plugins = explode(',', $hookRoutes);
         }
+        
         if (array_search($plugin, $plugins) !== false) {
-            $plugins = $content;
+            $plugins = $hookRoutes;
         } else {
             $plugins[] = $plugin;
             $plugins = implode(',', $plugins);
         }
-
-        $file->write($plugins);
+        $this->controller->Setting->write('Hook.routes', $plugins);
     }
 /**
  * Plugin name will be removed from /app/config/plugin_routes.txt file
@@ -641,15 +638,12 @@ class CroogoComponent extends Object {
  * @return void
  */
     function removePluginRoutes($plugin) {
-        App::import('Core', 'File');
-        $file = new File(APP.'config'.DS.'plugin_routes.txt', true);
-        $content = $file->read();
-
-        if ($content == null) {
+        $hookRoutes = Configure::read('Hook.routes');
+        if (!$hookRoutes) {
             return;
         }
 
-        $plugins = explode(',', $content);
+        $plugins = explode(',', $hookRoutes);
         if (array_search($plugin, $plugins) !== false) {
             $k = array_search($plugin, $plugins);
             unset($plugins[$k]);
@@ -660,8 +654,7 @@ class CroogoComponent extends Object {
         } else {
             $plugins = implode(',', $plugins);
         }
-
-        $file->write($plugins);
+        $this->controller->Setting->write('Hook.routes', $plugins);
     }
 /**
  * Parses bb-code like string.
