@@ -3,10 +3,12 @@
  * Locale
  */
     Configure::write('Config.language', 'eng');
+
 /**
  * Admin theme
  */
     //Configure::write('Site.admin_theme', 'sample');
+
 /**
  * Cache configuration
  */
@@ -34,4 +36,13 @@
     Cache::config('nodes_term', $cacheConfig);
     Cache::config('nodes_index', $cacheConfig);
     Cache::config('contacts_view', $cacheConfig);
+    
+/**
+ * Settings
+ */
+    require_once APP.'vendors'.DS.'spyc'.DS.'spyc.php';
+    $settings = Spyc::YAMLLoad(file_get_contents(APP.'config'.DS.'settings.yml'));
+    foreach ($settings AS $settingKey => $settingValue) {
+        Configure::write($settingKey, $settingValue);
+    }
 ?>

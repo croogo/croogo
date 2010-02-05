@@ -87,7 +87,6 @@ class AppController extends Controller {
  */
     function beforeFilter() {
         $this->AclFilter->auth();
-        $this->Setting->writeConfiguration();
         $this->RequestHandler->setContent('json', 'text/x-json');
 
         if (isset($this->params['admin'])) {

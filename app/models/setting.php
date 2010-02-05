@@ -60,6 +60,7 @@ class Setting extends AppModel {
  * @return void
  */
     function afterSave() {
+        $this->updateYaml();
         $this->writeConfiguration();
     }
 /**
@@ -68,6 +69,7 @@ class Setting extends AppModel {
  * @return void
  */
     function afterDelete() {
+        $this->updateYaml();
         $this->writeConfiguration();
     }
 /**
@@ -137,6 +139,28 @@ class Setting extends AppModel {
         foreach($settings AS $setting) {
             Configure::write($setting['Setting']['key'], $setting['Setting']['value']);
         }
+    }
+/**
+ * Find list and save yaml dump in app/config/settings.yml file.
+ * Data required in bootstrap.
+ *
+ * @return void
+ */
+    function updateYaml() {
+        $list = $this->find('list', array(
+            'fields' => array(
+                'key',
+                'value',
+            ),
+            'order' => array(
+                'Setting.key' => 'ASC',
+            ),
+        ));
+        $filePath = APP.'config'.DS.'settings.yml';
+        App::import('Core', 'File');
+        $file = new File($filePath, true);
+        $listYaml = Spyc::YAMLDump($list, 4, 60);
+        $file->write($listYaml);
     }
 }
 ?>
