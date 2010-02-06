@@ -1,6 +1,3 @@
-<?php
-    echo $javascript->link('/extensions/js/extensions_hooks.js');
-?>
 <div class="extensions-hooks">
     <h2><?php echo $title_for_layout; ?></h2>
 
@@ -52,12 +49,18 @@
             } else {
                 $icon = 'cross.png';
             }
+            $iconImage = $html->image('icons/'.$icon);
 
             $rows[] = array(
                 '',
                 $hookTitle,
                 $hookType,
-                $html->image('icons/'.$icon, array('class' => 'hook-toggle', 'rel' => $hook)),
+                $html->link($iconImage, array(
+                    'action' => 'toggle',
+                    $hook,
+                ), array(
+                    'escape' => false,
+                )),
                 $html->link(__('Edit', true), '/admin/filemanager/editfile?path='.urlencode($filePath)),
             );
         }

@@ -102,8 +102,6 @@ class ExtensionsHooksController extends AppController {
     }
 
     function admin_toggle($hook = null) {
-        $this->layout = 'ajax';
-
         if (strstr(Inflector::underscore($hook), '_helper')) {
             $configureKey = 'Hook.helpers';
             $hookType = 'Helper';
@@ -118,6 +116,7 @@ class ExtensionsHooksController extends AppController {
         if (!Configure::read($configureKey)) {
             $this->Setting->write($configureKey, $hookTitle);
             $status = 1;
+            $this->Session->setFlash(sprintf(__('%s activated successfully.', true), $hook));
         } else {
             $hookItems = explode(',', Configure::read($configureKey));
             if(array_search($hookTitle, $hookItems) !== false) {
@@ -126,11 +125,13 @@ class ExtensionsHooksController extends AppController {
                 $hookItems = implode(',', $hookItems);
                 $this->Setting->write($configureKey, $hookItems);
                 $status = 0;
+                $this->Session->setFlash(sprintf(__('%s deactivated successfully.', true), $hook));
             } else {
                 $hookItems[] = $hookTitle;
                 $hookItems = implode(',', $hookItems);
                 $this->Setting->write($configureKey, $hookItems);
                 $status = 1;
+                $this->Session->setFlash(sprintf(__('%s activated successfully.', true), $hook));
             }
         }
 
@@ -160,7 +161,9 @@ class ExtensionsHooksController extends AppController {
             $hookInstance->$method($this);
         }
 
-        $this->set(compact('status', 'hook', 'hookTitle'));
+        $this->redirect(array(
+            'action' => 'index',
+        ));
     }
 
 }
