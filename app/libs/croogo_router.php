@@ -2,8 +2,8 @@
 /**
  * CroogoRouter
  *
- * NOTE: Do not use this class as a substitute of Routes class.
- * Use it only in /app/config/routes.php
+ * NOTE: Do not use this class as a substitute of Router class.
+ * Use it only for CroogoRouter::connect()
  *
  * @package  Croogo
  * @version  1.0
@@ -37,7 +37,7 @@ class CroogoRouter {
  */
     function plugins() {
         $pluginRoutes = Configure::read('Hook.routes');
-        if ($pluginRoutes == null) {
+        if (!$pluginRoutes) {
             return;
         }
 

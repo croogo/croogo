@@ -26,7 +26,7 @@
  * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-    require_once APP.'config'.DS.'croogo_router.php';
+    require_once APP.'libs'.DS.'croogo_router.php';
     CroogoRouter::plugins();
     Router::parseExtensions('json', 'rss');
 
