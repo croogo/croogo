@@ -610,8 +610,6 @@ class CroogoComponent extends Object {
 /**
  * Loads plugin's routes.php file
  *
- * Plugin names stored in /app/config/plugin_routes.txt
- *
  * @param string $plugin Plugin name (underscored)
  * @return void
  */
@@ -632,7 +630,7 @@ class CroogoComponent extends Object {
         $this->controller->Setting->write('Hook.routes', $plugins);
     }
 /**
- * Plugin name will be removed from /app/config/plugin_routes.txt file
+ * Plugin name will be removed from Hook.routes
  *
  * @param string $plugin Plugin name (underscored)
  * @return void
@@ -655,6 +653,53 @@ class CroogoComponent extends Object {
             $plugins = implode(',', $plugins);
         }
         $this->controller->Setting->write('Hook.routes', $plugins);
+    }
+/**
+ * Loads plugin's bootstrap.php file
+ *
+ * @param string $plugin Plugin name (underscored)
+ * @return void
+ */
+    function addPluginBootstrap($plugin) {
+        $hookBootstraps = Configure::read('Hook.bootstraps');
+        if (!$hookBootstraps) {
+            $plugins = array();
+        } else {
+            $plugins = explode(',', $hookBootstraps);
+        }
+
+        if (array_search($plugin, $plugins) !== false) {
+            $plugins = $hookBootstraps;
+        } else {
+            $plugins[] = $plugin;
+            $plugins = implode(',', $plugins);
+        }
+        $this->controller->Setting->write('Hook.bootstraps', $plugins);
+    }
+/**
+ * Plugin name will be removed from Hook.bootstraps
+ *
+ * @param string $plugin Plugin name (underscored)
+ * @return void
+ */
+    function removePluginBootstrap($plugin) {
+        $hookBootstraps = Configure::read('Hook.bootstraps');
+        if (!$hookBootstraps) {
+            return;
+        }
+
+        $plugins = explode(',', $hookBootstraps);
+        if (array_search($plugin, $plugins) !== false) {
+            $k = array_search($plugin, $plugins);
+            unset($plugins[$k]);
+        }
+
+        if (count($plugins) == 0) {
+            $plugins = '';
+        } else {
+            $plugins = implode(',', $plugins);
+        }
+        $this->controller->Setting->write('Hook.bootstraps', $plugins);
     }
 /**
  * Parses bb-code like string.

@@ -23,6 +23,9 @@ class ExampleHookComponent extends Object {
         $controller->Croogo->addAco('Example'); // ExampleController
         $controller->Croogo->addAco('Example/index', array('registered', 'public')); // ExampleController::index()
 
+        // Bootstrap: app/plugins/example/config/bootstrap.php will be loaded in app/config/bootstrap.php
+        $controller->Croogo->addPluginBootstrap('example');
+
         // Routes: app/plugins/example/config/routes.php will be loaded in app/config/routes.php
         $controller->Croogo->addPluginRoutes('example');
 
@@ -44,6 +47,9 @@ class ExampleHookComponent extends Object {
     function onDeactivate(&$controller) {
         // ACL: remove ACOs with permissions
         $controller->Croogo->removeAco('Example'); // ExampleController ACO and it's actions will be removed
+
+        // Bootstrap: remove
+        $controller->Croogo->removePluginBootstrap('example');
 
         // Routes: remove
         $controller->Croogo->removePluginRoutes('example');

@@ -45,4 +45,17 @@
     foreach ($settings AS $settingKey => $settingValue) {
         Configure::write($settingKey, $settingValue);
     }
+
+/**
+ * Plugins
+ */
+    $pluginBootstraps = Configure::read('Hook.bootstraps');
+    if ($pluginBootstraps) {
+        $plugins = explode(',', $pluginBootstraps);
+        foreach ($plugins AS $plugin) {
+            if (file_exists(APP.'plugins'.DS.$plugin.DS.'config'.DS.'bootstrap.php')) {
+                require_once APP.'plugins'.DS.$plugin.DS.'config'.DS.'bootstrap.php';
+            }
+        }
+    }
 ?>
