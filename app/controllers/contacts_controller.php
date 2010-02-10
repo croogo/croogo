@@ -157,7 +157,7 @@ class ContactsController extends AppController {
             $continue === true) {
             $this->Akismet->setCommentAuthor($this->data['Message']['name']);
             $this->Akismet->setCommentAuthorEmail($this->data['Message']['email']);
-            $this->Akismet->setCommentContent($this->data['Comment']['body']);
+            $this->Akismet->setCommentContent($this->data['Message']['body']);
             if ($this->Akismet->isCommentSpam()) {
                 $continue = false;
                 $this->Session->setFlash(__('Sorry, the message appears to be spam.', true));
