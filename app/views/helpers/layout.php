@@ -22,7 +22,7 @@ class LayoutHelper extends AppHelper {
         'Html',
         'Form',
         'Session',
-        'Javascript',
+        'Js',
     );
 /**
  * Current Node
@@ -88,7 +88,7 @@ class LayoutHelper extends AppHelper {
  * @return string
  */
     function js() {
-        $output = $this->Javascript->link('croogo');
+        $output = $this->Html->script('croogo');
 
         $croogo = array();
         $croogo['basePath'] = Router::url('/');
@@ -97,7 +97,7 @@ class LayoutHelper extends AppHelper {
             'action' => $this->params['action'],
             'named' => $this->params['named'],
         );
-        $output .= $this->Javascript->codeBlock('$.extend(Croogo, ' . $this->Javascript->object($croogo) . ');');
+        $output .= $this->Html->scriptBlock('$.extend(Croogo, ' . $this->Js->object($croogo) . ');');
 
         echo $output;
     }

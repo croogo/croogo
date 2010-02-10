@@ -1,5 +1,5 @@
 <?php
-    $javascript->link(array('vocabularies'), false);
+    $html->script(array('vocabularies'), false);
 ?>
 <div class="vocabularies form">
     <h2><?php echo $title_for_layout; ?></h2>

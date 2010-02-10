@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title><?php echo $title_for_layout; ?> - <?php __('Croogo'); ?></title>
     <?php
-        echo $javascript->link(array('jquery/jquery.min'));
+        echo $html->script(array('jquery/jquery.min'));
         echo $layout->js();
         echo $html->css(array(
             'reset',
@@ -13,7 +13,7 @@
             'admin',
             'thickbox',
         ));
-        echo $javascript->link(array(
+        echo $html->script(array(
             'jquery/jquery-ui-1.7.min',
             'jquery/jquery.uuid',
             'jquery/jquery.cookie',

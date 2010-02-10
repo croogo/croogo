@@ -1,5 +1,5 @@
 <?php
-    $javascript->link(array('terms'), false);
+    $html->script(array('terms'), false);
 ?>
 <div class="terms form">
     <h2><?php echo $title_for_layout; ?></h2>

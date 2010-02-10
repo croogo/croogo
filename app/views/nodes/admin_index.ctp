@@ -1,5 +1,5 @@
 <?php
-    $javascript->link(array('nodes'), false);
+    $html->script(array('nodes'), false);
 ?>
 <div class="nodes index">
     <h2><?php echo $title_for_layout; ?></h2>

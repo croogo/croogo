@@ -40,7 +40,7 @@ class AppController extends Controller {
         'Form',
         'Session',
         'Text',
-        'Javascript',
+        'Js',
         'Time',
         'Layout',
         'Custom',

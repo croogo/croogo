@@ -1,6 +1,6 @@
 <div class="attachments index">
     <h2><?php echo $title_for_layout; ?></h2>
-    <?php echo $javascript->codeBlock($tinymce->selectURL()); ?>
+    <?php echo $html->scriptBlock($tinymce->selectURL()); ?>
 
     <div class="actions">
         <ul>

@@ -1,4 +1,4 @@
 <?php
     $data = array('success' => $success);
-    echo $javascript->object($data);
+    echo $js->object($data);
 ?>
