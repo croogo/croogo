@@ -92,29 +92,15 @@ class CroogoComponent extends Object {
         'nodes' => array(),
     );
 /**
- * Startup
+ * Constructor
  *
- * @param object $controller instance of controller
- * @return void
+ * @param array $options options
+ * @access public
  */
-    function startup(&$controller) {
+    function __construct($options = array()) {
         $this->__loadHooks();
 
-        $this->controller =& $controller;
-        App::import('Xml');
-
-        if ($this->Session->check('Auth.User.id')) {
-            $this->roleId = $this->Session->read('Auth.User.role_id');
-        }
-        $this->hook('startup');
-
-        if (!isset($this->controller->params['admin'])) {
-            $this->blocks();
-            $this->menus();
-            $this->vocabularies();
-            $this->types();
-            $this->nodes();
-        }
+        return parent::__construct($options);
     }
 /**
  * Load hooks as components
@@ -140,22 +126,32 @@ class CroogoComponent extends Object {
 
                 if (file_exists($filePath)) {
                     $this->hooks[] = $hook;
+                    $this->components[] = $hook;
                 }
             }
+        }
+    }
+/**
+ * Startup
+ *
+ * @param object $controller instance of controller
+ * @return void
+ */
+    function startup(&$controller) {
+        $this->controller =& $controller;
+        App::import('Xml');
 
-            // Set hooks as components
-            foreach ($this->hooks AS $hook) {
-                $componentName = $hook;
-                if (strstr($hook, '.')) {
-                    $hookE = explode('.', $hook);
-                    $componentName = $hookE['1'];
-                }
-                $componentClassName = $componentName.'Component';
+        if ($this->Session->check('Auth.User.id')) {
+            $this->roleId = $this->Session->read('Auth.User.role_id');
+        }
+        $this->hook('startup');
 
-                $this->components[] = $hook;
-                App::import('Component', $hook);
-                $this->{$componentName} =& new $componentClassName;
-            }
+        if (!isset($this->controller->params['admin'])) {
+            $this->blocks();
+            $this->menus();
+            $this->vocabularies();
+            $this->types();
+            $this->nodes();
         }
     }
 /**
