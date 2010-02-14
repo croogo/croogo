@@ -1,6 +1,6 @@
 <?php
-    $javascript->link('/acl/js/acl_permissions.js', false);
-    $javascript->codeBlock("$(document).ready(function(){ AclPermissions.documentReady(); });", array('inline' => false));
+    $html->script('/acl/js/acl_permissions.js', false);
+    $html->scriptBlock("$(document).ready(function(){ AclPermissions.documentReady(); });", array('inline' => false));
 ?>
 <div class="acos index">
     <h2><?php echo $title_for_layout; ?></h2>

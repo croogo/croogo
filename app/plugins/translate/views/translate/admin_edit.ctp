@@ -1,7 +1,7 @@
 <?php
     if (Configure::read('Writing.wysiwyg')) {
-        $javascript->codeBlock($tinymce->fileBrowserCallBack(), array('inline' => false));
-        $javascript->codeBlock($tinymce->init('NodeBody'), array('inline' => false));
+        $html->scriptBlock($tinymce->fileBrowserCallBack(), array('inline' => false));
+        $html->scriptBlock($tinymce->init('NodeBody'), array('inline' => false));
     }
 ?>
 <div class="translate form">

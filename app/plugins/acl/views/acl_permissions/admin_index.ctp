@@ -1,5 +1,5 @@
 <?php
-    $javascript->link('/acl/js/acl_permissions.js', false);
+    $html->script('/acl/js/acl_permissions.js', false);
 ?>
 <div class="acl_permissions index">
     <h2><?php echo $title_for_layout; ?></h2>
