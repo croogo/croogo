@@ -446,10 +446,18 @@ class CroogoComponent extends Object {
         $this->controller->set('nodes_for_layout', $this->nodes_for_layout);
 
         if ($controller->theme) {
-            $helperPaths = Configure::read('helperPaths');
-            array_unshift($helperPaths, APP.'views'.DS.'themed'.DS.$controller->theme.DS.'helpers'.DS);
-            Configure::write('helperPaths', $helperPaths);
-        }
+            //$helperPaths = Configure::read('helperPaths');
+            //array_unshift($helperPaths, APP.'views'.DS.'themed'.DS.$controller->theme.DS.'helpers'.DS);
+            //Configure::write('helperPaths', $helperPaths);
+
+            // Unless http://cakephp.lighthouseapp.com/projects/42648/tickets/84-enable-appbuild-to-retain-the-order-of-paths-given is integrated
+            // with the main core, the following "proper" way won't work.
+            //App::build(array('helpers' => array(APP . 'views' . DS . 'themed' . DS . $controller->theme . DS . 'helpers' . DS)));
+
+            // Workaround
+            $appInstance =& App::getInstance();
+            array_unshift($appInstance->helpers, APP.'views'.DS.'themed'.DS.$controller->theme.DS.'helpers'.DS);
+	}
 
         $this->hook('beforeRender');
     }
