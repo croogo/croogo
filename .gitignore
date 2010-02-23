@@ -6,8 +6,7 @@ nbproject/
 config/database.php
 plugins/debug_kit/
 vendors/simpletest/
-webroot/uploads/resized/*
-webroot/uploads/*
+webroot/uploads/
 
 # Cake cache
 tmp/cache/cake_*
