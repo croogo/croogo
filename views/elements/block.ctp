@@ -1,0 +1,15 @@
+<?php
+    $b = $block['Block'];
+    $class = 'block block-' . $b['alias'];
+    if ($block['Block']['class'] != null) {
+        $class .= ' ' . $b['class'];
+    }
+?>
+<div id="block-<?php echo $b['id']; ?>" class="<?php echo $class; ?>">
+<?php if ($b['show_title'] == 1) { ?>
+    <h3><?php echo $b['title']; ?></h3>
+<?php } ?>
+    <div class="block-body">
+<?php echo $layout->filter($b['body']); ?>
+    </div>
+</div>

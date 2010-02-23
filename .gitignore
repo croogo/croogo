@@ -3,18 +3,18 @@ nbproject/
 *.tmproj
 
 # App
-app/config/database.php
-app/plugins/debug_kit/
-app/vendors/simpletest/
-app/webroot/uploads/resized/*
-app/webroot/uploads/*
+config/database.php
+plugins/debug_kit/
+vendors/simpletest/
+webroot/uploads/resized/*
+webroot/uploads/*
 
 # Cake cache
-app/tmp/cache/cake_*
-app/tmp/cache/models/cake_*
-app/tmp/cache/persistent/cake_*
-app/tmp/cache/queries/cake_*
+tmp/cache/cake_*
+tmp/cache/models/cake_*
+tmp/cache/persistent/cake_*
+tmp/cache/queries/cake_*
  
 # Cake tmp dir
-app/tmp/logs/*.log
-app/tmp/sessions/*
+tmp/logs/*.log
+tmp/sessions/*
