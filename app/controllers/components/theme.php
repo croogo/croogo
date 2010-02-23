@@ -24,13 +24,13 @@ class ThemeComponent extends Object {
  * @return array
  */
     function getThemes() {
-        $themes = array();
+        $themes = array('default');
         $this->folder = new Folder;
-        $this->folder->path = WWW_ROOT . 'themed';
+        $this->folder->path = APP . 'views' . DS . 'themed';
         $themeFolders = $this->folder->read();
         foreach ($themeFolders[0] AS $themeFolder) {
             if (substr($themeFolder, 0, 1) != '.') {
-                $this->folder->path = WWW_ROOT . 'themed' . DS . $themeFolder;
+                $this->folder->path = APP . 'views' . DS . 'themed' . DS . $themeFolder . DS . 'webroot';
                 $themeFolderContent = $this->folder->read();
                 if (in_array('theme.xml', $themeFolderContent[1])) {
                     $themes[] = $themeFolder;
@@ -46,10 +46,10 @@ class ThemeComponent extends Object {
  * @return array
  */
     function getData($alias = null) {
-        if ($alias == null) {
+        if ($alias == null || $alias == 'default') {
             $xmlLocation = WWW_ROOT . 'theme.xml';
         } else {
-            $xmlLocation = WWW_ROOT . 'themed' . DS . $alias . DS . 'theme.xml';
+            $xmlLocation = APP . 'views' . DS . 'themed' . DS . $alias . DS . 'webroot' . DS . 'theme.xml';
             if (!file_exists($xmlLocation)) {
                 $xmlLocation = WWW_ROOT . 'theme.xml';
             }

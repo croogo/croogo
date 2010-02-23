@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <theme>
     <name>Default</name>
-    <alias>default</alias>
     <description>Default theme for Croogo.</description>
     <screenshot>screenshot.png</screenshot>
 

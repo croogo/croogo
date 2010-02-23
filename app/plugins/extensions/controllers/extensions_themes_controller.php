@@ -41,7 +41,7 @@ class ExtensionsThemesController extends AppController {
         $themesData = array();
         $themesData[] = $this->Theme->getData();
         foreach ($themes AS $theme) {
-            $themesData[] = $this->Theme->getData($theme);
+            $themesData[$theme] = $this->Theme->getData($theme);
         }
 
         $currentTheme = $this->Theme->getData(Configure::read('Site.theme'));
@@ -68,7 +68,7 @@ class ExtensionsThemesController extends AppController {
             $file = $this->data['Theme']['file'];
             unset($this->data['Theme']['file']);
 
-            // get Theme alias
+            // get Theme XML and alias
             $xmlContent = '';
             $zip = zip_open($file['tmp_name']);
             if ($zip) {
@@ -77,6 +77,11 @@ class ExtensionsThemesController extends AppController {
                     if (strstr($zipEntryName, 'theme.xml') &&
                         zip_entry_open($zip, $zip_entry, "r")) {
                         $xmlContent = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+
+                        $zipEntryNameE = explode('/', $zipEntryName);
+                        if (isset($zipEntryNameE['0'])) {
+                            $themeAlias = $zipEntryNameE[count($zipEntryNameE) - 3];
+                        }
                     }
                 }
                 zip_close($zip);
@@ -87,15 +92,10 @@ class ExtensionsThemesController extends AppController {
             }
 
             // check if alias already exists
-            App::import('Xml');
-            $xmlData =& new XML($xmlContent);
-            $xmlData = Set::reverse($xmlData);
-            if (!isset($xmlData['Theme']['alias']) ||
-                $xmlData['Theme']['alias'] == '') {
-                $this->Session->setFlash(__('Invalid XML file', true));
+            if (!isset($themeAlias)) {
+                $this->Session->setFlash(__('Invalid zip archive', true));
                 $this->redirect(array('action' => 'index'));
             }
-            $themeAlias = $xmlData['Theme']['alias'];
             if (is_dir(APP.'views'.DS.'themed'.DS.$themeAlias) ||
                 is_dir(APP.'webroot'.DS.'themed'.DS.$themeAlias)) {
                 $this->Session->setFlash(__('Directory with theme alias already exists.', true));
@@ -107,17 +107,12 @@ class ExtensionsThemesController extends AppController {
             if ($zip) {
                 while ($zip_entry = zip_read($zip)) {
                     $zipEntryName = zip_entry_name($zip_entry);
-                    if (strstr($zipEntryName, '/themed/' . $themeAlias)) {
-                        // views
-                        if (strstr($zipEntryName, 'views/themed/' . $themeAlias)) {
-                            $zipEntryNameE = explode('views/themed/' . $themeAlias, $zipEntryName);
-                            $path = APP.'views'.DS.'themed'.DS.$themeAlias.str_replace('/', DS, $zipEntryNameE['1']);
-                        }
-
-                        // webroot
-                        if (strstr($zipEntryName, 'webroot/themed/' . $themeAlias)) {
-                            $zipEntryNameE = explode('webroot/themed/' . $themeAlias, $zipEntryName);
-                            $path = APP.'webroot'.DS.'themed'.DS.$themeAlias.str_replace('/', DS, $zipEntryNameE['1']);
+                    if (strstr($zipEntryName, $themeAlias . '/')) {
+                        $zipEntryNameE = explode($themeAlias . '/', $zipEntryName);
+                        if (isset($zipEntryNameE['1'])) {
+                            $path = APP . 'views' . DS . 'themed' . DS . $themeAlias . DS . str_replace('/', DS, $zipEntryNameE['1']);
+                        } else {
+                            $path = APP . 'views' . DS . 'themed' . DS . $themeAlias . DS;
                         }
 
                         if (substr($path, strlen($path) - 1) == DS) {
@@ -137,6 +132,7 @@ class ExtensionsThemesController extends AppController {
                     }
                 }
                 zip_close($zip);
+                $this->Session->setFlash(__('Theme uploaded successfully.', true));
                 $this->redirect(array('action' => 'index'));
             }
         }
@@ -162,7 +158,7 @@ class ExtensionsThemesController extends AppController {
         }
 
         $paths = array(
-            APP . 'webroot' . DS . 'themed' . DS . $alias . DS,
+            APP . 'webroot' . DS . 'theme' . DS . $alias . DS,
             APP . 'views' . DS . 'themed' . DS . $alias . DS,
         );
 
