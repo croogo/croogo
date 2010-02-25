@@ -37,14 +37,14 @@ class ExtensionsThemesController extends AppController {
     function admin_index() {
         $this->set('title_for_layout', __('Themes', true));
 
-        $themes = $this->Theme->getThemes();
+        $themes = $this->Croogo->getThemes();
         $themesData = array();
-        $themesData[] = $this->Theme->getData();
+        $themesData[] = $this->Croogo->getThemeData();
         foreach ($themes AS $theme) {
-            $themesData[$theme] = $this->Theme->getData($theme);
+            $themesData[$theme] = $this->Croogo->getThemeData($theme);
         }
 
-        $currentTheme = $this->Theme->getData(Configure::read('Site.theme'));
+        $currentTheme = $this->Croogo->getThemeData(Configure::read('Site.theme'));
         $this->set(compact('themes', 'themesData', 'currentTheme'));
     }
 

@@ -27,7 +27,6 @@ class AppController extends Controller {
         'Acl.AclFilter',
         'Session',
         'RequestHandler',
-        'Theme',
     );
 /**
  * Helpers
