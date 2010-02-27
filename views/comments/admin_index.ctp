@@ -50,7 +50,7 @@
                     'type' => $comment['Node']['type'],
                     'slug' => $comment['Node']['slug'],
                 )),
-                $html->link($html->image('/img/icons/comment.png'), '#', array('class' => 'tooltip', 'title' => $comment['Comment']['body']), false, false),
+                $html->link($html->image('/img/icons/comment.png'), '#', array('class' => 'tooltip', 'title' => $comment['Comment']['body'], 'escape' => false)),
                 $comment['Comment']['created'],
                 $actions,
             );

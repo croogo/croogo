@@ -152,7 +152,41 @@ class CroogoComponent extends Object {
             $this->vocabularies();
             $this->types();
             $this->nodes();
+        } else {
+            $this->__adminData();
         }
+    }
+/**
+ * Set variables for admin layout
+ *
+ * @return void
+ */
+    function __adminData() {
+        // menus
+        $menus = $this->controller->Link->Menu->find('all', array(
+            'recursive' => '-1',
+            'order' => 'Menu.id ASC',
+        ));
+        $this->controller->set('menus_for_admin_layout', $menus);
+
+        // types
+        $types = $this->controller->Node->Term->Vocabulary->Type->find('all', array(
+            'conditions' => array(
+                'Type.plugin <>' => null,
+            ),
+            'order' => 'Type.alias ASC',
+        ));
+        $this->controller->set('types_for_admin_layout', $types);
+
+        // vocabularies
+        $vocabularies = $this->controller->Node->Term->Vocabulary->find('all', array(
+            'recursive' => '-1',
+            'conditions' => array(
+                'Vocabulary.plugin <>' => null,
+            ),
+            'order' => 'Vocabulary.alias ASC',
+        ));
+        $this->controller->set('vocabularies_for_admin_layout', $vocabularies);
     }
 /**
  * Blocks
