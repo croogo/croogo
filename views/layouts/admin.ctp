@@ -18,7 +18,6 @@
             'jquery/jquery.slug',
             'jquery/jquery.uuid',
             'jquery/jquery.cookie',
-            'jquery/jquery.collapsor',
             'jquery/jquery.hoverIntent.minified',
             'jquery/superfish',
             'jquery/supersubs',
