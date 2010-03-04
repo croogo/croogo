@@ -108,11 +108,18 @@ class ExtensionsPluginsController extends AppController {
                 while ($zip_entry = zip_read($zip)) {
                     $zipEntryName = zip_entry_name($zip_entry);
                     if (strstr($zipEntryName, $plugin . '/')) {
-                        $zipEntryNameE = explode($plugin . '/', $zipEntryName);
+                        $zipEntryNameE = explode($plugin . '/', $zipEntryName, 2);
                         if (isset($zipEntryNameE['1'])) {
                             $path = APP . 'plugins' . DS . $pluginName . DS . str_replace('/', DS, $zipEntryNameE['1']);
                         } else {
                             $path = APP . 'plugins' . DS . $pluginName . DS;
+                        }
+
+                        if(file_exists($path) {
+                            // skip duplicate zip entries for instances where a directory may
+                            // have been previously encountered in the zip file
+                            // we don't need to write it out again
+                            continue;
                         }
 
                         if (substr($path, strlen($path) - 1) == DS) {
