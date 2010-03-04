@@ -38,7 +38,7 @@ Nodes.filter = function() {
         return false;
     });
 
-    $('#FilterAddForm').submit(function() {
+    $('#FilterAdminIndexForm').submit(function() {
         var filter = '';
 
         // type
