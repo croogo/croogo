@@ -14,14 +14,12 @@
  * @link     http://www.croogo.org
  */
 class AppModel extends Model {
-
 /**
  * use Caching
  *
  * @var string
  */
     var $useCache = true;
-
 /**
  * Override find function to use caching
  *
@@ -47,7 +45,6 @@ class AppModel extends Model {
         }
         return $results;
     }
-
 /**
  * Check if find() was already cached
  *
@@ -80,7 +77,8 @@ class AppModel extends Model {
  * @access public
  */
     function updateAll($fields, $conditions = true) {
-        $output = parent::updateAll($fields, $conditions);
+        $args = func_get_args();
+        $output = call_user_func_array(array('parent', 'updateAll'), $args);
         if ($output) {
             $created = false;
             $options = array();
@@ -90,7 +88,6 @@ class AppModel extends Model {
             ));
             $this->afterSave($created);
             $this->_clearCache();
-            $this->id = false;
             return true;
         }
         return false;
