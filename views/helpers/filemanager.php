@@ -91,7 +91,11 @@ class FilemanagerHelper extends AppHelper {
         $path_e = explode(DS, $path);
 
         $output = array();
-        $current_path = DS;
+        if (DS == '/') {
+            $current_path = DS;
+        } else {
+            $current_path = '';
+        }
         foreach ($path_e AS $p) {
             if ($p != null) {
                 $current_path .= $p.DS;
