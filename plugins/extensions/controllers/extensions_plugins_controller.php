@@ -115,7 +115,7 @@ class ExtensionsPluginsController extends AppController {
                             $path = APP . 'plugins' . DS . $pluginName . DS;
                         }
 
-                        if(file_exists($path) {
+                        if(file_exists($path)) {
                             // skip duplicate zip entries for instances where a directory may
                             // have been previously encountered in the zip file
                             // we don't need to write it out again
