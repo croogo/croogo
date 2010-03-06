@@ -14,7 +14,8 @@
  */
     $cacheConfig = array(
         'duration' => '+1 hour',
-        'path' => 'queries',
+        'path' => CACHE.'queries',
+        'engine' => 'File',
     );
 
     // models

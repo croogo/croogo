@@ -20,7 +20,6 @@ class CroogoComponent extends Object {
  */
     var $components = array(
         'Session',
-        'Theme',
     );
 /**
  * Hook components
@@ -139,6 +138,7 @@ class CroogoComponent extends Object {
  */
     function startup(&$controller) {
         $this->controller =& $controller;
+        App::import('Core', 'File');
         App::import('Xml');
 
         if ($this->Session->check('Auth.User.id')) {
@@ -152,7 +152,41 @@ class CroogoComponent extends Object {
             $this->vocabularies();
             $this->types();
             $this->nodes();
+        } else {
+            $this->__adminData();
         }
+    }
+/**
+ * Set variables for admin layout
+ *
+ * @return void
+ */
+    function __adminData() {
+        // menus
+        $menus = $this->controller->Link->Menu->find('all', array(
+            'recursive' => '-1',
+            'order' => 'Menu.id ASC',
+        ));
+        $this->controller->set('menus_for_admin_layout', $menus);
+
+        // types
+        $types = $this->controller->Node->Term->Vocabulary->Type->find('all', array(
+            'conditions' => array(
+                'Type.plugin <>' => null,
+            ),
+            'order' => 'Type.alias ASC',
+        ));
+        $this->controller->set('types_for_admin_layout', $types);
+
+        // vocabularies
+        $vocabularies = $this->controller->Node->Term->Vocabulary->find('all', array(
+            'recursive' => '-1',
+            'conditions' => array(
+                'Vocabulary.plugin <>' => null,
+            ),
+            'order' => 'Vocabulary.alias ASC',
+        ));
+        $this->controller->set('vocabularies_for_admin_layout', $vocabularies);
     }
 /**
  * Blocks
@@ -749,6 +783,46 @@ class CroogoComponent extends Object {
             $output[$alias] = $aliasOptions;
         }
         return $output;
+    }
+/**
+ * Get theme alises (folder names)
+ *
+ * @return array
+ */
+    function getThemes() {
+        $themes = array('default');
+        $this->folder = new Folder;
+        $this->folder->path = APP . 'views' . DS . 'themed';
+        $themeFolders = $this->folder->read();
+        foreach ($themeFolders[0] AS $themeFolder) {
+            if (substr($themeFolder, 0, 1) != '.') {
+                $this->folder->path = APP . 'views' . DS . 'themed' . DS . $themeFolder . DS . 'webroot';
+                $themeFolderContent = $this->folder->read();
+                if (in_array('theme.xml', $themeFolderContent[1])) {
+                    $themes[] = $themeFolder;
+                }
+            }
+        }
+        return $themes;
+    }
+/**
+ * Get the content of theme.xml file
+ *
+ * @param string $alias theme folder name
+ * @return array
+ */
+    function getThemeData($alias = null) {
+        if ($alias == null || $alias == 'default') {
+            $xmlLocation = WWW_ROOT . 'theme.xml';
+        } else {
+            $xmlLocation = APP . 'views' . DS . 'themed' . DS . $alias . DS . 'webroot' . DS . 'theme.xml';
+            if (!file_exists($xmlLocation)) {
+                $xmlLocation = WWW_ROOT . 'theme.xml';
+            }
+        }
+        $themeXml =& new XML($xmlLocation);
+        $themeData = Set::reverse($themeXml);
+        return $themeData;
     }
 /**
  * Hook

@@ -11,17 +11,17 @@ var Admin = {};
  * @return void
  */
 Admin.navigation = function() {
-    //$("#navnew").accordion({header:'h3'});
-	$('#navigation ul a').collapsor();
-
-	// now find cookies and animate the li
-	$("#navigation > ul > li").each(function(){
-		var li_index = $("#navigation > ul > li").index(this);
-		var cookie_name = "cms19_toggle_navigation_ul_li_"+li_index;
-		if( $.cookie(cookie_name) ) {
-			$("#navigation > ul > li:eq("+li_index+") > ul").animate({height:'toggle', opacity:'toggle'}, 500, 'swing');
-		}
-	});
+    $('ul.sf-menu').supersubs({
+        minWidth:    12,                                // minimum width of sub-menus in em units
+        maxWidth:    27,                                // maximum width of sub-menus in em units
+        extraWidth:  1                                  // extra width can ensure lines don't sometimes turn over
+    }).superfish({
+        delay:       200,                               // delay on mouseout
+        animation:   {opacity:'show',height:'show'},    // fade-in and slide-down animation
+        speed:       'fast',                            // faster animation speed
+        autoArrows:  false,                             // disable generation of arrow mark-up
+        dropShadows: false                              // disable drop shadows
+    });
 }
 
 /**

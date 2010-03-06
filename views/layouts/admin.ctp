@@ -18,7 +18,9 @@
             'jquery/jquery.slug',
             'jquery/jquery.uuid',
             'jquery/jquery.cookie',
-            'jquery/jquery.collapsor',
+            'jquery/jquery.hoverIntent.minified',
+            'jquery/superfish',
+            'jquery/supersubs',
             'jquery/jquery.tipsy',
             'jquery/jquery.elastic-1.6.1.js',
             'jquery/thickbox-compressed',
@@ -46,12 +48,14 @@
             </div>
         </div>
 
-        <div id="main" class="container_16">
-            <div class="grid_3">
+        <div id="nav-container">
+            <div class="container_16">
                 <?php echo $this->element("admin/navigation"); ?>
             </div>
+        </div>
 
-            <div class="grid_13">
+        <div id="main" class="container_16">
+            <div class="grid_16">
                 <div id="content">
                     <?php
                         $layout->sessionFlash();

@@ -24,6 +24,12 @@ h3 { font-family: Arial, sans-serif; color: #464646; font-size: 16px; font-weigh
 
 
 /**
+ * Content
+ */
+#main { margin-top: 15px; }
+
+
+/**
  * Pagination
  */
 div.paging,
@@ -78,6 +84,9 @@ form textarea:focus { border: 1px solid #999; }
 form input[type=submit] { font-size: 24px; margin-top: 20px; }
 form textarea { background-color: #fff; width: 300px; height: 60px; font-size: 13px; }
 form .wide { width: 500px; height: 150px; }
+form select[multiple=multiple] { padding: 0px; }
+form select[multiple=multiple] optgroup { font-style: normal; }
+form select[multiple=multiple] optgroup option { text-indent: 25px; }
 div.radio { width: 140px; }
 div.radio input { width: 30px; float: left; }
 div.radio label { width: 80px; float: left;  }
@@ -88,7 +97,7 @@ div.input span.description { margin-left: 10px; }
 /**
  * Header
  */
-#header { width: auto; background-color: #464646; padding: 15px 0px 15px 0px; color: #ccc; margin: 0px 0px 10px 0px; height: 20px; }
+#header { width: auto; background-color: #464646; padding: 15px 0px 15px 0px; color: #ccc; margin: 0px 0px 0px 0px; height: 20px; }
 #header .logo { font-weight: bold; }
 #header a { color: #ccc; text-decoration: none; }
 #header a:hover { text-decoration: underline; }
@@ -99,14 +108,46 @@ div.input span.description { margin-left: 10px; }
 /**
  * Navigation
  */
-#navigation ul { margin: 0px; padding: 0px; list-style: none; }
-#navigation ul li { padding: 5px; margin-left: 3px; margin-bottom: 10px; background-color: #eee; }
-#navigation ul li a { margin-bottom: 3px; display: block; font-size: 18px; text-decoration: none; color: #464646; }
+#nav-container { background: #eee; width: auto; height: 35px; }
 
-#navigation ul li ul { margin-left: 0px; background-color: #fff; }
-#navigation ul li ul li { margin-bottom: 2px; background-color: #fff; }
-#navigation ul li ul li a { margin: 1px 3px 1px 3px; display: block; font-size: 14px; font-weight: bold; text-decoration: none; color: #21759B; }
-#navigation ul li ul li a:hover, #navigation ul li ul li a.current { color: #D54E21; }
+#nav { margin-bottom: 0px; margin-top: 0px; }
+#nav ul li,
+#nav ul li a { float: left; display: block; background: #eee; font-size: 12px; font-weight: bold; }
+#nav ul li:first-child a { border-left: 1px solid #eee; }
+#nav ul li a { color: #666; padding: 10px 10px 11px 20px; border-top: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee; text-decoration: none; }
+#nav ul li a:hover { background: #f7f7f7; color: #d54e21; }
+#nav ul li a.selected { border-bottom: 1px solid #fff; }
+#nav ul li a.selected:hover { background: #f7f7f7; border-bottom: 1px solid #ccc; }
+#nav > ul > li > a { margin-right: 20px; }
+#nav ul li span.ui-icon { position: absolute; left: 2px; top: 16px; margin: -8px 0px 0px 0px; }
+
+.sf-menu, .sf-menu * { margin: 0; padding: 0; list-style: none; }
+.sf-menu { line-height: 1.0; }
+.sf-menu ul { position: absolute; top: -999em; width: 10em; }
+.sf-menu ul li { width: 100%; }
+.sf-menu li:hover { visibility: inherit; }
+.sf-menu li { float: left; position: relative; }
+.sf-menu a { display: block; position: relative; }
+.sf-menu li:hover ul,
+.sf-menu li.sfHover ul { left: 0; top: 33px; z-index: 99; }
+ul.sf-menu li:hover li ul,
+ul.sf-menu li.sfHover li ul { top: -999em; }
+ul.sf-menu li li:hover ul,
+ul.sf-menu li li.sfHover ul { left: 10em; top: 0; }
+ul.sf-menu li li:hover li ul,
+ul.sf-menu li li.sfHover li ul { top: -999em; }
+ul.sf-menu li li li:hover ul,
+ul.sf-menu li li li.sfHover ul { left: 10em; top: 0; }
+
+#nav ul li:first-child ul { margin: 2px 0px 0px -1px; }
+#nav ul li ul { margin: 1px 0px 0px -1px; }
+#nav li li:first-child a { border-top: 1px solid #eee; }
+#nav li li a { background: #f7f7f7; border-top: 0px solid #eee; border-bottom: 1px solid #eee; border-left: 1px solid #eee; }
+#nav li li a:hover { color: #d54e21; background: #fafafa; }
+#nav li li a.separator { border-bottom: 1px dashed #bbb; }
+
+#nav li li li:first-child { margin: -2px 0px 0px 0px; border-left: 0px solid #ccc; }
+#nav li li li { margin: 0px 0px 0px 0px; }
 
 
 /**
