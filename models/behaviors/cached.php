@@ -54,8 +54,10 @@ class CachedBehavior extends ModelBehavior {
     function _deleteCachedFiles(&$model) {
         foreach ($this->settings[$model->alias]['prefix'] AS $prefix) {
             $files = glob(TMP.'cache/queries/cake_'.$prefix.'*');
-            foreach ($files AS $file) {
-                unlink($file);
+            if (is_array($files) && count($files) > 0) {
+                foreach ($files AS $file) {
+                    unlink($file);
+                }
             }
         }
     }
