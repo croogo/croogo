@@ -31,7 +31,7 @@ class CroogoRouter {
         Router::connect('/:locale' . $route, $default, array_merge(array('locale' => '[a-z]{3}'), $params));
     }
 /**
- * Load plugin routes (as found in plugin_routes.txt file)
+ * Load plugin routes
  *
  * @return void
  */
@@ -48,6 +48,5 @@ class CroogoRouter {
             }
         }
     }
-
 }
 ?>
