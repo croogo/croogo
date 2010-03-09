@@ -5,6 +5,7 @@
         <?php
             echo $form->input('id');
             echo $form->input('username', array('type' => 'hidden'));
+            echo $form->input('current_password', array('label' => __('Current Password', true), 'type' => 'password', 'value' => ''));
             echo $form->input('password', array('label' => __('New Password', true), 'value' => ''));
         ?>
         </fieldset>

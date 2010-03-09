@@ -91,11 +91,16 @@ class UsersController extends AppController {
             $this->redirect(array('action' => 'index'));
         }
         if (!empty($this->data)) {
-            if ($this->User->save($this->data)) {
-                $this->Session->setFlash(__('Password has been reset.', true));
-                $this->redirect(array('action' => 'index'));
+            $user = $this->User->findById($id);
+            if ($user['User']['password'] == Security::hash($this->data['User']['current_password'], null, true)) {
+                if ($this->User->save($this->data)) {
+                    $this->Session->setFlash(__('Password has been reset.', true));
+                    $this->redirect(array('action' => 'index'));
+                } else {
+                    $this->Session->setFlash(__('Password could not be reset. Please, try again.', true));
+                }
             } else {
-                $this->Session->setFlash(__('Password could not be reset. Please, try again.', true));
+                $this->Session->setFlash(__('Current password did not match. Please, try again.', true));
             }
         }
         if (empty($this->data)) {
