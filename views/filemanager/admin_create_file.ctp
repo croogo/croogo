@@ -1,23 +1,27 @@
 <div class="filemanager form">
-	<h2><?php echo $title_for_layout; ?></h2>
+    <h2><?php echo $title_for_layout; ?></h2>
 
-	<div class="breadcrumb">
-	<?php
-        __('You are here:');
-
-		$breadcrumb = $filemanager->breadcrumb($path);
-		foreach($breadcrumb AS $pathname => $p) {
+    <div class="breadcrumb">
+    <?php
+        echo __('You are here:', true) . ' ';
+        $breadcrumb = $filemanager->breadcrumb($path);
+        foreach($breadcrumb AS $pathname => $p) {
             echo $filemanager->linkDirectory($pathname, $p);
-			echo DS;
-		}
-	?>
-	</div>
+            echo DS;
+        }
+    ?>
+    </div>
 
-	<form method="post" action="<?php echo $html->url(array('controller' => 'filemanager', 'action' => 'create_file')) . '?path=' . urlencode($path); ?>" enctype="multipart/form-data">
-		<fieldset>
-			<?php
-                echo $form->input('Filemanager.name', array('type' => 'text'));
-            ?>
-		</fieldset>
-	<?php echo $form->end("Submit"); ?>
+    <?php
+        echo $form->create('Filemanager', array(
+            'url' => $html->url(array(
+                'controller' => 'filemanager',
+                'action' => 'create_file',
+            ), true) . '?path=' . urlencode($path),
+        ));
+    ?>
+    <fieldset>
+    <?php echo $form->input('Filemanager.name', array('type' => 'text')); ?>
+    </fieldset>
+    <?php echo $form->end("Submit"); ?>
 </div>
