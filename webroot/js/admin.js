@@ -22,6 +22,8 @@ Admin.navigation = function() {
         autoArrows:  false,                             // disable generation of arrow mark-up
         dropShadows: false                              // disable drop shadows
     });
+
+    $('#nav ul li:has(ul)').children(0).addClass('has-ul');
 }
 
 /**
