@@ -239,9 +239,13 @@ class NodesController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    function admin_delete($id = null) {
+    function admin_delete($id = null, $secToken = null ) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Node', true));
+            $this->redirect(array('action'=>'index'));
+        }
+        if ($this->Session->read("Security.token")!=$secToken) {
+            $this->Session->setFlash(__('Invalid request', true));
             $this->redirect(array('action'=>'index'));
         }
         if ($this->Node->delete($id)) {

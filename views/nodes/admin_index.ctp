@@ -41,7 +41,7 @@
         foreach ($nodes AS $node) {
             $actions  = $html->link(__('Edit', true), array('action' => 'edit', $node['Node']['id']));
             $actions .= ' ' . $layout->adminRowActions($node['Node']['id']);
-            $actions .= ' ' . $html->link(__('Delete', true), array('action' => 'delete', $node['Node']['id']), null, __('Are you sure?', true));
+            $actions .= ' ' . $html->link(__('Delete', true), array('action' => 'delete', $node['Node']['id'],$session->read("Security.token")), null, __('Are you sure?', true));
 
             $rows[] = array(
                 $form->checkbox('Node.'.$node['Node']['id'].'.id'),
