@@ -47,9 +47,10 @@ class NodesController extends AppController {
         if (isset($this->params['type'])) {
             $this->params['named']['type'] = $this->params['type'];
         }
-        //Set a unique token in session, CSFR protection
-        if (!$this->Session->check("Security.token")) {
-            $this->Session->write('Security.token',sha1(uniqid(mt_rand(), TRUE)));
+
+        // CSRF Protection
+        if (in_array($this->params['action'], array('admin_add', 'admin_edit'))) {
+            $this->Security->validatePost = false;
         }
     }
 
@@ -96,12 +97,6 @@ class NodesController extends AppController {
     }
 
     function admin_add($typeAlias = 'node') {
-        //CSFR Protection        
-        if(!empty($this->data) && $this->Session->read("Security.token")!=$this->data["Node"]["secToken"]) {
-            $this->Session->setFlash(__('Invalid request', true));
-            $this->redirect(array('action'=>'index'));
-        }
-        
         $type = $this->Node->Term->Vocabulary->Type->findByAlias($typeAlias);
         if (!isset($type['Type']['alias'])) {
             $this->Session->setFlash(__('Content type does not exist.', true));
@@ -113,6 +108,12 @@ class NodesController extends AppController {
         $this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
 
         if (!empty($this->data)) {
+            // CSRF Protection
+            if ($this->params['_Token']['key'] != $this->data['Node']['token_key']) {
+                $blackHoleCallback = $this->Security->blackHoleCallback;
+                $this->$blackHoleCallback();
+            }
+
             $this->Node->create();
             $this->data['Node']['path'] = $this->Croogo->getRelativePath(array(
                 'admin' => false,
@@ -145,11 +146,6 @@ class NodesController extends AppController {
     }
 
     function admin_edit($id = null) {
-        //CSFR Protection        
-        if(!empty($this->data) && $this->Session->read("Security.token")!=$this->data["Node"]["secToken"]) {
-            $this->Session->setFlash(__('Invalid request', true));
-            $this->redirect(array('action'=>'index'));
-        }
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid content', true));
             $this->redirect(array('action'=>'index'));
@@ -169,6 +165,12 @@ class NodesController extends AppController {
         $this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
 
         if (!empty($this->data)) {
+            // CSRF Protection
+            if ($this->params['_Token']['key'] != $this->data['Node']['token_key']) {
+                $blackHoleCallback = $this->Security->blackHoleCallback;
+                $this->$blackHoleCallback();
+            }
+
             $this->data['Node']['path'] = $this->Croogo->getRelativePath(array(
                 'admin' => false,
                 'controller' => 'nodes',

@@ -87,7 +87,10 @@
             </div>
         </fieldset>
     <?php
-        echo $form->input('secToken',array('type'=>'hidden', 'value'=>$session->read("Security.token"))); 
+        echo $form->input('token_key', array(
+            'type' => 'hidden',
+            'value' => $this->params['_Token']['key'],
+        ));
         echo $form->end('Submit');
     ?>
 </div>
