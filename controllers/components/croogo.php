@@ -275,7 +275,7 @@ class CroogoComponent extends Object {
             $xmlLocation = WWW_ROOT . 'theme.xml';
         } else {
             $cacheName = 'theme_'.Configure::read('Site.theme').'_xml';
-            $xmlLocation = WWW_ROOT . 'themed' . DS . Configure::read('Site.theme') . DS . 'theme.xml';
+            $xmlLocation = APP . 'views' . DS . 'themed' . DS . Configure::read('Site.theme') . DS . 'webroot' . DS . 'theme.xml';
             if (!file_exists($xmlLocation)) {
                 $xmlLocation = WWW_ROOT . 'theme.xml';
             }

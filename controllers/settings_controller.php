@@ -128,9 +128,9 @@ class SettingsController extends AppController {
 
     function admin_moveup($id, $step = 1) {
         if( $this->Setting->moveup($id, $step) ) {
-            $this->Session->setFlash(__("Moved up succuessfully", true));
+            $this->Session->setFlash(__('Moved up successfully', true));
         } else {
-            $this->Session->setFlash(__("Could not move up", true));
+            $this->Session->setFlash(__('Could not move up', true));
         }
 
         $this->redirect(array('admin' => true, 'controller' => 'settings', 'action' => 'index'));
@@ -138,9 +138,9 @@ class SettingsController extends AppController {
 
     function admin_movedown($id, $step = 1) {
         if( $this->Setting->movedown($id, $step) ) {
-            $this->Session->setFlash(__("Moved down succuessfully", true));
+            $this->Session->setFlash(__('Moved down successfully', true));
         } else {
-            $this->Session->setFlash(__("Could not move down", true));
+            $this->Session->setFlash(__('Could not move down', true));
         }
 
         $this->redirect(array('admin' => true, 'controller' => 'settings', 'action' => 'index'));

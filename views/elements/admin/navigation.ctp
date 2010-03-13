@@ -61,7 +61,7 @@
             <ul>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-image"></span>' . __('Themes', true), array('plugin' => 'extensions', 'controller' => 'extensions_themes', 'action' => 'index'), array('escape' => false)); ?></li>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-script"></span>' . __('Locales', true), array('plugin' => 'extensions', 'controller' => 'extensions_locales', 'action' => 'index'), array('escape' => false)); ?></li>
-                <li><?php echo $html->link('<span class="ui-icon ui-icon-bullet"></span>' . __('Plugins', true), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'), array('escape' => false)); ?></li>
+                <li><?php echo $html->link('<span class="ui-icon ui-icon-gear"></span>' . __('Plugins', true), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'), array('escape' => false)); ?></li>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-pin-w"></span>' . __('Hooks', true), array('plugin' => 'extensions', 'controller' => 'extensions_hooks', 'action' => 'index'), array('class' => Configure::read('Admin.menus') ? 'separator' : '', 'escape' => false)); ?></li>
                 <?php
                 if (Configure::read('Admin.menus')) {

@@ -118,7 +118,8 @@ div.input span.description { margin-left: 10px; }
 #nav ul li a:hover { background: #f7f7f7; color: #d54e21; }
 #nav ul li a.selected { border-bottom: 1px solid #fff; }
 #nav ul li a.selected:hover { background: #f7f7f7; border-bottom: 1px solid #ccc; }
-#nav > ul > li > a { margin-right: 20px; }
+#nav ul li a { margin-right: 20px; }
+#nav ul li li a { margin-right: 0px; }
 #nav ul li span.ui-icon { position: absolute; left: 2px; top: 16px; margin: -8px 0px 0px 0px; }
 
 .sf-menu, .sf-menu * { margin: 0; padding: 0; list-style: none; }
@@ -149,6 +150,7 @@ ul.sf-menu li li li.sfHover ul { left: 10em; top: 0; }
 #nav li li li:first-child { margin: -2px 0px 0px 0px; border-left: 0px solid #ccc; }
 #nav li li li { margin: 0px 0px 0px 0px; }
 
+#nav li li a.has-ul { background-image: url(../img/icons/bullet_arrow_right.png); background-position: right; background-repeat: no-repeat; }
 
 /**
  * Nodes

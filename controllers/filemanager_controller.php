@@ -41,10 +41,7 @@ class FilemanagerController extends AppController {
 
         $this->deletablePaths = array(
             APP.'views'.DS.'themed'.DS,
-            WWW_ROOT.'css'.DS,
-            WWW_ROOT.'img'.DS,
-            WWW_ROOT.'js'.DS,
-            WWW_ROOT.'themed'.DS,
+            WWW_ROOT,
         );
         $this->set('deletablePaths', $this->deletablePaths);
 
@@ -90,8 +87,7 @@ class FilemanagerController extends AppController {
         $path = implode(DS, $path_e);
         $this->file = new File($absolutefilepath, true);
 
-        if( !empty($this->data) ) {
-            // save
+        if (!empty($this->data) ) {
             if( $this->file->write($this->data['Filemanager']['content']) ) {
                 $this->Session->setFlash(__('File saved successfully', true));
             }
@@ -110,10 +106,9 @@ class FilemanagerController extends AppController {
         } else {
             $path = APP;
         }
-
         $this->set(compact('path'));
 
-        if (isset($this->data) &&
+        if (isset($this->data['Filemanager']['file']['tmp_name']) &&
             is_uploaded_file($this->data['Filemanager']['file']['tmp_name'])) {
             $destination = $path.$this->data['Filemanager']['file']['name'];
             move_uploaded_file($this->data['Filemanager']['file']['tmp_name'], $destination);
@@ -219,8 +214,6 @@ class FilemanagerController extends AppController {
         }
 
         if (!empty($this->data)) {
-            //$this->file = new File;
-            //if ($this->file->create($path . $this->data['Filemanager']['name'])) {
             if (touch($path . $this->data['Filemanager']['name'])) {
                 $this->Session->setFlash(__('File created successfully.', true));
                 $redirectUrl = Router::url(array('controller' => 'filemanager', 'action' => 'browse'), true) . '?path=' . urlencode($path);

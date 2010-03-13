@@ -86,5 +86,11 @@
                 <div class="clear">&nbsp;</div>
             </div>
         </fieldset>
-    <?php echo $form->end('Submit');?>
+    <?php
+        echo $form->input('token_key', array(
+            'type' => 'hidden',
+            'value' => $this->params['_Token']['key'],
+        ));
+        echo $form->end('Submit');
+    ?>
 </div>

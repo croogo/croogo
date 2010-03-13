@@ -47,6 +47,11 @@ class NodesController extends AppController {
         if (isset($this->params['type'])) {
             $this->params['named']['type'] = $this->params['type'];
         }
+
+        // CSRF Protection
+        if (in_array($this->params['action'], array('admin_add', 'admin_edit'))) {
+            $this->Security->validatePost = false;
+        }
     }
 
     function admin_index() {
@@ -103,6 +108,12 @@ class NodesController extends AppController {
         $this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
 
         if (!empty($this->data)) {
+            // CSRF Protection
+            if ($this->params['_Token']['key'] != $this->data['Node']['token_key']) {
+                $blackHoleCallback = $this->Security->blackHoleCallback;
+                $this->$blackHoleCallback();
+            }
+
             $this->Node->create();
             $this->data['Node']['path'] = $this->Croogo->getRelativePath(array(
                 'admin' => false,
@@ -154,6 +165,12 @@ class NodesController extends AppController {
         $this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
 
         if (!empty($this->data)) {
+            // CSRF Protection
+            if ($this->params['_Token']['key'] != $this->data['Node']['token_key']) {
+                $blackHoleCallback = $this->Security->blackHoleCallback;
+                $this->$blackHoleCallback();
+            }
+
             $this->data['Node']['path'] = $this->Croogo->getRelativePath(array(
                 'admin' => false,
                 'controller' => 'nodes',
@@ -224,9 +241,13 @@ class NodesController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    function admin_delete($id = null) {
+    function admin_delete($id = null, $secToken = null ) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Node', true));
+            $this->redirect(array('action'=>'index'));
+        }
+        if ($this->Session->read("Security.token")!=$secToken) {
+            $this->Session->setFlash(__('Invalid request', true));
             $this->redirect(array('action'=>'index'));
         }
         if ($this->Node->delete($id)) {

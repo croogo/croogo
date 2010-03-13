@@ -22,6 +22,7 @@ class AppController extends Controller {
  */
     var $components = array(
         'Croogo',
+        'Security',
         'Acl',
         'Auth',
         'Acl.AclFilter',
@@ -87,6 +88,7 @@ class AppController extends Controller {
     function beforeFilter() {
         $this->AclFilter->auth();
         $this->RequestHandler->setContent('json', 'text/x-json');
+        $this->Security->blackHoleCallback = '__securityError';
 
         if (isset($this->params['admin'])) {
             $this->layout = 'admin';
@@ -112,6 +114,14 @@ class AppController extends Controller {
         if (isset($this->params['locale'])) {
             Configure::write('Config.language', $this->params['locale']);
         }
+    }
+/**
+ * blackHoleCallback for SecurityComponent
+ *
+ * @return void
+ */
+    function __securityError() {
+        $this->cakeError('securityError');
     }
 
 }
