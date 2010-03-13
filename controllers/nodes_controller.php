@@ -47,6 +47,10 @@ class NodesController extends AppController {
         if (isset($this->params['type'])) {
             $this->params['named']['type'] = $this->params['type'];
         }
+        //Set a unique token in session, CSFR protection
+        if (!$this->Session->check("Security.token")) {
+            $this->Session->write('Security.token',sha1(uniqid(mt_rand(), TRUE)));
+        }
     }
 
     function admin_index() {
@@ -92,6 +96,12 @@ class NodesController extends AppController {
     }
 
     function admin_add($typeAlias = 'node') {
+        //CSFR Protection        
+        if(!empty($this->data) && $this->Session->read("Security.token")!=$this->data["Node"]["secToken"]) {
+            $this->Session->setFlash(__('Invalid request', true));
+            $this->redirect(array('action'=>'index'));
+        }
+        
         $type = $this->Node->Term->Vocabulary->Type->findByAlias($typeAlias);
         if (!isset($type['Type']['alias'])) {
             $this->Session->setFlash(__('Content type does not exist.', true));
@@ -135,6 +145,11 @@ class NodesController extends AppController {
     }
 
     function admin_edit($id = null) {
+        //CSFR Protection        
+        if(!empty($this->data) && $this->Session->read("Security.token")!=$this->data["Node"]["secToken"]) {
+            $this->Session->setFlash(__('Invalid request', true));
+            $this->redirect(array('action'=>'index'));
+        }
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid content', true));
             $this->redirect(array('action'=>'index'));
