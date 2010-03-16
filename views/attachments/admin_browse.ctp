@@ -28,22 +28,27 @@
             $mimeType = explode('/', $attachment['Node']['mime_type']);
             $mimeType = $mimeType['0'];
             if ($mimeType == 'image') {
-                $thumbnail = $html->link($image->resize($attachment['Node']['path'], 100, 200), '#', array('onclick' => 'selectURL("'.$attachment['Node']['slug'].'");'), false, false);
+                $thumbnail = $html->link($image->resize($attachment['Node']['path'], 100, 200), '#', array(
+                    'onclick' => 'selectURL("'.$attachment['Node']['slug'].'");',
+                    'escape' => false,
+                ));
             } else {
                 $thumbnail = $html->image('/img/icons/page_white.png') . ' ' . $attachment['Node']['mime_type'] . ' (' . $filemanager->filename2ext($attachment['Node']['slug']) . ')';
-                $thumbnail = $html->link($thumbnail, '#', array('onclick' => 'selectURL("'.$attachment['Node']['slug'].'");'), false, false);
+                $thumbnail = $html->link($thumbnail, '#', array(
+                    'onclick' => 'selectURL("'.$attachment['Node']['slug'].'");',
+                ));
             }
 
             $insertCode = $html->link(__('Insert', true), '#', array('onclick' => 'selectURL("'.$attachment['Node']['slug'].'");'));
 
             $rows[] = array(
-                       $attachment['Node']['id'],
-                       $thumbnail,
-                       $attachment['Node']['title'],
-                       $insertCode,
-                       $html->link($text->truncate(Router::url($attachment['Node']['path'], true), 20, '...'), $attachment['Node']['path']),
-                       $actions
-                      );
+                $attachment['Node']['id'],
+                $thumbnail,
+                $attachment['Node']['title'],
+                $insertCode,
+                $html->link($text->truncate(Router::url($attachment['Node']['path'], true), 20), $attachment['Node']['path']),
+                $actions,
+            );
         }
 
         echo $html->tableCells($rows);
