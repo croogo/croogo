@@ -126,6 +126,11 @@ class FilemanagerController extends AppController {
             $this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
         }
 
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
+
         if (file_exists($path) && unlink($path)) {
             $this->Session->setFlash(__('File deleted', true));
         } else {
@@ -146,6 +151,11 @@ class FilemanagerController extends AppController {
             $path = $this->params['url']['path'];
         } else {
             $this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
+        }
+
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
         }
 
         if (is_dir($path) && rmdir($path)) {

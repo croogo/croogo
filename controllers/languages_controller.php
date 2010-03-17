@@ -74,6 +74,10 @@ class LanguagesController extends AppController {
             $this->Session->setFlash(__('Invalid id for Language', true));
             $this->redirect(array('action'=>'index'));
         }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
         if ($this->Language->delete($id)) {
             $this->Session->setFlash(__('Language deleted', true));
             $this->redirect(array('action'=>'index'));

@@ -101,6 +101,10 @@ class TermsController extends AppController {
             $this->Session->setFlash(__('Invalid id for Term', true));
             $this->redirect(array('action'=>'index', 'vocabulary' => $this->vocabularyId));
         }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
         if ($this->Term->delete($id)) {
             $this->Session->setFlash(__('Term deleted', true));
             $this->redirect(array('action'=>'index', 'vocabulary' => $this->vocabularyId));

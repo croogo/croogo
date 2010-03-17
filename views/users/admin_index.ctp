@@ -10,28 +10,33 @@
     <table cellpadding="0" cellspacing="0">
     <?php
         $tableHeaders =  $html->tableHeaders(array(
-                                              $paginator->sort('id'),
-                                              __('Role', true),
-                                              $paginator->sort('username'),
-                                              $paginator->sort('name'),
-                                              $paginator->sort('email'),
-                                              __('Actions', true),
-                                             ));
+            $paginator->sort('id'),
+            __('Role', true),
+            $paginator->sort('username'),
+            $paginator->sort('name'),
+            $paginator->sort('email'),
+            __('Actions', true),
+        ));
         echo $tableHeaders;
 
         $rows = array();
         foreach ($users AS $user) {
             $actions  = $html->link(__('Edit', true), array('controller' => 'users', 'action' => 'edit', $user['User']['id']));
-            $actions .= ' ' . $html->link(__('Delete', true), array('controller' => 'users', 'action' => 'delete', $user['User']['id']), null, __('Are you sure?', true));
+            $actions .= ' ' . $html->link(__('Delete', true), array(
+                'controller' => 'users',
+                'action' => 'delete',
+                $user['User']['id'],
+                'token' => $this->params['_Token']['key'],
+            ), null, __('Are you sure?', true));
 
             $rows[] = array(
-                       $user['User']['id'],
-                       $user['Role']['title'],
-                       $user['User']['username'],
-                       $user['User']['name'],
-                       $user['User']['email'],
-                       $actions,
-                      );
+                $user['User']['id'],
+                $user['Role']['title'],
+                $user['User']['username'],
+                $user['User']['name'],
+                $user['User']['email'],
+                $actions,
+            );
         }
 
         echo $html->tableCells($rows);

@@ -23,7 +23,11 @@
             $actions = '';
             //$actions .= $html->link(__('View Messages', true), array('controller'=> 'messages', 'action' => 'index', 'contact' => $contact['Contact']['id']));
             $actions .= ' ' . $html->link(__('Edit', true), array('action' => 'edit', $contact['Contact']['id']));
-            $actions .= ' ' . $html->link(__('Delete', true), array('action' => 'delete', $contact['Contact']['id']), null, __('Are you sure?', true));
+            $actions .= ' ' . $html->link(__('Delete', true), array(
+                'action' => 'delete',
+                $contact['Contact']['id'],
+                'token' => $this->params['_Token']['key'],
+            ), null, __('Are you sure?', true));
 
             $rows[] = array(
                        $contact['Contact']['id'],

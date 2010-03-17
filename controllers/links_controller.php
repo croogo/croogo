@@ -25,7 +25,10 @@ class LinksController extends AppController {
  * @var array
  * @access public
  */
-    var $uses = array('Link', 'Role');
+    var $uses = array(
+        'Link',
+        'Role',
+    );
 /**
  * Menu ID
  *
@@ -130,6 +133,10 @@ class LinksController extends AppController {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Link', true));
             $this->redirect(array('action'=>'index', 'menu' => $this->menuId));
+        }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
         }
         if ($this->Link->delete($id)) {
             $this->Session->setFlash(__('Link deleted', true));

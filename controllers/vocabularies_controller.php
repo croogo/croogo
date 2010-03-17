@@ -80,6 +80,10 @@ class VocabulariesController extends AppController {
             $this->Session->setFlash(__('Invalid id for Vocabulary', true));
             $this->redirect(array('action'=>'index'));
         }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
         if ($this->Vocabulary->delete($id)) {
             $this->Session->setFlash(__('Vocabulary deleted', true));
             $this->redirect(array('action'=>'index'));

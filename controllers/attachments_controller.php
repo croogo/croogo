@@ -184,14 +184,20 @@ class AttachmentsController extends AppController {
             $this->Session->setFlash(__('Invalid id for Attachment', true));
             $this->redirect(array('action'=>'index'));
         }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
 
-        // get Node
-        $attachment = $this->Node->find('first', array('conditions' => array('Node.id' => $id, 'Node.type' => $this->type)));
+        $attachment = $this->Node->find('first', array(
+            'conditions' => array(
+                'Node.id' => $id,
+                'Node.type' => $this->type,
+            ),
+        ));
         if (isset($attachment['Node'])) {
             if ($this->Node->delete($id)) {
-                // delete the file
                 unlink(WWW_ROOT . $this->uploadsDir . DS . $attachment['Node']['slug']);
-
                 $this->Session->setFlash(__('Attachment deleted', true));
                 $this->redirect(array('action'=>'index'));
             }

@@ -34,7 +34,11 @@
         $rows = array();
         foreach ($messages AS $message) {
             $actions  = $html->link(__('Edit', true), array('action' => 'edit', $message['Message']['id']));
-            $actions .= ' ' . $html->link(__('Delete', true), array('action' => 'delete', $message['Message']['id']), null, __('Are you sure?', true));
+            $actions .= ' ' . $html->link(__('Delete', true), array(
+                'action' => 'delete',
+                $message['Message']['id'],
+                'token' => $this->params['_Token']['key'],
+            ), null, __('Are you sure?', true));
 
             $rows[] = array(
                 $form->checkbox('Message.'.$message['Message']['id'].'.id'),

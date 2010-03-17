@@ -10,24 +10,29 @@
     <table cellpadding="0" cellspacing="0">
     <?php
         $tableHeaders =  $html->tableHeaders(array(
-                                              $paginator->sort('id'),
-                                              $paginator->sort('title'),
-                                              $paginator->sort('alias'),
-                                              __('Actions', true),
-                                             ));
+            $paginator->sort('id'),
+            $paginator->sort('title'),
+            $paginator->sort('alias'),
+            __('Actions', true),
+        ));
         echo $tableHeaders;
 
         $rows = array();
         foreach ($roles AS $role) {
             $actions  = $html->link(__('Edit', true), array('controller' => 'roles', 'action' => 'edit', $role['Role']['id']));
-            $actions .= ' ' . $html->link(__('Delete', true), array('controller' => 'roles', 'action' => 'delete', $role['Role']['id']), null, __('Are you sure?', true));
+            $actions .= ' ' . $html->link(__('Delete', true), array(
+                'controller' => 'roles',
+                'action' => 'delete',
+                $role['Role']['id'],
+                'token' => $this->params['_Token']['key'],
+            ), null, __('Are you sure?', true));
 
             $rows[] = array(
-                       $role['Role']['id'],
-                       $role['Role']['title'],
-                       $role['Role']['alias'],
-                       $actions,
-                      );
+                $role['Role']['id'],
+                $role['Role']['title'],
+                $role['Role']['alias'],
+                $actions,
+            );
         }
 
         echo $html->tableCells($rows);

@@ -10,24 +10,29 @@
     <table cellpadding="0" cellspacing="0">
     <?php
         $tableHeaders =  $html->tableHeaders(array(
-                                              $paginator->sort('id'),
-                                              $paginator->sort('title'),
-                                              $paginator->sort('alias'),
-                                              __('Actions', true),
-                                             ));
+            $paginator->sort('id'),
+            $paginator->sort('title'),
+            $paginator->sort('alias'),
+            __('Actions', true),
+        ));
         echo $tableHeaders;
 
         $rows = array();
         foreach ($regions AS $region) {
             $actions  = $html->link(__('Edit', true), array('controller' => 'regions', 'action' => 'edit', $region['Region']['id']));
-            $actions .= ' ' . $html->link(__('Delete', true), array('controller' => 'regions', 'action' => 'delete', $region['Region']['id']), null, __('Are you sure?', true));
+            $actions .= ' ' . $html->link(__('Delete', true), array(
+                'controller' => 'regions',
+                'action' => 'delete',
+                $region['Region']['id'],
+                'token' => $this->params['_Token']['key'],
+            ), null, __('Are you sure?', true));
 
             $rows[] = array(
-                       $region['Region']['id'],
-                       $region['Region']['title'],
-                       $region['Region']['alias'],
-                       $actions,
-                      );
+                $region['Region']['id'],
+                $region['Region']['title'],
+                $region['Region']['alias'],
+                $actions,
+            );
         }
 
         echo $html->tableCells($rows);

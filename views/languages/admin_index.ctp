@@ -24,7 +24,11 @@
             $actions  = $html->link(__('Move up', true), array('action' => 'moveup', $language['Language']['id']));
             $actions .= ' ' . $html->link(__('Move down', true), array('action' => 'movedown', $language['Language']['id']));
             $actions .= ' ' . $html->link(__('Edit', true), array('action' => 'edit', $language['Language']['id']));
-            $actions .= ' ' . $html->link(__('Delete', true), array('action' => 'delete', $language['Language']['id']), null, __('Are you sure?', true));
+            $actions .= ' ' . $html->link(__('Delete', true), array(
+                'action' => 'delete',
+                $language['Language']['id'],
+                'token' => $this->params['_Token']['key'],
+            ), null, __('Are you sure?', true));
 
             $rows[] = array(
                 $language['Language']['id'],

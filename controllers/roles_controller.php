@@ -74,6 +74,10 @@ class RolesController extends AppController {
             $this->Session->setFlash(__('Invalid id for Role', true));
             $this->redirect(array('action'=>'index'));
         }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
         if ($this->Role->delete($id)) {
             $this->Session->setFlash(__('Role deleted', true));
             $this->redirect(array('action'=>'index'));

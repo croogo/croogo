@@ -31,7 +31,12 @@
             $actions  = $html->link(__('Move up', true), array('action' => 'moveup', $id, 'vocabulary' => $vocabulary));
             $actions .= ' ' . $html->link(__('Move down', true), array('action' => 'movedown', $id, 'vocabulary' => $vocabulary));
             $actions .= ' ' . $html->link(__('Edit', true), array('action' => 'edit', $id, 'vocabulary' => $vocabulary));
-            $actions .= ' ' . $html->link(__('Delete', true), array('action' => 'delete', $id, 'vocabulary' => $vocabulary), null, __('Are you sure?', true));
+            $actions .= ' ' . $html->link(__('Delete', true), array(
+                'action' => 'delete',
+                $id,
+                'vocabulary' => $vocabulary,
+                'token' => $this->params['_Token']['key'],
+            ), null, __('Are you sure?', true));
 
             $rows[] = array(
                 $form->checkbox('Term.'.$id.'.id'),

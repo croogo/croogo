@@ -35,7 +35,11 @@
             foreach ($content['0'] AS $directory) {
                 $actions = $filemanager->linkDirectory(__('Open', true), $path.$directory.DS);
                 if ($filemanager->inPath($deletablePaths, $path.$directory)) {
-                    $actions .= ' ' . $filemanager->link(__('Delete', true), array('controller' => 'filemanager', 'action' => 'delete_directory'), $path.$directory);
+                    $actions .= ' ' . $filemanager->link(__('Delete', true), array(
+                        'controller' => 'filemanager',
+                        'action' => 'delete_directory',
+                        'token' => $this->params['_Token']['key'],
+                    ), $path.$directory);
                 }
                 $rows[] = array(
                     $html->image('/img/icons/folder.png'),
@@ -50,7 +54,11 @@
             foreach ($content['1'] AS $file) {
                 $actions = $filemanager->link(__('Edit', true), array('controller' => 'filemanager', 'action' => 'editfile'), $path.$file);
                 if ($filemanager->inPath($deletablePaths, $path.$file)) {
-                    $actions .= $filemanager->link(__('Delete', true), array('controller' => 'filemanager', 'action' => 'delete_file'), $path.$file);
+                    $actions .= $filemanager->link(__('Delete', true), array(
+                        'controller' => 'filemanager',
+                        'action' => 'delete_file',
+                        'token' => $this->params['_Token']['key'],
+                    ), $path.$file);
                 }
                 $rows[] = array(
                     $html->image('/img/icons/'.$filemanager->filename2icon($file)),

@@ -10,12 +10,12 @@
     <table cellpadding="0" cellspacing="0">
     <?php
         $tableHeaders =  $html->tableHeaders(array(
-                                              $paginator->sort('id'),
-                                              $paginator->sort('key'),
-                                              $paginator->sort('value'),
-                                              $paginator->sort('editable'),
-                                              __('Actions', true),
-                                             ));
+            $paginator->sort('id'),
+            $paginator->sort('key'),
+            $paginator->sort('value'),
+            $paginator->sort('editable'),
+            __('Actions', true),
+        ));
         echo $tableHeaders;
 
         $rows = array();
@@ -23,7 +23,12 @@
             $actions  = $html->link(__('Move up', true), array('controller' => 'settings', 'action' => 'moveup', $setting['Setting']['id']));
             $actions .= ' ' . $html->link(__('Move down', true), array('controller' => 'settings', 'action' => 'movedown', $setting['Setting']['id']));
             $actions .= ' ' . $html->link(__('Edit', true), array('controller' => 'settings', 'action' => 'edit', $setting['Setting']['id']));
-            $actions .= ' ' . $html->link(__('Delete', true), array('controller' => 'settings', 'action' => 'delete', $setting['Setting']['id']), null, __('Are you sure?', true));
+            $actions .= ' ' . $html->link(__('Delete', true), array(
+                'controller' => 'settings',
+                'action' => 'delete',
+                $setting['Setting']['id'],
+                'token' => $this->params['_Token']['key'],
+            ), null, __('Are you sure?', true));
 
             $key = $setting['Setting']['key'];
             $keyE = explode('.', $key);
@@ -35,12 +40,12 @@
             }
 
             $rows[] = array(
-                       $setting['Setting']['id'],
-                       $html->link($keyPrefix, array('controller' => 'settings', 'action' => 'index', 'p' => $keyPrefix)) . $keyTitle,
-                       $text->truncate($setting['Setting']['value'], 20),
-                       $setting['Setting']['editable'],
-                       $actions,
-                      );
+                $setting['Setting']['id'],
+                $html->link($keyPrefix, array('controller' => 'settings', 'action' => 'index', 'p' => $keyPrefix)) . $keyTitle,
+                $text->truncate($setting['Setting']['value'], 20),
+                $setting['Setting']['editable'],
+                $actions,
+            );
         }
 
         echo $html->tableCells($rows);

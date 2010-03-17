@@ -35,7 +35,11 @@
         $rows = array();
         foreach ($comments AS $comment) {
             $actions  = $html->link(__('Edit', true), array('action' => 'edit', $comment['Comment']['id']));
-            $actions .= ' ' . $html->link(__('Delete', true), array('action' => 'delete', $comment['Comment']['id']), null, __('Are you sure?', true));
+            $actions .= ' ' . $html->link(__('Delete', true), array(
+                'action' => 'delete',
+                $comment['Comment']['id'],
+                'token' => $this->params['_Token']['key'],
+            ), null, __('Are you sure?', true));
 
             $rows[] = array(
                 $form->checkbox('Comment.'.$comment['Comment']['id'].'.id'),

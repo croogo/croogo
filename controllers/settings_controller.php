@@ -96,6 +96,10 @@ class SettingsController extends AppController {
             $this->Session->setFlash(__('Invalid id for Setting', true));
             $this->redirect(array('action'=>'index'));
         }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
         if ($this->Setting->delete($id)) {
             $this->Session->setFlash(__('Setting deleted', true));
             $this->redirect(array('action'=>'index'));

@@ -113,6 +113,10 @@ class UsersController extends AppController {
             $this->Session->setFlash(__('Invalid id for User', true));
             $this->redirect(array('action' => 'index'));
         }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
         if ($this->User->delete($id)) {
             $this->Session->setFlash(__('User deleted', true));
             $this->redirect(array('action' => 'index'));

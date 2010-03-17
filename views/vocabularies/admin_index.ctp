@@ -10,25 +10,30 @@
     <table cellpadding="0" cellspacing="0">
     <?php
         $tableHeaders =  $html->tableHeaders(array(
-                                              $paginator->sort('id'),
-                                              $paginator->sort('title'),
-                                              $paginator->sort('alias'),
-                                              __('Actions', true),
-                                             ));
+            $paginator->sort('id'),
+            $paginator->sort('title'),
+            $paginator->sort('alias'),
+            __('Actions', true),
+        ));
         echo $tableHeaders;
 
         $rows = array();
         foreach ($vocabularies AS $vocabulary) {
             $actions  = $html->link(__('View terms', true), array('controller' => 'terms', 'action' => 'index', 'vocabulary' => $vocabulary['Vocabulary']['id']));
             $actions .= ' ' . $html->link(__('Edit', true), array('controller' => 'vocabularies', 'action' => 'edit', $vocabulary['Vocabulary']['id']));
-            $actions .= ' ' . $html->link(__('Delete', true), array('controller' => 'vocabularies', 'action' => 'delete', $vocabulary['Vocabulary']['id']), null, __('Are you sure?', true));
+            $actions .= ' ' . $html->link(__('Delete', true), array(
+                'controller' => 'vocabularies',
+                'action' => 'delete',
+                $vocabulary['Vocabulary']['id'],
+                'token' => $this->params['_Token']['key'],
+            ), null, __('Are you sure?', true));
 
             $rows[] = array(
-                       $vocabulary['Vocabulary']['id'],
-                       $html->link($vocabulary['Vocabulary']['title'], array('controller' => 'terms', 'action' => 'index', 'vocabulary' => $vocabulary['Vocabulary']['id'])),
-                       $vocabulary['Vocabulary']['alias'],
-                       $actions,
-                      );
+                $vocabulary['Vocabulary']['id'],
+                $html->link($vocabulary['Vocabulary']['title'], array('controller' => 'terms', 'action' => 'index', 'vocabulary' => $vocabulary['Vocabulary']['id'])),
+                $vocabulary['Vocabulary']['alias'],
+                $actions,
+            );
         }
 
         echo $html->tableCells($rows);

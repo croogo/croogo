@@ -92,6 +92,10 @@ class CommentsController extends AppController {
             $this->Session->setFlash(__('Invalid id for Comment', true));
             $this->redirect(array('action'=>'index'));
         }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
         if ($this->Comment->delete($id)) {
             $this->Session->setFlash(__('Comment deleted', true));
             $this->redirect(array('action'=>'index'));
