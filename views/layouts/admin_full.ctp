@@ -17,10 +17,12 @@
             'jquery/jquery-ui-1.7.min',
             'jquery/jquery.uuid',
             'jquery/jquery.cookie',
+            'jquery/jquery.hoverIntent.minified',
+            'jquery/superfish',
+            'jquery/supersubs',
             'jquery/jquery.tipsy',
             'jquery/jquery.elastic-1.6.1.js',
             'jquery/thickbox-compressed',
-            'tinymce/tiny_mce',
             'admin',
         ));
         echo $scripts_for_layout;

@@ -1,10 +1,4 @@
-<?php
-    $html->script(array('nodes'), false);
-    if (Configure::read('Writing.wysiwyg')) {
-        $html->scriptBlock($tinymce->fileBrowserCallBack(), array('inline' => false));
-        $html->scriptBlock($tinymce->init('NodeBody'), array('inline' => false));
-    }
-?>
+<?php $html->script(array('nodes'), false); ?>
 <div class="nodes form">
     <h2><?php echo $title_for_layout; ?></h2>
     <?php echo $form->create('Node', array('url' => array('action' => 'add', $typeAlias)));?>

@@ -1,9 +1,3 @@
-<?php
-    if (Configure::read('Writing.wysiwyg')) {
-        $html->scriptBlock($tinymce->fileBrowserCallBack(), array('inline' => false));
-        $html->scriptBlock($tinymce->init('NodeBody'), array('inline' => false));
-    }
-?>
 <div class="translate form">
     <h2><?php echo $title_for_layout; ?></h2>
 

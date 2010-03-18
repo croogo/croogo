@@ -1,6 +1,5 @@
 <div class="attachments index">
     <h2><?php echo $title_for_layout; ?></h2>
-    <?php echo $html->scriptBlock($tinymce->selectURL()); ?>
 
     <div class="actions">
         <ul>
@@ -29,13 +28,14 @@
             $mimeType = $mimeType['0'];
             if ($mimeType == 'image') {
                 $thumbnail = $html->link($image->resize($attachment['Node']['path'], 100, 200), '#', array(
-                    'onclick' => 'selectURL("'.$attachment['Node']['slug'].'");',
+                    'onclick' => "selectURL('".$attachment['Node']['slug']."');",
                     'escape' => false,
                 ));
             } else {
                 $thumbnail = $html->image('/img/icons/page_white.png') . ' ' . $attachment['Node']['mime_type'] . ' (' . $filemanager->filename2ext($attachment['Node']['slug']) . ')';
                 $thumbnail = $html->link($thumbnail, '#', array(
-                    'onclick' => 'selectURL("'.$attachment['Node']['slug'].'");',
+                    'onclick' => "selectURL('".$attachment['Node']['slug']."');",
+                    'escape' => false,
                 ));
             }
 

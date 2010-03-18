@@ -24,7 +24,6 @@
             'jquery/jquery.tipsy',
             'jquery/jquery.elastic-1.6.1.js',
             'jquery/thickbox-compressed',
-            'tinymce/tiny_mce',
             'admin',
         ));
         echo $scripts_for_layout;
