@@ -13,15 +13,15 @@
         <div class="screenshot">
         <?php
             if (!Configure::read('Site.theme')) {
-                echo $html->image($currentTheme['Theme']['screenshot']);
+                echo $html->image($currentTheme['screenshot']);
             } else {
-                echo $html->tag('div', $html->image('/theme/' . Configure::read('Site.theme') . '/img/' . $currentTheme['Theme']['screenshot']), array('class' => 'screenshot'));
+                echo $html->tag('div', $html->image('/theme/' . Configure::read('Site.theme') . '/img/' . $currentTheme['screenshot']), array('class' => 'screenshot'));
             }
         ?>
         </div>
-        <h3><?php echo $currentTheme['Theme']['name'] . ' ' . __('by', true) . ' ' . $currentTheme['Theme']['author'] ?></h3>
-        <p class="description"><?php echo $currentTheme['Theme']['description']; ?></p>
-        <p class="regions"><?php echo __('Regions supported: ', true) . implode(', ', Set::extract('/region', $currentTheme['Theme']['Regions'])); ?></p>
+        <h3><?php echo $currentTheme['name'] . ' ' . __('by', true) . ' ' . $currentTheme['author'] ?></h3>
+        <p class="description"><?php echo $currentTheme['description']; ?></p>
+        <p class="regions"><?php echo __('Regions supported: ', true) . implode(', ', $currentTheme['regions']); ?></p>
         <div class="clear"></div>
     </div>
 
@@ -31,17 +31,17 @@
         <?php
             foreach ($themesData AS $themeAlias => $theme) {
                 if ($themeAlias != Configure::read('Site.theme') &&
-                    (!isset($theme['Theme']['adminOnly']) || $theme['Theme']['adminOnly'] != 'true') &&
+                    (!isset($theme['adminOnly']) || $theme['adminOnly'] != 'true') &&
                     !($themeAlias == 'default' && !Configure::read('Site.theme'))) {
                     echo '<li>';
                         if ($themeAlias == 'default') {
-                            echo $html->tag('div', $html->image($theme['Theme']['screenshot']), array('class' => 'screenshot'));
+                            echo $html->tag('div', $html->image($theme['screenshot']), array('class' => 'screenshot'));
                         } else {
-                            echo $html->tag('div', $html->image('/theme/' . $themeAlias . '/img/' . $theme['Theme']['screenshot']), array('class' => 'screenshot'));
+                            echo $html->tag('div', $html->image('/theme/' . $themeAlias . '/img/' . $theme['screenshot']), array('class' => 'screenshot'));
                         }
-                        echo $html->tag('h3', $theme['Theme']['name'] . ' ' . __('by', true) . ' ' . $theme['Theme']['author'], array());
-                        echo $html->tag('p', $theme['Theme']['description'], array('class' => 'description'));
-                        echo $html->tag('p', __('Regions supported: ', true) . implode(', ', Set::extract('/region', $theme['Theme']['Regions'])), array('class' => 'regions'));
+                        echo $html->tag('h3', $theme['name'] . ' ' . __('by', true) . ' ' . $theme['author'], array());
+                        echo $html->tag('p', $theme['description'], array('class' => 'description'));
+                        echo $html->tag('p', __('Regions supported: ', true) . implode(', ', $theme['regions']), array('class' => 'regions'));
                         echo $html->tag('div',
                             $html->link(__('Activate', true), array('action' => 'activate', $themeAlias)) .
                             $html->link(__('Delete', true), array('action' => 'delete', $themeAlias), null, __('Are you sure?', true)),

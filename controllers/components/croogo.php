@@ -38,13 +38,6 @@ class CroogoComponent extends Object {
  */
     var $roleId = 3;
 /**
- * Cache Theme XML
- *
- * @var boolean
- * @access public
- */
-    var $cacheThemeXml = false;
-/**
  * Menus for layout
  *
  * @var string
@@ -139,7 +132,6 @@ class CroogoComponent extends Object {
     function startup(&$controller) {
         $this->controller =& $controller;
         App::import('Core', 'File');
-        App::import('Xml');
 
         if ($this->Session->check('Auth.User.id')) {
             $this->roleId = $this->Session->read('Auth.User.role_id');
@@ -269,32 +261,10 @@ class CroogoComponent extends Object {
  * @return void
  */
     function menus() {
-        if (Configure::read('Site.theme') == 'default' ||
-            Configure::read('Site.theme') == null) {
-            $cacheName = 'theme_default_xml';
-            $xmlLocation = WWW_ROOT . 'theme.xml';
-        } else {
-            $cacheName = 'theme_'.Configure::read('Site.theme').'_xml';
-            $xmlLocation = APP . 'views' . DS . 'themed' . DS . Configure::read('Site.theme') . DS . 'webroot' . DS . 'theme.xml';
-            if (!file_exists($xmlLocation)) {
-                $xmlLocation = WWW_ROOT . 'theme.xml';
-            }
-        }
-        if ($this->cacheThemeXml) {
-            $themeXmlArray = Cache::read($cacheName, 'theme_xml');
-        }
-        if (!isset($themeXmlArray) || !$themeXmlArray) {
-            $themeXml =& new XML($xmlLocation);
-            $themeXmlArray = $themeXml->toArray(false);
-            Cache::write($cacheName, $themeXmlArray, 'theme_xml');
-        }
-        
         $menus = array();
-        if (isset($themeXmlArray['theme']['menus']['menu']) &&
-            is_array($themeXmlArray['theme']['menus']['menu'])) {
-            $menus = $themeXmlArray['theme']['menus']['menu'];
-        } elseif (isset($themeXmlArray['theme']['menus']['menu'])) {
-            $menus = array($themeXmlArray['theme']['menus']['menu']);
+        $themeData = $this->getThemeData(Configure::read('Site.theme'));
+        if (isset($themeData['menus']) && is_array($themeData['menus'])) {
+            $menus = Set::merge($menus, $themeData['menus']);
         }
         $menus = Set::merge($menus, array_keys($this->blocksData['menus']));
 
@@ -798,7 +768,7 @@ class CroogoComponent extends Object {
             if (substr($themeFolder, 0, 1) != '.') {
                 $this->folder->path = APP . 'views' . DS . 'themed' . DS . $themeFolder . DS . 'webroot';
                 $themeFolderContent = $this->folder->read();
-                if (in_array('theme.xml', $themeFolderContent[1])) {
+                if (in_array('theme.yml', $themeFolderContent[1])) {
                     $themes[] = $themeFolder;
                 }
             }
@@ -806,22 +776,21 @@ class CroogoComponent extends Object {
         return $themes;
     }
 /**
- * Get the content of theme.xml file
+ * Get the content of theme.yml file
  *
  * @param string $alias theme folder name
  * @return array
  */
     function getThemeData($alias = null) {
         if ($alias == null || $alias == 'default') {
-            $xmlLocation = WWW_ROOT . 'theme.xml';
+            $ymlLocation = WWW_ROOT . 'theme.yml';
         } else {
-            $xmlLocation = APP . 'views' . DS . 'themed' . DS . $alias . DS . 'webroot' . DS . 'theme.xml';
-            if (!file_exists($xmlLocation)) {
-                $xmlLocation = WWW_ROOT . 'theme.xml';
+            $ymlLocation = APP . 'views' . DS . 'themed' . DS . $alias . DS . 'webroot' . DS . 'theme.yml';
+            if (!file_exists($ymlLocation)) {
+                $ymlLocation = WWW_ROOT . 'theme.yml';
             }
         }
-        $themeXml =& new XML($xmlLocation);
-        $themeData = Set::reverse($themeXml);
+        $themeData = Spyc::YAMLLoad(file_get_contents($ymlLocation));
         return $themeData;
     }
 /**

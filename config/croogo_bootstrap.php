@@ -28,9 +28,6 @@
     Cache::config('croogo_types', $cacheConfig);
     Cache::config('croogo_vocabularies', $cacheConfig);
 
-    // themes (xml)
-    Cache::config('theme_xml', $cacheConfig);
-
     // controllers
     Cache::config('nodes_view', $cacheConfig);
     Cache::config('nodes_promoted', $cacheConfig);
