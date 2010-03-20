@@ -39,6 +39,35 @@ class ExampleHookHelper extends AppHelper {
     function onDeactivate(&$controller) {
     }
 /**
+ * Before render callback. Called before the view file is rendered.
+ *
+ * @return void
+ */
+    function beforeRender() {
+    }
+/**
+ * After render callback. Called after the view file is rendered
+ * but before the layout has been rendered.
+ *
+ * @return void
+ */
+    function afterRender() {
+    }
+/**
+ * Before layout callback. Called before the layout is rendered.
+ *
+ * @return void
+ */
+    function beforeLayout() {
+    }
+/**
+ * After layout callback. Called after the layout has rendered.
+ *
+ * @return void
+ */
+    function afterLayout() {
+    }
+/**
  * Called after LayoutHelper::setNode()
  *
  * @return void
