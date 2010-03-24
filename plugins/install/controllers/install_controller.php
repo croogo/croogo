@@ -36,6 +36,8 @@ class InstallController extends InstallAppController {
 /**
  * beforeFilter
  *
+ * If the bootstrap file exists - the app is already installed - disactivate
+ *
  * @return void
  */
     function beforeFilter() {
@@ -44,6 +46,10 @@ class InstallController extends InstallAppController {
         $this->layout = 'install';
         App::import('Component', 'Session');
         $this->Session = new SessionComponent;
+		if (file_exists(CONFIGS . 'croogo_bootstrap.php')) {
+			$this->Session->setFlash('Already Installed');
+			$this->redirect('/');
+		}
     }
 /**
  * Step 0: welcome
@@ -114,23 +120,25 @@ class InstallController extends InstallAppController {
 /**
  * Step 3: finish
  *
- * Remind the user to delete 'install' plugin.
+ * Remind the user to delete 'install' plugin, move the bootstrap file into place
+ * If the croogo bootstrap file exists this plugin is disabled
  *
  * @return void
  */
-    function finish() {
-        $this->set('title_for_layout', __('Installation completed successfully', true));
-        if (isset($this->params['named']['delete'])) {
-            App::import('Core', 'Folder');
-            $this->folder = new Folder;
-            if ($this->folder->delete(APP.'plugins'.DS.'install')) {
-                $this->Session->setFlash(__('Installataion files deleted successfully.', true));
-                $this->redirect('/');
-            } else {
-                $this->Session->setFlash(__('Could not delete installation files.', true));
-            }
-        }
-    }
+	function finish() {
+		$this->set('title_for_layout', __('Installation completed successfully', true));
+		if (isset($this->params['named']['delete'])) {
+			App::import('Core', 'Folder');
+			$this->folder = new Folder;
+			if ($this->folder->delete(APP.'plugins'.DS.'install')) {
+				$this->Session->setFlash(__('Installataion files deleted successfully.', true));
+				$this->redirect('/');
+			} else {
+				$this->Session->setFlash(__('Could not delete installation files.', true));
+			}
+		}
+		copy(APP.'config'.DS.'croogo_bootstrap.php.install', APP.'config'.DS.'croogo_bootstrap.php');
+	}
 /**
  * Execute SQL file
  *
