@@ -4,7 +4,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Dumping data for table `acos`
 --
 
-INSERT INTO `acos` (`id`, `parent_id`, `model`, `foreign_key`, `alias`, `lft`, `rght`) VALUES
+INSERT IGNORE INTO `acos` (`id`, `parent_id`, `model`, `foreign_key`, `alias`, `lft`, `rght`) VALUES
 (1, NULL, NULL, NULL, 'controllers', 1, 352),
 (2, 1, NULL, NULL, 'Attachments', 2, 13),
 (3, 2, NULL, NULL, 'admin_index', 3, 4),
@@ -186,7 +186,7 @@ INSERT INTO `acos` (`id`, `parent_id`, `model`, `foreign_key`, `alias`, `lft`, `
 -- Dumping data for table `aros`
 --
 
-INSERT INTO `aros` (`id`, `parent_id`, `model`, `foreign_key`, `alias`, `lft`, `rght`) VALUES
+INSERT IGNORE INTO `aros` (`id`, `parent_id`, `model`, `foreign_key`, `alias`, `lft`, `rght`) VALUES
 (1, NULL, 'Role', 1, '', 1, 4),
 (2, NULL, 'Role', 2, '', 5, 6),
 (3, NULL, 'Role', 3, '', 7, 8),
@@ -196,7 +196,7 @@ INSERT INTO `aros` (`id`, `parent_id`, `model`, `foreign_key`, `alias`, `lft`, `
 -- Dumping data for table `aros_acos`
 --
 
-INSERT INTO `aros_acos` (`id`, `aro_id`, `aco_id`, `_create`, `_read`, `_update`, `_delete`) VALUES
+INSERT IGNORE INTO `aros_acos` (`id`, `aro_id`, `aco_id`, `_create`, `_read`, `_update`, `_delete`) VALUES
 (1, 2, 23, '1', '1', '1', '1'),
 (2, 2, 22, '1', '1', '1', '1'),
 (3, 2, 21, '1', '1', '1', '1'),
@@ -229,7 +229,7 @@ INSERT INTO `aros_acos` (`id`, `aro_id`, `aco_id`, `_create`, `_read`, `_update`
 -- Dumping data for table `blocks`
 --
 
-INSERT INTO `blocks` (`id`, `region_id`, `title`, `alias`, `body`, `show_title`, `class`, `status`, `weight`, `element`, `visibility_roles`, `visibility_paths`, `visibility_php`, `params`, `updated`, `created`) VALUES
+INSERT IGNORE INTO `blocks` (`id`, `region_id`, `title`, `alias`, `body`, `show_title`, `class`, `status`, `weight`, `element`, `visibility_roles`, `visibility_paths`, `visibility_php`, `params`, `updated`, `created`) VALUES
 (3, 4, 'About', 'about', 'This is the content of your block. Can be modified in admin panel.', 1, '', 1, 2, '', '', '', '', '', '2009-12-20 03:07:39', '2009-07-26 17:13:14'),
 (8, 4, 'Search', 'search', '', 0, '', 1, 1, 'search', '', '', '', '', '2009-12-20 03:07:39', '2009-12-20 03:07:27'),
 (5, 4, 'Meta', 'meta', '[menu:meta]', 1, '', 1, 6, '', '', '', '', '', '2009-12-22 05:17:39', '2009-09-12 06:36:22'),
@@ -241,14 +241,14 @@ INSERT INTO `blocks` (`id`, `region_id`, `title`, `alias`, `body`, `show_title`,
 -- Dumping data for table `comments`
 --
 
-INSERT INTO `comments` (`id`, `parent_id`, `node_id`, `user_id`, `name`, `email`, `website`, `ip`, `title`, `body`, `rating`, `status`, `notify`, `type`, `comment_type`, `lft`, `rght`, `updated`, `created`) VALUES
+INSERT IGNORE INTO `comments` (`id`, `parent_id`, `node_id`, `user_id`, `name`, `email`, `website`, `ip`, `title`, `body`, `rating`, `status`, `notify`, `type`, `comment_type`, `lft`, `rght`, `updated`, `created`) VALUES
 (13, NULL, 21, 0, 'Mr Croogo', 'email@example.com', 'http://www.croogo.org', '127.0.0.1', '', 'Hi, this is the first comment.', NULL, 1, 0, 'blog', 'comment', 1, 2, '2009-10-06 22:13:05', '2009-10-03 19:43:52');
 
 --
 -- Dumping data for table `contacts`
 --
 
-INSERT INTO `contacts` (`id`, `title`, `alias`, `body`, `name`, `position`, `address`, `address2`, `state`, `country`, `postcode`, `phone`, `fax`, `email`, `message_status`, `message_archive`, `message_count`, `message_spam_protection`, `message_captcha`, `message_notify`, `status`, `updated`, `created`) VALUES
+INSERT IGNORE INTO `contacts` (`id`, `title`, `alias`, `body`, `name`, `position`, `address`, `address2`, `state`, `country`, `postcode`, `phone`, `fax`, `email`, `message_status`, `message_archive`, `message_count`, `message_spam_protection`, `message_captcha`, `message_notify`, `status`, `updated`, `created`) VALUES
 (1, 'Contact', 'contact', '', '', '', '', '', '', '', '', '', '', 'you@your-site.com', 1, 0, 0, 0, 0, 1, 1, '2009-10-07 22:07:49', '2009-09-16 01:45:17');
 
 --
@@ -260,14 +260,14 @@ INSERT INTO `contacts` (`id`, `title`, `alias`, `body`, `name`, `position`, `add
 -- Dumping data for table `languages`
 --
 
-INSERT INTO `languages` (`id`, `title`, `native`, `alias`, `status`, `weight`, `updated`, `created`) VALUES
+INSERT IGNORE INTO `languages` (`id`, `title`, `native`, `alias`, `status`, `weight`, `updated`, `created`) VALUES
 (1, 'English', 'English', 'eng', 1, 1, '2009-11-02 21:37:38', '2009-11-02 20:52:00');
 
 --
 -- Dumping data for table `links`
 --
 
-INSERT INTO `links` (`id`, `parent_id`, `menu_id`, `title`, `description`, `link`, `target`, `rel`, `status`, `lft`, `rght`, `visibility_roles`, `params`, `updated`, `created`) VALUES
+INSERT IGNORE INTO `links` (`id`, `parent_id`, `menu_id`, `title`, `description`, `link`, `target`, `rel`, `status`, `lft`, `rght`, `visibility_roles`, `params`, `updated`, `created`) VALUES
 (5, NULL, 4, 'About', '', 'controller:nodes/action:view/type:page/slug:about', '', '', 1, 3, 4, '', '', '2009-10-06 23:14:21', '2009-08-19 12:23:33'),
 (6, NULL, 4, 'Contact', '', 'controller:contacts/action:view/contact', '', '', 1, 5, 6, '', '', '2009-10-06 23:14:45', '2009-08-19 12:34:56'),
 (7, NULL, 3, 'Home', '', '/', '', '', 1, 5, 6, '', '', '2009-10-06 21:17:06', '2009-09-06 21:32:54'),
@@ -285,7 +285,7 @@ INSERT INTO `links` (`id`, `parent_id`, `menu_id`, `title`, `description`, `link
 -- Dumping data for table `menus`
 --
 
-INSERT INTO `menus` (`id`, `title`, `alias`, `description`, `status`, `weight`, `link_count`, `params`, `updated`, `created`) VALUES
+INSERT IGNORE INTO `menus` (`id`, `title`, `alias`, `description`, `status`, `weight`, `link_count`, `params`, `updated`, `created`) VALUES
 (3, 'Main Menu', 'main', '', 1, NULL, 4, '', '2009-08-19 12:21:06', '2009-07-22 01:49:53'),
 (4, 'Footer', 'footer', '', 1, NULL, 2, '', '2009-08-19 12:22:42', '2009-08-19 12:22:42'),
 (5, 'Meta', 'meta', '', 1, NULL, 4, '', '2009-09-12 06:33:29', '2009-09-12 06:33:29'),
@@ -300,14 +300,14 @@ INSERT INTO `menus` (`id`, `title`, `alias`, `description`, `status`, `weight`, 
 -- Dumping data for table `meta`
 --
 
-INSERT INTO `meta` (`id`, `model`, `foreign_key`, `key`, `value`, `weight`) VALUES
+INSERT IGNORE INTO `meta` (`id`, `model`, `foreign_key`, `key`, `value`, `weight`) VALUES
 (23, 'Node', 20, 'meta_keywords', 'key1, key2', NULL);
 
 --
 -- Dumping data for table `nodes`
 --
 
-INSERT INTO `nodes` (`id`, `parent_id`, `user_id`, `title`, `slug`, `body`, `excerpt`, `status`, `mime_type`, `comment_status`, `comment_count`, `promote`, `path`, `terms`, `sticky`, `lft`, `rght`, `visibility_roles`, `type`, `updated`, `created`) VALUES
+INSERT IGNORE INTO `nodes` (`id`, `parent_id`, `user_id`, `title`, `slug`, `body`, `excerpt`, `status`, `mime_type`, `comment_status`, `comment_count`, `promote`, `path`, `terms`, `sticky`, `lft`, `rght`, `visibility_roles`, `type`, `updated`, `created`) VALUES
 (20, NULL, 1, 'About', 'about', '<p>This is an example of a Croogo page, you could edit this to put information about yourself or your site.</p>', '', 1, '', 0, 0, 0, '/about', '', 0, 1, 2, '', 'page', '2009-12-28 21:54:31', '2009-12-25 22:00:00'),
 (21, NULL, 1, 'Hello World', 'hello-world', '<p>Welcome to Croogo. This is your first post. You can edit or delete it from the admin panel.</p>', '', 1, '', 2, 1, 1, '/blog/hello-world', '{"1":"uncategorized"}', 0, 1, 2, '', 'blog', '2009-12-28 21:55:09', '2009-12-25 11:00:00');
 
@@ -315,14 +315,14 @@ INSERT INTO `nodes` (`id`, `parent_id`, `user_id`, `title`, `slug`, `body`, `exc
 -- Dumping data for table `nodes_terms`
 --
 
-INSERT INTO `nodes_terms` (`id`, `node_id`, `vocabulary_id`, `term_id`, `weight`) VALUES
+INSERT IGNORE INTO `nodes_terms` (`id`, `node_id`, `vocabulary_id`, `term_id`, `weight`) VALUES
 (6407, 21, 0, 1, NULL);
 
 --
 -- Dumping data for table `regions`
 --
 
-INSERT INTO `regions` (`id`, `title`, `alias`, `description`, `block_count`) VALUES
+INSERT IGNORE INTO `regions` (`id`, `title`, `alias`, `description`, `block_count`) VALUES
 (3, 'none', '', '', 0),
 (4, 'right', 'right', '', 6),
 (6, 'left', 'left', '', 0),
@@ -342,7 +342,7 @@ INSERT INTO `regions` (`id`, `title`, `alias`, `description`, `block_count`) VAL
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`id`, `title`, `alias`, `created`, `updated`) VALUES
+INSERT IGNORE INTO `roles` (`id`, `title`, `alias`, `created`, `updated`) VALUES
 (1, 'Admin', 'admin', '2009-04-05 00:10:34', '2009-04-05 00:10:34'),
 (2, 'Registered', 'registered', '2009-04-05 00:10:50', '2009-04-06 05:20:38'),
 (3, 'Public', 'public', '2009-04-05 00:12:38', '2009-04-07 01:41:45');
@@ -351,7 +351,7 @@ INSERT INTO `roles` (`id`, `title`, `alias`, `created`, `updated`) VALUES
 -- Dumping data for table `settings`
 --
 
-INSERT INTO `settings` (`id`, `key`, `value`, `title`, `description`, `input_type`, `editable`, `weight`, `params`) VALUES
+INSERT IGNORE INTO `settings` (`id`, `key`, `value`, `title`, `description`, `input_type`, `editable`, `weight`, `params`) VALUES
 (5, 'Admin.settings', 'Site,Meta,Reading,Writing,Comment,Service', '', '', '', 1, 1, ''),
 (6, 'Site.title', 'Croogo', '', '', '', 1, 2, ''),
 (7, 'Site.tagline', 'A CakePHP powered Content Management System.', '', '', 'textarea', 1, 3, ''),
@@ -380,7 +380,7 @@ INSERT INTO `settings` (`id`, `key`, `value`, `title`, `description`, `input_typ
 -- Dumping data for table `terms`
 --
 
-INSERT INTO `terms` (`id`, `parent_id`, `vocabulary_id`, `title`, `slug`, `description`, `lft`, `rght`, `status`, `updated`, `created`) VALUES
+INSERT IGNORE INTO `terms` (`id`, `parent_id`, `vocabulary_id`, `title`, `slug`, `description`, `lft`, `rght`, `status`, `updated`, `created`) VALUES
 (1, NULL, 1, 'Uncategorized', 'uncategorized', '', 1, 2, 1, '2009-07-22 03:38:43', '2009-07-22 03:34:56'),
 (2, NULL, 1, 'Announcements', 'announcements', '', 3, 8, 1, '2009-07-22 03:45:37', '2009-07-22 03:45:37'),
 (6, NULL, 2, 'mytag', 'mytag', '', 9, 10, 1, '2009-08-26 14:42:43', '2009-08-26 14:42:43'),
@@ -390,7 +390,7 @@ INSERT INTO `terms` (`id`, `parent_id`, `vocabulary_id`, `title`, `slug`, `descr
 -- Dumping data for table `types`
 --
 
-INSERT INTO `types` (`id`, `title`, `alias`, `description`, `format_show_author`, `format_show_date`, `comment_status`, `comment_approve`, `comment_spam_protection`, `comment_captcha`, `params`, `plugin`, `updated`, `created`) VALUES
+INSERT IGNORE INTO `types` (`id`, `title`, `alias`, `description`, `format_show_author`, `format_show_date`, `comment_status`, `comment_approve`, `comment_spam_protection`, `comment_captcha`, `params`, `plugin`, `updated`, `created`) VALUES
 (1, 'Page', 'page', 'A page is a simple method for creating and displaying information that rarely changes, such as an "About us" section of a website. By default, a page entry does not allow visitor comments.', 0, 0, 0, 1, 0, 0, '', '', '2009-09-09 00:23:24', '2009-09-02 18:06:27'),
 (2, 'Blog', 'blog', 'A blog entry is a single post to an online journal, or blog.', 1, 1, 2, 1, 0, 0, '', '', '2009-09-15 12:15:43', '2009-09-02 18:20:44'),
 (4, 'Node', 'node', 'Default content type.', 1, 1, 2, 1, 0, 0, '', '', '2009-10-06 21:53:15', '2009-09-05 23:51:56');
@@ -399,7 +399,7 @@ INSERT INTO `types` (`id`, `title`, `alias`, `description`, `format_show_author`
 -- Dumping data for table `types_vocabularies`
 --
 
-INSERT INTO `types_vocabularies` (`id`, `type_id`, `vocabulary_id`, `weight`) VALUES
+INSERT IGNORE INTO `types_vocabularies` (`id`, `type_id`, `vocabulary_id`, `weight`) VALUES
 (23, 2, 2, NULL),
 (22, 2, 1, NULL),
 (25, 4, 2, NULL),
@@ -409,13 +409,13 @@ INSERT INTO `types_vocabularies` (`id`, `type_id`, `vocabulary_id`, `weight`) VA
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `username`, `password`, `name`, `email`, `website`, `activation_key`, `image`, `bio`, `timezone`, `status`, `updated`, `created`) VALUES
+INSERT IGNORE INTO `users` (`id`, `role_id`, `username`, `password`, `name`, `email`, `website`, `activation_key`, `image`, `bio`, `timezone`, `status`, `updated`, `created`) VALUES
 (1, 1, 'admin', 'c054b152596745efa1d197b809fa7fc70ce586e5', 'Administrator', 'you@your-site.com', '/about', '', '', '', '0', 1, '2009-10-07 22:23:27', '2009-04-05 00:20:34');
 
 --
 -- Dumping data for table `vocabularies`
 --
 
-INSERT INTO `vocabularies` (`id`, `title`, `alias`, `description`, `required`, `multiple`, `tags`, `plugin`, `term_count`, `weight`, `updated`, `created`) VALUES
+INSERT IGNORE INTO `vocabularies` (`id`, `title`, `alias`, `description`, `required`, `multiple`, `tags`, `plugin`, `term_count`, `weight`, `updated`, `created`) VALUES
 (1, 'Categories', 'categories', '', 0, 0, 0, '', 2, NULL, '2009-07-22 02:16:21', '2009-07-22 02:16:21'),
 (2, 'Tags', 'tags', '', 0, 0, 0, '', 1, NULL, '2009-07-22 02:16:34', '2009-07-22 02:16:34');

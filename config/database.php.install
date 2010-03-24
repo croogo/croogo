@@ -86,6 +86,7 @@ class DATABASE_CONFIG {
 		'password' => '{default_password}',
 		'database' => '{default_database}',
 		'prefix' => '',
+		'encoding' => 'UTF8',
 	);
 
 	var $test = array(
@@ -96,6 +97,7 @@ class DATABASE_CONFIG {
 		'password' => 'password',
 		'database' => 'test_database_name',
 		'prefix' => '',
+		'encoding' => 'UTF8',
 	);
 }
 ?>
