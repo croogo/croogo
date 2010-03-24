@@ -28,6 +28,9 @@ class CroogoRouter {
  */
     function connect($route, $default = array(), $params = array()) {
         Router::connect($route, $default, $params);
+        if ($route == '/') {
+            $route = '';
+        }
         Router::connect('/:locale' . $route, $default, array_merge(array('locale' => '[a-z]{3}'), $params));
     }
 /**
