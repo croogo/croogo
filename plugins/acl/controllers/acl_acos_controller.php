@@ -61,6 +61,10 @@ class AclAcosController extends AclAppController {
             $this->Session->setFlash(__('Invalid id for Aco', true));
             $this->redirect(array('action' => 'index'));
         }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
         if ($this->AclAco->delete($id)) {
             $this->Session->setFlash(__('Aco deleted', true));
             $this->redirect(array('action' => 'index'));

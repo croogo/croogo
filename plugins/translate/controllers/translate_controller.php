@@ -152,6 +152,10 @@ class TranslateController extends TranslateAppController {
                 'action' => 'index',
             ));
         }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
 
         if (!isset($this->Croogo->TranslateHook->translateModels[$modelAlias])) {
             $this->Session->setFlash(__('Invalid model.', true));

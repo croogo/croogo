@@ -20,9 +20,17 @@
         $rows = array();
         foreach ($locales AS $locale) {
             $actions  = '';
-            $actions .= $html->link(__('Activate', true), array('action' => 'activate', $locale));
+            $actions .= $html->link(__('Activate', true), array(
+                'action' => 'activate',
+                $locale,
+                'token' => $this->params['_Token']['key'],
+            ));
             $actions .= ' ' . $html->link(__('Edit', true), array('action' => 'edit', $locale));
-            $actions .= ' ' . $html->link(__('Delete', true), array('action' => 'delete', $locale), null, __('Are you sure?', true));
+            $actions .= ' ' . $html->link(__('Delete', true), array(
+                'action' => 'delete',
+                $locale,
+                'token' => $this->params['_Token']['key'],
+            ), null, __('Are you sure?', true));
 
             if ($locale == Configure::read('Site.locale')) {
                 $status = $layout->status(1);

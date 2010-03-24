@@ -39,7 +39,11 @@
             }
 
             $actions  = $html->link(__('Edit', true), array('action' => 'edit', $id));
-            $actions .= ' ' . $html->link(__('Delete', true), array('action' => 'delete', $id), null, __('Are you sure?', true));
+            $actions .= ' ' . $html->link(__('Delete', true), array(
+                'action' => 'delete',
+                $id,
+                'token' => $this->params['_Token']['key'],
+            ), null, __('Are you sure?', true));
             $actions .= ' ' . $html->link(__('Move up', true), array('action' => 'move', $id, 'up'));
             $actions .= ' ' . $html->link(__('Move down', true), array('action' => 'move', $id, 'down'));
 

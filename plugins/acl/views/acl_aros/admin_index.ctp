@@ -9,29 +9,33 @@
 
     <table cellpadding="0" cellspacing="0">
     <?php
-        $tableHeaders =  $html->tableHeaders(array(
-                                              $paginator->sort('id'),
-                                              $paginator->sort('parent_id'),
-                                              $paginator->sort('model'),
-                                              $paginator->sort('foreign_key'),
-                                              $paginator->sort('alias'),
-                                              __('Actions', true),
-                                             ));
+        $tableHeaders = $html->tableHeaders(array(
+            $paginator->sort('id'),
+            $paginator->sort('parent_id'),
+            $paginator->sort('model'),
+            $paginator->sort('foreign_key'),
+            $paginator->sort('alias'),
+            __('Actions', true),
+        ));
         echo $tableHeaders;
 
         $rows = array();
         foreach ($aros AS $aro) {
             $actions  = $html->link(__('Edit', true), array('action' => 'edit', $aro['AclAro']['id']));
-            $actions .= ' ' . $html->link(__('Delete', true), array('action' => 'delete', $aro['AclAro']['id']), null, __('Are you sure?', true));
+            $actions .= ' ' . $html->link(__('Delete', true), array(
+                'action' => 'delete',
+                $aro['AclAro']['id'],
+                'token' => $this->params['_Token']['key'],
+            ), null, __('Are you sure?', true));
 
             $rows[] = array(
-                       $aro['AclAro']['id'],
-                       $aro['AclAro']['parent_id'],
-                       $aro['AclAro']['model'],
-                       $html->link($aro['AclAro']['foreign_key'], array('plugin' => 0, 'controller' => Inflector::pluralize(strtolower($aro['AclAro']['model'])), 'action' => 'edit', $aro['AclAro']['foreign_key'])),
-                       $aro['AclAro']['alias'],
-                       $actions,
-                      );
+                $aro['AclAro']['id'],
+                $aro['AclAro']['parent_id'],
+                $aro['AclAro']['model'],
+                $html->link($aro['AclAro']['foreign_key'], array('plugin' => 0, 'controller' => Inflector::pluralize(strtolower($aro['AclAro']['model'])), 'action' => 'edit', $aro['AclAro']['foreign_key'])),
+                $aro['AclAro']['alias'],
+                $actions,
+            );
         }
 
         echo $html->tableCells($rows);

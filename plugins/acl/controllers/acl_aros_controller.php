@@ -61,6 +61,10 @@ class AclArosController extends AclAppController {
             $this->Session->setFlash(__('Invalid id for Aro', true));
             $this->redirect(array('action' => 'index'));
         }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
         if ($this->AclAro->delete($id)) {
             $this->Session->setFlash(__('Aro deleted', true));
             $this->redirect(array('action' => 'index'));

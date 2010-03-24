@@ -58,6 +58,7 @@
                 $html->link($iconImage, array(
                     'action' => 'toggle',
                     $hook,
+                    'token' => $this->params['_Token']['key'],
                 ), array(
                     'escape' => false,
                 )),

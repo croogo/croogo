@@ -143,6 +143,10 @@ class ExtensionsPluginsController extends AppController {
             $this->Session->setFlash(__('Invalid plugin', true));
             $this->redirect(array('action' => 'index'));
         }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
 
         $folder =& new Folder;
         if ($folder->delete(APP . 'plugins' . DS . $plugin)) {

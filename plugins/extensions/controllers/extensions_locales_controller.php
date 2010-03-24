@@ -48,6 +48,10 @@ class ExtensionsLocalesController extends AppController {
             $this->Session->setFlash(__('Locale does not exist.', true));
             $this->redirect(array('action' => 'index'));
         }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
 
         $file =& new File(APP . 'config' . DS . 'croogo_bootstrap.php', true);
         $content = $file->read();
@@ -166,6 +170,10 @@ class ExtensionsLocalesController extends AppController {
         if (!$locale) {
             $this->Session->setFlash(__('Invalid locale', true));
             $this->redirect(array('action' => 'index'));
+        }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
         }
 
         $folder =& new Folder;

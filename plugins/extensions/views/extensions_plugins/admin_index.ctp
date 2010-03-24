@@ -21,7 +21,11 @@
             if (in_array($plugin, $corePlugins)) continue;
 
             $actions  = '';
-            $actions .= ' ' . $html->link(__('Delete', true), array('action' => 'delete', $plugin), null, __('Are you sure?', true));
+            $actions .= ' ' . $html->link(__('Delete', true), array(
+                'action' => 'delete',
+                $plugin,
+                'token' => $this->params['_Token']['key'],
+            ), null, __('Are you sure?', true));
 
             $rows[] = array(
                 '',

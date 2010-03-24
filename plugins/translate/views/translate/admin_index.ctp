@@ -42,6 +42,7 @@
                 $id,
                 $modelAlias,
                 $translation[$runtimeModelAlias]['locale'],
+                'token' => $this->params['_Token']['key'],
             ), null, __('Are you sure?', true));
 
             $rows[] = array(

@@ -19,7 +19,15 @@
             }
         ?>
         </div>
-        <h3><?php echo $currentTheme['name'] . ' ' . __('by', true) . ' ' . $currentTheme['author'] ?></h3>
+        <h3>
+        <?php
+            $author = $currentTheme['author'];
+            if (isset($currentTheme['authorUrl']) && strlen($currentTheme['authorUrl']) > 0) {
+                $author = $html->link($author, $currentTheme['authorUrl']);
+            }
+            echo $currentTheme['name'] . ' ' . __('by', true) . ' ' . $author;
+        ?>
+        </h3>
         <p class="description"><?php echo $currentTheme['description']; ?></p>
         <p class="regions"><?php echo __('Regions supported: ', true) . implode(', ', $currentTheme['regions']); ?></p>
         <div class="clear"></div>
@@ -39,12 +47,24 @@
                         } else {
                             echo $html->tag('div', $html->image('/theme/' . $themeAlias . '/img/' . $theme['screenshot']), array('class' => 'screenshot'));
                         }
-                        echo $html->tag('h3', $theme['name'] . ' ' . __('by', true) . ' ' . $theme['author'], array());
+                        $author = $theme['author'];
+                        if (isset($theme['authorUrl']) && strlen($theme['authorUrl']) > 0) {
+                            $author = $html->link($author, $theme['authorUrl']);
+                        }
+                        echo $html->tag('h3', $theme['name'] . ' ' . __('by', true) . ' ' . $author, array());
                         echo $html->tag('p', $theme['description'], array('class' => 'description'));
                         echo $html->tag('p', __('Regions supported: ', true) . implode(', ', $theme['regions']), array('class' => 'regions'));
                         echo $html->tag('div',
-                            $html->link(__('Activate', true), array('action' => 'activate', $themeAlias)) .
-                            $html->link(__('Delete', true), array('action' => 'delete', $themeAlias), null, __('Are you sure?', true)),
+                            $html->link(__('Activate', true), array(
+                                'action' => 'activate',
+                                $themeAlias,
+                                'token' => $this->params['_Token']['key'],
+                            )) .
+                            $html->link(__('Delete', true), array(
+                                'action' => 'delete',
+                                $themeAlias,
+                                'token' => $this->params['_Token']['key'],
+                            ), null, __('Are you sure?', true)),
                             array('class' => 'actions'));
                     echo '</li>';
                 }

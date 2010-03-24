@@ -102,6 +102,11 @@ class ExtensionsHooksController extends AppController {
     }
 
     function admin_toggle($hook = null) {
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
+
         if (strstr(Inflector::underscore($hook), '_helper')) {
             $configureKey = 'Hook.helpers';
             $hookType = 'Helper';
