@@ -120,7 +120,7 @@ class InstallController extends InstallAppController {
 /**
  * Step 3: finish
  *
- * Remind the user to delete 'install' plugin, move the bootstrap file into place
+ * Remind the user to delete 'install' plugin, move the bootstrap and settings.yml files into place
  * If the croogo bootstrap file exists this plugin is disabled
  *
  * @return void
@@ -138,6 +138,7 @@ class InstallController extends InstallAppController {
 			}
 		}
 		copy(APP.'config'.DS.'croogo_bootstrap.php.install', APP.'config'.DS.'croogo_bootstrap.php');
+		copy(APP.'config'.DS.'settings.yml.install', APP.'config'.DS.'settings.yml');
 	}
 /**
  * Execute SQL file

@@ -48,5 +48,5 @@
  * Inflector::rules('plural', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
  *
  */
-require_once APP.'config'.DS.'croogo_bootstrap.php';
+include_once APP.'config'.DS.'croogo_bootstrap.php';
 ?>
