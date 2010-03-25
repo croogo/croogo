@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class InstallController extends InstallAppController {
+
 /**
  * Controller name
  *
@@ -19,6 +20,7 @@ class InstallController extends InstallAppController {
  * @access public
  */
     var $name = 'Install';
+
 /**
  * No models required
  *
@@ -26,6 +28,7 @@ class InstallController extends InstallAppController {
  * @access public
  */
     var $uses = null;
+
 /**
  * No components required
  *
@@ -33,12 +36,14 @@ class InstallController extends InstallAppController {
  * @access public
  */
     var $components = null;
+
 /**
  * beforeFilter
  *
- * If the bootstrap file exists - the app is already installed - disactivate
+ * If the croogo bootstrap file exists - the app is already installed, don't do anything
  *
  * @return void
+ * @access public
  */
     function beforeFilter() {
         parent::beforeFilter();
@@ -51,54 +56,66 @@ class InstallController extends InstallAppController {
 			$this->redirect('/');
 		}
     }
+
 /**
  * Step 0: welcome
  *
  * A simple welcome message for the installer.
  *
  * @return void
+ * @access public
  */
     function index() {
         $this->set('title_for_layout', __('Installation: Welcome', true));
     }
+
 /**
  * Step 1: database
  *
+ * Try to connect to the database and give a message if that's not possible so the user can check their
+ * credentials or create the missing database
+ * Create the database file and insert the submitted details
+ *
  * @return void
+ * @access public
  */
     function database() {
         $this->set('title_for_layout', __('Step 1: Database', true));
-        if (!empty($this->data)) {
-            // test database connection
-            if (mysql_connect($this->data['Install']['host'], $this->data['Install']['login'], $this->data['Install']['password']) &&
-                mysql_select_db($this->data['Install']['database'])) {
-                // copy database.php.install
-                copy(CONFIGS.'database.php.install', CONFIGS.'database.php');
+        if (empty($this->data)) {
+			return;
+		}
+		if (!mysql_connect($this->data['Install']['host'], $this->data['Install']['login'], $this->data['Install']['password'])) {
+			$this->Session->setFlash(__('Could not connect to database.', true));
+			return;
+		}
+		if (!mysql_select_db($this->data['Install']['database'])) {
+			$this->Session->setFlash(__('Could not select database.', true));
+			return;
+		}
 
-                // open database.php file
-                App::import('Core', 'File');
-                $file = new File(CONFIGS.'database.php', true);
-                $content = $file->read();
+		copy(CONFIGS.'database.php.install', CONFIGS.'database.php');
 
-                // write database.php file
-                $content = str_replace('{default_host}', $this->data['Install']['host'], $content);
-                $content = str_replace('{default_login}', $this->data['Install']['login'], $content);
-                $content = str_replace('{default_password}', $this->data['Install']['password'], $content);
-                $content = str_replace('{default_database}', $this->data['Install']['database'], $content);
-                if($file->write($content) ) {
-                    $this->redirect(array('action' => 'data'));
-                } else {
-                    $this->Session->setFlash(__('Could not write database.php file.', true));
-                }
-            } else {
-                $this->Session->setFlash(__('Could not connect to database.', true));
-            }
-        }
+		App::import('Core', 'File');
+		$file = new File(CONFIGS.'database.php', true);
+		$content = $file->read();
+
+		$content = str_replace('{default_host}', $this->data['Install']['host'], $content);
+		$content = str_replace('{default_login}', $this->data['Install']['login'], $content);
+		$content = str_replace('{default_password}', $this->data['Install']['password'], $content);
+		$content = str_replace('{default_database}', $this->data['Install']['database'], $content);
+
+		if($file->write($content) ) {
+			return $this->redirect(array('action' => 'data'));
+		} else {
+			$this->Session->setFlash(__('Could not write database.php file.', true));
+		}
     }
+
 /**
- * Step 2: insert required data
+ * Step 2: Run the initial sql scripts to create the db and seed it with data
  *
  * @return void
+ * @access public
  */
     function data() {
         $this->set('title_for_layout', __('Step 2: Run SQL', true));
@@ -117,13 +134,14 @@ class InstallController extends InstallAppController {
             }
         }
     }
+
 /**
  * Step 3: finish
  *
  * Remind the user to delete 'install' plugin, move the bootstrap and settings.yml files into place
- * If the croogo bootstrap file exists this plugin is disabled
  *
  * @return void
+ * @access public
  */
 	function finish() {
 		$this->set('title_for_layout', __('Installation completed successfully', true));
@@ -140,8 +158,21 @@ class InstallController extends InstallAppController {
 		$this->_copyConfigFiles();
 	}
 
+/**
+ * copyConfigFiles method
+ *
+ * By default, don't put files that are app specific in the repo.
+ * Copy the croogo_bootstrap tempalte into place
+ * Copy the settings.yml file into place
+ * Copy the standard core.php file into place
+ * 	give it a random salt and cipherSeed
+ *
+ * Update the admin users password if it's the same string as the value in the initial data dump
+ *
+ * @return bool
+ * @access protected
+ */
 	function _copyConfigFiles() {
-		Configure::write('debug', 2);
 		copy(CONFIGS.'croogo_bootstrap.php.install', CONFIGS.'croogo_bootstrap.php');
 		copy(CONFIGS.'settings.yml.install', CONFIGS.'settings.yml');
 
