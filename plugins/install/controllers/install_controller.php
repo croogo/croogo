@@ -73,11 +73,11 @@ class InstallController extends InstallAppController {
             if (mysql_connect($this->data['Install']['host'], $this->data['Install']['login'], $this->data['Install']['password']) &&
                 mysql_select_db($this->data['Install']['database'])) {
                 // copy database.php.install
-                copy(APP.'config'.DS.'database.php.install', APP.'config'.DS.'database.php');
+                copy(CONFIGS.'database.php.install', CONFIGS.'database.php');
 
                 // open database.php file
                 App::import('Core', 'File');
-                $file = new File(APP.'config'.DS.'database.php', true);
+                $file = new File(CONFIGS.'database.php', true);
                 $content = $file->read();
 
                 // write database.php file
@@ -137,9 +137,38 @@ class InstallController extends InstallAppController {
 				$this->Session->setFlash(__('Could not delete installation files.', true));
 			}
 		}
-		copy(APP.'config'.DS.'croogo_bootstrap.php.install', APP.'config'.DS.'croogo_bootstrap.php');
-		copy(APP.'config'.DS.'settings.yml.install', APP.'config'.DS.'settings.yml');
+		$this->_copyConfigFiles();
 	}
+
+	function _copyConfigFiles() {
+		Configure::write('debug', 2);
+		copy(CONFIGS.'croogo_bootstrap.php.install', CONFIGS.'croogo_bootstrap.php');
+		copy(CONFIGS.'settings.yml.install', CONFIGS.'settings.yml');
+
+		copy(CAKE_CORE_INCLUDE_PATH.DS.'cake'.DS.'console'.DS.'templates'.DS.'skel'.DS.'config'.DS.'core.php', CONFIGS.'core.php');
+
+		$File =& new File(CONFIGS . 'core.php');
+		if (!class_exists('Security')) {
+			require LIBS . 'security.php';
+		}
+		$salt = Security::generateAuthKey();
+		$seed = mt_rand() . mt_rand();
+
+		$contents = $File->read();
+		$contents = preg_replace('/(?<=Configure::write\(\'Security.salt\', \')([^\' ]+)(?=\'\))/', $salt, $contents);
+		$contents = preg_replace('/(?<=Configure::write\(\'Security.cipherSeed\', \')(\d+)(?=\'\))/', $seed, $contents);
+		$contents = preg_replace('/\/\/(?=Configure::write\(\'Routing.admin\')/', '', $contents);
+
+		if (!$File->write($contents)) {
+			return false;
+		}
+
+		$User = ClassRegistry::init('User');
+		$User->id = $User->field('id', array('password' => 'c054b152596745efa1d197b809fa7fc70ce586e5'));
+		$User->saveField('password', Security::hash('password', null, $salt));
+		return true;
+	}
+
 /**
  * Execute SQL file
  *
@@ -158,6 +187,5 @@ class InstallController extends InstallAppController {
             }
         }
     }
-
 }
 ?>
