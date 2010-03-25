@@ -138,7 +138,7 @@ class CroogoComponent extends Object {
         }
         $this->hook('startup');
 
-        if (!isset($this->controller->params['admin'])) {
+        if (!isset($this->controller->params['admin']) && !isset($this->controller->params['requested'])) {
             $this->blocks();
             $this->menus();
             $this->vocabularies();
