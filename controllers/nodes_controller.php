@@ -414,7 +414,7 @@ class NodesController extends AppController {
         }
 
         if ($this->usePaginationCache) {
-            $cacheNamePrefix = 'nodes_term';
+            $cacheNamePrefix = 'nodes_term_'.$this->params['named']['slug'];
             if (isset($type)) {
                 $cacheNamePrefix .= '_'.$type['Type']['alias'];
             }
