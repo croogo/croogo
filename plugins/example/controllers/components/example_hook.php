@@ -21,6 +21,7 @@ class ExampleHookComponent extends Object {
     function onActivate(&$controller) {
         // ACL: set ACOs with permissions
         $controller->Croogo->addAco('Example'); // ExampleController
+        $controller->Croogo->addAco('Example/admin_index'); // ExampleController::admin_index()
         $controller->Croogo->addAco('Example/index', array('registered', 'public')); // ExampleController::index()
 
         // Bootstrap: app/plugins/example/config/bootstrap.php will be loaded in app/config/bootstrap.php
@@ -85,6 +86,12 @@ class ExampleHookComponent extends Object {
         // Admin menu: admin_menu element of Example plugin will be shown in admin panel's navigation
         Configure::write('Admin.menus.example', 1);
 
+        // Row actions (links beside Edit, Delete actions)
+        //$modelAlias = Inflector::camelize(Inflector::singularize($controller->params['controller']));
+        //Configure::write('Admin.rowActions.Example', 'plugin:example/controller:example/action:index/model:'.$modelAlias.'/:id');
+        Configure::write('Admin.rowActions.Example', 'plugin:example/controller:example/action:index/:id');
+
+        // set variables
         $controller->set('exampleHookBeforeRender', 'ExampleHook beforeRender');
     }
 /**

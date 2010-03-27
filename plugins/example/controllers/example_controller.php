@@ -27,6 +27,10 @@ class ExampleController extends ExampleAppController {
  */
     var $uses = array('Setting');
 
+    function admin_index() {
+        $this->set('title_for_layout', __('Example', true));
+    }
+
     function index() {
         $this->set('title_for_layout', __('Example', true));
         $this->set('exampleVariable', 'value here');
