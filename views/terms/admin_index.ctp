@@ -31,6 +31,7 @@
             $actions  = $html->link(__('Move up', true), array('action' => 'moveup', $id, 'vocabulary' => $vocabulary));
             $actions .= ' ' . $html->link(__('Move down', true), array('action' => 'movedown', $id, 'vocabulary' => $vocabulary));
             $actions .= ' ' . $html->link(__('Edit', true), array('action' => 'edit', $id, 'vocabulary' => $vocabulary));
+            $actions .= ' ' . $layout->adminRowActions($id);
             $actions .= ' ' . $html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $id,

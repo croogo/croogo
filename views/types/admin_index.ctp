@@ -21,6 +21,7 @@
         $rows = array();
         foreach ($types AS $type) {
             $actions  = $html->link(__('Edit', true), array('controller' => 'types', 'action' => 'edit', $type['Type']['id']));
+            $actions .= ' ' . $layout->adminRowActions($type['Type']['id']);
             $actions .= ' ' . $html->link(__('Delete', true), array(
                 'controller' => 'types',
                 'action' => 'delete',

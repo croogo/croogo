@@ -10,12 +10,12 @@
     <table cellpadding="0" cellspacing="0">
     <?php
         $tableHeaders =  $html->tableHeaders(array(
-                                              $paginator->sort('id'),
-                                              $paginator->sort('title'),
-                                              $paginator->sort('alias'),
-                                              $paginator->sort('email'),
-                                              __('Actions', true),
-                                             ));
+            $paginator->sort('id'),
+            $paginator->sort('title'),
+            $paginator->sort('alias'),
+            $paginator->sort('email'),
+            __('Actions', true),
+        ));
         echo $tableHeaders;
 
         $rows = array();
@@ -23,6 +23,7 @@
             $actions = '';
             //$actions .= $html->link(__('View Messages', true), array('controller'=> 'messages', 'action' => 'index', 'contact' => $contact['Contact']['id']));
             $actions .= ' ' . $html->link(__('Edit', true), array('action' => 'edit', $contact['Contact']['id']));
+            $actions .= ' ' . $layout->adminRowActions($contact['Contact']['id']);
             $actions .= ' ' . $html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $contact['Contact']['id'],
@@ -30,17 +31,17 @@
             ), null, __('Are you sure?', true));
 
             $rows[] = array(
-                       $contact['Contact']['id'],
-                       $html->link($contact['Contact']['title'], array(
-                            'admin' => false,
-                            'controller' => 'contacts',
-                            'action' => 'view',
-                            $contact['Contact']['alias'],
-                       )),
-                       $contact['Contact']['alias'],
-                       $contact['Contact']['email'],
-                       $actions,
-                      );
+                $contact['Contact']['id'],
+                $html->link($contact['Contact']['title'], array(
+                    'admin' => false,
+                    'controller' => 'contacts',
+                    'action' => 'view',
+                    $contact['Contact']['alias'],
+                )),
+                $contact['Contact']['alias'],
+                $contact['Contact']['email'],
+                $actions,
+            );
         }
 
         echo $html->tableCells($rows);

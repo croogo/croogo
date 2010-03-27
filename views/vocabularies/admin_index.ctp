@@ -21,6 +21,7 @@
         foreach ($vocabularies AS $vocabulary) {
             $actions  = $html->link(__('View terms', true), array('controller' => 'terms', 'action' => 'index', 'vocabulary' => $vocabulary['Vocabulary']['id']));
             $actions .= ' ' . $html->link(__('Edit', true), array('controller' => 'vocabularies', 'action' => 'edit', $vocabulary['Vocabulary']['id']));
+            $actions .= ' ' . $layout->adminRowActions($vocabulary['Vocabulary']['id']);
             $actions .= ' ' . $html->link(__('Delete', true), array(
                 'controller' => 'vocabularies',
                 'action' => 'delete',

@@ -20,6 +20,7 @@
         $rows = array();
         foreach ($regions AS $region) {
             $actions  = $html->link(__('Edit', true), array('controller' => 'regions', 'action' => 'edit', $region['Region']['id']));
+            $actions .= ' ' . $layout->adminRowActions($region['Region']['id']);
             $actions .= ' ' . $html->link(__('Delete', true), array(
                 'controller' => 'regions',
                 'action' => 'delete',

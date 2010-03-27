@@ -24,6 +24,7 @@
             $actions  = $html->link(__('Move up', true), array('action' => 'moveup', $language['Language']['id']));
             $actions .= ' ' . $html->link(__('Move down', true), array('action' => 'movedown', $language['Language']['id']));
             $actions .= ' ' . $html->link(__('Edit', true), array('action' => 'edit', $language['Language']['id']));
+            $actions .= ' ' . $layout->adminRowActions($language['Language']['id']);
             $actions .= ' ' . $html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $language['Language']['id'],

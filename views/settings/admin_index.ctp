@@ -23,6 +23,7 @@
             $actions  = $html->link(__('Move up', true), array('controller' => 'settings', 'action' => 'moveup', $setting['Setting']['id']));
             $actions .= ' ' . $html->link(__('Move down', true), array('controller' => 'settings', 'action' => 'movedown', $setting['Setting']['id']));
             $actions .= ' ' . $html->link(__('Edit', true), array('controller' => 'settings', 'action' => 'edit', $setting['Setting']['id']));
+            $actions .= ' ' . $layout->adminRowActions($setting['Setting']['id']);
             $actions .= ' ' . $html->link(__('Delete', true), array(
                 'controller' => 'settings',
                 'action' => 'delete',

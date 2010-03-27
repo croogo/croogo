@@ -20,6 +20,7 @@
         $rows = array();
         foreach ($roles AS $role) {
             $actions  = $html->link(__('Edit', true), array('controller' => 'roles', 'action' => 'edit', $role['Role']['id']));
+            $actions .= ' ' . $layout->adminRowActions($role['Role']['id']);
             $actions .= ' ' . $html->link(__('Delete', true), array(
                 'controller' => 'roles',
                 'action' => 'delete',

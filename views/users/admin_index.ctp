@@ -22,6 +22,7 @@
         $rows = array();
         foreach ($users AS $user) {
             $actions  = $html->link(__('Edit', true), array('controller' => 'users', 'action' => 'edit', $user['User']['id']));
+            $actions .= ' ' . $layout->adminRowActions($user['User']['id']);
             $actions .= ' ' . $html->link(__('Delete', true), array(
                 'controller' => 'users',
                 'action' => 'delete',

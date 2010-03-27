@@ -25,6 +25,7 @@
                 'action' => 'edit',
                 $attachment['Node']['id'],
             ));
+            $actions .= ' ' . $layout->adminRowActions($attachment['Node']['id']);
             $actions .= ' ' . $html->link(__('Delete', true), array(
                 'controller' => 'attachments',
                 'action' => 'delete',
