@@ -40,11 +40,11 @@ class ExtensionsLocalesController extends AppController {
         $folder->path = APP . 'locale';
         $content = $folder->read();
         $locales = $content['0'];
-		foreach($locales as $i => $locale) {
-			if ($locale[0] === '.') {
-				unset($locales[0]);
-			}
-		}
+        foreach($locales as $i => $locale) {
+            if ($locale[$i] === '.') {
+                unset($locales[$i]);
+            }
+        }
         $this->set(compact('content', 'locales'));
     }
 
