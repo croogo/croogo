@@ -103,7 +103,7 @@
         </li>
 
         <li>
-            <a href="#"><span class="ui-icon ui-icon-wrench"></span><?php __('Settings'); ?></a>
+            <a href="#" class="last"><span class="ui-icon ui-icon-wrench"></span><?php __('Settings'); ?></a>
             <ul>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-wrench"></span>' . __('Site', true), array('plugin' => 0, 'controller' => 'settings', 'action' => 'prefix', 'Site'), array('escape' => false)); ?></li>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-info"></span>' . __('Meta', true), array('plugin' => 0, 'controller' => 'settings', 'action' => 'prefix', 'Meta'), array('escape' => false)); ?></li>

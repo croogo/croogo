@@ -119,6 +119,7 @@ div.input span.description { margin-left: 10px; }
 #nav ul li a.selected { border-bottom: 1px solid #fff; }
 #nav ul li a.selected:hover { background: #f7f7f7; border-bottom: 1px solid #ccc; }
 #nav ul li a { margin-right: 20px; }
+#nav ul li a.last { margin-right: 0px; }
 #nav ul li li a { margin-right: 0px; }
 #nav ul li span.ui-icon { position: absolute; left: 2px; top: 16px; margin: -8px 0px 0px 0px; }
 
