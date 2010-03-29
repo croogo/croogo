@@ -232,6 +232,8 @@ div.bulk-actions .input { float: left; padding: 4px; }
 
 div.breadcrumb { margin: 0px 0px 20px 0px; }
 
+div.extensions-hooks div.plugin { font-weight: bold; }
+
 #loading { margin: 0 auto; width: 20px; text-align: center; }
 #loading p { background-color: #FFF1A8; font-weight: bold; padding: 5px; margin: 0px; }
 

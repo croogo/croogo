@@ -10,7 +10,7 @@
     <table cellpadding="0" cellspacing="0">
     <?php
         $tableHeaders =  $html->tableHeaders(array(
-            '',
+            __('Plugin', true),
             __('Hook', true),
             __('Hook type', true),
             __('Status', true),
@@ -19,51 +19,50 @@
         echo $tableHeaders;
 
         $rows = array();
-        foreach ($hooks AS $hook) {
-            if (strstr(Inflector::underscore($hook), '_helper')) {
-                $hookType = 'Helper';
-                $hookTitle = str_replace($hookType, '', $hook);
-            } else {
-                $hookType = 'Component';
-                $hookTitle = str_replace($hookType, '', $hook);
+        foreach ($hooks AS $plugin => $pluginHooks) {
+            if (count($pluginHooks) == 0) {
+                continue;
             }
-
-            $filePath = APP;
-            if (strstr($hook, '.')) {
-                $pluginHook = explode('.', $hook);
-                $plugin = $pluginHook['0'];
-                $filePath .= 'plugins'.DS.Inflector::underscore($plugin).DS;
-                $hookTitleE = explode('.', $hookTitle);
-                $hookFile = Inflector::underscore($hookTitleE['1']).'.php';
-            } else {
-                $hookFile = Inflector::underscore($hookTitle).'.php';
-            }
-            if ($hookType == 'Component') {
-                $filePath .= 'controllers'.DS.'components'.DS.$hookFile;
-            } else {
-                $filePath .= 'views'.DS.'helpers'.DS.$hookFile;
-            }
-
-            if (array_search($hook, $siteHooks) !== false) {
-                $icon = 'tick.png';
-            } else {
-                $icon = 'cross.png';
-            }
-            $iconImage = $html->image('icons/'.$icon);
 
             $rows[] = array(
+                '<div class="plugin">'.$plugin.'</div>',
                 '',
-                $hookTitle,
-                $hookType,
-                $html->link($iconImage, array(
-                    'action' => 'toggle',
-                    $hook,
-                    'token' => $this->params['_Token']['key'],
-                ), array(
-                    'escape' => false,
-                )),
-                $html->link(__('Edit', true), '/admin/filemanager/editfile?path='.urlencode($filePath)),
+                '',
+                '',
+                '',
             );
+
+            foreach ($pluginHooks AS $pluginHook) {
+                if ($pluginHook['status']) {
+                    $icon = 'tick.png';
+                    $toggleText = __('Deactivate', true);
+                } else {
+                    $icon = 'cross.png';
+                    $toggleText = __('Activate', true);
+                }
+                $iconImage = $html->image('icons/'.$icon);
+
+                $actions  = $html->link(__('Edit', true), '/admin/filemanager/editfile?path='.urlencode($pluginHook['path']));
+                $actions .= ' ' . $html->link($toggleText, array(
+                    'action' => 'toggle',
+                    $pluginHook['plugin'] ? $plugin.'.'.$pluginHook['name'].$pluginHook['type'] : $pluginHook['name'].$pluginHook['type'],
+                    'token' => $this->params['_Token']['key'],
+                ));
+
+                $rows[] = array(
+                    '',
+                    $pluginHook['name'],
+                    $pluginHook['type'],
+                    $html->link($iconImage, array(
+                        'action' => 'toggle',
+                        $pluginHook['plugin'] ? $plugin.'.'.$pluginHook['name'].$pluginHook['type'] : $pluginHook['name'].$pluginHook['type'],
+                        'token' => $this->params['_Token']['key'],
+                    ), array(
+                        'escape' => false,
+                    )),
+                    $actions,
+                );
+            }
         }
 
         echo $html->tableCells($rows);

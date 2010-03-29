@@ -50,12 +50,13 @@ class ExtensionsPluginsController extends AppController {
     function admin_index() {
         $this->set('title_for_layout', __('Plugins', true));
 
-        $folder =& new Folder;
-        $folder->path = APP . 'plugins';
-        $content = $folder->read();
-        $plugins = $content['0'];
+        $pluginAliases = $this->Croogo->getPlugins();
+        $plugins = array();
+        foreach ($pluginAliases AS $pluginAlias) {
+            $plugins[$pluginAlias] = $this->Croogo->getPluginData($pluginAlias);
+        }
         $this->set('corePlugins', $this->corePlugins);
-        $this->set(compact('content', 'plugins'));
+        $this->set(compact('plugins'));
     }
 
     function admin_add() {
