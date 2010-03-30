@@ -27,6 +27,7 @@ h3 { font-family: Arial, sans-serif; color: #464646; font-size: 16px; font-weigh
  * Content
  */
 #main { margin-top: 15px; }
+#main #content { margin-bottom: 20px; }
 
 
 /**
@@ -186,21 +187,13 @@ div.extensions-themes .available-themes .actions a { margin-right: 10px; }
 /**
  * File Manager
  */
-.directory-content ul li { padding-left: 18px; }
-.directory-content ul li.directory { background: url(../img/icons/folder.png) no-repeat; }
-.directory-content ul li.file { background: url(../img/icons/page_white.png) no-repeat; }
-.directory-content ul li.file span.actions { margin-left: 20px; display: none; }
-.directory-content ul li.file span.actions a { text-decoration: none; font-size: 12px; }
-.directory-content ul li.file-extension-php { background: url(../img/icons/page_white_php.png) no-repeat; }
-.directory-content ul li.file-extension-css { background: url(../img/icons/css.png) no-repeat; }
-.directory-content ul li.file-extension-html { background: url(../img/icons/html.png) no-repeat; }
 textarea.file-content { width: 100%; height: 350px; }
 
 
 /**
  * Footer
  */
-#footer { width: auto; text-align: center; background-color: #464646; padding: 15px 0px 15px 0px; color: #ccc; margin: 20px 0px 0px 0px; height: 20px; }
+#footer { width: auto; text-align: center; background-color: #464646; padding: 15px 0px 15px 0px; color: #ccc; height: 20px; }
 #footer a { color: #ccc; text-decoration: none; }
 #footer a:hover { text-decoration: underline; }
 

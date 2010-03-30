@@ -67,6 +67,22 @@ Admin.extra = function() {
 }
 
 /**
+ * Sticky footer
+ * 
+ * Make footer stick at the bottom of the page
+ * 
+ * @return void
+ */
+Admin.stickyFooter = function() {
+    var wrapperHeight = $('#wrapper')[0].clientHeight;
+    var pageHeight = window.innerHeight;
+    if (wrapperHeight < pageHeight) {
+        var diffHeight = pageHeight - wrapperHeight;
+        $('#footer').css('margin-top', diffHeight+'px');
+    }
+}
+
+/**
  * Rounded corners
  *
  * @return void
@@ -85,6 +101,7 @@ $(document).ready(function() {
 	Admin.form();
     Admin.extra();
     Admin.roundedCorners();
+    Admin.stickyFooter();
 
 	$('.tabs').tabs();
     $('a.tooltip').tipsy({gravity: 's'});
