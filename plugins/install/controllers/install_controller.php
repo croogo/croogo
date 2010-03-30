@@ -40,8 +40,6 @@ class InstallController extends InstallAppController {
 /**
  * beforeFilter
  *
- * If the croogo bootstrap file exists - the app is already installed, don't do anything
- *
  * @return void
  * @access public
  */
@@ -51,10 +49,17 @@ class InstallController extends InstallAppController {
         $this->layout = 'install';
         App::import('Component', 'Session');
         $this->Session = new SessionComponent;
-		if (file_exists(CONFIGS . 'croogo_bootstrap.php')) {
-			$this->Session->setFlash('Already Installed');
-			$this->redirect('/');
-		}
+    }
+/**
+ * If settings.yml exists, app is already installed
+ *
+ * @return void
+ */
+    function _check() {
+        if (file_exists(CONFIGS . 'settings.yml')) {
+            $this->Session->setFlash('Already Installed');
+            $this->redirect('/');
+        }
     }
 
 /**
@@ -66,6 +71,7 @@ class InstallController extends InstallAppController {
  * @access public
  */
     function index() {
+        $this->_check();
         $this->set('title_for_layout', __('Installation: Welcome', true));
     }
 
@@ -80,35 +86,36 @@ class InstallController extends InstallAppController {
  * @access public
  */
     function database() {
+        $this->_check();
         $this->set('title_for_layout', __('Step 1: Database', true));
+
         if (empty($this->data)) {
-			return;
-		}
-		if (!mysql_connect($this->data['Install']['host'], $this->data['Install']['login'], $this->data['Install']['password'])) {
-			$this->Session->setFlash(__('Could not connect to database.', true));
-			return;
-		}
-		if (!mysql_select_db($this->data['Install']['database'])) {
-			$this->Session->setFlash(__('Could not select database.', true));
-			return;
-		}
+            return;
+	}
+        if (!mysql_connect($this->data['Install']['host'], $this->data['Install']['login'], $this->data['Install']['password'])) {
+            $this->Session->setFlash(__('Could not connect to database.', true));
+            return;
+        }
+        if (!mysql_select_db($this->data['Install']['database'])) {
+            $this->Session->setFlash(__('Could not select database.', true));
+            return;
+        }
 
-		copy(CONFIGS.'database.php.install', CONFIGS.'database.php');
+        copy(CONFIGS.'database.php.install', CONFIGS.'database.php');
+        App::import('Core', 'File');
+        $file = new File(CONFIGS.'database.php', true);
+        $content = $file->read();
 
-		App::import('Core', 'File');
-		$file = new File(CONFIGS.'database.php', true);
-		$content = $file->read();
+        $content = str_replace('{default_host}', $this->data['Install']['host'], $content);
+        $content = str_replace('{default_login}', $this->data['Install']['login'], $content);
+        $content = str_replace('{default_password}', $this->data['Install']['password'], $content);
+        $content = str_replace('{default_database}', $this->data['Install']['database'], $content);
 
-		$content = str_replace('{default_host}', $this->data['Install']['host'], $content);
-		$content = str_replace('{default_login}', $this->data['Install']['login'], $content);
-		$content = str_replace('{default_password}', $this->data['Install']['password'], $content);
-		$content = str_replace('{default_database}', $this->data['Install']['database'], $content);
-
-		if($file->write($content) ) {
-			return $this->redirect(array('action' => 'data'));
-		} else {
-			$this->Session->setFlash(__('Could not write database.php file.', true));
-		}
+        if($file->write($content) ) {
+            return $this->redirect(array('action' => 'data'));
+        } else {
+            $this->Session->setFlash(__('Could not write database.php file.', true));
+        }
     }
 
 /**
@@ -118,6 +125,7 @@ class InstallController extends InstallAppController {
  * @access public
  */
     function data() {
+        $this->_check();
         $this->set('title_for_layout', __('Step 2: Run SQL', true));
         if (isset($this->params['named']['run'])) {
             App::import('Core', 'File');
@@ -138,66 +146,45 @@ class InstallController extends InstallAppController {
 /**
  * Step 3: finish
  *
- * Remind the user to delete 'install' plugin, move the bootstrap and settings.yml files into place
+ * Remind the user to delete 'install' plugin
+ * Copy settings.yml file into place
  *
  * @return void
  * @access public
  */
 	function finish() {
-		$this->set('title_for_layout', __('Installation completed successfully', true));
-		if (isset($this->params['named']['delete'])) {
-			App::import('Core', 'Folder');
-			$this->folder = new Folder;
-			if ($this->folder->delete(APP.'plugins'.DS.'install')) {
-				$this->Session->setFlash(__('Installataion files deleted successfully.', true));
-				$this->redirect('/');
-			} else {
-				$this->Session->setFlash(__('Could not delete installation files.', true));
-			}
-		}
-		$this->_copyConfigFiles();
-	}
+            $this->set('title_for_layout', __('Installation completed successfully', true));
+            if (isset($this->params['named']['delete'])) {
+                App::import('Core', 'Folder');
+                $this->folder = new Folder;
+                if ($this->folder->delete(APP.'plugins'.DS.'install')) {
+                    $this->Session->setFlash(__('Installation files deleted successfully.', true));
+                    $this->redirect('/');
+                } else {
+                    return $this->Session->setFlash(__('Could not delete installation files.', true));
+                }
+            }
+            $this->_check();
 
-/**
- * copyConfigFiles method
- *
- * By default, don't put files that are app specific in the repo.
- * Copy the croogo_bootstrap tempalte into place
- * Copy the settings.yml file into place
- * Copy the standard core.php file into place
- * 	give it a random salt and cipherSeed
- *
- * Update the admin users password if it's the same string as the value in the initial data dump
- *
- * @return bool
- * @access protected
- */
-	function _copyConfigFiles() {
-		copy(CONFIGS.'croogo_bootstrap.php.install', CONFIGS.'croogo_bootstrap.php');
-		copy(CONFIGS.'settings.yml.install', CONFIGS.'settings.yml');
+            // set new salt and seed value
+            copy(CONFIGS.'settings.yml.install', CONFIGS.'settings.yml');
+            $File =& new File(CONFIGS . 'core.php');
+            if (!class_exists('Security')) {
+                require LIBS . 'security.php';
+            }
+            $salt = Security::generateAuthKey();
+            $seed = mt_rand() . mt_rand();
+            $contents = $File->read();
+            $contents = preg_replace('/(?<=Configure::write\(\'Security.salt\', \')([^\' ]+)(?=\'\))/', $salt, $contents);
+            $contents = preg_replace('/(?<=Configure::write\(\'Security.cipherSeed\', \')(\d+)(?=\'\))/', $seed, $contents);
+            if (!$File->write($contents)) {
+                return false;
+            }
 
-		copy(CAKE_CORE_INCLUDE_PATH.DS.'cake'.DS.'console'.DS.'templates'.DS.'skel'.DS.'config'.DS.'core.php', CONFIGS.'core.php');
-
-		$File =& new File(CONFIGS . 'core.php');
-		if (!class_exists('Security')) {
-			require LIBS . 'security.php';
-		}
-		$salt = Security::generateAuthKey();
-		$seed = mt_rand() . mt_rand();
-
-		$contents = $File->read();
-		$contents = preg_replace('/(?<=Configure::write\(\'Security.salt\', \')([^\' ]+)(?=\'\))/', $salt, $contents);
-		$contents = preg_replace('/(?<=Configure::write\(\'Security.cipherSeed\', \')(\d+)(?=\'\))/', $seed, $contents);
-		$contents = preg_replace('/\/\/(?=Configure::write\(\'Routing.admin\')/', '', $contents);
-
-		if (!$File->write($contents)) {
-			return false;
-		}
-
-		$User = ClassRegistry::init('User');
-		$User->id = $User->field('id', array('password' => 'c054b152596745efa1d197b809fa7fc70ce586e5'));
-		$User->saveField('password', Security::hash('password', null, $salt));
-		return true;
+            // set new password for admin, hashed according to new salt value
+            $User = ClassRegistry::init('User');
+            $User->id = $User->field('id', array('username' => 'admin'));
+            $User->saveField('password', Security::hash('password', null, $salt));
 	}
 
 /**

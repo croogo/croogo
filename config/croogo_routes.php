@@ -3,7 +3,7 @@
     Router::parseExtensions('json', 'rss');
 
     // Installer
-    if (!file_exists(APP.'config'.DS.'database.php')) {
+    if (!file_exists(APP.'config'.DS.'settings.yml')) {
         CroogoRouter::connect('/', array('plugin' => 'install' ,'controller' => 'install'));
     }
 

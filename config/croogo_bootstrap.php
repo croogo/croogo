@@ -39,9 +39,11 @@
  * Settings
  */
     require_once APP.'vendors'.DS.'spyc'.DS.'spyc.php';
-    $settings = Spyc::YAMLLoad(file_get_contents(APP.'config'.DS.'settings.yml'));
-    foreach ($settings AS $settingKey => $settingValue) {
-        Configure::write($settingKey, $settingValue);
+    if (file_exists(CONFIGS.'settings.yml')) {
+        $settings = Spyc::YAMLLoad(file_get_contents(CONFIGS.'settings.yml'));
+        foreach ($settings AS $settingKey => $settingValue) {
+            Configure::write($settingKey, $settingValue);
+        }
     }
 
 /**
