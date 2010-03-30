@@ -41,7 +41,7 @@ class ExtensionsLocalesController extends AppController {
         $content = $folder->read();
         $locales = $content['0'];
         foreach($locales as $i => $locale) {
-            if ($locale[$i] === '.') {
+            if (strstr($locale, '.') !== false) {
                 unset($locales[$i]);
             }
         }
