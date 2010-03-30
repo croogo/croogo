@@ -14,18 +14,22 @@ It is powered by [CakePHP](http://cakephp.org) MVC framework.
 #### Web based installer
 
   * Extract the archive. Upload the content to your server.
-  * visit http://your-site.com/ from your browser and follow the instructions
+  * visit http://your-site.com/ from your browser and follow the instructions.
 
 #### Manual installation
 
   * Extract the archive. Upload the content to your server.
   * Create a new MySQL database ('utf8_unicode_ci' collation), and use these two SQL dump files in given order:
-    * /app/config/sql/croogo.sql
-    * /app/config/sql/croogo_data.sql
-  * Rename /app/config/database.php.default to database.php and edit the details.
+    * app/config/sql/croogo.sql
+    * app/config/sql/croogo_data.sql
+  * Rename:
+    * app/config/database.php.install to database.php, and edit the details.
+    * app/config/settings.yml.install to settings.yml
   * You can access your admin panel at http://your-site.com/admin. Login details below:
     * username: admin
     * password: password
+
+It is recommended that you install Croogo using the web based installer for security reasons.
 
 ## Links
 
