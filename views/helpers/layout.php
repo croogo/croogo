@@ -355,7 +355,7 @@ class LayoutHelper extends AppHelper {
             $output .= $linkOutput;
         }
         if ($output != null) {
-            $tagAttr = array();
+            $tagAttr = $options['tagAttributes'];
             if ($options['dropdown'] && $depth == 1) {
                 $tagAttr['class'] = $options['dropdownClass'];
             }
