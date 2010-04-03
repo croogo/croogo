@@ -98,7 +98,7 @@ Admin.roundedCorners = function() {
  */
 $(document).ready(function() {
     Admin.navigation();
-	Admin.form();
+    Admin.form();
     Admin.extra();
     Admin.roundedCorners();
     Admin.stickyFooter();

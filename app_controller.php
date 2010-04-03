@@ -45,7 +45,6 @@ class AppController extends Controller {
         'Layout',
         'Custom',
         'Meta',
-        'Tinymce',
     );
 /**
  * Models
