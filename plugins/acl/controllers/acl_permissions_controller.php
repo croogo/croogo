@@ -12,8 +12,25 @@
  * @link     http://www.croogo.org
  */
 class AclPermissionsController extends AclAppController {
+/**
+ * Controller name
+ *
+ * @var string
+ * @access public
+ */
     var $name = 'AclPermissions';
-    var $uses = array('Acl.AclAco', 'Acl.AclAro', 'Acl.AclArosAco', 'Role');
+/**
+ * Models used by the Controller
+ *
+ * @var array
+ * @access public
+ */
+    var $uses = array(
+        'Acl.AclAco',
+        'Acl.AclAro',
+        'Acl.AclArosAco',
+        'Role',
+    );
 
     function admin_index() {
         $this->set('title_for_layout', __('Permissions', true));
@@ -62,6 +79,10 @@ class AclPermissionsController extends AclAppController {
     }
 
     function admin_toggle($acoId, $aroId) {
+        if (!$this->RequestHandler->isAjax()) {
+            $this->redirect(array('action' => 'index'));
+        }
+
         // see if acoId and aroId combination exists
         $conditions = array(
             'AclArosAco.aco_id' => $acoId,
