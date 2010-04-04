@@ -35,7 +35,7 @@ It is recommended that you install Croogo using the web based installer for secu
 
   * **Official website**: [http://croogo.org](http://croogo.org)
   * **Blog**: [http://fahad19.com/blog/term/croogo](http://fahad19.com/blog/term/croogo)
-  * **Downloads**: [http://wiki.github.com/croogo/croogo/downloads](http://wiki.github.com/croogo/croogo/downloads)
+  * **Downloads**: [http://github.com/croogo/croogo/downloads](http://github.com/croogo/croogo/downloads)
   * **Issue Tracker**: [http://croogo.lighthouseapp.com](http://croogo.lighthouseapp.com)
   * **Wiki**: [http://wiki.github.com/croogo/croogo/](http://wiki.github.com/croogo/croogo/)
   * **Google Group**: [http://groups.google.com/group/croogo](http://groups.google.com/group/croogo)
