@@ -27,6 +27,13 @@ class TypesController extends AppController {
  */
     var $uses = array('Type');
 
+    function beforeFilter() {
+        parent::beforeFilter();
+        if ($this->action == 'admin_edit') {
+            $this->Security->disabledFields = array('alias');
+        }
+    }
+
     function admin_index() {
         $this->set('title_for_layout', __('Type', true));
 
@@ -87,13 +94,6 @@ class TypesController extends AppController {
         if ($this->Type->delete($id)) {
             $this->Session->setFlash(__('Type deleted', true));
             $this->redirect(array('action'=>'index'));
-        }
-    }
-
-    function beforeFilter() {
-        parent::beforeFilter();
-        if ($this->action == 'admin_edit') {
-            $this->Security->disabledFields = array('alias');
         }
     }
 }

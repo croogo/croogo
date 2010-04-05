@@ -38,6 +38,13 @@ class CommentsController extends AppController {
  */
     var $uses = array('Comment');
 
+    function beforeFilter() {
+        parent::beforeFilter();
+        if ($this->action == 'admin_edit') {
+            $this->Security->disabledFields = array('ip');
+        }
+    }
+
     function admin_index() {
         $this->set('title_for_layout', __('Comments', true));
 
