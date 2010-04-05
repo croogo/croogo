@@ -90,5 +90,11 @@ class TypesController extends AppController {
         }
     }
 
+    function beforeFilter() {
+        parent::beforeFilter();
+        if ($this->action == 'admin_edit') {
+            $this->Security->disabledFields = array('alias');
+        }
+    }
 }
 ?>
