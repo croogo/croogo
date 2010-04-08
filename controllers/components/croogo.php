@@ -398,12 +398,13 @@ class CroogoComponent extends Object {
 
         foreach ($nodes AS $alias => $options) {
             $options = array_merge($_nodeOptions, $options);
+            $options['limit'] = str_replace('"', '', $options['limit']);
             $node = $this->controller->Node->find($options['find'], array(
                 'conditions' => $options['conditions'],
                 'order' => $options['order'],
                 'limit' => $options['limit'],
                 'cache' => array(
-                    'name' => 'croogo_nodes_'.$options['find'].'_'.$alias,
+                    'name' => 'croogo_nodes_'.$alias.'_'.md5(Spyc::YAMLDump($options)),
                     'config' => 'croogo_nodes',
                 ),
             ));
