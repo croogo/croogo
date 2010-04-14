@@ -115,7 +115,7 @@ class TinymceHookHelper extends AppHelper {
     }
 
     function beforeRender() {
-        if (Configure::read('Writing.wysiwyg')) {
+        if (Configure::read('Writing.wysiwyg') && ClassRegistry::getObject('view')) {
             $this->Html->script('/tinymce/js/tiny_mce', array('inline' => false));
             $this->Html->scriptBlock($this->fileBrowserCallBack(), array('inline' => false));
             $this->Html->scriptBlock('tinyMCE.init(' . $this->Js->object($this->getSettings()) . ');', array('inline' => false));
