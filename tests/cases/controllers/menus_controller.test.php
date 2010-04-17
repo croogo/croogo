@@ -18,6 +18,10 @@ class TestMenusController extends MenusController {
     function _stop($status = 0) {
         $this->stopped = $status;
     }
+
+    function __securityError() {
+
+    }
 }
 
 class MenusControllerTestCase extends CakeTestCase {

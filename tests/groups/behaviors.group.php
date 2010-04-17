@@ -1,5 +1,5 @@
 <?php
-class BehaviorsGroupTest extends GroupTest {
+class BehaviorsGroupTest extends TestSuite {
 /**
  * label property
  *

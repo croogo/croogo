@@ -18,6 +18,10 @@ class TestRegionsController extends RegionsController {
     function _stop($status = 0) {
         $this->stopped = $status;
     }
+
+    function __securityError() {
+
+    }
 }
 
 class RegionsControllerTestCase extends CakeTestCase {

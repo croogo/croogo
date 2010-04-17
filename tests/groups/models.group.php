@@ -1,5 +1,5 @@
 <?php
-class ModelsGroupTest extends GroupTest {
+class ModelsGroupTest extends TestSuite {
 /**
  * label property
  *

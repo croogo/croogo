@@ -18,6 +18,10 @@ class TestVocabulariesController extends VocabulariesController {
     function _stop($status = 0) {
         $this->stopped = $status;
     }
+
+    function __securityError() {
+
+    }
 }
 
 class VocabulariesControllerTestCase extends CakeTestCase {

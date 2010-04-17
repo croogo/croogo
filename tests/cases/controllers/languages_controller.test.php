@@ -18,6 +18,10 @@ class TestLanguagesController extends LanguagesController {
     function _stop($status = 0) {
         $this->stopped = $status;
     }
+
+    function __securityError() {
+
+    }
 }
 
 class LanguagesControllerTestCase extends CakeTestCase {
