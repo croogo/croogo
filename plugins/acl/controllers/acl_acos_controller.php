@@ -12,17 +12,17 @@
  * @link     http://www.croogo.org
  */
 class AclAcosController extends AclAppController {
-    var $name = 'AclAcos';
-    var $uses = array('Acl.AclAco');
+    public $name = 'AclAcos';
+    public $uses = array('Acl.AclAco');
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Acos', true));
 
         $this->AclAro->recursive = 0;
         $this->set('acos', $this->paginate());
     }
 
-    function admin_add() {
+    public function admin_add() {
         $this->set('title_for_layout', __('Add Aco', true));
 
         if (!empty($this->data)) {
@@ -36,7 +36,7 @@ class AclAcosController extends AclAppController {
         }
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Aco', true));
 
         if (!$id && empty($this->data)) {
@@ -56,7 +56,7 @@ class AclAcosController extends AclAppController {
         }
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Aco', true));
             $this->redirect(array('action' => 'index'));

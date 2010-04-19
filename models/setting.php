@@ -18,14 +18,14 @@ class Setting extends AppModel {
  * @var string
  * @access public
  */
-    var $name = 'Setting';
+    public $name = 'Setting';
 /**
  * Behaviors used by the Model
  *
  * @var array
  * @access public
  */
-    var $actsAs = array(
+    public $actsAs = array(
         'Ordered' => array(
             'field' => 'weight',
             'foreign_key' => false,
@@ -42,7 +42,7 @@ class Setting extends AppModel {
  * @var array
  * @access public
  */
-    var $validate = array(
+    public $validate = array(
         'key' => array(
             'isUnique' => array(
                 'rule' => 'isUnique',
@@ -59,7 +59,7 @@ class Setting extends AppModel {
  *
  * @return void
  */
-    function afterSave() {
+    public function afterSave() {
         $this->updateYaml();
         $this->writeConfiguration();
     }
@@ -68,7 +68,7 @@ class Setting extends AppModel {
  *
  * @return void
  */
-    function afterDelete() {
+    public function afterDelete() {
         $this->updateYaml();
         $this->writeConfiguration();
     }
@@ -80,7 +80,7 @@ class Setting extends AppModel {
  * @param array $options
  * @return boolean
  */
-    function write($key, $value, $options = array()) {
+    public function write($key, $value, $options = array()) {
         $_options = array(
             'editable' => 0,
         );
@@ -112,7 +112,7 @@ class Setting extends AppModel {
  * @param string $key
  * @return boolean
  */
-    function deleteKey($key) {
+    public function deleteKey($key) {
         $setting = $this->findByKey($key);
         if (isset($setting['Setting']['id']) &&
             $this->delete($setting['Setting']['id'])) {
@@ -125,7 +125,7 @@ class Setting extends AppModel {
  *
  * @return void
  */
-    function writeConfiguration() {
+    public function writeConfiguration() {
         $settings = $this->find('all', array(
             'fields' => array(
                 'Setting.key',
@@ -146,7 +146,7 @@ class Setting extends AppModel {
  *
  * @return void
  */
-    function updateYaml() {
+    public function updateYaml() {
         $list = $this->find('list', array(
             'fields' => array(
                 'key',

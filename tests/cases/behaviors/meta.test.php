@@ -3,7 +3,7 @@ App::import('Model', 'Node');
 
 class MetaBehaviorTestCase extends CakeTestCase {
 
-    var $fixtures = array(
+    public $fixtures = array(
         'aco',
         'aro',
         'aros_aco',
@@ -28,23 +28,23 @@ class MetaBehaviorTestCase extends CakeTestCase {
         'vocabulary',
     );
 
-    function startTest() {
+    public function startTest() {
         $this->Node =& ClassRegistry::init('Node');
     }
 
-    function testSingle() {
+    public function testSingle() {
         $about = $this->Node->findBySlug('about');
         $this->assertEqual($about['CustomFields']['meta_keywords'], 'key1, key2');
     }
 
-    function testMultiple() {
+    public function testMultiple() {
         $result = $this->Node->find('all', array(
             'order' => 'Node.id ASC',
         ));
         $this->assertEqual($result['0']['CustomFields']['meta_keywords'], 'key1, key2');
     }
 
-    function testPrepareMeta() {
+    public function testPrepareMeta() {
         $data = array(
             'Meta' => array(
                 String::uuid() => array(
@@ -71,7 +71,7 @@ class MetaBehaviorTestCase extends CakeTestCase {
         ));
     }
 
-    function endTest() {
+    public function endTest() {
         unset($this->Node);
         ClassRegistry::flush();
     }

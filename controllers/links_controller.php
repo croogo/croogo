@@ -18,14 +18,14 @@ class LinksController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Links';
+    public $name = 'Links';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array(
+    public $uses = array(
         'Link',
         'Role',
     );
@@ -37,9 +37,9 @@ class LinksController extends AppController {
  * @var string
  * @access public
  */
-    var $menuId = '';
+    public $menuId = '';
 
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter();
 
         if (isset($this->params['named']['menu']) && $this->params['named']['menu'] != null) {
@@ -53,7 +53,7 @@ class LinksController extends AppController {
         $this->set(compact('menu'));
     }
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Links', true));
 
         $conditions = array();
@@ -75,7 +75,7 @@ class LinksController extends AppController {
         $this->set(compact('linksTree', 'linksStatus'));
     }
 
-    function admin_add() {
+    public function admin_add() {
         $this->set('title_for_layout', __('Add Link', true));
 
         if (!empty($this->data)) {
@@ -98,7 +98,7 @@ class LinksController extends AppController {
         $this->set(compact('menus', 'roles', 'parentLinks'));
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Link', true));
 
         if (!$id && empty($this->data)) {
@@ -129,7 +129,7 @@ class LinksController extends AppController {
         $this->set(compact('menus', 'roles', 'parentLinks'));
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Link', true));
             $this->redirect(array('action'=>'index', 'menu' => $this->menuId));
@@ -144,7 +144,7 @@ class LinksController extends AppController {
         }
     }
 
-    function admin_moveup($id, $step = 1) {
+    public function admin_moveup($id, $step = 1) {
         if( $this->Link->moveup($id, $step) ) {
             $this->Session->setFlash(__('Moved up successfully', true));
         } else {
@@ -154,7 +154,7 @@ class LinksController extends AppController {
         $this->redirect(array('admin' => true, 'action' => 'index', 'menu' => $this->menuId));
     }
 
-    function admin_movedown($id, $step = 1) {
+    public function admin_movedown($id, $step = 1) {
         if( $this->Link->movedown($id, $step) ) {
             $this->Session->setFlash(__('Moved down successfully', true));
         } else {
@@ -164,7 +164,7 @@ class LinksController extends AppController {
         $this->redirect(array('admin' => true, 'action' => 'index', 'menu' => $this->menuId));
     }
 
-    function admin_process() {
+    public function admin_process() {
         $action = $this->data['Link']['action'];
         $ids = array();
         foreach ($this->data['Link'] AS $id => $value) {

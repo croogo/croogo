@@ -18,14 +18,14 @@ class Language extends AppModel {
  * @var string
  * @access public
  */
-    var $name = 'Language';
+    public $name = 'Language';
 /**
  * Behaviors used by the Model
  *
  * @var array
  * @access public
  */
-    var $actsAs = array(
+    public $actsAs = array(
         'Ordered' => array('field' => 'weight', 'foreign_key' => null),
     );
 /**
@@ -34,7 +34,7 @@ class Language extends AppModel {
  * @var array
  * @access public
  */
-    var $validate = array(
+    public $validate = array(
         'title' => array(
             'rule' => array('minLength', 1),
             'message' => 'Title cannot be empty.',

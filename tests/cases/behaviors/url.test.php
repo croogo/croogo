@@ -2,7 +2,7 @@
 App::import('Model', 'Node');
 class UrlBehaviorTestCase extends CakeTestCase {
 
-    var $fixtures = array(
+    public $fixtures = array(
         'aco',
         'aro',
         'aros_aco',
@@ -27,11 +27,11 @@ class UrlBehaviorTestCase extends CakeTestCase {
         'vocabulary',
     );
 
-    function startTest() {
+    public function startTest() {
         $this->Node =& ClassRegistry::init('Node');
     }
 
-    function testSingle() {
+    public function testSingle() {
         $helloWorld = $this->Node->findBySlug('hello-world');
         $this->assertEqual($helloWorld['Node']['url'], array(
             'controller' => 'nodes',
@@ -41,7 +41,7 @@ class UrlBehaviorTestCase extends CakeTestCase {
         ));
     }
 
-    function testMultiple() {
+    public function testMultiple() {
         $result = $this->Node->find('all');
         $this->assertEqual($result['0']['Node']['url'], array(
             'controller' => 'nodes',
@@ -51,7 +51,7 @@ class UrlBehaviorTestCase extends CakeTestCase {
         ));
     }
 
-    function endTest() {
+    public function endTest() {
         unset($this->Node);
         ClassRegistry::flush();
     }

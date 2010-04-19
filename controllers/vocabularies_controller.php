@@ -18,16 +18,16 @@ class VocabulariesController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Vocabularies';
+    public $name = 'Vocabularies';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array('Vocabulary');
+    public $uses = array('Vocabulary');
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Vocabulary', true));
 
         $this->Vocabulary->recursive = 0;
@@ -35,7 +35,7 @@ class VocabulariesController extends AppController {
         $this->set('vocabularies', $this->paginate());
     }
 
-    function admin_add() {
+    public function admin_add() {
         $this->set('title_for_layout', __('Add Vocabulary', true));
 
         if (!empty($this->data)) {
@@ -52,7 +52,7 @@ class VocabulariesController extends AppController {
         $this->set(compact('types'));
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Vocabulary', true));
 
         if (!$id && empty($this->data)) {
@@ -75,7 +75,7 @@ class VocabulariesController extends AppController {
         $this->set(compact('types'));
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Vocabulary', true));
             $this->redirect(array('action'=>'index'));

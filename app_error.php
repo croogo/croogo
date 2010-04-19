@@ -16,7 +16,7 @@ class AppError extends ErrorHandler {
  *
  * @return void
  */
-    function securityError() {
+    public function securityError() {
         $this->controller->set(array(
             'referer' => $this->controller->referer(),
         ));

@@ -3,13 +3,13 @@
  * @link http://bakery.cakephp.org/articles/view/recaptcha-component-helper-for-cakephp
  */
  class RecaptchaComponent extends Object {
-    var $publickey = '';
-    var $privatekey= '';
+    public $publickey = '';
+    public $privatekey= '';
     
-    var $is_valid = false;
-    var $error = "";
+    public $is_valid = false;
+    public $error = "";
     
-    function startup(&$controller){
+    public function startup(&$controller){
         $this->publickey = Configure::read('Service.recaptcha_public_key');
         $this->privatekey = Configure::read('Service.recaptcha_private_key');
 
@@ -23,7 +23,7 @@
         $this->controller->helpers[] = "Recaptcha";
     }
     
-    function valid($form){
+    public function valid($form){
         if (isset($form['recaptcha_challenge_field']) && isset($form['recaptcha_response_field'])){
             if($this->recaptcha_check_answer(
                 $this->privatekey, 
@@ -48,7 +48,7 @@
       * @param array $extra_params an array of extra variables to post to the server
       * @return ReCaptchaResponse
       */
-    function recaptcha_check_answer ($privkey, $remoteip, $challenge, $response, $extra_params = array()){
+    public function recaptcha_check_answer ($privkey, $remoteip, $challenge, $response, $extra_params = array()){
         if ($privkey == null || $privkey == ''){
             die ("To use reCAPTCHA you must get an API key from <a href='http://recaptcha.net/api/getkey'>http://recaptcha.net/api/getkey</a>");
         }
@@ -94,7 +94,7 @@
      * @param int port
      * @return array response
      */
-    function _recaptcha_http_post($host, $path, $data, $port = 80) {
+    protected function _recaptcha_http_post($host, $path, $data, $port = 80) {
 
         $req = $this->_recaptcha_qsencode ($data);
 
@@ -127,7 +127,7 @@
      * @param $data - array of string elements to be encoded
      * @return string - encoded request
      */
-    function _recaptcha_qsencode ($data) {
+    protected function _recaptcha_qsencode ($data) {
         $req = "";
         foreach ( $data as $key => $value )
                 $req .= $key . '=' . urlencode( stripslashes($value) ) . '&';

@@ -13,7 +13,7 @@
  */
 class EncoderBehavior extends ModelBehavior {
 
-    function setup(&$model, $config = array()) {
+    public function setup(&$model, $config = array()) {
         if (is_string($config)) {
             $config = array($config);
         }
@@ -30,7 +30,7 @@ class EncoderBehavior extends ModelBehavior {
  * @param array $options (optional)
  * @return string
  */
-    function encodeData(&$model, $data, $options = array()) {
+    public function encodeData(&$model, $data, $options = array()) {
         $_options = array(
             'json' => false,
             'trim' => true,
@@ -74,7 +74,7 @@ class EncoderBehavior extends ModelBehavior {
  * @param string $data data
  * @return array
  */
-    function decodeData(&$model, $data) {
+    public function decodeData(&$model, $data) {
         if ($data == '') {
             $output = '';
         } else {

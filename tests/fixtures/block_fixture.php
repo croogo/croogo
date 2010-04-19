@@ -1,9 +1,9 @@
 <?php
 
 class BlockFixture extends CakeTestFixture {
-	var $name = 'Block';
-	var $import = 'Block';
-	var $records = array(
+	public $name = 'Block';
+	public $import = 'Block';
+	public $records = array(
 		array(
 			'id' => '3',
 			'region_id' => '4',

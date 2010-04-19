@@ -1,9 +1,9 @@
 <?php
 
 class RoleFixture extends CakeTestFixture {
-	var $name = 'Role';
-	var $import = 'Role';
-	var $records = array(
+	public $name = 'Role';
+	public $import = 'Role';
+	public $records = array(
 		array(
 			'id' => '1',
 			'title' => 'Admin',

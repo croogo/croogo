@@ -3,10 +3,11 @@ App::import('Controller', 'Languages');
 
 class TestLanguagesController extends LanguagesController {
 
-    var $name = 'Languages';
+    public $name = 'Languages';
 
-    var $autoRender = false;
+    public $autoRender = false;
 
+<<<<<<< HEAD:tests/cases/controllers/languages_controller.test.php
     var $testView = false;
 
     function redirect($url, $status = null, $exit = true) {
@@ -19,20 +20,28 @@ class TestLanguagesController extends LanguagesController {
         } else {
             return parent::render($action, $layout, $file);
         }
+=======
+    public function redirect($url, $status = null, $exit = true) {
+        $this->redirectUrl = $url;
     }
 
-    function _stop($status = 0) {
+    public function render($action = null, $layout = null, $file = null) {
+        $this->renderedAction = $action;
+>>>>>>> 5ef3774... adding visibility keywords:tests/cases/controllers/languages_controller.test.php
+    }
+
+    public function _stop($status = 0) {
         $this->stopped = $status;
     }
 
-    function __securityError() {
+    public function __securityError() {
 
     }
 }
 
 class LanguagesControllerTestCase extends CakeTestCase {
 
-    var $fixtures = array(
+    public $fixtures = array(
         'aco',
         'aro',
         'aros_aco',
@@ -57,7 +66,7 @@ class LanguagesControllerTestCase extends CakeTestCase {
         'vocabulary',
     );
 
-    function startTest() {
+    public function startTest() {
         $this->Languages = new TestLanguagesController();
         $this->Languages->constructClasses();
         $this->Languages->params['controller'] = 'languages';
@@ -82,7 +91,7 @@ class LanguagesControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminAdd() {
+    public function testAdminAdd() {
         $this->Languages->params['action'] = 'admin_add';
         $this->Languages->params['url']['url'] = 'admin/languages/add';
         $this->Languages->Component->initialize($this->Languages);
@@ -109,7 +118,7 @@ class LanguagesControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminEdit() {
+    public function testAdminEdit() {
         $this->Languages->params['action'] = 'admin_edit';
         $this->Languages->params['url']['url'] = 'admin/languages/edit';
         $this->Languages->Component->initialize($this->Languages);
@@ -137,7 +146,7 @@ class LanguagesControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminDelete() {
+    public function testAdminDelete() {
         $this->Languages->params['action'] = 'admin_delete';
         $this->Languages->params['url']['url'] = 'admin/languages/delete';
         $this->Languages->Component->initialize($this->Languages);
@@ -156,7 +165,7 @@ class LanguagesControllerTestCase extends CakeTestCase {
         $this->assertFalse($hasAny);
     }
 
-    function testAdminMove() {
+    public function testAdminMove() {
         $this->Languages->params['action'] = 'admin_moveup';
         $this->Languages->params['url']['url'] = 'admin/languages/moveup';
         $this->Languages->Component->initialize($this->Languages);
@@ -174,7 +183,7 @@ class LanguagesControllerTestCase extends CakeTestCase {
         $this->__testAdminMoveDownWithSteps();
     }
 
-    function __testAdminMoveUp() {
+    private function __testAdminMoveUp() {
         // add language
         $this->Languages->Language->save(array(
             'title' => 'Bengali',
@@ -204,7 +213,7 @@ class LanguagesControllerTestCase extends CakeTestCase {
         ));
     }
 
-    function __testAdminMoveUpWithSteps() {
+    private function __testAdminMoveUpWithSteps() {
         // add another language
         $this->Languages->Language->id = false;
         $this->Languages->Language->save(array(
@@ -237,7 +246,7 @@ class LanguagesControllerTestCase extends CakeTestCase {
         ));
     }
 
-    function __testAdminMoveDown() {
+    private function __testAdminMoveDown() {
         $this->Languages->admin_movedown(3);
         $list = $this->Languages->Language->find('list', array(
             'order' => 'Language.weight ASC',
@@ -249,7 +258,7 @@ class LanguagesControllerTestCase extends CakeTestCase {
         ));
     }
 
-    function __testAdminMoveDownWithSteps() {
+    private function __testAdminMoveDownWithSteps() {
         $this->Languages->admin_movedown(2, 2);
         $list = $this->Languages->Language->find('list', array(
             'order' => 'Language.weight ASC',
@@ -261,7 +270,7 @@ class LanguagesControllerTestCase extends CakeTestCase {
         ));
     }
 
-    function testAdminSelect() {
+    public function testAdminSelect() {
         $this->Languages->params['action'] = 'admin_select';
         $this->Languages->params['url']['url'] = 'admin/languages/select';
         $this->Languages->Component->initialize($this->Languages);
@@ -282,7 +291,7 @@ class LanguagesControllerTestCase extends CakeTestCase {
         $this->assertEqual($this->Languages->viewVars['languages']['0']['Language']['alias'], 'eng');
     }
 
-    function endTest() {
+    public function endTest() {
         $this->Languages->Session->destroy();
         unset($this->Languages);
         ClassRegistry::flush();

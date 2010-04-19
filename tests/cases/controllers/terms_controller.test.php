@@ -3,10 +3,11 @@ App::import('Controller', 'Terms');
 
 class TestTermsController extends TermsController {
 
-    var $name = 'Terms';
+    public $name = 'Terms';
 
-    var $autoRender = false;
+    public $autoRender = false;
 
+<<<<<<< HEAD:tests/cases/controllers/terms_controller.test.php
     var $testView = false;
 
     function redirect($url, $status = null, $exit = true) {
@@ -19,20 +20,28 @@ class TestTermsController extends TermsController {
         } else {
             return parent::render($action, $layout, $file);
         }
+=======
+    public function redirect($url, $status = null, $exit = true) {
+        $this->redirectUrl = $url;
     }
 
-    function _stop($status = 0) {
+    public function render($action = null, $layout = null, $file = null) {
+        $this->renderedAction = $action;
+>>>>>>> 5ef3774... adding visibility keywords:tests/cases/controllers/terms_controller.test.php
+    }
+
+    public function _stop($status = 0) {
         $this->stopped = $status;
     }
 
-    function __securityError() {
+    public function __securityError() {
 
     }
 }
 
 class TermsControllerTestCase extends CakeTestCase {
 
-    var $fixtures = array(
+    public $fixtures = array(
         'aco',
         'aro',
         'aros_aco',
@@ -57,7 +66,7 @@ class TermsControllerTestCase extends CakeTestCase {
         'vocabulary',
     );
 
-    function startTest() {
+    public function startTest() {
         $this->Terms = new TestTermsController();
         $this->Terms->constructClasses();
         $this->Terms->params['named'] = array();
@@ -83,7 +92,7 @@ class TermsControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminAdd() {
+    public function testAdminAdd() {
         $this->Terms->params['named']['vocabulary'] = 1;
         $this->Terms->params['action'] = 'admin_add';
         $this->Terms->params['url']['url'] = 'admin/terms/add'; // categories
@@ -115,7 +124,7 @@ class TermsControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminEdit() {
+    public function testAdminEdit() {
         $this->Terms->params['named']['vocabulary'] = 1;
         $this->Terms->params['action'] = 'admin_edit';
         $this->Terms->params['url']['url'] = 'admin/terms/edit';
@@ -146,7 +155,7 @@ class TermsControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminDelete() {
+    public function testAdminDelete() {
         $this->Terms->params['named']['vocabulary'] = 1;
         $this->Terms->params['action'] = 'admin_delete';
         $this->Terms->params['url']['url'] = 'admin/terms/delete';
@@ -169,7 +178,7 @@ class TermsControllerTestCase extends CakeTestCase {
         $this->assertFalse($hasAny);
     }
 
-    function testAdminMove() {
+    public function testAdminMove() {
         $this->Terms->params['named']['vocabulary'] = 1;
         $this->Terms->params['action'] = 'admin_moveup';
         $this->Terms->params['url']['url'] = 'admin/terms/moveup';
@@ -188,7 +197,7 @@ class TermsControllerTestCase extends CakeTestCase {
         $this->__testAdminMoveDownWithSteps();
     }
 
-    function __testAdminMoveUp() {
+    private function __testAdminMoveUp() {
         // get current list with order for categories
         $list = $this->Terms->Term->find('list', array(
             'conditions' => array(
@@ -219,7 +228,7 @@ class TermsControllerTestCase extends CakeTestCase {
         ));
     }
 
-    function __testAdminMoveUpWithSteps() {
+    private function __testAdminMoveUpWithSteps() {
         // add new term
         $this->Terms->Term->id = false;
         $this->Terms->Term->save(array(
@@ -262,7 +271,7 @@ class TermsControllerTestCase extends CakeTestCase {
         ));
     }
 
-    function __testAdminMoveDown() {
+    private function __testAdminMoveDown() {
         $this->Terms->admin_movedown(1);
         $list = $this->Terms->Term->find('list', array(
             'conditions' => array(
@@ -277,7 +286,7 @@ class TermsControllerTestCase extends CakeTestCase {
         ));
     }
 
-    function __testAdminMoveDownWithSteps() {
+    private function __testAdminMoveDownWithSteps() {
         $this->Terms->admin_movedown($this->Terms->newTermId, 2);
         $list = $this->Terms->Term->find('list', array(
             'conditions' => array(
@@ -292,7 +301,7 @@ class TermsControllerTestCase extends CakeTestCase {
         ));
     }
 
-    function testAdminProcess() {
+    public function testAdminProcess() {
         $this->Terms->params['named']['vocabulary'] = 1;
         $this->Terms->params['action'] = 'admin_process';
         $this->Terms->params['url']['url'] = 'admin/terms/process';
@@ -309,7 +318,7 @@ class TermsControllerTestCase extends CakeTestCase {
         $this->__testAdminProcessDelete();
     }
 
-    function __testAdminProcessUnpublish() {
+    private function __testAdminProcessUnpublish() {
         $this->Terms->data = array(
             'Term' => array(
                 'action' => 'unpublish',
@@ -334,7 +343,7 @@ class TermsControllerTestCase extends CakeTestCase {
         $this->assertFalse($hasAny);
     }
 
-    function __testAdminProcessPublish() {
+    private function __testAdminProcessPublish() {
         $this->Terms->data = array(
             'Term' => array(
                 'action' => 'publish',
@@ -361,7 +370,7 @@ class TermsControllerTestCase extends CakeTestCase {
         $this->assertTrue($count, 2);
     }
 
-    function __testAdminProcessDelete() {
+    private function __testAdminProcessDelete() {
         $this->Terms->data = array(
             'Term' => array(
                 'action' => 'delete',
@@ -385,7 +394,7 @@ class TermsControllerTestCase extends CakeTestCase {
         $this->assertFalse($hasAny);
     }
 
-    function endTest() {
+    public function endTest() {
         $this->Terms->Session->destroy();
         unset($this->Terms);
         ClassRegistry::flush();

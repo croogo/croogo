@@ -1,9 +1,9 @@
 <?php
 
 class TermFixture extends CakeTestFixture {
-	var $name = 'Term';
-	var $import = 'Term';
-	var $records = array(
+	public $name = 'Term';
+	public $import = 'Term';
+	public $records = array(
 		array(
 			'id' => '1',
 			'parent_id' => '',

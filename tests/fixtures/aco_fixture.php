@@ -1,8 +1,8 @@
 <?php
 
 class AcoFixture extends CakeTestFixture {
-	var $name = 'Aco';
-	var $fields = array(
+	public $name = 'Aco';
+	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
 		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
 		'model' => array('type' => 'string', 'null' => true),
@@ -12,7 +12,7 @@ class AcoFixture extends CakeTestFixture {
 		'rght' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 	);
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => '1',
 			'parent_id' => '',

@@ -18,25 +18,25 @@ class FilemanagerController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Filemanager';
+    public $name = 'Filemanager';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array('Setting', 'User');
+    public $uses = array('Setting', 'User');
 /**
  * Helpers used by the Controller
  *
  * @var array
  * @access public
  */
-    var $helpers = array('Html', 'Form', 'Filemanager');
+    public $helpers = array('Html', 'Form', 'Filemanager');
 
-    var $deletablePaths = array();
+    public $deletablePaths = array();
 
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter();
 
         $this->deletablePaths = array(
@@ -49,12 +49,12 @@ class FilemanagerController extends AppController {
         App::import('Core', 'File');
     }
 
-    function admin_index() {
+    public function admin_index() {
         $this->redirect(array('action' => 'browse'));
         die();
     }
 
-    function admin_browse() {
+    public function admin_browse() {
         $this->folder = new Folder;
 
         if (isset($this->params['url']['path'])) {
@@ -71,7 +71,7 @@ class FilemanagerController extends AppController {
         $this->set('path', $path);
     }
 
-    function admin_editfile() {
+    public function admin_editfile() {
         if (isset($this->params['url']['path'])) {
             $path = $this->params['url']['path'];
             $absolutefilepath = $path;
@@ -98,7 +98,7 @@ class FilemanagerController extends AppController {
         $this->set(compact('content', 'path', 'absolutefilepath'));
     }
 
-    function admin_upload() {
+    public function admin_upload() {
         $this->set('title_for_layout', __('Upload', true));
 
         if (isset($this->params['url']['path'])) {
@@ -119,7 +119,7 @@ class FilemanagerController extends AppController {
         }
     }
 
-    function admin_delete_file() {
+    public function admin_delete_file() {
         if (isset($this->params['url']['path'])) {
             $path = $this->params['url']['path'];
         } else {
@@ -146,7 +146,7 @@ class FilemanagerController extends AppController {
         exit();
     }
 
-    function admin_delete_directory() {
+    public function admin_delete_directory() {
         if (isset($this->params['url']['path'])) {
             $path = $this->params['url']['path'];
         } else {
@@ -173,7 +173,7 @@ class FilemanagerController extends AppController {
         exit();
     }
 
-    function admin_rename() {
+    public function admin_rename() {
         if (isset($this->params['url']['path'])) {
             $path = $this->params['url']['path'];
         } else {
@@ -191,7 +191,7 @@ class FilemanagerController extends AppController {
         }
     }
 
-    function admin_create_directory() {
+    public function admin_create_directory() {
         $this->set('title_for_layout', __('New Directory', true));
 
         if (isset($this->params['url']['path'])) {
@@ -214,7 +214,7 @@ class FilemanagerController extends AppController {
         $this->set(compact('path'));
     }
 
-    function admin_create_file() {
+    public function admin_create_file() {
         $this->set('title_for_layout', __('New File', true));
 
         if (isset($this->params['url']['path'])) {
@@ -236,7 +236,7 @@ class FilemanagerController extends AppController {
         $this->set(compact('path'));
     }
 
-    function admin_chmod() {
+    public function admin_chmod() {
 
     }
 

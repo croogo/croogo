@@ -18,16 +18,16 @@ class BlocksController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Blocks';
+    public $name = 'Blocks';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array('Block', 'Role');
+    public $uses = array('Block', 'Role');
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Blocks', true));
 
         $this->Block->recursive = 0;
@@ -35,7 +35,7 @@ class BlocksController extends AppController {
         $this->set('blocks', $this->paginate());
     }
 
-    function admin_add() {
+    public function admin_add() {
         $this->set('title_for_layout', __('Add Block', true));
 
         if (!empty($this->data)) {
@@ -54,7 +54,7 @@ class BlocksController extends AppController {
         $this->set(compact('regions', 'roles'));
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Block', true));
 
         if (!$id && empty($this->data)) {
@@ -84,7 +84,7 @@ class BlocksController extends AppController {
         $this->set(compact('regions', 'roles'));
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Block', true));
             $this->redirect(array('action'=>'index'));
@@ -99,7 +99,7 @@ class BlocksController extends AppController {
         }
     }
 
-    function admin_moveup($id, $step = 1) {
+    public function admin_moveup($id, $step = 1) {
         if( $this->Block->moveup($id, $step) ) {
             $this->Session->setFlash(__('Moved up successfully', true));
         } else {
@@ -109,7 +109,7 @@ class BlocksController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    function admin_movedown($id, $step = 1) {
+    public function admin_movedown($id, $step = 1) {
         if( $this->Block->movedown($id, $step) ) {
             $this->Session->setFlash(__('Moved down successfully', true));
         } else {
@@ -119,7 +119,7 @@ class BlocksController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    function admin_process() {
+    public function admin_process() {
         $action = $this->data['Block']['action'];
         $ids = array();
         foreach ($this->data['Block'] AS $id => $value) {

@@ -3,10 +3,11 @@ App::import('Controller', 'Types');
 
 class TestTypesController extends TypesController {
 
-    var $name = 'Types';
+    public $name = 'Types';
 
-    var $autoRender = false;
+    public $autoRender = false;
 
+<<<<<<< HEAD:tests/cases/controllers/types_controller.test.php
     var $testView = false;
 
     function redirect($url, $status = null, $exit = true) {
@@ -19,20 +20,28 @@ class TestTypesController extends TypesController {
         } else {
             return parent::render($action, $layout, $file);
         }
+=======
+    public function redirect($url, $status = null, $exit = true) {
+        $this->redirectUrl = $url;
     }
 
-    function _stop($status = 0) {
+    public function render($action = null, $layout = null, $file = null) {
+        $this->renderedAction = $action;
+>>>>>>> 5ef3774... adding visibility keywords:tests/cases/controllers/types_controller.test.php
+    }
+
+    public function _stop($status = 0) {
         $this->stopped = $status;
     }
 
-    function __securityError() {
+    public function __securityError() {
 
     }
 }
 
 class TypesControllerTestCase extends CakeTestCase {
 
-    var $fixtures = array(
+    public $fixtures = array(
         'aco',
         'aro',
         'aros_aco',
@@ -57,7 +66,7 @@ class TypesControllerTestCase extends CakeTestCase {
         'vocabulary',
     );
 
-    function startTest() {
+    public function startTest() {
         $this->Types = new TestTypesController();
         $this->Types->constructClasses();
         $this->Types->params['controller'] = 'types';
@@ -82,7 +91,7 @@ class TypesControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminAdd() {
+    public function testAdminAdd() {
         $this->Types->params['action'] = 'admin_add';
         $this->Types->params['url']['url'] = 'admin/types/add';
         $this->Types->Component->initialize($this->Types);
@@ -109,7 +118,7 @@ class TypesControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminEdit() {
+    public function testAdminEdit() {
         $this->Types->params['action'] = 'admin_edit';
         $this->Types->params['url']['url'] = 'admin/types/edit';
         $this->Types->Component->initialize($this->Types);
@@ -136,7 +145,7 @@ class TypesControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminDelete() {
+    public function testAdminDelete() {
         $this->Types->params['action'] = 'admin_delete';
         $this->Types->params['url']['url'] = 'admin/types/delete';
         $this->Types->Component->initialize($this->Types);
@@ -155,7 +164,7 @@ class TypesControllerTestCase extends CakeTestCase {
         $this->assertFalse($hasAny);
     }
 
-    function endTest() {
+    public function endTest() {
         $this->Types->Session->destroy();
         unset($this->Types);
         ClassRegistry::flush();

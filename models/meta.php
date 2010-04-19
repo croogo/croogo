@@ -18,21 +18,21 @@ class Meta extends AppModel {
  * @var string
  * @access public
  */
-    var $name = 'Meta';
+    public $name = 'Meta';
 /**
  * Table name
  *
  * @var string
  * @access public
  */
-    var $useTable = 'meta';
+    public $useTable = 'meta';
 /**
  * Model associations: belongsTo
  *
  * @var array
  * @access public
  */
-    var $belongsTo = array(
+    public $belongsTo = array(
         'Node' => array(
             'className' => 'Node',
             'foreignKey' => 'foreign_key',

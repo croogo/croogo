@@ -18,14 +18,14 @@ class ContactsController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Contacts';
+    public $name = 'Contacts';
 /**
  * Components
  *
  * @var array
  * @access public
  */
-    var $components = array(
+    public $components = array(
         'Akismet',
         'Email',
         'Recaptcha',
@@ -36,9 +36,9 @@ class ContactsController extends AppController {
  * @var array
  * @access public
  */
-    var $uses = array('Contact');
+    public $uses = array('Contact');
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Contacts', true));
 
         $this->Contact->recursive = 0;
@@ -46,7 +46,7 @@ class ContactsController extends AppController {
         $this->set('contacts', $this->paginate());
     }
 
-    function admin_add() {
+    public function admin_add() {
         $this->set('title_for_layout', __('Add Contact', true));
 
         if (!empty($this->data)) {
@@ -60,7 +60,7 @@ class ContactsController extends AppController {
         }
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Contact', true));
 
         if (!$id && empty($this->data)) {
@@ -80,7 +80,7 @@ class ContactsController extends AppController {
         }
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Contact', true));
             $this->redirect(array('action'=>'index'));
@@ -95,7 +95,7 @@ class ContactsController extends AppController {
         }
     }
 
-    function view($alias = null) {
+    public function view($alias = null) {
         if (!$alias) {
             $this->redirect('/');
         }
@@ -140,7 +140,7 @@ class ContactsController extends AppController {
         $this->set('title_for_layout', $contact['Contact']['title']);
     }
 
-    function __validation($continue, $contact) {
+    private function __validation($continue, $contact) {
         if ($this->Contact->Message->set($this->data) &&
             $this->Contact->Message->validates() &&
             $continue === true) {
@@ -155,7 +155,7 @@ class ContactsController extends AppController {
         return $continue;
     }
 
-    function __spam_protection($continue, $contact) {
+    private function __spam_protection($continue, $contact) {
         if (!empty($this->data) &&
             $contact['Contact']['message_spam_protection'] &&
             $continue === true) {
@@ -171,7 +171,7 @@ class ContactsController extends AppController {
         return $continue;
     }
 
-    function __captcha($continue, $contact) {
+    private function __captcha($continue, $contact) {
         if (!empty($this->data) &&
             $contact['Contact']['message_captcha'] &&
             $continue === true &&
@@ -183,7 +183,7 @@ class ContactsController extends AppController {
         return $continue;
     }
 
-    function __send_email($continue, $contact) {
+    private function __send_email($continue, $contact) {
         if ($contact['Contact']['message_notify'] &&
             $continue === true) {
             $this->Email->from = Configure::read('Site.title') . ' '

@@ -3,10 +3,11 @@ App::import('Controller', 'Roles');
 
 class TestRolesController extends RolesController {
 
-    var $name = 'Roles';
+    public $name = 'Roles';
 
-    var $autoRender = false;
+    public $autoRender = false;
 
+<<<<<<< HEAD:tests/cases/controllers/roles_controller.test.php
     var $testView = false;
 
     function redirect($url, $status = null, $exit = true) {
@@ -19,20 +20,28 @@ class TestRolesController extends RolesController {
         } else {
             return parent::render($action, $layout, $file);
         }
+=======
+    public function redirect($url, $status = null, $exit = true) {
+        $this->redirectUrl = $url;
     }
 
-    function _stop($status = 0) {
+    public function render($action = null, $layout = null, $file = null) {
+        $this->renderedAction = $action;
+>>>>>>> 5ef3774... adding visibility keywords:tests/cases/controllers/roles_controller.test.php
+    }
+
+    public function _stop($status = 0) {
         $this->stopped = $status;
     }
 
-    function __securityError() {
+    public function __securityError() {
 
     }
 }
 
 class RolesControllerTestCase extends CakeTestCase {
 
-    var $fixtures = array(
+    public $fixtures = array(
         'aco',
         'aro',
         'aros_aco',
@@ -57,7 +66,7 @@ class RolesControllerTestCase extends CakeTestCase {
         'vocabulary',
     );
 
-    function startTest() {
+    public function startTest() {
         $this->Roles = new TestRolesController();
         $this->Roles->constructClasses();
         $this->Roles->params['controller'] = 'roles';
@@ -67,6 +76,7 @@ class RolesControllerTestCase extends CakeTestCase {
         $this->Roles->Role->Permission->useDbConfig = 'test';
     }
 
+<<<<<<< HEAD:tests/cases/controllers/roles_controller.test.php
     function testAdminIndex() {
         $this->Roles->params['action'] = 'admin_index';
         $this->Roles->params['url']['url'] = 'admin/roles';
@@ -85,6 +95,9 @@ class RolesControllerTestCase extends CakeTestCase {
     }
 
     function testAdminAdd() {
+=======
+    public function testAdminAdd() {
+>>>>>>> 5ef3774... adding visibility keywords:tests/cases/controllers/roles_controller.test.php
         $this->Roles->params['action'] = 'admin_add';
         $this->Roles->params['url']['url'] = 'admin/roles/add';
         $this->Roles->Component->initialize($this->Roles);
@@ -111,7 +124,7 @@ class RolesControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminEdit() {
+    public function testAdminEdit() {
         $this->Roles->params['action'] = 'admin_edit';
         $this->Roles->params['url']['url'] = 'admin/roles/edit';
         $this->Roles->Component->initialize($this->Roles);
@@ -138,7 +151,7 @@ class RolesControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminDelete() {
+    public function testAdminDelete() {
         $this->Roles->params['action'] = 'admin_delete';
         $this->Roles->params['url']['url'] = 'admin/roles/delete';
         $this->Roles->Component->initialize($this->Roles);
@@ -157,7 +170,7 @@ class RolesControllerTestCase extends CakeTestCase {
         $this->assertFalse($hasAny);
     }
 
-    function endTest() {
+    public function endTest() {
         $this->Roles->Session->destroy();
         unset($this->Roles);
         ClassRegistry::flush();

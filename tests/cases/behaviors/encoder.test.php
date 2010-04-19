@@ -2,7 +2,7 @@
 App::import('Model', 'Node');
 class EncoderBehaviorTestCase extends CakeTestCase {
 
-    var $fixtures = array(
+    public $fixtures = array(
         'aco',
         'aro',
         'aros_aco',
@@ -27,17 +27,17 @@ class EncoderBehaviorTestCase extends CakeTestCase {
         'vocabulary',
     );
 
-    function startTest() {
+    public function startTest() {
         $this->Node =& ClassRegistry::init('Node');
     }
 
-    function testEncodeWithoutKeys() {
+    public function testEncodeWithoutKeys() {
         $array = array('hello', 'world');
         $encoded = $this->Node->encodeData($array);
         $this->assertEqual($encoded, '["hello","world"]');
     }
 
-    function testEncodeWithKeys() {
+    public function testEncodeWithKeys() {
         $array = array(
             'first' => 'hello',
             'second' => 'world',
@@ -49,13 +49,13 @@ class EncoderBehaviorTestCase extends CakeTestCase {
         $this->assertEqual($encoded, '{"first":"hello","second":"world"}');
     }
 
-    function testDecodeWithoutKeys() {
+    public function testDecodeWithoutKeys() {
         $encoded = '["hello","world"]';
         $array = $this->Node->decodeData($encoded);
         $this->assertEqual($array, array('hello', 'world'));
     }
 
-    function testDecodeWithKeys() {
+    public function testDecodeWithKeys() {
         $encoded = '{"first":"hello","second":"world"}';
         $array = $this->Node->decodeData($encoded);
         $this->assertEqual($array, array(
@@ -64,7 +64,7 @@ class EncoderBehaviorTestCase extends CakeTestCase {
         ));
     }
 
-    function endTest() {
+    public function endTest() {
         unset($this->Node);
         ClassRegistry::flush();
     }

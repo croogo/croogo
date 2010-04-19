@@ -18,7 +18,7 @@ class MetaHelper extends AppHelper {
  * @var array
  * @access public
  */
-    var $helpers = array('Html', 'Form');
+    public $helpers = array('Html', 'Form');
 /**
  * Meta with key/value fields
  *
@@ -28,7 +28,7 @@ class MetaHelper extends AppHelper {
  * @param array $options (optional) options
  * @return string
  */
-    function field($key = '', $value = null, $id = null, $options = array()) {
+    public function field($key = '', $value = null, $id = null, $options = array()) {
         $_options = array(
             'key'   => array(
                 'label'   => __('Key', true),

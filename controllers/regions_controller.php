@@ -18,16 +18,16 @@ class RegionsController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Regions';
+    public $name = 'Regions';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array('Region');
+    public $uses = array('Region');
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Region', true));
 
         $this->Region->recursive = 0;
@@ -35,7 +35,7 @@ class RegionsController extends AppController {
         $this->set('regions', $this->paginate());
     }
 
-    function admin_add() {
+    public function admin_add() {
         $this->set('title_for_layout', __('Add Region', true));
 
         if (!empty($this->data)) {
@@ -49,7 +49,7 @@ class RegionsController extends AppController {
         }
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Region', true));
 
         if (!$id && empty($this->data)) {
@@ -69,7 +69,7 @@ class RegionsController extends AppController {
         }
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Region', true));
             $this->redirect(array('action'=>'index'));

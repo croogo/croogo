@@ -18,21 +18,21 @@ class User extends AppModel {
  * @var string
  * @access public
  */
-    var $name = 'User';
+    public $name = 'User';
 /**
  * Order
  *
  * @var string
  * @access public
  */
-    var $order = 'name ASC';
+    public $order = 'name ASC';
 /**
  * Behaviors used by the Model
  *
  * @var array
  * @access public
  */
-    var $actsAs = array(
+    public $actsAs = array(
         'Acl' => array('type' => 'requester'),
     );
 /**
@@ -41,14 +41,14 @@ class User extends AppModel {
  * @var array
  * @access public
  */
-    var $belongsTo = array('Role');
+    public $belongsTo = array('Role');
 /**
  * Validation
  *
  * @var array
  * @access public
  */
-    var $validate = array(
+    public $validate = array(
         'username' => array(
             'rule' => 'isUnique',
             'message' => 'The username has already been taken.',
@@ -73,7 +73,7 @@ class User extends AppModel {
         ),
     );
 
-    function parentNode() {
+    public function parentNode() {
         if (!$this->id && empty($this->data)) {
             return null;
         }
@@ -88,7 +88,7 @@ class User extends AppModel {
         }
     }
 
-    function afterSave($created) {
+    public function afterSave($created) {
         if (!$created) {
             $parent = $this->parentNode();
             $parent = $this->node($parent);

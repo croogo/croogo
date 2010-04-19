@@ -18,16 +18,16 @@ class MessagesController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Messages';
+    public $name = 'Messages';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array('Message');
+    public $uses = array('Message');
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Messages', true));
 
         $this->Message->recursive = 0;
@@ -56,7 +56,7 @@ class MessagesController extends AppController {
         $this->set('messages', $this->paginate());
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Message', true));
 
         if (!$id && empty($this->data)) {
@@ -76,7 +76,7 @@ class MessagesController extends AppController {
         }
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Message', true));
             $this->redirect(array('action'=>'index'));
@@ -91,7 +91,7 @@ class MessagesController extends AppController {
         }
     }
 
-    function admin_process() {
+    public function admin_process() {
         $action = $this->data['Message']['action'];
         $ids = array();
         foreach ($this->data['Message'] AS $id => $value) {

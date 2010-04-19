@@ -19,7 +19,7 @@ class CachedBehavior extends ModelBehavior {
  * @param array  $config
  * @return void
  */
-    function setup(&$model, $config = array()) {
+    public function setup(&$model, $config = array()) {
         if (is_string($config)) {
             $config = array($config);
         }
@@ -33,7 +33,7 @@ class CachedBehavior extends ModelBehavior {
  * @param boolean $created
  * @return void
  */
-    function afterSave(&$model, $created) {
+    public function afterSave(&$model, $created) {
         $this->_deleteCachedFiles($model);
     }
 /**
@@ -42,7 +42,7 @@ class CachedBehavior extends ModelBehavior {
  * @param object $model
  * @return void
  */
-    function afterDelete(&$model) {
+    public function afterDelete(&$model) {
         $this->_deleteCachedFiles($model);
     }
 /**
@@ -51,7 +51,7 @@ class CachedBehavior extends ModelBehavior {
  * @param object $model
  * @return void
  */
-    function _deleteCachedFiles(&$model) {
+    protected function _deleteCachedFiles(&$model) {
         foreach ($this->settings[$model->alias]['prefix'] AS $prefix) {
             $files = glob(TMP.'cache/queries/cake_'.$prefix.'*');
             if (is_array($files) && count($files) > 0) {

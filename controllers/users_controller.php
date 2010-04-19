@@ -18,14 +18,14 @@ class UsersController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Users';
+    public $name = 'Users';
 /**
  * Components
  *
  * @var array
  * @access public
  */
-    var $components = array(
+    public $components = array(
         'Email',
     );
 /**
@@ -34,20 +34,20 @@ class UsersController extends AppController {
  * @var array
  * @access public
  */
-    var $uses = array('User');
+    public $uses = array('User');
 
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter();
     }
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Users', true));
 
         $this->User->recursive = 0;
         $this->set('users', $this->paginate());
     }
 
-    function admin_add() {
+    public function admin_add() {
         if (!empty($this->data)) {
             $this->User->create();
             $this->data['User']['activation_key'] = md5(uniqid());
@@ -65,7 +65,7 @@ class UsersController extends AppController {
         $this->set(compact('roles'));
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid User', true));
             $this->redirect(array('action' => 'index'));
@@ -85,7 +85,7 @@ class UsersController extends AppController {
         $this->set(compact('roles'));
     }
 
-    function admin_reset_password($id = null) {
+    public function admin_reset_password($id = null) {
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid User', true));
             $this->redirect(array('action' => 'index'));
@@ -108,7 +108,7 @@ class UsersController extends AppController {
         }
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for User', true));
             $this->redirect(array('action' => 'index'));
@@ -123,21 +123,21 @@ class UsersController extends AppController {
         }
     }
 
-    function admin_login() {
+    public function admin_login() {
         $this->set('title_for_layout', __('Admin Login', true));
         $this->layout = "admin_login";
     }
 
-    function admin_logout() {
+    public function admin_logout() {
         $this->Session->setFlash(__('Log out successful.', true));
         $this->redirect($this->Auth->logout());
     }
 
-    function index() {
+    public function index() {
         $this->set('title_for_layout', __('Users', true));
     }
 
-    function add() {
+    public function add() {
         $this->set('title_for_layout', __('Register', true));
         if (!empty($this->data)) {
             $this->User->create();
@@ -162,7 +162,7 @@ class UsersController extends AppController {
         }
     }
 
-    function activate($username = null, $key = null) {
+    public function activate($username = null, $key = null) {
         if ($username == null || $key == null) {
             $this->redirect(array('action' => 'login'));
         }
@@ -184,9 +184,9 @@ class UsersController extends AppController {
         $this->redirect(array('action' => 'login'));
     }
 
-    function edit() {}
+    public function edit() {}
 
-    function forgot() {
+    public function forgot() {
         $this->set('title_for_layout', __('Forgot Password', true));
 
         if (!empty($this->data) && isset($this->data['User']['username'])) {
@@ -215,7 +215,7 @@ class UsersController extends AppController {
         }
     }
 
-    function reset($username = null, $key = null) {
+    public function reset($username = null, $key = null) {
         $this->set('title_for_layout', __('Reset Password', true));
 
         if ($username == null || $key == null) {
@@ -249,16 +249,16 @@ class UsersController extends AppController {
         $this->set(compact('user', 'username', 'key'));
     }
 
-    function login() {
+    public function login() {
         $this->set('title_for_layout', __('Log in', true));
     }
 
-    function logout() {
+    public function logout() {
         $this->Session->setFlash(__('Log out successful.', true));
         $this->redirect($this->Auth->logout());
     }
 
-    function view($username) {
+    public function view($username) {
         $user = $this->User->findByUsername($username);
         if (!isset($user['User']['id'])) {
             $this->Session->setFlash(__('Invalid User.', true));

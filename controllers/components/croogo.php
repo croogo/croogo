@@ -18,7 +18,7 @@ class CroogoComponent extends Object {
  * @var array
  * @access public
  */
-    var $components = array(
+    public $components = array(
         'Session',
     );
 /**
@@ -27,7 +27,7 @@ class CroogoComponent extends Object {
  * @var array
  * @access public
  */
-    var $hooks = array();
+    public $hooks = array();
 /**
  * Role ID of current user
  *
@@ -36,49 +36,49 @@ class CroogoComponent extends Object {
  * @var integer
  * @access public
  */
-    var $roleId = 3;
+    public $roleId = 3;
 /**
  * Menus for layout
  *
  * @var string
  * @access public
  */
-    var $menus_for_layout = array();
+    public $menus_for_layout = array();
  /**
  * Blocks for layout
  *
  * @var string
  * @access public
  */
-    var $blocks_for_layout = array();
+    public $blocks_for_layout = array();
  /**
  * Vocabularies for layout
  *
  * @var string
  * @access public
  */
-    var $vocabularies_for_layout = array();
+    public $vocabularies_for_layout = array();
  /**
  * Types for layout
  *
  * @var string
  * @access public
  */
-    var $types_for_layout = array();
+    public $types_for_layout = array();
  /**
  * Nodes for layout
  *
  * @var string
  * @access public
  */
-    var $nodes_for_layout = array();
+    public $nodes_for_layout = array();
 /**
  * Blocks data: contains parsed value of bb-code like strings
  *
  * @var array
  * @access public
  */
-    var $blocksData = array(
+    public $blocksData = array(
         'menus' => array(),
         'vocabularies' => array(),
         'nodes' => array(),
@@ -89,7 +89,7 @@ class CroogoComponent extends Object {
  * @param array $options options
  * @access public
  */
-    function __construct($options = array()) {
+    public function __construct($options = array()) {
         $this->__loadHooks();
 
         return parent::__construct($options);
@@ -99,7 +99,7 @@ class CroogoComponent extends Object {
  *
  * @return void
  */
-    function __loadHooks() {
+    private function __loadHooks() {
         if (Configure::read('Hook.components')) {
             // Set hooks
             $hooks = Configure::read('Hook.components');
@@ -129,7 +129,7 @@ class CroogoComponent extends Object {
  * @param object $controller instance of controller
  * @return void
  */
-    function startup(&$controller) {
+    public function startup(&$controller) {
         $this->controller =& $controller;
         App::import('Core', 'File');
 
@@ -153,7 +153,7 @@ class CroogoComponent extends Object {
  *
  * @return void
  */
-    function __adminData() {
+    private function __adminData() {
         // menus
         $menus = $this->controller->Link->Menu->find('all', array(
             'recursive' => '-1',
@@ -187,7 +187,7 @@ class CroogoComponent extends Object {
  *
  * @return void
  */
-    function blocks() {
+    public function blocks() {
         $regions = $this->controller->Block->Region->find('list', array(
             'conditions' => array(
                 'Region.block_count >' => '0',
@@ -244,7 +244,7 @@ class CroogoComponent extends Object {
  * @param array $blocks
  * @return void
  */
-    function processBlocksData($blocks) {
+    public function processBlocksData($blocks) {
         foreach ($blocks AS $block) {
             $this->blocksData['menus'] = Set::merge($this->blocksData['menus'], $this->parseString('menu|m', $block['Block']['body']));
             $this->blocksData['vocabularies'] = Set::merge($this->blocksData['vocabularies'], $this->parseString('vocabulary|v', $block['Block']['body']));
@@ -260,7 +260,7 @@ class CroogoComponent extends Object {
  *
  * @return void
  */
-    function menus() {
+    public function menus() {
         $menus = array();
         $themeData = $this->getThemeData(Configure::read('Site.theme'));
         if (isset($themeData['menus']) && is_array($themeData['menus'])) {
@@ -318,7 +318,7 @@ class CroogoComponent extends Object {
  *
  * @return void
  */
-    function vocabularies() {
+    public function vocabularies() {
         $vocabularies = $this->blocksData['vocabularies'];
         foreach ($vocabularies AS $vocabularyAlias => $options) {
             $vocabulary = $this->controller->Node->Term->Vocabulary->find('first', array(
@@ -362,7 +362,7 @@ class CroogoComponent extends Object {
  *
  * @return void
  */
-    function types() {
+    public function types() {
         $types = $this->controller->Node->Term->Vocabulary->Type->find('all', array(
             'cache' => array(
                 'name' => 'croogo_types',
@@ -382,7 +382,7 @@ class CroogoComponent extends Object {
  *
  * @return void
  */
-    function nodes() {
+    public function nodes() {
         $nodes = $this->blocksData['nodes'];
         $_nodeOptions = array(
             'find' => 'all',
@@ -420,7 +420,7 @@ class CroogoComponent extends Object {
  * @param string $string in this format: Node.type:blog;Node.user_id:1;
  * @return array
  */
-    function stringToArray($string) {
+    public function stringToArray($string) {
         $string = explode(';', $string);
         $stringArr = array();
         foreach ($string AS $stringElement) {
@@ -442,7 +442,7 @@ class CroogoComponent extends Object {
  * @param object $controller instance of controller
  * @return void
  */
-    function beforeRender(&$controller) {
+    public function beforeRender(&$controller) {
         $this->controller =& $controller;
         $this->controller->set('blocks_for_layout', $this->blocks_for_layout);
         $this->controller->set('menus_for_layout', $this->menus_for_layout);
@@ -471,7 +471,7 @@ class CroogoComponent extends Object {
  *
  * @return array
  */
-    function extractFilter() {
+    public function extractFilter() {
         $filter = explode(';', $this->controller->params['named']['filter']);
         $filterData = array();
         foreach ($filter AS $f) {
@@ -489,7 +489,7 @@ class CroogoComponent extends Object {
  * @param array $url
  * @return array
  */
-    function getRelativePath($url = '/') {
+    public function getRelativePath($url = '/') {
         if (is_array($url)) {
             $absoluteUrl = Router::url($url, true);
         } else {
@@ -507,7 +507,7 @@ class CroogoComponent extends Object {
  * @param array $allowRoles Role aliases
  * @return void
  */
-    function addAco($action, $allowRoles = array()) {
+    public function addAco($action, $allowRoles = array()) {
         // AROs
         $aroIds = array();
         if (count($allowRoles) > 0) {
@@ -610,7 +610,7 @@ class CroogoComponent extends Object {
  * @param string $action possible values: ControllerName, ControllerName/method_name
  * @return void
  */
-    function removeAco($action) {
+    public function removeAco($action) {
         $acoNode = $this->controller->Acl->Aco->node($this->controller->Auth->actionPath.$action);
         if (isset($acoNode['0']['Aco']['id'])) {
             $this->controller->Acl->Aco->delete($acoNode['0']['Aco']['id']);
@@ -622,7 +622,7 @@ class CroogoComponent extends Object {
  * @param string $plugin Plugin name (underscored)
  * @return void
  */
-    function addPluginRoutes($plugin) {
+    public function addPluginRoutes($plugin) {
         $hookRoutes = Configure::read('Hook.routes');
         if (!$hookRoutes) {
             $plugins = array();
@@ -644,7 +644,7 @@ class CroogoComponent extends Object {
  * @param string $plugin Plugin name (underscored)
  * @return void
  */
-    function removePluginRoutes($plugin) {
+    public function removePluginRoutes($plugin) {
         $hookRoutes = Configure::read('Hook.routes');
         if (!$hookRoutes) {
             return;
@@ -669,7 +669,7 @@ class CroogoComponent extends Object {
  * @param string $plugin Plugin name (underscored)
  * @return void
  */
-    function addPluginBootstrap($plugin) {
+    public function addPluginBootstrap($plugin) {
         $hookBootstraps = Configure::read('Hook.bootstraps');
         if (!$hookBootstraps) {
             $plugins = array();
@@ -691,7 +691,7 @@ class CroogoComponent extends Object {
  * @param string $plugin Plugin name (underscored)
  * @return void
  */
-    function removePluginBootstrap($plugin) {
+    public function removePluginBootstrap($plugin) {
         $hookBootstraps = Configure::read('Hook.bootstraps');
         if (!$hookBootstraps) {
             return;
@@ -728,7 +728,7 @@ class CroogoComponent extends Object {
  * @param array  $options
  * @return array
  */
-    function parseString($exp, $text, $options = array()) {
+    public function parseString($exp, $text, $options = array()) {
         $_options = array(
             'convertOptionsToArray' => false,
         );
@@ -760,7 +760,7 @@ class CroogoComponent extends Object {
  *
  * @return array
  */
-    function getThemes() {
+    public function getThemes() {
         $themes = array('default');
         $this->folder = new Folder;
         $this->folder->path = APP . 'views' . DS . 'themed';
@@ -782,7 +782,7 @@ class CroogoComponent extends Object {
  * @param string $alias theme folder name
  * @return array
  */
-    function getThemeData($alias = null) {
+    public function getThemeData($alias = null) {
         if ($alias == null || $alias == 'default') {
             $ymlLocation = WWW_ROOT . 'theme.yml';
         } else {
@@ -799,7 +799,7 @@ class CroogoComponent extends Object {
  *
  * @return array
  */
-    function getPlugins() {
+    public function getPlugins() {
         $plugins = array();
         $this->folder = new Folder;
         $this->folder->path = APP . 'plugins';
@@ -821,7 +821,7 @@ class CroogoComponent extends Object {
  * @param string $alias plugin folder name
  * @return array
  */
-    function getPluginData($alias = null) {
+    public function getPluginData($alias = null) {
         $ymlLocation = APP . 'plugins' . DS . $alias . DS . 'webroot' . DS . 'plugin.yml';
         if (!file_exists($ymlLocation)) {
             return false;
@@ -835,7 +835,7 @@ class CroogoComponent extends Object {
  * @param  string $plugin plugin alias (underscored)
  * @return array
  */
-    function getHooks($plugin = null) {
+    public function getHooks($plugin = null) {
         $hooks = array();
         if (!$plugin) {
             $location = APP;
@@ -890,7 +890,7 @@ class CroogoComponent extends Object {
  * @param string $hookType Component or Helper
  * @return boolean
  */
-    function hookIsActive($hook, $hookType) {
+    public function hookIsActive($hook, $hookType) {
         if ($hookType == 'Component') {
             $activeHooks = Configure::read('Hook.components');
         } else {
@@ -911,7 +911,7 @@ class CroogoComponent extends Object {
  * @param string $methodName
  * @return void
  */
-    function hook($methodName) {
+    public function hook($methodName) {
         foreach ($this->hooks AS $hook) {
             if (strstr($hook, '.')) {
                 $hookE = explode('.', $hook);
@@ -929,7 +929,7 @@ class CroogoComponent extends Object {
  * @param object $controller instance of controller
  * @return void
  */
-    function shutdown(&$controller) {
+    public function shutdown(&$controller) {
         $this->hook('shutdown');
     }
 

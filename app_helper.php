@@ -23,7 +23,7 @@ class AppHelper extends Helper {
  * @return mixed
  * @access public
  */
-    function url($url = null, $full = false) {
+    public function url($url = null, $full = false) {
         if (!isset($url['locale']) && isset($this->params['locale'])) {
             $url['locale'] = $this->params['locale'];
         }

@@ -18,14 +18,14 @@ class NodesController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Nodes';
+    public $name = 'Nodes';
 /**
  * Components
  *
  * @var array
  * @access public
  */
-    var $components = array(
+    public $components = array(
         'Recaptcha',
     );
 /**
@@ -34,11 +34,11 @@ class NodesController extends AppController {
  * @var array
  * @access public
  */
-    var $uses = array(
+    public $uses = array(
         'Node',
     );
 
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter();
 
         if (isset($this->params['slug'])) {
@@ -54,7 +54,7 @@ class NodesController extends AppController {
         }
     }
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Content', true));
 
         $this->Node->recursive = 0;
@@ -85,7 +85,7 @@ class NodesController extends AppController {
         }
     }
 
-    function admin_create() {
+    public function admin_create() {
         $this->set('title_for_layout', __('Create content', true));
 
         $types = $this->Node->Term->Vocabulary->Type->find('all', array(
@@ -96,7 +96,7 @@ class NodesController extends AppController {
         $this->set(compact('types'));
     }
 
-    function admin_add($typeAlias = 'node') {
+    public function admin_add($typeAlias = 'node') {
         $type = $this->Node->Term->Vocabulary->Type->findByAlias($typeAlias);
         if (!isset($type['Type']['alias'])) {
             $this->Session->setFlash(__('Content type does not exist.', true));
@@ -145,7 +145,7 @@ class NodesController extends AppController {
         $this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'terms', 'users'));
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid content', true));
             $this->redirect(array('action'=>'index'));
@@ -204,7 +204,7 @@ class NodesController extends AppController {
         $this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'terms', 'users'));
     }
 
-    function admin_update_paths() {
+    public function admin_update_paths() {
         $types = $this->Node->Term->Vocabulary->Type->find('list', array(
             'fields' => array(
                 'Type.id',
@@ -241,7 +241,7 @@ class NodesController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Node', true));
             $this->redirect(array('action'=>'index'));
@@ -256,7 +256,7 @@ class NodesController extends AppController {
         }
     }
 
-    function admin_delete_meta($id = null) {
+    public function admin_delete_meta($id = null) {
         $success = false;
         if ($id != null && $this->Node->Meta->delete($id)) {
             $success = true;
@@ -265,11 +265,11 @@ class NodesController extends AppController {
         $this->set(compact('success'));
     }
 
-    function admin_add_meta() {
+    public function admin_add_meta() {
         $this->layout = 'ajax';
     }
 
-    function admin_process() {
+    public function admin_process() {
         $action = $this->data['Node']['action'];
         $ids = array();
         foreach ($this->data['Node'] AS $id => $value) {
@@ -305,7 +305,7 @@ class NodesController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    function index() {
+    public function index() {
         if (!isset($this->params['named']['type'])) {
             $this->params['named']['type'] = 'node';
         }
@@ -365,7 +365,7 @@ class NodesController extends AppController {
         $this->set(compact('type', 'nodes'));
     }
 
-    function term() {
+    public function term() {
         $term = $this->Node->Term->find('first', array(
             'conditions' => array(
                 'Term.slug' => $this->params['named']['slug'],
@@ -439,7 +439,7 @@ class NodesController extends AppController {
         $this->set(compact('term', 'type', 'nodes'));
     }
 
-    function promoted() {
+    public function promoted() {
         $this->set('title_for_layout', __('Nodes', true));
 
         $this->paginate['Node']['order'] = 'Node.id DESC';
@@ -490,7 +490,7 @@ class NodesController extends AppController {
         $this->set(compact('nodes'));
     }
 
-    function search($type = null) {
+    public function search($type = null) {
         if (!isset($this->params['named']['q'])) {
             $this->redirect('/');
         }
@@ -527,7 +527,7 @@ class NodesController extends AppController {
         $this->set(compact('q', 'nodes'));
     }
 
-    function view($id = null) {
+    public function view($id = null) {
         if (isset($this->params['named']['slug']) && isset($this->params['named']['type'])) {
             $this->Node->type = $this->params['named']['type'];
             $type = $this->Node->Term->Vocabulary->Type->find('first', array(

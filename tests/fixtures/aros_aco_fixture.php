@@ -1,8 +1,8 @@
 <?php
 
 class ArosAcoFixture extends CakeTestFixture {
-	var $name = 'ArosAco';
-	var $fields = array(
+	public $name = 'ArosAco';
+	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
 		'aro_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10),
 		'aco_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10),
@@ -12,7 +12,7 @@ class ArosAcoFixture extends CakeTestFixture {
 		'_delete' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 	);
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => '1',
 			'aro_id' => '2',

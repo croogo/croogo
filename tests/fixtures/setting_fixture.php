@@ -1,9 +1,9 @@
 <?php
 
 class SettingFixture extends CakeTestFixture {
-	var $name = 'Setting';
-	var $import = 'Setting';
-	var $records = array(
+	public $name = 'Setting';
+	public $import = 'Setting';
+	public $records = array(
 		array(
 			'id' => '5',
 			'key' => 'Admin.settings',

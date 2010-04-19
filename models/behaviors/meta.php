@@ -13,7 +13,7 @@
  */
 class MetaBehavior extends ModelBehavior {
 
-    function setup(&$model, $config = array()) {
+    public function setup(&$model, $config = array()) {
         if (is_string($config)) {
             $config = array($config);
         }
@@ -21,7 +21,7 @@ class MetaBehavior extends ModelBehavior {
         $this->settings[$model->alias] = $config;
     }
 
-    function afterFind(&$model, $results = array(), $primary = false) {
+    public function afterFind(&$model, $results = array(), $primary = false) {
         if ($primary && isset($results[0][$model->alias])) {
             foreach ($results AS $i => $result) {
                 $customFields = array();
@@ -41,11 +41,11 @@ class MetaBehavior extends ModelBehavior {
         return $results;
     }
 
-    function prepareData(&$model, $data) {
+    public function prepareData(&$model, $data) {
         return $this->__prepareMeta($data);
     }
 
-    function __prepareMeta($data) {
+    private function __prepareMeta($data) {
         if (isset($data['Meta']) &&
             is_array($data['Meta']) &&
             count($data['Meta']) > 0 &&
@@ -62,7 +62,7 @@ class MetaBehavior extends ModelBehavior {
         return $data;
     }
 
-    function saveWithMeta(&$model, $data, $options = array()) {
+    public function saveWithMeta(&$model, $data, $options = array()) {
         $data = $this->__prepareMeta($data);
         return $model->saveAll($data, $options);
     }

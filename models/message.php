@@ -18,14 +18,14 @@ class Message extends AppModel {
  * @var string
  * @access public
  */
-    var $name = 'Message';
+    public $name = 'Message';
 /**
  * Validation
  *
  * @var array
  * @access public
  */
-    var $validate = array(
+    public $validate = array(
         'name' => array(
             'rule' => 'notEmpty',
             'message' => 'This field cannot be left blank.',
@@ -49,7 +49,7 @@ class Message extends AppModel {
  * @var array
  * @access public
  */
-    var $belongsTo = array(
+    public $belongsTo = array(
         'Contact' => array(
             'className' => 'Contact',
             'foreignKey' => 'contact_id',

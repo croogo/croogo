@@ -1,9 +1,9 @@
 <?php
 
 class CommentFixture extends CakeTestFixture {
-	var $name = 'Comment';
-	var $import = 'Comment';
-	var $records = array(
+	public $name = 'Comment';
+	public $import = 'Comment';
+	public $records = array(
 		array(
 			'id' => '13',
 			'parent_id' => '',

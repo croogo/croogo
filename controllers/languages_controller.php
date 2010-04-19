@@ -18,16 +18,16 @@ class LanguagesController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Languages';
+    public $name = 'Languages';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array('Language');
+    public $uses = array('Language');
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Languages', true));
 
         $this->Language->recursive = 0;
@@ -35,7 +35,7 @@ class LanguagesController extends AppController {
         $this->set('languages', $this->paginate());
     }
 
-    function admin_add() {
+    public function admin_add() {
         $this->set('title_for_layout', __("Add Language", true));
 
         if (!empty($this->data)) {
@@ -49,7 +49,7 @@ class LanguagesController extends AppController {
         }
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->set('title_for_layout', __("Edit Language", true));
 
         if (!$id && empty($this->data)) {
@@ -69,7 +69,7 @@ class LanguagesController extends AppController {
         }
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Language', true));
             $this->redirect(array('action'=>'index'));
@@ -84,7 +84,7 @@ class LanguagesController extends AppController {
         }
     }
 
-    function admin_moveup($id, $step = 1) {
+    public function admin_moveup($id, $step = 1) {
         if ($this->Language->moveup($id, $step)) {
             $this->Session->setFlash(__('Moved up successfully', true));
         } else {
@@ -94,7 +94,7 @@ class LanguagesController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    function admin_movedown($id, $step = 1) {
+    public function admin_movedown($id, $step = 1) {
         if ($this->Language->movedown($id, $step)) {
             $this->Session->setFlash(__('Moved down successfully', true));
         } else {
@@ -104,7 +104,7 @@ class LanguagesController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    function admin_select($id = null, $modelAlias = null) {
+    public function admin_select($id = null, $modelAlias = null) {
         if ($id == null ||
             $modelAlias == null) {
             $this->redirect(array('action' => 'index'));

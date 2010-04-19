@@ -18,7 +18,7 @@ class LayoutHelper extends AppHelper {
  * @var array
  * @access public
  */
-    var $helpers = array(
+    public $helpers = array(
         'Html',
         'Form',
         'Session',
@@ -30,21 +30,21 @@ class LayoutHelper extends AppHelper {
  * @var array
  * @access public
  */
-    var $node = null;
+    public $node = null;
 /**
  * Hook helpers
  *
  * @var array
  * @access public
  */
-    var $hooks = array();
+    public $hooks = array();
 /**
  * Constructor
  *
  * @param array $options options
  * @access public
  */
-    function __construct($options = array()) {
+    public function __construct($options = array()) {
         $this->View =& ClassRegistry::getObject('view');
         $this->__loadHooks();
 
@@ -55,7 +55,7 @@ class LayoutHelper extends AppHelper {
  *
  * @return void
  */
-    function __loadHooks() {
+    private function __loadHooks() {
         if (Configure::read('Hook.helpers')) {
             // Set hooks
             $hooks = Configure::read('Hook.helpers');
@@ -87,7 +87,7 @@ class LayoutHelper extends AppHelper {
  *
  * @return string
  */
-    function js() {
+    public function js() {
         $output = $this->Html->script('croogo');
 
         $croogo = array();
@@ -109,7 +109,7 @@ class LayoutHelper extends AppHelper {
  * @param integer $value 0 or 1
  * @return string formatted img tag
  */
-    function status($value) {
+    public function status($value) {
         if ($value == 1) {
             $output = $this->Html->image('/img/icons/tick.png');
         } else {
@@ -122,7 +122,7 @@ class LayoutHelper extends AppHelper {
  *
  * @return void
  */
-    function sessionFlash() {
+    public function sessionFlash() {
         $messages = $this->Session->read('Message');
         if( is_array($messages) ) {
             foreach(array_keys($messages) AS $key) {
@@ -135,7 +135,7 @@ class LayoutHelper extends AppHelper {
  *
  * @return string
  */
-    function meta($metaForLayout = array()) {
+    public function meta($metaForLayout = array()) {
         $_metaForLayout = array();
         if (is_array(Configure::read('Meta'))) {
             $_metaForLayout = Configure::read('Meta');
@@ -169,7 +169,7 @@ class LayoutHelper extends AppHelper {
  *
  * @return boolean
  */
-    function isLoggedIn() {
+    public function isLoggedIn() {
         if ($this->Session->check('Auth.User.id')) {
             return true;
         } else {
@@ -184,7 +184,7 @@ class LayoutHelper extends AppHelper {
  * @param boolean $returnUrl if true, only the URL will be returned
  * @return string
  */
-    function feed($returnUrl = false) {
+    public function feed($returnUrl = false) {
         if (Configure::read('Site.feed_url')) {
             $url = Configure::read('Site.feed_url');
         } else {
@@ -212,7 +212,7 @@ class LayoutHelper extends AppHelper {
  *
  * @return integer
  */
-    function getRoleId() {
+    public function getRoleId() {
         if ($this->isLoggedIn()) {
             $roleId = $this->Session->read('Auth.User.role_id');
         } else {
@@ -229,7 +229,7 @@ class LayoutHelper extends AppHelper {
  * @param string $regionAlias Region alias
  * @return boolean
  */
-    function regionIsEmpty($regionAlias) {
+    public function regionIsEmpty($regionAlias) {
         if (isset($this->View->viewVars['blocks_for_layout'][$regionAlias]) &&
             count($this->View->viewVars['blocks_for_layout'][$regionAlias]) > 0) {
             return false;
@@ -244,7 +244,7 @@ class LayoutHelper extends AppHelper {
  * @param array $findOptions (optional)
  * @return string
  */
-    function blocks($regionAlias, $options = array()) {
+    public function blocks($regionAlias, $options = array()) {
         $_options = array();
         $options = array_merge($_options, $options);
 
@@ -281,7 +281,7 @@ class LayoutHelper extends AppHelper {
  * @param array $options (optional)
  * @return string
  */
-    function menu($menuAlias, $options = array()) {
+    public function menu($menuAlias, $options = array()) {
         $_options = array(
             'findOptions' => array(),
             'tag' => 'ul',
@@ -319,7 +319,7 @@ class LayoutHelper extends AppHelper {
  * @param integer $depth depth level
  * @return string
  */
-    function nestedLinks($links, $options = array(), $depth = 1) {
+    public function nestedLinks($links, $options = array(), $depth = 1) {
         $_options = array();
         $options = array_merge($_options, $options);
 
@@ -370,7 +370,7 @@ class LayoutHelper extends AppHelper {
  * @param string $link link
  * @return array
  */
-    function linkStringToArray($link) {
+    public function linkStringToArray($link) {
         $link = explode('/', $link);
         $linkArr = array();
         foreach ($link AS $linkElement) {
@@ -396,7 +396,7 @@ class LayoutHelper extends AppHelper {
  * @param array $options (optional)
  * @return string
  */
-    function vocabulary($vocabularyAlias, $options = array()) {
+    public function vocabulary($vocabularyAlias, $options = array()) {
         $_options = array(
             'tag' => 'ul',
             'tagAttr' => array(),
@@ -442,7 +442,7 @@ class LayoutHelper extends AppHelper {
  * @param array $options (optional)
  * @return string
  */
-    function nodeList($alias, $options = array()) {
+    public function nodeList($alias, $options = array()) {
         $_options = array(
             'tag' => 'ul',
             'tagAttr' => array(),
@@ -488,7 +488,7 @@ class LayoutHelper extends AppHelper {
  * @param string $content content
  * @return string
  */
-    function filter($content) {
+    public function filter($content) {
         $content = $this->filterElements($content);
         $content = $this->filterMenus($content);
         $content = $this->filterVocabularies($content);
@@ -504,7 +504,7 @@ class LayoutHelper extends AppHelper {
  * @param string $content
  * @return string
  */
-    function filterElements($content) {
+    public function filterElements($content) {
         preg_match_all('/\[(element|e):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
         for ($i=0; $i < count($tagMatches[1]); $i++) {
             $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
@@ -526,7 +526,7 @@ class LayoutHelper extends AppHelper {
  * @param string $content
  * @return string
  */
-    function filterMenus($content) {
+    public function filterMenus($content) {
         preg_match_all('/\[(menu|m):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
         for ($i=0; $i < count($tagMatches[1]); $i++) {
             $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
@@ -548,7 +548,7 @@ class LayoutHelper extends AppHelper {
  * @param string $content
  * @return string
  */
-    function filterVocabularies($content) {
+    public function filterVocabularies($content) {
         preg_match_all('/\[(vocabulary|v):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
         for ($i=0; $i < count($tagMatches[1]); $i++) {
             $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
@@ -570,7 +570,7 @@ class LayoutHelper extends AppHelper {
  * @param string $content
  * @return string
  */
-    function filterNodes($content) {
+    public function filterNodes($content) {
         preg_match_all('/\[(node|n):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
         for ($i=0; $i < count($tagMatches[1]); $i++) {
             $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
@@ -591,7 +591,7 @@ class LayoutHelper extends AppHelper {
  * @param array $options
  * @return string
  */
-    function adminRowActions($id, $options = array()) {
+    public function adminRowActions($id, $options = array()) {
         $_options = array();
         $options = array_merge($_options, $options);
 
@@ -613,7 +613,7 @@ class LayoutHelper extends AppHelper {
  * @param array $node
  * @return void
  */
-    function setNode($node) {
+    public function setNode($node) {
         $this->node = $node;
         $this->hook('afterSetNode');
     }
@@ -624,7 +624,7 @@ class LayoutHelper extends AppHelper {
  * @param string $value
  * @return void
  */
-    function setNodeField($field, $value) {
+    public function setNodeField($field, $value) {
         $model = 'Node';
         if (strstr($field, '.')) {
             $fieldE = explode('.', $field);
@@ -640,7 +640,7 @@ class LayoutHelper extends AppHelper {
  * @param string $field
  * @return string
  */
-    function node($field = 'id') {
+    public function node($field = 'id') {
         $model = 'Node';
         if (strstr($field, '.')) {
             $fieldE = explode('.', $field);
@@ -660,7 +660,7 @@ class LayoutHelper extends AppHelper {
  * @param array $options
  * @return string
  */
-    function nodeInfo($options = array()) {
+    public function nodeInfo($options = array()) {
         $_options = array(
             'element' => 'node_info',
         );
@@ -677,7 +677,7 @@ class LayoutHelper extends AppHelper {
  * @param array $options
  * @return string
  */
-    function nodeExcerpt($options = array()) {
+    public function nodeExcerpt($options = array()) {
         $_options = array(
             'element' => 'node_excerpt',
         );
@@ -694,7 +694,7 @@ class LayoutHelper extends AppHelper {
  * @param array $options
  * @return string
  */
-    function nodeBody($options = array()) {
+    public function nodeBody($options = array()) {
         $_options = array(
             'element' => 'node_body',
         );
@@ -711,7 +711,7 @@ class LayoutHelper extends AppHelper {
  * @param array $options
  * @return string
  */
-    function nodeMoreInfo($options = array()) {
+    public function nodeMoreInfo($options = array()) {
         $_options = array(
             'element' => 'node_more_info',
         );
@@ -730,7 +730,7 @@ class LayoutHelper extends AppHelper {
  * @param string $methodName
  * @return string
  */
-    function hook($methodName) {
+    public function hook($methodName) {
         $output = '';
 
         foreach ($this->hooks AS $hook) {

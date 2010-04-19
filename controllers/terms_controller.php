@@ -18,16 +18,16 @@ class TermsController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Terms';
+    public $name = 'Terms';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array('Term');
+    public $uses = array('Term');
 
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter();
         $this->vocabularyId = null;
         if (isset($this->params['named']['vocabulary'])) {
@@ -36,7 +36,7 @@ class TermsController extends AppController {
         $this->set('vocabulary', $this->vocabularyId);
     }
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Terms', true));
 
         if ($this->vocabularyId != null) {
@@ -52,7 +52,7 @@ class TermsController extends AppController {
         $this->set(compact('termsTree'));
     }
 
-    function admin_add() {
+    public function admin_add() {
         $this->set('title_for_layout', __('Add Term', true));
 
         if (!empty($this->data)) {
@@ -73,7 +73,7 @@ class TermsController extends AppController {
         $this->set(compact('vocabularies', 'terms'));
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Term', true));
 
         if (!$id && empty($this->data)) {
@@ -96,7 +96,7 @@ class TermsController extends AppController {
         $this->set(compact('vocabularies', 'terms'));
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Term', true));
             $this->redirect(array('action'=>'index', 'vocabulary' => $this->vocabularyId));
@@ -111,7 +111,7 @@ class TermsController extends AppController {
         }
     }
 
-    function admin_moveup($id, $step = 1) {
+    public function admin_moveup($id, $step = 1) {
         if( $this->Term->moveup($id, $step) ) {
             $this->Session->setFlash(__('Moved up successfully', true));
         } else {
@@ -121,7 +121,7 @@ class TermsController extends AppController {
         $this->redirect(array('action' => 'index', 'vocabulary' => $this->vocabularyId));
     }
 
-    function admin_movedown($id, $step = 1) {
+    public function admin_movedown($id, $step = 1) {
         if( $this->Term->movedown($id, $step) ) {
             $this->Session->setFlash(__('Moved down successfully', true));
         } else {
@@ -131,7 +131,7 @@ class TermsController extends AppController {
         $this->redirect(array('action' => 'index', 'vocabulary' => $this->vocabularyId));
     }
 
-    function admin_process() {
+    public function admin_process() {
         $action = $this->data['Term']['action'];
         $ids = array();
         foreach ($this->data['Term'] AS $id => $value) {

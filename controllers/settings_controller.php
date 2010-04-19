@@ -18,27 +18,27 @@ class SettingsController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Settings';
+    public $name = 'Settings';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array('Setting');
+    public $uses = array('Setting');
 /**
  * Helpers used by the Controller
  *
  * @var array
  * @access public
  */
-    var $helpers = array('Html', 'Form');
+    public $helpers = array('Html', 'Form');
 
-    function admin_dashboard() {
+    public function admin_dashboard() {
         $this->set('title_for_layout', __('Dashboard', true));
     }
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Settings', true));
 
         $this->Setting->recursive = 0;
@@ -49,7 +49,7 @@ class SettingsController extends AppController {
         $this->set('settings', $this->paginate());
     }
 
-    function admin_view($id = null) {
+    public function admin_view($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid Setting.', true));
             $this->redirect(array('action'=>'index'));
@@ -57,7 +57,7 @@ class SettingsController extends AppController {
         $this->set('setting', $this->Setting->read(null, $id));
     }
 
-    function admin_add() {
+    public function admin_add() {
         $this->set('title_for_layout', __('Add Setting', true));
 
         if (!empty($this->data)) {
@@ -71,7 +71,7 @@ class SettingsController extends AppController {
         }
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Setting', true));
 
         if (!$id && empty($this->data)) {
@@ -91,7 +91,7 @@ class SettingsController extends AppController {
         }
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Setting', true));
             $this->redirect(array('action'=>'index'));
@@ -106,7 +106,7 @@ class SettingsController extends AppController {
         }
     }
 
-    function admin_prefix($prefix = null) {
+    public function admin_prefix($prefix = null) {
         $this->set('title_for_layout', sprintf(__('Settings: %s', true), $prefix));
 
         if(!empty($this->data) && $this->Setting->saveAll($this->data['Setting'])) {
@@ -130,7 +130,7 @@ class SettingsController extends AppController {
         $this->set("prefix", $prefix);
     }
 
-    function admin_moveup($id, $step = 1) {
+    public function admin_moveup($id, $step = 1) {
         if( $this->Setting->moveup($id, $step) ) {
             $this->Session->setFlash(__('Moved up successfully', true));
         } else {
@@ -140,7 +140,7 @@ class SettingsController extends AppController {
         $this->redirect(array('admin' => true, 'controller' => 'settings', 'action' => 'index'));
     }
 
-    function admin_movedown($id, $step = 1) {
+    public function admin_movedown($id, $step = 1) {
         if( $this->Setting->movedown($id, $step) ) {
             $this->Session->setFlash(__('Moved down successfully', true));
         } else {

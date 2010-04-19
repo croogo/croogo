@@ -18,7 +18,7 @@ class TranslateHookComponent extends Object {
  * @var array
  * @access public
  */
-    var $translateModels = array(
+    public $translateModels = array(
         'Node' => array(
             'title' => 'titleTranslation',
             'excerpt' => 'excerptTranslation',
@@ -38,7 +38,7 @@ class TranslateHookComponent extends Object {
  * @param object $controller Controller
  * @return void
  */
-    function onActivate(&$controller) {
+    public function onActivate(&$controller) {
         $controller->Croogo->addAco('Translate');
         $controller->Croogo->addAco('Translate/admin_index');
         $controller->Croogo->addAco('Translate/admin_edit');
@@ -50,7 +50,7 @@ class TranslateHookComponent extends Object {
  * @param object $controller Controller
  * @return void
  */
-    function onDeactivate(&$controller) {
+    public function onDeactivate(&$controller) {
         $controller->Croogo->removeAco('Translate');
     }
 /**
@@ -59,7 +59,7 @@ class TranslateHookComponent extends Object {
  * @param object $controller Controller with components to startup
  * @return void
  */
-    function startup(&$controller) {
+    public function startup(&$controller) {
         foreach ($this->translateModels AS $translateModel => $fields) {
             if (isset($controller->{$translateModel})) {
                 $controller->{$translateModel}->Behaviors->attach('CroogoTranslate', $fields);
@@ -73,7 +73,7 @@ class TranslateHookComponent extends Object {
  * @param object $controller Controller with components to beforeRender
  * @return void
  */
-    function beforeRender(&$controller) {
+    public function beforeRender(&$controller) {
         $modelAliases = array_keys($this->translateModels);
         $singularCamelizedControllerName = Inflector::camelize(Inflector::singularize($controller->params['controller']));
         if (in_array($singularCamelizedControllerName, $modelAliases)) {

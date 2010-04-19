@@ -12,11 +12,11 @@
  * @link     http://www.croogo.org
  */
 class AclActionsController extends AclAppController {
-    var $name = 'AclActions';
-    var $uses = array('Acl.AclAco');
-    var $components = array('Acl.AclGenerate');
+    public $name = 'AclActions';
+    public $uses = array('Acl.AclAco');
+    public $components = array('Acl.AclGenerate');
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Actions', true));
 
         $conditions = array(
@@ -28,7 +28,7 @@ class AclActionsController extends AclAppController {
         $this->set('acos', $this->Acl->Aco->generatetreelist($conditions, '{n}.Aco.id', '{n}.Aco.alias'));
     }
 
-    function admin_add() {
+    public function admin_add() {
         $this->set('title_for_layout', __('Add Action', true));
 
         if (!empty($this->data)) {
@@ -68,7 +68,7 @@ class AclActionsController extends AclAppController {
         $this->set(compact('acos'));
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Action', true));
 
         if (!$id && empty($this->data)) {
@@ -105,7 +105,7 @@ class AclActionsController extends AclAppController {
         $this->set(compact('acos'));
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Action', true));
             $this->redirect(array('action'=>'index'));
@@ -120,7 +120,7 @@ class AclActionsController extends AclAppController {
         }
     }
 
-    function admin_move($id, $direction = 'up', $step = '1') {
+    public function admin_move($id, $direction = 'up', $step = '1') {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Action', true));
             $this->redirect(array('action'=>'index'));
@@ -138,7 +138,7 @@ class AclActionsController extends AclAppController {
         }
     }
 
-    function admin_generate() {
+    public function admin_generate() {
         $aco =& $this->Acl->Aco;
         $root = $aco->node('controllers');
         if (!$root) {

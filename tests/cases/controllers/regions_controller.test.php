@@ -3,10 +3,11 @@ App::import('Controller', 'Regions');
 
 class TestRegionsController extends RegionsController {
 
-    var $name = 'Regions';
+    public $name = 'Regions';
 
-    var $autoRender = false;
+    public $autoRender = false;
 
+<<<<<<< HEAD:tests/cases/controllers/regions_controller.test.php
     var $testView = false;
 
     function redirect($url, $status = null, $exit = true) {
@@ -19,20 +20,28 @@ class TestRegionsController extends RegionsController {
         } else {
             return parent::render($action, $layout, $file);
         }
+=======
+    public function redirect($url, $status = null, $exit = true) {
+        $this->redirectUrl = $url;
     }
 
-    function _stop($status = 0) {
+    public function render($action = null, $layout = null, $file = null) {
+        $this->renderedAction = $action;
+>>>>>>> 5ef3774... adding visibility keywords:tests/cases/controllers/regions_controller.test.php
+    }
+
+    public function _stop($status = 0) {
         $this->stopped = $status;
     }
 
-    function __securityError() {
+    public function __securityError() {
 
     }
 }
 
 class RegionsControllerTestCase extends CakeTestCase {
 
-    var $fixtures = array(
+    public $fixtures = array(
         'aco',
         'aro',
         'aros_aco',
@@ -57,7 +66,7 @@ class RegionsControllerTestCase extends CakeTestCase {
         'vocabulary',
     );
 
-    function startTest() {
+    public function startTest() {
         $this->Regions = new TestRegionsController();
         $this->Regions->constructClasses();
         $this->Regions->params['controller'] = 'regions';
@@ -82,7 +91,7 @@ class RegionsControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminAdd() {
+    public function testAdminAdd() {
         $this->Regions->params['action'] = 'admin_add';
         $this->Regions->params['url']['url'] = 'admin/regions/add';
         $this->Regions->Component->initialize($this->Regions);
@@ -109,7 +118,7 @@ class RegionsControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminEdit() {
+    public function testAdminEdit() {
         $this->Regions->params['action'] = 'admin_edit';
         $this->Regions->params['url']['url'] = 'admin/regions/edit';
         $this->Regions->Component->initialize($this->Regions);
@@ -136,7 +145,7 @@ class RegionsControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminDelete() {
+    public function testAdminDelete() {
         $this->Regions->params['action'] = 'admin_delete';
         $this->Regions->params['url']['url'] = 'admin/regions/delete';
         $this->Regions->Component->initialize($this->Regions);
@@ -155,7 +164,7 @@ class RegionsControllerTestCase extends CakeTestCase {
         $this->assertFalse($hasAny);
     }
 
-    function endTest() {
+    public function endTest() {
         $this->Regions->Session->destroy();
         unset($this->Regions);
         ClassRegistry::flush();

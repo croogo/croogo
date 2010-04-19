@@ -18,21 +18,21 @@ class AclPermissionsController extends AclAppController {
  * @var string
  * @access public
  */
-    var $name = 'AclPermissions';
+    public $name = 'AclPermissions';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array(
+    public $uses = array(
         'Acl.AclAco',
         'Acl.AclAro',
         'Acl.AclArosAco',
         'Role',
     );
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Permissions', true));
 
         $acoConditions = array(
@@ -78,7 +78,7 @@ class AclPermissionsController extends AclAppController {
         $this->set(compact('rolesAros', 'permissions'));
     }
 
-    function admin_toggle($acoId, $aroId) {
+    public function admin_toggle($acoId, $aroId) {
         if (!$this->RequestHandler->isAjax()) {
             $this->redirect(array('action' => 'index'));
         }

@@ -18,14 +18,14 @@ class Type extends AppModel {
  * @var string
  * @access public
  */
-    var $name = 'Type';
+    public $name = 'Type';
 /**
  * Behaviors used by the Model
  *
  * @var array
  * @access public
  */
-    var $actsAs = array(
+    public $actsAs = array(
         'Cached' => array(
             'prefix' => array(
                 'type_',
@@ -38,7 +38,7 @@ class Type extends AppModel {
  * @var array
  * @access public
  */
-    var $validate = array(
+    public $validate = array(
         'title' => array(
             'rule' => array('minLength', 1),
             'message' => 'Title cannot be empty.',
@@ -60,7 +60,7 @@ class Type extends AppModel {
  * @var array
  * @access public
  */
-    var $hasAndBelongsToMany = array(
+    public $hasAndBelongsToMany = array(
         'Vocabulary' => array(
             'className' => 'Vocabulary',
             'joinTable' => 'types_vocabularies',

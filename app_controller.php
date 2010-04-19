@@ -20,7 +20,7 @@ class AppController extends Controller {
  * @var array
  * @access public
  */
-    var $components = array(
+    public $components = array(
         'Croogo',
         'Security',
         'Acl',
@@ -35,7 +35,7 @@ class AppController extends Controller {
  * @var array
  * @access public
  */
-    var $helpers = array(
+    public $helpers = array(
         'Html',
         'Form',
         'Session',
@@ -52,7 +52,7 @@ class AppController extends Controller {
  * @var array
  * @access public
  */
-    var $uses = array(
+    public $uses = array(
         'Block',
         'Link',
         'Setting',
@@ -64,27 +64,27 @@ class AppController extends Controller {
  * @var boolean
  * @access public
  */
-    var $usePaginationCache = true;
+    public $usePaginationCache = true;
 /**
  * View
  *
  * @var string
  * @access public
  */
-    var $view = 'Theme';
+    public $view = 'Theme';
 /**
  * Theme
  *
  * @var string
  * @access public
  */
-    var $theme;
+    public $theme;
 /**
  * beforeFilter
  *
  * @return void
  */
-    function beforeFilter() {
+    public function beforeFilter() {
         $this->AclFilter->auth();
         $this->RequestHandler->setContent('json', 'text/x-json');
         $this->Security->blackHoleCallback = '__securityError';
@@ -119,7 +119,7 @@ class AppController extends Controller {
  *
  * @return void
  */
-    function __securityError() {
+    public function __securityError() {
         $this->cakeError('securityError');
     }
 

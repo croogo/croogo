@@ -18,19 +18,19 @@ class TranslateController extends TranslateAppController {
  * @var string
  * @access public
  */
-    var $name = 'Translate';
+    public $name = 'Translate';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array(
+    public $uses = array(
         'Setting',
         'Language',
     );
 
-    function admin_index($id = null, $modelAlias = null) {
+    public function admin_index($id = null, $modelAlias = null) {
         if ($id == null || $modelAlias == null) {
             $this->Session->setFlash(__('Invalid ID.', true));
             $this->redirect(array(
@@ -75,7 +75,7 @@ class TranslateController extends TranslateAppController {
         $this->set(compact('runtimeModelAlias', 'translations', 'record', 'modelAlias', 'id'));
     }
 
-    function admin_edit($id = null, $modelAlias = null) {
+    public function admin_edit($id = null, $modelAlias = null) {
         if (!$id && empty($this->data)) {
             $this->Session->setFlash(__('Invalid ID.', true));
             $this->redirect(array(
@@ -143,7 +143,7 @@ class TranslateController extends TranslateAppController {
         $this->set(compact('fields', 'language', 'modelAlias', 'id'));
     }
 
-    function admin_delete($id = null, $modelAlias = null, $locale = null) {
+    public function admin_delete($id = null, $modelAlias = null, $locale = null) {
         if ($locale == null || $id == null) {
             $this->Session->setFlash(__('Invalid Locale or ID', true));
             $this->redirect(array(

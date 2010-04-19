@@ -18,22 +18,22 @@ class ExtensionsLocalesController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'ExtensionsLocales';
+    public $name = 'ExtensionsLocales';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array('Setting', 'User');
+    public $uses = array('Setting', 'User');
 
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter();
         App::import('Core', 'File');
         APP::import('Core', 'Folder');
     }
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Locales', true));
 
         $folder =& new Folder;
@@ -48,7 +48,7 @@ class ExtensionsLocalesController extends AppController {
         $this->set(compact('content', 'locales'));
     }
 
-    function admin_activate($locale = null) {
+    public function admin_activate($locale = null) {
         if ($locale == null || !is_dir(APP . 'locale' . DS . $locale)) {
             $this->Session->setFlash(__('Locale does not exist.', true));
             $this->redirect(array('action' => 'index'));
@@ -72,7 +72,7 @@ class ExtensionsLocalesController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    function admin_add() {
+    public function admin_add() {
         $this->set('title_for_layout', __('Upload a new locale', true));
 
         if (!empty($this->data)) {
@@ -144,7 +144,7 @@ class ExtensionsLocalesController extends AppController {
         }
     }
 
-    function admin_edit($locale = null) {
+    public function admin_edit($locale = null) {
         $this->set('title_for_layout', sprintf(__('Edit locale: %s', true), $locale));
 
         if (!$locale) {
@@ -171,7 +171,7 @@ class ExtensionsLocalesController extends AppController {
         $this->set(compact('locale', 'content'));
     }
 
-    function admin_delete($locale = null) {
+    public function admin_delete($locale = null) {
         if (!$locale) {
             $this->Session->setFlash(__('Invalid locale', true));
             $this->redirect(array('action' => 'index'));

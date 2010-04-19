@@ -1,9 +1,9 @@
 <?php
 
 class LinkFixture extends CakeTestFixture {
-	var $name = 'Link';
-	var $import = 'Link';
-	var $records = array(
+	public $name = 'Link';
+	public $import = 'Link';
+	public $records = array(
 		array(
 			'id' => '5',
 			'parent_id' => '',

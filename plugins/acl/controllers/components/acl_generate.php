@@ -17,7 +17,7 @@ class AclGenerateComponent extends Object {
  * @param object $controller controller
  * @param array  $settings   settings
  */
-    function initialize(&$controller, $settings = array()) {
+    public function initialize(&$controller, $settings = array()) {
         $this->controller =& $controller;
         App::import('Core', 'File');
         $this->folder = new Folder;
@@ -28,7 +28,7 @@ class AclGenerateComponent extends Object {
  *
  * @return array
  */
-    function listControllers() {
+    public function listControllers() {
         $controllerPaths = array();
 
         // app/controllers
@@ -65,7 +65,7 @@ class AclGenerateComponent extends Object {
  *
  * @return array
  */
-    function listActions($name, $path) {
+    public function listActions($name, $path) {
         // base methods
         if (strpos($path, 'app'.DS.'plugins')) {
             $plugin = $this->getPluginFromPath($path);
@@ -103,7 +103,7 @@ class AclGenerateComponent extends Object {
  *
  * @return string
  */
-    function getPluginFromPath($path) {
+    public function getPluginFromPath($path) {
         $pathE = explode(DS, $path);
         $pluginsK = array_search('plugins', $pathE);
         $pluginNameK = $pluginsK + 1;

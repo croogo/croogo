@@ -3,7 +3,7 @@ App::import('Model', 'Setting');
 
 class SettingTestCase extends CakeTestCase {
 
-    var $fixtures = array(
+    public $fixtures = array(
         'aco',
         'aro',
         'aros_aco',
@@ -28,23 +28,23 @@ class SettingTestCase extends CakeTestCase {
         'vocabulary',
     );
 
-    function startTest() {
+    public function startTest() {
          $this->Setting =& ClassRegistry::init('Setting');
     }
 
-    function testWriteNew() {
+    public function testWriteNew() {
         $this->Setting->write('Prefix.key', 'value');
         $prefixAnything = $this->Setting->findByKey('Prefix.key');
         $this->assertEqual('value', $prefixAnything['Setting']['value']);
     }
 
-    function testWriteUpdate() {
+    public function testWriteUpdate() {
         $this->Setting->write('Site.title', 'My new site title');
         $siteTitle = $this->Setting->findByKey('Site.title');
         $this->assertEqual('My new site title', $siteTitle['Setting']['value']);
     }
 
-    function testDeleteKey() {
+    public function testDeleteKey() {
         $this->Setting->write('Prefix.key', 'value');
         $this->Setting->deleteKey('Prefix.key');
         $hasAny = $this->Setting->hasAny(array(
@@ -53,12 +53,12 @@ class SettingTestCase extends CakeTestCase {
         $this->assertFalse($hasAny);
     }
 
-    function testWriteConfiguration() {
+    public function testWriteConfiguration() {
         $this->Setting->writeConfiguration();
         $this->assertEqual(Configure::read('Site.title'), 'Croogo');
     }
 
-    function endTest() {
+    public function endTest() {
         unset($this->Setting);
         ClassRegistry::flush();
     }

@@ -18,7 +18,7 @@ class CroogoShell extends Shell {
  *
  * Usage: ./cake croogo password myPasswordHere
  */
-    function password() {
+    public function password() {
         $value = trim($this->args[0]);
         $this->out(Security::hash($value, null, true));
     }

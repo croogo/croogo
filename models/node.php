@@ -18,14 +18,14 @@ class Node extends AppModel {
  * @var string
  * @access public
  */
-    var $name = 'Node';
+    public $name = 'Node';
 /**
  * Behaviors used by the Model
  *
  * @var array
  * @access public
  */
-    var $actsAs = array(
+    public $actsAs = array(
         'Containable',
         'Tree',
         'Encoder',
@@ -47,21 +47,21 @@ class Node extends AppModel {
  * @var string
  * @access public
  */
-    var $type = null;
+    public $type = null;
 /**
  * Guid
  *
  * @var string
  * @access public
  */
-    var $guid = null;
+    public $guid = null;
 /**
  * Validation
  *
  * @var array
  * @access public
  */
-    var $validate = array(
+    public $validate = array(
         'title' => array(
             'rule' => 'notEmpty',
             'message' => 'This field cannot be left blank.',
@@ -83,7 +83,7 @@ class Node extends AppModel {
  * @var array
  * @access public
  */
-    var $belongsTo = array(
+    public $belongsTo = array(
         'User' => array(
             'className' => 'User',
             'foreignKey' => 'user_id',
@@ -98,7 +98,7 @@ class Node extends AppModel {
  * @var array
  * @access public
  */
-    var $hasMany = array(
+    public $hasMany = array(
         'Comment' => array(
             'className' => 'Comment',
             'foreignKey' => 'node_id',
@@ -132,7 +132,7 @@ class Node extends AppModel {
  * @var array
  * @access public
  */
-    var $hasAndBelongsToMany = array(
+    public $hasAndBelongsToMany = array(
         'Term' => array(
             'className' => 'Term',
             'joinTable' => 'nodes_terms',
@@ -155,7 +155,7 @@ class Node extends AppModel {
  * @param array $q
  * @return array
  */
-    function beforeFind($q) {
+    public function beforeFind($q) {
         if($this->type != null) {
             $q['conditions']['Node.type'] = $this->type;
         }
@@ -166,7 +166,7 @@ class Node extends AppModel {
  *
  * @return boolean
  */
-    function beforeSave() {
+    public function beforeSave() {
         if ($this->type != null) {
             $this->data['Node']['type'] = $this->type;
         }
@@ -179,7 +179,7 @@ class Node extends AppModel {
  *
  * @return void
  */
-    function __cache_terms() {
+    private function __cache_terms() {
         if (isset($this->data['Term']['Term']) && count($this->data['Term']['Term']) > 0) {
             $termIds = $this->data['Term']['Term'];
             $terms = $this->Term->find('list', array(

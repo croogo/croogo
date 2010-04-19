@@ -1,9 +1,9 @@
 <?php
 
 class UserFixture extends CakeTestFixture {
-	var $name = 'User';
-	var $import = 'User';
-	var $records = array(
+	public $name = 'User';
+	public $import = 'User';
+	public $records = array(
 		array(
 			'id' => '1',
 			'role_id' => '1',

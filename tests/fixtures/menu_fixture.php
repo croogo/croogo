@@ -1,9 +1,9 @@
 <?php
 
 class MenuFixture extends CakeTestFixture {
-	var $name = 'Menu';
-	var $import = 'Menu';
-	var $records = array(
+	public $name = 'Menu';
+	public $import = 'Menu';
+	public $records = array(
 		array(
 			'id' => '3',
 			'title' => 'Main Menu',

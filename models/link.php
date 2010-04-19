@@ -18,14 +18,14 @@ class Link extends AppModel {
  * @var string
  * @access public
  */
-    var $name = 'Link';
+    public $name = 'Link';
 /**
  * Behaviors used by the Model
  *
  * @var array
  * @access public
  */
-    var $actsAs = array(
+    public $actsAs = array(
         'Encoder',
         'Tree',
         'Cached' => array(
@@ -42,7 +42,7 @@ class Link extends AppModel {
  * @var array
  * @access public
  */
-    var $validate = array(
+    public $validate = array(
         'title' => array(
             'rule' => array('minLength', 1),
             'message' => 'Title cannot be empty.',
@@ -58,7 +58,7 @@ class Link extends AppModel {
  * @var array
  * @access public
  */
-    var $belongsTo = array(
+    public $belongsTo = array(
         'Menu' => array('counterCache' => true)
     );
 

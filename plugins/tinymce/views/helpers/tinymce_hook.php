@@ -18,7 +18,7 @@ class TinymceHookHelper extends AppHelper {
  * @var array
  * @access public
  */
-    var $helpers = array(
+    public $helpers = array(
         'Html',
         'Js',
     );
@@ -29,7 +29,7 @@ class TinymceHookHelper extends AppHelper {
  *
  * @var array
  */
-    var $actions = array(
+    public $actions = array(
         'Nodes/admin_add' => array(
             'elements' => 'NodeBody',
         ),
@@ -46,7 +46,7 @@ class TinymceHookHelper extends AppHelper {
  * @var array
  * @access public
  */
-    var $settings = array(
+    public $settings = array(
         // General options
         'mode' => 'exact',
         'elements' => '',
@@ -78,7 +78,7 @@ class TinymceHookHelper extends AppHelper {
         'file_browser_callback' => 'fileBrowserCallBack',
     );
 
-    function fileBrowserCallBack() {
+    public function fileBrowserCallBack() {
         $output = "function fileBrowserCallBack(field_name, url, type, win) {
             browserField = field_name;
             browserWin = win;
@@ -88,7 +88,7 @@ class TinymceHookHelper extends AppHelper {
         return $output;
     }
 
-    function selectURL() {
+    public function selectURL() {
         $output = "function selectURL(url) {
             if (url == '') return false;
 
@@ -104,7 +104,7 @@ class TinymceHookHelper extends AppHelper {
         return $output;
     }
 
-    function getSettings($settings = array()) {
+    public function getSettings($settings = array()) {
         $_settings = $this->settings;
         $action = Inflector::camelize($this->params['controller']).'/'.$this->params['action'];
         if (isset($this->actions[$action])) {
@@ -114,7 +114,7 @@ class TinymceHookHelper extends AppHelper {
         return $settings;
     }
 
-    function beforeRender() {
+    public function beforeRender() {
         $action = Inflector::camelize($this->params['controller']).'/'.$this->params['action'];
         if (Configure::read('Writing.wysiwyg') && isset($this->actions[$action]) && ClassRegistry::getObject('view')) {
             $this->Html->script('/tinymce/js/tiny_mce', array('inline' => false));

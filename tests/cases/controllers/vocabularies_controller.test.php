@@ -3,10 +3,11 @@ App::import('Controller', 'Vocabularies');
 
 class TestVocabulariesController extends VocabulariesController {
 
-    var $name = 'Vocabularies';
+    public $name = 'Vocabularies';
 
-    var $autoRender = false;
+    public $autoRender = false;
 
+<<<<<<< HEAD:tests/cases/controllers/vocabularies_controller.test.php
     var $testView = false;
 
     function redirect($url, $status = null, $exit = true) {
@@ -19,20 +20,28 @@ class TestVocabulariesController extends VocabulariesController {
         } else {
             return parent::render($action, $layout, $file);
         }
+=======
+    public function redirect($url, $status = null, $exit = true) {
+        $this->redirectUrl = $url;
     }
 
-    function _stop($status = 0) {
+    public function render($action = null, $layout = null, $file = null) {
+        $this->renderedAction = $action;
+>>>>>>> 5ef3774... adding visibility keywords:tests/cases/controllers/vocabularies_controller.test.php
+    }
+
+    public function _stop($status = 0) {
         $this->stopped = $status;
     }
 
-    function __securityError() {
+    public function __securityError() {
 
     }
 }
 
 class VocabulariesControllerTestCase extends CakeTestCase {
 
-    var $fixtures = array(
+    public $fixtures = array(
         'aco',
         'aro',
         'aros_aco',
@@ -57,7 +66,7 @@ class VocabulariesControllerTestCase extends CakeTestCase {
         'vocabulary',
     );
 
-    function startTest() {
+    public function startTest() {
         $this->Vocabularies = new TestVocabulariesController();
         $this->Vocabularies->constructClasses();
         $this->Vocabularies->params['controller'] = 'vocabularies';
@@ -82,7 +91,7 @@ class VocabulariesControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminAdd() {
+    public function testAdminAdd() {
         $this->Vocabularies->params['action'] = 'admin_add';
         $this->Vocabularies->params['url']['url'] = 'admin/vocabularies/add';
         $this->Vocabularies->Component->initialize($this->Vocabularies);
@@ -109,7 +118,7 @@ class VocabulariesControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminEdit() {
+    public function testAdminEdit() {
         $this->Vocabularies->params['action'] = 'admin_edit';
         $this->Vocabularies->params['url']['url'] = 'admin/vocabularies/edit';
         $this->Vocabularies->Component->initialize($this->Vocabularies);
@@ -136,7 +145,7 @@ class VocabulariesControllerTestCase extends CakeTestCase {
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    function testAdminDelete() {
+    public function testAdminDelete() {
         $this->Vocabularies->params['action'] = 'admin_delete';
         $this->Vocabularies->params['url']['url'] = 'admin/vocabularies/delete';
         $this->Vocabularies->Component->initialize($this->Vocabularies);
@@ -155,7 +164,7 @@ class VocabulariesControllerTestCase extends CakeTestCase {
         $this->assertFalse($hasAny);
     }
 
-    function endTest() {
+    public function endTest() {
         $this->Vocabularies->Session->destroy();
         unset($this->Vocabularies);
         ClassRegistry::flush();

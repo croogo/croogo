@@ -5,8 +5,8 @@
  * @author Jorge Orpinel <jop@levogiro.net> (changes)
  */
 class ImageHelper extends Helper {
-    var $helpers = array('Html');
-    var $cacheDir = 'resized'; // relative to 'img'.DS
+    public $helpers = array('Html');
+    public $cacheDir = 'resized'; // relative to 'img'.DS
 
     /**
      * Automatically resizes an image and returns formatted IMG tag
@@ -20,7 +20,7 @@ class ImageHelper extends Helper {
      * @return mixed    Either string or echos the value, depends on AUTO_OUTPUT and $return.
      * @access public
      */
-    function resize($path, $width, $height, $aspect = true, $htmlAttributes = array(), $return = false) {
+    public function resize($path, $width, $height, $aspect = true, $htmlAttributes = array(), $return = false) {
         $types = array(1 => "gif", "jpeg", "png", "swf", "psd", "wbmp"); // used to determine image type
         if(empty($htmlAttributes['alt'])) $htmlAttributes['alt'] = 'thumb';  // Ponemos alt default
 

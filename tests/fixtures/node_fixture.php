@@ -1,9 +1,9 @@
 <?php
 
 class NodeFixture extends CakeTestFixture {
-	var $name = 'Node';
-	var $import = 'Node';
-	var $records = array(
+	public $name = 'Node';
+	public $import = 'Node';
+	public $records = array(
 		array(
 			'id' => '20',
 			'parent_id' => '',

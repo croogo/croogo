@@ -19,7 +19,7 @@ class AppModel extends Model {
  *
  * @var string
  */
-    var $useCache = true;
+    public $useCache = true;
 /**
  * Override find function to use caching
  *
@@ -28,7 +28,7 @@ class AppModel extends Model {
  * @return mixed
  * @access public
  */
-    function find($type, $options = array()) {
+    public function find($type, $options = array()) {
         if ($this->useCache) {
             $cachedResults = $this->_findCached($type, $options);
             if ($cachedResults) {
@@ -53,7 +53,7 @@ class AppModel extends Model {
  * @return void
  * @access private
  */
-    function _findCached($type, $options) {
+    protected function _findCached($type, $options) {
         if (isset($options['cache']['name']) &&
             isset($options['cache']['config'])) {
             $results = Cache::read($options['cache']['name'], $options['cache']['config']);
@@ -76,7 +76,7 @@ class AppModel extends Model {
  * @return boolean True on success, false on failure
  * @access public
  */
-    function updateAll($fields, $conditions = true) {
+    public function updateAll($fields, $conditions = true) {
         $args = func_get_args();
         $output = call_user_func_array(array('parent', 'updateAll'), $args);
         if ($output) {

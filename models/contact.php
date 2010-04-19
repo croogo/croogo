@@ -18,14 +18,14 @@ class Contact extends AppModel {
  * @var string
  * @access public
  */
-    var $name = 'Contact';
+    public $name = 'Contact';
 /**
  * Behaviors used by the Model
  *
  * @var array
  * @access public
  */
-    var $actsAs = array(
+    public $actsAs = array(
         'Cached' => array(
             'prefix' => array(
                 'contact_',
@@ -38,7 +38,7 @@ class Contact extends AppModel {
  * @var array
  * @access public
  */
-    var $validate = array(
+    public $validate = array(
         'title' => array(
             'rule' => 'notEmpty',
             'message' => 'This field cannot be left blank.',
@@ -64,7 +64,7 @@ class Contact extends AppModel {
  * @var array
  * @access public
  */
-    var $hasMany = array(
+    public $hasMany = array(
         'Message' => array(
             'className' => 'Message',
             'foreignKey' => 'contact_id',

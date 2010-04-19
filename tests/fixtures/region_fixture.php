@@ -1,9 +1,9 @@
 <?php
 
 class RegionFixture extends CakeTestFixture {
-	var $name = 'Region';
-	var $import = 'Region';
-	var $records = array(
+	public $name = 'Region';
+	public $import = 'Region';
+	public $records = array(
 		array(
 			'id' => '3',
 			'title' => 'none',

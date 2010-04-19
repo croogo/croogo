@@ -18,20 +18,20 @@ class ExampleController extends ExampleAppController {
  * @var string
  * @access public
  */
-    var $name = 'Example';
+    public $name = 'Example';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array('Setting');
+    public $uses = array('Setting');
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Example', true));
     }
 
-    function index() {
+    public function index() {
         $this->set('title_for_layout', __('Example', true));
         $this->set('exampleVariable', 'value here');
     }

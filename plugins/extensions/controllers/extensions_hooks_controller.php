@@ -18,22 +18,22 @@ class ExtensionsHooksController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'ExtensionsHooks';
+    public $name = 'ExtensionsHooks';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array('Setting', 'User');
+    public $uses = array('Setting', 'User');
 
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter();
         App::import('Core', 'File');
         APP::import('Core', 'Folder');
     }
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Hooks', true));
 
         $hooks = array();
@@ -46,7 +46,7 @@ class ExtensionsHooksController extends AppController {
         $this->set(compact('hooks'));
     }
 
-    function admin_toggle($hook = null) {
+    public function admin_toggle($hook = null) {
         if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
             $blackHoleCallback = $this->Security->blackHoleCallback;
             $this->$blackHoleCallback();

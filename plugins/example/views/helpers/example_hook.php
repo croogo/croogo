@@ -18,7 +18,7 @@ class ExampleHookHelper extends AppHelper {
  * @var array
  * @access public
  */
-    var $helpers = array(
+    public $helpers = array(
         'Html',
         'Layout',
     );
@@ -28,7 +28,7 @@ class ExampleHookHelper extends AppHelper {
  * @param object $controller Controller
  * @return void
  */
-    function onActivate(&$controller) {
+    public function onActivate(&$controller) {
     }
 /**
  * Called after deactivating the hook in ExtensionsHooksController::admin_toggle()
@@ -36,14 +36,14 @@ class ExampleHookHelper extends AppHelper {
  * @param object $controller Controller
  * @return void
  */
-    function onDeactivate(&$controller) {
+    public function onDeactivate(&$controller) {
     }
 /**
  * Before render callback. Called before the view file is rendered.
  *
  * @return void
  */
-    function beforeRender() {
+    public function beforeRender() {
     }
 /**
  * After render callback. Called after the view file is rendered
@@ -51,28 +51,28 @@ class ExampleHookHelper extends AppHelper {
  *
  * @return void
  */
-    function afterRender() {
+    public function afterRender() {
     }
 /**
  * Before layout callback. Called before the layout is rendered.
  *
  * @return void
  */
-    function beforeLayout() {
+    public function beforeLayout() {
     }
 /**
  * After layout callback. Called after the layout has rendered.
  *
  * @return void
  */
-    function afterLayout() {
+    public function afterLayout() {
     }
 /**
  * Called after LayoutHelper::setNode()
  *
  * @return void
  */
-    function afterSetNode() {
+    public function afterSetNode() {
         // field values can be changed from hooks
         $this->Layout->setNodeField('title', $this->Layout->node('title') . ' [Modified by ExampleHook]');
     }
@@ -81,7 +81,7 @@ class ExampleHookHelper extends AppHelper {
  *
  * @return string
  */
-    function beforeNodeInfo() {
+    public function beforeNodeInfo() {
         return '<p>beforeNodeInfo</p>';
     }
 /**
@@ -89,7 +89,7 @@ class ExampleHookHelper extends AppHelper {
  *
  * @return string
  */
-    function afterNodeInfo() {
+    public function afterNodeInfo() {
         return '<p>afterNodeInfo</p>';
     }
 /**
@@ -97,7 +97,7 @@ class ExampleHookHelper extends AppHelper {
  *
  * @return string
  */
-    function beforeNodeBody() {
+    public function beforeNodeBody() {
         return '<p>beforeNodeBody</p>';
     }
 /**
@@ -105,7 +105,7 @@ class ExampleHookHelper extends AppHelper {
  *
  * @return string
  */
-    function afterNodeBody() {
+    public function afterNodeBody() {
         return '<p>afterNodeBody</p>';
     }
 /**
@@ -113,7 +113,7 @@ class ExampleHookHelper extends AppHelper {
  *
  * @return string
  */
-    function beforeNodeMoreInfo() {
+    public function beforeNodeMoreInfo() {
         return '<p>beforeNodeMoreInfo</p>';
     }
 /**
@@ -121,7 +121,7 @@ class ExampleHookHelper extends AppHelper {
  *
  * @return string
  */
-    function afterNodeMoreInfo() {
+    public function afterNodeMoreInfo() {
         return '<p>afterNodeMoreInfo</p>';
     }
 }

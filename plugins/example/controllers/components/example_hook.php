@@ -18,7 +18,7 @@ class ExampleHookComponent extends Object {
  * @param object $controller Controller
  * @return void
  */
-    function onActivate(&$controller) {
+    public function onActivate(&$controller) {
         // ACL: set ACOs with permissions
         $controller->Croogo->addAco('Example'); // ExampleController
         $controller->Croogo->addAco('Example/admin_index'); // ExampleController::admin_index()
@@ -45,7 +45,7 @@ class ExampleHookComponent extends Object {
  * @param object $controller Controller
  * @return void
  */
-    function onDeactivate(&$controller) {
+    public function onDeactivate(&$controller) {
         // ACL: remove ACOs with permissions
         $controller->Croogo->removeAco('Example'); // ExampleController ACO and it's actions will be removed
 
@@ -72,7 +72,7 @@ class ExampleHookComponent extends Object {
  * @param object $controller Controller with components to startup
  * @return void
  */
-    function startup(&$controller) {
+    public function startup(&$controller) {
         $controller->set('exampleHookStartup', 'ExampleHook startup');
     }
 /**
@@ -82,7 +82,7 @@ class ExampleHookComponent extends Object {
  * @param object $controller Controller with components to beforeRender
  * @return void
  */
-    function beforeRender(&$controller) {
+    public function beforeRender(&$controller) {
         // Admin menu: admin_menu element of Example plugin will be shown in admin panel's navigation
         Configure::write('Admin.menus.example', 1);
 
@@ -100,7 +100,7 @@ class ExampleHookComponent extends Object {
  * @param object $controller Controller with components to shutdown
  * @return void
  */
-    function shutdown(&$controller) {
+    public function shutdown(&$controller) {
     }
     
 }

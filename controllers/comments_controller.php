@@ -18,14 +18,14 @@ class CommentsController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Comments';
+    public $name = 'Comments';
 /**
  * Components
  *
  * @var array
  * @access public
  */
-    var $components = array(
+    public $components = array(
         'Akismet',
         'Email',
         'Recaptcha',
@@ -36,16 +36,16 @@ class CommentsController extends AppController {
  * @var array
  * @access public
  */
-    var $uses = array('Comment');
+    public $uses = array('Comment');
 
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter();
         if ($this->action == 'admin_edit') {
             $this->Security->disabledFields = array('ip');
         }
     }
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Comments', true));
 
         $this->Comment->recursive = 0;
@@ -74,7 +74,7 @@ class CommentsController extends AppController {
         $this->set(compact('comments'));
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Comment', true));
 
         if (!$id && empty($this->data)) {
@@ -94,7 +94,7 @@ class CommentsController extends AppController {
         }
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Comment', true));
             $this->redirect(array('action'=>'index'));
@@ -109,7 +109,7 @@ class CommentsController extends AppController {
         }
     }
 
-    function admin_process() {
+    public function admin_process() {
         $action = $this->data['Comment']['action'];
         $ids = array();
         foreach ($this->data['Comment'] AS $id => $value) {
@@ -139,7 +139,7 @@ class CommentsController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
-    function index() {
+    public function index() {
         $this->set('title_for_layout', __('Comments', true));
 
         if (!isset($this->params['url']['ext']) ||
@@ -156,7 +156,7 @@ class CommentsController extends AppController {
         $this->set(compact('comments'));
     }
 
-    function add($nodeId = null, $parentId = null) {
+    public function add($nodeId = null, $parentId = null) {
         if (!$nodeId) {
             $this->Session->setFlash(__('Invalid Node', true));
             $this->redirect('/');
@@ -248,7 +248,7 @@ class CommentsController extends AppController {
         $this->set(compact('success', 'node', 'type', 'nodeId', 'parentId'));
     }
 
-    function __spam_protection($continue, $type, $node) {
+    private function __spam_protection($continue, $type, $node) {
         if (!empty($this->data) &&
             $type['Type']['comment_spam_protection'] &&
             $continue === true) {
@@ -266,7 +266,7 @@ class CommentsController extends AppController {
         return $continue;
     }
 
-    function __captcha($continue, $type, $node) {
+    private function __captcha($continue, $type, $node) {
         if (!empty($this->data) &&
             $type['Type']['comment_captcha'] &&
             $continue === true &&
@@ -278,7 +278,7 @@ class CommentsController extends AppController {
         return $continue;
     }
 
-    function delete($id) {
+    public function delete($id) {
         $success = 0;
         if ($this->Session->check('Auth.User.id')) {
             $userId = $this->Session->read('Auth.User.id');

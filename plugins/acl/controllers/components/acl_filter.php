@@ -17,7 +17,7 @@ class AclFilterComponent extends Object {
  * @param object $controller controller
  * @param array  $settings   settings
  */
-    function initialize(&$controller, $settings = array()) {
+    public function initialize(&$controller, $settings = array()) {
         $this->controller =& $controller;
     }
 
@@ -26,7 +26,7 @@ class AclFilterComponent extends Object {
  *
  * @return void
  */
-    function auth() {
+    public function auth() {
         //Configure AuthComponent
         $this->controller->Auth->authorize = 'actions';
         $this->controller->Auth->loginAction = array('plugin' => 0, 'controller' => 'users', 'action' => 'login');

@@ -18,14 +18,14 @@ class Menu extends AppModel {
  * @var string
  * @access public
  */
-    var $name = 'Menu';
+    public $name = 'Menu';
 /**
  * Behaviors used by the Model
  *
  * @var array
  * @access public
  */
-    var $actsAs = array(
+    public $actsAs = array(
         'Cached' => array(
             'prefix' => array(
                 'link_',
@@ -40,7 +40,7 @@ class Menu extends AppModel {
  * @var array
  * @access public
  */
-    var $validate = array(
+    public $validate = array(
         'title' => array(
             'rule' => array('minLength', 1),
             'message' => 'Title cannot be empty.',
@@ -62,7 +62,7 @@ class Menu extends AppModel {
  * @var array
  * @access public
  */
-    var $hasMany = array(
+    public $hasMany = array(
         'Link' => array(
             'className' => 'Link',
             'foreignKey' => 'menu_id',

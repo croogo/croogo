@@ -1,14 +1,14 @@
 <?php
 class TypesVocabularyFixture extends CakeTestFixture {
-	var $name = 'TypesVocabulary';
-	var $fields = array(
+	public $name = 'TypesVocabulary';
+	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
 		'type_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10),
 		'vocabulary_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10),
 		'weight' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 	);
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => '23',
 			'type_id' => '2',

@@ -1,8 +1,8 @@
 <?php
 
 class NodesTermFixture extends CakeTestFixture {
-	var $name = 'NodesTerm';
-	var $fields = array(
+	public $name = 'NodesTerm';
+	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 20, 'key' => 'primary'),
 		'node_id' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 10),
 		'vocabulary_id' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 10),
@@ -10,7 +10,7 @@ class NodesTermFixture extends CakeTestFixture {
 		'weight' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
 	);
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => '6407',
 			'node_id' => '21',

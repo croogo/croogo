@@ -18,14 +18,14 @@ class ExtensionsPluginsController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'ExtensionsPlugins';
+    public $name = 'ExtensionsPlugins';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array(
+    public $uses = array(
         'Setting',
         'User',
     );
@@ -35,19 +35,19 @@ class ExtensionsPluginsController extends AppController {
  * @var array
  * @access public
  */
-    var $corePlugins = array(
+    public $corePlugins = array(
         'acl',
         'extensions',
     );
 
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter();
 
         App::import('Core', 'File');
         APP::import('Core', 'Folder');
     }
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Plugins', true));
 
         $pluginAliases = $this->Croogo->getPlugins();
@@ -59,7 +59,7 @@ class ExtensionsPluginsController extends AppController {
         $this->set(compact('plugins'));
     }
 
-    function admin_add() {
+    public function admin_add() {
         $this->set('title_for_layout', __('Upload a new plugin', true));
 
         if (!empty($this->data)) {
@@ -139,7 +139,7 @@ class ExtensionsPluginsController extends AppController {
         }
     }
 
-    function admin_delete($plugin = null) {
+    public function admin_delete($plugin = null) {
         if (!$plugin) {
             $this->Session->setFlash(__('Invalid plugin', true));
             $this->redirect(array('action' => 'index'));

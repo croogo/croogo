@@ -18,14 +18,14 @@ class FilemanagerHelper extends AppHelper {
  * @var array
  * @access public
  */
-    var $helpers = array('Html');
+    public $helpers = array('Html');
 /**
  * Get extension from a file name.
  *
  * @param string $filename file name
  * @return string
  */
-    function filename2ext($filename) {
+    public function filename2ext($filename) {
         $filename = strtolower($filename) ;
         //$exts = split("[/\\.]", $filename) ;
         //$n = count($exts)-1;
@@ -43,7 +43,7 @@ class FilemanagerHelper extends AppHelper {
  * @param string $ext
  * @return string
  */
-    function ext2icon($ext) {
+    public function ext2icon($ext) {
         $ext = strtolower($ext);
 
         $ext2icon = array(
@@ -76,7 +76,7 @@ class FilemanagerHelper extends AppHelper {
  *
  * @param string $filename file name
  */
-    function filename2icon($filename) {
+    public function filename2icon($filename) {
         $ext = $this->filename2ext($filename);
         $icon = $this->ext2icon($ext);
         return $icon;
@@ -87,7 +87,7 @@ class FilemanagerHelper extends AppHelper {
  * @param string $path absolute path
  * @return string
  */
-    function breadcrumb($path) {
+    public function breadcrumb($path) {
         $path_e = explode(DS, $path);
 
         $output = array();
@@ -114,7 +114,7 @@ class FilemanagerHelper extends AppHelper {
  * @param string $pathKey default is 'path'
  * @return string
  */
-    function link($title, $url, $path, $pathKey = 'path') {
+    public function link($title, $url, $path, $pathKey = 'path') {
         $onclick = '';
         if (isset($url['action']) && ($url['action'] == 'delete_directory' || $url['action'] == 'delete_file')) {
             $onclick = 'return confirm(&#039;Are you sure?&#039;);';
@@ -129,7 +129,7 @@ class FilemanagerHelper extends AppHelper {
  * @param string $path directory path
  * @return string
  */
-    function linkDirectory($title, $path) {
+    public function linkDirectory($title, $path) {
         $output = $this->link($title, array('controller' => 'filemanager', 'action' => 'browse'), $path);
         return $output;
     }
@@ -140,7 +140,7 @@ class FilemanagerHelper extends AppHelper {
  * @param string $path
  * @return string
  */
-    function linkFile($title, $path) {
+    public function linkFile($title, $path) {
         $output = "<a href='" . $this->Html->url(array('controller' => 'filemanager', 'action' => 'editfile')) . "?path=" . urlencode($path) . "'>{$title}</a>";
         return $output;
     }
@@ -151,7 +151,7 @@ class FilemanagerHelper extends AppHelper {
  * @param string $path absolute path
  * @return string
  */
-    function linkUpload($title, $path) {
+    public function linkUpload($title, $path) {
         $output = $this->link($title, array('controller' => 'filemanager', 'action' => 'upload'), $path);
         return $output;
     }
@@ -162,7 +162,7 @@ class FilemanagerHelper extends AppHelper {
  * @param string $path absolute path
  * @return string
  */
-    function linkCreateDirectory($title, $path) {
+    public function linkCreateDirectory($title, $path) {
         $output = $this->link($title, array('controller' => 'filemanager', 'action' => 'new'), $path);
         return $output;
     }
@@ -172,7 +172,7 @@ class FilemanagerHelper extends AppHelper {
  * @param string $mimeType mine type
  * @return string
  */
-    function mimeTypeToImage($mimeType) {
+    public function mimeTypeToImage($mimeType) {
         $mime = explode('/', $mimeType);
         $mime = $mime['0'];
 
@@ -194,7 +194,7 @@ class FilemanagerHelper extends AppHelper {
  * @param string $search
  * @return boolean
  */
-    function inPath($paths, $search) {
+    public function inPath($paths, $search) {
         foreach ($paths AS $path) {
             if (strpos($search, $path) !== false) {
                 return true;

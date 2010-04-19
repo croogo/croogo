@@ -1,9 +1,9 @@
 <?php
 
 class VocabularyFixture extends CakeTestFixture {
-	var $name = 'Vocabulary';
-	var $import = 'Vocabulary';
-	var $records = array(
+	public $name = 'Vocabulary';
+	public $import = 'Vocabulary';
+	public $records = array(
 		array(
 			'id' => '1',
 			'title' => 'Categories',

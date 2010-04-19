@@ -3,7 +3,7 @@ App::import('Model', 'Node');
 
 class CroogoTranslateBehaviorTestCase extends CakeTestCase {
 
-    var $fixtures = array(
+    public $fixtures = array(
         'aco',
         'aro',
         'aros_aco',
@@ -28,14 +28,14 @@ class CroogoTranslateBehaviorTestCase extends CakeTestCase {
         'vocabulary',
     );
 
-    function startTest() {
+    public function startTest() {
         $this->Node =& ClassRegistry::init('Node');
         $this->Node->Behaviors->attach('CroogoTranslate', array(
             'title' => 'titleTranslation',
         ));
     }
 
-    function testSaveTranslation() {
+    public function testSaveTranslation() {
         $this->Node->id = 20; // About
         $this->Node->locale = 'ben';
         $this->Node->saveTranslation(array(
@@ -47,7 +47,7 @@ class CroogoTranslateBehaviorTestCase extends CakeTestCase {
         $this->assertEqual($about['Node']['title'], 'About [Translated in Bengali]');
     }
 
-    function endTest() {
+    public function endTest() {
         unset($this->Node);
         ClassRegistry::flush();
     }

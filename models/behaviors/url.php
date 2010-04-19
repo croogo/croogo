@@ -13,7 +13,7 @@
  */
 class UrlBehavior extends ModelBehavior {
 
-    function setup(&$model, $config = array()) {
+    public function setup(&$model, $config = array()) {
         $_config = array(
             'url' => array(
                 'controller' => 'nodes',
@@ -34,7 +34,7 @@ class UrlBehavior extends ModelBehavior {
         $this->settings[$model->alias] = $config;
     }
 
-    function afterFind(&$model, $results = array(), $primary = false) {
+    public function afterFind(&$model, $results = array(), $primary = false) {
         if ($primary && isset($results[0][$model->alias])) {
             foreach ($results AS $i => $result) {
                 $url = $this->settings[$model->alias]['url'];

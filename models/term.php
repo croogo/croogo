@@ -18,14 +18,14 @@ class Term extends AppModel {
  * @var string
  * @access public
  */
-    var $name = 'Term';
+    public $name = 'Term';
 /**
  * Behaviors used by the Model
  *
  * @var array
  * @access public
  */
-    var $actsAs = array(
+    public $actsAs = array(
         'Tree',
         'Cached' => array(
             'prefix' => array(
@@ -40,7 +40,7 @@ class Term extends AppModel {
  * @var array
  * @access public
  */
-    var $validate = array(
+    public $validate = array(
         'slug' => array(
             'isUnique' => array(
                 'rule' => 'isUnique',
@@ -58,7 +58,7 @@ class Term extends AppModel {
  * @var array
  * @access public
  */
-    var $belongsTo = array(
+    public $belongsTo = array(
         'Vocabulary' => array(
             'counterCache' => true,
         ),

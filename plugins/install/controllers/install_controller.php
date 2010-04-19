@@ -19,7 +19,7 @@ class InstallController extends InstallAppController {
  * @var string
  * @access public
  */
-    var $name = 'Install';
+    public $name = 'Install';
 
 /**
  * No models required
@@ -27,7 +27,7 @@ class InstallController extends InstallAppController {
  * @var array
  * @access public
  */
-    var $uses = null;
+    public $uses = null;
 
 /**
  * No components required
@@ -35,7 +35,7 @@ class InstallController extends InstallAppController {
  * @var array
  * @access public
  */
-    var $components = null;
+    public $components = null;
 
 /**
  * beforeFilter
@@ -43,7 +43,7 @@ class InstallController extends InstallAppController {
  * @return void
  * @access public
  */
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter();
 
         $this->layout = 'install';
@@ -55,7 +55,7 @@ class InstallController extends InstallAppController {
  *
  * @return void
  */
-    function _check() {
+    protected function _check() {
         if (file_exists(CONFIGS . 'settings.yml')) {
             $this->Session->setFlash('Already Installed');
             $this->redirect('/');
@@ -70,7 +70,7 @@ class InstallController extends InstallAppController {
  * @return void
  * @access public
  */
-    function index() {
+    public function index() {
         $this->_check();
         $this->set('title_for_layout', __('Installation: Welcome', true));
     }
@@ -85,7 +85,7 @@ class InstallController extends InstallAppController {
  * @return void
  * @access public
  */
-    function database() {
+    public function database() {
         $this->_check();
         $this->set('title_for_layout', __('Step 1: Database', true));
 
@@ -124,7 +124,7 @@ class InstallController extends InstallAppController {
  * @return void
  * @access public
  */
-    function data() {
+    public function data() {
         $this->_check();
         $this->set('title_for_layout', __('Step 2: Run SQL', true));
         if (isset($this->params['named']['run'])) {
@@ -152,7 +152,7 @@ class InstallController extends InstallAppController {
  * @return void
  * @access public
  */
-	function finish() {
+	public function finish() {
             $this->set('title_for_layout', __('Installation completed successfully', true));
             if (isset($this->params['named']['delete'])) {
                 App::import('Core', 'Folder');
@@ -195,7 +195,7 @@ class InstallController extends InstallAppController {
  * @param  string $fileName sql file
  * @return void
  */
-    function __executeSQLScript($db, $fileName) {
+    private function __executeSQLScript($db, $fileName) {
         $statements = file_get_contents($fileName);
         $statements = explode(';', $statements);
 

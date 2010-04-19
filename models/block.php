@@ -18,14 +18,14 @@ class Block extends AppModel {
  * @var string
  * @access public
  */
-    var $name = 'Block';
+    public $name = 'Block';
 /**
  * Behaviors used by the Model
  *
  * @var array
  * @access public
  */
-    var $actsAs = array(
+    public $actsAs = array(
         'Encoder',
         'Ordered' => array(
             'field' => 'weight',
@@ -45,7 +45,7 @@ class Block extends AppModel {
  * @var array
  * @access public
  */
-    var $validate = array(
+    public $validate = array(
         'title' => array(
             'rule' => array('minLength', 1),
             'message' => 'Title cannot be empty.',
@@ -67,7 +67,7 @@ class Block extends AppModel {
  * @var array
  * @access public
  */
-    var $belongsTo = array(
+    public $belongsTo = array(
         'Region' => array(
             'className' => 'Region',
             'foreignKey' => 'region_id',

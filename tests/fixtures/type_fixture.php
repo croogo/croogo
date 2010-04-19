@@ -1,9 +1,9 @@
 <?php
 
 class TypeFixture extends CakeTestFixture {
-	var $name = 'Type';
-	var $import = 'Type';
-	var $records = array(
+	public $name = 'Type';
+	public $import = 'Type';
+	public $records = array(
 		array(
 			'id' => '1',
 			'title' => 'Page',

@@ -5,7 +5,7 @@
  *
  * Lond description for file.
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * CakePHP(tm) :  Rapid Development Framework (http://www.cakephp.org)
  * Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
@@ -42,13 +42,13 @@ class CroogoTranslateBehavior extends ModelBehavior {
 /**
  * Used for runtime configuration of model
  */
-    var $runtime = array();
+    public $runtime = array();
 /**
  * Field names
  *
  * @var array
  */
-    var $translationFields = array();
+    public $translationFields = array();
 /**
  * Callback
  *
@@ -66,7 +66,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return mixed
  * @access public
  */
-    function setup(&$model, $config = array()) {
+    public function setup(&$model, $config = array()) {
         $db =& ConnectionManager::getDataSource($model->useDbConfig);
         if (!$db->connected) {
             trigger_error(
@@ -88,7 +88,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return void
  * @access public
  */
-    function cleanup(&$model) {
+    public function cleanup(&$model) {
         //$this->unbindTranslation($model);
         unset($this->settings[$model->alias]);
         unset($this->runtime[$model->alias]);
@@ -100,7 +100,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return array
  * @access public
  */
-    function getTranslationFields(&$model) {
+    public function getTranslationFields(&$model) {
         if (Set::numeric(array_keys($this->translationFields))) {
             return $this->translationFields;
         } else {
@@ -115,7 +115,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return array Modified results
  * @access public
  */
-    function afterFind(&$model, $results, $primary) {
+    public function afterFind(&$model, $results, $primary) {
         $locale = $this->_getLocale($model);
 
         if (empty($locale) || empty($results)) {
@@ -175,7 +175,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @param array $data
  * @param boolean $validate
  */
-    function saveTranslation(&$model, $data = null, $validate = true) {
+    public function saveTranslation(&$model, $data = null, $validate = true) {
         $model->data = $data;
         if (!isset($model->data[$model->alias])) {
             return false;
@@ -227,7 +227,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return void
  * @access public
  */
-    function afterDelete(&$model) {
+    public function afterDelete(&$model) {
         $RuntimeModel =& $this->translateModel($model);
         $conditions = array('model' => $model->alias, 'foreign_key' => $model->id);
         $RuntimeModel->deleteAll($conditions);
@@ -238,7 +238,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return mixed string or false
  * @access protected
  */
-    function _getLocale(&$model) {
+    protected function _getLocale(&$model) {
         if (!isset($model->locale) || is_null($model->locale)) {
             /*
             if (!class_exists('I18n')) {
@@ -259,7 +259,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return object
  * @access public
  */
-    function &translateModel(&$model) {
+    public function &translateModel(&$model) {
         if (!isset($this->runtime[$model->alias]['model'])) {
             if (!isset($model->translateModel) || empty($model->translateModel)) {
                 $className = 'I18nModel';
@@ -287,9 +287,9 @@ if (!defined('CAKEPHP_UNIT_TEST_EXECUTION')) {
  * @subpackage    cake.cake.libs.model.behaviors
  */
     class I18nModel extends AppModel {
-        var $name = 'I18nModel';
-        var $useTable = 'i18n';
-        var $displayField = 'field';
+        public $name = 'I18nModel';
+        public $useTable = 'i18n';
+        public $displayField = 'field';
     }
 }
 ?>

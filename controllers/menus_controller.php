@@ -18,16 +18,16 @@ class MenusController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Menus';
+    public $name = 'Menus';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array('Menu');
+    public $uses = array('Menu');
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Menus', true));
 
         $this->Menu->recursive = 0;
@@ -35,7 +35,7 @@ class MenusController extends AppController {
         $this->set('menus', $this->paginate());
     }
 
-    function admin_add() {
+    public function admin_add() {
         $this->set('title_for_layout', __('Add Menu', true));
 
         if (!empty($this->data)) {
@@ -49,7 +49,7 @@ class MenusController extends AppController {
         }
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Menu', true));
 
         if (!$id && empty($this->data)) {
@@ -69,7 +69,7 @@ class MenusController extends AppController {
         }
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Menu', true));
             $this->redirect(array('action'=>'index'));

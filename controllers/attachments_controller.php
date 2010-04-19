@@ -20,21 +20,21 @@ class AttachmentsController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Attachments';
+    public $name = 'Attachments';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array('Node');
+    public $uses = array('Node');
 /**
  * Helpers used by the Controller
  *
  * @var array
  * @access public
  */
-    var $helpers = array('Filemanager', 'Text', 'Image');
+    public $helpers = array('Filemanager', 'Text', 'Image');
 /**
  * Node type
  *
@@ -44,7 +44,7 @@ class AttachmentsController extends AppController {
  * @var string
  * @access public
  */
-    var $type = 'attachment';
+    public $type = 'attachment';
 /**
  * Uploads directory
  *
@@ -53,7 +53,7 @@ class AttachmentsController extends AppController {
  * @var string
  * @access public
  */
-    var $uploadsDir = 'uploads';
+    public $uploadsDir = 'uploads';
 
 /**
  * Before executing controller actions
@@ -61,7 +61,7 @@ class AttachmentsController extends AppController {
  * @return void
  * @access public
  */
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter();
 
         // Comment, Category, Tag not needed
@@ -78,7 +78,7 @@ class AttachmentsController extends AppController {
  * @return void
  * @access public
  */
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Attachments', true));
 
         $this->Node->recursive = 0;
@@ -92,7 +92,7 @@ class AttachmentsController extends AppController {
  * @return void
  * @access public
  */
-    function admin_add() {
+    public function admin_add() {
         $this->set('title_for_layout', __('Add Attachment', true));
 
         if (isset($this->params['named']['editor'])) {
@@ -152,7 +152,7 @@ class AttachmentsController extends AppController {
  * @return void
  * @access public
  */
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Attachment', true));
 
         if (!$id && empty($this->data)) {
@@ -179,7 +179,7 @@ class AttachmentsController extends AppController {
  * @return void
  * @access public
  */
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Attachment', true));
             $this->redirect(array('action'=>'index'));
@@ -207,7 +207,7 @@ class AttachmentsController extends AppController {
         }
     }
 
-    function admin_browse() {
+    public function admin_browse() {
         $this->layout = 'admin_full';
         $this->admin_index();
     }

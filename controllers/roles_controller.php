@@ -18,16 +18,16 @@ class RolesController extends AppController {
  * @var string
  * @access public
  */
-    var $name = 'Roles';
+    public $name = 'Roles';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    var $uses = array('Role');
+    public $uses = array('Role');
 
-    function admin_index() {
+    public function admin_index() {
         $this->set('title_for_layout', __('Roles', true));
 
         $this->Role->recursive = 0;
@@ -35,7 +35,7 @@ class RolesController extends AppController {
         $this->set('roles', $this->paginate());
     }
 
-    function admin_add() {
+    public function admin_add() {
         $this->set('title_for_layout', __('Add Role', true));
 
         if (!empty($this->data)) {
@@ -49,7 +49,7 @@ class RolesController extends AppController {
         }
     }
 
-    function admin_edit($id = null) {
+    public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Role', true));
 
         if (!$id && empty($this->data)) {
@@ -69,7 +69,7 @@ class RolesController extends AppController {
         }
     }
 
-    function admin_delete($id = null) {
+    public function admin_delete($id = null) {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Role', true));
             $this->redirect(array('action'=>'index'));

@@ -18,14 +18,14 @@ class Comment extends AppModel {
  * @var string
  * @access public
  */
-    var $name = 'Comment';
+    public $name = 'Comment';
 /**
  * Behaviors used by the Model
  *
  * @var array
  * @access public
  */
-    var $actsAs = array(
+    public $actsAs = array(
         'Tree',
         'Containable',
         'Cached' => array(
@@ -42,7 +42,7 @@ class Comment extends AppModel {
  * @var array
  * @access public
  */
-    var $validate = array(
+    public $validate = array(
         'body' => array(
             'rule' => 'notEmpty',
             'message' => 'This field cannot be left blank.',
@@ -63,7 +63,7 @@ class Comment extends AppModel {
  * @var array
  * @access public
  */
-    var $belongsTo = array(
+    public $belongsTo = array(
         'Node' => array(
             'counterCache' => true,
             'counterScope' => array('Comment.status' => 1),

@@ -1,9 +1,9 @@
 <?php
 
 class ContactFixture extends CakeTestFixture {
-	var $name = 'Contact';
-	var $import = 'Contact';
-	var $records = array(
+	public $name = 'Contact';
+	public $import = 'Contact';
+	public $records = array(
 		array(
 			'id' => '1',
 			'title' => 'Contact',
