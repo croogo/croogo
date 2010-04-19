@@ -228,7 +228,7 @@ class CroogoComponent extends Object {
                     'Block.weight' => 'ASC'
                 ),
                 'cache' => array(
-                    'name' => 'croogo_blocks_'.$regionAlias.'_'.$this->roleId.'_'.$this->controller->params['url']['url'],
+                    'prefix' => 'croogo_blocks_'.$regionAlias.'_'.$this->roleId.'_',
                     'config' => 'croogo_blocks',
                 ),
                 'recursive' => '-1',
@@ -404,7 +404,7 @@ class CroogoComponent extends Object {
                 'order' => $options['order'],
                 'limit' => $options['limit'],
                 'cache' => array(
-                    'name' => 'croogo_nodes_'.$alias.'_'.md5(Spyc::YAMLDump($options)),
+                    'prefix' => 'croogo_nodes_'.$alias.'_',
                     'config' => 'croogo_nodes',
                 ),
             ));

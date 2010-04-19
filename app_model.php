@@ -23,6 +23,9 @@ class AppModel extends Model {
 /**
  * Override find function to use caching
  *
+ * Caching can be done either by unique names,
+ * or prefixes where a hashed value of $options array is appended to the name
+ * 
  * @param mixed $type 
  * @param array $options 
  * @return mixed
@@ -38,30 +41,39 @@ class AppModel extends Model {
 
         $args = func_get_args();
         $results = call_user_func_array(array('parent', 'find'), $args);
-        if (isset($options['cache']['name']) && 
-            isset($options['cache']['config']) &&
-            $this->useCache) {
-            Cache::write($options['cache']['name'], $results, $options['cache']['config']);
+        if ($this->useCache) {
+            if (isset($options['cache']['name']) && isset($options['cache']['config'])) {
+                $cacheName = $options['cache']['name'];
+            } elseif (isset($options['cache']['prefix']) && isset($options['cache']['config'])) {
+                $cacheName = $options['cache']['prefix'] . md5(serialize($options));
+            }
+
+            if (isset($cacheName)) {
+                Cache::write($cacheName, $results, $options['cache']['config']);
+            }
         }
         return $results;
     }
 /**
  * Check if find() was already cached
  *
- * @param mixed $type 
- * @param array $options 
+ * @param mixed $type
+ * @param array $options
  * @return void
  * @access private
  */
-    protected function _findCached($type, $options) {
-        if (isset($options['cache']['name']) &&
-            isset($options['cache']['config'])) {
-            $results = Cache::read($options['cache']['name'], $options['cache']['config']);
-            if ($results) {
-                return $results;
-            } else {
-                return false;
-            }
+    function _findCached($type, $options) {
+        if (isset($options['cache']['name']) && isset($options['cache']['config'])) {
+            $cacheName = $options['cache']['name'];
+        } elseif (isset($options['cache']['prefix']) && isset($options['cache']['config'])) {
+            $cacheName = $options['cache']['prefix'] . md5(serialize($options));
+        } else {
+            return false;
+        }
+
+        $results = Cache::read($cacheName, $options['cache']['config']);
+        if ($results) {
+            return $results;
         }
         return false;
     }
