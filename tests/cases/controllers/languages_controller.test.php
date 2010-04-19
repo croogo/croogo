@@ -7,12 +7,18 @@ class TestLanguagesController extends LanguagesController {
 
     var $autoRender = false;
 
+    var $testView = false;
+
     function redirect($url, $status = null, $exit = true) {
         $this->redirectUrl = $url;
     }
 
     function render($action = null, $layout = null, $file = null) {
-        $this->renderedAction = $action;
+        if (!$this->testView) {
+            $this->renderedAction = $action;
+        } else {
+            return parent::render($action, $layout, $file);
+        }
     }
 
     function _stop($status = 0) {
@@ -55,6 +61,25 @@ class LanguagesControllerTestCase extends CakeTestCase {
         $this->Languages = new TestLanguagesController();
         $this->Languages->constructClasses();
         $this->Languages->params['controller'] = 'languages';
+        $this->Languages->params['pass'] = array();
+        $this->Languages->params['named'] = array();
+    }
+
+    function testAdminIndex() {
+        $this->Languages->params['action'] = 'admin_index';
+        $this->Languages->params['url']['url'] = 'admin/languages';
+        $this->Languages->Component->initialize($this->Languages);
+        $this->Languages->Session->write('Auth.User', array(
+            'id' => 1,
+            'username' => 'admin',
+        ));
+        $this->Languages->beforeFilter();
+        $this->Languages->Component->startup($this->Languages);
+        $this->Languages->admin_index();
+
+        $this->Languages->testView = true;
+        $output = $this->Languages->render('admin_index');
+        $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     function testAdminAdd() {
@@ -78,6 +103,10 @@ class LanguagesControllerTestCase extends CakeTestCase {
 
         $ben = $this->Languages->Language->findByAlias('ben');
         $this->assertEqual($ben['Language']['title'], 'Bengali');
+
+        $this->Languages->testView = true;
+        $output = $this->Languages->render('admin_add');
+        $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     function testAdminEdit() {
@@ -102,6 +131,10 @@ class LanguagesControllerTestCase extends CakeTestCase {
 
         $eng = $this->Languages->Language->findByAlias('eng');
         $this->assertEqual($eng['Language']['title'], 'English [modified]');
+
+        $this->Languages->testView = true;
+        $output = $this->Languages->render('admin_edit');
+        $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     function testAdminDelete() {

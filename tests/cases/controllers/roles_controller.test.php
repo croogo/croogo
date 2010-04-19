@@ -7,12 +7,18 @@ class TestRolesController extends RolesController {
 
     var $autoRender = false;
 
+    var $testView = false;
+
     function redirect($url, $status = null, $exit = true) {
         $this->redirectUrl = $url;
     }
 
     function render($action = null, $layout = null, $file = null) {
-        $this->renderedAction = $action;
+        if (!$this->testView) {
+            $this->renderedAction = $action;
+        } else {
+            return parent::render($action, $layout, $file);
+        }
     }
 
     function _stop($status = 0) {
@@ -55,8 +61,27 @@ class RolesControllerTestCase extends CakeTestCase {
         $this->Roles = new TestRolesController();
         $this->Roles->constructClasses();
         $this->Roles->params['controller'] = 'roles';
+        $this->Roles->params['pass'] = array();
+        $this->Roles->params['named'] = array();
         $this->Roles->Role->Aro->useDbConfig = 'test';
         $this->Roles->Role->Permission->useDbConfig = 'test';
+    }
+
+    function testAdminIndex() {
+        $this->Roles->params['action'] = 'admin_index';
+        $this->Roles->params['url']['url'] = 'admin/roles';
+        $this->Roles->Component->initialize($this->Roles);
+        $this->Roles->Session->write('Auth.User', array(
+            'id' => 1,
+            'username' => 'admin',
+        ));
+        $this->Roles->beforeFilter();
+        $this->Roles->Component->startup($this->Roles);
+        $this->Roles->admin_index();
+
+        $this->Roles->testView = true;
+        $output = $this->Roles->render('admin_index');
+        $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     function testAdminAdd() {
@@ -80,6 +105,10 @@ class RolesControllerTestCase extends CakeTestCase {
 
         $newRole = $this->Roles->Role->findByAlias('new_role');
         $this->assertEqual($newRole['Role']['title'], 'new_role');
+
+        $this->Roles->testView = true;
+        $output = $this->Roles->render('admin_add');
+        $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     function testAdminEdit() {
@@ -103,6 +132,10 @@ class RolesControllerTestCase extends CakeTestCase {
 
         $registered = $this->Roles->Role->findByAlias('registered');
         $this->assertEqual($registered['Role']['title'], 'Registered [modified]');
+
+        $this->Roles->testView = true;
+        $output = $this->Roles->render('admin_edit');
+        $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     function testAdminDelete() {

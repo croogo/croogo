@@ -7,12 +7,18 @@ class TestTermsController extends TermsController {
 
     var $autoRender = false;
 
+    var $testView = false;
+
     function redirect($url, $status = null, $exit = true) {
         $this->redirectUrl = $url;
     }
 
     function render($action = null, $layout = null, $file = null) {
-        $this->renderedAction = $action;
+        if (!$this->testView) {
+            $this->renderedAction = $action;
+        } else {
+            return parent::render($action, $layout, $file);
+        }
     }
 
     function _stop($status = 0) {
@@ -56,6 +62,25 @@ class TermsControllerTestCase extends CakeTestCase {
         $this->Terms->constructClasses();
         $this->Terms->params['named'] = array();
         $this->Terms->params['controller'] = 'terms';
+        $this->Terms->params['pass'] = array();
+        $this->Terms->params['named'] = array();
+    }
+
+    function testAdminIndex() {
+        $this->Terms->params['action'] = 'admin_index';
+        $this->Terms->params['url']['url'] = 'admin/terms';
+        $this->Terms->Component->initialize($this->Terms);
+        $this->Terms->Session->write('Auth.User', array(
+            'id' => 1,
+            'username' => 'admin',
+        ));
+        $this->Terms->beforeFilter();
+        $this->Terms->Component->startup($this->Terms);
+        $this->Terms->admin_index();
+
+        $this->Terms->testView = true;
+        $output = $this->Terms->render('admin_index');
+        $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     function testAdminAdd() {
@@ -84,6 +109,10 @@ class TermsControllerTestCase extends CakeTestCase {
 
         $newTerm = $this->Terms->Term->findBySlug('new-term');
         $this->assertEqual($newTerm['Term']['title'], 'New Term');
+
+        $this->Terms->testView = true;
+        $output = $this->Terms->render('admin_add');
+        $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     function testAdminEdit() {
@@ -111,6 +140,10 @@ class TermsControllerTestCase extends CakeTestCase {
 
         $uncategorized = $this->Terms->Term->findBySlug('uncategorized');
         $this->assertEqual($uncategorized['Term']['title'], 'Uncategorized [modified]');
+
+        $this->Terms->testView = true;
+        $output = $this->Terms->render('admin_edit');
+        $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     function testAdminDelete() {

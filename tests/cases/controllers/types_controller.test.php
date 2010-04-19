@@ -7,12 +7,18 @@ class TestTypesController extends TypesController {
 
     var $autoRender = false;
 
+    var $testView = false;
+
     function redirect($url, $status = null, $exit = true) {
         $this->redirectUrl = $url;
     }
 
     function render($action = null, $layout = null, $file = null) {
-        $this->renderedAction = $action;
+        if (!$this->testView) {
+            $this->renderedAction = $action;
+        } else {
+            return parent::render($action, $layout, $file);
+        }
     }
 
     function _stop($status = 0) {
@@ -55,6 +61,25 @@ class TypesControllerTestCase extends CakeTestCase {
         $this->Types = new TestTypesController();
         $this->Types->constructClasses();
         $this->Types->params['controller'] = 'types';
+        $this->Types->params['pass'] = array();
+        $this->Types->params['named'] = array();
+    }
+
+    function testAdminIndex() {
+        $this->Types->params['action'] = 'admin_index';
+        $this->Types->params['url']['url'] = 'admin/types';
+        $this->Types->Component->initialize($this->Types);
+        $this->Types->Session->write('Auth.User', array(
+            'id' => 1,
+            'username' => 'admin',
+        ));
+        $this->Types->beforeFilter();
+        $this->Types->Component->startup($this->Types);
+        $this->Types->admin_index();
+
+        $this->Types->testView = true;
+        $output = $this->Types->render('admin_index');
+        $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     function testAdminAdd() {
@@ -78,6 +103,10 @@ class TypesControllerTestCase extends CakeTestCase {
 
         $newType = $this->Types->Type->findByAlias('new_type');
         $this->assertEqual($newType['Type']['title'], 'New Type');
+
+        $this->Types->testView = true;
+        $output = $this->Types->render('admin_add');
+        $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     function testAdminEdit() {
@@ -101,6 +130,10 @@ class TypesControllerTestCase extends CakeTestCase {
 
         $page = $this->Types->Type->findByAlias('page');
         $this->assertEqual($page['Type']['description'], '[modified]');
+
+        $this->Types->testView = true;
+        $output = $this->Types->render('admin_edit');
+        $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     function testAdminDelete() {

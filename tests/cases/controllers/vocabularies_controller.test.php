@@ -7,12 +7,18 @@ class TestVocabulariesController extends VocabulariesController {
 
     var $autoRender = false;
 
+    var $testView = false;
+
     function redirect($url, $status = null, $exit = true) {
         $this->redirectUrl = $url;
     }
 
     function render($action = null, $layout = null, $file = null) {
-        $this->renderedAction = $action;
+        if (!$this->testView) {
+            $this->renderedAction = $action;
+        } else {
+            return parent::render($action, $layout, $file);
+        }
     }
 
     function _stop($status = 0) {
@@ -55,6 +61,25 @@ class VocabulariesControllerTestCase extends CakeTestCase {
         $this->Vocabularies = new TestVocabulariesController();
         $this->Vocabularies->constructClasses();
         $this->Vocabularies->params['controller'] = 'vocabularies';
+        $this->Vocabularies->params['pass'] = array();
+        $this->Vocabularies->params['named'] = array();
+    }
+
+    function testAdminIndex() {
+        $this->Vocabularies->params['action'] = 'admin_index';
+        $this->Vocabularies->params['url']['url'] = 'admin/vocabularies';
+        $this->Vocabularies->Component->initialize($this->Vocabularies);
+        $this->Vocabularies->Session->write('Auth.User', array(
+            'id' => 1,
+            'username' => 'admin',
+        ));
+        $this->Vocabularies->beforeFilter();
+        $this->Vocabularies->Component->startup($this->Vocabularies);
+        $this->Vocabularies->admin_index();
+
+        $this->Vocabularies->testView = true;
+        $output = $this->Vocabularies->render('admin_index');
+        $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     function testAdminAdd() {
@@ -78,6 +103,10 @@ class VocabulariesControllerTestCase extends CakeTestCase {
 
         $newVocabulary = $this->Vocabularies->Vocabulary->findByAlias('new_vocabulary');
         $this->assertEqual($newVocabulary['Vocabulary']['title'], 'New Vocabulary');
+
+        $this->Vocabularies->testView = true;
+        $output = $this->Vocabularies->render('admin_add');
+        $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     function testAdminEdit() {
@@ -101,6 +130,10 @@ class VocabulariesControllerTestCase extends CakeTestCase {
 
         $categories = $this->Vocabularies->Vocabulary->findByAlias('categories');
         $this->assertEqual($categories['Vocabulary']['title'], 'Categories [modified]');
+
+        $this->Vocabularies->testView = true;
+        $output = $this->Vocabularies->render('admin_edit');
+        $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     function testAdminDelete() {
