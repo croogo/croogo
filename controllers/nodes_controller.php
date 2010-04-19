@@ -340,7 +340,7 @@ class NodesController extends AppController {
         }
 
         if ($this->usePaginationCache) {
-            $cacheNamePrefix = 'nodes_index';
+            $cacheNamePrefix = 'nodes_index_'.$this->Croogo->roleId;
             if (isset($type)) {
                 $cacheNamePrefix .= '_'.$type['Type']['alias'];
             }
@@ -414,7 +414,7 @@ class NodesController extends AppController {
         }
 
         if ($this->usePaginationCache) {
-            $cacheNamePrefix = 'nodes_term_'.$this->params['named']['slug'];
+            $cacheNamePrefix = 'nodes_term_'.$this->Croogo->roleId.'_'.$this->params['named']['slug'];
             if (isset($type)) {
                 $cacheNamePrefix .= '_'.$type['Type']['alias'];
             }
@@ -466,7 +466,7 @@ class NodesController extends AppController {
         }
 
         if ($this->usePaginationCache) {
-            $cacheNamePrefix = 'nodes_promoted';
+            $cacheNamePrefix = 'nodes_promoted_'.$this->Croogo->roleId;
             if (isset($type)) {
                 $cacheNamePrefix .= '_'.$type['Type']['alias'];
             }
@@ -550,7 +550,7 @@ class NodesController extends AppController {
                     ),
                 ),
                 'cache' => array(
-                    'name' => 'node_'.$this->params['named']['slug'],
+                    'name' => 'node_'.$this->Croogo->roleId.'_'.$this->params['named']['slug'],
                     'config' => 'nodes_view',
                 ),
             ));
@@ -562,9 +562,13 @@ class NodesController extends AppController {
                 'conditions' => array(
                     'Node.id' => $id,
                     'Node.status' => 1,
+                    'OR' => array(
+                        'Node.visibility_roles' => '',
+                        'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
+                    ),
                 ),
                 'cache' => array(
-                    'name' => 'node_'.$id,
+                    'name' => 'node_'.$this->Croogo->roleId.'_'.$id,
                     'config' => 'nodes_view',
                 ),
             ));
