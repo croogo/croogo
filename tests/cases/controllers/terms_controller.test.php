@@ -7,27 +7,18 @@ class TestTermsController extends TermsController {
 
     public $autoRender = false;
 
-<<<<<<< HEAD:tests/cases/controllers/terms_controller.test.php
-    var $testView = false;
+    public $testView = false;
 
-    function redirect($url, $status = null, $exit = true) {
-        $this->redirectUrl = $url;
-    }
-
-    function render($action = null, $layout = null, $file = null) {
-        if (!$this->testView) {
-            $this->renderedAction = $action;
-        } else {
-            return parent::render($action, $layout, $file);
-        }
-=======
     public function redirect($url, $status = null, $exit = true) {
         $this->redirectUrl = $url;
     }
 
     public function render($action = null, $layout = null, $file = null) {
-        $this->renderedAction = $action;
->>>>>>> 5ef3774... adding visibility keywords:tests/cases/controllers/terms_controller.test.php
+        if (!$this->testView) {
+            $this->renderedAction = $action;
+        } else {
+            return parent::render($action, $layout, $file);
+        }
     }
 
     public function _stop($status = 0) {
@@ -75,7 +66,7 @@ class TermsControllerTestCase extends CakeTestCase {
         $this->Terms->params['named'] = array();
     }
 
-    function testAdminIndex() {
+    public function testAdminIndex() {
         $this->Terms->params['action'] = 'admin_index';
         $this->Terms->params['url']['url'] = 'admin/terms';
         $this->Terms->Component->initialize($this->Terms);
