@@ -34,7 +34,18 @@
     Cache::config('nodes_term', $cacheConfig);
     Cache::config('nodes_index', $cacheConfig);
     Cache::config('contacts_view', $cacheConfig);
-    
+
+/**
+ * Failed login attempts
+ *
+ * Default is 5 failed login attempts in every 5 minutes
+ */
+    Configure::write('User.failed_login_limit', 5);
+    Configure::write('User.failed_login_duration', 300);
+    Cache::config('users_login', array_merge($cacheConfig, array(
+        'duration' => '+' . Configure::read('User.failed_login_duration') . ' seconds',
+    )));
+
 /**
  * Settings
  */

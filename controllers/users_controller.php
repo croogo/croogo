@@ -38,6 +38,32 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
+
+        if (in_array($this->params['action'], array('admin_login', 'login'))) {
+            $field = $this->Auth->fields['username'];
+            $cacheName = 'auth_failed_' . $this->data['User'][$field];
+            if (Cache::read($cacheName, 'users_login') >= Configure::read('User.failed_login_limit')) {
+                $this->Session->setFlash(__('You have reached maximum limit for failed login attempts. Please try again after a few minutes.', true));
+                $this->redirect(array('action' => $this->params['action']));
+            }
+        }
+    }
+
+    public function beforeRender() {
+        parent::beforeRender();
+
+        if (in_array($this->params['action'], array('admin_login', 'login'))) {
+            if (!empty($this->data)) {
+                $field = $this->Auth->fields['username'];
+                $cacheName = 'auth_failed_' . $this->data['User'][$field];
+                if (!Cache::read($cacheName, 'users_login')) {
+                    Cache::write($cacheName, 1, 'users_login');
+                } else {
+                    $cacheValue = Cache::read($cacheName, 'users_login');
+                    Cache::write($cacheName, $cacheValue + 1, 'users_login');
+                }
+            }
+        }
     }
 
     public function admin_index() {
