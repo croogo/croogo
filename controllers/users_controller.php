@@ -56,12 +56,8 @@ class UsersController extends AppController {
             if (!empty($this->data)) {
                 $field = $this->Auth->fields['username'];
                 $cacheName = 'auth_failed_' . $this->data['User'][$field];
-                if (!Cache::read($cacheName, 'users_login')) {
-                    Cache::write($cacheName, 1, 'users_login');
-                } else {
-                    $cacheValue = Cache::read($cacheName, 'users_login');
-                    Cache::write($cacheName, $cacheValue + 1, 'users_login');
-                }
+                $cacheValue = Cache::read($cacheName, 'users_login');
+                Cache::write($cacheName, (int)$cacheValue + 1, 'users_login');
             }
         }
     }
