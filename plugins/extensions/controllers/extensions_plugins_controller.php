@@ -148,6 +148,10 @@ class ExtensionsPluginsController extends AppController {
             $blackHoleCallback = $this->Security->blackHoleCallback;
             $this->$blackHoleCallback();
         }
+        if ($this->Croogo->pluginIsActive($plugin)) {
+            $this->Session->setFlash(__('You cannot delete a plugin that is currently active.', true));
+            $this->redirect(array('action' => 'index'));
+        }
 
         $folder =& new Folder;
         if ($folder->delete(APP . 'plugins' . DS . $plugin)) {

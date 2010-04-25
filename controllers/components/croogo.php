@@ -827,6 +827,7 @@ class CroogoComponent extends Object {
             return false;
         }
         $pluginData = Spyc::YAMLLoad(file_get_contents($ymlLocation));
+        $pluginData['active'] = $this->pluginIsActive($alias);
         return $pluginData;
     }
 /**
@@ -902,6 +903,29 @@ class CroogoComponent extends Object {
         } else {
             return false;
         }
+    }
+/**
+ * Check if plugin has any of it's hooks active
+ *
+ * @param  string $plugin Plugin name (underscored)
+ * @return boolean
+ */
+    public function pluginIsActive($plugin) {
+        $configureKeys = array(
+            'Hook.components',
+            'Hook.helpers',
+        );
+
+        foreach ($configureKeys AS $configureKey) {
+            $hooks = explode(',', Configure::read($configureKey));
+            foreach ($hooks AS $hook) {
+                if (strstr($hook, Inflector::camelize($plugin).'.') !== false) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 /**
  * Hook

@@ -14,6 +14,7 @@
             __('Alias', true),
             __('Name', true),
             __('Description', true),
+            __('Hooks Active', true),
             __('Actions', true),
         ));
         echo $tableHeaders;
@@ -34,6 +35,7 @@
                 $pluginAlias,
                 $pluginData['name'],
                 $pluginData['description'],
+                $layout->status($pluginData['active']),
                 $actions,
             );
         }
