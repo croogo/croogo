@@ -162,6 +162,9 @@ class ExtensionsThemesController extends AppController {
         if ($alias == 'default') {
             $this->Session->setFlash(__('Default theme cannot be deleted.', true));
             $this->redirect(array('action' => 'index'));
+        } elseif ($alias == Configure::read('Site.theme')) {
+            $this->Session->setFlash(__('You cannot delete a theme that is currently active.', true));
+            $this->redirect(array('action' => 'index'));
         }
 
         $paths = array(
