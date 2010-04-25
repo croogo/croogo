@@ -170,7 +170,7 @@ class Node extends AppModel {
         if ($this->type != null) {
             $this->data['Node']['type'] = $this->type;
         }
-        $this->__cache_terms();
+        $this->__cacheTerms();
 
         return true;
     }
@@ -179,7 +179,7 @@ class Node extends AppModel {
  *
  * @return void
  */
-    private function __cache_terms() {
+    public function __cacheTerms() {
         if (isset($this->data['Term']['Term']) && count($this->data['Term']['Term']) > 0) {
             $termIds = $this->data['Term']['Term'];
             $terms = $this->Term->find('list', array(

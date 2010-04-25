@@ -39,7 +39,7 @@ class NodeTestCase extends CakeTestCase {
                 'Term' => array(1, 2), // uncategorized, and announcements
             ),
         );
-        $this->Node->__cache_terms();
+        $this->Node->__cacheTerms();
         $this->assertEqual($this->Node->data['Node']['terms'], '{"1":"uncategorized","2":"announcements"}');
     }
 
