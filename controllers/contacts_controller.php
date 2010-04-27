@@ -138,6 +138,7 @@ class ContactsController extends AppController {
         }
 
         $this->set('title_for_layout', $contact['Contact']['title']);
+        $this->set(compact('continue'));
     }
 
     private function __validation($continue, $contact) {
