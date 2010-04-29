@@ -340,7 +340,7 @@ class NodesController extends AppController {
         }
 
         if ($this->usePaginationCache) {
-            $cacheNamePrefix = 'nodes_index_'.$this->Croogo->roleId;
+            $cacheNamePrefix = 'nodes_index_'.$this->Croogo->roleId.'_'.Configure::read('Config.language');
             if (isset($type)) {
                 $cacheNamePrefix .= '_'.$type['Type']['alias'];
             }
@@ -414,7 +414,7 @@ class NodesController extends AppController {
         }
 
         if ($this->usePaginationCache) {
-            $cacheNamePrefix = 'nodes_term_'.$this->Croogo->roleId.'_'.$this->params['named']['slug'];
+            $cacheNamePrefix = 'nodes_term_'.$this->Croogo->roleId.'_'.$this->params['named']['slug'].'_'.Configure::read('Config.language');
             if (isset($type)) {
                 $cacheNamePrefix .= '_'.$type['Type']['alias'];
             }
@@ -466,7 +466,7 @@ class NodesController extends AppController {
         }
 
         if ($this->usePaginationCache) {
-            $cacheNamePrefix = 'nodes_promoted_'.$this->Croogo->roleId;
+            $cacheNamePrefix = 'nodes_promoted_'.$this->Croogo->roleId.'_'.Configure::read('Config.language');
             if (isset($type)) {
                 $cacheNamePrefix .= '_'.$type['Type']['alias'];
             }

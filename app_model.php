@@ -49,6 +49,7 @@ class AppModel extends Model {
             }
 
             if (isset($cacheName)) {
+                $cacheName .= '_' . Configure::read('Config.language');
                 Cache::write($cacheName, $results, $options['cache']['config']);
             }
         }
@@ -71,6 +72,7 @@ class AppModel extends Model {
             return false;
         }
 
+        $cacheName .= '_' . Configure::read('Config.language');
         $results = Cache::read($cacheName, $options['cache']['config']);
         if ($results) {
             return $results;
