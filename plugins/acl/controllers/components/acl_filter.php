@@ -46,6 +46,14 @@ class AclFilterComponent extends Object {
                 $roleId = 3; // Role: Public
             }
 
+            $aro = $this->controller->Acl->Aro->find('first', array(
+                'conditions' => array(
+                    'Aro.model' => 'Role',
+                    'Aro.foreign_key' => $roleId,
+                ),
+                'recursive' => -1,
+            ));
+            $aroId = $aro['Aro']['id'];
             $thisControllerNode = $this->controller->Acl->Aco->node($this->controller->Auth->actionPath.$this->controller->name);
             if ($thisControllerNode) {
                 $thisControllerNode = $thisControllerNode['0'];
@@ -62,7 +70,7 @@ class AclFilterComponent extends Object {
                 $thisControllerActionsIds = array_keys($thisControllerActions);
                 $allowedActions = $this->controller->Acl->Aco->Permission->find('list', array(
                     'conditions' => array(
-                        'Permission.aro_id' => $roleId,
+                        'Permission.aro_id' => $aroId,
                         'Permission.aco_id' => $thisControllerActionsIds,
                         'Permission._create' => 1,
                         'Permission._read' => 1,
