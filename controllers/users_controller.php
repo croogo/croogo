@@ -166,7 +166,9 @@ class UsersController extends AppController {
             $this->data['User']['role_id'] = 2; // Registered
             $this->data['User']['activation_key'] = md5(uniqid());
             $this->data['User']['status'] = 0;
-            //$this->data['User']['name']=htmlspecialchars($this->data['User']['name']);
+            $this->data['User']['username']=htmlspecialchars($this->data['User']['username'];
+            $this->data['User']['website']=htmlspecialchars($this->data['User']['website']);
+            $this->data['User']['name']=htmlspecialchars($this->data['User']['name']);
             if ($this->User->save($this->data)) {
                 $this->data['User']['password'] = null;
                 $this->Email->from = Configure::read('Site.title') . ' '
