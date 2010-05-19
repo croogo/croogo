@@ -50,8 +50,14 @@ class User extends AppModel {
  */
     public $validate = array(
         'username' => array(
-            'rule' => 'isUnique',
-            'message' => 'The username has already been taken.',
+            'isUnique' => array(
+                'rule' => 'isUnique',
+                'message' => 'The username has already been taken.',
+            ),
+            'notEmpty' => array(
+                'rule' => 'notEmpty',
+                'message' => 'This field cannot be left blank.',
+            ),
         ),
         'email' => array(
             'email' => array(
