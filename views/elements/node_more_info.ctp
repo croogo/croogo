@@ -2,8 +2,8 @@
 <?php
     $type = $types_for_layout[$layout->node('type')];
 
-    if (is_array($layout->node['Term']) && count($layout->node['Term']) > 0) {
-        $nodeTerms = Set::combine($layout->node, 'Term.{n}.slug', 'Term.{n}.title');
+    if (is_array($layout->node['Taxonomy']) && count($layout->node['Taxonomy']) > 0) {
+        $nodeTerms = Set::combine($layout->node, 'Taxonomy.{n}.Term.slug', 'Taxonomy.{n}.Term.title');
         $nodeTermLinks = array();
         if (count($nodeTerms) > 0) {
             foreach ($nodeTerms AS $termSlug => $termTitle) {
@@ -18,8 +18,7 @@
         }
     }
 
-    if ($this->params['action'] != 'view' &&
-        $type['Type']['comment_status']) {
+    if ($this->params['action'] != 'view' && $type['Type']['comment_status']) {
         if (isset($nodeTerms) && count($nodeTerms) > 0) {
             echo ' | ';
         }

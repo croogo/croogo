@@ -19,8 +19,10 @@
 
         $rows = array();
         foreach ($vocabularies AS $vocabulary) {
-            $actions  = $html->link(__('View terms', true), array('controller' => 'terms', 'action' => 'index', 'vocabulary' => $vocabulary['Vocabulary']['id']));
-            $actions .= ' ' . $html->link(__('Edit', true), array('controller' => 'vocabularies', 'action' => 'edit', $vocabulary['Vocabulary']['id']));
+            $actions  = $html->link(__('View terms', true), array('controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id']));
+            $actions .= ' ' . $html->link(__('Edit', true), array('action' => 'edit', $vocabulary['Vocabulary']['id']));
+            $actions .= ' ' . $html->link(__('Move up', true), array('action' => 'moveup', $vocabulary['Vocabulary']['id']));
+            $actions .= ' ' . $html->link(__('Move down', true), array('action' => 'movedown', $vocabulary['Vocabulary']['id']));
             $actions .= ' ' . $layout->adminRowActions($vocabulary['Vocabulary']['id']);
             $actions .= ' ' . $html->link(__('Delete', true), array(
                 'controller' => 'vocabularies',
@@ -31,7 +33,7 @@
 
             $rows[] = array(
                 $vocabulary['Vocabulary']['id'],
-                $html->link($vocabulary['Vocabulary']['title'], array('controller' => 'terms', 'action' => 'index', 'vocabulary' => $vocabulary['Vocabulary']['id'])),
+                $html->link($vocabulary['Vocabulary']['title'], array('controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id'])),
                 $vocabulary['Vocabulary']['alias'],
                 $actions,
             );

@@ -69,7 +69,7 @@ class Type extends AppModel {
             'unique' => true,
             'conditions' => '',
             'fields' => '',
-            'order' => '',
+            'order' => 'Vocabulary.weight ASC',
             'limit' => '',
             'offset' => '',
             'finderQuery' => '',

@@ -180,7 +180,7 @@ class CommentsController extends AppController {
                 $this->redirect($node['Node']['url']);
             }
         }
-        $type = $this->Comment->Node->Term->Vocabulary->Type->findByAlias($node['Node']['type']);
+        $type = $this->Comment->Node->Taxonomy->Vocabulary->Type->findByAlias($node['Node']['type']);
         $continue = false;
         if ($type['Type']['comment_status'] && $node['Node']['comment_status']) {
             $continue = true;

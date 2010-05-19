@@ -21,9 +21,9 @@
                     <?php echo $html->link('<span class="ui-icon ui-icon-tag"></span>' . __('Taxonomy', true), array('plugin' => null, 'controller' => 'vocabularies', 'action' => 'index'), array('escape' => false)); ?>
                     <ul>
                         <li><?php echo $html->link('<span class="ui-icon ui-icon-tag"></span>' . __('List', true), array('plugin' => null, 'controller' => 'vocabularies', 'action' => 'index'), array('escape' => false)); ?></li>
-                        <li><?php echo $html->link('<span class="ui-icon ui-icon-plus"></span>' . __('Add new', true), array('plugin' => null, 'controller' => 'vocabularies', 'action' => 'index'), array('class' => 'separator', 'escape' => false)); ?></li>
+                        <li><?php echo $html->link('<span class="ui-icon ui-icon-plus"></span>' . __('Add new', true), array('plugin' => null, 'controller' => 'vocabularies', 'action' => 'add'), array('class' => 'separator', 'escape' => false)); ?></li>
                         <?php foreach ($vocabularies_for_admin_layout AS $v) { ?>
-                        <li><?php echo $html->link('<span class="ui-icon ui-icon-bullet"></span>' . $v['Vocabulary']['title'], array('plugin' => null, 'controller' => 'terms', 'action' => 'index', 'vocabulary' => $v['Vocabulary']['id']), array('escape' => false)); ?></li>
+                        <li><?php echo $html->link('<span class="ui-icon ui-icon-bullet"></span>' . $v['Vocabulary']['title'], array('plugin' => null, 'controller' => 'terms', 'action' => 'index', $v['Vocabulary']['id']), array('escape' => false)); ?></li>
                         <?php } ?>
                     </ul>
                 </li>

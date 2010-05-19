@@ -26,6 +26,10 @@ class Vocabulary extends AppModel {
  * @access public
  */
     public $actsAs = array(
+        'Ordered' => array(
+            'field' => 'weight',
+            'foreign_key' => false,
+        ),
         'Cached' => array(
             'prefix' => array(
                 'vocabulary_',
@@ -54,27 +58,6 @@ class Vocabulary extends AppModel {
                 'rule' => array('minLength', 1),
                 'message' => 'Alias cannot be empty.',
             ),
-        ),
-    );
-/**
- * Model associations: hasMany
- *
- * @var array
- * @access public
- */
-    public $hasMany = array(
-        'Term' => array(
-            'className' => 'Term',
-            'foreignKey' => 'vocabulary_id',
-            'dependent' => false,
-            'conditions' => '',
-            'fields' => '',
-            'order' => 'Term.lft ASC',
-            'limit' => '3',
-            'offset' => '',
-            'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => '',
         ),
     );
 /**

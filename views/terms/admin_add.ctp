@@ -4,15 +4,33 @@
 <div class="terms form">
     <h2><?php echo $title_for_layout; ?></h2>
 
-    <?php echo $form->create('Term', array('url' => array('controller' => 'terms', 'action' => 'add', 'vocabulary' => $vocabulary)));?>
+    <?php 
+        echo $form->create('Term', array(
+            'url' => array(
+                'controller' => 'terms',
+                'action' => 'add',
+                $vocabulary['Vocabulary']['id'],
+            ),
+        ));
+    ?>
         <fieldset>
-            <?php
-                echo $form->input('vocabulary_id', array('value' => $vocabulary));
-                echo $form->input('parent_id', array('type' => 'select', 'options' => $terms, 'empty' => true));
-                echo $form->input('title');
-                echo $form->input('slug', array('class' => 'slug'));
-                echo $form->input('status', array());
-            ?>
+            <div class="tabs">
+                <ul>
+                    <li><span><a href="#term-basic"><?php __('Term'); ?></a></span></li>
+                </ul>
+
+                <div id="term-basic">
+                <?php
+                    echo $form->input('Taxonomy.parent_id', array(
+                        'options' => $parentTree,
+                        'empty' => true,
+                    ));
+                    echo $form->input('title');
+                    echo $form->input('slug', array('class' => 'slug'));
+                    echo $form->input('description');
+                ?>
+                </div>
+            </div>
         </fieldset>
     <?php echo $form->end('Submit');?>
 </div>

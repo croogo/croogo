@@ -61,7 +61,7 @@ class NodesController extends AppController {
         $this->paginate['Node']['order'] = 'Node.id DESC';
         $this->paginate['Node']['conditions'] = array();
 
-        $types = $this->Node->Term->Vocabulary->Type->find('all');
+        $types = $this->Node->Taxonomy->Vocabulary->Type->find('all');
         $typeAliases = Set::extract('/Type/alias', $types);
         $this->paginate['Node']['conditions']['Node.type'] = $typeAliases;
 
@@ -88,7 +88,7 @@ class NodesController extends AppController {
     public function admin_create() {
         $this->set('title_for_layout', __('Create content', true));
 
-        $types = $this->Node->Term->Vocabulary->Type->find('all', array(
+        $types = $this->Node->Taxonomy->Vocabulary->Type->find('all', array(
             'order' => array(
                 'Type.alias' => 'ASC',
             ),
@@ -97,7 +97,7 @@ class NodesController extends AppController {
     }
 
     public function admin_add($typeAlias = 'node') {
-        $type = $this->Node->Term->Vocabulary->Type->findByAlias($typeAlias);
+        $type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
         if (!isset($type['Type']['alias'])) {
             $this->Session->setFlash(__('Content type does not exist.', true));
             $this->redirect(array('action' => 'create'));
@@ -105,7 +105,11 @@ class NodesController extends AppController {
 
         $this->set('title_for_layout', sprintf(__('Create content: %s', true), $type['Type']['title']));
         $this->Node->type = $type['Type']['alias'];
-        $this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
+        $this->Node->Behaviors->attach('Tree', array(
+            'scope' => array(
+                'Node.type' => $this->Node->type,
+            ),
+        ));
 
         if (!empty($this->data)) {
             // CSRF Protection
@@ -114,6 +118,14 @@ class NodesController extends AppController {
                 $this->$blackHoleCallback();
             }
 
+            if (isset($this->data['TaxonomyData'])) {
+                $this->data['Taxonomy'] = array(
+                    'Taxonomy' => array(),
+                );
+                foreach ($this->data['TaxonomyData'] AS $vocabularyId => $taxonomyIds) {
+                    $this->data['Taxonomy']['Taxonomy'] = array_merge($this->data['Taxonomy']['Taxonomy'], $taxonomyIds);
+                }
+            }
             $this->Node->create();
             $this->data['Node']['path'] = $this->Croogo->getRelativePath(array(
                 'admin' => false,
@@ -136,13 +148,13 @@ class NodesController extends AppController {
         $nodes = $this->Node->generatetreelist();
         $roles   = $this->Node->User->Role->find('list');
         $users = $this->Node->User->find('list');
-        $terms = array();
+        $vocabularies = Set::combine($type['Vocabulary'], '{n}.id', '{n}');
+        $taxonomy = array();
         foreach ($type['Vocabulary'] AS $vocabulary) {
-            $vocabularyTitle = $vocabulary['title'];
-            $termsConditions = array('Term.vocabulary_id' => $vocabulary['id']);
-            $terms[$vocabularyTitle] = $this->Node->Term->generatetreelist($termsConditions);
+            $vocabularyId = $vocabulary['id'];
+            $taxonomy[$vocabularyId] = $this->Node->Taxonomy->getVocabularyTree($vocabulary['alias'], array('taxonomyId' => true));
         }
-        $this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'terms', 'users'));
+        $this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy', 'users'));
     }
 
     public function admin_edit($id = null) {
@@ -154,7 +166,7 @@ class NodesController extends AppController {
         $this->Node->id = $id;
         $typeAlias = $this->Node->field('type');
         
-        $type = $this->Node->Term->Vocabulary->Type->findByAlias($typeAlias);
+        $type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
         if (!isset($type['Type']['alias'])) {
             $this->Session->setFlash(__('Content type does not exist.', true));
             $this->redirect(array('action' => 'create'));
@@ -171,6 +183,14 @@ class NodesController extends AppController {
                 $this->$blackHoleCallback();
             }
 
+            if (isset($this->data['TaxonomyData'])) {
+                $this->data['Taxonomy'] = array(
+                    'Taxonomy' => array(),
+                );
+                foreach ($this->data['TaxonomyData'] AS $vocabularyId => $taxonomyIds) {
+                    $this->data['Taxonomy']['Taxonomy'] = array_merge($this->data['Taxonomy']['Taxonomy'], $taxonomyIds);
+                }
+            }
             $this->data['Node']['path'] = $this->Croogo->getRelativePath(array(
                 'admin' => false,
                 'controller' => 'nodes',
@@ -195,17 +215,17 @@ class NodesController extends AppController {
         $nodes = $this->Node->generatetreelist();
         $roles   = $this->Node->User->Role->find('list');
         $users = $this->Node->User->find('list');
-        $terms = array();
+        $vocabularies = Set::combine($type['Vocabulary'], '{n}.id', '{n}');
+        $taxonomy = array();
         foreach ($type['Vocabulary'] AS $vocabulary) {
-            $vocabularyTitle = $vocabulary['title'];
-            $termsConditions = array('Term.vocabulary_id' => $vocabulary['id']);
-            $terms[$vocabularyTitle] = $this->Node->Term->generatetreelist($termsConditions);
+            $vocabularyId = $vocabulary['id'];
+            $taxonomy[$vocabularyId] = $this->Node->Taxonomy->getVocabularyTree($vocabulary['alias'], array('taxonomyId' => true));
         }
-        $this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'terms', 'users'));
+        $this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy', 'users'));
     }
 
     public function admin_update_paths() {
-        $types = $this->Node->Term->Vocabulary->Type->find('list', array(
+        $types = $this->Node->Taxonomy->Vocabulary->Type->find('list', array(
             'fields' => array(
                 'Type.id',
                 'Type.alias',
@@ -319,9 +339,16 @@ class NodesController extends AppController {
                 'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
             ),
         );
+        $this->paginate['Node']['contain'] = array(
+            'Meta',
+            'Taxonomy' => array(
+                'Term',
+                'Vocabulary',
+            ),
+            'User',
+        );
         if (isset($this->params['named']['type'])) {
-            //$type = $this->Node->Term->Vocabulary->Type->findByAlias($this->params['named']['type']);
-            $type = $this->Node->Term->Vocabulary->Type->find('first', array(
+            $type = $this->Node->Taxonomy->Vocabulary->Type->find('first', array(
                 'conditions' => array(
                     'Type.alias' => $this->params['named']['type'],
                 ),
@@ -366,7 +393,7 @@ class NodesController extends AppController {
     }
 
     public function term() {
-        $term = $this->Node->Term->find('first', array(
+        $term = $this->Node->Taxonomy->Term->find('first', array(
             'conditions' => array(
                 'Term.slug' => $this->params['named']['slug'],
             ),
@@ -394,8 +421,16 @@ class NodesController extends AppController {
                 'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
             ),
         );
+        $this->paginate['Node']['contain'] = array(
+            'Meta',
+            'Taxonomy' => array(
+                'Term',
+                'Vocabulary',
+            ),
+            'User',
+        );
         if (isset($this->params['named']['type'])) {
-            $type = $this->Node->Term->Vocabulary->Type->find('first', array(
+            $type = $this->Node->Taxonomy->Vocabulary->Type->find('first', array(
                 'conditions' => array(
                     'Type.alias' => $this->params['named']['type'],
                 ),
@@ -452,9 +487,17 @@ class NodesController extends AppController {
                 'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
             ),
         );
+        $this->paginate['Node']['contain'] = array(
+            'Meta',
+            'Taxonomy' => array(
+                'Term',
+                'Vocabulary',
+            ),
+            'User',
+        );
 
         if (isset($this->params['named']['type'])) {
-            $type = $this->Node->Term->Vocabulary->Type->findByAlias($this->params['named']['type']);
+            $type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($this->params['named']['type']);
             if (!isset($type['Type']['id'])) {
                 $this->Session->setFlash(__('Invalid content type.', true));
                 $this->redirect('/');
@@ -518,6 +561,14 @@ class NodesController extends AppController {
                 ),
             ),
         );
+        $this->paginate['Node']['contain'] = array(
+            'Meta',
+            'Taxonomy' => array(
+                'Term',
+                'Vocabulary',
+            ),
+            'User',
+        );
         if ($type) {
             $this->paginate['Node']['conditions']['Node.type'] = $type;
         }
@@ -530,7 +581,7 @@ class NodesController extends AppController {
     public function view($id = null) {
         if (isset($this->params['named']['slug']) && isset($this->params['named']['type'])) {
             $this->Node->type = $this->params['named']['type'];
-            $type = $this->Node->Term->Vocabulary->Type->find('first', array(
+            $type = $this->Node->Taxonomy->Vocabulary->Type->find('first', array(
                 'conditions' => array(
                     'Type.alias' => $this->Node->type,
                 ),
@@ -549,6 +600,14 @@ class NodesController extends AppController {
                         'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
                     ),
                 ),
+                'contain' => array(
+                    'Meta',
+                    'Taxonomy' => array(
+                        'Term',
+                        'Vocabulary',
+                    ),
+                    'User',
+                ),
                 'cache' => array(
                     'name' => 'node_'.$this->Croogo->roleId.'_'.$this->params['named']['slug'],
                     'config' => 'nodes_view',
@@ -566,6 +625,14 @@ class NodesController extends AppController {
                         'Node.visibility_roles' => '',
                         'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
                     ),
+                ),
+                'contain' => array(
+                    'Meta',
+                    'Taxonomy' => array(
+                        'Term',
+                        'Vocabulary',
+                    ),
+                    'User',
                 ),
                 'cache' => array(
                     'name' => 'node_'.$this->Croogo->roleId.'_'.$id,

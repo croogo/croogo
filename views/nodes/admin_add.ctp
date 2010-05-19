@@ -6,7 +6,7 @@
             <div class="tabs">
                 <ul>
                     <li><a href="#node-main"><span><?php __($type['Type']['title']); ?></span></a></li>
-                    <?php if (count($terms) > 0) { ?><li><a href="#node-terms"><span><?php __('Terms'); ?></span></a></li><?php } ?>
+                    <?php if (count($taxonomy) > 0) { ?><li><a href="#node-terms"><span><?php __('Terms'); ?></span></a></li><?php } ?>
                     <?php if ($type['Type']['comment_status'] != 0) { ?><li><a href="#node-comments"><span><?php __('Comments'); ?></span></a></li><?php } ?>
                     <li><a href="#node-meta"><span><?php __('Custom fields'); ?></span></a></li>
                     <li><a href="#node-access"><span><?php __('Access'); ?></span></a></li>
@@ -23,9 +23,18 @@
                 ?>
                 </div>
 
-                <?php if (count($terms) > 0) { ?>
+                <?php if (count($taxonomy) > 0) { ?>
                 <div id="node-terms">
-                    <?php echo $form->input('Term.Term'); ?>
+                <?php
+                    foreach ($taxonomy AS $vocabularyId => $taxonomyTree) {
+                        echo $form->input('TaxonomyData.'.$vocabularyId, array(
+                            'label' => $vocabularies[$vocabularyId]['title'],
+                            'type' => 'select',
+                            'multiple' => true,
+                            'options' => $taxonomyTree,
+                        ));
+                    }
+                ?>
                 </div>
                 <?php } ?>
 
@@ -71,8 +80,14 @@
 
                 <div id="node-publishing">
                 <?php
-                    echo $form->input('status', array('label' => __('Published', true)));
-                    echo $form->input('promote', array('label' => __('Promoted to front page', true)));
+                    echo $form->input('status', array(
+                        'label' => __('Published', true),
+                        'checked' => 'checked',
+                    ));
+                    echo $form->input('promote', array(
+                        'label' => __('Promoted to front page', true),
+                        'checked' => 'checked',
+                    ));
                     echo $form->input('user_id');
                     echo $form->input('created');
                 ?>

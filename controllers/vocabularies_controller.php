@@ -28,10 +28,10 @@ class VocabulariesController extends AppController {
     public $uses = array('Vocabulary');
 
     public function admin_index() {
-        $this->set('title_for_layout', __('Vocabulary', true));
+        $this->set('title_for_layout', __('Vocabularies', true));
 
         $this->Vocabulary->recursive = 0;
-        $this->paginate['Vocabulary']['order'] = 'Vocabulary.title ASC';
+        $this->paginate['Vocabulary']['order'] = 'Vocabulary.weight ASC';
         $this->set('vocabularies', $this->paginate());
     }
 
@@ -88,6 +88,26 @@ class VocabulariesController extends AppController {
             $this->Session->setFlash(__('Vocabulary deleted', true));
             $this->redirect(array('action'=>'index'));
         }
+    }
+
+    public function admin_moveup($id, $step = 1) {
+        if( $this->Vocabulary->moveup($id, $step) ) {
+            $this->Session->setFlash(__('Moved up successfully', true));
+        } else {
+            $this->Session->setFlash(__('Could not move up', true));
+        }
+
+        $this->redirect(array('action' => 'index'));
+    }
+
+    public function admin_movedown($id, $step = 1) {
+        if( $this->Vocabulary->movedown($id, $step) ) {
+            $this->Session->setFlash(__('Moved down successfully', true));
+        } else {
+            $this->Session->setFlash(__('Could not move down', true));
+        }
+
+        $this->redirect(array('action' => 'index'));
     }
 
 }

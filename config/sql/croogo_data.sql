@@ -235,14 +235,14 @@ INSERT IGNORE INTO `blocks` (`id`, `region_id`, `title`, `alias`, `body`, `show_
 (5, 4, 'Meta', 'meta', '[menu:meta]', 1, '', 1, 6, '', '', '', '', '', '2009-12-22 05:17:39', '2009-09-12 06:36:22'),
 (6, 4, 'Blogroll', 'blogroll', '[menu:blogroll]', 1, '', 1, 4, '', '', '', '', '', '2009-12-20 03:07:33', '2009-09-12 23:33:27'),
 (7, 4, 'Categories', 'categories', '[vocabulary:categories type="blog"]', 1, '', 1, 3, '', '', '', '', '', '2009-12-20 03:07:36', '2009-10-03 16:52:50'),
-(9, 4, 'Recent Posts', 'recent_posts', '[node:recent_posts conditions="Node.type:blog" order="Node.id DESC"]', 1, '', 1, 5, '', '', '', '', '', '2009-12-22 05:17:39', '2009-12-22 05:17:32');
+(9, 4, 'Recent Posts', 'recent_posts', '[node:recent_posts conditions="Node.type:blog" order="Node.id DESC" limit="5"]', 1, '', 1, 5, '', '', '', '', '', '2010-04-08 21:09:31', '2009-12-22 05:17:32');
 
 --
 -- Dumping data for table `comments`
 --
 
-INSERT IGNORE INTO `comments` (`id`, `parent_id`, `node_id`, `user_id`, `name`, `email`, `website`, `ip`, `title`, `body`, `rating`, `status`, `notify`, `type`, `comment_type`, `lft`, `rght`, `updated`, `created`) VALUES
-(13, NULL, 21, 0, 'Mr Croogo', 'email@example.com', 'http://www.croogo.org', '127.0.0.1', '', 'Hi, this is the first comment.', NULL, 1, 0, 'blog', 'comment', 1, 2, '2009-10-06 22:13:05', '2009-10-03 19:43:52');
+INSERT INTO `comments` (`id`, `parent_id`, `node_id`, `user_id`, `name`, `email`, `website`, `ip`, `title`, `body`, `rating`, `status`, `notify`, `type`, `comment_type`, `lft`, `rght`, `updated`, `created`) VALUES
+(1, NULL, 1, 0, 'Mr Croogo', 'email@example.com', 'http://www.croogo.org', '127.0.0.1', '', 'Hi, this is the first comment.', NULL, 1, 0, 'blog', 'comment', 1, 2, '2009-12-25 12:00:00', '2009-12-25 12:00:00');
 
 --
 -- Dumping data for table `contacts`
@@ -301,22 +301,22 @@ INSERT IGNORE INTO `menus` (`id`, `title`, `alias`, `description`, `status`, `we
 --
 
 INSERT IGNORE INTO `meta` (`id`, `model`, `foreign_key`, `key`, `value`, `weight`) VALUES
-(23, 'Node', 20, 'meta_keywords', 'key1, key2', NULL);
+(1, 'Node', 1, 'meta_keywords', 'key1, key2', NULL);
 
 --
 -- Dumping data for table `nodes`
 --
 
 INSERT IGNORE INTO `nodes` (`id`, `parent_id`, `user_id`, `title`, `slug`, `body`, `excerpt`, `status`, `mime_type`, `comment_status`, `comment_count`, `promote`, `path`, `terms`, `sticky`, `lft`, `rght`, `visibility_roles`, `type`, `updated`, `created`) VALUES
-(20, NULL, 1, 'About', 'about', '<p>This is an example of a Croogo page, you could edit this to put information about yourself or your site.</p>', '', 1, '', 0, 0, 0, '/about', '', 0, 1, 2, '', 'page', '2009-12-28 21:54:31', '2009-12-25 22:00:00'),
-(21, NULL, 1, 'Hello World', 'hello-world', '<p>Welcome to Croogo. This is your first post. You can edit or delete it from the admin panel.</p>', '', 1, '', 2, 1, 1, '/blog/hello-world', '{"1":"uncategorized"}', 0, 1, 2, '', 'blog', '2009-12-28 21:55:09', '2009-12-25 11:00:00');
+(1, NULL, 1, 'Hello World', 'hello-world', '<p>Welcome to Croogo. This is your first post. You can edit or delete it from the admin panel.</p>', '', 1, '', 2, 1, 1, '/blog/hello-world', '{"1":"uncategorized"}', 0, 1, 2, '', 'blog', '2009-12-25 11:00:00', '2009-12-25 11:00:00'),
+(2, NULL, 1, 'About', 'about', '<p>This is an example of a Croogo page, you could edit this to put information about yourself or your site.</p>', '', 1, '', 0, 0, 0, '/about', '', 0, 1, 2, '', 'page', '2009-12-25 22:00:00', '2009-12-25 22:00:00');
 
 --
--- Dumping data for table `nodes_terms`
+-- Dumping data for table `nodes_taxonomies`
 --
 
-INSERT IGNORE INTO `nodes_terms` (`id`, `node_id`, `vocabulary_id`, `term_id`, `weight`) VALUES
-(6407, 21, 0, 1, NULL);
+INSERT INTO `nodes_taxonomies` (`id`, `node_id`, `taxonomy_id`) VALUES
+(1, 1, 1);
 
 --
 -- Dumping data for table `regions`
@@ -380,14 +380,22 @@ INSERT IGNORE INTO `settings` (`id`, `key`, `value`, `title`, `description`, `in
 (33, 'Hook.routes', '', '', '', '', 0, 26, '');
 
 --
+-- Dumping data for table `taxonomies`
+--
+
+INSERT IGNORE INTO `taxonomies` (`id`, `parent_id`, `term_id`, `vocabulary_id`, `lft`, `rght`) VALUES
+(1, NULL, 1, 1, 1, 2),
+(2, NULL, 2, 1, 3, 4),
+(3, NULL, 3, 2, 1, 2);
+
+--
 -- Dumping data for table `terms`
 --
 
-INSERT IGNORE INTO `terms` (`id`, `parent_id`, `vocabulary_id`, `title`, `slug`, `description`, `lft`, `rght`, `status`, `updated`, `created`) VALUES
-(1, NULL, 1, 'Uncategorized', 'uncategorized', '', 1, 2, 1, '2009-07-22 03:38:43', '2009-07-22 03:34:56'),
-(2, NULL, 1, 'Announcements', 'announcements', '', 3, 8, 1, '2009-07-22 03:45:37', '2009-07-22 03:45:37'),
-(6, NULL, 2, 'mytag', 'mytag', '', 9, 10, 1, '2009-08-26 14:42:43', '2009-08-26 14:42:43'),
-(7, NULL, 3, 'test term', 'test-term-1', '', 11, 12, 1, '2009-09-02 19:27:26', '2009-09-02 19:27:26');
+INSERT IGNORE INTO `terms` (`id`, `title`, `slug`, `description`, `updated`, `created`) VALUES
+(1, 'Uncategorized', 'uncategorized', '', '2009-07-22 03:38:43', '2009-07-22 03:34:56'),
+(2, 'Announcements', 'announcements', '', '2010-05-16 23:57:06', '2009-07-22 03:45:37'),
+(3, 'mytag', 'mytag', '', '2009-08-26 14:42:43', '2009-08-26 14:42:43');
 
 --
 -- Dumping data for table `types`
@@ -403,8 +411,8 @@ INSERT IGNORE INTO `types` (`id`, `title`, `alias`, `description`, `format_show_
 --
 
 INSERT IGNORE INTO `types_vocabularies` (`id`, `type_id`, `vocabulary_id`, `weight`) VALUES
-(23, 2, 2, NULL),
-(22, 2, 1, NULL),
+(31, 2, 2, NULL),
+(30, 2, 1, NULL),
 (25, 4, 2, NULL),
 (24, 4, 1, NULL);
 
@@ -419,6 +427,6 @@ INSERT IGNORE INTO `users` (`id`, `role_id`, `username`, `password`, `name`, `em
 -- Dumping data for table `vocabularies`
 --
 
-INSERT IGNORE INTO `vocabularies` (`id`, `title`, `alias`, `description`, `required`, `multiple`, `tags`, `plugin`, `term_count`, `weight`, `updated`, `created`) VALUES
-(1, 'Categories', 'categories', '', 0, 0, 0, '', 2, NULL, '2009-07-22 02:16:21', '2009-07-22 02:16:21'),
-(2, 'Tags', 'tags', '', 0, 0, 0, '', 1, NULL, '2009-07-22 02:16:34', '2009-07-22 02:16:34');
+INSERT IGNORE INTO `vocabularies` (`id`, `title`, `alias`, `description`, `required`, `multiple`, `tags`, `plugin`, `weight`, `updated`, `created`) VALUES
+(1, 'Categories', 'categories', '', 0, 1, 0, '', 1, '2010-05-17 20:03:11', '2009-07-22 02:16:21'),
+(2, 'Tags', 'tags', '', 0, 1, 0, '', 2, '2010-05-17 20:03:11', '2009-07-22 02:16:34');

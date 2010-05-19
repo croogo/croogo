@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `i18n` (
   KEY `model` (`model`),
   KEY `row_id` (`foreign_key`),
   KEY `field` (`field`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -299,15 +299,13 @@ CREATE TABLE IF NOT EXISTS `nodes` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nodes_terms`
+-- Table structure for table `nodes_taxonomies`
 --
 
-CREATE TABLE IF NOT EXISTS `nodes_terms` (
+CREATE TABLE IF NOT EXISTS `nodes_taxonomies` (
   `id` bigint(20) NOT NULL auto_increment,
-  `node_id` int(10) NOT NULL default '0',
-  `vocabulary_id` int(10) NOT NULL default '0',
-  `term_id` int(10) NOT NULL default '0',
-  `weight` int(10) default NULL,
+  `node_id` bigint(20) NOT NULL default '0',
+  `taxonomy_id` bigint(20) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -366,19 +364,30 @@ CREATE TABLE IF NOT EXISTS `settings` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `taxonomies`
+--
+
+CREATE TABLE IF NOT EXISTS `taxonomies` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `parent_id` bigint(20) default NULL,
+  `term_id` int(10) NOT NULL,
+  `vocabulary_id` int(10) NOT NULL,
+  `lft` int(11) default NULL,
+  `rght` int(11) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `terms`
 --
 
 CREATE TABLE IF NOT EXISTS `terms` (
   `id` int(10) NOT NULL auto_increment,
-  `parent_id` int(10) default NULL,
-  `vocabulary_id` int(10) NOT NULL,
   `title` varchar(255) collate utf8_unicode_ci NOT NULL,
   `slug` varchar(255) collate utf8_unicode_ci NOT NULL,
   `description` text collate utf8_unicode_ci NOT NULL,
-  `lft` int(11) NOT NULL,
-  `rght` int(11) NOT NULL,
-  `status` tinyint(1) NOT NULL default '1',
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY  (`id`),
@@ -463,7 +472,6 @@ CREATE TABLE IF NOT EXISTS `vocabularies` (
   `multiple` tinyint(1) NOT NULL default '0',
   `tags` tinyint(1) NOT NULL default '0',
   `plugin` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `term_count` int(10) NOT NULL default '0',
   `weight` int(11) default NULL,
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,

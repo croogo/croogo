@@ -162,7 +162,7 @@ class CroogoComponent extends Object {
         $this->controller->set('menus_for_admin_layout', $menus);
 
         // types
-        $types = $this->controller->Node->Term->Vocabulary->Type->find('all', array(
+        $types = $this->controller->Node->Taxonomy->Vocabulary->Type->find('all', array(
             'conditions' => array(
                 'Type.plugin <>' => null,
             ),
@@ -171,7 +171,7 @@ class CroogoComponent extends Object {
         $this->controller->set('types_for_admin_layout', $types);
 
         // vocabularies
-        $vocabularies = $this->controller->Node->Term->Vocabulary->find('all', array(
+        $vocabularies = $this->controller->Node->Taxonomy->Vocabulary->find('all', array(
             'recursive' => '-1',
             'conditions' => array(
                 'Vocabulary.plugin <>' => null,
@@ -321,7 +321,7 @@ class CroogoComponent extends Object {
     public function vocabularies() {
         $vocabularies = $this->blocksData['vocabularies'];
         foreach ($vocabularies AS $vocabularyAlias => $options) {
-            $vocabulary = $this->controller->Node->Term->Vocabulary->find('first', array(
+            $vocabulary = $this->controller->Node->Taxonomy->Vocabulary->find('first', array(
                 'conditions' => array(
                     'Vocabulary.alias' => $vocabularyAlias,
                 ),
@@ -333,10 +333,18 @@ class CroogoComponent extends Object {
             ));
 
             if (isset($vocabulary['Vocabulary']['id'])) {
-                $terms = $this->controller->Node->Term->find('list', array(
+                $tree = $this->controller->Node->Taxonomy->getVocabularyTree($vocabulary['Vocabulary']['alias'], array(
+                    'key' => 'id',
+                    'value' => 'title',
+                    'cache' => array(
+                        'prefix' => 'nodes_taxonomy_' . $vocabulary['Vocabulary']['alias'],
+                        'config' => 'croogo_vocabularies',
+                    ),
+                ));
+                $termIds = array_keys($tree);
+                $terms = $this->controller->Node->Taxonomy->Term->find('list', array(
                     'conditions' => array(
-                        'Term.vocabulary_id' => $vocabulary['Vocabulary']['id'],
-                        'Term.status' => 1,
+                        'Term.id' => $termIds,
                     ),
                     'fields' => array(
                         'Term.slug',
@@ -363,12 +371,11 @@ class CroogoComponent extends Object {
  * @return void
  */
     public function types() {
-        $types = $this->controller->Node->Term->Vocabulary->Type->find('all', array(
+        $types = $this->controller->Node->Taxonomy->Vocabulary->Type->find('all', array(
             'cache' => array(
                 'name' => 'croogo_types',
                 'config' => 'croogo_types',
             ),
-            'recursive' => '-1',
         ));
         foreach ($types AS $type) {
             $alias = $type['Type']['alias'];

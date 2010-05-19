@@ -133,11 +133,12 @@ class Node extends AppModel {
  * @access public
  */
     public $hasAndBelongsToMany = array(
-        'Term' => array(
-            'className' => 'Term',
-            'joinTable' => 'nodes_terms',
+        'Taxonomy' => array(
+            'className' => 'Taxonomy',
+            'with' => 'NodesTaxonomy',
+            'joinTable' => 'nodes_taxonomies',
             'foreignKey' => 'node_id',
-            'associationForeignKey' => 'term_id',
+            'associationForeignKey' => 'taxonomy_id',
             'unique' => true,
             'conditions' => '',
             'fields' => '',
@@ -180,17 +181,14 @@ class Node extends AppModel {
  * @return void
  */
     public function __cacheTerms() {
-        if (isset($this->data['Term']['Term']) && count($this->data['Term']['Term']) > 0) {
-            $termIds = $this->data['Term']['Term'];
-            $terms = $this->Term->find('list', array(
+        if (isset($this->data['Taxonomy']['Taxonomy']) && count($this->data['Taxonomy']['Taxonomy']) > 0) {
+            $taxonomyIds = $this->data['Taxonomy']['Taxonomy'];
+            $taxonomies = $this->Taxonomy->find('all', array(
                 'conditions' => array(
-                    'Term.id' => $termIds,
-                ),
-                'fields' => array(
-                    'Term.id',
-                    'Term.slug',
+                    'Taxonomy.id' => $taxonomyIds,
                 ),
             ));
+            $terms = Set::combine($taxonomies, '{n}.Term.id', '{n}.Term.slug');
             $this->data['Node']['terms'] = $this->encodeData($terms, array(
                 'trim' => false,
                 'json' => true,

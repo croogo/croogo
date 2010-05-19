@@ -7,7 +7,7 @@
             <div class="tabs">
                 <ul>
                     <li><a href="#node-main"><span><?php __($type['Type']['title']); ?></span></a></li>
-                    <?php if (count($terms) > 0) { ?><li><a href="#node-terms"><span><?php __('Terms'); ?></span></a></li><?php } ?>
+                    <?php if (count($taxonomy) > 0) { ?><li><a href="#node-terms"><span><?php __('Terms'); ?></span></a></li><?php } ?>
                     <?php if ($type['Type']['comment_status'] != 0) { ?><li><a href="#node-comments"><span><?php __('Comments'); ?></span></a></li><?php } ?>
                     <li><a href="#node-meta"><span><?php __('Custom fields'); ?></span></a></li>
                     <li><a href="#node-access"><span><?php __('Access'); ?></span></a></li>
@@ -25,9 +25,20 @@
                 ?>
                 </div>
 
-                <?php if (count($terms) > 0) { ?>
+                <?php if (count($taxonomy) > 0) { ?>
                 <div id="node-terms">
-                    <?php echo $form->input('Term.Term'); ?>
+                <?php
+                    $taxonomyIds = Set::extract('/Taxonomy/id', $this->data);
+                    foreach ($taxonomy AS $vocabularyId => $taxonomyTree) {
+                        echo $form->input('TaxonomyData.'.$vocabularyId, array(
+                            'label' => $vocabularies[$vocabularyId]['title'],
+                            'type' => 'select',
+                            'multiple' => true,
+                            'options' => $taxonomyTree,
+                            'value' => $taxonomyIds,
+                        ));
+                    }
+                ?>
                 </div>
                 <?php } ?>
 

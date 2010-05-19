@@ -26,10 +26,12 @@ class Term extends AppModel {
  * @access public
  */
     public $actsAs = array(
-        'Tree',
         'Cached' => array(
             'prefix' => array(
                 'term_',
+                'node_',
+                'nodes_',
+                'croogo_nodes_',
                 'croogo_vocabularies_',
             ),
         ),
@@ -53,16 +55,50 @@ class Term extends AppModel {
         ),
     );
 /**
- * Model associations: belongsTo
+ * Model associations: hasAndBelongsToMany
  *
  * @var array
  * @access public
  */
-    public $belongsTo = array(
+    public $hasAndBelongsToMany = array(
         'Vocabulary' => array(
-            'counterCache' => true,
+            'className' => 'Vocabulary',
+            'with' => 'Taxonomy',
+            'joinTable' => 'taxonomy',
+            'foreignKey' => 'term_id',
+            'associationForeignKey' => 'vocabulary_id',
+            'unique' => true,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'finderQuery' => '',
+            'deleteQuery' => '',
+            'insertQuery' => '',
         ),
     );
+/**
+ * Save Term and return ID.
+ * If another Term with same slug exists, return ID of that Term without saving.
+ *
+ * @param  array $data
+ * @return integer
+ */
+    public function saveAndGetId($data) {
+        $term = $this->find('first', array(
+            'conditions' => array(
+                'Term.slug' => $data['slug'],
+            ),
+        ));
+        if (isset($term['Term']['id'])) {
+            return $term['Term']['id'];
+        }
 
+        if ($this->save($data)) {
+            return $this->id;
+        }
+        return false;
+    }
 }
 ?>
