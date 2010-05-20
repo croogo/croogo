@@ -292,8 +292,7 @@ CREATE TABLE IF NOT EXISTS `nodes` (
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `slug` (`slug`),
-  FULLTEXT KEY `body` (`body`)
+  UNIQUE KEY `slug` (`slug`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
