@@ -21,8 +21,17 @@
 
         $rows = array();
         foreach ($attachments AS $attachment) {
-            $actions  = $html->link(__('Edit', true), array('controller' => 'attachments', 'action' => 'edit', $attachment['Node']['id']));
-            $actions .= ' ' . $html->link(__('Delete', true), array('controller' => 'attachments', 'action' => 'delete', $attachment['Node']['id']), null, __('Are you sure?', true));
+            $actions  = $html->link(__('Edit', true), array(
+                'controller' => 'attachments',
+                'action' => 'edit',
+                $attachment['Node']['id'],
+            ));
+            $actions .= ' ' . $html->link(__('Delete', true), array(
+                'controller' => 'attachments',
+                'action' => 'delete',
+                $attachment['Node']['id'],
+                'token' => $this->params['_Token']['key'],
+            ), null, __('Are you sure?', true));
 
             $mimeType = explode('/', $attachment['Node']['mime_type']);
             $mimeType = $mimeType['0'];
