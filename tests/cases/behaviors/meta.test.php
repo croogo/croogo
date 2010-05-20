@@ -17,10 +17,11 @@ class MetaBehaviorTestCase extends CakeTestCase {
         'message',
         'meta',
         'node',
-        'nodes_term',
+        'nodes_taxonomy',
         'region',
         'role',
         'setting',
+        'taxonomy',
         'term',
         'type',
         'types_vocabulary',
@@ -33,8 +34,8 @@ class MetaBehaviorTestCase extends CakeTestCase {
     }
 
     public function testSingle() {
-        $about = $this->Node->findBySlug('about');
-        $this->assertEqual($about['CustomFields']['meta_keywords'], 'key1, key2');
+        $helloWorld = $this->Node->findBySlug('hello-world');
+        $this->assertEqual($helloWorld['CustomFields']['meta_keywords'], 'key1, key2');
     }
 
     public function testMultiple() {

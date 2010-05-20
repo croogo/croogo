@@ -17,10 +17,11 @@ class CroogoTranslateBehaviorTestCase extends CakeTestCase {
         'message',
         'meta',
         'node',
-        'nodes_term',
+        'nodes_taxonomy',
         'region',
         'role',
         'setting',
+        'taxonomy',
         'term',
         'type',
         'types_vocabulary',
@@ -36,14 +37,14 @@ class CroogoTranslateBehaviorTestCase extends CakeTestCase {
     }
 
     public function testSaveTranslation() {
-        $this->Node->id = 20; // About
+        $this->Node->id = 2; // About
         $this->Node->locale = 'ben';
         $this->Node->saveTranslation(array(
             'Node' => array(
                 'title' => 'About [Translated in Bengali]',
             ),
         ));
-        $about = $this->Node->findById('20');
+        $about = $this->Node->findById('2');
         $this->assertEqual($about['Node']['title'], 'About [Translated in Bengali]');
     }
 

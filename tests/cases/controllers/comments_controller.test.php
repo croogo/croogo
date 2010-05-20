@@ -46,10 +46,11 @@ class CommentsControllerTestCase extends CakeTestCase {
         'message',
         'meta',
         'node',
-        'nodes_term',
+        'nodes_taxonomy',
         'region',
         'role',
         'setting',
+        'taxonomy',
         'term',
         'type',
         'types_vocabulary',
@@ -92,7 +93,7 @@ class CommentsControllerTestCase extends CakeTestCase {
         ));
         $this->Comments->data = array(
             'Comment' => array(
-                'id' => 13, // Mr Croogo
+                'id' => 1, // Mr Croogo
                 'name' => 'Mr Croogo [modified]',
                 'email' => 'contact@example.com',
                 'body' => 'lots of text...',
@@ -103,7 +104,7 @@ class CommentsControllerTestCase extends CakeTestCase {
         $this->Comments->admin_edit();
         $this->assertEqual($this->Comments->redirectUrl, array('action' => 'index'));
 
-        $comment = $this->Comments->Comment->findById(13);
+        $comment = $this->Comments->Comment->findById(1);
         $this->assertEqual($comment['Comment']['name'], 'Mr Croogo [modified]');
 
         $this->Comments->testView = true;
@@ -121,11 +122,11 @@ class CommentsControllerTestCase extends CakeTestCase {
         ));
         $this->Comments->beforeFilter();
         $this->Comments->Component->startup($this->Comments);
-        $this->Comments->admin_delete(13);
+        $this->Comments->admin_delete(1);
         $this->assertEqual($this->Comments->redirectUrl, array('action' => 'index'));
 
         $hasAny = $this->Comments->Comment->hasAny(array(
-            'Comment.id' => 13,
+            'Comment.id' => 1,
         ));
         $this->assertFalse($hasAny);
     }
@@ -143,7 +144,7 @@ class CommentsControllerTestCase extends CakeTestCase {
 
         $this->Comments->data['Comment'] = array(
             'action' => 'delete',
-            '13' => array(
+            '1' => array(
                 'id' => 1,
             ),
         );
@@ -171,18 +172,18 @@ class CommentsControllerTestCase extends CakeTestCase {
         $this->Comments->Component->startup($this->Comments);
 
         // unpublish a Comment for testing
-        $this->Comments->Comment->id = 13;
+        $this->Comments->Comment->id = 1;
         $this->Comments->Comment->saveField('status', 0);
         $this->Comments->Comment->id = false;
         $comment = $this->Comments->Comment->hasAny(array(
-            'id' => 13,
+            'id' => 1,
             'status' => 0,
         ));
         $this->assertTrue($comment);
 
         $this->Comments->data['Comment'] = array(
             'action' => 'publish',
-            '13' => array(
+            '1' => array(
                 'id' => 1,
             ),
         );
@@ -199,7 +200,7 @@ class CommentsControllerTestCase extends CakeTestCase {
             'order' => 'Comment.lft ASC',
         ));
         $this->assertEqual($list, array(
-            '13' => 'Mr Croogo',
+            '1' => 'Mr Croogo',
         ));
     }
 
@@ -216,7 +217,7 @@ class CommentsControllerTestCase extends CakeTestCase {
 
         $this->Comments->data['Comment'] = array(
             'action' => 'unpublish',
-            '13' => array(
+            '1' => array(
                 'id' => 1,
             ),
         );
@@ -275,7 +276,7 @@ class CommentsControllerTestCase extends CakeTestCase {
             'body' => 'text here...',
         );
         $node = $this->Comments->Comment->Node->findBySlug('hello-world');
-        $this->Comments->add($node['Node']['id'], 13); // under the comment by Mr Croogo
+        $this->Comments->add($node['Node']['id'], 1); // under the comment by Mr Croogo
         $this->assertTrue($this->Comments->viewVars['success']);
 
         $comments = $this->Comments->Comment->generatetreelist(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');

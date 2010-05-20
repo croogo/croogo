@@ -1,62 +1,44 @@
 <?php
-
+/* Term Fixture generated on: 2010-05-20 22:05:52 : 1274393812 */
 class TermFixture extends CakeTestFixture {
-	public $name = 'Term';
-	public $import = 'Term';
-	public $records = array(
+	var $name = 'Term';
+
+	var $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
+		'title' => array('type' => 'string', 'null' => false, 'default' => NULL),
+		'slug' => array('type' => 'string', 'null' => false, 'default' => NULL, 'key' => 'unique'),
+		'description' => array('type' => 'text', 'null' => false, 'default' => NULL),
+		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
+		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'slug' => array('column' => 'slug', 'unique' => 1)),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+	);
+
+	var $records = array(
 		array(
-			'id' => '1',
-			'parent_id' => '',
-			'vocabulary_id' => '1',
+			'id' => 1,
 			'title' => 'Uncategorized',
 			'slug' => 'uncategorized',
 			'description' => '',
-			'lft' => '1',
-			'rght' => '2',
-			'status' => '1',
 			'updated' => '2009-07-22 03:38:43',
-			'created' => '2009-07-22 03:34:56',
+			'created' => '2009-07-22 03:34:56'
 		),
 		array(
-			'id' => '2',
-			'parent_id' => '',
-			'vocabulary_id' => '1',
+			'id' => 2,
 			'title' => 'Announcements',
 			'slug' => 'announcements',
 			'description' => '',
-			'lft' => '3',
-			'rght' => '8',
-			'status' => '1',
-			'updated' => '2009-07-22 03:45:37',
-			'created' => '2009-07-22 03:45:37',
+			'updated' => '2010-05-16 23:57:06',
+			'created' => '2009-07-22 03:45:37'
 		),
 		array(
-			'id' => '6',
-			'parent_id' => '',
-			'vocabulary_id' => '2',
+			'id' => 3,
 			'title' => 'mytag',
 			'slug' => 'mytag',
 			'description' => '',
-			'lft' => '9',
-			'rght' => '10',
-			'status' => '1',
 			'updated' => '2009-08-26 14:42:43',
-			'created' => '2009-08-26 14:42:43',
-		),
-		array(
-			'id' => '7',
-			'parent_id' => '',
-			'vocabulary_id' => '3',
-			'title' => 'test term',
-			'slug' => 'test-term-1',
-			'description' => '',
-			'lft' => '11',
-			'rght' => '12',
-			'status' => '1',
-			'updated' => '2009-09-02 19:27:26',
-			'created' => '2009-09-02 19:27:26',
+			'created' => '2009-08-26 14:42:43'
 		),
 	);
 }
-
 ?>

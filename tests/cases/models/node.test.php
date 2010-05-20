@@ -17,10 +17,11 @@ class NodeTestCase extends CakeTestCase {
         'message',
         'meta',
         'node',
-        'nodes_term',
+        'nodes_taxonomy',
         'region',
         'role',
         'setting',
+        'taxonomy',
         'term',
         'type',
         'types_vocabulary',
@@ -35,8 +36,8 @@ class NodeTestCase extends CakeTestCase {
     public function testCacheTerms() {
         $this->Node->data = array(
             'Node' => array(),
-            'Term' => array(
-                'Term' => array(1, 2), // uncategorized, and announcements
+            'Taxonomy' => array(
+                'Taxonomy' => array(1, 2), // uncategorized, and announcements
             ),
         );
         $this->Node->__cacheTerms();
