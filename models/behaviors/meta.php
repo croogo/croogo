@@ -12,7 +12,13 @@
  * @link     http://www.croogo.org
  */
 class MetaBehavior extends ModelBehavior {
-
+/**
+ * Setup
+ *
+ * @param object $model
+ * @param array  $config
+ * @return void
+ */
     public function setup(&$model, $config = array()) {
         if (is_string($config)) {
             $config = array($config);
@@ -20,7 +26,14 @@ class MetaBehavior extends ModelBehavior {
 
         $this->settings[$model->alias] = $config;
     }
-
+/**
+ * afterFind callback
+ *
+ * @param object  $model
+ * @param array   $created
+ * @param boolean $primary
+ * @return array
+ */
     public function afterFind(&$model, $results = array(), $primary = false) {
         if ($primary && isset($results[0][$model->alias])) {
             foreach ($results AS $i => $result) {
@@ -40,11 +53,23 @@ class MetaBehavior extends ModelBehavior {
 
         return $results;
     }
-
+/**
+ * Prepare data
+ *
+ * @param object $model
+ * @param array  $data
+ * @return array
+ */
     public function prepareData(&$model, $data) {
         return $this->__prepareMeta($data);
     }
-
+/**
+ * Private method for MetaBehavior::prepareData()
+ *
+ * @param object $model
+ * @param array  $data
+ * @return array
+ */
     private function __prepareMeta($data) {
         if (isset($data['Meta']) &&
             is_array($data['Meta']) &&
@@ -61,7 +86,14 @@ class MetaBehavior extends ModelBehavior {
 
         return $data;
     }
-
+/**
+ * Save with meta
+ *
+ * @param object $model
+ * @param array  $data
+ * @param array  $options
+ * @return void
+ */
     public function saveWithMeta(&$model, $data, $options = array()) {
         $data = $this->__prepareMeta($data);
         return $model->saveAll($data, $options);
