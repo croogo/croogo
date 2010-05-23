@@ -152,7 +152,7 @@ class NodesController extends AppController {
         $taxonomy = array();
         foreach ($type['Vocabulary'] AS $vocabulary) {
             $vocabularyId = $vocabulary['id'];
-            $taxonomy[$vocabularyId] = $this->Node->Taxonomy->getVocabularyTree($vocabulary['alias'], array('taxonomyId' => true));
+            $taxonomy[$vocabularyId] = $this->Node->Taxonomy->getTree($vocabulary['alias'], array('taxonomyId' => true));
         }
         $this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy', 'users'));
     }
@@ -219,7 +219,7 @@ class NodesController extends AppController {
         $taxonomy = array();
         foreach ($type['Vocabulary'] AS $vocabulary) {
             $vocabularyId = $vocabulary['id'];
-            $taxonomy[$vocabularyId] = $this->Node->Taxonomy->getVocabularyTree($vocabulary['alias'], array('taxonomyId' => true));
+            $taxonomy[$vocabularyId] = $this->Node->Taxonomy->getTree($vocabulary['alias'], array('taxonomyId' => true));
         }
         $this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy', 'users'));
     }

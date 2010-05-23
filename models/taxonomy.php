@@ -65,7 +65,7 @@ class Taxonomy extends AppModel {
  * @param  array  $options
  * @return array
  */
-    public function getVocabularyTree($alias, $options = array()) {
+    public function getTree($alias, $options = array()) {
         $_options = array(
             'key' => 'slug',        // Term.slug
             'value' => 'title',     // Term.title

@@ -53,7 +53,7 @@ class TermsController extends AppController {
         }
         $this->set('title_for_layout', sprintf(__('Vocabulary: %s', true), $vocabulary['Vocabulary']['title']));
 
-        $termsTree = $this->Term->Taxonomy->getVocabularyTree($vocabulary['Vocabulary']['alias'], array(
+        $termsTree = $this->Term->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array(
             'key' => 'id',
             'value' => 'title',
         ));
@@ -120,7 +120,7 @@ class TermsController extends AppController {
                 $this->Session->setFlash(__('Term could not be saved. Please try again.', true));
             }
         }
-        $parentTree = $this->Term->Taxonomy->getVocabularyTree($vocabulary['Vocabulary']['alias'], array('taxonomyId' => true));
+        $parentTree = $this->Term->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array('taxonomyId' => true));
         $this->set(compact('vocabulary', 'parentTree'));
     }
 
@@ -220,7 +220,7 @@ class TermsController extends AppController {
             $this->data['Taxonomy'] = $taxonomy['Taxonomy'];
             $this->data['Term'] = $term['Term'];
         }
-        $parentTree = $this->Term->Taxonomy->getVocabularyTree($vocabulary['Vocabulary']['alias'], array('taxonomyId' => true));
+        $parentTree = $this->Term->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array('taxonomyId' => true));
         $this->set(compact('vocabulary', 'parentTree', 'term', 'taxonomy'));
     }
 

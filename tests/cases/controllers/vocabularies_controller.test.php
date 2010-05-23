@@ -156,6 +156,60 @@ class VocabulariesControllerTestCase extends CakeTestCase {
         $this->assertFalse($hasAny);
     }
 
+    public function testAdminMoveup() {
+        $this->Vocabularies->params['action'] = 'admin_index';
+        $this->Vocabularies->params['url']['url'] = 'admin/vocabularies/moveup';
+        $this->Vocabularies->Component->initialize($this->Vocabularies);
+        $this->Vocabularies->Session->write('Auth.User', array(
+            'id' => 1,
+            'username' => 'admin',
+        ));
+        $this->Vocabularies->beforeFilter();
+        $this->Vocabularies->Component->startup($this->Vocabularies);
+        $this->Vocabularies->admin_moveup(2); // ID of tags
+        $this->assertEqual($this->Vocabularies->redirectUrl, array('action' => 'index'));
+
+        $vocabularies = $this->Vocabularies->Vocabulary->find('list', array(
+            'fields' => array(
+                'id',
+                'alias',
+            ),
+            'order' => 'Vocabulary.weight ASC',
+        ));
+        $expected = array(
+            '2' => 'tags',
+            '1' => 'categories',
+        );
+        $this->assertEqual($vocabularies, $expected);
+    }
+
+    public function testAdminMovedown() {
+        $this->Vocabularies->params['action'] = 'admin_index';
+        $this->Vocabularies->params['url']['url'] = 'admin/vocabularies/moveup';
+        $this->Vocabularies->Component->initialize($this->Vocabularies);
+        $this->Vocabularies->Session->write('Auth.User', array(
+            'id' => 1,
+            'username' => 'admin',
+        ));
+        $this->Vocabularies->beforeFilter();
+        $this->Vocabularies->Component->startup($this->Vocabularies);
+        $this->Vocabularies->admin_movedown(1); // ID of categories
+        $this->assertEqual($this->Vocabularies->redirectUrl, array('action' => 'index'));
+
+        $vocabularies = $this->Vocabularies->Vocabulary->find('list', array(
+            'fields' => array(
+                'id',
+                'alias',
+            ),
+            'order' => 'Vocabulary.weight ASC',
+        ));
+        $expected = array(
+            '2' => 'tags',
+            '1' => 'categories',
+        );
+        $this->assertEqual($vocabularies, $expected);
+    }
+
     public function endTest() {
         $this->Vocabularies->Session->destroy();
         unset($this->Vocabularies);

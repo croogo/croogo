@@ -333,7 +333,7 @@ class CroogoComponent extends Object {
             ));
 
             if (isset($vocabulary['Vocabulary']['id'])) {
-                $tree = $this->controller->Node->Taxonomy->getVocabularyTree($vocabulary['Vocabulary']['alias'], array(
+                $tree = $this->controller->Node->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array(
                     'key' => 'id',
                     'value' => 'title',
                     'cache' => array(
