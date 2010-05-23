@@ -123,7 +123,9 @@ class NodesController extends AppController {
                     'Taxonomy' => array(),
                 );
                 foreach ($this->data['TaxonomyData'] AS $vocabularyId => $taxonomyIds) {
-                    $this->data['Taxonomy']['Taxonomy'] = array_merge($this->data['Taxonomy']['Taxonomy'], $taxonomyIds);
+                    if (is_array($taxonomyIds)) {
+                        $this->data['Taxonomy']['Taxonomy'] = array_merge($this->data['Taxonomy']['Taxonomy'], $taxonomyIds);
+                    }
                 }
             }
             $this->Node->create();
@@ -188,7 +190,9 @@ class NodesController extends AppController {
                     'Taxonomy' => array(),
                 );
                 foreach ($this->data['TaxonomyData'] AS $vocabularyId => $taxonomyIds) {
-                    $this->data['Taxonomy']['Taxonomy'] = array_merge($this->data['Taxonomy']['Taxonomy'], $taxonomyIds);
+                    if (is_array($taxonomyIds)) {
+                        $this->data['Taxonomy']['Taxonomy'] = array_merge($this->data['Taxonomy']['Taxonomy'], $taxonomyIds);
+                    }
                 }
             }
             $this->data['Node']['path'] = $this->Croogo->getRelativePath(array(
