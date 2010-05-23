@@ -1,4 +1,4 @@
 <?php
     Configure::write('debug', 0);
-    echo $meta->field();
+    echo $layout->metaField();
 ?>

@@ -61,10 +61,10 @@
                             $fields = array();
                             if (count($fields) > 0) {
                                 foreach ($fields AS $fieldKey => $fieldValue) {
-                                    echo $meta->field($fieldKey, $fieldValue);
+                                    echo $layout->metaField($fieldKey, $fieldValue);
                                 }
                             } else {
-                                echo $meta->field();
+                                echo $layout->metaField();
                             }
                         ?>
                         <div class="clear">&nbsp;</div>

@@ -585,6 +585,43 @@ class LayoutHelper extends AppHelper {
         return $content;
     }
 /**
+ * Meta field: with key/value fields
+ *
+ * @param string $key (optional) key
+ * @param string $value (optional) value
+ * @param integer $id (optional) ID of Meta
+ * @param array $options (optional) options
+ * @return string
+ */
+    public function metaField($key = '', $value = null, $id = null, $options = array()) {
+        $_options = array(
+            'key'   => array(
+                'label'   => __('Key', true),
+                'value'   => $key,
+            ),
+            'value' => array(
+                'label'   => __('Value', true),
+                'value'   => $value,
+            ),
+        );
+        $options = array_merge($_options, $options);
+        $uuid = String::uuid();
+
+        $fields  = '';
+        if ($id != null) {
+            $fields .= $this->Form->input('Meta.'.$uuid.'.id', array('type' => 'hidden', 'value' => $id));
+        }
+        $fields .= $this->Form->input('Meta.'.$uuid.'.key', $options['key']);
+        $fields .= $this->Form->input('Meta.'.$uuid.'.value', $options['value']);
+        $fields = $this->Html->tag('div', $fields, array('class' => 'fields'));
+
+        $actions = $this->Html->link(__('Remove', true), '#', array('class' => 'remove-meta', 'rel' => $id), null, null, false);
+        $actions = $this->Html->tag('div', $actions, array('class' => 'actions'));
+
+        $output = $this->Html->tag('div', $actions . $fields, array('class' => 'meta'));
+        return $output;
+    }
+/**
  * Show links under Actions column
  *
  * @param integer $id

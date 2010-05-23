@@ -44,7 +44,6 @@ class AppController extends Controller {
         'Time',
         'Layout',
         'Custom',
-        'Meta',
     );
 /**
  * Models

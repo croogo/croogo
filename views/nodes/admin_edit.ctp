@@ -65,7 +65,7 @@
                             $fieldsKeyToId = Set::combine($this->data['Meta'], '{n}.key', '{n}.id');
                             if (count($fields) > 0) {
                                 foreach ($fields AS $fieldKey => $fieldValue) {
-                                    echo $meta->field($fieldKey, $fieldValue, $fieldsKeyToId[$fieldKey]);
+                                    echo $layout->metaField($fieldKey, $fieldValue, $fieldsKeyToId[$fieldKey]);
                                 }
                             }
                         ?>
