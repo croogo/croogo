@@ -31,6 +31,7 @@ class Type extends AppModel {
                 'type_',
             ),
         ),
+        'Params',
     );
 /**
  * Validation

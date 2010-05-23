@@ -365,7 +365,9 @@ class NodesController extends AppController {
                 $this->Session->setFlash(__('Invalid content type.', true));
                 $this->redirect('/');
             }
-
+            if (isset($type['Params']['nodes_per_page'])) {
+                $this->paginate['Node']['limit'] = $type['Params']['nodes_per_page'];
+            }
             $this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
             $this->set('title_for_layout', $type['Type']['title']);
         }
@@ -447,7 +449,9 @@ class NodesController extends AppController {
                 $this->Session->setFlash(__('Invalid content type.', true));
                 $this->redirect('/');
             }
-
+            if (isset($type['Params']['nodes_per_page'])) {
+                $this->paginate['Node']['limit'] = $type['Params']['nodes_per_page'];
+            }
             $this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
             $this->set('title_for_layout', $term['Term']['title']);
         }
@@ -506,7 +510,9 @@ class NodesController extends AppController {
                 $this->Session->setFlash(__('Invalid content type.', true));
                 $this->redirect('/');
             }
-
+            if (isset($type['Params']['nodes_per_page'])) {
+                $this->paginate['Node']['limit'] = $type['Params']['nodes_per_page'];
+            }
             $this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
             $this->set('title_for_layout', $type['Type']['title']);
             $this->set(compact('type'));
@@ -537,7 +543,7 @@ class NodesController extends AppController {
         $this->set(compact('nodes'));
     }
 
-    public function search($type = null) {
+    public function search($typeAlias = null) {
         if (!isset($this->params['named']['q'])) {
             $this->redirect('/');
         }
@@ -554,7 +560,7 @@ class NodesController extends AppController {
                         'Node.title LIKE' => '%' . $q . '%',
                         'Node.excerpt LIKE' => '%' . $q . '%',
                         'Node.body LIKE' => '%' . $q . '%',
-                        //'Node.terms LIKE' => '%"' . $q . '"%',
+                        'Node.terms LIKE' => '%"' . $q . '"%',
                     ),
                 ),
                 array(
@@ -573,8 +579,16 @@ class NodesController extends AppController {
             ),
             'User',
         );
-        if ($type) {
-            $this->paginate['Node']['conditions']['Node.type'] = $type;
+        if ($typeAlias) {
+            $type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
+            if (!isset($type['Type']['id'])) {
+                $this->Session->setFlash(__('Invalid content type.', true));
+                $this->redirect('/');
+            }
+            if (isset($type['Params']['nodes_per_page'])) {
+                $this->paginate['Node']['limit'] = $type['Params']['nodes_per_page'];
+            }
+            $this->paginate['Node']['conditions']['Node.type'] = $typeAlias;
         }
 
         $nodes = $this->paginate('Node');
