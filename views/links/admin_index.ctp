@@ -3,7 +3,7 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('New Link', true), array('action'=>'add', 'menu' => $menu)); ?></li>
+            <li><?php echo $html->link(__('New Link', true), array('action'=>'add', $menu['Menu']['id'])); ?></li>
         </ul>
     </div>
 
@@ -13,9 +13,14 @@
                 $paginator->options['url'][] = $nn . ':' . $nv;
             }
         }
-    ?>
 
-    <?php echo $form->create('Link', array('url' => array('controller' => 'links', 'action' => 'process', 'menu' => $menu))); ?>
+        echo $form->create('Link', array(
+            'url' => array(
+                'action' => 'process',
+                $menu['Menu']['id'],
+            ),
+        ));
+    ?>
     <table cellpadding="0" cellspacing="0">
     <?php
         $tableHeaders =  $html->tableHeaders(array(
@@ -29,14 +34,13 @@
 
         $rows = array();
         foreach ($linksTree AS $linkId => $linkTitle) {
-            $actions  = $html->link(__('Move up', true), array('controller' => 'links', 'action' => 'moveup', 'menu' => $menu, $linkId));
-            $actions .= ' ' . $html->link(__('Move down', true), array('controller' => 'links', 'action' => 'movedown', 'menu' => $menu, $linkId));
-            $actions .= ' ' . $html->link(__('Edit', true), array('controller' => 'links', 'action' => 'edit', 'menu' => $menu, $linkId));
+            $actions  = $html->link(__('Move up', true), array('controller' => 'links', 'action' => 'moveup', $linkId));
+            $actions .= ' ' . $html->link(__('Move down', true), array('controller' => 'links', 'action' => 'movedown', $linkId));
+            $actions .= ' ' . $html->link(__('Edit', true), array('controller' => 'links', 'action' => 'edit', $linkId));
             $actions .= ' ' . $layout->adminRowActions($linkId);
             $actions .= ' ' . $html->link(__('Delete', true), array(
                 'controller' => 'links',
                 'action' => 'delete',
-                'menu' => $menu,
                 $linkId,
                 'token' => $this->params['_Token']['key'],
             ), null, __('Are you sure?', true));

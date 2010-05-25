@@ -1,6 +1,6 @@
 <div class="links form">
     <h2><?php echo $title_for_layout; ?></h2>
-    <?php echo $form->create('Link', array('url' => array('controller' => 'links', 'action' => 'edit', 'menu' => $menu)));?>
+    <?php echo $form->create('Link', array('url' => array('controller' => 'links', 'action' => 'edit', 'menu' => $menuId)));?>
         <fieldset>
             <div class="tabs">
                 <ul>

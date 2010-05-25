@@ -43,7 +43,7 @@
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-link"></span>' . __('Menus', true), array('plugin' => null, 'controller' => 'menus', 'action' => 'index'), array('escape' => false)); ?></li>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-plus"></span>' . __('Add new', true), array('plugin' => null, 'controller' => 'menus', 'action' => 'add'), array('class' => 'separator', 'escape' => false)); ?></li>
                 <?php foreach ($menus_for_admin_layout AS $m) { ?>
-                <li><?php echo $html->link('<span class="ui-icon ui-icon-bullet"></span>' . $m['Menu']['title'], array('plugin' => null, 'controller' => 'links', 'action' => 'index', 'menu' => $m['Menu']['id']), array('escape' => false)); ?></li>
+                <li><?php echo $html->link('<span class="ui-icon ui-icon-bullet"></span>' . $m['Menu']['title'], array('plugin' => null, 'controller' => 'links', 'action' => 'index', $m['Menu']['id']), array('escape' => false)); ?></li>
                 <?php } ?>
             </ul>
         </li>

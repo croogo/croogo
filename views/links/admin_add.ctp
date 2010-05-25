@@ -1,6 +1,6 @@
 <div class="links form">
     <h2><?php echo $title_for_layout; ?></h2>
-    <?php echo $form->create('Link', array('url' => array('controller' => 'links', 'action' => 'add', 'menu' => $menu)));?>
+    <?php echo $form->create('Link', array('url' => array('controller' => 'links', 'action' => 'add', 'menu' => $menuId)));?>
         <fieldset>
             <div class="tabs">
                 <ul>
@@ -11,7 +11,7 @@
 
                 <div id="link-basic">
                     <?php
-                        echo $form->input('menu_id', array('selected' => $menu));
+                        echo $form->input('menu_id', array('selected' => $menuId));
                         echo $form->input('parent_id', array(
                             'label' => __('Parent', true),
                             'options' => $parentLinks,

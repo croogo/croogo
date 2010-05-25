@@ -20,7 +20,7 @@
 
         $rows = array();
         foreach ($menus AS $menu) {
-            $actions  = $html->link(__('View links', true), array('controller' => 'links', 'action' => 'index', 'menu' => $menu['Menu']['id']));
+            $actions  = $html->link(__('View links', true), array('controller' => 'links', 'action' => 'index', $menu['Menu']['id']));
             $actions .= ' ' . $html->link(__('Edit', true), array('controller' => 'menus', 'action' => 'edit', $menu['Menu']['id']));
             $actions .= ' ' . $layout->adminRowActions($menu['Menu']['id']);
             $actions .= ' ' . $html->link(__('Delete', true), array(
@@ -32,7 +32,7 @@
 
             $rows[] = array(
                 $menu['Menu']['id'],
-                $html->link($menu['Menu']['title'], array('controller' => 'links', 'action' => 'index', 'menu' => $menu['Menu']['id'])),
+                $html->link($menu['Menu']['title'], array('controller' => 'links', 'action' => 'index', $menu['Menu']['id'])),
                 $menu['Menu']['alias'],
                 $menu['Menu']['link_count'],
                 $actions,
