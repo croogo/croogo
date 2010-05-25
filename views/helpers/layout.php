@@ -398,41 +398,23 @@ class LayoutHelper extends AppHelper {
  */
     public function vocabulary($vocabularyAlias, $options = array()) {
         $_options = array(
-            'tag' => 'ul',
-            'tagAttr' => array(),
-            'containerTag' => 'div',
-            'containerTagAttr' => array(
-                'class' => 'vocabulary',
-            ),
             'type' => null,
             'link' => true,
+            'plugin' => false,
+            'controller' => 'nodes',
+            'action' => 'term',
+            'element' => 'vocabulary',
         );
         $options = array_merge($_options, $options);
 
         $output = '';
         if (isset($this->View->viewVars['vocabularies_for_layout'][$vocabularyAlias]['list'])) {
             $vocabulary = $this->View->viewVars['vocabularies_for_layout'][$vocabularyAlias];
-            foreach ($vocabulary['list'] AS $termSlug => $termTitle) {
-                if ($options['link']) {
-                    $li = '<li>' . $this->Html->link($termTitle, array(
-                        'plugin' => false,
-                        'controller' => 'nodes',
-                        'action' => 'term',
-                        'type' => $options['type'],
-                        'slug' => $termSlug,
-                    )) . '</li>';
-                } else {
-                    $li = '<li>' . $termTitle . '</li>';
-                }
-                $output .= $li;
-            }
-            if ($output != '') {
-                $options['containerTagAttr']['id'] = 'vocabulary-' . $vocabulary['Vocabulary']['id'];
-                $output = $this->Html->tag($options['tag'], $output, $options['tagAttr']);
-                $output = $this->Html->tag($options['containerTag'], $output, $options['containerTagAttr']);
-            }
+            $output .= $this->View->element($options['element'], array(
+                'vocabulary' => $vocabulary,
+                'options' => $options,
+            ));
         }
-
         return $output;
     }
 /**
