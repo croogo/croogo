@@ -241,7 +241,7 @@ class LayoutHelper extends AppHelper {
  * Show Blocks for a particular Region
  *
  * @param string $regionAlias Region alias
- * @param array $findOptions (optional)
+ * @param array $options
  * @return string
  */
     public function blocks($regionAlias, $options = array()) {
@@ -283,32 +283,23 @@ class LayoutHelper extends AppHelper {
  */
     public function menu($menuAlias, $options = array()) {
         $_options = array(
-            'findOptions' => array(),
             'tag' => 'ul',
             'tagAttributes' => array(),
-            'containerTag' => 'div',
-            'containerTagAttr' => array(
-                'class' => 'menu',
-            ),
             'selected' => 'selected',
             'dropdown' => false,
             'dropdownClass' => 'sf-menu',
+            'element' => 'menu',
         );
         $options = array_merge($_options, $options);
 
         if (!isset($this->View->viewVars['menus_for_layout'][$menuAlias])) {
             return false;
         }
-
         $menu = $this->View->viewVars['menus_for_layout'][$menuAlias];
-
-        $options['containerTagAttr']['id'] = 'menu-' . $this->View->viewVars['menus_for_layout'][$menuAlias]['Menu']['id'];
-        $options['containerTagAttr']['class'] .= ' menu';
-
-        $links = $this->View->viewVars['menus_for_layout'][$menuAlias]['threaded'];
-        $linksList = $this->nestedLinks($links, $options);
-        $output = $this->Html->tag($options['containerTag'], $linksList, $options['containerTagAttr']);
-
+        $output = $this->View->element($options['element'], array(
+            'menu' => $menu,
+            'options' => $options,
+        ));
         return $output;
     }
 /**
@@ -426,40 +417,23 @@ class LayoutHelper extends AppHelper {
  */
     public function nodeList($alias, $options = array()) {
         $_options = array(
-            'tag' => 'ul',
-            'tagAttr' => array(),
-            'containerTag' => 'div',
-            'containerTagAttr' => array(
-                'class' => 'node-list',
-            ),
             'link' => true,
+            'plugin' => false,
+            'controller' => 'nodes',
+            'action' => 'view',
+            'element' => 'node_list',
         );
         $options = array_merge($_options, $options);
 
         $output = '';
         if (isset($this->View->viewVars['nodes_for_layout'][$alias])) {
             $nodes = $this->View->viewVars['nodes_for_layout'][$alias];
-            foreach ($nodes AS $node) {
-                if ($options['link']) {
-                    $li = '<li>' . $this->Html->link($node['Node']['title'], array(
-                        'plugin' => false,
-                        'controller' => 'nodes',
-                        'action' => 'view',
-                        'type' => $node['Node']['type'],
-                        'slug' => $node['Node']['slug'],
-                    )) . '</li>';
-                } else {
-                    $li = '<li>' . $node['Node']['title'] . '</li>';
-                }
-                $output .= $li;
-            }
-            if ($output != '') {
-                $options['containerTagAttr']['id'] = 'node-list-'.$alias;
-                $output = $this->Html->tag($options['tag'], $output, $options['tagAttr']);
-                $output = $this->Html->tag($options['containerTag'], $output, $options['containerTagAttr']);
-            }
+            $output = $this->View->element($options['element'], array(
+                'alias' => $alias,
+                'nodesList' => $this->View->viewVars['nodes_for_layout'][$alias],
+                'options' => $options,
+            ));
         }
-
         return $output;
     }
 /**
