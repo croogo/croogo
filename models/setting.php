@@ -82,7 +82,10 @@ class Setting extends AppModel {
  */
     public function write($key, $value, $options = array()) {
         $_options = array(
+            'description' => '',
+            'input_type' => '',
             'editable' => 0,
+            'params' => '',
         );
         $options = array_merge($_options, $options);
 
@@ -90,12 +93,18 @@ class Setting extends AppModel {
         if (isset($setting['Setting']['id'])) {
             $setting['Setting']['id'] = $setting['Setting']['id'];
             $setting['Setting']['value'] = $value;
+            $setting['Setting']['description'] = $options['description'];
+            $setting['Setting']['input_type'] = $options['input_type'];
             $setting['Setting']['editable'] = $options['editable'];
+            $setting['Setting']['params'] = $options['params'];
         } else {
             $setting = array();
             $setting['key'] = $key;
             $setting['value'] = $value;
+            $setting['description'] = $options['description'];
+            $setting['input_type'] = $options['input_type'];
             $setting['editable'] = $options['editable'];
+            $setting['params'] = $options['params'];
         }
 
         $this->id = false;
