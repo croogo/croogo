@@ -396,6 +396,9 @@ class NodesController extends AppController {
         }
 
         $this->set(compact('type', 'nodes'));
+        $this->__viewFallback(array(
+            'index_' . $type['Type']['alias'],
+        ));
     }
 
     public function term() {
@@ -480,6 +483,10 @@ class NodesController extends AppController {
         }
 
         $this->set(compact('term', 'type', 'nodes'));
+        $this->__viewFallback(array(
+            'term_' . $term['Term']['id'],
+            'term_' . $type['Type']['alias'],
+        ));
     }
 
     public function promoted() {
@@ -594,6 +601,11 @@ class NodesController extends AppController {
         $nodes = $this->paginate('Node');
         $this->set('title_for_layout', sprintf(__('Search Results: %s', true), $q));
         $this->set(compact('q', 'nodes'));
+        if ($typeAlias) {
+            $this->__viewFallback(array(
+                'search_' . $typeAlias,
+            ));
+        }
     }
 
     public function view($id = null) {
@@ -684,15 +696,24 @@ class NodesController extends AppController {
 
         $this->set('title_for_layout', $node['Node']['title']);
         $this->set(compact('node', 'type', 'comments'));
+        $this->__viewFallback(array(
+            'view_' . $node['Node']['id'],
+            'view_' . $type['Type']['alias'],
+        ));
+    }
 
-        if (isset($node['CustomFields']['theme'])) {
-            $this->theme = $node['CustomFields']['theme'];
+    private function __viewFallback($views) {
+        if (is_string($views)) {
+            $views = array($views);
         }
-        if (isset($node['CustomFields']['layout'])) {
-            $this->layout = $node['CustomFields']['layout'];
-        }
-        if (isset($node['CustomFields']['view'])) {
-            $this->render($node['CustomFields']['view']);
+
+        if ($this->theme) {
+            foreach ($views AS $view) {
+                $viewPath = APP.'views'.DS.'themed'.DS.$this->theme.DS.Inflector::slug($this->name).DS.$view.$this->ext;
+                if (file_exists($viewPath)) {
+                    return $this->render($view);
+                }
+            }
         }
     }
 
