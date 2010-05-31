@@ -80,7 +80,7 @@
                 'unpublish' => __('Unpublish', true),
                 'promote' => __('Promote', true),
                 'unpromote' => __('Unpromote', true),
-                'delete' => __('Delete', true),
+                //'delete' => __('Delete', true),
             ),
             'empty' => true,
         ));
