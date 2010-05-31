@@ -838,6 +838,24 @@ class CroogoComponent extends Object {
         return $pluginData;
     }
 /**
+ * Check if plugin is dependent on any other plugin.
+ * If yes, check if that plugin is available in plugins directory.
+ *
+ * @param  string $plugin plugin alias (underscrored)
+ * @return boolean
+ */
+    public function checkPluginDependency($plugin = null) {
+        $pluginData = $this->getPluginData($plugin);
+        if (isset($pluginData['dependencies']['plugins']) && is_array($pluginData['dependencies']['plugins'])) {
+            foreach ($pluginData['dependencies']['plugins'] AS $p) {
+                if (!is_dir(APP.'plugins'.DS.$p)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+/**
  * Get hooks
  *
  * @param  string $plugin plugin alias (underscored)

@@ -32,6 +32,11 @@ class ExampleHookComponent extends Object {
 
         // Main menu: add an Example link
         $mainMenu = $controller->Link->Menu->findByAlias('main');
+        $controller->Link->Behaviors->attach('Tree', array(
+            'scope' => array(
+                'Link.menu_id' => $mainMenu['Menu']['id'],
+            ),
+        ));
         $controller->Link->save(array(
             'menu_id' => $mainMenu['Menu']['id'],
             'title' => 'Example',
@@ -60,6 +65,11 @@ class ExampleHookComponent extends Object {
             'conditions' => array(
                 'Menu.alias' => 'main',
                 'Link.link' => 'plugin:example/controller:example/action:index',
+            ),
+        ));
+        $controller->Link->Behaviors->attach('Tree', array(
+            'scope' => array(
+                'Link.menu_id' => $link['Link']['menu_id'],
             ),
         ));
         if (isset($link['Link']['id'])) {

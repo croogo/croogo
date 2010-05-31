@@ -60,13 +60,24 @@ class ExtensionsHooksController extends AppController {
             $hookType = 'Component';
         }
         $hookTitle = str_replace($hookType, '', $hook);
+        if (strstr($hook, '.')) {
+            $hookE = explode('.', $hook);
+            $plugin = $hookE['0'];
+        } else {
+            $plugin = false;
+        }
 
         // toggle hook
         $status = 0;
         if (!Configure::read($configureKey)) {
-            $this->Setting->write($configureKey, $hookTitle);
-            $status = 1;
-            $this->Session->setFlash(sprintf(__('%s activated successfully.', true), $hook));
+            if (!$plugin || $this->Croogo->checkPluginDependency($plugin)) {
+                $this->Setting->write($configureKey, $hookTitle);
+                $status = 1;
+                $this->Session->setFlash(sprintf(__('%s activated successfully.', true), $hook));
+            } else {
+                $this->Session->setFlash(sprintf(__('%s could not be activated. Plugin depends on other plugins that are not available.', true), $hook));
+                $this->redirect(array('action' => 'index'));
+            }
         } else {
             $hookItems = explode(',', Configure::read($configureKey));
             if(array_search($hookTitle, $hookItems) !== false) {
@@ -77,11 +88,16 @@ class ExtensionsHooksController extends AppController {
                 $status = 0;
                 $this->Session->setFlash(sprintf(__('%s deactivated successfully.', true), $hook));
             } else {
-                $hookItems[] = $hookTitle;
-                $hookItems = implode(',', $hookItems);
-                $this->Setting->write($configureKey, $hookItems);
-                $status = 1;
-                $this->Session->setFlash(sprintf(__('%s activated successfully.', true), $hook));
+                if (!$plugin || $this->Croogo->checkPluginDependency($plugin)) {
+                    $hookItems[] = $hookTitle;
+                    $hookItems = implode(',', $hookItems);
+                    $this->Setting->write($configureKey, $hookItems);
+                    $status = 1;
+                    $this->Session->setFlash(sprintf(__('%s activated successfully.', true), $hook));
+                } else {
+                    $this->Session->setFlash(sprintf(__('%s could not be activated. Plugin depends on other plugins that are not available.', true), $hook));
+                    $this->redirect(array('action' => 'index'));
+                }
             }
         }
 
