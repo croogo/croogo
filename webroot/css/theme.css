@@ -9,9 +9,15 @@ a:hover { color: #ff4b33; text-decoration: none; }
 p { line-height: 25px; font-size: 15px; }
 p + p { margin: 20px 0px 0px 0px; }
 
+pre { margin: 10px 0px 10px 0px; padding: 20px; font-family: Courier, monospace; }
+
 h1 { font-family: Arial, sans-serif; font-size: 34px; color: #222; }
 h2 { font-family: Arial, sans-serif; font-size: 40px; margin: 0px 0px 20px 0px; color: #222; }
 h3 { font-family: Arial, sans-serif; font-size: 20px; margin: 0px; color: #222; }
+
+blockquote { margin: 20px 0px 20px 0px; padding: 20px 50px 20px 50px; }
+blockquote p { font-size: 16px; font-style: italic; }
+blockquote p cite { text-align: right; display: block; }
 
 div.paging { text-align: center; margin: 30px; }
 
@@ -93,8 +99,10 @@ ul.sf-menu li li li.sfHover ul { left:10em; top:0; }
 .node .node-info a,
 .node .node-more-info a { font-style: normal; }
 .node .node-body { margin: 20px 0px 15px 0px; }
-.node .node-body ul { margin: 10px; }
+.node .node-body ul,
+.node .node-body ol { margin: 10px; }
 .node .node-body ul li { list-style-type: disc; margin: 0px 0px 0px 25px; }
+.node .node-body ol li { list-style-type: decimal; margin: 0px 0px 0px 25px; }
 
 .comments h3 { margin: 50px 0px 10px 0px; }
 .comments .comment { border-top: 1px solid #f7f7f7; }
