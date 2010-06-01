@@ -389,6 +389,8 @@ class LayoutHelper extends AppHelper {
  */
     public function vocabulary($vocabularyAlias, $options = array()) {
         $_options = array(
+            'tag' => 'ul',
+            'tagAttributes' => array(),
             'type' => null,
             'link' => true,
             'plugin' => false,
@@ -399,13 +401,52 @@ class LayoutHelper extends AppHelper {
         $options = array_merge($_options, $options);
 
         $output = '';
-        if (isset($this->View->viewVars['vocabularies_for_layout'][$vocabularyAlias]['list'])) {
+        if (isset($this->View->viewVars['vocabularies_for_layout'][$vocabularyAlias]['threaded'])) {
             $vocabulary = $this->View->viewVars['vocabularies_for_layout'][$vocabularyAlias];
             $output .= $this->View->element($options['element'], array(
                 'vocabulary' => $vocabulary,
                 'options' => $options,
             ));
         }
+        return $output;
+    }
+/**
+ * Nested Terms
+ *
+ * @param array   $terms
+ * @param array   $options
+ * @param integer $depth
+ */
+    public function nestedTerms($terms, $options, $depth = 1) {
+        $_options = array();
+        $options = array_merge($_options, $options);
+
+        $output = '';
+        foreach ($terms AS $term) {
+            if ($options['link']) {
+                $termAttr = array(
+                    'id' => 'term-' . $term['Term']['id'],
+                );
+                $termOutput = $this->Html->link($term['Term']['title'], array(
+                    'plugin' => $options['plugin'],
+                    'controller' => $options['controller'],
+                    'action' => $options['action'],
+                    'type' => $options['type'],
+                    'slug' => $term['Term']['slug'],
+                ), $termAttr);
+            } else {
+                $termOutput = $term['Term']['title'];
+            }
+            if (isset($term['children']) && count($term['children']) > 0) {
+                $termOutput .= $this->nestedTerms($term['children'], $options, $depth + 1);
+            }
+            $termOutput = $this->Html->tag('li', $termOutput);
+            $output .= $termOutput;
+        }
+        if ($output != null) {
+            $output = $this->Html->tag($options['tag'], $output, $options['tagAttributes']);
+        }
+
         return $output;
     }
 /**

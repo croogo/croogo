@@ -35,6 +35,7 @@ class Taxonomy extends AppModel {
                 'croogo_nodes_',
             ),
         ),
+        'Containable',
     );
 /**
  * Model associations: belongsTo

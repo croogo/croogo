@@ -331,35 +331,23 @@ class CroogoComponent extends Object {
                 ),
                 'recursive' => '-1',
             ));
-
             if (isset($vocabulary['Vocabulary']['id'])) {
-                $tree = $this->controller->Node->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array(
-                    'key' => 'id',
-                    'value' => 'title',
-                    'cache' => array(
-                        'prefix' => 'nodes_taxonomy_' . $vocabulary['Vocabulary']['alias'],
-                        'config' => 'croogo_vocabularies',
-                    ),
-                ));
-                $termIds = array_keys($tree);
-                $terms = $this->controller->Node->Taxonomy->Term->find('list', array(
+                $threaded = $this->controller->Node->Taxonomy->find('threaded', array(
                     'conditions' => array(
-                        'Term.id' => $termIds,
+                        'Taxonomy.vocabulary_id' => $vocabulary['Vocabulary']['id'],
                     ),
-                    'fields' => array(
-                        'Term.slug',
-                        'Term.title',
+                    'contain' => array(
+                        'Term',
                     ),
-                    'order' => 'Term.slug ASC',
                     'cache' => array(
-                        'name' => 'croogo_vocabularies_'.$vocabulary['Vocabulary']['id'].'_terms',
+                        'name' => 'croogo_vocabulary_threaded_'.$vocabularyAlias,
                         'config' => 'croogo_vocabularies',
                     ),
-                    'recursive' => '-1',
+                    'order' => 'Taxonomy.lft ASC',
                 ));
                 $this->vocabularies_for_layout[$vocabularyAlias] = array();
                 $this->vocabularies_for_layout[$vocabularyAlias]['Vocabulary'] = $vocabulary['Vocabulary'];
-                $this->vocabularies_for_layout[$vocabularyAlias]['list'] = $terms;
+                $this->vocabularies_for_layout[$vocabularyAlias]['threaded'] = $threaded;
             }
         }
     }
