@@ -24,12 +24,13 @@ class TranslateHookComponent extends Object {
             'excerpt' => 'excerptTranslation',
             'body' => 'bodyTranslation',
         ),
-        'Link' => array(
-            'title' => 'titleTranslation',
-        ),
         'Block' => array(
             'title' => 'titleTranslation',
             'body' => 'bodyTranslation',
+        ),
+        'Link' => array(
+            'title' => 'titleTranslation',
+            'description' => 'descriptionTranslation',
         ),
     );
 /**
