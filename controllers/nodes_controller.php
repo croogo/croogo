@@ -334,7 +334,7 @@ class NodesController extends AppController {
             $this->params['named']['type'] = 'node';
         }
 
-        $this->paginate['Node']['order'] = 'Node.id DESC';
+        $this->paginate['Node']['order'] = 'Node.created DESC';
         $this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
         $this->paginate['Node']['conditions'] = array(
             'Node.status' => 1,
@@ -420,7 +420,7 @@ class NodesController extends AppController {
             $this->params['named']['type'] = 'node';
         }
 
-        $this->paginate['Node']['order'] = 'Node.id DESC';
+        $this->paginate['Node']['order'] = 'Node.created DESC';
         $this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
         $this->paginate['Node']['conditions'] = array(
             'Node.status' => 1,
@@ -492,7 +492,7 @@ class NodesController extends AppController {
     public function promoted() {
         $this->set('title_for_layout', __('Nodes', true));
 
-        $this->paginate['Node']['order'] = 'Node.id DESC';
+        $this->paginate['Node']['order'] = 'Node.created DESC';
         $this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
         $this->paginate['Node']['conditions'] = array(
             'Node.status' => 1,
@@ -557,7 +557,7 @@ class NodesController extends AppController {
 
         App::import('Core', 'Sanitize');
         $q = Sanitize::clean($this->params['named']['q']);
-        $this->paginate['Node']['order'] = 'Node.id DESC';
+        $this->paginate['Node']['order'] = 'Node.created DESC';
         $this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
         $this->paginate['Node']['conditions'] = array(
             'Node.status' => 1,
