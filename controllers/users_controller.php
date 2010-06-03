@@ -41,6 +41,9 @@ class UsersController extends AppController {
 
         if (in_array($this->params['action'], array('admin_login', 'login'))) {
             $field = $this->Auth->fields['username'];
+            if (!empty($this->data) && empty($this->data['User'][$field])) {
+                $this->redirect(array('action' => $this->params['action']));
+            }
             $cacheName = 'auth_failed_' . $this->data['User'][$field];
             if (Cache::read($cacheName, 'users_login') >= Configure::read('User.failed_login_limit')) {
                 $this->Session->setFlash(__('You have reached maximum limit for failed login attempts. Please try again after a few minutes.', true));
