@@ -382,17 +382,18 @@ class CroogoComponent extends Object {
         $_nodeOptions = array(
             'find' => 'all',
             'conditions' => array(
+                'Node.status' => 1,
                 'OR' => array(
                     'Node.visibility_roles' => '',
                     'Node.visibility_roles LIKE' => '%"' . $this->roleId . '"%',
                 ),
             ),
-            'order' => 'Node.id DESC',
+            'order' => 'Node.created DESC',
             'limit' => 5,
         );
 
         foreach ($nodes AS $alias => $options) {
-            $options = array_merge($_nodeOptions, $options);
+            $options = Set::merge($_nodeOptions, $options);
             $options['limit'] = str_replace('"', '', $options['limit']);
             $node = $this->controller->Node->find($options['find'], array(
                 'conditions' => $options['conditions'],
