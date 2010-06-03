@@ -104,6 +104,6 @@ $(document).ready(function() {
     Admin.stickyFooter();
 
 	$('.tabs').tabs();
-    $('a.tooltip').tipsy({gravity: 's',html:false});
+    $('a.tooltip').tipsy({gravity: 's', html: false});
     $('textarea').not('.file-content, #NodeBody').elastic();
 });
