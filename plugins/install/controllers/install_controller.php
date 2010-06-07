@@ -36,7 +36,25 @@ class InstallController extends InstallAppController {
  * @access public
  */
     public $components = null;
-
+/**
+ * Default configuration
+ *
+ * @var array
+ * @access public
+ */
+    public $defaultConfig = array(
+        'name' => 'default',
+        'driver'=> 'mysql',
+        'persistent'=> false,
+        'host'=> 'localhost',
+        'login'=> 'root',
+        'password'=> '',
+        'database'=> 'croogo',
+        'schema'=> null,
+        'prefix'=> null,
+        'encoding' => 'UTF8',
+        'port' => null,
+    );
 /**
  * beforeFilter
  *
@@ -92,12 +110,18 @@ class InstallController extends InstallAppController {
         if (empty($this->data)) {
             return;
 	}
-        if (!mysql_connect($this->data['Install']['host'], $this->data['Install']['login'], $this->data['Install']['password'])) {
-            $this->Session->setFlash(__('Could not connect to database.', true));
-            return;
+
+        @App::import('Model', 'ConnectionManager');
+        $config = $this->defaultConfig;
+        foreach ($this->data['Install'] AS $key => $value) {
+            if (isset($this->data['Install'][$key])) {
+                $config[$key] = $value;
+            }
         }
-        if (!mysql_select_db($this->data['Install']['database'])) {
-            $this->Session->setFlash(__('Could not select database.', true));
+        @ConnectionManager::create('default', $config);
+        $db = ConnectionManager::getDataSource('default');
+        if (!$db->isConnected()) {
+            $this->Session->setFlash(__('Could not connect to database.', true));
             return;
         }
 
@@ -105,6 +129,10 @@ class InstallController extends InstallAppController {
         App::import('Core', 'File');
         $file = new File(CONFIGS.'database.php', true);
         $content = $file->read();
+
+        foreach ($config AS $configKey => $configValue) {
+            $content = str_replace('{default_' . $configKey . '}', $configValue, $content);
+        }
 
         $content = str_replace('{default_host}', $this->data['Install']['host'], $content);
         $content = str_replace('{default_login}', $this->data['Install']['login'], $content);
@@ -126,17 +154,43 @@ class InstallController extends InstallAppController {
  */
     public function data() {
         $this->_check();
-        $this->set('title_for_layout', __('Step 2: Run SQL', true));
+        $this->set('title_for_layout', __('Step 2: Build database', true));
         if (isset($this->params['named']['run'])) {
             App::import('Core', 'File');
+            App::import('Model', 'CakeSchema', false);
             App::import('Model', 'ConnectionManager');
-            $db = ConnectionManager::getDataSource('default');
 
+            $db = ConnectionManager::getDataSource('default');
             if(!$db->isConnected()) {
                 $this->Session->setFlash(__('Could not connect to database.', true));
             } else {
-                $this->__executeSQLScript($db, CONFIGS.'sql'.DS.'croogo.sql');
-                $this->__executeSQLScript($db, CONFIGS.'sql'.DS.'croogo_data.sql');
+                $schema =& new CakeSchema(array('name'=>'app'));
+                $schema = $schema->load();
+                foreach($schema->tables as $table => $fields) {
+                    $create = $db->createSchema($schema, $table);
+                    $db->execute($create);
+                }
+
+                $dataObjects = App::objects('class', APP . 'config' . DS . 'schema' . DS . 'data' . DS);
+                foreach ($dataObjects as $data) {
+                    App::import('class', $data, false, APP . 'config' . DS . 'schema' . DS . 'data' . DS);
+                    $classVars = get_class_vars($data);
+                    $modelAlias = substr($data, 0, -4);
+                    $table = $classVars['table'];
+                    $records = $classVars['records'];
+                    App::import('Model', 'Model', false);
+                    $modelObject =& new Model(array(
+                        'name' => $modelAlias,
+                        'table' => $table,
+                        'ds' => 'default',
+                    ));
+                    if (is_array($records) && count($records) > 0) {
+                        foreach($records as $record) {
+                            $modelObject->create($record);
+                            $modelObject->save();
+                        }
+                    }
+                }
 
                 $this->redirect(array('action' => 'finish'));
             }

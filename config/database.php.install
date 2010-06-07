@@ -79,14 +79,15 @@
 class DATABASE_CONFIG {
 
 	var $default = array(
-		'driver' => 'mysql',
+		'driver' => '{default_driver}',
 		'persistent' => false,
 		'host' => '{default_host}',
 		'login' => '{default_login}',
 		'password' => '{default_password}',
 		'database' => '{default_database}',
-		'prefix' => '',
-		'encoding' => 'UTF8',
+		'prefix' => '{default_prefix}',
+		'encoding' => '{default_encoding}',
+		'port' => '{default_port}',
 	);
 
 	var $test = array(
