@@ -241,23 +241,5 @@ class InstallController extends InstallAppController {
             $User->saveField('password', Security::hash('password', null, $salt));
 	}
 
-/**
- * Execute SQL file
- *
- * @link   http://cakebaker.42dh.com/2007/04/16/writing-an-installer-for-your-cakephp-application/
- * @param  object $db Database
- * @param  string $fileName sql file
- * @return void
- */
-    private function __executeSQLScript($db, $fileName) {
-        $statements = file_get_contents($fileName);
-        $statements = explode(';', $statements);
-
-        foreach ($statements as $statement) {
-            if (trim($statement) != '') {
-                $db->query($statement);
-            }
-        }
-    }
 }
 ?>
