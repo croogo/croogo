@@ -16,7 +16,7 @@
             'label' => __('Content', true),
             'value' => $content,
             'type' => 'textarea',
-            'class' => 'file-content',
+            'class' => 'content',
         ));
     ?>
     </fieldset>

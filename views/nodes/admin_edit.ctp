@@ -21,7 +21,7 @@
                     echo $form->input('title');
                     echo $form->input('slug');
                     echo $form->input('excerpt');
-                    echo $form->input('body');
+                    echo $form->input('body', array('class' => 'content'));
                 ?>
                 </div>
 

@@ -19,7 +19,7 @@
                     echo $form->input('title');
                     echo $form->input('slug', array('class' => 'slug'));
                     echo $form->input('excerpt');
-                    echo $form->input('body');
+                    echo $form->input('body', array('class' => 'content'));
                 ?>
                 </div>
 

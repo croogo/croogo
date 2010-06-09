@@ -21,7 +21,7 @@
         ));
     ?>
     <fieldset>
-    <?php echo $form->input('Filemanager.content', array('type' => 'textarea', 'value' => $content, 'class' => 'file-content')); ?>
+    <?php echo $form->input('Filemanager.content', array('type' => 'textarea', 'value' => $content, 'class' => 'content')); ?>
     </fieldset>
     <?php echo $form->end("Submit"); ?>
 </div>

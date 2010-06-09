@@ -105,5 +105,5 @@ $(document).ready(function() {
 
 	$('.tabs').tabs();
     $('a.tooltip').tipsy({gravity: 's', html: false});
-    $('textarea').not('.file-content, #NodeBody').elastic();
+    $('textarea').not('.content').elastic();
 });
