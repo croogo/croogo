@@ -51,13 +51,13 @@ class AclActionsController extends AclAppController {
         }
 
         $conditions = array(
-            'model' => null,
+            //'model' => null,
         );
         $controllersAco = $this->Acl->Aco->find('first', array(
             'conditions' => array(
                 'alias' => 'controllers',
                 'parent_id' => null,
-                'model' => null,
+                //'model' => null,
                 'foreign_key' => null,
             ),
         ));
@@ -88,13 +88,13 @@ class AclActionsController extends AclAppController {
         }
 
         $conditions = array(
-            'model' => null,
+            //'model' => null,
         );
         $controllersAco = $this->Acl->Aco->find('first', array(
             'conditions' => array(
                 'alias' => 'controllers',
                 'parent_id' => null,
-                'model' => null,
+                //'model' => null,
                 'foreign_key' => null,
             ),
         ));
