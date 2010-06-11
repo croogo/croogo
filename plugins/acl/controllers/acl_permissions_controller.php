@@ -37,7 +37,7 @@ class AclPermissionsController extends AclAppController {
 
         $acoConditions = array(
             'parent_id !=' => null,
-            'model' => null,
+            //'model' => null,
             'foreign_key' => null,
             'alias !=' => null,
         );

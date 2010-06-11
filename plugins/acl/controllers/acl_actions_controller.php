@@ -21,7 +21,7 @@ class AclActionsController extends AclAppController {
 
         $conditions = array(
             'parent_id !=' => null,
-            'model' => null,
+            //'model' => null,
             'foreign_key' => null,
             'alias !=' => null,
         );
