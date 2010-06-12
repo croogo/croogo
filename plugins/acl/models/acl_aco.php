@@ -1,10 +1,11 @@
 <?php
 class AclAco extends AppModel {
 
-	var $name = 'AclAco';
-    var $useTable = 'acos';
+    public $name = 'AclAco';
 
-    var $acsAs = array('Tree');
+    public $useTable = 'acos';
+
+    public $actsAs = array('Tree');
 
 }
 ?>
