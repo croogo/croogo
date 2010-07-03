@@ -46,8 +46,7 @@ class LayoutHelper extends AppHelper {
  */
     public function __construct($options = array()) {
         $this->View =& ClassRegistry::getObject('view');
-        $this->__loadHooks();
-
+        $this->loadHooks();
         return parent::__construct($options);
     }
 /**
@@ -55,30 +54,13 @@ class LayoutHelper extends AppHelper {
  *
  * @return void
  */
-    private function __loadHooks() {
-        if (Configure::read('Hook.helpers')) {
-            // Set hooks
-            $hooks = Configure::read('Hook.helpers');
-            $hooksE = explode(',', $hooks);
-            foreach ($hooksE AS $hook) {
-                if (strstr($hook, '.')) {
-                    $hookE = explode('.', $hook);
-                    $plugin = $hookE['0'];
-                    $hookHelper = $hookE['1'];
-                    $filePath = APP.'plugins'.DS.Inflector::underscore($plugin).DS.'views'.DS.'helpers'.DS.Inflector::underscore($hookHelper).'.php';
-                } else {
-                    $plugin = null;
-                    $filePath = APP.'views'.DS.'helpers'.DS.Inflector::underscore($hook).'.php';
-                }
-
-                if (file_exists($filePath)) {
+    public function loadHooks() {
+        if (is_array(Configure::read('Hook.helpers'))) {
+            foreach (Configure::read('Hook.helpers') AS $hook) {
+                if (App::import('Helper', $hook)) {
                     $this->hooks[] = $hook;
+                    $this->helpers[] = $hook;
                 }
-            }
-
-            // Set hooks as helpers
-            foreach ($this->hooks AS $hook) {
-                $this->helpers[] = $hook;
             }
         }
     }
@@ -630,13 +612,14 @@ class LayoutHelper extends AppHelper {
         $options = array_merge($_options, $options);
 
         $output = '';
-        if (Configure::read('Admin.rowActions')) {
-            foreach (Configure::read('Admin.rowActions') AS $action => $link) {
+        $rowActions = Configure::read('Admin.rowActions.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
+        if (is_array($rowActions)) {
+            foreach ($rowActions AS $title => $link) {
                 if ($output != '') {
                     $output .= ' ';
                 }
                 $link = $this->linkStringToArray(str_replace(':id', $id, $link));
-                $output .= $this->Html->link($action, $link);
+                $output .= $this->Html->link($title, $link);
             }
         }
         return $output;

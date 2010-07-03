@@ -21,6 +21,39 @@ class AppModel extends Model {
  */
     public $useCache = true;
 /**
+ * Hook behaviors
+ *
+ * @var array
+ * @access public
+ */
+    public $hooks = array();
+/**
+ * Constructor
+ *
+ * @param mixed  $id    Set this ID for this model on startup, can also be an array of options, see above.
+ * @param string $table Name of database table to use.
+ * @param string $ds    DataSource connection name.
+ */
+    public function __construct($id = false, $table = null, $ds = null) {
+        $this->loadHooks();
+        parent::__construct($id, $table, $ds);
+    }
+/**
+ * Load hooks as behaviors
+ *
+ * @return void
+ */
+    public function loadHooks() {
+        if (is_array(Configure::read('Hook.behaviors.' . $this->name))) {
+            foreach (Configure::read('Hook.behaviors.' . $this->name) AS $hook => $config) {
+                if (App::import('Behavior', $hook)) {
+                    $this->hook[$hook] = $config;
+                    $this->actsAs[$hook] = $config;
+                }
+            }
+        }
+    }
+/**
  * Override find function to use caching
  *
  * Caching can be done either by unique names,

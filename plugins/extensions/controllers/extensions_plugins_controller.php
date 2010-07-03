@@ -163,5 +163,45 @@ class ExtensionsPluginsController extends AppController {
         $this->redirect(array('action' => 'index'));
     }
 
+    public function admin_toggle($plugin = null) {
+        if (!$plugin) {
+            $this->Session->setFlash(__('Invalid plugin', true));
+            $this->redirect(array('action' => 'index'));
+        }
+        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+            $blackHoleCallback = $this->Security->blackHoleCallback;
+            $this->$blackHoleCallback();
+        }
+        $className = Inflector::camelize($plugin) . 'Activation';
+        if (App::import('Plugin', $className)) {
+            $pluginActivation = new $className;
+        }
+        
+        if ($this->Croogo->pluginIsActive($plugin)) {
+            if (!isset($pluginActivation) || 
+                (isset($pluginActivation) && method_exists($pluginActivation, 'beforeDeactivation') && $pluginActivation->beforeDeactivation($this))) {
+                $this->Croogo->removePluginBootstrap($plugin);
+                if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
+                    $pluginActivation->onDeactivation($this);
+                }
+                $this->Session->setFlash(__('Plugin deactivated successfully.', true));
+            } else {
+                $this->Session->setFlash(__('Plugin could not be deactivated. Please, try again.', true));
+            }
+        } else {
+            if (!isset($pluginActivation) ||
+                (isset($pluginActivation) && method_exists($pluginActivation, 'beforeActivation') && $pluginActivation->beforeActivation($this))) {
+                $this->Croogo->addPluginBootstrap($plugin);
+                if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
+                    $pluginActivation->onActivation($this);
+                }
+                $this->Session->setFlash(__('Plugin activated successfully.', true));
+            } else {
+                $this->Session->setFlash(__('Plugin could not be activated. Please, try again.', true));
+            }
+        }
+        $this->redirect(array('action' => 'index'));
+    }
+
 }
 ?>

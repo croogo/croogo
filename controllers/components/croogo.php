@@ -22,13 +22,6 @@ class CroogoComponent extends Object {
         'Session',
     );
 /**
- * Hook components
- *
- * @var array
- * @access public
- */
-    public $hooks = array();
-/**
  * Role ID of current user
  *
  * Default is 3 (public)
@@ -84,46 +77,6 @@ class CroogoComponent extends Object {
         'nodes' => array(),
     );
 /**
- * Constructor
- *
- * @param array $options options
- * @access public
- */
-    public function __construct($options = array()) {
-        $this->__loadHooks();
-
-        return parent::__construct($options);
-    }
-/**
- * Load hooks as components
- *
- * @return void
- */
-    private function __loadHooks() {
-        if (Configure::read('Hook.components')) {
-            // Set hooks
-            $hooks = Configure::read('Hook.components');
-            $hooksE = explode(',', $hooks);
-
-            foreach ($hooksE AS $hook) {
-                if (strstr($hook, '.')) {
-                    $hookE = explode('.', $hook);
-                    $plugin = $hookE['0'];
-                    $hookComponent = $hookE['1'];
-                    $filePath = APP.'plugins'.DS.Inflector::underscore($plugin).DS.'controllers'.DS.'components'.DS.Inflector::underscore($hookComponent).'.php';
-                } else {
-                    $plugin = null;
-                    $filePath = APP.'controllers'.DS.'components'.DS.Inflector::underscore($hook).'.php';
-                }
-
-                if (file_exists($filePath)) {
-                    $this->hooks[] = $hook;
-                    $this->components[] = $hook;
-                }
-            }
-        }
-    }
-/**
  * Startup
  *
  * @param object $controller instance of controller
@@ -136,7 +89,6 @@ class CroogoComponent extends Object {
         if ($this->Session->check('Auth.User.id')) {
             $this->roleId = $this->Session->read('Auth.User.role_id');
         }
-        $this->hook('startup');
 
         if (!isset($this->controller->params['admin']) && !isset($this->controller->params['requested'])) {
             $this->blocks();
@@ -459,8 +411,6 @@ class CroogoComponent extends Object {
             $appInstance =& App::getInstance();
             array_unshift($appInstance->helpers, APP.'views'.DS.'themed'.DS.$controller->theme.DS.'helpers'.DS);
         }
-
-        $this->hook('beforeRender');
     }
 /**
  * Extracts parameters from 'filter' named parameter.
@@ -613,53 +563,6 @@ class CroogoComponent extends Object {
         }
     }
 /**
- * Loads plugin's routes.php file
- *
- * @param string $plugin Plugin name (underscored)
- * @return void
- */
-    public function addPluginRoutes($plugin) {
-        $hookRoutes = Configure::read('Hook.routes');
-        if (!$hookRoutes) {
-            $plugins = array();
-        } else {
-            $plugins = explode(',', $hookRoutes);
-        }
-        
-        if (array_search($plugin, $plugins) !== false) {
-            $plugins = $hookRoutes;
-        } else {
-            $plugins[] = $plugin;
-            $plugins = implode(',', $plugins);
-        }
-        $this->controller->Setting->write('Hook.routes', $plugins);
-    }
-/**
- * Plugin name will be removed from Hook.routes
- *
- * @param string $plugin Plugin name (underscored)
- * @return void
- */
-    public function removePluginRoutes($plugin) {
-        $hookRoutes = Configure::read('Hook.routes');
-        if (!$hookRoutes) {
-            return;
-        }
-
-        $plugins = explode(',', $hookRoutes);
-        if (array_search($plugin, $plugins) !== false) {
-            $k = array_search($plugin, $plugins);
-            unset($plugins[$k]);
-        }
-
-        if (count($plugins) == 0) {
-            $plugins = '';
-        } else {
-            $plugins = implode(',', $plugins);
-        }
-        $this->controller->Setting->write('Hook.routes', $plugins);
-    }
-/**
  * Loads plugin's bootstrap.php file
  *
  * @param string $plugin Plugin name (underscored)
@@ -757,16 +660,19 @@ class CroogoComponent extends Object {
  * @return array
  */
     public function getThemes() {
-        $themes = array('default');
+        $themes = array(
+            'default' => 'default',
+        );
         $this->folder = new Folder;
-        $this->folder->path = APP . 'views' . DS . 'themed';
-        $themeFolders = $this->folder->read();
-        foreach ($themeFolders[0] AS $themeFolder) {
-            if (substr($themeFolder, 0, 1) != '.') {
-                $this->folder->path = APP . 'views' . DS . 'themed' . DS . $themeFolder . DS . 'webroot';
+        $viewPaths = App::path('views');
+        foreach ($viewPaths AS $viewPath) {
+            $this->folder->path = $viewPath . 'themed';
+            $themeFolders = $this->folder->read();
+            foreach ($themeFolders['0'] AS $themeFolder) {
+                $this->folder->path = $viewPath . 'themed' . DS . $themeFolder . DS . 'webroot';
                 $themeFolderContent = $this->folder->read();
-                if (in_array('theme.yml', $themeFolderContent[1])) {
-                    $themes[] = $themeFolder;
+                if (in_array('theme.yml', $themeFolderContent['1'])) {
+                    $themes[$themeFolder] = $themeFolder;
                 }
             }
         }
@@ -782,8 +688,14 @@ class CroogoComponent extends Object {
         if ($alias == null || $alias == 'default') {
             $ymlLocation = WWW_ROOT . 'theme.yml';
         } else {
-            $ymlLocation = APP . 'views' . DS . 'themed' . DS . $alias . DS . 'webroot' . DS . 'theme.yml';
-            if (!file_exists($ymlLocation)) {
+            $viewPaths = App::path('views');
+            foreach ($viewPaths AS $viewPath) {
+                if (file_exists($viewPath . 'themed' . DS . $alias . DS . 'webroot' . DS . 'theme.yml')) {
+                    $ymlLocation = $viewPath . 'themed' . DS . $alias . DS . 'webroot' . DS . 'theme.yml';
+                    continue;
+                }
+            }
+            if (!isset($ymlLocation)) {
                 $ymlLocation = WWW_ROOT . 'theme.yml';
             }
         }
@@ -798,14 +710,17 @@ class CroogoComponent extends Object {
     public function getPlugins() {
         $plugins = array();
         $this->folder = new Folder;
-        $this->folder->path = APP . 'plugins';
-        $pluginFolders = $this->folder->read();
-        foreach ($pluginFolders[0] AS $pluginFolder) {
-            if (substr($pluginFolder, 0, 1) != '.') {
-                $this->folder->path = APP . 'plugins' . DS . $pluginFolder . DS . 'webroot';
-                $pluginFolderContent = $this->folder->read();
-                if (in_array('plugin.yml', $pluginFolderContent[1])) {
-                    $plugins[] = $pluginFolder;
+        $pluginPaths = App::path('plugins');
+        foreach ($pluginPaths AS $pluginPath) {
+            $this->folder->path = $pluginPath;
+            $pluginFolders = $this->folder->read();
+            foreach ($pluginFolders[0] AS $pluginFolder) {
+                if (substr($pluginFolder, 0, 1) != '.') {
+                    $this->folder->path = $pluginPath . $pluginFolder . DS . 'config';
+                    $pluginFolderContent = $this->folder->read();
+                    if (in_array('plugin.yml', $pluginFolderContent[1])) {
+                        $plugins[$pluginFolder] = $pluginFolder;
+                    }
                 }
             }
         }
@@ -818,13 +733,16 @@ class CroogoComponent extends Object {
  * @return array
  */
     public function getPluginData($alias = null) {
-        $ymlLocation = APP . 'plugins' . DS . $alias . DS . 'webroot' . DS . 'plugin.yml';
-        if (!file_exists($ymlLocation)) {
-            return false;
+        $pluginPaths = App::path('plugins');
+        foreach ($pluginPaths AS $pluginPath) {
+            $ymlLocation = $pluginPath . $alias . DS . 'config' . DS . 'plugin.yml';
+            if (file_exists($ymlLocation)) {
+                $pluginData = Spyc::YAMLLoad(file_get_contents($ymlLocation));
+                $pluginData['active'] = $this->pluginIsActive($alias);
+                return $pluginData;
+            }
         }
-        $pluginData = Spyc::YAMLLoad(file_get_contents($ymlLocation));
-        $pluginData['active'] = $this->pluginIsActive($alias);
-        return $pluginData;
+        return false;
     }
 /**
  * Check if plugin is dependent on any other plugin.
@@ -835,9 +753,16 @@ class CroogoComponent extends Object {
  */
     public function checkPluginDependency($plugin = null) {
         $pluginData = $this->getPluginData($plugin);
+        $pluginPaths = App::path('plugins');
         if (isset($pluginData['dependencies']['plugins']) && is_array($pluginData['dependencies']['plugins'])) {
             foreach ($pluginData['dependencies']['plugins'] AS $p) {
-                if (!is_dir(APP.'plugins'.DS.$p)) {
+                $check = false;
+                foreach ($pluginPaths AS $pluginPath) {
+                    if (is_dir($pluginPath . $p)) {
+                        $check = true;
+                    }
+                }
+                if (!$check) {
                     return false;
                 }
             }
@@ -845,130 +770,26 @@ class CroogoComponent extends Object {
         return true;
     }
 /**
- * Get hooks
- *
- * @param  string $plugin plugin alias (underscored)
- * @return array
- */
-    public function getHooks($plugin = null) {
-        $hooks = array();
-        if (!$plugin) {
-            $location = APP;
-        } else {
-            $location = APP.'plugins'.DS.$plugin.DS;
-        }
-
-        // Components
-        $hookComponents = glob($location.'controllers/components/*_hook.php');
-        if (is_array($hookComponents) && count($hookComponents) > 0) {
-            foreach ($hookComponents AS $hookComponent) {
-                $hookE = explode('/', $hookComponent);
-                $hookN = count($hookE) - 1;
-                $hookFile = $hookE[$hookN];
-                $hookName = Inflector::camelize(str_replace('.php', '', $hookFile));
-                $hookTitle = $plugin ? Inflector::camelize($plugin).'.'.$hookName : $hookName;
-                $hooks[] = array(
-                    'name' => $hookName,
-                    'type' => 'Component',
-                    'plugin' => $plugin,
-                    'path' => $hookComponent,
-                    'status' => $this->hookIsActive($hookTitle, 'Component'),
-                );
-            }
-        }
-
-        // Helpers
-        $hookHelpers = glob($location.'views/helpers/*_hook.php');
-        if (is_array($hookHelpers) && count($hookHelpers) > 0) {
-            foreach ($hookHelpers AS $hookHelper) {
-                $hookE = explode('/', $hookHelper);
-                $hookN = count($hookE) - 1;
-                $hookFile = $hookE[$hookN];
-                $hookName = Inflector::camelize(str_replace('.php', '', $hookFile));
-                $hookTitle = $plugin ? Inflector::camelize($plugin).'.'.$hookName : $hookName;
-                $hooks[] = array(
-                    'name' => $hookName,
-                    'type' => 'Helper',
-                    'plugin' => $plugin,
-                    'path' => $hookHelper,
-                    'status' => $this->hookIsActive($hookTitle, 'Helper'),
-                );
-            }
-        }
-
-        return $hooks;
-    }
-/**
- * Check if hook is active
- *
- * @param string $hook     for e.g., Example.ExampleHook
- * @param string $hookType Component or Helper
- * @return boolean
- */
-    public function hookIsActive($hook, $hookType) {
-        if ($hookType == 'Component') {
-            $activeHooks = Configure::read('Hook.components');
-        } else {
-            $activeHooks = Configure::read('Hook.helpers');
-        }
-        $activeHooks = explode(',', $activeHooks);
-        if (array_search($hook, $activeHooks) !== false) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-/**
- * Check if plugin has any of it's hooks active
+ * Check if plugin is active
  *
  * @param  string $plugin Plugin name (underscored)
  * @return boolean
  */
     public function pluginIsActive($plugin) {
         $configureKeys = array(
-            'Hook.components',
-            'Hook.helpers',
+            'Hook.bootstraps',
         );
 
         foreach ($configureKeys AS $configureKey) {
             $hooks = explode(',', Configure::read($configureKey));
             foreach ($hooks AS $hook) {
-                if (strstr($hook, Inflector::camelize($plugin).'.') !== false) {
+                if ($hook == $plugin) {
                     return true;
                 }
             }
         }
 
         return false;
-    }
-/**
- * Hook
- *
- * Used for calling hook methods from other HookComponents
- *
- * @param string $methodName
- * @return void
- */
-    public function hook($methodName) {
-        foreach ($this->hooks AS $hook) {
-            if (strstr($hook, '.')) {
-                $hookE = explode('.', $hook);
-                $hook = $hookE['1'];
-            }
-
-            if (method_exists($this->{$hook}, $methodName)) {
-                $this->{$hook}->$methodName($this->controller);
-            }
-        }
-    }
-/**
- * Shutdown
- *
- * @param object $controller instance of controller
- * @return void
- */
-    public function shutdown(&$controller) {
-        $this->hook('shutdown');
     }
 
 }

@@ -40,15 +40,13 @@ class CroogoRouter {
  */
     public function plugins() {
         $pluginRoutes = Configure::read('Hook.routes');
-        if (!$pluginRoutes) {
+        if (!$pluginRoutes || !is_array(Configure::read('Hook.routes'))) {
             return;
         }
 
-        $plugins = explode(',', $pluginRoutes);
+        $plugins = Configure::read('Hook.routes');
         foreach ($plugins AS $plugin) {
-            if (file_exists(APP.'plugins'.DS.$plugin.DS.'config'.DS.'routes.php')) {
-                require_once APP.'plugins'.DS.$plugin.DS.'config'.DS.'routes.php';
-            }
+            App::import('Plugin', Inflector::camelize($plugin) . 'Routes');
         }
     }
 }

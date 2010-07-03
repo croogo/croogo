@@ -14,16 +14,32 @@
             __('Alias', true),
             __('Name', true),
             __('Description', true),
-            __('Hooks Active', true),
+            __('Active', true),
             __('Actions', true),
         ));
         echo $tableHeaders;
 
         $rows = array();
         foreach ($plugins AS $pluginAlias => $pluginData) {
-            if (in_array($pluginAlias, $corePlugins)) continue;
+            if (in_array($pluginAlias, $corePlugins)) {
+                continue;
+            }
+
+            if ($pluginData['active']) {
+                $icon = 'tick.png';
+                $toggleText = __('Deactivate', true);
+            } else {
+                $icon = 'cross.png';
+                $toggleText = __('Activate', true);
+            }
+            $iconImage = $html->image('icons/'.$icon);
 
             $actions  = '';
+            $actions .= ' ' . $html->link($toggleText, array(
+                'action' => 'toggle',
+                $pluginAlias,
+                'token' => $this->params['_Token']['key'],
+            ));
             $actions .= ' ' . $html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $pluginAlias,
@@ -35,7 +51,13 @@
                 $pluginAlias,
                 $pluginData['name'],
                 $pluginData['description'],
-                $layout->status($pluginData['active']),
+                $html->link($iconImage, array(
+                    'action' => 'toggle',
+                    $pluginAlias,
+                    'token' => $this->params['_Token']['key'],
+                ), array(
+                    'escape' => false,
+                )),
                 $actions,
             );
         }

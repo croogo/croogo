@@ -79,6 +79,37 @@ class AppController extends Controller {
  */
     public $theme;
 /**
+ * Hook components
+ *
+ * @var array
+ * @access public
+ */
+    public $hooks = array();
+/**
+ * Constructor
+ *
+ * @access public
+ */
+    public function __construct() {
+        $this->loadHooks();
+        parent::__construct();
+    }
+/**
+ * Load hooks as components
+ *
+ * @return void
+ */
+    public function loadHooks() {
+        if (is_array(Configure::read('Hook.components'))) {
+            foreach (Configure::read('Hook.components') AS $hook) {
+                if (App::import('Component', $hook)) {
+                    $this->hooks[] = $hook;
+                    $this->components[] = $hook;
+                }
+            }
+        }
+    }
+/**
  * beforeFilter
  *
  * @return void
