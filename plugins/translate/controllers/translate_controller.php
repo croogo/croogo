@@ -40,7 +40,7 @@ class TranslateController extends TranslateAppController {
             ));
         }
 
-        if (!isset($this->Croogo->TranslateHook->translateModels[$modelAlias])) {
+        if (!is_array(Configure::read('Translate.models.' . $modelAlias))) {
             $this->Session->setFlash(__('Invalid model.', true));
             $this->redirect(array(
                 'plugin' => null,
@@ -50,7 +50,7 @@ class TranslateController extends TranslateAppController {
         }
 
         $model =& ClassRegistry::init($modelAlias);
-        $model->Behaviors->attach('CroogoTranslate', $this->Croogo->TranslateHook->translateModels[$modelAlias]);
+        //$model->Behaviors->attach('CroogoTranslate', $this->Croogo->TranslateHook->translateModels[$modelAlias]);
         $record = $model->findById($id);
         if (!isset($record[$modelAlias]['id'])) {
             $this->Session->setFlash(__('Invalid record.', true));
@@ -110,7 +110,6 @@ class TranslateController extends TranslateAppController {
         }
 
         $model =& ClassRegistry::init($modelAlias);
-        $model->Behaviors->attach('CroogoTranslate', $this->Croogo->TranslateHook->translateModels[$modelAlias]);
         $record = $model->findById($id);
         if (!isset($record[$modelAlias]['id'])) {
             $this->Session->setFlash(__('Invalid record.', true));
@@ -157,7 +156,7 @@ class TranslateController extends TranslateAppController {
             $this->$blackHoleCallback();
         }
 
-        if (!isset($this->Croogo->TranslateHook->translateModels[$modelAlias])) {
+        if (!is_array(Configure::read('Translate.models.' . $modelAlias))) {
             $this->Session->setFlash(__('Invalid model.', true));
             $this->redirect(array(
                 'plugin' => null,
@@ -167,7 +166,6 @@ class TranslateController extends TranslateAppController {
         }
 
         $model =& ClassRegistry::init($modelAlias);
-        $model->Behaviors->attach('CroogoTranslate', $this->Croogo->TranslateHook->translateModels[$modelAlias]);
         $record = $model->findById($id);
         if (!isset($record[$modelAlias]['id'])) {
             $this->Session->setFlash(__('Invalid record.', true));

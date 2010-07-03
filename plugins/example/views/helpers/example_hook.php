@@ -23,22 +23,6 @@ class ExampleHookHelper extends AppHelper {
         'Layout',
     );
 /**
- * Called after activating the hook in ExtensionsHooksController::admin_toggle()
- *
- * @param object $controller Controller
- * @return void
- */
-    public function onActivate(&$controller) {
-    }
-/**
- * Called after deactivating the hook in ExtensionsHooksController::admin_toggle()
- *
- * @param object $controller Controller
- * @return void
- */
-    public function onDeactivate(&$controller) {
-    }
-/**
  * Before render callback. Called before the view file is rendered.
  *
  * @return void
@@ -74,7 +58,7 @@ class ExampleHookHelper extends AppHelper {
  */
     public function afterSetNode() {
         // field values can be changed from hooks
-        $this->Layout->setNodeField('title', $this->Layout->node('title') . ' [Modified by ExampleHook]');
+        $this->Layout->setNodeField('title', $this->Layout->node('title') . ' [Modified by ExampleHookHelper]');
     }
 /**
  * Called before LayoutHelper::nodeInfo()
