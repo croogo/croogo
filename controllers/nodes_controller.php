@@ -709,7 +709,7 @@ class NodesController extends AppController {
 
         if ($this->theme) {
             foreach ($views AS $view) {
-                $viewPath = APP.'views'.DS.'themed'.DS.$this->theme.DS.Inflector::slug($this->name).DS.$view.$this->ext;
+                $viewPath = APP.'views'.DS.'themed'.DS.$this->theme.DS.Inflector::underscore($this->name).DS.$view.$this->ext;
                 if (file_exists($viewPath)) {
                     return $this->render($view);
                 }
