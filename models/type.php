@@ -28,6 +28,8 @@ class Type extends AppModel {
     public $actsAs = array(
         'Cached' => array(
             'prefix' => array(
+                'croogo_types_',
+                'types_',
                 'type_',
             ),
         ),
