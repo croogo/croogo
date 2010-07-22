@@ -179,6 +179,11 @@ class LinksController extends AppController {
                 'action' => 'index',
             ));
         }
+        $this->Link->Behaviors->attach('Tree', array(
+            'scope' => array(
+                'Link.menu_id' => $link['Link']['menu_id'],
+            ),
+        ));
         if( $this->Link->moveup($id, $step) ) {
             $this->Session->setFlash(__('Moved up successfully', true));
         } else {
@@ -199,6 +204,11 @@ class LinksController extends AppController {
                 'action' => 'index',
             ));
         }
+        $this->Link->Behaviors->attach('Tree', array(
+            'scope' => array(
+                'Link.menu_id' => $link['Link']['menu_id'],
+            ),
+        ));
         if( $this->Link->movedown($id, $step) ) {
             $this->Session->setFlash(__('Moved down successfully', true));
         } else {
