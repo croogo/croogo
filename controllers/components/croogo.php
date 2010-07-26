@@ -271,8 +271,15 @@ class CroogoComponent extends Object {
  * @return void
  */
     public function vocabularies() {
-        $vocabularies = $this->blocksData['vocabularies'];
-        foreach ($vocabularies AS $vocabularyAlias => $options) {
+        $vocabularies = array();
+        $themeData = $this->getThemeData(Configure::read('Site.theme'));
+        if (isset($themeData['vocabularies']) && is_array($themeData['vocabularies'])) {
+            $vocabularies = Set::merge($vocabularies, $themeData['vocabularies']);
+        }
+        $vocabularies = Set::merge($vocabularies, array_keys($this->blocksData['vocabularies']));
+        $vocabularies = array_unique($vocabularies);
+        debug($vocabularies);
+        foreach ($vocabularies AS $vocabularyAlias) {
             $vocabulary = $this->controller->Node->Taxonomy->Vocabulary->find('first', array(
                 'conditions' => array(
                     'Vocabulary.alias' => $vocabularyAlias,
