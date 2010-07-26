@@ -278,7 +278,6 @@ class CroogoComponent extends Object {
         }
         $vocabularies = Set::merge($vocabularies, array_keys($this->blocksData['vocabularies']));
         $vocabularies = array_unique($vocabularies);
-        debug($vocabularies);
         foreach ($vocabularies AS $vocabularyAlias) {
             $vocabulary = $this->controller->Node->Taxonomy->Vocabulary->find('first', array(
                 'conditions' => array(
