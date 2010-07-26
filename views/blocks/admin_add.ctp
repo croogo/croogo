@@ -7,6 +7,7 @@
                     <li><a href="#block-basic"><span><?php __('Block'); ?></span></a></li>
                     <li><a href="#block-access"><span><?php __('Access'); ?></span></a></li>
                     <li><a href="#block-visibilities"><span><?php __('Visibilities'); ?></span></a></li>
+                    <?php echo $layout->adminTabs(); ?>
                 </ul>
 
                 <div id="block-basic">
@@ -40,6 +41,7 @@
                         ));*/
                     ?>
                 </div>
+                <?php echo $layout->adminTabs(); ?>
             </div>
         </fieldset>
     <?php echo $form->end('Submit');?>

@@ -12,6 +12,7 @@
                     <li><a href="#node-meta"><span><?php __('Custom fields'); ?></span></a></li>
                     <li><a href="#node-access"><span><?php __('Access'); ?></span></a></li>
                     <li><a href="#node-publishing"><span><?php __('Publishing'); ?></span></a></li>
+                    <?php echo $layout->adminTabs(); ?>
                 </ul>
 
                 <div id="node-main">
@@ -88,6 +89,7 @@
                     echo $form->input('created');
                 ?>
                 </div>
+                <?php echo $layout->adminTabs(); ?>
                 <div class="clear">&nbsp;</div>
             </div>
         </fieldset>

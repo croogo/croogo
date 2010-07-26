@@ -625,6 +625,43 @@ class LayoutHelper extends AppHelper {
         return $output;
     }
 /**
+ * Show tabs
+ *
+ * @return string
+ */
+    public function adminTabs($show = null) {
+        if (!isset($this->adminTabs)) {
+            $this->adminTabs = false;
+        }
+
+        $output = '';
+        $tabs = Configure::read('Admin.tabs.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
+        if (is_array($tabs)) {
+            foreach ($tabs AS $title => $element) {
+                $domId = strtolower(Inflector::singularize($this->params['controller'])) . '-' . strtolower($title);
+                if ($this->adminTabs) {
+                    if (strstr($element, '.')) {
+                        $elementE = explode('.', $element);
+                        $plugin = $elementE['0'];
+                        $element = $elementE['1'];
+                    } else {
+                        $plugin = null;
+                    }
+                    $output .= '<div id="' . $domId . '">';
+                    $output .= $this->View->element($element, array(
+                        'plugin' => $plugin,
+                    ));
+                    $output .= '</div>';
+                } else {
+                    $output .= '<li><a href="#' . $domId . '">' . $title . '</a></li>';
+                }
+            }
+        }
+
+        $this->adminTabs = true;
+        return $output;
+    }
+/**
  * Set current Node
  *
  * @param array $node

@@ -9,6 +9,7 @@
                     <li><a href="#type-format"><?php __('Format'); ?></a></li>
                     <li><a href="#type-comments"><?php __('Comments'); ?></a></li>
                     <li><a href="#type-params"><?php __('Params'); ?></a></li>
+                    <?php echo $layout->adminTabs(); ?>
                 </ul>
 
                 <div id="type">
@@ -76,6 +77,7 @@
                     echo $form->input('Type.params');
                 ?>
                 </div>
+                <?php echo $layout->adminTabs(); ?>
             </div>
         </fieldset>
     <?php echo $form->end('Submit');?>

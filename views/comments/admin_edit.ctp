@@ -7,6 +7,7 @@
                 <ul>
                     <li><a href="#comment-main"><?php __('Comment'); ?></a></li>
                     <li><a href="#comment-contact"><?php __('Contact Info'); ?></a></li>
+                    <?php echo $layout->adminTabs(); ?>
                 </ul>
 
                 <div id="comment-main">
@@ -26,6 +27,7 @@
                     echo $form->input('ip', array('disabled' => 'disabled'));
                 ?>
                 </div>
+                <?php echo $layout->adminTabs(); ?>
             </div>
         </fieldset>
     <?php echo $form->end('Submit');?>

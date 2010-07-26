@@ -37,4 +37,14 @@
  * an extra link called 'Example' will be placed under 'Actions' column.
  */
     Croogo::hookAdminRowAction('Nodes/admin_index', 'Example', 'plugin:example/controller:example/action:index/:id');
+/**
+ * Admin tab
+ *
+ * When adding/editing Content (Nodes),
+ * an extra tab with title 'Example' will be shown with markup generated from the plugin's admin_tab_node element.
+ *
+ * Useful for adding form extra form fields if necessary.
+ */
+    Croogo::hookAdminTab('Nodes/admin_add', 'Example', 'example.admin_tab_node');
+    Croogo::hookAdminTab('Nodes/admin_edit', 'Example', 'example.admin_tab_node');
 ?>

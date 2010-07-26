@@ -10,6 +10,7 @@
             <div class="tabs">
                 <ul>
                     <li><span><a href="#term-basic"><?php __('Term'); ?></a></span></li>
+                    <?php echo $layout->adminTabs(); ?>
                 </ul>
 
                 <div id="term-basic">
@@ -23,6 +24,7 @@
                     echo $form->input('description');
                 ?>
                 </div>
+                <?php echo $layout->adminTabs(); ?>
             </div>
         </fieldset>
     <?php echo $form->end('Submit');?>

@@ -105,5 +105,23 @@ class Croogo {
         $rowActions[$action][$title] = $url;
         Configure::write('Admin.rowActions', $rowActions);
     }
+/**
+ * Admin tab
+ *
+ * @param string $action  in the format ControllerName/action_name
+ * @param string $title   Tab title
+ * @param string $element element name, like plugin_name.element_name
+ */
+    public function hookAdminTab($action, $title, $element) {
+        $tabs = Configure::read('Admin.tabs');
+        if (!is_array($tabs)) {
+            $tabs = array();
+        }
+        if (!isset($tabs[$action])) {
+            $tabs[$action] = array();
+        }
+        $tabs[$action][$title] = $element;
+        Configure::write('Admin.tabs', $tabs);
+    }
 }
 ?>

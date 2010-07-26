@@ -7,6 +7,7 @@
                     <li><a href="#contact-basic"><?php __('Contact'); ?></a></li>
                     <li><a href="#contact-details"><?php __('Details'); ?></a></li>
                     <li><a href="#contact-message"><?php __('Message'); ?></a></li>
+                    <?php echo $layout->adminTabs(); ?>
                 </ul>
 
                 <div id="contact-basic">
@@ -62,6 +63,7 @@
                     ?>
                     </p>
                 </div>
+                <?php echo $layout->adminTabs(); ?>
             </div>
         </fieldset>
     <?php echo $form->end('Submit');?>

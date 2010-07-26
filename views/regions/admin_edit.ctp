@@ -3,10 +3,20 @@
 
     <?php echo $form->create('Region');?>
         <fieldset>
-        <?php
-            echo $form->input('id');
-            echo $form->input('title');
-        ?>
+            <div class="tabs">
+                <ul>
+                    <li><a href="#region-main"><span><?php __('Region'); ?></span></a></li>
+                    <?php echo $layout->adminTabs(); ?>
+                </ul>
+
+                <div id="region-main">
+                <?php
+                    echo $form->input('id');
+                    echo $form->input('title');
+                ?>
+                </div>
+                <?php echo $layout->adminTabs(); ?>
+            </div>
         </fieldset>
     <?php echo $form->end('Submit');?>
 </div>

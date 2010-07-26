@@ -7,6 +7,7 @@
                     <li><a href="#link-basic"><span><?php __('Link'); ?></span></a></li>
                     <li><a href="#link-access"><span><?php __('Access'); ?></span></a></li>
                     <li><a href="#link-misc"><span><?php __('Misc.'); ?></span></a></li>
+                    <?php echo $layout->adminTabs(); ?>
                 </ul>
 
                 <div id="link-basic">
@@ -46,7 +47,7 @@
                         echo $form->input('params');
                     ?>
                 </div>
-
+                <?php echo $layout->adminTabs(); ?>
             </div>
         </fieldset>
     <?php echo $form->end('Submit');?>

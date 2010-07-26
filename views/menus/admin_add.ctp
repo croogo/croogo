@@ -6,6 +6,7 @@
                 <ul>
                     <li><a href="#menu-basic"><span><?php __('Menu'); ?></span></a></li>
                     <li><a href="#menu-misc"><span><?php __('Misc.'); ?></span></a></li>
+                    <?php echo $layout->adminTabs(); ?>
                 </ul>
 
                 <div id="menu-basic">
@@ -22,7 +23,7 @@
                         echo $form->input('params');
                     ?>
                 </div>
-
+                <?php echo $layout->adminTabs(); ?>
             </div>
         </fieldset>
     <?php echo $form->end('Submit');?>
