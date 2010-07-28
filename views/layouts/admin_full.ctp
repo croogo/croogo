@@ -58,9 +58,10 @@
             <div class="clear">&nbsp;</div>
         </div>
 
-        <?php echo $this->element('admin/footer'); ?>
-
+        <div class="push"></div>
     </div>
+
+    <?php echo $this->element('admin/footer'); ?>
 
     </body>
 </html>

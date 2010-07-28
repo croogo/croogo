@@ -1,7 +1,8 @@
 /**
  * Basic
  */
-body { font: 13px "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; background-color: #f9f9f9; line-height:1.5; }
+* { margin: 0;}
+html, body { font: 13px "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; background-color: #f9f9f9; line-height:1.5; height: 100%; }
 
 a { color: #21759B; }
 a:hover { color: #D54E21; }
@@ -21,6 +22,8 @@ h3 { font-family: Arial, sans-serif; color: #464646; font-size: 16px; font-weigh
 .notice a,
 .message a { color: #817134; }
 .success a { color: #529214; }
+
+#wrapper { min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -50px; }
 
 
 /**
@@ -193,6 +196,7 @@ div.extensions-themes .available-themes .actions a { margin-right: 10px; }
 #footer { width: auto; text-align: center; background-color: #464646; padding: 15px 0px 15px 0px; color: #ccc; height: 20px; }
 #footer a { color: #ccc; text-decoration: none; }
 #footer a:hover { text-decoration: underline; }
+.push { height: 50px; }
 
 
 /**
