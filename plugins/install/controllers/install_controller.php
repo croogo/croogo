@@ -121,7 +121,7 @@ class InstallController extends InstallAppController {
         @ConnectionManager::create('default', $config);
         $db = ConnectionManager::getDataSource('default');
         if (!$db->isConnected()) {
-            $this->Session->setFlash(__('Could not connect to database.', true));
+            $this->Session->setFlash(__('Could not connect to database.', true), 'default', array('class' => 'error'));
             return;
         }
 
@@ -142,7 +142,7 @@ class InstallController extends InstallAppController {
         if($file->write($content) ) {
             return $this->redirect(array('action' => 'data'));
         } else {
-            $this->Session->setFlash(__('Could not write database.php file.', true));
+            $this->Session->setFlash(__('Could not write database.php file.', true), 'default', array('class' => 'error'));
         }
     }
 
@@ -162,7 +162,7 @@ class InstallController extends InstallAppController {
 
             $db = ConnectionManager::getDataSource('default');
             if(!$db->isConnected()) {
-                $this->Session->setFlash(__('Could not connect to database.', true));
+                $this->Session->setFlash(__('Could not connect to database.', true), 'default', array('class' => 'error'));
             } else {
                 $schema =& new CakeSchema(array('name'=>'app'));
                 $schema = $schema->load();
@@ -212,10 +212,10 @@ class InstallController extends InstallAppController {
                 App::import('Core', 'Folder');
                 $this->folder = new Folder;
                 if ($this->folder->delete(APP.'plugins'.DS.'install')) {
-                    $this->Session->setFlash(__('Installation files deleted successfully.', true));
+                    $this->Session->setFlash(__('Installation files deleted successfully.', true), 'default', array('class' => 'success'));
                     $this->redirect('/');
                 } else {
-                    return $this->Session->setFlash(__('Could not delete installation files.', true));
+                    return $this->Session->setFlash(__('Could not delete installation files.', true), 'default', array('class' => 'error'));
                 }
             }
             $this->_check();

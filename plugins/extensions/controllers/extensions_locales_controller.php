@@ -50,7 +50,7 @@ class ExtensionsLocalesController extends AppController {
 
     public function admin_activate($locale = null) {
         if ($locale == null || !is_dir(APP . 'locale' . DS . $locale)) {
-            $this->Session->setFlash(__('Locale does not exist.', true));
+            $this->Session->setFlash(__('Locale does not exist.', true), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
         }
         if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
@@ -65,9 +65,9 @@ class ExtensionsLocalesController extends AppController {
             "Configure::write('Config.language', '" . $locale . "');", $content);
         if ($file->write($content)) {
             $this->Setting->write('Site.locale', $locale);
-            $this->Session->setFlash(__("Locale '{$locale}' set as default", true));
+            $this->Session->setFlash(__("Locale '{$locale}' set as default", true), 'default', array('class' => 'success'));
         } else {
-            $this->Session->setFlash(__('Could not edit croogo_bootstrap.php file.', true));
+            $this->Session->setFlash(__('Could not edit croogo_bootstrap.php file.', true), 'default', array('class' => 'error'));
         }
         $this->redirect(array('action' => 'index'));
     }
@@ -99,12 +99,12 @@ class ExtensionsLocalesController extends AppController {
             zip_close($zip);
 
             if (!$locale) {
-                $this->Session->setFlash(__('Invalid locale.', true));
+                $this->Session->setFlash(__('Invalid locale.', true), 'default', array('class' => 'error'));
                 $this->redirect(array('action' => 'add'));
             }
 
             if (is_dir(APP . 'locale' . DS . $locale)) {
-                $this->Session->setFlash(__('Locale already exists.', true));
+                $this->Session->setFlash(__('Locale already exists.', true), 'default', array('class' => 'error'));
                 $this->redirect(array('action' => 'add'));
             }
 
@@ -148,12 +148,12 @@ class ExtensionsLocalesController extends AppController {
         $this->set('title_for_layout', sprintf(__('Edit locale: %s', true), $locale));
 
         if (!$locale) {
-            $this->Session->setFlash(__('Invalid locale.', true));
+            $this->Session->setFlash(__('Invalid locale.', true), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
         }
 
         if (!file_exists(APP . 'locale' . DS . $locale . DS . 'LC_MESSAGES' . DS . 'default.po')) {
-            $this->Session->setFlash(__('The file default.po does not exist.', true));
+            $this->Session->setFlash(__('The file default.po does not exist.', true), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
         }
 
@@ -163,7 +163,7 @@ class ExtensionsLocalesController extends AppController {
         if (!empty($this->data)) {
             // save
             if ($file->write($this->data['Locale']['content'])) {
-                $this->Session->setFlash(__('Locale updated successfully', true));
+                $this->Session->setFlash(__('Locale updated successfully', true), 'default', array('class' => 'success'));
                 $this->redirect(array('action' => 'index'));
             }
         }
@@ -173,7 +173,7 @@ class ExtensionsLocalesController extends AppController {
 
     public function admin_delete($locale = null) {
         if (!$locale) {
-            $this->Session->setFlash(__('Invalid locale', true));
+            $this->Session->setFlash(__('Invalid locale', true), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
         }
         if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
@@ -183,9 +183,9 @@ class ExtensionsLocalesController extends AppController {
 
         $folder =& new Folder;
         if ($folder->delete(APP . 'locale' . DS . $locale)) {
-            $this->Session->setFlash(__('Locale deleted successfully.', true));
+            $this->Session->setFlash(__('Locale deleted successfully.', true), 'default', array('class' => 'success'));
         } else {
-            $this->Session->setFlash(__('Local could not be deleted.', true));
+            $this->Session->setFlash(__('Local could not be deleted.', true), 'default', array('class' => 'error'));
         }
 
         $this->redirect(array('action' => 'index'));

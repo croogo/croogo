@@ -89,7 +89,7 @@ class ExtensionsPluginsController extends AppController {
             zip_close($zip);
 
             if (!$plugin) {
-                $this->Session->setFlash(__('Invalid plugin.', true));
+                $this->Session->setFlash(__('Invalid plugin.', true), 'default', array('class' => 'error'));
                 $this->redirect(array('action' => 'add'));
             }
 
@@ -99,7 +99,7 @@ class ExtensionsPluginsController extends AppController {
             }
 
             if (is_dir(APP . 'plugins' . DS . $pluginName)) {
-                $this->Session->setFlash(__('Plugin already exists.', true));
+                $this->Session->setFlash(__('Plugin already exists.', true), 'default', array('class' => 'error'));
                 $this->redirect(array('action' => 'add'));
             }
 
@@ -141,7 +141,7 @@ class ExtensionsPluginsController extends AppController {
 
     public function admin_delete($plugin = null) {
         if (!$plugin) {
-            $this->Session->setFlash(__('Invalid plugin', true));
+            $this->Session->setFlash(__('Invalid plugin', true), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
         }
         if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
@@ -149,15 +149,15 @@ class ExtensionsPluginsController extends AppController {
             $this->$blackHoleCallback();
         }
         if ($this->Croogo->pluginIsActive($plugin)) {
-            $this->Session->setFlash(__('You cannot delete a plugin that is currently active.', true));
+            $this->Session->setFlash(__('You cannot delete a plugin that is currently active.', true), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
         }
 
         $folder =& new Folder;
         if ($folder->delete(APP . 'plugins' . DS . $plugin)) {
-            $this->Session->setFlash(__('Plugin deleted successfully.', true));
+            $this->Session->setFlash(__('Plugin deleted successfully.', true), 'default', array('class' => 'success'));
         } else {
-            $this->Session->setFlash(__('Plugin could not be deleted.', true));
+            $this->Session->setFlash(__('Plugin could not be deleted.', true), 'default', array('class' => 'error'));
         }
 
         $this->redirect(array('action' => 'index'));
@@ -165,7 +165,7 @@ class ExtensionsPluginsController extends AppController {
 
     public function admin_toggle($plugin = null) {
         if (!$plugin) {
-            $this->Session->setFlash(__('Invalid plugin', true));
+            $this->Session->setFlash(__('Invalid plugin', true), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
         }
         if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
@@ -184,9 +184,9 @@ class ExtensionsPluginsController extends AppController {
                 if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
                     $pluginActivation->onDeactivation($this);
                 }
-                $this->Session->setFlash(__('Plugin deactivated successfully.', true));
+                $this->Session->setFlash(__('Plugin deactivated successfully.', true), 'default', array('class' => 'success'));
             } else {
-                $this->Session->setFlash(__('Plugin could not be deactivated. Please, try again.', true));
+                $this->Session->setFlash(__('Plugin could not be deactivated. Please, try again.', true), 'default', array('class' => 'error'));
             }
         } else {
             if (!isset($pluginActivation) ||
@@ -195,9 +195,9 @@ class ExtensionsPluginsController extends AppController {
                 if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
                     $pluginActivation->onActivation($this);
                 }
-                $this->Session->setFlash(__('Plugin activated successfully.', true));
+                $this->Session->setFlash(__('Plugin activated successfully.', true), 'default', array('class' => 'success'));
             } else {
-                $this->Session->setFlash(__('Plugin could not be activated. Please, try again.', true));
+                $this->Session->setFlash(__('Plugin could not be activated. Please, try again.', true), 'default', array('class' => 'error'));
             }
         }
         $this->redirect(array('action' => 'index'));
