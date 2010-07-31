@@ -51,7 +51,7 @@ class SettingsController extends AppController {
 
     public function admin_view($id = null) {
         if (!$id) {
-            $this->Session->setFlash(__('Invalid Setting.', true));
+            $this->Session->setFlash(__('Invalid Setting.', true), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
         $this->set('setting', $this->Setting->read(null, $id));
@@ -63,10 +63,10 @@ class SettingsController extends AppController {
         if (!empty($this->data)) {
             $this->Setting->create();
             if ($this->Setting->save($this->data)) {
-                $this->Session->setFlash(__('The Setting has been saved', true));
+                $this->Session->setFlash(__('The Setting has been saved', true), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
-                $this->Session->setFlash(__('The Setting could not be saved. Please, try again.', true));
+                $this->Session->setFlash(__('The Setting could not be saved. Please, try again.', true), 'default', array('class' => 'error'));
             }
         }
     }
@@ -75,15 +75,15 @@ class SettingsController extends AppController {
         $this->set('title_for_layout', __('Edit Setting', true));
 
         if (!$id && empty($this->data)) {
-            $this->Session->setFlash(__('Invalid Setting', true));
+            $this->Session->setFlash(__('Invalid Setting', true), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
         if (!empty($this->data)) {
             if ($this->Setting->save($this->data)) {
-                $this->Session->setFlash(__('The Setting has been saved', true));
+                $this->Session->setFlash(__('The Setting has been saved', true), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
-                $this->Session->setFlash(__('The Setting could not be saved. Please, try again.', true));
+                $this->Session->setFlash(__('The Setting could not be saved. Please, try again.', true), 'default', array('class' => 'error'));
             }
         }
         if (empty($this->data)) {
@@ -93,7 +93,7 @@ class SettingsController extends AppController {
 
     public function admin_delete($id = null) {
         if (!$id) {
-            $this->Session->setFlash(__('Invalid id for Setting', true));
+            $this->Session->setFlash(__('Invalid id for Setting', true), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
         if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
@@ -101,7 +101,7 @@ class SettingsController extends AppController {
             $this->$blackHoleCallback();
         }
         if ($this->Setting->delete($id)) {
-            $this->Session->setFlash(__('Setting deleted', true));
+            $this->Session->setFlash(__('Setting deleted', true), 'default', array('class' => 'success'));
             $this->redirect(array('action'=>'index'));
         }
     }
@@ -110,7 +110,7 @@ class SettingsController extends AppController {
         $this->set('title_for_layout', sprintf(__('Settings: %s', true), $prefix));
 
         if(!empty($this->data) && $this->Setting->saveAll($this->data['Setting'])) {
-            $this->Session->setFlash(__("Settings updated successfully", true));
+            $this->Session->setFlash(__("Settings updated successfully", true), 'default', array('class' => 'success'));
         }
 
         $settings = $this->Setting->find('all', array(
@@ -124,7 +124,7 @@ class SettingsController extends AppController {
         $this->set(compact('settings'));
 
         if( count($settings) == 0 ) {
-            $this->Session->setFlash(__("Invalid Setting key", true));
+            $this->Session->setFlash(__("Invalid Setting key", true), 'default', array('class' => 'error'));
         }
 
         $this->set("prefix", $prefix);
@@ -132,9 +132,9 @@ class SettingsController extends AppController {
 
     public function admin_moveup($id, $step = 1) {
         if( $this->Setting->moveup($id, $step) ) {
-            $this->Session->setFlash(__('Moved up successfully', true));
+            $this->Session->setFlash(__('Moved up successfully', true), 'default', array('class' => 'success'));
         } else {
-            $this->Session->setFlash(__('Could not move up', true));
+            $this->Session->setFlash(__('Could not move up', true), 'default', array('class' => 'error'));
         }
 
         $this->redirect(array('admin' => true, 'controller' => 'settings', 'action' => 'index'));
@@ -142,9 +142,9 @@ class SettingsController extends AppController {
 
     public function admin_movedown($id, $step = 1) {
         if( $this->Setting->movedown($id, $step) ) {
-            $this->Session->setFlash(__('Moved down successfully', true));
+            $this->Session->setFlash(__('Moved down successfully', true), 'default', array('class' => 'success'));
         } else {
-            $this->Session->setFlash(__('Could not move down', true));
+            $this->Session->setFlash(__('Could not move down', true), 'default', array('class' => 'error'));
         }
 
         $this->redirect(array('admin' => true, 'controller' => 'settings', 'action' => 'index'));

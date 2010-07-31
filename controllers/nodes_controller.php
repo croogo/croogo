@@ -138,10 +138,10 @@ class NodesController extends AppController {
             ));
             $this->data['Node']['visibility_roles'] = $this->Node->encodeData($this->data['Role']['Role']);
             if ($this->Node->saveWithMeta($this->data)) {
-                $this->Session->setFlash(sprintf(__('%s has been saved', true), $type['Type']['title']));
+                $this->Session->setFlash(sprintf(__('%s has been saved', true), $type['Type']['title']), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
-                $this->Session->setFlash(sprintf(__('%s could not be saved. Please, try again.', true), $type['Type']['title']));
+                $this->Session->setFlash(sprintf(__('%s could not be saved. Please, try again.', true), $type['Type']['title']), 'default', array('class' => 'error'));
             }
         } else {
             $this->data['Node']['user_id'] = $this->Session->read('Auth.User.id');
@@ -161,7 +161,7 @@ class NodesController extends AppController {
 
     public function admin_edit($id = null) {
         if (!$id && empty($this->data)) {
-            $this->Session->setFlash(__('Invalid content', true));
+            $this->Session->setFlash(__('Invalid content', true), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
         
@@ -170,7 +170,7 @@ class NodesController extends AppController {
         
         $type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
         if (!isset($type['Type']['alias'])) {
-            $this->Session->setFlash(__('Content type does not exist.', true));
+            $this->Session->setFlash(__('Content type does not exist.', true), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'create'));
         }
 
@@ -204,10 +204,10 @@ class NodesController extends AppController {
             ));
             $this->data['Node']['visibility_roles'] = $this->Node->encodeData($this->data['Role']['Role']);
             if ($this->Node->saveWithMeta($this->data)) {
-                $this->Session->setFlash(sprintf(__('%s has been saved', true), $type['Type']['title']));
+                $this->Session->setFlash(sprintf(__('%s has been saved', true), $type['Type']['title']), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
-                $this->Session->setFlash(sprintf(__('%s could not be saved. Please, try again.', true), $type['Type']['title']));
+                $this->Session->setFlash(sprintf(__('%s could not be saved. Please, try again.', true), $type['Type']['title']), 'default', array('class' => 'error'));
             }
         }
         if (empty($this->data)) {
@@ -261,13 +261,13 @@ class NodesController extends AppController {
             $this->Node->save($node);
         }
 
-        $this->Session->setFlash(__('Paths updated.', true));
+        $this->Session->setFlash(__('Paths updated.', true), 'default', array('class' => 'success'));
         $this->redirect(array('action' => 'index'));
     }
 
     public function admin_delete($id = null) {
         if (!$id) {
-            $this->Session->setFlash(__('Invalid id for Node', true));
+            $this->Session->setFlash(__('Invalid id for Node', true), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
         if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
@@ -275,7 +275,7 @@ class NodesController extends AppController {
             $this->$blackHoleCallback();
         }
         if ($this->Node->delete($id)) {
-            $this->Session->setFlash(__('Node deleted', true));
+            $this->Session->setFlash(__('Node deleted', true), 'default', array('class' => 'success'));
             $this->redirect(array('action'=>'index'));
         }
     }
@@ -303,27 +303,27 @@ class NodesController extends AppController {
         }
 
         if (count($ids) == 0 || $action == null) {
-            $this->Session->setFlash(__('No items selected.', true));
+            $this->Session->setFlash(__('No items selected.', true), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
         }
 
         if ($action == 'delete' &&
             $this->Node->deleteAll(array('Node.id' => $ids), true, true)) {
-            $this->Session->setFlash(__('Nodes deleted.', true));
+            $this->Session->setFlash(__('Nodes deleted.', true), 'default', array('class' => 'success'));
         } elseif ($action == 'publish' &&
             $this->Node->updateAll(array('Node.status' => 1), array('Node.id' => $ids))) {
-            $this->Session->setFlash(__('Nodes published', true));
+            $this->Session->setFlash(__('Nodes published', true), 'default', array('class' => 'success'));
         } elseif ($action == 'unpublish' &&
             $this->Node->updateAll(array('Node.status' => 0), array('Node.id' => $ids))) {
-            $this->Session->setFlash(__('Nodes unpublished', true));
+            $this->Session->setFlash(__('Nodes unpublished', true), 'default', array('class' => 'success'));
         } elseif ($action == 'promote' &&
             $this->Node->updateAll(array('Node.promote' => 1), array('Node.id' => $ids))) {
-            $this->Session->setFlash(__('Nodes promoted', true));
+            $this->Session->setFlash(__('Nodes promoted', true), 'default', array('class' => 'success'));
         } elseif ($action == 'unpromote' &&
             $this->Node->updateAll(array('Node.promote' => 0), array('Node.id' => $ids))) {
-            $this->Session->setFlash(__('Nodes unpromoted', true));
+            $this->Session->setFlash(__('Nodes unpromoted', true), 'default', array('class' => 'success'));
         } else {
-            $this->Session->setFlash(__('An error occurred.', true));
+            $this->Session->setFlash(__('An error occurred.', true), 'default', array('class' => 'error'));
         }
 
         $this->redirect(array('action' => 'index'));
@@ -362,7 +362,7 @@ class NodesController extends AppController {
                 ),
             ));
             if (!isset($type['Type']['id'])) {
-                $this->Session->setFlash(__('Invalid content type.', true));
+                $this->Session->setFlash(__('Invalid content type.', true), 'default', array('class' => 'error'));
                 $this->redirect('/');
             }
             if (isset($type['Params']['nodes_per_page'])) {
@@ -412,7 +412,7 @@ class NodesController extends AppController {
             ),
         ));
         if (!isset($term['Term']['id'])) {
-            $this->Session->setFlash(__('Invalid Term.', true));
+            $this->Session->setFlash(__('Invalid Term.', true), 'default', array('class' => 'error'));
             $this->redirect('/');
         }
 
@@ -449,7 +449,7 @@ class NodesController extends AppController {
                 ),
             ));
             if (!isset($type['Type']['id'])) {
-                $this->Session->setFlash(__('Invalid content type.', true));
+                $this->Session->setFlash(__('Invalid content type.', true), 'default', array('class' => 'error'));
                 $this->redirect('/');
             }
             if (isset($type['Params']['nodes_per_page'])) {
@@ -514,7 +514,7 @@ class NodesController extends AppController {
         if (isset($this->params['named']['type'])) {
             $type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($this->params['named']['type']);
             if (!isset($type['Type']['id'])) {
-                $this->Session->setFlash(__('Invalid content type.', true));
+                $this->Session->setFlash(__('Invalid content type.', true), 'default', array('class' => 'error'));
                 $this->redirect('/');
             }
             if (isset($type['Params']['nodes_per_page'])) {
@@ -589,7 +589,7 @@ class NodesController extends AppController {
         if ($typeAlias) {
             $type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
             if (!isset($type['Type']['id'])) {
-                $this->Session->setFlash(__('Invalid content type.', true));
+                $this->Session->setFlash(__('Invalid content type.', true), 'default', array('class' => 'error'));
                 $this->redirect('/');
             }
             if (isset($type['Params']['nodes_per_page'])) {
@@ -644,7 +644,7 @@ class NodesController extends AppController {
                 ),
             ));
         } elseif ($id == null) {
-            $this->Session->setFlash(__('Invalid content', true));
+            $this->Session->setFlash(__('Invalid content', true), 'default', array('class' => 'error'));
             $this->redirect('/');
         } else {
             $node = $this->Node->find('first', array(
@@ -672,7 +672,7 @@ class NodesController extends AppController {
         }
 
         if (!isset($node['Node']['id'])) {
-            $this->Session->setFlash(__('Invalid content', true));
+            $this->Session->setFlash(__('Invalid content', true), 'default', array('class' => 'error'));
             $this->redirect('/');
         }
 

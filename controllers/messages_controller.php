@@ -65,10 +65,10 @@ class MessagesController extends AppController {
         }
         if (!empty($this->data)) {
             if ($this->Message->save($this->data)) {
-                $this->Session->setFlash(__('The Message has been saved', true));
+                $this->Session->setFlash(__('The Message has been saved', true), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
-                $this->Session->setFlash(__('The Message could not be saved. Please, try again.', true));
+                $this->Session->setFlash(__('The Message could not be saved. Please, try again.', true), 'default', array('class' => 'error'));
             }
         }
         if (empty($this->data)) {
@@ -78,7 +78,7 @@ class MessagesController extends AppController {
 
     public function admin_delete($id = null) {
         if (!$id) {
-            $this->Session->setFlash(__('Invalid id for Message', true));
+            $this->Session->setFlash(__('Invalid id for Message', true), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
         if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
@@ -86,7 +86,7 @@ class MessagesController extends AppController {
             $this->$blackHoleCallback();
         }
         if ($this->Message->delete($id)) {
-            $this->Session->setFlash(__('Message deleted', true));
+            $this->Session->setFlash(__('Message deleted', true), 'default', array('class' => 'success'));
             $this->redirect(array('action'=>'index'));
         }
     }
@@ -101,21 +101,21 @@ class MessagesController extends AppController {
         }
 
         if (count($ids) == 0 || $action == null) {
-            $this->Session->setFlash(__('No items selected.', true));
+            $this->Session->setFlash(__('No items selected.', true), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
         }
 
         if ($action == 'delete' &&
             $this->Message->deleteAll(array('Message.id' => $ids), true, true)) {
-            $this->Session->setFlash(__('Messages deleted.', true));
+            $this->Session->setFlash(__('Messages deleted.', true), 'default', array('class' => 'success'));
         } elseif ($action == 'read' &&
             $this->Message->updateAll(array('Message.status' => 1), array('Message.id' => $ids))) {
-            $this->Session->setFlash(__('Messages marked as read', true));
+            $this->Session->setFlash(__('Messages marked as read', true), 'default', array('class' => 'success'));
         } elseif ($action == 'unread' &&
             $this->Message->updateAll(array('Message.status' => 0), array('Message.id' => $ids))) {
-            $this->Session->setFlash(__('Messages marked as unread', true));
+            $this->Session->setFlash(__('Messages marked as unread', true), 'default', array('class' => 'success'));
         } else {
-            $this->Session->setFlash(__('An error occurred.', true));
+            $this->Session->setFlash(__('An error occurred.', true), 'default', array('class' => 'error'));
         }
 
         $this->redirect(array('action' => 'index'));

@@ -89,7 +89,7 @@ class FilemanagerController extends AppController {
 
         if (!empty($this->data) ) {
             if( $this->file->write($this->data['Filemanager']['content']) ) {
-                $this->Session->setFlash(__('File saved successfully', true));
+                $this->Session->setFlash(__('File saved successfully', true), 'default', array('class' => 'success'));
             }
         }
 
@@ -112,7 +112,7 @@ class FilemanagerController extends AppController {
             is_uploaded_file($this->data['Filemanager']['file']['tmp_name'])) {
             $destination = $path.$this->data['Filemanager']['file']['name'];
             move_uploaded_file($this->data['Filemanager']['file']['tmp_name'], $destination);
-            $this->Session->setFlash(__('File uploaded successfully.', true));
+            $this->Session->setFlash(__('File uploaded successfully.', true), 'default', array('class' => 'success'));
             $redirectUrl = Router::url(array('controller' => 'filemanager', 'action' => 'browse'), true) . '?path=' . urlencode($path);
 
             $this->redirect($redirectUrl);
@@ -132,9 +132,9 @@ class FilemanagerController extends AppController {
         }
 
         if (file_exists($path) && unlink($path)) {
-            $this->Session->setFlash(__('File deleted', true));
+            $this->Session->setFlash(__('File deleted', true), 'default', array('class' => 'success'));
         } else {
-            $this->Session->setFlash(__('An error occured', true));
+            $this->Session->setFlash(__('An error occured', true), 'default', array('class' => 'error'));
         }
 
         if (isset($_SERVER['HTTP_REFERER'])) {
@@ -159,9 +159,9 @@ class FilemanagerController extends AppController {
         }
 
         if (is_dir($path) && rmdir($path)) {
-            $this->Session->setFlash(__('Directory deleted', true));
+            $this->Session->setFlash(__('Directory deleted', true), 'default', array('class' => 'success'));
         } else {
-            $this->Session->setFlash(__('An error occured', true));
+            $this->Session->setFlash(__('An error occured', true), 'default', array('class' => 'error'));
         }
 
         if (isset($_SERVER['HTTP_REFERER'])) {
@@ -203,11 +203,11 @@ class FilemanagerController extends AppController {
         if (!empty($this->data)) {
             $this->folder = new Folder;
             if ($this->folder->create($path . $this->data['Filemanager']['name'])) {
-                $this->Session->setFlash(__('Directory created successfully.', true));
+                $this->Session->setFlash(__('Directory created successfully.', true), 'default', array('class' => 'success'));
                 $redirectUrl = Router::url(array('controller' => 'filemanager', 'action' => 'browse'), true) . '?path=' . urlencode($path);
                 $this->redirect($redirectUrl);
             } else {
-                $this->Session->setFlash(__('An error occured', true));
+                $this->Session->setFlash(__('An error occured', true), 'default', array('class' => 'error'));
             }
         }
 
@@ -225,11 +225,11 @@ class FilemanagerController extends AppController {
 
         if (!empty($this->data)) {
             if (touch($path . $this->data['Filemanager']['name'])) {
-                $this->Session->setFlash(__('File created successfully.', true));
+                $this->Session->setFlash(__('File created successfully.', true), 'default', array('class' => 'success'));
                 $redirectUrl = Router::url(array('controller' => 'filemanager', 'action' => 'browse'), true) . '?path=' . urlencode($path);
                 $this->redirect($redirectUrl);
             } else {
-                $this->Session->setFlash(__('An error occured', true));
+                $this->Session->setFlash(__('An error occured', true), 'default', array('class' => 'error'));
             }
         }
 

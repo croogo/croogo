@@ -48,10 +48,10 @@ class TypesController extends AppController {
         if (!empty($this->data)) {
             $this->Type->create();
             if ($this->Type->save($this->data)) {
-                $this->Session->setFlash(__('The Type has been saved', true));
+                $this->Session->setFlash(__('The Type has been saved', true), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
-                $this->Session->setFlash(__('The Type could not be saved. Please, try again.', true));
+                $this->Session->setFlash(__('The Type could not be saved. Please, try again.', true), 'default', array('class' => 'error'));
             }
         }
 
@@ -63,15 +63,15 @@ class TypesController extends AppController {
         $this->set('title_for_layout', __('Edit Type', true));
 
         if (!$id && empty($this->data)) {
-            $this->Session->setFlash(__('Invalid Type', true));
+            $this->Session->setFlash(__('Invalid Type', true), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
         if (!empty($this->data)) {
             if ($this->Type->save($this->data)) {
-                $this->Session->setFlash(__('The Type has been saved', true));
+                $this->Session->setFlash(__('The Type has been saved', true), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
-                $this->Session->setFlash(__('The Type could not be saved. Please, try again.', true));
+                $this->Session->setFlash(__('The Type could not be saved. Please, try again.', true), 'default', array('class' => 'error'));
             }
         }
         if (empty($this->data)) {
@@ -84,7 +84,7 @@ class TypesController extends AppController {
 
     public function admin_delete($id = null) {
         if (!$id) {
-            $this->Session->setFlash(__('Invalid id for Type', true));
+            $this->Session->setFlash(__('Invalid id for Type', true), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
         if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
@@ -92,7 +92,7 @@ class TypesController extends AppController {
             $this->$blackHoleCallback();
         }
         if ($this->Type->delete($id)) {
-            $this->Session->setFlash(__('Type deleted', true));
+            $this->Session->setFlash(__('Type deleted', true), 'default', array('class' => 'success'));
             $this->redirect(array('action'=>'index'));
         }
     }
