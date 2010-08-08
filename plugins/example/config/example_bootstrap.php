@@ -14,9 +14,9 @@
 /**
  * Component
  *
- * This plugin's ExampleHook component will be loaded from AppController
+ * This plugin's ExampleHook component will be loaded in ALL controllers.
  */
-    Croogo::hookComponent('Example.ExampleHook');
+    Croogo::hookComponent('*', 'Example.ExampleHook');
 /**
  * Helper
  *

@@ -30,43 +30,28 @@ class Croogo {
  *
  * Component name is added to Hook.components key of Configure object.
  *
- * @param string $componentName Component name
+ * @param string $controllerName Controller Name
+ * @param string $componentName  Component name
  */
-    public function hookComponent($componentName) {
-        $hooks = Configure::read('Hook.components');
-        if (!$hooks || !is_array($hooks)) {
-            $hooks = array();
-        }
-        $hooks[] = $componentName;
-        Configure::write('Hook.components', $hooks);
+    public function hookComponent($controllerName, $componentName) {
+        self::hookControllerProperty($controllerName, 'components', array($componentName));
     }
 /**
  * Attaches Behavior to a Model whenever loaded.
- *
- * Information is stored in Hook.behaviors key of Configure object.
  *
  * @param string $modelName
  * @param string $behaviorName
  * @param array  $config
  */
     public function hookBehavior($modelName, $behaviorName, $config = array()) {
-        $hooks = Configure::read('Hook.behaviors');
-        if (!$hooks || !is_array($hooks)) {
-            $hooks = array();
-        }
-        if (!isset($hooks[$modelName])) {
-            $hooks[$modelName] = array(
-                $behaviorName => $config,
-            );
-        } else {
-            $hooks[$modelName][$behaviorName] = $config;
-        }
-        Configure::write('Hook.behaviors', $hooks);
+        self::hookModelProperty($modelName, 'actsAs', array($behaviorName => $config));
     }
 /**
  * Loads as a normal helper and calls all the extra callbacks supported in Croogo.
  *
  * Information is stored in Hook.helpers key of Configure object.
+ *
+ * These helpers are loaded inside LayoutHelper.
  *
  * @param string $helperName
  */
@@ -122,6 +107,82 @@ class Croogo {
         }
         $tabs[$action][$title] = $element;
         Configure::write('Admin.tabs', $tabs);
+    }
+/**
+ * Hook model property
+ *
+ * Useful when models need to be associated to another one, setting Behaviors, disabling cache, etc.
+ *
+ * @param string $modelName Model name (for e.g., Node)
+ * @param string $property  for e.g., actsAs
+ * @param string $value     array or string
+ */
+    public function hookModelProperty($modelName, $property, $value) {
+        $configKeyPrefix = 'Hook.model_properties';
+        self::__hookProperty($configKeyPrefix, $modelName, $property, $value);
+    }
+/**
+ * Hook controller property
+ *
+ * @param string $controllerName Controller name (for e.g., Nodes)
+ * @param string $property       for e.g., components
+ * @param string $value          array or string
+ */
+    public function hookControllerProperty($controllerName, $property, $value) {
+        $configKeyPrefix = 'Hook.controller_properties';
+        self::__hookProperty($configKeyPrefix, $controllerName, $property, $value);
+    }
+/**
+ * Hook property
+ *
+ * @param string $configKeyPrefix
+ * @param string $name
+ * @param string $property
+ * @param string $value
+ */
+    private function __hookProperty($configKeyPrefix, $name, $property, $value) {
+        $propertyValue = Configure::read($configKeyPrefix . '.' . $name . '.' . $property);
+        if (!is_array($propertyValue)) {
+            $propertyValue = null;
+        }
+        if (is_array($value)) {
+            if (is_array($propertyValue)) {
+                $propertyValue = Set::merge($propertyValue, $value);
+            } else {
+                $propertyValue = $value;
+            }
+        } else {
+            $propertyValue = $value;
+        }
+        Configure::write($configKeyPrefix . '.' . $name . '.' . $property, $propertyValue);
+    }
+/**
+ * Applies properties set from hooks to an object in __construct()
+ *
+ * @param string $configKey
+ */
+    public function applyHookProperties($configKey) {
+        $hookProperties = Configure::read($configKey . '.' . $this->name);
+        if (is_array(Configure::read($configKey . '.*'))) {
+            $hookProperties = Set::merge(Configure::read($configKey . '.*'), $hookProperties);
+        }
+        if (is_array($hookProperties)) {
+            foreach ($hookProperties AS $property => $value) {
+                if (!isset($this->$property)) {
+                    $this->$property = $value;
+                } else {
+                    if (is_array($this->$property)) {
+                        if (is_array($value)) {
+                            $this->$property = Set::merge($this->$property, $value);
+                        } else {
+                            $this->$property = $value;
+                        }
+                    } else {
+                        $this->$property = $value;
+                    }
+                }
+            }
+        }
     }
 }
 ?>
