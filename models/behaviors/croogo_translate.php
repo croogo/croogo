@@ -79,7 +79,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
         $this->settings[$model->alias] = array();
         $this->runtime[$model->alias] = array('fields' => array());
         $this->translateModel($model);
-        $this->translationFields = $config;
+        $this->translationFields[$model->alias] = $config;
         //return $this->bindTranslation($model, $config, false);
     }
 /**
@@ -101,10 +101,10 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @access public
  */
     public function getTranslationFields(&$model) {
-        if (Set::numeric(array_keys($this->translationFields))) {
-            return $this->translationFields;
+        if (Set::numeric(array_keys($this->translationFields[$model->alias]))) {
+            return $this->translationFields[$model->alias];
         } else {
-            return array_keys($this->translationFields);
+            return array_keys($this->translationFields[$model->alias]);
         }
     }
 /**
@@ -121,7 +121,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
         if (empty($locale) || empty($results)) {
             return $results;
         }
-        
+
         $fields = $this->getTranslationFields($model);
         $RuntimeModel =& $this->translateModel($model);
 
@@ -153,7 +153,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
                     }
 
                     // Other translations
-                    if (!Set::numeric(array_keys($this->translationFields)) &&
+                    if (!Set::numeric(array_keys($this->translationFields[$model->alias])) &&
                         isset($results[$i][$model->alias][$field])) {
                         if (!isset($results[$i][$field.'Translation'])) {
                             $results[$i][$field.'Translation'] = array();
