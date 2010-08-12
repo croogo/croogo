@@ -20,10 +20,9 @@
 /**
  * Helper
  *
- * This plugin's ExampleHook helper will be loaded inside LayoutHelper,
- * and the extra callbacks supported for hook helpers by Croogo will be called.
+ * This plugin's ExampleHook helper will be loaded via NodesController.
  */
-    Croogo::hookHelper('Example.ExampleHook');
+    Croogo::hookHelper('Nodes', 'Example.ExampleHook');
 /**
  * Admin menu (navigation)
  *

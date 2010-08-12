@@ -1,3 +1,3 @@
 <?php
-    Croogo::hookHelper('Tinymce.TinymceHook');
+    Croogo::hookHelper('*', 'Tinymce.TinymceHook');
 ?>

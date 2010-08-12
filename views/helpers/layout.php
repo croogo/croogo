@@ -32,12 +32,39 @@ class LayoutHelper extends AppHelper {
  */
     public $node = null;
 /**
- * Hook helpers
+ * Core helpers
+ *
+ * Extra supported callbacks, like beforeNodeInfo() and afterNodeInfo(),
+ * won't be called for these helpers.
  *
  * @var array
  * @access public
  */
-    public $hooks = array();
+    public $coreHelpers = array(
+        // CakePHP
+        'Ajax',
+        'Cache',
+        'Form',
+        'Html',
+        'Javascript',
+        'JqueryEngine',
+        'Js',
+        'MootoolsEngine',
+        'Number',
+        'Paginator',
+        'PrototypeEngine',
+        'Rss',
+        'Session',
+        'Text',
+        'Time',
+        'Xml',
+
+        // Croogo
+        'Filemanager',
+        'Image',
+        'Layout',
+        'Recaptcha',
+    );
 /**
  * Constructor
  *
@@ -46,23 +73,7 @@ class LayoutHelper extends AppHelper {
  */
     public function __construct($options = array()) {
         $this->View =& ClassRegistry::getObject('view');
-        $this->loadHooks();
         return parent::__construct($options);
-    }
-/**
- * Load hooks as helpers
- *
- * @return void
- */
-    public function loadHooks() {
-        if (is_array(Configure::read('Hook.helpers'))) {
-            foreach (Configure::read('Hook.helpers') AS $hook) {
-                if (App::import('Helper', $hook)) {
-                    $this->hooks[] = $hook;
-                    $this->helpers[] = $hook;
-                }
-            }
-        }
     }
 /**
  * Javascript variables
@@ -786,18 +797,18 @@ class LayoutHelper extends AppHelper {
  */
     public function hook($methodName) {
         $output = '';
-
-        foreach ($this->hooks AS $hook) {
-            if (strstr($hook, '.')) {
-                $hookE = explode('.', $hook);
-                $hook = $hookE['1'];
+        foreach ($this->View->helpers AS $helper) {
+            if (!is_string($helper) || in_array($helper, $this->coreHelpers)) {
+                continue;
             }
-
-            if (method_exists($this->{$hook}, $methodName)) {
-                $output .= $this->{$hook}->$methodName();
+            if (strstr($helper, '.')) {
+                $helperE = explode('.', $helper);
+                $helper = $helperE['1'];
+            }
+            if (isset($this->View->{$helper}) && method_exists($this->View->{$helper}, $methodName)) {
+                $output .= $this->View->{$helper}->$methodName();
             }
         }
-
         return $output;
     }
 
