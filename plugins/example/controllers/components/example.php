@@ -1,6 +1,6 @@
 <?php
 /**
- * ExampleHook Component
+ * Example Component
  *
  * An example hook component for demonstrating hook system.
  *
@@ -11,7 +11,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExampleHookComponent extends Object {
+class ExampleComponent extends Object {
 /**
  * Called after the Controller::beforeFilter() and before the controller action
  *
@@ -19,7 +19,7 @@ class ExampleHookComponent extends Object {
  * @return void
  */
     public function startup(&$controller) {
-        $controller->set('exampleHookComponent', 'ExampleHookComponent startup');
+        $controller->set('exampleComponent', 'ExampleComponent startup');
     }
 /**
  * Called after the Controller::beforeRender(), after the view class is loaded, and before the

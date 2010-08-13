@@ -1,6 +1,6 @@
 <?php
 /**
- * ExampleHook Behavior
+ * Example Behavior
  *
  * PHP version 5
  *
@@ -10,7 +10,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExampleHookBehavior extends ModelBehavior {
+class ExampleBehavior extends ModelBehavior {
 /**
  * Setup
  *
@@ -37,12 +37,12 @@ class ExampleHookBehavior extends ModelBehavior {
         if ($primary && isset($results[0][$model->alias])) {
             foreach ($results AS $i => $result) {
                 if (isset($results[$i][$model->alias]['body'])) {
-                    $results[$i][$model->alias]['body'] .= '<p>[Modified by ExampleHookBehavior]</p>';
+                    $results[$i][$model->alias]['body'] .= '<p>[Modified by ExampleBehavior]</p>';
                 }
             }
         } elseif (isset($results[$model->alias])) {
             if (isset($results[$model->alias]['body'])) {
-                $results[$model->alias]['body'] .= '<p>[Modified by ExampleHookBehavior]</p>';
+                $results[$model->alias]['body'] .= '<p>[Modified by ExampleBehavior]</p>';
             }
         }
 

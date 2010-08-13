@@ -1,6 +1,6 @@
 <?php
 /**
- * TinymceHook Helper
+ * Tinymce Helper
  *
  * PHP version 5
  *
@@ -11,7 +11,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TinymceHookHelper extends AppHelper {
+class TinymceHelper extends AppHelper {
 /**
  * Other helpers used by this helper
  *
