@@ -1,9 +1,9 @@
 <?php
-/* Setting Fixture generated on: 2010-05-20 22:05:50 : 1274393810 */
+/* Setting Fixture generated on: 2010-08-13 05:08:31 : 1281677491 */
 class SettingFixture extends CakeTestFixture {
 	var $name = 'Setting';
 
-	var $fields = array(
+        var $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 20, 'key' => 'primary'),
 		'key' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 64, 'key' => 'unique'),
 		'value' => array('type' => 'text', 'null' => false, 'default' => NULL),
@@ -261,47 +261,14 @@ class SettingFixture extends CakeTestFixture {
 			'params' => ''
 		),
 		array(
-			'id' => 30,
-			'key' => 'Hook.helpers',
-			'value' => 'Tinymce.TinymceHook',
+			'id' => 32,
+			'key' => 'Hook.bootstraps',
+			'value' => 'example,debug_kit',
 			'title' => '',
 			'description' => '',
 			'input_type' => '',
 			'editable' => 0,
 			'weight' => 23,
-			'params' => ''
-		),
-		array(
-			'id' => 31,
-			'key' => 'Hook.components',
-			'value' => '',
-			'title' => '',
-			'description' => '',
-			'input_type' => '',
-			'editable' => 0,
-			'weight' => 24,
-			'params' => ''
-		),
-		array(
-			'id' => 32,
-			'key' => 'Hook.bootstraps',
-			'value' => '',
-			'title' => '',
-			'description' => '',
-			'input_type' => '',
-			'editable' => 0,
-			'weight' => 25,
-			'params' => ''
-		),
-		array(
-			'id' => 33,
-			'key' => 'Hook.routes',
-			'value' => '',
-			'title' => '',
-			'description' => '',
-			'input_type' => '',
-			'editable' => 0,
-			'weight' => 26,
 			'params' => ''
 		),
 	);

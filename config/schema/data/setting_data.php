@@ -247,28 +247,6 @@ class SettingData {
 			'params' => ''
 		),
 		array(
-			'id' => '30',
-			'key' => 'Hook.helpers',
-			'value' => 'Tinymce.TinymceHook',
-			'title' => '',
-			'description' => '',
-			'input_type' => '',
-			'editable' => '0',
-			'weight' => '23',
-			'params' => ''
-		),
-		array(
-			'id' => '31',
-			'key' => 'Hook.components',
-			'value' => '',
-			'title' => '',
-			'description' => '',
-			'input_type' => '',
-			'editable' => '0',
-			'weight' => '24',
-			'params' => ''
-		),
-		array(
 			'id' => '32',
 			'key' => 'Hook.bootstraps',
 			'value' => '',
@@ -276,18 +254,7 @@ class SettingData {
 			'description' => '',
 			'input_type' => '',
 			'editable' => '0',
-			'weight' => '25',
-			'params' => ''
-		),
-		array(
-			'id' => '33',
-			'key' => 'Hook.routes',
-			'value' => '',
-			'title' => '',
-			'description' => '',
-			'input_type' => '',
-			'editable' => '0',
-			'weight' => '26',
+			'weight' => '23',
 			'params' => ''
 		),
 	);
