@@ -648,23 +648,26 @@ class LayoutHelper extends AppHelper {
         $output = '';
         $tabs = Configure::read('Admin.tabs.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
         if (is_array($tabs)) {
-            foreach ($tabs AS $title => $element) {
-                $domId = strtolower(Inflector::singularize($this->params['controller'])) . '-' . strtolower($title);
-                if ($this->adminTabs) {
-                    if (strstr($element, '.')) {
-                        $elementE = explode('.', $element);
-                        $plugin = $elementE['0'];
-                        $element = $elementE['1'];
+            foreach ($tabs AS $title => $tab) {
+                if(!isset($tab['options']['type'])||(isset($tab['options']['type'])&&(in_array($this->View->viewVars['typeAlias'],$tab['options']['type']))))
+                {
+                    $domId = strtolower(Inflector::singularize($this->params['controller'])) . '-' . strtolower($title);
+                    if ($this->adminTabs) {
+                        if (strstr($tab['element'], '.')) {
+                            $elementE = explode('.', $tab['element']);
+                            $plugin = $elementE['0'];
+                            $element = $elementE['1'];
+                        } else {
+                            $plugin = null;
+                        }
+                        $output .= '<div id="' . $domId . '">';
+                        $output .= $this->View->element($element, array(
+                            'plugin' => $plugin,
+                        ));
+                        $output .= '</div>';
                     } else {
-                        $plugin = null;
+                        $output .= '<li><a href="#' . $domId . '">' . $title . '</a></li>';
                     }
-                    $output .= '<div id="' . $domId . '">';
-                    $output .= $this->View->element($element, array(
-                        'plugin' => $plugin,
-                    ));
-                    $output .= '</div>';
-                } else {
-                    $output .= '<li><a href="#' . $domId . '">' . $title . '</a></li>';
                 }
             }
         }
