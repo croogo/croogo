@@ -12,7 +12,7 @@ class Croogo {
 /**
  * Loads plugin's routes.php from app/config/routes.php.
  *
- * Plugin name is added to Hook.bootstraps key of Configure object.
+ * Plugin name is added to Hook.routes key of Configure object.
  *
  * @param string $pluginName plugin name
  */
@@ -26,9 +26,7 @@ class Croogo {
         Configure::write('Hook.routes', $hooks);
     }
 /**
- * Loads hook component from CroogoComponent.
- *
- * Component name is added to Hook.components key of Configure object.
+ * Loads as a normal component from controller.
  *
  * @param string $controllerName Controller Name
  * @param string $componentName  Component name
@@ -47,21 +45,13 @@ class Croogo {
         self::hookModelProperty($modelName, 'actsAs', array($behaviorName => $config));
     }
 /**
- * Loads as a normal helper and calls all the extra callbacks supported in Croogo.
+ * Loads as a normal helper via controller.
  *
- * Information is stored in Hook.helpers key of Configure object.
- *
- * These helpers are loaded inside LayoutHelper.
- *
+ * @param string $controllerName
  * @param string $helperName
  */
-    public function hookHelper($helperName) {
-        $hooks = Configure::read('Hook.helpers');
-        if (!$hooks || !is_array($hooks)) {
-            $hooks = array();
-        }
-        $hooks[] = $helperName;
-        Configure::write('Hook.helpers', $hooks);
+    public function hookHelper($controllerName, $helperName) {
+        self::hookControllerProperty($controllerName, 'helpers', array($helperName));
     }
 /**
  * Shows plugin's admin_menu element in admin navigation under Extensions.

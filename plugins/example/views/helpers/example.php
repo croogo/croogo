@@ -1,6 +1,6 @@
 <?php
 /**
- * ExampleHook Helper
+ * Example Helper
  *
  * An example hook helper for demonstrating hook system.
  *
@@ -11,7 +11,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExampleHookHelper extends AppHelper {
+class ExampleHelper extends AppHelper {
 /**
  * Other helpers used by this helper
  *
@@ -58,7 +58,7 @@ class ExampleHookHelper extends AppHelper {
  */
     public function afterSetNode() {
         // field values can be changed from hooks
-        $this->Layout->setNodeField('title', $this->Layout->node('title') . ' [Modified by ExampleHookHelper]');
+        $this->Layout->setNodeField('title', $this->Layout->node('title') . ' [Modified by ExampleHelper]');
     }
 /**
  * Called before LayoutHelper::nodeInfo()

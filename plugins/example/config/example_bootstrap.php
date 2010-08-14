@@ -8,22 +8,21 @@
 /**
  * Behavior
  *
- * This plugin's ExampleHook behavior will be attached whenever Node model is loaded.
+ * This plugin's Example behavior will be attached whenever Node model is loaded.
  */
-    Croogo::hookBehavior('Node', 'Example.ExampleHook', array());
+    Croogo::hookBehavior('Node', 'Example.Example', array());
 /**
  * Component
  *
- * This plugin's ExampleHook component will be loaded in ALL controllers.
+ * This plugin's Example component will be loaded in ALL controllers.
  */
-    Croogo::hookComponent('*', 'Example.ExampleHook');
+    Croogo::hookComponent('*', 'Example.Example');
 /**
  * Helper
  *
- * This plugin's ExampleHook helper will be loaded inside LayoutHelper,
- * and the extra callbacks supported for hook helpers by Croogo will be called.
+ * This plugin's Example helper will be loaded via NodesController.
  */
-    Croogo::hookHelper('Example.ExampleHook');
+    Croogo::hookHelper('Nodes', 'Example.Example');
 /**
  * Admin menu (navigation)
  *
