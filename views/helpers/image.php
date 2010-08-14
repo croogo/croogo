@@ -26,8 +26,8 @@ class ImageHelper extends Helper {
 
         $uploadsDir = 'uploads';
 
-        $fullpath = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.$this->theme.$uploadsDir.DS;
-        $url = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.$this->theme.$path;
+        $fullpath = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.$uploadsDir.DS;
+        $url = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.$path;
 
         if (!($size = getimagesize($url)))
             return; // image doesn't exist
@@ -39,7 +39,7 @@ class ImageHelper extends Helper {
                 $height = ceil($width / ($size[0]/$size[1]));
         }
 
-        $relfile = $this->webroot.$this->theme.$uploadsDir.'/'.$this->cacheDir.'/'.$width.'x'.$height.'_'.basename($path); // relative file
+        $relfile = $this->webroot.$uploadsDir.'/'.$this->cacheDir.'/'.$width.'x'.$height.'_'.basename($path); // relative file
         $cachefile = $fullpath.$this->cacheDir.DS.$width.'x'.$height.'_'.basename($path);  // location on server
 
         if (file_exists($cachefile)) {
