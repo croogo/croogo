@@ -22,6 +22,7 @@ class UrlBehavior extends ModelBehavior {
     public function setup(&$model, $config = array()) {
         $_config = array(
             'url' => array(
+                'plugin'=>false,
                 'controller' => 'nodes',
                 'action' => 'view',
             ),
