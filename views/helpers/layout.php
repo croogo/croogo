@@ -649,8 +649,7 @@ class LayoutHelper extends AppHelper {
         $tabs = Configure::read('Admin.tabs.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
         if (is_array($tabs)) {
             foreach ($tabs AS $title => $tab) {
-                if(!isset($tab['options']['type'])||(isset($tab['options']['type'])&&(in_array($this->View->viewVars['typeAlias'],$tab['options']['type']))))
-                {
+                if (!isset($tab['options']['type']) || (isset($tab['options']['type']) && (in_array($this->View->viewVars['typeAlias'], $tab['options']['type'])))) {
                     $domId = strtolower(Inflector::singularize($this->params['controller'])) . '-' . strtolower($title);
                     if ($this->adminTabs) {
                         if (strstr($tab['element'], '.')) {

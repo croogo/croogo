@@ -86,9 +86,7 @@ class AppController extends Controller {
     public function __construct() {
         Croogo::applyHookProperties('Hook.controller_properties');
         parent::__construct();
-        if($this->name=='CakeError')
-        {
-            $this->layout='error';
+        if ($this->name == 'CakeError') {
             $this->_set(Router::getPaths());
             $this->params = Router::getParams();
             $this->constructClasses();

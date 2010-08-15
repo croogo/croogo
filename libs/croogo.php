@@ -88,7 +88,7 @@ class Croogo {
  * @param string $element element name, like plugin_name.element_name
  * @param array  $options array with options for the hook to take effect
  */
-    public function hookAdminTab($action, $title, $element,$options=array()) {
+    public function hookAdminTab($action, $title, $element, $options = array()) {
         $tabs = Configure::read('Admin.tabs');
         if (!is_array($tabs)) {
             $tabs = array();
