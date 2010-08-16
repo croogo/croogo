@@ -84,7 +84,13 @@ class LayoutHelper extends AppHelper {
         $output = $this->Html->script('croogo');
 
         $croogo = array();
-        $croogo['basePath'] = Router::url('/');
+        
+        if($this->params['locale']){
+            $croogo['basePath'] = Router::url('/'.$this->params['locale'].'/');
+        }else{
+            $croogo['basePath'] = Router::url('/');
+        }
+
         $croogo['params'] = array(
             'controller' => $this->params['controller'],
             'action' => $this->params['action'],
