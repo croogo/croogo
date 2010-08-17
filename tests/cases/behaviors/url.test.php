@@ -35,6 +35,7 @@ class UrlBehaviorTestCase extends CakeTestCase {
     public function testSingle() {
         $helloWorld = $this->Node->findBySlug('hello-world');
         $this->assertEqual($helloWorld['Node']['url'], array(
+            'plugin' => false,
             'controller' => 'nodes',
             'action' => 'view',
             'type' => 'blog',
@@ -45,6 +46,7 @@ class UrlBehaviorTestCase extends CakeTestCase {
     public function testMultiple() {
         $result = $this->Node->find('all');
         $this->assertEqual($result['0']['Node']['url'], array(
+            'plugin' => false,
             'controller' => 'nodes',
             'action' => 'view',
             'type' => $result['0']['Node']['type'],
