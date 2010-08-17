@@ -78,6 +78,12 @@ class LayoutHelper extends AppHelper {
 /**
  * Javascript variables
  *
+ * Shows croogo.js file along with useful information like the applications's basePath, etc.
+ *
+ * Also merges Configure::read('Js') with the Croogo js variable.
+ * So you can set javascript info anywhere like Configure::write('Js.my_var', 'my value'),
+ * and you can access it like 'Croogo.my_var' in your javascript.
+ *
  * @return string
  */
     public function js() {
@@ -94,6 +100,9 @@ class LayoutHelper extends AppHelper {
             'action' => $this->params['action'],
             'named' => $this->params['named'],
         );
+        if (is_array(Configure::read('Js'))) {
+            $croogo = Set::merge($croogo, Configure::read('Js'));
+        }
         $output .= $this->Html->scriptBlock('$.extend(Croogo, ' . $this->Js->object($croogo) . ');');
 
         echo $output;
