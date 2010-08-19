@@ -669,6 +669,16 @@ class NodesController extends AppController {
                     'config' => 'nodes_view',
                 ),
             ));
+            $this->Node->type = $node['Node']['type'];
+            $type = $this->Node->Taxonomy->Vocabulary->Type->find('first', array(
+                'conditions' => array(
+                    'Type.alias' => $this->Node->type,
+                ),
+                'cache' => array(
+                    'name' => 'type_'.$this->Node->type,
+                    'config' => 'nodes_view',
+                ),
+            ));
         }
 
         if (!isset($node['Node']['id'])) {
