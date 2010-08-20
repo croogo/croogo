@@ -9,12 +9,12 @@
         echo $html->css(array(
             'reset',
             '960',
-            '/ui-themes/smoothness/jquery-ui-1.7.css',
+            '/ui-themes/smoothness/jquery-ui.css',
             'admin',
             'thickbox',
         ));
         echo $html->script(array(
-            'jquery/jquery-ui-1.7.min',
+            'jquery/jquery-ui.min',
             'jquery/jquery.slug',
             'jquery/jquery.uuid',
             'jquery/jquery.cookie',
