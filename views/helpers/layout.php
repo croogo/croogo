@@ -340,7 +340,14 @@ class LayoutHelper extends AppHelper {
                 $link['Link']['link'] = $this->linkStringToArray($link['Link']['link']);
             }
 
-            if (Router::url($link['Link']['link']) == Router::url('/' . $this->params['url']['url'])) {
+            // Remove locale part before comparing links
+            if (!empty($this->params['locale'])) {
+                $currentUrl = substr($this->params['url']['url'], strlen($this->params['locale']));
+            } else {
+                $currentUrl = $this->params['url']['url'];
+            }
+
+            if (Router::url($link['Link']['link']) == Router::url('/' . $currentUrl)) {
                 $linkAttr['class'] = $options['selected'];
             }
 
