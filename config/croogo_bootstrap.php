@@ -47,9 +47,13 @@
     )));
 
 /**
- * Settings
+ * Libraries
  */
     App::import('Vendor', 'Spyc/Spyc');
+
+/**
+ * Settings
+ */
     if (file_exists(CONFIGS.'settings.yml')) {
         $settings = Spyc::YAMLLoad(file_get_contents(CONFIGS.'settings.yml'));
         foreach ($settings AS $settingKey => $settingValue) {
