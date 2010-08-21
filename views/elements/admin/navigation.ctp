@@ -5,7 +5,7 @@
         </li>
 
         <li>
-            <a href="#"><span class="ui-icon ui-icon-document"></span><?php __('Content'); ?></a>
+            <a href="<?php echo $html->url(array('plugin' => null, 'controller' => 'nodes', 'action' => 'index')); ?>"><span class="ui-icon ui-icon-document"></span><?php __('Content'); ?></a>
             <ul>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-document"></span>' . __('List', true), array('plugin' => null, 'controller' => 'nodes', 'action' => 'index'), array('escape' => false)); ?></li>
                 <li>
@@ -38,7 +38,7 @@
         </li>
 
         <li>
-            <a href="#"><span class="ui-icon ui-icon-link"></span><?php __('Menus'); ?></a>
+            <a href="<?php echo $html->url(array('plugin' => null, 'controller' => 'menus', 'action' => 'index')); ?>"><span class="ui-icon ui-icon-link"></span><?php __('Menus'); ?></a>
             <ul>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-link"></span>' . __('Menus', true), array('plugin' => null, 'controller' => 'menus', 'action' => 'index'), array('escape' => false)); ?></li>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-plus"></span>' . __('Add new', true), array('plugin' => null, 'controller' => 'menus', 'action' => 'add'), array('class' => 'separator', 'escape' => false)); ?></li>
@@ -49,7 +49,7 @@
         </li>
 
         <li>
-            <a href="#"><span class="ui-icon ui-icon-copy"></span><?php __('Blocks'); ?></a>
+            <a href="<?php echo $html->url(array('plugin' => null, 'controller' => 'blocks', 'action' => 'index')); ?>"><span class="ui-icon ui-icon-copy"></span><?php __('Blocks'); ?></a>
             <ul>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-copy"></span>' . __('Blocks', true), array('plugin' => null, 'controller' => 'blocks', 'action' => 'index'), array('escape' => false)); ?></li>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-bullet"></span>' . __('Regions', true), array('plugin' => null, 'controller' => 'regions', 'action' => 'index'), array('escape' => false)); ?></li>
@@ -57,7 +57,7 @@
         </li>
 
         <li>
-            <a href="#"><span class="ui-icon ui-icon-gear"></span><?php __('Extensions'); ?></a>
+            <a href="<?php echo $html->url(array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index')); ?>"><span class="ui-icon ui-icon-gear"></span><?php __('Extensions'); ?></a>
             <ul>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-image"></span>' . __('Themes', true), array('plugin' => 'extensions', 'controller' => 'extensions_themes', 'action' => 'index'), array('escape' => false)); ?></li>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-script"></span>' . __('Locales', true), array('plugin' => 'extensions', 'controller' => 'extensions_locales', 'action' => 'index'), array('escape' => false)); ?></li>
@@ -77,7 +77,7 @@
         </li>
 
         <li>
-            <a href="#"><span class="ui-icon ui-icon-video"></span><?php __('Media'); ?></a>
+            <a href="<?php echo $html->url(array('plugin' => null, 'controller' => 'attachments', 'action' => 'index')); ?>"><span class="ui-icon ui-icon-video"></span><?php __('Media'); ?></a>
             <ul>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-image"></span>' . __('Attachments', true), array('plugin' => null, 'controller' => 'attachments', 'action' => 'index'), array('escape' => false)); ?></li>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-folder-collapsed"></span>' . __('File Manager', true), array('plugin' => null, 'controller' => 'filemanager', 'action' => 'index'), array('escape' => false)); ?></li>
@@ -85,7 +85,7 @@
         </li>
 
         <li>
-            <a href="#"><span class="ui-icon ui-icon-contact"></span><?php __('Contacts'); ?></a>
+            <a href="<?php echo $html->url(array('plugin' => null, 'controller' => 'contacts', 'action' => 'index')); ?>"><span class="ui-icon ui-icon-contact"></span><?php __('Contacts'); ?></a>
             <ul>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-contact"></span>' . __('Contacts', true), array('plugin' => null, 'controller' => 'contacts', 'action' => 'index'), array('escape' => false)); ?></li>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-mail-closed"></span>' . __('Messages', true), array('plugin' => null, 'controller' => 'messages', 'action' => 'index'), array('escape' => false)); ?></li>
@@ -93,7 +93,7 @@
         </li>
 
         <li>
-            <a href="#"><span class="ui-icon ui-icon-person"></span><?php __('Users'); ?></a>
+            <a href="<?php echo $html->url(array('plugin' => null, 'controller' => 'users', 'action' => 'index')); ?>"><span class="ui-icon ui-icon-person"></span><?php __('Users'); ?></a>
             <ul>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-person"></span>' . __('Users', true), array('plugin' => null, 'controller' => 'users', 'action' => 'index'), array('escape' => false)); ?></li>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-star"></span>' . __('Roles', true), array('plugin' => null, 'controller' => 'roles', 'action' => 'index'), array('escape' => false)); ?></li>
@@ -102,7 +102,7 @@
         </li>
 
         <li>
-            <a href="#" class="last"><span class="ui-icon ui-icon-wrench"></span><?php __('Settings'); ?></a>
+            <a href="<?php echo $html->url(array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Site')); ?>" class="last"><span class="ui-icon ui-icon-wrench"></span><?php __('Settings'); ?></a>
             <ul>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-wrench"></span>' . __('Site', true), array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Site'), array('escape' => false)); ?></li>
                 <li><?php echo $html->link('<span class="ui-icon ui-icon-info"></span>' . __('Meta', true), array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Meta'), array('escape' => false)); ?></li>
