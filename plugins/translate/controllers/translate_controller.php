@@ -50,7 +50,6 @@ class TranslateController extends TranslateAppController {
         }
 
         $model =& ClassRegistry::init($modelAlias);
-        //$model->Behaviors->attach('CroogoTranslate', $this->Croogo->TranslateHook->translateModels[$modelAlias]);
         $record = $model->findById($id);
         if (!isset($record[$modelAlias]['id'])) {
             $this->Session->setFlash(__('Invalid record.', true), 'default', array('class' => 'error'));
@@ -60,7 +59,7 @@ class TranslateController extends TranslateAppController {
                 'action' => 'index',
             ));
         }
-        $this->set('title_for_layout', sprintf(__('Translations: %s', true), $record[$modelAlias]['title']));
+        $this->set('title_for_layout', sprintf(__('Translations: %s', true), $record[$modelAlias][$model->displayField]));
 
         $runtimeModel =& $model->translateModel();
         $runtimeModelAlias = $runtimeModel->alias;
