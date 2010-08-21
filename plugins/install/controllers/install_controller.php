@@ -206,40 +206,40 @@ class InstallController extends InstallAppController {
  * @return void
  * @access public
  */
-	public function finish() {
-            $this->set('title_for_layout', __('Installation completed successfully', true));
-            if (isset($this->params['named']['delete'])) {
-                App::import('Core', 'Folder');
-                $this->folder = new Folder;
-                if ($this->folder->delete(APP.'plugins'.DS.'install')) {
-                    $this->Session->setFlash(__('Installation files deleted successfully.', true), 'default', array('class' => 'success'));
-                    $this->redirect('/');
-                } else {
-                    return $this->Session->setFlash(__('Could not delete installation files.', true), 'default', array('class' => 'error'));
-                }
+    public function finish() {
+        $this->set('title_for_layout', __('Installation completed successfully', true));
+        if (isset($this->params['named']['delete'])) {
+            App::import('Core', 'Folder');
+            $this->folder = new Folder;
+            if ($this->folder->delete(APP.'plugins'.DS.'install')) {
+                $this->Session->setFlash(__('Installation files deleted successfully.', true), 'default', array('class' => 'success'));
+                $this->redirect('/');
+            } else {
+                return $this->Session->setFlash(__('Could not delete installation files.', true), 'default', array('class' => 'error'));
             }
-            $this->_check();
+        }
+        $this->_check();
 
-            // set new salt and seed value
-            copy(CONFIGS.'settings.yml.install', CONFIGS.'settings.yml');
-            $File =& new File(CONFIGS . 'core.php');
-            if (!class_exists('Security')) {
-                require LIBS . 'security.php';
-            }
-            $salt = Security::generateAuthKey();
-            $seed = mt_rand() . mt_rand();
-            $contents = $File->read();
-            $contents = preg_replace('/(?<=Configure::write\(\'Security.salt\', \')([^\' ]+)(?=\'\))/', $salt, $contents);
-            $contents = preg_replace('/(?<=Configure::write\(\'Security.cipherSeed\', \')(\d+)(?=\'\))/', $seed, $contents);
-            if (!$File->write($contents)) {
-                return false;
-            }
+        // set new salt and seed value
+        copy(CONFIGS.'settings.yml.install', CONFIGS.'settings.yml');
+        $File =& new File(CONFIGS . 'core.php');
+        if (!class_exists('Security')) {
+            require LIBS . 'security.php';
+        }
+        $salt = Security::generateAuthKey();
+        $seed = mt_rand() . mt_rand();
+        $contents = $File->read();
+        $contents = preg_replace('/(?<=Configure::write\(\'Security.salt\', \')([^\' ]+)(?=\'\))/', $salt, $contents);
+        $contents = preg_replace('/(?<=Configure::write\(\'Security.cipherSeed\', \')(\d+)(?=\'\))/', $seed, $contents);
+        if (!$File->write($contents)) {
+            return false;
+        }
 
-            // set new password for admin, hashed according to new salt value
-            $User = ClassRegistry::init('User');
-            $User->id = $User->field('id', array('username' => 'admin'));
-            $User->saveField('password', Security::hash('password', null, $salt));
-	}
+        // set new password for admin, hashed according to new salt value
+        $User = ClassRegistry::init('User');
+        $User->id = $User->field('id', array('username' => 'admin'));
+        $User->saveField('password', Security::hash('password', null, $salt));
+    }
 
 }
 ?>
