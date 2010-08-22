@@ -29,17 +29,7 @@ class TinymceHelper extends AppHelper {
  *
  * @var array
  */
-    public $actions = array(
-        'Nodes/admin_add' => array(
-            'elements' => 'NodeBody',
-        ),
-        'Nodes/admin_edit' => array(
-            'elements' => 'NodeBody',
-        ),
-        'Translate/admin_edit' => array(
-            'elements' => 'NodeBody',
-        ),
-    );
+    public $actions = array();
 /**
  * Default settings for tinymce
  *
@@ -116,6 +106,9 @@ class TinymceHelper extends AppHelper {
     }
 
     public function beforeRender() {
+        if (is_array(Configure::read('Tinymce.actions'))) {
+            $this->actions = Set::merge($this->actions, Configure::read('Tinymce.actions'));
+        }
         $action = Inflector::camelize($this->params['controller']).'/'.$this->params['action'];
         if (Configure::read('Writing.wysiwyg') && isset($this->actions[$action]) && ClassRegistry::getObject('view')) {
             $this->Html->script('/tinymce/js/tiny_mce', array('inline' => false));
