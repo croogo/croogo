@@ -99,7 +99,10 @@ class TinymceHelper extends AppHelper {
         $_settings = $this->settings;
         $action = Inflector::camelize($this->params['controller']).'/'.$this->params['action'];
         if (isset($this->actions[$action])) {
-            $_settings = Set::merge($_settings, $this->actions[$action]);
+            $settings = array();
+            foreach ($this->actions[$action] as $action) {
+                $settings[] = Set::merge($_settings, $action); 
+            }
         }
         $settings = Set::merge($_settings, $settings);
         return $settings;
@@ -113,7 +116,10 @@ class TinymceHelper extends AppHelper {
         if (Configure::read('Writing.wysiwyg') && isset($this->actions[$action]) && ClassRegistry::getObject('view')) {
             $this->Html->script('/tinymce/js/tiny_mce', array('inline' => false));
             $this->Html->scriptBlock($this->fileBrowserCallBack(), array('inline' => false));
-            $this->Html->scriptBlock('tinyMCE.init(' . $this->Js->object($this->getSettings()) . ');', array('inline' => false));
+            $settings = $this->getSettings();
+            foreach ($settings as $setting) {
+                $this->Html->scriptBlock('tinyMCE.init(' . $this->Js->object($setting) . ');', array('inline' => false));                
+            }
         }
 
         if ($this->params['controller'] == 'attachments' && $this->params['action'] == 'admin_browse') {
