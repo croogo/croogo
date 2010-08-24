@@ -13,7 +13,8 @@
  */
 class CroogoRouter {
 /**
- * An extra Route will be created for locale-based URLs
+ * If Translate plugin is active,
+ * an extra Route will be created for locale-based URLs
  *
  * For example,
  * http://yoursite.com/blog/post-title, and
@@ -31,7 +32,9 @@ class CroogoRouter {
         if ($route == '/') {
             $route = '';
         }
-        Router::connect('/:locale' . $route, $default, array_merge(array('locale' => '[a-z]{3}'), $params));
+        if (Configure::read('Translate')) {
+            Router::connect('/:locale' . $route, $default, array_merge(array('locale' => '[a-z]{3}'), $params));
+        }
     }
 /**
  * Load plugin routes
