@@ -35,8 +35,10 @@ class AclGenerateComponent extends Object {
         $this->folder->path = APP.'controllers'.DS;
         $controllers = $this->folder->read();
         foreach ($controllers['1'] AS $c) {
-            $cName = Inflector::camelize(str_replace('_controller.php', '', $c));
-            $controllerPaths[$cName] = APP.'controllers'.DS.$c;
+            if (strstr($c, '.php')) {
+                $cName = Inflector::camelize(str_replace('_controller.php', '', $c));
+                $controllerPaths[$cName] = APP.'controllers'.DS.$c;
+            }
         }
 
         // plugins/*/controllers/
@@ -47,8 +49,10 @@ class AclGenerateComponent extends Object {
                 $this->folder->path = APP.'plugins'.DS.$p.DS.'controllers'.DS;
                 $pluginControllers = $this->folder->read();
                 foreach ($pluginControllers['1'] AS $pc) {
-                    $pcName = Inflector::camelize(str_replace('_controller.php', '', $pc));
-                    $controllerPaths[$pcName] = APP.'plugins'.DS.$p.DS.'controllers'.DS.$pc;
+                    if (strstr($pc, '.php')) {
+                        $pcName = Inflector::camelize(str_replace('_controller.php', '', $pc));
+                        $controllerPaths[$pcName] = APP.'plugins'.DS.$p.DS.'controllers'.DS.$pc;
+                    }
                 }
             }
         }
