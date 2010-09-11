@@ -343,15 +343,17 @@ class LayoutHelper extends AppHelper {
             // Remove locale part before comparing links
             if (!empty($this->params['locale'])) {
                 $currentUrl = substr($this->params['url']['url'], strlen($this->params['locale']));
+                $locale = '/'.$this->params['locale'];
             } else {
                 $currentUrl = $this->params['url']['url'];
+                $locale = '';
             }
 
             if (Router::url($link['Link']['link']) == Router::url('/' . $currentUrl)) {
                 $linkAttr['class'] = $options['selected'];
             }
-
-            $linkOutput = $this->Html->link($link['Link']['title'], $link['Link']['link'], $linkAttr);
+            
+            $linkOutput = $this->Html->link($link['Link']['title'], $locale.$link['Link']['link'], $linkAttr);
             if (isset($link['children']) && count($link['children']) > 0) {
                 $linkOutput .= $this->nestedLinks($link['children'], $options, $depth + 1);
             }
