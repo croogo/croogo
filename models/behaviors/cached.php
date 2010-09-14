@@ -13,6 +13,17 @@
  */
 class CachedBehavior extends ModelBehavior {
 /**
+ * Default settings:
+ *
+ * `config` - Cache config.
+ *
+ * @var array
+ */
+    public $defaults = array(
+        'config' => 'default',
+    );
+    
+/**
  * Setup
  *
  * @param object $model
@@ -23,6 +34,7 @@ class CachedBehavior extends ModelBehavior {
         if (is_string($config)) {
             $config = array($config);
         }
+        $config = array_merge($this->defaults, $config);
 
         $this->settings[$model->alias] = $config;
     }
@@ -52,8 +64,10 @@ class CachedBehavior extends ModelBehavior {
  * @return void
  */
     protected function _deleteCachedFiles(&$model) {
+        $cacheConfig = Cache::config($this->settings[$model->alias]['config']);
+        
         foreach ($this->settings[$model->alias]['prefix'] AS $prefix) {
-            $files = glob(TMP.'cache'.DS.'queries'.DS.'cake_'.$prefix.'*');
+            $files = glob($cacheConfig['settings']['path'].DS.'cake_'.$prefix.'*');
             if (is_array($files) && count($files) > 0) {
                 foreach ($files AS $file) {
                     unlink($file);

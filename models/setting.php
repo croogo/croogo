@@ -34,6 +34,7 @@ class Setting extends AppModel {
             'prefix' => array(
                 'setting_',
             ),
+            'config' => 'setting_write_configuration',
         ),
     );
 /**
