@@ -140,6 +140,25 @@ class CroogoComponent extends Object {
  * @return void
  */
     public function blocks() {
+    
+    $or = '';
+
+    if($this->controller->params['url']['url'] != '/'){
+        $urls = explode('/',$this->controller->params['url']['url']);
+        foreach($urls as $url){
+            if(!isset($uri)){
+                $uri = $url;
+            }else{
+                $uri .= '/'. $url;
+                $or .= ' OR Block.visibility_paths LIKE ';
+            }
+            $or .= ' "%' . $uri . '/*%" ';
+        }
+        $or .= ' OR ' .$or;
+    }else{
+        $this->controller->params['url']['url'] = 'nodes/promoted/*';
+    }
+    
         $regions = $this->controller->Block->Region->find('list', array(
             'conditions' => array(
                 'Region.block_count >' => '0',
@@ -153,6 +172,7 @@ class CroogoComponent extends Object {
                 'config' => 'croogo_blocks',
             ),
         ));
+
         foreach ($regions AS $regionId => $regionAlias) {
             $this->blocks_for_layout[$regionAlias] = array();
             $findOptions = array(
@@ -166,14 +186,7 @@ class CroogoComponent extends Object {
                                 'Block.visibility_roles LIKE' => '%"' . $this->roleId . '"%',
                             ),
                         ),
-                        array(
-                            'OR' => array(
-                                'Block.visibility_paths' => '',
-                                'Block.visibility_paths LIKE' => '%"' . $this->controller->params['url']['url'] . '"%',
-                                //'Block.visibility_paths LIKE' => '%"' . 'controller:' . $this->params['controller'] . '"%',
-                                //'Block.visibility_paths LIKE' => '%"' . 'controller:' . $this->params['controller'] . '/' . 'action:' . $this->params['action'] . '"%',
-                            ),
-                        ),
+                        array( 'Block.visibility_paths = "" OR Block.visibility_paths LIKE "%' . $this->controller->params['url']['url'] . '%"' . $or),
                     ),
                 ),
                 'order' => array(
@@ -185,6 +198,8 @@ class CroogoComponent extends Object {
                 ),
                 'recursive' => '-1',
             );
+            //pr($findOptions);
+            //die();
             $blocks = $this->controller->Block->find('all', $findOptions);
             $this->processBlocksData($blocks);
             $this->blocks_for_layout[$regionAlias] = $blocks;
