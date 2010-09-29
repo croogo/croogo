@@ -65,11 +65,9 @@
                 <?php
                 if (Configure::read('Admin.menus')) {
                     foreach (array_keys(Configure::read('Admin.menus')) AS $p) {
-                        if (file_exists(APP.'plugins'.DS.$p.DS.'views'.DS.'elements'.DS.'admin_menu.ctp')) {
-                            echo '<li>';
-                            echo $this->element('admin_menu', array('plugin' => $p));
-                            echo '</li>';
-                        }
+                        echo '<li>';
+                        echo $this->element('admin_menu', array('plugin' => $p));
+                        echo '</li>';
                     }
                 }
                 ?>
