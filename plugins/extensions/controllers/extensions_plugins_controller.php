@@ -122,7 +122,9 @@ class ExtensionsPluginsController extends AppController {
 							}
 							if (substr($path, strlen($path) - 1) == DS) {
 								 // create directory
-								 mkdir($path);
+                                                                 if (!is_dir($path)) {
+                                                                    mkdir($path);
+                                                                 }
 							} else {
 								 // create file
 								 if (zip_entry_open($zip, $zip_entry, 'r')) {
