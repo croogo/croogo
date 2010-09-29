@@ -68,28 +68,28 @@ class ExtensionsPluginsController extends AppController {
 
             // get plugin name and root
             $zip = zip_open($file['tmp_name']);
-				$root = 0;
+            $root = 0;
             if ($zip) {
                 while ($zip_entry = zip_read($zip)) {
                     $zipEntryName = zip_entry_name($zip_entry);
                     $searches = array('activation', 'bootstrap', 'routes', 'app_controller', 'app_model', 'app_helper');
                     foreach ($searches AS $search) { 
-							  if (preg_match('/([A-Za-z0-9_]+)_'.$search.'\.php/', $zipEntryName, $matches)) {
-								   $plugin = $matches[1];
-								   foreach (explode('/', $zipEntryName) as $folder) {
-									    if (in_array($folder, array(
-										     'config',
-											  $plugin.'_app_controller.php',
-											  $plugin.'_app_model.php',
-											  $plugin.'_app_helper.php'
-										  ))) {
-										      break;
-									     }
-									 $root++;
-								  }
-								  break;
-							  }
-						  }
+                        if (preg_match('/([A-Za-z0-9_]+)_'.$search.'\.php/', $zipEntryName, $matches)) {
+                            $plugin = $matches[1];
+                            foreach (explode('/', $zipEntryName) as $folder) {
+                                if (in_array($folder, array(
+                                    'config',
+                                    $plugin.'_app_controller.php',
+                                    $plugin.'_app_model.php',
+                                    $plugin.'_app_helper.php'
+                                    ))) {
+                                    break;
+                                }
+                                $root++;
+                            }
+                            break;
+                        }
+                    }
                 }
             }
             zip_close($zip);
@@ -109,33 +109,33 @@ class ExtensionsPluginsController extends AppController {
             // extract
             $zip = zip_open($file['tmp_name']);
             if ($zip) {
-					// create root plugin dir
-					$path = APP . 'plugins' . DS . $pluginName . DS;
-					mkdir($path);
+                // create root plugin dir
+                $path = APP . 'plugins' . DS . $pluginName . DS;
+                mkdir($path);
                 while ($zip_entry = zip_read($zip)) {
                     $zipEntryName = zip_entry_name($zip_entry);
-							$zipEntryNameE = array_slice(explode('/', $zipEntryName), $root);
-							if (!empty($zipEntryNameE[count($zipEntryNameE)-1])) {
-								 $path = APP . 'plugins' . DS . $pluginName . DS . implode(DS, $zipEntryNameE);
-							} else {
-								 $path = APP . 'plugins' . DS . $pluginName . DS . implode(DS, $zipEntryNameE) . DS;
-							}
-							if (substr($path, strlen($path) - 1) == DS) {
-								 // create directory
-                                                                 if (!is_dir($path)) {
-                                                                    mkdir($path);
-                                                                 }
-							} else {
-								 // create file
-								 if (zip_entry_open($zip, $zip_entry, 'r')) {
-									  $fileContent = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
-									  touch($path);
-									  $fh = fopen($path, 'w');
-									  fwrite($fh, $fileContent);
-									  fclose($fh);
-									  zip_entry_close($zip_entry);
-								 }
-							}
+                    $zipEntryNameE = array_slice(explode('/', $zipEntryName), $root);
+                    if (!empty($zipEntryNameE[count($zipEntryNameE)-1])) {
+                        $path = APP . 'plugins' . DS . $pluginName . DS . implode(DS, $zipEntryNameE);
+                    } else {
+                        $path = APP . 'plugins' . DS . $pluginName . DS . implode(DS, $zipEntryNameE) . DS;
+                    }
+                    if (substr($path, strlen($path) - 1) == DS) {
+                        // create directory
+                        if (!is_dir($path)) {
+                            mkdir($path);
+                        }
+                    } else {
+                        // create file
+                        if (zip_entry_open($zip, $zip_entry, 'r')) {
+                            $fileContent = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+                            touch($path);
+                            $fh = fopen($path, 'w');
+                            fwrite($fh, $fileContent);
+                            fclose($fh);
+                            zip_entry_close($zip_entry);
+                        }
+                    }
                 }
             }
             zip_close($zip);
