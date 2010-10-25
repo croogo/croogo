@@ -293,15 +293,7 @@ if (!defined('CAKEPHP_UNIT_TEST_EXECUTION')) {
         public $actsAs = array(
             'Cached' => array(
                 'prefix' => array(
-                    'link_',
-                    'menu_',
-                    'croogo_menu_',
-                    'node_',
-                    'nodes_',
-                    'croogo_nodes_',
-                    'block_',
-                    'blocks_',
-                    'croogo_blocks_',
+                    '',
                 ),
             ),
         );
