@@ -40,7 +40,8 @@ Nodes.filter = function() {
 
     $('#FilterAdminIndexForm').submit(function() {
         var filter = '';
-
+		var q='';
+		
         // type
         if ($('#FilterType').val() != '') {
             filter += 'type:' + $('#FilterType').val() + ';';
@@ -55,12 +56,28 @@ Nodes.filter = function() {
         if ($('#FilterPromote').val() != '') {
             filter += 'promote:' + $('#FilterPromote').val() + ';';
         }
-
+        
+        //query string
+        if($('#QueryQ').val() != '') {
+            q=$('#QueryQ').val();
+        }
+        
         var loadUrl = Croogo.basePath + 'admin/nodes/index/';
         if (filter != '') {
             loadUrl += 'filter:' + filter;
         }
-
+        
+        if(q!='')
+        {
+            if(filter==''){
+                loadUrl +='q:'+q;
+            }
+            else
+            {
+                loadUrl +='/q:'+q;
+            }
+        }
+        
         window.location = loadUrl;
         return false;
     });

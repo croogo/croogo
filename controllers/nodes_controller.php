@@ -75,7 +75,18 @@ class NodesController extends AppController {
             }
             $this->set('filters', $filters);
         }
-
+		
+		if (isset($this->params['named']['q'])) {
+            App::import('Core', 'Sanitize');
+            $q=Sanitize::clean($this->params['named']['q']);
+            $this->paginate['Node']['conditions']['OR'] = array(
+                        'Node.title LIKE' => '%' . $q . '%',
+                        'Node.excerpt LIKE' => '%' . $q . '%',
+                        'Node.body LIKE' => '%' . $q . '%',
+                        'Node.terms LIKE' => '%"' . $q . '"%',
+                    );
+        }
+        
         $nodes = $this->paginate('Node');
         $this->set(compact('nodes', 'types', 'typeAliases'));
 
