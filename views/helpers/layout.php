@@ -614,7 +614,7 @@ class LayoutHelper extends AppHelper {
                 'value'   => $value,
             ),
         );
-        $options = array_merge($_options, $options);
+        $options = Set::merge($_options, $options);
         $uuid = String::uuid();
 
         $fields  = '';
