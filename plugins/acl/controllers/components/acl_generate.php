@@ -35,7 +35,7 @@ class AclGenerateComponent extends Object {
         $this->folder->path = APP.'controllers'.DS;
         $controllers = $this->folder->read();
         foreach ($controllers['1'] AS $c) {
-            if (strstr($c, '.php')) {
+            if (substr($c, strlen($c) - 4, 4) == '.php') {
                 $cName = Inflector::camelize(str_replace('_controller.php', '', $c));
                 $controllerPaths[$cName] = APP.'controllers'.DS.$c;
             }
@@ -49,7 +49,7 @@ class AclGenerateComponent extends Object {
                 $this->folder->path = APP.'plugins'.DS.$p.DS.'controllers'.DS;
                 $pluginControllers = $this->folder->read();
                 foreach ($pluginControllers['1'] AS $pc) {
-                    if (strstr($pc, '.php')) {
+                    if (substr($pc, strlen($pc) - 4, 4) == '.php') {
                         $pcName = Inflector::camelize(str_replace('_controller.php', '', $pc));
                         $controllerPaths[$pcName] = APP.'plugins'.DS.$p.DS.'controllers'.DS.$pc;
                     }
