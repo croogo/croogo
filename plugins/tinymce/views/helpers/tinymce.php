@@ -73,7 +73,7 @@ class TinymceHelper extends AppHelper {
         $output = "function fileBrowserCallBack(field_name, url, type, win) {
             browserField = field_name;
             browserWin = win;
-            window.open('".$this->Html->url(array('controller' => 'attachments', 'action' => 'browse'))."', 'browserWindow', 'modal,width=960,height=700,scrollbars=yes');
+            window.open('".$this->Html->url(array('controller' => 'attachments', 'action' => 'browse', 'plugin' => false))."', 'browserWindow', 'modal,width=960,height=700,scrollbars=yes');
         }";
 
         return $output;
@@ -91,7 +91,7 @@ class TinymceHelper extends AppHelper {
             window.top.close();
             window.top.opener.browserWin.focus();
         }";
-        
+
         return $output;
     }
 
@@ -101,7 +101,7 @@ class TinymceHelper extends AppHelper {
         if (isset($this->actions[$action])) {
             $settings = array();
             foreach ($this->actions[$action] as $action) {
-                $settings[] = Set::merge($_settings, $action); 
+                $settings[] = Set::merge($_settings, $action);
             }
         }
         $settings = Set::merge($_settings, $settings);
@@ -118,7 +118,7 @@ class TinymceHelper extends AppHelper {
             $this->Html->scriptBlock($this->fileBrowserCallBack(), array('inline' => false));
             $settings = $this->getSettings();
             foreach ($settings as $setting) {
-                $this->Html->scriptBlock('tinyMCE.init(' . $this->Js->object($setting) . ');', array('inline' => false));                
+                $this->Html->scriptBlock('tinyMCE.init(' . $this->Js->object($setting) . ');', array('inline' => false));
             }
         }
 
