@@ -157,7 +157,7 @@ class Node extends AppModel {
  * @return array
  */
     public function beforeFind($q) {
-        if($this->type != null) {
+        if ($this->type != null && !isset($q['conditions']['Node.type'])) {
             $q['conditions']['Node.type'] = $this->type;
         }
         return $q;
