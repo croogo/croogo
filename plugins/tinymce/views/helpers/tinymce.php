@@ -73,7 +73,7 @@ class TinymceHelper extends AppHelper {
         $output = "function fileBrowserCallBack(field_name, url, type, win) {
             browserField = field_name;
             browserWin = win;
-            window.open('".$this->Html->url(array('controller' => 'attachments', 'action' => 'browse', 'plugin' => false))."', 'browserWindow', 'modal,width=960,height=700,scrollbars=yes');
+            window.open('".$this->Html->url(array('plugin' => false, 'controller' => 'attachments', 'action' => 'browse'))."', 'browserWindow', 'modal,width=960,height=700,scrollbars=yes');
         }";
 
         return $output;
