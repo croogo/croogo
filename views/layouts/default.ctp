@@ -14,14 +14,14 @@
     <?php
         echo $layout->meta();
         echo $layout->feed();
-        echo $html->script(array('jquery/jquery.min'));
-        echo $layout->js();
         echo $html->css(array(
             'reset',
             '960',
             'theme',
         ));
+        echo $layout->js();
         echo $html->script(array(
+            'jquery/jquery.min',
             'jquery/jquery.hoverIntent.minified',
             'jquery/superfish',
             'jquery/supersubs',

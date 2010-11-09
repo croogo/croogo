@@ -86,7 +86,7 @@ $(document).ready(function() {
     Admin.extra();
     Admin.roundedCorners();
 
-	$('.tabs').tabs();
+    $('.tabs').tabs();
     $('a.tooltip').tipsy({gravity: 's', html: false});
     $('textarea').not('.content').elastic();
 });
