@@ -3,13 +3,13 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('New User', true), array('action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('New User', true), array('action'=>'add')); ?></li>
         </ul>
     </div>
 
     <table cellpadding="0" cellspacing="0">
     <?php
-        $tableHeaders =  $html->tableHeaders(array(
+        $tableHeaders =  $this->Html->tableHeaders(array(
             $paginator->sort('id'),
             __('Role', true),
             $paginator->sort('username'),
@@ -21,9 +21,9 @@
 
         $rows = array();
         foreach ($users AS $user) {
-            $actions  = $html->link(__('Edit', true), array('controller' => 'users', 'action' => 'edit', $user['User']['id']));
+            $actions  = $this->Html->link(__('Edit', true), array('controller' => 'users', 'action' => 'edit', $user['User']['id']));
             $actions .= ' ' . $layout->adminRowActions($user['User']['id']);
-            $actions .= ' ' . $html->link(__('Delete', true), array(
+            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'controller' => 'users',
                 'action' => 'delete',
                 $user['User']['id'],
@@ -40,7 +40,7 @@
             );
         }
 
-        echo $html->tableCells($rows);
+        echo $this->Html->tableCells($rows);
         echo $tableHeaders;
     ?>
     </table>

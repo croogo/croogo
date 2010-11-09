@@ -3,13 +3,13 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('New Setting', true), array('action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('New Setting', true), array('action'=>'add')); ?></li>
         </ul>
     </div>
 
     <table cellpadding="0" cellspacing="0">
     <?php
-        $tableHeaders =  $html->tableHeaders(array(
+        $tableHeaders =  $this->Html->tableHeaders(array(
             $paginator->sort('id'),
             $paginator->sort('key'),
             $paginator->sort('value'),
@@ -20,11 +20,11 @@
 
         $rows = array();
         foreach ($settings AS $setting) {
-            $actions  = $html->link(__('Move up', true), array('controller' => 'settings', 'action' => 'moveup', $setting['Setting']['id']));
-            $actions .= ' ' . $html->link(__('Move down', true), array('controller' => 'settings', 'action' => 'movedown', $setting['Setting']['id']));
-            $actions .= ' ' . $html->link(__('Edit', true), array('controller' => 'settings', 'action' => 'edit', $setting['Setting']['id']));
+            $actions  = $this->Html->link(__('Move up', true), array('controller' => 'settings', 'action' => 'moveup', $setting['Setting']['id']));
+            $actions .= ' ' . $this->Html->link(__('Move down', true), array('controller' => 'settings', 'action' => 'movedown', $setting['Setting']['id']));
+            $actions .= ' ' . $this->Html->link(__('Edit', true), array('controller' => 'settings', 'action' => 'edit', $setting['Setting']['id']));
             $actions .= ' ' . $layout->adminRowActions($setting['Setting']['id']);
-            $actions .= ' ' . $html->link(__('Delete', true), array(
+            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'controller' => 'settings',
                 'action' => 'delete',
                 $setting['Setting']['id'],
@@ -42,14 +42,14 @@
 
             $rows[] = array(
                 $setting['Setting']['id'],
-                $html->link($keyPrefix, array('controller' => 'settings', 'action' => 'index', 'p' => $keyPrefix)) . $keyTitle,
+                $this->Html->link($keyPrefix, array('controller' => 'settings', 'action' => 'index', 'p' => $keyPrefix)) . $keyTitle,
                 $text->truncate($setting['Setting']['value'], 20),
                 $setting['Setting']['editable'],
                 $actions,
             );
         }
 
-        echo $html->tableCells($rows);
+        echo $this->Html->tableCells($rows);
         echo $tableHeaders;
     ?>
     </table>

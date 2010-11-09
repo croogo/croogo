@@ -7,7 +7,7 @@
         $nodeTermLinks = array();
         if (count($nodeTerms) > 0) {
             foreach ($nodeTerms AS $termSlug => $termTitle) {
-                $nodeTermLinks[] = $html->link($termTitle, array(
+                $nodeTermLinks[] = $this->Html->link($termTitle, array(
                     'controller' => 'nodes',
                     'action' => 'term',
                     'type' => $layout->node('type'),
@@ -31,7 +31,7 @@
         } else {
             $commentCount = $layout->node('comment_count') . ' ' . __('Comments', true);
         }
-        echo $html->link($commentCount, $html->url($layout->node('url'), true) . '#comments');
+        echo $this->Html->link($commentCount, $this->Html->url($layout->node('url'), true) . '#comments');
     }
 ?>
 </div>

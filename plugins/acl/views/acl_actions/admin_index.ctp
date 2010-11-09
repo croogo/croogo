@@ -1,20 +1,20 @@
 <?php
-    $html->script('/acl/js/acl_permissions.js', false);
-    $html->scriptBlock("$(document).ready(function(){ AclPermissions.documentReady(); });", array('inline' => false));
+    $this->Html->script('/acl/js/acl_permissions.js', false);
+    $this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentReady(); });", array('inline' => false));
 ?>
 <div class="acos index">
     <h2><?php echo $title_for_layout; ?></h2>
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('New Action', true), array('action'=>'add')); ?></li>
-            <li><?php echo $html->link(__('Generate Actions', true), array('action'=>'generate')); ?></li>
+            <li><?php echo $this->Html->link(__('New Action', true), array('action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('Generate Actions', true), array('action'=>'generate')); ?></li>
         </ul>
     </div>
 
     <table cellpadding="0" cellspacing="0">
     <?php
-        $tableHeaders =  $html->tableHeaders(array(
+        $tableHeaders =  $this->Html->tableHeaders(array(
             __('Id', true),
             __('Alias', true),
             __('Actions', true),
@@ -38,22 +38,22 @@
                 $currentController = $alias;
             }
 
-            $actions  = $html->link(__('Edit', true), array('action' => 'edit', $id));
-            $actions .= ' ' . $html->link(__('Delete', true), array(
+            $actions  = $this->Html->link(__('Edit', true), array('action' => 'edit', $id));
+            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $id,
                 'token' => $this->params['_Token']['key'],
             ), null, __('Are you sure?', true));
-            $actions .= ' ' . $html->link(__('Move up', true), array('action' => 'move', $id, 'up'));
-            $actions .= ' ' . $html->link(__('Move down', true), array('action' => 'move', $id, 'down'));
+            $actions .= ' ' . $this->Html->link(__('Move up', true), array('action' => 'move', $id, 'up'));
+            $actions .= ' ' . $this->Html->link(__('Move down', true), array('action' => 'move', $id, 'down'));
 
             $row = array(
                 $id,
-                $html->div($class, $alias),
+                $this->Html->div($class, $alias),
                 $actions,
             );
 
-            echo $html->tableCells(array($row), $oddOptions, $evenOptions);
+            echo $this->Html->tableCells(array($row), $oddOptions, $evenOptions);
         }
         echo $tableHeaders;
     ?>

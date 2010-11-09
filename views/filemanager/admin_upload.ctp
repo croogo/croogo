@@ -16,7 +16,7 @@
     <?php
         echo $form->create('Filemanager', array(
             'type' => 'file',
-            'url' => $html->url(array(
+            'url' => $this->Html->url(array(
                 'controller' => 'filemanager',
                 'action' => 'upload',
             ), true) . '?path=' . urlencode($path),

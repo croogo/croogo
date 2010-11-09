@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title><?php echo $title_for_layout; ?> - <?php __('Croogo'); ?></title>
     <?php
-        echo $html->css(array(
+        echo $this->Html->css(array(
             'reset',
             '960',
             '/ui-themes/smoothness/jquery-ui.css',
@@ -12,7 +12,7 @@
             'thickbox',
         ));
         echo $layout->js();
-        echo $html->script(array(
+        echo $this->Html->script(array(
             'jquery/jquery.min',
             'jquery/jquery-ui.min',
             'jquery/jquery.uuid',

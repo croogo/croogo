@@ -1,10 +1,10 @@
 <div id="comment-<?php echo $comment['Comment']['id']; ?>" class="comment<?php if ($node['Node']['user_id'] == $comment['Comment']['user_id']) { echo ' author'; } ?>">
     <div class="comment-info">
-        <span class="avatar"><?php echo $html->image('http://www.gravatar.com/avatar/' . md5(strtolower($comment['Comment']['email'])) . '?s=32') ?></span>
+        <span class="avatar"><?php echo $this->Html->image('http://www.gravatar.com/avatar/' . md5(strtolower($comment['Comment']['email'])) . '?s=32') ?></span>
         <span class="name">
         <?php
             if ($comment['Comment']['website'] != null) {
-                echo $html->link($comment['Comment']['name'], $comment['Comment']['website'], array('target' => '_blank'));
+                echo $this->Html->link($comment['Comment']['name'], $comment['Comment']['website'], array('target' => '_blank'));
             } else {
                 echo $comment['Comment']['name'];
             }
@@ -16,7 +16,7 @@
     <div class="comment-reply">
     <?php
         if ($level <= Configure::read('Comment.level')) {
-            echo $html->link(__('Reply', true), array(
+            echo $this->Html->link(__('Reply', true), array(
                 'controller' => 'comments',
                 'action' => 'add',
                 $node['Node']['id'],

@@ -1,6 +1,6 @@
 <?php
     if (isset($this->params['named']['filter'])) {
-        $html->scriptBlock('var filter = 1;', array('inline' => false));
+        $this->Html->scriptBlock('var filter = 1;', array('inline' => false));
     }
 ?>
 <div class="filter">

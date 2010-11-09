@@ -1,5 +1,5 @@
 <?php
-    echo $html->link(__('Admin Panel', true), '/admin');
+    echo $this->Html->link(__('Admin Panel', true), '/admin');
     echo " | ";
-    echo $html->link(__("Visit website", true), "/");
+    echo $this->Html->link(__("Visit website", true), "/");
 ?>

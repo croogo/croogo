@@ -3,13 +3,13 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('New Attachment', true), array('action'=>'add', 'editor' => 1)); ?></li>
+            <li><?php echo $this->Html->link(__('New Attachment', true), array('action'=>'add', 'editor' => 1)); ?></li>
         </ul>
     </div>
 
     <table cellpadding="0" cellspacing="0">
     <?php
-        $tableHeaders = $html->tableHeaders(array(
+        $tableHeaders = $this->Html->tableHeaders(array(
             $paginator->sort('id'),
             '&nbsp;',
             $paginator->sort('title'),
@@ -21,12 +21,12 @@
 
         $rows = array();
         foreach ($attachments AS $attachment) {
-            $actions  = $html->link(__('Edit', true), array(
+            $actions  = $this->Html->link(__('Edit', true), array(
                 'controller' => 'attachments',
                 'action' => 'edit',
                 $attachment['Node']['id'],
             ));
-            $actions .= ' ' . $html->link(__('Delete', true), array(
+            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'controller' => 'attachments',
                 'action' => 'delete',
                 $attachment['Node']['id'],
@@ -36,31 +36,31 @@
             $mimeType = explode('/', $attachment['Node']['mime_type']);
             $mimeType = $mimeType['0'];
             if ($mimeType == 'image') {
-                $thumbnail = $html->link($image->resize($attachment['Node']['path'], 100, 200), '#', array(
+                $thumbnail = $this->Html->link($image->resize($attachment['Node']['path'], 100, 200), '#', array(
                     'onclick' => "selectURL('".$attachment['Node']['slug']."');",
                     'escape' => false,
                 ));
             } else {
-                $thumbnail = $html->image('/img/icons/page_white.png') . ' ' . $attachment['Node']['mime_type'] . ' (' . $filemanager->filename2ext($attachment['Node']['slug']) . ')';
-                $thumbnail = $html->link($thumbnail, '#', array(
+                $thumbnail = $this->Html->image('/img/icons/page_white.png') . ' ' . $attachment['Node']['mime_type'] . ' (' . $filemanager->filename2ext($attachment['Node']['slug']) . ')';
+                $thumbnail = $this->Html->link($thumbnail, '#', array(
                     'onclick' => "selectURL('".$attachment['Node']['slug']."');",
                     'escape' => false,
                 ));
             }
 
-            $insertCode = $html->link(__('Insert', true), '#', array('onclick' => 'selectURL("'.$attachment['Node']['slug'].'");'));
+            $insertCode = $this->Html->link(__('Insert', true), '#', array('onclick' => 'selectURL("'.$attachment['Node']['slug'].'");'));
 
             $rows[] = array(
                 $attachment['Node']['id'],
                 $thumbnail,
                 $attachment['Node']['title'],
                 $insertCode,
-                $html->link($text->truncate(Router::url($attachment['Node']['path'], true), 20), $attachment['Node']['path']),
+                $this->Html->link($text->truncate(Router::url($attachment['Node']['path'], true), 20), $attachment['Node']['path']),
                 $actions,
             );
         }
 
-        echo $html->tableCells($rows);
+        echo $this->Html->tableCells($rows);
         echo $tableHeaders;
     ?>
     </table>

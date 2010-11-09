@@ -3,13 +3,13 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('Upload', true), array('action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('Upload', true), array('action'=>'add')); ?></li>
         </ul>
     </div>
 
     <table cellpadding="0" cellspacing="0">
     <?php
-        $tableHeaders =  $html->tableHeaders(array(
+        $tableHeaders =  $this->Html->tableHeaders(array(
             '',
             __('Alias', true),
             __('Name', true),
@@ -32,15 +32,15 @@
                 $icon = 'cross.png';
                 $toggleText = __('Activate', true);
             }
-            $iconImage = $html->image('icons/'.$icon);
+            $iconImage = $this->Html->image('icons/'.$icon);
 
             $actions  = '';
-            $actions .= ' ' . $html->link($toggleText, array(
+            $actions .= ' ' . $this->Html->link($toggleText, array(
                 'action' => 'toggle',
                 $pluginAlias,
                 'token' => $this->params['_Token']['key'],
             ));
-            $actions .= ' ' . $html->link(__('Delete', true), array(
+            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $pluginAlias,
                 'token' => $this->params['_Token']['key'],
@@ -51,7 +51,7 @@
                 $pluginAlias,
                 $pluginData['name'],
                 $pluginData['description'],
-                $html->link($iconImage, array(
+                $this->Html->link($iconImage, array(
                     'action' => 'toggle',
                     $pluginAlias,
                     'token' => $this->params['_Token']['key'],
@@ -62,7 +62,7 @@
             );
         }
 
-        echo $html->tableCells($rows);
+        echo $this->Html->tableCells($rows);
         echo $tableHeaders;
     ?>
     </table>

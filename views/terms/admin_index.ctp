@@ -3,7 +3,7 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('New Term', true), array('action' => 'add', $vocabulary['Vocabulary']['id'])); ?></li>
+            <li><?php echo $this->Html->link(__('New Term', true), array('action' => 'add', $vocabulary['Vocabulary']['id'])); ?></li>
         </ul>
     </div>
 
@@ -24,7 +24,7 @@
     ?>
     <table cellpadding="0" cellspacing="0">
     <?php
-        $tableHeaders =  $html->tableHeaders(array(
+        $tableHeaders =  $this->Html->tableHeaders(array(
             '',
             __('Id', true),
             __('Title', true),
@@ -35,23 +35,23 @@
 
         $rows = array();
         foreach ($termsTree AS $id => $title) {
-            $actions  = $html->link(__('Move up', true), array(
+            $actions  = $this->Html->link(__('Move up', true), array(
                 'action' => 'moveup',
                 $id,
                 $vocabulary['Vocabulary']['id'],
             ));
-            $actions .= ' ' . $html->link(__('Move down', true), array(
+            $actions .= ' ' . $this->Html->link(__('Move down', true), array(
                 'action' => 'movedown',
                 $id,
                 $vocabulary['Vocabulary']['id'],
             ));
-            $actions .= ' ' . $html->link(__('Edit', true), array(
+            $actions .= ' ' . $this->Html->link(__('Edit', true), array(
                 'action' => 'edit',
                 $id,
                 $vocabulary['Vocabulary']['id'],
             ));
             $actions .= ' ' . $layout->adminRowActions($id);
-            $actions .= ' ' . $html->link(__('Delete', true), array(
+            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $id,
                 $vocabulary['Vocabulary']['id'],
@@ -67,7 +67,7 @@
             );
         }
 
-        echo $html->tableCells($rows);
+        echo $this->Html->tableCells($rows);
         echo $tableHeaders;
     ?>
     </table>

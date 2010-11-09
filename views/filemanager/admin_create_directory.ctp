@@ -14,7 +14,7 @@
 
     <?php
         echo $form->create('Filemanager', array(
-            'url' => $html->url(array(
+            'url' => $this->Html->url(array(
                 'controller' => 'filemanager',
                 'action' => 'create_directory',
             ), true) . '?path=' . urlencode($path),

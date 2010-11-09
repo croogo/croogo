@@ -3,7 +3,7 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('New Link', true), array('action'=>'add', $menu['Menu']['id'])); ?></li>
+            <li><?php echo $this->Html->link(__('New Link', true), array('action'=>'add', $menu['Menu']['id'])); ?></li>
         </ul>
     </div>
 
@@ -23,7 +23,7 @@
     ?>
     <table cellpadding="0" cellspacing="0">
     <?php
-        $tableHeaders =  $html->tableHeaders(array(
+        $tableHeaders =  $this->Html->tableHeaders(array(
             '',
             __('Id', true),
             __('Title', true),
@@ -34,11 +34,11 @@
 
         $rows = array();
         foreach ($linksTree AS $linkId => $linkTitle) {
-            $actions  = $html->link(__('Move up', true), array('controller' => 'links', 'action' => 'moveup', $linkId));
-            $actions .= ' ' . $html->link(__('Move down', true), array('controller' => 'links', 'action' => 'movedown', $linkId));
-            $actions .= ' ' . $html->link(__('Edit', true), array('controller' => 'links', 'action' => 'edit', $linkId));
+            $actions  = $this->Html->link(__('Move up', true), array('controller' => 'links', 'action' => 'moveup', $linkId));
+            $actions .= ' ' . $this->Html->link(__('Move down', true), array('controller' => 'links', 'action' => 'movedown', $linkId));
+            $actions .= ' ' . $this->Html->link(__('Edit', true), array('controller' => 'links', 'action' => 'edit', $linkId));
             $actions .= ' ' . $layout->adminRowActions($linkId);
-            $actions .= ' ' . $html->link(__('Delete', true), array(
+            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'controller' => 'links',
                 'action' => 'delete',
                 $linkId,
@@ -54,7 +54,7 @@
             );
         }
 
-        echo $html->tableCells($rows);
+        echo $this->Html->tableCells($rows);
         echo $tableHeaders;
     ?>
     </table>

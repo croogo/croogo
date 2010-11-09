@@ -3,13 +3,13 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('New Language', true), array('action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('New Language', true), array('action'=>'add')); ?></li>
         </ul>
     </div>
 
     <table cellpadding="0" cellspacing="0">
     <?php
-        $tableHeaders =  $html->tableHeaders(array(
+        $tableHeaders =  $this->Html->tableHeaders(array(
             $paginator->sort('id'),
             $paginator->sort('title'),
             $paginator->sort('native'),
@@ -21,11 +21,11 @@
 
         $rows = array();
         foreach ($languages AS $language) {
-            $actions  = $html->link(__('Move up', true), array('action' => 'moveup', $language['Language']['id']));
-            $actions .= ' ' . $html->link(__('Move down', true), array('action' => 'movedown', $language['Language']['id']));
-            $actions .= ' ' . $html->link(__('Edit', true), array('action' => 'edit', $language['Language']['id']));
+            $actions  = $this->Html->link(__('Move up', true), array('action' => 'moveup', $language['Language']['id']));
+            $actions .= ' ' . $this->Html->link(__('Move down', true), array('action' => 'movedown', $language['Language']['id']));
+            $actions .= ' ' . $this->Html->link(__('Edit', true), array('action' => 'edit', $language['Language']['id']));
             $actions .= ' ' . $layout->adminRowActions($language['Language']['id']);
-            $actions .= ' ' . $html->link(__('Delete', true), array(
+            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $language['Language']['id'],
                 'token' => $this->params['_Token']['key'],
@@ -41,7 +41,7 @@
             );
         }
 
-        echo $html->tableCells($rows);
+        echo $this->Html->tableCells($rows);
         echo $tableHeaders;
     ?>
     </table>

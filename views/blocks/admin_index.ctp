@@ -3,14 +3,14 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('New Block', true), array('action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('New Block', true), array('action'=>'add')); ?></li>
         </ul>
     </div>
 
     <?php echo $form->create('Block', array('url' => array('controller' => 'blocks', 'action' => 'process'))); ?>
     <table cellpadding="0" cellspacing="0">
     <?php
-        $tableHeaders = $html->tableHeaders(array(
+        $tableHeaders = $this->Html->tableHeaders(array(
             '',
             $paginator->sort('id'),
             $paginator->sort('title'),
@@ -23,11 +23,11 @@
 
         $rows = array();
         foreach ($blocks AS $block) {
-            $actions  = $html->link(__('Move up', true), array('controller' => 'blocks', 'action' => 'moveup', $block['Block']['id']));
-            $actions .= ' ' . $html->link(__('Move down', true), array('controller' => 'blocks', 'action' => 'movedown', $block['Block']['id']));
-            $actions .= ' ' . $html->link(__('Edit', true), array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id']));
+            $actions  = $this->Html->link(__('Move up', true), array('controller' => 'blocks', 'action' => 'moveup', $block['Block']['id']));
+            $actions .= ' ' . $this->Html->link(__('Move down', true), array('controller' => 'blocks', 'action' => 'movedown', $block['Block']['id']));
+            $actions .= ' ' . $this->Html->link(__('Edit', true), array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id']));
             $actions .= ' ' . $layout->adminRowActions($block['Block']['id']);
-            $actions .= ' ' . $html->link(__('Delete', true), array(
+            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'controller' => 'blocks',
                 'action' => 'delete',
                 $block['Block']['id'],
@@ -37,7 +37,7 @@
             $rows[] = array(
                 $form->checkbox('Block.'.$block['Block']['id'].'.id'),
                 $block['Block']['id'],
-                $html->link($block['Block']['title'], array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id'])),
+                $this->Html->link($block['Block']['title'], array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id'])),
                 $block['Block']['alias'],
                 $block['Region']['title'],
                 $layout->status($block['Block']['status']),
@@ -45,7 +45,7 @@
             );
         }
 
-        echo $html->tableCells($rows);
+        echo $this->Html->tableCells($rows);
         echo $tableHeaders;
     ?>
     </table>

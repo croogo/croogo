@@ -55,7 +55,7 @@
                 ?>
                     <p>
                     <?php
-                        echo $html->link(__('You can manage your API keys here.', true), array(
+                        echo $this->Html->link(__('You can manage your API keys here.', true), array(
                             'controller' => 'settings',
                             'action' => 'prefix',
                             'Service',

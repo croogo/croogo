@@ -14,13 +14,13 @@
     <?php
         echo $layout->meta();
         echo $layout->feed();
-        echo $html->css(array(
+        echo $this->Html->css(array(
             'reset',
             '960',
             'theme',
         ));
         echo $layout->js();
-        echo $html->script(array(
+        echo $this->Html->script(array(
             'jquery/jquery.min',
             'jquery/jquery.hoverIntent.minified',
             'jquery/superfish',
@@ -34,7 +34,7 @@
     <div id="wrapper">
         <div id="header" class="container_16">
             <div class="grid_16">
-                <h1 class="site-title"><?php echo $html->link(Configure::read('Site.title'), '/'); ?></h1>
+                <h1 class="site-title"><?php echo $this->Html->link(Configure::read('Site.title'), '/'); ?></h1>
                 <span class="site-tagline"><?php echo Configure::read('Site.tagline'); ?></span>
             </div>
             <div class="clear"></div>
@@ -67,7 +67,7 @@
                     Powered by <a href="http://www.croogo.org">Croogo</a>.
                 </div>
                 <div class="grid_8 right">
-                    <a href="http://www.cakephp.org"><?php echo $html->image('/img/cake.power.gif'); ?></a>
+                    <a href="http://www.cakephp.org"><?php echo $this->Html->image('/img/cake.power.gif'); ?></a>
                 </div>
                 <div class="clear"></div>
             </div>

@@ -18,7 +18,7 @@
                             if ($fileType == 'image') {
                                 echo $image->resize('/uploads/'.$this->data['Node']['slug'], 200, 300);
                             } else {
-                                echo $html->image('/img/icons/' . $filemanager->mimeTypeToImage($this->data['Node']['mime_type'])) . ' ' . $this->data['Node']['mime_type'];
+                                echo $this->Html->image('/img/icons/' . $filemanager->mimeTypeToImage($this->data['Node']['mime_type'])) . ' ' . $this->data['Node']['mime_type'];
                             }
                         ?>
                     </div>

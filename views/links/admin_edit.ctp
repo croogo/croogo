@@ -21,7 +21,7 @@
                         ));
                         echo $form->input('title');
                         echo $form->input('link') . 
-                            $html->link(__('Link to a Node', true), Router::url(array(
+                            $this->Html->link(__('Link to a Node', true), Router::url(array(
                                 'controller' => 'nodes',
                                 'action' => 'index',
                                 'links' => 1,

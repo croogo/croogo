@@ -1,4 +1,4 @@
-<?php $html->script(array('nodes'), false); ?>
+<?php $this->Html->script(array('nodes'), false); ?>
 <div class="nodes form">
     <h2><?php echo $title_for_layout; ?></h2>
     <?php echo $form->create('Node', array('url' => array('action' => 'add', $typeAlias)));?>

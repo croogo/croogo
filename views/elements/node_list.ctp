@@ -4,7 +4,7 @@
         foreach ($nodesList AS $n) {
             if ($options['link']) {
                 echo '<li>';
-                echo $html->link($n['Node']['title'], array(
+                echo $this->Html->link($n['Node']['title'], array(
                     'plugin' => $options['plugin'],
                     'controller' => $options['controller'],
                     'action' => $options['action'],

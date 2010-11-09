@@ -1,8 +1,8 @@
 <?php
-    $html->script(array('nodes'), false);
+    $this->Html->script(array('nodes'), false);
     if (Configure::read('Writing.wysiwyg')) {
-        $html->scriptBlock($tinymce->fileBrowserCallBack(), array('inline' => false));
-        $html->scriptBlock($tinymce->init('NodeBody'), array('inline' => false));
+        $this->Html->scriptBlock($tinymce->fileBrowserCallBack(), array('inline' => false));
+        $this->Html->scriptBlock($tinymce->init('NodeBody'), array('inline' => false));
     }
 ?>
 <div class="nodes form">

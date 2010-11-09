@@ -3,13 +3,13 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('Upload', true), array('action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('Upload', true), array('action'=>'add')); ?></li>
         </ul>
     </div>
 
     <table cellpadding="0" cellspacing="0">
     <?php
-        $tableHeaders =  $html->tableHeaders(array(
+        $tableHeaders =  $this->Html->tableHeaders(array(
             '',
             __('Locale', true),
             __('Default', true),
@@ -20,13 +20,13 @@
         $rows = array();
         foreach ($locales AS $locale) {
             $actions  = '';
-            $actions .= $html->link(__('Activate', true), array(
+            $actions .= $this->Html->link(__('Activate', true), array(
                 'action' => 'activate',
                 $locale,
                 'token' => $this->params['_Token']['key'],
             ));
-            $actions .= ' ' . $html->link(__('Edit', true), array('action' => 'edit', $locale));
-            $actions .= ' ' . $html->link(__('Delete', true), array(
+            $actions .= ' ' . $this->Html->link(__('Edit', true), array('action' => 'edit', $locale));
+            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $locale,
                 'token' => $this->params['_Token']['key'],
@@ -46,7 +46,7 @@
             );
         }
 
-        echo $html->tableCells($rows);
+        echo $this->Html->tableCells($rows);
         echo $tableHeaders;
     ?>
     </table>

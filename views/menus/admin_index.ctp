@@ -3,13 +3,13 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('New Menu', true), array('action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('New Menu', true), array('action'=>'add')); ?></li>
         </ul>
     </div>
 
     <table cellpadding="0" cellspacing="0">
     <?php
-        $tableHeaders =  $html->tableHeaders(array(
+        $tableHeaders =  $this->Html->tableHeaders(array(
             $paginator->sort('id'),
             $paginator->sort('title'),
             $paginator->sort('alias'),
@@ -20,10 +20,10 @@
 
         $rows = array();
         foreach ($menus AS $menu) {
-            $actions  = $html->link(__('View links', true), array('controller' => 'links', 'action' => 'index', $menu['Menu']['id']));
-            $actions .= ' ' . $html->link(__('Edit', true), array('controller' => 'menus', 'action' => 'edit', $menu['Menu']['id']));
+            $actions  = $this->Html->link(__('View links', true), array('controller' => 'links', 'action' => 'index', $menu['Menu']['id']));
+            $actions .= ' ' . $this->Html->link(__('Edit', true), array('controller' => 'menus', 'action' => 'edit', $menu['Menu']['id']));
             $actions .= ' ' . $layout->adminRowActions($menu['Menu']['id']);
-            $actions .= ' ' . $html->link(__('Delete', true), array(
+            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'controller' => 'menus',
                 'action' => 'delete',
                 $menu['Menu']['id'],
@@ -32,14 +32,14 @@
 
             $rows[] = array(
                 $menu['Menu']['id'],
-                $html->link($menu['Menu']['title'], array('controller' => 'links', 'action' => 'index', $menu['Menu']['id'])),
+                $this->Html->link($menu['Menu']['title'], array('controller' => 'links', 'action' => 'index', $menu['Menu']['id'])),
                 $menu['Menu']['alias'],
                 $menu['Menu']['link_count'],
                 $actions,
             );
         }
 
-        echo $html->tableCells($rows);
+        echo $this->Html->tableCells($rows);
         echo $tableHeaders;
     ?>
     </table>

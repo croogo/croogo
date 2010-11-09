@@ -3,7 +3,7 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('Reset password', true), array('action' => 'reset_password', $this->params['pass']['0'])); ?></li>
+            <li><?php echo $this->Html->link(__('Reset password', true), array('action' => 'reset_password', $this->params['pass']['0'])); ?></li>
         </ul>
     </div>
 

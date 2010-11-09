@@ -4,7 +4,7 @@
     <div class="types">
         <?php foreach ($types AS $type) { ?>
         <div class="type">
-            <h3><?php echo $html->link($type['Type']['title'], array('action' => 'add', $type['Type']['alias'])); ?></h3>
+            <h3><?php echo $this->Html->link($type['Type']['title'], array('action' => 'add', $type['Type']['alias'])); ?></h3>
             <p><?php echo $type['Type']['description']; ?></p>
         </div>
         <?php } ?>

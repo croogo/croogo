@@ -1,13 +1,13 @@
 <?php
-    $html->script('/acl/js/acl_permissions.js', false);
+    $this->Html->script('/acl/js/acl_permissions.js', false);
 ?>
 <div class="acl_permissions index">
     <h2><?php echo $title_for_layout; ?></h2>
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('Generate Actions', true), array('controller' => 'acl_actions', 'action'=>'generate', 'permissions' => 1)); ?></li>
-            <li><?php echo $html->link(__('Edit Actions', true), array('controller' => 'acl_actions', 'action'=>'index', 'permissions' => 1)); ?></li>
+            <li><?php echo $this->Html->link(__('Generate Actions', true), array('controller' => 'acl_actions', 'action'=>'generate', 'permissions' => 1)); ?></li>
+            <li><?php echo $this->Html->link(__('Edit Actions', true), array('controller' => 'acl_actions', 'action'=>'index', 'permissions' => 1)); ?></li>
         </ul>
     </div>
 
@@ -21,7 +21,7 @@
             __('Alias', true),
         );
         $tableHeaders = array_merge($tableHeaders, $roleTitles);
-        $tableHeaders =  $html->tableHeaders($tableHeaders);
+        $tableHeaders =  $this->Html->tableHeaders($tableHeaders);
         echo $tableHeaders;
 
         $currentController = '';
@@ -43,26 +43,26 @@
             
             $row = array(
                 $id,
-                $html->div($class, $alias),
+                $this->Html->div($class, $alias),
             );
 
             foreach ($roles AS $roleId => $roleTitle) {
                 if ($level != 0) {
                     if ($roleId != 1) {
                         if ($permissions[$id][$roleId] == 1) {
-                            $row[] = $html->image('/img/icons/tick.png', array('class' => 'permission-toggle', 'rel' => $id.'-'.$rolesAros[$roleId]));
+                            $row[] = $this->Html->image('/img/icons/tick.png', array('class' => 'permission-toggle', 'rel' => $id.'-'.$rolesAros[$roleId]));
                         } else {
-                            $row[] = $html->image('/img/icons/cross.png', array('class' => 'permission-toggle', 'rel' => $id.'-'.$rolesAros[$roleId]));
+                            $row[] = $this->Html->image('/img/icons/cross.png', array('class' => 'permission-toggle', 'rel' => $id.'-'.$rolesAros[$roleId]));
                         }
                     } else {
-                        $row[] = $html->image('/img/icons/tick_disabled.png', array('class' => 'permission-disabled'));
+                        $row[] = $this->Html->image('/img/icons/tick_disabled.png', array('class' => 'permission-disabled'));
                     }
                 } else {
                     $row[] = '';
                 }
             }
 
-            echo $html->tableCells(array($row), $oddOptions, $evenOptions);
+            echo $this->Html->tableCells(array($row), $oddOptions, $evenOptions);
         }
 
         echo $tableHeaders;

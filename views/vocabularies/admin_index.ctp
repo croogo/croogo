@@ -3,13 +3,13 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('New Vocabulary', true), array('action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('New Vocabulary', true), array('action'=>'add')); ?></li>
         </ul>
     </div>
 
     <table cellpadding="0" cellspacing="0">
     <?php
-        $tableHeaders =  $html->tableHeaders(array(
+        $tableHeaders =  $this->Html->tableHeaders(array(
             $paginator->sort('id'),
             $paginator->sort('title'),
             $paginator->sort('alias'),
@@ -19,12 +19,12 @@
 
         $rows = array();
         foreach ($vocabularies AS $vocabulary) {
-            $actions  = $html->link(__('View terms', true), array('controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id']));
-            $actions .= ' ' . $html->link(__('Edit', true), array('action' => 'edit', $vocabulary['Vocabulary']['id']));
-            $actions .= ' ' . $html->link(__('Move up', true), array('action' => 'moveup', $vocabulary['Vocabulary']['id']));
-            $actions .= ' ' . $html->link(__('Move down', true), array('action' => 'movedown', $vocabulary['Vocabulary']['id']));
+            $actions  = $this->Html->link(__('View terms', true), array('controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id']));
+            $actions .= ' ' . $this->Html->link(__('Edit', true), array('action' => 'edit', $vocabulary['Vocabulary']['id']));
+            $actions .= ' ' . $this->Html->link(__('Move up', true), array('action' => 'moveup', $vocabulary['Vocabulary']['id']));
+            $actions .= ' ' . $this->Html->link(__('Move down', true), array('action' => 'movedown', $vocabulary['Vocabulary']['id']));
             $actions .= ' ' . $layout->adminRowActions($vocabulary['Vocabulary']['id']);
-            $actions .= ' ' . $html->link(__('Delete', true), array(
+            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'controller' => 'vocabularies',
                 'action' => 'delete',
                 $vocabulary['Vocabulary']['id'],
@@ -33,13 +33,13 @@
 
             $rows[] = array(
                 $vocabulary['Vocabulary']['id'],
-                $html->link($vocabulary['Vocabulary']['title'], array('controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id'])),
+                $this->Html->link($vocabulary['Vocabulary']['title'], array('controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id'])),
                 $vocabulary['Vocabulary']['alias'],
                 $actions,
             );
         }
 
-        echo $html->tableCells($rows);
+        echo $this->Html->tableCells($rows);
         echo $tableHeaders;
     ?>
     </table>

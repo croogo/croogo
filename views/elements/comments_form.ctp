@@ -4,8 +4,8 @@
         $type = $types_for_layout[$node['Node']['type']];
 
         if ($this->params['controller'] == 'comments') {
-            $nodeLink = $html->link(__('Go back to original post', true) . ': ' . $node['Node']['title'], $node['Node']['url']);
-            echo $html->tag('p', $nodeLink, array('class' => 'back'));
+            $nodeLink = $this->Html->link(__('Go back to original post', true) . ': ' . $node['Node']['title'], $node['Node']['url']);
+            echo $this->Html->tag('p', $nodeLink, array('class' => 'back'));
         }
 
         $formUrl = array(

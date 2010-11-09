@@ -1,6 +1,6 @@
 <?php
-    echo $html->css('admin');
-    echo $html->script('jquery/jquery.min');
+    echo $this->Html->css('admin');
+    echo $this->Html->script('jquery/jquery.min');
 ?>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -34,7 +34,7 @@
     <?php foreach ($nodes AS $node) { ?>
         <li>
         <?php
-            echo $html->link($node['Node']['title'], array(
+            echo $this->Html->link($node['Node']['title'], array(
                 'admin' => false,
                 'controller' => 'nodes',
                 'action' => 'view',

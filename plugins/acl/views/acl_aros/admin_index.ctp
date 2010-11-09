@@ -3,13 +3,13 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('New Aro', true), array('action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('New Aro', true), array('action'=>'add')); ?></li>
         </ul>
     </div>
 
     <table cellpadding="0" cellspacing="0">
     <?php
-        $tableHeaders = $html->tableHeaders(array(
+        $tableHeaders = $this->Html->tableHeaders(array(
             $paginator->sort('id'),
             $paginator->sort('parent_id'),
             $paginator->sort('model'),
@@ -21,8 +21,8 @@
 
         $rows = array();
         foreach ($aros AS $aro) {
-            $actions  = $html->link(__('Edit', true), array('action' => 'edit', $aro['AclAro']['id']));
-            $actions .= ' ' . $html->link(__('Delete', true), array(
+            $actions  = $this->Html->link(__('Edit', true), array('action' => 'edit', $aro['AclAro']['id']));
+            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $aro['AclAro']['id'],
                 'token' => $this->params['_Token']['key'],
@@ -32,13 +32,13 @@
                 $aro['AclAro']['id'],
                 $aro['AclAro']['parent_id'],
                 $aro['AclAro']['model'],
-                $html->link($aro['AclAro']['foreign_key'], array('plugin' => 0, 'controller' => Inflector::pluralize(strtolower($aro['AclAro']['model'])), 'action' => 'edit', $aro['AclAro']['foreign_key'])),
+                $this->Html->link($aro['AclAro']['foreign_key'], array('plugin' => 0, 'controller' => Inflector::pluralize(strtolower($aro['AclAro']['model'])), 'action' => 'edit', $aro['AclAro']['foreign_key'])),
                 $aro['AclAro']['alias'],
                 $actions,
             );
         }
 
-        echo $html->tableCells($rows);
+        echo $this->Html->tableCells($rows);
         echo $tableHeaders;
     ?>
     </table>

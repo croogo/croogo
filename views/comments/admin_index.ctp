@@ -11,15 +11,15 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('Published', true), array('action'=>'index', 'filter' => 'status:1;')); ?></li>
-            <li><?php echo $html->link(__('Approval', true), array('action'=>'index', 'filter' => 'status:0;')); ?></li>
+            <li><?php echo $this->Html->link(__('Published', true), array('action'=>'index', 'filter' => 'status:1;')); ?></li>
+            <li><?php echo $this->Html->link(__('Approval', true), array('action'=>'index', 'filter' => 'status:0;')); ?></li>
         </ul>
     </div>
 
     <?php echo $form->create('Comment', array('url' => array('controller' => 'comments', 'action' => 'process'))); ?>
     <table cellpadding="0" cellspacing="0">
     <?php
-        $tableHeaders = $html->tableHeaders(array(
+        $tableHeaders = $this->Html->tableHeaders(array(
             '',
             $paginator->sort('id'),
             //$paginator->sort('title'),
@@ -34,9 +34,9 @@
 
         $rows = array();
         foreach ($comments AS $comment) {
-            $actions  = $html->link(__('Edit', true), array('action' => 'edit', $comment['Comment']['id']));
+            $actions  = $this->Html->link(__('Edit', true), array('action' => 'edit', $comment['Comment']['id']));
             $actions .= ' ' . $layout->adminRowActions($comment['Comment']['id']);
-            $actions .= ' ' . $html->link(__('Delete', true), array(
+            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $comment['Comment']['id'],
                 'token' => $this->params['_Token']['key'],
@@ -48,20 +48,20 @@
                 //$comment['Comment']['title'],
                 $comment['Comment']['name'],
                 $comment['Comment']['email'],
-                $html->link($comment['Node']['title'], array(
+                $this->Html->link($comment['Node']['title'], array(
                     'admin' => false,
                     'controller' => 'nodes',
                     'action' => 'view',
                     'type' => $comment['Node']['type'],
                     'slug' => $comment['Node']['slug'],
                 )),
-                $html->link($html->image('/img/icons/comment.png'), '#', array('class' => 'tooltip', 'title' => $comment['Comment']['body'], 'escape' => false)),
+                $this->Html->link($this->Html->image('/img/icons/comment.png'), '#', array('class' => 'tooltip', 'title' => $comment['Comment']['body'], 'escape' => false)),
                 $comment['Comment']['created'],
                 $actions,
             );
         }
 
-        echo $html->tableCells($rows);
+        echo $this->Html->tableCells($rows);
         echo $tableHeaders;
     ?>
     </table>

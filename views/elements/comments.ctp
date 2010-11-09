@@ -6,7 +6,7 @@
     } else {
         $commentHeading .= __('Comments', true);
     }
-    echo $html->tag('h3', $commentHeading);
+    echo $this->Html->tag('h3', $commentHeading);
 
     foreach ($comments AS $comment) {
         echo $this->element('comment', array('comment' => $comment, 'level' => 1));

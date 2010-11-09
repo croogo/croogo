@@ -23,7 +23,7 @@
 	<div class="directory-content">
         <table cellpadding="0" cellspacing="0">
         <?php
-            $tableHeaders =  $html->tableHeaders(array(
+            $tableHeaders =  $this->Html->tableHeaders(array(
                 '',
                 __('Directory content', true),
                 __('Actions', true),
@@ -42,12 +42,12 @@
                     ), $path.$directory);
                 }
                 $rows[] = array(
-                    $html->image('/img/icons/folder.png'),
+                    $this->Html->image('/img/icons/folder.png'),
                     $filemanager->linkDirectory($directory, $path.$directory.DS),
                     $actions,
                 );
             }
-            echo $html->tableCells($rows, array('class' => 'directory'), array('class' => 'directory'));
+            echo $this->Html->tableCells($rows, array('class' => 'directory'), array('class' => 'directory'));
 
             // files
             $rows = array();
@@ -61,12 +61,12 @@
                     ), $path.$file);
                 }
                 $rows[] = array(
-                    $html->image('/img/icons/'.$filemanager->filename2icon($file)),
+                    $this->Html->image('/img/icons/'.$filemanager->filename2icon($file)),
                     $filemanager->linkFile($file, $path.$file),
                     $actions,
                 );
             }
-            echo $html->tableCells($rows, array('class' => 'file'), array('class' => 'file'));
+            echo $this->Html->tableCells($rows, array('class' => 'file'), array('class' => 'file'));
 
             echo $tableHeaders;
         ?>

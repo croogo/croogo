@@ -3,8 +3,8 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('Upload', true), array('action' => 'add')); ?></li>
-            <!--<li><?php echo $html->link(__('Editor', true), array('action' => 'editor')); ?></li>-->
+            <li><?php echo $this->Html->link(__('Upload', true), array('action' => 'add')); ?></li>
+            <!--<li><?php echo $this->Html->link(__('Editor', true), array('action' => 'editor')); ?></li>-->
         </ul>
     </div>
 
@@ -13,9 +13,9 @@
         <div class="screenshot">
         <?php
             if (!Configure::read('Site.theme')) {
-                echo $html->image($currentTheme['screenshot']);
+                echo $this->Html->image($currentTheme['screenshot']);
             } else {
-                echo $html->tag('div', $html->image('/theme/' . Configure::read('Site.theme') . '/img/' . $currentTheme['screenshot']), array('class' => 'screenshot'));
+                echo $this->Html->tag('div', $this->Html->image('/theme/' . Configure::read('Site.theme') . '/img/' . $currentTheme['screenshot']), array('class' => 'screenshot'));
             }
         ?>
         </div>
@@ -23,7 +23,7 @@
         <?php
             $author = $currentTheme['author'];
             if (isset($currentTheme['authorUrl']) && strlen($currentTheme['authorUrl']) > 0) {
-                $author = $html->link($author, $currentTheme['authorUrl']);
+                $author = $this->Html->link($author, $currentTheme['authorUrl']);
             }
             echo $currentTheme['name'] . ' ' . __('by', true) . ' ' . $author;
         ?>
@@ -43,24 +43,24 @@
                     !($themeAlias == 'default' && !Configure::read('Site.theme'))) {
                     echo '<li>';
                         if ($themeAlias == 'default') {
-                            echo $html->tag('div', $html->image($theme['screenshot']), array('class' => 'screenshot'));
+                            echo $this->Html->tag('div', $this->Html->image($theme['screenshot']), array('class' => 'screenshot'));
                         } else {
-                            echo $html->tag('div', $html->image('/theme/' . $themeAlias . '/img/' . $theme['screenshot']), array('class' => 'screenshot'));
+                            echo $this->Html->tag('div', $this->Html->image('/theme/' . $themeAlias . '/img/' . $theme['screenshot']), array('class' => 'screenshot'));
                         }
                         $author = $theme['author'];
                         if (isset($theme['authorUrl']) && strlen($theme['authorUrl']) > 0) {
-                            $author = $html->link($author, $theme['authorUrl']);
+                            $author = $this->Html->link($author, $theme['authorUrl']);
                         }
-                        echo $html->tag('h3', $theme['name'] . ' ' . __('by', true) . ' ' . $author, array());
-                        echo $html->tag('p', $theme['description'], array('class' => 'description'));
-                        echo $html->tag('p', __('Regions supported: ', true) . implode(', ', $theme['regions']), array('class' => 'regions'));
-                        echo $html->tag('div',
-                            $html->link(__('Activate', true), array(
+                        echo $this->Html->tag('h3', $theme['name'] . ' ' . __('by', true) . ' ' . $author, array());
+                        echo $this->Html->tag('p', $theme['description'], array('class' => 'description'));
+                        echo $this->Html->tag('p', __('Regions supported: ', true) . implode(', ', $theme['regions']), array('class' => 'regions'));
+                        echo $this->Html->tag('div',
+                            $this->Html->link(__('Activate', true), array(
                                 'action' => 'activate',
                                 $themeAlias,
                                 'token' => $this->params['_Token']['key'],
                             )) .
-                            $html->link(__('Delete', true), array(
+                            $this->Html->link(__('Delete', true), array(
                                 'action' => 'delete',
                                 $themeAlias,
                                 'token' => $this->params['_Token']['key'],

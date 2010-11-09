@@ -7,7 +7,7 @@
         ?>
         </fieldset>
     <?php
-        echo $html->link(__('Forgot password?', true), array(
+        echo $this->Html->link(__('Forgot password?', true), array(
             'admin' => false,
             'controller' => 'users',
             'action' => 'forgot',

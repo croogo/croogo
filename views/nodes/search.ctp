@@ -16,7 +16,7 @@
             $layout->setNode($node);
     ?>
     <div id="node-<?php echo $layout->node('id'); ?>" class="node node-type-<?php echo $layout->node('type'); ?>">
-        <h2><?php echo $html->link($layout->node('title'), $layout->node('url')); ?></h2>
+        <h2><?php echo $this->Html->link($layout->node('title'), $layout->node('url')); ?></h2>
         <?php 
             echo $layout->nodeInfo();
             echo $layout->nodeBody();
