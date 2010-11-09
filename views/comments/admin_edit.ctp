@@ -1,7 +1,7 @@
 <div class="comments form">
     <h2><?php echo $title_for_layout; ?></h2>
 
-    <?php echo $form->create('Comment');?>
+    <?php echo $this->Form->create('Comment');?>
         <fieldset>
             <div class="tabs">
                 <ul>
@@ -12,23 +12,23 @@
 
                 <div id="comment-main">
                 <?php
-                    echo $form->input('id');
-                    echo $form->input('title');
-                    echo $form->input('body');
-                    echo $form->input('status', array('label' => __('Published', true)));
+                    echo $this->Form->input('id');
+                    echo $this->Form->input('title');
+                    echo $this->Form->input('body');
+                    echo $this->Form->input('status', array('label' => __('Published', true)));
                 ?>
                 </div>
 
                 <div id="comment-contact">
                 <?php
-                    echo $form->input('name');
-                    echo $form->input('email');
-                    echo $form->input('website');
-                    echo $form->input('ip', array('disabled' => 'disabled'));
+                    echo $this->Form->input('name');
+                    echo $this->Form->input('email');
+                    echo $this->Form->input('website');
+                    echo $this->Form->input('ip', array('disabled' => 'disabled'));
                 ?>
                 </div>
                 <?php echo $layout->adminTabs(); ?>
             </div>
         </fieldset>
-    <?php echo $form->end('Submit');?>
+    <?php echo $this->Form->end('Submit');?>
 </div>

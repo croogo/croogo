@@ -1,8 +1,8 @@
 <div class="install form">
     <h2><?php echo $title_for_layout; ?></h2>
     <?php
-        echo $form->create('Install', array('url' => array('plugin' => 'install', 'controller' => 'install', 'action' => 'database')));
-        echo $form->input('Install.driver', array(
+        echo $this->Form->create('Install', array('url' => array('plugin' => 'install', 'controller' => 'install', 'action' => 'database')));
+        echo $this->Form->input('Install.driver', array(
             'label' => 'Driver',
             'value' => 'mysql',
             'empty' => false,
@@ -19,12 +19,12 @@
                 'odbc' => 'odbc',
             ),
         ));
-        //echo $form->input('Install.driver', array('label' => 'Driver', 'value' => 'mysql'));
-        echo $form->input('Install.host', array('label' => 'Host', 'value' => 'localhost'));
-        echo $form->input('Install.login', array('label' => 'User / Login', 'value' => 'root'));
-        echo $form->input('Install.password', array('label' => 'Password'));
-        echo $form->input('Install.database', array('label' => 'Name', 'value' => 'croogo'));
-        echo $form->input('Install.port', array('label' => 'Port (leave blank if unknown)'));
-        echo $form->end('Submit');
+        //echo $this->Form->input('Install.driver', array('label' => 'Driver', 'value' => 'mysql'));
+        echo $this->Form->input('Install.host', array('label' => 'Host', 'value' => 'localhost'));
+        echo $this->Form->input('Install.login', array('label' => 'User / Login', 'value' => 'root'));
+        echo $this->Form->input('Install.password', array('label' => 'Password'));
+        echo $this->Form->input('Install.database', array('label' => 'Name', 'value' => 'croogo'));
+        echo $this->Form->input('Install.port', array('label' => 'Port (leave blank if unknown)'));
+        echo $this->Form->end('Submit');
     ?>
 </div>

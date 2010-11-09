@@ -1,10 +1,10 @@
 <div class="users form">
     <h2><?php echo $title_for_layout; ?></h2>
-    <?php echo $form->create('User', array('url' => array('controller' => 'users', 'action' => 'forgot')));?>
+    <?php echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'forgot')));?>
         <fieldset>
         <?php
-            echo $form->input('username');
+            echo $this->Form->input('username');
         ?>
         </fieldset>
-    <?php echo $form->end('Submit');?>
+    <?php echo $this->Form->end('Submit');?>
 </div>

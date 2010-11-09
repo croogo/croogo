@@ -16,7 +16,7 @@
         }
     ?>
 
-    <?php echo $form->create('Message', array('url' => array('controller' => 'messages', 'action' => 'process'))); ?>
+    <?php echo $this->Form->create('Message', array('url' => array('controller' => 'messages', 'action' => 'process'))); ?>
     <table cellpadding="0" cellspacing="0">
     <?php
         $tableHeaders =  $this->Html->tableHeaders(array(
@@ -42,7 +42,7 @@
             ), null, __('Are you sure?', true));
 
             $rows[] = array(
-                $form->checkbox('Message.'.$message['Message']['id'].'.id'),
+                $this->Form->checkbox('Message.'.$message['Message']['id'].'.id'),
                 $message['Message']['id'],
                 $message['Contact']['title'],
                 $message['Message']['name'],
@@ -59,7 +59,7 @@
     </table>
     <div class="bulk-actions">
     <?php
-        echo $form->input('Message.action', array(
+        echo $this->Form->input('Message.action', array(
             'label' => false,
             'options' => array(
                 'read' => __('Mark as read', true),
@@ -68,7 +68,7 @@
             ),
             'empty' => true,
         ));
-        echo $form->end(__('Submit', true));
+        echo $this->Form->end(__('Submit', true));
     ?>
     </div>
 </div>

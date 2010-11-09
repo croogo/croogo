@@ -7,7 +7,7 @@
         </ul>
     </div>
 
-    <?php echo $form->create('User');?>
+    <?php echo $this->Form->create('User');?>
         <fieldset>
             <div class="tabs">
                 <ul>
@@ -17,16 +17,16 @@
 
                 <div id="user-main">
                 <?php
-                    echo $form->input('id');
-                    echo $form->input('role_id');
-                    echo $form->input('username');
-                    echo $form->input('name');
-                    echo $form->input('email');
-                    echo $form->input('website');
-                    echo $form->input('status');
+                    echo $this->Form->input('id');
+                    echo $this->Form->input('role_id');
+                    echo $this->Form->input('username');
+                    echo $this->Form->input('name');
+                    echo $this->Form->input('email');
+                    echo $this->Form->input('website');
+                    echo $this->Form->input('status');
                 ?>
                 </div>
                 <?php echo $layout->adminTabs(); ?>
         </fieldset>
-    <?php echo $form->end('Submit');?>
+    <?php echo $this->Form->end('Submit');?>
 </div>

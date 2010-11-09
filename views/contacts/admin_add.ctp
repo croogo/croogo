@@ -1,6 +1,6 @@
 <div class="contacts form">
     <h2><?php echo $title_for_layout; ?></h2>
-    <?php echo $form->create('Contact');?>
+    <?php echo $this->Form->create('Contact');?>
         <fieldset>
             <div class="tabs">
                 <ul>
@@ -12,43 +12,43 @@
 
                 <div id="contact-basic">
                 <?php
-                    echo $form->input('title');
-                    echo $form->input('alias');
-                    echo $form->input('email');
-                    echo $form->input('body');
-                    echo $form->input('status');
+                    echo $this->Form->input('title');
+                    echo $this->Form->input('alias');
+                    echo $this->Form->input('email');
+                    echo $this->Form->input('body');
+                    echo $this->Form->input('status');
                 ?>
                 </div>
 
                 <div id="contact-details">
                 <?php
-                    echo $form->input('name');
-                    echo $form->input('position');
-                    echo $form->input('address');
-                    echo $form->input('address2');
-                    echo $form->input('state');
-                    echo $form->input('country');
-                    echo $form->input('postcode');
-                    echo $form->input('phone');
-                    echo $form->input('fax');
+                    echo $this->Form->input('name');
+                    echo $this->Form->input('position');
+                    echo $this->Form->input('address');
+                    echo $this->Form->input('address2');
+                    echo $this->Form->input('state');
+                    echo $this->Form->input('country');
+                    echo $this->Form->input('postcode');
+                    echo $this->Form->input('phone');
+                    echo $this->Form->input('fax');
                 ?>
                 </div>
 
                 <div id="contact-message">
                 <?php
-                    echo $form->input('message_status', array(
+                    echo $this->Form->input('message_status', array(
                         'label' => __('Let users leave a message', true),
                     ));
-                    echo $form->input('message_archive', array(
+                    echo $this->Form->input('message_archive', array(
                         'label' => __('Save messages in database', true),
                     ));
-                    echo $form->input('message_notify', array(
+                    echo $this->Form->input('message_notify', array(
                         'label' => __('Notify by email instantly', true),
                     ));
-                    echo $form->input('message_spam_protection', array(
+                    echo $this->Form->input('message_spam_protection', array(
                         'label' => __('Spam protection (requires Akismet API key)', true),
                     ));
-                    echo $form->input('message_captcha', array(
+                    echo $this->Form->input('message_captcha', array(
                         'label' => __('Use captcha? (requires Recaptcha API key)', true),
                     ));
                 ?>
@@ -65,5 +65,5 @@
                 <?php echo $layout->adminTabs(); ?>
             </div>
         </fieldset>
-    <?php echo $form->end('Submit');?>
+    <?php echo $this->Form->end('Submit');?>
 </div>

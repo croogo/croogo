@@ -14,7 +14,7 @@
             }
         }
 
-        echo $form->create('Term', array(
+        echo $this->Form->create('Term', array(
             'url' => array(
                 'controller' => 'terms',
                 'action' => 'process',

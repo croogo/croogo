@@ -1,9 +1,9 @@
 <div class="users form">
-    <?php echo $form->create('User', array('url' => array('controller' => 'users', 'action' => 'login')));?>
+    <?php echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'login')));?>
         <fieldset>
         <?php
-            echo $form->input('username');
-            echo $form->input('password');
+            echo $this->Form->input('username');
+            echo $this->Form->input('password');
         ?>
         </fieldset>
     <?php
@@ -14,6 +14,6 @@
         ), array(
             'class' => 'forgot',
         ));
-        echo $form->end(__('Log In', true));
+        echo $this->Form->end(__('Log In', true));
     ?>
 </div>

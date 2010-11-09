@@ -1,6 +1,6 @@
 <div class="types form">
     <h2><?php echo $title_for_layout; ?></h2>
-    <?php echo $form->create('Type');?>
+    <?php echo $this->Form->create('Type');?>
         <fieldset>
             <div class="tabs">
                 <ul>
@@ -14,24 +14,24 @@
 
                 <div id="type">
                 <?php
-                    echo $form->input('title');
-                    echo $form->input('alias');
-                    echo $form->input('description');
+                    echo $this->Form->input('title');
+                    echo $this->Form->input('alias');
+                    echo $this->Form->input('description');
                 ?>
                 </div>
 
                 <div id="type-taxonomy">
                 <?php
-                    echo $form->input('Vocabulary.Vocabulary');
+                    echo $this->Form->input('Vocabulary.Vocabulary');
                 ?>
                 </div>
 
                 <div id="type-format">
                 <?php
-                    echo $form->input('format_show_author', array(
+                    echo $this->Form->input('format_show_author', array(
                         'label' => __('Show author\'s name', true),
                     ));
-                    echo $form->input('format_show_date', array(
+                    echo $this->Form->input('format_show_date', array(
                         'label' => __('Show date', true),
                     ));
                 ?>
@@ -44,19 +44,19 @@
                         '1' => __('Read only', true),
                         '2' => __('Read/Write', true),
                     );
-                    echo $form->input('comment_status', array(
+                    echo $this->Form->input('comment_status', array(
                         'type' => 'radio',
                         'div' => array('class' => 'radio'),
                         'options' => $options,
                         'value' => 2,
                     ));
-                    echo $form->input('comment_approve', array(
+                    echo $this->Form->input('comment_approve', array(
                         'label' => 'Auto approve comments',
                     ));
-                    echo $form->input('comment_spam_protection', array(
+                    echo $this->Form->input('comment_spam_protection', array(
                         'label' => __('Spam protection (requires Akismet API key)', true),
                     ));
-                    echo $form->input('comment_captcha', array(
+                    echo $this->Form->input('comment_captcha', array(
                         'label' => __('Use captcha? (requires Recaptcha API key)', true),
                     ));
                 ?>
@@ -74,11 +74,11 @@
 
                 <div id="type-params">
                 <?php
-                    echo $form->input('Type.params');
+                    echo $this->Form->input('Type.params');
                 ?>
                 </div>
                 <?php echo $layout->adminTabs(); ?>
             </div>
         </fieldset>
-    <?php echo $form->end('Submit');?>
+    <?php echo $this->Form->end('Submit');?>
 </div>

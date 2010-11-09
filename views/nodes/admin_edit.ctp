@@ -2,7 +2,7 @@
 <div class="nodes form">
     <h2><?php echo $title_for_layout; ?></h2>
 
-    <?php echo $form->create('Node', array('url' => array('action' => 'edit')));?>
+    <?php echo $this->Form->create('Node', array('url' => array('action' => 'edit')));?>
         <fieldset>
             <div class="tabs">
                 <ul>
@@ -17,12 +17,12 @@
 
                 <div id="node-main">
                 <?php
-                    echo $form->input('id');
-                    echo $form->input('parent_id', array('type' => 'select', 'options' => $nodes, 'empty' => true));
-                    echo $form->input('title');
-                    echo $form->input('slug');
-                    echo $form->input('excerpt');
-                    echo $form->input('body', array('class' => 'content'));
+                    echo $this->Form->input('id');
+                    echo $this->Form->input('parent_id', array('type' => 'select', 'options' => $nodes, 'empty' => true));
+                    echo $this->Form->input('title');
+                    echo $this->Form->input('slug');
+                    echo $this->Form->input('excerpt');
+                    echo $this->Form->input('body', array('class' => 'content'));
                 ?>
                 </div>
 
@@ -31,7 +31,7 @@
                 <?php
                     $taxonomyIds = Set::extract('/Taxonomy/id', $this->data);
                     foreach ($taxonomy AS $vocabularyId => $taxonomyTree) {
-                        echo $form->input('TaxonomyData.'.$vocabularyId, array(
+                        echo $this->Form->input('TaxonomyData.'.$vocabularyId, array(
                             'label' => $vocabularies[$vocabularyId]['title'],
                             'type' => 'select',
                             'multiple' => true,
@@ -46,7 +46,7 @@
                 <?php if ($type['Type']['comment_status'] != 0) { ?>
                 <div id="node-comments">
                 <?php
-                    echo $form->input('comment_status', array(
+                    echo $this->Form->input('comment_status', array(
                         'type' => 'radio',
                         'div' => array('class' => 'radio'),
                         'options' => array(
@@ -77,16 +77,16 @@
 
                 <div id="node-access">
                     <?php
-                        echo $form->input('Role.Role');
+                        echo $this->Form->input('Role.Role');
                     ?>
                 </div>
 
                 <div id="node-publishing">
                 <?php
-                    echo $form->input('status', array('label' => __('Published', true)));
-                    echo $form->input('promote', array('label' => __('Promoted to front page', true)));
-                    echo $form->input('user_id');
-                    echo $form->input('created');
+                    echo $this->Form->input('status', array('label' => __('Published', true)));
+                    echo $this->Form->input('promote', array('label' => __('Promoted to front page', true)));
+                    echo $this->Form->input('user_id');
+                    echo $this->Form->input('created');
                 ?>
                 </div>
                 <?php echo $layout->adminTabs(); ?>
@@ -94,10 +94,10 @@
             </div>
         </fieldset>
     <?php 
-        echo $form->input('token_key', array(
+        echo $this->Form->input('token_key', array(
             'type' => 'hidden',
             'value' => $this->params['_Token']['key'],
         ));
-        echo $form->end('Submit');
+        echo $this->Form->end('Submit');
     ?>
 </div>

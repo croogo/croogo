@@ -14,7 +14,7 @@
             }
         }
 
-        echo $form->create('Link', array(
+        echo $this->Form->create('Link', array(
             'url' => array(
                 'action' => 'process',
                 $menu['Menu']['id'],
@@ -46,7 +46,7 @@
             ), null, __('Are you sure?', true));
 
             $rows[] = array(
-                $form->checkbox('Link.'.$linkId.'.id'),
+                $this->Form->checkbox('Link.'.$linkId.'.id'),
                 $linkId,
                 $linkTitle,
                 $layout->status($linksStatus[$linkId]),
@@ -60,7 +60,7 @@
     </table>
     <div class="bulk-actions">
     <?php
-        echo $form->input('Link.action', array(
+        echo $this->Form->input('Link.action', array(
             'label' => false,
             'options' => array(
                 'publish' => __('Publish', true),
@@ -69,7 +69,7 @@
             ),
             'empty' => true,
         ));
-        echo $form->end(__('Submit', true));
+        echo $this->Form->end(__('Submit', true));
     ?>
     </div>
 </div>

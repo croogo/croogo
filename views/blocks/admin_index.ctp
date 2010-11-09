@@ -7,7 +7,7 @@
         </ul>
     </div>
 
-    <?php echo $form->create('Block', array('url' => array('controller' => 'blocks', 'action' => 'process'))); ?>
+    <?php echo $this->Form->create('Block', array('url' => array('controller' => 'blocks', 'action' => 'process'))); ?>
     <table cellpadding="0" cellspacing="0">
     <?php
         $tableHeaders = $this->Html->tableHeaders(array(
@@ -35,7 +35,7 @@
             ), null, __('Are you sure?', true));
 
             $rows[] = array(
-                $form->checkbox('Block.'.$block['Block']['id'].'.id'),
+                $this->Form->checkbox('Block.'.$block['Block']['id'].'.id'),
                 $block['Block']['id'],
                 $this->Html->link($block['Block']['title'], array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id'])),
                 $block['Block']['alias'],
@@ -51,7 +51,7 @@
     </table>
     <div class="bulk-actions">
     <?php
-        echo $form->input('Block.action', array(
+        echo $this->Form->input('Block.action', array(
             'label' => false,
             'options' => array(
                 'publish' => __('Publish', true),
@@ -60,7 +60,7 @@
             ),
             'empty' => true,
         ));
-        echo $form->end(__('Submit', true));
+        echo $this->Form->end(__('Submit', true));
     ?>
     </div>
 </div>

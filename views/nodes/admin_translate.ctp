@@ -9,7 +9,7 @@
     <h2><?php echo $title_for_layout; ?></h2>
 
     <?php
-        echo $form->create('Node', array('url' => array(
+        echo $this->Form->create('Node', array('url' => array(
             'action' => 'translate',
             'locale' => $this->params['named']['locale'],
         )));
@@ -23,11 +23,11 @@
             <div id="node-main">
             <?php
                 foreach ($fields AS $field) {
-                    echo $form->input('Node.'.$field);
+                    echo $this->Form->input('Node.'.$field);
                 }
              ?>
              </div>
         </div>
     </fieldset>
-    <?php echo $form->end('Submit');?>
+    <?php echo $this->Form->end('Submit');?>
 </div>

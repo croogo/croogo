@@ -2,7 +2,7 @@
     <h2><?php echo $title_for_layout; ?></h2>
 
     <?php
-        echo $form->create('Setting', array(
+        echo $this->Form->create('Setting', array(
             'url' => array(
                 'controller' => 'settings',
                 'action' => 'prefix',
@@ -29,25 +29,25 @@
             }
 
             echo '<div class="setting">';
-                echo $form->input("Setting.$i.id", array('value' => $setting['Setting']['id']));
-                echo $form->input("Setting.$i.key", array('type' => 'hidden', 'value' => $key));
+                echo $this->Form->input("Setting.$i.id", array('value' => $setting['Setting']['id']));
+                echo $this->Form->input("Setting.$i.key", array('type' => 'hidden', 'value' => $key));
                 if ($setting['Setting']['input_type'] == 'checkbox') {
                     if ($setting['Setting']['value'] == 1) {
-                        echo $form->input("Setting.$i.value", array(
+                        echo $this->Form->input("Setting.$i.value", array(
                             'label' => $label,
                             'type' => $setting['Setting']['input_type'],
                             'checked' => 'checked',
                             'rel' => $setting['Setting']['description'],
                         ));
                     } else {
-                        echo $form->input("Setting.$i.value", array(
+                        echo $this->Form->input("Setting.$i.value", array(
                             'label' => $label,
                             'type' => $setting['Setting']['input_type'],
                             'rel' => $setting['Setting']['description'],
                         ));
                     }
                 } else {
-                    echo $form->input("Setting.$i.value", array(
+                    echo $this->Form->input("Setting.$i.value", array(
                         'label' => $label,
                         'type' => $inputType,
                         'value' => $setting['Setting']['value'],
@@ -59,5 +59,5 @@
         }
     ?>
     </fieldset>
-    <?php echo $form->end("Submit"); ?>
+    <?php echo $this->Form->end("Submit"); ?>
 </div>

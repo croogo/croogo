@@ -1,7 +1,7 @@
 <div class="extensions-locales">
     <h2><?php echo $title_for_layout; ?></h2>
     <?php
-        echo $form->create('Locale', array(
+        echo $this->Form->create('Locale', array(
             'url' => array(
                 'plugin' => 'extensions',
                 'controller' => 'extensions_locales',
@@ -12,7 +12,7 @@
     ?>
     <fieldset>
     <?php
-        echo $form->input('Locale.content', array(
+        echo $this->Form->input('Locale.content', array(
             'label' => __('Content', true),
             'value' => $content,
             'type' => 'textarea',
@@ -20,5 +20,5 @@
         ));
     ?>
     </fieldset>
-    <?php echo $form->end('Submit');?>
+    <?php echo $this->Form->end('Submit');?>
 </div>

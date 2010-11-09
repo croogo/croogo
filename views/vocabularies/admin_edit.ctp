@@ -1,7 +1,7 @@
 <div class="vocabularies form">
     <h2><?php echo $title_for_layout; ?></h2>
 
-    <?php echo $form->create('Vocabulary');?>
+    <?php echo $this->Form->create('Vocabulary');?>
         <fieldset>
             <div class="tabs">
                 <ul>
@@ -12,23 +12,23 @@
 
                 <div id="vocabulary-basic">
                     <?php
-                        echo $form->input('id');
-                        echo $form->input('title');
-                        echo $form->input('alias');
-                        echo $form->input('description');
-                        echo $form->input('Type.Type');
+                        echo $this->Form->input('id');
+                        echo $this->Form->input('title');
+                        echo $this->Form->input('alias');
+                        echo $this->Form->input('description');
+                        echo $this->Form->input('Type.Type');
                     ?>
                 </div>
 
                 <div id="vocabulary-options">
                     <?php
-                        echo $form->input('required');
-                        echo $form->input('multiple');
-                        echo $form->input('tags');
+                        echo $this->Form->input('required');
+                        echo $this->Form->input('multiple');
+                        echo $this->Form->input('tags');
                     ?>
                 </div>
                 <?php echo $layout->adminTabs(); ?>
             </div>
         </fieldset>
-    <?php echo $form->end('Submit');?>
+    <?php echo $this->Form->end('Submit');?>
 </div>

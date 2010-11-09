@@ -2,7 +2,7 @@
     <h2><?php echo $title_for_layout; ?></h2>
 
     <?php
-        echo $form->create('Term', array(
+        echo $this->Form->create('Term', array(
             'url' => '/' . $this->params['url']['url'],
         ));
     ?>
@@ -15,17 +15,17 @@
 
                 <div id="term-basic">
                 <?php
-                    echo $form->input('Taxonomy.parent_id', array(
+                    echo $this->Form->input('Taxonomy.parent_id', array(
                         'options' => $parentTree,
                         'empty' => true,
                     ));
-                    echo $form->input('title');
-                    echo $form->input('slug', array('class' => 'slug'));
-                    echo $form->input('description');
+                    echo $this->Form->input('title');
+                    echo $this->Form->input('slug', array('class' => 'slug'));
+                    echo $this->Form->input('description');
                 ?>
                 </div>
                 <?php echo $layout->adminTabs(); ?>
             </div>
         </fieldset>
-    <?php echo $form->end('Submit');?>
+    <?php echo $this->Form->end('Submit');?>
 </div>

@@ -21,7 +21,7 @@
         echo $this->element('admin/nodes_filter');
     ?>
 
-    <?php echo $form->create('Node', array('url' => array('controller' => 'nodes', 'action' => 'process'))); ?>
+    <?php echo $this->Form->create('Node', array('url' => array('controller' => 'nodes', 'action' => 'process'))); ?>
     <table cellpadding="0" cellspacing="0">
     <?php
         $tableHeaders =  $this->Html->tableHeaders(array(
@@ -48,7 +48,7 @@
             ), null, __('Are you sure?', true));
 
             $rows[] = array(
-                $form->checkbox('Node.'.$node['Node']['id'].'.id'),
+                $this->Form->checkbox('Node.'.$node['Node']['id'].'.id'),
                 $node['Node']['id'],
                 $this->Html->link($node['Node']['title'], array(
                     'admin' => false,
@@ -73,7 +73,7 @@
 
     <div class="bulk-actions">
     <?php
-        echo $form->input('Node.action', array(
+        echo $this->Form->input('Node.action', array(
             'label' => false,
             'options' => array(
                 'publish' => __('Publish', true),
@@ -84,7 +84,7 @@
             ),
             'empty' => true,
         ));
-        echo $form->end(__('Submit', true));
+        echo $this->Form->end(__('Submit', true));
     ?>
     </div>
 </div>

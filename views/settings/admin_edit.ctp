@@ -1,6 +1,6 @@
 <div class="settings form">
     <h2><? echo $title_for_layout; ?></h2>
-    <?php echo $form->create('Setting');?>
+    <?php echo $this->Form->create('Setting');?>
 	<fieldset>
         <div class="tabs">
             <ul>
@@ -10,24 +10,24 @@
 
             <div id="setting-basic">
                 <?php
-                    echo $form->input('id');
-                    echo $form->input('key', array('rel' => __("e.g., 'Site.title'", true)));
-                    echo $form->input('value');
+                    echo $this->Form->input('id');
+                    echo $this->Form->input('key', array('rel' => __("e.g., 'Site.title'", true)));
+                    echo $this->Form->input('value');
                 ?>
             </div>
 
             <div id="setting-misc">
                 <?php
-                    echo $form->input('title');
-                    echo $form->input('description');
-                    echo $form->input('input_type', array('rel' => __("e.g., 'text' or 'textarea'", true)));
-                    echo $form->input('editable');
-                    //echo $form->input('weight');
-                    echo $form->input('params');
+                    echo $this->Form->input('title');
+                    echo $this->Form->input('description');
+                    echo $this->Form->input('input_type', array('rel' => __("e.g., 'text' or 'textarea'", true)));
+                    echo $this->Form->input('editable');
+                    //echo $this->Form->input('weight');
+                    echo $this->Form->input('params');
                 ?>
             </div>
 
         </div>
 	</fieldset>
-    <?php echo $form->end('Submit');?>
+    <?php echo $this->Form->end('Submit');?>
 </div>

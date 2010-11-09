@@ -1,7 +1,7 @@
 <div class="attachments form">
     <h2><?php echo $title_for_layout; ?></h2>
 
-    <?php echo $form->create('Node', array('url' => array('controller' => 'attachments', 'action' => 'edit')));?>
+    <?php echo $this->Form->create('Node', array('url' => array('controller' => 'attachments', 'action' => 'edit')));?>
         <fieldset>
 
             <div class="tabs">
@@ -24,20 +24,20 @@
                     </div>
 
                     <?php
-                        echo $form->input('id');
-                        echo $form->input('title');
-                        echo $form->input('excerpt', array('label' => __('Caption', true)));
-                        //echo $form->input('body', array('label' => __('Description', true)));
+                        echo $this->Form->input('id');
+                        echo $this->Form->input('title');
+                        echo $this->Form->input('excerpt', array('label' => __('Caption', true)));
+                        //echo $this->Form->input('body', array('label' => __('Description', true)));
                     ?>
                 </div>
 
                 <div id="node-info">
                     <?php
-                        echo $form->input('file_url', array('label' => __('File URL', true), 'value' => Router::url($this->data['Node']['path'], true), 'readonly' => 'readonly'));
-                        echo $form->input('file_type', array('label' => __('Mime Type', true), 'value' => $this->data['Node']['mime_type'], 'readonly' => 'readonly'));
+                        echo $this->Form->input('file_url', array('label' => __('File URL', true), 'value' => Router::url($this->data['Node']['path'], true), 'readonly' => 'readonly'));
+                        echo $this->Form->input('file_type', array('label' => __('Mime Type', true), 'value' => $this->data['Node']['mime_type'], 'readonly' => 'readonly'));
                     ?>
                 </div>
             </div>
         </fieldset>
-    <?php echo $form->end('Submit');?>
+    <?php echo $this->Form->end('Submit');?>
 </div>

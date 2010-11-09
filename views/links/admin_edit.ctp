@@ -1,6 +1,6 @@
 <div class="links form">
     <h2><?php echo $title_for_layout; ?></h2>
-    <?php echo $form->create('Link', array('url' => array('controller' => 'links', 'action' => 'edit', 'menu' => $menuId)));?>
+    <?php echo $this->Form->create('Link', array('url' => array('controller' => 'links', 'action' => 'edit', 'menu' => $menuId)));?>
         <fieldset>
             <div class="tabs">
                 <ul>
@@ -12,15 +12,15 @@
 
                 <div id="link-basic">
                     <?php
-                        echo $form->input('id');
-                        echo $form->input('menu_id');
-                        echo $form->input('parent_id', array(
+                        echo $this->Form->input('id');
+                        echo $this->Form->input('menu_id');
+                        echo $this->Form->input('parent_id', array(
                             'label' => __('Parent', true),
                             'options' => $parentLinks,
                             'empty' => true,
                         ));
-                        echo $form->input('title');
-                        echo $form->input('link') . 
+                        echo $this->Form->input('title');
+                        echo $this->Form->input('link') . 
                             $this->Html->link(__('Link to a Node', true), Router::url(array(
                                 'controller' => 'nodes',
                                 'action' => 'index',
@@ -29,26 +29,26 @@
                             array(
                                 'class' => 'thickbox',
                             ));
-                        echo $form->input('status');
+                        echo $this->Form->input('status');
                     ?>
                 </div>
 
                 <div id="link-access">
                     <?php
-                        echo $form->input('Role.Role');
+                        echo $this->Form->input('Role.Role');
                     ?>
                 </div>
 
                 <div id="link-misc">
                     <?php
-                        echo $form->input('description');
-                        echo $form->input('rel');
-                        echo $form->input('target');
-                        echo $form->input('params');
+                        echo $this->Form->input('description');
+                        echo $this->Form->input('rel');
+                        echo $this->Form->input('target');
+                        echo $this->Form->input('params');
                     ?>
                 </div>
                 <?php echo $layout->adminTabs(); ?>
             </div>
         </fieldset>
-    <?php echo $form->end('Submit');?>
+    <?php echo $this->Form->end('Submit');?>
 </div>

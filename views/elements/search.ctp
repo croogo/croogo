@@ -16,12 +16,12 @@
             if (isset($this->params['named']['q'])) {
                 $qValue = $this->params['named']['q'];
             }
-            echo $form->input('q', array(
+            echo $this->Form->input('q', array(
                 'label' => false,
                 'name' => 'q',
                 'value' => $qValue,
             ));
-            echo $form->submit(__('Search', true));
+            echo $this->Form->submit(__('Search', true));
         ?>
         </form>
     </div>

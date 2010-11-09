@@ -13,7 +13,7 @@
     </div>
 
     <?php
-        echo $form->create('Filemanager', array(
+        echo $this->Form->create('Filemanager', array(
             'url' => $this->Html->url(array(
                 'controller' => 'filemanager',
                 'action' => 'create_file',
@@ -21,7 +21,7 @@
         ));
     ?>
     <fieldset>
-    <?php echo $form->input('Filemanager.name', array('type' => 'text')); ?>
+    <?php echo $this->Form->input('Filemanager.name', array('type' => 'text')); ?>
     </fieldset>
-    <?php echo $form->end("Submit"); ?>
+    <?php echo $this->Form->end("Submit"); ?>
 </div>
