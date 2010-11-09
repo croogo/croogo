@@ -87,8 +87,6 @@ class LayoutHelper extends AppHelper {
  * @return string
  */
     public function js() {
-        $output = $this->Html->script('croogo');
-
         $croogo = array();
         if (isset($this->params['locale'])) {
             $croogo['basePath'] = Router::url('/'.$this->params['locale'].'/');
@@ -103,9 +101,7 @@ class LayoutHelper extends AppHelper {
         if (is_array(Configure::read('Js'))) {
             $croogo = Set::merge($croogo, Configure::read('Js'));
         }
-        $output .= $this->Html->scriptBlock('$.extend(Croogo, ' . $this->Js->object($croogo) . ');');
-
-        echo $output;
+        return $this->Html->scriptBlock('var Croogo = ' . $this->Js->object($croogo) . ';');
     }
 /**
  * Status
