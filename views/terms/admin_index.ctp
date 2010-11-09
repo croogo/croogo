@@ -50,7 +50,7 @@
                 $id,
                 $vocabulary['Vocabulary']['id'],
             ));
-            $actions .= ' ' . $layout->adminRowActions($id);
+            $actions .= ' ' . $this->Layout->adminRowActions($id);
             $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $id,

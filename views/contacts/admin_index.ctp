@@ -23,7 +23,7 @@
             $actions = '';
             //$actions .= $this->Html->link(__('View Messages', true), array('controller'=> 'messages', 'action' => 'index', 'contact' => $contact['Contact']['id']));
             $actions .= ' ' . $this->Html->link(__('Edit', true), array('action' => 'edit', $contact['Contact']['id']));
-            $actions .= ' ' . $layout->adminRowActions($contact['Contact']['id']);
+            $actions .= ' ' . $this->Layout->adminRowActions($contact['Contact']['id']);
             $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $contact['Contact']['id'],

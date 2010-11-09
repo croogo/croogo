@@ -22,7 +22,7 @@
         $rows = array();
         foreach ($users AS $user) {
             $actions  = $this->Html->link(__('Edit', true), array('controller' => 'users', 'action' => 'edit', $user['User']['id']));
-            $actions .= ' ' . $layout->adminRowActions($user['User']['id']);
+            $actions .= ' ' . $this->Layout->adminRowActions($user['User']['id']);
             $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'controller' => 'users',
                 'action' => 'delete',

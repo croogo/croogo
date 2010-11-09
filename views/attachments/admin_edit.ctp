@@ -16,9 +16,9 @@
                             $fileType = explode('/', $this->data['Node']['mime_type']);
                             $fileType = $fileType['0'];
                             if ($fileType == 'image') {
-                                echo $image->resize('/uploads/'.$this->data['Node']['slug'], 200, 300);
+                                echo $this->Image->resize('/uploads/'.$this->data['Node']['slug'], 200, 300);
                             } else {
-                                echo $this->Html->image('/img/icons/' . $filemanager->mimeTypeToImage($this->data['Node']['mime_type'])) . ' ' . $this->data['Node']['mime_type'];
+                                echo $this->Html->image('/img/icons/' . $this->Filemanager->mimeTypeToImage($this->data['Node']['mime_type'])) . ' ' . $this->data['Node']['mime_type'];
                             }
                         ?>
                     </div>

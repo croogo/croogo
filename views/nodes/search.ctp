@@ -13,14 +13,14 @@
 
     <?php 
         foreach ($nodes AS $node) {
-            $layout->setNode($node);
+            $this->Layout->setNode($node);
     ?>
-    <div id="node-<?php echo $layout->node('id'); ?>" class="node node-type-<?php echo $layout->node('type'); ?>">
-        <h2><?php echo $this->Html->link($layout->node('title'), $layout->node('url')); ?></h2>
+    <div id="node-<?php echo $this->Layout->node('id'); ?>" class="node node-type-<?php echo $this->Layout->node('type'); ?>">
+        <h2><?php echo $this->Html->link($this->Layout->node('title'), $this->Layout->node('url')); ?></h2>
         <?php 
-            echo $layout->nodeInfo();
-            echo $layout->nodeBody();
-            echo $layout->nodeMoreInfo();
+            echo $this->Layout->nodeInfo();
+            echo $this->Layout->nodeBody();
+            echo $this->Layout->nodeMoreInfo();
         ?>
     </div>
     <?php 

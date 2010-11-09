@@ -5,7 +5,7 @@
             <div class="tabs">
                 <ul>
                     <li><a href="#role-main"><span><?php __('Role'); ?></span></a></li>
-                    <?php echo $layout->adminTabs(); ?>
+                    <?php echo $this->Layout->adminTabs(); ?>
                 </ul>
 
                 <div id="role-main">
@@ -14,7 +14,7 @@
                     echo $this->Form->input('alias');
                 ?>
                 </div>
-                <?php echo $layout->adminTabs(); ?>
+                <?php echo $this->Layout->adminTabs(); ?>
             </div>
         </fieldset>
     <?php echo $this->Form->end('Submit');?>

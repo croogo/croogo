@@ -5,7 +5,7 @@
         <div class="tabs">
             <ul>
                 <li><a href="#user-main"><?php __('User'); ?></a></li>
-                <?php echo $layout->adminTabs(); ?>
+                <?php echo $this->Layout->adminTabs(); ?>
             </ul>
 
             <div id="user-main">
@@ -19,7 +19,7 @@
                 echo $this->Form->input('status');
             ?>
             </div>
-            <?php echo $layout->adminTabs(); ?>
+            <?php echo $this->Layout->adminTabs(); ?>
         </div>
     </fieldset>
     <?php echo $this->Form->end('Submit');?>

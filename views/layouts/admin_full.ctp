@@ -11,7 +11,7 @@
             'admin',
             'thickbox',
         ));
-        echo $layout->js();
+        echo $this->Layout->js();
         echo $this->Html->script(array(
             'jquery/jquery.min',
             'jquery/jquery-ui.min',
@@ -50,7 +50,7 @@
             <div class="grid_16">
                 <div id="content">
                     <?php
-                        $layout->sessionFlash();
+                        $this->Layout->sessionFlash();
                         echo $content_for_layout;
                     ?>
                 </div>

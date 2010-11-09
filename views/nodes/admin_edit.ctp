@@ -12,7 +12,7 @@
                     <li><a href="#node-meta"><span><?php __('Custom fields'); ?></span></a></li>
                     <li><a href="#node-access"><span><?php __('Access'); ?></span></a></li>
                     <li><a href="#node-publishing"><span><?php __('Publishing'); ?></span></a></li>
-                    <?php echo $layout->adminTabs(); ?>
+                    <?php echo $this->Layout->adminTabs(); ?>
                 </ul>
 
                 <div id="node-main">
@@ -66,7 +66,7 @@
                             $fieldsKeyToId = Set::combine($this->data['Meta'], '{n}.key', '{n}.id');
                             if (count($fields) > 0) {
                                 foreach ($fields AS $fieldKey => $fieldValue) {
-                                    echo $layout->metaField($fieldKey, $fieldValue, $fieldsKeyToId[$fieldKey]);
+                                    echo $this->Layout->metaField($fieldKey, $fieldValue, $fieldsKeyToId[$fieldKey]);
                                 }
                             }
                         ?>
@@ -89,7 +89,7 @@
                     echo $this->Form->input('created');
                 ?>
                 </div>
-                <?php echo $layout->adminTabs(); ?>
+                <?php echo $this->Layout->adminTabs(); ?>
                 <div class="clear">&nbsp;</div>
             </div>
         </fieldset>

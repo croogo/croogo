@@ -25,7 +25,7 @@
         <div id="main">
             <div id="login">
             <?php
-                $layout->sessionFlash();
+                $this->Layout->sessionFlash();
                 echo $content_for_layout;
             ?>
             </div>

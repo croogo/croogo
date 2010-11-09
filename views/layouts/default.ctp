@@ -12,14 +12,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title><?php echo $title_for_layout; ?> &raquo; <?php echo Configure::read('Site.title'); ?></title>
     <?php
-        echo $layout->meta();
-        echo $layout->feed();
+        echo $this->Layout->meta();
+        echo $this->Layout->feed();
         echo $this->Html->css(array(
             'reset',
             '960',
             'theme',
         ));
-        echo $layout->js();
+        echo $this->Layout->js();
         echo $this->Html->script(array(
             'jquery/jquery.min',
             'jquery/jquery.hoverIntent.minified',
@@ -42,20 +42,20 @@
 
         <div id="nav">
             <div class="container_16">
-                <?php echo $layout->menu('main', array('dropdown' => true)); ?>
+                <?php echo $this->Layout->menu('main', array('dropdown' => true)); ?>
             </div>
         </div>
 
         <div id="main" class="container_16">
             <div id="content" class="grid_11">
             <?php
-                $layout->sessionFlash();
+                $this->Layout->sessionFlash();
                 echo $content_for_layout;
             ?>
             </div>
 
             <div id="sidebar" class="grid_5">
-            <?php echo $layout->blocks('right'); ?>
+            <?php echo $this->Layout->blocks('right'); ?>
             </div>
 
             <div class="clear"></div>

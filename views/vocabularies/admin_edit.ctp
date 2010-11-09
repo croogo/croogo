@@ -7,7 +7,7 @@
                 <ul>
                     <li><span><a href="#vocabulary-basic"><?php __('Vocabulary'); ?></a></span></li>
                     <li><span><a href="#vocabulary-options"><?php __('Options'); ?></a></span></li>
-                    <?php echo $layout->adminTabs(); ?>
+                    <?php echo $this->Layout->adminTabs(); ?>
                 </ul>
 
                 <div id="vocabulary-basic">
@@ -27,7 +27,7 @@
                         echo $this->Form->input('tags');
                     ?>
                 </div>
-                <?php echo $layout->adminTabs(); ?>
+                <?php echo $this->Layout->adminTabs(); ?>
             </div>
         </fieldset>
     <?php echo $this->Form->end('Submit');?>

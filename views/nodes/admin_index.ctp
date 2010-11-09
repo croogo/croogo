@@ -40,7 +40,7 @@
         $rows = array();
         foreach ($nodes AS $node) {
             $actions  = $this->Html->link(__('Edit', true), array('action' => 'edit', $node['Node']['id']));
-            $actions .= ' ' . $layout->adminRowActions($node['Node']['id']);
+            $actions .= ' ' . $this->Layout->adminRowActions($node['Node']['id']);
             $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $node['Node']['id'],
@@ -59,8 +59,8 @@
                 )),
                 $node['Node']['type'],
                 $node['User']['username'],
-                $layout->status($node['Node']['status']),
-                $layout->status($node['Node']['promote']),
+                $this->Layout->status($node['Node']['status']),
+                $this->Layout->status($node['Node']['promote']),
                 //$node['Node']['created'],
                 $actions,
             );

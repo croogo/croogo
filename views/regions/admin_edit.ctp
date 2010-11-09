@@ -6,7 +6,7 @@
             <div class="tabs">
                 <ul>
                     <li><a href="#region-main"><span><?php __('Region'); ?></span></a></li>
-                    <?php echo $layout->adminTabs(); ?>
+                    <?php echo $this->Layout->adminTabs(); ?>
                 </ul>
 
                 <div id="region-main">
@@ -15,7 +15,7 @@
                     echo $this->Form->input('title');
                 ?>
                 </div>
-                <?php echo $layout->adminTabs(); ?>
+                <?php echo $this->Layout->adminTabs(); ?>
             </div>
         </fieldset>
     <?php echo $this->Form->end('Submit');?>

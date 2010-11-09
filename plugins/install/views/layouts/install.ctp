@@ -24,7 +24,7 @@
         <div id="main">
             <div id="install">
             <?php
-                $layout->sessionFlash();
+                $this->Layout->sessionFlash();
                 echo $content_for_layout;
             ?>
             </div>

@@ -18,20 +18,20 @@
         }
 
         echo $this->Form->create('Comment', array('url' => $formUrl));
-            if ($session->check('Auth.User.id')) {
+            if ($this->Session->check('Auth.User.id')) {
                 echo $this->Form->input('Comment.name', array(
                     'label' => __('Name', true),
-                    'value' => $session->read('Auth.User.name'),
+                    'value' => $this->Session->read('Auth.User.name'),
                     'readonly' => 'readonly',
                 ));
                 echo $this->Form->input('Comment.email', array(
                     'label' => __('Email', true),
-                    'value' => $session->read('Auth.User.email'),
+                    'value' => $this->Session->read('Auth.User.email'),
                     'readonly' => 'readonly',
                 ));
                 echo $this->Form->input('Comment.website', array(
                     'label' => __('Website', true),
-                    'value' => $session->read('Auth.User.website'),
+                    'value' => $this->Session->read('Auth.User.website'),
                     'readonly' => 'readonly',
                 ));
                 echo $this->Form->input('Comment.body', array('label' => false));
@@ -43,7 +43,7 @@
             }
 
             if ($type['Type']['comment_captcha']) {
-                echo $recaptcha->display_form();
+                echo $this->Recaptcha->display_form();
             }
         echo $this->Form->end(__('Post comment', true));
     ?>

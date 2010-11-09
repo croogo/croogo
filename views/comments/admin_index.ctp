@@ -35,7 +35,7 @@
         $rows = array();
         foreach ($comments AS $comment) {
             $actions  = $this->Html->link(__('Edit', true), array('action' => 'edit', $comment['Comment']['id']));
-            $actions .= ' ' . $layout->adminRowActions($comment['Comment']['id']);
+            $actions .= ' ' . $this->Layout->adminRowActions($comment['Comment']['id']);
             $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $comment['Comment']['id'],

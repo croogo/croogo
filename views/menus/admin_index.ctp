@@ -22,7 +22,7 @@
         foreach ($menus AS $menu) {
             $actions  = $this->Html->link(__('View links', true), array('controller' => 'links', 'action' => 'index', $menu['Menu']['id']));
             $actions .= ' ' . $this->Html->link(__('Edit', true), array('controller' => 'menus', 'action' => 'edit', $menu['Menu']['id']));
-            $actions .= ' ' . $layout->adminRowActions($menu['Menu']['id']);
+            $actions .= ' ' . $this->Layout->adminRowActions($menu['Menu']['id']);
             $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'controller' => 'menus',
                 'action' => 'delete',

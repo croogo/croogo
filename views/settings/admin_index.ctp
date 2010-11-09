@@ -23,7 +23,7 @@
             $actions  = $this->Html->link(__('Move up', true), array('controller' => 'settings', 'action' => 'moveup', $setting['Setting']['id']));
             $actions .= ' ' . $this->Html->link(__('Move down', true), array('controller' => 'settings', 'action' => 'movedown', $setting['Setting']['id']));
             $actions .= ' ' . $this->Html->link(__('Edit', true), array('controller' => 'settings', 'action' => 'edit', $setting['Setting']['id']));
-            $actions .= ' ' . $layout->adminRowActions($setting['Setting']['id']);
+            $actions .= ' ' . $this->Layout->adminRowActions($setting['Setting']['id']);
             $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'controller' => 'settings',
                 'action' => 'delete',
@@ -43,7 +43,7 @@
             $rows[] = array(
                 $setting['Setting']['id'],
                 $this->Html->link($keyPrefix, array('controller' => 'settings', 'action' => 'index', 'p' => $keyPrefix)) . $keyTitle,
-                $text->truncate($setting['Setting']['value'], 20),
+                $this->Text->truncate($setting['Setting']['value'], 20),
                 $setting['Setting']['editable'],
                 $actions,
             );

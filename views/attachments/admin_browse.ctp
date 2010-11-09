@@ -36,12 +36,12 @@
             $mimeType = explode('/', $attachment['Node']['mime_type']);
             $mimeType = $mimeType['0'];
             if ($mimeType == 'image') {
-                $thumbnail = $this->Html->link($image->resize($attachment['Node']['path'], 100, 200), '#', array(
+                $thumbnail = $this->Html->link($this->Image->resize($attachment['Node']['path'], 100, 200), '#', array(
                     'onclick' => "selectURL('".$attachment['Node']['slug']."');",
                     'escape' => false,
                 ));
             } else {
-                $thumbnail = $this->Html->image('/img/icons/page_white.png') . ' ' . $attachment['Node']['mime_type'] . ' (' . $filemanager->filename2ext($attachment['Node']['slug']) . ')';
+                $thumbnail = $this->Html->image('/img/icons/page_white.png') . ' ' . $attachment['Node']['mime_type'] . ' (' . $this->Filemanager->filename2ext($attachment['Node']['slug']) . ')';
                 $thumbnail = $this->Html->link($thumbnail, '#', array(
                     'onclick' => "selectURL('".$attachment['Node']['slug']."');",
                     'escape' => false,
@@ -55,7 +55,7 @@
                 $thumbnail,
                 $attachment['Node']['title'],
                 $insertCode,
-                $this->Html->link($text->truncate(Router::url($attachment['Node']['path'], true), 20), $attachment['Node']['path']),
+                $this->Html->link($this->Text->truncate(Router::url($attachment['Node']['path'], true), 20), $attachment['Node']['path']),
                 $actions,
             );
         }

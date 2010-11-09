@@ -11,7 +11,7 @@
                     <li><a href="#node-meta"><span><?php __('Custom fields'); ?></span></a></li>
                     <li><a href="#node-access"><span><?php __('Access'); ?></span></a></li>
                     <li><a href="#node-publishing"><span><?php __('Publishing'); ?></span></a></li>
-                    <?php echo $layout->adminTabs(); ?>
+                    <?php echo $this->Layout->adminTabs(); ?>
                 </ul>
 
                 <div id="node-main">
@@ -62,10 +62,10 @@
                             $fields = array();
                             if (count($fields) > 0) {
                                 foreach ($fields AS $fieldKey => $fieldValue) {
-                                    echo $layout->metaField($fieldKey, $fieldValue);
+                                    echo $this->Layout->metaField($fieldKey, $fieldValue);
                                 }
                             } else {
-                                echo $layout->metaField();
+                                echo $this->Layout->metaField();
                             }
                         ?>
                         <div class="clear">&nbsp;</div>
@@ -93,7 +93,7 @@
                     echo $this->Form->input('created');
                 ?>
                 </div>
-                <?php echo $layout->adminTabs(); ?>
+                <?php echo $this->Layout->adminTabs(); ?>
                 <div class="clear">&nbsp;</div>
             </div>
         </fieldset>

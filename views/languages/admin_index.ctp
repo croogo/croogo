@@ -24,7 +24,7 @@
             $actions  = $this->Html->link(__('Move up', true), array('action' => 'moveup', $language['Language']['id']));
             $actions .= ' ' . $this->Html->link(__('Move down', true), array('action' => 'movedown', $language['Language']['id']));
             $actions .= ' ' . $this->Html->link(__('Edit', true), array('action' => 'edit', $language['Language']['id']));
-            $actions .= ' ' . $layout->adminRowActions($language['Language']['id']);
+            $actions .= ' ' . $this->Layout->adminRowActions($language['Language']['id']);
             $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $language['Language']['id'],
@@ -36,7 +36,7 @@
                 $language['Language']['title'],
                 $language['Language']['native'],
                 $language['Language']['alias'],
-                $layout->status($language['Language']['status']),
+                $this->Layout->status($language['Language']['status']),
                 $actions,
             );
         }

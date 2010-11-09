@@ -4,9 +4,9 @@
     <div class="breadcrumb">
     <?php
         echo __('You are here:', true) . ' ';
-        $breadcrumb = $filemanager->breadcrumb($path);
+        $breadcrumb = $this->Filemanager->breadcrumb($path);
         foreach($breadcrumb AS $pathname => $p) {
-            echo $filemanager->linkDirectory($pathname, $p);
+            echo $this->Filemanager->linkDirectory($pathname, $p);
             echo DS;
         }
     ?>

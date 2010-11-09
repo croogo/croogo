@@ -21,7 +21,7 @@
         $rows = array();
         foreach ($types AS $type) {
             $actions  = $this->Html->link(__('Edit', true), array('controller' => 'types', 'action' => 'edit', $type['Type']['id']));
-            $actions .= ' ' . $layout->adminRowActions($type['Type']['id']);
+            $actions .= ' ' . $this->Layout->adminRowActions($type['Type']['id']);
             $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'controller' => 'types',
                 'action' => 'delete',
@@ -33,7 +33,7 @@
                 $type['Type']['id'],
                 $type['Type']['title'],
                 $type['Type']['alias'],
-                $text->truncate($type['Type']['description'], 50),
+                $this->Text->truncate($type['Type']['description'], 50),
                 $actions,
             );
         }

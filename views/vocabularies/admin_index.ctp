@@ -23,7 +23,7 @@
             $actions .= ' ' . $this->Html->link(__('Edit', true), array('action' => 'edit', $vocabulary['Vocabulary']['id']));
             $actions .= ' ' . $this->Html->link(__('Move up', true), array('action' => 'moveup', $vocabulary['Vocabulary']['id']));
             $actions .= ' ' . $this->Html->link(__('Move down', true), array('action' => 'movedown', $vocabulary['Vocabulary']['id']));
-            $actions .= ' ' . $layout->adminRowActions($vocabulary['Vocabulary']['id']);
+            $actions .= ' ' . $this->Layout->adminRowActions($vocabulary['Vocabulary']['id']);
             $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'controller' => 'vocabularies',
                 'action' => 'delete',

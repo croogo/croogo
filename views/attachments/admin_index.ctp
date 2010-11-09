@@ -25,7 +25,7 @@
                 'action' => 'edit',
                 $attachment['Node']['id'],
             ));
-            $actions .= ' ' . $layout->adminRowActions($attachment['Node']['id']);
+            $actions .= ' ' . $this->Layout->adminRowActions($attachment['Node']['id']);
             $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'controller' => 'attachments',
                 'action' => 'delete',
@@ -36,16 +36,16 @@
             $mimeType = explode('/', $attachment['Node']['mime_type']);
             $mimeType = $mimeType['0'];
             if ($mimeType == 'image') {
-                $thumbnail = $this->Html->link($image->resize('/uploads/' . $attachment['Node']['slug'], 100, 200), array('controller' => 'attachments', 'action' => 'edit', $attachment['Node']['id']), array('escape' => false));
+                $thumbnail = $this->Html->link($this->Image->resize('/uploads/' . $attachment['Node']['slug'], 100, 200), array('controller' => 'attachments', 'action' => 'edit', $attachment['Node']['id']), array('escape' => false));
             } else {
-                $thumbnail = $this->Html->image('/img/icons/page_white.png') . ' ' . $attachment['Node']['mime_type'] . ' (' . $filemanager->filename2ext($attachment['Node']['slug']) . ')';
+                $thumbnail = $this->Html->image('/img/icons/page_white.png') . ' ' . $attachment['Node']['mime_type'] . ' (' . $this->Filemanager->filename2ext($attachment['Node']['slug']) . ')';
             }
 
             $rows[] = array(
                 $attachment['Node']['id'],
                 $thumbnail,
                 $attachment['Node']['title'],
-                $this->Html->link($text->truncate($this->Html->url($attachment['Node']['path'], true), 20), $attachment['Node']['path']),
+                $this->Html->link($this->Text->truncate($this->Html->url($attachment['Node']['path'], true), 20), $attachment['Node']['path']),
                 $actions,
             );
         }

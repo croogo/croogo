@@ -33,9 +33,9 @@
             ), null, __('Are you sure?', true));
 
             if ($locale == Configure::read('Site.locale')) {
-                $status = $layout->status(1);
+                $status = $this->Layout->status(1);
             } else {
-                $status = $layout->status(0);
+                $status = $this->Layout->status(0);
             }
 
             $rows[] = array(

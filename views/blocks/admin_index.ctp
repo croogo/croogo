@@ -26,7 +26,7 @@
             $actions  = $this->Html->link(__('Move up', true), array('controller' => 'blocks', 'action' => 'moveup', $block['Block']['id']));
             $actions .= ' ' . $this->Html->link(__('Move down', true), array('controller' => 'blocks', 'action' => 'movedown', $block['Block']['id']));
             $actions .= ' ' . $this->Html->link(__('Edit', true), array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id']));
-            $actions .= ' ' . $layout->adminRowActions($block['Block']['id']);
+            $actions .= ' ' . $this->Layout->adminRowActions($block['Block']['id']);
             $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'controller' => 'blocks',
                 'action' => 'delete',
@@ -40,7 +40,7 @@
                 $this->Html->link($block['Block']['title'], array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id'])),
                 $block['Block']['alias'],
                 $block['Region']['title'],
-                $layout->status($block['Block']['status']),
+                $this->Layout->status($block['Block']['status']),
                 $actions,
             );
         }

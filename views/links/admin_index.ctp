@@ -37,7 +37,7 @@
             $actions  = $this->Html->link(__('Move up', true), array('controller' => 'links', 'action' => 'moveup', $linkId));
             $actions .= ' ' . $this->Html->link(__('Move down', true), array('controller' => 'links', 'action' => 'movedown', $linkId));
             $actions .= ' ' . $this->Html->link(__('Edit', true), array('controller' => 'links', 'action' => 'edit', $linkId));
-            $actions .= ' ' . $layout->adminRowActions($linkId);
+            $actions .= ' ' . $this->Layout->adminRowActions($linkId);
             $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'controller' => 'links',
                 'action' => 'delete',
@@ -49,7 +49,7 @@
                 $this->Form->checkbox('Link.'.$linkId.'.id'),
                 $linkId,
                 $linkTitle,
-                $layout->status($linksStatus[$linkId]),
+                $this->Layout->status($linksStatus[$linkId]),
                 $actions,
             );
         }

@@ -17,7 +17,7 @@
             <div class="tabs">
                 <ul>
                     <li><span><a href="#term-basic"><?php __('Term'); ?></a></span></li>
-                    <?php echo $layout->adminTabs(); ?>
+                    <?php echo $this->Layout->adminTabs(); ?>
                 </ul>
 
                 <div id="term-basic">
@@ -31,7 +31,7 @@
                     echo $this->Form->input('description');
                 ?>
                 </div>
-                <?php echo $layout->adminTabs(); ?>
+                <?php echo $this->Layout->adminTabs(); ?>
             </div>
         </fieldset>
     <?php echo $this->Form->end('Submit');?>

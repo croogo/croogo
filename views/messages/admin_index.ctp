@@ -34,7 +34,7 @@
         $rows = array();
         foreach ($messages AS $message) {
             $actions  = $this->Html->link(__('Edit', true), array('action' => 'edit', $message['Message']['id']));
-            $actions .= ' ' . $layout->adminRowActions($message['Message']['id']);
+            $actions .= ' ' . $this->Layout->adminRowActions($message['Message']['id']);
             $actions .= ' ' . $this->Html->link(__('Delete', true), array(
                 'action' => 'delete',
                 $message['Message']['id'],
