@@ -1,29 +1,27 @@
 <div id="nav">
     <ul class="sf-menu">
-        <li>
-            <a href="<?php echo $this->Html->url('/admin'); ?>"><span class="ui-icon ui-icon-home"></span><?php __('Dashboard'); ?></a>
-        </li>
+        <li><?php echo $this->Html->link(__('Dashboard', true), '/admin'); ?></li>
 
         <li>
-            <a href="<?php echo $this->Html->url(array('plugin' => null, 'controller' => 'nodes', 'action' => 'index')); ?>"><span class="ui-icon ui-icon-document"></span><?php __('Content'); ?></a>
+            <?php echo $this->Html->link(__('Content', true), array('plugin' => null, 'controller' => 'nodes', 'action' => 'index')); ?>
             <ul>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-document"></span>' . __('List', true), array('plugin' => null, 'controller' => 'nodes', 'action' => 'index'), array('escape' => false)); ?></li>
+                <li><?php echo $this->Html->link(__('List', true), array('plugin' => null, 'controller' => 'nodes', 'action' => 'index')); ?></li>
                 <li>
-                    <?php echo $this->Html->link('<span class="ui-icon ui-icon-plus"></span>' . __('Create content', true), array('plugin' => null, 'controller' => 'nodes', 'action' => 'create'), array('escape' => false)); ?>
+                    <?php echo $this->Html->link(__('Create content', true), array('plugin' => null, 'controller' => 'nodes', 'action' => 'create')); ?>
                     <ul>
                         <?php foreach ($types_for_admin_layout AS $t) { ?>
-                        <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-bullet"></span>' . $t['Type']['title'], array('plugin' => null, 'controller' => 'nodes', 'action' => 'add', $t['Type']['alias']), array('escape' => false)); ?></li>
+                        <li><?php echo $this->Html->link($t['Type']['title'], array('plugin' => null, 'controller' => 'nodes', 'action' => 'add', $t['Type']['alias'])); ?></li>
                         <?php } ?>
                     </ul>
                 </li>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-document-b"></span>' . __('Content types', true), array('plugin' => null, 'controller' => 'types', 'action' => 'index'), array('escape' => false)); ?></li>
+                <li><?php echo $this->Html->link(__('Content types', true), array('plugin' => null, 'controller' => 'types', 'action' => 'index')); ?></li>
                 <li>
-                    <?php echo $this->Html->link('<span class="ui-icon ui-icon-tag"></span>' . __('Taxonomy', true), array('plugin' => null, 'controller' => 'vocabularies', 'action' => 'index'), array('escape' => false)); ?>
+                    <?php echo $this->Html->link(__('Taxonomy', true), array('plugin' => null, 'controller' => 'vocabularies', 'action' => 'index')); ?>
                     <ul>
-                        <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-tag"></span>' . __('List', true), array('plugin' => null, 'controller' => 'vocabularies', 'action' => 'index'), array('escape' => false)); ?></li>
-                        <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-plus"></span>' . __('Add new', true), array('plugin' => null, 'controller' => 'vocabularies', 'action' => 'add'), array('class' => 'separator', 'escape' => false)); ?></li>
+                        <li><?php echo $this->Html->link(__('List', true), array('plugin' => null, 'controller' => 'vocabularies', 'action' => 'index')); ?></li>
+                        <li><?php echo $this->Html->link(__('Add new', true), array('plugin' => null, 'controller' => 'vocabularies', 'action' => 'add'), array('class' => 'separator')); ?></li>
                         <?php foreach ($vocabularies_for_admin_layout AS $v) { ?>
-                        <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-bullet"></span>' . $v['Vocabulary']['title'], array('plugin' => null, 'controller' => 'terms', 'action' => 'index', $v['Vocabulary']['id']), array('escape' => false)); ?></li>
+                        <li><?php echo $this->Html->link($v['Vocabulary']['title'], array('plugin' => null, 'controller' => 'terms', 'action' => 'index', $v['Vocabulary']['id'])); ?></li>
                         <?php } ?>
                     </ul>
                 </li>
@@ -38,30 +36,30 @@
         </li>
 
         <li>
-            <a href="<?php echo $this->Html->url(array('plugin' => null, 'controller' => 'menus', 'action' => 'index')); ?>"><span class="ui-icon ui-icon-link"></span><?php __('Menus'); ?></a>
+            <?php echo $this->Html->link(__('Menus', true), array('plugin' => null, 'controller' => 'menus', 'action' => 'index')); ?>
             <ul>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-link"></span>' . __('Menus', true), array('plugin' => null, 'controller' => 'menus', 'action' => 'index'), array('escape' => false)); ?></li>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-plus"></span>' . __('Add new', true), array('plugin' => null, 'controller' => 'menus', 'action' => 'add'), array('class' => 'separator', 'escape' => false)); ?></li>
+                <li><?php echo $this->Html->link(__('Menus', true), array('plugin' => null, 'controller' => 'menus', 'action' => 'index')); ?></li>
+                <li><?php echo $this->Html->link(__('Add new', true), array('plugin' => null, 'controller' => 'menus', 'action' => 'add'), array('class' => 'separator')); ?></li>
                 <?php foreach ($menus_for_admin_layout AS $m) { ?>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-bullet"></span>' . $m['Menu']['title'], array('plugin' => null, 'controller' => 'links', 'action' => 'index', $m['Menu']['id']), array('escape' => false)); ?></li>
+                <li><?php echo $this->Html->link($m['Menu']['title'], array('plugin' => null, 'controller' => 'links', 'action' => 'index', $m['Menu']['id'])); ?></li>
                 <?php } ?>
             </ul>
         </li>
 
         <li>
-            <a href="<?php echo $this->Html->url(array('plugin' => null, 'controller' => 'blocks', 'action' => 'index')); ?>"><span class="ui-icon ui-icon-copy"></span><?php __('Blocks'); ?></a>
+            <?php echo $this->Html->link(__('Blocks', true), array('plugin' => null, 'controller' => 'blocks', 'action' => 'index')); ?>
             <ul>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-copy"></span>' . __('Blocks', true), array('plugin' => null, 'controller' => 'blocks', 'action' => 'index'), array('escape' => false)); ?></li>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-bullet"></span>' . __('Regions', true), array('plugin' => null, 'controller' => 'regions', 'action' => 'index'), array('escape' => false)); ?></li>
+                <li><?php echo $this->Html->link(__('Blocks', true), array('plugin' => null, 'controller' => 'blocks', 'action' => 'index')); ?></li>
+                <li><?php echo $this->Html->link(__('Regions', true), array('plugin' => null, 'controller' => 'regions', 'action' => 'index')); ?></li>
             </ul>
         </li>
 
         <li>
-            <a href="<?php echo $this->Html->url(array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index')); ?>"><span class="ui-icon ui-icon-gear"></span><?php __('Extensions'); ?></a>
+            <?php echo $this->Html->link(__('Extensions', true), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index')); ?>
             <ul>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-image"></span>' . __('Themes', true), array('plugin' => 'extensions', 'controller' => 'extensions_themes', 'action' => 'index'), array('escape' => false)); ?></li>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-script"></span>' . __('Locales', true), array('plugin' => 'extensions', 'controller' => 'extensions_locales', 'action' => 'index'), array('escape' => false)); ?></li>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-gear"></span>' . __('Plugins', true), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'), array('escape' => false, 'class' => Configure::read('Admin.menus') ? 'separator' : '', 'escape' => false)); ?></li>
+                <li><?php echo $this->Html->link(__('Themes', true), array('plugin' => 'extensions', 'controller' => 'extensions_themes', 'action' => 'index')); ?></li>
+                <li><?php echo $this->Html->link(__('Locales', true), array('plugin' => 'extensions', 'controller' => 'extensions_locales', 'action' => 'index')); ?></li>
+                <li><?php echo $this->Html->link(__('Plugins', true), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'), array('class' => Configure::read('Admin.menus') ? 'separator' : '', 'escape' => false)); ?></li>
                 <?php
                 if (Configure::read('Admin.menus')) {
                     foreach (array_keys(Configure::read('Admin.menus')) AS $p) {
@@ -75,40 +73,40 @@
         </li>
 
         <li>
-            <a href="<?php echo $this->Html->url(array('plugin' => null, 'controller' => 'attachments', 'action' => 'index')); ?>"><span class="ui-icon ui-icon-video"></span><?php __('Media'); ?></a>
+            <?php echo $this->Html->link(__('Media', true), array('plugin' => null, 'controller' => 'attachments', 'action' => 'index')); ?>
             <ul>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-image"></span>' . __('Attachments', true), array('plugin' => null, 'controller' => 'attachments', 'action' => 'index'), array('escape' => false)); ?></li>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-folder-collapsed"></span>' . __('File Manager', true), array('plugin' => null, 'controller' => 'filemanager', 'action' => 'index'), array('escape' => false)); ?></li>
+                <li><?php echo $this->Html->link(__('Attachments', true), array('plugin' => null, 'controller' => 'attachments', 'action' => 'index')); ?></li>
+                <li><?php echo $this->Html->link(__('File Manager', true), array('plugin' => null, 'controller' => 'filemanager', 'action' => 'index')); ?></li>
             </ul>
         </li>
 
         <li>
-            <a href="<?php echo $this->Html->url(array('plugin' => null, 'controller' => 'contacts', 'action' => 'index')); ?>"><span class="ui-icon ui-icon-contact"></span><?php __('Contacts'); ?></a>
+            <?php echo $this->Html->link(__('Contacts', true), array('plugin' => null, 'controller' => 'contacts', 'action' => 'index')); ?>
             <ul>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-contact"></span>' . __('Contacts', true), array('plugin' => null, 'controller' => 'contacts', 'action' => 'index'), array('escape' => false)); ?></li>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-mail-closed"></span>' . __('Messages', true), array('plugin' => null, 'controller' => 'messages', 'action' => 'index'), array('escape' => false)); ?></li>
+                <li><?php echo $this->Html->link(__('Contacts', true), array('plugin' => null, 'controller' => 'contacts', 'action' => 'index')); ?></li>
+                <li><?php echo $this->Html->link(__('Messages', true), array('plugin' => null, 'controller' => 'messages', 'action' => 'index')); ?></li>
             </ul>
         </li>
 
         <li>
-            <a href="<?php echo $this->Html->url(array('plugin' => null, 'controller' => 'users', 'action' => 'index')); ?>"><span class="ui-icon ui-icon-person"></span><?php __('Users'); ?></a>
+            <?php echo $this->Html->link(__('Users', true), array('plugin' => null, 'controller' => 'users', 'action' => 'index')); ?>
             <ul>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-person"></span>' . __('Users', true), array('plugin' => null, 'controller' => 'users', 'action' => 'index'), array('escape' => false)); ?></li>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-star"></span>' . __('Roles', true), array('plugin' => null, 'controller' => 'roles', 'action' => 'index'), array('escape' => false)); ?></li>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-circle-check"></span>' . __('Permissions', true), array('plugin' => 'acl', 'controller' => 'acl_permissions', 'action' => 'index'), array('escape' => false)); ?></li>
+                <li><?php echo $this->Html->link(__('Users', true), array('plugin' => null, 'controller' => 'users', 'action' => 'index')); ?></li>
+                <li><?php echo $this->Html->link(__('Roles', true), array('plugin' => null, 'controller' => 'roles', 'action' => 'index')); ?></li>
+                <li><?php echo $this->Html->link(__('Permissions', true), array('plugin' => 'acl', 'controller' => 'acl_permissions', 'action' => 'index')); ?></li>
             </ul>
         </li>
 
         <li>
-            <a href="<?php echo $this->Html->url(array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Site')); ?>" class="last"><span class="ui-icon ui-icon-wrench"></span><?php __('Settings'); ?></a>
+            <?php echo $this->Html->link(__('Settings', true), array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Site')); ?>
             <ul>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-wrench"></span>' . __('Site', true), array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Site'), array('escape' => false)); ?></li>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-info"></span>' . __('Meta', true), array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Meta'), array('escape' => false)); ?></li>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-document"></span>' . __('Reading', true), array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Reading'), array('escape' => false)); ?></li>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-pencil"></span>' . __('Writing', true), array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Writing'), array('escape' => false)); ?></li>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-comment"></span>' . __('Comment', true), array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Comment'), array('escape' => false)); ?></li>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-transferthick-e-w"></span>' . __('Service', true), array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Service'), array('escape' => false)); ?></li>
-                <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-script"></span>' . __('Languages', true), array('plugin' => null, 'controller' => 'languages', 'action' => 'index'), array('escape' => false)); ?></li>
+                <li><?php echo $this->Html->link(__('Site', true), array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Site')); ?></li>
+                <li><?php echo $this->Html->link(__('Meta', true), array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Meta')); ?></li>
+                <li><?php echo $this->Html->link(__('Reading', true), array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Reading')); ?></li>
+                <li><?php echo $this->Html->link(__('Writing', true), array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Writing')); ?></li>
+                <li><?php echo $this->Html->link(__('Comment', true), array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Comment')); ?></li>
+                <li><?php echo $this->Html->link(__('Service', true), array('plugin' => null, 'controller' => 'settings', 'action' => 'prefix', 'Service')); ?></li>
+                <li><?php echo $this->Html->link(__('Languages', true), array('plugin' => null, 'controller' => 'languages', 'action' => 'index')); ?></li>
             </ul>
         </li>
     </ul>
