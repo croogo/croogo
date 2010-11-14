@@ -23,8 +23,6 @@ Admin.navigation = function() {
         dropShadows: false,
         disableHI: true
     });
-
-    $('#nav ul li:has(ul)').children(0).addClass('has-ul');
 }
 
 /**

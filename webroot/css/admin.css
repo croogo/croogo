@@ -155,7 +155,7 @@ li.sfHover > a > .sf-sub-indicator { background-position: -10px -100px; }
 .sf-menu ul li:hover > a > .sf-sub-indicator,
 .sf-menu ul li.sfHover > a > .sf-sub-indicator { background-position: -10px 0; }
 
-.sf-shadow ul { background:	url('../img/shadow.png') no-repeat bottom right; padding: 0 8px 9px 0; -moz-border-radius-bottomleft: 17px; -moz-border-radius-topright: 17px; -webkit-border-top-right-radius: 17px; -webkit-border-bottom-left-radius: 17px; }
+.sf-shadow ul { background: url('../img/shadow.png') no-repeat bottom right; padding: 0 8px 9px 0; -moz-border-radius-bottomleft: 17px; -moz-border-radius-topright: 17px; -webkit-border-top-right-radius: 17px; -webkit-border-bottom-left-radius: 17px; }
 .sf-shadow ul.sf-shadow-off { background: transparent; }
 
 #nav-container { background: #fff; width: auto; height: 40px; background: #1a1a1a; }
@@ -171,11 +171,12 @@ li.sfHover > a > .sf-sub-indicator { background-position: -10px -100px; }
 #nav ul li a.last { margin-right: 0px; }
 #nav ul li li a { margin-right: 0px; }
 
-#nav ul li ul { padding-top: 4px; }
+#nav ul li ul { padding-top: 5px; }
 #nav ul li ul li ul { padding-top: 0px; }
 #nav ul li ul li { background: #2b2b2b; }
 #nav ul li ul li a { -moz-border-radius: 0px; }
 #nav ul li ul li a:hover { background: #000; }
+#nav ul li ul li a.separator { border-bottom: 1px solid #333; }
 
 
 /**
