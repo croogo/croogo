@@ -26,10 +26,10 @@
                     </ul>
                 </li>
                 <li>
-                    <?php echo $this->Html->link('<span class="ui-icon ui-icon-comment"></span>' . __('Comments', true), array('plugin' => null, 'controller' => 'comments', 'action' => 'index'), array('escape' => false)); ?>
+                    <?php echo $this->Html->link(__('Comments', true), array('plugin' => null, 'controller' => 'comments', 'action' => 'index')); ?>
                     <ul>
-                        <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-check"></span>' . __('Published', true), array('plugin' => null, 'controller' => 'comments', 'action' => 'index', 'filter' => 'status:1;'), array('escape' => false)); ?></li>
-                        <li><?php echo $this->Html->link('<span class="ui-icon ui-icon-radio-off"></span>' . __('Approval', true), array('plugin' => null, 'controller' => 'comments', 'action' => 'index', 'filter' => 'status:0;'), array('escape' => false)); ?></li>
+                        <li><?php echo $this->Html->link(__('Published', true), array('plugin' => null, 'controller' => 'comments', 'action' => 'index', 'filter' => 'status:1;')); ?></li>
+                        <li><?php echo $this->Html->link(__('Approval', true), array('plugin' => null, 'controller' => 'comments', 'action' => 'index', 'filter' => 'status:0;')); ?></li>
                     </ul>
                 </li>
             </ul>
