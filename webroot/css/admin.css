@@ -2,13 +2,13 @@
  * Basic
  */
 * { margin: 0;}
-html, body { font: 13px "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; background-color: #fff; line-height:1.5; height: 100%; }
+html, body { font: 13px "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; background-color: #eee; line-height:1.5; height: 100%; }
 
 a { color: #21759B; }
 a:hover { color: #D54E21; }
 
-h2 { font-family: Arial, sans-serif; color: #000; font-size: 30px; font-weight: normal; border-bottom: 1px dotted #ccc; margin: 0px 0px 10px 0px;  }
-h3 { font-family: Arial, sans-serif; color: #000; font-size: 16px; font-weight: bold; }
+h2 { font-family: "Lucida Grande", Arial, sans-serif; color: #000; font-size: 36px; font-weight: normal; border-bottom: 1px dotted #ccc; margin: 0px 0px 10px 0px;  }
+h3 { font-family: "Lucida Grande", Arial, sans-serif; color: #000; font-size: 16px; font-weight: bold; }
 
 .error,
 .notice,
@@ -29,8 +29,8 @@ h3 { font-family: Arial, sans-serif; color: #000; font-size: 16px; font-weight: 
 /**
  * Content
  */
-#main { margin-top: 15px; }
-#main #content { margin-bottom: 20px; }
+#main { margin-top: 20px; }
+#main #content { margin-bottom: 20px; background: #fefefe; padding: 15px 20px 15px 20px; -moz-border-radius: 4px; -moz-box-shadow: rgba(200,200,200,1) 0 4px 18px; -webkit-box-shadow: rgba(200,200,200,1) 0 4px 18px; }
 
 
 /**
@@ -102,7 +102,6 @@ div.input span.description { margin-left: 10px; }
 /**
  * Header
  */
-#header { display: none; }
 #header { width: auto; background-color: #eee; border-bottom: 1px solid #dedede; padding: 15px 0px 15px 0px; color: #000; margin: 0px 0px 0px 0px; height: 20px; }
 #header .logo { font-weight: bold; }
 #header a { color: #000; text-decoration: none; }
