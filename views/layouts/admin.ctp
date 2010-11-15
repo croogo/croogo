@@ -33,20 +33,6 @@
 <body>
 
     <div id="wrapper">
-        <div id="header">
-            <div class="container_16">
-                <div class="grid_8">
-                    <div id="logo">
-                        <?php echo $this->element('admin/logo'); ?>
-                    </div>
-                </div>
-                <div class="grid_8">
-                    <?php echo $this->element('admin/quick'); ?>
-                </div>
-                <div class="clear">&nbsp;</div>
-            </div>
-        </div>
-
         <div id="nav-container">
             <div class="container_16">
                 <?php echo $this->element("admin/navigation"); ?>
