@@ -66,14 +66,6 @@ Admin.extra = function() {
     $('#loading p').addClass('ui-corner-bl ui-corner-br');
 }
 
-/**
- * Rounded corners
- *
- * @return void
- */
-Admin.roundedCorners = function() {
-    $("#navigation ul li, #navigation ul li ul, table, .notice, .success, .error, input, select, textarea, div.actions ul li a, div.meta, div.filter").addClass('ui-corner-all');
-}
 
 /**
  * Document ready
@@ -84,7 +76,6 @@ $(document).ready(function() {
     Admin.navigation();
     Admin.form();
     Admin.extra();
-    Admin.roundedCorners();
 
     $('.tabs').tabs();
     $('a.tooltip').tipsy({gravity: 's', html: false});

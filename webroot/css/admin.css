@@ -71,7 +71,7 @@ img.hook-toggle:hover { cursor: pointer; }
 /**
  * Forms
  */
-label { margin: 0px 0px 0px 3px; font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; font-size: 16px; color: #464646; font-weight: bold; }
+label { margin: 0px 0px 0px 3px; font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; font-size: 20px; color: #464646; }
 .text label,
 .textarea label,
 .select label,
@@ -82,21 +82,20 @@ label { margin: 0px 0px 0px 3px; font-family: "Lucida Grande", Verdana, Arial, "
 form input[type=text],
 form input[type=password],
 form input[type=file],
-form textarea { padding: 5px; font-size: 20px; margin-bottom: 10px; border: 1px solid #ccc; }
-form select { padding: 3px; font-size: 20px; margin-bottom: 10px; background-color: #fff; border: 1px solid #ccc; }
-form input:focus,
-form select:focus,
-form textarea:focus { border: 1px solid #999; }
+form textarea { padding: 5px; font-size: 20px; margin-bottom: 10px; width: 98%; }
+form select { padding: 3px; font-size: 20px; margin-bottom: 10px; background-color: #fff; }
 form input[type=submit] { font-size: 24px; margin-top: 20px; }
-form textarea { background-color: #fff; width: 300px; height: 60px; font-size: 13px; }
+form textarea { background-color: #fff; 98%; height: 60px; font-size: 13px; }
 form textarea.content { width: 99%; height: 350px; }
 form .wide { width: 500px; height: 150px; }
 form select[multiple=multiple] { padding: 0px; }
 form select[multiple=multiple] optgroup { font-style: normal; }
 form select[multiple=multiple] optgroup option { text-indent: 25px; }
-div.radio { width: 140px; }
-div.radio input { width: 30px; float: left; }
-div.radio label { width: 80px; float: left;  }
+
+div.radio legend { font-size: 20px; margin-bottom: 10px; }
+div.radio input { float: left; clear: both; margin-top: 5px; margin-right: 5px; }
+div.radio label { font-size: 16px; float: left;  }
+
 div.input { margin-top: 15px; }
 div.input span.description { margin-left: 10px; }
 
