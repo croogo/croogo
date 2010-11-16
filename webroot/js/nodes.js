@@ -76,7 +76,6 @@ Nodes.addMeta = function() {
         $.get(Croogo.basePath+'admin/nodes/add_meta/', function(data) {
             $('#meta-fields div.clear').before(data);
             $('div.meta a.remove-meta').unbind();
-            Admin.roundedCorners();
             Nodes.removeMeta();
         });
         return false;
