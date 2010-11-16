@@ -44,8 +44,10 @@ div.counter { margin-top: 10px; }
 /**
  * Tables
  */
-table { width: 100%; border: 1px solid #dfdfdf; background-color: #fff; clear: both; }
-table tr th { padding: 10px; background-color: #e7e7e7; color: #464646; border-bottom: 0px; text-align: left; }
+table { width: 100%; border: 1px solid #fff; background-color: #fff; clear: both; }
+table tr th { padding: 10px; background-color: #777; color: #fff; border-bottom: 0px; text-align: left; font-weight: normal; }
+table tr th a { color: #fff; text-decoration: none; }
+table tr th a:hover { color: #fff; text-decoration: underline; }
 table tr td { padding: 10px; border-bottom: 1px solid #dfdfdf; vertical-align: middle; }
 table tr td a { font-weight: normal; text-decoration: none; padding: 0px 5px 0px 0px; }
 table tr td a:hover { text-decoration: underline; }
@@ -244,7 +246,7 @@ div.tabs p { margin: 50px 0px 0px 0px; }
 div.actions { padding: 0px 0px 50px 0px; }
 div.actions ul { float: left; }
 div.actions ul li { margin: 0px 10px 0px 0px; padding: 0px; list-style: none; float: left; }
-div.actions ul li a { padding: 10px; margin-right: 10px; text-decoration: none; background-color: #eee; font-weight: bold; float: left; }
+div.actions ul li a { padding: 10px; margin-right: 10px; text-decoration: none; background-color: #eee; float: left; }
 div.actions ul li a:hover { background-color: #f2f2f2; }
 div.actions ul li span { }
 
