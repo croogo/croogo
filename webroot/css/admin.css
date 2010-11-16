@@ -281,6 +281,13 @@ p#backtosite { padding: 0px 0px 0px 20px; }
 .login #footer { background: none; color: #444; }
 .login #footer a { color: #444; }
 
+
+/**
+ * jQuery UI
+ */
+.ui-tabs { border: 0px; }
+
+
 /**
  * DebugKit
  */
