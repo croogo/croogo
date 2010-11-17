@@ -5,6 +5,7 @@
  */
 var Admin = {};
 
+
 /**
  * Navigation
  *
@@ -25,21 +26,13 @@ Admin.navigation = function() {
     });
 }
 
+
 /**
  * Forms
  *
  * @return void
  */
 Admin.form = function() {
-    $("form input[type=submit]").not('.filter input[type=submit]').addClass("ui-state-default ui-corner-all").hover(
-        function() {
-            $(this).addClass("ui-state-hover");
-        },
-        function() {
-            $(this).removeClass("ui-state-hover");
-        }
-    );
-
     $("input[type=text][rel], select[rel]").not(":hidden").each(function() {
         var sd = $(this).attr('rel');
         $(this).after("<span class=\"description\">"+sd+"</span>");
@@ -52,6 +45,7 @@ Admin.form = function() {
         }
     });
 }
+
 
 /**
  * Extra stuff
