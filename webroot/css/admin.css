@@ -85,8 +85,8 @@ form input[type=file],
 form textarea { padding: 5px; font-size: 20px; margin-bottom: 10px; width: 98%; }
 form select { padding: 3px; font-size: 20px; margin-bottom: 10px; background-color: #fff; }
 form input[type=submit] { font-size: 24px; margin-top: 20px; }
-form textarea { background-color: #fff; 98%; height: 60px; font-size: 13px; }
-form textarea.content { width: 99%; height: 350px; }
+form textarea { background: #fff; width: 98%; height: 60px; font-size: 13px; }
+form textarea.content { height: 350px; }
 form .wide { width: 500px; height: 150px; }
 form select[multiple=multiple] { padding: 0px; }
 form select[multiple=multiple] optgroup { font-style: normal; }
