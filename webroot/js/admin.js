@@ -61,7 +61,7 @@ Admin.form = function() {
  * @return void
  */
 Admin.extra = function() {
-    $("table tr:nth-child(even)").not('.controller-row').addClass("striped");
+    $("table tr:nth-child(odd)").not('.controller-row').addClass("striped");
     $("div.message").addClass("notice");
     $('#loading p').addClass('ui-corner-bl ui-corner-br');
 }
