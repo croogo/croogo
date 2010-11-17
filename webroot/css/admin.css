@@ -44,7 +44,7 @@ div.counter { margin-top: 10px; }
 /**
  * Tables
  */
-table { width: 100%; border: 1px solid #fff; background-color: #fff; clear: both; }
+table { width: 100%; border: 1px solid #fff; background-color: #fff; clear: both; border: 1px solid #ddd; -moz-border-radius: 5px; }
 table tr th { padding: 10px; background: #e5e5e5; color: #333; border-bottom: 0px; text-align: left; font-weight: bold; }
 table tr th a { color: #333; text-decoration: none; }
 table tr th a:hover { color: #333; text-decoration: underline; }
