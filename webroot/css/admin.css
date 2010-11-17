@@ -45,15 +45,15 @@ div.counter { margin-top: 10px; }
  * Tables
  */
 table { width: 100%; border: 1px solid #fff; background-color: #fff; clear: both; }
-table tr th { padding: 10px; background-color: #777; color: #fff; border-bottom: 0px; text-align: left; font-weight: normal; }
-table tr th a { color: #fff; text-decoration: none; }
-table tr th a:hover { color: #fff; text-decoration: underline; }
+table tr th { padding: 10px; background: #e5e5e5; color: #333; border-bottom: 0px; text-align: left; font-weight: bold; }
+table tr th a { color: #333; text-decoration: none; }
+table tr th a:hover { color: #333; text-decoration: underline; }
 table tr td { padding: 10px; border-bottom: 1px solid #dfdfdf; vertical-align: middle; }
 table tr td a { font-weight: normal; text-decoration: none; padding: 0px 5px 0px 0px; }
 table tr td a:hover { text-decoration: underline; }
 table tr td div.operations a { font-size: 12px; margin-right: 15px; text-decoration: none; text-transform: lowercase; }
 table tr td img { margin: 0px; padding: 0px; }
-.striped { background-color: #f9f9f9; }
+.striped { background-color: #f7f7f7; }
 
 div.level-0 { }
 div.level-1 { margin-left: 30px; }
