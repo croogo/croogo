@@ -24,5 +24,10 @@
              </div>
         </div>
     </fieldset>
-    <?php echo $this->Form->end('Submit');?>
+
+    <div class="buttons">
+    <?php
+        echo $this->Form->end(__('Save', true));
+    ?>
+    </div>
 </div>

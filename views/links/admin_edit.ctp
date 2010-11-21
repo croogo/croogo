@@ -50,5 +50,15 @@
                 <?php echo $this->Layout->adminTabs(); ?>
             </div>
         </fieldset>
-    <?php echo $this->Form->end('Submit');?>
+    <div class="buttons">
+    <?php
+        echo $this->Form->end(__('Save', true));
+        echo $this->Html->link(__('Cancel', true), array(
+            'action' => 'index',
+            $menuId,
+        ), array(
+            'class' => 'cancel',
+        ));
+    ?>
+    </div>
 </div>

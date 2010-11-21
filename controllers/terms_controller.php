@@ -121,7 +121,7 @@ class TermsController extends AppController {
             }
         }
         $parentTree = $this->Term->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array('taxonomyId' => true));
-        $this->set(compact('vocabulary', 'parentTree'));
+        $this->set(compact('vocabulary', 'parentTree', 'vocabularyId'));
     }
 
     public function admin_edit($id = null, $vocabularyId = null) {
@@ -221,7 +221,7 @@ class TermsController extends AppController {
             $this->data['Term'] = $term['Term'];
         }
         $parentTree = $this->Term->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array('taxonomyId' => true));
-        $this->set(compact('vocabulary', 'parentTree', 'term', 'taxonomy'));
+        $this->set(compact('vocabulary', 'parentTree', 'term', 'taxonomy', 'vocabularyId'));
     }
 
     public function admin_delete($id = null, $vocabularyId = null) {

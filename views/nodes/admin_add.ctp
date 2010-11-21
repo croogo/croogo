@@ -102,6 +102,15 @@
             'type' => 'hidden',
             'value' => $this->params['_Token']['key'],
         ));
-        echo $this->Form->end('Submit');
     ?>
+    <div class="buttons">
+    <?php
+        echo $this->Form->end(__('Save', true));
+        echo $this->Html->link(__('Cancel', true), array(
+            'action' => 'index',
+        ), array(
+            'class' => 'cancel',
+        ));
+    ?>
+    </div>
 </div>

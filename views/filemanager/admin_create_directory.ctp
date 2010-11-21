@@ -23,5 +23,14 @@
     <fieldset>
     <?php echo $this->Form->input('Filemanager.name', array('type' => 'text')); ?>
     </fieldset>
-    <?php echo $this->Form->end("Submit"); ?>
+    <div class="buttons">
+    <?php
+        echo $this->Form->end(__('Create', true));
+        echo $this->Html->link(__('Cancel', true), array(
+            'action' => 'index',
+        ), array(
+            'class' => 'cancel',
+        ));
+    ?>
+    </div>
 </div>

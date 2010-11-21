@@ -20,5 +20,15 @@
         ));
     ?>
     </fieldset>
-    <?php echo $this->Form->end('Submit');?>
+
+    <div class="buttons">
+    <?php
+        echo $this->Form->end(__('Save', true));
+        echo $this->Html->link(__('Cancel', true), array(
+            'action' => 'index',
+        ), array(
+            'class' => 'cancel',
+        ));
+    ?>
+    </div>
 </div>

@@ -1,7 +1,7 @@
 <div class="settings form">
     <h2><? echo $title_for_layout; ?></h2>
     <?php echo $this->Form->create('Setting');?>
-	<fieldset>
+    <fieldset>
         <div class="tabs">
             <ul>
                 <li><a href="#setting-basic"><span><?php __('Settings'); ?></span></a></li>
@@ -26,8 +26,17 @@
                     echo $this->Form->input('params');
                 ?>
             </div>
-
         </div>
-	</fieldset>
-    <?php echo $this->Form->end('Submit');?>
+    </fieldset>
+
+    <div class="buttons">
+    <?php
+        echo $this->Form->end(__('Save', true));
+        echo $this->Html->link(__('Cancel', true), array(
+            'action' => 'index',
+        ), array(
+            'class' => 'cancel',
+        ));
+    ?>
+    </div>
 </div>

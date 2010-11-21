@@ -25,5 +25,15 @@
     <fieldset>
     <?php echo $this->Form->input('Filemanager.file', array('type' => 'file')); ?>
     </fieldset>
-    <?php echo $this->Form->end("Submit"); ?>
+
+    <div class="buttons">
+    <?php
+        echo $this->Form->end(__('Upload', true));
+        echo $this->Html->link(__('Cancel', true), array(
+            'action' => 'index',
+        ), array(
+            'class' => 'cancel',
+        ));
+    ?>
+    </div>
 </div>

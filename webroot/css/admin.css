@@ -282,6 +282,14 @@ p#backtosite { padding: 0px 0px 0px 20px; }
 
 
 /**
+ * Buttons
+ */
+div.buttons { display: block; text-align: right; margin: 10px; }
+div.buttons .submit { display: inline; }
+div.buttons .cancel { margin: 20px 20px 20px 10px; }
+
+
+/**
  * jQuery UI
  */
 .ui-tabs { border: 0px; }
