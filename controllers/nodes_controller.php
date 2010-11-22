@@ -703,7 +703,7 @@ class NodesController extends AppController {
         } else {
             $comments = array();
         }
-
+	if ($node['Node']['show_title']==0) $node['Node']['title']= '';
         $this->set('title_for_layout', $node['Node']['title']);
         $this->set(compact('node', 'type', 'comments'));
         $this->__viewFallback(array(
