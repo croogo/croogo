@@ -18,6 +18,7 @@
                 <?php
                     echo $form->input('parent_id', array('type' => 'select', 'options' => $nodes, 'empty' => true));
                     echo $form->input('title');
+                    echo $form->input('show_title');
                     echo $form->input('slug', array('class' => 'slug'));
                     echo $form->input('excerpt');
                     echo $form->input('body', array('class' => 'content'));
