@@ -174,7 +174,7 @@ li.sfHover > a > .sf-sub-indicator { background-position: -10px -100px; }
 #nav ul li ul { padding-top: 5px; }
 #nav ul li ul li ul { padding-top: 0px; }
 #nav ul li ul li { background: #2b2b2b; }
-#nav ul li ul li a { }
+#nav ul li ul li a { -moz-border-radius: 0px; -webkit-border-radius: 0px; }
 #nav ul li ul li a:hover { background: #000; }
 #nav ul li ul li a.separator { border-bottom: 1px solid #333; }
 
@@ -298,7 +298,6 @@ div.buttons .cancel { margin: 20px 20px 20px 10px; }
 .ui-widget select,
 .ui-widget textarea,
 .ui-widget button { font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; }
-
 
 
 /**
