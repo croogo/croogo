@@ -293,6 +293,12 @@ div.buttons .cancel { margin: 20px 20px 20px 10px; }
  * jQuery UI
  */
 .ui-tabs { border: 0px; }
+.ui-widget,
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button { font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; }
+
 
 
 /**
