@@ -182,16 +182,10 @@ li.sfHover > a > .sf-sub-indicator { background-position: -10px -100px; }
 /**
  * Nodes
  */
-div#node-meta { float: left; }
-div#node-meta a { clear: both; }
-
-div.meta { padding: 0px; background-color: #efefef; float: left; margin-bottom: 10px; width: 100%; }
-div.meta .actions { margin: 0px 15px 0px 0px; padding: 0px; text-align: right; }
-div.meta .actions a { font-weight: bold; text-decoration: none; }
-div.meta .actions a:hover { text-decoration: underline; }
-div.meta .fields { margin: -15px 0px 0px 0px; }
-div.meta .input { margin-left: 10px; margin-right: 10px; float: left; }
-div.meta .input textarea { height: 60px; width: 520px; }
+div.meta { background: #eee; padding: 15px; margin-bottom: 15px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
+div.meta .actions { margin: 0px; padding: 0px; display: block; }
+div.meta .actions { text-align: right; }
+div.meta .fields .input { padding: 0px; margin: 0px; }
 
 div.nodes .type h3 { font-size: 14px; }
 div.nodes .type p { margin: 10px 10px 10px 20px; }
