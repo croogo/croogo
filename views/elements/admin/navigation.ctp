@@ -7,7 +7,7 @@
             <ul>
                 <li><?php echo $this->Html->link(__('List', true), array('plugin' => null, 'controller' => 'nodes', 'action' => 'index')); ?></li>
                 <li>
-                    <?php echo $this->Html->link(__('Create content', true), array('plugin' => null, 'controller' => 'nodes', 'action' => 'create')); ?>
+                    <?php echo $this->Html->link(__('Create', true), array('plugin' => null, 'controller' => 'nodes', 'action' => 'create')); ?>
                     <ul>
                         <?php foreach ($types_for_admin_layout AS $t) { ?>
                         <li><?php echo $this->Html->link($t['Type']['title'], array('plugin' => null, 'controller' => 'nodes', 'action' => 'add', $t['Type']['alias'])); ?></li>
