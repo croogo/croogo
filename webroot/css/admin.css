@@ -97,7 +97,7 @@ div.radio input { float: left; clear: both; margin-top: 5px; margin-right: 5px; 
 div.radio label { font-size: 16px; float: left;  }
 
 div.input { margin-top: 15px; }
-div.input span.description { margin-left: 10px; }
+div.input span.description { font-size: 11px; color: #999; }
 
 
 /**
