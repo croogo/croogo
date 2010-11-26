@@ -241,7 +241,9 @@ div.actions ul li a { padding: 10px; margin-right: 10px; text-decoration: none; 
 div.actions ul li a:hover { background-color: #f2f2f2; }
 div.actions ul li span { }
 
-div.bulk-actions .input { float: left; padding: 4px; }
+div.bulk-actions { display: block; margin: 15px 0px 15px 0px; }
+div.bulk-actions .input { display: inline; padding: 4px; }
+div.bulk-actions .submit { display: inline; }
 
 div.breadcrumb { margin: 0px 0px 20px 0px; }
 
