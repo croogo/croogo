@@ -2,7 +2,7 @@
  * Basic
  */
 * { margin: 0;}
-html, body { font: 13px "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; background-color: #eee; line-height:1.5; height: 100%; }
+html, body { font: 13px "Lucida Grande", Arial, sans-serif; background-color: #eee; line-height:1.5; height: 100%; }
 
 a { color: #21759B; }
 a:hover { color: #D54E21; }
@@ -71,7 +71,7 @@ img.hook-toggle:hover { cursor: pointer; }
 /**
  * Forms
  */
-label { margin: 0px 0px 0px 3px; font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; font-size: 20px; color: #464646; }
+label { margin: 0px 0px 0px 3px; font-family: "Lucida Grande", Arial, sans-serif; font-size: 20px; color: #464646; }
 .text label,
 .textarea label,
 .select label,
@@ -292,7 +292,7 @@ div.buttons .cancel { margin: 20px 20px 20px 10px; }
 .ui-widget input,
 .ui-widget select,
 .ui-widget textarea,
-.ui-widget button { font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif; }
+.ui-widget button { font-family: "Lucida Grande", Arial, sans-serif; }
 
 
 /**
