@@ -84,7 +84,8 @@ form input[type=password],
 form input[type=file],
 form textarea { padding: 5px; font-size: 20px; margin-bottom: 10px; width: 98%; }
 form textarea { border: 1px solid #888; }
-form input[type=submit] { font-size: 13px; }
+form input[type=submit],
+form button { font-size: 13px; }
 form textarea { background: #fff; width: 98%; height: 60px; font-size: 13px; }
 form textarea.content { height: 350px; }
 form .wide { width: 500px; height: 150px; }
@@ -279,7 +280,7 @@ p#backtosite { padding: 0px 0px 0px 20px; }
  * Buttons
  */
 div.buttons { display: block; text-align: right; margin: 10px; }
-div.buttons .submit { display: inline; }
+div.buttons .submit { display: inline; margin-left: 10px; }
 div.buttons .cancel { margin: 20px 20px 20px 10px; }
 
 
