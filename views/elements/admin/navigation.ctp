@@ -1,7 +1,5 @@
 <div id="nav">
     <ul class="sf-menu">
-        <li><?php echo $this->Html->link(__('Dashboard', true), '/admin'); ?></li>
-
         <li>
             <?php echo $this->Html->link(__('Content', true), array('plugin' => null, 'controller' => 'nodes', 'action' => 'index')); ?>
             <ul>

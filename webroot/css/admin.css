@@ -103,12 +103,10 @@ div.input span.description { font-size: 11px; color: #999; }
 /**
  * Header
  */
-#header { width: auto; background-color: #000; padding: 15px 0px 15px 0px; color: #fff; margin: 0px 0px 0px 0px; height: 20px; }
-#header .logo { font-weight: bold; }
-#header a { color: #fff; text-decoration: none; }
+#header { width: auto; font-size: 11px; background-color: #3c3c3c; padding: 3px 0px 3px 0px; color: #ccc; border-bottom: 1px solid #707070; }
+#header a { color: #ccc; text-decoration: none; }
 #header a:hover { text-decoration: underline; }
-
-#quick { text-align: right; }
+#header .header-right { text-align: right; }
 
 
 /**
