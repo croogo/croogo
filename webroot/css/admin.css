@@ -107,6 +107,7 @@ div.input span.description { font-size: 11px; color: #999; }
 #header { width: auto; font-size: 11px; background-color: #3c3c3c; padding: 3px 0px 3px 0px; color: #ccc; border-bottom: 1px solid #707070; }
 #header a { color: #ccc; text-decoration: none; }
 #header a:hover { text-decoration: underline; }
+#header span { color: #666; }
 #header .header-right { text-align: right; }
 
 
@@ -189,8 +190,11 @@ div.meta .fields .input { padding: 0px; margin: 0px; }
 div.nodes .type h3 { font-size: 14px; }
 div.nodes .type p { margin: 10px 10px 10px 20px; }
 
-div.filter { margin: 10px 0px 20px 0px; background: #efefef; padding: 10px; }
-div.filter form select { width: 200px; }
+div.filter { margin: 10px 0px 20px 0px; background: #efefef; padding: 0px 15px 15px 15px; -moz-border-radius: 4px; -webkit-border-radius: 4px; }
+div.filter form label { font-size: 14px; }
+div.filter form .input { float: left; margin-right: 10px; }
+div.filter form select { width: 100px; }
+div.filter .submit { float: left; margin-top: 35px; }
 
 
 /**

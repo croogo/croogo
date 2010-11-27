@@ -42,4 +42,5 @@
     ));
     echo $this->Form->end(__('Filter', true));
 ?>
+    <div class="clear">&nbsp;</div>
 </div>
