@@ -164,7 +164,8 @@ li.sfHover > a > .sf-sub-indicator { background-position: -10px -100px; }
 #nav ul li,
 #nav ul li a { float: left; display: block; font-size: 12px; }
 #nav ul li a { color: #fff; text-decoration: none; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
-#nav ul li a:hover { background: #2b2b2b; }
+#nav ul li a:hover,
+#nav ul li.sfHover > a { background: #2b2b2b; }
 #nav ul li a.selected { border-bottom: 1px solid #fff; }
 #nav ul li a.selected:hover { background: #f7f7f7; border-bottom: 1px solid #ccc; }
 #nav ul li a { margin-right: 20px; }
@@ -175,7 +176,8 @@ li.sfHover > a > .sf-sub-indicator { background-position: -10px -100px; }
 #nav ul li ul li ul { padding-top: 0px; }
 #nav ul li ul li { background: #2b2b2b; }
 #nav ul li ul li a { -moz-border-radius: 0px; -webkit-border-radius: 0px; }
-#nav ul li ul li a:hover { background: #000; }
+#nav ul li ul li a:hover,
+#nav ul li ul li.sfHover > a { background: #000; }
 #nav ul li ul li a.separator { border-bottom: 1px solid #333; }
 
 
