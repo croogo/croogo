@@ -27,6 +27,7 @@
             ?>
             </div>
             <?php echo $this->Layout->adminTabs(); ?>
+        </div>
     </fieldset>
 
     <div class="buttons">
