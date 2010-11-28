@@ -95,6 +95,7 @@ class Term extends AppModel {
             return $term['Term']['id'];
         }
 
+        $this->id = false;
         if ($this->save($data)) {
             return $this->id;
         }
