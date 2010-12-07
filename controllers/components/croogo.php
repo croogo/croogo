@@ -642,7 +642,7 @@ class CroogoComponent extends Object {
         $output = array();
         preg_match_all('/\[('.$exp.'):([A-Za-z0-9_\-]*)(.*?)\]/i', $text, $tagMatches);
         for ($i=0; $i < count($tagMatches[1]); $i++) {
-            $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
+            $regex = '/(\S+)=([\'"])?((?:.(?!\2?\s+(?:\S+)=|[>\2]))+.)\2?/i';
             preg_match_all($regex, $tagMatches[3][$i], $attributes);
             $alias = $tagMatches[2][$i];
             $aliasOptions = array();
