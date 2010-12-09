@@ -105,7 +105,7 @@ class AppController extends Controller {
         $this->RequestHandler->setContent('json', 'text/x-json');
         $this->Security->blackHoleCallback = '__securityError';
 
-        if (isset($this->params['admin'])) {
+        if (isset($this->params['admin']) && $this->name != 'CakeError') {
             $this->layout = 'admin';
         }
 
