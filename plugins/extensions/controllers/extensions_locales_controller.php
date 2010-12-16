@@ -65,7 +65,7 @@ class ExtensionsLocalesController extends AppController {
             "Configure::write('Config.language', '" . $locale . "');", $content);
         if ($file->write($content)) {
             $this->Setting->write('Site.locale', $locale);
-            $this->Session->setFlash(__("Locale '{$locale}' set as default", true), 'default', array('class' => 'success'));
+            $this->Session->setFlash(sprintf(__("Locale '%s' set as default", true), $locale), 'default', array('class' => 'success'));
         } else {
             $this->Session->setFlash(__('Could not edit croogo_bootstrap.php file.', true), 'default', array('class' => 'error'));
         }
