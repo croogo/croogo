@@ -171,9 +171,9 @@ class InstallController extends InstallAppController {
                     $db->execute($create);
                 }
 
-                $dataObjects = App::objects('class', APP . 'config' . DS . 'schema' . DS . 'data' . DS);
+                $dataObjects = App::objects('class', APP . 'plugins' . DS . 'install' . DS . 'config' . DS . 'data' . DS);
                 foreach ($dataObjects as $data) {
-                    App::import('class', $data, false, APP . 'config' . DS . 'schema' . DS . 'data' . DS);
+                    App::import('class', $data, false, APP . 'plugins' . DS . 'install' . DS . 'config' . DS . 'data' . DS);
                     $classVars = get_class_vars($data);
                     $modelAlias = substr($data, 0, -4);
                     $table = $classVars['table'];
