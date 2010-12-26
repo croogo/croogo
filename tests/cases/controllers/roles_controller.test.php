@@ -74,6 +74,7 @@ class RolesControllerTestCase extends CakeTestCase {
         $this->Roles->Component->initialize($this->Roles);
         $this->Roles->Session->write('Auth.User', array(
             'id' => 1,
+            'role_id' => 1,
             'username' => 'admin',
         ));
         $this->Roles->beforeFilter();
@@ -91,6 +92,7 @@ class RolesControllerTestCase extends CakeTestCase {
         $this->Roles->Component->initialize($this->Roles);
         $this->Roles->Session->write('Auth.User', array(
             'id' => 1,
+            'role_id' => 1,
             'username' => 'admin',
         ));
         $this->Roles->data = array(
@@ -118,6 +120,7 @@ class RolesControllerTestCase extends CakeTestCase {
         $this->Roles->Component->initialize($this->Roles);
         $this->Roles->Session->write('Auth.User', array(
             'id' => 1,
+            'role_id' => 1,
             'username' => 'admin',
         ));
         $this->Roles->data = array(
@@ -145,6 +148,7 @@ class RolesControllerTestCase extends CakeTestCase {
         $this->Roles->Component->initialize($this->Roles);
         $this->Roles->Session->write('Auth.User', array(
             'id' => 1,
+            'role_id' => 1,
             'username' => 'admin',
         ));
         $this->Roles->beforeFilter();
