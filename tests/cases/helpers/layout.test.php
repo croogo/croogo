@@ -17,7 +17,7 @@ class HtmlHelperTest extends CakeTestCase {
 
     function startTest() {
         $view =& new View(new TheLayoutTestController());
-	ClassRegistry::addObject('view', $view);
+        ClassRegistry::addObject('view', $view);
         $this->Layout =& new LayoutHelper();
         $this->Layout->Html =& new HtmlHelper();
         $this->Layout->Form =& new FormHelper();
