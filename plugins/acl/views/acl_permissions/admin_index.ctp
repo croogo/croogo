@@ -11,7 +11,7 @@
         </ul>
     </div>
 
-    <table cellpadding="0" cellspacing="0">
+    <table id="controller-list" cellpadding="0" cellspacing="0">
     <?php
         $roleTitles = array_values($roles);
         $roleIds   = array_keys($roles);
@@ -22,7 +22,7 @@
         );
         $tableHeaders = array_merge($tableHeaders, $roleTitles);
         $tableHeaders =  $this->Html->tableHeaders($tableHeaders);
-        echo $tableHeaders;
+        echo $this->Html->tag('thead', $tableHeaders);
 
         $currentController = '';
         foreach ($acos AS $id => $alias) {
@@ -65,7 +65,7 @@
             echo $this->Html->tableCells(array($row), $oddOptions, $evenOptions);
         }
 
-        echo $tableHeaders;
+        echo $this->Html->tag('thead', $tableHeaders);
     ?>
     </table>
 </div>
