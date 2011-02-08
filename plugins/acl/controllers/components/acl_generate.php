@@ -33,12 +33,10 @@ class AclGenerateComponent extends Object {
 
         // app/controllers
         $this->folder->path = APP.'controllers'.DS;
-        $controllers = $this->folder->read();
-        foreach ($controllers['1'] AS $c) {
-            if (substr($c, strlen($c) - 4, 4) == '.php') {
-                $cName = Inflector::camelize(str_replace('_controller.php', '', $c));
-                $controllerPaths[$cName] = APP.'controllers'.DS.$c;
-            }
+        $controllers = $this->folder->find('(.*)php$');
+        foreach ($controllers AS $c) {
+            $cName = Inflector::camelize(str_replace('_controller.php', '', $c));
+            $controllerPaths[$cName] = APP.'controllers'.DS.$c;
         }
 
         // plugins/*/controllers/
@@ -47,12 +45,10 @@ class AclGenerateComponent extends Object {
         foreach ($plugins['0'] AS $p) {
             if ($p != 'install') {
                 $this->folder->path = APP.'plugins'.DS.$p.DS.'controllers'.DS;
-                $pluginControllers = $this->folder->read();
-                foreach ($pluginControllers['1'] AS $pc) {
-                    if (substr($pc, strlen($pc) - 4, 4) == '.php') {
-                        $pcName = Inflector::camelize(str_replace('_controller.php', '', $pc));
-                        $controllerPaths[$pcName] = APP.'plugins'.DS.$p.DS.'controllers'.DS.$pc;
-                    }
+                $pluginControllers = $this->folder->find('(.*).php$');
+                foreach ($pluginControllers AS $pc) {
+                    $pcName = Inflector::camelize(str_replace('_controller.php', '', $pc));
+                    $controllerPaths[$pcName] = APP.'plugins'.DS.$p.DS.'controllers'.DS.$pc;
                 }
             }
         }
@@ -83,7 +79,9 @@ class AclGenerateComponent extends Object {
 
         $controllerName = $name.'Controller';
         App::import('Controller', $controllerName, null, null, $path);
-        $methods = get_class_methods($controllerName);
+        $controller = new $controllerName;
+        $controller->constructClasses();
+        $methods = $controller->methods;
 
         // filter out methods
         foreach ($methods AS $k => $method) {
@@ -91,7 +89,7 @@ class AclGenerateComponent extends Object {
                 unset($methods[$k]);
                 continue;
             }
-            if (in_array($method, $baseMethods)) {
+            if ($baseMethods && in_array($method, $baseMethods)) {
                 unset($methods[$k]);
                 continue;
             }
