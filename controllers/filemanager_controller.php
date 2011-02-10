@@ -64,6 +64,13 @@ class FilemanagerController extends AppController {
         }
 
         $this->set('title_for_layout', __('File Manager', true));
+
+        $regex = '/^' . preg_quote(APP, '/') . '/';
+        if (preg_match($regex, $path) == false) {
+            $this->Session->setFlash(__(sprintf('Path %s is restricted', $path), true));
+            $path = APP;
+        }
+
         $this->folder->path = $path;
 
         $content = $this->folder->read();
