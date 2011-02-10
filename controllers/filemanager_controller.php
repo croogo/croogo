@@ -71,6 +71,14 @@ class FilemanagerController extends AppController {
             $path = APP;
         }
 
+        $blacklist = array('.git', '.svn', '.CVS');
+        $regex = '/(' . implode('|', $blacklist) . ')/';
+        if (in_array(basename($path), $blacklist) || preg_match($regex, $path)
+			) {
+            $this->Session->setFlash(__(sprintf('Path %s is restricted', $path), true));
+            $path = dirname($path);
+        }
+
         $this->folder->path = $path;
 
         $content = $this->folder->read();
