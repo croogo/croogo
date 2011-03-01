@@ -48,6 +48,7 @@
     
     <div class="buttons">
     <?php
+        echo $this->Form->submit(__('Apply', true), array('name' => 'apply'));
         echo $this->Form->end(__('Save', true));
         echo $this->Html->link(__('Cancel', true), array(
             'action' => 'index',

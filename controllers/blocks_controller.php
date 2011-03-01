@@ -44,7 +44,11 @@ class BlocksController extends AppController {
             $this->data['Block']['visibility_paths'] = $this->Block->encodeData(explode("\n", $this->data['Block']['visibility_paths']));
             if ($this->Block->save($this->data)) {
                 $this->Session->setFlash(__('The Block has been saved', true), 'default', array('class' => 'success'));
-                $this->redirect(array('action'=>'index'));
+                if (isset($this->params['form']['apply'])) {
+                    $this->redirect(array('action'=>'edit', $this->Block->id));
+                } else {
+                    $this->redirect(array('action'=>'index'));
+                }
             } else {
                 $this->Session->setFlash(__('The Block could not be saved. Please, try again.', true), 'default', array('class' => 'error'));
             }
@@ -66,7 +70,9 @@ class BlocksController extends AppController {
             $this->data['Block']['visibility_paths'] = $this->Block->encodeData(explode("\n", $this->data['Block']['visibility_paths']));
             if ($this->Block->save($this->data)) {
                 $this->Session->setFlash(__('The Block has been saved', true), 'default', array('class' => 'success'));
-                $this->redirect(array('action'=>'index'));
+                if (! isset($this->params['form']['apply'])) {
+                    $this->redirect(array('action'=>'index'));
+                }
             } else {
                 $this->Session->setFlash(__('The Block could not be saved. Please, try again.', true), 'default', array('class' => 'error'));
             }
