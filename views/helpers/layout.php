@@ -163,7 +163,11 @@ class LayoutHelper extends AppHelper {
 
         $output = '';
         foreach ($metaForLayout AS $name => $content) {
-            $output .= '<meta name="' . $name . '" content="' . $content . '" />';
+            if ($name == "description" && $this->node('excerpt') != "") {
+                $output .= '<meta name="' . $name . '" content="' . $this->node('excerpt') . '" />';
+            } else {
+                $output .= '<meta name="' . $name . '" content="' . $content . '" />';
+            }
         }
 
         return $output;
