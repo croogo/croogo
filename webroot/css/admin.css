@@ -196,6 +196,7 @@ div.filter { margin: 10px 0px 20px 0px; background: #efefef; padding: 0px 15px 1
 div.filter form label { font-size: 14px; }
 div.filter form .input { float: left; margin-right: 10px; }
 div.filter form select { width: 100px; }
+div.filter form .text input { font-size: 12px; padding: 0px; }
 div.filter .submit { float: left; margin-top: 35px; }
 
 

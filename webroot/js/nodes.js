@@ -58,22 +58,17 @@ Nodes.filter = function() {
         }
         
         //query string
-        if($('#QueryQ').val() != '') {
-            q=$('#QueryQ').val();
+        if($('#FilterQ').val() != '') {
+            q=$('#FilterQ').val();
         }
-        
         var loadUrl = Croogo.basePath + 'admin/nodes/index/';
         if (filter != '') {
             loadUrl += 'filter:' + filter;
         }
-        
-        if(q!='')
-        {
-            if(filter==''){
+        if (q != '') {
+            if (filter == '') {
                 loadUrl +='q:'+q;
-            }
-            else
-            {
+            } else {
                 loadUrl +='/q:'+q;
             }
         }
