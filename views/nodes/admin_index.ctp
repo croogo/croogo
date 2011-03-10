@@ -7,7 +7,6 @@
     <div class="actions">
         <ul>
             <li><?php echo $this->Html->link(__('Create content', true), array('action'=>'create')); ?></li>
-            <li><?php echo $this->Html->link(__('Filter', true), '#', array('class' => 'filter')); ?></li>
         </ul>
     </div>
 

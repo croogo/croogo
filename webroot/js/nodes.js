@@ -24,10 +24,6 @@ Nodes.documentReady = function() {
  * @return void
  */
 Nodes.filter = function() {
-    if (typeof(window['filter']) == 'undefined') {
-        $('.nodes div.filter').hide();
-    }
-
     $('.nodes div.actions a.filter').click(function() {
         $('.nodes div.filter').slideToggle();
         return false;
