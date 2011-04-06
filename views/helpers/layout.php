@@ -815,7 +815,7 @@ class LayoutHelper extends AppHelper {
  */
     public function hook($methodName) {
         $output = '';
-        foreach ($this->View->helpers AS $helper) {
+        foreach ($this->View->helpers AS $helper => $settings) {
             if (!is_string($helper) || in_array($helper, $this->coreHelpers)) {
                 continue;
             }
