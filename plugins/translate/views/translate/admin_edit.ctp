@@ -5,6 +5,7 @@
         echo $this->Form->create($modelAlias, array('url' => array(
             'controller' => 'translate',
             'action' => 'edit',
+            $id,
             $modelAlias,
             'locale' => $this->params['named']['locale'],
         )));
