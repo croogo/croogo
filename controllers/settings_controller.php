@@ -107,7 +107,7 @@ class SettingsController extends AppController {
     }
 
     public function admin_prefix($prefix = null) {
-        $this->set('title_for_layout', sprintf(__('Settings: %s', true), $prefix));
+        $this->set('title_for_layout', sprintf(__('Settings: %s', true), __($prefix,true)));
 
         if(!empty($this->data) && $this->Setting->saveAll($this->data['Setting'])) {
             $this->Session->setFlash(__("Settings updated successfully", true), 'default', array('class' => 'success'));
