@@ -11,7 +11,7 @@
         $filterType = $filters['type'];
     }
     echo $this->Form->input('Filter.type', array(
-        'options' => Set::combine($types, '{n}.Type.alias', '{n}.Type.title'),
+        'options' => Set::combine($types, '{n}.Type.alias', __('{n}.Type.title',true)),
         'empty' => true,
         'value' => $filterType,
     ));
