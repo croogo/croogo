@@ -41,14 +41,14 @@
                         ));
                     } else {
                         echo $this->Form->input("Setting.$i.value", array(
-                            'label' => $label,
+                            'label' => __($label,true),
                             'type' => $setting['Setting']['input_type'],
                             'rel' => $setting['Setting']['description'],
                         ));
                     }
                 } else {
                     echo $this->Form->input("Setting.$i.value", array(
-                        'label' => $label,
+                        'label' => __($label,true),
                         'type' => $inputType,
                         'value' => $setting['Setting']['value'],
                         'rel' => $setting['Setting']['description'],
