@@ -6,6 +6,7 @@ plugins/migrations/
 vendors/simpletest/
 views/themed/
 webroot/uploads/
+config/core.php
 
 # Cake cache
 tmp/

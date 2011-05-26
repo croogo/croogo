@@ -71,7 +71,7 @@ class AclGenerateComponent extends Object {
  */
     public function listActions($name, $path) {
         // base methods
-        if (strpos($path, APP.'plugins') >= 0) {
+        if (strpos($path, APP.'plugins') !== false) {
             $plugin = $this->getPluginFromPath($path);
             $pacName = Inflector::camelize($plugin) . 'AppController'; // pac - PluginAppController
             $pacPath = APP.'plugins'.DS.$plugin.DS.$plugin.'_app_controller.php';

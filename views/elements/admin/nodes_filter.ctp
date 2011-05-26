@@ -10,8 +10,10 @@
     if (isset($filters['type'])) {
         $filterType = $filters['type'];
     }
+		$types = Set::sort($types, '{n}.Type.title', 'asc');
+		$types = Set::combine($types, '{n}.Type.alias', '{n}.Type.title');
     echo $this->Form->input('Filter.type', array(
-        'options' => Set::combine($types, '{n}.Type.alias', '{n}.Type.title'),
+				'options' => $types,
         'empty' => true,
         'value' => $filterType,
     ));
