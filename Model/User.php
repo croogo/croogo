@@ -108,14 +108,13 @@ class User extends AppModel {
     }
 
     public function afterSave($created) {
-        if (!$created) {
-            $parent = $this->parentNode();
-            $parent = $this->node($parent);
-            $node = $this->node();
-            $aro = $node[0];
-            $aro['Aro']['parent_id'] = $parent[0]['Aro']['id'];
-            $this->Aro->save($aro);
-        }
+        $parent = $this->parentNode();
+        $parent = $this->node($parent);
+        $node = $this->node();
+        $aro = $node[0];
+        $aro['Aro']['parent_id'] = $parent[0]['Aro']['id'];
+        $aro['Aro']['alias'] = $this->data['User']['username'];
+        $this->Aro->save($aro);
     }
 
     protected function _identical($check) {
