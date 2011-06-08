@@ -520,6 +520,9 @@ class LayoutHelper extends AppHelper {
             for ($j=0; $j < count($attributes[0]); $j++) {
                 $options[$attributes[1][$j]] = $attributes[2][$j];
             }
+            if (!empty($this->View->viewVars['block'])) {
+                $options['block'] = $this->View->viewVars['block'];
+            }
             $content = str_replace($tagMatches[0][$i], $this->View->element($element,$options), $content);
         }
         return $content;
