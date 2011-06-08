@@ -38,6 +38,7 @@ class Block extends AppModel {
                 'croogo_blocks_',
             ),
         ),
+        'Params',
     );
 /**
  * Validation

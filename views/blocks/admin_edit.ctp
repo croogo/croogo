@@ -7,6 +7,7 @@
                 <li><a href="#block-basic"><span><?php __('Block'); ?></span></a></li>
                 <li><a href="#block-access"><span><?php __('Access'); ?></span></a></li>
                 <li><a href="#block-visibilities"><span><?php __('Visibilities'); ?></span></a></li>
+                <li><a href="#block-params"><?php __('Params'); ?></a></li>
                 <?php echo $this->Layout->adminTabs(); ?>
             </ul>
 
@@ -41,6 +42,12 @@
                         'rel' => __('Block will be shown if the PHP code returns true. If unsure, leave blank.', true)
                     ));*/
                 ?>
+            </div>
+
+            <div id="block-params">
+            <?php
+                echo $this->Form->input('Block.params');
+            ?>
             </div>
             <?php echo $this->Layout->adminTabs(); ?>
         </div>

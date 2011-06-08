@@ -267,9 +267,17 @@ class LayoutHelper extends AppHelper {
                     $element = 'block';
                 }
                 if ($plugin) {
-                    $output .= $this->View->element($element, array('block' => $block, 'plugin' => $plugin));
+                    $blockOutput = $this->View->element($element, array('block' => $block, 'plugin' => $plugin));
                 } else {
-                    $output .= $this->View->element($element, array('block' => $block));
+                    $blockOutput = $this->View->element($element, array('block' => $block));
+                }
+                $enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
+                if ($element != 'block' && $enclosure) {
+                    $block['Block']['body'] = $blockOutput;
+                    $block['Block']['element'] = null;
+                    $output .= $this->View->element('block', array('block' => $block));
+                } else {
+                    $output .= $blockOutput;
                 }
             }
         }
