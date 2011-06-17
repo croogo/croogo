@@ -151,10 +151,35 @@ class AclActionsController extends AclAppController {
 
         $controllerPaths = $this->AclGenerate->listControllers();
         foreach ($controllerPaths AS $controllerName => $controllerPath) {
-            $controllerNode = $aco->node('controllers/'.$controllerName);
+            $parentAco = $root['Aco']['id'];
+            if (strpos($controllerName, '/') !== false) {
+                list($pluginName, $controllerName) = explode('/', $controllerName);
+                $pluginNode = $aco->node('controllers/'.$pluginName);
+                if (!$pluginNode) {
+                    $aco->create(array(
+                        'parent_id' => $root['Aco']['id'],
+                        'model' => null,
+                        'alias' => $pluginName,
+                    ));
+                    $pluginNode = $aco->save();
+                    $pluginNode['Aco']['id'] = $aco->id;
+                    $log[] = 'Created Aco node for plugin ' . $pluginName;
+                } else {
+                    $pluginNode = $pluginNode[0];
+                }
+                $parentAco = $pluginNode['Aco']['id'];
+            }
+            $controllerNodePath = 'controllers/';
+            if (!empty($pluginName)) {
+                $controllerNodePath .= $pluginName.'/'.$controllerName;
+            } else {
+                $controllerNodePath .= $controllerName;
+            }
+            $controllerNode = $aco->node($controllerNodePath);
+
             if (!$controllerNode) {
                 $aco->create(array(
-                    'parent_id' => $root['Aco']['id'],
+                    'parent_id' => $parentAco,
                     'model' => null,
                     'alias' => $controllerName,
                 ));
