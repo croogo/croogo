@@ -166,5 +166,19 @@ class AppController extends Controller {
         $this->render('../Errors/security');
     }
 
+/**
+ * isAuthorized for Auth/ACL
+ * @see AclFilter::auth()
+ * @see AclFilter::getPermissions()
+ * @return bool
+ */
+    function isAuthorized($user) {
+        if (!empty($this->Auth->_authorizeObjects[0])) {
+            $action = $this->Auth->_authorizeObjects[0]->action($this->request);
+            return in_array($action, $this->AclFilter->authorized);
+        }
+        return false;
+    }
+
 }
 ?>

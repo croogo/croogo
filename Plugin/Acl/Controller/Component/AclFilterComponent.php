@@ -16,6 +16,18 @@ class AclFilterComponent extends Component {
     protected $controller = null;
 
 /**
+ * Authorized
+ * Contains a list of actions authorized for logged in user. This list is
+ * automatically populated and used by AppController::isAuthorized
+ *
+ * @var array
+ * @access public
+ * @see AclFilterComponent::getPermissions()
+ * @see AppController::isAuthorized()
+ */
+    var $authorized = array();
+
+/**
  * @param object $controller controller
  * @param array  $settings   settings
  */
@@ -45,7 +57,7 @@ class AclFilterComponent extends Component {
         $actionPath = 'controllers';
         $this->controller->Auth->authorize = array(
             AuthComponent::ALL => array('actionPath' => $actionPath),
-            'Actions',
+            'Controller',
             );
         $this->controller->Auth->loginAction = array(
             'plugin' => null,
@@ -63,66 +75,78 @@ class AclFilterComponent extends Component {
             'action' => 'index',
         );
 
-        if ($this->controller->Auth->user() && $this->controller->Auth->user('role_id') == 1) {
+        $user = $this->controller->Auth->user();
+        if (!empty($user['role_id']) && $user['role_id'] == 1) {
             // Role: Admin
             $this->controller->Auth->allowedActions = array('*');
         } else {
-            if ($this->controller->Auth->user()) {
-                $roleId = $this->controller->Auth->user('role_id');
+            $permKey = 'Permission';
+            if ($this->controller->Session->check($permKey)) {
+                $permissions = $this->controller->Session->read($permKey);
             } else {
-                $roleId = 3; // Role: Public
+                $permissions = $this->getPermissions();
+                $this->controller->Session->write($permKey, $permissions);
             }
 
-            $aro = $this->controller->Acl->Aro->find('first', array(
-                'conditions' => array(
-                    'Aro.model' => 'Role',
-                    'Aro.foreign_key' => $roleId,
-                ),
-                'recursive' => -1,
-            ));
-            $aroId = $aro['Aro']['id'];
-            $thisControllerNode = $this->controller->Acl->Aco->node($actionPath .'/'.  $this->controller->name);
-            if ($thisControllerNode) {
-                $thisControllerNode = $thisControllerNode['0'];
-                $thisControllerActions = $this->controller->Acl->Aco->find('list', array(
-                    'conditions' => array(
-                        'Aco.parent_id' => $thisControllerNode['Aco']['id'],
-                    ),
-                    'fields' => array(
-                        'Aco.id',
-                        'Aco.alias',
-                    ),
-                    'recursive' => '-1',
-                ));
-                $thisControllerActionsIds = array_keys($thisControllerActions);
-                $allowedActions = $this->controller->Acl->Aco->Permission->find('list', array(
-                    'conditions' => array(
-                        'Permission.aro_id' => $aroId,
-                        'Permission.aco_id' => $thisControllerActionsIds,
-                        'Permission._create' => 1,
-                        'Permission._read' => 1,
-                        'Permission._update' => 1,
-                        'Permission._delete' => 1,
-                    ),
-                    'fields' => array(
-                        'id',
-                        'aco_id',
-                    ),
-                    'recursive' => '-1',
-                ));
-                $allowedActionsIds = array_values($allowedActions);
+            if (!empty($user['id'])) {
+                // let Controller::isAuthorized work
+                $this->authorized = $permissions['authorized'];
+                return;
             }
 
-            $allow = array();
-            if (isset($allowedActionsIds) &&
-                is_array($allowedActionsIds) &&
-                count($allowedActionsIds) > 0) {
-                foreach ($allowedActionsIds AS $i => $aId) {
-                    $allow[] = $thisControllerActions[$aId];
-                }
+            if (!empty($permissions['allowed'][$this->controller->name])) {
+                $this->controller->Auth->allow($permissions['allowed'][$this->controller->name]);
             }
-            $this->controller->Auth->allowedActions = $allow;
         }
+
+    }
+
+/**
+ * getPermissions
+ * retrieve list of permissions from database
+ * @return array list of authorized and allowed actions
+ */
+    function getPermissions() {
+        $Acl =& $this->controller->Acl;
+        if (! $this->controller->Auth->user()) {
+            $aro = array('model' => 'Role', 'foreign_key' => 3);
+        } else {
+            $aro = array('model' => 'User', 'foreign_key' => $this->controller->Auth->user('id'));
+        }
+        $node = $Acl->Aro->node($aro);
+        $nodes = $Acl->Aro->getPath($aro);
+
+        $aros = Set::extract('/Aro/id', $node);
+        if (!empty($nodes)) {
+            $aros = Set::merge($aros, Set::extract('/Aro/id', $nodes));
+        }
+
+        $permissions = $Acl->Aro->Permission->find('all', array(
+            'conditions' => array(
+                'Permission.aro_id' => $aros,
+                'Permission._create' => 1,
+                'Permission._read' => 1,
+                'Permission._update' => 1,
+                'Permission._delete' => 1,
+                )
+            ));
+
+        $authorized = $allowedActions = array();
+        foreach ($permissions as $permission) {
+            $path = $Acl->Aco->getPath($permission['Permission']['aco_id']);
+            if (count($path) == 4) {
+                // plugin controller/action
+                $controller = $path[2]['Aco']['alias'];
+                $action = $path[3]['Aco']['alias'];
+            } else {
+                // core controller/action
+                $controller = $path[1]['Aco']['alias'];
+                $action = $path[2]['Aco']['alias'];
+            }
+            $allowedActions[$controller][] = $action;
+            $authorized[] = implode('/', Set::extract('/Aco/alias', $path));
+        }
+        return array('authorized' => $authorized, 'allowed' => $allowedActions);
     }
 
 }
