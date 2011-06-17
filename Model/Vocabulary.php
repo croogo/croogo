@@ -104,14 +104,12 @@ class Vocabulary extends AppModel {
     }
 
     public function afterSave($created) {
-        $parent = $this->parentNode();
-        $parent = $this->node($parent);
+        if (empty($this->data['Role']['alias'])) {
+            return;
+        }
         $node = $this->node();
         $aro = $node[0];
-        $aro['Aro']['alias'] = $this->data['Role']['alias'];
-        if (!empty($parent['Aro']['foreign_key'])) {
-            $aro['Aro']['parent_id'] = $parent['Aro']['foreign_key'];
-        }
+        $aro['Aro']['alias'] = 'Role-' . $this->data['Role']['alias'];
         $this->Aro->save($aro);
     }
 
