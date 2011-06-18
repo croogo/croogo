@@ -14,6 +14,7 @@ AclPermissions.documentReady = function() {
     AclPermissions.permissionToggle();
     AclPermissions.tableToggle();
     $('tr:has(div.controller)').addClass('controller-row');
+    $('tr:has(div.plugin)').addClass('plugin-row');
 }
 
 /**
@@ -61,6 +62,19 @@ AclPermissions.tableToggle = function() {
             $(this).addClass('expand');
         }
     });
+
+    $('table div.plugin').click(function() {
+        var $this = $(this);
+        $('.plugin-'+$this.text()).toggle();
+        if ($this.hasClass('expand')) {
+            $this.removeClass('expand');
+            $this.addClass('collapse');
+        } else {
+            $this.removeClass('collapse');
+            $this.addClass('expand');
+        }
+    });
+
 }
 
 /**

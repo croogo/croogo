@@ -41,9 +41,65 @@ class AclPermissionsController extends AclAppController {
             'foreign_key' => null,
             'alias !=' => null,
         );
-        $acos  = $this->Acl->Aco->generateTreeList($acoConditions, '{n}.Aco.id', '{n}.Aco.alias');
+        $acos  = $this->Acl->Aco->generateTreeList($acoConditions, '{n}.Aco.id', '{n}.Aco.alias', '-');
         $roles = $this->Role->find('list');
         $this->set(compact('acos', 'roles'));
+
+        $acoPaths = array();
+        foreach ($acos  as $id => $alias) {
+            $paths = $this->Acl->Aco->getPath($id);
+            unset($paths[0]);
+            $alias = implode('/', Set::extract('/Aco/alias', $paths));
+            $childcount = $this->Acl->Aco->childCount($id, true);
+            if ($childcount == 0) {
+                $type = 'action';
+            } else {
+                $grandchildcount = $this->Acl->Aco->childCount($id);
+                if ($childcount == $grandchildcount) {
+                    $type = 'controller';
+                } else {
+                    $type = 'plugin';
+                }
+            }
+
+            if ($type == 'plugin') {
+                $plugin = $alias; $controller = false; $action = false;
+            } else {
+                $c = substr_count($alias, '/');
+                $aliasE = explode('/', $alias);
+                if ($type == 'action') {
+                    if ($c == 2) {
+                        $plugin = $aliasE[0];
+                        $controller = $aliasE[1];
+                        $action = $aliasE[2];
+                    } elseif ($c == 1) {
+                        $plugin = false;
+                        $controller = $aliasE[0];
+                        $action = $aliasE[1];
+                    }
+                } elseif ($type == 'controller') {
+                    if ($c == 1) {
+                        $plugin = $aliasE[0];
+                        $controller = $aliasE[1];
+                        $action = '';
+                    } elseif ($c == 0) {
+                        $plugin = false;
+                        $controller = $aliasE[0];
+                        $action = '';
+                    }
+                }
+            }
+            $acoPaths[$id] = array(
+                'Aco' => array(
+                    'type' => $type,
+                    'alias' => $alias,
+                    'children' => $childcount,
+                    'plugin' => $plugin,
+                    'controller' => $controller,
+                    'action' => $action,
+                ));
+        }
+        $this->set(compact('acoPaths'));
 
         $rolesAros = $this->AclAro->find('all', array(
             'conditions' => array(
@@ -55,7 +111,7 @@ class AclPermissionsController extends AclAppController {
 
         $permissions = array(); // acoId => roleId => bool
         foreach ($acos AS $acoId => $acoAlias) {
-            if (substr_count($acoAlias, '_') != 0) {
+            if (substr_count($acoAlias, '-') != 0) {
                 $permission = array();
                 foreach ($roles AS $roleId => $roleTitle) {
                     $hasAny = array(

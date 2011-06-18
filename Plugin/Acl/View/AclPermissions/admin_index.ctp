@@ -24,21 +24,39 @@
         $tableHeaders =  $this->Html->tableHeaders($tableHeaders);
         echo $tableHeaders;
 
-        $currentController = '';
+        $c = 0;
         foreach ($acos AS $id => $alias) {
             $class = '';
-            if(substr($alias, 0, 1) == '_') {
-                $level = 1;
+            $level = substr_count($alias, '-');
+            $acoPath = $acoPaths[$id]['Aco'];
+
+            switch ($acoPath['type']) {
+            case 'action':
                 $class .= 'level-'.$level;
-                $oddOptions = array('class' => 'hidden controller-'.$currentController);
-                $evenOptions = array('class' => 'hidden controller-'.$currentController);
-                $alias = substr_replace($alias, '', 0, 1);
-            } else {
-                $level = 0;
-                $class .= ' controller expand';
+                $actionClass = 'hidden controller-'.$acoPath['controller'];
+                $oddOptions = array('class' => $actionClass);
+                $evenOptions = array('class' => $actionClass);
+                $alias = substr_replace($alias, '', 0, $level);
+            break;
+            case 'plugin':
+                $class = 'plugin expand';
                 $oddOptions = array();
                 $evenOptions = array();
-                $currentController = $alias;
+                $trClass = false;
+            break;
+            case 'controller':
+                if ($acoPath['plugin']) {
+                    $class .= ' controller expand';
+                    $trClass = ' hidden plugin-controller plugin-' . $acoPath['plugin'];
+                    $class .= ' plugin level-' . $level;
+                } else {
+                    $class .= ' controller collapse';
+                    $trClass = false;
+                }
+                $oddOptions = array();
+                $evenOptions = array();
+                $alias = substr_replace($alias, '', 0, $level);
+            break;
             }
             
             $row = array(
@@ -47,7 +65,7 @@
             );
 
             foreach ($roles AS $roleId => $roleTitle) {
-                if ($level != 0) {
+                if ($acoPath['type'] == 'action') {
                     if ($roleId != 1) {
                         if ($permissions[$id][$roleId] == 1) {
                             $row[] = $this->Html->image('/img/icons/tick.png', array('class' => 'permission-toggle', 'rel' => $id.'-'.$rolesAros[$roleId]));
@@ -62,7 +80,14 @@
                 }
             }
 
-            echo $this->Html->tableCells(array($row), $oddOptions, $evenOptions);
+            $line = '';
+            foreach ($row as $cell) {
+                $tdOptions = ($c % 2 == 0) ? $evenOptions: $oddOptions;
+                $line .= $this->Html->tag('td', $cell, $tdOptions);
+            }
+            $trOptions = empty($trClass) ? array() : array('class' => $trClass);
+            echo $this->Html->tag('tr', $line, $trOptions);
+            $c++;
         }
 
         echo $tableHeaders;
