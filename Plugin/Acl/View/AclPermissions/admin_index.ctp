@@ -8,6 +8,7 @@
         <ul>
             <li><?php echo $this->Html->link(__('Generate Actions'), array('controller' => 'acl_actions', 'action'=>'generate', 'permissions' => 1)); ?></li>
             <li><?php echo $this->Html->link(__('Edit Actions'), array('controller' => 'acl_actions', 'action'=>'index', 'permissions' => 1)); ?></li>
+            <li><?php echo $this->Html->link(__('Upgrade Acl for Standard Plugins'), array('controller' => 'acl_permissions', 'action'=>'upgrade')); ?></li>
         </ul>
     </div>
 

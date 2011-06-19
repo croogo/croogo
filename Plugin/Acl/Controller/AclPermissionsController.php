@@ -184,5 +184,21 @@ class AclPermissionsController extends AclAppController {
         $this->set(compact('acoId', 'aroId', 'data', 'success', 'permitted'));
     }
     
+    function admin_upgrade() {
+        App::import('Component', 'Acl.AclUpgrade');
+        $this->AclUpgrade = new AclUpgradeComponent;
+        $this->AclUpgrade->initialize($this);
+        if (($errors = $this->AclUpgrade->upgrade()) === true) {
+            $this->Session->setFlash(__('Acl Upgrade complete', true));
+        } else {
+            $message = '';
+            foreach ($errors as $error) {
+                $message .= $error . '<br />';
+            }
+			$this->Session->setFlash($message);
+        }
+        $this->redirect($this->referer());
+    }
+
 }
 ?>
