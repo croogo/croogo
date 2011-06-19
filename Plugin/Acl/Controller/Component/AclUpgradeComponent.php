@@ -26,8 +26,8 @@ class AclUpgradeComponent extends Component {
 			$root = $root[0];
 		}
 
-		$errors = array();
 		$Aco->begin();
+		$errors = $this->update_role_hierarchy();
 		foreach ($this->__acosToMove as $plugin => $controllers) {
 			$pluginPath = $actionPath . $plugin;
 			$pluginNode = $Aco->node($pluginPath);
@@ -92,5 +92,3 @@ class AclUpgradeComponent extends Component {
 		return array();
 	}
 }
-
-?>
