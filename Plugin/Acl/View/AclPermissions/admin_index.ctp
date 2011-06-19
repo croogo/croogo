@@ -26,15 +26,15 @@
         echo $tableHeaders;
 
         $c = 0;
-        foreach ($acos AS $id => $alias) {
+        foreach ($acos AS $id => $aco) {
             $class = '';
+            $alias = $aco[0];
             $level = substr_count($alias, '-');
-            $acoPath = $acoPaths[$id]['Aco'];
 
-            switch ($acoPath['type']) {
+            switch ($aco['type']) {
             case 'action':
                 $class .= 'level-'.$level;
-                $actionClass = 'hidden controller-'.$acoPath['controller'];
+                $actionClass = 'hidden controller-'.$aco['controller'];
                 $oddOptions = array('class' => $actionClass);
                 $evenOptions = array('class' => $actionClass);
                 $alias = substr_replace($alias, '', 0, $level);
@@ -46,9 +46,9 @@
                 $trClass = false;
             break;
             case 'controller':
-                if ($acoPath['plugin']) {
+                if ($aco['plugin']) {
                     $class .= ' controller expand';
-                    $trClass = ' hidden plugin-controller plugin-' . $acoPath['plugin'];
+                    $trClass = ' hidden plugin-controller plugin-' . $aco['plugin'];
                     $class .= ' plugin level-' . $level;
                 } else {
                     $class .= ' controller collapse';
@@ -66,7 +66,7 @@
             );
 
             foreach ($roles AS $roleId => $roleTitle) {
-                if ($acoPath['type'] == 'action') {
+                if ($aco['type'] == 'action') {
                     if ($roleId != 1) {
                         if ($permissions[$id][$roleId] == 1) {
                             $row[] = $this->Html->image('/img/icons/tick.png', array('class' => 'permission-toggle', 'rel' => $id.'-'.$rolesAros[$roleId]));
