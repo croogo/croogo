@@ -25,20 +25,21 @@ AclPermissions.documentReady = function() {
 AclPermissions.permissionToggle = function() {
     $('img.permission-toggle').unbind();
     $('img.permission-toggle').click(function() {
-        var rel = $(this).attr('rel');
+        var $this = $(this);
+        var rel = $this.attr('rel');
         var rel_e = rel.split('-');
         var acoId = rel_e[0];
         var aroId = rel_e[1];
 
         // show loader
-        $(this).attr('src', Croogo.basePath+'img/ajax/circle_ball.gif');
+        $this.attr('src', Croogo.basePath+'img/ajax/circle_ball.gif');
 
         // prepare loadUrl
         var loadUrl = Croogo.basePath+'admin/acl/acl_permissions/toggle/';
         loadUrl    += acoId+'/'+aroId+'/';
 
         // now load it
-        $(this).parent().load(loadUrl, function() {
+        $this.parent().load(loadUrl, function() {
             AclPermissions.permissionToggle();
         });
 
@@ -53,13 +54,14 @@ AclPermissions.permissionToggle = function() {
  */
 AclPermissions.tableToggle = function() {
     $('table div.controller').click(function() {
-        $('.controller-'+$(this).text()).toggle();
-        if ($(this).hasClass('expand')) {
-            $(this).removeClass('expand');
-            $(this).addClass('collapse');
+        var $this = $(this);
+        $('.controller-'+$this.text()).toggle();
+        if ($this.hasClass('expand')) {
+            $this.removeClass('expand');
+            $this.addClass('collapse');
         } else {
-            $(this).removeClass('collapse');
-            $(this).addClass('expand');
+            $this.removeClass('collapse');
+            $this.addClass('expand');
         }
     });
 
