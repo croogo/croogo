@@ -57,8 +57,7 @@ class AclPermissionsController extends AclAppController {
         return $acos;
     }
 
-    public function admin_index() {
-        $this->set('title_for_layout', __('Permissions'));
+    function __generateAcoTreelist() {
 
         $acoConditions = array(
             'parent_id !=' => null,
@@ -68,7 +67,6 @@ class AclPermissionsController extends AclAppController {
         );
         $acos = $this->Acl->Aco->find('threaded', array('conditions' => $acoConditions));
         $acos = $this->__acoList($acos);
-        $roles = $this->Role->find('list');
 
         $paths = Set::extract('/path', $acos);
         foreach ($acos as $id => &$aco) {
@@ -133,6 +131,15 @@ class AclPermissionsController extends AclAppController {
                 'action' => $action,
                 ));
         }
+        return $acos;
+    }
+
+    public function admin_index() {
+        $this->set('title_for_layout', __('Permissions', true));
+
+        $acos = $this->__generateAcoTreelist();
+        $roles = $this->Role->find('list');
+
         $this->set(compact('acos', 'roles'));
 
         $rolesAros = $this->AclAro->find('all', array(
