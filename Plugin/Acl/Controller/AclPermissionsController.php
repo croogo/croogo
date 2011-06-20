@@ -70,17 +70,31 @@ class AclPermissionsController extends AclAppController {
         $acos = $this->__acoList($acos);
         $roles = $this->Role->find('list');
 
+        $paths = Set::extract('/path', $acos);
+        foreach ($acos as $id => &$aco) {
+            if (strpos($aco['path'], '/') === false) {
+                $childcount = count(preg_grep('/'. $aco['path'] . '\//', $paths));
+            } else {
+                $aco['grandchildren'] = 0;
+                continue;
+            }
+            if ($aco['children'] == 0 || $aco['children'] == $childcount) {
+                $aco['grandchildren'] = 0;
+            } else {
+                $aco['grandchildren'] = $childcount;
+            }
+        }
+
         foreach ($acos  as $id => &$aco) {
             $path = $aco['path'];
             $childcount = $aco['children'];
             if ($childcount == 0) {
                 $type = 'action';
             } else {
-                $grandchildcount = $this->Acl->Aco->childCount($id);
-                if ($childcount == $grandchildcount) {
-                    $type = 'controller';
-                } else {
+                if ($aco['grandchildren'] > 0) {
                     $type = 'plugin';
+                } else {
+                    $type = 'controller';
                 }
             }
 
