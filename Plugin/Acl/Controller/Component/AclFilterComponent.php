@@ -80,7 +80,7 @@ class AclFilterComponent extends Component {
             // Role: Admin
             $this->controller->Auth->allowedActions = array('*');
         } else {
-            $permKey = 'Permission';
+            $permKey = $this->controller->Auth->sessionKey . '.Permission';
             if ($this->controller->Session->check($permKey)) {
                 $permissions = $this->controller->Session->read($permKey);
             } else {
