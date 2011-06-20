@@ -48,6 +48,10 @@ class AclPermissionsController extends AclAppController {
             if (!empty($leaf['children'])) {
                 $this->__acoList($leaf['children'], $path, ++$level);
                 $level--;
+                $children = count($leaf['children']);
+                $acos[$leaf['Aco']['id']]['children'] = $children;
+            } else {
+                $acos[$leaf['Aco']['id']]['children'] = 0;
             }
         }
         return $acos;
@@ -68,7 +72,7 @@ class AclPermissionsController extends AclAppController {
 
         foreach ($acos  as $id => &$aco) {
             $path = $aco['path'];
-            $childcount = $this->Acl->Aco->childCount($id, true);
+            $childcount = $aco['children'];
             if ($childcount == 0) {
                 $type = 'action';
             } else {
