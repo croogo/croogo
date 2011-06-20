@@ -19,13 +19,7 @@ class AclActionsController extends AclAppController {
     public function admin_index() {
         $this->set('title_for_layout', __('Actions'));
 
-        $conditions = array(
-            'parent_id !=' => null,
-            //'model' => null,
-            'foreign_key' => null,
-            'alias !=' => null,
-        );
-        $this->set('acos', $this->Acl->Aco->generateTreeList($conditions, '{n}.Aco.id', '{n}.Aco.alias'));
+        $this->set('acos', $this->AclFilter->acoTreelist());
     }
 
     public function admin_add() {
