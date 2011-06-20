@@ -35,8 +35,25 @@ class RolesController extends AppController {
         $this->set('title_for_layout', __('Roles'));
 
         $this->Role->recursive = 0;
-        $this->paginate['Role']['order'] = "Role.id ASC";
-        $this->set('roles', $this->paginate());
+        $this->paginate['Role']['order'] = "Aro.lft ASC";
+
+        $this->Role->bindModel(array(
+            'hasOne' => array(
+                'Aro' => array(
+                    'className' => 'Aro',
+                    'foreignKey' => false,
+                    'conditions' => array(
+                        "model = 'Role'",
+                        'foreign_key = Role.id',
+                    ),
+                ),
+            )), false);
+
+        $roles = $this->paginate();
+        foreach ($roles as &$role) {
+            $role['Role']['level'] = count($this->Role->Aro->getPath($role['Aro']['id']));
+        }
+        $this->set(compact('roles'));
     }
 
     public function admin_add() {
@@ -60,8 +77,29 @@ class RolesController extends AppController {
             $this->Session->setFlash(__('Invalid Role'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
+
+        $this->Role->bindModel(array(
+            'hasOne' => array(
+                'Aro' => array(
+                    'foreignKey' => false,
+                    'conditions' => array(
+                        "model = 'Role'",
+                        'foreign_key = Role.id',
+                    ),
+                ),
+            )), false);
         if (!empty($this->request->data)) {
             if ($this->Role->save($this->request->data)) {
+                if (isset($this->request->data['Role']['parent_id'])) {
+                    $aro = $this->Acl->Aro->node(array(
+                        'model' => 'Role', 'foreign_key' => $this->Role->id
+                        ));
+                    if ($aro) {
+                        $aro = $aro[0];
+                        $aro['Aro']['parent_id'] = $this->request->data['Role']['parent_id'];
+                        $this->Acl->Aro->save($aro);
+                    }
+                }
                 $this->Session->setFlash(__('The Role has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
@@ -70,6 +108,16 @@ class RolesController extends AppController {
         }
         if (empty($this->request->data)) {
             $this->request->data = $this->Role->read(null, $id);
+            if (isset($this->request->data['Aro'])) {
+                $parent = $this->Acl->Aro->getParentNode($this->request->data['Aro']);
+                $this->request->data['Role']['parent_id'] = $parent['Aro']['id'];
+            }
+            $roles = $this->Role->find('all');
+            $parents = array();
+            foreach ($roles as &$role) {
+                $parents[$role['Aro']['id']] = $role['Role']['title'];
+            }
+            $this->set(compact('parents'));
         }
     }
 
