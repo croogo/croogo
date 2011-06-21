@@ -18,6 +18,9 @@
         'engine' => 'File',
     );
 
+    // permissions
+    Cache::config('permissions', $cacheConfig);
+
     // models
     Cache::config('setting_write_configuration', $cacheConfig);
 
