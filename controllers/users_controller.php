@@ -279,6 +279,10 @@ class UsersController extends AppController {
 
     public function login() {
         $this->set('title_for_layout', __('Log in', true));
+        $fields = $this->Auth->fields;
+        $userModel = $this->Auth->userModel;
+        $loginAction = $this->Auth->loginAction;
+        $this->set(compact('fields', 'userModel', 'loginAction'));
     }
 
     public function logout() {
