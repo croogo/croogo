@@ -35,6 +35,12 @@ class AclFilterComponent extends Object {
     private function _setupAuth() {
         $this->controller->Auth->authorize = 'controller';
 
+        $userModel = Configure::read('Acl.Auth.userModel');
+        if (empty($userModel)) {
+            $userModel = 'User';
+        }
+        $this->controller->Auth->userModel = $userModel;
+
         $loginAction = array(
             'plugin' => null,
             'controller' => 'users',
