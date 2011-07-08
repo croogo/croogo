@@ -58,6 +58,14 @@ class AclFilterComponent extends Object {
         $userScope = Set::merge($userScope, Configure::read('Acl.Auth.userScope'));
         $this->controller->Auth->userScope = $userScope;
 
+        if ($authError = Configure::read('Acl.Auth.authError')) {
+            $this->controller->authError = $authError;
+        }
+
+        if ($loginError = Configure::read('Acl.Auth.loginError')) {
+            $this->controller->loginError = $loginError;
+        }
+
         $this->controller->Auth->actionPath = 'controllers/';
 
         if ($this->controller->Auth->user() && $this->controller->Auth->user('role_id') == 1) {
