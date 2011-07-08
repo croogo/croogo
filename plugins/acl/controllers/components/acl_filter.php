@@ -22,12 +22,17 @@ class AclFilterComponent extends Object {
     }
 
 /**
- * acl and auth
- *
- * @return void
+ * Configure Auth component
+ * Auth settings can be configured using Acl.Auth keys.
+ * Currently, the following settings are applicable:
+ *   - loginAction
+ *   - loginRedirect
+ *   - logoutRedirect
+ *   - userScope
+ *   - authError
+ *   - loginError
  */
-    public function auth() {
-        //Configure AuthComponent
+    private function _setupAuth() {
         $this->controller->Auth->authorize = 'controller';
 
         $loginAction = array(
@@ -67,6 +72,15 @@ class AclFilterComponent extends Object {
         if ($loginError = Configure::read('Acl.Auth.loginError')) {
             $this->controller->loginError = $loginError;
         }
+    }
+
+/**
+ * acl and auth
+ *
+ * @return void
+ */
+    public function auth() {
+        $this->_setupAuth();
 
         $this->controller->Auth->actionPath = 'controllers/';
 
