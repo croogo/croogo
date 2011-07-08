@@ -31,6 +31,7 @@ class AclFilterComponent extends Object {
  *   - userScope
  *   - authError
  *   - loginError
+ *   - fields
  */
     private function _setupAuth() {
         $this->controller->Auth->authorize = 'controller';
@@ -40,6 +41,12 @@ class AclFilterComponent extends Object {
             $userModel = 'User';
         }
         $this->controller->Auth->userModel = $userModel;
+
+        $fields = Configure::read('Acl.Auth.fields');
+        if (empty($fields)) {
+            $fields = array('username' => 'username', 'password' => 'password');
+        }
+        $this->controller->Auth->fields = $fields;
 
         $loginAction = array(
             'plugin' => null,
