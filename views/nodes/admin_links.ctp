@@ -1,6 +1,7 @@
 <?php
     echo $this->Html->css('admin');
     echo $this->Html->script('jquery/jquery.min');
+		echo $this->Html->script('nodes_filter');
 ?>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -15,6 +16,8 @@
 <div class="nodes">
     <div>
         <?php
+						echo $this->element('admin/nodes_filter');
+						echo "<br />";
             if (isset($this->params['named'])) {
                 foreach ($this->params['named'] AS $nn => $nv) {
                     $paginator->options['url'][] = $nn . ':' . $nv;
