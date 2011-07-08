@@ -45,24 +45,30 @@ class AclFilterComponent extends Object {
         }
         $this->controller->Auth->loginAction = $loginAction;
 
-        $logoutRedirect = array(
-            'plugin' => null,
-            'controller' => 'users',
-            'action' => 'login',
-        );
-        $logoutRedirect = Set::merge($logoutRedirect, Configure::read('Acl.Auth.logoutRedirect'));
+        $logoutRedirect = Configure::read('Acl.Auth.logoutRedirect');
+        if (empty($logoutRedirect)) {
+            $logoutRedirect = array(
+                'plugin' => null,
+                'controller' => 'users',
+                'action' => 'login',
+                );
+        }
         $this->controller->Auth->logoutRedirect = $logoutRedirect;
 
-        $loginRedirect = array(
-            'plugin' => null,
-            'controller' => 'users',
-            'action' => 'index',
-        );
-        $loginRedirect = Set::merge($loginRedirect, Configure::read('Acl.Auth.loginRedirect'));
+        $loginRedirect = Configure::read('Acl.Auth.loginRedirect');
+        if (empty($loginRedirect)) {
+            $loginRedirect = array(
+                'plugin' => null,
+                'controller' => 'users',
+                'action' => 'index',
+                );
+        }
         $this->controller->Auth->loginRedirect = $loginRedirect;
 
-        $userScope = array('User.status' => 1);
-        $userScope = Set::merge($userScope, Configure::read('Acl.Auth.userScope'));
+        $userScope = Configure::read('Acl.Auth.userScope');
+        if (empty($userScope)) {
+            $userScope = array('User.status' => 1);
+        }
         $this->controller->Auth->userScope = $userScope;
 
         if ($authError = Configure::read('Acl.Auth.authError')) {
