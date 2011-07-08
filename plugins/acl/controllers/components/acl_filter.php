@@ -28,25 +28,36 @@ class AclFilterComponent extends Object {
  */
     public function auth() {
         //Configure AuthComponent
-        $this->controller->Auth->authorize = 'actions';
-        $this->controller->Auth->loginAction = array(
+        $this->controller->Auth->authorize = 'controller';
+
+        $loginAction = array(
             'plugin' => null,
             'controller' => 'users',
             'action' => 'login',
         );
-        $this->controller->Auth->logoutRedirect = array(
+        $loginAction = Set::merge($loginAction, Configure::read('Acl.Auth.loginAction'));
+        $this->controller->Auth->loginAction = $loginAction;
+
+        $logoutRedirect = array(
             'plugin' => null,
             'controller' => 'users',
             'action' => 'login',
         );
-        $this->controller->Auth->loginRedirect = array(
+        $logoutRedirect = Set::merge($logoutRedirect, Configure::read('Acl.Auth.logoutRedirect'));
+        $this->controller->Auth->logoutRedirect = $logoutRedirect;
+
+        $loginRedirect = array(
             'plugin' => null,
             'controller' => 'users',
             'action' => 'index',
         );
-        $this->controller->Auth->userScope = array(
-            'User.status' => 1,
-        );
+        $loginRedirect = Set::merge($loginRedirect, Configure::read('Acl.Auth.loginRedirect'));
+        $this->controller->Auth->loginRedirect = $loginRedirect;
+
+        $userScope = array('User.status' => 1);
+        $userScope = Set::merge($userScope, Configure::read('Acl.Auth.userScope'));
+        $this->controller->Auth->userScope = $userScope;
+
         $this->controller->Auth->actionPath = 'controllers/';
 
         if ($this->controller->Auth->user() && $this->controller->Auth->user('role_id') == 1) {
