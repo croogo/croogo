@@ -104,7 +104,6 @@ class TinymceHelper extends AppHelper {
                 $settings[] = Set::merge($_settings, $action);
             }
         }
-        $settings = Set::merge($_settings, $settings);
         return $settings;
     }
 
