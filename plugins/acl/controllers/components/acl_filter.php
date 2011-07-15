@@ -39,12 +39,14 @@ class AclFilterComponent extends Object {
         $userModel = Configure::read('Acl.Auth.userModel');
         if (empty($userModel)) {
             $userModel = 'User';
+            Configure::write('Acl.Auth.userModel', $userModel);
         }
         $this->controller->Auth->userModel = $userModel;
 
         $fields = Configure::read('Acl.Auth.fields');
         if (empty($fields)) {
             $fields = array('username' => 'username', 'password' => 'password');
+            Configure::write('Acl.Auth.fields', $fields);
         }
         $this->controller->Auth->fields = $fields;
 
@@ -55,6 +57,7 @@ class AclFilterComponent extends Object {
         );
         if (!isset($this->controller->params['admin'])) {
             $loginAction = Set::merge($loginAction, Configure::read('Acl.Auth.loginAction'));
+            Configure::write('Acl.Auth.loginAction', $loginAction);
         }
         $this->controller->Auth->loginAction = $loginAction;
 
@@ -65,6 +68,7 @@ class AclFilterComponent extends Object {
                 'controller' => 'users',
                 'action' => 'login',
                 );
+            Configure::write('Acl.Auth.logoutRedirect', $logoutRedirect);
         }
         $this->controller->Auth->logoutRedirect = $logoutRedirect;
 
@@ -75,12 +79,14 @@ class AclFilterComponent extends Object {
                 'controller' => 'users',
                 'action' => 'index',
                 );
+            Configure::write('Acl.Auth.loginRedirect', $loginRedirect);
         }
         $this->controller->Auth->loginRedirect = $loginRedirect;
 
         $userScope = Configure::read('Acl.Auth.userScope');
         if (empty($userScope)) {
             $userScope = array('User.status' => 1);
+            Configure::write('Acl.Auth.userScope', $userScope);
         }
         $this->controller->Auth->userScope = $userScope;
 
