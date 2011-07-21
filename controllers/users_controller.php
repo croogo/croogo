@@ -151,6 +151,10 @@ class UsersController extends AppController {
     public function admin_login() {
         $this->set('title_for_layout', __('Admin Login', true));
         $this->layout = "admin_login";
+        $fields = $this->Auth->fields;
+        $userModel = $this->Auth->userModel;
+        $loginAction = $this->Auth->loginAction;
+        $this->set(compact('fields', 'userModel', 'loginAction'));
     }
 
     public function admin_logout() {
