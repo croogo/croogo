@@ -91,11 +91,11 @@ class AclFilterComponent extends Object {
         $this->controller->Auth->userScope = $userScope;
 
         if ($authError = Configure::read('Acl.Auth.authError')) {
-            $this->controller->authError = $authError;
+            $this->controller->Auth->authError = $authError;
         }
 
         if ($loginError = Configure::read('Acl.Auth.loginError')) {
-            $this->controller->loginError = $loginError;
+            $this->controller->Auth->loginError = $loginError;
         }
     }
 
