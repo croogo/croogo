@@ -267,7 +267,7 @@ INSERT IGNORE INTO `languages` (`id`, `title`, `native`, `alias`, `status`, `wei
 -- Dumping data for table `links`
 --
 
-INSERT IGNORE INTO `links` (`id`, `parent_id`, `menu_id`, `title`, `alias`, `description`, `link`, `target`, `rel`, `status`, `lft`, `rght`, `visibility_roles`, `params`, `updated`, `created`) VALUES
+INSERT IGNORE INTO `links` (`id`, `parent_id`, `menu_id`, `title`, `class`, `description`, `link`, `target`, `rel`, `status`, `lft`, `rght`, `visibility_roles`, `params`, `updated`, `created`) VALUES
 (5, NULL, 4, 'About', 'about', '', 'controller:nodes/action:view/type:page/slug:about', '', '', 1, 3, 4, '', '', '2009-10-06 23:14:21', '2009-08-19 12:23:33'),
 (6, NULL, 4, 'Contact', 'contact', '', 'controller:contacts/action:view/contact', '', '', 1, 5, 6, '', '', '2009-10-06 23:14:45', '2009-08-19 12:34:56'),
 (7, NULL, 3, 'Home', 'home', '', '/', '', '', 1, 5, 6, '', '', '2009-10-06 21:17:06', '2009-09-06 21:32:54'),
