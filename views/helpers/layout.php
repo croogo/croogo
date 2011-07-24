@@ -331,6 +331,7 @@ class LayoutHelper extends AppHelper {
                 'rel' => $link['Link']['rel'],
                 'target' => $link['Link']['target'],
                 'title' => $link['Link']['description'],
+                'class' => $link['Link']['class'],
             );
 
             foreach ($linkAttr AS $attrKey => $attrValue) {
@@ -352,14 +353,14 @@ class LayoutHelper extends AppHelper {
             }
 
             if (Router::url($link['Link']['link']) == Router::url('/' . $currentUrl)) {
-                $linkAttr['class'] = $options['selected'];
+                $linkAttr['class'] .= ' ' . $options['selected'];
             }
 
             $linkOutput = $this->Html->link($link['Link']['title'], $link['Link']['link'], $linkAttr);
             if (isset($link['children']) && count($link['children']) > 0) {
                 $linkOutput .= $this->nestedLinks($link['children'], $options, $depth + 1);
             }
-            $linkOutput = $this->Html->tag('li', $linkOutput, array('class' => $link['Link']['class']));
+            $linkOutput = $this->Html->tag('li', $linkOutput);
             $output .= $linkOutput;
         }
         if ($output != null) {
