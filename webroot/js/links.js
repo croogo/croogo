@@ -12,7 +12,7 @@ var Links = {};
  */
 Links.slug = function() {
     $("#LinkTitle").slug({
-        slug: 'alias',
+        slug: 'class',
         hide: false
     });
 }

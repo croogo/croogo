@@ -21,7 +21,7 @@
                             'empty' => true,
                         ));
                         echo $this->Form->input('title');
-                        echo $this->Form->input('alias', array('class' => 'alias'));
+                        echo $this->Form->input('class', array('class' => 'class'));
                         echo $this->Form->input('link') . 
                             $this->Html->link(__('Link to a Node', true), Router::url(array(
                                 'controller' => 'nodes',
