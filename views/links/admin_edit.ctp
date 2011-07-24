@@ -21,7 +21,6 @@
                             'empty' => true,
                         ));
                         echo $this->Form->input('title');
-                        echo $this->Form->input('class', array('class' => 'class'));
                         echo $this->Form->input('link') . 
                             $this->Html->link(__('Link to a Node', true), Router::url(array(
                                 'controller' => 'nodes',
@@ -43,6 +42,7 @@
 
                 <div id="link-misc">
                     <?php
+                        echo $this->Form->input('class', array('class' => 'class'));
                         echo $this->Form->input('description');
                         echo $this->Form->input('rel');
                         echo $this->Form->input('target');
