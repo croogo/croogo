@@ -359,7 +359,7 @@ class LayoutHelper extends AppHelper {
             if (isset($link['children']) && count($link['children']) > 0) {
                 $linkOutput .= $this->nestedLinks($link['children'], $options, $depth + 1);
             }
-            $linkOutput = $this->Html->tag('li', $linkOutput);
+            $linkOutput = $this->Html->tag('li', $linkOutput, array('class' => $link['Link']['class']));
             $output .= $linkOutput;
         }
         if ($output != null) {

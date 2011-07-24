@@ -189,6 +189,7 @@ CREATE TABLE IF NOT EXISTS `links` (
   `parent_id` int(20) DEFAULT NULL,
   `menu_id` int(20) NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `class` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci,
   `link` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,

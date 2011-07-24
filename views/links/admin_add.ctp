@@ -1,3 +1,4 @@
+<?php $this->Html->script(array('links'), false); ?>
 <div class="links form">
     <h2><?php echo $title_for_layout; ?></h2>
     <?php echo $this->Form->create('Link', array('url' => array('controller' => 'links', 'action' => 'add', 'menu' => $menuId)));?>
@@ -19,6 +20,7 @@
                             'empty' => true,
                         ));
                         echo $this->Form->input('title');
+                        echo $this->Form->input('class', array('class' => 'class'));
                         echo $this->Form->input('link') .
                             $this->Html->link(__('Link to a Node', true), Router::url(array(
                                 'controller' => 'nodes',
