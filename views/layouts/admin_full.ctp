@@ -50,7 +50,11 @@
             <div class="grid_16">
                 <div id="content">
                     <?php
-                        $layout->sessionFlash();
+                        /**
+                        * CakePHP 1.3+ no have echo by default 
+                        * @see http://book.cakephp.org/view/1561/Migrating-from-CakePHP-1-2-to-1-3#Controller-Components-1564
+                        */
+                        echo $layout->sessionFlash();
                         echo $content_for_layout;
                     ?>
                 </div>
