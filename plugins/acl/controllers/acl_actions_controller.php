@@ -43,10 +43,10 @@ class AclActionsController extends AclAppController {
             }
 
             if ($this->Acl->Aco->save($this->data['Aco'])) {
-                $this->Session->setFlash(__('The '. $acoType .' has been saved', true), 'default', array('class' => 'success'));
+                $this->Session->setFlash(sprintf(__('The %s has been saved', true), $acoType), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
-                $this->Session->setFlash(__('The '. $acoType .' could not be saved. Please, try again.', true), 'default', array('class' => 'error'));
+                $this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), $acoType), 'default', array('class' => 'error'));
             }
         }
 
