@@ -109,7 +109,7 @@ class InstallController extends InstallAppController {
 
         if (empty($this->data)) {
             return;
-	}
+		}
 
         @App::import('Model', 'ConnectionManager');
         $config = $this->defaultConfig;
