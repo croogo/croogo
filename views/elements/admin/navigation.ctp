@@ -8,7 +8,7 @@
                     <?php echo $this->Html->link(__('Create', true), array('plugin' => null, 'controller' => 'nodes', 'action' => 'create')); ?>
                     <ul>
                         <?php foreach ($types_for_admin_layout AS $t) { ?>
-                        <li><?php echo $this->Html->link($t['Type']['title'], array('plugin' => null, 'controller' => 'nodes', 'action' => 'add', $t['Type']['alias'])); ?></li>
+                        <li><?php echo $this->Html->link(__($t['Type']['title'],true), array('plugin' => null, 'controller' => 'nodes', 'action' => 'add', $t['Type']['alias'])); ?></li>
                         <?php } ?>
                     </ul>
                 </li>
@@ -19,7 +19,7 @@
                         <li><?php echo $this->Html->link(__('List', true), array('plugin' => null, 'controller' => 'vocabularies', 'action' => 'index')); ?></li>
                         <li><?php echo $this->Html->link(__('Add new', true), array('plugin' => null, 'controller' => 'vocabularies', 'action' => 'add'), array('class' => 'separator')); ?></li>
                         <?php foreach ($vocabularies_for_admin_layout AS $v) { ?>
-                        <li><?php echo $this->Html->link($v['Vocabulary']['title'], array('plugin' => null, 'controller' => 'terms', 'action' => 'index', $v['Vocabulary']['id'])); ?></li>
+                        <li><?php echo $this->Html->link(__($v['Vocabulary']['title'],true), array('plugin' => null, 'controller' => 'terms', 'action' => 'index', $v['Vocabulary']['id'])); ?></li>
                         <?php } ?>
                     </ul>
                 </li>
