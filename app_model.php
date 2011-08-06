@@ -117,5 +117,18 @@ class AppModel extends Model {
         }
         return false;
     }
+
+    /**
+     * Fix to the Model::invalidate() method to display localized validate messages
+     *
+     * @param string $field The name of the field to invalidate
+     * @param mixed $value Name of validation rule that was not failed, or validation message to
+     *    be returned. If no validation key is provided, defaults to true.
+     */
+
+    function invalidate($field, $value = true) {
+	parent::invalidate($field, __($value, true));
+    }
+
 }
 ?>
