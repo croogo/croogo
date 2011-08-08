@@ -126,9 +126,8 @@ class AppModel extends Model {
  *    be returned. If no validation key is provided, defaults to true.
  * @access public
  */
-
     public function invalidate($field, $value = true) {
-	return parent::invalidate($field, __($value, true));
+        return parent::invalidate($field, __($value, true));
     }
 }
 ?>
