@@ -49,7 +49,7 @@
         <div id="main" class="container_16">
             <div id="content" class="grid_11">
             <?php
-                $this->Layout->sessionFlash();
+                echo $this->Layout->sessionFlash();
                 echo $content_for_layout;
             ?>
             </div>

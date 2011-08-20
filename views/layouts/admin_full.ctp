@@ -38,7 +38,7 @@
             <div class="grid_16">
                 <div id="content">
                     <?php
-                        $this->Layout->sessionFlash();
+                        echo $this->Layout->sessionFlash();
                         echo $content_for_layout;
                     ?>
                 </div>
