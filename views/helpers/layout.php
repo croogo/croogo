@@ -122,15 +122,17 @@ class LayoutHelper extends AppHelper {
 /**
  * Show flash message
  *
- * @return void
+ * @return string
  */
     public function sessionFlash() {
         $messages = $this->Session->read('Message');
+        $output = '';
         if( is_array($messages) ) {
             foreach(array_keys($messages) AS $key) {
-                echo $this->Session->flash($key);
+                $output .= $this->Session->flash($key);
             }
         }
+        return $output;
     }
 /**
  * Meta tags
