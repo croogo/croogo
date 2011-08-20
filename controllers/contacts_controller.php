@@ -185,10 +185,7 @@ class ContactsController extends AppController {
     }
 
     private function __send_email($continue, $contact) {
-        if ($contact['Contact']['message_notify'] &&
-            $continue === true) {
-            $this->Email->from = Configure::read('Site.title') . ' '
-                    . '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])).'>';
+        if ($contact['Contact']['message_notify'] && $continue === true) {
             $this->Email->to = $contact['Contact']['email'];
             $this->Email->from = $this->data['Message']['name'] . ' <' . $this->data['Message']['email'] . '>';
             $this->Email->subject = '[' . Configure::read('Site.title') . '] ' . $contact['Contact']['title'];
@@ -196,7 +193,9 @@ class ContactsController extends AppController {
 
             $this->set('contact', $contact);
             $this->set('message', $this->data);
-            $this->Email->send();
+            if (!$this->Email->send()) {
+                $continue = false;
+            }
         }
 
         return $continue;
