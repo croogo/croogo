@@ -355,6 +355,9 @@ class LayoutHelper extends AppHelper {
             }
 
             if (Router::url($link['Link']['link']) == Router::url('/' . $currentUrl)) {
+                if (!isset($linkAttr['class'])) {
+                    $linkAttr['class'] = '';
+                }
                 $linkAttr['class'] .= ' ' . $options['selected'];
             }
 
