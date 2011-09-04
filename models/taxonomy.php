@@ -33,7 +33,7 @@ class Taxonomy extends AppModel {
                 'nodes_',
                 'nodes_taxonomy_',
                 'croogo_nodes_',
-                'croogo_vocabulary',
+                'croogo_vocabulary_',
             ),
         ),
         'Containable',
