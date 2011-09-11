@@ -67,10 +67,10 @@ class Node extends AppModel {
             'message' => 'This field cannot be left blank.',
         ),
         'slug' => array(
-            /*'isUniquePerType' => array(
+            'isUniquePerType' => array(
                 'rule' => 'isUniquePerType',
                 'message' => 'This slug has already been taken.',
-            ),*/
+            ),
             'minLength' => array(
                 'rule' => array('minLength', 1),
                 'message' => 'Slug cannot be empty.',
@@ -194,6 +194,51 @@ class Node extends AppModel {
                 'json' => true,
             ));
         }
+    }
+/**
+ * Returns false if any fields passed match any (by default, all if $or = false) of their matching values.
+ *
+ * @param array $fields Field/value pairs to search (if no values specified, they are pulled from $this->data)
+ * @param boolean $or If false, all fields specified must match in order for a false return value
+ * @return boolean False if any records matching any fields are found
+ * @access public
+ */
+    function isUniquePerType($fields, $or = true) {
+        if (!is_array($fields)) {
+            $fields = func_get_args();
+            if (is_bool($fields[count($fields) - 1])) {
+                $or = $fields[count($fields) - 1];
+                unset($fields[count($fields) - 1]);
+            }
+        }
+
+        foreach ($fields as $field => $value) {
+            if (is_numeric($field)) {
+                unset($fields[$field]);
+
+                $field = $value;
+                if (isset($this->data[$this->alias][$field])) {
+                    $value = $this->data[$this->alias][$field];
+                } else {
+                    $value = null;
+                }
+            }
+
+            if (strpos($field, '.') === false) {
+                unset($fields[$field]);
+                $fields[$this->alias . '.' . $field] = $value;
+            }
+        }
+        if ($or) {
+            $fields = array('or' => $fields);
+        }
+        if (!empty($this->id)) {
+            $fields[$this->alias . '.' . $this->primaryKey . ' !='] = $this->id;
+        }
+        if (!empty($this->type)) {
+            $fields[$this->alias . '.type'] = $this->type;
+        }
+        return ($this->find('count', array('conditions' => $fields, 'recursive' => -1)) == 0);
     }
 }
 ?>
