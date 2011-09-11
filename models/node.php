@@ -67,10 +67,10 @@ class Node extends AppModel {
             'message' => 'This field cannot be left blank.',
         ),
         'slug' => array(
-            'isUnique' => array(
-                'rule' => 'isUnique',
+            /*'isUniquePerType' => array(
+                'rule' => 'isUniquePerType',
                 'message' => 'This slug has already been taken.',
-            ),
+            ),*/
             'minLength' => array(
                 'rule' => array('minLength', 1),
                 'message' => 'Slug cannot be empty.',

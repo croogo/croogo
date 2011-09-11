@@ -656,7 +656,7 @@ class NodesController extends AppController {
                     'User',
                 ),
                 'cache' => array(
-                    'name' => 'node_'.$this->Croogo->roleId.'_'.$this->params['named']['slug'],
+                    'name' => 'node_' . $this->Croogo->roleId . '_' . $this->params['named']['type'] . '_' . $this->params['named']['slug'],
                     'config' => 'nodes_view',
                 ),
             ));
