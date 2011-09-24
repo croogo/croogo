@@ -273,7 +273,7 @@ class LayoutHelper extends AppHelper {
                 } else {
                     $blockOutput = $this->View->element($element, array('block' => $block));
                 }
-                $enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
+                $enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : false;
                 if ($element != 'block' && $enclosure) {
                     $block['Block']['body'] = $blockOutput;
                     $block['Block']['element'] = null;
