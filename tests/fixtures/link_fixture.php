@@ -8,6 +8,7 @@ class LinkFixture extends CakeTestFixture {
 		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 20),
 		'menu_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 20),
 		'title' => array('type' => 'string', 'null' => false, 'default' => NULL),
+		'class' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'description' => array('type' => 'text', 'null' => false, 'default' => NULL),
 		'link' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'target' => array('type' => 'string', 'null' => false, 'default' => NULL),
