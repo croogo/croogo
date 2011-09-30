@@ -33,6 +33,7 @@ class Term extends AppModel {
                 'nodes_',
                 'croogo_nodes_',
                 'croogo_vocabularies_',
+                'croogo_vocabulary_',
             ),
         ),
     );
