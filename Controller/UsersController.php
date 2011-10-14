@@ -39,9 +39,9 @@ class UsersController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
 
-        if (in_array($this->params['action'], array('admin_login', 'login'))) {
-            $field = $this->Auth->fields['username'];
-            if (!empty($this->data) && empty($this->data['User'][$field])) {
+        if ($this->request->is('post') && in_array($this->params['action'], array('admin_login', 'login'))) {
+            $field = $this->Auth->authenticate['all']['fields']['username'];
+            if (!empty($this->request->data) && empty($this->request->data['User'][$field])) {
                 $this->redirect(array('action' => $this->params['action']));
             }
             $cacheName = 'auth_failed_' . $this->data['User'][$field];
@@ -56,9 +56,9 @@ class UsersController extends AppController {
         parent::beforeRender();
 
         if (in_array($this->params['action'], array('admin_login', 'login'))) {
-            if (!empty($this->data)) {
-                $field = $this->Auth->fields['username'];
-                $cacheName = 'auth_failed_' . $this->data['User'][$field];
+            if ($this->request->is('post') && !empty($this->request->data)) {
+                $field = $this->Auth->authenticate['all']['fields']['username'];
+                $cacheName = 'auth_failed_' . $this->request->data['User'][$field];
                 $cacheValue = Cache::read($cacheName, 'users_login');
                 Cache::write($cacheName, (int)$cacheValue + 1, 'users_login');
             }
@@ -151,6 +151,14 @@ class UsersController extends AppController {
     public function admin_login() {
         $this->set('title_for_layout', __('Admin Login'));
         $this->layout = "admin_login";
+        if ($this->request->is('post')) {
+            if ($this->Auth->login()) {
+                return $this->redirect($this->Auth->redirect());
+            } else {
+                $this->Session->setFlash($this->Auth->authError, 'default', array(), 'auth');
+                $this->redirect($this->Auth->loginAction);
+            }
+        }
     }
 
     public function admin_logout() {

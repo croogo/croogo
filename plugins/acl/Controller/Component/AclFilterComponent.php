@@ -30,6 +30,15 @@ class AclFilterComponent extends Component {
  */
     public function auth() {
         //Configure AuthComponent
+        $this->controller->Auth->authenticate = array(
+            AuthComponent::ALL => array(
+                'userModel' => 'User',
+                'fields' => array(
+                    'username' => 'username',
+                    ),
+                ),
+            'Form',
+            );
         $this->controller->Auth->authorize = 'actions';
         $this->controller->Auth->loginAction = array(
             'plugin' => null,
