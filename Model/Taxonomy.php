@@ -105,7 +105,7 @@ class Taxonomy extends AppModel {
         $treeConditions = array(
             'Taxonomy.vocabulary_id' => $vocabulary['Vocabulary']['id'],
         );
-        $tree = $this->generatetreelist($treeConditions, '{n}.Taxonomy.term_id', '{n}.Taxonomy.id');
+        $tree = $this->generateTreeList($treeConditions, '{n}.Taxonomy.term_id', '{n}.Taxonomy.id');
         $termsIds = array_keys($tree);
         $terms = $this->Term->find('list', array(
             'conditions' => array(

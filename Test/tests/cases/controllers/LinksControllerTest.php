@@ -212,7 +212,7 @@ class LinksControllerTest extends CakeTestCase {
 
         $this->Links->admin_moveup($aboutLink['Link']['id']);
         $this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $mainMenu['Menu']['id']));
-        $list = $this->Links->Link->generatetreelist(array(
+        $list = $this->Links->Link->generateTreeList(array(
             'Link.menu_id' => $mainMenu['Menu']['id'],
             'Link.status' => 1,
         ));
@@ -245,7 +245,7 @@ class LinksControllerTest extends CakeTestCase {
 
         $this->Links->admin_moveup($contactLink['Link']['id'], 2);
         $this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $mainMenu['Menu']['id']));
-        $list = $this->Links->Link->generatetreelist(array(
+        $list = $this->Links->Link->generateTreeList(array(
             'Link.menu_id' => $mainMenu['Menu']['id'],
             'Link.status' => 1,
         ));
@@ -279,7 +279,7 @@ class LinksControllerTest extends CakeTestCase {
 
         $this->Links->admin_movedown($aboutLink['Link']['id']);
         $this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $mainMenu['Menu']['id']));
-        $list = $this->Links->Link->generatetreelist(array(
+        $list = $this->Links->Link->generateTreeList(array(
             'Link.menu_id' => $mainMenu['Menu']['id'],
             'Link.status' => 1,
         ));
@@ -312,7 +312,7 @@ class LinksControllerTest extends CakeTestCase {
 
         $this->Links->admin_movedown($homeLink['Link']['id'], 2);
         $this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $mainMenu['Menu']['id']));
-        $list = $this->Links->Link->generatetreelist(array(
+        $list = $this->Links->Link->generateTreeList(array(
             'Link.menu_id' => $mainMenu['Menu']['id'],
             'Link.status' => 1,
         ));

@@ -41,7 +41,7 @@ class AclPermissionsController extends AclAppController {
             'foreign_key' => null,
             'alias !=' => null,
         );
-        $acos  = $this->Acl->Aco->generatetreelist($acoConditions, '{n}.Aco.id', '{n}.Aco.alias');
+        $acos  = $this->Acl->Aco->generateTreeList($acoConditions, '{n}.Aco.id', '{n}.Aco.alias');
         $roles = $this->Role->find('list');
         $this->set(compact('acos', 'roles'));
 

@@ -168,7 +168,7 @@ class NodesController extends AppController {
             $this->data['Node']['user_id'] = $this->Session->read('Auth.User.id');
         }
 
-        $nodes = $this->Node->generatetreelist();
+        $nodes = $this->Node->generateTreeList();
         $roles   = $this->Node->User->Role->find('list');
         $users = $this->Node->User->find('list');
         $vocabularies = Set::combine($type['Vocabulary'], '{n}.id', '{n}');
@@ -239,7 +239,7 @@ class NodesController extends AppController {
             $this->data = $data;
         }
 
-        $nodes = $this->Node->generatetreelist();
+        $nodes = $this->Node->generateTreeList();
         $roles   = $this->Node->User->Role->find('list');
         $users = $this->Node->User->find('list');
         $vocabularies = Set::combine($type['Vocabulary'], '{n}.id', '{n}');

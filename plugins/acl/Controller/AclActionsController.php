@@ -25,7 +25,7 @@ class AclActionsController extends AclAppController {
             'foreign_key' => null,
             'alias !=' => null,
         );
-        $this->set('acos', $this->Acl->Aco->generatetreelist($conditions, '{n}.Aco.id', '{n}.Aco.alias'));
+        $this->set('acos', $this->Acl->Aco->generateTreeList($conditions, '{n}.Aco.id', '{n}.Aco.alias'));
     }
 
     public function admin_add() {
@@ -64,7 +64,7 @@ class AclActionsController extends AclAppController {
         if (isset($controllersAco['Aco']['id'])) {
             $conditions['parent_id'] = $controllersAco['Aco']['id'];
         }
-        $acos = $this->Acl->Aco->generatetreelist($conditions, '{n}.Aco.id', '{n}.Aco.alias');
+        $acos = $this->Acl->Aco->generateTreeList($conditions, '{n}.Aco.id', '{n}.Aco.alias');
         $this->set(compact('acos'));
     }
 
@@ -101,7 +101,7 @@ class AclActionsController extends AclAppController {
         if (isset($controllersAco['Aco']['id'])) {
             $conditions['parent_id'] = $controllersAco['Aco']['id'];
         }
-        $acos = $this->Acl->Aco->generatetreelist($conditions, '{n}.Aco.id', '{n}.Aco.alias');
+        $acos = $this->Acl->Aco->generateTreeList($conditions, '{n}.Aco.id', '{n}.Aco.alias');
         $this->set(compact('acos'));
     }
 

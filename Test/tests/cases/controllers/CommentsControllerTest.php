@@ -253,7 +253,7 @@ class CommentsControllerTest extends CakeTestCase {
         $this->Comments->add($node['Node']['id']);
         $this->assertTrue($this->Comments->viewVars['success']);
 
-        $comments = $this->Comments->Comment->generatetreelist(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
+        $comments = $this->Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
         $commenters = array_values($comments);
         $this->assertEqual($commenters, array('Mr Croogo', 'John Smith'));
 
@@ -279,7 +279,7 @@ class CommentsControllerTest extends CakeTestCase {
         $this->Comments->add($node['Node']['id'], 1); // under the comment by Mr Croogo
         $this->assertTrue($this->Comments->viewVars['success']);
 
-        $comments = $this->Comments->Comment->generatetreelist(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
+        $comments = $this->Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
         $commenters = array_values($comments);
         $this->assertEqual($commenters, array('Mr Croogo', '_John Smith'));
 

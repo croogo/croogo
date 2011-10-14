@@ -56,7 +56,7 @@ class LinksController extends AppController {
         $this->set('title_for_layout', sprintf(__('Links: %s'), $menu['Menu']['title']));
 
         $this->Link->recursive = 0;
-        $linksTree = $this->Link->generatetreelist(array(
+        $linksTree = $this->Link->generateTreeList(array(
             'Link.menu_id' => $menuId,
         ));
         $linksStatus = $this->Link->find('list', array(
@@ -91,7 +91,7 @@ class LinksController extends AppController {
         }
         $menus = $this->Link->Menu->find('list');
         $roles = $this->Role->find('list');
-        $parentLinks = $this->Link->generatetreelist(array(
+        $parentLinks = $this->Link->generateTreeList(array(
             'Link.menu_id' => $menuId,
         ));
         $this->set(compact('menus', 'roles', 'parentLinks', 'menuId'));
@@ -129,7 +129,7 @@ class LinksController extends AppController {
         $menus = $this->Link->Menu->find('list');
         $roles = $this->Role->find('list');
         $menu = $this->Link->Menu->findById($this->data['Link']['menu_id']);
-        $parentLinks = $this->Link->generatetreelist(array(
+        $parentLinks = $this->Link->generateTreeList(array(
             'Link.menu_id' => $menu['Menu']['id'],
         ));
         $menuId = $menu['Menu']['id'];
