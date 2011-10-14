@@ -12,11 +12,11 @@
     <?php
         $tableHeaders = $this->Html->tableHeaders(array(
             '',
-            $paginator->sort('id'),
-            $paginator->sort('title'),
-            $paginator->sort('alias'),
-            $paginator->sort('region_id'),
-            $paginator->sort('status'),
+            $this->Paginator->sort('id'),
+            $this->Paginator->sort('title'),
+            $this->Paginator->sort('alias'),
+            $this->Paginator->sort('region_id'),
+            $this->Paginator->sort('status'),
             __('Actions'),
         ));
         echo $tableHeaders;
@@ -65,5 +65,5 @@
     </div>
 </div>
 
-<div class="paging"><?php echo $paginator->numbers(); ?></div>
-<div class="counter"><?php echo $paginator->counter(array('format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%'))); ?></div>
+<div class="paging"><?php echo $this->Paginator->numbers(); ?></div>
+<div class="counter"><?php echo $this->Paginator->counter(array('format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%'))); ?></div>

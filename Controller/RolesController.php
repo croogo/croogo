@@ -27,6 +27,10 @@ class RolesController extends AppController {
  */
     public $uses = array('Role');
 
+    protected $paginate = array(
+        'limit' => 10,
+        );
+
     public function admin_index() {
         $this->set('title_for_layout', __('Roles'));
 

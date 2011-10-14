@@ -10,9 +10,9 @@
     <table cellpadding="0" cellspacing="0">
     <?php
         $tableHeaders = $this->Html->tableHeaders(array(
-            $paginator->sort('id'),
+            $this->Paginator->sort('id'),
             '&nbsp;',
-            $paginator->sort('title'),
+            $this->Paginator->sort('title'),
             __('URL'),
             __('Actions'),
         ));
@@ -56,5 +56,5 @@
     </table>
 </div>
 
-<div class="paging"><?php echo $paginator->numbers(); ?></div>
-<div class="counter"><?php echo $paginator->counter(array('format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%'))); ?></div>
+<div class="paging"><?php echo $this->Paginator->numbers(); ?></div>
+<div class="counter"><?php echo $this->Paginator->counter(array('format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%'))); ?></div>

@@ -47,7 +47,7 @@
     if (isset($this->params['named']['q'])) {
         $filterSearch = $this->params['named']['q'];
     }
-    echo $form->input('Filter.q', array(
+    echo $this->Form->input('Filter.q', array(
         'label' => __('Search'),
         'value' => $filterSearch,
     ));

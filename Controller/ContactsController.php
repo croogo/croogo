@@ -38,6 +38,10 @@ class ContactsController extends AppController {
  */
     public $uses = array('Contact');
 
+    protected $paginate = array(
+        'limit' => 10,
+        );
+
     public function admin_index() {
         $this->set('title_for_layout', __('Contacts'));
 

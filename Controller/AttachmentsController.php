@@ -55,6 +55,10 @@ class AttachmentsController extends AppController {
  */
     public $uploadsDir = 'uploads';
 
+    protected $paginate = array(
+        'limit' => 10,
+        );
+
 /**
  * Before executing controller actions
  *

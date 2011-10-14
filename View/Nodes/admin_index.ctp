@@ -13,7 +13,7 @@
     <?php
     	if (isset($this->params['named'])) {
             foreach ($this->params['named'] AS $nn => $nv) {
-                $paginator->options['url'][] = $nn . ':' . $nv;
+                $this->Paginator->options['url'][] = $nn . ':' . $nv;
             }
         }
 
@@ -25,13 +25,13 @@
     <?php
         $tableHeaders =  $this->Html->tableHeaders(array(
             '',
-            $paginator->sort('id'),
-            $paginator->sort('title'),
-            $paginator->sort('type'),
-            $paginator->sort('user_id'),
-            $paginator->sort('status'),
-            $paginator->sort('promote'),
-            //$paginator->sort('created'),
+            $this->Paginator->sort('id'),
+            $this->Paginator->sort('title'),
+            $this->Paginator->sort('type'),
+            $this->Paginator->sort('user_id'),
+            $this->Paginator->sort('status'),
+            $this->Paginator->sort('promote'),
+            //$this->Paginator->sort('created'),
             __('Actions'),
         ));
         echo $tableHeaders;
@@ -88,5 +88,5 @@
     </div>
 </div>
 
-<div class="paging"><?php echo $paginator->numbers(); ?></div>
-<div class="counter"><?php echo $paginator->counter(array('format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%'))); ?></div>
+<div class="paging"><?php echo $this->Paginator->numbers(); ?></div>
+<div class="counter"><?php echo $this->Paginator->counter(array('format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%'))); ?></div>

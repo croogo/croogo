@@ -27,6 +27,10 @@ class LanguagesController extends AppController {
  */
     public $uses = array('Language');
 
+    protected $paginate = array(
+        'limit' => 10,
+        );
+
     public function admin_index() {
         $this->set('title_for_layout', __('Languages'));
 
