@@ -47,15 +47,15 @@ class NodesController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
 
-        if (isset($this->params['slug'])) {
-            $this->params['named']['slug'] = $this->params['slug'];
+        if (isset($this->request->params['slug'])) {
+            $this->request->params['named']['slug'] = $this->request->params['slug'];
         }
-        if (isset($this->params['type'])) {
-            $this->params['named']['type'] = $this->params['type'];
+        if (isset($this->request->params['type'])) {
+            $this->request->params['named']['type'] = $this->request->params['type'];
         }
 
         // CSRF Protection
-        if (in_array($this->params['action'], array('admin_add', 'admin_edit'))) {
+        if (in_array($this->request->params['action'], array('admin_add', 'admin_edit'))) {
             $this->Security->validatePost = false;
         }
     }
@@ -578,7 +578,7 @@ class NodesController extends AppController {
             $this->redirect('/');
         }
 
-        App::import('Core', 'Sanitize');
+        App::uses('Sanitize', 'Utility');
         $q = Sanitize::clean($this->params['named']['q']);
         $this->paginate['Node']['order'] = 'Node.created DESC';
         $this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
