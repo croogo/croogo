@@ -65,16 +65,7 @@ class LayoutHelper extends AppHelper {
         'Layout',
         'Recaptcha',
     );
-/**
- * Constructor
- *
- * @param array $options options
- * @access public
- */
-    public function __construct($options = array()) {
-        $this->View =& ClassRegistry::getObject('view');
-        return parent::__construct($options);
-    }
+
 /**
  * Javascript variables
  *
@@ -146,10 +137,10 @@ class LayoutHelper extends AppHelper {
         }
 
         if (count($metaForLayout) == 0 &&
-            isset($this->View->viewVars['node']['CustomFields']) &&
-            count($this->View->viewVars['node']['CustomFields']) > 0) {
+            isset($this->_View->viewVars['node']['CustomFields']) &&
+            count($this->_View->viewVars['node']['CustomFields']) > 0) {
             $metaForLayout = array();
-            foreach ($this->View->viewVars['node']['CustomFields'] AS $key => $value) {
+            foreach ($this->_View->viewVars['node']['CustomFields'] AS $key => $value) {
                 if (strstr($key, 'meta_')) {
                     $key = str_replace('meta_', '', $key);
                     $metaForLayout[$key] = $value;
@@ -234,8 +225,8 @@ class LayoutHelper extends AppHelper {
  * @return boolean
  */
     public function regionIsEmpty($regionAlias) {
-        if (isset($this->View->viewVars['blocks_for_layout'][$regionAlias]) &&
-            count($this->View->viewVars['blocks_for_layout'][$regionAlias]) > 0) {
+        if (isset($this->_View->viewVars['blocks_for_layout'][$regionAlias]) &&
+            count($this->_View->viewVars['blocks_for_layout'][$regionAlias]) > 0) {
             return false;
         } else {
             return true;
@@ -254,7 +245,7 @@ class LayoutHelper extends AppHelper {
 
         $output = '';
         if (!$this->regionIsEmpty($regionAlias)) {
-            $blocks = $this->View->viewVars['blocks_for_layout'][$regionAlias];
+            $blocks = $this->_View->viewVars['blocks_for_layout'][$regionAlias];
             foreach ($blocks AS $block) {
                 $plugin = false;
                 if ($block['Block']['element'] != null) {
@@ -269,15 +260,15 @@ class LayoutHelper extends AppHelper {
                     $element = 'block';
                 }
                 if ($plugin) {
-                    $blockOutput = $this->View->element($element, array('block' => $block, 'plugin' => $plugin));
+                    $blockOutput = $this->_View->element($element, array('block' => $block, 'plugin' => $plugin));
                 } else {
-                    $blockOutput = $this->View->element($element, array('block' => $block));
+                    $blockOutput = $this->_View->element($element, array('block' => $block));
                 }
                 $enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
                 if ($element != 'block' && $enclosure) {
                     $block['Block']['body'] = $blockOutput;
                     $block['Block']['element'] = null;
-                    $output .= $this->View->element('block', array('block' => $block));
+                    $output .= $this->_View->element('block', array('block' => $block));
                 } else {
                     $output .= $blockOutput;
                 }
@@ -304,11 +295,11 @@ class LayoutHelper extends AppHelper {
         );
         $options = array_merge($_options, $options);
 
-        if (!isset($this->View->viewVars['menus_for_layout'][$menuAlias])) {
+        if (!isset($this->_View->viewVars['menus_for_layout'][$menuAlias])) {
             return false;
         }
-        $menu = $this->View->viewVars['menus_for_layout'][$menuAlias];
-        $output = $this->View->element($options['element'], array(
+        $menu = $this->_View->viewVars['menus_for_layout'][$menuAlias];
+        $output = $this->_View->element($options['element'], array(
             'menu' => $menu,
             'options' => $options,
         ));
@@ -349,9 +340,9 @@ class LayoutHelper extends AppHelper {
 
             // Remove locale part before comparing links
             if (!empty($this->params['locale'])) {
-                $currentUrl = substr($this->params['url']['url'], strlen($this->params['locale']));
+                $currentUrl = substr($this->_View->request->url, strlen($this->params['locale']));
             } else {
-                $currentUrl = $this->params['url']['url'];
+                $currentUrl = $this->_View->request->url;
             }
 
             if (Router::url($link['Link']['link']) == Router::url('/' . $currentUrl)) {
@@ -424,9 +415,9 @@ class LayoutHelper extends AppHelper {
         $options = array_merge($_options, $options);
 
         $output = '';
-        if (isset($this->View->viewVars['vocabularies_for_layout'][$vocabularyAlias]['threaded'])) {
-            $vocabulary = $this->View->viewVars['vocabularies_for_layout'][$vocabularyAlias];
-            $output .= $this->View->element($options['element'], array(
+        if (isset($this->_View->viewVars['vocabularies_for_layout'][$vocabularyAlias]['threaded'])) {
+            $vocabulary = $this->_View->viewVars['vocabularies_for_layout'][$vocabularyAlias];
+            $output .= $this->_View->element($options['element'], array(
                 'vocabulary' => $vocabulary,
                 'options' => $options,
             ));
@@ -490,11 +481,11 @@ class LayoutHelper extends AppHelper {
         $options = array_merge($_options, $options);
 
         $output = '';
-        if (isset($this->View->viewVars['nodes_for_layout'][$alias])) {
-            $nodes = $this->View->viewVars['nodes_for_layout'][$alias];
-            $output = $this->View->element($options['element'], array(
+        if (isset($this->_View->viewVars['nodes_for_layout'][$alias])) {
+            $nodes = $this->_View->viewVars['nodes_for_layout'][$alias];
+            $output = $this->_View->element($options['element'], array(
                 'alias' => $alias,
-                'nodesList' => $this->View->viewVars['nodes_for_layout'][$alias],
+                'nodesList' => $this->_View->viewVars['nodes_for_layout'][$alias],
                 'options' => $options,
             ));
         }
@@ -534,10 +525,10 @@ class LayoutHelper extends AppHelper {
             for ($j=0; $j < count($attributes[0]); $j++) {
                 $options[$attributes[1][$j]] = $attributes[2][$j];
             }
-            if (!empty($this->View->viewVars['block'])) {
-                $options['block'] = $this->View->viewVars['block'];
+            if (!empty($this->_View->viewVars['block'])) {
+                $options['block'] = $this->_View->viewVars['block'];
             }
-            $content = str_replace($tagMatches[0][$i], $this->View->element($element,$options), $content);
+            $content = str_replace($tagMatches[0][$i], $this->_View->element($element,$options), $content);
         }
         return $content;
     }
@@ -682,7 +673,7 @@ class LayoutHelper extends AppHelper {
         $tabs = Configure::read('Admin.tabs.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
         if (is_array($tabs)) {
             foreach ($tabs AS $title => $tab) {
-                if (!isset($tab['options']['type']) || (isset($tab['options']['type']) && (in_array($this->View->viewVars['typeAlias'], $tab['options']['type'])))) {
+                if (!isset($tab['options']['type']) || (isset($tab['options']['type']) && (in_array($this->_View->viewVars['typeAlias'], $tab['options']['type'])))) {
                     $domId = strtolower(Inflector::singularize($this->params['controller'])) . '-' . strtolower($title);
                     if ($this->adminTabs) {
                         if (strstr($tab['element'], '.')) {
@@ -693,7 +684,7 @@ class LayoutHelper extends AppHelper {
                             $plugin = null;
                         }
                         $output .= '<div id="' . $domId . '">';
-                        $output .= $this->View->element($element, array(
+                        $output .= $this->_View->element($element, array(
                             'plugin' => $plugin,
                         ));
                         $output .= '</div>';
@@ -767,7 +758,7 @@ class LayoutHelper extends AppHelper {
         $options = array_merge($_options, $options);
 
         $output  = $this->hook('beforeNodeInfo');
-        $output .= $this->View->element($options['element']);
+        $output .= $this->_View->element($options['element']);
         $output .= $this->hook('afterNodeInfo');
         return $output;
     }
@@ -784,7 +775,7 @@ class LayoutHelper extends AppHelper {
         $options = array_merge($_options, $options);
 
         $output  = $this->hook('beforeNodeExcerpt');
-        $output .= $this->View->element($options['element']);
+        $output .= $this->_View->element($options['element']);
         $output .= $this->hook('afterNodeExcerpt');
         return $output;
     }
@@ -801,7 +792,7 @@ class LayoutHelper extends AppHelper {
         $options = array_merge($_options, $options);
 
         $output  = $this->hook('beforeNodeBody');
-        $output .= $this->View->element($options['element']);
+        $output .= $this->_View->element($options['element']);
         $output .= $this->hook('afterNodeBody');
         return $output;
     }
@@ -818,7 +809,7 @@ class LayoutHelper extends AppHelper {
         $options = array_merge($_options, $options);
 
         $output  = $this->hook('beforeNodeMoreInfo');
-        $output .= $this->View->element($options['element']);
+        $output .= $this->_View->element($options['element']);
         $output .= $this->hook('afterNodeMoreInfo');
         return $output;
     }
@@ -832,7 +823,7 @@ class LayoutHelper extends AppHelper {
  */
     public function hook($methodName) {
         $output = '';
-        foreach ($this->View->helpers AS $helper => $settings) {
+        foreach ($this->_View->helpers AS $helper => $settings) {
             if (!is_string($helper) || in_array($helper, $this->coreHelpers)) {
                 continue;
             }
@@ -840,8 +831,8 @@ class LayoutHelper extends AppHelper {
                 $helperE = explode('.', $helper);
                 $helper = $helperE['1'];
             }
-            if (isset($this->View->{$helper}) && method_exists($this->View->{$helper}, $methodName)) {
-                $output .= $this->View->{$helper}->$methodName();
+            if (isset($this->_View->{$helper}) && method_exists($this->_View->{$helper}, $methodName)) {
+                $output .= $this->_View->{$helper}->$methodName();
             }
         }
         return $output;

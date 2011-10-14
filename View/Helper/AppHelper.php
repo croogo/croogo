@@ -1,4 +1,6 @@
 <?php
+App::uses('Helper', 'View');
+
 /**
  * Application helper
  *
