@@ -50,4 +50,6 @@
  */
     App::import('Lib', 'Croogo');
     require_once 'croogo_bootstrap.php';
-?>
+
+    CakePlugin::load('Acl');
+    CakePlugin::load('Extensions');
