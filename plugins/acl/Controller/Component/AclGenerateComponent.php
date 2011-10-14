@@ -11,7 +11,9 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AclGenerateComponent extends Object {
+class AclGenerateComponent extends Component {
+
+    protected $controller = null;
 
 /**
  * @param object $controller controller
