@@ -38,6 +38,12 @@ class NodesController extends AppController {
         'Node',
     );
 
+/** Default pagination config
+ */
+    public $paginate = array(
+        'limit' => 10,
+    );
+
     public function beforeFilter() {
         parent::beforeFilter();
 

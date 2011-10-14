@@ -27,5 +27,5 @@
         }
     ?>
 
-    <div class="paging"><?php echo $paginator->numbers(); ?></div>
+    <div class="paging"><?php echo $this->Paginator->numbers(); ?></div>
 </div>
