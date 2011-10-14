@@ -5,7 +5,7 @@
         <ul>
             <li>
             <?php
-                echo $this->Html->link(__('Translate in a new language', true), array(
+                echo $this->Html->link(__('Translate in a new language'), array(
                     'plugin' => null,
                     'controller' => 'languages',
                     'action'=>'select',
@@ -22,28 +22,28 @@
     <?php
         $tableHeaders =  $this->Html->tableHeaders(array(
             '',
-            //__('Id', true),
-            __('Title', true),
-            __('Locale', true),
-            __('Actions', true),
+            //__('Id'),
+            __('Title'),
+            __('Locale'),
+            __('Actions'),
         ));
         echo $tableHeaders;
 
         $rows = array();
         foreach ($translations AS $translation) {
-            $actions  = $this->Html->link(__('Edit', true), array(
+            $actions  = $this->Html->link(__('Edit'), array(
                 'action' => 'edit',
                 $id,
                 $modelAlias,
                 'locale' => $translation[$runtimeModelAlias]['locale'],
             ));
-            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
+            $actions .= ' ' . $this->Html->link(__('Delete'), array(
                 'action' => 'delete',
                 $id,
                 $modelAlias,
                 $translation[$runtimeModelAlias]['locale'],
                 'token' => $this->params['_Token']['key'],
-            ), null, __('Are you sure?', true));
+            ), null, __('Are you sure?'));
 
             $rows[] = array(
                 '',
@@ -60,7 +60,7 @@
     </table>
     <?php 
         } else {
-            echo '<p>' . __('No translations available.', true) . '</p>';
+            echo '<p>' . __('No translations available.') . '</p>';
         }
     ?>
 </div>

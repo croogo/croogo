@@ -13,7 +13,7 @@
     <fieldset>
     <?php
         echo $this->Form->input('Locale.content', array(
-            'label' => __('Content', true),
+            'label' => __('Content'),
             'value' => $content,
             'type' => 'textarea',
             'class' => 'content',
@@ -23,8 +23,8 @@
 
     <div class="buttons">
     <?php
-        echo $this->Form->end(__('Save', true));
-        echo $this->Html->link(__('Cancel', true), array(
+        echo $this->Form->end(__('Save'));
+        echo $this->Html->link(__('Cancel'), array(
             'action' => 'index',
         ), array(
             'class' => 'cancel',

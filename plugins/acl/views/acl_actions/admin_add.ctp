@@ -6,7 +6,7 @@
             echo $this->Form->input('parent_id', array(
                 'options' => $acos,
                 'empty' => true,
-                'rel' => __('Choose none if the Aco is a controller.', true),
+                'rel' => __('Choose none if the Aco is a controller.'),
             ));
             echo $this->Form->input('alias', array());
         ?>

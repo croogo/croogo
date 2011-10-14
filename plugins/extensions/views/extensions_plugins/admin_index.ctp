@@ -3,7 +3,7 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $this->Html->link(__('Upload', true), array('action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('Upload'), array('action'=>'add')); ?></li>
         </ul>
     </div>
 
@@ -11,11 +11,11 @@
     <?php
         $tableHeaders =  $this->Html->tableHeaders(array(
             '',
-            __('Alias', true),
-            __('Name', true),
-            __('Description', true),
-            __('Active', true),
-            __('Actions', true),
+            __('Alias'),
+            __('Name'),
+            __('Description'),
+            __('Active'),
+            __('Actions'),
         ));
         echo $tableHeaders;
 
@@ -27,10 +27,10 @@
 
             if ($pluginData['active']) {
                 $icon = 'tick.png';
-                $toggleText = __('Deactivate', true);
+                $toggleText = __('Deactivate');
             } else {
                 $icon = 'cross.png';
-                $toggleText = __('Activate', true);
+                $toggleText = __('Activate');
             }
             $iconImage = $this->Html->image('icons/'.$icon);
 
@@ -40,11 +40,11 @@
                 $pluginAlias,
                 'token' => $this->params['_Token']['key'],
             ));
-            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
+            $actions .= ' ' . $this->Html->link(__('Delete'), array(
                 'action' => 'delete',
                 $pluginAlias,
                 'token' => $this->params['_Token']['key'],
-            ), null, __('Are you sure?', true));
+            ), null, __('Are you sure?'));
 
             $rows[] = array(
                 '',

@@ -13,7 +13,7 @@
     <fieldset>
         <div class="tabs">
             <ul>
-                <li><a href="#record-main"><span><?php __('Record'); ?></span></a></li>
+                <li><a href="#record-main"><span><?php echo __('Record'); ?></span></a></li>
             </ul>
 
             <div id="record-main">
@@ -28,7 +28,7 @@
 
     <div class="buttons">
     <?php
-        echo $this->Form->end(__('Save', true));
+        echo $this->Form->end(__('Save'));
     ?>
     </div>
 </div>

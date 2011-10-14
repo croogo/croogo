@@ -7,17 +7,17 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $this->Html->link(__('New Action', true), array('action'=>'add')); ?></li>
-            <li><?php echo $this->Html->link(__('Generate Actions', true), array('action'=>'generate')); ?></li>
+            <li><?php echo $this->Html->link(__('New Action'), array('action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('Generate Actions'), array('action'=>'generate')); ?></li>
         </ul>
     </div>
 
     <table cellpadding="0" cellspacing="0">
     <?php
         $tableHeaders =  $this->Html->tableHeaders(array(
-            __('Id', true),
-            __('Alias', true),
-            __('Actions', true),
+            __('Id'),
+            __('Alias'),
+            __('Actions'),
         ));
         echo $tableHeaders;
 
@@ -38,14 +38,14 @@
                 $currentController = $alias;
             }
 
-            $actions  = $this->Html->link(__('Edit', true), array('action' => 'edit', $id));
-            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
+            $actions  = $this->Html->link(__('Edit'), array('action' => 'edit', $id));
+            $actions .= ' ' . $this->Html->link(__('Delete'), array(
                 'action' => 'delete',
                 $id,
                 'token' => $this->params['_Token']['key'],
-            ), null, __('Are you sure?', true));
-            $actions .= ' ' . $this->Html->link(__('Move up', true), array('action' => 'move', $id, 'up'));
-            $actions .= ' ' . $this->Html->link(__('Move down', true), array('action' => 'move', $id, 'down'));
+            ), null, __('Are you sure?'));
+            $actions .= ' ' . $this->Html->link(__('Move up'), array('action' => 'move', $id, 'up'));
+            $actions .= ' ' . $this->Html->link(__('Move down'), array('action' => 'move', $id, 'down'));
 
             $row = array(
                 $id,

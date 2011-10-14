@@ -6,8 +6,8 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $this->Html->link(__('Generate Actions', true), array('controller' => 'acl_actions', 'action'=>'generate', 'permissions' => 1)); ?></li>
-            <li><?php echo $this->Html->link(__('Edit Actions', true), array('controller' => 'acl_actions', 'action'=>'index', 'permissions' => 1)); ?></li>
+            <li><?php echo $this->Html->link(__('Generate Actions'), array('controller' => 'acl_actions', 'action'=>'generate', 'permissions' => 1)); ?></li>
+            <li><?php echo $this->Html->link(__('Edit Actions'), array('controller' => 'acl_actions', 'action'=>'index', 'permissions' => 1)); ?></li>
         </ul>
     </div>
 
@@ -17,8 +17,8 @@
         $roleIds   = array_keys($roles);
 
         $tableHeaders = array(
-            __('Id', true),
-            __('Alias', true),
+            __('Id'),
+            __('Alias'),
         );
         $tableHeaders = array_merge($tableHeaders, $roleTitles);
         $tableHeaders =  $this->Html->tableHeaders($tableHeaders);

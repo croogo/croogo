@@ -3,7 +3,7 @@
 
     <div class="actions">
         <ul>
-            <li><?php echo $this->Html->link(__('Upload', true), array('action'=>'add')); ?></li>
+            <li><?php echo $this->Html->link(__('Upload'), array('action'=>'add')); ?></li>
         </ul>
     </div>
 
@@ -11,26 +11,26 @@
     <?php
         $tableHeaders =  $this->Html->tableHeaders(array(
             '',
-            __('Locale', true),
-            __('Default', true),
-            __('Actions', true),
+            __('Locale'),
+            __('Default'),
+            __('Actions'),
         ));
         echo $tableHeaders;
 
         $rows = array();
         foreach ($locales AS $locale) {
             $actions  = '';
-            $actions .= $this->Html->link(__('Activate', true), array(
+            $actions .= $this->Html->link(__('Activate'), array(
                 'action' => 'activate',
                 $locale,
                 'token' => $this->params['_Token']['key'],
             ));
-            $actions .= ' ' . $this->Html->link(__('Edit', true), array('action' => 'edit', $locale));
-            $actions .= ' ' . $this->Html->link(__('Delete', true), array(
+            $actions .= ' ' . $this->Html->link(__('Edit'), array('action' => 'edit', $locale));
+            $actions .= ' ' . $this->Html->link(__('Delete'), array(
                 'action' => 'delete',
                 $locale,
                 'token' => $this->params['_Token']['key'],
-            ), null, __('Are you sure?', true));
+            ), null, __('Are you sure?'));
 
             if ($locale == Configure::read('Site.locale')) {
                 $status = $this->Layout->status(1);

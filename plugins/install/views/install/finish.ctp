@@ -18,7 +18,7 @@
     <br />
 
     <?php
-        echo $this->Html->link(__('Click here to delete installation files', true), array(
+        echo $this->Html->link(__('Click here to delete installation files'), array(
             'plugin' => 'install',
             'controller' => 'install',
             'action' => 'finish',
