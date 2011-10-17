@@ -154,7 +154,7 @@ class NodesController extends AppController {
                 $this->Session->setFlash(sprintf(__('%s could not be saved. Please, try again.'), $type['Type']['title']), 'default', array('class' => 'error'));
             }
         } else {
-            $this->data['Node']['user_id'] = $this->Session->read('Auth.User.id');
+            $this->request->data['Node']['user_id'] = $this->Session->read('Auth.User.id');
         }
 
         $nodes = $this->Node->generateTreeList();
@@ -190,23 +190,23 @@ class NodesController extends AppController {
 
         if (!empty($this->data)) {
             if (isset($this->data['TaxonomyData'])) {
-                $this->data['Taxonomy'] = array(
+                $this->request->data['Taxonomy'] = array(
                     'Taxonomy' => array(),
                 );
-                foreach ($this->data['TaxonomyData'] AS $vocabularyId => $taxonomyIds) {
+                foreach ($this->request->data['TaxonomyData'] AS $vocabularyId => $taxonomyIds) {
                     if (is_array($taxonomyIds)) {
-                        $this->data['Taxonomy']['Taxonomy'] = array_merge($this->data['Taxonomy']['Taxonomy'], $taxonomyIds);
+                        $this->request->data['Taxonomy']['Taxonomy'] = array_merge($this->request->data['Taxonomy']['Taxonomy'], $taxonomyIds);
                     }
                 }
             }
-            $this->data['Node']['path'] = $this->Croogo->getRelativePath(array(
+            $this->request->data['Node']['path'] = $this->Croogo->getRelativePath(array(
                 'admin' => false,
                 'controller' => 'nodes',
                 'action' => 'view',
                 'type' => $this->Node->type,
                 'slug' => $this->data['Node']['slug'],
             ));
-            $this->data['Node']['visibility_roles'] = $this->Node->encodeData($this->data['Role']['Role']);
+            $this->request->data['Node']['visibility_roles'] = $this->Node->encodeData($this->data['Role']['Role']);
             if ($this->Node->saveWithMeta($this->data)) {
                 $this->Session->setFlash(sprintf(__('%s has been saved'), $type['Type']['title']), 'default', array('class' => 'success'));
                 if (! isset($this->request->data['apply'])) {
