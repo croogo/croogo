@@ -101,6 +101,7 @@ class AppController extends Controller {
  * @return void
  */
     public function beforeFilter() {
+        parent::beforeFilter();
         $this->AclFilter->auth();
         $this->RequestHandler->setContent('json', 'text/x-json');
         $this->Security->blackHoleCallback = '__securityError';
@@ -123,7 +124,7 @@ class AppController extends Controller {
             Configure::read('Site.status') == 0) {
             $this->layout = 'maintenance';
             $this->set('title_for_layout', __('Site down for maintenance'));
-            $this->render('../elements/blank');
+            $this->render('../Elements/blank');
         }
 
         if (isset($this->params['locale'])) {
@@ -135,8 +136,24 @@ class AppController extends Controller {
  *
  * @return void
  */
-    public function __securityError() {
-        $this->cakeError('securityError');
+    public function __securityError($type) {
+        switch ($type) {
+        case 'auth':
+            break;
+        case 'csrf':
+            break;
+        case 'get':
+            break;
+        case 'post':
+            break;
+        case 'put':
+            break;
+        case 'delete':
+            break;
+        default:
+            break;
+        }
+        $this->render('../Elements/blank');
     }
 
 }
