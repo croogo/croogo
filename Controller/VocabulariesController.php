@@ -27,6 +27,10 @@ class VocabulariesController extends AppController {
  */
     public $uses = array('Vocabulary');
 
+    protected $paginate = array(
+        'limit' => 10,
+        );
+
     public function admin_index() {
         $this->set('title_for_layout', __('Vocabularies'));
 

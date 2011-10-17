@@ -217,8 +217,8 @@ class TermsController extends AppController {
                 $this->Session->setFlash(__('Term could not be saved. Please try again.'), 'default', array('class' => 'error'));
             }
         } else {
-            $this->data['Taxonomy'] = $taxonomy['Taxonomy'];
-            $this->data['Term'] = $term['Term'];
+            $this->request->data['Taxonomy'] = $taxonomy['Taxonomy'];
+            $this->request->data['Term'] = $term['Term'];
         }
         $parentTree = $this->Term->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array('taxonomyId' => true));
         $this->set(compact('vocabulary', 'parentTree', 'term', 'taxonomy', 'vocabularyId'));
