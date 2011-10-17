@@ -68,7 +68,12 @@
     if ($pluginBootstraps) {
         $plugins = explode(',', $pluginBootstraps);
         foreach ($plugins AS $plugin) {
-            App::import('Plugin', Inflector::camelize($plugin) . 'Bootstrap');
+            $pluginName = Inflector::camelize($plugin);
+            CakePlugin::load(array(
+                $pluginName => array(
+                    'bootstrap' => true,
+                    )
+                ));
         }
     }
 ?>
