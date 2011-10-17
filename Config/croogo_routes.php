@@ -4,6 +4,7 @@
 
     // Installer
     if (!file_exists(APP . 'Config' . DS.'settings.yml')) {
+        CakePlugin::load('Install');
         CroogoRouter::connect('/', array('plugin' => 'install' ,'controller' => 'install'));
     }
 

@@ -44,7 +44,7 @@ class InstallController extends InstallAppController {
  */
     public $defaultConfig = array(
         'name' => 'default',
-        'driver'=> 'mysql',
+        'datasource'=> 'Database/Mysql',
         'persistent'=> false,
         'host'=> 'localhost',
         'login'=> 'root',
@@ -66,7 +66,7 @@ class InstallController extends InstallAppController {
 
         $this->layout = 'install';
         App::import('Component', 'Session');
-        $this->Session = new SessionComponent;
+        $this->Session = new SessionComponent($this->Components);
     }
 /**
  * If settings.yml exists, app is already installed
@@ -126,7 +126,7 @@ class InstallController extends InstallAppController {
         }
 
         copy(APP . 'Config' . DS.'database.php.install', APP . 'Config' . DS.'database.php');
-        App::import('Core', 'File');
+        App::uses('File', 'Utility');
         $file = new File(APP . 'Config' . DS.'database.php', true);
         $content = $file->read();
 
@@ -166,9 +166,9 @@ class InstallController extends InstallAppController {
                     $db->execute($create);
                 }
 
-                $dataObjects = App::objects('class', APP . 'plugins' . DS . 'install' . DS . 'config' . DS . 'data' . DS);
+                $dataObjects = App::objects('class', APP . 'plugins' . DS . 'install' . DS . 'Config' . DS . 'data' . DS);
                 foreach ($dataObjects as $data) {
-                    App::import('class', $data, false, APP . 'plugins' . DS . 'install' . DS . 'config' . DS . 'data' . DS);
+                    App::import('class', $data, false, APP . 'plugins' . DS . 'install' . DS . 'Config' . DS . 'data' . DS);
                     $classVars = get_class_vars($data);
                     $modelAlias = substr($data, 0, -4);
                     $table = $classVars['table'];
@@ -217,9 +217,10 @@ class InstallController extends InstallAppController {
 
         // set new salt and seed value
         copy(APP . 'Config' . DS.'settings.yml.install', APP . 'Config' . DS.'settings.yml');
+        App::uses('File', 'Utility');
         $File =& new File(APP . 'Config' . DS . 'core.php');
         if (!class_exists('Security')) {
-            require CAKE . 'security.php';
+            require CAKE . 'Utility' .DS. 'Security.php';
         }
         $salt = Security::generateAuthKey();
         $seed = mt_rand() . mt_rand();
