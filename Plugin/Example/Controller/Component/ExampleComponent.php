@@ -11,7 +11,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExampleComponent extends Object {
+class ExampleComponent extends Component {
 /**
  * Called after the Controller::beforeFilter() and before the controller action
  *
