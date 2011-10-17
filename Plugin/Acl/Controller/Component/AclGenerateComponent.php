@@ -21,7 +21,7 @@ class AclGenerateComponent extends Component {
  */
     public function initialize(&$controller, $settings = array()) {
         $this->controller =& $controller;
-        App::import('Core', 'File');
+        App::uses('Folder', 'Utility');
         $this->folder = new Folder;
     }
 

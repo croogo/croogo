@@ -46,7 +46,7 @@ class FilemanagerController extends AppController {
         $this->set('deletablePaths', $this->deletablePaths);
 
         //App::import('Core', 'Folder');
-        App::import('Core', 'File');
+        App::uses('File', 'Utility');
     }
 
     public function admin_index() {

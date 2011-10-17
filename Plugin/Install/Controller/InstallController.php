@@ -151,7 +151,7 @@ class InstallController extends InstallAppController {
         $this->_check();
         $this->set('title_for_layout', __('Step 2: Build database'));
         if (isset($this->params['named']['run'])) {
-            App::import('Core', 'File');
+            App::uses('File', 'Utility');
             App::import('Model', 'CakeSchema', false);
             App::import('Model', 'ConnectionManager');
 
@@ -204,7 +204,7 @@ class InstallController extends InstallAppController {
     public function finish() {
         $this->set('title_for_layout', __('Installation completed successfully'));
         if (isset($this->params['named']['delete'])) {
-            App::import('Core', 'Folder');
+            App::uses('Folder', 'Utility');
             $this->folder = new Folder;
             if ($this->folder->delete(APP.'plugins'.DS.'install')) {
                 $this->Session->setFlash(__('Installation files deleted successfully.'), 'default', array('class' => 'success'));

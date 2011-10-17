@@ -29,8 +29,8 @@ class ExtensionsThemesController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        App::import('Core', 'File');
-        App::import('Core', 'Folder');
+        App::uses('File', 'Utility');
+        App::uses('Folder', 'Utility');
     }
 
     public function admin_index() {

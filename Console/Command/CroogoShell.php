@@ -66,7 +66,7 @@ class CroogoShell extends Shell {
         if (!file_exists($filePath)) {
             touch($filePath);
         }
-        App::import('Core', 'File');
+        App::uses('File', 'Utility');
         $file = new File($filePath, true);
         $file->write($content);
 
