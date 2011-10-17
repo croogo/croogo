@@ -107,7 +107,8 @@ class AppModel extends Model {
         if ($output) {
             $created = false;
             $options = array();
-            $this->Behaviors->trigger($this, 'afterSave', array(
+            $this->Behaviors->trigger('afterSave', array(
+                &$this,
                 $created,
                 $options,
             ));
