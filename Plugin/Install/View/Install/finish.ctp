@@ -11,7 +11,7 @@
     <br />
 
     <p>
-        Delete the installation directory <strong>/app/plugins/install</strong>.
+        Delete the installation directory <strong>/app/Plugins/Install</strong>.
     </p>
 
     <br />
