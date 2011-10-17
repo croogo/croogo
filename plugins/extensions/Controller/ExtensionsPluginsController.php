@@ -149,10 +149,6 @@ class ExtensionsPluginsController extends AppController {
             $this->Session->setFlash(__('Invalid plugin'), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
         }
-        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
-            $blackHoleCallback = $this->Security->blackHoleCallback;
-            $this->$blackHoleCallback();
-        }
         if ($this->Croogo->pluginIsActive($plugin)) {
             $this->Session->setFlash(__('You cannot delete a plugin that is currently active.'), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
@@ -172,10 +168,6 @@ class ExtensionsPluginsController extends AppController {
         if (!$plugin) {
             $this->Session->setFlash(__('Invalid plugin'), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
-        }
-        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
-            $blackHoleCallback = $this->Security->blackHoleCallback;
-            $this->$blackHoleCallback();
         }
         $className = Inflector::camelize($plugin) . 'Activation';
         if (App::import('Plugin', $className)) {

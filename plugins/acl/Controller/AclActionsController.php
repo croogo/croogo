@@ -110,10 +110,6 @@ class AclActionsController extends AclAppController {
             $this->Session->setFlash(__('Invalid id for Action'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
-        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
-            $blackHoleCallback = $this->Security->blackHoleCallback;
-            $this->$blackHoleCallback();
-        }
         if ($this->Acl->Aco->delete($id)) {
             $this->Session->setFlash(__('Action deleted'), 'default', array('class' => 'success'));
             $this->redirect(array('action'=>'index'));

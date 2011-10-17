@@ -51,10 +51,6 @@ class ExtensionsThemesController extends AppController {
         if ($alias == 'default') {
             $alias = null;
         }
-        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
-            $blackHoleCallback = $this->Security->blackHoleCallback;
-            $this->$blackHoleCallback();
-        }
 
         $siteTheme = $this->Setting->findByKey('Site.theme');
         $siteTheme['Setting']['value'] = $alias;
@@ -153,10 +149,6 @@ class ExtensionsThemesController extends AppController {
         if ($alias == null) {
             $this->Session->setFlash(__('Invalid Theme.'), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
-        }
-        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
-            $blackHoleCallback = $this->Security->blackHoleCallback;
-            $this->$blackHoleCallback();
         }
 
         if ($alias == 'default') {
