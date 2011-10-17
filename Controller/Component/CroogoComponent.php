@@ -86,7 +86,8 @@ class CroogoComponent extends Component {
  */
     public function startup(&$controller) {
         $this->controller =& $controller;
-        App::import('Core', 'File');
+        App::uses('File', 'Utility');
+        App::uses('Folder', 'Utility');
 
         if ($this->Session->check('Auth.User.id')) {
             $this->roleId = $this->Session->read('Auth.User.role_id');
