@@ -725,7 +725,7 @@ class CroogoComponent extends Component {
             $pluginFolders = $this->folder->read();
             foreach ($pluginFolders[0] AS $pluginFolder) {
                 if (substr($pluginFolder, 0, 1) != '.') {
-                    $this->folder->path = $pluginPath . $pluginFolder . DS . 'config';
+                    $this->folder->path = $pluginPath . $pluginFolder . DS . 'Config';
                     $pluginFolderContent = $this->folder->read();
                     if (in_array('plugin.yml', $pluginFolderContent[1])) {
                         $plugins[$pluginFolder] = $pluginFolder;
@@ -744,7 +744,7 @@ class CroogoComponent extends Component {
     public function getPluginData($alias = null) {
         $pluginPaths = App::path('plugins');
         foreach ($pluginPaths AS $pluginPath) {
-            $ymlLocation = $pluginPath . $alias . DS . 'config' . DS . 'plugin.yml';
+            $ymlLocation = $pluginPath . $alias . DS . 'Config' . DS . 'plugin.yml';
             if (file_exists($ymlLocation)) {
                 $pluginData = Spyc::YAMLLoad(file_get_contents($ymlLocation));
                 $pluginData['active'] = $this->pluginIsActive($alias);
