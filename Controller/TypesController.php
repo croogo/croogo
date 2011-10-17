@@ -27,6 +27,10 @@ class TypesController extends AppController {
  */
     public $uses = array('Type');
 
+    protected $paginate = array(
+        'limit' => 10,
+        );
+
     public function beforeFilter() {
         parent::beforeFilter();
         if ($this->action == 'admin_edit') {
