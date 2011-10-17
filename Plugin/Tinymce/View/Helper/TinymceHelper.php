@@ -112,7 +112,7 @@ class TinymceHelper extends AppHelper {
             $this->actions = Set::merge($this->actions, Configure::read('Tinymce.actions'));
         }
         $action = Inflector::camelize($this->params['controller']).'/'.$this->params['action'];
-        if (Configure::read('Writing.wysiwyg') && isset($this->actions[$action]) && ClassRegistry::getObject('view')) {
+        if (Configure::read('Writing.wysiwyg') && isset($this->actions[$action])) {
             $this->Html->script('/tinymce/js/tiny_mce', array('inline' => false));
             $this->Html->scriptBlock($this->fileBrowserCallBack(), array('inline' => false));
             $settings = $this->getSettings();
