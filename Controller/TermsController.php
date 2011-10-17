@@ -232,10 +232,6 @@ class TermsController extends AppController {
                 $vocabularyId,
             ));
         }
-        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
-            $blackHoleCallback = $this->Security->blackHoleCallback;
-            $this->$blackHoleCallback();
-        }
         $taxonomyId = $this->Term->Taxonomy->termInVocabulary($id, $vocabularyId);
         if (!$taxonomyId) {
             $this->redirect(array(

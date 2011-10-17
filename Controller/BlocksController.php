@@ -99,10 +99,6 @@ class BlocksController extends AppController {
             $this->Session->setFlash(__('Invalid id for Block'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
-        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
-            $blackHoleCallback = $this->Security->blackHoleCallback;
-            $this->$blackHoleCallback();
-        }
         if ($this->Block->delete($id)) {
             $this->Session->setFlash(__('Block deleted'), 'default', array('class' => 'success'));
             $this->redirect(array('action'=>'index'));

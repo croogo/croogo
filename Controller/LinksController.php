@@ -152,10 +152,6 @@ class LinksController extends AppController {
                 'action' => 'index',
             ));
         }
-        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
-            $blackHoleCallback = $this->Security->blackHoleCallback;
-            $this->$blackHoleCallback();
-        }
         $this->Link->Behaviors->attach('Tree', array(
             'scope' => array(
                 'Link.menu_id' => $link['Link']['menu_id'],

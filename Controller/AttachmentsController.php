@@ -188,10 +188,6 @@ class AttachmentsController extends AppController {
             $this->Session->setFlash(__('Invalid id for Attachment'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
-        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
-            $blackHoleCallback = $this->Security->blackHoleCallback;
-            $this->$blackHoleCallback();
-        }
 
         $attachment = $this->Node->find('first', array(
             'conditions' => array(

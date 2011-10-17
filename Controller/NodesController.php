@@ -53,11 +53,6 @@ class NodesController extends AppController {
         if (isset($this->request->params['type'])) {
             $this->request->params['named']['type'] = $this->request->params['type'];
         }
-
-        // CSRF Protection
-        if (in_array($this->request->params['action'], array('admin_add', 'admin_edit'))) {
-            $this->Security->validatePost = false;
-        }
     }
 
     public function admin_index() {
@@ -129,12 +124,6 @@ class NodesController extends AppController {
         ));
 
         if (!empty($this->data)) {
-            // CSRF Protection
-            if ($this->params['_Token']['key'] != $this->data['Node']['token_key']) {
-                $blackHoleCallback = $this->Security->blackHoleCallback;
-                $this->$blackHoleCallback();
-            }
-
             if (isset($this->data['TaxonomyData'])) {
                 $this->data['Taxonomy'] = array(
                     'Taxonomy' => array(),
@@ -200,12 +189,6 @@ class NodesController extends AppController {
         $this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
 
         if (!empty($this->data)) {
-            // CSRF Protection
-            if ($this->params['_Token']['key'] != $this->data['Node']['token_key']) {
-                $blackHoleCallback = $this->Security->blackHoleCallback;
-                $this->$blackHoleCallback();
-            }
-
             if (isset($this->data['TaxonomyData'])) {
                 $this->data['Taxonomy'] = array(
                     'Taxonomy' => array(),
@@ -292,10 +275,6 @@ class NodesController extends AppController {
         if (!$id) {
             $this->Session->setFlash(__('Invalid id for Node'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
-        }
-        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
-            $blackHoleCallback = $this->Security->blackHoleCallback;
-            $this->$blackHoleCallback();
         }
         if ($this->Node->delete($id)) {
             $this->Session->setFlash(__('Node deleted'), 'default', array('class' => 'success'));
