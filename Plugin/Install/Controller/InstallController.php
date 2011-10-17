@@ -166,9 +166,10 @@ class InstallController extends InstallAppController {
                     $db->execute($create);
                 }
 
-                $dataObjects = App::objects('class', APP . 'plugins' . DS . 'install' . DS . 'Config' . DS . 'Data' . DS);
+                $path = App::pluginPath('Install') .DS. 'Config' .DS. 'Data' .DS;
+                $dataObjects = App::objects('class', $path);
                 foreach ($dataObjects as $data) {
-                    require(APP. 'plugins' .DS. 'install' .DS. 'Config' .DS. 'Data' .DS. $data . '.php');
+                    include($path . $data . '.php');
                     $classVars = get_class_vars($data);
                     $modelAlias = substr($data, 0, -4);
                     $table = $classVars['table'];
