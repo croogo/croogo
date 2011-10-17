@@ -62,7 +62,7 @@
                 if (Configure::read('Admin.menus')) {
                     foreach (array_keys(Configure::read('Admin.menus')) AS $p) {
                         echo '<li>';
-                        echo $this->element('admin_menu', array('plugin' => $p));
+                        echo $this->element('admin_menu', array(), array('plugin' => $p));
                         echo '</li>';
                     }
                 }
