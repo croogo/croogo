@@ -275,7 +275,7 @@ class TermsController extends AppController {
                 'Taxonomy.vocabulary_id' => $vocabularyId,
             ),
         ));
-        if( $this->Term->Taxonomy->moveup($taxonomyId, $step) ) {
+        if( $this->Term->Taxonomy->moveUp($taxonomyId, $step) ) {
             $this->Session->setFlash(__('Moved up successfully'), 'default', array('class' => 'success'));
         } else {
             $this->Session->setFlash(__('Could not move up'), 'default', array('class' => 'error'));
@@ -308,7 +308,7 @@ class TermsController extends AppController {
             ),
         ));
 
-        if( $this->Term->Taxonomy->movedown($taxonomyId, $step) ) {
+        if( $this->Term->Taxonomy->moveDown($taxonomyId, $step) ) {
             $this->Session->setFlash(__('Moved down successfully'), 'default', array('class' => 'success'));
         } else {
             $this->Session->setFlash(__('Could not move down'), 'default', array('class' => 'error'));

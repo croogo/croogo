@@ -180,7 +180,7 @@ class LinksController extends AppController {
                 'Link.menu_id' => $link['Link']['menu_id'],
             ),
         ));
-        if( $this->Link->moveup($id, $step) ) {
+        if( $this->Link->moveUp($id, $step) ) {
             $this->Session->setFlash(__('Moved up successfully'), 'default', array('class' => 'success'));
         } else {
             $this->Session->setFlash(__('Could not move up'), 'default', array('class' => 'error'));
@@ -205,7 +205,7 @@ class LinksController extends AppController {
                 'Link.menu_id' => $link['Link']['menu_id'],
             ),
         ));
-        if( $this->Link->movedown($id, $step) ) {
+        if( $this->Link->moveDown($id, $step) ) {
             $this->Session->setFlash(__('Moved down successfully'), 'default', array('class' => 'success'));
         } else {
             $this->Session->setFlash(__('Could not move down'), 'default', array('class' => 'error'));
