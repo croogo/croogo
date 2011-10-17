@@ -120,10 +120,10 @@ class ContactsController extends AppController {
             $continue = false;
         }
         if (!empty($this->data) && $continue === true) {
-            $this->data['Message']['contact_id'] = $contact['Contact']['id'];
-            $this->data['Message']['title'] = htmlspecialchars($this->data['Message']['title']);
-            $this->data['Message']['name'] = htmlspecialchars($this->data['Message']['name']);
-            $this->data['Message']['body'] = htmlspecialchars($this->data['Message']['body']);
+            $this->request->data['Message']['contact_id'] = $contact['Contact']['id'];
+            $this->request->data['Message']['title'] = htmlspecialchars($this->data['Message']['title']);
+            $this->request->data['Message']['name'] = htmlspecialchars($this->data['Message']['name']);
+            $this->request->data['Message']['body'] = htmlspecialchars($this->data['Message']['body']);
             $continue = $this->__validation($continue, $contact);
             $continue = $this->__spam_protection($continue, $contact);
             $continue = $this->__captcha($continue, $contact);
