@@ -21,5 +21,5 @@
             );
     }
 
-    $this->set('items', $rss->items($comments, 'rss_transform'));
+    $this->set('items', $this->Rss->items($comments, 'rss_transform'));
 ?>

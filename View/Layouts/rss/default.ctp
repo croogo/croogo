@@ -1,5 +1,5 @@
 <?php
-    echo $rss->header();
+    //echo $this->Rss->header();
     if (!isset($channel)) {
         $channel = array();
     }
@@ -7,8 +7,8 @@
         $channel['title'] = $title_for_layout . ' - ' . Configure::read('Site.title');
     }
 ?>
-<?php echo '<?'; ?>xml-stylesheet type="text/xsl" href="<?php echo $rss->webroot('css/feed.xsl') ?>" ?>
+<?php echo '<?'; ?>xml-stylesheet type="text/xsl" href="<?php echo $this->Rss->webroot('css/feed.xsl') ?>" ?>
 <?php
-    $channelEl = $rss->channel(array(), $channel, $items);
-    echo $rss->document(array(), $channelEl);
+    $channelEl = $this->Rss->channel(array(), $channel, $items);
+    echo $this->Rss->document(array(), $channelEl);
 ?>

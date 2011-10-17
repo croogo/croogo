@@ -9,5 +9,5 @@
         );
     }
 
-    $this->set('items', $rss->items($nodes, 'rss_transform'));
+    $this->set('items', $this->Rss->items($nodes, 'rss_transform'));
 ?>

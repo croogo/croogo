@@ -38,6 +38,10 @@ class CommentsController extends AppController {
  */
     public $uses = array('Comment');
 
+    protected $paginate = array(
+        'limit' => 10,
+        );
+
     public function beforeFilter() {
         parent::beforeFilter();
         if ($this->action == 'admin_edit') {
@@ -138,8 +142,8 @@ class CommentsController extends AppController {
     public function index() {
         $this->set('title_for_layout', __('Comments'));
 
-        if (!isset($this->params['url']['ext']) ||
-            $this->params['url']['ext'] != 'rss') {
+        if (!isset($this->request['ext']) ||
+            $this->request['ext'] != 'rss') {
             $this->redirect('/');
         }
 
