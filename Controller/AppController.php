@@ -1,4 +1,7 @@
 <?php
+
+App::uses('Controller', 'Controller');
+
 /**
  * Application controller
  *
