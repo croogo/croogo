@@ -165,6 +165,7 @@ class Setting extends AppModel {
                 'Setting.key' => 'ASC',
             ),
         ));
+        App::uses('File', 'Utility');
         $filePath = APP.'Config'.DS.'settings.yml';
         $file = new File($filePath, true);
         $listYaml = Spyc::YAMLDump($list, 4, 60);
