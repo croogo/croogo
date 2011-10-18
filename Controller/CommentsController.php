@@ -173,7 +173,7 @@ class CommentsController extends AppController {
             $this->redirect('/');
         }
         if ($parentId) {
-            $commentPath = $this->Comment->getpath($parentId, array('Comment.id'));
+            $commentPath = $this->Comment->getPath($parentId, array('Comment.id'));
             $commentLevel = count($commentPath);
             if ($commentLevel > Configure::read('Comment.level')) {
                 $this->Session->setFlash(__('Maximum level reached. You cannot reply to that comment.'), 'default', array('class' => 'error'));
