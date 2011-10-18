@@ -40,7 +40,7 @@ class FilemanagerController extends AppController {
         parent::beforeFilter();
 
         $this->deletablePaths = array(
-            APP.'views'.DS.'themed'.DS,
+            APP.'View'.DS.'Themed'.DS,
             WWW_ROOT,
         );
         $this->set('deletablePaths', $this->deletablePaths);

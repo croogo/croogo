@@ -95,7 +95,7 @@ class ExtensionsThemesController extends AppController {
                 $this->Session->setFlash(__('Invalid zip archive'), 'default', array('class' => 'error'));
                 $this->redirect(array('action' => 'index'));
             }
-            if (is_dir(APP.'views'.DS.'themed'.DS.$themeAlias) ||
+            if (is_dir(APP.'View'.DS.'Themed'.DS.$themeAlias) ||
                 is_dir(APP.'webroot'.DS.'themed'.DS.$themeAlias)) {
                 $this->Session->setFlash(__('Directory with theme alias already exists.'), 'default', array('class' => 'error'));
                 $this->redirect(array('action' => 'add'));
@@ -109,9 +109,9 @@ class ExtensionsThemesController extends AppController {
                     if (strstr($zipEntryName, $themeAlias . '/')) {
                         $zipEntryNameE = explode($themeAlias . '/', $zipEntryName);
                         if (isset($zipEntryNameE['1'])) {
-                            $path = APP . 'views' . DS . 'themed' . DS . $themeAlias . DS . str_replace('/', DS, $zipEntryNameE['1']);
+                            $path = APP . 'View' . DS . 'Themed' . DS . $themeAlias . DS . str_replace('/', DS, $zipEntryNameE['1']);
                         } else {
-                            $path = APP . 'views' . DS . 'themed' . DS . $themeAlias . DS;
+                            $path = APP . 'Views' . DS . 'Themed' . DS . $themeAlias . DS;
                         }
 
                         if (substr($path, strlen($path) - 1) == DS) {
@@ -161,7 +161,7 @@ class ExtensionsThemesController extends AppController {
 
         $paths = array(
             APP . 'webroot' . DS . 'theme' . DS . $alias . DS,
-            APP . 'views' . DS . 'themed' . DS . $alias . DS,
+            APP . 'View' . DS . 'Themed' . DS . $alias . DS,
         );
 
         $error = 0;

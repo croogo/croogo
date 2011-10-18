@@ -412,13 +412,7 @@ class CroogoComponent extends Component {
             //array_unshift($helperPaths, APP.'views'.DS.'themed'.DS.$controller->theme.DS.'helpers'.DS);
             //Configure::write('helperPaths', $helperPaths);
 
-            // Unless http://cakephp.lighthouseapp.com/projects/42648/tickets/84-enable-appbuild-to-retain-the-order-of-paths-given is integrated
-            // with the main core, the following "proper" way won't work.
-            //App::build(array('helpers' => array(APP . 'views' . DS . 'themed' . DS . $controller->theme . DS . 'helpers' . DS)));
-
-            // Workaround
-            $appInstance =& App::getInstance();
-            array_unshift($appInstance->helpers, APP.'views'.DS.'themed'.DS.$controller->theme.DS.'helpers'.DS);
+            App::build(array('View/Helper' => array(APP . 'View' . DS . 'Themed' . DS . $controller->theme . DS . 'Helper' . DS)));
         }
     }
 /**
@@ -675,10 +669,10 @@ class CroogoComponent extends Component {
         $this->folder = new Folder;
         $viewPaths = App::path('views');
         foreach ($viewPaths AS $viewPath) {
-            $this->folder->path = $viewPath . 'themed';
+            $this->folder->path = $viewPath . 'Themed';
             $themeFolders = $this->folder->read();
             foreach ($themeFolders['0'] AS $themeFolder) {
-                $this->folder->path = $viewPath . 'themed' . DS . $themeFolder . DS . 'webroot';
+                $this->folder->path = $viewPath . 'Themed' . DS . $themeFolder . DS . 'webroot';
                 $themeFolderContent = $this->folder->read();
                 if (in_array('theme.yml', $themeFolderContent['1'])) {
                     $themes[$themeFolder] = $themeFolder;
@@ -699,8 +693,8 @@ class CroogoComponent extends Component {
         } else {
             $viewPaths = App::path('views');
             foreach ($viewPaths AS $viewPath) {
-                if (file_exists($viewPath . 'themed' . DS . $alias . DS . 'webroot' . DS . 'theme.yml')) {
-                    $ymlLocation = $viewPath . 'themed' . DS . $alias . DS . 'webroot' . DS . 'theme.yml';
+                if (file_exists($viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'theme.yml')) {
+                    $ymlLocation = $viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'theme.yml';
                     continue;
                 }
             }

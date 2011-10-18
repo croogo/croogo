@@ -73,7 +73,7 @@ class AppController extends Controller {
  * @var string
  * @access public
  */
-    public $view = 'Theme';
+    public $viewClass = 'Theme';
 /**
  * Theme
  *
