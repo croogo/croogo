@@ -49,11 +49,11 @@
  *
  */
     App::import('Lib', 'Croogo');
+    CakePlugin::load('Acl');
+    CakePlugin::load('Extensions');
     require_once 'croogo_bootstrap.php';
 
     // Load Install plugin
     if (!file_exists(APP . 'Config' . DS.'settings.yml')) {
         CakePlugin::load('Install');
     }
-    CakePlugin::load('Acl');
-    CakePlugin::load('Extensions');
