@@ -6,7 +6,8 @@ App::import('Helper', array(
     'Js',
     'Layout',
 ));
-App::import('Component', 'Session');
+App::uses('SessionComponent', 'Controller/Component');
+App::uses('Controller', 'Controller');
 
 class TheLayoutTestController extends Controller {
     var $name = 'TheTest';
@@ -17,16 +18,14 @@ class HtmlHelperTest extends CakeTestCase {
 
     function startTest() {
         $view =& new View(new TheLayoutTestController());
-        ClassRegistry::addObject('view', $view);
-        $this->Layout =& new LayoutHelper();
-        $this->Layout->Html =& new HtmlHelper();
-        $this->Layout->Form =& new FormHelper();
-        $this->Layout->Session =& new SessionHelper();
-        $this->Layout->Js =& new JsHelper('JsBase');
-        $this->Layout->Js->Html =& new HtmlHelper();
-        $this->Layout->Js->Form =& new FormHelper();
-        $this->Layout->Js->Form->Html =& new HtmlHelper();
-        $this->Layout->Js->JsBaseEngine =& new JsBaseEngineHelper();
+        $this->Layout =& new LayoutHelper($view);
+        $this->Layout->Html = new HtmlHelper($view);
+        $this->Layout->Form = new FormHelper($view);
+        $this->Layout->Session = new SessionHelper($view);
+        $this->Layout->Js = new JsHelper($view);
+        $this->Layout->Js->Html = new HtmlHelper($view);
+        $this->Layout->Js->Form = new FormHelper($view);
+        $this->Layout->Js->Form->Html = new HtmlHelper($view);
         $this->Layout->params = array(
             'controller' => 'nodes',
             'action' => 'index',
@@ -58,8 +57,13 @@ class HtmlHelperTest extends CakeTestCase {
         $this->assertEqual($this->Layout->status(0), $this->Layout->Html->image('/img/icons/cross.png'));
     }
 
+    function setUp() {
+        parent::setUp();
+        $this->ComponentCollection = new ComponentCollection();
+    }
+
     function testIsLoggedIn() {
-        $session =& new SessionComponent();
+        $session =& new SessionComponent($this->ComponentCollection);
         $session->delete('Auth');
         $this->assertFalse($this->Layout->isLoggedIn());
 
@@ -72,7 +76,7 @@ class HtmlHelperTest extends CakeTestCase {
     }
 
     function testGetRoleId() {
-        $session =& new SessionComponent();
+        $session =& new SessionComponent($this->ComponentCollection);
         $session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
