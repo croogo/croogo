@@ -60,7 +60,10 @@ class CroogoRouter {
 
         $plugins = Configure::read('Hook.routes');
         foreach ($plugins AS $plugin) {
-            App::import('Plugin', Inflector::camelize($plugin) . 'Routes');
+            $path = App::pluginPath($plugin) . 'Config' .DS. 'routes.php';
+            if (file_exists($path)) {
+                include $path;
+            }
         }
     }
 }

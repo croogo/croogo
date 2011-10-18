@@ -17,7 +17,6 @@ class Croogo {
  * @param string $pluginName plugin name
  */
     public function hookRoutes($pluginName) {
-        $pluginName = Inflector::underscore($pluginName);
         $hooks = Configure::read('Hook.routes');
         if (!$hooks || !is_array($hooks)) {
             $hooks = array();
