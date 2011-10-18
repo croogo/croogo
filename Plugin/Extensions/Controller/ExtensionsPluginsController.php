@@ -169,8 +169,9 @@ class ExtensionsPluginsController extends AppController {
             $this->Session->setFlash(__('Invalid plugin'), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
         }
-        $className = Inflector::camelize($plugin) . 'Activation';
-        if (App::import('Plugin', $className)) {
+        $className = $plugin . 'Activation';
+        $configFile = APP . 'Plugin' .DS. $plugin .DS. 'Config' .DS. $className . '.php';
+        if (include $configFile) {
             $pluginActivation = new $className;
         }
         
