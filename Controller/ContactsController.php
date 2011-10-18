@@ -176,7 +176,7 @@ class ContactsController extends AppController {
         if (!empty($this->data) &&
             $contact['Contact']['message_captcha'] &&
             $continue === true &&
-            !$this->Recaptcha->valid($this->params['form'])) {
+            !$this->Recaptcha->valid($this->request)) {
             $continue = false;
             $this->Session->setFlash(__('Invalid captcha entry'), 'default', array('class' => 'error'));
         }

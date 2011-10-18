@@ -25,13 +25,13 @@ class RecaptchaComponent extends Component {
         $this->controller->helpers[] = "Recaptcha";
     }
     
-    public function valid($form){
-        if (isset($form['recaptcha_challenge_field']) && isset($form['recaptcha_response_field'])){
+    public function valid($request){
+        if (isset($request->data['recaptcha_challenge_field']) && isset($request->data['recaptcha_response_field'])){
             if($this->recaptcha_check_answer(
                 $this->privatekey, 
                 $_SERVER["REMOTE_ADDR"],
-                $form['recaptcha_challenge_field'], 
-                $form['recaptcha_response_field']
+                $request->data['recaptcha_challenge_field'],
+                $request->data['recaptcha_response_field']
             ) == 0)
                 return false;
 
