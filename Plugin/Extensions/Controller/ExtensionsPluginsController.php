@@ -171,7 +171,7 @@ class ExtensionsPluginsController extends AppController {
         }
         $className = $plugin . 'Activation';
         $configFile = APP . 'Plugin' .DS. $plugin .DS. 'Config' .DS. $className . '.php';
-        if (include $configFile) {
+        if (file_exists($configFile) && include $configFile) {
             $pluginActivation = new $className;
         }
         
