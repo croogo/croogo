@@ -722,10 +722,12 @@ class CroogoComponent extends Component {
         $pluginPaths = App::path('plugins');
         foreach ($pluginPaths AS $pluginPath) {
             $this->folder->path = $pluginPath;
+            if (!file_exists($this->folder->path)) { continue; }
             $pluginFolders = $this->folder->read();
             foreach ($pluginFolders[0] AS $pluginFolder) {
                 if (substr($pluginFolder, 0, 1) != '.') {
                     $this->folder->path = $pluginPath . $pluginFolder . DS . 'Config';
+                    if (!file_exists($this->folder->path)) { continue; }
                     $pluginFolderContent = $this->folder->read();
                     if (in_array('plugin.yml', $pluginFolderContent[1])) {
                         $plugins[$pluginFolder] = $pluginFolder;
