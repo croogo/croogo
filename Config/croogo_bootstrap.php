@@ -69,6 +69,10 @@
         $plugins = explode(',', $pluginBootstraps);
         foreach ($plugins AS $plugin) {
             $pluginName = Inflector::camelize($plugin);
+            if (!file_exists(APP . 'Plugin' .DS. $pluginName)) {
+                CakeLog::write(LOG_ERR, 'Plugin not found during bootstrap: ' . $pluginName);
+                continue;
+            }
             CakePlugin::load(array(
                 $pluginName => array(
                     'bootstrap' => true,

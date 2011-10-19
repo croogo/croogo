@@ -48,6 +48,7 @@
  * Inflector::rules('plural', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
  *
  */
+    App::uses('CakeLog', 'Log');
     App::import('Lib', 'Croogo');
     CakePlugin::load('Acl');
     CakePlugin::load('Extensions');
