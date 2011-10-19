@@ -93,9 +93,7 @@ class AppController extends Controller {
             $this->_set(Router::getPaths());
             $this->params = Router::getParams();
             $this->constructClasses();
-            $this->Component->initialize($this);
-            $this->beforeFilter();
-            $this->Component->triggerCallback('startup', $this);
+            $this->startupProcess();
         }
     }
 /**
