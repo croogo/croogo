@@ -17,37 +17,31 @@ class TheLayoutTestController extends Controller {
 class HtmlHelperTest extends CakeTestCase {
 
     function startTest() {
-        $view =& new View(new TheLayoutTestController());
-        $this->Layout =& new LayoutHelper($view);
-        $this->Layout->Html = new HtmlHelper($view);
-        $this->Layout->Form = new FormHelper($view);
-        $this->Layout->Session = new SessionHelper($view);
-        $this->Layout->Js = new JsHelper($view);
-        $this->Layout->Js->Html = new HtmlHelper($view);
-        $this->Layout->Js->Form = new FormHelper($view);
-        $this->Layout->Js->Form->Html = new HtmlHelper($view);
-        $this->Layout->params = array(
+        $request = new CakeRequest('nodes/index');
+        $request->params = array(
             'controller' => 'nodes',
             'action' => 'index',
             'named' => array(),
         );
+        $view =& new View(new TheLayoutTestController($request, new CakeResponse()));
+        $this->Layout =& new LayoutHelper($view);
         $this->_appEncoding = Configure::read('App.encoding');
         $this->_asset = Configure::read('Asset');
         $this->_debug = Configure::read('debug');
     }
 
     function testJs() {
-        $this->assertTrue(strstr($this->Layout->js(), 'var Croogo = {"basePath":"\/","params":{"controller":"nodes","action":"index","named":[]}};'));
+        $this->assertContains('var Croogo = {"basePath":"\/","params":{"controller":"nodes","action":"index","named":[]}};', $f = $this->Layout->js());
     
         $this->Layout->params['locale'] = 'eng';
-        $this->assertTrue(strstr($this->Layout->js(), 'var Croogo = {"basePath":"\/eng\/","params":{"controller":"nodes","action":"index","named":[]}};'));
+        $this->assertContains('var Croogo = {"basePath":"\/eng\/","params":{"controller":"nodes","action":"index","named":[]}};', $this->Layout->js());
         unset($this->Layout->params['locale']);
 
         Configure::write('Js.my_var', '123');
-        $this->assertTrue(strstr($this->Layout->js(), 'var Croogo = {"basePath":"\/","params":{"controller":"nodes","action":"index","named":[]},"my_var":"123"};'));
+        $this->assertContains('var Croogo = {"basePath":"\/","params":{"controller":"nodes","action":"index","named":[]},"my_var":"123"};', $this->Layout->js());
         
         Configure::write('Js.my_var2', '456');
-        $this->assertTrue(strstr($this->Layout->js(), 'var Croogo = {"basePath":"\/","params":{"controller":"nodes","action":"index","named":[]},"my_var":"123","my_var2":"456"};'));
+        $this->assertContains('var Croogo = {"basePath":"\/","params":{"controller":"nodes","action":"index","named":[]},"my_var":"123","my_var2":"456"};', $this->Layout->js());
     }
 
     function testStatus() {
@@ -91,7 +85,7 @@ class HtmlHelperTest extends CakeTestCase {
     function testRegionIsEmpty() {
         $this->assertTrue($this->Layout->regionIsEmpty('right'));
 
-        $this->Layout->View->viewVars['blocks_for_layout'] = array(
+        $this->Layout->_View->viewVars['blocks_for_layout'] = array(
             'right' => array(
                 '0' => array('block here'),
                 '1' => array('block here'),
