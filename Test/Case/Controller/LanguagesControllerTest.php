@@ -59,23 +59,23 @@ class LanguagesControllerTest extends CakeTestCase {
     );
 
     public function startTest() {
-        $this->Languages = new TestLanguagesController();
+        $request = new CakeRequest();
+        $response = new CakeResponse();
+        $this->Languages = new TestLanguagesController($request, $response);
         $this->Languages->constructClasses();
-        $this->Languages->params['controller'] = 'languages';
-        $this->Languages->params['pass'] = array();
-        $this->Languages->params['named'] = array();
+        $this->Languages->request->params['controller'] = 'languages';
+        $this->Languages->request->params['pass'] = array();
+        $this->Languages->request->params['named'] = array();
     }
 
     public function testAdminIndex() {
-        $this->Languages->params['action'] = 'admin_index';
-        $this->Languages->params['url']['url'] = 'admin/languages';
-        $this->Languages->Component->initialize($this->Languages);
+        $this->Languages->request->params['action'] = 'admin_index';
+        $this->Languages->request->params['url']['url'] = 'admin/languages';
         $this->Languages->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Languages->beforeFilter();
-        $this->Languages->Component->startup($this->Languages);
+        $this->Languages->startupProcess();
         $this->Languages->admin_index();
 
         $this->Languages->testView = true;
@@ -84,9 +84,8 @@ class LanguagesControllerTest extends CakeTestCase {
     }
 
     public function testAdminAdd() {
-        $this->Languages->params['action'] = 'admin_add';
-        $this->Languages->params['url']['url'] = 'admin/languages/add';
-        $this->Languages->Component->initialize($this->Languages);
+        $this->Languages->request->params['action'] = 'admin_add';
+        $this->Languages->request->params['url']['url'] = 'admin/languages/add';
         $this->Languages->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -97,8 +96,7 @@ class LanguagesControllerTest extends CakeTestCase {
                 'alias' => 'ben',
             ),
         );
-        $this->Languages->beforeFilter();
-        $this->Languages->Component->startup($this->Languages);
+        $this->Languages->startupProcess();
         $this->Languages->admin_add();
         $this->assertEqual($this->Languages->redirectUrl, array('action' => 'index'));
 
@@ -111,9 +109,8 @@ class LanguagesControllerTest extends CakeTestCase {
     }
 
     public function testAdminEdit() {
-        $this->Languages->params['action'] = 'admin_edit';
-        $this->Languages->params['url']['url'] = 'admin/languages/edit';
-        $this->Languages->Component->initialize($this->Languages);
+        $this->Languages->request->params['action'] = 'admin_edit';
+        $this->Languages->request->params['url']['url'] = 'admin/languages/edit';
         $this->Languages->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -125,8 +122,7 @@ class LanguagesControllerTest extends CakeTestCase {
                 'alias' => 'eng',
             ),
         );
-        $this->Languages->beforeFilter();
-        $this->Languages->Component->startup($this->Languages);
+        $this->Languages->startupProcess();
         $this->Languages->admin_edit();
         $this->assertEqual($this->Languages->redirectUrl, array('action' => 'index'));
 
@@ -139,15 +135,13 @@ class LanguagesControllerTest extends CakeTestCase {
     }
 
     public function testAdminDelete() {
-        $this->Languages->params['action'] = 'admin_delete';
-        $this->Languages->params['url']['url'] = 'admin/languages/delete';
-        $this->Languages->Component->initialize($this->Languages);
+        $this->Languages->request->params['action'] = 'admin_delete';
+        $this->Languages->request->params['url']['url'] = 'admin/languages/delete';
         $this->Languages->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Languages->beforeFilter();
-        $this->Languages->Component->startup($this->Languages);
+        $this->Languages->startupProcess();
         $this->Languages->admin_delete(1); // ID of English
         $this->assertEqual($this->Languages->redirectUrl, array('action' => 'index'));
 
@@ -158,15 +152,13 @@ class LanguagesControllerTest extends CakeTestCase {
     }
 
     public function testAdminMove() {
-        $this->Languages->params['action'] = 'admin_moveup';
-        $this->Languages->params['url']['url'] = 'admin/languages/moveup';
-        $this->Languages->Component->initialize($this->Languages);
+        $this->Languages->request->params['action'] = 'admin_moveup';
+        $this->Languages->request->params['url']['url'] = 'admin/languages/moveup';
         $this->Languages->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Languages->beforeFilter();
-        $this->Languages->Component->startup($this->Languages);
+        $this->Languages->startupProcess();
 
         $this->__testAdminMoveUp();
         $this->__testAdminMoveUpWithSteps();
@@ -263,15 +255,13 @@ class LanguagesControllerTest extends CakeTestCase {
     }
 
     public function testAdminSelect() {
-        $this->Languages->params['action'] = 'admin_select';
-        $this->Languages->params['url']['url'] = 'admin/languages/select';
-        $this->Languages->Component->initialize($this->Languages);
+        $this->Languages->request->params['action'] = 'admin_select';
+        $this->Languages->request->params['url']['url'] = 'admin/languages/select';
         $this->Languages->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Languages->beforeFilter();
-        $this->Languages->Component->startup($this->Languages);
+        $this->Languages->startupProcess();
 
         $this->Languages->admin_select();
         $this->assertEqual($this->Languages->redirectUrl, array('action' => 'index'));

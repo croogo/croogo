@@ -59,23 +59,23 @@ class TypesControllerTest extends CakeTestCase {
     );
 
     public function startTest() {
-        $this->Types = new TestTypesController();
+        $request = new CakeRequest();
+        $response = new CakeResponse();
+        $this->Types = new TestTypesController($request, $response);
         $this->Types->constructClasses();
-        $this->Types->params['controller'] = 'types';
-        $this->Types->params['pass'] = array();
-        $this->Types->params['named'] = array();
+        $this->Types->request->params['controller'] = 'types';
+        $this->Types->request->params['pass'] = array();
+        $this->Types->request->params['named'] = array();
     }
 
     function testAdminIndex() {
-        $this->Types->params['action'] = 'admin_index';
-        $this->Types->params['url']['url'] = 'admin/types';
-        $this->Types->Component->initialize($this->Types);
+        $this->Types->request->params['action'] = 'admin_index';
+        $this->Types->request->params['url']['url'] = 'admin/types';
         $this->Types->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Types->beforeFilter();
-        $this->Types->Component->startup($this->Types);
+        $this->Types->startupProcess();
         $this->Types->admin_index();
 
         $this->Types->testView = true;
@@ -84,9 +84,8 @@ class TypesControllerTest extends CakeTestCase {
     }
 
     public function testAdminAdd() {
-        $this->Types->params['action'] = 'admin_add';
-        $this->Types->params['url']['url'] = 'admin/types/add';
-        $this->Types->Component->initialize($this->Types);
+        $this->Types->request->params['action'] = 'admin_add';
+        $this->Types->request->params['url']['url'] = 'admin/types/add';
         $this->Types->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -97,8 +96,7 @@ class TypesControllerTest extends CakeTestCase {
                 'alias' => 'new_type',
             ),
         );
-        $this->Types->beforeFilter();
-        $this->Types->Component->startup($this->Types);
+        $this->Types->startupProcess();
         $this->Types->admin_add();
         $this->assertEqual($this->Types->redirectUrl, array('action' => 'index'));
 
@@ -111,9 +109,8 @@ class TypesControllerTest extends CakeTestCase {
     }
 
     public function testAdminEdit() {
-        $this->Types->params['action'] = 'admin_edit';
-        $this->Types->params['url']['url'] = 'admin/types/edit';
-        $this->Types->Component->initialize($this->Types);
+        $this->Types->request->params['action'] = 'admin_edit';
+        $this->Types->request->params['url']['url'] = 'admin/types/edit';
         $this->Types->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -124,8 +121,7 @@ class TypesControllerTest extends CakeTestCase {
                 'description' => '[modified]',
             ),
         );
-        $this->Types->beforeFilter();
-        $this->Types->Component->startup($this->Types);
+        $this->Types->startupProcess();
         $this->Types->admin_edit();
         $this->assertEqual($this->Types->redirectUrl, array('action' => 'index'));
 
@@ -138,15 +134,13 @@ class TypesControllerTest extends CakeTestCase {
     }
 
     public function testAdminDelete() {
-        $this->Types->params['action'] = 'admin_delete';
-        $this->Types->params['url']['url'] = 'admin/types/delete';
-        $this->Types->Component->initialize($this->Types);
+        $this->Types->request->params['action'] = 'admin_delete';
+        $this->Types->request->params['url']['url'] = 'admin/types/delete';
         $this->Types->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Types->beforeFilter();
-        $this->Types->Component->startup($this->Types);
+        $this->Types->startupProcess();
         $this->Types->admin_delete(1); // ID of page
         $this->assertEqual($this->Types->redirectUrl, array('action' => 'index'));
         

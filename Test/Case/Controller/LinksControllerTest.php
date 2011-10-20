@@ -59,23 +59,23 @@ class LinksControllerTest extends CakeTestCase {
     );
 
     public function startTest() {
-        $this->Links = new TestLinksController();
+        $request = new CakeRequest();
+        $response = new CakeResponse();
+        $this->Links = new TestLinksController($request, $response);
         $this->Links->constructClasses();
-        $this->Links->params['controller'] = 'links';
-        $this->Links->params['pass'] = array();
-        $this->Links->params['named'] = array();
+        $this->Links->request->params['controller'] = 'links';
+        $this->Links->request->params['pass'] = array();
+        $this->Links->request->params['named'] = array();
     }
 
     public function testAdminIndex() {
-        $this->Links->params['action'] = 'admin_index';
-        $this->Links->params['url']['url'] = 'admin/links';
-        $this->Links->Component->initialize($this->Links);
+        $this->Links->request->params['action'] = 'admin_index';
+        $this->Links->request->params['url']['url'] = 'admin/links';
         $this->Links->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Links->beforeFilter();
-        $this->Links->Component->startup($this->Links);
+        $this->Links->startupProcess();
 
         $this->Links->admin_index();
         $this->assertEqual($this->Links->redirectUrl, array(
@@ -93,9 +93,8 @@ class LinksControllerTest extends CakeTestCase {
     }
 
     public function testAdminAdd() {
-        $this->Links->params['action'] = 'admin_add';
-        $this->Links->params['url']['url'] = 'admin/links/add';
-        $this->Links->Component->initialize($this->Links);
+        $this->Links->request->params['action'] = 'admin_add';
+        $this->Links->request->params['url']['url'] = 'admin/links/add';
         $this->Links->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -112,8 +111,7 @@ class LinksControllerTest extends CakeTestCase {
                 'Role' => array(),
             ),
         );
-        $this->Links->beforeFilter();
-        $this->Links->Component->startup($this->Links);
+        $this->Links->startupProcess();
         $this->Links->admin_add($mainMenu['Menu']['id']);
         $this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $mainMenu['Menu']['id']));
 
@@ -126,9 +124,8 @@ class LinksControllerTest extends CakeTestCase {
     }
 
     public function testAdminEdit() {
-        $this->Links->params['action'] = 'admin_edit';
-        $this->Links->params['url']['url'] = 'admin/links/edit';
-        $this->Links->Component->initialize($this->Links);
+        $this->Links->request->params['action'] = 'admin_edit';
+        $this->Links->request->params['url']['url'] = 'admin/links/edit';
         $this->Links->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -151,8 +148,7 @@ class LinksControllerTest extends CakeTestCase {
                 'Role' => array(),
             ),
         );
-        $this->Links->beforeFilter();
-        $this->Links->Component->startup($this->Links);
+        $this->Links->startupProcess();
         $this->Links->admin_edit($homeLink['Link']['id']);
         $this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $homeLink['Link']['menu_id']));
 
@@ -165,21 +161,19 @@ class LinksControllerTest extends CakeTestCase {
     }
 
     public function testAdminDelete() {
-        $this->Links->params['action'] = 'admin_delete';
-        $this->Links->params['url']['url'] = 'admin/links/delete';
-        $this->Links->Component->initialize($this->Links);
+        $this->Links->request->params['action'] = 'admin_delete';
+        $this->Links->request->params['url']['url'] = 'admin/links/delete';
         $this->Links->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Links->beforeFilter();
-        $this->Links->Component->startup($this->Links);
         $homeLink = ClassRegistry::init('Link')->find('first', array(
             'conditions' => array(
                 'Link.title' => 'Home',
                 'Link.link' => '/',
             ),
         ));
+        $this->Links->startupProcess();
         $this->Links->admin_delete($homeLink['Link']['id']);
         $this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $homeLink['Link']['menu_id']));
 
@@ -191,15 +185,12 @@ class LinksControllerTest extends CakeTestCase {
     }
 
     public function testAdminMoveUp() {
-        $this->Links->params['action'] = 'admin_moveup';
-        $this->Links->params['url']['url'] = 'admin/links/moveup';
-        $this->Links->Component->initialize($this->Links);
+        $this->Links->request->params['action'] = 'admin_moveup';
+        $this->Links->request->params['url']['url'] = 'admin/links/moveup';
         $this->Links->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Links->beforeFilter();
-        $this->Links->Component->startup($this->Links);
 
         $mainMenu = ClassRegistry::init('Menu')->findByAlias('main');
         $aboutLink = ClassRegistry::init('Link')->find('first', array(
@@ -209,6 +200,7 @@ class LinksControllerTest extends CakeTestCase {
                 'Link.link' => '/about',
             ),
         ));
+        $this->Links->startupProcess();
 
         $this->Links->admin_moveup($aboutLink['Link']['id']);
         $this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $mainMenu['Menu']['id']));
@@ -225,15 +217,12 @@ class LinksControllerTest extends CakeTestCase {
     }
 
     public function testAdminMoveUpWithSteps() {
-        $this->Links->params['action'] = 'admin_moveup';
-        $this->Links->params['url']['url'] = 'admin/links/moveup';
-        $this->Links->Component->initialize($this->Links);
+        $this->Links->request->params['action'] = 'admin_moveup';
+        $this->Links->request->params['url']['url'] = 'admin/links/moveup';
         $this->Links->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Links->beforeFilter();
-        $this->Links->Component->startup($this->Links);
 
         $mainMenu = ClassRegistry::init('Menu')->findByAlias('main');
         $contactLink = ClassRegistry::init('Link')->find('first', array(
@@ -242,6 +231,7 @@ class LinksControllerTest extends CakeTestCase {
                 'Link.title' => 'Contact',
             ),
         ));
+        $this->Links->startupProcess();
 
         $this->Links->admin_moveup($contactLink['Link']['id'], 2);
         $this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $mainMenu['Menu']['id']));
@@ -258,15 +248,12 @@ class LinksControllerTest extends CakeTestCase {
     }
 
     public function testAdminMoveDown() {
-        $this->Links->params['action'] = 'admin_movedown';
-        $this->Links->params['url']['url'] = 'admin/links/movedown';
-        $this->Links->Component->initialize($this->Links);
+        $this->Links->request->params['action'] = 'admin_movedown';
+        $this->Links->request->params['url']['url'] = 'admin/links/movedown';
         $this->Links->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Links->beforeFilter();
-        $this->Links->Component->startup($this->Links);
 
         $mainMenu = ClassRegistry::init('Menu')->findByAlias('main');
         $aboutLink = ClassRegistry::init('Link')->find('first', array(
@@ -276,6 +263,7 @@ class LinksControllerTest extends CakeTestCase {
                 'Link.link' => '/about',
             ),
         ));
+        $this->Links->startupProcess();
 
         $this->Links->admin_movedown($aboutLink['Link']['id']);
         $this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $mainMenu['Menu']['id']));
@@ -292,15 +280,12 @@ class LinksControllerTest extends CakeTestCase {
     }
 
     public function testAdminMoveDownWithSteps() {
-        $this->Links->params['action'] = 'admin_movedown';
-        $this->Links->params['url']['url'] = 'admin/links/movedown';
-        $this->Links->Component->initialize($this->Links);
+        $this->Links->request->params['action'] = 'admin_movedown';
+        $this->Links->request->params['url']['url'] = 'admin/links/movedown';
         $this->Links->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Links->beforeFilter();
-        $this->Links->Component->startup($this->Links);
 
         $mainMenu = ClassRegistry::init('Menu')->findByAlias('main');
         $homeLink = ClassRegistry::init('Link')->find('first', array(
@@ -309,6 +294,7 @@ class LinksControllerTest extends CakeTestCase {
                 'Link.title' => 'Home',
             ),
         ));
+        $this->Links->startupProcess();
 
         $this->Links->admin_movedown($homeLink['Link']['id'], 2);
         $this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $mainMenu['Menu']['id']));

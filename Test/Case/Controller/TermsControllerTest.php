@@ -59,24 +59,24 @@ class TermsControllerTest extends CakeTestCase {
     );
 
     public function startTest() {
-        $this->Terms = new TestTermsController();
+        $request = new CakeRequest();
+        $response = new CakeResponse();
+        $this->Terms = new TestTermsController($request, $response);
         $this->Terms->constructClasses();
-        $this->Terms->params['named'] = array();
-        $this->Terms->params['controller'] = 'terms';
-        $this->Terms->params['pass'] = array();
-        $this->Terms->params['named'] = array();
+        $this->Terms->request->params['named'] = array();
+        $this->Terms->request->params['controller'] = 'terms';
+        $this->Terms->request->params['pass'] = array();
+        $this->Terms->request->params['named'] = array();
     }
 
     public function testAdminIndex() {
-        $this->Terms->params['action'] = 'admin_index';
-        $this->Terms->params['url']['url'] = 'admin/terms/index/1';
-        $this->Terms->Component->initialize($this->Terms);
+        $this->Terms->request->params['action'] = 'admin_index';
+        $this->Terms->request->params['url']['url'] = 'admin/terms/index/1';
         $this->Terms->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Terms->beforeFilter();
-        $this->Terms->Component->startup($this->Terms);
+        $this->Terms->startupProcess();
         $this->Terms->admin_index(1); // ID of categories
 
         $expectedTree = array(
@@ -91,9 +91,8 @@ class TermsControllerTest extends CakeTestCase {
     }
 
     public function testAdminAdd() {
-        $this->Terms->params['action'] = 'admin_add';
-        $this->Terms->params['url']['url'] = 'admin/terms/add/1';
-        $this->Terms->Component->initialize($this->Terms);
+        $this->Terms->request->params['action'] = 'admin_add';
+        $this->Terms->request->params['url']['url'] = 'admin/terms/add/1';
         $this->Terms->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -108,8 +107,7 @@ class TermsControllerTest extends CakeTestCase {
                 'description' => 'category description here',
             ),
         );
-        $this->Terms->beforeFilter();
-        $this->Terms->Component->startup($this->Terms);
+        $this->Terms->startupProcess();
         $this->Terms->admin_add(1); // ID of categories
         $this->assertEqual($this->Terms->redirectUrl, array('action' => 'index', 1));
 
@@ -128,9 +126,8 @@ class TermsControllerTest extends CakeTestCase {
     }
 
     public function testAdminAddWithParent() {
-        $this->Terms->params['action'] = 'admin_add';
-        $this->Terms->params['url']['url'] = 'admin/terms/add/1';
-        $this->Terms->Component->initialize($this->Terms);
+        $this->Terms->request->params['action'] = 'admin_add';
+        $this->Terms->request->params['url']['url'] = 'admin/terms/add/1';
         $this->Terms->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -145,8 +142,7 @@ class TermsControllerTest extends CakeTestCase {
                 'description' => 'category description here',
             ),
         );
-        $this->Terms->beforeFilter();
-        $this->Terms->Component->startup($this->Terms);
+        $this->Terms->startupProcess();
         $this->Terms->admin_add(1); // ID of categories
         $this->assertEqual($this->Terms->redirectUrl, array('action' => 'index', 1));
 
@@ -161,9 +157,8 @@ class TermsControllerTest extends CakeTestCase {
     }
 
     public function testAdminEdit() {
-        $this->Terms->params['action'] = 'admin_edit';
-        $this->Terms->params['url']['url'] = 'admin/terms/edit';
-        $this->Terms->Component->initialize($this->Terms);
+        $this->Terms->request->params['action'] = 'admin_edit';
+        $this->Terms->request->params['url']['url'] = 'admin/terms/edit';
         $this->Terms->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -178,8 +173,7 @@ class TermsControllerTest extends CakeTestCase {
                 'description' => 'category description here',
             ),
         );
-        $this->Terms->beforeFilter();
-        $this->Terms->Component->startup($this->Terms);
+        $this->Terms->startupProcess();
         $this->Terms->admin_edit(1, 1); // ID of Uncategorized and Categories
         $this->assertEqual($this->Terms->redirectUrl, array('action' => 'index', 1));
 
@@ -196,15 +190,13 @@ class TermsControllerTest extends CakeTestCase {
     }
 
     public function testAdminDelete() {
-        $this->Terms->params['action'] = 'admin_delete';
-        $this->Terms->params['url']['url'] = 'admin/terms/delete';
-        $this->Terms->Component->initialize($this->Terms);
+        $this->Terms->request->params['action'] = 'admin_delete';
+        $this->Terms->request->params['url']['url'] = 'admin/terms/delete';
         $this->Terms->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Terms->beforeFilter();
-        $this->Terms->Component->startup($this->Terms);
+        $this->Terms->startupProcess();
         $this->Terms->admin_delete(1, 1); // ID of Uncategorized and Categories
         $this->assertEqual($this->Terms->redirectUrl, array('action' => 'index', 1));
 
@@ -216,15 +208,13 @@ class TermsControllerTest extends CakeTestCase {
     }
 
     public function testAdminMoveup() {
-        $this->Terms->params['action'] = 'admin_moveup';
-        $this->Terms->params['url']['url'] = 'admin/terms/moveup';
-        $this->Terms->Component->initialize($this->Terms);
+        $this->Terms->request->params['action'] = 'admin_moveup';
+        $this->Terms->request->params['url']['url'] = 'admin/terms/moveup';
         $this->Terms->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Terms->beforeFilter();
-        $this->Terms->Component->startup($this->Terms);
+        $this->Terms->startupProcess();
         $this->Terms->admin_moveup(2, 1); // ID of Announcements and Categories
         $this->assertEqual($this->Terms->redirectUrl, array('action' => 'index', 1));
 
@@ -237,15 +227,13 @@ class TermsControllerTest extends CakeTestCase {
     }
 
     public function testAdminMovedown() {
-        $this->Terms->params['action'] = 'admin_movedown';
-        $this->Terms->params['url']['url'] = 'admin/terms/movedown';
-        $this->Terms->Component->initialize($this->Terms);
+        $this->Terms->request->params['action'] = 'admin_movedown';
+        $this->Terms->request->params['url']['url'] = 'admin/terms/movedown';
         $this->Terms->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Terms->beforeFilter();
-        $this->Terms->Component->startup($this->Terms);
+        $this->Terms->startupProcess();
         $this->Terms->admin_movedown(1, 1); // ID of Uncategorized and Categories
         $this->assertEqual($this->Terms->redirectUrl, array('action' => 'index', 1));
 

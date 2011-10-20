@@ -59,23 +59,23 @@ class ContactsControllerTest extends CakeTestCase {
     );
 
     public function startTest() {
-        $this->Contacts = new TestContactsController();
+        $request = new CakeRequest();
+        $response = new CakeResponse();
+        $this->Contacts = new TestContactsController($request, $response);
         $this->Contacts->constructClasses();
-        $this->Contacts->params['controller'] = 'contacts';
-        $this->Contacts->params['pass'] = array();
-        $this->Contacts->params['named'] = array();
+        $this->Contacts->request->params['controller'] = 'contacts';
+        $this->Contacts->request->params['pass'] = array();
+        $this->Contacts->request->params['named'] = array();
     }
 
     public function testAdminIndex() {
-        $this->Contacts->params['action'] = 'admin_index';
-        $this->Contacts->params['url']['url'] = 'admin/contacts';
-        $this->Contacts->Component->initialize($this->Contacts);
+        $this->Contacts->request->params['action'] = 'admin_index';
+        $this->Contacts->request->params['url'] = 'admin/contacts';
         $this->Contacts->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Contacts->beforeFilter();
-        $this->Contacts->Component->startup($this->Contacts);
+        $this->Contacts->startupProcess();
         $this->Contacts->admin_index();
 
         $this->Contacts->testView = true;
@@ -84,9 +84,8 @@ class ContactsControllerTest extends CakeTestCase {
     }
 
     public function testAdminAdd() {
-        $this->Contacts->params['action'] = 'admin_add';
-        $this->Contacts->params['url']['url'] = 'admin/contacts/add';
-        $this->Contacts->Component->initialize($this->Contacts);
+        $this->Contacts->request->params['action'] = 'admin_add';
+        $this->Contacts->request->params['url']['url'] = 'admin/contacts/add';
         $this->Contacts->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -97,8 +96,7 @@ class ContactsControllerTest extends CakeTestCase {
                 'alias' => 'new_contact',
             ),
         );
-        $this->Contacts->beforeFilter();
-        $this->Contacts->Component->startup($this->Contacts);
+        $this->Contacts->startupProcess();
         $this->Contacts->admin_add();
         $this->assertEqual($this->Contacts->redirectUrl, array('action' => 'index'));
 
@@ -111,9 +109,8 @@ class ContactsControllerTest extends CakeTestCase {
     }
 
     public function testAdminEdit() {
-        $this->Contacts->params['action'] = 'admin_edit';
-        $this->Contacts->params['url']['url'] = 'admin/contacts/edit';
-        $this->Contacts->Component->initialize($this->Contacts);
+        $this->Contacts->request->params['action'] = 'admin_edit';
+        $this->Contacts->request->params['url']['url'] = 'admin/contacts/edit';
         $this->Contacts->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -124,8 +121,7 @@ class ContactsControllerTest extends CakeTestCase {
                 'title' => 'Contact [modified]',
             ),
         );
-        $this->Contacts->beforeFilter();
-        $this->Contacts->Component->startup($this->Contacts);
+        $this->Contacts->startupProcess();
         $this->Contacts->admin_edit();
         $this->assertEqual($this->Contacts->redirectUrl, array('action' => 'index'));
 
@@ -138,15 +134,13 @@ class ContactsControllerTest extends CakeTestCase {
     }
 
     public function testAdminDelete() {
-        $this->Contacts->params['action'] = 'admin_delete';
-        $this->Contacts->params['url']['url'] = 'admin/contacts/delete';
-        $this->Contacts->Component->initialize($this->Contacts);
+        $this->Contacts->request->params['action'] = 'admin_delete';
+        $this->Contacts->request->params['url']['url'] = 'admin/contacts/delete';
         $this->Contacts->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Contacts->beforeFilter();
-        $this->Contacts->Component->startup($this->Contacts);
+        $this->Contacts->startupProcess();
         $this->Contacts->admin_delete(1);
         $this->assertEqual($this->Contacts->redirectUrl, array('action' => 'index'));
         
@@ -157,12 +151,8 @@ class ContactsControllerTest extends CakeTestCase {
     }
 
     public function testView() {
-        $this->Contacts->params['action'] = 'view';
-        $this->Contacts->params['url']['url'] = 'contacts/view/contact';
-        $this->Contacts->Component->initialize($this->Contacts);
-        $this->Contacts->beforeFilter();
-        $this->Contacts->Component->startup($this->Contacts);
-
+        $this->Contacts->request->params['action'] = 'view';
+        $this->Contacts->request->params['url']['url'] = 'contacts/view/contact';
         $this->Contacts->data = array(
             'Message' => array(
                 'name' => 'John Smith',
@@ -171,6 +161,7 @@ class ContactsControllerTest extends CakeTestCase {
                 'body' => 'text here',
             ),
         );
+        $this->Contacts->startupProcess();
         $this->Contacts->view('contact');
         $this->assertEqual($this->Contacts->viewVars['continue'], true);
 

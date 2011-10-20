@@ -59,23 +59,24 @@ class UsersControllerTest extends CakeTestCase {
     );
 
     public function startTest() {
-        $this->Users = new TestUsersController();
+        $request = new CakeRequest();
+        $response = new CakeResponse();
+        $this->Users = new TestUsersController($request, $response);
         $this->Users->constructClasses();
-        $this->Users->params['controller'] = 'users';
-        $this->Users->params['pass'] = array();
-        $this->Users->params['named'] = array();
+        $this->Users->User->Aro->useDbConfig = $this->Users->User->useDbConfig;
+        $this->Users->request->params['controller'] = 'users';
+        $this->Users->request->params['pass'] = array();
+        $this->Users->request->params['named'] = array();
     }
 
     function testAdminIndex() {
-        $this->Users->params['action'] = 'admin_index';
-        $this->Users->params['url']['url'] = 'admin/users';
-        $this->Users->Component->initialize($this->Users);
+        $this->Users->request->params['action'] = 'admin_index';
+        $this->Users->request->params['url']['url'] = 'admin/users';
         $this->Users->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Users->beforeFilter();
-        $this->Users->Component->startup($this->Users);
+        $this->Users->startupProcess();
         $this->Users->admin_index();
 
         $this->Users->testView = true;
@@ -84,21 +85,20 @@ class UsersControllerTest extends CakeTestCase {
     }
 
     public function testAdminAdd() {
-        $this->Users->params['action'] = 'admin_add';
-        $this->Users->params['url']['url'] = 'admin/users/add';
-        $this->Users->Component->initialize($this->Users);
+        $this->Users->request->params['action'] = 'admin_add';
+        $this->Users->request->params['url']['url'] = 'admin/users/add';
         $this->Users->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Users->data = array(
+        $this->Users->request->data = array(
             'User' => array(
                 'username' => 'new_user',
                 'name' => 'New User',
+				'role_id' => 3,
             ),
         );
-        $this->Users->beforeFilter();
-        $this->Users->Component->startup($this->Users);
+        $this->Users->startupProcess();
         $this->Users->admin_add();
         $this->assertEqual($this->Users->redirectUrl, array('action' => 'index'));
 
@@ -111,21 +111,20 @@ class UsersControllerTest extends CakeTestCase {
     }
 
     public function testAdminEdit() {
-        $this->Users->params['action'] = 'admin_edit';
-        $this->Users->params['url']['url'] = 'admin/users/edit';
-        $this->Users->Component->initialize($this->Users);
+        $this->Users->request->params['action'] = 'admin_edit';
+        $this->Users->request->params['url']['url'] = 'admin/users/edit';
         $this->Users->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Users->data = array(
+        $this->Users->request->data = array(
             'User' => array(
                 'id' => 1, // admin
                 'name' => 'Administrator [modified]',
+				'role_id' => 1,
             ),
         );
-        $this->Users->beforeFilter();
-        $this->Users->Component->startup($this->Users);
+        $this->Users->startupProcess();
         $this->Users->admin_edit(1);
         $this->assertEqual($this->Users->redirectUrl, array('action' => 'index'));
 
@@ -133,21 +132,19 @@ class UsersControllerTest extends CakeTestCase {
         $this->assertEqual($admin['User']['name'], 'Administrator [modified]');
 
         $this->Users->testView = true;
-        $this->Users->params['pass']['0'] = 1;
+        $this->Users->request->params['pass']['0'] = 1;
         $output = $this->Users->render('admin_edit');
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
     public function testAdminDelete() {
-        $this->Users->params['action'] = 'admin_delete';
-        $this->Users->params['url']['url'] = 'admin/users/delete';
-        $this->Users->Component->initialize($this->Users);
+        $this->Users->request->params['action'] = 'admin_delete';
+        $this->Users->request->params['url']['url'] = 'admin/users/delete';
         $this->Users->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Users->beforeFilter();
-        $this->Users->Component->startup($this->Users);
+        $this->Users->startupProcess();
         $this->Users->admin_delete(1); // ID of admin
         $this->assertEqual($this->Users->redirectUrl, array('action' => 'index'));
         

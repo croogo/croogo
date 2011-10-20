@@ -59,23 +59,21 @@ class BlocksControllerTest extends CakeTestCase {
     );
 
     public function startTest() {
-        $this->Blocks = new TestBlocksController();
+        $request = new CakeRequest('admin/blocks/index');
+        $response = new CakeResponse();
+        $this->Blocks = new TestBlocksController($request, $response);
         $this->Blocks->constructClasses();
-        $this->Blocks->params['controller'] = 'blocks';
-        $this->Blocks->params['pass'] = array();
-        $this->Blocks->params['named'] = array();
+        $request->params['pass'] = $request->params['named'] = array();
     }
 
     public function testAdminIndex() {
-        $this->Blocks->params['action'] = 'admin_index';
-        $this->Blocks->params['url']['url'] = 'admin/blocks';
-        $this->Blocks->Component->initialize($this->Blocks);
+        $this->Blocks->request->params['action'] = 'admin_index';
+        $this->Blocks->request->params['url']['url'] = 'admin/blocks';
         $this->Blocks->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Blocks->beforeFilter();
-        $this->Blocks->Component->startup($this->Blocks);
+        $this->Blocks->startupProcess();
         $this->Blocks->admin_index();
 
         $this->Blocks->testView = true;
@@ -84,14 +82,13 @@ class BlocksControllerTest extends CakeTestCase {
     }
 
     public function testAdminAdd() {
-        $this->Blocks->params['action'] = 'admin_add';
-        $this->Blocks->params['url']['url'] = 'admin/blocks/add';
-        $this->Blocks->Component->initialize($this->Blocks);
+        $this->Blocks->request->params['action'] = 'admin_add';
+        $this->Blocks->request->params['url']['url'] = 'admin/blocks/add';
         $this->Blocks->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Blocks->data = array(
+        $this->Blocks->request->data = array(
             'Block' => array(
                 'title' => 'Test block',
                 'alias' => 'test_block',
@@ -105,8 +102,7 @@ class BlocksControllerTest extends CakeTestCase {
                 'Role' => array(),
             ),
         );
-        $this->Blocks->beforeFilter();
-        $this->Blocks->Component->startup($this->Blocks);
+        $this->Blocks->startupProcess();
         $this->Blocks->admin_add();
         $this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
 
@@ -119,14 +115,13 @@ class BlocksControllerTest extends CakeTestCase {
     }
 
     public function testAdminEdit() {
-        $this->Blocks->params['action'] = 'admin_edit';
-        $this->Blocks->params['url']['url'] = 'admin/blocks/edit';
-        $this->Blocks->Component->initialize($this->Blocks);
+        $this->Blocks->request->params['action'] = 'admin_edit';
+        $this->Blocks->request->params['url']['url'] = 'admin/blocks/edit';
         $this->Blocks->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Blocks->data = array(
+        $this->Blocks->request->data = array(
             'Block' => array(
                 'id' => 3, // About
                 'title' => 'About [modified]',
@@ -136,8 +131,7 @@ class BlocksControllerTest extends CakeTestCase {
                 'Role' => array(),
             ),
         );
-        $this->Blocks->beforeFilter();
-        $this->Blocks->Component->startup($this->Blocks);
+        $this->Blocks->startupProcess();
         $this->Blocks->admin_edit();
         $this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
 
@@ -150,15 +144,13 @@ class BlocksControllerTest extends CakeTestCase {
     }
 
     public function testAdminDelete() {
-        $this->Blocks->params['action'] = 'admin_delete';
-        $this->Blocks->params['url']['url'] = 'admin/blocks/delete';
-        $this->Blocks->Component->initialize($this->Blocks);
+        $this->Blocks->request->params['action'] = 'admin_delete';
+        $this->Blocks->request->params['url']['url'] = 'admin/blocks/delete';
         $this->Blocks->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Blocks->beforeFilter();
-        $this->Blocks->Component->startup($this->Blocks);
+        $this->Blocks->startupProcess();
         $this->Blocks->admin_delete(8); // ID of Search
         $this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
 
@@ -169,15 +161,13 @@ class BlocksControllerTest extends CakeTestCase {
     }
 
     public function testAdminMoveUp() {
-        $this->Blocks->params['action'] = 'admin_moveup';
-        $this->Blocks->params['url']['url'] = 'admin/blocks/moveup/3';
-        $this->Blocks->Component->initialize($this->Blocks);
+        $this->Blocks->request->params['action'] = 'admin_moveup';
+        $this->Blocks->request->params['url']['url'] = 'admin/blocks/moveup/3';
         $this->Blocks->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Blocks->beforeFilter();
-        $this->Blocks->Component->startup($this->Blocks);
+        $this->Blocks->startupProcess();
 
         $this->Blocks->admin_moveup(3); // About
         $this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
@@ -200,15 +190,13 @@ class BlocksControllerTest extends CakeTestCase {
     }
 
     public function testAdminMoveUpWithSteps() {
-        $this->Blocks->params['action'] = 'admin_moveup';
-        $this->Blocks->params['url']['url'] = 'admin/blocks/moveup/6/3';
-        $this->Blocks->Component->initialize($this->Blocks);
+        $this->Blocks->request->params['action'] = 'admin_moveup';
+        $this->Blocks->request->params['url']['url'] = 'admin/blocks/moveup/6/3';
         $this->Blocks->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Blocks->beforeFilter();
-        $this->Blocks->Component->startup($this->Blocks);
+        $this->Blocks->startupProcess();
 
         $this->Blocks->admin_moveup(6, 3); // Blogroll up 3 steps
         $this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
@@ -231,15 +219,13 @@ class BlocksControllerTest extends CakeTestCase {
     }
 
     public function testAdminMoveDown() {
-        $this->Blocks->params['action'] = 'admin_movedown';
-        $this->Blocks->params['url']['url'] = 'admin/blocks/movedown/3';
-        $this->Blocks->Component->initialize($this->Blocks);
+        $this->Blocks->request->params['action'] = 'admin_movedown';
+        $this->Blocks->request->params['url']['url'] = 'admin/blocks/movedown/3';
         $this->Blocks->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Blocks->beforeFilter();
-        $this->Blocks->Component->startup($this->Blocks);
+        $this->Blocks->startupProcess();
 
         $this->Blocks->admin_movedown(3); // About
         $this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
@@ -262,15 +248,13 @@ class BlocksControllerTest extends CakeTestCase {
     }
 
     public function testAdminMoveDownWithSteps() {
-        $this->Blocks->params['action'] = 'admin_movedown';
-        $this->Blocks->params['url']['url'] = 'admin/blocks/movedown/8/3';
-        $this->Blocks->Component->initialize($this->Blocks);
+        $this->Blocks->request->params['action'] = 'admin_movedown';
+        $this->Blocks->request->params['url']['url'] = 'admin/blocks/movedown/8/3';
         $this->Blocks->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Blocks->beforeFilter();
-        $this->Blocks->Component->startup($this->Blocks);
+        $this->Blocks->startupProcess();
 
         $this->Blocks->admin_movedown(8, 2); // Search down 2 steps
         $this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
@@ -293,17 +277,14 @@ class BlocksControllerTest extends CakeTestCase {
     }
 
     public function testAdminProcessDelete() {
-        $this->Blocks->params['action'] = 'admin_process';
-        $this->Blocks->params['url']['url'] = 'admin/blocks/process';
-        $this->Blocks->Component->initialize($this->Blocks);
+        $this->Blocks->request->params['action'] = 'admin_process';
+        $this->Blocks->request->params['url']['url'] = 'admin/blocks/process';
         $this->Blocks->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Blocks->beforeFilter();
-        $this->Blocks->Component->startup($this->Blocks);
 
-        $this->Blocks->data['Block'] = array(
+        $this->Blocks->request->data['Block'] = array(
             'action' => 'delete',
             '8' => array( // Search
                 'id' => 0,
@@ -324,6 +305,7 @@ class BlocksControllerTest extends CakeTestCase {
                 'id' => 1,
             ),
         );
+        $this->Blocks->startupProcess();
         $this->Blocks->admin_process();
         $this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
         $list = $this->Blocks->Block->find('list', array(
@@ -342,15 +324,13 @@ class BlocksControllerTest extends CakeTestCase {
     }
 
     public function testAdminProcessPublish() {
-        $this->Blocks->params['action'] = 'admin_process';
-        $this->Blocks->params['url']['url'] = 'admin/blocks/process';
-        $this->Blocks->Component->initialize($this->Blocks);
+        $this->Blocks->request->params['action'] = 'admin_process';
+        $this->Blocks->request->params['url']['url'] = 'admin/blocks/process';
         $this->Blocks->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Blocks->beforeFilter();
-        $this->Blocks->Component->startup($this->Blocks);
+        $this->Blocks->startupProcess();
 
         // unpublish a Block for testing
         $this->Blocks->Block->id = 3; // About
@@ -365,7 +345,7 @@ class BlocksControllerTest extends CakeTestCase {
         ));
         $this->assertTrue($about);
 
-        $this->Blocks->data['Block'] = array(
+        $this->Blocks->request->data['Block'] = array(
             'action' => 'publish',
             '8' => array( // Search
                 'id' => 1,
@@ -410,17 +390,15 @@ class BlocksControllerTest extends CakeTestCase {
     }
 
     public function testAdminProcessUnpublish() {
-        $this->Blocks->params['action'] = 'admin_process';
-        $this->Blocks->params['url']['url'] = 'admin/blocks/process';
-        $this->Blocks->Component->initialize($this->Blocks);
+        $this->Blocks->request->params['action'] = 'admin_process';
+        $this->Blocks->request->params['url']['url'] = 'admin/blocks/process';
         $this->Blocks->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Blocks->beforeFilter();
-        $this->Blocks->Component->startup($this->Blocks);
+        $this->Blocks->startupProcess();
 
-        $this->Blocks->data['Block'] = array(
+        $this->Blocks->request->data['Block'] = array(
             'action' => 'unpublish',
             '8' => array( // Search
                 'id' => 1,

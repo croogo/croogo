@@ -59,23 +59,23 @@ class VocabulariesControllerTest extends CakeTestCase {
     );
 
     public function startTest() {
-        $this->Vocabularies = new TestVocabulariesController();
+        $request = new CakeRequest();
+        $response = new CakeResponse();
+        $this->Vocabularies = new TestVocabulariesController($request, $response);
         $this->Vocabularies->constructClasses();
-        $this->Vocabularies->params['controller'] = 'vocabularies';
-        $this->Vocabularies->params['pass'] = array();
-        $this->Vocabularies->params['named'] = array();
+        $this->Vocabularies->request->params['controller'] = 'vocabularies';
+        $this->Vocabularies->request->params['pass'] = array();
+        $this->Vocabularies->request->params['named'] = array();
     }
 
     public function testAdminIndex() {
-        $this->Vocabularies->params['action'] = 'admin_index';
-        $this->Vocabularies->params['url']['url'] = 'admin/vocabularies';
-        $this->Vocabularies->Component->initialize($this->Vocabularies);
+        $this->Vocabularies->request->params['action'] = 'admin_index';
+        $this->Vocabularies->request->params['url']['url'] = 'admin/vocabularies';
         $this->Vocabularies->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Vocabularies->beforeFilter();
-        $this->Vocabularies->Component->startup($this->Vocabularies);
+        $this->Vocabularies->startupProcess();
         $this->Vocabularies->admin_index();
 
         $this->Vocabularies->testView = true;
@@ -84,9 +84,8 @@ class VocabulariesControllerTest extends CakeTestCase {
     }
 
     public function testAdminAdd() {
-        $this->Vocabularies->params['action'] = 'admin_add';
-        $this->Vocabularies->params['url']['url'] = 'admin/vocabularies/add';
-        $this->Vocabularies->Component->initialize($this->Vocabularies);
+        $this->Vocabularies->request->params['action'] = 'admin_add';
+        $this->Vocabularies->request->params['url']['url'] = 'admin/vocabularies/add';
         $this->Vocabularies->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -97,8 +96,7 @@ class VocabulariesControllerTest extends CakeTestCase {
                 'alias' => 'new_vocabulary',
             ),
         );
-        $this->Vocabularies->beforeFilter();
-        $this->Vocabularies->Component->startup($this->Vocabularies);
+        $this->Vocabularies->startupProcess();
         $this->Vocabularies->admin_add();
         $this->assertEqual($this->Vocabularies->redirectUrl, array('action' => 'index'));
 
@@ -111,9 +109,8 @@ class VocabulariesControllerTest extends CakeTestCase {
     }
 
     public function testAdminEdit() {
-        $this->Vocabularies->params['action'] = 'admin_edit';
-        $this->Vocabularies->params['url']['url'] = 'admin/vocabularies/edit';
-        $this->Vocabularies->Component->initialize($this->Vocabularies);
+        $this->Vocabularies->request->params['action'] = 'admin_edit';
+        $this->Vocabularies->request->params['url']['url'] = 'admin/vocabularies/edit';
         $this->Vocabularies->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -124,8 +121,7 @@ class VocabulariesControllerTest extends CakeTestCase {
                 'title' => 'Categories [modified]',
             ),
         );
-        $this->Vocabularies->beforeFilter();
-        $this->Vocabularies->Component->startup($this->Vocabularies);
+        $this->Vocabularies->startupProcess();
         $this->Vocabularies->admin_edit();
         $this->assertEqual($this->Vocabularies->redirectUrl, array('action' => 'index'));
 
@@ -138,15 +134,13 @@ class VocabulariesControllerTest extends CakeTestCase {
     }
 
     public function testAdminDelete() {
-        $this->Vocabularies->params['action'] = 'admin_delete';
-        $this->Vocabularies->params['url']['url'] = 'admin/vocabularies/delete';
-        $this->Vocabularies->Component->initialize($this->Vocabularies);
+        $this->Vocabularies->request->params['action'] = 'admin_delete';
+        $this->Vocabularies->request->params['url']['url'] = 'admin/vocabularies/delete';
         $this->Vocabularies->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Vocabularies->beforeFilter();
-        $this->Vocabularies->Component->startup($this->Vocabularies);
+        $this->Vocabularies->startupProcess();
         $this->Vocabularies->admin_delete(1); // ID of categories
         $this->assertEqual($this->Vocabularies->redirectUrl, array('action' => 'index'));
         
@@ -157,15 +151,13 @@ class VocabulariesControllerTest extends CakeTestCase {
     }
 
     public function testAdminMoveup() {
-        $this->Vocabularies->params['action'] = 'admin_index';
-        $this->Vocabularies->params['url']['url'] = 'admin/vocabularies/moveup';
-        $this->Vocabularies->Component->initialize($this->Vocabularies);
+        $this->Vocabularies->request->params['action'] = 'admin_index';
+        $this->Vocabularies->request->params['url']['url'] = 'admin/vocabularies/moveup';
         $this->Vocabularies->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Vocabularies->beforeFilter();
-        $this->Vocabularies->Component->startup($this->Vocabularies);
+        $this->Vocabularies->startupProcess();
         $this->Vocabularies->admin_moveup(2); // ID of tags
         $this->assertEqual($this->Vocabularies->redirectUrl, array('action' => 'index'));
 
@@ -184,15 +176,13 @@ class VocabulariesControllerTest extends CakeTestCase {
     }
 
     public function testAdminMovedown() {
-        $this->Vocabularies->params['action'] = 'admin_index';
-        $this->Vocabularies->params['url']['url'] = 'admin/vocabularies/moveup';
-        $this->Vocabularies->Component->initialize($this->Vocabularies);
+        $this->Vocabularies->request->params['action'] = 'admin_index';
+        $this->Vocabularies->request->params['url']['url'] = 'admin/vocabularies/moveup';
         $this->Vocabularies->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Vocabularies->beforeFilter();
-        $this->Vocabularies->Component->startup($this->Vocabularies);
+        $this->Vocabularies->startupProcess();
         $this->Vocabularies->admin_movedown(1); // ID of categories
         $this->assertEqual($this->Vocabularies->redirectUrl, array('action' => 'index'));
 

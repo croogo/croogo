@@ -59,23 +59,23 @@ class MenusControllerTest extends CakeTestCase {
     );
 
     public function startTest() {
-        $this->Menus = new TestMenusController();
+        $request = new CakeRequest();
+        $response = new CakeResponse();
+        $this->Menus = new TestMenusController($request, $response);
         $this->Menus->constructClasses();
-        $this->Menus->params['controller'] = 'menus';
-        $this->Menus->params['pass'] = array();
-        $this->Menus->params['named'] = array();
+        $this->Menus->request->params['controller'] = 'menus';
+        $this->Menus->request->params['pass'] = array();
+        $this->Menus->request->params['named'] = array();
     }
 
     public function testAdminIndex() {
-        $this->Menus->params['action'] = 'admin_index';
-        $this->Menus->params['url']['url'] = 'admin/menus';
-        $this->Menus->Component->initialize($this->Menus);
+        $this->Menus->request->params['action'] = 'admin_index';
+        $this->Menus->request->params['url']['url'] = 'admin/menus';
         $this->Menus->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Menus->beforeFilter();
-        $this->Menus->Component->startup($this->Menus);
+        $this->Menus->startupProcess();
         $this->Menus->admin_index();
 
         $this->Menus->testView = true;
@@ -84,9 +84,8 @@ class MenusControllerTest extends CakeTestCase {
     }
 
     public function testAdminAdd() {
-        $this->Menus->params['action'] = 'admin_add';
-        $this->Menus->params['url']['url'] = 'admin/menus/add';
-        $this->Menus->Component->initialize($this->Menus);
+        $this->Menus->request->params['action'] = 'admin_add';
+        $this->Menus->request->params['url']['url'] = 'admin/menus/add';
         $this->Menus->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -97,8 +96,7 @@ class MenusControllerTest extends CakeTestCase {
                 'alias' => 'new',
             ),
         );
-        $this->Menus->beforeFilter();
-        $this->Menus->Component->startup($this->Menus);
+        $this->Menus->startupProcess();
         $this->Menus->admin_add();
         $this->assertEqual($this->Menus->redirectUrl, array('action' => 'index'));
 
@@ -111,9 +109,8 @@ class MenusControllerTest extends CakeTestCase {
     }
 
     public function testAdminEdit() {
-        $this->Menus->params['action'] = 'admin_edit';
-        $this->Menus->params['url']['url'] = 'admin/menus/edit';
-        $this->Menus->Component->initialize($this->Menus);
+        $this->Menus->request->params['action'] = 'admin_edit';
+        $this->Menus->request->params['url']['url'] = 'admin/menus/edit';
         $this->Menus->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -124,8 +121,7 @@ class MenusControllerTest extends CakeTestCase {
                 'title' => 'Main Menu [modified]',
             ),
         );
-        $this->Menus->beforeFilter();
-        $this->Menus->Component->startup($this->Menus);
+        $this->Menus->startupProcess();
         $this->Menus->admin_edit();
         $this->assertEqual($this->Menus->redirectUrl, array('action' => 'index'));
 
@@ -138,15 +134,13 @@ class MenusControllerTest extends CakeTestCase {
     }
 
     public function testAdminDelete() {
-        $this->Menus->params['action'] = 'admin_delete';
-        $this->Menus->params['url']['url'] = 'admin/menus/delete';
-        $this->Menus->Component->initialize($this->Menus);
+        $this->Menus->request->params['action'] = 'admin_delete';
+        $this->Menus->request->params['url']['url'] = 'admin/menus/delete';
         $this->Menus->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Menus->beforeFilter();
-        $this->Menus->Component->startup($this->Menus);
+        $this->Menus->startupProcess();
         $this->Menus->admin_delete(4); // ID of footer
         $this->assertEqual($this->Menus->redirectUrl, array('action' => 'index'));
         

@@ -59,23 +59,24 @@ class CommentsControllerTest extends CakeTestCase {
     );
 
     public function startTest() {
-        $this->Comments = new TestCommentsController();
+        $request = new CakeRequest();
+        $response = new CakeResponse();
+        $this->Comments = new TestCommentsController($request, $response);
         $this->Comments->constructClasses();
-        $this->Comments->params['controller'] = 'Comments';
-        $this->Comments->params['pass'] = array();
-        $this->Comments->params['named'] = array();
+        $this->Comments->request->params['controller'] = 'Comments';
+        $this->Comments->request->params['pass'] = array();
+        $this->Comments->request->params['named'] = array();
     }
 
     public function testAdminIndex() {
-        $this->Comments->params['action'] = 'admin_index';
-        $this->Comments->params['url']['url'] = 'admin/comments';
-        $this->Comments->Component->initialize($this->Comments);
+        $this->Comments->request->params['action'] = 'admin_index';
+        $this->Comments->request->params['url']['url'] = 'admin/comments';
+        $this->Comments->Components->trigger('initialize', array(&$this->Comments));
         $this->Comments->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Comments->beforeFilter();
-        $this->Comments->Component->startup($this->Comments);
+        $this->Comments->Components->trigger('startup', array(&$this->Comments));
         $this->Comments->admin_index();
 
         $this->Comments->testView = true;
@@ -84,14 +85,14 @@ class CommentsControllerTest extends CakeTestCase {
     }
 
     public function testAdminEdit() {
-        $this->Comments->params['action'] = 'admin_edit';
-        $this->Comments->params['url']['url'] = 'admin/comments/edit';
-        $this->Comments->Component->initialize($this->Comments);
+        $this->Comments->request->params['action'] = 'admin_edit';
+        $this->Comments->request->params['url']['url'] = 'admin/comments/edit';
+        $this->Comments->Components->trigger('initialize', array(&$this->Comments));
         $this->Comments->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Comments->data = array(
+        $this->Comments->request->data = array(
             'Comment' => array(
                 'id' => 1, // Mr Croogo
                 'name' => 'Mr Croogo [modified]',
@@ -99,8 +100,7 @@ class CommentsControllerTest extends CakeTestCase {
                 'body' => 'lots of text...',
             ),
         );
-        $this->Comments->beforeFilter();
-        $this->Comments->Component->startup($this->Comments);
+        $this->Comments->Components->trigger('startup', array(&$this->Comments));
         $this->Comments->admin_edit();
         $this->assertEqual($this->Comments->redirectUrl, array('action' => 'index'));
 
@@ -113,15 +113,14 @@ class CommentsControllerTest extends CakeTestCase {
     }
 
     public function testAdminDelete() {
-        $this->Comments->params['action'] = 'admin_delete';
-        $this->Comments->params['url']['url'] = 'admin/comments/delete';
-        $this->Comments->Component->initialize($this->Comments);
+        $this->Comments->request->params['action'] = 'admin_delete';
+        $this->Comments->request->params['url']['url'] = 'admin/comments/delete';
+        $this->Comments->Components->trigger('initialize', array(&$this->Comments));
         $this->Comments->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Comments->beforeFilter();
-        $this->Comments->Component->startup($this->Comments);
+        $this->Comments->Components->trigger('startup', array(&$this->Comments));
         $this->Comments->admin_delete(1);
         $this->assertEqual($this->Comments->redirectUrl, array('action' => 'index'));
 
@@ -132,17 +131,16 @@ class CommentsControllerTest extends CakeTestCase {
     }
 
     public function testAdminProcessDelete() {
-        $this->Comments->params['action'] = 'admin_process';
-        $this->Comments->params['url']['url'] = 'admin/comments/process';
-        $this->Comments->Component->initialize($this->Comments);
+        $this->Comments->request->params['action'] = 'admin_process';
+        $this->Comments->request->params['url']['url'] = 'admin/comments/process';
+        $this->Comments->Components->trigger('initialize', array(&$this->Comments));
         $this->Comments->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Comments->beforeFilter();
-        $this->Comments->Component->startup($this->Comments);
+        $this->Comments->Components->trigger('startup', array(&$this->Comments));
 
-        $this->Comments->data['Comment'] = array(
+        $this->Comments->request->data['Comment'] = array(
             'action' => 'delete',
             '1' => array(
                 'id' => 1,
@@ -161,15 +159,14 @@ class CommentsControllerTest extends CakeTestCase {
     }
 
     public function testAdminProcessPublish() {
-        $this->Comments->params['action'] = 'admin_process';
-        $this->Comments->params['url']['url'] = 'admin/comments/process';
-        $this->Comments->Component->initialize($this->Comments);
+        $this->Comments->request->params['action'] = 'admin_process';
+        $this->Comments->request->params['url']['url'] = 'admin/comments/process';
+        $this->Comments->Components->trigger('initialize', array(&$this->Comments));
         $this->Comments->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Comments->beforeFilter();
-        $this->Comments->Component->startup($this->Comments);
+        $this->Comments->Components->trigger('startup', array(&$this->Comments));
 
         // unpublish a Comment for testing
         $this->Comments->Comment->id = 1;
@@ -181,7 +178,7 @@ class CommentsControllerTest extends CakeTestCase {
         ));
         $this->assertTrue($comment);
 
-        $this->Comments->data['Comment'] = array(
+        $this->Comments->request->data['Comment'] = array(
             'action' => 'publish',
             '1' => array(
                 'id' => 1,
@@ -205,17 +202,16 @@ class CommentsControllerTest extends CakeTestCase {
     }
 
     public function testAdminProcessUnpublish() {
-        $this->Comments->params['action'] = 'admin_process';
-        $this->Comments->params['url']['url'] = 'admin/comments/process';
-        $this->Comments->Component->initialize($this->Comments);
+        $this->Comments->request->params['action'] = 'admin_process';
+        $this->Comments->request->params['url']['url'] = 'admin/comments/process';
+        $this->Comments->Components->trigger('initialize', array(&$this->Comments));
         $this->Comments->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Comments->beforeFilter();
-        $this->Comments->Component->startup($this->Comments);
+        $this->Comments->Components->trigger('startup', array(&$this->Comments));
 
-        $this->Comments->data['Comment'] = array(
+        $this->Comments->request->data['Comment'] = array(
             'action' => 'unpublish',
             '1' => array(
                 'id' => 1,
@@ -237,13 +233,12 @@ class CommentsControllerTest extends CakeTestCase {
     }
 
     public function testAdd() {
-        $this->Comments->params['action'] = 'add';
-        $this->Comments->params['url']['url'] = 'comments/add';
-        $this->Comments->Component->initialize($this->Comments);
-        $this->Comments->beforeFilter();
-        $this->Comments->Component->startup($this->Comments);
+        $this->Comments->request->params['action'] = 'add';
+        $this->Comments->request->params['url']['url'] = 'comments/add';
+        $this->Comments->Components->trigger('initialize', array(&$this->Comments));
 
-        $this->Comments->data['Comment'] = array(
+        $this->Comments->Components->trigger('startup', array(&$this->Comments));
+        $this->Comments->request->data['Comment'] = array(
             'name' => 'John Smith',
             'email' => 'john.smith@example.com',
             'website' => 'http://example.com',
@@ -251,7 +246,7 @@ class CommentsControllerTest extends CakeTestCase {
         );
         $node = $this->Comments->Comment->Node->findBySlug('hello-world');
         $this->Comments->add($node['Node']['id']);
-        $this->assertTrue($this->Comments->viewVars['success']);
+        $this->assertEqual($this->Comments->viewVars['success'], 1);
 
         $comments = $this->Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
         $commenters = array_values($comments);
@@ -263,13 +258,13 @@ class CommentsControllerTest extends CakeTestCase {
     }
 
     public function testAddWithParent() {
-        $this->Comments->params['action'] = 'add';
-        $this->Comments->params['url']['url'] = 'comments/add';
-        $this->Comments->Component->initialize($this->Comments);
-        $this->Comments->beforeFilter();
-        $this->Comments->Component->startup($this->Comments);
+        $this->Comments->request->params['action'] = 'add';
+        $this->Comments->request->params['url']['url'] = 'comments/add';
+        $this->Comments->Components->trigger('initialize', array(&$this->Comments));
+        $this->Comments->Components->trigger('startup', array(&$this->Comments));
 
-        $this->Comments->data['Comment'] = array(
+
+        $this->Comments->request->data['Comment'] = array(
             'name' => 'John Smith',
             'email' => 'john.smith@example.com',
             'website' => 'http://example.com',
@@ -277,7 +272,7 @@ class CommentsControllerTest extends CakeTestCase {
         );
         $node = $this->Comments->Comment->Node->findBySlug('hello-world');
         $this->Comments->add($node['Node']['id'], 1); // under the comment by Mr Croogo
-        $this->assertTrue($this->Comments->viewVars['success']);
+        $this->assertEqual($this->Comments->viewVars['success'], 1);
 
         $comments = $this->Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
         $commenters = array_values($comments);

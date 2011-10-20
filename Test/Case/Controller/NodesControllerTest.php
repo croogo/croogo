@@ -59,24 +59,24 @@ class NodesControllerTest extends CakeTestCase {
     );
 
     public function startTest() {
-        $this->Nodes = new TestNodesController();
+        $request = new CakeRequest();
+        $response = new CakeResponse();
+        $this->Nodes = new TestNodesController($request, $response);
         $this->Nodes->constructClasses();
-        $this->Nodes->params['controller'] = 'nodes';
-        $this->Nodes->params['pass'] = array();
-        $this->Nodes->params['named'] = array();
+        $this->Nodes->request->params['controller'] = 'nodes';
+        $this->Nodes->request->params['pass'] = array();
+        $this->Nodes->request->params['named'] = array();
     }
 
     function testAdminIndex() {
-        $this->Nodes->params['action'] = 'admin_index';
-        $this->Nodes->params['url']['url'] = 'admin/nodes';
-        $this->Nodes->Component->initialize($this->Nodes);
+        $this->Nodes->request->params['action'] = 'admin_index';
+        $this->Nodes->request->params['url']['url'] = 'admin/nodes';
         $this->Nodes->Session->write('Auth.User', array(
             'id' => 1,
             'role_id' => 1,
             'username' => 'admin',
         ));
-        $this->Nodes->beforeFilter();
-        $this->Nodes->Component->startup($this->Nodes);
+        $this->Nodes->startupProcess();
         $this->Nodes->admin_index();
 
         $this->Nodes->testView = true;
@@ -85,9 +85,8 @@ class NodesControllerTest extends CakeTestCase {
     }
 
     public function testAdminAdd() {
-        $this->Nodes->params['action'] = 'admin_add';
-        $this->Nodes->params['url']['url'] = 'admin/nodes/add';
-        $this->Nodes->Component->initialize($this->Nodes);
+        $this->Nodes->request->params['action'] = 'admin_add';
+        $this->Nodes->request->params['url']['url'] = 'admin/nodes/add';
         $this->Nodes->Session->write('Auth.User', array(
             'id' => 1,
             'role_id' => 1,
@@ -104,9 +103,8 @@ class NodesControllerTest extends CakeTestCase {
                 'Role' => array(),
             ),
         );
-        $this->Nodes->params['_Token']['key'] = 1;
-        $this->Nodes->beforeFilter();
-        $this->Nodes->Component->startup($this->Nodes);
+        $this->Nodes->request->params['_Token']['key'] = 1;
+        $this->Nodes->startupProcess();
         $this->Nodes->admin_add();
         $this->assertEqual($this->Nodes->redirectUrl, array('action' => 'index'));
 
@@ -119,9 +117,8 @@ class NodesControllerTest extends CakeTestCase {
     }
 
     public function testAdminEdit() {
-        $this->Nodes->params['action'] = 'admin_edit';
-        $this->Nodes->params['url']['url'] = 'admin/nodes/edit';
-        $this->Nodes->Component->initialize($this->Nodes);
+        $this->Nodes->request->params['action'] = 'admin_edit';
+        $this->Nodes->request->params['url']['url'] = 'admin/nodes/edit';
         $this->Nodes->Session->write('Auth.User', array(
             'id' => 1,
             'role_id' => 1,
@@ -140,8 +137,7 @@ class NodesControllerTest extends CakeTestCase {
             ),
         );
         $this->params['_Token']['key'] = 1;
-        $this->Nodes->beforeFilter();
-        $this->Nodes->Component->startup($this->Nodes);
+        $this->Nodes->startupProcess();
         $this->Nodes->admin_edit(1);
         $this->assertEqual($this->Nodes->redirectUrl, array('action' => 'index'));
 
@@ -154,16 +150,14 @@ class NodesControllerTest extends CakeTestCase {
     }
 
     public function testAdminDelete() {
-        $this->Nodes->params['action'] = 'admin_delete';
-        $this->Nodes->params['url']['url'] = 'admin/nodes/delete';
-        $this->Nodes->Component->initialize($this->Nodes);
+        $this->Nodes->request->params['action'] = 'admin_delete';
+        $this->Nodes->request->params['url']['url'] = 'admin/nodes/delete';
         $this->Nodes->Session->write('Auth.User', array(
             'id' => 1,
             'role_id' => 1,
             'username' => 'admin',
         ));
-        $this->Nodes->beforeFilter();
-        $this->Nodes->Component->startup($this->Nodes);
+        $this->Nodes->startupProcess();
         $this->Nodes->admin_delete(1); // ID of Hello World
         $this->assertEqual($this->Nodes->redirectUrl, array('action' => 'index'));
         

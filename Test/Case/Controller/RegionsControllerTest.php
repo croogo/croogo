@@ -59,23 +59,23 @@ class RegionsControllerTest extends CakeTestCase {
     );
 
     public function startTest() {
-        $this->Regions = new TestRegionsController();
+        $request = new CakeRequest();
+        $response = new CakeResponse();
+        $this->Regions = new TestRegionsController($request, $response);
         $this->Regions->constructClasses();
-        $this->Regions->params['controller'] = 'regions';
-        $this->Regions->params['pass'] = array();
-        $this->Regions->params['named'] = array();
+        $this->Regions->request->params['controller'] = 'regions';
+        $this->Regions->request->params['pass'] = array();
+        $this->Regions->request->params['named'] = array();
     }
 
     public function testAdminIndex() {
-        $this->Regions->params['action'] = 'admin_index';
-        $this->Regions->params['url']['url'] = 'admin/regions';
-        $this->Regions->Component->initialize($this->Regions);
+        $this->Regions->request->params['action'] = 'admin_index';
+        $this->Regions->request->params['url']['url'] = 'admin/regions';
         $this->Regions->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Regions->beforeFilter();
-        $this->Regions->Component->startup($this->Regions);
+        $this->Regions->startupProcess();
         $this->Regions->admin_index();
 
         $this->Regions->testView = true;
@@ -84,9 +84,8 @@ class RegionsControllerTest extends CakeTestCase {
     }
 
     public function testAdminAdd() {
-        $this->Regions->params['action'] = 'admin_add';
-        $this->Regions->params['url']['url'] = 'admin/regions/add';
-        $this->Regions->Component->initialize($this->Regions);
+        $this->Regions->request->params['action'] = 'admin_add';
+        $this->Regions->request->params['url']['url'] = 'admin/regions/add';
         $this->Regions->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -97,8 +96,7 @@ class RegionsControllerTest extends CakeTestCase {
                 'alias' => 'new_region',
             ),
         );
-        $this->Regions->beforeFilter();
-        $this->Regions->Component->startup($this->Regions);
+        $this->Regions->startupProcess();
         $this->Regions->admin_add();
         $this->assertEqual($this->Regions->redirectUrl, array('action' => 'index'));
 
@@ -111,9 +109,8 @@ class RegionsControllerTest extends CakeTestCase {
     }
 
     public function testAdminEdit() {
-        $this->Regions->params['action'] = 'admin_edit';
-        $this->Regions->params['url']['url'] = 'admin/regions/edit';
-        $this->Regions->Component->initialize($this->Regions);
+        $this->Regions->request->params['action'] = 'admin_edit';
+        $this->Regions->request->params['url']['url'] = 'admin/regions/edit';
         $this->Regions->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
@@ -124,8 +121,7 @@ class RegionsControllerTest extends CakeTestCase {
                 'title' => 'right_modified',
             ),
         );
-        $this->Regions->beforeFilter();
-        $this->Regions->Component->startup($this->Regions);
+        $this->Regions->startupProcess();
         $this->Regions->admin_edit();
         $this->assertEqual($this->Regions->redirectUrl, array('action' => 'index'));
 
@@ -138,15 +134,13 @@ class RegionsControllerTest extends CakeTestCase {
     }
 
     public function testAdminDelete() {
-        $this->Regions->params['action'] = 'admin_delete';
-        $this->Regions->params['url']['url'] = 'admin/regions/delete';
-        $this->Regions->Component->initialize($this->Regions);
+        $this->Regions->request->params['action'] = 'admin_delete';
+        $this->Regions->request->params['url']['url'] = 'admin/regions/delete';
         $this->Regions->Session->write('Auth.User', array(
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Regions->beforeFilter();
-        $this->Regions->Component->startup($this->Regions);
+        $this->Regions->startupProcess();
         $this->Regions->admin_delete(4); // ID of right
         $this->assertEqual($this->Regions->redirectUrl, array('action' => 'index'));
         

@@ -59,26 +59,25 @@ class RolesControllerTest extends CakeTestCase {
     );
 
     public function startTest() {
-        $this->Roles = new TestRolesController();
+        $request = new CakeRequest();
+        $response = new CakeResponse();
+        $this->Roles = new TestRolesController($request, $response);
         $this->Roles->constructClasses();
-        $this->Roles->params['controller'] = 'roles';
-        $this->Roles->params['pass'] = array();
-        $this->Roles->params['named'] = array();
-        $this->Roles->Role->Aro->useDbConfig = 'test';
-        $this->Roles->Role->Permission->useDbConfig = 'test';
+        $this->Roles->Role->Aro->useDbConfig = $this->Roles->Role->useDbConfig;
+        $this->Roles->request->params['controller'] = 'roles';
+        $this->Roles->request->params['pass'] = array();
+        $this->Roles->request->params['named'] = array();
     }
 
     public function testAdminIndex() {
-        $this->Roles->params['action'] = 'admin_index';
-        $this->Roles->params['url']['url'] = 'admin/roles';
-        $this->Roles->Component->initialize($this->Roles);
+        $this->Roles->request->params['action'] = 'admin_index';
+        $this->Roles->request->params['url']['url'] = 'admin/roles';
         $this->Roles->Session->write('Auth.User', array(
             'id' => 1,
             'role_id' => 1,
             'username' => 'admin',
         ));
-        $this->Roles->beforeFilter();
-        $this->Roles->Component->startup($this->Roles);
+        $this->Roles->startupProcess();
         $this->Roles->admin_index();
 
         $this->Roles->testView = true;
@@ -87,9 +86,8 @@ class RolesControllerTest extends CakeTestCase {
     }
 
     public function testAdminAdd() {
-        $this->Roles->params['action'] = 'admin_add';
-        $this->Roles->params['url']['url'] = 'admin/roles/add';
-        $this->Roles->Component->initialize($this->Roles);
+        $this->Roles->request->params['action'] = 'admin_add';
+        $this->Roles->request->params['url']['url'] = 'admin/roles/add';
         $this->Roles->Session->write('Auth.User', array(
             'id' => 1,
             'role_id' => 1,
@@ -101,8 +99,7 @@ class RolesControllerTest extends CakeTestCase {
                 'alias' => 'new_role',
             ),
         );
-        $this->Roles->beforeFilter();
-        $this->Roles->Component->startup($this->Roles);
+        $this->Roles->startupProcess();
         $this->Roles->admin_add();
         $this->assertEqual($this->Roles->redirectUrl, array('action' => 'index'));
 
@@ -115,9 +112,8 @@ class RolesControllerTest extends CakeTestCase {
     }
 
     public function testAdminEdit() {
-        $this->Roles->params['action'] = 'admin_edit';
-        $this->Roles->params['url']['url'] = 'admin/roles/edit';
-        $this->Roles->Component->initialize($this->Roles);
+        $this->Roles->request->params['action'] = 'admin_edit';
+        $this->Roles->request->params['url']['url'] = 'admin/roles/edit';
         $this->Roles->Session->write('Auth.User', array(
             'id' => 1,
             'role_id' => 1,
@@ -129,8 +125,7 @@ class RolesControllerTest extends CakeTestCase {
                 'title' => 'Registered [modified]',
             ),
         );
-        $this->Roles->beforeFilter();
-        $this->Roles->Component->startup($this->Roles);
+        $this->Roles->startupProcess();
         $this->Roles->admin_edit();
         $this->assertEqual($this->Roles->redirectUrl, array('action' => 'index'));
 
@@ -143,16 +138,14 @@ class RolesControllerTest extends CakeTestCase {
     }
 
     public function testAdminDelete() {
-        $this->Roles->params['action'] = 'admin_delete';
-        $this->Roles->params['url']['url'] = 'admin/roles/delete';
-        $this->Roles->Component->initialize($this->Roles);
+        $this->Roles->request->params['action'] = 'admin_delete';
+        $this->Roles->request->params['url']['url'] = 'admin/roles/delete';
         $this->Roles->Session->write('Auth.User', array(
             'id' => 1,
             'role_id' => 1,
             'username' => 'admin',
         ));
-        $this->Roles->beforeFilter();
-        $this->Roles->Component->startup($this->Roles);
+        $this->Roles->startupProcess();
         $this->Roles->admin_delete(1); // ID of Admin
         $this->assertEqual($this->Roles->redirectUrl, array('action' => 'index'));
         
