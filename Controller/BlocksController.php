@@ -42,11 +42,11 @@ class BlocksController extends AppController {
     public function admin_add() {
         $this->set('title_for_layout', __('Add Block'));
 
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->Block->create();
-            $this->data['Block']['visibility_roles'] = $this->Block->encodeData($this->data['Role']['Role']);
-            $this->data['Block']['visibility_paths'] = $this->Block->encodeData(explode("\n", $this->data['Block']['visibility_paths']));
-            if ($this->Block->save($this->data)) {
+            $this->request->data['Block']['visibility_roles'] = $this->Block->encodeData($this->request->data['Role']['Role']);
+            $this->request->data['Block']['visibility_paths'] = $this->Block->encodeData(explode("\n", $this->request->data['Block']['visibility_paths']));
+            if ($this->Block->save($this->request->data)) {
                 $this->Session->setFlash(__('The Block has been saved'), 'default', array('class' => 'success'));
                 if (isset($this->request->data['apply'])) {
                     $this->redirect(array('action'=>'edit', $this->Block->id));
@@ -65,14 +65,14 @@ class BlocksController extends AppController {
     public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Block'));
 
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid Block'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
-        if (!empty($this->data)) {
-            $this->data['Block']['visibility_roles'] = $this->Block->encodeData($this->data['Role']['Role']);
-            $this->data['Block']['visibility_paths'] = $this->Block->encodeData(explode("\n", $this->data['Block']['visibility_paths']));
-            if ($this->Block->save($this->data)) {
+        if (!empty($this->request->data)) {
+            $this->request->data['Block']['visibility_roles'] = $this->Block->encodeData($this->request->data['Role']['Role']);
+            $this->request->data['Block']['visibility_paths'] = $this->Block->encodeData(explode("\n", $this->request->data['Block']['visibility_paths']));
+            if ($this->Block->save($this->request->data)) {
                 $this->Session->setFlash(__('The Block has been saved'), 'default', array('class' => 'success'));
                 if (! isset($this->request->data['apply'])) {
                     $this->redirect(array('action'=>'index'));
@@ -81,13 +81,13 @@ class BlocksController extends AppController {
                 $this->Session->setFlash(__('The Block could not be saved. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
-        if (empty($this->data)) {
+        if (empty($this->request->data)) {
             $data = $this->Block->read(null, $id);
             $data['Role']['Role'] = $this->Block->decodeData($data['Block']['visibility_roles']);
             if ($data['Block']['visibility_paths'] != '') {
                 $data['Block']['visibility_paths'] = implode("\n", $this->Block->decodeData($data['Block']['visibility_paths']));
             }
-            $this->data = $data;
+            $this->request->data = $data;
         }
         $regions = $this->Block->Region->find('list');
         $roles = $this->Role->find('list');
@@ -126,9 +126,9 @@ class BlocksController extends AppController {
     }
 
     public function admin_process() {
-        $action = $this->data['Block']['action'];
+        $action = $this->request->data['Block']['action'];
         $ids = array();
-        foreach ($this->data['Block'] AS $id => $value) {
+        foreach ($this->request->data['Block'] AS $id => $value) {
             if ($id != 'action' && $value['id'] == 1) {
                 $ids[] = $id;
             }

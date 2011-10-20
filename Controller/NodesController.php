@@ -123,27 +123,27 @@ class NodesController extends AppController {
             ),
         ));
 
-        if (!empty($this->data)) {
-            if (isset($this->data['TaxonomyData'])) {
-                $this->data['Taxonomy'] = array(
+        if (!empty($this->request->data)) {
+            if (isset($this->request->data['TaxonomyData'])) {
+                $this->request->data['Taxonomy'] = array(
                     'Taxonomy' => array(),
                 );
-                foreach ($this->data['TaxonomyData'] AS $vocabularyId => $taxonomyIds) {
+                foreach ($this->request->data['TaxonomyData'] AS $vocabularyId => $taxonomyIds) {
                     if (is_array($taxonomyIds)) {
-                        $this->data['Taxonomy']['Taxonomy'] = array_merge($this->data['Taxonomy']['Taxonomy'], $taxonomyIds);
+                        $this->request->data['Taxonomy']['Taxonomy'] = array_merge($this->request->data['Taxonomy']['Taxonomy'], $taxonomyIds);
                     }
                 }
             }
             $this->Node->create();
-            $this->data['Node']['path'] = $this->Croogo->getRelativePath(array(
+            $this->request->data['Node']['path'] = $this->Croogo->getRelativePath(array(
                 'admin' => false,
                 'controller' => 'nodes',
                 'action' => 'view',
                 'type' => $this->Node->type,
-                'slug' => $this->data['Node']['slug'],
+                'slug' => $this->request->data['Node']['slug'],
             ));
-            $this->data['Node']['visibility_roles'] = $this->Node->encodeData($this->data['Role']['Role']);
-            if ($this->Node->saveWithMeta($this->data)) {
+            $this->request->data['Node']['visibility_roles'] = $this->Node->encodeData($this->request->data['Role']['Role']);
+            if ($this->Node->saveWithMeta($this->request->data)) {
                 $this->Session->setFlash(sprintf(__('%s has been saved'), $type['Type']['title']), 'default', array('class' => 'success'));
                 if (isset($this->request->data['apply'])) {
                     $this->redirect(array('action'=>'edit', $this->Node->id));
@@ -170,7 +170,7 @@ class NodesController extends AppController {
     }
 
     public function admin_edit($id = null) {
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid content'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
@@ -188,8 +188,8 @@ class NodesController extends AppController {
         $this->Node->type = $type['Type']['alias'];
         $this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
 
-        if (!empty($this->data)) {
-            if (isset($this->data['TaxonomyData'])) {
+        if (!empty($this->request->data)) {
+            if (isset($this->request->data['TaxonomyData'])) {
                 $this->request->data['Taxonomy'] = array(
                     'Taxonomy' => array(),
                 );
@@ -204,10 +204,10 @@ class NodesController extends AppController {
                 'controller' => 'nodes',
                 'action' => 'view',
                 'type' => $this->Node->type,
-                'slug' => $this->data['Node']['slug'],
+                'slug' => $this->request->data['Node']['slug'],
             ));
-            $this->request->data['Node']['visibility_roles'] = $this->Node->encodeData($this->data['Role']['Role']);
-            if ($this->Node->saveWithMeta($this->data)) {
+            $this->request->data['Node']['visibility_roles'] = $this->Node->encodeData($this->request->data['Role']['Role']);
+            if ($this->Node->saveWithMeta($this->request->data)) {
                 $this->Session->setFlash(sprintf(__('%s has been saved'), $type['Type']['title']), 'default', array('class' => 'success'));
                 if (! isset($this->request->data['apply'])) {
                     $this->redirect(array('action'=>'index'));
@@ -216,10 +216,10 @@ class NodesController extends AppController {
                 $this->Session->setFlash(sprintf(__('%s could not be saved. Please, try again.'), $type['Type']['title']), 'default', array('class' => 'error'));
             }
         }
-        if (empty($this->data)) {
+        if (empty($this->request->data)) {
             $data = $this->Node->read(null, $id);
             $data['Role']['Role'] = $this->Node->decodeData($data['Node']['visibility_roles']);
-            $this->data = $data;
+            $this->request->data = $data;
         }
 
         $nodes = $this->Node->generateTreeList();
@@ -296,9 +296,9 @@ class NodesController extends AppController {
     }
 
     public function admin_process() {
-        $action = $this->data['Node']['action'];
+        $action = $this->request->data['Node']['action'];
         $ids = array();
-        foreach ($this->data['Node'] AS $id => $value) {
+        foreach ($this->request->data['Node'] AS $id => $value) {
             if ($id != 'action' && $value['id'] == 1) {
                 $ids[] = $id;
             }

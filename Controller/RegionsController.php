@@ -42,9 +42,9 @@ class RegionsController extends AppController {
     public function admin_add() {
         $this->set('title_for_layout', __('Add Region'));
 
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->Region->create();
-            if ($this->Region->save($this->data)) {
+            if ($this->Region->save($this->request->data)) {
                 $this->Session->setFlash(__('The Region has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
@@ -56,20 +56,20 @@ class RegionsController extends AppController {
     public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Region'));
 
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid Region'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
-        if (!empty($this->data)) {
-            if ($this->Region->save($this->data)) {
+        if (!empty($this->request->data)) {
+            if ($this->Region->save($this->request->data)) {
                 $this->Session->setFlash(__('The Region has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
                 $this->Session->setFlash(__('The Region could not be saved. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
-        if (empty($this->data)) {
-            $this->data = $this->Region->read(null, $id);
+        if (empty($this->request->data)) {
+            $this->request->data = $this->Region->read(null, $id);
         }
     }
 

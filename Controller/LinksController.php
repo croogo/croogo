@@ -74,17 +74,17 @@ class LinksController extends AppController {
     public function admin_add($menuId = null) {
         $this->set('title_for_layout', __('Add Link'));
 
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->Link->create();
-            $this->data['Link']['visibility_roles'] = $this->Link->encodeData($this->data['Role']['Role']);
+            $this->request->data['Link']['visibility_roles'] = $this->Link->encodeData($this->request->data['Role']['Role']);
             $this->Link->Behaviors->attach('Tree', array(
                 'scope' => array(
-                    'Link.menu_id' => $this->data['Link']['menu_id'],
+                    'Link.menu_id' => $this->request->data['Link']['menu_id'],
                 ),
             ));
-            if ($this->Link->save($this->data)) {
+            if ($this->Link->save($this->request->data)) {
                 $this->Session->setFlash(__('The Link has been saved'), 'default', array('class' => 'success'));
-                $this->redirect(array('action'=>'index', $this->data['Link']['menu_id']));
+                $this->redirect(array('action'=>'index', $this->request->data['Link']['menu_id']));
             } else {
                 $this->Session->setFlash(__('The Link could not be saved. Please, try again.'), 'default', array('class' => 'error'));
             }
@@ -100,35 +100,35 @@ class LinksController extends AppController {
     public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Link'));
 
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid Link'), 'default', array('class' => 'error'));
             $this->redirect(array(
                 'controller' => 'menus',
                 'action'=>'index',
             ));
         }
-        if (!empty($this->data)) {
-            $this->data['Link']['visibility_roles'] = $this->Link->encodeData($this->data['Role']['Role']);
+        if (!empty($this->request->data)) {
+            $this->request->data['Link']['visibility_roles'] = $this->Link->encodeData($this->request->data['Role']['Role']);
             $this->Link->Behaviors->attach('Tree', array(
                 'scope' => array(
-                    'Link.menu_id' => $this->data['Link']['menu_id'],
+                    'Link.menu_id' => $this->request->data['Link']['menu_id'],
                 ),
             ));
-            if ($this->Link->save($this->data)) {
+            if ($this->Link->save($this->request->data)) {
                 $this->Session->setFlash(__('The Link has been saved'), 'default', array('class' => 'success'));
-                $this->redirect(array('action'=>'index', $this->data['Link']['menu_id']));
+                $this->redirect(array('action'=>'index', $this->request->data['Link']['menu_id']));
             } else {
                 $this->Session->setFlash(__('The Link could not be saved. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
-        if (empty($this->data)) {
+        if (empty($this->request->data)) {
             $data = $this->Link->read(null, $id);
             $data['Role']['Role'] = $this->Link->decodeData($data['Link']['visibility_roles']);
-            $this->data = $data;
+            $this->request->data = $data;
         }
         $menus = $this->Link->Menu->find('list');
         $roles = $this->Role->find('list');
-        $menu = $this->Link->Menu->findById($this->data['Link']['menu_id']);
+        $menu = $this->Link->Menu->findById($this->request->data['Link']['menu_id']);
         $parentLinks = $this->Link->generateTreeList(array(
             'Link.menu_id' => $menu['Menu']['id'],
         ));
@@ -217,9 +217,9 @@ class LinksController extends AppController {
     }
 
     public function admin_process($menuId = null) {
-        $action = $this->data['Link']['action'];
+        $action = $this->request->data['Link']['action'];
         $ids = array();
-        foreach ($this->data['Link'] AS $id => $value) {
+        foreach ($this->request->data['Link'] AS $id => $value) {
             if ($id != 'action' && $value['id'] == 1) {
                 $ids[] = $id;
             }

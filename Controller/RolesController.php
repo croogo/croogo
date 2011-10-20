@@ -42,9 +42,9 @@ class RolesController extends AppController {
     public function admin_add() {
         $this->set('title_for_layout', __('Add Role'));
 
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->Role->create();
-            if ($this->Role->save($this->data)) {
+            if ($this->Role->save($this->request->data)) {
                 $this->Session->setFlash(__('The Role has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
@@ -56,20 +56,20 @@ class RolesController extends AppController {
     public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Role'));
 
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid Role'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
-        if (!empty($this->data)) {
-            if ($this->Role->save($this->data)) {
+        if (!empty($this->request->data)) {
+            if ($this->Role->save($this->request->data)) {
                 $this->Session->setFlash(__('The Role has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
                 $this->Session->setFlash(__('The Role could not be saved. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
-        if (empty($this->data)) {
-            $this->data = $this->Role->read(null, $id);
+        if (empty($this->request->data)) {
+            $this->request->data = $this->Role->read(null, $id);
         }
     }
 

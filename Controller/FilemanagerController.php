@@ -102,8 +102,8 @@ class FilemanagerController extends AppController {
         $path = implode(DS, $path_e);
         $this->file = new File($absolutefilepath, true);
 
-        if (!empty($this->data) ) {
-            if( $this->file->write($this->data['Filemanager']['content']) ) {
+        if (!empty($this->request->data) ) {
+            if( $this->file->write($this->request->data['Filemanager']['content']) ) {
                 $this->Session->setFlash(__('File saved successfully'), 'default', array('class' => 'success'));
             }
         }
@@ -123,10 +123,10 @@ class FilemanagerController extends AppController {
         }
         $this->set(compact('path'));
 
-        if (isset($this->data['Filemanager']['file']['tmp_name']) &&
-            is_uploaded_file($this->data['Filemanager']['file']['tmp_name'])) {
-            $destination = $path.$this->data['Filemanager']['file']['name'];
-            move_uploaded_file($this->data['Filemanager']['file']['tmp_name'], $destination);
+        if (isset($this->request->data['Filemanager']['file']['tmp_name']) &&
+            is_uploaded_file($this->request->data['Filemanager']['file']['tmp_name'])) {
+            $destination = $path.$this->request->data['Filemanager']['file']['name'];
+            move_uploaded_file($this->request->data['Filemanager']['file']['tmp_name'], $destination);
             $this->Session->setFlash(__('File uploaded successfully.'), 'default', array('class' => 'success'));
             $redirectUrl = Router::url(array('controller' => 'filemanager', 'action' => 'browse'), true) . '?path=' . urlencode($path);
 
@@ -205,9 +205,9 @@ class FilemanagerController extends AppController {
             $this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
         }
 
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->folder = new Folder;
-            if ($this->folder->create($path . $this->data['Filemanager']['name'])) {
+            if ($this->folder->create($path . $this->request->data['Filemanager']['name'])) {
                 $this->Session->setFlash(__('Directory created successfully.'), 'default', array('class' => 'success'));
                 $redirectUrl = Router::url(array('controller' => 'filemanager', 'action' => 'browse'), true) . '?path=' . urlencode($path);
                 $this->redirect($redirectUrl);
@@ -228,8 +228,8 @@ class FilemanagerController extends AppController {
             $this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
         }
 
-        if (!empty($this->data)) {
-            if (touch($path . $this->data['Filemanager']['name'])) {
+        if (!empty($this->request->data)) {
+            if (touch($path . $this->request->data['Filemanager']['name'])) {
                 $this->Session->setFlash(__('File created successfully.'), 'default', array('class' => 'success'));
                 $redirectUrl = Router::url(array('controller' => 'filemanager', 'action' => 'browse'), true) . '?path=' . urlencode($path);
                 $this->redirect($redirectUrl);

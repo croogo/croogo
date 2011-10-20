@@ -58,7 +58,7 @@ class CommentsController extends AppController {
         $this->paginate['Comment']['conditions']['Comment.status'] = 1;
         $this->paginate['Comment']['comment_type'] = 'comment';
 
-        if (isset($this->params['named']['filter'])) {
+        if (isset($this->request->params['named']['filter'])) {
             $filters = $this->Croogo->extractFilter();
             foreach ($filters AS $filterKey => $filterValue) {
                 if (strpos($filterKey, '.') === false) {
@@ -81,20 +81,20 @@ class CommentsController extends AppController {
     public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Comment'));
 
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid Comment'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
-        if (!empty($this->data)) {
-            if ($this->Comment->save($this->data)) {
+        if (!empty($this->request->data)) {
+            if ($this->Comment->save($this->request->data)) {
                 $this->Session->setFlash(__('The Comment has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
                 $this->Session->setFlash(__('The Comment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
-        if (empty($this->data)) {
-            $this->data = $this->Comment->read(null, $id);
+        if (empty($this->request->data)) {
+            $this->request->data = $this->Comment->read(null, $id);
         }
     }
 
@@ -110,9 +110,9 @@ class CommentsController extends AppController {
     }
 
     public function admin_process() {
-        $action = $this->data['Comment']['action'];
+        $action = $this->request->data['Comment']['action'];
         $ids = array();
-        foreach ($this->data['Comment'] AS $id => $value) {
+        foreach ($this->request->data['Comment'] AS $id => $value) {
             if ($id != 'action' && $value['id'] == 1) {
                 $ids[] = $id;
             }
@@ -191,7 +191,7 @@ class CommentsController extends AppController {
         $continue = $this->__captcha($continue, $type, $node);
 
         $success = 0;
-        if (!empty($this->data) && $continue === true) {
+        if (!empty($this->request->data) && $continue === true) {
             $data = array();
             if ($parentId &&
                 $this->Comment->hasAny(array(
@@ -208,11 +208,11 @@ class CommentsController extends AppController {
                 $data['email'] = $this->Session->read('Auth.User.email');
                 $data['website'] = $this->Session->read('Auth.User.website');
             } else {
-                $data['name'] = htmlspecialchars($this->data['Comment']['name']);
-                $data['email'] = $this->data['Comment']['email'];
-                $data['website'] = $this->data['Comment']['website'];
+                $data['name'] = htmlspecialchars($this->request->data['Comment']['name']);
+                $data['email'] = $this->request->data['Comment']['email'];
+                $data['website'] = $this->request->data['Comment']['website'];
             }
-            $data['body'] = htmlspecialchars($this->data['Comment']['body']);
+            $data['body'] = htmlspecialchars($this->request->data['Comment']['body']);
             $data['ip'] = $_SERVER['REMOTE_ADDR'];
             $data['type'] = $node['Node']['type'];
             if ($type['Type']['comment_approve']) {
@@ -249,13 +249,13 @@ class CommentsController extends AppController {
     }
 
     private function __spam_protection($continue, $type, $node) {
-        if (!empty($this->data) &&
+        if (!empty($this->request->data) &&
             $type['Type']['comment_spam_protection'] &&
             $continue === true) {
-            $this->Akismet->setCommentAuthor($this->data['Comment']['name']);
-            $this->Akismet->setCommentAuthorEmail($this->data['Comment']['email']);
-            $this->Akismet->setCommentAuthorURL($this->data['Comment']['website']);
-            $this->Akismet->setCommentContent($this->data['Comment']['body']);
+            $this->Akismet->setCommentAuthor($this->request->data['Comment']['name']);
+            $this->Akismet->setCommentAuthorEmail($this->request->data['Comment']['email']);
+            $this->Akismet->setCommentAuthorURL($this->request->data['Comment']['website']);
+            $this->Akismet->setCommentContent($this->request->data['Comment']['body']);
             //$this->Akismet->setPermalink(Router::url($node['Node']['url'], true));
             if ($this->Akismet->isCommentSpam()) {
                 $continue = false;
@@ -267,7 +267,7 @@ class CommentsController extends AppController {
     }
 
     private function __captcha($continue, $type, $node) {
-        if (!empty($this->data) &&
+        if (!empty($this->request->data) &&
             $type['Type']['comment_captcha'] &&
             $continue === true &&
             !$this->Recaptcha->valid($this->params['form'])) {

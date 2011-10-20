@@ -42,9 +42,9 @@ class MenusController extends AppController {
     public function admin_add() {
         $this->set('title_for_layout', __('Add Menu'));
 
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->Menu->create();
-            if ($this->Menu->save($this->data)) {
+            if ($this->Menu->save($this->request->data)) {
                 $this->Session->setFlash(__('The Menu has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
@@ -56,20 +56,20 @@ class MenusController extends AppController {
     public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Menu'));
 
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid Menu'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
-        if (!empty($this->data)) {
-            if ($this->Menu->save($this->data)) {
+        if (!empty($this->request->data)) {
+            if ($this->Menu->save($this->request->data)) {
                 $this->Session->setFlash(__('The Menu has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
                 $this->Session->setFlash(__('The Menu could not be saved. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
-        if (empty($this->data)) {
-            $this->data = $this->Menu->read(null, $id);
+        if (empty($this->request->data)) {
+            $this->request->data = $this->Menu->read(null, $id);
         }
     }
 

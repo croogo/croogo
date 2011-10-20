@@ -86,8 +86,8 @@ class TermsController extends AppController {
         }
         $this->set('title_for_layout', sprintf(__('%s: Add Term'), $vocabulary['Vocabulary']['title']));
 
-        if (!empty($this->data)) {
-            $termId = $this->Term->saveAndGetId($this->data['Term']);
+        if (!empty($this->request->data)) {
+            $termId = $this->Term->saveAndGetId($this->request->data['Term']);
             if ($termId) {
                 $termInVocabulary = $this->Term->Taxonomy->hasAny(array(
                     'Taxonomy.vocabulary_id' => $vocabularyId,
@@ -102,7 +102,7 @@ class TermsController extends AppController {
                         ),
                     ));
                     $taxonomy = array(
-                        'parent_id' => $this->data['Taxonomy']['parent_id'],
+                        'parent_id' => $this->request->data['Taxonomy']['parent_id'],
                         'term_id' => $termId,
                         'vocabulary_id' => $vocabularyId,
                     );
@@ -167,16 +167,16 @@ class TermsController extends AppController {
         }
         $this->set('title_for_layout', sprintf(__('%s: Edit Term'), $vocabulary['Vocabulary']['title']));
 
-        if (!empty($this->data)) {
-            if ($term['Term']['slug'] != $this->data['Term']['slug']) {
-                if ($this->Term->hasAny(array('Term.slug' => $this->data['Term']['slug']))) {
+        if (!empty($this->request->data)) {
+            if ($term['Term']['slug'] != $this->request->data['Term']['slug']) {
+                if ($this->Term->hasAny(array('Term.slug' => $this->request->data['Term']['slug']))) {
                     $termId = false;
                 } else {
-                    $termId = $this->Term->saveAndGetId($this->data['Term']);
+                    $termId = $this->Term->saveAndGetId($this->request->data['Term']);
                 }
             } else {
                 $this->Term->id = $term['Term']['id'];
-                if (!$this->Term->save($this->data['Term'])) {
+                if (!$this->Term->save($this->request->data['Term'])) {
                     $termId = false;
                 } else {
                     $termId = $term['Term']['id'];
@@ -199,7 +199,7 @@ class TermsController extends AppController {
                     ));
                     $taxonomy = array(
                         'id' => $taxonomy['Taxonomy']['id'],
-                        'parent_id' => $this->data['Taxonomy']['parent_id'],
+                        'parent_id' => $this->request->data['Taxonomy']['parent_id'],
                         'term_id' => $termId,
                         'vocabulary_id' => $vocabularyId,
                     );

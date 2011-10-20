@@ -103,9 +103,9 @@ class AttachmentsController extends AppController {
             $this->layout = 'admin_full';
         }
 
-        if (!empty($this->data)) {
-            $file = $this->data['Node']['file'];
-            unset($this->data['Node']['file']);
+        if (!empty($this->request->data)) {
+            $file = $this->request->data['Node']['file'];
+            unset($this->request->data['Node']['file']);
 
             // check if file with same path exists
             $destination = WWW_ROOT . $this->uploadsDir . DS . $file['name'];
@@ -125,14 +125,14 @@ class AttachmentsController extends AppController {
                 $fileTitle = $file['name'];
             }
 
-            $this->data['Node']['title'] = $fileTitle;
-            $this->data['Node']['slug'] = $newFileName;
-            $this->data['Node']['mime_type'] = $file['type'];
-            //$this->data['Node']['guid'] = Router::url('/' . $this->uploadsDir . '/' . $newFileName, true);
-            $this->data['Node']['path'] = '/' . $this->uploadsDir . '/' . $newFileName;
+            $this->request->data['Node']['title'] = $fileTitle;
+            $this->request->data['Node']['slug'] = $newFileName;
+            $this->request->data['Node']['mime_type'] = $file['type'];
+            //$this->request->data['Node']['guid'] = Router::url('/' . $this->uploadsDir . '/' . $newFileName, true);
+            $this->request->data['Node']['path'] = '/' . $this->uploadsDir . '/' . $newFileName;
 
             $this->Node->create();
-            if ($this->Node->save($this->data)) {
+            if ($this->Node->save($this->request->data)) {
                 // move the file
                 move_uploaded_file($file['tmp_name'], $destination);
 
@@ -159,20 +159,20 @@ class AttachmentsController extends AppController {
     public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Attachment'));
 
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid Attachment'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
-        if (!empty($this->data)) {
-            if ($this->Node->save($this->data)) {
+        if (!empty($this->request->data)) {
+            if ($this->Node->save($this->request->data)) {
                 $this->Session->setFlash(__('The Attachment has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
                 $this->Session->setFlash(__('The Attachment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
-        if (empty($this->data)) {
-            $this->data = $this->Node->read(null, $id);
+        if (empty($this->request->data)) {
+            $this->request->data = $this->Node->read(null, $id);
         }
     }
 

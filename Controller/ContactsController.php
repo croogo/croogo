@@ -53,9 +53,9 @@ class ContactsController extends AppController {
     public function admin_add() {
         $this->set('title_for_layout', __('Add Contact'));
 
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->Contact->create();
-            if ($this->Contact->save($this->data)) {
+            if ($this->Contact->save($this->request->data)) {
                 $this->Session->setFlash(__('The Contact has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
@@ -67,20 +67,20 @@ class ContactsController extends AppController {
     public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Contact'));
 
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid Contact'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
-        if (!empty($this->data)) {
-            if ($this->Contact->save($this->data)) {
+        if (!empty($this->request->data)) {
+            if ($this->Contact->save($this->request->data)) {
                 $this->Session->setFlash(__('The Contact has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
                 $this->Session->setFlash(__('The Contact could not be saved. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
-        if (empty($this->data)) {
-            $this->data = $this->Contact->read(null, $id);
+        if (empty($this->request->data)) {
+            $this->request->data = $this->Contact->read(null, $id);
         }
     }
 
@@ -119,11 +119,11 @@ class ContactsController extends AppController {
         if (!$contact['Contact']['message_status']) {
             $continue = false;
         }
-        if (!empty($this->data) && $continue === true) {
+        if (!empty($this->request->data) && $continue === true) {
             $this->request->data['Message']['contact_id'] = $contact['Contact']['id'];
-            $this->request->data['Message']['title'] = htmlspecialchars($this->data['Message']['title']);
-            $this->request->data['Message']['name'] = htmlspecialchars($this->data['Message']['name']);
-            $this->request->data['Message']['body'] = htmlspecialchars($this->data['Message']['body']);
+            $this->request->data['Message']['title'] = htmlspecialchars($this->request->data['Message']['title']);
+            $this->request->data['Message']['name'] = htmlspecialchars($this->request->data['Message']['name']);
+            $this->request->data['Message']['body'] = htmlspecialchars($this->request->data['Message']['body']);
             $continue = $this->__validation($continue, $contact);
             $continue = $this->__spam_protection($continue, $contact);
             $continue = $this->__captcha($continue, $contact);
@@ -131,7 +131,7 @@ class ContactsController extends AppController {
 
             if ($continue === true) {
                 //$this->Session->setFlash(__('Your message has been received.'));
-                //unset($this->data['Message']);
+                //unset($this->request->data['Message']);
 
                 echo $this->flash(__('Your message has been received...'), '/');
             }
@@ -142,11 +142,11 @@ class ContactsController extends AppController {
     }
 
     private function __validation($continue, $contact) {
-        if ($this->Contact->Message->set($this->data) &&
+        if ($this->Contact->Message->set($this->request->data) &&
             $this->Contact->Message->validates() &&
             $continue === true) {
             if ($contact['Contact']['message_archive'] &&
-                !$this->Contact->Message->save($this->data['Message'])) {
+                !$this->Contact->Message->save($this->request->data['Message'])) {
                 $continue = false;
             }
         } else {
@@ -157,12 +157,12 @@ class ContactsController extends AppController {
     }
 
     private function __spam_protection($continue, $contact) {
-        if (!empty($this->data) &&
+        if (!empty($this->request->data) &&
             $contact['Contact']['message_spam_protection'] &&
             $continue === true) {
-            $this->Akismet->setCommentAuthor($this->data['Message']['name']);
-            $this->Akismet->setCommentAuthorEmail($this->data['Message']['email']);
-            $this->Akismet->setCommentContent($this->data['Message']['body']);
+            $this->Akismet->setCommentAuthor($this->request->data['Message']['name']);
+            $this->Akismet->setCommentAuthorEmail($this->request->data['Message']['email']);
+            $this->Akismet->setCommentContent($this->request->data['Message']['body']);
             if ($this->Akismet->isCommentSpam()) {
                 $continue = false;
                 $this->Session->setFlash(__('Sorry, the message appears to be spam.'), 'default', array('class' => 'error'));
@@ -173,7 +173,7 @@ class ContactsController extends AppController {
     }
 
     private function __captcha($continue, $contact) {
-        if (!empty($this->data) &&
+        if (!empty($this->request->data) &&
             $contact['Contact']['message_captcha'] &&
             $continue === true &&
             !$this->Recaptcha->valid($this->request)) {
@@ -187,12 +187,12 @@ class ContactsController extends AppController {
     private function __send_email($continue, $contact) {
         if ($contact['Contact']['message_notify'] && $continue === true) {
             $this->Email->to = $contact['Contact']['email'];
-            $this->Email->from = $this->data['Message']['name'] . ' <' . $this->data['Message']['email'] . '>';
+            $this->Email->from = $this->request->data['Message']['name'] . ' <' . $this->request->data['Message']['email'] . '>';
             $this->Email->subject = '[' . Configure::read('Site.title') . '] ' . $contact['Contact']['title'];
             $this->Email->template = 'contact';
 
             $this->set('contact', $contact);
-            $this->set('message', $this->data);
+            $this->set('message', $this->request->data);
             if (!$this->Email->send()) {
                 $continue = false;
             }

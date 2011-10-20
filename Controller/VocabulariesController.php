@@ -42,9 +42,9 @@ class VocabulariesController extends AppController {
     public function admin_add() {
         $this->set('title_for_layout', __('Add Vocabulary'));
 
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->Vocabulary->create();
-            if ($this->Vocabulary->save($this->data)) {
+            if ($this->Vocabulary->save($this->request->data)) {
                 $this->Session->setFlash(__('The Vocabulary has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
@@ -59,20 +59,20 @@ class VocabulariesController extends AppController {
     public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Vocabulary'));
 
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid Vocabulary'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
-        if (!empty($this->data)) {
-            if ($this->Vocabulary->save($this->data)) {
+        if (!empty($this->request->data)) {
+            if ($this->Vocabulary->save($this->request->data)) {
                 $this->Session->setFlash(__('The Vocabulary has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
                 $this->Session->setFlash(__('The Vocabulary could not be saved. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
-        if (empty($this->data)) {
-            $this->data = $this->Vocabulary->read(null, $id);
+        if (empty($this->request->data)) {
+            $this->request->data = $this->Vocabulary->read(null, $id);
         }
 
         $types = $this->Vocabulary->Type->find('list');

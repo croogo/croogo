@@ -49,9 +49,9 @@ class TypesController extends AppController {
     public function admin_add() {
         $this->set('title_for_layout', __('Add Type'));
 
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->Type->create();
-            if ($this->Type->save($this->data)) {
+            if ($this->Type->save($this->request->data)) {
                 $this->Session->setFlash(__('The Type has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
@@ -66,20 +66,20 @@ class TypesController extends AppController {
     public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Type'));
 
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid Type'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
-        if (!empty($this->data)) {
-            if ($this->Type->save($this->data)) {
+        if (!empty($this->request->data)) {
+            if ($this->Type->save($this->request->data)) {
                 $this->Session->setFlash(__('The Type has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
                 $this->Session->setFlash(__('The Type could not be saved. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
-        if (empty($this->data)) {
-            $this->data = $this->Type->read(null, $id);
+        if (empty($this->request->data)) {
+            $this->request->data = $this->Type->read(null, $id);
         }
 
         $vocabularies = $this->Type->Vocabulary->find('list');

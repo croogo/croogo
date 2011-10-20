@@ -63,20 +63,20 @@ class MessagesController extends AppController {
     public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Message'));
 
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid Message'));
             $this->redirect(array('action'=>'index'));
         }
-        if (!empty($this->data)) {
-            if ($this->Message->save($this->data)) {
+        if (!empty($this->request->data)) {
+            if ($this->Message->save($this->request->data)) {
                 $this->Session->setFlash(__('The Message has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
                 $this->Session->setFlash(__('The Message could not be saved. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
-        if (empty($this->data)) {
-            $this->data = $this->Message->read(null, $id);
+        if (empty($this->request->data)) {
+            $this->request->data = $this->Message->read(null, $id);
         }
     }
 
@@ -92,9 +92,9 @@ class MessagesController extends AppController {
     }
 
     public function admin_process() {
-        $action = $this->data['Message']['action'];
+        $action = $this->request->data['Message']['action'];
         $ids = array();
-        foreach ($this->data['Message'] AS $id => $value) {
+        foreach ($this->request->data['Message'] AS $id => $value) {
             if ($id != 'action' && $value['id'] == 1) {
                 $ids[] = $id;
             }

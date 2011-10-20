@@ -44,7 +44,7 @@ class UsersController extends AppController {
             if (!empty($this->request->data) && empty($this->request->data['User'][$field])) {
                 $this->redirect(array('action' => $this->params['action']));
             }
-            $cacheName = 'auth_failed_' . $this->data['User'][$field];
+            $cacheName = 'auth_failed_' . $this->request->data['User'][$field];
             if (Cache::read($cacheName, 'users_login') >= Configure::read('User.failed_login_limit')) {
                 $this->Session->setFlash(__('You have reached maximum limit for failed login attempts. Please try again after a few minutes.'), 'default', array('class' => 'error'));
                 $this->redirect(array('action' => $this->params['action']));
@@ -73,52 +73,52 @@ class UsersController extends AppController {
     }
 
     public function admin_add() {
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->User->create();
-            $this->data['User']['activation_key'] = md5(uniqid());
-            if ($this->User->save($this->data)) {
+            $this->request->data['User']['activation_key'] = md5(uniqid());
+            if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__('The User has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The User could not be saved. Please, try again.'), 'default', array('class' => 'error'));
-                unset($this->data['User']['password']);
+                unset($this->request->data['User']['password']);
             }
         } else {
-            $this->data['User']['role_id'] = 2; // default Role: Registered
+            $this->request->data['User']['role_id'] = 2; // default Role: Registered
         }
         $roles = $this->User->Role->find('list');
         $this->set(compact('roles'));
     }
 
     public function admin_edit($id = null) {
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid User'), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
         }
-        if (!empty($this->data)) {
-            if ($this->User->save($this->data)) {
+        if (!empty($this->request->data)) {
+            if ($this->User->save($this->request->data)) {
                 $this->Session->setFlash(__('The User has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The User could not be saved. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
-        if (empty($this->data)) {
-            $this->data = $this->User->read(null, $id);
+        if (empty($this->request->data)) {
+            $this->request->data = $this->User->read(null, $id);
         }
         $roles = $this->User->Role->find('list');
         $this->set(compact('roles'));
     }
 
     public function admin_reset_password($id = null) {
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid User'), 'default', array('class' => 'error'));
             $this->redirect(array('action' => 'index'));
         }
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $user = $this->User->findById($id);
-            if ($user['User']['password'] == Security::hash($this->data['User']['current_password'], null, true)) {
-                if ($this->User->save($this->data)) {
+            if ($user['User']['password'] == Security::hash($this->request->data['User']['current_password'], null, true)) {
+                if ($this->User->save($this->request->data)) {
                     $this->Session->setFlash(__('Password has been reset.'), 'default', array('class' => 'success'));
                     $this->redirect(array('action' => 'index'));
                 } else {
@@ -128,8 +128,8 @@ class UsersController extends AppController {
                 $this->Session->setFlash(__('Current password did not match. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
-        if (empty($this->data)) {
-            $this->data = $this->User->read(null, $id);
+        if (empty($this->request->data)) {
+            $this->request->data = $this->User->read(null, $id);
         }
     }
 
@@ -168,22 +168,22 @@ class UsersController extends AppController {
 
     public function add() {
         $this->set('title_for_layout', __('Register'));
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->User->create();
-            $this->data['User']['role_id'] = 2; // Registered
-            $this->data['User']['activation_key'] = md5(uniqid());
-            $this->data['User']['status'] = 0;
-            $this->data['User']['username'] = htmlspecialchars($this->data['User']['username']);
-            $this->data['User']['website'] = htmlspecialchars($this->data['User']['website']);
-            $this->data['User']['name'] = htmlspecialchars($this->data['User']['name']);
-            if ($this->User->save($this->data)) {
-                $this->data['User']['password'] = null;
+            $this->request->data['User']['role_id'] = 2; // Registered
+            $this->request->data['User']['activation_key'] = md5(uniqid());
+            $this->request->data['User']['status'] = 0;
+            $this->request->data['User']['username'] = htmlspecialchars($this->request->data['User']['username']);
+            $this->request->data['User']['website'] = htmlspecialchars($this->request->data['User']['website']);
+            $this->request->data['User']['name'] = htmlspecialchars($this->request->data['User']['name']);
+            if ($this->User->save($this->request->data)) {
+                $this->request->data['User']['password'] = null;
                 $this->Email->from = Configure::read('Site.title') . ' '
                     . '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])).'>';
-                $this->Email->to = $this->data['User']['email'];
+                $this->Email->to = $this->request->data['User']['email'];
                 $this->Email->subject = __('[' . Configure::read('Site.title') . '] Please activate your account');
                 $this->Email->template = 'register';
-                $this->set('user', $this->data);
+                $this->set('user', $this->request->data);
                 $this->Email->send();
 
                 $this->Session->setFlash(__('You have successfully registered an account. An email has been sent with further instructions.'), 'default', array('class' => 'success'));
@@ -221,8 +221,8 @@ class UsersController extends AppController {
     public function forgot() {
         $this->set('title_for_layout', __('Forgot Password'));
 
-        if (!empty($this->data) && isset($this->data['User']['username'])) {
-            $user = $this->User->findByUsername($this->data['User']['username']);
+        if (!empty($this->request->data) && isset($this->request->data['User']['username'])) {
+            $user = $this->User->findByUsername($this->request->data['User']['username']);
             if (!isset($user['User']['id'])) {
                 $this->Session->setFlash(__('Invalid username.'), 'default', array('class' => 'error'));
                 $this->redirect(array('action' => 'login'));
@@ -266,9 +266,9 @@ class UsersController extends AppController {
             $this->redirect(array('action' => 'login'));
         }
 
-        if (!empty($this->data) && isset($this->data['User']['password'])) {
+        if (!empty($this->request->data) && isset($this->request->data['User']['password'])) {
             $this->User->id = $user['User']['id'];
-            $user['User']['password'] = Security::hash($this->data['User']['password'], null, true);
+            $user['User']['password'] = Security::hash($this->request->data['User']['password'], null, true);
             $user['User']['activation_key'] = md5(uniqid());
             if ($this->User->save($user['User'])) {
                 $this->Session->setFlash(__('Your password has been reset successfully.'), 'default', array('class' => 'success'));
