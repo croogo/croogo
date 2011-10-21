@@ -231,11 +231,13 @@ class InstallController extends InstallAppController {
         if (!$File->write($contents)) {
             return false;
         }
+        Configure::write('Security.salt', $salt);
+        Configure::write('Security.cipherSeed', $seed);
 
-        // set new password for admin, hashed according to new salt value
+        // set default password for admin
         $User = ClassRegistry::init('User');
         $User->id = $User->field('id', array('username' => 'admin'));
-        $User->saveField('password', Security::hash('password', null, $salt));
+        $User->saveField('password', 'password');
     }
 
 }

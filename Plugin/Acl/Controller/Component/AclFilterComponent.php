@@ -39,10 +39,10 @@ class AclFilterComponent extends Component {
                 ),
             'Form',
             );
+        $actionPath = 'controllers';
         $this->controller->Auth->authorize = array(
-            AuthComponent::ALL=> array(
-                'actions'
-                )
+            AuthComponent::ALL => array('actionPath' => $actionPath),
+            'Actions',
             );
         $this->controller->Auth->loginAction = array(
             'plugin' => null,
@@ -62,7 +62,6 @@ class AclFilterComponent extends Component {
         $this->controller->Auth->userScope = array(
             'User.status' => 1,
         );
-        $this->controller->Auth->actionPath = 'controllers/';
 
         if ($this->controller->Auth->user() && $this->controller->Auth->user('role_id') == 1) {
             // Role: Admin
@@ -82,7 +81,7 @@ class AclFilterComponent extends Component {
                 'recursive' => -1,
             ));
             $aroId = $aro['Aro']['id'];
-            $thisControllerNode = $this->controller->Acl->Aco->node($this->controller->Auth->actionPath.$this->controller->name);
+            $thisControllerNode = $this->controller->Acl->Aco->node($actionPath .'/'.  $this->controller->name);
             if ($thisControllerNode) {
                 $thisControllerNode = $thisControllerNode['0'];
                 $thisControllerActions = $this->controller->Acl->Aco->find('list', array(

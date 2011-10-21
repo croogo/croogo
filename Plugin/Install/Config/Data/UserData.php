@@ -8,7 +8,7 @@ class UserData {
 			'id' => '1',
 			'role_id' => '1',
 			'username' => 'admin',
-			'password' => 'c054b152596745efa1d197b809fa7fc70ce586e5',
+			'password' => 'password',
 			'name' => 'Administrator',
 			'email' => 'you@your-site.com',
 			'website' => '/about',
