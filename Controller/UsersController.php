@@ -277,6 +277,14 @@ class UsersController extends AppController {
 
     public function login() {
         $this->set('title_for_layout', __('Log in'));
+        if ($this->request->is('post')) {
+            if ($this->Auth->login()) {
+                return $this->redirect($this->Auth->redirect());
+            } else {
+                $this->Session->setFlash($this->Auth->authError, 'default', array(), 'auth');
+                $this->redirect($this->Auth->loginAction);
+            }
+        }
     }
 
     public function logout() {
