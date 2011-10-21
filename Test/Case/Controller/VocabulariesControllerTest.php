@@ -90,7 +90,7 @@ class VocabulariesControllerTest extends CakeTestCase {
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Vocabularies->data = array(
+        $this->Vocabularies->request->data = array(
             'Vocabulary' => array(
                 'title' => 'New Vocabulary',
                 'alias' => 'new_vocabulary',
@@ -115,7 +115,7 @@ class VocabulariesControllerTest extends CakeTestCase {
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Vocabularies->data = array(
+        $this->Vocabularies->request->data = array(
             'Vocabulary' => array(
                 'id' => 1, // categories
                 'title' => 'Categories [modified]',

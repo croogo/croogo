@@ -90,7 +90,7 @@ class MenusControllerTest extends CakeTestCase {
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Menus->data = array(
+        $this->Menus->request->data = array(
             'Menu' => array(
                 'title' => 'New Menu',
                 'alias' => 'new',
@@ -115,7 +115,7 @@ class MenusControllerTest extends CakeTestCase {
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Menus->data = array(
+        $this->Menus->request->data = array(
             'Menu' => array(
                 'id' => 3, // main
                 'title' => 'Main Menu [modified]',

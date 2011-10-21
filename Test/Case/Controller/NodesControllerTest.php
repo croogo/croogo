@@ -92,7 +92,7 @@ class NodesControllerTest extends CakeTestCase {
             'role_id' => 1,
             'username' => 'admin',
         ));
-        $this->Nodes->data = array(
+        $this->Nodes->request->data = array(
             'Node' => array(
                 'title' => 'New Blog',
                 'slug' => 'new-blog',
@@ -124,7 +124,7 @@ class NodesControllerTest extends CakeTestCase {
             'role_id' => 1,
             'username' => 'admin',
         ));
-        $this->Nodes->data = array(
+        $this->Nodes->request->data = array(
             'Node' => array(
                 'id' => 1,
                 'title' => 'Hello World [modified]',

@@ -97,7 +97,7 @@ class TermsControllerTest extends CakeTestCase {
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Terms->data = array(
+        $this->Terms->request->data = array(
             'Taxonomy' => array(
                 'parent_id' => null,
             ),
@@ -132,7 +132,7 @@ class TermsControllerTest extends CakeTestCase {
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Terms->data = array(
+        $this->Terms->request->data = array(
             'Taxonomy' => array(
                 'parent_id' => 1, // Uncategorized
             ),
@@ -163,7 +163,7 @@ class TermsControllerTest extends CakeTestCase {
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Terms->data = array(
+        $this->Terms->request->data = array(
             'Taxonomy' => array(
                 'parent_id' => null,
             ),

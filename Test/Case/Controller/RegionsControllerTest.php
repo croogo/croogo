@@ -90,7 +90,7 @@ class RegionsControllerTest extends CakeTestCase {
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Regions->data = array(
+        $this->Regions->request->data = array(
             'Region' => array(
                 'title' => 'new_region',
                 'alias' => 'new_region',
@@ -115,7 +115,7 @@ class RegionsControllerTest extends CakeTestCase {
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Regions->data = array(
+        $this->Regions->request->data = array(
             'Region' => array(
                 'id' => 4, // right
                 'title' => 'right_modified',

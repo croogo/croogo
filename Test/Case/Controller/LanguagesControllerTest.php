@@ -90,7 +90,7 @@ class LanguagesControllerTest extends CakeTestCase {
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Languages->data = array(
+        $this->Languages->request->data = array(
             'Language' => array(
                 'title' => 'Bengali',
                 'alias' => 'ben',
@@ -115,7 +115,7 @@ class LanguagesControllerTest extends CakeTestCase {
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Languages->data = array(
+        $this->Languages->request->data = array(
             'Language' => array(
                 'id' => 1,
                 'title' => 'English [modified]',

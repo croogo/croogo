@@ -100,7 +100,7 @@ class LinksControllerTest extends CakeTestCase {
             'username' => 'admin',
         ));
         $mainMenu = ClassRegistry::init('Menu')->findByAlias('main');
-        $this->Links->data = array(
+        $this->Links->request->data = array(
             'Link' => array(
                 'menu_id' => $mainMenu['Menu']['id'],
                 'title' => 'Test link',
@@ -136,7 +136,7 @@ class LinksControllerTest extends CakeTestCase {
                 'Link.link' => '/',
             ),
         ));
-        $this->Links->data = array(
+        $this->Links->request->data = array(
             'Link' => array(
                 'id' => $homeLink['Link']['id'],
                 'menu_id' => $homeLink['Link']['menu_id'],

@@ -93,7 +93,7 @@ class RolesControllerTest extends CakeTestCase {
             'role_id' => 1,
             'username' => 'admin',
         ));
-        $this->Roles->data = array(
+        $this->Roles->request->data = array(
             'Role' => array(
                 'title' => 'new_role',
                 'alias' => 'new_role',
@@ -119,7 +119,7 @@ class RolesControllerTest extends CakeTestCase {
             'role_id' => 1,
             'username' => 'admin',
         ));
-        $this->Roles->data = array(
+        $this->Roles->request->data = array(
             'Role' => array(
                 'id' => 2, // Registered
                 'title' => 'Registered [modified]',

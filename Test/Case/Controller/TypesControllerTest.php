@@ -90,7 +90,7 @@ class TypesControllerTest extends CakeTestCase {
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Types->data = array(
+        $this->Types->request->data = array(
             'Type' => array(
                 'title' => 'New Type',
                 'alias' => 'new_type',
@@ -115,7 +115,7 @@ class TypesControllerTest extends CakeTestCase {
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Types->data = array(
+        $this->Types->request->data = array(
             'Type' => array(
                 'id' => 1, // page
                 'description' => '[modified]',

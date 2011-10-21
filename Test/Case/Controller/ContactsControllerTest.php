@@ -90,7 +90,7 @@ class ContactsControllerTest extends CakeTestCase {
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Contacts->data = array(
+        $this->Contacts->request->data = array(
             'Contact' => array(
                 'title' => 'New contact',
                 'alias' => 'new_contact',
@@ -115,7 +115,7 @@ class ContactsControllerTest extends CakeTestCase {
             'id' => 1,
             'username' => 'admin',
         ));
-        $this->Contacts->data = array(
+        $this->Contacts->request->data = array(
             'Contact' => array(
                 'id' => 1,
                 'title' => 'Contact [modified]',
@@ -153,7 +153,7 @@ class ContactsControllerTest extends CakeTestCase {
     public function testView() {
         $this->Contacts->request->params['action'] = 'view';
         $this->Contacts->request->params['url']['url'] = 'contacts/view/contact';
-        $this->Contacts->data = array(
+        $this->Contacts->request->data = array(
             'Message' => array(
                 'name' => 'John Smith',
                 'email' => 'john.smith@example.com',
