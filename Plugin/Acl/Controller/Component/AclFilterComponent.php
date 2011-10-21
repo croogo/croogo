@@ -19,7 +19,7 @@ class AclFilterComponent extends Component {
  * @param object $controller controller
  * @param array  $settings   settings
  */
-    public function initialize(&$controller, $settings = array()) {
+    public function initialize(&$controller) {
         $this->controller =& $controller;
     }
 
