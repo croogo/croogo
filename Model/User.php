@@ -76,6 +76,9 @@ class User extends AppModel {
             'rule' => array('minLength', 6),
             'message' => 'Passwords must be at least 6 characters long.',
         ),
+        'current_password' => array(
+            'rule' => '_identical',
+            ),
         'name' => array(
             'rule' => 'notEmpty',
             'message' => 'This field cannot be left blank.',
@@ -115,6 +118,16 @@ class User extends AppModel {
         }
     }
 
+    protected function _identical($check) {
+        if (isset($this->data['User']['password'])) {
+            if ($this->data['User']['password'] == $check['current_password']) {
+                return true;
+            } else {
+                return __('Current password did not match. Please, try again.');
+            }
+        }
+        return true;
+    }
 
 }
 ?>

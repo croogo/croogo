@@ -116,16 +116,11 @@ class UsersController extends AppController {
             $this->redirect(array('action' => 'index'));
         }
         if (!empty($this->request->data)) {
-            $user = $this->User->findById($id);
-            if ($user['User']['password'] == Security::hash($this->request->data['User']['current_password'], null, true)) {
-                if ($this->User->save($this->request->data)) {
-                    $this->Session->setFlash(__('Password has been reset.'), 'default', array('class' => 'success'));
-                    $this->redirect(array('action' => 'index'));
-                } else {
-                    $this->Session->setFlash(__('Password could not be reset. Please, try again.'), 'default', array('class' => 'error'));
-                }
+            if ($this->User->save($this->request->data)) {
+                $this->Session->setFlash(__('Password has been reset.'), 'default', array('class' => 'success'));
+                $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('Current password did not match. Please, try again.'), 'default', array('class' => 'error'));
+                $this->Session->setFlash(__('Password could not be reset. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
         if (empty($this->request->data)) {
@@ -268,7 +263,6 @@ class UsersController extends AppController {
 
         if (!empty($this->request->data) && isset($this->request->data['User']['password'])) {
             $this->User->id = $user['User']['id'];
-            $user['User']['password'] = Security::hash($this->request->data['User']['password'], null, true);
             $user['User']['activation_key'] = md5(uniqid());
             if ($this->User->save($user['User'])) {
                 $this->Session->setFlash(__('Your password has been reset successfully.'), 'default', array('class' => 'success'));
