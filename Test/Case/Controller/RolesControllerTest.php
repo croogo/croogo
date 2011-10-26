@@ -30,7 +30,9 @@ class TestRolesController extends RolesController {
     }
 }
 
-class RolesControllerTest extends CakeTestCase {
+App::uses('CroogoTestCase', 'TestSuite');
+
+class RolesControllerTest extends CroogoTestCase {
 
     public $fixtures = array(
         'aco',

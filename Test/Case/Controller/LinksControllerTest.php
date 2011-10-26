@@ -30,7 +30,9 @@ class TestLinksController extends LinksController {
     }
 }
 
-class LinksControllerTest extends CakeTestCase {
+App::uses('CroogoTestCase', 'TestSuite');
+
+class LinksControllerTest extends CroogoTestCase {
 
     public $fixtures = array(
         'aco',

@@ -30,7 +30,9 @@ class TestLanguagesController extends LanguagesController {
     }
 }
 
-class LanguagesControllerTest extends CakeTestCase {
+App::uses('CroogoTestCase', 'TestSuite');
+
+class LanguagesControllerTest extends CroogoTestCase {
 
     public $fixtures = array(
         'aco',

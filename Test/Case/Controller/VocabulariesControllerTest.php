@@ -30,7 +30,9 @@ class TestVocabulariesController extends VocabulariesController {
     }
 }
 
-class VocabulariesControllerTest extends CakeTestCase {
+App::uses('CroogoTestCase', 'TestSuite');
+
+class VocabulariesControllerTest extends CroogoTestCase {
 
     public $fixtures = array(
         'aco',

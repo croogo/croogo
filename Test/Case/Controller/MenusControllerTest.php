@@ -30,7 +30,9 @@ class TestMenusController extends MenusController {
     }
 }
 
-class MenusControllerTest extends CakeTestCase {
+App::uses('CroogoTestCase', 'TestSuite');
+
+class MenusControllerTest extends CroogoTestCase {
 
     public $fixtures = array(
         'aco',
