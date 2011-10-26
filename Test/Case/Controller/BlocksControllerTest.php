@@ -59,10 +59,11 @@ class BlocksControllerTest extends CakeTestCase {
     );
 
     public function startTest() {
-        $request = new CakeRequest('admin/blocks/index');
+        $request = new CakeRequest();
         $response = new CakeResponse();
         $this->Blocks = new TestBlocksController($request, $response);
         $this->Blocks->constructClasses();
+        $request->params['controller'] = 'blocks';
         $request->params['pass'] = $request->params['named'] = array();
     }
 
