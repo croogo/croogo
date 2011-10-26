@@ -96,7 +96,7 @@ class ExtensionsThemesController extends AppController {
                 $this->redirect(array('action' => 'index'));
             }
             if (is_dir(APP.'View'.DS.'Themed'.DS.$themeAlias) ||
-                is_dir(APP.'webroot'.DS.'themed'.DS.$themeAlias)) {
+                is_dir(APP.'webroot'.DS.'theme'.DS.$themeAlias)) {
                 $this->Session->setFlash(__('Directory with theme alias already exists.'), 'default', array('class' => 'error'));
                 $this->redirect(array('action' => 'add'));
             }
