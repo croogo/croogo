@@ -17,14 +17,14 @@
         <?php
             if (isset($this->params['named'])) {
                 foreach ($this->params['named'] AS $nn => $nv) {
-                    $paginator->options['url'][] = $nn . ':' . $nv;
+                    $this->Paginator->options['url'][] = $nn . ':' . $nv;
                 }
             }
 
             __('Sort by:');
-            echo ' ' . $paginator->sort('id');
-            echo ', ' . $paginator->sort('title');
-            echo ', ' . $paginator->sort('created');
+            echo ' ' . $this->Paginator->sort('id');
+            echo ', ' . $this->Paginator->sort('title');
+            echo ', ' . $this->Paginator->sort('created');
         ?>
     </div>
     
@@ -47,5 +47,5 @@
         </li>
     <?php } ?>
     </ul>
-    <div class="paging"><?php echo $paginator->numbers(); ?></div>
+    <div class="paging"><?php echo $this->Paginator->numbers(); ?></div>
 </div>

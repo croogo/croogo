@@ -6,7 +6,7 @@
             __('No items found.');
         } else {
             foreach ($this->params['named'] AS $nn => $nv) {
-                $paginator->options['url'][$nn] = $nv;
+                $this->Paginator->options['url'][$nn] = $nv;
             }
         }
     ?>
