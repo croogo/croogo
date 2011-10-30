@@ -683,7 +683,7 @@ class LayoutHelper extends AppHelper {
         if (is_array($tabs)) {
             foreach ($tabs AS $title => $tab) {
                 if (!isset($tab['options']['type']) || (isset($tab['options']['type']) && (in_array($this->View->viewVars['typeAlias'], $tab['options']['type'])))) {
-                    $domId = strtolower(Inflector::singularize($this->params['controller'])) . '-' . strtolower($title);
+                    $domId = strtolower(Inflector::singularize($this->params['controller'])) . '-' . strtolower(Inflector::slug($title, '-'));
                     if ($this->adminTabs) {
                         if (strstr($tab['element'], '.')) {
                             $elementE = explode('.', $tab['element']);
