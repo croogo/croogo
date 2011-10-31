@@ -270,7 +270,7 @@ class CommentsController extends AppController {
         if (!empty($this->request->data) &&
             $type['Type']['comment_captcha'] &&
             $continue === true &&
-            !$this->Recaptcha->valid($this->params['form'])) {
+            !$this->Recaptcha->valid($this->request)) {
             $continue = false;
             $this->Session->setFlash(__('Invalid captcha entry'), 'default', array('class' => 'error'));
         }
