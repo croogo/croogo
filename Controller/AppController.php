@@ -154,7 +154,8 @@ class AppController extends Controller {
         default:
             break;
         }
-        $this->render('../Elements/blank');
+        $this->set(compact('type'));
+        $this->render('../Errors/security');
     }
 
 }
