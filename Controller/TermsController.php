@@ -30,8 +30,8 @@ class TermsController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         $this->vocabularyId = null;
-        if (isset($this->params['named']['vocabulary'])) {
-            $this->vocabularyId = $this->params['named']['vocabulary'];
+        if (isset($this->request->params['named']['vocabulary'])) {
+            $this->vocabularyId = $this->request->params['named']['vocabulary'];
         }
         $this->set('vocabulary', $this->vocabularyId);
     }

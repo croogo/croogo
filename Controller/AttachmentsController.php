@@ -99,7 +99,7 @@ class AttachmentsController extends AppController {
     public function admin_add() {
         $this->set('title_for_layout', __('Add Attachment'));
 
-        if (isset($this->params['named']['editor'])) {
+        if (isset($this->request->params['named']['editor'])) {
             $this->layout = 'admin_full';
         }
 
@@ -138,7 +138,7 @@ class AttachmentsController extends AppController {
 
                 $this->Session->setFlash(__('The Attachment has been saved'), 'default', array('class' => 'success'));
 
-                if (isset($this->params['named']['editor'])) {
+                if (isset($this->request->params['named']['editor'])) {
                     $this->redirect(array('action' => 'browse'));
                 } else {
                     $this->redirect(array('action'=>'index'));

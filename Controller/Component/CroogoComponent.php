@@ -93,7 +93,7 @@ class CroogoComponent extends Component {
             $this->roleId = $this->Session->read('Auth.User.role_id');
         }
 
-        if (!isset($this->controller->params['admin']) && !isset($this->controller->params['requested'])) {
+        if (!isset($this->controller->request->params['admin']) && !isset($this->controller->request->params['requested'])) {
             $this->blocks();
             $this->menus();
             $this->vocabularies();
@@ -421,7 +421,7 @@ class CroogoComponent extends Component {
  * @return array
  */
     public function extractFilter() {
-        $filter = explode(';', $this->controller->params['named']['filter']);
+        $filter = explode(';', $this->controller->request->params['named']['filter']);
         $filterData = array();
         foreach ($filter AS $f) {
             $fData = explode(':', $f);

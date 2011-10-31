@@ -91,7 +91,7 @@ class AppController extends Controller {
         parent::__construct($request, $response);
         if ($this->name == 'CakeError') {
             $this->_set(Router::getPaths());
-            $this->params = Router::getParams();
+            $this->request->params = Router::getParams();
             $this->constructClasses();
             $this->startupProcess();
         }
@@ -107,7 +107,7 @@ class AppController extends Controller {
         $this->RequestHandler->setContent('json', 'text/x-json');
         $this->Security->blackHoleCallback = '__securityError';
 
-        if (isset($this->params['admin']) && $this->name != 'CakeError') {
+        if (isset($this->request->params['admin']) && $this->name != 'CakeError') {
             $this->layout = 'admin';
         }
 
@@ -115,21 +115,21 @@ class AppController extends Controller {
             $this->layout = 'ajax';
         }
 
-        if (Configure::read('Site.theme') && !isset($this->params['admin'])) {
+        if (Configure::read('Site.theme') && !isset($this->request->params['admin'])) {
             $this->theme = Configure::read('Site.theme');
-        } elseif (Configure::read('Site.admin_theme') && isset($this->params['admin'])) {
+        } elseif (Configure::read('Site.admin_theme') && isset($this->request->params['admin'])) {
             $this->theme = Configure::read('Site.admin_theme');
         }
 
-        if (!isset($this->params['admin']) && 
+        if (!isset($this->request->params['admin']) && 
             Configure::read('Site.status') == 0) {
             $this->layout = 'maintenance';
             $this->set('title_for_layout', __('Site down for maintenance'));
             $this->render('../Elements/blank');
         }
 
-        if (isset($this->params['locale'])) {
-            Configure::write('Config.language', $this->params['locale']);
+        if (isset($this->request->params['locale'])) {
+            Configure::write('Config.language', $this->request->params['locale']);
         }
     }
 /**

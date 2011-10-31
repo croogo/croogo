@@ -36,11 +36,11 @@ class MessagesController extends AppController {
 
         $this->Message->recursive = 0;
         $this->paginate['Message']['conditions'] = array('Message.status' => 0);
-        if (isset($this->params['named']['contact'])) {
-            $this->paginate['Message']['conditions'] = $this->params['named']['contact'];
+        if (isset($this->request->params['named']['contact'])) {
+            $this->paginate['Message']['conditions'] = $this->request->params['named']['contact'];
         }
 
-        if (isset($this->params['named']['filter'])) {
+        if (isset($this->request->params['named']['filter'])) {
             $filters = $this->Croogo->extractFilter();
             foreach ($filters AS $filterKey => $filterValue) {
                 if (strpos($filterKey, '.') === false) {

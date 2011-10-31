@@ -39,15 +39,15 @@ class UsersController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
 
-        if ($this->request->is('post') && in_array($this->params['action'], array('admin_login', 'login'))) {
+        if ($this->request->is('post') && in_array($this->request->params['action'], array('admin_login', 'login'))) {
             $field = $this->Auth->authenticate['all']['fields']['username'];
             if (!empty($this->request->data) && empty($this->request->data['User'][$field])) {
-                $this->redirect(array('action' => $this->params['action']));
+                $this->redirect(array('action' => $this->request->params['action']));
             }
             $cacheName = 'auth_failed_' . $this->request->data['User'][$field];
             if (Cache::read($cacheName, 'users_login') >= Configure::read('User.failed_login_limit')) {
                 $this->Session->setFlash(__('You have reached maximum limit for failed login attempts. Please try again after a few minutes.'), 'default', array('class' => 'error'));
-                $this->redirect(array('action' => $this->params['action']));
+                $this->redirect(array('action' => $this->request->params['action']));
             }
         }
     }
@@ -55,7 +55,7 @@ class UsersController extends AppController {
     public function beforeRender() {
         parent::beforeRender();
 
-        if (in_array($this->params['action'], array('admin_login', 'login'))) {
+        if (in_array($this->request->params['action'], array('admin_login', 'login'))) {
             if ($this->request->is('post') && !empty($this->request->data)) {
                 $field = $this->Auth->authenticate['all']['fields']['username'];
                 $cacheName = 'auth_failed_' . $this->request->data['User'][$field];
