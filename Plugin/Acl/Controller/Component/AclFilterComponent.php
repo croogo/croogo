@@ -36,6 +36,9 @@ class AclFilterComponent extends Component {
                 'fields' => array(
                     'username' => 'username',
                     ),
+                'scope' => array(
+                    'User.status' => 1,
+                    ),
                 ),
             'Form',
             );
@@ -58,9 +61,6 @@ class AclFilterComponent extends Component {
             'plugin' => null,
             'controller' => 'users',
             'action' => 'index',
-        );
-        $this->controller->Auth->userScope = array(
-            'User.status' => 1,
         );
 
         if ($this->controller->Auth->user() && $this->controller->Auth->user('role_id') == 1) {
