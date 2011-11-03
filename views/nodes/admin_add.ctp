@@ -70,7 +70,11 @@
                         ?>
                         <div class="clear">&nbsp;</div>
                     </div>
-                    <a href="#" class="add-meta"><?php __('Add another field'); ?></a>
+					<?php echo $this->Html->link(
+						__('Add another field', true),
+						array('action' => 'add_meta'),
+						array('class' => 'add-meta')
+					); ?>
                 </div>
 
                 <div id="node-access">
