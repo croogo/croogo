@@ -131,6 +131,19 @@ class AppController extends Controller {
         }
     }
 /**
+ * afterFilter callback
+ * Disable debug mode on JSON pages to prevent the script execution time to be appended to the page
+ *
+ * @see http://croogo.lighthouseapp.com/projects/32818/tickets/216
+ * @return void
+ */
+	public function afterFilter() {
+		parent::afterFilter();
+		if (!empty($this->params['url']['ext']) && $this->params['url']['ext'] === 'json') {
+			Configure::write('debug', 0);
+		}
+	}
+/**
  * blackHoleCallback for SecurityComponent
  *
  * @return void
