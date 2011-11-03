@@ -638,7 +638,11 @@ class LayoutHelper extends AppHelper {
         $fields .= $this->Form->input('Meta.'.$uuid.'.value', $options['value']);
         $fields = $this->Html->tag('div', $fields, array('class' => 'fields'));
 
-        $actions = $this->Html->link(__('Remove', true), '#', array('class' => 'remove-meta', 'rel' => $id), null, null, false);
+        $actions = $this->Html->link(
+			__('Remove', true),
+			is_null($id) ? '#' : array('plugin' => null, 'controller' => 'nodes', 'action' => 'delete_meta', $id),
+			array('class' => 'remove-meta', 'rel' => $id)
+		);
         $actions = $this->Html->tag('div', $actions, array('class' => 'actions'));
 
         $output = $this->Html->tag('div', $actions . $fields, array('class' => 'meta'));

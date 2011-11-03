@@ -80,13 +80,14 @@ Nodes.filter = function() {
  * @return void
  */
 Nodes.addMeta = function() {
-    $('a.add-meta').click(function() {
-        $.get(Croogo.basePath+'admin/nodes/add_meta/', function(data) {
-            $('#meta-fields div.clear').before(data);
+    $('a.add-meta').click(function(e) {
+		var aAddMeta = $(this);
+        $.get(aAddMeta.attr('href'), function(data) {
+            aAddMeta.parent().find('.clear:first').before(data);
             $('div.meta a.remove-meta').unbind();
             Nodes.removeMeta();
         });
-        return false;
+		e.preventDefault();
     });
 }
 
@@ -96,10 +97,10 @@ Nodes.addMeta = function() {
  * @return void
  */
 Nodes.removeMeta = function() {
-    $('div.meta a.remove-meta').click(function() {
+    $('div.meta a.remove-meta').click(function(e) {
         var aRemoveMeta = $(this);
         if (aRemoveMeta.attr('rel') != '') {
-            $.getJSON(Croogo.basePath+'admin/nodes/delete_meta/'+$(this).attr('rel')+'.json', function(data) {
+            $.getJSON(aRemoveMeta.attr('href') + '.json', function(data) {
                 if (data.success) {
                     aRemoveMeta.parents('.meta').remove();
                 } else {
@@ -109,7 +110,7 @@ Nodes.removeMeta = function() {
         } else {
             aRemoveMeta.parents('.meta').remove();
         }
-        return false;
+        e.preventDefault();
     });
 }
 
