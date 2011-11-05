@@ -220,7 +220,9 @@ class NodesController extends AppController {
             $this->data['Node']['visibility_roles'] = $this->Node->encodeData($this->data['Role']['Role']);
             if ($this->Node->saveWithMeta($this->data)) {
                 $this->Session->setFlash(sprintf(__('%s has been saved', true), $type['Type']['title']), 'default', array('class' => 'success'));
-                if (! isset($this->params['form']['apply'])) {
+                if (isset($this->params['form']['apply'])) {
+                    $this->redirect(array('action'=>'edit', $this->Node->id));
+				} else {
                     $this->redirect(array('action'=>'index'));
                 }
             } else {
