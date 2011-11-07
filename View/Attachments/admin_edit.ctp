@@ -7,6 +7,7 @@
             <ul>
                 <li><a href="#node-basic"><span><?php echo __('Attachment'); ?></span></a></li>
                 <li><a href="#node-info"><span><?php echo __('Info'); ?></span></a></li>
+                <?php echo $this->Layout->adminTabs(); ?>
             </ul>
 
             <div id="node-basic">
@@ -36,6 +37,7 @@
                     echo $this->Form->input('file_type', array('label' => __('Mime Type'), 'value' => $this->data['Node']['mime_type'], 'readonly' => 'readonly'));
                 ?>
             </div>
+            <?php echo $this->Layout->adminTabs(); ?>
         </div>
     </fieldset>
     
