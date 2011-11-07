@@ -260,7 +260,7 @@ class LayoutHelper extends AppHelper {
                     $element = 'block';
                 }
                 if ($plugin) {
-                    $blockOutput = $this->_View->element($element, array('block' => $block, 'plugin' => $plugin));
+                    $blockOutput = $this->_View->element($element, array('block' => $block), array('plugin' => $plugin));
                 } else {
                     $blockOutput = $this->_View->element($element, array('block' => $block));
                 }
@@ -684,7 +684,7 @@ class LayoutHelper extends AppHelper {
                             $plugin = null;
                         }
                         $output .= '<div id="' . $domId . '">';
-                        $output .= $this->_View->element($element, array(
+                        $output .= $this->_View->element($element, array(), array(
                             'plugin' => $plugin,
                         ));
                         $output .= '</div>';
