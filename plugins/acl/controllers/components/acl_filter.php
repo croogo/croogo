@@ -22,31 +22,91 @@ class AclFilterComponent extends Object {
     }
 
 /**
+ * Configure Auth component
+ * Auth settings can be configured using Acl.Auth keys.
+ * Currently, the following settings are applicable:
+ *   - loginAction
+ *   - loginRedirect
+ *   - logoutRedirect
+ *   - userScope
+ *   - authError
+ *   - loginError
+ *   - fields
+ */
+    private function _setupAuth() {
+        $this->controller->Auth->authorize = 'controller';
+
+        $userModel = Configure::read('Acl.Auth.userModel');
+        if (empty($userModel)) {
+            $userModel = 'User';
+            Configure::write('Acl.Auth.userModel', $userModel);
+        }
+        $this->controller->Auth->userModel = $userModel;
+
+        $fields = Configure::read('Acl.Auth.fields');
+        if (empty($fields)) {
+            $fields = array('username' => 'username', 'password' => 'password');
+            Configure::write('Acl.Auth.fields', $fields);
+        }
+        $this->controller->Auth->fields = $fields;
+
+        $loginAction = array(
+            'plugin' => null,
+            'controller' => 'users',
+            'action' => 'login',
+        );
+        if (!isset($this->controller->params['admin'])) {
+            $loginAction = Set::merge($loginAction, Configure::read('Acl.Auth.loginAction'));
+            Configure::write('Acl.Auth.loginAction', $loginAction);
+        }
+        $this->controller->Auth->loginAction = $loginAction;
+
+        $logoutRedirect = Configure::read('Acl.Auth.logoutRedirect');
+        if (empty($logoutRedirect)) {
+            $logoutRedirect = array(
+                'plugin' => null,
+                'controller' => 'users',
+                'action' => 'login',
+                );
+            Configure::write('Acl.Auth.logoutRedirect', $logoutRedirect);
+        }
+        $this->controller->Auth->logoutRedirect = $logoutRedirect;
+
+        $loginRedirect = Configure::read('Acl.Auth.loginRedirect');
+        if (empty($loginRedirect)) {
+            $loginRedirect = array(
+                'plugin' => null,
+                'controller' => 'users',
+                'action' => 'index',
+                );
+            Configure::write('Acl.Auth.loginRedirect', $loginRedirect);
+        }
+        $this->controller->Auth->loginRedirect = $loginRedirect;
+
+        $userScope = Configure::read('Acl.Auth.userScope');
+        if (empty($userScope)) {
+            $userScope = array('User.status' => 1);
+            Configure::write('Acl.Auth.userScope', $userScope);
+        }
+        $this->controller->Auth->userScope = $userScope;
+
+        if ($authError = Configure::read('Acl.Auth.authError')) {
+            $this->controller->Auth->authError = $authError;
+        }
+
+        if ($loginError = Configure::read('Acl.Auth.loginError')) {
+            $this->controller->Auth->loginError = $loginError;
+        }
+    }
+
+/**
  * acl and auth
  *
  * @return void
  */
     public function auth() {
-        //Configure AuthComponent
-        $this->controller->Auth->authorize = 'actions';
-        $this->controller->Auth->loginAction = array(
-            'plugin' => null,
-            'controller' => 'users',
-            'action' => 'login',
-        );
-        $this->controller->Auth->logoutRedirect = array(
-            'plugin' => null,
-            'controller' => 'users',
-            'action' => 'login',
-        );
-        $this->controller->Auth->loginRedirect = array(
-            'plugin' => null,
-            'controller' => 'users',
-            'action' => 'index',
-        );
-        $this->controller->Auth->userScope = array(
-            'User.status' => 1,
-        );
+        $this->_setupAuth();
+
         $this->controller->Auth->actionPath = 'controllers/';
 
         if ($this->controller->Auth->user() && $this->controller->Auth->user('role_id') == 1) {

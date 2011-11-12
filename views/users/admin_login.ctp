@@ -1,9 +1,9 @@
 <div class="users form">
-    <?php echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'login')));?>
+    <?php echo $this->Form->create($userModel, array('url' => $loginAction));?>
         <fieldset>
         <?php
-            echo $this->Form->input('username');
-            echo $this->Form->input('password');
+            echo $this->Form->input($fields['username']);
+            echo $this->Form->input($fields['password']);
         ?>
         </fieldset>
     <?php
