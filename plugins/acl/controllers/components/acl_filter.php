@@ -49,6 +49,12 @@ class AclFilterComponent extends Object {
         );
         $this->controller->Auth->actionPath = 'controllers/';
 
+		if ($customAuthCfg = Configure::read('User.Auth')) {
+			foreach ($customAuthCfg as $attribute => $customValue) {
+				$this->controller->Auth->{$attribute} = $customValue;
+			}
+		}
+
         if ($this->controller->Auth->user() && $this->controller->Auth->user('role_id') == 1) {
             // Role: Admin
             $this->controller->Auth->allowedActions = array('*');
