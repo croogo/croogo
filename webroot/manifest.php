@@ -1,14 +1,20 @@
-name: Default
-description: Default theme for Croogo
-screenshot: screenshot.png
+<?php
 
-author: Fahad Ibnay Heylaal
-authorEmail: contact@fahad19.com
-authorUrl: http://fahad19.com
+$themeManifest = array(
+	'name' => 'Default',
+	'description' => 'Default theme for Croogo',
+	'screenshot' => 'screenshot.png',
 
-menus:
-  - main
-  - footer
+	'author' => 'Fahad Ibnay Heylaal',
+	'authorEmail' => 'contact@fahad19.com',
+	'authorUrl' => 'http://fahad19.com',
 
-regions:
-  - right
+	'menus' => array(
+		'main',
+		'footer',
+		),
+
+	'regions' => array(
+		'right',
+		),
+	);

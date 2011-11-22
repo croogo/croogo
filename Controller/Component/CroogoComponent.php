@@ -674,7 +674,7 @@ class CroogoComponent extends Component {
             foreach ($themeFolders['0'] AS $themeFolder) {
                 $this->folder->path = $viewPath . 'Themed' . DS . $themeFolder . DS . 'webroot';
                 $themeFolderContent = $this->folder->read();
-                if (in_array('theme.yml', $themeFolderContent['1'])) {
+                if (in_array('manifest.php', $themeFolderContent['1'])) {
                     $themes[$themeFolder] = $themeFolder;
                 }
             }
@@ -682,27 +682,36 @@ class CroogoComponent extends Component {
         return $themes;
     }
 /**
- * Get the content of theme.yml file
+ * Get the content of manifest.php file from a theme
  *
  * @param string $alias theme folder name
  * @return array
  */
     public function getThemeData($alias = null) {
         if ($alias == null || $alias == 'default') {
-            $ymlLocation = WWW_ROOT . 'theme.yml';
+            $manifestFile = WWW_ROOT . 'manifest.php';
         } else {
             $viewPaths = App::path('views');
             foreach ($viewPaths AS $viewPath) {
-                if (file_exists($viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'theme.yml')) {
-                    $ymlLocation = $viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'theme.yml';
+                if (file_exists($viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'manifest.php')) {
+                    $manifestFile = $viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'manifest.php';
                     continue;
                 }
             }
-            if (!isset($ymlLocation)) {
-                $ymlLocation = WWW_ROOT . 'theme.yml';
+            if (!isset($manifestFile)) {
+                $manifestFile = WWW_ROOT . 'manifest.php';
             }
         }
-        $themeData = Spyc::YAMLLoad(file_get_contents($ymlLocation));
+        if (isset($manifestFile) && file_exists($manifestFile)) {
+            include $manifestFile;
+            if (isset($themeManifest)) {
+                $themeData = $themeManifest;
+            } else {
+                $themeData = array();
+            }
+        } else {
+            $themeData = array();
+        }
         return $themeData;
     }
 /**
