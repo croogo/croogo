@@ -1,14 +1,18 @@
-name: Default
-description: Default theme for Croogo
-screenshot: screenshot.png
+{
+	"name" : "Default",
+	"description" : "Default theme for Croogo",
+	"screenshot" : "screenshot.png",
 
-author: Fahad Ibnay Heylaal
-authorEmail: contact@fahad19.com
-authorUrl: http://fahad19.com
+	"author" : "Fahad Ibnay Heylaal",
+	"authorEmail" : "contact@fahad19.com",
+	"authorUrl" : "http://fahad19.com",
 
-menus:
-  - main
-  - footer
+	"menus" : [
+		"main",
+		"footer"
+		],
 
-regions:
-  - right
+	"regions" : [
+		"right"
+		]
+}
