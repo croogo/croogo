@@ -723,7 +723,7 @@ class CroogoComponent extends Component {
                     $this->folder->path = $pluginPath . $pluginFolder . DS . 'Config';
                     if (!file_exists($this->folder->path)) { continue; }
                     $pluginFolderContent = $this->folder->read();
-                    if (in_array('plugin.yml', $pluginFolderContent[1])) {
+                    if (in_array('manifest.php', $pluginFolderContent[1])) {
                         $plugins[$pluginFolder] = $pluginFolder;
                     }
                 }
@@ -732,7 +732,7 @@ class CroogoComponent extends Component {
         return $plugins;
     }
 /**
- * Get the content of plugin.yml file
+ * Get the content of manifest.php file of a plugin
  *
  * @param string $alias plugin folder name
  * @return array
@@ -740,10 +740,16 @@ class CroogoComponent extends Component {
     public function getPluginData($alias = null) {
         $pluginPaths = App::path('plugins');
         foreach ($pluginPaths AS $pluginPath) {
-            $ymlLocation = $pluginPath . $alias . DS . 'Config' . DS . 'plugin.yml';
-            if (file_exists($ymlLocation)) {
-                $pluginData = Spyc::YAMLLoad(file_get_contents($ymlLocation));
-                $pluginData['active'] = $this->pluginIsActive($alias);
+            $manifestFile = $pluginPath . $alias . DS . 'Config' . DS . 'manifest.php';
+            if (file_exists($manifestFile)) {
+                include $manifestFile;
+                if (isset($pluginManifest)) {
+                    $pluginData = $pluginManifest;
+                    $pluginData['active'] = $this->pluginIsActive($alias);
+                    unset($pluginManifest);
+                } else {
+                    $pluginData = array();
+                }
                 return $pluginData;
             }
         }

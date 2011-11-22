@@ -1,11 +1,17 @@
-name: Example
-description: Example plugin for demonstrating hook system
+<?php
 
-author: Author Name
-authorEmail: author@example.com
-authorUrl: http://example.com
+$pluginManifest = array(
+	'name'=> 'Example',
+	'description'=> 'Example plugin for demonstrating hook system',
 
-dependencies:
-  plugins:
-    - acl
-    - extensions
+	'author'=> 'Author Name',
+	'authorEmail'=> 'author@example.com',
+	'authorUrl'=> 'http://example.com',
+
+	'dependencies'=> array(
+		'plugins'=> array(
+			'acl',
+			'extensions',
+			),
+		),
+	);

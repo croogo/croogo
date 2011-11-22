@@ -1,6 +1,10 @@
-name: Translate
-description: Manages translation of content (i18n)
+<?php
 
-author: Fahad Ibnay Heylaal
-authorEmail: contact@fahad19.com
-authorUrl: http://fahad19.com
+$pluginManifest = array(
+	'name' => 'Translate',
+	'description' => 'Manages translation of content (i18n)',
+
+	'author' => 'Fahad Ibnay Heylaal',
+	'authorEmail' => 'contact@fahad19.com',
+	'authorUrl' => 'http://fahad19.com',
+	);
