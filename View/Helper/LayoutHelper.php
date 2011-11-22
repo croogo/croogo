@@ -838,5 +838,34 @@ class LayoutHelper extends AppHelper {
         return $output;
     }
 
+/** Generate Admin menus added by CroogoNav::add()
+ *
+ * @param array $menus
+ * @return string menu html tags
+ */
+    function adminMenus($menus) {
+        $out = null;
+        $sorted = Set::sort($menus, '{[a-z]+}.weight', 'ASC');
+        if (empty($this->Role)) {
+            $this->Role = ClassRegistry::init('Role');
+            $this->Role->Behaviors->attach('Aliasable');
+        }
+        $currentRole = $this->Role->byId($this->getRoleId());
+        foreach ($sorted as $menu) {
+            if ($currentRole != 'admin' && !in_array($currentRole, $menu['access'])) {
+                continue;
+            }
+            $link = $this->Html->link($menu['title'], $menu['url'], $menu['htmlAttributes']);
+            if (!empty($menu['children'])) {
+                $children = $this->adminMenus($menu['children'], true);
+                $link  = $this->Html->link($menu['title'], $menu['url'], $menu['htmlAttributes']);
+                $out  .= $this->Html->tag('li', $link. $children);
+            } else {
+                $out  .= $this->Html->tag('li', $link);
+            }
+        }
+        return $this->Html->tag('ul', $out, array('class' => 'sf-menu'));
+    }
+
 }
 ?>
