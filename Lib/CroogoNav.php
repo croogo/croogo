@@ -46,7 +46,33 @@ class CroogoNav extends Object {
 			static::add($parent, $o);
 		}
 		static::_setupOptions($options);
-		static::$_items = Set::insert(static::$_items, $path, $options);
+		$current = Set::extract($path, static::$_items);
+		if (!empty($current)) {
+			$current = Set::merge($current, $options);
+			static::_replace(static::$_items, $path, $current);
+		} else {
+			static::$_items = Set::insert(static::$_items, $path, $options);
+		}
+	}
+
+	/**
+	 * Replace a menu element
+	 *
+	 * @param array $target pointer to start of array
+	 * @param string $path path to search for in dot separated format
+	 * @param array $options data to replace with
+	 * @return void
+	 */
+	protected static function _replace(&$target, $path, $options) {
+		$pathE = explode('.', $path);
+		$path = join('.', array_splice($pathE, 1));
+		if (count($pathE) > 1) {
+			foreach ($pathE as $fragment) {
+				static::_merge($target[$fragment], $path, $options);
+			}
+		} else {
+			$target[$pathE[0]] = $options;
+		}
 	}
 
 	/**
