@@ -841,9 +841,16 @@ class LayoutHelper extends AppHelper {
 /** Generate Admin menus added by CroogoNav::add()
  *
  * @param array $menus
+ * @param array $options
  * @return string menu html tags
  */
-    function adminMenus($menus) {
+    function adminMenus($menus, $options = array()) {
+        $options = Set::merge(array(
+            'children' => true,
+            'htmlAttributes' => array(
+                'class' => 'sf-menu',
+                ),
+            ), $options);
         $out = null;
         $sorted = Set::sort($menus, '{[a-z]+}.weight', 'ASC');
         if (empty($this->Role)) {
@@ -855,16 +862,24 @@ class LayoutHelper extends AppHelper {
             if ($currentRole != 'admin' && !in_array($currentRole, $menu['access'])) {
                 continue;
             }
+            if (empty($menu['htmlAttributes']['class'])) {
+                $menuClass = Inflector::slug(strtolower('menu-' . $menu['title']), '-');
+                $menu['htmlAttributes'] = Set::merge(array(
+                    'class' => $menuClass
+                    ), $menu['htmlAttributes']);
+            }
             $link = $this->Html->link($menu['title'], $menu['url'], $menu['htmlAttributes']);
             if (!empty($menu['children'])) {
-                $children = $this->adminMenus($menu['children'], true);
-                $link  = $this->Html->link($menu['title'], $menu['url'], $menu['htmlAttributes']);
+                $children = $this->adminMenus($menu['children'], array(
+                    'children' => true,
+                    'htmlAttributes' => array('class' => false)
+                    ));
                 $out  .= $this->Html->tag('li', $link. $children);
             } else {
                 $out  .= $this->Html->tag('li', $link);
             }
         }
-        return $this->Html->tag('ul', $out, array('class' => 'sf-menu'));
+        return $this->Html->tag('ul', $out, $options['htmlAttributes']);
     }
 
 }
