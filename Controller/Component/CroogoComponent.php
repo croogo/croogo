@@ -485,7 +485,7 @@ class CroogoComponent extends Component {
             $aroIds = array_keys($aros);
         }
 
-        $actionPath = str_replace('/', '', $this->controller->Auth->actionPath);
+        $actionPath = $this->controller->Auth->authorize[AuthComponent::ALL]['actionPath'];
         $root = $Aco->node($actionPath);
         $root = $root[0];
 
