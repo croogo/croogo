@@ -73,11 +73,17 @@
                 CakeLog::write(LOG_ERR, 'Plugin not found during bootstrap: ' . $pluginName);
                 continue;
             }
-            CakePlugin::load(array(
+            $bootstrapFile = APP . 'Plugin' .DS. $pluginName .DS. 'Config' .DS. 'bootstrap.php';
+            $bootstrap = file_exists($bootstrapFile);
+            $routesFile = APP . 'Plugin' .DS. $pluginName .DS. 'Config' .DS. 'routes.php';
+            $routes = file_exists($routesFile);
+            $option = array(
                 $pluginName => array(
-                    'bootstrap' => true,
+                    'bootstrap' => $bootstrap,
+                    'routes' => $routes,
                     )
-                ));
+                );
+            CakePlugin::load($option);
         }
     }
 ?>
