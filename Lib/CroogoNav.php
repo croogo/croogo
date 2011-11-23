@@ -36,6 +36,15 @@ class CroogoNav extends Object {
 	 * @return void
 	 */
 	public static function add($path, $options) {
+		$pathE = explode('.', $path);
+		$pathE = array_splice($pathE, 0, count($pathE) - 2);
+		$parent = join('.', $pathE);
+		if (!empty($parent) && !Set::check(static::$_items, $parent)) {
+			$title = Inflector::humanize(end($pathE));
+			$o = array('title' => $title);
+			static::_setupOptions($o);
+			static::add($parent, $o);
+		}
 		static::_setupOptions($options);
 		static::$_items = Set::insert(static::$_items, $path, $options);
 	}
