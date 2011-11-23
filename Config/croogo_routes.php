@@ -1,5 +1,5 @@
 <?php
-    CroogoRouter::plugins();
+    CakePlugin::routes();
     Router::parseExtensions('json', 'rss');
 
     // Installer

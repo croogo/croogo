@@ -189,11 +189,29 @@ class ExtensionsPluginsController extends AppController {
         } else {
             if (!isset($pluginActivation) ||
                 (isset($pluginActivation) && method_exists($pluginActivation, 'beforeActivation') && $pluginActivation->beforeActivation($this))) {
-                $this->Croogo->addPluginBootstrap($plugin);
-                if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
-                    $pluginActivation->onActivation($this);
+
+                $pluginData = $this->Croogo->getPluginData($plugin);
+                $dependencies = true;
+                if (!empty($pluginData['dependencies']['plugins'])) {
+                    foreach ($pluginData['dependencies']['plugins'] as $requiredPlugin) {
+                        $requiredPlugin = ucfirst($requiredPlugin);
+                        if (!CakePlugin::loaded($requiredPlugin)) {
+                            $dependencies = false;
+                            $missingPlugin = $requiredPlugin;
+                            break;
+                        }
+                    }
                 }
-                $this->Session->setFlash(__('Plugin activated successfully.'), 'default', array('class' => 'success'));
+
+                if ($dependencies) {
+                    $this->Croogo->addPluginBootstrap($plugin);
+                    if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
+                        $pluginActivation->onActivation($this);
+                    }
+                    $this->Session->setFlash(__('Plugin activated successfully.'), 'default', array('class' => 'success'));
+                } else {
+                    $this->Session->setFlash(__('Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin), 'default', array('class' => 'error'));
+                }
             } else {
                 $this->Session->setFlash(__('Plugin could not be activated. Please, try again.'), 'default', array('class' => 'error'));
             }
