@@ -10,44 +10,62 @@
  */
 class CroogoNav extends Object {
 
-	protected static $items = array();
-
-	protected static $_this = null;
+	protected static $_items = array();
 
 	protected static $_defaults = array(
 		'title' => false,
-		'url' => array(),
+		'url' => '#',
 		'weight' => 9999,
 		'access' => array(),
 		'children' => array(),
 		'htmlAttributes' => array(),
 		);
 
-	function getInstance() {
-		static $instance = null;
-		if (!$instance) {
-			$instance = new CroogoNav();
-		}
-		return $instance;
-	}
-
 	protected static function _setupOptions(&$options) {
-		$instance = CroogoNav::getInstance();
-		$options = Set::merge($instance::$_defaults, $options);
+		$options = Set::merge(static::$_defaults, $options);
 		foreach ($options['children'] as &$child) {
-			$instance->_setupOptions($child);
+			static::_setupOptions($child);
 		}
 	}
 
+	/**
+	 * Add a menu item
+	 *
+	 * @param string $path dot separated path in the array.
+	 * @param array $options menu options array
+	 * @return void
+	 */
 	public static function add($path, $options) {
-		$instance = CroogoNav::getInstance();
-		$instance->_setupOptions($options);
-		self::$items = Set::insert(self::$items, $path, $options);
+		static::_setupOptions($options);
+		static::$_items = Set::insert(static::$_items, $path, $options);
 	}
 
+	/**
+	 * Remove a menu item
+	 *
+	 * @param string $path dot separated path in the array.
+	 * @return void
+	 */
+	public static function remove($path) {
+		static::$_items = Set::remove(static::$_items, $path);
+	}
+
+	/**
+	 * Clear all menus
+	 *
+	 * @return void
+	 */
+	public static function clear() {
+		static::$_items = array();
+	}
+
+	/**
+	 * Returns menu data in array
+	 *
+	 * @return void
+	 */
 	public static function items() {
-		$instance = CroogoNav::getInstance();
-		return $instance::$items;
+		return static::$_items;
 	}
 
 }
