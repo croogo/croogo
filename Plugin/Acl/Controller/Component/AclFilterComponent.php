@@ -80,7 +80,7 @@ class AclFilterComponent extends Component {
             // Role: Admin
             $this->controller->Auth->allowedActions = array('*');
         } else {
-            $cacheName = 'permissions_' . strval($user['User']['id']);
+            $cacheName = 'permissions_' . strval($user['id']);
             if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
                 $permissions = $this->getPermissions();
                 Cache::write($cacheName, $permissions, 'permissions');
