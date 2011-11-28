@@ -28,9 +28,8 @@ class ExampleActivation {
  */
     public function onActivation(&$controller) {
         // ACL: set ACOs with permissions
-        $controller->Croogo->addAco('Example'); // ExampleController
-        $controller->Croogo->addAco('Example/admin_index'); // ExampleController::admin_index()
-        $controller->Croogo->addAco('Example/index', array('registered', 'public')); // ExampleController::index()
+        $controller->Croogo->addAco('Example/Example/admin_index'); // ExampleController::admin_index()
+        $controller->Croogo->addAco('Example/Example/index', array('registered', 'public')); // ExampleController::index()
 
         // Main menu: add an Example link
         $mainMenu = $controller->Link->Menu->findByAlias('main');
