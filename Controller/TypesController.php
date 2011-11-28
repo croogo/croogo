@@ -27,7 +27,7 @@ class TypesController extends AppController {
  */
     public $uses = array('Type');
 
-    protected $paginate = array(
+    public $paginate = array(
         'limit' => 10,
         );
 

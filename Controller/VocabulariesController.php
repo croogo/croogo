@@ -27,7 +27,7 @@ class VocabulariesController extends AppController {
  */
     public $uses = array('Vocabulary');
 
-    protected $paginate = array(
+    public $paginate = array(
         'limit' => 10,
         );
 
