@@ -72,16 +72,16 @@ class ExtensionsPluginsController extends AppController {
             if ($zip) {
                 while ($zip_entry = zip_read($zip)) {
                     $zipEntryName = zip_entry_name($zip_entry);
-                    $searches = array('activation', 'bootstrap', 'routes', 'app_controller', 'app_model', 'app_helper');
+                    $searches = array('Activation', 'AppController', 'AppModel', 'AppHelper');
                     foreach ($searches AS $search) { 
-                        if (preg_match('/([A-Za-z0-9_]+)_'.$search.'\.php/', $zipEntryName, $matches)) {
+                        if (preg_match('/([A-Za-z0-9_]+)'.$search.'\.php/', $zipEntryName, $matches)) {
                             $plugin = $matches[1];
                             foreach (explode('/', $zipEntryName) as $folder) {
                                 if (in_array($folder, array(
-                                    'config',
-                                    $plugin.'_app_controller.php',
-                                    $plugin.'_app_model.php',
-                                    $plugin.'_app_helper.php'
+                                    'Config',
+                                    'Controller',
+                                    'Model',
+                                    'View',
                                     ))) {
                                     break;
                                 }
@@ -90,6 +90,7 @@ class ExtensionsPluginsController extends AppController {
                             break;
                         }
                     }
+                    if (!empty($plugin)) { break; }
                 }
             }
             zip_close($zip);
