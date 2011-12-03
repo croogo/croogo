@@ -27,7 +27,7 @@ class RegionsController extends AppController {
  */
     public $uses = array('Region');
 
-    protected $paginate = array(
+    public $paginate = array(
         'limit' => 10,
         );
 

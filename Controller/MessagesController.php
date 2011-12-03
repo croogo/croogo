@@ -27,7 +27,7 @@ class MessagesController extends AppController {
  */
     public $uses = array('Message');
 
-    protected $paginate = array(
+    public $paginate = array(
         'limit' => 10,
         );
 

@@ -27,7 +27,7 @@ class BlocksController extends AppController {
  */
     public $uses = array('Block', 'Role');
 
-    protected $paginate = array(
+    public $paginate = array(
         'limit' => 10,
         );
 

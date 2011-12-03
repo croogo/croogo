@@ -60,6 +60,14 @@ class AppController extends Controller {
         'Setting',
         'Node',
     );
+
+/**
+ * Pagination
+ */
+    public $paginate = array(
+        'limit' => 10,
+        );
+
 /**
  * Cache pagination results
  *

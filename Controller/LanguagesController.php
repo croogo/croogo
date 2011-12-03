@@ -27,7 +27,7 @@ class LanguagesController extends AppController {
  */
     public $uses = array('Language');
 
-    protected $paginate = array(
+    public $paginate = array(
         'limit' => 10,
         );
 

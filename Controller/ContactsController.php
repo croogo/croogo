@@ -38,7 +38,7 @@ class ContactsController extends AppController {
  */
     public $uses = array('Contact');
 
-    protected $paginate = array(
+    public $paginate = array(
         'limit' => 10,
         );
 

@@ -27,7 +27,7 @@ class RolesController extends AppController {
  */
     public $uses = array('Role');
 
-    protected $paginate = array(
+    public $paginate = array(
         'limit' => 10,
         );
 
