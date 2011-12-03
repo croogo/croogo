@@ -27,7 +27,7 @@ class MenusController extends AppController {
  */
     public $uses = array('Menu');
 
-    protected $paginate = array(
+    public $paginate = array(
         'limit' => 10,
         );
 

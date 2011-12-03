@@ -72,7 +72,7 @@ class FilemanagerController extends AppController {
         }
 
         $blacklist = array('.git', '.svn', '.CVS');
-        $regex = '/(' . implode('|', $blacklist) . ')/';
+        $regex = '/(' . preg_quote(implode('|', $blacklist), '.') . ')/';
         if (in_array(basename($path), $blacklist) || preg_match($regex, $path)
 			) {
             $this->Session->setFlash(__(sprintf('Path %s is restricted', $path)));

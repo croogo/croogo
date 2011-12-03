@@ -38,7 +38,7 @@ class CommentsController extends AppController {
  */
     public $uses = array('Comment');
 
-    protected $paginate = array(
+    public $paginate = array(
         'limit' => 10,
         );
 
