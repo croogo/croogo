@@ -16,18 +16,6 @@ class AclFilterComponent extends Component {
     protected $controller = null;
 
 /**
- * Authorized
- * Contains a list of actions authorized for logged in user. This list is
- * automatically populated and used by AppController::isAuthorized
- *
- * @var array
- * @access public
- * @see AclFilterComponent::getPermissions()
- * @see AppController::isAuthorized()
- */
-    var $authorized = array();
-
-/**
  * @param object $controller controller
  * @param array  $settings   settings
  */
@@ -57,7 +45,7 @@ class AclFilterComponent extends Component {
         $actionPath = 'controllers';
         $this->controller->Auth->authorize = array(
             AuthComponent::ALL => array('actionPath' => $actionPath),
-            'Controller',
+            'Acl.AclCached',
             );
         $this->controller->Auth->loginAction = array(
             'plugin' => null,
@@ -80,20 +68,17 @@ class AclFilterComponent extends Component {
             // Role: Admin
             $this->controller->Auth->allowedActions = array('*');
         } else {
-            $cacheName = 'permissions_' . strval($user['id']);
-            if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
-                $permissions = $this->getPermissions();
-                Cache::write($cacheName, $permissions, 'permissions');
-            }
 
-            if (!empty($user['id'])) {
-                // let Controller::isAuthorized work
-                $this->authorized = $permissions['authorized'];
-                return;
-            }
+            if (empty($user)) {
+                $cacheName = 'permissions_public';
+                if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
+                    $permissions = $this->getPermissions('Role', 3);
+                    Cache::write($cacheName, $permissions, 'permissions');
+                }
 
-            if (!empty($permissions['allowed'][$this->controller->name])) {
-                $this->controller->Auth->allow($permissions['allowed'][$this->controller->name]);
+                if (!empty($permissions['allowed'][$this->controller->name])) {
+                    $this->controller->Auth->allow($permissions['allowed'][$this->controller->name]);
+                }
             }
         }
 
@@ -102,15 +87,13 @@ class AclFilterComponent extends Component {
 /**
  * getPermissions
  * retrieve list of permissions from database
+ * @param string $model model name
+ * @param string $id model id
  * @return array list of authorized and allowed actions
  */
-    function getPermissions() {
+    function getPermissions($model, $id) {
         $Acl =& $this->controller->Acl;
-        if (! $this->controller->Auth->user()) {
-            $aro = array('model' => 'Role', 'foreign_key' => 3);
-        } else {
-            $aro = array('model' => 'User', 'foreign_key' => $this->controller->Auth->user('id'));
-        }
+        $aro = array('model' => $model, 'foreign_key' => $id);
         $node = $Acl->Aro->node($aro);
         $nodes = $Acl->Aro->getPath($aro);
 
