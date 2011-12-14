@@ -78,7 +78,7 @@ class NodesController extends AppController {
         }
 		
         if (isset($this->request->params['named']['q'])) {
-            App::import('Core', 'Sanitize');
+            App::uses('Sanitize', 'Utility');
             $q=Sanitize::clean($this->request->params['named']['q']);
             $this->paginate['Node']['conditions']['OR'] = array(
                 'Node.title LIKE' => '%' . $q . '%',
