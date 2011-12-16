@@ -25,7 +25,8 @@ class NodeData {
 			'visibility_roles' => '',
 			'type' => 'blog',
 			'updated' => '2009-12-25 11:00:00',
-			'created' => '2009-12-25 11:00:00'
+			'created' => '2009-12-25 11:00:00',
+			'params' => '',
 		),
 		array(
 			'id' => '2',
@@ -48,7 +49,8 @@ class NodeData {
 			'visibility_roles' => '',
 			'type' => 'page',
 			'updated' => '2009-12-25 22:00:00',
-			'created' => '2009-12-25 22:00:00'
+			'created' => '2009-12-25 22:00:00',
+			'params' => '',
 		),
 	);
 

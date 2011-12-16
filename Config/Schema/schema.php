@@ -219,6 +219,7 @@ class AppSchema extends CakeSchema {
 		'type' => array('type' => 'string', 'null' => false, 'default' => 'node', 'length' => 100, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
 		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
+		'params' => array('type' => 'text', 'null' => true, 'default' => NULL, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);

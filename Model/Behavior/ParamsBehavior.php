@@ -53,6 +53,14 @@ class ParamsBehavior extends ModelBehavior {
 
         return $results;
     }
+
+    public function beforeSave($model) {
+        if (is_array($model->data['Params'])) {
+            $model->data[$model->alias]['params'] = $this->arrayToParams($this, $model->data['Params']);
+        }
+        return true;
+    }
+
 /**
  * Converts a string of params to an array of formatted key/value pairs
  *
@@ -82,5 +90,11 @@ class ParamsBehavior extends ModelBehavior {
         return $output;
     }
 
+    public function arrayToParams($model, $params) {
+        foreach ($params as $key => $val) {
+            $data[] = $key . '=' . $val;
+        }
+        return join("\n", $data);
+    }
 }
 ?>
