@@ -62,9 +62,9 @@ class ExtensionsPluginsController extends AppController {
     public function admin_add() {
         $this->set('title_for_layout', __('Upload a new plugin'));
 
-        if (!empty($this->data)) {
-            $file = $this->data['Plugin']['file'];
-            unset($this->data['Plugin']['file']);
+        if (!empty($this->request->data)) {
+            $file = $this->request->data['Plugin']['file'];
+            unset($this->request->data['Plugin']['file']);
 
             // get plugin name and root
             $zip = zip_open($file['tmp_name']);
@@ -72,16 +72,16 @@ class ExtensionsPluginsController extends AppController {
             if ($zip) {
                 while ($zip_entry = zip_read($zip)) {
                     $zipEntryName = zip_entry_name($zip_entry);
-                    $searches = array('activation', 'bootstrap', 'routes', 'app_controller', 'app_model', 'app_helper');
+                    $searches = array('Activation', 'AppController', 'AppModel', 'AppHelper');
                     foreach ($searches AS $search) { 
-                        if (preg_match('/([A-Za-z0-9_]+)_'.$search.'\.php/', $zipEntryName, $matches)) {
+                        if (preg_match('/([A-Za-z0-9_]+)'.$search.'\.php/', $zipEntryName, $matches)) {
                             $plugin = $matches[1];
                             foreach (explode('/', $zipEntryName) as $folder) {
                                 if (in_array($folder, array(
-                                    'config',
-                                    $plugin.'_app_controller.php',
-                                    $plugin.'_app_model.php',
-                                    $plugin.'_app_helper.php'
+                                    'Config',
+                                    'Controller',
+                                    'Model',
+                                    'View',
                                     ))) {
                                     break;
                                 }
@@ -90,6 +90,7 @@ class ExtensionsPluginsController extends AppController {
                             break;
                         }
                     }
+                    if (!empty($plugin)) { break; }
                 }
             }
             zip_close($zip);
@@ -101,7 +102,7 @@ class ExtensionsPluginsController extends AppController {
 
             $pluginName = $plugin;
 
-            if (is_dir(APP . 'plugins' . DS . $pluginName)) {
+            if (is_dir(APP . 'Plugin' . DS . $pluginName)) {
                 $this->Session->setFlash(__('Plugin already exists.'), 'default', array('class' => 'error'));
                 $this->redirect(array('action' => 'add'));
             }
@@ -110,15 +111,15 @@ class ExtensionsPluginsController extends AppController {
             $zip = zip_open($file['tmp_name']);
             if ($zip) {
                 // create root plugin dir
-                $path = APP . 'plugins' . DS . $pluginName . DS;
+                $path = APP . 'Plugin' . DS . $pluginName . DS;
                 mkdir($path);
                 while ($zip_entry = zip_read($zip)) {
                     $zipEntryName = zip_entry_name($zip_entry);
                     $zipEntryNameE = array_slice(explode('/', $zipEntryName), $root);
                     if (!empty($zipEntryNameE[count($zipEntryNameE)-1])) {
-                        $path = APP . 'plugins' . DS . $pluginName . DS . implode(DS, $zipEntryNameE);
+                        $path = APP . 'Plugin' . DS . $pluginName . DS . implode(DS, $zipEntryNameE);
                     } else {
-                        $path = APP . 'plugins' . DS . $pluginName . DS . implode(DS, $zipEntryNameE) . DS;
+                        $path = APP . 'Plugin' . DS . $pluginName . DS . implode(DS, $zipEntryNameE) . DS;
                     }
                     if (substr($path, strlen($path) - 1) == DS) {
                         // create directory
@@ -155,7 +156,7 @@ class ExtensionsPluginsController extends AppController {
         }
 
         $folder =& new Folder;
-        if ($folder->delete(APP . 'plugins' . DS . $plugin)) {
+        if ($folder->delete(APP . 'Plugin' . DS . $plugin)) {
             $this->Session->setFlash(__('Plugin deleted successfully.'), 'default', array('class' => 'success'));
         } else {
             $this->Session->setFlash(__('Plugin could not be deleted.'), 'default', array('class' => 'error'));
