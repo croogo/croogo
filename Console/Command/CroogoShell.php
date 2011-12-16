@@ -11,8 +11,28 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-App::import('Core', 'Security');
-class CroogoShell extends Shell {
+App::uses('Security', 'Utility');
+class CroogoShell extends AppShell {
+
+	public function getOptionParser() {
+		$parser = parent::getOptionParser();
+        $parser->description(__d('croogo', 'Croogo Utilities')
+            )->addSubcommand('password', array(
+                'help' => 'Get hashed password',
+                'parser' => array(
+                    'description' => 'Get hashed password',
+                    'arguments' => array(
+                        'password' => array(
+                            'required' => true,
+                            'help' => 'Password to hash',
+                            ),
+                        ),
+                    ),
+                )
+            );
+        return $parser;
+	}
+
 /**
  * Get hashed password
  *
