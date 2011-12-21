@@ -517,18 +517,23 @@ class LayoutHelper extends AppHelper {
  */
     public function filterElements($content) {
         preg_match_all('/\[(element|e):([A-Za-z0-9_\-\/]*)(.*?)\]/i', $content, $tagMatches);
+        $validOptions = array('plugin', 'cache', 'callbacks');
         for ($i=0; $i < count($tagMatches[1]); $i++) {
             $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))*.)[\'"]?/i';
             preg_match_all($regex, $tagMatches[3][$i], $attributes);
             $element = $tagMatches[2][$i];
-            $options = array();
+            $data = $options = array();
             for ($j=0; $j < count($attributes[0]); $j++) {
-                $options[$attributes[1][$j]] = $attributes[2][$j];
+                if (in_array($attributes[1][$j], $validOptions)) {
+                    $options = Set::merge($options, array($attributes[1][$j] => $attributes[2][$j]));
+                } else {
+                    $data[$attributes[1][$j]] = $attributes[2][$j];
+                }
             }
             if (!empty($this->_View->viewVars['block'])) {
-                $options['block'] = $this->_View->viewVars['block'];
+                $data['block'] = $this->_View->viewVars['block'];
             }
-            $content = str_replace($tagMatches[0][$i], $this->_View->element($element,$options), $content);
+            $content = str_replace($tagMatches[0][$i], $this->_View->element($element, $data, $options), $content);
         }
         return $content;
     }
