@@ -674,7 +674,7 @@ class CroogoComponent extends Component {
             foreach ($themeFolders['0'] AS $themeFolder) {
                 $this->folder->path = $viewPath . 'Themed' . DS . $themeFolder . DS . 'webroot';
                 $themeFolderContent = $this->folder->read();
-                if (in_array('manifest.json', $themeFolderContent['1'])) {
+                if (in_array('theme.json', $themeFolderContent['1'])) {
                     $themes[$themeFolder] = $themeFolder;
                 }
             }
@@ -682,24 +682,24 @@ class CroogoComponent extends Component {
         return $themes;
     }
 /**
- * Get the content of manifest.json file from a theme
+ * Get the content of theme.json file from a theme
  *
  * @param string $alias theme folder name
  * @return array
  */
     public function getThemeData($alias = null) {
         if ($alias == null || $alias == 'default') {
-            $manifestFile = WWW_ROOT . 'manifest.json';
+            $manifestFile = WWW_ROOT . 'theme.json';
         } else {
             $viewPaths = App::path('views');
             foreach ($viewPaths AS $viewPath) {
-                if (file_exists($viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'manifest.json')) {
-                    $manifestFile = $viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'manifest.json';
+                if (file_exists($viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'theme.json')) {
+                    $manifestFile = $viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'theme.json';
                     continue;
                 }
             }
             if (!isset($manifestFile)) {
-                $manifestFile = WWW_ROOT . 'manifest.json';
+                $manifestFile = WWW_ROOT . 'theme.json';
             }
         }
         if (isset($manifestFile) && file_exists($manifestFile)) {
@@ -730,7 +730,7 @@ class CroogoComponent extends Component {
                     $this->folder->path = $pluginPath . $pluginFolder . DS . 'Config';
                     if (!file_exists($this->folder->path)) { continue; }
                     $pluginFolderContent = $this->folder->read();
-                    if (in_array('manifest.json', $pluginFolderContent[1])) {
+                    if (in_array('plugin.json', $pluginFolderContent[1])) {
                         $plugins[$pluginFolder] = $pluginFolder;
                     }
                 }
@@ -739,7 +739,7 @@ class CroogoComponent extends Component {
         return $plugins;
     }
 /**
- * Get the content of manifest.json file of a plugin
+ * Get the content of plugin.json file of a plugin
  *
  * @param string $alias plugin folder name
  * @return array
@@ -747,7 +747,7 @@ class CroogoComponent extends Component {
     public function getPluginData($alias = null) {
         $pluginPaths = App::path('plugins');
         foreach ($pluginPaths AS $pluginPath) {
-            $manifestFile = $pluginPath . $alias . DS . 'Config' . DS . 'manifest.json';
+            $manifestFile = $pluginPath . $alias . DS . 'Config' . DS . 'plugin.json';
             if (file_exists($manifestFile)) {
                 $pluginData = json_decode(file_get_contents($manifestFile), true);
                 if (!empty($pluginData)) {
