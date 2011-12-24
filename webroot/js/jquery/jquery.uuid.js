@@ -5,20 +5,23 @@ Usage 3: call the function jQuery.uuid() with no parameters to generate a uuid w
 */
 
 /*
-Generate fragment of random numbers
-*/
-jQuery._uuid_default_prefix = '';
-jQuery._uuidlet = function () {
-	return(((1+Math.random())*0x10000)|0).toString(16).substring(1);
-};
-/*
 Generates random uuid
 */
-jQuery.uuid = function (p) {
+jQuery.fn.uuid = function (p) {
+
+    /*
+     *Generate fragment of random numbers
+     */
+    var uuid_default_prefix = '';
+    var uuidlet = function () {
+	    return(((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    };
+
 	if (typeof(p) == 'object' && typeof(p.prefix) == 'string') {
-		jQuery._uuid_default_prefix = p.prefix;
+		uuid_default_prefix = p.prefix;
 	} else {
 		p = p || jQuery._uuid_default_prefix || '';
-		return(p+jQuery._uuidlet()+jQuery._uuidlet()+"-"+jQuery._uuidlet()+"-"+jQuery._uuidlet()+"-"+jQuery._uuidlet()+"-"+jQuery._uuidlet()+jQuery._uuidlet()+jQuery._uuidlet());
+		return(p + uuidlet() + uuidlet() + "-" + uuidlet() + "-" + uuidlet() +
+            "-" + uuidlet() + "-" + uuidlet() + uuidlet() + uuidlet());
 	};
 };
