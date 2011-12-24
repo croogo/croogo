@@ -93,6 +93,7 @@ class Setting extends AppModel {
         if (isset($setting['Setting']['id'])) {
             $setting['Setting']['id'] = $setting['Setting']['id'];
             $setting['Setting']['value'] = $value;
+            $setting['Setting']['title'] = $options['title'];
             $setting['Setting']['description'] = $options['description'];
             $setting['Setting']['input_type'] = $options['input_type'];
             $setting['Setting']['editable'] = $options['editable'];
@@ -101,6 +102,7 @@ class Setting extends AppModel {
             $setting = array();
             $setting['key'] = $key;
             $setting['value'] = $value;
+            $setting['title'] = $options['title'];
             $setting['description'] = $options['description'];
             $setting['input_type'] = $options['input_type'];
             $setting['editable'] = $options['editable'];
