@@ -25,10 +25,24 @@
     Croogo::hookHelper('Nodes', 'Example.Example');
 /**
  * Admin menu (navigation)
- *
- * This plugin's admin_menu element will be rendered in admin panel under Extensions menu.
  */
-    Croogo::hookAdminMenu('Example');
+    CroogoNav::add('extensions.plugins.example', array(
+        'title' => __('Example'),
+        'url' => '#',
+        'access' => array('admin'),
+        'children' => array(
+            'example1' => array(
+                'title' => __('Example 1'),
+                'url' => '#',
+                'access' => array('admin'),
+            ),
+            'example2' => array(
+                'title' => __('Example 2'),
+                'url' => '#',
+                'access' => array('admin'),
+            ),
+        ),
+    ));
 /**
  * Admin row action
  *
