@@ -50,7 +50,9 @@
  */
     App::uses('CakeLog', 'Log');
     App::import('Lib', 'Croogo');
-    CakePlugin::load(array('Acl', 'Extensions'));
+    App::import('Lib', 'CroogoNav');
+    CakePlugin::load(array('Acl', 'Extensions'), array('bootstrap' => true));
+    require('croogo_menus.php');
     require_once 'croogo_bootstrap.php';
 
     // Load Install plugin
