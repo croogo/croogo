@@ -102,5 +102,9 @@ class CroogoNav extends Object {
 	public static function items() {
 		return static::$_items;
 	}
+	
+	public static function getDefaults() {
+	    return static::$_defaults;
+	}
 
 }
