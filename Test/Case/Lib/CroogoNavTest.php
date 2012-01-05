@@ -27,7 +27,7 @@ class CroogoNavTest extends CakeTestCase {
         
         // 2 levels deep
         $example = array('title' => 'Example');
-        CroogoNav::add('extensions.children.plugins.children.example', $plugins);
+        CroogoNav::add('extensions.children.plugins.children.example', $example);
         $result = CroogoNav::items();
         
         $expected['extensions']['children']['plugins']['children']['example'] = Set::merge($defaults, $example);
