@@ -26,7 +26,7 @@
 /**
  * Admin menu (navigation)
  */
-    CroogoNav::add('extensions.plugins.example', array(
+    CroogoNav::add('extensions.children.plugins.children.example', array(
         'title' => __('Example'),
         'url' => '#',
         'access' => array('admin'),
