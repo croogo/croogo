@@ -54,9 +54,5 @@ class Role extends AppModel {
         ),
     );
 
-    public function parentNode() {
-        return null;
-    }
-
 }
 ?>
