@@ -36,7 +36,10 @@ class User extends AppModel {
  * @access public
  */
     public $actsAs = array(
-        'Acl' => array('type' => 'requester'),
+        'Acl' => array(
+            'className' => 'CroogoAcl',
+            'type' => 'requester',
+            ),
     );
 /**
  * Model associations: belongsTo

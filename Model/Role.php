@@ -27,6 +27,7 @@ class Role extends AppModel {
  */
     public $actsAs = array(
         'Acl' => array(
+            'className' => 'CroogoAcl',
             'type' => 'requester',
         ),
     );
