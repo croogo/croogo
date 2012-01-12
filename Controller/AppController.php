@@ -28,7 +28,6 @@ class AppController extends Controller {
         'Security',
         'Acl',
         'Auth',
-        'Acl.AclFilter',
         'Session',
         'RequestHandler',
     );
@@ -111,7 +110,9 @@ class AppController extends Controller {
  */
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->AclFilter->auth();
+        $aclFilterComponent = Configure::read('Site.acl_plugin') . 'Filter';
+        $aclFilterComponent = $aclFilterComponent == 'Filter' ? 'AclFilter' : $aclFilterComponent;
+        $this->{$aclFilterComponent}->auth();
         $this->RequestHandler->setContent('json', 'text/x-json');
         $this->Security->blackHoleCallback = '__securityError';
 
