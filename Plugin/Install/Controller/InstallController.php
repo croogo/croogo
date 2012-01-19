@@ -204,16 +204,6 @@ class InstallController extends InstallAppController {
  */
     public function finish() {
         $this->set('title_for_layout', __('Installation completed successfully'));
-        if (isset($this->params['named']['delete'])) {
-            App::uses('Folder', 'Utility');
-            $this->folder = new Folder;
-            if ($this->folder->delete(APP.'plugins'.DS.'install')) {
-                $this->Session->setFlash(__('Installation files deleted successfully.'), 'default', array('class' => 'success'));
-                $this->redirect('/');
-            } else {
-                return $this->Session->setFlash(__('Could not delete installation files.'), 'default', array('class' => 'error'));
-            }
-        }
         $this->_check();
 
         // set new salt and seed value
