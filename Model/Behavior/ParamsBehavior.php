@@ -76,7 +76,7 @@ class ParamsBehavior extends ModelBehavior {
             if (count($paramE) == 2) {
                 $key = $paramE['0'];
                 $value = $paramE['1'];
-                $output[$key] = $value;
+                $output[$key] = trim($value);
             }
         }
         return $output;
