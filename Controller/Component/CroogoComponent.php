@@ -118,9 +118,6 @@ class CroogoComponent extends Component {
 
         // types
         $types = $this->controller->Node->Taxonomy->Vocabulary->Type->find('all', array(
-            'conditions' => array(
-                'Type.plugin <>' => null,
-            ),
             'order' => 'Type.alias ASC',
         ));
         $this->controller->set('types_for_admin_layout', $types);
