@@ -721,16 +721,17 @@ class CroogoComponent extends Component {
         $plugins = array();
         $this->folder = new Folder;
         $pluginPaths = App::path('plugins');
+        $validFolders = array('Config', 'Console', 'Controller', 'Lib', 'Model', 'View', 'Vendor');
         foreach ($pluginPaths AS $pluginPath) {
             $this->folder->path = $pluginPath;
             if (!file_exists($this->folder->path)) { continue; }
             $pluginFolders = $this->folder->read();
             foreach ($pluginFolders[0] AS $pluginFolder) {
                 if (substr($pluginFolder, 0, 1) != '.') {
-                    $this->folder->path = $pluginPath . $pluginFolder . DS . 'Config';
-                    if (!file_exists($this->folder->path)) { continue; }
+                    $this->folder->path = $pluginPath . $pluginFolder;
                     $pluginFolderContent = $this->folder->read();
-                    if (in_array('plugin.json', $pluginFolderContent[1])) {
+                    $intersect = array_intersect($pluginFolderContent[0], $validFolders);
+                    if (!empty($intersect)) {
                         $plugins[$pluginFolder] = $pluginFolder;
                     }
                 }
@@ -746,18 +747,16 @@ class CroogoComponent extends Component {
  */
     public function getPluginData($alias = null) {
         $pluginPaths = App::path('plugins');
+        $defaults = array('name' => '', 'description' => '', 'author' => '', 'active' => false);
         foreach ($pluginPaths AS $pluginPath) {
             $manifestFile = $pluginPath . $alias . DS . 'Config' . DS . 'plugin.json';
+            $pluginData = array();
             if (file_exists($manifestFile)) {
                 $pluginData = json_decode(file_get_contents($manifestFile), true);
-                if (!empty($pluginData)) {
-                    $pluginData['active'] = $this->pluginIsActive($alias);
-                    unset($pluginManifest);
-                } else {
-                    $pluginData = array();
-                }
-                return $pluginData;
             }
+            $pluginData = Set::merge($defaults, $pluginData);
+            $pluginData['active'] = $this->pluginIsActive($alias);
+            return $pluginData;
         }
         return false;
     }

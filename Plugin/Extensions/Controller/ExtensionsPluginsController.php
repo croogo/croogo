@@ -37,6 +37,7 @@ class ExtensionsPluginsController extends AppController {
  */
     public $corePlugins = array(
         'Acl',
+        'Install',
         'Extensions',
     );
 
