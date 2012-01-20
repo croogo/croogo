@@ -169,7 +169,7 @@ class CroogoComponent extends Component {
                         array(
                             'OR' => array(
                                 'Block.visibility_paths' => '',
-                                'Block.visibility_paths LIKE' => '%"' . $this->controller->request->url . '"%',
+                                'Block.visibility_paths LIKE' => '%"' . $this->controller->request->here . '"%',
                                 //'Block.visibility_paths LIKE' => '%"' . 'controller:' . $this->params['controller'] . '"%',
                                 //'Block.visibility_paths LIKE' => '%"' . 'controller:' . $this->params['controller'] . '/' . 'action:' . $this->params['action'] . '"%',
                             ),
