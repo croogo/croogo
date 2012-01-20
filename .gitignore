@@ -1,14 +1,21 @@
 # App
-config/database.php
-config/settings.yml
-plugins/debug_kit/
-plugins/migrations/
-vendors/simpletest/
-views/themed/
+Config/database.php
+Config/settings.yml
+Vendor/Simpletest/
+View/Themed/
 webroot/uploads/
+*.bak
+*.swp
 
 # Cake cache
 tmp/
 
 # Others
 .DS_Store
+Plugin/*
+!Plugin/Acl
+!Plugin/Extensions
+!Plugin/Example
+!Plugin/Install
+!Plugin/Tinymce
+!Plugin/Translate
