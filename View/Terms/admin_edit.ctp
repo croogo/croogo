@@ -3,7 +3,7 @@
 
     <?php
         echo $this->Form->create('Term', array(
-            'url' => '/' . $this->params['url']['url'],
+            'url' => '/' . $this->request->url,
         ));
     ?>
     <fieldset>
