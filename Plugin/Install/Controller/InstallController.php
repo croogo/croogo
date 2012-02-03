@@ -107,14 +107,14 @@ class InstallController extends InstallAppController {
         $this->_check();
         $this->set('title_for_layout', __('Step 1: Database'));
 
-        if (empty($this->data)) {
+        if (empty($this->request->data)) {
             return;
 		}
-
+        
         @App::import('Model', 'ConnectionManager');
         $config = $this->defaultConfig;
-        foreach ($this->data['Install'] AS $key => $value) {
-            if (isset($this->data['Install'][$key])) {
+        foreach ($this->request->data['Install'] AS $key => $value) {
+            if (isset($this->request->data['Install'][$key])) {
                 $config[$key] = $value;
             }
         }
