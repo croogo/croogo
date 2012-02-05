@@ -4,6 +4,7 @@ App::import('Lib', 'CroogoNav');
 class CroogoNavTest extends CakeTestCase {
     
     public function testNav() {
+        $saved = CroogoNav::items();
         
         // test clear
         CroogoNav::clear();
@@ -32,6 +33,9 @@ class CroogoNavTest extends CakeTestCase {
         
         $expected['extensions']['children']['plugins']['children']['example'] = Set::merge($defaults, $example);
         $this->assertEqual($result, $expected);
+
+        CroogoNav::items($saved);
+        $this->assertEquals($saved, CroogoNav::items());
     }
     
 }
