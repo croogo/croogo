@@ -2,6 +2,16 @@
 App::import('Lib', 'CroogoNav');
 
 class CroogoNavTest extends CakeTestCase {
+
+    private static $__menus = array();
+
+    public function setUp() {
+        static::$__menus = CroogoNav::items();
+    }
+
+    public function tearDown() {
+        CroogoNav::items(static::$__menus);
+    }
     
     public function testNav() {
         $saved = CroogoNav::items();
@@ -37,6 +47,52 @@ class CroogoNavTest extends CakeTestCase {
         CroogoNav::items($saved);
         $this->assertEquals($saved, CroogoNav::items());
     }
-    
+
+    public function testNavOverwrite() {
+        $defaults = CroogoNav::getDefaults();
+
+        $items = CroogoNav::items();
+        $expected = Set::merge($defaults, array(
+            'title' => 'Permissions',
+            'url' => array(
+                'admin' => true,
+                'plugin' => 'acl',
+                'controller' => 'acl_permissions',
+                'action' => 'index',
+                ),
+            'access' => array('admin'),
+            'weight' => 30,
+            ));
+        $this->assertEquals($expected, $items['users']['children']['permissions']);
+
+        $item = array(
+            'title' => 'Permissions',
+            'url' => array(
+                'admin' => true,
+                'plugin' => 'acl_extras',
+                'controller' => 'acl_extras_permissions',
+                'action' => 'index',
+                ),
+            'access' => array('admin'),
+            'weight' => 30,
+            );
+        CroogoNav::add('users.children.permissions', $item);
+        $items = CroogoNav::items();
+
+        $expected = Set::merge($defaults, array(
+            'title' => 'Permissions',
+            'url' => array(
+                'admin' => true,
+                'plugin' => 'acl_extras',
+                'controller' => 'acl_extras_permissions',
+                'action' => 'index',
+                ),
+            'access' => array('admin'),
+            'weight' => 30,
+            ));
+
+        $this->assertEquals($expected, $items['users']['children']['permissions']);
+    }
+
 }
 ?>
