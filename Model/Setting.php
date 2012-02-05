@@ -82,6 +82,7 @@ class Setting extends AppModel {
  */
     public function write($key, $value, $options = array()) {
         $_options = array(
+            'title' => '',
             'description' => '',
             'input_type' => '',
             'editable' => 0,
