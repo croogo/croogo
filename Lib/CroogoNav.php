@@ -95,11 +95,15 @@ class CroogoNav extends Object {
 	}
 
 	/**
-	 * Returns menu data in array
+	 * Sets or returns menu data in array
 	 *
-	 * @return void
+	 * @param $items array if empty, the current menu is returned.
+	 * @return array
 	 */
-	public static function items() {
+	public static function items($items = null) {
+		if (!empty($items)) {
+			static::$_items = $items;
+		}
 		return static::$_items;
 	}
 	
