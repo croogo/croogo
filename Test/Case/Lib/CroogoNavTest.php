@@ -48,6 +48,19 @@ class CroogoNavTest extends CakeTestCase {
         $this->assertEquals($saved, CroogoNav::items());
     }
 
+    public function testNavMerge() {
+        $foo = array('title' => 'foo', 'access' => array('public', 'admin'));
+        $bar = array('title' => 'bar', 'access' => array('admin'));
+        CroogoNav::clear();
+        CroogoNav::add('foo', $foo);
+        CroogoNav::add('foo', $bar);
+        $items = CroogoNav::items();
+        $expected = array('admin', 'public');
+        sort($expected);
+        sort($items['foo']['access']);
+        $this->assertEquals($expected, $items['foo']['access']);
+    }
+
     public function testNavOverwrite() {
         $defaults = CroogoNav::getDefaults();
 

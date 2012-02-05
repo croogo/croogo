@@ -22,7 +22,7 @@ class CroogoNav extends Object {
 		);
 
 	protected static function _setupOptions(&$options) {
-		$options = Set::merge(static::$_defaults, $options);
+		$options = static::_merge(static::$_defaults, $options);
 		foreach ($options['children'] as &$child) {
 			static::_setupOptions($child);
 		}
@@ -48,8 +48,7 @@ class CroogoNav extends Object {
 		static::_setupOptions($options);
 		$current = Set::extract($path, static::$_items);
 		if (!empty($current)) {
-			$current = Set::merge($current, $options);
-			static::_replace(static::$_items, $path, $current);
+			static::_replace(static::$_items, $path, $options);
 		} else {
 			static::$_items = Set::insert(static::$_items, $path, $options);
 		}
@@ -65,14 +64,31 @@ class CroogoNav extends Object {
 	 */
 	protected static function _replace(&$target, $path, $options) {
 		$pathE = explode('.', $path);
-		$path = join('.', array_splice($pathE, 1));
-		if (count($pathE) > 1) {
-			foreach ($pathE as $fragment) {
-				static::_merge($target[$fragment], $path, $options);
-			}
+		$path = array_shift($pathE);
+		$fragment = join ('.', $pathE);
+		if (!empty($pathE)) {
+			static::_replace($target[$path], $fragment, $options);
 		} else {
-			$target[$pathE[0]] = $options;
+			$target[$path] = static::_merge($target[$path], $options);
 		}
+	}
+
+    /**
+	 * Merge $arr1 and $arr2
+	 *
+	 * Similar to Set::merge, except duplicates are removed
+	 * @param arram $arr1 array
+	 * @param arram $arr2 array
+	 * @return array
+	 */
+	protected static function _merge($arr1, $arr2) {
+		$merged = Set::merge($arr1, $arr2);
+		foreach ($merged as $key => $val) {
+			if (is_array($val) && is_int(key($val))) {
+				$merged[$key] = array_unique($val);
+			}
+		}
+		return $merged;
 	}
 
 	/**
@@ -106,7 +122,11 @@ class CroogoNav extends Object {
 		}
 		return static::$_items;
 	}
-	
+
+    /**
+     * Gets default settings for menu items
+     * @return array
+     */
 	public static function getDefaults() {
 	    return static::$_defaults;
 	}
