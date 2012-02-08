@@ -2,7 +2,7 @@
 Comment.date_time_format: M d, Y
 Comment.feed_limit: 10
 Comment.level: 1
-Hook.bootstraps: Tinymce
+Hook.bootstraps: Acl,Tinymce
 Meta.description: 'Croogo - A CakePHP powered Content Management System'
 Meta.generator: 'Croogo - Content Management System'
 Meta.keywords: croogo, Croogo

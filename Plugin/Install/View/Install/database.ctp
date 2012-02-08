@@ -1,6 +1,7 @@
 <div class="install form">
     <h2><?php echo $title_for_layout; ?></h2>
     <?php
+        Configure::write('debug', 0);
         echo $this->Form->create('Install', array('url' => array('plugin' => 'install', 'controller' => 'install', 'action' => 'database')));
         echo $this->Form->input('Install.datasource', array(
             'label' => 'Datasource',
