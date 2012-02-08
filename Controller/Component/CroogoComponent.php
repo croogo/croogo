@@ -456,7 +456,9 @@ class CroogoComponent extends Component {
  * @param array $allowRoles Role aliases
  * @return void
  */
+
     public function addAco($action, $allowRoles = array()) {
+        $Aco =& $this->controller->Acl->Aco;
         // AROs
         $aroIds = array();
         if (count($allowRoles) > 0) {
@@ -483,25 +485,72 @@ class CroogoComponent extends Component {
             $aroIds = array_keys($aros);
         }
 
+        $actionPath = $this->controller->Auth->authorize[AuthComponent::ALL]['actionPath'];
+        $root = $Aco->node($actionPath);
+        $root = $root[0];
+
         // ACOs
-        $acoNode = $this->controller->Acl->Aco->node($this->controller->Auth->actionPath.$action);
+        $acoNode = $this->controller->Acl->Aco->node($actionPath.'/'.$action);
         if (!isset($acoNode['0']['Aco']['id'])) {
-            if (!strstr($action, '/')) {
-                $parentNode = $this->controller->Acl->Aco->node(str_replace('/', '', $this->controller->Auth->actionPath));
-                $alias = $action;
-            } else {
-                $actionE = explode('/', $action);
-                $controllerName = $actionE['0'];
-                $method = $actionE['1'];
-                $alias = $method;
-                $parentNode = $this->controller->Acl->Aco->node($this->controller->Auth->actionPath.$controllerName);
+            $actionName = false;
+            switch (substr_count($action, '/')) {
+            case 0:
+                list($controllerName) = explode('/', $action);
+                $parentPath = str_replace('/', '', $this->controller->Auth->actionPath);
+            break;
+            case 1:
+                list($controllerName, $actionName) = explode('/', $action);
+                $parentPath = $controllerName;
+            break;
+			case 2:
+                list($pluginName, $controllerName, $actionName) = explode('/', $action);
+                $parentPath = $pluginName . '/' . $controllerName;
+            break;
+            default:
+                die('wtf?');
+            break;
             }
-            $parentId = $parentNode['0']['Aco']['id'];
+            $parentPath = $this->controller->Auth->actionPath . $parentPath;
+
+            if (isset($pluginName)) {
+				// get or create plugin ACO
+                $pluginNode = $Aco->node($actionPath . '/' . $pluginName);
+                if (!$pluginNode) {
+                    $Aco->create(array(
+                        'parent_id' => $root['Aco']['id'],
+                        'model' => null,
+                        'alias' => $pluginName,
+                    ));
+                    $pluginNode = $Aco->save();
+                    $pluginNode['Aco']['id'] = $Aco->id;
+                } else {
+                    $pluginNode = $pluginNode[0];
+                }
+
+				// get or create plugin's controller ACO
+                $controllerNode = $Aco->node($actionPath . '/' . $pluginName . '/' . $controllerName);
+                if (!$controllerNode) {
+                    $Aco->create(array(
+                        'parent_id' => $pluginNode['Aco']['id'],
+                        'model' => null,
+                        'alias' => $controllerName,
+                    ));
+                    $parentNode = $Aco->save();
+                    $parentNode['Aco']['id'] = $Aco->id;
+                } else {
+                    $parentNode = $controllerNode[0];
+                }
+            } else {
+                $parentNode = $Aco->node($parentPath);
+                $parentNode = $parentNode[0];
+            }
+
+            $parentId = $parentNode['Aco']['id'];
             $acoData = array(
                 'parent_id' => $parentId,
                 'model' => null,
                 'foreign_key' => null,
-                'alias' => $alias,
+                'alias' => $actionName,
             );
             $this->controller->Acl->Aco->id = false;
             $this->controller->Acl->Aco->save($acoData);

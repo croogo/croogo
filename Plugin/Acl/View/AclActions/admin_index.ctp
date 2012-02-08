@@ -21,31 +21,53 @@
         ));
         echo $tableHeaders;
 
-        $currentController = '';
-        foreach ($acos AS $id => $alias) {
+        $c = 0;
+        foreach ($acos AS $id => $aco) {
             $class = '';
-            if(substr($alias, 0, 1) == '_') {
-                $level = 1;
+            $alias = $aco[0];
+            $level = substr_count($alias, '-');
+
+            switch ($aco['type']) {
+            case 'action':
                 $class .= 'level-'.$level;
-                $oddOptions = array('class' => 'hidden controller-'.$currentController);
-                $evenOptions = array('class' => 'hidden controller-'.$currentController);
-                $alias = substr_replace($alias, '', 0, 1);
-            } else {
-                $level = 0;
-                $class .= ' controller expand';
+                $actionClass = 'hidden controller-'.$aco['controller'];
+                $oddOptions = array('class' => $actionClass);
+                $evenOptions = array('class' => $actionClass);
+                $alias = substr_replace($alias, '', 0, $level);
+            break;
+            case 'plugin':
+                $class = 'plugin expand';
                 $oddOptions = array();
                 $evenOptions = array();
-                $currentController = $alias;
+                $trClass = false;
+            break;
+            case 'controller':
+                if ($aco['plugin']) {
+                    $class .= ' controller expand';
+                    $trClass = ' hidden plugin-controller plugin-' . $aco['plugin'];
+                    $class .= ' plugin level-' . $level;
+                } else {
+                    $class .= ' controller collapse';
+                    $trClass = false;
+                }
+                $oddOptions = array();
+                $evenOptions = array();
+                $alias = substr_replace($alias, '', 0, $level);
+            break;
             }
 
-            $actions  = $this->Html->link(__('Edit'), array('action' => 'edit', $id));
-            $actions .= ' ' . $this->Html->link(__('Delete'), array(
-                'action' => 'delete',
-                $id,
-                'token' => $this->params['_Token']['key'],
-            ), null, __('Are you sure?'));
-            $actions .= ' ' . $this->Html->link(__('Move up'), array('action' => 'move', $id, 'up'));
-            $actions .= ' ' . $this->Html->link(__('Move down'), array('action' => 'move', $id, 'down'));
+            if ($aco['type'] == 'action') {
+                $actions  = $this->Html->link(__('Edit'), array('action' => 'edit', $id));
+                $actions .= ' ' . $this->Html->link(__('Delete'), array(
+                    'action' => 'delete',
+                    $id,
+                    'token' => $this->params['_Token']['key'],
+                ), null, __('Are you sure?', true));
+                $actions .= ' ' . $this->Html->link(__('Move up'), array('action' => 'move', $id, 'up'));
+                $actions .= ' ' . $this->Html->link(__('Move down'), array('action' => 'move', $id, 'down'));
+            } else {
+                $actions = '';
+            }
 
             $row = array(
                 $id,
@@ -53,7 +75,14 @@
                 $actions,
             );
 
-            echo $this->Html->tableCells(array($row), $oddOptions, $evenOptions);
+            $line = '';
+            foreach ($row as $cell) {
+                $tdOptions = ($c % 2 == 0) ? $evenOptions: $oddOptions;
+                $line .= $this->Html->tag('td', $cell, $tdOptions);
+            }
+            $trOptions = empty($trClass) ? array() : array('class' => $trClass);
+            echo $this->Html->tag('tr', $line, $trOptions);
+            $c++;
         }
         echo $tableHeaders;
     ?>

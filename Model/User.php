@@ -93,6 +93,9 @@ class User extends AppModel {
         if (empty($this->data)) {
             $data = $this->read();
         }
+        if (!isset($data['User']['role_id'])) {
+            $data['User']['role_id'] = $this->field('role_id');
+        }
         if (!isset($data['User']['role_id']) || !$data['User']['role_id']) {
             return null;
         } else {
@@ -108,14 +111,13 @@ class User extends AppModel {
     }
 
     public function afterSave($created) {
-        if (!$created) {
-            $parent = $this->parentNode();
-            $parent = $this->node($parent);
-            $node = $this->node();
-            $aro = $node[0];
-            $aro['Aro']['parent_id'] = $parent[0]['Aro']['id'];
-            $this->Aro->save($aro);
+        if (empty($this->data['User']['username'])) {
+            return;
         }
+        $node = $this->node();
+        $aro = $node[0];
+        $aro['Aro']['alias'] = $this->data['User']['username'];
+        $this->Aro->save($aro);
     }
 
     protected function _identical($check) {

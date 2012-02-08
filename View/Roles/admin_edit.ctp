@@ -12,6 +12,7 @@
             <div id="role-main">
             <?php
                 echo $this->Form->input('id');
+                echo $this->Form->input('parent_id', array('empty' => true));
                 echo $this->Form->input('title');
                 echo $this->Form->input('alias');
             ?>

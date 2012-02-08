@@ -33,16 +33,11 @@ class AclPermissionsController extends AclAppController {
     );
 
     public function admin_index() {
-        $this->set('title_for_layout', __('Permissions'));
+        $this->set('title_for_layout', __('Permissions', true));
 
-        $acoConditions = array(
-            'parent_id !=' => null,
-            //'model' => null,
-            'foreign_key' => null,
-            'alias !=' => null,
-        );
-        $acos  = $this->Acl->Aco->generateTreeList($acoConditions, '{n}.Aco.id', '{n}.Aco.alias');
+        $acos = $this->AclFilter->acoTreelist();
         $roles = $this->Role->find('list');
+
         $this->set(compact('acos', 'roles'));
 
         $rolesAros = $this->AclAro->find('all', array(
@@ -54,8 +49,8 @@ class AclPermissionsController extends AclAppController {
         $rolesAros = Set::combine($rolesAros, '{n}.AclAro.foreign_key', '{n}.AclAro.id');
 
         $permissions = array(); // acoId => roleId => bool
-        foreach ($acos AS $acoId => $acoAlias) {
-            if (substr_count($acoAlias, '_') != 0) {
+        foreach ($acos AS $acoId => $aco) {
+            if (substr_count($aco[0], '-') != 0) {
                 $permission = array();
                 foreach ($roles AS $roleId => $roleTitle) {
                     $hasAny = array(
@@ -128,5 +123,21 @@ class AclPermissionsController extends AclAppController {
         $this->set(compact('acoId', 'aroId', 'data', 'success', 'permitted'));
     }
     
+    function admin_upgrade() {
+        App::import('Component', 'Acl.AclUpgrade');
+        $this->AclUpgrade = new AclUpgradeComponent;
+        $this->AclUpgrade->initialize($this);
+        if (($errors = $this->AclUpgrade->upgrade()) === true) {
+            $this->Session->setFlash(__('Acl Upgrade complete', true));
+        } else {
+            $message = '';
+            foreach ($errors as $error) {
+                $message .= $error . '<br />';
+            }
+			$this->Session->setFlash($message);
+        }
+        $this->redirect($this->referer());
+    }
+
 }
 ?>

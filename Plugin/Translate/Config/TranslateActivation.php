@@ -24,10 +24,9 @@ class TranslateActivation {
  * @return void
  */
     public function onActivation(&$controller) {
-        $controller->Croogo->addAco('Translate');
-        $controller->Croogo->addAco('Translate/admin_index');
-        $controller->Croogo->addAco('Translate/admin_edit');
-        $controller->Croogo->addAco('Translate/admin_delete');
+        $controller->Croogo->addAco('Translate/Translate/admin_index');
+        $controller->Croogo->addAco('Translate/Translate/admin_edit');
+        $controller->Croogo->addAco('Translate/Translate/admin_delete');
     }
 /**
  * onDeactivate will be called if this returns true

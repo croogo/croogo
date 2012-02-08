@@ -83,5 +83,35 @@ class Vocabulary extends AppModel {
             'insertQuery' => '',
         ),
     );
+
+    public function parentNode() {
+        if (!$this->id && empty($this->data)) {
+            return null;
+        } else {
+            $id = $this->id ? $this->id : $this->data['Role']['id'];
+            $aro = $this->Aro->find('first', array(
+                'conditions' => array(
+                    'model' => $this->alias,
+                    'foreign_key' => $id,
+                    )
+                ));
+            if (empty($aro['Aro']['foreign_key'])) {
+                return null;
+            } else {
+                return array('Role' => array('id' => $aro['Aro']['foreign_key']));
+            }
+        }
+    }
+
+    public function afterSave($created) {
+        if (empty($this->data['Role']['alias'])) {
+            return;
+        }
+        $node = $this->node();
+        $aro = $node[0];
+        $aro['Aro']['alias'] = 'Role-' . $this->data['Role']['alias'];
+        $this->Aro->save($aro);
+    }
+
 }
 ?>

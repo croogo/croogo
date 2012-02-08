@@ -28,9 +28,15 @@
                 'token' => $this->params['_Token']['key'],
             ), null, __('Are you sure?'));
 
+            $level = $role['Role']['level'] - 1;
+            $spanOptions = $level > 0
+                ? array('style' => sprintf('margin: %dpx', $level * 35))
+                : array();
+            $roleTitle = $this->Html->tag('span', $role['Role']['title'], $spanOptions);;
+
             $rows[] = array(
                 $role['Role']['id'],
-                $role['Role']['title'],
+                $roleTitle,
                 $role['Role']['alias'],
                 $actions,
             );

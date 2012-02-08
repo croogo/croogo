@@ -19,13 +19,7 @@ class AclActionsController extends AclAppController {
     public function admin_index() {
         $this->set('title_for_layout', __('Actions'));
 
-        $conditions = array(
-            'parent_id !=' => null,
-            //'model' => null,
-            'foreign_key' => null,
-            'alias !=' => null,
-        );
-        $this->set('acos', $this->Acl->Aco->generateTreeList($conditions, '{n}.Aco.id', '{n}.Aco.alias'));
+        $this->set('acos', $this->AclFilter->acoTreelist());
     }
 
     public function admin_add() {
@@ -50,21 +44,7 @@ class AclActionsController extends AclAppController {
             }
         }
 
-        $conditions = array(
-            //'model' => null,
-        );
-        $controllersAco = $this->Acl->Aco->find('first', array(
-            'conditions' => array(
-                'alias' => 'controllers',
-                'parent_id' => null,
-                //'model' => null,
-                'foreign_key' => null,
-            ),
-        ));
-        if (isset($controllersAco['Aco']['id'])) {
-            $conditions['parent_id'] = $controllersAco['Aco']['id'];
-        }
-        $acos = $this->Acl->Aco->generateTreeList($conditions, '{n}.Aco.id', '{n}.Aco.alias');
+        $acos = $this->AclFilter->acoTreelist();
         $this->set(compact('acos'));
     }
 
@@ -87,21 +67,7 @@ class AclActionsController extends AclAppController {
             $this->data = $this->Acl->Aco->read(null, $id);
         }
 
-        $conditions = array(
-            //'model' => null,
-        );
-        $controllersAco = $this->Acl->Aco->find('first', array(
-            'conditions' => array(
-                'alias' => 'controllers',
-                'parent_id' => null,
-                //'model' => null,
-                'foreign_key' => null,
-            ),
-        ));
-        if (isset($controllersAco['Aco']['id'])) {
-            $conditions['parent_id'] = $controllersAco['Aco']['id'];
-        }
-        $acos = $this->Acl->Aco->generateTreeList($conditions, '{n}.Aco.id', '{n}.Aco.alias');
+        $acos = $this->AclFilter->acoTreelist();
         $this->set(compact('acos'));
     }
 
@@ -151,10 +117,35 @@ class AclActionsController extends AclAppController {
 
         $controllerPaths = $this->AclGenerate->listControllers();
         foreach ($controllerPaths AS $controllerName => $controllerPath) {
-            $controllerNode = $aco->node('controllers/'.$controllerName);
+            $parentAco = $root['Aco']['id'];
+            if (strpos($controllerName, '/') !== false) {
+                list($pluginName, $controllerName) = explode('/', $controllerName);
+                $pluginNode = $aco->node('controllers/'.$pluginName);
+                if (!$pluginNode) {
+                    $aco->create(array(
+                        'parent_id' => $root['Aco']['id'],
+                        'model' => null,
+                        'alias' => $pluginName,
+                    ));
+                    $pluginNode = $aco->save();
+                    $pluginNode['Aco']['id'] = $aco->id;
+                    $log[] = 'Created Aco node for plugin ' . $pluginName;
+                } else {
+                    $pluginNode = $pluginNode[0];
+                }
+                $parentAco = $pluginNode['Aco']['id'];
+            }
+            $controllerNodePath = 'controllers/';
+            if (!empty($pluginName)) {
+                $controllerNodePath .= $pluginName.'/'.$controllerName;
+            } else {
+                $controllerNodePath .= $controllerName;
+            }
+            $controllerNode = $aco->node($controllerNodePath);
+
             if (!$controllerNode) {
                 $aco->create(array(
-                    'parent_id' => $root['Aco']['id'],
+                    'parent_id' => $parentAco,
                     'model' => null,
                     'alias' => $controllerName,
                 ));
