@@ -27,6 +27,7 @@ class Role extends AppModel {
  */
     public $actsAs = array(
         'Acl' => array(
+            'className' => 'CroogoAcl',
             'type' => 'requester',
         ),
     );
@@ -52,10 +53,6 @@ class Role extends AppModel {
             ),
         ),
     );
-
-    public function parentNode() {
-        return null;
-    }
 
 }
 ?>
