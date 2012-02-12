@@ -36,8 +36,8 @@ class ExtensionsPluginsController extends AppController {
  * @access public
  */
     public $corePlugins = array(
-        'acl',
-        'extensions',
+        'Acl',
+        'Extensions',
     );
 
     public function beforeFilter() {
