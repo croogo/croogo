@@ -483,18 +483,18 @@ class CroogoComponent extends Component {
             $aroIds = array_keys($aros);
         }
 
-        // ACOs
-        $acoNode = $this->controller->Acl->Aco->node($this->controller->Auth->actionPath.$action);
+        // ACOs        
+        $acoNode = $this->controller->Acl->Aco->node($this->controller->Auth->authorize['all']['actionPath'].$action);
         if (!isset($acoNode['0']['Aco']['id'])) {
             if (!strstr($action, '/')) {
-                $parentNode = $this->controller->Acl->Aco->node(str_replace('/', '', $this->controller->Auth->actionPath));
+                $parentNode = $this->controller->Acl->Aco->node(str_replace('/', '', $this->controller->Auth->authorize['all']['actionPath']));
                 $alias = $action;
             } else {
                 $actionE = explode('/', $action);
                 $controllerName = $actionE['0'];
                 $method = $actionE['1'];
                 $alias = $method;
-                $parentNode = $this->controller->Acl->Aco->node($this->controller->Auth->actionPath.$controllerName);
+                $parentNode = $this->controller->Acl->Aco->node($this->controller->Auth->authorize['all']['actionPath'].'/'.$controllerName);
             }
             $parentId = $parentNode['0']['Aco']['id'];
             $acoData = array(
@@ -560,7 +560,7 @@ class CroogoComponent extends Component {
  * @return void
  */
     public function removeAco($action) {
-        $acoNode = $this->controller->Acl->Aco->node($this->controller->Auth->actionPath.$action);
+        $acoNode = $this->controller->Acl->Aco->node($this->controller->Auth->authorize['all']['actionPath'].'/'.$action);
         if (isset($acoNode['0']['Aco']['id'])) {
             $this->controller->Acl->Aco->delete($acoNode['0']['Aco']['id']);
         }
