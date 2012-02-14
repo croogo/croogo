@@ -187,9 +187,10 @@ class ContactsController extends AppController {
     private function __send_email($continue, $contact) {
         $email = new CakeEmail();
         if ($contact['Contact']['message_notify'] && $continue === true) {
+            $siteTitle = Configure::read('Site.title') ;
             $email->from($this->request->data['Message']['email'])
                 ->to($contact['Contact']['email'])
-                ->subject(__('[' . Configure::read('Site.title') . '] ' . $contact['Contact']['title']))
+                ->subject(__('[%s] %s', $siteTitle, $contact['Contact']['title']))
                 ->template('contact')
                 ->viewVars(array(
                     'contact' => $contact,
