@@ -31,18 +31,18 @@ class AclActionsController extends AclAppController {
     public function admin_add() {
         $this->set('title_for_layout', __('Add Action'));
 
-        if (!empty($this->data)) {
+        if (!empty($this->request->data)) {
             $this->Acl->Aco->create();
             
             // if parent_id is null, assign 'controllers' as parent
-            if ($this->data['Aco']['parent_id'] == null) {
-                $this->data['Aco']['parent_id'] = 1;
+            if ($this->request->data['Aco']['parent_id'] == null) {
+                $this->request->data['Aco']['parent_id'] = 1;
                 $acoType = 'Controller';
             } else {
                 $acoType = 'Action';
             }
 
-            if ($this->Acl->Aco->save($this->data['Aco'])) {
+            if ($this->Acl->Aco->save($this->request->data['Aco'])) {
                 $this->Session->setFlash(sprintf(__('The %s has been saved'), $acoType), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
@@ -71,20 +71,20 @@ class AclActionsController extends AclAppController {
     public function admin_edit($id = null) {
         $this->set('title_for_layout', __('Edit Action'));
 
-        if (!$id && empty($this->data)) {
+        if (!$id && empty($this->request->data)) {
             $this->Session->setFlash(__('Invalid Action'), 'default', array('class' => 'error'));
             $this->redirect(array('action'=>'index'));
         }
-        if (!empty($this->data)) {
-            if ($this->Acl->Aco->save($this->data['Aco'])) {
+        if (!empty($this->request->data)) {
+            if ($this->Acl->Aco->save($this->request->data['Aco'])) {
                 $this->Session->setFlash(__('The Action has been saved'), 'default', array('class' => 'success'));
                 $this->redirect(array('action'=>'index'));
             } else {
                 $this->Session->setFlash(__('The Action could not be saved. Please, try again.'), 'default', array('class' => 'error'));
             }
         }
-        if (empty($this->data)) {
-            $this->data = $this->Acl->Aco->read(null, $id);
+        if (empty($this->request->data)) {
+            $this->request->data = $this->Acl->Aco->read(null, $id);
         }
 
         $conditions = array(
