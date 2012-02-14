@@ -10,19 +10,4 @@
     <br />
     <br />
 
-    <p>
-        Delete the installation directory <strong>/app/Plugins/Install</strong>.
-    </p>
-
-    <br />
-    <br />
-
-    <?php
-        echo $this->Html->link(__('Click here to delete installation files'), array(
-            'plugin' => 'install',
-            'controller' => 'install',
-            'action' => 'finish',
-            'delete' => 1,
-        ));
-    ?>
 </div>

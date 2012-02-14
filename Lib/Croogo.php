@@ -28,10 +28,13 @@ class Croogo {
  * Loads as a normal component from controller.
  *
  * @param string $controllerName Controller Name
- * @param string $componentName  Component name
+ * @param mixed $componentName  Component name or array of Component and settings
  */
     public function hookComponent($controllerName, $componentName) {
-        self::hookControllerProperty($controllerName, 'components', array($componentName));
+        if (is_string($componentName)) {
+            $componentName = array($componentName);
+        }
+        self::hookControllerProperty($controllerName, 'components', $componentName);
     }
 /**
  * Attaches Behavior to a Model whenever loaded.
@@ -47,10 +50,13 @@ class Croogo {
  * Loads as a normal helper via controller.
  *
  * @param string $controllerName
- * @param string $helperName
+ * @param mixed $helperName Helper name or array of Helper and settings
  */
     public function hookHelper($controllerName, $helperName) {
-        self::hookControllerProperty($controllerName, 'helpers', array($helperName));
+        if (is_string($helperName)) {
+            $helperName = array($helperName);
+        }
+        self::hookControllerProperty($controllerName, 'helpers', $helperName);
     }
 /**
  * Shows plugin's admin_menu element in admin navigation under Extensions.
