@@ -135,6 +135,7 @@ class AppController extends Controller {
         if (!isset($this->request->params['admin']) && 
             Configure::read('Site.status') == 0) {
             $this->layout = 'maintenance';
+            $this->response->statusCode(503);
             $this->set('title_for_layout', __('Site down for maintenance'));
             $this->render('../Elements/blank');
         }
