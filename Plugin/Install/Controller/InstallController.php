@@ -118,8 +118,14 @@ class InstallController extends InstallAppController {
                 $config[$key] = $value;
             }
         }
-        @ConnectionManager::create('default', $config);
-        $db = ConnectionManager::getDataSource('default');
+        try {
+            @ConnectionManager::create('default', $config);
+            $db = ConnectionManager::getDataSource('default');
+        }
+        catch (MissingConnectionException $e) {
+            $this->Session->setFlash(__('Could not connect to database: %s', $e->getMessage()), 'default', array('class' => 'error'));
+            $this->redirect(array('action' => 'database'));
+        }
         if (!$db->isConnected()) {
             $this->Session->setFlash(__('Could not connect to database.'), 'default', array('class' => 'error'));
             return;
