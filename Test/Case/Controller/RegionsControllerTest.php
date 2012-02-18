@@ -158,4 +158,3 @@ class RegionsControllerTest extends CroogoTestCase {
         ClassRegistry::flush();
     }
 }
-?>

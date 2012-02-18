@@ -208,4 +208,3 @@ class VocabulariesControllerTest extends CroogoTestCase {
         ClassRegistry::flush();
     }
 }
-?>

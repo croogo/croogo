@@ -175,4 +175,3 @@ class NodesControllerTest extends CroogoTestCase {
         ClassRegistry::flush();
     }
 }
-?>

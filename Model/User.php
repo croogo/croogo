@@ -105,4 +105,3 @@ class User extends AppModel {
     }
 
 }
-?>

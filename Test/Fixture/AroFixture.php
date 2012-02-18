@@ -54,4 +54,3 @@ class AroFixture extends CakeTestFixture {
 		),
 	);
 }
-?>

@@ -447,4 +447,3 @@ class BlocksControllerTest extends CroogoTestCase {
         ClassRegistry::flush();
     }
 }
-?>

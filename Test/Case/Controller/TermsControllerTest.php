@@ -253,4 +253,3 @@ class TermsControllerTest extends CroogoTestCase {
         ClassRegistry::flush();
     }
 }
-?>

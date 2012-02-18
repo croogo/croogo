@@ -175,4 +175,3 @@ class Setting extends AppModel {
         $file->write($listYaml);
     }
 }
-?>

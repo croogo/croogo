@@ -291,4 +291,3 @@ class CommentsControllerTest extends CroogoTestCase {
         ClassRegistry::flush();
     }
 }
-?>

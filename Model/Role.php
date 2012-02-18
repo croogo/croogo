@@ -55,4 +55,3 @@ class Role extends AppModel {
     );
 
 }
-?>

@@ -178,4 +178,3 @@ class ContactsControllerTest extends CroogoTestCase {
         ClassRegistry::flush();
     }
 }
-?>

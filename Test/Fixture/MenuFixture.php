@@ -69,4 +69,3 @@ class MenuFixture extends CakeTestFixture {
 		),
 	);
 }
-?>

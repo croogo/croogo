@@ -39,4 +39,3 @@ class TypesVocabularyFixture extends CakeTestFixture {
 		),
 	);
 }
-?>

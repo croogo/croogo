@@ -163,4 +163,3 @@ class RolesControllerTest extends CroogoTestCase {
         ClassRegistry::flush();
     }
 }
-?>

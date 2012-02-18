@@ -78,4 +78,3 @@ class NodeFixture extends CakeTestFixture {
 		),
 	);
 }
-?>

@@ -79,7 +79,6 @@ class CroogoShell extends AppShell {
                     $content .= $recordString;
                 $content .= "\t);\n\n";
             $content .= "}\n";
-        $content .= "?>";
 
         // write file
         $filePath = APP . 'config' . DS . 'schema' . DS . 'data' . DS . Inflector::underscore($modelAlias) . '_data.php';
@@ -94,4 +93,3 @@ class CroogoShell extends AppShell {
     }
     
 }
-?>

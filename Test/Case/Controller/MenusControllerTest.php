@@ -158,4 +158,3 @@ class MenusControllerTest extends CroogoTestCase {
         ClassRegistry::flush();
     }
 }
-?>

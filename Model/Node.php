@@ -241,4 +241,3 @@ class Node extends AppModel {
         return ($this->find('count', array('conditions' => $fields, 'recursive' => -1)) == 0);
     }
 }
-?>

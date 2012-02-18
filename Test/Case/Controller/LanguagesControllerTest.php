@@ -281,4 +281,3 @@ class LanguagesControllerTest extends CroogoTestCase {
         ClassRegistry::flush();
     }
 }
-?>

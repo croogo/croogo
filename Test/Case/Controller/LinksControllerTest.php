@@ -318,4 +318,3 @@ class LinksControllerTest extends CroogoTestCase {
         ClassRegistry::flush();
     }
 }
-?>

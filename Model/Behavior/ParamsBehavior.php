@@ -83,4 +83,3 @@ class ParamsBehavior extends ModelBehavior {
     }
 
 }
-?>

@@ -77,4 +77,3 @@ class MetaBehaviorTest extends CakeTestCase {
         ClassRegistry::flush();
     }
 }
-?>

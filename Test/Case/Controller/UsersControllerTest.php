@@ -162,4 +162,3 @@ class UsersControllerTest extends CroogoTestCase {
         ClassRegistry::flush();
     }
 }
-?>

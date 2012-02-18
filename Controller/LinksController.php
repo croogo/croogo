@@ -264,4 +264,3 @@ class LinksController extends AppController {
     }
 
 }
-?>
