@@ -169,7 +169,13 @@ class InstallController extends InstallAppController {
                 $schema = $schema->load();
                 foreach($schema->tables as $table => $fields) {
                     $create = $db->createSchema($schema, $table);
-                    $db->execute($create);
+                    try {
+                        $db->execute($create);
+                    }
+                    catch (PDOException $e) {
+                        $this->Session->setFlash(__('Could not create table: %s', $e->getMessage()), 'default', array('class' => 'error'));
+                        $this->redirect(array('action' => 'database'));
+                    }
                 }
 
                 $path = App::pluginPath('Install') .DS. 'Config' .DS. 'Data' .DS;
