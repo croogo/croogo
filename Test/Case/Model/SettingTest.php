@@ -1,6 +1,5 @@
 <?php
-App::import('Model', 'Setting');
-
+App::uses('Setting', 'Model');
 class SettingTest extends CakeTestCase {
 
     public $fixtures = array(
@@ -28,9 +27,16 @@ class SettingTest extends CakeTestCase {
         'user',
         'vocabulary',
     );
-
-    public function startTest() {
-         $this->Setting =& ClassRegistry::init('Setting');
+    
+    public function setUp() {
+        parent::setUp();
+        $this->Setting = ClassRegistry::init('Setting');
+        $this->Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
+    }
+    
+    public function tearDown() {
+        parent::tearDown();
+        unset($this->Setting);
     }
 
     public function testWriteNew() {
@@ -57,10 +63,5 @@ class SettingTest extends CakeTestCase {
     public function testWriteConfiguration() {
         $this->Setting->writeConfiguration();
         $this->assertEqual(Configure::read('Site.title'), 'Croogo');
-    }
-
-    public function endTest() {
-        unset($this->Setting);
-        ClassRegistry::flush();
     }
 }

@@ -1,6 +1,5 @@
 <?php
-App::import('Model', 'Taxonomy');
-
+App::uses('Taxonomy', 'Model');
 class TaxonomyTest extends CakeTestCase {
 
     public $fixtures = array(
@@ -29,8 +28,14 @@ class TaxonomyTest extends CakeTestCase {
         'vocabulary',
     );
 
-    public function startTest() {
-         $this->Taxonomy =& ClassRegistry::init('Taxonomy');
+    public function setUp() {
+        parent::setUp();
+        $this->Taxonomy = ClassRegistry::init('Taxonomy');
+    }
+
+    public function tearDown() {
+        parent::tearDown();
+        unset($this->Taxonomy);
     }
 
     public function testGetTree() {
@@ -45,10 +50,5 @@ class TaxonomyTest extends CakeTestCase {
     public function testTermInVocabulary() {
         $this->assertEquals(1, $this->Taxonomy->termInVocabulary(1, 1));  // Uncategorized in Categories
         $this->assertFalse($this->Taxonomy->termInVocabulary(1, 3)); // Uncategorized in non-existing vocabulary
-    }
-
-    public function endTest() {
-        unset($this->Taxonomy);
-        ClassRegistry::flush();
     }
 }
