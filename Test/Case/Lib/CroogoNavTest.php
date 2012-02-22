@@ -1,16 +1,17 @@
 <?php
-App::import('Lib', 'CroogoNav');
-
+App::uses('CroogoNav', 'Lib');
 class CroogoNavTest extends CakeTestCase {
 
-    private static $__menus = array();
+    protected static $_menus = array();
 
     public function setUp() {
-        static::$__menus = CroogoNav::items();
+        parent::setUp();
+        static::$_menus = CroogoNav::items();
     }
 
     public function tearDown() {
-        CroogoNav::items(static::$__menus);
+        parent::tearDown();
+        CroogoNav::items(static::$_menus);
     }
     
     public function testNav() {
