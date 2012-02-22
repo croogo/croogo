@@ -1,13 +1,9 @@
 <?php
 /* Meta Fixture generated on: 2010-05-20 22:05:44 : 1274393804 */
 class MetaFixture extends CakeTestFixture {
-	var $name = 'Meta';
+	public $name = 'Meta';
 
-	var $import = 'Meta';
-
-	var $table = 'meta';
-
-	var $fields = array(
+	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 20, 'key' => 'primary'),
 		'model' => array('type' => 'string', 'null' => false, 'default' => 'Node'),
 		'foreign_key' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 20),
@@ -18,7 +14,7 @@ class MetaFixture extends CakeTestFixture {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => 1,
 			'model' => 'Node',
