@@ -120,7 +120,7 @@ class CroogoComponent extends Component {
         $types = $this->controller->Node->Taxonomy->Vocabulary->Type->find('all', array(
             'conditions' => array(
                 'OR' => array(
-                    'Type.plugin' => '',
+                    'Type.plugin LIKE' => '',
                     'Type.plugin' => null,
                 ),
             ),
