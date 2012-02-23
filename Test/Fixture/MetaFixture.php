@@ -2,6 +2,7 @@
 /* Meta Fixture generated on: 2010-05-20 22:05:44 : 1274393804 */
 class MetaFixture extends CakeTestFixture {
 	public $name = 'Meta';
+	public $table = 'meta';
 
 	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 20, 'key' => 'primary'),
