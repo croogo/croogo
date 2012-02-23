@@ -1,5 +1,6 @@
 <?php
-App::import('Controller', 'Languages');
+App::uses('LanguagesController', 'Controller');
+App::uses('CroogoTestCase', 'TestSuite');
 
 class TestLanguagesController extends LanguagesController {
 
@@ -29,8 +30,6 @@ class TestLanguagesController extends LanguagesController {
 
     }
 }
-
-App::uses('CroogoTestCase', 'TestSuite');
 
 class LanguagesControllerTest extends CroogoTestCase {
 

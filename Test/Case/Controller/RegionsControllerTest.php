@@ -1,5 +1,6 @@
 <?php
-App::import('Controller', 'Regions');
+App::uses('RegionsController', 'Controller');
+App::uses('CroogoTestCase', 'TestSuite');
 
 class TestRegionsController extends RegionsController {
 
@@ -29,8 +30,6 @@ class TestRegionsController extends RegionsController {
 
     }
 }
-
-App::uses('CroogoTestCase', 'TestSuite');
 
 class RegionsControllerTest extends CroogoTestCase {
 

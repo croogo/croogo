@@ -1,5 +1,6 @@
 <?php
-App::import('Controller', 'Users');
+App::uses('UsersController', 'Controller');
+App::uses('CroogoTestCase', 'TestSuite');
 
 class TestUsersController extends UsersController {
 
@@ -29,8 +30,6 @@ class TestUsersController extends UsersController {
 
     }
 }
-
-App::uses('CroogoTestCase', 'TestSuite');
 
 class UsersControllerTest extends CroogoTestCase {
 
