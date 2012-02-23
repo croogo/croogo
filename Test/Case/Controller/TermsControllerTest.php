@@ -1,5 +1,6 @@
 <?php
-App::import('Controller', 'Terms');
+App::uses('TermsController', 'Controller');
+App::uses('CroogoTestCase', 'TestSuite');
 
 class TestTermsController extends TermsController {
 
@@ -29,8 +30,6 @@ class TestTermsController extends TermsController {
 
     }
 }
-
-App::uses('CroogoTestCase', 'TestSuite');
 
 class TermsControllerTest extends CroogoTestCase {
 

@@ -1,5 +1,6 @@
 <?php
-App::import('Controller', 'Menus');
+App::uses('MenusController', 'Controller');
+App::uses('CroogoTestCase', 'TestSuite');
 
 class TestMenusController extends MenusController {
 
@@ -29,8 +30,6 @@ class TestMenusController extends MenusController {
 
     }
 }
-
-App::uses('CroogoTestCase', 'TestSuite');
 
 class MenusControllerTest extends CroogoTestCase {
 

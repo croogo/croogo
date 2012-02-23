@@ -1,5 +1,6 @@
 <?php
-App::import('Controller', 'Links');
+App::uses('LinksController', 'Controller');
+App::uses('CroogoTestCase', 'TestSuite');
 
 class TestLinksController extends LinksController {
 
@@ -29,8 +30,6 @@ class TestLinksController extends LinksController {
 
     }
 }
-
-App::uses('CroogoTestCase', 'TestSuite');
 
 class LinksControllerTest extends CroogoTestCase {
 
