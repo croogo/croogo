@@ -100,4 +100,3 @@ class MetaBehavior extends ModelBehavior {
     }
 
 }
-?>

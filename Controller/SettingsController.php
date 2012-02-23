@@ -147,4 +147,3 @@ class SettingsController extends AppController {
     }
 
 }
-?>

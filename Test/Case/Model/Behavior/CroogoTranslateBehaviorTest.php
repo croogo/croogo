@@ -53,4 +53,3 @@ class CroogoTranslateBehaviorTest extends CakeTestCase {
         ClassRegistry::flush();
     }
 }
-?>

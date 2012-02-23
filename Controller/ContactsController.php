@@ -206,4 +206,4 @@ class ContactsController extends AppController {
     }
 
 }
-?>
+

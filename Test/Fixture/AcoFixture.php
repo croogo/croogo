@@ -1602,4 +1602,3 @@ class AcoFixture extends CakeTestFixture {
 		),
 	);
 }
-?>

@@ -135,4 +135,3 @@ class BlockFixture extends CakeTestFixture {
 		),
 	);
 }
-?>

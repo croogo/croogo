@@ -1,5 +1,6 @@
 <?php
-App::import('Controller', 'Contacts');
+App::uses('ContactsController', 'Controller');
+App::uses('CroogoTestCase', 'TestSuite');
 
 class TestContactsController extends ContactsController {
 
@@ -29,8 +30,6 @@ class TestContactsController extends ContactsController {
 
     }
 }
-
-App::uses('CroogoTestCase', 'TestSuite');
 
 class ContactsControllerTest extends CroogoTestCase {
 
@@ -178,4 +177,3 @@ class ContactsControllerTest extends CroogoTestCase {
         ClassRegistry::flush();
     }
 }
-?>

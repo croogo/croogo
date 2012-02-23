@@ -78,4 +78,3 @@ class Menu extends AppModel {
         ),
     );
 }
-?>

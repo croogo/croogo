@@ -23,4 +23,3 @@ class AppError extends ErrorHandler {
         $this->_outputMessage('security');
     }
 }
-?>

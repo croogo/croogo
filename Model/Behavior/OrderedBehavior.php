@@ -662,4 +662,4 @@ class OrderedBehavior extends ModelBehavior {
 		return $Model->data[$Model->alias][$this->settings[$Model->alias]['field']];
 	}
 }
-?>
+
