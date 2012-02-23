@@ -100,7 +100,7 @@ class CroogoComponent extends Component {
             $this->types();
             $this->nodes();
         } else {
-            $this->__adminData();
+            $this->_adminData();
         }
     }
 /**
@@ -108,7 +108,7 @@ class CroogoComponent extends Component {
  *
  * @return void
  */
-    private function __adminData() {
+    protected function _adminData() {
         // menus
         $menus = $this->controller->Link->Menu->find('all', array(
             'recursive' => '-1',
