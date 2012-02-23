@@ -1,5 +1,6 @@
 <?php
-App::import('Controller', 'Comments');
+App::uses('CommentsController', 'Controller');
+App::uses('CroogoTestCase', 'TestSuite');
 
 class TestCommentsController extends CommentsController {
 
@@ -29,8 +30,6 @@ class TestCommentsController extends CommentsController {
 
     }
 }
-
-App::uses('CroogoTestCase', 'TestSuite');
 
 class CommentsControllerTest extends CroogoTestCase {
 

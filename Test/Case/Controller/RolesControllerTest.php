@@ -1,5 +1,6 @@
 <?php
-App::import('Controller', 'Roles');
+App::uses('RolesController', 'Controller');
+App::uses('CroogoTestCase', 'TestSuite');
 
 class TestRolesController extends RolesController {
 
@@ -29,8 +30,6 @@ class TestRolesController extends RolesController {
 
     }
 }
-
-App::uses('CroogoTestCase', 'TestSuite');
 
 class RolesControllerTest extends CroogoTestCase {
 

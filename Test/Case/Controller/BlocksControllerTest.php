@@ -1,5 +1,6 @@
 <?php
-App::import('Controller', 'Blocks');
+App::uses('BlocksController', 'Controller');
+App::uses('CroogoTestCase', 'TestSuite');
 
 class TestBlocksController extends BlocksController {
 
@@ -30,34 +31,32 @@ class TestBlocksController extends BlocksController {
     }
 }
 
-App::uses('CroogoTestCase', 'TestSuite');
-
 class BlocksControllerTest extends CroogoTestCase {
 
     public $fixtures = array(
-        'aco',
-        'aro',
-        'aros_aco',
-        'block',
-        'comment',
-        'contact',
-        'i18n',
-        'language',
-        'link',
-        'menu',
-        'message',
-        'meta',
-        'node',
-        'nodes_taxonomy',
-        'region',
-        'role',
-        'setting',
-        'taxonomy',
-        'term',
-        'type',
-        'types_vocabulary',
-        'user',
-        'vocabulary',
+        'app.aco',
+        'app.aro',
+        'app.aros_aco',
+        'app.block',
+        'app.comment',
+        'app.contact',
+        'app.i18n',
+        'app.language',
+        'app.link',
+        'app.menu',
+        'app.message',
+        'app.meta',
+        'app.node',
+        'app.nodes_taxonomy',
+        'app.region',
+        'app.role',
+        'app.setting',
+        'app.taxonomy',
+        'app.term',
+        'app.type',
+        'app.types_vocabulary',
+        'app.user',
+        'app.vocabulary',
     );
 
     public function startTest() {
