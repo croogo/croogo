@@ -400,7 +400,7 @@ class NodesController extends AppController {
         }
 
         $this->set(compact('type', 'nodes'));
-        $this->__viewFallback(array(
+        $this->_viewFallback(array(
             'index_' . $type['Type']['alias'],
         ));
     }
@@ -487,7 +487,7 @@ class NodesController extends AppController {
         }
 
         $this->set(compact('term', 'type', 'nodes'));
-        $this->__viewFallback(array(
+        $this->_viewFallback(array(
             'term_' . $term['Term']['id'],
             'term_' . $type['Type']['alias'],
         ));
@@ -606,7 +606,7 @@ class NodesController extends AppController {
         $this->set('title_for_layout', sprintf(__('Search Results: %s'), $q));
         $this->set(compact('q', 'nodes'));
         if ($typeAlias) {
-            $this->__viewFallback(array(
+            $this->_viewFallback(array(
                 'search_' . $typeAlias,
             ));
         }
@@ -710,13 +710,13 @@ class NodesController extends AppController {
 
         $this->set('title_for_layout', $node['Node']['title']);
         $this->set(compact('node', 'type', 'comments'));
-        $this->__viewFallback(array(
+        $this->_viewFallback(array(
             'view_' . $node['Node']['id'],
             'view_' . $type['Type']['alias'],
         ));
     }
 
-    private function __viewFallback($views) {
+    protected function _viewFallback($views) {
         if (is_string($views)) {
             $views = array($views);
         }
