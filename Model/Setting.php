@@ -11,6 +11,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
+App::uses('File', 'Utility');
 class Setting extends AppModel {
 /**
  * Model name
@@ -19,6 +20,12 @@ class Setting extends AppModel {
  * @access public
  */
     public $name = 'Setting';
+/**
+ * Path to settings file
+ *
+ * @var string
+ */
+	public $settingsPath = '';
 /**
  * Behaviors used by the Model
  *
@@ -54,6 +61,17 @@ class Setting extends AppModel {
             ),
         ),
     );
+/**
+ * __construct
+ *
+ * @param mixed $id
+ * @param string $table
+ * @param DataSource $ds
+ */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->settingsPath = APP . 'Config' . DS . 'settings.yml';
+	}
 /**
  * afterSave callback
  *
@@ -168,9 +186,7 @@ class Setting extends AppModel {
                 'Setting.key' => 'ASC',
             ),
         ));
-        App::uses('File', 'Utility');
-        $filePath = APP.'Config'.DS.'settings.yml';
-        $file = new File($filePath, true);
+        $file = new File($this->settingsPath, true);
         $listYaml = Spyc::YAMLDump($list, 4, 60);
         $file->write($listYaml);
     }
