@@ -1,6 +1,4 @@
 <?php
-// TODO: These tests fire a permission error but should be done in a separate
-// test_app and skip if no permissions
 App::uses('Setting', 'Model');
 class SettingTest extends CakeTestCase {
 
@@ -33,6 +31,7 @@ class SettingTest extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->Setting = ClassRegistry::init('Setting');
+		$this->Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
 	}
 	
 	public function tearDown() {
