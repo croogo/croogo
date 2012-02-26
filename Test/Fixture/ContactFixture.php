@@ -59,4 +59,3 @@ class ContactFixture extends CakeTestFixture {
 		),
 	);
 }
-?>

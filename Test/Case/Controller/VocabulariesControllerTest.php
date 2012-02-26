@@ -1,5 +1,6 @@
 <?php
-App::import('Controller', 'Vocabularies');
+App::uses('VocabulariesController', 'Controller');
+App::uses('CroogoTestCase', 'TestSuite');
 
 class TestVocabulariesController extends VocabulariesController {
 
@@ -29,8 +30,6 @@ class TestVocabulariesController extends VocabulariesController {
 
     }
 }
-
-App::uses('CroogoTestCase', 'TestSuite');
 
 class VocabulariesControllerTest extends CroogoTestCase {
 
@@ -208,4 +207,3 @@ class VocabulariesControllerTest extends CroogoTestCase {
         ClassRegistry::flush();
     }
 }
-?>

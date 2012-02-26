@@ -72,4 +72,3 @@ class Comment extends AppModel {
     );
 
 }
-?>

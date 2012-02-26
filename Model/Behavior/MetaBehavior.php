@@ -61,7 +61,7 @@ class MetaBehavior extends ModelBehavior {
  * @return array
  */
     public function prepareData(&$model, $data) {
-        return $this->__prepareMeta($data);
+        return $this->_prepareMeta($data);
     }
 /**
  * Private method for MetaBehavior::prepareData()
@@ -70,7 +70,7 @@ class MetaBehavior extends ModelBehavior {
  * @param array  $data
  * @return array
  */
-    private function __prepareMeta($data) {
+    protected function _prepareMeta($data) {
         if (isset($data['Meta']) &&
             is_array($data['Meta']) &&
             count($data['Meta']) > 0 &&
@@ -95,9 +95,8 @@ class MetaBehavior extends ModelBehavior {
  * @return void
  */
     public function saveWithMeta(&$model, $data, $options = array()) {
-        $data = $this->__prepareMeta($data);
+        $data = $this->_prepareMeta($data);
         return $model->saveAll($data, $options);
     }
 
 }
-?>

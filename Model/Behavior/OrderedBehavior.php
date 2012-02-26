@@ -572,7 +572,7 @@ class OrderedBehavior extends ModelBehavior {
 		return $Model->updateAll($action, $conditions);
 	}
 	
-	private function _findbyweight(&$Model, $weight) {
+	protected function _findbyweight(&$Model, $weight) {
 		$conditions = array($this->settings[$Model->alias]['field'] => $weight);
 		$fields = array($Model->primaryKey, $this->settings[$Model->alias]['field']);
 		if ($this->settings[$Model->alias]['foreign_key']) {
@@ -586,7 +586,7 @@ class OrderedBehavior extends ModelBehavior {
 				'recursive' => -1));
 	}
 	
-	private function _highest(&$Model) {
+	protected function _highest(&$Model) {
 		$options = array(
 				'order' => $this->settings[$Model->alias]['field'] . ' DESC', 
 				'fields' => array($Model->primaryKey, $this->settings[$Model->alias]['field']), 
@@ -606,7 +606,7 @@ class OrderedBehavior extends ModelBehavior {
 		return $last;
 	}
 	
-	private function _previous(&$Model) {
+	protected function _previous(&$Model) {
 		$conditions = array(
 				$this->settings[$Model->alias]['field'] => $Model->data[$Model->alias][$this->settings[$Model->alias]['field']] - 1);
 		$fields = array($Model->primaryKey, $this->settings[$Model->alias]['field']);
@@ -621,7 +621,7 @@ class OrderedBehavior extends ModelBehavior {
 				'recursive' => -1));
 	}
 	
-	private function _next(&$Model) {
+	protected function _next(&$Model) {
 		$conditions = array(
 				$this->settings[$Model->alias]['field'] => $Model->data[$Model->alias][$this->settings[$Model->alias]['field']] + 1);
 		$fields = array($Model->primaryKey, $this->settings[$Model->alias]['field']);
@@ -636,7 +636,7 @@ class OrderedBehavior extends ModelBehavior {
 				'recursive' => -1));
 	}
 	
-	private function _all(&$Model) {
+	protected function _all(&$Model) {
 		$options = array( 
 				'order' => $this->settings[$Model->alias]['field'] . ' DESC', 
 				'fields' => array($Model->primaryKey, $this->settings[$Model->alias]['field']), 
@@ -649,7 +649,7 @@ class OrderedBehavior extends ModelBehavior {
 		return $Model->find('all', $options);
 	}
 	
-	private function _read(&$Model, $id) {
+	protected function _read(&$Model, $id) {
 		$Model->id = $id;
 		$fields = array($Model->primaryKey, $this->settings[$Model->alias]['field']);
 		if ($this->settings[$Model->alias]['foreign_key']) {
@@ -662,4 +662,4 @@ class OrderedBehavior extends ModelBehavior {
 		return $Model->data[$Model->alias][$this->settings[$Model->alias]['field']];
 	}
 }
-?>
+

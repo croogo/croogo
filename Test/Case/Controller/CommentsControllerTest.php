@@ -1,5 +1,6 @@
 <?php
-App::import('Controller', 'Comments');
+App::uses('CommentsController', 'Controller');
+App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestCommentsController extends CommentsController {
 
@@ -30,9 +31,7 @@ class TestCommentsController extends CommentsController {
     }
 }
 
-App::uses('CroogoTestCase', 'TestSuite');
-
-class CommentsControllerTest extends CroogoTestCase {
+class CommentsControllerTest extends CroogoControllerTestCase {
 
     public $fixtures = array(
         'aco',
@@ -60,7 +59,12 @@ class CommentsControllerTest extends CroogoTestCase {
         'vocabulary',
     );
 
+/**
+ * startTest
+ */
     public function startTest() {
+		$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+		$_SERVER['SERVER_NAME'] = 'localhost';
         $request = new CakeRequest();
         $response = new CakeResponse();
         $this->Comments = new TestCommentsController($request, $response);
@@ -69,6 +73,15 @@ class CommentsControllerTest extends CroogoTestCase {
         $this->Comments->request->params['pass'] = array();
         $this->Comments->request->params['named'] = array();
     }
+
+/**
+ * endTest
+ */
+    public function endTest() {
+		unset($this->Comments);
+		CakeSession::clear();
+		ClassRegistry::flush();
+	}
 
     public function testAdminIndex() {
         $this->Comments->request->params['action'] = 'admin_index';
@@ -234,61 +247,79 @@ class CommentsControllerTest extends CroogoTestCase {
         $this->assertEqual($list, array());
     }
 
-    public function testAdd() {
-        $this->Comments->request->params['action'] = 'add';
-        $this->Comments->request->params['url']['url'] = 'comments/add';
-        $this->Comments->Components->trigger('initialize', array(&$this->Comments));
+/**
+ * testAdd
+ */
+	public function testAdd() {
+		$Comments = $this->generate('Comments', array(
+			'components' => array(
+				'Email' => array('send'),
+				'Session',
+			),
+		));
+		$Comments->Email
+			->expects($this->once())
+			->method('send')
+			->will($this->returnValue(true));
+        $Comments->request->params['action'] = 'add';
+        $Comments->request->params['url']['url'] = 'comments/add';
+        $Comments->Components->trigger('initialize', array(&$Comments));
 
-        $this->Comments->Components->trigger('startup', array(&$this->Comments));
-        $this->Comments->request->data['Comment'] = array(
+        $Comments->Components->trigger('startup', array(&$Comments));
+        $Comments->request->data['Comment'] = array(
             'name' => 'John Smith',
             'email' => 'john.smith@example.com',
             'website' => 'http://example.com',
             'body' => 'text here...',
         );
-        $node = $this->Comments->Comment->Node->findBySlug('hello-world');
-        $this->Comments->add($node['Node']['id']);
-        $this->assertEqual($this->Comments->viewVars['success'], 1);
+        $node = $Comments->Comment->Node->findBySlug('hello-world');
+        $Comments->add($node['Node']['id']);
+        $this->assertEqual($Comments->viewVars['success'], 1);
 
-        $comments = $this->Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
+        $comments = $Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
         $commenters = array_values($comments);
         $this->assertEqual($commenters, array('Mr Croogo', 'John Smith'));
 
-        $this->Comments->testView = true;
-        $output = $this->Comments->render('add');
+        $Comments->testView = true;
+        $output = $Comments->render('add');
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
 
-    public function testAddWithParent() {
-        $this->Comments->request->params['action'] = 'add';
-        $this->Comments->request->params['url']['url'] = 'comments/add';
-        $this->Comments->Components->trigger('initialize', array(&$this->Comments));
-        $this->Comments->Components->trigger('startup', array(&$this->Comments));
+/**
+ * testAddWithParent
+ */
+	public function testAddWithParent() {
+		$Comments = $this->generate('Comments', array(
+			'components' => array(
+				'Email' => array('send'),
+			),
+		));
+		$Comments->Email
+			->expects($this->once())
+			->method('send')
+			->will($this->returnValue(true));
+        $Comments->request->params['action'] = 'add';
+        $Comments->request->params['url']['url'] = 'comments/add';
+        $Comments->Components->trigger('initialize', array(&$Comments));
+        $Comments->Components->trigger('startup', array(&$Comments));
 
 
-        $this->Comments->request->data['Comment'] = array(
+        $Comments->request->data['Comment'] = array(
             'name' => 'John Smith',
             'email' => 'john.smith@example.com',
             'website' => 'http://example.com',
             'body' => 'text here...',
         );
-        $node = $this->Comments->Comment->Node->findBySlug('hello-world');
-        $this->Comments->add($node['Node']['id'], 1); // under the comment by Mr Croogo
-        $this->assertEqual($this->Comments->viewVars['success'], 1);
+        $node = $Comments->Comment->Node->findBySlug('hello-world');
+        $Comments->add($node['Node']['id'], 1); // under the comment by Mr Croogo
+        $this->assertEqual($Comments->viewVars['success'], 1);
 
-        $comments = $this->Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
+        $comments = $Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
         $commenters = array_values($comments);
         $this->assertEqual($commenters, array('Mr Croogo', '_John Smith'));
 
-        $this->Comments->testView = true;
-        $output = $this->Comments->render('add');
+        $Comments->testView = true;
+        $output = $Comments->render('add');
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
-
-    public function endTest() {
-        $this->Comments->Session->destroy();
-        unset($this->Comments);
-        ClassRegistry::flush();
-    }
 }
-?>

@@ -187,8 +187,8 @@ class CommentsController extends AppController {
         }
 
         // spam protection and captcha
-        $continue = $this->__spam_protection($continue, $type, $node);
-        $continue = $this->__captcha($continue, $type, $node);
+        $continue = $this->_spam_protection($continue, $type, $node);
+        $continue = $this->_captcha($continue, $type, $node);
 
         $success = 0;
         if (!empty($this->request->data) && $continue === true) {
@@ -248,7 +248,7 @@ class CommentsController extends AppController {
         $this->set(compact('success', 'node', 'type', 'nodeId', 'parentId'));
     }
 
-    private function __spam_protection($continue, $type, $node) {
+    protected function _spam_protection($continue, $type, $node) {
         if (!empty($this->request->data) &&
             $type['Type']['comment_spam_protection'] &&
             $continue === true) {
@@ -266,7 +266,7 @@ class CommentsController extends AppController {
         return $continue;
     }
 
-    private function __captcha($continue, $type, $node) {
+    protected function _captcha($continue, $type, $node) {
         if (!empty($this->request->data) &&
             $type['Type']['comment_captcha'] &&
             $continue === true &&
@@ -299,4 +299,3 @@ class CommentsController extends AppController {
     }
 
 }
-?>

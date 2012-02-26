@@ -134,4 +134,3 @@ class AppModel extends Model {
         return parent::invalidate($field, __($value));
     }
 }
-?>

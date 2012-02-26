@@ -41,4 +41,3 @@ class TaxonomyFixture extends CakeTestFixture {
 		),
 	);
 }
-?>

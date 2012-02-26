@@ -124,10 +124,10 @@ class ContactsController extends AppController {
             $this->request->data['Message']['title'] = htmlspecialchars($this->request->data['Message']['title']);
             $this->request->data['Message']['name'] = htmlspecialchars($this->request->data['Message']['name']);
             $this->request->data['Message']['body'] = htmlspecialchars($this->request->data['Message']['body']);
-            $continue = $this->__validation($continue, $contact);
-            $continue = $this->__spam_protection($continue, $contact);
-            $continue = $this->__captcha($continue, $contact);
-            $continue = $this->__send_email($continue, $contact);
+            $continue = $this->_validation($continue, $contact);
+            $continue = $this->_spam_protection($continue, $contact);
+            $continue = $this->_captcha($continue, $contact);
+            $continue = $this->_send_email($continue, $contact);
 
             if ($continue === true) {
                 //$this->Session->setFlash(__('Your message has been received.'));
@@ -141,7 +141,7 @@ class ContactsController extends AppController {
         $this->set(compact('continue'));
     }
 
-    private function __validation($continue, $contact) {
+    protected function _validation($continue, $contact) {
         if ($this->Contact->Message->set($this->request->data) &&
             $this->Contact->Message->validates() &&
             $continue === true) {
@@ -156,7 +156,7 @@ class ContactsController extends AppController {
         return $continue;
     }
 
-    private function __spam_protection($continue, $contact) {
+    protected function _spam_protection($continue, $contact) {
         if (!empty($this->request->data) &&
             $contact['Contact']['message_spam_protection'] &&
             $continue === true) {
@@ -172,7 +172,7 @@ class ContactsController extends AppController {
         return $continue;
     }
 
-    private function __captcha($continue, $contact) {
+    protected function _captcha($continue, $contact) {
         if (!empty($this->request->data) &&
             $contact['Contact']['message_captcha'] &&
             $continue === true &&
@@ -184,7 +184,7 @@ class ContactsController extends AppController {
         return $continue;
     }
 
-    private function __send_email($continue, $contact) {
+    protected function _send_email($continue, $contact) {
         $email = new CakeEmail();
         if ($contact['Contact']['message_notify'] && $continue === true) {
             $siteTitle = Configure::read('Site.title') ;
@@ -206,4 +206,4 @@ class ContactsController extends AppController {
     }
 
 }
-?>
+

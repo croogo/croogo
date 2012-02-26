@@ -99,7 +99,7 @@ class AkismetComponent extends Component
 
         // Start to populate the comment data
         $this->comment['blog'] = $this->blogURL;
-        $this->comment['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+        $this->comment['user_agent'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'Unknown';
 
         if(isset($_SERVER['HTTP_REFERER'])) {
             $this->comment['referrer'] = $_SERVER['HTTP_REFERER'];
@@ -388,4 +388,3 @@ class SocketWriteRead {
     }
 }
 
-?>

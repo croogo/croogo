@@ -231,4 +231,3 @@ class LinkFixture extends CakeTestFixture {
 		),
 	);
 }
-?>
