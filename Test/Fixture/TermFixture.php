@@ -41,4 +41,3 @@ class TermFixture extends CakeTestFixture {
 		),
 	);
 }
-?>

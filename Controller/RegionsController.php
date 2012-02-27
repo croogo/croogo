@@ -85,4 +85,3 @@ class RegionsController extends AppController {
     }
 
 }
-?>

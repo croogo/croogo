@@ -139,4 +139,3 @@ class RecaptchaComponent extends Component {
         return $req;
     }
 }
-?>

@@ -116,7 +116,7 @@ class Croogo {
  */
     public function hookModelProperty($modelName, $property, $value) {
         $configKeyPrefix = 'Hook.model_properties';
-        self::__hookProperty($configKeyPrefix, $modelName, $property, $value);
+        self::_hookProperty($configKeyPrefix, $modelName, $property, $value);
     }
 /**
  * Hook controller property
@@ -127,7 +127,7 @@ class Croogo {
  */
     public function hookControllerProperty($controllerName, $property, $value) {
         $configKeyPrefix = 'Hook.controller_properties';
-        self::__hookProperty($configKeyPrefix, $controllerName, $property, $value);
+        self::_hookProperty($configKeyPrefix, $controllerName, $property, $value);
     }
 /**
  * Hook property
@@ -137,7 +137,7 @@ class Croogo {
  * @param string $property
  * @param string $value
  */
-    private function __hookProperty($configKeyPrefix, $name, $property, $value) {
+    protected function _hookProperty($configKeyPrefix, $name, $property, $value) {
         $propertyValue = Configure::read($configKeyPrefix . '.' . $name . '.' . $property);
         if (!is_array($propertyValue)) {
             $propertyValue = null;
@@ -182,4 +182,3 @@ class Croogo {
         }
     }
 }
-?>

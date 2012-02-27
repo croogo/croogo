@@ -121,4 +121,3 @@ class LanguagesController extends AppController {
     }
 
 }
-?>

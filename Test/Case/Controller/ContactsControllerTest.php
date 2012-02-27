@@ -1,5 +1,6 @@
 <?php
-App::import('Controller', 'Contacts');
+App::uses('ContactsController', 'Controller');
+App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestContactsController extends ContactsController {
 
@@ -30,9 +31,7 @@ class TestContactsController extends ContactsController {
     }
 }
 
-App::uses('CroogoTestCase', 'TestSuite');
-
-class ContactsControllerTest extends CroogoTestCase {
+class ContactsControllerTest extends CroogoControllerTestCase {
 
     public $fixtures = array(
         'aco',
@@ -60,7 +59,9 @@ class ContactsControllerTest extends CroogoTestCase {
         'vocabulary',
     );
 
-    public function startTest() {
+    public function setUp() {
+        parent::setUp();
+        $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
         $request = new CakeRequest();
         $response = new CakeResponse();
         $this->Contacts = new TestContactsController($request, $response);
@@ -68,6 +69,13 @@ class ContactsControllerTest extends CroogoTestCase {
         $this->Contacts->request->params['controller'] = 'contacts';
         $this->Contacts->request->params['pass'] = array();
         $this->Contacts->request->params['named'] = array();
+    }
+
+    public function tearDown() {
+        parent::tearDown();
+        $this->Contacts->Session->destroy();
+        unset($this->Contacts);
+        ClassRegistry::flush();
     }
 
     public function testAdminIndex() {
@@ -152,10 +160,21 @@ class ContactsControllerTest extends CroogoTestCase {
         $this->assertFalse($hasAny);
     }
 
+/**
+ * testView
+ */
     public function testView() {
-        $this->Contacts->request->params['action'] = 'view';
-        $this->Contacts->request->params['url']['url'] = 'contacts/view/contact';
-        $this->Contacts->request->data = array(
+        $Contacts = $this->generate('Contacts', array(
+            'methods' => array(
+                '_send_email'
+            ),
+        ));
+        $Contacts->expects($this->once())
+            ->method('_send_email')
+            ->will($this->returnValue(true));
+        $Contacts->request->params['action'] = 'view';
+        $Contacts->request->params['url']['url'] = 'contacts/view/contact';
+        $Contacts->request->data = array(
             'Message' => array(
                 'name' => 'John Smith',
                 'email' => 'john.smith@example.com',
@@ -163,19 +182,12 @@ class ContactsControllerTest extends CroogoTestCase {
                 'body' => 'text here',
             ),
         );
-        $this->Contacts->startupProcess();
-        $this->Contacts->view('contact');
-        $this->assertEqual($this->Contacts->viewVars['continue'], true);
+        $Contacts->startupProcess();
+        $Contacts->view('contact');
+        $this->assertEqual($Contacts->viewVars['continue'], true);
 
-        $this->Contacts->testView = true;
-        $output = $this->Contacts->render('view');
+        $Contacts->testView = true;
+        $output = $Contacts->render('view');
         $this->assertFalse(strpos($output, '<pre class="cake-debug">'));
     }
-
-    public function endTest() {
-        $this->Contacts->Session->destroy();
-        unset($this->Contacts);
-        ClassRegistry::flush();
-    }
 }
-?>

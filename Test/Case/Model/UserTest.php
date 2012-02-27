@@ -1,27 +1,28 @@
 <?php
-App::import('Model', 'Node');
-
+App::uses('User', 'Model');
+App::uses('AuthComponent', 'Controller/Component');
 class UserTest extends CakeTestCase {
 
     public $fixtures = array(
-        'aco',
-        'aro',
-        'aros_aco',
-        'role',
-        'user',
+        'app.aco',
+        'app.aro',
+        'app.aros_aco',
+        'app.role',
+        'app.user',
     );
-
-    public function startTest() {
-         $this->User =& ClassRegistry::init('User');
+    
+    public function setUp() {
+        parent::setUp();
+        $this->User = ClassRegistry::init('User');
+        $this->User->Aro->useDbConfig = 'test';
     }
-
-    public function endTest() {
+    
+    public function tearDown() {
+        parent::tearDown();
         unset($this->User);
-        ClassRegistry::flush();
     }
 
     public function testPasswords() {
-        App::uses('AuthComponent', 'Controller/Component');
         $this->User->create(array(
             'username' => 'new_user',
             'name' => 'New User',

@@ -61,4 +61,3 @@ class Message extends AppModel {
     );
 
 }
-?>

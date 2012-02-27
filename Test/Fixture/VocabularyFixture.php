@@ -48,4 +48,3 @@ class VocabularyFixture extends CakeTestFixture {
 		),
 	);
 }
-?>

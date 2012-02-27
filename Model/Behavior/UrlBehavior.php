@@ -79,4 +79,3 @@ class UrlBehavior extends ModelBehavior {
     }
 
 }
-?>

@@ -16,4 +16,3 @@ class I18nFixture extends CakeTestFixture {
 	);
 }
 
-?>

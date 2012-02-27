@@ -1,6 +1,5 @@
 <?php
-App::import('Model', 'Node');
-
+App::uses('Node', 'Model');
 class NodeTest extends CakeTestCase {
 
     public $fixtures = array(
@@ -28,9 +27,15 @@ class NodeTest extends CakeTestCase {
         'user',
         'vocabulary',
     );
-
-    public function startTest() {
-         $this->Node =& ClassRegistry::init('Node');
+    
+    public function setUp() {
+        parent::setUp();
+        $this->Node = ClassRegistry::init('Node');
+    }
+    
+    public function tearDown() {
+        parent::tearDown();
+        unset($this->Node);
     }
 
     public function testCacheTerms() {
@@ -43,10 +48,4 @@ class NodeTest extends CakeTestCase {
         $this->Node->__cacheTerms();
         $this->assertEqual($this->Node->data['Node']['terms'], '{"1":"uncategorized","2":"announcements"}');
     }
-
-    public function endTest() {
-        unset($this->Node);
-        ClassRegistry::flush();
-    }
 }
-?>

@@ -24,4 +24,3 @@ class MessageFixture extends CakeTestFixture {
 	var $records = array(
 	);
 }
-?>

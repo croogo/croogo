@@ -111,4 +111,3 @@ class VocabulariesController extends AppController {
     }
 
 }
-?>
