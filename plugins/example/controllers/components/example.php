@@ -9,7 +9,7 @@
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link     http://www.croogo.org
+ * @link	 http://www.croogo.org
  */
 class ExampleComponent extends Object {
 /**
@@ -18,9 +18,9 @@ class ExampleComponent extends Object {
  * @param object $controller Controller with components to startup
  * @return void
  */
-    public function startup(&$controller) {
-        $controller->set('exampleComponent', 'ExampleComponent startup');
-    }
+	public function startup(&$controller) {
+		$controller->set('exampleComponent', 'ExampleComponent startup');
+	}
 /**
  * Called after the Controller::beforeRender(), after the view class is loaded, and before the
  * Controller::render()
@@ -28,16 +28,16 @@ class ExampleComponent extends Object {
  * @param object $controller Controller with components to beforeRender
  * @return void
  */
-    public function beforeRender(&$controller) {
-    }
+	public function beforeRender(&$controller) {
+	}
 /**
  * Called after Controller::render() and before the output is printed to the browser.
  *
  * @param object $controller Controller with components to shutdown
  * @return void
  */
-    public function shutdown(&$controller) {
-    }
-    
+	public function shutdown(&$controller) {
+	}
+	
 }
 ?>
