@@ -1,3 +1,4 @@
+<style>
 .install h1 { padding: 0px 0px 0px 20px;  }
 
 #install { margin: 0px auto; width: 500px; padding: 50px 0px 0px 0px; }
@@ -12,3 +13,4 @@
 
 .install #footer { background: none; color: #444; }
 .install #footer a { color: #444; }
+</style>
