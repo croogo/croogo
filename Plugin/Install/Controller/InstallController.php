@@ -1,4 +1,6 @@
 <?php
+App::uses('InstallAppController', 'Install.Controller');
+
 /**
  * Install Controller
  *
@@ -74,7 +76,7 @@ class InstallController extends InstallAppController {
  * @return void
  */
     protected function _check() {
-        if (file_exists(APP . 'Config' . DS . 'settings.yml')) {
+        if (Configure::read('Install.installed') && Configure::read('Install.secured')) {
             $this->Session->setFlash('Already Installed');
             $this->redirect('/');
         }
@@ -208,8 +210,7 @@ class InstallController extends InstallAppController {
 /**
  * Step 3: finish
  *
- * Remind the user to delete 'install' plugin
- * Copy settings.yml file into place
+ * Copy settings.yml file into place and set admin's password
  *
  * @return void
  * @access public
@@ -217,30 +218,7 @@ class InstallController extends InstallAppController {
     public function finish() {
         $this->set('title_for_layout', __('Installation completed successfully'));
         $this->_check();
-
-        // set new salt and seed value
-        copy(APP . 'Config' . DS.'settings.yml.install', APP . 'Config' . DS.'settings.yml');
-        App::uses('File', 'Utility');
-        $File =& new File(APP . 'Config' . DS . 'core.php');
-        if (!class_exists('Security')) {
-            require CAKE . 'Utility' .DS. 'Security.php';
-        }
-        $salt = Security::generateAuthKey();
-        $seed = mt_rand() . mt_rand();
-        $contents = $File->read();
-        $contents = preg_replace('/(?<=Configure::write\(\'Security.salt\', \')([^\' ]+)(?=\'\))/', $salt, $contents);
-        $contents = preg_replace('/(?<=Configure::write\(\'Security.cipherSeed\', \')(\d+)(?=\'\))/', $seed, $contents);
-        if (!$File->write($contents)) {
-            return false;
-        }
-        Configure::write('Security.salt', $salt);
-        Configure::write('Security.cipherSeed', $seed);
-
-        // set default password for admin
-        $User = ClassRegistry::init('User');
-        $User->id = $User->field('id', array('username' => 'admin'));
-        $User->saveField('password', 'password');
+        $this->Install->finalize();
     }
 
 }
-?>
