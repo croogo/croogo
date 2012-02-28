@@ -25,7 +25,8 @@
             'jquery/thickbox-compressed',
             'admin',
         ));
-        echo $scripts_for_layout;
+        echo $this->Blocks->get('css');
+        echo $this->Blocks->get('script');
     ?>
 </head>
 
@@ -50,6 +51,9 @@
     </div>
 
     <?php echo $this->element('admin/footer'); ?>
-
+    <?php
+        echo $this->Blocks->get('scriptBottom');
+        echo $this->Js->writeBuffer();
+    ?>
     </body>
 </html>
