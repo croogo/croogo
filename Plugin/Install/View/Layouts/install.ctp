@@ -8,8 +8,8 @@
             'reset',
             '960',
             'admin',
-            '/install/css/install',
         ));
+        echo $this->element('styles', array(), array('plugin' => 'install'));
         echo $scripts_for_layout;
     ?>
 </head>

@@ -56,6 +56,12 @@
     require_once 'croogo_bootstrap.php';
 
     // Load Install plugin
-    if (!file_exists(APP . 'Config' . DS.'settings.yml')) {
-        CakePlugin::load('Install');
+    if (Configure::read('Security.salt') == 'f78b12a5c38e9e5c6ae6fbd0ff1f46c77a1e3' ||
+        Configure::read('Security.cipherSeed') == '60170779348589376') {
+        $_securedInstall = false;
+    }
+    Configure::write('Install.secured', !isset($_securedInstall));
+    Configure::write('Install.installed', file_exists(APP . 'Config' .DS. 'settings.yml'));
+    if (!Configure::read('Install.installed') || !Configure::read('Install.secured')) {
+        CakePlugin::load('Install', array('routes' => true));
     }

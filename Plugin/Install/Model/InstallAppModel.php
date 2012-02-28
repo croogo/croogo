@@ -2,4 +2,3 @@
 class InstallAppModel extends AppModel {
 
 }
-?>

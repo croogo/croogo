@@ -1,9 +1,9 @@
 <?php
 class InstallAppController extends AppController {
 
-    function beforeFilter() {
-        
+    public function beforeFilter() {
+        $this->Components->unload('Croogo');
+        $this->Components->unload('Auth');
     }
 
 }
-?>
