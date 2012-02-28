@@ -26,7 +26,7 @@
  * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-    App::import('Lib', 'CroogoRouter');
-    require_once CONFIGS.'croogo_routes.php';
-    CroogoRouter::localize();
+	App::import('Lib', 'CroogoRouter');
+	require_once CONFIGS.'croogo_routes.php';
+	CroogoRouter::localize();
 ?>

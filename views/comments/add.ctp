@@ -1,3 +1,3 @@
 <div class="form">
-    <?php echo $this->element('comments_form'); ?>
+	<?php echo $this->element('comments_form'); ?>
 </div>

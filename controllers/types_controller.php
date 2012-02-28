@@ -18,83 +18,83 @@ class TypesController extends AppController {
  * @var string
  * @access public
  */
-    public $name = 'Types';
+	public $name = 'Types';
 /**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-    public $uses = array('Type');
+	public $uses = array('Type');
 
-    public function beforeFilter() {
-        parent::beforeFilter();
-        if ($this->action == 'admin_edit') {
-            $this->Security->disabledFields = array('alias');
-        }
-    }
+	public function beforeFilter() {
+		parent::beforeFilter();
+		if ($this->action == 'admin_edit') {
+			$this->Security->disabledFields = array('alias');
+		}
+	}
 
-    public function admin_index() {
-        $this->set('title_for_layout', __('Type', true));
+	public function admin_index() {
+		$this->set('title_for_layout', __('Type', true));
 
-        $this->Type->recursive = 0;
-        $this->paginate['Type']['order'] = 'Type.title ASC';
-        $this->set('types', $this->paginate());
-    }
+		$this->Type->recursive = 0;
+		$this->paginate['Type']['order'] = 'Type.title ASC';
+		$this->set('types', $this->paginate());
+	}
 
-    public function admin_add() {
-        $this->set('title_for_layout', __('Add Type', true));
+	public function admin_add() {
+		$this->set('title_for_layout', __('Add Type', true));
 
-        if (!empty($this->data)) {
-            $this->Type->create();
-            if ($this->Type->save($this->data)) {
-                $this->Session->setFlash(__('The Type has been saved', true), 'default', array('class' => 'success'));
-                $this->redirect(array('action'=>'index'));
-            } else {
-                $this->Session->setFlash(__('The Type could not be saved. Please, try again.', true), 'default', array('class' => 'error'));
-            }
-        }
+		if (!empty($this->data)) {
+			$this->Type->create();
+			if ($this->Type->save($this->data)) {
+				$this->Session->setFlash(__('The Type has been saved', true), 'default', array('class' => 'success'));
+				$this->redirect(array('action'=>'index'));
+			} else {
+				$this->Session->setFlash(__('The Type could not be saved. Please, try again.', true), 'default', array('class' => 'error'));
+			}
+		}
 
-        $vocabularies = $this->Type->Vocabulary->find('list');
-        $this->set(compact('vocabularies'));
-    }
+		$vocabularies = $this->Type->Vocabulary->find('list');
+		$this->set(compact('vocabularies'));
+	}
 
-    public function admin_edit($id = null) {
-        $this->set('title_for_layout', __('Edit Type', true));
+	public function admin_edit($id = null) {
+		$this->set('title_for_layout', __('Edit Type', true));
 
-        if (!$id && empty($this->data)) {
-            $this->Session->setFlash(__('Invalid Type', true), 'default', array('class' => 'error'));
-            $this->redirect(array('action'=>'index'));
-        }
-        if (!empty($this->data)) {
-            if ($this->Type->save($this->data)) {
-                $this->Session->setFlash(__('The Type has been saved', true), 'default', array('class' => 'success'));
-                $this->redirect(array('action'=>'index'));
-            } else {
-                $this->Session->setFlash(__('The Type could not be saved. Please, try again.', true), 'default', array('class' => 'error'));
-            }
-        }
-        if (empty($this->data)) {
-            $this->data = $this->Type->read(null, $id);
-        }
+		if (!$id && empty($this->data)) {
+			$this->Session->setFlash(__('Invalid Type', true), 'default', array('class' => 'error'));
+			$this->redirect(array('action'=>'index'));
+		}
+		if (!empty($this->data)) {
+			if ($this->Type->save($this->data)) {
+				$this->Session->setFlash(__('The Type has been saved', true), 'default', array('class' => 'success'));
+				$this->redirect(array('action'=>'index'));
+			} else {
+				$this->Session->setFlash(__('The Type could not be saved. Please, try again.', true), 'default', array('class' => 'error'));
+			}
+		}
+		if (empty($this->data)) {
+			$this->data = $this->Type->read(null, $id);
+		}
 
-        $vocabularies = $this->Type->Vocabulary->find('list');
-        $this->set(compact('vocabularies'));
-    }
+		$vocabularies = $this->Type->Vocabulary->find('list');
+		$this->set(compact('vocabularies'));
+	}
 
-    public function admin_delete($id = null) {
-        if (!$id) {
-            $this->Session->setFlash(__('Invalid id for Type', true), 'default', array('class' => 'error'));
-            $this->redirect(array('action'=>'index'));
-        }
-        if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
-            $blackHoleCallback = $this->Security->blackHoleCallback;
-            $this->$blackHoleCallback();
-        }
-        if ($this->Type->delete($id)) {
-            $this->Session->setFlash(__('Type deleted', true), 'default', array('class' => 'success'));
-            $this->redirect(array('action'=>'index'));
-        }
-    }
+	public function admin_delete($id = null) {
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid id for Type', true), 'default', array('class' => 'error'));
+			$this->redirect(array('action'=>'index'));
+		}
+		if (!isset($this->params['named']['token']) || ($this->params['named']['token'] != $this->params['_Token']['key'])) {
+			$blackHoleCallback = $this->Security->blackHoleCallback;
+			$this->$blackHoleCallback();
+		}
+		if ($this->Type->delete($id)) {
+			$this->Session->setFlash(__('Type deleted', true), 'default', array('class' => 'success'));
+			$this->redirect(array('action'=>'index'));
+		}
+	}
 }
 ?>
