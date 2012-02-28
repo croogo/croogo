@@ -9,7 +9,7 @@
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link     http://www.croogo.org
+ * @link	 http://www.croogo.org
  */
 class Role extends AppModel {
 /**
@@ -18,40 +18,40 @@ class Role extends AppModel {
  * @var string
  * @access public
  */
-    public $name = 'Role';
+	public $name = 'Role';
 /**
  * Behaviors used by the Model
  *
  * @var array
  * @access public
  */
-    public $actsAs = array(
-        'Acl' => array(
-            'className' => 'CroogoAcl',
-            'type' => 'requester',
-        ),
-    );
+	public $actsAs = array(
+		'Acl' => array(
+			'className' => 'CroogoAcl',
+			'type' => 'requester',
+		),
+	);
+
 /**
  * Validation
  *
  * @var array
  * @access public
  */
-    public $validate = array(
-        'title' => array(
-            'rule' => array('minLength', 1),
-            'message' => 'Title cannot be empty.',
-        ),
-        'alias' => array(
-            'isUnique' => array(
-                'rule' => 'isUnique',
-                'message' => 'This alias has already been taken.',
-            ),
-            'minLength' => array(
-                'rule' => array('minLength', 1),
-                'message' => 'Alias cannot be empty.',
-            ),
-        ),
-    );
-
+	public $validate = array(
+		'title' => array(
+			'rule' => array('minLength', 1),
+			'message' => 'Title cannot be empty.',
+		),
+		'alias' => array(
+			'isUnique' => array(
+				'rule' => 'isUnique',
+				'message' => 'This alias has already been taken.',
+			),
+			'minLength' => array(
+				'rule' => array('minLength', 1),
+				'message' => 'Alias cannot be empty.',
+			),
+		),
+	);
 }
