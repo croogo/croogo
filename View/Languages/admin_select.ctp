@@ -1,19 +1,11 @@
 <div class="languages">
 	<h2><?php echo $title_for_layout; ?></h2>
 
-<<<<<<< HEAD
 	<div class="actions">
 		<ul>
 			<li><?php echo $this->Html->link(__('New Language'), array('action'=>'add')); ?></li>
 		</ul>
 	</div>
-=======
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Language', true), array('action'=>'add')); ?></li>
-		</ul>
-	</div>
->>>>>>> 1.3-whitespace
 
 	<?php
 		foreach ($languages AS $language) {

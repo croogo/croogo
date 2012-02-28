@@ -1,7 +1,6 @@
 <div class="nodes search">
 	<h2><?php echo $title_for_layout; ?></h2>
 
-<<<<<<< HEAD
 	<?php
 		if (count($nodes) == 0) {
 			__('No items found.');
@@ -11,17 +10,6 @@
 			}
 		}
 	?>
-=======
-	<?php
-		if (count($nodes) == 0) {
-			__('No items found.');
-		} else {
-			foreach ($this->params['named'] AS $nn => $nv) {
-				$paginator->options['url'][$nn] = $nv;
-			}
-		}
-	?>
->>>>>>> 1.3-whitespace
 
 	<?php 
 		foreach ($nodes AS $node) {
@@ -39,9 +27,5 @@
 		}
 	?>
 
-<<<<<<< HEAD
 	<div class="paging"><?php echo $this->Paginator->numbers(); ?></div>
-=======
-	<div class="paging"><?php echo $paginator->numbers(); ?></div>
->>>>>>> 1.3-whitespace
 </div>

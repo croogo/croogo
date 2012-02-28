@@ -60,17 +60,9 @@
 	?>
 	</fieldset>
 
-<<<<<<< HEAD
 	<div class="buttons">
 	<?php
 		echo $this->Form->end(__('Save'));
 	?>
 	</div>
-=======
-	<div class="buttons">
-	<?php
-		echo $this->Form->end(__('Save', true));
-	?>
-	</div>
->>>>>>> 1.3-whitespace
 </div>

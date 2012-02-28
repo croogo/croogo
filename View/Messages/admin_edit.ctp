@@ -14,7 +14,6 @@
 	?>
 	</fieldset>
 
-<<<<<<< HEAD
 	<div class="buttons">
 	<?php
 		echo $this->Form->end(__('Save'));
@@ -25,16 +24,4 @@
 		));
 	?>
 	</div>
-=======
-	<div class="buttons">
-	<?php
-		echo $this->Form->end(__('Save', true));
-		echo $this->Html->link(__('Cancel', true), array(
-			'action' => 'index',
-		), array(
-			'class' => 'cancel',
-		));
-	?>
-	</div>
->>>>>>> 1.3-whitespace
 </div>

@@ -61,7 +61,6 @@
 			<div class="clear"></div>
 		</div>
 
-<<<<<<< HEAD
 		<div id="footer">
 			<div class="container_16">
 				<div class="grid_8 left">
@@ -76,20 +75,4 @@
 	</div>
 	<?php echo $this->Js->writeBuffer(); ?>
 	</body>
-=======
-		<div id="footer">
-			<div class="container_16">
-				<div class="grid_8 left">
-					Powered by <a href="http://www.croogo.org">Croogo</a>.
-				</div>
-				<div class="grid_8 right">
-					<a href="http://www.cakephp.org"><?php echo $this->Html->image('/img/cake.power.gif'); ?></a>
-				</div>
-				<div class="clear"></div>
-			</div>
-		</div>
-	</div>
-
-	</body>
->>>>>>> 1.3-whitespace
 </html>
