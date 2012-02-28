@@ -2,14 +2,14 @@
 	<h2><?php echo $title_for_layout; ?></h2>
 
 <<<<<<< HEAD
-    <?php echo $this->Form->create('Vocabulary');?>
-    <fieldset>
-        <div class="tabs">
-            <ul>
-                <li><span><a href="#vocabulary-basic"><?php echo __('Vocabulary'); ?></a></span></li>
-                <li><span><a href="#vocabulary-options"><?php echo __('Options'); ?></a></span></li>
-                <?php echo $this->Layout->adminTabs(); ?>
-            </ul>
+	<?php echo $this->Form->create('Vocabulary');?>
+	<fieldset>
+		<div class="tabs">
+			<ul>
+				<li><span><a href="#vocabulary-basic"><?php echo __('Vocabulary'); ?></a></span></li>
+				<li><span><a href="#vocabulary-options"><?php echo __('Options'); ?></a></span></li>
+				<?php echo $this->Layout->adminTabs(); ?>
+			</ul>
 =======
 	<?php echo $this->Form->create('Vocabulary');?>
 	<fieldset>
@@ -43,16 +43,16 @@
 	</fieldset>
 
 <<<<<<< HEAD
-    <div class="buttons">
-    <?php
-        echo $this->Form->end(__('Save'));
-        echo $this->Html->link(__('Cancel'), array(
-            'action' => 'index',
-        ), array(
-            'class' => 'cancel',
-        ));
-    ?>
-    </div>
+	<div class="buttons">
+	<?php
+		echo $this->Form->end(__('Save'));
+		echo $this->Html->link(__('Cancel'), array(
+			'action' => 'index',
+		), array(
+			'class' => 'cancel',
+		));
+	?>
+	</div>
 =======
 	<div class="buttons">
 	<?php

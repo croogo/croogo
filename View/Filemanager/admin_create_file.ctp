@@ -2,16 +2,16 @@
 	<h2><?php echo $title_for_layout; ?></h2>
 
 <<<<<<< HEAD
-    <div class="breadcrumb">
-    <?php
-        echo __('You are here:') . ' ';
-        $breadcrumb = $this->Filemanager->breadcrumb($path);
-        foreach($breadcrumb AS $pathname => $p) {
-            echo $this->Filemanager->linkDirectory($pathname, $p);
-            echo DS;
-        }
-    ?>
-    </div>
+	<div class="breadcrumb">
+	<?php
+		echo __('You are here:') . ' ';
+		$breadcrumb = $this->Filemanager->breadcrumb($path);
+		foreach($breadcrumb AS $pathname => $p) {
+			echo $this->Filemanager->linkDirectory($pathname, $p);
+			echo DS;
+		}
+	?>
+	</div>
 =======
 	<div class="breadcrumb">
 	<?php
@@ -38,16 +38,16 @@
 	</fieldset>
 
 <<<<<<< HEAD
-    <div class="buttons">
-    <?php
-        echo $this->Form->end(__('Create'));
-        echo $this->Html->link(__('Cancel'), array(
-            'action' => 'index',
-        ), array(
-            'class' => 'cancel',
-        ));
-    ?>
-    </div>
+	<div class="buttons">
+	<?php
+		echo $this->Form->end(__('Create'));
+		echo $this->Html->link(__('Cancel'), array(
+			'action' => 'index',
+		), array(
+			'class' => 'cancel',
+		));
+	?>
+	</div>
 =======
 	<div class="buttons">
 	<?php

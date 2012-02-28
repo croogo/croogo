@@ -2,20 +2,20 @@
 	<h2><?php echo $title_for_layout; ?></h2>
 
 <<<<<<< HEAD
-    <?php
-        echo $this->Form->create($modelAlias, array('url' => array(
-            'controller' => 'translate',
-            'action' => 'edit',
-            $id,
-            $modelAlias,
-            'locale' => $this->params['named']['locale'],
-        )));
-    ?>
-    <fieldset>
-        <div class="tabs">
-            <ul>
-                <li><a href="#record-main"><span><?php echo __('Record'); ?></span></a></li>
-            </ul>
+	<?php
+		echo $this->Form->create($modelAlias, array('url' => array(
+			'controller' => 'translate',
+			'action' => 'edit',
+			$id,
+			$modelAlias,
+			'locale' => $this->params['named']['locale'],
+		)));
+	?>
+	<fieldset>
+		<div class="tabs">
+			<ul>
+				<li><a href="#record-main"><span><?php echo __('Record'); ?></span></a></li>
+			</ul>
 =======
 	<?php
 		echo $this->Form->create($modelAlias, array('url' => array(
@@ -44,11 +44,11 @@
 	</fieldset>
 
 <<<<<<< HEAD
-    <div class="buttons">
-    <?php
-        echo $this->Form->end(__('Save'));
-    ?>
-    </div>
+	<div class="buttons">
+	<?php
+		echo $this->Form->end(__('Save'));
+	?>
+	</div>
 =======
 	<div class="buttons">
 	<?php

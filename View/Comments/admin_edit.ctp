@@ -2,23 +2,23 @@
 	<h2><?php echo $title_for_layout; ?></h2>
 
 <<<<<<< HEAD
-    <?php echo $this->Form->create('Comment');?>
-    <fieldset>
-        <div class="tabs">
-            <ul>
-                <li><a href="#comment-main"><?php echo __('Comment'); ?></a></li>
-                <li><a href="#comment-contact"><?php echo __('Contact Info'); ?></a></li>
-                <?php echo $this->Layout->adminTabs(); ?>
-            </ul>
+	<?php echo $this->Form->create('Comment');?>
+	<fieldset>
+		<div class="tabs">
+			<ul>
+				<li><a href="#comment-main"><?php echo __('Comment'); ?></a></li>
+				<li><a href="#comment-contact"><?php echo __('Contact Info'); ?></a></li>
+				<?php echo $this->Layout->adminTabs(); ?>
+			</ul>
 
-            <div id="comment-main">
-            <?php
-                echo $this->Form->input('id');
-                echo $this->Form->input('title');
-                echo $this->Form->input('body');
-                echo $this->Form->input('status', array('label' => __('Published')));
-            ?>
-            </div>
+			<div id="comment-main">
+			<?php
+				echo $this->Form->input('id');
+				echo $this->Form->input('title');
+				echo $this->Form->input('body');
+				echo $this->Form->input('status', array('label' => __('Published')));
+			?>
+			</div>
 =======
 	<?php echo $this->Form->create('Comment');?>
 	<fieldset>
@@ -52,16 +52,16 @@
 	</fieldset>
 
 <<<<<<< HEAD
-    <div class="buttons">
-    <?php
-        echo $this->Form->end(__('Save'));
-        echo $this->Html->link(__('Cancel'), array(
-            'action' => 'index',
-        ), array(
-            'class' => 'cancel',
-        ));
-    ?>
-    </div>
+	<div class="buttons">
+	<?php
+		echo $this->Form->end(__('Save'));
+		echo $this->Html->link(__('Cancel'), array(
+			'action' => 'index',
+		), array(
+			'class' => 'cancel',
+		));
+	?>
+	</div>
 =======
 	<div class="buttons">
 	<?php

@@ -61,11 +61,11 @@
 	</fieldset>
 
 <<<<<<< HEAD
-    <div class="buttons">
-    <?php
-        echo $this->Form->end(__('Save'));
-    ?>
-    </div>
+	<div class="buttons">
+	<?php
+		echo $this->Form->end(__('Save'));
+	?>
+	</div>
 =======
 	<div class="buttons">
 	<?php

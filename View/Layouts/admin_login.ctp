@@ -2,16 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <<<<<<< HEAD
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title><?php echo $title_for_layout; ?> - <?php echo __('Croogo'); ?></title>
-    <?php
-        echo $this->Html->css(array(
-            'reset',
-            '960',
-            'admin',
-        ));
-        echo $scripts_for_layout;
-    ?>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title><?php echo $title_for_layout; ?> - <?php echo __('Croogo'); ?></title>
+	<?php
+		echo $this->Html->css(array(
+			'reset',
+			'960',
+			'admin',
+		));
+		echo $scripts_for_layout;
+	?>
 =======
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title><?php echo $title_for_layout; ?> - <?php __('Croogo'); ?></title>
@@ -29,12 +29,12 @@
 <body>
 
 <<<<<<< HEAD
-    <div id="wrapper" class="login">
-        <div id="header">
-            <p id="backtosite">
-            <?php echo $this->Html->link(__('Back to') . ' ' . Configure::read('Site.title'), '/'); ?>
-            </p>
-        </div>
+	<div id="wrapper" class="login">
+		<div id="header">
+			<p id="backtosite">
+			<?php echo $this->Html->link(__('Back to') . ' ' . Configure::read('Site.title'), '/'); ?>
+			</p>
+		</div>
 =======
 	<div id="wrapper" class="login">
 		<div id="header">

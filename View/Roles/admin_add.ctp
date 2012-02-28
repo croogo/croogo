@@ -1,13 +1,13 @@
 <div class="roles form">
 <<<<<<< HEAD
-    <h2><?php echo $title_for_layout; ?></h2>
-    <?php echo $this->Form->create('Role');?>
-    <fieldset>
-        <div class="tabs">
-            <ul>
-                <li><a href="#role-main"><span><?php echo __('Role'); ?></span></a></li>
-                <?php echo $this->Layout->adminTabs(); ?>
-            </ul>
+	<h2><?php echo $title_for_layout; ?></h2>
+	<?php echo $this->Form->create('Role');?>
+	<fieldset>
+		<div class="tabs">
+			<ul>
+				<li><a href="#role-main"><span><?php echo __('Role'); ?></span></a></li>
+				<?php echo $this->Layout->adminTabs(); ?>
+			</ul>
 =======
 	<h2><?php echo $title_for_layout; ?></h2>
 	<?php echo $this->Form->create('Role');?>
@@ -30,16 +30,16 @@
 	</fieldset>
 
 <<<<<<< HEAD
-    <div class="buttons">
-    <?php
-        echo $this->Form->end(__('Save'));
-        echo $this->Html->link(__('Cancel'), array(
-            'action' => 'index',
-        ), array(
-            'class' => 'cancel',
-        ));
-    ?>
-    </div>
+	<div class="buttons">
+	<?php
+		echo $this->Form->end(__('Save'));
+		echo $this->Html->link(__('Cancel'), array(
+			'action' => 'index',
+		), array(
+			'class' => 'cancel',
+		));
+	?>
+	</div>
 =======
 	<div class="buttons">
 	<?php

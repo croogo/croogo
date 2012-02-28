@@ -1,15 +1,15 @@
 <div class="contacts form">
 <<<<<<< HEAD
-    <h2><?php echo $title_for_layout; ?></h2>
-    <?php echo $this->Form->create('Contact');?>
-    <fieldset>
-        <div class="tabs">
-            <ul>
-                <li><a href="#contact-basic"><?php echo __('Contact'); ?></a></li>
-                <li><a href="#contact-details"><?php echo __('Details'); ?></a></li>
-                <li><a href="#contact-message"><?php echo __('Message'); ?></a></li>
-                <?php echo $this->Layout->adminTabs(); ?>
-            </ul>
+	<h2><?php echo $title_for_layout; ?></h2>
+	<?php echo $this->Form->create('Contact');?>
+	<fieldset>
+		<div class="tabs">
+			<ul>
+				<li><a href="#contact-basic"><?php echo __('Contact'); ?></a></li>
+				<li><a href="#contact-details"><?php echo __('Details'); ?></a></li>
+				<li><a href="#contact-message"><?php echo __('Message'); ?></a></li>
+				<?php echo $this->Layout->adminTabs(); ?>
+			</ul>
 =======
 	<h2><?php echo $title_for_layout; ?></h2>
 	<?php echo $this->Form->create('Contact');?>
@@ -48,48 +48,48 @@
 			</div>
 
 <<<<<<< HEAD
-            <div id="contact-message">
-            <?php
-                echo $this->Form->input('message_status', array(
-                    'label' => __('Let users leave a message'),
-                ));
-                echo $this->Form->input('message_archive', array(
-                    'label' => __('Save messages in database'),
-                ));
-                echo $this->Form->input('message_notify', array(
-                    'label' => __('Notify by email instantly'),
-                ));
-                echo $this->Form->input('message_spam_protection', array(
-                    'label' => __('Spam protection (requires Akismet API key)'),
-                ));
-                echo $this->Form->input('message_captcha', array(
-                    'label' => __('Use captcha? (requires Recaptcha API key)'),
-                ));
-            ?>
-                <p>
-                <?php
-                    echo $this->Html->link(__('You can manage your API keys here.'), array(
-                        'controller' => 'settings',
-                        'action' => 'prefix',
-                        'Service',
-                    ));
-                ?>
-                </p>
-            </div>
-            <?php echo $this->Layout->adminTabs(); ?>
-        </div>
-    </fieldset>
+			<div id="contact-message">
+			<?php
+				echo $this->Form->input('message_status', array(
+					'label' => __('Let users leave a message'),
+				));
+				echo $this->Form->input('message_archive', array(
+					'label' => __('Save messages in database'),
+				));
+				echo $this->Form->input('message_notify', array(
+					'label' => __('Notify by email instantly'),
+				));
+				echo $this->Form->input('message_spam_protection', array(
+					'label' => __('Spam protection (requires Akismet API key)'),
+				));
+				echo $this->Form->input('message_captcha', array(
+					'label' => __('Use captcha? (requires Recaptcha API key)'),
+				));
+			?>
+				<p>
+				<?php
+					echo $this->Html->link(__('You can manage your API keys here.'), array(
+						'controller' => 'settings',
+						'action' => 'prefix',
+						'Service',
+					));
+				?>
+				</p>
+			</div>
+			<?php echo $this->Layout->adminTabs(); ?>
+		</div>
+	</fieldset>
 
-    <div class="buttons">
-    <?php
-        echo $this->Form->end(__('Save'));
-        echo $this->Html->link(__('Cancel'), array(
-            'action' => 'index',
-        ), array(
-            'class' => 'cancel',
-        ));
-    ?>
-    </div>
+	<div class="buttons">
+	<?php
+		echo $this->Form->end(__('Save'));
+		echo $this->Html->link(__('Cancel'), array(
+			'action' => 'index',
+		), array(
+			'class' => 'cancel',
+		));
+	?>
+	</div>
 =======
 			<div id="contact-message">
 			<?php

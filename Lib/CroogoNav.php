@@ -73,7 +73,7 @@ class CroogoNav extends Object {
 		}
 	}
 
-    /**
+	/**
 	 * Merge $arr1 and $arr2
 	 *
 	 * Similar to Set::merge, except duplicates are removed
@@ -123,12 +123,12 @@ class CroogoNav extends Object {
 		return static::$_items;
 	}
 
-    /**
-     * Gets default settings for menu items
-     * @return array
-     */
+	/**
+	 * Gets default settings for menu items
+	 * @return array
+	 */
 	public static function getDefaults() {
-	    return static::$_defaults;
+		return static::$_defaults;
 	}
 
 }

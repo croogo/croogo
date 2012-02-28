@@ -15,15 +15,15 @@
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
- * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
- * @package       cake
- * @subpackage    cake.app.config
- * @since         CakePHP(tm) v 1.0.0.2312
- * @version       $Revision: 7945 $
- * @modifiedby    $LastChangedBy: gwoo $
+ * @copyright	 Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
+ * @link		  http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @package	   cake
+ * @subpackage	cake.app.config
+ * @since		 CakePHP(tm) v 1.0.0.2312
+ * @version	   $Revision: 7945 $
+ * @modifiedby	$LastChangedBy: gwoo $
  * @lastmodified  $Date: 2008-12-18 18:16:01 -0800 (Thu, 18 Dec 2008) $
- * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @license	   http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 /**
  * This is a key => value array of regex used to match words.

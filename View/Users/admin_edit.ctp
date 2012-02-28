@@ -1,20 +1,20 @@
 <div class="users form">
 <<<<<<< HEAD
-    <h2><?php echo __('Edit User'); ?></h2>
+	<h2><?php echo __('Edit User'); ?></h2>
 
-    <div class="actions">
-        <ul>
-            <li><?php echo $this->Html->link(__('Reset password'), array('action' => 'reset_password', $this->params['pass']['0'])); ?></li>
-        </ul>
-    </div>
+	<div class="actions">
+		<ul>
+			<li><?php echo $this->Html->link(__('Reset password'), array('action' => 'reset_password', $this->params['pass']['0'])); ?></li>
+		</ul>
+	</div>
 
-    <?php echo $this->Form->create('User');?>
-    <fieldset>
-        <div class="tabs">
-            <ul>
-                <li><a href="#user-main"><?php echo __('User'); ?></a></li>
-                <?php echo $this->Layout->adminTabs(); ?>
-            </ul>
+	<?php echo $this->Form->create('User');?>
+	<fieldset>
+		<div class="tabs">
+			<ul>
+				<li><a href="#user-main"><?php echo __('User'); ?></a></li>
+				<?php echo $this->Layout->adminTabs(); ?>
+			</ul>
 =======
 	<h2><?php __('Edit User'); ?></h2>
 
@@ -49,16 +49,16 @@
 	</fieldset>
 
 <<<<<<< HEAD
-    <div class="buttons">
-    <?php
-        echo $this->Form->end(__('Save'));
-        echo $this->Html->link(__('Cancel'), array(
-            'action' => 'index',
-        ), array(
-            'class' => 'cancel',
-        ));
-    ?>
-    </div>
+	<div class="buttons">
+	<?php
+		echo $this->Form->end(__('Save'));
+		echo $this->Html->link(__('Cancel'), array(
+			'action' => 'index',
+		), array(
+			'class' => 'cancel',
+		));
+	?>
+	</div>
 =======
 	<div class="buttons">
 	<?php

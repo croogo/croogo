@@ -14,41 +14,41 @@
 
 <div class="nodes">
 <<<<<<< HEAD
-    <div>
-        <?php
-            if (isset($this->params['named'])) {
-                foreach ($this->params['named'] AS $nn => $nv) {
-                    $this->Paginator->options['url'][] = $nn . ':' . $nv;
-                }
-            }
+	<div>
+		<?php
+			if (isset($this->params['named'])) {
+				foreach ($this->params['named'] AS $nn => $nv) {
+					$this->Paginator->options['url'][] = $nn . ':' . $nv;
+				}
+			}
 
-            __('Sort by:');
-            echo ' ' . $this->Paginator->sort('id');
-            echo ', ' . $this->Paginator->sort('title');
-            echo ', ' . $this->Paginator->sort('created');
-        ?>
-    </div>
-    
-    <hr />
+			__('Sort by:');
+			echo ' ' . $this->Paginator->sort('id');
+			echo ', ' . $this->Paginator->sort('title');
+			echo ', ' . $this->Paginator->sort('created');
+		?>
+	</div>
+	
+	<hr />
 
-    <ul id="nodes-for-links">
-    <?php foreach ($nodes AS $node) { ?>
-        <li>
-        <?php
-            echo $this->Html->link($node['Node']['title'], array(
-                'admin' => false,
-                'controller' => 'nodes',
-                'action' => 'view',
-                'type' => $node['Node']['type'],
-                'slug' => $node['Node']['slug'],
-            ), array(
-                'rel' => 'controller:nodes/action:view/type:' . $node['Node']['type'] . '/slug:' . $node['Node']['slug'],
-            ));
-        ?>
-        </li>
-    <?php } ?>
-    </ul>
-    <div class="paging"><?php echo $this->Paginator->numbers(); ?></div>
+	<ul id="nodes-for-links">
+	<?php foreach ($nodes AS $node) { ?>
+		<li>
+		<?php
+			echo $this->Html->link($node['Node']['title'], array(
+				'admin' => false,
+				'controller' => 'nodes',
+				'action' => 'view',
+				'type' => $node['Node']['type'],
+				'slug' => $node['Node']['slug'],
+			), array(
+				'rel' => 'controller:nodes/action:view/type:' . $node['Node']['type'] . '/slug:' . $node['Node']['slug'],
+			));
+		?>
+		</li>
+	<?php } ?>
+	</ul>
+	<div class="paging"><?php echo $this->Paginator->numbers(); ?></div>
 =======
 	<div>
 		<?php

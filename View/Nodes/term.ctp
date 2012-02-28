@@ -2,15 +2,15 @@
 	<h2><?php echo $title_for_layout; ?></h2>
 
 <<<<<<< HEAD
-    <?php
-        if (count($nodes) == 0) {
-            __('No items found.');
-        } else {
-            foreach ($this->params['named'] AS $nn => $nv) {
-                $this->Paginator->options['url'][$nn] = $nv;
-            }
-        }
-    ?>
+	<?php
+		if (count($nodes) == 0) {
+			__('No items found.');
+		} else {
+			foreach ($this->params['named'] AS $nn => $nv) {
+				$this->Paginator->options['url'][$nn] = $nv;
+			}
+		}
+	?>
 =======
 	<?php
 		if (count($nodes) == 0) {
@@ -40,7 +40,7 @@
 	?>
 
 <<<<<<< HEAD
-    <div class="paging"><?php echo $this->Paginator->numbers(); ?></div>
+	<div class="paging"><?php echo $this->Paginator->numbers(); ?></div>
 =======
 	<div class="paging"><?php echo $paginator->numbers(); ?></div>
 >>>>>>> 1.3-whitespace

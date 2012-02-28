@@ -5,21 +5,21 @@
 	<h2><?php echo $title_for_layout; ?></h2>
 
 <<<<<<< HEAD
-    <?php 
-        echo $this->Form->create('Term', array(
-            'url' => array(
-                'controller' => 'terms',
-                'action' => 'add',
-                $vocabulary['Vocabulary']['id'],
-            ),
-        ));
-    ?>
-    <fieldset>
-        <div class="tabs">
-            <ul>
-                <li><span><a href="#term-basic"><?php echo __('Term'); ?></a></span></li>
-                <?php echo $this->Layout->adminTabs(); ?>
-            </ul>
+	<?php 
+		echo $this->Form->create('Term', array(
+			'url' => array(
+				'controller' => 'terms',
+				'action' => 'add',
+				$vocabulary['Vocabulary']['id'],
+			),
+		));
+	?>
+	<fieldset>
+		<div class="tabs">
+			<ul>
+				<li><span><a href="#term-basic"><?php echo __('Term'); ?></a></span></li>
+				<?php echo $this->Layout->adminTabs(); ?>
+			</ul>
 =======
 	<?php 
 		echo $this->Form->create('Term', array(
@@ -54,17 +54,17 @@
 	</fieldset>
 
 <<<<<<< HEAD
-    <div class="buttons">
-    <?php
-        echo $this->Form->end(__('Save'));
-        echo $this->Html->link(__('Cancel'), array(
-            'action' => 'index',
-            $vocabularyId,
-        ), array(
-            'class' => 'cancel',
-        ));
-    ?>
-    </div>
+	<div class="buttons">
+	<?php
+		echo $this->Form->end(__('Save'));
+		echo $this->Html->link(__('Cancel'), array(
+			'action' => 'index',
+			$vocabularyId,
+		), array(
+			'class' => 'cancel',
+		));
+	?>
+	</div>
 =======
 	<div class="buttons">
 	<?php
