@@ -109,7 +109,7 @@ class OrderedBehavior extends ModelBehavior {
 	 * 
 	 * foreign_key : (string) The field to identify one SET by. 
 	 * 				 Each set has their own order (ie they start at 1).
-	 *               Set to FALSE to not use this feature (and use only 1 set)
+	 *			   Set to FALSE to not use this feature (and use only 1 set)
 	 */
 	public $_defaults = array('field' => 'weight', 'foreign_key' => 'order_id');
 	

@@ -48,14 +48,14 @@
  * Inflector::rules('plural', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
  *
  */
-    App::uses('CakeLog', 'Log');
-    App::import('Lib', 'Croogo');
-    App::import('Lib', 'CroogoNav');
-    CakePlugin::load(array('Extensions'), array('bootstrap' => true));
-    require_once 'croogo_menus.php';
-    require_once 'croogo_bootstrap.php';
+	App::uses('CakeLog', 'Log');
+	App::import('Lib', 'Croogo');
+	App::import('Lib', 'CroogoNav');
+	CakePlugin::load(array('Extensions'), array('bootstrap' => true));
+	require_once 'croogo_menus.php';
+	require_once 'croogo_bootstrap.php';
 
-    // Load Install plugin
-    if (!file_exists(APP . 'Config' . DS.'settings.yml')) {
-        CakePlugin::load('Install');
-    }
+	// Load Install plugin
+	if (!file_exists(APP . 'Config' . DS.'settings.yml')) {
+		CakePlugin::load('Install');
+	}
