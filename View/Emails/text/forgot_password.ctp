@@ -1,13 +1,13 @@
 <?php echo sprintf(__('Hello %s'), $user['User']['name']); ?>,
 
 <?php
-    $url = Router::url(array(
-        'controller' => 'users',
-        'action' => 'reset',
-        $user['User']['username'],
-        $activationKey,
-    ), true);
-    echo sprintf(__('Please visit this link to reset your password: %s'), $url);
+	$url = Router::url(array(
+		'controller' => 'users',
+		'action' => 'reset',
+		$user['User']['username'],
+		$activationKey,
+	), true);
+	echo sprintf(__('Please visit this link to reset your password: %s'), $url);
 ?>
 
 

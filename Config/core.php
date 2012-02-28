@@ -12,11 +12,11 @@
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Config
- * @since         CakePHP(tm) v 0.2.9
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @copyright	 Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link		  http://cakephp.org CakePHP(tm) Project
+ * @package	   app.Config
+ * @since		 CakePHP(tm) v 0.2.9
+ * @license	   MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
 /**
@@ -42,7 +42,7 @@
  * Options:
  *
  * - `handler` - callback - The callback to handle errors. You can set this to any callback type,
- *    including anonymous functions.
+ *	including anonymous functions.
  * - `level` - int - The level of errors you are interested in capturing.
  * - `trace` - boolean - Include stack traces for errors in log files.
  *
@@ -148,14 +148,14 @@
  * - `Session.timeout` - The number of minutes you want sessions to live for. This timeout is handled by CakePHP
  * - `Session.cookieTimeout` - The number of minutes you want session cookies to live for.
  * - `Session.checkAgent` - Do you want the user agent to be checked when starting sessions? You might want to set the
- *    value to false, when dealing with older versions of IE, Chrome Frame or certain web-browsing devices and AJAX
+ *	value to false, when dealing with older versions of IE, Chrome Frame or certain web-browsing devices and AJAX
  * - `Session.defaults` - The default configuration set to use as a basis for your session.
- *    There are four builtins: php, cake, cache, database.
+ *	There are four builtins: php, cake, cache, database.
  * - `Session.handler` - Can be used to enable a custom session handler.  Expects an array of of callables,
- *    that can be used with `session_save_handler`.  Using this option will automatically add `session.save_handler`
- *    to the ini array.
+ *	that can be used with `session_save_handler`.  Using this option will automatically add `session.save_handler`
+ *	to the ini array.
  * - `Session.autoRegenerate` - Enabling this setting, turns on automatic renewal of sessions, and
- *    sessionids that change frequently. See CakeSession::$requestCountdown.
+ *	sessionids that change frequently. See CakeSession::$requestCountdown.
  * - `Session.ini` - An associative array of additional ini values to set.
  *
  * The built in defaults are:
