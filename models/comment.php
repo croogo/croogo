@@ -19,6 +19,7 @@ class Comment extends AppModel {
  * @access public
  */
 	public $name = 'Comment';
+
 /**
  * Behaviors used by the Model
  *
@@ -36,6 +37,7 @@ class Comment extends AppModel {
 			),
 		),
 	);
+
 /**
  * Validation
  *
@@ -57,6 +59,7 @@ class Comment extends AppModel {
 			'message' => 'Please enter a valid email address.',
 		),
 	);
+
 /**
  * Model associations: belongsTo
  *

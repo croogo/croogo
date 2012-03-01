@@ -19,6 +19,7 @@ class ExtensionsPluginsController extends AppController {
  * @access public
  */
 	public $name = 'ExtensionsPlugins';
+
 /**
  * Models used by the Controller
  *
@@ -29,6 +30,7 @@ class ExtensionsPluginsController extends AppController {
 		'Setting',
 		'User',
 	);
+
 /**
  * Core plugins
  *

@@ -19,6 +19,7 @@ class Language extends AppModel {
  * @access public
  */
 	public $name = 'Language';
+
 /**
  * Behaviors used by the Model
  *
@@ -28,6 +29,7 @@ class Language extends AppModel {
 	public $actsAs = array(
 		'Ordered' => array('field' => 'weight', 'foreign_key' => null),
 	);
+
 /**
  * Validation
  *

@@ -26,6 +26,7 @@ class MetaBehavior extends ModelBehavior {
 
 		$this->settings[$model->alias] = $config;
 	}
+
 /**
  * afterFind callback
  *
@@ -53,6 +54,7 @@ class MetaBehavior extends ModelBehavior {
 
 		return $results;
 	}
+
 /**
  * Prepare data
  *
@@ -63,6 +65,7 @@ class MetaBehavior extends ModelBehavior {
 	public function prepareData(&$model, $data) {
 		return $this->__prepareMeta($data);
 	}
+
 /**
  * Private method for MetaBehavior::prepareData()
  *
@@ -86,6 +89,7 @@ class MetaBehavior extends ModelBehavior {
 
 		return $data;
 	}
+
 /**
  * Save with meta
  *

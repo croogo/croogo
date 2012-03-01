@@ -43,12 +43,14 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * Used for runtime configuration of model
  */
 	public $runtime = array();
+
 /**
  * Field names
  *
  * @var array
  */
 	public $translationFields = array();
+
 /**
  * Callback
  *
@@ -82,6 +84,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 		$this->translationFields[$model->alias] = $config;
 		//return $this->bindTranslation($model, $config, false);
 	}
+
 /**
  * Callback
  *
@@ -93,6 +96,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 		unset($this->settings[$model->alias]);
 		unset($this->runtime[$model->alias]);
 	}
+
 /**
  * Get field names for Translation
  *
@@ -107,6 +111,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 			return array_keys($this->translationFields[$model->alias]);
 		}
 	}
+
 /**
  * afterFind Callback
  *
@@ -168,6 +173,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 
 		return $results;
 	}
+
 /**
  * Save translation only (in i18n table)
  *
@@ -221,6 +227,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 
 		return true;
 	}
+
 /**
  * afterDelete Callback
  *
@@ -232,6 +239,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 		$conditions = array('model' => $model->alias, 'foreign_key' => $model->id);
 		$RuntimeModel->deleteAll($conditions);
 	}
+
 /**
  * Get selected locale for model
  *
@@ -253,6 +261,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 
 		return $model->locale;
 	}
+
 /**
  * Get instance of model for translations
  *

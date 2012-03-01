@@ -19,6 +19,7 @@ class ExampleController extends ExampleAppController {
  * @access public
  */
 	public $name = 'Example';
+
 /**
  * Models used by the Controller
  *

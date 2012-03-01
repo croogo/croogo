@@ -19,6 +19,7 @@ class TranslateController extends TranslateAppController {
  * @access public
  */
 	public $name = 'Translate';
+
 /**
  * Models used by the Controller
  *

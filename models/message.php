@@ -19,6 +19,7 @@ class Message extends AppModel {
  * @access public
  */
 	public $name = 'Message';
+
 /**
  * Validation
  *
@@ -43,6 +44,7 @@ class Message extends AppModel {
 			'message' => 'This field cannot be left blank.',
 		),
 	);
+
 /**
  * Model associations: belongsTo
  *

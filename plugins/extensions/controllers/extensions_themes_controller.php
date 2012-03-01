@@ -19,6 +19,7 @@ class ExtensionsThemesController extends AppController {
  * @access public
  */
 	public $name = 'ExtensionsThemes';
+
 /**
  * Models used by the Controller
  *

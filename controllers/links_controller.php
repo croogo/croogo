@@ -19,6 +19,7 @@ class LinksController extends AppController {
  * @access public
  */
 	public $name = 'Links';
+
 /**
  * Models used by the Controller
  *
@@ -29,6 +30,7 @@ class LinksController extends AppController {
 		'Link',
 		'Role',
 	);
+
 /**
  * Menu ID
  *

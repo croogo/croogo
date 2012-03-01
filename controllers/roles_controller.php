@@ -19,6 +19,7 @@ class RolesController extends AppController {
  * @access public
  */
 	public $name = 'Roles';
+
 /**
  * Models used by the Controller
  *

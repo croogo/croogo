@@ -19,6 +19,7 @@ class ContactsController extends AppController {
  * @access public
  */
 	public $name = 'Contacts';
+
 /**
  * Components
  *
@@ -30,6 +31,7 @@ class ContactsController extends AppController {
 		'Email',
 		'Recaptcha',
 	);
+
 /**
  * Models used by the Controller
  *

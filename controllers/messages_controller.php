@@ -19,6 +19,7 @@ class MessagesController extends AppController {
  * @access public
  */
 	public $name = 'Messages';
+
 /**
  * Models used by the Controller
  *

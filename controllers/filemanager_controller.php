@@ -19,6 +19,7 @@ class FilemanagerController extends AppController {
  * @access public
  */
 	public $name = 'Filemanager';
+
 /**
  * Models used by the Controller
  *
@@ -26,6 +27,7 @@ class FilemanagerController extends AppController {
  * @access public
  */
 	public $uses = array('Setting', 'User');
+
 /**
  * Helpers used by the Controller
  *

@@ -19,6 +19,7 @@ class TypesController extends AppController {
  * @access public
  */
 	public $name = 'Types';
+
 /**
  * Models used by the Controller
  *

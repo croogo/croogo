@@ -19,6 +19,7 @@ class Type extends AppModel {
  * @access public
  */
 	public $name = 'Type';
+
 /**
  * Behaviors used by the Model
  *
@@ -35,6 +36,7 @@ class Type extends AppModel {
 		),
 		'Params',
 	);
+
 /**
  * Validation
  *
@@ -57,6 +59,7 @@ class Type extends AppModel {
 			),
 		),
 	);
+
 /**
  * Model associations: hasAndBelongsToMany
  *

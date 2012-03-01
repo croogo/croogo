@@ -19,6 +19,7 @@ class Term extends AppModel {
  * @access public
  */
 	public $name = 'Term';
+
 /**
  * Behaviors used by the Model
  *
@@ -37,6 +38,7 @@ class Term extends AppModel {
 			),
 		),
 	);
+
 /**
  * Validation
  *
@@ -55,6 +57,7 @@ class Term extends AppModel {
 			),
 		),
 	);
+
 /**
  * Model associations: hasAndBelongsToMany
  *
@@ -79,6 +82,7 @@ class Term extends AppModel {
 			'insertQuery' => '',
 		),
 	);
+
 /**
  * Save Term and return ID.
  * If another Term with same slug exists, return ID of that Term without saving.

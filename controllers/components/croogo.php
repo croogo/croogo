@@ -21,6 +21,7 @@ class CroogoComponent extends Object {
 	public $components = array(
 		'Session',
 	);
+
 /**
  * Role ID of current user
  *
@@ -30,6 +31,7 @@ class CroogoComponent extends Object {
  * @access public
  */
 	public $roleId = 3;
+
 /**
  * Menus for layout
  *
@@ -65,6 +67,7 @@ class CroogoComponent extends Object {
  * @access public
  */
 	public $nodes_for_layout = array();
+
 /**
  * Blocks data: contains parsed value of bb-code like strings
  *
@@ -76,6 +79,7 @@ class CroogoComponent extends Object {
 		'vocabularies' => array(),
 		'nodes' => array(),
 	);
+
 /**
  * Startup
  *
@@ -100,6 +104,7 @@ class CroogoComponent extends Object {
 			$this->__adminData();
 		}
 	}
+
 /**
  * Set variables for admin layout
  *
@@ -132,6 +137,7 @@ class CroogoComponent extends Object {
 		));
 		$this->controller->set('vocabularies_for_admin_layout', $vocabularies);
 	}
+
 /**
  * Blocks
  *
@@ -190,6 +196,7 @@ class CroogoComponent extends Object {
 			$this->blocks_for_layout[$regionAlias] = $blocks;
 		}
 	}
+
 /**
  * Process blocks for bb-code like strings
  *
@@ -205,6 +212,7 @@ class CroogoComponent extends Object {
 			)));
 		}
 	}
+
 /**
  * Menus
  *
@@ -263,6 +271,7 @@ class CroogoComponent extends Object {
 			}
 		}
 	}
+
 /**
  * Vocabularies
  *
@@ -309,6 +318,7 @@ class CroogoComponent extends Object {
 			}
 		}
 	}
+
 /**
  * Types
  *
@@ -328,6 +338,7 @@ class CroogoComponent extends Object {
 			$this->types_for_layout[$alias] = $type;
 		}
 	}
+
 /**
  * Nodes
  *
@@ -365,6 +376,7 @@ class CroogoComponent extends Object {
 			$this->nodes_for_layout[$alias] = $node;
 		}
 	}
+
 /**
  * Converts formatted string to array
  *
@@ -390,6 +402,7 @@ class CroogoComponent extends Object {
 
 		return $stringArr;
 	}
+
 /**
  * beforeRender
  *
@@ -418,6 +431,7 @@ class CroogoComponent extends Object {
 			array_unshift($appInstance->helpers, APP.'views'.DS.'themed'.DS.$controller->theme.DS.'helpers'.DS);
 		}
 	}
+
 /**
  * Extracts parameters from 'filter' named parameter.
  *
@@ -435,6 +449,7 @@ class CroogoComponent extends Object {
 		}
 		return $filterData;
 	}
+
 /**
  * Get URL relative to the app
  *
@@ -450,6 +465,7 @@ class CroogoComponent extends Object {
 		$path = '/' . str_replace(Router::url('/', true), '', $absoluteUrl);
 		return $path;
 	}
+
 /**
  * ACL: add ACO
  *
@@ -554,6 +570,7 @@ class CroogoComponent extends Object {
 			}
 		}
 	}
+
 /**
  * ACL: remove ACO
  *
@@ -568,6 +585,7 @@ class CroogoComponent extends Object {
 			$this->controller->Acl->Aco->delete($acoNode['0']['Aco']['id']);
 		}
 	}
+
 /**
  * Loads plugin's bootstrap.php file
  *
@@ -590,6 +608,7 @@ class CroogoComponent extends Object {
 		}
 		$this->controller->Setting->write('Hook.bootstraps', $plugins);
 	}
+
 /**
  * Plugin name will be removed from Hook.bootstraps
  *
@@ -615,6 +634,7 @@ class CroogoComponent extends Object {
 		}
 		$this->controller->Setting->write('Hook.bootstraps', $plugins);
 	}
+
 /**
  * Parses bb-code like string.
  *
@@ -660,6 +680,7 @@ class CroogoComponent extends Object {
 		}
 		return $output;
 	}
+
 /**
  * Get theme alises (folder names)
  *
@@ -684,6 +705,7 @@ class CroogoComponent extends Object {
 		}
 		return $themes;
 	}
+
 /**
  * Get the content of theme.yml file
  *
@@ -708,6 +730,7 @@ class CroogoComponent extends Object {
 		$themeData = Spyc::YAMLLoad(file_get_contents($ymlLocation));
 		return $themeData;
 	}
+
 /**
  * Get plugin alises (folder names)
  *
@@ -732,6 +755,7 @@ class CroogoComponent extends Object {
 		}
 		return $plugins;
 	}
+
 /**
  * Get the content of plugin.yml file
  *
@@ -750,6 +774,7 @@ class CroogoComponent extends Object {
 		}
 		return false;
 	}
+
 /**
  * Check if plugin is dependent on any other plugin.
  * If yes, check if that plugin is available in plugins directory.
@@ -775,6 +800,7 @@ class CroogoComponent extends Object {
 		}
 		return true;
 	}
+
 /**
  * Check if plugin is active
  *

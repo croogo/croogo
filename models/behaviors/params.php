@@ -26,6 +26,7 @@ class ParamsBehavior extends ModelBehavior {
 
 		$this->settings[$model->alias] = $config;
 	}
+
 /**
  * afterFind callback
  *
@@ -53,6 +54,7 @@ class ParamsBehavior extends ModelBehavior {
 
 		return $results;
 	}
+
 /**
  * Converts a string of params to an array of formatted key/value pairs
  *

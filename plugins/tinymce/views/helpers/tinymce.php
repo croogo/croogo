@@ -22,6 +22,7 @@ class TinymceHelper extends AppHelper {
 		'Html',
 		'Js',
 	);
+
 /**
  * Actions
  *
@@ -30,6 +31,7 @@ class TinymceHelper extends AppHelper {
  * @var array
  */
 	public $actions = array();
+
 /**
  * Default settings for tinymce
  *

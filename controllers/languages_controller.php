@@ -19,6 +19,7 @@ class LanguagesController extends AppController {
  * @access public
  */
 	public $name = 'Languages';
+
 /**
  * Models used by the Controller
  *

@@ -18,6 +18,7 @@
 			'description' => 'descriptionTranslation',
 		),
 	));
+
 /**
  * Do not edit below this line unless you know what you are doing.
  *

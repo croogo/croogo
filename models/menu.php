@@ -19,6 +19,7 @@ class Menu extends AppModel {
  * @access public
  */
 	public $name = 'Menu';
+
 /**
  * Behaviors used by the Model
  *
@@ -34,6 +35,7 @@ class Menu extends AppModel {
 			),
 		),
 	);
+
 /**
  * Validation
  *
@@ -56,6 +58,7 @@ class Menu extends AppModel {
 			),
 		),
 	);
+
 /**
  * Model associations: hasMany
  *

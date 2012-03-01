@@ -25,6 +25,7 @@ class ExampleBehavior extends ModelBehavior {
 
 		$this->settings[$model->alias] = $config;
 	}
+
 /**
  * afterFind callback
  *

@@ -19,6 +19,7 @@ class Setting extends AppModel {
  * @access public
  */
 	public $name = 'Setting';
+
 /**
  * Behaviors used by the Model
  *
@@ -36,6 +37,7 @@ class Setting extends AppModel {
 			),
 		),
 	);
+
 /**
  * Validation
  *
@@ -54,6 +56,7 @@ class Setting extends AppModel {
 			),
 		),
 	);
+
 /**
  * afterSave callback
  *
@@ -63,6 +66,7 @@ class Setting extends AppModel {
 		$this->updateYaml();
 		$this->writeConfiguration();
 	}
+
 /**
  * afterDelete callback
  *
@@ -72,6 +76,7 @@ class Setting extends AppModel {
 		$this->updateYaml();
 		$this->writeConfiguration();
 	}
+
 /**
  * Creates a new record with key/value pair if key does not exist.
  *
@@ -115,6 +120,7 @@ class Setting extends AppModel {
 			return false;
 		}
 	}
+
 /**
  * Deletes setting record for given key
  *
@@ -129,6 +135,7 @@ class Setting extends AppModel {
 		}
 		return false;
 	}
+
 /**
  * All key/value pairs are made accessible from Configure class
  *
@@ -149,6 +156,7 @@ class Setting extends AppModel {
 			Configure::write($setting['Setting']['key'], $setting['Setting']['value']);
 		}
 	}
+
 /**
  * Find list and save yaml dump in app/config/settings.yml file.
  * Data required in bootstrap.

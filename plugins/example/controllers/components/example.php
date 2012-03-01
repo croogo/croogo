@@ -21,6 +21,7 @@ class ExampleComponent extends Object {
 	public function startup(&$controller) {
 		$controller->set('exampleComponent', 'ExampleComponent startup');
 	}
+
 /**
  * Called after the Controller::beforeRender(), after the view class is loaded, and before the
  * Controller::render()
@@ -30,6 +31,7 @@ class ExampleComponent extends Object {
  */
 	public function beforeRender(&$controller) {
 	}
+
 /**
  * Called after Controller::render() and before the output is printed to the browser.
  *

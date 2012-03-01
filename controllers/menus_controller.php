@@ -19,6 +19,7 @@ class MenusController extends AppController {
  * @access public
  */
 	public $name = 'Menus';
+
 /**
  * Models used by the Controller
  *

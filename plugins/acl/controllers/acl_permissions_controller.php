@@ -19,6 +19,7 @@ class AclPermissionsController extends AclAppController {
  * @access public
  */
 	public $name = 'AclPermissions';
+
 /**
  * Models used by the Controller
  *

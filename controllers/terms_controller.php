@@ -19,6 +19,7 @@ class TermsController extends AppController {
  * @access public
  */
 	public $name = 'Terms';
+
 /**
  * Models used by the Controller
  *

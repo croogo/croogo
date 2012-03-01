@@ -19,6 +19,7 @@ class VocabulariesController extends AppController {
  * @access public
  */
 	public $name = 'Vocabularies';
+
 /**
  * Models used by the Controller
  *

@@ -19,6 +19,7 @@ class FilemanagerHelper extends AppHelper {
  * @access public
  */
 	public $helpers = array('Html');
+
 /**
  * Get extension from a file name.
  *
@@ -37,6 +38,7 @@ class FilemanagerHelper extends AppHelper {
 			return $filename_e[$n];
 		}
 	}
+
 /**
  * Get icon from file extension
  *
@@ -71,6 +73,7 @@ class FilemanagerHelper extends AppHelper {
 
 		return $output;
 	}
+
 /**
  * Get icon from file name
  *
@@ -81,6 +84,7 @@ class FilemanagerHelper extends AppHelper {
 		$icon = $this->ext2icon($ext);
 		return $icon;
 	}
+
 /**
  * Breadcrumb
  *
@@ -105,6 +109,7 @@ class FilemanagerHelper extends AppHelper {
 
 		return $output;
 	}
+
 /**
  * Generate anchor tag for a file/directory
  *
@@ -122,6 +127,7 @@ class FilemanagerHelper extends AppHelper {
 		$output = "<a onclick='{$onclick}' href='" . $this->Html->url($url) . "?{$pathKey}=" . urlencode($path) . "'>" . $title . "</a>";
 		return $output;
 	}
+
 /**
  * Generate anchor tag for directory
  *
@@ -133,6 +139,7 @@ class FilemanagerHelper extends AppHelper {
 		$output = $this->link($title, array('controller' => 'filemanager', 'action' => 'browse'), $path);
 		return $output;
 	}
+
 /**
  * Generate anchor tag for file
  *
@@ -144,6 +151,7 @@ class FilemanagerHelper extends AppHelper {
 		$output = "<a href='" . $this->Html->url(array('controller' => 'filemanager', 'action' => 'editfile')) . "?path=" . urlencode($path) . "'>{$title}</a>";
 		return $output;
 	}
+
 /**
  * Generate anchor tag for upload link
  *
@@ -155,6 +163,7 @@ class FilemanagerHelper extends AppHelper {
 		$output = $this->link($title, array('controller' => 'filemanager', 'action' => 'upload'), $path);
 		return $output;
 	}
+
 /**
  * Generate anchor tag for 'create a new directory' link
  *
@@ -166,6 +175,7 @@ class FilemanagerHelper extends AppHelper {
 		$output = $this->link($title, array('controller' => 'filemanager', 'action' => 'new'), $path);
 		return $output;
 	}
+
 /**
  * Get icon from mime type
  *
@@ -187,6 +197,7 @@ class FilemanagerHelper extends AppHelper {
 
 		return $output;
 	}
+
 /**
  * Checks if searched location is under any of the paths
  *

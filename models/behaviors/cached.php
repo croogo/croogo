@@ -26,6 +26,7 @@ class CachedBehavior extends ModelBehavior {
 
 		$this->settings[$model->alias] = $config;
 	}
+
 /**
  * afterSave callback
  *
@@ -36,6 +37,7 @@ class CachedBehavior extends ModelBehavior {
 	public function afterSave(&$model, $created) {
 		$this->_deleteCachedFiles($model);
 	}
+
 /**
  * afterDelete callback
  *
@@ -45,6 +47,7 @@ class CachedBehavior extends ModelBehavior {
 	public function afterDelete(&$model) {
 		$this->_deleteCachedFiles($model);
 	}
+
 /**
  * Delete cache files matching prefix
  *

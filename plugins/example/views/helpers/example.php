@@ -22,6 +22,7 @@ class ExampleHelper extends AppHelper {
 		'Html',
 		'Layout',
 	);
+
 /**
  * Before render callback. Called before the view file is rendered.
  *
@@ -29,6 +30,7 @@ class ExampleHelper extends AppHelper {
  */
 	public function beforeRender() {
 	}
+
 /**
  * After render callback. Called after the view file is rendered
  * but before the layout has been rendered.
@@ -37,6 +39,7 @@ class ExampleHelper extends AppHelper {
  */
 	public function afterRender() {
 	}
+
 /**
  * Before layout callback. Called before the layout is rendered.
  *
@@ -44,6 +47,7 @@ class ExampleHelper extends AppHelper {
  */
 	public function beforeLayout() {
 	}
+
 /**
  * After layout callback. Called after the layout has rendered.
  *
@@ -51,6 +55,7 @@ class ExampleHelper extends AppHelper {
  */
 	public function afterLayout() {
 	}
+
 /**
  * Called after LayoutHelper::setNode()
  *
@@ -60,6 +65,7 @@ class ExampleHelper extends AppHelper {
 		// field values can be changed from hooks
 		$this->Layout->setNodeField('title', $this->Layout->node('title') . ' [Modified by ExampleHelper]');
 	}
+
 /**
  * Called before LayoutHelper::nodeInfo()
  *
@@ -68,6 +74,7 @@ class ExampleHelper extends AppHelper {
 	public function beforeNodeInfo() {
 		return '<p>beforeNodeInfo</p>';
 	}
+
 /**
  * Called after LayoutHelper::nodeInfo()
  *
@@ -76,6 +83,7 @@ class ExampleHelper extends AppHelper {
 	public function afterNodeInfo() {
 		return '<p>afterNodeInfo</p>';
 	}
+
 /**
  * Called before LayoutHelper::nodeBody()
  *
@@ -84,6 +92,7 @@ class ExampleHelper extends AppHelper {
 	public function beforeNodeBody() {
 		return '<p>beforeNodeBody</p>';
 	}
+
 /**
  * Called after LayoutHelper::nodeBody()
  *
@@ -92,6 +101,7 @@ class ExampleHelper extends AppHelper {
 	public function afterNodeBody() {
 		return '<p>afterNodeBody</p>';
 	}
+
 /**
  * Called before LayoutHelper::nodeMoreInfo()
  *
@@ -100,6 +110,7 @@ class ExampleHelper extends AppHelper {
 	public function beforeNodeMoreInfo() {
 		return '<p>beforeNodeMoreInfo</p>';
 	}
+
 /**
  * Called after LayoutHelper::nodeMoreInfo()
  *

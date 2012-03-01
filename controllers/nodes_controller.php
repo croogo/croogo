@@ -19,6 +19,7 @@ class NodesController extends AppController {
  * @access public
  */
 	public $name = 'Nodes';
+
 /**
  * Components
  *
@@ -28,6 +29,7 @@ class NodesController extends AppController {
 	public $components = array(
 		'Recaptcha',
 	);
+
 /**
  * Models used by the Controller
  *

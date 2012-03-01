@@ -19,6 +19,7 @@ class Link extends AppModel {
  * @access public
  */
 	public $name = 'Link';
+
 /**
  * Behaviors used by the Model
  *
@@ -36,6 +37,7 @@ class Link extends AppModel {
 			),
 		),
 	);
+
 /**
  * Validation
  *
@@ -52,6 +54,7 @@ class Link extends AppModel {
 			'message' => 'Link cannot be empty.',
 		),
 	);
+
 /**
  * Model associations: belongsTo
  *

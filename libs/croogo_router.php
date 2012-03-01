@@ -36,6 +36,7 @@ class CroogoRouter {
 			Router::connect('/:locale' . $route, $default, array_merge(array('locale' => '[a-z]{3}'), $params));
 		}
 	}
+
 /**
  * If you want your non-routed controler actions (like /users/add) to support locale based urls,
  * this method must be called AFTER all the routes.
@@ -47,6 +48,7 @@ class CroogoRouter {
 			Router::connect('/:locale/:controller/:action/*', array(), array('locale' => '[a-z]{3}'));
 		}
 	}
+
 /**
  * Load plugin routes
  *

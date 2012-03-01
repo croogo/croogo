@@ -20,6 +20,7 @@ class ExampleActivation {
 	public function beforeActivation(&$controller) {
 		return true;
 	}
+
 /**
  * Called after activating the plugin in ExtensionsPluginsController::admin_toggle()
  *
@@ -46,6 +47,7 @@ class ExampleActivation {
 			'status' => 1,
 		));
 	}
+
 /**
  * onDeactivate will be called if this returns true
  *
@@ -55,6 +57,7 @@ class ExampleActivation {
 	public function beforeDeactivation(&$controller) {
 		return true;
 	}
+
 /**
  * Called after deactivating the plugin in ExtensionsPluginsController::admin_toggle()
  *

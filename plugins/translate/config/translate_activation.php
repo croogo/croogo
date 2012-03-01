@@ -17,6 +17,7 @@ class TranslateActivation {
 	public function beforeActivation(&$controller) {
 		return true;
 	}
+
 /**
  * Called after activating the plugin in ExtensionsPluginsController::admin_toggle()
  *
@@ -29,6 +30,7 @@ class TranslateActivation {
 		$controller->Croogo->addAco('Translate/admin_edit');
 		$controller->Croogo->addAco('Translate/admin_delete');
 	}
+
 /**
  * onDeactivate will be called if this returns true
  *
@@ -38,6 +40,7 @@ class TranslateActivation {
 	public function beforeDeactivation(&$controller) {
 		return true;
 	}
+
 /**
  * Called after deactivating the plugin in ExtensionsPluginsController::admin_toggle()
  *

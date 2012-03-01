@@ -19,6 +19,7 @@ class User extends AppModel {
  * @access public
  */
 	public $name = 'User';
+
 /**
  * Order
  *
@@ -26,6 +27,7 @@ class User extends AppModel {
  * @access public
  */
 	public $order = 'name ASC';
+
 /**
  * Behaviors used by the Model
  *
@@ -35,6 +37,7 @@ class User extends AppModel {
 	public $actsAs = array(
 		'Acl' => array('type' => 'requester'),
 	);
+
 /**
  * Model associations: belongsTo
  *
@@ -42,6 +45,7 @@ class User extends AppModel {
  * @access public
  */
 	public $belongsTo = array('Role');
+
 /**
  * Validation
  *

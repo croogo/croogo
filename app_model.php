@@ -20,6 +20,7 @@ class AppModel extends Model {
  * @var string
  */
 	public $useCache = true;
+
 /**
  * Constructor
  *
@@ -31,6 +32,7 @@ class AppModel extends Model {
 		Croogo::applyHookProperties('Hook.model_properties');
 		parent::__construct($id, $table, $ds);
 	}
+
 /**
  * Override find function to use caching
  *
@@ -66,6 +68,7 @@ class AppModel extends Model {
 		}
 		return $results;
 	}
+
 /**
  * Check if find() was already cached
  *
@@ -90,6 +93,7 @@ class AppModel extends Model {
 		}
 		return false;
 	}
+
 /**
  * Updates multiple model records based on a set of conditions.
  *

@@ -19,6 +19,7 @@ class Vocabulary extends AppModel {
  * @access public
  */
 	public $name = 'Vocabulary';
+
 /**
  * Behaviors used by the Model
  *
@@ -38,6 +39,7 @@ class Vocabulary extends AppModel {
 			),
 		),
 	);
+
 /**
  * Validation
  *
@@ -60,6 +62,7 @@ class Vocabulary extends AppModel {
 			),
 		),
 	);
+
 /**
  * Model associations: hasAndBelongsToMany
  *

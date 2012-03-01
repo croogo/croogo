@@ -19,6 +19,7 @@ class RegionsController extends AppController {
  * @access public
  */
 	public $name = 'Regions';
+
 /**
  * Models used by the Controller
  *

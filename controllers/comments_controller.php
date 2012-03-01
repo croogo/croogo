@@ -19,6 +19,7 @@ class CommentsController extends AppController {
  * @access public
  */
 	public $name = 'Comments';
+
 /**
  * Components
  *
@@ -30,6 +31,7 @@ class CommentsController extends AppController {
 		'Email',
 		'Recaptcha',
 	);
+
 /**
  * Models used by the Controller
  *

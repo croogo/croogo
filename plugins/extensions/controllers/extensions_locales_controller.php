@@ -19,6 +19,7 @@ class ExtensionsLocalesController extends AppController {
  * @access public
  */
 	public $name = 'ExtensionsLocales';
+
 /**
  * Models used by the Controller
  *

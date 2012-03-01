@@ -19,6 +19,7 @@ class SettingsController extends AppController {
  * @access public
  */
 	public $name = 'Settings';
+
 /**
  * Models used by the Controller
  *
@@ -26,6 +27,7 @@ class SettingsController extends AppController {
  * @access public
  */
 	public $uses = array('Setting');
+
 /**
  * Helpers used by the Controller
  *

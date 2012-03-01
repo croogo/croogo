@@ -20,6 +20,7 @@ class EncoderBehavior extends ModelBehavior {
 
 		$this->settings[$model->alias] = $config;
 	}
+
 /**
  * Encode data
  *
@@ -67,6 +68,7 @@ class EncoderBehavior extends ModelBehavior {
 
 		return $output;
 	}
+
 /**
  * Decode data
  *

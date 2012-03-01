@@ -36,6 +36,7 @@ class InstallController extends InstallAppController {
  * @access public
  */
 	public $components = null;
+
 /**
  * Default configuration
  *
@@ -55,6 +56,7 @@ class InstallController extends InstallAppController {
 		'encoding' => 'UTF8',
 		'port' => null,
 	);
+
 /**
  * beforeFilter
  *
@@ -68,6 +70,7 @@ class InstallController extends InstallAppController {
 		App::import('Component', 'Session');
 		$this->Session = new SessionComponent;
 	}
+
 /**
  * If settings.yml exists, app is already installed
  *

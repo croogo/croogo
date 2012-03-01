@@ -19,6 +19,7 @@ class Taxonomy extends AppModel {
  * @access public
  */
 	public $name = 'Taxonomy';
+
 /**
  * Behaviors used by the Model
  *
@@ -38,6 +39,7 @@ class Taxonomy extends AppModel {
 		),
 		'Containable',
 	);
+
 /**
  * Model associations: belongsTo
  *
@@ -60,6 +62,7 @@ class Taxonomy extends AppModel {
 			'order' => '',
 		),
 	);
+
 /**
  * Generates a tree of terms for a vocabulary
  *
@@ -146,6 +149,7 @@ class Taxonomy extends AppModel {
 
 		return $termsTree;
 	}
+
 /**
  * Check if Term HABTM Vocabulary.
  *

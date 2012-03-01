@@ -29,6 +29,7 @@ class AppController extends Controller {
 		'Session',
 		'RequestHandler',
 	);
+
 /**
  * Helpers
  *
@@ -45,6 +46,7 @@ class AppController extends Controller {
 		'Layout',
 		'Custom',
 	);
+
 /**
  * Models
  *
@@ -57,6 +59,7 @@ class AppController extends Controller {
 		'Setting',
 		'Node',
 	);
+
 /**
  * Cache pagination results
  *
@@ -64,6 +67,7 @@ class AppController extends Controller {
  * @access public
  */
 	public $usePaginationCache = true;
+
 /**
  * View
  *
@@ -71,6 +75,7 @@ class AppController extends Controller {
  * @access public
  */
 	public $view = 'Theme';
+
 /**
  * Theme
  *
@@ -78,6 +83,7 @@ class AppController extends Controller {
  * @access public
  */
 	public $theme;
+
 /**
  * Constructor
  *
@@ -95,6 +101,7 @@ class AppController extends Controller {
 			$this->Component->triggerCallback('startup', $this);
 		}
 	}
+
 /**
  * beforeFilter
  *
@@ -130,6 +137,7 @@ class AppController extends Controller {
 			Configure::write('Config.language', $this->params['locale']);
 		}
 	}
+
 /**
  * afterFilter callback
  * Disable debug mode on JSON pages to prevent the script execution time to be appended to the page
@@ -143,6 +151,7 @@ class AppController extends Controller {
 			Configure::write('debug', 0);
 		}
 	}
+
 /**
  * blackHoleCallback for SecurityComponent
  *

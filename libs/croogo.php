@@ -25,6 +25,7 @@ class Croogo {
 		$hooks[] = $pluginName;
 		Configure::write('Hook.routes', $hooks);
 	}
+
 /**
  * Loads as a normal component from controller.
  *
@@ -34,6 +35,7 @@ class Croogo {
 	public function hookComponent($controllerName, $componentName) {
 		self::hookControllerProperty($controllerName, 'components', array($componentName));
 	}
+
 /**
  * Attaches Behavior to a Model whenever loaded.
  *
@@ -44,6 +46,7 @@ class Croogo {
 	public function hookBehavior($modelName, $behaviorName, $config = array()) {
 		self::hookModelProperty($modelName, 'actsAs', array($behaviorName => $config));
 	}
+
 /**
  * Loads as a normal helper via controller.
  *
@@ -53,6 +56,7 @@ class Croogo {
 	public function hookHelper($controllerName, $helperName) {
 		self::hookControllerProperty($controllerName, 'helpers', array($helperName));
 	}
+
 /**
  * Shows plugin's admin_menu element in admin navigation under Extensions.
  *
@@ -62,6 +66,7 @@ class Croogo {
 		$pluginName = Inflector::underscore($pluginName);
 		Configure::write('Admin.menus.'.$pluginName, 1);
 	}
+
 /**
  * In admin panel for the provided action, the link will appear in table rows under 'Actions' column.
  *
@@ -80,6 +85,7 @@ class Croogo {
 		$rowActions[$action][$title] = $url;
 		Configure::write('Admin.rowActions', $rowActions);
 	}
+
 /**
  * Admin tab
  *
@@ -100,6 +106,7 @@ class Croogo {
 		$tabs[$action][$title]['options'] = $options;
 		Configure::write('Admin.tabs', $tabs);
 	}
+
 /**
  * Hook model property
  *
@@ -113,6 +120,7 @@ class Croogo {
 		$configKeyPrefix = 'Hook.model_properties';
 		self::__hookProperty($configKeyPrefix, $modelName, $property, $value);
 	}
+
 /**
  * Hook controller property
  *
@@ -124,6 +132,7 @@ class Croogo {
 		$configKeyPrefix = 'Hook.controller_properties';
 		self::__hookProperty($configKeyPrefix, $controllerName, $property, $value);
 	}
+
 /**
  * Hook property
  *
@@ -148,6 +157,7 @@ class Croogo {
 		}
 		Configure::write($configKeyPrefix . '.' . $name . '.' . $property, $propertyValue);
 	}
+
 /**
  * Applies properties set from hooks to an object in __construct()
  *

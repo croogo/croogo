@@ -19,6 +19,7 @@ class Node extends AppModel {
  * @access public
  */
 	public $name = 'Node';
+
 /**
  * Behaviors used by the Model
  *
@@ -39,6 +40,7 @@ class Node extends AppModel {
 			),
 		),
 	);
+
 /**
  * Node type
  *
@@ -48,6 +50,7 @@ class Node extends AppModel {
  * @access public
  */
 	public $type = null;
+
 /**
  * Guid
  *
@@ -55,6 +58,7 @@ class Node extends AppModel {
  * @access public
  */
 	public $guid = null;
+
 /**
  * Validation
  *
@@ -77,6 +81,7 @@ class Node extends AppModel {
 			),
 		),
 	);
+
 /**
  * Model associations: belongsTo
  *
@@ -92,6 +97,7 @@ class Node extends AppModel {
 			'order' => '',
 		),
 	);
+
 /**
  * Model associations: hasMany
  *
@@ -126,6 +132,7 @@ class Node extends AppModel {
 			'counterQuery' => '',
 		),
 	);
+
 /**
  * Model associations: hasAndBelongsToMany
  *
@@ -150,6 +157,7 @@ class Node extends AppModel {
 			'insertQuery' => '',
 		),
 	);
+
 /**
  * beforeFind callback
  *
@@ -162,6 +170,7 @@ class Node extends AppModel {
 		}
 		return $q;
 	}
+
 /**
  * beforeSave callback
  *
@@ -175,6 +184,7 @@ class Node extends AppModel {
 
 		return true;
 	}
+
 /**
  * Caches Term in Node.terms field
  *
@@ -195,6 +205,7 @@ class Node extends AppModel {
 			));
 		}
 	}
+
 /**
  * Returns false if any fields passed match any (by default, all if $or = false) of their matching values.
  *

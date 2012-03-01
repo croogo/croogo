@@ -19,6 +19,7 @@ class Region extends AppModel {
  * @access public
  */
 	public $name = 'Region';
+
 /**
  * Behaviors used by the Model
  *
@@ -35,6 +36,7 @@ class Region extends AppModel {
 			),
 		),
 	);
+
 /**
  * Validation
  *
@@ -57,6 +59,7 @@ class Region extends AppModel {
 			),
 		),
 	);
+
 /**
  * Model associations: hasMany
  *

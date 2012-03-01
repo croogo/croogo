@@ -19,6 +19,7 @@ class Contact extends AppModel {
  * @access public
  */
 	public $name = 'Contact';
+
 /**
  * Behaviors used by the Model
  *
@@ -32,6 +33,7 @@ class Contact extends AppModel {
 			),
 		),
 	);
+
 /**
  * Validation
  *
@@ -58,6 +60,7 @@ class Contact extends AppModel {
 			'message' => 'Please provide a valid email address.',
 		),
 	);
+
 /**
  * Model associations: hasMany
  *

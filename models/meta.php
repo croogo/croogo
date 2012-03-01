@@ -19,6 +19,7 @@ class Meta extends AppModel {
  * @access public
  */
 	public $name = 'Meta';
+
 /**
  * Table name
  *
@@ -26,6 +27,7 @@ class Meta extends AppModel {
  * @access public
  */
 	public $useTable = 'meta';
+
 /**
  * Model associations: belongsTo
  *

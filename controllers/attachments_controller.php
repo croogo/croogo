@@ -21,6 +21,7 @@ class AttachmentsController extends AppController {
  * @access public
  */
 	public $name = 'Attachments';
+
 /**
  * Models used by the Controller
  *
@@ -28,6 +29,7 @@ class AttachmentsController extends AppController {
  * @access public
  */
 	public $uses = array('Node');
+
 /**
  * Helpers used by the Controller
  *
@@ -35,6 +37,7 @@ class AttachmentsController extends AppController {
  * @access public
  */
 	public $helpers = array('Filemanager', 'Text', 'Image');
+
 /**
  * Node type
  *
@@ -45,6 +48,7 @@ class AttachmentsController extends AppController {
  * @access public
  */
 	public $type = 'attachment';
+
 /**
  * Uploads directory
  *

@@ -19,6 +19,7 @@ class BlocksController extends AppController {
  * @access public
  */
 	public $name = 'Blocks';
+
 /**
  * Models used by the Controller
  *

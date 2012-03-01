@@ -24,6 +24,7 @@ class LayoutHelper extends AppHelper {
 		'Session',
 		'Js',
 	);
+
 /**
  * Current Node
  *
@@ -31,6 +32,7 @@ class LayoutHelper extends AppHelper {
  * @access public
  */
 	public $node = null;
+
 /**
  * Core helpers
  *
@@ -65,6 +67,7 @@ class LayoutHelper extends AppHelper {
 		'Layout',
 		'Recaptcha',
 	);
+
 /**
  * Constructor
  *
@@ -75,6 +78,7 @@ class LayoutHelper extends AppHelper {
 		$this->View =& ClassRegistry::getObject('view');
 		return parent::__construct($options);
 	}
+
 /**
  * Javascript variables
  *
@@ -103,6 +107,7 @@ class LayoutHelper extends AppHelper {
 		}
 		return $this->Html->scriptBlock('var Croogo = ' . $this->Js->object($croogo) . ';');
 	}
+
 /**
  * Status
  *
@@ -119,6 +124,7 @@ class LayoutHelper extends AppHelper {
 		}
 		return $output;
 	}
+
 /**
  * Show flash message
  *
@@ -134,6 +140,7 @@ class LayoutHelper extends AppHelper {
 		}
 		return $output;
 	}
+
 /**
  * Meta tags
  *
@@ -166,6 +173,7 @@ class LayoutHelper extends AppHelper {
 
 		return $output;
 	}
+
 /**
  * isLoggedIn
  *
@@ -180,6 +188,7 @@ class LayoutHelper extends AppHelper {
 			return false;
 		}
 	}
+
 /**
  * Feed
  *
@@ -211,6 +220,7 @@ class LayoutHelper extends AppHelper {
 
 		return $output;
 	}
+
 /**
  * Get Role ID
  *
@@ -225,6 +235,7 @@ class LayoutHelper extends AppHelper {
 		}
 		return $roleId;
 	}
+
 /**
  * Region is empty
  *
@@ -241,6 +252,7 @@ class LayoutHelper extends AppHelper {
 			return true;
 		}
 	}
+
 /**
  * Show Blocks for a particular Region
  *
@@ -286,6 +298,7 @@ class LayoutHelper extends AppHelper {
 
 		return $output;
 	}
+
 /**
  * Show Menu by Alias
  *
@@ -314,6 +327,7 @@ class LayoutHelper extends AppHelper {
 		));
 		return $output;
 	}
+
 /**
  * Nested Links
  *
@@ -378,6 +392,7 @@ class LayoutHelper extends AppHelper {
 
 		return $output;
 	}
+
 /**
  * Converts strings like controller:abc/action:xyz/ to arrays
  *
@@ -403,6 +418,7 @@ class LayoutHelper extends AppHelper {
 
 		return $linkArr;
 	}
+
 /**
  * Show Vocabulary by Alias
  *
@@ -433,6 +449,7 @@ class LayoutHelper extends AppHelper {
 		}
 		return $output;
 	}
+
 /**
  * Nested Terms
  *
@@ -472,6 +489,7 @@ class LayoutHelper extends AppHelper {
 
 		return $output;
 	}
+
 /**
  * Show nodes list
  *
@@ -500,6 +518,7 @@ class LayoutHelper extends AppHelper {
 		}
 		return $output;
 	}
+
 /**
  * Filter content
  *
@@ -515,6 +534,7 @@ class LayoutHelper extends AppHelper {
 		$content = $this->filterNodes($content);
 		return $content;
 	}
+
 /**
  * Filter content for elements
  *
@@ -541,6 +561,7 @@ class LayoutHelper extends AppHelper {
 		}
 		return $content;
 	}
+
 /**
  * Filter content for Menus
  *
@@ -563,6 +584,7 @@ class LayoutHelper extends AppHelper {
 		}
 		return $content;
 	}
+
 /**
  * Filter content for Vocabularies
  *
@@ -585,6 +607,7 @@ class LayoutHelper extends AppHelper {
 		}
 		return $content;
 	}
+
 /**
  * Filter content for Nodes
  *
@@ -607,6 +630,7 @@ class LayoutHelper extends AppHelper {
 		}
 		return $content;
 	}
+
 /**
  * Meta field: with key/value fields
  *
@@ -648,6 +672,7 @@ class LayoutHelper extends AppHelper {
 		$output = $this->Html->tag('div', $actions . $fields, array('class' => 'meta'));
 		return $output;
 	}
+
 /**
  * Show links under Actions column
  *
@@ -672,6 +697,7 @@ class LayoutHelper extends AppHelper {
 		}
 		return $output;
 	}
+
 /**
  * Show tabs
  *
@@ -711,6 +737,7 @@ class LayoutHelper extends AppHelper {
 		$this->adminTabs = true;
 		return $output;
 	}
+
 /**
  * Set current Node
  *
@@ -721,6 +748,7 @@ class LayoutHelper extends AppHelper {
 		$this->node = $node;
 		$this->hook('afterSetNode');
 	}
+
 /**
  * Set value of a field
  *
@@ -738,6 +766,7 @@ class LayoutHelper extends AppHelper {
 
 		$this->node[$model][$field] = $value;
 	}
+
 /**
  * Get value of a Node field
  *
@@ -758,6 +787,7 @@ class LayoutHelper extends AppHelper {
 			return false;
 		}
 	}
+
 /**
  * Node info
  *
@@ -775,6 +805,7 @@ class LayoutHelper extends AppHelper {
 		$output .= $this->hook('afterNodeInfo');
 		return $output;
 	}
+
 /**
  * Node excerpt (summary)
  *
@@ -792,6 +823,7 @@ class LayoutHelper extends AppHelper {
 		$output .= $this->hook('afterNodeExcerpt');
 		return $output;
 	}
+
 /**
  * Node body
  *
@@ -809,6 +841,7 @@ class LayoutHelper extends AppHelper {
 		$output .= $this->hook('afterNodeBody');
 		return $output;
 	}
+
 /**
  * Node more info
  *
@@ -826,6 +859,7 @@ class LayoutHelper extends AppHelper {
 		$output .= $this->hook('afterNodeMoreInfo');
 		return $output;
 	}
+
 /**
  * Hook
  *

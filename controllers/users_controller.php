@@ -19,6 +19,7 @@ class UsersController extends AppController {
  * @access public
  */
 	public $name = 'Users';
+
 /**
  * Components
  *
@@ -28,6 +29,7 @@ class UsersController extends AppController {
 	public $components = array(
 		'Email',
 	);
+
 /**
  * Models used by the Controller
  *

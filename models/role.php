@@ -19,6 +19,7 @@ class Role extends AppModel {
  * @access public
  */
 	public $name = 'Role';
+
 /**
  * Behaviors used by the Model
  *
@@ -30,6 +31,7 @@ class Role extends AppModel {
 			'type' => 'requester',
 		),
 	);
+
 /**
  * Validation
  *

@@ -19,6 +19,7 @@ class Block extends AppModel {
  * @access public
  */
 	public $name = 'Block';
+
 /**
  * Behaviors used by the Model
  *
@@ -40,6 +41,7 @@ class Block extends AppModel {
 		),
 		'Params',
 	);
+
 /**
  * Validation
  *
@@ -62,6 +64,7 @@ class Block extends AppModel {
 			),
 		),
 	);
+
 /**
  * Model associations: belongsTo
  *
