@@ -42,6 +42,7 @@ class CroogoShell extends AppShell {
         $value = trim($this->args['0']);
         $this->out(Security::hash($value, null, true));
     }
+
 /**
  * Prepares data in config/schema/data/ required for install plugin
  *

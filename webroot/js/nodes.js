@@ -13,9 +13,9 @@ var Nodes = {};
  * @return void
  */
 Nodes.documentReady = function() {
-    Nodes.filter();
-    Nodes.addMeta();
-    Nodes.removeMeta();
+	Nodes.filter();
+	Nodes.addMeta();
+	Nodes.removeMeta();
 }
 
 /**
@@ -24,54 +24,54 @@ Nodes.documentReady = function() {
  * @return void
  */
 Nodes.filter = function() {
-    $('.nodes div.actions a.filter').click(function() {
-        $('.nodes div.filter').slideToggle();
-        return false;
-    });
+	$('.nodes div.actions a.filter').click(function() {
+		$('.nodes div.filter').slideToggle();
+		return false;
+	});
 
-    $('#FilterAddForm div.submit input').click(function() {
-        $('#FilterAddForm').submit();
-        return false;
-    });
+	$('#FilterAddForm div.submit input').click(function() {
+		$('#FilterAddForm').submit();
+		return false;
+	});
 
-    $('#FilterAdminIndexForm').submit(function() {
-        var filter = '';
+	$('#FilterAdminIndexForm').submit(function() {
+		var filter = '';
 		var q='';
-		
-        // type
-        if ($('#FilterType').val() != '') {
-            filter += 'type:' + $('#FilterType').val() + ';';
-        }
 
-        // status
-        if ($('#FilterStatus').val() != '') {
-            filter += 'status:' + $('#FilterStatus').val() + ';';
-        }
+		// type
+		if ($('#FilterType').val() != '') {
+			filter += 'type:' + $('#FilterType').val() + ';';
+		}
 
-        // promoted
-        if ($('#FilterPromote').val() != '') {
-            filter += 'promote:' + $('#FilterPromote').val() + ';';
-        }
-        
-        //query string
-        if($('#FilterQ').val() != '') {
-            q=$('#FilterQ').val();
-        }
-        var loadUrl = Croogo.basePath + 'admin/nodes/index/';
-        if (filter != '') {
-            loadUrl += 'filter:' + filter;
-        }
-        if (q != '') {
-            if (filter == '') {
-                loadUrl +='q:'+q;
-            } else {
-                loadUrl +='/q:'+q;
-            }
-        }
-        
-        window.location = loadUrl;
-        return false;
-    });
+		// status
+		if ($('#FilterStatus').val() != '') {
+			filter += 'status:' + $('#FilterStatus').val() + ';';
+		}
+
+		// promoted
+		if ($('#FilterPromote').val() != '') {
+			filter += 'promote:' + $('#FilterPromote').val() + ';';
+		}
+
+		//query string
+		if($('#FilterQ').val() != '') {
+			q=$('#FilterQ').val();
+		}
+		var loadUrl = Croogo.basePath + 'admin/nodes/index/';
+		if (filter != '') {
+			loadUrl += 'filter:' + filter;
+		}
+		if (q != '') {
+			if (filter == '') {
+				loadUrl +='q:'+q;
+			} else {
+				loadUrl +='/q:'+q;
+			}
+		}
+
+		window.location = loadUrl;
+		return false;
+	});
 }
 
 /**
@@ -80,14 +80,15 @@ Nodes.filter = function() {
  * @return void
  */
 Nodes.addMeta = function() {
-    $('a.add-meta').click(function() {
-        $.get(Croogo.basePath+'admin/nodes/add_meta/', function(data) {
-            $('#meta-fields div.clear').before(data);
-            $('div.meta a.remove-meta').unbind();
-            Nodes.removeMeta();
-        });
-        return false;
-    });
+	$('a.add-meta').click(function(e) {
+		var aAddMeta = $(this);
+		$.get(aAddMeta.attr('href'), function(data) {
+			aAddMeta.parent().find('.clear:first').before(data);
+			$('div.meta a.remove-meta').unbind();
+			Nodes.removeMeta();
+		});
+		e.preventDefault();
+	});
 }
 
 /**
@@ -96,21 +97,21 @@ Nodes.addMeta = function() {
  * @return void
  */
 Nodes.removeMeta = function() {
-    $('div.meta a.remove-meta').click(function() {
-        var aRemoveMeta = $(this);
-        if (aRemoveMeta.attr('rel') != '') {
-            $.getJSON(Croogo.basePath+'admin/nodes/delete_meta/'+$(this).attr('rel')+'.json', function(data) {
-                if (data.success) {
-                    aRemoveMeta.parents('.meta').remove();
-                } else {
-                    // error
-                }
-            });
-        } else {
-            aRemoveMeta.parents('.meta').remove();
-        }
-        return false;
-    });
+	$('div.meta a.remove-meta').click(function(e) {
+		var aRemoveMeta = $(this);
+		if (aRemoveMeta.attr('rel') != '') {
+			$.getJSON(aRemoveMeta.attr('href') + '.json', function(data) {
+				if (data.success) {
+					aRemoveMeta.parents('.meta').remove();
+				} else {
+					// error
+				}
+			});
+		} else {
+			aRemoveMeta.parents('.meta').remove();
+		}
+		e.preventDefault();
+	});
 }
 
 /**
@@ -119,10 +120,10 @@ Nodes.removeMeta = function() {
  * @return void
  */
 Nodes.slug = function() {
-    $("#NodeTitle").slug({
-        slug:'slug',
-        hide: false
-    });
+	$("#NodeTitle").slug({
+		slug:'slug',
+		hide: false
+	});
 }
 
 /**
@@ -131,10 +132,10 @@ Nodes.slug = function() {
  * @return void
  */
 $(document).ready(function() {
-    if (Croogo.params.controller == 'nodes') {
-        Nodes.documentReady();
-        if (Croogo.params.action == 'admin_add') {
-            Nodes.slug();
-        }
-    }
+	if (Croogo.params.controller == 'nodes') {
+		Nodes.documentReady();
+		if (Croogo.params.action == 'admin_add') {
+			Nodes.slug();
+		}
+	}
 });

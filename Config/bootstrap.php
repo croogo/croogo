@@ -48,20 +48,20 @@
  * Inflector::rules('plural', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
  *
  */
-    App::uses('CakeLog', 'Log');
-    App::import('Lib', 'Croogo');
-    App::import('Lib', 'CroogoNav');
-    CakePlugin::load(array('Extensions'), array('bootstrap' => true));
-    require_once 'croogo_menus.php';
-    require_once 'croogo_bootstrap.php';
+	App::uses('CakeLog', 'Log');
+	App::import('Lib', 'Croogo');
+	App::import('Lib', 'CroogoNav');
+	CakePlugin::load(array('Extensions'), array('bootstrap' => true));
+	require_once 'croogo_menus.php';
+	require_once 'croogo_bootstrap.php';
 
-    // Load Install plugin
-    if (Configure::read('Security.salt') == 'f78b12a5c38e9e5c6ae6fbd0ff1f46c77a1e3' ||
-        Configure::read('Security.cipherSeed') == '60170779348589376') {
-        $_securedInstall = false;
-    }
-    Configure::write('Install.secured', !isset($_securedInstall));
-    Configure::write('Install.installed', file_exists(APP . 'Config' .DS. 'settings.yml'));
-    if (!Configure::read('Install.installed') || !Configure::read('Install.secured')) {
-        CakePlugin::load('Install', array('routes' => true));
-    }
+	// Load Install plugin
+	if (Configure::read('Security.salt') == 'f78b12a5c38e9e5c6ae6fbd0ff1f46c77a1e3' ||
+	    Configure::read('Security.cipherSeed') == '60170779348589376') {
+		$_securedInstall = false;
+	}
+	Configure::write('Install.secured', !isset($_securedInstall));
+	Configure::write('Install.installed', file_exists(APP . 'Config' .DS. 'settings.yml'));
+	if (!Configure::read('Install.installed') || !Configure::read('Install.secured')) {
+		CakePlugin::load('Install', array('routes' => true));
+	}

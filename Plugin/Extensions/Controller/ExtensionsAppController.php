@@ -2,4 +2,3 @@
 class ExtensionsAppController extends AppController {
 
 }
-?>

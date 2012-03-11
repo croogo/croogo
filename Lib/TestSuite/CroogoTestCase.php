@@ -14,9 +14,9 @@
  */
 class CroogoTestCase extends CakeTestCase {
 
-    public function setUp() {
-        parent::setUp();
-        Configure::write('Acl.database', 'test');
-    }
+	public function setUp() {
+		parent::setUp();
+		Configure::write('Acl.database', 'test');
+	}
 
 }

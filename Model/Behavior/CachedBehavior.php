@@ -19,13 +19,14 @@ class CachedBehavior extends ModelBehavior {
  * @param array  $config
  * @return void
  */
-    public function setup(&$model, $config = array()) {
-        if (is_string($config)) {
-            $config = array($config);
-        }
+	public function setup(&$model, $config = array()) {
+		if (is_string($config)) {
+			$config = array($config);
+		}
 
-        $this->settings[$model->alias] = $config;
-    }
+		$this->settings[$model->alias] = $config;
+	}
+
 /**
  * afterSave callback
  *
@@ -33,33 +34,35 @@ class CachedBehavior extends ModelBehavior {
  * @param boolean $created
  * @return void
  */
-    public function afterSave(&$model, $created) {
-        $this->_deleteCachedFiles($model);
-    }
+	public function afterSave(&$model, $created) {
+		$this->_deleteCachedFiles($model);
+	}
+
 /**
  * afterDelete callback
  *
  * @param object $model
  * @return void
  */
-    public function afterDelete(&$model) {
-        $this->_deleteCachedFiles($model);
-    }
+	public function afterDelete(&$model) {
+		$this->_deleteCachedFiles($model);
+	}
+
 /**
  * Delete cache files matching prefix
  *
  * @param object $model
  * @return void
  */
-    protected function _deleteCachedFiles(&$model) {
-        foreach ($this->settings[$model->alias]['prefix'] AS $prefix) {
-            $files = glob(TMP.'cache'.DS.'queries'.DS.'cake_'.$prefix.'*');
-            if (is_array($files) && count($files) > 0) {
-                foreach ($files AS $file) {
-                    unlink($file);
-                }
-            }
-        }
-    }
+	protected function _deleteCachedFiles(&$model) {
+		foreach ($this->settings[$model->alias]['prefix'] AS $prefix) {
+			$files = glob(TMP.'cache'.DS.'queries'.DS.'cake_'.$prefix.'*');
+			if (is_array($files) && count($files) > 0) {
+				foreach ($files AS $file) {
+					unlink($file);
+				}
+			}
+		}
+	}
 
 }

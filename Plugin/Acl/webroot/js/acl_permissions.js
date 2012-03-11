@@ -11,9 +11,9 @@ var AclPermissions = {};
  * @return void
  */
 AclPermissions.documentReady = function() {
-    AclPermissions.permissionToggle();
-    AclPermissions.tableToggle();
-    $('tr:has(div.controller)').addClass('controller-row');
+	AclPermissions.permissionToggle();
+	AclPermissions.tableToggle();
+	$('tr:has(div.controller)').addClass('controller-row');
 }
 
 /**
@@ -22,27 +22,27 @@ AclPermissions.documentReady = function() {
  * @return void
  */
 AclPermissions.permissionToggle = function() {
-    $('img.permission-toggle').unbind();
-    $('img.permission-toggle').click(function() {
-        var rel = $(this).attr('rel');
-        var rel_e = rel.split('-');
-        var acoId = rel_e[0];
-        var aroId = rel_e[1];
+	$('img.permission-toggle').unbind();
+	$('img.permission-toggle').click(function() {
+		var rel = $(this).attr('rel');
+		var rel_e = rel.split('-');
+		var acoId = rel_e[0];
+		var aroId = rel_e[1];
 
-        // show loader
-        $(this).attr('src', Croogo.basePath+'img/ajax/circle_ball.gif');
+		// show loader
+		$(this).attr('src', Croogo.basePath+'img/ajax/circle_ball.gif');
 
-        // prepare loadUrl
-        var loadUrl = Croogo.basePath+'admin/acl/acl_permissions/toggle/';
-        loadUrl    += acoId+'/'+aroId+'/';
+		// prepare loadUrl
+		var loadUrl = Croogo.basePath+'admin/acl/acl_permissions/toggle/';
+		loadUrl    += acoId+'/'+aroId+'/';
 
-        // now load it
-        $(this).parent().load(loadUrl, function() {
-            AclPermissions.permissionToggle();
-        });
+		// now load it
+		$(this).parent().load(loadUrl, function() {
+			AclPermissions.permissionToggle();
+		});
 
-        return false;
-    });
+		return false;
+	});
 }
 
 /**
@@ -51,16 +51,16 @@ AclPermissions.permissionToggle = function() {
  * @return void
  */
 AclPermissions.tableToggle = function() {
-    $('table div.controller').click(function() {
-        $('.controller-'+$(this).text()).toggle();
-        if ($(this).hasClass('expand')) {
-            $(this).removeClass('expand');
-            $(this).addClass('collapse');
-        } else {
-            $(this).removeClass('collapse');
-            $(this).addClass('expand');
-        }
-    });
+	$('table div.controller').click(function() {
+		$('.controller-'+$(this).text()).toggle();
+		if ($(this).hasClass('expand')) {
+			$(this).removeClass('expand');
+			$(this).addClass('collapse');
+		} else {
+			$(this).removeClass('collapse');
+			$(this).addClass('expand');
+		}
+	});
 }
 
 /**
@@ -69,7 +69,7 @@ AclPermissions.tableToggle = function() {
  * @return void
  */
 $(document).ready(function() {
-    if (Croogo.params.controller == 'acl_permissions') {
-        AclPermissions.documentReady();
-    }
+	if (Croogo.params.controller == 'acl_permissions') {
+		AclPermissions.documentReady();
+	}
 });

@@ -23,7 +23,6 @@ class CustomHelper extends Helper {
  * @var array
  * @access public
  */
-    public $helpers = array();
+	public $helpers = array();
 
 }
-?>

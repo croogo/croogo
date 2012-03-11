@@ -19,13 +19,14 @@ class MetaBehavior extends ModelBehavior {
  * @param array  $config
  * @return void
  */
-    public function setup(&$model, $config = array()) {
-        if (is_string($config)) {
-            $config = array($config);
-        }
+	public function setup(&$model, $config = array()) {
+		if (is_string($config)) {
+			$config = array($config);
+		}
 
-        $this->settings[$model->alias] = $config;
-    }
+		$this->settings[$model->alias] = $config;
+	}
+
 /**
  * afterFind callback
  *
@@ -34,25 +35,26 @@ class MetaBehavior extends ModelBehavior {
  * @param boolean $primary
  * @return array
  */
-    public function afterFind(&$model, $results = array(), $primary = false) {
-        if ($primary && isset($results[0][$model->alias])) {
-            foreach ($results AS $i => $result) {
-                $customFields = array();
-                if (isset($result['Meta']) && count($result['Meta']) > 0) {
-                    $customFields = Set::combine($result, 'Meta.{n}.key', 'Meta.{n}.value');
-                }
-                $results[$i]['CustomFields'] = $customFields;
-            }
-        } elseif (isset($results[$model->alias])) {
-            $customFields = array();
-            if (isset($results['Meta']) && count($results['Meta']) > 0) {
-                $customFields = Set::combine($results, 'Meta.{n}.key', 'Meta.{n}.value');
-            }
-            $results['CustomFields'] = $customFields;
-        }
+	public function afterFind(&$model, $results = array(), $primary = false) {
+		if ($primary && isset($results[0][$model->alias])) {
+			foreach ($results AS $i => $result) {
+				$customFields = array();
+				if (isset($result['Meta']) && count($result['Meta']) > 0) {
+					$customFields = Set::combine($result, 'Meta.{n}.key', 'Meta.{n}.value');
+				}
+				$results[$i]['CustomFields'] = $customFields;
+			}
+		} elseif (isset($results[$model->alias])) {
+			$customFields = array();
+			if (isset($results['Meta']) && count($results['Meta']) > 0) {
+				$customFields = Set::combine($results, 'Meta.{n}.key', 'Meta.{n}.value');
+			}
+			$results['CustomFields'] = $customFields;
+		}
 
-        return $results;
-    }
+		return $results;
+	}
+
 /**
  * Prepare data
  *
@@ -60,9 +62,10 @@ class MetaBehavior extends ModelBehavior {
  * @param array  $data
  * @return array
  */
-    public function prepareData(&$model, $data) {
-        return $this->_prepareMeta($data);
-    }
+	public function prepareData(&$model, $data) {
+		return $this->_prepareMeta($data);
+	}
+
 /**
  * Private method for MetaBehavior::prepareData()
  *
@@ -70,22 +73,23 @@ class MetaBehavior extends ModelBehavior {
  * @param array  $data
  * @return array
  */
-    protected function _prepareMeta($data) {
-        if (isset($data['Meta']) &&
-            is_array($data['Meta']) &&
-            count($data['Meta']) > 0 &&
-            !Set::numeric(array_keys($data['Meta']))) {
-            $meta = $data['Meta'];
-            $data['Meta'] = array();
-            $i = 0;
-            foreach ($meta AS $metaUuid => $metaArray) {
-                $data['Meta'][$i] = $metaArray;
-                $i++;
-            }
-        }
+	protected function _prepareMeta($data) {
+		if (isset($data['Meta']) &&
+			is_array($data['Meta']) &&
+			count($data['Meta']) > 0 &&
+			!Set::numeric(array_keys($data['Meta']))) {
+			$meta = $data['Meta'];
+			$data['Meta'] = array();
+			$i = 0;
+			foreach ($meta AS $metaUuid => $metaArray) {
+				$data['Meta'][$i] = $metaArray;
+				$i++;
+			}
+		}
 
-        return $data;
-    }
+		return $data;
+	}
+
 /**
  * Save with meta
  *
@@ -94,9 +98,9 @@ class MetaBehavior extends ModelBehavior {
  * @param array  $options
  * @return void
  */
-    public function saveWithMeta(&$model, $data, $options = array()) {
-        $data = $this->_prepareMeta($data);
-        return $model->saveAll($data, $options);
-    }
+	public function saveWithMeta(&$model, $data, $options = array()) {
+		$data = $this->_prepareMeta($data);
+		return $model->saveAll($data, $options);
+	}
 
 }

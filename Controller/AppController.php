@@ -23,49 +23,51 @@ class AppController extends Controller {
  * @var array
  * @access public
  */
-    public $components = array(
-        'Croogo',
-        'Security',
-        'Acl',
-        'Auth',
-        'Session',
-        'RequestHandler',
-    );
+	public $components = array(
+		'Croogo',
+		'Security',
+		'Acl',
+		'Auth',
+		'Session',
+		'RequestHandler',
+	);
+
 /**
  * Helpers
  *
  * @var array
  * @access public
  */
-    public $helpers = array(
-        'Html',
-        'Form',
-        'Session',
-        'Text',
-        'Js',
-        'Time',
-        'Layout',
-        'Custom',
-    );
+	public $helpers = array(
+		'Html',
+		'Form',
+		'Session',
+		'Text',
+		'Js',
+		'Time',
+		'Layout',
+		'Custom',
+	);
+
 /**
  * Models
  *
  * @var array
  * @access public
  */
-    public $uses = array(
-        'Block',
-        'Link',
-        'Setting',
-        'Node',
-    );
+	public $uses = array(
+		'Block',
+		'Link',
+		'Setting',
+		'Node',
+	);
 
 /**
  * Pagination
  */
-    public $paginate = array(
-        'limit' => 10,
-        );
+	public $paginate = array(
+		'limit' => 10,
+		);
 
 /**
  * Cache pagination results
@@ -73,101 +75,120 @@ class AppController extends Controller {
  * @var boolean
  * @access public
  */
-    public $usePaginationCache = true;
+	public $usePaginationCache = true;
+
 /**
  * View
  *
  * @var string
  * @access public
  */
-    public $viewClass = 'Theme';
+	public $viewClass = 'Theme';
+
 /**
  * Theme
  *
  * @var string
  * @access public
  */
-    public $theme;
+	public $theme;
+
 /**
  * Constructor
  *
  * @access public
  */
-    public function __construct($request = null, $response = null) {
-        Croogo::applyHookProperties('Hook.controller_properties');
-        parent::__construct($request, $response);
-        if ($this->name == 'CakeError') {
-            $this->_set(Router::getPaths());
-            $this->request->params = Router::getParams();
-            $this->constructClasses();
-            $this->startupProcess();
-        }
-    }
+	public function __construct($request = null, $response = null) {
+		Croogo::applyHookProperties('Hook.controller_properties');
+		parent::__construct($request, $response);
+		if ($this->name == 'CakeError') {
+			$this->_set(Router::getPaths());
+			$this->request->params = Router::getParams();
+			$this->constructClasses();
+			$this->startupProcess();
+		}
+	}
+
 /**
  * beforeFilter
  *
  * @return void
  */
-    public function beforeFilter() {
-        parent::beforeFilter();
-        $aclFilterComponent = Configure::read('Site.acl_plugin') . 'Filter';
-        if (empty($this->{$aclFilterComponent})) {
-            throw new MissingComponentException(array('class' => $aclFilterComponent));
-        }
-        $this->{$aclFilterComponent}->auth();
-        $this->RequestHandler->setContent('json', 'text/x-json');
-        $this->Security->blackHoleCallback = '__securityError';
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$aclFilterComponent = Configure::read('Site.acl_plugin') . 'Filter';
+		if (empty($this->{$aclFilterComponent})) {
+			throw new MissingComponentException(array('class' => $aclFilterComponent));
+		}
+		$this->{$aclFilterComponent}->auth();
+		$this->RequestHandler->setContent('json', 'text/x-json');
+		$this->Security->blackHoleCallback = '__securityError';
 
-        if (isset($this->request->params['admin']) && $this->name != 'CakeError') {
-            $this->layout = 'admin';
-        }
+		if (isset($this->request->params['admin']) && $this->name != 'CakeError') {
+			$this->layout = 'admin';
+		}
 
-        if ($this->RequestHandler->isAjax()) {
-            $this->layout = 'ajax';
-        }
+		if ($this->RequestHandler->isAjax()) {
+			$this->layout = 'ajax';
+		}
 
-        if (Configure::read('Site.theme') && !isset($this->request->params['admin'])) {
-            $this->theme = Configure::read('Site.theme');
-        } elseif (Configure::read('Site.admin_theme') && isset($this->request->params['admin'])) {
-            $this->theme = Configure::read('Site.admin_theme');
-        }
+		if (Configure::read('Site.theme') && !isset($this->request->params['admin'])) {
+			$this->theme = Configure::read('Site.theme');
+		} elseif (Configure::read('Site.admin_theme') && isset($this->request->params['admin'])) {
+			$this->theme = Configure::read('Site.admin_theme');
+		}
 
-        if (!isset($this->request->params['admin']) && 
-            Configure::read('Site.status') == 0) {
-            $this->layout = 'maintenance';
-            $this->response->statusCode(503);
-            $this->set('title_for_layout', __('Site down for maintenance'));
-            $this->render('../Elements/blank');
-        }
+		if (!isset($this->request->params['admin']) &&
+			Configure::read('Site.status') == 0) {
+			$this->layout = 'maintenance';
+			$this->response->statusCode(503);
+			$this->set('title_for_layout', __('Site down for maintenance'));
+			$this->render('../Elements/blank');
+		}
 
-        if (isset($this->request->params['locale'])) {
-            Configure::write('Config.language', $this->request->params['locale']);
-        }
-    }
+		if (isset($this->request->params['locale'])) {
+			Configure::write('Config.language', $this->request->params['locale']);
+		}
+	}
+
+/**
+ * afterFilter callback
+ * Disable debug mode on JSON pages to prevent the script execution time to be appended to the page
+ *
+ * @see http://croogo.lighthouseapp.com/projects/32818/tickets/216
+ * @return void
+ */
+	public function afterFilter() {
+		parent::afterFilter();
+		if (!empty($this->params['url']['ext']) && $this->params['url']['ext'] === 'json') {
+			Configure::write('debug', 0);
+		}
+	}
+
 /**
  * blackHoleCallback for SecurityComponent
  *
  * @return void
  */
-    public function __securityError($type) {
-        switch ($type) {
-        case 'auth':
-            break;
-        case 'csrf':
-            break;
-        case 'get':
-            break;
-        case 'post':
-            break;
-        case 'put':
-            break;
-        case 'delete':
-            break;
-        default:
-            break;
-        }
-        $this->set(compact('type'));
-        $this->render('../Errors/security');
-    }
+	public function __securityError($type) {
+		switch ($type) {
+		case 'auth':
+			break;
+		case 'csrf':
+			break;
+		case 'get':
+			break;
+		case 'post':
+			break;
+		case 'put':
+			break;
+		case 'delete':
+			break;
+		default:
+			break;
+		}
+		$this->set(compact('type'));
+		$this->render('../Errors/security');
+	}
 
 }

@@ -2,4 +2,3 @@
 class ExampleAppController extends AppController {
 
 }
-?>

@@ -3,10 +3,10 @@
  * CroogoNav
  *
  * @package  Croogo
- * @since  1.4
+ * @since    1.4
  * @author   Rachman Chavik <rchavik@xintesa.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link	 http://www.croogo.org
+ * @link     http://www.croogo.org
  */
 class CroogoNav extends Object {
 
