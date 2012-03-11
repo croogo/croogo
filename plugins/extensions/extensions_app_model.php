@@ -2,4 +2,3 @@
 class ExtensionsAppModel extends AppModel {
 
 }
-?>

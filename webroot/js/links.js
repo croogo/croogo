@@ -11,10 +11,10 @@ var Links = {};
  * @return void
  */
 Links.slug = function() {
-    $("#LinkTitle").slug({
-        slug: 'class',
-        hide: false
-    });
+	$("#LinkTitle").slug({
+		slug: 'class',
+		hide: false
+	});
 }
 
 /**
@@ -23,9 +23,9 @@ Links.slug = function() {
  * @return void
  */
 $(document).ready(function() {
-    if (Croogo.params.controller == 'links') {
-        if (['admin_add', 'admin_edit'].indexOf(Croogo.params.action) >= 0) {
-            Links.slug();
-        }
-    }
+	if (Croogo.params.controller == 'links') {
+		if (['admin_add', 'admin_edit'].indexOf(Croogo.params.action) >= 0) {
+			Links.slug();
+		}
+	}
 });

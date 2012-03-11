@@ -18,49 +18,51 @@ class Link extends AppModel {
  * @var string
  * @access public
  */
-    public $name = 'Link';
+	public $name = 'Link';
+
 /**
  * Behaviors used by the Model
  *
  * @var array
  * @access public
  */
-    public $actsAs = array(
-        'Encoder',
-        'Tree',
-        'Cached' => array(
-            'prefix' => array(
-                'link_',
-                'menu_',
-                'croogo_menu_',
-            ),
-        ),
-    );
+	public $actsAs = array(
+		'Encoder',
+		'Tree',
+		'Cached' => array(
+			'prefix' => array(
+				'link_',
+				'menu_',
+				'croogo_menu_',
+			),
+		),
+	);
+
 /**
  * Validation
  *
  * @var array
  * @access public
  */
-    public $validate = array(
-        'title' => array(
-            'rule' => array('minLength', 1),
-            'message' => 'Title cannot be empty.',
-        ),
-        'link' => array(
-            'rule' => array('minLength', 1),
-            'message' => 'Link cannot be empty.',
-        ),
-    );
+	public $validate = array(
+		'title' => array(
+			'rule' => array('minLength', 1),
+			'message' => 'Title cannot be empty.',
+		),
+		'link' => array(
+			'rule' => array('minLength', 1),
+			'message' => 'Link cannot be empty.',
+		),
+	);
+
 /**
  * Model associations: belongsTo
  *
  * @var array
  * @access public
  */
-    public $belongsTo = array(
-        'Menu' => array('counterCache' => true)
-    );
+	public $belongsTo = array(
+		'Menu' => array('counterCache' => true)
+	);
 
 }
-?>

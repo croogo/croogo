@@ -9,7 +9,7 @@
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
- * @link     http://www.croogo.org
+ * @link	 http://www.croogo.org
  */
 class LayoutHelper extends AppHelper {
 /**
@@ -18,19 +18,21 @@ class LayoutHelper extends AppHelper {
  * @var array
  * @access public
  */
-    public $helpers = array(
-        'Html',
-        'Form',
-        'Session',
-        'Js',
-    );
+	public $helpers = array(
+		'Html',
+		'Form',
+		'Session',
+		'Js',
+	);
+
 /**
  * Current Node
  *
  * @var array
  * @access public
  */
-    public $node = null;
+	public $node = null;
+
 /**
  * Core helpers
  *
@@ -40,41 +42,43 @@ class LayoutHelper extends AppHelper {
  * @var array
  * @access public
  */
-    public $coreHelpers = array(
-        // CakePHP
-        'Ajax',
-        'Cache',
-        'Form',
-        'Html',
-        'Javascript',
-        'JqueryEngine',
-        'Js',
-        'MootoolsEngine',
-        'Number',
-        'Paginator',
-        'PrototypeEngine',
-        'Rss',
-        'Session',
-        'Text',
-        'Time',
-        'Xml',
+	public $coreHelpers = array(
+		// CakePHP
+		'Ajax',
+		'Cache',
+		'Form',
+		'Html',
+		'Javascript',
+		'JqueryEngine',
+		'Js',
+		'MootoolsEngine',
+		'Number',
+		'Paginator',
+		'PrototypeEngine',
+		'Rss',
+		'Session',
+		'Text',
+		'Time',
+		'Xml',
 
-        // Croogo
-        'Filemanager',
-        'Image',
-        'Layout',
-        'Recaptcha',
-    );
+		// Croogo
+		'Filemanager',
+		'Image',
+		'Layout',
+		'Recaptcha',
+	);
+
 /**
  * Constructor
  *
  * @param array $options options
  * @access public
  */
-    public function __construct($options = array()) {
-        $this->View =& ClassRegistry::getObject('view');
-        return parent::__construct($options);
-    }
+	public function __construct($options = array()) {
+		$this->View =& ClassRegistry::getObject('view');
+		return parent::__construct($options);
+	}
+
 /**
  * Javascript variables
  *
@@ -86,23 +90,24 @@ class LayoutHelper extends AppHelper {
  *
  * @return string
  */
-    public function js() {
-        $croogo = array();
-        if (isset($this->params['locale'])) {
-            $croogo['basePath'] = Router::url('/'.$this->params['locale'].'/');
-        } else {
-            $croogo['basePath'] = Router::url('/');
-        }
-        $croogo['params'] = array(
-            'controller' => $this->params['controller'],
-            'action' => $this->params['action'],
-            'named' => $this->params['named'],
-        );
-        if (is_array(Configure::read('Js'))) {
-            $croogo = Set::merge($croogo, Configure::read('Js'));
-        }
-        return $this->Html->scriptBlock('var Croogo = ' . $this->Js->object($croogo) . ';');
-    }
+	public function js() {
+		$croogo = array();
+		if (isset($this->params['locale'])) {
+			$croogo['basePath'] = Router::url('/'.$this->params['locale'].'/');
+		} else {
+			$croogo['basePath'] = Router::url('/');
+		}
+		$croogo['params'] = array(
+			'controller' => $this->params['controller'],
+			'action' => $this->params['action'],
+			'named' => $this->params['named'],
+		);
+		if (is_array(Configure::read('Js'))) {
+			$croogo = Set::merge($croogo, Configure::read('Js'));
+		}
+		return $this->Html->scriptBlock('var Croogo = ' . $this->Js->object($croogo) . ';');
+	}
+
 /**
  * Status
  *
@@ -111,61 +116,64 @@ class LayoutHelper extends AppHelper {
  * @param integer $value 0 or 1
  * @return string formatted img tag
  */
-    public function status($value) {
-        if ($value == 1) {
-            $output = $this->Html->image('/img/icons/tick.png');
-        } else {
-            $output = $this->Html->image('/img/icons/cross.png');
-        }
-        return $output;
-    }
+	public function status($value) {
+		if ($value == 1) {
+			$output = $this->Html->image('/img/icons/tick.png');
+		} else {
+			$output = $this->Html->image('/img/icons/cross.png');
+		}
+		return $output;
+	}
+
 /**
  * Show flash message
  *
  * @return string
  */
-    public function sessionFlash() {
-        $messages = $this->Session->read('Message');
-        $output = '';
-        if( is_array($messages) ) {
-            foreach(array_keys($messages) AS $key) {
-                $output .= $this->Session->flash($key);
-            }
-        }
-        return $output;
-    }
+	public function sessionFlash() {
+		$messages = $this->Session->read('Message');
+		$output = '';
+		if( is_array($messages) ) {
+			foreach(array_keys($messages) AS $key) {
+				$output .= $this->Session->flash($key);
+			}
+		}
+		return $output;
+	}
+
 /**
  * Meta tags
  *
  * @return string
  */
-    public function meta($metaForLayout = array()) {
-        $_metaForLayout = array();
-        if (is_array(Configure::read('Meta'))) {
-            $_metaForLayout = Configure::read('Meta');
-        }
+	public function meta($metaForLayout = array()) {
+		$_metaForLayout = array();
+		if (is_array(Configure::read('Meta'))) {
+			$_metaForLayout = Configure::read('Meta');
+		}
 
-        if (count($metaForLayout) == 0 &&
-            isset($this->View->viewVars['node']['CustomFields']) &&
-            count($this->View->viewVars['node']['CustomFields']) > 0) {
-            $metaForLayout = array();
-            foreach ($this->View->viewVars['node']['CustomFields'] AS $key => $value) {
-                if (strstr($key, 'meta_')) {
-                    $key = str_replace('meta_', '', $key);
-                    $metaForLayout[$key] = $value;
-                }
-            }
-        }
+		if (count($metaForLayout) == 0 &&
+			isset($this->View->viewVars['node']['CustomFields']) &&
+			count($this->View->viewVars['node']['CustomFields']) > 0) {
+			$metaForLayout = array();
+			foreach ($this->View->viewVars['node']['CustomFields'] AS $key => $value) {
+				if (strstr($key, 'meta_')) {
+					$key = str_replace('meta_', '', $key);
+					$metaForLayout[$key] = $value;
+				}
+			}
+		}
 
-        $metaForLayout = array_merge($_metaForLayout, $metaForLayout);
+		$metaForLayout = array_merge($_metaForLayout, $metaForLayout);
 
-        $output = '';
-        foreach ($metaForLayout AS $name => $content) {
-            $output .= '<meta name="' . $name . '" content="' . $content . '" />';
-        }
+		$output = '';
+		foreach ($metaForLayout AS $name => $content) {
+			$output .= '<meta name="' . $name . '" content="' . $content . '" />';
+		}
 
-        return $output;
-    }
+		return $output;
+	}
+
 /**
  * isLoggedIn
  *
@@ -173,13 +181,14 @@ class LayoutHelper extends AppHelper {
  *
  * @return boolean
  */
-    public function isLoggedIn() {
-        if ($this->Session->check('Auth.User.id')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+	public function isLoggedIn() {
+		if ($this->Session->check('Auth.User.id')) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 /**
  * Feed
  *
@@ -188,43 +197,45 @@ class LayoutHelper extends AppHelper {
  * @param boolean $returnUrl if true, only the URL will be returned
  * @return string
  */
-    public function feed($returnUrl = false) {
-        if (Configure::read('Site.feed_url')) {
-            $url = Configure::read('Site.feed_url');
-        } else {
-            /*$url = Router::url(array(
-                'controller' => 'nodes',
-                'action' => 'index',
-                'type' => 'blog',
-                'ext' => 'rss',
-            ));*/
-            $url = '/nodes/promoted.rss';
-        }
+	public function feed($returnUrl = false) {
+		if (Configure::read('Site.feed_url')) {
+			$url = Configure::read('Site.feed_url');
+		} else {
+			/*$url = Router::url(array(
+				'controller' => 'nodes',
+				'action' => 'index',
+				'type' => 'blog',
+				'ext' => 'rss',
+			));*/
+			$url = '/nodes/promoted.rss';
+		}
 
-        if ($returnUrl) {
-            $output = $url;
-        } else {
-            $url = Router::url($url);
-            $output = '<link href="' . $url . '" type="application/rss+xml" rel="alternate" title="RSS 2.0" />';
-            return $output;
-        }
+		if ($returnUrl) {
+			$output = $url;
+		} else {
+			$url = Router::url($url);
+			$output = '<link href="' . $url . '" type="application/rss+xml" rel="alternate" title="RSS 2.0" />';
+			return $output;
+		}
 
-        return $output;
-    }
+		return $output;
+	}
+
 /**
  * Get Role ID
  *
  * @return integer
  */
-    public function getRoleId() {
-        if ($this->isLoggedIn()) {
-            $roleId = $this->Session->read('Auth.User.role_id');
-        } else {
-            // Public
-            $roleId = 3;
-        }
-        return $roleId;
-    }
+	public function getRoleId() {
+		if ($this->isLoggedIn()) {
+			$roleId = $this->Session->read('Auth.User.role_id');
+		} else {
+			// Public
+			$roleId = 3;
+		}
+		return $roleId;
+	}
+
 /**
  * Region is empty
  *
@@ -233,14 +244,15 @@ class LayoutHelper extends AppHelper {
  * @param string $regionAlias Region alias
  * @return boolean
  */
-    public function regionIsEmpty($regionAlias) {
-        if (isset($this->View->viewVars['blocks_for_layout'][$regionAlias]) &&
-            count($this->View->viewVars['blocks_for_layout'][$regionAlias]) > 0) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+	public function regionIsEmpty($regionAlias) {
+		if (isset($this->View->viewVars['blocks_for_layout'][$regionAlias]) &&
+			count($this->View->viewVars['blocks_for_layout'][$regionAlias]) > 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 /**
  * Show Blocks for a particular Region
  *
@@ -248,44 +260,45 @@ class LayoutHelper extends AppHelper {
  * @param array $options
  * @return string
  */
-    public function blocks($regionAlias, $options = array()) {
-        $_options = array();
-        $options = array_merge($_options, $options);
+	public function blocks($regionAlias, $options = array()) {
+		$_options = array();
+		$options = array_merge($_options, $options);
 
-        $output = '';
-        if (!$this->regionIsEmpty($regionAlias)) {
-            $blocks = $this->View->viewVars['blocks_for_layout'][$regionAlias];
-            foreach ($blocks AS $block) {
-                $plugin = false;
-                if ($block['Block']['element'] != null) {
-                    if (strstr($block['Block']['element'], '.')) {
-                        $plugin_element = explode('.', $block['Block']['element']);
-                        $plugin  = $plugin_element[0];
-                        $element = $plugin_element[1];
-                    } else {
-                        $element = $block['Block']['element'];
-                    }
-                } else {
-                    $element = 'block';
-                }
-                if ($plugin) {
-                    $blockOutput = $this->View->element($element, array('block' => $block, 'plugin' => $plugin));
-                } else {
-                    $blockOutput = $this->View->element($element, array('block' => $block));
-                }
-                $enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
-                if ($element != 'block' && $enclosure) {
-                    $block['Block']['body'] = $blockOutput;
-                    $block['Block']['element'] = null;
-                    $output .= $this->View->element('block', array('block' => $block));
-                } else {
-                    $output .= $blockOutput;
-                }
-            }
-        }
+		$output = '';
+		if (!$this->regionIsEmpty($regionAlias)) {
+			$blocks = $this->View->viewVars['blocks_for_layout'][$regionAlias];
+			foreach ($blocks AS $block) {
+				$plugin = false;
+				if ($block['Block']['element'] != null) {
+					if (strstr($block['Block']['element'], '.')) {
+						$plugin_element = explode('.', $block['Block']['element']);
+						$plugin  = $plugin_element[0];
+						$element = $plugin_element[1];
+					} else {
+						$element = $block['Block']['element'];
+					}
+				} else {
+					$element = 'block';
+				}
+				if ($plugin) {
+					$blockOutput = $this->View->element($element, array('block' => $block, 'plugin' => $plugin));
+				} else {
+					$blockOutput = $this->View->element($element, array('block' => $block));
+				}
+				$enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
+				if ($element != 'block' && $enclosure) {
+					$block['Block']['body'] = $blockOutput;
+					$block['Block']['element'] = null;
+					$output .= $this->View->element('block', array('block' => $block));
+				} else {
+					$output .= $blockOutput;
+				}
+			}
+		}
 
-        return $output;
-    }
+		return $output;
+	}
+
 /**
  * Show Menu by Alias
  *
@@ -293,27 +306,28 @@ class LayoutHelper extends AppHelper {
  * @param array $options (optional)
  * @return string
  */
-    public function menu($menuAlias, $options = array()) {
-        $_options = array(
-            'tag' => 'ul',
-            'tagAttributes' => array(),
-            'selected' => 'selected',
-            'dropdown' => false,
-            'dropdownClass' => 'sf-menu',
-            'element' => 'menu',
-        );
-        $options = array_merge($_options, $options);
+	public function menu($menuAlias, $options = array()) {
+		$_options = array(
+			'tag' => 'ul',
+			'tagAttributes' => array(),
+			'selected' => 'selected',
+			'dropdown' => false,
+			'dropdownClass' => 'sf-menu',
+			'element' => 'menu',
+		);
+		$options = array_merge($_options, $options);
 
-        if (!isset($this->View->viewVars['menus_for_layout'][$menuAlias])) {
-            return false;
-        }
-        $menu = $this->View->viewVars['menus_for_layout'][$menuAlias];
-        $output = $this->View->element($options['element'], array(
-            'menu' => $menu,
-            'options' => $options,
-        ));
-        return $output;
-    }
+		if (!isset($this->View->viewVars['menus_for_layout'][$menuAlias])) {
+			return false;
+		}
+		$menu = $this->View->viewVars['menus_for_layout'][$menuAlias];
+		$output = $this->View->element($options['element'], array(
+			'menu' => $menu,
+			'options' => $options,
+		));
+		return $output;
+	}
+
 /**
  * Nested Links
  *
@@ -322,87 +336,89 @@ class LayoutHelper extends AppHelper {
  * @param integer $depth depth level
  * @return string
  */
-    public function nestedLinks($links, $options = array(), $depth = 1) {
-        $_options = array();
-        $options = array_merge($_options, $options);
+	public function nestedLinks($links, $options = array(), $depth = 1) {
+		$_options = array();
+		$options = array_merge($_options, $options);
 
-        $output = '';
-        foreach ($links AS $link) {
-            $linkAttr = array(
-                'id' => 'link-' . $link['Link']['id'],
-                'rel' => $link['Link']['rel'],
-                'target' => $link['Link']['target'],
-                'title' => $link['Link']['description'],
-                'class' => $link['Link']['class'],
-            );
+		$output = '';
+		foreach ($links AS $link) {
+			$linkAttr = array(
+				'id' => 'link-' . $link['Link']['id'],
+				'rel' => $link['Link']['rel'],
+				'target' => $link['Link']['target'],
+				'title' => $link['Link']['description'],
+				'class' => $link['Link']['class'],
+			);
 
-            foreach ($linkAttr AS $attrKey => $attrValue) {
-                if ($attrValue == null) {
-                    unset($linkAttr[$attrKey]);
-                }
-            }
+			foreach ($linkAttr AS $attrKey => $attrValue) {
+				if ($attrValue == null) {
+					unset($linkAttr[$attrKey]);
+				}
+			}
 
-            // if link is in the format: controller:contacts/action:view
-            if (strstr($link['Link']['link'], 'controller:')) {
-                $link['Link']['link'] = $this->linkStringToArray($link['Link']['link']);
-            }
+			// if link is in the format: controller:contacts/action:view
+			if (strstr($link['Link']['link'], 'controller:')) {
+				$link['Link']['link'] = $this->linkStringToArray($link['Link']['link']);
+			}
 
-            // Remove locale part before comparing links
-            if (!empty($this->params['locale'])) {
-                $currentUrl = substr($this->params['url']['url'], strlen($this->params['locale']));
-            } else {
-                $currentUrl = $this->params['url']['url'];
-            }
+			// Remove locale part before comparing links
+			if (!empty($this->params['locale'])) {
+				$currentUrl = substr($this->params['url']['url'], strlen($this->params['locale']));
+			} else {
+				$currentUrl = $this->params['url']['url'];
+			}
 
-            if (Router::url($link['Link']['link']) == Router::url('/' . $currentUrl)) {
-                if (!isset($linkAttr['class'])) {
-                    $linkAttr['class'] = '';
-                }
-                $linkAttr['class'] .= ' ' . $options['selected'];
-            }
+			if (Router::url($link['Link']['link']) == Router::url('/' . $currentUrl)) {
+				if (!isset($linkAttr['class'])) {
+					$linkAttr['class'] = '';
+				}
+				$linkAttr['class'] .= ' ' . $options['selected'];
+			}
 
-            $linkOutput = $this->Html->link($link['Link']['title'], $link['Link']['link'], $linkAttr);
-            if (isset($link['children']) && count($link['children']) > 0) {
-                $linkOutput .= $this->nestedLinks($link['children'], $options, $depth + 1);
-            }
-            $linkOutput = $this->Html->tag('li', $linkOutput);
-            $output .= $linkOutput;
-        }
-        if ($output != null) {
-            $tagAttr = $options['tagAttributes'];
-            if ($options['dropdown'] && $depth == 1) {
-                $tagAttr['class'] = $options['dropdownClass'];
-            }
-            $output = $this->Html->tag($options['tag'], $output, $tagAttr);
-        }
+			$linkOutput = $this->Html->link($link['Link']['title'], $link['Link']['link'], $linkAttr);
+			if (isset($link['children']) && count($link['children']) > 0) {
+				$linkOutput .= $this->nestedLinks($link['children'], $options, $depth + 1);
+			}
+			$linkOutput = $this->Html->tag('li', $linkOutput);
+			$output .= $linkOutput;
+		}
+		if ($output != null) {
+			$tagAttr = $options['tagAttributes'];
+			if ($options['dropdown'] && $depth == 1) {
+				$tagAttr['class'] = $options['dropdownClass'];
+			}
+			$output = $this->Html->tag($options['tag'], $output, $tagAttr);
+		}
 
-        return $output;
-    }
+		return $output;
+	}
+
 /**
  * Converts strings like controller:abc/action:xyz/ to arrays
  *
  * @param string $link link
  * @return array
  */
-    public function linkStringToArray($link) {
-        $link = explode('/', $link);
-        $linkArr = array();
-        foreach ($link AS $linkElement) {
-            if ($linkElement != null) {
-                $linkElementE = explode(':', $linkElement);
-                if (isset($linkElementE['1'])) {
-                    $linkArr[$linkElementE['0']] = $linkElementE['1'];
-                } else {
-                    $linkArr[] = $linkElement;
-                }
-            }
-        }
-        if (!isset($linkArr['plugin'])) {
-            $linkArr['plugin'] = false;
-        }
+	public function linkStringToArray($link) {
+		$link = explode('/', $link);
+		$linkArr = array();
+		foreach ($link AS $linkElement) {
+			if ($linkElement != null) {
+				$linkElementE = explode(':', $linkElement);
+				if (isset($linkElementE['1'])) {
+					$linkArr[$linkElementE['0']] = $linkElementE['1'];
+				} else {
+					$linkArr[] = $linkElement;
+				}
+			}
+		}
+		if (!isset($linkArr['plugin'])) {
+			$linkArr['plugin'] = false;
+		}
 
-        return $linkArr;
-    }
+		return $linkArr;
+	}
+
 /**
  * Show Vocabulary by Alias
  *
@@ -410,29 +426,30 @@ class LayoutHelper extends AppHelper {
  * @param array $options (optional)
  * @return string
  */
-    public function vocabulary($vocabularyAlias, $options = array()) {
-        $_options = array(
-            'tag' => 'ul',
-            'tagAttributes' => array(),
-            'type' => null,
-            'link' => true,
-            'plugin' => false,
-            'controller' => 'nodes',
-            'action' => 'term',
-            'element' => 'vocabulary',
-        );
-        $options = array_merge($_options, $options);
+	public function vocabulary($vocabularyAlias, $options = array()) {
+		$_options = array(
+			'tag' => 'ul',
+			'tagAttributes' => array(),
+			'type' => null,
+			'link' => true,
+			'plugin' => false,
+			'controller' => 'nodes',
+			'action' => 'term',
+			'element' => 'vocabulary',
+		);
+		$options = array_merge($_options, $options);
 
-        $output = '';
-        if (isset($this->View->viewVars['vocabularies_for_layout'][$vocabularyAlias]['threaded'])) {
-            $vocabulary = $this->View->viewVars['vocabularies_for_layout'][$vocabularyAlias];
-            $output .= $this->View->element($options['element'], array(
-                'vocabulary' => $vocabulary,
-                'options' => $options,
-            ));
-        }
-        return $output;
-    }
+		$output = '';
+		if (isset($this->View->viewVars['vocabularies_for_layout'][$vocabularyAlias]['threaded'])) {
+			$vocabulary = $this->View->viewVars['vocabularies_for_layout'][$vocabularyAlias];
+			$output .= $this->View->element($options['element'], array(
+				'vocabulary' => $vocabulary,
+				'options' => $options,
+			));
+		}
+		return $output;
+	}
+
 /**
  * Nested Terms
  *
@@ -440,38 +457,39 @@ class LayoutHelper extends AppHelper {
  * @param array   $options
  * @param integer $depth
  */
-    public function nestedTerms($terms, $options, $depth = 1) {
-        $_options = array();
-        $options = array_merge($_options, $options);
+	public function nestedTerms($terms, $options, $depth = 1) {
+		$_options = array();
+		$options = array_merge($_options, $options);
 
-        $output = '';
-        foreach ($terms AS $term) {
-            if ($options['link']) {
-                $termAttr = array(
-                    'id' => 'term-' . $term['Term']['id'],
-                );
-                $termOutput = $this->Html->link($term['Term']['title'], array(
-                    'plugin' => $options['plugin'],
-                    'controller' => $options['controller'],
-                    'action' => $options['action'],
-                    'type' => $options['type'],
-                    'slug' => $term['Term']['slug'],
-                ), $termAttr);
-            } else {
-                $termOutput = $term['Term']['title'];
-            }
-            if (isset($term['children']) && count($term['children']) > 0) {
-                $termOutput .= $this->nestedTerms($term['children'], $options, $depth + 1);
-            }
-            $termOutput = $this->Html->tag('li', $termOutput);
-            $output .= $termOutput;
-        }
-        if ($output != null) {
-            $output = $this->Html->tag($options['tag'], $output, $options['tagAttributes']);
-        }
+		$output = '';
+		foreach ($terms AS $term) {
+			if ($options['link']) {
+				$termAttr = array(
+					'id' => 'term-' . $term['Term']['id'],
+				);
+				$termOutput = $this->Html->link($term['Term']['title'], array(
+					'plugin' => $options['plugin'],
+					'controller' => $options['controller'],
+					'action' => $options['action'],
+					'type' => $options['type'],
+					'slug' => $term['Term']['slug'],
+				), $termAttr);
+			} else {
+				$termOutput = $term['Term']['title'];
+			}
+			if (isset($term['children']) && count($term['children']) > 0) {
+				$termOutput .= $this->nestedTerms($term['children'], $options, $depth + 1);
+			}
+			$termOutput = $this->Html->tag('li', $termOutput);
+			$output .= $termOutput;
+		}
+		if ($output != null) {
+			$output = $this->Html->tag($options['tag'], $output, $options['tagAttributes']);
+		}
 
-        return $output;
-    }
+		return $output;
+	}
+
 /**
  * Show nodes list
  *
@@ -479,27 +497,28 @@ class LayoutHelper extends AppHelper {
  * @param array $options (optional)
  * @return string
  */
-    public function nodeList($alias, $options = array()) {
-        $_options = array(
-            'link' => true,
-            'plugin' => false,
-            'controller' => 'nodes',
-            'action' => 'view',
-            'element' => 'node_list',
-        );
-        $options = array_merge($_options, $options);
+	public function nodeList($alias, $options = array()) {
+		$_options = array(
+			'link' => true,
+			'plugin' => false,
+			'controller' => 'nodes',
+			'action' => 'view',
+			'element' => 'node_list',
+		);
+		$options = array_merge($_options, $options);
 
-        $output = '';
-        if (isset($this->View->viewVars['nodes_for_layout'][$alias])) {
-            $nodes = $this->View->viewVars['nodes_for_layout'][$alias];
-            $output = $this->View->element($options['element'], array(
-                'alias' => $alias,
-                'nodesList' => $this->View->viewVars['nodes_for_layout'][$alias],
-                'options' => $options,
-            ));
-        }
-        return $output;
-    }
+		$output = '';
+		if (isset($this->View->viewVars['nodes_for_layout'][$alias])) {
+			$nodes = $this->View->viewVars['nodes_for_layout'][$alias];
+			$output = $this->View->element($options['element'], array(
+				'alias' => $alias,
+				'nodesList' => $this->View->viewVars['nodes_for_layout'][$alias],
+				'options' => $options,
+			));
+		}
+		return $output;
+	}
+
 /**
  * Filter content
  *
@@ -508,13 +527,14 @@ class LayoutHelper extends AppHelper {
  * @param string $content content
  * @return string
  */
-    public function filter($content) {
-        $content = $this->filterElements($content);
-        $content = $this->filterMenus($content);
-        $content = $this->filterVocabularies($content);
-        $content = $this->filterNodes($content);
-        return $content;
-    }
+	public function filter($content) {
+		$content = $this->filterElements($content);
+		$content = $this->filterMenus($content);
+		$content = $this->filterVocabularies($content);
+		$content = $this->filterNodes($content);
+		return $content;
+	}
+
 /**
  * Filter content for elements
  *
@@ -524,23 +544,24 @@ class LayoutHelper extends AppHelper {
  * @param string $content
  * @return string
  */
-    public function filterElements($content) {
-        preg_match_all('/\[(element|e):([A-Za-z0-9_\-\/]*)(.*?)\]/i', $content, $tagMatches);
-        for ($i=0; $i < count($tagMatches[1]); $i++) {
-            $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))*.)[\'"]?/i';
-            preg_match_all($regex, $tagMatches[3][$i], $attributes);
-            $element = $tagMatches[2][$i];
-            $options = array();
-            for ($j=0; $j < count($attributes[0]); $j++) {
-                $options[$attributes[1][$j]] = $attributes[2][$j];
-            }
-            if (!empty($this->View->viewVars['block'])) {
-                $options['block'] = $this->View->viewVars['block'];
-            }
-            $content = str_replace($tagMatches[0][$i], $this->View->element($element,$options), $content);
-        }
-        return $content;
-    }
+	public function filterElements($content) {
+		preg_match_all('/\[(element|e):([A-Za-z0-9_\-\/]*)(.*?)\]/i', $content, $tagMatches);
+		for ($i=0; $i < count($tagMatches[1]); $i++) {
+			$regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))*.)[\'"]?/i';
+			preg_match_all($regex, $tagMatches[3][$i], $attributes);
+			$element = $tagMatches[2][$i];
+			$options = array();
+			for ($j=0; $j < count($attributes[0]); $j++) {
+				$options[$attributes[1][$j]] = $attributes[2][$j];
+			}
+			if (!empty($this->View->viewVars['block'])) {
+				$options['block'] = $this->View->viewVars['block'];
+			}
+			$content = str_replace($tagMatches[0][$i], $this->View->element($element,$options), $content);
+		}
+		return $content;
+	}
+
 /**
  * Filter content for Menus
  *
@@ -549,20 +570,21 @@ class LayoutHelper extends AppHelper {
  * @param string $content
  * @return string
  */
-    public function filterMenus($content) {
-        preg_match_all('/\[(menu|m):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
-        for ($i=0; $i < count($tagMatches[1]); $i++) {
-            $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
-            preg_match_all($regex, $tagMatches[3][$i], $attributes);
-            $menuAlias = $tagMatches[2][$i];
-            $options = array();
-            for ($j=0; $j < count($attributes[0]); $j++) {
-                $options[$attributes[1][$j]] = $attributes[2][$j];
-            }
-            $content = str_replace($tagMatches[0][$i], $this->menu($menuAlias,$options), $content);
-        }
-        return $content;
-    }
+	public function filterMenus($content) {
+		preg_match_all('/\[(menu|m):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
+		for ($i=0; $i < count($tagMatches[1]); $i++) {
+			$regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
+			preg_match_all($regex, $tagMatches[3][$i], $attributes);
+			$menuAlias = $tagMatches[2][$i];
+			$options = array();
+			for ($j=0; $j < count($attributes[0]); $j++) {
+				$options[$attributes[1][$j]] = $attributes[2][$j];
+			}
+			$content = str_replace($tagMatches[0][$i], $this->menu($menuAlias,$options), $content);
+		}
+		return $content;
+	}
+
 /**
  * Filter content for Vocabularies
  *
@@ -571,20 +593,21 @@ class LayoutHelper extends AppHelper {
  * @param string $content
  * @return string
  */
-    public function filterVocabularies($content) {
-        preg_match_all('/\[(vocabulary|v):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
-        for ($i=0; $i < count($tagMatches[1]); $i++) {
-            $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
-            preg_match_all($regex, $tagMatches[3][$i], $attributes);
-            $vocabularyAlias = $tagMatches[2][$i];
-            $options = array();
-            for ($j=0; $j < count($attributes[0]); $j++) {
-                $options[$attributes[1][$j]] = $attributes[2][$j];
-            }
-            $content = str_replace($tagMatches[0][$i], $this->vocabulary($vocabularyAlias,$options), $content);
-        }
-        return $content;
-    }
+	public function filterVocabularies($content) {
+		preg_match_all('/\[(vocabulary|v):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
+		for ($i=0; $i < count($tagMatches[1]); $i++) {
+			$regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
+			preg_match_all($regex, $tagMatches[3][$i], $attributes);
+			$vocabularyAlias = $tagMatches[2][$i];
+			$options = array();
+			for ($j=0; $j < count($attributes[0]); $j++) {
+				$options[$attributes[1][$j]] = $attributes[2][$j];
+			}
+			$content = str_replace($tagMatches[0][$i], $this->vocabulary($vocabularyAlias,$options), $content);
+		}
+		return $content;
+	}
+
 /**
  * Filter content for Nodes
  *
@@ -593,20 +616,21 @@ class LayoutHelper extends AppHelper {
  * @param string $content
  * @return string
  */
-    public function filterNodes($content) {
-        preg_match_all('/\[(node|n):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
-        for ($i=0; $i < count($tagMatches[1]); $i++) {
-            $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
-            preg_match_all($regex, $tagMatches[3][$i], $attributes);
-            $alias = $tagMatches[2][$i];
-            $options = array();
-            for ($j=0; $j < count($attributes[0]); $j++) {
-                $options[$attributes[1][$j]] = $attributes[2][$j];
-            }
-            $content = str_replace($tagMatches[0][$i], $this->nodeList($alias,$options), $content);
-        }
-        return $content;
-    }
+	public function filterNodes($content) {
+		preg_match_all('/\[(node|n):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
+		for ($i=0; $i < count($tagMatches[1]); $i++) {
+			$regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
+			preg_match_all($regex, $tagMatches[3][$i], $attributes);
+			$alias = $tagMatches[2][$i];
+			$options = array();
+			for ($j=0; $j < count($attributes[0]); $j++) {
+				$options[$attributes[1][$j]] = $attributes[2][$j];
+			}
+			$content = str_replace($tagMatches[0][$i], $this->nodeList($alias,$options), $content);
+		}
+		return $content;
+	}
+
 /**
  * Meta field: with key/value fields
  *
@@ -616,38 +640,39 @@ class LayoutHelper extends AppHelper {
  * @param array $options (optional) options
  * @return string
  */
-    public function metaField($key = '', $value = null, $id = null, $options = array()) {
-        $_options = array(
-            'key'   => array(
-                'label'   => __('Key', true),
-                'value'   => $key,
-            ),
-            'value' => array(
-                'label'   => __('Value', true),
-                'value'   => $value,
-            ),
-        );
-        $options = Set::merge($_options, $options);
-        $uuid = String::uuid();
+	public function metaField($key = '', $value = null, $id = null, $options = array()) {
+		$_options = array(
+			'key'   => array(
+				'label'   => __('Key', true),
+				'value'   => $key,
+			),
+			'value' => array(
+				'label'   => __('Value', true),
+				'value'   => $value,
+			),
+		);
+		$options = Set::merge($_options, $options);
+		$uuid = String::uuid();
 
-        $fields  = '';
-        if ($id != null) {
-            $fields .= $this->Form->input('Meta.'.$uuid.'.id', array('type' => 'hidden', 'value' => $id));
-        }
-        $fields .= $this->Form->input('Meta.'.$uuid.'.key', $options['key']);
-        $fields .= $this->Form->input('Meta.'.$uuid.'.value', $options['value']);
-        $fields = $this->Html->tag('div', $fields, array('class' => 'fields'));
+		$fields  = '';
+		if ($id != null) {
+			$fields .= $this->Form->input('Meta.'.$uuid.'.id', array('type' => 'hidden', 'value' => $id));
+		}
+		$fields .= $this->Form->input('Meta.'.$uuid.'.key', $options['key']);
+		$fields .= $this->Form->input('Meta.'.$uuid.'.value', $options['value']);
+		$fields = $this->Html->tag('div', $fields, array('class' => 'fields'));
 
-        $actions = $this->Html->link(
+		$actions = $this->Html->link(
 			__('Remove', true),
 			is_null($id) ? '#' : array('plugin' => null, 'controller' => 'nodes', 'action' => 'delete_meta', $id),
 			array('class' => 'remove-meta', 'rel' => $id)
 		);
-        $actions = $this->Html->tag('div', $actions, array('class' => 'actions'));
+		$actions = $this->Html->tag('div', $actions, array('class' => 'actions'));
 
-        $output = $this->Html->tag('div', $actions . $fields, array('class' => 'meta'));
-        return $output;
-    }
+		$output = $this->Html->tag('div', $actions . $fields, array('class' => 'meta'));
+		return $output;
+	}
+
 /**
  * Show links under Actions column
  *
@@ -655,72 +680,75 @@ class LayoutHelper extends AppHelper {
  * @param array $options
  * @return string
  */
-    public function adminRowActions($id, $options = array()) {
-        $_options = array();
-        $options = array_merge($_options, $options);
+	public function adminRowActions($id, $options = array()) {
+		$_options = array();
+		$options = array_merge($_options, $options);
 
-        $output = '';
-        $rowActions = Configure::read('Admin.rowActions.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
-        if (is_array($rowActions)) {
-            foreach ($rowActions AS $title => $link) {
-                if ($output != '') {
-                    $output .= ' ';
-                }
-                $link = $this->linkStringToArray(str_replace(':id', $id, $link));
-                $output .= $this->Html->link($title, $link);
-            }
-        }
-        return $output;
-    }
+		$output = '';
+		$rowActions = Configure::read('Admin.rowActions.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
+		if (is_array($rowActions)) {
+			foreach ($rowActions AS $title => $link) {
+				if ($output != '') {
+					$output .= ' ';
+				}
+				$link = $this->linkStringToArray(str_replace(':id', $id, $link));
+				$output .= $this->Html->link($title, $link);
+			}
+		}
+		return $output;
+	}
+
 /**
  * Show tabs
  *
  * @return string
  */
-    public function adminTabs($show = null) {
-        if (!isset($this->adminTabs)) {
-            $this->adminTabs = false;
-        }
+	public function adminTabs($show = null) {
+		if (!isset($this->adminTabs)) {
+			$this->adminTabs = false;
+		}
 
-        $output = '';
-        $tabs = Configure::read('Admin.tabs.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
-        if (is_array($tabs)) {
-            foreach ($tabs AS $title => $tab) {
-                if (!isset($tab['options']['type']) || (isset($tab['options']['type']) && (in_array($this->View->viewVars['typeAlias'], $tab['options']['type'])))) {
-                    $domId = strtolower(Inflector::singularize($this->params['controller'])) . '-' . strtolower(Inflector::slug($title, '-'));
-                    if ($this->adminTabs) {
-                        if (strstr($tab['element'], '.')) {
-                            $elementE = explode('.', $tab['element']);
-                            $plugin = $elementE['0'];
-                            $element = $elementE['1'];
-                        } else {
-                            $plugin = null;
-                        }
-                        $output .= '<div id="' . $domId . '">';
-                        $output .= $this->View->element($element, array(
-                            'plugin' => $plugin,
-                        ));
-                        $output .= '</div>';
-                    } else {
-                        $output .= '<li><a href="#' . $domId . '">' . $title . '</a></li>';
-                    }
-                }
-            }
-        }
+		$output = '';
+		$tabs = Configure::read('Admin.tabs.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
+		if (is_array($tabs)) {
+			foreach ($tabs AS $title => $tab) {
+				if (!isset($tab['options']['type']) || (isset($tab['options']['type']) && (in_array($this->View->viewVars['typeAlias'], $tab['options']['type'])))) {
+					$domId = strtolower(Inflector::singularize($this->params['controller'])) . '-' . strtolower(Inflector::slug($title, '-'));
+					if ($this->adminTabs) {
+						if (strstr($tab['element'], '.')) {
+							$elementE = explode('.', $tab['element']);
+							$plugin = $elementE['0'];
+							$element = $elementE['1'];
+						} else {
+							$plugin = null;
+						}
+						$output .= '<div id="' . $domId . '">';
+						$output .= $this->View->element($element, array(
+							'plugin' => $plugin,
+						));
+						$output .= '</div>';
+					} else {
+						$output .= '<li><a href="#' . $domId . '">' . $title . '</a></li>';
+					}
+				}
+			}
+		}
 
-        $this->adminTabs = true;
-        return $output;
-    }
+		$this->adminTabs = true;
+		return $output;
+	}
+
 /**
  * Set current Node
  *
  * @param array $node
  * @return void
  */
-    public function setNode($node) {
-        $this->node = $node;
-        $this->hook('afterSetNode');
-    }
+	public function setNode($node) {
+		$this->node = $node;
+		$this->hook('afterSetNode');
+	}
+
 /**
  * Set value of a field
  *
@@ -728,104 +756,110 @@ class LayoutHelper extends AppHelper {
  * @param string $value
  * @return void
  */
-    public function setNodeField($field, $value) {
-        $model = 'Node';
-        if (strstr($field, '.')) {
-            $fieldE = explode('.', $field);
-            $model = $fieldE['0'];
-            $field = $fieldE['1'];
-        }
+	public function setNodeField($field, $value) {
+		$model = 'Node';
+		if (strstr($field, '.')) {
+			$fieldE = explode('.', $field);
+			$model = $fieldE['0'];
+			$field = $fieldE['1'];
+		}
 
-        $this->node[$model][$field] = $value;
-    }
+		$this->node[$model][$field] = $value;
+	}
+
 /**
  * Get value of a Node field
  *
  * @param string $field
  * @return string
  */
-    public function node($field = 'id') {
-        $model = 'Node';
-        if (strstr($field, '.')) {
-            $fieldE = explode('.', $field);
-            $model = $fieldE['0'];
-            $field = $fieldE['1'];
-        }
+	public function node($field = 'id') {
+		$model = 'Node';
+		if (strstr($field, '.')) {
+			$fieldE = explode('.', $field);
+			$model = $fieldE['0'];
+			$field = $fieldE['1'];
+		}
 
-        if (isset($this->node[$model][$field])) {
-            return $this->node[$model][$field];
-        } else {
-            return false;
-        }
-    }
+		if (isset($this->node[$model][$field])) {
+			return $this->node[$model][$field];
+		} else {
+			return false;
+		}
+	}
+
 /**
  * Node info
  *
  * @param array $options
  * @return string
  */
-    public function nodeInfo($options = array()) {
-        $_options = array(
-            'element' => 'node_info',
-        );
-        $options = array_merge($_options, $options);
+	public function nodeInfo($options = array()) {
+		$_options = array(
+			'element' => 'node_info',
+		);
+		$options = array_merge($_options, $options);
 
-        $output  = $this->hook('beforeNodeInfo');
-        $output .= $this->View->element($options['element']);
-        $output .= $this->hook('afterNodeInfo');
-        return $output;
-    }
+		$output  = $this->hook('beforeNodeInfo');
+		$output .= $this->View->element($options['element']);
+		$output .= $this->hook('afterNodeInfo');
+		return $output;
+	}
+
 /**
  * Node excerpt (summary)
  *
  * @param array $options
  * @return string
  */
-    public function nodeExcerpt($options = array()) {
-        $_options = array(
-            'element' => 'node_excerpt',
-        );
-        $options = array_merge($_options, $options);
+	public function nodeExcerpt($options = array()) {
+		$_options = array(
+			'element' => 'node_excerpt',
+		);
+		$options = array_merge($_options, $options);
 
-        $output  = $this->hook('beforeNodeExcerpt');
-        $output .= $this->View->element($options['element']);
-        $output .= $this->hook('afterNodeExcerpt');
-        return $output;
-    }
+		$output  = $this->hook('beforeNodeExcerpt');
+		$output .= $this->View->element($options['element']);
+		$output .= $this->hook('afterNodeExcerpt');
+		return $output;
+	}
+
 /**
  * Node body
  *
  * @param array $options
  * @return string
  */
-    public function nodeBody($options = array()) {
-        $_options = array(
-            'element' => 'node_body',
-        );
-        $options = array_merge($_options, $options);
+	public function nodeBody($options = array()) {
+		$_options = array(
+			'element' => 'node_body',
+		);
+		$options = array_merge($_options, $options);
 
-        $output  = $this->hook('beforeNodeBody');
-        $output .= $this->View->element($options['element']);
-        $output .= $this->hook('afterNodeBody');
-        return $output;
-    }
+		$output  = $this->hook('beforeNodeBody');
+		$output .= $this->View->element($options['element']);
+		$output .= $this->hook('afterNodeBody');
+		return $output;
+	}
+
 /**
  * Node more info
  *
  * @param array $options
  * @return string
  */
-    public function nodeMoreInfo($options = array()) {
-        $_options = array(
-            'element' => 'node_more_info',
-        );
-        $options = array_merge($_options, $options);
+	public function nodeMoreInfo($options = array()) {
+		$_options = array(
+			'element' => 'node_more_info',
+		);
+		$options = array_merge($_options, $options);
 
-        $output  = $this->hook('beforeNodeMoreInfo');
-        $output .= $this->View->element($options['element']);
-        $output .= $this->hook('afterNodeMoreInfo');
-        return $output;
-    }
+		$output  = $this->hook('beforeNodeMoreInfo');
+		$output .= $this->View->element($options['element']);
+		$output .= $this->hook('afterNodeMoreInfo');
+		return $output;
+	}
+
 /**
  * Hook
  *
@@ -834,22 +868,21 @@ class LayoutHelper extends AppHelper {
  * @param string $methodName
  * @return string
  */
-    public function hook($methodName) {
-        $output = '';
-        foreach ($this->View->helpers AS $helper => $settings) {
-            if (!is_string($helper) || in_array($helper, $this->coreHelpers)) {
-                continue;
-            }
-            if (strstr($helper, '.')) {
-                $helperE = explode('.', $helper);
-                $helper = $helperE['1'];
-            }
-            if (isset($this->View->{$helper}) && method_exists($this->View->{$helper}, $methodName)) {
-                $output .= $this->View->{$helper}->$methodName();
-            }
-        }
-        return $output;
-    }
+	public function hook($methodName) {
+		$output = '';
+		foreach ($this->View->helpers AS $helper => $settings) {
+			if (!is_string($helper) || in_array($helper, $this->coreHelpers)) {
+				continue;
+			}
+			if (strstr($helper, '.')) {
+				$helperE = explode('.', $helper);
+				$helper = $helperE['1'];
+			}
+			if (isset($this->View->{$helper}) && method_exists($this->View->{$helper}, $methodName)) {
+				$output .= $this->View->{$helper}->$methodName();
+			}
+		}
+		return $output;
+	}
 
 }
-?>

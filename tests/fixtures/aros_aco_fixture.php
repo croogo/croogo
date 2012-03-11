@@ -261,4 +261,3 @@ class ArosAcoFixture extends CakeTestFixture {
 		),
 	);
 }
-?>

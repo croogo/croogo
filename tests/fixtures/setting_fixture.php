@@ -3,7 +3,7 @@
 class SettingFixture extends CakeTestFixture {
 	var $name = 'Setting';
 
-        var $fields = array(
+		var $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 20, 'key' => 'primary'),
 		'key' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 64, 'key' => 'unique'),
 		'value' => array('type' => 'text', 'null' => false, 'default' => NULL),
@@ -273,4 +273,3 @@ class SettingFixture extends CakeTestFixture {
 		),
 	);
 }
-?>

@@ -2,4 +2,3 @@
 class AclAppController extends AppController {
 
 }
-?>

@@ -48,6 +48,5 @@
  * Inflector::rules('plural', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
  *
  */
-    App::import('Lib', 'Croogo');
-    require_once CONFIGS.'croogo_bootstrap.php';
-?>
+	App::import('Lib', 'Croogo');
+	require_once CONFIGS.'croogo_bootstrap.php';

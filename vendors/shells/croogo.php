@@ -22,6 +22,7 @@ class CroogoShell extends Shell {
         $value = trim($this->args['0']);
         $this->out(Security::hash($value, null, true));
     }
+
 /**
  * Prepares data in config/schema/data/ required for install plugin
  *
@@ -59,7 +60,6 @@ class CroogoShell extends Shell {
                     $content .= $recordString;
                 $content .= "\t);\n\n";
             $content .= "}\n";
-        $content .= "?>";
 
         // write file
         $filePath = APP . 'config' . DS . 'schema' . DS . 'data' . DS . Inflector::underscore($modelAlias) . '_data.php';
@@ -74,4 +74,3 @@ class CroogoShell extends Shell {
     }
     
 }
-?>

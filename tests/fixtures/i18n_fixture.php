@@ -11,9 +11,7 @@ class I18nFixture extends CakeTestFixture {
 		'content' => array('type' => 'text', 'null' => true, 'default' => NULL),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'locale' => array('column' => 'locale', 'unique' => 0), 'model' => array('column' => 'model', 'unique' => 0), 'row_id' => array('column' => 'foreign_key', 'unique' => 0), 'field' => array('column' => 'field', 'unique' => 0))
 	);
-        public $table = 'i18n';
+		public $table = 'i18n';
 	public $records = array(
 	);
 }
-
-?>

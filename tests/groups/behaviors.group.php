@@ -6,10 +6,9 @@ class BehaviorsGroupTest extends TestSuite {
  * @var string
  * @access public
  */
-    var $label = 'All behavior tests';
+	var $label = 'All behavior tests';
 
-    function BehaviorsGroupTest() {
-        TestManager::addTestCasesFromDirectory($this, APP_TEST_CASES.DS.'behaviors');
-    }
+	function BehaviorsGroupTest() {
+		TestManager::addTestCasesFromDirectory($this, APP_TEST_CASES.DS.'behaviors');
+	}
 }
-?>

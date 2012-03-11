@@ -2,4 +2,3 @@
 class AclAppModel extends AppModel {
 	
 }
-?>

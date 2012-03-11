@@ -19,13 +19,14 @@ class ParamsBehavior extends ModelBehavior {
  * @param array  $config
  * @return void
  */
-    public function setup(&$model, $config = array()) {
-        if (is_string($config)) {
-            $config = array($config);
-        }
+	public function setup(&$model, $config = array()) {
+		if (is_string($config)) {
+			$config = array($config);
+		}
 
-        $this->settings[$model->alias] = $config;
-    }
+		$this->settings[$model->alias] = $config;
+	}
+
 /**
  * afterFind callback
  *
@@ -34,25 +35,26 @@ class ParamsBehavior extends ModelBehavior {
  * @param boolean $primary
  * @return array
  */
-    public function afterFind(&$model, $results = array(), $primary = false) {
-        if ($primary && isset($results[0][$model->alias])) {
-            foreach ($results AS $i => $result) {
-                $params = array();
-                if (isset($result[$model->alias]['params']) && strlen($result[$model->alias]['params']) > 0) {
-                    $params = $this->paramsToArray($model, $result[$model->alias]['params']);
-                }
-                $results[$i]['Params'] = $params;
-            }
-        } elseif (isset($results[$model->alias])) {
-            $params = array();
-            if (isset($results[$model->alias]['params']) && strlen($results[$model->alias]['params']) > 0) {
-                $params = $this->paramsToArray($model, $results[$model->alias]['params']);
-            }
-            $results['Params'] = $params;
-        }
+	public function afterFind(&$model, $results = array(), $primary = false) {
+		if ($primary && isset($results[0][$model->alias])) {
+			foreach ($results AS $i => $result) {
+				$params = array();
+				if (isset($result[$model->alias]['params']) && strlen($result[$model->alias]['params']) > 0) {
+					$params = $this->paramsToArray($model, $result[$model->alias]['params']);
+				}
+				$results[$i]['Params'] = $params;
+			}
+		} elseif (isset($results[$model->alias])) {
+			$params = array();
+			if (isset($results[$model->alias]['params']) && strlen($results[$model->alias]['params']) > 0) {
+				$params = $this->paramsToArray($model, $results[$model->alias]['params']);
+			}
+			$results['Params'] = $params;
+		}
 
-        return $results;
-    }
+		return $results;
+	}
+
 /**
  * Converts a string of params to an array of formatted key/value pairs
  *
@@ -64,23 +66,22 @@ class ParamsBehavior extends ModelBehavior {
  * @param string $params
  * @return array
  */
-    public function paramsToArray(&$model, $params) {
-        $output = array();
-        $params = explode("\n", $params);
-        foreach ($params AS $param) {
-            if (strlen($param) == 0) {
-                continue;
-            }
+	public function paramsToArray(&$model, $params) {
+		$output = array();
+		$params = explode("\n", $params);
+		foreach ($params AS $param) {
+			if (strlen($param) == 0) {
+				continue;
+			}
 
-            $paramE = explode('=', $param);
-            if (count($paramE) == 2) {
-                $key = $paramE['0'];
-                $value = $paramE['1'];
-                $output[$key] = $value;
-            }
-        }
-        return $output;
-    }
+			$paramE = explode('=', $param);
+			if (count($paramE) == 2) {
+				$key = $paramE['0'];
+				$value = $paramE['1'];
+				$output[$key] = $value;
+			}
+		}
+		return $output;
+	}
 
 }
-?>

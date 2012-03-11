@@ -6,10 +6,9 @@ class ModelsGroupTest extends TestSuite {
  * @var string
  * @access public
  */
-    var $label = 'All model tests';
+	var $label = 'All model tests';
 
-    function ModelsGroupTest() {
-        TestManager::addTestCasesFromDirectory($this, APP_TEST_CASES.DS.'models');
-    }
+	function ModelsGroupTest() {
+		TestManager::addTestCasesFromDirectory($this, APP_TEST_CASES.DS.'models');
+	}
 }
-?>
