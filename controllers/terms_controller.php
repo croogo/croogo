@@ -326,4 +326,3 @@ class TermsController extends AppController {
 	}
 
 }
-?>

@@ -64,4 +64,3 @@ class ParamsBehaviorTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

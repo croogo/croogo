@@ -120,4 +120,3 @@ class RecaptchaHelper extends AppHelper {
 
 
 }
-?>

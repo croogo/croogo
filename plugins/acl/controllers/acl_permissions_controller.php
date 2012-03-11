@@ -130,4 +130,3 @@ class AclPermissionsController extends AclAppController {
 	}
 
 }
-?>

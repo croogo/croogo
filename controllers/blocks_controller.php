@@ -157,4 +157,3 @@ class BlocksController extends AppController {
 	}
 
 }
-?>

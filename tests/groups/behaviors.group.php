@@ -12,4 +12,3 @@ class BehaviorsGroupTest extends TestSuite {
 		TestManager::addTestCasesFromDirectory($this, APP_TEST_CASES.DS.'behaviors');
 	}
 }
-?>

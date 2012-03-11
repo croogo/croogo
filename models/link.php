@@ -66,4 +66,3 @@ class Link extends AppModel {
 	);
 
 }
-?>

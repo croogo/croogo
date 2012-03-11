@@ -45,4 +45,3 @@ class Meta extends AppModel {
 	);
 
 }
-?>

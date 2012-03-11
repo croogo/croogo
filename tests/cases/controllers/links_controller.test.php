@@ -330,4 +330,3 @@ class LinksControllerTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

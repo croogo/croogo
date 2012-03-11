@@ -66,4 +66,3 @@ class CachedBehavior extends ModelBehavior {
 	}
 
 }
-?>

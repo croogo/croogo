@@ -59,4 +59,3 @@ class UrlBehaviorTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

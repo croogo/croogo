@@ -162,4 +162,3 @@ class TypesControllerTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

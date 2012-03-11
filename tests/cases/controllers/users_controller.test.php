@@ -163,4 +163,3 @@ class UsersControllerTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

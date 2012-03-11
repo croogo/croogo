@@ -240,4 +240,3 @@ class InstallController extends InstallAppController {
 	}
 
 }
-?>

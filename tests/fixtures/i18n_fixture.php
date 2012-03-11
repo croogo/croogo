@@ -15,5 +15,3 @@ class I18nFixture extends CakeTestFixture {
 	public $records = array(
 	);
 }
-
-?>

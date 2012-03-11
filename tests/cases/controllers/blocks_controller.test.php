@@ -466,4 +466,3 @@ class BlocksControllerTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

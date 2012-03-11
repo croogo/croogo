@@ -27,4 +27,3 @@
 		Croogo::hookBehavior($translateModel, 'CroogoTranslate', $fields);
 		Croogo::hookAdminRowAction(Inflector::pluralize($translateModel) . '/admin_index', 'Translate', 'plugin:translate/controller:translate/action:index/:id/'.$translateModel);
 	}
-?>

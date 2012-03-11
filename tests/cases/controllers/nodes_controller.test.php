@@ -179,4 +179,3 @@ class NodesControllerTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

@@ -29,4 +29,3 @@
 	}
 	Croogo::hookHelper('Attachments', 'Tinymce.Tinymce');
 
-?>

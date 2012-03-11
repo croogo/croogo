@@ -16,4 +16,3 @@ class AclArosAco extends AppModel {
 	);
 
 }
-?>

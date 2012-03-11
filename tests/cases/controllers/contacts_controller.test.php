@@ -185,4 +185,3 @@ class ContactsControllerTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

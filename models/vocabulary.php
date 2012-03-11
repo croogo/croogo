@@ -87,4 +87,3 @@ class Vocabulary extends AppModel {
 		),
 	);
 }
-?>

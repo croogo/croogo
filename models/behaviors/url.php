@@ -80,4 +80,3 @@ class UrlBehavior extends ModelBehavior {
 	}
 
 }
-?>

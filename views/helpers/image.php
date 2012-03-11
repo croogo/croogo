@@ -75,4 +75,3 @@ class ImageHelper extends Helper {
 		return $this->output(sprintf($this->Html->tags['image'], $relfile, $this->Html->_parseAttributes($htmlAttributes, null, '', ' ')), $return);
 	}
 }
-?>

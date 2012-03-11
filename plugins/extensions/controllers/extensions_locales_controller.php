@@ -193,4 +193,3 @@ class ExtensionsLocalesController extends AppController {
 	}
 
 }
-?>

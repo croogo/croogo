@@ -98,4 +98,3 @@ class TypesController extends AppController {
 		}
 	}
 }
-?>

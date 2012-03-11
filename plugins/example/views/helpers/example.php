@@ -120,4 +120,3 @@ class ExampleHelper extends AppHelper {
 		return '<p>afterNodeMoreInfo</p>';
 	}
 }
-?>

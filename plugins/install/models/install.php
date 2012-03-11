@@ -5,4 +5,3 @@ class Install extends InstallAppModel {
 	var $useTable = false;
 
 }
-?>

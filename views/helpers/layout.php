@@ -886,4 +886,3 @@ class LayoutHelper extends AppHelper {
 	}
 
 }
-?>

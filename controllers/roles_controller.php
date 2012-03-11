@@ -86,4 +86,3 @@ class RolesController extends AppController {
 	}
 
 }
-?>

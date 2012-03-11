@@ -216,4 +216,3 @@ class VocabulariesControllerTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

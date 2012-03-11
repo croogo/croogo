@@ -49,4 +49,3 @@ class NodeTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

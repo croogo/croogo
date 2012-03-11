@@ -29,4 +29,3 @@ class MetaFixture extends CakeTestFixture {
 		),
 	);
 }
-?>

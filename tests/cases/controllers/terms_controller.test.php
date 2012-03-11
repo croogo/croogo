@@ -263,4 +263,3 @@ class TermsControllerTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

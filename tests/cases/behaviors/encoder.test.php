@@ -70,4 +70,3 @@ class EncoderBehaviorTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

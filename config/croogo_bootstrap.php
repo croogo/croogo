@@ -71,4 +71,3 @@
 			App::import('Plugin', Inflector::camelize($plugin) . 'Bootstrap');
 		}
 	}
-?>

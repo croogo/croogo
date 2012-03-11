@@ -29,4 +29,3 @@
 	App::import('Lib', 'CroogoRouter');
 	require_once CONFIGS.'croogo_routes.php';
 	CroogoRouter::localize();
-?>

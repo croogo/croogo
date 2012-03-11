@@ -6,4 +6,3 @@ class InstallAppController extends AppController {
 	}
 
 }
-?>

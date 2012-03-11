@@ -51,4 +51,3 @@ class ExampleBehavior extends ModelBehavior {
 	}
 
 }
-?>

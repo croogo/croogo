@@ -289,4 +289,3 @@ class LanguagesControllerTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

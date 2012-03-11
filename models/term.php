@@ -107,4 +107,3 @@ class Term extends AppModel {
 		return false;
 	}
 }
-?>

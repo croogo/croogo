@@ -12,4 +12,3 @@ class ModelsGroupTest extends TestSuite {
 		TestManager::addTestCasesFromDirectory($this, APP_TEST_CASES.DS.'models');
 	}
 }
-?>

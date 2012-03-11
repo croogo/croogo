@@ -82,4 +82,3 @@ class Region extends AppModel {
 		),
 	);
 }
-?>

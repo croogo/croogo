@@ -162,4 +162,3 @@ class RegionsControllerTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

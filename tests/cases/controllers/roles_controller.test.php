@@ -168,4 +168,3 @@ class RolesControllerTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

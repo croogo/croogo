@@ -273,4 +273,3 @@ class SettingFixture extends CakeTestFixture {
 		),
 	);
 }
-?>

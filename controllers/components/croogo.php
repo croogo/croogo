@@ -825,4 +825,3 @@ class CroogoComponent extends Object {
 	}
 
 }
-?>

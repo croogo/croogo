@@ -294,4 +294,3 @@ class CommentsControllerTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

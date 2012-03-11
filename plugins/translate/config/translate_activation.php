@@ -51,4 +51,3 @@ class TranslateActivation {
 		$controller->Croogo->removeAco('Translate');
 	}
 }
-?>

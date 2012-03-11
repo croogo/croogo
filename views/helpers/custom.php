@@ -26,4 +26,3 @@ class CustomHelper extends Helper {
 	public $helpers = array();
 
 }
-?>

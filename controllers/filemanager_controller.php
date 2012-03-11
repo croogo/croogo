@@ -258,4 +258,3 @@ class FilemanagerController extends AppController {
 	}
 
 }
-?>

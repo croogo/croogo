@@ -129,4 +129,3 @@ class TinymceHelper extends AppHelper {
 	}
 }
 
-?>

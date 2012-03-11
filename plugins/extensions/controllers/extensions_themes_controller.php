@@ -193,4 +193,3 @@ class ExtensionsThemesController extends AppController {
 	}
 
 }
-?>

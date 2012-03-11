@@ -30,4 +30,3 @@ class AppHelper extends Helper {
 		return parent::url($url, $full);
 	}
 }
-?>

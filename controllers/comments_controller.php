@@ -301,4 +301,3 @@ class CommentsController extends AppController {
 	}
 
 }
-?>

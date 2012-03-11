@@ -64,4 +64,3 @@ class SettingTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

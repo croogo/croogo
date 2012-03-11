@@ -2,4 +2,3 @@
 class ExampleAppModel extends AppModel {
 
 }
-?>

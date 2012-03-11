@@ -86,4 +86,3 @@ class EncoderBehavior extends ModelBehavior {
 		return $output;
 	}
 }
-?>

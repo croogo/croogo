@@ -162,4 +162,3 @@ class MenusControllerTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

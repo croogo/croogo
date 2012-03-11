@@ -133,4 +133,3 @@ class HtmlHelperTest extends CakeTestCase {
 	}
 
 }
-?>

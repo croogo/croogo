@@ -214,5 +214,3 @@ class FilemanagerHelper extends AppHelper {
 		return false;
 	}
 }
-
-?>

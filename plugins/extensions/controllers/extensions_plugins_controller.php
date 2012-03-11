@@ -211,4 +211,3 @@ class ExtensionsPluginsController extends AppController {
 	}
 
 }
-?>

@@ -52,4 +52,3 @@ class TaxonomyTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

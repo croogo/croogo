@@ -7,4 +7,3 @@ class I18nData {
 	);
 
 }
-?>

@@ -8,4 +8,3 @@ class AclAco extends AppModel {
 	public $actsAs = array('Tree');
 
 }
-?>

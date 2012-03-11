@@ -387,5 +387,3 @@ class SocketWriteRead {
 		return $this->errorString;
 	}
 }
-
-?>

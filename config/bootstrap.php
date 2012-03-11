@@ -50,4 +50,3 @@
  */
 	App::import('Lib', 'Croogo');
 	require_once CONFIGS.'croogo_bootstrap.php';
-?>
