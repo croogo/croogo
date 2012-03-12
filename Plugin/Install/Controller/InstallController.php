@@ -221,6 +221,7 @@ class InstallController extends InstallAppController {
 	public function finish() {
 		$this->set('title_for_layout', __('Installation completed successfully'));
 		$this->_check();
+		$this->loadModel('Install.Install');
 		$this->Install->finalize();
 	}
 
