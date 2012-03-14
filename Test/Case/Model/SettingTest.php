@@ -46,9 +46,18 @@ class SettingTest extends CakeTestCase {
 	}
 
 	public function testWriteUpdate() {
-		$this->Setting->write('Site.title', 'My new site title');
+		$this->Setting->write('Site.title', 'My new site title', array('editable' => 1));
 		$siteTitle = $this->Setting->findByKey('Site.title');
-		$this->assertEqual('My new site title', $siteTitle['Setting']['value']);
+		$this->assertEquals('My new site title', $siteTitle['Setting']['value']);
+
+		$this->Setting->write('Site.title', 'My new site title', array('input_type' => 'checkbox'));
+		$siteTitle = $this->Setting->findByKey('Site.title');
+		$this->assertTrue($siteTitle['Setting']['editable']);
+
+		$this->Setting->write('Site.title', 'My new site title', array('input_type' => 'textarea', 'editable' => false));
+		$siteTitle = $this->Setting->findByKey('Site.title');
+		$this->assertEquals('textarea', $siteTitle['Setting']['input_type']);
+		$this->assertFalse($siteTitle['Setting']['editable']);
 	}
 
 	public function testDeleteKey() {

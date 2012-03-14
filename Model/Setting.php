@@ -104,25 +104,24 @@ class Setting extends AppModel {
  * @return boolean
  */
 	public function write($key, $value, $options = array()) {
-		$_options = array(
-			'title' => '',
-			'description' => '',
-			'input_type' => '',
-			'editable' => 0,
-			'params' => '',
-		);
-		$options = array_merge($_options, $options);
 
 		$setting = $this->findByKey($key);
 		if (isset($setting['Setting']['id'])) {
 			$setting['Setting']['id'] = $setting['Setting']['id'];
 			$setting['Setting']['value'] = $value;
-			$setting['Setting']['title'] = $options['title'];
-			$setting['Setting']['description'] = $options['description'];
-			$setting['Setting']['input_type'] = $options['input_type'];
-			$setting['Setting']['editable'] = $options['editable'];
-			$setting['Setting']['params'] = $options['params'];
+
+			$setting['Setting'] = $options + $setting['Setting'];
+
 		} else {
+
+			$options = array_merge(array(
+				'title' => '',
+				'description' => '',
+				'input_type' => '',
+				'editable' => 0,
+				'params' => '',
+				), $options);
+
 			$setting = array();
 			$setting['key'] = $key;
 			$setting['value'] = $value;
