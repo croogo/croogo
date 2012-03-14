@@ -13,7 +13,9 @@
  */
 App::uses('Security', 'Utility');
 class CroogoShell extends AppShell {
-
+/**
+ * Display help/options
+ */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
 		$parser->description(__d('croogo', 'Croogo Utilities')
@@ -36,7 +38,7 @@ class CroogoShell extends AppShell {
 /**
  * Get hashed password
  *
- * Usage: ./cake croogo password myPasswordHere
+ * Usage: ./Console/cake croogo password myPasswordHere
  */
 	public function password() {
 		$value = trim($this->args['0']);
@@ -44,9 +46,9 @@ class CroogoShell extends AppShell {
 	}
 
 /**
- * Prepares data in config/schema/data/ required for install plugin
+ * Prepares data in Config/Schema/data/ required for install plugin
  *
- * Usage: ./cake croogo data table_name_here
+ * Usage: ./Console/cake croogo data table_name_here
  */
 	public function data() {
 		$connection = 'default';
@@ -82,7 +84,7 @@ class CroogoShell extends AppShell {
 			$content .= "}\n";
 
 		// write file
-		$filePath = APP . 'config' . DS . 'schema' . DS . 'data' . DS . Inflector::underscore($modelAlias) . '_data.php';
+		$filePath = APP . 'Config' . DS . 'Schema' . DS . 'data' . DS . Inflector::underscore($modelAlias) . '_data.php';
 		if (!file_exists($filePath)) {
 			touch($filePath);
 		}
