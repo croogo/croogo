@@ -5,8 +5,8 @@
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('username', array('type' => 'hidden'));
-		echo $this->Form->input('current_password', array('label' => __('Current Password'), 'type' => 'password', 'value' => ''));
 		echo $this->Form->input('password', array('label' => __('New Password'), 'value' => ''));
+		echo $this->Form->input('verify_password', array('label' => __('Verify Password'), 'type' => 'password', 'value' => ''));
 	?>
 	</fieldset>
 
