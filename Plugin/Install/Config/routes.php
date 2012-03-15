@@ -3,9 +3,13 @@
 $path = '/';
 $url = array('plugin' => 'install' ,'controller' => 'install');
 if (file_exists(APP . 'Config' . DS.'settings.yml')) {
-    if (!Configure::read('Install.secured')) {
-        $path = '/*';
-        $url['action'] = 'finish';
-    }
+	$request = Router::getRequest();
+	if (!Configure::read('Install.secured') &&
+	    strpos($request->url, 'finish') == false
+	   )
+	{
+		$path = '/*';
+		$url['action'] = 'adminuser';
+	}
 }
 CroogoRouter::connect($path, $url);

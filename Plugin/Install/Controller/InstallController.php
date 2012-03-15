@@ -205,24 +205,63 @@ class InstallController extends InstallAppController {
 					}
 				}
 
-				$this->redirect(array('action' => 'finish'));
+				$this->redirect(array('action' => 'adminuser'));
 			}
 		}
 	}
 
 /**
- * Step 3: finish
+ * Step 3: get username and passwords for administrative user
+ */
+	public function adminuser() {
+		if ($this->request->is('post')) {
+			$this->loadModel('User');
+			$this->User->set($this->request->data);
+			if ($this->User->validates()) {
+				$token = uniqid();
+				$this->Session->write('Install', array(
+					'token' => $token,
+					'User' => $this->request->data['User'],
+					));
+				$this->redirect(array('action' => 'finish', $token));
+			}
+		}
+	}
+
+/**
+ * Step 4: finish
  *
- * Copy settings.yml file into place and set admin's password
+ * Copy settings.yml file into place and create user obtained in step 3
  *
  * @return void
  * @access public
  */
-	public function finish() {
+	public function finish($token = null) {
 		$this->set('title_for_layout', __('Installation completed successfully'));
 		$this->_check();
 		$this->loadModel('Install.Install');
-		$this->Install->finalize();
+		$install = $this->Session->read('Install');
+		if ($install['token'] == $token) {
+			unset($install['token']);
+			if ($this->Install->finalize($install)) {
+				$urlBlogAdd = Router::url(array(
+					'plugin' => false, 'admin' => true,
+					'controller' => 'nodes', 'action' => 'add', 'blog',
+					));
+				$urlSettings = Router::url(array(
+					'plugin' => false, 'admin' => true,
+					'controller' => 'settings', 'action' => 'prefix', 'Site',
+					));
+				$this->set('user', $install);
+				$this->set(compact('urlBlogAdd', 'urlSettings'));
+			} else {
+				$this->Session->setFlash('Something went wrong during installation. Please check your server logs.');
+				$this->redirect(array('action' => 'adminuser'));
+			}
+			$this->Session->delete('Install');
+		} else {
+			$this->redirect('/');
+		}
 	}
 
 }

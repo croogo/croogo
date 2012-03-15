@@ -11,7 +11,7 @@ class Install extends InstallAppModel {
  *  Prepares Config/settings.yml and update password for admin user
  *  @return $mixed if false, indicates processing failure
  */
-	public function finalize() {
+	public function finalize($user) {
 		if (Configure::read('Install.installed') && Configure::read('Install.secured')) {
 			return false;
 		}
@@ -33,10 +33,12 @@ class Install extends InstallAppModel {
 		Configure::write('Security.salt', $salt);
 		Configure::write('Security.cipherSeed', $seed);
 
-		// set default password for admin
+		// create administrative user
 		$User = ClassRegistry::init('User');
-		$User->id = $User->field('id', array('username' => 'admin'));
-		return $User->saveField('password', 'password');
+		$User->Role->Behaviors->attach('Aliasable');
+		$user['User']['role_id'] = $User->Role->byAlias('admin');
+		$user['User']['status'] = true;
+		return $User->save($user);
 	}
 
 }
