@@ -16,7 +16,7 @@ class UserData {
 			'image' => '',
 			'bio' => '',
 			'timezone' => '0',
-			'status' => '1',
+			'status' => '0',
 			'updated' => '2010-06-06 07:00:10',
 			'created' => '2009-04-05 00:20:34'
 		),
