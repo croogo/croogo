@@ -146,13 +146,23 @@ class UsersControllerTest extends CroogoTestCase {
 			'username' => 'admin',
 		));
 		$this->Users->startupProcess();
-		$this->Users->admin_delete(1); // ID of admin
+
+		// delete another user
+		$this->Users->admin_delete(2); // ID of rchavik
 		$this->assertEqual($this->Users->redirectUrl, array('action' => 'index'));
 
 		$hasAny = $this->Users->User->hasAny(array(
-			'User.username' => 'admin',
+			'User.username' => 'rchavik',
 		));
 		$this->assertFalse($hasAny);
+
+		// delete the only remaining admin
+		$this->Users->admin_delete(1); // ID of admin
+		$this->assertEqual($this->Users->redirectUrl, array('action' => 'index'));
+		$hasAny = $this->Users->User->hasAny(array(
+			'User.username' => 'admin',
+		));
+		$this->assertTrue($hasAny);
 	}
 
 	public function endTest() {

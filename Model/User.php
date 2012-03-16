@@ -92,6 +92,24 @@ class User extends AppModel {
 		),
 	);
 
+	public function beforeDelete($cascade = true) {
+		$this->Role->Behaviors->attach('Aliasable');
+		$adminRoleId = $this->Role->byAlias('admin');
+		if ($this->field('role_id') == $adminRoleId) {
+			$count = $this->find('count', array(
+				'conditions' => array(
+					'User.id <>' => $this->id,
+					'User.role_id' => $adminRoleId,
+					'User.status' => true,
+					)
+				));
+			if ($count >= 1) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public function beforeSave($options = array()) {
 		if (!empty($this->data['User']['password'])) {
 			$this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);

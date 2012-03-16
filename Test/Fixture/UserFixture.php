@@ -39,5 +39,21 @@ class UserFixture extends CakeTestFixture {
 			'updated' => '2009-10-07 22:23:27',
 			'created' => '2009-04-05 00:20:34'
 		),
+		array(
+			'id' => 2,
+			'role_id' => 1,
+			'username' => 'rchavik',
+			'password' => 'ab4d1d3ab4d1d3ab4d1d3ab4d1d3aaaaab4d1d3a',
+			'name' => 'Rachman Chavik',
+			'email' => 'me@your-site.com',
+			'website' => '/about',
+			'activation_key' => '',
+			'image' => '',
+			'bio' => '',
+			'timezone' => '0',
+			'status' => 1,
+			'updated' => '2010-01-07 22:23:27',
+			'created' => '2010-01-05 00:00:00'
+		),
 	);
 }
