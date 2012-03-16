@@ -144,6 +144,10 @@ class CroogoComponent extends Component {
 			'order' => 'Vocabulary.alias ASC',
 		));
 		$this->controller->set('vocabularies_for_admin_layout', $vocabularies);
+
+		if (!Configure::read('Croogo.version')) {
+			$this->controller->Setting->write('Croogo.version', file_get_contents(APP . 'VERSION.txt'));
+		}
 	}
 
 /**
