@@ -16,7 +16,6 @@
 			'jquery/jquery.min',
 			'jquery/jquery-ui.min',
 			'jquery/jquery.slug',
-			'jquery/jquery.uuid',
 			'jquery/jquery.cookie',
 			'jquery/jquery.hoverIntent.minified',
 			'jquery/superfish',
