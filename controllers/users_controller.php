@@ -179,7 +179,7 @@ class UsersController extends AppController {
 				$this->Email->from = Configure::read('Site.title') . ' '
 					. '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])).'>';
 				$this->Email->to = $this->data['User']['email'];
-				$this->Email->subject = __('[' . Configure::read('Site.title') . '] Please activate your account', true);
+				$this->Email->subject = sprintf(__('[%s]  Please activate your account', true), Configure::read('Site.title'));
 				$this->Email->template = 'register';
 				$this->set('user', $this->data);
 				$this->Email->send();
@@ -234,7 +234,7 @@ class UsersController extends AppController {
 			$this->Email->from = Configure::read('Site.title') . ' '
 					. '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])).'>';
 			$this->Email->to = $user['User']['email'];
-			$this->Email->subject = '[' . Configure::read('Site.title') . '] ' . __('Reset Password', true);
+			$this->Email->subject = sprintf(__('[%s] Reset Password', true), Configure::read('Site.title'));
 			$this->Email->template = 'forgot_password';
 			if ($this->Email->send()) {
 				$this->Session->setFlash(__('An email has been sent with instructions for resetting your password.', true), 'default', array('class' => 'success'));
