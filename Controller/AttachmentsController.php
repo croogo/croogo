@@ -141,10 +141,11 @@ class AttachmentsController extends AppController {
 			//$this->request->data['Node']['guid'] = Router::url('/' . $this->uploadsDir . '/' . $newFileName, true);
 			$this->request->data['Node']['path'] = '/' . $this->uploadsDir . '/' . $newFileName;
 
+			// move the file
+			$moved = move_uploaded_file($file['tmp_name'], $destination);
+
 			$this->Node->create();
-			if ($this->Node->save($this->request->data)) {
-				// move the file
-				move_uploaded_file($file['tmp_name'], $destination);
+			if ($moved && $this->Node->save($this->request->data)) {
 
 				$this->Session->setFlash(__('The Attachment has been saved'), 'default', array('class' => 'success'));
 
