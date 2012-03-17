@@ -74,6 +74,10 @@ class AttachmentsController extends AppController {
 		$this->Node->type = $this->type;
 		$this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->type)));
 		$this->set('type', $this->type);
+
+		if ($this->action == 'admin_add') {
+			$this->Security->csrfCheck = false;
+		}
 	}
 
 /**
@@ -103,7 +107,13 @@ class AttachmentsController extends AppController {
 			$this->layout = 'admin_full';
 		}
 
-		if (!empty($this->request->data)) {
+		if ($this->request->is('post') || !empty($this->request->data)) {
+
+			if (empty($this->data['Node'])) {
+				$this->Node->invalidate('file', __('Upload failed. Please ensure size does not exceed the server limit.'));
+				return;
+			}
+
 			$file = $this->request->data['Node']['file'];
 			unset($this->request->data['Node']['file']);
 
