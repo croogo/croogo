@@ -258,8 +258,7 @@ class CroogoComponent extends Component {
 				'recursive' => '-1',
 			));
 			if (isset($menu['Menu']['id'])) {
-				$this->menus_for_layout[$menuAlias] = array();
-				$this->menus_for_layout[$menuAlias]['Menu'] = $menu['Menu'];
+				$this->menus_for_layout[$menuAlias] = $menu;
 				$findOptions = array(
 					'conditions' => array(
 						'Link.menu_id' => $menu['Menu']['id'],
