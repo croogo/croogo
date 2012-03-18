@@ -41,6 +41,7 @@ class InstallShellTest extends CakeTestCase {
 		parent::setUp();
 		App::build(array(
 			'Plugin' => array(TESTS . 'test_app' . DS . 'Plugin' . DS),
+			'View' => array(TESTS . 'test_app' . DS . 'View' . DS),
 		), App::PREPEND);
 	}
 
@@ -58,23 +59,43 @@ class InstallShellTest extends CakeTestCase {
 		}
 		$Folder = new Folder(TESTS . 'test_app' . DS . 'Plugin' . DS . 'Example');
 		$Folder->delete();
+		$Folder = new Folder(TESTS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Minimal');
+		$Folder->delete();
 	}
 
 /**
- * testMain
+ * testInstallPlugin
  *
  * @return void
  */
-	public function testMain() {
+	public function testInstallPlugin() {
 		$Shell = $this->getMock('InstallShell', array('_shell_exec', 'dispatchShell'));
 		$Shell->expects($this->once())
 			->method('_shell_exec')
-			->will($this->returnCallback(array($this, 'callbackDownloadFile')));
+			->will($this->returnCallback(array($this, 'callbackDownloadPlugin')));
 		$Shell->expects($this->once())
 			->method('dispatchShell')
 			->with(array('ext', 'activate', 'plugin', 'Example'))
 			->will($this->returnValue(true));
 		$Shell->args = array('plugin', 'shama', 'croogo');
+		$Shell->main();
+	}
+
+/**
+ * testInstallTheme
+ *
+ * @return void
+ */
+	public function testInstallTheme() {
+		$Shell = $this->getMock('InstallShell', array('_shell_exec', 'dispatchShell'));
+		$Shell->expects($this->once())
+			->method('_shell_exec')
+			->will($this->returnCallback(array($this, 'callbackDownloadTheme')));
+		$Shell->expects($this->once())
+			->method('dispatchShell')
+			->with(array('ext', 'activate', 'theme', 'Minimal'))
+			->will($this->returnValue(true));
+		$Shell->args = array('theme', 'shama', 'mytheme');
 		$Shell->main();
 	}
 
@@ -97,12 +118,23 @@ class InstallShellTest extends CakeTestCase {
 	}
 
 /**
- * Called when we want to pretend to download a file
+ * Called when we want to pretend to download a plugin
  */
-	public function callbackDownloadFile() {
+	public function callbackDownloadPlugin() {
 		preg_match('/ -o (.+)/', func_get_arg(0), $zip);
 		$dest = $zip[1];
 		$src = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_plugin.zip';
+		copy($src, $dest);
+		return 'Here is that thing you wanted';
+	}
+
+/**
+ * Called when we want to pretend to download a theme
+ */
+	public function callbackDownloadTheme() {
+		preg_match('/ -o (.+)/', func_get_arg(0), $zip);
+		$dest = $zip[1];
+		$src = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_theme.zip';
 		copy($src, $dest);
 		return 'Here is that thing you wanted';
 	}
