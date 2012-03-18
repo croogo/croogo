@@ -10,11 +10,12 @@ App::uses('CroogoComponent', 'Controller/Component');
  *
  * Activate Plugins/Themes
  *	./Console/croogo ext plugin example
- *	./Console/croogo ext theme example
+ *	./Console/croogo ext theme minimal
  *
  * Deactivate & Verbosely Activate
  *	./Console/croogo ext activate plugin example
  *	./Console/croogo ext deactivate plugin example
+ *	./Console/croogo ext deactivate theme
  *
  * @category Shell
  * @package  Croogo
@@ -24,6 +25,14 @@ App::uses('CroogoComponent', 'Controller/Component');
  * @link     http://www.croogo.org
  */
 class ExtShell extends AppShell {
+/**
+ * Models we use
+ *
+ * @var array
+ * @todo Use this for theme activation when CroogoComponent is moved
+ */
+	//public $uses = array('Setting');
+
 /**
  * Croogo Component
  *
@@ -66,11 +75,16 @@ class ExtShell extends AppShell {
  * @return void
  */
 	public function main() {
+		$this->args = array_map('strtolower', $this->args);
 		$activate = ($this->args[0] == 'deactivate') ? $this->args[0] : 'activate';
 		if (sizeof($this->args) > 2) {
 			$this->args = array_slice($this->args, 1);
 		}
-		$this->{'_' . $activate . ucfirst($this->args[0])}($this->args[1]);
+		if ($activate == 'deactivate' && $this->args[1] == 'theme') {
+			$this->_deactivateTheme();
+		} else {
+			$this->{'_' . $activate . ucfirst($this->args[0])}($this->args[1]);
+		}
 	}
 
 /**
@@ -164,20 +178,28 @@ class ExtShell extends AppShell {
 /**
  * Activate a theme
  *
- * @param string $theme
+ * @param string $theme Name of theme
  * @return boolean
  */
 	protected function _activateTheme($theme = null) {
-		
+		$Setting = $this->Croogo->controller->Setting;
+		$siteTheme = $Setting->findByKey('Site.theme');
+		$siteTheme['Setting']['value'] = $theme;
+		$Setting->save($siteTheme);
+		if (is_null($theme)) {
+			$this->out(__d('croogo', 'Theme deactivated successfully.'));
+		} else {
+			$this->out(__d('croogo', 'Theme activated successfully.'));
+		}
+		return true;
 	}
 
 /**
- * Deactivate a theme
+ * Deactivate a theme (just reverts to default)
  *
- * @param string $theme
  * @return boolean
  */
-	protected function _deactivateTheme($theme = null) {
-		
+	protected function _deactivateTheme() {
+		return $this->_activateTheme();
 	}
 }
