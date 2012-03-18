@@ -181,7 +181,7 @@ class UsersController extends AppController {
 				$this->Email->from = Configure::read('Site.title') . ' '
 					. '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])).'>';
 				$this->Email->to = $this->request->data['User']['email'];
-				$this->Email->subject = __('[' . Configure::read('Site.title') . '] Please activate your account');
+				$this->Email->subject = __('[%s] Please activate your account', Configure::read('Site.title'));
 				$this->Email->template = 'register';
 				$this->set('user', $this->request->data);
 				$this->Email->send();
@@ -236,7 +236,7 @@ class UsersController extends AppController {
 			$this->Email->from = Configure::read('Site.title') . ' '
 					. '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])).'>';
 			$this->Email->to = $user['User']['email'];
-			$this->Email->subject = '[' . Configure::read('Site.title') . '] ' . __('Reset Password');
+			$this->Email->subject = __('[%s] Reset Password', Configure::read('Site.title'));
 			$this->Email->template = 'forgot_password';
 			if ($this->Email->send()) {
 				$this->Session->setFlash(__('An email has been sent with instructions for resetting your password.'), 'default', array('class' => 'success'));
@@ -269,7 +269,8 @@ class UsersController extends AppController {
 		if (!empty($this->request->data) && isset($this->request->data['User']['password'])) {
 			$this->User->id = $user['User']['id'];
 			$user['User']['activation_key'] = md5(uniqid());
-			if ($this->User->save($user['User'])) {
+			$options = array('fieldList' => array('password', 'activation_key'));
+			if ($this->User->save($user['User'], $options)) {
 				$this->Session->setFlash(__('Your password has been reset successfully.'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'login'));
 			} else {
