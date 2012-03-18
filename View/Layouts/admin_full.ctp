@@ -15,7 +15,6 @@
 		echo $this->Html->script(array(
 			'jquery/jquery.min',
 			'jquery/jquery-ui.min',
-			'jquery/jquery.uuid',
 			'jquery/jquery.cookie',
 			'jquery/jquery.hoverIntent.minified',
 			'jquery/superfish',
