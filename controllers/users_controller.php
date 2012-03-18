@@ -268,7 +268,8 @@ class UsersController extends AppController {
 			$this->User->id = $user['User']['id'];
 			$user['User']['password'] = Security::hash($this->data['User']['password'], null, true);
 			$user['User']['activation_key'] = md5(uniqid());
-			if ($this->User->save($user['User'])) {
+			$options = array('fieldList' => array('password', 'activation_key'));
+			if ($this->User->save($user['User'], $options)) {
 				$this->Session->setFlash(__('Your password has been reset successfully.', true), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'login'));
 			} else {
