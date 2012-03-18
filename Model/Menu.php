@@ -34,6 +34,7 @@ class Menu extends AppModel {
 				'croogo_menu_',
 			),
 		),
+		'Params',
 	);
 
 /**

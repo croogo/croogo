@@ -1,10 +1,9 @@
-<div class="users form">
-	<h2><?php echo __('Reset password'); ?>: <?php echo $this->data['User']['username']; ?></h2>
-	<?php echo $this->Form->create('User', array('url' => array('action' => 'reset_password')));?>
+<div class="install">
+	<h2><?php echo __('Step 3: Create Admin User'); ?></h2>
+	<?php echo $this->Form->create('User', array('url' => array('controller' => 'install', 'action' => 'adminuser')));?>
 	<fieldset>
 	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('username', array('type' => 'hidden'));
+		echo $this->Form->input('username');
 		echo $this->Form->input('password', array('label' => __('New Password'), 'value' => ''));
 		echo $this->Form->input('verify_password', array('label' => __('Verify Password'), 'type' => 'password', 'value' => ''));
 	?>
@@ -12,7 +11,7 @@
 
 	<div class="buttons">
 	<?php
-		echo $this->Form->end(__('Reset'));
+		echo $this->Form->end(__('Save'));
 		echo $this->Html->link(__('Cancel'), array(
 			'action' => 'index',
 		), array(

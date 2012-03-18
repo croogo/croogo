@@ -2,7 +2,7 @@
 .install h1 { padding: 0px 0px 0px 20px;  }
 
 #install { margin: 0px auto; width: 500px; padding: 50px 0px 0px 0px; }
-#install h2 { border-bottom: 0px; margin: 20px 0px 20px 0px; }
+#install h2 { font-size: 28px; border-bottom: 0px; margin: 20px 0px 20px 0px; }
 #install .forgot { float: right; }
 #install input[type=text],
 #install input[type=password] { width: 95%; }
@@ -13,4 +13,14 @@
 
 .install #footer { background: none; color: #444; }
 .install #footer a { color: #444; }
+
+.install p { margin-bottom: 20px; }
+.install ul.bullet { list-style: disc inside; }
+
+.install blockquote {
+	margin: 10px;
+	background: #eee;
+	padding: 20px;
+	border-radius: 4px;
+}
 </style>

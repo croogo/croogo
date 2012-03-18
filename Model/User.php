@@ -83,7 +83,7 @@ class User extends AppModel {
 			'rule' => array('minLength', 6),
 			'message' => 'Passwords must be at least 6 characters long.',
 		),
-		'current_password' => array(
+		'verify_password' => array(
 			'rule' => '_identical',
 			),
 		'name' => array(
@@ -91,6 +91,24 @@ class User extends AppModel {
 			'message' => 'This field cannot be left blank.',
 		),
 	);
+
+	public function beforeDelete($cascade = true) {
+		$this->Role->Behaviors->attach('Aliasable');
+		$adminRoleId = $this->Role->byAlias('admin');
+		if ($this->field('role_id') == $adminRoleId) {
+			$count = $this->find('count', array(
+				'conditions' => array(
+					'User.id <>' => $this->id,
+					'User.role_id' => $adminRoleId,
+					'User.status' => true,
+					)
+				));
+			if ($count >= 1) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public function beforeSave($options = array()) {
 		if (!empty($this->data['User']['password'])) {
@@ -100,12 +118,12 @@ class User extends AppModel {
 	}
 
 	protected function _identical($check) {
-		$currentPassword = $this->field('password');
-		if ($currentPassword == AuthComponent::password($check['current_password'])) {
-			return true;
-		} else {
-			return __('Current password did not match. Please, try again.');
+		if (isset($this->data['User']['password'])) {
+			if ($this->data['User']['password'] != $check['verify_password']) {
+				return __('Passwords do not match. Please, try again.');
+			}
 		}
+		return true;
 	}
 
 }
