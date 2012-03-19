@@ -19,6 +19,17 @@ App::uses('Folder', 'Utility');
  */
 class ExtShellTest extends CakeTestCase {
 /**
+ * fixtures
+ *
+ * @var array
+ */
+	public $fixtures = array(
+		'app.menu',
+		'app.link',
+		'app.setting',
+	);
+
+/**
  * setUp method
  *
  * @return void

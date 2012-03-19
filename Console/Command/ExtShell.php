@@ -60,7 +60,7 @@ class ExtShell extends AppShell {
 	protected $_Controller = null;
 
 /**
- * Initialize Croogo Component
+ * Initialize
  *
  * @param type $stdout
  * @param type $stderr
