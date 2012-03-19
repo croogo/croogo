@@ -2,6 +2,8 @@
 
 App::uses('File', 'Utility');
 App::uses('Folder', 'Utility');
+App::uses('CroogoPlugin', 'Lib');
+App::uses('CroogoTheme', 'Lib');
 
 /**
  * Croogo Component
@@ -88,7 +90,33 @@ class CroogoComponent extends Component {
 		'nodes' => array(),
 	);
 
+/**
+ * controller
+ *
+ * @var Controller
+ */
 	protected $controller = null;
+
+/**
+ * Method to lazy load classes
+ *
+ * @return Object
+ */
+	public function __get($name) {
+		switch ($name) {
+			case '_CroogoPlugin':
+			case '_CroogoTheme':
+				if (!isset($this->{$name})) {
+					$class = substr($name, 1);
+					$this->{$name} = new $class();
+				}
+				return $this->{$name};
+			break;
+			default:
+				return parent::__get($name);
+			break;
+		}
+	}
 
 /**
  * Startup
@@ -485,7 +513,7 @@ class CroogoComponent extends Component {
  * @return void
  */
 	public function addAco($action, $allowRoles = array()) {
-		$this->CroogoAccess->addAco($action, $allowRoles);
+		$this->controller->CroogoAccess->addAco($action, $allowRoles);
 	}
 
 /**
@@ -497,7 +525,7 @@ class CroogoComponent extends Component {
  * @return void
  */
 	public function removeAco($action) {
-		$this->CroogoAccess->removeAco($action);
+		$this->controller->CroogoAccess->removeAco($action);
 	}
 
 /**
@@ -505,22 +533,10 @@ class CroogoComponent extends Component {
  *
  * @param string $plugin Plugin name (underscored)
  * @return void
+ * @deprecated use CroogoPlugin::addPluginBootstrap()
  */
 	public function addPluginBootstrap($plugin) {
-		$hookBootstraps = Configure::read('Hook.bootstraps');
-		if (!$hookBootstraps) {
-			$plugins = array();
-		} else {
-			$plugins = explode(',', $hookBootstraps);
-		}
-
-		if (array_search($plugin, $plugins) !== false) {
-			$plugins = $hookBootstraps;
-		} else {
-			$plugins[] = $plugin;
-			$plugins = implode(',', $plugins);
-		}
-		$this->controller->Setting->write('Hook.bootstraps', $plugins);
+		$this->_CroogoPlugin->addPluginBootstrap($plugin);
 	}
 
 /**
@@ -528,25 +544,10 @@ class CroogoComponent extends Component {
  *
  * @param string $plugin Plugin name (underscored)
  * @return void
+ * @deprecated use CroogoPlugin::removePluginBootstrap()
  */
 	public function removePluginBootstrap($plugin) {
-		$hookBootstraps = Configure::read('Hook.bootstraps');
-		if (!$hookBootstraps) {
-			return;
-		}
-
-		$plugins = explode(',', $hookBootstraps);
-		if (array_search($plugin, $plugins) !== false) {
-			$k = array_search($plugin, $plugins);
-			unset($plugins[$k]);
-		}
-
-		if (count($plugins) == 0) {
-			$plugins = '';
-		} else {
-			$plugins = implode(',', $plugins);
-		}
-		$this->controller->Setting->write('Hook.bootstraps', $plugins);
+		$this->_CroogoPlugin->removePluginBootstrap($plugin);
 	}
 
 /**
@@ -596,28 +597,12 @@ class CroogoComponent extends Component {
 	}
 
 /**
- * Get theme alises (folder names)
+ * Get theme aliases (folder names)
  *
  * @return array
  */
 	public function getThemes() {
-		$themes = array(
-			'default' => 'default',
-		);
-		$this->folder = new Folder;
-		$viewPaths = App::path('views');
-		foreach ($viewPaths AS $viewPath) {
-			$this->folder->path = $viewPath . 'Themed';
-			$themeFolders = $this->folder->read();
-			foreach ($themeFolders['0'] AS $themeFolder) {
-				$this->folder->path = $viewPath . 'Themed' . DS . $themeFolder . DS . 'webroot';
-				$themeFolderContent = $this->folder->read();
-				if (in_array('theme.json', $themeFolderContent['1'])) {
-					$themes[$themeFolder] = $themeFolder;
-				}
-			}
-		}
-		return $themes;
+		return $this->_CroogoTheme->getThemes();
 	}
 
 /**
@@ -625,58 +610,20 @@ class CroogoComponent extends Component {
  *
  * @param string $alias theme folder name
  * @return array
+ * @deprecated use CroogoTheme::getThemeData()
  */
 	public function getThemeData($alias = null) {
-		if ($alias == null || $alias == 'default') {
-			$manifestFile = WWW_ROOT . 'theme.json';
-		} else {
-			$viewPaths = App::path('views');
-			foreach ($viewPaths AS $viewPath) {
-				if (file_exists($viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'theme.json')) {
-					$manifestFile = $viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'theme.json';
-					continue;
-				}
-			}
-			if (!isset($manifestFile)) {
-				$manifestFile = WWW_ROOT . 'theme.json';
-			}
-		}
-		if (isset($manifestFile) && file_exists($manifestFile)) {
-			$themeData = json_decode(file_get_contents($manifestFile), true);
-			if ($themeData == NULL) {
-				$themeData = array();
-			}
-		} else {
-			$themeData = array();
-		}
-		return $themeData;
+		return $this->_CroogoTheme->getThemeData($alias);
 	}
 
 /**
  * Get plugin alises (folder names)
  *
  * @return array
+ * @deprecated use CroogoPlugin::getPlugins()
  */
 	public function getPlugins() {
-		$plugins = array();
-		$this->folder = new Folder;
-		$pluginPaths = App::path('plugins');
-		foreach ($pluginPaths AS $pluginPath) {
-			$this->folder->path = $pluginPath;
-			if (!file_exists($this->folder->path)) { continue; }
-			$pluginFolders = $this->folder->read();
-			foreach ($pluginFolders[0] AS $pluginFolder) {
-				if (substr($pluginFolder, 0, 1) != '.') {
-					$this->folder->path = $pluginPath . $pluginFolder . DS . 'Config';
-					if (!file_exists($this->folder->path)) { continue; }
-					$pluginFolderContent = $this->folder->read();
-					if (in_array('plugin.json', $pluginFolderContent[1])) {
-						$plugins[$pluginFolder] = $pluginFolder;
-					}
-				}
-			}
-		}
-		return $plugins;
+		return $this->_CroogoPlugin->getPlugins();
 	}
 
 /**
@@ -684,23 +631,10 @@ class CroogoComponent extends Component {
  *
  * @param string $alias plugin folder name
  * @return array
+ * @deprecated use CroogoPlugin::getPluginData
  */
 	public function getPluginData($alias = null) {
-		$pluginPaths = App::path('plugins');
-		foreach ($pluginPaths AS $pluginPath) {
-			$manifestFile = $pluginPath . $alias . DS . 'Config' . DS . 'plugin.json';
-			if (file_exists($manifestFile)) {
-				$pluginData = json_decode(file_get_contents($manifestFile), true);
-				if (!empty($pluginData)) {
-					$pluginData['active'] = $this->pluginIsActive($alias);
-					unset($pluginManifest);
-				} else {
-					$pluginData = array();
-				}
-				return $pluginData;
-			}
-		}
-		return false;
+		return $this->_CroogoPlugin->getPluginData($alias);
 	}
 
 /**
@@ -709,24 +643,10 @@ class CroogoComponent extends Component {
  *
  * @param  string $plugin plugin alias (underscrored)
  * @return boolean
+ * @deprecated use CroogoPlugin::checkPluginDependency()
  */
 	public function checkPluginDependency($plugin = null) {
-		$pluginData = $this->getPluginData($plugin);
-		$pluginPaths = App::path('plugins');
-		if (isset($pluginData['dependencies']['plugins']) && is_array($pluginData['dependencies']['plugins'])) {
-			foreach ($pluginData['dependencies']['plugins'] AS $p) {
-				$check = false;
-				foreach ($pluginPaths AS $pluginPath) {
-					if (is_dir($pluginPath . $p)) {
-						$check = true;
-					}
-				}
-				if (!$check) {
-					return false;
-				}
-			}
-		}
-		return true;
+		return $this->_CroogoPlugin->checkPluginDependency($plugin);
 	}
 
 /**
@@ -734,22 +654,10 @@ class CroogoComponent extends Component {
  *
  * @param  string $plugin Plugin name (underscored)
  * @return boolean
+ * @deprecated use CroogoPlugin::pluginIsActive
  */
 	public function pluginIsActive($plugin) {
-		$configureKeys = array(
-			'Hook.bootstraps',
-		);
-
-		foreach ($configureKeys AS $configureKey) {
-			$hooks = explode(',', Configure::read($configureKey));
-			foreach ($hooks AS $hook) {
-				if ($hook == $plugin) {
-					return true;
-				}
-			}
-		}
-
-		return false;
+		$this->_CroogoPlugin->pluginIsActive($plugin);
 	}
 
 }
