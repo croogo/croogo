@@ -203,6 +203,9 @@ class ExtShell extends AppShell {
  * @return boolean
  */
 	protected function _activateTheme($theme = null) {
+		if ($theme == 'default') {
+			$theme = null;
+		}
 		$siteTheme = $this->Setting->findByKey('Site.theme');
 		$siteTheme['Setting']['value'] = $theme;
 		$this->Setting->save($siteTheme);
