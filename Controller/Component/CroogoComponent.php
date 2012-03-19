@@ -513,7 +513,7 @@ class CroogoComponent extends Component {
  * @return void
  */
 	public function addAco($action, $allowRoles = array()) {
-		$this->CroogoAccess->addAco($action, $allowRoles);
+		$this->controller->CroogoAccess->addAco($action, $allowRoles);
 	}
 
 /**
@@ -525,7 +525,7 @@ class CroogoComponent extends Component {
  * @return void
  */
 	public function removeAco($action) {
-		$this->CroogoAccess->removeAco($action);
+		$this->controller->CroogoAccess->removeAco($action);
 	}
 
 /**
