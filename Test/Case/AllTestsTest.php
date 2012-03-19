@@ -10,9 +10,9 @@ class AllTestsTest extends PHPUnit_Framework_TestSuite {
 		$suite->addTestFile($path . 'AllControllersTest.php');
 		$suite->addTestFile($path . 'AllComponentsTest.php');
 		$suite->addTestFile($path . 'AllLibsTest.php');
+		$suite->addTestFile($path . 'AllConsolesTest.php');
+		$suite->addTestFile($path . 'AllCorePluginsTest.php');
 
-		$path = APP . 'Plugin' .DS. 'Acl' .DS. 'Test' .DS. 'Case' .DS;
-		$suite->addTestFile($path . 'AllAclTestsTest.php');
 		return $suite;
 	}
 }
