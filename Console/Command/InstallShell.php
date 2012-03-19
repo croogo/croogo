@@ -69,9 +69,22 @@ class InstallShell extends AppShell {
  * Display help/options
  */
 	public function getOptionParser() {
-		$parser = parent::getOptionParser();
-		$parser->description(__d('croogo', 'Croogo Install'));
-		return $parser;
+		return parent::getOptionParser()
+			->description(__d('croogo', 'Download, Install & Activate Plugins & Themes'))
+			->addArguments(array(
+				'type' => array(
+					'help' => __d('croogo', 'Extension type'),
+					'required' => true,
+					'choices' => array('plugin', 'theme'),
+				),
+				'zip_url' => array(
+					'help' => __d('croogo', 'URL to zip file OR github user name'),
+					'required' => true,
+				),
+				'github_package' => array(
+					'help' => __d('croogo', 'Github repo name'),
+				),
+			));
 	}
 
 /**
