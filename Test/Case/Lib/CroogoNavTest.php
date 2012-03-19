@@ -6,12 +6,12 @@ class CroogoNavTest extends CakeTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		static::$_menus = CroogoNav::items();
+		self::$_menus = CroogoNav::items();
 	}
 
 	public function tearDown() {
 		parent::tearDown();
-		CroogoNav::items(static::$_menus);
+		CroogoNav::items(self::$_menus);
 	}
 
 	public function testNav() {

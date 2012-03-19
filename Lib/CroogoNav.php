@@ -22,9 +22,9 @@ class CroogoNav extends Object {
 		);
 
 	protected static function _setupOptions(&$options) {
-		$options = static::_merge(static::$_defaults, $options);
+		$options = self::_merge(self::$_defaults, $options);
 		foreach ($options['children'] as &$child) {
-			static::_setupOptions($child);
+			self::_setupOptions($child);
 		}
 	}
 
@@ -39,18 +39,18 @@ class CroogoNav extends Object {
 		$pathE = explode('.', $path);
 		$pathE = array_splice($pathE, 0, count($pathE) - 2);
 		$parent = join('.', $pathE);
-		if (!empty($parent) && !Set::check(static::$_items, $parent)) {
+		if (!empty($parent) && !Set::check(self::$_items, $parent)) {
 			$title = Inflector::humanize(end($pathE));
 			$o = array('title' => $title);
-			static::_setupOptions($o);
-			static::add($parent, $o);
+			self::_setupOptions($o);
+			self::add($parent, $o);
 		}
-		static::_setupOptions($options);
-		$current = Set::extract($path, static::$_items);
+		self::_setupOptions($options);
+		$current = Set::extract($path, self::$_items);
 		if (!empty($current)) {
-			static::_replace(static::$_items, $path, $options);
+			self::_replace(self::$_items, $path, $options);
 		} else {
-			static::$_items = Set::insert(static::$_items, $path, $options);
+			self::$_items = Set::insert(self::$_items, $path, $options);
 		}
 	}
 
@@ -67,9 +67,9 @@ class CroogoNav extends Object {
 		$path = array_shift($pathE);
 		$fragment = join ('.', $pathE);
 		if (!empty($pathE)) {
-			static::_replace($target[$path], $fragment, $options);
+			self::_replace($target[$path], $fragment, $options);
 		} else {
-			$target[$path] = static::_merge($target[$path], $options);
+			$target[$path] = self::_merge($target[$path], $options);
 		}
 	}
 
@@ -98,7 +98,7 @@ class CroogoNav extends Object {
 	 * @return void
 	 */
 	public static function remove($path) {
-		static::$_items = Set::remove(static::$_items, $path);
+		self::$_items = Set::remove(self::$_items, $path);
 	}
 
 	/**
@@ -107,7 +107,7 @@ class CroogoNav extends Object {
 	 * @return void
 	 */
 	public static function clear() {
-		static::$_items = array();
+		self::$_items = array();
 	}
 
 	/**
@@ -118,9 +118,9 @@ class CroogoNav extends Object {
 	 */
 	public static function items($items = null) {
 		if (!empty($items)) {
-			static::$_items = $items;
+			self::$_items = $items;
 		}
-		return static::$_items;
+		return self::$_items;
 	}
 
     /**
@@ -128,7 +128,7 @@ class CroogoNav extends Object {
      * @return array
      */
 	public static function getDefaults() {
-	    return static::$_defaults;
+	    return self::$_defaults;
 	}
 
 }
