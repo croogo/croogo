@@ -31,24 +31,8 @@ class ExtShell extends AppShell {
  * Models we use
  *
  * @var array
- * @todo Use this for theme activation when CroogoComponent is moved
  */
-	//public $uses = array('Setting');
-
-/**
- * Croogo Component
- *
- * @var Component
- * @todo Move component functionality to a Lib/CroogoUtility to avoid this
- */
-	public $Croogo = null;
-
-/**
- * PluginActivation class
- *
- * @var object
- */
-	protected $_PluginActivation = null;
+	public $uses = array('Setting');
 
 /**
  * CroogoPlugin class
@@ -75,16 +59,6 @@ class ExtShell extends AppShell {
 		parent::__construct($stdout, $stderr, $stdin);
 		$this->_CroogoPlugin = new CroogoPlugin();
 		$this->_CroogoTheme = new CroogoTheme();
-		$Collection = new ComponentCollection();
-		$this->Croogo = new CroogoComponent($Collection);
-		$CakeRequest = new CakeRequest();
-		$CakeResponse = new CakeResponse();
-		$Controller = new Controller($CakeRequest, $CakeResponse);
-		$Controller->loadModel('Setting');
-		$Controller->loadModel('Block');
-		$Controller->loadModel('Link');
-		$Controller->loadModel('Node');
-		$this->Croogo->startup($Controller);
 	}
 
 /**
@@ -200,10 +174,9 @@ class ExtShell extends AppShell {
  * @return boolean
  */
 	protected function _activateTheme($theme = null) {
-		$Setting = $this->Croogo->controller->Setting;
-		$siteTheme = $Setting->findByKey('Site.theme');
+		$siteTheme = $this->Setting->findByKey('Site.theme');
 		$siteTheme['Setting']['value'] = $theme;
-		$Setting->save($siteTheme);
+		$this->Setting->save($siteTheme);
 		if (is_null($theme)) {
 			$this->out(__d('croogo', 'Theme deactivated successfully.'));
 		} else {
