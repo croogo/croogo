@@ -203,9 +203,18 @@ class ExtShell extends AppShell {
  * @return boolean
  */
 	protected function _activateTheme($theme = null) {
-		$siteTheme = $this->Setting->findByKey('Site.theme');
-		$siteTheme['Setting']['value'] = $theme;
-		$this->Setting->save($siteTheme);
+		if ($theme == 'default') {
+			$theme = null;
+		}
+		if ($theme == null) {
+			$siteTheme = $this->Setting->findByKey('Site.theme');
+			$this->Setting->id = $siteTheme['Setting']['id'];
+			$this->Setting->delete();
+		} else {
+			$siteTheme = $this->Setting->findByKey('Site.theme');
+			$siteTheme['Setting']['value'] = $theme;
+			$this->Setting->save($siteTheme);
+		}
 		if (is_null($theme)) {
 			$this->out(__d('croogo', 'Theme deactivated successfully.'));
 		} else {

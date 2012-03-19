@@ -24,9 +24,24 @@ class ExtShellTest extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
+		'app.comment',
 		'app.menu',
+		'app.block',
 		'app.link',
+		'app.meta',
+		'app.node',
+		'app.nodes_taxonomy',
+		'app.role',
 		'app.setting',
+		'app.taxonomy',
+		'app.term',
+		'app.type',
+		'app.types_vocabulary',
+		'app.user',
+		'app.vocabulary',
+		'app.aros',
+		'app.acos',
+		'app.aros_acos',
 	);
 
 /**
@@ -96,6 +111,14 @@ class ExtShellTest extends CakeTestCase {
 
 		$Shell = new ExtShell();
 		$Shell->args = array('deactivate', 'theme');
+		$Shell->main();
+		$result = $Setting->findByKey('Site.theme');
+		$this->assertEquals('', $result['Setting']['value']);
+
+		$Shell = new ExtShell();
+		$Shell->args = array('activate', 'theme', 'minimal');
+		$Shell->main();
+		$Shell->args = array('activate', 'theme', 'default');
 		$Shell->main();
 		$result = $Setting->findByKey('Site.theme');
 		$this->assertEquals('', $result['Setting']['value']);
