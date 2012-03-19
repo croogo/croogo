@@ -32,7 +32,7 @@ class AppModel extends Model {
  * @param string $ds    DataSource connection name.
  */
 	public function __construct($id = false, $table = null, $ds = null) {
-		Croogo::applyHookProperties('Hook.model_properties');
+		Croogo::applyHookProperties('Hook.model_properties', $this);
 		parent::__construct($id, $table, $ds);
 	}
 

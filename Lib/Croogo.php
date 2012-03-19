@@ -168,24 +168,27 @@ class Croogo {
  *
  * @param string $configKey
  */
-	public static function applyHookProperties($configKey) {
-		$hookProperties = Configure::read($configKey . '.' . $this->name);
+	public static function applyHookProperties($configKey, &$object = null) {
+		if (empty($object)) {
+			$object = $this;
+		}
+		$hookProperties = Configure::read($configKey . '.' . $object->name);
 		if (is_array(Configure::read($configKey . '.*'))) {
 			$hookProperties = Set::merge(Configure::read($configKey . '.*'), $hookProperties);
 		}
 		if (is_array($hookProperties)) {
 			foreach ($hookProperties AS $property => $value) {
-				if (!isset($this->$property)) {
-					$this->$property = $value;
+				if (!isset($object->$property)) {
+					$object->$property = $value;
 				} else {
-					if (is_array($this->$property)) {
+					if (is_array($object->$property)) {
 						if (is_array($value)) {
-							$this->$property = Set::merge($this->$property, $value);
+							$object->$property = Set::merge($object->$property, $value);
 						} else {
-							$this->$property = $value;
+							$object->$property = $value;
 						}
 					} else {
-						$this->$property = $value;
+						$object->$property = $value;
 					}
 				}
 			}
