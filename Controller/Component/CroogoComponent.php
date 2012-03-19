@@ -90,22 +90,31 @@ class CroogoComponent extends Component {
 		'nodes' => array(),
 	);
 
+/**
+ * controller
+ *
+ * @var Controller
+ */
 	protected $controller = null;
 
-	/** Method to lazy load classes
-	 */
+/**
+ * Method to lazy load classes
+ *
+ * @return Object
+ */
 	public function __get($name) {
 		switch ($name) {
-		case '_CroogoPlugin':
-		case '_CroogoTheme':
-			if (empty($this->{$name})) {
-				$this->{$name} = new $name();
-			}
-			return $this->{$name};
-		break;
-		default:
-			return parent::__get($name);
-		break;
+			case '_CroogoPlugin':
+			case '_CroogoTheme':
+				if (!isset($this->{$name})) {
+					$class = substr($name, 1);
+					$this->{$name} = new $class();
+				}
+				return $this->{$name};
+			break;
+			default:
+				return parent::__get($name);
+			break;
 		}
 	}
 
