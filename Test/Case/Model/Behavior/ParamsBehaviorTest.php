@@ -38,6 +38,7 @@ class ParamsBehaviorTest extends CakeTestCase {
 		$this->Type->save(array(
 			'title' => 'Article',
 			'alias' => 'article',
+			'description' => 'Article Types',
 			'params' => 'param1=value1',
 		));
 		$type = $this->Type->findByAlias('article');
@@ -51,6 +52,7 @@ class ParamsBehaviorTest extends CakeTestCase {
 		$this->Type->save(array(
 			'title' => 'Article',
 			'alias' => 'article',
+			'description' => 'Article Types',
 			'params' => "param1=value1\nparam2=value2",
 		));
 		$type = $this->Type->findByAlias('article');

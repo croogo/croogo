@@ -94,7 +94,9 @@ class MenusControllerTest extends CroogoTestCase {
 		$this->Menus->request->data = array(
 			'Menu' => array(
 				'title' => 'New Menu',
+				'description' => 'A new menu',
 				'alias' => 'new',
+				'link_count' => 0,
 			),
 		);
 		$this->Menus->startupProcess();

@@ -95,6 +95,7 @@ class RegionsControllerTest extends CroogoTestCase {
 			'Region' => array(
 				'title' => 'new_region',
 				'alias' => 'new_region',
+				'description' => 'A new region',
 			),
 		);
 		$this->Regions->startupProcess();

@@ -29,6 +29,7 @@ class UserTest extends CakeTestCase {
 			'role_id' => 3,
 			'email' => 'contact@croogo.org',
 			'password' => 'password',
+			'website' => 'http://croogo.org',
 			));
 		$this->User->save();
 		$this->assertEmpty($this->User->validationErrors, 'Validation error: ' . print_r($this->User->validationErrors, true));

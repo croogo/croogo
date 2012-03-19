@@ -105,6 +105,7 @@ class LinksControllerTest extends CroogoTestCase {
 			'Link' => array(
 				'menu_id' => $mainMenu['Menu']['id'],
 				'title' => 'Test link',
+				'class' => 'test-link',
 				'link' => '#test-link',
 				'status' => 1,
 			),

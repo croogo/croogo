@@ -94,6 +94,7 @@ class BlocksControllerTest extends CroogoTestCase {
 			'Block' => array(
 				'title' => 'Test block',
 				'alias' => 'test_block',
+				'class' => 'test-block',
 				'show_title' => 'test_block',
 				'region_id' => 4, // right
 				'body' => 'text here',

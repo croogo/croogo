@@ -95,6 +95,7 @@ class TypesControllerTest extends CroogoTestCase {
 			'Type' => array(
 				'title' => 'New Type',
 				'alias' => 'new_type',
+				'description' => 'A new type',
 			),
 		);
 		$this->Types->startupProcess();

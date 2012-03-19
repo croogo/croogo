@@ -99,6 +99,7 @@ class NodesControllerTest extends CroogoTestCase {
 				'slug' => 'new-blog',
 				'type' => 'blog',
 				'token_key' => 1,
+				'body' => '',
 			),
 			'Role' => array(
 				'Role' => array(),

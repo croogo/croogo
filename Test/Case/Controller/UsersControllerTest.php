@@ -95,6 +95,8 @@ class UsersControllerTest extends CroogoTestCase {
 		$this->Users->request->data = array(
 			'User' => array(
 				'username' => 'new_user',
+				'password' => uniqid(),
+				'email' => 'new_user@croogo.dev',
 				'name' => 'New User',
 				'role_id' => 3,
 			),
