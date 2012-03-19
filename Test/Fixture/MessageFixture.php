@@ -1,6 +1,6 @@
 <?php
 /* Message Fixture generated on: 2010-05-20 22:05:43 : 1274393803 */
-class MessageFixture extends CakeTestFixture {
+class MessageFixture extends CroogoTestFixture {
 	var $name = 'Message';
 
 	var $fields = array(

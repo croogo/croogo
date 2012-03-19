@@ -1,6 +1,6 @@
 <?php
 /* Meta Fixture generated on: 2010-05-20 22:05:44 : 1274393804 */
-class MetaFixture extends CakeTestFixture {
+class MetaFixture extends CroogoTestFixture {
 	public $name = 'Meta';
 
 	public $table = 'meta';

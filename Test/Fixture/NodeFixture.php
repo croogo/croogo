@@ -1,6 +1,6 @@
 <?php
 /* Node Fixture generated on: 2010-05-20 22:05:47 : 1274393807 */
-class NodeFixture extends CakeTestFixture {
+class NodeFixture extends CroogoTestFixture {
 	var $name = 'Node';
 
 	var $fields = array(

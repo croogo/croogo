@@ -1,6 +1,6 @@
 <?php
 /* Region Fixture generated on: 2010-05-20 22:05:48 : 1274393808 */
-class RegionFixture extends CakeTestFixture {
+class RegionFixture extends CroogoTestFixture {
 	var $name = 'Region';
 
 	var $fields = array(

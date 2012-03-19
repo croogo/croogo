@@ -1,6 +1,6 @@
 <?php
 /* Block Fixture generated on: 2010-05-20 22:05:30 : 1274393790 */
-class BlockFixture extends CakeTestFixture {
+class BlockFixture extends CroogoTestFixture {
 	var $name = 'Block';
 
 	var $fields = array(

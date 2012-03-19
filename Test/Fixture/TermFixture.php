@@ -1,6 +1,6 @@
 <?php
 /* Term Fixture generated on: 2010-05-20 22:05:52 : 1274393812 */
-class TermFixture extends CakeTestFixture {
+class TermFixture extends CroogoTestFixture {
 	var $name = 'Term';
 
 	var $fields = array(

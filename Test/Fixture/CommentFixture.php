@@ -1,6 +1,6 @@
 <?php
 /* Comment Fixture generated on: 2010-05-20 22:05:32 : 1274393792 */
-class CommentFixture extends CakeTestFixture {
+class CommentFixture extends CroogoTestFixture {
 	var $name = 'Comment';
 
 	var $fields = array(

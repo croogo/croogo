@@ -1,6 +1,6 @@
 <?php
 /* Language Fixture generated on: 2010-05-20 22:05:37 : 1274393797 */
-class LanguageFixture extends CakeTestFixture {
+class LanguageFixture extends CroogoTestFixture {
 	var $name = 'Language';
 
 	var $fields = array(

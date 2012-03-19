@@ -1,6 +1,6 @@
 <?php
 /* Link Fixture generated on: 2010-05-20 22:05:39 : 1274393799 */
-class LinkFixture extends CakeTestFixture {
+class LinkFixture extends CroogoTestFixture {
 	var $name = 'Link';
 
 	var $fields = array(

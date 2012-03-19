@@ -1,6 +1,6 @@
 <?php
 /* Role Fixture generated on: 2010-05-20 22:05:49 : 1274393809 */
-class RoleFixture extends CakeTestFixture {
+class RoleFixture extends CroogoTestFixture {
 	var $name = 'Role';
 
 	var $fields = array(

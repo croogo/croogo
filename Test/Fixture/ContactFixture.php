@@ -1,6 +1,6 @@
 <?php
 /* Contact Fixture generated on: 2010-05-20 22:05:35 : 1274393795 */
-class ContactFixture extends CakeTestFixture {
+class ContactFixture extends CroogoTestFixture {
 	var $name = 'Contact';
 
 	var $fields = array(

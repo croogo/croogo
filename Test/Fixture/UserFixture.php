@@ -1,6 +1,6 @@
 <?php
 /* User Fixture generated on: 2010-05-20 22:05:57 : 1274393817 */
-class UserFixture extends CakeTestFixture {
+class UserFixture extends CroogoTestFixture {
 	var $name = 'User';
 
 	var $fields = array(

@@ -1,6 +1,6 @@
 <?php
 /* Type Fixture generated on: 2010-05-20 22:05:54 : 1274393814 */
-class TypeFixture extends CakeTestFixture {
+class TypeFixture extends CroogoTestFixture {
 	var $name = 'Type';
 
 	var $fields = array(

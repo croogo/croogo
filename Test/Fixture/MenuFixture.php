@@ -1,6 +1,6 @@
 <?php
 /* Menu Fixture generated on: 2010-05-20 22:05:41 : 1274393801 */
-class MenuFixture extends CakeTestFixture {
+class MenuFixture extends CroogoTestFixture {
 	var $name = 'Menu';
 
 	var $fields = array(

@@ -1,6 +1,6 @@
 <?php
 /* Vocabulary Fixture generated on: 2010-05-20 22:05:59 : 1274393819 */
-class VocabularyFixture extends CakeTestFixture {
+class VocabularyFixture extends CroogoTestFixture {
 	var $name = 'Vocabulary';
 
 	var $fields = array(
