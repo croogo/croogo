@@ -29,7 +29,7 @@ class CroogoTranslateBehaviorTest extends CakeTestCase {
 		'vocabulary',
 	);
 
-	public function startTest() {
+	public function startTest($method) {
 		$this->Node =& ClassRegistry::init('Node');
 		$this->Node->Behaviors->attach('CroogoTranslate', array(
 			'title' => 'titleTranslation',
@@ -48,7 +48,7 @@ class CroogoTranslateBehaviorTest extends CakeTestCase {
 		$this->assertEqual($about['Node']['title'], 'About [Translated in Bengali]');
 	}
 
-	public function endTest() {
+	public function endTest($method) {
 		unset($this->Node);
 		ClassRegistry::flush();
 	}

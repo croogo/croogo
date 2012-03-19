@@ -59,7 +59,7 @@ class MenusControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest() {
+	public function startTest($method) {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Menus = new TestMenusController($request, $response);
@@ -151,7 +151,7 @@ class MenusControllerTest extends CroogoTestCase {
 		$this->assertFalse($hasAny);
 	}
 
-	public function endTest() {
+	public function endTest($method) {
 		$this->Menus->Session->destroy();
 		unset($this->Menus);
 		ClassRegistry::flush();

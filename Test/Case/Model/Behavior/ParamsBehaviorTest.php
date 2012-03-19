@@ -28,7 +28,7 @@ class ParamsBehaviorTest extends CakeTestCase {
 		'vocabulary',
 	);
 
-	public function startTest() {
+	public function startTest($method) {
 		$this->Type =& ClassRegistry::init('Type');
 	}
 
@@ -59,7 +59,7 @@ class ParamsBehaviorTest extends CakeTestCase {
 		$this->assertEqual($type['Params'], $expected);
 	}
 
-	public function endTest() {
+	public function endTest($method) {
 		unset($this->Type);
 		ClassRegistry::flush();
 	}

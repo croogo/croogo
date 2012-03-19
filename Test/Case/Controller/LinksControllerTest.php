@@ -59,7 +59,7 @@ class LinksControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest() {
+	public function startTest($method) {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Links = new TestLinksController($request, $response);
@@ -311,7 +311,7 @@ class LinksControllerTest extends CroogoTestCase {
 		));
 	}
 
-	public function endTest() {
+	public function endTest($method) {
 		$this->Links->Session->destroy();
 		unset($this->Links);
 		ClassRegistry::flush();

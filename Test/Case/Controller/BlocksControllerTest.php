@@ -59,7 +59,7 @@ class BlocksControllerTest extends CroogoTestCase {
 		'app.vocabulary',
 	);
 
-	public function startTest() {
+	public function startTest($method) {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Blocks = new TestBlocksController($request, $response);
@@ -440,7 +440,7 @@ class BlocksControllerTest extends CroogoTestCase {
 		));
 	}
 
-	public function endTest() {
+	public function endTest($method) {
 		$this->Blocks->Session->destroy();
 		unset($this->Blocks);
 		ClassRegistry::flush();
