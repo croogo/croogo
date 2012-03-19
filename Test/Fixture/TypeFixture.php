@@ -15,7 +15,7 @@ class TypeFixture extends CakeTestFixture {
 		'comment_spam_protection' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'comment_captcha' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'params' => array('type' => 'text', 'null' => false, 'default' => NULL),
-		'plugin' => array('type' => 'string', 'null' => false, 'default' => NULL),
+		'plugin' => array('type' => 'string', 'null' => true, 'default' => NULL),
 		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'alias' => array('column' => 'alias', 'unique' => 1)),

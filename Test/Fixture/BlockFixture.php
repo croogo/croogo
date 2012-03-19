@@ -13,7 +13,7 @@ class BlockFixture extends CakeTestFixture {
 		'class' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'weight' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'element' => array('type' => 'string', 'null' => false, 'default' => NULL),
+		'element' => array('type' => 'string', 'null' => true, 'default' => NULL),
 		'visibility_roles' => array('type' => 'text', 'null' => false, 'default' => NULL),
 		'visibility_paths' => array('type' => 'text', 'null' => false, 'default' => NULL),
 		'visibility_php' => array('type' => 'text', 'null' => false, 'default' => NULL),

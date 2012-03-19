@@ -12,7 +12,7 @@ class CommentFixture extends CakeTestFixture {
 		'email' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
 		'website' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 200),
 		'ip' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
-		'title' => array('type' => 'string', 'null' => false, 'default' => NULL),
+		'title' => array('type' => 'string', 'null' => true, 'default' => NULL),
 		'body' => array('type' => 'text', 'null' => false, 'default' => NULL),
 		'rating' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => false, 'default' => '0'),

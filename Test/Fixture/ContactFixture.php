@@ -7,7 +7,7 @@ class ContactFixture extends CakeTestFixture {
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'title' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'alias' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'body' => array('type' => 'text', 'null' => false, 'default' => NULL),
+		'body' => array('type' => 'text', 'null' => true, 'default' => NULL),
 		'name' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'position' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'address' => array('type' => 'text', 'null' => false, 'default' => NULL),
