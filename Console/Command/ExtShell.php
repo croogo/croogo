@@ -74,8 +74,7 @@ class ExtShell extends AppShell {
 		$CakeResponse = new CakeResponse();
 		$this->_Controller = new AppController($CakeRequest, $CakeResponse);
 		$this->_Controller->constructClasses();
-		$this->_Controller->Croogo->startup($this->_Controller);
-		//$this->_Controller->startupProcess();
+		$this->_Controller->startupProcess();
 		$this->initialize();
 	}
 
@@ -92,7 +91,7 @@ class ExtShell extends AppShell {
 		if ($activate == 'deactivate' && $type == 'theme') {
 			$this->_deactivateTheme();
 		} else {
-			$this->{'_' . $activate . ucfirst($type)}(ucfirst($ext));
+			$this->{'_' . $activate . ucfirst($type)}($ext);
 		}
 	}
 
@@ -115,9 +114,6 @@ class ExtShell extends AppShell {
 				),
 				'extension' => array(
 					'help' => __d('croogo', 'Name of extension'),
-					// Don't require because `ext deactivate theme`
-					// doesn't require a 3rd argument
-					//'required' => true,
 				),
 			));
 	}
