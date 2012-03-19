@@ -19,7 +19,7 @@ class CachedBehavior extends ModelBehavior {
  * @param array  $config
  * @return void
  */
-	public function setup(&$model, $config = array()) {
+	public function setup(Model $model, $config = array()) {
 		if (is_string($config)) {
 			$config = array($config);
 		}
@@ -34,7 +34,7 @@ class CachedBehavior extends ModelBehavior {
  * @param boolean $created
  * @return void
  */
-	public function afterSave(&$model, $created) {
+	public function afterSave(Model $model, $created) {
 		$this->_deleteCachedFiles($model);
 	}
 
@@ -44,7 +44,7 @@ class CachedBehavior extends ModelBehavior {
  * @param object $model
  * @return void
  */
-	public function afterDelete(&$model) {
+	public function afterDelete(Model $model) {
 		$this->_deleteCachedFiles($model);
 	}
 

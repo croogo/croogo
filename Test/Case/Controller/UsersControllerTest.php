@@ -26,7 +26,7 @@ class TestUsersController extends UsersController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError() {
+	public function __securityError($type) {
 
 	}
 }

@@ -47,7 +47,7 @@ class AppModel extends Model {
  * @return mixed
  * @access public
  */
-	public function find($type, $options = array()) {
+	public function find($type = 'first', $options = array()) {
 		if ($this->useCache) {
 			$cachedResults = $this->_findCached($type, $options);
 			if ($cachedResults) {

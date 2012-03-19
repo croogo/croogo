@@ -68,7 +68,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return mixed
  * @access public
  */
-	public function setup(&$model, $config = array()) {
+	public function setup(Model $model, $config = array()) {
 		$db =& ConnectionManager::getDataSource($model->useDbConfig);
 		if (!$db->connected) {
 			trigger_error(
@@ -91,7 +91,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return void
  * @access public
  */
-	public function cleanup(&$model) {
+	public function cleanup(Model $model) {
 		//$this->unbindTranslation($model);
 		unset($this->settings[$model->alias]);
 		unset($this->runtime[$model->alias]);
@@ -120,7 +120,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return array Modified results
  * @access public
  */
-	public function afterFind(&$model, $results, $primary) {
+	public function afterFind(Model $model, $results, $primary) {
 		$locale = $this->_getLocale($model);
 
 		if (empty($locale) || empty($results)) {
@@ -234,7 +234,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return void
  * @access public
  */
-	public function afterDelete(&$model) {
+	public function afterDelete(Model $model) {
 		$RuntimeModel =& $this->translateModel($model);
 		$conditions = array('model' => $model->alias, 'foreign_key' => $model->id);
 		$RuntimeModel->deleteAll($conditions);

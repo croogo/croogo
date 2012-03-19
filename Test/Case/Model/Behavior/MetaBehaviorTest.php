@@ -29,8 +29,10 @@ class MetaBehaviorTest extends CakeTestCase {
 		'vocabulary',
 	);
 
+	public $Node = null;
+
 	public function startTest($method) {
-		$this->Node =& ClassRegistry::init('Node');
+		$this->Node = ClassRegistry::init('Node');
 	}
 
 	public function testSingle() {

@@ -16,7 +16,7 @@ class AliasableBehavior extends ModelBehavior {
 
 	protected $_byAlias = array();
 
-	public function setup(&$model, $config = array()) {
+	public function setup(Model $model, $config = array()) {
 		$config = Set::merge(array(
 			'id' => 'id',
 			'alias' => 'alias',

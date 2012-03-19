@@ -26,7 +26,7 @@ class TestLinksController extends LinksController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError() {
+	public function __securityError($type) {
 
 	}
 }

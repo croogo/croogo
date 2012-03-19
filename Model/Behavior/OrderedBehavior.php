@@ -113,7 +113,7 @@ class OrderedBehavior extends ModelBehavior {
 	 */
 	public $_defaults = array('field' => 'weight', 'foreign_key' => 'order_id');
 
-	public function setup(&$Model, $config = array()) {
+	public function setup(Model $Model, $config = array()) {
 		if (!is_array($config)) {
 			$config = array();
 		}
@@ -121,7 +121,7 @@ class OrderedBehavior extends ModelBehavior {
 		$Model->order = $Model->alias . '.' . $this->settings[$Model->alias]['field'] . ' ASC';
 	}
 
-	public function beforedelete(&$Model) {
+	public function beforeDelete(Model $Model, $cascade = true) {
 		$Model->read();
 		$highest = $this->_highest($Model);
 		if (!empty($Model->data) && ($Model->data[$Model->alias][$Model->primaryKey] == $highest[$Model->alias][$Model->primaryKey])) {
@@ -130,7 +130,7 @@ class OrderedBehavior extends ModelBehavior {
 		return true;
 	}
 
-	public function afterdelete(&$Model) {
+	public function afterDelete(Model $Model) {
 		if ($Model->data) {
 			// What was the weight of the deleted model?
 			$old_weight = $Model->data[$Model->alias][$this->settings[$Model->alias]['field']];
@@ -155,7 +155,7 @@ class OrderedBehavior extends ModelBehavior {
 	 * @todo add new model with weight. clean up after
 	 * @param Model $Model
 	 */
-	public function beforesave(&$Model) {
+	public function beforeSave(Model $Model) {
 		//	Check if weight id is set. If not add to end, if set update all
 		// rows from ID and up
 		if (!isset($Model->data[$Model->alias][$Model->primaryKey])) {

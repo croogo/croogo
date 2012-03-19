@@ -17,7 +17,7 @@ class UserAcoBehavior extends ModelBehavior {
 		}
 	}
 
-	public function afterSave($model, $created) {
+	public function afterSave(Model $model, $created) {
 		if (!$created) {
 			$parent = $model->parentNode();
 			$parent = $model->node($parent);

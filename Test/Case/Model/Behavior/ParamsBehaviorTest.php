@@ -28,8 +28,10 @@ class ParamsBehaviorTest extends CakeTestCase {
 		'vocabulary',
 	);
 
+	public $Type = null;
+
 	public function startTest($method) {
-		$this->Type =& ClassRegistry::init('Type');
+		$this->Type = ClassRegistry::init('Type');
 	}
 
 	public function testSingle() {

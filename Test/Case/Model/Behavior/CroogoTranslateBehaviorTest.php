@@ -29,8 +29,10 @@ class CroogoTranslateBehaviorTest extends CakeTestCase {
 		'vocabulary',
 	);
 
+	public $Node = null;
+
 	public function startTest($method) {
-		$this->Node =& ClassRegistry::init('Node');
+		$this->Node = ClassRegistry::init('Node');
 		$this->Node->Behaviors->attach('CroogoTranslate', array(
 			'title' => 'titleTranslation',
 		));

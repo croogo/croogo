@@ -13,7 +13,7 @@
  */
 class EncoderBehavior extends ModelBehavior {
 
-	public function setup(&$model, $config = array()) {
+	public function setup(Model $model, $config = array()) {
 		if (is_string($config)) {
 			$config = array($config);
 		}

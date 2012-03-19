@@ -176,7 +176,7 @@ class Node extends AppModel {
  *
  * @return boolean
  */
-	public function beforeSave() {
+	public function beforeSave($options = array()) {
 		if ($this->type != null) {
 			$this->data['Node']['type'] = $this->type;
 		}

@@ -11,7 +11,7 @@ class RecaptchaComponent extends Component {
 
 	protected $controller = null;
 
-	public function startup(&$controller){
+	public function startup(Controller $controller){
 		$this->publickey = Configure::read('Service.recaptcha_public_key');
 		$this->privatekey = Configure::read('Service.recaptcha_private_key');
 

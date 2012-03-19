@@ -96,7 +96,7 @@ class CroogoComponent extends Component {
  * @param object $controller instance of controller
  * @return void
  */
-	public function startup(&$controller) {
+	public function startup(Controller $controller) {
 		$this->controller =& $controller;
 
 		if ($this->Session->check('Auth.User.id')) {
@@ -424,7 +424,7 @@ class CroogoComponent extends Component {
  * @param object $controller instance of controller
  * @return void
  */
-	public function beforeRender(&$controller) {
+	public function beforeRender(Controller $controller) {
 		$this->controller =& $controller;
 		$this->controller->set('blocks_for_layout', $this->blocks_for_layout);
 		$this->controller->set('menus_for_layout', $this->menus_for_layout);
