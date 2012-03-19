@@ -1,5 +1,6 @@
 <?php
 App::uses('ShellDispatcher', 'Console');
+App::uses('AppShell', 'Console/Command');
 App::uses('Shell', 'Console');
 App::uses('InstallShell', 'Console/Command');
 App::uses('Folder', 'Utility');
