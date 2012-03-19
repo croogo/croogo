@@ -69,7 +69,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @access public
  */
 	public function setup(Model $model, $config = array()) {
-		$db =& ConnectionManager::getDataSource($model->useDbConfig);
+		$db = ConnectionManager::getDataSource($model->useDbConfig);
 		if (!$db->connected) {
 			trigger_error(
 				sprintf(__('Datasource %s for CroogoTranslateBehavior of model %s is not connected'), $model->useDbConfig, $model->alias),
@@ -128,7 +128,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 		}
 
 		$fields = $this->getTranslationFields($model);
-		$RuntimeModel =& $this->translateModel($model);
+		$RuntimeModel = $this->translateModel($model);
 
 		if ($primary && isset($results[0][$model->alias])) {
 			$i = 0;
@@ -192,7 +192,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 			return false;
 		}
 
-		$RuntimeModel =& $this->translateModel($model);
+		$RuntimeModel = $this->translateModel($model);
 		$conditions = array('model' => $model->alias, 'foreign_key' => $model->id);
 
 		foreach ($model->data[$model->alias] as $field => $value) {
@@ -235,7 +235,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @access public
  */
 	public function afterDelete(Model $model) {
-		$RuntimeModel =& $this->translateModel($model);
+		$RuntimeModel = $this->translateModel($model);
 		$conditions = array('model' => $model->alias, 'foreign_key' => $model->id);
 		$RuntimeModel->deleteAll($conditions);
 	}
