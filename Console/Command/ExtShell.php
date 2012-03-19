@@ -10,12 +10,9 @@ App::uses('CroogoTheme', 'Lib');
 /**
  * Ext Shell
  *
- * Activate Plugins/Themes
- *	./Console/croogo ext plugin example
- *	./Console/croogo ext theme minimal
- *
- * Deactivate & Verbosely Activate
+ * Activate/Deactivate Plugins/Themes
  *	./Console/croogo ext activate plugin example
+ *	./Console/croogo ext activate theme minimal
  *	./Console/croogo ext deactivate plugin example
  *	./Console/croogo ext deactivate theme
  *
@@ -83,9 +80,24 @@ class ExtShell extends AppShell {
  * Display help/options
  */
 	public function getOptionParser() {
-		$parser = parent::getOptionParser();
-		$parser->description(__d('croogo', 'Croogo Extension Activation'));
-		return $parser;
+		return parent::getOptionParser()
+			->description(__d('croogo', 'Activate Plugins & Themes'))
+			->addArguments(array(
+				'method' => array(
+					'help' => __d('croogo', 'Method to perform'),
+					'required' => true,
+					'choices' => array('activate', 'deactivate'),
+				),
+				'type' => array(
+					'help' => __d('croogo', 'Extension type'),
+					'required' => true,
+					'choices' => array('plugin', 'theme'),
+				),
+				'extension' => array(
+					'help' => __d('croogo', 'Name of extension'),
+					'required' => true,
+				),
+			));
 	}
 
 /**
