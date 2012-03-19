@@ -74,7 +74,7 @@ class ExtShell extends AppShell {
 		$CakeResponse = new CakeResponse();
 		$this->_Controller = new AppController($CakeRequest, $CakeResponse);
 		$this->_Controller->constructClasses();
-		$this->_Controller->Croogo->startup($this->_Controller);
+		$this->_Controller->startupProcess();
 		$this->initialize();
 	}
 
