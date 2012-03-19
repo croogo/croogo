@@ -14,6 +14,12 @@
  */
 class AclAccessComponent extends Component {
 
+	protected $controller = null;
+
+	public function startup(Controller $controller) {
+		$this->controller = $controller;
+	}
+
 /**
  * ACL: add ACO
  *
