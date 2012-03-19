@@ -5,6 +5,7 @@ App::uses('CakeResponse', 'Network');
 App::uses('ComponentCollection', 'Controller');
 App::uses('CroogoComponent', 'Controller/Component');
 App::uses('CroogoPlugin', 'Lib');
+App::uses('CroogoTheme', 'Lib');
 
 /**
  * Ext Shell
@@ -57,6 +58,13 @@ class ExtShell extends AppShell {
 	protected $_CroogoPlugin = null;
 
 /**
+ * CroogoTheme class
+ *
+ * @var CroogoTheme
+ */
+	protected $_CroogoTheme = null;
+
+/**
  * Initialize Croogo Component
  *
  * @param type $stdout
@@ -66,6 +74,7 @@ class ExtShell extends AppShell {
 	public function __construct($stdout = null, $stderr = null, $stdin = null) {
 		parent::__construct($stdout, $stderr, $stdin);
 		$this->_CroogoPlugin = new CroogoPlugin();
+		$this->_CroogoTheme = new CroogoTheme();
 		$Collection = new ComponentCollection();
 		$this->Croogo = new CroogoComponent($Collection);
 		$CakeRequest = new CakeRequest();
