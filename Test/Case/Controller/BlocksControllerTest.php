@@ -339,7 +339,7 @@ class BlocksControllerTest extends CroogoTestCase {
 		$this->Blocks->Block->id = 3; // About
 		$this->Blocks->Block->save(array(
 			'id' => 3,
-			'status' => 0,
+			'status' => false,
 		));
 		$this->Blocks->Block->id = false;
 		$about = $this->Blocks->Block->hasAny(array(
@@ -373,7 +373,7 @@ class BlocksControllerTest extends CroogoTestCase {
 		$this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
 		$list = $this->Blocks->Block->find('list', array(
 			'conditions' => array(
-				'Block.status' => 1,
+				'Block.status' => true,
 			),
 			'fields' => array(
 				'id',
