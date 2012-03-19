@@ -1,5 +1,4 @@
 <?php
-
 App::uses('ClassRegistry', 'Utility');
 App::uses('Folder', 'Utility');
 
@@ -17,7 +16,9 @@ App::uses('Folder', 'Utility');
  * @link     http://www.croogo.org
  */
 class CroogoPlugin extends Object {
-
+/**
+ * __construct
+ */
 	public function __construct() {
 		$this->Setting = ClassRegistry::init('Setting');
 	}
