@@ -4,6 +4,7 @@ App::uses('CakeRequest', 'Network');
 App::uses('CakeResponse', 'Network');
 App::uses('ComponentCollection', 'Controller');
 App::uses('CroogoComponent', 'Controller/Component');
+App::uses('CroogoPlugin', 'Lib');
 
 /**
  * Ext Shell
@@ -49,6 +50,13 @@ class ExtShell extends AppShell {
 	protected $_PluginActivation = null;
 
 /**
+ * CroogoPlugin class
+ *
+ * @var CroogoPlugin
+ */
+	protected $_CroogoPlugin = null;
+
+/**
  * Initialize Croogo Component
  *
  * @param type $stdout
@@ -57,6 +65,7 @@ class ExtShell extends AppShell {
  */
 	public function __construct($stdout = null, $stderr = null, $stdin = null) {
 		parent::__construct($stdout, $stderr, $stdin);
+		$this->_CroogoPlugin = new CroogoPlugin();
 		$Collection = new ComponentCollection();
 		$this->Croogo = new CroogoComponent($Collection);
 		$CakeRequest = new CakeRequest();
@@ -108,7 +117,7 @@ class ExtShell extends AppShell {
 		$pluginActivation = $this->_getPluginActivation($plugin);
 		if (!isset($pluginActivation) ||
 			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeActivation') && $pluginActivation->beforeActivation($this))) {
-			$pluginData = $this->Croogo->getPluginData($plugin);
+			$pluginData = $this->_CroogoPlugin->getPluginData($plugin);
 			$dependencies = true;
 			if (!empty($pluginData['dependencies']['plugins'])) {
 				foreach ($pluginData['dependencies']['plugins'] as $requiredPlugin) {
@@ -121,7 +130,7 @@ class ExtShell extends AppShell {
 				}
 			}
 			if ($dependencies) {
-				$this->Croogo->addPluginBootstrap($plugin);
+				$this->_CroogoPlugin->addPluginBootstrap($plugin);
 				if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
 					$pluginActivation->onActivation($this);
 				}
@@ -146,7 +155,7 @@ class ExtShell extends AppShell {
 		$pluginActivation = $this->_getPluginActivation($plugin);
 		if (!isset($pluginActivation) ||
 			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeDeactivation') && $pluginActivation->beforeDeactivation($this))) {
-			$this->Croogo->removePluginBootstrap($plugin);
+			$this->_CroogoPlugin->removePluginBootstrap($plugin);
 			if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
 				$pluginActivation->onDeactivation($this);
 			}
