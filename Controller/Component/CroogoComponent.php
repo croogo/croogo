@@ -2,6 +2,7 @@
 
 App::uses('File', 'Utility');
 App::uses('Folder', 'Utility');
+App::uses('CroogoPlugin', 'Lib');
 
 /**
  * Croogo Component
@@ -522,22 +523,10 @@ class CroogoComponent extends Component {
  *
  * @param string $plugin Plugin name (underscored)
  * @return void
+ * @deprecated use CroogoPlugin::addPluginBootstrap()
  */
 	public function addPluginBootstrap($plugin) {
-		$hookBootstraps = Configure::read('Hook.bootstraps');
-		if (!$hookBootstraps) {
-			$plugins = array();
-		} else {
-			$plugins = explode(',', $hookBootstraps);
-		}
-
-		if (array_search($plugin, $plugins) !== false) {
-			$plugins = $hookBootstraps;
-		} else {
-			$plugins[] = $plugin;
-			$plugins = implode(',', $plugins);
-		}
-		$this->controller->Setting->write('Hook.bootstraps', $plugins);
+		$this->_CroogoPlugin->addPluginBootstrap($plugin);
 	}
 
 /**
@@ -545,25 +534,10 @@ class CroogoComponent extends Component {
  *
  * @param string $plugin Plugin name (underscored)
  * @return void
+ * @deprecated use CroogoPlugin::removePluginBootstrap()
  */
 	public function removePluginBootstrap($plugin) {
-		$hookBootstraps = Configure::read('Hook.bootstraps');
-		if (!$hookBootstraps) {
-			return;
-		}
-
-		$plugins = explode(',', $hookBootstraps);
-		if (array_search($plugin, $plugins) !== false) {
-			$k = array_search($plugin, $plugins);
-			unset($plugins[$k]);
-		}
-
-		if (count($plugins) == 0) {
-			$plugins = '';
-		} else {
-			$plugins = implode(',', $plugins);
-		}
-		$this->controller->Setting->write('Hook.bootstraps', $plugins);
+		$this->_CroogoPlugin->removePluginBootstrap($plugin);
 	}
 
 /**
@@ -673,27 +647,10 @@ class CroogoComponent extends Component {
  * Get plugin alises (folder names)
  *
  * @return array
+ * @deprecated use CroogoPlugin::getPlugins()
  */
 	public function getPlugins() {
-		$plugins = array();
-		$this->folder = new Folder;
-		$pluginPaths = App::path('plugins');
-		foreach ($pluginPaths AS $pluginPath) {
-			$this->folder->path = $pluginPath;
-			if (!file_exists($this->folder->path)) { continue; }
-			$pluginFolders = $this->folder->read();
-			foreach ($pluginFolders[0] AS $pluginFolder) {
-				if (substr($pluginFolder, 0, 1) != '.') {
-					$this->folder->path = $pluginPath . $pluginFolder . DS . 'Config';
-					if (!file_exists($this->folder->path)) { continue; }
-					$pluginFolderContent = $this->folder->read();
-					if (in_array('plugin.json', $pluginFolderContent[1])) {
-						$plugins[$pluginFolder] = $pluginFolder;
-					}
-				}
-			}
-		}
-		return $plugins;
+		return $this->_CroogoPlugin->getPlugins();
 	}
 
 /**
@@ -701,23 +658,10 @@ class CroogoComponent extends Component {
  *
  * @param string $alias plugin folder name
  * @return array
+ * @deprecated use CroogoPlugin::getPluginData
  */
 	public function getPluginData($alias = null) {
-		$pluginPaths = App::path('plugins');
-		foreach ($pluginPaths AS $pluginPath) {
-			$manifestFile = $pluginPath . $alias . DS . 'Config' . DS . 'plugin.json';
-			if (file_exists($manifestFile)) {
-				$pluginData = json_decode(file_get_contents($manifestFile), true);
-				if (!empty($pluginData)) {
-					$pluginData['active'] = $this->pluginIsActive($alias);
-					unset($pluginManifest);
-				} else {
-					$pluginData = array();
-				}
-				return $pluginData;
-			}
-		}
-		return false;
+		return $this->_CroogoPlugin->getPluginData($alias);
 	}
 
 /**
@@ -726,24 +670,10 @@ class CroogoComponent extends Component {
  *
  * @param  string $plugin plugin alias (underscrored)
  * @return boolean
+ * @deprecated use CroogoPlugin::checkPluginDependency()
  */
 	public function checkPluginDependency($plugin = null) {
-		$pluginData = $this->getPluginData($plugin);
-		$pluginPaths = App::path('plugins');
-		if (isset($pluginData['dependencies']['plugins']) && is_array($pluginData['dependencies']['plugins'])) {
-			foreach ($pluginData['dependencies']['plugins'] AS $p) {
-				$check = false;
-				foreach ($pluginPaths AS $pluginPath) {
-					if (is_dir($pluginPath . $p)) {
-						$check = true;
-					}
-				}
-				if (!$check) {
-					return false;
-				}
-			}
-		}
-		return true;
+		return $this->_CroogoPlugin->checkPluginDependency($plugin);
 	}
 
 /**
@@ -751,22 +681,10 @@ class CroogoComponent extends Component {
  *
  * @param  string $plugin Plugin name (underscored)
  * @return boolean
+ * @deprecated use CroogoPlugin::pluginIsActive
  */
 	public function pluginIsActive($plugin) {
-		$configureKeys = array(
-			'Hook.bootstraps',
-		);
-
-		foreach ($configureKeys AS $configureKey) {
-			$hooks = explode(',', Configure::read($configureKey));
-			foreach ($hooks AS $hook) {
-				if ($hook == $plugin) {
-					return true;
-				}
-			}
-		}
-
-		return false;
+		$this->_CroogoPlugin->pluginIsActive($plugin);
 	}
 
 }
