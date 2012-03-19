@@ -1,9 +1,8 @@
 <?php
-App::uses('Controller', 'Controller');
 App::uses('CakeRequest', 'Network');
 App::uses('CakeResponse', 'Network');
-App::uses('ComponentCollection', 'Controller');
-App::uses('CroogoComponent', 'Controller/Component');
+App::uses('Controller', 'Controller');
+App::uses('AppController', 'Controller');
 App::uses('CroogoPlugin', 'Lib');
 App::uses('CroogoTheme', 'Lib');
 
@@ -11,9 +10,9 @@ App::uses('CroogoTheme', 'Lib');
  * Ext Shell
  *
  * Activate/Deactivate Plugins/Themes
- *	./Console/croogo ext activate plugin example
+ *	./Console/croogo ext activate plugin Example
  *	./Console/croogo ext activate theme minimal
- *	./Console/croogo ext deactivate plugin example
+ *	./Console/croogo ext deactivate plugin Example
  *	./Console/croogo ext deactivate theme
  *
  * @category Shell
@@ -32,6 +31,13 @@ class ExtShell extends AppShell {
 	public $uses = array('Setting');
 
 /**
+ * PluginActivation class
+ *
+ * @var object
+ */
+	protected $_PluginActivation = null;
+
+/**
  * CroogoPlugin class
  *
  * @var CroogoPlugin
@@ -46,6 +52,14 @@ class ExtShell extends AppShell {
 	protected $_CroogoTheme = null;
 
 /**
+ * Controller
+ *
+ * @var Controller
+ * @todo Remove this when PluginActivation dont need controllers
+ */
+	protected $_Controller = null;
+
+/**
  * Initialize Croogo Component
  *
  * @param type $stdout
@@ -56,6 +70,12 @@ class ExtShell extends AppShell {
 		parent::__construct($stdout, $stderr, $stdin);
 		$this->_CroogoPlugin = new CroogoPlugin();
 		$this->_CroogoTheme = new CroogoTheme();
+		$CakeRequest = new CakeRequest();
+		$CakeResponse = new CakeResponse();
+		$this->_Controller = new AppController($CakeRequest, $CakeResponse);
+		$this->_Controller->constructClasses();
+		$this->_Controller->startupProcess();
+		$this->initialize();
 	}
 
 /**
@@ -65,14 +85,13 @@ class ExtShell extends AppShell {
  */
 	public function main() {
 		$this->args = array_map('strtolower', $this->args);
-		$activate = ($this->args[0] == 'deactivate') ? $this->args[0] : 'activate';
-		if (sizeof($this->args) > 2) {
-			$this->args = array_slice($this->args, 1);
-		}
-		if ($activate == 'deactivate' && $this->args[1] == 'theme') {
+		$activate = $this->args[0];
+		$type = $this->args[1];
+		$ext = isset($this->args[2]) ? $this->args[2] : null;
+		if ($activate == 'deactivate' && $type == 'theme') {
 			$this->_deactivateTheme();
 		} else {
-			$this->{'_' . $activate . ucfirst($this->args[0])}($this->args[1]);
+			$this->{'_' . $activate . ucfirst($type)}($ext);
 		}
 	}
 
@@ -95,7 +114,6 @@ class ExtShell extends AppShell {
 				),
 				'extension' => array(
 					'help' => __d('croogo', 'Name of extension'),
-					'required' => true,
 				),
 			));
 	}
@@ -105,13 +123,11 @@ class ExtShell extends AppShell {
  *
  * @param string $plugin
  * @return boolean
- *
- * @todo Move this to a Lib
  */
 	protected function _activatePlugin($plugin = null) {
 		$pluginActivation = $this->_getPluginActivation($plugin);
 		if (!isset($pluginActivation) ||
-			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeActivation') && $pluginActivation->beforeActivation($this))) {
+			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeActivation') && $pluginActivation->beforeActivation($this->_Controller))) {
 			$pluginData = $this->_CroogoPlugin->getPluginData($plugin);
 			$dependencies = true;
 			if (!empty($pluginData['dependencies']['plugins'])) {
@@ -127,7 +143,7 @@ class ExtShell extends AppShell {
 			if ($dependencies) {
 				$this->_CroogoPlugin->addPluginBootstrap($plugin);
 				if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
-					$pluginActivation->onActivation($this);
+					$pluginActivation->onActivation($this->_Controller);
 				}
 				$this->out(__d('croogo', 'Plugin activated successfully.'));
 				return true;
@@ -149,10 +165,10 @@ class ExtShell extends AppShell {
 	protected function _deactivatePlugin($plugin = null) {
 		$pluginActivation = $this->_getPluginActivation($plugin);
 		if (!isset($pluginActivation) ||
-			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeDeactivation') && $pluginActivation->beforeDeactivation($this))) {
+			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeDeactivation') && $pluginActivation->beforeDeactivation($this->_Controller))) {
 			$this->_CroogoPlugin->removePluginBootstrap($plugin);
 			if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
-				$pluginActivation->onDeactivation($this);
+				$pluginActivation->onDeactivation($this->_Controller);
 			}
 			$this->out(__d('croogo', 'Plugin deactivated successfully.'));
 			return true;
@@ -169,6 +185,7 @@ class ExtShell extends AppShell {
  * @return object
  */
 	protected function _getPluginActivation($plugin = null) {
+		$plugin = Inflector::camelize($plugin);
 		if (!isset($this->_PluginActivation)) {
 			$className = $plugin . 'Activation';
 			$configFile = APP . 'Plugin' . DS . $plugin . DS . 'Config' . DS . $className . '.php';
