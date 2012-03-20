@@ -17,7 +17,7 @@ App::uses('Folder', 'Utility');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtShellTest extends CakeTestCase {
+class ExtShellTest extends CroogoTestCase {
 /**
  * fixtures
  *

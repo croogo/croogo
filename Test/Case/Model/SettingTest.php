@@ -1,6 +1,6 @@
 <?php
 App::uses('Setting', 'Model');
-class SettingTest extends CakeTestCase {
+class SettingTest extends CroogoTestCase {
 
 	public $fixtures = array(
 		'aco',

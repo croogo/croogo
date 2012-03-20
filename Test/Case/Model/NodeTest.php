@@ -1,6 +1,6 @@
 <?php
 App::uses('Node', 'Model');
-class NodeTest extends CakeTestCase {
+class NodeTest extends CroogoTestCase {
 
 	public $fixtures = array(
 		'aco',

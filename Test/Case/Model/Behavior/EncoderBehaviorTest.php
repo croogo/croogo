@@ -1,6 +1,6 @@
 <?php
 App::import('Model', 'Node');
-class EncoderBehaviorTest extends CakeTestCase {
+class EncoderBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
 		'aco',

@@ -14,7 +14,7 @@ class TheLayoutTestController extends Controller {
 	var $uses = null;
 }
 
-class HtmlHelperTest extends CakeTestCase {
+class HtmlHelperTest extends CroogoTestCase {
 
 	function startTest($method) {
 		$request = new CakeRequest('nodes/index');

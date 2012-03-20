@@ -1,6 +1,6 @@
 <?php
 App::import('Model', 'Type');
-class ParamsBehaviorTest extends CakeTestCase {
+class ParamsBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
 		'aco',

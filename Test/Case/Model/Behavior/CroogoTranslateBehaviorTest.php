@@ -1,7 +1,7 @@
 <?php
 App::import('Model', 'Node');
 
-class CroogoTranslateBehaviorTest extends CakeTestCase {
+class CroogoTranslateBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
 		'aco',

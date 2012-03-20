@@ -32,7 +32,7 @@ class TestInstallShell extends InstallShell {
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class InstallShellTest extends CakeTestCase {
+class InstallShellTest extends CroogoTestCase {
 /**
  * setUp method
  *

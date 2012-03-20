@@ -1,4 +1,6 @@
 <?php
+App::uses('CroogoTestCase', 'TestSuite');
+
 class AllModelsTest extends PHPUnit_Framework_TestSuite {
 
 	public static function suite() {

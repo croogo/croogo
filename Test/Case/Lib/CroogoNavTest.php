@@ -1,6 +1,6 @@
 <?php
 App::uses('CroogoNav', 'Lib');
-class CroogoNavTest extends CakeTestCase {
+class CroogoNavTest extends CroogoTestCase {
 
 	protected static $_menus = array();
 

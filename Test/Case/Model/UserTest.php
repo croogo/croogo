@@ -1,7 +1,7 @@
 <?php
 App::uses('User', 'Model');
 App::uses('AuthComponent', 'Controller/Component');
-class UserTest extends CakeTestCase {
+class UserTest extends CroogoTestCase {
 
 	public $fixtures = array(
 		'app.aco',

@@ -1,6 +1,6 @@
 <?php
 App::import('Model', 'Node');
-class UrlBehaviorTest extends CakeTestCase {
+class UrlBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
 		'aco',

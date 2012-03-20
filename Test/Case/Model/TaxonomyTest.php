@@ -1,6 +1,6 @@
 <?php
 App::uses('Taxonomy', 'Model');
-class TaxonomyTest extends CakeTestCase {
+class TaxonomyTest extends CroogoTestCase {
 
 	public $fixtures = array(
 		'aco',

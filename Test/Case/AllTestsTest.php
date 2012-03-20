@@ -1,4 +1,6 @@
 <?php
+App::uses('CroogoTestCase', 'TestSuite');
+
 class AllTestsTest extends PHPUnit_Framework_TestSuite {
 /**
  * suite

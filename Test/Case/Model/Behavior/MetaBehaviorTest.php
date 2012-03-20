@@ -1,7 +1,7 @@
 <?php
 App::import('Model', 'Node');
 
-class MetaBehaviorTest extends CakeTestCase {
+class MetaBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
 		'aco',
