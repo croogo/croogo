@@ -109,7 +109,7 @@ class TinymceHelper extends AppHelper {
 		return $settings;
 	}
 
-	public function beforeRender() {
+	public function beforeRender($viewFile) {
 		if (is_array(Configure::read('Tinymce.actions'))) {
 			$this->actions = Set::merge($this->actions, Configure::read('Tinymce.actions'));
 		}

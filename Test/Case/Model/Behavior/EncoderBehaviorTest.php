@@ -28,8 +28,10 @@ class EncoderBehaviorTest extends CakeTestCase {
 		'vocabulary',
 	);
 
-	public function startTest() {
-		$this->Node =& ClassRegistry::init('Node');
+	public $Node = null;
+
+	public function startTest($method) {
+		$this->Node = ClassRegistry::init('Node');
 	}
 
 	public function testEncodeWithoutKeys() {
@@ -65,7 +67,7 @@ class EncoderBehaviorTest extends CakeTestCase {
 		));
 	}
 
-	public function endTest() {
+	public function endTest($method) {
 		unset($this->Node);
 		ClassRegistry::flush();
 	}

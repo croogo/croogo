@@ -1,21 +1,24 @@
 <?php
 /* Vocabulary Fixture generated on: 2010-05-20 22:05:59 : 1274393819 */
-class VocabularyFixture extends CakeTestFixture {
+class VocabularyFixture extends CroogoTestFixture {
 	var $name = 'Vocabulary';
 
 	var $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
 		'title' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'alias' => array('type' => 'string', 'null' => false, 'default' => NULL, 'key' => 'unique'),
-		'description' => array('type' => 'text', 'null' => false, 'default' => NULL),
+		'description' => array('type' => 'text', 'null' => true, 'default' => NULL),
 		'required' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'multiple' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'tags' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'plugin' => array('type' => 'string', 'null' => false, 'default' => NULL),
+		'plugin' => array('type' => 'string', 'null' => true, 'default' => NULL),
 		'weight' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'alias' => array('column' => 'alias', 'unique' => 1)),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'vocabulary_alias' => array('column' => 'alias', 'unique' => 1),
+			),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 

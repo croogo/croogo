@@ -24,7 +24,7 @@ class AclGenerateComponent extends Component {
  * @param object $controller controller
  * @param array  $settings   settings
  */
-	public function initialize(&$controller) {
+	public function initialize(Controller $controller) {
 		$this->controller =& $controller;
 		$this->folder = new Folder;
 	}

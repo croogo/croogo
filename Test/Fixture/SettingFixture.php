@@ -1,6 +1,6 @@
 <?php
 /* Setting Fixture generated on: 2010-08-13 05:08:31 : 1281677491 */
-class SettingFixture extends CakeTestFixture {
+class SettingFixture extends CroogoTestFixture {
 	var $name = 'Setting';
 
 		var $fields = array(

@@ -26,7 +26,7 @@ class TestUsersController extends UsersController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError() {
+	public function __securityError($type) {
 
 	}
 }
@@ -59,7 +59,7 @@ class UsersControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest() {
+	public function startTest($method) {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Users = new TestUsersController($request, $response);
@@ -95,6 +95,8 @@ class UsersControllerTest extends CroogoTestCase {
 		$this->Users->request->data = array(
 			'User' => array(
 				'username' => 'new_user',
+				'password' => uniqid(),
+				'email' => 'new_user@croogo.dev',
 				'name' => 'New User',
 				'role_id' => 3,
 			),
@@ -165,7 +167,7 @@ class UsersControllerTest extends CroogoTestCase {
 		$this->assertTrue($hasAny);
 	}
 
-	public function endTest() {
+	public function endTest($method) {
 		$this->Users->Session->destroy();
 		unset($this->Users);
 		ClassRegistry::flush();

@@ -4,7 +4,7 @@ App::uses('AclBehavior', 'Model/Behavior');
 
 class CroogoAclBehavior extends AclBehavior {
 
-	public function setup($model, $config = array()) {
+	public function setup(Model $model, $config = array()) {
 		if (isset($config[0])) {
 			$config['type'] = $config[0];
 			unset($config[0]);

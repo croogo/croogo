@@ -1,6 +1,6 @@
 <?php
 
-class I18nFixture extends CakeTestFixture {
+class I18nFixture extends CroogoTestFixture {
 	public $name = 'I18n';
 	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),

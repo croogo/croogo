@@ -1,20 +1,23 @@
 <?php
 /* Menu Fixture generated on: 2010-05-20 22:05:41 : 1274393801 */
-class MenuFixture extends CakeTestFixture {
+class MenuFixture extends CroogoTestFixture {
 	var $name = 'Menu';
 
 	var $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
 		'title' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'alias' => array('type' => 'string', 'null' => false, 'default' => NULL, 'key' => 'unique'),
-		'description' => array('type' => 'text', 'null' => false, 'default' => NULL),
+		'description' => array('type' => 'text', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 		'weight' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'link_count' => array('type' => 'integer', 'null' => false, 'default' => NULL),
-		'params' => array('type' => 'text', 'null' => false, 'default' => NULL),
+		'params' => array('type' => 'text', 'null' => true, 'default' => NULL),
 		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'alias' => array('column' => 'alias', 'unique' => 1)),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'menu_alias' => array('column' => 'alias', 'unique' => 1),
+			),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 

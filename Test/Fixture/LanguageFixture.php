@@ -1,12 +1,12 @@
 <?php
 /* Language Fixture generated on: 2010-05-20 22:05:37 : 1274393797 */
-class LanguageFixture extends CakeTestFixture {
+class LanguageFixture extends CroogoTestFixture {
 	var $name = 'Language';
 
 	var $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'title' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'native' => array('type' => 'string', 'null' => false, 'default' => NULL),
+		'native' => array('type' => 'string', 'null' => true, 'default' => NULL),
 		'alias' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 		'weight' => array('type' => 'integer', 'null' => true, 'default' => NULL),

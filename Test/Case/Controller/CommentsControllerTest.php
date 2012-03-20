@@ -26,7 +26,7 @@ class TestCommentsController extends CommentsController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError() {
+	public function __securityError($type) {
 
 	}
 }
@@ -62,7 +62,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 /**
  * startTest
  */
-	public function startTest() {
+	public function startTest($method) {
 		$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 		$_SERVER['SERVER_NAME'] = 'localhost';
 		$request = new CakeRequest();
@@ -77,7 +77,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 /**
  * endTest
  */
-	public function endTest() {
+	public function endTest($method) {
 		unset($this->Comments);
 		CakeSession::clear();
 		ClassRegistry::flush();

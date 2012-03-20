@@ -26,7 +26,7 @@ class TestLanguagesController extends LanguagesController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError() {
+	public function __securityError($type) {
 
 	}
 }
@@ -59,7 +59,7 @@ class LanguagesControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest() {
+	public function startTest($method) {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Languages = new TestLanguagesController($request, $response);
@@ -274,7 +274,7 @@ class LanguagesControllerTest extends CroogoTestCase {
 		$this->assertEqual($this->Languages->viewVars['languages']['0']['Language']['alias'], 'eng');
 	}
 
-	public function endTest() {
+	public function endTest($method) {
 		$this->Languages->Session->destroy();
 		unset($this->Languages);
 		ClassRegistry::flush();

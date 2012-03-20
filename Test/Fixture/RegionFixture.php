@@ -1,6 +1,6 @@
 <?php
 /* Region Fixture generated on: 2010-05-20 22:05:48 : 1274393808 */
-class RegionFixture extends CakeTestFixture {
+class RegionFixture extends CroogoTestFixture {
 	var $name = 'Region';
 
 	var $fields = array(
@@ -9,7 +9,10 @@ class RegionFixture extends CakeTestFixture {
 		'alias' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100, 'key' => 'unique'),
 		'description' => array('type' => 'text', 'null' => false, 'default' => NULL),
 		'block_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'alias' => array('column' => 'alias', 'unique' => 1)),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'region_alias' => array('column' => 'alias', 'unique' => 1),
+			),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 

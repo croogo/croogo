@@ -26,7 +26,7 @@ class TestBlocksController extends BlocksController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError() {
+	public function __securityError($type) {
 
 	}
 }
@@ -59,7 +59,7 @@ class BlocksControllerTest extends CroogoTestCase {
 		'app.vocabulary',
 	);
 
-	public function startTest() {
+	public function startTest($method) {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Blocks = new TestBlocksController($request, $response);
@@ -94,6 +94,7 @@ class BlocksControllerTest extends CroogoTestCase {
 			'Block' => array(
 				'title' => 'Test block',
 				'alias' => 'test_block',
+				'class' => 'test-block',
 				'show_title' => 'test_block',
 				'region_id' => 4, // right
 				'body' => 'text here',
@@ -338,7 +339,7 @@ class BlocksControllerTest extends CroogoTestCase {
 		$this->Blocks->Block->id = 3; // About
 		$this->Blocks->Block->save(array(
 			'id' => 3,
-			'status' => 0,
+			'status' => false,
 		));
 		$this->Blocks->Block->id = false;
 		$about = $this->Blocks->Block->hasAny(array(
@@ -372,7 +373,7 @@ class BlocksControllerTest extends CroogoTestCase {
 		$this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
 		$list = $this->Blocks->Block->find('list', array(
 			'conditions' => array(
-				'Block.status' => 1,
+				'Block.status' => true,
 			),
 			'fields' => array(
 				'id',
@@ -440,7 +441,7 @@ class BlocksControllerTest extends CroogoTestCase {
 		));
 	}
 
-	public function endTest() {
+	public function endTest($method) {
 		$this->Blocks->Session->destroy();
 		unset($this->Blocks);
 		ClassRegistry::flush();

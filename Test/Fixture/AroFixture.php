@@ -1,6 +1,6 @@
 <?php
 /* Aro Fixture generated on: 2010-05-20 22:05:26 : 1274393786 */
-class AroFixture extends CakeTestFixture {
+class AroFixture extends CroogoTestFixture {
 	var $name = 'Aro';
 
 	var $fields = array(

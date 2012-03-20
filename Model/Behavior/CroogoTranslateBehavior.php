@@ -68,8 +68,8 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return mixed
  * @access public
  */
-	public function setup(&$model, $config = array()) {
-		$db =& ConnectionManager::getDataSource($model->useDbConfig);
+	public function setup(Model $model, $config = array()) {
+		$db = ConnectionManager::getDataSource($model->useDbConfig);
 		if (!$db->connected) {
 			trigger_error(
 				sprintf(__('Datasource %s for CroogoTranslateBehavior of model %s is not connected'), $model->useDbConfig, $model->alias),
@@ -91,7 +91,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return void
  * @access public
  */
-	public function cleanup(&$model) {
+	public function cleanup(Model $model) {
 		//$this->unbindTranslation($model);
 		unset($this->settings[$model->alias]);
 		unset($this->runtime[$model->alias]);
@@ -120,7 +120,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return array Modified results
  * @access public
  */
-	public function afterFind(&$model, $results, $primary) {
+	public function afterFind(Model $model, $results, $primary) {
 		$locale = $this->_getLocale($model);
 
 		if (empty($locale) || empty($results)) {
@@ -128,7 +128,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 		}
 
 		$fields = $this->getTranslationFields($model);
-		$RuntimeModel =& $this->translateModel($model);
+		$RuntimeModel = $this->translateModel($model);
 
 		if ($primary && isset($results[0][$model->alias])) {
 			$i = 0;
@@ -192,7 +192,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 			return false;
 		}
 
-		$RuntimeModel =& $this->translateModel($model);
+		$RuntimeModel = $this->translateModel($model);
 		$conditions = array('model' => $model->alias, 'foreign_key' => $model->id);
 
 		foreach ($model->data[$model->alias] as $field => $value) {
@@ -234,8 +234,8 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return void
  * @access public
  */
-	public function afterDelete(&$model) {
-		$RuntimeModel =& $this->translateModel($model);
+	public function afterDelete(Model $model) {
+		$RuntimeModel = $this->translateModel($model);
 		$conditions = array('model' => $model->alias, 'foreign_key' => $model->id);
 		$RuntimeModel->deleteAll($conditions);
 	}

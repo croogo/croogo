@@ -1,23 +1,23 @@
 <?php
 /* Contact Fixture generated on: 2010-05-20 22:05:35 : 1274393795 */
-class ContactFixture extends CakeTestFixture {
+class ContactFixture extends CroogoTestFixture {
 	var $name = 'Contact';
 
 	var $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
 		'title' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'alias' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'body' => array('type' => 'text', 'null' => false, 'default' => NULL),
-		'name' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'position' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'address' => array('type' => 'text', 'null' => false, 'default' => NULL),
-		'address2' => array('type' => 'text', 'null' => false, 'default' => NULL),
-		'state' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
-		'country' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
-		'postcode' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
-		'phone' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'fax' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'email' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
+		'body' => array('type' => 'text', 'null' => true, 'default' => NULL),
+		'name' => array('type' => 'string', 'null' => true, 'default' => NULL),
+		'position' => array('type' => 'string', 'null' => true, 'default' => NULL),
+		'address' => array('type' => 'text', 'null' => true, 'default' => NULL),
+		'address2' => array('type' => 'text', 'null' => true, 'default' => NULL),
+		'state' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100),
+		'country' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100),
+		'postcode' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100),
+		'phone' => array('type' => 'string', 'null' => true, 'default' => NULL),
+		'fax' => array('type' => 'string', 'null' => true, 'default' => NULL),
+		'email' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100),
 		'message_status' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 		'message_archive' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 		'message_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),

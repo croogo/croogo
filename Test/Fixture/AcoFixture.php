@@ -1,6 +1,6 @@
 <?php
 /* Aco Fixture generated on: 2010-05-20 22:05:26 : 1274393786 */
-class AcoFixture extends CakeTestFixture {
+class AcoFixture extends CroogoTestFixture {
 	var $name = 'Aco';
 
 	var $fields = array(

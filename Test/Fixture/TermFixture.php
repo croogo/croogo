@@ -1,6 +1,6 @@
 <?php
 /* Term Fixture generated on: 2010-05-20 22:05:52 : 1274393812 */
-class TermFixture extends CakeTestFixture {
+class TermFixture extends CroogoTestFixture {
 	var $name = 'Term';
 
 	var $fields = array(
@@ -10,7 +10,10 @@ class TermFixture extends CakeTestFixture {
 		'description' => array('type' => 'text', 'null' => false, 'default' => NULL),
 		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'slug' => array('column' => 'slug', 'unique' => 1)),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'term_slug' => array('column' => 'slug', 'unique' => 1),
+			),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 

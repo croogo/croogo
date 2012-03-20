@@ -7,7 +7,7 @@ class RegionData {
 		array(
 			'id' => '3',
 			'title' => 'none',
-			'alias' => '',
+			'alias' => 'none',
 			'description' => '',
 			'block_count' => '0'
 		),

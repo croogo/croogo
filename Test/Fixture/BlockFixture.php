@@ -1,6 +1,6 @@
 <?php
 /* Block Fixture generated on: 2010-05-20 22:05:30 : 1274393790 */
-class BlockFixture extends CakeTestFixture {
+class BlockFixture extends CroogoTestFixture {
 	var $name = 'Block';
 
 	var $fields = array(
@@ -10,14 +10,14 @@ class BlockFixture extends CakeTestFixture {
 		'alias' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'key' => 'unique'),
 		'body' => array('type' => 'text', 'null' => false, 'default' => NULL),
 		'show_title' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-		'class' => array('type' => 'string', 'null' => false, 'default' => NULL),
+		'class' => array('type' => 'string', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'weight' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'element' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'visibility_roles' => array('type' => 'text', 'null' => false, 'default' => NULL),
-		'visibility_paths' => array('type' => 'text', 'null' => false, 'default' => NULL),
-		'visibility_php' => array('type' => 'text', 'null' => false, 'default' => NULL),
-		'params' => array('type' => 'text', 'null' => false, 'default' => NULL),
+		'element' => array('type' => 'string', 'null' => true, 'default' => NULL),
+		'visibility_roles' => array('type' => 'text', 'null' => true, 'default' => NULL),
+		'visibility_paths' => array('type' => 'text', 'null' => true, 'default' => NULL),
+		'visibility_php' => array('type' => 'text', 'null' => true, 'default' => NULL),
+		'params' => array('type' => 'text', 'null' => true, 'default' => NULL),
 		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'alias' => array('column' => 'alias', 'unique' => 1)),

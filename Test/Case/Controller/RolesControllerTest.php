@@ -26,7 +26,7 @@ class TestRolesController extends RolesController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError() {
+	public function __securityError($type) {
 
 	}
 }
@@ -59,7 +59,7 @@ class RolesControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest() {
+	public function startTest($method) {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Roles = new TestRolesController($request, $response);
@@ -156,7 +156,7 @@ class RolesControllerTest extends CroogoTestCase {
 		$this->assertFalse($hasAny);
 	}
 
-	public function endTest() {
+	public function endTest($method) {
 		$this->Roles->Session->destroy();
 		unset($this->Roles);
 		ClassRegistry::flush();

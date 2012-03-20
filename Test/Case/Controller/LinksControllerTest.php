@@ -26,7 +26,7 @@ class TestLinksController extends LinksController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError() {
+	public function __securityError($type) {
 
 	}
 }
@@ -59,7 +59,7 @@ class LinksControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest() {
+	public function startTest($method) {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Links = new TestLinksController($request, $response);
@@ -105,6 +105,7 @@ class LinksControllerTest extends CroogoTestCase {
 			'Link' => array(
 				'menu_id' => $mainMenu['Menu']['id'],
 				'title' => 'Test link',
+				'class' => 'test-link',
 				'link' => '#test-link',
 				'status' => 1,
 			),
@@ -311,7 +312,7 @@ class LinksControllerTest extends CroogoTestCase {
 		));
 	}
 
-	public function endTest() {
+	public function endTest($method) {
 		$this->Links->Session->destroy();
 		unset($this->Links);
 		ClassRegistry::flush();

@@ -1,6 +1,6 @@
 <?php
 /* Type Fixture generated on: 2010-05-20 22:05:54 : 1274393814 */
-class TypeFixture extends CakeTestFixture {
+class TypeFixture extends CroogoTestFixture {
 	var $name = 'Type';
 
 	var $fields = array(
@@ -14,11 +14,14 @@ class TypeFixture extends CakeTestFixture {
 		'comment_approve' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 		'comment_spam_protection' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'comment_captcha' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'params' => array('type' => 'text', 'null' => false, 'default' => NULL),
-		'plugin' => array('type' => 'string', 'null' => false, 'default' => NULL),
+		'params' => array('type' => 'text', 'null' => true, 'default' => NULL),
+		'plugin' => array('type' => 'string', 'null' => true, 'default' => NULL),
 		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'alias' => array('column' => 'alias', 'unique' => 1)),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'type_alias' => array('column' => 'alias', 'unique' => 1),
+			),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 

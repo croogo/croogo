@@ -36,9 +36,20 @@ class Install extends InstallAppModel {
 		// create administrative user
 		$User = ClassRegistry::init('User');
 		$User->Role->Behaviors->attach('Aliasable');
+		unset($User->validate['email']);
+		$user['User']['name'] = $user['User']['username'];
+		$user['User']['email'] = '';
+		$user['User']['timezone'] = 0;
 		$user['User']['role_id'] = $User->Role->byAlias('admin');
 		$user['User']['status'] = true;
-		return $User->save($user);
+		$user['User']['activation_key'] = md5(uniqid());
+		$data = $User->create($user['User']);
+		$saved = $User->save($data);
+		if (!$saved) {
+			$this->log('Unable to create administrative user. Validation errors:');
+			$this->log($User->validationErrors);
+		}
+		return $saved;
 	}
 
 }

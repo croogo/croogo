@@ -1,6 +1,6 @@
 <?php
 /* Role Fixture generated on: 2010-05-20 22:05:49 : 1274393809 */
-class RoleFixture extends CakeTestFixture {
+class RoleFixture extends CroogoTestFixture {
 	var $name = 'Role';
 
 	var $fields = array(
@@ -9,7 +9,10 @@ class RoleFixture extends CakeTestFixture {
 		'alias' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'key' => 'unique'),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 		'updated' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'alias' => array('column' => 'alias', 'unique' => 1)),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'role_alias' => array('column' => 'alias', 'unique' => 1),
+			),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 

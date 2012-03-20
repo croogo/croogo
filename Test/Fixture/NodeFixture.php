@@ -1,6 +1,6 @@
 <?php
 /* Node Fixture generated on: 2010-05-20 22:05:47 : 1274393807 */
-class NodeFixture extends CakeTestFixture {
+class NodeFixture extends CroogoTestFixture {
 	var $name = 'Node';
 
 	var $fields = array(
@@ -10,18 +10,18 @@ class NodeFixture extends CakeTestFixture {
 		'title' => array('type' => 'string', 'null' => false, 'default' => NULL),
 		'slug' => array('type' => 'string', 'null' => false, 'default' => NULL, 'key' => 'unique'),
 		'body' => array('type' => 'text', 'null' => false, 'default' => NULL, 'key' => 'index'),
-		'excerpt' => array('type' => 'text', 'null' => false, 'default' => NULL),
+		'excerpt' => array('type' => 'text', 'null' => true, 'default' => NULL),
 		'status' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'mime_type' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
+		'mime_type' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100),
 		'comment_status' => array('type' => 'integer', 'null' => false, 'default' => '1', 'length' => 1),
 		'comment_count' => array('type' => 'integer', 'null' => true, 'default' => '0'),
 		'promote' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'path' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'terms' => array('type' => 'text', 'null' => false, 'default' => NULL),
+		'terms' => array('type' => 'text', 'null' => true, 'default' => NULL),
 		'sticky' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'lft' => array('type' => 'integer', 'null' => true, 'default' => NULL),
 		'rght' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'visibility_roles' => array('type' => 'text', 'null' => false, 'default' => NULL),
+		'visibility_roles' => array('type' => 'text', 'null' => true, 'default' => NULL),
 		'type' => array('type' => 'string', 'null' => false, 'default' => 'node', 'length' => 100),
 		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),

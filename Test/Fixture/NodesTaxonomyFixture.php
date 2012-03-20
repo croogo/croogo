@@ -1,6 +1,6 @@
 <?php
 /* NodesTaxonomy Fixture generated on: 2010-05-20 22:05:47 : 1274393807 */
-class NodesTaxonomyFixture extends CakeTestFixture {
+class NodesTaxonomyFixture extends CroogoTestFixture {
 	var $name = 'NodesTaxonomy';
 
 	var $fields = array(

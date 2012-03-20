@@ -32,7 +32,7 @@ class AppModel extends Model {
  * @param string $ds    DataSource connection name.
  */
 	public function __construct($id = false, $table = null, $ds = null) {
-		Croogo::applyHookProperties('Hook.model_properties');
+		Croogo::applyHookProperties('Hook.model_properties', $this);
 		parent::__construct($id, $table, $ds);
 	}
 
@@ -47,7 +47,7 @@ class AppModel extends Model {
  * @return mixed
  * @access public
  */
-	public function find($type, $options = array()) {
+	public function find($type = 'first', $options = array()) {
 		if ($this->useCache) {
 			$cachedResults = $this->_findCached($type, $options);
 			if ($cachedResults) {

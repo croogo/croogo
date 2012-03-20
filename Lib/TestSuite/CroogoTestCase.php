@@ -1,4 +1,7 @@
 <?php
+
+App::uses('CroogoTestFixture', 'TestSuite');
+
 /**
  * CroogoTestCase class
  *

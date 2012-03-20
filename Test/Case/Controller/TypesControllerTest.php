@@ -26,7 +26,7 @@ class TestTypesController extends TypesController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError() {
+	public function __securityError($type) {
 
 	}
 }
@@ -59,7 +59,7 @@ class TypesControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest() {
+	public function startTest($method) {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Types = new TestTypesController($request, $response);
@@ -95,6 +95,7 @@ class TypesControllerTest extends CroogoTestCase {
 			'Type' => array(
 				'title' => 'New Type',
 				'alias' => 'new_type',
+				'description' => 'A new type',
 			),
 		);
 		$this->Types->startupProcess();
@@ -151,7 +152,7 @@ class TypesControllerTest extends CroogoTestCase {
 		$this->assertFalse($hasAny);
 	}
 
-	public function endTest() {
+	public function endTest($method) {
 		$this->Types->Session->destroy();
 		unset($this->Types);
 		ClassRegistry::flush();

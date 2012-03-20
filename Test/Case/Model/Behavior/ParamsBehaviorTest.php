@@ -28,14 +28,17 @@ class ParamsBehaviorTest extends CakeTestCase {
 		'vocabulary',
 	);
 
-	public function startTest() {
-		$this->Type =& ClassRegistry::init('Type');
+	public $Type = null;
+
+	public function startTest($method) {
+		$this->Type = ClassRegistry::init('Type');
 	}
 
 	public function testSingle() {
 		$this->Type->save(array(
 			'title' => 'Article',
 			'alias' => 'article',
+			'description' => 'Article Types',
 			'params' => 'param1=value1',
 		));
 		$type = $this->Type->findByAlias('article');
@@ -49,6 +52,7 @@ class ParamsBehaviorTest extends CakeTestCase {
 		$this->Type->save(array(
 			'title' => 'Article',
 			'alias' => 'article',
+			'description' => 'Article Types',
 			'params' => "param1=value1\nparam2=value2",
 		));
 		$type = $this->Type->findByAlias('article');
@@ -59,7 +63,7 @@ class ParamsBehaviorTest extends CakeTestCase {
 		$this->assertEqual($type['Params'], $expected);
 	}
 
-	public function endTest() {
+	public function endTest($method) {
 		unset($this->Type);
 		ClassRegistry::flush();
 	}

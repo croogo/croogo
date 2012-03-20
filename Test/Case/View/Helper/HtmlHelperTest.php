@@ -16,7 +16,7 @@ class TheLayoutTestController extends Controller {
 
 class HtmlHelperTest extends CakeTestCase {
 
-	function startTest() {
+	function startTest($method) {
 		$request = new CakeRequest('nodes/index');
 		$request->params = array(
 			'controller' => 'nodes',
@@ -122,7 +122,7 @@ class HtmlHelperTest extends CakeTestCase {
 		));
 	}
 
-	function endTest() {
+	function endTest($method) {
 		Configure::write('App.encoding', $this->_appEncoding);
 		Configure::write('Asset', $this->_asset);
 		Configure::write('debug', $this->_debug);

@@ -26,7 +26,7 @@ class TestNodesController extends NodesController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError() {
+	public function __securityError($type) {
 
 	}
 }
@@ -59,7 +59,7 @@ class NodesControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest() {
+	public function startTest($method) {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Nodes = new TestNodesController($request, $response);
@@ -99,6 +99,7 @@ class NodesControllerTest extends CroogoTestCase {
 				'slug' => 'new-blog',
 				'type' => 'blog',
 				'token_key' => 1,
+				'body' => '',
 			),
 			'Role' => array(
 				'Role' => array(),
@@ -168,7 +169,7 @@ class NodesControllerTest extends CroogoTestCase {
 		$this->assertFalse($hasAny);
 	}
 
-	public function endTest() {
+	public function endTest($method) {
 		$this->Nodes->Session->destroy();
 		unset($this->Nodes);
 		ClassRegistry::flush();

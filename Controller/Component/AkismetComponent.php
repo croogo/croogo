@@ -88,7 +88,7 @@ class AkismetComponent extends Component
 	 *    @param    string    $blogURL            The URL of your blog.
 	 *    @param    string    $wordPressAPIKey    WordPress API key.
 	 */
-	public function startup() {
+	public function startup(Controller $controller) {
 		$this->blogURL = Configure::read('Service.akismet_url');
 		$this->wordPressAPIKey = Configure::read('Service.akismet_key');
 

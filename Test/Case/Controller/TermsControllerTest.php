@@ -26,7 +26,7 @@ class TestTermsController extends TermsController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError() {
+	public function __securityError($type) {
 
 	}
 }
@@ -59,7 +59,7 @@ class TermsControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest() {
+	public function startTest($method) {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Terms = new TestTermsController($request, $response);
@@ -246,7 +246,7 @@ class TermsControllerTest extends CroogoTestCase {
 		$this->assertEqual($termsTree, $expected);
 	}
 
-	public function endTest() {
+	public function endTest($method) {
 		$this->Terms->Session->destroy();
 		unset($this->Terms);
 		ClassRegistry::flush();

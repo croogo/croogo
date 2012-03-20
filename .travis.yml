@@ -1,0 +1,92 @@
+language: php
+
+php:
+  - 5.2
+  - 5.3
+  - 5.4
+
+env:
+  - DB=mysql
+  - DB=sqlite
+  - DB=pgsql
+
+before_script:
+  - sh -c "cd .. ; mkdir lib ; cd lib ; git clone --depth 1 git://github.com/cakephp/cakephp ; cd cakephp ; git checkout -qf 2.1"
+  - sh -c "cd ../lib ; ln -s cakephp/lib/Cake Cake"
+  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE croogo_test;'; fi"
+  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE croogo_test;' -U postgres; fi"
+  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE SCHEMA croogo_test;' -U postgres -d croogo_test; fi"
+  - cp Config/settings.yml.install Config/settings.yml
+  - echo "Site.acl_plugin: Acl" >> Config/settings.yml
+  - chmod -R 777 ./tmp
+  - echo "var net = require('net');
+    var server = net.createServer();
+    server.listen(80, 'localhost');
+    console.log('TCP server listening on port 80 at localhost.');" > tmp/socket.js
+  - sudo node ./tmp/socket.js &
+  - set +H
+  - echo "<?php
+    class DATABASE_CONFIG {
+    private \$identities = array(
+      'mysql' => array(
+        'datasource' => 'Database/Mysql',
+        'host' => '0.0.0.0',
+        'login' => 'travis'
+      ),
+      'pgsql' => array(
+        'datasource' => 'Database/Postgres',
+        'host' => '127.0.0.1',
+        'login' => 'postgres',
+        'database' => 'croogo_test',
+        'schema' => array(
+          'default' => 'public',
+          'test' => 'croogo_test',
+        )
+      ),
+      'sqlite' => array(
+        'datasource' => 'Database/Sqlite',
+        'database' => array(
+          'default' => ':memory:',
+          'test' => ':memory:',
+        ),
+      )
+    );
+    public \$default = array(
+      'persistent' => false,
+      'host' => '',
+      'login' => '',
+      'password' => '',
+      'database' => 'croogo',
+      'prefix' => ''
+    );
+    public \$test = array(
+      'persistent' => false,
+      'host' => '',
+      'login' => '',
+      'password' => '',
+      'database' => 'croogo_test',
+      'prefix' => ''
+    );
+    public function __construct() {
+      \$db = 'mysql';
+      if (!empty(\$_SERVER['DB'])) {
+        \$db = \$_SERVER['DB'];
+      }
+      foreach (array('default', 'test') as \$source) {
+        \$config = array_merge(\$this->{\$source}, \$this->identities[\$db]);
+        if (is_array(\$config['database'])) {
+          \$config['database'] = \$config['database'][\$source];
+        }
+        if (!empty(\$config['schema']) && is_array(\$config['schema'])) {
+          \$config['schema'] = \$config['schema'][\$source];
+        }
+        \$this->{\$source} = \$config;
+      }
+    }
+    }" > Config/database.php
+
+script:
+  - ../lib/Cake/Console/cake test app AllTests --stderr
+
+notifications:
+  email: false
