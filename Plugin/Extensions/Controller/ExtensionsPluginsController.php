@@ -1,4 +1,6 @@
 <?php
+App::uses('ExtensionsInstaller', 'Extensions.Lib');
+
 /**
  * Extensions Plugins Controller
  *
@@ -61,88 +63,23 @@ class ExtensionsPluginsController extends AppController {
 		$this->set(compact('plugins'));
 	}
 
+/**
+ * admin_add
+ */
 	public function admin_add() {
 		$this->set('title_for_layout', __('Upload a new plugin'));
 
 		if (!empty($this->request->data)) {
 			$file = $this->request->data['Plugin']['file'];
 			unset($this->request->data['Plugin']['file']);
-
-			// get plugin name and root
-			$zip = zip_open($file['tmp_name']);
-			$root = 0;
-			if ($zip) {
-				while ($zip_entry = zip_read($zip)) {
-					$zipEntryName = zip_entry_name($zip_entry);
-					$searches = array('Activation', 'AppController', 'AppModel', 'AppHelper');
-					foreach ($searches AS $search) {
-						if (preg_match('/([A-Za-z0-9_]+)'.$search.'\.php/', $zipEntryName, $matches)) {
-							$plugin = $matches[1];
-							foreach (explode('/', $zipEntryName) as $folder) {
-								if (in_array($folder, array(
-									'Config',
-									'Controller',
-									'Model',
-									'View',
-									))) {
-									break;
-								}
-								$root++;
-							}
-							break;
-						}
-					}
-					if (!empty($plugin)) { break; }
-				}
-			}
-			zip_close($zip);
-
-			if (!$plugin) {
-				$this->Session->setFlash(__('Invalid plugin.'), 'default', array('class' => 'error'));
+			
+			$Installer = new ExtensionsInstaller;
+			try {
+				$Installer->extractPlugin($file['tmp_name']);
+			} catch (CakeException $e) {
+				$this->Session->setFlash($e->getMessage(), 'default', array('class' => 'error'));
 				$this->redirect(array('action' => 'add'));
 			}
-
-			$pluginName = $plugin;
-
-			if (is_dir(APP . 'Plugin' . DS . $pluginName)) {
-				$this->Session->setFlash(__('Plugin already exists.'), 'default', array('class' => 'error'));
-				$this->redirect(array('action' => 'add'));
-			}
-
-			// extract
-			$zip = zip_open($file['tmp_name']);
-			if ($zip) {
-				// create root plugin dir
-				$path = APP . 'Plugin' . DS . $pluginName . DS;
-				mkdir($path);
-				while ($zip_entry = zip_read($zip)) {
-					$zipEntryName = zip_entry_name($zip_entry);
-					$zipEntryNameE = array_slice(explode('/', $zipEntryName), $root);
-					if (!empty($zipEntryNameE[count($zipEntryNameE)-1])) {
-						$path = APP . 'Plugin' . DS . $pluginName . DS . implode(DS, $zipEntryNameE);
-					} else {
-						$path = APP . 'Plugin' . DS . $pluginName . DS . implode(DS, $zipEntryNameE) . DS;
-					}
-					if (substr($path, strlen($path) - 1) == DS) {
-						// create directory
-						if (!is_dir($path)) {
-							mkdir($path);
-						}
-					} else {
-						// create file
-						if (zip_entry_open($zip, $zip_entry, 'r')) {
-							$fileContent = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
-							touch($path);
-							$fh = fopen($path, 'w');
-							fwrite($fh, $fileContent);
-							fclose($fh);
-							zip_entry_close($zip_entry);
-						}
-					}
-				}
-			}
-			zip_close($zip);
-
 			$this->redirect(array('action' => 'index'));
 		}
 	}

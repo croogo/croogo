@@ -45,6 +45,7 @@ class ExampleActivation {
 			'title' => 'Example',
 			'link' => 'plugin:example/controller:example/action:index',
 			'status' => 1,
+			'class' => 'example',
 		));
 	}
 
