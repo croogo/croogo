@@ -171,7 +171,10 @@ class CroogoComponent extends Component {
 		$vocabularies = $this->controller->Node->Taxonomy->Vocabulary->find('all', array(
 			'recursive' => '-1',
 			'conditions' => array(
-				'Vocabulary.plugin <>' => null,
+				'OR' => array(
+					'Vocabulary.plugin LIKE' => '',
+					'Vocabulary.plugin' => null,
+				),
 			),
 			'order' => 'Vocabulary.alias ASC',
 		));
