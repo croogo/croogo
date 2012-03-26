@@ -35,6 +35,7 @@ class AclFilterComponent extends Component {
 				'userModel' => 'User',
 				'fields' => array(
 					'username' => 'username',
+					'password' => 'password',
 					),
 				'scope' => array(
 					'User.status' => 1,
