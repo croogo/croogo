@@ -84,15 +84,25 @@ class ExtShell extends AppShell {
  * @return void
  */
 	public function main() {
+		$args = $this->args;
 		$this->args = array_map('strtolower', $this->args);
 		$activate = $this->args[0];
 		$type = $this->args[1];
-		$ext = isset($this->args[2]) ? $this->args[2] : null;
-		if ($activate == 'deactivate' && $type == 'theme') {
-			$this->_deactivateTheme();
-		} else {
-			$this->{'_' . $activate . ucfirst($type)}($ext);
+		$ext = isset($args[2]) ? $args[2] : null;
+		if ($type == 'theme') {
+			if ($activate == 'deactivate') {
+				$this->_deactivateTheme();
+				return true;
+			}
+			$extensions = $this->_CroogoTheme->getThemes();
+		} elseif ($type == 'plugin') {
+			$extensions = $this->_CroogoPlugin->getPlugins();
 		}
+		if (!in_array($ext, $extensions)) {
+			$this->err(__d('croogo', '%s "%s" not found.', ucfirst($type), $ext));
+			return false;
+		}
+		return $this->{'_' . $activate . ucfirst($type)}($ext);
 	}
 
 /**
