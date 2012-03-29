@@ -128,7 +128,7 @@ class CroogoPlugin extends Object {
 /**
  * Loads plugin's bootstrap.php file
  *
- * @param string $plugin Plugin name (underscored)
+ * @param string $plugin Plugin name
  * @return void
  */
 	public function addPluginBootstrap($plugin) {
@@ -137,6 +137,10 @@ class CroogoPlugin extends Object {
 			$plugins = array();
 		} else {
 			$plugins = explode(',', $hookBootstraps);
+			$names = array(Inflector::underscore($plugin), Inflector::camelize($plugin));
+			if ($intersect = array_intersect($names, $plugins)) {
+				$plugin = current($intersect);
+			}
 		}
 
 		if (array_search($plugin, $plugins) !== false) {
@@ -151,7 +155,7 @@ class CroogoPlugin extends Object {
 /**
  * Plugin name will be removed from Hook.bootstraps
  *
- * @param string $plugin Plugin name (underscored)
+ * @param string $plugin Plugin name
  * @return void
  */
 	public function removePluginBootstrap($plugin) {
@@ -161,7 +165,9 @@ class CroogoPlugin extends Object {
 		}
 
 		$plugins = explode(',', $hookBootstraps);
-		if (array_search($plugin, $plugins) !== false) {
+		$names = array(Inflector::underscore($plugin), Inflector::camelize($plugin));
+		if ($intersect = array_intersect($names, $plugins)) {
+			$plugin = current($intersect);
 			$k = array_search($plugin, $plugins);
 			unset($plugins[$k]);
 		}
@@ -173,5 +179,4 @@ class CroogoPlugin extends Object {
 		}
 		$this->Setting->write('Hook.bootstraps', $plugins);
 	}
-
 }

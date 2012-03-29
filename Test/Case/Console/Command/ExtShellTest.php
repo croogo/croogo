@@ -87,7 +87,7 @@ class ExtShellTest extends CroogoTestCase {
 		$Shell->args = array('activate', 'plugin', 'Example');
 		$Shell->main();
 		$result = $this->Setting->findByKey('Hook.bootstraps');
-		$this->assertTrue(in_array('example', explode(',', $result['Setting']['value'])));
+		$this->assertTrue(in_array('Example', explode(',', $result['Setting']['value'])));
 		$result = $Link->findByTitle('Example');
 		$this->assertTrue(!empty($result));
 
