@@ -155,13 +155,13 @@ class ExtShell extends AppShell {
 				if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
 					$pluginActivation->onActivation($this->_Controller);
 				}
-				$this->out(__d('croogo', 'Plugin activated successfully.'));
+				$this->out(__d('croogo', 'Plugin "%s" activated successfully.', $plugin));
 				return true;
 			} else {
 				$this->err(__d('croogo', 'Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin));
 			}
 		} else {
-			$this->err(__d('croogo', 'Plugin could not be activated. Please, try again.'));
+			$this->err(__d('croogo', 'Plugin "%s" could not be activated. Please, try again.', $plugin));
 		}
 		return false;
 	}
@@ -180,10 +180,10 @@ class ExtShell extends AppShell {
 			if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
 				$pluginActivation->onDeactivation($this->_Controller);
 			}
-			$this->out(__d('croogo', 'Plugin deactivated successfully.'));
+			$this->out(__d('croogo', 'Plugin "%s" deactivated successfully.', $plugin));
 			return true;
 		} else {
-			$this->err(__d('croogo', 'Plugin could not be deactivated. Please, try again.'));
+			$this->err(__d('croogo', 'Plugin "%s" could not be deactivated. Please, try again.', $plugin));
 		}
 		return false;
 	}
