@@ -3,8 +3,8 @@ App::uses('CakeRequest', 'Network');
 App::uses('CakeResponse', 'Network');
 App::uses('Controller', 'Controller');
 App::uses('AppController', 'Controller');
-App::uses('CroogoPlugin', 'Lib');
-App::uses('CroogoTheme', 'Lib');
+App::uses('CroogoPlugin', 'Extensions.Lib');
+App::uses('CroogoTheme', 'Extensions.Lib');
 
 /**
  * Ext Shell

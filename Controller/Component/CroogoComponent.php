@@ -2,8 +2,8 @@
 
 App::uses('File', 'Utility');
 App::uses('Folder', 'Utility');
-App::uses('CroogoPlugin', 'Lib');
-App::uses('CroogoTheme', 'Lib');
+App::uses('CroogoPlugin', 'Extensions.Lib');
+App::uses('CroogoTheme', 'Extensions.Lib');
 
 /**
  * Croogo Component
