@@ -16,6 +16,13 @@
 class CroogoTheme extends Object {
 
 /**
+ * Constructor
+ */
+	public function __construct() {
+		$this->Setting = ClassRegistry::init('Setting');
+	}
+
+/**
  * Get theme aliases (folder names)
  *
  * @return array
@@ -81,6 +88,30 @@ class CroogoTheme extends Object {
  */
 	public function getThemeData($alias = null) {
 		return $this->getData($alias);
+	}
+
+/**
+ * Activate theme $alias
+ * @param $alias theme alias
+ * @return mixed On success Setting::$data or true, false on failure
+ */
+	public function activate($alias) {
+		if ($alias == 'default') {
+			$alias = '';
+		}
+
+		$siteTheme = $this->Setting->findByKey('Site.theme');
+		if ($siteTheme) {
+			$siteTheme['Setting']['value'] = $alias;
+		} else {
+			$this->Setting->write('Site.theme', $alias);
+		}
+		if (empty($alias)) {
+			$this->Setting->id = $siteTheme['Setting']['id'];
+			return $this->Setting->delete();
+		} else {
+			return $this->Setting->save($siteTheme);
+		}
 	}
 
 }
