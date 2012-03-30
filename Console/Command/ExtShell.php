@@ -213,14 +213,14 @@ class ExtShell extends AppShell {
  * @return boolean
  */
 	protected function _activateTheme($theme = null) {
-		if ($this->_CroogoTheme->activate($theme)) {
+		if ($r = $this->_CroogoTheme->activate($theme)) {
 			if (is_null($theme)) {
 				$this->out(__d('croogo', 'Theme deactivated successfully.'));
 			} else {
-				$this->out(__d('croogo', 'Theme activated successfully.'));
+				$this->out(__d('croogo', 'Theme "%s" activated successfully.', $theme));
 			}
 		} else {
-				$this->err(__d('croogo', 'Theme activation failed.'));
+			$this->err(__d('croogo', 'Theme "%s" activation failed.', $theme));
 		}
 		return true;
 	}
