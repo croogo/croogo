@@ -1,5 +1,8 @@
 <?php
+App::uses('File', 'Utility');
+App::uses('Folder', 'Utility');
 App::uses('ExtensionsInstaller', 'Extensions.Lib');
+App::uses('CroogoTheme', 'Extensions.Lib');
 
 /**
  * Extensions Themes Controller
@@ -30,35 +33,40 @@ class ExtensionsThemesController extends AppController {
  */
 	public $uses = array('Setting', 'User');
 
-	public function beforeFilter() {
-		parent::beforeFilter();
-		App::uses('File', 'Utility');
-		App::uses('Folder', 'Utility');
+
+/**
+ * CroogoTheme instance
+ */
+	protected $_CroogoTheme = false;
+
+/**
+ * Constructor
+ */
+	public function __construct($request = null, $response = null) {
+		$this->_CroogoTheme = new CroogoTheme();
+		parent::__construct($request, $response);
 	}
 
 	public function admin_index() {
 		$this->set('title_for_layout', __('Themes'));
 
-		$themes = $this->Croogo->getThemes();
+		$themes = $this->_CroogoTheme->getThemes();
 		$themesData = array();
-		$themesData[] = $this->Croogo->getThemeData();
+		$themesData[] = $this->_CroogoTheme->getData();
 		foreach ($themes AS $theme) {
-			$themesData[$theme] = $this->Croogo->getThemeData($theme);
+			$themesData[$theme] = $this->_CroogoTheme->getData($theme);
 		}
 
-		$currentTheme = $this->Croogo->getThemeData(Configure::read('Site.theme'));
+		$currentTheme = $this->_CroogoTheme->getData(Configure::read('Site.theme'));
 		$this->set(compact('themes', 'themesData', 'currentTheme'));
 	}
 
 	public function admin_activate($alias = null) {
-		if ($alias == 'default') {
-			$alias = null;
+		if ($this->_CroogoTheme->activate($alias)) {
+			$this->Session->setFlash(__('Theme activated.'), 'default', array('class' => 'success'));
+		} else {
+			$this->Session->setFlash(__('Theme activation failed.'), 'default', array('class' => 'success'));
 		}
-
-		$siteTheme = $this->Setting->findByKey('Site.theme');
-		$siteTheme['Setting']['value'] = $alias;
-		$this->Setting->save($siteTheme);
-		$this->Session->setFlash(__('Theme activated.'), 'default', array('class' => 'success'));
 
 		$this->redirect(array('action' => 'index'));
 	}

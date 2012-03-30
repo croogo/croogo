@@ -1,5 +1,6 @@
 <?php
 App::uses('ExtensionsInstaller', 'Extensions.Lib');
+App::uses('CroogoPlugin', 'Extensions.Lib');
 
 /**
  * Extensions Plugins Controller
@@ -47,17 +48,17 @@ class ExtensionsPluginsController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 
-		App::uses('File', 'Utility');
-		APP::uses('Folder', 'Utility');
+		$this->_CroogoPlugin = new CroogoPlugin();
+		$this->_CroogoPlugin->setController($this);
 	}
 
 	public function admin_index() {
 		$this->set('title_for_layout', __('Plugins'));
 
-		$pluginAliases = $this->Croogo->getPlugins();
+		$pluginAliases = $this->_CroogoPlugin->getPlugins();
 		$plugins = array();
 		foreach ($pluginAliases AS $pluginAlias) {
-			$plugins[$pluginAlias] = $this->Croogo->getPluginData($pluginAlias);
+			$plugins[$pluginAlias] = $this->_CroogoPlugin->getData($pluginAlias);
 		}
 		$this->set('corePlugins', $this->corePlugins);
 		$this->set(compact('plugins'));
@@ -89,14 +90,16 @@ class ExtensionsPluginsController extends AppController {
 			$this->Session->setFlash(__('Invalid plugin'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
-		if ($this->Croogo->pluginIsActive($plugin)) {
+		if ($this->_CroogoPlugin->isActive($plugin)) {
 			$this->Session->setFlash(__('You cannot delete a plugin that is currently active.'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$folder =& new Folder;
-		if ($folder->delete(APP . 'Plugin' . DS . $plugin)) {
-			$this->Session->setFlash(__('Plugin deleted successfully.'), 'default', array('class' => 'success'));
+		$result = $this->_CroogoPlugin->delete($plugin);
+		if ($result === true) {
+			$this->Session->setFlash(__('Plugin "%s" deleted successfully.', $plugin), 'default', array('class' => 'success'));
+		} elseif (!empty($result[0])) {
+			$this->Session->setFlash($result[0], 'default', array('class' => 'error'));
 		} else {
 			$this->Session->setFlash(__('Plugin could not be deleted.'), 'default', array('class' => 'error'));
 		}
@@ -109,49 +112,22 @@ class ExtensionsPluginsController extends AppController {
 			$this->Session->setFlash(__('Invalid plugin'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$className = $plugin . 'Activation';
-		$configFile = APP . 'Plugin' .DS. $plugin .DS. 'Config' .DS. $className . '.php';
-		if (file_exists($configFile) && include $configFile) {
-			$pluginActivation = new $className;
-		}
 
-		if ($this->Croogo->pluginIsActive($plugin)) {
-			if (!isset($pluginActivation) ||
-				(isset($pluginActivation) && method_exists($pluginActivation, 'beforeDeactivation') && $pluginActivation->beforeDeactivation($this))) {
-				$this->Croogo->removePluginBootstrap($plugin);
-				if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
-					$pluginActivation->onDeactivation($this);
-				}
-				$this->Session->setFlash(__('Plugin deactivated successfully.'), 'default', array('class' => 'success'));
+		if ($this->_CroogoPlugin->isActive($plugin)) {
+			$result = $this->_CroogoPlugin->deactivate($plugin);
+			if ($result === true) {
+				$this->Session->setFlash(__('Plugin "%s" deactivated successfully.', $plugin), 'default', array('class' => 'success'));
+			} elseif (is_string($result)) {
+				$this->Session->setFlash($result, 'default', array('class' => 'error'));
 			} else {
 				$this->Session->setFlash(__('Plugin could not be deactivated. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		} else {
-			if (!isset($pluginActivation) ||
-				(isset($pluginActivation) && method_exists($pluginActivation, 'beforeActivation') && $pluginActivation->beforeActivation($this))) {
-
-				$pluginData = $this->Croogo->getPluginData($plugin);
-				$dependencies = true;
-				if (!empty($pluginData['dependencies']['plugins'])) {
-					foreach ($pluginData['dependencies']['plugins'] as $requiredPlugin) {
-						$requiredPlugin = ucfirst($requiredPlugin);
-						if (!CakePlugin::loaded($requiredPlugin)) {
-							$dependencies = false;
-							$missingPlugin = $requiredPlugin;
-							break;
-						}
-					}
-				}
-
-				if ($dependencies) {
-					$this->Croogo->addPluginBootstrap($plugin);
-					if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
-						$pluginActivation->onActivation($this);
-					}
-					$this->Session->setFlash(__('Plugin activated successfully.'), 'default', array('class' => 'success'));
-				} else {
-					$this->Session->setFlash(__('Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin), 'default', array('class' => 'error'));
-				}
+			$result = $this->_CroogoPlugin->activate($plugin);
+			if ($result === true) {
+				$this->Session->setFlash(__('Plugin "%s" activated successfully.', $plugin), 'default', array('class' => 'success'));
+			} elseif (is_string($result)) {
+				$this->Session->setFlash($result, 'default', array('class' => 'error'));
 			} else {
 				$this->Session->setFlash(__('Plugin could not be activated. Please, try again.'), 'default', array('class' => 'error'));
 			}

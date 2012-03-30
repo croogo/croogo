@@ -31,6 +31,7 @@ class ExtShellTest extends CroogoTestCase {
 		'app.meta',
 		'app.node',
 		'app.nodes_taxonomy',
+		'app.region',
 		'app.role',
 		'app.setting',
 		'app.taxonomy',
@@ -87,9 +88,15 @@ class ExtShellTest extends CroogoTestCase {
 		$Shell->args = array('activate', 'plugin', 'Example');
 		$Shell->main();
 		$result = $this->Setting->findByKey('Hook.bootstraps');
-		$this->assertTrue(in_array('example', explode(',', $result['Setting']['value'])));
+		$this->assertTrue(in_array('Example', explode(',', $result['Setting']['value'])));
 		$result = $Link->findByTitle('Example');
 		$this->assertTrue(!empty($result));
+
+		$bogusPlugin = 'Bogus';
+		$Shell->args = array('activate', 'plugin', $bogusPlugin);
+		$Shell->main();
+		$result = $this->Setting->findByKey('Hook.bootstraps');
+		$this->assertFalse(in_array($bogusPlugin, explode(',', $result['Setting']['value'])));
 	}
 
 /**
@@ -99,10 +106,18 @@ class ExtShellTest extends CroogoTestCase {
  */
 	public function testTheme() {
 		$Shell = new ExtShell();
-		$Shell->args = array('activate', 'theme', 'minimal');
+		$Shell->args = array('activate', 'theme', 'Mytheme');
 		$Shell->main();
 		$result = $this->Setting->findByKey('Site.theme');
-		$this->assertEquals('minimal', $result['Setting']['value']);
+		$this->assertEquals('Mytheme', $result['Setting']['value']);
+		$this->assertEquals('Mytheme', Configure::read('Site.theme'));
+
+		$Shell = new ExtShell();
+		$Shell->args = array('activate', 'theme', 'Bogus');
+		$Shell->main();
+		$result = $this->Setting->findByKey('Site.theme');
+		$this->assertEquals('Mytheme', $result['Setting']['value']);
+		$this->assertEquals('Mytheme', Configure::read('Site.theme'));
 
 		$Shell = new ExtShell();
 		$Shell->args = array('deactivate', 'theme');
@@ -111,7 +126,7 @@ class ExtShellTest extends CroogoTestCase {
 		$this->assertEquals('', $result['Setting']['value']);
 
 		$Shell = new ExtShell();
-		$Shell->args = array('activate', 'theme', 'minimal');
+		$Shell->args = array('activate', 'theme', 'Mytheme');
 		$Shell->main();
 		$Shell->args = array('activate', 'theme', 'default');
 		$Shell->main();

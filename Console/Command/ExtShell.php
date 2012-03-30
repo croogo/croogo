@@ -3,8 +3,8 @@ App::uses('CakeRequest', 'Network');
 App::uses('CakeResponse', 'Network');
 App::uses('Controller', 'Controller');
 App::uses('AppController', 'Controller');
-App::uses('CroogoPlugin', 'Lib');
-App::uses('CroogoTheme', 'Lib');
+App::uses('CroogoPlugin', 'Extensions.Lib');
+App::uses('CroogoTheme', 'Extensions.Lib');
 
 /**
  * Ext Shell
@@ -29,13 +29,6 @@ class ExtShell extends AppShell {
  * @var array
  */
 	public $uses = array('Setting');
-
-/**
- * PluginActivation class
- *
- * @var object
- */
-	protected $_PluginActivation = null;
 
 /**
  * CroogoPlugin class
@@ -75,6 +68,7 @@ class ExtShell extends AppShell {
 		$this->_Controller = new AppController($CakeRequest, $CakeResponse);
 		$this->_Controller->constructClasses();
 		$this->_Controller->startupProcess();
+		$this->_CroogoPlugin->setController($this->_Controller);
 		$this->initialize();
 	}
 
@@ -84,15 +78,25 @@ class ExtShell extends AppShell {
  * @return void
  */
 	public function main() {
+		$args = $this->args;
 		$this->args = array_map('strtolower', $this->args);
 		$activate = $this->args[0];
 		$type = $this->args[1];
-		$ext = isset($this->args[2]) ? $this->args[2] : null;
-		if ($activate == 'deactivate' && $type == 'theme') {
-			$this->_deactivateTheme();
-		} else {
-			$this->{'_' . $activate . ucfirst($type)}($ext);
+		$ext = isset($args[2]) ? $args[2] : null;
+		if ($type == 'theme') {
+			if ($activate == 'deactivate') {
+				$this->_deactivateTheme();
+				return true;
+			}
+			$extensions = $this->_CroogoTheme->getThemes();
+		} elseif ($type == 'plugin') {
+			$extensions = $this->_CroogoPlugin->getPlugins();
 		}
+		if (!in_array($ext, $extensions)) {
+			$this->err(__d('croogo', '%s "%s" not found.', ucfirst($type), $ext));
+			return false;
+		}
+		return $this->{'_' . $activate . ucfirst($type)}($ext);
 	}
 
 /**
@@ -125,33 +129,13 @@ class ExtShell extends AppShell {
  * @return boolean
  */
 	protected function _activatePlugin($plugin = null) {
-		$pluginActivation = $this->_getPluginActivation($plugin);
-		if (!isset($pluginActivation) ||
-			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeActivation') && $pluginActivation->beforeActivation($this->_Controller))) {
-			$pluginData = $this->_CroogoPlugin->getPluginData($plugin);
-			$dependencies = true;
-			if (!empty($pluginData['dependencies']['plugins'])) {
-				foreach ($pluginData['dependencies']['plugins'] as $requiredPlugin) {
-					$requiredPlugin = ucfirst($requiredPlugin);
-					if (!CakePlugin::loaded($requiredPlugin)) {
-						$dependencies = false;
-						$missingPlugin = $requiredPlugin;
-						break;
-					}
-				}
-			}
-			if ($dependencies) {
-				$this->_CroogoPlugin->addPluginBootstrap($plugin);
-				if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
-					$pluginActivation->onActivation($this->_Controller);
-				}
-				$this->out(__d('croogo', 'Plugin activated successfully.'));
-				return true;
-			} else {
-				$this->err(__d('croogo', 'Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin));
-			}
+		$result = $this->_CroogoPlugin->activate($plugin);
+		if ($result === true) {
+			$this->out(__d('croogo', 'Plugin "%s" activated successfully.', $plugin));
+		} elseif (is_string($result)) {
+			$this->err($result);
 		} else {
-			$this->err(__d('croogo', 'Plugin could not be activated. Please, try again.'));
+			$this->err(__d('croogo', 'Plugin "%s" could not be activated. Please, try again.', $plugin));
 		}
 		return false;
 	}
@@ -163,37 +147,19 @@ class ExtShell extends AppShell {
  * @return boolean
  */
 	protected function _deactivatePlugin($plugin = null) {
-		$pluginActivation = $this->_getPluginActivation($plugin);
+		$pluginActivation = $this->_CroogoPlugin->getActivator($plugin);
 		if (!isset($pluginActivation) ||
 			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeDeactivation') && $pluginActivation->beforeDeactivation($this->_Controller))) {
 			$this->_CroogoPlugin->removePluginBootstrap($plugin);
 			if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
 				$pluginActivation->onDeactivation($this->_Controller);
 			}
-			$this->out(__d('croogo', 'Plugin deactivated successfully.'));
+			$this->out(__d('croogo', 'Plugin "%s" deactivated successfully.', $plugin));
 			return true;
 		} else {
-			$this->err(__d('croogo', 'Plugin could not be deactivated. Please, try again.'));
+			$this->err(__d('croogo', 'Plugin "%s" could not be deactivated. Please, try again.', $plugin));
 		}
 		return false;
-	}
-
-/**
- * Get PluginActivation class
- *
- * @param string $plugin
- * @return object
- */
-	protected function _getPluginActivation($plugin = null) {
-		$plugin = Inflector::camelize($plugin);
-		if (!isset($this->_PluginActivation)) {
-			$className = $plugin . 'Activation';
-			$configFile = APP . 'Plugin' . DS . $plugin . DS . 'Config' . DS . $className . '.php';
-			if (file_exists($configFile) && include $configFile) {
-				$this->_PluginActivation = new $className;
-			}
-		}
-		return $this->_PluginActivation;
 	}
 
 /**
@@ -203,22 +169,14 @@ class ExtShell extends AppShell {
  * @return boolean
  */
 	protected function _activateTheme($theme = null) {
-		if ($theme == 'default') {
-			$theme = null;
-		}
-		if ($theme == null) {
-			$siteTheme = $this->Setting->findByKey('Site.theme');
-			$this->Setting->id = $siteTheme['Setting']['id'];
-			$this->Setting->delete();
+		if ($r = $this->_CroogoTheme->activate($theme)) {
+			if (is_null($theme)) {
+				$this->out(__d('croogo', 'Theme deactivated successfully.'));
+			} else {
+				$this->out(__d('croogo', 'Theme "%s" activated successfully.', $theme));
+			}
 		} else {
-			$siteTheme = $this->Setting->findByKey('Site.theme');
-			$siteTheme['Setting']['value'] = $theme;
-			$this->Setting->save($siteTheme);
-		}
-		if (is_null($theme)) {
-			$this->out(__d('croogo', 'Theme deactivated successfully.'));
-		} else {
-			$this->out(__d('croogo', 'Theme activated successfully.'));
+			$this->err(__d('croogo', 'Theme "%s" activation failed.', $theme));
 		}
 		return true;
 	}

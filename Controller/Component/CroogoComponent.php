@@ -2,8 +2,8 @@
 
 App::uses('File', 'Utility');
 App::uses('Folder', 'Utility');
-App::uses('CroogoPlugin', 'Lib');
-App::uses('CroogoTheme', 'Lib');
+App::uses('CroogoPlugin', 'Extensions.Lib');
+App::uses('CroogoTheme', 'Extensions.Lib');
 
 /**
  * Croogo Component
@@ -109,6 +109,9 @@ class CroogoComponent extends Component {
 				if (!isset($this->{$name})) {
 					$class = substr($name, 1);
 					$this->{$name} = new $class();
+					if (method_exists($this->{$name}, 'setController')) {
+						$this->{$name}->setController($this->controller);
+					}
 				}
 				return $this->{$name};
 			break;
@@ -613,10 +616,10 @@ class CroogoComponent extends Component {
  *
  * @param string $alias theme folder name
  * @return array
- * @deprecated use CroogoTheme::getThemeData()
+ * @deprecated use CroogoTheme::getData()
  */
 	public function getThemeData($alias = null) {
-		return $this->_CroogoTheme->getThemeData($alias);
+		return $this->_CroogoTheme->getData($alias);
 	}
 
 /**
@@ -634,10 +637,10 @@ class CroogoComponent extends Component {
  *
  * @param string $alias plugin folder name
  * @return array
- * @deprecated use CroogoPlugin::getPluginData
+ * @deprecated use CroogoPlugin::getData
  */
 	public function getPluginData($alias = null) {
-		return $this->_CroogoPlugin->getPluginData($alias);
+		return $this->_CroogoPlugin->getData($alias);
 	}
 
 /**

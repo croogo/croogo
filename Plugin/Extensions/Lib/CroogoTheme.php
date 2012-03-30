@@ -16,6 +16,13 @@
 class CroogoTheme extends Object {
 
 /**
+ * Constructor
+ */
+	public function __construct() {
+		$this->Setting = ClassRegistry::init('Setting');
+	}
+
+/**
  * Get theme aliases (folder names)
  *
  * @return array
@@ -46,7 +53,7 @@ class CroogoTheme extends Object {
  * @param string $alias theme folder name
  * @return array
  */
-	public function getThemeData($alias = null) {
+	public function getData($alias = null) {
 		if ($alias == null || $alias == 'default') {
 			$manifestFile = WWW_ROOT . 'theme.json';
 		} else {
@@ -70,6 +77,29 @@ class CroogoTheme extends Object {
 			$themeData = array();
 		}
 		return $themeData;
+	}
+
+/**
+ * Get the content of theme.json file from a theme
+ *
+ * @param string $alias theme folder name
+ * @return array
+ * @deprecated use getData()
+ */
+	public function getThemeData($alias = null) {
+		return $this->getData($alias);
+	}
+
+/**
+ * Activate theme $alias
+ * @param $alias theme alias
+ * @return mixed On success Setting::$data or true, false on failure
+ */
+	public function activate($alias) {
+		if ($alias == 'default' || $alias == null) {
+			$alias = '';
+		}
+		return $this->Setting->write('Site.theme', $alias);
 	}
 
 }
