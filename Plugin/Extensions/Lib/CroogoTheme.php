@@ -46,7 +46,7 @@ class CroogoTheme extends Object {
  * @param string $alias theme folder name
  * @return array
  */
-	public function getThemeData($alias = null) {
+	public function getData($alias = null) {
 		if ($alias == null || $alias == 'default') {
 			$manifestFile = WWW_ROOT . 'theme.json';
 		} else {
@@ -70,6 +70,17 @@ class CroogoTheme extends Object {
 			$themeData = array();
 		}
 		return $themeData;
+	}
+
+/**
+ * Get the content of theme.json file from a theme
+ *
+ * @param string $alias theme folder name
+ * @return array
+ * @deprecated use getData()
+ */
+	public function getThemeData($alias = null) {
+		return $this->getData($alias);
 	}
 
 }

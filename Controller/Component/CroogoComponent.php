@@ -613,10 +613,10 @@ class CroogoComponent extends Component {
  *
  * @param string $alias theme folder name
  * @return array
- * @deprecated use CroogoTheme::getThemeData()
+ * @deprecated use CroogoTheme::getData()
  */
 	public function getThemeData($alias = null) {
-		return $this->_CroogoTheme->getThemeData($alias);
+		return $this->_CroogoTheme->getData($alias);
 	}
 
 /**
@@ -634,10 +634,10 @@ class CroogoComponent extends Component {
  *
  * @param string $alias plugin folder name
  * @return array
- * @deprecated use CroogoPlugin::getPluginData
+ * @deprecated use CroogoPlugin::getData
  */
 	public function getPluginData($alias = null) {
-		return $this->_CroogoPlugin->getPluginData($alias);
+		return $this->_CroogoPlugin->getData($alias);
 	}
 
 /**

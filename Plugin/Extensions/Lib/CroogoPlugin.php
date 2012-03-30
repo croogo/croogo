@@ -56,7 +56,7 @@ class CroogoPlugin extends Object {
  * @param string $alias plugin folder name
  * @return array
  */
-	public function getPluginData($alias = null) {
+	public function getData($alias = null) {
 		$pluginPaths = App::path('plugins');
 		foreach ($pluginPaths AS $pluginPath) {
 			$manifestFile = $pluginPath . $alias . DS . 'Config' . DS . 'plugin.json';
@@ -75,13 +75,24 @@ class CroogoPlugin extends Object {
 	}
 
 /**
+ * Get the content of plugin.json file of a plugin
+ *
+ * @param string $alias plugin folder name
+ * @return array
+ * @deprecated use getData()
+ */
+	public function getPluginData($alias = null) {
+		return $this->getData($alias);
+	}
+
+/**
  * Check if plugin is dependent on any other plugin.
  * If yes, check if that plugin is available in plugins directory.
  *
  * @param  string $plugin plugin alias (underscrored)
  * @return boolean
  */
-	public function checkPluginDependency($plugin = null) {
+	public function checkDependency($plugin = null) {
 		$pluginData = $this->getPluginData($plugin);
 		$pluginPaths = App::path('plugins');
 		if (isset($pluginData['dependencies']['plugins']) && is_array($pluginData['dependencies']['plugins'])) {
@@ -101,12 +112,23 @@ class CroogoPlugin extends Object {
 	}
 
 /**
+ * Check if plugin is dependent on any other plugin.
+ * If yes, check if that plugin is available in plugins directory.
+ *
+ * @param  string $plugin plugin alias (underscrored)
+ * @return boolean
+ */
+	public function checkPluginDependency($plugin = null) {
+		return $this->checkDependency($plugin);
+	}
+
+/**
  * Check if plugin is active
  *
  * @param  string $plugin Plugin name (underscored)
  * @return boolean
  */
-	public function pluginIsActive($plugin) {
+	public function isActive($plugin) {
 		$configureKeys = array(
 			'Hook.bootstraps',
 		);
@@ -126,12 +148,23 @@ class CroogoPlugin extends Object {
 	}
 
 /**
+ * Check if plugin is active
+ *
+ * @param  string $plugin Plugin name (underscored)
+ * @return boolean
+ * @deprecated use isActive()
+ */
+	public function pluginIsActive($plugin) {
+		return $this->isActive($plugin);
+	}
+
+/**
  * Loads plugin's bootstrap.php file
  *
  * @param string $plugin Plugin name
  * @return void
  */
-	public function addPluginBootstrap($plugin) {
+	public function addBootstrap($plugin) {
 		$hookBootstraps = Configure::read('Hook.bootstraps');
 		if (!$hookBootstraps) {
 			$plugins = array();
@@ -153,12 +186,23 @@ class CroogoPlugin extends Object {
 	}
 
 /**
+ * Loads plugin's bootstrap.php file
+ *
+ * @param string $plugin Plugin name
+ * @return void
+ * @deprecated use addBootstrap($plugin)
+ */
+	public function addPluginBootstrap($plugin) {
+		$this->addBootstrap($plugin);
+	}
+
+/**
  * Plugin name will be removed from Hook.bootstraps
  *
  * @param string $plugin Plugin name
  * @return void
  */
-	public function removePluginBootstrap($plugin) {
+	public function removeBootstrap($plugin) {
 		$hookBootstraps = Configure::read('Hook.bootstraps');
 		if (!$hookBootstraps) {
 			return;
@@ -179,4 +223,16 @@ class CroogoPlugin extends Object {
 		}
 		$this->Setting->write('Hook.bootstraps', $plugins);
 	}
+
+/**
+ * Plugin name will be removed from Hook.bootstraps
+ *
+ * @param string $plugin Plugin name
+ * @return void
+ * @deprecated use removeBootstrap()
+ */
+	public function removePluginBootstrap($plugin) {
+		$this->removeBootstrap($plugin);
+	}
+
 }
