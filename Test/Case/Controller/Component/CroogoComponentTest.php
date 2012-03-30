@@ -8,6 +8,9 @@ app::uses('CroogoComponent', 'Controller/Component');
 class MockCroogoComponent extends CroogoComponent {
 	public function startup(Controller $controller) {
 		$this->controller = $controller;
+		$this->_CroogoPlugin = new CroogoPlugin();
+		$this->_CroogoPlugin->Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
+		$this->_CroogoPlugin->Setting->writeConfiguration();
 	}
 }
 
@@ -17,7 +20,7 @@ class CroogoTestController extends AppController {
 class CroogoComponentTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'aco', 'aro', 'aros_aco',
+		'aco', 'aro', 'aros_aco', 'setting',
 		);
 
 	public function setUp() {
@@ -48,6 +51,15 @@ class CroogoComponentTest extends CroogoTestCase {
 		$this->Controller->Croogo->removeAco('CroogoTestController');
 		$parent = $Aco->findByAlias('CroogoTestController');
 		$this->assertEmpty($parent);
+	}
+
+	public function testPluginIsActive() {
+		$result = $this->Controller->Croogo->pluginIsActive('Example');
+		$this->assertTrue($result);
+		$result = $this->Controller->Croogo->pluginIsActive('example');
+		$this->assertTrue($result);
+		$result = $this->Controller->Croogo->pluginIsActive('Shops');
+		$this->assertFalse($result);
 	}
 
 }

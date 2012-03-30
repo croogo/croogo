@@ -111,10 +111,12 @@ class CroogoPlugin extends Object {
 			'Hook.bootstraps',
 		);
 
+		$plugin = array(Inflector::underscore($plugin), Inflector::camelize($plugin));
+
 		foreach ($configureKeys AS $configureKey) {
 			$hooks = explode(',', Configure::read($configureKey));
 			foreach ($hooks AS $hook) {
-				if ($hook == $plugin) {
+				if (in_array($hook, $plugin)) {
 					return true;
 				}
 			}

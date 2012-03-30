@@ -660,7 +660,7 @@ class CroogoComponent extends Component {
  * @deprecated use CroogoPlugin::pluginIsActive
  */
 	public function pluginIsActive($plugin) {
-		$this->_CroogoPlugin->pluginIsActive($plugin);
+		return $this->_CroogoPlugin->pluginIsActive($plugin);
 	}
 
 }
