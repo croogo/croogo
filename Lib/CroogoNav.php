@@ -74,15 +74,15 @@ class CroogoNav extends Object {
 	}
 
     /**
-	 * Merge $arr1 and $arr2
+	 * Merge $firstArray with $secondArray
 	 *
 	 * Similar to Set::merge, except duplicates are removed
-	 * @param arram $arr1 array
-	 * @param arram $arr2 array
+	 * @param array $firstArray
+	 * @param array $secondArray
 	 * @return array
 	 */
-	protected static function _merge($arr1, $arr2) {
-		$merged = Set::merge($arr1, $arr2);
+	protected static function _merge($firstArray, $secondArray) {
+		$merged = Set::merge($firstArray, $secondArray);
 		foreach ($merged as $key => $val) {
 			if (is_array($val) && is_int(key($val))) {
 				$merged[$key] = array_unique($val);

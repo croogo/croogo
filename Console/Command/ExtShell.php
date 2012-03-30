@@ -23,6 +23,7 @@ App::uses('CroogoTheme', 'Extensions.Lib');
  * @link     http://www.croogo.org
  */
 class ExtShell extends AppShell {
+
 /**
  * Models we use
  *

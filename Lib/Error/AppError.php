@@ -11,6 +11,7 @@
  * @link     http://www.croogo.org
  */
 class AppError extends ErrorHandler {
+
 /**
  * securityError
  *

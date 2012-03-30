@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class CroogoRouter {
+
 /**
  * If Translate plugin is active,
  * an extra Route will be created for locale-based URLs
@@ -61,8 +62,8 @@ class CroogoRouter {
 		}
 
 		$plugins = Configure::read('Hook.routes');
-		foreach ($plugins AS $plugin) {
-			$path = App::pluginPath($plugin) . 'Config' .DS. 'routes.php';
+		foreach ($plugins as $plugin) {
+			$path = App::pluginPath($plugin) . 'Config' . DS . 'routes.php';
 			if (file_exists($path)) {
 				include $path;
 			}

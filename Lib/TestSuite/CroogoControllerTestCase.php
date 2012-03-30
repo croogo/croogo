@@ -13,6 +13,7 @@
  * @link     http://www.croogo.org
  */
 class CroogoControllerTestCase extends ControllerTestCase {
+
 /**
  * setUp
  *

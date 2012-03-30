@@ -33,10 +33,10 @@ class CroogoTheme extends Object {
 		);
 		$this->folder = new Folder;
 		$viewPaths = App::path('views');
-		foreach ($viewPaths AS $viewPath) {
+		foreach ($viewPaths as $viewPath) {
 			$this->folder->path = $viewPath . 'Themed';
 			$themeFolders = $this->folder->read();
-			foreach ($themeFolders['0'] AS $themeFolder) {
+			foreach ($themeFolders['0'] as $themeFolder) {
 				$this->folder->path = $viewPath . 'Themed' . DS . $themeFolder . DS . 'webroot';
 				$themeFolderContent = $this->folder->read();
 				if (in_array('theme.json', $themeFolderContent['1'])) {
@@ -58,7 +58,7 @@ class CroogoTheme extends Object {
 			$manifestFile = WWW_ROOT . 'theme.json';
 		} else {
 			$viewPaths = App::path('views');
-			foreach ($viewPaths AS $viewPath) {
+			foreach ($viewPaths as $viewPath) {
 				if (file_exists($viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'theme.json')) {
 					$manifestFile = $viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'theme.json';
 					continue;
@@ -70,7 +70,7 @@ class CroogoTheme extends Object {
 		}
 		if (isset($manifestFile) && file_exists($manifestFile)) {
 			$themeData = json_decode(file_get_contents($manifestFile), true);
-			if ($themeData == NULL) {
+			if ($themeData == null) {
 				$themeData = array();
 			}
 		} else {

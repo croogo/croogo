@@ -49,14 +49,18 @@ class CroogoPlugin extends Object {
 		$plugins = array();
 		$this->folder = new Folder;
 		$pluginPaths = App::path('plugins');
-		foreach ($pluginPaths AS $pluginPath) {
+		foreach ($pluginPaths as $pluginPath) {
 			$this->folder->path = $pluginPath;
-			if (!file_exists($this->folder->path)) { continue; }
+			if (!file_exists($this->folder->path)) {
+				continue;
+			}
 			$pluginFolders = $this->folder->read();
-			foreach ($pluginFolders[0] AS $pluginFolder) {
+			foreach ($pluginFolders[0] as $pluginFolder) {
 				if (substr($pluginFolder, 0, 1) != '.') {
 					$this->folder->path = $pluginPath . $pluginFolder . DS . 'Config';
-					if (!file_exists($this->folder->path)) { continue; }
+					if (!file_exists($this->folder->path)) {
+						continue;
+					}
 					$pluginFolderContent = $this->folder->read();
 					if (in_array('plugin.json', $pluginFolderContent[1])) {
 						$plugins[$pluginFolder] = $pluginFolder;
@@ -75,7 +79,7 @@ class CroogoPlugin extends Object {
  */
 	public function getData($alias = null) {
 		$pluginPaths = App::path('plugins');
-		foreach ($pluginPaths AS $pluginPath) {
+		foreach ($pluginPaths as $pluginPath) {
 			$manifestFile = $pluginPath . $alias . DS . 'Config' . DS . 'plugin.json';
 			if (file_exists($manifestFile)) {
 				$pluginData = json_decode(file_get_contents($manifestFile), true);
@@ -113,9 +117,9 @@ class CroogoPlugin extends Object {
 		$pluginData = $this->getPluginData($plugin);
 		$pluginPaths = App::path('plugins');
 		if (isset($pluginData['dependencies']['plugins']) && is_array($pluginData['dependencies']['plugins'])) {
-			foreach ($pluginData['dependencies']['plugins'] AS $p) {
+			foreach ($pluginData['dependencies']['plugins'] as $p) {
 				$check = false;
-				foreach ($pluginPaths AS $pluginPath) {
+				foreach ($pluginPaths as $pluginPath) {
 					if (is_dir($pluginPath . $p)) {
 						$check = true;
 					}
@@ -152,9 +156,9 @@ class CroogoPlugin extends Object {
 
 		$plugin = array(Inflector::underscore($plugin), Inflector::camelize($plugin));
 
-		foreach ($configureKeys AS $configureKey) {
+		foreach ($configureKeys as $configureKey) {
 			$hooks = explode(',', Configure::read($configureKey));
-			foreach ($hooks AS $hook) {
+			foreach ($hooks as $hook) {
 				if (in_array($hook, $plugin)) {
 					return true;
 				}

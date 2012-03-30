@@ -16,6 +16,7 @@ App::uses('ExtensionsInstaller', 'Extensions.Lib');
  * @link     http://www.croogo.org
  */
 class InstallShell extends AppShell {
+
 /**
  * Tmp path to download extensions to
  *
@@ -50,9 +51,9 @@ class InstallShell extends AppShell {
  */
 	public function main() {
 		$url = '';
-		if (sizeof($this->args) == 2) {
+		if (count($this->args) == 2) {
 			$url = $this->args[1];
-		} else if (sizeof($this->args) == 3) {
+		} else if (count($this->args) == 3) {
 			$url = 'http://github.com/' . $this->args[1] . '/' . $this->args[2];
 		}
 		$type = $this->args[0];
@@ -128,17 +129,17 @@ class InstallShell extends AppShell {
  *
  * @param string $url URL of extension
  * @return string Path to zip file
+ * @throws ConsoleException
  */
 	protected function _download($url = null) {
 		if (empty($url)) {
 			throw new ConsoleException(__('Please specify a URL to a zipball extension'));
-			return false;
 		}
 		$this->out(__d('croogo', 'Downloading extension...'));
 		$url = $this->_githubUrl($url);
 		$filename = uniqid('croogo_') . '.zip';
 		$zip = $this->tmpPath . $filename;
-		$res = $this->_shell_exec('curl -L ' . $url . ' -o ' . $zip);
+		$res = $this->_shellExec('curl -L ' . $url . ' -o ' . $zip);
 		return $res ? $zip : false;
 	}
 
@@ -165,7 +166,7 @@ class InstallShell extends AppShell {
 /**
  * Wrapper for shell_exec() method for testing
  */
-	protected function _shell_exec($cmd) {
+	protected function _shellExec($cmd) {
 		return shell_exec($cmd);
 	}
 }

@@ -9,6 +9,7 @@
  * @link     http://www.croogo.org
  */
 class Croogo {
+
 /**
  * Loads plugin's routes.php from app/config/routes.php.
  *
@@ -69,7 +70,7 @@ class Croogo {
  */
 	public static function hookAdminMenu($pluginName) {
 		$pluginName = Inflector::underscore($pluginName);
-		Configure::write('Admin.menus.'.$pluginName, 1);
+		Configure::write('Admin.menus.' . $pluginName, 1);
 	}
 
 /**
@@ -170,7 +171,7 @@ class Croogo {
  */
 	public static function applyHookProperties($configKey, &$object = null) {
 		if (empty($object)) {
-			$object = $this;
+			$object = self;
 		}
 		$objectName = empty($object->name) ? get_class($object) : $object->name;
 		$hookProperties = Configure::read($configKey . '.' . $objectName);
@@ -178,7 +179,7 @@ class Croogo {
 			$hookProperties = Set::merge(Configure::read($configKey . '.*'), $hookProperties);
 		}
 		if (is_array($hookProperties)) {
-			foreach ($hookProperties AS $property => $value) {
+			foreach ($hookProperties as $property => $value) {
 				if (!isset($object->$property)) {
 					$object->$property = $value;
 				} else {

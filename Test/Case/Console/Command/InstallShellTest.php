@@ -9,6 +9,7 @@ App::uses('Folder', 'Utility');
  * TestInstallShell class
  */
 class TestInstallShell extends InstallShell {
+
 /**
  * Open _githubUrl for testing
  *
@@ -18,6 +19,7 @@ class TestInstallShell extends InstallShell {
 	public function githubUrl($url = null) {
 		return $this->_githubUrl($url);
 	}
+
 }
 
 /**
@@ -33,6 +35,7 @@ class TestInstallShell extends InstallShell {
  * @link     http://www.croogo.org
  */
 class InstallShellTest extends CroogoTestCase {
+
 /**
  * setUp method
  *
@@ -70,9 +73,9 @@ class InstallShellTest extends CroogoTestCase {
  * @return void
  */
 	public function testInstallPlugin() {
-		$Shell = $this->getMock('InstallShell', array('_shell_exec', 'dispatchShell'));
+		$Shell = $this->getMock('InstallShell', array('_shellExec', 'dispatchShell'));
 		$Shell->expects($this->once())
-			->method('_shell_exec')
+			->method('_shellExec')
 			->will($this->returnCallback(array($this, 'callbackDownloadPlugin')));
 		$Shell->expects($this->once())
 			->method('dispatchShell')
@@ -88,9 +91,9 @@ class InstallShellTest extends CroogoTestCase {
  * @return void
  */
 	public function testInstallTheme() {
-		$Shell = $this->getMock('InstallShell', array('_shell_exec', 'dispatchShell'));
+		$Shell = $this->getMock('InstallShell', array('_shellExec', 'dispatchShell'));
 		$Shell->expects($this->once())
-			->method('_shell_exec')
+			->method('_shellExec')
 			->will($this->returnCallback(array($this, 'callbackDownloadTheme')));
 		$Shell->expects($this->once())
 			->method('dispatchShell')
@@ -122,8 +125,8 @@ class InstallShellTest extends CroogoTestCase {
  * Called when we want to pretend to download a plugin
  */
 	public function callbackDownloadPlugin() {
-		$arg0 = func_get_arg(0);
-		preg_match('/ -o (.+)/', $arg0, $zip);
+		$argOne = func_get_arg(0);
+		preg_match('/ -o (.+)/', $argOne, $zip);
 		$dest = $zip[1];
 		$src = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_plugin.zip';
 		copy($src, $dest);
@@ -134,8 +137,8 @@ class InstallShellTest extends CroogoTestCase {
  * Called when we want to pretend to download a theme
  */
 	public function callbackDownloadTheme() {
-		$arg0 = func_get_arg(0);
-		preg_match('/ -o (.+)/', $arg0, $zip);
+		$argOne = func_get_arg(0);
+		preg_match('/ -o (.+)/', $argOne, $zip);
 		$dest = $zip[1];
 		$src = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_theme.zip';
 		copy($src, $dest);

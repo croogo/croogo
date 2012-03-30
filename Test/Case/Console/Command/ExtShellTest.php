@@ -18,6 +18,7 @@ App::uses('Folder', 'Utility');
  * @link     http://www.croogo.org
  */
 class ExtShellTest extends CroogoTestCase {
+
 /**
  * fixtures
  *
