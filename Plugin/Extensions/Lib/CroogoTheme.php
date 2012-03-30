@@ -96,22 +96,10 @@ class CroogoTheme extends Object {
  * @return mixed On success Setting::$data or true, false on failure
  */
 	public function activate($alias) {
-		if ($alias == 'default') {
+		if ($alias == 'default' || $alias == null) {
 			$alias = '';
 		}
-
-		$siteTheme = $this->Setting->findByKey('Site.theme');
-		if ($siteTheme) {
-			$siteTheme['Setting']['value'] = $alias;
-		} else {
-			$this->Setting->write('Site.theme', $alias);
-		}
-		if (empty($alias)) {
-			$this->Setting->id = $siteTheme['Setting']['id'];
-			return $this->Setting->delete();
-		} else {
-			return $this->Setting->save($siteTheme);
-		}
+		return $this->Setting->write('Site.theme', $alias);
 	}
 
 }
