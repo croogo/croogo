@@ -172,7 +172,8 @@ class Croogo {
 		if (empty($object)) {
 			$object = $this;
 		}
-		$hookProperties = Configure::read($configKey . '.' . $object->name);
+		$objectName = empty($object->name) ? get_class($object) : $object->name;
+		$hookProperties = Configure::read($configKey . '.' . $objectName);
 		if (is_array(Configure::read($configKey . '.*'))) {
 			$hookProperties = Set::merge(Configure::read($configKey . '.*'), $hookProperties);
 		}
