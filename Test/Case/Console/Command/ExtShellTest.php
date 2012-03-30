@@ -31,6 +31,7 @@ class ExtShellTest extends CroogoTestCase {
 		'app.meta',
 		'app.node',
 		'app.nodes_taxonomy',
+		'app.region',
 		'app.role',
 		'app.setting',
 		'app.taxonomy',

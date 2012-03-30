@@ -16,11 +16,28 @@ App::uses('Folder', 'Utility');
  * @link     http://www.croogo.org
  */
 class CroogoPlugin extends Object {
+
+/**
+ * PluginActivation class
+ *
+ * @var object
+ */
+	protected $_PluginActivation = null;
+
 /**
  * __construct
  */
 	public function __construct() {
 		$this->Setting = ClassRegistry::init('Setting');
+	}
+
+/**
+ * AppController setter
+ *
+ * @return void
+ */
+	public function setController(AppController $controller) {
+		$this->_Controller = $controller;
 	}
 
 /**
@@ -63,7 +80,7 @@ class CroogoPlugin extends Object {
 			if (file_exists($manifestFile)) {
 				$pluginData = json_decode(file_get_contents($manifestFile), true);
 				if (!empty($pluginData)) {
-					$pluginData['active'] = $this->pluginIsActive($alias);
+					$pluginData['active'] = $this->isActive($alias);
 					unset($pluginManifest);
 				} else {
 					$pluginData = array();
@@ -233,6 +250,95 @@ class CroogoPlugin extends Object {
  */
 	public function removePluginBootstrap($plugin) {
 		$this->removeBootstrap($plugin);
+	}
+
+/**
+ * Get PluginActivation class
+ *
+ * @param string $plugin
+ * @return object
+ */
+	public function getActivator($plugin = null) {
+		$plugin = Inflector::camelize($plugin);
+		if (!isset($this->_PluginActivation)) {
+			$className = $plugin . 'Activation';
+			$configFile = APP . 'Plugin' . DS . $plugin . DS . 'Config' . DS . $className . '.php';
+			if (file_exists($configFile) && include $configFile) {
+				$this->_PluginActivation = new $className;
+			}
+		}
+		return $this->_PluginActivation;
+	}
+
+/**
+ * Activate plugin
+ *
+ * @param string $plugin Plugin name
+ * @return boolean true when successful, false or error message when failed
+ */
+	public function activate($plugin) {
+		$pluginActivation = $this->getActivator($plugin);
+		if (!isset($pluginActivation) ||
+			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeActivation') && $pluginActivation->beforeActivation($this->_Controller))) {
+			$pluginData = $this->getData($plugin);
+			$dependencies = true;
+			if (!empty($pluginData['dependencies']['plugins'])) {
+				foreach ($pluginData['dependencies']['plugins'] as $requiredPlugin) {
+					$requiredPlugin = ucfirst($requiredPlugin);
+					if (!CakePlugin::loaded($requiredPlugin)) {
+						$dependencies = false;
+						$missingPlugin = $requiredPlugin;
+						break;
+					}
+				}
+			}
+			if ($dependencies) {
+				$this->addBootstrap($plugin);
+				if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
+					$pluginActivation->onActivation($this->_Controller);
+				}
+				return true;
+			} else {
+				return __d('croogo', 'Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin);
+			}
+			return __d('croogo', 'Plugin "%s" could not be activated. Please, try again.', $plugin);
+		}
+	}
+
+/**
+ * Deactivate plugin
+ *
+ * @param string $plugin Plugin name
+ * @return boolean true when successful, false or error message when failed
+ */
+	public function deactivate($plugin) {
+		$pluginActivation = $this->getActivator($plugin);
+		if (!isset($pluginActivation) ||
+			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeDeactivation') && $pluginActivation->beforeDeactivation($this->_Controller))) {
+			$this->removeBootstrap($plugin);
+			if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
+				$pluginActivation->onDeactivation($this->_Controller);
+			}
+			return true;
+		} else {
+			return __('Plugin could not be deactivated. Please, try again.');
+		}
+	}
+
+/**
+ * Delete plugin
+ *
+ * @param string $plugin Plugin name
+ * @return boolean true when successful, false or array of error messages when failed
+ */
+	public function delete($plugin) {
+		$pluginPath = APP . 'Plugin' .DS. $plugin;
+		$folder = new Folder();
+		$result = $folder->delete($pluginPath);
+		if ($result !== true) {
+			return $folder->errors();
+		}
+		return true;
 	}
 
 }

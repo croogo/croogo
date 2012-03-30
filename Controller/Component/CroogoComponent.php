@@ -109,6 +109,9 @@ class CroogoComponent extends Component {
 				if (!isset($this->{$name})) {
 					$class = substr($name, 1);
 					$this->{$name} = new $class();
+					if (method_exists($this->{$name}, 'setController')) {
+						$this->{$name}->setController($this->controller);
+					}
 				}
 				return $this->{$name};
 			break;

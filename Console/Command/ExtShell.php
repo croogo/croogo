@@ -31,13 +31,6 @@ class ExtShell extends AppShell {
 	public $uses = array('Setting');
 
 /**
- * PluginActivation class
- *
- * @var object
- */
-	protected $_PluginActivation = null;
-
-/**
  * CroogoPlugin class
  *
  * @var CroogoPlugin
@@ -75,6 +68,7 @@ class ExtShell extends AppShell {
 		$this->_Controller = new AppController($CakeRequest, $CakeResponse);
 		$this->_Controller->constructClasses();
 		$this->_Controller->startupProcess();
+		$this->_CroogoPlugin->setController($this->_Controller);
 		$this->initialize();
 	}
 
@@ -135,31 +129,11 @@ class ExtShell extends AppShell {
  * @return boolean
  */
 	protected function _activatePlugin($plugin = null) {
-		$pluginActivation = $this->_getPluginActivation($plugin);
-		if (!isset($pluginActivation) ||
-			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeActivation') && $pluginActivation->beforeActivation($this->_Controller))) {
-			$pluginData = $this->_CroogoPlugin->getPluginData($plugin);
-			$dependencies = true;
-			if (!empty($pluginData['dependencies']['plugins'])) {
-				foreach ($pluginData['dependencies']['plugins'] as $requiredPlugin) {
-					$requiredPlugin = ucfirst($requiredPlugin);
-					if (!CakePlugin::loaded($requiredPlugin)) {
-						$dependencies = false;
-						$missingPlugin = $requiredPlugin;
-						break;
-					}
-				}
-			}
-			if ($dependencies) {
-				$this->_CroogoPlugin->addPluginBootstrap($plugin);
-				if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
-					$pluginActivation->onActivation($this->_Controller);
-				}
-				$this->out(__d('croogo', 'Plugin "%s" activated successfully.', $plugin));
-				return true;
-			} else {
-				$this->err(__d('croogo', 'Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin));
-			}
+		$result = $this->_CroogoPlugin->activate($plugin);
+		if ($result === true) {
+			$this->out(__d('croogo', 'Plugin "%s" activated successfully.', $plugin));
+		} elseif (is_string($result)) {
+			$this->err($result);
 		} else {
 			$this->err(__d('croogo', 'Plugin "%s" could not be activated. Please, try again.', $plugin));
 		}
@@ -173,7 +147,7 @@ class ExtShell extends AppShell {
  * @return boolean
  */
 	protected function _deactivatePlugin($plugin = null) {
-		$pluginActivation = $this->_getPluginActivation($plugin);
+		$pluginActivation = $this->_CroogoPlugin->getActivator($plugin);
 		if (!isset($pluginActivation) ||
 			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeDeactivation') && $pluginActivation->beforeDeactivation($this->_Controller))) {
 			$this->_CroogoPlugin->removePluginBootstrap($plugin);
@@ -186,24 +160,6 @@ class ExtShell extends AppShell {
 			$this->err(__d('croogo', 'Plugin "%s" could not be deactivated. Please, try again.', $plugin));
 		}
 		return false;
-	}
-
-/**
- * Get PluginActivation class
- *
- * @param string $plugin
- * @return object
- */
-	protected function _getPluginActivation($plugin = null) {
-		$plugin = Inflector::camelize($plugin);
-		if (!isset($this->_PluginActivation)) {
-			$className = $plugin . 'Activation';
-			$configFile = APP . 'Plugin' . DS . $plugin . DS . 'Config' . DS . $className . '.php';
-			if (file_exists($configFile) && include $configFile) {
-				$this->_PluginActivation = new $className;
-			}
-		}
-		return $this->_PluginActivation;
 	}
 
 /**
