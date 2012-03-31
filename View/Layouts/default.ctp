@@ -27,7 +27,8 @@
 			'jquery/supersubs',
 			'theme',
 		));
-		echo $scripts_for_layout;
+		echo $this->Blocks->get('css');
+		echo $this->Blocks->get('script');
 	?>
 </head>
 <body>
@@ -73,6 +74,9 @@
 			</div>
 		</div>
 	</div>
-	<?php echo $this->Js->writeBuffer(); ?>
+	<?php
+		echo $this->Blocks->get('scriptBottom');
+		echo $this->Js->writeBuffer();
+	?>
 	</body>
 </html>
