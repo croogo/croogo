@@ -49,5 +49,26 @@ class CommentFixture extends CroogoTestFixture {
 			'updated' => '2009-12-25 12:00:00',
 			'created' => '2009-12-25 12:00:00'
 		),
+		array(
+			'id' => 2,
+			'parent_id' => NULL,
+			'node_id' => 1,
+			'user_id' => 0,
+			'name' => 'Mrs Croogo',
+			'email' => 'email@example.com',
+			'website' => 'http://www.croogo.org',
+			'ip' => '127.0.0.1',
+			'title' => '',
+			'body' => 'Hi, this is the second comment.',
+			'rating' => NULL,
+			'status' => 0,
+			'notify' => 0,
+			'type' => 'blog',
+			'comment_type' => 'comment',
+			'lft' => 3,
+			'rght' => 4,
+			'updated' => '2009-12-25 12:00:00',
+			'created' => '2009-12-25 12:00:00'
+		),
 	);
 }

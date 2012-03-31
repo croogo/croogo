@@ -48,4 +48,32 @@ class NodeTest extends CroogoTestCase {
 		$this->Node->__cacheTerms();
 		$this->assertEqual($this->Node->data['Node']['terms'], '{"1":"uncategorized","2":"announcements"}');
 	}
+
+	public function testNodeDeleteDependent() {
+		// assert existing count
+		$commentCount = $this->Node->Comment->find('count',
+			array('conditions' => array('Comment.node_id' => 1))
+			);
+		$this->assertEquals(2, $commentCount);
+
+		$metaCount = $this->Node->Meta->find('count',
+			array('conditions' => array('model' => 'Node', 'foreign_key' => 1))
+			);
+		$this->assertEquals(1, $metaCount);
+
+		// delete node
+		$this->Node->id = 1;
+		$this->Node->delete();
+
+		$commentCount = $this->Node->Comment->find('count',
+			array('conditions' => array('Comment.node_id' => 1))
+			);
+		$this->assertEqual(0, $commentCount);
+
+		$metaCount = $this->Node->Meta->find('count',
+			array('conditions' => array('model' => 'Node', 'foreign_key' => 1))
+			);
+		$this->assertEqual(0, $metaCount);
+	}
+
 }

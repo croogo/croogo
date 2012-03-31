@@ -108,7 +108,7 @@ class Node extends AppModel {
 		'Comment' => array(
 			'className' => 'Comment',
 			'foreignKey' => 'node_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => array('Comment.status' => 1),
 			'fields' => '',
 			'order' => '',
@@ -121,7 +121,7 @@ class Node extends AppModel {
 		'Meta' => array(
 			'className' => 'Meta',
 			'foreignKey' => 'foreign_key',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => array('Meta.model' => 'Node'),
 			'fields' => '',
 			'order' => 'Meta.key ASC',
@@ -182,6 +182,20 @@ class Node extends AppModel {
 		}
 		$this->__cacheTerms();
 
+		return true;
+	}
+
+/**
+ * beforeDelete callback
+ *
+ * @return boolean
+ */
+	public function beforeDelete($cascade = true) {
+		if ($cascade) {
+			if (isset($this->hasMany['Comment'])) {
+				$this->hasMany['Comment']['conditions'] = '';
+			}
+		}
 		return true;
 	}
 

@@ -170,7 +170,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 			),
 			'order' => 'Comment.lft ASC',
 		));
-		$this->assertEqual($list, array());
+		$this->assertEqual($list, array(2 => 'Mrs Croogo'));
 	}
 
 	public function testAdminProcessPublish() {
@@ -278,7 +278,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 
 		$comments = $Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
 		$commenters = array_values($comments);
-		$this->assertEqual($commenters, array('Mr Croogo', 'John Smith'));
+		$this->assertEqual($commenters, array('Mr Croogo', 'Mrs Croogo', 'John Smith'));
 
 		$Comments->testView = true;
 		$output = $Comments->render('add');
@@ -316,7 +316,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 
 		$comments = $Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
 		$commenters = array_values($comments);
-		$this->assertEqual($commenters, array('Mr Croogo', '_John Smith'));
+		$this->assertEqual($commenters, array('Mr Croogo', '_John Smith', 'Mrs Croogo'));
 
 		$Comments->testView = true;
 		$output = $Comments->render('add');
