@@ -26,6 +26,11 @@ class TestNodesController extends NodesController {
 		$this->stopped = $status;
 	}
 
+	public function viewFallback($views) {
+		$this->testView = true;
+		return $this->_viewFallback($views);
+	}
+
 	public function __securityError($type) {
 
 	}
@@ -167,6 +172,15 @@ class NodesControllerTest extends CroogoTestCase {
 			'Node.slug' => 'hello-world',
 		));
 		$this->assertFalse($hasAny);
+	}
+
+	public function testViewFallback() {
+		$this->Nodes->theme = 'Mytheme';
+		$result = $this->Nodes->viewFallback(array('index_blog'));
+		$this->assertContains('index_blog.ctp in Mytheme', $result->body());
+
+		$result = $this->Nodes->viewFallback(array('view_1', 'view_blog'));
+		$this->assertContains('view_1.ctp in Mytheme', $result->body());
 	}
 
 	public function endTest($method) {

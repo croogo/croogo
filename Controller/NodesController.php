@@ -718,10 +718,13 @@ class NodesController extends AppController {
 		}
 
 		if ($this->theme) {
+			$viewPaths = App::path('View');
 			foreach ($views AS $view) {
-				$viewPath = APP.'View'.DS.'Themed'.DS.$this->theme.DS.$this->name.DS.$view.$this->ext;
-				if (file_exists($viewPath)) {
-					return $this->render($view);
+				foreach ($viewPaths as $viewPath) {
+					$viewPath = $viewPath . 'Themed' . DS . $this->theme . DS . $this->name .DS . $view . $this->ext;
+					if (file_exists($viewPath)) {
+						return $this->render($view);
+					}
 				}
 			}
 		}
