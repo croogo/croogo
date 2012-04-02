@@ -252,6 +252,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
  * testAdd
  */
 	public function testAdd() {
+		Configure::write('Comment.email_notification', 1);
 		$Comments = $this->generate('Comments', array(
 			'components' => array(
 				'Email' => array('send'),
@@ -290,6 +291,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
  * testAddWithParent
  */
 	public function testAddWithParent() {
+		Configure::write('Comment.email_notification', 1);
 		$Comments = $this->generate('Comments', array(
 			'components' => array(
 				'Email' => array('send'),
@@ -323,4 +325,39 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		$output = $Comments->render('add');
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
+
+/**
+ * testAddWithoutEmailNotification
+ */
+	public function testAddWithoutEmailNotification() {
+		Configure::write('Comment.email_notification', 0);
+		$Comments = $this->generate('Comments', array(
+			'components' => array(
+				'Session',
+			),
+		));
+		$Comments->request->params['action'] = 'add';
+		$Comments->request->params['url']['url'] = 'comments/add';
+		$Comments->Components->trigger('initialize', array(&$Comments));
+
+		$Comments->Components->trigger('startup', array(&$Comments));
+		$Comments->request->data['Comment'] = array(
+			'name' => 'John Smith',
+			'email' => 'john.smith@example.com',
+			'website' => 'http://example.com',
+			'body' => 'text here...',
+		);
+		$node = $Comments->Comment->Node->findBySlug('hello-world');
+		$Comments->add($node['Node']['id']);
+		$this->assertEqual($Comments->viewVars['success'], 1);
+
+		$comments = $Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
+		$commenters = array_values($comments);
+		$this->assertEqual($commenters, array('Mr Croogo', 'Mrs Croogo', 'John Smith'));
+
+		$Comments->testView = true;
+		$output = $Comments->render('add');
+		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+	}
+
 }

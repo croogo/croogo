@@ -228,16 +228,18 @@ class CommentsController extends AppController {
 				}
 
 				// Email notification
-				$this->Email->from = Configure::read('Site.title') . ' '
-					. '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])).'>';
-				$this->Email->to = Configure::read('Site.email');
-				$this->Email->subject = '[' . Configure::read('Site.title') . '] '
-					. __('New comment posted under') . ' ' . $node['Node']['title'];
-				$this->set('node', $node);
-				$this->set('data', $data);
-				$this->set('commentId', $this->Comment->id);
-				$this->Email->template = 'comment';
-				$this->Email->send();
+				if (Configure::read('Comment.email_notification')) {
+					$this->Email->from = Configure::read('Site.title') . ' '
+						. '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])).'>';
+					$this->Email->to = Configure::read('Site.email');
+					$this->Email->subject = '[' . Configure::read('Site.title') . '] '
+						. __('New comment posted under') . ' ' . $node['Node']['title'];
+					$this->set('node', $node);
+					$this->set('data', $data);
+					$this->set('commentId', $this->Comment->id);
+					$this->Email->template = 'comment';
+					$this->Email->send();
+				}
 
 				$this->redirect(Router::url($node['Node']['url'], true) . '#comment-' . $this->Comment->id);
 			}
