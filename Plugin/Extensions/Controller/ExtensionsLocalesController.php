@@ -1,4 +1,7 @@
 <?php
+App::uses('File', 'Utility');
+APP::uses('Folder', 'Utility');
+
 /**
  * Extensions Locales Controller
  *
@@ -30,8 +33,6 @@ class ExtensionsLocalesController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		App::uses('File', 'Utility');
-		APP::uses('Folder', 'Utility');
 	}
 
 	public function admin_index() {
@@ -55,16 +56,11 @@ class ExtensionsLocalesController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$file =& new File(APP . 'config' . DS . 'croogo_bootstrap.php', true);
-		$content = $file->read();
-
-		$content = str_replace("Configure::write('Config.language', '" . Configure::read('Site.locale') . "');",
-			"Configure::write('Config.language', '" . $locale . "');", $content);
-		if ($file->write($content)) {
-			$this->Setting->write('Site.locale', $locale);
+		$result = $this->Setting->write('Site.locale', $locale);
+		if ($result) {
 			$this->Session->setFlash(sprintf(__("Locale '%s' set as default"), $locale), 'default', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(__('Could not edit croogo_bootstrap.php file.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__('Could not save Locale setting.'), 'default', array('class' => 'error'));
 		}
 		$this->redirect(array('action' => 'index'));
 	}
