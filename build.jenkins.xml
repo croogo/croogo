@@ -51,6 +51,8 @@
  <target name="phploc" description="Measure project size using PHPLOC">
   <exec executable="phploc">
    <arg value="--exclude" />
+   <arg value="${basedir}/webroot" />
+   <arg value="--exclude" />
    <arg value="${basedir}/Test" />
    <arg value="--exclude" />
    <arg value="${basedir}/Templates" />
@@ -71,12 +73,14 @@
   </exec>
  </target>
 
- <target name="phpmd" failonerror="off" failonruleviolation="off"  
+ <target name="phpmd"
          description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
   <exec executable="phpmd">
    <arg path="${basedir}" />
    <arg value="text" />
    <arg value="codesize,design,naming,unusedcode" />
+   <arg value="--exclude" />
+   <arg value="${basedir}/webroot" />
    <arg value="--exclude" />
    <arg value="${basedir}/Test" />
    <arg value="--exclude" />
@@ -84,7 +88,7 @@
   </exec>
  </target>
 
- <target name="phpmd-ci" failonerror="off" failonruleviolation="off"
+ <target name="phpmd-ci"
          description="Perform project mess detection using PHPMD creating a log file for the continuous integration server">
   <exec executable="phpmd">
    <arg path="${basedir}" />
@@ -93,36 +97,42 @@
    <arg value="--reportfile" />
    <arg value="${basedir}/build/logs/pmd.xml" />
    <arg value="--exclude" />
+   <arg value="${basedir}/webroot" />
+   <arg value="--exclude" />
    <arg value="${basedir}/Test" />
    <arg value="--exclude" />
    <arg value="${basedir}/Console/Templates" />
   </exec>
  </target>
 
- <target name="phpcs" failonerror="off" failonruleviolation="off"
+ <target name="phpcs"
          description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
   <exec executable="phpcs">
    <arg value="--standard=CakePHP" />
-   <arg value="--ignore=${basedir}/Console/Templates,${basedir}/Test,*.txt,*.bat" />
+   <arg value="--encoding=utf-8" />
+   <arg value="--ignore=${basedir}/webroot,${basedir}/Console/Templates,${basedir}/Test,*.txt,*.bat,*js" />
    <arg path="${basedir}" />
   </exec>
  </target>
 
- <target name="phpcs-ci" failonerror="off" failonruleviolation="off" 
+ <target name="phpcs-ci"
          description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server">
   <exec executable="phpcs" output="/dev/null">
    <arg value="--report=checkstyle" />
    <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
    <arg value="--standard=CakePHP" />
-   <arg value="--ignore=${basedir}/Console/Templates,${basedir}/Test,*.txt,*.bat" />
+   <arg value="--encoding=utf-8" />
+   <arg value="--ignore=${basedir}/webroot,${basedir}/Console/Templates,${basedir}/Test,*.txt,*.bat,*js" /> 
    <arg path="${basedir}" />
   </exec>
  </target>
 
- <target name="phpcpd" description="Find duplicate code using PHPCPD" failonerror="off" failonruleviolation="off">
+ <target name="phpcpd" description="Find duplicate code using PHPCPD">
   <exec executable="phpcpd">
    <arg value="--log-pmd" />
    <arg value="${basedir}/build/logs/pmd-cpd.xml" />
+   <arg value="--exclude" />
+   <arg value="${basedir}/webroot" />
    <arg value="--exclude" />
    <arg value="${basedir}/Test" />
    <arg value="--exclude" />
@@ -131,7 +141,7 @@
   </exec>
  </target>
 
- <target name="phpdoc" failonerror="off"
+ <target name="phpdoc"
          description="Generate API documentation using PHPDocumentor">
   <exec executable="phpdoc">
    <arg value="--directory" />
@@ -139,11 +149,11 @@
    <arg value="--target" />
    <arg path="${basedir}/build/api" />
    <arg value="--ignore" />
-   <arg value="Console/cake.php,Test/,Console/Templates/skel/,Config/unicode/" />
+   <arg value="Console/cake.php,Test/,Console/Templates/skel/,Config/unicode/,webroot/" />
    </exec>
  </target>
 
- <target name="phpcb" failonerror="off"
+ <target name="phpcb"
          description="Aggregate tool output with PHP_CodeBrowser">
   <exec executable="phpcb">
    <arg value="--log" />
@@ -155,7 +165,7 @@
    <arg value="-S" />
    <arg value="php" />
    <arg value="-i" />
-   <arg value="Console/cake,Console/cake.php,Test/,LICENSE.txt,VERSION.txt,Console/Templates/skel/" />
+   <arg value="Console/cake,Console/cake.php,Test/,LICENSE.txt,VERSION.txt,Console/Templates/skel/,webroot/" />
   </exec>
  </target>
 </project>
