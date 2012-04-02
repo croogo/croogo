@@ -1,13 +1,8 @@
 <?php
-App::import('Helper', array(
-	'Html',
-	'Form',
-	'Session',
-	'Js',
-	'Layout',
-));
+App::uses('LayoutHelper', 'View/Helper');
 App::uses('SessionComponent', 'Controller/Component');
 App::uses('Controller', 'Controller');
+App::uses('CroogoTestCase', 'TestSuite');
 
 class TheLayoutTestController extends Controller {
 	var $name = 'TheTest';

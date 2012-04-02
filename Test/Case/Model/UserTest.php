@@ -1,6 +1,8 @@
 <?php
 App::uses('User', 'Model');
 App::uses('AuthComponent', 'Controller/Component');
+App::uses('CroogoTestCase', 'TestSuite');
+
 class UserTest extends CroogoTestCase {
 
 	public $fixtures = array(

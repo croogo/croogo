@@ -1,6 +1,7 @@
 <?php
 App::uses('ContactsController', 'Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
+App::uses('CroogoTestFixture', 'TestSuite');
 
 class TestContactsController extends ContactsController {
 

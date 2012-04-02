@@ -4,6 +4,7 @@ App::uses('AppShell', 'Console/Command');
 App::uses('Shell', 'Console');
 App::uses('ExtShell', 'Console/Command');
 App::uses('Folder', 'Utility');
+App::uses('CroogoTestCase', 'TestSuite');
 
 /**
  * Ext Shell Test

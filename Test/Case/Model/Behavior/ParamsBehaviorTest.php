@@ -1,5 +1,7 @@
 <?php
-App::import('Model', 'Type');
+App::uses('Type', 'Model');
+App::uses('CroogoTestCase', 'TestSuite');
+
 class ParamsBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
