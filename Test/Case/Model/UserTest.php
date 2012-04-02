@@ -1,4 +1,7 @@
 <?php
+App::uses('CroogoTestCase', 'TestSuite');
+App::uses('Model', 'Model');
+App::uses('AppModel', 'Model');
 App::uses('User', 'Model');
 App::uses('AppModel', 'Model');
 App::uses('AuthComponent', 'Controller/Component');
@@ -181,6 +184,63 @@ class UserTest extends CroogoTestCase {
 		$anotherAdmin = $this->User->read();
 		$this->User->deleteAll(array('NOT' => array('User.id' => array($newAdmin['User']['id'], $anotherAdmin['User']['id']))));
 		$this->assertTrue($this->User->delete($newAdmin['User']['id']));
+	}
+
+/**
+ * testDisplayFields
+ *
+ * @return void
+ */
+	public function testDisplayFields() {
+		$User = ClassRegistry::init('TestUser');
+
+		$result = $User->displayFields();
+		$expected = array(
+			'id' => array(
+				'label' => 'Id',
+				'sort' => true,
+			),
+			'username' => array(
+				'label' => 'Username',
+				'sort' => true,
+			),
+			'name' => array(
+				'label' => 'Your Name',
+				'sort' => true,
+			),
+			'Setting.key' => array(
+				'label' => 'Key',
+				'sort' => true,
+			),
+			'email' => array(
+				'label' => 'Email Address',
+				'sort' => false,
+			),
+			'password' => array(
+				'label' => 'Password',
+				'sort' => false,
+			),
+		);
+		$this->assertEquals($expected, $result);
+
+		$result = $User->displayFields(array(
+			'one', 'two', 'three',
+		));
+		$expected = array(
+			'one' => array(
+				'label' => 'One',
+				'sort' => true,
+			),
+			'two' => array(
+				'label' => 'Two',
+				'sort' => true,
+			),
+			'three' => array(
+				'label' => 'Three',
+				'sort' => true,
+			),
+		);
+		$this->assertEquals($expected, $result);
 	}
 
 }
