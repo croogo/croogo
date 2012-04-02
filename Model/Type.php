@@ -83,4 +83,16 @@ class Type extends AppModel {
 			'insertQuery' => '',
 		),
 	);
+
+/**
+ * Display fields for this model
+ *
+ * @var array
+ */
+	protected $_displayFields = array(
+		'id',
+		'title',
+		'alias',
+		'description',
+	);
 }

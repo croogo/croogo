@@ -46,6 +46,7 @@ class ContactsController extends AppController {
 		$this->Contact->recursive = 0;
 		$this->paginate['Contact']['order'] = 'Contact.title ASC';
 		$this->set('contacts', $this->paginate());
+		$this->set('displayFields', $this->Contact->displayFields());
 	}
 
 	public function admin_add() {

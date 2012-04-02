@@ -72,6 +72,7 @@ class UsersController extends AppController {
 
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
+		$this->set('displayFields', $this->User->displayFields());
 	}
 
 	public function admin_add() {

@@ -41,6 +41,7 @@ class TypesController extends AppController {
 		$this->Type->recursive = 0;
 		$this->paginate['Type']['order'] = 'Type.title ASC';
 		$this->set('types', $this->paginate());
+		$this->set('displayFields', $this->Type->displayFields());
 	}
 
 	public function admin_add() {

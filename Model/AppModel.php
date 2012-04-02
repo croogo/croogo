@@ -25,6 +25,14 @@ class AppModel extends Model {
 	public $useCache = true;
 
 /**
+ * Display fields for admin_index. Use displayFields()
+ *
+ * @var array
+ * @access protected
+ */
+	protected $_displayFields = array();
+
+/**
  * Constructor
  *
  * @param mixed  $id    Set this ID for this model on startup, can also be an array of options, see above.
@@ -136,5 +144,39 @@ class AppModel extends Model {
  */
 	public function invalidate($field, $value = true) {
 		return parent::invalidate($field, __($value));
+	}
+
+/**
+ * Return formatted display fields
+ *
+ * @param array $displayFields
+ * @return array
+ */
+	public function displayFields($displayFields = null) {
+		if (isset($displayFields)) {
+			$this->_displayFields = $displayFields;
+		}
+		$out = array();
+		foreach ($this->_displayFields as $field => $label) {
+			if (is_int($field)) {
+				$field = $label;
+				list(, $label) = pluginSplit($label);
+				$out[$field] = array(
+					'label' => Inflector::humanize($label),
+					'sort' => true,
+				);
+			} elseif (is_array($label)) {
+				$out[$field] = $label;
+				if (!isset($out[$field]['label'])) {
+					$out[$field]['label'] = Inflector::humanize($field);
+				}
+			} else {
+				$out[$field] = array(
+					'label' => $label,
+					'sort' => true,
+				);
+			}
+		}
+		return $out;
 	}
 }

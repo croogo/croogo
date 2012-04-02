@@ -34,6 +34,7 @@ class RegionsController extends AppController {
 		$this->Region->recursive = 0;
 		$this->paginate['Region']['order'] = 'Region.title ASC';
 		$this->set('regions', $this->paginate());
+		$this->set('displayFields', $this->Region->displayFields());
 	}
 
 	public function admin_add() {
