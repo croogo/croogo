@@ -48,6 +48,14 @@ class UserTest extends CroogoTestCase {
 		$newUser = $this->User->read();
 		$this->assertNotEqual($newUser['User']['password'], '123456');
 		$this->assertEqual($newUser['User']['password'], AuthComponent::password('123456'));
+
+		$oldPassword = $newUser['User']['password'];
+		$newUser['User']['password'] = '';
+		$this->User->id = $newUser['User']['id'];
+		$this->User->save($newUser);
+		$this->assertContains('Passwords must be at least 6 characters long.', print_r($this->User->validationErrors, true));
+		$newUser = $this->User->read();
+		$this->assertEqual($newUser['User']['password'], $oldPassword);
 	}
 
 }
