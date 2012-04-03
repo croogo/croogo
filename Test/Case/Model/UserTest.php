@@ -33,7 +33,7 @@ class UserTest extends CroogoTestCase {
 			'password' => 'password',
 			'website' => 'http://croogo.org',
 			'activation_key' => md5(uniqid()),
-			));
+		));
 		$this->User->save();
 		$this->assertEmpty($this->User->validationErrors, 'Validation error: ' . print_r($this->User->validationErrors, true));
 		$newUser = $this->User->read();
@@ -48,6 +48,14 @@ class UserTest extends CroogoTestCase {
 		$newUser = $this->User->read();
 		$this->assertNotEqual($newUser['User']['password'], '123456');
 		$this->assertEqual($newUser['User']['password'], AuthComponent::password('123456'));
+
+		$oldPassword = $newUser['User']['password'];
+		$newUser['User']['password'] = '';
+		$this->User->id = $newUser['User']['id'];
+		$this->User->save($newUser);
+		$this->assertNotEmpty($this->User->validationErrors, 'Validation error: ' . print_r($this->User->validationErrors, true));
+		$newUser = $this->User->read();
+		$this->assertEqual($newUser['User']['password'], $oldPassword);
 	}
 
 }
