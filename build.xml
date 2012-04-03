@@ -2,10 +2,10 @@
 
 <project name="Croogo" default="build">
  <target name="build"
-   depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpdoc,phpcb"/>
+   depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpdoc,croogo,phpcb"/>
 
  <target name="build-parallel"
-   depends="prepare,lint,tools-parallel,phpcb"/>
+   depends="prepare,lint,tools-parallel,croogo,phpcb"/>
 
  <target name="tools-parallel"
          description="Run tools in parallel">
@@ -151,6 +151,19 @@
    <arg value="--ignore" />
    <arg value="Console/cake.php,Test/,Console/Templates/skel/,Config/unicode/,webroot/" />
    </exec>
+ </target>
+
+ <target name="croogo" description="Run unit tests">
+  <exec executable="Console/cake">
+   <arg value="test" />
+   <arg value="app" />
+   <arg value="AllTests" />
+   <arg value="--stderr" />
+   <arg value="--log-junit" />
+   <arg path="build/logs/junit.xml" />
+   <arg value="--coverage-clover" />
+   <arg path="build/logs/clover.xml" />
+  </exec>
  </target>
 
  <target name="phpcb"
