@@ -149,6 +149,7 @@ class AclActionsController extends AclAppController {
 			$root = $root[0];
 		}
 
+		$log = array();
 		$controllerPaths = $this->AclGenerate->listControllers();
 		foreach ($controllerPaths AS $controllerName => $controllerPath) {
 			$controllerNode = $aco->node('controllers/'.$controllerName);
@@ -158,9 +159,10 @@ class AclActionsController extends AclAppController {
 					'model' => null,
 					'alias' => $controllerName,
 				));
-				$controllerNode = $aco->save();
-				$controllerNode['Aco']['id'] = $aco->id;
-				$log[] = 'Created Aco node for '.$controllerName;
+				if ($controllerNode = $aco->save()) {
+					$controllerNode['Aco']['id'] = $aco->id;
+					$created[] = $controllerName;
+				}
 			} else {
 				$controllerNode = $controllerNode[0];
 			}
@@ -174,10 +176,13 @@ class AclActionsController extends AclAppController {
 						'model' => null,
 						'alias' => $method,
 					));
-					$methodNode = $aco->save();
+					if ($methodNode = $aco->save()) {
+						$created[] = $controllerName . '.' . $method;
+					}
 				}
 			}
 		}
+		$this->Session->setFlash(__('Created %d new permissions', count($created)), 'default', array('acosCreated' => $created));
 
 		if (isset($this->params['named']['permissions'])) {
 			$this->redirect(array('plugin' => 'acl', 'controller' => 'acl_permissions', 'action' => 'index'));
