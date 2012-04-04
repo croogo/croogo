@@ -1,4 +1,7 @@
 <?php
+App::uses('File', 'Utility');
+APP::uses('Folder', 'Utility');
+
 /**
  * Extensions Locales Controller
  *
@@ -30,15 +33,13 @@ class ExtensionsLocalesController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		App::uses('File', 'Utility');
-		APP::uses('Folder', 'Utility');
 	}
 
 	public function admin_index() {
 		$this->set('title_for_layout', __('Locales'));
 
 		$folder =& new Folder;
-		$folder->path = APP . 'locale';
+		$folder->path = APP . 'Locale';
 		$content = $folder->read();
 		$locales = $content['0'];
 		foreach($locales as $i => $locale) {
@@ -50,21 +51,16 @@ class ExtensionsLocalesController extends AppController {
 	}
 
 	public function admin_activate($locale = null) {
-		if ($locale == null || !is_dir(APP . 'locale' . DS . $locale)) {
+		if ($locale == null || !is_dir(APP . 'Locale' . DS . $locale)) {
 			$this->Session->setFlash(__('Locale does not exist.'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$file =& new File(APP . 'config' . DS . 'croogo_bootstrap.php', true);
-		$content = $file->read();
-
-		$content = str_replace("Configure::write('Config.language', '" . Configure::read('Site.locale') . "');",
-			"Configure::write('Config.language', '" . $locale . "');", $content);
-		if ($file->write($content)) {
-			$this->Setting->write('Site.locale', $locale);
+		$result = $this->Setting->write('Site.locale', $locale);
+		if ($result) {
 			$this->Session->setFlash(sprintf(__("Locale '%s' set as default"), $locale), 'default', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(__('Could not edit croogo_bootstrap.php file.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__('Could not save Locale setting.'), 'default', array('class' => 'error'));
 		}
 		$this->redirect(array('action' => 'index'));
 	}
@@ -72,9 +68,9 @@ class ExtensionsLocalesController extends AppController {
 	public function admin_add() {
 		$this->set('title_for_layout', __('Upload a new locale'));
 
-		if (!empty($this->data)) {
-			$file = $this->data['Locale']['file'];
-			unset($this->data['Locale']['file']);
+		if ($this->request->is('post') && !empty($this->request->data)) {
+			$file = $this->request->data['Locale']['file'];
+			unset($this->request->data['Locale']['file']);
 
 			// get locale name
 			$zip = zip_open($file['tmp_name']);
@@ -100,7 +96,7 @@ class ExtensionsLocalesController extends AppController {
 				$this->redirect(array('action' => 'add'));
 			}
 
-			if (is_dir(APP . 'locale' . DS . $locale)) {
+			if (is_dir(APP . 'Locale' . DS . $locale)) {
 				$this->Session->setFlash(__('Locale already exists.'), 'default', array('class' => 'error'));
 				$this->redirect(array('action' => 'add'));
 			}
@@ -113,9 +109,9 @@ class ExtensionsLocalesController extends AppController {
 					if (strstr($zipEntryName, $locale . '/')) {
 						$zipEntryNameE = explode($locale . '/', $zipEntryName);
 						if (isset($zipEntryNameE['1'])) {
-							$path = APP . 'locale' . DS . $locale . DS . str_replace('/', DS, $zipEntryNameE['1']);
+							$path = APP . 'Locale' . DS . $locale . DS . str_replace('/', DS, $zipEntryNameE['1']);
 						} else {
-							$path = APP . 'locale' . DS . $locale . DS;
+							$path = APP . 'Locale' . DS . $locale . DS;
 						}
 
 						if (substr($path, strlen($path) - 1) == DS) {
@@ -149,17 +145,17 @@ class ExtensionsLocalesController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		if (!file_exists(APP . 'locale' . DS . $locale . DS . 'LC_MESSAGES' . DS . 'default.po')) {
+		if (!file_exists(APP . 'Locale' . DS . $locale . DS . 'LC_MESSAGES' . DS . 'default.po')) {
 			$this->Session->setFlash(__('The file default.po does not exist.'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$file =& new File(APP . 'locale' . DS . $locale . DS . 'LC_MESSAGES' . DS . 'default.po', true);
+		$file =& new File(APP . 'Locale' . DS . $locale . DS . 'LC_MESSAGES' . DS . 'default.po', true);
 		$content = $file->read();
 
-		if (!empty($this->data)) {
+		if (!empty($this->request->data)) {
 			// save
-			if ($file->write($this->data['Locale']['content'])) {
+			if ($file->write($this->request->data['Locale']['content'])) {
 				$this->Session->setFlash(__('Locale updated successfully'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'index'));
 			}
@@ -175,7 +171,7 @@ class ExtensionsLocalesController extends AppController {
 		}
 
 		$folder =& new Folder;
-		if ($folder->delete(APP . 'locale' . DS . $locale)) {
+		if ($folder->delete(APP . 'Locale' . DS . $locale)) {
 			$this->Session->setFlash(__('Locale deleted successfully.'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__('Local could not be deleted.'), 'default', array('class' => 'error'));
