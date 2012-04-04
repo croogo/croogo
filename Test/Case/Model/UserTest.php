@@ -33,7 +33,7 @@ class UserTest extends CroogoTestCase {
 			'password' => 'password',
 			'website' => 'http://croogo.org',
 			'activation_key' => md5(uniqid()),
-			));
+		));
 		$this->User->save();
 		$this->assertEmpty($this->User->validationErrors, 'Validation error: ' . print_r($this->User->validationErrors, true));
 		$newUser = $this->User->read();
