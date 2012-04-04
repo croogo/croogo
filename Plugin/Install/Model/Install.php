@@ -1,6 +1,8 @@
 <?php
 
 App::uses('InstallAppModel', 'Install.Model');
+App::uses('CakeTime', 'Utility');
+App::uses('Security', 'Utility');
 
 class Install extends InstallAppModel {
 
@@ -19,9 +21,7 @@ class Install extends InstallAppModel {
 		copy(APP . 'Config' . DS.'settings.yml.install', APP . 'Config' . DS.'settings.yml');
 		App::uses('File', 'Utility');
 		$File =& new File(APP . 'Config' . DS . 'core.php');
-		if (!class_exists('Security')) {
-			require CAKE . 'Utility' .DS. 'Security.php';
-		}
+		$File->copy(APP . 'Config' . DS . 'core.' . date('YmdHis', time()) .'.php');
 		$salt = Security::generateAuthKey();
 		$seed = mt_rand() . mt_rand();
 		$contents = $File->read();
