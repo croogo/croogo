@@ -24,11 +24,10 @@
 		foreach ($users AS $user) {
 			$actions  = $this->Html->link(__('Edit'), array('controller' => 'users', 'action' => 'edit', $user['User']['id']));
 			$actions .= ' ' . $this->Layout->adminRowActions($user['User']['id']);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'controller' => 'users',
 				'action' => 'delete',
 				$user['User']['id'],
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 
 			$rows[] = array(

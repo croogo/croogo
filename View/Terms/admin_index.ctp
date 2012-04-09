@@ -13,14 +13,6 @@
 				$this->Paginator->options['url'][] = $nn . ':' . $nv;
 			}
 		}
-
-		echo $this->Form->create('Term', array(
-			'url' => array(
-				'controller' => 'terms',
-				'action' => 'process',
-				'vocabulary' => $vocabulary['Vocabulary']['id'],
-			),
-		));
 	?>
 	<table cellpadding="0" cellspacing="0">
 	<?php
@@ -51,11 +43,10 @@
 				$vocabulary['Vocabulary']['id'],
 			));
 			$actions .= ' ' . $this->Layout->adminRowActions($id);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'action' => 'delete',
 				$id,
 				$vocabulary['Vocabulary']['id'],
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 
 			$rows[] = array(

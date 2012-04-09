@@ -25,10 +25,9 @@
 			$actions .= ' ' . $this->Html->link(__('Move down'), array('action' => 'movedown', $language['Language']['id']));
 			$actions .= ' ' . $this->Html->link(__('Edit'), array('action' => 'edit', $language['Language']['id']));
 			$actions .= ' ' . $this->Layout->adminRowActions($language['Language']['id']);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'action' => 'delete',
 				$language['Language']['id'],
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 
 			$rows[] = array(

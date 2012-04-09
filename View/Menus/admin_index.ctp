@@ -23,11 +23,10 @@
 			$actions  = $this->Html->link(__('View links'), array('controller' => 'links', 'action' => 'index', $menu['Menu']['id']));
 			$actions .= ' ' . $this->Html->link(__('Edit'), array('controller' => 'menus', 'action' => 'edit', $menu['Menu']['id']));
 			$actions .= ' ' . $this->Layout->adminRowActions($menu['Menu']['id']);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'controller' => 'menus',
 				'action' => 'delete',
 				$menu['Menu']['id'],
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 
 			$rows[] = array(
