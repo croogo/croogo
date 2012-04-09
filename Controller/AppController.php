@@ -188,7 +188,11 @@ class AppController extends Controller {
 			break;
 		}
 		$this->set(compact('type'));
-		$this->render('../Errors/security');
+		$this->response = $this->render('../Errors/security');
+		$this->response->statusCode(400);
+		$this->response->send();
+		$this->_stop();
+		return false;
 	}
 
 }
