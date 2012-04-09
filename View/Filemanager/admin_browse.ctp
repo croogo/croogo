@@ -38,7 +38,6 @@
 					$actions .= ' ' . $this->Filemanager->link(__('Delete'), array(
 						'controller' => 'filemanager',
 						'action' => 'delete_directory',
-						'token' => $this->params['_Token']['key'],
 					), $path.$directory);
 				}
 				$rows[] = array(
@@ -57,7 +56,6 @@
 					$actions .= $this->Filemanager->link(__('Delete'), array(
 						'controller' => 'filemanager',
 						'action' => 'delete_file',
-						'token' => $this->params['_Token']['key'],
 					), $path.$file);
 				}
 				$rows[] = array(
