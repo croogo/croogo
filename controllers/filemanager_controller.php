@@ -51,6 +51,37 @@ class FilemanagerController extends AppController {
 		App::import('Core', 'File');
 	}
 
+/**
+ * Checks wether given $path is editable.
+ * A file is editable when it resides under the APP directory
+ *
+ * @param $path string
+ * @return boolean true if file is editable
+ */
+	protected function _isEditable($path) {
+		$path = realpath($path);
+		$regex = '/^' . preg_quote(realpath(APP), '/') . '/';
+		return preg_match($regex, $path) > 0;
+	}
+
+/**
+ * Checks wether given $path is editable.
+ * A file is deleteable when it resides under directories registered in
+ * FilemanagerController::deletablePaths
+ *
+ * @param $path string
+ * @return boolean true when file is deletable
+ */
+	protected function _isDeletable($path) {
+		$path = realpath($path);
+		$regex = array();
+		for ($i = 0, $ii = count($this->deletablePaths); $i < $ii; $i++) {
+			$regex[] = '(^' . preg_quote(realpath($this->deletablePaths[$i]), '/') . ')';
+		}
+		$regex = '/' . join($regex, '|') . '/';
+		return preg_match($regex, $path) > 0;
+	}
+
 	public function admin_index() {
 		$this->redirect(array('action' => 'browse'));
 		die();
@@ -94,6 +125,10 @@ class FilemanagerController extends AppController {
 			$path = $this->params['url']['path'];
 			$absolutefilepath = $path;
 		} else {
+			$this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
+		}
+		if (!$this->_isEditable($path)) {
+			$this->Session->setFlash(__(sprintf('Path %s is restricted', $path), true));
 			$this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
 		}
 		$this->set('title_for_layout', sprintf(__('Edit file: %s', true), $path));
@@ -141,6 +176,11 @@ class FilemanagerController extends AppController {
 		if (isset($this->params['url']['path'])) {
 			$path = $this->params['url']['path'];
 		} else {
+			$this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
+		}
+
+		if (!$this->_isDeletable($path)) {
+			$this->Session->setFlash(__(sprintf('Path %s is restricted', $path), true));
 			$this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
 		}
 
