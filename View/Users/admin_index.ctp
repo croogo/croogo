@@ -15,6 +15,7 @@
 			$this->Paginator->sort('username'),
 			$this->Paginator->sort('name'),
 			$this->Paginator->sort('email'),
+			$this->Paginator->sort('status'),
 			__('Actions'),
 		));
 		echo $tableHeaders;
@@ -36,6 +37,7 @@
 				$user['User']['username'],
 				$user['User']['name'],
 				$user['User']['email'],
+				$this->Layout->status($user['User']['status']),
 				$actions,
 			);
 		}
