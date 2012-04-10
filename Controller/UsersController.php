@@ -93,11 +93,12 @@ class UsersController extends AppController {
 		$this->set(compact('roles'));
 	}
 
+/**
+ * admin_edit
+ *
+ * @param integer $id
+ */
 	public function admin_edit($id = null) {
-		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid User'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
-		}
 		if (!empty($this->request->data)) {
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The User has been saved'), 'default', array('class' => 'success'));
@@ -105,12 +106,12 @@ class UsersController extends AppController {
 			} else {
 				$this->Session->setFlash(__('The User could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
-		}
-		if (empty($this->request->data)) {
+		} else {
 			$this->request->data = $this->User->read(null, $id);
 		}
 		$roles = $this->User->Role->find('list');
 		$this->set(compact('roles'));
+		$this->set('editFields', $this->User->editFields());
 	}
 
 	public function admin_reset_password($id = null) {

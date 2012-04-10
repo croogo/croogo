@@ -105,6 +105,20 @@ class User extends AppModel {
 		'email',
 	);
 
+/**
+ * Edit fields for this model
+ *
+ * @var array
+ */
+	protected $_editFields = array(
+		'role_id',
+		'username',
+		'name',
+		'email',
+		'website',
+		'status',
+	);
+
 	public function beforeDelete($cascade = true) {
 		$this->Role->Behaviors->attach('Aliasable');
 		$adminRoleId = $this->Role->byAlias('admin');

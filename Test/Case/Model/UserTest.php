@@ -192,9 +192,7 @@ class UserTest extends CroogoTestCase {
  * @return void
  */
 	public function testDisplayFields() {
-		$User = ClassRegistry::init('TestUser');
-
-		$result = $User->displayFields();
+		$result = $this->User->displayFields();
 		$expected = array(
 			'id' => array(
 				'label' => 'Id',
@@ -205,25 +203,21 @@ class UserTest extends CroogoTestCase {
 				'sort' => true,
 			),
 			'name' => array(
-				'label' => 'Your Name',
-				'sort' => true,
-			),
-			'Setting.key' => array(
-				'label' => 'Key',
+				'label' => 'Name',
 				'sort' => true,
 			),
 			'email' => array(
-				'label' => 'Email Address',
-				'sort' => false,
+				'label' => 'Email',
+				'sort' => true,
 			),
-			'password' => array(
-				'label' => 'Password',
-				'sort' => false,
+			'Role.title' => array(
+				'label' => 'Role',
+				'sort' => true,
 			),
 		);
 		$this->assertEquals($expected, $result);
 
-		$result = $User->displayFields(array(
+		$result = $this->User->displayFields(array(
 			'one', 'two', 'three',
 		));
 		$expected = array(
@@ -240,6 +234,52 @@ class UserTest extends CroogoTestCase {
 				'sort' => true,
 			),
 		);
+		$this->assertEquals($expected, $result);
+	}
+
+/**
+ * testEditFields
+ *
+ * @return void
+ */
+	public function testEditFields() {
+		$result = $this->User->editFields();
+		$expected = array(
+			'role_id' => array(),
+			'username' => array(),
+			'name' => array(),
+			'email' => array(),
+			'website' => array(),
+			'status' => array(),
+		);
+		$this->assertEquals($expected, $result);
+
+		$result = $this->User->editFields(array());
+		$expected = array(
+			'role_id' => array(),
+			'username' => array(),
+			'password' => array(),
+			'name' => array(),
+			'email' => array(),
+			'website' => array(),
+			'activation_key' => array(),
+			'image' => array(),
+			'bio' => array(),
+			'timezone' => array(),
+			'status' => array(),
+			'updated' => array(),
+			'created' => array(),
+		);
+		$this->assertEquals($expected, $result);
+
+		$expected = array(
+			'field' => array(
+				'label' => 'My Field',
+				'type' => 'select',
+				'options' => array(1, 2, 3),
+			),
+		);
+		$result = $this->User->editFields($expected);
 		$this->assertEquals($expected, $result);
 	}
 
