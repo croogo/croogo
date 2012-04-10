@@ -36,11 +36,9 @@
 		foreach ($comments AS $comment) {
 			$actions  = $this->Html->link(__('Edit'), array('action' => 'edit', $comment['Comment']['id']));
 			$actions .= ' ' . $this->Layout->adminRowActions($comment['Comment']['id']);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
-				'action' => 'delete',
-				$comment['Comment']['id'],
-				'token' => $this->params['_Token']['key'],
-			), null, __('Are you sure?'));
+			$actions .= ' ' . $this->Layout->processLink(__('Delete'),
+				'#Comment' . $comment['Comment']['id'] . 'Id',
+				null, __('Are you sure?'));
 
 			$rows[] = array(
 				$this->Form->checkbox('Comment.'.$comment['Comment']['id'].'.id'),

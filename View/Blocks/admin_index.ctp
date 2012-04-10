@@ -27,12 +27,9 @@
 			$actions .= ' ' . $this->Html->link(__('Move down'), array('controller' => 'blocks', 'action' => 'movedown', $block['Block']['id']));
 			$actions .= ' ' . $this->Html->link(__('Edit'), array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id']));
 			$actions .= ' ' . $this->Layout->adminRowActions($block['Block']['id']);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
-				'controller' => 'blocks',
-				'action' => 'delete',
-				$block['Block']['id'],
-				'token' => $this->params['_Token']['key'],
-			), null, __('Are you sure?'));
+			$actions .= ' ' . $this->Layout->processLink(__('Delete'),
+				'#Block' . $block['Block']['id'] .'Id',
+				null, __('Are you sure?'));
 
 			$rows[] = array(
 				$this->Form->checkbox('Block.'.$block['Block']['id'].'.id'),
