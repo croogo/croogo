@@ -16,6 +16,13 @@ class AclActionsController extends AclAppController {
 	public $uses = array('Acl.AclAco');
 	public $components = array('Acl.AclGenerate');
 
+	public function beforeFilter() {
+		parent::beforeFilter();
+		if ($this->action == 'admin_generate') {
+			$this->Security->csrfCheck = false;
+		}
+	}
+
 	public function admin_index() {
 		$this->set('title_for_layout', __('Actions'));
 
