@@ -409,6 +409,23 @@ class LayoutHelper extends AppHelper {
 	}
 
 /**
+ * Creates a special type of link for use in admin area.
+ *
+ * Clicking the link will automatically check a corresponding checkbox
+ * where element id is equal to $url parameter and immediately submit the form
+ * it's on.  This works in tandem with Admin.processLink() in javascript.
+ */
+	public function processLink($title, $url = null, $options = array(), $confirmMessage = false) {
+		if (!empty($confirmMessage)) {
+			$options['onclick'] = "if (confirm('$confirmMessage')) { Admin.processLink(this); } return false;";
+		} else {
+			$options['onclick'] = "Admin.processLink(this); return false;";
+		}
+		$output = $this->Html->link($title, $url, $options);
+		return $output;
+	}
+
+/**
  * Show Vocabulary by Alias
  *
  * @param string $vocabularyAlias Vocabulary alias
