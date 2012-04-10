@@ -33,6 +33,14 @@ class AppModel extends Model {
 	protected $_displayFields = array();
 
 /**
+ * Edit fields for admin_edit. Use editFields()
+ *
+ * @var array
+ * @access protected
+ */
+	protected $_editFields = array();
+
+/**
  * Constructor
  *
  * @param mixed  $id    Set this ID for this model on startup, can also be an array of options, see above.
@@ -174,6 +182,38 @@ class AppModel extends Model {
 				$out[$field] = array(
 					'label' => $label,
 					'sort' => true,
+				);
+			}
+		}
+		return $out;
+	}
+
+/**
+ * Return formatted edit fields
+ *
+ * @param array $editFields
+ * @return array
+ */
+	public function editFields($editFields = null) {
+		if (isset($editFields)) {
+			$this->_editFields = $editFields;
+		}
+		if (empty($this->_editFields)) {
+			$this->_editFields = array_keys($this->schema());
+			$id = array_search('id', $this->_editFields);
+			if ($id !== false) {
+				unset($this->_editFields[$id]);
+			}
+		}
+		$out = array();
+		foreach ($this->_editFields as $field => $label) {
+			if (is_int($field)) {
+				$out[$label] = array();
+			} elseif (is_array($label)) {
+				$out[$field] = $label;
+			} else {
+				$out[$field] = array(
+					'label' => $label,
 				);
 			}
 		}

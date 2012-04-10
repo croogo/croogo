@@ -2,8 +2,11 @@
 if (empty($modelClass)) {
 	$modelClass = Inflector::singularize($this->name);
 }
+if (!isset($className)) {
+	$className = strtolower($this->name);
+}
 ?>
-<div class="<?php echo strtolower($this->name); ?> index">
+<div class="<?php echo $className; ?> index">
 	<h2><?php if ($this->fetch('title')): ?>
 		<?php echo $this->fetch('title'); ?>
 	<?php else: ?>
