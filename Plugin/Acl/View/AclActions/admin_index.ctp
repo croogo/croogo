@@ -39,10 +39,9 @@
 			}
 
 			$actions  = $this->Html->link(__('Edit'), array('action' => 'edit', $id));
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'action' => 'delete',
 				$id,
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 			$actions .= ' ' . $this->Html->link(__('Move up'), array('action' => 'move', $id, 'up'));
 			$actions .= ' ' . $this->Html->link(__('Move down'), array('action' => 'move', $id, 'down'));

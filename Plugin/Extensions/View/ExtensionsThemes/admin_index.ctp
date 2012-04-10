@@ -55,15 +55,13 @@
 						echo $this->Html->tag('p', $theme['description'], array('class' => 'description'));
 						echo $this->Html->tag('p', __('Regions supported: ') . implode(', ', $theme['regions']), array('class' => 'regions'));
 						echo $this->Html->tag('div',
-							$this->Html->link(__('Activate'), array(
+							$this->Form->postLink(__('Activate'), array(
 								'action' => 'activate',
 								$themeAlias,
-								'token' => $this->params['_Token']['key'],
 							)) .
-							$this->Html->link(__('Delete'), array(
+							$this->Form->postLink(__('Delete'), array(
 								'action' => 'delete',
 								$themeAlias,
-								'token' => $this->params['_Token']['key'],
 							), null, __('Are you sure?')),
 							array('class' => 'actions'));
 					echo '</li>';

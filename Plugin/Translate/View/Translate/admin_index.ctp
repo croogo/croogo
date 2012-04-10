@@ -37,12 +37,11 @@
 				$modelAlias,
 				'locale' => $translation[$runtimeModelAlias]['locale'],
 			));
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'action' => 'delete',
 				$id,
 				$modelAlias,
 				$translation[$runtimeModelAlias]['locale'],
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 
 			$rows[] = array(
