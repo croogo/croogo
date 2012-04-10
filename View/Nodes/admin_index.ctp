@@ -40,11 +40,9 @@
 		foreach ($nodes AS $node) {
 			$actions  = $this->Html->link(__('Edit'), array('action' => 'edit', $node['Node']['id']));
 			$actions .= ' ' . $this->Layout->adminRowActions($node['Node']['id']);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
-				'action' => 'delete',
-				$node['Node']['id'],
-				'token' => $this->params['_Token']['key'],
-			), null, __('Are you sure?'));
+			$actions .= ' ' . $this->Layout->processLink(__('Delete'),
+				'#Node' . $node['Node']['id'] . 'Id',
+				null, __('Are you sure?'));
 
 			$rows[] = array(
 				$this->Form->checkbox('Node.'.$node['Node']['id'].'.id'),
@@ -79,11 +77,18 @@
 				'unpublish' => __('Unpublish'),
 				'promote' => __('Promote'),
 				'unpromote' => __('Unpromote'),
-				//'delete' => __('Delete'),
+				'delete' => __('Delete'),
 			),
 			'empty' => true,
 		));
-		echo $this->Form->end(__('Submit'));
+		$jsVarName = uniqid('confirmMessage_');
+		echo $this->Form->button(__('Submit'), array(
+			'type' => 'button',
+			'onclick' => sprintf('return Nodes.confirmProcess(app.%s)', $jsVarName),
+			));
+		$this->Js->set($jsVarName, __('%s selected items?'));
+
+		echo $this->Form->end();
 	?>
 	</div>
 </div>
