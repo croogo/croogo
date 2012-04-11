@@ -592,10 +592,12 @@ class LayoutHelper extends AppHelper {
  * @return string
  */
 	public function filter($content) {
+		Croogo::dispatchEvent('Helper.Layout.beforeFilter', $this->_View, array('content' => &$content));
 		$content = $this->filterElements($content);
 		$content = $this->filterMenus($content);
 		$content = $this->filterVocabularies($content);
 		$content = $this->filterNodes($content);
+		Croogo::dispatchEvent('Helper.Layout.afterFilter', $this->_View, array('content' => &$content));
 		return $content;
 	}
 
