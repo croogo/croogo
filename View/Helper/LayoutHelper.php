@@ -890,8 +890,9 @@ class LayoutHelper extends AppHelper {
 			'children' => true,
 			'htmlAttributes' => array(
 				'class' => 'sf-menu',
-				),
-			), $options);
+			),
+		), $options);
+			
 		$out = null;
 		$sorted = Set::sort($menus, '{[a-z]+}.weight', 'ASC');
 		if (empty($this->Role)) {
@@ -899,8 +900,15 @@ class LayoutHelper extends AppHelper {
 			$this->Role->Behaviors->attach('Aliasable');
 		}
 		$currentRole = $this->Role->byId($this->getRoleId());
+		if ($currentRole != 'admin') {
+			$allowedActions = $this->getAllowedActionsForRole();
+		}
 		foreach ($sorted as $menu) {
-			if ($currentRole != 'admin' && !in_array($currentRole, $menu['access'])) {
+			$linkAction = Inflector::camelize($menu['url']['controller']) . '/' . $menu['url']['action'];
+			if (isset($menu['url']['admin']) && $menu['url']['admin']) {
+				$linkAction = Inflector::camelize($menu['url']['controller']) . '/admin_' . $menu['url']['action'];
+			}
+			if ($currentRole != 'admin' && !in_array($linkAction, $allowedActions)) {
 				continue;
 			}
 			if (empty($menu['htmlAttributes']['class'])) {
@@ -923,4 +931,59 @@ class LayoutHelper extends AppHelper {
 		return $this->Html->tag('ul', $out, $options['htmlAttributes']);
 	}
 
+/** Generate allowed actions for current logged in Role
+ * 
+ *  DECIDE: move queries to AppController?
+ *
+ * @return array of elements formatted like ControllerName/action_name
+ */
+	function getAllowedActionsForRole() {
+		$Aco = ClassRegistry::init('Acl.AclAco');
+		$Aro = ClassRegistry::init('Acl.AclAro');
+		$ArosAco = ClassRegistry::init('Acl.ArosAco');
+		$acosTree = $Aco->generateTreeList(array(
+			'AclAco.parent_id !=' => null,
+		), '{n}.AclAco.id', '{n}.AclAco.alias');
+		$acos = array();
+		$controller = null;
+		foreach ($acosTree AS $acoId => $acoAlias) {
+			if (substr($acoAlias, 0, 1) == '_') {
+				$acos[$acoId] = $controller . '/' . substr($acoAlias, 1);
+			} else {
+				$controller = $acoAlias;
+			}
+		}
+		$acoIds = array_keys($acos);
+		
+		$roleId = $this->getRoleId();
+		$aro = $Aro->find('first', array(
+			'conditions' => array(
+				'AclAro.model' => 'Role',
+				'AclAro.foreign_key' => $roleId,
+			),
+		));
+		$aroId = $aro['AclAro']['id'];
+		
+		$permissionsForCurrentRole = $ArosAco->find('list', array(
+			'conditions' => array(
+				'ArosAco.aro_id' => $aroId,
+				'ArosAco.aco_id' => $acoIds,
+				'ArosAco._create' => 1,
+				'ArosAco._read' => 1,
+				'ArosAco._update' => 1,
+				'ArosAco._delete' => 1,
+			),
+			'fields' => array(
+				'ArosAco.id',
+				'ArosAco.aco_id',
+			),
+		));
+		$permissionsByActions = array();
+		foreach ($permissionsForCurrentRole AS $acoId) {
+			$permissionsByActions[] = $acos[$acoId];
+		}
+		
+		return $permissionsByActions;
+	}
+	
 }
