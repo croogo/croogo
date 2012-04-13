@@ -1,5 +1,7 @@
 <?php
 App::uses('CroogoNav', 'Lib');
+App::uses('CroogoTestCase', 'TestSuite');
+
 class CroogoNavTest extends CroogoTestCase {
 
 	protected static $_menus = array();

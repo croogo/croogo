@@ -1,4 +1,5 @@
 <?php
+App::uses('CroogoTestCase', 'TestSuite');
 
 class CroogoTest extends CroogoTestCase {
 
@@ -8,7 +9,6 @@ class CroogoTest extends CroogoTestCase {
 			));
 		$Order = ClassRegistry::init('Shops.Order');
 		$this->assertTrue($Order->monitored);
-
 	}
 
 }

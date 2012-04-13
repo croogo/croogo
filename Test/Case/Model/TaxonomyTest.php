@@ -1,5 +1,7 @@
 <?php
 App::uses('Taxonomy', 'Model');
+App::uses('CroogoTestCase', 'TestSuite');
+
 class TaxonomyTest extends CroogoTestCase {
 
 	public $fixtures = array(

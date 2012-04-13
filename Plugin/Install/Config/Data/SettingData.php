@@ -257,6 +257,17 @@ class SettingData {
 			'weight' => '23',
 			'params' => ''
 		),
+		array(
+			'id' => '33',
+			'key' => 'Comment.email_notification',
+			'value' => '1',
+			'title' => 'Enable email notification',
+			'description' => '',
+			'input_type' => 'checkbox',
+			'editable' => '1',
+			'weight' => '24',
+			'params' => ''
+		),
 	);
 
 }

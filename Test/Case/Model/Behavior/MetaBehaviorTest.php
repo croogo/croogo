@@ -1,5 +1,6 @@
 <?php
-App::import('Model', 'Node');
+App::uses('Node', 'Model');
+App::uses('CroogoTestCase', 'TestSuite');
 
 class MetaBehaviorTest extends CroogoTestCase {
 

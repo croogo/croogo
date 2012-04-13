@@ -5,11 +5,6 @@
     Configure::write('Site.acl_plugin', 'Acl');
 
 /**
- * Locale
- */
-	Configure::write('Config.language', 'eng');
-
-/**
  * Admin theme
  */
 	//Configure::write('Site.admin_theme', 'sample');
@@ -65,6 +60,11 @@
 			Configure::write($settingKey, $settingValue);
 		}
 	}
+
+/**
+ * Locale
+ */
+	Configure::write('Config.language', Configure::read('Site.locale'));
 
 /**
  * Plugins

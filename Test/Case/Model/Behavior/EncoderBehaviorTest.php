@@ -1,5 +1,7 @@
 <?php
-App::import('Model', 'Node');
+App::uses('Node', 'Model');
+App::uses('CroogoTestCase', 'TestSuite');
+
 class EncoderBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(

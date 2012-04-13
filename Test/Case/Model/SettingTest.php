@@ -1,5 +1,7 @@
 <?php
 App::uses('Setting', 'Model');
+App::uses('CroogoTestCase', 'TestSuite');
+
 class SettingTest extends CroogoTestCase {
 
 	public $fixtures = array(

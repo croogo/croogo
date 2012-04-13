@@ -85,6 +85,38 @@ class UsersControllerTest extends CroogoTestCase {
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
+	public function testAdd() {
+		$_SERVER['SERVER_NAME'] = 'croogo.dev';
+		$this->Users->request->params['action'] = 'add';
+		$this->Users->request->params['url']['url'] = 'users/add';
+		$this->Users->request->data = array(
+			'User' => array(
+				'username' => 'new_user',
+				'password' => '',
+				'email' => 'new_user@croogo.dev',
+				'name' => 'New User',
+				'website' => '',
+				'role_id' => 3,
+			),
+		);
+		$this->Users->startupProcess();
+		$User = $this->Users->User;
+
+		$this->Users->add();
+		$errors = print_r($User->validationErrors, true);
+		$this->assertContains('at least 6 characters', $errors);
+
+		$this->Users->request->data['User']['username'] = 'admin';
+		$this->Users->request->data['User']['password'] = 'yvonne';
+		$this->Users->request->data['User']['verify_password'] = 'strahovski';
+		$this->Users->request->data['User']['email'] = '123456';
+		$this->Users->add();
+		$errors = print_r($User->validationErrors, true);
+		$this->assertContains('do not match', $errors);
+		$this->assertContains('valid email', $errors);
+		$this->assertContains('been taken', $errors);
+	}
+
 	public function testAdminAdd() {
 		$this->Users->request->params['action'] = 'admin_add';
 		$this->Users->request->params['url']['url'] = 'admin/users/add';
