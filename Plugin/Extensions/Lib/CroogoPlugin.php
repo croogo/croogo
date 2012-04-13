@@ -281,6 +281,9 @@ class CroogoPlugin extends Object {
  * @return boolean true when successful, false or error message when failed
  */
 	public function activate($plugin) {
+		if (CakePlugin::loaded($plugin)) {
+			return __('Plugin "%s" is already active.', $plugin);
+		}
 		$pluginActivation = $this->getActivator($plugin);
 		if (!isset($pluginActivation) ||
 			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeActivation') && $pluginActivation->beforeActivation($this->_Controller))) {
@@ -316,6 +319,9 @@ class CroogoPlugin extends Object {
  * @return boolean true when successful, false or error message when failed
  */
 	public function deactivate($plugin) {
+		if (!CakePlugin::loaded($plugin)) {
+			return __('Plugin "%s" is not active.', $plugin);
+		}
 		$pluginActivation = $this->getActivator($plugin);
 		if (!isset($pluginActivation) ||
 			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeDeactivation') && $pluginActivation->beforeDeactivation($this->_Controller))) {
