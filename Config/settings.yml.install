@@ -14,6 +14,7 @@ Service.akismet_key: your-key
 Service.akismet_url: http://your-blog.com
 Service.recaptcha_private_key: your-private-key
 Service.recaptcha_public_key: your-public-key
+Site.acl_plugin: Acl
 Site.email: you@your-site.com
 Site.feed_url: 
 Site.locale: eng
