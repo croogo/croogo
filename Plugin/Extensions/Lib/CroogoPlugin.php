@@ -306,9 +306,9 @@ class CroogoPlugin extends Object {
 				}
 				return true;
 			} else {
-				return __d('croogo', 'Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin);
+				return __('Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin);
 			}
-			return __d('croogo', 'Plugin "%s" could not be activated. Please, try again.', $plugin);
+			return __('Plugin "%s" could not be activated. Please, try again.', $plugin);
 		}
 	}
 

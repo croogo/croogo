@@ -18,7 +18,7 @@ class InstallShell extends AppShell {
  */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
-		$parser->description(__d('croogo', 'Install Utilities')
+		$parser->description(__('Install Utilities')
 			)->addSubcommand('data', array(
 				'help' => 'Generate data files',
 				'parser' => array(

@@ -41,7 +41,7 @@ class ExtensionsInstaller {
  */
 	public function getPluginName($path = null) {
 		if (empty($path)) {
-			throw new CakeException(__d('extensions', 'Invalid plugin path'));
+			throw new CakeException(__('Invalid plugin path'));
 			return false;
 		}
 		if (isset($this->_pluginName[$path])) {
@@ -68,13 +68,13 @@ class ExtensionsInstaller {
 			}
 			$Zip->close();
 			if (!$plugin) {
-				throw new CakeException(__d('extensions', 'Invalid plugin'));
+				throw new CakeException(__('Invalid plugin'));
 				return false;
 			}
 			$this->_pluginName[$path] = $plugin;
 			return $plugin;
 		} else {
-			throw new CakeException(__d('extensions', 'Invalid zip archive'));
+			throw new CakeException(__('Invalid zip archive'));
 		}
 		return false;
 	}
@@ -88,7 +88,7 @@ class ExtensionsInstaller {
  */
 	public function extractPlugin($path = null, $plugin = null) {
 		if (!file_exists($path)) {
-			throw new CakeException(__d('extensions', 'Invalid plugin file path'));
+			throw new CakeException(__('Invalid plugin file path'));
 			return false;
 		}
 
@@ -99,7 +99,7 @@ class ExtensionsInstaller {
 		$pluginHome = current(App::path('Plugin'));
 		$pluginPath = $pluginHome . $plugin . DS;
 		if (is_dir($pluginPath)) {
-			throw new CakeException(__d('extensions', 'Plugin already exists'));
+			throw new CakeException(__('Plugin already exists'));
 			return false;
 		}
 
@@ -116,7 +116,7 @@ class ExtensionsInstaller {
 			$Zip->close();
 			return true;
 		} else {
-			throw new CakeException(__d('extensions', 'Failed to extract plugin'));
+			throw new CakeException(__('Failed to extract plugin'));
 		}
 		return false;
 	}
@@ -128,7 +128,7 @@ class ExtensionsInstaller {
  */
 	public function getThemeName($path = null) {
 		if (empty($path)) {
-			throw new CakeException(__d('extensions', 'Invalid theme path'));
+			throw new CakeException(__('Invalid theme path'));
 			return false;
 		}
 		if (isset($this->_themeName[$path])) {
@@ -144,7 +144,7 @@ class ExtensionsInstaller {
 					$yml = $Zip->getFromIndex($i);
 					preg_match('/name: (.+)/', $yml, $matches);
 					if (empty($matches[1])) {
-						throw new CakeException(__d('extensions', 'Invalid YML file'));
+						throw new CakeException(__('Invalid YML file'));
 					} else {
 						$theme = trim($matches[1]);
 					}
@@ -153,13 +153,13 @@ class ExtensionsInstaller {
 			}
 			$Zip->close();
 			if (!$theme) {
-				throw new CakeException(__d('extensions', 'Invalid theme'));
+				throw new CakeException(__('Invalid theme'));
 				return false;
 			}
 			$this->_themeName[$path] = $theme;
 			return $theme;
 		} else {
-			throw new CakeException(__d('extensions', 'Invalid zip archive'));
+			throw new CakeException(__('Invalid zip archive'));
 		}
 		return false;
 	}
@@ -173,7 +173,7 @@ class ExtensionsInstaller {
  */
 	public function extractTheme($path = null, $theme = null) {
 		if (!file_exists($path)) {
-			throw new CakeException(__d('extensions', 'Invalid theme file path'));
+			throw new CakeException(__('Invalid theme file path'));
 			return false;
 		}
 
@@ -184,7 +184,7 @@ class ExtensionsInstaller {
 		$themeHome = current(App::path('View')) . 'Themed' . DS;
 		$themePath = $themeHome . $theme . DS;
 		if (is_dir($themePath)) {
-			throw new CakeException(__d('extensions', 'Theme already exists'));
+			throw new CakeException(__('Theme already exists'));
 			return false;
 		}
 
@@ -201,7 +201,7 @@ class ExtensionsInstaller {
 			$Zip->close();
 			return true;
 		} else {
-			throw new CakeException(__d('extensions', 'Failed to extract theme'));
+			throw new CakeException(__('Failed to extract theme'));
 		}
 		return false;
 	}
