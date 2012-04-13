@@ -22,11 +22,10 @@
 		foreach ($types AS $type) {
 			$actions  = $this->Html->link(__('Edit'), array('controller' => 'types', 'action' => 'edit', $type['Type']['id']));
 			$actions .= ' ' . $this->Layout->adminRowActions($type['Type']['id']);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'controller' => 'types',
 				'action' => 'delete',
 				$type['Type']['id'],
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 
 			$rows[] = array(

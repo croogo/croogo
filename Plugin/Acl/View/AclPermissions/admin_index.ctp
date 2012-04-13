@@ -6,7 +6,7 @@
 
 	<div class="actions">
 		<ul>
-			<li><?php echo $this->Html->link(__('Generate Actions'), array('controller' => 'acl_actions', 'action'=>'generate', 'permissions' => 1)); ?></li>
+			<li><?php echo $this->Form->postLink(__('Generate Actions'), array('controller' => 'acl_actions', 'action'=>'generate', 'permissions' => 1)); ?></li>
 			<li><?php echo $this->Html->link(__('Edit Actions'), array('controller' => 'acl_actions', 'action'=>'index', 'permissions' => 1)); ?></li>
 		</ul>
 	</div>
@@ -50,9 +50,9 @@
 				if ($level != 0) {
 					if ($roleId != 1) {
 						if ($permissions[$id][$roleId] == 1) {
-							$row[] = $this->Html->image('/img/icons/tick.png', array('class' => 'permission-toggle', 'rel' => $id.'-'.$rolesAros[$roleId]));
+							$row[] = $this->Html->image('/img/icons/tick.png', array('class' => 'permission-toggle', 'data-aco_id' => $id, 'data-aro_id' => $rolesAros[$roleId]));
 						} else {
-							$row[] = $this->Html->image('/img/icons/cross.png', array('class' => 'permission-toggle', 'rel' => $id.'-'.$rolesAros[$roleId]));
+							$row[] = $this->Html->image('/img/icons/cross.png', array('class' => 'permission-toggle', 'data-aco_id' => $id, 'data-aro_id' => $rolesAros[$roleId]));
 						}
 					} else {
 						$row[] = $this->Html->image('/img/icons/tick_disabled.png', array('class' => 'permission-disabled'));

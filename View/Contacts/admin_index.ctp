@@ -24,10 +24,9 @@
 			//$actions .= $this->Html->link(__('View Messages'), array('controller'=> 'messages', 'action' => 'index', 'contact' => $contact['Contact']['id']));
 			$actions .= ' ' . $this->Html->link(__('Edit'), array('action' => 'edit', $contact['Contact']['id']));
 			$actions .= ' ' . $this->Layout->adminRowActions($contact['Contact']['id']);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'action' => 'delete',
 				$contact['Contact']['id'],
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 
 			$rows[] = array(

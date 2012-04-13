@@ -18,7 +18,7 @@ class FilemanagerHelper extends AppHelper {
  * @var array
  * @access public
  */
-	public $helpers = array('Html');
+	public $helpers = array('Html', 'Form');
 
 /**
  * Get extension from a file name.
@@ -120,11 +120,11 @@ class FilemanagerHelper extends AppHelper {
  * @return string
  */
 	public function link($title, $url, $path, $pathKey = 'path') {
-		$onclick = '';
 		if (isset($url['action']) && ($url['action'] == 'delete_directory' || $url['action'] == 'delete_file')) {
-			$onclick = 'return confirm(&#039;Are you sure?&#039;);';
+			$output = $this->Form->postLink($title, $url, array('data' => compact('path')), __('Are you sure?'));
+		} else {
+			$output = "<a href='" . $this->Html->url($url) . "?{$pathKey}=" . urlencode($path) . "'>" . $title . "</a>";
 		}
-		$output = "<a onclick='{$onclick}' href='" . $this->Html->url($url) . "?{$pathKey}=" . urlencode($path) . "'>" . $title . "</a>";
 		return $output;
 	}
 

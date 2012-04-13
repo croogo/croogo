@@ -101,12 +101,6 @@
 				<div class="clear">&nbsp;</div>
 			</div>
 		</fieldset>
-	<?php
-		echo $this->Form->input('token_key', array(
-			'type' => 'hidden',
-			'value' => $this->params['_Token']['key'],
-		));
-	?>
 	<div class="buttons">
 	<?php
 		echo $this->Form->submit(__('Apply'), array('name' => 'apply'));

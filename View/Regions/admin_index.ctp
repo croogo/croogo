@@ -21,11 +21,10 @@
 		foreach ($regions AS $region) {
 			$actions  = $this->Html->link(__('Edit'), array('controller' => 'regions', 'action' => 'edit', $region['Region']['id']));
 			$actions .= ' ' . $this->Layout->adminRowActions($region['Region']['id']);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'controller' => 'regions',
 				'action' => 'delete',
 				$region['Region']['id'],
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 
 			$rows[] = array(

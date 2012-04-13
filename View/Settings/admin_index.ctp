@@ -24,11 +24,10 @@
 			$actions .= ' ' . $this->Html->link(__('Move down'), array('controller' => 'settings', 'action' => 'movedown', $setting['Setting']['id']));
 			$actions .= ' ' . $this->Html->link(__('Edit'), array('controller' => 'settings', 'action' => 'edit', $setting['Setting']['id']));
 			$actions .= ' ' . $this->Layout->adminRowActions($setting['Setting']['id']);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'controller' => 'settings',
 				'action' => 'delete',
 				$setting['Setting']['id'],
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 
 			$key = $setting['Setting']['key'];

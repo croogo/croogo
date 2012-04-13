@@ -35,11 +35,9 @@
 		foreach ($messages AS $message) {
 			$actions  = $this->Html->link(__('Edit'), array('action' => 'edit', $message['Message']['id']));
 			$actions .= ' ' . $this->Layout->adminRowActions($message['Message']['id']);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
-				'action' => 'delete',
-				$message['Message']['id'],
-				'token' => $this->params['_Token']['key'],
-			), null, __('Are you sure?'));
+			$actions .= ' ' . $this->Layout->processLink(__('Delete'),
+				'#Message' . $message['Message']['id'] . 'Id',
+				null, __('Are you sure?'));
 
 			$rows[] = array(
 				$this->Form->checkbox('Message.'.$message['Message']['id'].'.id'),

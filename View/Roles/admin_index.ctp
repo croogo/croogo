@@ -21,11 +21,10 @@
 		foreach ($roles AS $role) {
 			$actions  = $this->Html->link(__('Edit'), array('controller' => 'roles', 'action' => 'edit', $role['Role']['id']));
 			$actions .= ' ' . $this->Layout->adminRowActions($role['Role']['id']);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'controller' => 'roles',
 				'action' => 'delete',
 				$role['Role']['id'],
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 
 			$rows[] = array(

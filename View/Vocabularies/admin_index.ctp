@@ -24,11 +24,10 @@
 			$actions .= ' ' . $this->Html->link(__('Move up'), array('action' => 'moveup', $vocabulary['Vocabulary']['id']));
 			$actions .= ' ' . $this->Html->link(__('Move down'), array('action' => 'movedown', $vocabulary['Vocabulary']['id']));
 			$actions .= ' ' . $this->Layout->adminRowActions($vocabulary['Vocabulary']['id']);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'controller' => 'vocabularies',
 				'action' => 'delete',
 				$vocabulary['Vocabulary']['id'],
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 
 			$rows[] = array(

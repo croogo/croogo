@@ -14,7 +14,7 @@ APP::uses('Folder', 'Utility');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtensionsLocalesController extends AppController {
+class ExtensionsLocalesController extends ExtensionsAppController {
 /**
  * Controller name
  *
@@ -30,10 +30,6 @@ class ExtensionsLocalesController extends AppController {
  * @access public
  */
 	public $uses = array('Setting', 'User');
-
-	public function beforeFilter() {
-		parent::beforeFilter();
-	}
 
 	public function admin_index() {
 		$this->set('title_for_layout', __('Locales'));

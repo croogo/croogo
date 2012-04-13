@@ -35,15 +35,13 @@
 			$iconImage = $this->Html->image('icons/'.$icon);
 
 			$actions  = '';
-			$actions .= ' ' . $this->Html->link($toggleText, array(
+			$actions .= ' ' . $this->Form->postLink($toggleText, array(
 				'action' => 'toggle',
 				$pluginAlias,
-				'token' => $this->params['_Token']['key'],
 			));
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'action' => 'delete',
 				$pluginAlias,
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 
 			$rows[] = array(
@@ -51,10 +49,9 @@
 				$pluginAlias,
 				$pluginData['name'],
 				$pluginData['description'],
-				$this->Html->link($iconImage, array(
+				$this->Form->postLink($iconImage, array(
 					'action' => 'toggle',
 					$pluginAlias,
-					'token' => $this->params['_Token']['key'],
 				), array(
 					'escape' => false,
 				)),

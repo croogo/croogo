@@ -38,12 +38,9 @@
 			$actions .= ' ' . $this->Html->link(__('Move down'), array('controller' => 'links', 'action' => 'movedown', $linkId));
 			$actions .= ' ' . $this->Html->link(__('Edit'), array('controller' => 'links', 'action' => 'edit', $linkId));
 			$actions .= ' ' . $this->Layout->adminRowActions($linkId);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
-				'controller' => 'links',
-				'action' => 'delete',
-				$linkId,
-				'token' => $this->params['_Token']['key'],
-			), null, __('Are you sure?'));
+			$actions .= ' ' . $this->Layout->processLink(__('Delete'),
+				'#Link' . $linkId . 'Id',
+				null, __('Are you sure?'));
 
 			$rows[] = array(
 				$this->Form->checkbox('Link.'.$linkId.'.id'),
