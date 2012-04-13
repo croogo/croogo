@@ -148,17 +148,14 @@ class ExtShell extends AppShell {
  * @return boolean
  */
 	protected function _deactivatePlugin($plugin = null) {
-		$pluginActivation = $this->_CroogoPlugin->getActivator($plugin);
-		if (!isset($pluginActivation) ||
-			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeDeactivation') && $pluginActivation->beforeDeactivation($this->_Controller))) {
-			$this->_CroogoPlugin->removePluginBootstrap($plugin);
-			if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
-				$pluginActivation->onDeactivation($this->_Controller);
-			}
-			$this->out(__d('croogo', 'Plugin "%s" deactivated successfully.', $plugin));
+		$result = $this->_CroogoPlugin->deactivate($plugin);
+		if ($result === true) {
+			$this->out(__('Plugin "%s" deactivated successfully.', $plugin));
 			return true;
+		} elseif (is_string($result)) {
+			$this->err($result);
 		} else {
-			$this->err(__d('croogo', 'Plugin "%s" could not be deactivated. Please, try again.', $plugin));
+			$this->err(__('Plugin "%s" could not be deactivated. Please, try again.', $plugin));
 		}
 		return false;
 	}
