@@ -3,6 +3,7 @@
 App::uses('InstallAppModel', 'Install.Model');
 App::uses('CakeTime', 'Utility');
 App::uses('Security', 'Utility');
+App::uses('File', 'Utility');
 
 class Install extends InstallAppModel {
 
@@ -17,21 +18,22 @@ class Install extends InstallAppModel {
 		if (Configure::read('Install.installed') && Configure::read('Install.secured')) {
 			return false;
 		}
-		// set new salt and seed value
 		copy(APP . 'Config' . DS.'settings.yml.install', APP . 'Config' . DS.'settings.yml');
-		App::uses('File', 'Utility');
-		$File =& new File(APP . 'Config' . DS . 'core.php');
-		$File->copy(APP . 'Config' . DS . 'core.' . date('YmdHis', time()) .'.php');
-		$salt = Security::generateAuthKey();
-		$seed = mt_rand() . mt_rand();
-		$contents = $File->read();
-		$contents = preg_replace('/(?<=Configure::write\(\'Security.salt\', \')([^\' ]+)(?=\'\))/', $salt, $contents);
-		$contents = preg_replace('/(?<=Configure::write\(\'Security.cipherSeed\', \')(\d+)(?=\'\))/', $seed, $contents);
-		if (!$File->write($contents)) {
-			return false;
+
+		// set new salt and seed value
+		if (!Configure::read('Install.secured')) {
+			$File =& new File(APP . 'Config' . DS . 'croogo.php');
+			$salt = Security::generateAuthKey();
+			$seed = mt_rand() . mt_rand();
+			$contents = $File->read();
+			$contents = preg_replace('/(?<=Configure::write\(\'Security.salt\', \')([^\' ]+)(?=\'\))/', $salt, $contents);
+			$contents = preg_replace('/(?<=Configure::write\(\'Security.cipherSeed\', \')(\d+)(?=\'\))/', $seed, $contents);
+			if (!$File->write($contents)) {
+				return false;
+			}
+			Configure::write('Security.salt', $salt);
+			Configure::write('Security.cipherSeed', $seed);
 		}
-		Configure::write('Security.salt', $salt);
-		Configure::write('Security.cipherSeed', $seed);
 
 		// create administrative user
 		$User = ClassRegistry::init('User');
