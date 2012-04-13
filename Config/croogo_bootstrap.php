@@ -91,5 +91,6 @@
 				'routes' => $routes,
 				)
 			);
-		CakePlugin::load($option);
+		CroogoPlugin::load($option);
 	}
+	CroogoEventManager::loadListeners();
