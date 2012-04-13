@@ -63,7 +63,8 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 /**
  * startTest
  */
-	public function startTest($method) {
+	public function setUp() {
+		parent::setUp();
 		$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 		$_SERVER['SERVER_NAME'] = 'localhost';
 		$request = new CakeRequest();
@@ -78,7 +79,8 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 /**
  * endTest
  */
-	public function endTest($method) {
+	public function tearDown() {
+		parent::tearDown();
 		unset($this->Comments);
 		CakeSession::clear();
 		ClassRegistry::flush();

@@ -49,6 +49,7 @@ class AclActionsControllerTest extends CroogoTestCase {
 
 		// remove some nodes so that it's recreated
 		$node = $this->AclActions->Acl->Aco->node('controllers/Nodes');
+		$count = $this->AclActions->Acl->Aco->childCount($node[0]['Aco']);
 		$this->assertNotEmpty($node);
 		$this->AclActions->Acl->Aco->removeFromTree($node[0]['Aco']['id']);
 
@@ -56,7 +57,7 @@ class AclActionsControllerTest extends CroogoTestCase {
 		$result = $this->AclActions->Session->read('Message.flash');
 		preg_match('/Created ([0-9]+) new permissions/', $result['message'], $matches);
 		$this->assertTrue(isset($matches[1]));
-		$this->assertTrue($matches[1] == 18);
+		$this->assertTrue($matches[1] >= $count);
 	}
 
 }

@@ -57,7 +57,6 @@ class ExtShellTest extends CroogoTestCase {
 		$Folder = new Folder(APP . 'Plugin' . DS . 'Example');
 		$Folder->copy(TESTS . 'test_app' . DS . 'Plugin' . DS . 'Example');
 		$this->Setting = ClassRegistry::init('Setting');
-		$this->Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
 	}
 
 /**
