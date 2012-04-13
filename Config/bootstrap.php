@@ -49,6 +49,8 @@
  *
  */
 	App::uses('CakeLog', 'Log');
+	App::uses('CroogoPlugin', 'Extensions.Lib');
+	App::uses('CroogoEventManager', 'Event');
 	App::import('Lib', 'Croogo');
 	App::import('Lib', 'CroogoNav');
 	CakePlugin::load(array('Extensions'), array('bootstrap' => true));

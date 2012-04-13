@@ -304,7 +304,8 @@ class CroogoPlugin extends Object {
 				if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
 					$pluginActivation->onActivation($this->_Controller);
 				}
-				CakePlugin::load($plugin);
+				CroogoPlugin::load($plugin);
+				Cache::delete('EventHandlers', 'setting_write_configuration');
 				return true;
 			} else {
 				return __('Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin);
@@ -330,11 +331,28 @@ class CroogoPlugin extends Object {
 			if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
 				$pluginActivation->onDeactivation($this->_Controller);
 			}
-			CakePlugin::unload($plugin);
+			CroogoPlugin::unload($plugin);
+			Cache::delete('EventHandlers', 'setting_write_configuration');
 			return true;
 		} else {
 			return __('Plugin could not be deactivated. Please, try again.');
 		}
+	}
+
+	public static function load($plugin) {
+		CakePlugin::load($plugin);
+		$pluginName = is_string($plugin) ? $plugin : key($plugin);
+		$eventsFile = CakePlugin::path($pluginName) . 'Config' . DS . 'events.php';
+		if (file_exists($eventsFile)) {
+			Configure::load($pluginName . '.events');
+		}
+	}
+
+	public static function unload($plugin) {
+		$pluginName = is_string($plugin) ? $plugin : key($plugin);
+		$eventManager = CroogoEventManager::instance();
+		$eventManager->detachPluginSubscribers($pluginName);
+		CakePlugin::unload($plugin);
 	}
 
 /**
