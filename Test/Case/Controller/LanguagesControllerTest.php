@@ -1,6 +1,6 @@
 <?php
 App::uses('LanguagesController', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestLanguagesController extends LanguagesController {
 
@@ -31,7 +31,7 @@ class TestLanguagesController extends LanguagesController {
 	}
 }
 
-class LanguagesControllerTest extends CroogoTestCase {
+class LanguagesControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
 		'aco',
@@ -59,7 +59,13 @@ class LanguagesControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest($method) {
+/**
+ * setUp
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Languages = new TestLanguagesController($request, $response);
@@ -67,21 +73,45 @@ class LanguagesControllerTest extends CroogoTestCase {
 		$this->Languages->request->params['controller'] = 'languages';
 		$this->Languages->request->params['pass'] = array();
 		$this->Languages->request->params['named'] = array();
+
+		$this->LanguagesController = $this->generate('Languages', array(
+			'methods' => array(
+				'redirect',
+			),
+			'components' => array(
+				'Auth' => array('user'),
+				'Session',
+			),
+		));
+		$this->LanguagesController->Auth
+			->staticExpects($this->any())
+			->method('user')
+			->will($this->returnValue(array(
+				'id' => 1,
+				'username' => 'admin',
+			)));
 	}
 
-	public function testAdminIndex() {
-		$this->Languages->request->params['action'] = 'admin_index';
-		$this->Languages->request->params['url']['url'] = 'admin/languages';
-		$this->Languages->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Languages->startupProcess();
-		$this->Languages->admin_index();
+/**
+ * tearDown
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		$this->Languages->Session->destroy();
+		unset($this->Languages);
+		ClassRegistry::flush();
+	}
 
-		$this->Languages->testView = true;
-		$output = $this->Languages->render('admin_index');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+/**
+ * testAdminIndex
+ *
+ * @return void
+ */
+	public function testAdminIndex() {
+		$this->testAction('/admin/languages/index');
+		$this->assertNotEmpty($this->vars['languages']);
 	}
 
 	public function testAdminAdd() {
@@ -109,30 +139,34 @@ class LanguagesControllerTest extends CroogoTestCase {
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
+/**
+ * testAdminEdit
+ *
+ * @return void
+ */
 	public function testAdminEdit() {
-		$this->Languages->request->params['action'] = 'admin_edit';
-		$this->Languages->request->params['url']['url'] = 'admin/languages/edit';
-		$this->Languages->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Languages->request->data = array(
-			'Language' => array(
-				'id' => 1,
-				'title' => 'English [modified]',
-				'alias' => 'eng',
+		$this->LanguagesController->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo('The Language has been saved'),
+				$this->equalTo('default'),
+				$this->equalTo(array('class' => 'success'))
+			);
+		$this->LanguagesController
+			->expects($this->once())
+			->method('redirect');
+		$this->testAction('/admin/languages/edit/1', array(
+			'data' => array(
+				'Language' => array(
+					'id' => 1,
+					'title' => 'English [modified]',
+					'alias' => 'eng',
+				),
 			),
-		);
-		$this->Languages->startupProcess();
-		$this->Languages->admin_edit();
-		$this->assertEqual($this->Languages->redirectUrl, array('action' => 'index'));
-
-		$eng = $this->Languages->Language->findByAlias('eng');
-		$this->assertEqual($eng['Language']['title'], 'English [modified]');
-
-		$this->Languages->testView = true;
-		$output = $this->Languages->render('admin_edit');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		));
+		$result = $this->LanguagesController->Language->findByAlias('eng');
+		$this->assertEquals('English [modified]', $result['Language']['title']);
 	}
 
 	public function testAdminDelete() {
@@ -274,9 +308,4 @@ class LanguagesControllerTest extends CroogoTestCase {
 		$this->assertEqual($this->Languages->viewVars['languages']['0']['Language']['alias'], 'eng');
 	}
 
-	public function endTest($method) {
-		$this->Languages->Session->destroy();
-		unset($this->Languages);
-		ClassRegistry::flush();
-	}
 }

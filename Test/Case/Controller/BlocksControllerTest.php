@@ -1,6 +1,6 @@
 <?php
 App::uses('BlocksController', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestBlocksController extends BlocksController {
 
@@ -31,7 +31,7 @@ class TestBlocksController extends BlocksController {
 	}
 }
 
-class BlocksControllerTest extends CroogoTestCase {
+class BlocksControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
 		'app.aco',
@@ -59,28 +59,58 @@ class BlocksControllerTest extends CroogoTestCase {
 		'app.vocabulary',
 	);
 
-	public function startTest($method) {
+/**
+ * setUp
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Blocks = new TestBlocksController($request, $response);
 		$this->Blocks->constructClasses();
 		$request->params['controller'] = 'blocks';
 		$request->params['pass'] = $request->params['named'] = array();
+
+		$this->BlocksController = $this->generate('Blocks', array(
+			'methods' => array(
+				'redirect',
+			),
+			'components' => array(
+				'Auth' => array('user'),
+				'Session',
+			),
+		));
+		$this->BlocksController->Auth
+			->staticExpects($this->any())
+			->method('user')
+			->will($this->returnValue(array(
+				'id' => 1,
+				'username' => 'admin',
+			)));
 	}
 
-	public function testAdminIndex() {
-		$this->Blocks->request->params['action'] = 'admin_index';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks';
-		$this->Blocks->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Blocks->startupProcess();
-		$this->Blocks->admin_index();
+/**
+ * tearDown
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		$this->Blocks->Session->destroy();
+		unset($this->Blocks);
+		ClassRegistry::flush();
+	}
 
-		$this->Blocks->testView = true;
-		$output = $this->Blocks->render('admin_index');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+/**
+ * testAdminIndex
+ *
+ * @return void
+ */
+	public function testAdminIndex() {
+		$this->testAction('/admin/blocks/index');
+		$this->assertNotEmpty($this->vars['blocks']);
 	}
 
 	public function testAdminAdd() {
@@ -117,33 +147,37 @@ class BlocksControllerTest extends CroogoTestCase {
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
+/**
+ * testAdminEdit
+ *
+ * @return void
+ */
 	public function testAdminEdit() {
-		$this->Blocks->request->params['action'] = 'admin_edit';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/edit';
-		$this->Blocks->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
+		$this->BlocksController->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo('The Block has been saved'),
+				$this->equalTo('default'),
+				$this->equalTo(array('class' => 'success'))
+			);
+		$this->BlocksController
+			->expects($this->once())
+			->method('redirect');
+		$this->testAction('/admin/blocks/edit/1', array(
+			'data' => array(
+				'Block' => array(
+					'id' => 3, // About
+					'title' => 'About [modified]',
+					'visibility_paths' => '',
+				),
+				'Role' => array(
+					'Role' => array(),
+				),
+			),
 		));
-		$this->Blocks->request->data = array(
-			'Block' => array(
-				'id' => 3, // About
-				'title' => 'About [modified]',
-				'visibility_paths' => '',
-			),
-			'Role' => array(
-				'Role' => array(),
-			),
-		);
-		$this->Blocks->startupProcess();
-		$this->Blocks->admin_edit();
-		$this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
-
-		$about = $this->Blocks->Block->findByAlias('about');
-		$this->assertEqual($about['Block']['title'], 'About [modified]');
-
-		$this->Blocks->testView = true;
-		$output = $this->Blocks->render('admin_edit');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		$result = $this->Blocks->Block->findByAlias('about');
+		$this->assertEquals('About [modified]', $result['Block']['title']);
 	}
 
 	public function testAdminDelete() {
@@ -441,9 +475,4 @@ class BlocksControllerTest extends CroogoTestCase {
 		));
 	}
 
-	public function endTest($method) {
-		$this->Blocks->Session->destroy();
-		unset($this->Blocks);
-		ClassRegistry::flush();
-	}
 }

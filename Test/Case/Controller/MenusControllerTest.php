@@ -1,6 +1,6 @@
 <?php
 App::uses('MenusController', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestMenusController extends MenusController {
 
@@ -31,7 +31,7 @@ class TestMenusController extends MenusController {
 	}
 }
 
-class MenusControllerTest extends CroogoTestCase {
+class MenusControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
 		'aco',
@@ -59,7 +59,13 @@ class MenusControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest($method) {
+/**
+ * setUp
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Menus = new TestMenusController($request, $response);
@@ -67,21 +73,45 @@ class MenusControllerTest extends CroogoTestCase {
 		$this->Menus->request->params['controller'] = 'menus';
 		$this->Menus->request->params['pass'] = array();
 		$this->Menus->request->params['named'] = array();
+
+		$this->MenusController = $this->generate('Menus', array(
+			'methods' => array(
+				'redirect',
+			),
+			'components' => array(
+				'Auth' => array('user'),
+				'Session',
+			),
+		));
+		$this->MenusController->Auth
+			->staticExpects($this->any())
+			->method('user')
+			->will($this->returnValue(array(
+				'id' => 1,
+				'username' => 'admin',
+			)));
 	}
 
-	public function testAdminIndex() {
-		$this->Menus->request->params['action'] = 'admin_index';
-		$this->Menus->request->params['url']['url'] = 'admin/menus';
-		$this->Menus->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Menus->startupProcess();
-		$this->Menus->admin_index();
+/**
+ * tearDown
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		$this->Menus->Session->destroy();
+		unset($this->Menus);
+		ClassRegistry::flush();
+	}
 
-		$this->Menus->testView = true;
-		$output = $this->Menus->render('admin_index');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+/**
+ * testAdminIndex
+ *
+ * @return void
+ */
+	public function testAdminIndex() {
+		$this->testAction('/admin/menus/index');
+		$this->assertNotEmpty($this->vars['menus']);
 	}
 
 	public function testAdminAdd() {
@@ -111,29 +141,33 @@ class MenusControllerTest extends CroogoTestCase {
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
+/**
+ * testAdminEdit
+ *
+ * @return void
+ */
 	public function testAdminEdit() {
-		$this->Menus->request->params['action'] = 'admin_edit';
-		$this->Menus->request->params['url']['url'] = 'admin/menus/edit';
-		$this->Menus->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Menus->request->data = array(
-			'Menu' => array(
-				'id' => 3, // main
-				'title' => 'Main Menu [modified]',
+		$this->MenusController->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo('The Menu has been saved'),
+				$this->equalTo('default'),
+				$this->equalTo(array('class' => 'success'))
+			);
+		$this->MenusController
+			->expects($this->once())
+			->method('redirect');
+		$this->testAction('/admin/menus/edit/1', array(
+			'data' => array(
+				'Menu' => array(
+					'id' => 3, // main
+					'title' => 'Main Menu [modified]',
+				),
 			),
-		);
-		$this->Menus->startupProcess();
-		$this->Menus->admin_edit();
-		$this->assertEqual($this->Menus->redirectUrl, array('action' => 'index'));
-
-		$main = $this->Menus->Menu->findByAlias('main');
-		$this->assertEqual($main['Menu']['title'], 'Main Menu [modified]');
-
-		$this->Menus->testView = true;
-		$output = $this->Menus->render('admin_edit');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		));
+		$result = $this->MenusController->Menu->findByAlias('main');
+		$this->assertEquals('Main Menu [modified]', $result['Menu']['title']);
 	}
 
 	public function testAdminDelete() {
@@ -153,9 +187,4 @@ class MenusControllerTest extends CroogoTestCase {
 		$this->assertFalse($hasAny);
 	}
 
-	public function endTest($method) {
-		$this->Menus->Session->destroy();
-		unset($this->Menus);
-		ClassRegistry::flush();
-	}
 }

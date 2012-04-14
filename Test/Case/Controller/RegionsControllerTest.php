@@ -1,6 +1,6 @@
 <?php
 App::uses('RegionsController', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestRegionsController extends RegionsController {
 
@@ -31,7 +31,7 @@ class TestRegionsController extends RegionsController {
 	}
 }
 
-class RegionsControllerTest extends CroogoTestCase {
+class RegionsControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
 		'aco',
@@ -59,7 +59,13 @@ class RegionsControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest($method) {
+/**
+ * setUp
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Regions = new TestRegionsController($request, $response);
@@ -67,21 +73,46 @@ class RegionsControllerTest extends CroogoTestCase {
 		$this->Regions->request->params['controller'] = 'regions';
 		$this->Regions->request->params['pass'] = array();
 		$this->Regions->request->params['named'] = array();
+
+		$this->RegionsController = $this->generate('Regions', array(
+			'methods' => array(
+				'redirect',
+			),
+			'components' => array(
+				'Auth' => array('user'),
+				'Session',
+			),
+		));
+		$this->RegionsController->Auth
+			->staticExpects($this->any())
+			->method('user')
+			->will($this->returnValue(array(
+				'id' => 1,
+				'username' => 'admin',
+			)));
 	}
 
-	public function testAdminIndex() {
-		$this->Regions->request->params['action'] = 'admin_index';
-		$this->Regions->request->params['url']['url'] = 'admin/regions';
-		$this->Regions->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Regions->startupProcess();
-		$this->Regions->admin_index();
+/**
+ * tearDown
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		$this->Regions->Session->destroy();
+		unset($this->Regions);
+		ClassRegistry::flush();
+	}
 
-		$this->Regions->testView = true;
-		$output = $this->Regions->render('admin_index');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+/**
+ * testAdminIndex
+ *
+ * @return void
+ */
+	public function testAdminIndex() {
+		$this->testAction('/admin/regions/index');
+		$this->assertNotEmpty($this->vars['displayFields']);
+		$this->assertNotEmpty($this->vars['regions']);
 	}
 
 	public function testAdminAdd() {
@@ -110,29 +141,33 @@ class RegionsControllerTest extends CroogoTestCase {
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
+/**
+ * testAdminEdit
+ *
+ * @return void
+ */
 	public function testAdminEdit() {
-		$this->Regions->request->params['action'] = 'admin_edit';
-		$this->Regions->request->params['url']['url'] = 'admin/regions/edit';
-		$this->Regions->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Regions->request->data = array(
-			'Region' => array(
-				'id' => 4, // right
-				'title' => 'right_modified',
+		$this->RegionsController->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo('The Region has been saved'),
+				$this->equalTo('default'),
+				$this->equalTo(array('class' => 'success'))
+			);
+		$this->RegionsController
+			->expects($this->once())
+			->method('redirect');
+		$this->testAction('/admin/regions/edit/1', array(
+			'data' => array(
+				'Region' => array(
+					'id' => 4, // right
+					'title' => 'right_modified',
+				),
 			),
-		);
-		$this->Regions->startupProcess();
-		$this->Regions->admin_edit();
-		$this->assertEqual($this->Regions->redirectUrl, array('action' => 'index'));
-
-		$right = $this->Regions->Region->findByAlias('right');
-		$this->assertEqual($right['Region']['title'], 'right_modified');
-
-		$this->Regions->testView = true;
-		$output = $this->Regions->render('admin_edit');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		));
+		$right = $this->RegionsController->Region->findByAlias('right');
+		$this->assertEquals('right_modified', $right['Region']['title']);
 	}
 
 	public function testAdminDelete() {
@@ -152,9 +187,4 @@ class RegionsControllerTest extends CroogoTestCase {
 		$this->assertFalse($hasAny);
 	}
 
-	public function endTest($method) {
-		$this->Regions->Session->destroy();
-		unset($this->Regions);
-		ClassRegistry::flush();
-	}
 }

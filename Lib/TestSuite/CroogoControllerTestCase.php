@@ -1,4 +1,7 @@
 <?php
+
+App::uses('CroogoTestFixture', 'TestSuite');
+
 /**
  * CroogoTestCase class
  *
@@ -21,6 +24,12 @@ class CroogoControllerTestCase extends ControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+
+		App::build(array(
+			'Plugin' => array(TESTS . 'test_app' . DS . 'Plugin' . DS),
+			'View' => array(TESTS . 'test_app' . DS . 'View' . DS),
+		), App::PREPEND);
+
 		Configure::write('Acl.database', 'test');
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 App::uses('LinksController', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestLinksController extends LinksController {
 
@@ -31,7 +31,7 @@ class TestLinksController extends LinksController {
 	}
 }
 
-class LinksControllerTest extends CroogoTestCase {
+class LinksControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
 		'aco',
@@ -59,7 +59,13 @@ class LinksControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest($method) {
+/**
+ * setUp
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Links = new TestLinksController($request, $response);
@@ -67,30 +73,59 @@ class LinksControllerTest extends CroogoTestCase {
 		$this->Links->request->params['controller'] = 'links';
 		$this->Links->request->params['pass'] = array();
 		$this->Links->request->params['named'] = array();
+
+		$this->LinksController = $this->generate('Links', array(
+			'methods' => array(
+				'redirect',
+			),
+			'components' => array(
+				'Auth' => array('user'),
+				'Session',
+			),
+		));
+		$this->LinksController->Auth
+			->staticExpects($this->any())
+			->method('user')
+			->will($this->returnValue(array(
+				'id' => 1,
+				'username' => 'admin',
+			)));
 	}
 
+/**
+ * tearDown
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		CakeSession::clear();
+		CakeSession::destroy();
+		unset($this->Links);
+		ClassRegistry::flush();
+	}
+
+/*
+ * testAdminIndex
+ *
+ * @return void
+ */
 	public function testAdminIndex() {
-		$this->Links->request->params['action'] = 'admin_index';
-		$this->Links->request->params['url']['url'] = 'admin/links';
-		$this->Links->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Links->startupProcess();
-
-		$this->Links->admin_index();
-		$this->assertEqual($this->Links->redirectUrl, array(
-			'controller' => 'menus',
-			'action' => 'index',
-		));
-
-		$mainMenu = $this->Links->Link->Menu->findByAlias('main');
-		$this->Links->admin_index($mainMenu['Menu']['id']);
-		$this->assertEqual($this->Links->viewVars['menu'], $mainMenu);
-
-		$this->Links->testView = true;
-		$output = $this->Links->render('admin_index');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		$this->LinksController
+			->expects($this->once())
+			->method('redirect')
+			->with(
+				$this->equalTo(array(
+					'controller' => 'menus',
+					'action' => 'index',
+				))
+			);
+		$this->testAction('/admin/links/index');
+		$this->testAction('/admin/links/index/3');
+		$mainMenu = $this->LinksController->Link->Menu->findByAlias('main');
+		$this->assertEquals($mainMenu, $this->vars['menu']);
+		$this->assertNotEmpty($this->vars['linksTree']);
+		$this->assertNotEmpty($this->vars['linksStatus']);
 	}
 
 	public function testAdminAdd() {
@@ -125,41 +160,45 @@ class LinksControllerTest extends CroogoTestCase {
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
+/**
+ * testAdminEdit
+ *
+ * @return void
+ */
 	public function testAdminEdit() {
-		$this->Links->request->params['action'] = 'admin_edit';
-		$this->Links->request->params['url']['url'] = 'admin/links/edit';
-		$this->Links->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$homeLink = ClassRegistry::init('Link')->find('first', array(
+		$this->LinksController->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo('The Link has been saved'),
+				$this->equalTo('default'),
+				$this->equalTo(array('class' => 'success'))
+			);
+		$this->LinksController
+			->expects($this->once())
+			->method('redirect');
+		$homeLink = $this->LinksController->Link->find('first', array(
 			'conditions' => array(
 				'Link.title' => 'Home',
 				'Link.link' => '/',
 			),
 		));
-		$this->Links->request->data = array(
-			'Link' => array(
-				'id' => $homeLink['Link']['id'],
-				'menu_id' => $homeLink['Link']['menu_id'],
-				'title' => 'Home [modified]',
-				'link' => '/',
-				'status' => 1,
+		$this->testAction('/admin/links/edit/' . $homeLink['Link']['id'], array(
+			'data' => array(
+				'Link' => array(
+					'id' => $homeLink['Link']['id'],
+					'menu_id' => $homeLink['Link']['menu_id'],
+					'title' => 'Home [modified]',
+					'link' => '/',
+					'status' => 1,
+				),
+				'Role' => array(
+					'Role' => array(),
+				),
 			),
-			'Role' => array(
-				'Role' => array(),
-			),
-		);
-		$this->Links->startupProcess();
-		$this->Links->admin_edit($homeLink['Link']['id']);
-		$this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $homeLink['Link']['menu_id']));
-
-		$link = $this->Links->Link->findById($homeLink['Link']['id']);
-		$this->assertEqual($link['Link']['title'], 'Home [modified]');
-
-		$this->Links->testView = true;
-		$output = $this->Links->render('admin_edit');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		));
+		$result = $this->LinksController->Link->findById($homeLink['Link']['id']);
+		$this->assertEquals('Home [modified]', $result['Link']['title']);
 	}
 
 	public function testAdminDelete() {
@@ -312,9 +351,4 @@ class LinksControllerTest extends CroogoTestCase {
 		));
 	}
 
-	public function endTest($method) {
-		$this->Links->Session->destroy();
-		unset($this->Links);
-		ClassRegistry::flush();
-	}
 }

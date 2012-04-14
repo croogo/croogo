@@ -17,13 +17,18 @@ App::uses('CroogoTestFixture', 'TestSuite');
  */
 class CroogoTestCase extends CakeTestCase {
 
+/**
+ * setUp
+ *
+ * @return void
+ */
 	public function setUp() {
 		parent::setUp();
 
 		App::build(array(
 			'Plugin' => array(TESTS . 'test_app' . DS . 'Plugin' . DS),
 			'View' => array(TESTS . 'test_app' . DS . 'View' . DS),
-			), App::PREPEND);
+		), App::PREPEND);
 
 		Configure::write('Acl.database', 'test');
 	}

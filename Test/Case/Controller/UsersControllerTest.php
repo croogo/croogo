@@ -1,6 +1,6 @@
 <?php
 App::uses('UsersController', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestUsersController extends UsersController {
 
@@ -31,8 +31,16 @@ class TestUsersController extends UsersController {
 	}
 }
 
-class UsersControllerTest extends CroogoTestCase {
+/**
+ * UsersController Test
+ */
+class UsersControllerTest extends CroogoControllerTestCase {
 
+/**
+ * fixtures
+ *
+ * @var array
+ */
 	public $fixtures = array(
 		'aco',
 		'aro',
@@ -59,7 +67,13 @@ class UsersControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest($method) {
+/**
+ * setUp
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Users = new TestUsersController($request, $response);
@@ -68,23 +82,53 @@ class UsersControllerTest extends CroogoTestCase {
 		$this->Users->request->params['controller'] = 'users';
 		$this->Users->request->params['pass'] = array();
 		$this->Users->request->params['named'] = array();
-	}
 
-	function testAdminIndex() {
-		$this->Users->request->params['action'] = 'admin_index';
-		$this->Users->request->params['url']['url'] = 'admin/users';
-		$this->Users->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
+		$this->UsersController = $this->generate('Users', array(
+			'methods' => array(
+				'redirect',
+			),
+			'components' => array(
+				'Auth' => array('user'),
+				'Session',
+			),
 		));
-		$this->Users->startupProcess();
-		$this->Users->admin_index();
-
-		$this->Users->testView = true;
-		$output = $this->Users->render('admin_index');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		$this->UsersController->Auth
+			->staticExpects($this->any())
+			->method('user')
+			->will($this->returnValue(array(
+				'id' => 1,
+				'username' => 'admin',
+			)));
 	}
 
+/**
+ * tearDown
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		$this->Users->Session->destroy();
+		unset($this->Users);
+		ClassRegistry::flush();
+	}
+
+/**
+ * testAdminIndex
+ *
+ * @return void
+ */
+	function testAdminIndex() {
+		$this->testAction('/admin/users/index');
+		$this->assertNotEmpty($this->vars['displayFields']);
+		$this->assertNotEmpty($this->vars['users']);
+	}
+
+/**
+ * testAdd
+ *
+ * @return void
+ */
 	public function testAdd() {
 		$_SERVER['SERVER_NAME'] = 'croogo.dev';
 		$this->Users->request->params['action'] = 'add';
@@ -117,6 +161,11 @@ class UsersControllerTest extends CroogoTestCase {
 		$this->assertContains('been taken', $errors);
 	}
 
+/**
+ * testAdminAdd
+ *
+ * @return void
+ */
 	public function testAdminAdd() {
 		$this->Users->request->params['action'] = 'admin_add';
 		$this->Users->request->params['url']['url'] = 'admin/users/add';
@@ -145,33 +194,44 @@ class UsersControllerTest extends CroogoTestCase {
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
+/**
+ * testAdminEdit
+ *
+ * @return void
+ */
 	public function testAdminEdit() {
-		$this->Users->request->params['action'] = 'admin_edit';
-		$this->Users->request->params['url']['url'] = 'admin/users/edit';
-		$this->Users->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Users->request->data = array(
-			'User' => array(
-				'id' => 1, // admin
-				'name' => 'Administrator [modified]',
-				'role_id' => 1,
+		$this->UsersController->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo('The User has been saved'),
+				$this->equalTo('default'),
+				$this->equalTo(array('class' => 'success'))
+			);
+		$this->UsersController
+			->expects($this->once())
+			->method('redirect');
+		$this->testAction('/admin/users/edit/1', array(
+			'data' => array(
+				'User' => array(
+					'id' => 1, // admin
+					'name' => 'Administrator [modified]',
+					'role_id' => 1,
+				),
 			),
-		);
-		$this->Users->startupProcess();
-		$this->Users->admin_edit(1);
-		$this->assertEqual($this->Users->redirectUrl, array('action' => 'index'));
-
-		$admin = $this->Users->User->findByUsername('admin');
-		$this->assertEqual($admin['User']['name'], 'Administrator [modified]');
-
-		$this->Users->testView = true;
-		$this->Users->request->params['pass']['0'] = 1;
-		$output = $this->Users->render('admin_edit');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		));
+		$this->assertNotEmpty($this->vars['editFields']);
+		$expected = 'Administrator [modified]';
+		$this->assertEquals($expected, $this->controller->request->data['User']['name']);
+		$result = $this->UsersController->User->findByUsername('admin');
+		$this->assertEquals($expected, $result['User']['name']);
 	}
 
+/**
+ * testAdminDelete
+ *
+ * @return void
+ */
 	public function testAdminDelete() {
 		$this->Users->request->params['action'] = 'admin_delete';
 		$this->Users->request->params['url']['url'] = 'admin/users/delete';
@@ -199,9 +259,4 @@ class UsersControllerTest extends CroogoTestCase {
 		$this->assertTrue($hasAny);
 	}
 
-	public function endTest($method) {
-		$this->Users->Session->destroy();
-		unset($this->Users);
-		ClassRegistry::flush();
-	}
 }

@@ -32,8 +32,25 @@ class EncoderBehaviorTest extends CroogoTestCase {
 
 	public $Node = null;
 
-	public function startTest($method) {
+/**
+ * setUp
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
 		$this->Node = ClassRegistry::init('Node');
+	}
+
+/**
+ * tearDown
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		unset($this->Node);
+		ClassRegistry::flush();
 	}
 
 	public function testEncodeWithoutKeys() {
@@ -69,8 +86,4 @@ class EncoderBehaviorTest extends CroogoTestCase {
 		));
 	}
 
-	public function endTest($method) {
-		unset($this->Node);
-		ClassRegistry::flush();
-	}
 }
