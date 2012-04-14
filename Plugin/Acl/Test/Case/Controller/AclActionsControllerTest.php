@@ -45,7 +45,7 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
 			->expects($this->once())
 			->method('setFlash')
 			->with(
-				$this->equalTo('Created 21 new permissions'),
+				$this->matchesRegularExpression('/Created [0-9]+ new permissions/'),
 				$this->equalTo('default'),
 				$this->anything(),
 				$this->equalTo('flash')

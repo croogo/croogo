@@ -61,7 +61,9 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 	);
 
 /**
- * startTest
+ * setUp
+ *
+ * @return void
  */
 	public function setUp() {
 		parent::setUp();
@@ -74,10 +76,26 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		$this->Comments->request->params['controller'] = 'Comments';
 		$this->Comments->request->params['pass'] = array();
 		$this->Comments->request->params['named'] = array();
+
+		$this->CommentsController = $this->generate('Comments', array(
+			'methods' => array(
+				'redirect',
+			),
+			'components' => array(
+				'Auth' => array('user'),
+				'Session',
+			),
+		));
+		$this->CommentsController->Auth
+			->staticExpects($this->any())
+			->method('user')
+			->will($this->returnCallback(array($this, 'callbackAuthUser')));
 	}
 
 /**
- * endTest
+ * tearDown
+ *
+ * @return void
  */
 	public function tearDown() {
 		parent::tearDown();
@@ -86,48 +104,45 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		ClassRegistry::flush();
 	}
 
+/**
+ * testAdminIndex
+ *
+ * @return void
+ */
 	public function testAdminIndex() {
-		$this->Comments->request->params['action'] = 'admin_index';
-		$this->Comments->request->params['url']['url'] = 'admin/comments';
-		$this->Comments->Components->trigger('initialize', array(&$this->Comments));
-		$this->Comments->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Comments->Components->trigger('startup', array(&$this->Comments));
-		$this->Comments->admin_index();
-
-		$this->Comments->testView = true;
-		$output = $this->Comments->render('admin_index');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		$this->testAction('/admin/comments/index');
+		$this->assertNotEmpty($this->vars['comments']);
 	}
 
+/**
+ * testAdminEdit
+ *
+ * @return void
+ */
 	public function testAdminEdit() {
-		$this->Comments->request->params['action'] = 'admin_edit';
-		$this->Comments->request->params['url']['url'] = 'admin/comments/edit';
-		$this->Comments->Components->trigger('initialize', array(&$this->Comments));
-		$this->Comments->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Comments->request->data = array(
-			'Comment' => array(
-				'id' => 1, // Mr Croogo
-				'name' => 'Mr Croogo [modified]',
-				'email' => 'contact@example.com',
-				'body' => 'lots of text...',
+		$this->CommentsController->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo('The Comment has been saved'),
+				$this->equalTo('default'),
+				$this->equalTo(array('class' => 'success'))
+			);
+		$this->CommentsController
+			->expects($this->once())
+			->method('redirect');
+		$this->testAction('/admin/comments/edit/1', array(
+			'data' => array(
+				'Comment' => array(
+					'id' => 1, // Mr Croogo
+					'name' => 'Mr Croogo [modified]',
+					'email' => 'contact@example.com',
+					'body' => 'lots of text...',
+				),
 			),
-		);
-		$this->Comments->Components->trigger('startup', array(&$this->Comments));
-		$this->Comments->admin_edit();
-		$this->assertEqual($this->Comments->redirectUrl, array('action' => 'index'));
-
-		$comment = $this->Comments->Comment->findById(1);
-		$this->assertEqual($comment['Comment']['name'], 'Mr Croogo [modified]');
-
-		$this->Comments->testView = true;
-		$output = $this->Comments->render('admin_edit');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		));
+		$result = $this->CommentsController->Comment->findById(1);
+		$this->assertEquals('Mr Croogo [modified]', $result['Comment']['name']);
 	}
 
 	public function testAdminDelete() {

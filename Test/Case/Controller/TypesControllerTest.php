@@ -1,6 +1,6 @@
 <?php
 App::uses('TypesController', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestTypesController extends TypesController {
 
@@ -31,7 +31,7 @@ class TestTypesController extends TypesController {
 	}
 }
 
-class TypesControllerTest extends CroogoTestCase {
+class TypesControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
 		'aco',
@@ -59,7 +59,13 @@ class TypesControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest($method) {
+/**
+ * setUp
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Types = new TestTypesController($request, $response);
@@ -67,21 +73,43 @@ class TypesControllerTest extends CroogoTestCase {
 		$this->Types->request->params['controller'] = 'types';
 		$this->Types->request->params['pass'] = array();
 		$this->Types->request->params['named'] = array();
+
+		$this->TypesController = $this->generate('Types', array(
+			'methods' => array(
+				'redirect',
+			),
+			'components' => array(
+				'Auth' => array('user'),
+				'Session',
+			),
+		));
+		$this->TypesController->Auth
+			->staticExpects($this->any())
+			->method('user')
+			->will($this->returnCallback(array($this, 'callbackAuthUser')));
 	}
 
-	function testAdminIndex() {
-		$this->Types->request->params['action'] = 'admin_index';
-		$this->Types->request->params['url']['url'] = 'admin/types';
-		$this->Types->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Types->startupProcess();
-		$this->Types->admin_index();
+/**
+ * tearDown
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		$this->Types->Session->destroy();
+		unset($this->Types);
+		ClassRegistry::flush();
+	}
 
-		$this->Types->testView = true;
-		$output = $this->Types->render('admin_index');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+/**
+ * testAdminIndex
+ *
+ * @return void
+ */
+	public function testAdminIndex() {
+		$this->testAction('/admin/types/index');
+		$this->assertNotEmpty($this->vars['displayFields']);
+		$this->assertNotEmpty($this->vars['types']);
 	}
 
 	public function testAdminAdd() {
@@ -110,29 +138,33 @@ class TypesControllerTest extends CroogoTestCase {
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
+/**
+ * testAdminEdit
+ *
+ * @return void
+ */
 	public function testAdminEdit() {
-		$this->Types->request->params['action'] = 'admin_edit';
-		$this->Types->request->params['url']['url'] = 'admin/types/edit';
-		$this->Types->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Types->request->data = array(
-			'Type' => array(
-				'id' => 1, // page
-				'description' => '[modified]',
+		$this->TypesController->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo('The Type has been saved'),
+				$this->equalTo('default'),
+				$this->equalTo(array('class' => 'success'))
+			);
+		$this->TypesController
+			->expects($this->once())
+			->method('redirect');
+		$this->testAction('/admin/types/edit/1', array(
+			'data' => array(
+				'Type' => array(
+					'id' => 1, // page
+					'description' => '[modified]',
+				),
 			),
-		);
-		$this->Types->startupProcess();
-		$this->Types->admin_edit();
-		$this->assertEqual($this->Types->redirectUrl, array('action' => 'index'));
-
-		$page = $this->Types->Type->findByAlias('page');
-		$this->assertEqual($page['Type']['description'], '[modified]');
-
-		$this->Types->testView = true;
-		$output = $this->Types->render('admin_edit');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		));
+		$page = $this->TypesController->Type->findByAlias('page');
+		$this->assertEquals('[modified]', $page['Type']['description']);
 	}
 
 	public function testAdminDelete() {
@@ -152,9 +184,4 @@ class TypesControllerTest extends CroogoTestCase {
 		$this->assertFalse($hasAny);
 	}
 
-	public function endTest($method) {
-		$this->Types->Session->destroy();
-		unset($this->Types);
-		ClassRegistry::flush();
-	}
 }
