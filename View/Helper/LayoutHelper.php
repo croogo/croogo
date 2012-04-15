@@ -67,6 +67,17 @@ class LayoutHelper extends AppHelper {
 		'Layout',
 		'Recaptcha',
 	);
+	
+/**
+ * Default Constructor
+ *
+ * @param View $View The View this helper is being attached to.
+ * @param array $settings Configuration settings for the helper.
+ */
+	public function __construct(View $View, $settings = array()) {
+		$this->helpers[] = Configure::read('Site.acl_plugin') . '.' . Configure::read('Site.acl_plugin');
+		parent::__construct($View, $settings);
+	}
 
 /**
  * Javascript variables
@@ -900,17 +911,12 @@ class LayoutHelper extends AppHelper {
 			$this->Role->Behaviors->attach('Aliasable');
 		}
 		$currentRole = $this->Role->byId($this->getRoleId());
-		if ($currentRole != 'admin') {
-			$allowedActions = $this->getAllowedActionsForRole();
-		}
+		$aclPlugin = Configure::read('Site.acl_plugin');
 		foreach ($sorted as $menu) {
-			$linkAction = Inflector::camelize($menu['url']['controller']) . '/' . $menu['url']['action'];
-			if (isset($menu['url']['admin']) && $menu['url']['admin']) {
-				$linkAction = Inflector::camelize($menu['url']['controller']) . '/admin_' . $menu['url']['action'];
-			}
-			if ($currentRole != 'admin' && !in_array($linkAction, $allowedActions)) {
+			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByRoleId($this->getRoleId(), $menu['url'])) {
 				continue;
 			}
+			
 			if (empty($menu['htmlAttributes']['class'])) {
 				$menuClass = Inflector::slug(strtolower('menu-' . $menu['title']), '-');
 				$menu['htmlAttributes'] = Set::merge(array(
@@ -931,59 +937,6 @@ class LayoutHelper extends AppHelper {
 		return $this->Html->tag('ul', $out, $options['htmlAttributes']);
 	}
 
-/** Generate allowed actions for current logged in Role
- * 
- *  DECIDE: move queries to AppController?
- *
- * @return array of elements formatted like ControllerName/action_name
- */
-	function getAllowedActionsForRole() {
-		$Aco = ClassRegistry::init('Acl.AclAco');
-		$Aro = ClassRegistry::init('Acl.AclAro');
-		$ArosAco = ClassRegistry::init('Acl.ArosAco');
-		$acosTree = $Aco->generateTreeList(array(
-			'AclAco.parent_id !=' => null,
-		), '{n}.AclAco.id', '{n}.AclAco.alias');
-		$acos = array();
-		$controller = null;
-		foreach ($acosTree AS $acoId => $acoAlias) {
-			if (substr($acoAlias, 0, 1) == '_') {
-				$acos[$acoId] = $controller . '/' . substr($acoAlias, 1);
-			} else {
-				$controller = $acoAlias;
-			}
-		}
-		$acoIds = array_keys($acos);
-		
-		$roleId = $this->getRoleId();
-		$aro = $Aro->find('first', array(
-			'conditions' => array(
-				'AclAro.model' => 'Role',
-				'AclAro.foreign_key' => $roleId,
-			),
-		));
-		$aroId = $aro['AclAro']['id'];
-		
-		$permissionsForCurrentRole = $ArosAco->find('list', array(
-			'conditions' => array(
-				'ArosAco.aro_id' => $aroId,
-				'ArosAco.aco_id' => $acoIds,
-				'ArosAco._create' => 1,
-				'ArosAco._read' => 1,
-				'ArosAco._update' => 1,
-				'ArosAco._delete' => 1,
-			),
-			'fields' => array(
-				'ArosAco.id',
-				'ArosAco.aco_id',
-			),
-		));
-		$permissionsByActions = array();
-		foreach ($permissionsForCurrentRole AS $acoId) {
-			$permissionsByActions[] = $acos[$acoId];
-		}
-		
-		return $permissionsByActions;
-	}
+
 	
 }
