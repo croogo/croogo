@@ -197,22 +197,44 @@ class UserTest extends CroogoTestCase {
 			'id' => array(
 				'label' => 'Id',
 				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
 			),
 			'username' => array(
 				'label' => 'Username',
 				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
 			),
 			'name' => array(
 				'label' => 'Name',
 				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
 			),
 			'email' => array(
 				'label' => 'Email',
 				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
+			),
+			'status' => array(
+				'label' => 'Status',
+				'sort' => true,
+				'type' => 'boolean',
+				'url' => array(),
+				'options' => array(),
 			),
 			'Role.title' => array(
 				'label' => 'Role',
 				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
 			),
 		);
 		$this->assertEquals($expected, $result);
@@ -224,14 +246,23 @@ class UserTest extends CroogoTestCase {
 			'one' => array(
 				'label' => 'One',
 				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
 			),
 			'two' => array(
 				'label' => 'Two',
 				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
 			),
 			'three' => array(
 				'label' => 'Three',
 				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
 			),
 		);
 		$this->assertEquals($expected, $result);

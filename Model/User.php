@@ -102,6 +102,7 @@ class User extends AppModel {
 		'Role.title' => 'Role',
 		'username',
 		'name',
+		'status' => array('type' => 'boolean'),
 		'email',
 	);
 

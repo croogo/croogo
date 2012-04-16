@@ -165,24 +165,23 @@ class AppModel extends Model {
 			$this->_displayFields = $displayFields;
 		}
 		$out = array();
+		$defaults = array('sort' => true, 'type' => 'text', 'url' => array(), 'options' => array());
 		foreach ($this->_displayFields as $field => $label) {
 			if (is_int($field)) {
 				$field = $label;
 				list(, $label) = pluginSplit($label);
-				$out[$field] = array(
+				$out[$field] = Set::merge($defaults, array(
 					'label' => Inflector::humanize($label),
-					'sort' => true,
-				);
+				));
 			} elseif (is_array($label)) {
-				$out[$field] = $label;
+				$out[$field] = Set::merge($defaults, $label);
 				if (!isset($out[$field]['label'])) {
 					$out[$field]['label'] = Inflector::humanize($field);
 				}
 			} else {
-				$out[$field] = array(
+				$out[$field] = Set::merge($defaults, array(
 					'label' => $label,
-					'sort' => true,
-				);
+				));
 			}
 		}
 		return $out;

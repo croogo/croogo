@@ -61,6 +61,7 @@ if (!isset($className)) {
 				), null, __('Are you sure?'));
 				$row = array();
 				foreach ($displayFields as $key => $val) {
+					extract($val);
 					if (!is_int($key)) {
 						$val = $key;
 					}
@@ -68,7 +69,7 @@ if (!isset($className)) {
 						$val = $modelClass . '.' . $val;
 					}
 					list($model, $field) = pluginSplit($val);
-					$row[] = $item[$model][$field];
+					$row[] = $this->Layout->displayField($item, $model, $field, compact('type', 'url', 'options'));
 				}
 				$row[] = $actions;
 				$rows[] = $row;
