@@ -35,7 +35,7 @@ class AclHelper extends Helper {
 			return $this->allowedActions[$roleId];
 		}
 		
-		$this->allowedActions[$roleId] = ClassRegistry::init('Acl.AclAro')->getAllowedActionsByRoleId($roleId); 
+		$this->allowedActions[$roleId] = ClassRegistry::init('Acl.AclPermission')->getAllowedActionsByRoleId($roleId); 
 		return $this->allowedActions[$roleId];
 	}
 	
