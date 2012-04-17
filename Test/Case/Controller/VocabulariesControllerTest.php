@@ -1,6 +1,6 @@
 <?php
 App::uses('VocabulariesController', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestVocabulariesController extends VocabulariesController {
 
@@ -31,8 +31,14 @@ class TestVocabulariesController extends VocabulariesController {
 	}
 }
 
-class VocabulariesControllerTest extends CroogoTestCase {
+/**
+ * VocabulariesController Test
+ */
+class VocabulariesControllerTest extends CroogoControllerTestCase {
 
+/**
+ * fixtures
+ */
 	public $fixtures = array(
 		'aco',
 		'aro',
@@ -59,7 +65,13 @@ class VocabulariesControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest($method) {
+/**
+ * setUp
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Vocabularies = new TestVocabulariesController($request, $response);
@@ -67,21 +79,42 @@ class VocabulariesControllerTest extends CroogoTestCase {
 		$this->Vocabularies->request->params['controller'] = 'vocabularies';
 		$this->Vocabularies->request->params['pass'] = array();
 		$this->Vocabularies->request->params['named'] = array();
+
+		$this->VocabulariesController = $this->generate('Vocabularies', array(
+			'methods' => array(
+				'redirect',
+			),
+			'components' => array(
+				'Auth' => array('user'),
+				'Session',
+			),
+		));
+		$this->VocabulariesController->Auth
+			->staticExpects($this->any())
+			->method('user')
+			->will($this->returnCallback(array($this, 'callbackAuthUser')));
 	}
 
-	public function testAdminIndex() {
-		$this->Vocabularies->request->params['action'] = 'admin_index';
-		$this->Vocabularies->request->params['url']['url'] = 'admin/vocabularies';
-		$this->Vocabularies->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Vocabularies->startupProcess();
-		$this->Vocabularies->admin_index();
+/**
+ * tearDown
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		$this->Vocabularies->Session->destroy();
+		unset($this->Vocabularies);
+		ClassRegistry::flush();
+	}
 
-		$this->Vocabularies->testView = true;
-		$output = $this->Vocabularies->render('admin_index');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+/**
+ * testAdminIndex
+ *
+ * @return void
+ */
+	public function testAdminIndex() {
+		$this->testAction('/admin/vocabularies/index');
+		$this->assertNotEmpty($this->vars['vocabularies']);
 	}
 
 	public function testAdminAdd() {
@@ -109,29 +142,33 @@ class VocabulariesControllerTest extends CroogoTestCase {
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
+/**
+ * testAdminEdit
+ *
+ * @return void
+ */
 	public function testAdminEdit() {
-		$this->Vocabularies->request->params['action'] = 'admin_edit';
-		$this->Vocabularies->request->params['url']['url'] = 'admin/vocabularies/edit';
-		$this->Vocabularies->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Vocabularies->request->data = array(
-			'Vocabulary' => array(
-				'id' => 1, // categories
-				'title' => 'Categories [modified]',
+		$this->VocabulariesController->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo('The Vocabulary has been saved'),
+				$this->equalTo('default'),
+				$this->equalTo(array('class' => 'success'))
+			);
+		$this->VocabulariesController
+			->expects($this->once())
+			->method('redirect');
+		$this->testAction('/admin/vocabularies/edit/1', array(
+			'data' => array(
+				'Vocabulary' => array(
+					'id' => 1, // categories
+					'title' => 'Categories [modified]',
+				),
 			),
-		);
-		$this->Vocabularies->startupProcess();
-		$this->Vocabularies->admin_edit();
-		$this->assertEqual($this->Vocabularies->redirectUrl, array('action' => 'index'));
-
-		$categories = $this->Vocabularies->Vocabulary->findByAlias('categories');
-		$this->assertEqual($categories['Vocabulary']['title'], 'Categories [modified]');
-
-		$this->Vocabularies->testView = true;
-		$output = $this->Vocabularies->render('admin_edit');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		));
+		$categories = $this->VocabulariesController->Vocabulary->findByAlias('categories');
+		$this->assertEquals('Categories [modified]', $categories['Vocabulary']['title']);
 	}
 
 	public function testAdminDelete() {
@@ -201,9 +238,4 @@ class VocabulariesControllerTest extends CroogoTestCase {
 		$this->assertEqual($vocabularies, $expected);
 	}
 
-	public function endTest($method) {
-		$this->Vocabularies->Session->destroy();
-		unset($this->Vocabularies);
-		ClassRegistry::flush();
-	}
 }

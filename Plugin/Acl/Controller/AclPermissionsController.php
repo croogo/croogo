@@ -33,6 +33,14 @@ class AclPermissionsController extends AclAppController {
 		'Role',
 	);
 
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Security->requirePost('admin_toggle');
+		if ($this->action == 'admin_toggle') {
+			$this->Security->csrfCheck = false;
+		}
+	}
+
 	public function admin_index() {
 		$this->set('title_for_layout', __('Permissions'));
 

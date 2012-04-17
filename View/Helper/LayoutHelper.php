@@ -126,6 +126,53 @@ class LayoutHelper extends AppHelper {
 	}
 
 /**
+ * Display value from $item array
+ *
+ * @param $item array of values
+ * @param $model string model alias
+ * @param $field string field name
+ * @param $options array
+ * @return string
+ */
+	public function displayField($item, $model, $field, $options = array()) {
+		extract(array_intersect_key($options, array(
+			'type' => null,
+			'url' => array(),
+			'options' => array(),
+			)
+		));
+		switch ($type) {
+		case 'boolean':
+			$out = $this->status($item[$model][$field]);
+			break;
+		default:
+			$out = $item[$model][$field];
+			break;
+		}
+
+		if (!empty($url)) {
+			if (isset($url['pass'])) {
+				$passVars = is_string($url['pass']) ?  array($url['pass']) : $url['pass'];
+				foreach ($passVars as $passField) {
+					$url[] = $item[$model][$passField];
+				}
+				unset($url['pass']);
+			}
+
+			if (isset($url['named'])) {
+				$namedVars = is_string($url['named']) ?  array($url['named']) : $url['named'];
+				foreach ($namedVars as $namedField) {
+					$url[$namedField] = $item[$model][$namedField];
+				}
+				unset($url['named']);
+			}
+
+			$out = $this->Html->link($out, $url, $options);
+		}
+		return $out;
+	}
+
+/**
  * Show flash message
  *
  * @return string
@@ -417,6 +464,23 @@ class LayoutHelper extends AppHelper {
 		}
 
 		return $linkArr;
+	}
+
+/**
+ * Creates a special type of link for use in admin area.
+ *
+ * Clicking the link will automatically check a corresponding checkbox
+ * where element id is equal to $url parameter and immediately submit the form
+ * it's on.  This works in tandem with Admin.processLink() in javascript.
+ */
+	public function processLink($title, $url = null, $options = array(), $confirmMessage = false) {
+		if (!empty($confirmMessage)) {
+			$options['onclick'] = "if (confirm('$confirmMessage')) { Admin.processLink(this); } return false;";
+		} else {
+			$options['onclick'] = "Admin.processLink(this); return false;";
+		}
+		$output = $this->Html->link($title, $url, $options);
+		return $output;
 	}
 
 /**

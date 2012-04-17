@@ -1,23 +1,21 @@
-<div class="translate index">
-	<h2><?php echo $title_for_layout; ?></h2>
+<?php
+$this->extend('/Common/admin_index');
+$this->name = 'translate';
+?>
 
-	<div class="actions">
-		<ul>
-			<li>
-			<?php
-				echo $this->Html->link(__('Translate in a new language'), array(
-					'plugin' => null,
-					'controller' => 'languages',
-					'action'=>'select',
-					$record[$modelAlias]['id'],
-					$modelAlias,
-				));
-			?>
-			</li>
-		</ul>
-	</div>
+<?php $this->start('tabs'); ?>
+<li><?php
+echo $this->Html->link(__('Translate in a new language'), array(
+	'plugin' => null,
+	'controller' => 'languages',
+	'action'=>'select',
+	$record[$modelAlias]['id'],
+	$modelAlias,
+));
+?></li>
+<?php $this->end(); ?>
 
-	<?php if (count($translations) > 0) { ?>
+<?php if (count($translations) > 0): ?>
 	<table cellpadding="0" cellspacing="0">
 	<?php
 		$tableHeaders =  $this->Html->tableHeaders(array(
@@ -37,12 +35,11 @@
 				$modelAlias,
 				'locale' => $translation[$runtimeModelAlias]['locale'],
 			));
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'action' => 'delete',
 				$id,
 				$modelAlias,
 				$translation[$runtimeModelAlias]['locale'],
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 
 			$rows[] = array(
@@ -58,9 +55,6 @@
 		echo $tableHeaders;
 	?>
 	</table>
-	<?php
-		} else {
-			echo '<p>' . __('No translations available.') . '</p>';
-		}
-	?>
-</div>
+<?php else: ?>
+	<p><?php echo __('No translations available.'); ?></p>
+<?php endif; ?>

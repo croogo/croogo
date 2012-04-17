@@ -70,7 +70,7 @@ class Menu extends AppModel {
 		'Link' => array(
 			'className' => 'Link',
 			'foreignKey' => 'menu_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => 'Link.lft ASC',

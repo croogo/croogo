@@ -60,7 +60,7 @@ class InstallShell extends AppShell {
 		if ($zip = $this->_download($url)) {
 			if ($this->_install($type, $zip)) {
 				if ($this->_activate($type, $zip)) {
-					$this->out(__d('croogo', 'Extension installed and activated.'));
+					$this->out(__('Extension installed and activated.'));
 				}
 			}
 		}
@@ -71,19 +71,19 @@ class InstallShell extends AppShell {
  */
 	public function getOptionParser() {
 		return parent::getOptionParser()
-			->description(__d('croogo', 'Download, Install & Activate Plugins & Themes'))
+			->description(__('Download, Install & Activate Plugins & Themes'))
 			->addArguments(array(
 				'type' => array(
-					'help' => __d('croogo', 'Extension type'),
+					'help' => __('Extension type'),
 					'required' => true,
 					'choices' => array('plugin', 'theme'),
 				),
 				'zip_url' => array(
-					'help' => __d('croogo', 'URL to zip file OR github user name'),
+					'help' => __('URL to zip file OR github user name'),
 					'required' => true,
 				),
 				'github_package' => array(
-					'help' => __d('croogo', 'Github repo name'),
+					'help' => __('Github repo name'),
 				),
 			));
 	}
@@ -114,7 +114,7 @@ class InstallShell extends AppShell {
  * @return boolean
  */
 	protected function _install($type = null, $zip = null) {
-		$this->out(__d('croogo', 'Installing extension...'));
+		$this->out(__('Installing extension...'));
 		try {
 			$this->_ExtensionsInstaller->{'extract' . ucfirst($type)}($zip);
 			return true;
@@ -135,7 +135,7 @@ class InstallShell extends AppShell {
 		if (empty($url)) {
 			throw new ConsoleException(__('Please specify a URL to a zipball extension'));
 		}
-		$this->out(__d('croogo', 'Downloading extension...'));
+		$this->out(__('Downloading extension...'));
 		$url = $this->_githubUrl($url);
 		$filename = uniqid('croogo_') . '.zip';
 		$zip = $this->tmpPath . $filename;

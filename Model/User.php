@@ -92,6 +92,34 @@ class User extends AppModel {
 		),
 	);
 
+/**
+ * Display fields for this model
+ *
+ * @var array
+ */
+	protected $_displayFields = array(
+		'id',
+		'Role.title' => 'Role',
+		'username',
+		'name',
+		'status' => array('type' => 'boolean'),
+		'email',
+	);
+
+/**
+ * Edit fields for this model
+ *
+ * @var array
+ */
+	protected $_editFields = array(
+		'role_id',
+		'username',
+		'name',
+		'email',
+		'website',
+		'status',
+	);
+
 	public function beforeDelete($cascade = true) {
 		$this->Role->Behaviors->attach('Aliasable');
 		$adminRoleId = $this->Role->byAlias('admin');

@@ -26,11 +26,10 @@
 				'action' => 'edit',
 				$attachment['Node']['id'],
 			));
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'controller' => 'attachments',
 				'action' => 'delete',
 				$attachment['Node']['id'],
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 
 			$mimeType = explode('/', $attachment['Node']['mime_type']);

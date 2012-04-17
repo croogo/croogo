@@ -1,6 +1,6 @@
 <?php
 App::uses('TermsController', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestTermsController extends TermsController {
 
@@ -31,7 +31,7 @@ class TestTermsController extends TermsController {
 	}
 }
 
-class TermsControllerTest extends CroogoTestCase {
+class TermsControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
 		'aco',
@@ -59,7 +59,13 @@ class TermsControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest($method) {
+/**
+ * setUp
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Terms = new TestTermsController($request, $response);
@@ -68,27 +74,47 @@ class TermsControllerTest extends CroogoTestCase {
 		$this->Terms->request->params['controller'] = 'terms';
 		$this->Terms->request->params['pass'] = array();
 		$this->Terms->request->params['named'] = array();
+
+		$this->TermsController = $this->generate('Terms', array(
+			'methods' => array(
+				'redirect',
+			),
+			'components' => array(
+				'Auth' => array('user'),
+				'Session',
+			),
+		));
+		$this->TermsController->Auth
+			->staticExpects($this->any())
+			->method('user')
+			->will($this->returnCallback(array($this, 'callbackAuthUser')));
 	}
 
-	public function testAdminIndex() {
-		$this->Terms->request->params['action'] = 'admin_index';
-		$this->Terms->request->params['url']['url'] = 'admin/terms/index/1';
-		$this->Terms->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Terms->startupProcess();
-		$this->Terms->admin_index(1); // ID of categories
+/**
+ * tearDown
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		$this->Terms->Session->destroy();
+		unset($this->Terms);
+		ClassRegistry::flush();
+	}
 
-		$expectedTree = array(
+/**
+ * testAdminIndex
+ *
+ * @return void
+ */
+	public function testAdminIndex() {
+		$this->testAction('/admin/terms/index/1');
+		$this->assertNotEmpty($this->vars['terms']);
+		$expected = array(
 			'1' => 'Uncategorized',
 			'2' => 'Announcements',
 		);
-		$this->assertEqual($this->Terms->viewVars['termsTree'], $expectedTree);
-
-		$this->Terms->testView = true;
-		$output = $this->Terms->render('admin_index');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		$this->assertEquals($expected, $this->vars['termsTree']);
 	}
 
 	public function testAdminAdd() {
@@ -157,37 +183,34 @@ class TermsControllerTest extends CroogoTestCase {
 		$this->assertEqual($termsTreeTitles, $expected);
 	}
 
+/**
+ * testAdminEdit
+ *
+ * @return void
+ */
 	public function testAdminEdit() {
-		$this->Terms->request->params['action'] = 'admin_edit';
-		$this->Terms->request->params['url']['url'] = 'admin/terms/edit';
-		$this->Terms->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
+		$this->TermsController
+			->expects($this->once())
+			->method('redirect');
+		// ID of Uncategorized and Categories
+		$this->testAction('/admin/terms/edit/1/1', array(
+			'data' => array(
+				'Taxonomy' => array(
+					'parent_id' => null,
+				),
+				'Term' => array(
+					'title' => 'New Category',
+					'slug' => 'new-category',
+					'description' => 'category description here',
+				),
+			),
 		));
-		$this->Terms->request->data = array(
-			'Taxonomy' => array(
-				'parent_id' => null,
-			),
-			'Term' => array(
-				'title' => 'New Category',
-				'slug' => 'new-category',
-				'description' => 'category description here',
-			),
-		);
-		$this->Terms->startupProcess();
-		$this->Terms->admin_edit(1, 1); // ID of Uncategorized and Categories
-		$this->assertEqual($this->Terms->redirectUrl, array('action' => 'index', 1));
-
-		$termsTree = $this->Terms->Term->Taxonomy->getTree('categories');
+		$termsTree = $this->TermsController->Term->Taxonomy->getTree('categories');
 		$expected = array(
 			'new-category' => 'New Category',
 			'announcements' => 'Announcements',
 		);
-		$this->assertEqual($termsTree, $expected);
-
-		$this->Terms->testView = true;
-		$output = $this->Terms->render('admin_edit');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		$this->assertEquals($expected, $termsTree);
 	}
 
 	public function testAdminDelete() {
@@ -246,9 +269,4 @@ class TermsControllerTest extends CroogoTestCase {
 		$this->assertEqual($termsTree, $expected);
 	}
 
-	public function endTest($method) {
-		$this->Terms->Session->destroy();
-		unset($this->Terms);
-		ClassRegistry::flush();
-	}
 }

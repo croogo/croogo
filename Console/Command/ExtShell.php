@@ -94,7 +94,7 @@ class ExtShell extends AppShell {
 			$extensions = $this->_CroogoPlugin->getPlugins();
 		}
 		if (!in_array($ext, $extensions)) {
-			$this->err(__d('croogo', '%s "%s" not found.', ucfirst($type), $ext));
+			$this->err(__('%s "%s" not found.', ucfirst($type), $ext));
 			return false;
 		}
 		return $this->{'_' . $activate . ucfirst($type)}($ext);
@@ -105,20 +105,20 @@ class ExtShell extends AppShell {
  */
 	public function getOptionParser() {
 		return parent::getOptionParser()
-			->description(__d('croogo', 'Activate Plugins & Themes'))
+			->description(__('Activate Plugins & Themes'))
 			->addArguments(array(
 				'method' => array(
-					'help' => __d('croogo', 'Method to perform'),
+					'help' => __('Method to perform'),
 					'required' => true,
 					'choices' => array('activate', 'deactivate'),
 				),
 				'type' => array(
-					'help' => __d('croogo', 'Extension type'),
+					'help' => __('Extension type'),
 					'required' => true,
 					'choices' => array('plugin', 'theme'),
 				),
 				'extension' => array(
-					'help' => __d('croogo', 'Name of extension'),
+					'help' => __('Name of extension'),
 				),
 			));
 	}
@@ -132,11 +132,11 @@ class ExtShell extends AppShell {
 	protected function _activatePlugin($plugin = null) {
 		$result = $this->_CroogoPlugin->activate($plugin);
 		if ($result === true) {
-			$this->out(__d('croogo', 'Plugin "%s" activated successfully.', $plugin));
+			$this->out(__('Plugin "%s" activated successfully.', $plugin));
 		} elseif (is_string($result)) {
 			$this->err($result);
 		} else {
-			$this->err(__d('croogo', 'Plugin "%s" could not be activated. Please, try again.', $plugin));
+			$this->err(__('Plugin "%s" could not be activated. Please, try again.', $plugin));
 		}
 		return false;
 	}
@@ -148,17 +148,14 @@ class ExtShell extends AppShell {
  * @return boolean
  */
 	protected function _deactivatePlugin($plugin = null) {
-		$pluginActivation = $this->_CroogoPlugin->getActivator($plugin);
-		if (!isset($pluginActivation) ||
-			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeDeactivation') && $pluginActivation->beforeDeactivation($this->_Controller))) {
-			$this->_CroogoPlugin->removePluginBootstrap($plugin);
-			if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
-				$pluginActivation->onDeactivation($this->_Controller);
-			}
-			$this->out(__d('croogo', 'Plugin "%s" deactivated successfully.', $plugin));
+		$result = $this->_CroogoPlugin->deactivate($plugin);
+		if ($result === true) {
+			$this->out(__('Plugin "%s" deactivated successfully.', $plugin));
 			return true;
+		} elseif (is_string($result)) {
+			$this->err($result);
 		} else {
-			$this->err(__d('croogo', 'Plugin "%s" could not be deactivated. Please, try again.', $plugin));
+			$this->err(__('Plugin "%s" could not be deactivated. Please, try again.', $plugin));
 		}
 		return false;
 	}
@@ -172,12 +169,12 @@ class ExtShell extends AppShell {
 	protected function _activateTheme($theme = null) {
 		if ($r = $this->_CroogoTheme->activate($theme)) {
 			if (is_null($theme)) {
-				$this->out(__d('croogo', 'Theme deactivated successfully.'));
+				$this->out(__('Theme deactivated successfully.'));
 			} else {
-				$this->out(__d('croogo', 'Theme "%s" activated successfully.', $theme));
+				$this->out(__('Theme "%s" activated successfully.', $theme));
 			}
 		} else {
-			$this->err(__d('croogo', 'Theme "%s" activation failed.', $theme));
+			$this->err(__('Theme "%s" activation failed.', $theme));
 		}
 		return true;
 	}

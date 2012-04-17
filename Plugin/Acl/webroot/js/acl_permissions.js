@@ -24,20 +24,21 @@ AclPermissions.documentReady = function() {
 AclPermissions.permissionToggle = function() {
 	$('img.permission-toggle').unbind();
 	$('img.permission-toggle').click(function() {
-		var rel = $(this).attr('rel');
-		var rel_e = rel.split('-');
-		var acoId = rel_e[0];
-		var aroId = rel_e[1];
+		var $this = $(this);
+		var acoId = $this.data('aco_id');
+		var aroId = $this.data('aro_id');
 
 		// show loader
-		$(this).attr('src', Croogo.basePath+'img/ajax/circle_ball.gif');
+		$this.attr('src', Croogo.basePath+'img/ajax/circle_ball.gif');
 
 		// prepare loadUrl
 		var loadUrl = Croogo.basePath+'admin/acl/acl_permissions/toggle/';
 		loadUrl    += acoId+'/'+aroId+'/';
 
 		// now load it
-		$(this).parent().load(loadUrl, function() {
+		var target = $this.parent();
+		$.post(loadUrl, null, function(data, textStatus, jqXHR) {
+			target.html(data);
 			AclPermissions.permissionToggle();
 		});
 

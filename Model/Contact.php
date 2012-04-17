@@ -82,4 +82,16 @@ class Contact extends AppModel {
 			'counterQuery' => '',
 		),
 	);
+
+/**
+ * Display fields for this model
+ *
+ * @var array
+ */
+	protected $_displayFields = array(
+		'id',
+		'title',
+		'alias',
+		'email',
+	);
 }

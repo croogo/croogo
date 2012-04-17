@@ -9,7 +9,6 @@ class MockCroogoComponent extends CroogoComponent {
 	public function startup(Controller $controller) {
 		$this->controller = $controller;
 		$this->_CroogoPlugin = new CroogoPlugin();
-		$this->_CroogoPlugin->Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
 		$this->_CroogoPlugin->Setting->writeConfiguration();
 	}
 }

@@ -1,51 +1,39 @@
-<div class="languages index">
-	<h2><?php echo $title_for_layout; ?></h2>
+<?php $this->extend('/Common/admin_index'); ?>
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Language'), array('action'=>'add')); ?></li>
-		</ul>
-	</div>
+<table cellpadding="0" cellspacing="0">
+<?php
+	$tableHeaders =  $this->Html->tableHeaders(array(
+		$this->Paginator->sort('id'),
+		$this->Paginator->sort('title'),
+		$this->Paginator->sort('native'),
+		$this->Paginator->sort('alias'),
+		$this->Paginator->sort('status'),
+		__('Actions'),
+	));
+	echo $tableHeaders;
 
-	<table cellpadding="0" cellspacing="0">
-	<?php
-		$tableHeaders =  $this->Html->tableHeaders(array(
-			$this->Paginator->sort('id'),
-			$this->Paginator->sort('title'),
-			$this->Paginator->sort('native'),
-			$this->Paginator->sort('alias'),
-			$this->Paginator->sort('status'),
-			__('Actions'),
-		));
-		echo $tableHeaders;
+	$rows = array();
+	foreach ($languages AS $language) {
+		$actions  = $this->Html->link(__('Move up'), array('action' => 'moveup', $language['Language']['id']));
+		$actions .= ' ' . $this->Html->link(__('Move down'), array('action' => 'movedown', $language['Language']['id']));
+		$actions .= ' ' . $this->Html->link(__('Edit'), array('action' => 'edit', $language['Language']['id']));
+		$actions .= ' ' . $this->Layout->adminRowActions($language['Language']['id']);
+		$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
+			'action' => 'delete',
+			$language['Language']['id'],
+		), null, __('Are you sure?'));
 
-		$rows = array();
-		foreach ($languages AS $language) {
-			$actions  = $this->Html->link(__('Move up'), array('action' => 'moveup', $language['Language']['id']));
-			$actions .= ' ' . $this->Html->link(__('Move down'), array('action' => 'movedown', $language['Language']['id']));
-			$actions .= ' ' . $this->Html->link(__('Edit'), array('action' => 'edit', $language['Language']['id']));
-			$actions .= ' ' . $this->Layout->adminRowActions($language['Language']['id']);
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
-				'action' => 'delete',
-				$language['Language']['id'],
-				'token' => $this->params['_Token']['key'],
-			), null, __('Are you sure?'));
+		$rows[] = array(
+			$language['Language']['id'],
+			$language['Language']['title'],
+			$language['Language']['native'],
+			$language['Language']['alias'],
+			$this->Layout->status($language['Language']['status']),
+			$actions,
+		);
+	}
 
-			$rows[] = array(
-				$language['Language']['id'],
-				$language['Language']['title'],
-				$language['Language']['native'],
-				$language['Language']['alias'],
-				$this->Layout->status($language['Language']['status']),
-				$actions,
-			);
-		}
-
-		echo $this->Html->tableCells($rows);
-		echo $tableHeaders;
-	?>
-	</table>
-</div>
-
-<div class="paging"><?php echo $this->Paginator->numbers(); ?></div>
-<div class="counter"><?php echo $this->Paginator->counter(array('format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%'))); ?></div>
+	echo $this->Html->tableCells($rows);
+	echo $tableHeaders;
+?>
+</table>
