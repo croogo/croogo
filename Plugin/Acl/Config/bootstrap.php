@@ -23,7 +23,6 @@ if (Configure::read('Site.acl_plugin') == 'Acl') {
 			'controller' => 'acl_permissions',
 			'action' => 'index',
 			),
-		'access' => array('admin'),
 		'weight' => 30,
 		));
 

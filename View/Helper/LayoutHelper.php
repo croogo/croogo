@@ -67,6 +67,17 @@ class LayoutHelper extends AppHelper {
 		'Layout',
 		'Recaptcha',
 	);
+	
+/**
+ * Default Constructor
+ *
+ * @param View $View The View this helper is being attached to.
+ * @param array $settings Configuration settings for the helper.
+ */
+	public function __construct(View $View, $settings = array()) {
+		$this->helpers[] = Configure::read('Site.acl_plugin') . '.' . Configure::read('Site.acl_plugin');
+		parent::__construct($View, $settings);
+	}
 
 /**
  * Javascript variables
@@ -954,8 +965,9 @@ class LayoutHelper extends AppHelper {
 			'children' => true,
 			'htmlAttributes' => array(
 				'class' => 'sf-menu',
-				),
-			), $options);
+			),
+		), $options);
+			
 		$out = null;
 		$sorted = Set::sort($menus, '{[a-z]+}.weight', 'ASC');
 		if (empty($this->Role)) {
@@ -963,10 +975,12 @@ class LayoutHelper extends AppHelper {
 			$this->Role->Behaviors->attach('Aliasable');
 		}
 		$currentRole = $this->Role->byId($this->getRoleId());
+		$aclPlugin = Configure::read('Site.acl_plugin');
 		foreach ($sorted as $menu) {
-			if ($currentRole != 'admin' && !in_array($currentRole, $menu['access'])) {
+			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByRoleId($this->getRoleId(), $menu['url'])) {
 				continue;
 			}
+			
 			if (empty($menu['htmlAttributes']['class'])) {
 				$menuClass = Inflector::slug(strtolower('menu-' . $menu['title']), '-');
 				$menu['htmlAttributes'] = Set::merge(array(
@@ -987,4 +1001,6 @@ class LayoutHelper extends AppHelper {
 		return $this->Html->tag('ul', $out, $options['htmlAttributes']);
 	}
 
+
+	
 }

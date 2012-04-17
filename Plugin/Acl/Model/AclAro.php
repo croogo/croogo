@@ -6,5 +6,7 @@ class AclAro extends AppModel {
 	public $useTable = 'aros';
 
 	public $actsAs = array('Tree');
+	
+
 
 }
