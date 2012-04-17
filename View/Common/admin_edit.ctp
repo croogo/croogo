@@ -8,22 +8,24 @@ if (!isset($className)) {
 $what = isset($this->request->data[$modelClass]['id']) ? __('Edit') : __('Add');
 ?>
 <div class="<?php echo $className; ?> form">
-	<h2><?php if ($this->fetch('title')): ?>
-		<?php echo $this->fetch('title'); ?>
+	<h2><?php if ($titleBlock = $this->fetch('title')): ?>
+		<?php echo $titleBlock; ?>
 	<?php else: ?>
 		<?php
 		echo !empty($title_for_layout) ? $title_for_layout : $what . ' ' . $modelClass;
 		?>
 	<?php endif; ?></h2>
 
+	<?php if ($actionsBlock = $this->fetch('actions')): ?>
 	<div class="actions">
 		<ul>
-			<?php echo $this->fetch('actions'); ?>
+			<?php echo $actionsBlock; ?>
 		</ul>
 	</div>
+	<?php endif; ?>
 
-	<?php if ($this->fetch('content')): ?>
-		<?php echo $this->fetch('content'); ?>
+	<?php if ($contentBlock = $this->fetch('content')): ?>
+		<?php echo $contentBlock; ?>
 	<?php else: ?>
 		<?php echo $this->Form->create($modelClass); ?>
 		<?php
@@ -47,8 +49,8 @@ $what = isset($this->request->data[$modelClass]['id']) ? __('Edit') : __('Add');
 		</fieldset>
 
 		<div class="buttons">
-			<?php if ($this->fetch('buttons')): ?>
-				<?php echo $this->fetch('buttons'); ?>
+			<?php if ($buttonsBlock = $this->fetch('buttons')): ?>
+				<?php echo $buttonsBlock; ?>
 			<?php else: ?>
 				<?php
 				echo $this->Form->end(__('Save'));

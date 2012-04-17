@@ -7,8 +7,8 @@ if (!isset($className)) {
 }
 ?>
 <div class="<?php echo $className; ?> index">
-	<h2><?php if ($this->fetch('title')): ?>
-		<?php echo $this->fetch('title'); ?>
+	<h2><?php if ($titleBlock = $this->fetch('title')): ?>
+		<?php echo $titleBlock; ?>
 	<?php else: ?>
 		<?php
 		echo !empty($title_for_layout) ? $title_for_layout : $this->name;
@@ -17,8 +17,8 @@ if (!isset($className)) {
 
 	<div class="actions">
 		<ul>
-			<?php if ($this->fetch('tabs')): ?>
-				<?php echo $this->fetch('tabs'); ?>
+			<?php if ($tabsBlock = $this->fetch('tabs')): ?>
+				<?php echo $tabsBlock; ?>
 			<?php else: ?>
 			<li>
 				<?php
@@ -31,8 +31,8 @@ if (!isset($className)) {
 		</ul>
 	</div>
 
-	<?php if ($this->fetch('content')): ?>
-		<?php echo $this->fetch('content'); ?>
+	<?php if ($contentBlock = $this->fetch('content')): ?>
+		<?php echo $contentBlock; ?>
 	<?php else: ?>
 		<table cellpadding="0" cellspacing="0">
 		<?php
@@ -84,8 +84,8 @@ if (!isset($className)) {
 	<?php endif; ?>
 </div>
 
-<?php if ($this->fetch('paging')): ?>
-	<?php echo $this->fetch('paging'); ?>
+<?php if ($pagingBlock = $this->fetch('paging')): ?>
+	<?php echo $pagingBlock; ?>
 <?php else: ?>
 	<?php if (isset($this->Paginator)): ?>
 		<div class="paging"><?php echo $this->Paginator->numbers(); ?></div>
