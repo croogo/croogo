@@ -25,6 +25,22 @@ class AppModel extends Model {
 	public $useCache = true;
 
 /**
+ * Display fields for admin_index. Use displayFields()
+ *
+ * @var array
+ * @access protected
+ */
+	protected $_displayFields = array();
+
+/**
+ * Edit fields for admin_edit. Use editFields()
+ *
+ * @var array
+ * @access protected
+ */
+	protected $_editFields = array();
+
+/**
  * Constructor
  *
  * @param mixed  $id    Set this ID for this model on startup, can also be an array of options, see above.
@@ -136,5 +152,70 @@ class AppModel extends Model {
  */
 	public function invalidate($field, $value = true) {
 		return parent::invalidate($field, __($value));
+	}
+
+/**
+ * Return formatted display fields
+ *
+ * @param array $displayFields
+ * @return array
+ */
+	public function displayFields($displayFields = null) {
+		if (isset($displayFields)) {
+			$this->_displayFields = $displayFields;
+		}
+		$out = array();
+		$defaults = array('sort' => true, 'type' => 'text', 'url' => array(), 'options' => array());
+		foreach ($this->_displayFields as $field => $label) {
+			if (is_int($field)) {
+				$field = $label;
+				list(, $label) = pluginSplit($label);
+				$out[$field] = Set::merge($defaults, array(
+					'label' => Inflector::humanize($label),
+				));
+			} elseif (is_array($label)) {
+				$out[$field] = Set::merge($defaults, $label);
+				if (!isset($out[$field]['label'])) {
+					$out[$field]['label'] = Inflector::humanize($field);
+				}
+			} else {
+				$out[$field] = Set::merge($defaults, array(
+					'label' => $label,
+				));
+			}
+		}
+		return $out;
+	}
+
+/**
+ * Return formatted edit fields
+ *
+ * @param array $editFields
+ * @return array
+ */
+	public function editFields($editFields = null) {
+		if (isset($editFields)) {
+			$this->_editFields = $editFields;
+		}
+		if (empty($this->_editFields)) {
+			$this->_editFields = array_keys($this->schema());
+			$id = array_search('id', $this->_editFields);
+			if ($id !== false) {
+				unset($this->_editFields[$id]);
+			}
+		}
+		$out = array();
+		foreach ($this->_editFields as $field => $label) {
+			if (is_int($field)) {
+				$out[$label] = array();
+			} elseif (is_array($label)) {
+				$out[$field] = $label;
+			} else {
+				$out[$field] = array(
+					'label' => $label,
+				);
+			}
+		}
+		return $out;
 	}
 }

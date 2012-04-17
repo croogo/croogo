@@ -35,6 +35,7 @@ class RolesController extends AppController {
 		$this->Role->recursive = 0;
 		$this->paginate['Role']['order'] = "Role.id ASC";
 		$this->set('roles', $this->paginate());
+		$this->set('displayFields', $this->Role->displayFields());
 	}
 
 	public function admin_add() {

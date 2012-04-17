@@ -1,6 +1,6 @@
 <?php
 App::uses('FilemanagerController', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestFilemanagerController extends FilemanagerController {
 
@@ -9,7 +9,7 @@ class TestFilemanagerController extends FilemanagerController {
 	}
 }
 
-class FilemanagerControllerTest extends CroogoTestCase {
+class FilemanagerControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
 		'aco',
@@ -19,7 +19,13 @@ class FilemanagerControllerTest extends CroogoTestCase {
 
 	public $Filemanaer = null;
 
+/**
+ * tearDown
+ *
+ * @return void
+ */
 	public function tearDown() {
+		parent::tearDown();
 		if (isset($this->Filemanager)) {
 			$this->Filemanager->Session->destroy();
 			unset($this->Filemanager);

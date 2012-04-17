@@ -1,6 +1,6 @@
 <?php
 App::uses('NodesController', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestNodesController extends NodesController {
 
@@ -36,7 +36,7 @@ class TestNodesController extends NodesController {
 	}
 }
 
-class NodesControllerTest extends CroogoTestCase {
+class NodesControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
 		'aco',
@@ -64,7 +64,13 @@ class NodesControllerTest extends CroogoTestCase {
 		'vocabulary',
 	);
 
-	public function startTest($method) {
+/**
+ * setUp
+ *
+ * @return void
+ */
+	public function setUp() {
+		parent::setUp();
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Nodes = new TestNodesController($request, $response);
@@ -72,22 +78,42 @@ class NodesControllerTest extends CroogoTestCase {
 		$this->Nodes->request->params['controller'] = 'nodes';
 		$this->Nodes->request->params['pass'] = array();
 		$this->Nodes->request->params['named'] = array();
+
+		$this->NodesController = $this->generate('Nodes', array(
+			'methods' => array(
+				'redirect',
+			),
+			'components' => array(
+				'Auth' => array('user'),
+				'Session',
+			),
+		));
+		$this->NodesController->Auth
+			->staticExpects($this->any())
+			->method('user')
+			->will($this->returnCallback(array($this, 'callbackAuthUser')));
 	}
 
-	function testAdminIndex() {
-		$this->Nodes->request->params['action'] = 'admin_index';
-		$this->Nodes->request->params['url']['url'] = 'admin/nodes';
-		$this->Nodes->Session->write('Auth.User', array(
-			'id' => 1,
-			'role_id' => 1,
-			'username' => 'admin',
-		));
-		$this->Nodes->startupProcess();
-		$this->Nodes->admin_index();
+/**
+ * tearDown
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		$this->Nodes->Session->destroy();
+		unset($this->Nodes);
+		ClassRegistry::flush();
+	}
 
-		$this->Nodes->testView = true;
-		$output = $this->Nodes->render('admin_index');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+/*
+ * testAdminIndex
+ *
+ * @return void
+ */
+	public function testAdminIndex() {
+		$this->testAction('/admin/nodes/index');
+		$this->assertNotEmpty($this->vars['nodes']);
 	}
 
 	public function testAdminAdd() {
@@ -123,37 +149,39 @@ class NodesControllerTest extends CroogoTestCase {
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
+/**
+ * testAdminEdit
+ *
+ * @return void
+ */
 	public function testAdminEdit() {
-		$this->Nodes->request->params['action'] = 'admin_edit';
-		$this->Nodes->request->params['url']['url'] = 'admin/nodes/edit';
-		$this->Nodes->Session->write('Auth.User', array(
-			'id' => 1,
-			'role_id' => 1,
-			'username' => 'admin',
+		$this->NodesController->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo('Blog has been saved'),
+				$this->equalTo('default'),
+				$this->equalTo(array('class' => 'success'))
+			);
+		$this->NodesController
+			->expects($this->once())
+			->method('redirect');
+		$this->testAction('/admin/nodes/edit/1', array(
+			'data' => array(
+				'Node' => array(
+					'id' => 1,
+					'title' => 'Hello World [modified]',
+					'slug' => 'hello-world',
+					'type' => 'blog',
+					'token_key' => 1,
+				),
+				'Role' => array(
+					'Role' => array(),
+				),
+			),
 		));
-		$this->Nodes->request->data = array(
-			'Node' => array(
-				'id' => 1,
-				'title' => 'Hello World [modified]',
-				'slug' => 'hello-world',
-				'type' => 'blog',
-				'token_key' => 1,
-			),
-			'Role' => array(
-				'Role' => array(),
-			),
-		);
-		$this->params['_Token']['key'] = 1;
-		$this->Nodes->startupProcess();
-		$this->Nodes->admin_edit(1);
-		$this->assertEqual($this->Nodes->redirectUrl, array('action' => 'index'));
-
-		$helloWorld = $this->Nodes->Node->findBySlug('hello-world');
-		$this->assertEqual($helloWorld['Node']['title'], 'Hello World [modified]');
-
-		//$this->Nodes->testView = true;
-		//$output = $this->Nodes->render('admin_edit');
-		//$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		$result = $this->NodesController->Node->findBySlug('hello-world');
+		$this->assertEquals('Hello World [modified]', $result['Node']['title']);
 	}
 
 	public function testAdminDelete() {
@@ -183,9 +211,4 @@ class NodesControllerTest extends CroogoTestCase {
 		$this->assertContains('view_1.ctp in Mytheme', $result->body());
 	}
 
-	public function endTest($method) {
-		$this->Nodes->Session->destroy();
-		unset($this->Nodes);
-		ClassRegistry::flush();
-	}
 }
