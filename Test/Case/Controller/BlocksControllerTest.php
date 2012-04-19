@@ -95,9 +95,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		$this->Blocks->Session->destroy();
 		unset($this->Blocks);
-		ClassRegistry::flush();
 	}
 
 /**

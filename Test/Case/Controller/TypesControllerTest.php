@@ -96,9 +96,7 @@ class TypesControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		$this->Types->Session->destroy();
 		unset($this->Types);
-		ClassRegistry::flush();
 	}
 
 /**

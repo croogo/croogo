@@ -97,9 +97,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		$this->Terms->Session->destroy();
 		unset($this->Terms);
-		ClassRegistry::flush();
 	}
 
 /**

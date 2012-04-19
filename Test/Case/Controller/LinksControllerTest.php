@@ -96,10 +96,7 @@ class LinksControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		CakeSession::clear();
-		CakeSession::destroy();
 		unset($this->Links);
-		ClassRegistry::flush();
 	}
 
 /*

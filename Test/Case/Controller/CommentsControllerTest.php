@@ -100,8 +100,6 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 	public function tearDown() {
 		parent::tearDown();
 		unset($this->Comments);
-		CakeSession::clear();
-		ClassRegistry::flush();
 	}
 
 /**

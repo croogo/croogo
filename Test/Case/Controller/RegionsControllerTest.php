@@ -96,9 +96,7 @@ class RegionsControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		$this->Regions->Session->destroy();
 		unset($this->Regions);
-		ClassRegistry::flush();
 	}
 
 /**

@@ -97,9 +97,7 @@ class RolesControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		$this->Roles->Session->destroy();
 		unset($this->Roles);
-		ClassRegistry::flush();
 	}
 
 /**
