@@ -263,7 +263,7 @@ class SettingFixture extends CroogoTestFixture {
 		array(
 			'id' => 32,
 			'key' => 'Hook.bootstraps',
-			'value' => 'example,debug_kit',
+			'value' => 'Example',
 			'title' => '',
 			'description' => '',
 			'input_type' => '',
@@ -280,6 +280,17 @@ class SettingFixture extends CroogoTestFixture {
 			'input_type' => 'checkbox',
 			'editable' => 1,
 			'weight' => 24,
+			'params' => ''
+		),
+		array(
+			'id' => 34,
+			'key' => 'Site.acl_plugin',
+			'value' => 'Acl',
+			'title' => 'Acl Plugin',
+			'description' => '',
+			'input_type' => '',
+			'editable' => 0,
+			'weight' => 25,
 			'params' => ''
 		),
 	);

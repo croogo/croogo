@@ -304,6 +304,7 @@ class CroogoPlugin extends Object {
 				if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
 					$pluginActivation->onActivation($this->_Controller);
 				}
+				CakePlugin::load($plugin);
 				return true;
 			} else {
 				return __('Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin);
@@ -329,6 +330,7 @@ class CroogoPlugin extends Object {
 			if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
 				$pluginActivation->onDeactivation($this->_Controller);
 			}
+			CakePlugin::unload($plugin);
 			return true;
 		} else {
 			return __('Plugin could not be deactivated. Please, try again.');
