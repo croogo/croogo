@@ -52,6 +52,7 @@ class UsersController extends AppController {
 				$this->redirect(array('action' => $this->request->params['action']));
 			}
 		}
+		$this->Auth->allow('logout', 'admin_logout');
 	}
 
 	public function beforeRender() {
