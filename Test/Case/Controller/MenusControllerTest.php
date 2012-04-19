@@ -96,9 +96,7 @@ class MenusControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		$this->Menus->Session->destroy();
 		unset($this->Menus);
-		ClassRegistry::flush();
 	}
 
 /**

@@ -96,9 +96,7 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		$this->Languages->Session->destroy();
 		unset($this->Languages);
-		ClassRegistry::flush();
 	}
 
 /**

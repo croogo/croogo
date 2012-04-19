@@ -101,9 +101,7 @@ class NodesControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		$this->Nodes->Session->destroy();
 		unset($this->Nodes);
-		ClassRegistry::flush();
 	}
 
 /*

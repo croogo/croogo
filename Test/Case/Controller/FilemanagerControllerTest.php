@@ -26,11 +26,7 @@ class FilemanagerControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		if (isset($this->Filemanager)) {
-			$this->Filemanager->Session->destroy();
-			unset($this->Filemanager);
-		}
-		ClassRegistry::flush();
+		unset($this->Filemanager);
 	}
 
 	public function testAdminBrowseRestricted() {

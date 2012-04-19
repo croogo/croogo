@@ -34,6 +34,13 @@ class CroogoControllerTestCase extends ControllerTestCase {
 		ClassRegistry::init('Setting')->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
 	}
 
+	public function tearDown() {
+		parent::tearDown();
+		CakeSession::clear();
+		CakeSession::destroy();
+		ClassRegistry::flush();
+	}
+
 	public function AuthUserCallback($key) {
 		$auth = array(
 			'id' => 1,

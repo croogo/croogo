@@ -98,9 +98,7 @@ class ContactsControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		$this->Contacts->Session->destroy();
 		unset($this->Contacts);
-		ClassRegistry::flush();
 	}
 
 /**

@@ -102,9 +102,7 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		$this->Vocabularies->Session->destroy();
 		unset($this->Vocabularies);
-		ClassRegistry::flush();
 	}
 
 /**

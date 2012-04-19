@@ -105,9 +105,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		$this->Users->Session->destroy();
 		unset($this->Users);
-		ClassRegistry::flush();
 	}
 
 /**
