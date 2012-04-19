@@ -196,4 +196,21 @@ class Croogo {
 			}
 		}
 	}
+
+/**
+ * Convenience method to dispatch event.
+ *
+ * Creates, dispatches, and returns a new CakeEvent object.
+ *
+ * @see CakeEvent::__construct()
+ * @param string $name Name of the event
+ * @param object $subject the object that this event applies to
+ * @param mixed $data any value you wish to be transported with this event
+ */
+	public static function dispatchEvent($name, $subject, $data = null) {
+		$event = new CakeEvent($name, $subject, $data);
+		$subject->getEventManager()->dispatch($event);
+		return $event;
+	}
+
 }
