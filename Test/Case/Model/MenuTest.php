@@ -35,6 +35,7 @@ class MenuTest extends CroogoTestCase {
 		'app.aros_aco',
 		'app.menu',
 		'app.link',
+		'app.setting',
 	);
 
 /**
