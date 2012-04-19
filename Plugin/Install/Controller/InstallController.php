@@ -1,5 +1,4 @@
 <?php
-App::uses('InstallAppController', 'Install.Controller');
 
 /**
  * Install Controller
@@ -13,7 +12,7 @@ App::uses('InstallAppController', 'Install.Controller');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class InstallController extends InstallAppController {
+class InstallController extends Controller {
 
 /**
  * Controller name
@@ -37,7 +36,15 @@ class InstallController extends InstallAppController {
  * @var array
  * @access public
  */
-	public $components = null;
+	public $components = array('Session');
+
+/**
+ * Helpers
+ *
+ * @var array
+ * @access public
+ */
+	public $helpers = array('Html', 'Form', 'Layout');
 
 /**
  * Default configuration
@@ -69,8 +76,6 @@ class InstallController extends InstallAppController {
 		parent::beforeFilter();
 
 		$this->layout = 'install';
-		App::import('Component', 'Session');
-		$this->Session = new SessionComponent($this->Components);
 	}
 
 /**
@@ -112,6 +117,10 @@ class InstallController extends InstallAppController {
 		$this->_check();
 		$this->set('title_for_layout', __('Step 1: Database'));
 
+		if (Configure::read('Install.installed')) {
+			$this->redirect(array('action' => 'adminuser'));
+		}
+
 		if (empty($this->request->data)) {
 			return;
 		}
@@ -145,10 +154,15 @@ class InstallController extends InstallAppController {
 			$content = str_replace('{default_' . $configKey . '}', $configValue, $content);
 		}
 
-		if($file->write($content) ) {
+		if(!$file->write($content)) {
+			$this->Session->setFlash(__('Could not write database.php file.'), 'default', array('class' => 'error'));
+			return;
+		}
+
+		if (copy(APP . 'Config' . DS.'croogo.php.install', APP . 'Config' . DS.'croogo.php')) {
 			return $this->redirect(array('action' => 'data'));
 		} else {
-			$this->Session->setFlash(__('Could not write database.php file.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__('Could not write croogo.php file.'), 'default', array('class' => 'error'));
 		}
 	}
 
