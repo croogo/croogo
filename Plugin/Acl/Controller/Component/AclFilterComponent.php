@@ -53,16 +53,18 @@ class AclFilterComponent extends Component {
 			'controller' => 'users',
 			'action' => 'login',
 		);
-		$this->controller->Auth->logoutRedirect = array(
-			'plugin' => null,
-			'controller' => 'users',
-			'action' => 'login',
-		);
-		$this->controller->Auth->loginRedirect = array(
-			'plugin' => null,
-			'controller' => 'users',
-			'action' => 'index',
-		);
+		if (isset($this->controller->request->params['admin'])) {
+			$loginRedirect = '/admin';
+			$logoutRedirect = array(
+				'plugin' => null,
+				'controller' => 'users',
+				'action' => 'login',
+				);
+		} else {
+			$loginRedirect = $logoutRedirect = '/';
+		}
+		$this->controller->Auth->loginRedirect = $loginRedirect;
+		$this->controller->Auth->logoutRedirect = $logoutRedirect;
 
 		if ($this->controller->Auth->user() && $this->controller->Auth->user('role_id') == 1) {
 			// Role: Admin
