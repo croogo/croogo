@@ -80,7 +80,7 @@ class AclFilterComponent extends Component {
 				$linkAction = Inflector::camelize($this->controller->request->params['controller']) . '/admin_' . $this->controller->request->params['action'];
 			}
 			if (in_array($linkAction, $allowedActions)) {
-				$this->controller->Auth->allowedActions = array($this->params['action']);
+				$this->controller->Auth->allowedActions = array($this->controller->request->params['action']);
 			}
 		}
 	}
