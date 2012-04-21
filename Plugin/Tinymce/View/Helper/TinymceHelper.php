@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class TinymceHelper extends AppHelper {
+
 /**
  * Other helpers used by this helper
  *
@@ -72,34 +73,42 @@ class TinymceHelper extends AppHelper {
 	);
 
 	public function fileBrowserCallBack() {
-		$output = "function fileBrowserCallBack(field_name, url, type, win) {
-			browserField = field_name;
-			browserWin = win;
-			window.open('".$this->Html->url(array('plugin' => false, 'controller' => 'attachments', 'action' => 'browse'))."', 'browserWindow', 'modal,width=960,height=700,scrollbars=yes');
-		}";
+		$output = <<<EOF
+function fileBrowserCallBack(field_name, url, type, win) {
+	browserField = field_name;
+	browserWin = win;
+	window.open('%s', 'browserWindow', 'modal,width=960,height=700,scrollbars=yes');
+}
+EOF;
+		$output = sprintf($output, $this->Html->url(
+			array('plugin' => false, 'controller' => 'attachments', 'action' => 'browse')
+			));
 
 		return $output;
 	}
 
 	public function selectURL() {
-		$output = "function selectURL(url) {
-			if (url == '') return false;
+		$output = <<<EOF
+function selectURL(url) {
+	if (url == '') return false;
 
-			url = '".Router::url('/uploads/', true)."' + url;
+	url = '%s' + url;
 
-			field = window.top.opener.browserWin.document.forms[0].elements[window.top.opener.browserField];
-			field.value = url;
-			if (field.onchange != null) field.onchange();
-			window.top.close();
-			window.top.opener.browserWin.focus();
-		}";
+	field = window.top.opener.browserWin.document.forms[0].elements[window.top.opener.browserField];
+	field.value = url;
+	if (field.onchange != null) field.onchange();
+		window.top.close();
+		window.top.opener.browserWin.focus();
+}
+EOF;
+		$output = sprintf($output, Router::url('/uploads/', true));
 
 		return $output;
 	}
 
 	public function getSettings($settings = array()) {
 		$_settings = $this->settings;
-		$action = Inflector::camelize($this->params['controller']).'/'.$this->params['action'];
+		$action = Inflector::camelize($this->params['controller']) . '/' . $this->params['action'];
 		if (isset($this->actions[$action])) {
 			$settings = array();
 			foreach ($this->actions[$action] as $action) {
@@ -113,7 +122,7 @@ class TinymceHelper extends AppHelper {
 		if (is_array(Configure::read('Tinymce.actions'))) {
 			$this->actions = Set::merge($this->actions, Configure::read('Tinymce.actions'));
 		}
-		$action = Inflector::camelize($this->params['controller']).'/'.$this->params['action'];
+		$action = Inflector::camelize($this->params['controller']) . '/' . $this->params['action'];
 		if (Configure::read('Writing.wysiwyg') && isset($this->actions[$action])) {
 			$this->Html->script('/tinymce/js/tiny_mce', array('inline' => false));
 			$this->Html->scriptBlock($this->fileBrowserCallBack(), array('inline' => false));
