@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class TranslateController extends TranslateAppController {
+
 /**
  * Controller name
  *
@@ -66,9 +67,9 @@ class TranslateController extends TranslateAppController {
 		$runtimeModelAlias = $runtimeModel->alias;
 		$translations = $runtimeModel->find('all', array(
 			'conditions' => array(
-				$runtimeModelAlias.'.model' => $modelAlias,
-				$runtimeModelAlias.'.foreign_key' => $id,
-				$runtimeModelAlias.'.field' => 'title',
+				$runtimeModelAlias . '.model' => $modelAlias,
+				$runtimeModelAlias . '.foreign_key' => $id,
+				$runtimeModelAlias . '.field' => 'title',
 			),
 		));
 
@@ -175,9 +176,9 @@ class TranslateController extends TranslateAppController {
 		$runtimeModel =& $model->translateModel();
 		$runtimeModelAlias = $runtimeModel->alias;
 		if ($runtimeModel->deleteAll(array(
-				$runtimeModelAlias.'.model' => $modelAlias,
-				$runtimeModelAlias.'.foreign_key' => $id,
-				$runtimeModelAlias.'.locale' => $locale,
+				$runtimeModelAlias . '.model' => $modelAlias,
+				$runtimeModelAlias . '.foreign_key' => $id,
+				$runtimeModelAlias . '.locale' => $locale,
 			))) {
 			$this->Session->setFlash(__('Translation for the locale deleted successfully.'), 'default', array('class' => 'success'));
 		} else {
