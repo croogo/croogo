@@ -46,6 +46,16 @@ Admin.form = function() {
 	});
 }
 
+Admin.processLink = function(el) {
+	var checkbox = $(el.attributes["href"].value);
+	var form = checkbox.get(0).form;
+	$('input[type=checkbox]', form).prop('checked', false);
+	checkbox.prop("checked", true);
+	$('.bulk-actions select', form).val('delete');
+	form.submit();
+	return false;
+}
+
 
 /**
  * Extra stuff

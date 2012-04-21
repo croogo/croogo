@@ -1,5 +1,4 @@
 <?php
-/* SVN FILE: $Id$ */
 /**
  * Short description for file.
  *
@@ -39,6 +38,7 @@
  * @link     http://www.croogo.org
  */
 class CroogoTranslateBehavior extends ModelBehavior {
+
 /**
  * Used for runtime configuration of model
  */
@@ -132,18 +132,20 @@ class CroogoTranslateBehavior extends ModelBehavior {
 
 		if ($primary && isset($results[0][$model->alias])) {
 			$i = 0;
-			foreach ($results AS $result) {
-				if (!isset($result[$model->alias][$model->primaryKey])) continue;
+			foreach ($results as $result) {
+				if (!isset($result[$model->alias][$model->primaryKey])) {
+					continue;
+				}
 
 				$translations = $RuntimeModel->find('all', array(
 					'conditions' => array(
-						$RuntimeModel->alias.'.model' => $model->alias,
-						$RuntimeModel->alias.'.foreign_key' => $result[$model->alias][$model->primaryKey],
-						$RuntimeModel->alias.'.field' => $fields,
+						$RuntimeModel->alias . '.model' => $model->alias,
+						$RuntimeModel->alias . '.foreign_key' => $result[$model->alias][$model->primaryKey],
+						$RuntimeModel->alias . '.field' => $fields,
 					),
 				));
 
-				foreach ($translations AS $translation) {
+				foreach ($translations as $translation) {
 					$field = $translation[$RuntimeModel->alias]['field'];
 
 					// Original row
@@ -160,10 +162,10 @@ class CroogoTranslateBehavior extends ModelBehavior {
 					// Other translations
 					if (!Set::numeric(array_keys($this->translationFields[$model->alias])) &&
 						isset($results[$i][$model->alias][$field])) {
-						if (!isset($results[$i][$field.'Translation'])) {
-							$results[$i][$field.'Translation'] = array();
+						if (!isset($results[$i][$field . 'Translation'])) {
+							$results[$i][$field . 'Translation'] = array();
 						}
-						$results[$i][$field.'Translation'][] = $translation[$RuntimeModel->alias];
+						$results[$i][$field . 'Translation'][] = $translation[$RuntimeModel->alias];
 					}
 				}
 
@@ -286,15 +288,20 @@ class CroogoTranslateBehavior extends ModelBehavior {
 		return $this->runtime[$model->alias]['model'];
 	}
 }
+
 if (!defined('CAKEPHP_UNIT_TEST_EXECUTION')) {
 /**
  * @package	 cake
  * @subpackage  cake.cake.libs.model.behaviors
  */
 	class I18nModel extends AppModel {
+
 		public $name = 'I18nModel';
+
 		public $useTable = 'i18n';
+
 		public $displayField = 'field';
+
 		public $actsAs = array(
 			'Cached' => array(
 				'prefix' => array(

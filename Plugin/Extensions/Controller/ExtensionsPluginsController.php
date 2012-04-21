@@ -14,7 +14,7 @@ App::uses('CroogoPlugin', 'Extensions.Lib');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtensionsPluginsController extends AppController {
+class ExtensionsPluginsController extends ExtensionsAppController {
 /**
  * Controller name
  *

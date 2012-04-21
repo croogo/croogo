@@ -29,9 +29,17 @@ class AclPermissionsController extends AclAppController {
 	public $uses = array(
 		'Acl.AclAco',
 		'Acl.AclAro',
-		'Acl.AclArosAco',
+		'Acl.AclPermission',
 		'Role',
 	);
+
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Security->requirePost('admin_toggle');
+		if ($this->action == 'admin_toggle') {
+			$this->Security->csrfCheck = false;
+		}
+	}
 
 	public function admin_index() {
 		$this->set('title_for_layout', __('Permissions'));
@@ -67,7 +75,7 @@ class AclPermissionsController extends AclAppController {
 						'_update' => 1,
 						'_delete' => 1,
 					);
-					if ($this->AclArosAco->hasAny($hasAny)) {
+					if ($this->AclPermission->hasAny($hasAny)) {
 						$permission[$roleId] = 1;
 					} else {
 						$permission[$roleId] = 0;
@@ -86,43 +94,43 @@ class AclPermissionsController extends AclAppController {
 
 		// see if acoId and aroId combination exists
 		$conditions = array(
-			'AclArosAco.aco_id' => $acoId,
-			'AclArosAco.aro_id' => $aroId,
+			'AclPermission.aco_id' => $acoId,
+			'AclPermission.aro_id' => $aroId,
 		);
-		if ($this->AclArosAco->hasAny($conditions)) {
-			$data = $this->AclArosAco->find('first', array('conditions' => $conditions));
-			if ($data['AclArosAco']['_create'] == 1 &&
-				$data['AclArosAco']['_read'] == 1 &&
-				$data['AclArosAco']['_update'] == 1 &&
-				$data['AclArosAco']['_delete'] == 1) {
+		if ($this->AclPermission->hasAny($conditions)) {
+			$data = $this->AclPermission->find('first', array('conditions' => $conditions));
+			if ($data['AclPermission']['_create'] == 1 &&
+				$data['AclPermission']['_read'] == 1 &&
+				$data['AclPermission']['_update'] == 1 &&
+				$data['AclPermission']['_delete'] == 1) {
 				// from 1 to 0
-				$data['AclArosAco']['_create'] = 0;
-				$data['AclArosAco']['_read'] = 0;
-				$data['AclArosAco']['_update'] = 0;
-				$data['AclArosAco']['_delete'] = 0;
+				$data['AclPermission']['_create'] = 0;
+				$data['AclPermission']['_read'] = 0;
+				$data['AclPermission']['_update'] = 0;
+				$data['AclPermission']['_delete'] = 0;
 				$permitted = 0;
 			} else {
 				// from 0 to 1
-				$data['AclArosAco']['_create'] = 1;
-				$data['AclArosAco']['_read'] = 1;
-				$data['AclArosAco']['_update'] = 1;
-				$data['AclArosAco']['_delete'] = 1;
+				$data['AclPermission']['_create'] = 1;
+				$data['AclPermission']['_read'] = 1;
+				$data['AclPermission']['_update'] = 1;
+				$data['AclPermission']['_delete'] = 1;
 				$permitted = 1;
 			}
 		} else {
 			// create - CRUD with 1
-			$data['AclArosAco']['aco_id'] = $acoId;
-			$data['AclArosAco']['aro_id'] = $aroId;
-			$data['AclArosAco']['_create'] = 1;
-			$data['AclArosAco']['_read'] = 1;
-			$data['AclArosAco']['_update'] = 1;
-			$data['AclArosAco']['_delete'] = 1;
+			$data['AclPermission']['aco_id'] = $acoId;
+			$data['AclPermission']['aro_id'] = $aroId;
+			$data['AclPermission']['_create'] = 1;
+			$data['AclPermission']['_read'] = 1;
+			$data['AclPermission']['_update'] = 1;
+			$data['AclPermission']['_delete'] = 1;
 			$permitted = 1;
 		}
 
 		// save
 		$success = 0;
-		if ($this->AclArosAco->save($data)) {
+		if ($this->AclPermission->save($data)) {
 			$success = 1;
 		}
 

@@ -17,15 +17,25 @@ App::uses('CroogoTestFixture', 'TestSuite');
  */
 class CroogoTestCase extends CakeTestCase {
 
+/**
+ * setUp
+ *
+ * @return void
+ */
 	public function setUp() {
 		parent::setUp();
 
 		App::build(array(
 			'Plugin' => array(TESTS . 'test_app' . DS . 'Plugin' . DS),
 			'View' => array(TESTS . 'test_app' . DS . 'View' . DS),
-			), App::PREPEND);
+		), App::PREPEND);
 
+		CakePlugin::unload('Install');
+		CakePlugin::load('Example');
 		Configure::write('Acl.database', 'test');
+		$Setting = ClassRegistry::init('Setting');
+		$Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
+		$Setting->writeConfiguration();
 	}
 
 }

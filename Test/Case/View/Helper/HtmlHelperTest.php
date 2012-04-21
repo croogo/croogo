@@ -11,7 +11,17 @@ class TheLayoutTestController extends Controller {
 
 class HtmlHelperTest extends CroogoTestCase {
 
-	function startTest($method) {
+	public $fixtures = array(
+		'user', 'role',
+		);
+
+/**
+ * setUp
+ */
+	function setUp() {
+		parent::setUp();
+		$this->ComponentCollection = new ComponentCollection();
+
 		$request = new CakeRequest('nodes/index');
 		$request->params = array(
 			'controller' => 'nodes',
@@ -25,7 +35,21 @@ class HtmlHelperTest extends CroogoTestCase {
 		$this->_debug = Configure::read('debug');
 	}
 
-	function testJs() {
+/**
+ * tearDown
+ */
+	function tearDown() {
+		Configure::write('App.encoding', $this->_appEncoding);
+		Configure::write('Asset', $this->_asset);
+		Configure::write('debug', $this->_debug);
+		ClassRegistry::flush();
+		unset($this->Layout);
+	}
+
+/**
+ * testJs
+ */
+	public function testJs() {
 		$this->assertContains('var Croogo = {"basePath":"\/","params":{"controller":"nodes","action":"index","named":[]}};', $f = $this->Layout->js());
 
 		$this->Layout->params['locale'] = 'eng';
@@ -39,19 +63,20 @@ class HtmlHelperTest extends CroogoTestCase {
 		$this->assertContains('var Croogo = {"basePath":"\/","params":{"controller":"nodes","action":"index","named":[]},"my_var":"123","my_var2":"456"};', $this->Layout->js());
 	}
 
-	function testStatus() {
+/**
+ * testStatus
+ */
+	public function testStatus() {
 		$this->assertEqual($this->Layout->status(true), $this->Layout->Html->image('/img/icons/tick.png'));
 		$this->assertEqual($this->Layout->status(1), $this->Layout->Html->image('/img/icons/tick.png'));
 		$this->assertEqual($this->Layout->status(false), $this->Layout->Html->image('/img/icons/cross.png'));
 		$this->assertEqual($this->Layout->status(0), $this->Layout->Html->image('/img/icons/cross.png'));
 	}
 
-	function setUp() {
-		parent::setUp();
-		$this->ComponentCollection = new ComponentCollection();
-	}
-
-	function testIsLoggedIn() {
+/**
+ * testIsLoggedIn
+ */
+	public function testIsLoggedIn() {
 		$session =& new SessionComponent($this->ComponentCollection);
 		$session->delete('Auth');
 		$this->assertFalse($this->Layout->isLoggedIn());
@@ -64,7 +89,10 @@ class HtmlHelperTest extends CroogoTestCase {
 		$session->delete('Auth');
 	}
 
-	function testGetRoleId() {
+/**
+ * testGetRoleId
+ */
+	public function testGetRoleId() {
 		$session =& new SessionComponent($this->ComponentCollection);
 		$session->write('Auth.User', array(
 			'id' => 1,
@@ -77,7 +105,10 @@ class HtmlHelperTest extends CroogoTestCase {
 		$this->assertEqual($this->Layout->getRoleId(), 3);
 	}
 
-	function testRegionIsEmpty() {
+/**
+ * testRegionIsEmpty
+ */
+	public function testRegionIsEmpty() {
 		$this->assertTrue($this->Layout->regionIsEmpty('right'));
 
 		$this->Layout->_View->viewVars['blocks_for_layout'] = array(
@@ -90,7 +121,10 @@ class HtmlHelperTest extends CroogoTestCase {
 		$this->assertFalse($this->Layout->regionIsEmpty('right'));
 	}
 
-	function testLinkStringToArray() {
+/**
+ * testLinkStringToArray
+ */
+	public function testLinkStringToArray() {
 		$this->assertEqual($this->Layout->linkStringToArray('controller:nodes/action:index'), array(
 			'plugin' => null,
 			'controller' => 'nodes',
@@ -117,12 +151,109 @@ class HtmlHelperTest extends CroogoTestCase {
 		));
 	}
 
-	function endTest($method) {
-		Configure::write('App.encoding', $this->_appEncoding);
-		Configure::write('Asset', $this->_asset);
-		Configure::write('debug', $this->_debug);
-		ClassRegistry::flush();
-		unset($this->Layout);
+/**
+ * testDisplayFields
+ */
+	public function testDisplayFields() {
+		$User = ClassRegistry::init('User');
+		$rows = $User->find('all');
+
+		$expected = '1';
+		$options = array(
+			'type' => null,
+			'url' => null,
+			'options' => array(),
+			);
+		$result = $this->Layout->displayField($rows[0], 'User', 'id', $options);
+		$this->assertEqual($expected, $result);
+
+		$expected = 'admin';
+		$options = array(
+			'type' => null,
+			'url' => null,
+			'options' => array(),
+			);
+		$result = $this->Layout->displayField($rows[0], 'User', 'username', $options);
+		$this->assertEqual($expected, $result);
+
+		$options = array(
+			'type' => 'boolean',
+			'url' => null,
+			'options' => array(),
+			);
+		$result = $this->Layout->displayField($rows[0], 'User', 'status', $options);
+		$this->assertContains('tick.png', $result);
+
+		$expected = '<a href="/users/view/1">admin</a>';
+		$options = array(
+			'type' => null,
+			'url' => array(
+				'plugin' => false,
+				'controller' => 'users',
+				'action' => 'view',
+				'pass' => 'id'
+				),
+			'options' => array(),
+			);
+		$result = $this->Layout->displayField($rows[0], 'User', 'username', $options);
+		$this->assertEqual($expected, $result);
+
+		$expected = '<a href="/admin/roles/view/1">Admin</a>';
+		$options = array(
+			'type' => null,
+			'url' => array(
+				'admin' => true,
+				'plugin' => false,
+				'controller' => 'roles',
+				'action' => 'view',
+				'pass' => 'id'
+				),
+			'options' => array(),
+			);
+		$result = $this->Layout->displayField($rows[0], 'Role', 'title', $options);
+		$this->assertEqual($expected, $result);
+
+		$expected = '<a href="/users/view/1/admin">admin</a>';
+		$options = array(
+			'type' => null,
+			'url' => array(
+				'plugin' => false,
+				'controller' => 'users',
+				'action' => 'view',
+				'pass' => array('id', 'username'),
+				),
+			'options' => array(),
+			);
+		$result = $this->Layout->displayField($rows[0], 'User', 'username', $options);
+		$this->assertEqual($expected, $result);
+
+		$expected = '<a href="/users/view/id:1/username:admin">admin</a>';
+		$options = array(
+			'type' => null,
+			'url' => array(
+				'plugin' => false,
+				'controller' => 'users',
+				'action' => 'view',
+				'named' => array('id', 'username'),
+				),
+			'options' => array(),
+			);
+		$result = $this->Layout->displayField($rows[0], 'User', 'username', $options);
+		$this->assertEqual($expected, $result);
+
+		$expected = '<a href="/users/view/id:1/username:admin" class="view">admin</a>';
+		$options = array(
+			'type' => null,
+			'url' => array(
+				'plugin' => false,
+				'controller' => 'users',
+				'action' => 'view',
+				'named' => array('id', 'username'),
+				),
+			'options' => array('class' => 'view'),
+			);
+		$result = $this->Layout->displayField($rows[0], 'User', 'username', $options);
+		$this->assertEqual($expected, $result);
 	}
 
 }

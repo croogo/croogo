@@ -1,4 +1,7 @@
 <?php
+App::uses('CroogoTestCase', 'TestSuite');
+App::uses('Model', 'Model');
+App::uses('AppModel', 'Model');
 App::uses('User', 'Model');
 App::uses('AppModel', 'Model');
 App::uses('AuthComponent', 'Controller/Component');
@@ -181,6 +184,134 @@ class UserTest extends CroogoTestCase {
 		$anotherAdmin = $this->User->read();
 		$this->User->deleteAll(array('NOT' => array('User.id' => array($newAdmin['User']['id'], $anotherAdmin['User']['id']))));
 		$this->assertTrue($this->User->delete($newAdmin['User']['id']));
+	}
+
+/**
+ * testDisplayFields
+ *
+ * @return void
+ */
+	public function testDisplayFields() {
+		$result = $this->User->displayFields();
+		$expected = array(
+			'id' => array(
+				'label' => 'Id',
+				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
+			),
+			'username' => array(
+				'label' => 'Username',
+				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
+			),
+			'name' => array(
+				'label' => 'Name',
+				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
+			),
+			'email' => array(
+				'label' => 'Email',
+				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
+			),
+			'status' => array(
+				'label' => 'Status',
+				'sort' => true,
+				'type' => 'boolean',
+				'url' => array(),
+				'options' => array(),
+			),
+			'Role.title' => array(
+				'label' => 'Role',
+				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
+			),
+		);
+		$this->assertEquals($expected, $result);
+
+		$result = $this->User->displayFields(array(
+			'one', 'two', 'three',
+		));
+		$expected = array(
+			'one' => array(
+				'label' => 'One',
+				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
+			),
+			'two' => array(
+				'label' => 'Two',
+				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
+			),
+			'three' => array(
+				'label' => 'Three',
+				'sort' => true,
+				'type' => 'text',
+				'url' => array(),
+				'options' => array(),
+			),
+		);
+		$this->assertEquals($expected, $result);
+	}
+
+/**
+ * testEditFields
+ *
+ * @return void
+ */
+	public function testEditFields() {
+		$result = $this->User->editFields();
+		$expected = array(
+			'role_id' => array(),
+			'username' => array(),
+			'name' => array(),
+			'email' => array(),
+			'website' => array(),
+			'status' => array(),
+		);
+		$this->assertEquals($expected, $result);
+
+		$result = $this->User->editFields(array());
+		$expected = array(
+			'role_id' => array(),
+			'username' => array(),
+			'password' => array(),
+			'name' => array(),
+			'email' => array(),
+			'website' => array(),
+			'activation_key' => array(),
+			'image' => array(),
+			'bio' => array(),
+			'timezone' => array(),
+			'status' => array(),
+			'updated' => array(),
+			'created' => array(),
+		);
+		$this->assertEquals($expected, $result);
+
+		$expected = array(
+			'field' => array(
+				'label' => 'My Field',
+				'type' => 'select',
+				'options' => array(1, 2, 3),
+			),
+		);
+		$result = $this->User->editFields($expected);
+		$this->assertEquals($expected, $result);
 	}
 
 }

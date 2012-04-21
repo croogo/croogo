@@ -140,6 +140,7 @@ class NodesController extends AppController {
 			));
 			$this->request->data['Node']['visibility_roles'] = $this->Node->encodeData($this->request->data['Role']['Role']);
 			if ($this->Node->saveWithMeta($this->request->data)) {
+				Croogo::dispatchEvent('Controller.Nodes.afterAdd', $this, array('data' => $this->request->data));
 				$this->Session->setFlash(sprintf(__('%s has been saved'), $type['Type']['title']), 'default', array('class' => 'success'));
 				if (isset($this->request->data['apply'])) {
 					$this->redirect(array('action'=>'edit', $this->Node->id));
@@ -204,6 +205,7 @@ class NodesController extends AppController {
 			));
 			$this->request->data['Node']['visibility_roles'] = $this->Node->encodeData($this->request->data['Role']['Role']);
 			if ($this->Node->saveWithMeta($this->request->data)) {
+				Croogo::dispatchEvent('Controller.Nodes.afterEdit', $this, array('data' => $this->request->data));
 				$this->Session->setFlash(sprintf(__('%s has been saved'), $type['Type']['title']), 'default', array('class' => 'success'));
 				if (isset($this->request->data['apply'])) {
 					$this->redirect(array('action'=>'edit', $this->Node->id));
@@ -309,18 +311,23 @@ class NodesController extends AppController {
 
 		if ($action == 'delete' &&
 			$this->Node->deleteAll(array('Node.id' => $ids), true, true)) {
+			Croogo::dispatchEvent('Controller.Nodes.afterDelete', $this, compact($ids));
 			$this->Session->setFlash(__('Nodes deleted.'), 'default', array('class' => 'success'));
 		} elseif ($action == 'publish' &&
 			$this->Node->updateAll(array('Node.status' => 1), array('Node.id' => $ids))) {
+			Croogo::dispatchEvent('Controller.Nodes.afterPublish', $this, compact($ids));
 			$this->Session->setFlash(__('Nodes published'), 'default', array('class' => 'success'));
 		} elseif ($action == 'unpublish' &&
 			$this->Node->updateAll(array('Node.status' => 0), array('Node.id' => $ids))) {
+			Croogo::dispatchEvent('Controller.Nodes.afterUnpublish', $this, compact($ids));
 			$this->Session->setFlash(__('Nodes unpublished'), 'default', array('class' => 'success'));
 		} elseif ($action == 'promote' &&
 			$this->Node->updateAll(array('Node.promote' => 1), array('Node.id' => $ids))) {
+			Croogo::dispatchEvent('Controller.Nodes.afterPromote', $this, compact($ids));
 			$this->Session->setFlash(__('Nodes promoted'), 'default', array('class' => 'success'));
 		} elseif ($action == 'unpromote' &&
 			$this->Node->updateAll(array('Node.promote' => 0), array('Node.id' => $ids))) {
+			Croogo::dispatchEvent('Controller.Nodes.afterUnpromote', $this, compact($ids));
 			$this->Session->setFlash(__('Nodes unpromoted'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__('An error occurred.'), 'default', array('class' => 'error'));

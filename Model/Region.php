@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Region extends AppModel {
+
 /**
  * Model name
  *
@@ -81,4 +82,16 @@ class Region extends AppModel {
 			'counterQuery' => '',
 		),
 	);
+
+/**
+ * Display fields for this model
+ *
+ * @var array
+ */
+	protected $_displayFields = array(
+		'id',
+		'title',
+		'alias',
+	);
+
 }

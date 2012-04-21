@@ -1,15 +1,7 @@
 <?php
 
-$path = '/';
-$url = array('plugin' => 'install' ,'controller' => 'install');
-if (file_exists(APP . 'Config' . DS.'settings.yml')) {
-	$request = Router::getRequest();
-	if (!Configure::read('Install.secured') &&
-	    strpos($request->url, 'finish') == false
-	   )
-	{
-		$path = '/*';
-		$url['action'] = 'adminuser';
-	}
+$request = Router::getRequest();
+if (strpos($request->url, 'install') === false) {
+	$url = array('plugin' => 'install' ,'controller' => 'install');
+	Router::redirect('/*', $url, array('status' => 307));
 }
-CroogoRouter::connect($path, $url);

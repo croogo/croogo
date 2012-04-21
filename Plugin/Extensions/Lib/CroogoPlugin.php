@@ -281,6 +281,9 @@ class CroogoPlugin extends Object {
  * @return boolean true when successful, false or error message when failed
  */
 	public function activate($plugin) {
+		if (CakePlugin::loaded($plugin)) {
+			return __('Plugin "%s" is already active.', $plugin);
+		}
 		$pluginActivation = $this->getActivator($plugin);
 		if (!isset($pluginActivation) ||
 			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeActivation') && $pluginActivation->beforeActivation($this->_Controller))) {
@@ -301,11 +304,13 @@ class CroogoPlugin extends Object {
 				if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
 					$pluginActivation->onActivation($this->_Controller);
 				}
+				CroogoPlugin::load($plugin);
+				Cache::delete('EventHandlers', 'setting_write_configuration');
 				return true;
 			} else {
-				return __d('croogo', 'Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin);
+				return __('Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin);
 			}
-			return __d('croogo', 'Plugin "%s" could not be activated. Please, try again.', $plugin);
+			return __('Plugin "%s" could not be activated. Please, try again.', $plugin);
 		}
 	}
 
@@ -316,6 +321,9 @@ class CroogoPlugin extends Object {
  * @return boolean true when successful, false or error message when failed
  */
 	public function deactivate($plugin) {
+		if (!CakePlugin::loaded($plugin)) {
+			return __('Plugin "%s" is not active.', $plugin);
+		}
 		$pluginActivation = $this->getActivator($plugin);
 		if (!isset($pluginActivation) ||
 			(isset($pluginActivation) && method_exists($pluginActivation, 'beforeDeactivation') && $pluginActivation->beforeDeactivation($this->_Controller))) {
@@ -323,10 +331,59 @@ class CroogoPlugin extends Object {
 			if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
 				$pluginActivation->onDeactivation($this->_Controller);
 			}
+			CroogoPlugin::unload($plugin);
+			Cache::delete('EventHandlers', 'setting_write_configuration');
 			return true;
 		} else {
 			return __('Plugin could not be deactivated. Please, try again.');
 		}
+	}
+
+/**
+ * Loads a plugin and optionally loads bootstrapping and routing files.
+ *
+ * This method is identical to CakePlugin::load() with extra functionality
+ * that loads event configuration when Plugin/Config/events.php is present.
+ *
+ * @see CakePlugin::load()
+ * @param mixed $plugin name of plugin, or array of plugin and its config
+ * @return void
+ */
+	public static function load($plugin, $config = array()) {
+		CakePlugin::load($plugin, $config = array());
+		if (is_string($plugin)) {
+			$plugin = array($plugin => $config);
+		}
+		foreach ($plugin as $name => $conf) {
+			list($name, $conf) = (is_numeric($name)) ? array($conf, $config) : array($name, $conf);
+			$file = CakePlugin::path($name) . 'Config' . DS . 'events.php';
+			if (file_exists($file)) {
+				Configure::load($name . '.events');
+			}
+		}
+	}
+
+/**
+ * Forgets a loaded plugin or all of them if first parameter is null
+
+ * This method is identical to CakePlugin::load() with extra functionality
+ * that unregister event listeners when a plugin in unloaded.
+ *
+ * @see CakePlugin::unload()
+ * @param string $plugin name of the plugin to forget
+ * @return void
+ */
+	public static function unload($plugin) {
+		$eventManager = CroogoEventManager::instance();
+		if ($plugin == null) {
+			$activePlugins = CakePlugin::loaded();
+			foreach ($activePlugins as $activePlugin) {
+				$eventManager->detachPluginSubscribers($activePlugin);
+			}
+		} else {
+			$eventManager->detachPluginSubscribers($plugin);
+		}
+		CakePlugin::unload($plugin);
 	}
 
 /**

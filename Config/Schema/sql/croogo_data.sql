@@ -415,13 +415,6 @@ INSERT IGNORE INTO `types_vocabularies` (`id`, `type_id`, `vocabulary_id`, `weig
 (24, 4, 1, NULL);
 
 --
--- Dumping data for table `users`
---
-
-INSERT IGNORE INTO `users` (`id`, `role_id`, `username`, `password`, `name`, `email`, `website`, `activation_key`, `image`, `bio`, `timezone`, `status`, `updated`, `created`) VALUES
-(1, 1, 'admin', sha1(rand(now())), 'Administrator', 'you@your-site.com', '/about', '', '', '', '0', 0, '2009-10-07 22:23:27', '2009-04-05 00:20:34');
-
---
 -- Dumping data for table `vocabularies`
 --
 

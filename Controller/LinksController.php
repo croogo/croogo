@@ -47,6 +47,7 @@ class LinksController extends AppController {
 				'controller' => 'menus',
 				'action' => 'index',
 			));
+			return;
 		}
 		$menu = $this->Link->Menu->findById($menuId);
 		if (!isset($menu['Menu']['id'])) {
@@ -54,6 +55,7 @@ class LinksController extends AppController {
 				'controller' => 'menus',
 				'action' => 'index',
 			));
+			return;
 		}
 		$this->set('title_for_layout', sprintf(__('Links: %s'), $menu['Menu']['title']));
 

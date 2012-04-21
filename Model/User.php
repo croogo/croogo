@@ -15,6 +15,7 @@ App::uses('AuthComponent', 'Controller/Component');
  * @link     http://www.croogo.org
  */
 class User extends AppModel {
+
 /**
  * Model name
  *
@@ -90,6 +91,34 @@ class User extends AppModel {
 			'rule' => 'notEmpty',
 			'message' => 'This field cannot be left blank.',
 		),
+	);
+
+/**
+ * Display fields for this model
+ *
+ * @var array
+ */
+	protected $_displayFields = array(
+		'id',
+		'Role.title' => 'Role',
+		'username',
+		'name',
+		'status' => array('type' => 'boolean'),
+		'email',
+	);
+
+/**
+ * Edit fields for this model
+ *
+ * @var array
+ */
+	protected $_editFields = array(
+		'role_id',
+		'username',
+		'name',
+		'email',
+		'website',
+		'status',
 	);
 
 	public function beforeDelete($cascade = true) {

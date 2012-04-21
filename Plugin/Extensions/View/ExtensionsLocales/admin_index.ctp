@@ -20,16 +20,14 @@
 		$rows = array();
 		foreach ($locales AS $locale) {
 			$actions  = '';
-			$actions .= $this->Html->link(__('Activate'), array(
+			$actions .= $this->Form->postLink(__('Activate'), array(
 				'action' => 'activate',
 				$locale,
-				'token' => $this->params['_Token']['key'],
 			));
 			$actions .= ' ' . $this->Html->link(__('Edit'), array('action' => 'edit', $locale));
-			$actions .= ' ' . $this->Html->link(__('Delete'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 				'action' => 'delete',
 				$locale,
-				'token' => $this->params['_Token']['key'],
 			), null, __('Are you sure?'));
 
 			if ($locale == Configure::read('Site.locale')) {

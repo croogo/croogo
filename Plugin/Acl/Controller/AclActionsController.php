@@ -16,6 +16,16 @@ class AclActionsController extends AclAppController {
 	public $uses = array('Acl.AclAco');
 	public $components = array('Acl.AclGenerate');
 
+	public function beforeFilter() {
+		parent::beforeFilter();
+		if ($this->action == 'admin_generate') {
+			$this->Security->csrfCheck = false;
+		}
+	}
+
+/**
+ * admin_index
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Actions'));
 
@@ -28,6 +38,9 @@ class AclActionsController extends AclAppController {
 		$this->set('acos', $this->Acl->Aco->generateTreeList($conditions, '{n}.Aco.id', '{n}.Aco.alias'));
 	}
 
+/**
+ * admin_add
+ */
 	public function admin_add() {
 		$this->set('title_for_layout', __('Add Action'));
 
@@ -68,6 +81,11 @@ class AclActionsController extends AclAppController {
 		$this->set(compact('acos'));
 	}
 
+/**
+ * admin_edit
+ *
+ * @param integer $id
+ */
 	public function admin_edit($id = null) {
 		$this->set('title_for_layout', __('Edit Action'));
 
@@ -105,6 +123,11 @@ class AclActionsController extends AclAppController {
 		$this->set(compact('acos'));
 	}
 
+/**
+ * admin_delete
+ *
+ * @param integer $id
+ */
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Action'), 'default', array('class' => 'error'));
@@ -116,6 +139,13 @@ class AclActionsController extends AclAppController {
 		}
 	}
 
+/**
+ * admin_move
+ *
+ * @param integer $id
+ * @param string $direction
+ * @param string $step
+ */
 	public function admin_move($id, $direction = 'up', $step = '1') {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Action'), 'default', array('class' => 'error'));
@@ -134,6 +164,9 @@ class AclActionsController extends AclAppController {
 		}
 	}
 
+/**
+ * admin_generate
+ */
 	public function admin_generate() {
 		$aco =& $this->Acl->Aco;
 		$root = $aco->node('controllers');

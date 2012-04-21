@@ -8,7 +8,6 @@ CroogoNav::add('extensions', array(
 		'action' => 'index',
 		),
 	'weight' => 35,
-	'access' => array('admin'),
 	'children' => array(
 		'themes' => array(
 			'title' => __('Themes'),

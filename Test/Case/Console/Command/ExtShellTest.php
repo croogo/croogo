@@ -57,7 +57,6 @@ class ExtShellTest extends CroogoTestCase {
 		$Folder = new Folder(APP . 'Plugin' . DS . 'Example');
 		$Folder->copy(TESTS . 'test_app' . DS . 'Plugin' . DS . 'Example');
 		$this->Setting = ClassRegistry::init('Setting');
-		$this->Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
 	}
 
 /**
@@ -78,7 +77,7 @@ class ExtShellTest extends CroogoTestCase {
  */
 	public function testPlugin() {
 		$Link = ClassRegistry::init('Link');
-		$Shell = new ExtShell();
+		$Shell = $this->getMock('ExtShell', array('out', 'err'));
 
 		$Shell->args = array('deactivate', 'plugin', 'Example');
 		$Shell->main();
@@ -107,27 +106,24 @@ class ExtShellTest extends CroogoTestCase {
  * @return void
  */
 	public function testTheme() {
-		$Shell = new ExtShell();
+		$Shell = $this->getMock('ExtShell', array('out', 'err'));
 		$Shell->args = array('activate', 'theme', 'Mytheme');
 		$Shell->main();
 		$result = $this->Setting->findByKey('Site.theme');
 		$this->assertEquals('Mytheme', $result['Setting']['value']);
 		$this->assertEquals('Mytheme', Configure::read('Site.theme'));
 
-		$Shell = new ExtShell();
 		$Shell->args = array('activate', 'theme', 'Bogus');
 		$Shell->main();
 		$result = $this->Setting->findByKey('Site.theme');
 		$this->assertEquals('Mytheme', $result['Setting']['value']);
 		$this->assertEquals('Mytheme', Configure::read('Site.theme'));
 
-		$Shell = new ExtShell();
 		$Shell->args = array('deactivate', 'theme');
 		$Shell->main();
 		$result = $this->Setting->findByKey('Site.theme');
 		$this->assertEquals('', $result['Setting']['value']);
 
-		$Shell = new ExtShell();
 		$Shell->args = array('activate', 'theme', 'Mytheme');
 		$Shell->main();
 		$Shell->args = array('activate', 'theme', 'default');

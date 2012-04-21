@@ -72,6 +72,7 @@ class UsersController extends AppController {
 
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
+		$this->set('displayFields', $this->User->displayFields());
 	}
 
 	public function admin_add() {
@@ -92,11 +93,12 @@ class UsersController extends AppController {
 		$this->set(compact('roles'));
 	}
 
+/**
+ * admin_edit
+ *
+ * @param integer $id
+ */
 	public function admin_edit($id = null) {
-		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid User'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
-		}
 		if (!empty($this->request->data)) {
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The User has been saved'), 'default', array('class' => 'success'));
@@ -104,12 +106,12 @@ class UsersController extends AppController {
 			} else {
 				$this->Session->setFlash(__('The User could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
-		}
-		if (empty($this->request->data)) {
+		} else {
 			$this->request->data = $this->User->read(null, $id);
 		}
 		$roles = $this->User->Role->find('list');
 		$this->set(compact('roles'));
+		$this->set('editFields', $this->User->editFields());
 	}
 
 	public function admin_reset_password($id = null) {
@@ -149,8 +151,10 @@ class UsersController extends AppController {
 		$this->layout = "admin_login";
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
+				Croogo::dispatchEvent('Controller.Users.adminLoginSuccessful', $this);
 				return $this->redirect($this->Auth->redirect());
 			} else {
+				Croogo::dispatchEvent('Controller.Users.adminLoginFailure', $this);
 				$this->Session->setFlash($this->Auth->authError, 'default', array(), 'auth');
 				$this->redirect($this->Auth->loginAction);
 			}
@@ -158,6 +162,7 @@ class UsersController extends AppController {
 	}
 
 	public function admin_logout() {
+		Croogo::dispatchEvent('Controller.Users.adminLogoutSuccessful', $this);
 		$this->Session->setFlash(__('Log out successful.'), 'default', array('class' => 'success'));
 		$this->redirect($this->Auth->logout());
 	}
@@ -177,6 +182,7 @@ class UsersController extends AppController {
 			$this->request->data['User']['website'] = htmlspecialchars($this->request->data['User']['website']);
 			$this->request->data['User']['name'] = htmlspecialchars($this->request->data['User']['name']);
 			if ($this->User->save($this->request->data)) {
+				Croogo::dispatchEvent('Controller.Users.registrationSuccessful', $this);
 				$this->request->data['User']['password'] = null;
 				$this->Email->from = Configure::read('Site.title') . ' '
 					. '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])).'>';
@@ -189,6 +195,7 @@ class UsersController extends AppController {
 				$this->Session->setFlash(__('You have successfully registered an account. An email has been sent with further instructions.'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'login'));
 			} else {
+				Croogo::dispatchEvent('Controller.Users.registrationFailure', $this);
 				$this->Session->setFlash(__('The User could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
@@ -208,8 +215,10 @@ class UsersController extends AppController {
 			$this->User->id = $user['User']['id'];
 			$this->User->saveField('status', 1);
 			$this->User->saveField('activation_key', md5(uniqid()));
+			Croogo::dispatchEvent('Controller.Users.activationSuccessful', $this);
 			$this->Session->setFlash(__('Account activated successfully.'), 'default', array('class' => 'success'));
 		} else {
+			Croogo::dispatchEvent('Controller.Users.activationFailure', $this);
 			$this->Session->setFlash(__('An error occurred.'), 'default', array('class' => 'error'));
 		}
 
@@ -284,9 +293,12 @@ class UsersController extends AppController {
 	public function login() {
 		$this->set('title_for_layout', __('Log in'));
 		if ($this->request->is('post')) {
+			Croogo::dispatchEvent('Controller.Users.beforeLogin', $this);
 			if ($this->Auth->login()) {
+				Croogo::dispatchEvent('Controller.Users.loginSuccessful', $this);
 				return $this->redirect($this->Auth->redirect());
 			} else {
+				Croogo::dispatchEvent('Controller.Users.loginFailure', $this);
 				$this->Session->setFlash($this->Auth->authError, 'default', array(), 'auth');
 				$this->redirect($this->Auth->loginAction);
 			}
@@ -294,8 +306,10 @@ class UsersController extends AppController {
 	}
 
 	public function logout() {
+		Croogo::dispatchEvent('Controller.Users.beforeLogout', $this);
 		$this->Session->setFlash(__('Log out successful.'), 'default', array('class' => 'success'));
 		$this->redirect($this->Auth->logout());
+		Croogo::dispatchEvent('Controller.Users.afterLogout', $this);
 	}
 
 	public function view($username) {

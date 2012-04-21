@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Role extends AppModel {
+
 /**
  * Model name
  *
@@ -54,6 +55,17 @@ class Role extends AppModel {
 				'message' => 'Alias cannot be empty.',
 			),
 		),
+	);
+
+/**
+ * Display fields for this model
+ *
+ * @var array
+ */
+	protected $_displayFields = array(
+		'id',
+		'title',
+		'alias',
 	);
 
 }

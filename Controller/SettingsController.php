@@ -129,7 +129,7 @@ class SettingsController extends AppController {
 	}
 
 	public function admin_moveup($id, $step = 1) {
-		if( $this->Setting->moveup($id, $step) ) {
+		if( $this->Setting->moveUp($id, $step) ) {
 			$this->Session->setFlash(__('Moved up successfully'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__('Could not move up'), 'default', array('class' => 'error'));
@@ -139,7 +139,7 @@ class SettingsController extends AppController {
 	}
 
 	public function admin_movedown($id, $step = 1) {
-		if( $this->Setting->movedown($id, $step) ) {
+		if( $this->Setting->moveDown($id, $step) ) {
 			$this->Session->setFlash(__('Moved down successfully'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__('Could not move down'), 'default', array('class' => 'error'));

@@ -173,8 +173,8 @@ class FilemanagerController extends AppController {
 	}
 
 	public function admin_delete_file() {
-		if (isset($this->request->query['path'])) {
-			$path = $this->request->query['path'];
+		if (!empty($this->request->data['path'])) {
+			$path = $this->request->data['path'];
 		} else {
 			$this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
 		}
@@ -200,8 +200,8 @@ class FilemanagerController extends AppController {
 	}
 
 	public function admin_delete_directory() {
-		if (isset($this->request->query['path'])) {
-			$path = $this->request->query['path'];
+		if (!empty($this->request->data['path'])) {
+			$path = $this->request->data['path'];
 		} else {
 			$this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
 		}

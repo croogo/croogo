@@ -28,13 +28,13 @@ class CroogoNav extends Object {
 		}
 	}
 
-	/**
-	 * Add a menu item
-	 *
-	 * @param string $path dot separated path in the array.
-	 * @param array $options menu options array
-	 * @return void
-	 */
+/**
+ * Add a menu item
+ *
+ * @param string $path dot separated path in the array.
+ * @param array $options menu options array
+ * @return void
+ */
 	public static function add($path, $options) {
 		$pathE = explode('.', $path);
 		$pathE = array_splice($pathE, 0, count($pathE) - 2);
@@ -54,14 +54,14 @@ class CroogoNav extends Object {
 		}
 	}
 
-	/**
-	 * Replace a menu element
-	 *
-	 * @param array $target pointer to start of array
-	 * @param string $path path to search for in dot separated format
-	 * @param array $options data to replace with
-	 * @return void
-	 */
+/**
+ * Replace a menu element
+ *
+ * @param array $target pointer to start of array
+ * @param string $path path to search for in dot separated format
+ * @param array $options data to replace with
+ * @return void
+ */
 	protected static function _replace(&$target, $path, $options) {
 		$pathE = explode('.', $path);
 		$path = array_shift($pathE);
@@ -73,14 +73,14 @@ class CroogoNav extends Object {
 		}
 	}
 
-    /**
-	 * Merge $firstArray with $secondArray
-	 *
-	 * Similar to Set::merge, except duplicates are removed
-	 * @param array $firstArray
-	 * @param array $secondArray
-	 * @return array
-	 */
+/**
+ * Merge $firstArray with $secondArray
+ *
+ * Similar to Set::merge, except duplicates are removed
+ * @param array $firstArray
+ * @param array $secondArray
+ * @return array
+ */
 	protected static function _merge($firstArray, $secondArray) {
 		$merged = Set::merge($firstArray, $secondArray);
 		foreach ($merged as $key => $val) {
@@ -91,31 +91,31 @@ class CroogoNav extends Object {
 		return $merged;
 	}
 
-	/**
-	 * Remove a menu item
-	 *
-	 * @param string $path dot separated path in the array.
-	 * @return void
-	 */
+/**
+ * Remove a menu item
+ *
+ * @param string $path dot separated path in the array.
+ * @return void
+ */
 	public static function remove($path) {
 		self::$_items = Set::remove(self::$_items, $path);
 	}
 
-	/**
-	 * Clear all menus
-	 *
-	 * @return void
-	 */
+/**
+ * Clear all menus
+ *
+ * @return void
+ */
 	public static function clear() {
 		self::$_items = array();
 	}
 
-	/**
-	 * Sets or returns menu data in array
-	 *
-	 * @param $items array if empty, the current menu is returned.
-	 * @return array
-	 */
+/**
+ * Sets or returns menu data in array
+ *
+ * @param $items array if empty, the current menu is returned.
+ * @return array
+ */
 	public static function items($items = null) {
 		if (!empty($items)) {
 			self::$_items = $items;
@@ -123,10 +123,10 @@ class CroogoNav extends Object {
 		return self::$_items;
 	}
 
-    /**
-     * Gets default settings for menu items
-     * @return array
-     */
+/**
+ * Gets default settings for menu items
+ * @return array
+ */
 	public static function getDefaults() {
 	    return self::$_defaults;
 	}

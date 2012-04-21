@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Menu extends AppModel {
+
 /**
  * Model name
  *
@@ -70,7 +71,7 @@ class Menu extends AppModel {
 		'Link' => array(
 			'className' => 'Link',
 			'foreignKey' => 'menu_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => 'Link.lft ASC',

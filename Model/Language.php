@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Language extends AppModel {
+
 /**
  * Model name
  *

@@ -67,6 +67,17 @@ class LayoutHelper extends AppHelper {
 		'Layout',
 		'Recaptcha',
 	);
+	
+/**
+ * Default Constructor
+ *
+ * @param View $View The View this helper is being attached to.
+ * @param array $settings Configuration settings for the helper.
+ */
+	public function __construct(View $View, $settings = array()) {
+		$this->helpers[] = Configure::read('Site.acl_plugin') . '.' . Configure::read('Site.acl_plugin');
+		parent::__construct($View, $settings);
+	}
 
 /**
  * Javascript variables
@@ -112,6 +123,53 @@ class LayoutHelper extends AppHelper {
 			$output = $this->Html->image('/img/icons/cross.png');
 		}
 		return $output;
+	}
+
+/**
+ * Display value from $item array
+ *
+ * @param $item array of values
+ * @param $model string model alias
+ * @param $field string field name
+ * @param $options array
+ * @return string
+ */
+	public function displayField($item, $model, $field, $options = array()) {
+		extract(array_intersect_key($options, array(
+			'type' => null,
+			'url' => array(),
+			'options' => array(),
+			)
+		));
+		switch ($type) {
+		case 'boolean':
+			$out = $this->status($item[$model][$field]);
+			break;
+		default:
+			$out = $item[$model][$field];
+			break;
+		}
+
+		if (!empty($url)) {
+			if (isset($url['pass'])) {
+				$passVars = is_string($url['pass']) ?  array($url['pass']) : $url['pass'];
+				foreach ($passVars as $passField) {
+					$url[] = $item[$model][$passField];
+				}
+				unset($url['pass']);
+			}
+
+			if (isset($url['named'])) {
+				$namedVars = is_string($url['named']) ?  array($url['named']) : $url['named'];
+				foreach ($namedVars as $namedField) {
+					$url[$namedField] = $item[$model][$namedField];
+				}
+				unset($url['named']);
+			}
+
+			$out = $this->Html->link($out, $url, $options);
+		}
+		return $out;
 	}
 
 /**
@@ -409,6 +467,23 @@ class LayoutHelper extends AppHelper {
 	}
 
 /**
+ * Creates a special type of link for use in admin area.
+ *
+ * Clicking the link will automatically check a corresponding checkbox
+ * where element id is equal to $url parameter and immediately submit the form
+ * it's on.  This works in tandem with Admin.processLink() in javascript.
+ */
+	public function processLink($title, $url = null, $options = array(), $confirmMessage = false) {
+		if (!empty($confirmMessage)) {
+			$options['onclick'] = "if (confirm('$confirmMessage')) { Admin.processLink(this); } return false;";
+		} else {
+			$options['onclick'] = "Admin.processLink(this); return false;";
+		}
+		$output = $this->Html->link($title, $url, $options);
+		return $output;
+	}
+
+/**
  * Show Vocabulary by Alias
  *
  * @param string $vocabularyAlias Vocabulary alias
@@ -517,10 +592,12 @@ class LayoutHelper extends AppHelper {
  * @return string
  */
 	public function filter($content) {
+		Croogo::dispatchEvent('Helper.Layout.beforeFilter', $this->_View, array('content' => &$content));
 		$content = $this->filterElements($content);
 		$content = $this->filterMenus($content);
 		$content = $this->filterVocabularies($content);
 		$content = $this->filterNodes($content);
+		Croogo::dispatchEvent('Helper.Layout.afterFilter', $this->_View, array('content' => &$content));
 		return $content;
 	}
 
@@ -890,8 +967,9 @@ class LayoutHelper extends AppHelper {
 			'children' => true,
 			'htmlAttributes' => array(
 				'class' => 'sf-menu',
-				),
-			), $options);
+			),
+		), $options);
+			
 		$out = null;
 		$sorted = Set::sort($menus, '{[a-z]+}.weight', 'ASC');
 		if (empty($this->Role)) {
@@ -899,10 +977,12 @@ class LayoutHelper extends AppHelper {
 			$this->Role->Behaviors->attach('Aliasable');
 		}
 		$currentRole = $this->Role->byId($this->getRoleId());
+		$aclPlugin = Configure::read('Site.acl_plugin');
 		foreach ($sorted as $menu) {
-			if ($currentRole != 'admin' && !in_array($currentRole, $menu['access'])) {
+			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByRoleId($this->getRoleId(), $menu['url'])) {
 				continue;
 			}
+			
 			if (empty($menu['htmlAttributes']['class'])) {
 				$menuClass = Inflector::slug(strtolower('menu-' . $menu['title']), '-');
 				$menu['htmlAttributes'] = Set::merge(array(
@@ -923,4 +1003,6 @@ class LayoutHelper extends AppHelper {
 		return $this->Html->tag('ul', $out, $options['htmlAttributes']);
 	}
 
+
+	
 }

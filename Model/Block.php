@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Block extends AppModel {
+
 /**
  * Model name
  *

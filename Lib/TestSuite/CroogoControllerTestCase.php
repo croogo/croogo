@@ -1,4 +1,7 @@
 <?php
+
+App::uses('CroogoTestFixture', 'TestSuite');
+
 /**
  * CroogoTestCase class
  *
@@ -21,6 +24,37 @@ class CroogoControllerTestCase extends ControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+
+		App::build(array(
+			'Plugin' => array(TESTS . 'test_app' . DS . 'Plugin' . DS),
+			'View' => array(TESTS . 'test_app' . DS . 'View' . DS),
+		), App::PREPEND);
+
+		CakePlugin::unload('Install');
+		CakePlugin::load('Example');
 		Configure::write('Acl.database', 'test');
+		$Setting = ClassRegistry::init('Setting');
+		$Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
+		$Setting->writeConfiguration();
 	}
+
+	public function tearDown() {
+		parent::tearDown();
+		CakeSession::clear();
+		CakeSession::destroy();
+		ClassRegistry::flush();
+	}
+
+	public function authUserCallback($key) {
+		$auth = array(
+			'id' => 1,
+			'username' => 'admin',
+			'role_id' => 1,
+			);
+		if (empty($key) || !isset($auth[$key])) {
+			return $auth;
+		}
+		return $auth[$key];
+	}
+
 }

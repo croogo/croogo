@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class CachedBehavior extends ModelBehavior {
+
 /**
  * Setup
  *
@@ -55,10 +56,10 @@ class CachedBehavior extends ModelBehavior {
  * @return void
  */
 	protected function _deleteCachedFiles(&$model) {
-		foreach ($this->settings[$model->alias]['prefix'] AS $prefix) {
-			$files = glob(TMP.'cache'.DS.'queries'.DS.'cake_'.$prefix.'*');
+		foreach ($this->settings[$model->alias]['prefix'] as $prefix) {
+			$files = glob(TMP . 'cache' . DS . 'queries' . DS . 'cake_' . $prefix . '*');
 			if (is_array($files) && count($files) > 0) {
-				foreach ($files AS $file) {
+				foreach ($files as $file) {
 					unlink($file);
 				}
 			}

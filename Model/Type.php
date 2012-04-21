@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Type extends AppModel {
+
 /**
  * Model name
  *
@@ -82,5 +83,17 @@ class Type extends AppModel {
 			'deleteQuery' => '',
 			'insertQuery' => '',
 		),
+	);
+
+/**
+ * Display fields for this model
+ *
+ * @var array
+ */
+	protected $_displayFields = array(
+		'id',
+		'title',
+		'alias',
+		'description',
 	);
 }

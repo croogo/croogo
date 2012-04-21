@@ -8,7 +8,6 @@ CroogoNav::add('content', array(
 		'controller' => 'nodes',
 		'action' => 'index',
 		),
-	'access' => array('admin'),
 	'weight' => 10,
 	'children' => array(
 
@@ -20,7 +19,6 @@ CroogoNav::add('content', array(
 				'controller' => 'nodes',
 				'action' => 'index',
 				),
-			'access' => array('admin'),
 			'weight' => 10,
 			),
 
@@ -32,7 +30,6 @@ CroogoNav::add('content', array(
 				'controller' => 'nodes',
 				'action' => 'create',
 				),
-			'access' => array('admin'),
 			'weight' => 20,
 			),
 
@@ -44,7 +41,6 @@ CroogoNav::add('content', array(
 				'controller' => 'types',
 				'action' => 'index',
 				),
-			'access' => array('admin'),
 			'weight' => 30,
 			),
 
@@ -56,7 +52,6 @@ CroogoNav::add('content', array(
 				'controller' => 'vocabularies',
 				'action' => 'index',
 				),
-			'access' => array('admin'),
 			'weight' => 40,
 			'children' => array(
 				'list' => array(
@@ -67,7 +62,6 @@ CroogoNav::add('content', array(
 						'controller' => 'vocabularies',
 						'action' => 'index',
 						),
-					'access' => array('admin'),
 					'weight' => 10,
 					),
 				'add_new' => array(
@@ -78,7 +72,6 @@ CroogoNav::add('content', array(
 						'controller' => 'vocabularies',
 						'action' => 'add',
 						),
-					'access' => array('admin'),
 					'weight' => 20,
 					'htmlAttributes' => array('class' => 'separator'),
 					),
@@ -93,7 +86,6 @@ CroogoNav::add('content', array(
 				'controller' => 'comments',
 				'action' => 'index',
 				),
-			'access' => array('admin'),
 			'children' => array(
 				'published' => array(
 					'title' => __('Published'),
@@ -104,7 +96,6 @@ CroogoNav::add('content', array(
 						'action' => 'index',
 						'filter' => 'status:1;',
 						),
-					'access' => array('admin'),
 					),
 				'approval' => array(
 					'title' => __('Approval'),
@@ -115,7 +106,6 @@ CroogoNav::add('content', array(
 						'action' => 'index',
 						'filter' => 'status:0;',
 						),
-					'access' => array('admin'),
 					),
 				),
 			),
@@ -132,7 +122,6 @@ CroogoNav::add('menus', array(
 		'controller' => 'menus',
 		'action' => 'index',
 		),
-	'access' => array('admin'),
 	'weight' => 20,
 	'children' => array(
 		'menus' => array(
@@ -143,7 +132,6 @@ CroogoNav::add('menus', array(
 				'controller' => 'menus',
 				'action' => 'index',
 				),
-			'access' => array('admin'),
 			'weight' => 10,
 			),
 		'add_new' => array(
@@ -154,7 +142,6 @@ CroogoNav::add('menus', array(
 				'controller' => 'menus',
 				'action' => 'add',
 				),
-			'access' => array('admin'),
 			'weight' => 20,
 			'htmlAttributes' => array('class' => 'separator'),
 			),
@@ -169,7 +156,6 @@ CroogoNav::add('blocks', array(
 		'controller' => 'blocks',
 		'action' => 'index',
 		),
-	'access' => array('admin'),
 	'weight' => 30,
 	'children' => array(
 		'blocks' => array(
@@ -180,7 +166,6 @@ CroogoNav::add('blocks', array(
 				'controller' => 'blocks',
 				'action' => 'index',
 				),
-			'access' => array('admin'),
 			),
 		'regions' => array(
 			'title' => __('Regions'),
@@ -190,7 +175,6 @@ CroogoNav::add('blocks', array(
 				'controller' => 'regions',
 				'action' => 'index',
 				),
-			'access' => array('admin'),
 			),
 		),
 	));
@@ -203,7 +187,6 @@ CroogoNav::add('media', array(
 		'controller' => 'attachments',
 		'action' => 'index',
 		),
-	'access' => array('admin'),
 	'weight' => 40,
 	'children' => array(
 		'attachments' => array(
@@ -214,7 +197,6 @@ CroogoNav::add('media', array(
 				'controller' => 'attachments',
 				'action' => 'index',
 				),
-			'access' => array('admin'),
 			),
 		'file_manager' => array(
 			'title' => __('File Manager'),
@@ -224,7 +206,6 @@ CroogoNav::add('media', array(
 				'controller' => 'filemanager',
 				'action' => 'index',
 				),
-			'access' => array('admin'),
 			),
 		),
 	));
@@ -237,7 +218,6 @@ CroogoNav::add('contacts', array(
 		'controller' => 'contacts',
 		'action' => 'index',
 		),
-	'access' => array('admin'),
 	'weight' => 50,
 	'children' => array(
 		'attachments' => array(
@@ -248,7 +228,6 @@ CroogoNav::add('contacts', array(
 				'controller' => 'contacts',
 				'action' => 'index',
 				),
-			'access' => array('admin'),
 			),
 		'file_manager' => array(
 			'title' => __('Messages'),
@@ -258,7 +237,6 @@ CroogoNav::add('contacts', array(
 				'controller' => 'messages',
 				'action' => 'index',
 				),
-			'access' => array('admin'),
 			),
 		),
 	));
@@ -271,7 +249,6 @@ CroogoNav::add('users', array(
 		'controller' => 'users',
 		'action' => 'index',
 		),
-	'access' => array('admin'),
 	'weight' => 50,
 	'children' => array(
 		'users' => array(
@@ -282,7 +259,6 @@ CroogoNav::add('users', array(
 				'controller' => 'users',
 				'action' => 'index',
 				),
-			'access' => array('admin'),
 			'weight' => 10,
 			),
 		'roles' => array(
@@ -293,7 +269,6 @@ CroogoNav::add('users', array(
 				'controller' => 'roles',
 				'action' => 'index',
 				),
-			'access' => array('admin'),
 			'weight' => 20,
 			),
 		),
@@ -308,7 +283,6 @@ CroogoNav::add('settings', array(
 		'action' => 'prefix',
 		'Site',
 		),
-	'access' => array('admin'),
 	'weight' => 60,
 	'children' => array(
 		'site' => array(
@@ -320,7 +294,6 @@ CroogoNav::add('settings', array(
 				'action' => 'prefix',
 				'Site',
 				),
-			'access' => array('admin'),
 			'weight' => 10,
 			),
 
@@ -333,7 +306,6 @@ CroogoNav::add('settings', array(
 				'action' => 'prefix',
 				'Meta',
 				),
-			'access' => array('admin'),
 			'weight' => 20,
 			),
 
@@ -346,7 +318,6 @@ CroogoNav::add('settings', array(
 				'action' => 'prefix',
 				'Reading',
 				),
-			'access' => array('admin'),
 			'weight' => 30,
 			),
 
@@ -359,7 +330,6 @@ CroogoNav::add('settings', array(
 				'action' => 'prefix',
 				'Writing',
 				),
-			'access' => array('admin'),
 			'weight' => 40,
 			),
 
@@ -372,7 +342,6 @@ CroogoNav::add('settings', array(
 				'action' => 'prefix',
 				'Comment',
 				),
-			'access' => array('admin'),
 			'weight' => 50,
 			),
 
@@ -385,7 +354,6 @@ CroogoNav::add('settings', array(
 				'action' => 'prefix',
 				'Service',
 				),
-			'access' => array('admin'),
 			'weight' => 60,
 			),
 
@@ -397,7 +365,6 @@ CroogoNav::add('settings', array(
 				'controller' => 'languages',
 				'action' => 'index',
 				),
-			'access' => array('admin'),
 			'weight' => 70,
 			),
 

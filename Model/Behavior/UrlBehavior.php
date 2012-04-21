@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class UrlBehavior extends ModelBehavior {
+
 /**
  * Setup
  *
@@ -51,11 +52,11 @@ class UrlBehavior extends ModelBehavior {
  */
 	public function afterFind(Model $model, $results, $primary) {
 		if ($primary && isset($results[0][$model->alias])) {
-			foreach ($results AS $i => $result) {
+			foreach ($results as $i => $result) {
 				$url = $this->settings[$model->alias]['url'];
 				$fields = $this->settings[$model->alias]['fields'];
 				if (is_array($fields)) {
-					foreach ($fields AS $field) {
+					foreach ($fields as $field) {
 						if (isset($results[$i][$model->alias][$field])) {
 							$url[$field] = $results[$i][$model->alias][$field];
 						}
@@ -67,7 +68,7 @@ class UrlBehavior extends ModelBehavior {
 			$url = $this->settings[$model->alias]['url'];
 			$fields = $this->settings[$model->alias]['fields'];
 			if (is_array($fields)) {
-				foreach ($fields AS $field) {
+				foreach ($fields as $field) {
 					if (isset($results[$i][$model->alias][$field])) {
 						$url[$field] = $results[$i][$model->alias][$field];
 					}

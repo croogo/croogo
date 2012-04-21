@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Contact extends AppModel {
+
 /**
  * Model name
  *
@@ -81,5 +82,17 @@ class Contact extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => '',
 		),
+	);
+
+/**
+ * Display fields for this model
+ *
+ * @var array
+ */
+	protected $_displayFields = array(
+		'id',
+		'title',
+		'alias',
+		'email',
 	);
 }

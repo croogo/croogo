@@ -60,6 +60,11 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 		'vocabulary',
 	);
 
+/**
+ * setUp
+ *
+ * @return void
+ */
 	public function setUp() {
 		parent::setUp();
 		$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
@@ -70,28 +75,40 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 		$this->Contacts->request->params['controller'] = 'contacts';
 		$this->Contacts->request->params['pass'] = array();
 		$this->Contacts->request->params['named'] = array();
+
+		$this->ContactsController = $this->generate('Contacts', array(
+			'methods' => array(
+				'redirect',
+			),
+			'components' => array(
+				'Auth' => array('user'),
+				'Session',
+			),
+		));
+		$this->ContactsController->Auth
+			->staticExpects($this->any())
+			->method('user')
+			->will($this->returnCallback(array($this, 'authUserCallback')));
 	}
 
+/**
+ * tearDown
+ *
+ * @return void
+ */
 	public function tearDown() {
 		parent::tearDown();
-		$this->Contacts->Session->destroy();
 		unset($this->Contacts);
-		ClassRegistry::flush();
 	}
 
+/**
+ * testAdminIndex
+ *
+ * @return void
+ */
 	public function testAdminIndex() {
-		$this->Contacts->request->params['action'] = 'admin_index';
-		$this->Contacts->request->params['url'] = 'admin/contacts';
-		$this->Contacts->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Contacts->startupProcess();
-		$this->Contacts->admin_index();
-
-		$this->Contacts->testView = true;
-		$output = $this->Contacts->render('admin_index');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		$this->testAction('/admin/contacts/index');
+		$this->assertNotEmpty($this->vars['contacts']);
 	}
 
 	public function testAdminAdd() {
@@ -119,29 +136,33 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
+/**
+ * testAdminEdit
+ *
+ * @return void
+ */
 	public function testAdminEdit() {
-		$this->Contacts->request->params['action'] = 'admin_edit';
-		$this->Contacts->request->params['url']['url'] = 'admin/contacts/edit';
-		$this->Contacts->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Contacts->request->data = array(
-			'Contact' => array(
-				'id' => 1,
-				'title' => 'Contact [modified]',
+		$this->ContactsController->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo('The Contact has been saved'),
+				$this->equalTo('default'),
+				$this->equalTo(array('class' => 'success'))
+			);
+		$this->ContactsController
+			->expects($this->once())
+			->method('redirect');
+		$this->testAction('/admin/contacts/edit/1', array(
+			'data' => array(
+				'Contact' => array(
+					'id' => 1,
+					'title' => 'Contact [modified]',
+				),
 			),
-		);
-		$this->Contacts->startupProcess();
-		$this->Contacts->admin_edit();
-		$this->assertEqual($this->Contacts->redirectUrl, array('action' => 'index'));
-
-		$contact = $this->Contacts->Contact->findByAlias('contact');
-		$this->assertEqual($contact['Contact']['title'], 'Contact [modified]');
-
-		$this->Contacts->testView = true;
-		$output = $this->Contacts->render('admin_edit');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		));
+		$result = $this->ContactsController->Contact->findByAlias('contact');
+		$this->assertEquals('Contact [modified]', $result['Contact']['title']);
 	}
 
 	public function testAdminDelete() {
