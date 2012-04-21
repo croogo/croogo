@@ -86,7 +86,7 @@ class RegionsControllerTest extends CroogoControllerTestCase {
 		$this->RegionsController->Auth
 			->staticExpects($this->any())
 			->method('user')
-			->will($this->returnCallback(array($this, 'callbackAuthUser')));
+			->will($this->returnCallback(array($this, 'authUserCallback')));
 	}
 
 /**

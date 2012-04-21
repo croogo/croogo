@@ -85,7 +85,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		$this->BlocksController->Auth
 			->staticExpects($this->any())
 			->method('user')
-			->will($this->returnCallback(array($this, 'callbackAuthUser')));
+			->will($this->returnCallback(array($this, 'authUserCallback')));
 	}
 
 /**

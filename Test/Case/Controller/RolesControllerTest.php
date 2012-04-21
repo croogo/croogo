@@ -87,7 +87,7 @@ class RolesControllerTest extends CroogoControllerTestCase {
 		$this->RolesController->Auth
 			->staticExpects($this->any())
 			->method('user')
-			->will($this->returnCallback(array($this, 'callbackAuthUser')));
+			->will($this->returnCallback(array($this, 'authUserCallback')));
 	}
 
 /**

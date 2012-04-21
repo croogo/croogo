@@ -45,7 +45,7 @@ class CroogoControllerTestCase extends ControllerTestCase {
 		ClassRegistry::flush();
 	}
 
-	public function AuthUserCallback($key) {
+	public function authUserCallback($key) {
 		$auth = array(
 			'id' => 1,
 			'username' => 'admin',
