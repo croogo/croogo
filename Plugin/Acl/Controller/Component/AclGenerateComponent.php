@@ -16,17 +16,17 @@ App::uses('Folder', 'Utility');
  */
 class AclGenerateComponent extends Component {
 
-	protected $controller = null;
+	protected $_controller = null;
 
-	protected $folder = null;
+	protected $_folder = null;
 
 /**
  * @param object $controller controller
  * @param array  $settings   settings
  */
 	public function initialize(Controller $controller) {
-		$this->controller =& $controller;
-		$this->folder = new Folder;
+		$this->_controller =& $controller;
+		$this->_folder = new Folder;
 	}
 
 /**
@@ -38,35 +38,35 @@ class AclGenerateComponent extends Component {
 		$controllerPaths = array();
 
 		// app/controllers
-		$this->folder->path = APP. 'Controller' .DS;
-		$controllers = $this->folder->read();
-		foreach ($controllers['1'] AS $c) {
+		$this->_folder->path = APP . 'Controller' . DS;
+		$controllers = $this->_folder->read();
+		foreach ($controllers['1'] as $c) {
 			if (substr($c, strlen($c) - 4, 4) == '.php') {
 				$cName = str_replace('Controller.php', '', $c);
 				if ($cName == 'App') {
 					continue; // skip AppController
 				}
-				$controllerPaths[$cName] = APP . 'Controller' .DS. $c;
+				$controllerPaths[$cName] = APP . 'Controller' . DS . $c;
 			}
 		}
 
 		// plugins/*/controllers/
-		$this->folder->path = APP. 'Plugin' .DS;
-		$plugins = $this->folder->read();
-		foreach ($plugins['0'] AS $p) {
+		$this->_folder->path = APP . 'Plugin' . DS;
+		$plugins = $this->_folder->read();
+		foreach ($plugins['0'] as $p) {
 			if ($p != 'Install') {
 				if (!CakePlugin::loaded($p)) {
 					continue;
 				}
-				$this->folder->path = APP. 'Plugin' .DS. $p .DS. 'Controller' .DS;
-				$pluginControllers = $this->folder->read();
-				foreach ($pluginControllers['1'] AS $pc) {
+				$this->_folder->path = APP . 'Plugin' . DS . $p . DS . 'Controller' . DS;
+				$pluginControllers = $this->_folder->read();
+				foreach ($pluginControllers['1'] as $pc) {
 					if (substr($pc, strlen($pc) - 4, 4) == '.php') {
 						$pcName = str_replace('Controller.php', '', $pc);
 						if ($pcName == $p . 'App') {
 							continue; // skip PluginAppController
 						}
-						$controllerPaths[$pcName] = APP. 'Plugin' .DS. $p .DS. 'Controller' .DS. $pc;
+						$controllerPaths[$pcName] = APP . 'Plugin' . DS . $p . DS . 'Controller' . DS . $pc;
 					}
 				}
 			}
@@ -102,7 +102,7 @@ class AclGenerateComponent extends Component {
 		$methods = get_class_methods($controllerName);
 
 		// filter out methods
-		foreach ($methods AS $k => $method) {
+		foreach ($methods as $k => $method) {
 			if (strpos($method, '_', 0) === 0) {
 				unset($methods[$k]);
 				continue;

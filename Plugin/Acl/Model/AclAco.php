@@ -1,4 +1,5 @@
 <?php
+
 class AclAco extends AppModel {
 
 	public $name = 'AclAco';

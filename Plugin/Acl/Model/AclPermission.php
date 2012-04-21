@@ -1,10 +1,11 @@
 <?php
 class AclPermission extends AppModel {
 
-	var $name = 'AclPermission';
-	var $useTable = 'aros_acos';
+	public $name = 'AclPermission';
 
-	var $belongsTo = array(
+	public $useTable = 'aros_acos';
+
+	public $belongsTo = array(
 		'AclAro' => array(
 			'className' => 'Acl.AclAro',
 			'foreignKey' => 'aro_id',
@@ -14,18 +15,18 @@ class AclPermission extends AppModel {
 			'foreignKey' => 'aco_id',
 		),
 	);
-	
+
 /** Generate allowed actions for current logged in Role
  *
  * @return array of elements formatted like ControllerName/action_name
  */
-	function getAllowedActionsByRoleId($roleId) {
+	public function getAllowedActionsByRoleId($roleId) {
 		$acosTree = $this->AclAco->generateTreeList(array(
 			'AclAco.parent_id !=' => null,
 		), '{n}.AclAco.id', '{n}.AclAco.alias');
 		$acos = array();
 		$controller = null;
-		foreach ($acosTree AS $acoId => $acoAlias) {
+		foreach ($acosTree as $acoId => $acoAlias) {
 			if (substr($acoAlias, 0, 1) == '_') {
 				$acos[$acoId] = $controller . '/' . substr($acoAlias, 1);
 			} else {
@@ -57,7 +58,7 @@ class AclPermission extends AppModel {
 			),
 		));
 		$permissionsByActions = array();
-		foreach ($permissionsForCurrentRole AS $acoId) {
+		foreach ($permissionsForCurrentRole as $acoId) {
 			$permissionsByActions[] = $acos[$acoId];
 		}
 
