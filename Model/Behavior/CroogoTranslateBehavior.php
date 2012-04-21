@@ -132,7 +132,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 
 		if ($primary && isset($results[0][$model->alias])) {
 			$i = 0;
-			foreach ($results AS $result) {
+			foreach ($results as $result) {
 				if (!isset($result[$model->alias][$model->primaryKey])) continue;
 
 				$translations = $RuntimeModel->find('all', array(
@@ -143,7 +143,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 					),
 				));
 
-				foreach ($translations AS $translation) {
+				foreach ($translations as $translation) {
 					$field = $translation[$RuntimeModel->alias]['field'];
 
 					// Original row

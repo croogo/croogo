@@ -174,7 +174,7 @@ class Setting extends AppModel {
 				'config' => 'setting_write_configuration',
 			),
 		));
-		foreach($settings AS $setting) {
+		foreach($settings as $setting) {
 			Configure::write($setting['Setting']['key'], $setting['Setting']['value']);
 		}
 	}
