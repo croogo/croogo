@@ -47,7 +47,7 @@ class NodeTest extends CroogoTestCase {
 				'Taxonomy' => array(1, 2), // uncategorized, and announcements
 			),
 		);
-		$this->Node->__cacheTerms();
+		$this->Node->cacheTerms();
 		$this->assertEqual($this->Node->data['Node']['terms'], '{"1":"uncategorized","2":"announcements"}');
 	}
 

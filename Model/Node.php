@@ -181,7 +181,7 @@ class Node extends AppModel {
 		if ($this->type != null) {
 			$this->data['Node']['type'] = $this->type;
 		}
-		$this->__cacheTerms();
+		$this->cacheTerms();
 
 		return true;
 	}
@@ -205,7 +205,7 @@ class Node extends AppModel {
  *
  * @return void
  */
-	public function __cacheTerms() {
+	public function cacheTerms() {
 		if (isset($this->data['Taxonomy']['Taxonomy']) && count($this->data['Taxonomy']['Taxonomy']) > 0) {
 			$taxonomyIds = $this->data['Taxonomy']['Taxonomy'];
 			$taxonomies = $this->Taxonomy->find('all', array(
@@ -219,6 +219,16 @@ class Node extends AppModel {
 				'json' => true,
 			));
 		}
+	}
+
+/**
+ * Caches Term in Node.terms field
+ *
+ * @deprecated for backward compatibility
+ * @see Node::cacheTerms()
+ */
+	public function __cacheTerms() {
+		return $this->cacheTerms();
 	}
 
 /**
