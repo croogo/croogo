@@ -365,7 +365,7 @@ class CroogoPlugin extends Object {
 
 /**
  * Forgets a loaded plugin or all of them if first parameter is null
-
+ *
  * This method is identical to CakePlugin::load() with extra functionality
  * that unregister event listeners when a plugin in unloaded.
  *
@@ -393,7 +393,7 @@ class CroogoPlugin extends Object {
  * @return boolean true when successful, false or array of error messages when failed
  */
 	public function delete($plugin) {
-		$pluginPath = APP . 'Plugin' .DS. $plugin;
+		$pluginPath = APP . 'Plugin' . DS . $plugin;
 		$folder = new Folder();
 		$result = $folder->delete($pluginPath);
 		if ($result !== true) {

@@ -15,6 +15,7 @@ App::uses('CroogoPlugin', 'Extensions.Lib');
  * @link     http://www.croogo.org
  */
 class ExtensionsPluginsController extends ExtensionsAppController {
+
 /**
  * Controller name
  *
@@ -57,7 +58,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 
 		$pluginAliases = $this->_CroogoPlugin->getPlugins();
 		$plugins = array();
-		foreach ($pluginAliases AS $pluginAlias) {
+		foreach ($pluginAliases as $pluginAlias) {
 			$plugins[$pluginAlias] = $this->_CroogoPlugin->getData($pluginAlias);
 		}
 		$this->set('corePlugins', $this->corePlugins);
@@ -73,7 +74,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 		if (!empty($this->request->data)) {
 			$file = $this->request->data['Plugin']['file'];
 			unset($this->request->data['Plugin']['file']);
-			
+
 			$Installer = new ExtensionsInstaller;
 			try {
 				$Installer->extractPlugin($file['tmp_name']);
