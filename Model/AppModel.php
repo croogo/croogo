@@ -97,7 +97,7 @@ class AppModel extends Model {
  * @return void
  * @access private
  */
-	function _findCached($type, $options) {
+	protected function _findCached($type, $options) {
 		if (isset($options['cache']['name']) && isset($options['cache']['config'])) {
 			$cacheName = $options['cache']['name'];
 		} elseif (isset($options['cache']['prefix']) && isset($options['cache']['config'])) {

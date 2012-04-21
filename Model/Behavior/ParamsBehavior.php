@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class ParamsBehavior extends ModelBehavior {
+
 /**
  * Setup
  *

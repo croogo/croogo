@@ -42,7 +42,7 @@ class EncoderBehavior extends ModelBehavior {
 			// trim
 			if ($options['trim']) {
 				$elements = array();
-				foreach($data as $id => $d) {
+				foreach ($data as $id => $d) {
 					$d = trim($d);
 					if ($d != '') {
 						$elements[$id] = '"' . $d . '"';

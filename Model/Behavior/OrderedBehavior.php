@@ -102,6 +102,7 @@
  *
  */
 class OrderedBehavior extends ModelBehavior {
+
 	public $name = 'Ordered';
 
 	/**
@@ -111,7 +112,7 @@ class OrderedBehavior extends ModelBehavior {
 	 *               Each set has their own order (ie they start at 1).
 	 *               Set to FALSE to not use this feature (and use only 1 set)
 	 */
-	public $_defaults = array('field' => 'weight', 'foreign_key' => 'order_id');
+	protected $_defaults = array('field' => 'weight', 'foreign_key' => 'order_id');
 
 	public function setup(Model $Model, $config = array()) {
 		if (!is_array($config)) {

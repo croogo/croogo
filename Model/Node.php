@@ -229,7 +229,7 @@ class Node extends AppModel {
  * @return boolean False if any records matching any fields are found
  * @access public
  */
-	function isUniquePerType($fields, $or = true) {
+	public function isUniquePerType($fields, $or = true) {
 		if (!is_array($fields)) {
 			$fields = func_get_args();
 			if (is_bool($fields[count($fields) - 1])) {

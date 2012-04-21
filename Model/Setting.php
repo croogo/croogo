@@ -29,6 +29,7 @@ class Setting extends AppModel {
  * @var string
  */
 	public $settingsPath = '';
+
 /**
  * Behaviors used by the Model
  *
@@ -106,7 +107,6 @@ class Setting extends AppModel {
  * @return boolean
  */
 	public function write($key, $value, $options = array()) {
-
 		$setting = $this->findByKey($key);
 		if (isset($setting['Setting']['id'])) {
 			$setting['Setting']['id'] = $setting['Setting']['id'];
@@ -174,7 +174,7 @@ class Setting extends AppModel {
 				'config' => 'setting_write_configuration',
 			),
 		));
-		foreach($settings as $setting) {
+		foreach ($settings as $setting) {
 			Configure::write($setting['Setting']['key'], $setting['Setting']['value']);
 		}
 	}
