@@ -63,25 +63,25 @@
  * a simple controller call to the model like this that can be achieved:
  *
  * // in a controller action :
- * $this->Page->moveup($id);
+ * $this->Page->moveUp($id);
  * // the id here is the id of the newest page
  *
  * You find that the first page you made is suppose to be the 5 pages later:
  *
  * // in a controller action :
- * $this->Page->movedown($id, 5);
+ * $this->Page->moveDown($id, 5);
  *
  * Also you discovered that in the first page got put in the middle. This
  * can easily be moved first by doing this :
  *
  * // in a controller action :
- * $this->Page->moveup($id,true);
+ * $this->Page->moveUp($id,true);
  * // true will move it to the extre in that direction
  *
  * You can also use actions to find out if the node is first or last page :
  *
- *  - isfirst($id)
- *  - islast($id)
+ *  - isFirst($id)
+ *  - isLast($id)
  *
  * And a last feature is the ability to sort the list by any field
  * you want and have it set weights based on that. You do that like this :
@@ -176,7 +176,7 @@ class OrderedBehavior extends ModelBehavior {
  * @param int $newWeight the new weight of the node
  * @return boolean True of move successful
  */
-	public function moveto(&$Model, $id = null, $newWeight = null) {
+	public function moveTo(&$Model, $id = null, $newWeight = null) {
 		if (!$id || !$newWeight || $newWeight < 1) {
 			return false;
 		}
@@ -237,7 +237,7 @@ class OrderedBehavior extends ModelBehavior {
  * @param mixed $foreignKey
  * $returns boolean true if successfull
  */
-	public function sortby(&$Model, $order, $foreignKey = null) {
+	public function sortBy(&$Model, $order, $foreignKey = null) {
 		$fields = array($Model->primaryKey, $this->settings[$Model->alias]['field']);
 		$conditions = array(1 => 1);
 		if ($this->settings[$Model->alias]['foreign_key']) {
@@ -273,7 +273,7 @@ class OrderedBehavior extends ModelBehavior {
  * @return boolean true on success, false on failure
  * @access public
  */
-	public function moveup(&$Model, $id = null, $number = 1) {
+	public function moveUp(&$Model, $id = null, $number = 1) {
 		if (!$id) {
 			if ($Model->id) {
 				$id = $Model->id;
@@ -355,7 +355,7 @@ class OrderedBehavior extends ModelBehavior {
  * @param Object $Model
  * @return boolean success
  */
-	public function resetweights(&$Model) {
+	public function resetWeights(&$Model) {
 		if ($this->settings[$Model->alias]['foreign_key']) {
 			$temp = $Model->find('all', array(
 					'fields' => $this->settings[$Model->alias]['foreign_key'],
@@ -409,7 +409,7 @@ class OrderedBehavior extends ModelBehavior {
  * @return boolean true on success, false on failure
  * @access public
  */
-	public function movedown(&$Model, $id = null, $number = 1) {
+	public function moveDown(&$Model, $id = null, $number = 1) {
 		if (!$id) {
 			if ($Model->id) {
 				$id = $Model->id;
@@ -503,7 +503,7 @@ class OrderedBehavior extends ModelBehavior {
  * @param Int $id
  * @return Boolean, true if it is the first item, false if not
  */
-	public function isfirst(&$Model, $id = null) {
+	public function isFirst(&$Model, $id = null) {
 		if (!$id) {
 			if ($Model->id) {
 				$id = $Model->id;
@@ -532,7 +532,7 @@ class OrderedBehavior extends ModelBehavior {
  * @param Int $id
  * @return Boolean, true if it is the last item, false if not
  */
-	public function islast(&$Model, $id = null) {
+	public function isLast(&$Model, $id = null) {
 		if (!$id) {
 			if ($Model->id) {
 				$id = $Model->id;
