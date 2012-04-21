@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class TermsController extends AppController {
+
 /**
  * Controller name
  *
@@ -229,7 +230,7 @@ class TermsController extends AppController {
 		if (!$id || !$vocabularyId) {
 			$this->Session->setFlash(__('Invalid id for Term'), 'default', array('class' => 'error'));
 			$this->redirect(array(
-				'action'=>'index',
+				'action' => 'index',
 				$vocabularyId,
 			));
 		}
@@ -260,7 +261,7 @@ class TermsController extends AppController {
 		if (!$id || !$vocabularyId) {
 			$this->Session->setFlash(__('Invalid id for Term'), 'default', array('class' => 'error'));
 			$this->redirect(array(
-				'action'=>'index',
+				'action' => 'index',
 				$vocabularyId,
 			));
 		}
@@ -276,7 +277,7 @@ class TermsController extends AppController {
 				'Taxonomy.vocabulary_id' => $vocabularyId,
 			),
 		));
-		if( $this->Term->Taxonomy->moveUp($taxonomyId, $step) ) {
+		if ($this->Term->Taxonomy->moveUp($taxonomyId, $step)) {
 			$this->Session->setFlash(__('Moved up successfully'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__('Could not move up'), 'default', array('class' => 'error'));
@@ -292,7 +293,7 @@ class TermsController extends AppController {
 		if (!$id || !$vocabularyId) {
 			$this->Session->setFlash(__('Invalid id for Term'), 'default', array('class' => 'error'));
 			$this->redirect(array(
-				'action'=>'index',
+				'action' => 'index',
 				$vocabularyId,
 			));
 		}
@@ -309,7 +310,7 @@ class TermsController extends AppController {
 			),
 		));
 
-		if( $this->Term->Taxonomy->moveDown($taxonomyId, $step) ) {
+		if ($this->Term->Taxonomy->moveDown($taxonomyId, $step)) {
 			$this->Session->setFlash(__('Moved down successfully'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__('Could not move down'), 'default', array('class' => 'error'));

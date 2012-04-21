@@ -1,4 +1,7 @@
 <?php
+
+App::uses('File', 'Utility');
+
 /**
  * Filemanager Controller
  *
@@ -12,6 +15,7 @@
  * @link     http://www.croogo.org
  */
 class FilemanagerController extends AppController {
+
 /**
  * Controller name
  *
@@ -42,13 +46,10 @@ class FilemanagerController extends AppController {
 		parent::beforeFilter();
 
 		$this->deletablePaths = array(
-			APP.'View'.DS.'Themed'.DS,
+			APP . 'View' . DS . 'Themed' . DS,
 			WWW_ROOT,
 		);
 		$this->set('deletablePaths', $this->deletablePaths);
-
-		//App::import('Core', 'Folder');
-		App::uses('File', 'Utility');
 	}
 
 /**
@@ -133,15 +134,15 @@ class FilemanagerController extends AppController {
 		}
 		$this->set('title_for_layout', sprintf(__('Edit file: %s'), $path));
 
-		$path_e = explode(DS, $path);
-		$n = count($path_e) - 1;
-		$filename = $path_e[$n];
-		unset($path_e[$n]);
-		$path = implode(DS, $path_e);
+		$pathE = explode(DS, $path);
+		$n = count($pathE) - 1;
+		$filename = $pathE[$n];
+		unset($pathE[$n]);
+		$path = implode(DS, $pathE);
 		$this->file = new File($absolutefilepath, true);
 
 		if (!empty($this->request->data) ) {
-			if( $this->file->write($this->request->data['Filemanager']['content']) ) {
+			if ($this->file->write($this->request->data['Filemanager']['content'])) {
 				$this->Session->setFlash(__('File saved successfully'), 'default', array('class' => 'success'));
 			}
 		}
@@ -163,7 +164,7 @@ class FilemanagerController extends AppController {
 
 		if (isset($this->request->data['Filemanager']['file']['tmp_name']) &&
 			is_uploaded_file($this->request->data['Filemanager']['file']['tmp_name'])) {
-			$destination = $path.$this->request->data['Filemanager']['file']['name'];
+			$destination = $path . $this->request->data['Filemanager']['file']['name'];
 			move_uploaded_file($this->request->data['Filemanager']['file']['tmp_name'], $destination);
 			$this->Session->setFlash(__('File uploaded successfully.'), 'default', array('class' => 'success'));
 			$redirectUrl = Router::url(array('controller' => 'filemanager', 'action' => 'browse'), true) . '?path=' . urlencode($path);
@@ -285,7 +286,6 @@ class FilemanagerController extends AppController {
 	}
 
 	public function admin_chmod() {
-
 	}
 
 }

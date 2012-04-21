@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class MessagesController extends AppController {
+
 /**
  * Controller name
  *
@@ -39,7 +40,7 @@ class MessagesController extends AppController {
 
 		if (isset($this->request->params['named']['filter'])) {
 			$filters = $this->Croogo->extractFilter();
-			foreach ($filters AS $filterKey => $filterValue) {
+			foreach ($filters as $filterKey => $filterValue) {
 				if (strpos($filterKey, '.') === false) {
 					$filterKey = 'Message.' . $filterKey;
 				}
@@ -62,12 +63,12 @@ class MessagesController extends AppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Message'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Message->save($this->request->data)) {
 				$this->Session->setFlash(__('The Message has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The Message could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -80,18 +81,18 @@ class MessagesController extends AppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Message'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Message->delete($id)) {
 			$this->Session->setFlash(__('Message deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 	}
 
 	public function admin_process() {
 		$action = $this->request->data['Message']['action'];
 		$ids = array();
-		foreach ($this->request->data['Message'] AS $id => $value) {
+		foreach ($this->request->data['Message'] as $id => $value) {
 			if ($id != 'action' && $value['id'] == 1) {
 				$ids[] = $id;
 			}

@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class MenusController extends AppController {
+
 /**
  * Controller name
  *
@@ -43,7 +44,7 @@ class MenusController extends AppController {
 			$this->Menu->create();
 			if ($this->Menu->save($this->request->data)) {
 				$this->Session->setFlash(__('The Menu has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The Menu could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -55,12 +56,12 @@ class MenusController extends AppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Menu'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Menu->save($this->request->data)) {
 				$this->Session->setFlash(__('The Menu has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The Menu could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -73,11 +74,11 @@ class MenusController extends AppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Menu'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Menu->delete($id)) {
 			$this->Session->setFlash(__('Menu deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 	}
 

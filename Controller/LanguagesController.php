@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class LanguagesController extends AppController {
+
 /**
  * Controller name
  *
@@ -43,7 +44,7 @@ class LanguagesController extends AppController {
 			$this->Language->create();
 			if ($this->Language->save($this->request->data)) {
 				$this->Session->setFlash(__('The Language has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The Language could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -55,12 +56,12 @@ class LanguagesController extends AppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Language'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Language->save($this->request->data)) {
 				$this->Session->setFlash(__('The Language has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The Language could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -73,11 +74,11 @@ class LanguagesController extends AppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Language'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Language->delete($id)) {
 			$this->Session->setFlash(__('Language deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 	}
 

@@ -18,6 +18,7 @@ App::uses('CroogoTheme', 'Extensions.Lib');
  * @link     http://www.croogo.org
  */
 class CroogoComponent extends Component {
+
 /**
  * Other components used by this component
  *
@@ -46,7 +47,7 @@ class CroogoComponent extends Component {
  */
 	public $menus_for_layout = array();
 
- /**
+/**
  * Blocks for layout
  *
  * @var string
@@ -54,7 +55,7 @@ class CroogoComponent extends Component {
  */
 	public $blocks_for_layout = array();
 
- /**
+/**
  * Vocabularies for layout
  *
  * @var string
@@ -62,7 +63,7 @@ class CroogoComponent extends Component {
  */
 	public $vocabularies_for_layout = array();
 
- /**
+/**
  * Types for layout
  *
  * @var string
@@ -70,7 +71,7 @@ class CroogoComponent extends Component {
  */
 	public $types_for_layout = array();
 
- /**
+/**
  * Nodes for layout
  *
  * @var string
@@ -209,7 +210,7 @@ class CroogoComponent extends Component {
 				'config' => 'croogo_blocks',
 			),
 		));
-		foreach ($regions AS $regionId => $regionAlias) {
+		foreach ($regions as $regionId => $regionAlias) {
 			$this->blocks_for_layout[$regionAlias] = array();
 			$findOptions = array(
 				'conditions' => array(
@@ -236,7 +237,7 @@ class CroogoComponent extends Component {
 					'Block.weight' => 'ASC'
 				),
 				'cache' => array(
-					'prefix' => 'croogo_blocks_'.$regionAlias.'_'.$this->roleId.'_',
+					'prefix' => 'croogo_blocks_' . $regionAlias . '_' . $this->roleId . '_',
 					'config' => 'croogo_blocks',
 				),
 				'recursive' => '-1',
@@ -254,7 +255,7 @@ class CroogoComponent extends Component {
  * @return void
  */
 	public function processBlocksData($blocks) {
-		foreach ($blocks AS $block) {
+		foreach ($blocks as $block) {
 			$this->blocksData['menus'] = Set::merge($this->blocksData['menus'], $this->parseString('menu|m', $block['Block']['body']));
 			$this->blocksData['vocabularies'] = Set::merge($this->blocksData['vocabularies'], $this->parseString('vocabulary|v', $block['Block']['body']));
 			$this->blocksData['nodes'] = Set::merge($this->blocksData['nodes'], $this->parseString('node|n', $block['Block']['body'], array(
@@ -278,7 +279,7 @@ class CroogoComponent extends Component {
 		}
 		$menus = Set::merge($menus, array_keys($this->blocksData['menus']));
 
-		foreach ($menus AS $menuAlias) {
+		foreach ($menus as $menuAlias) {
 			$menu = $this->controller->Link->Menu->find('first', array(
 				'conditions' => array(
 					'Menu.status' => 1,
@@ -286,7 +287,7 @@ class CroogoComponent extends Component {
 					'Menu.link_count >' => 0,
 				),
 				'cache' => array(
-					'name' => 'croogo_menu_'.$menuAlias,
+					'name' => 'croogo_menu_' . $menuAlias,
 					'config' => 'croogo_menus',
 				),
 				'recursive' => '-1',
@@ -310,7 +311,7 @@ class CroogoComponent extends Component {
 						'Link.lft' => 'ASC',
 					),
 					'cache' => array(
-						'name' => 'croogo_menu_'.$menu['Menu']['id'].'_links_'.$this->roleId,
+						'name' => 'croogo_menu_' . $menu['Menu']['id'] . '_links_' . $this->roleId,
 						'config' => 'croogo_menus',
 					),
 					'recursive' => -1,
@@ -336,13 +337,13 @@ class CroogoComponent extends Component {
 		}
 		$vocabularies = Set::merge($vocabularies, array_keys($this->blocksData['vocabularies']));
 		$vocabularies = array_unique($vocabularies);
-		foreach ($vocabularies AS $vocabularyAlias) {
+		foreach ($vocabularies as $vocabularyAlias) {
 			$vocabulary = $this->controller->Node->Taxonomy->Vocabulary->find('first', array(
 				'conditions' => array(
 					'Vocabulary.alias' => $vocabularyAlias,
 				),
 				'cache' => array(
-					'name' => 'croogo_vocabulary_'.$vocabularyAlias,
+					'name' => 'croogo_vocabulary_' . $vocabularyAlias,
 					'config' => 'croogo_vocabularies',
 				),
 				'recursive' => '-1',
@@ -356,7 +357,7 @@ class CroogoComponent extends Component {
 						'Term',
 					),
 					'cache' => array(
-						'name' => 'croogo_vocabulary_threaded_'.$vocabularyAlias,
+						'name' => 'croogo_vocabulary_threaded_' . $vocabularyAlias,
 						'config' => 'croogo_vocabularies',
 					),
 					'order' => 'Taxonomy.lft ASC',
@@ -382,7 +383,7 @@ class CroogoComponent extends Component {
 				'config' => 'croogo_types',
 			),
 		));
-		foreach ($types AS $type) {
+		foreach ($types as $type) {
 			$alias = $type['Type']['alias'];
 			$this->types_for_layout[$alias] = $type;
 		}
@@ -410,7 +411,7 @@ class CroogoComponent extends Component {
 			'limit' => 5,
 		);
 
-		foreach ($nodes AS $alias => $options) {
+		foreach ($nodes as $alias => $options) {
 			$options = Set::merge($_nodeOptions, $options);
 			$options['limit'] = str_replace('"', '', $options['limit']);
 			$node = $this->controller->Node->find($options['find'], array(
@@ -418,7 +419,7 @@ class CroogoComponent extends Component {
 				'order' => $options['order'],
 				'limit' => $options['limit'],
 				'cache' => array(
-					'prefix' => 'croogo_nodes_'.$alias.'_',
+					'prefix' => 'croogo_nodes_' . $alias . '_',
 					'config' => 'croogo_nodes',
 				),
 			));
@@ -438,7 +439,7 @@ class CroogoComponent extends Component {
 	public function stringToArray($string) {
 		$string = explode(';', $string);
 		$stringArr = array();
-		foreach ($string AS $stringElement) {
+		foreach ($string as $stringElement) {
 			if ($stringElement != null) {
 				$stringElementE = explode(':', $stringElement);
 				if (isset($stringElementE['1'])) {
@@ -483,7 +484,7 @@ class CroogoComponent extends Component {
 	public function extractFilter() {
 		$filter = explode(';', $this->controller->request->params['named']['filter']);
 		$filterData = array();
-		foreach ($filter AS $f) {
+		foreach ($filter as $f) {
 			$fData = explode(':', $f);
 			$fKey = $fData['0'];
 			if ($fKey != null) {
@@ -581,17 +582,17 @@ class CroogoComponent extends Component {
 		$options = array_merge($_options, $options);
 
 		$output = array();
-		preg_match_all('/\[('.$exp.'):([A-Za-z0-9_\-]*)(.*?)\]/i', $text, $tagMatches);
-		for ($i=0; $i < count($tagMatches[1]); $i++) {
+		preg_match_all('/\[(' . $exp . '):([A-Za-z0-9_\-]*)(.*?)\]/i', $text, $tagMatches);
+		for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
 			$regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
 			preg_match_all($regex, $tagMatches[3][$i], $attributes);
 			$alias = $tagMatches[2][$i];
 			$aliasOptions = array();
-			for ($j=0; $j < count($attributes[0]); $j++) {
+			for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
 				$aliasOptions[$attributes[1][$j]] = $attributes[2][$j];
 			}
 			if ($options['convertOptionsToArray']) {
-				foreach ($aliasOptions AS $optionKey => $optionValue) {
+				foreach ($aliasOptions as $optionKey => $optionValue) {
 					if (!is_array($optionValue) && strpos($optionValue, ':') !== false) {
 						$aliasOptions[$optionKey] = $this->stringToArray($optionValue);
 					}

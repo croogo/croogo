@@ -17,6 +17,7 @@ App::uses('Controller', 'Controller');
  * @link     http://www.croogo.org
  */
 class AppController extends Controller {
+
 /**
  * Components
  *
@@ -113,6 +114,7 @@ class AppController extends Controller {
  * beforeFilter
  *
  * @return void
+ * @throws MissingComponentException
  */
 	public function beforeFilter() {
 		parent::beforeFilter();
@@ -122,7 +124,7 @@ class AppController extends Controller {
 		}
 		$this->{$aclFilterComponent}->auth();
 		$this->RequestHandler->setContent('json', 'text/x-json');
-		$this->Security->blackHoleCallback = '__securityError';
+		$this->Security->blackHoleCallback = '_securityError';
 		$this->Security->requirePost('admin_delete');
 
 		if (isset($this->request->params['admin']) && $this->name != 'CakeError') {
@@ -171,21 +173,21 @@ class AppController extends Controller {
  *
  * @return void
  */
-	public function __securityError($type) {
+	protected function _securityError($type) {
 		switch ($type) {
-		case 'auth':
+			case 'auth':
 			break;
-		case 'csrf':
+			case 'csrf':
 			break;
-		case 'get':
+			case 'get':
 			break;
-		case 'post':
+			case 'post':
 			break;
-		case 'put':
+			case 'put':
 			break;
-		case 'delete':
+			case 'delete':
 			break;
-		default:
+			default:
 			break;
 		}
 		$this->set(compact('type'));
