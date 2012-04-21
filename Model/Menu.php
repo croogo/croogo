@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Menu extends AppModel {
+
 /**
  * Model name
  *

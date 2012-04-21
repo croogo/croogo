@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Taxonomy extends AppModel {
+
 /**
  * Model name
  *
@@ -122,7 +123,7 @@ class Taxonomy extends AppModel {
 		));
 
 		$termsTree = array();
-		foreach ($tree AS $termId => $tvId) {
+		foreach ($tree as $termId => $tvId) {
 			if (isset($terms[$termId])) {
 				$term = $terms[$termId];
 				$key = array_keys($term);

@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Region extends AppModel {
+
 /**
  * Model name
  *

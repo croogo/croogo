@@ -88,7 +88,7 @@ class VocabulariesController extends AppController {
 	}
 
 	public function admin_moveup($id, $step = 1) {
-		if( $this->Vocabulary->moveup($id, $step) ) {
+		if( $this->Vocabulary->moveUp($id, $step) ) {
 			$this->Session->setFlash(__('Moved up successfully'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__('Could not move up'), 'default', array('class' => 'error'));
@@ -98,7 +98,7 @@ class VocabulariesController extends AppController {
 	}
 
 	public function admin_movedown($id, $step = 1) {
-		if( $this->Vocabulary->movedown($id, $step) ) {
+		if( $this->Vocabulary->moveDown($id, $step) ) {
 			$this->Session->setFlash(__('Moved down successfully'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__('Could not move down'), 'default', array('class' => 'error'));

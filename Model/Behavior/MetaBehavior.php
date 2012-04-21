@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class MetaBehavior extends ModelBehavior {
+
 /**
  * Setup
  *
@@ -37,7 +38,7 @@ class MetaBehavior extends ModelBehavior {
  */
 	public function afterFind(Model $model, $results, $primary) {
 		if ($primary && isset($results[0][$model->alias])) {
-			foreach ($results AS $i => $result) {
+			foreach ($results as $i => $result) {
 				$customFields = array();
 				if (isset($result['Meta']) && count($result['Meta']) > 0) {
 					$customFields = Set::combine($result, 'Meta.{n}.key', 'Meta.{n}.value');
@@ -81,7 +82,7 @@ class MetaBehavior extends ModelBehavior {
 			$meta = $data['Meta'];
 			$data['Meta'] = array();
 			$i = 0;
-			foreach ($meta AS $metaUuid => $metaArray) {
+			foreach ($meta as $metaUuid => $metaArray) {
 				$data['Meta'][$i] = $metaArray;
 				$i++;
 			}

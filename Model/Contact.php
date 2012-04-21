@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Contact extends AppModel {
+
 /**
  * Model name
  *

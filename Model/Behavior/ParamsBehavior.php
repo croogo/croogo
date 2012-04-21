@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class ParamsBehavior extends ModelBehavior {
+
 /**
  * Setup
  *
@@ -37,7 +38,7 @@ class ParamsBehavior extends ModelBehavior {
  */
 	public function afterFind(Model $model, $results, $primary) {
 		if ($primary && isset($results[0][$model->alias])) {
-			foreach ($results AS $i => $result) {
+			foreach ($results as $i => $result) {
 				$params = array();
 				if (isset($result[$model->alias]['params']) && strlen($result[$model->alias]['params']) > 0) {
 					$params = $this->paramsToArray($model, $result[$model->alias]['params']);
@@ -69,7 +70,7 @@ class ParamsBehavior extends ModelBehavior {
 	public function paramsToArray(&$model, $params) {
 		$output = array();
 		$params = explode("\n", $params);
-		foreach ($params AS $param) {
+		foreach ($params as $param) {
 			if (strlen($param) == 0) {
 				continue;
 			}

@@ -62,7 +62,7 @@ class CroogoEventManager extends CakeEventManager {
 					if (!empty($eventOptions)) {
 						extract(array_intersect_key($validKeys, $eventOptions));
 					}
-					App::uses($class, $plugin.'.Event');
+					App::uses($class, $plugin . '.Event');
 					if (class_exists($class)) {
 						$cached[] = compact('plugin', 'class', 'eventKey', 'eventOptions');
 					} else {

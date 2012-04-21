@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Node extends AppModel {
+
 /**
  * Model name
  *
@@ -180,7 +181,7 @@ class Node extends AppModel {
 		if ($this->type != null) {
 			$this->data['Node']['type'] = $this->type;
 		}
-		$this->__cacheTerms();
+		$this->cacheTerms();
 
 		return true;
 	}
@@ -204,7 +205,7 @@ class Node extends AppModel {
  *
  * @return void
  */
-	public function __cacheTerms() {
+	public function cacheTerms() {
 		if (isset($this->data['Taxonomy']['Taxonomy']) && count($this->data['Taxonomy']['Taxonomy']) > 0) {
 			$taxonomyIds = $this->data['Taxonomy']['Taxonomy'];
 			$taxonomies = $this->Taxonomy->find('all', array(
@@ -221,6 +222,16 @@ class Node extends AppModel {
 	}
 
 /**
+ * Caches Term in Node.terms field
+ *
+ * @deprecated for backward compatibility
+ * @see Node::cacheTerms()
+ */
+	public function __cacheTerms() {
+		return $this->cacheTerms();
+	}
+
+/**
  * Returns false if any fields passed match any (by default, all if $or = false) of their matching values.
  *
  * @param array $fields Field/value pairs to search (if no values specified, they are pulled from $this->data)
@@ -228,7 +239,7 @@ class Node extends AppModel {
  * @return boolean False if any records matching any fields are found
  * @access public
  */
-	function isUniquePerType($fields, $or = true) {
+	public function isUniquePerType($fields, $or = true) {
 		if (!is_array($fields)) {
 			$fields = func_get_args();
 			if (is_bool($fields[count($fields) - 1])) {
