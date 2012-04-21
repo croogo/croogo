@@ -1,4 +1,6 @@
 <?php
+App::uses('File', 'Utility');
+
 /**
  * Setting
  *
@@ -11,8 +13,8 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-App::uses('File', 'Utility');
 class Setting extends AppModel {
+
 /**
  * Model name
  *

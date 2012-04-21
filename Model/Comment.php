@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Comment extends AppModel {
+
 /**
  * Model name
  *

@@ -17,6 +17,7 @@ App::uses('Model', 'Model');
  * @link     http://www.croogo.org
  */
 class AppModel extends Model {
+
 /**
  * use Caching
  *

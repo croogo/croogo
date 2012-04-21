@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Meta extends AppModel {
+
 /**
  * Model name
  *

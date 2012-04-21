@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Node extends AppModel {
+
 /**
  * Model name
  *

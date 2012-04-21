@@ -15,6 +15,7 @@ App::uses('AuthComponent', 'Controller/Component');
  * @link     http://www.croogo.org
  */
 class User extends AppModel {
+
 /**
  * Model name
  *

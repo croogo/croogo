@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class Taxonomy extends AppModel {
+
 /**
  * Model name
  *
