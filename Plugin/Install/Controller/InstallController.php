@@ -1,5 +1,7 @@
 <?php
 
+App::uses('File', 'Utility');
+
 /**
  * Install Controller
  *
@@ -54,14 +56,14 @@ class InstallController extends Controller {
  */
 	public $defaultConfig = array(
 		'name' => 'default',
-		'datasource'=> 'Database/Mysql',
-		'persistent'=> false,
-		'host'=> 'localhost',
-		'login'=> 'root',
-		'password'=> '',
-		'database'=> 'croogo',
-		'schema'=> null,
-		'prefix'=> null,
+		'datasource' => 'Database/Mysql',
+		'persistent' => false,
+		'host' => 'localhost',
+		'login' => 'root',
+		'password' => '',
+		'database' => 'croogo',
+		'schema' => null,
+		'prefix' => null,
 		'encoding' => 'UTF8',
 		'port' => null,
 	);
@@ -127,7 +129,7 @@ class InstallController extends Controller {
 
 		@App::import('Model', 'ConnectionManager');
 		$config = $this->defaultConfig;
-		foreach ($this->request->data['Install'] AS $key => $value) {
+		foreach ($this->request->data['Install'] as $key => $value) {
 			if (isset($this->request->data['Install'][$key])) {
 				$config[$key] = $value;
 			}
@@ -145,30 +147,29 @@ class InstallController extends Controller {
 			return;
 		}
 
-		copy(APP . 'Config' . DS.'database.php.install', APP . 'Config' . DS.'database.php');
-		App::uses('File', 'Utility');
-		$file = new File(APP . 'Config' . DS.'database.php', true);
+		copy(APP . 'Config' . DS . 'database.php.install', APP . 'Config' . DS . 'database.php');
+		$file = new File(APP . 'Config' . DS . 'database.php', true);
 		$content = $file->read();
 
-		foreach ($config AS $configKey => $configValue) {
+		foreach ($config as $configKey => $configValue) {
 			$content = str_replace('{default_' . $configKey . '}', $configValue, $content);
 		}
 
-		if(!$file->write($content)) {
+		if (!$file->write($content)) {
 			$this->Session->setFlash(__('Could not write database.php file.'), 'default', array('class' => 'error'));
 			return;
 		}
 
-		if (copy(APP . 'Config' . DS.'croogo.php.install', APP . 'Config' . DS.'croogo.php')) {
+		if (copy(APP . 'Config' . DS . 'croogo.php.install', APP . 'Config' . DS . 'croogo.php')) {
 			return $this->redirect(array('action' => 'data'));
 		} else {
 			$this->Session->setFlash(__('Could not write croogo.php file.'), 'default', array('class' => 'error'));
 		}
 	}
 
-	/**
-	 * Fixes Postgres sequence
-	 */
+/**
+ * Fixes Postgres sequence
+ */
 	protected function _fixSequence($model) {
 		$db = $model->getDataSource();
 		$nextValue = $model->find('first', array(
@@ -195,12 +196,12 @@ class InstallController extends Controller {
 
 			$db = ConnectionManager::getDataSource('default');
 			$brokenSequence = $db instanceof Postgres;
-			if(!$db->isConnected()) {
+			if (!$db->isConnected()) {
 				$this->Session->setFlash(__('Could not connect to database.'), 'default', array('class' => 'error'));
 			} else {
-				$schema =& new CakeSchema(array('name'=>'app'));
+				$schema =& new CakeSchema(array('name' => 'app'));
 				$schema = $schema->load();
-				foreach($schema->tables as $table => $fields) {
+				foreach ($schema->tables as $table => $fields) {
 					$create = $db->createSchema($schema, $table);
 					try {
 						$db->execute($create);
@@ -211,10 +212,10 @@ class InstallController extends Controller {
 					}
 				}
 
-				$path = App::pluginPath('Install') .DS. 'Config' .DS. 'Data' .DS;
+				$path = App::pluginPath('Install') . DS . 'Config' . DS . 'Data' . DS;
 				$dataObjects = App::objects('class', $path);
 				foreach ($dataObjects as $data) {
-					include($path . $data . '.php');
+					include ($path . $data . '.php');
 					$classVars = get_class_vars($data);
 					$modelAlias = substr($data, 0, -4);
 					$table = $classVars['table'];
@@ -226,7 +227,7 @@ class InstallController extends Controller {
 						'ds' => 'default',
 					));
 					if (is_array($records) && count($records) > 0) {
-						foreach($records as $record) {
+						foreach ($records as $record) {
 							$modelObject->create($record);
 							$modelObject->save();
 						}
