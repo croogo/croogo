@@ -19,3 +19,4 @@ Plugin/*
 !Plugin/Install
 !Plugin/Tinymce
 !Plugin/Translate
+build/*
