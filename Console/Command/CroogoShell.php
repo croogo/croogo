@@ -21,7 +21,7 @@ class CroogoShell extends AppShell {
  */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
-		$parser->description(__d('croogo', 'Croogo Utilities')
+		$parser->description(__('Croogo Utilities')
 			)->addSubcommand('password', array(
 				'help' => 'Get hashed password',
 				'parser' => array(
