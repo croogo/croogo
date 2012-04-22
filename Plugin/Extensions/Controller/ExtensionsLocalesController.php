@@ -1,4 +1,5 @@
 <?php
+
 App::uses('File', 'Utility');
 APP::uses('Folder', 'Utility');
 
@@ -15,6 +16,7 @@ APP::uses('Folder', 'Utility');
  * @link     http://www.croogo.org
  */
 class ExtensionsLocalesController extends ExtensionsAppController {
+
 /**
  * Controller name
  *
@@ -38,7 +40,7 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 		$folder->path = APP . 'Locale';
 		$content = $folder->read();
 		$locales = $content['0'];
-		foreach($locales as $i => $locale) {
+		foreach ($locales as $i => $locale) {
 			if (strstr($locale, '.') !== false) {
 				unset($locales[$i]);
 			}
@@ -72,8 +74,8 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 			$zip = zip_open($file['tmp_name']);
 			$locale = null;
 			if ($zip) {
-				while ($zip_entry = zip_read($zip)) {
-					$zipEntryName = zip_entry_name($zip_entry);
+				while ($zipEntry = zip_read($zip)) {
+					$zipEntryName = zip_entry_name($zipEntry);
 					if (strstr($zipEntryName, 'LC_MESSAGES')) {
 						$zipEntryNameE = explode('/LC_MESSAGES', $zipEntryName);
 						if (isset($zipEntryNameE['0'])) {
@@ -100,8 +102,8 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 			// extract
 			$zip = zip_open($file['tmp_name']);
 			if ($zip) {
-				while ($zip_entry = zip_read($zip)) {
-					$zipEntryName = zip_entry_name($zip_entry);
+				while ($zipEntry = zip_read($zip)) {
+					$zipEntryName = zip_entry_name($zipEntry);
 					if (strstr($zipEntryName, $locale . '/')) {
 						$zipEntryNameE = explode($locale . '/', $zipEntryName);
 						if (isset($zipEntryNameE['1'])) {
@@ -115,13 +117,13 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 							mkdir($path);
 						} else {
 							// create file
-							if (zip_entry_open($zip, $zip_entry, 'r')) {
-								$fileContent = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+							if (zip_entry_open($zip, $zipEntry, 'r')) {
+								$fileContent = zip_entry_read($zipEntry, zip_entry_filesize($zipEntry));
 								touch($path);
 								$fh = fopen($path, 'w');
 								fwrite($fh, $fileContent);
 								fclose($fh);
-								zip_entry_close($zip_entry);
+								zip_entry_close($zipEntry);
 							}
 						}
 					}

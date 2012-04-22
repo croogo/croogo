@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class ContactsController extends AppController {
+
 /**
  * Controller name
  *
@@ -56,7 +57,7 @@ class ContactsController extends AppController {
 			$this->Contact->create();
 			if ($this->Contact->save($this->request->data)) {
 				$this->Session->setFlash(__('The Contact has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The Contact could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -68,12 +69,12 @@ class ContactsController extends AppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Contact'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Contact->save($this->request->data)) {
 				$this->Session->setFlash(__('The Contact has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The Contact could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -86,11 +87,11 @@ class ContactsController extends AppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Contact'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Contact->delete($id)) {
 			$this->Session->setFlash(__('Contact deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 	}
 
@@ -105,7 +106,7 @@ class ContactsController extends AppController {
 				'Contact.status' => 1,
 			),
 			'cache' => array(
-				'name' => 'contact_'.$alias,
+				'name' => 'contact_' . $alias,
 				'config' => 'contacts_view',
 			),
 		));
@@ -186,7 +187,7 @@ class ContactsController extends AppController {
 	protected function _send_email($continue, $contact) {
 		$email = new CakeEmail();
 		if ($contact['Contact']['message_notify'] && $continue === true) {
-			$siteTitle = Configure::read('Site.title') ;
+			$siteTitle = Configure::read('Site.title');
 			$email->from($this->request->data['Message']['email'])
 				->to($contact['Contact']['email'])
 				->subject(__('[%s] %s', $siteTitle, $contact['Contact']['title']))

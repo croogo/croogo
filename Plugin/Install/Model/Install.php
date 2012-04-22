@@ -8,17 +8,21 @@ App::uses('File', 'Utility');
 class Install extends InstallAppModel {
 
 	public $name = 'Install';
+
 	public $useTable = false;
 
-/** Finalize installation
- *  Prepares Config/settings.yml and update password for admin user
- *  @return $mixed if false, indicates processing failure
+/**
+ * Finalize installation
+ *
+ * Prepares Config/settings.yml and update password for admin user
+ * @param $user array user to create
+ * @return $mixed if false, indicates processing failure
  */
 	public function finalize($user) {
 		if (Configure::read('Install.installed') && Configure::read('Install.secured')) {
 			return false;
 		}
-		copy(APP . 'Config' . DS.'settings.yml.install', APP . 'Config' . DS.'settings.yml');
+		copy(APP . 'Config' . DS . 'settings.yml.install', APP . 'Config' . DS . 'settings.yml');
 
 		// set new salt and seed value
 		if (!Configure::read('Install.secured')) {

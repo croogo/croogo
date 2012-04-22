@@ -14,10 +14,10 @@
  */
 class AclAccessComponent extends Component {
 
-	protected $controller = null;
+	protected $_controller = null;
 
 	public function startup(Controller $controller) {
-		$this->controller = $controller;
+		$this->_controller = $controller;
 	}
 
 /**
@@ -43,7 +43,7 @@ class AclAccessComponent extends Component {
 				),
 			));
 			$roleIds = array_keys($roles);
-			$aros = $this->controller->Acl->Aro->find('list', array(
+			$aros = $this->_controller->Acl->Aro->find('list', array(
 				'conditions' => array(
 					'Aro.model' => 'Role',
 					'Aro.foreign_key' => $roleIds,
@@ -57,17 +57,17 @@ class AclAccessComponent extends Component {
 		}
 
 		// ACOs
-		$acoNode = $this->controller->Acl->Aco->node($this->controller->Auth->authorize['all']['actionPath'].$action);
+		$acoNode = $this->_controller->Acl->Aco->node($this->_controller->Auth->authorize['all']['actionPath'] . $action);
 		if (!isset($acoNode['0']['Aco']['id'])) {
 			if (!strstr($action, '/')) {
-				$parentNode = $this->controller->Acl->Aco->node(str_replace('/', '', $this->controller->Auth->authorize['all']['actionPath']));
+				$parentNode = $this->_controller->Acl->Aco->node(str_replace('/', '', $this->_controller->Auth->authorize['all']['actionPath']));
 				$alias = $action;
 			} else {
 				$actionE = explode('/', $action);
 				$controllerName = $actionE['0'];
 				$method = $actionE['1'];
 				$alias = $method;
-				$parentNode = $this->controller->Acl->Aco->node($this->controller->Auth->authorize['all']['actionPath'].'/'.$controllerName);
+				$parentNode = $this->_controller->Acl->Aco->node($this->_controller->Auth->authorize['all']['actionPath'] . '/' . $controllerName);
 			}
 			$parentId = $parentNode['0']['Aco']['id'];
 			$acoData = array(
@@ -76,16 +76,16 @@ class AclAccessComponent extends Component {
 				'foreign_key' => null,
 				'alias' => $alias,
 			);
-			$this->controller->Acl->Aco->id = false;
-			$this->controller->Acl->Aco->save($acoData);
-			$acoId = $this->controller->Acl->Aco->id;
+			$this->_controller->Acl->Aco->id = false;
+			$this->_controller->Acl->Aco->save($acoData);
+			$acoId = $this->_controller->Acl->Aco->id;
 		} else {
 			$acoId = $acoNode['0']['Aco']['id'];
 		}
 
 		// Permissions (aros_acos)
-		foreach ($aroIds AS $aroId) {
-			$permission = $this->controller->Acl->Aro->Permission->find('first', array(
+		foreach ($aroIds as $aroId) {
+			$permission = $this->_controller->Acl->Aro->Permission->find('first', array(
 				'conditions' => array(
 					'Permission.aro_id' => $aroId,
 					'Permission.aco_id' => $acoId,
@@ -101,8 +101,8 @@ class AclAccessComponent extends Component {
 					'_update' => 1,
 					'_delete' => 1,
 				);
-				$this->controller->Acl->Aco->Permission->id = false;
-				$this->controller->Acl->Aco->Permission->save($permissionData);
+				$this->_controller->Acl->Aco->Permission->id = false;
+				$this->_controller->Acl->Aco->Permission->save($permissionData);
 			} else {
 				// check if not permitted
 				if ($permission['Permission']['_create'] == 0 ||
@@ -118,8 +118,8 @@ class AclAccessComponent extends Component {
 						'_update' => 1,
 						'_delete' => 1,
 					);
-					$this->controller->Acl->Aco->Permission->id = $permission['Permission']['id'];
-					$this->controller->Acl->Aco->Permission->save($permissionData);
+					$this->_controller->Acl->Aco->Permission->id = $permission['Permission']['id'];
+					$this->_controller->Acl->Aco->Permission->save($permissionData);
 				}
 			}
 		}
@@ -134,9 +134,9 @@ class AclAccessComponent extends Component {
  * @return void
  */
 	public function removeAco($action) {
-		$acoNode = $this->controller->Acl->Aco->node($this->controller->Auth->authorize['all']['actionPath'].'/'.$action);
+		$acoNode = $this->_controller->Acl->Aco->node($this->_controller->Auth->authorize['all']['actionPath'] . '/' . $action);
 		if (isset($acoNode['0']['Aco']['id'])) {
-			$this->controller->Acl->Aco->delete($acoNode['0']['Aco']['id']);
+			$this->_controller->Acl->Aco->delete($acoNode['0']['Aco']['id']);
 		}
 	}
 

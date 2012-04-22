@@ -17,6 +17,7 @@ App::uses('CroogoTheme', 'Extensions.Lib');
  * @link     http://www.croogo.org
  */
 class ExtensionsThemesController extends ExtensionsAppController {
+
 /**
  * Controller name
  *
@@ -32,7 +33,6 @@ class ExtensionsThemesController extends ExtensionsAppController {
  * @access public
  */
 	public $uses = array('Setting', 'User');
-
 
 /**
  * CroogoTheme instance
@@ -53,7 +53,7 @@ class ExtensionsThemesController extends ExtensionsAppController {
 		$themes = $this->_CroogoTheme->getThemes();
 		$themesData = array();
 		$themesData[] = $this->_CroogoTheme->getData();
-		foreach ($themes AS $theme) {
+		foreach ($themes as $theme) {
 			$themesData[$theme] = $this->_CroogoTheme->getData($theme);
 		}
 
@@ -97,7 +97,6 @@ class ExtensionsThemesController extends ExtensionsAppController {
 	}
 
 	public function admin_save() {
-
 	}
 
 	public function admin_delete($alias = null) {
@@ -121,7 +120,7 @@ class ExtensionsThemesController extends ExtensionsAppController {
 
 		$error = 0;
 		$folder =& new Folder;
-		foreach ($paths AS $path) {
+		foreach ($paths as $path) {
 			if (is_dir($path)) {
 				if (!$folder->delete($path)) {
 					$error = 1;

@@ -12,8 +12,11 @@
  * @link     http://www.croogo.org
  */
 class AclActionsController extends AclAppController {
+
 	public $name = 'AclActions';
+
 	public $uses = array('Acl.AclAco');
+
 	public $components = array('Acl.AclGenerate');
 
 	public function beforeFilter() {
@@ -57,7 +60,7 @@ class AclActionsController extends AclAppController {
 
 			if ($this->Acl->Aco->save($this->request->data['Aco'])) {
 				$this->Session->setFlash(sprintf(__('The %s has been saved'), $acoType), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.'), $acoType), 'default', array('class' => 'error'));
 			}
@@ -91,12 +94,12 @@ class AclActionsController extends AclAppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Action'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Acl->Aco->save($this->request->data['Aco'])) {
 				$this->Session->setFlash(__('The Action has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The Action could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -131,11 +134,11 @@ class AclActionsController extends AclAppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Action'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Acl->Aco->delete($id)) {
 			$this->Session->setFlash(__('Action deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 	}
 
@@ -149,17 +152,17 @@ class AclActionsController extends AclAppController {
 	public function admin_move($id, $direction = 'up', $step = '1') {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Action'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($direction == 'up') {
 			if ($this->Acl->Aco->moveUp($id)) {
 				$this->Session->setFlash(__('Action moved up'), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			}
 		} else {
 			if ($this->Acl->Aco->moveDown($id)) {
 				$this->Session->setFlash(__('Action moved down'), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			}
 		}
 	}
@@ -184,8 +187,8 @@ class AclActionsController extends AclAppController {
 
 		$log = array();
 		$controllerPaths = $this->AclGenerate->listControllers();
-		foreach ($controllerPaths AS $controllerName => $controllerPath) {
-			$controllerNode = $aco->node('controllers/'.$controllerName);
+		foreach ($controllerPaths as $controllerName => $controllerPath) {
+			$controllerNode = $aco->node('controllers/' . $controllerName);
 			if (!$controllerNode) {
 				$aco->create(array(
 					'parent_id' => $root['Aco']['id'],
@@ -201,8 +204,8 @@ class AclActionsController extends AclAppController {
 			}
 
 			$methods = $this->AclGenerate->listActions($controllerName, $controllerPath);
-			foreach ($methods AS $method) {
-				$methodNode = $aco->node('controllers/'.$controllerName.'/'.$method);
+			foreach ($methods as $method) {
+				$methodNode = $aco->node('controllers/' . $controllerName . '/' . $method);
 				if (!$methodNode) {
 					$aco->create(array(
 						'parent_id' => $controllerNode['Aco']['id'],
@@ -210,7 +213,7 @@ class AclActionsController extends AclAppController {
 						'alias' => $method,
 					));
 					if ($methodNode = $aco->save()) {
-						$created[] = $controllerName . '.' . $method;
+						$created[] = $controllerName . ' . ' . $method;
 					}
 				}
 			}

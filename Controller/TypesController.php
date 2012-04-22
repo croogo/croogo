@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class TypesController extends AppController {
+
 /**
  * Controller name
  *
@@ -51,7 +52,7 @@ class TypesController extends AppController {
 			$this->Type->create();
 			if ($this->Type->save($this->request->data)) {
 				$this->Session->setFlash(__('The Type has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The Type could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -66,12 +67,12 @@ class TypesController extends AppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Type'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Type->save($this->request->data)) {
 				$this->Session->setFlash(__('The Type has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The Type could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -87,11 +88,11 @@ class TypesController extends AppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Type'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Type->delete($id)) {
 			$this->Session->setFlash(__('Type deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 	}
 }

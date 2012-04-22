@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class UsersController extends AppController {
+
 /**
  * Controller name
  *
@@ -184,8 +185,8 @@ class UsersController extends AppController {
 			if ($this->User->save($this->request->data)) {
 				Croogo::dispatchEvent('Controller.Users.registrationSuccessful', $this);
 				$this->request->data['User']['password'] = null;
-				$this->Email->from = Configure::read('Site.title') . ' '
-					. '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])).'>';
+				$this->Email->from = Configure::read('Site.title') . ' ' .
+					'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
 				$this->Email->to = $this->request->data['User']['email'];
 				$this->Email->subject = __('[%s] Please activate your account', Configure::read('Site.title'));
 				$this->Email->template = 'register';
@@ -225,7 +226,8 @@ class UsersController extends AppController {
 		$this->redirect(array('action' => 'login'));
 	}
 
-	public function edit() {}
+	public function edit() {
+	}
 
 	public function forgot() {
 		$this->set('title_for_layout', __('Forgot Password'));
@@ -242,8 +244,8 @@ class UsersController extends AppController {
 			$this->User->saveField('activation_key', $activationKey);
 			$this->set(compact('user', 'activationKey'));
 
-			$this->Email->from = Configure::read('Site.title') . ' '
-					. '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])).'>';
+			$this->Email->from = Configure::read('Site.title') . ' ' .
+				'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
 			$this->Email->to = $user['User']['email'];
 			$this->Email->subject = __('[%s] Reset Password', Configure::read('Site.title'));
 			$this->Email->template = 'forgot_password';

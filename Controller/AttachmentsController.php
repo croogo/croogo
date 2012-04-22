@@ -14,6 +14,7 @@
  * @link     http://www.croogo.org
  */
 class AttachmentsController extends AppController {
+
 /**
  * Controller name
  *
@@ -152,7 +153,7 @@ class AttachmentsController extends AppController {
 				if (isset($this->request->params['named']['editor'])) {
 					$this->redirect(array('action' => 'browse'));
 				} else {
-					$this->redirect(array('action'=>'index'));
+					$this->redirect(array('action' => 'index'));
 				}
 			} else {
 				$this->Session->setFlash(__('The Attachment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
@@ -172,12 +173,12 @@ class AttachmentsController extends AppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Attachment'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Node->save($this->request->data)) {
 				$this->Session->setFlash(__('The Attachment has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The Attachment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -197,7 +198,7 @@ class AttachmentsController extends AppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Attachment'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 
 		$attachment = $this->Node->find('first', array(
@@ -210,11 +211,11 @@ class AttachmentsController extends AppController {
 			if ($this->Node->delete($id)) {
 				unlink(WWW_ROOT . $this->uploadsDir . DS . $attachment['Node']['slug']);
 				$this->Session->setFlash(__('Attachment deleted'), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			}
 		} else {
 			$this->Session->setFlash(__('Invalid id for Attachment'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 	}
 

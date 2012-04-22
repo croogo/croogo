@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class CommentsController extends AppController {
+
 /**
  * Controller name
  *
@@ -58,7 +59,7 @@ class CommentsController extends AppController {
 
 		if (isset($this->request->params['named']['filter'])) {
 			$filters = $this->Croogo->extractFilter();
-			foreach ($filters AS $filterKey => $filterValue) {
+			foreach ($filters as $filterKey => $filterValue) {
 				if (strpos($filterKey, '.') === false) {
 					$filterKey = 'Comment.' . $filterKey;
 				}
@@ -81,12 +82,12 @@ class CommentsController extends AppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Comment'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Comment->save($this->request->data)) {
 				$this->Session->setFlash(__('The Comment has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action'=>'index'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The Comment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -99,18 +100,18 @@ class CommentsController extends AppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Comment'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Comment->delete($id)) {
 			$this->Session->setFlash(__('Comment deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 	}
 
 	public function admin_process() {
 		$action = $this->request->data['Comment']['action'];
 		$ids = array();
-		foreach ($this->request->data['Comment'] AS $id => $value) {
+		foreach ($this->request->data['Comment'] as $id => $value) {
 			if ($id != 'action' && $value['id'] == 1) {
 				$ids[] = $id;
 			}
@@ -229,11 +230,11 @@ class CommentsController extends AppController {
 
 				// Email notification
 				if (Configure::read('Comment.email_notification')) {
-					$this->Email->from = Configure::read('Site.title') . ' '
-						. '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])).'>';
+					$this->Email->from = Configure::read('Site.title') . ' ' .
+						'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
 					$this->Email->to = Configure::read('Site.email');
-					$this->Email->subject = '[' . Configure::read('Site.title') . '] '
-						. __('New comment posted under') . ' ' . $node['Node']['title'];
+					$this->Email->subject = '[' . Configure::read('Site.title') . '] ' .
+						__('New comment posted under') . ' ' . $node['Node']['title'];
 					$this->set('node', $node);
 					$this->set('data', $data);
 					$this->set('commentId', $this->Comment->id);

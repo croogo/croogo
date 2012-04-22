@@ -75,7 +75,7 @@ class InstallShell extends AppShell {
 			$content .= "}\n";
 
 		// write file
-		$filePath = APP . 'Plugin' .DS. 'Install'. DS. 'Config' .DS. 'Data' .DS. $modelAlias . 'Data.php';
+		$filePath = APP . 'Plugin' . DS . 'Install'. DS .'Config' . DS . 'Data' . DS . $modelAlias . 'Data.php';
 		if (!file_exists($filePath)) {
 			touch($filePath);
 		}

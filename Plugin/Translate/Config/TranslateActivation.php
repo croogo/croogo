@@ -8,6 +8,7 @@
  * @link     http://www.croogo.org
  */
 class TranslateActivation {
+
 /**
  * onActivate will be called if this returns true
  *

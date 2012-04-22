@@ -13,14 +13,14 @@
  */
 class AclFilterComponent extends Component {
 
-	protected $controller = null;
+	protected $_controller = null;
 
 /**
  * @param object $controller controller
  * @param array  $settings   settings
  */
 	public function initialize(Controller $controller) {
-		$this->controller =& $controller;
+		$this->_controller =& $controller;
 	}
 
 /**
@@ -30,7 +30,7 @@ class AclFilterComponent extends Component {
  */
 	public function auth() {
 		//Configure AuthComponent
-		$this->controller->Auth->authenticate = array(
+		$this->_controller->Auth->authenticate = array(
 			AuthComponent::ALL => array(
 				'userModel' => 'User',
 				'fields' => array(
@@ -44,43 +44,43 @@ class AclFilterComponent extends Component {
 			'Form',
 		);
 		$actionPath = 'controllers';
-		$this->controller->Auth->authorize = array(
+		$this->_controller->Auth->authorize = array(
 			AuthComponent::ALL => array('actionPath' => $actionPath),
 			'Actions',
 			);
-		$this->controller->Auth->loginAction = array(
+		$this->_controller->Auth->loginAction = array(
 			'plugin' => null,
 			'controller' => 'users',
 			'action' => 'login',
 		);
-		$this->controller->Auth->logoutRedirect = array(
+		$this->_controller->Auth->logoutRedirect = array(
 			'plugin' => null,
 			'controller' => 'users',
 			'action' => 'login',
 		);
-		$this->controller->Auth->loginRedirect = array(
+		$this->_controller->Auth->loginRedirect = array(
 			'plugin' => null,
 			'controller' => 'users',
 			'action' => 'index',
 		);
 
-		if ($this->controller->Auth->user() && $this->controller->Auth->user('role_id') == 1) {
+		if ($this->_controller->Auth->user() && $this->_controller->Auth->user('role_id') == 1) {
 			// Role: Admin
-			$this->controller->Auth->allowedActions = array('*');
+			$this->_controller->Auth->allowedActions = array('*');
 		} else {
-			if ($this->controller->Auth->user()) {
-				$roleId = $this->controller->Auth->user('role_id');
+			if ($this->_controller->Auth->user()) {
+				$roleId = $this->_controller->Auth->user('role_id');
 			} else {
 				$roleId = 3; // Role: Public
 			}
 
 			$allowedActions = ClassRegistry::init('Acl.AclPermission')->getAllowedActionsByRoleId($roleId);
-			$linkAction = Inflector::camelize($this->controller->request->params['controller']) . '/' . $this->controller->request->params['action'];
-			if (isset($this->controller->request->params['admin']) && $this->controller->request->params['admin']) {
-				$linkAction = Inflector::camelize($this->controller->request->params['controller']) . '/admin_' . $this->controller->request->params['action'];
+			$linkAction = Inflector::camelize($this->_controller->request->params['controller']) . '/' . $this->_controller->request->params['action'];
+			if (isset($this->_controller->request->params['admin']) && $this->_controller->request->params['admin']) {
+				$linkAction = Inflector::camelize($this->_controller->request->params['controller']) . '/admin_' . $this->_controller->request->params['action'];
 			}
 			if (in_array($linkAction, $allowedActions)) {
-				$this->controller->Auth->allowedActions = array($this->controller->request->params['action']);
+				$this->_controller->Auth->allowedActions = array($this->_controller->request->params['action']);
 			}
 		}
 	}

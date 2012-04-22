@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class FilemanagerHelper extends AppHelper {
+
 /**
  * Other helpers used by this helper
  *
@@ -27,15 +28,13 @@ class FilemanagerHelper extends AppHelper {
  * @return string
  */
 	public function filename2ext($filename) {
-		$filename = strtolower($filename) ;
-		//$exts = split("[/\\.]", $filename) ;
-		//$n = count($exts)-1;
-		$filename_e = explode(".", $filename);
-		if ($filename_e == 1) {
+		$filename = strtolower($filename);
+		$filenameE = explode(".", $filename);
+		if ($filenameE == 1) {
 			return "file";
 		} else {
-			$n = count($filename_e) - 1;
-			return $filename_e[$n];
+			$n = count($filenameE) - 1;
+			return $filenameE[$n];
 		}
 	}
 
@@ -48,7 +47,7 @@ class FilemanagerHelper extends AppHelper {
 	public function ext2icon($ext) {
 		$ext = strtolower($ext);
 
-		$ext2icon = array(
+		$extToIcon = array(
 			'css' => 'css.png',
 			'htm' => 'html.png',
 			'html' => 'html.png',
@@ -65,8 +64,8 @@ class FilemanagerHelper extends AppHelper {
 			'png' => 'picture.png',
 		);
 
-		if (isset($ext2icon[$ext])) {
-			$output = $ext2icon[$ext];
+		if (isset($extToIcon[$ext])) {
+			$output = $extToIcon[$ext];
 		} else {
 			$output = 'page_white.png';
 		}
@@ -92,18 +91,18 @@ class FilemanagerHelper extends AppHelper {
  * @return string
  */
 	public function breadcrumb($path) {
-		$path_e = explode(DS, $path);
+		$pathE = explode(DS, $path);
 
 		$output = array();
 		if (DS == '/') {
-			$current_path = DS;
+			$currentPath = DS;
 		} else {
-			$current_path = '';
+			$currentPath = '';
 		}
-		foreach ($path_e AS $p) {
+		foreach ($pathE as $p) {
 			if ($p != null) {
-				$current_path .= $p.DS;
-				$output[$p] = $current_path;
+				$currentPath .= $p . DS;
+				$output[$p] = $currentPath;
 			}
 		}
 
@@ -206,7 +205,7 @@ class FilemanagerHelper extends AppHelper {
  * @return boolean
  */
 	public function inPath($paths, $search) {
-		foreach ($paths AS $path) {
+		foreach ($paths as $path) {
 			if (strpos($search, $path) !== false) {
 				return true;
 			}

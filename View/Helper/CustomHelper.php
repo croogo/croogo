@@ -17,6 +17,7 @@
  * @link     http://www.croogo.org
  */
 class CustomHelper extends Helper {
+
 /**
  * Other helpers used by this helper
  *

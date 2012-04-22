@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class BlocksController extends AppController {
+
 /**
  * Controller name
  *
@@ -46,9 +47,9 @@ class BlocksController extends AppController {
 			if ($this->Block->save($this->request->data)) {
 				$this->Session->setFlash(__('The Block has been saved'), 'default', array('class' => 'success'));
 				if (isset($this->request->data['apply'])) {
-					$this->redirect(array('action'=>'edit', $this->Block->id));
+					$this->redirect(array('action' => 'edit', $this->Block->id));
 				} else {
-					$this->redirect(array('action'=>'index'));
+					$this->redirect(array('action' => 'index'));
 				}
 			} else {
 				$this->Session->setFlash(__('The Block could not be saved. Please, try again.'), 'default', array('class' => 'error'));
@@ -64,7 +65,7 @@ class BlocksController extends AppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Block'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			$this->request->data['Block']['visibility_roles'] = $this->Block->encodeData($this->request->data['Role']['Role']);
@@ -96,16 +97,16 @@ class BlocksController extends AppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Block'), 'default', array('class' => 'error'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Block->delete($id)) {
 			$this->Session->setFlash(__('Block deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 	}
 
 	public function admin_moveup($id, $step = 1) {
-		if( $this->Block->moveUp($id, $step) ) {
+		if ($this->Block->moveUp($id, $step)) {
 			$this->Session->setFlash(__('Moved up successfully'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__('Could not move up'), 'default', array('class' => 'error'));
@@ -115,7 +116,7 @@ class BlocksController extends AppController {
 	}
 
 	public function admin_movedown($id, $step = 1) {
-		if( $this->Block->moveDown($id, $step) ) {
+		if ($this->Block->moveDown($id, $step)) {
 			$this->Session->setFlash(__('Moved down successfully'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__('Could not move down'), 'default', array('class' => 'error'));
@@ -127,7 +128,7 @@ class BlocksController extends AppController {
 	public function admin_process() {
 		$action = $this->request->data['Block']['action'];
 		$ids = array();
-		foreach ($this->request->data['Block'] AS $id => $value) {
+		foreach ($this->request->data['Block'] as $id => $value) {
 			if ($id != 'action' && $value['id'] == 1) {
 				$ids[] = $id;
 			}

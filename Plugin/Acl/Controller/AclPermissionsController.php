@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class AclPermissionsController extends AclAppController {
+
 /**
  * Controller name
  *
@@ -63,10 +64,10 @@ class AclPermissionsController extends AclAppController {
 		$rolesAros = Set::combine($rolesAros, '{n}.AclAro.foreign_key', '{n}.AclAro.id');
 
 		$permissions = array(); // acoId => roleId => bool
-		foreach ($acos AS $acoId => $acoAlias) {
+		foreach ($acos as $acoId => $acoAlias) {
 			if (substr_count($acoAlias, '_') != 0) {
 				$permission = array();
-				foreach ($roles AS $roleId => $roleTitle) {
+				foreach ($roles as $roleId => $roleTitle) {
 					$hasAny = array(
 						'aco_id'  => $acoId,
 						'aro_id'  => $rolesAros[$roleId],
