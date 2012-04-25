@@ -254,4 +254,34 @@ class UsersControllerTest extends CroogoControllerTestCase {
 		$this->assertTrue($hasAny);
 	}
 
+/**
+ * testAdminDelete
+ *
+ * @return void
+ */
+	public function testAdminDeleteCurrentUser() {
+		$this->Users->request->params['action'] = 'admin_delete';
+		$this->Users->request->params['url']['url'] = 'admin/users/delete';
+		$this->Users->Session->write('Auth.User', array(
+			'id' => 1,
+			'username' => 'admin',
+		));
+		$this->Users->startupProcess();
+
+		// check that another admin exists
+		$hasAny = $this->Users->User->hasAny(array(
+			'User.username' => 'rchavik',
+			'User.role_id' => 1,
+		));
+		$this->assertTrue($hasAny);
+
+		// delete the only remaining admin
+		$this->Users->admin_delete(1); // ID of admin
+		$this->assertEqual($this->Users->redirectUrl, array('action' => 'index'));
+		$hasAny = $this->Users->User->hasAny(array(
+			'User.username' => 'admin',
+		));
+		$this->assertTrue($hasAny);
+	}
+
 }
