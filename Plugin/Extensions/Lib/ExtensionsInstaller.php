@@ -96,7 +96,7 @@ class ExtensionsInstaller {
 			$plugin = $this->getPluginName($path);
 		}
 
-		$pluginHome = current(App::path('Plugin'));
+		$pluginHome = reset(App::path('Plugin'));
 		$pluginPath = $pluginHome . $plugin . DS;
 		if (is_dir($pluginPath)) {
 			throw new CakeException(__('Plugin already exists'));
@@ -179,7 +179,7 @@ class ExtensionsInstaller {
 			$theme = $this->getThemeName($path);
 		}
 
-		$themeHome = current(App::path('View')) . 'Themed' . DS;
+		$themeHome = reset(App::path('View')) . 'Themed' . DS;
 		$themePath = $themeHome . $theme . DS;
 		if (is_dir($themePath)) {
 			throw new CakeException(__('Theme already exists'));

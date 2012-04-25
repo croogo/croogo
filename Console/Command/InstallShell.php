@@ -135,11 +135,11 @@ class InstallShell extends AppShell {
 		if (empty($url)) {
 			throw new ConsoleException(__('Please specify a URL to a zipball extension'));
 		}
-		$this->out(__('Downloading extension...'));
 		$url = $this->_githubUrl($url);
 		$filename = uniqid('croogo_') . '.zip';
 		$zip = $this->tmpPath . $filename;
-		$res = $this->_shellExec('curl -L ' . $url . ' -o ' . $zip);
+		$this->out(__('Downloading extension to %s...', $zip));
+		$res = $this->_shellExec('curl -L ' . $url . ' -o ' . $zip . ' 2>&1');
 		return $res ? $zip : false;
 	}
 
