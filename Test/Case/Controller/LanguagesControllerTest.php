@@ -26,9 +26,9 @@ class TestLanguagesController extends LanguagesController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError($type) {
-
+	protected function _securityError($type) {
 	}
+
 }
 
 class LanguagesControllerTest extends CroogoControllerTestCase {
@@ -190,14 +190,14 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
 		));
 		$this->Languages->startupProcess();
 
-		$this->__testAdminMoveUp();
-		$this->__testAdminMoveUpWithSteps();
+		$this->_testAdminMoveUp();
+		$this->_testAdminMoveUpWithSteps();
 
-		$this->__testAdminMoveDown();
-		$this->__testAdminMoveDownWithSteps();
+		$this->_testAdminMoveDown();
+		$this->_testAdminMoveDownWithSteps();
 	}
 
-	private function __testAdminMoveUp() {
+	protected function _testAdminMoveUp() {
 		// add language
 		$this->Languages->Language->save(array(
 			'title' => 'Bengali',
@@ -227,7 +227,7 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
 		));
 	}
 
-	private function __testAdminMoveUpWithSteps() {
+	protected function _testAdminMoveUpWithSteps() {
 		// add another language
 		$this->Languages->Language->id = false;
 		$this->Languages->Language->save(array(
@@ -260,7 +260,7 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
 		));
 	}
 
-	private function __testAdminMoveDown() {
+	protected function _testAdminMoveDown() {
 		$this->Languages->admin_movedown(3);
 		$list = $this->Languages->Language->find('list', array(
 			'order' => 'Language.weight ASC',
@@ -272,7 +272,7 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
 		));
 	}
 
-	private function __testAdminMoveDownWithSteps() {
+	protected function _testAdminMoveDownWithSteps() {
 		$this->Languages->admin_movedown(2, 2);
 		$list = $this->Languages->Language->find('list', array(
 			'order' => 'Language.weight ASC',

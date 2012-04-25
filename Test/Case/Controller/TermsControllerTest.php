@@ -26,9 +26,9 @@ class TestTermsController extends TermsController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError($type) {
-
+	protected function _securityError($type) {
 	}
+
 }
 
 class TermsControllerTest extends CroogoControllerTestCase {

@@ -26,9 +26,9 @@ class TestRegionsController extends RegionsController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError($type) {
-
+	protected function _securityError($type) {
 	}
+
 }
 
 class RegionsControllerTest extends CroogoControllerTestCase {

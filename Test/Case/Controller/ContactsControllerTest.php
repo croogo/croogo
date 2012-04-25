@@ -27,9 +27,9 @@ class TestContactsController extends ContactsController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError($type) {
-
+	protected function _securityError($type) {
 	}
+
 }
 
 class ContactsControllerTest extends CroogoControllerTestCase {

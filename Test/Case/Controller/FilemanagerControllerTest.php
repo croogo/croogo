@@ -7,6 +7,7 @@ class TestFilemanagerController extends FilemanagerController {
 	protected function _stop($status = 0) {
 		$this->stopped = $status;
 	}
+
 }
 
 class FilemanagerControllerTest extends CroogoControllerTestCase {

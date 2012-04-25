@@ -26,9 +26,9 @@ class TestVocabulariesController extends VocabulariesController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError($type) {
-
+	protected function _securityError($type) {
 	}
+
 }
 
 /**

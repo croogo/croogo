@@ -26,9 +26,9 @@ class TestBlocksController extends BlocksController {
 		$this->stopped = $status;
 	}
 
-	public function __securityError($type) {
-
+	protected function _securityError($type) {
 	}
+
 }
 
 class BlocksControllerTest extends CroogoControllerTestCase {
