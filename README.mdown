@@ -22,23 +22,24 @@ It is powered by [CakePHP](http://cakephp.org) MVC framework.
 
   * Extract the archive. Upload the content to your server.
   * Create a new MySQL database ('utf8_unicode_ci' collation), and use these two SQL dump files in given order:
-    * app/config/schema/sql/croogo.sql
-    * app/config/schema/sql/croogo_data.sql
+    * app/Config/Schema/sql/croogo.sql
+    * app/Config/Schema/sql/croogo_data.sql
   * Rename:
-    * app/config/database.php.install to database.php, and edit the details.
-    * app/config/settings.yml.install to settings.yml
-  * You can access your admin panel at http://your-site.com/admin. Login details below:
-    * username: admin
-    * password: password
+    * app/Config/database.php.install to database.php, and edit the details.
+    * app/Config/croogo.php.install to croogo.php, and edit the details.
+    * app/Config/settings.yml.install to settings.yml
+  * You can access your admin panel at http://your-site.com/admin. The installer should
+    display a page for you to create the administrative user.
 
 It is recommended that you install Croogo using the web based installer for security reasons.
 
 ## Links
 
   * **Official website**: [http://croogo.org](http://croogo.org)
-  * **Blog**: [http://fahad19.com/blog/term/croogo](http://fahad19.com/blog/term/croogo)
+  * **Blog**: [http://blog.croogo.org](http://blog.croogo.org)
   * **Downloads**: [http://github.com/croogo/croogo/downloads](http://github.com/croogo/croogo/downloads)
   * **Issue Tracker**: [http://croogo.lighthouseapp.com](http://croogo.lighthouseapp.com)
   * **Wiki**: [http://wiki.croogo.org](http://wiki.croogo.org)
   * **Google Group**: [http://groups.google.com/group/croogo](http://groups.google.com/group/croogo)
+  * **Fahad's Blog**: [http://fahad19.com/blog/term/croogo](http://fahad19.com/blog/term/croogo)
   * **IRC Channel**: #croogo on irc.freenode.net
