@@ -95,7 +95,12 @@ class InstallShellTest extends CroogoTestCase {
 			->will($this->returnCallback(array($this, 'callbackDownloadPlugin')));
 		$Shell->expects($this->once())
 			->method('dispatchShell')
-			->with(array('ext', 'activate', 'plugin', 'Example'))
+			->with(
+				$this->equalTo('ext'),
+				$this->equalTo('activate'),
+				$this->equalTo('plugin'),
+				$this->equalTo('Example')
+			)
 			->will($this->returnValue(true));
 		$Shell->args = array('plugin', 'shama', 'croogo');
 		$Shell->main();
@@ -113,7 +118,12 @@ class InstallShellTest extends CroogoTestCase {
 			->will($this->returnCallback(array($this, 'callbackDownloadTheme')));
 		$Shell->expects($this->once())
 			->method('dispatchShell')
-			->with(array('ext', 'activate', 'theme', 'Minimal'))
+			->with(
+				$this->equalTo('ext'),
+				$this->equalTo('activate'),
+				$this->equalTo('theme'),
+				$this->equalTo('Minimal')
+			)
 			->will($this->returnValue(true));
 		$Shell->args = array('theme', 'shama', 'mytheme');
 		$Shell->main();
@@ -142,7 +152,7 @@ class InstallShellTest extends CroogoTestCase {
  */
 	public function callbackDownloadPlugin() {
 		$argOne = func_get_arg(0);
-		preg_match('/ -o (.+)/', $argOne, $zip);
+		preg_match('/ -o (.+) /', $argOne, $zip);
 		$dest = $zip[1];
 		$src = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_plugin.zip';
 		copy($src, $dest);
@@ -154,7 +164,7 @@ class InstallShellTest extends CroogoTestCase {
  */
 	public function callbackDownloadTheme() {
 		$argOne = func_get_arg(0);
-		preg_match('/ -o (.+)/', $argOne, $zip);
+		preg_match('/ -o (.+) /', $argOne, $zip);
 		$dest = $zip[1];
 		$src = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_theme.zip';
 		copy($src, $dest);

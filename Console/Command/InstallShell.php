@@ -98,7 +98,7 @@ class InstallShell extends AppShell {
 	protected function _activate($type = null, $zip = null) {
 		try {
 			$ext = $this->_ExtensionsInstaller->{'get' . ucfirst($type) . 'Name'}($zip);
-			$this->dispatchShell(array('ext', 'activate', $type, $ext));
+			$this->dispatchShell('ext', 'activate', $type, $ext);
 			return true;
 		} catch (CakeException $e) {
 			$this->err($e->getMessage());
