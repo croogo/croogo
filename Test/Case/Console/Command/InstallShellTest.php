@@ -44,6 +44,15 @@ class TestInstallShell extends InstallShell {
 class InstallShellTest extends CroogoTestCase {
 
 /**
+ * fixtures
+ *
+ * @var array
+ */
+	public $fixtures = array(
+		'app.setting',
+	);
+
+/**
  * setUp method
  *
  * @return void
