@@ -5,8 +5,11 @@ App::uses('Controller', 'Controller');
 App::uses('CroogoTestCase', 'TestSuite');
 
 class TheLayoutTestController extends Controller {
-	var $name = 'TheTest';
-	var $uses = null;
+
+	public $name = 'TheTest';
+
+	public $uses = null;
+
 }
 
 class HtmlHelperTest extends CroogoTestCase {
@@ -18,7 +21,7 @@ class HtmlHelperTest extends CroogoTestCase {
 /**
  * setUp
  */
-	function setUp() {
+	public function setUp() {
 		parent::setUp();
 		$this->ComponentCollection = new ComponentCollection();
 
@@ -38,7 +41,7 @@ class HtmlHelperTest extends CroogoTestCase {
 /**
  * tearDown
  */
-	function tearDown() {
+	public function tearDown() {
 		Configure::write('App.encoding', $this->_appEncoding);
 		Configure::write('Asset', $this->_asset);
 		Configure::write('debug', $this->_debug);

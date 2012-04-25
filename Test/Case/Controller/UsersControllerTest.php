@@ -22,7 +22,7 @@ class TestUsersController extends UsersController {
 		}
 	}
 
-	public function _stop($status = 0) {
+	protected function _stop($status = 0) {
 		$this->stopped = $status;
 	}
 
@@ -113,7 +113,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  *
  * @return void
  */
-	function testAdminIndex() {
+	public function testAdminIndex() {
 		$this->testAction('/admin/users/index');
 		$this->assertNotEmpty($this->vars['displayFields']);
 		$this->assertNotEmpty($this->vars['users']);

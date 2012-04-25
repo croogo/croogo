@@ -22,7 +22,7 @@ class TestRolesController extends RolesController {
 		}
 	}
 
-	public function _stop($status = 0) {
+	protected function _stop($status = 0) {
 		$this->stopped = $status;
 	}
 
