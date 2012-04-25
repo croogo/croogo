@@ -132,11 +132,9 @@ class User extends AppModel {
 					'User.status' => true,
 					)
 				));
-			if ($count >= 1) {
-				return true;
-			}
+			return ($count > 0);
 		}
-		return false;
+		return true;
 	}
 
 	public function beforeSave($options = array()) {

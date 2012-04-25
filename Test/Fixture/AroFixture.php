@@ -61,5 +61,14 @@ class AroFixture extends CroogoTestFixture {
 			'lft' => 4,
 			'rght' => 5
 		),
+		array(
+			'id' => 7,
+			'parent_id' => 1,
+			'model' => 'User',
+			'foreign_key' => 3,
+			'alias' => '',
+			'lft' => 6,
+			'rght' => 7,
+		),
 	);
 }

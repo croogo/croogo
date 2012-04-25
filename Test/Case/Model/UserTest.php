@@ -314,4 +314,50 @@ class UserTest extends CroogoTestCase {
 		$this->assertEquals($expected, $result);
 	}
 
+/**
+ * testDeleteAdminUsers
+ */
+	public function testDeleteAdminUsers() {
+		// delete an admin
+		$this->User->id = 2;
+		$result = $this->User->delete();
+		$this->assertTrue($result);
+
+		// delete last remaining admin
+		$this->User->id = 1;
+		$result = $this->User->delete();
+		$this->assertFalse($result);
+
+		// delete normal user
+		$this->User->id = 3;
+		$result = $this->User->delete();
+		$this->assertTrue($result);
+
+		$count = $this->User->find('count');
+		$this->assertEquals(1, $count);
+	}
+
+/**
+ * testDeleteUsers
+ */
+	public function testDeleteUsers() {
+		// delete normal user
+		$this->User->id = 3;
+		$result = $this->User->delete();
+		$this->assertTrue($result);
+
+		// delete an admin
+		$this->User->id = 2;
+		$result = $this->User->delete();
+		$this->assertTrue($result);
+
+		// delete last remaining admin
+		$this->User->id = 1;
+		$result = $this->User->delete();
+		$this->assertFalse($result);
+
+		$count = $this->User->find('count');
+		$this->assertEquals(1, $count);
+	}
+
 }
