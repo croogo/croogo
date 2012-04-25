@@ -1,12 +1,13 @@
 <?php
-/* ArosAco Fixture generated on: 2010-05-20 22:05:27 : 1274393787 */
-class ArosAcoFixture extends CroogoTestFixture {
-	var $name = 'ArosAco';
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
-		'aro_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10),
-		'aco_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10),
+class ArosAcoFixture extends CroogoTestFixture {
+
+	public $name = 'ArosAco';
+
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
+		'aro_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10),
+		'aco_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10),
 		'_create' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2),
 		'_read' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2),
 		'_update' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2),
@@ -15,7 +16,7 @@ class ArosAcoFixture extends CroogoTestFixture {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => 1,
 			'aro_id' => 2,

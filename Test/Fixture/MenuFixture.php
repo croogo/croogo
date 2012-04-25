@@ -1,19 +1,20 @@
 <?php
-/* Menu Fixture generated on: 2010-05-20 22:05:41 : 1274393801 */
-class MenuFixture extends CroogoTestFixture {
-	var $name = 'Menu';
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
-		'title' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'alias' => array('type' => 'string', 'null' => false, 'default' => NULL, 'key' => 'unique'),
-		'description' => array('type' => 'text', 'null' => true, 'default' => NULL),
+class MenuFixture extends CroogoTestFixture {
+
+	public $name = 'Menu';
+
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
+		'title' => array('type' => 'string', 'null' => false, 'default' => null),
+		'alias' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique'),
+		'description' => array('type' => 'text', 'null' => true, 'default' => null),
 		'status' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-		'weight' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'link_count' => array('type' => 'integer', 'null' => false, 'default' => NULL),
-		'params' => array('type' => 'text', 'null' => true, 'default' => NULL),
-		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
-		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
+		'weight' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'link_count' => array('type' => 'integer', 'null' => false, 'default' => null),
+		'params' => array('type' => 'text', 'null' => true, 'default' => null),
+		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'menu_alias' => array('column' => 'alias', 'unique' => 1),
@@ -21,14 +22,14 @@ class MenuFixture extends CroogoTestFixture {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => 3,
 			'title' => 'Main Menu',
 			'alias' => 'main',
 			'description' => '',
 			'status' => 1,
-			'weight' => NULL,
+			'weight' => null,
 			'link_count' => 4,
 			'params' => '',
 			'updated' => '2009-08-19 12:21:06',
@@ -40,7 +41,7 @@ class MenuFixture extends CroogoTestFixture {
 			'alias' => 'footer',
 			'description' => '',
 			'status' => 1,
-			'weight' => NULL,
+			'weight' => null,
 			'link_count' => 2,
 			'params' => '',
 			'updated' => '2009-08-19 12:22:42',
@@ -52,7 +53,7 @@ class MenuFixture extends CroogoTestFixture {
 			'alias' => 'meta',
 			'description' => '',
 			'status' => 1,
-			'weight' => NULL,
+			'weight' => null,
 			'link_count' => 4,
 			'params' => '',
 			'updated' => '2009-09-12 06:33:29',
@@ -64,7 +65,7 @@ class MenuFixture extends CroogoTestFixture {
 			'alias' => 'blogroll',
 			'description' => '',
 			'status' => 1,
-			'weight' => NULL,
+			'weight' => null,
 			'link_count' => 2,
 			'params' => '',
 			'updated' => '2009-09-12 23:30:24',

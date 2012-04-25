@@ -1,38 +1,39 @@
 <?php
-/* Node Fixture generated on: 2010-05-20 22:05:47 : 1274393807 */
-class NodeFixture extends CroogoTestFixture {
-	var $name = 'Node';
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 20, 'key' => 'primary'),
-		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 20),
+class NodeFixture extends CroogoTestFixture {
+
+	public $name = 'Node';
+
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'primary'),
+		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 20),
 		'user_id' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 20),
-		'title' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'slug' => array('type' => 'string', 'null' => false, 'default' => NULL, 'key' => 'unique'),
-		'body' => array('type' => 'text', 'null' => false, 'default' => NULL, 'key' => 'index'),
-		'excerpt' => array('type' => 'text', 'null' => true, 'default' => NULL),
+		'title' => array('type' => 'string', 'null' => false, 'default' => null),
+		'slug' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique'),
+		'body' => array('type' => 'text', 'null' => false, 'default' => null, 'key' => 'index'),
+		'excerpt' => array('type' => 'text', 'null' => true, 'default' => null),
 		'status' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'mime_type' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100),
+		'mime_type' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 100),
 		'comment_status' => array('type' => 'integer', 'null' => false, 'default' => '1', 'length' => 1),
 		'comment_count' => array('type' => 'integer', 'null' => true, 'default' => '0'),
 		'promote' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'path' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'terms' => array('type' => 'text', 'null' => true, 'default' => NULL),
+		'path' => array('type' => 'string', 'null' => false, 'default' => null),
+		'terms' => array('type' => 'text', 'null' => true, 'default' => null),
 		'sticky' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'lft' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'rght' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'visibility_roles' => array('type' => 'text', 'null' => true, 'default' => NULL),
+		'lft' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'rght' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'visibility_roles' => array('type' => 'text', 'null' => true, 'default' => null),
 		'type' => array('type' => 'string', 'null' => false, 'default' => 'node', 'length' => 100),
-		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
-		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
+		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'slug' => array('column' => 'slug', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => 1,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'user_id' => 1,
 			'title' => 'Hello World',
 			'slug' => 'hello-world',
@@ -55,7 +56,7 @@ class NodeFixture extends CroogoTestFixture {
 		),
 		array(
 			'id' => 2,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'user_id' => 1,
 			'title' => 'About',
 			'slug' => 'about',

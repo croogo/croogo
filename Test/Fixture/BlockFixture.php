@@ -1,30 +1,31 @@
 <?php
-/* Block Fixture generated on: 2010-05-20 22:05:30 : 1274393790 */
-class BlockFixture extends CroogoTestFixture {
-	var $name = 'Block';
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 20, 'key' => 'primary'),
-		'region_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 20),
-		'title' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
-		'alias' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'key' => 'unique'),
-		'body' => array('type' => 'text', 'null' => false, 'default' => NULL),
+class BlockFixture extends CroogoTestFixture {
+
+	public $name = 'Block';
+
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'primary'),
+		'region_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 20),
+		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100),
+		'alias' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 100, 'key' => 'unique'),
+		'body' => array('type' => 'text', 'null' => false, 'default' => null),
 		'show_title' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-		'class' => array('type' => 'string', 'null' => true, 'default' => NULL),
+		'class' => array('type' => 'string', 'null' => true, 'default' => null),
 		'status' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'weight' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'element' => array('type' => 'string', 'null' => true, 'default' => NULL),
-		'visibility_roles' => array('type' => 'text', 'null' => true, 'default' => NULL),
-		'visibility_paths' => array('type' => 'text', 'null' => true, 'default' => NULL),
-		'visibility_php' => array('type' => 'text', 'null' => true, 'default' => NULL),
-		'params' => array('type' => 'text', 'null' => true, 'default' => NULL),
-		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
-		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
+		'weight' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'element' => array('type' => 'string', 'null' => true, 'default' => null),
+		'visibility_roles' => array('type' => 'text', 'null' => true, 'default' => null),
+		'visibility_paths' => array('type' => 'text', 'null' => true, 'default' => null),
+		'visibility_php' => array('type' => 'text', 'null' => true, 'default' => null),
+		'params' => array('type' => 'text', 'null' => true, 'default' => null),
+		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'alias' => array('column' => 'alias', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => 3,
 			'region_id' => 4,

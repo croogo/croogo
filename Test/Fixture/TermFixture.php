@@ -1,15 +1,16 @@
 <?php
-/* Term Fixture generated on: 2010-05-20 22:05:52 : 1274393812 */
-class TermFixture extends CroogoTestFixture {
-	var $name = 'Term';
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
-		'title' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'slug' => array('type' => 'string', 'null' => false, 'default' => NULL, 'key' => 'unique'),
-		'description' => array('type' => 'text', 'null' => false, 'default' => NULL),
-		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
-		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
+class TermFixture extends CroogoTestFixture {
+
+	public $name = 'Term';
+
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
+		'title' => array('type' => 'string', 'null' => false, 'default' => null),
+		'slug' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique'),
+		'description' => array('type' => 'text', 'null' => false, 'default' => null),
+		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'term_slug' => array('column' => 'slug', 'unique' => 1),
@@ -17,7 +18,7 @@ class TermFixture extends CroogoTestFixture {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => 1,
 			'title' => 'Uncategorized',

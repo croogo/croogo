@@ -1,23 +1,24 @@
 <?php
-/* Type Fixture generated on: 2010-05-20 22:05:54 : 1274393814 */
-class TypeFixture extends CroogoTestFixture {
-	var $name = 'Type';
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
-		'title' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'alias' => array('type' => 'string', 'null' => false, 'default' => NULL, 'key' => 'unique'),
-		'description' => array('type' => 'text', 'null' => false, 'default' => NULL),
+class TypeFixture extends CroogoTestFixture {
+
+	public $name = 'Type';
+
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
+		'title' => array('type' => 'string', 'null' => false, 'default' => null),
+		'alias' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique'),
+		'description' => array('type' => 'text', 'null' => false, 'default' => null),
 		'format_show_author' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 		'format_show_date' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 		'comment_status' => array('type' => 'integer', 'null' => false, 'default' => '1', 'length' => 1),
 		'comment_approve' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 		'comment_spam_protection' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'comment_captcha' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'params' => array('type' => 'text', 'null' => true, 'default' => NULL),
-		'plugin' => array('type' => 'string', 'null' => true, 'default' => NULL),
-		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
-		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
+		'params' => array('type' => 'text', 'null' => true, 'default' => null),
+		'plugin' => array('type' => 'string', 'null' => true, 'default' => null),
+		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'type_alias' => array('column' => 'alias', 'unique' => 1),
@@ -25,7 +26,7 @@ class TypeFixture extends CroogoTestFixture {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => 1,
 			'title' => 'Page',

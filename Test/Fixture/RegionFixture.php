@@ -1,13 +1,14 @@
 <?php
-/* Region Fixture generated on: 2010-05-20 22:05:48 : 1274393808 */
-class RegionFixture extends CroogoTestFixture {
-	var $name = 'Region';
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'title' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
-		'alias' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100, 'key' => 'unique'),
-		'description' => array('type' => 'text', 'null' => false, 'default' => NULL),
+class RegionFixture extends CroogoTestFixture {
+
+	public $name = 'Region';
+
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
+		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100),
+		'alias' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100, 'key' => 'unique'),
+		'description' => array('type' => 'text', 'null' => false, 'default' => null),
 		'block_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
@@ -16,7 +17,7 @@ class RegionFixture extends CroogoTestFixture {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => 3,
 			'title' => 'none',

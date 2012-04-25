@@ -1,26 +1,27 @@
 <?php
-/* Aco Fixture generated on: 2010-05-20 22:05:26 : 1274393786 */
-class AcoFixture extends CroogoTestFixture {
-	var $name = 'Aco';
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
-		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
+class AcoFixture extends CroogoTestFixture {
+
+	public $name = 'Aco';
+
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
+		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 10),
 		'model' => array('type' => 'string', 'null' => true),
-		'foreign_key' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
+		'foreign_key' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 10),
 		'alias' => array('type' => 'string', 'null' => true),
-		'lft' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
-		'rght' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
+		'lft' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 10),
+		'rght' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 10),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => 1,
-			'parent_id' => NULL,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'parent_id' => null,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'controllers',
 			'lft' => 1,
 			'rght' => 352
@@ -28,8 +29,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 2,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Attachments',
 			'lft' => 2,
 			'rght' => 13
@@ -37,8 +38,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 3,
 			'parent_id' => 2,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 3,
 			'rght' => 4
@@ -46,8 +47,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 4,
 			'parent_id' => 2,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 5,
 			'rght' => 6
@@ -55,8 +56,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 5,
 			'parent_id' => 2,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 7,
 			'rght' => 8
@@ -64,8 +65,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 6,
 			'parent_id' => 2,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 9,
 			'rght' => 10
@@ -73,8 +74,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 7,
 			'parent_id' => 2,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_browse',
 			'lft' => 11,
 			'rght' => 12
@@ -82,8 +83,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 8,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Blocks',
 			'lft' => 14,
 			'rght' => 29
@@ -91,8 +92,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 9,
 			'parent_id' => 8,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 15,
 			'rght' => 16
@@ -100,8 +101,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 10,
 			'parent_id' => 8,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 17,
 			'rght' => 18
@@ -109,8 +110,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 11,
 			'parent_id' => 8,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 19,
 			'rght' => 20
@@ -118,8 +119,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 12,
 			'parent_id' => 8,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 21,
 			'rght' => 22
@@ -127,8 +128,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 13,
 			'parent_id' => 8,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_moveup',
 			'lft' => 23,
 			'rght' => 24
@@ -136,8 +137,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 14,
 			'parent_id' => 8,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_movedown',
 			'lft' => 25,
 			'rght' => 26
@@ -145,8 +146,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 15,
 			'parent_id' => 8,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_process',
 			'lft' => 27,
 			'rght' => 28
@@ -154,8 +155,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 16,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Comments',
 			'lft' => 30,
 			'rght' => 45
@@ -163,8 +164,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 17,
 			'parent_id' => 16,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 31,
 			'rght' => 32
@@ -172,8 +173,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 18,
 			'parent_id' => 16,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 33,
 			'rght' => 34
@@ -181,8 +182,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 19,
 			'parent_id' => 16,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 35,
 			'rght' => 36
@@ -190,8 +191,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 20,
 			'parent_id' => 16,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_process',
 			'lft' => 37,
 			'rght' => 38
@@ -199,8 +200,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 21,
 			'parent_id' => 16,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'index',
 			'lft' => 39,
 			'rght' => 40
@@ -208,8 +209,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 22,
 			'parent_id' => 16,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'add',
 			'lft' => 41,
 			'rght' => 42
@@ -217,8 +218,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 23,
 			'parent_id' => 16,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'delete',
 			'lft' => 43,
 			'rght' => 44
@@ -226,8 +227,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 24,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Contacts',
 			'lft' => 46,
 			'rght' => 57
@@ -235,8 +236,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 25,
 			'parent_id' => 24,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 47,
 			'rght' => 48
@@ -244,8 +245,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 26,
 			'parent_id' => 24,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 49,
 			'rght' => 50
@@ -253,8 +254,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 27,
 			'parent_id' => 24,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 51,
 			'rght' => 52
@@ -262,8 +263,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 28,
 			'parent_id' => 24,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 53,
 			'rght' => 54
@@ -271,8 +272,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 29,
 			'parent_id' => 24,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'view',
 			'lft' => 55,
 			'rght' => 56
@@ -280,8 +281,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 30,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Filemanager',
 			'lft' => 58,
 			'rght' => 79
@@ -289,8 +290,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 31,
 			'parent_id' => 30,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 59,
 			'rght' => 60
@@ -298,8 +299,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 32,
 			'parent_id' => 30,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_browse',
 			'lft' => 61,
 			'rght' => 62
@@ -307,8 +308,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 33,
 			'parent_id' => 30,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_editfile',
 			'lft' => 63,
 			'rght' => 64
@@ -316,8 +317,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 34,
 			'parent_id' => 30,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_upload',
 			'lft' => 65,
 			'rght' => 66
@@ -325,8 +326,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 35,
 			'parent_id' => 30,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete_file',
 			'lft' => 67,
 			'rght' => 68
@@ -334,8 +335,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 36,
 			'parent_id' => 30,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete_directory',
 			'lft' => 69,
 			'rght' => 70
@@ -343,8 +344,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 37,
 			'parent_id' => 30,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_rename',
 			'lft' => 71,
 			'rght' => 72
@@ -352,8 +353,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 38,
 			'parent_id' => 30,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_create_directory',
 			'lft' => 73,
 			'rght' => 74
@@ -361,8 +362,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 39,
 			'parent_id' => 30,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_create_file',
 			'lft' => 75,
 			'rght' => 76
@@ -370,8 +371,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 40,
 			'parent_id' => 30,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_chmod',
 			'lft' => 77,
 			'rght' => 78
@@ -379,8 +380,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 41,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Languages',
 			'lft' => 80,
 			'rght' => 95
@@ -388,8 +389,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 42,
 			'parent_id' => 41,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 81,
 			'rght' => 82
@@ -397,8 +398,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 43,
 			'parent_id' => 41,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 83,
 			'rght' => 84
@@ -406,8 +407,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 44,
 			'parent_id' => 41,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 85,
 			'rght' => 86
@@ -415,8 +416,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 45,
 			'parent_id' => 41,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 87,
 			'rght' => 88
@@ -424,8 +425,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 46,
 			'parent_id' => 41,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_moveup',
 			'lft' => 89,
 			'rght' => 90
@@ -433,8 +434,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 47,
 			'parent_id' => 41,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_movedown',
 			'lft' => 91,
 			'rght' => 92
@@ -442,8 +443,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 48,
 			'parent_id' => 41,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_select',
 			'lft' => 93,
 			'rght' => 94
@@ -451,8 +452,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 49,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Links',
 			'lft' => 96,
 			'rght' => 111
@@ -460,8 +461,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 50,
 			'parent_id' => 49,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 97,
 			'rght' => 98
@@ -469,8 +470,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 51,
 			'parent_id' => 49,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 99,
 			'rght' => 100
@@ -478,8 +479,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 52,
 			'parent_id' => 49,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 101,
 			'rght' => 102
@@ -487,8 +488,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 53,
 			'parent_id' => 49,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 103,
 			'rght' => 104
@@ -496,8 +497,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 54,
 			'parent_id' => 49,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_moveup',
 			'lft' => 105,
 			'rght' => 106
@@ -505,8 +506,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 55,
 			'parent_id' => 49,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_movedown',
 			'lft' => 107,
 			'rght' => 108
@@ -514,8 +515,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 56,
 			'parent_id' => 49,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_process',
 			'lft' => 109,
 			'rght' => 110
@@ -523,8 +524,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 57,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Menus',
 			'lft' => 112,
 			'rght' => 121
@@ -532,8 +533,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 58,
 			'parent_id' => 57,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 113,
 			'rght' => 114
@@ -541,8 +542,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 59,
 			'parent_id' => 57,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 115,
 			'rght' => 116
@@ -550,8 +551,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 60,
 			'parent_id' => 57,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 117,
 			'rght' => 118
@@ -559,8 +560,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 61,
 			'parent_id' => 57,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 119,
 			'rght' => 120
@@ -568,8 +569,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 62,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Messages',
 			'lft' => 122,
 			'rght' => 131
@@ -577,8 +578,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 63,
 			'parent_id' => 62,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 123,
 			'rght' => 124
@@ -586,8 +587,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 64,
 			'parent_id' => 62,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 125,
 			'rght' => 126
@@ -595,8 +596,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 65,
 			'parent_id' => 62,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 127,
 			'rght' => 128
@@ -604,8 +605,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 66,
 			'parent_id' => 62,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_process',
 			'lft' => 129,
 			'rght' => 130
@@ -613,8 +614,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 67,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Nodes',
 			'lft' => 132,
 			'rght' => 161
@@ -622,8 +623,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 68,
 			'parent_id' => 67,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 133,
 			'rght' => 134
@@ -631,8 +632,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 69,
 			'parent_id' => 67,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_create',
 			'lft' => 135,
 			'rght' => 136
@@ -640,8 +641,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 70,
 			'parent_id' => 67,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 137,
 			'rght' => 138
@@ -649,8 +650,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 71,
 			'parent_id' => 67,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 139,
 			'rght' => 140
@@ -658,8 +659,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 72,
 			'parent_id' => 67,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_update_paths',
 			'lft' => 141,
 			'rght' => 142
@@ -667,8 +668,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 73,
 			'parent_id' => 67,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 143,
 			'rght' => 144
@@ -676,8 +677,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 74,
 			'parent_id' => 67,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete_meta',
 			'lft' => 145,
 			'rght' => 146
@@ -685,8 +686,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 75,
 			'parent_id' => 67,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add_meta',
 			'lft' => 147,
 			'rght' => 148
@@ -694,8 +695,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 76,
 			'parent_id' => 67,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_process',
 			'lft' => 149,
 			'rght' => 150
@@ -703,8 +704,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 77,
 			'parent_id' => 67,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'index',
 			'lft' => 151,
 			'rght' => 152
@@ -712,8 +713,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 78,
 			'parent_id' => 67,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'term',
 			'lft' => 153,
 			'rght' => 154
@@ -721,8 +722,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 79,
 			'parent_id' => 67,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'promoted',
 			'lft' => 155,
 			'rght' => 156
@@ -730,8 +731,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 80,
 			'parent_id' => 67,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'search',
 			'lft' => 157,
 			'rght' => 158
@@ -739,8 +740,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 81,
 			'parent_id' => 67,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'view',
 			'lft' => 159,
 			'rght' => 160
@@ -748,8 +749,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 82,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Regions',
 			'lft' => 162,
 			'rght' => 171
@@ -757,8 +758,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 83,
 			'parent_id' => 82,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 163,
 			'rght' => 164
@@ -766,8 +767,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 84,
 			'parent_id' => 82,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 165,
 			'rght' => 166
@@ -775,8 +776,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 85,
 			'parent_id' => 82,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 167,
 			'rght' => 168
@@ -784,8 +785,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 86,
 			'parent_id' => 82,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 169,
 			'rght' => 170
@@ -793,8 +794,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 87,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Roles',
 			'lft' => 172,
 			'rght' => 181
@@ -802,8 +803,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 88,
 			'parent_id' => 87,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 173,
 			'rght' => 174
@@ -811,8 +812,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 89,
 			'parent_id' => 87,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 175,
 			'rght' => 176
@@ -820,8 +821,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 90,
 			'parent_id' => 87,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 177,
 			'rght' => 178
@@ -829,8 +830,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 91,
 			'parent_id' => 87,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 179,
 			'rght' => 180
@@ -838,8 +839,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 92,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Settings',
 			'lft' => 182,
 			'rght' => 201
@@ -847,8 +848,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 93,
 			'parent_id' => 92,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_dashboard',
 			'lft' => 183,
 			'rght' => 184
@@ -856,8 +857,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 94,
 			'parent_id' => 92,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 185,
 			'rght' => 186
@@ -865,8 +866,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 95,
 			'parent_id' => 92,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_view',
 			'lft' => 187,
 			'rght' => 188
@@ -874,8 +875,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 96,
 			'parent_id' => 92,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 189,
 			'rght' => 190
@@ -883,8 +884,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 97,
 			'parent_id' => 92,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 191,
 			'rght' => 192
@@ -892,8 +893,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 98,
 			'parent_id' => 92,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 193,
 			'rght' => 194
@@ -901,8 +902,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 99,
 			'parent_id' => 92,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_prefix',
 			'lft' => 195,
 			'rght' => 196
@@ -910,8 +911,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 100,
 			'parent_id' => 92,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_moveup',
 			'lft' => 197,
 			'rght' => 198
@@ -919,8 +920,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 101,
 			'parent_id' => 92,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_movedown',
 			'lft' => 199,
 			'rght' => 200
@@ -928,8 +929,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 102,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Terms',
 			'lft' => 202,
 			'rght' => 217
@@ -937,8 +938,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 103,
 			'parent_id' => 102,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 203,
 			'rght' => 204
@@ -946,8 +947,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 104,
 			'parent_id' => 102,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 205,
 			'rght' => 206
@@ -955,8 +956,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 105,
 			'parent_id' => 102,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 207,
 			'rght' => 208
@@ -964,8 +965,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 106,
 			'parent_id' => 102,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 209,
 			'rght' => 210
@@ -973,8 +974,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 107,
 			'parent_id' => 102,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_moveup',
 			'lft' => 211,
 			'rght' => 212
@@ -982,8 +983,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 108,
 			'parent_id' => 102,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_movedown',
 			'lft' => 213,
 			'rght' => 214
@@ -991,8 +992,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 109,
 			'parent_id' => 102,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_process',
 			'lft' => 215,
 			'rght' => 216
@@ -1000,8 +1001,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 110,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Types',
 			'lft' => 218,
 			'rght' => 227
@@ -1009,8 +1010,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 111,
 			'parent_id' => 110,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 219,
 			'rght' => 220
@@ -1018,8 +1019,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 112,
 			'parent_id' => 110,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 221,
 			'rght' => 222
@@ -1027,8 +1028,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 113,
 			'parent_id' => 110,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 223,
 			'rght' => 224
@@ -1036,8 +1037,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 114,
 			'parent_id' => 110,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 225,
 			'rght' => 226
@@ -1045,8 +1046,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 115,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Users',
 			'lft' => 228,
 			'rght' => 261
@@ -1054,8 +1055,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 116,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 229,
 			'rght' => 230
@@ -1063,8 +1064,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 117,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 231,
 			'rght' => 232
@@ -1072,8 +1073,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 118,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 233,
 			'rght' => 234
@@ -1081,8 +1082,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 119,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_reset_password',
 			'lft' => 235,
 			'rght' => 236
@@ -1090,8 +1091,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 120,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 237,
 			'rght' => 238
@@ -1099,8 +1100,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 121,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_login',
 			'lft' => 239,
 			'rght' => 240
@@ -1108,8 +1109,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 122,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_logout',
 			'lft' => 241,
 			'rght' => 242
@@ -1117,8 +1118,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 123,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'index',
 			'lft' => 243,
 			'rght' => 244
@@ -1126,8 +1127,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 124,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'add',
 			'lft' => 245,
 			'rght' => 246
@@ -1135,8 +1136,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 125,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'activate',
 			'lft' => 247,
 			'rght' => 248
@@ -1144,8 +1145,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 126,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'edit',
 			'lft' => 249,
 			'rght' => 250
@@ -1153,8 +1154,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 127,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'forgot',
 			'lft' => 251,
 			'rght' => 252
@@ -1162,8 +1163,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 128,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'reset',
 			'lft' => 253,
 			'rght' => 254
@@ -1171,8 +1172,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 129,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'login',
 			'lft' => 255,
 			'rght' => 256
@@ -1180,8 +1181,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 130,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'logout',
 			'lft' => 257,
 			'rght' => 258
@@ -1189,8 +1190,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 131,
 			'parent_id' => 115,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'view',
 			'lft' => 259,
 			'rght' => 260
@@ -1198,8 +1199,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 132,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'Vocabularies',
 			'lft' => 262,
 			'rght' => 271
@@ -1207,8 +1208,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 133,
 			'parent_id' => 132,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 263,
 			'rght' => 264
@@ -1216,8 +1217,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 134,
 			'parent_id' => 132,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 265,
 			'rght' => 266
@@ -1225,8 +1226,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 135,
 			'parent_id' => 132,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 267,
 			'rght' => 268
@@ -1234,8 +1235,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 136,
 			'parent_id' => 132,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 269,
 			'rght' => 270
@@ -1243,8 +1244,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 137,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'AclAcos',
 			'lft' => 272,
 			'rght' => 281
@@ -1252,8 +1253,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 138,
 			'parent_id' => 137,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 273,
 			'rght' => 274
@@ -1261,8 +1262,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 139,
 			'parent_id' => 137,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 275,
 			'rght' => 276
@@ -1270,8 +1271,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 140,
 			'parent_id' => 137,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 277,
 			'rght' => 278
@@ -1279,8 +1280,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 141,
 			'parent_id' => 137,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 279,
 			'rght' => 280
@@ -1288,8 +1289,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 142,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'AclActions',
 			'lft' => 282,
 			'rght' => 295
@@ -1297,8 +1298,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 143,
 			'parent_id' => 142,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 283,
 			'rght' => 284
@@ -1306,8 +1307,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 144,
 			'parent_id' => 142,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 285,
 			'rght' => 286
@@ -1315,8 +1316,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 145,
 			'parent_id' => 142,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 287,
 			'rght' => 288
@@ -1324,8 +1325,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 146,
 			'parent_id' => 142,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 289,
 			'rght' => 290
@@ -1333,8 +1334,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 147,
 			'parent_id' => 142,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_move',
 			'lft' => 291,
 			'rght' => 292
@@ -1342,8 +1343,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 148,
 			'parent_id' => 142,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_generate',
 			'lft' => 293,
 			'rght' => 294
@@ -1351,8 +1352,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 149,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'AclAros',
 			'lft' => 296,
 			'rght' => 305
@@ -1360,8 +1361,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 150,
 			'parent_id' => 149,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 297,
 			'rght' => 298
@@ -1369,8 +1370,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 151,
 			'parent_id' => 149,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 299,
 			'rght' => 300
@@ -1378,8 +1379,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 152,
 			'parent_id' => 149,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 301,
 			'rght' => 302
@@ -1387,8 +1388,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 153,
 			'parent_id' => 149,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 303,
 			'rght' => 304
@@ -1396,8 +1397,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 154,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'AclPermissions',
 			'lft' => 306,
 			'rght' => 311
@@ -1405,8 +1406,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 155,
 			'parent_id' => 154,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 307,
 			'rght' => 308
@@ -1414,8 +1415,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 156,
 			'parent_id' => 154,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_toggle',
 			'lft' => 309,
 			'rght' => 310
@@ -1423,8 +1424,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 159,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'ExtensionsHooks',
 			'lft' => 312,
 			'rght' => 317
@@ -1432,8 +1433,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 160,
 			'parent_id' => 159,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 313,
 			'rght' => 314
@@ -1441,8 +1442,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 161,
 			'parent_id' => 159,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_toggle',
 			'lft' => 315,
 			'rght' => 316
@@ -1450,8 +1451,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 162,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'ExtensionsLocales',
 			'lft' => 318,
 			'rght' => 329
@@ -1459,8 +1460,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 163,
 			'parent_id' => 162,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 319,
 			'rght' => 320
@@ -1468,8 +1469,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 164,
 			'parent_id' => 162,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_activate',
 			'lft' => 321,
 			'rght' => 322
@@ -1477,8 +1478,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 165,
 			'parent_id' => 162,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 323,
 			'rght' => 324
@@ -1486,8 +1487,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 166,
 			'parent_id' => 162,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_edit',
 			'lft' => 325,
 			'rght' => 326
@@ -1495,8 +1496,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 167,
 			'parent_id' => 162,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 327,
 			'rght' => 328
@@ -1504,8 +1505,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 168,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'ExtensionsPlugins',
 			'lft' => 330,
 			'rght' => 337
@@ -1513,8 +1514,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 169,
 			'parent_id' => 168,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 331,
 			'rght' => 332
@@ -1522,8 +1523,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 170,
 			'parent_id' => 168,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 333,
 			'rght' => 334
@@ -1531,8 +1532,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 171,
 			'parent_id' => 168,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 335,
 			'rght' => 336
@@ -1540,8 +1541,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 172,
 			'parent_id' => 1,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'ExtensionsThemes',
 			'lft' => 338,
 			'rght' => 351
@@ -1549,8 +1550,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 173,
 			'parent_id' => 172,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_index',
 			'lft' => 339,
 			'rght' => 340
@@ -1558,8 +1559,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 174,
 			'parent_id' => 172,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_activate',
 			'lft' => 341,
 			'rght' => 342
@@ -1567,8 +1568,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 175,
 			'parent_id' => 172,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_add',
 			'lft' => 343,
 			'rght' => 344
@@ -1576,8 +1577,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 176,
 			'parent_id' => 172,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_editor',
 			'lft' => 345,
 			'rght' => 346
@@ -1585,8 +1586,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 177,
 			'parent_id' => 172,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_save',
 			'lft' => 347,
 			'rght' => 348
@@ -1594,8 +1595,8 @@ class AcoFixture extends CroogoTestFixture {
 		array(
 			'id' => 178,
 			'parent_id' => 172,
-			'model' => NULL,
-			'foreign_key' => NULL,
+			'model' => null,
+			'foreign_key' => null,
 			'alias' => 'admin_delete',
 			'lft' => 349,
 			'rght' => 350

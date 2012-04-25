@@ -1,28 +1,29 @@
 <?php
-/* User Fixture generated on: 2010-05-20 22:05:57 : 1274393817 */
-class UserFixture extends CroogoTestFixture {
-	var $name = 'User';
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 20, 'key' => 'primary'),
-		'role_id' => array('type' => 'integer', 'null' => false, 'default' => NULL),
-		'username' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 60),
-		'password' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
-		'name' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 50),
-		'email' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
-		'website' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100),
-		'activation_key' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 60),
-		'image' => array('type' => 'string', 'null' => true, 'default' => NULL),
-		'bio' => array('type' => 'text', 'null' => true, 'default' => NULL),
+class UserFixture extends CroogoTestFixture {
+
+	public $name = 'User';
+
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'primary'),
+		'role_id' => array('type' => 'integer', 'null' => false, 'default' => null),
+		'username' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 60),
+		'password' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100),
+		'name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50),
+		'email' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100),
+		'website' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 100),
+		'activation_key' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 60),
+		'image' => array('type' => 'string', 'null' => true, 'default' => null),
+		'bio' => array('type' => 'text', 'null' => true, 'default' => null),
 		'timezone' => array('type' => 'string', 'null' => true, 'default' => '0', 'length' => 10),
 		'status' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
-		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
+		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => 1,
 			'role_id' => 1,

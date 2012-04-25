@@ -1,24 +1,25 @@
 <?php
-/* Aro Fixture generated on: 2010-05-20 22:05:26 : 1274393786 */
-class AroFixture extends CroogoTestFixture {
-	var $name = 'Aro';
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 10, 'key' => 'primary'),
-		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
+class AroFixture extends CroogoTestFixture {
+
+	public $name = 'Aro';
+
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
+		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 10),
 		'model' => array('type' => 'string', 'null' => true),
-		'foreign_key' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
+		'foreign_key' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 10),
 		'alias' => array('type' => 'string', 'null' => true),
-		'lft' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
-		'rght' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
+		'lft' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 10),
+		'rght' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 10),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => 1,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'model' => 'Role',
 			'foreign_key' => 1,
 			'alias' => '',
@@ -27,7 +28,7 @@ class AroFixture extends CroogoTestFixture {
 		),
 		array(
 			'id' => 2,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'model' => 'Role',
 			'foreign_key' => 2,
 			'alias' => '',
@@ -36,7 +37,7 @@ class AroFixture extends CroogoTestFixture {
 		),
 		array(
 			'id' => 3,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'model' => 'Role',
 			'foreign_key' => 3,
 			'alias' => '',

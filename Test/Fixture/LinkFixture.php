@@ -1,33 +1,34 @@
 <?php
-/* Link Fixture generated on: 2010-05-20 22:05:39 : 1274393799 */
-class LinkFixture extends CroogoTestFixture {
-	var $name = 'Link';
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 20, 'key' => 'primary'),
-		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 20),
-		'menu_id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'length' => 20),
-		'title' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'class' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'description' => array('type' => 'text', 'null' => true, 'default' => NULL),
-		'link' => array('type' => 'string', 'null' => false, 'default' => NULL),
-		'target' => array('type' => 'string', 'null' => true, 'default' => NULL),
-		'rel' => array('type' => 'string', 'null' => true, 'default' => NULL),
+class LinkFixture extends CroogoTestFixture {
+
+	public $name = 'Link';
+
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'primary'),
+		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 20),
+		'menu_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20),
+		'title' => array('type' => 'string', 'null' => false, 'default' => null),
+		'class' => array('type' => 'string', 'null' => false, 'default' => null),
+		'description' => array('type' => 'text', 'null' => true, 'default' => null),
+		'link' => array('type' => 'string', 'null' => false, 'default' => null),
+		'target' => array('type' => 'string', 'null' => true, 'default' => null),
+		'rel' => array('type' => 'string', 'null' => true, 'default' => null),
 		'status' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-		'lft' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'rght' => array('type' => 'integer', 'null' => true, 'default' => NULL),
-		'visibility_roles' => array('type' => 'text', 'null' => true, 'default' => NULL),
-		'params' => array('type' => 'text', 'null' => true, 'default' => NULL),
-		'updated' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
-		'created' => array('type' => 'datetime', 'null' => false, 'default' => NULL),
+		'lft' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'rght' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'visibility_roles' => array('type' => 'text', 'null' => true, 'default' => null),
+		'params' => array('type' => 'text', 'null' => true, 'default' => null),
+		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => 5,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'menu_id' => 4,
 			'title' => 'About',
 			'class' => 'about',
@@ -45,7 +46,7 @@ class LinkFixture extends CroogoTestFixture {
 		),
 		array(
 			'id' => 6,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'menu_id' => 4,
 			'title' => 'Contact',
 			'class' => 'contact',
@@ -63,7 +64,7 @@ class LinkFixture extends CroogoTestFixture {
 		),
 		array(
 			'id' => 7,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'menu_id' => 3,
 			'title' => 'Home',
 			'class' => 'home',
@@ -81,7 +82,7 @@ class LinkFixture extends CroogoTestFixture {
 		),
 		array(
 			'id' => 8,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'menu_id' => 3,
 			'title' => 'About',
 			'class' => 'about',
@@ -117,7 +118,7 @@ class LinkFixture extends CroogoTestFixture {
 		),
 		array(
 			'id' => 10,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'menu_id' => 5,
 			'title' => 'Site Admin',
 			'class' => 'site-admin',
@@ -135,7 +136,7 @@ class LinkFixture extends CroogoTestFixture {
 		),
 		array(
 			'id' => 11,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'menu_id' => 5,
 			'title' => 'Log out',
 			'class' => 'log-out',
@@ -153,7 +154,7 @@ class LinkFixture extends CroogoTestFixture {
 		),
 		array(
 			'id' => 12,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'menu_id' => 6,
 			'title' => 'Croogo',
 			'class' => 'croogo',
@@ -171,7 +172,7 @@ class LinkFixture extends CroogoTestFixture {
 		),
 		array(
 			'id' => 14,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'menu_id' => 6,
 			'title' => 'CakePHP',
 			'class' => 'cakephp',
@@ -189,7 +190,7 @@ class LinkFixture extends CroogoTestFixture {
 		),
 		array(
 			'id' => 15,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'menu_id' => 3,
 			'title' => 'Contact',
 			'class' => 'contact',
@@ -207,7 +208,7 @@ class LinkFixture extends CroogoTestFixture {
 		),
 		array(
 			'id' => 16,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'menu_id' => 5,
 			'title' => 'Entries (RSS)',
 			'class' => 'entries-rss',
@@ -225,7 +226,7 @@ class LinkFixture extends CroogoTestFixture {
 		),
 		array(
 			'id' => 17,
-			'parent_id' => NULL,
+			'parent_id' => null,
 			'menu_id' => 5,
 			'title' => 'Comments (RSS)',
 			'class' => 'comments-rss',

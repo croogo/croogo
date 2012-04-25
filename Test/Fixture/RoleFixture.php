@@ -1,14 +1,15 @@
 <?php
-/* Role Fixture generated on: 2010-05-20 22:05:49 : 1274393809 */
-class RoleFixture extends CroogoTestFixture {
-	var $name = 'Role';
 
-	var $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),
-		'title' => array('type' => 'string', 'null' => false, 'default' => NULL, 'length' => 100),
-		'alias' => array('type' => 'string', 'null' => true, 'default' => NULL, 'length' => 100, 'key' => 'unique'),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
-		'updated' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+class RoleFixture extends CroogoTestFixture {
+
+	public $name = 'Role';
+
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
+		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100),
+		'alias' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 100, 'key' => 'unique'),
+		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
+		'updated' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'role_alias' => array('column' => 'alias', 'unique' => 1),
@@ -16,7 +17,7 @@ class RoleFixture extends CroogoTestFixture {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
 	);
 
-	var $records = array(
+	public $records = array(
 		array(
 			'id' => 1,
 			'title' => 'Admin',
