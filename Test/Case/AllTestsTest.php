@@ -2,6 +2,7 @@
 App::uses('CroogoTestCase', 'TestSuite');
 
 class AllTestsTest extends PHPUnit_Framework_TestSuite {
+
 /**
  * suite
  *
@@ -9,7 +10,7 @@ class AllTestsTest extends PHPUnit_Framework_TestSuite {
  */
 	public static function suite() {
 		$suite = new CakeTestSuite('All tests');
-		$path = APP . 'Test' .DS. 'Case' .DS;
+		$path = APP . 'Test' . DS . 'Case' . DS;
 		$suite->addTestFile($path . 'AllModelsTest.php');
 		$suite->addTestFile($path . 'AllBehaviorsTest.php');
 		$suite->addTestFile($path . 'AllHelpersTest.php');
@@ -21,4 +22,5 @@ class AllTestsTest extends PHPUnit_Framework_TestSuite {
 		$suite->addTestFile($path . 'AllCorePluginsTest.php');
 		return $suite;
 	}
+
 }

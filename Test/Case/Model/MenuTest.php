@@ -62,6 +62,7 @@ class MenuTest extends CroogoTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
+		unset($this->Menu);
 	}
 
 /**
