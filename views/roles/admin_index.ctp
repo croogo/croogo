@@ -30,8 +30,8 @@
 
 			$rows[] = array(
 				$role['Role']['id'],
-				$role['Role']['title'],
-				$role['Role']['alias'],
+				h($role['Role']['title']),
+				h($role['Role']['alias']),
 				$actions,
 			);
 		}

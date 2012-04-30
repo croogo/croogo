@@ -57,20 +57,29 @@ class User extends AppModel {
 			'isUnique' => array(
 				'rule' => 'isUnique',
 				'message' => 'The username has already been taken.',
+				'last' => true,
 			),
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
 				'message' => 'This field cannot be left blank.',
+				'last' => true,
+			),
+			'validAlias' => array(
+				'rule' => '_validAlias',
+				'message' => 'This field must be alphanumeric',
+				'last' => true,
 			),
 		),
 		'email' => array(
 			'email' => array(
 				'rule' => 'email',
 				'message' => 'Please provide a valid email address.',
+				'last' => true,
 			),
 			'isUnique' => array(
 				'rule' => 'isUnique',
 				'message' => 'Email address already in use.',
+				'last' => true,
 			),
 		),
 		'password' => array(
@@ -78,8 +87,23 @@ class User extends AppModel {
 			'message' => 'Passwords must be at least 6 characters long.',
 		),
 		'name' => array(
-			'rule' => 'notEmpty',
-			'message' => 'This field cannot be left blank.',
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'This field cannot be left blank.',
+				'last' => true,
+			),
+			'validName' => array(
+				'rule' => '_validName',
+				'message' => 'This field must be alphanumeric',
+				'last' => true,
+			),
+		),
+		'website' => array(
+			'url' => array(
+				'rule' => 'url',
+				'message' => 'This field must be a valid URL',
+				'allowEmpty' => true,
+			),
 		),
 	);
 

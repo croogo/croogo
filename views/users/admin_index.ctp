@@ -32,9 +32,9 @@
 
 			$rows[] = array(
 				$user['User']['id'],
-				$user['Role']['title'],
-				$user['User']['username'],
-				$user['User']['name'],
+				h($user['Role']['title']),
+				h($user['User']['username']),
+				h($user['User']['name']),
 				$user['User']['email'],
 				$actions,
 			);
