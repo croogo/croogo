@@ -219,4 +219,21 @@ class AppModel extends Model {
 		}
 		return $out;
 	}
+
+/**
+ * Validation method for alias field
+ * @return bool true when validation successful
+ */
+	protected function _validAlias($check) {
+		return preg_match('/^[\p{Ll}\p{Lm}\p{Lo}\p{Lt}\p{Lu}\p{Nd}-_]+$/mu', $check[key($check)]);
+	}
+
+/**
+ * Validation method for name or title fields
+ * @return bool true when validation successful
+ */
+	protected function _validName($check) {
+		return preg_match('/^[\p{Ll}\p{Lm}\p{Lo}\p{Lt}\p{Lu}\p{Nd}-_\[\]\(\) ]+$/mu', $check[key($check)]);
+	}
+
 }

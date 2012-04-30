@@ -42,17 +42,32 @@ class Role extends AppModel {
  */
 	public $validate = array(
 		'title' => array(
-			'rule' => array('minLength', 1),
-			'message' => 'Title cannot be empty.',
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Alias cannot be empty.',
+				'last' => true,
+			),
+			'validName' => array(
+				'rule' => '_validName',
+				'message' => 'This field must be alphanumeric',
+				'last' => true,
+			),
 		),
 		'alias' => array(
 			'isUnique' => array(
 				'rule' => 'isUnique',
 				'message' => 'This alias has already been taken.',
+				'last' => true,
 			),
-			'minLength' => array(
-				'rule' => array('minLength', 1),
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
 				'message' => 'Alias cannot be empty.',
+				'last' => true,
+			),
+			'validAlias' => array(
+				'rule' => '_validAlias',
+				'message' => 'This field must be alphanumeric',
+				'last' => true,
 			),
 		),
 	);

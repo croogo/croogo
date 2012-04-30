@@ -147,7 +147,7 @@ class LayoutHelper extends AppHelper {
 				$out = $this->status($item[$model][$field]);
 			break;
 			default:
-				$out = $item[$model][$field];
+				$out = h($item[$model][$field]);
 			break;
 		}
 
