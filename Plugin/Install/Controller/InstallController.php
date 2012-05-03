@@ -127,7 +127,7 @@ class InstallController extends Controller {
 			return;
 		}
 
-		@App::import('Model', 'ConnectionManager');
+		App::import('Model', 'ConnectionManager');
 		$config = $this->defaultConfig;
 		foreach ($this->request->data['Install'] as $key => $value) {
 			if (isset($this->request->data['Install'][$key])) {
@@ -135,7 +135,7 @@ class InstallController extends Controller {
 			}
 		}
 		try {
-			@ConnectionManager::create('default', $config);
+			ConnectionManager::create('default', $config);
 			$db = ConnectionManager::getDataSource('default');
 		}
 		catch (MissingConnectionException $e) {
