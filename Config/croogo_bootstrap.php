@@ -14,7 +14,7 @@
  */
 	$cacheConfig = array(
 		'duration' => '+1 hour',
-		'path' => CACHE.'queries',
+		'path' => CACHE . 'queries',
 		'engine' => 'File',
 	);
 
@@ -54,9 +54,9 @@
 /**
  * Settings
  */
-    if (file_exists(APP . 'Config' . DS.'settings.yml')) {
-        $settings = Spyc::YAMLLoad(file_get_contents(APP . 'Config' . DS.'settings.yml'));
-		foreach ($settings AS $settingKey => $settingValue) {
+	if (file_exists(APP . 'Config' . DS . 'settings.yml')) {
+		$settings = Spyc::YAMLLoad(file_get_contents(APP . 'Config' . DS . 'settings.yml'));
+		foreach ($settings as $settingKey => $settingValue) {
 			Configure::write($settingKey, $settingValue);
 		}
 	}
@@ -75,15 +75,15 @@
 	if (!in_array($aclPlugin, $plugins)) {
 		$plugins = Set::merge($aclPlugin, $plugins);
 	}
-	foreach ($plugins AS $plugin) {
+	foreach ($plugins as $plugin) {
 		$pluginName = Inflector::camelize($plugin);
-		if (!file_exists(APP . 'Plugin' .DS. $pluginName)) {
+		if (!file_exists(APP . 'Plugin' . DS . $pluginName)) {
 			CakeLog::write(LOG_ERR, 'Plugin not found during bootstrap: ' . $pluginName);
 			continue;
 		}
-		$bootstrapFile = APP . 'Plugin' .DS. $pluginName .DS. 'Config' .DS. 'bootstrap.php';
+		$bootstrapFile = APP . 'Plugin' . DS . $pluginName . DS . 'Config' . DS . 'bootstrap.php';
 		$bootstrap = file_exists($bootstrapFile);
-		$routesFile = APP . 'Plugin' .DS. $pluginName .DS. 'Config' .DS. 'routes.php';
+		$routesFile = APP . 'Plugin' . DS . $pluginName . DS . 'Config' . DS . 'routes.php';
 		$routes = file_exists($routesFile);
 		$option = array(
 			$pluginName => array(
