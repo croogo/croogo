@@ -102,12 +102,6 @@ class AppController extends Controller {
 	public function __construct($request = null, $response = null) {
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
 		parent::__construct($request, $response);
-		if ($this->name == 'CakeError') {
-			$this->_set(Router::getPaths());
-			$this->request->params = Router::getParams();
-			$this->constructClasses();
-			$this->startupProcess();
-		}
 	}
 
 /**
@@ -127,7 +121,7 @@ class AppController extends Controller {
 		$this->Security->blackHoleCallback = '_securityError';
 		$this->Security->requirePost('admin_delete');
 
-		if (isset($this->request->params['admin']) && $this->name != 'CakeError') {
+		if (isset($this->request->params['admin'])) {
 			$this->layout = 'admin';
 		}
 

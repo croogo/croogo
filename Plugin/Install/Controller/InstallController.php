@@ -127,7 +127,7 @@ class InstallController extends Controller {
 			return;
 		}
 
-		@App::import('Model', 'ConnectionManager');
+		App::import('Model', 'ConnectionManager');
 		$config = $this->defaultConfig;
 		foreach ($this->request->data['Install'] as $key => $value) {
 			if (isset($this->request->data['Install'][$key])) {
@@ -135,12 +135,12 @@ class InstallController extends Controller {
 			}
 		}
 		try {
-			@ConnectionManager::create('default', $config);
+			ConnectionManager::create('default', $config);
 			$db = ConnectionManager::getDataSource('default');
 		}
 		catch (MissingConnectionException $e) {
 			$this->Session->setFlash(__('Could not connect to database: %s', $e->getMessage()), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'database'));
+			return;
 		}
 		if (!$db->isConnected()) {
 			$this->Session->setFlash(__('Could not connect to database.'), 'default', array('class' => 'error'));
@@ -208,7 +208,7 @@ class InstallController extends Controller {
 					}
 					catch (PDOException $e) {
 						$this->Session->setFlash(__('Could not create table: %s', $e->getMessage()), 'default', array('class' => 'error'));
-						$this->redirect(array('action' => 'database'));
+						return;
 					}
 				}
 
