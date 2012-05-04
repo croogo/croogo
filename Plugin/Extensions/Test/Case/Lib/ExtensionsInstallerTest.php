@@ -15,6 +15,7 @@ App::uses('Folder', 'Utility');
  * @link     http://www.croogo.org
  */
 class ExtensionsInstallerTest extends CakeTestCase {
+
 /**
  * setUp
  *

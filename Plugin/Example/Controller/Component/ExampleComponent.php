@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Example Component
  *
@@ -12,6 +13,7 @@
  * @link     http://www.croogo.org
  */
 class ExampleComponent extends Component {
+
 /**
  * Called after the Controller::beforeFilter() and before the controller action
  *
@@ -40,5 +42,5 @@ class ExampleComponent extends Component {
  */
 	public function shutdown(&$controller) {
 	}
-	
+
 }

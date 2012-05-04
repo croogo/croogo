@@ -12,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class ExampleHelper extends AppHelper {
+
 /**
  * Other helpers used by this helper
  *

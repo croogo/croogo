@@ -12,7 +12,7 @@
 	CroogoRouter::contentType('blog');
 	CroogoRouter::contentType('node');
 	CroogoRouter::routableContentTypes();
-	
+
 	// Page
 	CroogoRouter::connect('/about', array('controller' => 'nodes', 'action' => 'view', 'type' => 'page', 'slug' => 'about'));
 	CroogoRouter::connect('/page/:slug', array('controller' => 'nodes', 'action' => 'view', 'type' => 'page'));

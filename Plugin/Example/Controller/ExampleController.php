@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Example Controller
  *
@@ -12,6 +13,7 @@
  * @link     http://www.croogo.org
  */
 class ExampleController extends ExampleAppController {
+
 /**
  * Controller name
  *

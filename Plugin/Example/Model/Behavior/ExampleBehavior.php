@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Example Behavior
  *
@@ -11,6 +12,7 @@
  * @link     http://www.croogo.org
  */
 class ExampleBehavior extends ModelBehavior {
+
 /**
  * Setup
  *
@@ -36,7 +38,7 @@ class ExampleBehavior extends ModelBehavior {
  */
 	public function afterFind(&$model, $results = array(), $primary = false) {
 		if ($primary && isset($results[0][$model->alias])) {
-			foreach ($results AS $i => $result) {
+			foreach ($results as $i => $result) {
 				if (isset($results[$i][$model->alias]['body'])) {
 					$results[$i][$model->alias]['body'] .= '<p>[Modified by ExampleBehavior]</p>';
 				}

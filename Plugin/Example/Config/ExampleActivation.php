@@ -11,6 +11,7 @@
  * @link     http://www.croogo.org
  */
 class ExampleActivation {
+
 /**
  * onActivate will be called if this returns true
  *

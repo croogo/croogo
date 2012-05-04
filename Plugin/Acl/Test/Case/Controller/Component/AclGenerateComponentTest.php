@@ -4,7 +4,9 @@ App::uses('Controller', 'Controller');
 App::uses('CroogoTestCase', 'TestSuite');
 
 class AclGenerateTestController extends Controller {
+
 	public $components = array('Acl.AclGenerate');
+
 }
 
 class AclGenerateComponentTest extends CroogoTestCase {
@@ -43,7 +45,7 @@ class AclGenerateComponentTest extends CroogoTestCase {
 			'admin_delete_meta', 'admin_process', 'index', 'term', 'promoted',
 			'search', 'view',
 			);
-		$result = $this->Controller->AclGenerate->listActions('Nodes', APP .DS. 'Controller');
+		$result = $this->Controller->AclGenerate->listActions('Nodes', APP . DS . 'Controller');
 		sort($result);
 		sort($expected);
 		$this->assertEquals($expected, $result);

@@ -1,5 +1,4 @@
 <?php
-/* SVN FILE: $Id: inflections.php 7945 2008-12-19 02:16:01Z gwoo $ */
 /**
  * Custom Inflected Words.
  *
