@@ -1,4 +1,7 @@
 <?php
+
+App::uses('Router', 'Routing');
+
 /**
  * CroogoRouter
  *
@@ -75,7 +78,7 @@ class CroogoRouter {
  * 
  * @param string $alias
  * @return void
- */ 
+ */
 	public static function contentType($alias) {
 		CroogoRouter::connect('/' . $alias, array('controller' => 'nodes', 'action' => 'index', 'type' => $alias));
 		CroogoRouter::connect('/' . $alias . '/archives/*', array('controller' => 'nodes', 'action' => 'index', 'type' => $alias));

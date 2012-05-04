@@ -1,5 +1,4 @@
 <?php
-/* SVN FILE: $Id$ */
 /**
  * Short description for file.
  *
@@ -26,7 +25,7 @@
  * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
-	App::import('Lib', 'CroogoRouter');
+	App::uses('CroogoRouter', 'Lib');
 	require_once 'croogo_routes.php';
 	CroogoRouter::localize();
 	require CAKE . 'Config' . DS . 'routes.php';
