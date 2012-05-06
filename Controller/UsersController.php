@@ -39,6 +39,12 @@ class UsersController extends AppController {
  */
 	public $uses = array('User');
 
+/**
+ * beforeFilter
+ *
+ * @return void
+ * @access public
+ */
 	public function beforeFilter() {
 		parent::beforeFilter();
 
@@ -55,6 +61,12 @@ class UsersController extends AppController {
 		}
 	}
 
+/**
+ * beforeRender
+ *
+ * @return void
+ * @access public
+ */
 	public function beforeRender() {
 		parent::beforeRender();
 
@@ -68,6 +80,12 @@ class UsersController extends AppController {
 		}
 	}
 
+/**
+ * Admin index
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Users'));
 
@@ -76,6 +94,12 @@ class UsersController extends AppController {
 		$this->set('displayFields', $this->User->displayFields());
 	}
 
+/**
+ * Admin add
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_add() {
 		if (!empty($this->request->data)) {
 			$this->User->create();
@@ -95,9 +119,11 @@ class UsersController extends AppController {
 	}
 
 /**
- * admin_edit
+ * Admin edit
  *
  * @param integer $id
+ * @return void
+ * @access public
  */
 	public function admin_edit($id = null) {
 		if (!empty($this->request->data)) {
@@ -115,6 +141,13 @@ class UsersController extends AppController {
 		$this->set('editFields', $this->User->editFields());
 	}
 
+/**
+ * Admin reset password
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_reset_password($id = null) {
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid User'), 'default', array('class' => 'error'));
@@ -133,6 +166,13 @@ class UsersController extends AppController {
 		}
 	}
 
+/**
+ * Admin delete
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for User'), 'default', array('class' => 'error'));
@@ -147,6 +187,12 @@ class UsersController extends AppController {
 		}
 	}
 
+/**
+ * Admin login
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_login() {
 		$this->set('title_for_layout', __('Admin Login'));
 		$this->layout = "admin_login";
@@ -162,16 +208,34 @@ class UsersController extends AppController {
 		}
 	}
 
+/**
+ * Admin logout
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_logout() {
 		Croogo::dispatchEvent('Controller.Users.adminLogoutSuccessful', $this);
 		$this->Session->setFlash(__('Log out successful.'), 'default', array('class' => 'success'));
 		$this->redirect($this->Auth->logout());
 	}
 
+/**
+ * Index
+ *
+ * @return void
+ * @access public
+ */
 	public function index() {
 		$this->set('title_for_layout', __('Users'));
 	}
 
+/**
+ * Add
+ *
+ * @return void
+ * @access public
+ */
 	public function add() {
 		$this->set('title_for_layout', __('Register'));
 		if (!empty($this->request->data)) {
@@ -202,6 +266,14 @@ class UsersController extends AppController {
 		}
 	}
 
+/**
+ * Activate
+ *
+ * @param string $username
+ * @param string $key
+ * @return void
+ * @access public
+ */
 	public function activate($username = null, $key = null) {
 		if ($username == null || $key == null) {
 			$this->redirect(array('action' => 'login'));
@@ -226,9 +298,21 @@ class UsersController extends AppController {
 		$this->redirect(array('action' => 'login'));
 	}
 
+/**
+ * Edit
+ *
+ * @return void
+ * @access public
+ */
 	public function edit() {
 	}
 
+/**
+ * Forgot
+ *
+ * @return void
+ * @access public
+ */
 	public function forgot() {
 		$this->set('title_for_layout', __('Forgot Password'));
 
@@ -258,6 +342,14 @@ class UsersController extends AppController {
 		}
 	}
 
+/**
+ * Reset
+ *
+ * @param string $username
+ * @param string $key
+ * @return void
+ * @access public
+ */
 	public function reset($username = null, $key = null) {
 		$this->set('title_for_layout', __('Reset Password'));
 
@@ -292,6 +384,12 @@ class UsersController extends AppController {
 		$this->set(compact('user', 'username', 'key'));
 	}
 
+/**
+ * Login
+ *
+ * @return boolean
+ * @access public
+ */
 	public function login() {
 		$this->set('title_for_layout', __('Log in'));
 		if ($this->request->is('post')) {
@@ -307,6 +405,12 @@ class UsersController extends AppController {
 		}
 	}
 
+/**
+ * Logout
+ *
+ * @return void
+ * @access public
+ */
 	public function logout() {
 		Croogo::dispatchEvent('Controller.Users.beforeLogout', $this);
 		$this->Session->setFlash(__('Log out successful.'), 'default', array('class' => 'success'));
@@ -314,6 +418,13 @@ class UsersController extends AppController {
 		Croogo::dispatchEvent('Controller.Users.afterLogout', $this);
 	}
 
+/**
+ * View
+ *
+ * @param string $username
+ * @return void
+ * @access public
+ */
 	public function view($username) {
 		$user = $this->User->findByUsername($username);
 		if (!isset($user['User']['id'])) {

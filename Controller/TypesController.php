@@ -29,6 +29,12 @@ class TypesController extends AppController {
  */
 	public $uses = array('Type');
 
+/**
+ * beforeFilter
+ *
+ * @return void
+ * @access public
+ */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		if ($this->action == 'admin_edit') {
@@ -36,6 +42,12 @@ class TypesController extends AppController {
 		}
 	}
 
+/**
+ * Admin index
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Type'));
 
@@ -45,6 +57,12 @@ class TypesController extends AppController {
 		$this->set('displayFields', $this->Type->displayFields());
 	}
 
+/**
+ * Admin add
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_add() {
 		$this->set('title_for_layout', __('Add Type'));
 
@@ -62,6 +80,13 @@ class TypesController extends AppController {
 		$this->set(compact('vocabularies'));
 	}
 
+/**
+ * Admin edit
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_edit($id = null) {
 		$this->set('title_for_layout', __('Edit Type'));
 
@@ -85,6 +110,13 @@ class TypesController extends AppController {
 		$this->set(compact('vocabularies'));
 	}
 
+/**
+ * Admin delete
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Type'), 'default', array('class' => 'error'));

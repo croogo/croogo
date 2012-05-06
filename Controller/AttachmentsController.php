@@ -219,6 +219,12 @@ class AttachmentsController extends AppController {
 		}
 	}
 
+/**
+ * Admin browse
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_browse() {
 		$this->layout = 'admin_full';
 		$this->admin_index();

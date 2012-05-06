@@ -29,6 +29,12 @@ class RegionsController extends AppController {
  */
 	public $uses = array('Region');
 
+/**
+ * Admin index
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Region'));
 
@@ -38,6 +44,12 @@ class RegionsController extends AppController {
 		$this->set('displayFields', $this->Region->displayFields());
 	}
 
+/**
+ * Admin add
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_add() {
 		$this->set('title_for_layout', __('Add Region'));
 
@@ -52,6 +64,13 @@ class RegionsController extends AppController {
 		}
 	}
 
+/**
+ * Admin edit
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_edit($id = null) {
 		$this->set('title_for_layout', __('Edit Region'));
 
@@ -72,6 +91,13 @@ class RegionsController extends AppController {
 		}
 	}
 
+/**
+ * Admin delete
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Region'), 'default', array('class' => 'error'));

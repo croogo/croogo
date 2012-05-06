@@ -68,7 +68,7 @@ class AppController extends Controller {
  */
 	public $paginate = array(
 		'limit' => 10,
-		);
+	);
 
 /**
  * Cache pagination results

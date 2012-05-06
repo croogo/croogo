@@ -29,6 +29,12 @@ class RolesController extends AppController {
  */
 	public $uses = array('Role');
 
+/**
+ * Admin index
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Roles'));
 
@@ -38,6 +44,12 @@ class RolesController extends AppController {
 		$this->set('displayFields', $this->Role->displayFields());
 	}
 
+/**
+ * Admin add
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_add() {
 		$this->set('title_for_layout', __('Add Role'));
 
@@ -52,6 +64,13 @@ class RolesController extends AppController {
 		}
 	}
 
+/**
+ * Admin edit
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_edit($id = null) {
 		$this->set('title_for_layout', __('Edit Role'));
 
@@ -72,6 +91,13 @@ class RolesController extends AppController {
 		}
 	}
 
+/**
+ * Admin delete
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Role'), 'default', array('class' => 'error'));

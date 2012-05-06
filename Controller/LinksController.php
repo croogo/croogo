@@ -42,6 +42,13 @@ class LinksController extends AppController {
  */
 	public $menuId = '';
 
+/**
+ * Admin index
+ *
+ * @param integer $menuId
+ * @return void
+ * @access public
+ */
 	public function admin_index($menuId = null) {
 		if (!$menuId) {
 			$this->redirect(array(
@@ -76,6 +83,13 @@ class LinksController extends AppController {
 		$this->set(compact('linksTree', 'linksStatus', 'menu'));
 	}
 
+/**
+ * Admin add
+ *
+ * @param integer $menuId
+ * @return void
+ * @access public
+ */
 	public function admin_add($menuId = null) {
 		$this->set('title_for_layout', __('Add Link'));
 
@@ -102,6 +116,13 @@ class LinksController extends AppController {
 		$this->set(compact('menus', 'roles', 'parentLinks', 'menuId'));
 	}
 
+/**
+ * Admin edit
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_edit($id = null) {
 		$this->set('title_for_layout', __('Edit Link'));
 
@@ -141,6 +162,13 @@ class LinksController extends AppController {
 		$this->set(compact('menus', 'roles', 'parentLinks', 'menuId'));
 	}
 
+/**
+ * Admin delete
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Link'), 'default', array('class' => 'error'));
@@ -171,6 +199,14 @@ class LinksController extends AppController {
 		}
 	}
 
+/**
+ * Admin moveup
+ *
+ * @param integer $id
+ * @param integer $step
+ * @return void
+ * @access public
+ */
 	public function admin_moveup($id, $step = 1) {
 		$link = $this->Link->findById($id);
 		if (!isset($link['Link']['id'])) {
@@ -196,6 +232,14 @@ class LinksController extends AppController {
 		));
 	}
 
+/**
+ * Admin movedown
+ *
+ * @param integer $id
+ * @param integer $step
+ * @return void
+ * @access public
+ */
 	public function admin_movedown($id, $step = 1) {
 		$link = $this->Link->findById($id);
 		if (!isset($link['Link']['id'])) {
@@ -221,6 +265,13 @@ class LinksController extends AppController {
 		));
 	}
 
+/**
+ * Admin process
+ *
+ * @param integer $menuId
+ * @return void
+ * @access public
+ */
 	public function admin_process($menuId = null) {
 		$action = $this->request->data['Link']['action'];
 		$ids = array();

@@ -29,6 +29,12 @@ class VocabulariesController extends AppController {
  */
 	public $uses = array('Vocabulary');
 
+/**
+ * Admin index
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Vocabularies'));
 
@@ -37,6 +43,12 @@ class VocabulariesController extends AppController {
 		$this->set('vocabularies', $this->paginate());
 	}
 
+/**
+ * Admin add
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_add() {
 		$this->set('title_for_layout', __('Add Vocabulary'));
 
@@ -54,6 +66,13 @@ class VocabulariesController extends AppController {
 		$this->set(compact('types'));
 	}
 
+/**
+ * Admin edit
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_edit($id = null) {
 		$this->set('title_for_layout', __('Edit Vocabulary'));
 
@@ -77,6 +96,13 @@ class VocabulariesController extends AppController {
 		$this->set(compact('types'));
 	}
 
+/**
+ * Admin delete
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Vocabulary'), 'default', array('class' => 'error'));
@@ -88,6 +114,14 @@ class VocabulariesController extends AppController {
 		}
 	}
 
+/**
+ * Admin moveup
+ *
+ * @param integer $id
+ * @param integer $step
+ * @return void
+ * @access public
+ */
 	public function admin_moveup($id, $step = 1) {
 		if ($this->Vocabulary->moveUp($id, $step)) {
 			$this->Session->setFlash(__('Moved up successfully'), 'default', array('class' => 'success'));
@@ -98,6 +132,14 @@ class VocabulariesController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+/**
+ * Admin moveup
+ *
+ * @param integer $id
+ * @param integer $step
+ * @return void
+ * @access public
+ */
 	public function admin_movedown($id, $step = 1) {
 		if ($this->Vocabulary->moveDown($id, $step)) {
 			$this->Session->setFlash(__('Moved down successfully'), 'default', array('class' => 'success'));
