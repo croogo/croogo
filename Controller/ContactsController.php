@@ -41,6 +41,12 @@ class ContactsController extends AppController {
  */
 	public $uses = array('Contact');
 
+/**
+ * Admin index
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Contacts'));
 
@@ -50,6 +56,12 @@ class ContactsController extends AppController {
 		$this->set('displayFields', $this->Contact->displayFields());
 	}
 
+/**
+ * Admin add
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_add() {
 		$this->set('title_for_layout', __('Add Contact'));
 
@@ -64,6 +76,13 @@ class ContactsController extends AppController {
 		}
 	}
 
+/**
+ * Admin edit
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_edit($id = null) {
 		$this->set('title_for_layout', __('Edit Contact'));
 
@@ -84,6 +103,13 @@ class ContactsController extends AppController {
 		}
 	}
 
+/**
+ * Admin delete
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Contact'), 'default', array('class' => 'error'));
@@ -95,6 +121,13 @@ class ContactsController extends AppController {
 		}
 	}
 
+/**
+ * View
+ *
+ * @param string $alias
+ * @return void
+ * @access public
+ */
 	public function view($alias = null) {
 		if (!$alias) {
 			$this->redirect('/');
@@ -141,6 +174,14 @@ class ContactsController extends AppController {
 		$this->set(compact('continue'));
 	}
 
+/**
+ * Validation
+ *
+ * @param boolean $continue
+ * @param array $contact
+ * @return boolean
+ * @access protected
+ */
 	protected function _validation($continue, $contact) {
 		if ($this->Contact->Message->set($this->request->data) &&
 			$this->Contact->Message->validates() &&
@@ -156,6 +197,14 @@ class ContactsController extends AppController {
 		return $continue;
 	}
 
+/**
+ * Spam protection
+ *
+ * @param boolean $continue
+ * @param array $contact
+ * @return boolean
+ * @access protected
+ */
 	protected function _spam_protection($continue, $contact) {
 		if (!empty($this->request->data) &&
 			$contact['Contact']['message_spam_protection'] &&
@@ -172,6 +221,14 @@ class ContactsController extends AppController {
 		return $continue;
 	}
 
+/**
+ * Captcha
+ *
+ * @param boolean $continue
+ * @param array $contact
+ * @return boolean
+ * @access protected
+ */
 	protected function _captcha($continue, $contact) {
 		if (!empty($this->request->data) &&
 			$contact['Contact']['message_captcha'] &&
@@ -184,6 +241,14 @@ class ContactsController extends AppController {
 		return $continue;
 	}
 
+/**
+ * Send Email
+ *
+ * @param boolean $continue
+ * @param array $contact
+ * @return boolean
+ * @access protected
+ */
 	protected function _send_email($continue, $contact) {
 		$email = new CakeEmail();
 		if ($contact['Contact']['message_notify'] && $continue === true) {

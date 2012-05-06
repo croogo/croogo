@@ -29,6 +29,12 @@ class MessagesController extends AppController {
  */
 	public $uses = array('Message');
 
+/**
+ * Admin index
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Messages'));
 
@@ -58,6 +64,13 @@ class MessagesController extends AppController {
 		$this->set('messages', $this->paginate());
 	}
 
+/**
+ * Admin edit
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_edit($id = null) {
 		$this->set('title_for_layout', __('Edit Message'));
 
@@ -78,6 +91,13 @@ class MessagesController extends AppController {
 		}
 	}
 
+/**
+ * Admin delete
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Message'), 'default', array('class' => 'error'));
@@ -89,6 +109,12 @@ class MessagesController extends AppController {
 		}
 	}
 
+/**
+ * Admin process
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_process() {
 		$action = $this->request->data['Message']['action'];
 		$ids = array();

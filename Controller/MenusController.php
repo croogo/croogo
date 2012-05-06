@@ -29,6 +29,12 @@ class MenusController extends AppController {
  */
 	public $uses = array('Menu');
 
+/**
+ * Admin index
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Menus'));
 
@@ -37,6 +43,12 @@ class MenusController extends AppController {
 		$this->set('menus', $this->paginate());
 	}
 
+/**
+ * Admin add
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_add() {
 		$this->set('title_for_layout', __('Add Menu'));
 
@@ -51,6 +63,13 @@ class MenusController extends AppController {
 		}
 	}
 
+/**
+ * Admin edit
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_edit($id = null) {
 		$this->set('title_for_layout', __('Edit Menu'));
 
@@ -71,6 +90,13 @@ class MenusController extends AppController {
 		}
 	}
 
+/**
+ * Admin delete
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Menu'), 'default', array('class' => 'error'));

@@ -29,6 +29,12 @@ class BlocksController extends AppController {
  */
 	public $uses = array('Block', 'Role');
 
+/**
+ * Admin index
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Blocks'));
 
@@ -37,6 +43,12 @@ class BlocksController extends AppController {
 		$this->set('blocks', $this->paginate());
 	}
 
+/**
+ * Admin add
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_add() {
 		$this->set('title_for_layout', __('Add Block'));
 
@@ -60,6 +72,13 @@ class BlocksController extends AppController {
 		$this->set(compact('regions', 'roles'));
 	}
 
+/**
+ * Admin edit
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_edit($id = null) {
 		$this->set('title_for_layout', __('Edit Block'));
 
@@ -94,6 +113,13 @@ class BlocksController extends AppController {
 		$this->set(compact('regions', 'roles'));
 	}
 
+/**
+ * Admin delete
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Block'), 'default', array('class' => 'error'));
@@ -105,6 +131,14 @@ class BlocksController extends AppController {
 		}
 	}
 
+/**
+ * Admin moveup
+ *
+ * @param integer $id
+ * @param integer $step
+ * @return void
+ * @access public
+ */
 	public function admin_moveup($id, $step = 1) {
 		if ($this->Block->moveUp($id, $step)) {
 			$this->Session->setFlash(__('Moved up successfully'), 'default', array('class' => 'success'));
@@ -115,6 +149,14 @@ class BlocksController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+/**
+ * Admin movedown
+ *
+ * @param integer $id
+ * @param integer $step
+ * @return void
+ * @access public
+ */
 	public function admin_movedown($id, $step = 1) {
 		if ($this->Block->moveDown($id, $step)) {
 			$this->Session->setFlash(__('Moved down successfully'), 'default', array('class' => 'success'));
@@ -125,6 +167,12 @@ class BlocksController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+/**
+ * Admin process
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_process() {
 		$action = $this->request->data['Block']['action'];
 		$ids = array();

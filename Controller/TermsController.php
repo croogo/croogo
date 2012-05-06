@@ -29,6 +29,12 @@ class TermsController extends AppController {
  */
 	public $uses = array('Term');
 
+/**
+ * beforeFilter
+ *
+ * @return void
+ * @access public
+ */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->vocabularyId = null;
@@ -38,6 +44,13 @@ class TermsController extends AppController {
 		$this->set('vocabulary', $this->vocabularyId);
 	}
 
+/**
+ * Admin index
+ *
+ * @param integer $vocabularyId
+ * @return void
+ * @access public
+ */
 	public function admin_index($vocabularyId = null) {
 		if (!$vocabularyId) {
 			$this->redirect(array(
@@ -68,6 +81,13 @@ class TermsController extends AppController {
 		$this->set(compact('termsTree', 'vocabulary', 'terms'));
 	}
 
+/**
+ * Admin add
+ *
+ * @param integer $vocabularyId
+ * @return void
+ * @access public
+ */
 	public function admin_add($vocabularyId = null) {
 		if (!$vocabularyId) {
 			$this->redirect(array(
@@ -126,6 +146,14 @@ class TermsController extends AppController {
 		$this->set(compact('vocabulary', 'parentTree', 'vocabularyId'));
 	}
 
+/**
+ * Admin edit
+ *
+ * @param integer $id
+ * @param integer $vocabularyId
+ * @return void
+ * @access public
+ */
 	public function admin_edit($id = null, $vocabularyId = null) {
 		if (!$vocabularyId) {
 			$this->redirect(array(
@@ -226,6 +254,14 @@ class TermsController extends AppController {
 		$this->set(compact('vocabulary', 'parentTree', 'term', 'taxonomy', 'vocabularyId'));
 	}
 
+/**
+ * Admin delete
+ *
+ * @param integer $id
+ * @param integer $vocabularyId
+ * @return void
+ * @access public
+ */
 	public function admin_delete($id = null, $vocabularyId = null) {
 		if (!$id || !$vocabularyId) {
 			$this->Session->setFlash(__('Invalid id for Term'), 'default', array('class' => 'error'));
@@ -257,6 +293,15 @@ class TermsController extends AppController {
 		));
 	}
 
+/**
+ * Admin moveup
+ *
+ * @param integer $id
+ * @param integer $vocabularyId
+ * @param integer $step
+ * @return void
+ * @access public
+ */
 	public function admin_moveup($id = null, $vocabularyId = null, $step = 1) {
 		if (!$id || !$vocabularyId) {
 			$this->Session->setFlash(__('Invalid id for Term'), 'default', array('class' => 'error'));
@@ -289,6 +334,15 @@ class TermsController extends AppController {
 		));
 	}
 
+/**
+ * Admin movedown
+ *
+ * @param integer $id
+ * @param integer $vocabularyId
+ * @param integer $step
+ * @return void
+ * @access public
+ */
 	public function admin_movedown($id = null, $vocabularyId = null, $step = 1) {
 		if (!$id || !$vocabularyId) {
 			$this->Session->setFlash(__('Invalid id for Term'), 'default', array('class' => 'error'));

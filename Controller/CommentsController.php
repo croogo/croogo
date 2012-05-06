@@ -41,6 +41,12 @@ class CommentsController extends AppController {
  */
 	public $uses = array('Comment');
 
+/**
+ * beforeFilter
+ *
+ * @return void
+ * @access public
+ */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		if ($this->action == 'admin_edit') {
@@ -48,6 +54,12 @@ class CommentsController extends AppController {
 		}
 	}
 
+/**
+ * Admin index
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Comments'));
 
@@ -77,6 +89,13 @@ class CommentsController extends AppController {
 		$this->set(compact('comments'));
 	}
 
+/**
+ * Admin edit
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_edit($id = null) {
 		$this->set('title_for_layout', __('Edit Comment'));
 
@@ -97,6 +116,13 @@ class CommentsController extends AppController {
 		}
 	}
 
+/**
+ * Admin delete
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Comment'), 'default', array('class' => 'error'));
@@ -108,6 +134,12 @@ class CommentsController extends AppController {
 		}
 	}
 
+/**
+ * Admin process
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_process() {
 		$action = $this->request->data['Comment']['action'];
 		$ids = array();
@@ -138,6 +170,12 @@ class CommentsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+/**
+ * index
+ *
+ * @return void
+ * @access public
+ */
 	public function index() {
 		$this->set('title_for_layout', __('Comments'));
 
@@ -155,6 +193,14 @@ class CommentsController extends AppController {
 		$this->set(compact('comments'));
 	}
 
+/**
+ * add
+ *
+ * @param integer $nodeId
+ * @param integer $parentId
+ * @return void
+ * @access public
+ */
 	public function add($nodeId = null, $parentId = null) {
 		if (!$nodeId) {
 			$this->Session->setFlash(__('Invalid Node'), 'default', array('class' => 'error'));
@@ -249,6 +295,15 @@ class CommentsController extends AppController {
 		$this->set(compact('success', 'node', 'type', 'nodeId', 'parentId'));
 	}
 
+/**
+ * Spam Protection
+ *
+ * @param boolean $continue
+ * @param array $type
+ * @param array $node
+ * @return boolean
+ * @access protected
+ */
 	protected function _spam_protection($continue, $type, $node) {
 		if (!empty($this->request->data) &&
 			$type['Type']['comment_spam_protection'] &&
@@ -267,6 +322,15 @@ class CommentsController extends AppController {
 		return $continue;
 	}
 
+/**
+ * Captcha
+ *
+ * @param boolean $continue
+ * @param array $type
+ * @param array $node
+ * @return boolean
+ * @access protected
+ */
 	protected function _captcha($continue, $type, $node) {
 		if (!empty($this->request->data) &&
 			$type['Type']['comment_captcha'] &&
@@ -279,6 +343,13 @@ class CommentsController extends AppController {
 		return $continue;
 	}
 
+/**
+ * delete
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function delete($id) {
 		$success = 0;
 		if ($this->Session->check('Auth.User.id')) {

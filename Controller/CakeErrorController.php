@@ -22,7 +22,7 @@ class CakeErrorController extends Controller {
 		'Auth',
 		'Session',
 		'RequestHandler',
-		);
+	);
 
 /**
  * Helpers
@@ -39,7 +39,7 @@ class CakeErrorController extends Controller {
 		'Time',
 		'Layout',
 		'Custom',
-		);
+	);
 
 /**
  * Models

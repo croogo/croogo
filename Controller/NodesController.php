@@ -41,6 +41,12 @@ class NodesController extends AppController {
 		'Node',
 	);
 
+/**
+ * beforeFilter
+ *
+ * @return void
+ * @access public
+ */
 	public function beforeFilter() {
 		parent::beforeFilter();
 
@@ -52,6 +58,12 @@ class NodesController extends AppController {
 		}
 	}
 
+/**
+ * Admin index
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Content'));
 
@@ -94,6 +106,12 @@ class NodesController extends AppController {
 		}
 	}
 
+/**
+ * Admin create
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_create() {
 		$this->set('title_for_layout', __('Create content'));
 
@@ -105,6 +123,13 @@ class NodesController extends AppController {
 		$this->set(compact('types'));
 	}
 
+/**
+ * Admin add
+ *
+ * @param string $typeAlias
+ * @return void
+ * @access public
+ */
 	public function admin_add($typeAlias = 'node') {
 		$type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
 		if (!isset($type['Type']['alias'])) {
@@ -167,6 +192,13 @@ class NodesController extends AppController {
 		$this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy', 'users'));
 	}
 
+/**
+ * Admin edit
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_edit($id = null) {
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid content'), 'default', array('class' => 'error'));
@@ -235,6 +267,12 @@ class NodesController extends AppController {
 		$this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy', 'users'));
 	}
 
+/**
+ * Admin update paths
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_update_paths() {
 		$types = $this->Node->Taxonomy->Vocabulary->Type->find('list', array(
 			'fields' => array(
@@ -272,6 +310,13 @@ class NodesController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+/**
+ * Admin delete
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for Node'), 'default', array('class' => 'error'));
@@ -283,6 +328,13 @@ class NodesController extends AppController {
 		}
 	}
 
+/**
+ * Admin delete meta
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function admin_delete_meta($id = null) {
 		$success = false;
 		if ($id != null && $this->Node->Meta->delete($id)) {
@@ -292,10 +344,22 @@ class NodesController extends AppController {
 		$this->set(compact('success'));
 	}
 
+/**
+ * Admin add meta
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_add_meta() {
 		$this->layout = 'ajax';
 	}
 
+/**
+ * Admin process
+ *
+ * @return void
+ * @access public
+ */
 	public function admin_process() {
 		$action = $this->request->data['Node']['action'];
 		$ids = array();
@@ -337,6 +401,12 @@ class NodesController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+/**
+ * Index
+ *
+ * @return void
+ * @access public
+ */
 	public function index() {
 		if (!isset($this->request->params['named']['type'])) {
 			$this->request->params['named']['type'] = 'node';
@@ -409,6 +479,12 @@ class NodesController extends AppController {
 		));
 	}
 
+/**
+ * Term
+ *
+ * @return void
+ * @access public
+ */
 	public function term() {
 		$term = $this->Node->Taxonomy->Term->find('first', array(
 			'conditions' => array(
@@ -497,6 +573,12 @@ class NodesController extends AppController {
 		));
 	}
 
+/**
+ * Promoted
+ *
+ * @return void
+ * @access public
+ */
 	public function promoted() {
 		$this->set('title_for_layout', __('Nodes'));
 
@@ -558,6 +640,13 @@ class NodesController extends AppController {
 		$this->set(compact('nodes'));
 	}
 
+/**
+ * Search
+ *
+ * @param string $typeAlias
+ * @return void
+ * @access public
+ */
 	public function search($typeAlias = null) {
 		if (!isset($this->request->params['named']['q'])) {
 			$this->redirect('/');
@@ -616,6 +705,13 @@ class NodesController extends AppController {
 		}
 	}
 
+/**
+ * View
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
 	public function view($id = null) {
 		if (isset($this->request->params['named']['slug']) && isset($this->params['named']['type'])) {
 			$this->Node->type = $this->request->params['named']['type'];
@@ -720,6 +816,13 @@ class NodesController extends AppController {
 		));
 	}
 
+/**
+ * View Fallback
+ *
+ * @param mixed $views
+ * @return string
+ * @access protected
+ */
 	protected function _viewFallback($views) {
 		if (is_string($views)) {
 			$views = array($views);
