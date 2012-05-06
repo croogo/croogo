@@ -374,4 +374,33 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
+/**
+ * testAddNotAllowedByType
+ */
+	public function testAddNotAllowedByType() {
+		$Type = ClassRegistry::init('Type');
+		$Type->id = 2;
+		$Type->saveField('comment_status', 0);
+
+		$this->CommentsController->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo('Comments are not allowed.'),
+				$this->equalTo('default'),
+				$this->equalTo(array('class' => 'error'))
+			);
+		$this->CommentsController->request->params['action'] = 'add';
+		$this->CommentsController->request->params['url']['url'] = 'comments/add';
+
+		$this->CommentsController->request->data['Comment'] = array(
+			'name' => 'John Smith',
+			'email' => 'john.smith@example.com',
+			'website' => 'http://example.com',
+			'body' => 'text here...',
+		);
+		$this->CommentsController->add(1);
+		$this->assertEqual($this->CommentsController->viewVars['success'], 0);
+	}
+
 }

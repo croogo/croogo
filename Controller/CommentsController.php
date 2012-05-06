@@ -227,8 +227,16 @@ class CommentsController extends AppController {
 		}
 		$type = $this->Comment->Node->Taxonomy->Vocabulary->Type->findByAlias($node['Node']['type']);
 		$continue = false;
-		if ($type['Type']['comment_status'] && $node['Node']['comment_status']) {
+		if ($type['Type']['comment_status'] == 2 && $node['Node']['comment_status']) {
 			$continue = true;
+		} else {
+			$this->Session->setFlash(__('Comments are not allowed.'), 'default', array('class' => 'error'));
+			$this->redirect(array(
+				'controller' => 'nodes',
+				'action' => 'view',
+				'type' => $node['Node']['type'],
+				'slug' => $node['Node']['slug'],
+			));
 		}
 
 		// spam protection and captcha
