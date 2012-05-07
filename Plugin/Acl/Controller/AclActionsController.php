@@ -185,7 +185,7 @@ class AclActionsController extends AclAppController {
 			$root = $root[0];
 		}
 
-		$log = array();
+		$created = array();
 		$controllerPaths = $this->AclGenerate->listControllers();
 		foreach ($controllerPaths as $controllerName => $controllerPath) {
 			$controllerNode = $aco->node('controllers/' . $controllerName);
