@@ -1,5 +1,6 @@
 <?php
 
+App::uses('CakeSession', 'Model/Datasource');
 App::uses('CroogoTestFixture', 'TestSuite');
 
 /**

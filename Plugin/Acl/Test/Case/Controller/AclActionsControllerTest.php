@@ -20,6 +20,7 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
 		'app.type',
 		'app.types_vocabulary',
 		'app.vocabulary',
+		'app.setting',
 	);
 
 /**
