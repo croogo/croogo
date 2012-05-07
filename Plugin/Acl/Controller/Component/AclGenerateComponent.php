@@ -43,8 +43,9 @@ class AclGenerateComponent extends Component {
 		foreach ($controllers['1'] as $c) {
 			if (substr($c, strlen($c) - 4, 4) == '.php') {
 				$cName = str_replace('Controller.php', '', $c);
-				if ($cName == 'App') {
-					continue; // skip AppController
+				// skip AppController and CakeError
+				if ($cName == 'App' || $cName == 'CakeError') {
+					continue;
 				}
 				$controllerPaths[$cName] = APP . 'Controller' . DS . $c;
 			}

@@ -31,6 +31,8 @@ class AclGenerateComponentTest extends CroogoTestCase {
 		$controllerPath = $this->Controller->AclGenerate->listControllers();
 		$controllers = array_keys($controllerPath);
 
+		$this->assertFalse(in_array('CakeError', $controllers));
+
 		$result = array_intersect($this->_coreControllers, $controllers);
 		$this->assertEquals($this->_coreControllers, $result);
 
