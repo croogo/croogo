@@ -11,7 +11,9 @@
 	// Content types
 	CroogoRouter::contentType('blog');
 	CroogoRouter::contentType('node');
-	CroogoRouter::routableContentTypes();
+	if (Configure::read('Install.installed')) {
+		CroogoRouter::routableContentTypes();
+	}
 
 	// Page
 	CroogoRouter::connect('/about', array('controller' => 'nodes', 'action' => 'view', 'type' => 'page', 'slug' => 'about'));
