@@ -9,37 +9,7 @@
  * - loads its own set of components and helpers
  * - aware of Site.theme and Site.admin_theme
  */
-class CakeErrorController extends Controller {
-
-/**
- * Components
- *
- * @var array
- * @access public
- */
-	public $components = array(
-		'Acl',
-		'Auth',
-		'Session',
-		'RequestHandler',
-	);
-
-/**
- * Helpers
- *
- * @var array
- * @access public
- */
-	public $helpers = array(
-		'Html',
-		'Form',
-		'Session',
-		'Text',
-		'Js',
-		'Time',
-		'Layout',
-		'Custom',
-	);
+class CakeErrorController extends AppController {
 
 /**
  * Models
@@ -68,8 +38,14 @@ class CakeErrorController extends Controller {
 		if (count(Router::extensions())) {
 			$this->components[] = 'RequestHandler';
 		}
-		$this->constructClasses();
-		$this->startupProcess();
+
+		try {
+			$this->constructClasses();
+			$this->startupProcess();
+		}
+		catch (CakeException $e) {
+			CakeLog::write('critical', __('Errors in CakeErrorController: %s', $e->getMessage()));
+		}
 
 		$this->_set(array('cacheAction' => false, 'viewPath' => 'Errors'));
 		if (isset($this->RequestHandler)) {
@@ -86,8 +62,10 @@ class CakeErrorController extends Controller {
 		parent::beforeFilter();
 		if (Configure::read('Site.theme') && !isset($this->request->params['admin'])) {
 			$this->theme = Configure::read('Site.theme');
-		} elseif (Configure::read('Site.admin_theme') && isset($this->request->params['admin'])) {
-			$this->theme = Configure::read('Site.admin_theme');
+		} elseif (isset($this->request->params['admin'])) {
+			if ($adminTheme = Configure::read('Site.admin_theme')) {
+				$this->theme = $adminTheme;
+			}
 			$this->layout = 'admin_full';
 		}
 	}

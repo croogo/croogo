@@ -92,16 +92,21 @@ class CroogoRouter {
  * @return void
  */
 	public static function routableContentTypes() {
-		$types = ClassRegistry::init('Type')->find('all', array(
-			'cache' => array(
-				'name' => 'croogo_types',
-				'config' => 'croogo_types',
-			),
-		));
-		foreach ($types as $type) {
-			if (isset($type['Params']['routes']) && $type['Params']['routes']) {
-				CroogoRouter::contentType($type['Type']['alias']);
+		try {
+			$types = ClassRegistry::init('Type')->find('all', array(
+				'cache' => array(
+					'name' => 'croogo_types',
+					'config' => 'croogo_types',
+				),
+			));
+			foreach ($types as $type) {
+				if (isset($type['Params']['routes']) && $type['Params']['routes']) {
+					CroogoRouter::contentType($type['Type']['alias']);
+				}
 			}
+		}
+		catch (MissingConnectionException $e) {
+			CakeLog::write('critical', __('Unable to get routeable content types: %s', $e->getMessage()));
 		}
 	}
 }
