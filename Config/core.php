@@ -4,7 +4,7 @@ if (file_exists(APP . 'Config' . DS . 'croogo.php')) {
 	require APP . 'Config' . DS . 'croogo.php';
 } else {
 	if (!defined('LOG_ERROR')) {
-		define('LOG_ERROR', 2);
+		define('LOG_ERROR', LOG_ERR);
 	}
 
 	Configure::write('Error', array(

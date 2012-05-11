@@ -71,3 +71,17 @@
 	if (!Configure::read('Install.installed') || !Configure::read('Install.secured')) {
 		CakePlugin::load('Install', array('routes' => true));
 	}
+	Configure::write('Dispatcher.filters', array(
+		'AssetDispatcher',
+		'CacheDispatcher'
+	));
+	CakeLog::config('debug', array(
+		'engine' => 'FileLog',
+		'types' => array('notice', 'info', 'debug'),
+		'file' => 'debug',
+		));
+	CakeLog::config('error', array(
+		'engine' => 'FileLog',
+		'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
+		'file' => 'error',
+		));
