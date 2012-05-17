@@ -67,6 +67,15 @@
 	Configure::write('Config.language', Configure::read('Site.locale'));
 
 /**
+ * Setup custom paths
+ */
+	if ($theme = Configure::read('Site.theme')) {
+		App::build(array(
+			'View/Helper' => array(App::themePath($theme) . 'Helper' . DS),
+		));
+	}
+
+/**
  * Plugins
  */
 	$aclPlugin = Configure::read('Site.acl_plugin');
