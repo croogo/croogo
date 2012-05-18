@@ -15,7 +15,7 @@ class TheLayoutTestController extends Controller {
 class HtmlHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'user', 'role',
+		'user', 'role', 'setting',
 		);
 
 /**
@@ -152,6 +152,37 @@ class HtmlHelperTest extends CroogoTestCase {
 			'action' => 'index',
 			'with-slash',
 		));
+	}
+
+/**
+ * testProcessLink
+ */
+	public function testProcessLinks() {
+		$url = array('controller' => 'users', 'action' => 'edit', 1);
+		$expected = array(
+			'a' => array(
+				'href' => '/users/edit/1',
+				'onclick' => 'Admin.processLink(this); return false;',
+				),
+			'Edit',
+			'/a',
+			);
+		$result = $this->Layout->processLink('Edit', $url);
+		$this->assertTags($result, $expected);
+
+		$options = array('class' => 'test-class');
+		$message = 'Are you sure';
+		$expected = array(
+			'a' => array(
+				'href' => '/users/edit/1',
+				'class' => 'test-class',
+				'onclick' => 'if (confirm(&#039;Are you sure&#039;)) { Admin.processLink(this); } return false;',
+				),
+			'Edit',
+			'/a',
+			);
+		$result = $this->Layout->processLink('Edit', $url, $options, $message);
+		$this->assertTags($result, $expected);
 	}
 
 /**
