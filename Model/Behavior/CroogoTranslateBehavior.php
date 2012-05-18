@@ -287,6 +287,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 		}
 		return $this->runtime[$model->alias]['model'];
 	}
+
 }
 
 if (!defined('CAKEPHP_UNIT_TEST_EXECUTION')) {
