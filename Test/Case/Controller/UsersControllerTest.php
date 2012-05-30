@@ -284,4 +284,73 @@ class UsersControllerTest extends CroogoControllerTestCase {
 		$this->assertTrue($hasAny);
 	}
 
+  /**
+ * testResetPasswordWithValidInfo
+ *
+ * @return void
+ */
+  public function testResetPasswordWithValidInfo() {
+    $vars = $this->testAction(
+      sprintf('/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
+      array(
+        'return' => 'vars'
+      )
+    );
+    $this->assertTrue(isset($vars['key']));
+  }
+
+  /**
+   * testResetPasswordWithInvalidInfo
+   *
+   * @return void
+   */
+  public function testResetPasswordWithInvalidInfo() {
+    $this->UsersController->Session
+      ->expects($this->once())
+      ->method('setFlash')
+      ->with(
+      $this->equalTo(__('An error occurred.')),
+      $this->equalTo('default'),
+      $this->equalTo(array('class' => 'error'))
+    );
+    $vars = $this->testAction(
+      sprintf('/users/reset/%s/%s', 'yvonne','invalid'),
+      array(
+        'return' => 'vars'
+      )
+    );
+  }
+
+  /**
+   * testResetPasswordUpdatesPassword
+   *
+   * @return void
+   */
+  public function testResetPasswordUpdatesPassword() {
+    /*
+    $this->UsersController->Session
+      ->expects($this->once())
+      ->method('setFlash')
+      ->with(
+      $this->equalTo(__('Your password has been reset successfully.')),
+      $this->equalTo('default'),
+      $this->equalTo(array('class' => 'success'))
+    );
+    */
+    $this->testAction(
+      sprintf('/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
+      array(
+        'data' => array(
+          'User' => array(
+            'password' => 'newpassword'
+          )
+        )
+      )
+    );
+    $user = $this->Users->User->findByUsername('yvonne');
+
+    $expected = AuthComponent::password('newpassword');
+    $this->assertEqual($expected,$user['User']['password'],sprintf("%s to be %s",$user['User']['password'],$expected));
+  }
+
 }
