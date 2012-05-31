@@ -4,6 +4,7 @@
 		<fieldset>
 		<?php
 			echo $this->Form->input('password', array('label' => __('New password')));
+			echo $this->Form->input('verify_password', array('type' => 'password', 'label' => __('Verify Password')));
 		?>
 		</fieldset>
 	<?php echo $this->Form->end('Submit');?>

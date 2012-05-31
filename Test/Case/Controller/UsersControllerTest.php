@@ -330,7 +330,8 @@ class UsersControllerTest extends CroogoControllerTestCase {
 			array(
 				'data' => array(
 					'User' => array(
-						'password' => 'newpassword'
+						'password' => 'newpassword',
+						'verify_password' => 'newpassword',
 						)
 					)
 				)
@@ -339,6 +340,28 @@ class UsersControllerTest extends CroogoControllerTestCase {
 
 		$expected = AuthComponent::password('newpassword');
 		$this->assertEqual($expected,$user['User']['password'],sprintf("%s to be %s",$user['User']['password'],$expected));
+	}
+
+/**
+ * testResetPasswordWithMismatchValues
+ *
+ * @return void
+ */
+	public function testResetPasswordWithMismatchValues() {
+		$this->testAction(
+			sprintf('/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
+			array(
+				'return' => 'contents',
+				'data' => array(
+					'User' => array(
+						'id' => 3,
+						'password' => 'otherpassword',
+						'verify_password' => 'other password',
+						)
+					)
+				)
+			);
+		$this->assertContains('Passwords do not match', $this->contents);
 	}
 
 }
