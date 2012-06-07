@@ -59,7 +59,7 @@
 
 	// Load Install plugin
 	if (Configure::read('Security.salt') == 'f78b12a5c38e9e5c6ae6fbd0ff1f46c77a1e3' ||
-	    Configure::read('Security.cipherSeed') == '60170779348589376') {
+		Configure::read('Security.cipherSeed') == '60170779348589376') {
 		$_securedInstall = false;
 	}
 	Configure::write('Install.secured', !isset($_securedInstall));

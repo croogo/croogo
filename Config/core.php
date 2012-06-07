@@ -11,11 +11,11 @@ if (file_exists(APP . 'Config' . DS . 'croogo.php')) {
 		'handler' => 'ErrorHandler::handleError',
 		'level' => E_ALL & ~E_DEPRECATED,
 		'trace' => true
-		));
+	));
 
 	Configure::write('Exception', array(
 		'handler' => 'ErrorHandler::handleException',
 		'renderer' => 'ExceptionRenderer',
 		'log' => true
-		));
+	));
 }
