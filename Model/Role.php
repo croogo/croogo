@@ -48,7 +48,7 @@ class Role extends AppModel {
 				'last' => true,
 			),
 			'validName' => array(
-				'rule' => '_validName',
+				'rule' => 'validName',
 				'message' => 'This field must be alphanumeric',
 				'last' => true,
 			),
@@ -65,7 +65,7 @@ class Role extends AppModel {
 				'last' => true,
 			),
 			'validAlias' => array(
-				'rule' => '_validAlias',
+				'rule' => 'validAlias',
 				'message' => 'This field must be alphanumeric',
 				'last' => true,
 			),

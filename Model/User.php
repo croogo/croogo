@@ -72,7 +72,7 @@ class User extends AppModel {
 				'last' => true,
 			),
 			'validAlias' => array(
-				'rule' => '_validAlias',
+				'rule' => 'validAlias',
 				'message' => 'This field must be alphanumeric',
 				'last' => true,
 			),
@@ -94,7 +94,7 @@ class User extends AppModel {
 			'message' => 'Passwords must be at least 6 characters long.',
 		),
 		'verify_password' => array(
-			'rule' => '_identical',
+			'rule' => 'validIdentical',
 		),
 		'name' => array(
 			'notEmpty' => array(
@@ -103,7 +103,7 @@ class User extends AppModel {
 				'last' => true,
 			),
 			'validName' => array(
-				'rule' => '_validName',
+				'rule' => 'validName',
 				'message' => 'This field must be alphanumeric',
 				'last' => true,
 			),
@@ -145,6 +145,12 @@ class User extends AppModel {
 		'status',
 	);
 
+/**
+ * beforeDelete
+ *
+ * @param boolean $cascade
+ * @return boolean
+ */
 	public function beforeDelete($cascade = true) {
 		$this->Role->Behaviors->attach('Aliasable');
 		$adminRoleId = $this->Role->byAlias('admin');
@@ -166,6 +172,12 @@ class User extends AppModel {
 		return true;
 	}
 
+/**
+ * beforeSave
+ *
+ * @param array $options
+ * @return boolean
+ */
 	public function beforeSave($options = array()) {
 		if (!empty($this->data['User']['password'])) {
 			$this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
@@ -173,7 +185,24 @@ class User extends AppModel {
 		return true;
 	}
 
+/**
+ * _identical
+ *
+ * @param string $check
+ * @return boolean
+ * @deprecated Protected validation methods are no longer supported
+ */
 	protected function _identical($check) {
+		return $this->validIdentical($check);
+	}
+
+/**
+ * validIdentical
+ *
+ * @param string $check
+ * @return boolean
+ */
+	public function validIdentical($check) {
 		if (isset($this->data['User']['password'])) {
 			if ($this->data['User']['password'] != $check['verify_password']) {
 				return __('Passwords do not match. Please, try again.');

@@ -3,7 +3,6 @@ App::uses('CroogoTestCase', 'TestSuite');
 App::uses('Model', 'Model');
 App::uses('AppModel', 'Model');
 App::uses('User', 'Model');
-App::uses('AppModel', 'Model');
 App::uses('AuthComponent', 'Controller/Component');
 App::uses('CroogoTestCase', 'TestSuite');
 
@@ -19,16 +18,6 @@ class TestUser extends User {
  * @var string
  */
 	public $alias = 'User';
-
-/**
- * identical method
- *
- * @param array $check
- * @return boolean
- */
-	public function identical($check) {
-		return $this->_identical($check);
-	}
 
 }
 
@@ -119,15 +108,15 @@ class UserTest extends CroogoTestCase {
 	}
 
 /**
- * testIdentical method
+ * testValidIdenticalPassword method
  *
  * @return void
  */
-	public function testIdenticalPassword() {
+	public function testValidIdenticalPassword() {
 		$this->User->data['User'] = array('password' => '123456');
-		$this->assertTrue($this->User->identical(array('verify_password' => '123456')));
+		$this->assertTrue($this->User->validIdentical(array('verify_password' => '123456')));
 		$this->User->data['User'] = array('password' => '123456');
-		$this->assertContains('Passwords do not match. Please, try again.', $this->User->identical(array('verify_password' => 'other-value')));
+		$this->assertContains('Passwords do not match. Please, try again.', $this->User->validIdentical(array('verify_password' => 'other-value')));
 	}
 
 /**
