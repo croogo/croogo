@@ -223,17 +223,37 @@ class AppModel extends Model {
 /**
  * Validation method for alias field
  * @return bool true when validation successful
+ * @deprecated Protected validation methods are no longer supported
  */
 	protected function _validAlias($check) {
-		return preg_match('/^[\p{Ll}\p{Lm}\p{Lo}\p{Lt}\p{Lu}\p{Nd}-_]+$/mu', $check[key($check)]);
+		return $this->validAlias($check);
 	}
 
 /**
  * Validation method for name or title fields
  * @return bool true when validation successful
+ * @deprecated Protected validation methods are no longer supported
  */
 	protected function _validName($check) {
-		return preg_match('/^[\p{Ll}\p{Lm}\p{Lo}\p{Lt}\p{Lu}\p{Nd}-_\[\]\(\) ]+$/mu', $check[key($check)]);
+		return $this->validName($check);
+	}
+
+/**
+ * Validation method for alias field
+ *
+ * @return bool true when validation successful
+ */
+	public function validAlias($check) {
+		return (preg_match('/^[\p{Ll}\p{Lm}\p{Lo}\p{Lt}\p{Lu}\p{Nd}-_]+$/mu', $check[key($check)]) == 1);
+	}
+
+/**
+ * Validation method for name or title fields
+ *
+ * @return bool true when validation successful
+ */
+	public function validName($check) {
+		return (preg_match('/^[\p{Ll}\p{Lm}\p{Lo}\p{Lt}\p{Lu}\p{Nd}-_\[\]\(\) ]+$/mu', $check[key($check)]) == 1);
 	}
 
 }
