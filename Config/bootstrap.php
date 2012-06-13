@@ -66,8 +66,8 @@
 	Configure::write('Install.installed',
 		file_exists(APP . 'Config' . DS . 'database.php') &&
 		file_exists(APP . 'Config' . DS . 'settings.yml') &&
-		file_exists(APP . 'Config' . DS . 'croogo.php'
-		));
+		file_exists(APP . 'Config' . DS . 'croogo.php')
+	);
 	if (!Configure::read('Install.installed') || !Configure::read('Install.secured')) {
 		CakePlugin::load('Install', array('routes' => true));
 	}

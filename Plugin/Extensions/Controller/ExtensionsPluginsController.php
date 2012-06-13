@@ -46,6 +46,11 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 		'Extensions',
 	);
 
+/**
+ * beforeFilter
+ *
+ * @return void
+ */
 	public function beforeFilter() {
 		parent::beforeFilter();
 
@@ -53,6 +58,11 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 		$this->_CroogoPlugin->setController($this);
 	}
 
+/**
+ * admin_index
+ *
+ * @return void
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Plugins'));
 
@@ -67,6 +77,8 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 
 /**
  * admin_add
+ *
+ * @return void
  */
 	public function admin_add() {
 		$this->set('title_for_layout', __('Upload a new plugin'));
@@ -86,6 +98,12 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 		}
 	}
 
+/**
+ * admin_delete
+ *
+ * @param string $plugin
+ * @return void
+ */
 	public function admin_delete($plugin = null) {
 		if (!$plugin) {
 			$this->Session->setFlash(__('Invalid plugin'), 'default', array('class' => 'error'));
@@ -108,6 +126,12 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+/**
+ * admin_toggle
+ *
+ * @param string $plugin
+ * @return void
+ */
 	public function admin_toggle($plugin = null) {
 		if (!$plugin) {
 			$this->Session->setFlash(__('Invalid plugin'), 'default', array('class' => 'error'));

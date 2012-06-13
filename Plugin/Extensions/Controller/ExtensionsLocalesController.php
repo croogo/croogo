@@ -33,6 +33,11 @@ class ExtensionsLocalesController extends ExtensionsAppController {
  */
 	public $uses = array('Setting', 'User');
 
+/**
+ * admin_index
+ *
+ * @return void
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Locales'));
 
@@ -48,6 +53,12 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 		$this->set(compact('content', 'locales'));
 	}
 
+/**
+ * admin_activate
+ *
+ * @param string $locale
+ * @return void
+ */
 	public function admin_activate($locale = null) {
 		if ($locale == null || !is_dir(APP . 'Locale' . DS . $locale)) {
 			$this->Session->setFlash(__('Locale does not exist.'), 'default', array('class' => 'error'));
@@ -63,6 +74,11 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+/**
+ * admin_add
+ *
+ * @return void
+ */
 	public function admin_add() {
 		$this->set('title_for_layout', __('Upload a new locale'));
 
@@ -135,6 +151,12 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 		}
 	}
 
+/**
+ * admin_edit
+ *
+ * @param string $locale
+ * @return void
+ */
 	public function admin_edit($locale = null) {
 		$this->set('title_for_layout', sprintf(__('Edit locale: %s'), $locale));
 
@@ -162,6 +184,12 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 		$this->set(compact('locale', 'content'));
 	}
 
+/**
+ * admin_delete
+ *
+ * @param string $locale
+ * @return void
+ */
 	public function admin_delete($locale = null) {
 		if (!$locale) {
 			$this->Session->setFlash(__('Invalid locale'), 'default', array('class' => 'error'));

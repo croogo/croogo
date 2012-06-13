@@ -98,8 +98,8 @@
 			$pluginName => array(
 				'bootstrap' => $bootstrap,
 				'routes' => $routes,
-				)
-			);
+			)
+		);
 		CroogoPlugin::load($option);
 	}
 	CroogoEventManager::loadListeners();

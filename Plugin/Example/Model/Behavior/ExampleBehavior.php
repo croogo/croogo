@@ -16,8 +16,8 @@ class ExampleBehavior extends ModelBehavior {
 /**
  * Setup
  *
- * @param object $model
- * @param array  $config
+ * @param Model $model
+ * @param array $config
  * @return void
  */
 	public function setup(&$model, $config = array()) {
@@ -31,8 +31,8 @@ class ExampleBehavior extends ModelBehavior {
 /**
  * afterFind callback
  *
- * @param object  $model
- * @param array   $created
+ * @param Model $model
+ * @param array $results
  * @param boolean $primary
  * @return array
  */

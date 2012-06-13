@@ -34,6 +34,11 @@ class AclPermissionsController extends AclAppController {
 		'Role',
 	);
 
+/**
+ * beforeFilter
+ *
+ * @return void
+ */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Security->requirePost('admin_toggle');
@@ -42,6 +47,11 @@ class AclPermissionsController extends AclAppController {
 		}
 	}
 
+/**
+ * admin_index
+ *
+ * @return void
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Permissions'));
 
@@ -88,6 +98,13 @@ class AclPermissionsController extends AclAppController {
 		$this->set(compact('rolesAros', 'permissions'));
 	}
 
+/**
+ * admin_toggle
+ *
+ * @param integer $acoId
+ * @param integer $aroId
+ * @return void
+ */
 	public function admin_toggle($acoId, $aroId) {
 		if (!$this->RequestHandler->isAjax()) {
 			$this->redirect(array('action' => 'index'));

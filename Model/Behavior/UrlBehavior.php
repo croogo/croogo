@@ -16,8 +16,8 @@ class UrlBehavior extends ModelBehavior {
 /**
  * Setup
  *
- * @param object $model
- * @param array  $config
+ * @param Modeo $model
+ * @param array $config
  * @return void
  */
 	public function setup(Model $model, $config = array()) {
@@ -45,8 +45,8 @@ class UrlBehavior extends ModelBehavior {
 /**
  * afterFind callback
  *
- * @param object  $model
- * @param array   $created
+ * @param Modeo $model
+ * @param array $created
  * @param boolean $primary
  * @return array
  */

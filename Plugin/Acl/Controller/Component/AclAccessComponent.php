@@ -14,8 +14,18 @@
  */
 class AclAccessComponent extends Component {
 
+/**
+ * _controller
+ *
+ * @var Controller
+ */
 	protected $_controller = null;
 
+/**
+ * startup
+ *
+ * @param Controller $controller
+ */
 	public function startup(Controller $controller) {
 		$this->_controller = $controller;
 	}

@@ -42,7 +42,7 @@ class User extends AppModel {
 		'Acl' => array(
 			'className' => 'CroogoAcl',
 			'type' => 'requester',
-			),
+		),
 	);
 
 /**
@@ -95,7 +95,7 @@ class User extends AppModel {
 		),
 		'verify_password' => array(
 			'rule' => '_identical',
-			),
+		),
 		'name' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
@@ -159,8 +159,8 @@ class User extends AppModel {
 					'User.id <>' => $this->id,
 					'User.role_id' => $adminRoleId,
 					'User.status' => true,
-					)
-				));
+				)
+			));
 			return ($count > 0);
 		}
 		return true;

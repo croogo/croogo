@@ -13,6 +13,11 @@
  */
 class AclFilterComponent extends Component {
 
+/**
+ * _controller
+ *
+ * @var Controller
+ */
 	protected $_controller = null;
 
 /**

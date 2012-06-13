@@ -16,8 +16,8 @@ class MetaBehavior extends ModelBehavior {
 /**
  * Setup
  *
- * @param object $model
- * @param array  $config
+ * @param Model $model
+ * @param array $config
  * @return void
  */
 	public function setup(Model $model, $config = array()) {
@@ -31,8 +31,8 @@ class MetaBehavior extends ModelBehavior {
 /**
  * afterFind callback
  *
- * @param object  $model
- * @param array   $created
+ * @param Model $model
+ * @param array $created
  * @param boolean $primary
  * @return array
  */
@@ -59,8 +59,8 @@ class MetaBehavior extends ModelBehavior {
 /**
  * Prepare data
  *
- * @param object $model
- * @param array  $data
+ * @param Model $model
+ * @param array $data
  * @return array
  */
 	public function prepareData(&$model, $data) {
@@ -70,8 +70,8 @@ class MetaBehavior extends ModelBehavior {
 /**
  * Private method for MetaBehavior::prepareData()
  *
- * @param object $model
- * @param array  $data
+ * @param Model$model
+ * @param array $data
  * @return array
  */
 	protected function _prepareMeta($data) {
@@ -94,9 +94,9 @@ class MetaBehavior extends ModelBehavior {
 /**
  * Save with meta
  *
- * @param object $model
- * @param array  $data
- * @param array  $options
+ * @param Model $model
+ * @param array $data
+ * @param array $options
  * @return void
  */
 	public function saveWithMeta(&$model, $data, $options = array()) {
