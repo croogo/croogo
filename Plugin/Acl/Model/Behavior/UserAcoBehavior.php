@@ -1,7 +1,24 @@
 <?php
-
+/**
+ * UserAco Behavior
+ *
+ * PHP version 5
+ *
+ * @category Behavior
+ * @package  Croogo
+ * @version  1.0
+ * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
+ * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link     http://www.croogo.org
+ */
 class UserAcoBehavior extends ModelBehavior {
 
+/**
+ * parentNode
+ *
+ * @param Model $model
+ * @return array
+ */
 	public function parentNode($model) {
 		if (!$model->id && empty($model->data)) {
 			return null;
@@ -17,6 +34,13 @@ class UserAcoBehavior extends ModelBehavior {
 		}
 	}
 
+/**
+ * afterSave
+ *
+ * @param Model $model
+ * @param boolean $created
+ * @return void
+ */
 	public function afterSave(Model $model, $created) {
 		if (!$created) {
 			$parent = $model->parentNode();

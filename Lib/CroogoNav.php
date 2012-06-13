@@ -10,8 +10,18 @@
  */
 class CroogoNav extends Object {
 
+/**
+ * _items
+ *
+ * @var array
+ */
 	protected static $_items = array();
 
+/**
+ * _defaults
+ *
+ * @var array
+ */
 	protected static $_defaults = array(
 		'title' => false,
 		'url' => '#',
@@ -19,8 +29,13 @@ class CroogoNav extends Object {
 		'access' => array(),
 		'children' => array(),
 		'htmlAttributes' => array(),
-		);
+	);
 
+/**
+ * _setupOptions
+ *
+ * @param array $options
+ */
 	protected static function _setupOptions(&$options) {
 		$options = self::_merge(self::$_defaults, $options);
 		foreach ($options['children'] as &$child) {

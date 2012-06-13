@@ -7,7 +7,7 @@ CroogoNav::add('content', array(
 		'admin' => true,
 		'controller' => 'nodes',
 		'action' => 'index',
-		),
+	),
 	'weight' => 10,
 	'children' => array(
 
@@ -18,9 +18,9 @@ CroogoNav::add('content', array(
 				'admin' => true,
 				'controller' => 'nodes',
 				'action' => 'index',
-				),
-			'weight' => 10,
 			),
+			'weight' => 10,
+		),
 
 		'create' => array(
 			'title' => __('Create'),
@@ -29,9 +29,9 @@ CroogoNav::add('content', array(
 				'admin' => true,
 				'controller' => 'nodes',
 				'action' => 'create',
-				),
-			'weight' => 20,
 			),
+			'weight' => 20,
+		),
 
 		'content_types' => array(
 			'title' => __('Content Types'),
@@ -40,9 +40,9 @@ CroogoNav::add('content', array(
 				'admin' => true,
 				'controller' => 'types',
 				'action' => 'index',
-				),
-			'weight' => 30,
 			),
+			'weight' => 30,
+		),
 
 		'taxonomy' => array(
 			'title' => __('Taxonomy'),
@@ -51,7 +51,7 @@ CroogoNav::add('content', array(
 				'admin' => true,
 				'controller' => 'vocabularies',
 				'action' => 'index',
-				),
+			),
 			'weight' => 40,
 			'children' => array(
 				'list' => array(
@@ -61,9 +61,9 @@ CroogoNav::add('content', array(
 						'admin' => true,
 						'controller' => 'vocabularies',
 						'action' => 'index',
-						),
-					'weight' => 10,
 					),
+					'weight' => 10,
+				),
 				'add_new' => array(
 					'title' => __('Add new'),
 					'url' => array(
@@ -71,12 +71,12 @@ CroogoNav::add('content', array(
 						'admin' => true,
 						'controller' => 'vocabularies',
 						'action' => 'add',
-						),
+					),
 					'weight' => 20,
 					'htmlAttributes' => array('class' => 'separator'),
-					),
 				),
 			),
+		),
 
 		'comments' => array(
 			'title' => __('Comments'),
@@ -85,7 +85,7 @@ CroogoNav::add('content', array(
 				'admin' => true,
 				'controller' => 'comments',
 				'action' => 'index',
-				),
+			),
 			'children' => array(
 				'published' => array(
 					'title' => __('Published'),
@@ -95,8 +95,8 @@ CroogoNav::add('content', array(
 						'controller' => 'comments',
 						'action' => 'index',
 						'filter' => 'status:1;',
-						),
 					),
+				),
 				'approval' => array(
 					'title' => __('Approval'),
 					'url' => array(
@@ -105,13 +105,13 @@ CroogoNav::add('content', array(
 						'controller' => 'comments',
 						'action' => 'index',
 						'filter' => 'status:0;',
-						),
 					),
 				),
 			),
 		),
+	),
 
-	));
+));
 
 
 CroogoNav::add('menus', array(
@@ -121,7 +121,7 @@ CroogoNav::add('menus', array(
 		'admin' => true,
 		'controller' => 'menus',
 		'action' => 'index',
-		),
+	),
 	'weight' => 20,
 	'children' => array(
 		'menus' => array(
@@ -131,9 +131,9 @@ CroogoNav::add('menus', array(
 				'admin' => true,
 				'controller' => 'menus',
 				'action' => 'index',
-				),
-			'weight' => 10,
 			),
+			'weight' => 10,
+		),
 		'add_new' => array(
 			'title' => __('Add new'),
 			'url' => array(
@@ -141,12 +141,12 @@ CroogoNav::add('menus', array(
 				'admin' => true,
 				'controller' => 'menus',
 				'action' => 'add',
-				),
+			),
 			'weight' => 20,
 			'htmlAttributes' => array('class' => 'separator'),
-			),
 		),
-	));
+	),
+));
 
 CroogoNav::add('blocks', array(
 	'title' => __('Blocks'),
@@ -155,7 +155,7 @@ CroogoNav::add('blocks', array(
 		'admin' => true,
 		'controller' => 'blocks',
 		'action' => 'index',
-		),
+	),
 	'weight' => 30,
 	'children' => array(
 		'blocks' => array(
@@ -165,8 +165,8 @@ CroogoNav::add('blocks', array(
 				'admin' => true,
 				'controller' => 'blocks',
 				'action' => 'index',
-				),
 			),
+		),
 		'regions' => array(
 			'title' => __('Regions'),
 			'url' => array(
@@ -174,10 +174,10 @@ CroogoNav::add('blocks', array(
 				'admin' => true,
 				'controller' => 'regions',
 				'action' => 'index',
-				),
 			),
 		),
-	));
+	),
+));
 
 CroogoNav::add('media', array(
 	'title' => __('Media'),
@@ -186,7 +186,7 @@ CroogoNav::add('media', array(
 		'admin' => true,
 		'controller' => 'attachments',
 		'action' => 'index',
-		),
+	),
 	'weight' => 40,
 	'children' => array(
 		'attachments' => array(
@@ -196,8 +196,8 @@ CroogoNav::add('media', array(
 				'admin' => true,
 				'controller' => 'attachments',
 				'action' => 'index',
-				),
 			),
+		),
 		'file_manager' => array(
 			'title' => __('File Manager'),
 			'url' => array(
@@ -205,10 +205,10 @@ CroogoNav::add('media', array(
 				'admin' => true,
 				'controller' => 'filemanager',
 				'action' => 'index',
-				),
 			),
 		),
-	));
+	),
+));
 
 CroogoNav::add('contacts', array(
 	'title' => __('Contacts'),
@@ -217,7 +217,7 @@ CroogoNav::add('contacts', array(
 		'admin' => true,
 		'controller' => 'contacts',
 		'action' => 'index',
-		),
+	),
 	'weight' => 50,
 	'children' => array(
 		'attachments' => array(
@@ -227,8 +227,8 @@ CroogoNav::add('contacts', array(
 				'admin' => true,
 				'controller' => 'contacts',
 				'action' => 'index',
-				),
 			),
+		),
 		'file_manager' => array(
 			'title' => __('Messages'),
 			'url' => array(
@@ -236,10 +236,10 @@ CroogoNav::add('contacts', array(
 				'admin' => true,
 				'controller' => 'messages',
 				'action' => 'index',
-				),
 			),
 		),
-	));
+	),
+));
 
 CroogoNav::add('users', array(
 	'title' => __('Users'),
@@ -248,7 +248,7 @@ CroogoNav::add('users', array(
 		'admin' => true,
 		'controller' => 'users',
 		'action' => 'index',
-		),
+	),
 	'weight' => 50,
 	'children' => array(
 		'users' => array(
@@ -258,9 +258,9 @@ CroogoNav::add('users', array(
 				'admin' => true,
 				'controller' => 'users',
 				'action' => 'index',
-				),
-			'weight' => 10,
 			),
+			'weight' => 10,
+		),
 		'roles' => array(
 			'title' => __('Roles'),
 			'url' => array(
@@ -268,11 +268,11 @@ CroogoNav::add('users', array(
 				'admin' => true,
 				'controller' => 'roles',
 				'action' => 'index',
-				),
-			'weight' => 20,
 			),
+			'weight' => 20,
 		),
-	));
+	),
+));
 
 CroogoNav::add('settings', array(
 	'title' => __('Settings'),
@@ -282,7 +282,7 @@ CroogoNav::add('settings', array(
 		'controller' => 'settings',
 		'action' => 'prefix',
 		'Site',
-		),
+	),
 	'weight' => 60,
 	'children' => array(
 		'site' => array(
@@ -293,9 +293,9 @@ CroogoNav::add('settings', array(
 				'controller' => 'settings',
 				'action' => 'prefix',
 				'Site',
-				),
-			'weight' => 10,
 			),
+			'weight' => 10,
+		),
 
 		'meta' => array(
 			'title' => __('Meta'),
@@ -305,9 +305,9 @@ CroogoNav::add('settings', array(
 				'controller' => 'settings',
 				'action' => 'prefix',
 				'Meta',
-				),
-			'weight' => 20,
 			),
+			'weight' => 20,
+		),
 
 		'reading' => array(
 			'title' => __('Reading'),
@@ -317,9 +317,9 @@ CroogoNav::add('settings', array(
 				'controller' => 'settings',
 				'action' => 'prefix',
 				'Reading',
-				),
-			'weight' => 30,
 			),
+			'weight' => 30,
+		),
 
 		'writing' => array(
 			'title' => __('Writing'),
@@ -329,9 +329,9 @@ CroogoNav::add('settings', array(
 				'controller' => 'settings',
 				'action' => 'prefix',
 				'Writing',
-				),
-			'weight' => 40,
 			),
+			'weight' => 40,
+		),
 
 		'comment' => array(
 			'title' => __('Comment'),
@@ -341,9 +341,9 @@ CroogoNav::add('settings', array(
 				'controller' => 'settings',
 				'action' => 'prefix',
 				'Comment',
-				),
-			'weight' => 50,
 			),
+			'weight' => 50,
+		),
 
 		'service' => array(
 			'title' => __('Service'),
@@ -353,9 +353,9 @@ CroogoNav::add('settings', array(
 				'controller' => 'settings',
 				'action' => 'prefix',
 				'Service',
-				),
-			'weight' => 60,
 			),
+			'weight' => 60,
+		),
 
 		'languages' => array(
 			'title' => __('Languages'),
@@ -364,9 +364,9 @@ CroogoNav::add('settings', array(
 				'admin' => true,
 				'controller' => 'languages',
 				'action' => 'index',
-				),
-			'weight' => 70,
 			),
-
+			'weight' => 70,
 		),
-	));
+
+	),
+));

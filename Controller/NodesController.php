@@ -256,7 +256,7 @@ class NodesController extends AppController {
 		}
 
 		$nodes = $this->Node->generateTreeList();
-		$roles   = $this->Node->User->Role->find('list');
+		$roles = $this->Node->User->Role->find('list');
 		$users = $this->Node->User->find('list');
 		$vocabularies = Set::combine($type['Vocabulary'], '{n}.id', '{n}');
 		$taxonomy = array();

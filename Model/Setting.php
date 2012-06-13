@@ -122,7 +122,7 @@ class Setting extends AppModel {
 				'input_type' => '',
 				'editable' => 0,
 				'params' => '',
-				), $options);
+			), $options);
 
 			$setting = array();
 			$setting['key'] = $key;

@@ -4,7 +4,7 @@
  *
  * PHP version 5
  *
- * @category Helper
+ * @category Tinymce.Helper
  * @package  Croogo
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
@@ -72,6 +72,11 @@ class TinymceHelper extends AppHelper {
 		'file_browser_callback' => 'fileBrowserCallBack',
 	);
 
+/**
+ * fileBrowserCallBack
+ *
+ * @return string
+ */
 	public function fileBrowserCallBack() {
 		$output = <<<EOF
 function fileBrowserCallBack(field_name, url, type, win) {
@@ -87,6 +92,11 @@ EOF;
 		return $output;
 	}
 
+/**
+ * selectURL
+ *
+ * @return string
+ */
 	public function selectURL() {
 		$output = <<<EOF
 function selectURL(url) {
@@ -106,6 +116,12 @@ EOF;
 		return $output;
 	}
 
+/**
+ * getSettings
+ *
+ * @param array $settings
+ * @return array
+ */
 	public function getSettings($settings = array()) {
 		$_settings = $this->settings;
 		$action = Inflector::camelize($this->params['controller']) . '/' . $this->params['action'];
@@ -118,6 +134,12 @@ EOF;
 		return $settings;
 	}
 
+/**
+ * beforeRender
+ *
+ * @param string $viewFile
+ * @return void
+ */
 	public function beforeRender($viewFile) {
 		if (is_array(Configure::read('Tinymce.actions'))) {
 			$this->actions = Set::merge($this->actions, Configure::read('Tinymce.actions'));

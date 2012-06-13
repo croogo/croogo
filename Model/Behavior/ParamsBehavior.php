@@ -16,8 +16,8 @@ class ParamsBehavior extends ModelBehavior {
 /**
  * Setup
  *
- * @param object $model
- * @param array  $config
+ * @param Model $model
+ * @param array $config
  * @return void
  */
 	public function setup(Model $model, $config = array()) {
@@ -31,8 +31,8 @@ class ParamsBehavior extends ModelBehavior {
 /**
  * afterFind callback
  *
- * @param object  $model
- * @param array   $created
+ * @param Model $model
+ * @param array $created
  * @param boolean $primary
  * @return array
  */
@@ -63,7 +63,7 @@ class ParamsBehavior extends ModelBehavior {
  * my_param_key=value_here
  * another_param=another_value
  *
- * @param object $model
+ * @param Model $model
  * @param string $params
  * @return array
  */

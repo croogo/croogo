@@ -16,8 +16,18 @@ App::uses('Folder', 'Utility');
  */
 class AclGenerateComponent extends Component {
 
+/**
+ * _controller
+ *
+ * @var Controller
+ */
 	protected $_controller = null;
 
+/**
+ * _folder
+ *
+ * @var Folder
+ */
 	protected $_folder = null;
 
 /**

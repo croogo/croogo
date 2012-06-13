@@ -47,6 +47,11 @@ class ExtensionsThemesController extends ExtensionsAppController {
 		parent::__construct($request, $response);
 	}
 
+/**
+ * admin_index
+ *
+ * @return void
+ */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Themes'));
 
@@ -61,6 +66,12 @@ class ExtensionsThemesController extends ExtensionsAppController {
 		$this->set(compact('themes', 'themesData', 'currentTheme'));
 	}
 
+/**
+ * admin_activate
+ *
+ * @param string $alias
+ * @return void
+ */
 	public function admin_activate($alias = null) {
 		if ($this->_CroogoTheme->activate($alias)) {
 			$this->Session->setFlash(__('Theme activated.'), 'default', array('class' => 'success'));
@@ -73,6 +84,8 @@ class ExtensionsThemesController extends ExtensionsAppController {
 
 /**
  * admin_add
+ *
+ * @return void
  */
 	public function admin_add() {
 		$this->set('title_for_layout', __('Upload a new theme'));
@@ -92,13 +105,29 @@ class ExtensionsThemesController extends ExtensionsAppController {
 		}
 	}
 
+/**
+ * admin_editor
+ *
+ * @return void
+ */
 	public function admin_editor() {
 		$this->set('title_for_layout', __('Theme Editor'));
 	}
 
+/**
+ * admin_save
+ *
+ * @return void
+ */
 	public function admin_save() {
 	}
 
+/**
+ * admin_delete
+ *
+ * @param string $alias
+ * @return void
+ */
 	public function admin_delete($alias = null) {
 		if ($alias == null) {
 			$this->Session->setFlash(__('Invalid Theme.'), 'default', array('class' => 'error'));

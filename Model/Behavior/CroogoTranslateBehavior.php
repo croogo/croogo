@@ -1,29 +1,5 @@
 <?php
 /**
- * Short description for file.
- *
- * Lond description for file.
- *
- * PHP version 5
- *
- * CakePHP(tm) :  Rapid Development Framework (http://www.cakephp.org)
- * Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @filesource
- * @copyright     Copyright 2005-2008, Cake Software Foundation, Inc. (http://www.cakefoundation.org)
- * @link          http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
- * @package	      cake
- * @subpackage    cake.cake.libs.model.behaviors
- * @since         CakePHP(tm) v 1.2.0.4525
- * @version       $Revision$
- * @modifiedby    $LastChangedBy$
- * @lastmodified  $Date$
- * @license	      http://www.opensource.org/licenses/mit-license.php The MIT License
- */
-/**
  * CroogoTranslate Behavior
  *
  * Modified version of cake's core TranslateBehavior.
@@ -64,6 +40,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * $config could be empty - and translations configured dynamically by
  * bindTranslation() method
  *
+ * @param Model $model
  * @param array $config
  * @return mixed
  * @access public

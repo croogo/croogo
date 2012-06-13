@@ -13,6 +13,13 @@
  */
 class EncoderBehavior extends ModelBehavior {
 
+/**
+ * setup
+ *
+ * @param Model $model
+ * @param array $config
+ * @return void
+ */
 	public function setup(Model $model, $config = array()) {
 		if (is_string($config)) {
 			$config = array($config);
@@ -72,8 +79,8 @@ class EncoderBehavior extends ModelBehavior {
 /**
  * Decode data
  *
- * @param object $model model
- * @param string $data data
+ * @param Model $model
+ * @param string $data
  * @return array
  */
 	public function decodeData(&$model, $data) {

@@ -1,10 +1,37 @@
 <?php
+/**
+ * AclPermission Model
+ *
+ * PHP version 5
+ *
+ * @category Model
+ * @package  Croogo
+ * @version  1.0
+ * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
+ * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link     http://www.croogo.org
+ */
 class AclPermission extends AppModel {
 
+/**
+ * name
+ *
+ * @var string
+ */
 	public $name = 'AclPermission';
 
+/**
+ * useTable
+ *
+ * @var string
+ */
 	public $useTable = 'aros_acos';
 
+/**
+ * belongsTo
+ *
+ * @var array
+ */
 	public $belongsTo = array(
 		'AclAro' => array(
 			'className' => 'Acl.AclAro',
@@ -16,8 +43,10 @@ class AclPermission extends AppModel {
 		),
 	);
 
-/** Generate allowed actions for current logged in Role
+/**
+ * Generate allowed actions for current logged in Role
  *
+ * @param integer $roleId
  * @return array of elements formatted like ControllerName/action_name
  */
 	public function getAllowedActionsByRoleId($roleId) {

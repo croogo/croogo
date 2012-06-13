@@ -39,6 +39,11 @@ class CroogoControllerTestCase extends ControllerTestCase {
 		$Setting->writeConfiguration();
 	}
 
+/**
+ * tearDown
+ *
+ * @return void
+ */
 	public function tearDown() {
 		parent::tearDown();
 		CakeSession::clear();
@@ -46,12 +51,18 @@ class CroogoControllerTestCase extends ControllerTestCase {
 		ClassRegistry::flush();
 	}
 
+/**
+ * authUserCallback
+ *
+ * @param type $key
+ * @return mixed
+ */
 	public function authUserCallback($key) {
 		$auth = array(
 			'id' => 1,
 			'username' => 'admin',
 			'role_id' => 1,
-			);
+		);
 		if (empty($key) || !isset($auth[$key])) {
 			return $auth;
 		}

@@ -4,7 +4,7 @@
  *
  * PHP version 5
  *
- * @category Controller
+ * @category Translate.Controller
  * @package  Croogo
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
@@ -32,6 +32,13 @@ class TranslateController extends TranslateAppController {
 		'Language',
 	);
 
+/**
+ * admin_index
+ *
+ * @param integer $id
+ * @param string $modelAlias
+ * @return void
+ */
 	public function admin_index($id = null, $modelAlias = null) {
 		if ($id == null || $modelAlias == null) {
 			$this->Session->setFlash(__('Invalid ID.'), 'default', array('class' => 'error'));
@@ -76,6 +83,13 @@ class TranslateController extends TranslateAppController {
 		$this->set(compact('runtimeModelAlias', 'translations', 'record', 'modelAlias', 'id'));
 	}
 
+/**
+ * admin_edit
+ *
+ * @param integer $id
+ * @param string $modelAlias
+ * @return void
+ */
 	public function admin_edit($id = null, $modelAlias = null) {
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid ID.'), 'default', array('class' => 'error'));
@@ -143,6 +157,14 @@ class TranslateController extends TranslateAppController {
 		$this->set(compact('fields', 'language', 'modelAlias', 'id'));
 	}
 
+/**
+ * admin_delete
+ *
+ * @param integer $id
+ * @param string $modelAlias
+ * @param string $locale
+ * @return void
+ */
 	public function admin_delete($id = null, $modelAlias = null, $locale = null) {
 		if ($locale == null || $id == null) {
 			$this->Session->setFlash(__('Invalid Locale or ID'), 'default', array('class' => 'error'));

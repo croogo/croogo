@@ -13,12 +13,32 @@
  */
 class AclActionsController extends AclAppController {
 
+/**
+ * name
+ *
+ * @var string
+ */
 	public $name = 'AclActions';
 
+/**
+ * uses
+ *
+ * @var array
+ */
 	public $uses = array('Acl.AclAco');
 
+/**
+ * components
+ *
+ * @var array
+ */
 	public $components = array('Acl.AclGenerate');
 
+/**
+ * beforeFilter
+ *
+ * @return void
+ */
 	public function beforeFilter() {
 		parent::beforeFilter();
 		if ($this->action == 'admin_generate') {
