@@ -201,9 +201,9 @@ CroogoNav::add('media', array(
 		'file_manager' => array(
 			'title' => __('File Manager'),
 			'url' => array(
-				'plugin' => false,
 				'admin' => true,
-				'controller' => 'filemanager',
+				'plugin' => 'file_manager',
+				'controller' => 'file_managers',
 				'action' => 'index',
 			),
 		),
