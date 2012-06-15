@@ -1,6 +1,6 @@
 <?php
 /**
- * Filemanager Helper
+ * FileManager Helper
  *
  * PHP version 5
  *
@@ -11,7 +11,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class FilemanagerHelper extends AppHelper {
+class FileManagerHelper extends AppHelper {
 
 /**
  * Other helpers used by this helper
@@ -135,7 +135,7 @@ class FilemanagerHelper extends AppHelper {
  * @return string
  */
 	public function linkDirectory($title, $path) {
-		$output = $this->link($title, array('controller' => 'filemanager', 'action' => 'browse'), $path);
+		$output = $this->link($title, array('controller' => 'file_manager', 'action' => 'browse'), $path);
 		return $output;
 	}
 
@@ -147,7 +147,7 @@ class FilemanagerHelper extends AppHelper {
  * @return string
  */
 	public function linkFile($title, $path) {
-		$output = "<a href='" . $this->Html->url(array('controller' => 'filemanager', 'action' => 'editfile')) . "?path=" . urlencode($path) . "'>{$title}</a>";
+		$output = "<a href='" . $this->Html->url(array('controller' => 'file_manager', 'action' => 'editfile')) . "?path=" . urlencode($path) . "'>{$title}</a>";
 		return $output;
 	}
 
@@ -159,7 +159,7 @@ class FilemanagerHelper extends AppHelper {
  * @return string
  */
 	public function linkUpload($title, $path) {
-		$output = $this->link($title, array('controller' => 'filemanager', 'action' => 'upload'), $path);
+		$output = $this->link($title, array('controller' => 'file_manager', 'action' => 'upload'), $path);
 		return $output;
 	}
 
@@ -171,7 +171,7 @@ class FilemanagerHelper extends AppHelper {
  * @return string
  */
 	public function linkCreateDirectory($title, $path) {
-		$output = $this->link($title, array('controller' => 'filemanager', 'action' => 'new'), $path);
+		$output = $this->link($title, array('controller' => 'file_manager', 'action' => 'new'), $path);
 		return $output;
 	}
 

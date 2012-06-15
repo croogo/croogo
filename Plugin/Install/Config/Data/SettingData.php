@@ -249,7 +249,7 @@ class SettingData {
 		array(
 			'id' => '32',
 			'key' => 'Hook.bootstraps',
-			'value' => 'Tinymce',
+			'value' => 'FileManager,Tinymce',
 			'title' => '',
 			'description' => '',
 			'input_type' => '',

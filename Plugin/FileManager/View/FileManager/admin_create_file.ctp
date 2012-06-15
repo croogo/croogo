@@ -2,32 +2,31 @@
 	<h2><?php echo $title_for_layout; ?></h2>
 
 	<div class="breadcrumb">
-	<?php echo __('You are here:');
-
-		$breadcrumb = $this->Filemanager->breadcrumb($path);
+	<?php
+		echo __('You are here:') . ' ';
+		$breadcrumb = $this->FileManager->breadcrumb($path);
 		foreach($breadcrumb AS $pathname => $p) {
-			echo $this->Filemanager->linkDirectory($pathname, $p);
+			echo $this->FileManager->linkDirectory($pathname, $p);
 			echo DS;
 		}
 	?>
 	</div>
 
 	<?php
-		echo $this->Form->create('Filemanager', array(
-			'type' => 'file',
+		echo $this->Form->create('FileManager', array(
 			'url' => $this->Html->url(array(
-				'controller' => 'filemanager',
-				'action' => 'upload',
+				'controller' => 'file_manager',
+				'action' => 'create_file',
 			), true) . '?path=' . urlencode($path),
 		));
 	?>
 	<fieldset>
-	<?php echo $this->Form->input('Filemanager.file', array('type' => 'file')); ?>
+	<?php echo $this->Form->input('FileManager.name', array('type' => 'text')); ?>
 	</fieldset>
 
 	<div class="buttons">
 	<?php
-		echo $this->Form->end(__('Upload'));
+		echo $this->Form->end(__('Create'));
 		echo $this->Html->link(__('Cancel'), array(
 			'action' => 'index',
 		), array(
