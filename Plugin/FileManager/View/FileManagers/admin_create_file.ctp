@@ -4,25 +4,26 @@
 	<div class="breadcrumb">
 	<?php
 		echo __('You are here:') . ' ';
-		$breadcrumb = $this->Filemanager->breadcrumb($path);
+		$breadcrumb = $this->FileManager->breadcrumb($path);
 		foreach($breadcrumb AS $pathname => $p) {
-			echo $this->Filemanager->linkDirectory($pathname, $p);
+			echo $this->FileManager->linkDirectory($pathname, $p);
 			echo DS;
 		}
 	?>
 	</div>
 
 	<?php
-		echo $this->Form->create('Filemanager', array(
+		echo $this->Form->create('FileManager', array(
 			'url' => $this->Html->url(array(
-				'controller' => 'filemanager',
-				'action' => 'create_directory',
+				'controller' => 'file_managers',
+				'action' => 'create_file',
 			), true) . '?path=' . urlencode($path),
 		));
 	?>
 	<fieldset>
-	<?php echo $this->Form->input('Filemanager.name', array('type' => 'text')); ?>
+	<?php echo $this->Form->input('FileManager.name', array('type' => 'text')); ?>
 	</fieldset>
+
 	<div class="buttons">
 	<?php
 		echo $this->Form->end(__('Create'));

@@ -54,6 +54,7 @@
 	App::import('Lib', 'Croogo');
 	App::import('Lib', 'CroogoNav');
 	CakePlugin::load(array('Extensions'), array('bootstrap' => true));
+	CakePlugin::load('FileManager');
 	require_once 'croogo_menus.php';
 	require_once 'croogo_bootstrap.php';
 
