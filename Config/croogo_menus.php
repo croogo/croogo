@@ -179,37 +179,6 @@ CroogoNav::add('blocks', array(
 	),
 ));
 
-CroogoNav::add('media', array(
-	'title' => __('Media'),
-	'url' => array(
-		'plugin' => false,
-		'admin' => true,
-		'controller' => 'attachments',
-		'action' => 'index',
-	),
-	'weight' => 40,
-	'children' => array(
-		'attachments' => array(
-			'title' => __('Attachments'),
-			'url' => array(
-				'plugin' => false,
-				'admin' => true,
-				'controller' => 'attachments',
-				'action' => 'index',
-			),
-		),
-		'file_manager' => array(
-			'title' => __('File Manager'),
-			'url' => array(
-				'plugin' => false,
-				'admin' => true,
-				'controller' => 'filemanager',
-				'action' => 'index',
-			),
-		),
-	),
-));
-
 CroogoNav::add('contacts', array(
 	'title' => __('Contacts'),
 	'url' => array(
