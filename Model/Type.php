@@ -69,7 +69,7 @@ class Type extends AppModel {
  */
 	public $hasAndBelongsToMany = array(
 		'Vocabulary' => array(
-			'className' => 'Vocabulary',
+			'className' => 'Taxonomy.Vocabulary',
 			'joinTable' => 'types_vocabularies',
 			'foreignKey' => 'type_id',
 			'associationForeignKey' => 'vocabulary_id',

@@ -1,5 +1,5 @@
 <?php
-App::uses('VocabulariesController', 'Controller');
+App::uses('VocabulariesController', 'Taxonomy.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestVocabulariesController extends VocabulariesController {
@@ -40,29 +40,29 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
  * fixtures
  */
 	public $fixtures = array(
-		'aco',
-		'aro',
-		'aros_aco',
-		'block',
-		'comment',
-		'contact',
-		'i18n',
-		'language',
-		'link',
-		'menu',
-		'message',
-		'meta',
-		'node',
-		'nodes_taxonomy',
-		'region',
-		'role',
-		'setting',
-		'taxonomy',
-		'term',
-		'type',
-		'types_vocabulary',
-		'user',
-		'vocabulary',
+		'app.aco',
+		'app.aro',
+		'app.aros_aco',
+		'app.block',
+		'app.comment',
+		'app.contact',
+		'app.i18n',
+		'app.language',
+		'app.link',
+		'app.menu',
+		'app.message',
+		'app.meta',
+		'app.node',
+		'plugin.taxonomy.nodes_taxonomy',
+		'app.region',
+		'app.role',
+		'app.setting',
+		'plugin.taxonomy.taxonomy',
+		'plugin.taxonomy.term',
+		'app.type',
+		'plugin.taxonomy.types_vocabulary',
+		'app.user',
+		'plugin.taxonomy.vocabulary',
 	);
 
 /**
@@ -72,6 +72,9 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+		App::build(array(
+			'View' => array(CakePlugin::path('Taxonomy') . 'View' . DS)
+		), App::APPEND);
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Vocabularies = new TestVocabulariesController($request, $response);
@@ -111,13 +114,13 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminIndex() {
-		$this->testAction('/admin/vocabularies/index');
+		$this->testAction('/admin/taxonomy/vocabularies/index');
 		$this->assertNotEmpty($this->vars['vocabularies']);
 	}
 
 	public function testAdminAdd() {
 		$this->Vocabularies->request->params['action'] = 'admin_add';
-		$this->Vocabularies->request->params['url']['url'] = 'admin/vocabularies/add';
+		$this->Vocabularies->request->params['url']['url'] = 'admin/taxonomy/vocabularies/add';
 		$this->Vocabularies->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -157,7 +160,7 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
 		$this->VocabulariesController
 			->expects($this->once())
 			->method('redirect');
-		$this->testAction('/admin/vocabularies/edit/1', array(
+		$this->testAction('/admin/taxonomy/vocabularies/edit/1', array(
 			'data' => array(
 				'Vocabulary' => array(
 					'id' => 1, // categories
@@ -171,7 +174,7 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminDelete() {
 		$this->Vocabularies->request->params['action'] = 'admin_delete';
-		$this->Vocabularies->request->params['url']['url'] = 'admin/vocabularies/delete';
+		$this->Vocabularies->request->params['url']['url'] = 'admin/taxonomy/vocabularies/delete';
 		$this->Vocabularies->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -188,7 +191,7 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminMoveup() {
 		$this->Vocabularies->request->params['action'] = 'admin_index';
-		$this->Vocabularies->request->params['url']['url'] = 'admin/vocabularies/moveup';
+		$this->Vocabularies->request->params['url']['url'] = 'admin/taxonomy/vocabularies/moveup';
 		$this->Vocabularies->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -213,7 +216,7 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminMovedown() {
 		$this->Vocabularies->request->params['action'] = 'admin_index';
-		$this->Vocabularies->request->params['url']['url'] = 'admin/vocabularies/moveup';
+		$this->Vocabularies->request->params['url']['url'] = 'admin/taxonomy/vocabularies/moveup';
 		$this->Vocabularies->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',

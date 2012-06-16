@@ -142,7 +142,7 @@ class Node extends AppModel {
  */
 	public $hasAndBelongsToMany = array(
 		'Taxonomy' => array(
-			'className' => 'Taxonomy',
+			'className' => 'Taxonomy.Taxonomy',
 			'with' => 'NodesTaxonomy',
 			'joinTable' => 'nodes_taxonomies',
 			'foreignKey' => 'node_id',

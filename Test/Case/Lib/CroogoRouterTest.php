@@ -9,8 +9,8 @@ class CroogoRouterTest extends CroogoTestCase {
 	public $fixtures = array(
 		'setting',
 		'type',
-		'vocabulary',
-		'types_vocabulary',
+		'plugin.taxonomy.vocabulary',
+		'plugin.taxonomy.types_vocabulary',
 		);
 
 	public function testContentType() {

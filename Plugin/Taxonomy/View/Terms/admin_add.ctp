@@ -1,4 +1,4 @@
-<?php $this->Html->script(array('terms'), false); ?>
+<?php $this->Html->script(array('/taxonomy/js/terms'), false); ?>
 <?php $this->extend('/Common/admin_edit'); ?>
 <?php
 	echo $this->Form->create('Term', array(

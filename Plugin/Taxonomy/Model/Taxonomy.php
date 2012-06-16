@@ -1,17 +1,19 @@
 <?php
+App::uses('TaxonomyAppModel', 'Taxonomy.Model');
+
 /**
  * Taxonomy
  *
  * PHP version 5
  *
- * @category Model
+ * @category Taxonomy.Model
  * @package  Croogo
- * @since	1.3.1
+ * @since    1.3.1
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Taxonomy extends AppModel {
+class Taxonomy extends TaxonomyAppModel {
 
 /**
  * Model name
@@ -49,14 +51,14 @@ class Taxonomy extends AppModel {
  */
 	public $belongsTo = array(
 		'Term' => array(
-			'className' => 'Term',
+			'className' => 'Taxonomy.Term',
 			'foreignKey' => 'term_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
 		),
 		'Vocabulary' => array(
-			'className' => 'Vocabulary',
+			'className' => 'Taxonomy.Vocabulary',
 			'foreignKey' => 'vocabulary_id',
 			'conditions' => '',
 			'fields' => '',
