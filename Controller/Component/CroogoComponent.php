@@ -48,14 +48,6 @@ class CroogoComponent extends Component {
 	public $menus_for_layout = array();
 
 /**
- * Blocks for layout
- *
- * @var string
- * @access public
- */
-	public $blocks_for_layout = array();
-
-/**
  * Nodes for layout
  *
  * @var string
@@ -120,7 +112,6 @@ class CroogoComponent extends Component {
 		}
 
 		if (!isset($this->controller->request->params['admin']) && !isset($this->controller->request->params['requested'])) {
-			$this->blocks();
 			$this->menus();
 			$this->nodes();
 		} else {
@@ -143,81 +134,6 @@ class CroogoComponent extends Component {
 
 		if (!Configure::read('Croogo.version')) {
 			$this->controller->Setting->write('Croogo.version', file_get_contents(APP . 'VERSION.txt'));
-		}
-	}
-
-/**
- * Blocks
- *
- * Blocks will be available in this variable in views: $blocks_for_layout
- *
- * @return void
- */
-	public function blocks() {
-		$regions = $this->controller->Block->Region->find('list', array(
-			'conditions' => array(
-				'Region.block_count >' => '0',
-			),
-			'fields' => array(
-				'Region.id',
-				'Region.alias',
-			),
-			'cache' => array(
-				'name' => 'croogo_regions',
-				'config' => 'croogo_blocks',
-			),
-		));
-		foreach ($regions as $regionId => $regionAlias) {
-			$this->blocks_for_layout[$regionAlias] = array();
-			$findOptions = array(
-				'conditions' => array(
-					'Block.status' => 1,
-					'Block.region_id' => $regionId,
-					'AND' => array(
-						array(
-							'OR' => array(
-								'Block.visibility_roles' => '',
-								'Block.visibility_roles LIKE' => '%"' . $this->roleId . '"%',
-							),
-						),
-						array(
-							'OR' => array(
-								'Block.visibility_paths' => '',
-								'Block.visibility_paths LIKE' => '%"' . $this->controller->request->here . '"%',
-								//'Block.visibility_paths LIKE' => '%"' . 'controller:' . $this->params['controller'] . '"%',
-								//'Block.visibility_paths LIKE' => '%"' . 'controller:' . $this->params['controller'] . '/' . 'action:' . $this->params['action'] . '"%',
-							),
-						),
-					),
-				),
-				'order' => array(
-					'Block.weight' => 'ASC'
-				),
-				'cache' => array(
-					'prefix' => 'croogo_blocks_' . $regionAlias . '_' . $this->roleId . '_',
-					'config' => 'croogo_blocks',
-				),
-				'recursive' => '-1',
-			);
-			$blocks = $this->controller->Block->find('all', $findOptions);
-			$this->processBlocksData($blocks);
-			$this->blocks_for_layout[$regionAlias] = $blocks;
-		}
-	}
-
-/**
- * Process blocks for bb-code like strings
- *
- * @param array $blocks
- * @return void
- */
-	public function processBlocksData($blocks) {
-		foreach ($blocks as $block) {
-			$this->blocksData['menus'] = Set::merge($this->blocksData['menus'], $this->parseString('menu|m', $block['Block']['body']));
-			$this->blocksData['vocabularies'] = Set::merge($this->blocksData['vocabularies'], $this->parseString('vocabulary|v', $block['Block']['body']));
-			$this->blocksData['nodes'] = Set::merge($this->blocksData['nodes'], $this->parseString('node|n', $block['Block']['body'], array(
-				'convertOptionsToArray' => true,
-			)));
 		}
 	}
 
@@ -287,7 +203,7 @@ class CroogoComponent extends Component {
  * @return void
  */
 	public function nodes() {
-		$nodes = $this->blocksData['nodes'];
+		$nodes = $this->controller->Blocks->blocksData['nodes'];
 		$_nodeOptions = array(
 			'find' => 'all',
 			'conditions' => array(
@@ -318,32 +234,6 @@ class CroogoComponent extends Component {
 	}
 
 /**
- * Converts formatted string to array
- *
- * A string formatted like 'Node.type:blog;' will be converted to
- * array('Node.type' => 'blog');
- *
- * @param string $string in this format: Node.type:blog;Node.user_id:1;
- * @return array
- */
-	public function stringToArray($string) {
-		$string = explode(';', $string);
-		$stringArr = array();
-		foreach ($string as $stringElement) {
-			if ($stringElement != null) {
-				$stringElementE = explode(':', $stringElement);
-				if (isset($stringElementE['1'])) {
-					$stringArr[$stringElementE['0']] = $stringElementE['1'];
-				} else {
-					$stringArr[] = $stringElement;
-				}
-			}
-		}
-
-		return $stringArr;
-	}
-
-/**
  * beforeRender
  *
  * @param object $controller instance of controller
@@ -351,7 +241,6 @@ class CroogoComponent extends Component {
  */
 	public function beforeRender(Controller $controller) {
 		$this->controller =& $controller;
-		$this->controller->set('blocks_for_layout', $this->blocks_for_layout);
 		$this->controller->set('menus_for_layout', $this->menus_for_layout);
 		$this->controller->set('nodes_for_layout', $this->nodes_for_layout);
 	}
@@ -435,52 +324,6 @@ class CroogoComponent extends Component {
  */
 	public function removePluginBootstrap($plugin) {
 		$this->_CroogoPlugin->removeBootstrap($plugin);
-	}
-
-/**
- * Parses bb-code like string.
- *
- * Example: string containing [menu:main option1="value"] will return an array like
- *
- * Array
- * (
- *     [main] => Array
- *         (
- *             [option1] => value
- *         )
- * )
- *
- * @param string $exp
- * @param string $text
- * @param array  $options
- * @return array
- */
-	public function parseString($exp, $text, $options = array()) {
-		$_options = array(
-			'convertOptionsToArray' => false,
-		);
-		$options = array_merge($_options, $options);
-
-		$output = array();
-		preg_match_all('/\[(' . $exp . '):([A-Za-z0-9_\-]*)(.*?)\]/i', $text, $tagMatches);
-		for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
-			$regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
-			preg_match_all($regex, $tagMatches[3][$i], $attributes);
-			$alias = $tagMatches[2][$i];
-			$aliasOptions = array();
-			for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
-				$aliasOptions[$attributes[1][$j]] = $attributes[2][$j];
-			}
-			if ($options['convertOptionsToArray']) {
-				foreach ($aliasOptions as $optionKey => $optionValue) {
-					if (!is_array($optionValue) && strpos($optionValue, ':') !== false) {
-						$aliasOptions[$optionKey] = $this->stringToArray($optionValue);
-					}
-				}
-			}
-			$output[$alias] = $aliasOptions;
-		}
-		return $output;
 	}
 
 /**

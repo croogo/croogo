@@ -331,13 +331,13 @@ class LayoutHelper extends AppHelper {
 				if ($plugin) {
 					$blockOutput = $this->_View->element($element, array('block' => $block), array('plugin' => $plugin));
 				} else {
-					$blockOutput = $this->_View->element($element, array('block' => $block));
+					$blockOutput = $this->_View->element($element, array('block' => $block), array('plugin' => 'blocks'));
 				}
 				$enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
 				if ($element != 'block' && $enclosure) {
 					$block['Block']['body'] = $blockOutput;
 					$block['Block']['element'] = null;
-					$output .= $this->_View->element('block', array('block' => $block));
+					$output .= $this->_View->element('Blocks.block', array('block' => $block));
 				} else {
 					$output .= $blockOutput;
 				}
