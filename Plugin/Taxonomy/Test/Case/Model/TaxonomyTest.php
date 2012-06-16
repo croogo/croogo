@@ -1,38 +1,38 @@
 <?php
-App::uses('Taxonomy', 'Model');
+App::uses('Taxonomy', 'Taxonomy.Model');
 App::uses('CroogoTestCase', 'TestSuite');
 
 class TaxonomyTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'aco',
-		'aro',
-		'aros_aco',
-		'block',
-		'comment',
-		'contact',
-		'i18n',
-		'language',
-		'link',
-		'menu',
-		'message',
-		'meta',
-		'node',
-		'nodes_taxonomy',
-		'region',
-		'role',
-		'setting',
-		'taxonomy',
-		'term',
-		'type',
-		'types_vocabulary',
-		'user',
-		'vocabulary',
+		'app.aco',
+		'app.aro',
+		'app.aros_aco',
+		'app.block',
+		'app.comment',
+		'app.contact',
+		'app.i18n',
+		'app.language',
+		'app.link',
+		'app.menu',
+		'app.message',
+		'app.meta',
+		'app.node',
+		'plugin.taxonomy.nodes_taxonomy',
+		'app.region',
+		'app.role',
+		'app.setting',
+		'plugin.taxonomy.taxonomy',
+		'plugin.taxonomy.term',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.types_vocabulary',
+		'app.user',
+		'plugin.taxonomy.vocabulary',
 	);
 
 	public function setUp() {
 		parent::setUp();
-		$this->Taxonomy = ClassRegistry::init('Taxonomy');
+		$this->Taxonomy = ClassRegistry::init('Taxonomy.Taxonomy');
 	}
 
 	public function tearDown() {

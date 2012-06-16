@@ -1,5 +1,5 @@
 <?php
-App::uses('TermsController', 'Controller');
+App::uses('TermsController', 'Taxonomy.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestTermsController extends TermsController {
@@ -34,29 +34,29 @@ class TestTermsController extends TermsController {
 class TermsControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
-		'aco',
-		'aro',
-		'aros_aco',
-		'block',
-		'comment',
-		'contact',
-		'i18n',
-		'language',
-		'link',
-		'menu',
-		'message',
-		'meta',
-		'node',
-		'nodes_taxonomy',
-		'region',
-		'role',
-		'setting',
-		'taxonomy',
-		'term',
-		'type',
-		'types_vocabulary',
-		'user',
-		'vocabulary',
+		'app.aco',
+		'app.aro',
+		'app.aros_aco',
+		'app.block',
+		'app.comment',
+		'app.contact',
+		'app.i18n',
+		'app.language',
+		'app.link',
+		'app.menu',
+		'app.message',
+		'app.meta',
+		'app.node',
+		'plugin.taxonomy.nodes_taxonomy',
+		'app.region',
+		'app.role',
+		'app.setting',
+		'plugin.taxonomy.taxonomy',
+		'plugin.taxonomy.term',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.types_vocabulary',
+		'app.user',
+		'plugin.taxonomy.vocabulary',
 	);
 
 /**
@@ -66,6 +66,9 @@ class TermsControllerTest extends CroogoControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+		App::build(array(
+			'View' => array(CakePlugin::path('Taxonomy') . 'View' . DS)
+		), App::APPEND);
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Terms = new TestTermsController($request, $response);
@@ -107,7 +110,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminIndex() {
-		$this->testAction('/admin/terms/index/1');
+		$this->testAction('/admin/taxonomy/terms/index/1');
 		$this->assertNotEmpty($this->vars['terms']);
 		$expected = array(
 			'1' => 'Uncategorized',
@@ -118,7 +121,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminAdd() {
 		$this->Terms->request->params['action'] = 'admin_add';
-		$this->Terms->request->params['url']['url'] = 'admin/terms/add/1';
+		$this->Terms->request->params['url']['url'] = 'admin/taxonomy/terms/add/1';
 		$this->Terms->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -153,7 +156,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminAddWithParent() {
 		$this->Terms->request->params['action'] = 'admin_add';
-		$this->Terms->request->params['url']['url'] = 'admin/terms/add/1';
+		$this->Terms->request->params['url']['url'] = 'admin/taxonomy/terms/add/1';
 		$this->Terms->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -192,7 +195,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
 			->expects($this->once())
 			->method('redirect');
 		// ID of Uncategorized and Categories
-		$this->testAction('/admin/terms/edit/1/1', array(
+		$this->testAction('/admin/taxonomy/terms/edit/1/1', array(
 			'data' => array(
 				'Taxonomy' => array(
 					'parent_id' => null,
@@ -214,7 +217,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminDelete() {
 		$this->Terms->request->params['action'] = 'admin_delete';
-		$this->Terms->request->params['url']['url'] = 'admin/terms/delete';
+		$this->Terms->request->params['url']['url'] = 'admin/taxonomy/terms/delete';
 		$this->Terms->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -232,7 +235,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminMoveup() {
 		$this->Terms->request->params['action'] = 'admin_moveup';
-		$this->Terms->request->params['url']['url'] = 'admin/terms/moveup';
+		$this->Terms->request->params['url']['url'] = 'admin/taxonomy/terms/moveup';
 		$this->Terms->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -251,7 +254,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminMovedown() {
 		$this->Terms->request->params['action'] = 'admin_movedown';
-		$this->Terms->request->params['url']['url'] = 'admin/terms/movedown';
+		$this->Terms->request->params['url']['url'] = 'admin/taxonomy/terms/movedown';
 		$this->Terms->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',

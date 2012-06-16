@@ -47,16 +47,16 @@ class RegionsControllerTest extends CroogoControllerTestCase {
 		'message',
 		'meta',
 		'node',
-		'nodes_taxonomy',
+		'plugin.taxonomy.nodes_taxonomy',
 		'region',
 		'role',
 		'setting',
-		'taxonomy',
-		'term',
-		'type',
-		'types_vocabulary',
+		'plugin.taxonomy.taxonomy',
+		'plugin.taxonomy.term',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.types_vocabulary',
 		'user',
-		'vocabulary',
+		'plugin.taxonomy.vocabulary',
 	);
 
 /**

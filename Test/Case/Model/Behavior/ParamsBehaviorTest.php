@@ -18,16 +18,16 @@ class ParamsBehaviorTest extends CroogoTestCase {
 		'message',
 		'meta',
 		'node',
-		'nodes_taxonomy',
+		'plugin.taxonomy.nodes_taxonomy',
 		'region',
 		'role',
 		'setting',
-		'taxonomy',
-		'term',
-		'type',
-		'types_vocabulary',
+		'plugin.taxonomy.taxonomy',
+		'plugin.taxonomy.term',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.types_vocabulary',
 		'user',
-		'vocabulary',
+		'plugin.taxonomy.vocabulary',
 	);
 
 	public $Type = null;
@@ -39,7 +39,7 @@ class ParamsBehaviorTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Type = ClassRegistry::init('Type');
+		$this->Type = ClassRegistry::init('Taxonomy.Type');
 	}
 
 /**

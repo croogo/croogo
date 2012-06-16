@@ -27,7 +27,7 @@ class TypesController extends AppController {
  * @var array
  * @access public
  */
-	public $uses = array('Type');
+	public $uses = array('Taxonomy.Type');
 
 /**
  * beforeFilter

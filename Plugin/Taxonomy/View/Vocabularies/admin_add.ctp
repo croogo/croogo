@@ -1,4 +1,4 @@
-<?php $this->Html->script(array('vocabularies'), false); ?>
+<?php $this->Html->script(array('/taxonomy/js/vocabularies'), false); ?>
 <?php $this->extend('/Common/admin_edit'); ?>
 <?php echo $this->Form->create('Vocabulary');?>
 <fieldset>

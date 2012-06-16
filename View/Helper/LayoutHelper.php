@@ -500,7 +500,7 @@ class LayoutHelper extends AppHelper {
 			'plugin' => false,
 			'controller' => 'nodes',
 			'action' => 'term',
-			'element' => 'vocabulary',
+			'element' => 'Taxonomy.vocabulary',
 		);
 		$options = array_merge($_options, $options);
 

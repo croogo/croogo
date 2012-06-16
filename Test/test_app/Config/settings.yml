@@ -3,7 +3,7 @@ Comment.date_time_format: M d, Y
 Comment.email_notification: 1
 Comment.feed_limit: 10
 Comment.level: 1
-Hook.bootstraps: FileManager,Example
+Hook.bootstraps: Taxonomy,FileManager,Example
 Meta.description: 'Croogo - A CakePHP powered Content Management System'
 Meta.generator: 'Croogo - Content Management System'
 Meta.keywords: croogo, Croogo

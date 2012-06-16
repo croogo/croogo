@@ -1,5 +1,5 @@
 <?php
-App::uses('TypesController', 'Controller');
+App::uses('TypesController', 'Taxonomy.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestTypesController extends TypesController {
@@ -47,16 +47,16 @@ class TypesControllerTest extends CroogoControllerTestCase {
 		'message',
 		'meta',
 		'node',
-		'nodes_taxonomy',
+		'plugin.taxonomy.nodes_taxonomy',
 		'region',
 		'role',
 		'setting',
-		'taxonomy',
-		'term',
-		'type',
-		'types_vocabulary',
+		'plugin.taxonomy.taxonomy',
+		'plugin.taxonomy.term',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.types_vocabulary',
 		'user',
-		'vocabulary',
+		'plugin.taxonomy.vocabulary',
 	);
 
 /**
@@ -69,6 +69,7 @@ class TypesControllerTest extends CroogoControllerTestCase {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Types = new TestTypesController($request, $response);
+		$this->Types->plugin = 'Taxonomy';
 		$this->Types->constructClasses();
 		$this->Types->Security = $this->getMock('SecurityComponent', null, array($this->Types->Components));
 		$this->Types->request->params['controller'] = 'types';
