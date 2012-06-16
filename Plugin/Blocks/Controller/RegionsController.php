@@ -1,17 +1,19 @@
 <?php
+App::uses('BlocksAppController', 'Blocks.Controller');
+
 /**
  * Regions Controller
  *
  * PHP version 5
  *
- * @category Controller
+ * @category Blocks.Controller
  * @package  Croogo
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class RegionsController extends AppController {
+class RegionsController extends BlocksAppController {
 
 /**
  * Controller name
@@ -27,7 +29,7 @@ class RegionsController extends AppController {
  * @var array
  * @access public
  */
-	public $uses = array('Region');
+	public $uses = array('Blocks.Region');
 
 /**
  * Admin index

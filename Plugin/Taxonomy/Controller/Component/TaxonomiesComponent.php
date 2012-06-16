@@ -128,7 +128,7 @@ class TaxonomiesComponent extends Component {
 		if (isset($themeData['vocabularies']) && is_array($themeData['vocabularies'])) {
 			$vocabularies = Set::merge($vocabularies, $themeData['vocabularies']);
 		}
-		$vocabularies = Set::merge($vocabularies, array_keys($this->controller->Croogo->blocksData['vocabularies']));
+		$vocabularies = Set::merge($vocabularies, array_keys($this->controller->Blocks->blocksData['vocabularies']));
 		$vocabularies = array_unique($vocabularies);
 		foreach ($vocabularies as $vocabularyAlias) {
 			$vocabulary = $this->controller->Node->Taxonomy->Vocabulary->find('first', array(

@@ -148,37 +148,6 @@ CroogoNav::add('menus', array(
 	),
 ));
 
-CroogoNav::add('blocks', array(
-	'title' => __('Blocks'),
-	'url' => array(
-		'plugin' => false,
-		'admin' => true,
-		'controller' => 'blocks',
-		'action' => 'index',
-	),
-	'weight' => 30,
-	'children' => array(
-		'blocks' => array(
-			'title' => __('Blocks'),
-			'url' => array(
-				'plugin' => false,
-				'admin' => true,
-				'controller' => 'blocks',
-				'action' => 'index',
-			),
-		),
-		'regions' => array(
-			'title' => __('Regions'),
-			'url' => array(
-				'plugin' => false,
-				'admin' => true,
-				'controller' => 'regions',
-				'action' => 'index',
-			),
-		),
-	),
-));
-
 CroogoNav::add('contacts', array(
 	'title' => __('Contacts'),
 	'url' => array(

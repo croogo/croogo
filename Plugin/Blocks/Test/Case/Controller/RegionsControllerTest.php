@@ -1,5 +1,5 @@
 <?php
-App::uses('RegionsController', 'Controller');
+App::uses('RegionsController', 'Blocks.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestRegionsController extends RegionsController {
@@ -34,28 +34,28 @@ class TestRegionsController extends RegionsController {
 class RegionsControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
-		'aco',
-		'aro',
-		'aros_aco',
-		'block',
-		'comment',
-		'contact',
-		'i18n',
-		'language',
-		'link',
-		'menu',
-		'message',
-		'meta',
-		'node',
+		'app.aco',
+		'app.aro',
+		'app.aros_aco',
+		'plugin.blocks.block',
+		'app.comment',
+		'app.contact',
+		'app.i18n',
+		'app.language',
+		'app.link',
+		'app.menu',
+		'app.message',
+		'app.meta',
+		'app.node',
 		'plugin.taxonomy.nodes_taxonomy',
-		'region',
-		'role',
-		'setting',
+		'plugin.blocks.region',
+		'app.role',
+		'app.setting',
 		'plugin.taxonomy.taxonomy',
 		'plugin.taxonomy.term',
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.types_vocabulary',
-		'user',
+		'app.user',
 		'plugin.taxonomy.vocabulary',
 	);
 
@@ -66,6 +66,9 @@ class RegionsControllerTest extends CroogoControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+		App::build(array(
+			'View' => array(CakePlugin::path('Blocks') . 'View' . DS)
+		), App::APPEND);
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Regions = new TestRegionsController($request, $response);
@@ -106,14 +109,14 @@ class RegionsControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminIndex() {
-		$this->testAction('/admin/regions/index');
+		$this->testAction('/admin/blocks/regions/index');
 		$this->assertNotEmpty($this->vars['displayFields']);
 		$this->assertNotEmpty($this->vars['regions']);
 	}
 
 	public function testAdminAdd() {
 		$this->Regions->request->params['action'] = 'admin_add';
-		$this->Regions->request->params['url']['url'] = 'admin/regions/add';
+		$this->Regions->request->params['url']['url'] = 'admin/blocks/regions/add';
 		$this->Regions->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -154,7 +157,7 @@ class RegionsControllerTest extends CroogoControllerTestCase {
 		$this->RegionsController
 			->expects($this->once())
 			->method('redirect');
-		$this->testAction('/admin/regions/edit/1', array(
+		$this->testAction('/admin/blocks/regions/edit/1', array(
 			'data' => array(
 				'Region' => array(
 					'id' => 4, // right
@@ -168,7 +171,7 @@ class RegionsControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminDelete() {
 		$this->Regions->request->params['action'] = 'admin_delete';
-		$this->Regions->request->params['url']['url'] = 'admin/regions/delete';
+		$this->Regions->request->params['url']['url'] = 'admin/blocks/regions/delete';
 		$this->Regions->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',

@@ -1,17 +1,19 @@
 <?php
+App::uses('BlocksAppModel', 'Blocks.Model');
+
 /**
  * Block
  *
  * PHP version 5
  *
- * @category Model
+ * @category Blocks.Model
  * @package  Croogo
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Block extends AppModel {
+class Block extends BlocksAppModel {
 
 /**
  * Model name
@@ -74,11 +76,8 @@ class Block extends AppModel {
  */
 	public $belongsTo = array(
 		'Region' => array(
-			'className' => 'Region',
+			'className' => 'Blocks.Region',
 			'foreignKey' => 'region_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
 			'counterCache' => true,
 			'counterScope' => array('Block.status' => 1),
 		),
