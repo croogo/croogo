@@ -56,22 +56,6 @@ class CroogoComponent extends Component {
 	public $blocks_for_layout = array();
 
 /**
- * Vocabularies for layout
- *
- * @var string
- * @access public
- */
-	public $vocabularies_for_layout = array();
-
-/**
- * Types for layout
- *
- * @var string
- * @access public
- */
-	public $types_for_layout = array();
-
-/**
  * Nodes for layout
  *
  * @var string
@@ -138,8 +122,6 @@ class CroogoComponent extends Component {
 		if (!isset($this->controller->request->params['admin']) && !isset($this->controller->request->params['requested'])) {
 			$this->blocks();
 			$this->menus();
-			$this->vocabularies();
-			$this->types();
 			$this->nodes();
 		} else {
 			$this->_adminData();
@@ -158,31 +140,6 @@ class CroogoComponent extends Component {
 			'order' => 'Menu.id ASC',
 		));
 		$this->controller->set('menus_for_admin_layout', $menus);
-
-		// types
-		$types = $this->controller->Node->Taxonomy->Vocabulary->Type->find('all', array(
-			'conditions' => array(
-				'OR' => array(
-					'Type.plugin LIKE' => '',
-					'Type.plugin' => null,
-				),
-			),
-			'order' => 'Type.alias ASC',
-		));
-		$this->controller->set('types_for_admin_layout', $types);
-
-		// vocabularies
-		$vocabularies = $this->controller->Node->Taxonomy->Vocabulary->find('all', array(
-			'recursive' => '-1',
-			'conditions' => array(
-				'OR' => array(
-					'Vocabulary.plugin LIKE' => '',
-					'Vocabulary.plugin' => null,
-				),
-			),
-			'order' => 'Vocabulary.alias ASC',
-		));
-		$this->controller->set('vocabularies_for_admin_layout', $vocabularies);
 
 		if (!Configure::read('Croogo.version')) {
 			$this->controller->Setting->write('Croogo.version', file_get_contents(APP . 'VERSION.txt'));
@@ -323,73 +280,6 @@ class CroogoComponent extends Component {
 	}
 
 /**
- * Vocabularies
- *
- * Vocabularies will be available in this variable in views: $vocabularies_for_layout
- *
- * @return void
- */
-	public function vocabularies() {
-		$vocabularies = array();
-		$themeData = $this->getThemeData(Configure::read('Site.theme'));
-		if (isset($themeData['vocabularies']) && is_array($themeData['vocabularies'])) {
-			$vocabularies = Set::merge($vocabularies, $themeData['vocabularies']);
-		}
-		$vocabularies = Set::merge($vocabularies, array_keys($this->blocksData['vocabularies']));
-		$vocabularies = array_unique($vocabularies);
-		foreach ($vocabularies as $vocabularyAlias) {
-			$vocabulary = $this->controller->Node->Taxonomy->Vocabulary->find('first', array(
-				'conditions' => array(
-					'Vocabulary.alias' => $vocabularyAlias,
-				),
-				'cache' => array(
-					'name' => 'croogo_vocabulary_' . $vocabularyAlias,
-					'config' => 'croogo_vocabularies',
-				),
-				'recursive' => '-1',
-			));
-			if (isset($vocabulary['Vocabulary']['id'])) {
-				$threaded = $this->controller->Node->Taxonomy->find('threaded', array(
-					'conditions' => array(
-						'Taxonomy.vocabulary_id' => $vocabulary['Vocabulary']['id'],
-					),
-					'contain' => array(
-						'Term',
-					),
-					'cache' => array(
-						'name' => 'croogo_vocabulary_threaded_' . $vocabularyAlias,
-						'config' => 'croogo_vocabularies',
-					),
-					'order' => 'Taxonomy.lft ASC',
-				));
-				$this->vocabularies_for_layout[$vocabularyAlias] = array();
-				$this->vocabularies_for_layout[$vocabularyAlias]['Vocabulary'] = $vocabulary['Vocabulary'];
-				$this->vocabularies_for_layout[$vocabularyAlias]['threaded'] = $threaded;
-			}
-		}
-	}
-
-/**
- * Types
- *
- * Types will be available in this variable in views: $types_for_layout
- *
- * @return void
- */
-	public function types() {
-		$types = $this->controller->Node->Taxonomy->Vocabulary->Type->find('all', array(
-			'cache' => array(
-				'name' => 'croogo_types',
-				'config' => 'croogo_types',
-			),
-		));
-		foreach ($types as $type) {
-			$alias = $type['Type']['alias'];
-			$this->types_for_layout[$alias] = $type;
-		}
-	}
-
-/**
  * Nodes
  *
  * Nodes will be available in this variable in views: $nodes_for_layout
@@ -463,8 +353,6 @@ class CroogoComponent extends Component {
 		$this->controller =& $controller;
 		$this->controller->set('blocks_for_layout', $this->blocks_for_layout);
 		$this->controller->set('menus_for_layout', $this->menus_for_layout);
-		$this->controller->set('vocabularies_for_layout', $this->vocabularies_for_layout);
-		$this->controller->set('types_for_layout', $this->types_for_layout);
 		$this->controller->set('nodes_for_layout', $this->nodes_for_layout);
 	}
 

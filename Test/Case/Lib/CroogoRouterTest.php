@@ -8,9 +8,9 @@ class CroogoRouterTest extends CroogoTestCase {
 
 	public $fixtures = array(
 		'setting',
-		'type',
-		'vocabulary',
-		'types_vocabulary',
+		'plugin.taxonomy.vocabulary',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.types_vocabulary',
 		);
 
 	public function testContentType() {
@@ -39,7 +39,7 @@ class CroogoRouterTest extends CroogoTestCase {
 	}
 
 	public function testRoutableContentTypes() {
-		$Type = ClassRegistry::init('Type');
+		$Type = ClassRegistry::init('Taxonomy.Type');
 		$type = $Type->create(array(
 			'title' => 'Press Release',
 			'alias' => 'press-release',

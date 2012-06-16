@@ -1,6 +1,6 @@
 <?php
 /**
- * Vocabulary
+ * Type
  *
  * PHP version 5
  *
@@ -11,7 +11,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Vocabulary extends AppModel {
+class Type extends TaxonomyAppModel {
 
 /**
  * Model name
@@ -19,7 +19,7 @@ class Vocabulary extends AppModel {
  * @var string
  * @access public
  */
-	public $name = 'Vocabulary';
+	public $name = 'Type';
 
 /**
  * Behaviors used by the Model
@@ -28,17 +28,14 @@ class Vocabulary extends AppModel {
  * @access public
  */
 	public $actsAs = array(
-		'Ordered' => array(
-			'field' => 'weight',
-			'foreign_key' => false,
-		),
 		'Cached' => array(
 			'prefix' => array(
-				'vocabulary_',
-				'croogo_vocabulary_',
-				'croogo_vocabularies_',
+				'croogo_types_',
+				'types_',
+				'type_',
 			),
 		),
+		'Params',
 	);
 
 /**
@@ -71,20 +68,32 @@ class Vocabulary extends AppModel {
  * @access public
  */
 	public $hasAndBelongsToMany = array(
-		'Type' => array(
-			'className' => 'Type',
+		'Vocabulary' => array(
+			'className' => 'Taxonomy.Vocabulary',
 			'joinTable' => 'types_vocabularies',
-			'foreignKey' => 'vocabulary_id',
-			'associationForeignKey' => 'type_id',
+			'foreignKey' => 'type_id',
+			'associationForeignKey' => 'vocabulary_id',
 			'unique' => true,
 			'conditions' => '',
 			'fields' => '',
-			'order' => '',
+			'order' => 'Vocabulary.weight ASC',
 			'limit' => '',
 			'offset' => '',
 			'finderQuery' => '',
 			'deleteQuery' => '',
 			'insertQuery' => '',
 		),
+	);
+
+/**
+ * Display fields for this model
+ *
+ * @var array
+ */
+	protected $_displayFields = array(
+		'id',
+		'title',
+		'alias',
+		'description',
 	);
 }

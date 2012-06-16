@@ -8,13 +8,6 @@
 	CroogoRouter::connect('/admin', array('admin' => true, 'controller' => 'settings', 'action' => 'dashboard'));
 	CroogoRouter::connect('/search/*', array('controller' => 'nodes', 'action' => 'search'));
 
-	// Content types
-	CroogoRouter::contentType('blog');
-	CroogoRouter::contentType('node');
-	if (Configure::read('Install.installed')) {
-		CroogoRouter::routableContentTypes();
-	}
-
 	// Page
 	CroogoRouter::connect('/about', array('controller' => 'nodes', 'action' => 'view', 'type' => 'page', 'slug' => 'about'));
 	CroogoRouter::connect('/page/:slug', array('controller' => 'nodes', 'action' => 'view', 'type' => 'page'));

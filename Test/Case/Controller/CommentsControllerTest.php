@@ -48,16 +48,16 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		'message',
 		'meta',
 		'node',
-		'nodes_taxonomy',
+		'plugin.taxonomy.nodes_taxonomy',
 		'region',
 		'role',
 		'setting',
-		'taxonomy',
-		'term',
-		'type',
-		'types_vocabulary',
+		'plugin.taxonomy.taxonomy',
+		'plugin.taxonomy.term',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.types_vocabulary',
 		'user',
-		'vocabulary',
+		'plugin.taxonomy.vocabulary',
 	);
 
 /**
@@ -378,7 +378,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
  * testAddNotAllowedByType
  */
 	public function testAddNotAllowedByType() {
-		$Type = ClassRegistry::init('Type');
+		$Type = ClassRegistry::init('Taxonomy.Type');
 		$Type->id = 2;
 		$Type->saveField('comment_status', 0);
 

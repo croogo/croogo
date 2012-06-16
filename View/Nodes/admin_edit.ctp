@@ -5,7 +5,6 @@
 		<div class="tabs">
 			<ul>
 				<li><a href="#node-main"><span><?php echo __($type['Type']['title']); ?></span></a></li>
-				<?php if (count($taxonomy) > 0) { ?><li><a href="#node-terms"><span><?php echo __('Terms'); ?></span></a></li><?php } ?>
 				<?php if ($type['Type']['comment_status'] != 0) { ?><li><a href="#node-comments"><span><?php echo __('Comments'); ?></span></a></li><?php } ?>
 				<li><a href="#node-meta"><span><?php echo __('Custom fields'); ?></span></a></li>
 				<li><a href="#node-access"><span><?php echo __('Access'); ?></span></a></li>
@@ -23,23 +22,6 @@
 				echo $this->Form->input('body', array('class' => 'content'));
 			?>
 			</div>
-
-			<?php if (count($taxonomy) > 0) { ?>
-			<div id="node-terms">
-			<?php
-				$taxonomyIds = Set::extract('/Taxonomy/id', $this->data);
-				foreach ($taxonomy AS $vocabularyId => $taxonomyTree) {
-					echo $this->Form->input('TaxonomyData.'.$vocabularyId, array(
-						'label' => $vocabularies[$vocabularyId]['title'],
-						'type' => 'select',
-						'multiple' => true,
-						'options' => $taxonomyTree,
-						'value' => $taxonomyIds,
-					));
-				}
-			?>
-			</div>
-			<?php } ?>
 
 			<?php if ($type['Type']['comment_status'] != 0) { ?>
 			<div id="node-comments">
