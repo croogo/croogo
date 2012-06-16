@@ -151,7 +151,7 @@ CroogoNav::add('menus', array(
 CroogoNav::add('blocks', array(
 	'title' => __('Blocks'),
 	'url' => array(
-		'plugin' => false,
+		'plugin' => 'blocks',
 		'admin' => true,
 		'controller' => 'blocks',
 		'action' => 'index',
@@ -161,7 +161,7 @@ CroogoNav::add('blocks', array(
 		'blocks' => array(
 			'title' => __('Blocks'),
 			'url' => array(
-				'plugin' => false,
+				'plugin' => 'blocks',
 				'admin' => true,
 				'controller' => 'blocks',
 				'action' => 'index',
@@ -170,7 +170,7 @@ CroogoNav::add('blocks', array(
 		'regions' => array(
 			'title' => __('Regions'),
 			'url' => array(
-				'plugin' => false,
+				'plugin' => 'blocks',
 				'admin' => true,
 				'controller' => 'regions',
 				'action' => 'index',

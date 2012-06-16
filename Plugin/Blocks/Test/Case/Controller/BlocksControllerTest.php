@@ -1,5 +1,5 @@
 <?php
-App::uses('BlocksController', 'Controller');
+App::uses('BlocksController', 'Blocks.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestBlocksController extends BlocksController {
@@ -37,7 +37,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		'app.aco',
 		'app.aro',
 		'app.aros_aco',
-		'app.block',
+		'plugin.blocks.block',
 		'app.comment',
 		'app.contact',
 		'app.i18n',
@@ -48,7 +48,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		'app.meta',
 		'app.node',
 		'app.nodes_taxonomy',
-		'app.region',
+		'plugin.blocks.region',
 		'app.role',
 		'app.setting',
 		'app.taxonomy',
@@ -66,6 +66,9 @@ class BlocksControllerTest extends CroogoControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+		App::build(array(
+			'View' => array(CakePlugin::path('Blocks') . 'View' . DS)
+		), App::APPEND);
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Blocks = new TestBlocksController($request, $response);
@@ -104,13 +107,13 @@ class BlocksControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminIndex() {
-		$this->testAction('/admin/blocks/index');
+		$this->testAction('/admin/blocks/blocks/index');
 		$this->assertNotEmpty($this->vars['blocks']);
 	}
 
 	public function testAdminAdd() {
 		$this->Blocks->request->params['action'] = 'admin_add';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/add';
+		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/add';
 		$this->Blocks->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -159,7 +162,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		$this->BlocksController
 			->expects($this->once())
 			->method('redirect');
-		$this->testAction('/admin/blocks/edit/1', array(
+		$this->testAction('/admin/blocks/blocks/edit/1', array(
 			'data' => array(
 				'Block' => array(
 					'id' => 3, // About
@@ -177,7 +180,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminDelete() {
 		$this->Blocks->request->params['action'] = 'admin_delete';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/delete';
+		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/delete';
 		$this->Blocks->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -194,7 +197,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminMoveUp() {
 		$this->Blocks->request->params['action'] = 'admin_moveup';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/moveup/3';
+		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/moveup/3';
 		$this->Blocks->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -223,7 +226,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminMoveUpWithSteps() {
 		$this->Blocks->request->params['action'] = 'admin_moveup';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/moveup/6/3';
+		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/moveup/6/3';
 		$this->Blocks->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -252,7 +255,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminMoveDown() {
 		$this->Blocks->request->params['action'] = 'admin_movedown';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/movedown/3';
+		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/movedown/3';
 		$this->Blocks->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -281,7 +284,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminMoveDownWithSteps() {
 		$this->Blocks->request->params['action'] = 'admin_movedown';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/movedown/8/3';
+		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/movedown/8/3';
 		$this->Blocks->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -310,7 +313,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminProcessDelete() {
 		$this->Blocks->request->params['action'] = 'admin_process';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/process';
+		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/process';
 		$this->Blocks->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -357,7 +360,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminProcessPublish() {
 		$this->Blocks->request->params['action'] = 'admin_process';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/process';
+		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/process';
 		$this->Blocks->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -423,7 +426,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminProcessUnpublish() {
 		$this->Blocks->request->params['action'] = 'admin_process';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/process';
+		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/process';
 		$this->Blocks->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',

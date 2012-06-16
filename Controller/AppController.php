@@ -57,7 +57,7 @@ class AppController extends Controller {
  * @access public
  */
 	public $uses = array(
-		'Block',
+		'Blocks.Block',
 		'Link',
 		'Setting',
 		'Node',

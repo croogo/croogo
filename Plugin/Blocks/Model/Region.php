@@ -1,17 +1,19 @@
 <?php
+App::uses('BlocksAppModel', 'Blocks.Model');
+
 /**
  * Region
  *
  * PHP version 5
  *
- * @category Model
+ * @category Blocks.Model
  * @package  Croogo
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Region extends AppModel {
+class Region extends BlocksAppModel {
 
 /**
  * Model name
@@ -69,17 +71,10 @@ class Region extends AppModel {
  */
 	public $hasMany = array(
 		'Block' => array(
-			'className' => 'Block',
+			'className' => 'Blocks.Block',
 			'foreignKey' => 'region_id',
 			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '3',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => '',
+			'limit' => 3,
 		),
 	);
 
