@@ -1,17 +1,19 @@
 <?php
+App::uses('TaxonomyAppModel', 'Taxonomy.Model');
+
 /**
- * Term
+ * Vocabulary
  *
  * PHP version 5
  *
- * @category Model
+ * @category Taxonomy.Model
  * @package  Croogo
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Term extends AppModel {
+class Vocabulary extends TaxonomyAppModel {
 
 /**
  * Model name
@@ -19,7 +21,7 @@ class Term extends AppModel {
  * @var string
  * @access public
  */
-	public $name = 'Term';
+	public $name = 'Vocabulary';
 
 /**
  * Behaviors used by the Model
@@ -28,14 +30,15 @@ class Term extends AppModel {
  * @access public
  */
 	public $actsAs = array(
+		'Ordered' => array(
+			'field' => 'weight',
+			'foreign_key' => false,
+		),
 		'Cached' => array(
 			'prefix' => array(
-				'term_',
-				'node_',
-				'nodes_',
-				'croogo_nodes_',
-				'croogo_vocabularies_',
+				'vocabulary_',
 				'croogo_vocabulary_',
+				'croogo_vocabularies_',
 			),
 		),
 	);
@@ -47,14 +50,18 @@ class Term extends AppModel {
  * @access public
  */
 	public $validate = array(
-		'slug' => array(
+		'title' => array(
+			'rule' => array('minLength', 1),
+			'message' => 'Title cannot be empty.',
+		),
+		'alias' => array(
 			'isUnique' => array(
 				'rule' => 'isUnique',
-				'message' => 'This slug has already been taken.',
+				'message' => 'This alias has already been taken.',
 			),
 			'minLength' => array(
 				'rule' => array('minLength', 1),
-				'message' => 'Slug cannot be empty.',
+				'message' => 'Alias cannot be empty.',
 			),
 		),
 	);
@@ -66,12 +73,11 @@ class Term extends AppModel {
  * @access public
  */
 	public $hasAndBelongsToMany = array(
-		'Vocabulary' => array(
-			'className' => 'Vocabulary',
-			'with' => 'Taxonomy',
-			'joinTable' => 'taxonomy',
-			'foreignKey' => 'term_id',
-			'associationForeignKey' => 'vocabulary_id',
+		'Type' => array(
+			'className' => 'Taxonomy.Type',
+			'joinTable' => 'types_vocabularies',
+			'foreignKey' => 'vocabulary_id',
+			'associationForeignKey' => 'type_id',
 			'unique' => true,
 			'conditions' => '',
 			'fields' => '',
@@ -83,28 +89,4 @@ class Term extends AppModel {
 			'insertQuery' => '',
 		),
 	);
-
-/**
- * Save Term and return ID.
- * If another Term with same slug exists, return ID of that Term without saving.
- *
- * @param  array $data
- * @return integer
- */
-	public function saveAndGetId($data) {
-		$term = $this->find('first', array(
-			'conditions' => array(
-				'Term.slug' => $data['slug'],
-			),
-		));
-		if (isset($term['Term']['id'])) {
-			return $term['Term']['id'];
-		}
-
-		$this->id = false;
-		if ($this->save($data)) {
-			return $this->id;
-		}
-		return false;
-	}
 }

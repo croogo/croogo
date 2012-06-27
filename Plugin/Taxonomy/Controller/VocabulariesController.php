@@ -1,17 +1,19 @@
 <?php
+App::uses('TaxonomyAppController', 'Taxonomy.Controller');
+
 /**
  * Vocabularies Controller
  *
  * PHP version 5
  *
- * @category Controller
+ * @category Taxonomy.Controller
  * @package  Croogo
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class VocabulariesController extends AppController {
+class VocabulariesController extends TaxonomyAppController {
 
 /**
  * Controller name
@@ -27,7 +29,7 @@ class VocabulariesController extends AppController {
  * @var array
  * @access public
  */
-	public $uses = array('Vocabulary');
+	public $uses = array('Taxonomy.Vocabulary');
 
 /**
  * Admin index

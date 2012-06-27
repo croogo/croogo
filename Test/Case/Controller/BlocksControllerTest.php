@@ -47,16 +47,16 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		'app.message',
 		'app.meta',
 		'app.node',
-		'app.nodes_taxonomy',
+		'plugin.taxonomy.nodes_taxonomy',
 		'app.region',
 		'app.role',
 		'app.setting',
-		'app.taxonomy',
-		'app.term',
+		'plugin.taxonomy.taxonomy',
+		'plugin.taxonomy.term',
 		'app.type',
-		'app.types_vocabulary',
+		'plugin.taxonomy.types_vocabulary',
 		'app.user',
-		'app.vocabulary',
+		'plugin.taxonomy.vocabulary',
 	);
 
 /**

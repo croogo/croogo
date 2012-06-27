@@ -19,7 +19,7 @@ foreach ($vocabularies_for_admin_layout as $v):
 	CroogoNav::add('content.children.taxonomy.children.' . $v['Vocabulary']['alias'], array(
 		'title' => $v['Vocabulary']['title'],
 		'url' => array(
-			'plugin' => false,
+			'plugin' => 'taxonomy',
 			'admin' => true,
 			'controller' => 'terms',
 			'action' => 'index',

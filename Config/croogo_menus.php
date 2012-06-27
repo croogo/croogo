@@ -47,7 +47,7 @@ CroogoNav::add('content', array(
 		'taxonomy' => array(
 			'title' => __('Taxonomy'),
 			'url' => array(
-				'plugin' => false,
+				'plugin' => 'taxonomy',
 				'admin' => true,
 				'controller' => 'vocabularies',
 				'action' => 'index',
@@ -57,7 +57,7 @@ CroogoNav::add('content', array(
 				'list' => array(
 					'title' => __('List'),
 					'url' => array(
-						'plugin' => false,
+						'plugin' => 'taxonomy',
 						'admin' => true,
 						'controller' => 'vocabularies',
 						'action' => 'index',
@@ -67,7 +67,7 @@ CroogoNav::add('content', array(
 				'add_new' => array(
 					'title' => __('Add new'),
 					'url' => array(
-						'plugin' => false,
+						'plugin' => 'taxonomy',
 						'admin' => true,
 						'controller' => 'vocabularies',
 						'action' => 'add',
