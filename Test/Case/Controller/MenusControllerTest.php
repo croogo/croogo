@@ -26,7 +26,7 @@ class TestMenusController extends MenusController {
 		$this->stopped = $status;
 	}
 
-	protected function _securityError($type) {
+	public function securityError($type) {
 	}
 
 }
@@ -70,6 +70,7 @@ class MenusControllerTest extends CroogoControllerTestCase {
 		$response = new CakeResponse();
 		$this->Menus = new TestMenusController($request, $response);
 		$this->Menus->constructClasses();
+		$this->Menus->Security = $this->getMock('SecurityComponent', null, array($this->Menus->Components));
 		$this->Menus->request->params['controller'] = 'menus';
 		$this->Menus->request->params['pass'] = array();
 		$this->Menus->request->params['named'] = array();

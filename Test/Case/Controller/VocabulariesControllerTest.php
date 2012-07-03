@@ -26,7 +26,7 @@ class TestVocabulariesController extends VocabulariesController {
 		$this->stopped = $status;
 	}
 
-	protected function _securityError($type) {
+	public function securityError($type) {
 	}
 
 }
@@ -76,6 +76,7 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
 		$response = new CakeResponse();
 		$this->Vocabularies = new TestVocabulariesController($request, $response);
 		$this->Vocabularies->constructClasses();
+		$this->Vocabularies->Security = $this->getMock('SecurityComponent', null, array($this->Vocabularies->Components));
 		$this->Vocabularies->request->params['controller'] = 'vocabularies';
 		$this->Vocabularies->request->params['pass'] = array();
 		$this->Vocabularies->request->params['named'] = array();

@@ -26,7 +26,7 @@ class TestTermsController extends TermsController {
 		$this->stopped = $status;
 	}
 
-	protected function _securityError($type) {
+	public function securityError($type) {
 	}
 
 }
@@ -70,6 +70,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
 		$response = new CakeResponse();
 		$this->Terms = new TestTermsController($request, $response);
 		$this->Terms->constructClasses();
+		$this->Terms->Security = $this->getMock('SecurityComponent', null, array($this->Terms->Components));
 		$this->Terms->request->params['named'] = array();
 		$this->Terms->request->params['controller'] = 'terms';
 		$this->Terms->request->params['pass'] = array();

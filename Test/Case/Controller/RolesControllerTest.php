@@ -26,7 +26,7 @@ class TestRolesController extends RolesController {
 		$this->stopped = $status;
 	}
 
-	protected function _securityError($type) {
+	public function securityError($type) {
 	}
 
 }
@@ -70,6 +70,7 @@ class RolesControllerTest extends CroogoControllerTestCase {
 		$response = new CakeResponse();
 		$this->Roles = new TestRolesController($request, $response);
 		$this->Roles->constructClasses();
+		$this->Roles->Security = $this->getMock('SecurityComponent', null, array($this->Roles->Components));
 		$this->Roles->Role->Aro->useDbConfig = $this->Roles->Role->useDbConfig;
 		$this->Roles->request->params['controller'] = 'roles';
 		$this->Roles->request->params['pass'] = array();

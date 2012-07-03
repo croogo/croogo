@@ -10,6 +10,8 @@ class TestNodesController extends NodesController {
 
 	public $testView = false;
 
+	public $blackholed = false;
+
 	public function redirect($url, $status = null, $exit = true) {
 		$this->redirectUrl = $url;
 	}
@@ -31,7 +33,8 @@ class TestNodesController extends NodesController {
 		return $this->_viewFallback($views);
 	}
 
-	protected function _securityError($type) {
+	public function securityError($type) {
+		$this->blackholed = true;
 	}
 
 }
@@ -75,6 +78,7 @@ class NodesControllerTest extends CroogoControllerTestCase {
 		$response = new CakeResponse();
 		$this->Nodes = new TestNodesController($request, $response);
 		$this->Nodes->constructClasses();
+		$this->Nodes->Security = $this->getMock('SecurityComponent', null, array($this->Nodes->Components));
 		$this->Nodes->request->params['controller'] = 'nodes';
 		$this->Nodes->request->params['pass'] = array();
 		$this->Nodes->request->params['named'] = array();
@@ -198,6 +202,27 @@ class NodesControllerTest extends CroogoControllerTestCase {
 			'Node.slug' => 'hello-world',
 		));
 		$this->assertFalse($hasAny);
+		$this->assertFalse($this->Nodes->blackholed);
+	}
+
+	public function testBlackholedRequest() {
+		$request = new CakeRequest('/admin/nodes/delete/1');
+		$response = new CakeResponse();
+		$this->Nodes = new TestNodesController($request, $response);
+		$this->Nodes->constructClasses();
+		$this->Nodes->request->params['controller'] = 'nodes';
+		$this->Nodes->request->params['action'] = 'admin_delete';
+		$this->Nodes->request->params['prefix'] = 'admin';
+		$this->Nodes->request->params['pass'] = array();
+		$this->Nodes->request->params['named'] = array();
+		$this->Nodes->startupProcess();
+		$this->Nodes->Node->Behaviors->detach('Tree');
+		$this->Nodes->invokeAction($request);
+		$this->assertTrue($this->Nodes->blackholed);
+		$hasAny = $this->Nodes->Node->hasAny(array(
+			'Node.id' => 1,
+		));
+		$this->assertTrue($hasAny);
 	}
 
 	public function testViewFallback() {

@@ -26,7 +26,7 @@ class TestRegionsController extends RegionsController {
 		$this->stopped = $status;
 	}
 
-	protected function _securityError($type) {
+	public function securityError($type) {
 	}
 
 }
@@ -70,6 +70,7 @@ class RegionsControllerTest extends CroogoControllerTestCase {
 		$response = new CakeResponse();
 		$this->Regions = new TestRegionsController($request, $response);
 		$this->Regions->constructClasses();
+		$this->Regions->Security = $this->getMock('SecurityComponent', null, array($this->Regions->Components));
 		$this->Regions->request->params['controller'] = 'regions';
 		$this->Regions->request->params['pass'] = array();
 		$this->Regions->request->params['named'] = array();

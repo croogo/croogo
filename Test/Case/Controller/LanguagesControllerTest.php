@@ -26,7 +26,7 @@ class TestLanguagesController extends LanguagesController {
 		$this->stopped = $status;
 	}
 
-	protected function _securityError($type) {
+	public function securityError($type) {
 	}
 
 }
@@ -70,6 +70,7 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
 		$response = new CakeResponse();
 		$this->Languages = new TestLanguagesController($request, $response);
 		$this->Languages->constructClasses();
+		$this->Languages->Security = $this->getMock('SecurityComponent', null, array($this->Languages->Components));
 		$this->Languages->request->params['controller'] = 'languages';
 		$this->Languages->request->params['pass'] = array();
 		$this->Languages->request->params['named'] = array();

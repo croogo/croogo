@@ -27,7 +27,7 @@ class TestContactsController extends ContactsController {
 		$this->stopped = $status;
 	}
 
-	protected function _securityError($type) {
+	public function securityError($type) {
 	}
 
 }
@@ -72,6 +72,7 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 		$response = new CakeResponse();
 		$this->Contacts = new TestContactsController($request, $response);
 		$this->Contacts->constructClasses();
+		$this->Contacts->Security = $this->getMock('SecurityComponent', null, array($this->Contacts->Components));
 		$this->Contacts->request->params['controller'] = 'contacts';
 		$this->Contacts->request->params['pass'] = array();
 		$this->Contacts->request->params['named'] = array();

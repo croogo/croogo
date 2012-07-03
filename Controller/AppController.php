@@ -118,7 +118,7 @@ class AppController extends Controller {
 		}
 		$this->{$aclFilterComponent}->auth();
 		$this->RequestHandler->setContent('json', 'text/x-json');
-		$this->Security->blackHoleCallback = '_securityError';
+		$this->Security->blackHoleCallback = 'securityError';
 		$this->Security->requirePost('admin_delete');
 
 		if (isset($this->request->params['admin'])) {
@@ -167,7 +167,7 @@ class AppController extends Controller {
  *
  * @return void
  */
-	protected function _securityError($type) {
+	public function securityError($type) {
 		switch ($type) {
 			case 'auth':
 			break;

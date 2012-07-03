@@ -26,7 +26,7 @@ class TestBlocksController extends BlocksController {
 		$this->stopped = $status;
 	}
 
-	protected function _securityError($type) {
+	public function securityError($type) {
 	}
 
 }
@@ -70,6 +70,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		$response = new CakeResponse();
 		$this->Blocks = new TestBlocksController($request, $response);
 		$this->Blocks->constructClasses();
+		$this->Blocks->Security = $this->getMock('SecurityComponent', null, array($this->Blocks->Components));
 		$request->params['controller'] = 'blocks';
 		$request->params['pass'] = $request->params['named'] = array();
 

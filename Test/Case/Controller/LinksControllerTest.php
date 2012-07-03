@@ -26,7 +26,7 @@ class TestLinksController extends LinksController {
 		$this->stopped = $status;
 	}
 
-	protected function _securityError($type) {
+	public function securityError($type) {
 	}
 
 }
@@ -70,6 +70,7 @@ class LinksControllerTest extends CroogoControllerTestCase {
 		$response = new CakeResponse();
 		$this->Links = new TestLinksController($request, $response);
 		$this->Links->constructClasses();
+		$this->Links->Security = $this->getMock('SecurityComponent', null, array($this->Links->Components));
 		$this->Links->request->params['controller'] = 'links';
 		$this->Links->request->params['pass'] = array();
 		$this->Links->request->params['named'] = array();

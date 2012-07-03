@@ -27,7 +27,7 @@ class TestCommentsController extends CommentsController {
 		$this->stopped = $status;
 	}
 
-	protected function _securityError($type) {
+	public function securityError($type) {
 	}
 
 }

@@ -26,7 +26,7 @@ class TestUsersController extends UsersController {
 		$this->stopped = $status;
 	}
 
-	protected function _securityError($type) {
+	public function securityError($type) {
 	}
 
 }
@@ -78,6 +78,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 		$response = new CakeResponse();
 		$this->Users = new TestUsersController($request, $response);
 		$this->Users->constructClasses();
+		$this->Users->Security = $this->getMock('SecurityComponent', null, array($this->Users->Components));
 		$this->Users->User->Aro->useDbConfig = $this->Users->User->useDbConfig;
 		$this->Users->request->params['controller'] = 'users';
 		$this->Users->request->params['pass'] = array();
@@ -90,6 +91,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 			'components' => array(
 				'Auth' => array('user'),
 				'Session',
+				'Security',
 			),
 		));
 		$this->UsersController->Auth
