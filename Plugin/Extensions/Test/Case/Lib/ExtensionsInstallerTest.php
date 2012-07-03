@@ -99,4 +99,45 @@ class ExtensionsInstallerTest extends CakeTestCase {
 		$this->assertTrue(in_array('webroot' . DS . 'css' . DS . 'theme.css', $files));
 		$this->assertTrue(in_array('webroot' . DS . 'img' . DS . 'screenshot.png', $files));
 	}
+
+/**
+ * testComposerInstall
+ *
+ * @expectedException CakeException
+ */
+	public function testComposerInstall() {
+		$this->skipIf(version_compare(PHP_VERSION, '5.3.0', '<'), 'PHP >= 5.3.0 required to run this test.');
+
+		$ExtensionsInstaller = new ReflectionClass('ExtensionsInstaller');
+		$prop = $ExtensionsInstaller->getProperty('_CroogoComposer');
+		$prop->setAccessible(true);
+		$ExtensionsInstallerMock = new ExtensionsInstaller();
+
+		$CroogoComposer = $this->getMock('CroogoComposer', array(
+			'getComposer', 'setConfig', 'runComposer',
+		));
+		$prop->setValue($ExtensionsInstallerMock, $CroogoComposer);
+
+		$CroogoComposer->expects($this->once())
+			->method('getComposer')
+			->will($this->returnValue(true));
+		$CroogoComposer->expects($this->once())
+			->method('setConfig')
+			->with(
+				$this->equalTo(array('shama/ftp' => '*'))
+			)
+			->will($this->returnValue(true));
+		$CroogoComposer->expects($this->once())
+			->method('runComposer')
+			->will($this->returnValue(true));
+
+		$ExtensionsInstallerMock->composerInstall(array(
+			'package' => 'shama/ftp',
+		));
+
+		$ExtensionsInstallerMock->composerInstall(array(
+			'package' => 'nothemes/yet',
+			'type' => 'theme',
+		));
+	}
 }

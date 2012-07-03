@@ -44,23 +44,47 @@ class InstallShell extends AppShell {
 	}
 
 /**
- * 1. Detects URL or github user/repo
- * 2. Downloads zip file
+ * 1. Detects URL or github user/repo or composer package
+ * 2. Downloads
  * 3. Installs extension
  * 4. Activates extension
+ *
+ * Composer: ./Console/cake install plugin vendor/package
+ * Github: ./Console/cake install plugin user repo
+ * Url: ./Console/cake install plugin https://github.com/user/repo
  */
 	public function main() {
-		$url = '';
-		if (count($this->args) == 2) {
-			$url = $this->args[1];
-		} else if (count($this->args) == 3) {
-			$url = 'http://github.com/' . $this->args[1] . '/' . $this->args[2];
-		}
 		$type = $this->args[0];
-		if ($zip = $this->_download($url)) {
-			if ($this->_install($type, $zip)) {
-				if ($this->_activate($type, $zip)) {
-					$this->out(__('Extension installed and activated.'));
+		if (strpos($this->args[1], '/') !== false) {
+			// Composer Install
+			$ver = isset($this->args[2]) ? $this->args[2] : '*';
+			$this->out(__('Installing with Composer...'));
+			try {
+				$this->_ExtensionsInstaller->composerInstall(array(
+					'package' => $this->args[1],
+					'version' => $ver,
+					'type' => $type,
+				));
+				$ext = substr($this->args[1], strpos($this->args[1], '/') + 1);
+				$ext = Inflector::classify($ext);
+				$this->dispatchShell('ext', 'activate', $type, $ext);
+				$this->out(__('Package installed and activated.'));
+			} catch (CakeException $e) {
+				$this->err($e->getMessage());
+			}
+		} else {
+			// Github / URL Install
+			$url = '';
+			if (count($this->args) == 2) {
+				$url = $this->args[1];
+			} else if (count($this->args) == 3) {
+				$url = 'http://github.com/' . $this->args[1] . '/' . $this->args[2];
+			}
+			if ($zip = $this->_download($url)) {
+				if ($this->_install($type, $zip)) {
+					if ($this->_activate($type, $zip)) {
+						$this->out(__('Extension installed and activated.'));
+					}
 				}
 			}
 		}
