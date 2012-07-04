@@ -20,14 +20,28 @@ class CroogoComposer {
  */
 	public $appPath = APP;
 
+	protected $_composerPath = null;
+
 /**
  * Downloads composer if it doesn't exist
  *
  * @return boolean
  */
 	public function getComposer() {
-		if (!file_exists($this->appPath . 'composer.phar')) {
+		$appComposer = $this->appPath . 'composer.phar';
+		if (file_exists($appComposer)) {
+			$this->_composerPath = $appComposer;
+		} else {
+
+			if (DS != '\\' && exec('which composer', $output, $found)) {
+				if ($found == 0) {
+					$this->_composerPath = $output[0];
+					return true;
+				}
+			}
+
 			$this->_shellExec('curl -s http://getcomposer.org/installer | php -- --install-dir=' . $this->appPath);
+			$this->_composerPath = $appComposer;
 		}
 		return true;
 	}
@@ -38,7 +52,7 @@ class CroogoComposer {
  * @return boolean
  */
 	public function runComposer() {
-		$cmd = 'php ' . $this->appPath . 'composer.phar ';
+		$cmd = 'php ' . $this->_composerPath . ' ';
 		if (file_exists($this->appPath . 'composer.lock')) {
 			$cmd .= 'update';
 		} else {

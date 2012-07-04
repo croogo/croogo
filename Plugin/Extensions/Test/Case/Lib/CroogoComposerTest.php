@@ -74,6 +74,8 @@ class CroogoComposerTest extends CakeTestCase {
 	public function testRunComposer() {
 		$CroogoComposer = $this->getMock('CroogoComposer', array('_shellExec'));
 		$CroogoComposer->appPath = $this->CroogoComposer->appPath;
+		$CroogoComposer->getComposer();
+		$CroogoComposer->appPath = $this->CroogoComposer->appPath;
 		$CroogoComposer->expects($this->once())
 			->method('_shellExec')
 			->with(
