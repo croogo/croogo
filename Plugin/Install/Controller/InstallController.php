@@ -127,7 +127,7 @@ class InstallController extends Controller {
 			return;
 		}
 
-		App::import('Model', 'ConnectionManager');
+		App::uses('ConnectionManager', 'Model');
 		$config = $this->defaultConfig;
 		foreach ($this->request->data['Install'] as $key => $value) {
 			if (isset($this->request->data['Install'][$key])) {
@@ -191,8 +191,8 @@ class InstallController extends Controller {
 		$this->set('title_for_layout', __('Step 2: Build database'));
 		if (isset($this->params['named']['run'])) {
 			App::uses('File', 'Utility');
-			App::import('Model', 'CakeSchema', false);
-			App::import('Model', 'ConnectionManager');
+			App::uses('CakeSchema', 'Model');
+			App::uses('ConnectionManager', 'Model');
 
 			$db = ConnectionManager::getDataSource('default');
 			$brokenSequence = $db instanceof Postgres;
@@ -220,7 +220,7 @@ class InstallController extends Controller {
 					$modelAlias = substr($data, 0, -4);
 					$table = $classVars['table'];
 					$records = $classVars['records'];
-					App::import('Model', 'Model', false);
+					App::uses('Model', 'Model');
 					$modelObject =& new Model(array(
 						'name' => $modelAlias,
 						'table' => $table,

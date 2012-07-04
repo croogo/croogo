@@ -48,7 +48,7 @@ class InstallShell extends AppShell {
 
 		// get records
 		$modelAlias = Inflector::camelize(Inflector::singularize($table));
-		App::import('Model', 'Model', false);
+		App::uses('Model', 'Model');
 		$model = new Model(array('name' => $modelAlias, 'table' => $table, 'ds' => $connection));
 		$records = $model->find('all', array(
 			'recursive' => -1,
