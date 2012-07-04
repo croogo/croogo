@@ -57,7 +57,7 @@ class CroogoComposerTest extends CakeTestCase {
 	public function testGetComposer() {
 		$CroogoComposer = $this->getMock('CroogoComposer', array('_shellExec'));
 		$CroogoComposer->appPath = $this->CroogoComposer->appPath;
-		$CroogoComposer->expects($this->once())
+		$CroogoComposer->expects($this->any())
 			->method('_shellExec')
 			->with(
 				$this->equalTo('curl -s http://getcomposer.org/installer | php -- --install-dir=' . $CroogoComposer->appPath)
@@ -74,10 +74,11 @@ class CroogoComposerTest extends CakeTestCase {
 	public function testRunComposer() {
 		$CroogoComposer = $this->getMock('CroogoComposer', array('_shellExec'));
 		$CroogoComposer->appPath = $this->CroogoComposer->appPath;
+		$CroogoComposer->getComposer();
 		$CroogoComposer->expects($this->once())
 			->method('_shellExec')
 			->with(
-				$this->equalTo('php ' . $CroogoComposer->appPath . 'composer.phar install')
+				$this->equalTo('php ' . $CroogoComposer->composerPath . ' install')
 			)
 			->will($this->returnValue(true));
 		$CroogoComposer->runComposer();
