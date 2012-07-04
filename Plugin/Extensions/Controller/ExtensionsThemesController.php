@@ -90,9 +90,9 @@ class ExtensionsThemesController extends ExtensionsAppController {
 	public function admin_add() {
 		$this->set('title_for_layout', __('Upload a new theme'));
 
-		if (!empty($this->data)) {
-			$file = $this->data['Theme']['file'];
-			unset($this->data['Theme']['file']);
+		if (!empty($this->request->data)) {
+			$file = $this->request->data['Theme']['file'];
+			unset($this->request->data['Theme']['file']);
 
 			$Installer = new ExtensionsInstaller;
 			try {

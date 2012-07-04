@@ -91,7 +91,7 @@ class TranslateController extends TranslateAppController {
  * @return void
  */
 	public function admin_edit($id = null, $modelAlias = null) {
-		if (!$id && empty($this->data)) {
+		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid ID.'), 'default', array('class' => 'error'));
 			$this->redirect(array(
 				'plugin' => null,
@@ -139,8 +139,8 @@ class TranslateController extends TranslateAppController {
 		$model->id = $id;
 		$model->locale = $this->params['named']['locale'];
 		$fields = $model->getTranslationFields();
-		if (!empty($this->data)) {
-			if ($model->saveTranslation($this->data)) {
+		if (!empty($this->request->data)) {
+			if ($model->saveTranslation($this->request->data)) {
 				$this->Session->setFlash(__('Record has been translated'), 'default', array('class' => 'success'));
 				$this->redirect(array(
 					'action' => 'index',
@@ -151,8 +151,8 @@ class TranslateController extends TranslateAppController {
 				$this->Session->setFlash(__('Record could not be translated. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $model->read(null, $id);
+		if (empty($this->request->data)) {
+			$this->request->data = $model->read(null, $id);
 		}
 		$this->set(compact('fields', 'language', 'modelAlias', 'id'));
 	}
