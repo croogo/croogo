@@ -100,6 +100,10 @@ class CroogoComposerTest extends CakeTestCase {
 		$File->close();
 		$expected = <<<END
 {
+	"minimum-stability": "dev",
+	"config": {
+		"vendor-path": "Vendor"
+	},
 	"require": {
 		"composer/installers": "*",
 		"shama/ftp": "*"
