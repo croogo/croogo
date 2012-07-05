@@ -243,7 +243,6 @@ class ExtensionsInstaller {
 		$this->_CroogoComposer->setConfig(array(
 			$data['package'] => $data['version'],
 		));
-		$this->_CroogoComposer->runComposer();
-		return true;
+		return $this->_CroogoComposer->runComposer();
 	}
 }

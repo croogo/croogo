@@ -133,6 +133,7 @@ class ExtShell extends AppShell {
 		$result = $this->_CroogoPlugin->activate($plugin);
 		if ($result === true) {
 			$this->out(__('Plugin "%s" activated successfully.', $plugin));
+			return true;
 		} elseif (is_string($result)) {
 			$this->err($result);
 		} else {
