@@ -58,8 +58,7 @@ class CroogoComposer {
 		} else {
 			$cmd .= 'install';
 		}
-		$this->_shellExec($cmd);
-		return true;
+		return $this->_shellExec($cmd);
 	}
 
 /**
@@ -140,7 +139,8 @@ class CroogoComposer {
  * Wrapper for shell_exec() method for testing
  */
 	protected function _shellExec($cmd) {
-		return shell_exec($cmd);
+		$output = system($cmd, $returnValue);
+		return compact('cmd', 'output', 'returnValue');
 	}
 	
 }

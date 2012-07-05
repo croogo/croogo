@@ -156,7 +156,7 @@ class InstallShellTest extends CroogoTestCase {
 		$Shell = new ReflectionClass('InstallShell');
 		$prop = $Shell->getProperty('_ExtensionsInstaller');
 		$prop->setAccessible(true);
-		$ShellMock = $this->getMock('InstallShell', array('dispatchShell'));
+		$ShellMock = $this->getMock('InstallShell', array('dispatchShell', 'out', 'err'));
 
 		$ExtensionsInstaller = $this->getMock('ExtensionsInstaller', array('composerInstall'));
 		$prop->setValue($ShellMock, $ExtensionsInstaller);

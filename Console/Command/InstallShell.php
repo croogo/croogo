@@ -60,15 +60,23 @@ class InstallShell extends AppShell {
 			$ver = isset($this->args[2]) ? $this->args[2] : '*';
 			$this->out(__('Installing with Composer...'));
 			try {
-				$this->_ExtensionsInstaller->composerInstall(array(
+				$result = $this->_ExtensionsInstaller->composerInstall(array(
 					'package' => $this->args[1],
 					'version' => $ver,
 					'type' => $type,
 				));
+				if ($result['returnValue'] <> 0) {
+					$this->err($result['output']);
+					return false;
+				}
 				$ext = substr($this->args[1], strpos($this->args[1], '/') + 1);
-				$ext = Inflector::classify($ext);
-				$this->dispatchShell('ext', 'activate', $type, $ext);
-				$this->out(__('Package installed and activated.'));
+				$ext = Inflector::camelize($ext);
+				$result = $this->dispatchShell('ext', 'activate', $type, $ext, '--quiet');
+				if ($result) {
+					$this->out(__('Package installed and activated.'));
+				} else {
+					$this->err(__('Package installed but not activated.'));
+				}
 			} catch (CakeException $e) {
 				$this->err($e->getMessage());
 			}
@@ -122,7 +130,7 @@ class InstallShell extends AppShell {
 	protected function _activate($type = null, $zip = null) {
 		try {
 			$ext = $this->_ExtensionsInstaller->{'get' . ucfirst($type) . 'Name'}($zip);
-			$this->dispatchShell('ext', 'activate', $type, $ext);
+			$this->dispatchShell('ext', 'activate', $type, $ext, '--quiet');
 			return true;
 		} catch (CakeException $e) {
 			$this->err($e->getMessage());
