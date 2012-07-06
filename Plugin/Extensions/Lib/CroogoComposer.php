@@ -1,6 +1,7 @@
 <?php
 App::uses('File', 'Utility');
 App::uses('HttpSocket', 'Network/Http');
+App::uses('CroogoJson', 'Lib');
 
 /**
  * Croogo Composer Wrapper
@@ -95,53 +96,17 @@ class CroogoComposer {
 			}
 			$json['require'][$pkg] = $ver;
 		}
-		$json = $this->_stringifyJson($json) . "\n";
+		$options = 0;
+		if (version_compare(PHP_VERSION, '5.3.3', '>=')) {
+			$options |= JSON_NUMERIC_CHECK;
+		}
+		if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
+			$options |= JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT;
+		}
+		$json = CroogoJson::stringify($json, $options) . "\n";
 		$file->write($json);
 		$file->close();
 		return true;
-	}
-
-/**
- * Returns an array in a pretty json format
- *
- * @param array $json
- * @return string
- * @author http://recursive-design.com/blog/2008/03/11/format-json-with-php/
- */
-	protected function _stringifyJson($json = array()) {
-		$json = json_encode($json);
-		$json = str_replace(array('\/', ':{', ':"'), array('/', ': {', ': "'), $json);
-		$result			= '';
-		$pos			= 0;
-		$strLen			= strlen($json);
-		$indentStr		= "\t";
-		$newLine		= "\n";
-		$prevChar		= '';
-		$outOfQuotes	= true;
-		for ($i = 0; $i <= $strLen; $i++) {
-			$char = substr($json, $i, 1);
-			if ($char == '"' && $prevChar != '\\') {
-				$outOfQuotes = !$outOfQuotes;
-			} else if(($char == '}' || $char == ']') && $outOfQuotes) {
-				$result .= $newLine;
-				$pos --;
-				for ($j = 0; $j < $pos; $j++) {
-					$result .= $indentStr;
-				}
-			}
-			$result .= $char;
-			if (($char == ',' || $char == '{' || $char == '[') && $outOfQuotes) {
-				$result .= $newLine;
-				if ($char == '{' || $char == '[') {
-					$pos ++;
-				}
-				for ($j = 0; $j < $pos; $j++) {
-					$result .= $indentStr;
-				}
-			}
-			$prevChar = $char;
-		}
-		return $result;
 	}
 
 /**
