@@ -102,7 +102,8 @@ class CroogoComposerTest extends CakeTestCase {
 {
 \s+"minimum-stability": "dev",
 \s+"config": {
-\s+"vendor-dir": "Vendor"
+\s+"vendor-dir": "Vendor",
+\s+"bin-dir": "Vendor/bin"
 \s+},
 \s+"require": {
 \s+"composer/installers": "\*",

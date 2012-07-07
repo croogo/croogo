@@ -83,6 +83,9 @@ class CroogoComposer {
 		if (!isset($json['config']['vendor-dir'])) {
 			$json['config']['vendor-dir'] = 'Vendor';
 		}
+		if (!isset($json['config']['bin-dir'])) {
+			$json['config']['bin-dir'] = 'Vendor/bin';
+		}
 		if (!isset($json['require'])) {
 			$json['require'] = array('composer/installers' => '*');
 		}
