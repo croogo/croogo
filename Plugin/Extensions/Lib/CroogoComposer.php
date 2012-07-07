@@ -76,6 +76,15 @@ class CroogoComposer {
 			$file = new File($this->appPath . $filename, true);
 			$json = array();
 		}
+		if (!isset($json['minimum-stability'])) {
+			$json['minimum-stability'] = 'dev';
+		}
+		if (!isset($json['config']['vendor-dir'])) {
+			$json['config']['vendor-dir'] = 'Vendor';
+		}
+		if (!isset($json['config']['bin-dir'])) {
+			$json['config']['bin-dir'] = 'Vendor/bin';
+		}
 		if (!isset($json['require'])) {
 			$json['require'] = array('composer/installers' => '*');
 		}

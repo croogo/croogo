@@ -99,12 +99,17 @@ class CroogoComposerTest extends CakeTestCase {
 		$File->close();
 		$expected = <<<END
 {
-	"require": {
-		"composer/installers": "*",
-		"shama/ftp": "*"
-	}
+\s+"minimum-stability": "dev",
+\s+"config": {
+\s+"vendor-dir": "Vendor",
+\s+"bin-dir": "Vendor/bin"
+\s+},
+\s+"require": {
+\s+"composer/installers": "\*",
+\s+"shama/ftp": "\*"
+\s+}
 }
 END;
-		$this->assertEquals(trim($expected), trim($result));
+		$this->assertRegExp($expected, trim($result));
 	}
 }
