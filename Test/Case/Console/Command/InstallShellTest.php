@@ -148,6 +148,45 @@ class InstallShellTest extends CroogoTestCase {
 	}
 
 /**
+ * testComposerInstall
+ */
+	public function testComposerInstall() {
+		$this->skipIf(version_compare(PHP_VERSION, '5.3.0', '<'), 'PHP >= 5.3.0 required to run this test.');
+
+		$Shell = new ReflectionClass('InstallShell');
+		$prop = $Shell->getProperty('_ExtensionsInstaller');
+		$prop->setAccessible(true);
+		$ShellMock = $this->getMock('InstallShell', array('dispatchShell', 'out', 'err'));
+
+		$ExtensionsInstaller = $this->getMock('ExtensionsInstaller', array('composerInstall'));
+		$prop->setValue($ShellMock, $ExtensionsInstaller);
+
+		$ExtensionsInstaller->expects($this->once())
+			->method('composerInstall')
+			->with(
+				$this->equalTo(array(
+					'package' => 'shama/ftp',
+					'version' => '1.1.1',
+					'type' => 'plugin',
+				))
+			)
+			->will($this->returnValue(true));
+
+		$ShellMock->expects($this->once())
+			->method('dispatchShell')
+			->with(
+				$this->equalTo('ext'),
+				$this->equalTo('activate'),
+				$this->equalTo('plugin'),
+				$this->equalTo('Ftp')
+			)
+			->will($this->returnValue(true));
+
+		$ShellMock->args = array('plugin', 'shama/ftp', '1.1.1');
+		$ShellMock->main();
+	}
+
+/**
  * Called when we want to pretend to download a plugin
  */
 	public function callbackDownloadPlugin() {
