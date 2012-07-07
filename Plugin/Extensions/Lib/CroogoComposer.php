@@ -80,8 +80,8 @@ class CroogoComposer {
 		if (!isset($json['minimum-stability'])) {
 			$json['minimum-stability'] = 'dev';
 		}
-		if (!isset($json['config']['vendor-path'])) {
-			$json['config']['vendor-path'] = 'Vendor';
+		if (!isset($json['config']['vendor-dir'])) {
+			$json['config']['vendor-dir'] = 'Vendor';
 		}
 		if (!isset($json['require'])) {
 			$json['require'] = array('composer/installers' => '*');
