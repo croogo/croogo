@@ -38,7 +38,7 @@ class CroogoJson {
 			$char = substr($json, $i, 1);
 			if ($char == '"' && $prevChar != '\\') {
 				$outOfQuotes = !$outOfQuotes;
-			} else if(($char == '}' || $char == ']') && $outOfQuotes) {
+			} elseif (($char == '}' || $char == ']') && $outOfQuotes) {
 				$result .= $newLine;
 				$pos --;
 				for ($j = 0; $j < $pos; $j++) {

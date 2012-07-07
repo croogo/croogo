@@ -225,6 +225,7 @@ class ExtensionsInstaller {
  *
  * @param array $data
  * @return boolean
+ * @throws CakeException
  */
 	public function composerInstall($data = array()) {
 		$data = array_merge(array(

@@ -101,7 +101,7 @@ class CroogoComposer {
 			$options |= JSON_NUMERIC_CHECK;
 		}
 		if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
-			$options |= JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT;
+			$options |= JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT;
 		}
 		$json = CroogoJson::stringify($json, $options) . "\n";
 		$file->write($json);
@@ -116,5 +116,5 @@ class CroogoComposer {
 		$output = system($cmd, $returnValue);
 		return compact('cmd', 'output', 'returnValue');
 	}
-	
+
 }

@@ -14,7 +14,7 @@ App::uses('CroogoComposer', 'Extensions.Lib');
  * @link     http://www.croogo.org
  */
 class CroogoComposerTest extends CakeTestCase {
-	
+
 /**
  * setUp
  *
