@@ -1,5 +1,7 @@
 <?php
 App::uses('ExtensionsInstaller', 'Extensions.Lib');
+App::uses('CroogoPlugin', 'Extensions.Lib');
+App::uses('CroogoTheme', 'Extensions.Lib');
 
 /**
  * Install Shell
@@ -32,7 +34,21 @@ class InstallShell extends AppShell {
 	protected $_ExtensionsInstaller = null;
 
 /**
- * Init ExtensionsInstaller
+ * CroogoPlugin class
+ *
+ * @var CroogoPlugin
+ */
+	protected $_CroogoPlugin = null;
+
+/**
+ * CroogoTheme class
+ *
+ * @var CroogoTheme
+ */
+	protected $_CroogoTheme = null;
+
+/**
+ * Init ExtensionsInstaller, CroogoPlugin, CroogoTheme
  *
  * @param type $stdout
  * @param type $stderr
@@ -41,26 +57,67 @@ class InstallShell extends AppShell {
 	public function __construct($stdout = null, $stderr = null, $stdin = null) {
 		parent::__construct($stdout, $stderr, $stdin);
 		$this->_ExtensionsInstaller = new ExtensionsInstaller();
+		$this->_CroogoPlugin = new CroogoPlugin();
+		$this->_CroogoTheme = new CroogoTheme();
 	}
 
 /**
- * 1. Detects URL or github user/repo
- * 2. Downloads zip file
+ * 1. Detects URL or github user/repo or composer package
+ * 2. Downloads
  * 3. Installs extension
  * 4. Activates extension
+ *
+ * Composer: ./Console/cake install plugin vendor/package
+ * Github: ./Console/cake install plugin user repo
+ * Url: ./Console/cake install plugin https://github.com/user/repo
  */
 	public function main() {
-		$url = '';
-		if (count($this->args) == 2) {
-			$url = $this->args[1];
-		} else if (count($this->args) == 3) {
-			$url = 'http://github.com/' . $this->args[1] . '/' . $this->args[2];
-		}
 		$type = $this->args[0];
-		if ($zip = $this->_download($url)) {
-			if ($this->_install($type, $zip)) {
-				if ($this->_activate($type, $zip)) {
-					$this->out(__('Extension installed and activated.'));
+		if (strpos($this->args[1], '/') !== false) {
+			// Composer Install
+			$ver = isset($this->args[2]) ? $this->args[2] : '*';
+			$this->out(__('Installing with Composer...'));
+			try {
+				$result = $this->_ExtensionsInstaller->composerInstall(array(
+					'package' => $this->args[1],
+					'version' => $ver,
+					'type' => $type,
+				));
+				if (!is_array($result)) {
+					$this->err(__('Unexpected composerInstall return value'));
+					return false;
+				}
+				if ($result['returnValue'] <> 0) {
+					$this->err($result['output']);
+					return false;
+				}
+				$ext = substr($this->args[1], strpos($this->args[1], '/') + 1);
+				$ext = Inflector::camelize($ext);
+				$shouldActivate = $this->{'_Croogo' . ucfirst($type)}->getData($ext);
+				if ($shouldActivate !== false) {
+					$result = $this->dispatchShell('ext', 'activate', $type, $ext, '--quiet');
+					if ($result) {
+						$this->out(__('Package installed and activated.'));
+					} else {
+						$this->err(__('Package installed but not activated.'));
+					}
+				}
+			} catch (CakeException $e) {
+				$this->err($e->getMessage());
+			}
+		} else {
+			// Github / URL Install
+			$url = '';
+			if (count($this->args) == 2) {
+				$url = $this->args[1];
+			} else if (count($this->args) == 3) {
+				$url = 'http://github.com/' . $this->args[1] . '/' . $this->args[2];
+			}
+			if ($zip = $this->_download($url)) {
+				if ($this->_install($type, $zip)) {
+					if ($this->_activate($type, $zip)) {
+						$this->out(__('Extension installed and activated.'));
+					}
 				}
 			}
 		}
@@ -98,7 +155,7 @@ class InstallShell extends AppShell {
 	protected function _activate($type = null, $zip = null) {
 		try {
 			$ext = $this->_ExtensionsInstaller->{'get' . ucfirst($type) . 'Name'}($zip);
-			$this->dispatchShell('ext', 'activate', $type, $ext);
+			$this->dispatchShell('ext', 'activate', $type, $ext, '--quiet');
 			return true;
 		} catch (CakeException $e) {
 			$this->err($e->getMessage());

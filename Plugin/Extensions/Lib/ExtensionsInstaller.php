@@ -1,5 +1,6 @@
 <?php
 App::uses('Folder', 'Utility');
+App::uses('CroogoComposer', 'Extensions.Lib');
 
 /**
  * Extensions Installer
@@ -33,6 +34,20 @@ class ExtensionsInstaller {
  * @var array
  */
 	protected $_rootPath = array();
+
+/**
+ * Hold instance of CroogoComposer
+ *
+ * @var CroogoComposer
+ */
+	protected $_CroogoComposer = null;
+
+/**
+ * __construct
+ */
+	public function __construct() {
+		$this->_CroogoComposer = new CroogoComposer();
+	}
 
 /**
  * Get Plugin Name from zip file
@@ -203,5 +218,31 @@ class ExtensionsInstaller {
 			throw new CakeException(__('Failed to extract theme'));
 		}
 		return false;
+	}
+
+/**
+ * Install packages with CroogoComposer
+ *
+ * @param array $data
+ * @return boolean
+ */
+	public function composerInstall($data = array()) {
+		$data = array_merge(array(
+			'package' => '',
+			'version' => '*',
+			'type' => 'plugin',
+		), $data);
+		if (empty($data['package']) || strpos($data['package'], '/') === false) {
+			throw new CakeException(__('Must specify a valid package name: vendor/name.'));
+		}
+		// TODO: Enable theme support when custom install paths are enabled in composer/installers
+		if ($data['type'] == 'theme') {
+			throw new CakeException(__('Themes installed via composer are not yet supported.'));
+		}
+		$this->_CroogoComposer->getComposer();
+		$this->_CroogoComposer->setConfig(array(
+			$data['package'] => $data['version'],
+		));
+		return $this->_CroogoComposer->runComposer();
 	}
 }
