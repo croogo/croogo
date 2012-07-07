@@ -172,6 +172,15 @@ class InstallShellTest extends CroogoTestCase {
 			)
 			->will($this->returnValue(array('returnValue' => 0)));
 
+		$prop = $Shell->getProperty('_CroogoPlugin');
+		$prop->setAccessible(true);
+		$CroogoPlugin = $this->getMock('CroogoPlugin');
+		$prop->setValue($ShellMock, $CroogoPlugin);
+
+		$CroogoPlugin->expects($this->once())
+			->method('getData')
+			->will($this->returnValue(true));
+
 		$ShellMock->expects($this->once())
 			->method('dispatchShell')
 			->with(

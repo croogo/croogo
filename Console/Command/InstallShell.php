@@ -1,5 +1,7 @@
 <?php
 App::uses('ExtensionsInstaller', 'Extensions.Lib');
+App::uses('CroogoPlugin', 'Extensions.Lib');
+App::uses('CroogoTheme', 'Extensions.Lib');
 
 /**
  * Install Shell
@@ -32,7 +34,21 @@ class InstallShell extends AppShell {
 	protected $_ExtensionsInstaller = null;
 
 /**
- * Init ExtensionsInstaller
+ * CroogoPlugin class
+ *
+ * @var CroogoPlugin
+ */
+	protected $_CroogoPlugin = null;
+
+/**
+ * CroogoTheme class
+ *
+ * @var CroogoTheme
+ */
+	protected $_CroogoTheme = null;
+
+/**
+ * Init ExtensionsInstaller, CroogoPlugin, CroogoTheme
  *
  * @param type $stdout
  * @param type $stderr
@@ -41,6 +57,8 @@ class InstallShell extends AppShell {
 	public function __construct($stdout = null, $stderr = null, $stdin = null) {
 		parent::__construct($stdout, $stderr, $stdin);
 		$this->_ExtensionsInstaller = new ExtensionsInstaller();
+		$this->_CroogoPlugin = new CroogoPlugin();
+		$this->_CroogoTheme = new CroogoTheme();
 	}
 
 /**
@@ -75,11 +93,14 @@ class InstallShell extends AppShell {
 				}
 				$ext = substr($this->args[1], strpos($this->args[1], '/') + 1);
 				$ext = Inflector::camelize($ext);
-				$result = $this->dispatchShell('ext', 'activate', $type, $ext, '--quiet');
-				if ($result) {
-					$this->out(__('Package installed and activated.'));
-				} else {
-					$this->err(__('Package installed but not activated.'));
+				$shouldActivate = $this->{'_Croogo' . ucfirst($type)}->getData($ext);
+				if ($shouldActivate !== false) {
+					$result = $this->dispatchShell('ext', 'activate', $type, $ext, '--quiet');
+					if ($result) {
+						$this->out(__('Package installed and activated.'));
+					} else {
+						$this->err(__('Package installed but not activated.'));
+					}
 				}
 			} catch (CakeException $e) {
 				$this->err($e->getMessage());
