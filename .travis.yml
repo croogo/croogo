@@ -11,7 +11,7 @@ env:
   - DB=pgsql
 
 before_script:
-  - sh -c "cd .. ; mkdir lib ; cd lib ; git clone --depth 1 git://github.com/cakephp/cakephp ; cd cakephp ; git checkout -qf 2.1.4"
+  - sh -c "cd .. ; mkdir lib ; cd lib ; git clone --depth 1 git://github.com/cakephp/cakephp ; cd cakephp ; git checkout -qf 2.2.0"
   - sh -c "cd ../lib ; ln -s cakephp/lib/Cake Cake"
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE croogo_test;'; fi"
   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE croogo_test;' -U postgres; fi"
@@ -80,7 +80,7 @@ before_script:
     }" > Config/database.php
 
 script:
-  - ../lib/Cake/Console/cake test app AllTests --stderr
+  - ./Console/cake test app AllTests --stderr
 
 notifications:
   email: false
