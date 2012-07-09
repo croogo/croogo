@@ -22,7 +22,7 @@ class SettingFixture extends CroogoTestFixture {
 		array(
 			'id' => 6,
 			'key' => 'Site.title',
-			'value' => 'Croogo',
+			'value' => 'Croogo - Test',
 			'title' => '',
 			'description' => '',
 			'input_type' => '',
@@ -264,7 +264,7 @@ class SettingFixture extends CroogoTestFixture {
 		array(
 			'id' => 32,
 			'key' => 'Hook.bootstraps',
-			'value' => 'Users,Example',
+			'value' => 'Settings,Comments,Contacts,Contents,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Example',
 			'title' => '',
 			'description' => '',
 			'input_type' => '',

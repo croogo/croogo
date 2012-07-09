@@ -47,18 +47,12 @@
 	)));
 
 /**
- * Libraries
- */
-	App::import('Vendor', 'Spyc/Spyc');
-
-/**
  * Settings
  */
-	if (file_exists(APP . 'Config' . DS . 'settings.yml')) {
-		$settings = Spyc::YAMLLoad(file_get_contents(APP . 'Config' . DS . 'settings.yml'));
-		foreach ($settings as $settingKey => $settingValue) {
-			Configure::write($settingKey, $settingValue);
-		}
+	App::uses('CroogoJsonReader', 'Configure');
+	Configure::config('settings', new CroogoJsonReader());
+	if (file_exists(APP . 'Config' . DS . 'settings.json')) {
+		Configure::load('settings', 'settings');
 	}
 
 /**

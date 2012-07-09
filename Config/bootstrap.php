@@ -64,7 +64,7 @@
 	Configure::write('Install.secured', !isset($_securedInstall));
 	Configure::write('Install.installed',
 		file_exists(APP . 'Config' . DS . 'database.php') &&
-		file_exists(APP . 'Config' . DS . 'settings.yml') &&
+		file_exists(APP . 'Config' . DS . 'settings.json') &&
 		file_exists(APP . 'Config' . DS . 'croogo.php')
 	);
 	if (!Configure::read('Install.installed') || !Configure::read('Install.secured')) {
