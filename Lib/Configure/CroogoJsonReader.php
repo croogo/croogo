@@ -19,17 +19,6 @@ class CroogoJsonReader implements ConfigReaderInterface {
 	protected $_path = null;
 
 /**
- * Ignored keys.
- *
- * These are set on runtime and do not needs storage persistence
- */
-	protected $_ignoredKeys = array(
-		'Hook.controller_properties',
-		'Hook.model_properties',
-		'Hook.routes',
-	);
-
-/**
  * __construct
  *
  */
@@ -71,9 +60,12 @@ class CroogoJsonReader implements ConfigReaderInterface {
  * Dumps the state of Configure data into an json string.
  */
 	public function dump($filename, $data) {
-		foreach ($this->_ignoredKeys as $ignoredKey) {
-			if (Hash::check($data, $ignoredKey)) {
-				$data = Hash::remove($data, $ignoredKey);
+		$settings = array();
+		foreach ($data as $prefix => $setting) {
+			foreach ($setting as $key => $value) {
+				if (!is_array($value)) {
+					$settings[$prefix][$key] = $value;
+				}
 			}
 		}
 		$options = 0;
@@ -83,7 +75,7 @@ class CroogoJsonReader implements ConfigReaderInterface {
 		if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
 			$options |= JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT;
 		}
-		$contents = CroogoJson::stringify($data, $options);
+		$contents = CroogoJson::stringify($settings, $options);
 		return $this->_writeFile($this->_path . $filename, $contents);
 	}
 
