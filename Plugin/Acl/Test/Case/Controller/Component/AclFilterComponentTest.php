@@ -20,8 +20,8 @@ class AclFilterComponentTest extends CroogoTestCase {
 		'app.aro',
 		'app.aco',
 		'app.aros_aco',
-		'app.user',
-		'app.role',
+		'plugin.users.user',
+		'plugin.users.role',
 		'app.setting',
 		);
 

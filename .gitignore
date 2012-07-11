@@ -19,3 +19,4 @@ tmp/
 !./Plugin/Install
 !./Plugin/Tinymce
 !./Plugin/Translate
+!./Plugin/Users

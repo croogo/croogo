@@ -12,7 +12,7 @@
 		<?php
 			echo sprintf(__("You are logged in as: %s"), $this->Session->read('Auth.User.username'));
 			echo ' <span>|</span> ';
-			echo $this->Html->link(__("Log out"), array('plugin' => 0, 'controller' => 'users', 'action' => 'logout'));
+			echo $this->Html->link(__("Log out"), array('plugin' => 'users', 'controller' => 'users', 'action' => 'logout'));
 		?>
 		</div>
 

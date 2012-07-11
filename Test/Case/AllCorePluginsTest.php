@@ -13,6 +13,8 @@ class AllCorePluginsTest extends PHPUnit_Framework_TestSuite {
 		$suite->addTestFile($path . 'AllAclTestsTest.php');
 		$path = CakePlugin::path('Extensions') . DS . 'Test' . DS . 'Case' . DS;
 		$suite->addTestFile($path . 'AllExtensionsTestsTest.php');
+		$path = CakePlugin::path('Users') . DS . 'Test' . DS . 'Case' . DS;
+		$suite->addTestFile($path . 'AllUsersTestsTest.php');
 		return $suite;
 	}
 

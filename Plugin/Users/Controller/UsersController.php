@@ -1,4 +1,7 @@
 <?php
+
+App::uses('UsersAppController', 'Users.Controller');
+
 /**
  * Users Controller
  *
@@ -11,7 +14,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class UsersController extends AppController {
+class UsersController extends UsersAppController {
 
 /**
  * Controller name
@@ -37,7 +40,7 @@ class UsersController extends AppController {
  * @var array
  * @access public
  */
-	public $uses = array('User');
+	public $uses = array('Users.User');
 
 /**
  * beforeFilter

@@ -29,8 +29,8 @@ class AppModelTest extends CroogoTestCase {
 		'app.aco',
 		'app.aro',
 		'app.aros_aco',
-		'app.role',
-		'app.user',
+		'plugin.users.role',
+		'plugin.users.user',
 		'app.setting',
 	);
 
