@@ -1,4 +1,7 @@
 <?php
+
+App::uses('UsersAppController', 'Users.Controller');
+
 /**
  * Users Controller
  *
@@ -11,7 +14,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class UsersController extends AppController {
+class UsersController extends UsersAppController {
 
 /**
  * Controller name
@@ -37,7 +40,7 @@ class UsersController extends AppController {
  * @var array
  * @access public
  */
-	public $uses = array('User');
+	public $uses = array('Users.User');
 
 /**
  * beforeFilter
@@ -253,7 +256,7 @@ class UsersController extends AppController {
 					'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
 				$this->Email->to = $this->request->data['User']['email'];
 				$this->Email->subject = __('[%s] Please activate your account', Configure::read('Site.title'));
-				$this->Email->template = 'register';
+				$this->Email->template = 'Users.register';
 				$this->set('user', $this->request->data);
 				$this->Email->send();
 
@@ -332,7 +335,7 @@ class UsersController extends AppController {
 				'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
 			$this->Email->to = $user['User']['email'];
 			$this->Email->subject = __('[%s] Reset Password', Configure::read('Site.title'));
-			$this->Email->template = 'forgot_password';
+			$this->Email->template = 'Users.forgot_password';
 			if ($this->Email->send()) {
 				$this->Session->setFlash(__('An email has been sent with instructions for resetting your password.'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'login'));

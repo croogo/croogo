@@ -20,13 +20,13 @@ class TaxonomyTest extends CroogoTestCase {
 		'app.node',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',
-		'app.role',
+		'plugin.users.role',
 		'app.setting',
 		'plugin.taxonomy.taxonomy',
 		'plugin.taxonomy.term',
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.types_vocabulary',
-		'app.user',
+		'plugin.users.user',
 		'plugin.taxonomy.vocabulary',
 	);
 

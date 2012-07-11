@@ -72,7 +72,9 @@ class Comment extends AppModel {
 			'counterCache' => true,
 			'counterScope' => array('Comment.status' => 1),
 		),
-		'User',
+		'User' => array(
+			'className' => 'Users.User',
+		),
 	);
 
 }

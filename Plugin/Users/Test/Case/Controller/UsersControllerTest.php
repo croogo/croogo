@@ -1,5 +1,5 @@
 <?php
-App::uses('UsersController', 'Controller');
+App::uses('UsersController', 'Users.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestUsersController extends UsersController {
@@ -57,13 +57,13 @@ class UsersControllerTest extends CroogoControllerTestCase {
 		'node',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',
-		'role',
+		'plugin.users.role',
 		'setting',
 		'plugin.taxonomy.taxonomy',
 		'plugin.taxonomy.term',
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.types_vocabulary',
-		'user',
+		'plugin.users.user',
 		'plugin.taxonomy.vocabulary',
 	);
 
@@ -77,6 +77,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Users = new TestUsersController($request, $response);
+		$this->Users->plugin = 'Users';
 		$this->Users->constructClasses();
 		$this->Users->Security = $this->getMock('SecurityComponent', null, array($this->Users->Components));
 		$this->Users->User->Aro->useDbConfig = $this->Users->User->useDbConfig;
@@ -84,7 +85,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 		$this->Users->request->params['pass'] = array();
 		$this->Users->request->params['named'] = array();
 
-		$this->UsersController = $this->generate('Users', array(
+		$this->generate('Users', array(
 			'methods' => array(
 				'redirect',
 			),
@@ -94,7 +95,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 				'Security',
 			),
 		));
-		$this->UsersController->Auth
+		$this->controller->Auth
 			->staticExpects($this->any())
 			->method('user')
 			->will($this->returnCallback(array($this, 'authUserCallback')));
@@ -116,7 +117,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminIndex() {
-		$this->testAction('/admin/users/index');
+		$this->testAction('/admin/users/users/index');
 		$this->assertNotEmpty($this->vars['displayFields']);
 		$this->assertNotEmpty($this->vars['users']);
 	}
@@ -129,7 +130,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 	public function testAdd() {
 		$_SERVER['SERVER_NAME'] = 'croogo.dev';
 		$this->Users->request->params['action'] = 'add';
-		$this->Users->request->params['url']['url'] = 'users/add';
+		$this->Users->request->params['url']['url'] = 'users/users/add';
 		$this->Users->request->data = array(
 			'User' => array(
 				'username' => 'new_user',
@@ -165,7 +166,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  */
 	public function testAdminAdd() {
 		$this->Users->request->params['action'] = 'admin_add';
-		$this->Users->request->params['url']['url'] = 'admin/users/add';
+		$this->Users->request->params['url']['url'] = 'admin/users/users/add';
 		$this->Users->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -197,7 +198,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminEdit() {
-		$this->UsersController->Session
+		$this->controller->Session
 			->expects($this->once())
 			->method('setFlash')
 			->with(
@@ -205,10 +206,10 @@ class UsersControllerTest extends CroogoControllerTestCase {
 				$this->equalTo('default'),
 				$this->equalTo(array('class' => 'success'))
 			);
-		$this->UsersController
+		$this->controller
 			->expects($this->once())
 			->method('redirect');
-		$this->testAction('/admin/users/edit/1', array(
+		$this->testAction('/admin/users/users/edit/1', array(
 			'data' => array(
 				'User' => array(
 					'id' => 1, // admin
@@ -220,7 +221,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 		$this->assertNotEmpty($this->vars['editFields']);
 		$expected = 'Administrator [modified]';
 		$this->assertEquals($expected, $this->controller->request->data['User']['name']);
-		$result = $this->UsersController->User->findByUsername('admin');
+		$result = $this->controller->User->findByUsername('admin');
 		$this->assertEquals($expected, $result['User']['name']);
 	}
 
@@ -231,7 +232,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  */
 	public function testAdminDelete() {
 		$this->Users->request->params['action'] = 'admin_delete';
-		$this->Users->request->params['url']['url'] = 'admin/users/delete';
+		$this->Users->request->params['url']['url'] = 'admin/users/users/delete';
 		$this->Users->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -263,7 +264,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  */
 	public function testAdminDeleteCurrentUser() {
 		$this->Users->request->params['action'] = 'admin_delete';
-		$this->Users->request->params['url']['url'] = 'admin/users/delete';
+		$this->Users->request->params['url']['url'] = 'admin/users/users/delete';
 		$this->Users->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -293,7 +294,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  */
 	public function testResetPasswordWithValidInfo() {
 		$vars = $this->testAction(
-			sprintf('/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
+			sprintf('/users/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
 			array(
 			'return' => 'vars'
 			)
@@ -307,7 +308,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testResetPasswordWithInvalidInfo() {
-		$this->UsersController->Session
+		$this->controller->Session
 			->expects($this->once())
 			->method('setFlash')
 			->with(
@@ -316,7 +317,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 				$this->equalTo(array('class' => 'error'))
 			);
 		$vars = $this->testAction(
-			sprintf('/users/reset/%s/%s', 'yvonne','invalid'),
+			sprintf('/users/users/reset/%s/%s', 'yvonne','invalid'),
 			array('return' => 'vars')
 		);
 	}
@@ -328,7 +329,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  */
 	public function testResetPasswordUpdatesPassword() {
 		$this->testAction(
-			sprintf('/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
+			sprintf('/users/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
 			array(
 				'data' => array(
 					'User' => array(
@@ -351,7 +352,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  */
 	public function testResetPasswordWithMismatchValues() {
 		$this->testAction(
-			sprintf('/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
+			sprintf('/users/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
 			array(
 				'return' => 'contents',
 				'data' => array(

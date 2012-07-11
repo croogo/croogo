@@ -51,7 +51,10 @@ class Install extends InstallAppModel {
 		}
 
 		// create administrative user
-		$User = ClassRegistry::init('User');
+		if (!CakePlugin::loaded('Users')) {
+			CakePlugin::load('Users');
+		}
+		$User = ClassRegistry::init('Users.User');
 		$User->Role->Behaviors->attach('Aliasable');
 		unset($User->validate['email']);
 		$user['User']['name'] = $user['User']['username'];

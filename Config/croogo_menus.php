@@ -179,39 +179,6 @@ CroogoNav::add('contacts', array(
 	),
 ));
 
-CroogoNav::add('users', array(
-	'title' => __('Users'),
-	'url' => array(
-		'plugin' => false,
-		'admin' => true,
-		'controller' => 'users',
-		'action' => 'index',
-	),
-	'weight' => 50,
-	'children' => array(
-		'users' => array(
-			'title' => __('Users'),
-			'url' => array(
-				'plugin' => false,
-				'admin' => true,
-				'controller' => 'users',
-				'action' => 'index',
-			),
-			'weight' => 10,
-		),
-		'roles' => array(
-			'title' => __('Roles'),
-			'url' => array(
-				'plugin' => false,
-				'admin' => true,
-				'controller' => 'roles',
-				'action' => 'index',
-			),
-			'weight' => 20,
-		),
-	),
-));
-
 CroogoNav::add('settings', array(
 	'title' => __('Settings'),
 	'url' => array(

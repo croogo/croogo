@@ -12,9 +12,5 @@
 	CroogoRouter::connect('/about', array('controller' => 'nodes', 'action' => 'view', 'type' => 'page', 'slug' => 'about'));
 	CroogoRouter::connect('/page/:slug', array('controller' => 'nodes', 'action' => 'view', 'type' => 'page'));
 
-	// Users
-	CroogoRouter::connect('/register', array('controller' => 'users', 'action' => 'add'));
-	CroogoRouter::connect('/user/:username', array('controller' => 'users', 'action' => 'view'), array('pass' => array('username')));
-
 	// Contact
 	CroogoRouter::connect('/contact', array('controller' => 'contacts', 'action' => 'view', 'contact'));

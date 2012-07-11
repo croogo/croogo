@@ -1,6 +1,6 @@
 <?php
 App::uses('CroogoTestCase', 'TestSuite');
-App::uses('UsersController', 'Controller');
+App::uses('UsersController', 'Users.Controller');
 App::uses('NodesController', 'Controller');
 
 class TestUsersEventController extends UsersController {
