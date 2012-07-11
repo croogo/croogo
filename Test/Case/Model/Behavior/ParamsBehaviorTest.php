@@ -20,13 +20,13 @@ class ParamsBehaviorTest extends CroogoTestCase {
 		'node',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',
-		'role',
+		'plugin.users.role',
 		'setting',
 		'plugin.taxonomy.taxonomy',
 		'plugin.taxonomy.term',
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.types_vocabulary',
-		'user',
+		'plugin.users.user',
 		'plugin.taxonomy.vocabulary',
 	);
 

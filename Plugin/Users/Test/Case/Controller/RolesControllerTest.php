@@ -1,5 +1,5 @@
 <?php
-App::uses('RolesController', 'Controller');
+App::uses('RolesController', 'Users.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestRolesController extends RolesController {
@@ -49,13 +49,13 @@ class RolesControllerTest extends CroogoControllerTestCase {
 		'node',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',
-		'role',
+		'plugin.users.role',
 		'setting',
 		'plugin.taxonomy.taxonomy',
 		'plugin.taxonomy.term',
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.types_vocabulary',
-		'user',
+		'plugin.users.user',
 		'plugin.taxonomy.vocabulary',
 	);
 
@@ -69,14 +69,16 @@ class RolesControllerTest extends CroogoControllerTestCase {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Roles = new TestRolesController($request, $response);
+		$this->Roles->plugin = 'Users';
 		$this->Roles->constructClasses();
 		$this->Roles->Security = $this->getMock('SecurityComponent', null, array($this->Roles->Components));
 		$this->Roles->Role->Aro->useDbConfig = $this->Roles->Role->useDbConfig;
+		$this->Roles->request->params['plugin'] = 'users';
 		$this->Roles->request->params['controller'] = 'roles';
 		$this->Roles->request->params['pass'] = array();
 		$this->Roles->request->params['named'] = array();
 
-		$this->RolesController = $this->generate('Roles', array(
+		$this->generate('Roles', array(
 			'methods' => array(
 				'redirect',
 			),
@@ -85,7 +87,7 @@ class RolesControllerTest extends CroogoControllerTestCase {
 				'Session',
 			),
 		));
-		$this->RolesController->Auth
+		$this->controller->Auth
 			->staticExpects($this->any())
 			->method('user')
 			->will($this->returnCallback(array($this, 'authUserCallback')));
@@ -144,7 +146,7 @@ class RolesControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminEdit() {
-		$this->RolesController->Session
+		$this->controller->Session
 			->expects($this->once())
 			->method('setFlash')
 			->with(
@@ -152,7 +154,7 @@ class RolesControllerTest extends CroogoControllerTestCase {
 				$this->equalTo('default'),
 				$this->equalTo(array('class' => 'success'))
 			);
-		$this->RolesController
+		$this->controller
 			->expects($this->once())
 			->method('redirect');
 		$this->testAction('/admin/roles/edit/1', array(
@@ -163,7 +165,7 @@ class RolesControllerTest extends CroogoControllerTestCase {
 				),
 			),
 		));
-		$registered = $this->RolesController->Role->findByAlias('registered');
+		$registered = $this->controller->Role->findByAlias('registered');
 		$this->assertEquals('Registered [modified]', $registered['Role']['title']);
 	}
 

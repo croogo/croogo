@@ -51,7 +51,7 @@ class User extends AppModel {
  * @var array
  * @access public
  */
-	public $belongsTo = array('Role');
+	public $belongsTo = array('Users.Role');
 
 /**
  * Validation
