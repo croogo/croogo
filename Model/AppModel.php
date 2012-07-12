@@ -131,12 +131,16 @@ class AppModel extends Model {
 		if ($output) {
 			$created = false;
 			$options = array();
-			$this->Behaviors->trigger('afterSave', array(
-				&$this,
-				$created,
-				$options,
-			));
-			$this->afterSave($created);
+			$field = sprintf('%s.%s', $this->alias, $this->primaryKey);
+			if (!empty($args[1][$field])) {
+				foreach ($args[1][$field] as $id) {
+					$this->id = $id;
+					$event = new CakeEvent('Model.afterSave', $this, array(
+						$created, $options
+					));
+					$this->getEventManager()->dispatch($event);
+				}
+			}
 			$this->_clearCache();
 			return true;
 		}
