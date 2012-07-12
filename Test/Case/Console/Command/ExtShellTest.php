@@ -27,9 +27,9 @@ class ExtShellTest extends CroogoTestCase {
  */
 	public $fixtures = array(
 		'app.comment',
-		'app.menu',
+		'plugin.menus.menu',
 		'plugin.blocks.block',
-		'app.link',
+		'plugin.menus.link',
 		'app.meta',
 		'app.node',
 		'plugin.taxonomy.nodes_taxonomy',
@@ -76,7 +76,7 @@ class ExtShellTest extends CroogoTestCase {
  * @return void
  */
 	public function testPlugin() {
-		$Link = ClassRegistry::init('Link');
+		$Link = ClassRegistry::init('Menus.Link');
 		$Shell = $this->getMock('ExtShell', array('out', 'err'));
 
 		$Shell->args = array('deactivate', 'plugin', 'Example');

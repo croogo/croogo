@@ -1,6 +1,6 @@
 <?php
-App::uses('Menu', 'Model');
-App::uses('AppModel', 'Model');
+App::uses('Menu', 'Menus.Model');
+App::uses('MenusAppModel', 'Menus.Model');
 App::uses('CroogoTestCase', 'TestSuite');
 
 /**
@@ -33,9 +33,9 @@ class MenuTest extends CroogoTestCase {
 		'app.aco',
 		'app.aro',
 		'app.aros_aco',
-		'app.menu',
-		'app.link',
 		'app.setting',
+		'plugin.menus.menu',
+		'plugin.menus.link',
 	);
 
 /**

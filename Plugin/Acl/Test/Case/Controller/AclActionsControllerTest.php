@@ -16,7 +16,7 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
 		'app.aro',
 		'app.aco',
 		'app.aros_aco',
-		'app.menu',
+		'plugin.menus.menu',
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.types_vocabulary',
 		'plugin.taxonomy.vocabulary',
@@ -36,6 +36,7 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
 			'components' => array(
 				'Auth' => array('user'),
 				'Session',
+				'Menus.Menus',
 			),
 		));
 		$AclActions->Auth

@@ -42,8 +42,8 @@ class RolesControllerTest extends CroogoControllerTestCase {
 		'contact',
 		'i18n',
 		'language',
-		'link',
-		'menu',
+		'plugin.menus.link',
+		'plugin.menus.menu',
 		'message',
 		'meta',
 		'node',
@@ -72,6 +72,8 @@ class RolesControllerTest extends CroogoControllerTestCase {
 		$this->Roles->plugin = 'Users';
 		$this->Roles->constructClasses();
 		$this->Roles->Security = $this->getMock('SecurityComponent', null, array($this->Roles->Components));
+		$this->Roles->Components->unload('Croogo');
+		$this->Roles->Components->unload('Menus');
 		$this->Roles->Role->Aro->useDbConfig = $this->Roles->Role->useDbConfig;
 		$this->Roles->request->params['plugin'] = 'users';
 		$this->Roles->request->params['controller'] = 'roles';
@@ -85,6 +87,7 @@ class RolesControllerTest extends CroogoControllerTestCase {
 			'components' => array(
 				'Auth' => array('user'),
 				'Session',
+				'Menus.Menus',
 			),
 		));
 		$this->controller->Auth

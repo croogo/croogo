@@ -42,8 +42,8 @@ class TermsControllerTest extends CroogoControllerTestCase {
 		'app.contact',
 		'app.i18n',
 		'app.language',
-		'app.link',
-		'app.menu',
+		'plugin.menus.link',
+		'plugin.menus.menu',
 		'app.message',
 		'app.meta',
 		'app.node',
@@ -74,6 +74,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
 		$this->Terms = new TestTermsController($request, $response);
 		$this->Terms->constructClasses();
 		$this->Terms->Security = $this->getMock('SecurityComponent', null, array($this->Terms->Components));
+		$this->Terms->Components->unload('Menus');
 		$this->Terms->request->params['named'] = array();
 		$this->Terms->request->params['controller'] = 'terms';
 		$this->Terms->request->params['pass'] = array();
@@ -86,6 +87,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
 			'components' => array(
 				'Auth' => array('user'),
 				'Session',
+				'Menus.Menus',
 			),
 		));
 		$this->TermsController->Auth

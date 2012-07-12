@@ -1,17 +1,17 @@
 <?php
 /**
- * Menu
+ * Link
  *
  * PHP version 5
  *
  * @category Model
- * @package  Croogo
+ * @package  Menus
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Menu extends AppModel {
+class Link extends MenusAppModel {
 
 /**
  * Model name
@@ -19,7 +19,7 @@ class Menu extends AppModel {
  * @var string
  * @access public
  */
-	public $name = 'Menu';
+	public $name = 'Link';
 
 /**
  * Behaviors used by the Model
@@ -28,6 +28,8 @@ class Menu extends AppModel {
  * @access public
  */
 	public $actsAs = array(
+		'Encoder',
+		'Tree',
 		'Cached' => array(
 			'prefix' => array(
 				'link_',
@@ -35,7 +37,6 @@ class Menu extends AppModel {
 				'croogo_menu_',
 			),
 		),
-		'Params',
 	);
 
 /**
@@ -49,37 +50,23 @@ class Menu extends AppModel {
 			'rule' => array('minLength', 1),
 			'message' => 'Title cannot be empty.',
 		),
-		'alias' => array(
-			'isUnique' => array(
-				'rule' => 'isUnique',
-				'message' => 'This alias has already been taken.',
-			),
-			'minLength' => array(
-				'rule' => array('minLength', 1),
-				'message' => 'Alias cannot be empty.',
-			),
+		'link' => array(
+			'rule' => array('minLength', 1),
+			'message' => 'Link cannot be empty.',
 		),
 	);
 
 /**
- * Model associations: hasMany
+ * Model associations: belongsTo
  *
  * @var array
  * @access public
  */
-	public $hasMany = array(
-		'Link' => array(
-			'className' => 'Link',
-			'foreignKey' => 'menu_id',
-			'dependent' => true,
-			'conditions' => '',
-			'fields' => '',
-			'order' => 'Link.lft ASC',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => '',
-		),
+	public $belongsTo = array(
+		'Menu' => array(
+			'className' => 'Menus.Menu',
+			'counterCache' => true,
+		)
 	);
+
 }

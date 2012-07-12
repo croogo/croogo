@@ -361,7 +361,7 @@ class LayoutHelper extends AppHelper {
 			'selected' => 'selected',
 			'dropdown' => false,
 			'dropdownClass' => 'sf-menu',
-			'element' => 'menu',
+			'element' => 'Menus.menu',
 		);
 		$options = array_merge($_options, $options);
 

@@ -50,8 +50,8 @@ class UsersControllerTest extends CroogoControllerTestCase {
 		'contact',
 		'i18n',
 		'language',
-		'link',
-		'menu',
+		'plugin.menus.link',
+		'plugin.menus.menu',
 		'message',
 		'meta',
 		'node',
@@ -80,6 +80,8 @@ class UsersControllerTest extends CroogoControllerTestCase {
 		$this->Users->plugin = 'Users';
 		$this->Users->constructClasses();
 		$this->Users->Security = $this->getMock('SecurityComponent', null, array($this->Users->Components));
+		$this->Users->Components->unload('Croogo');
+		$this->Users->Components->unload('Menus');
 		$this->Users->User->Aro->useDbConfig = $this->Users->User->useDbConfig;
 		$this->Users->request->params['controller'] = 'users';
 		$this->Users->request->params['pass'] = array();

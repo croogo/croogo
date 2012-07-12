@@ -21,7 +21,12 @@ class CroogoTestController extends AppController {
 class CroogoComponentTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'aco', 'aro', 'aros_aco', 'setting',
+		'app.aco',
+		'app.aro',
+		'app.aros_aco',
+		'app.setting',
+		'plugin.menus.menu',
+		'plugin.menus.link',
 		);
 
 	public function setUp() {

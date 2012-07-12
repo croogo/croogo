@@ -1,17 +1,20 @@
 <?php
+
+App::uses('MenusAppController', 'Menus.Controller');
+
 /**
  * Menus Controller
  *
  * PHP version 5
  *
  * @category Controller
- * @package  Croogo
+ * @package  Menus
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MenusController extends AppController {
+class MenusController extends MenusAppController {
 
 /**
  * Controller name
@@ -27,7 +30,7 @@ class MenusController extends AppController {
  * @var array
  * @access public
  */
-	public $uses = array('Menu');
+	public $uses = array('Menus.Menu');
 
 /**
  * Admin index
