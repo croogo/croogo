@@ -1,5 +1,5 @@
 <?php
-App::uses('LinksController', 'Controller');
+App::uses('LinksController', 'Menus.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestLinksController extends LinksController {
@@ -42,8 +42,6 @@ class LinksControllerTest extends CroogoControllerTestCase {
 		'contact',
 		'i18n',
 		'language',
-		'link',
-		'menu',
 		'message',
 		'meta',
 		'node',
@@ -51,6 +49,8 @@ class LinksControllerTest extends CroogoControllerTestCase {
 		'plugin.blocks.region',
 		'plugin.users.role',
 		'setting',
+		'plugin.menus.menu',
+		'plugin.menus.link',
 		'plugin.taxonomy.taxonomy',
 		'plugin.taxonomy.term',
 		'plugin.taxonomy.type',
@@ -71,6 +71,10 @@ class LinksControllerTest extends CroogoControllerTestCase {
 		$this->Links = new TestLinksController($request, $response);
 		$this->Links->constructClasses();
 		$this->Links->Security = $this->getMock('SecurityComponent', null, array($this->Links->Components));
+		$this->Links->Components->unload('Acl');
+		$this->Links->Components->unload('Auth');
+		$this->Links->plugin = 'Menus';
+		$this->Links->request->params['plugin'] = 'menus';
 		$this->Links->request->params['controller'] = 'links';
 		$this->Links->request->params['pass'] = array();
 		$this->Links->request->params['named'] = array();
@@ -115,8 +119,8 @@ class LinksControllerTest extends CroogoControllerTestCase {
 					'action' => 'index',
 				))
 			);
-		$this->testAction('/admin/links/index');
-		$this->testAction('/admin/links/index/3');
+		$this->testAction('/admin/menus/links/index');
+		$this->testAction('/admin/menus/links/index/3');
 		$mainMenu = $this->LinksController->Link->Menu->findByAlias('main');
 		$this->assertEquals($mainMenu, $this->vars['menu']);
 		$this->assertNotEmpty($this->vars['linksTree']);
@@ -125,12 +129,12 @@ class LinksControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminAdd() {
 		$this->Links->request->params['action'] = 'admin_add';
-		$this->Links->request->params['url']['url'] = 'admin/links/add';
+		$this->Links->request->params['url']['url'] = 'admin/menus/links/add';
 		$this->Links->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
 		));
-		$mainMenu = ClassRegistry::init('Menu')->findByAlias('main');
+		$mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
 		$this->Links->request->data = array(
 			'Link' => array(
 				'menu_id' => $mainMenu['Menu']['id'],
@@ -203,7 +207,7 @@ class LinksControllerTest extends CroogoControllerTestCase {
 			'id' => 1,
 			'username' => 'admin',
 		));
-		$homeLink = ClassRegistry::init('Link')->find('first', array(
+		$homeLink = ClassRegistry::init('Menus.Link')->find('first', array(
 			'conditions' => array(
 				'Link.title' => 'Home',
 				'Link.link' => '/',
@@ -228,8 +232,8 @@ class LinksControllerTest extends CroogoControllerTestCase {
 			'username' => 'admin',
 		));
 
-		$mainMenu = ClassRegistry::init('Menu')->findByAlias('main');
-		$aboutLink = ClassRegistry::init('Link')->find('first', array(
+		$mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
+		$aboutLink = ClassRegistry::init('Menus.Link')->find('first', array(
 			'conditions' => array(
 				'Link.menu_id' => $mainMenu['Menu']['id'],
 				'Link.title' => 'About',
@@ -260,8 +264,8 @@ class LinksControllerTest extends CroogoControllerTestCase {
 			'username' => 'admin',
 		));
 
-		$mainMenu = ClassRegistry::init('Menu')->findByAlias('main');
-		$contactLink = ClassRegistry::init('Link')->find('first', array(
+		$mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
+		$contactLink = ClassRegistry::init('Menus.Link')->find('first', array(
 			'conditions' => array(
 				'Link.menu_id' => $mainMenu['Menu']['id'],
 				'Link.title' => 'Contact',
@@ -291,8 +295,8 @@ class LinksControllerTest extends CroogoControllerTestCase {
 			'username' => 'admin',
 		));
 
-		$mainMenu = ClassRegistry::init('Menu')->findByAlias('main');
-		$aboutLink = ClassRegistry::init('Link')->find('first', array(
+		$mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
+		$aboutLink = ClassRegistry::init('Menus.Link')->find('first', array(
 			'conditions' => array(
 				'Link.menu_id' => $mainMenu['Menu']['id'],
 				'Link.title' => 'About',
@@ -323,8 +327,8 @@ class LinksControllerTest extends CroogoControllerTestCase {
 			'username' => 'admin',
 		));
 
-		$mainMenu = ClassRegistry::init('Menu')->findByAlias('main');
-		$homeLink = ClassRegistry::init('Link')->find('first', array(
+		$mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
+		$homeLink = ClassRegistry::init('Menus.Link')->find('first', array(
 			'conditions' => array(
 				'Link.menu_id' => $mainMenu['Menu']['id'],
 				'Link.title' => 'Home',

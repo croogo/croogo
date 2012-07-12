@@ -10,7 +10,14 @@ class AllCorePluginsTest extends PHPUnit_Framework_TestSuite {
 	public static function suite() {
 		$suite = new CakeTestSuite('All core plugins tests');
 		$plugins = array(
-			'Acl', 'Extensions', 'FileManager', 'Tinymce', 'Taxonomy', 'Blocks', 'Users',
+			'Acl',
+			'Blocks',
+			'Extensions',
+			'FileManager',
+			'Menus',
+			'Taxonomy',
+			'Tinymce',
+			'Users',
 		);
 		foreach ($plugins as $plugin) {
 			CakePlugin::load($plugin);

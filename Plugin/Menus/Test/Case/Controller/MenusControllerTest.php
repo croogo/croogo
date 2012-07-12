@@ -1,5 +1,5 @@
 <?php
-App::uses('MenusController', 'Controller');
+App::uses('MenusController', 'Menus.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestMenusController extends MenusController {
@@ -42,8 +42,6 @@ class MenusControllerTest extends CroogoControllerTestCase {
 		'contact',
 		'i18n',
 		'language',
-		'link',
-		'menu',
 		'message',
 		'meta',
 		'node',
@@ -51,6 +49,8 @@ class MenusControllerTest extends CroogoControllerTestCase {
 		'plugin.blocks.region',
 		'plugin.users.role',
 		'setting',
+		'plugin.menus.menu',
+		'plugin.menus.link',
 		'plugin.taxonomy.taxonomy',
 		'plugin.taxonomy.term',
 		'plugin.taxonomy.type',
@@ -71,6 +71,10 @@ class MenusControllerTest extends CroogoControllerTestCase {
 		$this->Menus = new TestMenusController($request, $response);
 		$this->Menus->constructClasses();
 		$this->Menus->Security = $this->getMock('SecurityComponent', null, array($this->Menus->Components));
+		$this->Menus->Components->unload('Acl');
+		$this->Menus->Components->unload('Auth');
+		$this->Menus->plugin = 'Menus';
+		$this->Menus->request->params['plugin'] = 'menus';
 		$this->Menus->request->params['controller'] = 'menus';
 		$this->Menus->request->params['pass'] = array();
 		$this->Menus->request->params['named'] = array();
@@ -106,13 +110,13 @@ class MenusControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminIndex() {
-		$this->testAction('/admin/menus/index');
+		$this->testAction('/admin/menus/menus/index');
 		$this->assertNotEmpty($this->vars['menus']);
 	}
 
 	public function testAdminAdd() {
 		$this->Menus->request->params['action'] = 'admin_add';
-		$this->Menus->request->params['url']['url'] = 'admin/menus/add';
+		$this->Menus->request->params['url']['url'] = 'admin/menus/menus/add';
 		$this->Menus->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -154,7 +158,7 @@ class MenusControllerTest extends CroogoControllerTestCase {
 		$this->MenusController
 			->expects($this->once())
 			->method('redirect');
-		$this->testAction('/admin/menus/edit/1', array(
+		$this->testAction('/admin/menus/menus/edit/1', array(
 			'data' => array(
 				'Menu' => array(
 					'id' => 3, // main
@@ -168,7 +172,7 @@ class MenusControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminDelete() {
 		$this->Menus->request->params['action'] = 'admin_delete';
-		$this->Menus->request->params['url']['url'] = 'admin/menus/delete';
+		$this->Menus->request->params['url']['url'] = 'admin/menus/menus/delete';
 		$this->Menus->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',

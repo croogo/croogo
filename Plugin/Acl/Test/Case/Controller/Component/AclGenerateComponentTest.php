@@ -13,7 +13,7 @@ class AclGenerateComponentTest extends CroogoTestCase {
 
 	protected $_coreControllers = array(
 		'Comments', 'Contacts',
-		'Languages', 'Links', 'Menus', 'Messages', 'Nodes',
+		'Languages', 'Messages', 'Nodes',
 		'Settings',
 		);
 
