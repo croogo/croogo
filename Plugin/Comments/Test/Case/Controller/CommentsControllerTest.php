@@ -1,5 +1,5 @@
 <?php
-App::uses('CommentsController', 'Controller');
+App::uses('CommentsController', 'Comments.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 App::uses('CroogoTestFixture', 'TestSuite');
 
@@ -39,7 +39,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		'aro',
 		'aros_aco',
 		'plugin.blocks.block',
-		'comment',
+		'plugin.comments.comment',
 		'plugin.contacts.contact',
 		'i18n',
 		'language',
@@ -73,6 +73,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		$response = new CakeResponse();
 		$this->Comments = new TestCommentsController($request, $response);
 		$this->Comments->constructClasses();
+		$this->Comments->request->params['plugin'] = 'Comments';
 		$this->Comments->request->params['controller'] = 'Comments';
 		$this->Comments->request->params['pass'] = array();
 		$this->Comments->request->params['named'] = array();
@@ -129,7 +130,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		$this->CommentsController
 			->expects($this->once())
 			->method('redirect');
-		$this->testAction('/admin/comments/edit/1', array(
+		$this->testAction('/admin/comments/comments/edit/1', array(
 			'data' => array(
 				'Comment' => array(
 					'id' => 1, // Mr Croogo
@@ -145,7 +146,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminDelete() {
 		$this->Comments->request->params['action'] = 'admin_delete';
-		$this->Comments->request->params['url']['url'] = 'admin/comments/delete';
+		$this->Comments->request->params['url']['url'] = 'admin/comments/comments/delete';
 		$this->Comments->Components->trigger('initialize', array(&$this->Comments));
 		$this->Comments->Session->write('Auth.User', array(
 			'id' => 1,
@@ -163,7 +164,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminProcessDelete() {
 		$this->Comments->request->params['action'] = 'admin_process';
-		$this->Comments->request->params['url']['url'] = 'admin/comments/process';
+		$this->Comments->request->params['url']['url'] = 'admin/comments/comments/process';
 		$this->Comments->Components->trigger('initialize', array(&$this->Comments));
 		$this->Comments->Session->write('Auth.User', array(
 			'id' => 1,
@@ -191,7 +192,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminProcessPublish() {
 		$this->Comments->request->params['action'] = 'admin_process';
-		$this->Comments->request->params['url']['url'] = 'admin/comments/process';
+		$this->Comments->request->params['url']['url'] = 'admin/comments/comments/process';
 		$this->Comments->Components->trigger('initialize', array(&$this->Comments));
 		$this->Comments->Session->write('Auth.User', array(
 			'id' => 1,
@@ -234,7 +235,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminProcessUnpublish() {
 		$this->Comments->request->params['action'] = 'admin_process';
-		$this->Comments->request->params['url']['url'] = 'admin/comments/process';
+		$this->Comments->request->params['url']['url'] = 'admin/comments/comments/process';
 		$this->Comments->Components->trigger('initialize', array(&$this->Comments));
 		$this->Comments->Session->write('Auth.User', array(
 			'id' => 1,
@@ -274,12 +275,13 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 				'Session',
 			),
 		));
+		$Comments->plugin = 'Comments';
 		$Comments->Email
 			->expects($this->once())
 			->method('send')
 			->will($this->returnValue(true));
 		$Comments->request->params['action'] = 'add';
-		$Comments->request->params['url']['url'] = 'comments/add';
+		$Comments->request->params['url']['url'] = 'comments/comments/add';
 		$Comments->Components->trigger('initialize', array(&$Comments));
 
 		$Comments->Components->trigger('startup', array(&$Comments));
@@ -312,12 +314,13 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 				'Email' => array('send'),
 			),
 		));
+		$Comments->plugin = 'Comments';
 		$Comments->Email
 			->expects($this->once())
 			->method('send')
 			->will($this->returnValue(true));
 		$Comments->request->params['action'] = 'add';
-		$Comments->request->params['url']['url'] = 'comments/add';
+		$Comments->request->params['url']['url'] = 'comments/comments/add';
 		$Comments->Components->trigger('initialize', array(&$Comments));
 		$Comments->Components->trigger('startup', array(&$Comments));
 
@@ -350,11 +353,10 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 				'Session',
 			),
 		));
+		$Comments->plugin = 'Comments';
 		$Comments->request->params['action'] = 'add';
-		$Comments->request->params['url']['url'] = 'comments/add';
-		$Comments->Components->trigger('initialize', array(&$Comments));
-
-		$Comments->Components->trigger('startup', array(&$Comments));
+		$Comments->request->params['url']['url'] = 'comments/comments/add';
+		$Comments->startupProcess();
 		$Comments->request->data['Comment'] = array(
 			'name' => 'John Smith',
 			'email' => 'john.smith@example.com',

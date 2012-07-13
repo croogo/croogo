@@ -35,6 +35,8 @@ class CroogoComponentTest extends CroogoTestCase {
 		$this->Controller = new CroogoTestController(new CakeRequest(), new CakeResponse());
 		$this->Controller->constructClasses();
 		$this->Controller->Croogo = new MockCroogoComponent($this->Controller->Components);
+		$this->Controller->Components->unload('Blocks');
+		$this->Controller->Components->unload('Menus');
 		$this->Controller->Components->set('Croogo', $this->Controller->Croogo);
 		$this->Controller->startupProcess();
 	}

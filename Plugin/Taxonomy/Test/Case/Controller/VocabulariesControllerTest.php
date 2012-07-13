@@ -44,7 +44,7 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
 		'app.aro',
 		'app.aros_aco',
 		'plugin.blocks.block',
-		'app.comment',
+		'plugin.comments.comment',
 		'plugin.contacts.contact',
 		'app.i18n',
 		'app.language',

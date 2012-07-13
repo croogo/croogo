@@ -1,4 +1,7 @@
 <?php
+
+App::uses('CommentsAppController', 'Comments.Controller');
+
 /**
  * Comments Controller
  *
@@ -11,7 +14,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CommentsController extends AppController {
+class CommentsController extends CommentsAppController {
 
 /**
  * Controller name
@@ -39,7 +42,7 @@ class CommentsController extends AppController {
  * @var array
  * @access public
  */
-	public $uses = array('Comment');
+	public $uses = array('Comments.Comment');
 
 /**
  * beforeFilter
@@ -292,7 +295,7 @@ class CommentsController extends AppController {
 					$this->set('node', $node);
 					$this->set('data', $data);
 					$this->set('commentId', $this->Comment->id);
-					$this->Email->template = 'comment';
+					$this->Email->template = 'Comments.comment';
 					$this->Email->send();
 				}
 

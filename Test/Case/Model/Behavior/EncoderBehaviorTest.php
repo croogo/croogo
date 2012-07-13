@@ -9,7 +9,7 @@ class EncoderBehaviorTest extends CroogoTestCase {
 		'aro',
 		'aros_aco',
 		'plugin.blocks.block',
-		'comment',
+		'plugin.comments.comment',
 		'plugin.contacts.contact',
 		'i18n',
 		'language',

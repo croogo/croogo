@@ -9,6 +9,7 @@
 		}
 
 		$formUrl = array(
+			'plugin' => 'comments',
 			'controller' => 'comments',
 			'action' => 'add',
 			$node['Node']['id'],

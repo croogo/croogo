@@ -5,7 +5,6 @@
 		<div class="tabs">
 			<ul>
 				<li><a href="#node-main"><span><?php echo __($type['Type']['title']); ?></span></a></li>
-				<?php if ($type['Type']['comment_status'] != 0) { ?><li><a href="#node-comments"><span><?php echo __('Comments'); ?></span></a></li><?php } ?>
 				<li><a href="#node-access"><span><?php echo __('Access'); ?></span></a></li>
 				<li><a href="#node-publishing"><span><?php echo __('Publishing'); ?></span></a></li>
 				<?php echo $this->Layout->adminTabs(); ?>
@@ -20,23 +19,6 @@
 				echo $this->Form->input('body', array('class' => 'content'));
 			?>
 			</div>
-
-			<?php if ($type['Type']['comment_status'] != 0) { ?>
-			<div id="node-comments">
-			<?php
-				echo $this->Form->input('comment_status', array(
-					'type' => 'radio',
-					'div' => array('class' => 'radio'),
-					'options' => array(
-						'0' => __('Disabled'),
-						'1' => __('Read only'),
-						'2' => __('Read/Write'),
-					),
-					'value' => $type['Type']['comment_status'],
-				));
-			?>
-			</div>
-			<?php } ?>
 
 			<div id="node-access">
 				<?php

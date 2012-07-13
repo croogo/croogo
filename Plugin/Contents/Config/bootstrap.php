@@ -37,37 +37,5 @@ CroogoNav::add('content', array(
 			'weight' => 20,
 		),
 
-		'comments' => array(
-			'title' => __('Comments'),
-			'url' => array(
-				'plugin' => false,
-				'admin' => true,
-				'controller' => 'comments',
-				'action' => 'index',
-			),
-			'children' => array(
-				'published' => array(
-					'title' => __('Published'),
-					'url' => array(
-						'plugin' => false,
-						'admin' => true,
-						'controller' => 'comments',
-						'action' => 'index',
-						'filter' => 'status:1;',
-					),
-				),
-				'approval' => array(
-					'title' => __('Approval'),
-					'url' => array(
-						'plugin' => false,
-						'admin' => true,
-						'controller' => 'comments',
-						'action' => 'index',
-						'filter' => 'status:0;',
-					),
-				),
-			),
-		),
-	),
-
+	)
 ));
