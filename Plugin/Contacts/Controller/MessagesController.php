@@ -1,17 +1,20 @@
 <?php
+
+App::uses('ContactsAppController', 'Contacts.Controller');
+
 /**
  * Messages Controller
  *
  * PHP version 5
  *
- * @category Controller
- * @package  Croogo
+ * @category Contacts.Controller
+ * @package  Croogo.Contacts
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MessagesController extends AppController {
+class MessagesController extends ContactsAppController {
 
 /**
  * Controller name
@@ -27,7 +30,7 @@ class MessagesController extends AppController {
  * @var array
  * @access public
  */
-	public $uses = array('Message');
+	public $uses = array('Contacts.Message');
 
 /**
  * Admin index

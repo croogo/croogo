@@ -12,6 +12,7 @@ class AllCorePluginsTest extends PHPUnit_Framework_TestSuite {
 		$plugins = array(
 			'Acl',
 			'Blocks',
+			'Contacts',
 			'Contents',
 			'Extensions',
 			'FileManager',

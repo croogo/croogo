@@ -43,7 +43,9 @@
 			$message['Message']['name'],
 			$message['Message']['email'],
 			$message['Message']['title'],
-			$this->Html->image('/img/icons/comment.png'),
+			$this->Html->image('/img/icons/comment.png', array(
+				'title' => strip_tags($message['Message']['body']),
+				)),
 			$actions,
 		);
 	}

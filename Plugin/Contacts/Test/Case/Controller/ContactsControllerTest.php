@@ -1,5 +1,5 @@
 <?php
-App::uses('ContactsController', 'Controller');
+App::uses('ContactsController', 'Contacts.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 App::uses('CroogoTestFixture', 'TestSuite');
 
@@ -40,12 +40,12 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 		'aros_aco',
 		'plugin.blocks.block',
 		'comment',
-		'contact',
+		'plugin.contacts.contact',
 		'i18n',
 		'language',
 		'plugin.menus.link',
 		'plugin.menus.menu',
-		'message',
+		'plugin.contacts.message',
 		'plugin.meta.meta',
 		'plugin.contents.node',
 		'plugin.taxonomy.nodes_taxonomy',
@@ -71,22 +71,26 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Contacts = new TestContactsController($request, $response);
+		$this->Contacts->plugin = 'Contacts';
 		$this->Contacts->constructClasses();
 		$this->Contacts->Security = $this->getMock('SecurityComponent', null, array($this->Contacts->Components));
+		$this->Contacts->request->params['plugin'] = 'contacts';
 		$this->Contacts->request->params['controller'] = 'contacts';
 		$this->Contacts->request->params['pass'] = array();
 		$this->Contacts->request->params['named'] = array();
 
-		$this->ContactsController = $this->generate('Contacts', array(
+		$this->generate('Contacts', array(
 			'methods' => array(
 				'redirect',
+				'_send_email',
 			),
 			'components' => array(
 				'Auth' => array('user'),
 				'Session',
 			),
 		));
-		$this->ContactsController->Auth
+		$this->controller->plugin = 'Contacts';
+		$this->controller->Auth
 			->staticExpects($this->any())
 			->method('user')
 			->will($this->returnCallback(array($this, 'authUserCallback')));
@@ -108,13 +112,13 @@ class ContactsControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminIndex() {
-		$this->testAction('/admin/contacts/index');
+		$this->testAction('/admin/contacts/contacts/index');
 		$this->assertNotEmpty($this->vars['contacts']);
 	}
 
 	public function testAdminAdd() {
 		$this->Contacts->request->params['action'] = 'admin_add';
-		$this->Contacts->request->params['url']['url'] = 'admin/contacts/add';
+		$this->Contacts->request->params['url']['url'] = 'admin/contacts/contacts/add';
 		$this->Contacts->Session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',
@@ -125,6 +129,7 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 				'alias' => 'new_contact',
 			),
 		);
+		$this->Contacts->Components->unload('Auth');
 		$this->Contacts->startupProcess();
 		$this->Contacts->admin_add();
 		$this->assertEqual($this->Contacts->redirectUrl, array('action' => 'index'));
@@ -143,7 +148,7 @@ class ContactsControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminEdit() {
-		$this->ContactsController->Session
+		$this->controller->Session
 			->expects($this->once())
 			->method('setFlash')
 			->with(
@@ -151,10 +156,10 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 				$this->equalTo('default'),
 				$this->equalTo(array('class' => 'success'))
 			);
-		$this->ContactsController
+		$this->controller
 			->expects($this->once())
 			->method('redirect');
-		$this->testAction('/admin/contacts/edit/1', array(
+		$this->testAction('/admin/contacts/contacts/edit/1', array(
 			'data' => array(
 				'Contact' => array(
 					'id' => 1,
@@ -162,17 +167,13 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 				),
 			),
 		));
-		$result = $this->ContactsController->Contact->findByAlias('contact');
+		$result = $this->controller->Contact->findByAlias('contact');
 		$this->assertEquals('Contact [modified]', $result['Contact']['title']);
 	}
 
 	public function testAdminDelete() {
 		$this->Contacts->request->params['action'] = 'admin_delete';
-		$this->Contacts->request->params['url']['url'] = 'admin/contacts/delete';
-		$this->Contacts->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
+		$this->Contacts->request->params['url']['url'] = 'admin/contacts/contacts/delete';
 		$this->Contacts->startupProcess();
 		$this->Contacts->admin_delete(1);
 		$this->assertEqual($this->Contacts->redirectUrl, array('action' => 'index'));
@@ -192,12 +193,13 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 				'_send_email'
 			),
 		));
+		$Contacts->plugin = 'Contacts';
 		$Contacts->expects($this->once())
 			->method('_send_email')
 			->will($this->returnValue(true));
-		$Contacts->request->params['action'] = 'view';
-		$Contacts->request->params['url']['url'] = 'contacts/view/contact';
-		$Contacts->request->data = array(
+		$this->controller->request->params['action'] = 'view';
+		$this->controller->request->params['url']['url'] = 'contacts/contacts/view/contact';
+		$this->controller->request->data = array(
 			'Message' => array(
 				'name' => 'John Smith',
 				'email' => 'john.smith@example.com',
@@ -205,12 +207,12 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 				'body' => 'text here',
 			),
 		);
-		$Contacts->startupProcess();
-		$Contacts->view('contact');
-		$this->assertEqual($Contacts->viewVars['continue'], true);
+		$this->controller->startupProcess();
+		$this->controller->view('contact');
+		$this->assertEqual($this->controller->viewVars['continue'], true);
 
-		$Contacts->testView = true;
-		$output = $Contacts->render('view');
+		$this->controller->testView = true;
+		$output = $this->controller->render('view');
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 }

@@ -1,36 +1,5 @@
 <?php
 
-CroogoNav::add('contacts', array(
-	'title' => __('Contacts'),
-	'url' => array(
-		'plugin' => false,
-		'admin' => true,
-		'controller' => 'contacts',
-		'action' => 'index',
-	),
-	'weight' => 50,
-	'children' => array(
-		'attachments' => array(
-			'title' => __('Contacts'),
-			'url' => array(
-				'plugin' => false,
-				'admin' => true,
-				'controller' => 'contacts',
-				'action' => 'index',
-			),
-		),
-		'file_manager' => array(
-			'title' => __('Messages'),
-			'url' => array(
-				'plugin' => false,
-				'admin' => true,
-				'controller' => 'messages',
-				'action' => 'index',
-			),
-		),
-	),
-));
-
 CroogoNav::add('settings', array(
 	'title' => __('Settings'),
 	'url' => array(
