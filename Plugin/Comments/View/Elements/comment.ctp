@@ -29,7 +29,7 @@
 	<?php
 		if (isset($comment['children']) && count($comment['children']) > 0) {
 			foreach ($comment['children'] AS $childComment) {
-				echo $this->element('comment', array('comment' => $childComment, 'level' => $level + 1));
+				echo $this->element('Comments.comment', array('comment' => $childComment, 'level' => $level + 1));
 			}
 		}
 	?>

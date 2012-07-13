@@ -13,11 +13,11 @@
 	$type = $types_for_layout[$this->Layout->node('type')];
 
 	if ($type['Type']['comment_status'] > 0 && $this->Layout->node('comment_status') > 0) {
-		echo $this->element('comments');
+		echo $this->element('Comments.comments');
 	}
 
 	if ($type['Type']['comment_status'] == 2 && $this->Layout->node('comment_status') == 2) {
-		echo $this->element('comments_form');
+		echo $this->element('Comments.comments_form');
 	}
 ?>
 </div>

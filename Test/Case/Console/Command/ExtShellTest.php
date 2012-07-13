@@ -26,7 +26,7 @@ class ExtShellTest extends CroogoTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.comment',
+		'plugin.comments.comment',
 		'plugin.menus.menu',
 		'plugin.blocks.block',
 		'plugin.menus.link',
