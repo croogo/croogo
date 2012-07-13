@@ -1,4 +1,7 @@
 <?php
+
+App::uses('ContactsAppModel', 'Contacts.Model');
+
 /**
  * Contact
  *
@@ -11,7 +14,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Contact extends AppModel {
+class Contact extends ContactsAppModel {
 
 /**
  * Model name
@@ -70,7 +73,7 @@ class Contact extends AppModel {
  */
 	public $hasMany = array(
 		'Message' => array(
-			'className' => 'Message',
+			'className' => 'Contacts.Message',
 			'foreignKey' => 'contact_id',
 			'dependent' => false,
 			'conditions' => '',

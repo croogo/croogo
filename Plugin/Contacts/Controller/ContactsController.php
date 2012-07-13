@@ -1,4 +1,7 @@
 <?php
+
+App::uses('ContactsAppController', 'Contacts.Controller');
+
 /**
  * Contacts Controller
  *
@@ -11,7 +14,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ContactsController extends AppController {
+class ContactsController extends ContactsAppController {
 
 /**
  * Controller name
@@ -39,7 +42,7 @@ class ContactsController extends AppController {
  * @var array
  * @access public
  */
-	public $uses = array('Contact');
+	public $uses = array('Contacts.Contact', 'Contacts.Message');
 
 /**
  * Admin index
@@ -256,7 +259,7 @@ class ContactsController extends AppController {
 			$email->from($this->request->data['Message']['email'])
 				->to($contact['Contact']['email'])
 				->subject(__('[%s] %s', $siteTitle, $contact['Contact']['title']))
-				->template('contact')
+				->template('Contacts.contact')
 				->viewVars(array(
 					'contact' => $contact,
 					'message' => $this->request->data,

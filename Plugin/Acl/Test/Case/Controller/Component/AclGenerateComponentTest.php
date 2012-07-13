@@ -12,8 +12,8 @@ class AclGenerateTestController extends Controller {
 class AclGenerateComponentTest extends CroogoTestCase {
 
 	protected $_coreControllers = array(
-		'Comments', 'Contacts',
-		'Languages', 'Messages',
+		'Comments',
+		'Languages',
 		'Settings',
 		);
 

@@ -10,12 +10,12 @@ class UrlBehaviorTest extends CroogoTestCase {
 		'aros_aco',
 		'plugin.blocks.block',
 		'comment',
-		'contact',
+		'plugin.contacts.contact',
 		'i18n',
 		'language',
 		'plugin.menus.link',
 		'plugin.menus.menu',
-		'message',
+		'plugin.contacts.message',
 		'plugin.contents.node',
 		'plugin.meta.meta',
 		'plugin.taxonomy.nodes_taxonomy',
@@ -56,7 +56,7 @@ class UrlBehaviorTest extends CroogoTestCase {
 	public function testSingle() {
 		$helloWorld = $this->Node->findBySlug('hello-world');
 		$this->assertEqual($helloWorld['Node']['url'], array(
-			'plugin' => false,
+			'plugin' => 'contents',
 			'controller' => 'nodes',
 			'action' => 'view',
 			'type' => 'blog',
@@ -67,7 +67,7 @@ class UrlBehaviorTest extends CroogoTestCase {
 	public function testMultiple() {
 		$result = $this->Node->find('all');
 		$this->assertEqual($result['0']['Node']['url'], array(
-			'plugin' => false,
+			'plugin' => 'contents',
 			'controller' => 'nodes',
 			'action' => 'view',
 			'type' => $result['0']['Node']['type'],

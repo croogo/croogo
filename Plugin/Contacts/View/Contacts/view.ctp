@@ -9,6 +9,7 @@
 	<?php
 		echo $this->Form->create('Message', array(
 			'url' => array(
+				'plugin' => 'contacts',
 				'controller' => 'contacts',
 				'action' => 'view',
 				$contact['Contact']['alias'],
