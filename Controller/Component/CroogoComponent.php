@@ -40,14 +40,6 @@ class CroogoComponent extends Component {
 	public $roleId = 3;
 
 /**
- * Nodes for layout
- *
- * @var string
- * @access public
- */
-	public $nodes_for_layout = array();
-
-/**
  * Blocks data: contains parsed value of bb-code like strings
  *
  * @var array
@@ -97,14 +89,13 @@ class CroogoComponent extends Component {
  * @return void
  */
 	public function startup(Controller $controller) {
-		$this->controller =& $controller;
+		$this->controller = $controller;
 
 		if ($this->Session->check('Auth.User.id')) {
 			$this->roleId = $this->Session->read('Auth.User.role_id');
 		}
 
 		if (!isset($this->controller->request->params['admin']) && !isset($this->controller->request->params['requested'])) {
-			$this->nodes();
 		} else {
 			$this->_adminData();
 		}
@@ -119,55 +110,6 @@ class CroogoComponent extends Component {
 		if (!Configure::read('Croogo.version')) {
 			$this->controller->Setting->write('Croogo.version', file_get_contents(APP . 'VERSION.txt'));
 		}
-	}
-
-/**
- * Nodes
- *
- * Nodes will be available in this variable in views: $nodes_for_layout
- *
- * @return void
- */
-	public function nodes() {
-		$nodes = $this->controller->Blocks->blocksData['nodes'];
-		$_nodeOptions = array(
-			'find' => 'all',
-			'conditions' => array(
-				'Node.status' => 1,
-				'OR' => array(
-					'Node.visibility_roles' => '',
-					'Node.visibility_roles LIKE' => '%"' . $this->roleId . '"%',
-				),
-			),
-			'order' => 'Node.created DESC',
-			'limit' => 5,
-		);
-
-		foreach ($nodes as $alias => $options) {
-			$options = Set::merge($_nodeOptions, $options);
-			$options['limit'] = str_replace('"', '', $options['limit']);
-			$node = $this->controller->Node->find($options['find'], array(
-				'conditions' => $options['conditions'],
-				'order' => $options['order'],
-				'limit' => $options['limit'],
-				'cache' => array(
-					'prefix' => 'croogo_nodes_' . $alias . '_',
-					'config' => 'croogo_nodes',
-				),
-			));
-			$this->nodes_for_layout[$alias] = $node;
-		}
-	}
-
-/**
- * beforeRender
- *
- * @param object $controller instance of controller
- * @return void
- */
-	public function beforeRender(Controller $controller) {
-		$this->controller =& $controller;
-		$this->controller->set('nodes_for_layout', $this->nodes_for_layout);
 	}
 
 /**

@@ -1,5 +1,5 @@
 <?php
-App::uses('Node', 'Model');
+App::uses('Node', 'Contents.Model');
 App::uses('CroogoTestCase', 'TestSuite');
 
 class NodeTest extends CroogoTestCase {
@@ -17,7 +17,7 @@ class NodeTest extends CroogoTestCase {
 		'plugin.menus.menu',
 		'message',
 		'plugin.meta.meta',
-		'node',
+		'plugin.contents.node',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',
 		'plugin.users.role',
@@ -32,7 +32,7 @@ class NodeTest extends CroogoTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		$this->Node = ClassRegistry::init('Node');
+		$this->Node = ClassRegistry::init('Contents.Node');
 	}
 
 	public function tearDown() {

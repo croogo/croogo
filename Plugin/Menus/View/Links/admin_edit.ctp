@@ -22,6 +22,7 @@
 					echo $this->Form->input('title');
 					echo $this->Form->input('link') . 
 						$this->Html->link(__('Link to a Node'), Router::url(array(
+							'plugin' => 'contents',
 							'controller' => 'nodes',
 							'action' => 'index',
 							'links' => 1,

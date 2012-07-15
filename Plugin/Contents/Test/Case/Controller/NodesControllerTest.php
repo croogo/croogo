@@ -1,5 +1,5 @@
 <?php
-App::uses('NodesController', 'Controller');
+App::uses('NodesController', 'Contents.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestNodesController extends NodesController {
@@ -54,7 +54,7 @@ class NodesControllerTest extends CroogoControllerTestCase {
 		'plugin.menus.menu',
 		'message',
 		'plugin.meta.meta',
-		'node',
+		'plugin.contents.node',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',
 		'plugin.users.role',
@@ -77,6 +77,7 @@ class NodesControllerTest extends CroogoControllerTestCase {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Nodes = new TestNodesController($request, $response);
+		$this->Nodes->plugin = 'Contents';
 		$this->Nodes->constructClasses();
 		$this->Nodes->Security = $this->getMock('SecurityComponent', null, array($this->Nodes->Components));
 		$this->Nodes->request->params['controller'] = 'nodes';

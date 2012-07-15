@@ -45,7 +45,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
 		'plugin.menus.link',
 		'plugin.menus.menu',
 		'app.message',
-		'app.node',
+		'plugin.contents.node',
 		'plugin.meta.meta',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',

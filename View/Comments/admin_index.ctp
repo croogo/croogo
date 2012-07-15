@@ -47,6 +47,7 @@ if (isset($this->params['named'])) {
 			$comment['Comment']['email'],
 			$this->Html->link($comment['Node']['title'], array(
 				'admin' => false,
+				'plugin' => 'contents',
 				'controller' => 'nodes',
 				'action' => 'view',
 				'type' => $comment['Node']['type'],

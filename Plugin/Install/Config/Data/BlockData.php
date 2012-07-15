@@ -32,7 +32,7 @@ class BlockData {
 			'class' => '',
 			'status' => '1',
 			'weight' => '1',
-			'element' => 'search',
+			'element' => 'Contents.search',
 			'visibility_roles' => '',
 			'visibility_paths' => '',
 			'visibility_php' => '',
