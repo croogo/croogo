@@ -58,7 +58,6 @@ class AppController extends Controller {
  */
 	public $uses = array(
 		'Setting',
-		'Node',
 	);
 
 /**

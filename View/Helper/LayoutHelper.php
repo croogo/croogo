@@ -255,7 +255,7 @@ class LayoutHelper extends AppHelper {
 				'type' => 'blog',
 				'ext' => 'rss',
 			));*/
-			$url = '/nodes/promoted.rss';
+			$url = '/promoted.rss';
 		}
 
 		if ($returnUrl) {
@@ -497,7 +497,7 @@ class LayoutHelper extends AppHelper {
 			'tagAttributes' => array(),
 			'type' => null,
 			'link' => true,
-			'plugin' => false,
+			'plugin' => 'contents',
 			'controller' => 'nodes',
 			'action' => 'term',
 			'element' => 'Taxonomy.vocabulary',
@@ -565,10 +565,10 @@ class LayoutHelper extends AppHelper {
 	public function nodeList($alias, $options = array()) {
 		$_options = array(
 			'link' => true,
-			'plugin' => false,
+			'plugin' => 'contents',
 			'controller' => 'nodes',
 			'action' => 'view',
-			'element' => 'node_list',
+			'element' => 'Contents.node_list',
 		);
 		$options = array_merge($_options, $options);
 
@@ -739,7 +739,7 @@ class LayoutHelper extends AppHelper {
 
 		$actions = $this->Html->link(
 			__('Remove'),
-			is_null($id) ? '#' : array('plugin' => null, 'controller' => 'nodes', 'action' => 'delete_meta', $id),
+			is_null($id) ? '#' : array('plugin' => 'contents', 'controller' => 'nodes', 'action' => 'delete_meta', $id),
 			array('class' => 'remove-meta', 'rel' => $id)
 		);
 		$actions = $this->Html->tag('div', $actions, array('class' => 'actions'));
@@ -871,7 +871,7 @@ class LayoutHelper extends AppHelper {
  */
 	public function nodeInfo($options = array()) {
 		$_options = array(
-			'element' => 'node_info',
+			'element' => 'Contents.node_info',
 		);
 		$options = array_merge($_options, $options);
 
@@ -889,7 +889,7 @@ class LayoutHelper extends AppHelper {
  */
 	public function nodeExcerpt($options = array()) {
 		$_options = array(
-			'element' => 'node_excerpt',
+			'element' => 'Contents.node_excerpt',
 		);
 		$options = array_merge($_options, $options);
 
@@ -907,7 +907,7 @@ class LayoutHelper extends AppHelper {
  */
 	public function nodeBody($options = array()) {
 		$_options = array(
-			'element' => 'node_body',
+			'element' => 'Contents.node_body',
 		);
 		$options = array_merge($_options, $options);
 
@@ -925,7 +925,7 @@ class LayoutHelper extends AppHelper {
  */
 	public function nodeMoreInfo($options = array()) {
 		$_options = array(
-			'element' => 'node_more_info',
+			'element' => 'Contents.node_more_info',
 		);
 		$options = array_merge($_options, $options);
 

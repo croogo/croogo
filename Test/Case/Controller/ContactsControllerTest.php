@@ -47,7 +47,7 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 		'plugin.menus.menu',
 		'message',
 		'plugin.meta.meta',
-		'node',
+		'plugin.contents.node',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',
 		'plugin.users.role',

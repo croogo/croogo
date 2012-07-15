@@ -33,7 +33,7 @@ class TaxonomiesHelper extends AppHelper {
 			CroogoNav::add('content.children.create.children.' . $t['Type']['alias'], array(
 				'title' => $t['Type']['title'],
 				'url' => array(
-					'plugin' => false,
+					'plugin' => 'contents',
 					'admin' => true,
 					'controller' => 'nodes',
 					'action' => 'add',

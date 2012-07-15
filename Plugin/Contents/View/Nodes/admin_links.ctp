@@ -36,12 +36,20 @@
 		<?php
 			echo $this->Html->link($node['Node']['title'], array(
 				'admin' => false,
+				'plugin' => 'contents',
 				'controller' => 'nodes',
 				'action' => 'view',
 				'type' => $node['Node']['type'],
 				'slug' => $node['Node']['slug'],
 			), array(
-				'rel' => 'controller:nodes/action:view/type:' . $node['Node']['type'] . '/slug:' . $node['Node']['slug'],
+				'rel' => sprintf(
+					'plugin:%s/controller:%s/action:%s/type:%s/slug:%s',
+					'contents',
+					'nodes',
+					'view',
+					$node['Node']['type'],
+					$node['Node']['slug']
+					),
 			));
 		?>
 		</li>

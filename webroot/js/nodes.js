@@ -57,7 +57,7 @@ Nodes.filter = function() {
 		if($('#FilterQ').val() != '') {
 			q=$('#FilterQ').val();
 		}
-		var loadUrl = Croogo.basePath + 'admin/nodes/index/';
+		var loadUrl = Croogo.basePath + 'admin/contents/nodes/index/';
 		if (filter != '') {
 			loadUrl += 'filter:' + filter;
 		}

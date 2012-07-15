@@ -1,17 +1,20 @@
 <?php
+
+App::uses('ContentsAppModel', 'Contents.Model');
+
 /**
  * Node
  *
  * PHP version 5
  *
- * @category Model
- * @package  Croogo
+ * @category Contents.Model
+ * @package  Croogo.Contents
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Node extends AppModel {
+class Node extends ContentsAppModel {
 
 /**
  * Model name
@@ -143,7 +146,7 @@ class Node extends AppModel {
 	public $hasAndBelongsToMany = array(
 		'Taxonomy' => array(
 			'className' => 'Taxonomy.Taxonomy',
-			'with' => 'NodesTaxonomy',
+			'with' => 'Taxonomy.NodesTaxonomy',
 			'joinTable' => 'nodes_taxonomies',
 			'foreignKey' => 'node_id',
 			'associationForeignKey' => 'taxonomy_id',
