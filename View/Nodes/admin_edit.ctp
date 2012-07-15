@@ -6,7 +6,6 @@
 			<ul>
 				<li><a href="#node-main"><span><?php echo __($type['Type']['title']); ?></span></a></li>
 				<?php if ($type['Type']['comment_status'] != 0) { ?><li><a href="#node-comments"><span><?php echo __('Comments'); ?></span></a></li><?php } ?>
-				<li><a href="#node-meta"><span><?php echo __('Custom fields'); ?></span></a></li>
 				<li><a href="#node-access"><span><?php echo __('Access'); ?></span></a></li>
 				<li><a href="#node-publishing"><span><?php echo __('Publishing'); ?></span></a></li>
 				<?php echo $this->Layout->adminTabs(); ?>
@@ -38,26 +37,6 @@
 			?>
 			</div>
 			<?php } ?>
-
-			<div id="node-meta">
-				<div id="meta-fields">
-					<?php
-						$fields = Set::combine($this->data['Meta'], '{n}.key', '{n}.value');
-						$fieldsKeyToId = Set::combine($this->data['Meta'], '{n}.key', '{n}.id');
-						if (count($fields) > 0) {
-							foreach ($fields AS $fieldKey => $fieldValue) {
-								echo $this->Layout->metaField($fieldKey, $fieldValue, $fieldsKeyToId[$fieldKey]);
-							}
-						}
-					?>
-					<div class="clear">&nbsp;</div>
-				</div>
-				<?php echo $this->Html->link(
-					__('Add another field'),
-					array('action' => 'add_meta'),
-					array('class' => 'add-meta')
-				); ?>
-			</div>
 
 			<div id="node-access">
 				<?php

@@ -45,7 +45,7 @@ class TypesControllerTest extends CroogoControllerTestCase {
 		'plugin.menus.link',
 		'plugin.menus.menu',
 		'message',
-		'meta',
+		'plugin.meta.meta',
 		'node',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',

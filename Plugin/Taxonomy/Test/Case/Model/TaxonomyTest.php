@@ -16,7 +16,7 @@ class TaxonomyTest extends CroogoTestCase {
 		'plugin.menus.link',
 		'plugin.menus.menu',
 		'app.message',
-		'app.meta',
+		'plugin.meta.meta',
 		'app.node',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',
