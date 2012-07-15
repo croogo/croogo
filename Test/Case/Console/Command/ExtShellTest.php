@@ -30,7 +30,7 @@ class ExtShellTest extends CroogoTestCase {
 		'plugin.menus.menu',
 		'plugin.blocks.block',
 		'plugin.menus.link',
-		'app.meta',
+		'plugin.meta.meta',
 		'app.node',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',

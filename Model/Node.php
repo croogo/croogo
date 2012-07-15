@@ -31,7 +31,7 @@ class Node extends AppModel {
 		'Containable',
 		'Tree',
 		'Encoder',
-		'Meta',
+		'Meta.Meta',
 		'Url',
 		'Cached' => array(
 			'prefix' => array(
@@ -120,7 +120,7 @@ class Node extends AppModel {
 			'counterQuery' => '',
 		),
 		'Meta' => array(
-			'className' => 'Meta',
+			'className' => 'Meta.Meta',
 			'foreignKey' => 'foreign_key',
 			'dependent' => true,
 			'conditions' => array('Meta.model' => 'Node'),
