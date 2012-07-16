@@ -1,5 +1,5 @@
 <?php
-App::uses('RolesController', 'Controller');
+App::uses('RolesController', 'Users.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestRolesController extends RolesController {
@@ -49,13 +49,13 @@ class RolesControllerTest extends CroogoControllerTestCase {
 		'node',
 		'nodes_taxonomy',
 		'region',
-		'role',
+		'plugin.users.role',
 		'setting',
 		'taxonomy',
 		'term',
 		'type',
 		'types_vocabulary',
-		'user',
+		'plugin.users.user',
 		'vocabulary',
 	);
 
@@ -69,9 +69,11 @@ class RolesControllerTest extends CroogoControllerTestCase {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Roles = new TestRolesController($request, $response);
+		$this->Roles->plugin = 'Users';
 		$this->Roles->constructClasses();
 		$this->Roles->Security = $this->getMock('SecurityComponent', null, array($this->Roles->Components));
 		$this->Roles->Role->Aro->useDbConfig = $this->Roles->Role->useDbConfig;
+		$this->Roles->request->params['plugin'] = 'users';
 		$this->Roles->request->params['controller'] = 'roles';
 		$this->Roles->request->params['pass'] = array();
 		$this->Roles->request->params['named'] = array();

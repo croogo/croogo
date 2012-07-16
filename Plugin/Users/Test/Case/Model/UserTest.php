@@ -2,7 +2,7 @@
 App::uses('CroogoTestCase', 'TestSuite');
 App::uses('Model', 'Model');
 App::uses('AppModel', 'Model');
-App::uses('User', 'Model');
+App::uses('User', 'Users.Model');
 App::uses('AuthComponent', 'Controller/Component');
 App::uses('CroogoTestCase', 'TestSuite');
 
@@ -36,8 +36,8 @@ class UserTest extends CroogoTestCase {
 		'app.aco',
 		'app.aro',
 		'app.aros_aco',
-		'app.role',
-		'app.user',
+		'plugin.users.role',
+		'plugin.users.user',
 	);
 
 /**

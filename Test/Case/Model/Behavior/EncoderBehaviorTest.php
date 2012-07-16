@@ -20,13 +20,13 @@ class EncoderBehaviorTest extends CroogoTestCase {
 		'node',
 		'nodes_taxonomy',
 		'region',
-		'role',
+		'plugin.users.role',
 		'setting',
 		'taxonomy',
 		'term',
 		'type',
 		'types_vocabulary',
-		'user',
+		'plugin.users.user',
 		'vocabulary',
 	);
 

@@ -14,7 +14,7 @@ class AclGenerateComponentTest extends CroogoTestCase {
 	protected $_coreControllers = array(
 		'Attachments', 'Blocks', 'Comments', 'Contacts', 'Filemanager',
 		'Languages', 'Links', 'Menus', 'Messages', 'Nodes', 'Regions',
-		'Roles', 'Settings', 'Terms', 'Types', 'Users', 'Vocabularies',
+		'Settings', 'Terms', 'Types', 'Vocabularies',
 		);
 
 	protected $_extensionsControllers = array(

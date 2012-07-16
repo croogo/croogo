@@ -1,4 +1,7 @@
 <?php
+
+App::uses('UsersAppController', 'Users.Controller');
+
 /**
  * Roles Controller
  *
@@ -11,7 +14,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class RolesController extends AppController {
+class RolesController extends UsersAppController {
 
 /**
  * Controller name
@@ -27,7 +30,7 @@ class RolesController extends AppController {
  * @var array
  * @access public
  */
-	public $uses = array('Role');
+	public $uses = array('Users.Role');
 
 /**
  * Admin index
