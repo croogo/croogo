@@ -350,7 +350,7 @@ class CroogoPlugin extends Object {
  * @return void
  */
 	public static function load($plugin, $config = array()) {
-		CakePlugin::load($plugin, $config = array());
+		CakePlugin::load($plugin, $config);
 		if (is_string($plugin)) {
 			$plugin = array($plugin => $config);
 		}

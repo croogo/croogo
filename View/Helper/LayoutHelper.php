@@ -729,9 +729,12 @@ class LayoutHelper extends AppHelper {
 		$fields  = '';
 		if ($id != null) {
 			$fields .= $this->Form->input('Meta.' . $uuid . '.id', array('type' => 'hidden', 'value' => $id));
+			$this->Form->unlockField('Meta.' . $uuid . '.id');
 		}
 		$fields .= $this->Form->input('Meta.' . $uuid . '.key', $options['key']);
 		$fields .= $this->Form->input('Meta.' . $uuid . '.value', $options['value']);
+		$this->Form->unlockField('Meta.' . $uuid . '.key');
+		$this->Form->unlockField('Meta.' . $uuid . '.value');
 		$fields = $this->Html->tag('div', $fields, array('class' => 'fields'));
 
 		$actions = $this->Html->link(

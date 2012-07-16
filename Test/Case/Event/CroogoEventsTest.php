@@ -27,25 +27,33 @@ class CroogoEventsTest extends CroogoTestCase {
 	}
 
 /**
+ * tearDown
+ *
+ * @return void
+ */
+	public function tearDown() {
+		parent::tearDown();
+		CroogoPlugin::unload('Shops');
+	}
+
+/**
  * Indirectly test CroogoEventManager::detachPluginSubscribers()
  * triggerred by calling CroogoPlugin::unload(null)
  */
 	public function testDetachPluginSubscribers() {
 		$eventManager = CroogoEventManager::instance();
-		$loaded = CakePlugin::loaded();
+		$loaded = CakePlugin::loaded('Shops');
 		$this->assertNotEmpty($loaded);
 
 		$eventName = 'Controller.Users.activationFailure';
 		$event = Croogo::dispatchEvent($eventName, $this->Users);
 		$this->assertTrue($event->result, sprintf('Event: %s', $eventName));
 
-		CroogoPlugin::unload(null);
+		CroogoPlugin::unload('Shops');
 
 		$eventName = 'Controller.Users.activationFailure';
 		$event = Croogo::dispatchEvent($eventName, $this->Users);
 		$this->assertNull($event->result, sprintf('Event: %s', $eventName));
-
-		CroogoPlugin::load(array('Acl', 'Extensions'), array('bootstrap' => true));
 	}
 
 /**
