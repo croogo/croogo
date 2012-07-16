@@ -35,7 +35,7 @@ class ExtShellTest extends CroogoTestCase {
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',
 		'plugin.users.role',
-		'app.setting',
+		'plugin.settings.setting',
 		'plugin.taxonomy.taxonomy',
 		'plugin.taxonomy.term',
 		'plugin.taxonomy.type',
@@ -56,7 +56,7 @@ class ExtShellTest extends CroogoTestCase {
 		parent::setUp();
 		$Folder = new Folder(APP . 'Plugin' . DS . 'Example');
 		$Folder->copy(TESTS . 'test_app' . DS . 'Plugin' . DS . 'Example');
-		$this->Setting = ClassRegistry::init('Setting');
+		$this->Setting = ClassRegistry::init('Settings.Setting');
 	}
 
 /**

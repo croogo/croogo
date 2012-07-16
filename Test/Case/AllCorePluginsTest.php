@@ -19,6 +19,7 @@ class AllCorePluginsTest extends PHPUnit_Framework_TestSuite {
 			'FileManager',
 			'Menus',
 			'Meta',
+			'Settings',
 			'Taxonomy',
 			'Tinymce',
 			'Users',

@@ -51,16 +51,6 @@ class AppController extends Controller {
 	);
 
 /**
- * Models
- *
- * @var array
- * @access public
- */
-	public $uses = array(
-		'Setting',
-	);
-
-/**
  * Pagination
  */
 	public $paginate = array(

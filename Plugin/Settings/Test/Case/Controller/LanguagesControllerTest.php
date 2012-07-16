@@ -1,5 +1,5 @@
 <?php
-App::uses('LanguagesController', 'Controller');
+App::uses('LanguagesController', 'Settings.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestLanguagesController extends LanguagesController {
@@ -41,7 +41,7 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
 		'plugin.comments.comment',
 		'plugin.contacts.contact',
 		'i18n',
-		'language',
+		'plugin.settings.language',
 		'plugin.menus.link',
 		'plugin.menus.menu',
 		'plugin.contacts.message',
@@ -50,7 +50,7 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',
 		'plugin.users.role',
-		'setting',
+		'plugin.settings.setting',
 		'plugin.taxonomy.taxonomy',
 		'plugin.taxonomy.term',
 		'plugin.taxonomy.type',
@@ -70,12 +70,13 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
 		$response = new CakeResponse();
 		$this->Languages = new TestLanguagesController($request, $response);
 		$this->Languages->constructClasses();
+		$this->Languages->plugin = 'Settings';
 		$this->Languages->Security = $this->getMock('SecurityComponent', null, array($this->Languages->Components));
 		$this->Languages->request->params['controller'] = 'languages';
 		$this->Languages->request->params['pass'] = array();
 		$this->Languages->request->params['named'] = array();
 
-		$this->LanguagesController = $this->generate('Languages', array(
+		$this->LanguagesController = $this->generate('Settings.Languages', array(
 			'methods' => array(
 				'redirect',
 			),

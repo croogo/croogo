@@ -25,7 +25,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase {
 		'app.aco',
 		'app.aro',
 		'app.aros_aco',
-		'app.setting'
+		'plugin.settings.setting'
 	);
 
 /**

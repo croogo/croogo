@@ -24,7 +24,7 @@ class CroogoComponentTest extends CroogoTestCase {
 		'app.aco',
 		'app.aro',
 		'app.aros_aco',
-		'app.setting',
+		'plugin.settings.setting',
 		'plugin.menus.menu',
 		'plugin.menus.link',
 		);

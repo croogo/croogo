@@ -1,10 +1,12 @@
 <?php
 
+Croogo::hookControllerProperty('*', 'uses', array('Settings.Setting'));
+
 CroogoNav::add('settings', array(
 	'title' => __('Settings'),
 	'url' => array(
-		'plugin' => false,
 		'admin' => true,
+		'plugin' => 'settings',
 		'controller' => 'settings',
 		'action' => 'prefix',
 		'Site',
@@ -14,8 +16,8 @@ CroogoNav::add('settings', array(
 		'site' => array(
 			'title' => __('Site'),
 			'url' => array(
-				'plugin' => false,
 				'admin' => true,
+				'plugin' => 'settings',
 				'controller' => 'settings',
 				'action' => 'prefix',
 				'Site',
@@ -26,8 +28,8 @@ CroogoNav::add('settings', array(
 		'meta' => array(
 			'title' => __('Meta'),
 			'url' => array(
-				'plugin' => false,
 				'admin' => true,
+				'plugin' => 'settings',
 				'controller' => 'settings',
 				'action' => 'prefix',
 				'Meta',
@@ -38,8 +40,8 @@ CroogoNav::add('settings', array(
 		'reading' => array(
 			'title' => __('Reading'),
 			'url' => array(
-				'plugin' => false,
 				'admin' => true,
+				'plugin' => 'settings',
 				'controller' => 'settings',
 				'action' => 'prefix',
 				'Reading',
@@ -50,8 +52,8 @@ CroogoNav::add('settings', array(
 		'writing' => array(
 			'title' => __('Writing'),
 			'url' => array(
-				'plugin' => false,
 				'admin' => true,
+				'plugin' => 'settings',
 				'controller' => 'settings',
 				'action' => 'prefix',
 				'Writing',
@@ -62,8 +64,8 @@ CroogoNav::add('settings', array(
 		'comment' => array(
 			'title' => __('Comment'),
 			'url' => array(
-				'plugin' => false,
 				'admin' => true,
+				'plugin' => 'settings',
 				'controller' => 'settings',
 				'action' => 'prefix',
 				'Comment',
@@ -74,8 +76,8 @@ CroogoNav::add('settings', array(
 		'service' => array(
 			'title' => __('Service'),
 			'url' => array(
-				'plugin' => false,
 				'admin' => true,
+				'plugin' => 'settings',
 				'controller' => 'settings',
 				'action' => 'prefix',
 				'Service',
@@ -86,8 +88,8 @@ CroogoNav::add('settings', array(
 		'languages' => array(
 			'title' => __('Languages'),
 			'url' => array(
-				'plugin' => false,
 				'admin' => true,
+				'plugin' => 'settings',
 				'controller' => 'languages',
 				'action' => 'index',
 			),

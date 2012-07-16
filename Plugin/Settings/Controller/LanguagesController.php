@@ -1,17 +1,20 @@
 <?php
+
+App::uses('SettingsAppController', 'Settings.Controller');
+
 /**
  * Languages Controller
  *
  * PHP version 5
  *
- * @category Controller
- * @package  Croogo
+ * @category Settings.Controller
+ * @package  Croogo.Settings
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class LanguagesController extends AppController {
+class LanguagesController extends SettingsAppController {
 
 /**
  * Controller name
@@ -27,7 +30,7 @@ class LanguagesController extends AppController {
  * @var array
  * @access public
  */
-	public $uses = array('Language');
+	public $uses = array('Settings.Language');
 
 /**
  * Admin index

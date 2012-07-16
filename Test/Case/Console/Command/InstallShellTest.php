@@ -49,7 +49,7 @@ class InstallShellTest extends CroogoTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.setting',
+		'plugin.settings.setting',
 	);
 
 /**
