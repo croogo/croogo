@@ -7,7 +7,7 @@ App::uses('CroogoRouter', 'Lib');
 class CroogoRouterTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'app.setting',
+		'plugin.settings.setting',
 		'plugin.taxonomy.vocabulary',
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.types_vocabulary',

@@ -12,7 +12,7 @@ class TestNodesEventController extends NodesController {
 class CroogoEventsTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'app.setting',
+		'plugin.settings.setting',
 		);
 
 	public function setUp() {

@@ -1,5 +1,5 @@
 <?php
-App::uses('Setting', 'Model');
+App::uses('Setting', 'Settings.Model');
 App::uses('CroogoTestCase', 'TestSuite');
 
 class SettingTest extends CroogoTestCase {
@@ -12,7 +12,7 @@ class SettingTest extends CroogoTestCase {
 		'plugin.comments.comment',
 		'plugin.contacts.contact',
 		'i18n',
-		'language',
+		'plugin.settings.language',
 		'plugin.menus.link',
 		'plugin.menus.menu',
 		'plugin.contacts.message',
@@ -21,7 +21,7 @@ class SettingTest extends CroogoTestCase {
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',
 		'plugin.users.role',
-		'setting',
+		'plugin.settings.setting',
 		'plugin.taxonomy.taxonomy',
 		'plugin.taxonomy.term',
 		'plugin.taxonomy.type',
@@ -32,7 +32,7 @@ class SettingTest extends CroogoTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		$this->Setting = ClassRegistry::init('Setting');
+		$this->Setting = ClassRegistry::init('Settings.Setting');
 		$this->Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
 	}
 

@@ -15,7 +15,7 @@ class TheLayoutTestController extends Controller {
 class HtmlHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.users.user', 'plugin.users.role', 'setting',
+		'plugin.users.user', 'plugin.users.role', 'plugin.settings.setting',
 		);
 
 /**

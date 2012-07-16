@@ -28,8 +28,8 @@ class TranslateController extends TranslateAppController {
  * @access public
  */
 	public $uses = array(
-		'Setting',
-		'Language',
+		'Settings.Setting',
+		'Settings.Language',
 	);
 
 /**
