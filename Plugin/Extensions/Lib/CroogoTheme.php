@@ -19,7 +19,7 @@ class CroogoTheme extends Object {
  * Constructor
  */
 	public function __construct() {
-		$this->Setting = ClassRegistry::init('Setting');
+		$this->Setting = ClassRegistry::init('Settings.Setting');
 	}
 
 /**

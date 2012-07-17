@@ -28,7 +28,7 @@ class CroogoPlugin extends Object {
  * __construct
  */
 	public function __construct() {
-		$this->Setting = ClassRegistry::init('Setting');
+		$this->Setting = ClassRegistry::init('Settings.Setting');
 	}
 
 /**

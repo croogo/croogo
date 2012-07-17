@@ -31,8 +31,8 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  * @access public
  */
 	public $uses = array(
-		'Setting',
-		'User',
+		'Settings.Setting',
+		'Users.User',
 	);
 
 /**
