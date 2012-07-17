@@ -9,7 +9,7 @@ $this->Html->script('/acl/js/acl_permissions.js', false);
 <li><?php echo $this->Html->link(__('Edit Actions'), array('controller' => 'acl_actions', 'action'=>'index', 'permissions' => 1)); ?></li>
 <?php $this->end(); ?>
 
-<table cellpadding="0" cellspacing="0">
+<table class="permission-table" cellpadding="0" cellspacing="0">
 <?php
 	$roleTitles = array_values($roles);
 	$roleIds   = array_keys($roles);
@@ -23,17 +23,22 @@ $this->Html->script('/acl/js/acl_permissions.js', false);
 	echo $tableHeaders;
 
 	$currentController = '';
-	foreach ($acos AS $id => $alias) {
+	foreach ($acos AS $index => $aco) {
+		$id = $aco['Aco']['id'];
+		$alias = $aco['Aco']['alias'];
 		$class = '';
 		if(substr($alias, 0, 1) == '_') {
 			$level = 1;
-			$class .= 'level-'.$level;
-			$oddOptions = array('class' => 'hidden controller-'.$currentController);
-			$evenOptions = array('class' => 'hidden controller-'.$currentController);
+			$class .= 'level-' . $level;
+			$oddOptions = array('class' => 'hidden controller-' . $currentController);
+			$evenOptions = array('class' => 'hidden controller-' . $currentController);
 			$alias = substr_replace($alias, '', 0, 1);
 		} else {
 			$level = 0;
-			$class .= ' controller expand';
+			$class .= ' controller';
+			if ($aco['Aco']['children'] > 0) {
+				$class .= ' expand';
+			}
 			$oddOptions = array();
 			$evenOptions = array();
 			$currentController = $alias;
@@ -41,23 +46,15 @@ $this->Html->script('/acl/js/acl_permissions.js', false);
 
 		$row = array(
 			$id,
-			$this->Html->div($class, $alias),
+			$this->Html->div(trim($class), $alias, array(
+				'data-id' => $id,
+				'data-alias' => $alias,
+				'data-level' => $level,
+				)),
 		);
 
 		foreach ($roles AS $roleId => $roleTitle) {
-			if ($level != 0) {
-				if ($roleId != 1) {
-					if ($permissions[$id][$roleId] == 1) {
-						$row[] = $this->Html->image('/img/icons/tick.png', array('class' => 'permission-toggle', 'data-aco_id' => $id, 'data-aro_id' => $rolesAros[$roleId]));
-					} else {
-						$row[] = $this->Html->image('/img/icons/cross.png', array('class' => 'permission-toggle', 'data-aco_id' => $id, 'data-aro_id' => $rolesAros[$roleId]));
-					}
-				} else {
-					$row[] = $this->Html->image('/img/icons/tick_disabled.png', array('class' => 'permission-disabled'));
-				}
-			} else {
-				$row[] = '';
-			}
+			$row[] = '';
 		}
 
 		echo $this->Html->tableCells(array($row), $oddOptions, $evenOptions);

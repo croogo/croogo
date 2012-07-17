@@ -22,6 +22,7 @@
 			'jquery/jquery.tipsy',
 			'jquery/jquery.elastic-1.6.1.js',
 			'jquery/thickbox-compressed',
+			'underscore-min',
 			'admin',
 		));
 		echo $this->Blocks->get('css');

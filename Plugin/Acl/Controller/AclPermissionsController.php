@@ -28,10 +28,10 @@ class AclPermissionsController extends AclAppController {
  * @access public
  */
 	public $uses = array(
+		'Acl.AclPermission',
 		'Acl.AclAco',
 		'Acl.AclAro',
-		'Acl.AclPermission',
-		'Role',
+		'Users.Role',
 	);
 
 /**
@@ -50,52 +50,38 @@ class AclPermissionsController extends AclAppController {
 /**
  * admin_index
  *
+ * @param id integer aco id, when null, the root ACO is used
  * @return void
  */
-	public function admin_index() {
+	public function admin_index($id = null, $level = null) {
 		$this->set('title_for_layout', __('Permissions'));
 
-		$acoConditions = array(
-			'parent_id !=' => null,
-			//'model' => null,
-			'foreign_key' => null,
-			'alias !=' => null,
-		);
-		$acos  = $this->Acl->Aco->generateTreeList($acoConditions, '{n}.Aco.id', '{n}.Aco.alias');
-		$roles = $this->Role->find('list');
-		$this->set(compact('acos', 'roles'));
-
-		$rolesAros = $this->AclAro->find('all', array(
-			'conditions' => array(
-				'AclAro.model' => 'Role',
-				'AclAro.foreign_key' => array_keys($roles),
-				),
-			));
-		$rolesAros = Set::combine($rolesAros, '{n}.AclAro.foreign_key', '{n}.AclAro.id');
-
-		$permissions = array(); // acoId => roleId => bool
-		foreach ($acos as $acoId => $acoAlias) {
-			if (substr_count($acoAlias, '_') != 0) {
-				$permission = array();
-				foreach ($roles as $roleId => $roleTitle) {
-					$hasAny = array(
-						'aco_id'  => $acoId,
-						'aro_id'  => $rolesAros[$roleId],
-						'_create' => 1,
-						'_read'   => 1,
-						'_update' => 1,
-						'_delete' => 1,
-					);
-					if ($this->AclPermission->hasAny($hasAny)) {
-						$permission[$roleId] = 1;
-					} else {
-						$permission[$roleId] = 0;
-					}
-					$permissions[$acoId] = $permission;
-				}
-			}
+		if ($id == null) {
+			$root = $this->AclAco->node('controllers');
+			$root = $root[0];
+		} else {
+			$root = $this->AclAco->read(null, $id);
 		}
-		$this->set(compact('rolesAros', 'permissions'));
+
+		if ($level !== null) {
+			$level++;
+		}
+
+		$acos = $this->AclAco->getChildren($root['Aco']['id']);
+		$roles = $this->Role->find('list');
+		$this->set(compact('acos', 'roles', 'level'));
+
+		$aros = $this->AclAro->getRoles($roles);
+		if ($this->RequestHandler->ext == 'json') {
+			$options = array_intersect_key(
+				$this->request->query,
+				array('perms' => null, 'urls' => null)
+			);
+			$permissions = $this->AclPermission->format($acos, $aros, $options);
+		} else {
+			$permissions = array();
+		}
+		$this->set(compact('aros', 'permissions'));
 	}
 
 /**
@@ -111,47 +97,14 @@ class AclPermissionsController extends AclAppController {
 		}
 
 		// see if acoId and aroId combination exists
-		$conditions = array(
-			'AclPermission.aco_id' => $acoId,
-			'AclPermission.aro_id' => $aroId,
-		);
-		if ($this->AclPermission->hasAny($conditions)) {
-			$data = $this->AclPermission->find('first', array('conditions' => $conditions));
-			if ($data['AclPermission']['_create'] == 1 &&
-				$data['AclPermission']['_read'] == 1 &&
-				$data['AclPermission']['_update'] == 1 &&
-				$data['AclPermission']['_delete'] == 1) {
-				// from 1 to 0
-				$data['AclPermission']['_create'] = 0;
-				$data['AclPermission']['_read'] = 0;
-				$data['AclPermission']['_update'] = 0;
-				$data['AclPermission']['_delete'] = 0;
-				$permitted = 0;
-			} else {
-				// from 0 to 1
-				$data['AclPermission']['_create'] = 1;
-				$data['AclPermission']['_read'] = 1;
-				$data['AclPermission']['_update'] = 1;
-				$data['AclPermission']['_delete'] = 1;
-				$permitted = 1;
-			}
-		} else {
-			// create - CRUD with 1
-			$data['AclPermission']['aco_id'] = $acoId;
-			$data['AclPermission']['aro_id'] = $aroId;
-			$data['AclPermission']['_create'] = 1;
-			$data['AclPermission']['_read'] = 1;
-			$data['AclPermission']['_update'] = 1;
-			$data['AclPermission']['_delete'] = 1;
-			$permitted = 1;
-		}
+		$this->AclPermission->Aro->id = $aroId;
+		$aro = $this->AclPermission->Aro->read();
+		$aro = $aro['Aro'];
+		$path = $this->AclPermission->Aco->getPath($acoId);
+		$path = join('/', Hash::extract($path, '{n}.Aco.alias'));
 
-		// save
-		$success = 0;
-		if ($this->AclPermission->save($data)) {
-			$success = 1;
-		}
-
+		$permitted = !$this->AclPermission->check($aro, $path);
+		$success = $this->AclPermission->allow($aro, $path, '*', $permitted ? 1 : -1);
 		$this->set(compact('acoId', 'aroId', 'data', 'success', 'permitted'));
 	}
 

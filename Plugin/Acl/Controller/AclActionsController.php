@@ -49,16 +49,18 @@ class AclActionsController extends AclAppController {
 /**
  * admin_index
  */
-	public function admin_index() {
+	public function admin_index($id = null) {
 		$this->set('title_for_layout', __('Actions'));
 
-		$conditions = array(
-			'parent_id !=' => null,
-			//'model' => null,
-			'foreign_key' => null,
-			'alias !=' => null,
-		);
-		$this->set('acos', $this->Acl->Aco->generateTreeList($conditions, '{n}.Aco.id', '{n}.Aco.alias'));
+		if ($id == null) {
+			$root = $this->Acl->Aco->node('controllers');
+			$root = $root[0];
+		} else {
+			$root = $this->Acl->Aco->read(null, $id);
+		}
+
+		$acos = $this->AclAco->getChildren($root['Aco']['id']);
+		$this->set(compact('acos'));
 	}
 
 /**
@@ -86,21 +88,7 @@ class AclActionsController extends AclAppController {
 			}
 		}
 
-		$conditions = array(
-			//'model' => null,
-		);
-		$controllersAco = $this->Acl->Aco->find('first', array(
-			'conditions' => array(
-				'alias' => 'controllers',
-				'parent_id' => null,
-				//'model' => null,
-				'foreign_key' => null,
-			),
-		));
-		if (isset($controllersAco['Aco']['id'])) {
-			$conditions['parent_id'] = $controllersAco['Aco']['id'];
-		}
-		$acos = $this->Acl->Aco->generateTreeList($conditions, '{n}.Aco.id', '{n}.Aco.alias');
+		$acos = $this->Acl->Aco->generateTreeList(null, '{n}.Aco.id', '{n}.Aco.alias');
 		$this->set(compact('acos'));
 	}
 
@@ -128,21 +116,7 @@ class AclActionsController extends AclAppController {
 			$this->request->data = $this->Acl->Aco->read(null, $id);
 		}
 
-		$conditions = array(
-			//'model' => null,
-		);
-		$controllersAco = $this->Acl->Aco->find('first', array(
-			'conditions' => array(
-				'alias' => 'controllers',
-				'parent_id' => null,
-				//'model' => null,
-				'foreign_key' => null,
-			),
-		));
-		if (isset($controllersAco['Aco']['id'])) {
-			$conditions['parent_id'] = $controllersAco['Aco']['id'];
-		}
-		$acos = $this->Acl->Aco->generateTreeList($conditions, '{n}.Aco.id', '{n}.Aco.alias');
+		$acos = $this->Acl->Aco->generateTreeList(null, '{n}.Aco.id', '{n}.Aco.alias');
 		$this->set(compact('acos'));
 	}
 

@@ -57,15 +57,20 @@ table tr td img { margin: 0px; padding: 0px; }
 
 div.level-0 { }
 div.level-1 { margin-left: 30px; }
+div.level-2 { margin-left: 60px; }
 
 img.permission-toggle:hover { cursor: pointer; }
 img.hook-toggle:hover { cursor: pointer; }
 
 .controller-row { background: #6f6f6f; color: #fff; font-weight: bold; }
+.controller-row.level-1 { background: #eee; color: #555; }
 .controller-row a { color: #efefef; }
 .controller:hover { cursor: pointer; }
 .collapse { background: url('../img/icons/bullet_arrow_down.png') no-repeat; padding-left: 15px; }
 .expand { background: url('../img/icons/bullet_arrow_right.png') no-repeat; padding-left: 15px; }
+.controller.loading {
+	background: url('../img/ajax/circle_ball.gif') no-repeat scroll 100% 0 transparent;
+}
 
 
 /**
