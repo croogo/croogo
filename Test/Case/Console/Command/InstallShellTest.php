@@ -49,7 +49,7 @@ class InstallShellTest extends CroogoTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.setting',
+		'plugin.settings.setting',
 	);
 
 /**
@@ -81,6 +81,7 @@ class InstallShellTest extends CroogoTestCase {
 		$Folder->delete();
 		$Folder = new Folder(TESTS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Minimal');
 		$Folder->delete();
+		App::build();
 	}
 
 /**

@@ -255,7 +255,7 @@ class LayoutHelper extends AppHelper {
 				'type' => 'blog',
 				'ext' => 'rss',
 			));*/
-			$url = '/nodes/promoted.rss';
+			$url = '/promoted.rss';
 		}
 
 		if ($returnUrl) {
@@ -331,13 +331,13 @@ class LayoutHelper extends AppHelper {
 				if ($plugin) {
 					$blockOutput = $this->_View->element($element, array('block' => $block), array('plugin' => $plugin));
 				} else {
-					$blockOutput = $this->_View->element($element, array('block' => $block));
+					$blockOutput = $this->_View->element($element, array('block' => $block), array('plugin' => 'blocks'));
 				}
 				$enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
 				if ($element != 'block' && $enclosure) {
 					$block['Block']['body'] = $blockOutput;
 					$block['Block']['element'] = null;
-					$output .= $this->_View->element('block', array('block' => $block));
+					$output .= $this->_View->element('Blocks.block', array('block' => $block));
 				} else {
 					$output .= $blockOutput;
 				}
@@ -361,7 +361,7 @@ class LayoutHelper extends AppHelper {
 			'selected' => 'selected',
 			'dropdown' => false,
 			'dropdownClass' => 'sf-menu',
-			'element' => 'menu',
+			'element' => 'Menus.menu',
 		);
 		$options = array_merge($_options, $options);
 
@@ -497,10 +497,10 @@ class LayoutHelper extends AppHelper {
 			'tagAttributes' => array(),
 			'type' => null,
 			'link' => true,
-			'plugin' => false,
+			'plugin' => 'contents',
 			'controller' => 'nodes',
 			'action' => 'term',
-			'element' => 'vocabulary',
+			'element' => 'Taxonomy.vocabulary',
 		);
 		$options = array_merge($_options, $options);
 
@@ -565,10 +565,10 @@ class LayoutHelper extends AppHelper {
 	public function nodeList($alias, $options = array()) {
 		$_options = array(
 			'link' => true,
-			'plugin' => false,
+			'plugin' => 'contents',
 			'controller' => 'nodes',
 			'action' => 'view',
-			'element' => 'node_list',
+			'element' => 'Contents.node_list',
 		);
 		$options = array_merge($_options, $options);
 
@@ -739,7 +739,7 @@ class LayoutHelper extends AppHelper {
 
 		$actions = $this->Html->link(
 			__('Remove'),
-			is_null($id) ? '#' : array('plugin' => null, 'controller' => 'nodes', 'action' => 'delete_meta', $id),
+			is_null($id) ? '#' : array('plugin' => 'contents', 'controller' => 'nodes', 'action' => 'delete_meta', $id),
 			array('class' => 'remove-meta', 'rel' => $id)
 		);
 		$actions = $this->Html->tag('div', $actions, array('class' => 'actions'));
@@ -871,7 +871,7 @@ class LayoutHelper extends AppHelper {
  */
 	public function nodeInfo($options = array()) {
 		$_options = array(
-			'element' => 'node_info',
+			'element' => 'Contents.node_info',
 		);
 		$options = array_merge($_options, $options);
 
@@ -889,7 +889,7 @@ class LayoutHelper extends AppHelper {
  */
 	public function nodeExcerpt($options = array()) {
 		$_options = array(
-			'element' => 'node_excerpt',
+			'element' => 'Contents.node_excerpt',
 		);
 		$options = array_merge($_options, $options);
 
@@ -907,7 +907,7 @@ class LayoutHelper extends AppHelper {
  */
 	public function nodeBody($options = array()) {
 		$_options = array(
-			'element' => 'node_body',
+			'element' => 'Contents.node_body',
 		);
 		$options = array_merge($_options, $options);
 
@@ -925,7 +925,7 @@ class LayoutHelper extends AppHelper {
  */
 	public function nodeMoreInfo($options = array()) {
 		$_options = array(
-			'element' => 'node_more_info',
+			'element' => 'Contents.node_more_info',
 		);
 		$options = array_merge($_options, $options);
 

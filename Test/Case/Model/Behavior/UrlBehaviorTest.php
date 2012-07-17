@@ -8,26 +8,26 @@ class UrlBehaviorTest extends CroogoTestCase {
 		'aco',
 		'aro',
 		'aros_aco',
-		'block',
-		'comment',
-		'contact',
+		'plugin.blocks.block',
+		'plugin.comments.comment',
+		'plugin.contacts.contact',
 		'i18n',
-		'language',
-		'link',
-		'menu',
-		'message',
-		'meta',
-		'node',
-		'nodes_taxonomy',
-		'region',
-		'role',
-		'setting',
-		'taxonomy',
-		'term',
-		'type',
-		'types_vocabulary',
-		'user',
-		'vocabulary',
+		'plugin.settings.language',
+		'plugin.menus.link',
+		'plugin.menus.menu',
+		'plugin.contacts.message',
+		'plugin.contents.node',
+		'plugin.meta.meta',
+		'plugin.taxonomy.nodes_taxonomy',
+		'plugin.blocks.region',
+		'plugin.users.role',
+		'plugin.settings.setting',
+		'plugin.taxonomy.taxonomy',
+		'plugin.taxonomy.term',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.types_vocabulary',
+		'plugin.users.user',
+		'plugin.taxonomy.vocabulary',
 	);
 
 	public $Node = null;
@@ -39,7 +39,7 @@ class UrlBehaviorTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Node = ClassRegistry::init('Node');
+		$this->Node = ClassRegistry::init('Contents.Node');
 	}
 
 /**
@@ -56,7 +56,7 @@ class UrlBehaviorTest extends CroogoTestCase {
 	public function testSingle() {
 		$helloWorld = $this->Node->findBySlug('hello-world');
 		$this->assertEqual($helloWorld['Node']['url'], array(
-			'plugin' => false,
+			'plugin' => 'contents',
 			'controller' => 'nodes',
 			'action' => 'view',
 			'type' => 'blog',
@@ -67,7 +67,7 @@ class UrlBehaviorTest extends CroogoTestCase {
 	public function testMultiple() {
 		$result = $this->Node->find('all');
 		$this->assertEqual($result['0']['Node']['url'], array(
-			'plugin' => false,
+			'plugin' => 'contents',
 			'controller' => 'nodes',
 			'action' => 'view',
 			'type' => $result['0']['Node']['type'],

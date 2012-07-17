@@ -26,22 +26,22 @@ class ExtShellTest extends CroogoTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.comment',
-		'app.menu',
-		'app.block',
-		'app.link',
-		'app.meta',
-		'app.node',
-		'app.nodes_taxonomy',
-		'app.region',
-		'app.role',
-		'app.setting',
-		'app.taxonomy',
-		'app.term',
-		'app.type',
-		'app.types_vocabulary',
-		'app.user',
-		'app.vocabulary',
+		'plugin.comments.comment',
+		'plugin.menus.menu',
+		'plugin.blocks.block',
+		'plugin.menus.link',
+		'plugin.meta.meta',
+		'plugin.contents.node',
+		'plugin.taxonomy.nodes_taxonomy',
+		'plugin.blocks.region',
+		'plugin.users.role',
+		'plugin.settings.setting',
+		'plugin.taxonomy.taxonomy',
+		'plugin.taxonomy.term',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.types_vocabulary',
+		'plugin.users.user',
+		'plugin.taxonomy.vocabulary',
 		'app.aro',
 		'app.aco',
 		'app.aros_aco',
@@ -56,7 +56,7 @@ class ExtShellTest extends CroogoTestCase {
 		parent::setUp();
 		$Folder = new Folder(APP . 'Plugin' . DS . 'Example');
 		$Folder->copy(TESTS . 'test_app' . DS . 'Plugin' . DS . 'Example');
-		$this->Setting = ClassRegistry::init('Setting');
+		$this->Setting = ClassRegistry::init('Settings.Setting');
 	}
 
 /**
@@ -76,7 +76,7 @@ class ExtShellTest extends CroogoTestCase {
  * @return void
  */
 	public function testPlugin() {
-		$Link = ClassRegistry::init('Link');
+		$Link = ClassRegistry::init('Menus.Link');
 		$Shell = $this->getMock('ExtShell', array('out', 'err'));
 
 		$Shell->args = array('deactivate', 'plugin', 'Example');

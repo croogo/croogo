@@ -21,7 +21,12 @@ class CroogoTestController extends AppController {
 class CroogoComponentTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'aco', 'aro', 'aros_aco', 'setting',
+		'app.aco',
+		'app.aro',
+		'app.aros_aco',
+		'plugin.settings.setting',
+		'plugin.menus.menu',
+		'plugin.menus.link',
 		);
 
 	public function setUp() {
@@ -30,6 +35,8 @@ class CroogoComponentTest extends CroogoTestCase {
 		$this->Controller = new CroogoTestController(new CakeRequest(), new CakeResponse());
 		$this->Controller->constructClasses();
 		$this->Controller->Croogo = new MockCroogoComponent($this->Controller->Components);
+		$this->Controller->Components->unload('Blocks');
+		$this->Controller->Components->unload('Menus');
 		$this->Controller->Components->set('Croogo', $this->Controller->Croogo);
 		$this->Controller->startupProcess();
 	}
