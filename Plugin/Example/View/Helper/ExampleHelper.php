@@ -29,7 +29,7 @@ class ExampleHelper extends AppHelper {
  *
  * @return void
  */
-	public function beforeRender() {
+	public function beforeRender($viewFile) {
 	}
 
 /**
@@ -38,7 +38,7 @@ class ExampleHelper extends AppHelper {
  *
  * @return void
  */
-	public function afterRender() {
+	public function afterRender($viewFile) {
 	}
 
 /**
@@ -46,7 +46,7 @@ class ExampleHelper extends AppHelper {
  *
  * @return void
  */
-	public function beforeLayout() {
+	public function beforeLayout($layoutFile) {
 	}
 
 /**
@@ -54,7 +54,7 @@ class ExampleHelper extends AppHelper {
  *
  * @return void
  */
-	public function afterLayout() {
+	public function afterLayout($layoutFile) {
 	}
 
 /**
