@@ -76,7 +76,7 @@ class Setting extends SettingsAppModel {
  */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		$this->settingsPath = APP . 'Config' . DS . 'settings.yml';
+		$this->settingsPath = APP . 'Config' . DS . 'settings.json';
 	}
 /**
  * afterSave callback
@@ -84,7 +84,7 @@ class Setting extends SettingsAppModel {
  * @return void
  */
 	public function afterSave($created) {
-		$this->updateYaml();
+		$this->updateJson();
 		$this->writeConfiguration();
 	}
 
@@ -94,7 +94,7 @@ class Setting extends SettingsAppModel {
  * @return void
  */
 	public function afterDelete() {
-		$this->updateYaml();
+		$this->updateJson();
 		$this->writeConfiguration();
 	}
 
@@ -164,29 +164,17 @@ class Setting extends SettingsAppModel {
  * @return void
  */
 	public function writeConfiguration() {
-		$settings = $this->find('all', array(
-			'fields' => array(
-				'Setting.key',
-				'Setting.value',
-			),
-			'cache' => array(
-				'name' => 'setting_write_configuration',
-				'config' => 'setting_write_configuration',
-			),
-		));
-		foreach ($settings as $setting) {
-			Configure::write($setting['Setting']['key'], $setting['Setting']['value']);
-		}
+		Configure::load('settings', 'settings');
 	}
 
 /**
- * Find list and save yaml dump in app/config/settings.yml file.
+ * Find list and save yaml dump in app/Config/settings.json file.
  * Data required in bootstrap.
  *
  * @return void
  */
-	public function updateYaml() {
-		$list = $this->find('list', array(
+	public function updateJson() {
+		$settings = $this->find('all', array(
 			'fields' => array(
 				'key',
 				'value',
@@ -195,8 +183,16 @@ class Setting extends SettingsAppModel {
 				'Setting.key' => 'ASC',
 			),
 		));
-		$file = new File($this->settingsPath, true);
-		$listYaml = Spyc::YAMLDump($list, 4, 60);
-		$file->write($listYaml);
+		$settings = array_combine(
+			Hash::extract($settings, '{n}.Setting.key'),
+			Hash::extract($settings, '{n}.Setting.value')
+			);
+		Configure::write($settings);
+		foreach ($settings as $key => $setting) {
+			list($key, $ignore) = explode('.', $key, 2);
+			$keys[] = $key;
+		}
+		$keys = array_unique($keys);
+		Configure::dump('settings.json', 'settings', $keys);
 	}
 }

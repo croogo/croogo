@@ -24,7 +24,7 @@ class Install extends InstallAppModel {
 /**
  * Finalize installation
  *
- * Prepares Config/settings.yml and update password for admin user
+ * Prepares Config/settings.json and update password for admin user
  * @param $user array user to create
  * @return $mixed if false, indicates processing failure
  */
@@ -32,7 +32,7 @@ class Install extends InstallAppModel {
 		if (Configure::read('Install.installed') && Configure::read('Install.secured')) {
 			return false;
 		}
-		copy(APP . 'Config' . DS . 'settings.yml.install', APP . 'Config' . DS . 'settings.yml');
+		copy(APP . 'Config' . DS . 'settings.json.install', APP . 'Config' . DS . 'settings.json');
 
 		// set new salt and seed value
 		if (!Configure::read('Install.secured')) {

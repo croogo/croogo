@@ -16,7 +16,7 @@ before_script:
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE croogo_test;'; fi"
   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE croogo_test;' -U postgres; fi"
   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE SCHEMA croogo_test;' -U postgres -d croogo_test; fi"
-  - cp Config/settings.yml.install Config/settings.yml
+  - cp Config/settings.json.install Config/settings.json
   - cp Config/croogo.php.install Config/croogo.php
   - set +H
   - echo "<?php

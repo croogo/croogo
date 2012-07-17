@@ -81,7 +81,7 @@ class InstallController extends Controller {
 	}
 
 /**
- * If settings.yml exists, app is already installed
+ * If settings.json exists, app is already installed
  *
  * @return void
  */
@@ -263,7 +263,7 @@ class InstallController extends Controller {
 /**
  * Step 4: finish
  *
- * Copy settings.yml file into place and create user obtained in step 3
+ * Copy settings.json file into place and create user obtained in step 3
  *
  * @return void
  * @access public

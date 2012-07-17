@@ -33,7 +33,7 @@ class SettingTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->Setting = ClassRegistry::init('Settings.Setting');
-		$this->Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
+		$this->Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.json';
 	}
 
 	public function tearDown() {
@@ -73,6 +73,6 @@ class SettingTest extends CroogoTestCase {
 
 	public function testWriteConfiguration() {
 		$this->Setting->writeConfiguration();
-		$this->assertEqual(Configure::read('Site.title'), 'Croogo');
+		$this->assertEqual(Configure::read('Site.title'), 'Croogo - Test');
 	}
 }
