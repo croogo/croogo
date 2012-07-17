@@ -34,7 +34,9 @@ class CroogoTestCase extends CakeTestCase {
 		CakePlugin::load('Example');
 		Configure::write('Acl.database', 'test');
 		$Setting = ClassRegistry::init('Settings.Setting');
-		$Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
+		$Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.json';
+		Configure::drop('settings');
+		Configure::config('settings', new CroogoJsonReader(dirname($Setting->settingsPath) . DS));
 		$Setting->writeConfiguration();
 	}
 
