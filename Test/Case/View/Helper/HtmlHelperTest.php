@@ -15,7 +15,7 @@ class TheLayoutTestController extends Controller {
 class HtmlHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'user', 'role', 'setting',
+		'plugin.users.user', 'plugin.users.role', 'plugin.settings.setting',
 		);
 
 /**
@@ -189,7 +189,7 @@ class HtmlHelperTest extends CroogoTestCase {
  * testDisplayFields
  */
 	public function testDisplayFields() {
-		$User = ClassRegistry::init('User');
+		$User = ClassRegistry::init('Users.User');
 		$rows = $User->find('all');
 
 		$expected = '1';

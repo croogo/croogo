@@ -33,7 +33,7 @@ class CroogoTestCase extends CakeTestCase {
 		CakePlugin::unload('Install');
 		CakePlugin::load('Example');
 		Configure::write('Acl.database', 'test');
-		$Setting = ClassRegistry::init('Setting');
+		$Setting = ClassRegistry::init('Settings.Setting');
 		$Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
 		$Setting->writeConfiguration();
 	}

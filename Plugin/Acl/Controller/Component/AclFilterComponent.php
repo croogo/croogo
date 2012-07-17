@@ -37,7 +37,7 @@ class AclFilterComponent extends Component {
 		//Configure AuthComponent
 		$this->_controller->Auth->authenticate = array(
 			AuthComponent::ALL => array(
-				'userModel' => 'User',
+				'userModel' => 'Users.User',
 				'fields' => array(
 					'username' => 'username',
 					'password' => 'password',
@@ -54,17 +54,17 @@ class AclFilterComponent extends Component {
 			'Actions',
 			);
 		$this->_controller->Auth->loginAction = array(
-			'plugin' => null,
+			'plugin' => 'users',
 			'controller' => 'users',
 			'action' => 'login',
 		);
 		$this->_controller->Auth->logoutRedirect = array(
-			'plugin' => null,
+			'plugin' => 'users',
 			'controller' => 'users',
 			'action' => 'login',
 		);
 		$this->_controller->Auth->loginRedirect = array(
-			'plugin' => null,
+			'plugin' => 'users',
 			'controller' => 'users',
 			'action' => 'index',
 		);

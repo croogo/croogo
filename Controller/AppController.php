@@ -51,19 +51,6 @@ class AppController extends Controller {
 	);
 
 /**
- * Models
- *
- * @var array
- * @access public
- */
-	public $uses = array(
-		'Block',
-		'Link',
-		'Setting',
-		'Node',
-	);
-
-/**
  * Pagination
  */
 	public $paginate = array(

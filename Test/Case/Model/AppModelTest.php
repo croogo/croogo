@@ -29,9 +29,9 @@ class AppModelTest extends CroogoTestCase {
 		'app.aco',
 		'app.aro',
 		'app.aros_aco',
-		'app.role',
-		'app.user',
-		'app.setting',
+		'plugin.users.role',
+		'plugin.users.user',
+		'plugin.settings.setting',
 	);
 
 /**
@@ -48,7 +48,7 @@ class AppModelTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->User = ClassRegistry::init('User');
+		$this->User = ClassRegistry::init('Users.User');
 	}
 
 /**
