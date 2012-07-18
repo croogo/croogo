@@ -18,7 +18,7 @@ class CommentsHelper extends AppHelper {
  * beforeRender
  */
 	public function beforeRender($viewFile) {
-		if (isset($this->request->params['admin'])) {
+		if (isset($this->request->params['admin']) && !$this->request->is('ajax')) {
 			$this->_adminTabs();
 		}
 	}

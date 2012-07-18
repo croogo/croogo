@@ -18,7 +18,7 @@ class TaxonomiesHelper extends AppHelper {
  * beforeRender
  */
 	public function beforeRender($viewFile) {
-		if (isset($this->request->params['admin'])) {
+		if (isset($this->request->params['admin']) && !$this->request->is('ajax')) {
 			$this->_adminMenu();
 			$this->_adminTabs();
 		}
@@ -28,7 +28,11 @@ class TaxonomiesHelper extends AppHelper {
  * Inject admin menu items
  */
 	protected function _adminMenu() {
-		$types = $this->_View->viewVars['types_for_admin_layout'];
+		if (empty($this->_View->viewVars['types_for_admin_layout'])) {
+			$types = array();
+		} else {
+			$types = $this->_View->viewVars['types_for_admin_layout'];
+		}
 		foreach ($types as $t):
 			CroogoNav::add('content.children.create.children.' . $t['Type']['alias'], array(
 				'title' => $t['Type']['title'],
@@ -42,7 +46,11 @@ class TaxonomiesHelper extends AppHelper {
 			));
 		endforeach;
 
-		$vocabularies = $this->_View->viewVars['vocabularies_for_admin_layout'];
+		if (empty($this->_View->viewVars['vocabularies_for_admin_layout'])) {
+			$vocabularies = array();
+		} else {
+			$vocabularies = $this->_View->viewVars['vocabularies_for_admin_layout'];
+		}
 		foreach ($vocabularies as $v):
 			$weight = 9999 + $v['Vocabulary']['weight'];
 			CroogoNav::add('content.children.taxonomy.children.' . $v['Vocabulary']['alias'], array(

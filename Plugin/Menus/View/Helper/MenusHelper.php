@@ -18,7 +18,7 @@ class MenusHelper extends AppHelper {
  * beforeRender
  */
 	public function beforeRender($viewFile) {
-		if (isset($this->request->params['admin'])) {
+		if (isset($this->request->params['admin']) && !$this->request->is('ajax')) {
 			$this->_adminMenu();
 		}
 	}
@@ -27,6 +27,9 @@ class MenusHelper extends AppHelper {
  * Inject admin menu items
  */
 	protected function _adminMenu() {
+		if (empty($this->_View->viewVars['menus_for_admin_layout'])) {
+			return;
+		}
 		$menus = $this->_View->viewVars['menus_for_admin_layout'];
 		foreach ($menus as $m):
 			$weight = 9999 + $m['Menu']['weight'];
