@@ -58,32 +58,18 @@ class AclPermission extends Permission {
  * @return array of elements formatted like ControllerName/action_name
  */
 	public function getAllowedActionsByRoleId($roleId) {
-		$acosTree = $this->Aco->generateTreeList(array(
-			'Aco.parent_id !=' => null,
-			), '{n}.Aco.id', '{n}.Aco.alias');
-		$acos = array();
-		$controller = null;
-		foreach ($acosTree as $acoId => $acoAlias) {
-			if (substr($acoAlias, 0, 1) == '_') {
-				$acos[$acoId] = $controller . '/' . substr($acoAlias, 1);
-			} else {
-				$controller = $acoAlias;
-			}
-		}
-		$acoIds = array_keys($acos);
-
-		$aro = $this->Aro->find('first', array(
-			'conditions' => array(
-				'Aro.model' => 'Role',
-				'Aro.foreign_key' => $roleId,
-			),
+		$aro = $this->Aro->node(array(
+			'model' => 'Role',
+			'foreign_key' => $roleId,
 		));
-		$aroId = $aro['Aro']['id'];
+		if (empty($aro[0]['Aro']['id'])) {
+			return array();
+		}
+		$aroId = $aro[0]['Aro']['id'];
 
 		$permissionsForCurrentRole = $this->find('list', array(
 			'conditions' => array(
 				'Permission.aro_id' => $aroId,
-				'Permission.aco_id' => $acoIds,
 				'Permission._create' => 1,
 				'Permission._read' => 1,
 				'Permission._update' => 1,
@@ -96,7 +82,9 @@ class AclPermission extends Permission {
 		));
 		$permissionsByActions = array();
 		foreach ($permissionsForCurrentRole as $acoId) {
-			$permissionsByActions[] = $acos[$acoId];
+			$path = $this->Aco->getPath($acoId);
+			$path = join('/', Hash::extract($path, '{n}.Aco.alias'));
+			$permissionsByActions[] = $path;
 		}
 
 		return $permissionsByActions;
