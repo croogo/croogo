@@ -1,6 +1,6 @@
 <?php
 /**
- * UserAco Behavior
+ * UserAro Behavior
  *
  * PHP version 5
  *
@@ -11,7 +11,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class UserAcoBehavior extends ModelBehavior {
+class UserAroBehavior extends ModelBehavior {
 
 /**
  * parentNode
