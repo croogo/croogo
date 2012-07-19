@@ -43,7 +43,7 @@ class AclAccessComponent extends Component {
 		// AROs
 		$aroIds = array();
 		if (count($allowRoles) > 0) {
-			$roles = ClassRegistry::init('Role')->find('list', array(
+			$roles = ClassRegistry::init('Users.Role')->find('list', array(
 				'conditions' => array(
 					'Role.alias' => $allowRoles,
 				),

@@ -22,7 +22,7 @@ class FileManagerController extends FileManagerAppController {
  * @var array
  * @access public
  */
-	public $uses = array('Setting', 'User');
+	public $uses = array('Settings.Setting', 'Users.User');
 
 /**
  * Helpers used by the Controller
