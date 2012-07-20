@@ -28,13 +28,6 @@ class AclActionsController extends AclAppController {
 	public $uses = array('Acl.AclAco');
 
 /**
- * components
- *
- * @var array
- */
-	public $components = array('Acl.AclGenerate');
-
-/**
  * beforeFilter
  *
  * @return void
@@ -165,54 +158,20 @@ class AclActionsController extends AclAppController {
  * admin_generate
  */
 	public function admin_generate() {
-		$aco =& $this->Acl->Aco;
-		$root = $aco->node('controllers');
-		if (!$root) {
-			$aco->create(array(
-				'parent_id' => null,
-				'model' => null,
-				'alias' => 'controllers',
-			));
-			$root = $aco->save();
-			$root['Aco']['id'] = $aco->id;
+		App::uses('AclExtras', 'Acl.Lib');
+		$AclExtras = new AclExtras();
+		$AclExtras->startup($this);
+		$result = $AclExtras->aco_update();
+		$output = $AclExtras->output;
+		$output += $AclExtras->errors;
+		if ($result) {
+			$class = 'success';
+			$output[] = __('Created %d new permissions', $AclExtras->created);
 		} else {
-			$root = $root[0];
+			$class = 'error';
 		}
 
-		$created = array();
-		$controllerPaths = $this->AclGenerate->listControllers();
-		foreach ($controllerPaths as $controllerName => $controllerPath) {
-			$controllerNode = $aco->node('controllers/' . $controllerName);
-			if (!$controllerNode) {
-				$aco->create(array(
-					'parent_id' => $root['Aco']['id'],
-					'model' => null,
-					'alias' => $controllerName,
-				));
-				if ($controllerNode = $aco->save()) {
-					$controllerNode['Aco']['id'] = $aco->id;
-					$created[] = $controllerName;
-				}
-			} else {
-				$controllerNode = $controllerNode[0];
-			}
-
-			$methods = $this->AclGenerate->listActions($controllerName, $controllerPath);
-			foreach ($methods as $method) {
-				$methodNode = $aco->node('controllers/' . $controllerName . '/' . $method);
-				if (!$methodNode) {
-					$aco->create(array(
-						'parent_id' => $controllerNode['Aco']['id'],
-						'model' => null,
-						'alias' => $method,
-					));
-					if ($methodNode = $aco->save()) {
-						$created[] = $controllerName . ' . ' . $method;
-					}
-				}
-			}
-		}
-		$this->Session->setFlash(__('Created %d new permissions', count($created)), 'default', array('acosCreated' => $created));
+		$this->Session->setFlash(join('<br>', $output), 'default', array('class' => $class));
 
 		if (isset($this->params['named']['permissions'])) {
 			$this->redirect(array('plugin' => 'acl', 'controller' => 'acl_permissions', 'action' => 'index'));

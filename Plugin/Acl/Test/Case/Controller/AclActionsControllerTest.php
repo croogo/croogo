@@ -44,10 +44,10 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
 			->method('user')
 			->will($this->returnValue(2));
 		$AclActions->Session
-			->expects($this->once())
+			->expects($this->any())
 			->method('setFlash')
 			->with(
-				$this->matchesRegularExpression('/Created [0-9]+ new permissions/'),
+				$this->matchesRegularExpression('/(Created Aco node:)|.*Aco Update Complete.*/'),
 				$this->equalTo('default'),
 				$this->anything(),
 				$this->equalTo('flash')

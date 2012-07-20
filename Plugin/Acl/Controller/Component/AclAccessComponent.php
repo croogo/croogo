@@ -38,6 +38,7 @@ class AclAccessComponent extends Component {
 			case 'Roles':
 				$this->_setupRole();
 			break;
+			case 'AclActions':
 			case 'AclPermissions':
 				$this->_checkUpgrade();
 			break;
