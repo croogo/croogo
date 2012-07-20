@@ -1,4 +1,4 @@
-<?php $this->Html->script(array('links'), false); ?>
+<?php $this->Html->script(array('Menus.links'), false); ?>
 <?php $this->extend('/Common/admin_edit'); ?>
 <?php echo $this->Form->create('Link', array('url' => array('controller' => 'links', 'action' => 'add', 'menu' => $menuId)));?>
 	<fieldset>
