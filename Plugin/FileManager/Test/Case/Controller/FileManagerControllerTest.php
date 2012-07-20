@@ -25,7 +25,11 @@ class FileManagerControllerTest extends CroogoControllerTestCase {
 		'app.aco',
 		'app.aro',
 		'app.aros_aco',
-		'plugin.settings.setting'
+		'plugin.settings.setting',
+		'plugin.users.role',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.types_vocabulary',
+		'plugin.taxonomy.vocabulary',
 	);
 
 /**

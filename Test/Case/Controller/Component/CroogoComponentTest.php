@@ -27,6 +27,7 @@ class CroogoComponentTest extends CroogoTestCase {
 		'plugin.settings.setting',
 		'plugin.menus.menu',
 		'plugin.menus.link',
+		'plugin.users.role',
 		);
 
 	public function setUp() {
