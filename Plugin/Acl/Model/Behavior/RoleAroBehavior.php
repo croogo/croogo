@@ -48,12 +48,70 @@ class RoleAroBehavior extends ModelBehavior {
  * Update the corresponding ACO record alias
  */
 	public function afterSave(Model $model, $created) {
-		if (!empty($model->data['Role']['alias'])) {
-			$node = $model->node();
-			$aro = $node[0];
-			$model->Aro->id = $aro['Aro']['id'];
-			$model->Aro->saveField('alias', 'Role-' . $model->data['Role']['alias']);
+		$node = $model->node();
+		$aro = $node[0];
+		if (!empty($model->data[$model->alias]['alias'])) {
+			$aro['Aro']['alias'] = sprintf('Role-%s',
+				Inflector::slug($model->data[$model->alias]['alias'])
+			);
 		}
+		if (!empty($model->data[$model->alias]['parent_id'])) {
+			$aro['Aro']['parent_id'] = $model->data['Role']['parent_id'];
+		}
+		$model->Aro->save($aro);
+	}
+
+/**
+ * bindAro
+ *
+ * binds Aro model so that it gets retrieved during admin_[edit|add].
+ */
+	public function bindAro(Model $model) {
+		$model->bindModel(array(
+			'hasOne' => array(
+				'Aro' => array(
+					'foreignKey' => false,
+					'conditions' => array(
+						sprintf("model = '%s'", $model->alias),
+						sprintf('foreign_key = %s.%s', $model->alias, $model->primaryKey),
+					),
+				),
+			),
+		), false);
+	}
+
+/**
+ * afterFind
+ *
+ * When 'parent_id' is present, copy its value from Aro to Role data.
+ */
+	public function afterFind(Model $model, $results, $primary) {
+		if (!empty($results[0]['Aro']['parent_id'])) {
+			$results[0][$model->alias]['parent_id'] = $results[0]['Aro']['parent_id'];
+			return $results;
+		}
+	}
+
+/**
+ * Retrieve a list of allowed parent roles
+ *
+ * @paraam integer $roleId
+ * @param integer $id Role id
+ * @return array list of allowable parent roles in 'list' format
+ */
+	public function allowedParents(Model $model, $id = null) {
+		if (!$model->Behaviors->enabled('Aliasable')) {
+			$model->Behaviors->load('Aliasable');
+		}
+		if ($id == $model->byAlias('public')) {
+			return array();
+		}
+		$adminRoleId = $model->byAlias('admin');
+		$excludes = array_values(array($adminRoleId, $id));
+		$options = array('conditions' => array(
+			'NOT' => array($model->alias . '.id' => $excludes),
+		));
+		return $model->find('list', $options);
 	}
 
 }

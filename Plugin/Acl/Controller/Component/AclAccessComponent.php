@@ -28,6 +28,34 @@ class AclAccessComponent extends Component {
  */
 	public function startup(Controller $controller) {
 		$this->_controller = $controller;
+		$adminPrefix = isset($controller->request->params['admin']);
+		$isAdminAction = $controller->name == 'Roles' && $adminPrefix;
+		if (!$adminPrefix) {
+			return;
+		}
+
+		switch ($controller->name) {
+			case 'Roles':
+				$this->_setupRole();
+			break;
+		}
+	}
+
+/**
+ * Hook admin menu element to set role parent
+ */
+	protected function _setupRole() {
+		$title = __('Parent Role');
+		$element = 'Acl.admin/parent_role';
+		Croogo::hookAdminTab('Roles/admin_add', $title, $element);
+		Croogo::hookAdminTab('Roles/admin_edit', $title, $element);
+
+		$this->_controller->Role->bindAro();
+		$id = null;
+		if (!empty($this->_controller->request->params['pass'][0])) {
+			$id = $this->_controller->request->params['pass'][0];
+		}
+		$this->_controller->set('parents', $this->_controller->Role->allowedParents($id));
 	}
 
 /**
