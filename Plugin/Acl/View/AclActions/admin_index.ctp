@@ -8,6 +8,7 @@ $this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentR
 <?php $this->start('tabs'); ?>
 <li><?php echo $this->Html->link(__('New Action'), array('action'=>'add')); ?></li>
 <li><?php echo $this->Html->link(__('Generate Actions'), array('action'=>'generate')); ?></li>
+<li><?php echo $this->Form->postLink(__('Sync Actions'), array('controller' => 'acl_actions', 'action'=>'generate', 'permissions' => 1, 'sync' => 1)); ?></li>
 <?php $this->end(); ?>
 
 <table class="permission-table" cellpadding="0" cellspacing="0">

@@ -161,7 +161,11 @@ class AclActionsController extends AclAppController {
 		App::uses('AclExtras', 'Acl.Lib');
 		$AclExtras = new AclExtras();
 		$AclExtras->startup($this);
-		$result = $AclExtras->aco_update();
+		if (isset($this->request->named['sync'])) {
+			$result = $AclExtras->aco_sync();
+		} else {
+			$result = $AclExtras->aco_update();
+		}
 		$output = $AclExtras->output;
 		$output += $AclExtras->errors;
 		if ($result) {

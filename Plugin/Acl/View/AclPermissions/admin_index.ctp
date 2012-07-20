@@ -6,6 +6,7 @@ $this->Html->script('/acl/js/acl_permissions.js', false);
 
 <?php $this->start('tabs'); ?>
 <li><?php echo $this->Form->postLink(__('Generate Actions'), array('controller' => 'acl_actions', 'action'=>'generate', 'permissions' => 1)); ?></li>
+<li><?php echo $this->Form->postLink(__('Sync Actions'), array('controller' => 'acl_actions', 'action'=>'generate', 'permissions' => 1, 'sync' => 1)); ?></li>
 <li><?php echo $this->Html->link(__('Edit Actions'), array('controller' => 'acl_actions', 'action'=>'index', 'permissions' => 1)); ?></li>
 <?php $this->end(); ?>
 
