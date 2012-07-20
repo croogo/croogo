@@ -26,7 +26,13 @@ class CroogoJson {
 		} else {
 			$json = json_encode($json);
 		}
-		$json = str_replace(array('\/', ':{', ':"'), array('/', ': {', ': "'), $json);
+		$json = str_replace(array('\/', ':{', ':"', ':['), array('/', ': {', ': "', ': ['), $json);
+		$found = preg_match_all('/:([0-9]+)/', $json, $matches);
+		if ($found) {
+			foreach ($matches[0] as $i => $search) {
+				$json = preg_replace('/' . $search . '/', ': ' . $matches[1][$i], $json);
+			}
+		}
 		$result			= '';
 		$pos			= 0;
 		$strLen			= strlen($json);

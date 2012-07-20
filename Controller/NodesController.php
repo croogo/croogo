@@ -56,6 +56,16 @@ class NodesController extends AppController {
 		if (isset($this->request->params['type'])) {
 			$this->request->params['named']['type'] = $this->request->params['type'];
 		}
+
+		if (isset($this->request->data['Meta'])) {
+			$unlockedFields = array();
+			foreach ($this->request->data['Meta'] as $uuid => $fields) {
+				foreach ($fields as $field => $vals) {
+					$unlockedFields[] = 'Meta.' . $uuid . '.' . $field;
+				}
+			}
+			$this->Security->unlockedFields += $unlockedFields;
+		}
 	}
 
 /**
