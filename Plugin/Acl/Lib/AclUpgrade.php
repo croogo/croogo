@@ -64,6 +64,12 @@ class AclUpgrade extends Object {
 			$root = $root[0];
 		}
 
+		$upgraded = $this->Aco->node('controllers/Acl/AclPermissions');
+		$upgraded = !empty($upgraded);
+		if ($upgraded) {
+			return array(__('<warning>ACL Database seems to have already been upgraded</warning>'));
+		}
+
 		$this->Aco->begin();
 		$this->_renameFileManagerAco();
 		$errors = $this->update_role_hierarchy();

@@ -27,6 +27,21 @@ class AclHelper extends Helper {
  */
 	public $allowedActions = array();
 
+/**
+ * beforeRender
+ *
+ */
+	public function beforeRender($viewFile) {
+		// display upgrade link when required
+		$key = AuthComponent::$sessionKey . '.aclUpgrade';
+		if ($this->_View->Session->read($key)) {
+			$link = $this->_View->Html->link(__('Upgrade Acl database'), array(
+				'controller' => 'acl_permissions', 'action' => 'upgrade'
+			));
+			$this->_View->Blocks->append('tabs', sprintf('<li>%s</li>', $link));
+		}
+	}
+
 /** Generate allowed actions for current logged in Role
  *
  * @return array
