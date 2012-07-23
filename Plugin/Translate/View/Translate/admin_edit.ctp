@@ -4,6 +4,7 @@ $this->set('className', 'translate');
 ?>
 <?php
 	echo $this->Form->create($modelAlias, array('url' => array(
+		'plugin' => 'translate',
 		'controller' => 'translate',
 		'action' => 'edit',
 		$id,
