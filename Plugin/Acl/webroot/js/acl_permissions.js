@@ -26,7 +26,7 @@ AclPermissions.templates = {
 
 	editLinks: _.template('<td> <%= edit %> <%= del %> <%= up %> <%= down %> </td>')
 
-}
+};
 
 /**
  * functions to execute when document is ready
@@ -37,7 +37,7 @@ AclPermissions.documentReady = function() {
 	AclPermissions.permissionToggle();
 	AclPermissions.tableToggle();
 	$('tr:has(div.controller)').addClass('controller-row');
-}
+};
 
 /**
  * Toggle permissions (enable/disable)
@@ -66,7 +66,7 @@ AclPermissions.permissionToggle = function() {
 
 		return false;
 	});
-}
+};
 
 /**
  * Toggle table rows (collapsible)
@@ -113,7 +113,7 @@ AclPermissions.tableToggle = function() {
 		var $row = $el.parents('tr');
 		$(rows).insertAfter($row);
 		$el.removeClass('loading');
-	}
+	};
 
 	// create table cells for role permissions
 	var renderRoles = function(aros, acoId, roles) {
@@ -143,7 +143,7 @@ AclPermissions.tableToggle = function() {
 			text += AclPermissions.templates.toggleButton(cell);
 		}
 		return text;
-	}
+	};
 
 	$('.permission-table').on('click', '.controller', function() {
 		var $el = $(this);
@@ -178,7 +178,7 @@ AclPermissions.tableToggle = function() {
 			renderPermissions.call($el[0], data, textStatus);
 		});
 	});
-}
+};
 
 /**
  * document ready
