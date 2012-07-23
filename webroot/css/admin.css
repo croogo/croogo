@@ -66,6 +66,7 @@ img.hook-toggle:hover { cursor: pointer; }
 .controller-row.level-1 { background: #eee; color: #555; }
 .controller-row a { color: #efefef; }
 .controller:hover { cursor: pointer; }
+.controller { padding-left: 15px; }
 .collapse { background: url('../img/icons/bullet_arrow_down.png') no-repeat; padding-left: 15px; }
 .expand { background: url('../img/icons/bullet_arrow_right.png') no-repeat; padding-left: 15px; }
 .controller.loading {
