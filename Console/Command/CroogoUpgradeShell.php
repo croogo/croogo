@@ -29,10 +29,10 @@ class CroogoUpgradeShell extends AppShell {
 			CakePlugin::load('Settings');
 		}
 		if (file_exists(APP . 'Config' . DS . 'settings.json')) {
-			ClassRegistry::init('Settings.Setting')->updateJson();
-			$this->out(__('<success>Config/settings.yml converted to settings.json</success>'));
+			$this->err(__('<warning>Config/settings.json already exist</warning>'));
 		} else {
-			$this->err(__('Config/settings.json already exist'));
+			ClassRegistry::init('Settings.Setting')->updateJson();
+			$this->out(__('<success>Config/settings.yml created based on `settings` table</success>'));
 		}
 	}
 
