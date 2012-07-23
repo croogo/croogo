@@ -1,5 +1,5 @@
 <?php $this->extend('/Common/admin_edit'); ?>
-<?php $this->Html->script(array('nodes'), false); ?>
+<?php $this->Html->script(array('Contents.nodes'), false); ?>
 <?php echo $this->Form->create('Node', array('url' => array('action' => 'edit')));?>
 	<fieldset>
 		<div class="tabs">
