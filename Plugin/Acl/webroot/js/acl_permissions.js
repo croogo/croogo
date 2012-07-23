@@ -82,11 +82,11 @@ AclPermissions.tableToggle = function() {
 		var id = $el.data('id');
 		for (var acoId in data.permissions) {
 			text = '<td>' + acoId + '</td>';
-			var aliases = data.permissions[acoId]
+			var aliases = data.permissions[acoId];
 			for (var alias in aliases) {
-				var aco = aliases[alias]
-				var children = aco['children']
-				var classes = children > 0 ? 'controller expand' : ''
+				var aco = aliases[alias];
+				var children = aco['children'];
+				var classes = children > 0 ? 'controller expand' : '';
 				classes += " level-" + data.level;
 				text += AclPermissions.templates.controllerCell({
 					id: acoId,
@@ -170,7 +170,7 @@ AclPermissions.tableToggle = function() {
 			params = $.extend(params, {
 				urls: true,
 				perms: false
-			})
+			});
 		}
 
 		var url = Croogo.basePath + 'admin/acl/acl_permissions/index/';
