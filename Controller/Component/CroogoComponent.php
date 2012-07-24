@@ -1,5 +1,6 @@
 <?php
 
+App::uses('Component', 'Controller');
 App::uses('File', 'Utility');
 App::uses('Folder', 'Utility');
 App::uses('CroogoPlugin', 'Extensions.Lib');

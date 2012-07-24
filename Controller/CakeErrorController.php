@@ -1,5 +1,7 @@
 <?php
 
+App::uses('AppController', 'Controller');
+
 /**
  * Error Handling Controller
  *

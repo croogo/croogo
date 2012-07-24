@@ -1,5 +1,6 @@
 <?php
 
+App::uses('AppShell', 'Console/Command');
 App::uses('Security', 'Utility');
 
 /**

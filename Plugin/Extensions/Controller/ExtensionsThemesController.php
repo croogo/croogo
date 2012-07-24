@@ -1,6 +1,8 @@
 <?php
+
 App::uses('File', 'Utility');
 App::uses('Folder', 'Utility');
+App::uses('ExtensionsAppController', 'Extensions.Controller');
 App::uses('ExtensionsInstaller', 'Extensions.Lib');
 App::uses('CroogoTheme', 'Extensions.Lib');
 

@@ -1,4 +1,7 @@
 <?php
+
+App::uses('AppShell', 'Console/Command');
+
 /**
  * Install Shell
  *

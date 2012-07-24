@@ -1,4 +1,5 @@
 <?php
+
 App::uses('Folder', 'Utility');
 App::uses('CroogoComposer', 'Extensions.Lib');
 

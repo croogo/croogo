@@ -1,4 +1,7 @@
 <?php
+
+App::uses('Helper', 'View/Helper');
+
 /**
  * @version 1.1
  * @author Josh Hundley

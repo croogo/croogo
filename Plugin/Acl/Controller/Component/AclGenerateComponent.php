@@ -1,5 +1,6 @@
 <?php
 
+App::uses('Component', 'Controller');
 App::uses('Folder', 'Utility');
 
 /**

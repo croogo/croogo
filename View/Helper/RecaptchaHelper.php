@@ -1,4 +1,7 @@
 <?php
+
+App::uses('AppHelper', 'View/Helper');
+
 /**
  * @link http://bakery.cakephp.org/articles/view/recaptcha-component-helper-for-cakephp
  */

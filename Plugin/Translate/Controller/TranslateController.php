@@ -1,4 +1,7 @@
 <?php
+
+App::uses('TranslateAppController', 'Translate.Controller');
+
 /**
  * Translate Controller
  *

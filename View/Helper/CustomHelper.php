@@ -1,4 +1,7 @@
 <?php
+
+App::uses('Helper', 'View/Helper');
+
 /**
  * Custom Helper
  *

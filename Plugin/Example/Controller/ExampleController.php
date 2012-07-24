@@ -1,5 +1,7 @@
 <?php
 
+App::uses('ExampleAppController', 'Example.Controller');
+
 /**
  * Example Controller
  *

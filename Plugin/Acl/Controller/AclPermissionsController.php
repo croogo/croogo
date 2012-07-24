@@ -1,4 +1,7 @@
 <?php
+
+App::uses('AclAppController', 'Acl.Controller');
+
 /**
  * AclPermissions Controller
  *
