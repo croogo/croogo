@@ -63,7 +63,7 @@ class MetaBehavior extends ModelBehavior {
  * @param array $data
  * @return array
  */
-	public function prepareData(&$model, $data) {
+	public function prepareData(Model $model, $data) {
 		return $this->_prepareMeta($data);
 	}
 
@@ -99,7 +99,7 @@ class MetaBehavior extends ModelBehavior {
  * @param array $options
  * @return void
  */
-	public function saveWithMeta(&$model, $data, $options = array()) {
+	public function saveWithMeta(Model $model, $data, $options = array()) {
 		$data = $this->_prepareMeta($data);
 		return $model->saveAll($data, $options);
 	}

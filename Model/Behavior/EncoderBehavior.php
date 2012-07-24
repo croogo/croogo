@@ -38,7 +38,7 @@ class EncoderBehavior extends ModelBehavior {
  * @param array $options (optional)
  * @return string
  */
-	public function encodeData(&$model, $data, $options = array()) {
+	public function encodeData(Model $model, $data, $options = array()) {
 		$_options = array(
 			'json' => false,
 			'trim' => true,
@@ -83,7 +83,7 @@ class EncoderBehavior extends ModelBehavior {
  * @param string $data
  * @return array
  */
-	public function decodeData(&$model, $data) {
+	public function decodeData(Model $model, $data) {
 		if ($data == '') {
 			$output = '';
 		} else {
