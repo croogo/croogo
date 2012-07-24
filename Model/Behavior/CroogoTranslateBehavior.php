@@ -49,7 +49,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 		$db = ConnectionManager::getDataSource($model->useDbConfig);
 		if (!$db->connected) {
 			trigger_error(
-				sprintf(__('Datasource %s for CroogoTranslateBehavior of model %s is not connected'), $model->useDbConfig, $model->alias),
+				__('Datasource %s for CroogoTranslateBehavior of model %s is not connected', $model->useDbConfig, $model->alias),
 				E_USER_ERROR
 			);
 			return false;

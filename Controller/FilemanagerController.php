@@ -161,7 +161,7 @@ class FilemanagerController extends AppController {
 			$this->Session->setFlash(__(sprintf('Path %s is restricted', $path), true));
 			$this->redirect(array('controller' => 'filemanager', 'action' => 'browse'));
 		}
-		$this->set('title_for_layout', sprintf(__('Edit file: %s'), $path));
+		$this->set('title_for_layout', __('Edit file: %s', $path));
 
 		$pathE = explode(DS, $path);
 		$n = count($pathE) - 1;
