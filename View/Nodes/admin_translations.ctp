@@ -32,7 +32,7 @@
 		$rows = array();
 		foreach ($translations AS $translation) {
 			$actions  = $this->Html->link(__('Edit'), array('action' => 'translate', $id, 'locale' => $translation[$runtimeModelAlias]['locale']));
-			$actions .= ' ' . $this->Html->link(__('Delete'), array('action' => 'delete_translation', $translation[$runtimeModelAlias]['locale'], $id), null, __('Are you sure?'));
+			$actions .= ' ' . $this->Form->postLink(__('Delete'), array('action' => 'delete_translation', $translation[$runtimeModelAlias]['locale'], $id), null, __('Are you sure?'));
 
 			$rows[] = array(
 				'',
