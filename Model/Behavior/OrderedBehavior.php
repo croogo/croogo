@@ -40,7 +40,7 @@
  *
  * To set up this behavior we add this property to the Page model :
  *
- * var $actsAs = array('Ordered' => array(
+ * public $actsAs = array('Ordered' => array(
  * 			'field' 		=> 'page_number',
  * 			'foreign_key' 	=> 'book_id'
  * 		));
