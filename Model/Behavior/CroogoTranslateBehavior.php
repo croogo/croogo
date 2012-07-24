@@ -231,7 +231,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 			if (!class_exists('I18n')) {
 				App::import('Core', 'i18n');
 			}
-			$I18n =& I18n::getInstance();
+			$I18n = I18n::getInstance();
 			$I18n->l10n->get(Configure::read('Config.language'));
 			$model->locale = $I18n->l10n->locale;
 			*/

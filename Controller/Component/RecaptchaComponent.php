@@ -21,7 +21,7 @@ class RecaptchaComponent extends Component {
 		Configure::write("Recaptcha.pubKey", $this->publickey);
 		Configure::write("Recaptcha.privateKey", $this->privatekey);
 
-		$this->controller =& $controller;
+		$this->controller = $controller;
 		$this->controller->helpers[] = "Recaptcha";
 	}
 
