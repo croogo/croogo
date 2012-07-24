@@ -110,7 +110,7 @@ class InstallShell extends AppShell {
 			$url = '';
 			if (count($this->args) == 2) {
 				$url = $this->args[1];
-			} else if (count($this->args) == 3) {
+			} elseif (count($this->args) == 3) {
 				$url = 'http://github.com/' . $this->args[1] . '/' . $this->args[2];
 			}
 			if ($zip = $this->_download($url)) {

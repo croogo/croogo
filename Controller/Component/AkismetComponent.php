@@ -36,7 +36,7 @@
  *    $akismet->setCommentAuthorURL($url);
  *    $akismet->setCommentContent($comment);
  *    $akismet->setPermalink('http://www.example.com/blog/alex/someurl/');
- *    if($akismet->isCommentSpam())
+ *    if ($akismet->isCommentSpam())
  *      // store the comment but mark it as spam (in case of a mis-diagnosis)
  *    else
  *      // store the comment normally
@@ -47,7 +47,7 @@
  * <code>
  *   $akismet = new Akismet('http://www.example.com/blog/', 'aoeu1aoue');
  *
- *   if($akismet->isKeyValid()) {
+ *   if ($akismet->isKeyValid()) {
  *     // api key is okay
  *   } else {
  *     // api key is invalid
@@ -101,7 +101,7 @@ class AkismetComponent extends Component
 		$this->comment['blog'] = $this->blogURL;
 		$this->comment['user_agent'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'Unknown';
 
-		if(isset($_SERVER['HTTP_REFERER'])) {
+		if (isset($_SERVER['HTTP_REFERER'])) {
 			$this->comment['referrer'] = $_SERVER['HTTP_REFERER'];
 		}
 
@@ -147,9 +147,9 @@ class AkismetComponent extends Component
 
 	// Formats the data for transmission
 	private function getQueryString() {
-		foreach($_SERVER as $key => $value) {
-			if(!in_array($key, $this->ignore)) {
-				if($key == 'REMOTE_ADDR') {
+		foreach ($_SERVER as $key => $value) {
+			if (!in_array($key, $this->ignore)) {
+				if ($key == 'REMOTE_ADDR') {
 					$this->comment[$key] = $this->comment['user_ip'];
 				} else {
 					$this->comment[$key] = $value;
@@ -159,8 +159,8 @@ class AkismetComponent extends Component
 
 		$query_string = '';
 
-		foreach($this->comment as $key => $data) {
-			if(!is_array($data)) {
+		foreach ($this->comment as $key => $data) {
+			if (!is_array($data)) {
 				$query_string .= $key . '=' . urlencode(stripslashes($data)) . '&';
 			}
 		}
@@ -179,7 +179,7 @@ class AkismetComponent extends Component
 	public function isCommentSpam() {
 		$response = $this->sendRequest($this->getQueryString(), $this->wordPressAPIKey . '.rest.akismet.com', '/' . $this->akismetVersion . '/comment-check');
 
-		if($response[1] == 'invalid' && !$this->isKeyValid()) {
+		if ($response[1] == 'invalid' && !$this->isKeyValid()) {
 			throw new exception('The Wordpress API key passed to the Akismet constructor is invalid.  Please obtain a valid one from http://wordpress.com/api-keys/');
 		}
 
@@ -341,14 +341,14 @@ class SocketWriteRead {
 
 		$fs = fsockopen($this->host, $this->port, $this->errorNumber, $this->errorString, 3);
 
-		if($this->errorNumber != 0) {
+		if ($this->errorNumber != 0) {
 			throw new Exception('Error connecting to host: ' . $this->host . ' Error number: ' . $this->errorNumber . ' Error message: ' . $this->errorString);
 		}
 
-		if($fs !== false) {
+		if ($fs !== false) {
 			@fwrite($fs, $this->request);
 
-			while(!feof($fs)) {
+			while (!feof($fs)) {
 				$this->response .= fgets($fs, $this->responseLength);
 			}
 

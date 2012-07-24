@@ -5,19 +5,19 @@
 class RecaptchaHelper extends AppHelper {
 	public $helpers = array('Form');
 
-	public function display_form($output_method = 'return', $error = null, $use_ssl = false){
+	public function display_form($output_method = 'return', $error = null, $use_ssl = false) {
 		$this->Form->unlockField('recaptcha_challenge_field');
 		$this->Form->unlockField('recaptcha_response_field');
 		$data = $this->__form(Configure::read("Recaptcha.pubKey"),$error,$use_ssl);
-		if($output_method == "echo")
+		if ($output_method == "echo")
 			echo $data;
 		else
 			return $data;
 	}
 
-	public function hide_mail($email = '',$output_method = 'return'){
+	public function hide_mail($email = '',$output_method = 'return') {
 		$data = $this->recaptcha_mailhide_html(Configure::read('Recaptcha.pubKey'), Configure::read('Recaptcha.privateKey'), $email);
-		if($output_method == "echo")
+		if ($output_method == "echo")
 			echo $data;
 		else
 			return $data;
@@ -32,7 +32,7 @@ class RecaptchaHelper extends AppHelper {
 	 * @param boolean $use_ssl Should the request be made over ssl? (optional, default is false)
 	 * @return string - The HTML to be embedded in the user's form.
 	 */
-	private function __form($pubkey, $error = null, $use_ssl = false){
+	private function __form($pubkey, $error = null, $use_ssl = false) {
 		if ($pubkey == null || $pubkey == '') {
 			die ("To use reCAPTCHA you must get an API key from <a href='http://recaptcha.net/api/getkey'>http://recaptcha.net/api/getkey</a>");
 		}
@@ -68,7 +68,7 @@ class RecaptchaHelper extends AppHelper {
 		return mcrypt_encrypt($enc, $ky, $val, $mode, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
 	}
 
-	protected function _recaptcha_mailhide_urlbase64 ($x) {
+	protected function _recaptcha_mailhide_urlbase64($x) {
 		return strtr(base64_encode ($x), '+/', '-_');
 	}
 
@@ -91,12 +91,12 @@ class RecaptchaHelper extends AppHelper {
 	 * eg, given johndoe@example,com return ["john", "example.com"].
 	 * the email is then displayed as john...@example.com
 	 */
-	protected function _recaptcha_mailhide_email_parts ($email) {
+	protected function _recaptcha_mailhide_email_parts($email) {
 		$arr = preg_split("/@/", $email );
 
 		if (strlen ($arr[0]) <= 4) {
 			$arr[0] = substr ($arr[0], 0, 1);
-		} else if (strlen ($arr[0]) <= 6) {
+		} elseif (strlen ($arr[0]) <= 6) {
 			$arr[0] = substr ($arr[0], 0, 3);
 		} else {
 			$arr[0] = substr ($arr[0], 0, 4);

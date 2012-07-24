@@ -22,7 +22,7 @@ class ImageHelper extends Helper {
 	 */
 	public function resize($path, $width, $height, $aspect = true, $htmlAttributes = array(), $return = false) {
 		$types = array(1 => "gif", "jpeg", "png", "swf", "psd", "wbmp"); // used to determine image type
-		if(empty($htmlAttributes['alt'])) $htmlAttributes['alt'] = 'thumb';  // Ponemos alt default
+		if (empty($htmlAttributes['alt'])) $htmlAttributes['alt'] = 'thumb';  // Ponemos alt default
 
 		$uploadsDir = 'uploads';
 

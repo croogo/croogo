@@ -5,7 +5,7 @@
 	<?php echo __('You are here:');
 
 		$breadcrumb = $this->Filemanager->breadcrumb($path);
-		foreach($breadcrumb AS $pathname => $p) {
+		foreach ($breadcrumb AS $pathname => $p) {
 			echo $this->Filemanager->linkDirectory($pathname, $p);
 			echo DS;
 		}
