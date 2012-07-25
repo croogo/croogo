@@ -32,7 +32,7 @@ class AttachmentsController extends FileManagerAppController {
  * @var array
  * @access public
  */
-	public $uses = array('Contents.Node');
+	public $uses = array('Nodes.Node');
 
 /**
  * Helpers used by the Controller

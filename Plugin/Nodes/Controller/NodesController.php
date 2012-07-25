@@ -1,20 +1,20 @@
 <?php
 
-App::uses('ContentsAppController', 'Contents.Controller');
+App::uses('NodesAppController', 'Nodes.Controller');
 
 /**
  * Nodes Controller
  *
  * PHP version 5
  *
- * @category Contents.Controller
- * @package  Croogo.Contents
+ * @category Nodes.Controller
+ * @package  Croogo.Nodes
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class NodesController extends ContentsAppController {
+class NodesController extends NodesAppController {
 
 /**
  * Controller name
@@ -41,7 +41,7 @@ class NodesController extends ContentsAppController {
  * @access public
  */
 	public $uses = array(
-		'Contents.Node',
+		'Nodes.Node',
 	);
 
 /**

@@ -26,7 +26,7 @@ class AclUpgrade extends Object {
 		'Contacts' => array(
 			'Contacts', 'Messages',
 			),
-		'Contents' => array(
+		'Nodes' => array(
 			'Nodes',
 			),
 		'Menus' => array(

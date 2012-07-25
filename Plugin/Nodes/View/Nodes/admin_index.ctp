@@ -1,6 +1,6 @@
 <?php
 $this->extend('/Common/admin_index');
-$this->Html->script(array('Contents.nodes'), false);
+$this->Html->script(array('Nodes.nodes'), false);
 ?>
 <?php $this->start('tabs'); ?>
 	<li><?php echo $this->Html->link(__('Create content'), array('action'=>'create')); ?></li>

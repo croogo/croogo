@@ -1,20 +1,20 @@
 <?php
 
-App::uses('ContentsAppModel', 'Contents.Model');
+App::uses('NodesAppModel', 'Nodes.Model');
 
 /**
  * Node
  *
  * PHP version 5
  *
- * @category Contents.Model
- * @package  Croogo.Contents
+ * @category Nodes.Model
+ * @package  Croogo.Nodes
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Node extends ContentsAppModel {
+class Node extends NodesAppModel {
 
 /**
  * Model name

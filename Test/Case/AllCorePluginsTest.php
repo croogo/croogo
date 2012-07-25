@@ -14,7 +14,7 @@ class AllCorePluginsTest extends PHPUnit_Framework_TestSuite {
 			'Blocks',
 			'Comments',
 			'Contacts',
-			'Contents',
+			'Nodes',
 			'Extensions',
 			'FileManager',
 			'Menus',

@@ -8,7 +8,7 @@
 		if (count($nodeTerms) > 0) {
 			foreach ($nodeTerms as $termSlug => $termTitle) {
 				$nodeTermLinks[] = $this->Html->link($termTitle, array(
-					'plugin' => 'contents',
+					'plugin' => 'nodes',
 					'controller' => 'nodes',
 					'action' => 'term',
 					'type' => $this->Layout->node('type'),

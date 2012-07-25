@@ -1,13 +1,13 @@
 <?php
 
-Croogo::hookControllerProperty('*', 'uses', array('Contents.Node'));
+Croogo::hookControllerProperty('*', 'uses', array('Nodes.Node'));
 
-Croogo::hookComponent('*', 'Contents.Contents');
+Croogo::hookComponent('*', 'Nodes.Nodes');
 
 CroogoNav::add('content', array(
 	'title' => __('Content'),
 	'url' => array(
-		'plugin' => 'contents',
+		'plugin' => 'nodes',
 		'admin' => true,
 		'controller' => 'nodes',
 		'action' => 'index',
@@ -18,7 +18,7 @@ CroogoNav::add('content', array(
 		'list' => array(
 			'title' => __('List'),
 			'url' => array(
-				'plugin' => 'contents',
+				'plugin' => 'nodes',
 				'admin' => true,
 				'controller' => 'nodes',
 				'action' => 'index',
@@ -29,7 +29,7 @@ CroogoNav::add('content', array(
 		'create' => array(
 			'title' => __('Create'),
 			'url' => array(
-				'plugin' => 'contents',
+				'plugin' => 'nodes',
 				'admin' => true,
 				'controller' => 'nodes',
 				'action' => 'create',

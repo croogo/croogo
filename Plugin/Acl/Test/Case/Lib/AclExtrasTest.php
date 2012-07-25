@@ -46,9 +46,9 @@ class AclExtrasTest extends CroogoTestCase {
 			'search', 'view',
 			);
 
-		$this->AclExtras->aco_sync(array('plugin' => 'Contents'));
+		$this->AclExtras->aco_sync(array('plugin' => 'Nodes'));
 
-		$node = $this->AclExtras->Aco->node('controllers/Contents/Nodes');
+		$node = $this->AclExtras->Aco->node('controllers/Nodes/Nodes');
 		$result = $this->AclExtras->Aco->children($node[0]['Aco']['id'], true);
 		$result = Hash::extract($result, '{n}.Aco.alias');
 		sort($result);

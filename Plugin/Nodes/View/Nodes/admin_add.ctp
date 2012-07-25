@@ -1,6 +1,6 @@
 <?php $this->extend('/Common/admin_edit'); ?>
-<?php $this->Html->script(array('Contents.nodes'), false); ?>
-<?php echo $this->Form->create('Node', array('url' => array('action' => 'edit')));?>
+<?php $this->Html->script(array('Nodes.nodes'), false); ?>
+<?php echo $this->Form->create('Node', array('url' => array('action' => 'add', $typeAlias)));?>
 	<fieldset>
 		<div class="tabs">
 			<ul>
@@ -12,10 +12,9 @@
 
 			<div id="node-main">
 			<?php
-				echo $this->Form->input('id');
 				echo $this->Form->input('parent_id', array('type' => 'select', 'options' => $nodes, 'empty' => true));
 				echo $this->Form->input('title');
-				echo $this->Form->input('slug');
+				echo $this->Form->input('slug', array('class' => 'slug'));
 				echo $this->Form->input('excerpt');
 				echo $this->Form->input('body', array('class' => 'content'));
 			?>
@@ -29,8 +28,14 @@
 
 			<div id="node-publishing">
 			<?php
-				echo $this->Form->input('status', array('label' => __('Published')));
-				echo $this->Form->input('promote', array('label' => __('Promoted to front page')));
+				echo $this->Form->input('status', array(
+					'label' => __('Published'),
+					'checked' => 'checked',
+				));
+				echo $this->Form->input('promote', array(
+					'label' => __('Promoted to front page'),
+					'checked' => 'checked',
+				));
 				echo $this->Form->input('user_id');
 				echo $this->Form->input('created');
 			?>
@@ -50,4 +55,4 @@
 		));
 	?>
 	</div>
-<?php echo $this->Form->end();?>
+<?php echo $this->Form->end(); ?>
