@@ -1,7 +1,7 @@
 <div id="node-list-<?php echo $alias; ?>" class="node-list">
 	<ul>
 	<?php
-		foreach ($nodesList AS $n) {
+		foreach ($nodesList as $n) {
 			if ($options['link']) {
 				echo '<li>';
 				echo $this->Html->link($n['Node']['title'], array(

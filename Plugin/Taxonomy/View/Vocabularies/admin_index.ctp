@@ -11,7 +11,7 @@
 	echo $tableHeaders;
 
 	$rows = array();
-	foreach ($vocabularies AS $vocabulary) {
+	foreach ($vocabularies as $vocabulary) {
 		$actions  = $this->Html->link(__('View terms'), array('controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id']));
 		$actions .= ' ' . $this->Html->link(__('Edit'), array('action' => 'edit', $vocabulary['Vocabulary']['id']));
 		$actions .= ' ' . $this->Html->link(__('Move up'), array('action' => 'moveup', $vocabulary['Vocabulary']['id']));

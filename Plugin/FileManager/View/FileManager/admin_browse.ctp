@@ -10,7 +10,7 @@
 <?php
 	echo __('You are here:') . ' ';
 	$breadcrumb = $this->FileManager->breadcrumb($path);
-	foreach ($breadcrumb AS $pathname => $p) {
+	foreach ($breadcrumb as $pathname => $p) {
 		echo $this->FileManager->linkDirectory($pathname, $p);
 		echo DS;
 	}
@@ -29,7 +29,7 @@
 
 		// directories
 		$rows = array();
-		foreach ($content['0'] AS $directory) {
+		foreach ($content['0'] as $directory) {
 			$actions = $this->FileManager->linkDirectory(__('Open'), $path.$directory.DS);
 			if ($this->FileManager->inPath($deletablePaths, $path.$directory)) {
 				$actions .= ' ' . $this->FileManager->link(__('Delete'), array(
@@ -47,7 +47,7 @@
 
 		// files
 		$rows = array();
-		foreach ($content['1'] AS $file) {
+		foreach ($content['1'] as $file) {
 			$actions = $this->FileManager->link(__('Edit'), array('controller' => 'file_manager', 'action' => 'editfile'), $path.$file);
 			if ($this->FileManager->inPath($deletablePaths, $path.$file)) {
 				$actions .= $this->FileManager->link(__('Delete'), array(

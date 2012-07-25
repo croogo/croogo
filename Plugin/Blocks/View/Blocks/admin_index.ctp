@@ -15,7 +15,7 @@
 	echo $tableHeaders;
 
 	$rows = array();
-	foreach ($blocks AS $block) {
+	foreach ($blocks as $block) {
 		$actions  = $this->Html->link(__('Move up'), array('controller' => 'blocks', 'action' => 'moveup', $block['Block']['id']));
 		$actions .= ' ' . $this->Html->link(__('Move down'), array('controller' => 'blocks', 'action' => 'movedown', $block['Block']['id']));
 		$actions .= ' ' . $this->Html->link(__('Edit'), array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id']));

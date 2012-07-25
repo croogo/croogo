@@ -49,7 +49,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 		$db = ConnectionManager::getDataSource($model->useDbConfig);
 		if (!$db->connected) {
 			trigger_error(
-				sprintf(__('Datasource %s for CroogoTranslateBehavior of model %s is not connected'), $model->useDbConfig, $model->alias),
+				__('Datasource %s for CroogoTranslateBehavior of model %s is not connected', $model->useDbConfig, $model->alias),
 				E_USER_ERROR
 			);
 			return false;
@@ -81,7 +81,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return array
  * @access public
  */
-	public function getTranslationFields(&$model) {
+	public function getTranslationFields(Model $model) {
 		if (Set::numeric(array_keys($this->translationFields[$model->alias]))) {
 			return $this->translationFields[$model->alias];
 		} else {
@@ -160,7 +160,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @param array $data
  * @param boolean $validate
  */
-	public function saveTranslation(&$model, $data = null, $validate = true) {
+	public function saveTranslation(Model $model, $data = null, $validate = true) {
 		$model->data = $data;
 		if (!isset($model->data[$model->alias])) {
 			return false;
@@ -225,13 +225,13 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return mixed string or false
  * @access protected
  */
-	protected function _getLocale(&$model) {
+	protected function _getLocale(Model $model) {
 		if (!isset($model->locale) || is_null($model->locale)) {
 			/*
 			if (!class_exists('I18n')) {
 				App::import('Core', 'i18n');
 			}
-			$I18n =& I18n::getInstance();
+			$I18n = I18n::getInstance();
 			$I18n->l10n->get(Configure::read('Config.language'));
 			$model->locale = $I18n->l10n->locale;
 			*/
@@ -247,7 +247,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return object
  * @access public
  */
-	public function &translateModel(&$model) {
+	public function &translateModel(Model $model) {
 		if (!isset($this->runtime[$model->alias]['model'])) {
 			if (!isset($model->translateModel) || empty($model->translateModel)) {
 				$className = 'I18nModel';

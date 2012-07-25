@@ -13,7 +13,7 @@
 	echo $tableHeaders;
 
 	$rows = array();
-	foreach ($languages AS $language) {
+	foreach ($languages as $language) {
 		$actions  = $this->Html->link(__('Move up'), array('action' => 'moveup', $language['Language']['id']));
 		$actions .= ' ' . $this->Html->link(__('Move down'), array('action' => 'movedown', $language['Language']['id']));
 		$actions .= ' ' . $this->Html->link(__('Edit'), array('action' => 'edit', $language['Language']['id']));

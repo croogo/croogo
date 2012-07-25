@@ -68,7 +68,7 @@ class TermsController extends TaxonomyAppController {
 				'action' => 'index',
 			));
 		}
-		$this->set('title_for_layout', sprintf(__('Vocabulary: %s'), $vocabulary['Vocabulary']['title']));
+		$this->set('title_for_layout', __('Vocabulary: %s', $vocabulary['Vocabulary']['title']));
 
 		$termsTree = $this->Term->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array(
 			'key' => 'id',
@@ -108,7 +108,7 @@ class TermsController extends TaxonomyAppController {
 				'action' => 'index',
 			));
 		}
-		$this->set('title_for_layout', sprintf(__('%s: Add Term'), $vocabulary['Vocabulary']['title']));
+		$this->set('title_for_layout', __('%s: Add Term', $vocabulary['Vocabulary']['title']));
 
 		if (!empty($this->request->data)) {
 			$termId = $this->Term->saveAndGetId($this->request->data['Term']);
@@ -197,7 +197,7 @@ class TermsController extends TaxonomyAppController {
 				'action' => 'index',
 			));
 		}
-		$this->set('title_for_layout', sprintf(__('%s: Edit Term'), $vocabulary['Vocabulary']['title']));
+		$this->set('title_for_layout', __('%s: Edit Term', $vocabulary['Vocabulary']['title']));
 
 		if (!empty($this->request->data)) {
 			if ($term['Term']['slug'] != $this->request->data['Term']['slug']) {

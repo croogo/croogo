@@ -67,7 +67,7 @@ class ParamsBehavior extends ModelBehavior {
  * @param string $params
  * @return array
  */
-	public function paramsToArray(&$model, $params) {
+	public function paramsToArray(Model $model, $params) {
 		$output = array();
 		$params = explode("\n", $params);
 		foreach ($params as $param) {

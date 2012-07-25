@@ -140,7 +140,7 @@ class NodesController extends ContentsAppController {
 			$this->redirect(array('action' => 'create'));
 		}
 
-		$this->set('title_for_layout', sprintf(__('Create content: %s'), $type['Type']['title']));
+		$this->set('title_for_layout', __('Create content: %s', $type['Type']['title']));
 		$this->Node->type = $type['Type']['alias'];
 		$this->Node->Behaviors->attach('Tree', array(
 			'scope' => array(
@@ -170,14 +170,14 @@ class NodesController extends ContentsAppController {
 			$this->request->data['Node']['visibility_roles'] = $this->Node->encodeData($this->request->data['Role']['Role']);
 			if ($this->Node->saveWithMeta($this->request->data)) {
 				Croogo::dispatchEvent('Controller.Nodes.afterAdd', $this, array('data' => $this->request->data));
-				$this->Session->setFlash(sprintf(__('%s has been saved'), $type['Type']['title']), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__('%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));
 				if (isset($this->request->data['apply'])) {
 					$this->redirect(array('action' => 'edit', $this->Node->id));
 				} else {
 					$this->redirect(array('action' => 'index'));
 				}
 			} else {
-				$this->Session->setFlash(sprintf(__('%s could not be saved. Please, try again.'), $type['Type']['title']), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__('%s could not be saved. Please, try again.', $type['Type']['title']), 'default', array('class' => 'error'));
 			}
 		} else {
 			$this->request->data['Node']['user_id'] = $this->Session->read('Auth.User.id');
@@ -217,7 +217,7 @@ class NodesController extends ContentsAppController {
 			$this->redirect(array('action' => 'create'));
 		}
 
-		$this->set('title_for_layout', sprintf(__('Edit content: %s'), $type['Type']['title']));
+		$this->set('title_for_layout', __('Edit content: %s', $type['Type']['title']));
 		$this->Node->type = $type['Type']['alias'];
 		$this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
 
@@ -242,14 +242,14 @@ class NodesController extends ContentsAppController {
 			$this->request->data['Node']['visibility_roles'] = $this->Node->encodeData($this->request->data['Role']['Role']);
 			if ($this->Node->saveWithMeta($this->request->data)) {
 				Croogo::dispatchEvent('Controller.Nodes.afterEdit', $this, array('data' => $this->request->data));
-				$this->Session->setFlash(sprintf(__('%s has been saved'), $type['Type']['title']), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__('%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));
 				if (isset($this->request->data['apply'])) {
 					$this->redirect(array('action' => 'edit', $this->Node->id));
 				} else {
 					$this->redirect(array('action' => 'index'));
 				}
 			} else {
-				$this->Session->setFlash(sprintf(__('%s could not be saved. Please, try again.'), $type['Type']['title']), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__('%s could not be saved. Please, try again.', $type['Type']['title']), 'default', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -699,7 +699,7 @@ class NodesController extends ContentsAppController {
 		}
 
 		$nodes = $this->paginate('Node');
-		$this->set('title_for_layout', sprintf(__('Search Results: %s'), $q));
+		$this->set('title_for_layout', __('Search Results: %s', $q));
 		$this->set(compact('q', 'nodes'));
 		if ($typeAlias) {
 			$this->_viewFallback(array(

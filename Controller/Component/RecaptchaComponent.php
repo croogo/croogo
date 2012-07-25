@@ -11,7 +11,7 @@ class RecaptchaComponent extends Component {
 
 	protected $controller = null;
 
-	public function startup(Controller $controller){
+	public function startup(Controller $controller) {
 		$this->publickey = Configure::read('Service.recaptcha_public_key');
 		$this->privatekey = Configure::read('Service.recaptcha_private_key');
 
@@ -21,13 +21,13 @@ class RecaptchaComponent extends Component {
 		Configure::write("Recaptcha.pubKey", $this->publickey);
 		Configure::write("Recaptcha.privateKey", $this->privatekey);
 
-		$this->controller =& $controller;
+		$this->controller = $controller;
 		$this->controller->helpers[] = "Recaptcha";
 	}
 
-	public function valid($request){
-		if (isset($request->data['recaptcha_challenge_field']) && isset($request->data['recaptcha_response_field'])){
-			if($this->recaptcha_check_answer(
+	public function valid($request) {
+		if (isset($request->data['recaptcha_challenge_field']) && isset($request->data['recaptcha_response_field'])) {
+			if ($this->recaptcha_check_answer(
 				$this->privatekey,
 				$_SERVER["REMOTE_ADDR"],
 				$request->data['recaptcha_challenge_field'],
@@ -50,12 +50,12 @@ class RecaptchaComponent extends Component {
 	  * @param array $extra_params an array of extra variables to post to the server
 	  * @return ReCaptchaResponse
 	  */
-	public function recaptcha_check_answer ($privkey, $remoteip, $challenge, $response, $extra_params = array()){
-		if ($privkey == null || $privkey == ''){
+	public function recaptcha_check_answer($privkey, $remoteip, $challenge, $response, $extra_params = array()) {
+		if ($privkey == null || $privkey == '') {
 			die ("To use reCAPTCHA you must get an API key from <a href='http://recaptcha.net/api/getkey'>http://recaptcha.net/api/getkey</a>");
 		}
 
-		if ($remoteip == null || $remoteip == ''){
+		if ($remoteip == null || $remoteip == '') {
 			die ("For security reasons, you must pass the remote ip to reCAPTCHA");
 		}
 
@@ -80,7 +80,7 @@ class RecaptchaComponent extends Component {
 			if (trim ($answers [0]) == 'true') {
 					$this->is_valid = true;
 					return 1;
-			}else{
+			} else {
 					$this->is_valid = false;
 					$this->error = $answers [1];
 					return 0;
@@ -109,7 +109,7 @@ class RecaptchaComponent extends Component {
 		$http_request .= $req;
 
 		$response = '';
-		if( false == ( $fs = @fsockopen($host, $port, $errno, $errstr, 10) ) ) {
+		if ( false == ( $fs = @fsockopen($host, $port, $errno, $errstr, 10) ) ) {
 				die ('Could not open socket');
 		}
 
@@ -129,7 +129,7 @@ class RecaptchaComponent extends Component {
 	 * @param $data - array of string elements to be encoded
 	 * @return string - encoded request
 	 */
-	protected function _recaptcha_qsencode ($data) {
+	protected function _recaptcha_qsencode($data) {
 		$req = "";
 		foreach ( $data as $key => $value )
 				$req .= $key . '=' . urlencode( stripslashes($value) ) . '&';

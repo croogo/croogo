@@ -48,7 +48,7 @@ class AliasableBehavior extends ModelBehavior {
  * @param Model $model
  * @return void
  */
-	public function reload(&$model) {
+	public function reload(Model $model) {
 		$config = $this->settings[$model->alias];
 		$this->_byIds[$model->alias] = $model->find('list', array(
 			'fields' => array($config['id'], $config['alias']),
@@ -66,7 +66,7 @@ class AliasableBehavior extends ModelBehavior {
  * @param integer $id
  * @return boolean
  */
-	public function byId(&$model, $id) {
+	public function byId(Model $model, $id) {
 		if (!empty($this->_byIds[$model->alias][$id])) {
 			return $this->_byIds[$model->alias][$id];
 		}
@@ -80,7 +80,7 @@ class AliasableBehavior extends ModelBehavior {
  * @param string $alias
  * @return boolean
  */
-	public function byAlias(&$model, $alias) {
+	public function byAlias(Model $model, $alias) {
 		if (!empty($this->_byAlias[$model->alias][$alias])) {
 			return $this->_byAlias[$model->alias][$alias];
 		}
@@ -93,7 +93,7 @@ class AliasableBehavior extends ModelBehavior {
  * @param Model $model
  * @return string
  */
-	public function listById(&$model) {
+	public function listById(Model $model) {
 		return $this->_byIds[$model->alias];
 	}
 
@@ -103,7 +103,7 @@ class AliasableBehavior extends ModelBehavior {
  * @param Model $model
  * @return string
  */
-	public function listByAlias(&$model) {
+	public function listByAlias(Model $model) {
 		return $this->_byAlias[$model->alias];
 	}
 

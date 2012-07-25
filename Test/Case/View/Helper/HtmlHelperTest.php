@@ -31,8 +31,8 @@ class HtmlHelperTest extends CroogoTestCase {
 			'action' => 'index',
 			'named' => array(),
 		);
-		$view =& new View(new TheLayoutTestController($request, new CakeResponse()));
-		$this->Layout =& new LayoutHelper($view);
+		$view = new View(new TheLayoutTestController($request, new CakeResponse()));
+		$this->Layout = new LayoutHelper($view);
 		$this->_appEncoding = Configure::read('App.encoding');
 		$this->_asset = Configure::read('Asset');
 		$this->_debug = Configure::read('debug');
@@ -80,7 +80,7 @@ class HtmlHelperTest extends CroogoTestCase {
  * testIsLoggedIn
  */
 	public function testIsLoggedIn() {
-		$session =& new SessionComponent($this->ComponentCollection);
+		$session = new SessionComponent($this->ComponentCollection);
 		$session->delete('Auth');
 		$this->assertFalse($this->Layout->isLoggedIn());
 
@@ -96,7 +96,7 @@ class HtmlHelperTest extends CroogoTestCase {
  * testGetRoleId
  */
 	public function testGetRoleId() {
-		$session =& new SessionComponent($this->ComponentCollection);
+		$session = new SessionComponent($this->ComponentCollection);
 		$session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',

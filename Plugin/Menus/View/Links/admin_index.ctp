@@ -9,7 +9,7 @@
 <?php $this->end('tabs'); ?>
 <?php
 	if (isset($this->params['named'])) {
-		foreach ($this->params['named'] AS $nn => $nv) {
+		foreach ($this->params['named'] as $nn => $nv) {
 			$this->Paginator->options['url'][] = $nn . ':' . $nv;
 		}
 	}
@@ -33,7 +33,7 @@
 	echo $tableHeaders;
 
 	$rows = array();
-	foreach ($linksTree AS $linkId => $linkTitle) {
+	foreach ($linksTree as $linkId => $linkTitle) {
 		$actions  = $this->Html->link(__('Move up'), array('controller' => 'links', 'action' => 'moveup', $linkId));
 		$actions .= ' ' . $this->Html->link(__('Move down'), array('controller' => 'links', 'action' => 'movedown', $linkId));
 		$actions .= ' ' . $this->Html->link(__('Edit'), array('controller' => 'links', 'action' => 'edit', $linkId));

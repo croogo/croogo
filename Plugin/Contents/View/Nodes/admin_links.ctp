@@ -16,7 +16,7 @@
 	<div>
 		<?php
 			if (isset($this->params['named'])) {
-				foreach ($this->params['named'] AS $nn => $nv) {
+				foreach ($this->params['named'] as $nn => $nv) {
 					$this->Paginator->options['url'][] = $nn . ':' . $nv;
 				}
 			}
@@ -31,7 +31,7 @@
 	<hr />
 
 	<ul id="nodes-for-links">
-	<?php foreach ($nodes AS $node) { ?>
+	<?php foreach ($nodes as $node) { ?>
 		<li>
 		<?php
 			echo $this->Html->link($node['Node']['title'], array(
