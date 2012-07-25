@@ -8,9 +8,10 @@ $this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentR
 <?php $this->start('tabs'); ?>
 <li><?php echo $this->Html->link(__('New Action'), array('action'=>'add')); ?></li>
 <li><?php echo $this->Html->link(__('Generate Actions'), array('action'=>'generate')); ?></li>
+<li><?php echo $this->Form->postLink(__('Sync Actions'), array('controller' => 'acl_actions', 'action'=>'generate', 'permissions' => 1, 'sync' => 1)); ?></li>
 <?php $this->end(); ?>
 
-<table cellpadding="0" cellspacing="0">
+<table class="permission-table" cellpadding="0" cellspacing="0">
 <?php
 	$tableHeaders =  $this->Html->tableHeaders(array(
 		__('Id'),
@@ -20,7 +21,9 @@ $this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentR
 	echo $tableHeaders;
 
 	$currentController = '';
-	foreach ($acos AS $id => $alias) {
+	foreach ($acos AS $acoIndex => $aco) {
+		$id = $aco['Aco']['id'];
+		$alias = $aco['Aco']['alias'];
 		$class = '';
 		if(substr($alias, 0, 1) == '_') {
 			$level = 1;
@@ -30,7 +33,10 @@ $this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentR
 			$alias = substr_replace($alias, '', 0, 1);
 		} else {
 			$level = 0;
-			$class .= ' controller expand';
+			$class .= ' controller';
+			if ($aco['Aco']['children'] > 0) {
+				$class .= ' expand';
+			}
 			$oddOptions = array();
 			$evenOptions = array();
 			$currentController = $alias;
@@ -46,7 +52,11 @@ $this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentR
 
 		$row = array(
 			$id,
-			$this->Html->div($class, $alias),
+			$this->Html->div(trim($class), $alias, array(
+				'data-id' => $id,
+				'data-alias' => $alias,
+				'data-level' => $level,
+			)),
 			$actions,
 		);
 

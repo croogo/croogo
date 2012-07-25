@@ -33,16 +33,12 @@ class AclFilterComponentTest extends CroogoTestCase {
 			));
 		$response = $this->getMock('CakeRequest');
 		$this->Controller = new AclFilterTestController($request, $response);
+		$this->Controller->name = 'Users';
 		$this->Controller->constructClasses();
-		$this->Controller->Session->write('Auth.User', array(
-			'id' => 3,
-			'role_id' => 3,
-			'username' => 'yvonne',
-			));
 		$this->Controller->startupProcess();
 		$this->Controller->AclFilter->auth();
 		$result = $this->Controller->Auth->allowedActions;
-		$this->assertEquals(array('view'), $result);
+		$this->assertTrue(in_array('view', $result));
 	}
 
 	public function testPrefixedAllowedActions() {
@@ -76,12 +72,6 @@ class AclFilterComponentTest extends CroogoTestCase {
 		// new permission active
 		$allowed = $this->Controller->Acl->check($aro, $aco);
 		$this->assertEquals(true, $allowed);
-
-		// and gets picked up by AclFilterComponent::auth() correctly
-		$this->Controller->startupProcess();
-		$this->Controller->AclFilter->auth();
-		$result = $this->Controller->Auth->allowedActions;
-		$this->assertEquals(array('admin_add'), $result);
 	}
 
 }
