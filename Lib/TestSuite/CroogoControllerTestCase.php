@@ -39,6 +39,8 @@ class CroogoControllerTestCase extends ControllerTestCase {
 		$Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.json';
 		Configure::drop('settings');
 		Configure::config('settings', new CroogoJsonReader(dirname($Setting->settingsPath) . DS ));
+		CakeLog::drop('stdout');
+		CakeLog::drop('stderr');
 		$Setting->writeConfiguration();
 	}
 

@@ -2,37 +2,38 @@
 
 App::uses('Controller', 'Controller');
 App::uses('CroogoTestCase', 'TestSuite');
+App::uses('AclExtras', 'Acl.Lib');
 
-class AclGenerateTestController extends Controller {
-
-	public $components = array('Acl.AclGenerate');
-
-}
-
-class AclGenerateComponentTest extends CroogoTestCase {
+class AclExtrasTest extends CroogoTestCase {
 
 	protected $_coreControllers = array(
 		);
 
 	protected $_extensionsControllers = array(
-		'ExtensionsLocales', 'ExtensionsPlugins', 'ExtensionsThemes',
+		'ExtensionsLocalesController',
+		'ExtensionsPluginsController',
+		'ExtensionsThemesController',
 		);
 
 	public function setUp() {
-		$this->Controller = new AclGenerateTestController(new CakeRequest(), new CakeResponse());
-		$this->Controller->constructClasses();
-		$this->Controller->startupProcess();
+		$this->AclExtras = new AclExtras();
+		$this->AclExtras->startup();
+		$this->AclExtras->Aco->deleteAll('1 = 1');
+	}
+
+	public function tearDown() {
+		$this->AclExtras->Aco->deleteAll('1 = 1');
 	}
 
 	public function testListControllers() {
-		$controllerPath = $this->Controller->AclGenerate->listControllers();
-		$controllers = array_keys($controllerPath);
+		$controllers = $this->AclExtras->getControllerList();
 
 		$this->assertFalse(in_array('CakeError', $controllers));
 
 		$result = array_intersect($this->_coreControllers, $controllers);
 		$this->assertEquals($this->_coreControllers, $result);
 
+		$controllers = $this->AclExtras->getControllerList('Extensions');
 		$result = array_intersect($this->_extensionsControllers, $controllers);
 		$this->assertEquals($this->_extensionsControllers, $result);
 	}
@@ -44,7 +45,12 @@ class AclGenerateComponentTest extends CroogoTestCase {
 			'admin_delete_meta', 'admin_process', 'index', 'term', 'promoted',
 			'search', 'view',
 			);
-		$result = $this->Controller->AclGenerate->listActions('Nodes', APP . DS . 'Controller');
+
+		$this->AclExtras->aco_sync(array('plugin' => 'Contents'));
+
+		$node = $this->AclExtras->Aco->node('controllers/Contents/Nodes');
+		$result = $this->AclExtras->Aco->children($node[0]['Aco']['id'], true);
+		$result = Hash::extract($result, '{n}.Aco.alias');
 		sort($result);
 		sort($expected);
 		$this->assertEquals($expected, $result);

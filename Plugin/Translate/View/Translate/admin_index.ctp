@@ -6,7 +6,7 @@ $this->name = 'translate';
 <?php $this->start('tabs'); ?>
 <li><?php
 echo $this->Html->link(__('Translate in a new language'), array(
-	'plugin' => null,
+	'plugin' => 'settings',
 	'controller' => 'languages',
 	'action'=>'select',
 	$record[$modelAlias]['id'],

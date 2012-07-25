@@ -27,6 +27,9 @@ class UserAroBehavior extends ModelBehavior {
 		if (empty($model->data)) {
 			$data = $model->read();
 		}
+		if (!isset($data['User']['role_id'])) {
+			$data['User']['role_id'] = $model->field('role_id');
+		}
 		if (!isset($data['User']['role_id']) || !$data['User']['role_id']) {
 			return null;
 		} else {
@@ -42,13 +45,12 @@ class UserAroBehavior extends ModelBehavior {
  * @return void
  */
 	public function afterSave(Model $model, $created) {
-		if (!$created) {
-			$parent = $model->parentNode();
-			$parent = $model->node($parent);
+		// update ACO alias
+		if (!empty($model->data['User']['username'])) {
 			$node = $model->node();
 			$aro = $node[0];
-			$aro['Aro']['parent_id'] = $parent[0]['Aro']['id'];
-			$model->Aro->save($aro);
+			$model->Aro->id = $aro['Aro']['id'];
+			$model->Aro->saveField('alias', $model->data['User']['username']);
 		}
 	}
 
