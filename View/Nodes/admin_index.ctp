@@ -8,7 +8,7 @@ $this->Html->script(array('nodes'), false);
 
 <?php
 if (isset($this->params['named'])) {
-	foreach ($this->params['named'] AS $nn => $nv) {
+	foreach ($this->params['named'] as $nn => $nv) {
 		$this->Paginator->options['url'][] = $nn . ':' . $nv;
 	}
 }
@@ -32,7 +32,7 @@ echo $this->element('admin/nodes_filter');
 	echo $tableHeaders;
 
 	$rows = array();
-	foreach ($nodes AS $node) {
+	foreach ($nodes as $node) {
 		$actions  = $this->Html->link(__('Edit'), array('action' => 'edit', $node['Node']['id']));
 		$actions .= ' ' . $this->Layout->adminRowActions($node['Node']['id']);
 		$actions .= ' ' . $this->Layout->processLink(__('Delete'),

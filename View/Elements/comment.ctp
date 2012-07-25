@@ -28,7 +28,7 @@
 
 	<?php
 		if (isset($comment['children']) && count($comment['children']) > 0) {
-			foreach ($comment['children'] AS $childComment) {
+			foreach ($comment['children'] as $childComment) {
 				echo $this->element('comment', array('comment' => $childComment, 'level' => $level + 1));
 			}
 		}

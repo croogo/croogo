@@ -28,7 +28,7 @@
 			<div id="node-terms">
 			<?php
 				$taxonomyIds = Set::extract('/Taxonomy/id', $this->data);
-				foreach ($taxonomy AS $vocabularyId => $taxonomyTree) {
+				foreach ($taxonomy as $vocabularyId => $taxonomyTree) {
 					echo $this->Form->input('TaxonomyData.'.$vocabularyId, array(
 						'label' => $vocabularies[$vocabularyId]['title'],
 						'type' => 'select',
@@ -63,7 +63,7 @@
 						$fields = Set::combine($this->data['Meta'], '{n}.key', '{n}.value');
 						$fieldsKeyToId = Set::combine($this->data['Meta'], '{n}.key', '{n}.id');
 						if (count($fields) > 0) {
-							foreach ($fields AS $fieldKey => $fieldValue) {
+							foreach ($fields as $fieldKey => $fieldValue) {
 								echo $this->Layout->metaField($fieldKey, $fieldValue, $fieldsKeyToId[$fieldKey]);
 							}
 						}
