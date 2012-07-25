@@ -1,14 +1,14 @@
 <?php
 /**
- * Contents App Model
+ * Nodes App Model
  *
- * @category Contents.Model
- * @package  Croogo.Contents
+ * @category Nodes.Model
+ * @package  Croogo.Nodes
  * @version  1.4
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ContentsAppModel extends AppModel {
+class NodesAppModel extends AppModel {
 
 }

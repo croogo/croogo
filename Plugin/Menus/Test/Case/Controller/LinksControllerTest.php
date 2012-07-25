@@ -44,7 +44,7 @@ class LinksControllerTest extends CroogoControllerTestCase {
 		'plugin.settings.language',
 		'plugin.contacts.message',
 		'plugin.meta.meta',
-		'plugin.contents.node',
+		'plugin.nodes.node',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',
 		'plugin.users.role',

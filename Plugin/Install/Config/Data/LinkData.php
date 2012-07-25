@@ -11,7 +11,7 @@ class LinkData {
 			'title' => 'About',
 			'class' => 'about',
 			'description' => '',
-			'link' => 'plugin:contents/controller:nodes/action:view/type:page/slug:about',
+			'link' => 'plugin:nodes/controller:nodes/action:view/type:page/slug:about',
 			'target' => '',
 			'rel' => '',
 			'status' => '1',

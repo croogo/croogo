@@ -497,7 +497,7 @@ class LayoutHelper extends AppHelper {
 			'tagAttributes' => array(),
 			'type' => null,
 			'link' => true,
-			'plugin' => 'contents',
+			'plugin' => 'nodes',
 			'controller' => 'nodes',
 			'action' => 'term',
 			'element' => 'Taxonomy.vocabulary',
@@ -565,10 +565,10 @@ class LayoutHelper extends AppHelper {
 	public function nodeList($alias, $options = array()) {
 		$_options = array(
 			'link' => true,
-			'plugin' => 'contents',
+			'plugin' => 'nodes',
 			'controller' => 'nodes',
 			'action' => 'view',
-			'element' => 'Contents.node_list',
+			'element' => 'Nodes.node_list',
 		);
 		$options = array_merge($_options, $options);
 
@@ -739,7 +739,7 @@ class LayoutHelper extends AppHelper {
 
 		$actions = $this->Html->link(
 			__('Remove'),
-			is_null($id) ? '#' : array('plugin' => 'contents', 'controller' => 'nodes', 'action' => 'delete_meta', $id),
+			is_null($id) ? '#' : array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'delete_meta', $id),
 			array('class' => 'remove-meta', 'rel' => $id)
 		);
 		$actions = $this->Html->tag('div', $actions, array('class' => 'actions'));
@@ -871,7 +871,7 @@ class LayoutHelper extends AppHelper {
  */
 	public function nodeInfo($options = array()) {
 		$_options = array(
-			'element' => 'Contents.node_info',
+			'element' => 'Nodes.node_info',
 		);
 		$options = array_merge($_options, $options);
 
@@ -889,7 +889,7 @@ class LayoutHelper extends AppHelper {
  */
 	public function nodeExcerpt($options = array()) {
 		$_options = array(
-			'element' => 'Contents.node_excerpt',
+			'element' => 'Nodes.node_excerpt',
 		);
 		$options = array_merge($_options, $options);
 
@@ -907,7 +907,7 @@ class LayoutHelper extends AppHelper {
  */
 	public function nodeBody($options = array()) {
 		$_options = array(
-			'element' => 'Contents.node_body',
+			'element' => 'Nodes.node_body',
 		);
 		$options = array_merge($_options, $options);
 
@@ -925,7 +925,7 @@ class LayoutHelper extends AppHelper {
  */
 	public function nodeMoreInfo($options = array()) {
 		$_options = array(
-			'element' => 'Contents.node_more_info',
+			'element' => 'Nodes.node_more_info',
 		);
 		$options = array_merge($_options, $options);
 

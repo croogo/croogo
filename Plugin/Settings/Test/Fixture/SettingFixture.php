@@ -264,7 +264,7 @@ class SettingFixture extends CroogoTestFixture {
 		array(
 			'id' => 32,
 			'key' => 'Hook.bootstraps',
-			'value' => 'Settings,Comments,Contacts,Contents,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Example',
+			'value' => 'Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Example',
 			'title' => '',
 			'description' => '',
 			'input_type' => '',

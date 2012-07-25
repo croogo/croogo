@@ -1,5 +1,5 @@
 <?php
-App::uses('Node', 'Contents.Model');
+App::uses('Node', 'Nodes.Model');
 App::uses('CroogoTestCase', 'TestSuite');
 
 class MetaBehaviorTest extends CroogoTestCase {
@@ -16,7 +16,7 @@ class MetaBehaviorTest extends CroogoTestCase {
 		'plugin.menus.link',
 		'plugin.menus.menu',
 		'plugin.contacts.message',
-		'plugin.contents.node',
+		'plugin.nodes.node',
 		'plugin.meta.meta',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',
@@ -39,7 +39,7 @@ class MetaBehaviorTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Node = ClassRegistry::init('Contents.Node');
+		$this->Node = ClassRegistry::init('Nodes.Node');
 	}
 
 /**

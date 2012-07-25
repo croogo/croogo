@@ -36,7 +36,7 @@
 		<?php
 			echo $this->Html->link($node['Node']['title'], array(
 				'admin' => false,
-				'plugin' => 'contents',
+				'plugin' => 'nodes',
 				'controller' => 'nodes',
 				'action' => 'view',
 				'type' => $node['Node']['type'],
@@ -44,7 +44,7 @@
 			), array(
 				'rel' => sprintf(
 					'plugin:%s/controller:%s/action:%s/type:%s/slug:%s',
-					'contents',
+					'nodes',
 					'nodes',
 					'view',
 					$node['Node']['type'],

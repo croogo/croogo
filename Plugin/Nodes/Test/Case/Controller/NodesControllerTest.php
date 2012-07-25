@@ -1,5 +1,5 @@
 <?php
-App::uses('NodesController', 'Contents.Controller');
+App::uses('NodesController', 'Nodes.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
 class TestNodesController extends NodesController {
@@ -54,7 +54,7 @@ class NodesControllerTest extends CroogoControllerTestCase {
 		'plugin.menus.menu',
 		'plugin.contacts.message',
 		'plugin.meta.meta',
-		'plugin.contents.node',
+		'plugin.nodes.node',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',
 		'plugin.users.role',
@@ -77,7 +77,7 @@ class NodesControllerTest extends CroogoControllerTestCase {
 		$request = new CakeRequest();
 		$response = new CakeResponse();
 		$this->Nodes = new TestNodesController($request, $response);
-		$this->Nodes->plugin = 'Contents';
+		$this->Nodes->plugin = 'Nodes';
 		$this->Nodes->constructClasses();
 		$this->Nodes->Security = $this->getMock('SecurityComponent', null, array($this->Nodes->Components));
 		$this->Nodes->request->params['controller'] = 'nodes';
@@ -169,7 +169,7 @@ class NodesControllerTest extends CroogoControllerTestCase {
 		$this->NodesController
 			->expects($this->once())
 			->method('redirect');
-		$this->testAction('/admin/nodes/edit/1', array(
+		$this->testAction('/admin/nodes/nodes/edit/1', array(
 			'data' => array(
 				'Node' => array(
 					'id' => 1,
@@ -189,7 +189,7 @@ class NodesControllerTest extends CroogoControllerTestCase {
 
 	public function testAdminDelete() {
 		$this->Nodes->request->params['action'] = 'admin_delete';
-		$this->Nodes->request->params['url']['url'] = 'admin/nodes/delete';
+		$this->Nodes->request->params['url']['url'] = 'admin/nodes/nodes/delete';
 		$this->Nodes->Session->write('Auth.User', array(
 			'id' => 1,
 			'role_id' => 1,
@@ -207,10 +207,11 @@ class NodesControllerTest extends CroogoControllerTestCase {
 	}
 
 	public function testBlackholedRequest() {
-		$request = new CakeRequest('/admin/nodes/delete/1');
+		$request = new CakeRequest('/admin/nodes/nodes/delete/1');
 		$response = new CakeResponse();
 		$this->Nodes = new TestNodesController($request, $response);
 		$this->Nodes->constructClasses();
+		$this->Nodes->request->params['plugin'] = 'nodes';
 		$this->Nodes->request->params['controller'] = 'nodes';
 		$this->Nodes->request->params['action'] = 'admin_delete';
 		$this->Nodes->request->params['prefix'] = 'admin';

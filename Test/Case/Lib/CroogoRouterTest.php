@@ -16,13 +16,13 @@ class CroogoRouterTest extends CroogoTestCase {
 	public function testContentType() {
 		$params = array(
 			'url' => array(),
-			'plugin' => 'contents',
+			'plugin' => 'nodes',
 			'controller' => 'nodes',
 			'action' => 'index',
 			'type' => 'blog',
 			);
 		$result = Router::reverse($params);
-		$this->assertEquals('/contents/nodes/index/type:blog', $result);
+		$this->assertEquals('/nodes/nodes/index/type:blog', $result);
 
 		CroogoRouter::contentType('blog');
 		$result = Router::reverse($params);
@@ -31,7 +31,7 @@ class CroogoRouterTest extends CroogoTestCase {
 		CroogoRouter::contentType('page');
 		$params = array(
 			'url' => array(),
-			'plugin' => 'contents',
+			'plugin' => 'nodes',
 			'controller' => 'nodes',
 			'action' => 'index',
 			'type' => 'page',
@@ -53,13 +53,13 @@ class CroogoRouterTest extends CroogoTestCase {
 
 		$params = array(
 			'url' => array(),
-			'plugin' => 'contents',
+			'plugin' => 'nodes',
 			'controller' => 'nodes',
 			'action' => 'index',
 			'type' => 'press-release',
 			);
 		$result = Router::reverse($params);
-		$this->assertEquals('/contents/nodes/index/type:press-release', $result);
+		$this->assertEquals('/nodes/nodes/index/type:press-release', $result);
 
 		$type['Type']['params'] = 'routes=1';
 		$Type->save($type);

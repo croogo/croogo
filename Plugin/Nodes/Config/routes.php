@@ -2,15 +2,15 @@
 
 // Basic
 CroogoRouter::connect('/', array(
-	'plugin' => 'contents', 'controller' => 'nodes', 'action' => 'promoted'
+	'plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'promoted'
 ));
 
 CroogoRouter::connect('/promoted/*', array(
-	'plugin' => 'contents', 'controller' => 'nodes', 'action' => 'promoted'
+	'plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'promoted'
 ));
 
 CroogoRouter::connect('/search/*', array(
-	'plugin' => 'contents', 'controller' => 'nodes', 'action' => 'search'
+	'plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'search'
 ));
 
 // Content types
@@ -22,10 +22,10 @@ if (Configure::read('Install.installed')) {
 
 // Page
 CroogoRouter::connect('/about', array(
-	'plugin' => 'contents', 'controller' => 'nodes', 'action' => 'view',
+	'plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'view',
 	'type' => 'page', 'slug' => 'about'
 	));
 CroogoRouter::connect('/page/:slug', array(
-	'plugin' => 'contents', 'controller' => 'nodes', 'action' => 'view',
+	'plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'view',
 	'type' => 'page'
 ));

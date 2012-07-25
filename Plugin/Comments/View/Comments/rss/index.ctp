@@ -6,7 +6,7 @@
 		}
 
 		$item['Node']['url'] = array(
-			'plugin' => 'contents',
+			'plugin' => 'nodes',
 			'controller' => 'nodes',
 			'action' => 'view',
 			'type' => $item['Node']['type'],

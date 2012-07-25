@@ -51,7 +51,7 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
 		'plugin.menus.link',
 		'plugin.menus.menu',
 		'plugin.contacts.message',
-		'plugin.contents.node',
+		'plugin.nodes.node',
 		'plugin.meta.meta',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',

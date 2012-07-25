@@ -1,5 +1,5 @@
 <?php
-App::uses('Node', 'Contents.Model');
+App::uses('Node', 'Nodes.Model');
 App::uses('CroogoTestCase', 'TestSuite');
 
 class EncoderBehaviorTest extends CroogoTestCase {
@@ -17,7 +17,7 @@ class EncoderBehaviorTest extends CroogoTestCase {
 		'plugin.menus.menu',
 		'plugin.contacts.message',
 		'plugin.meta.meta',
-		'plugin.contents.node',
+		'plugin.nodes.node',
 		'plugin.taxonomy.nodes_taxonomy',
 		'plugin.blocks.region',
 		'plugin.users.role',
@@ -39,7 +39,7 @@ class EncoderBehaviorTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Node = ClassRegistry::init('Contents.Node');
+		$this->Node = ClassRegistry::init('Nodes.Node');
 	}
 
 /**

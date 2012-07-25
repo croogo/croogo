@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Contents Component
+ * Nodes Component
  *
  * PHP version 5
  *
  * @category Component
- * @package  Contents
+ * @package  Nodes
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ContentsComponent extends Component {
+class NodesComponent extends Component {
 
 /**
  * Nodes for layout

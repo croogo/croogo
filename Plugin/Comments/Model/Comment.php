@@ -69,7 +69,7 @@ class Comment extends AppModel {
  */
 	public $belongsTo = array(
 		'Node' => array(
-			'className' => 'Contents.Node',
+			'className' => 'Nodes.Node',
 			'counterCache' => true,
 			'counterScope' => array('Comment.status' => 1),
 		),
