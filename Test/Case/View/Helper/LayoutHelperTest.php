@@ -12,11 +12,13 @@ class TheLayoutTestController extends Controller {
 
 }
 
-class HtmlHelperTest extends CroogoTestCase {
+class LayoutHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.users.user', 'plugin.users.role', 'plugin.settings.setting',
-		);
+		'plugin.users.user',
+		'plugin.users.role',
+		'plugin.settings.setting',
+	);
 
 /**
  * setUp
@@ -106,52 +108,6 @@ class HtmlHelperTest extends CroogoTestCase {
 
 		$session->delete('Auth');
 		$this->assertEqual($this->Layout->getRoleId(), 3);
-	}
-
-/**
- * testRegionIsEmpty
- */
-	public function testRegionIsEmpty() {
-		$this->assertTrue($this->Layout->regionIsEmpty('right'));
-
-		$this->Layout->_View->viewVars['blocks_for_layout'] = array(
-			'right' => array(
-				'0' => array('block here'),
-				'1' => array('block here'),
-				'2' => array('block here'),
-			),
-		);
-		$this->assertFalse($this->Layout->regionIsEmpty('right'));
-	}
-
-/**
- * testLinkStringToArray
- */
-	public function testLinkStringToArray() {
-		$this->assertEqual($this->Layout->linkStringToArray('controller:nodes/action:index'), array(
-			'plugin' => null,
-			'controller' => 'nodes',
-			'action' => 'index',
-		));
-		$this->assertEqual($this->Layout->linkStringToArray('controller:nodes/action:index/pass/pass2'), array(
-			'plugin' => null,
-			'controller' => 'nodes',
-			'action' => 'index',
-			'pass',
-			'pass2',
-		));
-		$this->assertEqual($this->Layout->linkStringToArray('controller:nodes/action:index/param:value'), array(
-			'plugin' => null,
-			'controller' => 'nodes',
-			'action' => 'index',
-			'param' => 'value',
-		));
-		$this->assertEqual($this->Layout->linkStringToArray('controller:nodes/action:index/with-slash/'), array(
-			'plugin' => null,
-			'controller' => 'nodes',
-			'action' => 'index',
-			'with-slash',
-		));
 	}
 
 /**

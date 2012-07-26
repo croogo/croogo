@@ -9,6 +9,8 @@ Croogo::hookComponent('*', array(
 	)
 );
 
+Croogo::hookHelper('*', 'Blocks.Regions');
+
 CroogoNav::add('blocks', array(
 	'title' => __('Blocks'),
 	'url' => array(
