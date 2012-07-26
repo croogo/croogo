@@ -4,6 +4,8 @@ Croogo::hookControllerProperty('*', 'uses', array('Nodes.Node'));
 
 Croogo::hookComponent('*', 'Nodes.Nodes');
 
+Croogo::hookHelper('*', 'Nodes.Nodes');
+
 CroogoNav::add('content', array(
 	'title' => __('Content'),
 	'url' => array(

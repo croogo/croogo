@@ -88,6 +88,9 @@ class AppController extends Controller {
  */
 	public function __construct($request = null, $response = null) {
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
+		if (isset($request->params['admin'])) {
+			$this->helpers[] = 'Croogo';
+		}
 		parent::__construct($request, $response);
 	}
 

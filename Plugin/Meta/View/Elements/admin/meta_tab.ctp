@@ -8,7 +8,7 @@
 	}
 	if (count($fields) > 0) {
 		foreach ($fields AS $fieldKey => $fieldValue) {
-			echo $this->Layout->metaField($fieldKey, $fieldValue, $fieldsKeyToId[$fieldKey]);
+			echo $this->Meta->field($fieldKey, $fieldValue, $fieldsKeyToId[$fieldKey]);
 		}
 	}
 ?>

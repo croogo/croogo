@@ -22,6 +22,7 @@ class ExampleHelper extends AppHelper {
 	public $helpers = array(
 		'Html',
 		'Layout',
+		'Nodes' => array('className' => 'Nodes.Nodes'),
 	);
 
 /**
@@ -64,7 +65,7 @@ class ExampleHelper extends AppHelper {
  */
 	public function afterSetNode() {
 		// field values can be changed from hooks
-		$this->Layout->setNodeField('title', $this->Layout->node('title') . ' [Modified by ExampleHelper]');
+		$this->Nodes->field('title', $this->Nodes->field('title') . ' [Modified by ExampleHelper]');
 	}
 
 /**

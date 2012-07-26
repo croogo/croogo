@@ -31,7 +31,7 @@
 	$rows = array();
 	foreach ($messages as $message) {
 		$actions  = $this->Html->link(__('Edit'), array('action' => 'edit', $message['Message']['id']));
-		$actions .= ' ' . $this->Layout->adminRowActions($message['Message']['id']);
+		$actions .= ' ' . $this->Croogo->adminRowActions($message['Message']['id']);
 		$actions .= ' ' . $this->Layout->processLink(__('Delete'),
 			'#Message' . $message['Message']['id'] . 'Id',
 			null, __('Are you sure?'));

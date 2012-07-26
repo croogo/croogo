@@ -4,7 +4,7 @@
 	<div class="tabs">
 		<ul>
 			<li><a href="#language-basic"><?php echo __('Language'); ?></a></li>
-			<?php echo $this->Layout->adminTabs(); ?>
+			<?php echo $this->Croogo->adminTabs(); ?>
 		</ul>
 
 		<div id="language-basic">
@@ -15,7 +15,7 @@
 			echo $this->Form->input('status');
 		?>
 		</div>
-		<?php echo $this->Layout->adminTabs(); ?>
+		<?php echo $this->Croogo->adminTabs(); ?>
 	</div>
 </fieldset>
 

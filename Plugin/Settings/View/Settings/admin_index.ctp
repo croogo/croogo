@@ -16,7 +16,7 @@
 		$actions  = $this->Html->link(__('Move up'), array('controller' => 'settings', 'action' => 'moveup', $setting['Setting']['id']));
 		$actions .= ' ' . $this->Html->link(__('Move down'), array('controller' => 'settings', 'action' => 'movedown', $setting['Setting']['id']));
 		$actions .= ' ' . $this->Html->link(__('Edit'), array('controller' => 'settings', 'action' => 'edit', $setting['Setting']['id']));
-		$actions .= ' ' . $this->Layout->adminRowActions($setting['Setting']['id']);
+		$actions .= ' ' . $this->Croogo->adminRowActions($setting['Setting']['id']);
 		$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 			'controller' => 'settings',
 			'action' => 'delete',

@@ -1,3 +1,3 @@
 <div class="node-body">
-	<?php echo $this->Layout->node('body'); ?>
+	<?php echo $this->Nodes->field('body'); ?>
 </div>

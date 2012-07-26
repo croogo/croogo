@@ -4,7 +4,7 @@
 	<div class="tabs">
 		<ul>
 			<li><a href="#region-main"><span><?php echo __('Region'); ?></span></a></li>
-			<?php echo $this->Layout->adminTabs(); ?>
+			<?php echo $this->Croogo->adminTabs(); ?>
 		</ul>
 
 		<div id="region-main">
@@ -13,7 +13,7 @@
 			echo $this->Form->input('title');
 		?>
 		</div>
-		<?php echo $this->Layout->adminTabs(); ?>
+		<?php echo $this->Croogo->adminTabs(); ?>
 	</div>
 </fieldset>
 

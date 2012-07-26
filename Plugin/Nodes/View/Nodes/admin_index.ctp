@@ -34,7 +34,7 @@ echo $this->element('admin/nodes_filter');
 	$rows = array();
 	foreach ($nodes as $node) {
 		$actions  = $this->Html->link(__('Edit'), array('action' => 'edit', $node['Node']['id']));
-		$actions .= ' ' . $this->Layout->adminRowActions($node['Node']['id']);
+		$actions .= ' ' . $this->Croogo->adminRowActions($node['Node']['id']);
 		$actions .= ' ' . $this->Layout->processLink(__('Delete'),
 			'#Node' . $node['Node']['id'] . 'Id',
 			null, __('Are you sure?'));

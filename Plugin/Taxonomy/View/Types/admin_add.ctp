@@ -8,7 +8,7 @@
 			<li><a href="#type-format"><?php echo __('Format'); ?></a></li>
 			<li><a href="#type-comments"><?php echo __('Comments'); ?></a></li>
 			<li><a href="#type-params"><?php echo __('Params'); ?></a></li>
-			<?php echo $this->Layout->adminTabs(); ?>
+			<?php echo $this->Croogo->adminTabs(); ?>
 		</ul>
 
 		<div id="type">
@@ -76,7 +76,7 @@
 			echo $this->Form->input('Type.params');
 		?>
 		</div>
-		<?php echo $this->Layout->adminTabs(); ?>
+		<?php echo $this->Croogo->adminTabs(); ?>
 	</div>
 </fieldset>
 

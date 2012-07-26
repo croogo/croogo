@@ -13,7 +13,7 @@
 	<div class="tabs">
 		<ul>
 			<li><span><a href="#term-basic"><?php echo __('Term'); ?></a></span></li>
-			<?php echo $this->Layout->adminTabs(); ?>
+			<?php echo $this->Croogo->adminTabs(); ?>
 		</ul>
 
 		<div id="term-basic">
@@ -27,7 +27,7 @@
 			echo $this->Form->input('description');
 		?>
 		</div>
-		<?php echo $this->Layout->adminTabs(); ?>
+		<?php echo $this->Croogo->adminTabs(); ?>
 	</div>
 </fieldset>
 

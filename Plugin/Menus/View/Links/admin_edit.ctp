@@ -7,7 +7,7 @@
 				<li><a href="#link-basic"><span><?php echo __('Link'); ?></span></a></li>
 				<li><a href="#link-access"><span><?php echo __('Access'); ?></span></a></li>
 				<li><a href="#link-misc"><span><?php echo __('Misc.'); ?></span></a></li>
-				<?php echo $this->Layout->adminTabs(); ?>
+				<?php echo $this->Croogo->adminTabs(); ?>
 			</ul>
 
 			<div id="link-basic">
@@ -49,7 +49,7 @@
 					echo $this->Form->input('params');
 				?>
 			</div>
-			<?php echo $this->Layout->adminTabs(); ?>
+			<?php echo $this->Croogo->adminTabs(); ?>
 		</div>
 	</fieldset>
 <div class="buttons">

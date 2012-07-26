@@ -4,7 +4,7 @@
 	<div class="tabs">
 		<ul>
 			<li><a href="#user-main"><?php echo __('User'); ?></a></li>
-			<?php echo $this->Layout->adminTabs(); ?>
+			<?php echo $this->Croogo->adminTabs(); ?>
 		</ul>
 
 		<div id="user-main">
@@ -18,7 +18,7 @@
 			echo $this->Form->input('status');
 		?>
 		</div>
-		<?php echo $this->Layout->adminTabs(); ?>
+		<?php echo $this->Croogo->adminTabs(); ?>
 	</div>
 </fieldset>
 
