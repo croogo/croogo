@@ -107,7 +107,7 @@ class RoleAroBehavior extends ModelBehavior {
 			return array();
 		}
 		$adminRoleId = $model->byAlias('admin');
-		$excludes = array_values(array($adminRoleId, $id));
+		$excludes = Hash::filter(array_values(array($adminRoleId, $id)));
 		$options = array('conditions' => array(
 			'NOT' => array($model->alias . '.id' => $excludes),
 		));
