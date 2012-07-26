@@ -5,7 +5,7 @@
 		<ul>
 			<li><a href="#comment-main"><?php echo __('Comment'); ?></a></li>
 			<li><a href="#comment-contact"><?php echo __('Contact Info'); ?></a></li>
-			<?php echo $this->Layout->adminTabs(); ?>
+			<?php echo $this->Croogo->adminTabs(); ?>
 		</ul>
 
 		<div id="comment-main">
@@ -25,7 +25,7 @@
 			echo $this->Form->input('ip', array('disabled' => 'disabled'));
 		?>
 		</div>
-		<?php echo $this->Layout->adminTabs(); ?>
+		<?php echo $this->Croogo->adminTabs(); ?>
 	</div>
 </fieldset>
 

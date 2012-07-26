@@ -16,7 +16,7 @@
 		$actions .= ' ' . $this->Html->link(__('Edit'), array('action' => 'edit', $vocabulary['Vocabulary']['id']));
 		$actions .= ' ' . $this->Html->link(__('Move up'), array('action' => 'moveup', $vocabulary['Vocabulary']['id']));
 		$actions .= ' ' . $this->Html->link(__('Move down'), array('action' => 'movedown', $vocabulary['Vocabulary']['id']));
-		$actions .= ' ' . $this->Layout->adminRowActions($vocabulary['Vocabulary']['id']);
+		$actions .= ' ' . $this->Croogo->adminRowActions($vocabulary['Vocabulary']['id']);
 		$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 			'controller' => 'vocabularies',
 			'action' => 'delete',

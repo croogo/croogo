@@ -7,7 +7,7 @@
 				<li><a href="#node-main"><span><?php echo __($type['Type']['title']); ?></span></a></li>
 				<li><a href="#node-access"><span><?php echo __('Access'); ?></span></a></li>
 				<li><a href="#node-publishing"><span><?php echo __('Publishing'); ?></span></a></li>
-				<?php echo $this->Layout->adminTabs(); ?>
+				<?php echo $this->Croogo->adminTabs(); ?>
 			</ul>
 
 			<div id="node-main">
@@ -40,7 +40,7 @@
 				echo $this->Form->input('created');
 			?>
 			</div>
-			<?php echo $this->Layout->adminTabs(); ?>
+			<?php echo $this->Croogo->adminTabs(); ?>
 			<div class="clear">&nbsp;</div>
 		</div>
 	</fieldset>

@@ -7,7 +7,7 @@
 			<li><a href="#block-access"><span><?php echo __('Access'); ?></span></a></li>
 			<li><a href="#block-visibilities"><span><?php echo __('Visibilities'); ?></span></a></li>
 			<li><a href="#block-params"><?php echo __('Params'); ?></a></li>
-			<?php echo $this->Layout->adminTabs(); ?>
+			<?php echo $this->Croogo->adminTabs(); ?>
 		</ul>
 
 		<div id="block-basic">
@@ -46,7 +46,7 @@
 			echo $this->Form->input('Block.params');
 		?>
 		</div>
-		<?php echo $this->Layout->adminTabs(); ?>
+		<?php echo $this->Croogo->adminTabs(); ?>
 	</div>
 </fieldset>
 

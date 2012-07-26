@@ -6,7 +6,7 @@
 		<ul>
 			<li><span><a href="#vocabulary-basic"><?php echo __('Vocabulary'); ?></a></span></li>
 			<li><span><a href="#vocabulary-options"><?php echo __('Options'); ?></a></span></li>
-			<?php echo $this->Layout->adminTabs(); ?>
+			<?php echo $this->Croogo->adminTabs(); ?>
 		</ul>
 
 		<div id="vocabulary-basic">
@@ -25,7 +25,7 @@
 				echo $this->Form->input('tags');
 			?>
 		</div>
-		<?php echo $this->Layout->adminTabs(); ?>
+		<?php echo $this->Croogo->adminTabs(); ?>
 	</div>
 </fieldset>
 

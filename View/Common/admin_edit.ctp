@@ -37,14 +37,14 @@ $what = isset($this->request->data[$modelClass]['id']) ? __('Edit') : __('Add');
 			<div class="tabs">
 				<ul>
 					<li><a href="#<?php echo strtolower($modelClass); ?>-main"><?php echo $modelClass; ?></a></li>
-					<?php echo $this->Layout->adminTabs(); ?>
+					<?php echo $this->Croogo->adminTabs(); ?>
 				</ul>
 				<div id="<?php echo strtolower($modelClass); ?>-main">
 					<?php foreach ($editFields as $field => $opts): ?>
 						<?php echo $this->Form->input($field, $opts); ?>
 					<?php endforeach; ?>
 				</div>
-				<?php echo $this->Layout->adminTabs(); ?>
+				<?php echo $this->Croogo->adminTabs(); ?>
 			</div>
 		</fieldset>
 

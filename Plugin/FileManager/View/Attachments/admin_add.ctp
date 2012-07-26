@@ -2,7 +2,7 @@
 <div class="tabs">
 	<ul>
 		<li><a href="#attachment-main">Attachment</a></li>
-		<?php echo $this->Layout->adminTabs(); ?>
+		<?php echo $this->Croogo->adminTabs(); ?>
 	</ul>
 
 	<div id="attachment-main">
@@ -20,7 +20,7 @@
 		</fieldset>
 	</div>
 
-	<?php echo $this->Layout->adminTabs(); ?>
+	<?php echo $this->Croogo->adminTabs(); ?>
 	</div>
 </div>
 

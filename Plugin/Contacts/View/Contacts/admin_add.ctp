@@ -6,7 +6,7 @@
 			<li><a href="#contact-basic"><?php echo __('Contact'); ?></a></li>
 			<li><a href="#contact-details"><?php echo __('Details'); ?></a></li>
 			<li><a href="#contact-message"><?php echo __('Message'); ?></a></li>
-			<?php echo $this->Layout->adminTabs(); ?>
+			<?php echo $this->Croogo->adminTabs(); ?>
 		</ul>
 
 		<div id="contact-basic">
@@ -61,7 +61,7 @@
 			?>
 			</p>
 		</div>
-		<?php echo $this->Layout->adminTabs(); ?>
+		<?php echo $this->Croogo->adminTabs(); ?>
 	</div>
 </fieldset>
 

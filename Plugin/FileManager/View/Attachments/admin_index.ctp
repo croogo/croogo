@@ -18,7 +18,7 @@
 			'action' => 'edit',
 			$attachment['Node']['id'],
 		));
-		$actions .= ' ' . $this->Layout->adminRowActions($attachment['Node']['id']);
+		$actions .= ' ' . $this->Croogo->adminRowActions($attachment['Node']['id']);
 		$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 			'controller' => 'attachments',
 			'action' => 'delete',

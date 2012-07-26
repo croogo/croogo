@@ -47,7 +47,7 @@
 			$id,
 			$vocabulary['Vocabulary']['id'],
 		));
-		$actions .= ' ' . $this->Layout->adminRowActions($id);
+		$actions .= ' ' . $this->Croogo->adminRowActions($id);
 		$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 			'action' => 'delete',
 			$id,

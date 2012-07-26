@@ -34,7 +34,7 @@ if (isset($this->params['named'])) {
 	$rows = array();
 	foreach ($comments as $comment) {
 		$actions  = $this->Html->link(__('Edit'), array('action' => 'edit', $comment['Comment']['id']));
-		$actions .= ' ' . $this->Layout->adminRowActions($comment['Comment']['id']);
+		$actions .= ' ' . $this->Croogo->adminRowActions($comment['Comment']['id']);
 		$actions .= ' ' . $this->Layout->processLink(__('Delete'),
 			'#Comment' . $comment['Comment']['id'] . 'Id',
 			null, __('Are you sure?'));

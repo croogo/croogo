@@ -5,7 +5,7 @@
 		<ul>
 			<li><a href="#menu-basic"><span><?php echo __('Menu'); ?></span></a></li>
 			<li><a href="#menu-misc"><span><?php echo __('Misc.'); ?></span></a></li>
-			<?php echo $this->Layout->adminTabs(); ?>
+			<?php echo $this->Croogo->adminTabs(); ?>
 		</ul>
 
 		<div id="menu-basic">
@@ -22,7 +22,7 @@
 				echo $this->Form->input('params');
 			?>
 		</div>
-		<?php echo $this->Layout->adminTabs(); ?>
+		<?php echo $this->Croogo->adminTabs(); ?>
 	</div>
 </fieldset>
 

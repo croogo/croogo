@@ -17,7 +17,7 @@
 		$actions  = $this->Html->link(__('Move up'), array('action' => 'moveup', $language['Language']['id']));
 		$actions .= ' ' . $this->Html->link(__('Move down'), array('action' => 'movedown', $language['Language']['id']));
 		$actions .= ' ' . $this->Html->link(__('Edit'), array('action' => 'edit', $language['Language']['id']));
-		$actions .= ' ' . $this->Layout->adminRowActions($language['Language']['id']);
+		$actions .= ' ' . $this->Croogo->adminRowActions($language['Language']['id']);
 		$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
 			'action' => 'delete',
 			$language['Language']['id'],

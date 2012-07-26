@@ -37,7 +37,7 @@
 		$actions  = $this->Html->link(__('Move up'), array('controller' => 'links', 'action' => 'moveup', $linkId));
 		$actions .= ' ' . $this->Html->link(__('Move down'), array('controller' => 'links', 'action' => 'movedown', $linkId));
 		$actions .= ' ' . $this->Html->link(__('Edit'), array('controller' => 'links', 'action' => 'edit', $linkId));
-		$actions .= ' ' . $this->Layout->adminRowActions($linkId);
+		$actions .= ' ' . $this->Croogo->adminRowActions($linkId);
 		$actions .= ' ' . $this->Layout->processLink(__('Delete'),
 			'#Link' . $linkId . 'Id',
 			null, __('Are you sure?'));

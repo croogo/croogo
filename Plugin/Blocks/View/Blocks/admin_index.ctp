@@ -19,7 +19,7 @@
 		$actions  = $this->Html->link(__('Move up'), array('controller' => 'blocks', 'action' => 'moveup', $block['Block']['id']));
 		$actions .= ' ' . $this->Html->link(__('Move down'), array('controller' => 'blocks', 'action' => 'movedown', $block['Block']['id']));
 		$actions .= ' ' . $this->Html->link(__('Edit'), array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id']));
-		$actions .= ' ' . $this->Layout->adminRowActions($block['Block']['id']);
+		$actions .= ' ' . $this->Croogo->adminRowActions($block['Block']['id']);
 		$actions .= ' ' . $this->Layout->processLink(__('Delete'),
 			'#Block' . $block['Block']['id'] .'Id',
 			null, __('Are you sure?'));

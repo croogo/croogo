@@ -54,7 +54,7 @@ if (!isset($className)) {
 					__('Edit'),
 					array('action' => 'edit', $item[$modelClass]['id'])
 				);
-				$actions .= '&nbsp;' . $this->Layout->adminRowActions($item[$modelClass]['id']);
+				$actions .= '&nbsp;' . $this->Croogo->adminRowActions($item[$modelClass]['id']);
 				$actions .= '&nbsp;' . $this->Form->postLink(__('Delete'), array(
 					'action' => 'delete',
 					$item[$modelClass]['id'],
