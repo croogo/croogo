@@ -342,6 +342,10 @@ class NodesController extends NodesAppController {
 		$success = false;
 		if ($id != null && $this->Node->Meta->delete($id)) {
 			$success = true;
+		} else {
+			if (!$this->Node->Meta->exists($id)) {
+				$success = true;
+			}
 		}
 
 		$this->set(compact('success'));

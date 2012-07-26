@@ -100,6 +100,9 @@ Nodes.removeMeta = function() {
 	$('div.meta a.remove-meta').click(function(e) {
 		var aRemoveMeta = $(this);
 		if (aRemoveMeta.attr('rel') != '') {
+			if (!confirm('Remove this meta field?')) {
+				return false;
+			}
 			$.getJSON(aRemoveMeta.attr('href') + '.json', function(data) {
 				if (data.success) {
 					aRemoveMeta.parents('.meta').remove();
@@ -111,6 +114,7 @@ Nodes.removeMeta = function() {
 			aRemoveMeta.parents('.meta').remove();
 		}
 		e.preventDefault();
+		return false;
 	});
 }
 

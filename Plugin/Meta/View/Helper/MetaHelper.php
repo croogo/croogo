@@ -15,6 +15,14 @@
 class MetaHelper extends AppHelper {
 
 /**
+ * Helpers
+ */
+	public $helpers = array(
+		'Html',
+		'Form',
+		);
+
+/**
  * beforeRender
  */
 	public function beforeRender($viewFile) {
@@ -101,9 +109,17 @@ class MetaHelper extends AppHelper {
 		$this->Form->unlockField('Meta.' . $uuid . '.value');
 		$fields = $this->Html->tag('div', $fields, array('class' => 'fields'));
 
+		$id = is_null($id) ? $uuid : $id;
+		$deleteUrl = array_intersect_key($this->request->params, array(
+			'admin' => null, 'plugin' => null,
+			'controller' => null, 'named' => null,
+		));
+		$deleteUrl['action'] = 'delete_meta';
+		$deleteUrl[] = $id;
+		$deleteUrl = $this->url($deleteUrl);
 		$actions = $this->Html->link(
 			__('Remove'),
-			is_null($id) ? '#' : array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'delete_meta', $id),
+			$deleteUrl,
 			array('class' => 'remove-meta', 'rel' => $id)
 		);
 		$actions = $this->Html->tag('div', $actions, array('class' => 'actions'));
