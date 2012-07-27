@@ -1,4 +1,7 @@
 <?php
+
+App::uses('UsersAppModel', 'Users.Model');
+
 /**
  * Role
  *
@@ -11,7 +14,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Role extends AppModel {
+class Role extends UsersAppModel {
 
 /**
  * Model name
