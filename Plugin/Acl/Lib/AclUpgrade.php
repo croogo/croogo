@@ -64,7 +64,7 @@ class AclUpgrade extends Object {
 			$root = $root[0];
 		}
 
-		$upgraded = $this->Aco->node('controllers/Acl/AclPermissions');
+		$upgraded = $this->Aco->node('controllers/Nodes/Nodes/admin_index');
 		$upgraded = !empty($upgraded);
 		if ($upgraded) {
 			return array(__('<warning>ACL Database seems to have already been upgraded</warning>'));
