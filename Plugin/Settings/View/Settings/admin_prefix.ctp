@@ -37,13 +37,17 @@
 							'label' => $label,
 							'type' => $setting['Setting']['input_type'],
 							'checked' => 'checked',
-							'rel' => $setting['Setting']['description'],
+							'div' => array(
+								'title' => $setting['Setting']['description'],
+							),
 						));
 					} else {
 						echo $this->Form->input("Setting.$i.value", array(
 							'label' => $label,
 							'type' => $setting['Setting']['input_type'],
-							'rel' => $setting['Setting']['description'],
+							'div' => array(
+								'title' => $setting['Setting']['description'],
+							),
 						));
 					}
 				} else {
