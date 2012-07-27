@@ -26,6 +26,22 @@ class AclFilterComponent extends Component {
  */
 	public function initialize(Controller $controller) {
 		$this->_controller =& $controller;
+
+		if (Configure::read('Access Control.multiRole')) {
+			Configure::write('Acl.classname', 'Acl.HabtmDbAcl');
+			App::uses('HabtmDbAcl', 'Acl.Controller/Component/Acl');
+			$controller->Acl->adapter('HabtmDbAcl');
+			$controller->Node->User->bindModel(array(
+				'hasAndBelongsToMany' => array(
+					'Role' => array(
+						'className' => 'Users.Role',
+						'with' => 'Users.RolesUser',
+					),
+				),
+			), false);
+			Croogo::hookAdminTab('Users/admin_add', 'Roles', 'Acl.admin/roles');
+			Croogo::hookAdminTab('Users/admin_edit', 'Roles', 'Acl.admin/roles');
+		}
 	}
 
 /**

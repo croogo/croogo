@@ -268,6 +268,17 @@ class SettingData {
 			'weight' => '24',
 			'params' => ''
 		),
+		array(
+			'id' => '34',
+			'key' => 'Access Control.multiRole',
+			'value' => '0',
+			'title' => 'Enable Multiple Roles',
+			'description' => '',
+			'input_type' => 'checkbox',
+			'editable' => '1',
+			'weight' => '25',
+			'params' => ''
+		),
 	);
 
 }

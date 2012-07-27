@@ -374,7 +374,8 @@ INSERT IGNORE INTO `settings` (`id`, `key`, `value`, `title`, `description`, `in
 (28, 'Comment.date_time_format', 'M d, Y', '', '', '', 1, 22, ''),
 (29, 'Site.timezone', '0', '', 'zero (0) for GMT', '', 1, 4, ''),
 (32, 'Hook.bootstraps', 'Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Tinymce', '', '', '', 0, 23, ''),
-(33, 'Comment.email_notification', '1', 'Enable email notification', '', '', 1, 24, '');
+(33, 'Comment.email_notification', '1', 'Enable email notification', '', '', 1, 24, ''),
+(34, 'Access Control.multiRole', '0', 'Enable Multiple Roles', '', 'checkbox', 1, 25, '');
 
 --
 -- Dumping data for table `taxonomies`
