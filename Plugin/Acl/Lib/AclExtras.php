@@ -130,6 +130,43 @@ class AclExtras extends Object {
 	}
 
 /**
+ * Sync the ACO table for contents
+ *
+ * @return bool
+ */
+	function aco_update_contents($params = array())  {
+		list($plugin, $model) = pluginSplit($this->args[0]);
+		App::uses($model, $plugin . '.Model');
+		if (!class_exists($model)) {
+			$this->err(__('Model %s cannot be found.', $model));
+			return false;
+		}
+
+		$Model = ClassRegistry::init($model);
+		$primaryKey = $Model->primaryKey;
+		$rows = $Model->find('all');
+
+		$root = $this->_checkNode('contents', 'contents', null);
+		foreach ($rows as $row) {
+			$alias = sprintf('%s.%s', $model, $row[$model][$primaryKey]);
+			$path = sprintf('contents/%s', $alias);
+			$acoNode = $this->Aco->node($path);
+			if ($acoNode) {
+				continue;
+			}
+			$this->Aco->create(array(
+				'parent_id' => $root['Aco']['id'],
+				'model' => $model,
+				'alias' => $alias,
+				'foreign_key' => $row[$model][$primaryKey],
+				));
+			$acoNode = $this->Aco->save();
+			$this->out(__('Created Aco node: %s', $path), 1, Shell::VERBOSE);
+		}
+		return true;
+	}
+
+/**
  * Updates the Aco Tree with new controller actions.
  *
  * @return void

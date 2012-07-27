@@ -279,6 +279,17 @@ class SettingData {
 			'weight' => '25',
 			'params' => ''
 		),
+		array(
+			'id' => '35',
+			'key' => 'Access Control.rowLevel',
+			'value' => '0',
+			'title' => 'Row Level Access Control',
+			'description' => '',
+			'input_type' => 'checkbox',
+			'editable' => '1',
+			'weight' => '26',
+			'params' => ''
+		),
 	);
 
 }
