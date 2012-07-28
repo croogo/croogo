@@ -91,6 +91,50 @@ class AclPermission extends Permission {
 	}
 
 /**
+ * Generate allowed actions for current logged in User
+ *
+ * @param integer $userId
+ * @return array of elements formatted like ControllerName/action_name
+ */
+	public function getAllowedActionsByUserId($userId) {
+		$aro = $this->Aro->node(array(
+			'model' => 'User',
+			'foreign_key' => $userId,
+		));
+		if (empty($aro[0]['Aro']['id'])) {
+			return array();
+		}
+		$aroIds = Hash::extract($aro, '{n}.Aro.id');
+		if (Configure::read('Access Control.multiRole')) {
+			$RolesUser = ClassRegistry::init('Users.RolesUser');
+			$rolesAro = $RolesUser->getRolesAro($userId);
+			$aroIds = array_unique(Hash::merge($aroIds, $rolesAro));
+		}
+
+		$permissionsForCurrentUser = $this->find('list', array(
+			'conditions' => array(
+				'Permission.aro_id' => $aroIds,
+				'Permission._create' => 1,
+				'Permission._read' => 1,
+				'Permission._update' => 1,
+				'Permission._delete' => 1,
+			),
+			'fields' => array(
+				'Permission.id',
+				'Permission.aco_id',
+			),
+		));
+		$permissionsByActions = array();
+		foreach ($permissionsForCurrentUser as $acoId) {
+			$path = $this->Aco->getPath($acoId);
+			$path = join('/', Hash::extract($path, '{n}.Aco.alias'));
+			$permissionsByActions[] = $path;
+		}
+
+		return $permissionsByActions;
+	}
+
+/**
  * Retrieve an array for formatted aros/aco data
  *
  * @param array $acos

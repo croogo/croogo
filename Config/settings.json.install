@@ -37,5 +37,9 @@
 	},
 	"Writing": {
 		"wysiwyg": 1
+	},
+	"Access Control": {
+		"multiRole" : 0,
+		"rowLevel": 0
 	}
 }
