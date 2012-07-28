@@ -13,6 +13,27 @@
  */
 class UserAroBehavior extends ModelBehavior {
 
+	public function setup(Model $model, $config = array()) {
+		$this->_setupMultirole($model);
+	}
+
+/**
+ * Enable Multiple Role, dynamically bind User Habtm Role
+ */
+	protected function _setupMultirole(Model $model) {
+		if (!Configure::read('Access Control.multiRole')) {
+			return;
+		}
+		$model->bindModel(array(
+			'hasAndBelongsToMany' => array(
+				'Role' => array(
+					'className' => 'Users.Role',
+					'unique' => 'keepExisting',
+				),
+			)
+		), false);
+	}
+
 /**
  * parentNode
  *

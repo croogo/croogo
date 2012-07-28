@@ -69,6 +69,16 @@ class ExtrasShell extends Shell {
 	}
 
 /**
+ * Sync the ACO table for contents
+ *
+ * @return void
+ */
+	function aco_sync_contents() {
+		$this->AclExtras->args = $this->args;
+		$this->AclExtras->aco_update_contents($this->params);
+	}
+
+/**
  * Updates the Aco Tree with new controller actions.
  *
  * @return void
@@ -97,6 +107,18 @@ class ExtrasShell extends Shell {
 				'help' => __('Perform a full sync on the ACO table.' .
 					'Will create new ACOs or missing controllers and actions.' .
 					'Will also remove orphaned entries that no longer have a matching controller/action')
+			))->addSubcommand('aco_sync_contents', array(
+				'help' => __('Perform a full content sync on the ACO table.' .
+					'Will create new ACOs or missing contents.' .
+					'Will also remove orphaned entries that no longer have a matching contents'),
+				'parser' => array(
+					'arguments' => array(
+						'model' => array(
+							'required' => true,
+							'help' => __('The content model name '),
+						)
+					),
+				),
 			))->addSubcommand('verify', array(
 				'help' => __('Verify the tree structure of either your Aco or Aro Trees'),
 				'parser' => array(

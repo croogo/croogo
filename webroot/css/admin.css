@@ -84,6 +84,7 @@ label { margin: 0px 0px 0px 3px; font-family: "Lucida Grande", Arial, sans-serif
 .file label,
 .datetime label,
 .password label { display: block; }
+.checkbox label { display: inline-block; }
 
 form input[type=text],
 form input[type=password],

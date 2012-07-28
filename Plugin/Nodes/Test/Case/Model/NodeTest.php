@@ -33,6 +33,8 @@ class NodeTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->Node = ClassRegistry::init('Nodes.Node');
+		$this->Node->Behaviors->unload('Acl');
+		$this->Node->Behaviors->unload('ControlledContents');
 	}
 
 	public function tearDown() {

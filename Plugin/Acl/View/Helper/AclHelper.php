@@ -42,7 +42,8 @@ class AclHelper extends Helper {
 		}
 	}
 
-/** Generate allowed actions for current logged in Role
+/**
+ * Generate allowed actions for current logged in Role
  *
  * @return array
  */
@@ -73,6 +74,43 @@ class AclHelper extends Helper {
 			);
 		$linkAction = str_replace('//', '/', $path);
 		if (in_array($linkAction, $this->getAllowedActionsByRoleId($roleId))) {
+			return true;
+		}
+		return false;
+	}
+
+/**
+ * Generate allowed actions for current logged in User
+ *
+ * @return array
+ */
+	public function getAllowedActionsByUserId($roleId) {
+		if (!empty($this->allowedActions[$roleId])) {
+			return $this->allowedActions[$roleId];
+		}
+
+		$this->allowedActions[$roleId] = ClassRegistry::init('Acl.AclPermission')->getAllowedActionsByUserId($roleId);
+		return $this->allowedActions[$roleId];
+	}
+
+/**
+ * Check if url is allowed for the User
+ *
+ * @return boolean
+ */
+	public function linkIsAllowedByUserId($userId, $url) {
+		if (isset($url['admin']) && $url['admin'] == true) {
+			$url['action'] = 'admin_' . $url['action'];
+		}
+		$plugin = empty($url['plugin']) ? null : Inflector::camelize($url['plugin']) . '/';
+		$path = '/:plugin/:controller/:action';
+		$path = str_replace(
+			array(':controller', ':action', ':plugin/'),
+			array(Inflector::camelize($url['controller']), $url['action'], $plugin),
+			'controllers/' . $path
+			);
+		$linkAction = str_replace('//', '/', $path);
+		if (in_array($linkAction, $this->getAllowedActionsByUserId($userId))) {
 			return true;
 		}
 		return false;

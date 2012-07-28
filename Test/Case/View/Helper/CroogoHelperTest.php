@@ -65,6 +65,7 @@ class CroogoHelperTest extends CroogoTestCase {
  * testAdminMenus
  */
 	public function testAdminMenus() {
+		CakeSession::write('Auth.User', array('id' => 1, 'role_id' => 1));
 		CroogoNav::add('contents', array(
 			'title' => 'Contents',
 			'url' => '#',

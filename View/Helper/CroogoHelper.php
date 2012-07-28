@@ -53,8 +53,9 @@ class CroogoHelper extends AppHelper {
 		}
 		$currentRole = $this->Role->byId($this->Layout->getRoleId());
 		$aclPlugin = Configure::read('Site.acl_plugin');
+		$userId = AuthComponent::user('id');
 		foreach ($sorted as $menu) {
-			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByRoleId($this->Layout->getRoleId(), $menu['url'])) {
+			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByUserId($userId, $menu['url'])) {
 				continue;
 			}
 
