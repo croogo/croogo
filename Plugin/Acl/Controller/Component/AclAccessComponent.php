@@ -75,7 +75,7 @@ class AclAccessComponent extends Component {
 			}
 			return;
 		}
-		$node = $this->_controller->Acl->Aco->node('controllers/Nodes');
+		$node = $this->_controller->Acl->Aco->node('controllers/Nodes/admin_index');
 		$this->_controller->Session->write($key, !empty($node));
 		$this->_controller->helpers[] = 'Acl.Acl';
 	}
