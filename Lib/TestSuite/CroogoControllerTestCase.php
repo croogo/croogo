@@ -18,6 +18,20 @@ App::uses('CroogoTestFixture', 'TestSuite');
  */
 class CroogoControllerTestCase extends ControllerTestCase {
 
+	public static function setUpBeforeClass() {
+		self::_restoreSettings();
+	}
+
+	public static function tearDownAfterClass() {
+		self::_restoreSettings();
+	}
+
+	protected static function _restoreSettings() {
+		$source = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.default';
+		$target = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.json';
+		copy($source, $target);
+	}
+
 /**
  * setUp
  *
