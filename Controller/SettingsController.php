@@ -156,6 +156,7 @@ class SettingsController extends AppController {
 
 		if (!empty($this->request->data) && $this->Setting->saveAll($this->request->data['Setting'])) {
 			$this->Session->setFlash(__("Settings updated successfully"), 'default', array('class' => 'success'));
+			$this->redirect(array('action' => 'prefix', $prefix));
 		}
 
 		$settings = $this->Setting->find('all', array(
