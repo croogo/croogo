@@ -1,15 +1,15 @@
 <?php
 
 /**
- * CroogoUpgradeShell
+ * UpgradeTask
  *
- * @package  Console.Command
- * @since  1.5
+ * @package  Console.Command.Task
+ * @since    1.5
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoUpgradeShell extends AppShell {
+class UpgradeTask extends AppShell {
 
 /**
  * getOptionParser
@@ -32,6 +32,9 @@ class CroogoUpgradeShell extends AppShell {
 				))
 			->addSubCommand('settings', array(
 				'help' => __('Create settings.json from database'),
+				))
+			->addSubCommand('all', array(
+				'help' => __('Run all upgrade tasks'),
 				));
 	}
 
@@ -55,6 +58,10 @@ class CroogoUpgradeShell extends AppShell {
  */
 	public function acl() {
 		App::uses('AclUpgrade', 'Acl.Lib');
+		if (!CakePlugin::loaded('Acl') || !class_exists('AclUpgrade')) {
+			$this->err('AclUpgrade class not found or Acl plugin not loaded');
+			$this->_stop();
+		}
 		$Upgrade = new AclUpgrade();
 		if (($result = $Upgrade->upgrade()) !== true) {
 			$this->err($result);
@@ -74,6 +81,19 @@ class CroogoUpgradeShell extends AppShell {
 			}
 			$this->out(__('Upgrade "%s"', $name));
 			$this->$name();
+		}
+	}
+
+	public function execute() {
+		if (empty($this->args)) {
+			return $this->out($this->OptionParser->help());
+		}
+		$commands = array_keys($this->OptionParser->subcommands('croogo'));
+		$command = $this->args[0];
+		if ($command[0] != '_' && in_array($command, $commands)) {
+			return $this->{$command}();
+		} else {
+			$this->out(__('Command not recognized'));
 		}
 	}
 

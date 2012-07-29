@@ -16,12 +16,20 @@ App::uses('Security', 'Utility');
  */
 class CroogoShell extends AppShell {
 
+	public $tasks = array(
+		'Upgrade',
+	);
+
 /**
  * Display help/options
  */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
 		$parser->description(__('Croogo Utilities')
+			)->addSubCommand('upgrade', array(
+				'help' => __('Upgrade Croogo'),
+				'parser' => $this->Upgrade->getOptionParser(),
+				)
 			)->addSubcommand('password', array(
 				'help' => 'Get hashed password',
 				'parser' => array(
