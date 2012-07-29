@@ -17,20 +17,12 @@ App::uses('File', 'Utility');
 class InstallController extends Controller {
 
 /**
- * Controller name
- *
- * @var string
- * @access public
- */
-	public $name = 'Install';
-
-/**
  * No models required
  *
  * @var array
  * @access public
  */
-	public $uses = null;
+	public $uses = false;
 
 /**
  * No components required
@@ -122,6 +114,14 @@ class InstallController extends Controller {
 		if (Configure::read('Install.installed')) {
 			$this->redirect(array('action' => 'adminuser'));
 		}
+		if (file_exists(APP . 'Config' . DS . 'database.php')) {
+			if (!copy(APP . 'Config' . DS . 'croogo.php.install', APP . 'Config' . DS . 'croogo.php')) {
+				$this->Session->setFlash(__('Could not write croogo.php file.'), 'default', array('class' => 'error'));
+			} else {
+				$this->Session->setFlash('Skipping database setup');
+				$this->redirect(array('action' => 'data'));
+			}
+		}
 
 		if (empty($this->request->data)) {
 			return;
@@ -161,7 +161,7 @@ class InstallController extends Controller {
 		}
 
 		if (copy(APP . 'Config' . DS . 'croogo.php.install', APP . 'Config' . DS . 'croogo.php')) {
-			return $this->redirect(array('action' => 'data'));
+			$this->redirect(array('action' => 'data'));
 		} else {
 			$this->Session->setFlash(__('Could not write croogo.php file.'), 'default', array('class' => 'error'));
 		}
