@@ -1,6 +1,6 @@
 <?php
 
-Croogo::hookControllerProperty('*', 'uses', array('Settings.Setting'));
+Croogo::hookComponent('*', 'Settings.Settings');
 
 CroogoNav::add('settings', array(
 	'title' => __('Settings'),

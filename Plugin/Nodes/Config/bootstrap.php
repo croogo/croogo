@@ -1,7 +1,5 @@
 <?php
 
-Croogo::hookControllerProperty('*', 'uses', array('Nodes.Node'));
-
 Croogo::hookComponent('*', 'Nodes.Nodes');
 
 Croogo::hookHelper('*', 'Nodes.Nodes');

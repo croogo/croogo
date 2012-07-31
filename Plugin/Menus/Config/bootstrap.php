@@ -1,7 +1,5 @@
 <?php
 
-Croogo::hookControllerProperty('*', 'uses', array('Menus.Link'));
-
 Croogo::hookComponent('*', 'Menus.Menus');
 
 Croogo::hookHelper('*', 'Menus.Menus');

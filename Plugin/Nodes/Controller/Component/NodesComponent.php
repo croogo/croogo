@@ -30,6 +30,7 @@ class NodesComponent extends Component {
  */
 	public function startup(Controller $controller) {
 		$this->controller = $controller;
+		$controller->loadModel('Nodes.Node');
 
 		if (!isset($this->controller->request->params['admin']) && !isset($this->controller->request->params['requested'])) {
 			$this->nodes();

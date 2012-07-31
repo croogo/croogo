@@ -1,7 +1,5 @@
 <?php
 
-Croogo::hookControllerProperty('*', 'uses', array('Blocks.Block'));
-
 Croogo::hookComponent('*', array(
 	'Blocks.Blocks' => array(
 		'priority' => 5,

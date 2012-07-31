@@ -30,6 +30,7 @@ class BlocksComponent extends Component {
  */
 	public function startup(Controller $controller) {
 		$this->controller = $controller;
+		$controller->loadModel('Blocks.Block');
 
 		if (!isset($this->controller->request->params['admin']) && !isset($this->controller->request->params['requested'])) {
 			$this->blocks();
