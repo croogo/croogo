@@ -27,6 +27,16 @@
 			echo '<p class="error">' . sprintf(__('PHP version %s < 5'), phpversion()) . '</p>';
 		}
 
+		// php version
+		$minCakeVersion = '2.1.5';
+		$cakeVersion = Configure::version();
+		if (version_compare($cakeVersion, $minCakeVersion, '>=')) {
+			echo '<p class="success">' . __('CakePhp version %s >= %s', $cakeVersion, $minCakeVersion) . '</p>';
+		} else {
+			$check = false;
+			echo '<p class="error">' . __('CakePHP version %s < %s', $cakeVersion, $minCakeVersion) . '</p>';
+		}
+
 		if ($check) {
 			echo '<p>' . $this->Html->link('Click here to begin installation', array('action' => 'database')) . '</p>';
 		} else {
