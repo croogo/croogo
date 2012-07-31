@@ -108,7 +108,11 @@ class CroogoComponent extends Component {
  */
 	protected function _adminData() {
 		if (!Configure::read('Croogo.version')) {
-			$this->controller->Setting->write('Croogo.version', file_get_contents(APP . 'VERSION.txt'));
+			if (CakePlugin::loaded('Settings')) {
+				if ($this->controller->Setting instanceof Model) {
+					$this->controller->Setting->write('Croogo.version', file_get_contents(APP . 'VERSION.txt'));
+				}
+			}
 		}
 	}
 
