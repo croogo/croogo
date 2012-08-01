@@ -48,7 +48,22 @@ class UpgradeTask extends AppShell {
 		if (file_exists(APP . 'Config' . DS . 'settings.json')) {
 			$this->err(__('<warning>Config/settings.json already exist</warning>'));
 		} else {
-			ClassRegistry::init('Settings.Setting')->updateJson();
+			$defaultPlugins = array(
+				'Settings', 'Comments', 'Contacts', 'Nodes', 'Meta', 'Menus',
+				'Users', 'Blocks', 'Taxonomy', 'FileManager', 'Tinymce',
+			);
+			$Setting = ClassRegistry::init('Settings.Setting');
+			$setting = $Setting->findByKey('Hook.bootstraps');
+			$plugins = explode(',', $setting['Setting']['value']);
+			if (is_array($plugins)) {
+				foreach ($plugins as $plugin) {
+					if (!in_array($plugin, $defaultPlugins)) {
+						$defaultPlugins[] = $plugin;
+					}
+				}
+			}
+			$Setting->write('Hook.bootstraps', join(',', $defaultPlugins));
+			$Setting->updateJson();
 			$this->out(__('<success>Config/settings.yml created based on `settings` table</success>'));
 		}
 	}
