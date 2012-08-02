@@ -77,7 +77,12 @@ class AclPermissionsController extends AclAppController {
 				$this->request->query,
 				array('perms' => null, 'urls' => null)
 			);
-			$permissions = $this->AclPermission->format($acos, $aros, $options);
+			$cacheName = 'permissions_aco_' . $root['Aco']['id'];
+			$permissions = Cache::read($cacheName, 'permissions');
+			if ($permissions === false) {
+				$permissions = $this->AclPermission->format($acos, $aros, $options);
+				Cache::write($cacheName, $permissions, 'permissions');
+			}
 		} else {
 			$permissions = array();
 		}
@@ -105,6 +110,13 @@ class AclPermissionsController extends AclAppController {
 
 		$permitted = !$this->AclPermission->check($aro, $path);
 		$success = $this->AclPermission->allow($aro, $path, '*', $permitted ? 1 : -1);
+		if ($success) {
+			$this->AclPermission->Aco->id = $acoId;
+			$parentAcoId = $this->AclPermission->Aco->field('parent_id');
+			$cacheName = 'permissions_aco_' . $parentAcoId;
+			Cache::delete($cacheName, 'permissions');
+		}
+
 		$this->set(compact('acoId', 'aroId', 'data', 'success', 'permitted'));
 	}
 
