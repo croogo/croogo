@@ -63,7 +63,22 @@ class SettingsShell extends AppShell {
 					'options' => array(
 						'create' => array(
 							'boolean' => true,
-						)
+							'short' => 'c',
+						),
+						'title' => array(
+							'short' => 't',
+						),
+						'description' => array(
+							'short' => 'd',
+						),
+						'input_type' => array(
+							'choices' => array('text', 'textarea', 'checkbox'),
+							'short' => 'i',
+						),
+						'editable' => array(
+							'short' => 'e',
+							'boolean' => true,
+						),
 					),
 				)
 			))
@@ -137,7 +152,12 @@ class SettingsShell extends AppShell {
 			$this->warn($text);
 			$this->success(__('+ %s', $val));
 			if ('y' == $this->in($ask, array('y', 'n'), 'n')) {
-				$this->Setting->write($key, $val);
+				$keys = array(
+					'title' => null, 'description' => null,
+					'input_type' => null, 'editable' => null,
+				);
+				$options = array_intersect_key($this->params, $keys);
+				$this->Setting->write($key, $val, $options);
 				$this->success(__('Setting updated'));
 			} else {
 				$this->warn(__('Cancelled'));
