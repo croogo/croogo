@@ -23,9 +23,42 @@ class NodesComponent extends Component {
 	public $nodesForLayout = array();
 
 /**
+ * initialize
+ *
+ * @param Controller $controller instance of controller
+ */
+	public function initialize(Controller $controller) {
+		$controller->loadModel('Nodes.Node');
+
+		if (Configure::read('Access Control.multiRole')) {
+			Configure::write('Acl.classname', 'Acl.HabtmDbAcl');
+			App::uses('HabtmDbAcl', 'Acl.Controller/Component/Acl');
+			$controller->Acl->adapter('HabtmDbAcl');
+			$controller->Node->User->bindModel(array(
+				'hasAndBelongsToMany' => array(
+					'Role' => array(
+						'className' => 'Users.Role',
+						'with' => 'Users.RolesUser',
+					),
+				),
+			), false);
+		}
+
+		if (Configure::read('Access Control.rowLevel')) {
+			$controller->Node->Behaviors->load('Acl', array(
+				'className' => 'CroogoAcl', 'type' => 'controlled',
+			));
+			$controller->Node->Behaviors->attach('RowLevelAcl', array(
+				'className' => 'Acl.RowLevelAcl',
+			));
+			$controller->Components->load('Acl.RowLevelAcl');
+		}
+	}
+
+/**
  * Startup
  *
- * @param object $controller instance of controller
+ * @param Controller $controller instance of controller
  * @return void
  */
 	public function startup(Controller $controller) {
