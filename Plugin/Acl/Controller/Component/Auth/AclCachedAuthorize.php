@@ -91,13 +91,23 @@ class AclCachedAuthorize extends BaseAuthorize {
 			return $allowed;
 		}
 
+		// bail out when controller's primary model does not want row level acl
+		$controller = $this->controller();
+		$model = $controller->modelClass;
+		$Model = $controller->{$model};
+		if ($Model && !$Model->Behaviors->attached('RowLevelAcl')) {
+			return $allowed;
+		}
+
+		$primaryKey = $Model->primaryKey;
 		$ids = array();
 		if ($request->is('get') && !empty($request->params['pass'][0])) {
+			// collect id from actions such as: Nodes/admin_edit/1
 			$ids[] = $request->params['pass'][0];
-		} elseif ($request->is('post') || $request->is('put')) {
-			$model = Inflector::classify($request->params['controller']);
+		} elseif ($request->is('post') || $request->is('put') && isset($request->data[$model]['action'])) {
+			// collect ids from 'bulk' processing action such as: Nodes/admin_process
 			foreach ($request->data[$model] as $id => $flag) {
-				if (isset($flag['id']) && $flag['id'] == 1) {
+				if (isset($flag[$primaryKey]) && $flag[$primaryKey] == 1) {
 					$ids[] = $id;
 				}
 			}
