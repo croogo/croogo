@@ -87,6 +87,10 @@ class AclCachedAuthorize extends BaseAuthorize {
 			return false;
 		}
 
+		if (!Configure::read('Access Control.rowLevel')) {
+			return $allowed;
+		}
+
 		$ids = array();
 		if ($request->is('get') && !empty($request->params['pass'][0])) {
 			$ids[] = $request->params['pass'][0];
