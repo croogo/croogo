@@ -63,7 +63,9 @@ class UpgradeTask extends AppShell {
 				}
 			}
 			$Setting->write('Hook.bootstraps', join(',', $defaultPlugins));
-			$Setting->updateJson();
+			if ($version = file_get_contents(APP . 'VERSION.txt')) {
+				$Setting->write('Croogo.version', $version);
+			}
 			$this->out(__('<success>Config/settings.yml created based on `settings` table</success>'));
 		}
 	}
