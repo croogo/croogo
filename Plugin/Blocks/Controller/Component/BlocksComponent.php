@@ -69,6 +69,7 @@ class BlocksComponent extends Component {
 				'config' => 'croogo_blocks',
 			),
 		));
+		$roleId = $this->controller->Auth->user('role_id');
 		foreach ($regions as $regionId => $regionAlias) {
 			$this->blocksForLayout[$regionAlias] = array();
 			$findOptions = array(
@@ -79,7 +80,7 @@ class BlocksComponent extends Component {
 						array(
 							'OR' => array(
 								'Block.visibility_roles' => '',
-								'Block.visibility_roles LIKE' => '%"' . $this->roleId . '"%',
+								'Block.visibility_roles LIKE' => '%"' . $roleId . '"%',
 							),
 						),
 						array(
@@ -96,7 +97,7 @@ class BlocksComponent extends Component {
 					'Block.weight' => 'ASC'
 				),
 				'cache' => array(
-					'prefix' => 'croogo_blocks_' . $regionAlias . '_' . $this->roleId . '_',
+					'prefix' => 'croogo_blocks_' . $regionAlias . '_' . $roleId . '_',
 					'config' => 'croogo_blocks',
 				),
 				'recursive' => '-1',

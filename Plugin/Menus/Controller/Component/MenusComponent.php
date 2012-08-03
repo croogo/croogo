@@ -73,6 +73,7 @@ class MenusComponent extends Component {
 		}
 		$menus = Set::merge($menus, array_keys($this->controller->Blocks->blocksData['menus']));
 
+		$roleId = $this->controller->Auth->user('role_id');
 		foreach ($menus as $menuAlias) {
 			$menu = $this->controller->Link->Menu->find('first', array(
 				'conditions' => array(
@@ -96,7 +97,7 @@ class MenusComponent extends Component {
 							array(
 								'OR' => array(
 									'Link.visibility_roles' => '',
-									'Link.visibility_roles LIKE' => '%"' . $this->roleId . '"%',
+									'Link.visibility_roles LIKE' => '%"' . $roleId . '"%',
 								),
 							),
 						),
@@ -105,7 +106,7 @@ class MenusComponent extends Component {
 						'Link.lft' => 'ASC',
 					),
 					'cache' => array(
-						'name' => 'croogo_menu_' . $menu['Menu']['id'] . '_links_' . $this->roleId,
+						'name' => 'croogo_menu_' . $menu['Menu']['id'] . '_links_' . $roleId,
 						'config' => 'croogo_menus',
 					),
 					'recursive' => -1,
