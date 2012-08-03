@@ -22,7 +22,7 @@ class AppShell extends Shell {
  * Convenience method for out() that encloses message between <success /> tag
  */
 	public function success($message = null, $newlines = 1, $level = Shell::NORMAL) {
-		$this->out('<success>' . $message . '</success>');
+		$this->out('<success>' . $message . '</success>', $newlines, $level);
 	}
 
 }

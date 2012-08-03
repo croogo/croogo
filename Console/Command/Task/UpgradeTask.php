@@ -12,6 +12,31 @@
 class UpgradeTask extends AppShell {
 
 /**
+ * maps 1.4 controllers to the current plugin
+ */
+	protected $_controllerMap = array(
+		'attachments' => 'file_manager',
+		'filemanager' => 'file_manager',
+		'contacts' => 'contacts',
+		'messages' => 'contacts',
+		'terms' => 'taxonomy',
+		'vocabularies' => 'taxonomy',
+		'types' => 'taxonomy',
+		'comments' => 'comments',
+		'acl_actions' => 'acl',
+		'acl_permissions' => 'acl',
+		'roles' => 'users',
+		'users' => 'users',
+		'nodes' => 'nodes',
+		'regions' => 'blocks',
+		'blocks' => 'blocks',
+		'languages' => 'settings',
+		'settings' => 'settings',
+		'menus' => 'menus',
+		'links' => 'menus',
+	);
+
+/**
  * getOptionParser
  */
 	public function getOptionParser() {
@@ -32,6 +57,9 @@ class UpgradeTask extends AppShell {
 				))
 			->addSubCommand('settings', array(
 				'help' => __('Create settings.json from database'),
+				))
+			->addSubCommand('links', array(
+				'help' => __('Update Links in database'),
 				))
 			->addSubCommand('all', array(
 				'help' => __('Run all upgrade tasks'),
@@ -95,6 +123,41 @@ class UpgradeTask extends AppShell {
 		} else {
 			$this->out('<success>ACL Upgrade completed successfully</success>');
 		}
+	}
+
+	public function links() {
+		if (!CakePlugin::loaded('Menus')) {
+			CakePlugin::load('Menus');
+		}
+		App::uses('View', 'View');
+		App::uses('AppHelper', 'View/Helper');
+		App::uses('MenusHelper', 'Menus.View/Helper');
+		$Menus = new MenusHelper(new View());
+		$Link = ClassRegistry::init('Menus.Link');
+		$links = $Link->find('all', array('fields' => array('id', 'title', 'link')));
+
+		$count = 0;
+		foreach ($links as $link) {
+			if (!strstr($link['Link']['link'], 'controller:')) {
+				continue;
+			}
+			if (strstr($link['Link']['link'], 'plugin:')) {
+				continue;
+			}
+			$arr = array();
+			$url = $Menus->linkStringToArray($link['Link']['link']);
+			if (isset($this->_controllerMap[$url['controller']])) {
+				$url['plugin'] = $this->_controllerMap[$url['controller']];
+				$linkString = $Menus->urlToLinkString($url);
+				$Link->id = $link['Link']['id'];
+				$this->out(__('Updating Link %s', $Link->id));
+				$this->warn(__('- %s', $link['Link']['link']));
+				$this->success(__('+ %s', $linkString), 2);
+				$Link->saveField('link', $linkString, false);
+				$count++;
+			}
+		}
+		$this->out(__('Links updated: %d rows', $count));
 	}
 
 /**
