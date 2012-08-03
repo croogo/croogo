@@ -23,26 +23,6 @@ class MetaHelper extends AppHelper {
 		);
 
 /**
- * beforeRender
- */
-	public function beforeRender($viewFile) {
-		if (isset($this->request->params['admin'])) {
-			$this->_adminTabs();
-		}
-	}
-
-/**
- * Hook admin tabs
- */
-	protected function _adminTabs() {
-		$controller = Inflector::camelize($this->request->params['controller']);
-		$title = __('Custom Fields');
-		$element = 'Meta.admin/meta_tab';
-		Croogo::hookAdminTab("$controller/admin_add", $title, $element);
-		Croogo::hookAdminTab("$controller/admin_edit", $title, $element);
-	}
-
-/**
  * Meta tags
  *
  * @return string
