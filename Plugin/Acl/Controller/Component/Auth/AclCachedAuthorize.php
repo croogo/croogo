@@ -25,14 +25,28 @@ class AclCachedAuthorize extends BaseAuthorize {
  * @return void
  */
 	protected function _setPrefixMappings() {
+		if (!Configure::read('Access Control.rowLevel')) {
+			return;
+		}
+
 		$crud = array('create', 'read', 'update', 'delete');
 		$map = array_combine($crud, $crud);
+
+		$Controller = $this->Controller();
+		if ($Controller->Components->attached('RowLevelAcl')) {
+			$settings = $Controller->Components->RowLevelAcl->settings;
+			if (isset($settings['actionMap'])) {
+				$map = array_merge($map, $settings['actionMap']);
+			}
+		}
 
 		$prefixes = Router::prefixes();
 		if (!empty($prefixes)) {
 			foreach ($prefixes as $prefix) {
 				$map = array_merge($map, array(
-					$prefix . '_process' => 'update',
+					$prefix . '_moveup' => 'update',
+					$prefix . '_movedown' => 'update',
+					$prefix . '_process' => 'delete',
 					$prefix . '_index' => 'read',
 					$prefix . '_add' => 'create',
 					$prefix . '_edit' => 'update',
@@ -152,7 +166,12 @@ class AclCachedAuthorize extends BaseAuthorize {
 
 		if (!isset($permissions[$alias][$action])) {
 			$Acl = $this->_Collection->load('Acl');
-			$allowed = $Acl->check($user, $acoNode, $action);
+			try {
+				$allowed = $Acl->check($user, $acoNode, $action);
+			} catch (Exception $e) {
+				CakeLog::warning('authorizeByContent: ' . $e->getMessage());
+				$allowed = false;
+			}
 			$permissions[$alias][$action] = $allowed;
 			Cache::write($cacheName, $permissions, 'permissions');
 			$hit = false;

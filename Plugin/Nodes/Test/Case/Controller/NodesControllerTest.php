@@ -80,7 +80,6 @@ class NodesControllerTest extends CroogoControllerTestCase {
 		$this->Nodes->plugin = 'Nodes';
 		$this->Nodes->constructClasses();
 		$this->Nodes->Node->Behaviors->detach('Acl');
-		$this->Nodes->Node->Behaviors->detach('ControlledContents');
 		$this->Nodes->Security = $this->getMock('SecurityComponent', null, array($this->Nodes->Components));
 		$this->Nodes->request->params['controller'] = 'nodes';
 		$this->Nodes->request->params['pass'] = array();
@@ -96,7 +95,6 @@ class NodesControllerTest extends CroogoControllerTestCase {
 			),
 		));
 		$this->NodesController->Node->Behaviors->detach('Acl');
-		$this->NodesController->Node->Behaviors->detach('ControlledContents');
 		$this->NodesController->Auth
 			->staticExpects($this->any())
 			->method('user')

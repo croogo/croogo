@@ -44,16 +44,6 @@ class NodesComponent extends Component {
 				),
 			), false);
 		}
-
-		if (Configure::read('Access Control.rowLevel')) {
-			$controller->Node->Behaviors->load('Acl', array(
-				'className' => 'CroogoAcl', 'type' => 'controlled',
-			));
-			$controller->Node->Behaviors->attach('RowLevelAcl', array(
-				'className' => 'Acl.RowLevelAcl',
-			));
-			$controller->Components->load('Acl.RowLevelAcl');
-		}
 	}
 
 /**

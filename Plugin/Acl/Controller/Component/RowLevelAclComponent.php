@@ -1,16 +1,80 @@
 <?php
 
+/**
+ * RoleLevelAcl Component
+ *
+ * When "Access Control.rowLevel" Setting is active, this component will perform
+ * the necesary setup on controller's primary model and hook the element for 
+ * backend use.
+ *
+ * You can also use it to configure the action mappings used by AclCachedAuthorize
+ * class, for example:
+ *
+ * ```
+ *      class ItemsController extends AppController {
+ *          public $components = array(
+ *              'RowLevelAcl' => array(
+ *                  'className' => 'Acl.RowLevelAcl',
+ *                  'settings' => array(
+ *                      'actionMap' => array(
+ *                          'admin_reserve' => 'update', // action map
+ *                      ),
+ *                  ),
+ *              ));
+ *      }
+ * ```
+ *
+ * PHP version 5
+ *
+ * @category Component
+ * @package  Acl
+ * @version  1.0
+ * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
+ * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link     http://www.croogo.org
+ */
 class RowLevelAclComponent extends Component {
 
+/**
+ * controller instance
+ */
 	protected $_controller;
+
+/**
+ * initialize
+ *
+ * attaches Acl and RowLevelAcl behavior to the controller's primary model and
+ * hook the appropriate admin tabs
+ */
+	public function initialize(Controller $controller) {
+		$this->_controller = $controller;
+		$Model = $controller->{$controller->modelClass};
+		$Model->Behaviors->load('Acl', array(
+			'className' => 'CroogoAcl', 'type' => 'controlled',
+		));
+		$Model->Behaviors->load('RowLevelAcl', array(
+			'className' => 'Acl.RowLevelAcl'
+		));
+
+		$name = $controller->name;
+		$element = 'Acl.admin/row_acl';
+		if (!empty($this->settings['adminTabElement'])) {
+			$element = $this->settings['adminTabElement'];
+		}
+		$adminTabActions = array('admin_add', 'admin_edit');
+		if (!empty($this->settings['adminTabActions'])) {
+			$adminTabActions += $this->settings['adminTabActions'];
+		}
+		foreach ($adminTabActions as $action) {
+			Croogo::hookAdminTab("$name/$action", __('Permissions'), $element);
+		}
+	}
 
 /**
  * startup
  */
 	public function startup(Controller $controller) {
-		$this->_controller = $controller;
-		$rowLevel = Configure::read('Access Control.rowLevel');
-		if ($rowLevel && !empty($controller->request->params['pass'][0])) {
+		if (!empty($controller->request->params['pass'][0])) {
 			$id = $controller->request->params['pass'][0];
 			$this->_rolePermissions($id);
 		}

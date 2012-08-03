@@ -45,6 +45,14 @@ class NodesController extends NodesAppController {
 	);
 
 /**
+ * afterConstruct
+ */
+	public function afterConstruct() {
+		parent::afterConstruct();
+		$this->_setupAclComponent();
+	}
+
+/**
  * beforeFilter
  *
  * @return void

@@ -290,6 +290,17 @@ class SettingData {
 			'weight' => '26',
 			'params' => ''
 		),
+		array(
+			'id' => '36',
+			'key' => 'Access Control.models',
+			'value' => '',
+			'title' => 'Models with Row Level Acl',
+			'description' => 'Select models to activate Row Level Access Control on',
+			'input_type' => 'multiple',
+			'editable' => '1',
+			'weight' => '26',
+			'params' => 'multiple=checkboxoptions={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "Menus.Link": "Link"}'
+		),
 	);
 
 }

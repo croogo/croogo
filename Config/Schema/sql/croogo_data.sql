@@ -376,7 +376,8 @@ INSERT IGNORE INTO `settings` (`id`, `key`, `value`, `title`, `description`, `in
 (32, 'Hook.bootstraps', 'Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Tinymce', '', '', '', 0, 23, ''),
 (33, 'Comment.email_notification', '1', 'Enable email notification', '', '', 1, 24, ''),
 (34, 'Access Control.multiRole', '0', 'Enable Multiple Roles', '', 'checkbox', 1, 25, ''),
-(35, 'Access Control.rowLevel', '0', 'Row Level Access Control', '', 'checkbox', 1, 26, '');
+(35, 'Access Control.rowLevel', '0', 'Row Level Access Control', '', 'checkbox', 1, 26, ''),
+(36, 'Access Control.models', '', 'Models with Row Level Acl', 'Select models to activate Row Level Access Control on', 'multiple', 1, 27, 'multiple=checkboxoptions={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "Menus.Link": "Link"}');
 
 --
 -- Dumping data for table `taxonomies`

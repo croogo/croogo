@@ -33,6 +33,14 @@ class MenusController extends MenusAppController {
 	public $uses = array('Menus.Menu');
 
 /**
+ * afterConstruct
+ */
+	public function afterConstruct() {
+		parent::afterConstruct();
+		$this->_setupAclComponent();
+	}
+
+/**
  * Admin index
  *
  * @return void

@@ -33,11 +33,6 @@ class AclFilterComponent extends Component {
 			Croogo::hookAdminTab('Users/admin_add', 'Roles', 'Acl.admin/roles');
 			Croogo::hookAdminTab('Users/admin_edit', 'Roles', 'Acl.admin/roles');
 		}
-
-		if (Configure::read('Access Control.rowLevel')) {
-			Croogo::hookAdminTab('Nodes/admin_add', 'Permissions', 'Acl.admin/row_acl');
-			Croogo::hookAdminTab('Nodes/admin_edit', 'Permissions', 'Acl.admin/row_acl');
-		}
 	}
 
 /**

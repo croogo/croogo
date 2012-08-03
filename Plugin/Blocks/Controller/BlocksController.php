@@ -32,6 +32,15 @@ class BlocksController extends BlocksAppController {
 	public $uses = array('Blocks.Block', 'Role');
 
 /**
+ * afterConstruct
+ * @see AppController::afterConstruct()
+ */
+	public function afterConstruct() {
+		parent::afterConstruct();
+		$this->_setupAclComponent();
+	}
+
+/**
  * Admin index
  *
  * @return void

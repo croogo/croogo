@@ -303,7 +303,7 @@ class AclExtras extends Object {
  * @return void
  */
 	protected function _checkMethods($className, $controllerName, $node, $pluginPath = false) {
-		$excludes = array('securityError');
+		$excludes = array('afterConstruct', 'securityError');
 		$baseMethods = get_class_methods('Controller');
 		$actions = get_class_methods($className);
 		$methods = array_diff($actions, $baseMethods);

@@ -46,6 +46,14 @@ class LinksController extends MenusAppController {
 	public $menuId = '';
 
 /**
+ * afterConstruct
+ */
+	public function afterConstruct() {
+		parent::afterConstruct();
+		$this->_setupAclComponent();
+	}
+
+/**
  * Admin index
  *
  * @return void

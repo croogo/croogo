@@ -87,11 +87,34 @@ class AppController extends Controller {
  * @access public
  */
 	public function __construct($request = null, $response = null) {
+		parent::__construct($request, $response);
+		$this->getEventManager()->dispatch(new CakeEvent('Controller.afterConstruct', $this));
+	}
+
+/**
+ * implementedEvents
+ */
+	public function implementedEvents() {
+		return parent::implementedEvents() + array(
+			'Controller.afterConstruct' => 'afterConstruct',
+		);
+	}
+
+/**
+ * afterConstruct
+ *
+ * called when Controller::__construct() is complete.
+ * Override this method to perform class configuration/initialization that
+ * needs to be performed earlier from Controller::beforeFilter().
+ *
+ * You still need to call parent::afterConstruct() method to ensure correct
+ * behavior.
+ */
+	public function afterConstruct() {
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
 		if (isset($request->params['admin'])) {
 			$this->helpers[] = 'Croogo';
 		}
-		parent::__construct($request, $response);
 	}
 
 /**
@@ -180,6 +203,19 @@ class AppController extends Controller {
 		$this->response->send();
 		$this->_stop();
 		return false;
+	}
+
+/**
+ * _setupAclComponent
+ */
+	protected function _setupAclComponent() {
+		$config = Configure::read('Access Control');
+		if (isset($config['rowLevel']) && $config['rowLevel'] == true) {
+			if (strpos($config['models'], $this->plugin . '.' . $this->modelClass) === false) {
+				return;
+			}
+			$this->Components->load(Configure::read('Site.acl_plugin') . '.RowLevelAcl');
+		}
 	}
 
 }
