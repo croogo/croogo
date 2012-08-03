@@ -68,6 +68,7 @@ class Install extends InstallAppModel {
 		if (!$saved) {
 			$this->log('Unable to create administrative user. Validation errors:');
 			$this->log($User->validationErrors);
+			copy(APP . 'Config' . DS . 'croogo.php.install', APP . 'Config' . DS . 'croogo.php');
 		}
 		return $saved;
 	}
