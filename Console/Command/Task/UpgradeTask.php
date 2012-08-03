@@ -66,6 +66,16 @@ class UpgradeTask extends AppShell {
 			if ($version = file_get_contents(APP . 'VERSION.txt')) {
 				$Setting->write('Croogo.version', $version);
 			}
+			$Setting->write('Access Control.multiRole', 0, array(
+				'title' => 'Enable Multiple Roles',
+				'input_type' => 'checkbox',
+				'editable' => true,
+			));
+			$Setting->write('Access Control.rowLevel', 0, array(
+				'title' => 'Row Level Access Control',
+				'input_type' => 'checkbox',
+				'editable' => true,
+			));
 			$this->out(__('<success>Config/settings.yml created based on `settings` table</success>'));
 		}
 	}
