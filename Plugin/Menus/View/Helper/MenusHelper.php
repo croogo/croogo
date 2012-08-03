@@ -217,4 +217,34 @@ class MenusHelper extends AppHelper {
 		return $linkArr;
 	}
 
+/**
+ * Converts array into string controller:abc/action:xyz/value1/value2
+ *
+ * @param array $url link
+ * @return array
+ */
+	public function urlToLinkString($url) {
+		$result = array();
+		$actions = array_merge(array(
+			'admin' => false, 'plugin' => false,
+			'controller' => false, 'action' => false
+			),
+			$url
+		);
+		foreach ($actions as $key => $val) {
+			if (is_string($key)) {
+				if (is_bool($val)) {
+					if ($val === true) {
+						$result[] = $key;
+					}
+				} else {
+					$result[] = $key . ':' . $val;
+				}
+			} else {
+				$result[] = $val;
+			}
+		}
+		return join('/', $result);
+	}
+
 }

@@ -1,5 +1,5 @@
 <?php
-App::uses('MenusHelper', 'View/Helper');
+App::uses('MenusHelper', 'Menus.View/Helper');
 App::uses('SessionComponent', 'Controller/Component');
 App::uses('Controller', 'Controller');
 App::uses('CroogoTestCase', 'TestSuite');
@@ -79,6 +79,91 @@ class MenusHelperTest extends CroogoTestCase {
 			'action' => 'index',
 			'with-slash',
 		));
+
+		$expected = array(
+			'plugin' => 'contacts',
+			'controller' => 'contacts',
+			'action' => 'view',
+			'contact',
+		);
+		$string = 'plugin:contacts/controller:contacts/action:view/contact';
+		$this->assertEqual($expected, $this->Menus->linkStringToArray($string));
+
+		$string = '/plugin:contacts/controller:contacts/action:view/contact';
+		$this->assertEqual($expected, $this->Menus->linkStringToArray($string));
+	}
+
+/**
+ * testUrlToLinkString
+ */
+	public function testUrlToLinkString() {
+		$url = array(
+			'controller' => 'contacts',
+			'action' => 'view',
+			'contact',
+			'plugin' => 'contacts',
+		);
+		$expected = 'plugin:contacts/controller:contacts/action:view/contact';
+		$this->assertEquals($expected, $this->Menus->urlToLinkString($url));
+
+		$url = array(
+			'plugin' => 'contacts',
+			'controller' => 'contacts',
+			'action' => 'view',
+			'contact',
+		);
+		$expected = 'plugin:contacts/controller:contacts/action:view/contact';
+		$this->assertEquals($expected, $this->Menus->urlToLinkString($url));
+
+		$url = array(
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'view',
+			'type' => 'blog',
+			'hello'
+		);
+		$expected = 'plugin:nodes/controller:nodes/action:view/type:blog/hello';
+		$this->assertEquals($expected, $this->Menus->urlToLinkString($url));
+
+		$url = array(
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'view',
+			'live',
+			'long',
+			'and',
+			'prosper',
+		);
+		$expected = 'plugin:nodes/controller:nodes/action:view/live/long/and/prosper';
+		$this->assertEquals($expected, $this->Menus->urlToLinkString($url));
+
+		$url = array(
+			'controller' => 'nodes',
+			'action' => 'view',
+			'live',
+			'long',
+			'and',
+			'prosper',
+		);
+		$expected = 'controller:nodes/action:view/live/long/and/prosper';
+		$this->assertEquals($expected, $this->Menus->urlToLinkString($url));
+
+		$url = array(
+			'admin' => true,
+			'controller' => 'nodes',
+			'action' => 'edit',
+			1,
+			'type' => 'blog',
+		);
+		$expected = 'admin/controller:nodes/action:edit/1/type:blog';
+		$this->assertEquals($expected, $this->Menus->urlToLinkString($url));
+
+		$url = array();
+		$this->assertEquals('', $this->Menus->urlToLinkString($url));
+
+		$url = array('some' => 'random', 1, 2, 'array' => 'must', 'work');
+		$expected = 'some:random/1/2/array:must/work';
+		$this->assertEquals($expected, $this->Menus->urlToLinkString($url));
 	}
 
 }
