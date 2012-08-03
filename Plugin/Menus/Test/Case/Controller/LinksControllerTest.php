@@ -120,7 +120,7 @@ class LinksControllerTest extends CroogoControllerTestCase {
 				))
 			);
 		$this->testAction('/admin/menus/links/index');
-		$this->testAction('/admin/menus/links/index/3');
+		$this->testAction('/admin/menus/links/index/?menu_id=3');
 		$mainMenu = $this->LinksController->Link->Menu->findByAlias('main');
 		$this->assertEquals($mainMenu, $this->vars['menu']);
 		$this->assertNotEmpty($this->vars['linksTree']);

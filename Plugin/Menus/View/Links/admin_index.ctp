@@ -3,7 +3,7 @@
 <li><?php echo $this->Html->link(
 	__('New %s', Inflector::singularize($this->name)),
 	array('action' => 'add',
-	$menu['Menu']['id'],
+	'?' => array('menu_id' => $menu['Menu']['id']),
 	)); ?>
 </li>
 <?php $this->end('tabs'); ?>

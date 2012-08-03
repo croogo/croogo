@@ -67,7 +67,7 @@ class MenusHelper extends AppHelper {
 					'admin' => true,
 					'controller' => 'links',
 					'action' => 'index',
-					$m['Menu']['id'],
+					'?' => array('menu_id' => $m['Menu']['id'])
 					),
 				'weight' => $weight,
 				));

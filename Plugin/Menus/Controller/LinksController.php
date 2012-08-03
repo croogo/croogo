@@ -48,12 +48,14 @@ class LinksController extends MenusAppController {
 /**
  * Admin index
  *
- * @param integer $menuId
  * @return void
  * @access public
  */
-	public function admin_index($menuId = null) {
-		if (!$menuId) {
+	public function admin_index() {
+		if (isset($this->request->query['menu_id'])) {
+			$menuId = $this->request->query['menu_id'];
+		}
+		if (empty($menuId)) {
 			$this->redirect(array(
 				'controller' => 'menus',
 				'action' => 'index',

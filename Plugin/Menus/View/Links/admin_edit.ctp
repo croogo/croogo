@@ -57,7 +57,7 @@
 	echo $this->Form->end(__('Save'));
 	echo $this->Html->link(__('Cancel'), array(
 		'action' => 'index',
-		$menuId,
+		'?' => array('menu_id' => $menuId),
 	), array(
 		'class' => 'cancel',
 	));

@@ -1,4 +1,7 @@
 <?php
+
+App::uses('MenusAppModel', 'Menus.Model');
+
 /**
  * Link
  *

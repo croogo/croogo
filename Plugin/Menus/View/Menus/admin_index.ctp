@@ -13,7 +13,10 @@
 
 	$rows = array();
 	foreach ($menus as $menu) {
-		$actions  = $this->Html->link(__('View links'), array('controller' => 'links', 'action' => 'index', $menu['Menu']['id']));
+		$actions  = $this->Html->link(__('View links'), array(
+			'controller' => 'links', 'action' => 'index',
+			'?' => array('menu_id' => $menu['Menu']['id'])
+		));
 		$actions .= ' ' . $this->Html->link(__('Edit'), array('controller' => 'menus', 'action' => 'edit', $menu['Menu']['id']));
 		$actions .= ' ' . $this->Croogo->adminRowActions($menu['Menu']['id']);
 		$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
