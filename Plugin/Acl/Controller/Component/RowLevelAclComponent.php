@@ -24,7 +24,8 @@ class RowLevelAclComponent extends Component {
  */
 	protected function _rolePermissions($id) {
 		$Permission = $this->_controller->Acl->Aro->Permission;
-		$roles = $this->_controller->Node->User->Role->find('list', array(
+		$Role = ClassRegistry::init('Users.Role');
+		$roles = $Role->find('list', array(
 			'cache' => array('name' => 'roles', 'config' => 'nodes_index'),
 		));
 		$modelClass = $this->_controller->modelClass;

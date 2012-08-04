@@ -23,16 +23,23 @@ class BlocksComponent extends Component {
 	);
 
 /**
+ * initialize
+ *
+ * @param Controller $controller instance of controller
+ */
+	public function initialize(Controller $controller) {
+		$this->controller = $controller;
+		$this->Block = ClassRegistry::init('Blocks.Block');
+	}
+
+/**
  * Startup
  *
  * @param object $controller instance of controller
  * @return void
  */
 	public function startup(Controller $controller) {
-		$this->controller = $controller;
-		$controller->loadModel('Blocks.Block');
-
-		if (!isset($this->controller->request->params['admin']) && !isset($this->controller->request->params['requested'])) {
+		if (!isset($controller->request->params['admin']) && !isset($controller->request->params['requested'])) {
 			$this->blocks();
 		}
 	}
@@ -44,8 +51,7 @@ class BlocksComponent extends Component {
  * @return void
  */
 	public function beforeRender(Controller $controller) {
-		$this->controller = $controller;
-		$this->controller->set('blocks_for_layout', $this->blocksForLayout);
+		$controller->set('blocks_for_layout', $this->blocksForLayout);
 	}
 
 /**
@@ -56,7 +62,7 @@ class BlocksComponent extends Component {
  * @return void
  */
 	public function blocks() {
-		$regions = $this->controller->Block->Region->find('list', array(
+		$regions = $this->Block->Region->find('list', array(
 			'conditions' => array(
 				'Region.block_count >' => '0',
 			),
@@ -102,7 +108,7 @@ class BlocksComponent extends Component {
 				),
 				'recursive' => '-1',
 			);
-			$blocks = $this->controller->Block->find('all', $findOptions);
+			$blocks = $this->Block->find('all', $findOptions);
 			$this->processBlocksData($blocks);
 			$this->blocksForLayout[$regionAlias] = $blocks;
 		}
@@ -192,7 +198,6 @@ class BlocksComponent extends Component {
 				}
 			}
 		}
-
 		return $stringArr;
 	}
 

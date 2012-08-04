@@ -21,16 +21,23 @@ class MenusComponent extends Component {
 	public $menusForLayout = array();
 
 /**
+ * initialize
+ *
+ * @param Controller $controller instance of controller
+ */
+	public function initialize(Controller $controller) {
+		$this->controller = $controller;
+		$this->Link = ClassRegistry::init('Menus.Link');
+	}
+
+/**
  * Startup
  *
  * @param object $controller instance of controller
  * @return void
  */
 	public function startup(Controller $controller) {
-		$this->controller = $controller;
-		$controller->loadModel('Menus.Link');
-
-		if (!isset($this->controller->request->params['admin']) && !isset($this->controller->request->params['requested'])) {
+		if (!isset($controller->request->params['admin']) && !isset($controller->request->params['requested'])) {
 			$this->menus();
 
 		} else {
@@ -40,7 +47,7 @@ class MenusComponent extends Component {
 
 	protected function _adminData() {
 		// menus
-		$menus = $this->controller->Link->Menu->find('all', array(
+		$menus = $this->Link->Menu->find('all', array(
 			'recursive' => '-1',
 			'order' => 'Menu.id ASC',
 		));
@@ -54,8 +61,7 @@ class MenusComponent extends Component {
  * @return void
  */
 	public function beforeRender(Controller $controller) {
-		$this->controller = $controller;
-		$this->controller->set('menus_for_layout', $this->menusForLayout);
+		$controller->set('menus_for_layout', $this->menusForLayout);
 	}
 
 /**
@@ -75,7 +81,7 @@ class MenusComponent extends Component {
 
 		$roleId = $this->controller->Auth->user('role_id');
 		foreach ($menus as $menuAlias) {
-			$menu = $this->controller->Link->Menu->find('first', array(
+			$menu = $this->Link->Menu->find('first', array(
 				'conditions' => array(
 					'Menu.status' => 1,
 					'Menu.alias' => $menuAlias,
@@ -111,7 +117,7 @@ class MenusComponent extends Component {
 					),
 					'recursive' => -1,
 				);
-				$links = $this->controller->Link->find('threaded', $findOptions);
+				$links = $this->Link->find('threaded', $findOptions);
 				$this->menusForLayout[$menuAlias]['threaded'] = $links;
 			}
 		}
