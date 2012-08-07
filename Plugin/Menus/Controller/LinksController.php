@@ -116,7 +116,11 @@ class LinksController extends MenusAppController {
 			));
 			if ($this->Link->save($this->request->data)) {
 				$this->Session->setFlash(__('The Link has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index', $this->request->data['Link']['menu_id']));
+				if (isset($this->request->data['apply'])) {
+					$this->redirect(array('action' => 'edit', $this->Link->id));
+				} else {
+					$this->redirect(array('action' => 'index', $this->request->data['Link']['menu_id']));
+				}
 			} else {
 				$this->Session->setFlash(__('The Link could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -155,7 +159,11 @@ class LinksController extends MenusAppController {
 			));
 			if ($this->Link->save($this->request->data)) {
 				$this->Session->setFlash(__('The Link has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index', $this->request->data['Link']['menu_id']));
+				if (isset($this->request->data['apply'])) {
+					$this->redirect(array('action' => 'edit', $this->Link->id));
+				} else {
+					$this->redirect(array('action' => 'index', $this->request->data['Link']['menu_id']));
+				}
 			} else {
 				$this->Session->setFlash(__('The Link could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
