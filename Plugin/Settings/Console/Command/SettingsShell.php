@@ -79,6 +79,9 @@ class SettingsShell extends AppShell {
 							'short' => 'e',
 							'boolean' => true,
 						),
+						'params' => array(
+							'short' => 'p',
+						),
 					),
 				)
 			))
@@ -154,7 +157,7 @@ class SettingsShell extends AppShell {
 			if ('y' == $this->in($ask, array('y', 'n'), 'n')) {
 				$keys = array(
 					'title' => null, 'description' => null,
-					'input_type' => null, 'editable' => null,
+					'input_type' => null, 'editable' => null, 'params' => null,
 				);
 				$options = array_intersect_key($this->params, $keys);
 				$this->Setting->write($key, $val, $options);
