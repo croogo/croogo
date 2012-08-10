@@ -69,7 +69,7 @@ class ParamsBehavior extends ModelBehavior {
  */
 	public function paramsToArray(Model $model, $params) {
 		$output = array();
-		$params = explode("\n", $params);
+		$params = preg_split('/[\r\n]+/', $params);
 		foreach ($params as $param) {
 			if (strlen($param) == 0) {
 				continue;
