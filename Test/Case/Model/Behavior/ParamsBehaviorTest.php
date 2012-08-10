@@ -82,4 +82,21 @@ class ParamsBehaviorTest extends CroogoTestCase {
 		$this->assertEqual($type['Params'], $expected);
 	}
 
+	public function testMixedLineEndings() {
+		$this->Type->save(array(
+			'title' => 'Article',
+			'alias' => 'article',
+			'description' => 'Article Types',
+			'params' => "param1=value1\r\nparam2=value2\rparam3=value3\nparam4=value4",
+		));
+		$type = $this->Type->findByAlias('article');
+		$expected = array(
+			'param1' => 'value1',
+			'param2' => 'value2',
+			'param3' => 'value3',
+			'param4' => 'value4',
+		);
+		$this->assertEqual($type['Params'], $expected);
+	}
+
 }
