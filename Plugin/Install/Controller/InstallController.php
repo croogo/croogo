@@ -247,6 +247,9 @@ class InstallController extends Controller {
  */
 	public function adminuser() {
 		if ($this->request->is('post')) {
+			if (!CakePlugin::loaded('Users')) {
+				CakePlugin::load('Users');
+			}
 			$this->loadModel('Users.User');
 			$this->User->set($this->request->data);
 			if ($this->User->validates()) {
