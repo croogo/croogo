@@ -60,13 +60,13 @@ class CroogoJsonReader implements ConfigReaderInterface {
  * Dumps the state of Configure data into an json string.
  */
 	public function dump($filename, $data) {
-		$settings = array();
-		foreach ($data as $prefix => $setting) {
-			foreach ($setting as $key => $value) {
-				if (!is_array($value)) {
-					$settings[$prefix][$key] = $value;
-				}
-			}
+		$runtime = array(
+			'routes' => '',
+			'controller_properties' => '',
+			'model_properties' => '',
+		);
+		if (isset($data['Hook'])) {
+			$data['Hook'] = array_diff_key($data['Hook'], $runtime);
 		}
 		$options = 0;
 		if (version_compare(PHP_VERSION, '5.3.3', '>=')) {
@@ -75,7 +75,7 @@ class CroogoJsonReader implements ConfigReaderInterface {
 		if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
 			$options |= JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT;
 		}
-		$contents = CroogoJson::stringify($settings, $options);
+		$contents = CroogoJson::stringify($data, $options);
 		return $this->_writeFile($this->_path . $filename, $contents);
 	}
 

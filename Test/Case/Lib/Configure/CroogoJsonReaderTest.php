@@ -1,5 +1,6 @@
 <?php
 
+App::uses('CroogoTestCase', 'Lib/TestSuite');
 App::uses('CroogoJsonReader', 'Configure');
 
 class MockCroogoJsonReader extends CroogoJsonReader {
@@ -77,9 +78,14 @@ class CroogoJsonReaderTest extends CroogoTestCase {
 			'Nested' => array(
 				'StringValue' => 'Is Fine',
 				'AnotherArray' => array(
-					'is' => 'ignored',
-					'to' => 'oblivion',
+					'should' => 'be',
+					'persisted' => 'correctly',
 				),
+			),
+			'Hook' => array(
+				'someKey' => 'value',
+				'model_properties' => array('ignored', 'to', 'oblivion'),
+				'controller_properties' => array('ignored', 'to', 'oblivion'),
 			),
 		);
 		$this->CroogoJsonReader->dump(basename($this->testFile), $settings);
@@ -93,7 +99,14 @@ class CroogoJsonReaderTest extends CroogoTestCase {
 \s+"nodes_per_page": 20
 \s+},
 \s+"Nested": {
-\s+"StringValue": "Is Fine"
+\s+"StringValue": "Is Fine",
+\s+"AnotherArray": {
+\s+"should": "be",
+\s+"persisted": "correctly"
+\s+}
+\s+},
+\s+"Hook": {
+\s+"someKey": "value"
 \s+}
 }
 END;
