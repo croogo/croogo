@@ -72,12 +72,15 @@ class SettingsShell extends AppShell {
 							'short' => 'd',
 						),
 						'input_type' => array(
-							'choices' => array('text', 'textarea', 'checkbox'),
+							'choices' => array('text', 'textarea', 'checkbox', 'multiple'),
 							'short' => 'i',
 						),
 						'editable' => array(
 							'short' => 'e',
 							'boolean' => true,
+						),
+						'params' => array(
+							'short' => 'p',
 						),
 					),
 				)
@@ -154,7 +157,7 @@ class SettingsShell extends AppShell {
 			if ('y' == $this->in($ask, array('y', 'n'), 'n')) {
 				$keys = array(
 					'title' => null, 'description' => null,
-					'input_type' => null, 'editable' => null,
+					'input_type' => null, 'editable' => null, 'params' => null,
 				);
 				$options = array_intersect_key($this->params, $keys);
 				$this->Setting->write($key, $val, $options);

@@ -31,7 +31,22 @@
 			echo '<div class="setting">';
 				echo $this->Form->input("Setting.$i.id", array('value' => $setting['Setting']['id']));
 				echo $this->Form->input("Setting.$i.key", array('type' => 'hidden', 'value' => $key));
-				if ($setting['Setting']['input_type'] == 'checkbox') {
+
+				if ($setting['Setting']['input_type'] == 'multiple') {
+					$multiple = true;
+					if (isset($setting['Params']['multiple'])) {
+						$multiple = $setting['Params']['multiple'];
+					};
+					$selected = json_decode($setting['Setting']['value']);
+					$options = json_decode($setting['Params']['options'], true);
+					echo $this->Form->input("Setting.$i.values", array(
+						'label' => $label,
+						'multiple' => $multiple,
+						'options' => $options,
+						'selected' => $selected,
+						));
+
+				} elseif ($setting['Setting']['input_type'] == 'checkbox') {
 					if ($setting['Setting']['value'] == 1) {
 						echo $this->Form->input("Setting.$i.value", array(
 							'label' => $label,

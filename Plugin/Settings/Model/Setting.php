@@ -195,4 +195,18 @@ class Setting extends SettingsAppModel {
 		$keys = array_unique($keys);
 		Configure::dump('settings.json', 'settings', $keys);
 	}
+
+/**
+ * beforeSave
+ *
+ * if 'values' is present, serialize it with json_encode and save it in 'value'.
+ * this is used for allowing 'multiple' input_type (select|checkbox) feature
+ */
+	public function beforeSave($options = array()) {
+		if (isset($this->data[$this->alias]['values'])) {
+			$this->data[$this->alias]['value'] = json_encode($this->data[$this->alias]['values']);
+		}
+		return true;
+	}
+
 }
