@@ -15,7 +15,7 @@
 	$cacheConfig = array(
 		'duration' => '+1 hour',
 		'path' => CACHE . 'queries',
-		'engine' => 'File',
+		'engine' => Configure::read('Cache.defaultEngine'),
 	);
 
 	// models

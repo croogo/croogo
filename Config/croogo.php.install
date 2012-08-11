@@ -300,6 +300,7 @@
  *
  */
 $engine = 'File';
+Configure::write('Cache.defaultEngine', $engine);
 if (extension_loaded('apc') && (php_sapi_name() !== 'cli' || ini_get('apc.enable_cli'))) {
 	$engine = 'Apc';
 }
