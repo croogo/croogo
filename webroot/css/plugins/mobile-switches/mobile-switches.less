@@ -1,0 +1,37 @@
+@import url("../../bootstrap/variables.less"); /* Estilos e variáveis utilizados por todos */
+
+	/* Used for the Switch effect: */
+
+	.cb-enable, .cb-disable, .cb-enable span, .cb-disable span { 
+		background:url("@{base-url}css/plugins/mobile-switches/switch.gif") repeat-x; 
+		display: block; 
+		float: left; 
+	}
+
+	.cb-enable span, .cb-disable span { 
+		line-height: 30px; 
+		display: block; 
+		background-repeat: 
+		no-repeat; 
+		font-weight: bold;
+		padding: 0 10px; 
+	}
+
+	.cb-enable span { background-position: left -90px;}
+
+	.cb-disable span { background-position: right -180px;}
+
+	.cb-disable.selected { 
+		background-position: 0 -30px; 
+		span { background-position: right -210px; color: #fff; }
+	}
+	.cb-enable.selected { 
+		background-position: 0 -60px; 
+		span { background-position: left -150px; color: #fff; }
+	}
+	.switch {
+		.cb-enable, .cb-disable { cursor: pointer; }
+		.checkbox{visibility: hidden;}
+		// label{float:none!important}
+	}
+ 

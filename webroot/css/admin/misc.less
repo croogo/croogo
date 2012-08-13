@@ -1,0 +1,223 @@
+
+
+/* Wizard Navigation */
+
+.croogo-wizard ul
+{
+	margin:0;
+	padding:0;
+	float:left;
+}
+
+.croogo-wizard
+{
+	background:#eaeaea url(img/core/croogo-wizard-bg.png) repeat-x left top;
+	border-bottom:1px solid #dddddd;
+}
+
+.croogo-wizard ul li
+{
+	float:left;
+	list-style:none;
+	margin:0; padding:0;
+	padding:0 25px;
+	margin-right:-25px;
+	margin-bottom:-1px;
+	border-right:1px solid #d6d6d6;
+	background:url(img/core/croogo-wizard.png) no-repeat left -50px;
+	
+	display:block;
+	max-width:250px;
+	max-height:50px;
+	overflow:hidden;
+}
+
+.croogo-wizard ul li.current a, 
+.croogo-wizard ul li.current span
+{
+	color:#555555;
+}
+
+.croogo-wizard ul li a.croogo-i-24, 
+.croogo-wizard ul li a.croogo-ic-16, 
+.croogo-wizard ul li span.croogo-i-24, 
+.croogo-wizard ul li span.croogo-ic-16
+{
+	background-position:12px center;
+	padding-left:40px;
+}
+
+.croogo-wizard ul li:first-child
+{
+	background-position:-25px -50px;
+	padding-left:12px;
+}
+
+.croogo-wizard ul li:last-child
+{
+	padding-right:12px;
+}
+
+.croogo-wizard ul li:first-child.current
+{
+	background-position:-25px top;
+}
+
+.croogo-wizard ul li:first-child:hover
+{
+	background-position:-25px -100px;
+}
+
+.croogo-wizard ul li.current, 
+.croogo-wizard ul li.current:hover
+{
+	background-position:left top;
+}
+
+.croogo-wizard ul li:hover
+{
+	background-position:left -100px;
+}
+
+
+.croogo-wizard ul li a, 
+.croogo-wizard ul li span
+{
+	display:block;
+	line-height:50px;
+	text-decoration:none;
+	padding:0 16px;
+	color:#999999;
+}
+
+/* Summary */
+
+ul.croogo-summary{
+	margin:0; 
+	padding:0;
+
+	li{
+		padding:0; margin:0;
+		list-style-type:none;
+		font-size:14px;
+		color:#666666;
+		padding:4px 6px;
+		border-bottom:1px solid #bbbbbb;
+		border-top:1px solid #ffffff;
+		
+		overflow:hidden;
+		display:block;
+		text-overflow:ellipsis;
+		white-space:nowrap;
+
+		&:first-child{
+			border-top:0;
+		}
+
+		&:last-child{
+			border-bottom:0;
+		}
+
+		span{
+			font-size:26px;
+			text-align:right;
+			margin-right:3px;
+			width:80px;
+			color:#444444;
+			display:inline-block;
+		}
+	}
+
+}
+
+
+/* Toolbar */
+
+div.croogo-panel-toolbar
+{
+	border-bottom:1px solid #dddddd;
+	background:#eaeaea url(img/core/croogo-toolbar.png) repeat-x left top;
+}
+
+div.croogo-panel-toolbar.bottom
+{
+	border-top:1px solid #dddddd;
+}
+
+div.croogo-panel-toolbar ul, 
+div.croogo-panel-toolbar ul li
+{
+	list-style:none;
+	padding:0; margin:0;
+}
+
+div.croogo-panel-toolbar.right ul
+{
+	float:right;
+}
+
+div.croogo-panel-toolbar ul
+{
+	float:left;
+}
+
+div.croogo-panel-toolbar.right ul li
+{
+	border-right:0;
+	border-left:1px solid #d0d0d0;
+}
+
+div.croogo-panel-toolbar ul li
+{
+	display:block;
+	float:left;
+	border-right:1px solid #d0d0d0;
+}
+
+div.croogo-panel-toolbar ul li a, 
+div.croogo-panel-toolbar ul li span
+{
+	text-decoration:none;
+	color:#666666;
+	padding:8px 12px;
+	display:block;
+	cursor:pointer;
+	
+	/* CSS 3 */
+	
+	-webkit-box-shadow:inset 1px 0px 0px rgba(255, 255, 255, 0.75), inset 0px 1px 0px #ffffff;
+	-moz-box-shadow:inset 1px 0px 0px rgba(255, 255, 255, 0.75), inset 0px 1px 0px #ffffff;
+	-o-box-shadow:inset 1px 0px 0px rgba(255, 255, 255, 0.75), inset 0px 1px 0px #ffffff;
+	-khtml-box-shadow:inset 1px 0px 0px rgba(255, 255, 255, 0.75), inset 0px 1px 0px #ffffff;
+	box-shadow:inset 1px 0px 0px rgba(255, 255, 255, 0.75), inset 0px 1px 0px #ffffff;
+}
+
+div.croogo-panel-toolbar ul li a.croogo-ic-16, 
+div.croogo-panel-toolbar ul li span.croogo-ic-16
+{
+	padding-left:32px;
+	background-position:12px center;
+}
+
+div.croogo-panel-toolbar ul li a:active, 
+div.croogo-panel-toolbar ul li span:active
+{
+	background-color:#efefef;
+	
+	/* CSS 3 */
+	
+	-webkit-box-shadow:inset 0px 0px 8px rgba(0, 0, 0, 0.1) !important;
+	-moz-box-shadow:inset 0px 0px 8px rgba(0, 0, 0, 0.1) !important;
+	-o-box-shadow:inset 0px 0px 8px rgba(0, 0, 0, 0.1) !important;
+	-khtml-box-shadow:inset 0px 0px 8px rgba(0, 0, 0, 0.1) !important;
+	box-shadow:inset 0px 0px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+
+
+
+
+// Classes Auxiliares
+// --------------------------------------------------
+
+.no-mb{margin-bottom:0!important}

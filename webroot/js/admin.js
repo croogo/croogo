@@ -12,7 +12,7 @@ var Admin = {};
  * @return void
  */
 Admin.navigation = function() {
-	$('ul.sf-menu').supersubs({
+	/*$('ul.sf-menu').supersubs({
 		minWidth: 12,
 		maxWidth: 27,
 		extraWidth: 1
@@ -23,7 +23,9 @@ Admin.navigation = function() {
 		autoArrows: true,
 		dropShadows: false,
 		disableHI: true
-	});
+	});*/
+	/* Menu Accordion by TwitterBootstrap */
+	$(".collapse").collapse();
 }
 
 

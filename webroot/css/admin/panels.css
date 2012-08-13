@@ -1,0 +1,109 @@
+/* Panel Header */
+
+.croogo-panel {
+  margin-bottom: 32px;
+}
+.croogo-panel .croogo-panel-header {
+  background: url(img/core/croogo-panel-header-bg.png) repeat-x #333333;
+  height: 25px;
+  position: relative;
+  padding: 12px 12px 10px 12px;
+  border-bottom: 2px solid #35353a;
+  font-size: 14px;
+  /* CSS 3 */
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -o-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  border-radius: 4px;
+}
+.croogo-panel .croogo-panel-header span {
+  line-height: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  white-space: nowrap;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 6px #589bb3;
+}
+/*.croogo-panel .croogo-panel-header span.croogo-ic
+{
+	padding-left:40px;
+	background-position:4px center;
+}
+
+.croogo-panel .croogo-panel-header span.croogo-i-16
+{
+	padding-left:32px;
+	background-position:8px center;
+}
+
+.croogo-panel .croogo-panel-header span.croogo-i-24
+{
+	padding-left:40px;
+	background-position:8px center;
+}*/
+
+.croogo-panel .croogo-panel-header .croogo-collapse-button {
+  width: 22px;
+  height: 22px;
+  display: block;
+  padding: 0;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -11px;
+}
+.croogo-panel .croogo-panel-header .croogo-collapse-button span {
+  display: block;
+  padding: 0;
+  margin: 3px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center center;
+  /* CSS 3 */
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -o-border-radius: 2px;
+  -khtml-border-radius: 2px;
+  border-radius: 2px;
+}
+.croogo-panel.croogo-collapsed .croogo-panel-header .croogo-collapse-button span {
+  background-image: url(img/core/croogo-panel-button-icon-plus.png);
+}
+.croogo-panel .croogo-panel-header .croogo-collapse-button span {
+  background-image: url(img/core/croogo-panel-button-icon-min.png);
+}
+.croogo-panel .croogo-panel-body {
+  background-color: #f8f8f8;
+  margin: 0 2px;
+  border: 1px solid #bcbcbc;
+  border-top: 0;
+  /* CSS 3 */
+  -webkit-box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.15);
+  -o-box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.15);
+  -khtml-box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.15);
+}
+/* General Body */
+
+.croogo-panel .croogo-panel-content {
+  padding: 24px;
+}
+/* elFinder */
+
+.croogo-panel .el-finder {
+  margin: 0 2px;
+  width: auto;
+  border-top: 0;
+  /* CSS 3 */
+  -webkit-box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.15);
+  -o-box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.15);
+  -khtml-box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 3px 3px -2px rgba(0, 0, 0, 0.15);
+}

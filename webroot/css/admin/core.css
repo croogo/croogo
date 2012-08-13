@@ -1,0 +1,250 @@
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+.hide-text {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.input-block-level {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  color: #323232;
+  font: 13px/1.5 Arial, Helvetica, sans-serif;
+  background-color: #f0f0f0;
+  background-image: url('img/core/cross_scratches.png');
+}
+body,
+#croogo-header,
+#croogo-wrapper {
+  min-width: 480px;
+}
+.croogo-inset {
+  background-image: url(img/core/croogo-inset.png);
+  /* CSS 3 */
+
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 1px 2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+/* Header */
+
+#croogo-header {
+  background-image: url(img/core/croogo-header-bg.png);
+  background-repeat: repeat-x;
+  border-bottom: 4px solid white;
+  z-index: 1;
+  position: relative;
+  /* CSS 3 */
+
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.35);
+}
+#croogo-header .croogo-user-functions {
+  margin-top: 15px;
+}
+#croogo-header .btn-navbar {
+  margin-top: 20px;
+}
+#croogo-header .navbar-inner {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+/* Wrapper */
+
+#croogo-wrapper {
+  height: auto;
+  min-height: 100%;
+  position: relative;
+  z-index: 0;
+  padding: 0;
+  /*.span3:before{
+		width:17px;
+		z-index:2;
+		background:url(img/core/croogo-sidebar-stitch.png) repeat-y;
+		position:absolute;
+		top:0; bottom:0;
+		left:189px;
+		content:"";
+	}*/
+
+}
+#croogo-sidebar {
+  /*width:198px;
+	margin-right:2px;
+	padding-top:72px;
+	float:left;*/
+  z-index: 1;
+  position: relative;
+  background: #333333 url("img/core/croogo-dark-bg.png");
+}
+#croogo-sidebar-stitch,
+#croogo-sidebar-bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+#croogo-sidebar-stitch {
+  left: 14%;
+  width: 17px;
+  z-index: 2;
+  background: url(img/core/croogo-sidebar-stitch.png) repeat-y;
+}
+#croogo-sidebar-bg {
+  left: 0;
+  z-index: 0;
+  width: 14.5299%;
+  background: #333333 url("img/core/croogo-dark-bg.png");
+  -webkit-box-shadow: 3px 0 0 rgba(255, 255, 255, 0.9);
+  -moz-box-shadow: 3px 0 0 rgba(255, 255, 255, 0.9);
+  box-shadow: 3px 0 0 rgba(255, 255, 255, 0.9);
+}
+#croogo-navigation .accordion-group,
+#croogo-navigation .accordion-group a {
+  color: white;
+}
+#croogo-navigation .accordion-group {
+  border-color: #414141;
+  border-bottom-color: #181818;
+}
+#croogo-navigation .accordion-group .accordion-heading:hover {
+  background: url(img/core/croogo-sub-nav-bg.png);
+  border-color: transparent;
+}
+#croogo-navigation .accordion-group.active > .accordion-heading {
+  background: url("img/core/croogo-dark-bg.png") 0 0 #0088cc;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+}
+#croogo-navigation .accordion-group .accordion-heading {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+#croogo-navigation .accordion-group a:hover {
+  text-decoration: none;
+}
+#croogo-navigation ul,
+#croogo-navigation ul li {
+  margin: 0;
+  list-style: none;
+}
+#croogo-navigation > ul {
+  width: 100%;
+  padding-top: 1px;
+  background: url(img/core/croogo-nav-ruler.png) repeat-x left top;
+}
+#croogo-navigation .accordion-inner {
+  padding-left: 0;
+  padding-right: 0;
+  border: 0;
+}
+#croogo-navigation .accordion-body {
+  background: url("img/core/croogo-inset.png");
+}
+#croogo-navigation .accordion-body .nav-list {
+  padding: 0;
+}
+#croogo-navigation .accordion-body .nav-list > li > a,
+#croogo-navigation .accordion-body .nav-list .nav-header {
+  margin: 0;
+}
+#croogo-navigation [class^="icon-"] {
+  margin-right: 12px;
+  vertical-align: middle;
+}
+#croogo-navigation .nav-tabs > .active > a,
+#croogo-navigation .nav-tabs > .active > a:hover {
+  color: white;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+  background: #0088cc url('img/core/croogo-dark-bg.png');
+  border-color: transparent;
+}
+#croogo-navigation .nav > li > a:hover {
+  background: url(img/core/croogo-sub-nav-bg.png);
+  border-color: #2f2f2f;
+}
+#croogo-navigation ul li span.croogo-nav-tooltip {
+  position: absolute;
+  line-height: 1;
+  padding: 5px;
+  right: -16px;
+  top: 50%;
+  margin-top: -12px;
+}
+#croogo-navigation ul li ul {
+  background: url(img/core/croogo-inset.png);
+  border: 0;
+  /* CSS 3 */
+
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+#croogo-navigation ul li ul.closed {
+  display: none;
+}
+#croogo-navigation ul li ul li {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background-image: none;
+}
+#croogo-navigation ul li ul li a,
+#croogo-navigation ul li ul li span {
+  display: block;
+  font-size: 12px;
+  padding: 4px 0 4px 25px;
+  color: white !important;
+  text-shadow: none;
+}
+#croogo-navigation ul li:hover {
+  background: url(img/core/croogo-sub-nav-bg.png);
+}
+/* Container */
+
+#croogo-container {
+  margin-left: 0px;
+  /*background-color:#f0f0f0;
+	background-image:url('img/core/first_aid_kit.png');*/
+
+}
+#croogo-container .container-fluid {
+  padding-top: 20px;
+}
+/* Footer */
+
+#croogo-footer {
+  margin: 0 4%;
+  text-align: center;
+  padding: 16px 0;
+  border-top: 1px solid #dadada;
+  clear: both;
+  /*bottom:0;
+	left:206px; right:0;
+	position:absolute;*/
+
+}

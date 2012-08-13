@@ -1,0 +1,78 @@
+@import url("../bootstrap/variables.less");
+@import url("../bootstrap/mixins.less");
+
+
+@media (max-width: 768px) {
+  #croogo-sidebar-bg,
+  #croogo-sidebar-stitch{
+    display: none;
+  }
+
+
+  #croogo-sidebar{
+    // background:@color_gray_dark url("img/core/croogo-dark-bg.png");
+    .border-radius(0 0 6px 6px);
+  }
+}
+
+
+
+
+
+// TABLETS AND BELOW
+// -----------------
+@media (max-width: 979px) {
+
+  // COLLAPSIBLE NAVBAR
+  // ------------------
+  // Nav collapse clears brand
+  .nav-collapse {
+    clear: both;
+  }
+  // Block-level the nav
+  .nav-collapse .nav {
+    float: none;
+    margin: 0 0 (@baseLineHeight / 2);
+  }
+  .nav-collapse .nav > li {
+    float: none;
+  }
+  .nav-collapse .nav > li > a {
+    margin-bottom: 2px;
+  }
+  .nav-collapse .nav > .divider-vertical {
+    display: none;
+  }
+  .nav-collapse .nav .nav-header {
+    color: @navbarText;
+    text-shadow: none;
+  }
+  
+  // Pull right (secondary) nav content
+  .navbar .nav-collapse .nav.pull-right {
+    float: none;
+    margin-left: 0;
+  }
+  // Hide everything in the navbar save .brand and toggle button */
+  .nav-collapse,
+  .nav-collapse.collapse {
+    overflow: hidden;
+    height: 0;
+  }
+  // Navbar button
+  .navbar .btn-navbar {
+    display: block;
+  }
+}
+
+
+// DEFAULT DESKTOP
+// ---------------
+
+// Required to make the collapsing navbar work on regular desktops
+@media (min-width: 980px) {
+  .nav-collapse.collapse {
+    height: auto !important;
+    overflow: visible !important;
+  }
+}

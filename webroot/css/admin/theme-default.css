@@ -1,0 +1,65 @@
+/*body, 
+#croogo-container
+{
+	background-image:url('img/core/first_aid_kit.png');
+	background-color:@color_silver_light;
+}*/
+
+#croogo-sidebar-bg,
+#croogo-header,
+.croogo-panel .croogo-panel-header,
+#croogo-error-container,
+#croogo-login,
+.ui-accordion .ui-accordion-header,
+.ui-tabs .ui-tabs-nav,
+.ui-datepicker,
+.fc-event-skin,
+.ui-dialog .ui-dialog-titlebar,
+#croogo-user-tools .croogo-dropdown-menu .croogo-dropdown-box,
+#croogo-user-tools .croogo-dropdown-menu.toggled a.croogo-dropdown-trigger {
+  background-color: #333333 !important;
+}
+/*#croogo-header
+{
+	border-color:@color_blue_rain;
+}*/
+
+.croogo-panel .croogo-panel-header span,
+/*#croogo-navigation ul li.active a, 
+#croogo-navigation ul li.active span, */ #croogo-user-tools #croogo-username,
+#croogo-navigation ul li span.croogo-nav-tooltip,
+#croogo-user-tools #croogo-user-info #croogo-user-functions #croogo-username/*, 
+.ui-dialog .ui-dialog-title, 
+.ui-state-default, 
+.ui-state-active, 
+.ui-state-hover, 
+.ui-state-focus, 
+.ui-state-default a, 
+.ui-state-active a, 
+.ui-state-hover a, 
+.ui-state-focus a*/ {
+  color: #9ec5d3;
+  text-shadow: 0 0 6px #589bb3;
+}
+.croogo-panel .croogo-panel-header span {
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 6px #589bb3;
+}
+#croogo-searchbox input.croogo-search-submit,
+.croogo-panel .croogo-panel-header .croogo-collapse-button span,
+.dataTables_wrapper .dataTables_paginate div,
+.dataTables_wrapper .dataTables_paginate span.paginate_active,
+.croogo-table tbody tr.odd:hover td,
+.croogo-table tbody tr.even:hover td,
+.fc-state-highlight,
+.ui-slider-horizontal .ui-slider-range,
+.ui-slider-vertical .ui-slider-range,
+.ui-progressbar .ui-progressbar-value,
+.ui-datepicker td.ui-datepicker-current-day,
+.ui-datepicker .ui-datepicker-prev .ui-icon,
+.ui-datepicker .ui-datepicker-next .ui-icon,
+.ui-accordion-header .ui-icon,
+.ui-dialog-titlebar-close .ui-icon {
+  background-color: #0088cc;
+}
