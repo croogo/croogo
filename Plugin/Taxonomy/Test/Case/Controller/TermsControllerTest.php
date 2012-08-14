@@ -2,35 +2,6 @@
 App::uses('TermsController', 'Taxonomy.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
-class TestTermsController extends TermsController {
-
-	public $name = 'Terms';
-
-	public $autoRender = false;
-
-	public $testView = false;
-
-	public function redirect($url, $status = null, $exit = true) {
-		$this->redirectUrl = $url;
-	}
-
-	public function render($action = null, $layout = null, $file = null) {
-		if (!$this->testView) {
-			$this->renderedAction = $action;
-		} else {
-			return parent::render($action, $layout, $file);
-		}
-	}
-
-	protected function _stop($status = 0) {
-		$this->stopped = $status;
-	}
-
-	public function securityError($type) {
-	}
-
-}
-
 class TermsControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
@@ -69,18 +40,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
 		App::build(array(
 			'View' => array(CakePlugin::path('Taxonomy') . 'View' . DS)
 		), App::APPEND);
-		$request = new CakeRequest();
-		$response = new CakeResponse();
-		$this->Terms = new TestTermsController($request, $response);
-		$this->Terms->constructClasses();
-		$this->Terms->Security = $this->getMock('SecurityComponent', null, array($this->Terms->Components));
-		$this->Terms->Components->unload('Menus');
-		$this->Terms->request->params['named'] = array();
-		$this->Terms->request->params['controller'] = 'terms';
-		$this->Terms->request->params['pass'] = array();
-		$this->Terms->request->params['named'] = array();
-
-		$this->TermsController = $this->generate('Terms', array(
+		$this->TermsController = $this->generate('Taxonomy.Terms', array(
 			'methods' => array(
 				'redirect',
 			),
@@ -103,7 +63,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		unset($this->Terms);
+		unset($this->TermsController);
 	}
 
 /**
@@ -121,28 +81,26 @@ class TermsControllerTest extends CroogoControllerTestCase {
 		$this->assertEquals($expected, $this->vars['termsTree']);
 	}
 
+/**
+ * testAdminAdd
+ *
+ * @return void
+ */
 	public function testAdminAdd() {
-		$this->Terms->request->params['action'] = 'admin_add';
-		$this->Terms->request->params['url']['url'] = 'admin/taxonomy/terms/add/1';
-		$this->Terms->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
+		$this->expectFlashAndRedirect('Term saved successfuly.');
+		$this->testAction('admin/taxonomy/terms/add/1', array(
+			'data' => array(
+				'Taxonomy' => array(
+					'parent_id' => null,
+				),
+				'Term' => array(
+					'title' => 'New Category',
+					'slug' => 'new-category',
+					'description' => 'category description here',
+				),
+			),
 		));
-		$this->Terms->request->data = array(
-			'Taxonomy' => array(
-				'parent_id' => null,
-			),
-			'Term' => array(
-				'title' => 'New Category',
-				'slug' => 'new-category',
-				'description' => 'category description here',
-			),
-		);
-		$this->Terms->startupProcess();
-		$this->Terms->admin_add(1); // ID of categories
-		$this->assertEqual($this->Terms->redirectUrl, array('action' => 'index', 1));
-
-		$termsTree = $this->Terms->Term->Taxonomy->getTree('categories');
+		$termsTree = $this->TermsController->Term->Taxonomy->getTree('categories');
 		$termsTreeSlugs = array_keys($termsTree);
 		$expected = array(
 			'uncategorized',
@@ -150,34 +108,28 @@ class TermsControllerTest extends CroogoControllerTestCase {
 			'new-category',
 		);
 		$this->assertEqual($termsTreeSlugs, $expected);
-
-		$this->Terms->testView = true;
-		$output = $this->Terms->render('admin_add');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
+/**
+ * testAdminAddWithParent
+ *
+ * @return void
+ */
 	public function testAdminAddWithParent() {
-		$this->Terms->request->params['action'] = 'admin_add';
-		$this->Terms->request->params['url']['url'] = 'admin/taxonomy/terms/add/1';
-		$this->Terms->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
+		$this->expectFlashAndRedirect('Term saved successfuly.');
+		$this->testAction('admin/taxonomy/terms/add/1', array(
+			'data' => array(
+				'Taxonomy' => array(
+					'parent_id' => 1, // Uncategorized
+				),
+				'Term' => array(
+					'title' => 'New Category',
+					'slug' => 'new-category',
+					'description' => 'category description here',
+				),
+			),
 		));
-		$this->Terms->request->data = array(
-			'Taxonomy' => array(
-				'parent_id' => 1, // Uncategorized
-			),
-			'Term' => array(
-				'title' => 'New Category',
-				'slug' => 'new-category',
-				'description' => 'category description here',
-			),
-		);
-		$this->Terms->startupProcess();
-		$this->Terms->admin_add(1); // ID of categories
-		$this->assertEqual($this->Terms->redirectUrl, array('action' => 'index', 1));
-
-		$termsTree = $this->Terms->Term->Taxonomy->getTree('categories');
+		$termsTree = $this->TermsController->Term->Taxonomy->getTree('categories');
 		$termsTreeTitles = array_values($termsTree);
 		$expected = array(
 			'Uncategorized',
@@ -193,9 +145,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminEdit() {
-		$this->TermsController
-			->expects($this->once())
-			->method('redirect');
+		$this->expectFlashAndRedirect('Term saved successfuly.');
 		// ID of Uncategorized and Categories
 		$this->testAction('/admin/taxonomy/terms/edit/1/1', array(
 			'data' => array(
@@ -217,36 +167,30 @@ class TermsControllerTest extends CroogoControllerTestCase {
 		$this->assertEquals($expected, $termsTree);
 	}
 
+/**
+ * testAdminDelete
+ *
+ * @return void
+ */
 	public function testAdminDelete() {
-		$this->Terms->request->params['action'] = 'admin_delete';
-		$this->Terms->request->params['url']['url'] = 'admin/taxonomy/terms/delete';
-		$this->Terms->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Terms->startupProcess();
-		$this->Terms->admin_delete(1, 1); // ID of Uncategorized and Categories
-		$this->assertEqual($this->Terms->redirectUrl, array('action' => 'index', 1));
-
-		$termsTree = $this->Terms->Term->Taxonomy->getTree('categories');
+		$this->expectFlashAndRedirect('Term deleted');
+		$this->testAction('admin/taxonomy/terms/delete/1/1'); // ID of Uncategorized and Categories
+		$termsTree = $this->TermsController->Term->Taxonomy->getTree('categories');
 		$expected = array(
 			'announcements' => 'Announcements',
 		);
 		$this->assertEqual($termsTree, $expected);
 	}
 
+/**
+ * testAdminMoveup
+ *
+ * @return void
+ */
 	public function testAdminMoveup() {
-		$this->Terms->request->params['action'] = 'admin_moveup';
-		$this->Terms->request->params['url']['url'] = 'admin/taxonomy/terms/moveup';
-		$this->Terms->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Terms->startupProcess();
-		$this->Terms->admin_moveup(2, 1); // ID of Announcements and Categories
-		$this->assertEqual($this->Terms->redirectUrl, array('action' => 'index', 1));
-
-		$termsTree = $this->Terms->Term->Taxonomy->getTree('categories');
+		$this->expectFlashAndRedirect('Moved up successfully');
+		$this->testAction('admin/taxonomy/terms/moveup/2/1'); // ID of Announcements and Categories
+		$termsTree = $this->TermsController->Term->Taxonomy->getTree('categories');
 		$expected = array(
 			'announcements' => 'Announcements',
 			'uncategorized' => 'Uncategorized',
@@ -254,18 +198,15 @@ class TermsControllerTest extends CroogoControllerTestCase {
 		$this->assertEqual($termsTree, $expected);
 	}
 
+/**
+ * testAdminMovedown
+ *
+ * @return void
+ */
 	public function testAdminMovedown() {
-		$this->Terms->request->params['action'] = 'admin_movedown';
-		$this->Terms->request->params['url']['url'] = 'admin/taxonomy/terms/movedown';
-		$this->Terms->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Terms->startupProcess();
-		$this->Terms->admin_movedown(1, 1); // ID of Uncategorized and Categories
-		$this->assertEqual($this->Terms->redirectUrl, array('action' => 'index', 1));
-
-		$termsTree = $this->Terms->Term->Taxonomy->getTree('categories');
+		$this->expectFlashAndRedirect('Moved down successfully');
+		$this->testAction('admin/taxonomy/terms/movedown/1/1'); // ID of Uncategorized and Categories
+		$termsTree = $this->TermsController->Term->Taxonomy->getTree('categories');
 		$expected = array(
 			'announcements' => 'Announcements',
 			'uncategorized' => 'Uncategorized',

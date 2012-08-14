@@ -200,7 +200,7 @@ class BlocksController extends BlocksAppController {
 
 		if ($action == 'delete' &&
 			$this->Block->deleteAll(array('Block.id' => $ids), true, true)) {
-			$this->Session->setFlash(__('Blocks deleted.'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__('Blocks deleted'), 'default', array('class' => 'success'));
 		} elseif ($action == 'publish' &&
 			$this->Block->updateAll(array('Block.status' => true), array('Block.id' => $ids))) {
 			$this->Session->setFlash(__('Blocks published'), 'default', array('class' => 'success'));

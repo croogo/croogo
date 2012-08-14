@@ -2,35 +2,6 @@
 App::uses('BlocksController', 'Blocks.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
-class TestBlocksController extends BlocksController {
-
-	public $name = 'Blocks';
-
-	public $autoRender = false;
-
-	public $testView = false;
-
-	public function redirect($url, $status = null, $exit = true) {
-		$this->redirectUrl = $url;
-	}
-
-	public function render($action = null, $layout = null, $file = null) {
-		if (!$this->testView) {
-			$this->renderedAction = $action;
-		} else {
-			return parent::render($action, $layout, $file);
-		}
-	}
-
-	protected function _stop($status = 0) {
-		$this->stopped = $status;
-	}
-
-	public function securityError($type) {
-	}
-
-}
-
 class BlocksControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
@@ -69,15 +40,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		App::build(array(
 			'View' => array(CakePlugin::path('Blocks') . 'View' . DS)
 		), App::APPEND);
-		$request = new CakeRequest();
-		$response = new CakeResponse();
-		$this->Blocks = new TestBlocksController($request, $response);
-		$this->Blocks->constructClasses();
-		$this->Blocks->Security = $this->getMock('SecurityComponent', null, array($this->Blocks->Components));
-		$request->params['controller'] = 'blocks';
-		$request->params['pass'] = $request->params['named'] = array();
-
-		$this->BlocksController = $this->generate('Blocks', array(
+		$this->BlocksController = $this->generate('Blocks.Blocks', array(
 			'methods' => array(
 				'redirect',
 			),
@@ -99,7 +62,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		unset($this->Blocks);
+		unset($this->BlocksController);
 	}
 
 /**
@@ -112,38 +75,32 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		$this->assertNotEmpty($this->vars['blocks']);
 	}
 
+/**
+ * testAdminAdd
+ *
+ * @return void
+ */
 	public function testAdminAdd() {
-		$this->Blocks->request->params['action'] = 'admin_add';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/add';
-		$this->Blocks->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
+		$this->expectFlashAndRedirect('The Block has been saved');
+		$this->testAction('/admin/blocks/blocks/add', array(
+			'data' => array(
+				'Block' => array(
+					'title' => 'Test block',
+					'alias' => 'test_block',
+					'class' => 'test-block',
+					'show_title' => 'test_block',
+					'region_id' => 4, // right
+					'body' => 'text here',
+					'visibility_paths' => '',
+					'status' => 1,
+				),
+				'Role' => array(
+					'Role' => array(),
+				),
+			),
 		));
-		$this->Blocks->request->data = array(
-			'Block' => array(
-				'title' => 'Test block',
-				'alias' => 'test_block',
-				'class' => 'test-block',
-				'show_title' => 'test_block',
-				'region_id' => 4, // right
-				'body' => 'text here',
-				'visibility_paths' => '',
-				'status' => 1,
-			),
-			'Role' => array(
-				'Role' => array(),
-			),
-		);
-		$this->Blocks->startupProcess();
-		$this->Blocks->admin_add();
-		$this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
-
-		$testBlock = $this->Blocks->Block->findByAlias('test_block');
-		$this->assertEqual($testBlock['Block']['title'], 'Test block');
-
-		$this->Blocks->testView = true;
-		$output = $this->Blocks->render('admin_add');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
+		$result = $this->BlocksController->Block->findByAlias('test_block');
+		$this->assertEqual($result['Block']['title'], 'Test block');
 	}
 
 /**
@@ -152,17 +109,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminEdit() {
-		$this->BlocksController->Session
-			->expects($this->once())
-			->method('setFlash')
-			->with(
-				$this->equalTo('The Block has been saved'),
-				$this->equalTo('default'),
-				$this->equalTo(array('class' => 'success'))
-			);
-		$this->BlocksController
-			->expects($this->once())
-			->method('redirect');
+		$this->expectFlashAndRedirect('The Block has been saved');
 		$this->testAction('/admin/blocks/blocks/edit/1', array(
 			'data' => array(
 				'Block' => array(
@@ -175,39 +122,33 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 				),
 			),
 		));
-		$result = $this->Blocks->Block->findByAlias('about');
+		$result = $this->BlocksController->Block->findByAlias('about');
 		$this->assertEquals('About [modified]', $result['Block']['title']);
 	}
 
+/**
+ * testAdminDelete
+ *
+ * @return void
+ */
 	public function testAdminDelete() {
-		$this->Blocks->request->params['action'] = 'admin_delete';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/delete';
-		$this->Blocks->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Blocks->startupProcess();
-		$this->Blocks->admin_delete(8); // ID of Search
-		$this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
-
-		$hasAny = $this->Blocks->Block->hasAny(array(
+		$this->expectFlashAndRedirect('Block deleted');
+		$this->testAction('/admin/blocks/blocks/delete/8');
+		$hasAny = $this->BlocksController->Block->hasAny(array(
 			'Block.alias' => 'search',
 		));
 		$this->assertFalse($hasAny);
 	}
 
+/**
+ * testAdminMoveUp
+ *
+ * @return void
+ */
 	public function testAdminMoveUp() {
-		$this->Blocks->request->params['action'] = 'admin_moveup';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/moveup/3';
-		$this->Blocks->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Blocks->startupProcess();
-
-		$this->Blocks->admin_moveup(3); // About
-		$this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
-		$list = $this->Blocks->Block->find('list', array(
+		$this->expectFlashAndRedirect('Moved up successfully');
+		$this->testAction('/admin/blocks/blocks/moveup/3');
+		$list = $this->BlocksController->Block->find('list', array(
 			'fields' => array(
 				'id',
 				'alias',
@@ -225,18 +166,15 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		));
 	}
 
+/**
+ * testAdminMoveUpWithSteps
+ *
+ * @return void
+ */
 	public function testAdminMoveUpWithSteps() {
-		$this->Blocks->request->params['action'] = 'admin_moveup';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/moveup/6/3';
-		$this->Blocks->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Blocks->startupProcess();
-
-		$this->Blocks->admin_moveup(6, 3); // Blogroll up 3 steps
-		$this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
-		$list = $this->Blocks->Block->find('list', array(
+		$this->expectFlashAndRedirect('Moved up successfully');
+		$this->testAction('/admin/blocks/blocks/moveup/6/3');
+		$list = $this->BlocksController->Block->find('list', array(
 			'fields' => array(
 				'id',
 				'alias',
@@ -254,18 +192,15 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		));
 	}
 
+/**
+ * testAdminMoveDown
+ *
+ * @return void
+ */
 	public function testAdminMoveDown() {
-		$this->Blocks->request->params['action'] = 'admin_movedown';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/movedown/3';
-		$this->Blocks->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Blocks->startupProcess();
-
-		$this->Blocks->admin_movedown(3); // About
-		$this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
-		$list = $this->Blocks->Block->find('list', array(
+		$this->expectFlashAndRedirect('Moved down successfully');
+		$this->testAction('/admin/blocks/blocks/movedown/3');
+		$list = $this->BlocksController->Block->find('list', array(
 			'fields' => array(
 				'id',
 				'alias',
@@ -283,18 +218,15 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		));
 	}
 
+/**
+ * testAdminMoveDownWithSteps
+ *
+ * @return void
+ */
 	public function testAdminMoveDownWithSteps() {
-		$this->Blocks->request->params['action'] = 'admin_movedown';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/movedown/8/3';
-		$this->Blocks->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Blocks->startupProcess();
-
-		$this->Blocks->admin_movedown(8, 2); // Search down 2 steps
-		$this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
-		$list = $this->Blocks->Block->find('list', array(
+		$this->expectFlashAndRedirect('Moved down successfully');
+		$this->testAction('/admin/blocks/blocks/movedown/8/3');
+		$list = $this->BlocksController->Block->find('list', array(
 			'fields' => array(
 				'id',
 				'alias',
@@ -305,46 +237,34 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		$this->assertEqual($blockAliases, array(
 			'about',
 			'categories',
-			'search',
 			'blogroll',
+			'search',
 			'recent_posts',
 			'meta',
 		));
 	}
 
+/**
+ * testAdminProcessDelete
+ *
+ * @return void
+ */
 	public function testAdminProcessDelete() {
-		$this->Blocks->request->params['action'] = 'admin_process';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/process';
-		$this->Blocks->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
+		$this->expectFlashAndRedirect('Blocks deleted');
+		$this->testAction('/admin/blocks/blocks/process', array(
+			'data' => array(
+				'Block' => array(
+					'action' => 'delete',
+					'8' => array('id' => 0), // Search
+					'3' => array('id' => 1), // About
+					'7' => array('id' => 0), // Categories
+					'6' => array('id' => 1), // Blogroll
+					'9' => array('id' => 0), // Recent Posts
+					'5' => array('id' => 1), // Meta
+				),
+			),
 		));
-
-		$this->Blocks->request->data['Block'] = array(
-			'action' => 'delete',
-			'8' => array( // Search
-				'id' => 0,
-			),
-			'3' => array( // About
-				'id' => 1,
-			),
-			'7' => array( // Categories
-				'id' => 0,
-			),
-			'6' => array( // Blogroll
-				'id' => 1,
-			),
-			'9' => array( // Recent Posts
-				'id' => 0,
-			),
-			'5' => array( // Meta
-				'id' => 1,
-			),
-		);
-		$this->Blocks->startupProcess();
-		$this->Blocks->admin_process();
-		$this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
-		$list = $this->Blocks->Block->find('list', array(
+		$list = $this->BlocksController->Block->find('list', array(
 			'fields' => array(
 				'id',
 				'alias',
@@ -359,52 +279,42 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		));
 	}
 
+/**
+ * testAdminProcessPublish
+ *
+ * @return void
+ */
 	public function testAdminProcessPublish() {
-		$this->Blocks->request->params['action'] = 'admin_process';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/process';
-		$this->Blocks->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Blocks->startupProcess();
-
 		// unpublish a Block for testing
-		$this->Blocks->Block->id = 3; // About
-		$this->Blocks->Block->save(array(
+		$this->BlocksController->Block->id = 3; // About
+		$this->BlocksController->Block->save(array(
 			'id' => 3,
 			'status' => false,
 		));
-		$this->Blocks->Block->id = false;
-		$about = $this->Blocks->Block->hasAny(array(
+		$this->BlocksController->Block->id = false;
+		$about = $this->BlocksController->Block->hasAny(array(
 			'id' => 3,
 			'status' => 0,
 		));
 		$this->assertTrue($about);
 
-		$this->Blocks->request->data['Block'] = array(
-			'action' => 'publish',
-			'8' => array( // Search
-				'id' => 1,
+		$this->expectFlashAndRedirect('Blocks published');
+
+		$this->testAction('/admin/blocks/blocks/process', array(
+			'data' => array(
+				'Block' => array(
+					'action' => 'publish',
+					'8' => array('id' => 1), // Search
+					'3' => array('id' => 1), // About
+					'7' => array('id' => 1), // Categories
+					'6' => array('id' => 1), // Blogroll
+					'9' => array('id' => 1), // Recent Posts
+					'5' => array('id' => 1), // Meta
+				),
 			),
-			'3' => array( // About
-				'id' => 1,
-			),
-			'7' => array( // Categories
-				'id' => 1,
-			),
-			'6' => array( // Blogroll
-				'id' => 1,
-			),
-			'9' => array( // Recent Posts
-				'id' => 1,
-			),
-			'5' => array( // Meta
-				'id' => 1,
-			),
-		);
-		$this->Blocks->admin_process();
-		$this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
-		$list = $this->Blocks->Block->find('list', array(
+		));
+
+		$list = $this->BlocksController->Block->find('list', array(
 			'conditions' => array(
 				'Block.status' => true,
 			),
@@ -425,39 +335,28 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		));
 	}
 
+/**
+ * testAdminProcessUnpublish
+ *
+ * @return void
+ */
 	public function testAdminProcessUnpublish() {
-		$this->Blocks->request->params['action'] = 'admin_process';
-		$this->Blocks->request->params['url']['url'] = 'admin/blocks/blocks/process';
-		$this->Blocks->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
+		$this->expectFlashAndRedirect('Blocks unpublished');
+		$this->testAction('/admin/blocks/blocks/process', array(
+			'data' => array(
+				'Block' => array(
+					'action' => 'unpublish',
+					'8' => array('id' => 1), // Search
+					'3' => array('id' => 1), // About
+					'7' => array('id' => 0), // Categories
+					'6' => array('id' => 1), // Blogroll
+					'9' => array('id' => 0), // Recent Posts
+					'5' => array('id' => 1), // Meta
+				),
+			),
 		));
-		$this->Blocks->startupProcess();
 
-		$this->Blocks->request->data['Block'] = array(
-			'action' => 'unpublish',
-			'8' => array( // Search
-				'id' => 1,
-			),
-			'3' => array( // About
-				'id' => 1,
-			),
-			'7' => array( // Categories
-				'id' => 0,
-			),
-			'6' => array( // Blogroll
-				'id' => 1,
-			),
-			'9' => array( // Recent Posts
-				'id' => 0,
-			),
-			'5' => array( // Meta
-				'id' => 1,
-			),
-		);
-		$this->Blocks->admin_process();
-		$this->assertEqual($this->Blocks->redirectUrl, array('action' => 'index'));
-		$list = $this->Blocks->Block->find('list', array(
+		$list = $this->BlocksController->Block->find('list', array(
 			'conditions' => array(
 				'Block.status' => 1,
 			),

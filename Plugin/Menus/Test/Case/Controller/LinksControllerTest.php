@@ -2,35 +2,6 @@
 App::uses('LinksController', 'Menus.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
-class TestLinksController extends LinksController {
-
-	public $name = 'Links';
-
-	public $autoRender = false;
-
-	public $testView = false;
-
-	public function redirect($url, $status = null, $exit = true) {
-		$this->redirectUrl = $url;
-	}
-
-	public function render($action = null, $layout = null, $file = null) {
-		if (!$this->testView) {
-			$this->renderedAction = $action;
-		} else {
-			return parent::render($action, $layout, $file);
-		}
-	}
-
-	protected function _stop($status = 0) {
-		$this->stopped = $status;
-	}
-
-	public function securityError($type) {
-	}
-
-}
-
 class LinksControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
@@ -66,20 +37,7 @@ class LinksControllerTest extends CroogoControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$request = new CakeRequest();
-		$response = new CakeResponse();
-		$this->Links = new TestLinksController($request, $response);
-		$this->Links->constructClasses();
-		$this->Links->Security = $this->getMock('SecurityComponent', null, array($this->Links->Components));
-		$this->Links->Components->unload('Acl');
-		$this->Links->Components->unload('Auth');
-		$this->Links->plugin = 'Menus';
-		$this->Links->request->params['plugin'] = 'menus';
-		$this->Links->request->params['controller'] = 'links';
-		$this->Links->request->params['pass'] = array();
-		$this->Links->request->params['named'] = array();
-
-		$this->LinksController = $this->generate('Links', array(
+		$this->LinksController = $this->generate('Menus.Links', array(
 			'methods' => array(
 				'redirect',
 			),
@@ -101,7 +59,7 @@ class LinksControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		unset($this->Links);
+		unset($this->LinksController);
 	}
 
 /**
@@ -127,36 +85,30 @@ class LinksControllerTest extends CroogoControllerTestCase {
 		$this->assertNotEmpty($this->vars['linksStatus']);
 	}
 
+/**
+ * testAdminAdd
+ *
+ * @return void
+ */
 	public function testAdminAdd() {
-		$this->Links->request->params['action'] = 'admin_add';
-		$this->Links->request->params['url']['url'] = 'admin/menus/links/add';
-		$this->Links->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
+		$this->expectFlashAndRedirect('The Link has been saved');
 		$mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
-		$this->Links->request->data = array(
-			'Link' => array(
-				'menu_id' => $mainMenu['Menu']['id'],
-				'title' => 'Test link',
-				'class' => 'test-link',
-				'link' => '#test-link',
-				'status' => 1,
+		$this->testAction('/admin/menus/links/add', array(
+			'data' => array(
+				'Link' => array(
+					'menu_id' => $mainMenu['Menu']['id'],
+					'title' => 'Test link',
+					'class' => 'test-link',
+					'link' => '#test-link',
+					'status' => 1,
+				),
+				'Role' => array(
+					'Role' => array(),
+				),
 			),
-			'Role' => array(
-				'Role' => array(),
-			),
-		);
-		$this->Links->startupProcess();
-		$this->Links->admin_add($mainMenu['Menu']['id']);
-		$this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $mainMenu['Menu']['id']));
-
-		$testLink = $this->Links->Link->findByLink('#test-link');
+		));
+		$testLink = $this->LinksController->Link->findByLink('#test-link');
 		$this->assertEqual($testLink['Link']['title'], 'Test link');
-
-		$this->Links->testView = true;
-		$output = $this->Links->render('admin_add');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
 /**
@@ -165,17 +117,7 @@ class LinksControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminEdit() {
-		$this->LinksController->Session
-			->expects($this->once())
-			->method('setFlash')
-			->with(
-				$this->equalTo('The Link has been saved'),
-				$this->equalTo('default'),
-				$this->equalTo(array('class' => 'success'))
-			);
-		$this->LinksController
-			->expects($this->once())
-			->method('redirect');
+		$this->expectFlashAndRedirect('The Link has been saved');
 		$homeLink = $this->LinksController->Link->find('first', array(
 			'conditions' => array(
 				'Link.title' => 'Home',
@@ -200,38 +142,34 @@ class LinksControllerTest extends CroogoControllerTestCase {
 		$this->assertEquals('Home [modified]', $result['Link']['title']);
 	}
 
+/**
+ * testAdminDelete
+ *
+ * @return void
+ */
 	public function testAdminDelete() {
-		$this->Links->request->params['action'] = 'admin_delete';
-		$this->Links->request->params['url']['url'] = 'admin/links/delete';
-		$this->Links->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
+		$this->expectFlashAndRedirect('Link deleted');
 		$homeLink = ClassRegistry::init('Menus.Link')->find('first', array(
 			'conditions' => array(
 				'Link.title' => 'Home',
 				'Link.link' => '/',
 			),
 		));
-		$this->Links->startupProcess();
-		$this->Links->admin_delete($homeLink['Link']['id']);
-		$this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $homeLink['Link']['menu_id']));
-
-		$hasAny = $this->Links->Link->hasAny(array(
+		$this->testAction('/admin/menus/links/delete/' . $homeLink['Link']['id']);
+		$hasAny = $this->LinksController->Link->hasAny(array(
 			'Link.title' => 'Home',
 			'Link.link' => '/',
 		));
 		$this->assertFalse($hasAny);
 	}
 
+/**
+ * testAdminMoveUp
+ *
+ * @return void
+ */
 	public function testAdminMoveUp() {
-		$this->Links->request->params['action'] = 'admin_moveup';
-		$this->Links->request->params['url']['url'] = 'admin/links/moveup';
-		$this->Links->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-
+		$this->expectFlashAndRedirect('Moved up successfully');
 		$mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
 		$aboutLink = ClassRegistry::init('Menus.Link')->find('first', array(
 			'conditions' => array(
@@ -240,11 +178,8 @@ class LinksControllerTest extends CroogoControllerTestCase {
 				'Link.link' => '/about',
 			),
 		));
-		$this->Links->startupProcess();
-
-		$this->Links->admin_moveup($aboutLink['Link']['id']);
-		$this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $mainMenu['Menu']['id']));
-		$list = $this->Links->Link->generateTreeList(array(
+		$this->testAction('/admin/menus/links/moveup/' . $aboutLink['Link']['id']);
+		$list = $this->LinksController->Link->generateTreeList(array(
 			'Link.menu_id' => $mainMenu['Menu']['id'],
 			'Link.status' => 1,
 		));
@@ -256,14 +191,13 @@ class LinksControllerTest extends CroogoControllerTestCase {
 		));
 	}
 
+/**
+ * testAdminMoveUpWithSteps
+ *
+ * @return void
+ */
 	public function testAdminMoveUpWithSteps() {
-		$this->Links->request->params['action'] = 'admin_moveup';
-		$this->Links->request->params['url']['url'] = 'admin/links/moveup';
-		$this->Links->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-
+		$this->expectFlashAndRedirect('Moved up successfully');
 		$mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
 		$contactLink = ClassRegistry::init('Menus.Link')->find('first', array(
 			'conditions' => array(
@@ -271,11 +205,8 @@ class LinksControllerTest extends CroogoControllerTestCase {
 				'Link.title' => 'Contact',
 			),
 		));
-		$this->Links->startupProcess();
-
-		$this->Links->admin_moveup($contactLink['Link']['id'], 2);
-		$this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $mainMenu['Menu']['id']));
-		$list = $this->Links->Link->generateTreeList(array(
+		$this->testAction('/admin/menus/links/moveup/' . $contactLink['Link']['id'] . '/' . 2);
+		$list = $this->LinksController->Link->generateTreeList(array(
 			'Link.menu_id' => $mainMenu['Menu']['id'],
 			'Link.status' => 1,
 		));
@@ -287,14 +218,13 @@ class LinksControllerTest extends CroogoControllerTestCase {
 		));
 	}
 
+/**
+ * testAdminMoveDown
+ *
+ * @return void
+ */
 	public function testAdminMoveDown() {
-		$this->Links->request->params['action'] = 'admin_movedown';
-		$this->Links->request->params['url']['url'] = 'admin/links/movedown';
-		$this->Links->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-
+		$this->expectFlashAndRedirect('Moved down successfully');
 		$mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
 		$aboutLink = ClassRegistry::init('Menus.Link')->find('first', array(
 			'conditions' => array(
@@ -303,11 +233,8 @@ class LinksControllerTest extends CroogoControllerTestCase {
 				'Link.link' => '/about',
 			),
 		));
-		$this->Links->startupProcess();
-
-		$this->Links->admin_movedown($aboutLink['Link']['id']);
-		$this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $mainMenu['Menu']['id']));
-		$list = $this->Links->Link->generateTreeList(array(
+		$this->testAction('/admin/menus/links/movedown/' . $aboutLink['Link']['id']);
+		$list = $this->LinksController->Link->generateTreeList(array(
 			'Link.menu_id' => $mainMenu['Menu']['id'],
 			'Link.status' => 1,
 		));
@@ -319,14 +246,13 @@ class LinksControllerTest extends CroogoControllerTestCase {
 		));
 	}
 
+/**
+ * testAdminMoveDownWithSteps
+ *
+ * @return void
+ */
 	public function testAdminMoveDownWithSteps() {
-		$this->Links->request->params['action'] = 'admin_movedown';
-		$this->Links->request->params['url']['url'] = 'admin/links/movedown';
-		$this->Links->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-
+		$this->expectFlashAndRedirect('Moved down successfully');
 		$mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
 		$homeLink = ClassRegistry::init('Menus.Link')->find('first', array(
 			'conditions' => array(
@@ -334,11 +260,8 @@ class LinksControllerTest extends CroogoControllerTestCase {
 				'Link.title' => 'Home',
 			),
 		));
-		$this->Links->startupProcess();
-
-		$this->Links->admin_movedown($homeLink['Link']['id'], 2);
-		$this->assertEqual($this->Links->redirectUrl, array('action' => 'index', $mainMenu['Menu']['id']));
-		$list = $this->Links->Link->generateTreeList(array(
+		$this->testAction('/admin/menus/links/movedown/' . $homeLink['Link']['id'] . '/' . 2);
+		$list = $this->LinksController->Link->generateTreeList(array(
 			'Link.menu_id' => $mainMenu['Menu']['id'],
 			'Link.status' => 1,
 		));

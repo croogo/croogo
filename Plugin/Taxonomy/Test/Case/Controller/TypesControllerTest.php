@@ -2,35 +2,6 @@
 App::uses('TypesController', 'Taxonomy.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
-class TestTypesController extends TypesController {
-
-	public $name = 'Types';
-
-	public $autoRender = false;
-
-	public $testView = false;
-
-	public function redirect($url, $status = null, $exit = true) {
-		$this->redirectUrl = $url;
-	}
-
-	public function render($action = null, $layout = null, $file = null) {
-		if (!$this->testView) {
-			$this->renderedAction = $action;
-		} else {
-			return parent::render($action, $layout, $file);
-		}
-	}
-
-	protected function _stop($status = 0) {
-		$this->stopped = $status;
-	}
-
-	public function securityError($type) {
-	}
-
-}
-
 class TypesControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
@@ -66,17 +37,7 @@ class TypesControllerTest extends CroogoControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$request = new CakeRequest();
-		$response = new CakeResponse();
-		$this->Types = new TestTypesController($request, $response);
-		$this->Types->plugin = 'Taxonomy';
-		$this->Types->constructClasses();
-		$this->Types->Security = $this->getMock('SecurityComponent', null, array($this->Types->Components));
-		$this->Types->request->params['controller'] = 'types';
-		$this->Types->request->params['pass'] = array();
-		$this->Types->request->params['named'] = array();
-
-		$this->TypesController = $this->generate('Types', array(
+		$this->TypesController = $this->generate('Taxonomy.Types', array(
 			'methods' => array(
 				'redirect',
 			),
@@ -98,7 +59,7 @@ class TypesControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		unset($this->Types);
+		unset($this->TypesController);
 	}
 
 /**
@@ -112,30 +73,24 @@ class TypesControllerTest extends CroogoControllerTestCase {
 		$this->assertNotEmpty($this->vars['types']);
 	}
 
+/**
+ * testAdminAdd
+ *
+ * @return void
+ */
 	public function testAdminAdd() {
-		$this->Types->request->params['action'] = 'admin_add';
-		$this->Types->request->params['url']['url'] = 'admin/types/add';
-		$this->Types->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Types->request->data = array(
-			'Type' => array(
-				'title' => 'New Type',
-				'alias' => 'new_type',
-				'description' => 'A new type',
+		$this->expectFlashAndRedirect('The Type has been saved');
+		$this->testAction('admin/taxonomy/types/add', array(
+			'data' => array(
+				'Type' => array(
+					'title' => 'New Type',
+					'alias' => 'new_type',
+					'description' => 'A new type',
+				),
 			),
-		);
-		$this->Types->startupProcess();
-		$this->Types->admin_add();
-		$this->assertEqual($this->Types->redirectUrl, array('action' => 'index'));
-
-		$newType = $this->Types->Type->findByAlias('new_type');
+		));
+		$newType = $this->TypesController->Type->findByAlias('new_type');
 		$this->assertEqual($newType['Type']['title'], 'New Type');
-
-		$this->Types->testView = true;
-		$output = $this->Types->render('admin_add');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
 /**
@@ -144,17 +99,7 @@ class TypesControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminEdit() {
-		$this->TypesController->Session
-			->expects($this->once())
-			->method('setFlash')
-			->with(
-				$this->equalTo('The Type has been saved'),
-				$this->equalTo('default'),
-				$this->equalTo(array('class' => 'success'))
-			);
-		$this->TypesController
-			->expects($this->once())
-			->method('redirect');
+		$this->expectFlashAndRedirect('The Type has been saved');
 		$this->testAction('/admin/types/edit/1', array(
 			'data' => array(
 				'Type' => array(
@@ -167,18 +112,15 @@ class TypesControllerTest extends CroogoControllerTestCase {
 		$this->assertEquals('[modified]', $page['Type']['description']);
 	}
 
+/**
+ * testAdminDelete
+ *
+ * @return void
+ */
 	public function testAdminDelete() {
-		$this->Types->request->params['action'] = 'admin_delete';
-		$this->Types->request->params['url']['url'] = 'admin/types/delete';
-		$this->Types->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Types->startupProcess();
-		$this->Types->admin_delete(1); // ID of page
-		$this->assertEqual($this->Types->redirectUrl, array('action' => 'index'));
-
-		$hasAny = $this->Types->Type->hasAny(array(
+		$this->expectFlashAndRedirect('Type deleted');
+		$this->testAction('/admin/types/delete/1'); // ID of page
+		$hasAny = $this->TypesController->Type->hasAny(array(
 			'Type.alias' => 'page',
 		));
 		$this->assertFalse($hasAny);
