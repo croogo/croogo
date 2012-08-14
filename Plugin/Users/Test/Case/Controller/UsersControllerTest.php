@@ -2,35 +2,6 @@
 App::uses('UsersController', 'Users.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
-class TestUsersController extends UsersController {
-
-	public $name = 'Users';
-
-	public $autoRender = false;
-
-	public $testView = false;
-
-	public function redirect($url, $status = null, $exit = true) {
-		$this->redirectUrl = $url;
-	}
-
-	public function render($action = null, $layout = null, $file = null) {
-		if (!$this->testView) {
-			$this->renderedAction = $action;
-		} else {
-			return parent::render($action, $layout, $file);
-		}
-	}
-
-	protected function _stop($status = 0) {
-		$this->stopped = $status;
-	}
-
-	public function securityError($type) {
-	}
-
-}
-
 /**
  * UsersController Test
  */
@@ -74,20 +45,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$request = new CakeRequest();
-		$response = new CakeResponse();
-		$this->Users = new TestUsersController($request, $response);
-		$this->Users->plugin = 'Users';
-		$this->Users->constructClasses();
-		$this->Users->Security = $this->getMock('SecurityComponent', null, array($this->Users->Components));
-		$this->Users->Components->unload('Croogo');
-		$this->Users->Components->unload('Menus');
-		$this->Users->User->Aro->useDbConfig = $this->Users->User->useDbConfig;
-		$this->Users->request->params['controller'] = 'users';
-		$this->Users->request->params['pass'] = array();
-		$this->Users->request->params['named'] = array();
-
-		$this->generate('Users', array(
+		$this->UsersController = $this->generate('Users.Users', array(
 			'methods' => array(
 				'redirect',
 			),
@@ -110,7 +68,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		unset($this->Users);
+		unset($this->UsersController);
 	}
 
 /**
@@ -125,37 +83,65 @@ class UsersControllerTest extends CroogoControllerTestCase {
 	}
 
 /**
- * testAdd
+ * testAddtestAddInvalidPassword
  *
  * @return void
  */
-	public function testAdd() {
+	public function testAddInvalidPassword() {
 		$_SERVER['SERVER_NAME'] = 'croogo.dev';
-		$this->Users->request->params['action'] = 'add';
-		$this->Users->request->params['url']['url'] = 'users/users/add';
-		$this->Users->request->data = array(
-			'User' => array(
-				'username' => 'new_user',
-				'password' => '',
-				'email' => 'new_user@croogo.dev',
-				'name' => 'New User',
-				'website' => '',
-				'role_id' => 3,
+		$this->UsersController->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo('The User could not be saved. Please, try again.'),
+				$this->equalTo('default'),
+				$this->equalTo(array('class' => 'error'))
+			);
+		$this->testAction('/users/users/add', array(
+			'data' => array(
+				'User' => array(
+					'username' => 'new_user',
+					'password' => '',
+					'email' => 'new_user@croogo.dev',
+					'name' => 'New User',
+					'website' => '',
+					'role_id' => 3,
+				),
 			),
-		);
-		$this->Users->startupProcess();
-		$User = $this->Users->User;
-
-		$this->Users->add();
-		$errors = print_r($User->validationErrors, true);
+		));
+		$errors = print_r($this->UsersController->User->validationErrors, true);
 		$this->assertContains('at least 6 characters', $errors);
+	}
 
-		$this->Users->request->data['User']['username'] = 'admin';
-		$this->Users->request->data['User']['password'] = 'yvonne';
-		$this->Users->request->data['User']['verify_password'] = 'strahovski';
-		$this->Users->request->data['User']['email'] = '123456';
-		$this->Users->add();
-		$errors = print_r($User->validationErrors, true);
+/**
+ * testAddtestAddOtherErrors
+ *
+ * @return void
+ */
+	public function testAddtestAddOtherErrors() {
+		$_SERVER['SERVER_NAME'] = 'croogo.dev';
+		$this->UsersController->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo('The User could not be saved. Please, try again.'),
+				$this->equalTo('default'),
+				$this->equalTo(array('class' => 'error'))
+			);
+		$this->testAction('/users/users/add', array(
+			'data' => array(
+				'User' => array(
+					'username' => 'admin',
+					'password' => 'yvonne',
+					'verify_password' => 'strahovski',
+					'email' => '123456',
+					'name' => 'New User',
+					'website' => '',
+					'role_id' => 3,
+				),
+			),
+		));
+		$errors = print_r($this->UsersController->User->validationErrors, true);
 		$this->assertContains('do not match', $errors);
 		$this->assertContains('valid email', $errors);
 		$this->assertContains('been taken', $errors);
@@ -167,31 +153,20 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminAdd() {
-		$this->Users->request->params['action'] = 'admin_add';
-		$this->Users->request->params['url']['url'] = 'admin/users/users/add';
-		$this->Users->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Users->request->data = array(
-			'User' => array(
-				'username' => 'new_user',
-				'password' => uniqid(),
-				'email' => 'new_user@croogo.dev',
-				'name' => 'New User',
-				'role_id' => 3,
+		$this->expectFlashAndRedirect('The User has been saved');
+		$this->testAction('/admin/users/users/add', array(
+			'data' => array(
+				'User' => array(
+					'username' => 'new_user',
+					'password' => uniqid(),
+					'email' => 'new_user@croogo.dev',
+					'name' => 'New User',
+					'role_id' => 3,
+				),
 			),
-		);
-		$this->Users->startupProcess();
-		$this->Users->admin_add();
-		$this->assertEqual($this->Users->redirectUrl, array('action' => 'index'));
-
-		$newUser = $this->Users->User->findByUsername('new_user');
+		));
+		$newUser = $this->UsersController->User->findByUsername('new_user');
 		$this->assertEqual($newUser['User']['name'], 'New User');
-
-		$this->Users->testView = true;
-		$output = $this->Users->render('admin_add');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
 /**
@@ -200,17 +175,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminEdit() {
-		$this->controller->Session
-			->expects($this->once())
-			->method('setFlash')
-			->with(
-				$this->equalTo('The User has been saved'),
-				$this->equalTo('default'),
-				$this->equalTo(array('class' => 'success'))
-			);
-		$this->controller
-			->expects($this->once())
-			->method('redirect');
+		$this->expectFlashAndRedirect('The User has been saved');
 		$this->testAction('/admin/users/users/edit/1', array(
 			'data' => array(
 				'User' => array(
@@ -233,58 +198,33 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminDelete() {
-		$this->Users->request->params['action'] = 'admin_delete';
-		$this->Users->request->params['url']['url'] = 'admin/users/users/delete';
-		$this->Users->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Users->startupProcess();
-
-		// delete another user
-		$this->Users->admin_delete(2); // ID of rchavik
-		$this->assertEqual($this->Users->redirectUrl, array('action' => 'index'));
-
-		$hasAny = $this->Users->User->hasAny(array(
+		$this->expectFlashAndRedirect('User deleted');
+		$this->testAction('/admin/users/users/delete/2'); // ID of rchavik
+		$hasAny = $this->UsersController->User->hasAny(array(
 			'User.username' => 'rchavik',
 		));
 		$this->assertFalse($hasAny);
-
-		// delete the only remaining admin
-		$this->Users->admin_delete(1); // ID of admin
-		$this->assertEqual($this->Users->redirectUrl, array('action' => 'index'));
-		$hasAny = $this->Users->User->hasAny(array(
-			'User.username' => 'admin',
-		));
-		$this->assertTrue($hasAny);
 	}
 
 /**
- * testAdminDelete
+ * testAdminDeleteCurrentUser
  *
  * @return void
  */
 	public function testAdminDeleteCurrentUser() {
-		$this->Users->request->params['action'] = 'admin_delete';
-		$this->Users->request->params['url']['url'] = 'admin/users/users/delete';
-		$this->Users->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Users->startupProcess();
-
 		// check that another admin exists
-		$hasAny = $this->Users->User->hasAny(array(
+		$hasAny = $this->UsersController->User->hasAny(array(
 			'User.username' => 'rchavik',
 			'User.role_id' => 1,
 		));
 		$this->assertTrue($hasAny);
 
-		// delete the only remaining admin
-		$this->Users->admin_delete(1); // ID of admin
-		$this->assertEqual($this->Users->redirectUrl, array('action' => 'index'));
-		$hasAny = $this->Users->User->hasAny(array(
-			'User.username' => 'admin',
+		// delete admin
+		$this->expectFlashAndRedirect('User deleted');
+		$this->testAction('/admin/users/users/delete/1'); // ID of admin
+
+		$hasAny = $this->UsersController->User->hasAny(array(
+			'User.role_id' => 1,
 		));
 		$this->assertTrue($hasAny);
 	}
@@ -295,14 +235,11 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testResetPasswordWithValidInfo() {
-		$vars = $this->testAction(
-			sprintf('/users/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
-			array(
-			'return' => 'vars'
-			)
+		$this->testAction(
+			sprintf('/users/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2')
 		);
-		$this->assertTrue(isset($vars['key']));
-  }
+		$this->assertTrue(isset($this->vars['key']));
+	}
 
 /**
  * testResetPasswordWithInvalidInfo
@@ -310,17 +247,19 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testResetPasswordWithInvalidInfo() {
-		$this->controller->Session
+		$this->UsersController->Session
 			->expects($this->once())
 			->method('setFlash')
 			->with(
-				$this->equalTo(__('An error occurred.')),
+				$this->equalTo('An error occurred.'),
 				$this->equalTo('default'),
 				$this->equalTo(array('class' => 'error'))
 			);
-		$vars = $this->testAction(
-			sprintf('/users/users/reset/%s/%s', 'yvonne','invalid'),
-			array('return' => 'vars')
+		$this->UsersController
+			->expects($this->once())
+			->method('redirect');
+		$this->testAction(
+			sprintf('/users/users/reset/%s/%s', 'yvonne','invalid')
 		);
 	}
 
@@ -337,14 +276,14 @@ class UsersControllerTest extends CroogoControllerTestCase {
 					'User' => array(
 						'password' => 'newpassword',
 						'verify_password' => 'newpassword',
-						)
 					)
 				)
-			);
-		$user = $this->Users->User->findByUsername('yvonne');
+			)
+		);
+		$user = $this->UsersController->User->findByUsername('yvonne');
 
 		$expected = AuthComponent::password('newpassword');
-		$this->assertEqual($expected,$user['User']['password'],sprintf("%s to be %s",$user['User']['password'],$expected));
+		$this->assertEqual($expected, $user['User']['password'], sprintf("%s to be %s", $user['User']['password'], $expected));
 	}
 
 /**
@@ -362,10 +301,10 @@ class UsersControllerTest extends CroogoControllerTestCase {
 						'id' => 3,
 						'password' => 'otherpassword',
 						'verify_password' => 'other password',
-						)
 					)
 				)
-			);
+			)
+		);
 		$this->assertContains('Passwords do not match', $this->contents);
 	}
 

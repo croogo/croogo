@@ -2,35 +2,6 @@
 App::uses('VocabulariesController', 'Taxonomy.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
-class TestVocabulariesController extends VocabulariesController {
-
-	public $name = 'Vocabularies';
-
-	public $autoRender = false;
-
-	public $testView = false;
-
-	public function redirect($url, $status = null, $exit = true) {
-		$this->redirectUrl = $url;
-	}
-
-	public function render($action = null, $layout = null, $file = null) {
-		if (!$this->testView) {
-			$this->renderedAction = $action;
-		} else {
-			return parent::render($action, $layout, $file);
-		}
-	}
-
-	protected function _stop($status = 0) {
-		$this->stopped = $status;
-	}
-
-	public function securityError($type) {
-	}
-
-}
-
 /**
  * VocabulariesController Test
  */
@@ -75,16 +46,7 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
 		App::build(array(
 			'View' => array(CakePlugin::path('Taxonomy') . 'View' . DS)
 		), App::APPEND);
-		$request = new CakeRequest();
-		$response = new CakeResponse();
-		$this->Vocabularies = new TestVocabulariesController($request, $response);
-		$this->Vocabularies->constructClasses();
-		$this->Vocabularies->Security = $this->getMock('SecurityComponent', null, array($this->Vocabularies->Components));
-		$this->Vocabularies->request->params['controller'] = 'vocabularies';
-		$this->Vocabularies->request->params['pass'] = array();
-		$this->Vocabularies->request->params['named'] = array();
-
-		$this->VocabulariesController = $this->generate('Vocabularies', array(
+		$this->VocabulariesController = $this->generate('Taxonomy.Vocabularies', array(
 			'methods' => array(
 				'redirect',
 			),
@@ -106,7 +68,7 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		unset($this->Vocabularies);
+		unset($this->VocabulariesController);
 	}
 
 /**
@@ -119,29 +81,23 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
 		$this->assertNotEmpty($this->vars['vocabularies']);
 	}
 
+/**
+ * testAdminAdd
+ *
+ * @return void
+ */
 	public function testAdminAdd() {
-		$this->Vocabularies->request->params['action'] = 'admin_add';
-		$this->Vocabularies->request->params['url']['url'] = 'admin/taxonomy/vocabularies/add';
-		$this->Vocabularies->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Vocabularies->request->data = array(
-			'Vocabulary' => array(
-				'title' => 'New Vocabulary',
-				'alias' => 'new_vocabulary',
+		$this->expectFlashAndRedirect('The Vocabulary has been saved');
+		$this->testAction('admin/taxonomy/vocabularies/add', array(
+			'data' => array(
+				'Vocabulary' => array(
+					'title' => 'New Vocabulary',
+					'alias' => 'new_vocabulary',
+				),
 			),
-		);
-		$this->Vocabularies->startupProcess();
-		$this->Vocabularies->admin_add();
-		$this->assertEqual($this->Vocabularies->redirectUrl, array('action' => 'index'));
-
-		$newVocabulary = $this->Vocabularies->Vocabulary->findByAlias('new_vocabulary');
+		));
+		$newVocabulary = $this->VocabulariesController->Vocabulary->findByAlias('new_vocabulary');
 		$this->assertEqual($newVocabulary['Vocabulary']['title'], 'New Vocabulary');
-
-		$this->Vocabularies->testView = true;
-		$output = $this->Vocabularies->render('admin_add');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
 /**
@@ -150,17 +106,7 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminEdit() {
-		$this->VocabulariesController->Session
-			->expects($this->once())
-			->method('setFlash')
-			->with(
-				$this->equalTo('The Vocabulary has been saved'),
-				$this->equalTo('default'),
-				$this->equalTo(array('class' => 'success'))
-			);
-		$this->VocabulariesController
-			->expects($this->once())
-			->method('redirect');
+		$this->expectFlashAndRedirect('The Vocabulary has been saved');
 		$this->testAction('/admin/taxonomy/vocabularies/edit/1', array(
 			'data' => array(
 				'Vocabulary' => array(
@@ -173,35 +119,29 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
 		$this->assertEquals('Categories [modified]', $categories['Vocabulary']['title']);
 	}
 
+/**
+ * testAdminDelete
+ *
+ * @return void
+ */
 	public function testAdminDelete() {
-		$this->Vocabularies->request->params['action'] = 'admin_delete';
-		$this->Vocabularies->request->params['url']['url'] = 'admin/taxonomy/vocabularies/delete';
-		$this->Vocabularies->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Vocabularies->startupProcess();
-		$this->Vocabularies->admin_delete(1); // ID of categories
-		$this->assertEqual($this->Vocabularies->redirectUrl, array('action' => 'index'));
-
-		$hasAny = $this->Vocabularies->Vocabulary->hasAny(array(
+		$this->expectFlashAndRedirect('Vocabulary deleted');
+		$this->testAction('admin/taxonomy/vocabularies/delete/1'); // ID of categories
+		$hasAny = $this->VocabulariesController->Vocabulary->hasAny(array(
 			'Vocabulary.alias' => 'categories',
 		));
 		$this->assertFalse($hasAny);
 	}
 
+/**
+ * testAdminMoveup
+ *
+ * @return void
+ */
 	public function testAdminMoveup() {
-		$this->Vocabularies->request->params['action'] = 'admin_index';
-		$this->Vocabularies->request->params['url']['url'] = 'admin/taxonomy/vocabularies/moveup';
-		$this->Vocabularies->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Vocabularies->startupProcess();
-		$this->Vocabularies->admin_moveup(2); // ID of tags
-		$this->assertEqual($this->Vocabularies->redirectUrl, array('action' => 'index'));
-
-		$vocabularies = $this->Vocabularies->Vocabulary->find('list', array(
+		$this->expectFlashAndRedirect('Moved up successfully');
+		$this->testAction('admin/taxonomy/vocabularies/moveup/2'); // ID of tags
+		$vocabularies = $this->VocabulariesController->Vocabulary->find('list', array(
 			'fields' => array(
 				'id',
 				'alias',
@@ -215,18 +155,15 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
 		$this->assertEqual($vocabularies, $expected);
 	}
 
+/**
+ * testAdminMovedown
+ *
+ * @return void
+ */
 	public function testAdminMovedown() {
-		$this->Vocabularies->request->params['action'] = 'admin_index';
-		$this->Vocabularies->request->params['url']['url'] = 'admin/taxonomy/vocabularies/moveup';
-		$this->Vocabularies->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Vocabularies->startupProcess();
-		$this->Vocabularies->admin_movedown(1); // ID of categories
-		$this->assertEqual($this->Vocabularies->redirectUrl, array('action' => 'index'));
-
-		$vocabularies = $this->Vocabularies->Vocabulary->find('list', array(
+		$this->expectFlashAndRedirect('Moved down successfully');
+		$this->testAction('admin/taxonomy/vocabularies/movedown/1'); // ID of categories
+		$vocabularies = $this->VocabulariesController->Vocabulary->find('list', array(
 			'fields' => array(
 				'id',
 				'alias',

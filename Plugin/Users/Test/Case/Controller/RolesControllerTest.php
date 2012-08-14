@@ -2,35 +2,6 @@
 App::uses('RolesController', 'Users.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
-class TestRolesController extends RolesController {
-
-	public $name = 'Roles';
-
-	public $autoRender = false;
-
-	public $testView = false;
-
-	public function redirect($url, $status = null, $exit = true) {
-		$this->redirectUrl = $url;
-	}
-
-	public function render($action = null, $layout = null, $file = null) {
-		if (!$this->testView) {
-			$this->renderedAction = $action;
-		} else {
-			return parent::render($action, $layout, $file);
-		}
-	}
-
-	protected function _stop($status = 0) {
-		$this->stopped = $status;
-	}
-
-	public function securityError($type) {
-	}
-
-}
-
 class RolesControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
@@ -66,21 +37,7 @@ class RolesControllerTest extends CroogoControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$request = new CakeRequest();
-		$response = new CakeResponse();
-		$this->Roles = new TestRolesController($request, $response);
-		$this->Roles->plugin = 'Users';
-		$this->Roles->constructClasses();
-		$this->Roles->Security = $this->getMock('SecurityComponent', null, array($this->Roles->Components));
-		$this->Roles->Components->unload('Croogo');
-		$this->Roles->Components->unload('Menus');
-		$this->Roles->Role->Aro->useDbConfig = $this->Roles->Role->useDbConfig;
-		$this->Roles->request->params['plugin'] = 'users';
-		$this->Roles->request->params['controller'] = 'roles';
-		$this->Roles->request->params['pass'] = array();
-		$this->Roles->request->params['named'] = array();
-
-		$this->generate('Roles', array(
+		$this->RolesController = $this->generate('Users.Roles', array(
 			'methods' => array(
 				'redirect',
 			),
@@ -103,7 +60,7 @@ class RolesControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		unset($this->Roles);
+		unset($this->RolesController);
 	}
 
 /**
@@ -112,35 +69,28 @@ class RolesControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminIndex() {
-		$this->testAction('/admin/roles/index');
+		$this->testAction('/admin/users/roles/index');
 		$this->assertNotEmpty($this->vars['displayFields']);
 		$this->assertNotEmpty($this->vars['roles']);
 	}
 
+/**
+ * testAdminAdd
+ *
+ * @return void
+ */
 	public function testAdminAdd() {
-		$this->Roles->request->params['action'] = 'admin_add';
-		$this->Roles->request->params['url']['url'] = 'admin/roles/add';
-		$this->Roles->Session->write('Auth.User', array(
-			'id' => 1,
-			'role_id' => 1,
-			'username' => 'admin',
-		));
-		$this->Roles->request->data = array(
-			'Role' => array(
-				'title' => 'new_role',
-				'alias' => 'new_role',
+		$this->expectFlashAndRedirect('The Role has been saved');
+		$this->testAction('admin/users/roles/add', array(
+			'data' => array(
+				'Role' => array(
+					'title' => 'new_role',
+					'alias' => 'new_role',
+				),
 			),
-		);
-		$this->Roles->startupProcess();
-		$this->Roles->admin_add();
-		$this->assertEqual($this->Roles->redirectUrl, array('action' => 'index'));
-
-		$newRole = $this->Roles->Role->findByAlias('new_role');
+		));
+		$newRole = $this->RolesController->Role->findByAlias('new_role');
 		$this->assertEqual($newRole['Role']['title'], 'new_role');
-
-		$this->Roles->testView = true;
-		$output = $this->Roles->render('admin_add');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
 /**
@@ -149,18 +99,8 @@ class RolesControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminEdit() {
-		$this->controller->Session
-			->expects($this->once())
-			->method('setFlash')
-			->with(
-				$this->equalTo('The Role has been saved'),
-				$this->equalTo('default'),
-				$this->equalTo(array('class' => 'success'))
-			);
-		$this->controller
-			->expects($this->once())
-			->method('redirect');
-		$this->testAction('/admin/roles/edit/1', array(
+		$this->expectFlashAndRedirect('The Role has been saved');
+		$this->testAction('/admin/users/roles/edit/1', array(
 			'data' => array(
 				'Role' => array(
 					'id' => 2, // Registered
@@ -172,19 +112,15 @@ class RolesControllerTest extends CroogoControllerTestCase {
 		$this->assertEquals('Registered [modified]', $registered['Role']['title']);
 	}
 
+/**
+ * testAdminDelete
+ *
+ * @return void
+ */
 	public function testAdminDelete() {
-		$this->Roles->request->params['action'] = 'admin_delete';
-		$this->Roles->request->params['url']['url'] = 'admin/roles/delete';
-		$this->Roles->Session->write('Auth.User', array(
-			'id' => 1,
-			'role_id' => 1,
-			'username' => 'admin',
-		));
-		$this->Roles->startupProcess();
-		$this->Roles->admin_delete(1); // ID of Admin
-		$this->assertEqual($this->Roles->redirectUrl, array('action' => 'index'));
-
-		$hasAny = $this->Roles->Role->hasAny(array(
+		$this->expectFlashAndRedirect('Role deleted');
+		$this->testAction('/admin/users/roles/delete/1'); // ID of Admin
+		$hasAny = $this->RolesController->Role->hasAny(array(
 			'Role.alias' => 'admin',
 		));
 		$this->assertFalse($hasAny);

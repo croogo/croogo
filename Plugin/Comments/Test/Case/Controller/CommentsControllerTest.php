@@ -3,35 +3,6 @@ App::uses('CommentsController', 'Comments.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 App::uses('CroogoTestFixture', 'TestSuite');
 
-class TestCommentsController extends CommentsController {
-
-	public $name = 'Comments';
-
-	public $autoRender = false;
-
-	public $testView = false;
-
-	public function redirect($url, $status = null, $exit = true) {
-		$this->redirectUrl = $url;
-	}
-
-	public function render($action = null, $layout = null, $file = null) {
-		if (!$this->testView) {
-			$this->renderedAction = $action;
-		} else {
-			return parent::render($action, $layout, $file);
-		}
-	}
-
-	protected function _stop($status = 0) {
-		$this->stopped = $status;
-	}
-
-	public function securityError($type) {
-	}
-
-}
-
 class CommentsControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
@@ -69,16 +40,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		parent::setUp();
 		$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 		$_SERVER['SERVER_NAME'] = 'localhost';
-		$request = new CakeRequest();
-		$response = new CakeResponse();
-		$this->Comments = new TestCommentsController($request, $response);
-		$this->Comments->constructClasses();
-		$this->Comments->request->params['plugin'] = 'Comments';
-		$this->Comments->request->params['controller'] = 'Comments';
-		$this->Comments->request->params['pass'] = array();
-		$this->Comments->request->params['named'] = array();
-
-		$this->CommentsController = $this->generate('Comments', array(
+		$this->CommentsController = $this->generate('Comments.Comments', array(
 			'methods' => array(
 				'redirect',
 			),
@@ -100,7 +62,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		unset($this->Comments);
+		unset($this->CommentsController);
 	}
 
 /**
@@ -119,17 +81,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminEdit() {
-		$this->CommentsController->Session
-			->expects($this->once())
-			->method('setFlash')
-			->with(
-				$this->equalTo('The Comment has been saved'),
-				$this->equalTo('default'),
-				$this->equalTo(array('class' => 'success'))
-			);
-		$this->CommentsController
-			->expects($this->once())
-			->method('redirect');
+		$this->expectFlashAndRedirect('The Comment has been saved');
 		$this->testAction('/admin/comments/comments/edit/1', array(
 			'data' => array(
 				'Comment' => array(
@@ -144,43 +96,36 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		$this->assertEquals('Mr Croogo [modified]', $result['Comment']['name']);
 	}
 
+/**
+ * testAdminDelete
+ *
+ * @return void
+ */
 	public function testAdminDelete() {
-		$this->Comments->request->params['action'] = 'admin_delete';
-		$this->Comments->request->params['url']['url'] = 'admin/comments/comments/delete';
-		$this->Comments->Components->trigger('initialize', array(&$this->Comments));
-		$this->Comments->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Comments->Components->trigger('startup', array(&$this->Comments));
-		$this->Comments->admin_delete(1);
-		$this->assertEqual($this->Comments->redirectUrl, array('action' => 'index'));
-
-		$hasAny = $this->Comments->Comment->hasAny(array(
+		$this->expectFlashAndRedirect('Comment deleted');
+		$this->testAction('/admin/comments/comments/delete/1');
+		$hasAny = $this->CommentsController->Comment->hasAny(array(
 			'Comment.id' => 1,
 		));
 		$this->assertFalse($hasAny);
 	}
 
+/**
+ * testAdminProcessDelete
+ *
+ * @return void
+ */
 	public function testAdminProcessDelete() {
-		$this->Comments->request->params['action'] = 'admin_process';
-		$this->Comments->request->params['url']['url'] = 'admin/comments/comments/process';
-		$this->Comments->Components->trigger('initialize', array(&$this->Comments));
-		$this->Comments->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Comments->Components->trigger('startup', array(&$this->Comments));
-
-		$this->Comments->request->data['Comment'] = array(
-			'action' => 'delete',
-			'1' => array(
-				'id' => 1,
+		$this->expectFlashAndRedirect('Comments deleted');
+		$this->testAction('/admin/comments/comments/process', array(
+			'data' => array(
+				'Comment' => array(
+					'action' => 'delete',
+					'1' => array('id' => 1),
+				),
 			),
-		);
-		$this->Comments->admin_process();
-		$this->assertEqual($this->Comments->redirectUrl, array('action' => 'index'));
-		$list = $this->Comments->Comment->find('list', array(
+		));
+		$list = $this->CommentsController->Comment->find('list', array(
 			'fields' => array(
 				'id',
 				'name',
@@ -190,35 +135,34 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		$this->assertEqual($list, array(2 => 'Mrs Croogo'));
 	}
 
+/**
+ * testAdminProcessPublish
+ *
+ * @return void
+ */
 	public function testAdminProcessPublish() {
-		$this->Comments->request->params['action'] = 'admin_process';
-		$this->Comments->request->params['url']['url'] = 'admin/comments/comments/process';
-		$this->Comments->Components->trigger('initialize', array(&$this->Comments));
-		$this->Comments->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Comments->Components->trigger('startup', array(&$this->Comments));
-
 		// unpublish a Comment for testing
-		$this->Comments->Comment->id = 1;
-		$this->Comments->Comment->saveField('status', 0);
-		$this->Comments->Comment->id = false;
-		$comment = $this->Comments->Comment->hasAny(array(
+		$this->CommentsController->Comment->id = 1;
+		$this->CommentsController->Comment->saveField('status', 0);
+		$this->CommentsController->Comment->id = false;
+		$comment = $this->CommentsController->Comment->hasAny(array(
 			'id' => 1,
 			'status' => 0,
 		));
 		$this->assertTrue($comment);
 
-		$this->Comments->request->data['Comment'] = array(
-			'action' => 'publish',
-			'1' => array(
-				'id' => 1,
+		$this->expectFlashAndRedirect('Comments published');
+
+		$this->testAction('/admin/comments/comments/process', array(
+			'data' => array(
+				'Comment' => array(
+					'action' => 'publish',
+					'1' => array('id' => 1),
+				),
 			),
-		);
-		$this->Comments->admin_process();
-		$this->assertEqual($this->Comments->redirectUrl, array('action' => 'index'));
-		$list = $this->Comments->Comment->find('list', array(
+		));
+
+		$list = $this->CommentsController->Comment->find('list', array(
 			'conditions' => array(
 				'Comment.status' => 1,
 			),
@@ -233,25 +177,22 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		));
 	}
 
+/**
+ * testAdminProcessUnpublish
+ *
+ * @return void
+ */
 	public function testAdminProcessUnpublish() {
-		$this->Comments->request->params['action'] = 'admin_process';
-		$this->Comments->request->params['url']['url'] = 'admin/comments/comments/process';
-		$this->Comments->Components->trigger('initialize', array(&$this->Comments));
-		$this->Comments->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Comments->Components->trigger('startup', array(&$this->Comments));
-
-		$this->Comments->request->data['Comment'] = array(
-			'action' => 'unpublish',
-			'1' => array(
-				'id' => 1,
+		$this->expectFlashAndRedirect('Comments unpublished');
+		$this->testAction('/admin/comments/comments/process', array(
+			'data' => array(
+				'Comment' => array(
+					'action' => 'unpublish',
+					'1' => array('id' => 1),
+				),
 			),
-		);
-		$this->Comments->admin_process();
-		$this->assertEqual($this->Comments->redirectUrl, array('action' => 'index'));
-		$list = $this->Comments->Comment->find('list', array(
+		));
+		$list = $this->CommentsController->Comment->find('list', array(
 			'conditions' => array(
 				'Comment.status' => 1,
 			),

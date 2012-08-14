@@ -1,5 +1,4 @@
 <?php
-
 App::uses('CakeSession', 'Model/Datasource');
 App::uses('CroogoTestFixture', 'TestSuite');
 
@@ -45,6 +44,10 @@ class CroogoControllerTestCase extends ControllerTestCase {
 			'View' => array(TESTS . 'test_app' . DS . 'View' . DS),
 		), App::PREPEND);
 
+		if (!isset($_SERVER['REMOTE_ADDR'])) {
+			$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+		}
+
 		CakePlugin::unload('Install');
 		CakePlugin::load(array('Users'), array('bootstrap' => true));
 		CakePlugin::load('Example');
@@ -86,6 +89,29 @@ class CroogoControllerTestCase extends ControllerTestCase {
 			return $auth;
 		}
 		return $auth[$key];
+	}
+
+/**
+ * Helper to expect a Session->setFlash and redirect
+ *
+ * @param string $class
+ * @param string $message
+ */
+	public function expectFlashAndRedirect($message = '', $class = false) {
+		if (!$class) {
+			$class = substr(get_class($this), 0, -4);
+		}
+		$this->{$class}->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo($message),
+				$this->equalTo('default'),
+				$this->equalTo(array('class' => 'success'))
+			);
+		$this->{$class}
+			->expects($this->once())
+			->method('redirect');
 	}
 
 }

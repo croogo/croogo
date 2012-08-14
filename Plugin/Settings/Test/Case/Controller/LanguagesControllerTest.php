@@ -2,35 +2,6 @@
 App::uses('LanguagesController', 'Settings.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
-class TestLanguagesController extends LanguagesController {
-
-	public $name = 'Languages';
-
-	public $autoRender = false;
-
-	public $testView = false;
-
-	public function redirect($url, $status = null, $exit = true) {
-		$this->redirectUrl = $url;
-	}
-
-	public function render($action = null, $layout = null, $file = null) {
-		if (!$this->testView) {
-			$this->renderedAction = $action;
-		} else {
-			return parent::render($action, $layout, $file);
-		}
-	}
-
-	protected function _stop($status = 0) {
-		$this->stopped = $status;
-	}
-
-	public function securityError($type) {
-	}
-
-}
-
 class LanguagesControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
@@ -66,16 +37,6 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$request = new CakeRequest();
-		$response = new CakeResponse();
-		$this->Languages = new TestLanguagesController($request, $response);
-		$this->Languages->constructClasses();
-		$this->Languages->plugin = 'Settings';
-		$this->Languages->Security = $this->getMock('SecurityComponent', null, array($this->Languages->Components));
-		$this->Languages->request->params['controller'] = 'languages';
-		$this->Languages->request->params['pass'] = array();
-		$this->Languages->request->params['named'] = array();
-
 		$this->LanguagesController = $this->generate('Settings.Languages', array(
 			'methods' => array(
 				'redirect',
@@ -98,7 +59,7 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		unset($this->Languages);
+		unset($this->LanguagesController);
 	}
 
 /**
@@ -111,29 +72,23 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
 		$this->assertNotEmpty($this->vars['languages']);
 	}
 
+/**
+ * testAdminAdd
+ *
+ * @return void
+ */
 	public function testAdminAdd() {
-		$this->Languages->request->params['action'] = 'admin_add';
-		$this->Languages->request->params['url']['url'] = 'admin/languages/add';
-		$this->Languages->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Languages->request->data = array(
-			'Language' => array(
-				'title' => 'Bengali',
-				'alias' => 'ben',
+		$this->expectFlashAndRedirect('The Language has been saved');
+		$this->testAction('/admin/languages/add', array(
+			'data' => array(
+				'Language' => array(
+					'title' => 'Bengali',
+					'alias' => 'ben',
+				),
 			),
-		);
-		$this->Languages->startupProcess();
-		$this->Languages->admin_add();
-		$this->assertEqual($this->Languages->redirectUrl, array('action' => 'index'));
-
-		$ben = $this->Languages->Language->findByAlias('ben');
+		));
+		$ben = $this->LanguagesController->Language->findByAlias('ben');
 		$this->assertEqual($ben['Language']['title'], 'Bengali');
-
-		$this->Languages->testView = true;
-		$output = $this->Languages->render('admin_add');
-		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
 
 /**
@@ -142,17 +97,7 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminEdit() {
-		$this->LanguagesController->Session
-			->expects($this->once())
-			->method('setFlash')
-			->with(
-				$this->equalTo('The Language has been saved'),
-				$this->equalTo('default'),
-				$this->equalTo(array('class' => 'success'))
-			);
-		$this->LanguagesController
-			->expects($this->once())
-			->method('redirect');
+		$this->expectFlashAndRedirect('The Language has been saved');
 		$this->testAction('/admin/languages/edit/1', array(
 			'data' => array(
 				'Language' => array(
@@ -166,143 +111,143 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
 		$this->assertEquals('English [modified]', $result['Language']['title']);
 	}
 
+/**
+ * testAdminDelete
+ *
+ * @return void
+ */
 	public function testAdminDelete() {
-		$this->Languages->request->params['action'] = 'admin_delete';
-		$this->Languages->request->params['url']['url'] = 'admin/languages/delete';
-		$this->Languages->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Languages->startupProcess();
-		$this->Languages->admin_delete(1); // ID of English
-		$this->assertEqual($this->Languages->redirectUrl, array('action' => 'index'));
-
-		$hasAny = $this->Languages->Language->hasAny(array(
+		$this->expectFlashAndRedirect('Language deleted');
+		$this->testAction('/admin/languages/delete/1'); // ID of English
+		$hasAny = $this->LanguagesController->Language->hasAny(array(
 			'Language.alias' => 'eng',
 		));
 		$this->assertFalse($hasAny);
 	}
 
-	public function testAdminMove() {
-		$this->Languages->request->params['action'] = 'admin_moveup';
-		$this->Languages->request->params['url']['url'] = 'admin/languages/moveup';
-		$this->Languages->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
+/**
+ * testAdminMoveUp
+ *
+ * @return void
+ */
+	public function testAdminMoveUp() {
+		$id = $this->_addLanguages();
+		$this->assertEqual(3, $id, __('Could not add a new language.'));
+
+		// move up
+		$this->expectFlashAndRedirect('Moved up successfully');
+		$this->testAction("/admin/languages/moveup/$id");
+
+		$list = $this->LanguagesController->Language->find('list', array(
+			'order' => 'Language.weight ASC',
 		));
-		$this->Languages->startupProcess();
-
-		$this->_testAdminMoveUp();
-		$this->_testAdminMoveUpWithSteps();
-
-		$this->_testAdminMoveDown();
-		$this->_testAdminMoveDownWithSteps();
+		$this->assertEqual($list, array(
+			'1' => 'English',
+			'3' => 'German',
+			'2' => 'Bengali',
+		));
 	}
 
-	protected function _testAdminMoveUp() {
-		// add language
-		$this->Languages->Language->save(array(
+/**
+ * testAdminMoveUpWithSteps
+ *
+ * @return void
+ */
+	public function testAdminMoveUpWithSteps() {
+		$id = $this->_addLanguages();
+		$this->assertEqual(3, $id, __('Could not add a new language.'));
+
+		// move up with steps
+		$this->expectFlashAndRedirect('Moved up successfully');
+		$this->testAction("/admin/languages/moveup/$id/2");
+
+		$list = $this->LanguagesController->Language->find('list', array(
+			'order' => 'Language.weight ASC',
+		));
+		$this->assertEqual($list, array(
+			'3' => 'German',
+			'2' => 'Bengali',
+			'1' => 'English',
+		));
+	}
+
+/**
+ * testAdminMoveDown
+ *
+ * @return void
+ */
+	public function testAdminMoveDown() {
+		$id = $this->_addLanguages();
+
+		$this->expectFlashAndRedirect('Moved down successfully');
+		$this->testAction('/admin/languages/movedown/1');
+
+		$list = $this->LanguagesController->Language->find('list', array(
+			'order' => 'Language.weight ASC',
+		));
+		$this->assertEqual($list, array(
+			'2' => 'Bengali',
+			'3' => 'German',
+			'1' => 'English',
+		));
+	}
+
+/**
+ * testAdminMoveDownWithSteps
+ *
+ * @return void
+ */
+	public function testAdminMoveDownWithSteps() {
+		$id = $this->_addLanguages();
+
+		$this->expectFlashAndRedirect('Moved down successfully');
+		$this->testAction('/admin/languages/movedown/1/2');
+
+		$list = $this->LanguagesController->Language->find('list', array(
+			'order' => 'Language.weight ASC',
+		));
+		$this->assertEqual($list, array(
+			'3' => 'German',
+			'2' => 'Bengali',
+			'1' => 'English',
+		));
+	}
+
+/**
+ * testAdminSelect
+ *
+ * @return void
+ */
+	public function testAdminSelect() {
+		$this->LanguagesController
+			->expects($this->once())
+			->method('redirect');
+		$this->testAction('/admin/languages/select');
+
+		$this->testAction('/admin/languages/select/1/Node');
+		$this->assertEqual(1, $this->vars['id']);
+		$this->assertEqual('Node', $this->vars['modelAlias']);
+		$this->assertEqual('English', $this->vars['languages']['0']['Language']['title']);
+		$this->assertEqual('eng', $this->vars['languages']['0']['Language']['alias']);
+	}
+
+/**
+ * Helper for adding languages
+ *
+ * @return integer id of last added
+ */
+	protected function _addLanguages() {
+		$this->LanguagesController->Language->create();
+		$this->LanguagesController->Language->save(array(
 			'title' => 'Bengali',
 			'alias' => 'ben',
 		));
-		$benId = $this->Languages->Language->id;
-		$this->assertEqual($benId, 2, __('Could not add a new language.'));
-
-		// get current list with order
-		$list = $this->Languages->Language->find('list', array(
-			'order' => 'Language.weight ASC',
-		));
-		$this->assertEqual($list, array(
-			'1' => 'English',
-			'2' => 'Bengali',
-		));
-
-		// move up
-		$this->Languages->admin_moveup($benId);
-		$this->assertEqual($this->Languages->redirectUrl, array('action' => 'index'));
-		$list = $this->Languages->Language->find('list', array(
-			'order' => 'Language.weight ASC',
-		));
-		$this->assertEqual($list, array(
-			'2' => 'Bengali',
-			'1' => 'English',
-		));
-	}
-
-	protected function _testAdminMoveUpWithSteps() {
-		// add another language
-		$this->Languages->Language->id = false;
-		$this->Languages->Language->save(array(
+		$this->LanguagesController->Language->create();
+		$this->LanguagesController->Language->save(array(
 			'title' => 'German',
 			'alias' => 'deu',
 		));
-		$deuId = $this->Languages->Language->id;
-		$this->assertEqual($deuId, 3, __('Could not add a new language.'));
-
-		// get current list with order
-		$list = $this->Languages->Language->find('list', array(
-			'order' => 'Language.weight ASC',
-		));
-		$this->assertEqual($list, array(
-			'2' => 'Bengali',
-			'1' => 'English',
-			'3' => 'German',
-		));
-
-		// move up with steps
-		$this->Languages->admin_moveup($deuId, 2);
-		$this->assertEqual($this->Languages->redirectUrl, array('action' => 'index'));
-		$list = $this->Languages->Language->find('list', array(
-			'order' => 'Language.weight ASC',
-		));
-		$this->assertEqual($list, array(
-			'3' => 'German',
-			'2' => 'Bengali',
-			'1' => 'English',
-		));
-	}
-
-	protected function _testAdminMoveDown() {
-		$this->Languages->admin_movedown(3);
-		$list = $this->Languages->Language->find('list', array(
-			'order' => 'Language.weight ASC',
-		));
-		$this->assertEqual($list, array(
-			'2' => 'Bengali',
-			'3' => 'German',
-			'1' => 'English',
-		));
-	}
-
-	protected function _testAdminMoveDownWithSteps() {
-		$this->Languages->admin_movedown(2, 2);
-		$list = $this->Languages->Language->find('list', array(
-			'order' => 'Language.weight ASC',
-		));
-		$this->assertEqual($list, array(
-			'3' => 'German',
-			'1' => 'English',
-			'2' => 'Bengali',
-		));
-	}
-
-	public function testAdminSelect() {
-		$this->Languages->request->params['action'] = 'admin_select';
-		$this->Languages->request->params['url']['url'] = 'admin/languages/select';
-		$this->Languages->Session->write('Auth.User', array(
-			'id' => 1,
-			'username' => 'admin',
-		));
-		$this->Languages->startupProcess();
-
-		$this->Languages->admin_select();
-		$this->assertEqual($this->Languages->redirectUrl, array('action' => 'index'));
-
-		$this->Languages->admin_select(1, 'Node');
-		$this->assertEqual($this->Languages->viewVars['id'], 1);
-		$this->assertEqual($this->Languages->viewVars['modelAlias'], 'Node');
-		$this->assertEqual($this->Languages->viewVars['languages']['0']['Language']['title'], 'English');
-		$this->assertEqual($this->Languages->viewVars['languages']['0']['Language']['alias'], 'eng');
+		return $this->LanguagesController->Language->id;
 	}
 
 }
