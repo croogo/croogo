@@ -280,13 +280,19 @@ class InstallController extends Controller {
 			unset($install['token']);
 			if ($this->Install->finalize($install)) {
 				$urlBlogAdd = Router::url(array(
-					'plugin' => false, 'admin' => true,
-					'controller' => 'nodes', 'action' => 'add', 'blog',
-					));
+					'plugin' => 'nodes', 
+					'admin' => true,
+					'controller' => 'nodes', 
+					'action' => 'add', 
+					'blog',
+				));
 				$urlSettings = Router::url(array(
-					'plugin' => false, 'admin' => true,
-					'controller' => 'settings', 'action' => 'prefix', 'Site',
-					));
+					'plugin' => 'settings', 
+					'admin' => true,
+					'controller' => 'settings', 
+					'action' => 'prefix', 
+					'Site',
+				));
 				$this->set('user', $install);
 				$this->set(compact('urlBlogAdd', 'urlSettings'));
 			} else {
