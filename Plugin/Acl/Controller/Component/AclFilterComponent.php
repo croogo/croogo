@@ -96,7 +96,7 @@ class AclFilterComponent extends Component {
 		$user = $this->_controller->Auth->user();
 		// Admin role is allowed to perform all actions, bypassing ACL
 		if (!empty($user['role_id']) && $user['role_id'] == 1) {
-			$this->_controller->Auth->allowedActions = array('*');
+			$this->_controller->Auth->allow();
 			return;
 		}
 
