@@ -155,16 +155,16 @@ class ExtensionsInstaller {
 		if ($Zip->open($path) === true) {
 			$search = 'webroot/theme.json';
                         $index = $Zip->locateName('theme.json', ZIPARCHIVE::FL_NODIR);
-                        if($index !== FALSE){
+                        if ($index !== FALSE) {
                             $file = $Zip->getNameIndex($index);
                             $this->_rootPath[$path] = str_replace($search, '', $file);
                             $json = json_decode($Zip->getFromIndex($index));
-                            if(!isset($json->name) || empty($json->name)){
-                                throw new CakeException(__('Invalid YML file'));//framework of the json invalid
-                            }else{
+                            if (!isset($json->name) || empty($json->name)) {
+                                throw new CakeException(__('Invalid YML file'));//estruct file json invalid
+                            } else {
                                 $theme = $json->name;
                             }
-                        }else{
+                        } else {
                             throw new CakeException(__('Invalid YML file'));//Not Found theme.json
                         }
 			$Zip->close();
