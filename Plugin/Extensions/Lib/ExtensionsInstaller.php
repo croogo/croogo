@@ -146,26 +146,27 @@ class ExtensionsInstaller {
 		if (empty($path)) {
 			throw new CakeException(__('Invalid theme path'));
 		}
+                
 		if (isset($this->_themeName[$path])) {
 			return $this->_themeName[$path];
 		}
+                
 		$Zip = new ZipArchive;
 		if ($Zip->open($path) === true) {
-			$search = 'webroot/theme.yml';
-			for ($i = 0; $i < $Zip->numFiles; $i++) {
-				$file = $Zip->getNameIndex($i);
-				if (stripos($file, $search) !== false) {
-					$this->_rootPath[$path] = str_replace($search, '', $file);
-					$yml = $Zip->getFromIndex($i);
-					preg_match('/name: (.+)/', $yml, $matches);
-					if (empty($matches[1])) {
-						throw new CakeException(__('Invalid YML file'));
-					} else {
-						$theme = trim($matches[1]);
-					}
-					break;
-				}
-			}
+			$search = 'webroot/theme.json';
+                        $index = $Zip->locateName('theme.json', ZIPARCHIVE::FL_NODIR);
+                        if ($index !== FALSE) {
+                            $file = $Zip->getNameIndex($index);
+                            $this->_rootPath[$path] = str_replace($search, '', $file);
+                            $json = json_decode($Zip->getFromIndex($index));
+                            if (!isset($json->name) || empty($json->name)) {
+                                throw new CakeException(__('Invalid YML file'));//estruct file json invalid
+                            } else {
+                                $theme = $json->name;
+                            }
+                        } else {
+                            throw new CakeException(__('Invalid YML file'));//Not Found theme.json
+                        }
 			$Zip->close();
 			if (!$theme) {
 				throw new CakeException(__('Invalid theme'));
