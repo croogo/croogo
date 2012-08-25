@@ -95,7 +95,7 @@ class ExtensionsInstallerTest extends CakeTestCase {
 			$files[$key] = str_replace($path, '', $file);
 		}
 		$this->assertTrue(in_array('Layouts' . DS . 'default.ctp', $files));
-		$this->assertTrue(in_array('webroot' . DS . 'theme.yml', $files));
+		$this->assertTrue(in_array('webroot' . DS . 'theme.json', $files));
 		$this->assertTrue(in_array('webroot' . DS . 'css' . DS . 'theme.css', $files));
 		$this->assertTrue(in_array('webroot' . DS . 'img' . DS . 'screenshot.png', $files));
 	}
