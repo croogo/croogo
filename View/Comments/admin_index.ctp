@@ -8,7 +8,7 @@
 
 <?php
 if (isset($this->params['named'])) {
-	foreach ($this->params['named'] AS $named => $value) {
+	foreach ($this->params['named'] as $named => $value) {
 		$this->Paginator->options['url'][$named] = $value;
 	}
 }
@@ -32,7 +32,7 @@ if (isset($this->params['named'])) {
 	echo $tableHeaders;
 
 	$rows = array();
-	foreach ($comments AS $comment) {
+	foreach ($comments as $comment) {
 		$actions  = $this->Html->link(__('Edit'), array('action' => 'edit', $comment['Comment']['id']));
 		$actions .= ' ' . $this->Layout->adminRowActions($comment['Comment']['id']);
 		$actions .= ' ' . $this->Layout->processLink(__('Delete'),

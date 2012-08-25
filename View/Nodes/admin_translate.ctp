@@ -22,7 +22,7 @@
 
 			<div id="node-main">
 			<?php
-				foreach ($fields AS $field) {
+				foreach ($fields as $field) {
 					echo $this->Form->input('Node.'.$field);
 				}
 			 ?>

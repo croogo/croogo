@@ -8,7 +8,7 @@
 	</div>
 
 	<?php
-		foreach ($languages AS $language) {
+		foreach ($languages as $language) {
 			$title = $language['Language']['title'] . ' (' . $language['Language']['native'] . ')';
 			$link = $this->Html->link($title, array(
 				'plugin' => 'translate',

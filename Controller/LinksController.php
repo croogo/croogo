@@ -65,7 +65,7 @@ class LinksController extends AppController {
 			));
 			return;
 		}
-		$this->set('title_for_layout', sprintf(__('Links: %s'), $menu['Menu']['title']));
+		$this->set('title_for_layout', __('Links: %s', $menu['Menu']['title']));
 
 		$this->Link->recursive = 0;
 		$linksTree = $this->Link->generateTreeList(array(

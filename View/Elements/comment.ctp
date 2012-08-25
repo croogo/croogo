@@ -10,7 +10,7 @@
 			}
 		?>
 		</span>
-		<span class="date"><?php echo sprintf(__('said on %s'), $this->Time->format(Configure::read('Comment.date_time_format'), $comment['Comment']['created'], null, Configure::read('Site.timezone'))); ?></span>
+		<span class="date"><?php echo __('said on %s', $this->Time->format(Configure::read('Comment.date_time_format'), $comment['Comment']['created'], null, Configure::read('Site.timezone'))); ?></span>
 	</div>
 	<div class="comment-body"><?php echo nl2br($this->Text->autoLink($comment['Comment']['body'])); ?></div>
 	<div class="comment-reply">
@@ -28,7 +28,7 @@
 
 	<?php
 		if (isset($comment['children']) && count($comment['children']) > 0) {
-			foreach ($comment['children'] AS $childComment) {
+			foreach ($comment['children'] as $childComment) {
 				echo $this->element('comment', array('comment' => $childComment, 'level' => $level + 1));
 			}
 		}

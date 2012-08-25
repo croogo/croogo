@@ -13,7 +13,7 @@
 	<fieldset>
 	<?php
 		$i = 0;
-		foreach ($settings AS $setting) {
+		foreach ($settings as $setting) {
 			$key = $setting['Setting']['key'];
 			$keyE = explode('.', $key);
 			$keyTitle = Inflector::humanize($keyE['1']);

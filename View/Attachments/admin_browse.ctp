@@ -20,7 +20,7 @@
 		echo $tableHeaders;
 
 		$rows = array();
-		foreach ($attachments AS $attachment) {
+		foreach ($attachments as $attachment) {
 			$actions  = $this->Html->link(__('Edit'), array(
 				'controller' => 'attachments',
 				'action' => 'edit',

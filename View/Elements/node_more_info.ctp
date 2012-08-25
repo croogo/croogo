@@ -6,7 +6,7 @@
 		$nodeTerms = Set::combine($this->Layout->node, 'Taxonomy.{n}.Term.slug', 'Taxonomy.{n}.Term.title');
 		$nodeTermLinks = array();
 		if (count($nodeTerms) > 0) {
-			foreach ($nodeTerms AS $termSlug => $termTitle) {
+			foreach ($nodeTerms as $termSlug => $termTitle) {
 				$nodeTermLinks[] = $this->Html->link($termTitle, array(
 					'controller' => 'nodes',
 					'action' => 'term',

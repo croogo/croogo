@@ -81,9 +81,6 @@ class AclFilterComponent extends Component {
 
 			$allowedActions = ClassRegistry::init('Acl.AclPermission')->getAllowedActionsByRoleId($roleId);
 			$linkAction = Inflector::camelize($this->_controller->request->params['controller']) . '/' . $this->_controller->request->params['action'];
-			if (isset($this->_controller->request->params['admin']) && $this->_controller->request->params['admin']) {
-				$linkAction = Inflector::camelize($this->_controller->request->params['controller']) . '/admin_' . $this->_controller->request->params['action'];
-			}
 			if (in_array($linkAction, $allowedActions)) {
 				$this->_controller->Auth->allowedActions = array($this->_controller->request->params['action']);
 			}

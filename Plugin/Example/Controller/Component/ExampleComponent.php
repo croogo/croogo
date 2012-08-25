@@ -20,7 +20,7 @@ class ExampleComponent extends Component {
  * @param object $controller Controller with components to startup
  * @return void
  */
-	public function startup(&$controller) {
+	public function startup(Controller $controller) {
 		$controller->set('exampleComponent', 'ExampleComponent startup');
 	}
 
@@ -31,7 +31,7 @@ class ExampleComponent extends Component {
  * @param object $controller Controller with components to beforeRender
  * @return void
  */
-	public function beforeRender(&$controller) {
+	public function beforeRender(Controller $controller) {
 	}
 
 /**
@@ -40,7 +40,7 @@ class ExampleComponent extends Component {
  * @param object $controller Controller with components to shutdown
  * @return void
  */
-	public function shutdown(&$controller) {
+	public function shutdown(Controller $controller) {
 	}
 
 }

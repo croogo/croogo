@@ -187,10 +187,9 @@ INSERT IGNORE INTO `acos` (`id`, `parent_id`, `model`, `foreign_key`, `alias`, `
 --
 
 INSERT IGNORE INTO `aros` (`id`, `parent_id`, `model`, `foreign_key`, `alias`, `lft`, `rght`) VALUES
-(1, NULL, 'Role', 1, '', 1, 4),
-(2, NULL, 'Role', 2, '', 5, 6),
-(3, NULL, 'Role', 3, '', 7, 8),
-(5, 1, 'User', 1, '', 2, 3);
+(1, NULL, 'Role', 1, '', 1, 2),
+(2, NULL, 'Role', 2, '', 3, 4),
+(3, NULL, 'Role', 3, '', 5, 6);
 
 --
 -- Dumping data for table `aros_acos`

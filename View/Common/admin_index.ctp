@@ -87,7 +87,7 @@ if (!isset($className)) {
 <?php if ($pagingBlock = $this->fetch('paging')): ?>
 	<?php echo $pagingBlock; ?>
 <?php else: ?>
-	<?php if (isset($this->Paginator)): ?>
+	<?php if (isset($this->Paginator) && isset($this->request['paging'])): ?>
 		<div class="paging"><?php echo $this->Paginator->numbers(); ?></div>
 		<div class="counter"><?php echo $this->Paginator->counter(array('format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%'))); ?></div>
 	<?php endif; ?>

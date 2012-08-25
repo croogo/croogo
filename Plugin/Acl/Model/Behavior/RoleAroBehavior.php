@@ -1,6 +1,6 @@
 <?php
 /**
- * RoleAco Behavior
+ * RoleAro Behavior
  *
  * PHP version 5
  *
@@ -11,7 +11,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class RoleAcoBehavior extends ModelBehavior {
+class RoleAroBehavior extends ModelBehavior {
 
 /**
  * parentNode

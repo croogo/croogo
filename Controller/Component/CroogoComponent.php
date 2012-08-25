@@ -129,7 +129,7 @@ class CroogoComponent extends Component {
  * @return void
  */
 	public function startup(Controller $controller) {
-		$this->controller =& $controller;
+		$this->controller = $controller;
 
 		if ($this->Session->check('Auth.User.id')) {
 			$this->roleId = $this->Session->read('Auth.User.role_id');
@@ -460,7 +460,7 @@ class CroogoComponent extends Component {
  * @return void
  */
 	public function beforeRender(Controller $controller) {
-		$this->controller =& $controller;
+		$this->controller = $controller;
 		$this->controller->set('blocks_for_layout', $this->blocks_for_layout);
 		$this->controller->set('menus_for_layout', $this->menus_for_layout);
 		$this->controller->set('vocabularies_for_layout', $this->vocabularies_for_layout);

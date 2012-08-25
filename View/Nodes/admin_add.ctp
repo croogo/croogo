@@ -26,7 +26,7 @@
 			<?php if (count($taxonomy) > 0) { ?>
 			<div id="node-terms">
 			<?php
-				foreach ($taxonomy AS $vocabularyId => $taxonomyTree) {
+				foreach ($taxonomy as $vocabularyId => $taxonomyTree) {
 					echo $this->Form->input('TaxonomyData.'.$vocabularyId, array(
 						'label' => $vocabularies[$vocabularyId]['title'],
 						'type' => 'select',
@@ -60,7 +60,7 @@
 					<?php
 						$fields = array();
 						if (count($fields) > 0) {
-							foreach ($fields AS $fieldKey => $fieldValue) {
+							foreach ($fields as $fieldKey => $fieldValue) {
 								echo $this->Layout->metaField($fieldKey, $fieldValue);
 							}
 						} else {

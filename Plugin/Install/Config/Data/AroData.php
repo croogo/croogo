@@ -31,15 +31,6 @@ class AroData {
 			'lft' => '5',
 			'rght' => '6'
 		),
-		array(
-			'id' => '5',
-			'parent_id' => '',
-			'model' => 'User',
-			'foreign_key' => '1',
-			'alias' => '',
-			'lft' => '7',
-			'rght' => '8'
-		),
 	);
 
 }

@@ -12,10 +12,10 @@ tmp/
 
 # Others
 .DS_Store
-Plugin/*
-!Plugin/Acl
-!Plugin/Extensions
-!Plugin/Example
-!Plugin/Install
-!Plugin/Tinymce
-!Plugin/Translate
+./Plugin/*
+!./Plugin/Acl
+!./Plugin/Extensions
+!./Plugin/Example
+!./Plugin/Install
+!./Plugin/Tinymce
+!./Plugin/Translate
