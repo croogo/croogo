@@ -84,16 +84,24 @@ class ExtShell extends AppShell {
 		$method = $this->args[0];
 		$type = $this->args[1];
 		$ext = isset($args[2]) ? $args[2] : null;
+		$force = isset($this->params['force']) ? $this->params['force'] : false;
 		if ($type == 'theme') {
 			if ($method == 'deactivate') {
 				$this->_deactivateTheme();
 				return true;
 			}
 			$extensions = $this->_CroogoTheme->getThemes();
+			$theme = Configure::read('Site.theme');
+			$active = !empty($theme) ? $theme == 'default' : true;
 		} elseif ($type == 'plugin') {
 			$extensions = $this->_CroogoPlugin->getPlugins();
+			if ($force) {
+				$plugins = array_combine($p = App::objects('plugins'), $p);
+				$extensions += $plugins;
+			}
+			$active = CakePlugin::loaded($ext);
 		}
-		if (!empty($ext) && !in_array($ext, $extensions)) {
+		if (!empty($ext) && !in_array($ext, $extensions) && !$active) {
 			$this->err(__('%s "%s" not found.', ucfirst($type), $ext));
 			return false;
 		}
@@ -131,6 +139,11 @@ class ExtShell extends AppShell {
 				'short' => 'a',
 				'boolean' => true,
 				'help' => 'List all extensions',
+			))
+			->addOption('force', array(
+				'short' => 'f',
+				'boolean' => true,
+				'help' => 'Force method operation even when plugin does not provide a `plugin.json` file.'
 			))
 			;
 	}
