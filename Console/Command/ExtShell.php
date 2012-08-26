@@ -81,11 +81,11 @@ class ExtShell extends AppShell {
 	public function main() {
 		$args = $this->args;
 		$this->args = array_map('strtolower', $this->args);
-		$activate = $this->args[0];
+		$method = $this->args[0];
 		$type = $this->args[1];
 		$ext = isset($args[2]) ? $args[2] : null;
 		if ($type == 'theme') {
-			if ($activate == 'deactivate') {
+			if ($method == 'deactivate') {
 				$this->_deactivateTheme();
 				return true;
 			}
@@ -93,11 +93,17 @@ class ExtShell extends AppShell {
 		} elseif ($type == 'plugin') {
 			$extensions = $this->_CroogoPlugin->getPlugins();
 		}
-		if (!in_array($ext, $extensions)) {
+		if (!empty($ext) && !in_array($ext, $extensions)) {
 			$this->err(__('%s "%s" not found.', ucfirst($type), $ext));
 			return false;
 		}
-		return $this->{'_' . $activate . ucfirst($type)}($ext);
+		switch ($method) {
+		case 'list':
+			$call = Inflector::pluralize($type);
+			return $this->{$call}($ext);
+		default:
+			return $this->{'_' . $method . ucfirst($type)}($ext);
+		}
 	}
 
 /**
@@ -110,7 +116,7 @@ class ExtShell extends AppShell {
 				'method' => array(
 					'help' => __('Method to perform'),
 					'required' => true,
-					'choices' => array('activate', 'deactivate'),
+					'choices' => array('list', 'activate', 'deactivate'),
 				),
 				'type' => array(
 					'help' => __('Extension type'),
@@ -120,7 +126,13 @@ class ExtShell extends AppShell {
 				'extension' => array(
 					'help' => __('Name of extension'),
 				),
-			));
+			))
+			->addOption('all', array(
+				'short' => 'a',
+				'boolean' => true,
+				'help' => 'List all extensions',
+			))
+			;
 	}
 
 /**
@@ -188,4 +200,56 @@ class ExtShell extends AppShell {
 	protected function _deactivateTheme() {
 		return $this->_activateTheme();
 	}
+
+/**
+ * List plugins
+ */
+	public function plugins($plugin = null) {
+		App::uses('CroogoPlugin', 'Extensions.Lib');
+		$all = $this->params['all'];
+		$bootstraps = Configure::read('Hook.bootstraps');
+		$plugins = $plugin == null ? App::objects('plugins') : array($plugin);
+		$loaded = CakePlugin::loaded();
+		$CroogoPlugin = new CroogoPlugin();
+		$this->out(__('Plugins:'), 2);
+		$this->out(__('%-20s%-50s%s', __('Plugin'), __('Author'), __('Status')));
+		$this->out(str_repeat('-', 80));
+		foreach ($plugins as $plugin) {
+			$status = '<info>inactive</info>';
+			if ($active = in_array($plugin, $loaded)) {
+				$status = '<success>active</success>';
+			}
+			if (!$active && !$all) {
+				continue;
+			}
+			$data = $CroogoPlugin->getPluginData($plugin);
+			$author = isset($data['author']) ? $data['author'] : '';
+			$this->out(__('%-20s%-50s%s', $plugin, $author, $status));
+		}
+	}
+
+/**
+ * List themes
+ */
+	public function themes($theme = null) {
+		$CroogoTheme = new CroogoTheme();
+		$all = $this->params['all'];
+		$current = Configure::read('Site.theme');
+		$themes = $theme == null ? $CroogoTheme->getThemes() : array($theme);
+		$this->out("Themes:", 2);
+		$default = empty($current) || $current == 'default';
+		$this->out(__('%-20s%-50s%s', __('Theme'), __('Author'), __('Status')));
+		$this->out(str_repeat('-', 80));
+		foreach ($themes as $theme) {
+			$active = $theme == $current || $default && $theme == 'default';
+			$status = $active ? '<success>active</success>' : '<info>inactive</info>';
+			if (!$active && !$all) {
+				continue;
+			}
+			$data = $CroogoTheme->getThemeData($theme);
+			$author = isset($data['author']) ? $data['author'] : '';
+			$this->out(__('%-20s%-50s%s', $theme, $author, $status));
+		}
+	}
+
 }
