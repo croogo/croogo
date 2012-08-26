@@ -86,10 +86,6 @@ class ExtShell extends AppShell {
 		$ext = isset($args[2]) ? $args[2] : null;
 		$force = isset($this->params['force']) ? $this->params['force'] : false;
 		if ($type == 'theme') {
-			if ($method == 'deactivate') {
-				$this->_deactivateTheme();
-				return true;
-			}
 			$extensions = $this->_CroogoTheme->getThemes();
 			$theme = Configure::read('Site.theme');
 			$active = !empty($theme) ? $theme == 'default' : true;
@@ -101,6 +97,10 @@ class ExtShell extends AppShell {
 			}
 			$active = CakePlugin::loaded($ext);
 		}
+		if ($type == 'theme' && $method == 'deactivate') {
+			$this->err(__('Theme cannot be deactivated, instead activate another theme.'));
+			return false;
+		}
 		if (!empty($ext) && !in_array($ext, $extensions) && !$active) {
 			$this->err(__('%s "%s" not found.', ucfirst($type), $ext));
 			return false;
@@ -110,6 +110,10 @@ class ExtShell extends AppShell {
 			$call = Inflector::pluralize($type);
 			return $this->{$call}($ext);
 		default:
+			if (empty($ext)) {
+				$this->err(__('%s name must be provided.', ucfirst($type)));
+				return false;
+			}
 			return $this->{'_' . $method . ucfirst($type)}($ext);
 		}
 	}
@@ -154,7 +158,7 @@ class ExtShell extends AppShell {
  * @param string $plugin
  * @return boolean
  */
-	protected function _activatePlugin($plugin = null) {
+	protected function _activatePlugin($plugin) {
 		$result = $this->_CroogoPlugin->activate($plugin);
 		if ($result === true) {
 			$this->out(__('Plugin "%s" activated successfully.', $plugin));
@@ -173,7 +177,7 @@ class ExtShell extends AppShell {
  * @param string $plugin
  * @return boolean
  */
-	protected function _deactivatePlugin($plugin = null) {
+	protected function _deactivatePlugin($plugin) {
 		$result = $this->_CroogoPlugin->deactivate($plugin);
 		if ($result === true) {
 			$this->out(__('Plugin "%s" deactivated successfully.', $plugin));
@@ -192,26 +196,13 @@ class ExtShell extends AppShell {
  * @param string $theme Name of theme
  * @return boolean
  */
-	protected function _activateTheme($theme = null) {
+	protected function _activateTheme($theme) {
 		if ($r = $this->_CroogoTheme->activate($theme)) {
-			if (is_null($theme)) {
-				$this->out(__('Theme deactivated successfully.'));
-			} else {
-				$this->out(__('Theme "%s" activated successfully.', $theme));
-			}
+			$this->out(__('Theme "%s" activated successfully.', $theme));
 		} else {
 			$this->err(__('Theme "%s" activation failed.', $theme));
 		}
 		return true;
-	}
-
-/**
- * Deactivate a theme (just reverts to default)
- *
- * @return boolean
- */
-	protected function _deactivateTheme() {
-		return $this->_activateTheme();
 	}
 
 /**

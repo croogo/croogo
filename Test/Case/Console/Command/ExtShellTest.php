@@ -140,7 +140,12 @@ class ExtShellTest extends CroogoTestCase {
 		$Shell->args = array('deactivate', 'theme');
 		$Shell->main();
 		$result = $this->Setting->findByKey('Site.theme');
-		$this->assertEquals('', $result['Setting']['value']);
+		$this->assertEquals('Mytheme', $result['Setting']['value']);
+
+		$Shell->args = array('deactivate', 'theme', 'Mytheme');
+		$Shell->main();
+		$result = $this->Setting->findByKey('Site.theme');
+		$this->assertEquals('Mytheme', $result['Setting']['value']);
 
 		$Shell->args = array('activate', 'theme', 'Mytheme');
 		$Shell->main();
