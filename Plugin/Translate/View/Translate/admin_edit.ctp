@@ -3,7 +3,7 @@ $this->extend('/Common/admin_edit');
 $this->set('className', 'translate');
 ?>
 <?php
-	echo $this->Form->create($modelAlias, array('url' => array(
+	echo $this->Form->create(getModelAlias($modelAlias), array('url' => array(
 		'controller' => 'translate',
 		'action' => 'edit',
 		$id,
@@ -20,7 +20,7 @@ $this->set('className', 'translate');
 		<div id="record-main">
 		<?php
 			foreach ($fields AS $field) {
-				echo $this->Form->input($modelAlias.'.'.$field);
+				echo $this->Form->input(getModelAlias($modelAlias).'.'.$field);
 			}
 		 ?>
 		 </div>
