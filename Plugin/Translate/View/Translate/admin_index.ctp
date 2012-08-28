@@ -9,7 +9,7 @@ echo $this->Html->link(__('Translate in a new language'), array(
 	'plugin' => null,
 	'controller' => 'languages',
 	'action'=>'select',
-	$record[$modelAlias]['id'],
+	$record[getModelAlias($modelAlias)]['id'],
 	$modelAlias,
 ));
 ?></li>
