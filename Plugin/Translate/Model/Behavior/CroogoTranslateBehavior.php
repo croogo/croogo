@@ -58,7 +58,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 		$this->settings[$model->alias] = array();
 		$this->runtime[$model->alias] = array('fields' => array());
 		$this->translateModel($model);
-		$this->translationFields[$model->alias] = $config;
+		$this->translationFields[$model->alias] = $config['fields'];
 		//return $this->bindTranslation($model, $config, false);
 	}
 
