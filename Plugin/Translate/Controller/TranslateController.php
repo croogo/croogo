@@ -174,8 +174,9 @@ class TranslateController extends TranslateAppController {
                 'action' => 'index',
             ));
         }
-
-        if (!is_array(Configure::read('Translate.models.' . getModelAlias($modelAlias)))) {
+        
+        $models = Configure::read('Translate.models');
+        if (!is_array($models[$modelAlias])) {
             $this->Session->setFlash(__('Invalid model.'), 'default', array('class' => 'error'));
             $this->redirect(array(
                 'plugin' => null,
