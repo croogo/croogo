@@ -17,7 +17,7 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
 		'plugin.blocks.block',
 		'plugin.comments.comment',
 		'plugin.contacts.contact',
-		'app.i18n',
+		'plugin.translate.i18n',
 		'plugin.settings.language',
 		'plugin.menus.link',
 		'plugin.menus.menu',

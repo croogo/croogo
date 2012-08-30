@@ -11,7 +11,7 @@ class CroogoTranslateBehaviorTest extends CroogoTestCase {
 		'plugin.blocks.block',
 		'plugin.comments.comment',
 		'plugin.contacts.contact',
-		'i18n',
+		'plugin.translate.i18n',
 		'plugin.settings.language',
 		'plugin.menus.link',
 		'plugin.menus.menu',
@@ -40,8 +40,10 @@ class CroogoTranslateBehaviorTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->Node = ClassRegistry::init('Nodes.Node');
-		$this->Node->Behaviors->attach('CroogoTranslate', array(
-			'title' => 'titleTranslation',
+		$this->Node->Behaviors->attach('Translate.CroogoTranslate', array(
+			'fields' => array(
+				'title' => 'titleTranslation',
+			),
 		));
 	}
 
@@ -56,6 +58,11 @@ class CroogoTranslateBehaviorTest extends CroogoTestCase {
 		ClassRegistry::flush();
 	}
 
+/**
+ * testSaveTranslation
+ *
+ * @return void
+ */
 	public function testSaveTranslation() {
 		$this->Node->id = 2; // About
 		$this->Node->locale = 'ben';
