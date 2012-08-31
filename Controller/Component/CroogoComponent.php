@@ -4,6 +4,7 @@ App::uses('File', 'Utility');
 App::uses('Folder', 'Utility');
 App::uses('CroogoPlugin', 'Extensions.Lib');
 App::uses('CroogoTheme', 'Extensions.Lib');
+App::uses('Croogo', 'Lib');
 
 /**
  * Croogo Component
@@ -139,15 +140,10 @@ class CroogoComponent extends Component {
  *
  * @param array $url
  * @return array
+ * @deprecated Use Croogo::getRelativePath
  */
 	public function getRelativePath($url = '/') {
-		if (is_array($url)) {
-			$absoluteUrl = Router::url($url, true);
-		} else {
-			$absoluteUrl = Router::url('/' . $url, true);
-		}
-		$path = '/' . str_replace(Router::url('/', true), '', $absoluteUrl);
-		return $path;
+		return Croogo::getRelativePath($url);
 	}
 
 /**
@@ -201,6 +197,7 @@ class CroogoComponent extends Component {
  * Get theme aliases (folder names)
  *
  * @return array
+ * @deprecated use CroogoTheme::getThemes()
  */
 	public function getThemes() {
 		return $this->_CroogoTheme->getThemes();
