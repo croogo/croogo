@@ -1,0 +1,25 @@
+{
+	"name": "croogo/blocks",
+	"type": "cakephp-plugin",
+	"description": "Blocks Plugin for Croogo",
+	"keywords": ["croogo"],
+	"homepage": "http://croogo.org",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Fahad Ibnay Heylaal",
+			"email": "fahad19@gmail.com"
+		},
+		{
+			"name": "Rachman Chavik",
+			"email": "rchavik@xintesa.com"
+		},
+		{
+			"name": "Kyle Robinson Young",
+			"email": "kyle@dontkry.com"
+		}
+	],
+	"require": {
+		"composer/installers": "*"
+	}
+}

@@ -1,0 +1,25 @@
+{
+	"name": "croogo/settings",
+	"type": "cakephp-plugin",
+	"description": "Settings Plugin for Croogo",
+	"keywords": ["croogo","settings"],
+	"homepage": "http://croogo.org",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Fahad Ibnay Heylaal",
+			"email": "fahad19@gmail.com"
+		},
+		{
+			"name": "Rachman Chavik",
+			"email": "rchavik@xintesa.com"
+		},
+		{
+			"name": "Kyle Robinson Young",
+			"email": "kyle@dontkry.com"
+		}
+	],
+	"require": {
+		"composer/installers": "*"
+	}
+}
