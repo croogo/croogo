@@ -1,6 +1,7 @@
 <?php
 
 App::uses('NodesAppController', 'Nodes.Controller');
+App::uses('Croogo', 'Lib');
 
 /**
  * Nodes Controller
@@ -168,7 +169,7 @@ class NodesController extends NodesAppController {
 				}
 			}
 			$this->Node->create();
-			$this->request->data['Node']['path'] = $this->Croogo->getRelativePath(array(
+			$this->request->data['Node']['path'] = Croogo::getRelativePath(array(
 				'admin' => false,
 				'controller' => 'nodes',
 				'action' => 'view',
@@ -192,7 +193,7 @@ class NodesController extends NodesAppController {
 		}
 
 		$nodes = $this->Node->generateTreeList();
-		$roles   = $this->Node->User->Role->find('list');
+		$roles = $this->Node->User->Role->find('list');
 		$users = $this->Node->User->find('list');
 		$vocabularies = Set::combine($type['Vocabulary'], '{n}.id', '{n}');
 		$taxonomy = array();
@@ -240,7 +241,7 @@ class NodesController extends NodesAppController {
 					}
 				}
 			}
-			$this->request->data['Node']['path'] = $this->Croogo->getRelativePath(array(
+			$this->request->data['Node']['path'] = Croogo::getRelativePath(array(
 				'admin' => false,
 				'controller' => 'nodes',
 				'action' => 'view',
@@ -306,7 +307,7 @@ class NodesController extends NodesAppController {
 			'recursive' => '-1',
 		));
 		foreach ($nodes as $node) {
-			$node['Node']['path'] = $this->Croogo->getRelativePath(array(
+			$node['Node']['path'] = Croogo::getRelativePath(array(
 				'admin' => false,
 				'controller' => 'nodes',
 				'action' => 'view',

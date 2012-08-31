@@ -213,4 +213,20 @@ class Croogo {
 		return $event;
 	}
 
+/**
+ * Get URL relative to the app
+ *
+ * @param array $url
+ * @return array
+ */
+	public static function getRelativePath($url = '/') {
+		if (is_array($url)) {
+			$absoluteUrl = Router::url($url, true);
+		} else {
+			$absoluteUrl = Router::url('/' . $url, true);
+		}
+		$path = '/' . str_replace(Router::url('/', true), '', $absoluteUrl);
+		return $path;
+	}
+
 }
