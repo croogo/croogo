@@ -32,13 +32,11 @@ class CroogoRouter {
  * @return void
  */
 	public static function connect($route, $default = array(), $params = array()) {
-		Router::connect($route, $default, $params);
-		if ($route == '/') {
-			$route = '';
-		}
+		$localizedRoute = $route == '/' ? '' : $route;
 		if (Configure::read('Translate')) {
-			Router::connect('/:locale' . $route, $default, array_merge(array('locale' => '[a-z]{3}'), $params));
+			Router::connect('/:locale' . $localizedRoute, $default, array_merge(array('locale' => '[a-z]{3}'), $params));
 		}
+		Router::connect($route, $default, $params);
 	}
 
 /**
