@@ -71,7 +71,7 @@ class AclFilterComponent extends Component {
 
 		if ($this->_controller->Auth->user() && $this->_controller->Auth->user('role_id') == 1) {
 			// Role: Admin
-			$this->_controller->Auth->allowedActions = array('*');
+			$this->_controller->Auth->allow();
 		} else {
 			if ($this->_controller->Auth->user()) {
 				$roleId = $this->_controller->Auth->user('role_id');
