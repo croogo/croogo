@@ -11,7 +11,7 @@ class MenusControllerTest extends CroogoControllerTestCase {
 		'plugin.blocks.block',
 		'plugin.comments.comment',
 		'plugin.contacts.contact',
-		'i18n',
+		'plugin.translate.i18n',
 		'plugin.settings.language',
 		'plugin.contacts.message',
 		'plugin.nodes.node',

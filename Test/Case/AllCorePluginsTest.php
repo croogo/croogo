@@ -22,6 +22,7 @@ class AllCorePluginsTest extends PHPUnit_Framework_TestSuite {
 			'Settings',
 			'Taxonomy',
 			'Tinymce',
+			'Translate',
 			'Users',
 		);
 		foreach ($plugins as $plugin) {
