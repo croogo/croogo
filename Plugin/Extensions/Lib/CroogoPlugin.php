@@ -1,4 +1,5 @@
 <?php
+App::uses('CroogoEventManager', 'Event');
 App::uses('ClassRegistry', 'Utility');
 App::uses('Folder', 'Utility');
 
@@ -375,13 +376,15 @@ class CroogoPlugin extends Object {
  */
 	public static function unload($plugin) {
 		$eventManager = CroogoEventManager::instance();
-		if ($plugin == null) {
-			$activePlugins = CakePlugin::loaded();
-			foreach ($activePlugins as $activePlugin) {
-				$eventManager->detachPluginSubscribers($activePlugin);
+		if ($eventManager instanceof CroogoEventManager) {
+			if ($plugin == null) {
+				$activePlugins = CakePlugin::loaded();
+				foreach ($activePlugins as $activePlugin) {
+					$eventManager->detachPluginSubscribers($activePlugin);
+				}
+			} else {
+				$eventManager->detachPluginSubscribers($plugin);
 			}
-		} else {
-			$eventManager->detachPluginSubscribers($plugin);
 		}
 		CakePlugin::unload($plugin);
 	}
