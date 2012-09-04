@@ -28,7 +28,8 @@
 
 <div class="buttons">
 <?php
-	echo $this->Form->end(__('Save'));
+	echo $this->Form->submit(__('Apply'), array('name' => 'apply'));
+	echo $this->Form->submit(__('Save'));
 	echo $this->Html->link(__('Cancel'), array(
 		'action' => 'index',
 	), array(
@@ -36,3 +37,4 @@
 	));
 ?>
 </div>
+<?php echo $this->Form->end(); ?>
