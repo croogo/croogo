@@ -44,6 +44,13 @@ $this->name = 'extensions-plugins';
 			$pluginAlias,
 		), null, __('Are you sure?'));
 
+		if ($pluginData['needMigration']) {
+			$actions .= ' ' . $this->Html->link(__('Migrate'), array(
+				'action' => 'migrate',
+				$pluginAlias,
+			), null, __('Are you sure?'));
+		}
+
 		$rows[] = array(
 			'',
 			$pluginAlias,

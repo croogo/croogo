@@ -54,6 +54,7 @@
 	App::uses('Croogo', 'Lib');
 	App::uses('CroogoNav', 'Lib');
 	CakePlugin::load(array('Extensions'), array('bootstrap' => true));
+	CakePlugin::load(array('Migrations'));
 	require_once 'croogo_bootstrap.php';
 
 	// Load Install plugin

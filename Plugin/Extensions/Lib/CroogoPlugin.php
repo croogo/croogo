@@ -26,10 +26,23 @@ class CroogoPlugin extends Object {
 	protected $_PluginActivation = null;
 
 /**
+ * MigrationVersion class
+ *
+ * @var MigrationVersion
+ */
+	protected $_MigrationVersion = null;
+
+/**
  * __construct
  */
-	public function __construct() {
+	public function __construct($migrationVersion = null) {
 		$this->Setting = ClassRegistry::init('Settings.Setting');
+
+		if (is_null($migrationVersion)) {
+			$this->_MigrationVersion = new MigrationVersion();
+		} else {
+			$this->_MigrationVersion = $migrationVersion;
+		}
 	}
 
 /**
@@ -86,6 +99,7 @@ class CroogoPlugin extends Object {
 				$pluginData = json_decode(file_get_contents($manifestFile), true);
 				if (!empty($pluginData)) {
 					$pluginData['active'] = $this->isActive($alias);
+					$pluginData['needMigration'] = $this->needMigration($alias, $pluginData['active']);
 				} else {
 					$pluginData = array();
 				}
@@ -177,6 +191,41 @@ class CroogoPlugin extends Object {
  */
 	public function pluginIsActive($plugin) {
 		return $this->isActive($plugin);
+	}
+
+/**
+ * Check if a plugin need a database migration
+ *
+ * @param strign $plugin Plugin name
+ * @param string $isActive If the plugin is active
+ * @return boolean
+ */
+	public function needMigration($plugin, $isActive) {
+		$needMigration = false;
+		if ($isActive) {
+			$mapping = $this->_MigrationVersion->getMapping($plugin);
+			$currentVersion = $this->_MigrationVersion->getVersion($plugin);
+			if ($mapping) {
+				$lastVersion = max(array_keys($mapping));
+				$needMigration = ($lastVersion - $currentVersion != 0);
+			}
+		}
+		return $needMigration;
+	}
+
+/**
+ *  Migrate a plugin
+ * @param string $plugin Plugin name
+ */
+	public function migrate($plugin) {
+		if (!$this->needMigration($plugin, $this->isActive($plugin))) {
+			return false;
+		}
+		$mapping = $this->_MigrationVersion->getMapping($plugin);
+		$lastVersion = max(array_keys($mapping));
+		return $this->_MigrationVersion->run(
+				array('version' => $lastVersion, 'type' => $plugin)
+		);
 	}
 
 /**
