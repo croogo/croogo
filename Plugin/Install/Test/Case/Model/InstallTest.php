@@ -6,7 +6,9 @@ class InstallTest extends CroogoTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		$this->Install = ClassRegistry::init('Install');
+
+		CakePlugin::load('Install');
+		$this->Install = ClassRegistry::init('Install.Install');
 	}
 
 	public function tearDown() {
@@ -19,7 +21,7 @@ class InstallTest extends CroogoTestCase {
 				->method('migrate')
 				->will($this->returnValue(true));
 		$this->Install->setCroogoPlugin($croogoPlugin);
-		$this->assertEquals(true, $this->Install->runMigrations());
+		$this->assertEquals(true, $this->Install->runMigrations('Users'));
 	}
 	
 	public function testRunMigrationsKo() {
@@ -28,7 +30,7 @@ class InstallTest extends CroogoTestCase {
 				->method('migrate')
 				->will($this->returnValue(false));
 		$this->Install->setCroogoPlugin($croogoPlugin);
-		$this->assertEquals(false, $this->Install->runMigrations());
+		$this->assertEquals(false, $this->Install->runMigrations('Users'));
 	}
 }
 
