@@ -41,3 +41,7 @@ CroogoNav::add('extensions', array(
 		),
 	),
 ));
+
+if (!CakePlugin::loaded('Settings')) {
+	CakePlugin::load('Settings');
+}
