@@ -129,19 +129,6 @@ class CroogoPluginTest extends CakeTestCase {
 		$this->assertEquals(true, $croogoPlugin->needMigration('app', true));
 	}
 	
-	public function testMigratePluginNotExist() {
-		$this->assertEquals(false, $this->CroogoPlugin->migrate('NotARealPlugin'));
-	}
-	
-	public function testMigratePluginNotActive() {
-		$actives = Configure::read('Hook.bootstraps');
-		Configure::write('Hook.bootstraps', '');
-
-		$this->assertEquals(false, $this->CroogoPlugin->migrate('Suppliers'));
-	
-		Configure::read('Hook.bootstraps', $actives);
-	}
-	
 	public function testMigratePluginNotNeedMigration() {
 		$actives = Configure::read('Hook.bootstraps');
 		Configure::write('Hook.bootstraps', 'Suppliers');
@@ -206,5 +193,3 @@ class CroogoPluginTest extends CakeTestCase {
 	}
 
 }
-
-?>

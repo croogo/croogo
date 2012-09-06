@@ -2,6 +2,7 @@
 App::uses('CroogoEventManager', 'Event');
 App::uses('ClassRegistry', 'Utility');
 App::uses('Folder', 'Utility');
+App::uses('MigrationVersion', 'Migrations.Lib');
 
 /**
  * CroogoPlugin utility class
@@ -218,14 +219,15 @@ class CroogoPlugin extends Object {
  * @param string $plugin Plugin name
  */
 	public function migrate($plugin) {
-		if (!$this->needMigration($plugin, $this->isActive($plugin))) {
-			return false;
-		}
 		$mapping = $this->_MigrationVersion->getMapping($plugin);
-		$lastVersion = max(array_keys($mapping));
-		return $this->_MigrationVersion->run(
-				array('version' => $lastVersion, 'type' => $plugin)
-		);
+		if ($mapping) {
+			$lastVersion = max(array_keys($mapping));
+			return $this->_MigrationVersion->run(array(
+				'version' => $lastVersion,
+				'type' => $plugin
+			));
+		}
+		return false;
 	}
 
 /**
