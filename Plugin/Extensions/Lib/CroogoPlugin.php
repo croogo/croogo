@@ -217,15 +217,28 @@ class CroogoPlugin extends Object {
  * @param string $plugin Plugin name
  */
 	public function migrate($plugin) {
+		$success = false;
 		$mapping = $this->_getMigrationVersion()->getMapping($plugin);
 		if ($mapping) {
 			$lastVersion = max(array_keys($mapping));
-			return $this->_MigrationVersion->run(array(
+			$success = $this->_MigrationVersion->run(array(
 				'version' => $lastVersion,
 				'type' => $plugin
 			));
 		}
-		return false;
+		return $success;
+	}
+
+	public function unmigrate($plugin) {
+		$success = false;
+		if ($this->_getMigrationVersion()->getMapping($plugin)) {
+			$success = $this->_getMigrationVersion()->run(array(
+				'version' => 0,
+				'type' => $plugin,
+				'direction' => 'down'
+			));
+		}
+		return $success;
 	}
 
 	protected function _getMigrationVersion() {
