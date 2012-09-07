@@ -357,10 +357,10 @@ class CroogoPlugin extends Object {
 			}
 			if ($dependencies) {
 				$this->addBootstrap($plugin);
+				CroogoPlugin::load($plugin);
 				if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
 					$pluginActivation->onActivation($this->_Controller);
 				}
-				CroogoPlugin::load($plugin);
 				Cache::delete('EventHandlers', 'setting_write_configuration');
 				return true;
 			} else {
