@@ -45,7 +45,7 @@ $this->name = 'extensions-plugins';
 		), null, __('Are you sure?'));
 
 		if ($pluginData['needMigration']) {
-			$actions .= ' ' . $this->Html->link(__('Migrate'), array(
+			$actions .= ' ' . $this->Form->postLink(__('Migrate'), array(
 				'action' => 'migrate',
 				$pluginAlias,
 			), null, __('Are you sure?'));
