@@ -40,7 +40,6 @@ class CroogoPluginTest extends CakeTestCase {
 	public function tearDown() {
 		parent::tearDown();
 		unset($this->CroogoPlugin);
-		$this->CroogoPlugin = new CroogoPlugin();
 	}
 
 	public function testGetDataPluginNotActive() {
@@ -94,8 +93,8 @@ class CroogoPluginTest extends CakeTestCase {
 	public function testNeedMigrationPluginNotExists() {
 		$migrationVersion = $this->getMock('MigrationVersion');
 		$migrationVersion->expects($this->any())
-				->method('getMapping')
-				->will($this->returnValue(false));
+			->method('getMapping')
+			->will($this->returnValue(false));
 		$croogoPlugin = new CroogoPlugin($migrationVersion);
 		$this->assertEquals(false, $croogoPlugin->needMigration('Anything', true));
 	}
@@ -108,11 +107,11 @@ class CroogoPluginTest extends CakeTestCase {
 	public function testNeedMigrationPluginNoMigration() {
 		$migrationVersion = $this->getMock('MigrationVersion');
 		$migrationVersion->expects($this->any())
-				->method('getMapping')
-				->will($this->returnValue($this->_mapping));
+			->method('getMapping')
+			->will($this->returnValue($this->_mapping));
 		$migrationVersion->expects($this->any())
-				->method('getVersion')
-				->will($this->returnValue(1346748933));
+			->method('getVersion')
+			->will($this->returnValue(1346748933));
 		$croogoPlugin = new CroogoPlugin($migrationVersion);
 		$this->assertEquals(false, $croogoPlugin->needMigration('app', true));
 	}
@@ -120,11 +119,11 @@ class CroogoPluginTest extends CakeTestCase {
 	public function testNeedMigrationPluginWithMigration() {
 		$migrationVersion = $this->getMock('MigrationVersion');
 		$migrationVersion->expects($this->any())
-				->method('getMapping')
-				->will($this->returnValue($this->_mapping));
+			->method('getMapping')
+			->will($this->returnValue($this->_mapping));
 		$migrationVersion->expects($this->any())
-				->method('getVersion')
-				->will($this->returnValue(1346748762));
+			->method('getVersion')
+			->will($this->returnValue(1346748762));
 		$croogoPlugin = new CroogoPlugin($migrationVersion);
 		$this->assertEquals(true, $croogoPlugin->needMigration('app', true));
 	}
@@ -135,8 +134,8 @@ class CroogoPluginTest extends CakeTestCase {
 
 		$migrationVersion = $this->getMock('MigrationVersion');
 		$migrationVersion->expects($this->any())
-				->method('getMapping')
-				->will($this->returnValue($this->_mapping));
+			->method('getMapping')
+			->will($this->returnValue($this->_mapping));
 		$croogoPlugin = new CroogoPlugin($migrationVersion);
 		
 		$this->assertEquals(false, $croogoPlugin->migrate('Suppliers'));
@@ -150,12 +149,12 @@ class CroogoPluginTest extends CakeTestCase {
 
 		$migrationVersion = $this->getMock('MigrationVersion');
 		$migrationVersion->expects($this->any())
-				->method('getMapping')
-				->will($this->returnValue($this->_mapping));
+			->method('getMapping')
+			->will($this->returnValue($this->_mapping));
 		$migrationVersion->expects($this->any())
-				->method('run')
-				->with($this->logicalAnd($this->arrayHasKey('version'), $this->arrayHasKey('type')))
-				->will($this->returnValue(true));
+			->method('run')
+			->with($this->logicalAnd($this->arrayHasKey('version'), $this->arrayHasKey('type')))
+			->will($this->returnValue(true));
 		
 		$croogoPlugin = new CroogoPlugin($migrationVersion);
 		
@@ -170,11 +169,11 @@ class CroogoPluginTest extends CakeTestCase {
 
 		$migrationVersion = $this->getMock('MigrationVersion');
 		$migrationVersion->expects($this->any())
-				->method('getMapping')
-				->will($this->returnValue($this->_mapping));
+			->method('getMapping')
+			->will($this->returnValue($this->_mapping));
 		$migrationVersion->expects($this->any())
-				->method('run')
-				->will($this->returnValue(false));
+			->method('run')
+			->will($this->returnValue(false));
 		
 		$croogoPlugin = new CroogoPlugin($migrationVersion);
 		
@@ -183,18 +182,19 @@ class CroogoPluginTest extends CakeTestCase {
 		Configure::read('Hook.bootstraps', $actives);
 	}
 
-	public function testUnmigrate () {
+
+	public function testUnmigrate() {
 		$actives = Configure::read('Hook.bootstraps');
 		Configure::write('Hook.bootstraps', 'Suppliers');
 
 		$migrationVersion = $this->getMock('MigrationVersion');
 		$migrationVersion->expects($this->once())
-				->method('getMapping')
-				->will($this->returnValue($this->_mapping));
+			->method('getMapping')
+			->will($this->returnValue($this->_mapping));
 		$migrationVersion->expects($this->once())
-				->method('run')
-				->with($this->arrayHasKey('version', 'type', 'direction'))
-				->will($this->returnValue(true));
+			->method('run')
+			->with($this->arrayHasKey('version', 'type', 'direction'))
+			->will($this->returnValue(true));
 
 		$croogoPlugin = new CroogoPlugin($migrationVersion);
 
@@ -203,17 +203,17 @@ class CroogoPluginTest extends CakeTestCase {
 		Configure::read('Hook.bootstraps', $actives);
 	}
 
-	public function testUnmigrateNoMapping () {
+	public function testUnmigrateNoMapping() {
 		$actives = Configure::read('Hook.bootstraps');
 		Configure::write('Hook.bootstraps', 'Suppliers');
 
 		$migrationVersion = $this->getMock('MigrationVersion');
 		$migrationVersion->expects($this->once())
-				->method('getMapping')
-				->will($this->returnValue(array()));
+			->method('getMapping')
+			->will($this->returnValue(array()));
 		$migrationVersion->expects($this->never())
-				->method('run')
-				->will($this->returnValue(false));
+			->method('run')
+			->will($this->returnValue(false));
 
 		$croogoPlugin = new CroogoPlugin($migrationVersion);
 
