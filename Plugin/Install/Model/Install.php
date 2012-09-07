@@ -29,18 +29,6 @@ class Install extends InstallAppModel {
 	private $_CroogoPlugin = null;
 
 /**
- * Constructor
- *
- * @param type $id
- * @param type $table
- * @param type $ds
- */
-	public function __construct($id = false, $table = null, $ds = null) {
-		parent::__construct($id, $table, $ds);
-		$this->_CroogoPlugin = new CroogoPlugin();
-	}
-
-/**
  * Finalize installation
  *
  * Prepares Config/settings.json and update password for admin user
@@ -96,7 +84,14 @@ class Install extends InstallAppModel {
 		if (!CakePlugin::loaded($plugin)) {
 			CakePlugin::load($plugin);
 		}
-		return $this->_CroogoPlugin->migrate($plugin);
+		return $this->_getCroogoPlugin()->migrate($plugin);
+	}
+
+	protected function _getCroogoPlugin() {
+		if (!is_a($this->_CroogoPlugin, 'CroogoPlugin')) {
+			$this->setCroogoPlugin(new CroogoPlugin());
+		}
+		return $this->_CroogoPlugin;
 	}
 
 	public function setCroogoPlugin($croogoPlugin) {

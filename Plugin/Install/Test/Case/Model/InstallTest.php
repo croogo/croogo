@@ -33,5 +33,3 @@ class InstallTest extends CroogoTestCase {
 		$this->assertEquals(false, $this->Install->runMigrations('Users'));
 	}
 }
-
-?>

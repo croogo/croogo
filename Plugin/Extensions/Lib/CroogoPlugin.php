@@ -39,9 +39,7 @@ class CroogoPlugin extends Object {
 	public function __construct($migrationVersion = null) {
 		$this->Setting = ClassRegistry::init('Settings.Setting');
 
-		if (is_null($migrationVersion)) {
-			$this->_MigrationVersion = new MigrationVersion();
-		} else {
+		if (!is_null($migrationVersion)) {
 			$this->_MigrationVersion = $migrationVersion;
 		}
 	}
@@ -204,8 +202,8 @@ class CroogoPlugin extends Object {
 	public function needMigration($plugin, $isActive) {
 		$needMigration = false;
 		if ($isActive) {
-			$mapping = $this->_MigrationVersion->getMapping($plugin);
-			$currentVersion = $this->_MigrationVersion->getVersion($plugin);
+			$mapping = $this->_getMigrationVersion()->getMapping($plugin);
+			$currentVersion = $this->_getMigrationVersion()->getVersion($plugin);
 			if ($mapping) {
 				$lastVersion = max(array_keys($mapping));
 				$needMigration = ($lastVersion - $currentVersion != 0);
@@ -219,7 +217,7 @@ class CroogoPlugin extends Object {
  * @param string $plugin Plugin name
  */
 	public function migrate($plugin) {
-		$mapping = $this->_MigrationVersion->getMapping($plugin);
+		$mapping = $this->_getMigrationVersion()->getMapping($plugin);
 		if ($mapping) {
 			$lastVersion = max(array_keys($mapping));
 			return $this->_MigrationVersion->run(array(
@@ -228,6 +226,13 @@ class CroogoPlugin extends Object {
 			));
 		}
 		return false;
+	}
+
+	protected function _getMigrationVersion() {
+		if (!is_a($this->_MigrationVersion, 'MigrationVersion')) {
+			$this->_MigrationVersion = new MigrationVersion();
+		}
+		return $this->_MigrationVersion;
 	}
 
 /**
