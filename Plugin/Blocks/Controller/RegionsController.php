@@ -38,8 +38,6 @@ class RegionsController extends BlocksAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Region'));
-
 		$this->Region->recursive = 0;
 		$this->paginate['Region']['order'] = 'Region.title ASC';
 		$this->set('regions', $this->paginate());
@@ -53,8 +51,6 @@ class RegionsController extends BlocksAppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Region'));
-
 		if (!empty($this->request->data)) {
 			$this->Region->create();
 			if ($this->Region->save($this->request->data)) {
@@ -74,8 +70,6 @@ class RegionsController extends BlocksAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Region'));
-
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Region'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));

@@ -60,6 +60,43 @@ class CroogoComponent extends Component {
 	protected $controller = null;
 
 /**
+ * For mapping plugin.controller.action to a title
+ *
+ * @var array
+ */
+	protected $_titleForLayoutMap = array(
+		'acl.acl_actions.admin_index' => 'Actions',
+		'acl.acl_actions.admin_add' => 'Add Action',
+		'acl.acl_actions.admin_edit' => 'Edit Action',
+		'acl.acl_permissions.admin_index' => 'Permissions',
+		'extensions.extensions_locales.admin_index' => 'Locales',
+		'extensions.extensions_locales.admin_add' => 'Upload a new locale',
+		'extensions.extensions_plugins.admin_index' => 'Plugins',
+		'extensions.extensions_plugins.admin_add' => 'Upload a new plugin',
+		'extensions.extensions_themes.admin_index' => 'Themes',
+		'extensions.extensions_themes.admin_add' => 'Upload a new theme',
+		'extensions.extensions_themes.admin_editor' => 'Theme Editor',
+		'file_manager.file_manager.admin_browse' => 'File Manager',
+		'file_manager.file_manager.admin_upload' => 'Upload',
+		'file_manager.file_manager.admin_create_directory' => 'New Directory',
+		'file_manager.file_manager.admin_create_file' => 'New File',
+		'install.install.index' => 'Installation: Welcome',
+		'install.install.database' => 'Step 1: Database',
+		'install.install.data' => 'Step 2: Build database',
+		'install.install.finish' => 'Installation completed successfully',
+		'nodes.nodes.admin_index' => 'Content',
+		'nodes.nodes.admin_create' => 'Create Content',
+		'nodes.nodes.promoted' => 'Nodes',
+		'settings.languages.admin_select' => 'Select a language',
+		'settings.settings.admin_dashboard' => 'Dashboard',
+		'users.users.admin_login' => 'Admin login',
+		'users.users.add' => 'Register',
+		'users.users.forgot' => 'Forgot Password',
+		'users.users.reset' => 'Reset Password',
+		'users.users.login' => 'Log In',
+	);
+
+/**
  * Method to lazy load classes
  *
  * @return Object
@@ -86,7 +123,7 @@ class CroogoComponent extends Component {
 /**
  * Startup
  *
- * @param object $controller instance of controller
+ * @param Controller $controller instance of controller
  * @return void
  */
 	public function startup(Controller $controller) {
@@ -96,10 +133,20 @@ class CroogoComponent extends Component {
 			$this->roleId = $this->Session->read('Auth.User.role_id');
 		}
 
-		if (!isset($this->controller->request->params['admin']) && !isset($this->controller->request->params['requested'])) {
-		} else {
+		if (isset($controller->request->params['admin'])) {
 			$this->_adminData();
 		}
+	}
+
+/**
+ * beforeRender callback
+ *
+ * @param Controller $controller
+ * @return void
+ */
+	public function beforeRender(Controller $controller) {
+		$this->controller = $controller;
+		$this->_setTitleForLayout();
 	}
 
 /**
@@ -115,6 +162,29 @@ class CroogoComponent extends Component {
 				}
 			}
 		}
+	}
+
+/**
+ * Sets the title_for_layout if it doesn't exist
+ *
+ * @return void
+ */
+	protected function _setTitleForLayout() {
+		if (isset($this->controller->viewVars['title_for_layout'])) {
+			return;
+		}
+		$params = $this->controller->request->params;
+		$key = $params['plugin'] . '.' . $params['controller'] . '.' . $params['action'];
+		if (isset($this->_titleForLayoutMap[$key])) {
+			$title = $this->_titleForLayoutMap[$key];
+		} else {
+			$title = ucfirst($params['controller']);
+			$action = str_replace('admin_', '', $params['action']);
+			if ($action == 'add' || $action == 'edit') {
+				$title = ucfirst($action) . ' ' . Inflector::singularize($title);
+			}
+		}
+		$this->controller->set('title_for_layout', __($title));
 	}
 
 /**

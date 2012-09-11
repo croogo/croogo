@@ -54,8 +54,6 @@ class AclPermissionsController extends AclAppController {
  * @return void
  */
 	public function admin_index($id = null, $level = null) {
-		$this->set('title_for_layout', __('Permissions'));
-
 		if ($id == null) {
 			$root = $this->AclAco->node('controllers');
 			$root = $root[0];

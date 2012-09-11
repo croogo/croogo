@@ -39,8 +39,6 @@ class MessagesController extends ContactsAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Messages'));
-
 		$this->Message->recursive = 0;
 		$this->paginate['Message']['conditions'] = array('Message.status' => 0);
 		if (isset($this->request->params['named']['contact'])) {
@@ -75,8 +73,6 @@ class MessagesController extends ContactsAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Message'));
-
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Message'));
 			$this->redirect(array('action' => 'index'));

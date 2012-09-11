@@ -47,7 +47,6 @@ class SettingsController extends SettingsAppController {
  * @access public
  */
 	public function admin_dashboard() {
-		$this->set('title_for_layout', __('Dashboard'));
 	}
 
 /**
@@ -57,8 +56,6 @@ class SettingsController extends SettingsAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Settings'));
-
 		$this->Setting->recursive = 0;
 		$this->paginate['Setting']['order'] = "Setting.weight ASC";
 		if (isset($this->request->params['named']['p'])) {
@@ -89,8 +86,6 @@ class SettingsController extends SettingsAppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Setting'));
-
 		if (!empty($this->request->data)) {
 			$this->Setting->create();
 			if ($this->Setting->save($this->request->data)) {
@@ -110,8 +105,6 @@ class SettingsController extends SettingsAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Setting'));
-
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Setting'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));

@@ -94,7 +94,6 @@ class InstallController extends Controller {
  */
 	public function index() {
 		$this->_check();
-		$this->set('title_for_layout', __('Installation: Welcome'));
 	}
 
 /**
@@ -109,7 +108,6 @@ class InstallController extends Controller {
  */
 	public function database() {
 		$this->_check();
-		$this->set('title_for_layout', __('Step 1: Database'));
 
 		if (Configure::read('Install.installed')) {
 			$this->redirect(array('action' => 'adminuser'));
@@ -188,7 +186,6 @@ class InstallController extends Controller {
  */
 	public function data() {
 		$this->_check();
-		$this->set('title_for_layout', __('Step 2: Build database'));
 		if (isset($this->params['named']['run'])) {
 			App::uses('File', 'Utility');
 			App::uses('CakeSchema', 'Model');
@@ -272,7 +269,6 @@ class InstallController extends Controller {
  * @access public
  */
 	public function finish($token = null) {
-		$this->set('title_for_layout', __('Installation completed successfully'));
 		$this->_check();
 		$this->loadModel('Install.Install');
 		$install = $this->Session->read('Install');

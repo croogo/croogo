@@ -56,8 +56,6 @@ class ExtensionsThemesController extends ExtensionsAppController {
  * @return void
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Themes'));
-
 		$themes = $this->_CroogoTheme->getThemes();
 		$themesData = array();
 		$themesData[] = $this->_CroogoTheme->getData();
@@ -91,8 +89,6 @@ class ExtensionsThemesController extends ExtensionsAppController {
  * @return void
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Upload a new theme'));
-
 		if (!empty($this->request->data)) {
 			$file = $this->request->data['Theme']['file'];
 			unset($this->request->data['Theme']['file']);
@@ -114,7 +110,6 @@ class ExtensionsThemesController extends ExtensionsAppController {
  * @return void
  */
 	public function admin_editor() {
-		$this->set('title_for_layout', __('Theme Editor'));
 	}
 
 /**

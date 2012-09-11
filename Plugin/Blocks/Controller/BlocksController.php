@@ -47,8 +47,6 @@ class BlocksController extends BlocksAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Blocks'));
-
 		$this->Block->recursive = 0;
 		$this->paginate['Block']['order'] = array('Block.weight' => 'ASC');
 		$this->set('blocks', $this->paginate());
@@ -61,8 +59,6 @@ class BlocksController extends BlocksAppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Block'));
-
 		if (!empty($this->request->data)) {
 			$this->Block->create();
 			$this->request->data['Block']['visibility_roles'] = $this->Block->encodeData($this->request->data['Role']['Role']);
@@ -91,8 +87,6 @@ class BlocksController extends BlocksAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Block'));
-
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Block'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));

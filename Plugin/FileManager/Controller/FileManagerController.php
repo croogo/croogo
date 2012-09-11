@@ -111,8 +111,6 @@ class FileManagerController extends FileManagerAppController {
 			$path = APP;
 		}
 
-		$this->set('title_for_layout', __('File Manager'));
-
 		$path = realpath($path) . DS;
 		$regex = '/^' . preg_quote(realpath(APP), '/') . '/';
 		if (preg_match($regex, $path) == false) {
@@ -178,8 +176,6 @@ class FileManagerController extends FileManagerAppController {
  * @access public
  */
 	public function admin_upload() {
-		$this->set('title_for_layout', __('Upload'));
-
 		if (isset($this->request->query['path'])) {
 			$path = $this->request->query['path'];
 		} else {
@@ -290,8 +286,6 @@ class FileManagerController extends FileManagerAppController {
  * @access public
  */
 	public function admin_create_directory() {
-		$this->set('title_for_layout', __('New Directory'));
-
 		if (isset($this->request->query['path'])) {
 			$path = $this->request->query['path'];
 		} else {
@@ -319,8 +313,6 @@ class FileManagerController extends FileManagerAppController {
  * @access public
  */
 	public function admin_create_file() {
-		$this->set('title_for_layout', __('New File'));
-
 		if (isset($this->request->query['path'])) {
 			$path = $this->request->query['path'];
 		} else {

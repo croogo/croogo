@@ -64,8 +64,6 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  * @return void
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Plugins'));
-
 		$pluginAliases = $this->_CroogoPlugin->getPlugins();
 		$plugins = array();
 		foreach ($pluginAliases as $pluginAlias) {
@@ -81,8 +79,6 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  * @return void
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Upload a new plugin'));
-
 		if (!empty($this->request->data)) {
 			$file = $this->request->data['Plugin']['file'];
 			unset($this->request->data['Plugin']['file']);

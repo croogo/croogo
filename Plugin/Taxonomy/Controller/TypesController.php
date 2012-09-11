@@ -49,8 +49,6 @@ class TypesController extends AppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Type'));
-
 		$this->Type->recursive = 0;
 		$this->paginate['Type']['order'] = 'Type.title ASC';
 		$this->set('types', $this->paginate());
@@ -64,8 +62,6 @@ class TypesController extends AppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Type'));
-
 		if (!empty($this->request->data)) {
 			$this->Type->create();
 			if ($this->Type->save($this->request->data)) {
@@ -92,8 +88,6 @@ class TypesController extends AppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Type'));
-
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Type'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));

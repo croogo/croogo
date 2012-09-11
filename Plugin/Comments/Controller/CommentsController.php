@@ -64,8 +64,6 @@ class CommentsController extends CommentsAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Comments'));
-
 		$this->Comment->recursive = 0;
 		$this->paginate['Comment']['order'] = 'Comment.created DESC';
 		$this->paginate['Comment']['conditions'] = array();
@@ -83,9 +81,9 @@ class CommentsController extends CommentsAppController {
 		}
 
 		if ($this->paginate['Comment']['conditions']['Comment.status'] == 1) {
-			$this->set('title_for_layout', __('Comments: Published'));
+			//$this->set('title_for_layout', __('Comments: Published'));
 		} else {
-			$this->set('title_for_layout', __('Comments: Approval'));
+			//$this->set('title_for_layout', __('Comments: Approval'));
 		}
 
 		$comments = $this->paginate();
@@ -100,8 +98,6 @@ class CommentsController extends CommentsAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Comment'));
-
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Comment'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
@@ -180,8 +176,6 @@ class CommentsController extends CommentsAppController {
  * @access public
  */
 	public function index() {
-		$this->set('title_for_layout', __('Comments'));
-
 		if (!isset($this->request['ext']) ||
 			$this->request['ext'] != 'rss') {
 			$this->redirect('/');

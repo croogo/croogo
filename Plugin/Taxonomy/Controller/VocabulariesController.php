@@ -38,8 +38,6 @@ class VocabulariesController extends TaxonomyAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Vocabularies'));
-
 		$this->Vocabulary->recursive = 0;
 		$this->paginate['Vocabulary']['order'] = 'Vocabulary.weight ASC';
 		$this->set('vocabularies', $this->paginate());
@@ -52,8 +50,6 @@ class VocabulariesController extends TaxonomyAppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Vocabulary'));
-
 		if (!empty($this->request->data)) {
 			$this->Vocabulary->create();
 			if ($this->Vocabulary->save($this->request->data)) {
@@ -76,8 +72,6 @@ class VocabulariesController extends TaxonomyAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Vocabulary'));
-
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Vocabulary'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));

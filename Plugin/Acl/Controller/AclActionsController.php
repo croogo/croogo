@@ -43,8 +43,6 @@ class AclActionsController extends AclAppController {
  * admin_index
  */
 	public function admin_index($id = null) {
-		$this->set('title_for_layout', __('Actions'));
-
 		if ($id == null) {
 			$root = $this->Acl->Aco->node('controllers');
 			$root = $root[0];
@@ -60,8 +58,6 @@ class AclActionsController extends AclAppController {
  * admin_add
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Action'));
-
 		if (!empty($this->request->data)) {
 			$this->Acl->Aco->create();
 
@@ -91,8 +87,6 @@ class AclActionsController extends AclAppController {
  * @param integer $id
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Action'));
-
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Action'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));

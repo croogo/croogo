@@ -2,7 +2,7 @@
 
 App::uses('Component', 'Controller');
 App::uses('AppController', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'TestSuite');
 app::uses('CroogoComponent', 'Controller/Component');
 
 class MockCroogoComponent extends CroogoComponent {
@@ -18,7 +18,7 @@ class MockCroogoComponent extends CroogoComponent {
 class CroogoTestController extends AppController {
 }
 
-class CroogoComponentTest extends CroogoTestCase {
+class CroogoComponentTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
 		'app.aco',
@@ -28,7 +28,10 @@ class CroogoComponentTest extends CroogoTestCase {
 		'plugin.menus.menu',
 		'plugin.menus.link',
 		'plugin.users.role',
-		);
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.vocabulary',
+		'plugin.taxonomy.types_vocabulary',
+	);
 
 	public function setUp() {
 		parent::setUp();
@@ -69,6 +72,30 @@ class CroogoComponentTest extends CroogoTestCase {
 		$this->assertTrue($result);
 		$result = $this->Controller->Croogo->pluginIsActive('Shops');
 		$this->assertFalse($result);
+	}
+
+/**
+ * testTitleForLayout
+ *
+ * @dataProvider titleForLayoutData
+ */
+	public function testTitleForLayout($expected, $params) {
+		$this->Controller->request->params = $params;
+		$this->Controller->Croogo->beforeRender($this->Controller);
+		$this->assertEquals(__($expected), $this->Controller->viewVars['title_for_layout']);
+	}
+
+/**
+ * titleForLayoutData
+ */
+	public function titleForLayoutData() {
+		return array(
+			array('Actions', array('plugin' => 'acl', 'controller' => 'acl_actions', 'action' => 'admin_index')),
+			array('Upload', array('plugin' => 'file_manager', 'controller' => 'file_manager', 'action' => 'admin_upload')),
+			array('Blocks', array('plugin' => 'blocks', 'controller' => 'blocks', 'action' => 'admin_index')),
+			array('Add Block', array('plugin' => 'blocks', 'controller' => 'blocks', 'action' => 'admin_add')),
+			array('Edit Block', array('plugin' => 'blocks', 'controller' => 'blocks', 'action' => 'admin_edit')),
+		);
 	}
 
 }

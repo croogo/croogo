@@ -47,8 +47,6 @@ class MenusController extends MenusAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Menus'));
-
 		$this->Menu->recursive = 0;
 		$this->paginate['Menu']['order'] = 'Menu.id ASC';
 		$this->set('menus', $this->paginate());
@@ -61,8 +59,6 @@ class MenusController extends MenusAppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Menu'));
-
 		if (!empty($this->request->data)) {
 			$this->Menu->create();
 			if ($this->Menu->save($this->request->data)) {
@@ -86,8 +82,6 @@ class MenusController extends MenusAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Menu'));
-
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Menu'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));

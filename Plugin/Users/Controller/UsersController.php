@@ -90,8 +90,6 @@ class UsersController extends UsersAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Users'));
-
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
 		$this->set('displayFields', $this->User->displayFields());
@@ -197,7 +195,6 @@ class UsersController extends UsersAppController {
  * @access public
  */
 	public function admin_login() {
-		$this->set('title_for_layout', __('Admin Login'));
 		$this->layout = "admin_login";
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
@@ -230,7 +227,6 @@ class UsersController extends UsersAppController {
  * @access public
  */
 	public function index() {
-		$this->set('title_for_layout', __('Users'));
 	}
 
 /**
@@ -240,7 +236,6 @@ class UsersController extends UsersAppController {
  * @access public
  */
 	public function add() {
-		$this->set('title_for_layout', __('Register'));
 		if (!empty($this->request->data)) {
 			$this->User->create();
 			$this->request->data['User']['role_id'] = 2; // Registered
@@ -317,8 +312,6 @@ class UsersController extends UsersAppController {
  * @access public
  */
 	public function forgot() {
-		$this->set('title_for_layout', __('Forgot Password'));
-
 		if (!empty($this->request->data) && isset($this->request->data['User']['username'])) {
 			$user = $this->User->findByUsername($this->request->data['User']['username']);
 			if (!isset($user['User']['id'])) {
@@ -354,8 +347,6 @@ class UsersController extends UsersAppController {
  * @access public
  */
 	public function reset($username = null, $key = null) {
-		$this->set('title_for_layout', __('Reset Password'));
-
 		if ($username == null || $key == null) {
 			$this->Session->setFlash(__('An error occurred.'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'login'));
@@ -396,7 +387,6 @@ class UsersController extends UsersAppController {
  * @access public
  */
 	public function login() {
-		$this->set('title_for_layout', __('Log in'));
 		if ($this->request->is('post')) {
 			Croogo::dispatchEvent('Controller.Users.beforeLogin', $this);
 			if ($this->Auth->login()) {
