@@ -32,7 +32,7 @@ class LinksController extends MenusAppController {
  */
 	public $uses = array(
 		'Menus.Link',
-		'Role',
+		'Users.Role',
 	);
 
 /**

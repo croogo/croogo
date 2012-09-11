@@ -110,7 +110,7 @@ class Node extends NodesAppModel {
  */
 	public $hasMany = array(
 		'Comment' => array(
-			'className' => 'Comment',
+			'className' => 'Comments.Comment',
 			'foreignKey' => 'node_id',
 			'dependent' => true,
 			'conditions' => array('Comment.status' => 1),
