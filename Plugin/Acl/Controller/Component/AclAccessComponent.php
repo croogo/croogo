@@ -29,7 +29,6 @@ class AclAccessComponent extends Component {
 	public function startup(Controller $controller) {
 		$this->_controller = $controller;
 		$adminPrefix = isset($controller->request->params['admin']);
-		$isAdminAction = $controller->name == 'Roles' && $adminPrefix;
 		if (!$adminPrefix) {
 			return;
 		}

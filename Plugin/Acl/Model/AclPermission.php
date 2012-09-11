@@ -146,11 +146,11 @@ class AclPermission extends Permission {
 		$options = Hash::merge(array(
 			'model' => 'Role',
 			'perms' => true
-			), $options);
+		), $options);
 		extract($options);
 		$permissions = array();
 
-		foreach ($acos as $index => $aco) {
+		foreach ($acos as $aco) {
 			$acoId = $aco['Aco']['id'];
 			$acoAlias = $aco['Aco']['alias'];
 
@@ -159,7 +159,7 @@ class AclPermission extends Permission {
 			$data = array(
 				'children' => $this->Aco->childCount($acoId, true),
 				'depth' => substr_count($path, '/'),
-				);
+			);
 
 			foreach ($aros as $aroFk => $aroId) {
 				$role = array(

@@ -93,7 +93,6 @@ class RowLevelAclComponent extends Component {
 			'cache' => array('name' => 'roles', 'config' => 'nodes_index'),
 		));
 		$modelClass = $this->_controller->modelClass;
-		$foreignKey = $this->_controller->{$modelClass}->primaryKey;
 		$aco = array('model' => $modelClass, 'foreign_key' => $id);
 		foreach ($roles as $roleId => $role) {
 			$aro = array('model' => 'Role', 'foreign_key' => $roleId);

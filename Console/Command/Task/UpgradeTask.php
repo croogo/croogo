@@ -144,7 +144,6 @@ class UpgradeTask extends AppShell {
 			if (strstr($link['Link']['link'], 'plugin:')) {
 				continue;
 			}
-			$arr = array();
 			$url = $Menus->linkStringToArray($link['Link']['link']);
 			if (isset($this->_controllerMap[$url['controller']])) {
 				$url['plugin'] = $this->_controllerMap[$url['controller']];

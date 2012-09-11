@@ -173,8 +173,7 @@ class LayoutHelper extends AppHelper {
 			'type' => null,
 			'url' => array(),
 			'options' => array(),
-			)
-		));
+		)));
 		switch ($type) {
 			case 'boolean':
 				$out = $this->status($item[$model][$field]);

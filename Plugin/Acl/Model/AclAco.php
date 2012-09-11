@@ -72,7 +72,7 @@ class AclAco extends AclNode {
 				$aco = $this->create(array(
 					'parent_id' => $parent['Aco']['id'],
 					'alias' => $alias,
-					));
+				));
 				$parent = $this->save($aco);
 			}
 		}
@@ -104,7 +104,7 @@ class AclAco extends AclNode {
 			));
 		}
 
-		$aco = $this->createFromPath($action);
+		$this->createFromPath($action);
 		$Permission = ClassRegistry::init('Acl.AclPermission');
 		foreach ($roles AS $roleId => $roleAlias) {
 			$Permission->allow(array('model' => 'Role', 'foreign_key' => $roleId), $action);

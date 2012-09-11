@@ -82,7 +82,7 @@ class MetaBehavior extends ModelBehavior {
 			$meta = $data['Meta'];
 			$data['Meta'] = array();
 			$i = 0;
-			foreach ($meta as $metaUuid => $metaArray) {
+			foreach ($meta as $metaArray) {
 				$data['Meta'][$i] = $metaArray;
 				$i++;
 			}

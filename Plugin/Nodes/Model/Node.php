@@ -167,11 +167,11 @@ class Node extends NodesAppModel {
  * @param array $q
  * @return array
  */
-	public function beforeFind($q) {
-		if ($this->type != null && !isset($q['conditions']['Node.type'])) {
-			$q['conditions']['Node.type'] = $this->type;
+	public function beforeFind($queryData) {
+		if ($this->type != null && !isset($queryData['conditions']['Node.type'])) {
+			$queryData['conditions']['Node.type'] = $this->type;
 		}
-		return $q;
+		return $queryData;
 	}
 
 /**

@@ -36,7 +36,7 @@ class ExampleBehavior extends ModelBehavior {
  * @param boolean $primary
  * @return array
  */
-	public function afterFind(Model $model, $results = array(), $primary = false) {
+	public function afterFind(Model $model, $results, $primary) {
 		if ($primary && isset($results[0][$model->alias])) {
 			foreach ($results as $i => $result) {
 				if (isset($results[$i][$model->alias]['body'])) {

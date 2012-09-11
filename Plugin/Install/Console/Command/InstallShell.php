@@ -65,7 +65,6 @@ class InstallShell extends AppShell {
 			$recordString .= implode(",\n", $values);
 			$recordString .= "\n\t\t),\n";
 		}
-		$className = $modelAlias . 'Data';
 		$content = "<?php\n";
 			$content .= "class " . $modelAlias . "Data" . " {\n\n";
 				$content .= "\tpublic \$table = '" . $table . "';\n\n";
