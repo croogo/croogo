@@ -86,7 +86,6 @@ class CroogoPlugin extends Object {
 				$pluginData = json_decode(file_get_contents($manifestFile), true);
 				if (!empty($pluginData)) {
 					$pluginData['active'] = $this->isActive($alias);
-					unset($pluginManifest);
 				} else {
 					$pluginData = array();
 				}
