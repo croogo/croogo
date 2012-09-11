@@ -104,8 +104,6 @@ class LinksController extends MenusAppController {
  * @access public
  */
 	public function admin_add($menuId = null) {
-		$this->set('title_for_layout', __('Add Link'));
-
 		if (!empty($this->request->data)) {
 			$this->Link->create();
 			$this->request->data['Link']['visibility_roles'] = $this->Link->encodeData($this->request->data['Role']['Role']);
@@ -141,8 +139,6 @@ class LinksController extends MenusAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Link'));
-
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Link'), 'default', array('class' => 'error'));
 			$this->redirect(array(

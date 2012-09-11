@@ -77,8 +77,6 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Content'));
-
 		$this->Node->recursive = 0;
 		$this->paginate['Node']['order'] = 'Node.created DESC';
 		$this->paginate['Node']['conditions'] = array();
@@ -125,8 +123,6 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public function admin_create() {
-		$this->set('title_for_layout', __('Create content'));
-
 		$types = $this->Node->Taxonomy->Vocabulary->Type->find('all', array(
 			'order' => array(
 				'Type.alias' => 'ASC',
@@ -596,8 +592,6 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public function promoted() {
-		$this->set('title_for_layout', __('Nodes'));
-
 		$this->paginate['Node']['order'] = 'Node.created DESC';
 		$this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
 		$this->paginate['Node']['conditions'] = array(

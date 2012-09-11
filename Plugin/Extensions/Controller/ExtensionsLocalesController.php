@@ -42,8 +42,6 @@ class ExtensionsLocalesController extends ExtensionsAppController {
  * @return void
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Locales'));
-
 		$folder =& new Folder;
 		$folder->path = APP . 'Locale';
 		$content = $folder->read();
@@ -83,8 +81,6 @@ class ExtensionsLocalesController extends ExtensionsAppController {
  * @return void
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Upload a new locale'));
-
 		if ($this->request->is('post') && !empty($this->request->data)) {
 			$file = $this->request->data['Locale']['file'];
 			unset($this->request->data['Locale']['file']);

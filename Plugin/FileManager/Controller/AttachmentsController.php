@@ -91,8 +91,6 @@ class AttachmentsController extends FileManagerAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Attachments'));
-
 		$this->Node->recursive = 0;
 		$this->paginate['Node']['order'] = 'Node.created DESC';
 		$this->set('attachments', $this->paginate());
@@ -105,8 +103,6 @@ class AttachmentsController extends FileManagerAppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Attachment'));
-
 		if (isset($this->request->params['named']['editor'])) {
 			$this->layout = 'admin_full';
 		}
@@ -172,8 +168,6 @@ class AttachmentsController extends FileManagerAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Attachment'));
-
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Attachment'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));

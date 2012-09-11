@@ -39,8 +39,6 @@ class RolesController extends UsersAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Roles'));
-
 		$this->Role->recursive = 0;
 		$this->paginate['Role']['order'] = "Role.id ASC";
 		$this->set('roles', $this->paginate());
@@ -54,8 +52,6 @@ class RolesController extends UsersAppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Role'));
-
 		if (!empty($this->request->data)) {
 			$this->Role->create();
 			if ($this->Role->save($this->request->data)) {
@@ -75,8 +71,6 @@ class RolesController extends UsersAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Role'));
-
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Role'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));

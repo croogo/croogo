@@ -39,8 +39,6 @@ class LanguagesController extends SettingsAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Languages'));
-
 		$this->Language->recursive = 0;
 		$this->paginate['Language']['order'] = 'Language.weight ASC';
 		$this->set('languages', $this->paginate());
@@ -53,8 +51,6 @@ class LanguagesController extends SettingsAppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __("Add Language"));
-
 		if (!empty($this->request->data)) {
 			$this->Language->create();
 			if ($this->Language->save($this->request->data)) {
@@ -74,8 +70,6 @@ class LanguagesController extends SettingsAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __("Edit Language"));
-
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Language'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
@@ -161,7 +155,6 @@ class LanguagesController extends SettingsAppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$this->set('title_for_layout', __('Select a language'));
 		$languages = $this->Language->find('all', array(
 			'conditions' => array(
 				'Language.status' => 1,

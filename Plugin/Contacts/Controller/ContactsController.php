@@ -51,8 +51,6 @@ class ContactsController extends ContactsAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Contacts'));
-
 		$this->Contact->recursive = 0;
 		$this->paginate['Contact']['order'] = 'Contact.title ASC';
 		$this->set('contacts', $this->paginate());
@@ -66,8 +64,6 @@ class ContactsController extends ContactsAppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Contact'));
-
 		if (!empty($this->request->data)) {
 			$this->Contact->create();
 			if ($this->Contact->save($this->request->data)) {
@@ -91,8 +87,6 @@ class ContactsController extends ContactsAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Contact'));
-
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__('Invalid Contact'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
