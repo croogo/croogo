@@ -73,7 +73,7 @@ class InstallShell extends AppShell {
  */
 	public function main() {
 		$type = $this->args[0];
-		if (strpos($this->args[1], '/') !== false) {
+		if (strpos($this->args[1], '/') !== false && preg_match('/http[s]*:\/\//i', $this->args[1]) === 0) {
 			// Composer Install
 			$ver = isset($this->args[2]) ? $this->args[2] : '*';
 			$this->out(__('Installing with Composer...'));
