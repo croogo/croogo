@@ -69,11 +69,7 @@ class BlocksController extends BlocksAppController {
 			$this->request->data['Block']['visibility_paths'] = $this->Block->encodeData(explode("\n", $this->request->data['Block']['visibility_paths']));
 			if ($this->Block->save($this->request->data)) {
 				$this->Session->setFlash(__('The Block has been saved'), 'default', array('class' => 'success'));
-				if (isset($this->request->data['apply'])) {
-					$this->redirect(array('action' => 'edit', $this->Block->id));
-				} else {
-					$this->redirect(array('action' => 'index'));
-				}
+				$this->Croogo->redirect(array('action' => 'edit', $this->Block->id));
 			} else {
 				$this->Session->setFlash(__('The Block could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -102,11 +98,7 @@ class BlocksController extends BlocksAppController {
 			$this->request->data['Block']['visibility_paths'] = $this->Block->encodeData(explode("\n", $this->request->data['Block']['visibility_paths']));
 			if ($this->Block->save($this->request->data)) {
 				$this->Session->setFlash(__('The Block has been saved'), 'default', array('class' => 'success'));
-				if (isset($this->request->data['apply'])) {
-					$this->redirect(array('action' => 'edit', $id));
-				} else {
-					$this->redirect(array('action' => 'index'));
-				}
+				$this->Croogo->redirect(array('action' => 'edit', $id));
 			} else {
 				$this->Session->setFlash(__('The Block could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}

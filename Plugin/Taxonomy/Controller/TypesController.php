@@ -70,11 +70,7 @@ class TypesController extends AppController {
 			$this->Type->create();
 			if ($this->Type->save($this->request->data)) {
 				$this->Session->setFlash(__('The Type has been saved'), 'default', array('class' => 'success'));
-				if (isset($this->request->data['apply'])) {
-					$this->redirect(array('action' => 'edit', $this->Type->id));
-				} else {
-					$this->redirect(array('action' => 'index'));
-				}
+				$this->Croogo->redirect(array('action' => 'edit', $this->Type->id));
 			} else {
 				$this->Session->setFlash(__('The Type could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -101,11 +97,7 @@ class TypesController extends AppController {
 		if (!empty($this->request->data)) {
 			if ($this->Type->save($this->request->data)) {
 				$this->Session->setFlash(__('The Type has been saved'), 'default', array('class' => 'success'));
-				if (isset($this->request->data['apply'])) {
-					$this->redirect(array('action' => 'edit', $this->Type->id));
-				} else {
-					$this->redirect(array('action' => 'index'));
-				}
+				$this->Croogo->redirect(array('action' => 'edit', $this->Type->id));
 			} else {
 				$this->Session->setFlash(__('The Type could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
