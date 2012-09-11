@@ -82,6 +82,7 @@ class NodesController extends NodesAppController {
 		$this->Node->recursive = 0;
 		$this->paginate['Node']['order'] = 'Node.created DESC';
 		$this->paginate['Node']['conditions'] = array();
+		$this->paginate['Node']['contain'] = array('User');
 
 		$types = $this->Node->Taxonomy->Vocabulary->Type->find('all');
 		$typeAliases = Set::extract('/Type/alias', $types);

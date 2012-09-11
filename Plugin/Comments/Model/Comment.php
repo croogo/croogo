@@ -29,7 +29,6 @@ class Comment extends AppModel {
  */
 	public $actsAs = array(
 		'Tree',
-		'Containable',
 		'Cached' => array(
 			'prefix' => array(
 				'comment_',

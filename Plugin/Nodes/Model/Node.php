@@ -31,7 +31,6 @@ class Node extends NodesAppModel {
  * @access public
  */
 	public $actsAs = array(
-		'Containable',
 		'Tree',
 		'Encoder',
 		'Meta.Meta',

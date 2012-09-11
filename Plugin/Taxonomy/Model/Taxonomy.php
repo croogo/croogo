@@ -40,7 +40,6 @@ class Taxonomy extends TaxonomyAppModel {
 				'croogo_vocabulary_',
 			),
 		),
-		'Containable',
 	);
 
 /**

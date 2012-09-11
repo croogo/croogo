@@ -26,6 +26,13 @@ class AppModel extends Model {
 	public $useCache = true;
 
 /**
+ * Default behaviors
+ */
+	public $actsAs = array(
+		'Containable',
+	);
+
+/**
  * Display fields for admin_index. Use displayFields()
  *
  * @var array

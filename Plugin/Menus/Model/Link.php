@@ -40,6 +40,7 @@ class Link extends MenusAppModel {
 				'croogo_menu_',
 			),
 		),
+		'Params',
 	);
 
 /**
