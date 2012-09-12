@@ -197,7 +197,7 @@ class ExtShell extends AppShell {
  * @return boolean
  */
 	protected function _activateTheme($theme) {
-		if ($r = $this->_CroogoTheme->activate($theme)) {
+		if ($this->_CroogoTheme->activate($theme)) {
 			$this->out(__('Theme "%s" activated successfully.', $theme));
 		} else {
 			$this->err(__('Theme "%s" activation failed.', $theme));
@@ -211,7 +211,6 @@ class ExtShell extends AppShell {
 	public function plugins($plugin = null) {
 		App::uses('CroogoPlugin', 'Extensions.Lib');
 		$all = $this->params['all'];
-		$bootstraps = Configure::read('Hook.bootstraps');
 		$plugins = $plugin == null ? App::objects('plugins') : array($plugin);
 		$loaded = CakePlugin::loaded();
 		$CroogoPlugin = new CroogoPlugin();

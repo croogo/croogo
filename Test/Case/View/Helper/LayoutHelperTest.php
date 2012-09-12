@@ -119,10 +119,10 @@ class LayoutHelperTest extends CroogoTestCase {
 			'a' => array(
 				'href' => '/users/edit/1',
 				'onclick' => 'Admin.processLink(this); return false;',
-				),
+			),
 			'Edit',
 			'/a',
-			);
+		);
 		$result = $this->Layout->processLink('Edit', $url);
 		$this->assertTags($result, $expected);
 
@@ -133,10 +133,10 @@ class LayoutHelperTest extends CroogoTestCase {
 				'href' => '/users/edit/1',
 				'class' => 'test-class',
 				'onclick' => 'if (confirm(&#039;Are you sure&#039;)) { Admin.processLink(this); } return false;',
-				),
+			),
 			'Edit',
 			'/a',
-			);
+		);
 		$result = $this->Layout->processLink('Edit', $url, $options, $message);
 		$this->assertTags($result, $expected);
 	}
@@ -153,7 +153,7 @@ class LayoutHelperTest extends CroogoTestCase {
 			'type' => null,
 			'url' => null,
 			'options' => array(),
-			);
+		);
 		$result = $this->Layout->displayField($rows[0], 'User', 'id', $options);
 		$this->assertEqual($expected, $result);
 
@@ -162,7 +162,7 @@ class LayoutHelperTest extends CroogoTestCase {
 			'type' => null,
 			'url' => null,
 			'options' => array(),
-			);
+		);
 		$result = $this->Layout->displayField($rows[0], 'User', 'username', $options);
 		$this->assertEqual($expected, $result);
 
@@ -170,7 +170,7 @@ class LayoutHelperTest extends CroogoTestCase {
 			'type' => 'boolean',
 			'url' => null,
 			'options' => array(),
-			);
+		);
 		$result = $this->Layout->displayField($rows[0], 'User', 'status', $options);
 		$this->assertContains('tick.png', $result);
 
@@ -182,9 +182,9 @@ class LayoutHelperTest extends CroogoTestCase {
 				'controller' => 'users',
 				'action' => 'view',
 				'pass' => 'id'
-				),
+			),
 			'options' => array(),
-			);
+		);
 		$result = $this->Layout->displayField($rows[0], 'User', 'username', $options);
 		$this->assertEqual($expected, $result);
 
@@ -197,9 +197,9 @@ class LayoutHelperTest extends CroogoTestCase {
 				'controller' => 'roles',
 				'action' => 'view',
 				'pass' => 'id'
-				),
+			),
 			'options' => array(),
-			);
+		);
 		$result = $this->Layout->displayField($rows[0], 'Role', 'title', $options);
 		$this->assertEqual($expected, $result);
 
@@ -211,9 +211,9 @@ class LayoutHelperTest extends CroogoTestCase {
 				'controller' => 'users',
 				'action' => 'view',
 				'pass' => array('id', 'username'),
-				),
+			),
 			'options' => array(),
-			);
+		);
 		$result = $this->Layout->displayField($rows[0], 'User', 'username', $options);
 		$this->assertEqual($expected, $result);
 
@@ -225,9 +225,9 @@ class LayoutHelperTest extends CroogoTestCase {
 				'controller' => 'users',
 				'action' => 'view',
 				'named' => array('id', 'username'),
-				),
+			),
 			'options' => array(),
-			);
+		);
 		$result = $this->Layout->displayField($rows[0], 'User', 'username', $options);
 		$this->assertEqual($expected, $result);
 
@@ -239,9 +239,9 @@ class LayoutHelperTest extends CroogoTestCase {
 				'controller' => 'users',
 				'action' => 'view',
 				'named' => array('id', 'username'),
-				),
+			),
 			'options' => array('class' => 'view'),
-			);
+		);
 		$result = $this->Layout->displayField($rows[0], 'User', 'username', $options);
 		$this->assertEqual($expected, $result);
 	}

@@ -92,18 +92,18 @@ class ExtrasShell extends Shell {
 		$plugin = array(
 			'short' => 'p',
 			'help' => __('Plugin to process'),
-			);
+		);
 		return parent::getOptionParser()
 			->description(__("Better manage, and easily synchronize you application's ACO tree"))
 			->addSubcommand('aco_update', array(
 				'parser' => array(
 					'options' => compact('plugin'),
-					),
+				),
 				'help' => __('Add new ACOs for new controllers and actions. Does not remove nodes from the ACO table.')
 			))->addSubcommand('aco_sync', array(
 				'parser' => array(
 					'options' => compact('plugin'),
-					),
+				),
 				'help' => __('Perform a full sync on the ACO table.' .
 					'Will create new ACOs or missing controllers and actions.' .
 					'Will also remove orphaned entries that no longer have a matching controller/action')
