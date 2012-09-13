@@ -2,6 +2,8 @@
 App::uses('NodesController', 'Nodes.Controller');
 App::uses('CroogoControllerTestCase', 'TestSuite');
 
+CakePlugin::load('Translate');
+
 class TestNodesController extends NodesController {
 
 	public $name = 'Nodes';
@@ -228,6 +230,20 @@ class NodesControllerTest extends CroogoControllerTestCase {
 
 		$result = $this->Nodes->viewFallback(array('view_1', 'view_blog'));
 		$this->assertContains('view_1.ctp in Mytheme', $result->body());
+	}
+
+/**
+ * Tests that blocks do not contain unfiltered block content
+ *
+ * @return void
+ */
+	public function testBlocksAreFiltered() {
+		$result = $this->testAction('/nodes/nodes/index', array(
+			'return' => 'contents',
+		));
+		$this->assertNotContains('[vocabulary:', $result);
+		$this->assertNotContains('[menu:', $result);
+		$this->assertNotContains('[node:', $result);
 	}
 
 }

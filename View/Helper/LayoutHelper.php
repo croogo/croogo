@@ -25,6 +25,9 @@ class LayoutHelper extends AppHelper {
 		'Form',
 		'Session',
 		'Js',
+		'Nodes.Nodes',
+		'Taxonomy.Taxonomies',
+		'Menus.Menus',
 	);
 
 /**
@@ -311,6 +314,9 @@ class LayoutHelper extends AppHelper {
 	public function filter($content) {
 		Croogo::dispatchEvent('Helper.Layout.beforeFilter', $this->_View, array('content' => &$content));
 		$content = $this->filterElements($content);
+		$content = $this->Nodes->filter($content);
+		$content = $this->Menus->filter($content);
+		$content = $this->Taxonomies->filter($content);
 		Croogo::dispatchEvent('Helper.Layout.afterFilter', $this->_View, array('content' => &$content));
 		return $content;
 	}

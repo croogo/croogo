@@ -149,10 +149,9 @@ class BlocksComponent extends Component {
  * @return array
  */
 	public function parseString($exp, $text, $options = array()) {
-		$_options = array(
+		$options = array_merge(array(
 			'convertOptionsToArray' => false,
-		);
-		$options = array_merge($_options, $options);
+		), $options);
 
 		$output = array();
 		preg_match_all('/\[(' . $exp . '):([A-Za-z0-9_\-]*)(.*?)\]/i', $text, $tagMatches);
