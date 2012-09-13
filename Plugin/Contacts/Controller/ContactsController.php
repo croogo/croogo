@@ -72,11 +72,7 @@ class ContactsController extends ContactsAppController {
 			$this->Contact->create();
 			if ($this->Contact->save($this->request->data)) {
 				$this->Session->setFlash(__('The Contact has been saved'), 'default', array('class' => 'success'));
-				if (isset($this->request->data['apply'])) {
-					$this->redirect(array('action' => 'edit', $this->Contact->id));
-				} else {
-					$this->redirect(array('action' => 'index'));
-				}
+				$this->Croogo->redirect(array('action' => 'edit', $this->Contact->id));
 			} else {
 				$this->Session->setFlash(__('The Contact could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -100,11 +96,7 @@ class ContactsController extends ContactsAppController {
 		if (!empty($this->request->data)) {
 			if ($this->Contact->save($this->request->data)) {
 				$this->Session->setFlash(__('The Contact has been saved'), 'default', array('class' => 'success'));
-				if (isset($this->request->data['apply'])) {
-					$this->redirect(array('action' => 'edit', $this->Contact->id));
-				} else {
-					$this->redirect(array('action' => 'index'));
-				}
+				$this->Croogo->redirect(array('action' => 'edit', $this->Contact->id));
 			} else {
 				$this->Session->setFlash(__('The Contact could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}

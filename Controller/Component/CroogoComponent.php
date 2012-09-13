@@ -172,6 +172,24 @@ class CroogoComponent extends Component {
 	}
 
 /**
+ * Croogo flavored redirect
+ * If 'save' pressed, redirect to action 'index' instead of 'edit'
+ *
+ * @param string $url
+ * @param integer $status
+ * @param boolean $exit
+ * @return void
+ */
+	public function redirect($url, $status = null, $exit = true) {
+		if (is_array($url)) {
+			if (isset($url['action']) && $url['action'] === 'edit' && !isset($this->controller->request->data['apply'])) {
+				$url = array('action' => 'index');
+			}
+		}
+		$this->controller->redirect($url, $status, $exit);
+	}
+
+/**
  * Loads plugin's bootstrap.php file
  *
  * @param string $plugin Plugin name (underscored)

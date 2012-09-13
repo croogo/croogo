@@ -1,6 +1,7 @@
 <?php
 
 App::uses('Component', 'Controller');
+app::uses('ComponentCollection', 'Controller/Component');
 App::uses('AppController', 'Controller');
 App::uses('CroogoTestCase', 'TestSuite');
 app::uses('CroogoComponent', 'Controller/Component');
@@ -28,7 +29,10 @@ class CroogoComponentTest extends CroogoTestCase {
 		'plugin.menus.menu',
 		'plugin.menus.link',
 		'plugin.users.role',
-		);
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.vocabulary',
+		'plugin.taxonomy.types_vocabulary',
+	);
 
 	public function setUp() {
 		parent::setUp();
@@ -69,6 +73,36 @@ class CroogoComponentTest extends CroogoTestCase {
 		$this->assertTrue($result);
 		$result = $this->Controller->Croogo->pluginIsActive('Shops');
 		$this->assertFalse($result);
+	}
+
+/**
+ * testRedirect
+ *
+ * @return void
+ * @dataProvider redirectData
+ */
+	public function testRedirect($expected, $url, $data = array()) {
+		$Controller = $this->getMock('CroogoTestController', array('redirect'), array(new CakeRequest(), new CakeResponse()));
+		$Controller->request->data = $data;
+		$Controller->expects($this->once())
+			->method('redirect')
+			->with($this->equalTo($expected));
+		$CroogoComponent = new CroogoComponent(new ComponentCollection());
+		$CroogoComponent->startup($Controller);
+		$CroogoComponent->redirect($url);
+	}
+
+/**
+ * redirectData
+ *
+ * @return array
+ */
+	public function redirectData() {
+		return array(
+			array('croogo.org', 'croogo.org'),
+			array(array('action' => 'index'), array('action' => 'edit', 1)),
+			array(array('action' => 'edit', 1), array('action' => 'edit', 1), array('apply' => 'Apply')),
+		);
 	}
 
 }

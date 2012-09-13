@@ -181,11 +181,7 @@ class NodesController extends NodesAppController {
 			if ($this->Node->saveWithMeta($this->request->data)) {
 				Croogo::dispatchEvent('Controller.Nodes.afterAdd', $this, array('data' => $this->request->data));
 				$this->Session->setFlash(__('%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));
-				if (isset($this->request->data['apply'])) {
-					$this->redirect(array('action' => 'edit', $this->Node->id));
-				} else {
-					$this->redirect(array('action' => 'index'));
-				}
+				$this->Croogo->redirect(array('action' => 'edit', $this->Node->id));
 			} else {
 				$this->Session->setFlash(__('%s could not be saved. Please, try again.', $type['Type']['title']), 'default', array('class' => 'error'));
 			}
@@ -253,11 +249,7 @@ class NodesController extends NodesAppController {
 			if ($this->Node->saveWithMeta($this->request->data)) {
 				Croogo::dispatchEvent('Controller.Nodes.afterEdit', $this, array('data' => $this->request->data));
 				$this->Session->setFlash(__('%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));
-				if (isset($this->request->data['apply'])) {
-					$this->redirect(array('action' => 'edit', $this->Node->id));
-				} else {
-					$this->redirect(array('action' => 'index'));
-				}
+				$this->Croogo->redirect(array('action' => 'edit', $this->Node->id));
 			} else {
 				$this->Session->setFlash(__('%s could not be saved. Please, try again.', $type['Type']['title']), 'default', array('class' => 'error'));
 			}
