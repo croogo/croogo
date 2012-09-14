@@ -119,7 +119,12 @@ class LinksController extends MenusAppController {
 				if (isset($this->request->data['apply'])) {
 					$this->redirect(array('action' => 'edit', $this->Link->id));
 				} else {
-					$this->redirect(array('action' => 'index', $this->request->data['Link']['menu_id']));
+					$this->redirect(array(
+						'action' => 'index',
+						'?' => array(
+							'menu_id' => $this->request->data['Link']['menu_id']
+						)
+					));
 				}
 			} else {
 				$this->Session->setFlash(__('The Link could not be saved. Please, try again.'), 'default', array('class' => 'error'));
@@ -162,7 +167,12 @@ class LinksController extends MenusAppController {
 				if (isset($this->request->data['apply'])) {
 					$this->redirect(array('action' => 'edit', $this->Link->id));
 				} else {
-					$this->redirect(array('action' => 'index', $this->request->data['Link']['menu_id']));
+					$this->redirect(array(
+						'action' => 'index',
+						'?' => array(
+							'menu_id' => $this->request->data['Link']['menu_id']
+						)
+					));
 				}
 			} else {
 				$this->Session->setFlash(__('The Link could not be saved. Please, try again.'), 'default', array('class' => 'error'));
@@ -215,7 +225,9 @@ class LinksController extends MenusAppController {
 			$this->Session->setFlash(__('Link deleted'), 'default', array('class' => 'success'));
 			$this->redirect(array(
 				'action' => 'index',
-				$link['Link']['menu_id'],
+				'?' => array(
+					'menu_id' => $link['Link']['menu_id'],
+				),
 			));
 		}
 	}
@@ -249,7 +261,9 @@ class LinksController extends MenusAppController {
 		}
 		$this->redirect(array(
 			'action' => 'index',
-			$link['Link']['menu_id'],
+			'?' => array(
+				'menu_id' => $link['Link']['menu_id'],
+			),
 		));
 	}
 
@@ -282,7 +296,9 @@ class LinksController extends MenusAppController {
 		}
 		$this->redirect(array(
 			'action' => 'index',
-			$link['Link']['menu_id'],
+			'?' => array(
+				'menu_id' => $link['Link']['menu_id'],
+			),
 		));
 	}
 
@@ -336,7 +352,9 @@ class LinksController extends MenusAppController {
 
 		$this->redirect(array(
 			'action' => 'index',
-			$menuId,
+			'?' => array(
+				'menu_id' => $menuId,
+			),
 		));
 	}
 

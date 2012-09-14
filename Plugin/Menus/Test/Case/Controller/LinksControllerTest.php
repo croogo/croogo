@@ -63,6 +63,19 @@ class LinksControllerTest extends CroogoControllerTestCase {
 	}
 
 /**
+ * checks that we were redirected with menu id
+ */
+	protected function _expectsRedirectToMenu($menuId) {
+		$this->controller->expects($this->once())
+			->method('redirect')
+			->with(array(
+				'action' => 'index',
+				'?' => array('menu_id' => $menuId),
+			)
+		);
+	}
+
+/**
  * testAdminIndex
  *
  * @return void
@@ -93,6 +106,7 @@ class LinksControllerTest extends CroogoControllerTestCase {
 	public function testAdminAdd() {
 		$this->expectFlashAndRedirect('The Link has been saved');
 		$mainMenu = ClassRegistry::init('Menus.Menu')->findByAlias('main');
+		$this->_expectsRedirectToMenu($mainMenu['Menu']['id']);
 		$this->testAction('/admin/menus/links/add', array(
 			'data' => array(
 				'Link' => array(
@@ -124,6 +138,7 @@ class LinksControllerTest extends CroogoControllerTestCase {
 				'Link.link' => '/',
 			),
 		));
+		$this->_expectsRedirectToMenu($homeLink['Link']['menu_id']);
 		$this->testAction('/admin/links/edit/' . $homeLink['Link']['id'], array(
 			'data' => array(
 				'Link' => array(
@@ -155,6 +170,7 @@ class LinksControllerTest extends CroogoControllerTestCase {
 				'Link.link' => '/',
 			),
 		));
+		$this->_expectsRedirectToMenu($homeLink['Link']['menu_id']);
 		$this->testAction('/admin/menus/links/delete/' . $homeLink['Link']['id']);
 		$hasAny = $this->LinksController->Link->hasAny(array(
 			'Link.title' => 'Home',
@@ -178,6 +194,7 @@ class LinksControllerTest extends CroogoControllerTestCase {
 				'Link.link' => '/about',
 			),
 		));
+		$this->_expectsRedirectToMenu($aboutLink['Link']['menu_id']);
 		$this->testAction('/admin/menus/links/moveup/' . $aboutLink['Link']['id']);
 		$list = $this->LinksController->Link->generateTreeList(array(
 			'Link.menu_id' => $mainMenu['Menu']['id'],
@@ -205,6 +222,7 @@ class LinksControllerTest extends CroogoControllerTestCase {
 				'Link.title' => 'Contact',
 			),
 		));
+		$this->_expectsRedirectToMenu($contactLink['Link']['menu_id']);
 		$this->testAction('/admin/menus/links/moveup/' . $contactLink['Link']['id'] . '/' . 2);
 		$list = $this->LinksController->Link->generateTreeList(array(
 			'Link.menu_id' => $mainMenu['Menu']['id'],
@@ -233,6 +251,7 @@ class LinksControllerTest extends CroogoControllerTestCase {
 				'Link.link' => '/about',
 			),
 		));
+		$this->_expectsRedirectToMenu($aboutLink['Link']['menu_id']);
 		$this->testAction('/admin/menus/links/movedown/' . $aboutLink['Link']['id']);
 		$list = $this->LinksController->Link->generateTreeList(array(
 			'Link.menu_id' => $mainMenu['Menu']['id'],
@@ -260,6 +279,7 @@ class LinksControllerTest extends CroogoControllerTestCase {
 				'Link.title' => 'Home',
 			),
 		));
+		$this->_expectsRedirectToMenu($homeLink['Link']['menu_id']);
 		$this->testAction('/admin/menus/links/movedown/' . $homeLink['Link']['id'] . '/' . 2);
 		$list = $this->LinksController->Link->generateTreeList(array(
 			'Link.menu_id' => $mainMenu['Menu']['id'],
