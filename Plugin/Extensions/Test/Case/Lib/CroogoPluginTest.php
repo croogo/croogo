@@ -7,8 +7,8 @@ class CroogoPluginTest extends CakeTestCase {
 
 /**
  * CroogoPlugin class
- * @var CroogoPlugin 
- */	
+ * @var CroogoPlugin
+ */
 	public $CroogoPlugin;
 
 	public function setUp() {
@@ -62,12 +62,12 @@ class CroogoPluginTest extends CakeTestCase {
 	public function testGetDataPluginActive() {
 		$actives = Configure::read('Hook.bootstraps');
 		Configure::write('Hook.bootstraps', 'suppliers');
-		
+
 		$migrationVersion = $this->getMock('MigrationVersion');
 		$croogoPlugin = new CroogoPlugin($migrationVersion);
 
 		$suppliers = $croogoPlugin->getData('Suppliers');
-		
+
 		$needed = array(
 			'name' => 'Suppliers',
 			'description' => 'Suppliers plugin',
@@ -88,8 +88,8 @@ class CroogoPluginTest extends CakeTestCase {
 		$data = $this->CroogoPlugin->getData('EmptyJson');
 		$this->assertEquals(array(), $data);
 	}
-	
-	
+
+
 	public function testNeedMigrationPluginNotExists() {
 		$migrationVersion = $this->getMock('MigrationVersion');
 		$migrationVersion->expects($this->any())
@@ -103,7 +103,7 @@ class CroogoPluginTest extends CakeTestCase {
 		$croogoPlugin = new CroogoPlugin();
 		$this->assertEquals(false, $croogoPlugin->needMigration('Anything', false));
 	}
-	
+
 	public function testNeedMigrationPluginNoMigration() {
 		$migrationVersion = $this->getMock('MigrationVersion');
 		$migrationVersion->expects($this->any())
@@ -127,7 +127,7 @@ class CroogoPluginTest extends CakeTestCase {
 		$croogoPlugin = new CroogoPlugin($migrationVersion);
 		$this->assertEquals(true, $croogoPlugin->needMigration('app', true));
 	}
-	
+
 	public function testMigratePluginNotNeedMigration() {
 		$actives = Configure::read('Hook.bootstraps');
 		Configure::write('Hook.bootstraps', 'Suppliers');
@@ -137,12 +137,12 @@ class CroogoPluginTest extends CakeTestCase {
 			->method('getMapping')
 			->will($this->returnValue($this->_mapping));
 		$croogoPlugin = new CroogoPlugin($migrationVersion);
-		
+
 		$this->assertEquals(false, $croogoPlugin->migrate('Suppliers'));
-		
+
 		Configure::read('Hook.bootstraps', $actives);
 	}
-	
+
 	public function testMigratePluginWithMigration() {
 		$actives = Configure::read('Hook.bootstraps');
 		Configure::write('Hook.bootstraps', 'Suppliers');
@@ -155,14 +155,14 @@ class CroogoPluginTest extends CakeTestCase {
 			->method('run')
 			->with($this->logicalAnd($this->arrayHasKey('version'), $this->arrayHasKey('type')))
 			->will($this->returnValue(true));
-		
+
 		$croogoPlugin = new CroogoPlugin($migrationVersion);
-		
+
 		$this->assertEquals(true, $croogoPlugin->migrate('Suppliers'));
-		
+
 		Configure::read('Hook.bootstraps', $actives);
 	}
-	
+
 	public function testMigratePluginWithMigrationError() {
 		$actives = Configure::read('Hook.bootstraps');
 		Configure::write('Hook.bootstraps', 'Suppliers');
@@ -173,12 +173,14 @@ class CroogoPluginTest extends CakeTestCase {
 			->will($this->returnValue($this->_mapping));
 		$migrationVersion->expects($this->any())
 			->method('run')
-			->will($this->returnValue(false));
-		
+			->will($this->returnValue('An error message'));
+
 		$croogoPlugin = new CroogoPlugin($migrationVersion);
-		
+
+		$expectedErrors = array('An error message');
 		$this->assertEquals(false, $croogoPlugin->migrate('Suppliers'));
-		
+		$this->assertEquals($expectedErrors, $croogoPlugin->migrationErrors);
+
 		Configure::read('Hook.bootstraps', $actives);
 	}
 

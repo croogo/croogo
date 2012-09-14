@@ -172,7 +172,11 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 		} elseif ($this->_CroogoPlugin->migrate($plugin)) {
 			$this->Session->setFlash(__('Plugin "%s" migrated successfully.', $plugin), 'default', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(__('Plugin "%s" could not be migrated. Please, try again.', $plugin), 'default', array('class' => 'success'));
+			$this->Session->setFlash(
+				__('Plugin "%s" could not be migrated. Error: %s', $plugin, implode('<br />', $this->_CroogoPlugin->migrationErrors)),
+				'default',
+				array('class' => 'success')
+			);
 		}
 		$this->redirect(array('action' => 'index'));
 	}

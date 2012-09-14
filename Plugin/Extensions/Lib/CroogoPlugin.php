@@ -20,6 +20,14 @@ App::uses('MigrationVersion', 'Migrations.Lib');
 class CroogoPlugin extends Object {
 
 /**
+ * List of migration errors
+ * Updated in case of errors when running migrations
+ *
+ * @var array
+ */
+	public $migrationErrors = array();
+
+/**
  * PluginActivation class
  *
  * @var object
@@ -213,18 +221,25 @@ class CroogoPlugin extends Object {
 	}
 
 /**
- *  Migrate a plugin
+ * Migrate a plugin
+ *
  * @param string $plugin Plugin name
+ * @return boolean Success of the migration
  */
 	public function migrate($plugin) {
 		$success = false;
 		$mapping = $this->_getMigrationVersion()->getMapping($plugin);
 		if ($mapping) {
 			$lastVersion = max(array_keys($mapping));
-			$success = $this->_MigrationVersion->run(array(
+			$executionResult = $this->_MigrationVersion->run(array(
 				'version' => $lastVersion,
 				'type' => $plugin
 			));
+
+			$success = $executionResult === true;
+			if (!$success) {
+				array_push($this->migrationErrors, $executionResult);
+			}
 		}
 		return $success;
 	}
