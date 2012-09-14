@@ -1,5 +1,5 @@
 <?php
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 /**
  *  AllCorePluginsTest

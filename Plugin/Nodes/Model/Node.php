@@ -32,10 +32,10 @@ class Node extends NodesAppModel {
  */
 	public $actsAs = array(
 		'Tree',
-		'Encoder',
+		'Croogo.Encoder',
 		'Meta.Meta',
-		'Url',
-		'Cached' => array(
+		'Croogo.Url',
+		'Croogo.Cached' => array(
 			'prefix' => array(
 				'node_',
 				'nodes_',

@@ -103,8 +103,8 @@ class RoleAroBehavior extends ModelBehavior {
  * @return array list of allowable parent roles in 'list' format
  */
 	public function allowedParents(Model $model, $id = null) {
-		if (!$model->Behaviors->enabled('Aliasable')) {
-			$model->Behaviors->load('Aliasable');
+		if (!$model->Behaviors->enabled('Croogo.Aliasable')) {
+			$model->Behaviors->load('Croogo.Aliasable');
 		}
 		if ($id == $model->byAlias('public')) {
 			return array();

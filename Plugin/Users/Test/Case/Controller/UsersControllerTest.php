@@ -1,6 +1,6 @@
 <?php
 App::uses('UsersController', 'Users.Controller');
-App::uses('CroogoControllerTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
 /**
  * UsersController Test
@@ -13,9 +13,9 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'aco',
-		'aro',
-		'aros_aco',
+		'plugin.croogo.aco',
+		'plugin.croogo.aro',
+		'plugin.croogo.aros_aco',
 		'plugin.blocks.block',
 		'plugin.comments.comment',
 		'plugin.contacts.contact',

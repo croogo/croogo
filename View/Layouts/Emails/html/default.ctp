@@ -1,6 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
-	<body>
-		<?php echo $content_for_layout; ?>
-	</body>
+<head>
+	<title><?php echo $title_for_layout;?></title>
+</head>
+<body>
+	<?php echo $this->fetch('content');?>
+</body>
 </html>

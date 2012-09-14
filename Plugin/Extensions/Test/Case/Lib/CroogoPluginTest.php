@@ -15,7 +15,7 @@ class CroogoPluginTest extends CakeTestCase {
 		parent::setUp();
 		App::build(array(
 			'Plugin' => array(CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
-				), App::PREPEND);
+		), App::PREPEND);
 
 		$this->CroogoPlugin = new CroogoPlugin();
 
