@@ -1,6 +1,6 @@
 <?php
 App::uses('FileManagerController', 'FileManager.Controller');
-App::uses('CroogoControllerTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
 /**
  * FileManager Controller Test
@@ -22,9 +22,9 @@ class FileManagerControllerTest extends CroogoControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.aco',
-		'app.aro',
-		'app.aros_aco',
+		'plugin.croogo.aco',
+		'plugin.croogo.aro',
+		'plugin.croogo.aros_aco',
 		'plugin.settings.setting',
 		'plugin.users.role',
 		'plugin.taxonomy.type',
@@ -65,7 +65,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase {
 			),
 		));
 		$this->FileManager->constructClasses();
-		$this->FileManager->Components->unload('Croogo');
+		$this->FileManager->Components->unload('Croogo.Croogo');
 		$this->FileManager->Session->write('Auth.User', array(
 			'id' => 1,
 			'role_id' => 1,
@@ -100,7 +100,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase {
 			),
 		));
 		$this->FileManager->constructClasses();
-		$this->FileManager->Components->unload('Croogo');
+		$this->FileManager->Components->unload('Croogo.Croogo');
 		$this->FileManager->Session->write('Auth.User', array(
 			'id' => 1,
 			'role_id' => 1,
@@ -135,7 +135,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase {
 			),
 		));
 		$this->FileManager->constructClasses();
-		$this->FileManager->Components->unload('Croogo');
+		$this->FileManager->Components->unload('Croogo.Croogo');
 		$this->FileManager->Session->write('Auth.User', array(
 			'id' => 1,
 			'role_id' => 1,

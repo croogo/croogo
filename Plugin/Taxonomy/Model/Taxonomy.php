@@ -32,7 +32,7 @@ class Taxonomy extends TaxonomyAppModel {
  */
 	public $actsAs = array(
 		'Tree',
-		'Cached' => array(
+		'Croogo.Cached' => array(
 			'prefix' => array(
 				'node_',
 				'nodes_',

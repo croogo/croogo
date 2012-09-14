@@ -50,7 +50,7 @@ Cache::config('users_login', array_merge($cacheConfig, array(
 /**
  * Settings
  */
-App::uses('CroogoJsonReader', 'Configure');
+App::uses('CroogoJsonReader', 'Croogo.Configure');
 Configure::config('settings', new CroogoJsonReader());
 if (file_exists(APP . 'Config' . DS . 'settings.json')) {
 	Configure::load('settings', 'settings');

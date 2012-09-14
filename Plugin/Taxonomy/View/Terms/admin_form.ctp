@@ -1,7 +1,7 @@
 <?php
-$this->Html->script(array('/taxonomy/js/terms'), false);
+$this->extend('Croogo./Common/admin_edit');
 
-$this->extend('/Common/admin_edit');
+$this->Html->script(array('/taxonomy/js/terms'), false);
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))

@@ -1,7 +1,7 @@
 <?php
 
 App::uses('NodesAppController', 'Nodes.Controller');
-App::uses('Croogo', 'Lib');
+App::uses('Croogo', 'Croogo.Lib');
 
 /**
  * Nodes Controller
@@ -34,6 +34,7 @@ class NodesController extends NodesAppController {
 	public $components = array(
 		'Recaptcha',
 		'Search.Prg',
+		'Croogo.Recaptcha',
 	);
 
 /**

@@ -1,9 +1,9 @@
-<?php $this->extend('/Common/admin_edit'); ?>
 <?php
-	$this->Html
-		->addCrumb($this->Html->icon('home'), '/admin')
-		->addCrumb(__('Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
-		->addCrumb(__('Roles'), array('plugin' => 'users', 'controller' => 'roles', 'action' => 'index'));
+$this->extend('Croogo./Common/admin_edit');
+$this->Html
+	->addCrumb($this->Html->icon('home'), '/admin')
+	->addCrumb(__('Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
+	->addCrumb(__('Roles'), array('plugin' => 'users', 'controller' => 'roles', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
 	$this->Html->addCrumb($this->request->data['Role']['title'], $this->here);

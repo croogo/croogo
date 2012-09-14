@@ -1,4 +1,4 @@
-<?php $this->extend('/Common/admin_index'); ?>
+<?php $this->extend('Croogo./Common/admin_index'); ?>
 
 <?php $this->start('actions'); ?>
 	<li>

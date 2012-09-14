@@ -50,7 +50,7 @@ class RowLevelAclComponent extends Component {
 		$this->_controller = $controller;
 		$Model = $controller->{$controller->modelClass};
 		$Model->Behaviors->load('Acl', array(
-			'className' => 'CroogoAcl', 'type' => 'controlled',
+			'className' => 'Croogo.CroogoAcl', 'type' => 'controlled',
 		));
 		$Model->Behaviors->load('RowLevelAcl', array(
 			'className' => 'Acl.RowLevelAcl'

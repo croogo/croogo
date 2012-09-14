@@ -1,6 +1,5 @@
 <?php
-
-$this->extend('/Common/admin_edit');
+$this->extend('Croogo./Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))

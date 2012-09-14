@@ -1,7 +1,7 @@
 <?php
 
-App::uses('CroogoControllerTestCase', 'TestSuite');
-App::uses('CroogoTestFixture', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
+App::uses('CroogoTestFixture', 'Croogo.TestSuite');
 App::uses('AppController', 'Controller');
 
 class TestAppController extends AppController {

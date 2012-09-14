@@ -1,7 +1,7 @@
 <?php
 
 App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 App::uses('AclExtras', 'Acl.Lib');
 
 class AclExtrasTest extends CroogoTestCase {

@@ -31,11 +31,11 @@ class Vocabulary extends TaxonomyAppModel {
  * @access public
  */
 	public $actsAs = array(
-		'Ordered' => array(
+		'Croogo.Ordered' => array(
 			'field' => 'weight',
 			'foreign_key' => false,
 		),
-		'Cached' => array(
+		'Croogo.Cached' => array(
 			'prefix' => array(
 				'vocabulary_',
 				'croogo_vocabulary_',

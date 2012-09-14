@@ -1,13 +1,13 @@
 <?php
 App::uses('Taxonomy', 'Taxonomy.Model');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 class TaxonomyTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'app.aco',
-		'app.aro',
-		'app.aros_aco',
+		'plugin.croogo.aco',
+		'plugin.croogo.aro',
+		'plugin.croogo.aros_aco',
 		'plugin.blocks.block',
 		'plugin.comments.comment',
 		'plugin.contacts.contact',

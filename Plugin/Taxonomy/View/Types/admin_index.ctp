@@ -4,5 +4,5 @@ $this->Html
 	->addCrumb(__('Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
 	->addCrumb(__('Types'), $this->here);
 
-echo $this->extend('/Common/admin_index');
+echo $this->extend('Croogo./Common/admin_index');
 ?>

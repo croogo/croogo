@@ -1,5 +1,6 @@
 <?php
-
+$this->extend('Croogo./Common/admin_edit');
+$this->set('className', 'acl_actions');
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__('Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))

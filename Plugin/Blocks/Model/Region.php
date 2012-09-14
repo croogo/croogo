@@ -32,7 +32,7 @@ class Region extends BlocksAppModel {
  */
 	public $actsAs = array(
 		'Search.Searchable',
-		'Cached' => array(
+		'Croogo.Cached' => array(
 			'prefix' => array(
 				'region_',
 				'croogo_regions',

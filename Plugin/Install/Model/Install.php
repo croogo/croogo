@@ -41,7 +41,7 @@ class Install extends InstallAppModel {
 		}
 		$User = ClassRegistry::init('Users.User');
 		$Role = ClassRegistry::init('Users.Role');
-		$Role->Behaviors->attach('Aliasable');
+		$Role->Behaviors->attach('Croogo.Aliasable');
 		unset($User->validate['email']);
 		$user['User']['name'] = $user['User']['username'];
 		$user['User']['email'] = '';
