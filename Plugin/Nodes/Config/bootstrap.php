@@ -5,6 +5,7 @@ Croogo::hookComponent('*', 'Nodes.Nodes');
 Croogo::hookHelper('*', 'Nodes.Nodes');
 
 CroogoNav::add('content', array(
+	'icon' => array('edit', 'large'),
 	'title' => __('Content'),
 	'url' => array(
 		'plugin' => 'nodes',

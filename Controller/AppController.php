@@ -116,6 +116,7 @@ class AppController extends Controller {
 			$this->helpers[] = 'Croogo';
 			$this->helpers['Html'] = array('className' => 'CroogoHtml');
 			$this->helpers['Form'] = array('className' => 'CroogoForm');
+			$this->helpers['Paginator'] = array('className' => 'CroogoPaginator');
 		}
 	}
 

@@ -1,17 +1,18 @@
 <?php
-	echo $this->Html->css('admin');
-	echo $this->Html->script('jquery/jquery.min');
-?>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#nodes-for-links a').click(function() {
-			parent.$('#LinkLink').val($(this).attr('rel'));
-			parent.tb_remove();
-			return false;
-		});
-	});
-</script>
 
+echo $this->Html->css('admin');
+echo $this->Html->script('jquery/jquery.min');
+
+?>
+<script>
+$(function() {
+	$('#nodes-for-links a').click(function() {
+		parent.$('#LinkLink').val($(this).attr('rel'));
+		parent.tb_remove();
+		return false;
+	});
+});
+</script>
 <div class="nodes">
 	<div>
 		<?php
@@ -21,7 +22,7 @@
 				}
 			}
 
-			__('Sort by:');
+			echo __('Sort by:');
 			echo ' ' . $this->Paginator->sort('id');
 			echo ', ' . $this->Paginator->sort('title');
 			echo ', ' . $this->Paginator->sort('created');
