@@ -101,7 +101,23 @@ class Croogo {
  * @param array  $options array with options for the hook to take effect
  */
 	public static function hookAdminTab($action, $title, $element, $options = array()) {
-		$tabs = Configure::read('Admin.tabs');
+		self::_hookAdminBlock('Admin.tabs', $action, $title, $element, $options);
+	}
+
+/**
+ * Admin box
+ *
+ * @param string $action  in the format ControllerName/action_name
+ * @param string $title   Box title
+ * @param string $element element name, like plugin_name.element_name
+ * @param array  $options array with options for the hook to take effect
+ */
+	public static function hookAdminBox($action, $title, $element, $options = array()) {
+		self::_hookAdminBlock('Admin.boxes', $action, $title, $element, $options);
+	}
+
+	protected static function _hookAdminBlock($key, $action, $title, $element, $options = array()) {
+		$tabs = Configure::read($key);
 		if (!is_array($tabs)) {
 			$tabs = array();
 		}
@@ -110,7 +126,7 @@ class Croogo {
 		}
 		$tabs[$action][$title]['element'] = $element;
 		$tabs[$action][$title]['options'] = $options;
-		Configure::write('Admin.tabs', $tabs);
+		Configure::write($key, $tabs);
 	}
 
 /**

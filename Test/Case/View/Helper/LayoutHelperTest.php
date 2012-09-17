@@ -55,17 +55,17 @@ class LayoutHelperTest extends CroogoTestCase {
  * testJs
  */
 	public function testJs() {
-		$this->assertContains('var Croogo = {"basePath":"\/","params":{"controller":"nodes","action":"index","named":[]}};', $f = $this->Layout->js());
+		$this->assertContains('var Croogo = {"basePath":"\/","params":{"plugin":null,"controller":"nodes","action":"index","named":[]}};', $f = $this->Layout->js());
 
 		$this->Layout->params['locale'] = 'eng';
-		$this->assertContains('var Croogo = {"basePath":"\/eng\/","params":{"controller":"nodes","action":"index","named":[]}};', $this->Layout->js());
+		$this->assertContains('var Croogo = {"basePath":"\/eng\/","params":{"plugin":null,"controller":"nodes","action":"index","named":[]}};', $this->Layout->js());
 		unset($this->Layout->params['locale']);
 
 		Configure::write('Js.my_var', '123');
-		$this->assertContains('var Croogo = {"basePath":"\/","params":{"controller":"nodes","action":"index","named":[]},"my_var":"123"};', $this->Layout->js());
+		$this->assertContains('var Croogo = {"basePath":"\/","params":{"plugin":null,"controller":"nodes","action":"index","named":[]},"my_var":"123"};', $this->Layout->js());
 
 		Configure::write('Js.my_var2', '456');
-		$this->assertContains('var Croogo = {"basePath":"\/","params":{"controller":"nodes","action":"index","named":[]},"my_var":"123","my_var2":"456"};', $this->Layout->js());
+		$this->assertContains('var Croogo = {"basePath":"\/","params":{"plugin":null,"controller":"nodes","action":"index","named":[]},"my_var":"123","my_var2":"456"};', $this->Layout->js());
 	}
 
 /**

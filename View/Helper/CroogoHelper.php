@@ -15,7 +15,8 @@
 class CroogoHelper extends AppHelper {
 
 	public $helpers = array(
-		'Html',
+		'Form' => array('className' => 'CroogoForm'),
+		'Html' => array('className' => 'CroogoHtml'),
 		'Layout',
 		'Menus.Menus',
 	);
@@ -37,13 +38,19 @@ class CroogoHelper extends AppHelper {
  * @param array $options
  * @return string menu html tags
  */
-	public function adminMenus($menus, $options = array()) {
+	public function adminMenus($menus, $options = array(), $depth = 0) {
 		$options = Set::merge(array(
 			'children' => true,
 			'htmlAttributes' => array(
-				'class' => 'sf-menu',
+				'class' => 'nav nav-stacked',
 			),
 		), $options);
+
+		$aclPlugin = Configure::read('Site.acl_plugin');
+		$userId = AuthComponent::user('id');
+		if (empty($userId)) {
+			return '';
+		}
 
 		$out = null;
 		$sorted = Set::sort($menus, '{[a-z]+}.weight', 'ASC');
@@ -52,9 +59,9 @@ class CroogoHelper extends AppHelper {
 			$this->Role->Behaviors->attach('Aliasable');
 		}
 		$currentRole = $this->Role->byId($this->Layout->getRoleId());
-		$aclPlugin = Configure::read('Site.acl_plugin');
-		$userId = AuthComponent::user('id');
+
 		foreach ($sorted as $menu) {
+			$htmlAttributes = $options['htmlAttributes'];
 			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByUserId($userId, $menu['url'])) {
 				continue;
 			}
@@ -65,18 +72,44 @@ class CroogoHelper extends AppHelper {
 					'class' => $menuClass
 				), $menu['htmlAttributes']);
 			}
-			$link = $this->Html->link($menu['title'], $menu['url'], $menu['htmlAttributes']);
+			$title = '';
+			if (empty($menu['icon'])) {
+				$menu['htmlAttributes'] += array('icon' => 'white');
+			} else {
+				$menu['htmlAttributes'] += array('icon' => $menu['icon']);
+			}
+			$title .= '<span>' . $menu['title'] . '</span>';
+			$children = '';
 			if (!empty($menu['children'])) {
+				$childClass = 'nav nav-stacked sub-nav ';
+				$childClass .= ' submenu-' . Inflector::slug(strtolower($menu['title']), '-');
+				if ($depth > 0) {
+					$childClass .= ' dropdown-menu';
+				}
 				$children = $this->adminMenus($menu['children'], array(
 					'children' => true,
-					'htmlAttributes' => array('class' => false)
-				));
-				$out  .= $this->Html->tag('li', $link . $children);
-			} else {
-				$out  .= $this->Html->tag('li', $link);
+					'htmlAttributes' => array('class' => $childClass),
+				), $depth + 1);
+				$menu['htmlAttributes']['class'] .= ' hasChild dropdown-close';
 			}
+			$menu['htmlAttributes']['class'] .= ' sidebar-item';
+
+			$menuUrl = $this->url($menu['url']);
+			if ($menuUrl == env('REQUEST_URI')) {
+				if (isset($menu['htmlAttributes']['class'])) {
+					$menu['htmlAttributes']['class'] .= ' current';
+				} else {
+					$menu['htmlAttributes']['class'] = 'current';
+				}
+			}
+			$link = $this->Html->link($title, $menu['url'], $menu['htmlAttributes']);
+			$liOptions = array();
+			if (!empty($children) && $depth > 0) {
+				$liOptions['class'] = ' dropdown-submenu';
+			}
+			$out  .= $this->Html->tag('li', $link . $children, $liOptions);
 		}
-		return $this->Html->tag('ul', $out, $options['htmlAttributes']);
+		return $this->Html->tag('ul', $out, $htmlAttributes);
 	}
 
 /**
@@ -87,9 +120,6 @@ class CroogoHelper extends AppHelper {
  * @return string
  */
 	public function adminRowActions($id, $options = array()) {
-		$_options = array();
-		$options = array_merge($_options, $options);
-
 		$output = '';
 		$rowActions = Configure::read('Admin.rowActions.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
 		if (is_array($rowActions)) {
@@ -98,10 +128,34 @@ class CroogoHelper extends AppHelper {
 					$output .= ' ';
 				}
 				$link = $this->Menus->linkStringToArray(str_replace(':id', $id, $link));
-				$output .= $this->Html->link($title, $link);
+				$output .= $this->Html->link($title, $link, $options);
 			}
 		}
 		return $output;
+	}
+
+/**
+ * Show link under Actions column
+ *
+ */
+	public function adminRowAction($title, $url = null, $options, $confirmMessage = false) {
+		$action = false;
+		if (is_array($url)) {
+			$action = $url['action'];
+			if (isset($options['class'])) {
+				$options['class'] .= ' ' . $url['action'];
+			} else {
+				$options['class'] = $url['action'];
+			}
+		}
+		if (isset($options['icon'])) {
+			$options['iconInline'] = true;
+		}
+
+		if ($action == 'delete') {
+			return $this->Form->postLink($title, $url, $options, $confirmMessage);
+		}
+		return $this->Html->link($title, $url, $options, $confirmMessage);
 	}
 
 /**
@@ -122,19 +176,119 @@ class CroogoHelper extends AppHelper {
 					$domId = strtolower(Inflector::singularize($this->params['controller'])) . '-' . strtolower(Inflector::slug($title, '-'));
 					if ($this->adminTabs) {
 						list($plugin, $element) = pluginSplit($tab['element']);
-						$output .= '<div id="' . $domId . '">';
+						$output .= '<div id="' . $domId . '" class="tab-pane">';
 						$output .= $this->_View->element($element, array(), array(
 							'plugin' => $plugin,
 						));
 						$output .= '</div>';
 					} else {
-						$output .= '<li><a href="#' . $domId . '">' . $title . '</a></li>';
+						$output .= '<li><a href="#' . $domId . '" data-toggle="tab">' . $title . '</a></li>';
 					}
 				}
 			}
 		}
 
 		$this->adminTabs = true;
+		return $output;
+	}
+
+/**
+ * Show Boxes
+ *
+ * @param array $boxNames
+ */
+	public function adminBoxes($boxName = null) {
+		if (!isset($this->boxAlreadyPrinted)) {
+			$this->boxAlreadyPrinted = array();
+		}
+
+		$output = '';
+		$allBoxes = Configure::read('Admin.boxes.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
+		$allBoxes = empty($allBoxes) ? array() : $allBoxes;
+		$boxNames = array();
+
+		if (is_null($boxName)) {
+			foreach ($allBoxes as $boxName => $value) {
+				if (!in_array($boxName, $this->boxAlreadyPrinted)) {
+					$boxNames[$boxName] = $allBoxes[$boxName];
+				}
+			}
+		} elseif (!in_array($boxName, $this->boxAlreadyPrinted)) {
+			if (array_key_exists($boxName, $allBoxes)) {
+				$boxNames[$boxName] = $allBoxes[$boxName];
+			}
+		}
+
+		foreach ($boxNames as $title => $box) {
+			$issetType = isset($box['options']['type']);
+			$typeInTypeAlias = $issetType && in_array($this->_View->viewVars['typeAlias'], $box['options']['type']);
+			if (!$issetType || $typeInTypeAlias) {
+				list($plugin, $element) = pluginSplit($box['element']);
+				$output .= $this->Html->beginBox($title);
+				$output .= $this->_View->element(
+					$element,
+					array(),
+					array('plugin' => $plugin)
+				);
+				$output .= $this->Html->endBox();
+				$this->boxAlreadyPrinted[] = $title;
+			}
+		}
+
+		return $output;
+	}
+
+	protected function _settingsInputCheckbox($setting, $label, $i) {
+		$tooltip = array(
+			'data-trigger' => 'hover',
+			'data-placement' => 'right',
+			'data-title' => $setting['Setting']['description'],
+		);
+		if ($setting['Setting']['value'] == 1) {
+			$output = $this->Form->input("Setting.$i.value", array(
+				'type' => $setting['Setting']['input_type'],
+				'checked' => 'checked',
+				'tooltip' => $tooltip,
+				'label' => $label
+			));
+		} else {
+			$output = $this->Form->input("Setting.$i.value", array(
+				'type' => $setting['Setting']['input_type'],
+				'tooltip' => $tooltip,
+				'label' => $label
+			));
+		}
+		return $output;
+	}
+
+	public function settingsInput($setting, $label, $i) {
+		$output = '';
+		$inputType = ($setting['Setting']['input_type'] != null) ? $setting['Setting']['input_type'] : 'text';
+		if ($setting['Setting']['input_type'] == 'multiple') {
+			$multiple = true;
+			if (isset($setting['Params']['multiple'])) {
+				$multiple = $setting['Params']['multiple'];
+			};
+			$selected = json_decode($setting['Setting']['value']);
+			$options = json_decode($setting['Params']['options'], true);
+			$output = $this->Form->input("Setting.$i.values", array(
+				'label' => $setting['Setting']['title'],
+				'multiple' => $multiple,
+				'options' => $options,
+				'selected' => $selected,
+			));
+		} elseif ($setting['Setting']['input_type'] == 'checkbox') {
+			$output = $this->_settingsInputCheckbox($setting, $label, $i);
+		} else {
+			$output = $this->Form->input("Setting.$i.value", array(
+				'type' => $inputType,
+				'class' => 'span10',
+				'value' => $setting['Setting']['value'],
+				'help' => $setting['Setting']['description'],
+				'label' => false,
+				'placeholder' => $label,
+			));
+		}
 		return $output;
 	}
 

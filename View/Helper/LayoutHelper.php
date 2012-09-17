@@ -132,6 +132,7 @@ class LayoutHelper extends AppHelper {
 			$croogo['basePath'] = Router::url('/');
 		}
 		$croogo['params'] = array(
+			'plugin' => $this->params['plugin'],
 			'controller' => $this->params['controller'],
 			'action' => $this->params['action'],
 			'named' => $this->params['named'],
@@ -295,6 +296,9 @@ class LayoutHelper extends AppHelper {
 			$options['onclick'] = "if (confirm('$confirmMessage')) { Admin.processLink(this); } return false;";
 		} else {
 			$options['onclick'] = "Admin.processLink(this); return false;";
+		}
+		if (isset($options['icon'])) {
+			$options['iconInline'] = true;
 		}
 		$output = $this->Html->link($title, $url, $options);
 		return $output;
