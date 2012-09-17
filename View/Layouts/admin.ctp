@@ -1,18 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title><?php echo $title_for_layout; ?> - <?php echo __('Croogo'); ?></title>
-	<?php
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title><?php echo $title_for_layout; ?> - <?php echo __('Croogo'); ?></title>
+		<?php
+
 		echo $this->Html->css(array(
-			'reset',
-			'960',
-			'/ui-themes/smoothness/jquery-ui.css',
-			'admin',
+			'croogo-bootstrap',
+			'croogo-bootstrap-responsive',
 			'thickbox',
 		));
 		echo $this->Layout->js();
 		echo $this->Html->script(array(
+			'html5',
 			'jquery/jquery.min',
 			'jquery/jquery-ui.min',
 			'jquery/jquery.slug',
@@ -23,44 +23,39 @@
 			'jquery/jquery.tipsy',
 			'jquery/jquery.elastic-1.6.1.js',
 			'jquery/thickbox-compressed',
+
 			'underscore-min',
 			'admin',
+			'croogo-bootstrap.js',
 		));
-		echo $this->Blocks->get('css');
-		echo $this->Blocks->get('script');
-	?>
-</head>
 
-<body>
+		echo $this->fetch('script');
+		echo $this->fetch('css');
 
-	<div id="wrapper">
-		<?php echo $this->element('admin/header'); ?>
-
-		<div id="nav-container">
-			<div class="container_16">
-				<?php echo $this->element("admin/navigation"); ?>
-			</div>
-		</div>
-
-		<div id="main" class="container_16">
-			<div class="grid_16">
-				<div id="content">
-					<?php
-						echo $this->Layout->sessionFlash();
-						echo $content_for_layout;
-					?>
+		?>
+	</head>
+	<body>
+		<div id="wrap">
+			<?php echo $this->element('admin/header'); ?>
+			<?php echo $this->element('admin/navigation'); ?>
+			<div id="push"></div>
+			<div id="content-container" class="container-fluid">
+				<div class="row-fluid">
+					<div id="content" class="clearfix">
+						<?php echo $this->element('admin/breadcrumb'); ?>
+						<div id="inner-content" class="span12">
+							<?php echo $this->Layout->sessionFlash(); ?>
+							<?php echo $this->fetch('content'); ?>
+						</div>
+					</div>
+					&nbsp;
 				</div>
 			</div>
-			<div class="clear">&nbsp;</div>
 		</div>
-
-		<div class="push"></div>
-	</div>
-
-	<?php echo $this->element('admin/footer'); ?>
-	<?php
+		<?php echo $this->element('admin/footer'); ?>
+		<?php
 		echo $this->Blocks->get('scriptBottom');
 		echo $this->Js->writeBuffer();
-	?>
+		?>
 	</body>
 </html>

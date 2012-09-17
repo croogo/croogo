@@ -1,40 +1,49 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title><?php echo $title_for_layout; ?> - <?php echo __('Croogo'); ?></title>
-	<?php
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title><?php echo $title_for_layout; ?> - <?php echo __('Croogo'); ?></title>
+		<?php
 		echo $this->Html->css(array(
-			'reset',
-			'960',
-			'admin',
+			'croogo-bootstrap',
+			'croogo-bootstrap-responsive',
 		));
-		echo $scripts_for_layout;
-	?>
-</head>
+		echo $this->Html->script(array(
+			'html5',
+		));
 
-<body>
+		echo $this->fetch('script');
+		echo $this->fetch('css');
+		?>
+	</head>
+	<body class="admin-login">
+		<div id="wrap">
 
-	<div id="wrapper" class="login">
-		<div id="header">
-			<p id="backtosite">
-			<?php echo $this->Html->link(__('Back to') . ' ' . Configure::read('Site.title'), '/'); ?>
-			</p>
-		</div>
+			<header class="navbar navbar-inverse navbar-fixed-top">
+				<div class="navbar-inner">
+					<div class="container-fluid">
+						<?php echo $this->Html->link(
+							__('Back to') . ' ' . Configure::read('Site.title'),
+							'/',
+							array('class' => 'brand')
+						); ?>
+					</div>
+				</div>
+			</header>
 
-		<div id="main">
-			<div id="login">
-			<?php
-				echo $this->Layout->sessionFlash();
-				echo $content_for_layout;
-			?>
+			<div id="push"></div>
+			<div id="content-container" class="container-fluid">
+				<div class="row-fluid">
+					<div id="admin-login">
+					<?php
+						echo $this->Layout->sessionFlash();
+						echo $this->fetch('content');
+					?>
+					</div>
+				</div>
 			</div>
+
 		</div>
-
 		<?php echo $this->element('admin/footer'); ?>
-
-	</div>
-
-
 	</body>
 </html>
