@@ -20,7 +20,7 @@ class InstallTest extends CroogoTestCase {
 		$croogoPlugin->expects($this->any())
 				->method('migrate')
 				->will($this->returnValue(true));
-		$this->Install->setCroogoPlugin($croogoPlugin);
+		$this->_runProtectedMethod('_setCroogoPlugin', array($croogoPlugin));
 		$this->assertEquals(true, $this->Install->runMigrations('Users'));
 	}
 	
@@ -29,7 +29,13 @@ class InstallTest extends CroogoTestCase {
 		$croogoPlugin->expects($this->any())
 				->method('migrate')
 				->will($this->returnValue(false));
-		$this->Install->setCroogoPlugin($croogoPlugin);
+		$this->_runProtectedMethod('_setCroogoPlugin', array($croogoPlugin));
 		$this->assertEquals(false, $this->Install->runMigrations('Users'));
+	}
+
+	protected function _runProtectedMethod($name, $args = array()) {
+		$method = new ReflectionMethod(get_class($this->Install), $name);
+		$method->setAccessible(true);
+		return $method->invokeArgs($this->Install, $args);
 	}
 }

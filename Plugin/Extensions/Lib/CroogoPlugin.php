@@ -257,7 +257,7 @@ class CroogoPlugin extends Object {
 	}
 
 	protected function _getMigrationVersion() {
-		if (!is_a($this->_MigrationVersion, 'MigrationVersion')) {
+		if (!($this->_MigrationVersion instanceof MigrationVersion)) {
 			$this->_MigrationVersion = new MigrationVersion();
 		}
 		return $this->_MigrationVersion;

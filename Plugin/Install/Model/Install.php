@@ -26,7 +26,7 @@ class Install extends InstallAppModel {
  *
  * @var CroogoPlugin
  */
-	private $_CroogoPlugin = null;
+	protected $_CroogoPlugin = null;
 
 /**
  * Finalize installation
@@ -88,13 +88,13 @@ class Install extends InstallAppModel {
 	}
 
 	protected function _getCroogoPlugin() {
-		if (!is_a($this->_CroogoPlugin, 'CroogoPlugin')) {
-			$this->setCroogoPlugin(new CroogoPlugin());
+		if (!($this->_CroogoPlugin instanceof CroogoPlugin)) {
+			$this->_setCroogoPlugin(new CroogoPlugin());
 		}
 		return $this->_CroogoPlugin;
 	}
 
-	public function setCroogoPlugin($croogoPlugin) {
+	protected function _setCroogoPlugin($croogoPlugin) {
 		unset($this->_CroogoPlugin);
 		$this->_CroogoPlugin = $croogoPlugin;
 	}
