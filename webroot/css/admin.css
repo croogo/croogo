@@ -55,24 +55,6 @@ table tr td div.operations a { font-size: 12px; margin-right: 15px; text-decorat
 table tr td img { margin: 0px; padding: 0px; }
 .striped { background-color: #f8f8f8; }
 
-div.level-0 { }
-div.level-1 { margin-left: 30px; }
-div.level-2 { margin-left: 60px; }
-
-img.permission-toggle:hover { cursor: pointer; }
-img.hook-toggle:hover { cursor: pointer; }
-
-.controller-row { background: #6f6f6f; color: #fff; font-weight: bold; }
-.controller-row.level-1 { background: #eee; color: #555; }
-.controller-row a { color: #efefef; }
-.controller:hover { cursor: pointer; }
-.controller { padding-left: 15px; }
-.collapse { background: url('../img/icons/bullet_arrow_down.png') no-repeat; padding-left: 15px; }
-.expand { background: url('../img/icons/bullet_arrow_right.png') no-repeat; padding-left: 15px; }
-.controller.loading {
-	background: url('../img/ajax/circle_ball.gif') no-repeat scroll 100% 0 transparent;
-}
-
 
 /**
  * Forms
@@ -273,24 +255,6 @@ div.extensions-hooks div.plugin { font-weight: bold; }
 .round { -moz-border-radius: 5px; -webkit-border-radius: 5px; }
 .hidden { display: none; }
 
-
-/**
- * Login
- */
-p#backtosite { padding: 0px 0px 0px 20px; }
-
-#login { margin: 0px auto; width: 320px; padding: 50px 0px 0px 0px; }
-#login h2 { border-bottom: 0px; }
-#login .forgot { float: right; }
-#login input[type=text],
-#login input[type=password] { width: 95%; }
-
-#login form { margin: 30px 0px 0px 0px; padding: 0px 20px 20px 20px; background: #fff; border: 1px solid #e5e5e5; }
-#login form { -moz-box-shadow: rgba(200,200,200,1) 0 4px 18px; -webkit-box-shadow: rgba(200,200,200,1) 0 4px 18px; }
-#login form { -moz-border-radius: 10px; -webkit-border-radius: 10px; }
-
-.login #footer { background: none; color: #444; }
-.login #footer a { color: #444; }
 
 
 /**

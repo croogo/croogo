@@ -1,0 +1,57 @@
+@media (min-width: 768px) and (max-width: 979px) {
+
+	#content {
+		margin-left: @crNavWidth767;
+	}
+
+	.navbar-fixed-top {
+		margin-left: 0px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		position: fixed;
+	}
+
+	.sidebar {
+		a.sidebar-item {
+			padding: 10px 17px;
+		}
+
+		.sub-nav {
+			.sidebar-item.current {
+					background: none;
+			}
+		}
+	}
+
+	.filter {
+		.input {
+			&[class*=span] {
+				margin-left: 0px;
+			}
+		}
+	}
+
+	#sidebar-menu {
+		> li > .sub-nav {
+			border: 1px solid #ccc; // Fallback for IE7-8
+			border: 1px solid @dropdownBorder;
+			*border-top-width: 1px;
+			*border-right-width: 1px;
+			*border-bottom-width: 1px;
+			.border-top-right-radius(6px);
+			.border-bottom-radius(6px);
+			.box-shadow(0 5px 10px rgba(0,0,0,.2));
+			-webkit-background-clip: padding-box;
+			-moz-background-clip: padding;
+			background-clip: padding-box;
+
+			li:first-child > a {
+				border-top: none;
+			}
+			li:last-child > a {
+				border-bottom: none;
+			}
+		}
+	}
+
+}

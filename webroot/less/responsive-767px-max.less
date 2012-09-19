@@ -1,0 +1,90 @@
+@media (max-width: 767px) {
+
+	.navbar-fixed-top,
+	.navbar-static-top {
+		margin-left: 0px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+		position: fixed;
+	}
+
+	.box {
+		margin: 0px 0px @crBoxMarginVertical;
+		padding: 0px;
+	}
+
+	#content {
+		margin-left: @crNavWidth767;
+
+		.tab-content {
+			margin-bottom: @crGeneralMargin;
+		}
+	}
+
+	.sidebar {
+		height: 0; // prevent contents being pushed down
+		a.sidebar-item {
+			padding: 10px 17px;
+		}
+
+		.sub-nav {
+			.sidebar-item.current {
+					background: none;
+			}
+		}
+	}
+
+	.filter {
+		margin-bottom: @crGeneralMargin;
+		.border-bottom-radius(@borderRadiusSmall);
+		.input {
+			&[class*="span"] {
+				margin-top: 0px;
+				margin-bottom: 0px;
+				&.submit {
+					input {
+						float: right;
+					}
+				}
+				input {
+					max-width: 100%;
+				}
+			}
+
+			margin: 5px 5px 5px 0;
+
+			input {
+				max-width: 150px;
+			}
+		}
+	}
+
+	#admin-login {
+		margin: @navbarHeight * 2 auto;
+		max-width: @crLoginBox - 50px;
+	}
+
+	#sidebar-menu {
+		> li > .sub-nav {
+			border: 1px solid #ccc; // Fallback for IE7-8
+			border: 1px solid @dropdownBorder;
+			*border-top-width: 1px;
+			*border-right-width: 1px;
+			*border-bottom-width: 1px;
+			.border-top-right-radius(6px);
+			.border-bottom-radius(6px);
+			.box-shadow(0 5px 10px rgba(0,0,0,.2));
+			-webkit-background-clip: padding-box;
+			-moz-background-clip: padding;
+			background-clip: padding-box;
+
+			li:first-child > a {
+				border-top: none;
+			}
+			li:last-child > a {
+				border-bottom: none;
+			}
+		}
+	}
+
+}
