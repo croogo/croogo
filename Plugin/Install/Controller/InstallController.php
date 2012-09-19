@@ -22,7 +22,7 @@ class InstallController extends Controller {
  * @var array
  * @access public
  */
-	public $uses = false;
+	public $uses = 'Install.Install';
 
 /**
  * No components required
@@ -194,51 +194,34 @@ class InstallController extends Controller {
 			App::uses('CakeSchema', 'Model');
 			App::uses('ConnectionManager', 'Model');
 
-			$db = ConnectionManager::getDataSource('default');
-			$brokenSequence = $db instanceof Postgres;
-			if (!$db->isConnected()) {
-				$this->Session->setFlash(__('Could not connect to database.'), 'default', array('class' => 'error'));
-			} else {
-				$schema =& new CakeSchema(array('name' => 'app'));
-				$schema = $schema->load();
-				foreach ($schema->tables as $table => $fields) {
-					$create = $db->createSchema($schema, $table);
-					try {
-						$db->execute($create);
-					}
-					catch (PDOException $e) {
-						$this->Session->setFlash(__('Could not create table: %s', $e->getMessage()), 'default', array('class' => 'error'));
-						return;
-					}
-				}
-
-				$path = App::pluginPath('Install') . DS . 'Config' . DS . 'Data' . DS;
-				$dataObjects = App::objects('class', $path);
-				foreach ($dataObjects as $data) {
-					include ($path . $data . '.php');
-					$classVars = get_class_vars($data);
-					$modelAlias = substr($data, 0, -4);
-					$table = $classVars['table'];
-					$records = $classVars['records'];
-					App::uses('Model', 'Model');
-					$modelObject =& new Model(array(
-						'name' => $modelAlias,
-						'table' => $table,
-						'ds' => 'default',
-					));
-					if (is_array($records) && count($records) > 0) {
-						foreach ($records as $record) {
-							$modelObject->create($record);
-							$modelObject->save();
-						}
-					}
-					if ($brokenSequence) {
-						$this->_fixSequence($modelObject);
-					}
-				}
-
-				$this->redirect(array('action' => 'adminuser'));
+			$plugins = Configure::read('Core.corePlugins');
+			foreach ($plugins as $plugin) {
+				$this->Install->runMigrations($plugin);
 			}
+
+			$path = App::pluginPath('Install') . DS . 'Config' . DS . 'Data' . DS;
+			$dataObjects = App::objects('class', $path);
+			foreach ($dataObjects as $data) {
+				include ($path . $data . '.php');
+				$classVars = get_class_vars($data);
+				$modelAlias = substr($data, 0, -4);
+				$table = $classVars['table'];
+				$records = $classVars['records'];
+				App::uses('Model', 'Model');
+				$modelObject =& new Model(array(
+					'name' => $modelAlias,
+					'table' => $table,
+					'ds' => 'default',
+				));
+				if (is_array($records) && count($records) > 0) {
+					foreach ($records as $record) {
+						$modelObject->create($record);
+						$modelObject->save();
+					}
+				}
+			}
+
+			$this->redirect(array('action' => 'adminuser'));
 		}
 	}
 

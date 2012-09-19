@@ -29,6 +29,9 @@ class TranslateActivation {
 		$controller->Croogo->addAco('Translate/Translate/admin_index');
 		$controller->Croogo->addAco('Translate/Translate/admin_edit');
 		$controller->Croogo->addAco('Translate/Translate/admin_delete');
+		App::uses('CroogoPlugin', 'Extensions.Lib');
+		$CroogoPlugin = new CroogoPlugin();
+		$CroogoPlugin->migrate('Translate');
 	}
 
 /**
