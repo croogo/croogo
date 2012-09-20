@@ -69,10 +69,12 @@ class MetaHelper extends AppHelper {
 			'key'   => array(
 				'label'   => __('Key'),
 				'value'   => $key,
+				'class' => 'span12'
 			),
 			'value' => array(
 				'label'   => __('Value'),
 				'value'   => $value,
+				'class' => 'span12'
 			),
 		);
 		$options = Set::merge($_options, $options);

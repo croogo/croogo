@@ -12,7 +12,7 @@
 		}
 	}
 ?>
-	<div class="clear">&nbsp;</div>
+	<div class="clear"></div>
 </div>
 <?php
 echo $this->Html->link(

@@ -39,8 +39,8 @@ class MetaComponent extends Component {
 		$controller = $this->_controller->name;
 		$title = __('Custom Fields');
 		$element = 'Meta.admin/meta_tab';
-		Croogo::hookAdminTab("$controller/admin_add", $title, $element);
-		Croogo::hookAdminTab("$controller/admin_edit", $title, $element);
+		Croogo::hookAdminBox("$controller/admin_add", $title, $element);
+		Croogo::hookAdminBox("$controller/admin_edit", $title, $element);
 	}
 
 }
