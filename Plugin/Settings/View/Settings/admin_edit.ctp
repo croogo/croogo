@@ -1,40 +1,81 @@
-<?php $this->extend('/Common/admin_edit'); ?>
-<?php echo $this->Form->create('Setting');?>
-<fieldset>
-	<div class="tabs">
-		<ul>
-			<li><a href="#setting-basic"><span><?php echo __('Settings'); ?></span></a></li>
-			<li><a href="#setting-misc"><span><?php echo __('Misc.'); ?></span></a></li>
+<?php
+$this->extend('/Common/admin_edit');
+
+$this->Html
+	->addCrumb($this->Html->icon('home'), '/admin')
+	->addCrumb(__('Settings'), array(
+		'admin' => true,
+		'plugin' => 'settings',
+		'controller' => 'settings',
+		'action' => 'index',
+	))
+	->addCrumb($this->data['Setting']['key']);
+
+echo $this->Form->create('Setting');
+
+?>
+<div class="row-fluid">
+	<div class="span8">
+		<ul class="nav nav-tabs">
+			<li><a href="#setting-basic" data-toggle="tab"><?php echo __('Settings'); ?></a></li>
+			<li><a href="#setting-misc" data-toggle="tab"><?php echo __('Misc.'); ?></a></li>
 		</ul>
 
-		<div id="setting-basic">
+		<div class="tab-content">
+			<div id="setting-basic" class="tab-pane">
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('key', array('rel' => __("e.g., 'Site.title'")));
-				echo $this->Form->input('value');
+				$this->Form->inputDefaults(array(
+					'label' => false,
+					'class' => 'span10',
+				));
+				echo $this->Form->input('key', array(
+					'rel' => __("e.g., 'Site.title'"),
+					'placeholder' => __('Key'),
+				));
+				echo $this->Form->input('value', array(
+					'placeholder' => __('Value'),
+				));
 			?>
-		</div>
+			</div>
 
-		<div id="setting-misc">
+			<div id="setting-misc" class="tab-pane">
 			<?php
-				echo $this->Form->input('title');
-				echo $this->Form->input('description');
-				echo $this->Form->input('input_type', array('rel' => __("e.g., 'text' or 'textarea'")));
-				echo $this->Form->input('editable');
-				//echo $this->Form->input('weight');
-				echo $this->Form->input('params');
+				echo $this->Form->input('title', array(
+					'placeholder' => __('Title'),
+				));
+				echo $this->Form->input('description', array(
+					'placeholder' => __('Description'),
+				));
+				echo $this->Form->input('input_type', array(
+					'placeholder' => __('Input Type'),
+					'rel' => __("e.g., 'text' or 'textarea'"),
+				));
+				echo $this->Form->input('editable', array(
+					'label' => __('Editable'),
+					'class' => false,
+				));
+				echo $this->Form->input('params', array(
+					'placeholder' => __('Params'),
+				));
 			?>
+			</div>
+
+			<?php echo $this->Croogo->adminTabs(); ?>
 		</div>
 	</div>
-</fieldset>
 
-<div class="buttons">
-<?php
-	echo $this->Form->end(__('Save'));
-	echo $this->Html->link(__('Cancel'), array(
-		'action' => 'index',
-	), array(
-		'class' => 'cancel',
-	));
-?>
+	<div class="span4">
+	<?php
+		echo $this->Html->beginBox(__('Publishing')) .
+			$this->Form->button(__('Save'), array('button' => 'default')) .
+			$this->Html->link(__('Cancel'), array('action' => 'index'), array(
+				'button' => 'danger')) .
+			$this->Html->endBox();
+
+		echo $this->Croogo->adminBoxes();
+	?>
+	</div>
+
 </div>
+<?php echo $this->Form->end(); ?>

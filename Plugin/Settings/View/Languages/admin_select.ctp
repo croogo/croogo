@@ -1,12 +1,33 @@
-<div class="languages">
-	<h2><?php echo $title_for_layout; ?></h2>
+<?php
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Language'), array('action' => 'add')); ?></li>
+$this->Html
+	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb(__('Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'index'))
+	->addCrumb(__('Languages'), array('plugin' => 'settings', 'controller' => 'languages', 'action' => 'index'))
+	;
+
+?>
+<div class="row-fluid">
+
+	<div class="span12 actions">
+		<ul class="nav-buttons">
+			<li>
+			<?php
+				echo $this->Html->link(
+					__('New Language'),
+					array('action'=>'add'),
+					array('button' => 'default')
+				);
+			?>
+			</li>
 		</ul>
 	</div>
 
+	<div class="languages span12">
+
+	<h4><?php echo $title_for_layout; ?></h4>
+
+	<ul>
 	<?php
 		foreach ($languages as $language) {
 			$title = $language['Language']['title'] . ' (' . $language['Language']['native'] . ')';
@@ -18,7 +39,10 @@
 				$modelAlias,
 				'locale' => $language['Language']['alias'],
 			));
-			echo '<h3>' . $link . '</h3>';
+			echo '<li>' . $link . '</li>';
 		}
 	?>
+	</ul>
+	</div>
+
 </div>
