@@ -1,7 +1,18 @@
-<?php $this->extend('/Common/admin_index'); ?>
+<?php
 
-<?php echo $this->Form->create('Block', array('url' => array('controller' => 'blocks', 'action' => 'process'))); ?>
-<table cellpadding="0" cellspacing="0">
+$this->extend('/Common/admin_index');
+
+$this->Html
+	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb(__('Blocks'), array('action' => 'index'));
+
+echo $this->Form->create('Block',
+	array('url' => array('controller' => 'blocks', 'action' => 'process')),
+	array('class' => 'form-inline')
+);
+
+?>
+<table class="table table-striped">
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
 		'',
@@ -12,17 +23,35 @@
 		$this->Paginator->sort('status'),
 		__('Actions'),
 	));
-	echo $tableHeaders;
-
+?>
+	<thead>
+		<?php echo $tableHeaders; ?>
+	</thead>
+<?php
 	$rows = array();
 	foreach ($blocks as $block) {
-		$actions  = $this->Html->link(__('Move up'), array('controller' => 'blocks', 'action' => 'moveup', $block['Block']['id']));
-		$actions .= ' ' . $this->Html->link(__('Move down'), array('controller' => 'blocks', 'action' => 'movedown', $block['Block']['id']));
-		$actions .= ' ' . $this->Html->link(__('Edit'), array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id']));
-		$actions .= ' ' . $this->Croogo->adminRowActions($block['Block']['id']);
-		$actions .= ' ' . $this->Layout->processLink(__('Delete'),
+		$actions = array();
+		$actions[] = $this->Croogo->adminRowAction('',
+			array('controller' => 'blocks', 'action' => 'moveup', $block['Block']['id']),
+			array('icon' => 'arrow-up', 'tooltip' => __('Move up'),
+		));
+		$actions[] = $this->Croogo->adminRowAction('',
+			array('controller' => 'blocks', 'action' => 'movedown', $block['Block']['id']),
+			array('icon' => 'arrow-down', 'tooltip' => __('Move down'),
+			)
+		);
+		$actions[] = $this->Croogo->adminRowActions($block['Block']['id']);
+		$actions[] = $this->Croogo->adminRowAction('',
+			array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id']),
+			array('icon' => 'pencil', 'tooltip' => __('Edit this item'))
+		);
+		$actions[] = $this->Croogo->adminRowAction('',
 			'#Block' . $block['Block']['id'] . 'Id',
-			null, __('Are you sure?'));
+			array('icon' => 'trash', 'tooltip' => __('Remove this item')),
+			__('Are you sure?')
+		);
+
+		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
 		$rows[] = array(
 			$this->Form->checkbox('Block.' . $block['Block']['id'] . '.id'),
@@ -30,26 +59,30 @@
 			$this->Html->link($block['Block']['title'], array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id'])),
 			$block['Block']['alias'],
 			$block['Region']['title'],
-			$this->Layout->status($block['Block']['status']),
+			$this->Html->status($block['Block']['status']),
 			$actions,
 		);
 	}
 
 	echo $this->Html->tableCells($rows);
-	echo $tableHeaders;
 ?>
 </table>
-<div class="bulk-actions">
-<?php
-	echo $this->Form->input('Block.action', array(
-		'label' => false,
-		'options' => array(
-			'publish' => __('Publish'),
-			'unpublish' => __('Unpublish'),
-			'delete' => __('Delete'),
-		),
-		'empty' => true,
-	));
-	echo $this->Form->end(__('Submit'));
-?>
+<div class="row-fluid">
+	<div class="control-group">
+		<?php
+			echo $this->Form->input('Block.action', array(
+				'label' => false,
+				'div' => 'input inline',
+				'options' => array(
+					'publish' => __('Publish'),
+					'unpublish' => __('Unpublish'),
+					'delete' => __('Delete'),
+				),
+				'empty' => true,
+			));
+		?>
+		<div class="controls">
+			<?php echo $this->Form->end(__('Submit')); ?>
+		</div>
+	</div>
 </div>
