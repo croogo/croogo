@@ -5,6 +5,7 @@ Croogo::hookComponent('*', 'Menus.Menus');
 Croogo::hookHelper('*', 'Menus.Menus');
 
 CroogoNav::add('menus', array(
+	'icon' => array('sitemap', 'large'),
 	'title' => __('Menus'),
 	'url' => array(
 		'plugin' => 'menus',
