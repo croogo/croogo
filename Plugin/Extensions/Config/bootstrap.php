@@ -1,6 +1,7 @@
 <?php
 
 CroogoNav::add('extensions', array(
+	'icon' => array('magic', 'large'),
 	'title' => 'Extensions',
 	'url' => array(
 		'plugin' => 'extensions',
