@@ -116,14 +116,14 @@ class FileManagerController extends FileManagerAppController {
 		$path = realpath($path) . DS;
 		$regex = '/^' . preg_quote(realpath(APP), '/') . '/';
 		if (preg_match($regex, $path) == false) {
-			$this->Session->setFlash(__(sprintf('Path %s is restricted', $path)));
+			$this->Session->setFlash(__('Path %s is restricted', $path), 'default', array('class' => 'error'));
 			$path = APP;
 		}
 
 		$blacklist = array('.git', '.svn', '.CVS');
 		$regex = '/(' . preg_quote(implode('|', $blacklist), '.') . ')/';
 		if (in_array(basename($path), $blacklist) || preg_match($regex, $path)) {
-			$this->Session->setFlash(__(sprintf('Path %s is restricted', $path)));
+			$this->Session->setFlash(__(sprintf('Path %s is restricted', $path)), 'default', array('class' => 'error'));
 			$path = dirname($path);
 		}
 
@@ -148,7 +148,7 @@ class FileManagerController extends FileManagerAppController {
 			$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 		if (!$this->_isEditable($path)) {
-			$this->Session->setFlash(__(sprintf('Path %s is restricted', $path), true));
+			$this->Session->setFlash(__('Path %s is restricted', $path), 'default', array('class' => 'error'));
 			$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 		$this->set('title_for_layout', __('Edit file: %s', $path));
@@ -212,7 +212,7 @@ class FileManagerController extends FileManagerAppController {
 		}
 
 		if (!$this->_isDeletable($path)) {
-			$this->Session->setFlash(__(sprintf('Path %s is restricted', $path), true));
+			$this->Session->setFlash(__('Path %s is restricted', $path), 'default', array('class' => 'error'));
 			$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 
@@ -290,7 +290,7 @@ class FileManagerController extends FileManagerAppController {
  * @access public
  */
 	public function admin_create_directory() {
-		$this->set('title_for_layout', __('New Directory'));
+		$this->set('title_for_layout', __('Create Directory'));
 
 		if (isset($this->request->query['path'])) {
 			$path = $this->request->query['path'];
@@ -319,7 +319,7 @@ class FileManagerController extends FileManagerAppController {
  * @access public
  */
 	public function admin_create_file() {
-		$this->set('title_for_layout', __('New File'));
+		$this->set('title_for_layout', __('Create File'));
 
 		if (isset($this->request->query['path'])) {
 			$path = $this->request->query['path'];

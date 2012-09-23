@@ -1,6 +1,7 @@
 <?php
 
 CroogoNav::add('media', array(
+	'icon' => array('picture', 'large'),
 	'title' => __('Media'),
 	'url' => array(
 		'admin' => true,
@@ -25,7 +26,7 @@ CroogoNav::add('media', array(
 				'admin' => true,
 				'plugin' => 'file_manager',
 				'controller' => 'file_manager',
-				'action' => 'index',
+				'action' => 'browse',
 			),
 		),
 	),
