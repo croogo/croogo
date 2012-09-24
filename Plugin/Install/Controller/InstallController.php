@@ -168,19 +168,6 @@ class InstallController extends Controller {
 	}
 
 /**
- * Fixes Postgres sequence
- */
-	protected function _fixSequence($model) {
-		$db = $model->getDataSource();
-		$nextValue = $model->find('first', array(
-			'fields' => sprintf('MAX(%s.%s) as max', $model->alias, $model->primaryKey),
-			));
-		$nextValue = empty($nextValue[0]['max']) ? 1 :  $nextValue[0]['max'] + 1;
-		$sql = sprintf('alter sequence %s restart with %d', $db->getSequence($model), $nextValue);
-		$db->execute($sql);
-	}
-
-/**
  * Step 2: Run the initial sql scripts to create the db and seed it with data
  *
  * @return void
@@ -218,6 +205,9 @@ class InstallController extends Controller {
 						$modelObject->create($record);
 						$modelObject->save();
 					}
+					$modelObject->getDatasource()->resetSequence(
+						$modelObject->useTable, $modelObject->primaryKey
+					);
 				}
 			}
 
