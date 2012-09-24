@@ -4,6 +4,7 @@ App::uses('InstallAppModel', 'Install.Model');
 App::uses('CakeTime', 'Utility');
 App::uses('Security', 'Utility');
 App::uses('File', 'Utility');
+App::uses('CroogoPlugin', 'Extensions.Lib');
 
 class Install extends InstallAppModel {
 
@@ -20,6 +21,12 @@ class Install extends InstallAppModel {
  * @var string
  */
 	public $useTable = false;
+
+/**
+ *
+ * @var CroogoPlugin
+ */
+	protected $_CroogoPlugin = null;
 
 /**
  * Finalize installation
@@ -73,4 +80,22 @@ class Install extends InstallAppModel {
 		return $saved;
 	}
 
+	public function runMigrations($plugin) {
+		if (!CakePlugin::loaded($plugin)) {
+			CakePlugin::load($plugin);
+		}
+		return $this->_getCroogoPlugin()->migrate($plugin);
+	}
+
+	protected function _getCroogoPlugin() {
+		if (!($this->_CroogoPlugin instanceof CroogoPlugin)) {
+			$this->_setCroogoPlugin(new CroogoPlugin());
+		}
+		return $this->_CroogoPlugin;
+	}
+
+	protected function _setCroogoPlugin($croogoPlugin) {
+		unset($this->_CroogoPlugin);
+		$this->_CroogoPlugin = $croogoPlugin;
+	}
 }

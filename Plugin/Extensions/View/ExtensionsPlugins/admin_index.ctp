@@ -44,6 +44,13 @@ $this->name = 'extensions-plugins';
 			$pluginAlias,
 		), null, __('Are you sure?'));
 
+		if ($pluginData['needMigration']) {
+			$actions .= ' ' . $this->Form->postLink(__('Migrate'), array(
+				'action' => 'migrate',
+				$pluginAlias,
+			), null, __('Are you sure?'));
+		}
+
 		$rows[] = array(
 			'',
 			$pluginAlias,
