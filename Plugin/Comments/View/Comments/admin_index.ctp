@@ -1,8 +1,32 @@
 <?php $this->extend('/Common/admin_index'); ?>
 
+<?php
+	$this->Html
+		->addCrumb($this->Html->icon('home'), '/admin')
+		->addCrumb(__('Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
+		->addCrumb(__('Comments'));
+?>
+
+
 <?php $this->start('tabs'); ?>
-	<li><?php echo $this->Html->link(__('Published'), array('action' => 'index', 'filter' => 'status:1;')); ?></li>
-	<li><?php echo $this->Html->link(__('Approval'), array('action' => 'index', 'filter' => 'status:0;')); ?></li>
+	<li>
+		<?php
+			echo $this->Html->link(
+				__('Published'),
+				array('action'=>'index', 'filter' => 'status:1;'),
+				array('button' => 'default')
+			);
+		?>
+	</li>
+	<li>
+		<?php
+			echo $this->Html->link(
+				__('Approval'),
+				array('action'=>'index', 'filter' => 'status:0;'),
+				array('button' => 'default')
+			);
+		?>
+	</li>
 <?php $this->end(); ?>
 
 
@@ -16,7 +40,7 @@ if (isset($this->params['named'])) {
 
 
 <?php echo $this->Form->create('Comment', array('url' => array('controller' => 'comments', 'action' => 'process'))); ?>
-<table cellpadding="0" cellspacing="0">
+<table class="table table-striped">
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
 		'',
@@ -29,20 +53,31 @@ if (isset($this->params['named'])) {
 		$this->Paginator->sort('created'),
 		__('Actions'),
 	));
-	echo $tableHeaders;
+?>
+	<thead>
+	<?php echo $tableHeaders; ?>
+	</thead>
+<?php
 
 	$rows = array();
 	foreach ($comments as $comment) {
-		$actions  = $this->Html->link(__('Edit'), array('action' => 'edit', $comment['Comment']['id']));
-		$actions .= ' ' . $this->Croogo->adminRowActions($comment['Comment']['id']);
-		$actions .= ' ' . $this->Layout->processLink(__('Delete'),
+		$actions = array();
+		$actions[] = $this->Croogo->adminRowActions($comment['Comment']['id']);
+		$actions[] = $this->Croogo->adminRowAction('',
+			array('action' => 'edit', $comment['Comment']['id']),
+			array('icon' => 'pencil', 'tooltip' => __('Edit this item'))
+		);
+		$actions[] = $this->Croogo->adminRowAction('',
 			'#Comment' . $comment['Comment']['id'] . 'Id',
-			null, __('Are you sure?'));
+			array('icon' => 'trash', 'tooltip' => __('Remove this item')),
+			__('Are you sure?')
+		);
+
+		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
 		$rows[] = array(
 			$this->Form->checkbox('Comment.' . $comment['Comment']['id'] . '.id'),
 			$comment['Comment']['id'],
-			//$comment['Comment']['title'],
 			$comment['Comment']['name'],
 			$comment['Comment']['email'],
 			$this->Html->link($comment['Node']['title'], array(
@@ -60,20 +95,25 @@ if (isset($this->params['named'])) {
 	}
 
 	echo $this->Html->tableCells($rows);
-	echo $tableHeaders;
 ?>
+
 </table>
-<div class="bulk-actions">
-<?php
-	echo $this->Form->input('Comment.action', array(
-		'label' => false,
-		'options' => array(
-			'publish' => __('Publish'),
-			'unpublish' => __('Unpublish'),
-			'delete' => __('Delete'),
-		),
-		'empty' => true,
-	));
-	echo $this->Form->end(__('Submit'));
-?>
+	<div class="row-fluid">
+		<div class="control-group">
+			<?php
+				echo $this->Form->input('Comment.action', array(
+					'label' => false,
+					'div' => 'input inline',
+					'options' => array(
+						'publish' => __('Publish'),
+						'unpublish' => __('Unpublish'),
+						'delete' => __('Delete'),
+					),
+					'empty' => true,
+				));
+			?>
+			<div class="controls">
+			<?php echo $this->Form->end(__('Submit')); ?>
+			</div>
+	</div>
 </div>
