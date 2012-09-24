@@ -1,6 +1,7 @@
 <?php
 
 CroogoNav::add('contacts', array(
+	'icon' => array('comments', 'large'),
 	'title' => __('Contacts'),
 	'url' => array(
 		'admin' => true,
