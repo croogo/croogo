@@ -24,7 +24,7 @@ AclPermissions.templates = {
 		data-aro_id="<%= aroId %>" data-aco_id="<%= acoId %>"> \
 </td>'),
 
-	editLinks: _.template('<td> <%= edit %> <%= del %> <%= up %> <%= down %> </td>')
+	editLinks: _.template('<td><div class="item-actions"><%= up %> <%= down %> <%= edit %> <%= del %> </div></td>')
 
 };
 
@@ -86,7 +86,7 @@ AclPermissions.tableToggle = function() {
 			for (var alias in aliases) {
 				var aco = aliases[alias];
 				var children = aco['children'];
-				var classes = children > 0 ? 'controller expand' : '';
+				var classes = children > 0 ? 'controller perm-expand' : '';
 				classes += " level-" + data.level;
 				text += AclPermissions.templates.controllerCell({
 					id: acoId,
@@ -151,15 +151,15 @@ AclPermissions.tableToggle = function() {
 		var level = $el.data('level');
 
 		$el.addClass('loading');
-		if ($el.hasClass('expand')) {
-			$el.removeClass('expand').addClass('collapse');
+		if ($el.hasClass('perm-expand')) {
+			$el.removeClass('perm-expand').addClass('perm-collapse');
 		} else {
 			var children = $('tr[data-parent_id=' + id + ']');
 			children.each(function() {
 				var childId = $('.controller', this).data('id')
 				$('tr[data-parent_id=' + childId + ']').remove();
 			}).remove();
-			$el.removeClass('loading collapse').addClass('expand');
+			$el.removeClass('loading perm-collapse').addClass('perm-expand');
 			return;
 		}
 
