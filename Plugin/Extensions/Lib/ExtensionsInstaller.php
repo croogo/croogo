@@ -73,7 +73,7 @@ class ExtensionsInstaller {
 				$fileName = $Zip->getNameIndex($indexJson);
 				$fileJson = json_decode($Zip->getFromIndex($indexJson));
 				
-				if (empty($indexJson->name)) {
+				if (empty($fileJson->name)) {
 					throw new CakeException(__('Invalid plugin'));
 				}
 				
