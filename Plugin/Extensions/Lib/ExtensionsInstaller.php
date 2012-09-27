@@ -65,20 +65,31 @@ class ExtensionsInstaller {
 		}
 		$Zip = new ZipArchive;
 		if ($Zip->open($path) === true) {
-			$searches = array(
-				'Config*Activation',
-				'Controller*AppController',
-				'Model*AppModel',
-				'View*AppHelper',
-			);
-			for ($i = 0; $i < $Zip->numFiles; $i++) {
-				$file = $Zip->getNameIndex($i);
+			$search = 'Config/plugin.json';
+			$indexJson = $Zip->locateName('plugin.json', ZIPARCHIVE::FL_NODIR);
+			if ($indexJson === FALSE) {
+				throw new CakeException(__('Invalid zip archive'));
+			} else {
+				$fileName = $Zip->getNameIndex($indexJson);
+				$fileJson = json_decode($Zip->getFromIndex($indexJson));
+				
+				if (empty($fileJson->name)) {
+					throw new CakeException(__('Invalid plugin'));
+				}
+				
+				$this->_rootPath[$path] = str_replace($search, '', $fileName);
+				$plugin = $fileJson->name;
+				
+				$searches = array(
+					$plugin . 'Activation.php',
+					$plugin . 'AppController.php',
+					$plugin . 'AppModel.php',
+					$plugin . 'Helper.php'
+				);
+				
 				foreach ($searches as $search) {
-					$search = str_replace('*', '\/([\w]+)', $search);
-					if (preg_match('/' . $search . '\.php/', $file, $matches)) {
-						$plugin = trim($matches[1]);
-						$this->_rootPath[$path] = str_replace($matches[0], '', $file);
-						break 2;
+					if ($Zip->locateName($search, ZIPARCHIVE::FL_NODIR) === FALSE) {
+						throw new CakeException(__('Invalid plugin'));
 					}
 				}
 			}
