@@ -88,7 +88,7 @@ class ExtensionsInstaller {
 				);
 				
 				foreach ($searches as $search) {
-					if ($Zip->locateName($search, ZIPARCHIVE::FL_NODIR) === false) {
+					if ($Zip->locateName($search, ZIPARCHIVE::FL_NODIR) === FALSE) {
 						throw new CakeException(__('Invalid plugin'));
 					}
 				}
