@@ -115,6 +115,7 @@ class AclPermissionsController extends AclAppController {
 			$parentAcoId = $this->AclPermission->Aco->field('parent_id');
 			$cacheName = 'permissions_aco_' . $parentAcoId;
 			Cache::delete($cacheName, 'permissions');
+			Cache::delete('permissions_public', 'permissions');
 		}
 
 		$this->set(compact('acoId', 'aroId', 'data', 'success', 'permitted'));
