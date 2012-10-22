@@ -24,6 +24,27 @@ class BlocksController extends BlocksAppController {
 	public $name = 'Blocks';
 
 /**
+ * Components
+ *
+ * @var array
+ * @access public
+ */
+	public $components = array(
+		'Search.Prg',
+	);
+
+/**
+ * Preset Variables Search
+ *
+ * @var array
+ * @access public
+ */
+	public $presetVars = array(
+		'title' => array('type' => 'value'),
+		'region_id' => array('type' => 'lookup', 'formField' => 'region_input', 'modelField' => 'title', 'model' => 'Region')
+	);
+
+/**
  * Models used by the Controller
  *
  * @var array
@@ -45,13 +66,19 @@ class BlocksController extends BlocksAppController {
  *
  * @return void
  * @access public
+ * $searchField : Identify fields for search
  */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Blocks'));
+		$this->Prg->commonProcess();
+		$searchFields = array('region_id', 'title');
 
 		$this->Block->recursive = 0;
 		$this->paginate['Block']['order'] = array('Block.weight' => 'ASC');
-		$this->set('blocks', $this->paginate());
+
+		$this->set('blocks', $this->paginate($this->Block->parseCriteria($this->passedArgs)));
+		$this->set('regions', $this->Block->Region->find('list'));
+		$this->set('searchFields', $searchFields);
 	}
 
 /**

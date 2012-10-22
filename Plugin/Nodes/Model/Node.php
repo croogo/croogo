@@ -42,6 +42,7 @@ class Node extends NodesAppModel {
 				'croogo_nodes_',
 			),
 		),
+		'Search.Searchable',
 	);
 
 /**
@@ -83,6 +84,19 @@ class Node extends NodesAppModel {
 				'message' => 'Slug cannot be empty.',
 			),
 		),
+	);
+
+/**
+ * Filter search fields
+ *
+ * @var array
+ * @access public
+ */
+	public $filterArgs = array(
+		'filter' => array('type' => 'query', 'method' => 'filterNodes'),
+		'type' => array('type' => 'value'),
+		'status' => array('type' => 'value'),
+		'promote' => array('type' => 'value'),
 	);
 
 /**
@@ -278,4 +292,24 @@ class Node extends NodesAppModel {
 		}
 		return ($this->find('count', array('conditions' => $fields, 'recursive' => -1)) == 0);
 	}
+
+/**
+ * Return filter condition for Nodes
+ */
+	public function filterNodes($data = array()) {
+		if (empty($data['filter'])) {
+			return;
+		}
+		$filter = '%' . $data['filter'] . '%';
+		$conditions = array(
+			'OR' => array(
+				$this->alias . '.title LIKE'  => $filter,
+				$this->alias . '.excerpt LIKE'  => $filter,
+				$this->alias . '.body LIKE'  => $filter,
+				$this->alias . '.terms LIKE'  => $filter,
+			),
+		);
+		return $conditions;
+	}
+
 }

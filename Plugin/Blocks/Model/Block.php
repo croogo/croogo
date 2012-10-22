@@ -43,6 +43,7 @@ class Block extends BlocksAppModel {
 			),
 		),
 		'Params',
+		'Search.Searchable',
 	);
 
 /**
@@ -66,6 +67,17 @@ class Block extends BlocksAppModel {
 				'message' => 'Alias cannot be empty.',
 			),
 		),
+	);
+
+/**
+ * Filter search fields
+ *
+ * @var array
+ * @access public
+ */
+	public $filterArgs = array(
+		'title' => array('type' => 'like', 'field' => array('Block.title', 'Block.alias')),
+		'region_id' => array('type' => 'value'),
 	);
 
 /**
