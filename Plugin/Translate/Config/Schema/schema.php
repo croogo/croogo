@@ -22,6 +22,6 @@ class TranslateSchema extends CakeSchema {
 			'row_id' => array('column' => 'foreign_key', 'unique' => 0),
 			'field' => array('column' => 'field', 'unique' => 0)
 		),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 	);
 }

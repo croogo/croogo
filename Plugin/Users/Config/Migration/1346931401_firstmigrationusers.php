@@ -29,7 +29,7 @@ class FirstMigrationUsers extends CakeMigration {
 						'PRIMARY' => array('column' => 'id', 'unique' => 1),
 						'role_alias' => array('column' => 'alias', 'unique' => 1)
 					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 				),
 				'roles_users' => array(
 					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
@@ -42,7 +42,7 @@ class FirstMigrationUsers extends CakeMigration {
 						'PRIMARY' => array('column' => 'id', 'unique' => 1),
 						'pk_role_users' => array('column' => array('user_id', 'role_id'), 'unique' => 1)
 					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 				),
 				'users' => array(
 					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'primary'),
@@ -62,7 +62,7 @@ class FirstMigrationUsers extends CakeMigration {
 					'indexes' => array(
 						'PRIMARY' => array('column' => 'id', 'unique' => 1)
 					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 				),
 			),
 		),
