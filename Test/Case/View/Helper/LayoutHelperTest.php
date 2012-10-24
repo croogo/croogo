@@ -246,4 +246,106 @@ class LayoutHelperTest extends CroogoTestCase {
 		$this->assertEqual($expected, $result);
 	}
 
+/**
+ * Test filterElements shortcode detection
+ */
+	public function testFilterElement_WithoutAttributes() {
+		$content = 'Lorem [element:element_name] ipsum';
+		$View = $this->getMock('View');
+		$Layout = new LayoutHelper($View);
+
+		$View
+			->expects($this->once())
+			->method('element')
+			->with(
+				$this->equalTo('element_name'),
+				$this->equalTo(array()),
+				$this->equalTo(array())
+			)
+			->will($this->returnValue('foobar'));
+		$result = $Layout->filterElements($content);
+
+		$expected = 'Lorem foobar ipsum';
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testFilterElement_ShortSyntax() {
+		$content = 'Lorem [e:element_name] ipsum';
+		$View = $this->getMock('View');
+		$Layout = new LayoutHelper($View);
+
+		$View
+			->expects($this->once())
+			->method('element')
+			->with(
+				$this->equalTo('element_name'),
+				$this->equalTo(array()),
+				$this->equalTo(array())
+			)
+			->will($this->returnValue('foobar'));
+		$result = $Layout->filterElements($content);
+
+		$expected = 'Lorem foobar ipsum';
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testFilterElement_MultipleElements() {
+		$content = 'Lorem [element:first] ipsum [element:second] dolor sit.';
+		$View = $this->getMock('View');
+		$Layout = new LayoutHelper($View);
+
+		$View
+			->expects($this->at(0))
+			->method('element')
+			->with($this->equalTo('first'))
+			->will($this->returnValue('LOREM'));
+		$View
+			->expects($this->at(1))
+			->method('element')
+			->with($this->equalTo('second'))
+			->will($this->returnValue('IPSUM'));
+		$result = $Layout->filterElements($content);
+
+		$expected = 'Lorem LOREM ipsum IPSUM dolor sit.';
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testFilterElement_ParseParams() {
+		$content = 'Lorem [element:first id=123 cache=var1 nextvar="with quotes" and=\'simple quotes\'] ipsum';
+		$View = $this->getMock('View');
+		$View->viewVars['block'] = array('title' => 'Hello world');
+		$Layout = new LayoutHelper($View);
+
+		$View
+			->expects($this->once())
+			->method('element')
+			->with(
+				$this->equalTo('first'),
+				$this->equalTo(array(
+					'id' => 123,
+					'nextvar' => 'with quotes',
+					'and' => 'simple quotes',
+					'block' => array('title' => 'Hello world')
+				)),
+				$this->equalTo(array('cache' => 'var1'))
+			);
+		$Layout->filterElements($content);
+	}
+
+	public function testFilterElement_ParamsValue_QuotedDigit() {
+		$content = 'Lorem [element:issue_list issuesToShow="5"]';
+		$View = $this->getMock('View');
+		$Layout = new LayoutHelper($View);
+
+		$View
+			->expects($this->once())
+			->method('element')
+			->with(
+				$this->equalTo('issue_list'),
+				$this->equalTo(array('issuesToShow' => '5')),
+				$this->equalTo(array())
+			);
+		$Layout->filterElements($content);
+	}
+
 }
