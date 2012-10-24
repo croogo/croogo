@@ -348,4 +348,20 @@ class LayoutHelperTest extends CroogoTestCase {
 		$Layout->filterElements($content);
 	}
 
+	public function testFilterElement_ParamsValueContainsEqual() {
+		$content = 'Lorem [element:map plugin="plugandrent" tricky-query="te=st" ]';
+		$View = $this->getMock('View');
+		$Layout = new LayoutHelper($View);
+
+		$View
+			->expects($this->once())
+			->method('element')
+			->with(
+				$this->equalTo('map'),
+				$this->equalTo(array('tricky-query' => 'te=st')),
+				$this->equalTo(array('plugin' => 'plugandrent'))
+			);
+		$Layout->filterElements($content);
+	}
+
 }
