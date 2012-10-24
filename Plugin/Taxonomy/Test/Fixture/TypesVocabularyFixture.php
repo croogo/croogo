@@ -10,7 +10,7 @@ class TypesVocabularyFixture extends CroogoTestFixture {
 		'vocabulary_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10),
 		'weight' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 	);
 
 	public $records = array(
