@@ -44,6 +44,7 @@ class User extends UsersAppModel {
 			'className' => 'CroogoAcl',
 			'type' => 'requester',
 		),
+		'Search.Searchable',
 	);
 
 /**
@@ -116,6 +117,18 @@ class User extends UsersAppModel {
 				'allowEmpty' => true,
 			),
 		),
+	);
+
+/**
+ * Filter search fields
+ *
+ * @var array
+ * @access public
+ */
+
+	public $filterArgs = array(
+		'name' => array('type' => 'like', 'field' => array('User.name', 'User.username')),
+		'role_id' => array('type' => 'value'),
 	);
 
 /**

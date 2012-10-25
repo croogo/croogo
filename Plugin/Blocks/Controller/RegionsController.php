@@ -24,6 +24,26 @@ class RegionsController extends BlocksAppController {
 	public $name = 'Regions';
 
 /**
+ * Components
+ *
+ * @var array
+ * @access public
+ */
+	public $components = array(
+		'Search.Prg'
+	);
+
+/**
+ * Preset Variables Search
+ *
+ * @var array
+ * @access public
+ */
+	public $presetVars = array(
+		'title' => array('type' => 'value'),
+	);
+
+/**
  * Models used by the Controller
  *
  * @var array
@@ -39,11 +59,14 @@ class RegionsController extends BlocksAppController {
  */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Region'));
+		$this->Prg->commonProcess();
+		$searchFields = array('title');
 
 		$this->Region->recursive = 0;
 		$this->paginate['Region']['order'] = 'Region.title ASC';
-		$this->set('regions', $this->paginate());
+		$this->set('regions', $this->paginate($this->Region->parseCriteria($this->passedArgs)));
 		$this->set('displayFields', $this->Region->displayFields());
+		$this->set('searchFields', $searchFields);
 	}
 
 /**

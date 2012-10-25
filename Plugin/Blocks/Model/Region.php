@@ -30,6 +30,7 @@ class Region extends BlocksAppModel {
  * @access public
  */
 	public $actsAs = array(
+		'Search.Searchable',
 		'Cached' => array(
 			'prefix' => array(
 				'region_',
@@ -61,6 +62,16 @@ class Region extends BlocksAppModel {
 				'message' => 'Alias cannot be empty.',
 			),
 		),
+	);
+
+/**
+ * Filter search fields
+ *
+ * @var array
+ * @access public
+ */
+	public $filterArgs = array(
+		'title' => array('type' => 'like', 'field' => array('Region.title'))
 	);
 
 /**

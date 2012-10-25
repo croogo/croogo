@@ -1,57 +1,29 @@
+<div class="nodes filter form">
 <?php
-	if (isset($this->params['named']['filter'])) {
-		$this->Html->scriptBlock('var filter = 1;', array('inline' => false));
-	}
-?>
-<div class="filter">
-<?php
-	echo $this->Form->create('Filter');
-	$filterType = '';
-	if (isset($filters['type'])) {
-		$filterType = $filters['type'];
-	}
-	$types = Set::sort($types, '{n}.Type.title', 'asc');
-	$types = Set::combine($types, '{n}.Type.alias', '{n}.Type.title');
-	echo $this->Form->input('Filter.type', array(
-		'options' => $types,
-		'empty' => true,
-		'value' => $filterType,
+	echo $this->Form->create('Node', array(
+		'url' => array_merge(array('action' => 'index'), $this->params['pass'])
 	));
-	$filterStatus = '';
-	if (isset($filters['status'])) {
-		$filterStatus = $filters['status'];
-	}
-	echo $this->Form->input('Filter.status', array(
+	echo $this->Form->input('type', array(
+		'empty' => true,
+		'options' => $nodeTypes
+	));
+	echo $this->Form->input('status', array(
+		'empty' => true,
 		'options' => array(
 			'1' => __('Published'),
 			'0' => __('Unpublished'),
 		),
-		'empty' => true,
-		'value' => $filterStatus,
 	));
-	$filterPromote = '';
-	if (isset($filters['promote'])) {
-		$filterPromote = $filters['promote'];
-	}
-	echo $this->Form->input('Filter.promote', array(
+	echo $this->Form->input('promote', array(
 		'label' => __('Promoted'),
+		'empty' => true,
 		'options' => array(
 			'1' => __('Yes'),
 			'0' => __('No'),
 		),
-		'empty' => true,
-		'value' => $filterPromote,
 	));
-
-	$filterSearch = '';
-	if (isset($this->params['named']['q'])) {
-		$filterSearch = $this->params['named']['q'];
-	}
-	echo $this->Form->input('Filter.q', array(
-		'label' => __('Search'),
-		'value' => $filterSearch,
-	));
+	echo $this->Form->input('filter', array('label' => __('Title')));
 	echo $this->Form->end(__('Filter'));
 ?>
-	<div class="clear">&nbsp;</div>
+<div class="clear">&nbsp;</div>
 </div>
