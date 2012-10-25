@@ -32,8 +32,14 @@ if (!isset($className)) {
 	</div>
 
 	<?php if ($contentBlock = $this->fetch('content')): ?>
-		<?php echo $contentBlock; ?>
-	<?php else: ?>
+		<?php
+		echo $this->element('admin/search');
+		echo $contentBlock;
+		?>
+	<?php
+		else:
+		echo $this->element('admin/search');
+	?>
 		<table cellpadding="0" cellspacing="0">
 		<?php
 		$tableHeaders = array();

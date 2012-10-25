@@ -48,3 +48,6 @@ if (!CakePlugin::loaded('Migrations')) {
 if (!CakePlugin::loaded('Settings')) {
 	CakePlugin::load('Settings');
 }
+if (!CakePlugin::loaded('Search')) {
+	CakePlugin::load('Search');
+}

@@ -32,6 +32,18 @@ class UsersController extends UsersAppController {
  */
 	public $components = array(
 		'Email',
+		'Search.Prg',
+	);
+
+/**
+ * Preset Variables Search
+ *
+ * @var array
+ * @access public
+ */
+	public $presetVars = array(
+		'name' => array('type' => 'value'),
+		'role_id' => array('type' => 'lookup', 'formField' => 'role_input', 'modelField' => 'title', 'model' => 'Role')
 	);
 
 /**
@@ -88,13 +100,20 @@ class UsersController extends UsersAppController {
  *
  * @return void
  * @access public
+ * $searchField : Identify fields for search
  */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Users'));
+		$this->Prg->commonProcess();
+		$searchFields = array('role_id', 'name');
 
 		$this->User->recursive = 0;
+		$this->paginate['conditions'] = $this->User->parseCriteria($this->passedArgs);
+
 		$this->set('users', $this->paginate());
+		$this->set('roles', $this->User->Role->find('list'));
 		$this->set('displayFields', $this->User->displayFields());
+		$this->set('searchFields', $searchFields);
 	}
 
 /**
