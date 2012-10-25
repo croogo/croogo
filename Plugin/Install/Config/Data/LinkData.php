@@ -119,7 +119,7 @@ class LinkData {
 			'title' => 'Log out',
 			'class' => 'log-out',
 			'description' => '',
-			'link' => '/users/logout',
+			'link' => '/plugin:users/controller:users/action:logout',
 			'target' => '',
 			'rel' => '',
 			'status' => '1',
