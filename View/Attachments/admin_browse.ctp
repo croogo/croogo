@@ -47,7 +47,7 @@
 				));
 			}
 
-			$insertCode = $this->Html->link(__('Insert'), '#', array('onclick' => 'selectURL("'.$attachment['Node']['slug'].'");'));
+			$insertCode = $this->Html->link(__('Insert'), '#', array('onclick' => 'selectURL("'.$attachment['Node']['slug'].'", "'.$attachment['Node']['title'].'", "'.$attachment['Node']['excerpt'].'" );'));
 
 			$rows[] = array(
 				$attachment['Node']['id'],
