@@ -96,19 +96,25 @@ class AclHelper extends Helper {
 /**
  * Check if url is allowed for the User
  *
+ * @param integer $userId User Id
+ * @param array|string $url link/url to check
  * @return boolean
  */
 	public function linkIsAllowedByUserId($userId, $url) {
-		if (isset($url['admin']) && $url['admin'] == true) {
-			$url['action'] = 'admin_' . $url['action'];
-		}
-		$plugin = empty($url['plugin']) ? null : Inflector::camelize($url['plugin']) . '/';
-		$path = '/:plugin/:controller/:action';
-		$path = str_replace(
-			array(':controller', ':action', ':plugin/'),
-			array(Inflector::camelize($url['controller']), $url['action'], $plugin),
-			'controllers/' . $path
+		if (is_array($url)) {
+			if (isset($url['admin']) && $url['admin'] == true && strpos($url['action'], 'admin_') == -1) {
+				$url['action'] = 'admin_' . $url['action'];
+			}
+			$plugin = empty($url['plugin']) ? null : Inflector::camelize($url['plugin']) . '/';
+			$path = '/:plugin/:controller/:action';
+			$path = str_replace(
+				array(':controller', ':action', ':plugin/'),
+				array(Inflector::camelize($url['controller']), $url['action'], $plugin),
+				'controllers/' . $path
 			);
+		} else {
+			$path = $url;
+		}
 		$linkAction = str_replace('//', '/', $path);
 		if (in_array($linkAction, $this->getAllowedActionsByUserId($userId))) {
 			return true;
