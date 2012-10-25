@@ -23,7 +23,7 @@ class TypeFixture extends CroogoTestFixture {
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'type_alias' => array('column' => 'alias', 'unique' => 1),
 			),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 	);
 
 	public $records = array(

@@ -14,7 +14,7 @@ class RoleFixture extends CroogoTestFixture {
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'role_alias' => array('column' => 'alias', 'unique' => 1),
 			),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 	);
 
 	public $records = array(

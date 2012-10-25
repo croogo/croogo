@@ -15,7 +15,7 @@ class SettingFixture extends CroogoTestFixture {
 		'weight' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'params' => array('type' => 'text', 'null' => false, 'default' => null),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'key' => array('column' => 'key', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 	);
 
 	public $records = array(

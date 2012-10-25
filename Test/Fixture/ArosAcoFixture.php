@@ -13,7 +13,7 @@ class ArosAcoFixture extends CroogoTestFixture {
 		'_update' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2),
 		'_delete' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 	);
 
 	public $records = array(

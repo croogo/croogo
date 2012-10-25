@@ -33,7 +33,7 @@ class NodesSchema extends CakeSchema {
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1)
 		),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 	);
 	
 	public $nodes_taxonomies = array(
@@ -41,6 +41,6 @@ class NodesSchema extends CakeSchema {
 		'node_id' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 20),
 		'taxonomy_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 	);
 }

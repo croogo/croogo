@@ -29,7 +29,7 @@ class FirstMigrationTaxonomy extends CakeMigration {
 					'indexes' => array(
 						'PRIMARY' => array('column' => 'id', 'unique' => 1)
 					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 				),
 				'terms' => array(
 					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
@@ -42,7 +42,7 @@ class FirstMigrationTaxonomy extends CakeMigration {
 						'PRIMARY' => array('column' => 'id', 'unique' => 1),
 						'slug' => array('column' => 'slug', 'unique' => 1)
 					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 				),
 				'types' => array(
 					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
@@ -63,7 +63,7 @@ class FirstMigrationTaxonomy extends CakeMigration {
 						'PRIMARY' => array('column' => 'id', 'unique' => 1),
 						'type_alias' => array('column' => 'alias', 'unique' => 1)
 					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 				),
 				'types_vocabularies' => array(
 					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
@@ -73,7 +73,7 @@ class FirstMigrationTaxonomy extends CakeMigration {
 					'indexes' => array(
 						'PRIMARY' => array('column' => 'id', 'unique' => 1)
 					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 				),
 				'vocabularies' => array(
 					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
@@ -91,7 +91,7 @@ class FirstMigrationTaxonomy extends CakeMigration {
 						'PRIMARY' => array('column' => 'id', 'unique' => 1),
 						'vocabulary_alias' => array('column' => 'alias', 'unique' => 1)
 					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 				),
 			),
 		),

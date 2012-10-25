@@ -31,7 +31,7 @@ class FirstMigrationSettings extends CakeMigration {
 					'indexes' => array(
 						'PRIMARY' => array('column' => 'id', 'unique' => 1)
 					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 				),
 				'settings' => array(
 					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'primary'),
@@ -47,7 +47,7 @@ class FirstMigrationSettings extends CakeMigration {
 						'PRIMARY' => array('column' => 'id', 'unique' => 1),
 						'key' => array('column' => 'key', 'unique' => 1)
 					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM')
+					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 				),
 			),
 		),
