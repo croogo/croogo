@@ -328,7 +328,7 @@ class LayoutHelper extends AppHelper {
 		preg_match_all('/\[(element|e):([A-Za-z0-9_\-\/]*)(.*?)\]/i', $content, $tagMatches);
 		$validOptions = array('plugin', 'cache', 'callbacks');
 		for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
-			$regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))*.)[\'"]?/i';
+			$regex = '/([\w-]+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))*.)[\'"]?/i';
 			preg_match_all($regex, $tagMatches[3][$i], $attributes);
 			$element = $tagMatches[2][$i];
 			$data = $options = array();
