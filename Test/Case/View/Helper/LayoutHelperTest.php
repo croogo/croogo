@@ -249,7 +249,7 @@ class LayoutHelperTest extends CroogoTestCase {
 /**
  * Test filterElements shortcode detection
  */
-	public function testFilterElement_WithoutAttributes() {
+	public function testFilterElementWithoutAttributes() {
 		$content = 'Lorem [element:element_name] ipsum';
 		$View = $this->getMock('View');
 		$Layout = new LayoutHelper($View);
@@ -269,7 +269,10 @@ class LayoutHelperTest extends CroogoTestCase {
 		$this->assertEquals($expected, $result);
 	}
 
-	public function testFilterElement_ShortSyntax() {
+/**
+ * Test filterElements with short syntax
+ */
+	public function testFilterElementShortSyntax() {
 		$content = 'Lorem [e:element_name] ipsum';
 		$View = $this->getMock('View');
 		$Layout = new LayoutHelper($View);
@@ -289,7 +292,10 @@ class LayoutHelperTest extends CroogoTestCase {
 		$this->assertEquals($expected, $result);
 	}
 
-	public function testFilterElement_MultipleElements() {
+/**
+ * Test filterElements with multiple elements
+ */
+	public function testFilterElementMultipleElements() {
 		$content = 'Lorem [element:first] ipsum [element:second] dolor sit.';
 		$View = $this->getMock('View');
 		$Layout = new LayoutHelper($View);
@@ -310,7 +316,10 @@ class LayoutHelperTest extends CroogoTestCase {
 		$this->assertEquals($expected, $result);
 	}
 
-	public function testFilterElement_ParseParams() {
+/**
+ * Test filterElements and parameter parsing
+ */
+	public function testFilterElementParseParams() {
 		$content = 'Lorem [element:first id=123 cache=var1 nextvar="with quotes" and=\'simple quotes\'] ipsum';
 		$View = $this->getMock('View');
 		$View->viewVars['block'] = array('title' => 'Hello world');
@@ -332,7 +341,10 @@ class LayoutHelperTest extends CroogoTestCase {
 		$Layout->filterElements($content);
 	}
 
-	public function testFilterElement_ParamsValue_QuotedDigit() {
+/**
+ * Test filterElements with quoted digits
+ */
+	public function testFilterElementParamsValueQuotedDigit() {
 		$content = 'Lorem [element:issue_list issuesToShow="5"]';
 		$View = $this->getMock('View');
 		$Layout = new LayoutHelper($View);
@@ -348,7 +360,10 @@ class LayoutHelperTest extends CroogoTestCase {
 		$Layout->filterElements($content);
 	}
 
-	public function testFilterElement_ParamsValueContainsEqual() {
+/**
+ * Test filterElements with value containing '=' sign
+ */
+	public function testFilterElementParamsValueContainsEqual() {
 		$content = 'Lorem [element:map plugin="plugandrent" tricky-query="te=st" ]';
 		$View = $this->getMock('View');
 		$Layout = new LayoutHelper($View);

@@ -160,7 +160,6 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
-
 /**
  * Migrate a plugin (database)
  *

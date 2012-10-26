@@ -11,10 +11,6 @@ class InstallTest extends CroogoTestCase {
 		$this->Install = ClassRegistry::init('Install.Install');
 	}
 
-	public function tearDown() {
-		parent::tearDown();
-	}
-
 	public function testRunMigrationsOk() {
 		$croogoPlugin = $this->getMock('CroogoPlugin');
 		$croogoPlugin->expects($this->any())
@@ -23,7 +19,7 @@ class InstallTest extends CroogoTestCase {
 		$this->_runProtectedMethod('_setCroogoPlugin', array($croogoPlugin));
 		$this->assertEquals(true, $this->Install->runMigrations('Users'));
 	}
-	
+
 	public function testRunMigrationsKo() {
 		$croogoPlugin = $this->getMock('CroogoPlugin');
 		$croogoPlugin->expects($this->any())

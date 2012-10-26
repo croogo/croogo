@@ -47,7 +47,7 @@ class CroogoPluginTest extends CakeTestCase {
 			->disableOriginalConstructor()
 			->getMock();
 	}
-	
+
 	public function testGetDataPluginNotActive() {
 		$actives = Configure::read('Hook.bootstraps');
 		Configure::write('Hook.bootstraps', '');
@@ -94,7 +94,6 @@ class CroogoPluginTest extends CakeTestCase {
 		$data = $this->CroogoPlugin->getData('EmptyJson');
 		$this->assertEquals(array(), $data);
 	}
-
 
 	public function testNeedMigrationPluginNotExists() {
 		$migrationVersion = $this->__getMockMigrationVersion();
@@ -189,7 +188,6 @@ class CroogoPluginTest extends CakeTestCase {
 
 		Configure::read('Hook.bootstraps', $actives);
 	}
-
 
 	public function testUnmigrate() {
 		$actives = Configure::read('Hook.bootstraps');

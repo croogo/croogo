@@ -125,7 +125,6 @@ class User extends UsersAppModel {
  * @var array
  * @access public
  */
-
 	public $filterArgs = array(
 		'name' => array('type' => 'like', 'field' => array('User.name', 'User.username')),
 		'role_id' => array('type' => 'value'),
