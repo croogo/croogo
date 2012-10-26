@@ -105,10 +105,14 @@ function selectURL(url, title, description) {
 	url = '%s' + url;
 
 	desc_field = window.top.opener.browserWin.document.forms[0].elements[2];
-	desc_field.value = description;
+	if (typeof description !== 'undefined') {
+		desc_field.value = description;
+	}
 
 	title_field = window.top.opener.browserWin.document.forms[0].elements[3];
-	title_field.value = title;
+	if (typeof title !== 'undefined') {
+		title_field.value = title;
+	}
 
 	field = window.top.opener.browserWin.document.forms[0].elements[window.top.opener.browserField];
 	field.value = url;
