@@ -36,18 +36,18 @@
 			$mimeType = $mimeType['0'];
 			if ($mimeType == 'image') {
 				$thumbnail = $this->Html->link($this->Image->resize($attachment['Node']['path'], 100, 200), '#', array(
-					'onclick' => "selectURL('".$attachment['Node']['slug']."');",
+					'onclick' => "selectURL('" . $attachment['Node']['slug'] . "');",
 					'escape' => false,
 				));
 			} else {
 				$thumbnail = $this->Html->image('/img/icons/page_white.png') . ' ' . $attachment['Node']['mime_type'] . ' (' . $this->Filemanager->filename2ext($attachment['Node']['slug']) . ')';
 				$thumbnail = $this->Html->link($thumbnail, '#', array(
-					'onclick' => "selectURL('".$attachment['Node']['slug']."');",
+					'onclick' => "selectURL('" . $attachment['Node']['slug'] . "');",
 					'escape' => false,
 				));
 			}
 
-			$insertCode = $this->Html->link(__('Insert'), '#', array('onclick' => 'selectURL("'.$attachment['Node']['slug'].'", "'.$attachment['Node']['title'].'", "'.$attachment['Node']['excerpt'].'" );'));
+			$insertCode = $this->Html->link(__('Insert'), '#', array('onclick' => 'selectURL("' . $attachment['Node']['slug'] . '", "' . $attachment['Node']['title'] . '", "' . $attachment['Node']['excerpt'] . '" );'));
 
 			$rows[] = array(
 				$attachment['Node']['id'],
