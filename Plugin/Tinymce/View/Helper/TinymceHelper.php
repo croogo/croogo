@@ -99,10 +99,16 @@ EOF;
  */
 	public function selectURL() {
 		$output = <<<EOF
-function selectURL(url) {
+function selectURL(url, title, description) {
 	if (url == '') return false;
 
 	url = '%s' + url;
+
+	desc_field = window.top.opener.browserWin.document.forms[0].elements[2];
+	desc_field.value = description;
+
+	title_field = window.top.opener.browserWin.document.forms[0].elements[3];
+	title_field.value = title;
 
 	field = window.top.opener.browserWin.document.forms[0].elements[window.top.opener.browserField];
 	field.value = url;
