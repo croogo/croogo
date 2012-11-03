@@ -7,7 +7,7 @@
 			<?php
 				echo $this->Html->link(__('Translate in a new language'), array(
 					'controller' => 'languages',
-					'action'=>'select',
+					'action' => 'select',
 					'nodes',
 					'translate',
 					$node['Node']['id'],
@@ -17,10 +17,10 @@
 		</ul>
 	</div>
 
-	<?php if (count($translations) > 0) { ?>
+	<?php if (count($translations) > 0): ?>
 	<table cellpadding="0" cellspacing="0">
 	<?php
-		$tableHeaders =  $this->Html->tableHeaders(array(
+		$tableHeaders = $this->Html->tableHeaders(array(
 			'',
 			//__('Id'),
 			__('Title'),
@@ -47,9 +47,7 @@
 		echo $tableHeaders;
 	?>
 	</table>
-	<?php
-		} else {
-			echo '<p>' . __('No translations available.') . '</p>';
-		}
-	?>
+	<?php else: ?>
+		<p><?php echo __('No translations available.'); ?></p>
+	<?php endif; ?>
 </div>

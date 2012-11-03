@@ -27,7 +27,7 @@
 			<div id="node-terms">
 			<?php
 				foreach ($taxonomy as $vocabularyId => $taxonomyTree) {
-					echo $this->Form->input('TaxonomyData.'.$vocabularyId, array(
+					echo $this->Form->input('TaxonomyData.' . $vocabularyId, array(
 						'label' => $vocabularies[$vocabularyId]['title'],
 						'type' => 'select',
 						'multiple' => true,

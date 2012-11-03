@@ -29,7 +29,7 @@
 			<?php
 				$taxonomyIds = Set::extract('/Taxonomy/id', $this->data);
 				foreach ($taxonomy as $vocabularyId => $taxonomyTree) {
-					echo $this->Form->input('TaxonomyData.'.$vocabularyId, array(
+					echo $this->Form->input('TaxonomyData.' . $vocabularyId, array(
 						'label' => $vocabularies[$vocabularyId]['title'],
 						'type' => 'select',
 						'multiple' => true,

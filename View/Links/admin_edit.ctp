@@ -20,7 +20,7 @@
 						'empty' => true,
 					));
 					echo $this->Form->input('title');
-					echo $this->Form->input('link') . 
+					echo $this->Form->input('link') .
 						$this->Html->link(__('Link to a Node'), Router::url(array(
 							'controller' => 'nodes',
 							'action' => 'index',

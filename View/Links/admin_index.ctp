@@ -23,7 +23,7 @@
 ?>
 <table cellpadding="0" cellspacing="0">
 <?php
-	$tableHeaders =  $this->Html->tableHeaders(array(
+	$tableHeaders = $this->Html->tableHeaders(array(
 		'',
 		__('Id'),
 		__('Title'),
@@ -43,7 +43,7 @@
 			null, __('Are you sure?'));
 
 		$rows[] = array(
-			$this->Form->checkbox('Link.'.$linkId.'.id'),
+			$this->Form->checkbox('Link.' . $linkId . '.id'),
 			$linkId,
 			$linkTitle,
 			$this->Layout->status($linksStatus[$linkId]),

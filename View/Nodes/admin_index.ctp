@@ -3,7 +3,7 @@ $this->extend('/Common/admin_index');
 $this->Html->script(array('nodes'), false);
 ?>
 <?php $this->start('tabs'); ?>
-	<li><?php echo $this->Html->link(__('Create content'), array('action'=>'create')); ?></li>
+	<li><?php echo $this->Html->link(__('Create content'), array('action' => 'create')); ?></li>
 <?php $this->end(); ?>
 
 <?php
@@ -18,7 +18,7 @@ echo $this->element('admin/nodes_filter');
 <?php echo $this->Form->create('Node', array('url' => array('controller' => 'nodes', 'action' => 'process'))); ?>
 <table cellpadding="0" cellspacing="0">
 <?php
-	$tableHeaders =  $this->Html->tableHeaders(array(
+	$tableHeaders = $this->Html->tableHeaders(array(
 		'',
 		$this->Paginator->sort('id'),
 		$this->Paginator->sort('title'),
@@ -40,7 +40,7 @@ echo $this->element('admin/nodes_filter');
 			null, __('Are you sure?'));
 
 		$rows[] = array(
-			$this->Form->checkbox('Node.'.$node['Node']['id'].'.id'),
+			$this->Form->checkbox('Node.' . $node['Node']['id'] . '.id'),
 			$node['Node']['id'],
 			$this->Html->link($node['Node']['title'], array(
 				'admin' => false,

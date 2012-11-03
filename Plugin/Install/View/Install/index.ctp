@@ -12,7 +12,7 @@
 		}
 
 		// config is writable
-		if (is_writable(APP.'Config')) {
+		if (is_writable(APP . 'Config')) {
 			echo '<p class="success">' . __('Your config directory is writable.') . '</p>';
 		} else {
 			$check = false;

@@ -5,8 +5,8 @@ $this->Html->script('/acl/js/acl_permissions.js', false);
 ?>
 
 <?php $this->start('tabs'); ?>
-<li><?php echo $this->Form->postLink(__('Generate Actions'), array('controller' => 'acl_actions', 'action'=>'generate', 'permissions' => 1)); ?></li>
-<li><?php echo $this->Html->link(__('Edit Actions'), array('controller' => 'acl_actions', 'action'=>'index', 'permissions' => 1)); ?></li>
+<li><?php echo $this->Form->postLink(__('Generate Actions'), array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1)); ?></li>
+<li><?php echo $this->Html->link(__('Edit Actions'), array('controller' => 'acl_actions', 'action' => 'index', 'permissions' => 1)); ?></li>
 <?php $this->end(); ?>
 
 <table cellpadding="0" cellspacing="0">
@@ -19,17 +19,17 @@ $this->Html->script('/acl/js/acl_permissions.js', false);
 		__('Alias'),
 	);
 	$tableHeaders = array_merge($tableHeaders, $roleTitles);
-	$tableHeaders =  $this->Html->tableHeaders($tableHeaders);
+	$tableHeaders = $this->Html->tableHeaders($tableHeaders);
 	echo $tableHeaders;
 
 	$currentController = '';
-	foreach ($acos AS $id => $alias) {
+	foreach ($acos as $id => $alias) {
 		$class = '';
-		if(substr($alias, 0, 1) == '_') {
+		if (substr($alias, 0, 1) == '_') {
 			$level = 1;
-			$class .= 'level-'.$level;
-			$oddOptions = array('class' => 'hidden controller-'.$currentController);
-			$evenOptions = array('class' => 'hidden controller-'.$currentController);
+			$class .= 'level-' . $level;
+			$oddOptions = array('class' => 'hidden controller-' . $currentController);
+			$evenOptions = array('class' => 'hidden controller-' . $currentController);
 			$alias = substr_replace($alias, '', 0, 1);
 		} else {
 			$level = 0;
@@ -44,7 +44,7 @@ $this->Html->script('/acl/js/acl_permissions.js', false);
 			$this->Html->div($class, $alias),
 		);
 
-		foreach ($roles AS $roleId => $roleTitle) {
+		foreach ($roles as $roleId => $roleTitle) {
 			if ($level != 0) {
 				if ($roleId != 1) {
 					if ($permissions[$id][$roleId] == 1) {

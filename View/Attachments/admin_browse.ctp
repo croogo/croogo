@@ -3,7 +3,7 @@
 
 	<div class="actions">
 		<ul>
-			<li><?php echo $this->Html->link(__('New Attachment'), array('action'=>'add', 'editor' => 1)); ?></li>
+			<li><?php echo $this->Html->link(__('New Attachment'), array('action' => 'add', 'editor' => 1)); ?></li>
 		</ul>
 	</div>
 

@@ -3,13 +3,13 @@
 
 	<div class="actions">
 		<ul>
-			<li><?php echo $this->Html->link(__('Upload'), array('action'=>'add')); ?></li>
+			<li><?php echo $this->Html->link(__('Upload'), array('action' => 'add')); ?></li>
 		</ul>
 	</div>
 
 	<table cellpadding="0" cellspacing="0">
 	<?php
-		$tableHeaders =  $this->Html->tableHeaders(array(
+		$tableHeaders = $this->Html->tableHeaders(array(
 			'',
 			__('Locale'),
 			__('Default'),
@@ -18,7 +18,7 @@
 		echo $tableHeaders;
 
 		$rows = array();
-		foreach ($locales AS $locale) {
+		foreach ($locales as $locale) {
 			$actions  = '';
 			$actions .= $this->Form->postLink(__('Activate'), array(
 				'action' => 'activate',
