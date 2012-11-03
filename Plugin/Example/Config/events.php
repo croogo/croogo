@@ -5,7 +5,7 @@ $config = array(
 		'Example.ExampleEventHandler' => array(
 			'options' => array(
 				'priority' => 1,
-				),
 			),
 		),
-	);
+	),
+);

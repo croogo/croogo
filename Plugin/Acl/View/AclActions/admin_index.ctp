@@ -6,14 +6,14 @@ $this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentR
 ?>
 
 <?php $this->start('tabs'); ?>
-<li><?php echo $this->Html->link(__('New Action'), array('action'=>'add')); ?></li>
-<li><?php echo $this->Html->link(__('Generate Actions'), array('action'=>'generate')); ?></li>
-<li><?php echo $this->Form->postLink(__('Sync Actions'), array('controller' => 'acl_actions', 'action'=>'generate', 'permissions' => 1, 'sync' => 1)); ?></li>
+<li><?php echo $this->Html->link(__('New Action'), array('action' => 'add')); ?></li>
+<li><?php echo $this->Html->link(__('Generate Actions'), array('action' => 'generate')); ?></li>
+<li><?php echo $this->Form->postLink(__('Sync Actions'), array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1, 'sync' => 1)); ?></li>
 <?php $this->end(); ?>
 
 <table class="permission-table" cellpadding="0" cellspacing="0">
 <?php
-	$tableHeaders =  $this->Html->tableHeaders(array(
+	$tableHeaders = $this->Html->tableHeaders(array(
 		__('Id'),
 		__('Alias'),
 		__('Actions'),
@@ -21,15 +21,15 @@ $this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentR
 	echo $tableHeaders;
 
 	$currentController = '';
-	foreach ($acos AS $acoIndex => $aco) {
+	foreach ($acos as $acoIndex => $aco) {
 		$id = $aco['Aco']['id'];
 		$alias = $aco['Aco']['alias'];
 		$class = '';
-		if(substr($alias, 0, 1) == '_') {
+		if (substr($alias, 0, 1) == '_') {
 			$level = 1;
-			$class .= 'level-'.$level;
-			$oddOptions = array('class' => 'hidden controller-'.$currentController);
-			$evenOptions = array('class' => 'hidden controller-'.$currentController);
+			$class .= 'level-' . $level;
+			$oddOptions = array('class' => 'hidden controller-' . $currentController);
+			$evenOptions = array('class' => 'hidden controller-' . $currentController);
 			$alias = substr_replace($alias, '', 0, 1);
 		} else {
 			$level = 0;

@@ -21,11 +21,11 @@
 		$actions .= ' ' . $this->Html->link(__('Edit'), array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id']));
 		$actions .= ' ' . $this->Croogo->adminRowActions($block['Block']['id']);
 		$actions .= ' ' . $this->Layout->processLink(__('Delete'),
-			'#Block' . $block['Block']['id'] .'Id',
+			'#Block' . $block['Block']['id'] . 'Id',
 			null, __('Are you sure?'));
 
 		$rows[] = array(
-			$this->Form->checkbox('Block.'.$block['Block']['id'].'.id'),
+			$this->Form->checkbox('Block.' . $block['Block']['id'] . '.id'),
 			$block['Block']['id'],
 			$this->Html->link($block['Block']['title'], array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id'])),
 			$block['Block']['alias'],

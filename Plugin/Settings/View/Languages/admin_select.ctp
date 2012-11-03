@@ -3,7 +3,7 @@
 
 	<div class="actions">
 		<ul>
-			<li><?php echo $this->Html->link(__('New Language'), array('action'=>'add')); ?></li>
+			<li><?php echo $this->Html->link(__('New Language'), array('action' => 'add')); ?></li>
 		</ul>
 	</div>
 

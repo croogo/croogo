@@ -20,7 +20,7 @@
 <div class="directory-content">
 	<table cellpadding="0" cellspacing="0">
 	<?php
-		$tableHeaders =  $this->Html->tableHeaders(array(
+		$tableHeaders = $this->Html->tableHeaders(array(
 			'',
 			__('Directory content'),
 			__('Actions'),
@@ -30,16 +30,16 @@
 		// directories
 		$rows = array();
 		foreach ($content['0'] as $directory) {
-			$actions = $this->FileManager->linkDirectory(__('Open'), $path.$directory.DS);
-			if ($this->FileManager->inPath($deletablePaths, $path.$directory)) {
+			$actions = $this->FileManager->linkDirectory(__('Open'), $path . $directory . DS);
+			if ($this->FileManager->inPath($deletablePaths, $path . $directory)) {
 				$actions .= ' ' . $this->FileManager->link(__('Delete'), array(
 					'controller' => 'file_manager',
 					'action' => 'delete_directory',
-				), $path.$directory);
+				), $path . $directory);
 			}
 			$rows[] = array(
 				$this->Html->image('/img/icons/folder.png'),
-				$this->FileManager->linkDirectory($directory, $path.$directory.DS),
+				$this->FileManager->linkDirectory($directory, $path . $directory . DS),
 				$actions,
 			);
 		}
@@ -48,16 +48,16 @@
 		// files
 		$rows = array();
 		foreach ($content['1'] as $file) {
-			$actions = $this->FileManager->link(__('Edit'), array('controller' => 'file_manager', 'action' => 'editfile'), $path.$file);
-			if ($this->FileManager->inPath($deletablePaths, $path.$file)) {
+			$actions = $this->FileManager->link(__('Edit'), array('controller' => 'file_manager', 'action' => 'editfile'), $path . $file);
+			if ($this->FileManager->inPath($deletablePaths, $path . $file)) {
 				$actions .= $this->FileManager->link(__('Delete'), array(
 					'controller' => 'file_manager',
 					'action' => 'delete_file',
-				), $path.$file);
+				), $path . $file);
 			}
 			$rows[] = array(
-				$this->Html->image('/img/icons/'.$this->FileManager->filename2icon($file)),
-				$this->FileManager->linkFile($file, $path.$file),
+				$this->Html->image('/img/icons/' . $this->FileManager->filename2icon($file)),
+				$this->FileManager->linkFile($file, $path . $file),
 				$actions,
 			);
 		}

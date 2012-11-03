@@ -4,46 +4,46 @@
  *
  * example_routes.php will be loaded in main app/config/routes.php file.
  */
-	Croogo::hookRoutes('Example');
+Croogo::hookRoutes('Example');
 
 /**
  * Behavior
  *
  * This plugin's Example behavior will be attached whenever Node model is loaded.
  */
-	Croogo::hookBehavior('Node', 'Example.Example', array());
+Croogo::hookBehavior('Node', 'Example.Example', array());
 
 /**
  * Component
  *
  * This plugin's Example component will be loaded in ALL controllers.
  */
-	Croogo::hookComponent('*', 'Example.Example');
+Croogo::hookComponent('*', 'Example.Example');
 
 /**
  * Helper
  *
  * This plugin's Example helper will be loaded via NodesController.
  */
-	Croogo::hookHelper('Nodes', 'Example.Example');
+Croogo::hookHelper('Nodes', 'Example.Example');
 
 /**
  * Admin menu (navigation)
  */
-	CroogoNav::add('extensions.children.example', array(
-		'title' => __('Example'),
-		'url' => '#',
-		'children' => array(
-			'example1' => array(
-				'title' => __('Example 1'),
-				'url' => '#',
-			),
-			'example2' => array(
-				'title' => __('Example 2'),
-				'url' => '#',
-			),
+CroogoNav::add('extensions.children.example', array(
+	'title' => __('Example'),
+	'url' => '#',
+	'children' => array(
+		'example1' => array(
+			'title' => __('Example 1'),
+			'url' => '#',
 		),
-	));
+		'example2' => array(
+			'title' => __('Example 2'),
+			'url' => '#',
+		),
+	),
+));
 
 /**
  * Admin row action
@@ -51,7 +51,7 @@
  * When browsing the content list in admin panel (Content > List),
  * an extra link called 'Example' will be placed under 'Actions' column.
  */
-	Croogo::hookAdminRowAction('Nodes/admin_index', 'Example', 'plugin:example/controller:example/action:index/:id');
+Croogo::hookAdminRowAction('Nodes/admin_index', 'Example', 'plugin:example/controller:example/action:index/:id');
 
 /**
  * Admin tab
@@ -61,5 +61,5 @@
  *
  * Useful for adding form extra form fields if necessary.
  */
-	Croogo::hookAdminTab('Nodes/admin_add', 'Example', 'example.admin_tab_node');
-	Croogo::hookAdminTab('Nodes/admin_edit', 'Example', 'example.admin_tab_node');
+Croogo::hookAdminTab('Nodes/admin_add', 'Example', 'example.admin_tab_node');
+Croogo::hookAdminTab('Nodes/admin_edit', 'Example', 'example.admin_tab_node');

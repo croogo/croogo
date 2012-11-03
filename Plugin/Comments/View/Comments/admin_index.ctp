@@ -1,8 +1,8 @@
 <?php $this->extend('/Common/admin_index'); ?>
 
 <?php $this->start('tabs'); ?>
-	<li><?php echo $this->Html->link(__('Published'), array('action'=>'index', 'filter' => 'status:1;')); ?></li>
-	<li><?php echo $this->Html->link(__('Approval'), array('action'=>'index', 'filter' => 'status:0;')); ?></li>
+	<li><?php echo $this->Html->link(__('Published'), array('action' => 'index', 'filter' => 'status:1;')); ?></li>
+	<li><?php echo $this->Html->link(__('Approval'), array('action' => 'index', 'filter' => 'status:0;')); ?></li>
 <?php $this->end(); ?>
 
 
@@ -40,7 +40,7 @@ if (isset($this->params['named'])) {
 			null, __('Are you sure?'));
 
 		$rows[] = array(
-			$this->Form->checkbox('Comment.'.$comment['Comment']['id'].'.id'),
+			$this->Form->checkbox('Comment.' . $comment['Comment']['id'] . '.id'),
 			$comment['Comment']['id'],
 			//$comment['Comment']['title'],
 			$comment['Comment']['name'],

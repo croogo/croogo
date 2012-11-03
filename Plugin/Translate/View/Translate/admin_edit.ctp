@@ -20,8 +20,8 @@ $this->set('className', 'translate');
 
 		<div id="record-main">
 		<?php
-			foreach ($fields AS $field) {
-				echo $this->Form->input($modelAlias.'.'.$field);
+			foreach ($fields as $field) {
+				echo $this->Form->input($modelAlias . '.' . $field);
 			}
 		 ?>
 		 </div>

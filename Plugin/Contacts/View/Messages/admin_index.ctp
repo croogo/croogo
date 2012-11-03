@@ -1,8 +1,8 @@
 <?php $this->extend('/Common/admin_index'); ?>
 
 <?php $this->start('tabs'); ?>
-<li><?php echo $this->Html->link(__('Unread'), array('action'=>'index', 'filter' => 'status:0;')); ?></li>
-<li><?php echo $this->Html->link(__('Read'), array('action'=>'index', 'filter' => 'status:1;')); ?></li>
+<li><?php echo $this->Html->link(__('Unread'), array('action' => 'index', 'filter' => 'status:0;')); ?></li>
+<li><?php echo $this->Html->link(__('Read'), array('action' => 'index', 'filter' => 'status:1;')); ?></li>
 <?php $this->end(); ?>
 
 <?php
@@ -37,7 +37,7 @@
 			null, __('Are you sure?'));
 
 		$rows[] = array(
-			$this->Form->checkbox('Message.'.$message['Message']['id'].'.id'),
+			$this->Form->checkbox('Message.' . $message['Message']['id'] . '.id'),
 			$message['Message']['id'],
 			$message['Contact']['title'],
 			$message['Message']['name'],

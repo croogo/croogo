@@ -23,7 +23,7 @@
 			<div id="node-main">
 			<?php
 				foreach ($fields as $field) {
-					echo $this->Form->input('Node.'.$field);
+					echo $this->Form->input('Node.' . $field);
 				}
 			 ?>
 			 </div>

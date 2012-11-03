@@ -48,39 +48,39 @@
  * Inflector::rules('plural', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
  *
  */
-	App::uses('CakeLog', 'Log');
-	App::uses('CroogoPlugin', 'Extensions.Lib');
-	App::uses('CroogoEventManager', 'Event');
-	App::uses('Croogo', 'Lib');
-	App::uses('CroogoNav', 'Lib');
-	CakePlugin::load(array('Extensions'), array('bootstrap' => true));
-	require_once 'croogo_bootstrap.php';
+App::uses('CakeLog', 'Log');
+App::uses('CroogoPlugin', 'Extensions.Lib');
+App::uses('CroogoEventManager', 'Event');
+App::uses('Croogo', 'Lib');
+App::uses('CroogoNav', 'Lib');
+CakePlugin::load(array('Extensions'), array('bootstrap' => true));
+require_once 'croogo_bootstrap.php';
 
-	// Load Install plugin
-	if (Configure::read('Security.salt') == 'f78b12a5c38e9e5c6ae6fbd0ff1f46c77a1e3' ||
-		Configure::read('Security.cipherSeed') == '60170779348589376') {
-		$_securedInstall = false;
-	}
-	Configure::write('Install.secured', !isset($_securedInstall));
-	Configure::write('Install.installed',
-		file_exists(APP . 'Config' . DS . 'database.php') &&
-		file_exists(APP . 'Config' . DS . 'settings.json') &&
-		file_exists(APP . 'Config' . DS . 'croogo.php')
-	);
-	if (!Configure::read('Install.installed') || !Configure::read('Install.secured')) {
-		CakePlugin::load('Install', array('routes' => true));
-	}
-	Configure::write('Dispatcher.filters', array(
-		'AssetDispatcher',
-		'CacheDispatcher'
-	));
-	CakeLog::config('debug', array(
-		'engine' => 'FileLog',
-		'types' => array('notice', 'info', 'debug'),
-		'file' => 'debug',
-		));
-	CakeLog::config('error', array(
-		'engine' => 'FileLog',
-		'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
-		'file' => 'error',
-		));
+// Load Install plugin
+if (Configure::read('Security.salt') == 'f78b12a5c38e9e5c6ae6fbd0ff1f46c77a1e3' ||
+	Configure::read('Security.cipherSeed') == '60170779348589376') {
+	$_securedInstall = false;
+}
+Configure::write('Install.secured', !isset($_securedInstall));
+Configure::write('Install.installed',
+	file_exists(APP . 'Config' . DS . 'database.php') &&
+	file_exists(APP . 'Config' . DS . 'settings.json') &&
+	file_exists(APP . 'Config' . DS . 'croogo.php')
+);
+if (!Configure::read('Install.installed') || !Configure::read('Install.secured')) {
+	CakePlugin::load('Install', array('routes' => true));
+}
+Configure::write('Dispatcher.filters', array(
+	'AssetDispatcher',
+	'CacheDispatcher'
+));
+CakeLog::config('debug', array(
+	'engine' => 'FileLog',
+	'types' => array('notice', 'info', 'debug'),
+	'file' => 'debug',
+));
+CakeLog::config('error', array(
+	'engine' => 'FileLog',
+	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
+	'file' => 'error',
+));

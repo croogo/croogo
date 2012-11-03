@@ -8,7 +8,7 @@ $this->name = 'translate';
 echo $this->Html->link(__('Translate in a new language'), array(
 	'plugin' => 'settings',
 	'controller' => 'languages',
-	'action'=>'select',
+	'action' => 'select',
 	$record[$modelAlias]['id'],
 	$modelAlias,
 ));
@@ -18,7 +18,7 @@ echo $this->Html->link(__('Translate in a new language'), array(
 <?php if (count($translations) > 0): ?>
 	<table cellpadding="0" cellspacing="0">
 	<?php
-		$tableHeaders =  $this->Html->tableHeaders(array(
+		$tableHeaders = $this->Html->tableHeaders(array(
 			'',
 			//__('Id'),
 			__('Title'),
@@ -28,7 +28,7 @@ echo $this->Html->link(__('Translate in a new language'), array(
 		echo $tableHeaders;
 
 		$rows = array();
-		foreach ($translations AS $translation) {
+		foreach ($translations as $translation) {
 			$actions  = $this->Html->link(__('Edit'), array(
 				'action' => 'edit',
 				$id,

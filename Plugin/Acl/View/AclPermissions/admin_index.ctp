@@ -7,7 +7,7 @@ $this->Html->script('/acl/js/acl_permissions.js', false);
 <?php $this->start('tabs'); ?>
 <li><?php echo $this->Form->postLink(__('Generate Actions'), array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1)); ?></li>
 <li><?php echo $this->Form->postLink(__('Sync Actions'), array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1, 'sync' => 1)); ?></li>
-<li><?php echo $this->Html->link(__('Edit Actions'), array('controller' => 'acl_actions', 'action'=>'index', 'permissions' => 1)); ?></li>
+<li><?php echo $this->Html->link(__('Edit Actions'), array('controller' => 'acl_actions', 'action' => 'index', 'permissions' => 1)); ?></li>
 <?php $this->end(); ?>
 
 <table class="permission-table" cellpadding="0" cellspacing="0">
@@ -20,15 +20,15 @@ $this->Html->script('/acl/js/acl_permissions.js', false);
 		__('Alias'),
 	);
 	$tableHeaders = array_merge($tableHeaders, $roleTitles);
-	$tableHeaders =  $this->Html->tableHeaders($tableHeaders);
+	$tableHeaders = $this->Html->tableHeaders($tableHeaders);
 	echo $tableHeaders;
 
 	$currentController = '';
-	foreach ($acos AS $index => $aco) {
+	foreach ($acos as $index => $aco) {
 		$id = $aco['Aco']['id'];
 		$alias = $aco['Aco']['alias'];
 		$class = '';
-		if(substr($alias, 0, 1) == '_') {
+		if (substr($alias, 0, 1) == '_') {
 			$level = 1;
 			$class .= 'level-' . $level;
 			$oddOptions = array('class' => 'hidden controller-' . $currentController);
@@ -54,7 +54,7 @@ $this->Html->script('/acl/js/acl_permissions.js', false);
 				)),
 		);
 
-		foreach ($roles AS $roleId => $roleTitle) {
+		foreach ($roles as $roleId => $roleTitle) {
 			$row[] = '';
 		}
 

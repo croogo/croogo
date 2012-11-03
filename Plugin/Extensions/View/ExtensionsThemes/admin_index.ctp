@@ -37,7 +37,7 @@
 		<h3><?php echo __('Available Themes'); ?></h3>
 		<ul>
 		<?php
-			foreach ($themesData AS $themeAlias => $theme) {
+			foreach ($themesData as $themeAlias => $theme) {
 				if ($themeAlias != Configure::read('Site.theme') &&
 					(!isset($theme['adminOnly']) || $theme['adminOnly'] != 'true') &&
 					!($themeAlias == 'default' && !Configure::read('Site.theme'))) {

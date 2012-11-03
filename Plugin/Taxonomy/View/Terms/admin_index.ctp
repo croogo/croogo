@@ -21,7 +21,7 @@
 ?>
 <table cellpadding="0" cellspacing="0">
 <?php
-	$tableHeaders =  $this->Html->tableHeaders(array(
+	$tableHeaders = $this->Html->tableHeaders(array(
 		'',
 		__('Id'),
 		__('Title'),

@@ -2,7 +2,7 @@
 
 <table cellpadding="0" cellspacing="0">
 <?php
-	$tableHeaders =  $this->Html->tableHeaders(array(
+	$tableHeaders = $this->Html->tableHeaders(array(
 		$this->Paginator->sort('id'),
 		$this->Paginator->sort('title'),
 		$this->Paginator->sort('native'),

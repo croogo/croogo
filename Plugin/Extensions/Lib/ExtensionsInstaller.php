@@ -67,28 +67,28 @@ class ExtensionsInstaller {
 		if ($Zip->open($path) === true) {
 			$search = 'Config/plugin.json';
 			$indexJson = $Zip->locateName('plugin.json', ZIPARCHIVE::FL_NODIR);
-			if ($indexJson === FALSE) {
+			if ($indexJson === false) {
 				throw new CakeException(__('Invalid zip archive'));
 			} else {
 				$fileName = $Zip->getNameIndex($indexJson);
 				$fileJson = json_decode($Zip->getFromIndex($indexJson));
-				
+
 				if (empty($fileJson->name)) {
 					throw new CakeException(__('Invalid plugin'));
 				}
-				
+
 				$this->_rootPath[$path] = str_replace($search, '', $fileName);
 				$plugin = $fileJson->name;
-				
+
 				$searches = array(
 					$plugin . 'Activation.php',
 					$plugin . 'AppController.php',
 					$plugin . 'AppModel.php',
 					$plugin . 'Helper.php'
 				);
-				
+
 				foreach ($searches as $search) {
-					if ($Zip->locateName($search, ZIPARCHIVE::FL_NODIR) === FALSE) {
+					if ($Zip->locateName($search, ZIPARCHIVE::FL_NODIR) === false) {
 						throw new CakeException(__('Invalid plugin'));
 					}
 				}

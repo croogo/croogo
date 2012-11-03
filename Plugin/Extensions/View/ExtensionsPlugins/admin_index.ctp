@@ -9,7 +9,7 @@ $this->name = 'extensions-plugins';
 
 <table cellpadding="0" cellspacing="0">
 <?php
-	$tableHeaders =  $this->Html->tableHeaders(array(
+	$tableHeaders = $this->Html->tableHeaders(array(
 		'',
 		__('Alias'),
 		__('Name'),
@@ -20,7 +20,7 @@ $this->name = 'extensions-plugins';
 	echo $tableHeaders;
 
 	$rows = array();
-	foreach ($plugins AS $pluginAlias => $pluginData) {
+	foreach ($plugins as $pluginAlias => $pluginData) {
 		if (in_array($pluginAlias, $corePlugins)) {
 			continue;
 		}
@@ -32,7 +32,7 @@ $this->name = 'extensions-plugins';
 			$icon = 'cross.png';
 			$toggleText = __('Activate');
 		}
-		$iconImage = $this->Html->image('icons/'.$icon);
+		$iconImage = $this->Html->image('icons/' . $icon);
 
 		$actions  = '';
 		$actions .= ' ' . $this->Form->postLink($toggleText, array(

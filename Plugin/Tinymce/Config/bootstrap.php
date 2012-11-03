@@ -28,4 +28,3 @@ foreach (Configure::read('Tinymce.actions') as $action => $settings) {
 	Croogo::hookHelper($actionE['0'], 'Tinymce.Tinymce');
 }
 Croogo::hookHelper('Attachments', 'Tinymce.Tinymce');
-
