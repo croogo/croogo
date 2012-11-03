@@ -65,9 +65,9 @@ class AppModel extends Model {
  *
  * Caching can be done either by unique names,
  * or prefixes where a hashed value of $options array is appended to the name
- * 
- * @param mixed $type 
- * @param array $options 
+ *
+ * @param mixed $type
+ * @param array $options
  * @return mixed
  * @access public
  */

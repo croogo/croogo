@@ -1,4 +1,5 @@
 <?php
+
 	function rss_transform($item) {
 		return array(
 			'title' => $item['Node']['title'],

@@ -73,7 +73,7 @@ class CroogoRouter {
 
 /**
  * Routes for content types
- * 
+ *
  * @param string $alias
  * @return void
  */
@@ -98,7 +98,7 @@ class CroogoRouter {
 
 /**
  * Apply routes for content types with routes enabled
- * 
+ *
  * @return void
  */
 	public static function routableContentTypes() {

@@ -20,8 +20,8 @@ class AppHelper extends Helper {
 /**
  * Url helper function
  *
- * @param string $url 
- * @param bool $full 
+ * @param string $url
+ * @param bool $full
  * @return mixed
  * @access public
  */

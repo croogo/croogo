@@ -44,7 +44,7 @@ $failedLoginDuration = 300;
 Configure::write('User.failed_login_limit', 5);
 Configure::write('User.failed_login_duration', $failedLoginDuration);
 Cache::config('users_login', array_merge($cacheConfig, array(
-	'duration' => '+' . $failedLoginDuration. ' seconds',
+	'duration' => '+' . $failedLoginDuration . ' seconds',
 )));
 
 /**
