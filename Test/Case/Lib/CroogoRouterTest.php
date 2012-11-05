@@ -24,6 +24,7 @@ class CroogoRouterTest extends CroogoTestCase {
 		$result = Router::reverse($params);
 		$this->assertEquals('/nodes/nodes/index/type:blog', $result);
 
+		Router::$routes = array();
 		CroogoRouter::contentType('blog');
 		$result = Router::reverse($params);
 		$this->assertEquals('/blog', $result);
@@ -63,6 +64,7 @@ class CroogoRouterTest extends CroogoTestCase {
 
 		$type['Type']['params'] = 'routes=1';
 		$Type->save($type);
+		Router::$routes = array();
 		CroogoRouter::routableContentTypes();
 
 		$result = Router::reverse($params);
