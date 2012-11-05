@@ -80,6 +80,9 @@ class ExampleActivation {
 				'Link.link' => 'plugin:example/controller:example/action:index',
 			),
 		));
+		if (!$link) {
+			return;
+		}
 		$this->Link->Behaviors->attach('Tree', array(
 			'scope' => array(
 				'Link.menu_id' => $link['Link']['menu_id'],
