@@ -94,20 +94,27 @@ class CroogoControllerTestCase extends ControllerTestCase {
 /**
  * Helper to expect a Session->setFlash and redirect
  *
- * @param string $class
- * @param string $message
+ * @param string $message expected message that will be passed to setFlash()
+ * @param string $class class name, when null current class will be used
+ * @param array $flashOptions expected SessionComponent::setFlash arguments
  */
-	public function expectFlashAndRedirect($message = '', $class = false) {
+	public function expectFlashAndRedirect($message = '', $class = false, $flashOptions = array()) {
 		if (!$class) {
 			$class = substr(get_class($this), 0, -4);
 		}
+		$flashOptions = Hash::merge(array(
+			'element' => 'default',
+			'params' => array(
+				'class' => 'success',
+			),
+		), $flashOptions);
 		$this->{$class}->Session
 			->expects($this->once())
 			->method('setFlash')
 			->with(
 				$this->equalTo($message),
-				$this->equalTo('default'),
-				$this->equalTo(array('class' => 'success'))
+				$this->equalTo($flashOptions['element']),
+				$this->equalTo($flashOptions['params'])
 			);
 		$this->{$class}
 			->expects($this->once())

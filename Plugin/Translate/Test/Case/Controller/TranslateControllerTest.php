@@ -60,9 +60,12 @@ class TranslateControllerTest extends CroogoControllerTestCase {
  * test admin_edit action with invalid language
  */
 	public function testAdminEditWithBogusLanguage() {
+		$this->expectFlashAndRedirect('Invalid Language', null, array(
+			'params' => array(
+				'class' => 'error',
+			),
+		));
 		$this->testAction('/admin/translate/translate/edit/2/Node/locale:lol');
-		$this->assertEquals('Node', $this->vars['modelAlias']);
-		$this->assertFalse($this->vars['language']);
 	}
 
 /**

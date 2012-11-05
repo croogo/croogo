@@ -123,7 +123,7 @@ class TranslateController extends TranslateAppController {
 		));
 		if (!isset($language['Language']['id'])) {
 			$this->Session->setFlash(__('Invalid Language'), 'default', array('class' => 'error'));
-			$this->redirect(array(
+			return $this->redirect(array(
 				'plugin' => $plugin,
 				'controller' => Inflector::pluralize($modelAlias),
 				'action' => 'index',
