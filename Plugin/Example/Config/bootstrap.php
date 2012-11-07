@@ -41,6 +41,23 @@ CroogoNav::add('extensions.children.example', array(
 		'example2' => array(
 			'title' => __('Example 2'),
 			'url' => '#',
+			'children' => array(
+				'example-2-1' => array(
+					'title' => 'Example 2-1',
+					'url' => '#',
+					'children' => array(
+						'example-2-1-1' => array(
+							'title' => 'Example 2-1-1',
+							'url' => '#',
+							'children' => array(
+								'example-2-1-1-1' => array(
+									'title' => 'Example 2-1-1-1',
+								),
+							),
+						),
+					),
+				),
+			),
 		),
 	),
 ));
