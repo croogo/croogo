@@ -98,10 +98,10 @@ class TaxonomiesHelper extends AppHelper {
  * Hook admin tabs when $taxonomy is set
  */
 	protected function _adminTabs() {
-		if (empty($this->_View->viewVars['taxonomy'])) {
+		$controller = Inflector::camelize($this->request->params['controller']);
+		if (empty($this->_View->viewVars['taxonomy']) || $controller == 'Terms') {
 			return;
 		}
-		$controller = Inflector::camelize($this->request->params['controller']);
 		$title = __('Terms');
 		$element = 'Taxonomy.admin/terms_tab';
 		Croogo::hookAdminTab("$controller/admin_add", $title, $element);
