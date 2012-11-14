@@ -132,6 +132,9 @@ Nodes.slug = function() {
 
 Nodes.confirmProcess = function(confirmMessage) {
 	var action = $('#NodeAction :selected');
+	if (action.val() == '') {
+		confirmMessage = 'Please select an action';
+	}
 	if (confirmMessage == undefined) {
 		confirmMessage = 'Are you sure?';
 	} else {
