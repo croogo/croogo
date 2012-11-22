@@ -31,6 +31,9 @@ class CroogoJsonReader implements ConfigReaderInterface {
 
 /**
  * Read an json file and return the results as an array.
+ *
+ * @params $key string name key to read
+ * @throws ConfigureException
  */
 	public function read($key) {
 		if (strpos($key, '..') !== false) {

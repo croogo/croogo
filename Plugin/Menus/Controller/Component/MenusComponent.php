@@ -121,7 +121,6 @@ class MenusComponent extends Component {
 				$this->menusForLayout[$menuAlias]['threaded'] = $links;
 			}
 		}
-
 	}
 
 }

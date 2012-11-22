@@ -106,7 +106,7 @@ class AclAco extends AclNode {
 
 		$this->createFromPath($action);
 		$Permission = ClassRegistry::init('Acl.AclPermission');
-		foreach ($roles AS $roleId => $roleAlias) {
+		foreach ($roles as $roleId => $roleAlias) {
 			$Permission->allow(array('model' => 'Role', 'foreign_key' => $roleId), $action);
 		}
 	}

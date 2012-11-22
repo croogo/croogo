@@ -143,7 +143,7 @@ class CroogoNav extends Object {
  * @return array
  */
 	public static function getDefaults() {
-	    return self::$_defaults;
+		return self::$_defaults;
 	}
 
 }

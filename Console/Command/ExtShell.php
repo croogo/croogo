@@ -106,15 +106,15 @@ class ExtShell extends AppShell {
 			return false;
 		}
 		switch ($method) {
-		case 'list':
-			$call = Inflector::pluralize($type);
-			return $this->{$call}($ext);
-		default:
-			if (empty($ext)) {
-				$this->err(__('%s name must be provided.', ucfirst($type)));
-				return false;
-			}
-			return $this->{'_' . $method . ucfirst($type)}($ext);
+			case 'list':
+				$call = Inflector::pluralize($type);
+				return $this->{$call}($ext);
+			default:
+				if (empty($ext)) {
+					$this->err(__('%s name must be provided.', ucfirst($type)));
+					return false;
+				}
+				return $this->{'_' . $method . ucfirst($type)}($ext);
 		}
 	}
 
@@ -148,8 +148,7 @@ class ExtShell extends AppShell {
 				'short' => 'f',
 				'boolean' => true,
 				'help' => 'Force method operation even when plugin does not provide a `plugin.json` file.'
-			))
-			;
+			));
 	}
 
 /**

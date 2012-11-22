@@ -95,8 +95,7 @@ class SettingsShell extends AppShell {
 						),
 					),
 				)
-			))
-			;
+			));
 	}
 
 /**

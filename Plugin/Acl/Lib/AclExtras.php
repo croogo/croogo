@@ -69,7 +69,6 @@ class AclExtras extends Object {
  **/
 	protected $_clean = false;
 
-
 /**
  * array of output messages
  */
@@ -134,7 +133,7 @@ class AclExtras extends Object {
  *
  * @return bool
  */
-	function aco_update_contents($params = array())  {
+	public function aco_update_contents($params = array()) {
 		list($plugin, $model) = pluginSplit($this->args[0]);
 		App::uses($model, $plugin . '.Model');
 		if (!class_exists($model)) {
