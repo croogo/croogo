@@ -22,6 +22,7 @@ class AppHelperTest extends CroogoTestCase {
 
 	public function setUp() {
 		parent::setUp();
+		CakePlugin::load('Translate', array('bootstrap' => true));
 		$this->View = new View(null);
 		$this->AppHelper = new AppHelper($this->View);
 		$this->AppHelper->request = new CakeRequest(null, false);
