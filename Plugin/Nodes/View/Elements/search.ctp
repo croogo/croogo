@@ -21,7 +21,7 @@
 				'name' => 'q',
 				'value' => $qValue,
 			));
-			echo $this->Form->submit(__('Search'));
+			echo $this->Form->button(__('Search'));
 		?>
 		</form>
 	</div>

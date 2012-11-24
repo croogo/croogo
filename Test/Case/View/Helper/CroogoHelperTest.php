@@ -72,7 +72,7 @@ class CroogoHelperTest extends CroogoTestCase {
 			)
 		);
 		$items = CroogoNav::items();
-		$expected = '<ul class="sf-menu"><li><a href="#" class="menu-contents">Contents</a></li></ul>';
+		$expected = '<ul class="nav nav-stacked"><li><a href="#" class="menu-contents sidebar-item"><i class="icon-white"></i> <span>Contents</span></a></li></ul>';
 		$result = $this->Croogo->adminMenus(CroogoNav::items());
 		$this->assertEquals($expected, $result);
 	}
@@ -84,13 +84,19 @@ class CroogoHelperTest extends CroogoTestCase {
 		$this->Croogo->params = array(
 			'controller' => 'test',
 			'action' => 'action',
-			);
+		);
 		Configure::write('Admin.rowActions.Test/action', array(
 			'Title' => 'plugin:example/controller:example/action:index/:id',
 		));
 		$result = $this->Croogo->adminRowActions(1);
-		$expected = '<a href="/example/example/index/1">Title</a>';
-		$this->assertEquals($expected, $result);
+		$expected = array(
+			'a' => array(
+				'href' => '/example/example/index/1',
+			),
+			'Title',
+			'/a',
+		);
+		$this->assertTags($result, $expected);
 	}
 
 /**
@@ -100,7 +106,7 @@ class CroogoHelperTest extends CroogoTestCase {
 		$this->Croogo->params = array(
 			'controller' => 'test',
 			'action' => 'action',
-			);
+		);
 		Configure::write('Admin.tabs.Test/action', array(
 			'Title' => array(
 				'element' => 'blank',
@@ -108,11 +114,98 @@ class CroogoHelperTest extends CroogoTestCase {
 			),
 		));
 		$result = $this->Croogo->adminTabs();
-		$expected = '<li><a href="#test-title">Title</a></li>';
+		$expected = '<li><a href="#test-title" data-toggle="tab">Title</a></li>';
 		$this->assertEquals($expected, $result);
 
 		$result = $this->Croogo->adminTabs(true);
 		$this->assertContains('test-title', $result);
+	}
+
+	public function testAdminBoxes() {
+		$this->Croogo->params = array(
+			'controller' => 'test',
+			'action' => 'action',
+		);
+		Configure::write('Admin.boxes.Test/action', array(
+			'Title' => array(
+				'element' => 'blank',
+				'options' => array(),
+			),
+		));
+
+		$result = $this->Croogo->adminBoxes('Title');
+		$this->assertContains('class="box"', $result);
+	}
+
+	public function testAdminBoxesAlreadyPrinted() {
+		$this->Croogo->params = array(
+			'controller' => 'test',
+			'action' => 'action',
+		);
+		Configure::write('Admin.tabs.Test/action', array(
+			'Title' => array(
+				'element' => 'blank',
+				'options' => array(),
+			),
+		));
+
+		$this->Croogo->adminBoxes('Title');
+		$result = $this->Croogo->adminBoxes('Title');
+		$this->assertEquals('', $result);
+	}
+
+	public function testAdminBoxesAll() {
+		$this->Croogo->params = array(
+			'controller' => 'test',
+			'action' => 'action',
+		);
+		Configure::write('Admin.boxes.Test/action', array(
+			'Title' => array(
+				'element' => 'blank',
+				'options' => array(),
+			),
+			'Content' => array(
+				'element' => 'blank',
+				'options' => array(),
+			),
+		));
+
+		$result = $this->Croogo->adminBoxes();
+		$this->assertContains('Title', $result);
+		$this->assertContains('Content', $result);
+	}
+
+	public function testSettingsInputCheckbox() {
+		$setting['Setting']['input_type'] = 'checkbox';
+		$setting['Setting']['value'] = 0;
+		$setting['Setting']['description'] = 'A description';
+		$result = $this->Croogo->settingsInput($setting, 'MyLabel', 0);
+		$this->assertContains('type="checkbox"',$result);
+	}
+
+	public function testSettingsInputCheckboxChecked() {
+		$setting['Setting']['input_type'] = 'checkbox';
+		$setting['Setting']['value'] = 1;
+		$setting['Setting']['description'] = 'A description';
+		$result = $this->Croogo->settingsInput($setting, 'MyLabel', 0);
+		$this->assertContains('type="checkbox"', $result);
+		$this->assertContains('checked="checked"', $result);
+	}
+
+	public function testSettingsInputTextbox() {
+		$setting['Setting']['input_type'] = '';
+		$setting['Setting']['description'] = 'A description';
+		$setting['Setting']['value'] = 'Yes';
+		$result = $this->Croogo->settingsInput($setting, 'MyLabel', 0);
+		$this->assertContains('type="text"', $result);
+	}
+
+	public function testSettingsInputTextarea() {
+		$setting['Setting']['input_type'] = 'textarea';
+		$setting['Setting']['description'] = 'A description';
+		$setting['Setting']['value'] = 'Yes';
+		$result = $this->Croogo->settingsInput($setting, 'MyLabel', 0);
+		$this->assertContains('</textarea>', $result);
 	}
 
 }

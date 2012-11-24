@@ -119,10 +119,16 @@ class FileManagerHelper extends AppHelper {
  * @return string
  */
 	public function link($title, $url, $path, $pathKey = 'path') {
+		$class = '';
+		if (isset($url['action'])
+			&& ($url['action'] == 'create_directory' || $url['action'] == 'upload' || $url['action'] == 'create_file')) {
+			$class = 'btn';
+		}
+
 		if (isset($url['action']) && ($url['action'] == 'delete_directory' || $url['action'] == 'delete_file')) {
 			$output = $this->Form->postLink($title, $url, array('data' => compact('path')), __('Are you sure?'));
 		} else {
-			$output = "<a href='" . $this->Html->url($url) . "?{$pathKey}=" . urlencode($path) . "'>" . $title . "</a>";
+			$output = '<a class="' . $class . '" href="' . $this->Html->url($url) . "?{$pathKey}=" . urlencode($path) . '">' . $title . '</a>';
 		}
 		return $output;
 	}

@@ -1,5 +1,16 @@
-<div id="footer">
-	<?php $product = __('Croogo %s', strval(Configure::read('Croogo.version'))); ?>
-	Powered by <?php echo $this->Html->link($product, 'http://www.croogo.org'); ?>
+<footer class="navbar-inverse">
+	<div class="navbar-inner">
+
+	<div class="footer-content">
+	<?php
+		$link = $this->Html->link(
+			__('Croogo %s', strval(Configure::read('Croogo.version'))),
+			'http://www.croogo.org'
+		);
+	?>
+	Powered by <?php echo $link; ?>
 	<?php echo $this->Html->image('http://assets.croogo.org/powered_by.png'); ?>
-</div>
+	</div>
+
+	</div>
+</footer>

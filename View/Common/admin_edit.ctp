@@ -7,20 +7,23 @@ if (!isset($className)) {
 }
 $what = isset($this->request->data[$modelClass]['id']) ? __('Edit') : __('Add');
 ?>
-<div class="<?php echo $className; ?> form">
-	<h2><?php if ($titleBlock = $this->fetch('title')): ?>
-		<?php echo $titleBlock; ?>
-	<?php else: ?>
-		<?php
+	<h2 class="hidden-desktop">
+	<?php
+	if ($titleBlock = $this->fetch('title')):
+		echo $titleBlock;
+	else:
 		echo !empty($title_for_layout) ? $title_for_layout : $what . ' ' . $modelClass;
-		?>
-	<?php endif; ?></h2>
+	?>
+	<?php endif; ?>
+	</h2>
 
 	<?php if ($actionsBlock = $this->fetch('actions')): ?>
-	<div class="actions">
-		<ul>
-			<?php echo $actionsBlock; ?>
-		</ul>
+	<div class="row-fluid">
+		<div class="span12 actions">
+			<ul class="nav-buttons">
+				<?php echo $actionsBlock; ?>
+			</ul>
+		</div>
 	</div>
 	<?php endif; ?>
 
@@ -33,34 +36,35 @@ $what = isset($this->request->data[$modelClass]['id']) ? __('Edit') : __('Add');
 			echo $this->Form->input('id');
 		}
 		?>
-		<fieldset>
-			<div class="tabs">
-				<ul>
-					<li><a href="#<?php echo strtolower($modelClass); ?>-main"><?php echo $modelClass; ?></a></li>
-					<?php echo $this->Croogo->adminTabs(); ?>
-				</ul>
-				<div id="<?php echo strtolower($modelClass); ?>-main">
-					<?php foreach ($editFields as $field => $opts): ?>
-						<?php echo $this->Form->input($field, $opts); ?>
-					<?php endforeach; ?>
-				</div>
-				<?php echo $this->Croogo->adminTabs(); ?>
-			</div>
-		</fieldset>
-
-		<div class="buttons">
-			<?php if ($buttonsBlock = $this->fetch('buttons')): ?>
-				<?php echo $buttonsBlock; ?>
-			<?php else: ?>
+		<div class="row-fluid">
+			<div class="span8">
 				<?php
-				echo $this->Form->end(__('Save'));
-				echo $this->Html->link(__('Cancel'), array(
-					'action' => 'index',
-				), array(
-					'class' => 'cancel',
-				));
+					$content = '';
+					foreach ($editFields as $field => $opts):
+						$_opts = array('class' => 'span12');
+						$content .= $this->Form->input($field, $opts);
+					endforeach;
+
+					if (!empty($content)):
+						echo $this->Html->beginBox($modelClass) .
+							$content .
+							$this->Html->endBox();
+					endif;
+					echo $this->Croogo->adminBoxes();
 				?>
-			<?php endif; ?>
+			</div>
+			<div class="span4">
+				<?php if ($buttonsBlock = $this->fetch('buttons')): ?>
+					<?php $publishing = $buttonsBlock; ?>
+				<?php else : ?>
+					<?php
+					echo $this->Html->beginBox('Publishing') .
+							$this->Form->button(__('Save'), array('button' => 'primary')) .
+							$this->Html->link(__('Cancel'), array('action' => 'index'), array('button' => 'danger')) .
+							$this->Html->endBox();
+					?>
+				<?php endif; ?>
+			</div>
 		</div>
+		<?php echo $this->Form->end(); ?>
 	<?php endif; ?>
-</div>

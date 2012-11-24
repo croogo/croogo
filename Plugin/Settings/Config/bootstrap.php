@@ -3,6 +3,7 @@
 Croogo::hookComponent('*', 'Settings.Settings');
 
 CroogoNav::add('settings', array(
+	'icon' => array('cog', 'large'),
 	'title' => __('Settings'),
 	'url' => array(
 		'admin' => true,

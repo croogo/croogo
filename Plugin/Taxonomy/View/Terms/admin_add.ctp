@@ -1,44 +1,66 @@
-<?php $this->Html->script(array('/taxonomy/js/terms'), false); ?>
-<?php $this->extend('/Common/admin_edit'); ?>
 <?php
-	echo $this->Form->create('Term', array(
-		'url' => array(
-			'controller' => 'terms',
-			'action' => 'add',
-			$vocabulary['Vocabulary']['id'],
-		),
-	));
+
+$this->extend('/Common/admin_edit');
+
+$this->Html->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb(__('Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
+	->addCrumb(__('Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index', $vocabulary['Vocabulary']['id'],))
+	->addCrumb($vocabulary['Vocabulary']['title'], array('plugin' => 'taxonomy', 'controller' => 'terms', 'action' => 'index'))
+	->addCrumb(__('Add'));
+
+echo $this->Form->create('Term', array(
+	'url' => '/' . $this->request->url,
+));
+
 ?>
-<fieldset>
-	<div class="tabs">
-		<ul>
-			<li><span><a href="#term-basic"><?php echo __('Term'); ?></a></span></li>
+<div class="row-fluid">
+	<div class="span8">
+
+		<ul class="nav nav-tabs">
+			<li><a href="#term-basic" data-toggle="tab"><?php echo __('Term'); ?></a></li>
 			<?php echo $this->Croogo->adminTabs(); ?>
 		</ul>
 
-		<div id="term-basic">
-		<?php
-			echo $this->Form->input('Taxonomy.parent_id', array(
-				'options' => $parentTree,
-				'empty' => true,
-			));
-			echo $this->Form->input('title');
-			echo $this->Form->input('slug', array('class' => 'slug'));
-			echo $this->Form->input('description');
-		?>
-		</div>
-		<?php echo $this->Croogo->adminTabs(); ?>
-	</div>
-</fieldset>
+		<div class="tab-content">
+			<div id="term-basic" class="tab-pane">
+			<?php
+				echo $this->Form->input('Taxonomy.parent_id', array(
+					'options' => $parentTree,
+					'empty' => true,
+					'label' => __('Parent'),
+				));
+				$this->Form->inputDefaults(array(
+					'class' => 'span10',
+					'label' => false,
+				));
+				echo $this->Form->input('title', array(
+					'placeholder' => __('Title'),
+				));
+				echo $this->Form->input('slug', array('label' => __('Slug'),
+					'class' => 'slug span10',
+				));
+				echo $this->Form->input('description', array(
+					'placeholder' => __('Description'),
+				));
+			?>
+			</div>
 
-<div class="buttons">
-<?php
-	echo $this->Form->end(__('Save'));
-	echo $this->Html->link(__('Cancel'), array(
-		'action' => 'index',
-		$vocabularyId,
-	), array(
-		'class' => 'cancel',
-	));
-?>
+			<?php echo $this->Croogo->adminTabs(); ?>
+		</div>
+	</div>
+
+	<div class="span4">
+		<?php
+			echo $this->Html->beginBox(__('Publishing')) .
+ 				$this->Form->button(__('Save'), array('button' => 'default')) .
+ 				$this->Html->link(
+					__('Cancel'),
+					array('action' => 'index', $vocabularyId),
+					array('button' => 'danger')
+				) .
+				$this->Html->endBox();
+			echo $this->Croogo->adminBoxes();
+		?>
+	</div>
 </div>
+<?php echo $this->Form->end(); ?>

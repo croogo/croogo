@@ -1,6 +1,7 @@
 <?php
 
 CroogoNav::add('users', array(
+	'icon' => array('user', 'large'),
 	'title' => __('Users'),
 	'url' => array(
 		'admin' => true,

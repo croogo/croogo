@@ -1,37 +1,46 @@
-<div class="filemanager form">
-	<h2><?php echo $title_for_layout; ?></h2>
+<?php
+$this->Html
+	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb(__('File Manager'), array('plugin' => 'file_manager', 'controller' => 'file_manager', 'action' => 'browse'))
+	->addCrumb(basename($absolutefilepath), $this->here);
 
-	<div class="breadcrumb">
-	<?php
-		echo __('You are here:') . ' ';
-		$breadcrumb = $this->FileManager->breadcrumb($path);
-		foreach ($breadcrumb as $pathname => $p) {
-			echo $this->FileManager->linkDirectory($pathname, $p);
-			echo DS;
-		}
-	?>
-	</div>
-
-	<?php
-		echo $this->Form->create('FileManager', array(
-			'url' => $this->Html->url(array(
-				'controller' => 'file_manager',
-				'action' => 'editfile',
-			), true) . '?path=' . urlencode($absolutefilepath),
-		));
-	?>
-	<fieldset>
-	<?php echo $this->Form->input('FileManager.content', array('type' => 'textarea', 'value' => $content, 'class' => 'content')); ?>
-	</fieldset>
-
-	<div class="buttons">
-	<?php
-		echo $this->Form->end(__('Save'));
-		echo $this->Html->link(__('Cancel'), array(
-			'action' => 'index',
-		), array(
-			'class' => 'cancel',
-		));
-	?>
-	</div>
+echo $this->Form->create('FileManager', array(
+	'url' => $this->Html->url(array(
+		'controller' => 'file_manager',
+		'action' => 'editfile',
+	), true) . '?path=' . urlencode($absolutefilepath),
+));
+?>
+<h2 class="hidden-desktop"><?php echo __('Edit file'); ?> </h2>
+<div class="breadcrumb">
+	<a href="#"><?php echo __('You are here') . ' '; ?> </a> <span class="divider"> &gt; </span>
+	<?php $breadcrumb = $this->FileManager->breadcrumb($path); ?>
+	<?php foreach ($breadcrumb as $pathname => $p) : ?>
+		<?php echo $this->FileManager->linkDirectory($pathname, $p); ?>
+		<span class="divider"> <?php echo DS;  ?> </span>
+	<?php endforeach; ?>
+	</ul>
 </div>
+
+&nbsp;
+
+<div class="row-fluid">
+	<div class="span8">
+		<?php echo $this->Html->beginBox(__('Edit')) .
+			$this->Form->input(
+				'FileManager.content',
+				array('type' => 'textarea', 'value' => $content, 'class' => 'span12', 'label' => '')
+			) .
+			$this->Html->endBox(); ?>
+	</div>
+	<div class="span4">
+		<?php
+		echo $this->Html->beginBox(__('Publishing')) .
+			$this->Form->button(__('Save'), array('button' => 'default')) .
+			$this->Html->link(__('Cancel'), array('action' => 'index'), array('button' => 'danger')) .
+			$this->Html->endBox();
+		?>
+	</div>
+
+</div>
+<?php echo $this->Form->end(); ?>

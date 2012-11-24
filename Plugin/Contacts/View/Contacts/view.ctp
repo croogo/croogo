@@ -4,7 +4,7 @@
 	<?php echo $contact['Contact']['body']; ?>
 	</div>
 
-	<?php if ($contact['Contact']['message_status']) { ?>
+	<?php if ($contact['Contact']['message_status']):  ?>
 	<div class="contact-form">
 	<?php
 		echo $this->Form->create('Message', array(
@@ -19,11 +19,11 @@
 		echo $this->Form->input('Message.email', array('label' => __('Your email')));
 		echo $this->Form->input('Message.title', array('label' => __('Subject')));
 		echo $this->Form->input('Message.body', array('label' => __('Message')));
-		if ($contact['Contact']['message_captcha']) {
+		if ($contact['Contact']['message_captcha']):
 			echo $this->Recaptcha->display_form();
-		}
+		endif;
 		echo $this->Form->end(__('Send'));
 	?>
 	</div>
-	<?php } ?>
+	<?php endif; ?>
 </div>

@@ -1,9 +1,9 @@
 <?php
-	$this->Html->script(array('Nodes.nodes'), false);
-	if (Configure::read('Writing.wysiwyg')) {
-		$this->Html->scriptBlock($tinymce->fileBrowserCallBack(), array('inline' => false));
-		$this->Html->scriptBlock($tinymce->init('NodeBody'), array('inline' => false));
-	}
+$this->Html->script(array('Nodes.nodes'), false);
+if (Configure::read('Writing.wysiwyg')) {
+	$this->Html->scriptBlock($tinymce->fileBrowserCallBack(), array('inline' => false));
+	$this->Html->scriptBlock($tinymce->init('NodeBody'), array('inline' => false));
+}
 ?>
 <div class="nodes form">
 	<h2><?php echo $title_for_layout; ?></h2>

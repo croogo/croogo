@@ -8,19 +8,22 @@ if (!isset($className)) {
 if (!empty($searchFields)):
 ?>
 
-<div class="<?php echo $className; ?> filter form">
+<div class="<?php echo $className; ?> filter row-fluid">
 <?php
 	echo $this->Form->create($modelClass, array(
-		'url' => array_merge(array('action' => 'index'), $this->params['pass'])
+		'class' => 'form-inline',
+		'url' => array('action' => 'index')
 	));
-	$options = array('empty' => '');
+	$options = array(
+		'empty' => '',
+	);
 	foreach ($searchFields as $field) {
 		$this->Form->unlockField($field);
 		echo $this->Form->input($field, $options);
 	}
 
-	echo $this->Form->end(__('Filter'));
+	echo $this->Form->submit(__('Filter'), array('div' => 'input submit'));
+	echo $this->Form->end();
 ?>
-<div class="clear">&nbsp;</div>
 </div>
 <?php endif; ?>

@@ -224,7 +224,8 @@ class UsersController extends UsersAppController {
 				$this->redirect($this->Auth->redirect());
 			} else {
 				Croogo::dispatchEvent('Controller.Users.adminLoginFailure', $this);
-				$this->Session->setFlash($this->Auth->authError, 'default', array(), 'auth');
+				$this->Auth->authError = __('Incorrect username or password');
+				$this->Session->setFlash($this->Auth->authError, 'default', array('class' => 'error'), 'auth');
 				$this->redirect($this->Auth->loginAction);
 			}
 		}
@@ -423,7 +424,7 @@ class UsersController extends UsersAppController {
 				$this->redirect($this->Auth->redirect());
 			} else {
 				Croogo::dispatchEvent('Controller.Users.loginFailure', $this);
-				$this->Session->setFlash($this->Auth->authError, 'default', array(), 'auth');
+				$this->Session->setFlash($this->Auth->authError, 'default', array('class' => 'error'), 'auth');
 				$this->redirect($this->Auth->loginAction);
 			}
 		}

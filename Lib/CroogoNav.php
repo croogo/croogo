@@ -23,9 +23,12 @@ class CroogoNav extends Object {
  * @var array
  */
 	protected static $_defaults = array(
+		'icon' => false,
 		'title' => false,
 		'url' => '#',
 		'weight' => 9999,
+		'before' => false,
+		'after' => false,
 		'access' => array(),
 		'children' => array(),
 		'htmlAttributes' => array(),

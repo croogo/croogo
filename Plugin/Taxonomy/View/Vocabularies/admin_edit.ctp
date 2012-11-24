@@ -1,41 +1,82 @@
-<?php $this->extend('/Common/admin_edit'); ?>
-<?php echo $this->Form->create('Vocabulary');?>
-<fieldset>
-	<div class="tabs">
-		<ul>
-			<li><span><a href="#vocabulary-basic"><?php echo __('Vocabulary'); ?></a></span></li>
-			<li><span><a href="#vocabulary-options"><?php echo __('Options'); ?></a></span></li>
+<?php
+$this->Html->script(array('/taxonomy/js/vocabularies'), false);
+$this->extend('/Common/admin_edit');
+
+$this->Html
+	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb(__('Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
+	->addCrumb(__('Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index', $this->request->data['Vocabulary']['id'],))
+	->addCrumb($this->request->data['Vocabulary']['title'], $this->here);
+
+echo $this->Form->create('Vocabulary');
+
+?>
+<div class="row-fluid">
+	<div class="span8">
+
+		<ul class="nav nav-tabs">
+			<li><a href="#vocabulary-basic" data-toggle="tab"><?php echo __('Vocabulary'); ?></a></li>
+			<li><a href="#vocabulary-options" data-toggle="tab"><?php echo __('Options'); ?></a></li>
 			<?php echo $this->Croogo->adminTabs(); ?>
 		</ul>
 
-		<div id="vocabulary-basic">
+		<div class="tab-content">
+
+			<div id="vocabulary-basic" class="tab-pane">
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('title');
-				echo $this->Form->input('alias');
-				echo $this->Form->input('description');
-				echo $this->Form->input('Type.Type');
+				$this->Form->inputDefaults(array(
+					'class' => 'span10',
+				));
+				echo $this->Form->input('title', array(
+					'placeholder' => __('Title'),
+				));
+				echo $this->Form->input('alias', array(
+					'class' => 'alias',
+					'placeholder' => __('Alias'),
+				));
+				echo $this->Form->input('description', array(
+					'label' => __('Description'),
+				));
+				echo $this->Form->input('Type.Type', array(
+					'label' => __('Type'),
+				));
 			?>
-		</div>
+			</div>
 
-		<div id="vocabulary-options">
+			<div id="vocabulary-options" class="tab-pane">
 			<?php
-				echo $this->Form->input('required');
-				echo $this->Form->input('multiple');
-				echo $this->Form->input('tags');
+				echo $this->Form->input('required', array(
+					'label' => __('Required'),
+					'class' => false,
+				));
+				echo $this->Form->input('multiple', array(
+					'label' => __('Multiple'),
+					'class' => false,
+				));
+				echo $this->Form->input('tags', array(
+					'label' => __('Tags'),
+					'class' => false,
+				));
 			?>
-		</div>
-		<?php echo $this->Croogo->adminTabs(); ?>
-	</div>
-</fieldset>
+			</div>
 
-<div class="buttons">
-<?php
-	echo $this->Form->end(__('Save'));
-	echo $this->Html->link(__('Cancel'), array(
-		'action' => 'index',
-	), array(
-		'class' => 'cancel',
-	));
-?>
+			<?php echo $this->Croogo->adminBoxes(); ?>
+		</div>
+	</div>
+
+	<div class="span4">
+	<?php
+		echo $this->Html->beginBox(__('Publishing')) .
+			$this->Form->button(__('Save'), array('button' => 'default')) .
+			$this->Html->link(
+				__('Cancel'),
+				array('action' => 'index'),
+				array('button' => 'danger')
+			) .
+			$this->Html->endBox();
+	?>
+	</div>
+
 </div>
+<?php echo $this->Form->end(); ?>

@@ -8,6 +8,7 @@ if (count($taxonomy) > 0):
 			'multiple' => true,
 			'options' => $taxonomyTree,
 			'value' => $taxonomyIds,
+			'class' => false,
 			));
 	endforeach;
 endif;

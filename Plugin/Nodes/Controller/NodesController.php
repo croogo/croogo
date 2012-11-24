@@ -219,7 +219,6 @@ class NodesController extends NodesAppController {
 			$this->redirect(array('action' => 'create'));
 		}
 
-		$this->set('title_for_layout', __('Edit content: %s', $type['Type']['title']));
 		$this->Node->type = $type['Type']['alias'];
 		$this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
 
@@ -255,6 +254,8 @@ class NodesController extends NodesAppController {
 			$data['Role']['Role'] = $this->Node->decodeData($data['Node']['visibility_roles']);
 			$this->request->data = $data;
 		}
+
+		$this->set('title_for_layout', __('Edit %s: %s', $type['Type']['title'], $this->request->data['Node']['title']));
 
 		$nodes = $this->Node->generateTreeList();
 		$roles = $this->Node->User->Role->find('list');

@@ -1,65 +1,107 @@
-<?php $this->extend('/Common/admin_edit'); ?>
-<?php echo $this->Form->create('Block');?>
-<fieldset>
-	<div class="tabs">
-		<ul>
-			<li><a href="#block-basic"><span><?php echo __('Block'); ?></span></a></li>
-			<li><a href="#block-access"><span><?php echo __('Access'); ?></span></a></li>
-			<li><a href="#block-visibilities"><span><?php echo __('Visibilities'); ?></span></a></li>
-			<li><a href="#block-params"><?php echo __('Params'); ?></a></li>
+<?php
+
+$this->extend('/Common/admin_edit');
+
+$this->Html
+	->addCrumb($this->Html->icon('home'), '/admin')
+	->addCrumb(__('Blocks'), array('plugin' => 'blocks', 'controller' => 'blocks', 'action' => 'index'))
+	->addCrumb($this->request->data['Block']['title'], $this->here);
+
+echo $this->Form->create('Block');
+
+?>
+<div class="row-fluid">
+	<div class="span8">
+
+		<ul class="nav nav-tabs">
+			<li><a href="#block-basic" data-toggle="tab"><?php echo __('Block'); ?></a></li>
+			<li><a href="#block-access" data-toggle="tab"><?php echo __('Access'); ?></a></li>
+			<li><a href="#block-visibilities" data-toggle="tab"><?php echo __('Visibilities'); ?></span></a></li>
+			<li><a href="#block-params" data-toggle="tab"><?php echo __('Params'); ?></a></li>
 			<?php echo $this->Croogo->adminTabs(); ?>
 		</ul>
 
-		<div id="block-basic">
+		<div class="tab-content">
+
+			<div id="block-basic" class="tab-pane">
 			<?php
 				echo $this->Form->input('id');
-				echo $this->Form->input('title');
-				echo $this->Form->input('show_title');
-				echo $this->Form->input('alias', array('rel' => __('unique name for your block')));
-				echo $this->Form->input('region_id', array('rel' => __('if you are not sure, choose \'none\'')));
-				echo $this->Form->input('body');
-				echo $this->Form->input('class');
-				echo $this->Form->input('element');
-				echo $this->Form->input('status');
-			?>
-		</div>
+				$this->Form->inputDefaults(array(
+					'label' => false,
+					'class' => 'span10',
+				));
+				echo $this->Form->input('title', array(
+					'placeholder' => __('Title'),
+				));
 
-		<div id="block-access">
+				echo $this->Form->input('alias', array(
+					'placeholder' => __('Alias'),
+					'rel' => __('unique name for your block'),
+				));
+				echo $this->Form->input('region_id', array(
+					'placeholder' => __('Region'),
+					'rel' => __('if you are not sure, choose \'none\''),
+				));
+				echo $this->Form->input('body', array(
+					'placeholder' => __('Body'),
+				));
+				echo $this->Form->input('class', array(
+					'placeholder' => __('Class')
+				));
+				echo $this->Form->input('element', array(
+					'placeholder' => __('Element')
+				));
+			?>
+			</div>
+
+			<div id="block-access" class="tab-pane">
 			<?php
-				echo $this->Form->input('Role.Role');
+				echo $this->Form->input('Role.Role', array(
+					'class' => false,
+				));
 			?>
-		</div>
+			</div>
 
-		<div id="block-visibilities">
+			<div id="block-visibilities" class="tab-pane">
 			<?php
 				echo $this->Form->input('Block.visibility_paths', array(
-					'class' => 'wide',
+					'placeholder' => __('Visibility Paths'),
 					'rel' => __('Enter one URL per line. Leave blank if you want this Block to appear in all pages.')
 				));
-				/*echo $this->Form->input('Block.visibility_php', array(
-					'class' => 'wide',
-					'rel' => __('Block will be shown if the PHP code returns true. If unsure, leave blank.')
-				));*/
 			?>
-		</div>
+			</div>
 
-		<div id="block-params">
-		<?php
-			echo $this->Form->input('Block.params');
-		?>
+			<div id="block-params" class="tab-pane">
+			<?php
+				echo $this->Form->input('Block.params', array(
+					'placeholder' => __('Params'),
+				));
+			?>
+			</div>
+
+			<?php echo $this->Croogo->adminTabs(); ?>
 		</div>
-		<?php echo $this->Croogo->adminTabs(); ?>
 	</div>
-</fieldset>
 
-<div class="buttons">
-<?php
-	echo $this->Form->submit(__('Apply'), array('name' => 'apply'));
-	echo $this->Form->end(__('Save'));
-	echo $this->Html->link(__('Cancel'), array(
-		'action' => 'index',
-	), array(
-		'class' => 'cancel',
-	));
-?>
+	<div class="span4">
+		<?php
+		echo $this->Html->beginBox(__('Publishing')) .
+			$this->Form->button(__('Apply'), array('name' => 'apply', 'button' => 'default')) .
+			$this->Form->button(__('Save'), array('button' => 'default')) .
+			$this->Html->link(__('Cancel'), array('action' => 'index'), array('button' => 'danger')) .
+			$this->Form->input('status', array(
+				'label' => __('Status'),
+				'class' => false,
+			)) .
+			$this->Form->input('show_title', array(
+				'label' => __('Show title ?'),
+				'class' => false,
+			)) .
+			$this->Html->endBox();
+
+		echo $this->Croogo->adminBoxes();
+		?>
+	</div>
+
 </div>
+<?php echo $this->Form->end(); ?>

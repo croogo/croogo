@@ -1,12 +1,22 @@
-<div class="nodes create">
-	<h2><?php echo $title_for_layout; ?></h2>
+<h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
+<?php
 
-	<div class="types">
-		<?php foreach ($types as $type) { ?>
-		<div class="type">
-			<h3><?php echo $this->Html->link($type['Type']['title'], array('action' => 'add', $type['Type']['alias'])); ?></h3>
-			<p><?php echo $type['Type']['description']; ?></p>
+$this->Html->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb(__('Content'), array('controller' => 'nodes', 'action' => 'index'))
+	->addCrumb(__('Create'), $this->here);
+
+?>
+<div class="row-fluid">
+	<div class="span12">
+		<div class="box">
+			<div class="box-content">
+				<?php foreach ($types as $type): ?>
+					<div class="type">
+						<h3><?php echo $this->Html->link($type['Type']['title'], array('action' => 'add', $type['Type']['alias'])); ?></h3>
+						<p><?php echo $type['Type']['description']; ?></p>
+					</div>
+				<?php endforeach; ?>
+			</div>
 		</div>
-		<?php } ?>
 	</div>
 </div>

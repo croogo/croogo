@@ -10,6 +10,7 @@ Croogo::hookComponent('*', array(
 Croogo::hookHelper('*', 'Blocks.Regions');
 
 CroogoNav::add('blocks', array(
+	'icon' => array('columns', 'large'),
 	'title' => __('Blocks'),
 	'url' => array(
 		'plugin' => 'blocks',
