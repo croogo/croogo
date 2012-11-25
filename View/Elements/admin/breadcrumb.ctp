@@ -11,4 +11,4 @@ $crumbs = $this->Html->getCrumbs(
 		<?php echo $crumbs; ?>
 	</div>
 </div>
-<?endif; ?>
+<?php endif; ?>

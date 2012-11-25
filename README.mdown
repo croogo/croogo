@@ -37,9 +37,11 @@ It is recommended that you install Croogo using the web based installer for secu
 #### Installation using git
 
   * Ensure you have a recent cakephp version 2.3
+  * Run `git submodule update --init`
   * After running the web installer, you will need to generate the assets:
 
-	`Console/cake croogo make` that will compile the CSS assets using lessphp.
+	`Console/cake croogo make` that will fetch twitter bootstrap and FontAwesome
+	and subsequently compile the CSS assets using lessphp.
 
 	Alternatively, you could use `lessc` or `recess` as the compiler as they
 	generate a better result.  Edit the `COMPILE` value in the `Makefile`
