@@ -75,8 +75,16 @@ class ExampleActivation {
 
 		// Main menu: delete Example link
 		$link = $this->Link->find('first', array(
+			'joins' => array(
+				array(
+					'table' => 'menus',
+					'alias' => 'JoinMenu',
+					'conditions' => array(
+						'JoinMenu.alias' => 'main',
+					),
+				),
+			),
 			'conditions' => array(
-				'Menu.alias' => 'main',
 				'Link.link' => 'plugin:example/controller:example/action:index',
 			),
 		));
