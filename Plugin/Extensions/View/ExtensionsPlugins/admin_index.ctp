@@ -49,7 +49,7 @@ $this->Html
 		$actions  = array();
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'toggle',	$pluginAlias),
-			array('icon' => $icon, 'tooltip' => $toggleText)
+			array('icon' => $icon, 'tooltip' => $toggleText, 'method' => 'post')
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'delete', $pluginAlias),

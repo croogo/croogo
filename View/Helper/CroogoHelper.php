@@ -137,6 +137,16 @@ class CroogoHelper extends AppHelper {
 /**
  * Show link under Actions column
  *
+ * ### Options:
+ *
+ * - `method` - when 'POST' is specified, the FormHelper::postLink() will be
+ *              used instead of HtmlHelper::link()
+ *
+ * @param string $title The content to be wrapped by <a> tags.
+ * @param string|array $url Cake-relative URL or array of URL parameters, or external URL (starts with http://)
+ * @param array $options Array of HTML attributes.
+ * @param string $confirmMessage JavaScript confirmation message.
+ * @return string An `<a />` element
  */
 	public function adminRowAction($title, $url = null, $options, $confirmMessage = false) {
 		$action = false;
@@ -152,7 +162,12 @@ class CroogoHelper extends AppHelper {
 			$options['iconInline'] = true;
 		}
 
-		if ($action == 'delete') {
+		if (!empty($options['method']) && strtolower($options['method']) == 'post') {
+			$usePost = true;
+			unset($options['method']);
+		}
+
+		if ($action == 'delete' || isset($usePost)) {
 			return $this->Form->postLink($title, $url, $options, $confirmMessage);
 		}
 		return $this->Html->link($title, $url, $options, $confirmMessage);
