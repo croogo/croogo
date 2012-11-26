@@ -27,6 +27,7 @@ $dashboardUrl = array(
 						<?php echo $this->Html->link(__('Visit website'), '/', array('target' => '_blank')); ?>
 					</li>
 				</ul>
+				<?php if ($this->Session->read('Auth.User.id')): ?>
 				<ul class="nav pull-right">
 					<li>
 						<a href="#">
@@ -37,6 +38,7 @@ $dashboardUrl = array(
 						<?php echo $this->Html->link(__("Log out"), array('plugin' => 'users', 'controller' => 'users', 'action' => 'logout')); ?>
 					</li>
 				</ul>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>
