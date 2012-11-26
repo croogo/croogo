@@ -1,43 +1,60 @@
-<?php $this->extend('/Common/admin_index'); ?>
-
 <?php
-	$this->Html
-		->addCrumb($this->Html->icon('home'), '/admin')
-		->addCrumb(__('Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
-		->addCrumb(__('Comments'));
-?>
 
+$this->extend('/Common/admin_index');
 
-<?php $this->start('tabs'); ?>
-	<li>
-		<?php
-			echo $this->Html->link(
-				__('Published'),
-				array('action'=>'index', 'filter' => 'status:1;'),
-				array('button' => 'default')
-			);
-		?>
-	</li>
-	<li>
-		<?php
-			echo $this->Html->link(
-				__('Approval'),
-				array('action'=>'index', 'filter' => 'status:0;'),
-				array('button' => 'default')
-			);
-		?>
-	</li>
-<?php $this->end(); ?>
+$this->Html
+	->addCrumb($this->Html->icon('home'), '/admin')
+	->addCrumb(__('Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
+	->addCrumb(__('Comments'), array('plugin' => 'comments', 'controller' => 'comments', 'action' => 'index'));
 
-
-<?php
-if (isset($this->params['named'])) {
-	foreach ($this->params['named'] as $named => $value) {
-		$this->Paginator->options['url'][$named] = $value;
+if (isset($criteria['Comment.status'])) {
+	if ($criteria['Comment.status'] == '1') {
+		$this->Html->addCrumb(__('Published'), $this->here);
+		$this->viewVars['title_for_layout'] = __('Comments: Published');
+	} else {
+		$this->Html->addCrumb(__('Approval'), $this->here);
+		$this->viewVars['title_for_layout'] = __('Comments: Approval');
 	}
 }
-?>
 
+$script =<<<EOF
+$(".comment-view").on("click", function() {
+	var el= \$(this)
+	var modal = \$('#comment-modal');
+	$('#comment-modal')
+	.find('.modal-header h3').html(el.data("title")).end()
+	.find('.modal-body').html('<pre>' + el.data('content') + '</pre>').end()
+	.modal('toggle');
+});
+EOF;
+$this->Js->buffer($script);
+
+echo $this->element('admin/modal', array(
+	'id' => 'comment-modal',
+	'class' => 'hide',
+));
+
+?>
+<?php $this->start('tabs'); ?>
+	<li>
+	<?php
+		echo $this->Html->link(
+			__('Published'),
+			array('action'=>'index', 'status' => '1'),
+			array('button' => 'default')
+		);
+	?>
+	</li>
+	<li>
+	<?php
+		echo $this->Html->link(
+			__('Approval'),
+			array('action'=>'index', 'status' => '0'),
+			array('button' => 'default')
+		);
+	?>
+	</li>
+<?php $this->end(); ?>
 
 <?php echo $this->Form->create('Comment', array('url' => array('controller' => 'comments', 'action' => 'process'))); ?>
 <table class="table table-striped">
@@ -75,6 +92,7 @@ if (isset($this->params['named'])) {
 
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
+		$title = empty($comment['Comment']['title']) ? 'Comment' : $comment['Comment']['title'];
 		$rows[] = array(
 			$this->Form->checkbox('Comment.' . $comment['Comment']['id'] . '.id'),
 			$comment['Comment']['id'],
@@ -88,7 +106,13 @@ if (isset($this->params['named'])) {
 				'type' => $comment['Node']['type'],
 				'slug' => $comment['Node']['slug'],
 			)),
-			$this->Html->link($this->Html->image('/img/icons/comment.png'), '#', array('class' => 'tooltip', 'title' => $comment['Comment']['body'], 'escape' => false)),
+			$this->Html->link($this->Html->image('/img/icons/comment.png'), '#',
+				array(
+					'class' => 'comment-view',
+					'data-title' => $title,
+					'data-content' => $comment['Comment']['body'],
+					'escape' => false
+				)),
 			$comment['Comment']['created'],
 			$actions,
 		);

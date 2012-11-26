@@ -34,6 +34,7 @@ class CommentsController extends CommentsAppController {
 		'Akismet',
 		'Email',
 		'Recaptcha',
+		'Search.Prg',
 	);
 
 /**
@@ -43,6 +44,14 @@ class CommentsController extends CommentsAppController {
  * @access public
  */
 	public $uses = array('Comments.Comment');
+
+/**
+ * Preset Variable Search
+ * @var array
+ */
+	public $presetVars = array(
+		'status' => array('type' => 'value'),
+	);
 
 /**
  * beforeFilter
@@ -65,31 +74,21 @@ class CommentsController extends CommentsAppController {
  */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Comments'));
+		$this->Prg->commonProcess();
 
 		$this->Comment->recursive = 0;
-		$this->paginate['Comment']['order'] = 'Comment.created DESC';
-		$this->paginate['Comment']['conditions'] = array();
-		$this->paginate['Comment']['conditions']['Comment.status'] = 1;
-		$this->paginate['Comment']['comment_type'] = 'comment';
+		$this->paginate['Comment']['conditions'] = array(
+			'Comment.status' => 1,
+			'Comment.comment_type' => 'comment',
+		);
 
-		if (isset($this->request->params['named']['filter'])) {
-			$filters = $this->Croogo->extractFilter();
-			foreach ($filters as $filterKey => $filterValue) {
-				if (strpos($filterKey, '.') === false) {
-					$filterKey = 'Comment.' . $filterKey;
-				}
-				$this->paginate['Comment']['conditions'][$filterKey] = $filterValue;
-			}
+		$criteria = $this->Comment->parseCriteria($this->passedArgs);
+		if (array_key_exists('Comment.status', $criteria)) {
+			$criteria = array_merge($this->paginate['Comment']['conditions'], $criteria);
 		}
 
-		if ($this->paginate['Comment']['conditions']['Comment.status'] == 1) {
-			$this->set('title_for_layout', __('Comments: Published'));
-		} else {
-			$this->set('title_for_layout', __('Comments: Approval'));
-		}
-
-		$comments = $this->paginate();
-		$this->set(compact('comments'));
+		$comments = $this->paginate($criteria);
+		$this->set(compact('comments', 'criteria'));
 	}
 
 /**

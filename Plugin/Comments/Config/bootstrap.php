@@ -18,7 +18,7 @@ CroogoNav::add('content.children.comments', array(
 				'plugin' => 'comments',
 				'controller' => 'comments',
 				'action' => 'index',
-				'filter' => 'status:1;',
+				'status' => '1',
 			),
 		),
 		'approval' => array(
@@ -28,7 +28,7 @@ CroogoNav::add('content.children.comments', array(
 				'plugin' => 'comments',
 				'controller' => 'comments',
 				'action' => 'index',
-				'filter' => 'status:0;',
+				'status' => '0',
 			),
 		),
 	),

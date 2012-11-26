@@ -36,6 +36,7 @@ class Comment extends AppModel {
 				'node_',
 			),
 		),
+		'Search.Searchable',
 	);
 
 /**
@@ -75,6 +76,15 @@ class Comment extends AppModel {
 		'User' => array(
 			'className' => 'Users.User',
 		),
+	);
+
+/**
+ * Filter fields
+ *
+ * @var array
+ */
+	public $filterArgs = array(
+		'status' => array('type' => 'value'),
 	);
 
 }
