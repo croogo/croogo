@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
 		<title><?php echo $title_for_layout; ?> - <?php echo __('Croogo'); ?></title>
 		<?php
 
