@@ -121,6 +121,7 @@ class CroogoComponent extends Component {
  * Extracts parameters from 'filter' named parameter.
  *
  * @return array
+ * @deprecated use Search plugin to perform filtering
  */
 	public function extractFilter() {
 		$filter = explode(';', $this->controller->request->params['named']['filter']);
