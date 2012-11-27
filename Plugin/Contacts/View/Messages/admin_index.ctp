@@ -7,6 +7,16 @@ $this->Html
 	->addCrumb(__('Contacts'), array('controller' => 'contacts', 'action' => 'index'))
 	->addCrumb(__('Messages'), array('action' => 'index'));
 
+if (isset($criteria['Message.status'])) {
+	if ($criteria['Message.status'] == '1') {
+		$this->Html->addCrumb(__('Read'), $this->here);
+		$this->viewVars['title_for_layout'] = __('Messages: Read');
+	} else {
+		$this->Html->addCrumb(__('Unread'), $this->here);
+		$this->viewVars['title_for_layout'] = __('Messages: Unread');
+	}
+}
+
 $script =<<<EOF
 $(".comment-view").on("click", function() {
 	var el= \$(this)
@@ -27,16 +37,11 @@ echo $this->element('admin/modal', array(
 ?>
 
 <?php $this->start('tabs'); ?>
-<li><?php echo $this->Html->link(__('Unread'), array('action'=>'index', 'filter' => 'status:0;'), array('button' => 'default')); ?></li>
-<li><?php echo $this->Html->link(__('Read'), array('action'=>'index', 'filter' => 'status:1;'), array('button' => 'default')); ?></li>
+<li><?php echo $this->Html->link(__('Unread'), array('action'=>'index', 'status' => '0'), array('button' => 'default')); ?></li>
+<li><?php echo $this->Html->link(__('Read'), array('action'=>'index', 'status' => '1'), array('button' => 'default')); ?></li>
 <?php $this->end(); ?>
 
 <?php
-if (isset($this->params['named'])) {
-	foreach ($this->params['named'] as $nn => $nv) {
-		$this->Paginator->options['url'][] = $nn . ':' . $nv;
-	}
-}
 
 echo $this->Form->create('Message', array('url' => array('controller' => 'messages', 'action' => 'process')));
 
@@ -100,11 +105,11 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 
 </table>
 <div class="row-fluid">
-	<div class="span3">
+	<div class="control-group">
 		<?php
 			echo $this->Form->input('Message.action', array(
 				'label' => false,
-				'class' => 'span11',
+				'div' => 'input inline',
 				'options' => array(
 					'read' => __('Mark as read'),
 					'unread' => __('Mark as unread'),
@@ -113,8 +118,8 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 				'empty' => true,
 			));
 		?>
-	</div>
-	<div class="span3">
-		<?php echo $this->Form->end(__('Submit')); ?>
+		<div class="controls">
+			<?php echo $this->Form->end(__('Submit')); ?>
+		</div>
 	</div>
 </div>

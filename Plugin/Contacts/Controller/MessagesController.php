@@ -33,6 +33,21 @@ class MessagesController extends ContactsAppController {
 	public $uses = array('Contacts.Message');
 
 /**
+ * Components
+ *
+ * @var array
+ * @access public
+ */
+	public $components = array(
+		'Search.Prg',
+	);
+
+/**
+ * Preset Search Variables
+ */
+	public $presetVars = true;
+
+/**
  * Admin index
  *
  * @return void
@@ -40,31 +55,17 @@ class MessagesController extends ContactsAppController {
  */
 	public function admin_index() {
 		$this->set('title_for_layout', __('Messages'));
+		$this->Prg->commonProcess();
 
 		$this->Message->recursive = 0;
-		$this->paginate['Message']['conditions'] = array('Message.status' => 0);
-		if (isset($this->request->params['named']['contact'])) {
-			$this->paginate['Message']['conditions'] = $this->request->params['named']['contact'];
-		}
-
-		if (isset($this->request->params['named']['filter'])) {
-			$filters = $this->Croogo->extractFilter();
-			foreach ($filters as $filterKey => $filterValue) {
-				if (strpos($filterKey, '.') === false) {
-					$filterKey = 'Message.' . $filterKey;
-				}
-				$this->paginate['Message']['conditions'][$filterKey] = $filterValue;
-			}
-		}
-
-		if ($this->paginate['Message']['conditions']['Message.status'] == 1) {
-			$this->set('title_for_layout', __('Messages: Read'));
-		} else {
-			$this->set('title_for_layout', __('Messages: Unread'));
-		}
-
-		$this->paginate['Message']['order'] = 'Message.title ASC';
-		$this->set('messages', $this->paginate());
+		$criteria = $this->Message->parseCriteria($this->passedArgs);
+		$contacts = $this->Message->Contact->find('list');
+		$messages = $this->paginate($criteria);
+		$searchFields = array('contact_id', 'status' => array(
+			'label' => __('Read'),
+			'type' => 'hidden',
+		));
+		$this->set(compact('criteria', 'messages', 'contacts', 'searchFields'));
 	}
 
 /**

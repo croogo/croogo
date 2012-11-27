@@ -25,6 +25,16 @@ class Message extends ContactsAppModel {
 	public $name = 'Message';
 
 /**
+ * Behaviors
+ *
+ * @var array
+ * @access public
+ */
+	public $actsAs = array(
+		'Search.Searchable',
+	);
+
+/**
  * Validation
  *
  * @var array
@@ -63,6 +73,24 @@ class Message extends ContactsAppModel {
 			'fields' => '',
 			'order' => '',
 			'counterCache' => true,
+		),
+	);
+
+/**
+ * Filter fields
+ *
+ * @var array
+ * @access public
+ */
+	public $filterArgs = array(
+		'contact_id' => array(
+			'type' => 'lookup',
+			'model' => 'Contact',
+			'modelField' => 'id',
+			'formField' => 'contact_id',
+		),
+		'status' => array(
+			'type' => 'value',
 		),
 	);
 
