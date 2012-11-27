@@ -108,18 +108,20 @@ echo $this->Form->create(
 
 		<div class="row-fluid">
 			<div class="control-group">
-					<?php echo $this->Form->input('Node.action', array(
-						'label' => __('Applying to selected'),
-						'div' => 'input inline',
-						'options' => array(
-							'publish' => __('Publish'),
-							'unpublish' => __('Unpublish'),
-							'promote' => __('Promote'),
-							'unpromote' => __('Unpromote'),
-							'delete' => __('Delete'),
-						),
-						'empty' => true,
-					)); ?>
+				<?php
+				echo $this->Form->input('Node.action', array(
+					'label' => __('Applying to selected'),
+					'div' => 'input inline',
+					'options' => array(
+						'publish' => __('Publish'),
+						'unpublish' => __('Unpublish'),
+						'promote' => __('Promote'),
+						'unpromote' => __('Unpromote'),
+						'delete' => __('Delete'),
+					),
+					'empty' => true,
+				));
+				?>
 				<div class="controls">
 					<?php
 					$jsVarName = uniqid('confirmMessage_');

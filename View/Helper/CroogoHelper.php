@@ -148,7 +148,7 @@ class CroogoHelper extends AppHelper {
  * @param string $confirmMessage JavaScript confirmation message.
  * @return string An `<a />` element
  */
-	public function adminRowAction($title, $url = null, $options, $confirmMessage = false) {
+	public function adminRowAction($title, $url = null, $options = array(), $confirmMessage = false) {
 		$action = false;
 		if (is_array($url)) {
 			$action = $url['action'];
