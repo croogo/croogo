@@ -14,10 +14,15 @@ if (!empty($searchFields)):
 		'class' => 'form-inline',
 		'url' => array('action' => 'index')
 	));
-	$options = array(
-		'empty' => '',
-	);
-	foreach ($searchFields as $field) {
+	foreach ($searchFields as $field => $fieldOptions) {
+		$options = array('empty' => '');
+		if (is_numeric($field) && is_string($fieldOptions)) {
+			$field = $fieldOptions;
+			$fieldOptions = array();
+		}
+		if (!empty($fieldOptions)) {
+			$options = Hash::merge($fieldOptions, $options);
+		}
 		$this->Form->unlockField($field);
 		echo $this->Form->input($field, $options);
 	}
