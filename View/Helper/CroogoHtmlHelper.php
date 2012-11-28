@@ -109,9 +109,20 @@ class CroogoHtmlHelper extends HtmlHelper {
 		}
 
 		if (isset($options['tooltip'])) {
-			$options['rel'] = 'tooltip';
-			$options['data-placement'] = 'top';
-			$options['data-original-title'] = $options['tooltip'];
+			$tooltipOptions = array(
+				'rel' => 'tooltip',
+				'data-placement' => 'top',
+				'data-trigger' => 'hover',
+			);
+			if (is_string($options['tooltip'])) {
+				$tooltipOptions = array_merge(array(
+					'data-title' => $options['tooltip'],
+				), $tooltipOptions);
+				$options = array_merge($options, $tooltipOptions);
+			} else {
+				$options['tooltip'] = array_merge($tooltipOptions, $options['tooltip']);
+				$options = array_merge($options, $options['tooltip']);
+			}
 			unset($options['tooltip']);
 		}
 

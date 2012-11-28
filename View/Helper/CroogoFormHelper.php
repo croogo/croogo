@@ -46,7 +46,7 @@ class CroogoFormHelper extends FormHelper {
 			$tooltipOptions['data-title'] = $options['title'];
 		}
 
-		$tooltipOptions = array_merge($tooltipOptions, $options['tooltip']);
+		$tooltipOptions = Hash::merge($tooltipOptions, $options['tooltip']);
 		unset($options['title']);
 		unset($options['tooltip']);
 
@@ -67,7 +67,7 @@ class CroogoFormHelper extends FormHelper {
 	}
 
 	public function input($fieldName, $options = array()) {
-		if (empty($options['title']) && empty($options['label']) && !empty($options['placeholder'])) {
+		if (empty($options['title']) && empty($options['label']) && !empty($options['placeholder']) && empty($options['tooltip'])) {
 			$options['tooltip'] = $options['placeholder'];
 		}
 

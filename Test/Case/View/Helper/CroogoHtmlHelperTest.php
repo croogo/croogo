@@ -51,7 +51,40 @@ class CroogoHtmlHelperTest extends CroogoTestCase{
 
 	public function testLinkTooltip() {
 		$result = $this->CroogoHtml->link('', '/remove', array('tooltip' => 'remove it'));
-		$this->assertContains('rel="tooltip" data-placement="top" data-original-title="remove it"', $result);
+		$expected = array(
+			'a' => array(
+				'href',
+				'rel' => 'tooltip',
+				'data-placement',
+				'data-trigger',
+				'data-title' => 'remove it',
+			),
+			'/a',
+		);
+		$this->assertTags($result, $expected);
+	}
+
+	public function testLinkButtonTooltipWithArrayOptions() {
+		$result = $this->CroogoHtml->link('', '/remove', array(
+			'button' => array('success'),
+			'tooltip' => array(
+				'data-title' => 'remove it',
+				'data-placement' => 'left',
+				'data-trigger' => 'focus',
+			),
+		));
+		$expected = array(
+			'a' => array(
+				'href',
+				'class' => 'btn btn-success',
+				'rel' => 'tooltip',
+				'data-placement' => 'left',
+				'data-trigger' => 'focus',
+				'data-title' => 'remove it',
+			),
+			'/a',
+		);
+		$this->assertTags($result, $expected);
 	}
 
 	public function testAddPathAndGetCrumbList() {

@@ -16,9 +16,88 @@ class CroogoFormHelperTest extends CroogoTestCase{
 		unset($this->CroogoHtml);
 	}
 
+	public function testInputTooltips() {
+		$result = $this->CroogoForm->input('username', array(
+			'tooltip' => 'Username',
+		));
+		$expected = array(
+			'div' => array(
+				'class',
+				),
+			'label' => array('for' => 'username'),
+			'Username',
+			'/label',
+			'input' => array(
+				'name',
+				'data-placement' => 'right',
+				'data-trigger' => 'focus',
+				'data-title' => 'Username',
+				'type' => 'text',
+				'id',
+				),
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+
+		$result = $this->CroogoForm->input('username', array(
+			'tooltip' => array(
+				'data-title' => 'Username',
+				'data-placement' => 'left',
+				'data-trigger' => 'click',
+			)
+		));
+		$expected = array(
+			'div' => array(
+				'class',
+				),
+			'label' => array('for' => 'username'),
+			'Username',
+			'/label',
+			'input' => array(
+				'name',
+				'data-placement' => 'left',
+				'data-trigger' => 'click',
+				'data-title' => 'Username',
+				'type' => 'text',
+				'id',
+				),
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+
+		$result = $this->CroogoForm->input('username', array(
+			'hiddenField' => false,
+			'type' => 'checkbox',
+			'tooltip' => array(
+				'data-title' => 'Username',
+				'data-placement' => 'left',
+				'data-trigger' => 'click',
+			)
+		));
+		$expected = array(
+			'div' => array(
+				'class',
+				'data-placement' => 'left',
+				'data-trigger' => 'click',
+				'data-title' => 'Username',
+				),
+			'input' => array(
+				'type' => 'checkbox',
+				'name',
+				'value',
+				'id',
+				),
+			'label' => array('for' => 'username'),
+			'Username',
+			'/label',
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+
+	}
+
 	public function testButtonDefault() {
 		$result = $this->CroogoForm->button('Button');
-
 		$expected = array(
 			'button' => array(
 				'class' => 'btn',
