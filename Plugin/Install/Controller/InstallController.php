@@ -38,7 +38,15 @@ class InstallController extends Controller {
  * @var array
  * @access public
  */
-	public $helpers = array('Html', 'Form', 'Layout');
+	public $helpers = array(
+		'Html' => array(
+			'className' => 'CroogoHtml',
+		),
+		'Form' => array(
+			'className' => 'CroogoForm',
+		),
+		'Layout',
+	);
 
 /**
  * Default configuration
@@ -245,7 +253,7 @@ class InstallController extends Controller {
  * @access public
  */
 	public function finish($token = null) {
-		$this->set('title_for_layout', __('Installation completed successfully'));
+		$this->set('title_for_layout', __('Installation successful'));
 		$this->_check();
 		$this->loadModel('Install.Install');
 		$install = $this->Session->read('Install');

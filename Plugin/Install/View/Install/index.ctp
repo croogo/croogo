@@ -1,4 +1,4 @@
-<div class="install index">
+<div class="install">
 	<h2><?php echo $title_for_layout; ?></h2>
 	<?php
 		$check = true;
@@ -37,10 +37,21 @@
 			echo '<p class="error">' . __('CakePHP version %s < %s', $cakeVersion, $minCakeVersion) . '</p>';
 		}
 
-		if ($check) {
-			echo '<p>' . $this->Html->link('Click here to begin installation', array('action' => 'database')) . '</p>';
-		} else {
-			echo '<p>' . __('Installation cannot continue as minimum requirements are not met.') . '</p>';
-		}
-	?>
+?>
 </div>
+<?php
+if ($check) {
+	$out = $this->Html->link(__('Install'), array(
+		'action' => 'database',
+	), array(
+		'button' => 'success',
+		'tooltip' => array(
+			'data-title' => __('Click here to begin installation'),
+			'data-placement' => 'left',
+		),
+	));
+} else {
+	$out = '<p>' . __('Installation cannot continue as minimum requirements are not met.') . '</p>';
+}
+echo $this->Html->div('form-actions', $out);
+?>
