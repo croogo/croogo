@@ -78,6 +78,23 @@ class InstallController extends Controller {
 		parent::beforeFilter();
 
 		$this->layout = 'install';
+		$this->_generateAssets();
+	}
+
+/**
+ * Generate assets
+ */
+	protected function _generateAssets() {
+		if (!file_exists(CSS . 'croogo-bootstrap.css')) {
+			App::uses('AssetGenerator', 'Install.Lib');
+			$generator = new AssetGenerator();
+			try {
+				$generator->generate();
+			} catch (Exception $e) {
+				$this->log($e->getMessage());
+				$this->Session->setFlash('Asset generation failed. Please verify that dependencies exists and readable.', 'default', array('class' => 'error'));
+			}
+		}
 	}
 
 /**
