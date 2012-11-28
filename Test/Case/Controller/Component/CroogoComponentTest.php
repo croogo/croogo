@@ -9,7 +9,7 @@ app::uses('CroogoComponent', 'Controller/Component');
 class MockCroogoComponent extends CroogoComponent {
 
 	public function startup(Controller $controller) {
-		$this->controller = $controller;
+		$this->_controller = $controller;
 		$this->_CroogoPlugin = new CroogoPlugin();
 		$this->_CroogoPlugin->Setting->writeConfiguration();
 	}

@@ -60,7 +60,7 @@ class TaxonomiesHelper extends AppHelper {
 		} else {
 			$types = $this->_View->viewVars['types_for_admin_layout'];
 		}
-		foreach ($types as $t):
+		foreach ($types as $t) {
 			CroogoNav::add('content.children.create.children.' . $t['Type']['alias'], array(
 				'title' => $t['Type']['title'],
 				'url' => array(
@@ -71,14 +71,14 @@ class TaxonomiesHelper extends AppHelper {
 					$t['Type']['alias'],
 				),
 			));
-		endforeach;
+		};
 
 		if (empty($this->_View->viewVars['vocabularies_for_admin_layout'])) {
 			$vocabularies = array();
 		} else {
 			$vocabularies = $this->_View->viewVars['vocabularies_for_admin_layout'];
 		}
-		foreach ($vocabularies as $v):
+		foreach ($vocabularies as $v) {
 			$weight = 9999 + $v['Vocabulary']['weight'];
 			CroogoNav::add('content.children.taxonomy.children.' . $v['Vocabulary']['alias'], array(
 				'title' => $v['Vocabulary']['title'],
@@ -91,7 +91,7 @@ class TaxonomiesHelper extends AppHelper {
 				),
 				'weight' => $weight,
 			));
-		endforeach;
+		};
 	}
 
 /**

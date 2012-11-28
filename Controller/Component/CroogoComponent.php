@@ -57,7 +57,7 @@ class CroogoComponent extends Component {
  *
  * @var Controller
  */
-	protected $controller = null;
+	protected $_controller = null;
 
 /**
  * Method to lazy load classes
@@ -72,7 +72,7 @@ class CroogoComponent extends Component {
 					$class = substr($name, 1);
 					$this->{$name} = new $class();
 					if (method_exists($this->{$name}, 'setController')) {
-						$this->{$name}->setController($this->controller);
+						$this->{$name}->setController($this->_controller);
 					}
 				}
 				return $this->{$name};
@@ -90,13 +90,13 @@ class CroogoComponent extends Component {
  * @return void
  */
 	public function startup(Controller $controller) {
-		$this->controller = $controller;
+		$this->_controller = $controller;
 
 		if ($this->Session->check('Auth.User.id')) {
 			$this->roleId = $this->Session->read('Auth.User.role_id');
 		}
 
-		if (!isset($this->controller->request->params['admin']) && !isset($this->controller->request->params['requested'])) {
+		if (!isset($this->_controller->request->params['admin']) && !isset($this->_controller->request->params['requested'])) {
 		} else {
 			$this->_adminData();
 		}
@@ -110,8 +110,8 @@ class CroogoComponent extends Component {
 	protected function _adminData() {
 		if (!Configure::read('Croogo.version')) {
 			if (CakePlugin::loaded('Settings')) {
-				if ($this->controller->Setting instanceof Model) {
-					$this->controller->Setting->write('Croogo.version', file_get_contents(APP . 'VERSION.txt'));
+				if ($this->_controller->Setting instanceof Model) {
+					$this->_controller->Setting->write('Croogo.version', file_get_contents(APP . 'VERSION.txt'));
 				}
 			}
 		}
@@ -124,7 +124,7 @@ class CroogoComponent extends Component {
  * @deprecated use Search plugin to perform filtering
  */
 	public function extractFilter() {
-		$filter = explode(';', $this->controller->request->params['named']['filter']);
+		$filter = explode(';', $this->_controller->request->params['named']['filter']);
 		$filterData = array();
 		foreach ($filter as $f) {
 			$fData = explode(':', $f);
@@ -157,7 +157,7 @@ class CroogoComponent extends Component {
  * @return void
  */
 	public function addAco($action, $allowRoles = array()) {
-		$this->controller->CroogoAccess->addAco($action, $allowRoles);
+		$this->_controller->CroogoAccess->addAco($action, $allowRoles);
 	}
 
 /**
@@ -169,7 +169,7 @@ class CroogoComponent extends Component {
  * @return void
  */
 	public function removeAco($action) {
-		$this->controller->CroogoAccess->removeAco($action);
+		$this->_controller->CroogoAccess->removeAco($action);
 	}
 
 /**
@@ -183,11 +183,11 @@ class CroogoComponent extends Component {
  */
 	public function redirect($url, $status = null, $exit = true) {
 		if (is_array($url)) {
-			if (isset($url['action']) && $url['action'] === 'edit' && !isset($this->controller->request->data['apply'])) {
+			if (isset($url['action']) && $url['action'] === 'edit' && !isset($this->_controller->request->data['apply'])) {
 				$url = array('action' => 'index');
 			}
 		}
-		$this->controller->redirect($url, $status, $exit);
+		$this->_controller->redirect($url, $status, $exit);
 	}
 
 /**

@@ -93,7 +93,6 @@ class CroogoFormHelperTest extends CroogoTestCase{
 			'/div',
 		);
 		$this->assertTags($result, $expected);
-
 	}
 
 	public function testButtonDefault() {

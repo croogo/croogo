@@ -4,6 +4,8 @@ class AssetGenerator extends Object {
 
 /**
  * Compile CSS files used by admin ui
+ *
+ * @throws Exception
  */
 	protected function _compileCss() {
 		$bootstrapPath = WWW_ROOT . 'bootstrap';
@@ -62,6 +64,8 @@ class AssetGenerator extends Object {
 
 /**
  * Copy font files used by admin ui
+ *
+ * @throws Exception
  */
 	protected function _copyFonts() {
 		$fontAwesomePath = WWW_ROOT . 'fontAwesome';
