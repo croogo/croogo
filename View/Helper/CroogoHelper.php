@@ -141,6 +141,7 @@ class CroogoHelper extends AppHelper {
  *
  * - `method` - when 'POST' is specified, the FormHelper::postLink() will be
  *              used instead of HtmlHelper::link()
+ * - `rowAction` when bulk submissions is used, defines which action to use.
  *
  * @param string $title The content to be wrapped by <a> tags.
  * @param string|array $url Cake-relative URL or array of URL parameters, or external URL (starts with http://)
@@ -162,7 +163,13 @@ class CroogoHelper extends AppHelper {
 			$options['iconInline'] = true;
 		}
 
-		if (!empty($options['method']) && strtolower($options['method']) == 'post') {
+		if (!empty($options['rowAction'])) {
+			$options['data-row-action'] = $options['rowAction'];
+			unset($options['rowAction']);
+			return $this->_bulkRowAction($title, $url, $options, $confirmMessage);
+		}
+
+		if (!empty($options['method']) && strcasecmp($options['method'], 'post') == 0) {
 			$usePost = true;
 			unset($options['method']);
 		}
@@ -170,7 +177,26 @@ class CroogoHelper extends AppHelper {
 		if ($action == 'delete' || isset($usePost)) {
 			return $this->Form->postLink($title, $url, $options, $confirmMessage);
 		}
+
 		return $this->Html->link($title, $url, $options, $confirmMessage);
+	}
+
+/**
+ * Creates a special type of link for use in admin area.
+ *
+ * Clicking the link will automatically check a corresponding checkbox
+ * where element id is equal to $url parameter and immediately submit the form
+ * it's on.  This works in tandem with Admin.processLink() in javascript.
+ */
+	protected function _bulkRowAction($title, $url = null, $options = array(), $confirmMessage = false) {
+		if (!empty($confirmMessage)) {
+			$options['data-confirm-message'] = $confirmMessage;
+		}
+		if (isset($options['icon'])) {
+			$options['iconInline'] = true;
+		}
+		$output = $this->Html->link($title, $url, $options);
+		return $output;
 	}
 
 /**

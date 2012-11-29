@@ -94,7 +94,7 @@ echo $this->Form->create(
 									echo ' ' . $this->Croogo->adminRowAction(
 										'',
 										'#Node' . $node['Node']['id'] . 'Id',
-										array('icon' => 'trash', 'tooltip' => __('Remove this item')),
+										array('icon' => 'trash', 'tooltip' => __('Remove this item'), 'rowAction' => 'delete'),
 										__('Are you sure?')
 									);
 								?>
@@ -107,7 +107,7 @@ echo $this->Form->create(
 		</table>
 
 		<div class="row-fluid">
-			<div class="control-group">
+			<div id="bulk-action" class="control-group">
 				<?php
 				echo $this->Form->input('Node.action', array(
 					'label' => __('Applying to selected'),

@@ -208,4 +208,57 @@ class CroogoHelperTest extends CroogoTestCase {
 		$this->assertContains('</textarea>', $result);
 	}
 
+/**
+ * testAdminRowAction
+ */
+	public function testAdminRowAction() {
+		$url = array('controller' => 'users', 'action' => 'edit', 1);
+		$expected = array(
+			'a' => array(
+				'href' => '/users/edit/1',
+				'class' => 'edit',
+			),
+			'Edit',
+			'/a',
+		);
+		$result = $this->Croogo->adminRowAction('Edit', $url);
+		$this->assertTags($result, $expected);
+
+		$options = array('class' => 'test-class');
+		$message = 'Are you sure?';
+		$expected = array(
+			'a' => array(
+				'href' => '/users/edit/1',
+				'class' => 'test-class edit',
+				'onclick' => "return confirm('" . $message . "');",
+			),
+			'Edit',
+			'/a',
+		);
+		$result = $this->Croogo->adminRowAction('Edit', $url, $options, $message);
+		$this->assertTags($result, $expected);
+	}
+
+/**
+ * testAdminRowActionBulkDelete
+ */
+	public function testAdminRowActionBulkDelete() {
+		$url = '#Node1Id';
+		$options = array(
+			'rowAction' => 'delete',
+		);
+		$message = 'Delete this?';
+		$expected = array(
+			'a' => array(
+				'href' => '#Node1Id',
+				'data-row-action' => 'delete',
+				'data-confirm-message',
+			),
+			'Delete',
+			'/a',
+		);
+		$result = $this->Croogo->adminRowAction('Delete', $url, $options, $message);
+		$this->assertTags($result, $expected);
+	}
+
 }

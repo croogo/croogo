@@ -74,7 +74,8 @@ $this->Html
 		$actions[] = $this->Croogo->adminRowAction('', '#Link' . $linkId . 'Id',
 			array(
 				'icon' => 'trash',
-				'tooltip' => __('Delete this item')
+				'tooltip' => __('Delete this item'),
+				'rowAction' => 'delete',
 			),
 			__('Are you sure?')
 		);
@@ -93,7 +94,7 @@ $this->Html
 
 </table>
 <div class="row-fluid">
-	<div class="control-group">
+	<div id="bulk-action" class="control-group">
 		<?php
 			echo $this->Form->input('Link.action', array(
 				'div' => 'input inline',

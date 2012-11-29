@@ -47,7 +47,7 @@ echo $this->Form->create('Block',
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Block' . $block['Block']['id'] . 'Id',
-			array('icon' => 'trash', 'tooltip' => __('Remove this item')),
+			array('icon' => 'trash', 'tooltip' => __('Remove this item'), 'rowAction' => 'delete'),
 			__('Are you sure?')
 		);
 
@@ -68,7 +68,7 @@ echo $this->Form->create('Block',
 ?>
 </table>
 <div class="row-fluid">
-	<div class="control-group">
+	<div id="bulk-action" class="control-group">
 		<?php
 			echo $this->Form->input('Block.action', array(
 				'label' => false,
