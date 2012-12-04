@@ -39,38 +39,36 @@ class RegionsHelper extends AppHelper {
  * @return string
  */
 	public function blocks($regionAlias, $options = array()) {
-		$_options = array();
-		$options = array_merge($_options, $options);
-
 		$output = '';
-		if (!$this->isEmpty($regionAlias)) {
-			$blocks = $this->_View->viewVars['blocks_for_layout'][$regionAlias];
-			foreach ($blocks as $block) {
-				$plugin = false;
-				if ($block['Block']['element'] != null) {
-					if (strstr($block['Block']['element'], '.')) {
-						$pluginElement = explode('.', $block['Block']['element']);
-						$plugin  = $pluginElement[0];
-						$element = $pluginElement[1];
-					} else {
-						$element = $block['Block']['element'];
-					}
-				} else {
-					$element = 'block';
+		if ($this->isEmpty($regionAlias)) {
+			return $output;
+		}
+
+		$defaultElement = 'Blocks.block';
+		$blocks = $this->_View->viewVars['blocks_for_layout'][$regionAlias];
+		foreach ($blocks as $block) {
+			$element = $block['Block']['element'];
+			$exists = $this->_View->elementExists($element);
+			$blockOutput = '';
+			if ($exists) {
+				$blockOutput = $this->_View->element($element, compact('block'));
+			} else {
+				if (!empty($element)) {
+					$this->log(sprintf('Missing element `%s` in block `%s` (%s)',
+						$block['Block']['element'],
+						$block['Block']['alias'],
+						$block['Block']['id']
+					), LOG_WARNING);
 				}
-				if ($plugin) {
-					$blockOutput = $this->_View->element($element, array('block' => $block), array('plugin' => $plugin));
-				} else {
-					$blockOutput = $this->_View->element($element, array('block' => $block), array('plugin' => 'blocks'));
-				}
-				$enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
-				if ($element != 'block' && $enclosure) {
-					$block['Block']['body'] = $blockOutput;
-					$block['Block']['element'] = null;
-					$output .= $this->_View->element('Blocks.block', array('block' => $block));
-				} else {
-					$output .= $blockOutput;
-				}
+				$blockOutput = $this->_View->element($defaultElement, compact('block'), array('ignoreMissing' => true));
+			}
+			$enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
+			if ($exists && $element != $defaultElement && $enclosure) {
+				$block['Block']['body'] = $blockOutput;
+				$block['Block']['element'] = null;
+				$output .= $this->_View->element($defaultElement, compact('block'));
+			} else {
+				$output .= $blockOutput;
 			}
 		}
 
