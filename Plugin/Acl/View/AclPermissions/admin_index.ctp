@@ -12,7 +12,7 @@ $this->Html
 	));
 
 ?>
-<?php $this->start('tabs'); ?>
+<?php $this->start('actions'); ?>
 <li>
 <?php
 	echo $this->Form->postLink(__('Generate Actions'),

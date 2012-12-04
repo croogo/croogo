@@ -10,7 +10,7 @@ $this->Html
 		'?' => array('menu_id' => $menu['Menu']['id'])));
 ?>
 
-<?php $this->start('tabs'); ?>
+<?php $this->start('actions'); ?>
 <li>
 	<?php
 	echo $this->Html->link(
@@ -20,7 +20,7 @@ $this->Html
 	);
 	?>
 </li>
-<?php $this->end('tabs'); ?>
+<?php $this->end('actions'); ?>
 
 <?php
 	if (isset($this->params['named'])) {

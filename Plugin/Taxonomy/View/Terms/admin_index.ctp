@@ -9,7 +9,7 @@ $this->Html
 	->addCrumb($vocabulary['Vocabulary']['title'], array('plugin' => 'taxonomy', 'controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id']));
 ?>
 
-<?php $this->start('tabs'); ?>
+<?php $this->start('actions'); ?>
 	<li>
 		<?php echo $this->Html->link(
 			__('New Term'),

@@ -36,7 +36,7 @@ echo $this->element('admin/modal', array(
 );
 ?>
 
-<?php $this->start('tabs'); ?>
+<?php $this->start('actions'); ?>
 <li><?php echo $this->Html->link(__('Unread'), array('action'=>'index', 'status' => '0'), array('button' => 'default')); ?></li>
 <li><?php echo $this->Html->link(__('Read'), array('action'=>'index', 'status' => '1'), array('button' => 'default')); ?></li>
 <?php $this->end(); ?>

@@ -20,8 +20,8 @@ if (!isset($className)) {
 <div class="row-fluid">
 	<div class="span12 actions">
 		<ul class="nav-buttons">
-			<?php if ($tabsBlock = $this->fetch('tabs')): ?>
-				<?php echo $tabsBlock; ?>
+			<?php if ($actionsBlock = $this->fetch('actions')): ?>
+				<?php echo $actionsBlock; ?>
 			<?php else: ?>
 			<li>
 				<?php

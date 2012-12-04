@@ -8,7 +8,7 @@ $this->Html
 	->addCrumb(__('Plugins'), $this->here);
 
 ?>
-<?php $this->start('tabs'); ?>
+<?php $this->start('actions'); ?>
 <li>
 	<?php
 		echo $this->Html->link(
