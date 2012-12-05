@@ -14,7 +14,7 @@ $this->Html
 		<?php echo $this->Html->link(
 			__('New Term'),
 			array('action' => 'add', $vocabulary['Vocabulary']['id']),
-			array('button' => 'small')
+			array('button' => 'default')
 		); ?>
 	</li>
 <?php $this->end(); ?>

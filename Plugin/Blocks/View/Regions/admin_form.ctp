@@ -1,4 +1,5 @@
 <?php
+
 $this->extend('/Common/admin_edit');
 
 $this->Html
@@ -6,12 +7,22 @@ $this->Html
 	->addCrumb(__('Blocks'), array(
 		'plugin' => 'blocks', 'controller' => 'blocks', 'action' => 'index'))
 	->addCrumb(__('Regions'), array(
-		'plugin' => 'blocks', 'controller' => 'regions', 'action' => 'index'))
-	->addCrumb(__('Add'));
+		'plugin' => 'blocks', 'controller' => 'regions', 'action' => 'index'));
 
-echo $this->Form->create('Region');
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html->addCrumb($this->data['Region']['title'], array(
+		'plugin' => 'blocks', 'controller' => 'regions', 'action' => 'edit',
+		$this->params['pass'][0]
+	));
+}
+
+if ($this->request->params['action'] == 'admin_add') {
+	$this->Html->addCrumb(__('Add'), $this->here);
+}
 
 ?>
+<?php echo $this->Form->create('Region');?>
+
 <div class="row-fluid">
 	<div class="span8">
 
@@ -23,6 +34,7 @@ echo $this->Form->create('Region');
 		<div class="tab-content">
 			<div id="region-main" class="tab-pane">
 			<?php
+				echo $this->Form->input('id');
 				$this->Form->inputDefaults(array(
 					'label' => false,
 					'class' => 'span10',

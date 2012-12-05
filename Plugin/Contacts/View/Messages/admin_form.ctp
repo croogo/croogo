@@ -5,8 +5,11 @@ $this->extend('/Common/admin_edit');
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__('Contacts'), array('plugin' => 'contacts', 'controller' => 'contacts', 'action' => 'index'))
-	->addCrumb(__('Messages'), array('plugin' => 'contacts', 'controller' => 'messages', 'action' => 'index'))
-	->addCrumb($this->data['Message']['id'] . ': ' . $this->data['Message']['title']);
+	->addCrumb(__('Messages'), array('plugin' => 'contacts', 'controller' => 'messages', 'action' => 'index'));
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html->addCrumb($this->data['Message']['id'] . ': ' . $this->data['Message']['title'], $this->here);
+}
 
 echo $this->Form->create('Message');
 

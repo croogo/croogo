@@ -5,10 +5,21 @@ $this->Html->script(array('Nodes.nodes'), false);
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Content'), array('controller' => 'nodes', 'action' => 'index'))
-	->addCrumb($this->request->data['Node']['title'], $this->here);
+	->addCrumb(__('Content'), array('controller' => 'nodes', 'action' => 'index'));
 
-echo $this->Form->create('Node', array('url' => array('action' => 'edit')));
+if ($this->request->params['action'] == 'admin_add') {
+	$formUrl = array('action' => 'add', $typeAlias);
+	$this->Html
+		->addCrumb(__('Create'), array('controller' => 'nodes', 'action' => 'create'))
+		->addCrumb($type['Type']['title'], $this->here);
+}
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$formUrl = array('action' => 'edit');
+	$this->Html->addCrumb($this->request->data['Node']['title'], $this->here);
+}
+
+echo $this->Form->create('Node', array('url' => $formUrl));
 
 ?>
 <div class="row-fluid">
@@ -24,7 +35,7 @@ echo $this->Form->create('Node', array('url' => array('action' => 'edit')));
 
 			<div id="node-main" class="tab-pane">
 			<?php
-				echo $this->Form->input('parent_id', array('type' => 'select', 'options' => $nodes, 'empty' => true), true);
+				echo $this->Form->input('parent_id', array('type' => 'select', 'options' => $nodes, 'empty' => true));
 				echo $this->Form->input('id');
 				$this->Form->inputDefaults(array(
 					'class' => 'span10',
@@ -35,6 +46,7 @@ echo $this->Form->create('Node', array('url' => array('action' => 'edit')));
 				));
 				echo $this->Form->input('slug', array(
 					'label' => false,
+					'class' => 'span10 slug',
 					'placeholder' => __('Slug'),
 				));
 				echo $this->Form->input('excerpt', array(
@@ -74,7 +86,7 @@ echo $this->Form->create('Node', array('url' => array('action' => 'edit')));
 				'class' => false,
 			)) .
 			$this->Form->input('user_id', array(
-				'label' => __('Publish as ')
+				'label' => __('Publish as '),
 			)) .
 			$this->Form->input('created', array(
 				'type' => 'text',

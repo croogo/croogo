@@ -8,8 +8,15 @@ $this->Html
 		'plugin' => 'settings',
 		'controller' => 'settings',
 		'action' => 'index',
-	))
-	->addCrumb($this->data['Setting']['key']);
+	));
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html->addCrumb($this->data['Setting']['key'], $this->here);
+}
+
+if ($this->request->params['action'] == 'admin_add') {
+	$this->Html->addCrumb(__('Add'), $this->here);
+}
 
 echo $this->Form->create('Setting');
 

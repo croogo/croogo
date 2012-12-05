@@ -3,9 +3,15 @@
 $this->extend('/Common/admin_edit');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Blocks'), array('plugin' => 'blocks', 'controller' => 'blocks', 'action' => 'index'))
-	->addCrumb(__('Add'), $this->here);
+	->addCrumb($this->Html->icon('home'), '/admin')
+	->addCrumb(__('Blocks'), array('plugin' => 'blocks', 'controller' => 'blocks', 'action' => 'index'));
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html->addCrumb($this->request->data['Block']['title'], $this->here);
+}
+if ($this->request->params['action'] == 'admin_add') {
+	$this->Html->addCrumb(__('Add'), $this->here);
+}
 
 echo $this->Form->create('Block');
 
@@ -25,6 +31,7 @@ echo $this->Form->create('Block');
 
 			<div id="block-basic" class="tab-pane">
 			<?php
+				echo $this->Form->input('id');
 				$this->Form->inputDefaults(array(
 					'label' => false,
 					'class' => 'span10',
@@ -38,8 +45,7 @@ echo $this->Form->create('Block');
 					'rel' => __('unique name for your block'),
 				));
 				echo $this->Form->input('region_id', array(
-					'label' => __('Region'),
-					'class' => false,
+					'placeholder' => __('Region'),
 					'rel' => __('if you are not sure, choose \'none\''),
 				));
 				echo $this->Form->input('body', array(
@@ -57,7 +63,7 @@ echo $this->Form->create('Block');
 			<div id="block-access" class="tab-pane">
 			<?php
 				echo $this->Form->input('Role.Role', array(
-					'label' => __('Role'),
+					'class' => false,
 				));
 			?>
 			</div>

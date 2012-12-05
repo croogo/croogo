@@ -221,4 +221,25 @@ class AppController extends Controller {
 		}
 	}
 
+/**
+ * Combine add and edit views
+ *
+ * @see Controller::render()
+ */
+	public function render($view = null, $layout = null) {
+		$viewPaths = App::path('View', $this->plugin);
+		$rootPath = $viewPaths[0] . DS . $this->viewPath . DS;
+		$requested = $rootPath . $view . '.ctp';
+		if (in_array($this->request->action, array('admin_edit', 'admin_add', 'edit', 'add'))) {
+			$viewPath = $rootPath . $this->request->action . '.ctp';
+			if (!file_exists($requested) && !file_exists($viewPath)) {
+				if (strpos($this->request->action, 'admin_') === false) {
+					$view = 'form';
+				} else {
+					$view = 'admin_form';
+				}
+			}
+		}
+		return parent::render($view, $layout);
+	}
 }
