@@ -24,7 +24,7 @@ if (Configure::read('Install.installed')) {
 CroogoRouter::connect('/about', array(
 	'plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'view',
 	'type' => 'page', 'slug' => 'about'
-	));
+));
 CroogoRouter::connect('/page/:slug', array(
 	'plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'view',
 	'type' => 'page'

@@ -11,10 +11,9 @@ CroogoNav::add('content.children.content_types', array(
 		'admin' => true,
 		'controller' => 'types',
 		'action' => 'index',
-		),
+	),
 	'weight' => 30,
-	)
-);
+));
 
 CroogoNav::add('content.children.taxonomy', array(
 	'title' => __('Taxonomy'),
@@ -23,7 +22,7 @@ CroogoNav::add('content.children.taxonomy', array(
 		'admin' => true,
 		'controller' => 'vocabularies',
 		'action' => 'index',
-		),
+	),
 	'weight' => 40,
 	'children' => array(
 		'list' => array(
@@ -33,9 +32,9 @@ CroogoNav::add('content.children.taxonomy', array(
 				'admin' => true,
 				'controller' => 'vocabularies',
 				'action' => 'index',
-				),
-			'weight' => 10,
 			),
+			'weight' => 10,
+		),
 		'add_new' => array(
 			'title' => __('Add new'),
 			'url' => array(
@@ -43,10 +42,9 @@ CroogoNav::add('content.children.taxonomy', array(
 				'admin' => true,
 				'controller' => 'vocabularies',
 				'action' => 'add',
-				),
+			),
 			'weight' => 20,
 			'htmlAttributes' => array('class' => 'separator'),
-			)
 		)
 	)
-);
+));

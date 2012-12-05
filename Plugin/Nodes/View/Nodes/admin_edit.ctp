@@ -58,35 +58,33 @@ echo $this->Form->create('Node', array('url' => array('action' => 'edit')));
 
 	</div>
 	<div class="span4">
+	<?php
+		echo $this->Html->beginBox(__('Publishing')) .
+			$this->Form->button(__('Apply'), array('name' => 'apply', 'class' => 'btn')) .
+			$this->Form->button(__('Save'), array('class' => 'btn btn-primary')) .
+			$this->Html->link(__('Cancel'), array('action' => 'index'), array('class' => 'cancel btn btn-danger')) .
+			$this->Form->input('status', array(
+				'label' => __('Published'),
+				'checked' => 'checked',
+				'class' => false,
+			)) .
+			$this->Form->input('promote', array(
+				'label' => __('Promoted to front page'),
+				'checked' => 'checked',
+				'class' => false,
+			)) .
+			$this->Form->input('user_id', array(
+				'label' => __('Publish as ')
+			)) .
+			$this->Form->input('created', array(
+				'type' => 'text',
+				'class' => 'span10',
+			));
 
-		<?php
-			echo $this->Html->beginBox(__('Publishing')) .
-				$this->Form->button(__('Apply'), array('name' => 'apply', 'class' => 'btn')) .
-				$this->Form->button(__('Save'), array('class' => 'btn btn-primary')) .
-				$this->Html->link(__('Cancel'), array('action' => 'index'), array('class' => 'cancel btn btn-danger')) .
-				$this->Form->input('status', array(
-					'label' => __('Published'),
-					'checked' => 'checked',
-					'class' => false,
-				)) .
-				$this->Form->input('promote', array(
-					'label' => __('Promoted to front page'),
-					'checked' => 'checked',
-					'class' => false,
-				)) .
-				$this->Form->input('user_id', array(
-					'label' => __('Publish as ')
-				)) .
-				$this->Form->input('created', array(
-					'type' => 'text',
-					'class' => 'span10',
-				));
+		echo $this->Html->endBox();
 
-			echo $this->Html->endBox();
-		?>
-
-		<?php echo $this->Croogo->adminBoxes(); ?>
-
+		echo $this->Croogo->adminBoxes();
+	?>
 	</div>
 </div>
 <?php echo $this->Form->end(); ?>

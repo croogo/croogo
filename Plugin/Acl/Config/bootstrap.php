@@ -8,8 +8,8 @@ if (Configure::read('Site.acl_plugin') == 'Acl') {
 		Croogo::hookComponent('*', array(
 			'CroogoAccess' => array(
 				'className' => 'Acl.AclAccess',
-				),
-			));
+			),
+		));
 	}
 
 	Croogo::hookBehavior('User', 'Acl.UserAro');
@@ -22,9 +22,9 @@ if (Configure::read('Site.acl_plugin') == 'Acl') {
 			'plugin' => 'acl',
 			'controller' => 'acl_permissions',
 			'action' => 'index',
-			),
+		),
 		'weight' => 30,
-		));
+	));
 
 	CroogoNav::add('settings.children.acl', array(
 		'title' => __('Access Control'),
@@ -34,13 +34,13 @@ if (Configure::read('Site.acl_plugin') == 'Acl') {
 			'controller' => 'settings',
 			'action' => 'prefix',
 			'Access Control',
-			),
-		));
+		),
+	));
 
 	$cacheConfig = Cache::config('_cake_core_');
 	Cache::config('permissions', array(
 		'duration' => '+1 hour',
 		'path' => CACHE . 'queries',
 		'engine' => Configure::read('Cache.defaultEngine'),
-		));
+	));
 }

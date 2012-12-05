@@ -37,7 +37,7 @@ class ContactsSchema extends CakeSchema {
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 	);
-	
+
 	public $messages = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'contact_id' => array('type' => 'integer', 'null' => false, 'default' => null),
