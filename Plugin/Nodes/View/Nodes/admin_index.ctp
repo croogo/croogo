@@ -7,7 +7,7 @@ $this->Html
 	->addCrumb(__('Content'), $this->here);
 
 ?>
-<?php $this->start('tabs'); ?>
+<?php $this->start('actions'); ?>
 	<li>
 		<?php echo $this->Html->link(
 			__('Create content'),

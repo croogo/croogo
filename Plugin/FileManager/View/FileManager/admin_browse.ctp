@@ -8,7 +8,7 @@ $this->Html
 
 ?>
 
-<?php $this->start('tabs'); ?>
+<?php $this->start('actions'); ?>
 <li>
 	<?php
 		echo $this->FileManager->link(__('Upload here'),

@@ -1,6 +1,6 @@
 <?php $this->extend('/Common/admin_index'); ?>
 
-<?php $this->start('tabs'); ?>
+<?php $this->start('actions'); ?>
 	<li>
 		<?php
 			echo $this->Html->link(

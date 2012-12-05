@@ -54,7 +54,7 @@ class BlockFixture extends CroogoTestFixture {
 			'class' => '',
 			'status' => 1,
 			'weight' => 1,
-			'element' => 'search',
+			'element' => 'Nodes.search',
 			'visibility_roles' => '',
 			'visibility_paths' => '',
 			'visibility_php' => '',

@@ -10,7 +10,7 @@ $this->Html
 	->addCrumb($record[$modelAlias]['title'], array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'edit', $record[$modelAlias]['id']));
 
 ?>
-<?php $this->start('tabs'); ?>
+<?php $this->start('actions'); ?>
 <li><?php
 echo $this->Html->link(
 	__('Translate in a new language'),

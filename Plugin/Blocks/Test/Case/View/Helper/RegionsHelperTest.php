@@ -33,7 +33,7 @@ class RegionsHelperTest extends CroogoTestCase {
 			'named' => array(),
 		);
 		$view = new View(new TheRegionsTestController($request, new CakeResponse()));
-		$this->Regions = new RegionsHelper($view);
+		$this->Regions = $this->getMock('RegionsHelper', array('log'), array($view));
 		$this->_appEncoding = Configure::read('App.encoding');
 		$this->_asset = Configure::read('Asset');
 		$this->_debug = Configure::read('debug');
@@ -83,6 +83,35 @@ class RegionsHelperTest extends CroogoTestCase {
 				),
 			),
 		);
+		$this->Regions->expects($this->never())->method('log');
+		$result = $this->Regions->blocks('right');
+		$this->assertContains('id="block-1"', $result);
+		$this->assertContains('block-hello-world', $result);
+		$this->assertContains('hello world', $result);
+	}
+
+/**
+ * testBlocks with invalid/missing element
+ */
+	public function testBlockWithInvalidElement() {
+		$this->Regions->_View->viewVars['blocks_for_layout'] = array(
+			'right' => array(
+				0 => array(
+					'Block' => array(
+						'id' => 1,
+						'alias' => 'hello-world',
+						'body' => 'hello world',
+						'show_title' => false,
+						'class' => null,
+						'element' => 'non-existent',
+					)
+				),
+			),
+		);
+		$this->Regions
+			->expects($this->once())
+			->method('log')
+			->with('Missing element `non-existent` in block `hello-world` (1)');
 		$result = $this->Regions->blocks('right');
 		$this->assertContains('id="block-1"', $result);
 		$this->assertContains('block-hello-world', $result);

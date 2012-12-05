@@ -8,7 +8,7 @@ $this->Html
 	->addCrumb(__('Locales'), $this->here);
 
 ?>
-<?php echo $this->start('tabs') ?>
+<?php echo $this->start('actions') ?>
 <li>
 <?php
 	echo $this->Html->link(__('Upload'),
@@ -17,7 +17,7 @@ $this->Html
 	);
 ?>
 </li>
-<?php echo $this->end('tabs') ?>
+<?php echo $this->end('actions') ?>
 
 <table class="table table-striped">
 <?php

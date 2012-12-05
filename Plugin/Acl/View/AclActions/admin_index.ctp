@@ -14,7 +14,7 @@ $this->Html
 	->addCrumb(__('Actions'), array('plugin' => 'acl', 'controller' => 'acl_actions', 'action' => 'index', 'permission' => 1));
 
 ?>
-<?php $this->start('tabs'); ?>
+<?php $this->start('actions'); ?>
 <li>
 <?php
 	echo $this->Html->link(__('New Action'),
