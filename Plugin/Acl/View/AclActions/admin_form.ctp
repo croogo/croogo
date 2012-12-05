@@ -4,8 +4,15 @@ $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__('Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
 	->addCrumb(__('Permissions'), array('plugin' => 'acl', 'controller' => 'acl_permissions'))
-	->addCrumb(__('Actions'), array('plugin' => 'acl', 'controller' => 'acl_actions', 'action' => 'index'))
-	->addCrumb($this->data['Aco']['id'] . ': ' . $this->data['Aco']['alias'], $this->here);
+	->addCrumb(__('Actions'), array('plugin' => 'acl', 'controller' => 'acl_actions', 'action' => 'index'));
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html->addCrumb($this->data['Aco']['id'] . ': ' . $this->data['Aco']['alias'], $this->here);
+}
+
+if ($this->request->params['action'] == 'admin_add') {
+	$this->Html->addCrumb(__('Add'), $this->here);
+}
 
 ?>
 <h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>

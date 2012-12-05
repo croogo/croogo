@@ -4,8 +4,15 @@ $this->extend('/Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Contacts'), array('controller' => 'contacts', 'action' => 'index'))
-	->addCrumb($this->request->data['Contact']['title']);
+	->addCrumb(__('Contacts'), array('controller' => 'contacts', 'action' => 'index'));
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html->addCrumb($this->request->data['Contact']['title']);
+}
+
+if ($this->request->params['action'] == 'admin_add') {
+	$this->Html->addCrumb(__('Add'), $this->here);
+}
 
 echo $this->Form->create('Contact');
 

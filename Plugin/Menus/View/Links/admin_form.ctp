@@ -5,11 +5,32 @@ $this->Html->script(array('Menus.links'), false);
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Menus'), array('plugin' => 'menus', 'controller' => 'menus', 'action' => 'index'))
-	->addCrumb($this->data['Menu']['title'], array('plugin' => 'menus', 'controller' => 'links', 'action' => 'index', '?' => array('menu_id' => $this->data['Menu']['id'])))
-	->addCrumb($this->request->data['Link']['title'], $this->here);
+	->addCrumb(__('Menus'), array('plugin' => 'menus', 'controller' => 'menus', 'action' => 'index'));
 
-echo $this->Form->create('Link', array('url' => array('controller' => 'links', 'action' => 'edit', 'menu' => $menuId)));
+if ($this->request->params['action'] == 'admin_add') {
+	$this->Html
+		->addCrumb($menus[$menuId], array(
+			'plugin' => 'menus', 'controller' => 'links', 'action' => 'index',
+			'?' => array('menu_id' => $menuId))
+		)
+		->addCrumb(__('Add'), $this->here);
+	$formUrl = array(
+		'controller' => 'links', 'action' => 'add', 'menu' => $menuId
+	);
+}
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html
+		->addCrumb($this->data['Menu']['title'], array(
+			'plugin' => 'menus', 'controller' => 'links', 'action' => 'index',
+			'?' => array('menu_id' => $this->data['Menu']['id'])))
+		->addCrumb($this->request->data['Link']['title'], $this->here);
+	$formUrl = array(
+		'controller' => 'links', 'action' => 'edit', 'menu' => $menuId
+	);
+}
+
+echo $this->Form->create('Link', array('url' => $formUrl));
 
 ?>
 <div class="row-fluid">

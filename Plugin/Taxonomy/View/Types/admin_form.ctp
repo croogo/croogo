@@ -4,8 +4,15 @@ $this->extend('/Common/admin_edit');
 
 $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__('Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
-	->addCrumb(__('Types'), array('plugin' => 'taxonomy', 'controller' => 'types', 'action' => 'index'))
-	->addCrumb($this->request->data['Type']['title'], $this->here);
+	->addCrumb(__('Types'), array('plugin' => 'taxonomy', 'controller' => 'types', 'action' => 'index'));
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html->addCrumb($this->request->data['Type']['title'], $this->here);
+}
+
+if ($this->request->params['action'] == 'admin_add') {
+	$this->Html->addCrumb(__('Add'), $this->here);
+}
 
 echo $this->Form->create('Type');
 

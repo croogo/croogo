@@ -4,8 +4,14 @@ $this->extend('/Common/admin_edit');
 
 $this->Html
 	->addCrumb($this->Html->icon('home'), '/admin')
-	->addCrumb(__('Blocks'), array('plugin' => 'blocks', 'controller' => 'blocks', 'action' => 'index'))
-	->addCrumb($this->request->data['Block']['title'], $this->here);
+	->addCrumb(__('Blocks'), array('plugin' => 'blocks', 'controller' => 'blocks', 'action' => 'index'));
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html->addCrumb($this->request->data['Block']['title'], $this->here);
+}
+if ($this->request->params['action'] == 'admin_add') {
+	$this->Html->addCrumb(__('Add'), $this->here);
+}
 
 echo $this->Form->create('Block');
 

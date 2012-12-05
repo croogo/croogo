@@ -3,8 +3,15 @@
 	$this->Html
 		->addCrumb($this->Html->icon('home'), '/admin')
 		->addCrumb(__('Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
-		->addCrumb(__('Roles'), array('plugin' => 'users', 'controller' => 'roles', 'action' => 'index'))
-		->addCrumb($this->request->data['Role']['title'], $this->here);
+		->addCrumb(__('Roles'), array('plugin' => 'users', 'controller' => 'roles', 'action' => 'index'));
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html->addCrumb($this->request->data['Role']['title'], $this->here);
+}
+
+if ($this->request->params['action'] == 'admin_add') {
+	$this->Html->addCrumb(__('Add'), $this->here);
+}
 ?>
 <?php echo $this->Form->create('Role');?>
 
@@ -48,6 +55,6 @@
 		echo $this->Croogo->adminBoxes();
 	?>
 	</div>
-	
+
 </div>
 <?php echo $this->Form->end(); ?>

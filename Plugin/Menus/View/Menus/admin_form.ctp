@@ -4,8 +4,15 @@ $this->extend('/Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Menus'), array('plugin' => 'menus', 'controller' => 'menus', 'action' => 'index'))
-	->addCrumb($this->request->data['Menu']['title']);
+	->addCrumb(__('Menus'), array('plugin' => 'menus', 'controller' => 'menus', 'action' => 'index'));
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html->addCrumb($this->request->data['Menu']['title'], $this->here);
+}
+
+if ($this->request->params['action'] == 'admin_add') {
+	$this->Html->addCrumb(__('Add'), $this->here);
+}
 
 echo $this->Form->create('Menu');
 
@@ -25,7 +32,7 @@ echo $this->Form->create('Menu');
 			<?php
 				echo $this->Form->input('id');
 				$this->Form->inputDefaults(array(
-					'class' => 'span12',
+					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
 					'label' => false,

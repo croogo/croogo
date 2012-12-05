@@ -5,8 +5,15 @@ $this->extend('/Common/admin_edit');
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__('Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'prefix', 'Site'))
-	->addCrumb(__('Language'), array('plugin' => 'settings', 'controller' => 'languages', 'action' => 'index'))
-	->addCrumb($this->data['Language']['title'], $this->here);
+	->addCrumb(__('Language'), array('plugin' => 'settings', 'controller' => 'languages', 'action' => 'index'));
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html->addCrumb($this->data['Language']['title'], $this->here);
+}
+
+if ($this->request->params['action'] == 'admin_add') {
+	$this->Html->addCrumb(__('Add'), $this->here);
+}
 
 echo $this->Form->create('Language');
 
@@ -60,4 +67,4 @@ echo $this->Form->create('Language');
 		?>
 	</div>
 </div>
-<?php $this->Form->end(); ?>
+<?php echo $this->Form->end(); ?>

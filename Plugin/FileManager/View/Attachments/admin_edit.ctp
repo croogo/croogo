@@ -64,16 +64,16 @@ echo $this->Form->create('Node', array('url' => array('controller' => 'attachmen
 	</div>
 
 	<div class="span4">
-		<?php
-			echo $this->Html->beginBox(__('Publishing')) .
-				$this->Form->button(__('Save')) .
-				$this->Html->link(
-					__('Cancel'),
-					array('action' => 'index'),
-					array('class' => 'cancel', 'button' => 'danger')
-				).
-				$this->Html->endBox();
-		?>
+	<?php
+		echo $this->Html->beginBox(__('Publishing')) .
+			$this->Form->button(__('Save')) .
+			$this->Html->link(
+				__('Cancel'),
+				array('action' => 'index'),
+				array('class' => 'cancel', 'button' => 'danger')
+			).
+			$this->Html->endBox();
+	?>
 	</div>
 </div>
 <?php echo $this->Form->end(); ?>

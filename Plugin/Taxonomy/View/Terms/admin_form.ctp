@@ -1,12 +1,25 @@
 <?php
+$this->Html->script(array('/taxonomy/js/terms'), false);
+
 $this->extend('/Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
-	->addCrumb(__('Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index'))
-	->addCrumb($vocabulary['Vocabulary']['title'], array('plugin' => 'taxonomy', 'controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id']))
-	->addCrumb($this->request->data['Term']['title'], $this->here);
+	->addCrumb(__('Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'));
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html
+		->addCrumb(__('Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index'))
+		->addCrumb($vocabulary['Vocabulary']['title'], array('plugin' => 'taxonomy', 'controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id']))
+		->addCrumb($this->request->data['Term']['title'], $this->here);
+}
+
+if ($this->request->params['action'] == 'admin_add') {
+	$this->Html
+		->addCrumb(__('Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index', $vocabulary['Vocabulary']['id'],))
+		->addCrumb($vocabulary['Vocabulary']['title'], array('plugin' => 'taxonomy', 'controller' => 'terms', 'action' => 'index'))
+		->addCrumb(__('Add'), $this->here);
+}
 
 echo $this->Form->create('Term', array(
 	'url' => '/' . $this->request->url,
@@ -51,16 +64,17 @@ echo $this->Form->create('Term', array(
 	</div>
 
 	<div class="span4">
-		<?php
-			echo $this->Html->beginBox(__('Publishing')) .
- 				$this->Form->button(__('Save'), array('button' => 'default')) .
- 				$this->Html->link(
-					__('Cancel'),
-					array('action' => 'index', $vocabularyId),
-					array('button' => 'danger')
-				) .
-				$this->Html->endBox();
-		?>
+	<?php
+		echo $this->Html->beginBox(__('Publishing')) .
+			$this->Form->button(__('Save'), array('button' => 'default')) .
+			$this->Html->link(
+				__('Cancel'),
+				array('action' => 'index', $vocabularyId),
+				array('button' => 'danger')
+			) .
+			$this->Html->endBox();
+		echo $this->Croogo->adminBoxes();
+	?>
 	</div>
 </div>
 <?php echo $this->Form->end(); ?>

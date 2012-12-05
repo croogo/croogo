@@ -7,10 +7,18 @@ $this->Html
 	->addCrumb(__('Blocks'), array(
 		'plugin' => 'blocks', 'controller' => 'blocks', 'action' => 'index'))
 	->addCrumb(__('Regions'), array(
-		'plugin' => 'blocks', 'controller' => 'regions', 'action' => 'index'))
-	->addCrumb($this->data['Region']['title'], array(
+		'plugin' => 'blocks', 'controller' => 'regions', 'action' => 'index'));
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html->addCrumb($this->data['Region']['title'], array(
 		'plugin' => 'blocks', 'controller' => 'regions', 'action' => 'edit',
-		$this->params['pass'][0]));
+		$this->params['pass'][0]
+	));
+}
+
+if ($this->request->params['action'] == 'admin_add') {
+	$this->Html->addCrumb(__('Add'), $this->here);
+}
 
 ?>
 <?php echo $this->Form->create('Region');?>

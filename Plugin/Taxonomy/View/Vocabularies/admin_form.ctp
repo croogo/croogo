@@ -4,9 +4,19 @@ $this->extend('/Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
-	->addCrumb(__('Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index', $this->request->data['Vocabulary']['id'],))
-	->addCrumb($this->request->data['Vocabulary']['title'], $this->here);
+	->addCrumb(__('Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'));
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html
+		->addCrumb(__('Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index', $this->request->data['Vocabulary']['id'],))
+		->addCrumb($this->request->data['Vocabulary']['title'], $this->here);
+}
+
+if ($this->request->params['action'] == 'admin_add') {
+	$this->Html
+		->addCrumb(__('Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index',))
+		->addCrumb(__('Add'), $this->here);
+}
 
 echo $this->Form->create('Vocabulary');
 
@@ -27,12 +37,13 @@ echo $this->Form->create('Vocabulary');
 				echo $this->Form->input('id');
 				$this->Form->inputDefaults(array(
 					'class' => 'span10',
+					'label' => false,
 				));
 				echo $this->Form->input('title', array(
 					'placeholder' => __('Title'),
 				));
 				echo $this->Form->input('alias', array(
-					'class' => 'alias',
+					'class' => 'alias span10',
 					'placeholder' => __('Alias'),
 				));
 				echo $this->Form->input('description', array(

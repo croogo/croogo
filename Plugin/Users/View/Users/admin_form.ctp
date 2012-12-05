@@ -1,16 +1,27 @@
-<?php $this->extend('/Common/admin_edit'); ?>
 <?php
+
+$this->extend('/Common/admin_edit');
+
 $this->Html
 	->addCrumb($this->Html->icon('home'), '/admin')
-	->addCrumb(__('Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
-	->addCrumb($this->data['User']['name'], array(
+	->addCrumb(__('Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'));
+
+if ($this->request->params['action'] == 'admin_edit') {
+	$this->Html->addCrumb($this->data['User']['name'], array(
 		'plugin' => 'users', 'controller' => 'users', 'action' => 'edit',
 		$this->data['User']['id']
 	));
+}
+
+if ($this->request->params['action'] == 'admin_add') {
+	$this->Html->addCrumb(__('Add'), array('plugin' => 'users','controller' => 'users', 'action' => 'add'));
+}
 ?>
 <?php $this->start('actions'); ?>
+<?php if ($this->request->params['action'] == 'admin_edit'): ?>
 	<li><?php echo $this->Html->link(__('Reset password'), array('action' => 'reset_password', $this->params['pass']['0']), array(
 	'class' => 'btn')); ?></li>
+<?php endif; ?>
 <?php $this->end(); ?>
 
 <?php echo $this->Form->create('User');?>
