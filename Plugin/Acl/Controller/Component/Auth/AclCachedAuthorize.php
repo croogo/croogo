@@ -128,7 +128,11 @@ class AclCachedAuthorize extends BaseAuthorize {
 		}
 		foreach ($ids as $id) {
 			if (is_numeric($id)) {
-				$allowed = $this->_authorizeByContent($user['User'], $request, $id);
+				try {
+					$allowed = $this->_authorizeByContent($user['User'], $request, $id);
+				} catch (CakeException $e) {
+					$allowed = false;
+				}
 			} else {
 				continue;
 			}
@@ -140,6 +144,11 @@ class AclCachedAuthorize extends BaseAuthorize {
 		return $allowed;
 	}
 
+/**
+ * Checks authorization by content
+ *
+ * @throws CakeException
+ */
 	protected function _authorizeByContent($user, CakeRequest $request, $id) {
 		if (!isset($this->settings['actionMap'][$request->params['action']])) {
 			throw new CakeException(
