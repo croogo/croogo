@@ -126,18 +126,29 @@ Admin.form = function() {
 	// Tooltips activation
 	$('[rel=tooltip],*[data-title],input[title],textarea[title]').tooltip();
 	$('a.tooltip').tipsy({gravity: 's', html: false}); // Legacy tooltip
+
+	// Row Actions
+	$('body').on('click', 'a[data-row-action]', Admin.processLink);
 }
 
-Admin.processLink = function(el) {
-	var checkbox = $(el.attributes["href"].value);
+/**
+ * Helper to process row action links
+ */
+Admin.processLink = function(event) {
+	var $el = $(event.currentTarget);
+	var checkbox = $(event.currentTarget.attributes["href"].value);
 	var form = checkbox.get(0).form;
+	var action = $el.data('row-action');
+	var confirmMessage = $el.data('confirm-message');
+	if (confirmMessage && !confirm(confirmMessage)) {
+		return false;
+	}
 	$('input[type=checkbox]', form).prop('checked', false);
 	checkbox.prop("checked", true);
-	$('.control-group select', form).val('delete');
+	$('#bulk-action select', form).val(action);
 	form.submit();
 	return false;
 }
-
 
 /**
  * Extra stuff

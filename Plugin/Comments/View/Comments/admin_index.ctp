@@ -86,7 +86,7 @@ echo $this->element('admin/modal', array(
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Comment' . $comment['Comment']['id'] . 'Id',
-			array('icon' => 'trash', 'tooltip' => __('Remove this item')),
+			array('icon' => 'trash', 'tooltip' => __('Remove this item'), 'rowAction' => 'delete'),
 			__('Are you sure?')
 		);
 
@@ -123,7 +123,7 @@ echo $this->element('admin/modal', array(
 
 </table>
 	<div class="row-fluid">
-		<div class="control-group">
+		<div id="bulk-action" class="control-group">
 			<?php
 				echo $this->Form->input('Comment.action', array(
 					'label' => false,

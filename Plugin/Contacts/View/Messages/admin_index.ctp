@@ -74,7 +74,7 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Message' . $message['Message']['id'] . 'Id',
-			array('icon' => 'trash', 'tooltip' => __('Remove this item')),
+			array('icon' => 'trash', 'tooltip' => __('Remove this item'), 'rowAction' => 'delete'),
 			__('Are you sure?')
 		);
 		$actions[] = $this->Croogo->adminRowActions($message['Message']['id']);
@@ -105,7 +105,7 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 
 </table>
 <div class="row-fluid">
-	<div class="control-group">
+	<div id="bulk-action" class="control-group">
 		<?php
 			echo $this->Form->input('Message.action', array(
 				'label' => false,

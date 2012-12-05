@@ -118,7 +118,6 @@ class LayoutHelperTest extends CroogoTestCase {
 		$expected = array(
 			'a' => array(
 				'href' => '/users/edit/1',
-				'onclick' => 'Admin.processLink(this); return false;',
 			),
 			'Edit',
 			'/a',
@@ -132,7 +131,7 @@ class LayoutHelperTest extends CroogoTestCase {
 			'a' => array(
 				'href' => '/users/edit/1',
 				'class' => 'test-class',
-				'onclick' => 'if (confirm(&#039;Are you sure&#039;)) { Admin.processLink(this); } return false;',
+				'data-confirm-message',
 			),
 			'Edit',
 			'/a',

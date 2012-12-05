@@ -104,6 +104,7 @@ class CroogoHtmlHelper extends HtmlHelper {
 				} else {
 					$options['class'] = ' ' . $icon;
 				}
+				unset($options['iconInline']);
 			}
 			unset($options['icon']);
 		}
