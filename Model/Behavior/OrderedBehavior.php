@@ -361,7 +361,7 @@ class OrderedBehavior extends ModelBehavior {
 					'fields' => $this->settings[$Model->alias]['foreign_key'],
 					'group' => $this->settings[$Model->alias]['foreign_key'],
 					'recursive' => -1));
-			$foreignKeys = Set::extract($temp, '{n}.' . $Model->alias . '.' . $this->settings[$Model->alias]['foreign_key']);
+			$foreignKeys = Hash::extract($temp, '{n}.' . $Model->alias . '.' . $this->settings[$Model->alias]['foreign_key']);
 			foreach ($foreignKeys as $fk) {
 				$all = $Model->find('all', array(
 						'conditions' => array($this->settings[$Model->alias]['foreign_key'] => $fk),

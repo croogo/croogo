@@ -64,7 +64,7 @@ class CroogoNav extends Object {
 			self::add($parent, $o);
 		}
 		self::_setupOptions($options);
-		$current = Set::extract($path, self::$_items);
+		$current = Hash::extract(self::$_items, $path);
 		if (!empty($current)) {
 			self::_replace(self::$_items, $path, $options);
 		} else {

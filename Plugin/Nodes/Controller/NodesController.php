@@ -100,7 +100,7 @@ class NodesController extends NodesAppController {
 		$this->paginate['Node']['contain'] = array('User');
 
 		$types = $this->Node->Taxonomy->Vocabulary->Type->find('all');
-		$typeAliases = Set::extract('/Type/alias', $types);
+		$typeAliases = Hash::extract($types, '{n}.Type.alias');
 		$this->paginate['Node']['conditions']['Node.type'] = $typeAliases;
 
 		$nodes = $this->paginate($this->Node->parseCriteria($this->passedArgs));
