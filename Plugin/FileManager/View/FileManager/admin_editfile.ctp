@@ -26,12 +26,24 @@ echo $this->Form->create('FileManager', array(
 
 <div class="row-fluid">
 	<div class="span8">
-		<?php echo $this->Html->beginBox(__('Edit')) .
-			$this->Form->input(
-				'FileManager.content',
-				array('type' => 'textarea', 'value' => $content, 'class' => 'span12', 'label' => '')
-			) .
-			$this->Html->endBox(); ?>
+		<ul class="nav nav-tabs">
+			<li><a href='#filemanager-edit' data-toggle="tab"><?php echo __('Edit'); ?></a></li>
+			<?php echo $this->Croogo->adminTabs(); ?>
+		</ul>
+
+		<div class="tab-content">
+			<div id="filemanager-edit" class="tab-pane">
+			<?php
+				echo $this->Form->input('FileManager.content', array(
+					'type' => 'textarea',
+					'value' => $content,
+					'class' => 'span12',
+					'label' => false,
+				));
+			?>
+			</div>
+			<?php echo $this->Croogo->adminTabs(); ?>
+		</div>
 	</div>
 	<div class="span4">
 		<?php

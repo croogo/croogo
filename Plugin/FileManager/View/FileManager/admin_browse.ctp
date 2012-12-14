@@ -90,7 +90,7 @@ $this->Html
 					'action' => 'delete_file',
 				), $path . $file);
 			}
-			$actions = implode(' ', $actions);
+			$actions = $this->Html->div('item-actions', implode(' ', $actions));
 			$rows[] = array(
 				$this->Html->image('/img/icons/' . $this->FileManager->filename2icon($file)),
 				$this->FileManager->linkFile($file, $path . $file),
