@@ -122,9 +122,9 @@ class BlocksComponent extends Component {
  */
 	public function processBlocksData($blocks) {
 		foreach ($blocks as $block) {
-			$this->blocksData['menus'] = Set::merge($this->blocksData['menus'], $this->parseString('menu|m', $block['Block']['body']));
-			$this->blocksData['vocabularies'] = Set::merge($this->blocksData['vocabularies'], $this->parseString('vocabulary|v', $block['Block']['body']));
-			$this->blocksData['nodes'] = Set::merge($this->blocksData['nodes'], $this->parseString('node|n', $block['Block']['body'], array(
+			$this->blocksData['menus'] = Hash::merge($this->blocksData['menus'], $this->parseString('menu|m', $block['Block']['body']));
+			$this->blocksData['vocabularies'] = Hash::merge($this->blocksData['vocabularies'], $this->parseString('vocabulary|v', $block['Block']['body']));
+			$this->blocksData['nodes'] = Hash::merge($this->blocksData['nodes'], $this->parseString('node|n', $block['Block']['body'], array(
 				'convertOptionsToArray' => true,
 			)));
 		}

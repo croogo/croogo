@@ -138,7 +138,7 @@ class LayoutHelper extends AppHelper {
 			'named' => $this->params['named'],
 		);
 		if (is_array(Configure::read('Js'))) {
-			$croogo = Set::merge($croogo, Configure::read('Js'));
+			$croogo = Hash::merge($croogo, Configure::read('Js'));
 		}
 		return $this->Html->scriptBlock('var Croogo = ' . $this->Js->object($croogo) . ';');
 	}
@@ -338,7 +338,7 @@ class LayoutHelper extends AppHelper {
 			$data = $options = array();
 			for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
 				if (in_array($attributes[1][$j], $validOptions)) {
-					$options = Set::merge($options, array($attributes[1][$j] => $attributes[2][$j]));
+					$options = Hash::merge($options, array($attributes[1][$j] => $attributes[2][$j]));
 				} else {
 					$data[$attributes[1][$j]] = $attributes[2][$j];
 				}

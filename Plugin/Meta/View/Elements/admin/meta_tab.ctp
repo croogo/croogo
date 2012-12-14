@@ -1,8 +1,8 @@
 <div id="meta-fields">
 <?php
 	if (!empty($this->data['Meta'])) {
-		$fields = Set::combine($this->data['Meta'], '{n}.key', '{n}.value');
-		$fieldsKeyToId = Set::combine($this->data['Meta'], '{n}.key', '{n}.id');
+		$fields = Hash::combine($this->data['Meta'], '{n}.key', '{n}.value');
+		$fieldsKeyToId = Hash::combine($this->data['Meta'], '{n}.key', '{n}.id');
 	} else {
 		$fields = $fieldsKeyToId = array();
 	}

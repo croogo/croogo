@@ -133,7 +133,7 @@ class AclFilterComponent extends Component {
 
 		$aros = Set::extract('/Aro/id', $node);
 		if (!empty($nodes)) {
-			$aros = Set::merge($aros, Set::extract('/Aro/id', $nodes));
+			$aros = Hash::merge($aros, Set::extract('/Aro/id', $nodes));
 		}
 
 		$permissions = $Acl->Aro->Permission->find('all', array(

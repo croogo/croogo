@@ -81,7 +81,7 @@ class NodesComponent extends Component {
 		);
 
 		foreach ($nodes as $alias => $options) {
-			$options = Set::merge($_nodeOptions, $options);
+			$options = Hash::merge($_nodeOptions, $options);
 			$options['limit'] = str_replace('"', '', $options['limit']);
 			$node = $this->Node->find($options['find'], array(
 				'conditions' => $options['conditions'],

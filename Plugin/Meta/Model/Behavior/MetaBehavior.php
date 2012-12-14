@@ -41,14 +41,14 @@ class MetaBehavior extends ModelBehavior {
 			foreach ($results as $i => $result) {
 				$customFields = array();
 				if (isset($result['Meta']) && count($result['Meta']) > 0) {
-					$customFields = Set::combine($result, 'Meta.{n}.key', 'Meta.{n}.value');
+					$customFields = Hash::combine($result, 'Meta.{n}.key', 'Meta.{n}.value');
 				}
 				$results[$i]['CustomFields'] = $customFields;
 			}
 		} elseif (isset($results[$model->alias])) {
 			$customFields = array();
 			if (isset($results['Meta']) && count($results['Meta']) > 0) {
-				$customFields = Set::combine($results, 'Meta.{n}.key', 'Meta.{n}.value');
+				$customFields = Hash::combine($results, 'Meta.{n}.key', 'Meta.{n}.value');
 			}
 			$results['CustomFields'] = $customFields;
 		}
@@ -78,7 +78,7 @@ class MetaBehavior extends ModelBehavior {
 		if (isset($data['Meta']) &&
 			is_array($data['Meta']) &&
 			count($data['Meta']) > 0 &&
-			!Set::numeric(array_keys($data['Meta']))) {
+			!Hash::numeric(array_keys($data['Meta']))) {
 			$meta = $data['Meta'];
 			$data['Meta'] = array();
 			$i = 0;

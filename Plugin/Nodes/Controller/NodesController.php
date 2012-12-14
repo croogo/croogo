@@ -188,7 +188,7 @@ class NodesController extends NodesAppController {
 		$nodes = $this->Node->generateTreeList();
 		$roles = $this->Node->User->Role->find('list');
 		$users = $this->Node->User->find('list');
-		$vocabularies = Set::combine($type['Vocabulary'], '{n}.id', '{n}');
+		$vocabularies = Hash::combine($type['Vocabulary'], '{n}.id', '{n}');
 		$taxonomy = array();
 		foreach ($type['Vocabulary'] as $vocabulary) {
 			$vocabularyId = $vocabulary['id'];
@@ -260,7 +260,7 @@ class NodesController extends NodesAppController {
 		$nodes = $this->Node->generateTreeList();
 		$roles = $this->Node->User->Role->find('list');
 		$users = $this->Node->User->find('list');
-		$vocabularies = Set::combine($type['Vocabulary'], '{n}.id', '{n}');
+		$vocabularies = Hash::combine($type['Vocabulary'], '{n}.id', '{n}');
 		$taxonomy = array();
 		foreach ($type['Vocabulary'] as $vocabulary) {
 			$vocabularyId = $vocabulary['id'];
