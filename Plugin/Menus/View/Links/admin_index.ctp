@@ -84,7 +84,10 @@ $this->Html
 			$this->Form->checkbox('Link.' . $linkId . '.id'),
 			$linkId,
 			$linkTitle,
-			$this->Html->status($linksStatus[$linkId]),
+			$this->element('admin/toggle', array(
+				'id' => $linkId,
+				'status' => $linksStatus[$linkId],
+			)),
 			$actions,
 		);
 	endforeach;

@@ -82,6 +82,18 @@ class NodesController extends NodesAppController {
 		if (isset($this->request->params['type'])) {
 			$this->request->params['named']['type'] = $this->request->params['type'];
 		}
+		$this->Security->unlockedActions[] = 'admin_toggle';
+	}
+
+/**
+ * Toggle Node status
+ *
+ * @param $id string Node id
+ * @param $status integer Current Node status
+ * @return void
+ */
+	public function admin_toggle($id = null, $status = null) {
+		$this->Croogo->fieldToggle($this->Node, $id, $status);
 	}
 
 /**

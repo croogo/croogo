@@ -191,6 +191,30 @@ class CroogoComponent extends Component {
 	}
 
 /**
+ * Toggle field status
+ *
+ * @param $model Model instance
+ * @param $id integer Model id
+ * @param $status integer current status
+ * @param $field string field name to toggle
+ * @throws CakeException
+ */
+	public function fieldToggle(Model $model, $id, $status, $field = 'status') {
+		if (empty($id) || $status === null) {
+			throw new CakeException(__('Invalid content'));
+		}
+		$model->id = $id;
+		$status = !$status;
+		$this->_controller->layout = 'ajax';
+		if ($model->saveField($field, $status)) {
+			$this->_controller->set(compact('id', 'status'));
+			$this->_controller->render('Common/admin_toggle');
+		} else {
+			throw new CakeException(__('Failed toggling field %s to %s', $field, $status));
+		}
+	}
+
+/**
  * Loads plugin's bootstrap.php file
  *
  * @param string $plugin Plugin name (underscored)

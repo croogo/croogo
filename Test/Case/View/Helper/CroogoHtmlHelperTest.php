@@ -29,9 +29,45 @@ class CroogoHtmlHelperTest extends CroogoTestCase{
 		$this->assertContains('<i class="icon-ok green"></i>', $result);
 	}
 
+	public function testStatusOkWithUrl() {
+		$result = $this->CroogoHtml->status(1, array(
+			'admin' => true,
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'toggle',
+		));
+		$expected = array(
+			'a' => array(
+				'href',
+				'data-url' => '/admin/nodes/nodes/toggle',
+				'class' => 'icon-ok green ajax-toggle',
+			),
+			'/a',
+		);
+		$this->assertTags($result, $expected);
+	}
+
 	public function testStatusRemove() {
 		$result = $this->CroogoHtml->status(0);
 		$this->assertContains('<i class="icon-remove red"></i>', $result);
+	}
+
+	public function testStatusRemoveWithUrl() {
+		$result = $this->CroogoHtml->status(0, array(
+			'admin' => true,
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'delete',
+		));
+		$expected = array(
+			'a' => array(
+				'href',
+				'data-url' => '/admin/nodes/nodes/delete',
+				'class' => 'icon-remove red ajax-toggle',
+			),
+			'/a',
+		);
+		$this->assertTags($result, $expected);
 	}
 
 	public function testLink() {

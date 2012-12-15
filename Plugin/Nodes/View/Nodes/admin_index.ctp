@@ -80,7 +80,12 @@ echo $this->Form->create(
 						<?php echo $node['User']['username']; ?>
 					</td>
 					<td>
-						<?php echo $this->Html->status($node['Node']['status']); ?>
+						<?php
+							echo $this->element('admin/toggle', array(
+								'id' => $node['Node']['id'],
+								'status' => $node['Node']['status'],
+							));
+						?>
 					</td>
 					<td>
 						<div class="item-actions">
