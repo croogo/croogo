@@ -55,7 +55,7 @@ class HabtmDbAcl extends DbAcl {
 		$groupField = $User->hasAndBelongsToMany[$groupAlias]['associationForeignKey'];
 
 		$node = $this->Acl->Aro->node($aro);
-		$userId = Set::extract('0.Aro.foreign_key', $node);
+		$userId = Hash::extract($node, '0.Aro.foreign_key');
 		$groupIDs = ClassRegistry::init($joinModel)->find('list', array(
 			'fields' => array($groupField),
 			'conditions' => array($userField => $userId),

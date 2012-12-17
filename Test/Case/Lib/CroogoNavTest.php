@@ -29,14 +29,14 @@ class CroogoNavTest extends CroogoTestCase {
 		$extensions = array('title' => 'Extensions');
 		CroogoNav::add('extensions', $extensions);
 		$result = CroogoNav::items();
-		$expected = array('extensions' => Set::merge($defaults, $extensions));
+		$expected = array('extensions' => Hash::merge($defaults, $extensions));
 		$this->assertEqual($result, $expected);
 
 		// tested nested insertion (1 level)
 		$plugins = array('title' => 'Plugins');
 		CroogoNav::add('extensions.children.plugins', $plugins);
 		$result = CroogoNav::items();
-		$expected['extensions']['children']['plugins'] = Set::merge($defaults, $plugins);
+		$expected['extensions']['children']['plugins'] = Hash::merge($defaults, $plugins);
 		$this->assertEqual($result, $expected);
 
 		// 2 levels deep
@@ -44,7 +44,7 @@ class CroogoNavTest extends CroogoTestCase {
 		CroogoNav::add('extensions.children.plugins.children.example', $example);
 		$result = CroogoNav::items();
 
-		$expected['extensions']['children']['plugins']['children']['example'] = Set::merge($defaults, $example);
+		$expected['extensions']['children']['plugins']['children']['example'] = Hash::merge($defaults, $example);
 		$this->assertEqual($result, $expected);
 
 		CroogoNav::items($saved);
@@ -68,7 +68,7 @@ class CroogoNavTest extends CroogoTestCase {
 		$defaults = CroogoNav::getDefaults();
 
 		$items = CroogoNav::items();
-		$expected = Set::merge($defaults, array(
+		$expected = Hash::merge($defaults, array(
 			'title' => 'Permissions',
 			'url' => array(
 				'admin' => true,
@@ -93,7 +93,7 @@ class CroogoNavTest extends CroogoTestCase {
 		CroogoNav::add('users.children.permissions', $item);
 		$items = CroogoNav::items();
 
-		$expected = Set::merge($defaults, array(
+		$expected = Hash::merge($defaults, array(
 			'title' => 'Permissions',
 			'url' => array(
 				'admin' => true,

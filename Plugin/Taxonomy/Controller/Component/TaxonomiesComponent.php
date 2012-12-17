@@ -127,9 +127,9 @@ class TaxonomiesComponent extends Component {
 		$vocabularies = array();
 		$themeData = $this->Croogo->getThemeData(Configure::read('Site.theme'));
 		if (isset($themeData['vocabularies']) && is_array($themeData['vocabularies'])) {
-			$vocabularies = Set::merge($vocabularies, $themeData['vocabularies']);
+			$vocabularies = Hash::merge($vocabularies, $themeData['vocabularies']);
 		}
-		$vocabularies = Set::merge($vocabularies, array_keys($this->controller->Blocks->blocksData['vocabularies']));
+		$vocabularies = Hash::merge($vocabularies, array_keys($this->controller->Blocks->blocksData['vocabularies']));
 		$vocabularies = array_unique($vocabularies);
 		foreach ($vocabularies as $vocabularyAlias) {
 			$vocabulary = $this->Node->Taxonomy->Vocabulary->find('first', array(

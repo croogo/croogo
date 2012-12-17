@@ -57,18 +57,18 @@ class CroogoNav extends Object {
 		$pathE = explode('.', $path);
 		$pathE = array_splice($pathE, 0, count($pathE) - 2);
 		$parent = join('.', $pathE);
-		if (!empty($parent) && !Set::check(self::$_items, $parent)) {
+		if (!empty($parent) && !Hash::check(self::$_items, $parent)) {
 			$title = Inflector::humanize(end($pathE));
 			$o = array('title' => $title);
 			self::_setupOptions($o);
 			self::add($parent, $o);
 		}
 		self::_setupOptions($options);
-		$current = Set::extract($path, self::$_items);
+		$current = Hash::extract(self::$_items, $path);
 		if (!empty($current)) {
 			self::_replace(self::$_items, $path, $options);
 		} else {
-			self::$_items = Set::insert(self::$_items, $path, $options);
+			self::$_items = Hash::insert(self::$_items, $path, $options);
 		}
 	}
 
@@ -94,13 +94,13 @@ class CroogoNav extends Object {
 /**
  * Merge $firstArray with $secondArray
  *
- * Similar to Set::merge, except duplicates are removed
+ * Similar to Hash::merge, except duplicates are removed
  * @param array $firstArray
  * @param array $secondArray
  * @return array
  */
 	protected static function _merge($firstArray, $secondArray) {
-		$merged = Set::merge($firstArray, $secondArray);
+		$merged = Hash::merge($firstArray, $secondArray);
 		foreach ($merged as $key => $val) {
 			if (is_array($val) && is_int(key($val))) {
 				$merged[$key] = array_unique($val);
@@ -116,7 +116,7 @@ class CroogoNav extends Object {
  * @return void
  */
 	public static function remove($path) {
-		self::$_items = Set::remove(self::$_items, $path);
+		self::$_items = Hash::remove(self::$_items, $path);
 	}
 
 /**

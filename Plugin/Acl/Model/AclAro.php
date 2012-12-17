@@ -47,7 +47,7 @@ class AclAro extends AclNode {
 				'Aro.foreign_key' => array_keys($roles),
 			),
 		));
-		return Set::combine($aros, '{n}.Aro.foreign_key', '{n}.Aro.id');
+		return Hash::combine($aros, '{n}.Aro.foreign_key', '{n}.Aro.id');
 	}
 
 }

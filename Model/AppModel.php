@@ -182,16 +182,16 @@ class AppModel extends Model {
 			if (is_int($field)) {
 				$field = $label;
 				list(, $label) = pluginSplit($label);
-				$out[$field] = Set::merge($defaults, array(
+				$out[$field] = Hash::merge($defaults, array(
 					'label' => Inflector::humanize($label),
 				));
 			} elseif (is_array($label)) {
-				$out[$field] = Set::merge($defaults, $label);
+				$out[$field] = Hash::merge($defaults, $label);
 				if (!isset($out[$field]['label'])) {
 					$out[$field]['label'] = Inflector::humanize($field);
 				}
 			} else {
-				$out[$field] = Set::merge($defaults, array(
+				$out[$field] = Hash::merge($defaults, array(
 					'label' => $label,
 				));
 			}

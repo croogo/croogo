@@ -229,7 +229,7 @@ class Node extends NodesAppModel {
 					'Taxonomy.id' => $taxonomyIds,
 				),
 			));
-			$terms = Set::combine($taxonomies, '{n}.Term.id', '{n}.Term.slug');
+			$terms = Hash::combine($taxonomies, '{n}.Term.id', '{n}.Term.slug');
 			$this->data['Node']['terms'] = $this->encodeData($terms, array(
 				'trim' => false,
 				'json' => true,

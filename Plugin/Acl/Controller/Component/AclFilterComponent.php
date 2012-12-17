@@ -131,9 +131,9 @@ class AclFilterComponent extends Component {
 		$node = $Acl->Aro->node($aro);
 		$nodes = $Acl->Aro->getPath($node[0]['Aro']['id']);
 
-		$aros = Set::extract('/Aro/id', $node);
+		$aros = Hash::extract($node, '{n}.Aro.id');
 		if (!empty($nodes)) {
-			$aros = Set::merge($aros, Set::extract('/Aro/id', $nodes));
+			$aros = Hash::merge($aros, Hash::extract($nodes, '{n}.Aro.id'));
 		}
 
 		$permissions = $Acl->Aro->Permission->find('all', array(
@@ -159,7 +159,7 @@ class AclFilterComponent extends Component {
 				$action = $path[2]['Aco']['alias'];
 			}
 			$allowedActions[$controller][] = $action;
-			$authorized[] = implode('/', Set::extract('/Aco/alias', $path));
+			$authorized[] = implode('/', Hash::extract($path, '{n}.Aco.alias'));
 		}
 		return array('authorized' => $authorized, 'allowed' => $allowedActions);
 	}
