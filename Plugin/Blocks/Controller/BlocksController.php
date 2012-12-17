@@ -62,6 +62,28 @@ class BlocksController extends BlocksAppController {
 	}
 
 /**
+ * beforeFilter
+ *
+ * @return void
+ * @access public
+ */
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Security->unlockedActions[] = 'admin_toggle';
+	}
+
+/**
+ * Toggle Block status
+ *
+ * @param $id string Block id
+ * @param $status integer Current Block status
+ * @return void
+ */
+	public function admin_toggle($id = null, $status = null) {
+		$this->Croogo->fieldToggle($this->Block, $id, $status);
+	}
+
+/**
  * Admin index
  *
  * @return void

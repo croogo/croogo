@@ -127,8 +127,20 @@ Admin.form = function() {
 	$('[rel=tooltip],*[data-title],input[title],textarea[title]').tooltip();
 	$('a.tooltip').tipsy({gravity: 's', html: false}); // Legacy tooltip
 
+	var ajaxToggle = function(e) {
+		var $this = $(this);
+		$this.addClass('loading').find('i').attr('class', 'icon-none');
+		var url = $this.data('url');
+		$.post(url, function(data) {
+			$this.parent().html(data);
+		});
+	}
+
 	// Row Actions
-	$('body').on('click', 'a[data-row-action]', Admin.processLink);
+	$('body')
+		.on('click', 'a[data-row-action]', Admin.processLink)
+		.on('click', 'a.ajax-toggle', ajaxToggle)
+	;
 }
 
 /**

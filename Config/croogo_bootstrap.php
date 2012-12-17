@@ -86,7 +86,7 @@ $aclPlugin = Configure::read('Site.acl_plugin');
 $pluginBootstraps = Configure::read('Hook.bootstraps');
 $plugins = array_filter(explode(',', $pluginBootstraps));
 if (!in_array($aclPlugin, $plugins)) {
-	$plugins = Set::merge($aclPlugin, $plugins);
+	$plugins = Hash::merge((array)$aclPlugin, $plugins);
 }
 foreach ($plugins as $plugin) {
 	$pluginName = Inflector::camelize($plugin);

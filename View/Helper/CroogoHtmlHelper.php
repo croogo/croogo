@@ -55,11 +55,18 @@ class CroogoHtmlHelper extends HtmlHelper {
 		return sprintf($this->_tags['icon'], $class, $attributes);
 	}
 
-	public function status($value) {
+	public function status($value, $url = array()) {
 		$icon = $value == 1 ? 'ok' : 'remove';
 		$class = $value == 1 ? 'green' : 'red';
 
-		return $this->icon($icon, array('class' => $class));
+		if (empty($url)) {
+			return $this->icon($icon, array('class' => $class));
+		} else {
+			return $this->link('', 'javascript:void(0);', array(
+				'data-url' => $this->url($url),
+				'class' => 'icon-' . $icon . ' ' . $class . ' ajax-toggle',
+			));
+		}
 	}
 
 /**

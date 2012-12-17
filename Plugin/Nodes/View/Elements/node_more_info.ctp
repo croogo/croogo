@@ -3,7 +3,7 @@
 	$type = $types_for_layout[$this->Nodes->field('type')];
 
 	if (is_array($this->Nodes->node['Taxonomy']) && count($this->Nodes->node['Taxonomy']) > 0) {
-		$nodeTerms = Set::combine($this->Nodes->node, 'Taxonomy.{n}.Term.slug', 'Taxonomy.{n}.Term.title');
+		$nodeTerms = Hash::combine($this->Nodes->node, 'Taxonomy.{n}.Term.slug', 'Taxonomy.{n}.Term.title');
 		$nodeTermLinks = array();
 		if (count($nodeTerms) > 0) {
 			foreach ($nodeTerms as $termSlug => $termTitle) {

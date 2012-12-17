@@ -77,7 +77,7 @@ class MetaHelper extends AppHelper {
 				'class' => 'span12'
 			),
 		);
-		$options = Set::merge($_options, $options);
+		$options = Hash::merge($_options, $options);
 		$uuid = String::uuid();
 
 		$fields  = '';

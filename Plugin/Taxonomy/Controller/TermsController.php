@@ -79,7 +79,7 @@ class TermsController extends TaxonomyAppController {
 				'Term.id' => array_keys($termsTree),
 			),
 		));
-		$terms = Set::combine($terms, '{n}.Term.id', '{n}.Term');
+		$terms = Hash::combine($terms, '{n}.Term.id', '{n}.Term');
 		$this->set(compact('termsTree', 'vocabulary', 'terms'));
 	}
 

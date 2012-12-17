@@ -82,7 +82,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @access public
  */
 	public function getTranslationFields(Model $model) {
-		if (Set::numeric(array_keys($this->translationFields[$model->alias]))) {
+		if (Hash::numeric(array_keys($this->translationFields[$model->alias]))) {
 			return $this->translationFields[$model->alias];
 		} else {
 			return array_keys($this->translationFields[$model->alias]);
@@ -137,7 +137,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 					}
 
 					// Other translations
-					if (!Set::numeric(array_keys($this->translationFields[$model->alias])) &&
+					if (!Hash::numeric(array_keys($this->translationFields[$model->alias])) &&
 						isset($results[$i][$model->alias][$field])) {
 						if (!isset($results[$i][$field . 'Translation'])) {
 							$results[$i][$field . 'Translation'] = array();

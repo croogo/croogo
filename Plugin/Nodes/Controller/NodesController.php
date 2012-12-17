@@ -82,6 +82,18 @@ class NodesController extends NodesAppController {
 		if (isset($this->request->params['type'])) {
 			$this->request->params['named']['type'] = $this->request->params['type'];
 		}
+		$this->Security->unlockedActions[] = 'admin_toggle';
+	}
+
+/**
+ * Toggle Node status
+ *
+ * @param $id string Node id
+ * @param $status integer Current Node status
+ * @return void
+ */
+	public function admin_toggle($id = null, $status = null) {
+		$this->Croogo->fieldToggle($this->Node, $id, $status);
 	}
 
 /**
@@ -100,7 +112,7 @@ class NodesController extends NodesAppController {
 		$this->paginate['Node']['contain'] = array('User');
 
 		$types = $this->Node->Taxonomy->Vocabulary->Type->find('all');
-		$typeAliases = Set::extract('/Type/alias', $types);
+		$typeAliases = Hash::extract($types, '{n}.Type.alias');
 		$this->paginate['Node']['conditions']['Node.type'] = $typeAliases;
 
 		$nodes = $this->paginate($this->Node->parseCriteria($this->passedArgs));
@@ -188,7 +200,7 @@ class NodesController extends NodesAppController {
 		$nodes = $this->Node->generateTreeList();
 		$roles = $this->Node->User->Role->find('list');
 		$users = $this->Node->User->find('list');
-		$vocabularies = Set::combine($type['Vocabulary'], '{n}.id', '{n}');
+		$vocabularies = Hash::combine($type['Vocabulary'], '{n}.id', '{n}');
 		$taxonomy = array();
 		foreach ($type['Vocabulary'] as $vocabulary) {
 			$vocabularyId = $vocabulary['id'];
@@ -260,7 +272,7 @@ class NodesController extends NodesAppController {
 		$nodes = $this->Node->generateTreeList();
 		$roles = $this->Node->User->Role->find('list');
 		$users = $this->Node->User->find('list');
-		$vocabularies = Set::combine($type['Vocabulary'], '{n}.id', '{n}');
+		$vocabularies = Hash::combine($type['Vocabulary'], '{n}.id', '{n}');
 		$taxonomy = array();
 		foreach ($type['Vocabulary'] as $vocabulary) {
 			$vocabularyId = $vocabulary['id'];

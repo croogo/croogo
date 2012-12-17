@@ -59,7 +59,10 @@ echo $this->Form->create('Block',
 			$this->Html->link($block['Block']['title'], array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id'])),
 			$block['Block']['alias'],
 			$block['Region']['title'],
-			$this->Html->status($block['Block']['status']),
+			$this->element('admin/toggle', array(
+				'id' => $block['Block']['id'],
+				'status' => $block['Block']['status'],
+			)),
 			$actions,
 		);
 	}

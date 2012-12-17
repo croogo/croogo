@@ -34,7 +34,7 @@ class AliasableBehavior extends ModelBehavior {
  * @return void
  */
 	public function setup(Model $model, $config = array()) {
-		$config = Set::merge(array(
+		$config = Hash::merge(array(
 			'id' => 'id',
 			'alias' => 'alias',
 		), $config);

@@ -170,7 +170,7 @@ class Croogo {
 		}
 		if (is_array($value)) {
 			if (is_array($propertyValue)) {
-				$propertyValue = Set::merge($propertyValue, $value);
+				$propertyValue = Hash::merge($propertyValue, $value);
 			} else {
 				$propertyValue = $value;
 			}
@@ -192,7 +192,7 @@ class Croogo {
 		$objectName = empty($object->name) ? get_class($object) : $object->name;
 		$hookProperties = Configure::read($configKey . '.' . $objectName);
 		if (is_array(Configure::read($configKey . '.*'))) {
-			$hookProperties = Set::merge(Configure::read($configKey . '.*'), $hookProperties);
+			$hookProperties = Hash::merge(Configure::read($configKey . '.*'), $hookProperties);
 		}
 		if (is_array($hookProperties)) {
 			foreach ($hookProperties as $property => $value) {
@@ -201,7 +201,7 @@ class Croogo {
 				} else {
 					if (is_array($object->$property)) {
 						if (is_array($value)) {
-							$object->$property = Set::merge($object->$property, $value);
+							$object->$property = Hash::merge($object->$property, $value);
 						} else {
 							$object->$property = $value;
 						}

@@ -39,7 +39,7 @@ class CroogoHelper extends AppHelper {
  * @return string menu html tags
  */
 	public function adminMenus($menus, $options = array(), $depth = 0) {
-		$options = Set::merge(array(
+		$options = Hash::merge(array(
 			'children' => true,
 			'htmlAttributes' => array(
 				'class' => 'nav nav-stacked',
@@ -53,7 +53,7 @@ class CroogoHelper extends AppHelper {
 		}
 
 		$out = null;
-		$sorted = Set::sort($menus, '{[a-z]+}.weight', 'ASC');
+		$sorted = Hash::sort($menus, '{s}.weight', 'ASC');
 		if (empty($this->Role)) {
 			$this->Role = ClassRegistry::init('Users.Role');
 			$this->Role->Behaviors->attach('Aliasable');
@@ -68,7 +68,7 @@ class CroogoHelper extends AppHelper {
 
 			if (empty($menu['htmlAttributes']['class'])) {
 				$menuClass = Inflector::slug(strtolower('menu-' . $menu['title']), '-');
-				$menu['htmlAttributes'] = Set::merge(array(
+				$menu['htmlAttributes'] = Hash::merge(array(
 					'class' => $menuClass
 				), $menu['htmlAttributes']);
 			}
