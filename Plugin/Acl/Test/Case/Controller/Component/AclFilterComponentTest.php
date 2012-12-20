@@ -10,7 +10,7 @@ class AclFilterTestController extends Controller {
 		'Acl',
 		'Session',
 		'Acl.AclFilter',
-		);
+	);
 
 }
 
@@ -23,14 +23,14 @@ class AclFilterComponentTest extends CroogoTestCase {
 		'plugin.users.user',
 		'plugin.users.role',
 		'plugin.settings.setting',
-		);
+	);
 
 	public function testAllowedActions() {
 		$request = new CakeRequest('/users/view/yvonne');
 		$request->addParams(array(
 			'controller' => 'users',
 			'action' => 'view',
-			));
+		));
 		$response = $this->getMock('CakeRequest');
 		$this->Controller = new AclFilterTestController($request, $response);
 		$this->Controller->name = 'Users';
@@ -48,7 +48,7 @@ class AclFilterComponentTest extends CroogoTestCase {
 			'controller' => 'users',
 			'action' => 'admin_add',
 			3,
-			));
+		));
 		$response = $this->getMock('CakeRequest');
 		$this->Controller = new AclFilterTestController($request, $response);
 		$this->Controller->constructClasses();

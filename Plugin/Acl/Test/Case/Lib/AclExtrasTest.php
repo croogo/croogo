@@ -7,13 +7,13 @@ App::uses('AclExtras', 'Acl.Lib');
 class AclExtrasTest extends CroogoTestCase {
 
 	protected $_coreControllers = array(
-		);
+	);
 
 	protected $_extensionsControllers = array(
 		'ExtensionsLocalesController',
 		'ExtensionsPluginsController',
 		'ExtensionsThemesController',
-		);
+	);
 
 	public function setUp() {
 		$this->AclExtras = new AclExtras();
@@ -44,7 +44,7 @@ class AclExtrasTest extends CroogoTestCase {
 			'admin_toggle', 'admin_update_paths', 'admin_delete', 'admin_add_meta',
 			'admin_delete_meta', 'admin_process', 'index', 'term', 'promoted',
 			'search', 'view',
-			);
+		);
 
 		$this->AclExtras->aco_sync(array('plugin' => 'Nodes'));
 
