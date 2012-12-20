@@ -10,27 +10,45 @@ class AclFilterTestController extends Controller {
 		'Acl',
 		'Session',
 		'Acl.AclFilter',
-		);
+	);
 
 }
 
 class AclFilterComponentTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.croogo.aro',
+		'plugin.translate.i18n',
 		'plugin.croogo.aco',
+		'plugin.croogo.aro',
 		'plugin.croogo.aros_aco',
-		'plugin.users.user',
+		'plugin.blocks.block',
+		'plugin.comments.comment',
+		'plugin.contacts.contact',
+		'plugin.translate.i18n',
+		'plugin.settings.language',
+		'plugin.menus.link',
+		'plugin.menus.menu',
+		'plugin.contacts.message',
+		'plugin.nodes.node',
+		'plugin.meta.meta',
+		'plugin.taxonomy.nodes_taxonomy',
+		'plugin.blocks.region',
 		'plugin.users.role',
 		'plugin.settings.setting',
-		);
+		'plugin.taxonomy.taxonomy',
+		'plugin.taxonomy.term',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.types_vocabulary',
+		'plugin.users.user',
+		'plugin.taxonomy.vocabulary',
+	);
 
 	public function testAllowedActions() {
 		$request = new CakeRequest('/users/view/yvonne');
 		$request->addParams(array(
 			'controller' => 'users',
 			'action' => 'view',
-			));
+		));
 		$response = $this->getMock('CakeRequest');
 		$this->Controller = new AclFilterTestController($request, $response);
 		$this->Controller->name = 'Users';
@@ -48,7 +66,7 @@ class AclFilterComponentTest extends CroogoTestCase {
 			'controller' => 'users',
 			'action' => 'admin_add',
 			3,
-			));
+		));
 		$response = $this->getMock('CakeRequest');
 		$this->Controller = new AclFilterTestController($request, $response);
 		$this->Controller->constructClasses();

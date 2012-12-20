@@ -19,9 +19,36 @@ class TestAppController extends AppController {
 
 class AppControllerTest extends CroogoControllerTestCase {
 
+	public $fixtures = array(
+		'plugin.translate.i18n',
+		'plugin.croogo.aco',
+		'plugin.croogo.aro',
+		'plugin.croogo.aros_aco',
+		'plugin.blocks.block',
+		'plugin.comments.comment',
+		'plugin.contacts.contact',
+		'plugin.translate.i18n',
+		'plugin.settings.language',
+		'plugin.menus.link',
+		'plugin.menus.menu',
+		'plugin.contacts.message',
+		'plugin.nodes.node',
+		'plugin.meta.meta',
+		'plugin.taxonomy.nodes_taxonomy',
+		'plugin.blocks.region',
+		'plugin.users.role',
+		'plugin.settings.setting',
+		'plugin.taxonomy.taxonomy',
+		'plugin.taxonomy.term',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.types_vocabulary',
+		'plugin.users.user',
+		'plugin.taxonomy.vocabulary',
+	);
+
 	public function setUp() {
 		parent::setUp();
-		$this->generate('TestApp', array(
+		$TestApp = $this->generate('TestApp', array(
 			'components' => array(
 				'Auth',
 				'Security',
@@ -31,6 +58,7 @@ class AppControllerTest extends CroogoControllerTestCase {
 				'Taxonomy.Taxonomies',
 			)
 		));
+		$TestApp->helpers[] = 'Croogo.Croogo';
 	}
 
 	public function tearDown() {
