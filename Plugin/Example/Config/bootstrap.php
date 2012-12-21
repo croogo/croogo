@@ -39,7 +39,7 @@ CroogoNav::add('extensions.children.example', array(
 			'url' => '#',
 		),
 		'example2' => array(
-			'title' => __('Example 2'),
+			'title' => __('Example 2 with a title that won\'t fit in the sidebar'),
 			'url' => '#',
 			'children' => array(
 				'example-2-1' => array(
