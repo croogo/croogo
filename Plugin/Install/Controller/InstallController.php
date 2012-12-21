@@ -158,7 +158,9 @@ class InstallController extends Controller {
 			$this->loadModel('Users.User');
 			$this->User->set($this->request->data);
 			if ($this->User->validates()) {
-				if ($this->Install->addAdminUser($this->request->data)) {
+				$user = $this->Install->addAdminUser($this->request->data);
+				if ($user) {
+					$this->Session->write('Install.user', $user);
 					$this->redirect(array('action' => 'finish'));
 				}
 			}
@@ -195,7 +197,8 @@ class InstallController extends Controller {
 			'Site',
 		));
 
-		$this->set('user', $install);
+		$this->set('user', $this->Session->read('Install.user'));
+		$this->Session->destroy();
 		$this->set(compact('urlBlogAdd', 'urlSettings'));
 	}
 
