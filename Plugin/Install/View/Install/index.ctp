@@ -27,7 +27,7 @@
 			echo '<p class="error">' . sprintf(__('PHP version %s < 5'), phpversion()) . '</p>';
 		}
 
-		// php version
+		// cakephp version
 		$minCakeVersion = '2.1.5';
 		$cakeVersion = Configure::version();
 		if (version_compare($cakeVersion, $minCakeVersion, '>=')) {

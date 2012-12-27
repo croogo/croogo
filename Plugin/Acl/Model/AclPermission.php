@@ -73,25 +73,27 @@ class AclPermission extends AppModel {
 				'AclAro.foreign_key' => $roleId,
 			),
 		));
-		$aroId = $aro['AclAro']['id'];
 
-		$permissionsForCurrentRole = $this->find('list', array(
-			'conditions' => array(
-				'AclPermission.aro_id' => $aroId,
-				'AclPermission.aco_id' => $acoIds,
-				'AclPermission._create' => 1,
-				'AclPermission._read' => 1,
-				'AclPermission._update' => 1,
-				'AclPermission._delete' => 1,
-			),
-			'fields' => array(
-				'AclPermission.id',
-				'AclPermission.aco_id',
-			),
-		));
 		$permissionsByActions = array();
-		foreach ($permissionsForCurrentRole as $acoId) {
-			$permissionsByActions[] = $acos[$acoId];
+		if (!empty($aro)) {
+			$aroId = $aro['AclAro']['id'];
+			$permissionsForCurrentRole = $this->find('list', array(
+				'conditions' => array(
+					'AclPermission.aro_id' => $aroId,
+					'AclPermission.aco_id' => $acoIds,
+					'AclPermission._create' => 1,
+					'AclPermission._read' => 1,
+					'AclPermission._update' => 1,
+					'AclPermission._delete' => 1,
+				),
+				'fields' => array(
+					'AclPermission.id',
+					'AclPermission.aco_id',
+				),
+			));
+			foreach ($permissionsForCurrentRole as $acoId) {
+				$permissionsByActions[] = $acos[$acoId];
+			}
 		}
 
 		return $permissionsByActions;
