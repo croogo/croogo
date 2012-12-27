@@ -1,4 +1,6 @@
 <?php
+
+App::uses('AppModel', 'Model');
 App::uses('File', 'Utility');
 
 /**

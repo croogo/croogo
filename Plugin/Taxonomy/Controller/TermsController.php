@@ -1,4 +1,5 @@
 <?php
+
 App::uses('TaxonomyAppController', 'Taxonomy.Controller');
 
 /**

@@ -1,4 +1,7 @@
 <?php
+
+App::uses('Component', 'Controller');
+
 /**
  * @link http://bakery.cakephp.org/articles/view/recaptcha-component-helper-for-cakephp
  */

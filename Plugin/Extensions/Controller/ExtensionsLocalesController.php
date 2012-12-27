@@ -1,7 +1,8 @@
 <?php
 
 App::uses('File', 'Utility');
-APP::uses('Folder', 'Utility');
+App::uses('Folder', 'Utility');
+App::uses('ExtensionsAppController', 'Extensions.Controller');
 
 /**
  * Extensions Locales Controller

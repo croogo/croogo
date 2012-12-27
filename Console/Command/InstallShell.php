@@ -1,4 +1,6 @@
 <?php
+
+App::uses('AppShell', 'Console/Command');
 App::uses('ExtensionsInstaller', 'Extensions.Lib');
 App::uses('CroogoPlugin', 'Extensions.Lib');
 App::uses('CroogoTheme', 'Extensions.Lib');

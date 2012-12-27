@@ -1,5 +1,9 @@
 <?php
-/** Aliasable Behavior
+
+App::uses('ModelBehavior', 'Model');
+
+/**
+ * Aliasable Behavior
  *
  * Utility behavior to allow easy retrieval of records by id or its alias
  *

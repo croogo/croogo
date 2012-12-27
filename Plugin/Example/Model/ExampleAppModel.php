@@ -1,4 +1,5 @@
 <?php
+App::uses('AppModel', 'Model');
 /**
  * Example App Model
  *

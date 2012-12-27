@@ -1,5 +1,6 @@
 <?php
 
+App::uses('CroogoComponent', 'Controller/Component');
 App::uses('Component', 'Controller');
 app::uses('ComponentCollection', 'Controller/Component');
 App::uses('AppController', 'Controller');

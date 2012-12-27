@@ -1,4 +1,8 @@
 <?php
+
+App::uses('ModelBehavior', 'Model');
+App::uses('AppModel', 'Model');
+
 /**
  * CroogoTranslate Behavior
  *

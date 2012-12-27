@@ -1,4 +1,5 @@
 <?php
+
 App::uses('BlocksAppController', 'Blocks.Controller');
 
 /**

@@ -21,6 +21,8 @@
  * @license        http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
+App::uses('Component', 'Controller');
+
 /**
  *    The Akismet PHP5 Class
  *

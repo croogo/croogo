@@ -1,4 +1,7 @@
 <?php
+
+App::uses('Component', 'Controller');
+
 /**
  * AclFilter Component
  *

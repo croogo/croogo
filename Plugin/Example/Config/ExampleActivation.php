@@ -88,7 +88,7 @@ class ExampleActivation {
 				'Link.link' => 'plugin:example/controller:example/action:index',
 			),
 		));
-		if (!$link) {
+		if (empty($link)) {
 			return;
 		}
 		$this->Link->Behaviors->attach('Tree', array(

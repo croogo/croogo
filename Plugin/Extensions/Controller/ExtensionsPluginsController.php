@@ -1,4 +1,6 @@
 <?php
+
+App::uses('ExtensionsAppController', 'Extensions.Controller');
 App::uses('ExtensionsInstaller', 'Extensions.Lib');
 App::uses('CroogoPlugin', 'Extensions.Lib');
 

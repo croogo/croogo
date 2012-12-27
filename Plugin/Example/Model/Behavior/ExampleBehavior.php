@@ -1,4 +1,5 @@
 <?php
+App::uses('ModelBehavior', 'Model');
 
 /**
  * Example Behavior

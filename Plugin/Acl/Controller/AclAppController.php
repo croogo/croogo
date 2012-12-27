@@ -1,4 +1,7 @@
 <?php
+
+App::uses('AppController', 'Controller');
+
 /**
  * AclApp Controller
  *

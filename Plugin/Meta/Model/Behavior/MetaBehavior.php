@@ -1,4 +1,7 @@
 <?php
+
+App::uses('ModelBehavior', 'Model');
+
 /**
  * Meta Behavior
  *
