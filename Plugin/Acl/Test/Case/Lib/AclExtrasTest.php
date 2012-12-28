@@ -6,6 +6,17 @@ App::uses('AclExtras', 'Acl.Lib');
 
 class AclExtrasTest extends CroogoTestCase {
 
+/**
+ * fixtures
+ *
+ * @var array
+ */
+	public $fixtures = array(
+		'plugin.croogo.aro',
+		'plugin.croogo.aco',
+		'plugin.croogo.aros_aco',
+	);
+
 	protected $_coreControllers = array(
 	);
 
@@ -16,6 +27,8 @@ class AclExtrasTest extends CroogoTestCase {
 	);
 
 	public function setUp() {
+		Configure::write('Acl.classname', 'DbAcl');
+		Configure::write('Acl.database', 'test');
 		$this->AclExtras = new AclExtras();
 		$this->AclExtras->startup();
 		$this->AclExtras->Aco->deleteAll('1 = 1');
