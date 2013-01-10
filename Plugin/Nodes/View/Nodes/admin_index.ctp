@@ -18,11 +18,6 @@ $this->Html
 <?php $this->end(); ?>
 <?php
 
-if (isset($this->params['named'])) {
-	foreach ($this->params['named'] as $nn => $nv) {
-		$this->Paginator->options['url'][] = $nn . ':' . $nv;
-	}
-}
 echo $this->element('admin/nodes_filter');
 
 echo $this->Form->create(
