@@ -7,9 +7,9 @@ REPO_BOOTSTRAP=git://github.com/twitter/bootstrap
 CROOGO_LESS = ./webroot/less/admin.less
 CROOGO_RESPONSIVE_LESS = ./webroot/less/admin-responsive.less
 
-CSS_DIR=webroot/css
-JS_DIR=webroot/js
-FONT_DIR=webroot/font
+CSS_DIR=$(CURDIR)/webroot/css
+JS_DIR=$(CURDIR)/webroot/js
+FONT_DIR=$(CURDIR)/webroot/font
 
 CROOGO_CSS=croogo-bootstrap.css
 CROOGO_RESPONSIVE_CSS=croogo-bootstrap-responsive.css
@@ -52,7 +52,7 @@ css: deps
 js: webroot/bootstrap
 	@( \
 	cd webroot/bootstrap ; \
-	cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > ../js/${BOOTSTRAP_JS} \
+	cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > ${JS_DIR}/${BOOTSTRAP_JS} \
 	)
 	@echo "File: ${JS_DIR}/${BOOTSTRAP_JS} ${CHECK}"
 
