@@ -1,6 +1,5 @@
 <?php
-
-$this->extend('/Common/admin_index');
+$this->extend('Croogo./Common/admin_index');
 
 $this->Html
 	->addCrumb($this->Html->icon('home'), '/admin')
@@ -29,7 +28,7 @@ $(".comment-view").on("click", function() {
 EOF;
 $this->Js->buffer($script);
 
-echo $this->element('admin/modal', array(
+echo $this->element('Croogo.admin/modal', array(
 	'id' => 'comment-modal',
 	'class' => 'hide',
 ));
@@ -106,7 +105,7 @@ echo $this->element('admin/modal', array(
 				'type' => $comment['Node']['type'],
 				'slug' => $comment['Node']['slug'],
 			)),
-			$this->Html->link($this->Html->image('/img/icons/comment.png'), '#',
+			$this->Html->link($this->Html->image('/croogo/img/icons/comment.png'), '#',
 				array(
 					'class' => 'comment-view',
 					'data-title' => $title,

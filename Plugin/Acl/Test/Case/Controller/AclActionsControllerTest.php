@@ -1,6 +1,6 @@
 <?php
 
-App::uses('CroogoControllerTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
 /**
  * AclActionsController Test
@@ -13,13 +13,14 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.aro',
-		'app.aco',
-		'app.aros_aco',
+		'plugin.croogo.aro',
+		'plugin.croogo.aco',
+		'plugin.croogo.aros_aco',
 		'plugin.menus.menu',
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.types_vocabulary',
 		'plugin.taxonomy.vocabulary',
+		'plugin.translate.i18n',
 		'plugin.settings.setting',
 	);
 

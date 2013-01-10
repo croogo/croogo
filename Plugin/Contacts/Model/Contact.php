@@ -31,7 +31,7 @@ class Contact extends ContactsAppModel {
  * @access public
  */
 	public $actsAs = array(
-		'Cached' => array(
+		'Croogo.Cached' => array(
 			'prefix' => array(
 				'contact_',
 			),

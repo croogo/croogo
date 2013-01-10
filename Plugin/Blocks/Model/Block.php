@@ -31,19 +31,19 @@ class Block extends BlocksAppModel {
  * @access public
  */
 	public $actsAs = array(
-		'Encoder',
-		'Ordered' => array(
+		'Croogo.Encoder',
+		'Croogo.Ordered' => array(
 			'field' => 'weight',
 			'foreign_key' => false,
 		),
-		'Cached' => array(
+		'Croogo.Cached' => array(
 			'prefix' => array(
 				'block_',
 				'blocks_',
 				'croogo_blocks_',
 			),
 		),
-		'Params',
+		'Croogo.Params',
 		'Search.Searchable',
 	);
 

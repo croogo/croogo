@@ -1,0 +1,26 @@
+---
+Comment.date_time_format: M d, Y
+Comment.email_notification: 1
+Comment.feed_limit: 10
+Comment.level: 1
+Hook.bootstraps: Example
+Meta.description: 'Croogo - A CakePHP powered Content Management System'
+Meta.generator: 'Croogo - Content Management System'
+Meta.keywords: croogo, Croogo
+Meta.robots: index, follow
+Reading.date_time_format: D, M d Y H:i:s
+Reading.nodes_per_page: 5
+Service.akismet_key: your-key
+Service.akismet_url: http://your-blog.com
+Service.recaptcha_private_key: your-private-key
+Service.recaptcha_public_key: your-public-key
+Site.acl_plugin: Acl
+Site.email: you@your-site.com
+Site.feed_url: 
+Site.locale: eng
+Site.status: 1
+Site.tagline: A CakePHP powered Content Management System.
+Site.theme: 
+Site.timezone: 0
+Site.title: Croogo
+Writing.wysiwyg: 1

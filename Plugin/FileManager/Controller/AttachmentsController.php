@@ -40,7 +40,7 @@ class AttachmentsController extends FileManagerAppController {
  * @var array
  * @access public
  */
-	public $helpers = array('FileManager.FileManager', 'Text', 'Image');
+	public $helpers = array('FileManager.FileManager', 'Text', 'Croogo.Image');
 
 /**
  * Node type

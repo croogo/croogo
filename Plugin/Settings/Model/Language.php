@@ -31,7 +31,7 @@ class Language extends AppModel {
  * @access public
  */
 	public $actsAs = array(
-		'Ordered' => array('field' => 'weight', 'foreign_key' => null),
+		'Croogo.Ordered' => array('field' => 'weight', 'foreign_key' => null),
 	);
 
 /**

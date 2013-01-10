@@ -1,6 +1,5 @@
 <?php
-
-$this->extend('/Common/admin_edit');
+$this->extend('Croogo./Common/admin_edit');
 $this->Html->script(array('Nodes.nodes'), false);
 
 $this->Html

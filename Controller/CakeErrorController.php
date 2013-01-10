@@ -68,7 +68,7 @@ class CakeErrorController extends AppController {
 			if ($adminTheme = Configure::read('Site.admin_theme')) {
 				$this->theme = $adminTheme;
 			}
-			$this->layout = 'admin_full';
+			$this->layout = 'Croogo.admin_full';
 		}
 	}
 

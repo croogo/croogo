@@ -285,7 +285,7 @@ if (!defined('CAKEPHP_UNIT_TEST_EXECUTION')) {
 		public $displayField = 'field';
 
 		public $actsAs = array(
-			'Cached' => array(
+			'Croogo.Cached' => array(
 				'prefix' => array(
 					'',
 				),

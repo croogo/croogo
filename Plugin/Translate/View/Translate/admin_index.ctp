@@ -1,5 +1,5 @@
 <?php
-$this->extend('/Common/admin_index');
+$this->extend('Croogo./Common/admin_index');
 $this->name = 'translate';
 
 

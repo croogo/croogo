@@ -1,6 +1,5 @@
 <?php
-
-$this->extend('/Common/admin_edit');
+$this->extend('Croogo./Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
@@ -28,7 +27,7 @@ echo $this->Form->create('Node', array('url' => array('controller' => 'attachmen
 				if ($fileType == 'image') {
 					$imgUrl = $this->Image->resize('/uploads/'.$this->data['Node']['slug'], 200, 300, true, array('class' => 'img-polaroid'));
 				} else {
-					$imgUrl = $this->Html->image('/img/icons/' . $this->Filemanager->mimeTypeToImage($this->data['Node']['mime_type'])) . ' ' . $this->data['Node']['mime_type'];
+					$imgUrl = $this->Html->image('/croogo/img/icons/' . $this->Filemanager->mimeTypeToImage($this->data['Node']['mime_type'])) . ' ' . $this->data['Node']['mime_type'];
 				}
 				echo $this->Html->link($imgUrl, $this->data['Node']['path'], array(
 					'class' => 'thickbox pull-right',

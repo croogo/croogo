@@ -55,7 +55,7 @@ class CroogoTheme extends Object {
  */
 	public function getData($alias = null) {
 		if ($alias == null || $alias == 'default') {
-			$manifestFile = WWW_ROOT . 'theme.json';
+			$manifestFile = CakePlugin::path('Croogo') . 'webroot' . DS . 'theme.json';
 		} else {
 			$viewPaths = App::path('views');
 			foreach ($viewPaths as $viewPath) {
@@ -65,7 +65,7 @@ class CroogoTheme extends Object {
 				}
 			}
 			if (!isset($manifestFile)) {
-				$manifestFile = WWW_ROOT . 'theme.json';
+				$manifestFile = CakePlugin::path('Croogo') . 'webroot' . DS . 'theme.json';
 			}
 		}
 		if (isset($manifestFile) && file_exists($manifestFile)) {

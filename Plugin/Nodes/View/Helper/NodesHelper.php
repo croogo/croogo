@@ -24,7 +24,7 @@ class NodesHelper extends AppHelper {
 		'Form',
 		'Session',
 		'Js',
-		'Layout',
+		'Croogo.Layout',
 	);
 
 /**

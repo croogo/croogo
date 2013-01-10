@@ -1,6 +1,5 @@
 <?php
-
-App::uses('CroogoEventManager', 'Event');
+App::uses('CroogoEventManager', 'Croogo.Event');
 App::uses('ClassRegistry', 'Utility');
 App::uses('Folder', 'Utility');
 App::uses('MigrationVersion', 'Migrations.Lib');

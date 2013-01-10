@@ -25,7 +25,7 @@ class AppController extends Controller {
  * @access public
  */
 	public $components = array(
-		'Croogo',
+		'Croogo.Croogo',
 		'Security',
 		'Acl',
 		'Auth',
@@ -46,8 +46,8 @@ class AppController extends Controller {
 		'Text',
 		'Js',
 		'Time',
-		'Layout',
-		'Custom',
+		'Croogo.Layout',
+		'Croogo.Custom',
 	);
 
 /**
@@ -82,6 +82,14 @@ class AppController extends Controller {
 	public $theme;
 
 /**
+ * Layout
+ *
+ * @var string
+ * @access public
+ */
+	public $layout = 'Croogo.default';
+
+/**
  * Constructor
  *
  * @access public
@@ -113,10 +121,10 @@ class AppController extends Controller {
 	public function afterConstruct() {
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
 		if (isset($this->request->params['admin'])) {
-			$this->helpers[] = 'Croogo';
-			$this->helpers['Html'] = array('className' => 'CroogoHtml');
-			$this->helpers['Form'] = array('className' => 'CroogoForm');
-			$this->helpers['Paginator'] = array('className' => 'CroogoPaginator');
+			$this->helpers[] = 'Croogo.Croogo';
+			$this->helpers['Html'] = array('className' => 'Croogo.CroogoHtml');
+			$this->helpers['Form'] = array('className' => 'Croogo.CroogoForm');
+			$this->helpers['Paginator'] = array('className' => 'Croogo.CroogoPaginator');
 		}
 	}
 
@@ -138,11 +146,11 @@ class AppController extends Controller {
 		$this->Security->requirePost('admin_delete');
 
 		if (isset($this->request->params['admin'])) {
-			$this->layout = 'admin';
+			$this->layout = 'Croogo.admin';
 		}
 
 		if ($this->RequestHandler->isAjax()) {
-			$this->layout = 'ajax';
+			$this->layout = 'Croogo.ajax';
 		}
 
 		if (Configure::read('Site.theme') && !isset($this->request->params['admin'])) {
@@ -153,7 +161,7 @@ class AppController extends Controller {
 
 		if (!isset($this->request->params['admin']) &&
 			Configure::read('Site.status') == 0) {
-			$this->layout = 'maintenance';
+			$this->layout = 'Croogo.maintenance';
 			$this->response->statusCode(503);
 			$this->set('title_for_layout', __('Site down for maintenance'));
 			$this->render('../Elements/blank');

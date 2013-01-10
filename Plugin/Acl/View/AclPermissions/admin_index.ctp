@@ -1,6 +1,5 @@
 <?php
-
-$this->extend('/Common/admin_index');
+$this->extend('Croogo./Common/admin_index');
 $this->name = 'acl_permissions';
 $this->Html->script('/acl/js/acl_permissions.js', false);
 

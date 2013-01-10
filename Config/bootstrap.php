@@ -48,11 +48,12 @@
  * Inflector::rules('plural', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
  *
  */
+CakePlugin::load('Croogo');
 App::uses('CakeLog', 'Log');
 App::uses('CroogoPlugin', 'Extensions.Lib');
-App::uses('CroogoEventManager', 'Event');
-App::uses('Croogo', 'Lib');
-App::uses('CroogoNav', 'Lib');
+App::uses('CroogoEventManager', 'Croogo.Event');
+App::uses('Croogo', 'Croogo.Lib');
+App::uses('CroogoNav', 'Croogo.Lib');
 CakePlugin::load(array('Extensions'), array('bootstrap' => true));
 require_once 'croogo_bootstrap.php';
 

@@ -38,7 +38,7 @@ class InstallController extends Controller {
 		'Form' => array(
 			'className' => 'CroogoForm',
 		),
-		'Layout',
+		'Croogo.Layout',
 	);
 
 /**
