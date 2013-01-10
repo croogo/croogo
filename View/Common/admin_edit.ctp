@@ -40,7 +40,7 @@ $what = isset($this->request->data[$modelClass]['id']) ? __('Edit') : __('Add');
 	<div class="row-fluid">
 		<div class="span8">
 			<ul class="nav nav-tabs">
-				<li><a href="#<?php echo $tabId; ?>" data-toggle="tab"><?php echo __($modelClass); ?></a>
+				<li><a href="#<?php echo $tabId; ?>" data-toggle="tab"><?php echo __($modelClass); ?></a></li>
 				<?php echo $this->Croogo->adminTabs(); ?>
 			</ul>
 
