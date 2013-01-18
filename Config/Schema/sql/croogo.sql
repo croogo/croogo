@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `acos` (
   `lft` int(10) DEFAULT NULL,
   `rght` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `aros` (
   `lft` int(10) DEFAULT NULL,
   `rght` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `aros_acos` (
   `_update` varchar(2) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   `_delete` varchar(2) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `blocks` (
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `i18n` (
   KEY `model` (`model`),
   KEY `row_id` (`foreign_key`),
   KEY `field` (`field`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `languages` (
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `links` (
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `menus` (
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -246,7 +246,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -262,7 +262,7 @@ CREATE TABLE IF NOT EXISTS `meta` (
   `value` text COLLATE utf8_unicode_ci,
   `weight` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -293,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `nodes` (
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -306,7 +306,7 @@ CREATE TABLE IF NOT EXISTS `nodes_taxonomies` (
   `node_id` int(20) NOT NULL DEFAULT '0',
   `taxonomy_id` int(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -322,7 +322,7 @@ CREATE TABLE IF NOT EXISTS `regions` (
   `block_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -338,10 +338,12 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `updated` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Table structure for table `roles_users`
 --
 
 CREATE TABLE IF NOT EXISTS `roles_users` (
@@ -352,8 +354,9 @@ CREATE TABLE IF NOT EXISTS `roles_users` (
   `created` datetime DEFAULT NULL,
   `updated` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `pk_roles_users` (`user_id`, `role_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  UNIQUE KEY `pk_roles_users` (`user_id`,`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -372,7 +375,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `params` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -388,7 +391,7 @@ CREATE TABLE IF NOT EXISTS `taxonomies` (
   `lft` int(11) DEFAULT NULL,
   `rght` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -405,7 +408,7 @@ CREATE TABLE IF NOT EXISTS `terms` (
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -430,7 +433,7 @@ CREATE TABLE IF NOT EXISTS `types` (
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -444,7 +447,7 @@ CREATE TABLE IF NOT EXISTS `types_vocabularies` (
   `vocabulary_id` int(10) NOT NULL,
   `weight` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -468,7 +471,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -490,4 +493,4 @@ CREATE TABLE IF NOT EXISTS `vocabularies` (
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias` (`alias`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
