@@ -19,3 +19,5 @@ tmp/
 !./Plugin/Install
 !./Plugin/Tinymce
 !./Plugin/Translate
+
+Locale
