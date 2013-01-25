@@ -61,7 +61,7 @@ class InstallManager {
 
 	public function createCroogoFile() {
 		$croogoConfigFile = APP . 'Config' . DS . 'croogo.php';
-		copy($croogoConfigFile .'.install', $croogoConfigFile);
+		copy($croogoConfigFile . '.install', $croogoConfigFile);
 		$File =& new File($croogoConfigFile);
 		$salt = Security::generateAuthKey();
 		$seed = mt_rand() . mt_rand();

@@ -28,7 +28,6 @@ class Install extends InstallAppModel {
  */
 	protected $_CroogoPlugin = null;
 
-
 /**
  * Create admin user
  *
@@ -66,7 +65,7 @@ class Install extends InstallAppModel {
 	public function setupDatabase() {
 		$plugins = Configure::read('Core.corePlugins');
 
-		$migrationsSucceed =  true;
+		$migrationsSucceed = true;
 		foreach ($plugins as $plugin) {
 			$migrationsSucceed = $this->runMigrations($plugin);
 			if (!$migrationsSucceed) {
@@ -74,7 +73,7 @@ class Install extends InstallAppModel {
 			}
 		}
 
-		if ($migrationsSucceed) {		
+		if ($migrationsSucceed) {
 			$path = App::pluginPath('Install') . DS . 'Config' . DS . 'Data' . DS;
 			$dataObjects = App::objects('class', $path);
 			foreach ($dataObjects as $data) {

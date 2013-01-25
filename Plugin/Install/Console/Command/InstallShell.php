@@ -36,7 +36,6 @@ class InstallShell extends AppShell {
 		return $parser;
 	}
 
-
 	public function main() {
 		$this->out();
 		$this->out('Database settings:');
@@ -67,7 +66,7 @@ class InstallShell extends AppShell {
 			return $this->_stop();
 		}
 		$InstallManager->createCroogoFile();
-		
+
 		$this->out();
 		$this->out('Create Admin user:');
 
@@ -92,7 +91,7 @@ class InstallShell extends AppShell {
 
 		$user['User']['username'] = $username;
 		$user['User']['password'] = AuthComponent::password($password);
-		
+
 		$Install->addAdminUser($user);
 		$InstallManager->createSettingsFile();
 

@@ -136,7 +136,7 @@ class InstallController extends Controller {
 		if (isset($this->params['named']['run'])) {
 			$this->loadModel('Install.Install');
 			$this->Install->setupDatabase();
-			
+
 			$InstallManager = new InstallManager();
 			$result = $InstallManager->createCroogoFile();
 
@@ -182,7 +182,7 @@ class InstallController extends Controller {
 
 		$InstallManager = new InstallManager();
 		$result = $InstallManager->createSettingsFile();
-		
+
 		$urlBlogAdd = Router::url(array(
 			'plugin' => 'nodes',
 			'admin' => true,
