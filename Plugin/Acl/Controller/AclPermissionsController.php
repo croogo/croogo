@@ -70,12 +70,15 @@ class AclPermissionsController extends AclAppController {
 			$level++;
 		}
 
-		$acos = $this->AclAco->getChildren($root['Aco']['id']);
+		$acos = array();
 		$roles = $this->Role->find('list');
+		if ($root) {
+			$acos = $this->AclAco->getChildren($root['Aco']['id']);
+		}
 		$this->set(compact('acos', 'roles', 'level'));
 
 		$aros = $this->AclAro->getRoles($roles);
-		if ($this->RequestHandler->ext == 'json') {
+		if ($root && $this->RequestHandler->ext == 'json') {
 			$options = array_intersect_key(
 				$this->request->query,
 				array('perms' => null, 'urls' => null)
