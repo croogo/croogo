@@ -200,6 +200,18 @@ class CroogoHelper extends AppHelper {
 	}
 
 /**
+ * Create a tab title/link
+ */
+	public function adminTab($title, $url, $options = array()) {
+		return $this->Html->tag('li',
+			$this->Html->link($title, $url, Hash::merge(array(
+				'data-toggle' => 'tab',
+				), $options)
+			)
+		);
+	}
+
+/**
  * Show tabs
  *
  * @return string
@@ -223,7 +235,7 @@ class CroogoHelper extends AppHelper {
 						));
 						$output .= '</div>';
 					} else {
-						$output .= '<li><a href="#' . $domId . '" data-toggle="tab">' . $title . '</a></li>';
+						$output .= $this->adminTab(__($title), '#' . $domId);
 					}
 				}
 			}
