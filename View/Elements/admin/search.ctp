@@ -15,7 +15,7 @@ if (!empty($searchFields)):
 		'url' => array('action' => 'index')
 	));
 	foreach ($searchFields as $field => $fieldOptions) {
-		$options = array('empty' => '');
+		$options = array('empty' => '', 'required' => false);
 		if (is_numeric($field) && is_string($fieldOptions)) {
 			$field = $fieldOptions;
 			$fieldOptions = array();
