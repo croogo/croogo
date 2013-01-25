@@ -144,7 +144,11 @@ class FileManagerHelper extends AppHelper {
  * @return string
  */
 	public function linkDirectory($title, $path) {
-		$output = $this->link($title, array('controller' => 'file_manager', 'action' => 'browse'), $path);
+		$output = $this->link($title, array(
+			'plugin' => 'file_manager',
+			'controller' => 'file_manager',
+			'action' => 'browse',
+		), $path);
 		return $output;
 	}
 
