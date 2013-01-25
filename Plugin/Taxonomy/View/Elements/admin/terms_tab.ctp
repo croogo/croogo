@@ -1,6 +1,6 @@
 <?php
 if (count($taxonomy) > 0):
-	$taxonomyIds = Hash::extract($this->data, '{n}.Taxonomy.id');
+	$taxonomyIds = Hash::extract($this->data, 'Taxonomy.{n}.id');
 	foreach ($taxonomy as $vocabularyId => $taxonomyTree):
 		echo $this->Form->input('TaxonomyData.' . $vocabularyId, array(
 			'label' => $vocabularies[$vocabularyId]['title'],
