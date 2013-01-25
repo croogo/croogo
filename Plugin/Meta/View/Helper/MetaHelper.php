@@ -74,7 +74,9 @@ class MetaHelper extends AppHelper {
 			'value' => array(
 				'label'   => __('Value'),
 				'value'   => $value,
-				'class' => 'span12'
+				'class' => 'span12',
+				'type' => 'textarea',
+				'rows' => 2,
 			),
 		);
 		$options = Hash::merge($_options, $options);
