@@ -656,13 +656,13 @@ class OrderedBehavior extends ModelBehavior {
 
 	protected function _read(Model $Model, $id) {
 		$Model->id = $id;
-		$fields = array($Model->primaryKey, $this->settings[$Model->alias]['field']);
+		$fields = array($Model->alias . '.' . $Model->primaryKey, $Model->alias . '.' . $this->settings[$Model->alias]['field']);
 		if ($this->settings[$Model->alias]['foreign_key']) {
 			$fields[] = $this->settings[$Model->alias]['foreign_key'];
 		}
 		$Model->data = $Model->find('first', array(
 				'fields' => $fields,
-				'conditions' => array($Model->primaryKey => $id),
+				'conditions' => array($Model->alias . '.' . $Model->primaryKey => $id),
 				'recursive' => -1));
 		return $Model->data[$Model->alias][$this->settings[$Model->alias]['field']];
 	}
