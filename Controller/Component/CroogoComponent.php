@@ -186,7 +186,7 @@ class CroogoComponent extends Component {
 		$this->controller->set('vocabularies_for_admin_layout', $vocabularies);
 
 		if (!Configure::read('Croogo.version')) {
-			$this->controller->Setting->write('Croogo.version', file_get_contents(APP . 'VERSION.txt'));
+			$this->controller->Setting->write('Croogo.version', trim(file_get_contents(APP . 'VERSION.txt')));
 		}
 	}
 
