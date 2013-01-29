@@ -112,7 +112,7 @@ class CroogoComponent extends Component {
 		if (!Configure::read('Croogo.version')) {
 			if (CakePlugin::loaded('Settings')) {
 				if ($this->_controller->Setting instanceof Model) {
-					$this->_controller->Setting->write('Croogo.version', file_get_contents(APP . 'VERSION.txt'));
+					$this->_controller->Setting->write('Croogo.version', trim(file_get_contents(APP . 'VERSION.txt')));
 				}
 			}
 		}
