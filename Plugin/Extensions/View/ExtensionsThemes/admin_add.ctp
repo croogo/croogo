@@ -1,29 +1,55 @@
-<div class="extensions-themes">
-	<h2><?php echo $title_for_layout; ?></h2>
-	<?php
-		echo $this->Form->create('Theme', array(
-			'url' => array(
-				'plugin' => 'extensions',
-				'controller' => 'extensions_themes',
-				'action' => 'add',
-			),
-			'type' => 'file',
-		));
-	?>
-	<fieldset>
-	<?php
-		echo $this->Form->input('Theme.file', array('label' => __('Upload'), 'type' => 'file',));
-	?>
-	</fieldset>
+<?php
 
-	<div class="buttons">
+$this->Html
+	->addCrumb($this->Html->icon('home'), '/admin')
+	->addCrumb(__('Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
+	->addCrumb(__('Themes'), array('plugin' => 'extensions', 'controller' => 'extensions_themes', 'action' => 'index'))
+	->addCrumb(__('Upload'), $this->here);
+
+?>
+<h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
+<?php
+echo $this->Form->create('Theme', array(
+	'url' => array(
+		'plugin' => 'extensions',
+		'controller' => 'extensions_themes',
+		'action' => 'add',
+	),
+	'type' => 'file',
+));
+
+?>
+<div class="row-fluid">
+	<div class="span8">
+
+		<ul class="nav nav-tabs">
+			<li><a href="#themes-upload" data-toggle="tab"><?php echo __('Upload'); ?></a></li>
+		</ul>
+
+		<div class="tab-content">
+
+			<div id="themes-upload" class="tab-pane">
+			<?php
+				echo $this->Form->input('Theme.file', array(
+					'type' => 'file', 'button' => 'default',
+				));
+			?>
+			</div>
+
+			<?php echo $this->Croogo->adminTabs(); ?>
+		</div>
+	</div>
+
+	<div class="span4">
 	<?php
-		echo $this->Form->end(__('Upload'));
-		echo $this->Html->link(__('Cancel'), array(
-			'action' => 'index',
-		), array(
-			'class' => 'cancel',
-		));
+		echo $this->Html->beginBox('Publishing') .
+			$this->Form->button(__('Upload'), array('button' => 'default')) .
+			$this->Form->end() .
+			$this->Html->link(__('Cancel'), array('action' => 'index'), array('button' => 'danger')) .
+			$this->Html->endBox();
+		echo $this->Croogo->adminBoxes();
 	?>
 	</div>
+
 </div>
+<?php echo $this->Form->end(); ?>

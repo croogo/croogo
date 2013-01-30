@@ -5,17 +5,26 @@
  */
 Configure::write('Translate.models', array(
 	'Node' => array(
-		'title' => 'titleTranslation',
-		'excerpt' => 'excerptTranslation',
-		'body' => 'bodyTranslation',
+		'fields' => array(
+			'title' => 'titleTranslation',
+			'excerpt' => 'excerptTranslation',
+			'body' => 'bodyTranslation',
+		),
+		'translateModel' => 'Nodes.Node',
 	),
 	'Block' => array(
-		'title' => 'titleTranslation',
-		'body' => 'bodyTranslation',
+		'fields' => array(
+			'title' => 'titleTranslation',
+			'body' => 'bodyTranslation',
+		),
+		'translateModel' => 'Blocks.Block',
 	),
 	'Link' => array(
-		'title' => 'titleTranslation',
-		'description' => 'descriptionTranslation',
+		'fields' => array(
+			'title' => 'titleTranslation',
+			'description' => 'descriptionTranslation',
+		),
+		'translateModel' => 'Menus.Link',
 	),
 ));
 
@@ -23,7 +32,7 @@ Configure::write('Translate.models', array(
  * Do not edit below this line unless you know what you are doing.
  *
  */
-foreach (Configure::read('Translate.models') as $translateModel => $fields) {
-	Croogo::hookBehavior($translateModel, 'CroogoTranslate', $fields);
+foreach (Configure::read('Translate.models') as $translateModel => $config) {
+	Croogo::hookBehavior($translateModel, 'Translate.CroogoTranslate', $config);
 	Croogo::hookAdminRowAction(Inflector::pluralize($translateModel) . '/admin_index', 'Translate', 'plugin:translate/controller:translate/action:index/:id/' . $translateModel);
 }

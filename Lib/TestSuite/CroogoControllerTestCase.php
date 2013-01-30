@@ -1,5 +1,4 @@
 <?php
-
 App::uses('CakeSession', 'Model/Datasource');
 App::uses('CroogoTestFixture', 'TestSuite');
 
@@ -28,7 +27,7 @@ class CroogoControllerTestCase extends ControllerTestCase {
 
 	protected static function _restoreSettings() {
 		$source = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.default';
-		$target = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
+		$target = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.json';
 		copy($source, $target);
 	}
 
@@ -45,11 +44,20 @@ class CroogoControllerTestCase extends ControllerTestCase {
 			'View' => array(TESTS . 'test_app' . DS . 'View' . DS),
 		), App::PREPEND);
 
+		if (!isset($_SERVER['REMOTE_ADDR'])) {
+			$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+		}
+
 		CakePlugin::unload('Install');
+		CakePlugin::load(array('Users'), array('bootstrap' => true));
 		CakePlugin::load('Example');
 		Configure::write('Acl.database', 'test');
-		$Setting = ClassRegistry::init('Setting');
-		$Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
+		$Setting = ClassRegistry::init('Settings.Setting');
+		$Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.json';
+		Configure::drop('settings');
+		Configure::config('settings', new CroogoJsonReader(dirname($Setting->settingsPath) . DS ));
+		CakeLog::drop('stdout');
+		CakeLog::drop('stderr');
 		$Setting->writeConfiguration();
 	}
 
@@ -81,6 +89,36 @@ class CroogoControllerTestCase extends ControllerTestCase {
 			return $auth;
 		}
 		return $auth[$key];
+	}
+
+/**
+ * Helper to expect a Session->setFlash and redirect
+ *
+ * @param string $message expected message that will be passed to setFlash()
+ * @param string $class class name, when null current class will be used
+ * @param array $flashOptions expected SessionComponent::setFlash arguments
+ */
+	public function expectFlashAndRedirect($message = '', $class = false, $flashOptions = array()) {
+		if (!$class) {
+			$class = substr(get_class($this), 0, -4);
+		}
+		$flashOptions = Hash::merge(array(
+			'element' => 'default',
+			'params' => array(
+				'class' => 'success',
+			),
+		), $flashOptions);
+		$this->{$class}->Session
+			->expects($this->once())
+			->method('setFlash')
+			->with(
+				$this->equalTo($message),
+				$this->equalTo($flashOptions['element']),
+				$this->equalTo($flashOptions['params'])
+			);
+		$this->{$class}
+			->expects($this->once())
+			->method('redirect');
 	}
 
 }

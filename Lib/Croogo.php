@@ -101,7 +101,23 @@ class Croogo {
  * @param array  $options array with options for the hook to take effect
  */
 	public static function hookAdminTab($action, $title, $element, $options = array()) {
-		$tabs = Configure::read('Admin.tabs');
+		self::_hookAdminBlock('Admin.tabs', $action, $title, $element, $options);
+	}
+
+/**
+ * Admin box
+ *
+ * @param string $action  in the format ControllerName/action_name
+ * @param string $title   Box title
+ * @param string $element element name, like plugin_name.element_name
+ * @param array  $options array with options for the hook to take effect
+ */
+	public static function hookAdminBox($action, $title, $element, $options = array()) {
+		self::_hookAdminBlock('Admin.boxes', $action, $title, $element, $options);
+	}
+
+	protected static function _hookAdminBlock($key, $action, $title, $element, $options = array()) {
+		$tabs = Configure::read($key);
 		if (!is_array($tabs)) {
 			$tabs = array();
 		}
@@ -110,7 +126,7 @@ class Croogo {
 		}
 		$tabs[$action][$title]['element'] = $element;
 		$tabs[$action][$title]['options'] = $options;
-		Configure::write('Admin.tabs', $tabs);
+		Configure::write($key, $tabs);
 	}
 
 /**
@@ -154,7 +170,7 @@ class Croogo {
 		}
 		if (is_array($value)) {
 			if (is_array($propertyValue)) {
-				$propertyValue = Set::merge($propertyValue, $value);
+				$propertyValue = Hash::merge($propertyValue, $value);
 			} else {
 				$propertyValue = $value;
 			}
@@ -176,7 +192,7 @@ class Croogo {
 		$objectName = empty($object->name) ? get_class($object) : $object->name;
 		$hookProperties = Configure::read($configKey . '.' . $objectName);
 		if (is_array(Configure::read($configKey . '.*'))) {
-			$hookProperties = Set::merge(Configure::read($configKey . '.*'), $hookProperties);
+			$hookProperties = Hash::merge(Configure::read($configKey . '.*'), $hookProperties);
 		}
 		if (is_array($hookProperties)) {
 			foreach ($hookProperties as $property => $value) {
@@ -185,7 +201,7 @@ class Croogo {
 				} else {
 					if (is_array($object->$property)) {
 						if (is_array($value)) {
-							$object->$property = Set::merge($object->$property, $value);
+							$object->$property = Hash::merge($object->$property, $value);
 						} else {
 							$object->$property = $value;
 						}
@@ -211,6 +227,22 @@ class Croogo {
 		$event = new CakeEvent($name, $subject, $data);
 		$subject->getEventManager()->dispatch($event);
 		return $event;
+	}
+
+/**
+ * Get URL relative to the app
+ *
+ * @param array $url
+ * @return array
+ */
+	public static function getRelativePath($url = '/') {
+		if (is_array($url)) {
+			$absoluteUrl = Router::url($url, true);
+		} else {
+			$absoluteUrl = Router::url('/' . $url, true);
+		}
+		$path = '/' . str_replace(Router::url('/', true), '', $absoluteUrl);
+		return $path;
 	}
 
 }

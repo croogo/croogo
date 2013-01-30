@@ -51,10 +51,9 @@
 App::uses('CakeLog', 'Log');
 App::uses('CroogoPlugin', 'Extensions.Lib');
 App::uses('CroogoEventManager', 'Event');
-App::import('Lib', 'Croogo');
-App::import('Lib', 'CroogoNav');
+App::uses('Croogo', 'Lib');
+App::uses('CroogoNav', 'Lib');
 CakePlugin::load(array('Extensions'), array('bootstrap' => true));
-require_once 'croogo_menus.php';
 require_once 'croogo_bootstrap.php';
 
 // Load Install plugin
@@ -65,7 +64,7 @@ if (Configure::read('Security.salt') == 'f78b12a5c38e9e5c6ae6fbd0ff1f46c77a1e3' 
 Configure::write('Install.secured', !isset($_securedInstall));
 Configure::write('Install.installed',
 	file_exists(APP . 'Config' . DS . 'database.php') &&
-	file_exists(APP . 'Config' . DS . 'settings.yml') &&
+	file_exists(APP . 'Config' . DS . 'settings.json') &&
 	file_exists(APP . 'Config' . DS . 'croogo.php')
 );
 if (!Configure::read('Install.installed') || !Configure::read('Install.secured')) {

@@ -89,7 +89,7 @@ function fileBrowserCallBack(field_name, url, type, win) {
 }
 EOF;
 		$output = sprintf($output, $this->Html->url(
-			array('plugin' => false, 'controller' => 'attachments', 'action' => 'browse')
+			array('plugin' => 'file_manager', 'controller' => 'attachments', 'action' => 'browse')
 			));
 
 		return $output;
@@ -141,7 +141,7 @@ EOF;
 		if (isset($this->actions[$action])) {
 			$settings = array();
 			foreach ($this->actions[$action] as $action) {
-				$settings[] = Set::merge($_settings, $action);
+				$settings[] = Hash::merge($_settings, $action);
 			}
 		}
 		return $settings;
@@ -155,7 +155,7 @@ EOF;
  */
 	public function beforeRender($viewFile) {
 		if (is_array(Configure::read('Tinymce.actions'))) {
-			$this->actions = Set::merge($this->actions, Configure::read('Tinymce.actions'));
+			$this->actions = Hash::merge($this->actions, Configure::read('Tinymce.actions'));
 		}
 		$action = Inflector::camelize($this->params['controller']) . '/' . $this->params['action'];
 		if (Configure::read('Writing.wysiwyg') && isset($this->actions[$action])) {

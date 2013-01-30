@@ -54,7 +54,7 @@ class InstallShell extends AppShell {
  *
  * @param type $stdout
  * @param type $stderr
- * @param type $stdin 
+ * @param type $stdin
  */
 	public function __construct($stdout = null, $stderr = null, $stdin = null) {
 		parent::__construct($stdout, $stderr, $stdin);

@@ -51,19 +51,6 @@ class AppController extends Controller {
 	);
 
 /**
- * Models
- *
- * @var array
- * @access public
- */
-	public $uses = array(
-		'Block',
-		'Link',
-		'Setting',
-		'Node',
-	);
-
-/**
  * Pagination
  */
 	public $paginate = array(
@@ -100,8 +87,37 @@ class AppController extends Controller {
  * @access public
  */
 	public function __construct($request = null, $response = null) {
-		Croogo::applyHookProperties('Hook.controller_properties', $this);
 		parent::__construct($request, $response);
+		$this->getEventManager()->dispatch(new CakeEvent('Controller.afterConstruct', $this));
+	}
+
+/**
+ * implementedEvents
+ */
+	public function implementedEvents() {
+		return parent::implementedEvents() + array(
+			'Controller.afterConstruct' => 'afterConstruct',
+		);
+	}
+
+/**
+ * afterConstruct
+ *
+ * called when Controller::__construct() is complete.
+ * Override this method to perform class configuration/initialization that
+ * needs to be performed earlier from Controller::beforeFilter().
+ *
+ * You still need to call parent::afterConstruct() method to ensure correct
+ * behavior.
+ */
+	public function afterConstruct() {
+		Croogo::applyHookProperties('Hook.controller_properties', $this);
+		if (isset($this->request->params['admin'])) {
+			$this->helpers[] = 'Croogo';
+			$this->helpers['Html'] = array('className' => 'CroogoHtml');
+			$this->helpers['Form'] = array('className' => 'CroogoForm');
+			$this->helpers['Paginator'] = array('className' => 'CroogoPaginator');
+		}
 	}
 
 /**
@@ -192,4 +208,38 @@ class AppController extends Controller {
 		return false;
 	}
 
+/**
+ * _setupAclComponent
+ */
+	protected function _setupAclComponent() {
+		$config = Configure::read('Access Control');
+		if (isset($config['rowLevel']) && $config['rowLevel'] == true) {
+			if (strpos($config['models'], $this->plugin . '.' . $this->modelClass) === false) {
+				return;
+			}
+			$this->Components->load(Configure::read('Site.acl_plugin') . '.RowLevelAcl');
+		}
+	}
+
+/**
+ * Combine add and edit views
+ *
+ * @see Controller::render()
+ */
+	public function render($view = null, $layout = null) {
+		$viewPaths = App::path('View', $this->plugin);
+		$rootPath = $viewPaths[0] . DS . $this->viewPath . DS;
+		$requested = $rootPath . $view . '.ctp';
+		if (in_array($this->request->action, array('admin_edit', 'admin_add', 'edit', 'add'))) {
+			$viewPath = $rootPath . $this->request->action . '.ctp';
+			if (!file_exists($requested) && !file_exists($viewPath)) {
+				if (strpos($this->request->action, 'admin_') === false) {
+					$view = 'form';
+				} else {
+					$view = 'admin_form';
+				}
+			}
+		}
+		return parent::render($view, $layout);
+	}
 }

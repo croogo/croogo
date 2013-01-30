@@ -2,13 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width">
 	<title><?php echo $title_for_layout; ?> - <?php echo __('Croogo'); ?></title>
 	<?php
 		echo $this->Html->css(array(
-			'reset',
-			'960',
-			'/ui-themes/smoothness/jquery-ui.css',
-			'admin',
+			'croogo-bootstrap',
+			'croogo-bootstrap-responsive',
 			'thickbox',
 		));
 		echo $this->Layout->js();
@@ -22,7 +21,9 @@
 			'jquery/jquery.tipsy',
 			'jquery/jquery.elastic-1.6.1.js',
 			'jquery/thickbox-compressed',
+			'underscore-min',
 			'admin',
+			'croogo-bootstrap.js',
 		));
 		echo $this->Blocks->get('css');
 		echo $this->Blocks->get('script');
@@ -31,22 +32,23 @@
 
 <body>
 
-	<div id="wrapper">
+	<div id="wrap" class="full">
 		<?php echo $this->element('admin/header'); ?>
-
-		<div id="main" class="container_16">
-			<div class="grid_16">
-				<div id="content">
+		<div id="push"></div>
+		<div id="content-container" class="container-fluid">
+			<div class="row-fluid">
+				<div id="content" class="clearfix">
+					<div id="inner-content" class="span12">
 					<?php
 						echo $this->Layout->sessionFlash();
 						echo $content_for_layout;
 					?>
+					</div>
+					&nbsp;
 				</div>
 			</div>
-			<div class="clear">&nbsp;</div>
 		</div>
 
-		<div class="push"></div>
 	</div>
 
 	<?php echo $this->element('admin/footer'); ?>

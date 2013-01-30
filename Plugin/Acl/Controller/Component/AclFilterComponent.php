@@ -24,23 +24,30 @@ class AclFilterComponent extends Component {
 	protected $_controller = null;
 
 /**
- * @param object $controller controller
- * @param array  $settings   settings
+ * initialize
+ *
+ * @param Controller $controller instance of controller
+ * @return void
  */
 	public function initialize(Controller $controller) {
-		$this->_controller =& $controller;
+		$this->_controller = $controller;
+
+		if (Configure::read('Access Control.multiRole')) {
+			Croogo::hookAdminTab('Users/admin_add', 'Roles', 'Acl.admin/roles');
+			Croogo::hookAdminTab('Users/admin_edit', 'Roles', 'Acl.admin/roles');
+		}
 	}
 
 /**
- * acl and auth
+ * configure component settings
  *
  * @return void
  */
-	public function auth() {
+	protected function _configure() {
 		//Configure AuthComponent
 		$this->_controller->Auth->authenticate = array(
 			AuthComponent::ALL => array(
-				'userModel' => 'User',
+				'userModel' => 'Users.User',
 				'fields' => array(
 					'username' => 'username',
 					'password' => 'password',
@@ -51,43 +58,113 @@ class AclFilterComponent extends Component {
 			),
 			'Form',
 		);
-		$actionPath = 'controllers';
 		$this->_controller->Auth->authorize = array(
-			AuthComponent::ALL => array('actionPath' => $actionPath),
-			'Actions',
-			);
+			AuthComponent::ALL => array(
+				'actionPath' => 'controllers',
+				'userModel' => 'Users.User',
+			),
+			'Acl.AclCached',
+		);
 		$this->_controller->Auth->loginAction = array(
-			'plugin' => null,
+			'plugin' => 'users',
 			'controller' => 'users',
 			'action' => 'login',
 		);
 		$this->_controller->Auth->logoutRedirect = array(
-			'plugin' => null,
+			'plugin' => 'users',
 			'controller' => 'users',
 			'action' => 'login',
 		);
 		$this->_controller->Auth->loginRedirect = array(
-			'plugin' => null,
+			'plugin' => 'users',
 			'controller' => 'users',
 			'action' => 'index',
 		);
 
-		if ($this->_controller->Auth->user() && $this->_controller->Auth->user('role_id') == 1) {
-			// Role: Admin
-			$this->_controller->Auth->allow();
-		} else {
-			if ($this->_controller->Auth->user()) {
-				$roleId = $this->_controller->Auth->user('role_id');
-			} else {
-				$roleId = 3; // Role: Public
-			}
-
-			$allowedActions = ClassRegistry::init('Acl.AclPermission')->getAllowedActionsByRoleId($roleId);
-			$linkAction = Inflector::camelize($this->_controller->request->params['controller']) . '/' . $this->_controller->request->params['action'];
-			if (in_array($linkAction, $allowedActions)) {
-				$this->_controller->Auth->allowedActions = array($this->_controller->request->params['action']);
+		$config = Configure::read('Acl');
+		if (!empty($config['Auth']) && is_array($config['Auth'])) {
+			foreach ($config['Auth'] as $property => $value) {
+				$this->_controller->Auth->{$property} = $value;
 			}
 		}
+	}
+
+/**
+ * acl and auth
+ *
+ * @return void
+ */
+	public function auth() {
+		$this->_configure();
+		$user = $this->_controller->Auth->user();
+		// Admin role is allowed to perform all actions, bypassing ACL
+		if (!empty($user['role_id']) && $user['role_id'] == 1) {
+			$this->_controller->Auth->allow();
+			return;
+		}
+
+		// authorization for authenticated user is handled by authorize object
+		if ($user) {
+			return;
+		}
+
+		// public access authorization
+		$cacheName = 'permissions_public';
+		if (($perms = Cache::read($cacheName, 'permissions')) === false) {
+			$perms = $this->getPermissions('Role', 3);
+			Cache::write($cacheName, $perms, 'permissions');
+		}
+		if (!empty($perms['allowed'][$this->_controller->name])) {
+			$this->_controller->Auth->allow(
+				$perms['allowed'][$this->_controller->name]
+			);
+		}
+	}
+
+/**
+ * getPermissions
+ * retrieve list of permissions from database
+ * @param string $model model name
+ * @param string $id model id
+ * @return array list of authorized and allowed actions
+ */
+	public function getPermissions($model, $id) {
+		$Acl =& $this->_controller->Acl;
+		$aro = array('model' => $model, 'foreign_key' => $id);
+		$node = $Acl->Aro->node($aro);
+		$nodes = $Acl->Aro->getPath($node[0]['Aro']['id']);
+
+		$aros = Hash::extract($node, '{n}.Aro.id');
+		if (!empty($nodes)) {
+			$aros = Hash::merge($aros, Hash::extract($nodes, '{n}.Aro.id'));
+		}
+
+		$permissions = $Acl->Aro->Permission->find('all', array(
+			'conditions' => array(
+				'Permission.aro_id' => $aros,
+				'Permission._create' => 1,
+				'Permission._read' => 1,
+				'Permission._update' => 1,
+				'Permission._delete' => 1,
+				)
+			));
+
+		$authorized = $allowedActions = array();
+		foreach ($permissions as $permission) {
+			$path = $Acl->Aco->getPath($permission['Permission']['aco_id']);
+			if (count($path) == 4) {
+				// plugin controller/action
+				$controller = $path[2]['Aco']['alias'];
+				$action = $path[3]['Aco']['alias'];
+			} else {
+				// app controller/action
+				$controller = $path[1]['Aco']['alias'];
+				$action = $path[2]['Aco']['alias'];
+			}
+			$allowedActions[$controller][] = $action;
+			$authorized[] = implode('/', Hash::extract($path, '{n}.Aco.alias'));
+		}
+		return array('authorized' => $authorized, 'allowed' => $allowedActions);
 	}
 
 }

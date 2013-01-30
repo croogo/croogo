@@ -15,7 +15,7 @@ Configure::write('Site.acl_plugin', 'Acl');
 $cacheConfig = array(
 	'duration' => '+1 hour',
 	'path' => CACHE . 'queries',
-	'engine' => 'File',
+	'engine' => Configure::read('Cache.defaultEngine'),
 );
 
 // models
@@ -44,22 +44,16 @@ $failedLoginDuration = 300;
 Configure::write('User.failed_login_limit', 5);
 Configure::write('User.failed_login_duration', $failedLoginDuration);
 Cache::config('users_login', array_merge($cacheConfig, array(
-	'duration' => '+' . $failedLoginDuration. ' seconds',
+	'duration' => '+' . $failedLoginDuration . ' seconds',
 )));
-
-/**
- * Libraries
- */
-App::import('Vendor', 'Spyc/Spyc');
 
 /**
  * Settings
  */
-if (file_exists(APP . 'Config' . DS . 'settings.yml')) {
-	$settings = Spyc::YAMLLoad(file_get_contents(APP . 'Config' . DS . 'settings.yml'));
-	foreach ($settings as $settingKey => $settingValue) {
-		Configure::write($settingKey, $settingValue);
-	}
+App::uses('CroogoJsonReader', 'Configure');
+Configure::config('settings', new CroogoJsonReader());
+if (file_exists(APP . 'Config' . DS . 'settings.json')) {
+	Configure::load('settings', 'settings');
 }
 
 /**
@@ -77,13 +71,22 @@ if ($theme = Configure::read('Site.theme')) {
 }
 
 /**
+ * List of core plugins
+ */
+
+Configure::write('Core.corePlugins', array(
+	'Settings', 'Acl', 'Blocks', 'Comments', 'Contacts', 'Menus', 'Meta',
+	'Nodes', 'Taxonomy', 'Users',
+));
+
+/**
  * Plugins
  */
 $aclPlugin = Configure::read('Site.acl_plugin');
 $pluginBootstraps = Configure::read('Hook.bootstraps');
 $plugins = array_filter(explode(',', $pluginBootstraps));
 if (!in_array($aclPlugin, $plugins)) {
-	$plugins = Set::merge($aclPlugin, $plugins);
+	$plugins = Hash::merge((array)$aclPlugin, $plugins);
 }
 foreach ($plugins as $plugin) {
 	$pluginName = Inflector::camelize($plugin);

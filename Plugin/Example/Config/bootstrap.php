@@ -39,8 +39,25 @@ CroogoNav::add('extensions.children.example', array(
 			'url' => '#',
 		),
 		'example2' => array(
-			'title' => __('Example 2'),
+			'title' => __('Example 2 with a title that won\'t fit in the sidebar'),
 			'url' => '#',
+			'children' => array(
+				'example-2-1' => array(
+					'title' => 'Example 2-1',
+					'url' => '#',
+					'children' => array(
+						'example-2-1-1' => array(
+							'title' => 'Example 2-1-1',
+							'url' => '#',
+							'children' => array(
+								'example-2-1-1-1' => array(
+									'title' => 'Example 2-1-1-1',
+								),
+							),
+						),
+					),
+				),
+			),
 		),
 	),
 ));

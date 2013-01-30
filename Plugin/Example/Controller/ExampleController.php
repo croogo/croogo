@@ -51,4 +51,7 @@ class ExampleController extends ExampleAppController {
 		$this->set('exampleVariable', 'value here');
 	}
 
+	public function admin_add() {
+	}
+
 }

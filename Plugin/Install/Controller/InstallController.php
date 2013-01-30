@@ -2,7 +2,7 @@
 
 App::uses('Controller', 'Controller');
 App::uses('File', 'Utility');
-
+App::uses('InstallManager','Install.Lib');
 /**
  * Install Controller
  *
@@ -18,22 +18,6 @@ App::uses('File', 'Utility');
 class InstallController extends Controller {
 
 /**
- * Controller name
- *
- * @var string
- * @access public
- */
-	public $name = 'Install';
-
-/**
- * No models required
- *
- * @var array
- * @access public
- */
-	public $uses = null;
-
-/**
  * No components required
  *
  * @var array
@@ -47,26 +31,14 @@ class InstallController extends Controller {
  * @var array
  * @access public
  */
-	public $helpers = array('Html', 'Form', 'Layout');
-
-/**
- * Default configuration
- *
- * @var array
- * @access public
- */
-	public $defaultConfig = array(
-		'name' => 'default',
-		'datasource' => 'Database/Mysql',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'root',
-		'password' => '',
-		'database' => 'croogo',
-		'schema' => null,
-		'prefix' => null,
-		'encoding' => 'UTF8',
-		'port' => null,
+	public $helpers = array(
+		'Html' => array(
+			'className' => 'CroogoHtml',
+		),
+		'Form' => array(
+			'className' => 'CroogoForm',
+		),
+		'Layout',
 	);
 
 /**
@@ -79,10 +51,27 @@ class InstallController extends Controller {
 		parent::beforeFilter();
 
 		$this->layout = 'install';
+		$this->_generateAssets();
 	}
 
 /**
- * If settings.yml exists, app is already installed
+ * Generate assets
+ */
+	protected function _generateAssets() {
+		if (!file_exists(CSS . 'croogo-bootstrap.css')) {
+			App::uses('AssetGenerator', 'Install.Lib');
+			$generator = new AssetGenerator();
+			try {
+				$generator->generate();
+			} catch (Exception $e) {
+				$this->log($e->getMessage());
+				$this->Session->setFlash('Asset generation failed. Please verify that dependencies exists and readable.', 'default', array('class' => 'error'));
+			}
+		}
+	}
+
+/**
+ * If settings.json exists, app is already installed
  *
  * @return void
  */
@@ -124,61 +113,15 @@ class InstallController extends Controller {
 			$this->redirect(array('action' => 'adminuser'));
 		}
 
-		if (empty($this->request->data)) {
-			return;
-		}
-
-		App::uses('ConnectionManager', 'Model');
-		$config = $this->defaultConfig;
-		foreach ($this->request->data['Install'] as $key => $value) {
-			if (isset($this->request->data['Install'][$key])) {
-				$config[$key] = $value;
+		if (!empty($this->request->data)) {
+			$InstallManager = new InstallManager();
+			$result = $InstallManager->createDatabaseFile($this->request->data);
+			if ($result !== true) {
+				$this->Session->setFlash($result, 'default', array('class' => 'error'));
+			} else {
+				$this->redirect(array('action' => 'data'));
 			}
 		}
-		try {
-			ConnectionManager::create('default', $config);
-			$db = ConnectionManager::getDataSource('default');
-		}
-		catch (MissingConnectionException $e) {
-			$this->Session->setFlash(__('Could not connect to database: %s', $e->getMessage()), 'default', array('class' => 'error'));
-			return;
-		}
-		if (!$db->isConnected()) {
-			$this->Session->setFlash(__('Could not connect to database.'), 'default', array('class' => 'error'));
-			return;
-		}
-
-		copy(APP . 'Config' . DS . 'database.php.install', APP . 'Config' . DS . 'database.php');
-		$file = new File(APP . 'Config' . DS . 'database.php', true);
-		$content = $file->read();
-
-		foreach ($config as $configKey => $configValue) {
-			$content = str_replace('{default_' . $configKey . '}', $configValue, $content);
-		}
-
-		if (!$file->write($content)) {
-			$this->Session->setFlash(__('Could not write database.php file.'), 'default', array('class' => 'error'));
-			return;
-		}
-
-		if (copy(APP . 'Config' . DS . 'croogo.php.install', APP . 'Config' . DS . 'croogo.php')) {
-			return $this->redirect(array('action' => 'data'));
-		} else {
-			$this->Session->setFlash(__('Could not write croogo.php file.'), 'default', array('class' => 'error'));
-		}
-	}
-
-/**
- * Fixes Postgres sequence
- */
-	protected function _fixSequence($model) {
-		$db = $model->getDataSource();
-		$nextValue = $model->find('first', array(
-			'fields' => sprintf('MAX(%s.%s) as max', $model->alias, $model->primaryKey),
-			));
-		$nextValue = empty($nextValue[0]['max']) ? 1 :  $nextValue[0]['max'] + 1;
-		$sql = sprintf('alter sequence %s restart with %d', $db->getSequence($model), $nextValue);
-		$db->execute($sql);
 	}
 
 /**
@@ -191,55 +134,13 @@ class InstallController extends Controller {
 		$this->_check();
 		$this->set('title_for_layout', __('Step 2: Build database'));
 		if (isset($this->params['named']['run'])) {
-			App::uses('File', 'Utility');
-			App::uses('CakeSchema', 'Model');
-			App::uses('ConnectionManager', 'Model');
+			$this->loadModel('Install.Install');
+			$this->Install->setupDatabase();
 
-			$db = ConnectionManager::getDataSource('default');
-			$brokenSequence = $db instanceof Postgres;
-			if (!$db->isConnected()) {
-				$this->Session->setFlash(__('Could not connect to database.'), 'default', array('class' => 'error'));
-			} else {
-				$schema =& new CakeSchema(array('name' => 'app'));
-				$schema = $schema->load();
-				foreach ($schema->tables as $table => $fields) {
-					$create = $db->createSchema($schema, $table);
-					try {
-						$db->execute($create);
-					}
-					catch (PDOException $e) {
-						$this->Session->setFlash(__('Could not create table: %s', $e->getMessage()), 'default', array('class' => 'error'));
-						return;
-					}
-				}
+			$InstallManager = new InstallManager();
+			$result = $InstallManager->createCroogoFile();
 
-				$path = App::pluginPath('Install') . DS . 'Config' . DS . 'Data' . DS;
-				$dataObjects = App::objects('class', $path);
-				foreach ($dataObjects as $data) {
-					include ($path . $data . '.php');
-					$classVars = get_class_vars($data);
-					$modelAlias = substr($data, 0, -4);
-					$table = $classVars['table'];
-					$records = $classVars['records'];
-					App::uses('Model', 'Model');
-					$modelObject =& new Model(array(
-						'name' => $modelAlias,
-						'table' => $table,
-						'ds' => 'default',
-					));
-					if (is_array($records) && count($records) > 0) {
-						foreach ($records as $record) {
-							$modelObject->create($record);
-							$modelObject->save();
-						}
-					}
-					if ($brokenSequence) {
-						$this->_fixSequence($modelObject);
-					}
-				}
-
-				$this->redirect(array('action' => 'adminuser'));
-			}
+			$this->redirect(array('action' => 'adminuser'));
 		}
 	}
 
@@ -247,16 +148,22 @@ class InstallController extends Controller {
  * Step 3: get username and passwords for administrative user
  */
 	public function adminuser() {
+		if (!file_exists(APP . 'Config' . DS . 'database.php')) {
+			$this->redirect('/');
+		}
+
 		if ($this->request->is('post')) {
-			$this->loadModel('User');
+			if (!CakePlugin::loaded('Users')) {
+				CakePlugin::load('Users');
+			}
+			$this->loadModel('Users.User');
 			$this->User->set($this->request->data);
 			if ($this->User->validates()) {
-				$token = uniqid();
-				$this->Session->write('Install', array(
-					'token' => $token,
-					'User' => $this->request->data['User'],
-					));
-				$this->redirect(array('action' => 'finish', $token));
+				$user = $this->Install->addAdminUser($this->request->data);
+				if ($user) {
+					$this->Session->write('Install.user', $user);
+					$this->redirect(array('action' => 'finish'));
+				}
 			}
 		}
 	}
@@ -264,37 +171,36 @@ class InstallController extends Controller {
 /**
  * Step 4: finish
  *
- * Copy settings.yml file into place and create user obtained in step 3
+ * Copy settings.json file into place and create user obtained in step 3
  *
  * @return void
  * @access public
  */
 	public function finish($token = null) {
-		$this->set('title_for_layout', __('Installation completed successfully'));
+		$this->set('title_for_layout', __('Installation successful'));
 		$this->_check();
-		$this->loadModel('Install.Install');
-		$install = $this->Session->read('Install');
-		if ($install['token'] == $token) {
-			unset($install['token']);
-			if ($this->Install->finalize($install)) {
-				$urlBlogAdd = Router::url(array(
-					'plugin' => false, 'admin' => true,
-					'controller' => 'nodes', 'action' => 'add', 'blog',
-					));
-				$urlSettings = Router::url(array(
-					'plugin' => false, 'admin' => true,
-					'controller' => 'settings', 'action' => 'prefix', 'Site',
-					));
-				$this->set('user', $install);
-				$this->set(compact('urlBlogAdd', 'urlSettings'));
-			} else {
-				$this->Session->setFlash('Something went wrong during installation. Please check your server logs.');
-				$this->redirect(array('action' => 'adminuser'));
-			}
-			$this->Session->delete('Install');
-		} else {
-			$this->redirect('/');
-		}
+
+		$InstallManager = new InstallManager();
+		$result = $InstallManager->createSettingsFile();
+
+		$urlBlogAdd = Router::url(array(
+			'plugin' => 'nodes',
+			'admin' => true,
+			'controller' => 'nodes',
+			'action' => 'add',
+			'blog',
+		));
+		$urlSettings = Router::url(array(
+			'plugin' => 'settings',
+			'admin' => true,
+			'controller' => 'settings',
+			'action' => 'prefix',
+			'Site',
+		));
+
+		$this->set('user', $this->Session->read('Install.user'));
+		$this->Session->destroy();
+		$this->set(compact('urlBlogAdd', 'urlSettings'));
 	}
 
 }

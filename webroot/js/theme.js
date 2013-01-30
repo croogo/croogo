@@ -13,4 +13,15 @@ $(document).ready(function(){
 		autoArrows:  false,                             // disable generation of arrow mark-up
 		dropShadows: false                              // disable drop shadows
 	});
+
+	// Prevent double form submissions on all forms to avoid unwanted requests
+	$('body').on('submit', 'form', function(e) {
+		var self = $(this);
+		if (self.data('alreadySubmitted')) {
+			e.stopImmediatePropagation();
+			e.preventDefault();
+		} else {
+			self.data('alreadySubmitted', true);
+		}
+	});
 });

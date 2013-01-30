@@ -1,22 +1,33 @@
 <?php
 $this->extend('/Common/admin_index');
 $this->name = 'translate';
-?>
 
-<?php $this->start('tabs'); ?>
+
+$this->Html
+	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb(__('Translate'), $this->here)
+	->addCrumb($modelAlias)
+	->addCrumb($record[$modelAlias]['title'], array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'edit', $record[$modelAlias]['id']));
+
+?>
+<?php $this->start('actions'); ?>
 <li><?php
-echo $this->Html->link(__('Translate in a new language'), array(
-	'plugin' => null,
-	'controller' => 'languages',
-	'action' => 'select',
-	$record[$modelAlias]['id'],
-	$modelAlias,
-));
+echo $this->Html->link(
+	__('Translate in a new language'),
+	array(
+		'plugin' => 'settings',
+		'controller' => 'languages',
+		'action'=>'select',
+		$record[$modelAlias]['id'],
+		$modelAlias
+	),
+	array('button' => 'default')
+);
 ?></li>
 <?php $this->end(); ?>
 
 <?php if (count($translations) > 0): ?>
-	<table cellpadding="0" cellspacing="0">
+	<table class="table table-striped">
 	<?php
 		$tableHeaders = $this->Html->tableHeaders(array(
 			'',
@@ -25,34 +36,43 @@ echo $this->Html->link(__('Translate in a new language'), array(
 			__('Locale'),
 			__('Actions'),
 		));
-		echo $tableHeaders;
-
+	?>
+		<thead>
+			<?php echo $tableHeaders; ?>
+		</thead>
+	<?php
 		$rows = array();
-		foreach ($translations as $translation) {
-			$actions  = $this->Html->link(__('Edit'), array(
+		foreach ($translations as $translation):
+			$actions = array();
+			$actions[] = $this->Croogo->adminRowAction('', array(
 				'action' => 'edit',
 				$id,
 				$modelAlias,
 				'locale' => $translation[$runtimeModelAlias]['locale'],
+			), array(
+				'icon' => 'pencil',
+				'tooltip' => __('Edit this item'),
 			));
-			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
+			$actions[] = $this->Croogo->adminRowAction('', array(
 				'action' => 'delete',
 				$id,
 				$modelAlias,
 				$translation[$runtimeModelAlias]['locale'],
-			), null, __('Are you sure?'));
+			), array(
+				'icon' => 'trash',
+				'tooltip' => __('Remove this item'),
+			) , __('Are you sure?'));
 
+			$actions = $this->Html->div('item-actions', implode(' ', $actions));
 			$rows[] = array(
 				'',
-				//$translation[$RuntimeModelAlias]['id'],
 				$translation[$runtimeModelAlias]['content'],
 				$translation[$runtimeModelAlias]['locale'],
 				$actions,
 			);
-		}
+		endforeach;
 
 		echo $this->Html->tableCells($rows);
-		echo $tableHeaders;
 	?>
 	</table>
 <?php else: ?>

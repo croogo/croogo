@@ -27,7 +27,7 @@ class CroogoTestCase extends CakeTestCase {
 
 	protected static function _restoreSettings() {
 		$source = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.default';
-		$target = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
+		$target = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.json';
 		copy($source, $target);
 	}
 
@@ -47,8 +47,10 @@ class CroogoTestCase extends CakeTestCase {
 		CakePlugin::unload('Install');
 		CakePlugin::load('Example');
 		Configure::write('Acl.database', 'test');
-		$Setting = ClassRegistry::init('Setting');
-		$Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.yml';
+		$Setting = ClassRegistry::init('Settings.Setting');
+		$Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.json';
+		Configure::drop('settings');
+		Configure::config('settings', new CroogoJsonReader(dirname($Setting->settingsPath) . DS));
 		$Setting->writeConfiguration();
 	}
 

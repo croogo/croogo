@@ -1,7 +1,7 @@
 <?php
 App::uses('CroogoTestCase', 'TestSuite');
-App::uses('UsersController', 'Controller');
-App::uses('NodesController', 'Controller');
+App::uses('UsersController', 'Users.Controller');
+App::uses('NodesController', 'Nodes.Controller');
 
 class TestUsersEventController extends UsersController {
 }
@@ -12,7 +12,7 @@ class TestNodesEventController extends NodesController {
 class CroogoEventsTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'app.setting',
+		'plugin.settings.setting',
 		);
 
 	public function setUp() {

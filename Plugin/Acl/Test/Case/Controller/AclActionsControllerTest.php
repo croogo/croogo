@@ -16,11 +16,11 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
 		'app.aro',
 		'app.aco',
 		'app.aros_aco',
-		'app.menu',
-		'app.type',
-		'app.types_vocabulary',
-		'app.vocabulary',
-		'app.setting',
+		'plugin.menus.menu',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.types_vocabulary',
+		'plugin.taxonomy.vocabulary',
+		'plugin.settings.setting',
 	);
 
 /**
@@ -36,6 +36,7 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
 			'components' => array(
 				'Auth' => array('user'),
 				'Session',
+				'Menus.Menus',
 			),
 		));
 		$AclActions->Auth
@@ -43,10 +44,10 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
 			->method('user')
 			->will($this->returnValue(2));
 		$AclActions->Session
-			->expects($this->once())
+			->expects($this->any())
 			->method('setFlash')
 			->with(
-				$this->matchesRegularExpression('/Created [0-9]+ new permissions/'),
+				$this->matchesRegularExpression('/(Created Aco node:)|.*Aco Update Complete.*/'),
 				$this->equalTo('default'),
 				$this->anything(),
 				$this->equalTo('flash')

@@ -17,12 +17,23 @@ App::uses('Security', 'Utility');
  */
 class CroogoShell extends AppShell {
 
+	public $tasks = array(
+		'Upgrade',
+	);
+
 /**
  * Display help/options
  */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
 		$parser->description(__('Croogo Utilities')
+			)->addSubCommand('make', array(
+				'help' => __('Compile/Generate CSS'),
+				)
+			)->addSubCommand('upgrade', array(
+				'help' => __('Upgrade Croogo'),
+				'parser' => $this->Upgrade->getOptionParser(),
+				)
 			)->addSubcommand('password', array(
 				'help' => 'Get hashed password',
 				'parser' => array(
@@ -47,6 +58,23 @@ class CroogoShell extends AppShell {
 	public function password() {
 		$value = trim($this->args['0']);
 		$this->out(Security::hash($value, null, true));
+	}
+
+/**
+ * Compile assets for admin ui
+ */
+	public function make() {
+		App::uses('AssetGenerator', 'Install.Lib');
+		if (!CakePlugin::loaded('Install')) {
+			CakePlugin::load('Install');
+		}
+		$generator = new AssetGenerator();
+		try {
+			$generator->generate(array('clone' => true));
+		} catch (Exception $e) {
+			$this->err('<error>' . $e->getMessage() . '</error>');
+		}
+		CakePlugin::unload('Install');
 	}
 
 }

@@ -1,15 +1,45 @@
 <?php
+
 $this->extend('/Common/admin_index');
 $this->name = 'acl_permissions';
 $this->Html->script('/acl/js/acl_permissions.js', false);
-?>
 
-<?php $this->start('tabs'); ?>
-<li><?php echo $this->Form->postLink(__('Generate Actions'), array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1)); ?></li>
-<li><?php echo $this->Html->link(__('Edit Actions'), array('controller' => 'acl_actions', 'action' => 'index', 'permissions' => 1)); ?></li>
+$this->Html
+	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb(__('Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
+	->addCrumb(__('Permissions'), array(
+		'plugin' => 'acl', 'controller' => 'acl_permissions',
+	));
+
+?>
+<?php $this->start('actions'); ?>
+<li>
+<?php
+	echo $this->Form->postLink(__('Generate Actions'),
+		array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1),
+		array('button' => 'default')
+	);
+?>
+</li>
+<li>
+<?php
+	echo $this->Form->postLink(__('Sync Actions'),
+		array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1, 'sync' => 1),
+		array('button' => 'default')
+	);
+?>
+</li>
+<li>
+<?php
+	echo $this->Html->link(__('Edit Actions'),
+		array('controller' => 'acl_actions', 'action'=>'index', 'permissions' => 1),
+		array('button' => 'default')
+	);
+?>
+</li>
 <?php $this->end(); ?>
 
-<table cellpadding="0" cellspacing="0">
+<table class="table permission-table">
 <?php
 	$roleTitles = array_values($roles);
 	$roleIds   = array_keys($roles);
@@ -19,11 +49,17 @@ $this->Html->script('/acl/js/acl_permissions.js', false);
 		__('Alias'),
 	);
 	$tableHeaders = array_merge($tableHeaders, $roleTitles);
-	$tableHeaders = $this->Html->tableHeaders($tableHeaders);
-	echo $tableHeaders;
+	$tableHeaders =  $this->Html->tableHeaders($tableHeaders);
+?>
+	<thead>
+		<?php echo $tableHeaders; ?>
+	</thead>
+<?php
 
 	$currentController = '';
-	foreach ($acos as $id => $alias) {
+	foreach ($acos as $index => $aco) {
+		$id = $aco['Aco']['id'];
+		$alias = $aco['Aco']['alias'];
 		$class = '';
 		if (substr($alias, 0, 1) == '_') {
 			$level = 1;
@@ -33,7 +69,10 @@ $this->Html->script('/acl/js/acl_permissions.js', false);
 			$alias = substr_replace($alias, '', 0, 1);
 		} else {
 			$level = 0;
-			$class .= ' controller expand';
+			$class .= ' controller';
+			if ($aco['Aco']['children'] > 0) {
+				$class .= ' perm-expand';
+			}
 			$oddOptions = array();
 			$evenOptions = array();
 			$currentController = $alias;
@@ -41,28 +80,23 @@ $this->Html->script('/acl/js/acl_permissions.js', false);
 
 		$row = array(
 			$id,
-			$this->Html->div($class, $alias),
+			$this->Html->div(trim($class), $alias, array(
+				'data-id' => $id,
+				'data-alias' => $alias,
+				'data-level' => $level,
+				)),
 		);
 
 		foreach ($roles as $roleId => $roleTitle) {
-			if ($level != 0) {
-				if ($roleId != 1) {
-					if ($permissions[$id][$roleId] == 1) {
-						$row[] = $this->Html->image('/img/icons/tick.png', array('class' => 'permission-toggle', 'data-aco_id' => $id, 'data-aro_id' => $rolesAros[$roleId]));
-					} else {
-						$row[] = $this->Html->image('/img/icons/cross.png', array('class' => 'permission-toggle', 'data-aco_id' => $id, 'data-aro_id' => $rolesAros[$roleId]));
-					}
-				} else {
-					$row[] = $this->Html->image('/img/icons/tick_disabled.png', array('class' => 'permission-disabled'));
-				}
-			} else {
-				$row[] = '';
-			}
+			$row[] = '';
 		}
 
 		echo $this->Html->tableCells(array($row), $oddOptions, $evenOptions);
 	}
 
-	echo $tableHeaders;
 ?>
+	<thead>
+		<?php echo $tableHeaders; ?>
+	</thead>
+
 </table>

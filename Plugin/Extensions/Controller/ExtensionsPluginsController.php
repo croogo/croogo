@@ -33,8 +33,8 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  * @access public
  */
 	public $uses = array(
-		'Setting',
-		'User',
+		'Settings.Setting',
+		'Users.User',
 	);
 
 /**
@@ -162,4 +162,23 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+/**
+ * Migrate a plugin (database)
+ *
+ * @param type $plugin
+ */
+	public function admin_migrate($plugin = null) {
+		if (!$plugin) {
+			$this->Session->setFlash(__('Invalid plugin'), 'default', array('class' => 'error'));
+		} elseif ($this->_CroogoPlugin->migrate($plugin)) {
+			$this->Session->setFlash(__('Plugin "%s" migrated successfully.', $plugin), 'default', array('class' => 'success'));
+		} else {
+			$this->Session->setFlash(
+				__('Plugin "%s" could not be migrated. Error: %s', $plugin, implode('<br />', $this->_CroogoPlugin->migrationErrors)),
+				'default',
+				array('class' => 'success')
+			);
+		}
+		$this->redirect(array('action' => 'index'));
+	}
 }

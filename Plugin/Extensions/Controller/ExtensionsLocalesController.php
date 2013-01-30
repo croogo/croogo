@@ -32,7 +32,10 @@ class ExtensionsLocalesController extends ExtensionsAppController {
  * @var array
  * @access public
  */
-	public $uses = array('Setting', 'User');
+	public $uses = array(
+		'Settings.Setting',
+		'Users.User',
+	);
 
 /**
  * admin_index

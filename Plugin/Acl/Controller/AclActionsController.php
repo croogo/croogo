@@ -31,13 +31,6 @@ class AclActionsController extends AclAppController {
 	public $uses = array('Acl.AclAco');
 
 /**
- * components
- *
- * @var array
- */
-	public $components = array('Acl.AclGenerate');
-
-/**
  * beforeFilter
  *
  * @return void
@@ -52,16 +45,18 @@ class AclActionsController extends AclAppController {
 /**
  * admin_index
  */
-	public function admin_index() {
+	public function admin_index($id = null) {
 		$this->set('title_for_layout', __('Actions'));
 
-		$conditions = array(
-			'parent_id !=' => null,
-			//'model' => null,
-			'foreign_key' => null,
-			'alias !=' => null,
-		);
-		$this->set('acos', $this->Acl->Aco->generateTreeList($conditions, '{n}.Aco.id', '{n}.Aco.alias'));
+		if ($id == null) {
+			$root = $this->Acl->Aco->node('controllers');
+			$root = $root[0];
+		} else {
+			$root = $this->Acl->Aco->read(null, $id);
+		}
+
+		$acos = $this->AclAco->getChildren($root['Aco']['id']);
+		$this->set(compact('acos'));
 	}
 
 /**
@@ -89,21 +84,7 @@ class AclActionsController extends AclAppController {
 			}
 		}
 
-		$conditions = array(
-			//'model' => null,
-		);
-		$controllersAco = $this->Acl->Aco->find('first', array(
-			'conditions' => array(
-				'alias' => 'controllers',
-				'parent_id' => null,
-				//'model' => null,
-				'foreign_key' => null,
-			),
-		));
-		if (isset($controllersAco['Aco']['id'])) {
-			$conditions['parent_id'] = $controllersAco['Aco']['id'];
-		}
-		$acos = $this->Acl->Aco->generateTreeList($conditions, '{n}.Aco.id', '{n}.Aco.alias');
+		$acos = $this->Acl->Aco->generateTreeList(null, '{n}.Aco.id', '{n}.Aco.alias');
 		$this->set(compact('acos'));
 	}
 
@@ -131,21 +112,7 @@ class AclActionsController extends AclAppController {
 			$this->request->data = $this->Acl->Aco->read(null, $id);
 		}
 
-		$conditions = array(
-			//'model' => null,
-		);
-		$controllersAco = $this->Acl->Aco->find('first', array(
-			'conditions' => array(
-				'alias' => 'controllers',
-				'parent_id' => null,
-				//'model' => null,
-				'foreign_key' => null,
-			),
-		));
-		if (isset($controllersAco['Aco']['id'])) {
-			$conditions['parent_id'] = $controllersAco['Aco']['id'];
-		}
-		$acos = $this->Acl->Aco->generateTreeList($conditions, '{n}.Aco.id', '{n}.Aco.alias');
+		$acos = $this->Acl->Aco->generateTreeList(null, '{n}.Aco.id', '{n}.Aco.alias');
 		$this->set(compact('acos'));
 	}
 
@@ -194,54 +161,24 @@ class AclActionsController extends AclAppController {
  * admin_generate
  */
 	public function admin_generate() {
-		$aco =& $this->Acl->Aco;
-		$root = $aco->node('controllers');
-		if (!$root) {
-			$aco->create(array(
-				'parent_id' => null,
-				'model' => null,
-				'alias' => 'controllers',
-			));
-			$root = $aco->save();
-			$root['Aco']['id'] = $aco->id;
+		App::uses('AclExtras', 'Acl.Lib');
+		$AclExtras = new AclExtras();
+		$AclExtras->startup($this);
+		if (isset($this->request->named['sync'])) {
+			$result = $AclExtras->aco_sync();
 		} else {
-			$root = $root[0];
+			$result = $AclExtras->aco_update();
+		}
+		$output = $AclExtras->output;
+		$output += $AclExtras->errors;
+		if ($result) {
+			$class = 'success';
+			$output[] = __('Created %d new permissions', $AclExtras->created);
+		} else {
+			$class = 'error';
 		}
 
-		$created = array();
-		$controllerPaths = $this->AclGenerate->listControllers();
-		foreach ($controllerPaths as $controllerName => $controllerPath) {
-			$controllerNode = $aco->node('controllers/' . $controllerName);
-			if (!$controllerNode) {
-				$aco->create(array(
-					'parent_id' => $root['Aco']['id'],
-					'model' => null,
-					'alias' => $controllerName,
-				));
-				if ($controllerNode = $aco->save()) {
-					$controllerNode['Aco']['id'] = $aco->id;
-					$created[] = $controllerName;
-				}
-			} else {
-				$controllerNode = $controllerNode[0];
-			}
-
-			$methods = $this->AclGenerate->listActions($controllerName, $controllerPath);
-			foreach ($methods as $method) {
-				$methodNode = $aco->node('controllers/' . $controllerName . '/' . $method);
-				if (!$methodNode) {
-					$aco->create(array(
-						'parent_id' => $controllerNode['Aco']['id'],
-						'model' => null,
-						'alias' => $method,
-					));
-					if ($methodNode = $aco->save()) {
-						$created[] = $controllerName . ' . ' . $method;
-					}
-				}
-			}
-		}
-		$this->Session->setFlash(__('Created %d new permissions', count($created)), 'default', array('acosCreated' => $created));
+		$this->Session->setFlash(join('<br>', $output), 'default', array('class' => $class));
 
 		if (isset($this->params['named']['permissions'])) {
 			$this->redirect(array('plugin' => 'acl', 'controller' => 'acl_permissions', 'action' => 'index'));

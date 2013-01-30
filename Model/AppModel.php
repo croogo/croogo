@@ -26,6 +26,13 @@ class AppModel extends Model {
 	public $useCache = true;
 
 /**
+ * Default behaviors
+ */
+	public $actsAs = array(
+		'Containable',
+	);
+
+/**
  * Display fields for admin_index. Use displayFields()
  *
  * @var array
@@ -58,9 +65,9 @@ class AppModel extends Model {
  *
  * Caching can be done either by unique names,
  * or prefixes where a hashed value of $options array is appended to the name
- * 
- * @param mixed $type 
- * @param array $options 
+ *
+ * @param mixed $type
+ * @param array $options
  * @return mixed
  * @access public
  */
@@ -175,16 +182,16 @@ class AppModel extends Model {
 			if (is_int($field)) {
 				$field = $label;
 				list(, $label) = pluginSplit($label);
-				$out[$field] = Set::merge($defaults, array(
+				$out[$field] = Hash::merge($defaults, array(
 					'label' => Inflector::humanize($label),
 				));
 			} elseif (is_array($label)) {
-				$out[$field] = Set::merge($defaults, $label);
+				$out[$field] = Hash::merge($defaults, $label);
 				if (!isset($out[$field]['label'])) {
 					$out[$field]['label'] = Inflector::humanize($field);
 				}
 			} else {
-				$out[$field] = Set::merge($defaults, array(
+				$out[$field] = Hash::merge($defaults, array(
 					'label' => $label,
 				));
 			}
