@@ -17,6 +17,7 @@
 	<?php
 		if ($level <= Configure::read('Comment.level')) {
 			echo $this->Html->link(__('Reply'), array(
+				'plugin' => 'comments',
 				'controller' => 'comments',
 				'action' => 'add',
 				$node['Node']['id'],
