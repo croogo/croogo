@@ -10,10 +10,15 @@ if (!empty($searchFields)):
 
 <div class="<?php echo $className; ?> filter row-fluid">
 <?php
+	$args = $this->passedArgs + array('?' => $this->request->query);
 	echo $this->Form->create($modelClass, array(
 		'class' => 'form-inline',
 		'novalidate' => true,
-		'url' => array('action' => 'index')
+		'url' => Hash::merge(array(
+			'plugin' => $this->request->params['plugin'],
+			'controller' => $this->request->params['controller'],
+			'action' => $this->request->params['action'],
+		), $args)
 	));
 	foreach ($searchFields as $field => $fieldOptions) {
 		$options = array('empty' => '', 'required' => false);
