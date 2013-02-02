@@ -14,7 +14,9 @@ echo $this->Form->create('Node', array('url' => array('controller' => 'attachmen
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#attachment-main" data-toggle="tab"><?php echo __('Attachment'); ?></a></li>
+		<?php
+			echo $this->Croogo->adminTab(__('Attachment'), '#attachment-main');
+		?>
 		</ul>
 
 		<div class="tab-content">

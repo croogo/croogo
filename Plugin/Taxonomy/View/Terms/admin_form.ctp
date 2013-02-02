@@ -30,8 +30,10 @@ echo $this->Form->create('Term', array(
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#term-basic" data-toggle="tab"><?php echo __('Term'); ?></a></li>
-			<?php echo $this->Croogo->adminTabs(); ?>
+		<?php
+			echo $this->Croogo->adminTab(__('Term'), '#term-basic');
+			echo $this->Croogo->adminTabs();
+		?>
 		</ul>
 
 		<div class="tab-content">

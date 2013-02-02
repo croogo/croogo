@@ -25,9 +25,11 @@ echo $this->Form->create('Vocabulary');
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#vocabulary-basic" data-toggle="tab"><?php echo __('Vocabulary'); ?></a></li>
-			<li><a href="#vocabulary-options" data-toggle="tab"><?php echo __('Options'); ?></a></li>
-			<?php echo $this->Croogo->adminTabs(); ?>
+		<?php
+			echo $this->Croogo->adminTab(__('Vocabulary'), '#vocabulary-basic');
+			echo $this->Croogo->adminTab(__('Options'), '#vocabulary-options');
+			echo $this->Croogo->adminTabs();
+		?>
 		</ul>
 
 		<div class="tab-content">

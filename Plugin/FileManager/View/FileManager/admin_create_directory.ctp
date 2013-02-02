@@ -27,8 +27,10 @@ echo $this->Form->create('FileManager', array(
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#filemanager-createdir" data-toggle="tab"><?php echo __('Directory'); ?></a></li>
-			<?php echo $this->Croogo->adminTabs(); ?>
+		<?php
+			echo $this->Croogo->adminTab(__('Directory'), '#filemanager-createdir');
+			echo $this->Croogo->adminTabs();
+		?>
 		</ul>
 
 		<div class="tab-content">

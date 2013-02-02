@@ -12,8 +12,10 @@
 <div class="row-fluid">
 	<div class="span8">
 		<ul class="nav nav-tabs">
-			<li><a href="#reset-password" data-toggle="tab"><?php echo __('Reset Password'); ?></a></li>
-			<?php echo $this->Croogo->adminTabs(); ?>
+		<?php
+			echo $this->Croogo->adminTab(__('Reset Password'), '#reset-password');
+			echo $this->Croogo->adminTabs();
+		?>
 		</ul>
 
 		<div class="tab-content">

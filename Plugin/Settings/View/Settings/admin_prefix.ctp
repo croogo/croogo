@@ -20,7 +20,9 @@ echo $this->Form->create('Setting', array(
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#settings-main" data-toggle="tab"><?php echo $prefix; ?></a></li>
+		<?php
+			echo $this->Croogo->adminTab($prefix, '#settings-main');
+		?>
 		</ul>
 
 		<div class="tab-content">

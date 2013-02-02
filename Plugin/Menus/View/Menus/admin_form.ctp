@@ -21,9 +21,11 @@ echo $this->Form->create('Menu');
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#menu-basic" data-toggle="tab"><?php echo __('Menu'); ?></a></li>
-			<li><a href="#menu-misc" data-toggle="tab"><?php echo __('Misc.'); ?></a></li>
-			<?php echo $this->Croogo->adminTabs(); ?>
+		<?php
+			echo $this->Croogo->adminTab(__('Menu'), '#menu-basic');
+			echo $this->Croogo->adminTab(__('Misc.'), '#menu-misc');
+			echo $this->Croogo->adminTabs();
+		?>
 		</ul>
 
 		<div class="tab-content">

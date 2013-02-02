@@ -20,8 +20,10 @@ echo $this->Form->create($modelAlias, array('url' => array(
 <div class="row-fluid">
 	<div class="span8">
 		<ul class="nav nav-tabs">
-			<li><a href="#translate-main" data-toggle="tab"><?php echo __('Translate'); ?></a></li>
-			<?php echo $this->Croogo->adminTabs(); ?>
+		<?php
+			echo $this->Croogo->adminTab(__('Translate'), '#translate-main');
+			echo $this->Croogo->adminTabs();
+		?>
 		</ul>
 
 		<div class="tab-content">

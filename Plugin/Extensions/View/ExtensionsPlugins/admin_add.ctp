@@ -20,7 +20,9 @@ echo $this->Form->create('Plugin', array(
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#plugin-upload" data-toggle="tab"><?php echo __('Upload'); ?></a></li>
+		<?php
+			echo $this->Croogo->adminTab(__('Upload'), '#plugin-upload');
+		?>
 		</ul>
 
 		<div class="tab-content">

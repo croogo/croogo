@@ -17,7 +17,10 @@ echo $this->Form->create('Message');
 <div class="row-fluid">
 	<div class="span8">
 		<ul class="nav nav-tabs">
-			<li><a href="#message-main" data-toggle="tab"><?php echo __('Message'); ?></a>
+		<?php
+			echo $this->Croogo->adminTab(__('Message'), '#message-main');
+			echo $this->Croogo->adminTabs();
+		?>
 		</ul>
 
 		<div class="tab-content">

@@ -21,11 +21,13 @@ echo $this->Form->create('Type');
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#type-main" data-toggle="tab"><?php echo __('Type'); ?></a></li>
-			<li><a href="#type-taxonomy" data-toggle="tab"><?php echo __('Taxonomy'); ?></a></li>
-			<li><a href="#type-comments" data-toggle="tab"><?php echo __('Comments'); ?></a></li>
-			<li><a href="#type-params" data-toggle="tab"><?php echo __('Params'); ?></a></li>
-			<?php echo $this->Croogo->adminTabs(); ?>
+		<?php
+			echo $this->Croogo->adminTab(__('Type'), '#type-main');
+			echo $this->Croogo->adminTab(__('Taxonomy'), '#type-taxonomy');
+			echo $this->Croogo->adminTab(__('Comments'), '#type-comments');
+			echo $this->Croogo->adminTab(__('Params'), '#type-params');
+			echo $this->Croogo->adminTabs();
+		?>
 		</ul>
 
 		<div class="tab-content">

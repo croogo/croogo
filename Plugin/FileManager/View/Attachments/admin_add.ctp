@@ -19,7 +19,9 @@ echo $this->Form->create('Node', array('url' => $formUrl, 'type' => 'file'));
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#attachment-upload" data-toggle="tab"><?php echo __('Upload'); ?></a></li>
+		<?php
+			echo $this->Croogo->adminTab(__('Upload'), '#attachment-upload');
+		?>
 		</ul>
 
 		<div class="tab-content">

@@ -24,8 +24,10 @@ echo $this->Form->create('Locale', array(
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#locale-content" data-toggle="tab"><?php echo __('Content'); ?></a></li>
-			<?php echo $this->Croogo->adminTabs(); ?>
+		<?php
+			echo $this->Croogo->adminTab(__('Content'), '#locale-content');
+			echo $this->Croogo->adminTabs();
+		?>
 		</ul>
 
 		<div class="tab-content">
