@@ -9,30 +9,20 @@ $this->Html
 ?>
 
 <?php $this->start('actions'); ?>
-<li>
-	<?php
-		echo $this->FileManager->link(__('Upload here'),
-			array('controller' => 'file_manager', 'action' => 'upload'),
-			$path
-		);
-	?>
-</li>
-<li>
-	<?php
-		echo $this->FileManager->link(__('Create directory'),
-			array('controller' => 'file_manager', 'action' => 'create_directory'),
-			$path
-		);
-	?>
-</li>
-<li>
-	<?php
-		echo $this->FileManager->link(__('Create file'),
-			array('controller' => 'file_manager', 'action' => 'create_file'),
-			$path
-		);
-	?>
-</li>
+<?php
+	echo $this->FileManager->adminAction(__('Upload here'),
+		array('controller' => 'file_manager', 'action' => 'upload'),
+		$path
+	);
+	echo $this->FileManager->adminAction(__('Create directory'),
+		array('controller' => 'file_manager', 'action' => 'create_directory'),
+		$path
+	);
+	echo $this->FileManager->adminAction(__('Create file'),
+		array('controller' => 'file_manager', 'action' => 'create_file'),
+		$path
+	);
+?>
 <?php $this->end(); ?>
 
 <div class="breadcrumb">

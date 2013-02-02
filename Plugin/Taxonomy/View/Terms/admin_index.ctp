@@ -10,13 +10,12 @@ $this->Html
 ?>
 
 <?php $this->start('actions'); ?>
-	<li>
-		<?php echo $this->Html->link(
-			__('New Term'),
-			array('action' => 'add', $vocabulary['Vocabulary']['id']),
-			array('button' => 'default')
-		); ?>
-	</li>
+<?php
+	echo $this->Croogo->adminAction(
+		__('New Term'),
+		array('action' => 'add', $vocabulary['Vocabulary']['id'])
+	);
+?>
 <?php $this->end(); ?>
 
 <?php

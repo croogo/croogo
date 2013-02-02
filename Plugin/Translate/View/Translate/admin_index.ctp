@@ -11,19 +11,21 @@ $this->Html
 
 ?>
 <?php $this->start('actions'); ?>
-<li><?php
-echo $this->Html->link(
-	__('Translate in a new language'),
-	array(
-		'plugin' => 'settings',
-		'controller' => 'languages',
-		'action'=>'select',
-		$record[$modelAlias]['id'],
-		$modelAlias
-	),
-	array('button' => 'default')
-);
-?></li>
+<?php
+	echo $this->Croogo->adminAction(
+		__('Translate in a new language'),
+		array(
+			'plugin' => 'settings',
+			'controller' => 'languages',
+			'action'=>'select',
+			$record[$modelAlias]['id'],
+			$modelAlias
+		),
+		array(
+			'button' => false,
+		)
+	);
+?>
 <?php $this->end(); ?>
 
 <?php if (count($translations) > 0): ?>

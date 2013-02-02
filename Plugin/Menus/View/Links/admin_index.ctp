@@ -11,15 +11,12 @@ $this->Html
 ?>
 
 <?php $this->start('actions'); ?>
-<li>
-	<?php
-	echo $this->Html->link(
+<?php
+	echo $this->Croogo->adminAction(
 		__('New %s', Inflector::singularize($this->name)),
-		array('action' => 'add', $menu['Menu']['id']),
-		array('button' => 'default')
+		array('action' => 'add', $menu['Menu']['id'])
 	);
-	?>
-</li>
+?>
 <?php $this->end('actions'); ?>
 
 <?php

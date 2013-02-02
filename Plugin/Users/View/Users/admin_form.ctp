@@ -19,8 +19,9 @@ if ($this->request->params['action'] == 'admin_add') {
 ?>
 <?php $this->start('actions'); ?>
 <?php if ($this->request->params['action'] == 'admin_edit'): ?>
-	<li><?php echo $this->Html->link(__('Reset password'), array('action' => 'reset_password', $this->params['pass']['0']), array(
-	'class' => 'btn')); ?></li>
+<?php
+	echo $this->Croogo->adminAction(__('Reset password'), array('action' => 'reset_password', $this->params['pass']['0']));
+?>
 <?php endif; ?>
 <?php $this->end(); ?>
 

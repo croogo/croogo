@@ -9,14 +9,11 @@ $this->Html
 
 ?>
 <?php echo $this->start('actions') ?>
-<li>
 <?php
-	echo $this->Html->link(__('Upload'),
-		array('action' => 'add'),
-		array('button' => 'default')
+	echo $this->Croogo->adminAction(__('Upload'),
+		array('action' => 'add')
 	);
 ?>
-</li>
 <?php echo $this->end('actions') ?>
 
 <table class="table table-striped">

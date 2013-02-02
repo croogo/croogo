@@ -1,14 +1,12 @@
 <?php $this->extend('/Common/admin_index'); ?>
 
 <?php $this->start('actions'); ?>
-	<li>
-		<?php
-			echo $this->Html->link(
-				__('New Tab'),
-				array('action' => 'add')
-			);
-		?>
-	</li>
+<?php
+	echo $this->Croogo->adminAction(
+		__('New Tab'),
+		array('action' => 'add')
+	);
+?>
 <?php $this->end(); ?>
 
 <p><?php echo __('content here'); ?></p>
