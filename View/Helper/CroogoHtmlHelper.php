@@ -89,7 +89,7 @@ class CroogoHtmlHelper extends HtmlHelper {
 		$options = is_null($options) ? array() : $options;
 		$options = array_merge($defaults, $options);
 
-		if (isset($options['button'])) {
+		if (!empty($options['button'])) {
 			$buttons = array('btn');
 			foreach ((array)$options['button'] as $button) {
 				if ($button == 'default') {
