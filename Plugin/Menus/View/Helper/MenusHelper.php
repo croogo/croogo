@@ -194,10 +194,13 @@ class MenusHelper extends AppHelper {
 /**
  * Converts strings like controller:abc/action:xyz/ to arrays
  *
- * @param string $link link
+ * @param string|array $link link
  * @return array
  */
 	public function linkStringToArray($link) {
+		if (is_array($link)) {
+			$link = key($link);
+		}
 		$link = explode('/', $link);
 		$linkArr = array();
 		foreach ($link as $linkElement) {

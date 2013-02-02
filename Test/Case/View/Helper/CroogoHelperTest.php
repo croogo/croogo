@@ -92,8 +92,57 @@ class CroogoHelperTest extends CroogoTestCase {
 		$expected = array(
 			'a' => array(
 				'href' => '/example/example/index/1',
+				'class',
 			),
 			'Title',
+			'/a',
+		);
+		$this->assertTags($result, $expected);
+
+		// test row actions with options
+		Configure::write('Admin.rowActions.Test/action', array(
+			'Title' => array(
+				'plugin:example/controller:example/action:index/:id' => array(
+					'options' => array(
+						'icon' => 'key',
+						'title' => false,
+					),
+				),
+			)
+		));
+		$result = $this->Croogo->adminRowActions(1);
+		$expected = array(
+			'a' => array(
+				'href' => '/example/example/index/1',
+				'class',
+			),
+			'i' => array(
+				'class',
+			),
+			'/i',
+			' Title',
+			'/a',
+		);
+		$this->assertTags($result, $expected);
+
+		// test row actions with no title + icon
+		Configure::write('Admin.rowActions.Test/action', array(
+			'Title' => array(
+				'plugin:example/controller:example/action:edit/:id' => array(
+					'title' => false,
+					'options' => array(
+						'icon' => 'edit',
+						'title' => false,
+					),
+				),
+			)
+		));
+		$result = $this->Croogo->adminRowActions(1);
+		$expected = array(
+			'a' => array(
+				'href' => '/example/example/edit/1',
+				'class' => 'edit icon-large icon-edit',
+			),
 			'/a',
 		);
 		$this->assertTags($result, $expected);

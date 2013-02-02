@@ -70,6 +70,30 @@ CroogoNav::add('extensions.children.example', array(
  */
 Croogo::hookAdminRowAction('Nodes/admin_index', 'Example', 'plugin:example/controller:example/action:index/:id');
 
+/* Row action with link options */
+Croogo::hookAdminRowAction('Nodes/admin_index', 'Button with Icon', array(
+	'plugin:example/controller:example/action:index/:id' => array(
+		'options' => array(
+			'icon' => 'key',
+			'button' => 'success',
+		),
+	),
+));
+
+/* Row action with icon */
+Croogo::hookAdminRowAction('Nodes/admin_index', 'Icon Only', array(
+	'plugin:example/controller:example/action:index/:id' => array(
+		'title' => false,
+		'options' => array(
+			'icon' => 'picture',
+			'tooltip' => array(
+				'data-title' => 'A nice and simple action with tooltip',
+				'data-placement' => 'left',
+			),
+		),
+	),
+));
+
 /**
  * Admin tab
  *

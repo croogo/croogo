@@ -124,11 +124,19 @@ class CroogoHelper extends AppHelper {
 		$rowActions = Configure::read('Admin.rowActions.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
 		if (is_array($rowActions)) {
 			foreach ($rowActions as $title => $link) {
-				if ($output != '') {
-					$output .= ' ';
+				$linkOptions = $options;
+				if (is_array($link)) {
+					$config = $link[key($link)];
+					if (isset($config['options'])) {
+						$linkOptions = Hash::merge($options, $config['options']);
+					}
+					if (isset($config['title'])) {
+						$title = $config['title'];
+					}
+					$link = key($link);
 				}
 				$link = $this->Menus->linkStringToArray(str_replace(':id', $id, $link));
-				$output .= $this->Html->link($title, $link, $options);
+				$output .= $this->adminRowAction($title, $link, $linkOptions);
 			}
 		}
 		return $output;
@@ -159,7 +167,7 @@ class CroogoHelper extends AppHelper {
 				$options['class'] = $url['action'];
 			}
 		}
-		if (isset($options['icon'])) {
+		if (isset($options['icon']) && empty($title)) {
 			$options['iconInline'] = true;
 		}
 
