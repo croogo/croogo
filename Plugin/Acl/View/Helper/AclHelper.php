@@ -38,7 +38,7 @@ class AclHelper extends Helper {
 		// display upgrade link when required
 		$key = AuthComponent::$sessionKey . '.aclUpgrade';
 		if ($this->_View->Session->read($key)) {
-			$link = $this->_View->Html->link(
+			$link = $this->_View->Croogo->adminAction(
 				__('Upgrade Acl database'),
 				array('controller' => 'acl_permissions', 'action' => 'upgrade'),
 				array('button' => 'primary')

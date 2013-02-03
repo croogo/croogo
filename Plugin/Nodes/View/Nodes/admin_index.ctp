@@ -8,13 +8,12 @@ $this->Html
 
 ?>
 <?php $this->start('actions'); ?>
-	<li>
-		<?php echo $this->Html->link(
-			__('Create content'),
-			array('action'=>'create'),
-			array('button' => 'default')
-		); ?>
-	</li>
+<?php
+	echo $this->Croogo->adminAction(
+		__('Create content'),
+		array('action'=>'create')
+	);
+?>
 <?php $this->end(); ?>
 <?php
 

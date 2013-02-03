@@ -26,9 +26,11 @@ echo $this->Form->create('Node', array('url' => $formUrl));
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#node-main" data-toggle="tab"><?php echo __($type['Type']['title']); ?></a></li>
-			<li><a href="#node-access" data-toggle="tab"><?php echo __('Access'); ?></a></li>
-			<?php echo $this->Croogo->adminTabs(); ?>
+		<?php
+			echo $this->Croogo->adminTab(__($type['Type']['title']), '#node-main');
+			echo $this->Croogo->adminTab(__('Access'), '#node-access');
+			echo $this->Croogo->adminTabs();
+		?>
 		</ul>
 
 		<div class="tab-content">

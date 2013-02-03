@@ -24,8 +24,10 @@ echo $this->Form->create('Setting');
 <div class="row-fluid">
 	<div class="span8">
 		<ul class="nav nav-tabs">
-			<li><a href="#setting-basic" data-toggle="tab"><?php echo __('Settings'); ?></a></li>
-			<li><a href="#setting-misc" data-toggle="tab"><?php echo __('Misc.'); ?></a></li>
+		<?php
+			echo $this->Croogo->adminTab(__('Settings'), '#setting-basic');
+			echo $this->Croogo->adminTab(__('Misc'), '#setting-misc');
+		?>
 		</ul>
 
 		<div class="tab-content">

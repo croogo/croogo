@@ -21,7 +21,9 @@ echo $this->Form->create('Locale', array(
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#locale-upload" data-toggle="tab"><?php echo __('Upload'); ?></a></li>
+		<?php
+			echo $this->Croogo->adminTab(__('Upload'), '#locale-upload');
+		?>
 		</ul>
 
 		<div class="tab-content">

@@ -21,10 +21,12 @@ echo $this->Form->create('Contact');
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#contact-basic" data-toggle="tab"><?php echo __('Contact'); ?></a></li>
-			<li><a href="#contact-details" data-toggle="tab"><?php echo __('Details'); ?></a></li>
-			<li><a href="#contact-message" data-toggle="tab"><?php echo __('Message'); ?></a></li>
-			<?php echo $this->Croogo->adminTabs(); ?>
+		<?php
+			echo $this->Croogo->adminTab(__('Contact'), '#contact-basic');
+			echo $this->Croogo->adminTab(__('Details'), '#contact-details');
+			echo $this->Croogo->adminTab(__('Message'), '#contact-message');
+			echo $this->Croogo->adminTabs();
+		?>
 		</ul>
 
 		<div class="tab-content">

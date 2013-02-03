@@ -36,24 +36,16 @@ echo $this->element('admin/modal', array(
 
 ?>
 <?php $this->start('actions'); ?>
-	<li>
-	<?php
-		echo $this->Html->link(
-			__('Published'),
-			array('action'=>'index', 'status' => '1'),
-			array('button' => 'default')
-		);
-	?>
-	</li>
-	<li>
-	<?php
-		echo $this->Html->link(
-			__('Approval'),
-			array('action'=>'index', 'status' => '0'),
-			array('button' => 'default')
-		);
-	?>
-	</li>
+<?php
+	echo $this->Croogo->adminAction(
+		__('Published'),
+		array('action'=>'index', 'status' => '1')
+	);
+	echo $this->Croogo->adminAction(
+		__('Approval'),
+		array('action'=>'index', 'status' => '0')
+	);
+?>
 <?php $this->end(); ?>
 
 <?php echo $this->Form->create('Comment', array('url' => array('controller' => 'comments', 'action' => 'process'))); ?>

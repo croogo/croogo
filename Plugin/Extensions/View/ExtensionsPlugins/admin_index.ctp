@@ -9,15 +9,12 @@ $this->Html
 
 ?>
 <?php $this->start('actions'); ?>
-<li>
-	<?php
-		echo $this->Html->link(
-			__('Upload'),
-			array('action' => 'add'),
-			array('button' => 'default')
-		);
-	?>
-</li>
+<?php
+	echo $this->Crogoo->adminAction(
+		__('Upload'),
+		array('action' => 'add')
+	);
+?>
 <?php $this->end(); ?>
 
 <table class="table table-striped">

@@ -10,14 +10,11 @@ $this->Html
 <h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
 
 <?php $this->start('actions'); ?>
-<li>
 <?php
-	echo $this->Html->link(__('Upload'),
-		array('action' => 'add'),
-		array('button' => 'default')
+	echo $this->Croogo->adminAction(__('Upload'),
+		array('action' => 'add')
 	);
 ?>
-</li>
 <?php $this->end(); ?>
 
 <div class="row-fluid">

@@ -27,8 +27,10 @@ if ($this->request->params['action'] == 'admin_add') {
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#region-main" data-toggle="tab"><?php echo __('Region'); ?></span></a></li>
-			<?php echo $this->Croogo->adminTabs(); ?>
+		<?php
+			echo $this->Croogo->adminTab(__('Region'), '#region-main');
+			echo $this->Croogo->adminTabs();
+		?>
 		</ul>
 
 		<div class="tab-content">

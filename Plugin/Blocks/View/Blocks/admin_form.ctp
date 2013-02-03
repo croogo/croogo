@@ -20,11 +20,13 @@ echo $this->Form->create('Block');
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#block-basic" data-toggle="tab"><?php echo __('Block'); ?></a></li>
-			<li><a href="#block-access" data-toggle="tab"><?php echo __('Access'); ?></a></li>
-			<li><a href="#block-visibilities" data-toggle="tab"><?php echo __('Visibilities'); ?></span></a></li>
-			<li><a href="#block-params" data-toggle="tab"><?php echo __('Params'); ?></a></li>
-			<?php echo $this->Croogo->adminTabs(); ?>
+		<?php
+			echo $this->Croogo->adminTab(__('Block'), '#block-basic');
+			echo $this->Croogo->adminTab(__('Access'), '#block-access');
+			echo $this->Croogo->adminTab(__('Visibilities'), '#block-visibilities');
+			echo $this->Croogo->adminTab(__('Params'), '#block-params');
+			echo $this->Croogo->adminTabs();
+		?>
 		</ul>
 
 		<div class="tab-content">

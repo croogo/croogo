@@ -28,8 +28,10 @@ $primaryTab = strtolower(Inflector::slug($singularHumanName, '-'));
 <div class="<?php echo $pluralVar; ?> row-fluid">
 	<div class="span8">
 		<ul class="nav nav-tabs">
-			<li><a href="#<?php echo $primaryTab; ?>" data-toggle="tab"><?php echo "<?php echo __('$singularHumanName'); ?>"; ?></a></li>
-			<?php echo "<?php echo \$this->Croogo->adminTabs(); ?>\n"; ?>
+		<?php echo "<?php\n"; ?>
+		<?php echo "\techo \$this->Croogo->adminTab(__('$singularHumanName'), '#$primaryTab');\n"; ?>
+		<?php echo "\techo \$this->Croogo->adminTabs();\n"; ?>
+		<?php echo "?>\n"; ?>
 		</ul>
 
 		<div class="tab-content">

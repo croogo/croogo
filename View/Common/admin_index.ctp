@@ -25,9 +25,9 @@ if (!isset($className)) {
 			<?php else: ?>
 			<li>
 				<?php
-				echo $this->Html->link(__('New %s', Inflector::singularize($this->name)),
-					array('action' => 'add'),
-					array('class' => 'btn')
+				echo $this->Croogo->adminAction(
+					__('New %s', Inflector::singularize($this->name)),
+					array('action' => 'add')
 				);
 				?>
 			</li>

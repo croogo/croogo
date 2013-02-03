@@ -13,30 +13,18 @@ $this->Html
 
 ?>
 <?php $this->start('actions'); ?>
-<li>
 <?php
-	echo $this->Form->postLink(__('Generate Actions'),
+	echo $this->Croogo->adminAction(__('Generate Actions'),
 		array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1),
-		array('button' => 'default')
+		array('method' => 'post')
+	);
+	echo $this->Croogo->adminAction(__('Sync Actions'),
+		array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1, 'sync' => 1)
+	);
+	echo $this->Croogo->adminAction(__('Edit Actions'),
+		array('controller' => 'acl_actions', 'action'=>'index', 'permissions' => 1)
 	);
 ?>
-</li>
-<li>
-<?php
-	echo $this->Form->postLink(__('Sync Actions'),
-		array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1, 'sync' => 1),
-		array('button' => 'default')
-	);
-?>
-</li>
-<li>
-<?php
-	echo $this->Html->link(__('Edit Actions'),
-		array('controller' => 'acl_actions', 'action'=>'index', 'permissions' => 1),
-		array('button' => 'default')
-	);
-?>
-</li>
 <?php $this->end(); ?>
 
 <table class="table permission-table">

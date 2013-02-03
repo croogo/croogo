@@ -15,8 +15,10 @@ echo $this->Form->create('Comment');
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#comment-main" data-toggle="tab"><?php echo __('Comment'); ?></a></li>
-			<?php echo $this->Croogo->adminTabs(); ?>
+		<?php
+			echo $this->Croogo->adminTab(__('Comment'), '#comment-main');
+			echo $this->Croogo->adminTabs();
+		?>
 		</ul>
 
 		<div class="tab-content">

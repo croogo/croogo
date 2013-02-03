@@ -37,10 +37,12 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-			<li><a href="#link-basic" data-toggle="tab"><?php echo __('Link'); ?></a></li>
-			<li><a href="#link-access" data-toggle="tab"><?php echo __('Access'); ?></a></li>
-			<li><a href="#link-misc" data-toggle="tab"><?php echo __('Misc.'); ?></a></li>
-			<?php echo $this->Croogo->adminTabs(); ?>
+		<?php
+			echo $this->Croogo->adminTab(__('Link'), '#link-basic');
+			echo $this->Croogo->adminTab(__('Access'), '#link-access');
+			echo $this->Croogo->adminTab(__('Misc.'), '#link-misc');
+			echo $this->Croogo->adminTabs();
+		?>
 		</ul>
 
 		<div class="tab-content">
