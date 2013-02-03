@@ -12,6 +12,7 @@ if (!empty($searchFields)):
 <?php
 	echo $this->Form->create($modelClass, array(
 		'class' => 'form-inline',
+		'novalidate' => true,
 		'url' => array('action' => 'index')
 	));
 	foreach ($searchFields as $field => $fieldOptions) {
