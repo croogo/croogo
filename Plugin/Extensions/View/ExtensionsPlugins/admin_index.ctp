@@ -10,7 +10,7 @@ $this->Html
 ?>
 <?php $this->start('actions'); ?>
 <?php
-	echo $this->Crogoo->adminAction(
+	echo $this->Croogo->adminAction(
 		__('Upload'),
 		array('action' => 'add')
 	);
