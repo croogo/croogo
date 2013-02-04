@@ -36,7 +36,7 @@ $this->Html
 
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'activate', $locale),
-			array('icon' => 'bolt', 'tooltip' => __('Activate'))
+			array('icon' => 'bolt', 'tooltip' => __('Activate'), 'method' => 'post')
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'edit', $locale),
