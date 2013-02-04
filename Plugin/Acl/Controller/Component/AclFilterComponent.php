@@ -152,6 +152,9 @@ class AclFilterComponent extends Component {
 		$authorized = $allowedActions = array();
 		foreach ($permissions as $permission) {
 			$path = $Acl->Aco->getPath($permission['Permission']['aco_id']);
+			if (empty($path)) {
+				continue;
+			}
 			if (count($path) == 4) {
 				// plugin controller/action
 				$controller = $path[2]['Aco']['alias'];
