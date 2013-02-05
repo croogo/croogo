@@ -44,15 +44,15 @@ css: deps
 	@[ "$$?" -eq 0 ] && echo "bootstrap branch/tag: ${BOOTSTRAP_TAG} ${CHECK}"
 	@echo "${HR}"
 	@echo "Compiling..."
-	@${COMPILE} ${CROOGO_LESS} > ${CSS_DIR}/${CROOGO_CSS}
+	@${COMPILE} ${CROOGO_LESS} > "${CSS_DIR}"/"${CROOGO_CSS}"
 	@echo "File: ${CSS_DIR}/${CROOGO_CSS} ${CHECK}"
-	@${COMPILE} ${CROOGO_RESPONSIVE_LESS} > ${CSS_DIR}/${CROOGO_RESPONSIVE_CSS}
+	@${COMPILE} ${CROOGO_RESPONSIVE_LESS} > "${CSS_DIR}"/"${CROOGO_RESPONSIVE_CSS}"
 	@echo "File: ${CSS_DIR}/${CROOGO_RESPONSIVE_CSS} ${CHECK}"
 
 js: webroot/bootstrap
 	@( \
 	cd webroot/bootstrap ; \
-	cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > ${JS_DIR}/${BOOTSTRAP_JS} \
+	cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > "${JS_DIR}"/"${BOOTSTRAP_JS}" \
 	)
 	@echo "File: ${JS_DIR}/${BOOTSTRAP_JS} ${CHECK}"
 
@@ -60,7 +60,7 @@ assets:
 	@echo "${HR}"
 	@echo "Copying..."
 	@if [ ! -d ${FONT_DIR} ] ; then \
-		mkdir ${FONT_DIR}; \
+		mkdir "${FONT_DIR}"; \
 	fi
 	@for file in webroot/fontAwesome/font/* ; do \
 		cp $${file} webroot/font/ ; \
@@ -68,9 +68,9 @@ assets:
 	done
 
 clean:
-	@rm -f ${CSS_DIR}/${CROOGO_CSS} ${CSS_DIR}/${CROOGO_RESPONSIVE_CSS}
-	@rm -f ${JS_DIR}/${BOOTSTRAP_JS}
-	@rm -rf ${FONT_DIR}
+	@rm -f "${CSS_DIR}"/"${CROOGO_CSS}" "${CSS_DIR}"/"${CROOGO_RESPONSIVE_CSS}"
+	@rm -f "${JS_DIR}"/"${BOOTSTRAP_JS}"
+	@rm -rf "${FONT_DIR}"
 	@echo "Generated files deleted: ${CHECK}"
 
 .PHONY: bootstrap
