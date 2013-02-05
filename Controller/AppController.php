@@ -114,9 +114,15 @@ class AppController extends Controller {
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
 		if (isset($this->request->params['admin'])) {
 			$this->helpers[] = 'Croogo';
-			$this->helpers['Html'] = array('className' => 'CroogoHtml');
-			$this->helpers['Form'] = array('className' => 'CroogoForm');
-			$this->helpers['Paginator'] = array('className' => 'CroogoPaginator');
+			if (empty($this->helpers['Html'])) {
+				$this->helpers['Html'] = array('className' => 'CroogoHtml');
+			}
+			if (empty($this->helpers['Form'])) {
+				$this->helpers['Form'] = array('className' => 'CroogoForm');
+			}
+			if (empty($this->helpers['Paginator'])) {
+				$this->helpers['Paginator'] = array('className' => 'CroogoPaginator');
+			}
 		}
 	}
 
