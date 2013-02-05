@@ -101,9 +101,10 @@ class LayoutHelper extends AppHelper {
 		list($helper, $method) = $mapped;
 		list($plugin, $helper) = pluginSplit($helper, true);
 		if (!$this->{$helper}) {
-			$class = $helper . 'Helper';
-			App::uses($class, $plugin . '.View/Helper');
-			$this->{$helper} = new $class($this->_View);
+			if (!$this->_View->Helpers->loaded($helper)) {
+				$this->_View->Helpers->load($helper);
+			}
+			$this->{$helper} = $this->_View->{$helper};
 		}
 		return call_user_func_array(array($this->{$helper}, $method), $params);
 	}
