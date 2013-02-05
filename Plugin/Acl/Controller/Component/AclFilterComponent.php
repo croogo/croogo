@@ -155,14 +155,21 @@ class AclFilterComponent extends Component {
 			if (empty($path)) {
 				continue;
 			}
-			if (count($path) == 4) {
+			$acos = count($path);
+			if ($acos == 4) {
 				// plugin controller/action
 				$controller = $path[2]['Aco']['alias'];
 				$action = $path[3]['Aco']['alias'];
-			} else {
+			} else if ($acos == 3) {
 				// app controller/action
 				$controller = $path[1]['Aco']['alias'];
 				$action = $path[2]['Aco']['alias'];
+			} else {
+				$this->log(sprintf(
+					'Incomplete path for aco_id = %s:',
+					$permission['Permission']['id']
+				));
+				$this->log($path);
 			}
 			$allowedActions[$controller][] = $action;
 			$authorized[] = implode('/', Hash::extract($path, '{n}.Aco.alias'));
