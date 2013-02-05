@@ -31,14 +31,6 @@ class LayoutHelper extends AppHelper {
 	);
 
 /**
- * Current Node
- *
- * @var array
- * @access public
- */
-	public $node = null;
-
-/**
  * Core helpers
  *
  * Extra supported callbacks, like beforeNodeInfo() and afterNodeInfo(),
@@ -114,6 +106,34 @@ class LayoutHelper extends AppHelper {
 			$this->{$helper} = new $class($this->_View);
 		}
 		return call_user_func_array(array($this->{$helper}, $method), $params);
+	}
+
+/**
+ * Provides backward compatibility for deprecated properties
+ */
+	public function __get($name) {
+		switch ($name) {
+			case 'node':
+				return $this->_View->Nodes->node;
+			break;
+			default:
+				return parent::__get($name);
+			break;
+		}
+	}
+
+/**
+ * Provides backward compatibility for deprecated properties
+ */
+	public function __set($name, $val) {
+		switch ($name) {
+			case 'node':
+				return $this->_View->Nodes->node = $val;
+			break;
+			default:
+				return parent::__set($name, $val);
+			break;
+		}
 	}
 
 /**
