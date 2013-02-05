@@ -95,6 +95,9 @@ class SettingsShell extends AppShell {
 						),
 					),
 				)
+			))
+			->addSubcommand('update_version_info', array(
+				'help' => __('Update version string from git tag information'),
 			));
 	}
 
@@ -194,6 +197,29 @@ class SettingsShell extends AppShell {
 			}
 		} else {
 			$this->warn(__('Key: %s not found', $key));
+		}
+	}
+
+/**
+ * Update Croogo.version in settings.json
+ */
+	public function update_version_info() {
+		$gitDir = APP . '.git';
+		if (!file_exists($gitDir)) {
+			$this->err('Git repository not found');
+			return false;
+		}
+
+		$git = trim(shell_exec('which git'));
+		if (empty($git)) {
+			$this->err('Git executable not found');
+			return false;
+		}
+
+		chdir($gitDir);
+		$version = trim(shell_exec('git describe --tags'));
+		if ($version) {
+			$this->runCommand('write', array('write', 'Croogo.version', $version));
 		}
 	}
 
