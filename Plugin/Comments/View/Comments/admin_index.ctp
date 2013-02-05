@@ -1,5 +1,9 @@
 <?php
 
+if (!$this->request->is('ajax') && isset($this->request->params['admin'])):
+	$this->Html->script('Comments.admin', array('inline' => false));
+endif;
+
 $this->extend('/Common/admin_index');
 
 $this->Html
@@ -16,18 +20,6 @@ if (isset($criteria['Comment.status'])) {
 		$this->viewVars['title_for_layout'] = __('Comments: Approval');
 	}
 }
-
-$script =<<<EOF
-$(".comment-view").on("click", function() {
-	var el= \$(this)
-	var modal = \$('#comment-modal');
-	$('#comment-modal')
-	.find('.modal-header h3').html(el.data("title")).end()
-	.find('.modal-body').html('<pre>' + el.data('content') + '</pre>').end()
-	.modal('toggle');
-});
-EOF;
-$this->Js->buffer($script);
 
 echo $this->element('admin/modal', array(
 	'id' => 'comment-modal',
@@ -114,22 +106,22 @@ echo $this->element('admin/modal', array(
 ?>
 
 </table>
-	<div class="row-fluid">
-		<div id="bulk-action" class="control-group">
-			<?php
-				echo $this->Form->input('Comment.action', array(
-					'label' => false,
-					'div' => 'input inline',
-					'options' => array(
-						'publish' => __('Publish'),
-						'unpublish' => __('Unpublish'),
-						'delete' => __('Delete'),
-					),
-					'empty' => true,
-				));
-			?>
-			<div class="controls">
-			<?php echo $this->Form->end(__('Submit')); ?>
-			</div>
+<div class="row-fluid">
+	<div id="bulk-action" class="control-group">
+		<?php
+			echo $this->Form->input('Comment.action', array(
+				'label' => false,
+				'div' => 'input inline',
+				'options' => array(
+					'publish' => __('Publish'),
+					'unpublish' => __('Unpublish'),
+					'delete' => __('Delete'),
+				),
+				'empty' => true,
+			));
+		?>
+		<div class="controls">
+		<?php echo $this->Form->end(__('Submit')); ?>
+		</div>
 	</div>
 </div>
