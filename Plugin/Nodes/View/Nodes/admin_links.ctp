@@ -17,9 +17,9 @@ $(function() {
 	<div class="span12">
 	<?php
 		echo __('Sort by:');
-		echo ' ' . $this->Paginator->sort('id');
-		echo ', ' . $this->Paginator->sort('title');
-		echo ', ' . $this->Paginator->sort('created');
+		echo ' ' . $this->Paginator->sort('id', __('Id'), array('class' => 'sort'));
+		echo ', ' . $this->Paginator->sort('title', __('Title'), array('class' => 'sort'));
+		echo ', ' . $this->Paginator->sort('created', __('Created'), array('class' => 'sort'));
 	?>
 	</div>
 </div>
