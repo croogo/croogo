@@ -63,10 +63,14 @@
 </div>
 <?php
 
+$targetField = isset($this->request->query['targetField']) ?
+	$this->request->query['targetField'] :
+	'LinkLink';
+
 $script =<<<EOF
 $('.popovers').popover().on('click', function() { return false; });;
 $('#nodes-for-links a[rel]').click(function() {
-	parent.$('#LinkLink').val($(this).attr('rel'));
+	parent.$('#{$targetField}').val($(this).attr('rel'));
 	parent.tb_remove();
 	return false;
 });
