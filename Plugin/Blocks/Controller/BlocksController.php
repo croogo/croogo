@@ -42,7 +42,7 @@ class BlocksController extends BlocksAppController {
  */
 	public $presetVars = array(
 		'title' => array('type' => 'value'),
-		'region_id' => array('type' => 'lookup', 'formField' => 'region_input', 'modelField' => 'title', 'model' => 'Region')
+		'region_id' => array('type' => 'value')
 	);
 
 /**
