@@ -25,6 +25,9 @@ $(function() {
 </div>
 
 <div class="row-fluid">
+	<?php
+		echo $this->element('Nodes.admin/nodes_filter', array('url' => $this->here));
+	?>
 
 	<hr />
 

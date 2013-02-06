@@ -117,6 +117,21 @@ class NodesControllerTest extends CroogoControllerTestCase {
 	}
 
 /**
+ * testAdminIndex - from popups
+ *
+ * @return void
+ */
+	public function testAdminLinks() {
+		$this->testAction('/admin/nodes/nodes/index/links:1/filter:about');
+		$this->assertEquals('admin_popup', $this->controller->View->layout);
+		$this->assertNotEmpty($this->vars['nodes']);
+		$this->assertNotEmpty($this->vars['nodes'][0]['Node']);
+		$this->assertEquals('about', $this->vars['nodes'][0]['Node']['slug']);
+		$this->assertNotEmpty($this->vars['nodes'][0]['User']);
+		$this->assertArrayHasKey('CustomFields', $this->vars['nodes'][0]);
+	}
+
+/**
  * testAdminAdd
  *
  * @return void
