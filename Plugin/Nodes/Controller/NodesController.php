@@ -122,7 +122,7 @@ class NodesController extends NodesAppController {
 		$this->set(compact('nodes', 'types', 'typeAliases', 'nodeTypes'));
 
 		if (isset($this->request->params['named']['links'])) {
-			$this->layout = 'ajax';
+			$this->layout = 'admin_popup';
 			$this->render('admin_links');
 		}
 	}
