@@ -1,18 +1,3 @@
-<?php
-
-echo $this->Html->css('admin');
-echo $this->Html->script('jquery/jquery.min');
-
-?>
-<script>
-$(function() {
-	$('#nodes-for-links a').click(function() {
-		parent.$('#LinkLink').val($(this).attr('rel'));
-		parent.tb_remove();
-		return false;
-	});
-});
-</script>
 <div class="row-fluid">
 	<div class="span12">
 	<?php
@@ -52,9 +37,38 @@ $(function() {
 					$node['Node']['slug']
 					),
 			));
+
+			$popup = array();
+			$type = __($nodeTypes[$node['Node']['type']]);
+			$popup[] = array(__('Promoted'), $this->Layout->status($node['Node']['promote'])
+			);
+			$popup[] = array(__('Status'), $this->Layout->status($node['Node']['status']));
+			$popup[] = array(__('Created'), $this->Time->niceShort($node['Node']['created']));
+			$popup = $this->Html->tag('table', $this->Html->tableCells($popup));
+			$a = $this->Html->link('', '#', array(
+				'class' => 'popovers action',
+				'icon' => 'info-sign',
+				'data-title' => $type,
+				'data-trigger' => 'click',
+				'data-placement' => 'right',
+				'data-html' => true,
+				'data-content' => h($popup),
+			));
+			echo $a;
 		?>
 		</li>
 	<?php } ?>
 	</ul>
 	<div class="pagination"><ul><?php echo $this->Paginator->numbers(); ?></ul></div>
 </div>
+<?php
+
+$script =<<<EOF
+$('.popovers').popover().on('click', function() { return false; });;
+$('#nodes-for-links a[rel]').click(function() {
+	parent.$('#LinkLink').val($(this).attr('rel'));
+	parent.tb_remove();
+	return false;
+});
+EOF;
+$this->Js->buffer($script);
