@@ -8,3 +8,17 @@
 	background-repeat: none;
 	filter: none;
 }
+
+
+.sortDirections() {
+	&.asc {
+		&:after {
+		content: "\21e3";
+		}
+	}
+	&.desc {
+		&:after {
+			content: "\21e1";
+		}
+	}
+}

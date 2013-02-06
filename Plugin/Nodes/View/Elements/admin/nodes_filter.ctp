@@ -1,12 +1,17 @@
+<?php
+if (!isset($url)) {
+	$url = array_merge(
+		array('action' => 'index'), $this->request->params['pass']
+	);
+}
+?>
 <div class="row-fluid">
 	<div class="span12">
-		<div class="row-fluid filter">
+		<div class="clearfix filter">
 			<?php
 			echo $this->Form->create('Node', array(
 				'class' => 'inline',
-				'url' => array_merge(
-					array('action' => 'index'), $this->params['pass']
-				)
+				'url' => $url,
 			));
 
 			echo $this->Form->input('filter', array(
