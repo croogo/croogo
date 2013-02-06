@@ -23,7 +23,7 @@ class CroogoFormHelperTest extends CroogoTestCase{
 		$expected = array(
 			'div' => array(
 				'class',
-				),
+			),
 			'label' => array('for' => 'username'),
 			'Username',
 			'/label',
@@ -34,7 +34,7 @@ class CroogoFormHelperTest extends CroogoTestCase{
 				'data-title' => 'Username',
 				'type' => 'text',
 				'id',
-				),
+			),
 			'/div',
 		);
 		$this->assertTags($result, $expected);
@@ -49,7 +49,7 @@ class CroogoFormHelperTest extends CroogoTestCase{
 		$expected = array(
 			'div' => array(
 				'class',
-				),
+			),
 			'label' => array('for' => 'username'),
 			'Username',
 			'/label',
@@ -60,7 +60,7 @@ class CroogoFormHelperTest extends CroogoTestCase{
 				'data-title' => 'Username',
 				'type' => 'text',
 				'id',
-				),
+			),
 			'/div',
 		);
 		$this->assertTags($result, $expected);
@@ -80,13 +80,13 @@ class CroogoFormHelperTest extends CroogoTestCase{
 				'data-placement' => 'left',
 				'data-trigger' => 'click',
 				'data-title' => 'Username',
-				),
+			),
 			'input' => array(
 				'type' => 'checkbox',
 				'name',
 				'value',
 				'id',
-				),
+			),
 			'label' => array('for' => 'username'),
 			'Username',
 			'/label',
@@ -174,6 +174,102 @@ class CroogoFormHelperTest extends CroogoTestCase{
 					'type' => 'submit',
 					'value' => 'Send'
 				)
+			),
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+	}
+
+	public function testInputPlaceholders() {
+		$result = $this->CroogoForm->input('username', array(
+			'placeholder' => true,
+		));
+		$expected = array(
+			'div' => array(
+				'class',
+			),
+			'label' => array('for' => 'username'),
+			'Username',
+			'/label',
+			'input' => array(
+				'name',
+				'placeholder' => 'Username',
+				'data-placement' => 'right',
+				'data-trigger' => 'focus',
+				'data-title' => 'Username',
+				'type' => 'text',
+				'id',
+			),
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+
+		$result = $this->CroogoForm->input('username', array(
+			'placeholder' => 'User/Email',
+		));
+		$expected = array(
+			'div' => array(
+				'class',
+			),
+			'label' => array('for' => 'username'),
+			'Username',
+			'/label',
+			'input' => array(
+				'name',
+				'placeholder' => 'User/Email',
+				'data-placement' => 'right',
+				'data-trigger' => 'focus',
+				'data-title' => 'User/Email',
+				'type' => 'text',
+				'id',
+			),
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+
+		$tip = 'Enter your username or email address';
+		$result = $this->CroogoForm->input('username', array(
+			'placeholder' => 'User/Email',
+			'tooltip' => $tip,
+		));
+		$expected = array(
+			'div' => array(
+				'class',
+			),
+			'label' => array('for' => 'username'),
+			'Username',
+			'/label',
+			'input' => array(
+				'name',
+				'placeholder' => 'User/Email',
+				'data-placement' => 'right',
+				'data-trigger' => 'focus',
+				'data-title' => $tip,
+				'type' => 'text',
+				'id',
+			),
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+
+		$result = $this->CroogoForm->input('username', array(
+			'placeholder' => false,
+			'tooltip' => $tip,
+		));
+		$expected = array(
+			'div' => array(
+				'class',
+			),
+			'label' => array('for' => 'username'),
+			'Username',
+			'/label',
+			'input' => array(
+				'name',
+				'data-placement' => 'right',
+				'data-trigger' => 'focus',
+				'data-title' => $tip,
+				'type' => 'text',
+				'id',
 			),
 			'/div',
 		);

@@ -66,7 +66,33 @@ class CroogoFormHelper extends FormHelper {
 		return $options;
 	}
 
+/**
+ * placeholderOptions
+ */
+	protected function _placeholderOptions($fieldName, $options = array()) {
+		$autoPlaceholder = empty($options['placeholder']) &&
+			isset($this->_inputDefaults['placeholder']) &&
+			$this->_inputDefaults['placeholder'] === true;
+		$autoPlaceholder = $autoPlaceholder ||
+			(isset($options['placeholder']) && $options['placeholder'] === true);
+		if ($autoPlaceholder) {
+			if (!empty($options['title'])) {
+				$options['placeholder'] = $options['title'];
+			} else {
+				if (strpos($fieldName, '.') !== false) {
+					list(, $placeholder) = explode('.', $fieldName);
+				} else {
+					$placeholder = $fieldName;
+				}
+				$options['placeholder'] = Inflector::humanize($placeholder);
+			}
+		}
+		return $options;
+	}
+
 	public function input($fieldName, $options = array()) {
+		$options = $this->_placeholderOptions($fieldName, $options);
+
 		if (empty($options['title']) && empty($options['label']) && !empty($options['placeholder']) && empty($options['tooltip'])) {
 			$options['tooltip'] = $options['placeholder'];
 		}
