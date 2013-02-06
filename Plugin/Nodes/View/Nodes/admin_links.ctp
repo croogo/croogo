@@ -13,21 +13,18 @@ $(function() {
 	});
 });
 </script>
-<div class="nodes">
-	<div>
-		<?php
-			if (isset($this->params['named'])) {
-				foreach ($this->params['named'] as $nn => $nv) {
-					$this->Paginator->options['url'][] = $nn . ':' . $nv;
-				}
-			}
-
-			echo __('Sort by:');
-			echo ' ' . $this->Paginator->sort('id');
-			echo ', ' . $this->Paginator->sort('title');
-			echo ', ' . $this->Paginator->sort('created');
-		?>
+<div class="row-fluid">
+	<div class="span12">
+	<?php
+		echo __('Sort by:');
+		echo ' ' . $this->Paginator->sort('id');
+		echo ', ' . $this->Paginator->sort('title');
+		echo ', ' . $this->Paginator->sort('created');
+	?>
 	</div>
+</div>
+
+<div class="row-fluid">
 
 	<hr />
 
@@ -56,5 +53,5 @@ $(function() {
 		</li>
 	<?php } ?>
 	</ul>
-	<div class="paging"><?php echo $this->Paginator->numbers(); ?></div>
+	<div class="pagination"><ul><?php echo $this->Paginator->numbers(); ?></ul></div>
 </div>
