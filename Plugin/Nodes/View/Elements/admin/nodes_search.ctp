@@ -15,6 +15,11 @@ $url = isset($url) ? $url : array('action' => 'index');
 				'class' => 'span11',
 			));
 
+			echo $this->Form->input('chooser', array(
+				'type' => 'hidden',
+				'value' => isset($this->request->query['chooser']),
+			));
+
 			echo $this->Form->input('filter', array(
 				'title' => __('Search'),
 				'placeholder' => __('Search...'),
