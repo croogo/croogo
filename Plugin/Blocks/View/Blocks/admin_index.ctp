@@ -11,6 +11,8 @@ echo $this->Form->create('Block',
 	array('class' => 'form-inline')
 );
 
+$chooser = isset($this->request->query['chooser']);
+
 ?>
 <table class="table table-striped">
 <?php
@@ -51,10 +53,24 @@ echo $this->Form->create('Block',
 			__('Are you sure?')
 		);
 
+		if ($chooser) {
+			$checkbox = null;
+			$actions = array(
+				$this->Croogo->adminRowAction(__('Choose'), '#', array(
+					'class' => 'item-choose',
+					'data-chooser_type' => 'Block',
+					'data-chooser_id' => $block['Block']['id'],
+					'data-chooser_title' => $block['Block']['title'],
+				)),
+			);
+		} else {
+			$checkbox = $this->Form->checkbox('Block.' . $block['Block']['id'] . '.id');
+		}
+
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
 		$rows[] = array(
-			$this->Form->checkbox('Block.' . $block['Block']['id'] . '.id'),
+			$checkbox,
 			$block['Block']['id'],
 			$this->Html->link($block['Block']['title'], array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id'])),
 			$block['Block']['alias'],
@@ -70,6 +86,8 @@ echo $this->Form->create('Block',
 	echo $this->Html->tableCells($rows);
 ?>
 </table>
+
+<?php if (!$chooser): ?>
 <div class="row-fluid">
 	<div id="bulk-action" class="control-group">
 		<?php
@@ -89,3 +107,4 @@ echo $this->Form->create('Block',
 		</div>
 	</div>
 </div>
+<?php endif; ?>
