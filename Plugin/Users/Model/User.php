@@ -31,7 +31,7 @@ class User extends UsersAppModel {
  * @var string
  * @access public
  */
-	public $order = 'name ASC';
+	public $order = 'User.name ASC';
 
 /**
  * Behaviors used by the Model
