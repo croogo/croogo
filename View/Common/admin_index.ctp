@@ -17,10 +17,12 @@ if (!isset($className)) {
 	<?php endif; ?>
 </h2>
 
+<?php $actionsBlock = $this->fetch('actions'); ?>
+<?php if (!empty($actionsBlock)): ?>
 <div class="row-fluid">
 	<div class="span12 actions">
 		<ul class="nav-buttons">
-			<?php if ($actionsBlock = $this->fetch('actions')): ?>
+			<?php if ($actionsBlock): ?>
 				<?php echo $actionsBlock; ?>
 			<?php else: ?>
 			<li>
@@ -35,6 +37,7 @@ if (!isset($className)) {
 		</ul>
 	</div>
 </div>
+<?php endif; ?>
 
 <div class="row-fluid">
 	<div class="span12">
