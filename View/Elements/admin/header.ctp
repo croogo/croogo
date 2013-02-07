@@ -2,9 +2,24 @@
 	<div class="container_16">
 		<div class="grid_8 header-left">
 		<?php
-			echo $this->Html->link(__('Dashboard'), '/admin');
+			echo $this->Html->link(__('Dashboard'),
+                                array(
+                                    'admin' => true,
+                                    'controller' => 'settings',
+                                    'action' => 'dashboard',   
+                                )
+                        );
 			echo ' <span>|</span> ';
-			echo $this->Html->link(__('Visit website'), '/');
+			echo $this->Html->link(__('Visit website'),
+                                array(
+                                    'admin' => false,
+                                    'controller' => 'nodes',
+                                    'action' => 'promoted'
+                                ),
+                                array(
+                                    'target' => '_blank'
+                                )
+                        );
 		?>
 		</div>
 
