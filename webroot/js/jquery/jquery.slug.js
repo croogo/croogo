@@ -12,7 +12,7 @@ jQuery.fn.slug = function(options) {
 		jQuery.extend(settings, options);
 	}
 
-	$this = $(this);
+	var $this = $(this);
 
 	$(document).ready( function() {
 		if (settings.hide) {
