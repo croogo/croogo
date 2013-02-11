@@ -1,7 +1,7 @@
 <?php
 if (!isset($url)) {
 	$url = array_merge(
-		array('action' => 'index'), $this->request->params['pass']
+		array('action' => 'index'), $this->passedArgs + array('?' => $this->request->query)
 	);
 }
 ?>
