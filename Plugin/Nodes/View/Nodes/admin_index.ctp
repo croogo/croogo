@@ -17,7 +17,7 @@ $this->Html
 <?php $this->end(); ?>
 <?php
 
-echo $this->element('admin/nodes_filter');
+echo $this->element('admin/nodes_search');
 
 echo $this->Form->create(
 	'Node',
