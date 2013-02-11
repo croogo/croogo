@@ -33,7 +33,14 @@ class NodesController extends NodesAppController {
  */
 	public $components = array(
 		'Recaptcha',
-		'Search.Prg',
+		'Search.Prg' => array(
+			'presetForm' => array(
+				'paramType' => 'querystring',
+			),
+			'commonProcess' => array(
+				'paramType' => 'querystring',
+			),
+		),
 	);
 
 /**

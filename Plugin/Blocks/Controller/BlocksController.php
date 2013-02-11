@@ -31,7 +31,14 @@ class BlocksController extends BlocksAppController {
  * @access public
  */
 	public $components = array(
-		'Search.Prg',
+		'Search.Prg' => array(
+			'presetForm' => array(
+				'paramType' => 'querystring',
+			),
+			'commonProcess' => array(
+				'paramType' => 'querystring',
+			),
+		),
 	);
 
 /**

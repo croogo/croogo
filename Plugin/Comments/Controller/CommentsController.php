@@ -34,7 +34,14 @@ class CommentsController extends CommentsAppController {
 		'Akismet',
 		'Email',
 		'Recaptcha',
-		'Search.Prg',
+		'Search.Prg' => array(
+			'presetForm' => array(
+				'paramType' => 'querystring',
+			),
+			'commonProcess' => array(
+				'paramType' => 'querystring',
+			),
+		),
 	);
 
 /**
