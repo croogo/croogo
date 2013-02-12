@@ -45,6 +45,7 @@ class MessagesController extends ContactsAppController {
 			),
 			'commonProcess' => array(
 				'paramType' => 'querystring',
+				'filterEmpty' => true,
 			),
 		),
 	);

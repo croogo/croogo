@@ -39,6 +39,7 @@ class NodesController extends NodesAppController {
 			),
 			'commonProcess' => array(
 				'paramType' => 'querystring',
+				'filterEmpty' => true,
 			),
 		),
 	);

@@ -40,6 +40,7 @@ class CommentsController extends CommentsAppController {
 			),
 			'commonProcess' => array(
 				'paramType' => 'querystring',
+				'filterEmpty' => true,
 			),
 		),
 	);

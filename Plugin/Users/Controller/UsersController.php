@@ -38,6 +38,7 @@ class UsersController extends UsersAppController {
 			),
 			'commonProcess' => array(
 				'paramType' => 'querystring',
+				'filterEmpty' => true,
 			),
 		),
 	);

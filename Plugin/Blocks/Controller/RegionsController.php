@@ -37,6 +37,7 @@ class RegionsController extends BlocksAppController {
 			),
 			'commonProcess' => array(
 				'paramType' => 'querystring',
+				'filterEmpty' => true,
 			),
 		),
 	);
