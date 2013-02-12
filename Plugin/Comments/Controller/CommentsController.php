@@ -56,9 +56,7 @@ class CommentsController extends CommentsAppController {
  * Preset Variable Search
  * @var array
  */
-	public $presetVars = array(
-		'status' => array('type' => 'value'),
-	);
+	public $presetVars = true;
 
 /**
  * beforeFilter

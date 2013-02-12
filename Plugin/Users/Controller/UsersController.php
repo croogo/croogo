@@ -48,10 +48,7 @@ class UsersController extends UsersAppController {
  * @var array
  * @access public
  */
-	public $presetVars = array(
-		'name' => array('type' => 'value'),
-		'role_id' => array('type' => 'lookup', 'formField' => 'role_input', 'modelField' => 'title', 'model' => 'Role')
-	);
+	public $presetVars = true;
 
 /**
  * Models used by the Controller

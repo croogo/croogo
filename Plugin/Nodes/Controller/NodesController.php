@@ -49,12 +49,7 @@ class NodesController extends NodesAppController {
  * @var array
  * @access public
  */
-	public $presetVars = array(
-		'filter' => array('type' => 'value'),
-		'type' => array('type' => 'value'),
-		'status' => array('type' => 'value'),
-		'promote' => array('type' => 'value'),
-	);
+	public $presetVars = true;
 
 /**
  * Models used by the Controller

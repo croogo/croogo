@@ -47,9 +47,7 @@ class RegionsController extends BlocksAppController {
  * @var array
  * @access public
  */
-	public $presetVars = array(
-		'title' => array('type' => 'value'),
-	);
+	public $presetVars = true;
 
 /**
  * Models used by the Controller
