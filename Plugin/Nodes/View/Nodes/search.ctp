@@ -4,10 +4,6 @@
 	<?php
 		if (count($nodes) == 0) {
 			echo __('No items found.');
-		} else {
-			foreach ($this->params['named'] as $nn => $nv) {
-				$this->Paginator->options['url'][$nn] = $nv;
-			}
 		}
 	?>
 
