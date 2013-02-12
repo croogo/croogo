@@ -1,7 +1,7 @@
 <div class="nodes">
 	<?php
 		if (count($nodes) == 0) {
-			__('No items found.');
+			echo __('No items found.');
 		}
 	?>
 
