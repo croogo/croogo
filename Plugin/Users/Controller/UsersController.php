@@ -38,6 +38,7 @@ class UsersController extends UsersAppController {
 			),
 			'commonProcess' => array(
 				'paramType' => 'querystring',
+				'filterEmpty' => true,
 			),
 		),
 	);
@@ -48,10 +49,7 @@ class UsersController extends UsersAppController {
  * @var array
  * @access public
  */
-	public $presetVars = array(
-		'name' => array('type' => 'value'),
-		'role_id' => array('type' => 'lookup', 'formField' => 'role_input', 'modelField' => 'title', 'model' => 'Role')
-	);
+	public $presetVars = true;
 
 /**
  * Models used by the Controller
@@ -115,7 +113,7 @@ class UsersController extends UsersAppController {
 		$searchFields = array('role_id', 'name');
 
 		$this->User->recursive = 0;
-		$this->paginate['conditions'] = $this->User->parseCriteria($this->passedArgs);
+		$this->paginate['conditions'] = $this->User->parseCriteria($this->request->query);
 
 		$this->set('users', $this->paginate());
 		$this->set('roles', $this->User->Role->find('list'));

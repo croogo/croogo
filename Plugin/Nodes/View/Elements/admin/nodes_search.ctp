@@ -1,9 +1,5 @@
 <?php
-if (!isset($url)) {
-	$url = array_merge(
-		array('action' => 'index'), $this->passedArgs + array('?' => $this->request->query)
-	);
-}
+$url = isset($url) ? $url : array('action' => 'index');
 ?>
 <div class="row-fluid">
 	<div class="span12">

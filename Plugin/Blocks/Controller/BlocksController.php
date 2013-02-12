@@ -37,6 +37,7 @@ class BlocksController extends BlocksAppController {
 			),
 			'commonProcess' => array(
 				'paramType' => 'querystring',
+				'filterEmpty' => true,
 			),
 		),
 	);
@@ -47,10 +48,7 @@ class BlocksController extends BlocksAppController {
  * @var array
  * @access public
  */
-	public $presetVars = array(
-		'title' => array('type' => 'value'),
-		'region_id' => array('type' => 'value')
-	);
+	public $presetVars = true;
 
 /**
  * Models used by the Controller
@@ -106,7 +104,7 @@ class BlocksController extends BlocksAppController {
 		$this->Block->recursive = 0;
 		$this->paginate['Block']['order'] = array('Block.weight' => 'ASC');
 
-		$this->set('blocks', $this->paginate($this->Block->parseCriteria($this->passedArgs)));
+		$this->set('blocks', $this->paginate($this->Block->parseCriteria($this->request->query)));
 		$this->set('regions', $this->Block->Region->find('list'));
 		$this->set('searchFields', $searchFields);
 	}

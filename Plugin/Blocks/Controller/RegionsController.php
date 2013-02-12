@@ -37,6 +37,7 @@ class RegionsController extends BlocksAppController {
 			),
 			'commonProcess' => array(
 				'paramType' => 'querystring',
+				'filterEmpty' => true,
 			),
 		),
 	);
@@ -47,9 +48,7 @@ class RegionsController extends BlocksAppController {
  * @var array
  * @access public
  */
-	public $presetVars = array(
-		'title' => array('type' => 'value'),
-	);
+	public $presetVars = true;
 
 /**
  * Models used by the Controller
@@ -72,7 +71,7 @@ class RegionsController extends BlocksAppController {
 
 		$this->Region->recursive = 0;
 		$this->paginate['Region']['order'] = 'Region.title ASC';
-		$this->set('regions', $this->paginate($this->Region->parseCriteria($this->passedArgs)));
+		$this->set('regions', $this->paginate($this->Region->parseCriteria($this->request->query)));
 		$this->set('displayFields', $this->Region->displayFields());
 		$this->set('searchFields', $searchFields);
 	}

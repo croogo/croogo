@@ -39,6 +39,7 @@ class NodesController extends NodesAppController {
 			),
 			'commonProcess' => array(
 				'paramType' => 'querystring',
+				'filterEmpty' => true,
 			),
 		),
 	);
@@ -49,12 +50,7 @@ class NodesController extends NodesAppController {
  * @var array
  * @access public
  */
-	public $presetVars = array(
-		'filter' => array('type' => 'value'),
-		'type' => array('type' => 'value'),
-		'status' => array('type' => 'value'),
-		'promote' => array('type' => 'value'),
-	);
+	public $presetVars = true;
 
 /**
  * Models used by the Controller
@@ -122,7 +118,7 @@ class NodesController extends NodesAppController {
 		$typeAliases = Hash::extract($types, '{n}.Type.alias');
 		$this->paginate['Node']['conditions']['Node.type'] = $typeAliases;
 
-		$nodes = $this->paginate($this->Node->parseCriteria($this->passedArgs));
+		$nodes = $this->paginate($this->Node->parseCriteria($this->request->query));
 		$nodeTypes = $this->Node->Taxonomy->Vocabulary->Type->find('list', array(
 			'fields' => array('Type.alias', 'Type.title')
 			));
