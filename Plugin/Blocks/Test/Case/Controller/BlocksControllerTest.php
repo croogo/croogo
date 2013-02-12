@@ -76,6 +76,18 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 	}
 
 /**
+ * testAdminIndexSearch
+ *
+ * @return void
+ */
+	public function testAdminIndexSearch() {
+		$this->testAction('/admin/blocks/blocks/index?title=Recent');
+		$this->assertNotEmpty($this->vars['blocks']);
+		$this->assertEquals(1, count($this->vars['blocks']));
+		$this->assertEquals(9, $this->vars['blocks'][0]['Block']['id']);
+	}
+
+/**
  * testAdminAdd
  *
  * @return void

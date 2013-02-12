@@ -72,7 +72,7 @@ class RegionsController extends BlocksAppController {
 
 		$this->Region->recursive = 0;
 		$this->paginate['Region']['order'] = 'Region.title ASC';
-		$this->set('regions', $this->paginate($this->Region->parseCriteria($this->passedArgs)));
+		$this->set('regions', $this->paginate($this->Region->parseCriteria($this->request->query)));
 		$this->set('displayFields', $this->Region->displayFields());
 		$this->set('searchFields', $searchFields);
 	}

@@ -106,7 +106,7 @@ class BlocksController extends BlocksAppController {
 		$this->Block->recursive = 0;
 		$this->paginate['Block']['order'] = array('Block.weight' => 'ASC');
 
-		$this->set('blocks', $this->paginate($this->Block->parseCriteria($this->passedArgs)));
+		$this->set('blocks', $this->paginate($this->Block->parseCriteria($this->request->query)));
 		$this->set('regions', $this->Block->Region->find('list'));
 		$this->set('searchFields', $searchFields);
 	}

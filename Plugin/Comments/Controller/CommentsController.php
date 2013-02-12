@@ -89,7 +89,7 @@ class CommentsController extends CommentsAppController {
 			'Comment.comment_type' => 'comment',
 		);
 
-		$criteria = $this->Comment->parseCriteria($this->passedArgs);
+		$criteria = $this->Comment->parseCriteria($this->request->query);
 		if (array_key_exists('Comment.status', $criteria)) {
 			$criteria = array_merge($this->paginate['Comment']['conditions'], $criteria);
 		}

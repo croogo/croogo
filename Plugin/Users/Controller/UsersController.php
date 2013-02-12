@@ -115,7 +115,7 @@ class UsersController extends UsersAppController {
 		$searchFields = array('role_id', 'name');
 
 		$this->User->recursive = 0;
-		$this->paginate['conditions'] = $this->User->parseCriteria($this->passedArgs);
+		$this->paginate['conditions'] = $this->User->parseCriteria($this->request->query);
 
 		$this->set('users', $this->paginate());
 		$this->set('roles', $this->User->Role->find('list'));

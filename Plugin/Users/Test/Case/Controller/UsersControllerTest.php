@@ -80,6 +80,17 @@ class UsersControllerTest extends CroogoControllerTestCase {
 		$this->testAction('/admin/users/users/index');
 		$this->assertNotEmpty($this->vars['displayFields']);
 		$this->assertNotEmpty($this->vars['users']);
+		$this->assertEquals(3, count($this->vars['users']));
+	}
+
+/**
+ * testAdminIndexSearch
+ *
+ * @return void
+ */
+	public function testAdminIndexSearch() {
+		$this->testAction('/admin/users/users/index?name=admin');
+		$this->assertEquals(1, count($this->vars['users']));
 	}
 
 /**

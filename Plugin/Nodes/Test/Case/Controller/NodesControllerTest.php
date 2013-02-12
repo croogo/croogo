@@ -111,8 +111,21 @@ class NodesControllerTest extends CroogoControllerTestCase {
 	public function testAdminIndex() {
 		$this->testAction('/admin/nodes/index');
 		$this->assertNotEmpty($this->vars['nodes']);
+		$this->assertEquals(2, count($this->vars['nodes']));
 		$this->assertNotEmpty($this->vars['nodes'][0]['Node']);
 		$this->assertNotEmpty($this->vars['nodes'][0]['User']);
+		$this->assertArrayHasKey('CustomFields', $this->vars['nodes'][0]);
+	}
+
+/**
+ * testAdminIndexSearch
+ *
+ * @return void
+ */
+	public function testAdminIndexSearch() {
+		$this->testAction('/admin/nodes/index?filter=about');
+		$this->assertEquals(1, count($this->vars['nodes']));
+		$this->assertEquals(2, $this->vars['nodes'][0]['Node']['id']);
 		$this->assertArrayHasKey('CustomFields', $this->vars['nodes'][0]);
 	}
 

@@ -122,7 +122,7 @@ class NodesController extends NodesAppController {
 		$typeAliases = Hash::extract($types, '{n}.Type.alias');
 		$this->paginate['Node']['conditions']['Node.type'] = $typeAliases;
 
-		$nodes = $this->paginate($this->Node->parseCriteria($this->passedArgs));
+		$nodes = $this->paginate($this->Node->parseCriteria($this->request->query));
 		$nodeTypes = $this->Node->Taxonomy->Vocabulary->Type->find('list', array(
 			'fields' => array('Type.alias', 'Type.title')
 			));
