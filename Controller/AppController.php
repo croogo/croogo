@@ -219,6 +219,9 @@ class AppController extends Controller {
  * @see Controller::render()
  */
 	public function render($view = null, $layout = null) {
+		if (strpos($view, '/') !== false) {
+			return parent::render($view, $layout);
+		}
 		$viewPaths = App::path('View', $this->plugin);
 		$rootPath = $viewPaths[0] . DS . $this->viewPath . DS;
 		$requested = $rootPath . $view . '.ctp';
