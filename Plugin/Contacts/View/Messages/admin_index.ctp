@@ -38,8 +38,18 @@ echo $this->element('admin/modal', array(
 
 <?php $this->start('actions'); ?>
 <?php
-	echo $this->Croogo->adminAction(__('Unread'), array('action'=>'index', 'status' => '0'));
-	echo $this->Croogo->adminAction(__('Read'), array('action'=>'index', 'status' => '1'));
+	echo $this->Croogo->adminAction(__('Unread'), array(
+		'action'=>'index',
+		'?' => array(
+			'status' => '0',
+		),
+	));
+	echo $this->Croogo->adminAction(__('Read'), array(
+		'action'=>'index',
+		'?' => array(
+			'status' => '1',
+		),
+	));
 ?>
 <?php $this->end(); ?>
 

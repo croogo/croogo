@@ -31,11 +31,11 @@ echo $this->element('admin/modal', array(
 <?php
 	echo $this->Croogo->adminAction(
 		__('Published'),
-		array('action'=>'index', 'status' => '1')
+		array('action'=>'index', '?' => array('status' => '1'))
 	);
 	echo $this->Croogo->adminAction(
 		__('Approval'),
-		array('action'=>'index', 'status' => '0')
+		array('action'=>'index', '?' => array('status' => '0'))
 	);
 ?>
 <?php $this->end(); ?>
