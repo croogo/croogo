@@ -488,7 +488,6 @@ class NodesController extends NodesAppController {
 			} else {
 				$paging = Cache::read($cacheNamePaging, $cacheConfig);
 				$this->request->params['paging'] = $paging;
-				$this->helpers[] = 'Paginator';
 			}
 		} else {
 			$nodes = $this->paginate('Node');
@@ -581,7 +580,6 @@ class NodesController extends NodesAppController {
 			} else {
 				$paging = Cache::read($cacheNamePaging, $cacheConfig);
 				$this->request->params['paging'] = $paging;
-				$this->helpers[] = 'Paginator';
 			}
 		} else {
 			$nodes = $this->paginate('Node');
@@ -653,7 +651,6 @@ class NodesController extends NodesAppController {
 			} else {
 				$paging = Cache::read($cacheNamePaging, $cacheConfig);
 				$this->request->params['paging'] = $paging;
-				$this->helpers[] = 'Paginator';
 			}
 		} else {
 			$nodes = $this->paginate('Node');
