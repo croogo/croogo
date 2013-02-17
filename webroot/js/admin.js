@@ -32,7 +32,7 @@ Admin.navigation = function() {
 	var $current = $('.sidebar .current');
 	if ($current.length == 0) {
 		var selector = _.template(
-			'a.sidebar-item[href="<%= basePath %>admin/' +
+			'a.sidebar-item[href^="<%= basePath %>admin/' +
 			'<%= params.plugin %>/' +
 			'<%= params.controller %>"]'
 		);
