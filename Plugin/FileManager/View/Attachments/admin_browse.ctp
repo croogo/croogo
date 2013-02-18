@@ -53,7 +53,7 @@
 			$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
 			$insertCode = $this->Html->link('', '#', array(
-				'onclick' => "selectURL('" . $attachment['Node']['slug'] . "');",
+				'onclick' => "Croogo.Wysiwyg.choose('" . $attachment['Node']['slug'] . "');",
 				'icon' => 'paper-clip',
 				'tooltip' => __('Insert')
 			));
@@ -65,7 +65,7 @@
 				$insertCode,
 				$this->Html->link(Router::url($attachment['Node']['path']),
 					$attachment['Node']['path'],
-					array('onclick' => "selectURL('" . $attachment['Node']['slug'] . "');")
+					array('onclick' => "Croogo.Wysiwyg.choose('" . $attachment['Node']['slug'] . "');")
 				),
 				$actions,
 			);
