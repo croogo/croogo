@@ -101,8 +101,8 @@ class TinymceHelper extends AppHelper {
  */
 	public function beforeRender($viewFile) {
 		$this->Html->script('/tinymce/js/wysiwyg', array('inline' => false));
-		if (is_array(Configure::read('Tinymce.actions'))) {
-			$this->actions = Hash::merge($this->actions, Configure::read('Tinymce.actions'));
+		if (is_array(Configure::read('Wysiwyg.actions'))) {
+			$this->actions = Hash::merge($this->actions, Configure::read('Wysiwyg.actions'));
 		}
 		$action = Inflector::camelize($this->params['controller']) . '/' . $this->params['action'];
 		if (Configure::read('Writing.wysiwyg') && isset($this->actions[$action])) {
