@@ -100,13 +100,6 @@ class TinymceHelper extends AppHelper {
  * @return void
  */
 	public function beforeRender($viewFile) {
-		Configure::write('Js.Wysiwyg.uploadsPath', Router::url('/uploads/'));
-		Configure::write('Js.Wysiwyg.attachmentsPath', $this->Html->url(array(
-			'plugin' => 'file_manager',
-			'controller' => 'attachments',
-			'action' => 'browse',
-		)));
-
 		$this->Html->script('/tinymce/js/wysiwyg', array('inline' => false));
 		if (is_array(Configure::read('Tinymce.actions'))) {
 			$this->actions = Hash::merge($this->actions, Configure::read('Tinymce.actions'));

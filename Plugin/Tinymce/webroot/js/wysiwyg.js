@@ -1,10 +1,3 @@
-if (typeof Croogo.Wysiwyg == 'undefined') {
-	Croogo.Wysiwyg = {
-		uploadsPath: Croogo.basePath + 'uploads/',
-		attachmentsPath: Croogo.basePath + 'file_manager/attachments/browse'
-	};
-}
-
 Croogo.Wysiwyg.choose = function(url, title, description) {
 	if (url == '') return false;
 
@@ -27,7 +20,7 @@ Croogo.Wysiwyg.choose = function(url, title, description) {
 	}
 	window.top.close();
 	window.top.opener.browserWin.focus();
-}
+};
 
 Croogo.Wysiwyg.browser = function() {
 	window.fileBrowserCallBack = function(field_name, url, type, win) {
@@ -35,8 +28,4 @@ Croogo.Wysiwyg.browser = function() {
 		browserWin = win;
 		window.open(Croogo.Wysiwyg.attachmentsPath, 'browserWindow', 'modal,width=960,height=700,scrollbars=yes');
 	}
-}
-
-$(document).ready(function() {
-	Croogo.Wysiwyg.browser();
-});
+};
