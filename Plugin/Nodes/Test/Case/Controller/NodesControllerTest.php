@@ -258,4 +258,68 @@ class NodesControllerTest extends CroogoControllerTestCase {
 		$this->assertContains('view_1.ctp in Mytheme', $result->body());
 	}
 
+/**
+ * testViewFallback from plugin controller that extends NodesController
+ *
+ * @return void
+ */
+	public function testViewFallbackInPlugins() {
+		CakePlugin::load('TestPlugin');
+		$this->Nodes = $this->getMock('TestNodesController',
+			array('render'), array(new CakeRequest(), new CakeResponse())
+		);
+		$this->Nodes->theme = null;
+		$this->Nodes->plugin = 'TestPlugin';
+		$this->Nodes
+			->expects($this->once())
+			->method('render')
+			->with(
+				$this->equalTo('index_event')
+			);
+		$this->Nodes->viewFallback(array('index_event'));
+		unset($this->Nodes);
+	}
+
+/**
+ * testViewFallback from plugin controller that extends NodesController
+ * with an active theme
+ *
+ * @return void
+ */
+	public function testViewFallbackInPluginsWithTheme() {
+		CakePlugin::load('TestPlugin');
+		$this->Nodes = $this->getMock('TestNodesController',
+			array('render'), array(new CakeRequest(), new CakeResponse())
+		);
+		$this->Nodes->theme = 'Mytheme';
+		$this->Nodes->plugin = 'TestPlugin';
+		$this->Nodes
+			->expects($this->once())
+			->method('render')
+			->with(
+				$this->equalTo('index_blog')
+			);
+		$this->Nodes->viewFallback(array('index_blog'));
+		unset($this->Nodes);
+	}
+
+/**
+ * testViewFallback correctly use views from Nodes plugin
+ *
+ * @return void
+ */
+	public function testViewFallbackToCorePlugins() {
+		CakePlugin::load('TestPlugin');
+		$this->Nodes = $this->getMock('TestNodesController',
+			array('render'), array(new CakeRequest(), new CakeResponse())
+		);
+		$this->Nodes->theme = null;
+		$this->Nodes->plugin = 'TestPlugin';
+		$this->Nodes
+			->expects($this->never())
+			->method('render');
+		$this->Nodes->viewFallback(array('view_1', 'view_blog'));
+		unset($this->Nodes);
+	}
+
 }
