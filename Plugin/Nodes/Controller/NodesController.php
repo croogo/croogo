@@ -856,6 +856,30 @@ class NodesController extends NodesAppController {
 					}
 				}
 			}
+
+		}
+
+		if ($this->plugin && $this->plugin !== 'Nodes') {
+			$views[] = $this->action;
+			$viewPaths = App::path('View', $this->plugin);
+			foreach ($views as $view) {
+				foreach ($viewPaths as $viewPath) {
+					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
+					if (file_exists($viewPath)) {
+						return $this->render($view);
+					}
+				}
+			}
+
+			$nodesViewPaths = App::path('View', 'Nodes');
+			foreach ($views as $view) {
+				foreach ($nodesViewPaths as $viewPath) {
+					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
+					if (file_exists($viewPath)) {
+						return $this->render($viewPath);
+					}
+				}
+			}
 		}
 	}
 
