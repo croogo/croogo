@@ -6,7 +6,10 @@ class CommentTest extends CroogoTestCase {
 
 	public $fixtures = array(
 		'plugin.comments.comment',
+		'plugin.meta.meta',
 		'plugin.nodes.node',
+		'plugin.taxonomy.nodes_taxonomy',
+		'plugin.taxonomy.taxonomy',
 		'plugin.taxonomy.type',
 		'plugin.users.user',
 	);
