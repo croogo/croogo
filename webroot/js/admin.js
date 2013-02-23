@@ -34,7 +34,7 @@ Admin.navigation = function() {
 		var selector = _.template(
 			'a.sidebar-item[href^="<%= basePath %>admin/' +
 			'<%= params.plugin %>/' +
-			'<%= params.controller %>"]'
+			'<%= params.controller %>"]:first'
 		);
 		if ($(selector(Croogo)).addClass('current').length == 0) {
 			var selector = _.template(
