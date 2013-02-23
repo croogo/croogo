@@ -5,6 +5,8 @@ if (empty($modelClass)) {
 if (!isset($className)) {
 	$className = strtolower($this->name);
 }
+
+$showActions = isset($showActions) ? $showActions : true;
 ?>
 
 <h2 class="hidden-desktop">
@@ -17,12 +19,11 @@ if (!isset($className)) {
 	<?php endif; ?>
 </h2>
 
-<?php $actionsBlock = $this->fetch('actions'); ?>
-<?php if (!empty($actionsBlock)): ?>
+<?php if ($showActions): ?>
 <div class="row-fluid">
 	<div class="span12 actions">
 		<ul class="nav-buttons">
-			<?php if ($actionsBlock): ?>
+			<?php if ($actionsBlock = $this->fetch('actions')): ?>
 				<?php echo $actionsBlock; ?>
 			<?php else: ?>
 			<li>
