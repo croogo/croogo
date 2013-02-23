@@ -72,7 +72,7 @@ Admin.navigation = function() {
 
 	$topLevelMenus.on('click blur', function(e) {
 		var $this = $(this);
-		var $ul = $(this).next('ul')
+		var $ul = $(this).next('ul');
 		var sidebarWidth = $sidebar.width();
 
 		if (e.type == 'blur' && window.innerWidth > 979) {
@@ -97,7 +97,7 @@ Admin.navigation = function() {
 			});
 			dropdownOpen.call(this);
 			if (window.innerWidth <= 979) {
-				$ul.css({'position': 'absolute', 'margin-left': sidebarWidth + 1 + 'px', 'margin-top': '-42px'})
+				$ul.css({'position': 'absolute', 'margin-left': sidebarWidth + 1 + 'px', 'margin-top': '-42px'});
 				$ul.show('fade', 'fast');
 			} else {
 				$ul.css({'margin-left': 0, 'position': 'relative'});
@@ -110,7 +110,7 @@ Admin.navigation = function() {
 
 	$(window).on('resize', function() {
 		$('#sidebar-menu > li ul:visible').each(function() {
-			$(this).toggle()
+			$(this).toggle();
 			dropdownClose.call(this);
 		});
 	});
