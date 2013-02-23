@@ -29,6 +29,14 @@ class CommentTest extends CroogoTestCase {
 		unset($this->Comment);
 	}
 
+	public function testMandatoryFields() {
+		$record = array('id' => '');
+		$expectedKeys = array('body', 'name', 'email');
+
+		$this->Comment->save($record);
+		$this->assertEquals($expectedKeys, array_keys($this->Comment->validationErrors));
+	}
+
 	public function testAdd() {
 		$oldCount = $this->Comment->find('count');
 		$data = array(

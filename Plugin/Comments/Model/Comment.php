@@ -54,10 +54,12 @@ class Comment extends AppModel {
 		'body' => array(
 			'rule' => 'notEmpty',
 			'message' => 'This field cannot be left blank.',
+			'required' => true,
 		),
 		'name' => array(
 			'rule' => 'notEmpty',
 			'message' => 'This field cannot be left blank.',
+			'required' => true,
 		),
 		'email' => array(
 			'rule' => 'email',
