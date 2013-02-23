@@ -23,6 +23,8 @@ class Comment extends AppModel {
  * @access public
  */
 	public $name = 'Comment';
+	const STATUS_APPROVED = 1;
+	const STATUS_MODERATED = 0;
 
 /**
  * Behaviors used by the Model
@@ -89,5 +91,68 @@ class Comment extends AppModel {
 	public $filterArgs = array(
 		'status' => array('type' => 'value'),
 	);
+
+	public function add($data, $nodeId, $nodeType, $parentId = null, $userData = array()) {
+		$record = array();
+		$node = array();
+
+		$node = $this->Node->findById($nodeId);
+		if (empty($node)) {
+			throw new NotFoundException(__d('comments', 'Invalid Node id'));
+		}
+
+		if (
+			!is_null($parentId) &&
+			$this->isAllowToCommentOnParent($parentId) &&
+			$this->parentCommentIsApproved($parentId, $nodeId)
+		) {
+			$record['parent_id'] = $parentId;
+		}
+
+		if (!empty($userData)) {
+			$record['user_id'] = $userData['User']['id'];
+			$record['name'] = $userData['User']['name'];
+			$record['email'] = $userData['User']['email'];
+			$record['website'] = $userData['User']['website'];
+		} else {
+			$record['name'] = $data[$this->alias]['name'];
+			$record['email'] = $data[$this->alias]['email'];
+			$record['website'] = $data[$this->alias]['website'];
+		}
+
+		$record['node_id'] = $node['Node']['id'];
+		$record['body'] = h($data['Comment']['body']);
+		$record['ip'] = env('REMOTE_ADDR');
+		$record['type'] = $nodeType['Type']['alias'];
+
+		if ($nodeType['Type']['comment_approve']) {
+			$record['status'] = self::STATUS_APPROVED;
+		} else {
+			$record['status'] = self::STATUS_MODERATED;
+		}
+
+		return (bool) $this->save($record);
+	}
+
+	public function parentCommentIsApproved($parentId, $nodeId) {
+		return $this->hasAny(array(
+			$this->escapeField() => $parentId,
+			$this->escapeField('node_id') => $nodeId,
+			$this->escapeField('status') => 1,
+		));
+	}
+
+	public function isAllowToCommentOnParent($parentId){
+		if (is_null($parentId) || !$this->exists($parentId)) {
+			throw new NotFoundException(__d('comments', 'Invalid Comment id'));
+		}
+
+		$parentId;
+
+		$path = $this->getPath($parentId, array($this->escapeField()));
+		$level = count($path);
+
+		return Configure::read('Comment.level') > $level;
+	}
 
 }
