@@ -277,7 +277,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 
 		$comments = $Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
 		$commenters = array_values($comments);
-		$this->assertEqual($commenters, array('Mr Croogo', '_John Smith', 'Mrs Croogo'));
+		$this->assertEqual($commenters, array('Mr Croogo', 'Mrs Croogo', 'John Smith'));
 
 		$Comments->testView = true;
 		$output = $Comments->render('add');
