@@ -31,6 +31,8 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		'plugin.taxonomy.vocabulary',
 	);
 
+	protected $_level;
+
 /**
  * setUp
  *
@@ -38,6 +40,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+		$this->_level = Configure::write('Comment.level');
 		$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 		$_SERVER['SERVER_NAME'] = 'localhost';
 		$this->CommentsController = $this->generate('Comments.Comments', array(
@@ -62,6 +65,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
+		Configure::write('Comment.level', $this->_level);
 		unset($this->CommentsController);
 	}
 
@@ -272,6 +276,8 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 			'body' => 'text here...',
 		);
 		$node = $Comments->Comment->Node->findBySlug('hello-world');
+
+		Configure::write('Comment.level', 2);
 		$Comments->add($node['Node']['id'], 1); // under the comment by Mr Croogo
 		$this->assertEqual($Comments->viewVars['success'], 1);
 
