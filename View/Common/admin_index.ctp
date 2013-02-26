@@ -26,14 +26,12 @@ $showActions = isset($showActions) ? $showActions : true;
 			<?php if ($actionsBlock = $this->fetch('actions')): ?>
 				<?php echo $actionsBlock; ?>
 			<?php else: ?>
-			<li>
-				<?php
+			<?php
 				echo $this->Croogo->adminAction(
 					__('New %s', Inflector::singularize($this->name)),
 					array('action' => 'add')
 				);
-				?>
-			</li>
+			?>
 			<?php endif; ?>
 		</ul>
 	</div>
