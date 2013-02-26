@@ -308,6 +308,14 @@ class CommentsController extends CommentsAppController {
 		return $continue;
 	}
 
+/**
+ * sendEmail
+ *
+ * @param array $node Node data
+ * @param array $comment Comment data
+ * @return void
+ * @access protected
+ */
 	protected function _sendEmail($node, $data){
 		$this->Email->from = Configure::read('Site.title') . ' ' .
 			'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
