@@ -221,7 +221,7 @@ class CommentsController extends CommentsAppController {
 			$this->redirect($node['Node']['url']);
 		}
 
-		$type = ClassRegistry::init('Taxonomy.Type')->findByAlias($node['Node']['type']);
+		$type = $this->Comment->Node->Taxonomy->Vocabulary->Type->findByAlias($node['Node']['type']);
 		$continue = $type['Type']['comment_status'] == 2 && $node['Node']['comment_status'];
 
 		if (!$continue) {
