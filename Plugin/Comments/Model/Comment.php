@@ -23,6 +23,7 @@ class Comment extends AppModel {
  * @access public
  */
 	public $name = 'Comment';
+
 	const STATUS_APPROVED = 1;
 	const STATUS_MODERATED = 0;
 
