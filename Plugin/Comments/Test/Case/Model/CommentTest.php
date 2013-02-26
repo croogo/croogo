@@ -48,7 +48,8 @@ class CommentTest extends CroogoTestCase {
 				'name' => 'Test Visitor',
 				'email' => 'visitor@test.fr',
 				'website' => 'http://www.test.fr',
-				'body' => 'TESTEH'
+				'body' => 'TESTEH',
+				'ip' => '127.0.0.1'
 			)
 		);
 
@@ -71,6 +72,7 @@ class CommentTest extends CroogoTestCase {
 				'email' => 'visitor@test.fr',
 				'website' => 'http://www.test.fr',
 				'body' => 'TESTEH',
+				'ip' => '127.0.0.1'
 			)
 		);
 
@@ -98,6 +100,7 @@ class CommentTest extends CroogoTestCase {
 				'email' => 'visitor@test.fr',
 				'website' => 'http://www.test.fr',
 				'body' => 'TESTEH',
+				'ip' => '127.0.0.1'
 			)
 		);
 
@@ -132,7 +135,8 @@ class CommentTest extends CroogoTestCase {
 				'name' => 'Test Visitor',
 				'email' => 'visitor@test.fr',
 				'website' => 'http://www.test.fr',
-				'body' => 'TESTEH'
+				'body' => 'TESTEH',
+				'ip' => '127.0.0.1'
 			)
 		);
 		$this->Comment->add(
