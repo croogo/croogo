@@ -15,13 +15,13 @@ class CommentTest extends CroogoTestCase {
 	);
 
 	public $Comment;
-	private $__level;
+	protected $_level;
 	protected $_record;
 
 
 	public function setUp() {
 		parent::setUp();
-		$this->__level = Configure::read('Comment.level');
+		$this->_level = Configure::read('Comment.level');
 		Configure::write('Comment.level', 10);
 		$this->Comment = ClassRegistry::init('Comments.Comment');
 		$this->_record = $this->Comment->findById(1);
@@ -29,7 +29,7 @@ class CommentTest extends CroogoTestCase {
 
 	public function tearDown() {
 		parent::tearDown();
-		Configure::write('Comment.level', $this->__level);
+		Configure::write('Comment.level', $this->_level);
 		unset($this->Comment);
 	}
 
