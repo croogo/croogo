@@ -373,11 +373,12 @@ INSERT IGNORE INTO `settings` (`id`, `key`, `value`, `title`, `description`, `in
 (27, 'Reading.date_time_format', 'D, M d Y H:i:s', '', '', '', 1, 21, ''),
 (28, 'Comment.date_time_format', 'M d, Y', '', '', '', 1, 22, ''),
 (29, 'Site.timezone', '0', '', 'zero (0) for GMT', '', 1, 4, ''),
-(32, 'Hook.bootstraps', 'Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Tinymce', '', '', '', 0, 23, ''),
+(32, 'Hook.bootstraps', 'Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Wysiwyg,Tinymce', '', '', '', 0, 23, ''),
 (33, 'Comment.email_notification', '1', 'Enable email notification', '', '', 1, 24, ''),
 (34, 'Access Control.multiRole', '0', 'Enable Multiple Roles', '', 'checkbox', 1, 25, ''),
 (35, 'Access Control.rowLevel', '0', 'Row Level Access Control', '', 'checkbox', 1, 26, ''),
-(36, 'Access Control.models', '', 'Models with Row Level Acl', 'Select models to activate Row Level Access Control on', 'multiple', 1, 27, 'multiple=checkboxoptions={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "Menus.Link": "Link"}');
+(36, 'Access Control.models', '', 'Models with Row Level Acl', 'Select models to activate Row Level Access Control on', 'multiple', 1, 27, 'multiple=checkbox
+options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "Menus.Link": "Link"}');
 
 --
 -- Dumping data for table `taxonomies`

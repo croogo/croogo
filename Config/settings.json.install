@@ -11,7 +11,7 @@
 		"title": "Croogo"
 	},
 	"Hook": {
-		"bootstraps": "Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Tinymce"
+		"bootstraps": "Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Wysiwyg,Tinymce"
 	},
 	"Comment": {
 		"date_time_format": "M d, Y",
