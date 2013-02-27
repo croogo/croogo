@@ -488,7 +488,6 @@ class NodesController extends NodesAppController {
 			} else {
 				$paging = Cache::read($cacheNamePaging, $cacheConfig);
 				$this->request->params['paging'] = $paging;
-				$this->helpers[] = 'Paginator';
 			}
 		} else {
 			$nodes = $this->paginate('Node');
@@ -581,7 +580,6 @@ class NodesController extends NodesAppController {
 			} else {
 				$paging = Cache::read($cacheNamePaging, $cacheConfig);
 				$this->request->params['paging'] = $paging;
-				$this->helpers[] = 'Paginator';
 			}
 		} else {
 			$nodes = $this->paginate('Node');
@@ -653,7 +651,6 @@ class NodesController extends NodesAppController {
 			} else {
 				$paging = Cache::read($cacheNamePaging, $cacheConfig);
 				$this->request->params['paging'] = $paging;
-				$this->helpers[] = 'Paginator';
 			}
 		} else {
 			$nodes = $this->paginate('Node');
@@ -856,6 +853,30 @@ class NodesController extends NodesAppController {
 					$viewPath = $viewPath . 'Themed' . DS . $this->theme . DS . $this->name . DS . $view . $this->ext;
 					if (file_exists($viewPath)) {
 						return $this->render($view);
+					}
+				}
+			}
+
+		}
+
+		if ($this->plugin && $this->plugin !== 'Nodes') {
+			$views[] = $this->action;
+			$viewPaths = App::path('View', $this->plugin);
+			foreach ($views as $view) {
+				foreach ($viewPaths as $viewPath) {
+					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
+					if (file_exists($viewPath)) {
+						return $this->render($view);
+					}
+				}
+			}
+
+			$nodesViewPaths = App::path('View', 'Nodes');
+			foreach ($views as $view) {
+				foreach ($nodesViewPaths as $viewPath) {
+					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
+					if (file_exists($viewPath)) {
+						return $this->render($viewPath);
 					}
 				}
 			}

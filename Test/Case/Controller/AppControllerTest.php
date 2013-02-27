@@ -15,6 +15,12 @@ class TestAppController extends AppController {
 	public function register() {
 	}
 
+	public function admin_index() {
+	}
+
+	public function admin_index_no_actions() {
+	}
+
 }
 
 class AppControllerTest extends CroogoControllerTestCase {
@@ -66,6 +72,32 @@ class AppControllerTest extends CroogoControllerTestCase {
 			'return' => 'view',
 		));
 		$this->assertEquals('register', trim($result));
+	}
+
+/**
+ * testRenderDefaultActionsBlock
+ */
+	public function testRenderDefaultActionsBlock() {
+		$this->controller->viewVars = array(
+			'displayFields' => array(),
+		);
+		$result = $this->testAction('/admin/test_app/index', array(
+			'return' => 'view',
+		));
+		$this->assertContains('nav-buttons', $result);
+	}
+
+/**
+ * testRenderNoActionsBlock
+ */
+	public function testRenderNoActionsBlock() {
+		$this->controller->viewVars = array(
+			'displayFields' => array(),
+		);
+		$result = $this->testAction('/admin/test_app/index_no_actions', array(
+			'return' => 'view',
+		));
+		$this->assertNotContains('nav-buttons', $result);
 	}
 
 }
