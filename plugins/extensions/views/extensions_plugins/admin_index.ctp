@@ -19,6 +19,7 @@
 		));
 		echo $tableHeaders;
 
+		$plugins = Sanitize::clean($plugins);
 		$rows = array();
 		foreach ($plugins AS $pluginAlias => $pluginData) {
 			if (in_array($pluginAlias, $corePlugins)) {

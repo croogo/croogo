@@ -1,4 +1,7 @@
 <?php
+
+App::import('Core', 'Sanitize');
+
 /**
  * Extensions Themes Controller
  *

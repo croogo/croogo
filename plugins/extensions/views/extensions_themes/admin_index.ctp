@@ -12,6 +12,7 @@
 		<h3><?php __('Current Theme'); ?></h3>
 		<div class="screenshot">
 		<?php
+			$currentTheme = Sanitize::clean($currentTheme);
 			if (!Configure::read('Site.theme')) {
 				echo $this->Html->image($currentTheme['screenshot']);
 			} else {
@@ -37,6 +38,7 @@
 		<h3><?php __('Available Themes'); ?></h3>
 		<ul>
 		<?php
+			$themesData = Sanitize::clean($themesData);
 			foreach ($themesData AS $themeAlias => $theme) {
 				if ($themeAlias != Configure::read('Site.theme') &&
 					(!isset($theme['adminOnly']) || $theme['adminOnly'] != 'true') &&
