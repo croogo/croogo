@@ -36,7 +36,12 @@ CroogoNav::add('extensions.children.example', array(
 	'children' => array(
 		'example1' => array(
 			'title' => __('Example 1'),
-			'url' => '#',
+			'url' => array(
+				'admin' => true,
+				'plugin' => 'example',
+				'controller' => 'example',
+				'action' => 'index',
+			),
 		),
 		'example2' => array(
 			'title' => __('Example 2 with a title that won\'t fit in the sidebar'),

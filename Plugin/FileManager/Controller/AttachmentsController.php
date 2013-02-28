@@ -229,7 +229,7 @@ class AttachmentsController extends FileManagerAppController {
  * @access public
  */
 	public function admin_browse() {
-		$this->layout = 'admin_full';
+		$this->layout = 'admin_popup';
 		$this->admin_index();
 	}
 

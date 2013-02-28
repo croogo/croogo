@@ -27,6 +27,7 @@
 
 			'underscore-min',
 			'admin',
+			'choose',
 			'croogo-bootstrap.js',
 		));
 

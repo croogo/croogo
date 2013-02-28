@@ -6,6 +6,10 @@
 		__('New Tab'),
 		array('action' => 'add')
 	);
+	echo $this->Croogo->adminAction(
+		__('Chooser Example'),
+		array('action' => 'chooser')
+	);
 ?>
 <?php $this->end(); ?>
 

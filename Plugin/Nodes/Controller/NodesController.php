@@ -124,9 +124,9 @@ class NodesController extends NodesAppController {
 			));
 		$this->set(compact('nodes', 'types', 'typeAliases', 'nodeTypes'));
 
-		if (isset($this->request->params['named']['links'])) {
+		if (isset($this->request->params['named']['links']) || isset($this->request->query['chooser'])) {
 			$this->layout = 'admin_popup';
-			$this->render('admin_links');
+			$this->render('admin_chooser');
 		}
 	}
 

@@ -62,14 +62,21 @@ $showActions = isset($showActions) ? $showActions : true;
 				if (!empty(${strtolower($this->name)})) {
 					foreach (${strtolower($this->name)} as $item):
 						$actions = array();
-						$actions[] = $this->Croogo->adminRowAction(
-							'',
-							array('action' => 'edit', $item[$modelClass]['id']),
-							array('icon' => 'pencil', 'tooltip' => __('Edit this item'))
-						);
-						$actions[] = $this->Croogo->adminRowActions($item[$modelClass]['id']);
-						$actions[] = $this->Croogo->adminRowAction(
-								'',
+
+						if (isset($this->request->query['chooser'])):
+							$title = isset($item[$modelClass]['title']) ? $item[$modelClass]['title']  : null;
+							$actions[] = $this->Croogo->adminRowAction(__('Choose'), '#', array(
+								'class' => 'item-choose',
+								'data-chooser_type' => $modelClass,
+								'data-chooser_id' => $item[$modelClass]['id'],
+							));
+						else:
+							$actions[] = $this->Croogo->adminRowAction('',
+								array('action' => 'edit', $item[$modelClass]['id']),
+								array('icon' => 'pencil', 'tooltip' => __('Edit this item'))
+							);
+							$actions[] = $this->Croogo->adminRowActions($item[$modelClass]['id']);
+							$actions[] = $this->Croogo->adminRowAction('',
 								array(
 									'action' => 'delete',
 									$item[$modelClass]['id'],
@@ -79,6 +86,7 @@ $showActions = isset($showActions) ? $showActions : true;
 									'tooltip' => __('Remove this item')
 								),
 								__('Are you sure?'));
+						endif;
 						$actions = $this->Html->div('item-actions', implode(' ', $actions));
 						$row = array();
 						foreach ($displayFields as $key => $val) {

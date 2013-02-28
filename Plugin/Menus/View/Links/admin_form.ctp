@@ -72,10 +72,15 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 					'plugin' => 'nodes',
 					'controller' => 'nodes',
 					'action' => 'index',
-					'links' => 1,
-				), true) . '?KeepThis=true&TB_iframe=true&height=400&width=600',
+					'?' => array(
+						'chooser' => 1,
+						'KeepThis' => true,
+						'TB_iframe' => true,
+						'height' => 400,
+						'width' => 600,
+					)), true),
 					array(
-						'class' => 'thickbox',
+						'class' => 'link chooser',
 					)
 				);
 			?>
@@ -135,3 +140,10 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 	</div>
 </div>
 <?php echo $this->Form->end(); ?>
+<?php
+$script =<<<EOF
+$('.link.chooser').itemChooser({
+	fields: [{ type: "Node", target: "#LinkLink", attr: "rel" }]
+});
+EOF;
+$this->Js->buffer($script);
