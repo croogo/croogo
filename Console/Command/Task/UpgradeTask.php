@@ -37,6 +37,23 @@ class UpgradeTask extends AppShell {
 	);
 
 /**
+ * Setting instance
+ */
+	public $Setting = null;
+
+/**
+ * Load Settings plugin and model
+ */
+	protected function _loadSettingsPlugin() {
+		if (!CakePlugin::loaded('Settings')) {
+			CakePlugin::load('Settings');
+		}
+		if (!$this->Setting) {
+			$this->Setting = ClassRegistry::init('Settings.Setting');
+		}
+	}
+
+/**
  * getOptionParser
  */
 	public function getOptionParser() {
@@ -58,6 +75,9 @@ class UpgradeTask extends AppShell {
 			->addSubCommand('settings', array(
 				'help' => __('Create settings.json from database'),
 				))
+			->addSubCommand('bootstraps', array(
+				'help' => __('Update Hook.bootstrap settings'),
+				))
 			->addSubCommand('links', array(
 				'help' => __('Update Links in database'),
 				))
@@ -70,9 +90,7 @@ class UpgradeTask extends AppShell {
  * convert settings.yml to settings.json
  */
 	public function settings($keys = array()) {
-		if (!CakePlugin::loaded('Settings')) {
-			CakePlugin::load('Settings');
-		}
+		$this->_loadSettingsPlugin();
 		if (file_exists(APP . 'Config' . DS . 'settings.json')) {
 			$this->err(__('<warning>Config/settings.json already exist</warning>'));
 		} else {
@@ -80,7 +98,7 @@ class UpgradeTask extends AppShell {
 				'Settings', 'Comments', 'Contacts', 'Nodes', 'Meta', 'Menus',
 				'Users', 'Blocks', 'Taxonomy', 'FileManager', 'Tinymce',
 			);
-			$Setting = ClassRegistry::init('Settings.Setting');
+			$Setting = $this->Setting;
 			$setting = $Setting->findByKey('Hook.bootstraps');
 			$plugins = explode(',', $setting['Setting']['value']);
 			if (is_array($plugins)) {
@@ -157,6 +175,35 @@ class UpgradeTask extends AppShell {
 			}
 		}
 		$this->out(__('Links updated: %d rows', $count));
+	}
+
+/**
+ * Upgrade Hook.bootstraps
+ */
+	public function bootstraps() {
+		$this->_loadSettingsPlugin();
+
+		// activate/move Wysiwyg before Tinymce
+		if (empty($plugins['Tinymce'])) {
+			return;
+		}
+		$bootstraps = Configure::read('Hook.bootstraps');
+		$plugins = array_flip(explode(',', $bootstraps));
+		foreach ($plugins as $plugin => &$value) {
+			$value *= 10;
+		}
+		if (empty($plugins['Wysiwyg'])) {
+			$plugins['Wysiwyg'] = $plugins['Tinymce'] - 1;
+		} else {
+			if ($plugins['Wysiwyg'] >= $plugin['Tinymce']) {
+				$plugins['Wysiwyg'] = $plugins['Tinymce'] - 1;
+			}
+		}
+		asort($plugins);
+		$plugins = array_flip($plugins);
+		$this->Setting->write('Hook.bootstraps', join(',', $plugins));
+
+		$this->out(__('Hook.bootstraps updated'));
 	}
 
 /**
