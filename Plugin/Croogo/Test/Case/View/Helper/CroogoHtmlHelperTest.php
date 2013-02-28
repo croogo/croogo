@@ -1,11 +1,12 @@
 <?php
 
-App::uses('CroogoHelper', 'View/Helper');
-App::uses('CroogoHtmlHelper', 'View/Helper');
+App::uses('CroogoHelper', 'Croogo.View/Helper');
+App::uses('CroogoHtmlHelper', 'Croogo.View/Helper');
 App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 App::uses('View', 'View');
 App::uses('HtmlHelper', 'View/Helper');
+
 class CroogoHtmlHelperTest extends CroogoTestCase{
 
 	public function setUp() {

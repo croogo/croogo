@@ -1,8 +1,8 @@
 <?php
-App::uses('CroogoHelper', 'View/Helper');
-App::uses('CroogoPaginatorHelper', 'View/Helper');
+App::uses('CroogoHelper', 'Croogo.View/Helper');
+App::uses('CroogoPaginatorHelper', 'Croogo.View/Helper');
 App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 App::uses('View', 'View');
 App::uses('HtmlHelper', 'View/Helper');
 

@@ -1,7 +1,8 @@
 <?php
-App::uses('CroogoFormHelper', 'View/Helper');
+App::uses('View', 'View');
+App::uses('CroogoFormHelper', 'Croogo.View/Helper');
 App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 class CroogoFormHelperTest extends CroogoTestCase{
 
