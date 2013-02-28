@@ -26,7 +26,7 @@
 			'/croogo/js/jquery/thickbox-compressed',
 			'/croogo/js/underscore-min',
 			'/croogo/js/admin',
-			'choose',
+			'/croogo/js/choose',
 			'croogo-bootstrap.js',
 		));
 

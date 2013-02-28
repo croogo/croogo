@@ -70,7 +70,7 @@
 				$iframe.contents().on('click', options.itemSelector, function (e) {
 					parent.$('body *').trigger('chooser_select', this);
 					return false;
-				})
+				});
 			});
 
 			return false;

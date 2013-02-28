@@ -12,9 +12,9 @@
 		));
 		echo $this->Layout->js();
 		echo $this->Html->script(array(
-			'html5',
-			'jquery/jquery.min',
-			'jquery/jquery.slug',
+			'/croogo/js/html5',
+			'/croogo/js/jquery/jquery.min',
+			'/croogo/js/jquery/jquery.slug',
 			'croogo-bootstrap.js',
 		));
 
