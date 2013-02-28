@@ -119,6 +119,10 @@ class UsersController extends UsersAppController {
 		$this->set('roles', $this->User->Role->find('list'));
 		$this->set('displayFields', $this->User->displayFields());
 		$this->set('searchFields', $searchFields);
+
+		if (isset($this->request->query['chooser'])) {
+			$this->layout = 'admin_popup';
+		}
 	}
 
 /**

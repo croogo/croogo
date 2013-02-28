@@ -107,6 +107,9 @@ class BlocksController extends BlocksAppController {
 		$this->set('blocks', $this->paginate($this->Block->parseCriteria($this->request->query)));
 		$this->set('regions', $this->Block->Region->find('list'));
 		$this->set('searchFields', $searchFields);
+		if (isset($this->request->query['chooser'])) {
+			$this->layout = 'admin_popup';
+		}
 	}
 
 /**

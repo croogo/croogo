@@ -42,6 +42,15 @@ class ExampleController extends ExampleAppController {
 	}
 
 /**
+ * admin_chooser
+ *
+ * @return void
+ */
+	public function admin_chooser() {
+		$this->set('title_for_layout', __('Chooser Example'));
+	}
+
+/**
  * index
  *
  * @return void

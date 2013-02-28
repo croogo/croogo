@@ -19,6 +19,10 @@ if (!empty($searchFields)):
 			'action' => $this->request->params['action'],
 		),
 	));
+	echo $this->Form->input('chooser', array(
+		'type' => 'hidden',
+		'value' => isset($this->request->query['chooser']),
+	));
 	foreach ($searchFields as $field => $fieldOptions) {
 		$options = array('empty' => '', 'required' => false);
 		if (is_numeric($field) && is_string($fieldOptions)) {

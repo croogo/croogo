@@ -28,6 +28,9 @@
 				'type' => $node['Node']['type'],
 				'slug' => $node['Node']['slug'],
 			), array(
+				'class' => 'item-choose',
+				'data-chooser_type' => 'Node',
+				'data-chooser_id' => $node['Node']['id'],
 				'rel' => sprintf(
 					'plugin:%s/controller:%s/action:%s/type:%s/slug:%s',
 					'nodes',
@@ -63,16 +66,7 @@
 </div>
 <?php
 
-$targetField = isset($this->request->query['targetField']) ?
-	$this->request->query['targetField'] :
-	'LinkLink';
-
 $script =<<<EOF
 $('.popovers').popover().on('click', function() { return false; });;
-$('#nodes-for-links a[rel]').click(function() {
-	parent.$('#{$targetField}').val($(this).attr('rel'));
-	parent.tb_remove();
-	return false;
-});
 EOF;
 $this->Js->buffer($script);
