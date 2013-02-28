@@ -135,9 +135,9 @@ class Comment extends AppModel {
 			$record['website'] = $data[$this->alias]['website'];
 		}
 
+		$record['ip'] = $data[$this->alias]['ip'];
 		$record['node_id'] = $node['Node']['id'];
-		$record['body'] = h($data['Comment']['body']);
-		$record['ip'] = env('REMOTE_ADDR');
+		$record['body'] = h($data[$this->alias]['body']);
 		$record['type'] = $nodeType['Type']['alias'];
 
 		if ($nodeType['Type']['comment_approve']) {

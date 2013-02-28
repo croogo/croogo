@@ -240,6 +240,7 @@ class CommentsController extends CommentsAppController {
 		$success = false;
 		if (!empty($this->request->data) && $continue === true) {
 			$data = $this->request->data;
+			$data['Comment']['ip'] = env('REMOTE_ADDR');
 			$success = $this->Comment->add($data, $nodeId, $type, $parentId, $this->Auth->user());
 			if ($success) {
 				if ($type['Type']['comment_approve']) {
