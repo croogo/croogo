@@ -20,6 +20,7 @@ $this->name = 'extensions-plugins';
 	echo $tableHeaders;
 
 	$rows = array();
+	$plugins = Sanitize::clean($plugins);
 	foreach ($plugins as $pluginAlias => $pluginData) {
 		if (in_array($pluginAlias, $corePlugins)) {
 			continue;
