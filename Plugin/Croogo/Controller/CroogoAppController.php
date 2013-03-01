@@ -220,7 +220,7 @@ class CroogoAppController extends Controller {
 			return parent::render($view, $layout);
 		}
 		$viewPaths = App::path('View', $this->plugin);
-		$rootPath = $viewPaths[0] . DS . $this->viewPath . DS;
+		$rootPath = $viewPaths[0] . $this->viewPath . DS;
 		$requested = $rootPath . $view . '.ctp';
 		if (in_array($this->request->action, array('admin_edit', 'admin_add', 'edit', 'add'))) {
 			$viewPath = $rootPath . $this->request->action . '.ctp';
