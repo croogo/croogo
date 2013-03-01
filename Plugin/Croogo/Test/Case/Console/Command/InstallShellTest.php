@@ -81,7 +81,6 @@ class InstallShellTest extends CroogoTestCase {
 		$Folder->delete();
 		$Folder = new Folder(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Minimal');
 		$Folder->delete();
-		App::build();
 	}
 
 /**

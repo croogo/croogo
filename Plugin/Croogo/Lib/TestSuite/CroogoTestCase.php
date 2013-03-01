@@ -17,6 +17,8 @@ App::uses('CroogoTestFixture', 'Croogo.TestSuite');
  */
 class CroogoTestCase extends CakeTestCase {
 
+	protected $_paths = array();
+
 	public static function setUpBeforeClass() {
 		self::_restoreSettings();
 	}
@@ -26,8 +28,9 @@ class CroogoTestCase extends CakeTestCase {
 	}
 
 	protected static function _restoreSettings() {
-		$source = CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS . 'settings.default';
-		$target = CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS . 'settings.json';
+		$root = CakePlugin::path('Croogo');
+		$source = $root . 'Test' . DS . 'test_app' . DS . 'Config' . DS . 'settings.default';
+		$target = $root . 'Test' . DS . 'test_app' . DS . 'Config' . DS . 'settings.json';
 		copy($source, $target);
 	}
 
@@ -43,6 +46,7 @@ class CroogoTestCase extends CakeTestCase {
 			'Plugin' => array(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
 			'View' => array(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'View' . DS),
 		), App::PREPEND);
+		$this->_paths = App::paths();
 
 		CakePlugin::unload('Install');
 		CakePlugin::load('Example');
@@ -52,6 +56,12 @@ class CroogoTestCase extends CakeTestCase {
 		Configure::drop('settings');
 		Configure::config('settings', new CroogoJsonReader(dirname($Setting->settingsPath) . DS));
 		$Setting->writeConfiguration();
+	}
+
+	public function tearDown() {
+		parent::tearDown();
+
+		App::build($this->_paths);
 	}
 
 }
