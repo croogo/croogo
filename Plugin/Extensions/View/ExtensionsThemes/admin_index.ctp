@@ -24,6 +24,7 @@ $this->Html
 			<div class="screenshot span4">
 				<h3><?php echo __('Current Theme'); ?></h3>
 				<?php
+					$currentTheme = Sanitize::clean($currentTheme);
 					if (!Configure::read('Site.theme')) :
 						echo $this->Html->image($currentTheme['screenshot'], array('class' => 'img-polaroid'));
 					else:
@@ -55,6 +56,7 @@ $this->Html
 			<ul>
 			<?php
 				$hasAvailable = false;
+				$themesData = Sanitize::clean($themesData);
 				foreach ($themesData AS $themeAlias => $theme):
 					$isAdminOnly = (!isset($theme['adminOnly']) || $theme['adminOnly'] != 'true');
 					$isDefault = !($themeAlias == 'default' && !Configure::read('Site.theme'));

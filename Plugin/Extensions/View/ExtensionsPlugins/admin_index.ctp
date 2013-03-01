@@ -34,7 +34,8 @@ $this->Html
 
 <?php
 	$rows = array();
-	foreach ($plugins AS $pluginAlias => $pluginData):
+	$plugins = Sanitize::clean($plugins);
+	foreach ($plugins as $pluginAlias => $pluginData):
 		if (in_array($pluginAlias, $corePlugins)) {
 			continue;
 		}
