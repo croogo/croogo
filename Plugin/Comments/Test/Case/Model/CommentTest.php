@@ -59,9 +59,11 @@ class CommentTest extends CroogoTestCase {
 			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 2))
 		);
 		$newCount = $this->Comment->find('count');
+		$newCommment = $this->Comment->find('first', array('order' => 'Comment.created DESC'));
 
-		$this->assertEquals($oldCount + 1, $newCount);
 		$this->assertTrue($result);
+		$this->assertEquals($oldCount + 1, $newCount);
+		$this->assertEquals(2, $newCommment['Comment']['status']);
 	}
 
 	public function testAddWithParentId() {
@@ -88,6 +90,80 @@ class CommentTest extends CroogoTestCase {
 		$this->assertEquals(1, $newComment['Comment']['parent_id']);
 		$this->assertEquals($oldCount + 1, $newCount);
 		$this->assertTrue($result);
+	}
+
+	public function testAddCommentWithUserData() {
+		$oldCount = $this->Comment->find('count');
+		$data = array(
+			'Comment' => array(
+				'name' => '',
+				'email' => '',
+				'website' => 'http://www.test.fr',
+				'body' => 'TESTEH',
+				'ip' => '127.0.0.1'
+			)
+		);
+
+		$userData =	array(
+			'User' => array(
+				'id' => 2,
+				'role_id' => 1,
+				'username' => 'rchavik',
+				'password' => 'ab4d1d3ab4d1d3ab4d1d3ab4d1d3aaaaab4d1d3a',
+				'name' => 'Rachman Chavik',
+				'email' => 'me@your-site.com',
+				'website' => '/about',
+				'activation_key' => '',
+				'image' => '',
+				'bio' => '',
+				'timezone' => '0',
+				'status' => 1,
+				'updated' => '2010-01-07 22:23:27',
+				'created' => '2010-01-05 00:00:00'
+			)
+		);
+
+
+		$result = $this->Comment->add(
+			$data,
+			1,
+			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 2)),
+			1,
+			$userData
+		);
+		$newCount = $this->Comment->find('count');
+		$newComment = $this->Comment->find('first', array('order' => 'Comment.created DESC'));
+
+		$this->assertTrue($result);
+		$this->assertEquals($oldCount + 1, $newCount);
+		$this->assertEquals('Rachman Chavik', $newComment['Comment']['name']);
+		$this->assertEquals(2, $newComment['Comment']['user_id']);
+	}
+
+	public function testAddCommentToModeratedNode() {
+		$oldCount = $this->Comment->find('count');
+		$data = array(
+			'Comment' => array(
+				'name' => 'Test Visitor',
+				'email' => 'visitor@test.fr',
+				'website' => 'http://www.test.fr',
+				'body' => 'TESTEH',
+				'ip' => '127.0.0.1'
+			)
+		);
+
+		$result = $this->Comment->add(
+			$data,
+			1,
+			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 0)),
+			1
+		);
+		$newCount = $this->Comment->find('count');
+		$newComment = $this->Comment->find('first', array('order' => 'Comment.created DESC'));
+
+		$this->assertTrue($result);
+		$this->assertEquals($oldCount + 1, $newCount);
+		$this->assertEquals(Comment::STATUS_MODERATED, $newComment['Comment']['status']);
 	}
 
 	public function testAddWithParentId_When_ExceedingLevel_AddCommentWithoutParentId() {
