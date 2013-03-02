@@ -364,8 +364,7 @@ class CroogoHelper extends AppHelper {
 				'class' => 'span10',
 				'value' => $setting['Setting']['value'],
 				'help' => $setting['Setting']['description'],
-				'label' => false,
-				'placeholder' => $label,
+				'label' => $label,
 			));
 		}
 		return $output;
