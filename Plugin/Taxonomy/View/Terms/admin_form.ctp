@@ -49,14 +49,14 @@ echo $this->Form->create('Term', array(
 					'label' => false,
 				));
 				echo $this->Form->input('title', array(
-					'placeholder' => __('Title'),
+					'label' => __('Title'),
 				));
 				echo $this->Form->input('slug', array(
-					'placeholder' => __('Slug'),
+					'label' => __('Slug'),
 					'class' => 'slug span10',
 				));
 				echo $this->Form->input('description', array(
-					'placeholder' => __('Description'),
+					'label' => __('Description'),
 				));
 			?>
 			</div>

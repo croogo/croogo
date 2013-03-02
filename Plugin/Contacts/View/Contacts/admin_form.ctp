@@ -36,20 +36,16 @@ echo $this->Form->create('Contact');
 				echo $this->Form->input('id');
 				$this->Form->inputDefaults(array('class' => 'span10'));
 				echo $this->Form->input('title', array(
-					'label' => false,
-					'placeholder' => __('Title'),
+					'label' => __('Title'),
 				));
 				echo $this->Form->input('alias', array(
-					'label' => false,
-					'placeholder' => __('Alias'),
+					'label' => __('Alias'),
 				));
 				echo $this->Form->input('email', array(
-					'label' => false,
-					'placeholder' => __('Email')
+					'label' => __('Email')
 				));
 				echo $this->Form->input('body', array(
-					'label' => false,
-					'placeholder' => __('Body'),
+					'label' => __('Body'),
 				));
 			?>
 			</div>
@@ -57,40 +53,31 @@ echo $this->Form->create('Contact');
 			<div id="contact-details" class="tab-pane">
 			<?php
 				echo $this->Form->input('name', array(
-					'label' => false,
-					'placeholder' => __('Name'),
+					'label' => __('Name'),
 				));
 				echo $this->Form->input('position', array(
-					'label' => false,
-					'placeholder' => __('Position'),
+					'label' => __('Position'),
 				));
 				echo $this->Form->input('address', array(
-					'label' => false,
-					'placeholder' => __('Address'),
+					'label' => __('Address'),
 				));
 				echo $this->Form->input('address2', array(
-					'label' => false,
-					'placeholder' => __('Address2'),
+					'label' => __('Address2'),
 				));
 				echo $this->Form->input('state', array(
-					'label' => false,
-					'placeholder' => __('State'),
+					'label' => __('State'),
 				));
 				echo $this->Form->input('country', array(
-					'label' => false,
-					'placeholder' => __('Country'),
+					'label' => __('Country'),
 				));
 				echo $this->Form->input('postcode', array(
-					'label' => false,
-					'placeholder' => __('Post Code'),
+					'label' => __('Post Code'),
 				));
 				echo $this->Form->input('phone', array(
-					'label' => false,
-					'placeholder' => __('Phone'),
+					'label' => __('Phone'),
 				));
 				echo $this->Form->input('fax', array(
-					'label' => false,
-					'placeholder' => __('Fax'),
+					'label' => __('Fax'),
 				));
 			?>
 			</div>

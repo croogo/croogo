@@ -35,16 +35,13 @@ echo $this->Form->create('Language');
 				));
 				echo $this->Form->input('id');
 				echo $this->Form->input('title', array(
-					'label' => false,
-					'placeholder' => __('Title'),
+					'label' => __('Title'),
 				));
 				echo $this->Form->input('native', array(
-					'label' => false,
-					'placeholder' => __('Native'),
+					'label' => __('Native'),
 				));
 				echo $this->Form->input('alias', array(
-					'label' => false,
-					'placeholder' => __('Alias'),
+					'label' => __('Alias'),
 				));
 			?>
 			</div>
