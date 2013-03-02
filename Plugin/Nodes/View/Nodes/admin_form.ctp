@@ -43,17 +43,14 @@ echo $this->Form->create('Node', array('url' => $formUrl));
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'label' => false,
-					'placeholder' => __('Title'),
+					'label' => __('Title'),
 				));
 				echo $this->Form->input('slug', array(
-					'label' => false,
+					'label' => __('Slug'),
 					'class' => 'span10 slug',
-					'placeholder' => __('Slug'),
 				));
 				echo $this->Form->input('excerpt', array(
-					'label' => false,
-					'placeholder' => __('Excerpt'),
+					'label' => __('Excerpt'),
 				));
 				echo $this->Form->input('body', array(
 					'label' => __('Body'),

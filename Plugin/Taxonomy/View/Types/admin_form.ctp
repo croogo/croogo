@@ -39,13 +39,13 @@ echo $this->Form->create('Type');
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'placeholder' => __('Title'),
+					'label' => __('Title'),
 				));
 				echo $this->Form->input('alias', array(
-					'placeholder' => __('Alias'),
+					'label' => __('Alias'),
 				));
 				echo $this->Form->input('description', array(
-					'placeholder' => __('Description'),
+					'label' => __('Description'),
 				));
 			?>
 			</div>

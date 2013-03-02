@@ -29,40 +29,40 @@ echo $this->Form->create(null, array(
 			),
 		));
 		echo $this->Form->input('Install.host', array(
-			'placeholder' => __('Host'),
+			'label' => __('Host'),
 			'default' => 'localhost',
 			'tooltip' => __('Database hostname or IP Address'),
 			'before' => '<span class="add-on"><i class="icon-home"></i></span>',
 			'div' => 'input input-prepend',
 		));
 		echo $this->Form->input('Install.login', array(
-			'placeholder' => __('Login'),
+			'label' => __('Login'),
 			'default' => 'root',
 			'tooltip' => __('Database login/username'),
 			'before' => '<span class="add-on"><i class="icon-user"></i></span>',
 			'div' => 'input input-prepend',
 		));
 		echo $this->Form->input('Install.password', array(
-			'placeholder' => __('Password'),
+			'label' => __('Password'),
 			'tooltip' => __('Database password'),
 			'before' => '<span class="add-on"><i class="icon-key"></i></span>',
 			'div' => 'input input-prepend',
 		));
 		echo $this->Form->input('Install.database', array(
-			'placeholder' => __('Name'),
+			'label' => __('Name'),
 			'default' => 'croogo',
 			'tooltip' => __('Database name'),
 			'before' => '<span class="add-on"><i class="icon-briefcase"></i></span>',
 			'div' => 'input input-prepend',
 		));
 		echo $this->Form->input('Install.prefix', array(
-			'placeholder' => __('Prefix'),
+			'label' => __('Prefix'),
 			'tooltip' => __('Table prefix (leave blank if unknown)'),
 			'before' => '<span class="add-on"><i class="icon-minus"></i></span>',
 			'div' => 'input input-prepend',
 		));
 		echo $this->Form->input('Install.port', array(
-			'placeholder' => __('Port'),
+			'label' => __('Port'),
 			'tooltip' => __('Database port (leave blank if unknown)'),
 			'before' => '<span class="add-on"><i class="icon-asterisk"></i></span>',
 			'div' => 'input input-prepend',

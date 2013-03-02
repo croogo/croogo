@@ -39,25 +39,25 @@ echo $this->Form->create('Block');
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'placeholder' => __('Title'),
+					'label' => __('Title'),
 				));
 
 				echo $this->Form->input('alias', array(
-					'placeholder' => __('Alias'),
+					'label' => __('Alias'),
 					'rel' => __('unique name for your block'),
 				));
 				echo $this->Form->input('region_id', array(
-					'placeholder' => __('Region'),
+					'label' => __('Region'),
 					'rel' => __('if you are not sure, choose \'none\''),
 				));
 				echo $this->Form->input('body', array(
-					'placeholder' => __('Body'),
+					'label' => __('Body'),
 				));
 				echo $this->Form->input('class', array(
-					'placeholder' => __('Class')
+					'label' => __('Class')
 				));
 				echo $this->Form->input('element', array(
-					'placeholder' => __('Element')
+					'label' => __('Element')
 				));
 			?>
 			</div>
@@ -73,7 +73,7 @@ echo $this->Form->create('Block');
 			<div id="block-visibilities" class="tab-pane">
 			<?php
 				echo $this->Form->input('Block.visibility_paths', array(
-					'placeholder' => __('Visibility Paths'),
+					'label' => false,
 					'rel' => __('Enter one URL per line. Leave blank if you want this Block to appear in all pages.')
 				));
 			?>
@@ -82,7 +82,7 @@ echo $this->Form->create('Block');
 			<div id="block-params" class="tab-pane">
 			<?php
 				echo $this->Form->input('Block.params', array(
-					'placeholder' => __('Params'),
+					'label' => false,
 				));
 			?>
 			</div>
@@ -102,7 +102,7 @@ echo $this->Form->create('Block');
 				'class' => false,
 			)) .
 			$this->Form->input('show_title', array(
-				'label' => __('Show title ?'),
+				'label' => __('Show title?'),
 				'class' => false,
 			)) .
 			$this->Html->endBox();

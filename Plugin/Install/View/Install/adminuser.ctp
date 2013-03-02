@@ -11,18 +11,18 @@ echo $this->Form->create(null, array(
 			'class' => 'span10',
 		));
 		echo $this->Form->input('User.username', array(
-			'placeholder' => __('Username'),
+			'label' => __('Username'),
 			'before' => '<span class="add-on"><i class="icon-user"></i></span>',
 			'div' => 'input text input-prepend',
 		));
 		echo $this->Form->input('User.password', array(
-			'placeholder' => __('New Password'),
+			'label' => __('New Password'),
 			'value' => '',
 			'before' => '<span class="add-on"><i class="icon-key"></i></span>',
 			'div' => 'input password input-prepend',
 		));
 		echo $this->Form->input('User.verify_password', array(
-			'placeholder' => __('Verify Password'),
+			'label' => __('Verify Password'),
 			'type' => 'password',
 			'value' => '',
 			'before' => '<span class="add-on"><i class="icon-key"></i></span>',

@@ -48,16 +48,16 @@ if ($this->request->params['action'] == 'admin_add') {
 					'label' => false,
 				));
 				echo $this->Form->input('username', array(
-					'placeholder' => __('Username'),
+					'label' => __('Username'),
 				));
 				echo $this->Form->input('name', array(
-					'placeholder' => __('Name'),
+					'label' => __('Name'),
 				));
 				echo $this->Form->input('email', array(
-					'placeholder' => __('Email'),
+					'label' => __('Email'),
 				));
 				echo $this->Form->input('website', array(
-					'placeholder' => __('Website'),
+					'label' => __('Website'),
 				));
 			?>
 			</div>

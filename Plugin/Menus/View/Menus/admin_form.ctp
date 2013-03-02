@@ -37,16 +37,13 @@ echo $this->Form->create('Menu');
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'label' => false,
-					'placeholder' => __('Title'),
+					'label' => __('Title'),
 				));
 				echo $this->Form->input('alias', array(
-					'label' => false,
-					'placeholder' => __('Alias'),
+					'label' => __('Alias'),
 				));
 				echo $this->Form->input('description', array(
-					'label' => false,
-					'placeholder' => __('Description'),
+					'label' => __('Description'),
 				));
 			?>
 			</div>

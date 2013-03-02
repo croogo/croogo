@@ -42,11 +42,11 @@ echo $this->Form->create('Vocabulary');
 					'label' => false,
 				));
 				echo $this->Form->input('title', array(
-					'placeholder' => __('Title'),
+					'label' => __('Title'),
 				));
 				echo $this->Form->input('alias', array(
 					'class' => 'alias span10',
-					'placeholder' => __('Alias'),
+					'label' => __('Alias'),
 				));
 				echo $this->Form->input('description', array(
 					'label' => __('Description'),
