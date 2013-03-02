@@ -109,6 +109,9 @@ class Comment extends AppModel {
 		$record = array();
 		$node = array();
 
+		$nodeId = (int) $nodeId;
+		$parentId = is_null($parentId) ? null : (int) $parentId;
+
 		$node = $this->Node->findById($nodeId);
 		if (empty($node)) {
 			throw new NotFoundException(__d('comments', 'Invalid Node id'));
