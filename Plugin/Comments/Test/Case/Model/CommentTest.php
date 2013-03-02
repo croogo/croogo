@@ -53,7 +53,7 @@ class CommentTest extends CroogoTestCase {
 			)
 		);
 
-		$result = (bool) $this->Comment->add(
+		$result = $this->Comment->add(
 			$data,
 			1,
 			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 2))
@@ -76,7 +76,7 @@ class CommentTest extends CroogoTestCase {
 			)
 		);
 
-		$result = (bool) $this->Comment->add(
+		$result = $this->Comment->add(
 			$data,
 			1,
 			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 2)),
@@ -104,19 +104,20 @@ class CommentTest extends CroogoTestCase {
 			)
 		);
 
-		$result = (bool) $this->Comment->add(
+		$result = $this->Comment->add(
 			$data,
 			1,
 			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 2)),
 			1
 		);
+
 		Configure::write('Comment.level', $oldConf);
 		$newCount = $this->Comment->find('count');
 		$newComment = $this->Comment->find('first', array('order' => 'Comment.created DESC'));
 
-		$this->assertEmpty($newComment['Comment']['parent_id']);
-		$this->assertEquals($oldCount + 1, $newCount);
 		$this->assertTrue($result);
+		$this->assertEquals($oldCount + 1, $newCount);
+		$this->assertEmpty($newComment['Comment']['parent_id']);
 	}
 
 	public function testAdd_ThrowsException_When_InvalidNodeId() {

@@ -79,7 +79,7 @@ class Comment extends AppModel {
 		'Node' => array(
 			'className' => 'Nodes.Node',
 			'counterCache' => true,
-			'counterScope' => array('Comment.status' => 1),
+			'counterScope' => array('Comment.status' => self::STATUS_APPROVED),
 		),
 		'User' => array(
 			'className' => 'Users.User',
@@ -161,11 +161,9 @@ class Comment extends AppModel {
 	}
 
 	public function isAllowToCommentOnParent($parentId){
-		if (is_null($parentId) || !$this->exists($parentId)) {
+		if (!$this->exists($parentId)) {
 			throw new NotFoundException(__d('comments', 'Invalid Comment id'));
 		}
-
-		$parentId;
 
 		$path = $this->getPath($parentId, array($this->escapeField()));
 		$level = count($path);
