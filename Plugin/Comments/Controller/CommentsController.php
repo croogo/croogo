@@ -221,23 +221,16 @@ class CommentsController extends CommentsAppController {
 				'Node.status' => 1,
 			),
 		));
-		if (!isset($node['Node']['id'])) {
-			$this->Session->setFlash(__('Invalid Node'), 'default', array('class' => 'error'));
-			$this->redirect('/');
+
+		if (!is_null($parentId) && !$this->Comment->isAllowToCommentOnParent($parentId)) {
+			$this->Session->setFlash(__('Maximum level reached. You cannot reply to that comment.'), 'default', array('class' => 'error'));
+			$this->redirect($node['Node']['url']);
 		}
-		if ($parentId) {
-			$commentPath = $this->Comment->getPath($parentId, array('Comment.id'));
-			$commentLevel = count($commentPath);
-			if ($commentLevel > Configure::read('Comment.level')) {
-				$this->Session->setFlash(__('Maximum level reached. You cannot reply to that comment.'), 'default', array('class' => 'error'));
-				$this->redirect($node['Node']['url']);
-			}
-		}
+
 		$type = $this->Comment->Node->Taxonomy->Vocabulary->Type->findByAlias($node['Node']['type']);
-		$continue = false;
-		if ($type['Type']['comment_status'] == 2 && $node['Node']['comment_status']) {
-			$continue = true;
-		} else {
+		$continue = $type['Type']['comment_status'] == 2 && $node['Node']['comment_status'];
+
+		if (!$continue) {
 			$this->Session->setFlash(__('Comments are not allowed.'), 'default', array('class' => 'error'));
 			$this->redirect(array(
 				'controller' => 'nodes',
@@ -250,58 +243,21 @@ class CommentsController extends CommentsAppController {
 		// spam protection and captcha
 		$continue = $this->_spam_protection($continue, $type, $node);
 		$continue = $this->_captcha($continue, $type, $node);
-
-		$success = 0;
+		$success = false;
 		if (!empty($this->request->data) && $continue === true) {
-			$data = array();
-			if ($parentId &&
-				$this->Comment->hasAny(array(
-					'Comment.id' => $parentId,
-					'Comment.node_id' => $nodeId,
-					'Comment.status' => 1,
-				))) {
-				$data['parent_id'] = $parentId;
-			}
-			$data['node_id'] = $nodeId;
-			if ($this->Session->check('Auth.User.id')) {
-				$data['user_id'] = $this->Session->read('Auth.User.id');
-				$data['name'] = $this->Session->read('Auth.User.name');
-				$data['email'] = $this->Session->read('Auth.User.email');
-				$data['website'] = $this->Session->read('Auth.User.website');
-			} else {
-				$data['name'] = htmlspecialchars($this->request->data['Comment']['name']);
-				$data['email'] = $this->request->data['Comment']['email'];
-				$data['website'] = $this->request->data['Comment']['website'];
-			}
-			$data['body'] = htmlspecialchars($this->request->data['Comment']['body']);
-			$data['ip'] = $_SERVER['REMOTE_ADDR'];
-			$data['type'] = $node['Node']['type'];
-			if ($type['Type']['comment_approve']) {
-				$data['status'] = 1;
-			} else {
-				$data['status'] = 0;
-			}
-
-			if ($this->Comment->save($data)) {
-				$success = 1;
+			$data = $this->request->data;
+			$data['Comment']['ip'] = env('REMOTE_ADDR');
+			$success = $this->Comment->add($data, $nodeId, $type, $parentId, $this->Auth->user());
+			if ($success) {
 				if ($type['Type']['comment_approve']) {
-					$this->Session->setFlash(__('Your comment has been added successfully.'), 'default', array('class' => 'success'));
+					$messageFlash = __('Your comment has been added successfully.');
 				} else {
-					$this->Session->setFlash(__('Your comment will appear after moderation.'), 'default', array('class' => 'success'));
+					$messageFlash = __('Your comment will appear after moderation.');
 				}
+				$this->Session->setFlash($messageFlash, 'default', array('class' => 'success'));
 
-				// Email notification
 				if (Configure::read('Comment.email_notification')) {
-					$this->Email->from = Configure::read('Site.title') . ' ' .
-						'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
-					$this->Email->to = Configure::read('Site.email');
-					$this->Email->subject = '[' . Configure::read('Site.title') . '] ' .
-						__('New comment posted under') . ' ' . $node['Node']['title'];
-					$this->set('node', $node);
-					$this->set('data', $data);
-					$this->set('commentId', $this->Comment->id);
-					$this->Email->template = 'Comments.comment';
-					$this->Email->send();
+					$this->_sendEmail($node, $data);
 				}
 
 				$this->redirect(Router::url($node['Node']['url'], true) . '#comment-' . $this->Comment->id);
@@ -357,6 +313,27 @@ class CommentsController extends CommentsAppController {
 		}
 
 		return $continue;
+	}
+
+/**
+ * sendEmail
+ *
+ * @param array $node Node data
+ * @param array $comment Comment data
+ * @return void
+ * @access protected
+ */
+	protected function _sendEmail($node, $data){
+		$this->Email->from = Configure::read('Site.title') . ' ' .
+			'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
+		$this->Email->to = Configure::read('Site.email');
+		$this->Email->subject = '[' . Configure::read('Site.title') . '] ' .
+			__('New comment posted under') . ' ' . $node['Node']['title'];
+		$this->set('node', $node);
+		$this->set('data', $data);
+		$this->set('commentId', $this->Comment->id);
+		$this->Email->template = 'Comments.comment';
+		$this->Email->send();
 	}
 
 /**

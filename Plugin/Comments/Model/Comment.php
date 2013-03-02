@@ -24,6 +24,9 @@ class Comment extends AppModel {
  */
 	public $name = 'Comment';
 
+	const STATUS_APPROVED = 1;
+	const STATUS_MODERATED = 0;
+
 /**
  * Behaviors used by the Model
  *
@@ -52,10 +55,12 @@ class Comment extends AppModel {
 		'body' => array(
 			'rule' => 'notEmpty',
 			'message' => 'This field cannot be left blank.',
+			'required' => true,
 		),
 		'name' => array(
 			'rule' => 'notEmpty',
 			'message' => 'This field cannot be left blank.',
+			'required' => true,
 		),
 		'email' => array(
 			'rule' => 'email',
@@ -74,7 +79,7 @@ class Comment extends AppModel {
 		'Node' => array(
 			'className' => 'Nodes.Node',
 			'counterCache' => true,
-			'counterScope' => array('Comment.status' => 1),
+			'counterScope' => array('Comment.status' => self::STATUS_APPROVED),
 		),
 		'User' => array(
 			'className' => 'Users.User',
@@ -89,5 +94,81 @@ class Comment extends AppModel {
 	public $filterArgs = array(
 		'status' => array('type' => 'value'),
 	);
+
+/**
+ * Add a new Comment
+ *
+ * @param array $data Comment data (Usually POSTed data from Comment form)
+ * @param int 	$nodeId Node Id (Node Id from where comment was posted).
+ * @param array $nodeType Type data (Node's Type data)
+ * @param mixed int/null $parentId id of parent comment (if it is a reply)
+ * @param array $userData author data (User data (if logged in) / Author fields from Comment form)
+ *
+ * @return bool true if comment was added, false otherwise.
+ */
+
+	public function add($data, $nodeId, $nodeType, $parentId = null, $userData = array()) {
+		$record = array();
+		$node = array();
+
+		$nodeId = (int) $nodeId;
+		$parentId = is_null($parentId) ? null : (int) $parentId;
+
+		$node = $this->Node->findById($nodeId);
+		if (empty($node)) {
+			throw new NotFoundException(__d('comments', 'Invalid Node id'));
+		}
+
+		if (
+			!is_null($parentId) &&
+			$this->isAllowToCommentOnParent($parentId) &&
+			$this->parentCommentIsApproved($parentId, $nodeId)
+		) {
+			$record['parent_id'] = $parentId;
+		}
+
+		if (!empty($userData)) {
+			$record['user_id'] = $userData['User']['id'];
+			$record['name'] = $userData['User']['name'];
+			$record['email'] = $userData['User']['email'];
+			$record['website'] = $userData['User']['website'];
+		} else {
+			$record['name'] = $data[$this->alias]['name'];
+			$record['email'] = $data[$this->alias]['email'];
+			$record['website'] = $data[$this->alias]['website'];
+		}
+
+		$record['ip'] = $data[$this->alias]['ip'];
+		$record['node_id'] = $node['Node']['id'];
+		$record['body'] = h($data[$this->alias]['body']);
+		$record['type'] = $nodeType['Type']['alias'];
+
+		if ($nodeType['Type']['comment_approve']) {
+			$record['status'] = self::STATUS_APPROVED;
+		} else {
+			$record['status'] = self::STATUS_MODERATED;
+		}
+
+		return (bool) $this->save($record);
+	}
+
+	public function parentCommentIsApproved($parentId, $nodeId) {
+		return $this->hasAny(array(
+			$this->escapeField() => $parentId,
+			$this->escapeField('node_id') => $nodeId,
+			$this->escapeField('status') => 1,
+		));
+	}
+
+	public function isAllowToCommentOnParent($parentId){
+		if (!$this->exists($parentId)) {
+			throw new NotFoundException(__d('comments', 'Invalid Comment id'));
+		}
+
+		$path = $this->getPath($parentId, array($this->escapeField()));
+		$level = count($path);
+
+		return Configure::read('Comment.level') > $level;
+	}
 
 }
