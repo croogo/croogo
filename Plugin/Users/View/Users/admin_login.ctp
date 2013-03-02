@@ -6,13 +6,13 @@
 			'label' => false,
 		));
 		echo $this->Form->input('username', array(
-			'placeholder' => __d('croogo', 'Username'),
+			'label' => __d('croogo', 'Username'),
 			'before' => '<span class="add-on"><i class="icon-user"></i></span>',
 			'div' => 'input-prepend text',
 			'class' => 'span11',
 		));
 		echo $this->Form->input('password', array(
-			'placeholder' => 'Password',
+			'label' => 'Password',
 			'before' => '<span class="add-on"><i class="icon-key"></i></span>',
 			'div' => 'input-prepend password',
 			'class' => 'span11',

@@ -62,11 +62,11 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 				));
 				echo $this->Form->input('title', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Title'),
+					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('link', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Link'),
+					'label' => __d('croogo', 'Link'),
 				));
 				echo $this->Html->link(__d('croogo', 'Link to a Node'), Router::url(array(
 					'plugin' => 'nodes',
@@ -98,23 +98,23 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 			<?php
 				echo $this->Form->input('class', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Class'),
+					'label' => __d('croogo', 'Class'),
 				));
 				echo $this->Form->input('description', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Description'),
+					'label' => __d('croogo', 'Description'),
 				));
 				echo $this->Form->input('rel', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Rel'),
+					'label' => __d('croogo', 'Rel'),
 				));
 				echo $this->Form->input('target', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Target'),
+					'label' => __d('croogo', 'Target'),
 				));
 				echo $this->Form->input('params', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Params'),
+					'label' => __d('croogo', 'Params'),
 				));
 			?>
 			</div>

@@ -39,25 +39,25 @@ echo $this->Form->create('Block');
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'placeholder' => __d('croogo', 'Title'),
+					'label' => __d('croogo', 'Title'),
 				));
 
 				echo $this->Form->input('alias', array(
-					'placeholder' => __d('croogo', 'Alias'),
+					'label' => __d('croogo', 'Alias'),
 					'rel' => __d('croogo', 'unique name for your block'),
 				));
 				echo $this->Form->input('region_id', array(
-					'placeholder' => __d('croogo', 'Region'),
+					'label' => __d('croogo', 'Region'),
 					'rel' => __d('croogo', 'if you are not sure, choose \'none\''),
 				));
 				echo $this->Form->input('body', array(
-					'placeholder' => __d('croogo', 'Body'),
+					'label' => __d('croogo', 'Body'),
 				));
 				echo $this->Form->input('class', array(
-					'placeholder' => __d('croogo', 'Class')
+					'label' => __d('croogo', 'Class')
 				));
 				echo $this->Form->input('element', array(
-					'placeholder' => __d('croogo', 'Element')
+					'label' => __d('croogo', 'Element')
 				));
 			?>
 			</div>
@@ -73,7 +73,7 @@ echo $this->Form->create('Block');
 			<div id="block-visibilities" class="tab-pane">
 			<?php
 				echo $this->Form->input('Block.visibility_paths', array(
-					'placeholder' => __d('croogo', 'Visibility Paths'),
+					'label' => __d('croogo', 'Visibility Paths'),
 					'rel' => __d('croogo', 'Enter one URL per line. Leave blank if you want this Block to appear in all pages.')
 				));
 			?>
@@ -82,7 +82,7 @@ echo $this->Form->create('Block');
 			<div id="block-params" class="tab-pane">
 			<?php
 				echo $this->Form->input('Block.params', array(
-					'placeholder' => __d('croogo', 'Params'),
+					'label' => __d('croogo', 'Params'),
 				));
 			?>
 			</div>

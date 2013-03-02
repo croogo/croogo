@@ -35,7 +35,7 @@ echo $this->Form->create('Locale', array(
 			<?php
 				echo $this->Form->input('Locale.content', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Content'),
+					'label' => __d('croogo', 'Content'),
 					'data-placement' => 'top',
 					'value' => $content,
 					'type' => 'textarea',

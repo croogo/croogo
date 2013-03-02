@@ -39,13 +39,13 @@ echo $this->Form->create('Type');
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'placeholder' => __d('croogo', 'Title'),
+					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('alias', array(
-					'placeholder' => __d('croogo', 'Alias'),
+					'label' => __d('croogo', 'Alias'),
 				));
 				echo $this->Form->input('description', array(
-					'placeholder' => __d('croogo', 'Description'),
+					'label' => __d('croogo', 'Description'),
 				));
 			?>
 			</div>
@@ -96,7 +96,7 @@ echo $this->Form->create('Type');
 			<div id="type-params" class="tab-pane">
 			<?php
 				echo $this->Form->input('Type.params', array(
-					'placeholder' => __d('croogo', 'Params'),
+					'label' => __d('croogo', 'Params'),
 				));
 			?>
 			</div>

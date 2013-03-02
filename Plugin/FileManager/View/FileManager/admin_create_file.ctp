@@ -39,7 +39,7 @@ echo $this->Form->create('FileManager', array(
 			<?php
 				echo $this->Form->input('FileManager.name', array(
 					'type' => 'text',
-					'placeholder' => __d('croogo', 'Filename'),
+					'label' => __d('croogo', 'Filename'),
 					'class' => 'span10',
 				));
 			?>

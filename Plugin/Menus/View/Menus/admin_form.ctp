@@ -38,15 +38,15 @@ echo $this->Form->create('Menu');
 				));
 				echo $this->Form->input('title', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Title'),
+					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('alias', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Alias'),
+					'label' => __d('croogo', 'Alias'),
 				));
 				echo $this->Form->input('description', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Description'),
+					'label' => __d('croogo', 'Description'),
 				));
 			?>
 			</div>
@@ -55,7 +55,7 @@ echo $this->Form->create('Menu');
 			<?php
 				echo $this->Form->input('params', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Params'),
+					'label' => __d('croogo', 'Params'),
 				));
 			?>
 			</div>

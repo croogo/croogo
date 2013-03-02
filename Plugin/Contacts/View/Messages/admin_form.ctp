@@ -32,22 +32,22 @@ echo $this->Form->create('Message');
 					'class' => 'span10',
 				));
 				echo $this->Form->input('name', array(
-					'placeholder' => __d('croogo', 'Name'),
+					'label' => __d('croogo', 'Name'),
 				));
 				echo $this->Form->input('email', array(
-					'placeholder' => __d('croogo', 'Email'),
+					'label' => __d('croogo', 'Email'),
 				));
 				echo $this->Form->input('title', array(
-					'placeholder' => __d('croogo', 'Title'),
+					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('body', array(
-					'placeholder' => __d('croogo', 'Body'),
+					'label' => __d('croogo', 'Body'),
 				));
 				echo $this->Form->input('phone', array(
-					'placeholder' => __d('croogo', 'Phone'),
+					'label' => __d('croogo', 'Phone'),
 				));
 				echo $this->Form->input('address', array(
-					'placeholder' => __d('croogo', 'Address'),
+					'label' => __d('croogo', 'Address'),
 				));
 			?>
 			</div>

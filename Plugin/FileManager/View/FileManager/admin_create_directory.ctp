@@ -38,7 +38,7 @@ echo $this->Form->create('FileManager', array(
 			<?php
 				echo $this->Form->input('FileManager.name', array(
 					'type' => 'text',
-					'placeholder' => __d('croogo', 'Directory name'),
+					'label' => __d('croogo', 'Directory name'),
 				));
 			?>
 			</div>
