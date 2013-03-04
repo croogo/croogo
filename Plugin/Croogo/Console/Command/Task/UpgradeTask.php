@@ -184,11 +184,11 @@ class UpgradeTask extends AppShell {
 		$this->_loadSettingsPlugin();
 
 		// activate/move Wysiwyg before Tinymce
+		$bootstraps = Configure::read('Hook.bootstraps');
+		$plugins = array_flip(explode(',', $bootstraps));
 		if (empty($plugins['Tinymce'])) {
 			return;
 		}
-		$bootstraps = Configure::read('Hook.bootstraps');
-		$plugins = array_flip(explode(',', $bootstraps));
 		foreach ($plugins as $plugin => &$value) {
 			$value *= 10;
 		}
