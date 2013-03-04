@@ -6,8 +6,8 @@
 		<title><?php echo $title_for_layout; ?> - <?php echo __('Croogo'); ?></title>
 		<?php
 		echo $this->Html->css(array(
-			'croogo-bootstrap',
-			'croogo-bootstrap-responsive',
+			'/croogo/css/croogo-bootstrap',
+			'/croogo/css/croogo-bootstrap-responsive',
 		));
 		echo $this->Html->script(array(
 			'/croogo/js/html5',

@@ -47,7 +47,7 @@ It is recommended that you install Croogo using the web based installer for secu
 	generate a better result.  Edit the `COMPILE` value in the `Makefile`
 	accordingly and run:
 
-	`make`
+	`( cd Plugin/Croogo ; make )`
 
 ## Links
 

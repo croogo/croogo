@@ -7,8 +7,8 @@
 		<?php
 
 		echo $this->Html->css(array(
-			'croogo-bootstrap',
-			'croogo-bootstrap-responsive',
+			'/croogo/css/croogo-bootstrap',
+			'/croogo/css/croogo-bootstrap-responsive',
 			'/croogo/css/thickbox',
 		));
 		echo $this->Layout->js();
@@ -27,7 +27,7 @@
 			'/croogo/js/underscore-min',
 			'/croogo/js/admin',
 			'/croogo/js/choose',
-			'croogo-bootstrap.js',
+			'/croogo/js/croogo-bootstrap.js',
 		));
 
 		echo $this->fetch('script');
