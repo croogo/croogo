@@ -31,7 +31,7 @@ class ExtShell extends AppShell {
  *
  * @var array
  */
-	public $uses = array('Setting');
+	public $uses = array('Settings.Setting');
 
 /**
  * CroogoPlugin class

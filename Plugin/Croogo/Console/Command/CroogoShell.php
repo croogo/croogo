@@ -18,7 +18,7 @@ App::uses('Security', 'Utility');
 class CroogoShell extends AppShell {
 
 	public $tasks = array(
-		'Upgrade',
+		'Croogo.Upgrade',
 	);
 
 /**
