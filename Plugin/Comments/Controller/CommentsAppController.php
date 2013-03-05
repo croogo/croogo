@@ -1,4 +1,5 @@
 <?php
+App::uses('AppController', 'Controller');
 /**
  * Comments App Controller
  *
