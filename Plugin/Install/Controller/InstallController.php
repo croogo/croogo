@@ -117,7 +117,9 @@ class InstallController extends Controller {
 
 		if (!empty($this->request->data)) {
 			$InstallManager = new InstallManager();
-			$result = $InstallManager->createDatabaseFile($this->request->data);
+			$result = $InstallManager->createDatabaseFile(array(
+				'Install' => $this->request->data,
+			));
 			if ($result !== true) {
 				$this->Session->setFlash($result, 'default', array('class' => 'error'));
 			} else {
