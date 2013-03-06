@@ -137,8 +137,19 @@ class InstallController extends Controller {
 	public function data() {
 		$this->_check();
 		$this->set('title_for_layout', __('Step 2: Build database'));
+
+		$this->loadModel('Install.Install');
+		$ds = $this->Install->getDataSource();
+		$ds->cacheSources = false;
+		$sources = $ds->listSources();
+		if (!empty($sources)) {
+			$this->Session->setFlash(
+				__('Warning: Database "%s" is not empty.', $ds->config['database']),
+				'default', array('class' => 'error')
+			);
+		}
+
 		if (isset($this->params['named']['run'])) {
-			$this->loadModel('Install.Install');
 			$this->Install->setupDatabase();
 
 			$InstallManager = new InstallManager();
