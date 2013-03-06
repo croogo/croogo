@@ -29,7 +29,11 @@ class BlocksComponent extends Component {
  */
 	public function initialize(Controller $controller) {
 		$this->controller = $controller;
-		$this->Block = ClassRegistry::init('Blocks.Block');
+		if (isset($controller->Block)) {
+			$this->Block = $controller->Block;
+		} else {
+			$this->Block = ClassRegistry::init('Blocks.Block');
+		}
 	}
 
 /**

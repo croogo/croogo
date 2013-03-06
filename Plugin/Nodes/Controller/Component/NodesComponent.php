@@ -29,7 +29,11 @@ class NodesComponent extends Component {
  */
 	public function initialize(Controller $controller) {
 		$this->controller = $controller;
-		$this->Node = ClassRegistry::init('Nodes.Node');
+		if (isset($controller->Node)) {
+			$this->Node = $controller->Node;
+		} else {
+			$this->Node = ClassRegistry::init('Nodes.Node');
+		}
 
 		if (Configure::read('Access Control.multiRole')) {
 			Configure::write('Acl.classname', 'Acl.HabtmDbAcl');
