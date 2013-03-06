@@ -25,8 +25,7 @@ class UsersShell extends AppShell {
 						),
 					),
 				),
-			))
-			;
+			));
 	}
 
 /**

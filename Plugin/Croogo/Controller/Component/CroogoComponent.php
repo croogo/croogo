@@ -77,10 +77,8 @@ class CroogoComponent extends Component {
 					}
 				}
 				return $this->{$name};
-			break;
 			default:
 				return parent::__get($name);
-			break;
 		}
 	}
 

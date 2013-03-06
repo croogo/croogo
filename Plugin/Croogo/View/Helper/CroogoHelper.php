@@ -108,7 +108,7 @@ class CroogoHelper extends AppHelper {
 			if (!empty($children) && $depth > 0) {
 				$liOptions['class'] = ' dropdown-submenu';
 			}
-			$out  .= $this->Html->tag('li', $link . $children, $liOptions);
+			$out .= $this->Html->tag('li', $link . $children, $liOptions);
 		}
 		return $this->Html->tag('ul', $out, $htmlAttributes);
 	}

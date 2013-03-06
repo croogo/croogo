@@ -89,7 +89,7 @@ class CroogoJsonReaderTest extends CroogoTestCase {
 			),
 		);
 		$this->CroogoJsonReader->dump(basename($this->testFile), $settings);
-		$expected =<<<END
+		$expected = <<<END
 {
 \s+"Site": {
 \s+"title": "Croogo - Test \(Edited\)"

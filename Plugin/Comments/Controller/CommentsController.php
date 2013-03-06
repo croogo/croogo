@@ -323,7 +323,7 @@ class CommentsController extends CommentsAppController {
  * @return void
  * @access protected
  */
-	protected function _sendEmail($node, $data){
+	protected function _sendEmail($node, $data) {
 		$this->Email->from = Configure::read('Site.title') . ' ' .
 			'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
 		$this->Email->to = Configure::read('Site.email');

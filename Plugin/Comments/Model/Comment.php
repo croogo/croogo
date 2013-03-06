@@ -104,13 +104,14 @@ class Comment extends AppModel {
  * @param array $userData author data (User data (if logged in) / Author fields from Comment form)
  *
  * @return bool true if comment was added, false otherwise.
+ * @throws NotFoundException
  */
 	public function add($data, $nodeId, $nodeType, $parentId = null, $userData = array()) {
 		$record = array();
 		$node = array();
 
-		$nodeId = (int) $nodeId;
-		$parentId = is_null($parentId) ? null : (int) $parentId;
+		$nodeId = (int)$nodeId;
+		$parentId = is_null($parentId) ? null : (int)$parentId;
 
 		$node = $this->Node->findById($nodeId);
 		if (empty($node)) {
@@ -147,7 +148,7 @@ class Comment extends AppModel {
 			$record['status'] = self::STATUS_PENDING;
 		}
 
-		return (bool) $this->save($record);
+		return (bool)$this->save($record);
 	}
 
 /**
@@ -171,7 +172,7 @@ class Comment extends AppModel {
  * @return boolean
  * @throws NotFoundException
  */
-	public function isValidLevel($commentId){
+	public function isValidLevel($commentId) {
 		if (!$this->exists($commentId)) {
 			throw new NotFoundException(__d('comments', 'Invalid Comment id'));
 		}

@@ -133,7 +133,7 @@ class BlocksController extends BlocksAppController {
 			}
 		}
 		$regions = $this->Block->Region->find('list');
-		$roles   = $this->Role->find('list');
+		$roles = $this->Role->find('list');
 		$this->set(compact('regions', 'roles'));
 	}
 

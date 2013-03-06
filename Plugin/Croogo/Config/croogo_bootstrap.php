@@ -99,7 +99,7 @@ $plugins = array_filter(explode(',', $pluginBootstraps));
 
 // Re-order plugins based on denpendencies:
 // for e.g, Tinymce depends on Wysiwyg
-// if in Hook.bootstraps Tinymce appears before Wysiwyg, 
+// if in Hook.bootstraps Tinymce appears before Wysiwyg,
 // we will reorder it so that it loads right after Wysiwyg
 $pluginsOrdered = $plugins;
 foreach ($plugins as $p) {
@@ -112,8 +112,8 @@ foreach ($plugins as $p) {
 				$dk = array_search($d, $pluginsOrdered);
 				if ($dk > $k) {
 					unset($pluginsOrdered[$k]);
-					$pluginsOrdered = array_slice($pluginsOrdered, 0, $k + 1, true) + 
-						array($p => $p) + 
+					$pluginsOrdered = array_slice($pluginsOrdered, 0, $k + 1, true) +
+						array($p => $p) +
 						array_slice($pluginsOrdered, $k + 1, count($pluginsOrdered) - 1, true);
 					$pluginsOrdered = array_values($pluginsOrdered);
 				}

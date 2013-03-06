@@ -10,7 +10,7 @@ class MenusComponent extends Component {
  */
 	public $components = array(
 		'Croogo.Croogo',
-		);
+	);
 
 /**
  * Menus for layout

@@ -50,7 +50,7 @@ class TaxonomyTest extends CroogoTestCase {
 	}
 
 	public function testTermInVocabulary() {
-		$this->assertEquals(1, $this->Taxonomy->termInVocabulary(1, 1));  // Uncategorized in Categories
+		$this->assertEquals(1, $this->Taxonomy->termInVocabulary(1, 1)); // Uncategorized in Categories
 		$this->assertFalse($this->Taxonomy->termInVocabulary(1, 3)); // Uncategorized in non-existing vocabulary
 	}
 }

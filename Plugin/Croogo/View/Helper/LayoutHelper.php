@@ -116,10 +116,8 @@ class LayoutHelper extends AppHelper {
 		switch ($name) {
 			case 'node':
 				return $this->_View->Nodes->node;
-			break;
 			default:
 				return parent::__get($name);
-			break;
 		}
 	}
 
@@ -130,10 +128,8 @@ class LayoutHelper extends AppHelper {
 		switch ($name) {
 			case 'node':
 				return $this->_View->Nodes->node = $val;
-			break;
 			default:
 				return parent::__set($name, $val);
-			break;
 		}
 	}
 
@@ -210,7 +206,7 @@ class LayoutHelper extends AppHelper {
 
 		if (!empty($url)) {
 			if (isset($url['pass'])) {
-				$passVars = is_string($url['pass']) ?  array($url['pass']) : $url['pass'];
+				$passVars = is_string($url['pass']) ? array($url['pass']) : $url['pass'];
 				foreach ($passVars as $passField) {
 					$url[] = $item[$model][$passField];
 				}
@@ -218,7 +214,7 @@ class LayoutHelper extends AppHelper {
 			}
 
 			if (isset($url['named'])) {
-				$namedVars = is_string($url['named']) ?  array($url['named']) : $url['named'];
+				$namedVars = is_string($url['named']) ? array($url['named']) : $url['named'];
 				foreach ($namedVars as $namedField) {
 					$url[$namedField] = $item[$model][$namedField];
 				}

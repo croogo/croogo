@@ -303,10 +303,10 @@ class Node extends NodesAppModel {
 		$filter = '%' . $data['filter'] . '%';
 		$conditions = array(
 			'OR' => array(
-				$this->alias . '.title LIKE'  => $filter,
-				$this->alias . '.excerpt LIKE'  => $filter,
-				$this->alias . '.body LIKE'  => $filter,
-				$this->alias . '.terms LIKE'  => $filter,
+				$this->alias . '.title LIKE' => $filter,
+				$this->alias . '.excerpt LIKE' => $filter,
+				$this->alias . '.body LIKE' => $filter,
+				$this->alias . '.terms LIKE' => $filter,
 			),
 		);
 		return $conditions;

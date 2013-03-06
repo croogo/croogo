@@ -75,8 +75,8 @@ class Taxonomy extends TaxonomyAppModel {
  */
 	public function getTree($alias, $options = array()) {
 		$_options = array(
-			'key' => 'slug',		// Term.slug
-			'value' => 'title',	 // Term.title
+			'key' => 'slug', // Term.slug
+			'value' => 'title', // Term.title
 			'taxonomyId' => false,
 			'cache' => false,
 		);
