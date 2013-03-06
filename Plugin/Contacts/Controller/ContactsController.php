@@ -31,9 +31,9 @@ class ContactsController extends ContactsAppController {
  * @access public
  */
 	public $components = array(
-		'Akismet',
+		'Croogo.Akismet',
 		'Email',
-		'Recaptcha',
+		'Croogo.Recaptcha',
 	);
 
 /**

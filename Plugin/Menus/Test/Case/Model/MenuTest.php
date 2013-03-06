@@ -1,7 +1,7 @@
 <?php
 App::uses('Menu', 'Menus.Model');
 App::uses('MenusAppModel', 'Menus.Model');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 /**
  * TestMenu
@@ -30,9 +30,9 @@ class MenuTest extends CroogoTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.aco',
-		'app.aro',
-		'app.aros_aco',
+		'plugin.croogo.aco',
+		'plugin.croogo.aro',
+		'plugin.croogo.aros_aco',
 		'plugin.settings.setting',
 		'plugin.menus.menu',
 		'plugin.menus.link',

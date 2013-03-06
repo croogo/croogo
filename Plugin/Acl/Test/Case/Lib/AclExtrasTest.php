@@ -1,21 +1,34 @@
 <?php
 
 App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 App::uses('AclExtras', 'Acl.Lib');
 
 class AclExtrasTest extends CroogoTestCase {
 
+/**
+ * fixtures
+ *
+ * @var array
+ */
+	public $fixtures = array(
+		'plugin.croogo.aro',
+		'plugin.croogo.aco',
+		'plugin.croogo.aros_aco',
+	);
+
 	protected $_coreControllers = array(
-		);
+	);
 
 	protected $_extensionsControllers = array(
 		'ExtensionsLocalesController',
 		'ExtensionsPluginsController',
 		'ExtensionsThemesController',
-		);
+	);
 
 	public function setUp() {
+		Configure::write('Acl.classname', 'DbAcl');
+		Configure::write('Acl.database', 'test');
 		$this->AclExtras = new AclExtras();
 		$this->AclExtras->startup();
 		$this->AclExtras->Aco->deleteAll('1 = 1');
@@ -44,7 +57,7 @@ class AclExtrasTest extends CroogoTestCase {
 			'admin_toggle', 'admin_update_paths', 'admin_delete', 'admin_add_meta',
 			'admin_delete_meta', 'admin_process', 'index', 'term', 'promoted',
 			'search', 'view',
-			);
+		);
 
 		$this->AclExtras->aco_sync(array('plugin' => 'Nodes'));
 

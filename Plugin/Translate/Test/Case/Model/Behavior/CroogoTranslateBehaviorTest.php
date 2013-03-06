@@ -1,13 +1,13 @@
 <?php
 App::uses('Node', 'Model');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 class CroogoTranslateBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'aco',
-		'aro',
-		'aros_aco',
+		'plugin.croogo.aco',
+		'plugin.croogo.aro',
+		'plugin.croogo.aros_aco',
 		'plugin.blocks.block',
 		'plugin.comments.comment',
 		'plugin.contacts.contact',
@@ -28,6 +28,7 @@ class CroogoTranslateBehaviorTest extends CroogoTestCase {
 		'plugin.taxonomy.types_vocabulary',
 		'plugin.users.user',
 		'plugin.taxonomy.vocabulary',
+		'plugin.translate.i18n',
 	);
 
 	public $Node = null;

@@ -44,7 +44,7 @@ $this->Html
 			$thumbnail = $this->Html->link($imgUrl, $attachment['Node']['path'],
 			array('escape' => false, 'class' => 'thickbox', 'title' => $attachment['Node']['title']));
 		} else {
-			$thumbnail = $this->Html->image('/img/icons/page_white.png') . ' ' . $attachment['Node']['mime_type'] . ' (' . $this->Filemanager->filename2ext($attachment['Node']['slug']) . ')';
+			$thumbnail = $this->Html->image('/croogo/img/icons/page_white.png') . ' ' . $attachment['Node']['mime_type'] . ' (' . $this->Filemanager->filename2ext($attachment['Node']['slug']) . ')';
 		}
 
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));

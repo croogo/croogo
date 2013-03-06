@@ -90,7 +90,7 @@ echo $this->element('admin/modal', array(
 				'type' => $comment['Node']['type'],
 				'slug' => $comment['Node']['slug'],
 			)),
-			$this->Html->link($this->Html->image('/img/icons/comment.png'), '#',
+			$this->Html->link($this->Html->image('/croogo/img/icons/comment.png'), '#',
 				array(
 					'class' => 'comment-view',
 					'data-title' => $title,

@@ -31,14 +31,14 @@ class Type extends TaxonomyAppModel {
  * @access public
  */
 	public $actsAs = array(
-		'Cached' => array(
+		'Croogo.Cached' => array(
 			'prefix' => array(
 				'croogo_types_',
 				'types_',
 				'type_',
 			),
 		),
-		'Params',
+		'Croogo.Params',
 	);
 
 /**

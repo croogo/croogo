@@ -62,7 +62,7 @@ $this->Html
 			}
 			$actions = $this->Html->div('item-actions', implode(' ', $actions));
 			$rows[] = array(
-				$this->Html->image('/img/icons/folder.png'),
+				$this->Html->image('/croogo/img/icons/folder.png'),
 				$this->FileManager->linkDirectory($directory, $path . $directory . DS),
 				$actions,
 			);
@@ -82,7 +82,7 @@ $this->Html
 			}
 			$actions = $this->Html->div('item-actions', implode(' ', $actions));
 			$rows[] = array(
-				$this->Html->image('/img/icons/' . $this->FileManager->filename2icon($file)),
+				$this->Html->image('/croogo/img/icons/' . $this->FileManager->filename2icon($file)),
 				$this->FileManager->linkFile($file, $path . $file),
 				$actions,
 			);

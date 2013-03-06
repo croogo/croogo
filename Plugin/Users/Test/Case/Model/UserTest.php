@@ -1,10 +1,9 @@
 <?php
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 App::uses('Model', 'Model');
 App::uses('AppModel', 'Model');
 App::uses('User', 'Users.Model');
 App::uses('AuthComponent', 'Controller/Component');
-App::uses('CroogoTestCase', 'TestSuite');
 
 /**
  * TestUser
@@ -33,9 +32,9 @@ class UserTest extends CroogoTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.aco',
-		'app.aro',
-		'app.aros_aco',
+		'plugin.croogo.aco',
+		'plugin.croogo.aro',
+		'plugin.croogo.aros_aco',
 		'plugin.users.role',
 		'plugin.users.user',
 	);

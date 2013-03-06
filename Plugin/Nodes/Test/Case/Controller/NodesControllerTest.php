@@ -1,6 +1,6 @@
 <?php
 App::uses('NodesController', 'Nodes.Controller');
-App::uses('CroogoControllerTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
 class TestNodesController extends NodesController {
 
@@ -42,9 +42,9 @@ class TestNodesController extends NodesController {
 class NodesControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
-		'aco',
-		'aro',
-		'aros_aco',
+		'plugin.croogo.aco',
+		'plugin.croogo.aro',
+		'plugin.croogo.aros_aco',
 		'plugin.blocks.block',
 		'plugin.comments.comment',
 		'plugin.contacts.contact',
@@ -243,6 +243,10 @@ class NodesControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testViewFallback() {
+		App::build(array(
+			'View' => array(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Mytheme' . DS),
+		), App::PREPEND);
+
 		$request = new CakeRequest('/admin/nodes/nodes/delete/1');
 		$response = new CakeResponse();
 		$this->Nodes = new TestNodesController($request, $response);

@@ -1,8 +1,9 @@
 <?php
 App::uses('RegionsHelper', 'Blocks.View/Helper');
+App::uses('LayoutHelper', 'Croogo.View/Helper');
 App::uses('SessionComponent', 'Controller/Component');
 App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 class TheRegionsTestController extends Controller {
 
@@ -33,6 +34,7 @@ class RegionsHelperTest extends CroogoTestCase {
 			'named' => array(),
 		);
 		$view = new View(new TheRegionsTestController($request, new CakeResponse()));
+		$view->loadHelper('Croogo.Layout');
 		$this->Regions = $this->getMock('RegionsHelper', array('log'), array($view));
 		$this->_appEncoding = Configure::read('App.encoding');
 		$this->_asset = Configure::read('Asset');

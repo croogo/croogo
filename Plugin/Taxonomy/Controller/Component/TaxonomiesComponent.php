@@ -21,7 +21,7 @@ class TaxonomiesComponent extends Component {
  * @access public
  */
 	public $components = array(
-		'Croogo',
+		'Croogo.Croogo',
 	);
 
 /**

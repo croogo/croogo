@@ -31,9 +31,9 @@ class CommentsController extends CommentsAppController {
  * @access public
  */
 	public $components = array(
-		'Akismet',
+		'Croogo.Akismet',
 		'Email',
-		'Recaptcha',
+		'Croogo.Recaptcha',
 		'Search.Prg' => array(
 			'presetForm' => array(
 				'paramType' => 'querystring',

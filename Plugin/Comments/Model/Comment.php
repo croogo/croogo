@@ -36,7 +36,7 @@ class Comment extends AppModel {
  */
 	public $actsAs = array(
 		'Tree',
-		'Cached' => array(
+		'Croogo.Cached' => array(
 			'prefix' => array(
 				'comment_',
 				'nodes_',

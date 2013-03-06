@@ -41,7 +41,7 @@ class User extends UsersAppModel {
  */
 	public $actsAs = array(
 		'Acl' => array(
-			'className' => 'CroogoAcl',
+			'className' => 'Croogo.CroogoAcl',
 			'type' => 'requester',
 		),
 		'Search.Searchable',
@@ -166,7 +166,7 @@ class User extends UsersAppModel {
  * @return boolean
  */
 	public function beforeDelete($cascade = true) {
-		$this->Role->Behaviors->attach('Aliasable');
+		$this->Role->Behaviors->attach('Croogo.Aliasable');
 		$adminRoleId = $this->Role->byAlias('admin');
 
 		$current = AuthComponent::user();

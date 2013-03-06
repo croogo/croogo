@@ -32,7 +32,7 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public $components = array(
-		'Recaptcha',
+		'Croogo.Recaptcha',
 		'Search.Prg' => array(
 			'presetForm' => array(
 				'paramType' => 'querystring',
