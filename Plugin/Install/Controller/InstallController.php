@@ -3,6 +3,7 @@
 App::uses('Controller', 'Controller');
 App::uses('File', 'Utility');
 App::uses('InstallManager','Install.Lib');
+
 /**
  * Install Controller
  *
@@ -58,7 +59,8 @@ class InstallController extends Controller {
  * Generate assets
  */
 	protected function _generateAssets() {
-		if (!file_exists(CSS . 'croogo-bootstrap.css')) {
+		$file = CakePlugin::path('Croogo') . 'webroot' . DS . 'css' . DS . 'croogo-bootstrap.css';
+		if (!file_exists($file)) {
 			App::uses('AssetGenerator', 'Install.Lib');
 			$generator = new AssetGenerator();
 			try {
