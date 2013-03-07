@@ -1,5 +1,5 @@
 <?php
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 /**
  *  AllCorePluginsTest
@@ -9,10 +9,27 @@ class AllCorePluginsTest extends PHPUnit_Framework_TestSuite {
 
 	public static function suite() {
 		$suite = new CakeTestSuite('All core plugins tests');
-		$path = CakePlugin::path('Acl') . 'Test' . DS . 'Case' . DS;
-		$suite->addTestFile($path . 'AllAclTestsTest.php');
-		$path = CakePlugin::path('Extensions') . DS . 'Test' . DS . 'Case' . DS;
-		$suite->addTestFile($path . 'AllExtensionsTestsTest.php');
+		$plugins = array(
+			'Acl',
+			'Blocks',
+			'Comments',
+			'Contacts',
+			'Croogo',
+			'Nodes',
+			'Extensions',
+			'FileManager',
+			'Menus',
+			'Meta',
+			'Settings',
+			'Taxonomy',
+			'Tinymce',
+			'Translate',
+			'Users',
+		);
+		foreach ($plugins as $plugin) {
+			CakePlugin::load($plugin);
+			$suite->addTestDirectoryRecursive(CakePlugin::path($plugin) . 'Test' . DS);
+		}
 		return $suite;
 	}
 

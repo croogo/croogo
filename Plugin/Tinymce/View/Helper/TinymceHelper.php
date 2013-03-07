@@ -76,60 +76,6 @@ class TinymceHelper extends AppHelper {
 	);
 
 /**
- * fileBrowserCallBack
- *
- * @return string
- */
-	public function fileBrowserCallBack() {
-		$output = <<<EOF
-function fileBrowserCallBack(field_name, url, type, win) {
-	browserField = field_name;
-	browserWin = win;
-	window.open('%s', 'browserWindow', 'modal,width=960,height=700,scrollbars=yes');
-}
-EOF;
-		$output = sprintf($output, $this->Html->url(
-			array('plugin' => false, 'controller' => 'attachments', 'action' => 'browse')
-			));
-
-		return $output;
-	}
-
-/**
- * selectURL
- *
- * @return string
- */
-	public function selectURL() {
-		$output = <<<EOF
-function selectURL(url, title, description) {
-	if (url == '') return false;
-
-	url = '%s' + url;
-
-	desc_field = window.top.opener.browserWin.document.forms[0].elements[2];
-	if (typeof description !== 'undefined') {
-		desc_field.value = description;
-	}
-
-	title_field = window.top.opener.browserWin.document.forms[0].elements[3];
-	if (typeof title !== 'undefined') {
-		title_field.value = title;
-	}
-
-	field = window.top.opener.browserWin.document.forms[0].elements[window.top.opener.browserField];
-	field.value = url;
-	if (field.onchange != null) field.onchange();
-		window.top.close();
-		window.top.opener.browserWin.focus();
-}
-EOF;
-		$output = sprintf($output, Router::url('/uploads/', true));
-
-		return $output;
-	}
-
-/**
  * getSettings
  *
  * @param array $settings
@@ -141,7 +87,7 @@ EOF;
 		if (isset($this->actions[$action])) {
 			$settings = array();
 			foreach ($this->actions[$action] as $action) {
-				$settings[] = Set::merge($_settings, $action);
+				$settings[] = Hash::merge($_settings, $action);
 			}
 		}
 		return $settings;
@@ -154,21 +100,17 @@ EOF;
  * @return void
  */
 	public function beforeRender($viewFile) {
-		if (is_array(Configure::read('Tinymce.actions'))) {
-			$this->actions = Set::merge($this->actions, Configure::read('Tinymce.actions'));
+		$this->Html->script('/tinymce/js/wysiwyg', array('inline' => false));
+		if (is_array(Configure::read('Wysiwyg.actions'))) {
+			$this->actions = Hash::merge($this->actions, Configure::read('Wysiwyg.actions'));
 		}
 		$action = Inflector::camelize($this->params['controller']) . '/' . $this->params['action'];
 		if (Configure::read('Writing.wysiwyg') && isset($this->actions[$action])) {
 			$this->Html->script('/tinymce/js/tiny_mce', array('inline' => false));
-			$this->Html->scriptBlock($this->fileBrowserCallBack(), array('inline' => false));
 			$settings = $this->getSettings();
 			foreach ($settings as $setting) {
 				$this->Html->scriptBlock('tinyMCE.init(' . $this->Js->object($setting) . ');', array('inline' => false));
 			}
-		}
-
-		if ($this->params['controller'] == 'attachments' && $this->params['action'] == 'admin_browse') {
-			$this->Html->scriptBlock($this->selectURL(), array('inline' => false));
 		}
 	}
 }

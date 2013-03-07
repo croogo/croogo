@@ -1,6 +1,7 @@
 <?php
 
 CroogoNav::add('extensions', array(
+	'icon' => array('magic', 'large'),
 	'title' => 'Extensions',
 	'url' => array(
 		'plugin' => 'extensions',
@@ -41,3 +42,13 @@ CroogoNav::add('extensions', array(
 		),
 	),
 ));
+
+if (!CakePlugin::loaded('Migrations')) {
+	CakePlugin::load('Migrations');
+}
+if (!CakePlugin::loaded('Settings')) {
+	CakePlugin::load('Settings');
+}
+if (!CakePlugin::loaded('Search')) {
+	CakePlugin::load('Search');
+}

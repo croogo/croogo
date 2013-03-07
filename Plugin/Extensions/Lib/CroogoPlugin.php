@@ -1,8 +1,8 @@
 <?php
-
-App::uses('CroogoEventManager', 'Event');
+App::uses('CroogoEventManager', 'Croogo.Event');
 App::uses('ClassRegistry', 'Utility');
 App::uses('Folder', 'Utility');
+App::uses('MigrationVersion', 'Migrations.Lib');
 
 /**
  * CroogoPlugin utility class
@@ -20,6 +20,14 @@ App::uses('Folder', 'Utility');
 class CroogoPlugin extends Object {
 
 /**
+ * List of migration errors
+ * Updated in case of errors when running migrations
+ *
+ * @var array
+ */
+	public $migrationErrors = array();
+
+/**
  * PluginActivation class
  *
  * @var object
@@ -27,10 +35,21 @@ class CroogoPlugin extends Object {
 	protected $_PluginActivation = null;
 
 /**
+ * MigrationVersion class
+ *
+ * @var MigrationVersion
+ */
+	protected $_MigrationVersion = null;
+
+/**
  * __construct
  */
-	public function __construct() {
-		$this->Setting = ClassRegistry::init('Setting');
+	public function __construct($migrationVersion = null) {
+		$this->Setting = ClassRegistry::init('Settings.Setting');
+
+		if (!is_null($migrationVersion)) {
+			$this->_MigrationVersion = $migrationVersion;
+		}
 	}
 
 /**
@@ -87,7 +106,7 @@ class CroogoPlugin extends Object {
 				$pluginData = json_decode(file_get_contents($manifestFile), true);
 				if (!empty($pluginData)) {
 					$pluginData['active'] = $this->isActive($alias);
-					unset($pluginManifest);
+					$pluginData['needMigration'] = $this->needMigration($alias, $pluginData['active']);
 				} else {
 					$pluginData = array();
 				}
@@ -179,6 +198,69 @@ class CroogoPlugin extends Object {
  */
 	public function pluginIsActive($plugin) {
 		return $this->isActive($plugin);
+	}
+
+/**
+ * Check if a plugin need a database migration
+ *
+ * @param strign $plugin Plugin name
+ * @param string $isActive If the plugin is active
+ * @return boolean
+ */
+	public function needMigration($plugin, $isActive) {
+		$needMigration = false;
+		if ($isActive) {
+			$mapping = $this->_getMigrationVersion()->getMapping($plugin);
+			$currentVersion = $this->_getMigrationVersion()->getVersion($plugin);
+			if ($mapping) {
+				$lastVersion = max(array_keys($mapping));
+				$needMigration = ($lastVersion - $currentVersion != 0);
+			}
+		}
+		return $needMigration;
+	}
+
+/**
+ * Migrate a plugin
+ *
+ * @param string $plugin Plugin name
+ * @return boolean Success of the migration
+ */
+	public function migrate($plugin) {
+		$success = false;
+		$mapping = $this->_getMigrationVersion()->getMapping($plugin);
+		if ($mapping) {
+			$lastVersion = max(array_keys($mapping));
+			$executionResult = $this->_MigrationVersion->run(array(
+				'version' => $lastVersion,
+				'type' => $plugin
+			));
+
+			$success = $executionResult === true;
+			if (!$success) {
+				array_push($this->migrationErrors, $executionResult);
+			}
+		}
+		return $success;
+	}
+
+	public function unmigrate($plugin) {
+		$success = false;
+		if ($this->_getMigrationVersion()->getMapping($plugin)) {
+			$success = $this->_getMigrationVersion()->run(array(
+				'version' => 0,
+				'type' => $plugin,
+				'direction' => 'down'
+			));
+		}
+		return $success;
+	}
+
+	protected function _getMigrationVersion() {
+		if (!($this->_MigrationVersion instanceof MigrationVersion)) {
+			$this->_MigrationVersion = new MigrationVersion();
+		}
+		return $this->_MigrationVersion;
 	}
 
 /**
@@ -303,10 +385,10 @@ class CroogoPlugin extends Object {
 			}
 			if ($dependencies) {
 				$this->addBootstrap($plugin);
+				CroogoPlugin::load($plugin);
 				if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
 					$pluginActivation->onActivation($this->_Controller);
 				}
-				CroogoPlugin::load($plugin);
 				Cache::delete('EventHandlers', 'setting_write_configuration');
 				return true;
 			} else {

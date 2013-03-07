@@ -1,0 +1,165 @@
+
+// Sidebar
+.sidebar {
+	font-family: @sansFontFamily;
+	width: @crNavWidth;
+	padding-top: @navbarHeight;
+	margin-bottom: 10px;
+	float: left;
+
+	.nav {
+		margin-bottom: 0px;
+	}
+
+	a {
+		// no annoying outline
+		&:focus {
+			outline: none;
+		}
+	}
+
+	.sidebar-item {
+		padding: 10px 15px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+
+		// fix width for large icons
+		[class^="icon-large-"]:before,
+		[class*=" icon-large"]:before {
+			width: 1em;
+		}
+
+		&.current {
+			.sidebarActiveBackground;
+
+			&.dropdown-close {
+				.sidebarActiveBackground;
+			}
+
+			&.dropdown-open {
+				background: none;
+			}
+		}
+
+		span {
+			margin: 0 8px;
+		}
+
+	}
+
+	.dropdown-submenu {
+		&:hover {
+			.sidebar-item {
+				[class^="icon-"],
+				[class*=" icon-"] {
+					background-image: none; // no glyphicons
+				}
+			}
+		}
+		.sidebar-item {
+			&.current:after {
+				display: none;
+			}
+		}
+	}
+
+	.dropdown-submenu {
+		&:hover {
+			.sidebar-item {
+				[class^="icon-"],
+				[class*=" icon-"] {
+					background-image: none; // no glyphicons
+				}
+				&.current {
+					background: none; // hide active background when hovered
+				}
+			}
+		}
+	}
+
+	.dropdown-menu li > a:hover,
+	.dropdown-menu li > a:focus,
+	.dropdown-submenu:hover > a {
+		.noGradient; // resets gradient set by bootstrap
+	}
+
+	.sub-nav {
+		width: @crNavWidth;
+		#gradient > .horizontal(@navbarBackgroundHighlight, @navbarBackground);
+		z-index: @zindexModal;
+		margin-bottom: 0px;
+		display: none;
+
+		.sidebar-item {
+			&.current {
+				&:hover {
+					background: none;
+				}
+			}
+		}
+
+		.sub-nav {
+			position: absolute;
+			margin-left: 0;
+
+			&.dropdown-menu {
+				li:first-child > a {
+					border-top: none;
+				}
+				li:last-child > a {
+					border-bottom: none;
+				}
+			}
+		}
+	}
+
+	.nav-stacked > li > a {
+		color: @navbarLinkColor;
+		&:hover {
+			color: @navbarLinkColorHover;
+		}
+	}
+
+	.navbar-inner {
+		padding: 0;
+		border-color: none;
+		.border-radius(0);
+		border: none;
+	}
+
+	&.navbar-inverse {
+		background: @crMainBackgroundColor;
+
+		.navbar-inner {
+			background: @navbarInverseBackground;
+		}
+
+		.nav-stacked {
+			> li {
+				&:first-child > a {
+					border-top: 1px solid @navbarInverseBorder;
+				}
+				> a {
+					color: @navbarInverseLinkColor;
+					&:hover {
+						color: @navbarInverseLinkColorHover;
+					}
+					border-bottom: 1px solid @navbarInverseBorder;
+				}
+			}
+		}
+
+		.sub-nav {
+			background: lighten(@navbarInverseBackground, 10%);
+			.sub-nav {
+				.sidebar-item.current {
+					color: darken(@navbarInverseLinkColorHover, 10%);
+					&:hover {
+						color: @navbarInverseLinkColorHover;
+					}
+				}
+			}
+		}
+	}
+}

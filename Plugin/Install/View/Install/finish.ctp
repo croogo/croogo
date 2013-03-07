@@ -30,5 +30,5 @@
 			<li><?php echo $this->Html->link('Croogo Google Group', 'https://groups.google.com/forum/#!forum/croogo'); ?></li>
 		</ul>
 	</blockquote>
-
+	&nbsp;
 </div>
