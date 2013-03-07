@@ -20,7 +20,7 @@ AclPermissions.templates = {
 </td>'),
 
 	toggleButton: _.template('\
-<td><img src="<%= Croogo.basePath %>img/icons/<%= icon %>" class="<%= classes.trim() %>" \
+<td><img src="<%= Croogo.basePath %>croogo/img/icons/<%= icon %>" class="<%= classes.trim() %>" \
 		data-aro_id="<%= aroId %>" data-aco_id="<%= acoId %>"> \
 </td>'),
 
