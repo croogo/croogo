@@ -51,7 +51,7 @@ AclPermissions.permissionToggle = function() {
 		var aroId = $this.data('aro_id');
 
 		// show loader
-		$this.attr('src', Croogo.basePath+'img/ajax/circle_ball.gif');
+		$this.attr('src', Croogo.basePath+'croogo/img/ajax/circle_ball.gif');
 
 		// prepare loadUrl
 		var loadUrl = Croogo.basePath+'admin/acl/acl_permissions/toggle/';
