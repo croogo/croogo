@@ -85,6 +85,16 @@ class AclExtras extends Object {
 	public $created = 0;
 
 /**
+ * list of ACO paths to skip
+ */
+	protected $_skipList = array(
+		'controllers/CroogoApp',
+		'controllers/CroogoError',
+		'controllers/Croogo/CroogoApp',
+		'controllers/Croogo/CroogoError',
+	);
+
+/**
  * Start up And load Acl Component / Aco model
  *
  * @return void
@@ -226,6 +236,11 @@ class AclExtras extends Object {
 			$controllerName = preg_replace('/Controller$/', '', $controller);
 
 			$path = $this->rootNode . '/' . $pluginPath . $controllerName;
+			if (in_array($path, $this->_skipList)) {
+				$this->out(__('Skipped Aco node: <warning>%s</warning>', $path), 1, Shell::VERBOSE);
+				continue;
+			}
+
 			$controllerNode = $this->_checkNode($path, $controllerName, $root['Aco']['id']);
 			$this->_checkMethods($controller, $controllerName, $controllerNode, $pluginPath);
 		}
