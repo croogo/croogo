@@ -193,6 +193,7 @@ class InstallShell extends AppShell {
 			'controllers/Users/Users/reset' => array($public),
 			'controllers/Users/Users/login' => array($public),
 			'controllers/Users/Users/logout' => array($registered),
+			'controllers/Users/Users/admin_logout' => array($registered),
 			'controllers/Users/Users/view' => array($registered),
 		);
 
