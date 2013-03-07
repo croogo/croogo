@@ -75,6 +75,15 @@ class SettingsFormHelper extends AppHelper {
 			));
 		} elseif ($setting['Setting']['input_type'] == 'checkbox') {
 			$output = $this->_inputCheckbox($setting, $label, $i);
+		} elseif ($setting['Setting']['input_type'] == 'radio') {
+			$value = $setting['Setting']['value'];
+			$options = json_decode($setting['Params']['options'], true);
+			$output = $this->Form->input("Setting.$i.value", array(
+				'legend' => $setting['Setting']['title'],
+				'type' => 'radio',
+				'options' => $options,
+				'value' => $value,
+			));
 		} else {
 			$output = $this->Form->input("Setting.$i.value", array(
 				'type' => $inputType,
