@@ -32,6 +32,12 @@ class InstallShell extends AppShell {
 					'description' => 'Generate croogo.php, database.php, settings.json and create admin user.',
 					)
 				)
+			)->addSubcommand('setup_acos', array(
+				'help' => 'Setup default ACOs for roles',
+				'parser' => array(
+					'description' => 'Generate default role settings during release',
+					)
+				)
 			)->addSubcommand('data', array(
 				'help' => 'Generate data files',
 				'parser' => array(
@@ -159,6 +165,48 @@ class InstallShell extends AppShell {
 		$file->write($content);
 
 		$this->out('New file generated: ' . $filePath);
+	}
+
+	public function setup_acos() {
+		$Role = ClassRegistry::init('Users.Role');
+		$Role->Behaviors->attach('Croogo.Aliasable');
+		$public = $Role->byAlias('public');
+		$registered = $Role->byAlias('registered');
+
+		$Permission = ClassRegistry::init('Acl.AclPermission');
+
+		$setup = array(
+			'controllers/Comments/Comments/index' => array($public),
+			'controllers/Comments/Comments/add' => array($public),
+			'controllers/Comments/Comments/delete' => array($registered),
+			'controllers/Contacts/Contacts/view' => array($public),
+			'controllers/Nodes/Nodes/index' => array($public),
+			'controllers/Nodes/Nodes/term' => array($public),
+			'controllers/Nodes/Nodes/promoted' => array($public),
+			'controllers/Nodes/Nodes/search' => array($public),
+			'controllers/Nodes/Nodes/view' => array($public),
+			'controllers/Users/Users/index' => array($registered),
+			'controllers/Users/Users/add' => array($public),
+			'controllers/Users/Users/activate' => array($public),
+			'controllers/Users/Users/edit' => array($registered),
+			'controllers/Users/Users/forgot' => array($public),
+			'controllers/Users/Users/reset' => array($public),
+			'controllers/Users/Users/login' => array($public),
+			'controllers/Users/Users/logout' => array($registered),
+			'controllers/Users/Users/view' => array($registered),
+		);
+
+		foreach ($setup as $aco => $roles) {
+			foreach ($roles as $roleId) {
+				$aro = array(
+					'model' => 'Role',
+					'foreign_key' => $roleId,
+				);
+				if ($Permission->allow($aro, $aco)) {
+					$this->success(__('Permission %s granted to %s', $aco, $Role->byId($roleId)));
+				}
+			}
+		}
 	}
 
 }
