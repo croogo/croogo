@@ -79,12 +79,10 @@ echo $this->Form->create('Node', array('url' => $formUrl));
 			$this->Html->link(__('Cancel'), array('action' => 'index'), array('class' => 'cancel btn btn-danger')) .
 			$this->Form->input('status', array(
 				'label' => __('Published'),
-				'checked' => 'checked',
 				'class' => false,
 			)) .
 			$this->Form->input('promote', array(
 				'label' => __('Promoted to front page'),
-				'checked' => 'checked',
 				'class' => false,
 			)) .
 			$this->Form->input('user_id', array(
