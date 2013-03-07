@@ -352,4 +352,23 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		$this->assertEqual($this->CommentsController->viewVars['success'], 0);
 	}
 
+/**
+ * testAddShouldWorkWhenLoggedIn
+ */
+	public function testAddShouldWorkWhenLoggedIn() {
+		Configure::write('Comment.email_notification', 0);
+		$this->CommentsController->request->params['action'] = 'add';
+		$this->CommentsController->request->params['url']['url'] = 'comments/add';
+
+		$this->CommentsController->request->data['Comment'] = array(
+			'name' => 'John Smith',
+			'email' => 'john.smith@example.com',
+			'website' => 'http://example.com',
+			'body' => 'text here...',
+		);
+		$this->CommentsController->add(1);
+
+		$this->assertEqual($this->CommentsController->viewVars['success'], 1);
+	}
+
 }

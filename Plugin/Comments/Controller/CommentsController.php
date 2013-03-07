@@ -247,7 +247,12 @@ class CommentsController extends CommentsAppController {
 		if (!empty($this->request->data) && $continue === true) {
 			$data = $this->request->data;
 			$data['Comment']['ip'] = env('REMOTE_ADDR');
-			$success = $this->Comment->add($data, $nodeId, $type, $parentId, $this->Auth->user());
+			$userData = array();
+			if ($this->Auth->user()) {
+				$userData['User'] = $this->Auth->user();
+			}
+
+			$success = $this->Comment->add($data, $nodeId, $type, $parentId, $userData);
 			if ($success) {
 				if ($type['Type']['comment_approve']) {
 					$messageFlash = __('Your comment has been added successfully.');

@@ -84,6 +84,9 @@ class CroogoControllerTestCase extends ControllerTestCase {
 			'id' => 1,
 			'username' => 'admin',
 			'role_id' => 1,
+			'name' => 'Administrator',
+			'email' => 'you@your-site.com',
+			'website' => '/about'
 		);
 		if (empty($key) || !isset($auth[$key])) {
 			return $auth;
