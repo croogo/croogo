@@ -30,6 +30,24 @@ class InstallShell extends AppShell {
 				'help' => 'Generate croogo.php, database.php, settings.json and create admin user.',
 				'parser' => array(
 					'description' => 'Generate croogo.php, database.php, settings.json and create admin user.',
+					)
+				)
+			)->addSubcommand('setup_acos', array(
+				'help' => 'Setup default ACOs for roles',
+				'parser' => array(
+					'description' => 'Generate default role settings during release',
+					)
+				)
+			)->addSubcommand('data', array(
+				'help' => 'Generate data files',
+				'parser' => array(
+					'description' => 'Generate installation data files.',
+					'arguments' => array(
+						'table' => array(
+							'required' => true,
+							'help' => 'table name',
+							),
+						),
 					),
 				)
 			);
@@ -98,4 +116,97 @@ class InstallShell extends AppShell {
 		$this->out();
 		$this->success('Congratulations, Croogo has been installed successfully.');
 	}
+
+/**
+ * Prepares data in Config/Schema/data/ required for install plugin
+ * You need to load the Install plugin temporarily to run this command.
+ *
+ * Usage: ./Console/cake install.install data table_name_here
+ */
+	public function data() {
+		$connection = 'default';
+		$table = trim($this->args['0']);
+		$records = array();
+
+		// get records
+		$modelAlias = Inflector::camelize(Inflector::singularize($table));
+		App::uses('Model', 'Model');
+		$model = new Model(array('name' => $modelAlias, 'table' => $table, 'ds' => $connection));
+		$records = $model->find('all', array(
+			'recursive' => -1,
+		));
+
+		// generate file content
+		$recordString = '';
+		foreach ($records as $record) {
+			$values = array();
+			foreach ($record[$modelAlias] as $field => $value) {
+				$values[] = "\t\t\t'$field' => '$value'";
+			}
+			$recordString .= "\t\tarray(\n";
+			$recordString .= implode(",\n", $values);
+			$recordString .= "\n\t\t),\n";
+		}
+		$content = "<?php\n";
+			$content .= "class " . $modelAlias . "Data" . " {\n\n";
+				$content .= "\tpublic \$table = '" . $table . "';\n\n";
+				$content .= "\tpublic \$records = array(\n";
+					$content .= $recordString;
+				$content .= "\t);\n\n";
+			$content .= "}\n";
+
+		// write file
+		$filePath = APP . 'Plugin' . DS . 'Install' . DS . 'Config' . DS . 'Data' . DS . $modelAlias . 'Data.php';
+		if (!file_exists($filePath)) {
+			touch($filePath);
+		}
+		App::uses('File', 'Utility');
+		$file = new File($filePath, true);
+		$file->write($content);
+
+		$this->out('New file generated: ' . $filePath);
+	}
+
+	public function setup_acos() {
+		$Role = ClassRegistry::init('Users.Role');
+		$Role->Behaviors->attach('Croogo.Aliasable');
+		$public = $Role->byAlias('public');
+		$registered = $Role->byAlias('registered');
+
+		$Permission = ClassRegistry::init('Acl.AclPermission');
+
+		$setup = array(
+			'controllers/Comments/Comments/index' => array($public),
+			'controllers/Comments/Comments/add' => array($public),
+			'controllers/Comments/Comments/delete' => array($registered),
+			'controllers/Contacts/Contacts/view' => array($public),
+			'controllers/Nodes/Nodes/index' => array($public),
+			'controllers/Nodes/Nodes/term' => array($public),
+			'controllers/Nodes/Nodes/promoted' => array($public),
+			'controllers/Nodes/Nodes/search' => array($public),
+			'controllers/Nodes/Nodes/view' => array($public),
+			'controllers/Users/Users/index' => array($registered),
+			'controllers/Users/Users/add' => array($public),
+			'controllers/Users/Users/activate' => array($public),
+			'controllers/Users/Users/edit' => array($registered),
+			'controllers/Users/Users/forgot' => array($public),
+			'controllers/Users/Users/reset' => array($public),
+			'controllers/Users/Users/login' => array($public),
+			'controllers/Users/Users/logout' => array($registered),
+			'controllers/Users/Users/view' => array($registered),
+		);
+
+		foreach ($setup as $aco => $roles) {
+			foreach ($roles as $roleId) {
+				$aro = array(
+					'model' => 'Role',
+					'foreign_key' => $roleId,
+				);
+				if ($Permission->allow($aro, $aco)) {
+					$this->success(__('Permission %s granted to %s', $aco, $Role->byId($roleId)));
+				}
+			}
+		}
+	}
+
 }
