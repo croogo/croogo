@@ -39,15 +39,13 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 	);
 
 /**
- * Core plugins
- *
- * @var array
- * @access public
+ * BC compatibility
  */
-	public $corePlugins = array(
-		'Acl',
-		'Extensions',
-	);
+	public function __get($name) {
+		if ($name == 'corePlugins') {
+			return $this->_CroogoPlugin->corePlugins;
+		}
+	}
 
 /**
  * beforeFilter
@@ -59,6 +57,9 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 
 		$this->_CroogoPlugin = new CroogoPlugin();
 		$this->_CroogoPlugin->setController($this);
+
+		$this->Security->requirePost[] = 'admin_moveup';
+		$this->Security->requirePost[] = 'admin_movedown';
 	}
 
 /**
@@ -70,7 +71,8 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 		$this->set('title_for_layout', __('Plugins'));
 
 		$plugins = $this->_CroogoPlugin->plugins();
-		$this->set('corePlugins', $this->corePlugins);
+		$this->set('corePlugins', $this->_CroogoPlugin->corePlugins);
+		$this->set('bundledPlugins', $this->_CroogoPlugin->bundledPlugins);
 		$this->set(compact('plugins'));
 	}
 
@@ -178,4 +180,51 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 		}
 		$this->redirect(array('action' => 'index'));
 	}
+
+/**
+ * Move up a plugin in bootstrap order
+ *
+ * @param string $plugin
+ */
+	public function admin_moveup($plugin = null) {
+		if ($plugin === null) {
+			throw new CakeException(__('Invalid plugin'));
+		}
+
+		$class = 'success';
+		$result = $this->_CroogoPlugin->move('up', $plugin);
+		if ($result === true) {
+			$message = __('Plugin %s has been moved up', $plugin);
+		} else {
+			$message = $result;
+			$class = 'error';
+		}
+		$this->Session->setFlash($message, 'default', array('class' => $class));
+
+		$this->redirect($this->referer());
+	}
+
+/**
+ * Move down a plugin in bootstrap order
+ *
+ * @param string $plugin
+ */
+	public function admin_movedown($plugin = null) {
+		if ($plugin === null) {
+			throw new CakeException(__('Invalid plugin'));
+		}
+
+		$class = 'success';
+		$result = $this->_CroogoPlugin->move('down', $plugin);
+		if ($result === true) {
+			$message = __('Plugin %s has been moved down', $plugin);
+		} else {
+			$message = $result;
+			$class = 'error';
+		}
+		$this->Session->setFlash($message, 'default', array('class' => $class));
+
+		$this->redirect($this->referer());
+	}
+
 }

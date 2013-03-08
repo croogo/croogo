@@ -18,7 +18,10 @@ class CroogoPluginTest extends CroogoTestCase {
 			'Plugin' => array(CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
 		), App::PREPEND);
 
-		$this->CroogoPlugin = new CroogoPlugin();
+		$this->CroogoPlugin = $this->getMock('CroogoPlugin', array(
+			'_writeSetting',
+			'needMigration',
+		));
 
 		$this->_mapping = array(
 			1346748762 => array(
@@ -228,4 +231,39 @@ class CroogoPluginTest extends CroogoTestCase {
 
 		Configure::read('Hook.bootstraps', $actives);
 	}
+
+/**
+ * testReorderBootstraps
+ */
+	public function testReorderBootstraps() {
+		$bootstraps = explode(',', 'Settings,Taxonomy,Sites,Example');
+
+		$expected = 'Example is already at the last position';
+		$result = $this->CroogoPlugin->move('down', 'Example', $bootstraps);
+		$this->assertEquals($expected, $result);
+
+		// core and bundled plugins must not be reordered
+		$result = $this->CroogoPlugin->move('up', 'Sites', $bootstraps);
+		$this->assertEquals('Sites is already at the first position', $result);
+
+		$bootstraps = explode(',', 'Example,Settings,Taxonomy,Sites');
+		$result = $this->CroogoPlugin->move('up', 'Example', $bootstraps);
+		$this->assertEquals('Example is already at the first position', $result);
+	}
+
+/**
+ * testReorderBootstrapsWithDependency
+ */
+	public function testReorderBootstrapsWithDependency() {
+		$bootstraps = explode(',', 'Widgets,Editors');
+
+		$expected = 'Plugin Editors depends on Widgets';
+		$result = $this->CroogoPlugin->move('up', 'Editors', $bootstraps);
+		$this->assertEquals($expected, $result);
+
+		$expected = 'Plugin Editors depends on Widgets';
+		$result = $this->CroogoPlugin->move('down', 'Widgets', $bootstraps);
+		$this->assertEquals($expected, $result);
+	}
+
 }

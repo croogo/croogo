@@ -55,6 +55,20 @@ $this->Html
 			__('Are you sure?')
 		);
 
+		if ($pluginData['active'] && !in_array($pluginAlias, $bundledPlugins)) {
+			$actions[] = $this->Croogo->adminRowAction('',
+				array('action' => 'moveup', $pluginAlias),
+				array('icon' => 'chevron-up', 'tooltip' => __('Move up'), 'method' => 'post'),
+				__('Are you sure?')
+			);
+
+			$actions[] = $this->Croogo->adminRowAction('',
+				array('action' => 'movedown', $pluginAlias),
+				array('icon' => 'chevron-down', 'tooltip' => __('Move down'), 'method' => 'post'),
+				__('Are you sure?')
+			);
+		}
+
 		if ($pluginData['needMigration']) {
 			$actions[] = $this->Croogo->adminRowAction(__('Migrate'), array(
 				'action' => 'migrate',
