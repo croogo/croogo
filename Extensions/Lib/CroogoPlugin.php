@@ -141,6 +141,16 @@ class CroogoPlugin extends Object {
  */
 	protected function _isCroogoPlugin($pluginDir, $path) {
 		$dir = $pluginDir . $path . DS;
+		$composerFile = $dir . 'composer.json';
+		if (file_exists($composerFile)) {
+			$pluginData = json_decode(file_get_contents($composerFile), true);
+			if (
+				isset($pluginData['require']['croogo/croogo']) ||
+				$pluginData['type'] == 'croogo-plugin'
+			) {
+				return true;
+			}
+		}
 		if (file_exists($dir . 'Config' . DS . 'plugin.json')) {
 			return true;
 		}
@@ -168,18 +178,45 @@ class CroogoPlugin extends Object {
 	public function getData($alias = null) {
 		$pluginPaths = App::path('plugins');
 		foreach ($pluginPaths as $pluginPath) {
+			$active = $this->isActive($alias);
+			$isCroogoPlugin = false;
 			$manifestFile = $pluginPath . $alias . DS . 'Config' . DS . 'plugin.json';
 			$hasManifest = file_exists($manifestFile);
-			$active = $this->isActive($alias);
-			if ($hasManifest) {
-				$pluginData = json_decode(file_get_contents($manifestFile), true);
-				if (!empty($pluginData)) {
-					$pluginData['active'] = $active;
-					$pluginData['needMigration'] = $this->needMigration($alias, $pluginData['active']);
-				} else {
-					$this->log('plugin.json exists but cannot be decoded.');
-					$pluginData = array();
+			$composerFile = $pluginPath . $alias . DS . 'composer.json';
+			$hasComposer = file_exists($composerFile);
+			if ($hasManifest || $hasComposer) {
+				$pluginData = array(
+					'name' => $alias,
+					'needMigration' => false,
+					'active' => $active,
+				);
+
+				if ($hasManifest) {
+					$manifestData = json_decode(file_get_contents($manifestFile), true);
+					if (empty($manifestData)) {
+						$this->log($alias . 'plugin.json exists but cannot be decoded.');
+						return $pluginData;
+					}
+					$pluginData = array_merge($manifestData, $pluginData);
 				}
+
+				if ($hasComposer) {
+					$composerData = json_decode(file_get_contents($composerFile), true);
+					$type = isset($composerData['type']) ? $composerData['type'] : null;
+					$isCroogoPlugin =
+						isset($composerData['require']['croogo/croogo']) ||
+						$type == 'croogo-plugin';
+
+					if ($isCroogoPlugin) {
+						if (isset($composerData['name'])) {
+							$composerData['vendor'] = $composerData['name'];
+							unset($composerData['name']);
+						}
+						$pluginData = Hash::merge($pluginData, $composerData);
+					}
+				}
+
+				$pluginData['needMigration'] = $this->needMigration($alias, $active);
 				return $pluginData;
 			} elseif ($this->_isBuiltin($alias)) {
 				if ($this->needMigration($alias, $active)) {
