@@ -2,6 +2,7 @@
 App::uses('CroogoEventManager', 'Croogo.Event');
 App::uses('ClassRegistry', 'Utility');
 App::uses('Folder', 'Utility');
+App::uses('Hash', 'Utility');
 App::uses('MigrationVersion', 'Migrations.Lib');
 
 /**
@@ -125,6 +126,35 @@ class CroogoPlugin extends Object {
  */
 	public function getPluginData($alias = null) {
 		return $this->getData($alias);
+	}
+
+/**
+ * Get a list of plugins available with all available meta data.
+ * Plugin without metadata are excluded.
+ *
+ * @return array array of plugins, listed according to bootstrap order
+ */
+	public function plugins() {
+		$pluginAliases = $this->getPlugins();
+		$allPlugins = array();
+		foreach ($pluginAliases as $pluginAlias) {
+			$allPlugins[$pluginAlias] = $this->getData($pluginAlias);
+		}
+
+		$activePlugins = array();
+		$bootstraps = explode(',', Configure::read('Hook.bootstraps'));
+		foreach ($bootstraps as $pluginAlias) {
+			if ($pluginData = $this->getData($pluginAlias)) {
+				$activePlugins[$pluginAlias] = $pluginData;
+			}
+		}
+
+		$plugins = array();
+		foreach ($activePlugins as $plugin => $pluginData) {
+			$plugins[$plugin] = $pluginData;
+		}
+		$plugins = Hash::merge($plugins, $allPlugins);
+		return $plugins;
 	}
 
 /**

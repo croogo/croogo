@@ -69,11 +69,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 	public function admin_index() {
 		$this->set('title_for_layout', __('Plugins'));
 
-		$pluginAliases = $this->_CroogoPlugin->getPlugins();
-		$plugins = array();
-		foreach ($pluginAliases as $pluginAlias) {
-			$plugins[$pluginAlias] = $this->_CroogoPlugin->getData($pluginAlias);
-		}
+		$plugins = $this->_CroogoPlugin->plugins();
 		$this->set('corePlugins', $this->corePlugins);
 		$this->set(compact('plugins'));
 	}
