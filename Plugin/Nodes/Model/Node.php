@@ -318,18 +318,18 @@ class Node extends NodesAppModel {
  * Return filter condition for Nodes
  */
 	public function filterNodes($data = array()) {
-		if (empty($data['filter'])) {
-			return;
+		$conditions = array();
+		if (!empty($data['filter'])) {
+			$filter = '%' . $data['filter'] . '%';
+			$conditions = array(
+				'OR' => array(
+					$this->alias . '.title LIKE'  => $filter,
+					$this->alias . '.excerpt LIKE'  => $filter,
+					$this->alias . '.body LIKE'  => $filter,
+					$this->alias . '.terms LIKE'  => $filter,
+				),
+			);
 		}
-		$filter = '%' . $data['filter'] . '%';
-		$conditions = array(
-			'OR' => array(
-				$this->alias . '.title LIKE' => $filter,
-				$this->alias . '.excerpt LIKE' => $filter,
-				$this->alias . '.body LIKE' => $filter,
-				$this->alias . '.terms LIKE' => $filter,
-			),
-		);
 		return $conditions;
 	}
 
