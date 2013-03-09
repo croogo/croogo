@@ -170,26 +170,7 @@ class NodesController extends NodesAppController {
 		));
 
 		if (!empty($this->request->data)) {
-			if (isset($this->request->data['TaxonomyData'])) {
-				$this->request->data['Taxonomy'] = array(
-					'Taxonomy' => array(),
-				);
-				foreach ($this->request->data['TaxonomyData'] as $vocabularyId => $taxonomyIds) {
-					if (is_array($taxonomyIds)) {
-						$this->request->data['Taxonomy']['Taxonomy'] = array_merge($this->request->data['Taxonomy']['Taxonomy'], $taxonomyIds);
-					}
-				}
-			}
-			$this->Node->create();
-			$this->request->data['Node']['path'] = Croogo::getRelativePath(array(
-				'admin' => false,
-				'controller' => 'nodes',
-				'action' => 'view',
-				'type' => $this->Node->type,
-				'slug' => $this->request->data['Node']['slug'],
-			));
-			$this->request->data['Node']['visibility_roles'] = $this->Node->encodeData($this->request->data['Role']['Role']);
-			if ($this->Node->saveWithMeta($this->request->data)) {
+			if ($this->Node->saveNode($this->request->data, $typeAlias)) {
 				Croogo::dispatchEvent('Controller.Nodes.afterAdd', $this, array('data' => $this->request->data));
 				$this->Session->setFlash(__d('croogo', '%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Node->id));
@@ -224,40 +205,13 @@ class NodesController extends NodesAppController {
 			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
-
 		$this->Node->id = $id;
 		$typeAlias = $this->Node->field('type');
-
 		$type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
-		if (!isset($type['Type']['alias'])) {
-			$this->Session->setFlash(__d('croogo', 'Content type does not exist.'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'create'));
-		}
-
-		$this->Node->type = $type['Type']['alias'];
-		$this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
 
 		if (!empty($this->request->data)) {
-			if (isset($this->request->data['TaxonomyData'])) {
-				$this->request->data['Taxonomy'] = array(
-					'Taxonomy' => array(),
-				);
-				foreach ($this->request->data['TaxonomyData'] as $vocabularyId => $taxonomyIds) {
-					if (is_array($taxonomyIds)) {
-						$this->request->data['Taxonomy']['Taxonomy'] = array_merge($this->request->data['Taxonomy']['Taxonomy'], $taxonomyIds);
-					}
-				}
-			}
-			$this->request->data['Node']['path'] = Croogo::getRelativePath(array(
-				'admin' => false,
-				'controller' => 'nodes',
-				'action' => 'view',
-				'type' => $this->Node->type,
-				'slug' => $this->request->data['Node']['slug'],
-			));
-			$this->request->data['Node']['visibility_roles'] = $this->Node->encodeData($this->request->data['Role']['Role']);
-			if ($this->Node->saveWithMeta($this->request->data)) {
-				Croogo::dispatchEvent('Controller.Nodes.afterEdit', $this, array('data' => $this->request->data));
+			if ($this->Node->saveNode($this->request->data, $typeAlias)) {
+				Croogo::dispatchEvent('Controller.Nodes.afterEdit', $this, compact('data'));
 				$this->Session->setFlash(__d('croogo', '%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Node->id));
 			} else {

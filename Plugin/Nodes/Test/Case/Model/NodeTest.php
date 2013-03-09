@@ -79,4 +79,87 @@ class NodeTest extends CroogoTestCase {
 		$this->assertEqual(0, $metaCount);
 	}
 
+/**
+ * test saving node.
+ */
+	public function testAddNode(){
+		$this->Node->Behaviors->disable('Tree');
+		$oldNodeCount = $this->Node->find('count');
+
+		$data = array(
+			'title' => 'Test Content',
+			'slug' => 'test-content',
+			'type' => 'blog',
+			'token_key' => 1,
+			'body' => '',
+		);
+		$result = $this->Node->saveNode($data, Node::DEFAULT_TYPE);
+		$newNodeCount = $this->Node->find('count');
+
+		$this->assertTrue($result);
+		$this->assertTrue($this->Node->Behaviors->enabled('Tree'));
+		$this->assertEquals($oldNodeCount + 1, $newNodeCount);
+	}
+
+/**
+ * testAddNodeWithTaxonomyData
+ */
+	public function testAddNodeWithTaxonomyData(){
+		$oldNodeCount = $this->Node->find('count');
+
+		$data = array(
+			'Node' => array(
+				'title' => 'Test Content',
+				'slug' => 'test-content',
+				'type' => 'blog',
+				'token_key' => 1,
+				'body' => '',
+			),
+			'TaxonomyData' => array(1 => array(0 => '1', 1 => '2'))
+		);
+		$result = $this->Node->saveNode($data, Node::DEFAULT_TYPE);
+		$newNodeCount = $this->Node->find('count');
+
+		$this->assertTrue($result);
+		$this->assertEquals($oldNodeCount + 1, $newNodeCount);
+	}
+
+/**
+ * testAddNodeWithVisibilityRole
+ */
+	public function testAddNodeWithVisibilityRole(){
+		$oldNodeCount = $this->Node->find('count');
+
+		$data = array(
+			'Node' => array(
+				'title' => 'Test Content',
+				'slug' => 'test-content',
+				'type' => 'blog',
+				'token_key' => 1,
+				'body' => '',
+			),
+			'Role' => array('Role' => array('3')) //Public
+		);
+		$result = $this->Node->saveNode($data, Node::DEFAULT_TYPE);
+		$newNodeCount = $this->Node->find('count');
+
+		$this->assertTrue($result);
+		$this->assertEquals($oldNodeCount + 1, $newNodeCount);
+	}
+
+/**
+ * testAddNodeWithInvalidNodeType
+ */
+	public function testAddNodeWithInvalidNodeType(){
+		$this->setExpectedException('InvalidArgumentException');
+		$data = array(
+			'title' => 'Test Content',
+			'slug' => 'test-content',
+			'type' => 'invalid',
+			'token_key' => 1,
+			'body' => '',
+		);
+		$result = $this->Node->saveNode($data, 'invalid');
+	}
+
 }

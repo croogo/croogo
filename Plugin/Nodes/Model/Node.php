@@ -24,6 +24,8 @@ class Node extends NodesAppModel {
  */
 	public $name = 'Node';
 
+	const DEFAULT_TYPE = 'node';
+
 /**
  * Behaviors used by the Model
  *
@@ -329,6 +331,98 @@ class Node extends NodesAppModel {
 			),
 		);
 		return $conditions;
+	}
+
+/**
+ * Create/update a Node record
+ *
+ * @param $data array Node data
+ * @param $typeAlias string Node type alias
+ * @return mixed see Model::saveAll()
+ * @see MetaBehavior::saveWithMeta()
+ */
+	public function saveNode($data, $typeAlias = self::DEFAULT_TYPE) {
+		$result = false;
+
+		$data = $this->formatData($data, $typeAlias);
+		Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, compact('data'));
+		$result = $this->saveWithMeta($data);
+		Croogo::dispatchEvent('Model.Node.afterSaveNode', $this, compact('data'));
+
+		return $result;
+	}
+
+/**
+ * Format data for saving
+ *
+ * @param $data array Node and related data such as Taxonomy and Role
+ * @param $typeAlias string Node type alias
+ * @return array formatted data
+ */
+	public function formatData($data, $typeAlias = self::DEFAULT_TYPE) {
+		$prepared = $roles = $type = array();
+		$type = $this->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
+
+		if (!array_key_exists($this->alias, $data)) {
+			$prepared  = array($this->alias => $data);
+		} else {
+			$prepared = $data;
+		}
+
+		if (empty($type)) {
+			throw new InvalidArgumentException(__('Invalid Content Type'));
+		}
+
+		$this->type = $type['Type']['alias'];
+		if(!$this->Behaviors->enabled('Tree')) {
+			$this->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->type)));
+		}
+
+		$this->_parseTaxonomyData($prepared);
+		$prepared[$this->alias]['path'] = $this->_getNodeRelativePath($prepared);
+
+		if (!array_key_exists('Role', $prepared) || empty($prepared['Role']['Role'])) {
+			$roles = '';
+		} else {
+			$roles = $prepared['Role']['Role'];
+		}
+
+		$prepared[$this->alias]['visibility_roles'] = $this->encodeData($roles);
+		unset($this->type);
+
+		return $prepared;
+	}
+
+/**
+ * parseTaxonomyData
+ *
+ * @param array $node Node array
+ * @return void
+ */
+	protected function _parseTaxonomyData(&$node) {
+		if (array_key_exists('TaxonomyData', $node)) {
+			$node['Taxonomy'] = array('Taxonomy' => array());
+			foreach ($node['TaxonomyData'] as $vocabularyId => $taxonomyIds) {
+				$node['Taxonomy']['Taxonomy'] = array_merge($node['Taxonomy']['Taxonomy'], (array)$taxonomyIds);
+			}
+			unset($node['TaxonomyData']);
+		}
+	}
+
+/**
+ * getNodeRelativePath
+ *
+ * @param array $node Node array
+ * @return string relative node path
+ */
+	protected function _getNodeRelativePath($node) {
+		return Croogo::getRelativePath(array(
+			'admin' => false,
+			'controller' => 'nodes',
+			'action' => 'view',
+			'type' => $this->type,
+			'slug' => $node[$this->alias]['slug'],
+		));
 	}
 
 }
