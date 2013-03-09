@@ -152,4 +152,29 @@ class NodeTest extends CroogoTestCase {
 		);
 		$result = $this->Node->add('invalid', $data);
 	}
+/**
+ * Test filtering methods
+ */
+	public function testFilterNodesByTitle(){
+		$filterConditions = $this->Node->filterNodes(array('filter' => 'Hello'));
+		$node = $this->Node->find('first', array('conditions' => $filterConditions));
+
+		$this->assertNotEmpty($node);
+		$this->assertEquals(1, $node['Node']['id']);
+	}
+
+	public function testFilterNodeByBody(){
+		$filterConditions = $this->Node->filterNodes(array('filter' => 'example'));
+		$node = $this->Node->find('first', array('conditions' => $filterConditions));
+
+		$this->assertNotEmpty($node);
+		$this->assertEquals(2, $node['Node']['id']);
+	}
+
+	public function testFilterNodes_WithoutKeyword(){
+		$filterConditions = $this->Node->filterNodes();
+		$nodes = $this->Node->find('all', array('conditions' => $filterConditions));
+
+		$this->assertEquals(2, count($nodes));
+	}
 }
