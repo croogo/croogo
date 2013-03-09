@@ -25,6 +25,11 @@ class Node extends NodesAppModel {
 	public $name = 'Node';
 
 /**
+ * Default node type
+ */
+	const DEFAULT_TYPE = 'node';
+
+/**
  * Behaviors used by the Model
  *
  * @var array
@@ -312,4 +317,77 @@ class Node extends NodesAppModel {
 		return $conditions;
 	}
 
+/**
+ * Add a node
+ */
+	public function add($typeAlias = self::DEFAULT_TYPE, $data = array()) {
+		$result = false;
+
+		$data = $this->prepareData($typeAlias, $data);
+		$result = (bool) $this->saveWithMeta($data);
+		Croogo::dispatchEvent('Model.Nodes.afterAdd', $this, compact('data'));
+
+		return $result;
+	}
+
+/**
+ * Prepare data in order to be saved
+ * @param $typeAlias 		string Node type alias
+ * @param $data 			array array which contains node data, and related data such as taxonomy and role
+ * @return $preparedData	array
+ */
+	public function prepareData($typeAlias, $data){
+		$preparedData = $roles = $type = array();
+		$type = $this->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
+
+		if (!array_key_exists($this->alias, $data)) {
+			$preparedData  = array($this->alias => $data);
+		} else {
+			$preparedData = $data;
+		}
+
+		if (empty($type)) {
+			throw new InvalidArgumentException(__('Invalid Content Type'));
+		}
+
+		$this->type = $type['Type']['alias'];
+		if(!$this->Behaviors->enabled('Tree')) {
+			$this->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->type)));
+		}
+
+		$this->_parseTaxonomyData($preparedData);
+		$preparedData[$this->alias]['path'] = $this->_getNodeRelativePath($preparedData);
+
+		if (!array_key_exists('Role', $preparedData) || empty($preparedData['Role']['Role'])) {
+			$roles = '';
+		} else {
+			$roles = $preparedData['Role']['Role'];
+		}
+
+		$preparedData[$this->alias]['visibility_roles'] = $this->encodeData($roles);
+		unset($this->type);
+
+		return $preparedData;
+	}
+
+	protected function _parseTaxonomyData(&$nodeData) {
+		if (array_key_exists('TaxonomyData', $nodeData)) {
+			$nodeData['Taxonomy'] = array('Taxonomy' => array());
+			foreach ($nodeData['TaxonomyData'] as $vocabularyId => $taxonomyIds) {
+				$nodeData['Taxonomy']['Taxonomy'] = array_merge($nodeData['Taxonomy']['Taxonomy'], (array) $taxonomyIds);
+			}
+			unset($nodeData['TaxonomyData']);
+		}
+	}
+
+	protected function _getNodeRelativePath($data){
+		return Croogo::getRelativePath(array(
+			'admin' => false,
+			'controller' => 'nodes',
+			'action' => 'view',
+			'type' => $this->type,
+			'slug' => $data[$this->alias]['slug'],
+
+		));
+	}
 }
