@@ -26,7 +26,7 @@ class AssetGenerator extends Object {
 			}
 			CakeLog::info('Cloning Bootstrap...');
 			chdir($this->_croogoPath);
-			exec('git clone git://github.com/twitter/bootstrap');
+			exec('git clone git://github.com/twitter/bootstrap ' . $bootstrapPath);
 		}
 		chdir($bootstrapPath);
 		exec('git checkout -f v2.2.0');
