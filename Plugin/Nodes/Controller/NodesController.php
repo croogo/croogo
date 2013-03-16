@@ -226,39 +226,16 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public function admin_update_paths() {
-		$types = $this->Node->Taxonomy->Vocabulary->Type->find('list', array(
-			'fields' => array(
-				'Type.id',
-				'Type.alias',
-			),
-		));
-		$typesAlias = array_values($types);
 
-		$nodes = $this->Node->find('all', array(
-			'conditions' => array(
-				'Node.type' => $typesAlias,
-			),
-			'fields' => array(
-				'Node.id',
-				'Node.slug',
-				'Node.type',
-				'Node.path',
-			),
-			'recursive' => '-1',
-		));
-		foreach ($nodes as $node) {
-			$node['Node']['path'] = Croogo::getRelativePath(array(
-				'admin' => false,
-				'controller' => 'nodes',
-				'action' => 'view',
-				'type' => $node['Node']['type'],
-				'slug' => $node['Node']['slug'],
-			));
-			$this->Node->id = false;
-			$this->Node->save($node);
+		if ($this->Node->updateAllNodesPaths()) {
+			$messageFlash = __d('croogo', 'Paths updated.');
+			$class = 'success';
+		} else {
+			$messageFlash = __d('croogo', 'Something went wrong while updating paths.' . "\n" . 'Please try again');
+			$class = 'error';
 		}
 
-		$this->Session->setFlash(__d('croogo', 'Paths updated.'), 'default', array('class' => 'success'));
+		$this->Session->setFlash($messageFlash, 'default', compact('class'));
 		$this->redirect(array('action' => 'index'));
 	}
 

@@ -188,4 +188,18 @@ class NodeTest extends CroogoTestCase {
 		$this->assertEquals(2, count($nodes));
 	}
 
+/**
+ * test updateAllNodesPaths
+ */
+	public function testUpdateAllNodesPaths(){
+		$node = $this->Node->findById(1);
+		$node['Node']['path'] = 'invalid one';
+		$this->assertTrue((bool) $this->Node->save($node));
+
+		CroogoRouter::contentType('blog');
+		$this->assertTrue($this->Node->updateAllNodesPaths());
+		$node = $this->Node->findById(1);
+		$this->assertEquals('/blog/hello-world', $node['Node']['path']);
+	}
+
 }

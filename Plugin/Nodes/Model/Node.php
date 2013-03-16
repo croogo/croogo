@@ -393,6 +393,34 @@ class Node extends NodesAppModel {
 		return $prepared;
 	}
 
+	public function updateAllNodesPaths() {
+		$types = $this->Taxonomy->Vocabulary->Type->find('list', array(
+			'fields' => array(
+				'Type.id',
+				'Type.alias',
+			),
+		));
+		$typesAlias = array_values($types);
+
+		$nodes = $this->find('all', array(
+			'conditions' => array(
+				$this->alias . '.type' => $typesAlias,
+			),
+			'fields' => array(
+				$this->alias . '.id',
+				$this->alias . '.slug',
+				$this->alias . '.type',
+				$this->alias . '.path',
+			),
+			'recursive' => '-1',
+		));
+		foreach ($nodes as &$node) {
+			$node[$this->alias]['path'] = $this->_getNodeRelativePath($node);
+		}
+
+		return $this->saveMany($nodes);
+	}
+
 /**
  * parseTaxonomyData
  *
@@ -416,11 +444,17 @@ class Node extends NodesAppModel {
  * @return string relative node path
  */
 	protected function _getNodeRelativePath($node) {
+		if (empty($data[$this->alias]['type'])) {
+			$type = is_null($this->type) ? self::DEFAULT_TYPE : $this->type;
+		} else {
+			$type = $node[$this->alias]['type'];
+		}
 		return Croogo::getRelativePath(array(
+			'plugin' => 'nodes',
 			'admin' => false,
 			'controller' => 'nodes',
 			'action' => 'view',
-			'type' => $this->type,
+			'type' => $type,
 			'slug' => $node[$this->alias]['slug'],
 		));
 	}
