@@ -24,10 +24,11 @@ class Node extends NodesAppModel {
  */
 	public $name = 'Node';
 
-/**
- * Default node type
- */
 	const DEFAULT_TYPE = 'node';
+	const STATUS_PUBLISHED = 1;
+	const STATUS_UNPUBLISHED = 0;
+	const PROMOTED = 1;
+	const NOT_PROMOTED = 0;
 
 /**
  * Behaviors used by the Model
@@ -178,6 +179,10 @@ class Node extends NodesAppModel {
 			'deleteQuery' => '',
 			'insertQuery' => '',
 		),
+	);
+
+	public $findMethods = array(
+		'promoted' => true
 	);
 
 /**
@@ -333,7 +338,7 @@ class Node extends NodesAppModel {
 /**
  * Prepare data in order to be saved
  * @param $typeAlias 		string Node type alias
- * @param $data 			array array which contains node data, and related data such as taxonomy and role
+ * @param $data 			array Node data, and related data such as taxonomy and role
  * @return $preparedData	array
  */
 	public function prepareData($typeAlias, $data){
@@ -354,7 +359,6 @@ class Node extends NodesAppModel {
 		if(!$this->Behaviors->enabled('Tree')) {
 			$this->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->type)));
 		}
-
 		$this->_parseTaxonomyData($preparedData);
 		$preparedData[$this->alias]['path'] = $this->_getNodeRelativePath($preparedData);
 
@@ -370,6 +374,34 @@ class Node extends NodesAppModel {
 		return $preparedData;
 	}
 
+	public function updateAllNodesPaths(){
+		$types = $this->Node->Taxonomy->Vocabulary->Type->find('list', array(
+			'fields' => array(
+				'Type.id',
+				'Type.alias',
+			),
+		));
+		$typesAlias = array_values($types);
+
+		$nodes = $this->Node->find('all', array(
+			'conditions' => array(
+				$this->alias . '.type' => $typesAlias,
+			),
+			'fields' => array(
+				$this->alias . '.id',
+				$this->alias . '.slug',
+				$this->alias . '.type',
+				$this->alias . '.path',
+			),
+			'recursive' => '-1',
+		));
+		foreach ($nodes as &$node) {
+			$node[$this->alias]['path'] = $this->_getNodeRelativePath($node);
+		}
+
+		return $this->saveMany($nodes);
+	}
+
 	protected function _parseTaxonomyData(&$nodeData) {
 		if (array_key_exists('TaxonomyData', $nodeData)) {
 			$nodeData['Taxonomy'] = array('Taxonomy' => array());
@@ -381,13 +413,57 @@ class Node extends NodesAppModel {
 	}
 
 	protected function _getNodeRelativePath($data){
+		if (empty($data[$this->alias]['type'])) {
+			$type = is_null($this->type) ? self::DEFAULT_TYPE : $this->type;
+		} else {
+			$type = $data[$this->alias]['type'];
+		}
 		return Croogo::getRelativePath(array(
 			'admin' => false,
 			'controller' => 'nodes',
 			'action' => 'view',
-			'type' => $this->type,
+			'type' => $type,
 			'slug' => $data[$this->alias]['slug'],
 
 		));
+	}
+
+	protected function _findPromoted($state, $query, $results = array()){
+		if ($state === 'before') {
+			$_defaultFilters = array('contain', 'limit', 'order', 'conditions');
+			$_defaultContain = array(
+				'Meta',
+				'Taxonomy' => array(
+					'Term',
+					'Vocabulary',
+				),
+				'User',
+			);
+			$_defaultConditions = array(
+				'Node.status' => self::STATUS_PUBLISHED,
+				'Node.promote' => self::PROMOTED,
+				'OR' => array(
+					'Node.visibility_roles' => '',
+				),
+			);
+			$_defaultOrder = $this->alias . '.created DESC';
+			$_defaultLimit = Configure::read('Reading.nodes_per_page');
+
+			foreach ($_defaultFilters as $filter){
+				$this->__mergeQueryFilters($query, $filter, ${'_default' . ucfirst($filter)});
+			}
+
+			return $query;
+		} else {
+			return $results;
+		}
+	}
+
+	private function __mergeQueryFilters(&$query, $key, $values){
+		if (!empty($query[$key])) {
+			$query[$key] = array_merge($query[$key], $values);
+		} else {
+			$query[$key] = $values;
+		}
 	}
 }
