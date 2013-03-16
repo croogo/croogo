@@ -181,16 +181,7 @@ class NodesController extends NodesAppController {
 			$this->request->data['Node']['user_id'] = $this->Session->read('Auth.User.id');
 		}
 
-		$nodes = $this->Node->generateTreeList();
-		$roles = $this->Node->User->Role->find('list');
-		$users = $this->Node->User->find('list');
-		$vocabularies = Hash::combine($type['Vocabulary'], '{n}.id', '{n}');
-		$taxonomy = array();
-		foreach ($type['Vocabulary'] as $vocabulary) {
-			$vocabularyId = $vocabulary['id'];
-			$taxonomy[$vocabularyId] = $this->Node->Taxonomy->getTree($vocabulary['alias'], array('taxonomyId' => true));
-		}
-		$this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy', 'users'));
+		$this->_setCommonVariables($type);
 	}
 
 /**
@@ -226,17 +217,7 @@ class NodesController extends NodesAppController {
 		}
 
 		$this->set('title_for_layout', __('Edit %s: %s', $type['Type']['title'], $this->request->data['Node']['title']));
-
-		$nodes = $this->Node->generateTreeList();
-		$roles = $this->Node->User->Role->find('list');
-		$users = $this->Node->User->find('list');
-		$vocabularies = Hash::combine($type['Vocabulary'], '{n}.id', '{n}');
-		$taxonomy = array();
-		foreach ($type['Vocabulary'] as $vocabulary) {
-			$vocabularyId = $vocabulary['id'];
-			$taxonomy[$vocabularyId] = $this->Node->Taxonomy->getTree($vocabulary['alias'], array('taxonomyId' => true));
-		}
-		$this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy', 'users'));
+		$this->_setCommonVariables($type);
 	}
 
 /**
@@ -838,4 +819,22 @@ class NodesController extends NodesAppController {
 		}
 	}
 
+/**
+ * Set common form variables to views
+ *	@param array $type TaxonoymyVocabularyType data from node type.
+ *	@return void
+ */
+	protected function _setCommonVariables($type){
+		$nodes = $this->Node->generateTreeList();
+		$roles = $this->Node->User->Role->find('list');
+		$users = $this->Node->User->find('list');
+		$vocabularies = Hash::combine($type['Vocabulary'], '{n}.id', '{n}');
+		$taxonomy = array();
+		foreach ($type['Vocabulary'] as $vocabulary) {
+			$vocabularyId = $vocabulary['id'];
+			$taxonomy[$vocabularyId] = $this->Node->Taxonomy->getTree($vocabulary['alias'], array('taxonomyId' => true));
+		}
+		$typeAlias = $type['Type']['alias'];
+		$this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy', 'users'));
+	}
 }
