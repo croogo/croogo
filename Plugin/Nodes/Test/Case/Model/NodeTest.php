@@ -41,6 +41,36 @@ class NodeTest extends CroogoTestCase {
 		unset($this->Node);
 	}
 
+/**
+ * Test before Callbacks.
+ */
+	public function testBeforeSave(){
+		$this->Node->type = 'whut ?';
+		$data = array(
+			'user_id' => 42,
+			'title' => 'Test Content',
+			'slug' => 'test-content',
+			'type' => 'blog',
+			'token_key' => 1,
+			'body' => '',
+			'path' => '/no-way'
+		);
+		$result = $this->Node->save($data);
+		$this->assertTrue((bool) $result);
+		$this->assertEquals('whut ?', $result['Node']['type']);
+	}
+
+	public function testBeforeFind(){
+		$this->Node->type = 'blog';
+		$node = $this->Node->find('first', array('conditions' => array('DATE(created)' => '2009-12-25'), 'recursive' => -1));
+		$this->assertNotEmpty($node);
+
+		$expectedNodeId = 1;
+
+		$this->assertEquals($expectedNodeId, $node['Node']['id']);
+		$this->assertEquals('blog', $node['Node']['type']);
+	}
+
 	public function testCacheTerms() {
 		$this->Node->data = array(
 			'Node' => array(),
