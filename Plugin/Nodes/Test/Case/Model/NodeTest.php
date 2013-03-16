@@ -221,4 +221,17 @@ class NodeTest extends CroogoTestCase {
 		$this->assertEquals(Node::STATUS_PUBLISHED, $results[0]['Node']['status']);
 		$this->assertEquals(Node::PROMOTED, $results[0]['Node']['promote']);
 	}
+
+/**
+ * test updateAllNodesPaths
+ */
+	public function testUpdateAllNodesPaths(){
+		$node = $this->Node->find('first');
+		$node['Node']['path'] = 'invalid one';
+		$this->assertTrue((bool) $this->Node->save($node));
+
+		$this->assertTrue($this->Node->updateAllNodesPaths());
+		$node = $this->Node->find('first');
+		$this->assertEquals('/nodes/nodes/view/type:blog/slug:hello-world', $node['Node']['path']);
+	}
 }

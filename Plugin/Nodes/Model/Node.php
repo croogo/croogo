@@ -1,7 +1,6 @@
 <?php
-
 App::uses('NodesAppModel', 'Nodes.Model');
-
+App::uses('Router', 'Routing');
 /**
  * Node
  *
@@ -419,6 +418,7 @@ class Node extends NodesAppModel {
 			$type = $data[$this->alias]['type'];
 		}
 		return Croogo::getRelativePath(array(
+			'plugin' => 'nodes',
 			'admin' => false,
 			'controller' => 'nodes',
 			'action' => 'view',
