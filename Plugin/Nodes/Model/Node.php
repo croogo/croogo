@@ -26,6 +26,14 @@ class Node extends NodesAppModel {
 
 	const DEFAULT_TYPE = 'node';
 
+	const STATUS_PUBLISHED = 1;
+
+	const STATUS_UNPUBLISHED = 0;
+
+	const STATUS_PROMOTED = 1;
+
+	const STATUS_UNPROMOTED = 0;
+
 /**
  * Behaviors used by the Model
  *
@@ -175,6 +183,10 @@ class Node extends NodesAppModel {
 			'deleteQuery' => '',
 			'insertQuery' => '',
 		),
+	);
+
+	public $findMethods = array(
+		'promoted' => true
 	);
 
 /**
@@ -457,6 +469,59 @@ class Node extends NodesAppModel {
 			'type' => $type,
 			'slug' => $node[$this->alias]['slug'],
 		));
+	}
+
+/**
+ * Find promoted nodes
+ *
+ * @see Model::find()
+ * @see Model::_findAll()
+ */
+	protected function _findPromoted($state, $query, $results = array()) {
+		if ($state === 'before') {
+			$_defaultFilters = array('contain', 'limit', 'order', 'conditions');
+			$_defaultContain = array(
+				'Meta',
+				'Taxonomy' => array(
+					'Term',
+					'Vocabulary',
+				),
+				'User',
+			);
+			$_defaultConditions = array(
+				'Node.status' => self::STATUS_PUBLISHED,
+				'Node.promote' => self::STATUS_PROMOTED,
+				'OR' => array(
+					'Node.visibility_roles' => '',
+				),
+			);
+			$_defaultOrder = $this->alias . '.created DESC';
+			$_defaultLimit = Configure::read('Reading.nodes_per_page');
+
+			foreach ($_defaultFilters as $filter) {
+				$this->_mergeQueryFilters($query, $filter, ${'_default' . ucfirst($filter)});
+			}
+
+			return $query;
+		} else {
+			return $results;
+		}
+	}
+
+/**
+ * mergeQueryFilters
+ *
+ * @see Node::_findPromoted()
+ * @return void
+ */
+	protected function _mergeQueryFilters(&$query, $key, $values) {
+		if (!empty($query[$key])) {
+			if (is_array($query[$key])) {
+				$query[$key] = array_merge($query[$key], $values);
+			}
+		} else {
+			$query[$key] = $values;
+		}
 	}
 
 }
