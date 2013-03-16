@@ -375,7 +375,7 @@ class Node extends NodesAppModel {
 	}
 
 	public function updateAllNodesPaths(){
-		$types = $this->Node->Taxonomy->Vocabulary->Type->find('list', array(
+		$types = $this->Taxonomy->Vocabulary->Type->find('list', array(
 			'fields' => array(
 				'Type.id',
 				'Type.alias',
@@ -383,7 +383,7 @@ class Node extends NodesAppModel {
 		));
 		$typesAlias = array_values($types);
 
-		$nodes = $this->Node->find('all', array(
+		$nodes = $this->find('all', array(
 			'conditions' => array(
 				$this->alias . '.type' => $typesAlias,
 			),
