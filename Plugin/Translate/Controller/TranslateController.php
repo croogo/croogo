@@ -31,8 +31,8 @@ class TranslateController extends TranslateAppController {
  * @access public
  */
 	public $uses = array(
-		'Setting',
-		'Language',
+		'Settings.Setting',
+		'Settings.Language',
 	);
 
 /**
@@ -52,28 +52,31 @@ class TranslateController extends TranslateAppController {
 			));
 		}
 
-		if (!is_array(Configure::read('Translate.models.' . $modelAlias))) {
+		$config = Configure::read('Translate.models.' . $modelAlias);
+		list($plugin, $modelAlias) = pluginSplit($config['translateModel']);
+
+		if (!is_array($config)) {
 			$this->Session->setFlash(__('Invalid model.'), 'default', array('class' => 'error'));
 			$this->redirect(array(
-				'plugin' => null,
+				'plugin' => $plugin,
 				'controller' => Inflector::pluralize($modelAlias),
 				'action' => 'index',
 			));
 		}
 
-		$model =& ClassRegistry::init($modelAlias);
+		$model = ClassRegistry::init($config['translateModel']);
 		$record = $model->findById($id);
 		if (!isset($record[$modelAlias]['id'])) {
 			$this->Session->setFlash(__('Invalid record.'), 'default', array('class' => 'error'));
 			$this->redirect(array(
-				'plugin' => null,
+				'plugin' => $plugin,
 				'controller' => Inflector::pluralize($modelAlias),
 				'action' => 'index',
 			));
 		}
 		$this->set('title_for_layout', sprintf(__('Translations: %s'), $record[$modelAlias][$model->displayField]));
 
-		$runtimeModel =& $model->translateModel();
+		$runtimeModel = $model->translateModel();
 		$runtimeModelAlias = $runtimeModel->alias;
 		$translations = $runtimeModel->find('all', array(
 			'conditions' => array(
@@ -112,6 +115,9 @@ class TranslateController extends TranslateAppController {
 			));
 		}
 
+		$config = Configure::read('Translate.models.' . $modelAlias);
+		list($plugin, $modelAlias) = pluginSplit($config['translateModel']);
+
 		$language = $this->Language->find('first', array(
 			'conditions' => array(
 				'Language.alias' => $this->params['named']['locale'],
@@ -120,19 +126,19 @@ class TranslateController extends TranslateAppController {
 		));
 		if (!isset($language['Language']['id'])) {
 			$this->Session->setFlash(__('Invalid Language'), 'default', array('class' => 'error'));
-			$this->redirect(array(
-				'plugin' => null,
+			return $this->redirect(array(
+				'plugin' => $plugin,
 				'controller' => Inflector::pluralize($modelAlias),
 				'action' => 'index',
 			));
 		}
 
-		$model =& ClassRegistry::init($modelAlias);
+		$model = ClassRegistry::init($config['translateModel']);
 		$record = $model->findById($id);
 		if (!isset($record[$modelAlias]['id'])) {
 			$this->Session->setFlash(__('Invalid record.'), 'default', array('class' => 'error'));
 			$this->redirect(array(
-				'plugin' => null,
+				'plugin' => $plugin,
 				'controller' => Inflector::pluralize($modelAlias),
 				'action' => 'index',
 			));
@@ -178,27 +184,30 @@ class TranslateController extends TranslateAppController {
 			));
 		}
 
-		if (!is_array(Configure::read('Translate.models.' . $modelAlias))) {
+		$config = Configure::read('Translate.models.' . $modelAlias);
+		list($plugin, $modelAlias) = pluginSplit($config['translateModel']);
+
+		if (!is_array($config)) {
 			$this->Session->setFlash(__('Invalid model.'), 'default', array('class' => 'error'));
 			$this->redirect(array(
-				'plugin' => null,
+				'plugin' => $plugin,
 				'controller' => Inflector::pluralize($modelAlias),
 				'action' => 'index',
 			));
 		}
 
-		$model =& ClassRegistry::init($modelAlias);
+		$model = ClassRegistry::init($config['translateModel']);
 		$record = $model->findById($id);
 		if (!isset($record[$modelAlias]['id'])) {
 			$this->Session->setFlash(__('Invalid record.'), 'default', array('class' => 'error'));
 			$this->redirect(array(
-				'plugin' => null,
+				'plugin' => $plugin,
 				'controller' => Inflector::pluralize($modelAlias),
 				'action' => 'index',
 			));
 		}
 
-		$runtimeModel =& $model->translateModel();
+		$runtimeModel = $model->translateModel();
 		$runtimeModelAlias = $runtimeModel->alias;
 		if ($runtimeModel->deleteAll(array(
 				$runtimeModelAlias . '.model' => $modelAlias,

@@ -1,26 +1,24 @@
 <style>
-.install h1 { padding: 0px 0px 0px 20px;  }
-
-#install { margin: 0px auto; width: 500px; padding: 50px 0px 0px 0px; }
-#install h2 { font-size: 28px; border-bottom: 0px; margin: 20px 0px 20px 0px; }
-#install .forgot { float: right; }
-#install input[type=text],
-#install input[type=password] { width: 95%; }
-
-#install .install { margin: 30px 0px 0px 0px; padding: 0px 20px 20px 20px; background: #fff; border: 1px solid #e5e5e5; }
-#install .install { -moz-box-shadow: rgba(200,200,200,1) 0 4px 18px; -webkit-box-shadow: rgba(200,200,200,1) 0 4px 18px; }
-#install .install { -moz-border-radius: 10px; -webkit-border-radius: 10px; }
-
-.install #footer { background: none; color: #444; }
-.install #footer a { color: #444; }
-
-.install p { margin-bottom: 20px; }
-.install ul.bullet { list-style: disc inside; }
-
-.install blockquote {
-	margin: 10px;
-	background: #eee;
-	padding: 20px;
-	border-radius: 4px;
+@media (max-width: 767px) {
+	h1, h2, h3 { font-size: 20px }
+	#main { padding: 100px 20px; }
 }
+
+#wrap { padding: 0px; }
+#main { max-width: 500px; margin: 42px auto; padding: 60px 0 0 0; }
+#install { background: white; background-clip: padding-box;
+	box-shadow: rgba(200,200,200,1) 0 4px 18px;
+	moz-box-shadow: rgba(200,200,200,1) 0 4px 18px;
+	-webkit-box-shadow: rgba(200,200,200,1) 0 4px 18px;
+}
+#flashMessage { margin: 10px; color: #B94A48;}
+
+.install { padding: 20px 20px 0 20px; }
+.install .input { margin: 0 0 5px 0; padding: 10px;}
+.input select { margin-bottom: 0; }
+.install blockquote { background: #eee; padding: 10px; margin-bottom: 0px; border-radius: 4px; }
+.input .error-message { font-size: 14px; }
+.form-actions { text-align: right;  margin-bottom: 0px; }
+
+form { margin: 0px; }
 </style>

@@ -1,0 +1,132 @@
+//
+// Layouts
+// --------------------------------------------------
+
+// For top and bottom navbar
+html,
+body {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	background-color: @crBackgroundColor;
+
+	&.admin-login {
+		#content-container {
+			background-color: @bodyBackground
+		}
+	}
+}
+
+#wrap {
+	overflow: hidden;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	/* Negative indent footer by it's height */
+	margin-bottom: -(@navbarHeight + 2);
+
+	.full  {
+		#content {
+			margin: 0 @crGeneralMargin;
+		}
+	}
+}
+
+#push {
+	height: @navbarHeight;
+}
+
+#content-container {
+	padding: 0;
+	// expands downwards for matching background color
+	background: @crMainBackgroundColor;
+	padding: 20px 0px 99999px 0px;
+	margin-bottom: -99999px;
+}
+
+#content {
+	background: #fff;
+	border: 1px solid #fff;
+	border-top-left-radius: 8px;
+	border-bottom-left-radius: 8px;
+	margin-left: 170px;
+	margin-bottom: @crGeneralMargin;
+	padding: 20px;
+	min-height: 400px;
+}
+
+#inner-content {
+	margin: 20px 0 0 0;
+}
+
+.content {
+	padding: 0px @crContentPadding;
+
+	table {
+		margin: @crGeneralMargin 0px;
+	}
+}
+
+#admin-login {
+	margin: @navbarHeight * 3 auto 0;
+	max-width: @crLoginBox + 2;
+
+	#authMessage {
+		margin-bottom: @crContentPadding;
+	}
+
+	.box {
+		margin-top: @crGeneralMargin;
+		margin: auto;
+		max-width: @crLoginBox;
+
+		.box-content {
+			padding: @crContentPadding * 2;
+		}
+	}
+
+	.input-prepend {
+		margin-bottom: @crContentPadding;
+	}
+
+	.forgot {
+		vertical-align: middle;
+		margin: 0 @crContentPadding * 2;
+	}
+
+}
+
+header {
+	border-bottom: 1px solid #707070;
+}
+
+footer {
+	background: @navbarInverseBackground;
+	.navbar-inner {
+		.border-radius(0);
+		margin: 0 auto;
+		padding: 0;
+	}
+
+	.footer-content {
+		padding: 10px;
+		text-align: center;
+		color: #fff;
+		font-size: 13px;
+	}
+
+	border-top: 1px solid #707070;
+
+	color: #fff;
+	a {
+		color: #fff;
+	}
+	a:hover {
+		color: #fff;
+	}
+}
+
+
+.footer.navbar-inverse {
+	background: @navbarInverseBackground;
+}

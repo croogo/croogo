@@ -158,11 +158,11 @@ class ExtensionsInstaller {
 		if (empty($path)) {
 			throw new CakeException(__('Invalid theme path'));
 		}
-                
+
 		if (isset($this->_themeName[$path])) {
 			return $this->_themeName[$path];
 		}
-                
+
 		$Zip = new ZipArchive;
 		if ($Zip->open($path) === true) {
 			$search = 'webroot/theme.json';

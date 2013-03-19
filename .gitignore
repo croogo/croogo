@@ -1,6 +1,6 @@
 # App
 Config/database.php
-Config/settings.yml
+Config/settings.json
 Vendor/Simpletest/
 View/Themed/
 webroot/uploads/
