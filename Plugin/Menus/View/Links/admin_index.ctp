@@ -14,7 +14,8 @@ $this->Html
 <?php
 	echo $this->Croogo->adminAction(
 		__('New %s', Inflector::singularize($this->name)),
-		array('action' => 'add', $menu['Menu']['id'])
+		array('action' => 'add', $menu['Menu']['id']),
+		array('button' => 'success')
 	);
 ?>
 <?php $this->end('actions'); ?>

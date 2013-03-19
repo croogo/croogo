@@ -11,7 +11,8 @@ $this->Html
 <?php
 	echo $this->Croogo->adminAction(
 		__('Create content'),
-		array('action'=>'create')
+		array('action'=>'create'),
+		array('button' => 'success')
 	);
 ?>
 <?php $this->end(); ?>

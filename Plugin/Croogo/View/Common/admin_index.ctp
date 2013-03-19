@@ -29,7 +29,8 @@ $showActions = isset($showActions) ? $showActions : true;
 			<?php
 				echo $this->Croogo->adminAction(
 					__('New %s', Inflector::singularize($this->name)),
-					array('action' => 'add')
+					array('action' => 'add'),
+					array('button' => 'success')
 				);
 			?>
 			<?php endif; ?>
