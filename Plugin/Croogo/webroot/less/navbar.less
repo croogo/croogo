@@ -18,6 +18,10 @@
 		}
 	}
 
+	& > ul {
+		border-top: 1px solid @crNavLinkBorderBottomColor;
+	}
+
 	.sidebar-item {
 		padding: 10px 15px;
 		text-overflow: ellipsis;
@@ -90,6 +94,7 @@
 		z-index: @zindexModal;
 		margin-bottom: 0px;
 		display: none;
+		background: @crSubNavBgColor;
 
 		.sidebar-item {
 			&.current {
@@ -97,6 +102,16 @@
 					background: none;
 				}
 			}
+		}
+
+		a {
+			&:hover{
+				color: @crSubNavLinkHoverColor;
+			};
+		}
+
+		i {
+			display: none;
 		}
 
 		.sub-nav {
@@ -138,14 +153,18 @@
 		.nav-stacked {
 			> li {
 				&:first-child > a {
-					border-top: 1px solid @navbarInverseBorder;
+					border-top: 1px solid @crNavLinkBorderTopColor;
 				}
 				> a {
-					color: @navbarInverseLinkColor;
+					color: @crNavLinkColor;
 					&:hover {
-						color: @navbarInverseLinkColorHover;
+						color: @crNavLinkHoverColor;
+						text-decoration: none;
+						background: @crNavLinkHoverBgColor;
+						box-shadow: 0 2px 4px @crNavLinkHoverShadowColor inset;
 					}
-					border-bottom: 1px solid @navbarInverseBorder;
+					border-top: 1px solid @crNavLinkBorderTopColor; 
+					border-bottom: 1px solid @crNavLinkBorderBottomColor;
 				}
 			}
 		}
