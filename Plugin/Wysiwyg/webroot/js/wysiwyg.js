@@ -26,6 +26,8 @@ Croogo.Wysiwyg.browser = function() {
 
 };
 
-$(document).ready(function() {
-	Croogo.Wysiwyg.browser();
-});
+if (typeof jQuery != 'undefined') {
+	$(document).ready(function() {
+		Croogo.Wysiwyg.browser();
+	});
+}
