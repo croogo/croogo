@@ -9,6 +9,7 @@
 			'/croogo/css/croogo-bootstrap',
 			'/croogo/css/croogo-bootstrap-responsive',
 		));
+		echo $this->Layout->js();
 		echo $this->Html->script(array(
 			'/croogo/js/html5',
 		));
