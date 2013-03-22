@@ -10,6 +10,15 @@ App::uses('AppController', 'Controller');
  * - inherits from Controller, instead of AppController
  * - loads its own set of components and helpers
  * - aware of Site.theme and Site.admin_theme
+ *
+ * PHP version 5
+ *
+ * @category Controllers
+ * @package  Croogo
+ * @version  1.0
+ * @author   Rachman Chavik <rchavik@xintesa.com>
+ * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link     http://www.croogo.org
  */
 class CakeErrorController extends AppController {
 
