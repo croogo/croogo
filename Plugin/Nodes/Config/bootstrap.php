@@ -6,7 +6,7 @@ Croogo::hookHelper('*', 'Nodes.Nodes');
 
 CroogoNav::add('content', array(
 	'icon' => array('edit', 'large'),
-	'title' => __('Content'),
+	'title' => __d('croogo', 'Content'),
 	'url' => array(
 		'plugin' => 'nodes',
 		'admin' => true,
@@ -17,7 +17,7 @@ CroogoNav::add('content', array(
 	'children' => array(
 
 		'list' => array(
-			'title' => __('List'),
+			'title' => __d('croogo', 'List'),
 			'url' => array(
 				'plugin' => 'nodes',
 				'admin' => true,
@@ -28,7 +28,7 @@ CroogoNav::add('content', array(
 		),
 
 		'create' => array(
-			'title' => __('Create'),
+			'title' => __d('croogo', 'Create'),
 			'url' => array(
 				'plugin' => 'nodes',
 				'admin' => true,

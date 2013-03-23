@@ -6,22 +6,22 @@ $this->Html->script('/acl/js/acl_permissions.js', false);
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
-	->addCrumb(__('Permissions'), array(
+	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Permissions'), array(
 		'plugin' => 'acl', 'controller' => 'acl_permissions',
 	));
 
 ?>
 <?php $this->start('actions'); ?>
 <?php
-	echo $this->Croogo->adminAction(__('Generate Actions'),
+	echo $this->Croogo->adminAction(__d('croogo', 'Generate Actions'),
 		array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1),
 		array('method' => 'post')
 	);
-	echo $this->Croogo->adminAction(__('Sync Actions'),
+	echo $this->Croogo->adminAction(__d('croogo', 'Sync Actions'),
 		array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1, 'sync' => 1)
 	);
-	echo $this->Croogo->adminAction(__('Edit Actions'),
+	echo $this->Croogo->adminAction(__d('croogo', 'Edit Actions'),
 		array('controller' => 'acl_actions', 'action'=>'index', 'permissions' => 1)
 	);
 ?>
@@ -33,8 +33,8 @@ $this->Html
 	$roleIds   = array_keys($roles);
 
 	$tableHeaders = array(
-		__('Id'),
-		__('Alias'),
+		__d('croogo', 'Id'),
+		__d('croogo', 'Alias'),
 	);
 	$tableHeaders = array_merge($tableHeaders, $roleTitles);
 	$tableHeaders =  $this->Html->tableHeaders($tableHeaders);

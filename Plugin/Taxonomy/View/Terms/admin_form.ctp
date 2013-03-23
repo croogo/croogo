@@ -5,20 +5,20 @@ $this->Html->script(array('/taxonomy/js/terms'), false);
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'));
+	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
 	$this->Html
-		->addCrumb(__('Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index'))
+		->addCrumb(__d('croogo', 'Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index'))
 		->addCrumb($vocabulary['Vocabulary']['title'], array('plugin' => 'taxonomy', 'controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id']))
 		->addCrumb($this->request->data['Term']['title'], $this->here);
 }
 
 if ($this->request->params['action'] == 'admin_add') {
 	$this->Html
-		->addCrumb(__('Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index', $vocabulary['Vocabulary']['id'],))
+		->addCrumb(__d('croogo', 'Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index', $vocabulary['Vocabulary']['id'],))
 		->addCrumb($vocabulary['Vocabulary']['title'], array('plugin' => 'taxonomy', 'controller' => 'terms', 'action' => 'index'))
-		->addCrumb(__('Add'), $this->here);
+		->addCrumb(__d('croogo', 'Add'), $this->here);
 }
 
 echo $this->Form->create('Term', array(
@@ -31,7 +31,7 @@ echo $this->Form->create('Term', array(
 
 		<ul class="nav nav-tabs">
 		<?php
-			echo $this->Croogo->adminTab(__('Term'), '#term-basic');
+			echo $this->Croogo->adminTab(__d('croogo', 'Term'), '#term-basic');
 			echo $this->Croogo->adminTabs();
 		?>
 		</ul>
@@ -42,21 +42,21 @@ echo $this->Form->create('Term', array(
 				echo $this->Form->input('Taxonomy.parent_id', array(
 					'options' => $parentTree,
 					'empty' => true,
-					'label' => __('Parent'),
+					'label' => __d('croogo', 'Parent'),
 				));
 				$this->Form->inputDefaults(array(
 					'class' => 'span10',
 					'label' => false,
 				));
 				echo $this->Form->input('title', array(
-					'placeholder' => __('Title'),
+					'placeholder' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('slug', array(
-					'placeholder' => __('Slug'),
+					'placeholder' => __d('croogo', 'Slug'),
 					'class' => 'slug span10',
 				));
 				echo $this->Form->input('description', array(
-					'placeholder' => __('Description'),
+					'placeholder' => __d('croogo', 'Description'),
 				));
 			?>
 			</div>
@@ -67,10 +67,10 @@ echo $this->Form->create('Term', array(
 
 	<div class="span4">
 	<?php
-		echo $this->Html->beginBox(__('Publishing')) .
-			$this->Form->button(__('Save'), array('button' => 'default')) .
+		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+			$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
 			$this->Html->link(
-				__('Cancel'),
+				__d('croogo', 'Cancel'),
 				array('action' => 'index', $vocabularyId),
 				array('button' => 'danger')
 			) .

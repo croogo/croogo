@@ -19,23 +19,23 @@ $dashboardUrl = array(
 			<?php echo $this->Html->link(Configure::read('Site.title'), $dashboardUrl, array('class' => 'brand')); ?>
 			</span>
 			<span class="hidden-desktop hidden-tablet">
-			<?php echo $this->Html->link(__('Dashboard'), $dashboardUrl, array('class' => 'brand')); ?>
+			<?php echo $this->Html->link(__d('croogo', 'Dashboard'), $dashboardUrl, array('class' => 'brand')); ?>
 			</span>
 			<div class="nav-collapse collapse" style="height: 0px; ">
 				<ul class="nav">
 					<li>
-						<?php echo $this->Html->link(__('Visit website'), '/', array('target' => '_blank')); ?>
+						<?php echo $this->Html->link(__d('croogo', 'Visit website'), '/', array('target' => '_blank')); ?>
 					</li>
 				</ul>
 				<?php if ($this->Session->read('Auth.User.id')): ?>
 				<ul class="nav pull-right">
 					<li>
 						<a href="#">
-							<?php echo sprintf(__("You are logged in as: %s"), $this->Session->read('Auth.User.username')); ?>
+							<?php echo sprintf(__d('croogo', "You are logged in as: %s"), $this->Session->read('Auth.User.username')); ?>
 						</a>
 					</li>
 					<li>
-						<?php echo $this->Html->link(__("Log out"), array('plugin' => 'users', 'controller' => 'users', 'action' => 'logout')); ?>
+						<?php echo $this->Html->link(__d('croogo', "Log out"), array('plugin' => 'users', 'controller' => 'users', 'action' => 'logout')); ?>
 					</li>
 				</ul>
 				<?php endif; ?>

@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title><?php echo $title_for_layout; ?> - <?php echo __('Croogo'); ?></title>
+	<title><?php echo $title_for_layout; ?> - <?php echo __d('croogo', 'Croogo'); ?></title>
 	<?php
 		echo $this->Html->css(array(
 			'/croogo/css/croogo-bootstrap',

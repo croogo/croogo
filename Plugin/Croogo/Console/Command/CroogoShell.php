@@ -26,12 +26,12 @@ class CroogoShell extends AppShell {
  */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
-		$parser->description(__('Croogo Utilities')
+		$parser->description(__d('croogo', 'Croogo Utilities')
 			)->addSubCommand('make', array(
-				'help' => __('Compile/Generate CSS'),
+				'help' => __d('croogo', 'Compile/Generate CSS'),
 				)
 			)->addSubCommand('upgrade', array(
-				'help' => __('Upgrade Croogo'),
+				'help' => __d('croogo', 'Upgrade Croogo'),
 				'parser' => $this->Upgrade->getOptionParser(),
 				)
 			)->addSubcommand('password', array(

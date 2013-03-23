@@ -68,7 +68,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  * @return void
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Plugins'));
+		$this->set('title_for_layout', __d('croogo', 'Plugins'));
 
 		$plugins = $this->_CroogoPlugin->plugins();
 		$this->set('corePlugins', $this->_CroogoPlugin->corePlugins);
@@ -82,7 +82,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  * @return void
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Upload a new plugin'));
+		$this->set('title_for_layout', __d('croogo', 'Upload a new plugin'));
 
 		if (!empty($this->request->data)) {
 			$file = $this->request->data['Plugin']['file'];
@@ -107,21 +107,21 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  */
 	public function admin_delete($plugin = null) {
 		if (!$plugin) {
-			$this->Session->setFlash(__('Invalid plugin'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->_CroogoPlugin->isActive($plugin)) {
-			$this->Session->setFlash(__('You cannot delete a plugin that is currently active.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'You cannot delete a plugin that is currently active.'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 
 		$result = $this->_CroogoPlugin->delete($plugin);
 		if ($result === true) {
-			$this->Session->setFlash(__('Plugin "%s" deleted successfully.', $plugin), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Plugin "%s" deleted successfully.', $plugin), 'default', array('class' => 'success'));
 		} elseif (!empty($result[0])) {
 			$this->Session->setFlash($result[0], 'default', array('class' => 'error'));
 		} else {
-			$this->Session->setFlash(__('Plugin could not be deleted.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Plugin could not be deleted.'), 'default', array('class' => 'error'));
 		}
 
 		$this->redirect(array('action' => 'index'));
@@ -135,27 +135,27 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  */
 	public function admin_toggle($plugin = null) {
 		if (!$plugin) {
-			$this->Session->setFlash(__('Invalid plugin'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 
 		if ($this->_CroogoPlugin->isActive($plugin)) {
 			$result = $this->_CroogoPlugin->deactivate($plugin);
 			if ($result === true) {
-				$this->Session->setFlash(__('Plugin "%s" deactivated successfully.', $plugin), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'Plugin "%s" deactivated successfully.', $plugin), 'default', array('class' => 'success'));
 			} elseif (is_string($result)) {
 				$this->Session->setFlash($result, 'default', array('class' => 'error'));
 			} else {
-				$this->Session->setFlash(__('Plugin could not be deactivated. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Plugin could not be deactivated. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		} else {
 			$result = $this->_CroogoPlugin->activate($plugin);
 			if ($result === true) {
-				$this->Session->setFlash(__('Plugin "%s" activated successfully.', $plugin), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'Plugin "%s" activated successfully.', $plugin), 'default', array('class' => 'success'));
 			} elseif (is_string($result)) {
 				$this->Session->setFlash($result, 'default', array('class' => 'error'));
 			} else {
-				$this->Session->setFlash(__('Plugin could not be activated. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Plugin could not be activated. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
 		$this->redirect(array('action' => 'index'));
@@ -168,12 +168,12 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  */
 	public function admin_migrate($plugin = null) {
 		if (!$plugin) {
-			$this->Session->setFlash(__('Invalid plugin'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'default', array('class' => 'error'));
 		} elseif ($this->_CroogoPlugin->migrate($plugin)) {
-			$this->Session->setFlash(__('Plugin "%s" migrated successfully.', $plugin), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Plugin "%s" migrated successfully.', $plugin), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(
-				__('Plugin "%s" could not be migrated. Error: %s', $plugin, implode('<br />', $this->_CroogoPlugin->migrationErrors)),
+				__d('croogo', 'Plugin "%s" could not be migrated. Error: %s', $plugin, implode('<br />', $this->_CroogoPlugin->migrationErrors)),
 				'default',
 				array('class' => 'success')
 			);
@@ -188,13 +188,13 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  */
 	public function admin_moveup($plugin = null) {
 		if ($plugin === null) {
-			throw new CakeException(__('Invalid plugin'));
+			throw new CakeException(__d('croogo', 'Invalid plugin'));
 		}
 
 		$class = 'success';
 		$result = $this->_CroogoPlugin->move('up', $plugin);
 		if ($result === true) {
-			$message = __('Plugin %s has been moved up', $plugin);
+			$message = __d('croogo', 'Plugin %s has been moved up', $plugin);
 		} else {
 			$message = $result;
 			$class = 'error';
@@ -211,13 +211,13 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  */
 	public function admin_movedown($plugin = null) {
 		if ($plugin === null) {
-			throw new CakeException(__('Invalid plugin'));
+			throw new CakeException(__d('croogo', 'Invalid plugin'));
 		}
 
 		$class = 'success';
 		$result = $this->_CroogoPlugin->move('down', $plugin);
 		if ($result === true) {
-			$message = __('Plugin %s has been moved down', $plugin);
+			$message = __d('croogo', 'Plugin %s has been moved down', $plugin);
 		} else {
 			$message = $result;
 			$class = 'error';

@@ -28,7 +28,7 @@ $showActions = isset($showActions) ? $showActions : true;
 			<?php else: ?>
 			<?php
 				echo $this->Croogo->adminAction(
-					__('New %s', Inflector::singularize($this->name)),
+					__d('croogo', 'New %s', Inflector::singularize($this->name)),
 					array('action' => 'add'),
 					array('button' => 'success')
 				);
@@ -56,7 +56,7 @@ $showActions = isset($showActions) ? $showActions : true;
 						$tableHeaders[] = $arr['label'];
 					}
 				}
-				$tableHeaders[] = __('Actions');
+				$tableHeaders[] = __d('croogo', 'Actions');
 				$tableHeaders = $this->Html->tableHeaders($tableHeaders);
 
 				$rows = array();
@@ -66,7 +66,7 @@ $showActions = isset($showActions) ? $showActions : true;
 
 						if (isset($this->request->query['chooser'])):
 							$title = isset($item[$modelClass]['title']) ? $item[$modelClass]['title']  : null;
-							$actions[] = $this->Croogo->adminRowAction(__('Choose'), '#', array(
+							$actions[] = $this->Croogo->adminRowAction(__d('croogo', 'Choose'), '#', array(
 								'class' => 'item-choose',
 								'data-chooser_type' => $modelClass,
 								'data-chooser_id' => $item[$modelClass]['id'],
@@ -74,7 +74,7 @@ $showActions = isset($showActions) ? $showActions : true;
 						else:
 							$actions[] = $this->Croogo->adminRowAction('',
 								array('action' => 'edit', $item[$modelClass]['id']),
-								array('icon' => 'pencil', 'tooltip' => __('Edit this item'))
+								array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 							);
 							$actions[] = $this->Croogo->adminRowActions($item[$modelClass]['id']);
 							$actions[] = $this->Croogo->adminRowAction('',
@@ -84,9 +84,9 @@ $showActions = isset($showActions) ? $showActions : true;
 								),
 								array(
 									'icon' => 'trash',
-									'tooltip' => __('Remove this item')
+									'tooltip' => __d('croogo', 'Remove this item')
 								),
-								__('Are you sure?'));
+								__d('croogo', 'Are you sure?'));
 						endif;
 						$actions = $this->Html->div('item-actions', implode(' ', $actions));
 						$row = array();
@@ -125,16 +125,16 @@ $showActions = isset($showActions) ? $showActions : true;
 					<p>
 					<?php
 					echo $this->Paginator->counter(array(
-						'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+						'format' => __d('croogo', 'Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
 					));
 					?>
 					</p>
 					<ul>
-						<?php echo $this->Paginator->first('< ' . __('first')); ?>
-						<?php echo $this->Paginator->prev('< ' . __('prev')); ?>
+						<?php echo $this->Paginator->first('< ' . __d('croogo', 'first')); ?>
+						<?php echo $this->Paginator->prev('< ' . __d('croogo', 'prev')); ?>
 						<?php echo $this->Paginator->numbers(); ?>
-						<?php echo $this->Paginator->next(__('next') . ' >'); ?>
-						<?php echo $this->Paginator->last(__('last') . ' >'); ?>
+						<?php echo $this->Paginator->next(__d('croogo', 'next') . ' >'); ?>
+						<?php echo $this->Paginator->last(__d('croogo', 'last') . ' >'); ?>
 					</ul>
 				</div>
 			<?php endif; ?>

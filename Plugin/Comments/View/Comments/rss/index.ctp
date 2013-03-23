@@ -14,7 +14,7 @@
 		);
 
 		return array(
-			'title' => __('Comment on') . ' ' . $item['Node']['title'] . ' ' . __('by') . ' ' . $name,
+			'title' => __d('croogo', 'Comment on') . ' ' . $item['Node']['title'] . ' ' . __d('croogo', 'by') . ' ' . $name,
 			'link' => Router::url($item['Node']['url'], true) . '#comment-' . $item['Comment']['id'],
 			'guid' => Router::url($item['Node']['url'], true) . '#comment-' . $item['Comment']['id'],
 			'description' => $item['Comment']['body'],

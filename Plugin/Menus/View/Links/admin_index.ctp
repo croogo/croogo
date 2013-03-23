@@ -4,8 +4,8 @@ $this->extend('/Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Menus'), array('plugin' => 'menus', 'controller' => 'menus', 'action' => 'index'))
-	->addCrumb(__($menu['Menu']['title']), array(
+	->addCrumb(__d('croogo', 'Menus'), array('plugin' => 'menus', 'controller' => 'menus', 'action' => 'index'))
+	->addCrumb(__d('croogo', $menu['Menu']['title']), array(
 		'plugin' => 'menus', 'controller' => 'links', 'action' => 'index',
 		'?' => array('menu_id' => $menu['Menu']['id'])));
 ?>
@@ -13,7 +13,7 @@ $this->Html
 <?php $this->start('actions'); ?>
 <?php
 	echo $this->Croogo->adminAction(
-		__('New %s', Inflector::singularize($this->name)),
+		__d('croogo', 'New %s', Inflector::singularize($this->name)),
 		array('action' => 'add', $menu['Menu']['id']),
 		array('button' => 'success')
 	);
@@ -38,10 +38,10 @@ $this->Html
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
 		'',
-		__('Id'),
-		__('Title'),
-		__('Status'),
-		__('Actions'),
+		__d('croogo', 'Id'),
+		__d('croogo', 'Title'),
+		__d('croogo', 'Status'),
+		__d('croogo', 'Actions'),
 	));
 ?>
 	<thead>
@@ -55,27 +55,27 @@ $this->Html
 			'controller' => 'links', 'action' => 'moveup', $linkId
 			), array(
 			'icon' => 'chevron-up',
-			'tooltip' => __('Move up'),
+			'tooltip' => __d('croogo', 'Move up'),
 		));
 		$actions[] = $this->Croogo->adminRowAction('', array(
 			'controller' => 'links', 'action' => 'movedown', $linkId,
 			), array(
 			'icon' => 'chevron-down',
-			'tooltip' => __('Move down'),
+			'tooltip' => __d('croogo', 'Move down'),
 		));
 		$actions[] = $this->Croogo->adminRowActions($linkId);
 		$actions[] = $this->Croogo->adminRowAction('', array(
 			'controller' => 'links', 'action' => 'edit', $linkId,
 			), array(
-			'icon' => 'pencil', 'tooltip' => __('Edit this item'),
+			'icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'),
 		));
 		$actions[] = $this->Croogo->adminRowAction('', '#Link' . $linkId . 'Id',
 			array(
 				'icon' => 'trash',
-				'tooltip' => __('Delete this item'),
+				'tooltip' => __d('croogo', 'Delete this item'),
 				'rowAction' => 'delete',
 			),
-			__('Are you sure?')
+			__d('croogo', 'Are you sure?')
 		);
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 		$rows[] = array(
@@ -101,15 +101,15 @@ $this->Html
 				'div' => 'input inline',
 				'label' => false,
 				'options' => array(
-					'publish' => __('Publish'),
-					'unpublish' => __('Unpublish'),
-					'delete' => __('Delete'),
+					'publish' => __d('croogo', 'Publish'),
+					'unpublish' => __d('croogo', 'Unpublish'),
+					'delete' => __d('croogo', 'Delete'),
 				),
 				'empty' => true,
 			));
 		?>
 		<div class="controls">
-			<?php echo $this->Form->end(__('Submit')); ?>
+			<?php echo $this->Form->end(__d('croogo', 'Submit')); ?>
 		</div>
 	</div>
 </div>

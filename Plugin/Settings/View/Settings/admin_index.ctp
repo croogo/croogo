@@ -4,7 +4,7 @@ $this->extend('/Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Settings'), array(
+	->addCrumb(__d('croogo', 'Settings'), array(
 		'admin' => true,
 		'plugin' => 'settings',
 		'controller' => 'settings',
@@ -21,7 +21,7 @@ if (!empty($this->request->params['named']['p'])) {
 		$this->Paginator->sort('key'),
 		$this->Paginator->sort('value'),
 		$this->Paginator->sort('editable'),
-		__('Actions'),
+		__d('croogo', 'Actions'),
 	));
 ?>
 	<thead>
@@ -33,21 +33,21 @@ if (!empty($this->request->params['named']['p'])) {
 		$actions = array();
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'settings', 'action' => 'moveup', $setting['Setting']['id']),
-			array('icon' => 'chevron-up', 'tooltip' => __('Move up'))
+			array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'settings', 'action' => 'movedown', $setting['Setting']['id']),
-			array('icon' => 'chevron-down', 'tooltip' => __('Move down'))
+			array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'settings', 'action' => 'edit', $setting['Setting']['id']),
-			array('icon' => 'pencil', 'tooltip' => __('Edit this item'))
+			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowActions($setting['Setting']['id']);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'settings', 'action' => 'delete', $setting['Setting']['id']),
-			array('icon' => 'trash','tooltip' => __('Remove this item')),
-			__('Are you sure?'));
+			array('icon' => 'trash','tooltip' => __d('croogo', 'Remove this item')),
+			__d('croogo', 'Are you sure?'));
 
 		$key = $setting['Setting']['key'];
 		$keyE = explode('.', $key);

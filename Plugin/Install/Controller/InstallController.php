@@ -94,7 +94,7 @@ class InstallController extends Controller {
  */
 	public function index() {
 		$this->_check();
-		$this->set('title_for_layout', __('Installation: Welcome'));
+		$this->set('title_for_layout', __d('croogo', 'Installation: Welcome'));
 	}
 
 /**
@@ -109,7 +109,7 @@ class InstallController extends Controller {
  */
 	public function database() {
 		$this->_check();
-		$this->set('title_for_layout', __('Step 1: Database'));
+		$this->set('title_for_layout', __d('croogo', 'Step 1: Database'));
 
 		if (Configure::read('Install.installed')) {
 			$this->redirect(array('action' => 'adminuser'));
@@ -136,7 +136,7 @@ class InstallController extends Controller {
  */
 	public function data() {
 		$this->_check();
-		$this->set('title_for_layout', __('Step 2: Build database'));
+		$this->set('title_for_layout', __d('croogo', 'Step 2: Build database'));
 
 		$this->loadModel('Install.Install');
 		$ds = $this->Install->getDataSource();
@@ -144,7 +144,7 @@ class InstallController extends Controller {
 		$sources = $ds->listSources();
 		if (!empty($sources)) {
 			$this->Session->setFlash(
-				__('Warning: Database "%s" is not empty.', $ds->config['database']),
+				__d('croogo', 'Warning: Database "%s" is not empty.', $ds->config['database']),
 				'default', array('class' => 'error')
 			);
 		}
@@ -192,7 +192,7 @@ class InstallController extends Controller {
  * @access public
  */
 	public function finish($token = null) {
-		$this->set('title_for_layout', __('Installation successful'));
+		$this->set('title_for_layout', __d('croogo', 'Installation successful'));
 		$this->_check();
 
 		$InstallManager = new InstallManager();

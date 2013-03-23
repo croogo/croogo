@@ -4,7 +4,7 @@ $this->extend('/Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Attachments'), array('plugin' => 'file_manager', 'controller' => 'attachments', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Attachments'), array('plugin' => 'file_manager', 'controller' => 'attachments', 'action' => 'index'))
 	->addCrumb($this->data['Node']['title'], $this->here);
 
 echo $this->Form->create('Node', array('url' => array('controller' => 'attachments', 'action' => 'edit')));
@@ -15,7 +15,7 @@ echo $this->Form->create('Node', array('url' => array('controller' => 'attachmen
 
 		<ul class="nav nav-tabs">
 		<?php
-			echo $this->Croogo->adminTab(__('Attachment'), '#attachment-main');
+			echo $this->Croogo->adminTab(__d('croogo', 'Attachment'), '#attachment-main');
 		?>
 		</ul>
 
@@ -40,20 +40,20 @@ echo $this->Form->create('Node', array('url' => array('controller' => 'attachmen
 					'label' => false,
 				));
 				echo $this->Form->input('title', array(
-					'placeholder' => __('Title'),
+					'placeholder' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('excerpt', array(
-					'placeholder' => __('Caption'),
+					'placeholder' => __d('croogo', 'Caption'),
 				));
 
 				echo $this->Form->input('file_url', array(
-					'placeholder' => __('File URL'),
+					'placeholder' => __d('croogo', 'File URL'),
 					'value' => Router::url($this->data['Node']['path'], true),
 					'readonly' => 'readonly')
 				);
 
 				echo $this->Form->input('file_type', array(
-					'placeholder' => __('Mime Type'),
+					'placeholder' => __d('croogo', 'Mime Type'),
 					'value' => $this->data['Node']['mime_type'],
 					'readonly' => 'readonly')
 				);
@@ -67,10 +67,10 @@ echo $this->Form->create('Node', array('url' => array('controller' => 'attachmen
 
 	<div class="span4">
 	<?php
-		echo $this->Html->beginBox(__('Publishing')) .
-			$this->Form->button(__('Save')) .
+		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+			$this->Form->button(__d('croogo', 'Save')) .
 			$this->Html->link(
-				__('Cancel'),
+				__d('croogo', 'Cancel'),
 				array('action' => 'index'),
 				array('class' => 'cancel', 'button' => 'danger')
 			).

@@ -47,7 +47,7 @@ class MenusController extends MenusAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Menus'));
+		$this->set('title_for_layout', __d('croogo', 'Menus'));
 
 		$this->Menu->recursive = 0;
 		$this->paginate['Menu']['order'] = 'Menu.id ASC';
@@ -61,15 +61,15 @@ class MenusController extends MenusAppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Menu'));
+		$this->set('title_for_layout', __d('croogo', 'Add Menu'));
 
 		if (!empty($this->request->data)) {
 			$this->Menu->create();
 			if ($this->Menu->save($this->request->data)) {
-				$this->Session->setFlash(__('The Menu has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Menu has been saved'), 'default', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Menu->id));
 			} else {
-				$this->Session->setFlash(__('The Menu could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Menu could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
 	}
@@ -82,18 +82,18 @@ class MenusController extends MenusAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Menu'));
+		$this->set('title_for_layout', __d('croogo', 'Edit Menu'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Menu'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Menu'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Menu->save($this->request->data)) {
-				$this->Session->setFlash(__('The Menu has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Menu has been saved'), 'default', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Menu->id));
 			} else {
-				$this->Session->setFlash(__('The Menu could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Menu could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -110,11 +110,11 @@ class MenusController extends MenusAppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Menu'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Menu'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Menu->delete($id)) {
-			$this->Session->setFlash(__('Menu deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Menu deleted'), 'default', array('class' => 'success'));
 			$this->redirect(array('action' => 'index'));
 		}
 	}

@@ -6,7 +6,7 @@
 			'label' => false,
 		));
 		echo $this->Form->input('username', array(
-			'placeholder' => __('Username'),
+			'placeholder' => __d('croogo', 'Username'),
 			'before' => '<span class="add-on"><i class="icon-user"></i></span>',
 			'div' => 'input-prepend text',
 			'class' => 'span11',
@@ -17,8 +17,8 @@
 			'div' => 'input-prepend password',
 			'class' => 'span11',
 		));
-		echo $this->Form->button(__('Log In'));
-		echo $this->Html->link(__('Forgot password?'), array(
+		echo $this->Form->button(__d('croogo', 'Log In'));
+		echo $this->Html->link(__d('croogo', 'Forgot password?'), array(
 			'admin' => false,
 			'controller' => 'users',
 			'action' => 'forgot',

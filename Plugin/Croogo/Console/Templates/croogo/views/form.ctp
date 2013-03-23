@@ -2,18 +2,18 @@
 
 $header =<<<EOF
 <?php
-\$this->viewVars['title_for_layout'] = __('$pluralHumanName');
+\$this->viewVars['title_for_layout'] = __d('croogo', '$pluralHumanName');
 \$this->extend('/Common/admin_edit');
 
 \$this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('${pluralHumanName}'), array('action' => 'index'));
+	->addCrumb(__d('croogo', '${pluralHumanName}'), array('action' => 'index'));
 
 if (\$this->action == 'admin_edit') {
 	\$this->Html->addCrumb(\$this->data['$modelClass']['$displayField'], \$this->here);
 	\$this->viewVars['title_for_layout'] = '$pluralHumanName: ' . \$this->data['$modelClass']['$displayField'];
 } else {
-	\$this->Html->addCrumb(__('Add'), \$this->here);
+	\$this->Html->addCrumb(__d('croogo', 'Add'), \$this->here);
 }
 
 echo \$this->Form->create('{$modelClass}');
@@ -29,7 +29,7 @@ $primaryTab = strtolower(Inflector::slug($singularHumanName, '-'));
 	<div class="span8">
 		<ul class="nav nav-tabs">
 		<?php echo "<?php\n"; ?>
-		<?php echo "\techo \$this->Croogo->adminTab(__('$singularHumanName'), '#$primaryTab');\n"; ?>
+		<?php echo "\techo \$this->Croogo->adminTab(__d('croogo', '$singularHumanName'), '#$primaryTab');\n"; ?>
 		<?php echo "\techo \$this->Croogo->adminTabs();\n"; ?>
 		<?php echo "?>\n"; ?>
 		</ul>
@@ -69,10 +69,10 @@ EOF;
 	<?php
 		echo <<<EOF
 <?php
-		echo \$this->Html->beginBox(__('Publishing')) .
-			\$this->Form->button(__('Apply'), array('name' => 'apply')) .
-			\$this->Form->button(__('Save'), array('class' => 'btn btn-primary')) .
-			\$this->Html->link(__('Cancel'), array('action' => 'index'), array('class' => 'btn btn-danger')) .
+		echo \$this->Html->beginBox(__d('croogo', 'Publishing')) .
+			\$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+			\$this->Form->button(__d('croogo', 'Save'), array('class' => 'btn btn-primary')) .
+			\$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'btn btn-danger')) .
 			\$this->Html->endBox();
 		?>\n
 EOF;

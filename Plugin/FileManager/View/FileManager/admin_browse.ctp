@@ -4,21 +4,21 @@ $this->extend('/Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('File Manager'), $this->here);
+	->addCrumb(__d('croogo', 'File Manager'), $this->here);
 
 ?>
 
 <?php $this->start('actions'); ?>
 <?php
-	echo $this->FileManager->adminAction(__('Upload here'),
+	echo $this->FileManager->adminAction(__d('croogo', 'Upload here'),
 		array('controller' => 'file_manager', 'action' => 'upload'),
 		$path
 	);
-	echo $this->FileManager->adminAction(__('Create directory'),
+	echo $this->FileManager->adminAction(__d('croogo', 'Create directory'),
 		array('controller' => 'file_manager', 'action' => 'create_directory'),
 		$path
 	);
-	echo $this->FileManager->adminAction(__('Create file'),
+	echo $this->FileManager->adminAction(__d('croogo', 'Create file'),
 		array('controller' => 'file_manager', 'action' => 'create_file'),
 		$path
 	);
@@ -26,7 +26,7 @@ $this->Html
 <?php $this->end(); ?>
 
 <div class="breadcrumb">
-	<a href="#"><?php echo __('You are here') . ' '; ?> </a> <span class="divider"> &gt; </span>
+	<a href="#"><?php echo __d('croogo', 'You are here') . ' '; ?> </a> <span class="divider"> &gt; </span>
 	<?php $breadcrumb = $this->FileManager->breadcrumb($path); ?>
 	<?php foreach ($breadcrumb as $pathname => $p) : ?>
 		<?php echo $this->FileManager->linkDirectory($pathname, $p); ?>
@@ -41,8 +41,8 @@ $this->Html
 	<?php
 		$tableHeaders = $this->Html->tableHeaders(array(
 			'',
-			__('Directory content'),
-			__('Actions'),
+			__d('croogo', 'Directory content'),
+			__d('croogo', 'Actions'),
 		));
 	?>
 		<thead>
@@ -53,9 +53,9 @@ $this->Html
 		$rows = array();
 		foreach ($content['0'] as $directory):
 			$actions = array();
-			$actions[] = $this->FileManager->linkDirectory(__('Open'), $path.$directory.DS);
+			$actions[] = $this->FileManager->linkDirectory(__d('croogo', 'Open'), $path.$directory.DS);
 			if ($this->FileManager->inPath($deletablePaths, $path.$directory)) {
-				$actions[] = $this->FileManager->link(__('Delete'), array(
+				$actions[] = $this->FileManager->link(__d('croogo', 'Delete'), array(
 					'controller' => 'file_manager',
 					'action' => 'delete_directory',
 				), $path . $directory);
@@ -73,9 +73,9 @@ $this->Html
 		$rows = array();
 		foreach ($content['1'] as $file):
 			$actions = array();
-			$actions[] = $this->FileManager->link(__('Edit'), array('controller' => 'file_manager', 'action' => 'editfile'), $path.$file);
+			$actions[] = $this->FileManager->link(__d('croogo', 'Edit'), array('controller' => 'file_manager', 'action' => 'editfile'), $path.$file);
 			if ($this->FileManager->inPath($deletablePaths, $path.$file)) {
-				$actions[] = $this->FileManager->link(__('Delete'), array(
+				$actions[] = $this->FileManager->link(__d('croogo', 'Delete'), array(
 					'controller' => 'file_manager',
 					'action' => 'delete_file',
 				), $path . $file);

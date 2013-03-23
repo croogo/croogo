@@ -5,7 +5,7 @@ if (empty($modelClass)) {
 if (!isset($className)) {
 	$className = strtolower($this->name);
 }
-$what = isset($this->request->data[$modelClass]['id']) ? __('Edit') : __('Add');
+$what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') : __d('croogo', 'Add');
 ?>
 <h2 class="hidden-desktop">
 <?php
@@ -41,7 +41,7 @@ $what = isset($this->request->data[$modelClass]['id']) ? __('Edit') : __('Add');
 		<div class="span8">
 			<ul class="nav nav-tabs">
 			<?php
-				echo $this->Croogo->adminTab(__($modelClass), "#$tabId");
+				echo $this->Croogo->adminTab(__d('croogo', $modelClass), "#$tabId");
 				echo $this->Croogo->adminTabs();
 			?>
 			</ul>
@@ -80,8 +80,8 @@ $what = isset($this->request->data[$modelClass]['id']) ? __('Edit') : __('Add');
 				$publishing = $buttonsBlock;
 			else :
 				echo $this->Html->beginBox('Publishing') .
-					$this->Form->button(__('Save'), array('button' => 'primary')) .
-					$this->Html->link(__('Cancel'), array('action' => 'index'), array('button' => 'danger')) .
+					$this->Form->button(__d('croogo', 'Save'), array('button' => 'primary')) .
+					$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
 					$this->Html->endBox();
 
 			endif;

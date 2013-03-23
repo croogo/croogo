@@ -15,14 +15,14 @@
 				$contact['Contact']['alias'],
 			),
 		));
-		echo $this->Form->input('Message.name', array('label' => __('Your name')));
-		echo $this->Form->input('Message.email', array('label' => __('Your email')));
-		echo $this->Form->input('Message.title', array('label' => __('Subject')));
-		echo $this->Form->input('Message.body', array('label' => __('Message')));
+		echo $this->Form->input('Message.name', array('label' => __d('croogo', 'Your name')));
+		echo $this->Form->input('Message.email', array('label' => __d('croogo', 'Your email')));
+		echo $this->Form->input('Message.title', array('label' => __d('croogo', 'Subject')));
+		echo $this->Form->input('Message.body', array('label' => __d('croogo', 'Message')));
 		if ($contact['Contact']['message_captcha']):
 			echo $this->Recaptcha->display_form();
 		endif;
-		echo $this->Form->end(__('Send'));
+		echo $this->Form->end(__d('croogo', 'Send'));
 	?>
 	</div>
 	<?php endif; ?>

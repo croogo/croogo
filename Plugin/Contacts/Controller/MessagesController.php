@@ -62,7 +62,7 @@ class MessagesController extends ContactsAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Messages'));
+		$this->set('title_for_layout', __d('croogo', 'Messages'));
 		$this->Prg->commonProcess();
 
 		$this->Message->recursive = 0;
@@ -70,7 +70,7 @@ class MessagesController extends ContactsAppController {
 		$contacts = $this->Message->Contact->find('list');
 		$messages = $this->paginate($criteria);
 		$searchFields = array('contact_id', 'status' => array(
-			'label' => __('Read'),
+			'label' => __d('croogo', 'Read'),
 			'type' => 'hidden',
 		));
 		$this->set(compact('criteria', 'messages', 'contacts', 'searchFields'));
@@ -84,18 +84,18 @@ class MessagesController extends ContactsAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Message'));
+		$this->set('title_for_layout', __d('croogo', 'Edit Message'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Message'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Message'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Message->save($this->request->data)) {
-				$this->Session->setFlash(__('The Message has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Message has been saved'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Message could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Message could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -112,11 +112,11 @@ class MessagesController extends ContactsAppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Message'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Message'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Message->delete($id)) {
-			$this->Session->setFlash(__('Message deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Message deleted'), 'default', array('class' => 'success'));
 			$this->redirect(array('action' => 'index'));
 		}
 	}
@@ -137,21 +137,21 @@ class MessagesController extends ContactsAppController {
 		}
 
 		if (count($ids) == 0 || $action == null) {
-			$this->Session->setFlash(__('No items selected.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'No items selected.'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 
 		if ($action == 'delete' &&
 			$this->Message->deleteAll(array('Message.id' => $ids), true, true)) {
-			$this->Session->setFlash(__('Messages deleted.'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Messages deleted.'), 'default', array('class' => 'success'));
 		} elseif ($action == 'read' &&
 			$this->Message->updateAll(array('Message.status' => 1), array('Message.id' => $ids))) {
-			$this->Session->setFlash(__('Messages marked as read'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Messages marked as read'), 'default', array('class' => 'success'));
 		} elseif ($action == 'unread' &&
 			$this->Message->updateAll(array('Message.status' => 0), array('Message.id' => $ids))) {
-			$this->Session->setFlash(__('Messages marked as unread'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Messages marked as unread'), 'default', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(__('An error occurred.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
 		}
 
 		$this->redirect(array('action' => 'index'));

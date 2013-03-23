@@ -63,13 +63,13 @@ class TermsController extends TaxonomyAppController {
 		}
 		$vocabulary = $this->Term->Vocabulary->findById($vocabularyId);
 		if (!isset($vocabulary['Vocabulary']['id'])) {
-			$this->Session->setFlash(__('Invalid Vocabulary ID.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Vocabulary ID.'), 'default', array('class' => 'error'));
 			$this->redirect(array(
 				'controller' => 'vocabularies',
 				'action' => 'index',
 			));
 		}
-		$this->set('title_for_layout', __('Vocabulary: %s', $vocabulary['Vocabulary']['title']));
+		$this->set('title_for_layout', __d('croogo', 'Vocabulary: %s', $vocabulary['Vocabulary']['title']));
 
 		$termsTree = $this->Term->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array(
 			'key' => 'id',
@@ -109,7 +109,7 @@ class TermsController extends TaxonomyAppController {
 				'action' => 'index',
 			));
 		}
-		$this->set('title_for_layout', __('%s: Add Term', $vocabulary['Vocabulary']['title']));
+		$this->set('title_for_layout', __d('croogo', '%s: Add Term', $vocabulary['Vocabulary']['title']));
 
 		if (!empty($this->request->data)) {
 			$termId = $this->Term->saveAndGetId($this->request->data['Term']);
@@ -119,7 +119,7 @@ class TermsController extends TaxonomyAppController {
 					'Taxonomy.term_id' => $termId,
 				));
 				if ($termInVocabulary) {
-					$this->Session->setFlash(__('Term with same slug already exists in the vocabulary.'), 'default', array('class' => 'error'));
+					$this->Session->setFlash(__d('croogo', 'Term with same slug already exists in the vocabulary.'), 'default', array('class' => 'error'));
 				} else {
 					$this->Term->Taxonomy->Behaviors->attach('Tree', array(
 						'scope' => array(
@@ -132,17 +132,17 @@ class TermsController extends TaxonomyAppController {
 						'vocabulary_id' => $vocabularyId,
 					);
 					if ($this->Term->Taxonomy->save($taxonomy)) {
-						$this->Session->setFlash(__('Term saved successfuly.'), 'default', array('class' => 'success'));
+						$this->Session->setFlash(__d('croogo', 'Term saved successfuly.'), 'default', array('class' => 'success'));
 						$this->redirect(array(
 							'action' => 'index',
 							$vocabularyId,
 						));
 					} else {
-						$this->Session->setFlash(__('Term could not be added to the vocabulary. Please try again.'), 'default', array('class' => 'error'));
+						$this->Session->setFlash(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'), 'default', array('class' => 'error'));
 					}
 				}
 			} else {
-				$this->Session->setFlash(__('Term could not be saved. Please try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Term could not be saved. Please try again.'), 'default', array('class' => 'error'));
 			}
 		}
 		$parentTree = $this->Term->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array('taxonomyId' => true));
@@ -198,7 +198,7 @@ class TermsController extends TaxonomyAppController {
 				'action' => 'index',
 			));
 		}
-		$this->set('title_for_layout', __('%s: Edit Term', $vocabulary['Vocabulary']['title']));
+		$this->set('title_for_layout', __d('croogo', '%s: Edit Term', $vocabulary['Vocabulary']['title']));
 
 		if (!empty($this->request->data)) {
 			if ($term['Term']['slug'] != $this->request->data['Term']['slug']) {
@@ -223,7 +223,7 @@ class TermsController extends TaxonomyAppController {
 					'Taxonomy.term_id' => $termId,
 				));
 				if ($termInVocabulary) {
-					$this->Session->setFlash(__('Term with same slug already exists in the vocabulary.'), 'default', array('class' => 'error'));
+					$this->Session->setFlash(__d('croogo', 'Term with same slug already exists in the vocabulary.'), 'default', array('class' => 'error'));
 				} else {
 					$this->Term->Taxonomy->Behaviors->attach('Tree', array(
 						'scope' => array(
@@ -237,17 +237,17 @@ class TermsController extends TaxonomyAppController {
 						'vocabulary_id' => $vocabularyId,
 					);
 					if ($this->Term->Taxonomy->save($taxonomy)) {
-						$this->Session->setFlash(__('Term saved successfuly.'), 'default', array('class' => 'success'));
+						$this->Session->setFlash(__d('croogo', 'Term saved successfuly.'), 'default', array('class' => 'success'));
 						$this->redirect(array(
 							'action' => 'index',
 							$vocabularyId,
 						));
 					} else {
-						$this->Session->setFlash(__('Term could not be added to the vocabulary. Please try again.'), 'default', array('class' => 'error'));
+						$this->Session->setFlash(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'), 'default', array('class' => 'error'));
 					}
 				}
 			} else {
-				$this->Session->setFlash(__('Term could not be saved. Please try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Term could not be saved. Please try again.'), 'default', array('class' => 'error'));
 			}
 		} else {
 			$this->request->data['Taxonomy'] = $taxonomy['Taxonomy'];
@@ -267,7 +267,7 @@ class TermsController extends TaxonomyAppController {
  */
 	public function admin_delete($id = null, $vocabularyId = null) {
 		if (!$id || !$vocabularyId) {
-			$this->Session->setFlash(__('Invalid id for Term'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Term'), 'default', array('class' => 'error'));
 			$this->redirect(array(
 				'action' => 'index',
 				$vocabularyId,
@@ -286,9 +286,9 @@ class TermsController extends TaxonomyAppController {
 			),
 		));
 		if ($this->Term->Taxonomy->delete($taxonomyId)) {
-			$this->Session->setFlash(__('Term deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Term deleted'), 'default', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(__('Term could not be deleted. Please, try again.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Term could not be deleted. Please, try again.'), 'default', array('class' => 'error'));
 		}
 		$this->redirect(array(
 			'action' => 'index',
@@ -307,7 +307,7 @@ class TermsController extends TaxonomyAppController {
  */
 	public function admin_moveup($id = null, $vocabularyId = null, $step = 1) {
 		if (!$id || !$vocabularyId) {
-			$this->Session->setFlash(__('Invalid id for Term'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Term'), 'default', array('class' => 'error'));
 			$this->redirect(array(
 				'action' => 'index',
 				$vocabularyId,
@@ -326,9 +326,9 @@ class TermsController extends TaxonomyAppController {
 			),
 		));
 		if ($this->Term->Taxonomy->moveUp($taxonomyId, $step)) {
-			$this->Session->setFlash(__('Moved up successfully'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'default', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(__('Could not move up'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'default', array('class' => 'error'));
 		}
 
 		$this->redirect(array(
@@ -348,7 +348,7 @@ class TermsController extends TaxonomyAppController {
  */
 	public function admin_movedown($id = null, $vocabularyId = null, $step = 1) {
 		if (!$id || !$vocabularyId) {
-			$this->Session->setFlash(__('Invalid id for Term'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Term'), 'default', array('class' => 'error'));
 			$this->redirect(array(
 				'action' => 'index',
 				$vocabularyId,
@@ -368,9 +368,9 @@ class TermsController extends TaxonomyAppController {
 		));
 
 		if ($this->Term->Taxonomy->moveDown($taxonomyId, $step)) {
-			$this->Session->setFlash(__('Moved down successfully'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'default', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(__('Could not move down'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'default', array('class' => 'error'));
 		}
 
 		$this->redirect(array(

@@ -66,7 +66,7 @@ class RowLevelAclComponent extends Component {
 			$adminTabActions += $this->settings['adminTabActions'];
 		}
 		foreach ($adminTabActions as $action) {
-			Croogo::hookAdminTab("$name/$action", __('Permissions'), $element);
+			Croogo::hookAdminTab("$name/$action", __d('croogo', 'Permissions'), $element);
 		}
 	}
 

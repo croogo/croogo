@@ -6,7 +6,7 @@ Croogo::hookHelper('*', 'Menus.Menus');
 
 CroogoNav::add('menus', array(
 	'icon' => array('sitemap', 'large'),
-	'title' => __('Menus'),
+	'title' => __d('croogo', 'Menus'),
 	'url' => array(
 		'plugin' => 'menus',
 		'admin' => true,
@@ -16,7 +16,7 @@ CroogoNav::add('menus', array(
 	'weight' => 20,
 	'children' => array(
 		'menus' => array(
-			'title' => __('Menus'),
+			'title' => __d('croogo', 'Menus'),
 			'url' => array(
 				'plugin' => 'menus',
 				'admin' => true,
@@ -26,7 +26,7 @@ CroogoNav::add('menus', array(
 			'weight' => 10,
 		),
 		'add_new' => array(
-			'title' => __('Add new'),
+			'title' => __d('croogo', 'Add new'),
 			'url' => array(
 				'plugin' => 'menus',
 				'admin' => true,

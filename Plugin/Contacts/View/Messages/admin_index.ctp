@@ -4,16 +4,16 @@ $this->extend('/Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Contacts'), array('controller' => 'contacts', 'action' => 'index'))
-	->addCrumb(__('Messages'), array('action' => 'index'));
+	->addCrumb(__d('croogo', 'Contacts'), array('controller' => 'contacts', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Messages'), array('action' => 'index'));
 
 if (isset($criteria['Message.status'])) {
 	if ($criteria['Message.status'] == '1') {
-		$this->Html->addCrumb(__('Read'), $this->here);
-		$this->viewVars['title_for_layout'] = __('Messages: Read');
+		$this->Html->addCrumb(__d('croogo', 'Read'), $this->here);
+		$this->viewVars['title_for_layout'] = __d('croogo', 'Messages: Read');
 	} else {
-		$this->Html->addCrumb(__('Unread'), $this->here);
-		$this->viewVars['title_for_layout'] = __('Messages: Unread');
+		$this->Html->addCrumb(__d('croogo', 'Unread'), $this->here);
+		$this->viewVars['title_for_layout'] = __d('croogo', 'Messages: Unread');
 	}
 }
 
@@ -38,13 +38,13 @@ echo $this->element('admin/modal', array(
 
 <?php $this->start('actions'); ?>
 <?php
-	echo $this->Croogo->adminAction(__('Unread'), array(
+	echo $this->Croogo->adminAction(__d('croogo', 'Unread'), array(
 		'action'=>'index',
 		'?' => array(
 			'status' => '0',
 		),
 	));
-	echo $this->Croogo->adminAction(__('Read'), array(
+	echo $this->Croogo->adminAction(__d('croogo', 'Read'), array(
 		'action'=>'index',
 		'?' => array(
 			'status' => '1',
@@ -67,7 +67,7 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 		$this->Paginator->sort('name'),
 		$this->Paginator->sort('email'),
 		$this->Paginator->sort('title'),
-		__('Actions'),
+		__d('croogo', 'Actions'),
 	));
 ?>
 	<thead>
@@ -82,12 +82,12 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'edit', $message['Message']['id']),
-			array('icon' => 'pencil', 'tooltip' => __('Edit this item'))
+			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Message' . $message['Message']['id'] . 'Id',
-			array('icon' => 'trash', 'tooltip' => __('Remove this item'), 'rowAction' => 'delete'),
-			__('Are you sure?')
+			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item'), 'rowAction' => 'delete'),
+			__d('croogo', 'Are you sure?')
 		);
 		$actions[] = $this->Croogo->adminRowActions($message['Message']['id']);
 
@@ -123,15 +123,15 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 				'label' => false,
 				'div' => 'input inline',
 				'options' => array(
-					'read' => __('Mark as read'),
-					'unread' => __('Mark as unread'),
-					'delete' => __('Delete'),
+					'read' => __d('croogo', 'Mark as read'),
+					'unread' => __d('croogo', 'Mark as unread'),
+					'delete' => __d('croogo', 'Delete'),
 				),
 				'empty' => true,
 			));
 		?>
 		<div class="controls">
-			<?php echo $this->Form->end(__('Submit')); ?>
+			<?php echo $this->Form->end(__d('croogo', 'Submit')); ?>
 		</div>
 	</div>
 </div>

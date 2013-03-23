@@ -5,7 +5,7 @@
 		<ul>
 			<li>
 			<?php
-				echo $this->Html->link(__('Translate in a new language'), array(
+				echo $this->Html->link(__d('croogo', 'Translate in a new language'), array(
 					'controller' => 'languages',
 					'action' => 'select',
 					'nodes',
@@ -22,17 +22,17 @@
 	<?php
 		$tableHeaders = $this->Html->tableHeaders(array(
 			'',
-			//__('Id'),
-			__('Title'),
-			__('Locale'),
-			__('Actions'),
+			//__d('croogo', 'Id'),
+			__d('croogo', 'Title'),
+			__d('croogo', 'Locale'),
+			__d('croogo', 'Actions'),
 		));
 		echo $tableHeaders;
 
 		$rows = array();
 		foreach ($translations as $translation) {
-			$actions  = $this->Html->link(__('Edit'), array('action' => 'translate', $id, 'locale' => $translation[$runtimeModelAlias]['locale']));
-			$actions .= ' ' . $this->Form->postLink(__('Delete'), array('action' => 'delete_translation', $translation[$runtimeModelAlias]['locale'], $id), null, __('Are you sure?'));
+			$actions  = $this->Html->link(__d('croogo', 'Edit'), array('action' => 'translate', $id, 'locale' => $translation[$runtimeModelAlias]['locale']));
+			$actions .= ' ' . $this->Form->postLink(__d('croogo', 'Delete'), array('action' => 'delete_translation', $translation[$runtimeModelAlias]['locale'], $id), null, __d('croogo', 'Are you sure?'));
 
 			$rows[] = array(
 				'',
@@ -48,6 +48,6 @@
 	?>
 	</table>
 	<?php else: ?>
-		<p><?php echo __('No translations available.'); ?></p>
+		<p><?php echo __d('croogo', 'No translations available.'); ?></p>
 	<?php endif; ?>
 </div>

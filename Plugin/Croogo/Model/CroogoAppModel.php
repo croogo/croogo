@@ -160,7 +160,7 @@ class CroogoAppModel extends Model {
  * @access public
  */
 	public function invalidate($field, $value = true) {
-		return parent::invalidate($field, __($value));
+		return parent::invalidate($field, __d('croogo', $value));
 	}
 
 /**

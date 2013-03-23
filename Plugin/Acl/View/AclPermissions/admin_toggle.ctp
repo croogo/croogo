@@ -7,7 +7,7 @@ if ($success == 1) {
 		echo $this->Html->image('/croogo/img/icons/cross.png', array('class' => 'permission-toggle', 'data-aco_id' => $acoId, 'data-aro_id' => $aroId));
 	}
 } else {
-	__('error');
+	__d('croogo', 'error');
 }
 
 Configure::write('debug', 0);

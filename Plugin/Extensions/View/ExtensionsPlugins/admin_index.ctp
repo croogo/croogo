@@ -4,14 +4,14 @@ $this->name = 'extensions-plugins';
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
-	->addCrumb(__('Plugins'), $this->here);
+	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Plugins'), $this->here);
 
 ?>
 <?php $this->start('actions'); ?>
 <?php
 	echo $this->Croogo->adminAction(
-		__('Upload'),
+		__d('croogo', 'Upload'),
 		array('action' => 'add')
 	);
 ?>
@@ -21,11 +21,11 @@ $this->Html
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
 		'',
-		__('Alias'),
-		__('Name'),
-		__('Description'),
-		__('Active'),
-		__('Actions'),
+		__d('croogo', 'Alias'),
+		__d('croogo', 'Name'),
+		__d('croogo', 'Description'),
+		__d('croogo', 'Active'),
+		__d('croogo', 'Actions'),
 	));
 ?>
 	<thead>
@@ -40,7 +40,7 @@ $this->Html
 			continue;
 		}
 
-		$toggleText = $pluginData['active'] ? __('Deactivate') : __('Activate');
+		$toggleText = $pluginData['active'] ? __d('croogo', 'Deactivate') : __d('croogo', 'Activate');
 		$iconImage = $this->Html->status($pluginData['active']);
 		$icon = $pluginData['active'] ? 'off' : 'bolt';
 
@@ -51,29 +51,29 @@ $this->Html
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'delete', $pluginAlias),
-			array('icon' => 'trash', 'tooltip' => __('Delete')),
-			__('Are you sure?')
+			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Delete')),
+			__d('croogo', 'Are you sure?')
 		);
 
 		if ($pluginData['active'] && !in_array($pluginAlias, $bundledPlugins)) {
 			$actions[] = $this->Croogo->adminRowAction('',
 				array('action' => 'moveup', $pluginAlias),
-				array('icon' => 'chevron-up', 'tooltip' => __('Move up'), 'method' => 'post'),
-				__('Are you sure?')
+				array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'), 'method' => 'post'),
+				__d('croogo', 'Are you sure?')
 			);
 
 			$actions[] = $this->Croogo->adminRowAction('',
 				array('action' => 'movedown', $pluginAlias),
-				array('icon' => 'chevron-down', 'tooltip' => __('Move down'), 'method' => 'post'),
-				__('Are you sure?')
+				array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'), 'method' => 'post'),
+				__d('croogo', 'Are you sure?')
 			);
 		}
 
 		if ($pluginData['needMigration']) {
-			$actions[] = $this->Croogo->adminRowAction(__('Migrate'), array(
+			$actions[] = $this->Croogo->adminRowAction(__d('croogo', 'Migrate'), array(
 				'action' => 'migrate',
 				$pluginAlias,
-			), array(), __('Are you sure?'));
+			), array(), __d('croogo', 'Are you sure?'));
 		}
 
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));

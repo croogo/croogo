@@ -16,7 +16,7 @@
 </div>
 <?php
 echo $this->Html->link(
-	__('Add another field'),
+	__d('croogo', 'Add another field'),
 	array('action' => 'add_meta'),
 	array('class' => 'add-meta')
 );

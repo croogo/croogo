@@ -91,7 +91,7 @@ class AttachmentsController extends FileManagerAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Attachments'));
+		$this->set('title_for_layout', __d('croogo', 'Attachments'));
 
 		$this->Node->recursive = 0;
 		$this->paginate['Node']['order'] = 'Node.created DESC';
@@ -105,7 +105,7 @@ class AttachmentsController extends FileManagerAppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Attachment'));
+		$this->set('title_for_layout', __d('croogo', 'Add Attachment'));
 
 		if (isset($this->request->params['named']['editor'])) {
 			$this->layout = 'admin_full';
@@ -114,7 +114,7 @@ class AttachmentsController extends FileManagerAppController {
 		if ($this->request->is('post') || !empty($this->request->data)) {
 
 			if (empty($this->data['Node'])) {
-				$this->Node->invalidate('file', __('Upload failed. Please ensure size does not exceed the server limit.'));
+				$this->Node->invalidate('file', __d('croogo', 'Upload failed. Please ensure size does not exceed the server limit.'));
 				return;
 			}
 
@@ -151,7 +151,7 @@ class AttachmentsController extends FileManagerAppController {
 			$this->Node->create();
 			if ($moved && $this->Node->save($this->request->data)) {
 
-				$this->Session->setFlash(__('The Attachment has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Attachment has been saved'), 'default', array('class' => 'success'));
 
 				if (isset($this->request->params['named']['editor'])) {
 					$this->redirect(array('action' => 'browse'));
@@ -159,7 +159,7 @@ class AttachmentsController extends FileManagerAppController {
 					$this->redirect(array('action' => 'index'));
 				}
 			} else {
-				$this->Session->setFlash(__('The Attachment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Attachment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
 	}
@@ -172,18 +172,18 @@ class AttachmentsController extends FileManagerAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Attachment'));
+		$this->set('title_for_layout', __d('croogo', 'Edit Attachment'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Attachment'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Attachment'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Node->save($this->request->data)) {
-				$this->Session->setFlash(__('The Attachment has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Attachment has been saved'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Attachment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Attachment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -200,7 +200,7 @@ class AttachmentsController extends FileManagerAppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Attachment'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Attachment'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 
@@ -213,11 +213,11 @@ class AttachmentsController extends FileManagerAppController {
 		if (isset($attachment['Node'])) {
 			if ($this->Node->delete($id)) {
 				unlink(WWW_ROOT . $this->uploadsDir . DS . $attachment['Node']['slug']);
-				$this->Session->setFlash(__('Attachment deleted'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'Attachment deleted'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'index'));
 			}
 		} else {
-			$this->Session->setFlash(__('Invalid id for Attachment'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Attachment'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 	}

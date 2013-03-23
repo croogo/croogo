@@ -262,7 +262,7 @@ class CroogoHelper extends AppHelper {
 						));
 						$output .= '</div>';
 					} else {
-						$output .= $this->adminTab(__($title), '#' . $domId);
+						$output .= $this->adminTab(__d('croogo', $title), '#' . $domId);
 					}
 				}
 			}

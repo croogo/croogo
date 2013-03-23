@@ -10,7 +10,7 @@ a:hover { text-decoration: underline; color:#44E; }
 </style>
 </head>
 <body>
-<p><?php echo __('Site down for maintenance.'); ?></p>
+<p><?php echo __d('croogo', 'Site down for maintenance.'); ?></p>
 </body>
 </html>
 <?php Configure::write('debug', 0); ?>

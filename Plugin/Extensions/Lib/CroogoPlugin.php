@@ -465,7 +465,7 @@ class CroogoPlugin extends Object {
  */
 	public function activate($plugin) {
 		if (CakePlugin::loaded($plugin)) {
-			return __('Plugin "%s" is already active.', $plugin);
+			return __d('croogo', 'Plugin "%s" is already active.', $plugin);
 		}
 		$pluginActivation = $this->getActivator($plugin);
 		if (!isset($pluginActivation) ||
@@ -491,9 +491,9 @@ class CroogoPlugin extends Object {
 				Cache::delete('EventHandlers', 'setting_write_configuration');
 				return true;
 			} else {
-				return __('Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin);
+				return __d('croogo', 'Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin);
 			}
-			return __('Plugin "%s" could not be activated. Please, try again.', $plugin);
+			return __d('croogo', 'Plugin "%s" could not be activated. Please, try again.', $plugin);
 		}
 	}
 
@@ -505,7 +505,7 @@ class CroogoPlugin extends Object {
  */
 	public function deactivate($plugin) {
 		if (!CakePlugin::loaded($plugin)) {
-			return __('Plugin "%s" is not active.', $plugin);
+			return __d('croogo', 'Plugin "%s" is not active.', $plugin);
 		}
 		$pluginActivation = $this->getActivator($plugin);
 		if (!isset($pluginActivation) ||
@@ -518,7 +518,7 @@ class CroogoPlugin extends Object {
 			Cache::delete('EventHandlers', 'setting_write_configuration');
 			return true;
 		} else {
-			return __('Plugin could not be deactivated. Please, try again.');
+			return __d('croogo', 'Plugin could not be deactivated. Please, try again.');
 		}
 	}
 
@@ -603,34 +603,34 @@ class CroogoPlugin extends Object {
 				$swap = $bootstraps[$index - 1];
 			}
 			if ($index == 0 || $this->_isBuiltin($swap)) {
-				return __('%s is already at the first position', $plugin);
+				return __d('croogo', '%s is already at the first position', $plugin);
 			}
 			$before = array_slice($bootstraps, 0, $index - 1);
 			$after = array_slice($bootstraps, $index + 1);
 			$dependencies = $this->getDependencies($plugin);
 			if (in_array($swap, $dependencies)) {
-				return __('Plugin %s depends on %s', $plugin, $swap);
+				return __d('croogo', 'Plugin %s depends on %s', $plugin, $swap);
 			}
 			$reordered = array_merge($before, (array)$plugin, (array)$swap);
 		} elseif ($dir === 'down') {
 			if ($index >= count($bootstraps) - 1) {
-				return __('%s is already at the last position', $plugin);
+				return __d('croogo', '%s is already at the last position', $plugin);
 			}
 			$swap = $bootstraps[$index + 1];
 			$before = array_slice($bootstraps, 0, $index);
 			$after = array_slice($bootstraps, $index + 2);
 			$dependencies = $this->getDependencies($swap);
 			if (in_array($plugin, $dependencies)) {
-				return __('Plugin %s depends on %s', $swap, $plugin);
+				return __d('croogo', 'Plugin %s depends on %s', $swap, $plugin);
 			}
 			$reordered = array_merge($before, (array)$swap, (array)$plugin);
 		} else {
-			return __('Invalid direction');
+			return __d('croogo', 'Invalid direction');
 		}
 		$reordered = array_merge($reordered, $after);
 
 		if ($this->_isBuiltin($swap)) {
-			return __('Plugin %s cannot be reordered', $swap);
+			return __d('croogo', 'Plugin %s cannot be reordered', $swap);
 		}
 
 		return $reordered;

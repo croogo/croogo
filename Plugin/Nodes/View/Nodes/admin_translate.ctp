@@ -17,7 +17,7 @@ if (Configure::read('Writing.wysiwyg')) {
 	<fieldset>
 		<div class="tabs">
 			<ul>
-				<li><a href="#node-main"><span><?php echo __($type['Type']['title']); ?></span></a></li>
+				<li><a href="#node-main"><span><?php echo __d('croogo', $type['Type']['title']); ?></span></a></li>
 			</ul>
 
 			<div id="node-main">

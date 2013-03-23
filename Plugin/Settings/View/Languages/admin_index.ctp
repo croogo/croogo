@@ -3,8 +3,8 @@
 $this->extend('/Common/admin_index');
 
 $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'prefix', 'Site'))
-	->addCrumb(__('Languages'), $this->here);
+	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'prefix', 'Site'))
+	->addCrumb(__d('croogo', 'Languages'), $this->here);
 
 ?>
 <div class="row-fluid">
@@ -17,7 +17,7 @@ $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
 					$this->Paginator->sort('native'),
 					$this->Paginator->sort('alias'),
 					$this->Paginator->sort('status'),
-					__('Actions'),
+					__d('croogo', 'Actions'),
 				));
 				?>
 					<thead>
@@ -31,20 +31,20 @@ $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
 					$actions[] = $this->Croogo->adminRowActions($language['Language']['id']);
 					$actions[] = $this->Croogo->adminRowAction('',
 						array('action' => 'moveup', $language['Language']['id']),
-						array('icon' => 'chevron-up', 'tooltip' => __('Move up'))
+						array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'))
 					);
 					$actions[] = $this->Croogo->adminRowAction('',
 						array('action' => 'movedown', $language['Language']['id']),
-						array('icon' => 'chevron-down', 'tooltip' => __('Move down'))
+						array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'))
 					);
 					$actions[] = $this->Croogo->adminRowAction('',
 						array('action' => 'edit', $language['Language']['id']),
-						array('icon' => 'pencil', 'tooltip' => __('Edit this item'))
+						array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 					);
 					$actions[] = $this->Croogo->adminRowAction('',
 						array('action' => 'delete', $language['Language']['id']),
-						array('icon' => 'trash', 'tooltip' => __('Remove this item')),
-						__('Are you sure?')
+						array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
+						__d('croogo', 'Are you sure?')
 					);
 
 					$actions = $this->Html->div('item-actions', implode(' ', $actions));

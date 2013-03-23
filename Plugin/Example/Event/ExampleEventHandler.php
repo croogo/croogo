@@ -40,7 +40,7 @@ class ExampleEventHandler extends Object implements CakeEventListener {
  */
 	public function onAdminLoginSuccessful($event) {
 		$Controller = $event->subject();
-		$message = __('Welcome %s.  Have a nice day', $Controller->Auth->user('name'));
+		$message = __d('croogo', 'Welcome %s.  Have a nice day', $Controller->Auth->user('name'));
 		$Controller->Session->setFlash($message);
 		$Controller->redirect(array(
 			'admin' => true,

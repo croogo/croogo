@@ -4,7 +4,7 @@ $this->extend('/Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Attachments'), $this->here);
+	->addCrumb(__d('croogo', 'Attachments'), $this->here);
 
 ?>
 <table class="table table-striped">
@@ -14,8 +14,8 @@ $this->Html
 		$this->Paginator->sort('id'),
 		'&nbsp;',
 		$this->Paginator->sort('title'),
-		__('URL'),
-		__('Actions'),
+		__d('croogo', 'URL'),
+		__d('croogo', 'Actions'),
 	));
 
 ?>
@@ -30,12 +30,12 @@ $this->Html
 		$actions[] = $this->Croogo->adminRowActions($attachment['Node']['id']);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'attachments', 'action' => 'edit', $attachment['Node']['id']),
-			array('icon' => 'pencil', 'tooltip' => __('Edit this item'))
+			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'attachments', 'action' => 'delete', $attachment['Node']['id']),
-			array('icon' => 'trash', 'tooltip' => __('Remove this item')),
-			__('Are you sure?'));
+			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
+			__d('croogo', 'Are you sure?'));
 
 		$mimeType = explode('/', $attachment['Node']['mime_type']);
 		$mimeType = $mimeType['0'];

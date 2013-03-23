@@ -11,7 +11,7 @@ CroogoNav::add('extensions', array(
 	'weight' => 35,
 	'children' => array(
 		'themes' => array(
-			'title' => __('Themes'),
+			'title' => __d('croogo', 'Themes'),
 			'url' => array(
 				'plugin' => 'extensions',
 				'controller' => 'extensions_themes',
@@ -20,7 +20,7 @@ CroogoNav::add('extensions', array(
 			'weight' => 10,
 		),
 		'locales' => array(
-			'title' => __('Locales'),
+			'title' => __d('croogo', 'Locales'),
 			'url' => array(
 				'plugin' => 'extensions',
 				'controller' => 'extensions_locales',
@@ -29,7 +29,7 @@ CroogoNav::add('extensions', array(
 			'weight' => 20,
 		),
 		'plugins' => array(
-			'title' => __('Plugins'),
+			'title' => __d('croogo', 'Plugins'),
 			'url' => array(
 				'plugin' => 'extensions',
 				'controller' => 'extensions_plugins',

@@ -10,13 +10,13 @@
 			}
 		?>
 		</span>
-		<span class="date"><?php echo __('said on %s', $this->Time->format(Configure::read('Comment.date_time_format'), $comment['Comment']['created'], null, Configure::read('Site.timezone'))); ?></span>
+		<span class="date"><?php echo __d('croogo', 'said on %s', $this->Time->format(Configure::read('Comment.date_time_format'), $comment['Comment']['created'], null, Configure::read('Site.timezone'))); ?></span>
 	</div>
 	<div class="comment-body"><?php echo nl2br($this->Text->autoLink($comment['Comment']['body'])); ?></div>
 	<div class="comment-reply">
 	<?php
 		if ($level <= Configure::read('Comment.level')) {
-			echo $this->Html->link(__('Reply'), array(
+			echo $this->Html->link(__d('croogo', 'Reply'), array(
 				'plugin' => 'comments',
 				'controller' => 'comments',
 				'action' => 'add',

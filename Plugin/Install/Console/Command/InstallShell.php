@@ -25,7 +25,7 @@ class InstallShell extends AppShell {
  */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
-		$parser->description(__('Install Utilities')
+		$parser->description(__d('croogo', 'Install Utilities')
 			)->addSubcommand('main', array(
 				'help' => 'Generate croogo.php, database.php, settings.json and create admin user.',
 				'parser' => array(
@@ -57,19 +57,19 @@ class InstallShell extends AppShell {
 	public function main() {
 		$this->out();
 		$this->out('Database settings:');
-		$install['Install']['datasource'] = $this->in(__('DataSource'), array(
+		$install['Install']['datasource'] = $this->in(__d('croogo', 'DataSource'), array(
 			'Mysql',
 			'Sqlite',
 			'Postgres',
 			'Sqlserver'
 		), 'Mysql');
 		$install['Install']['datasource'] = 'Database/' . $install['Install']['datasource'];
-		$install['Install']['host'] = $this->in(__('Host'), null, 'localhost');
-		$install['Install']['login'] = $this->in(__('Login'), null, 'root');
-		$install['Install']['password'] = $this->in(__('Password'), null, '');
-		$install['Install']['database'] = $this->in(__('Database'), null, 'croogo');
-		$install['Install']['prefix'] = $this->in(__('Prefix'), null, '');
-		$install['Install']['port'] = $this->in(__('Port'), null, null);
+		$install['Install']['host'] = $this->in(__d('croogo', 'Host'), null, 'localhost');
+		$install['Install']['login'] = $this->in(__d('croogo', 'Login'), null, 'root');
+		$install['Install']['password'] = $this->in(__d('croogo', 'Password'), null, '');
+		$install['Install']['database'] = $this->in(__d('croogo', 'Database'), null, 'croogo');
+		$install['Install']['prefix'] = $this->in(__d('croogo', 'Prefix'), null, '');
+		$install['Install']['port'] = $this->in(__d('croogo', 'Port'), null, null);
 
 		$InstallManager = new InstallManager();
 		$InstallManager->createDatabaseFile($install);
@@ -89,15 +89,15 @@ class InstallShell extends AppShell {
 		$this->out('Create Admin user:');
 
 		do {
-			$username = $this->in(__('Username'), null, null);
+			$username = $this->in(__d('croogo', 'Username'), null, null);
 			if (empty($username)) {
 				$this->err('Username must not be empty');
 			}
 		} while (empty($username));
 
 		do {
-			$password = $this->in(__('Password'));
-			$password2 = $this->in(__('Verify Password'));
+			$password = $this->in(__d('croogo', 'Password'));
+			$password2 = $this->in(__d('croogo', 'Verify Password'));
 			$passwordsMatched = $password == $password2;
 			if (!$passwordsMatched) {
 				$this->err('Passwords do not match');
@@ -204,7 +204,7 @@ class InstallShell extends AppShell {
 					'foreign_key' => $roleId,
 				);
 				if ($Permission->allow($aro, $aco)) {
-					$this->success(__('Permission %s granted to %s', $aco, $Role->byId($roleId)));
+					$this->success(__d('croogo', 'Permission %s granted to %s', $aco, $Role->byId($roleId)));
 				}
 			}
 		}

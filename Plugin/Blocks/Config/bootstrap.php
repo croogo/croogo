@@ -11,7 +11,7 @@ Croogo::hookHelper('*', 'Blocks.Regions');
 
 CroogoNav::add('blocks', array(
 	'icon' => array('columns', 'large'),
-	'title' => __('Blocks'),
+	'title' => __d('croogo', 'Blocks'),
 	'url' => array(
 		'plugin' => 'blocks',
 		'admin' => true,
@@ -21,7 +21,7 @@ CroogoNav::add('blocks', array(
 	'weight' => 30,
 	'children' => array(
 		'blocks' => array(
-			'title' => __('Blocks'),
+			'title' => __d('croogo', 'Blocks'),
 			'url' => array(
 				'plugin' => 'blocks',
 				'admin' => true,
@@ -30,7 +30,7 @@ CroogoNav::add('blocks', array(
 			),
 		),
 		'regions' => array(
-			'title' => __('Regions'),
+			'title' => __d('croogo', 'Regions'),
 			'url' => array(
 				'plugin' => 'blocks',
 				'admin' => true,

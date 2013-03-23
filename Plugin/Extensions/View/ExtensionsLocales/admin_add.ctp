@@ -1,9 +1,9 @@
 <?php
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
-	->addCrumb(__('Locales'), array('plugin' => 'extensions', 'controller' => 'extensions_locales', 'action' => 'index'))
-	->addCrumb(__('Upload'), $this->here);
+	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Locales'), array('plugin' => 'extensions', 'controller' => 'extensions_locales', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Upload'), $this->here);
 
 echo $this->Form->create('Locale', array(
 	'url' => array(
@@ -22,7 +22,7 @@ echo $this->Form->create('Locale', array(
 
 		<ul class="nav nav-tabs">
 		<?php
-			echo $this->Croogo->adminTab(__('Upload'), '#locale-upload');
+			echo $this->Croogo->adminTab(__d('croogo', 'Upload'), '#locale-upload');
 		?>
 		</ul>
 
@@ -42,10 +42,10 @@ echo $this->Form->create('Locale', array(
 
 	<div class="span4">
 	<?php
-		echo $this->Html->beginBox(__('Publishing')) .
-			$this->Form->button(__('Upload'), array('button' => 'default')) .
+		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+			$this->Form->button(__d('croogo', 'Upload'), array('button' => 'default')) .
 			$this->Form->end() .
-			$this->Html->link(__('Cancel'), array('action' => 'index'), array('button' => 'danger')) .
+			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
 			$this->Html->endBox();
 
 		echo $this->Croogo->adminBoxes();
