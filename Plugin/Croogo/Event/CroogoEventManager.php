@@ -8,6 +8,9 @@ App::uses('CakeEventManager', 'Event');
  *
  * @since 1.4
  * @see CakeEventManager
+ * @author   Rachman Chavik <rchavik@xintesa.com>
+ * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link     http://www.croogo.org
  */
 class CroogoEventManager extends CakeEventManager {
 

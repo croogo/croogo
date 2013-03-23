@@ -37,7 +37,6 @@ if (Configure::read('Site.acl_plugin') == 'Acl') {
 		),
 	));
 
-	$cacheConfig = Cache::config('_cake_core_');
 	Cache::config('permissions', array(
 		'duration' => '+1 hour',
 		'path' => CACHE . 'queries',

@@ -7,7 +7,6 @@ echo $this->Form->input('comment_status', array(
 		'1' => __('Read only'),
 		'2' => __('Read/Write'),
 	),
-	'value' => $type['Type']['comment_status'],
 	'legend' => false,
 	'label' => true
 ));
