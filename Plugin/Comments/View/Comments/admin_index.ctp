@@ -8,16 +8,16 @@ $this->extend('/Common/admin_index');
 
 $this->Html
 	->addCrumb($this->Html->icon('home'), '/admin')
-	->addCrumb(__('Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
-	->addCrumb(__('Comments'), array('plugin' => 'comments', 'controller' => 'comments', 'action' => 'index'));
+	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Comments'), array('plugin' => 'comments', 'controller' => 'comments', 'action' => 'index'));
 
 if (isset($criteria['Comment.status'])) {
 	if ($criteria['Comment.status'] == '1') {
-		$this->Html->addCrumb(__('Published'), $this->here);
-		$this->viewVars['title_for_layout'] = __('Comments: Published');
+		$this->Html->addCrumb(__d('croogo', 'Published'), $this->here);
+		$this->viewVars['title_for_layout'] = __d('croogo', 'Comments: Published');
 	} else {
-		$this->Html->addCrumb(__('Approval'), $this->here);
-		$this->viewVars['title_for_layout'] = __('Comments: Approval');
+		$this->Html->addCrumb(__d('croogo', 'Approval'), $this->here);
+		$this->viewVars['title_for_layout'] = __d('croogo', 'Comments: Approval');
 	}
 }
 
@@ -30,11 +30,11 @@ echo $this->element('admin/modal', array(
 <?php $this->start('actions'); ?>
 <?php
 	echo $this->Croogo->adminAction(
-		__('Published'),
+		__d('croogo', 'Published'),
 		array('action'=>'index', '?' => array('status' => '1'))
 	);
 	echo $this->Croogo->adminAction(
-		__('Approval'),
+		__d('croogo', 'Approval'),
 		array('action'=>'index', '?' => array('status' => '0'))
 	);
 ?>
@@ -52,7 +52,7 @@ echo $this->element('admin/modal', array(
 		$this->Paginator->sort('node_id'),
 		'',
 		$this->Paginator->sort('created'),
-		__('Actions'),
+		__d('croogo', 'Actions'),
 	));
 ?>
 	<thead>
@@ -66,12 +66,12 @@ echo $this->element('admin/modal', array(
 		$actions[] = $this->Croogo->adminRowActions($comment['Comment']['id']);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'edit', $comment['Comment']['id']),
-			array('icon' => 'pencil', 'tooltip' => __('Edit this item'))
+			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Comment' . $comment['Comment']['id'] . 'Id',
-			array('icon' => 'trash', 'tooltip' => __('Remove this item'), 'rowAction' => 'delete'),
-			__('Are you sure?')
+			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item'), 'rowAction' => 'delete'),
+			__d('croogo', 'Are you sure?')
 		);
 
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
@@ -113,15 +113,15 @@ echo $this->element('admin/modal', array(
 				'label' => false,
 				'div' => 'input inline',
 				'options' => array(
-					'publish' => __('Publish'),
-					'unpublish' => __('Unpublish'),
-					'delete' => __('Delete'),
+					'publish' => __d('croogo', 'Publish'),
+					'unpublish' => __d('croogo', 'Unpublish'),
+					'delete' => __d('croogo', 'Delete'),
 				),
 				'empty' => true,
 			));
 		?>
 		<div class="controls">
-		<?php echo $this->Form->end(__('Submit')); ?>
+		<?php echo $this->Form->end(__d('croogo', 'Submit')); ?>
 		</div>
 	</div>
 </div>

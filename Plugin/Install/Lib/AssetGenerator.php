@@ -49,10 +49,10 @@ class AssetGenerator extends Object {
 			$output = $this->_croogoWebroot . $output;
 			$out = str_replace(APP, '', $output);
 			if ($lessc->compileFile($file, $output)) {
-				$text = __('CSS : %s created', $out);
+				$text = __d('croogo', 'CSS : %s created', $out);
 				CakeLog::info($text);
 			} else {
-				$text = __('CSS : %s failed', $out);
+				$text = __d('croogo', 'CSS : %s failed', $out);
 				CakeLog::error($text);
 			}
 		}
@@ -69,10 +69,10 @@ class AssetGenerator extends Object {
 
 		$out = str_replace(APP, '', $outputFile);
 		if ($rc == 0) {
-			$text = __('JS  : %s created', $out);
+			$text = __d('croogo', 'JS  : %s created', $out);
 			CakeLog::info($text);
 		} else {
-			$text = __('JS  : %s failed', $out);
+			$text = __d('croogo', 'JS  : %s failed', $out);
 			CakeLog::error($text);
 		}
 	}
@@ -107,10 +107,10 @@ class AssetGenerator extends Object {
 			$File = new File($fontPath . DS . $file);
 			$newFile = $targetPath . $file;
 			if ($File->copy($newFile)) {
-				$text = __('Font: %s copied', $file);
+				$text = __d('croogo', 'Font: %s copied', $file);
 				CakeLog::info($text);
 			} else {
-				$text = __('File: %s not copied', $file);
+				$text = __d('croogo', 'File: %s not copied', $file);
 				CakeLog::error($text);
 			}
 		}

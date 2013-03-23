@@ -15,7 +15,7 @@
 					'slug' => $termSlug,
 				));
 			}
-			echo __('Posted in') . ' ' . implode(', ', $nodeTermLinks);
+			echo __d('croogo', 'Posted in') . ' ' . implode(', ', $nodeTermLinks);
 		}
 	}
 
@@ -26,11 +26,11 @@
 
 		$commentCount = '';
 		if ($this->Nodes->field('comment_count') == 0) {
-			$commentCount = __('Leave a comment');
+			$commentCount = __d('croogo', 'Leave a comment');
 		} elseif ($this->Nodes->field('comment_count') == 1) {
-			$commentCount = $this->Nodes->field('comment_count') . ' ' . __('Comment');
+			$commentCount = $this->Nodes->field('comment_count') . ' ' . __d('croogo', 'Comment');
 		} else {
-			$commentCount = $this->Nodes->field('comment_count') . ' ' . __('Comments');
+			$commentCount = $this->Nodes->field('comment_count') . ' ' . __d('croogo', 'Comments');
 		}
 		echo $this->Html->link($commentCount, $this->Html->url($this->Nodes->field('url'), true) . '#comments');
 	}

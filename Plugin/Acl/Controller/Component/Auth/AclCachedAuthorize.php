@@ -152,7 +152,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 	protected function _authorizeByContent($user, CakeRequest $request, $id) {
 		if (!isset($this->settings['actionMap'][$request->params['action']])) {
 			throw new CakeException(
-				__('_authorizeByContent() - Access of un-mapped action "%1$s" in controller "%2$s"',
+				__d('croogo', '_authorizeByContent() - Access of un-mapped action "%1$s" in controller "%2$s"',
 				$request->action,
 				$request->controller
 			));

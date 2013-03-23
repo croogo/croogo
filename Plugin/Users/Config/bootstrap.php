@@ -2,7 +2,7 @@
 
 CroogoNav::add('users', array(
 	'icon' => array('user', 'large'),
-	'title' => __('Users'),
+	'title' => __d('croogo', 'Users'),
 	'url' => array(
 		'admin' => true,
 		'plugin' => 'users',
@@ -12,7 +12,7 @@ CroogoNav::add('users', array(
 	'weight' => 50,
 	'children' => array(
 		'users' => array(
-			'title' => __('Users'),
+			'title' => __d('croogo', 'Users'),
 			'url' => array(
 				'admin' => true,
 				'plugin' => 'users',
@@ -22,7 +22,7 @@ CroogoNav::add('users', array(
 			'weight' => 10,
 		),
 		'roles' => array(
-			'title' => __('Roles'),
+			'title' => __d('croogo', 'Roles'),
 			'url' => array(
 				'admin' => true,
 				'plugin' => 'users',

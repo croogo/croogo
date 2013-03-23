@@ -1,4 +1,4 @@
-<?php echo __('Hello %s', $user['User']['name']); ?>,
+<?php echo __d('croogo', 'Hello %s', $user['User']['name']); ?>,
 
 <?php
 	$url = Router::url(array(
@@ -7,5 +7,5 @@
 		$user['User']['username'],
 		$user['User']['activation_key'],
 	), true);
-	echo __('Please visit this link to activate your account: %s', $url);
+	echo __d('croogo', 'Please visit this link to activate your account: %s', $url);
 ?>

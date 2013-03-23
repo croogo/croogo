@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width">
-		<title><?php echo $title_for_layout; ?> - <?php echo __('Croogo'); ?></title>
+		<title><?php echo $title_for_layout; ?> - <?php echo __d('croogo', 'Croogo'); ?></title>
 		<?php
 		echo $this->Html->css(array(
 			'/croogo/css/croogo-bootstrap',
@@ -25,7 +25,7 @@
 				<div class="navbar-inner">
 					<div class="container-fluid">
 						<?php echo $this->Html->link(
-							__('Back to') . ' ' . Configure::read('Site.title'),
+							__d('croogo', 'Back to') . ' ' . Configure::read('Site.title'),
 							'/',
 							array('class' => 'brand')
 						); ?>

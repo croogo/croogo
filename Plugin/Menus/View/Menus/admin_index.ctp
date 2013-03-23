@@ -4,7 +4,7 @@ $this->extend('/Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Menus'), $this->here);
+	->addCrumb(__d('croogo', 'Menus'), $this->here);
 
 ?>
 <div class="row-fluid">
@@ -16,7 +16,7 @@ $this->Html
 					$this->Paginator->sort('title'),
 					$this->Paginator->sort('alias'),
 					$this->Paginator->sort('link_count'),
-					__('Actions'),
+					__d('croogo', 'Actions'),
 				));
 			?>
 			<thead>
@@ -30,19 +30,19 @@ $this->Html
 				$actions[] = $this->Croogo->adminRowAction(
 					'',
 					array('controller' => 'links', 'action' => 'index',	'?' => array('menu_id' => $menu['Menu']['id'])),
-					array('icon' => 'zoom-in', 'tooltip' => __('View links'))
+					array('icon' => 'zoom-in', 'tooltip' => __d('croogo', 'View links'))
 				);
 				$actions[] = $this->Croogo->adminRowActions($menu['Menu']['id']);
 				$actions[] = $this->Croogo->adminRowAction(
 					'',
 					array('controller' => 'menus', 'action' => 'edit', $menu['Menu']['id']),
-					array('icon' => 'pencil', 'tooltip' => __('Edit this item'))
+					array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 				);
 				$actions[] = $this->Croogo->adminRowAction(
 					'',
 					array('controller' => 'menus', 'action' => 'delete', $menu['Menu']['id']),
-					array('icon' => 'trash', 'tooltip' => __('Remove this item')),
-					__('Are you sure?')
+					array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
+					__d('croogo', 'Are you sure?')
 				);
 				$actions = $this->Html->div('item-actions', implode(' ', $actions));
 				$rows[] = array(

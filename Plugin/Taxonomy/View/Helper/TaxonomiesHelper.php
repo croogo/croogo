@@ -102,7 +102,7 @@ class TaxonomiesHelper extends AppHelper {
 		if (empty($this->_View->viewVars['taxonomy']) || $controller == 'Terms') {
 			return;
 		}
-		$title = __('Terms');
+		$title = __d('croogo', 'Terms');
 		$element = 'Taxonomy.admin/terms_tab';
 		Croogo::hookAdminTab("$controller/admin_add", $title, $element);
 		Croogo::hookAdminTab("$controller/admin_edit", $title, $element);

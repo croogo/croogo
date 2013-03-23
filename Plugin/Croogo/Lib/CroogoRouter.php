@@ -116,7 +116,7 @@ class CroogoRouter {
 			}
 		}
 		catch (MissingConnectionException $e) {
-			CakeLog::write('critical', __('Unable to get routeable content types: %s', $e->getMessage()));
+			CakeLog::write('critical', __d('croogo', 'Unable to get routeable content types: %s', $e->getMessage()));
 		}
 	}
 }

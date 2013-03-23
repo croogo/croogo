@@ -31,7 +31,7 @@ class CommentsHelper extends AppHelper {
 			return;
 		}
 		$controller = Inflector::camelize($this->request->params['controller']);
-		$title = __('Comments');
+		$title = __d('croogo', 'Comments');
 		$element = 'Comments.admin/comments_tab';
 		Croogo::hookAdminTab("$controller/admin_add", $title, $element);
 		Croogo::hookAdminTab("$controller/admin_edit", $title, $element);

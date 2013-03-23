@@ -2,8 +2,8 @@
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'index'))
-	->addCrumb(__('Languages'), array('plugin' => 'settings', 'controller' => 'languages', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Languages'), array('plugin' => 'settings', 'controller' => 'languages', 'action' => 'index'))
 	;
 
 ?>
@@ -14,7 +14,7 @@ $this->Html
 			<li>
 			<?php
 				echo $this->Html->link(
-					__('New Language'),
+					__d('croogo', 'New Language'),
 					array('action'=>'add'),
 					array('button' => 'default')
 				);

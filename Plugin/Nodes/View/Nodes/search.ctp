@@ -3,7 +3,7 @@
 
 	<?php
 		if (count($nodes) == 0) {
-			echo __('No items found.');
+			echo __d('croogo', 'No items found.');
 		}
 	?>
 

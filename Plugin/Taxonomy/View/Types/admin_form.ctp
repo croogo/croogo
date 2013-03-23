@@ -3,15 +3,15 @@
 $this->extend('/Common/admin_edit');
 
 $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
-	->addCrumb(__('Types'), array('plugin' => 'taxonomy', 'controller' => 'types', 'action' => 'index'));
+	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Types'), array('plugin' => 'taxonomy', 'controller' => 'types', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
 	$this->Html->addCrumb($this->request->data['Type']['title'], $this->here);
 }
 
 if ($this->request->params['action'] == 'admin_add') {
-	$this->Html->addCrumb(__('Add'), $this->here);
+	$this->Html->addCrumb(__d('croogo', 'Add'), $this->here);
 }
 
 echo $this->Form->create('Type');
@@ -22,10 +22,10 @@ echo $this->Form->create('Type');
 
 		<ul class="nav nav-tabs">
 		<?php
-			echo $this->Croogo->adminTab(__('Type'), '#type-main');
-			echo $this->Croogo->adminTab(__('Taxonomy'), '#type-taxonomy');
-			echo $this->Croogo->adminTab(__('Comments'), '#type-comments');
-			echo $this->Croogo->adminTab(__('Params'), '#type-params');
+			echo $this->Croogo->adminTab(__d('croogo', 'Type'), '#type-main');
+			echo $this->Croogo->adminTab(__d('croogo', 'Taxonomy'), '#type-taxonomy');
+			echo $this->Croogo->adminTab(__d('croogo', 'Comments'), '#type-comments');
+			echo $this->Croogo->adminTab(__d('croogo', 'Params'), '#type-params');
 			echo $this->Croogo->adminTabs();
 		?>
 		</ul>
@@ -39,13 +39,13 @@ echo $this->Form->create('Type');
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'placeholder' => __('Title'),
+					'placeholder' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('alias', array(
-					'placeholder' => __('Alias'),
+					'placeholder' => __d('croogo', 'Alias'),
 				));
 				echo $this->Form->input('description', array(
-					'placeholder' => __('Description'),
+					'placeholder' => __d('croogo', 'Description'),
 				));
 			?>
 			</div>
@@ -63,9 +63,9 @@ echo $this->Form->create('Type');
 				echo $this->Form->input('comment_status', array(
 					'type' => 'radio',
 					'options' => array(
-						'0' => __('Disabled'),
-						'1' => __('Read only'),
-						'2' => __('Read/Write'),
+						'0' => __d('croogo', 'Disabled'),
+						'1' => __d('croogo', 'Read only'),
+						'2' => __d('croogo', 'Read/Write'),
 					),
 					'value' => 2,
 					'legend' => false,
@@ -77,14 +77,14 @@ echo $this->Form->create('Type');
 					'class' => false,
 				));
 				echo $this->Form->input('comment_spam_protection', array(
-					'label' => __('Spam protection (requires Akismet API key)'),
+					'label' => __d('croogo', 'Spam protection (requires Akismet API key)'),
 					'class' => false,
 				));
 				echo $this->Form->input('comment_captcha', array(
-					'label' => __('Use captcha? (requires Recaptcha API key)'),
+					'label' => __d('croogo', 'Use captcha? (requires Recaptcha API key)'),
 					'class' => false,
 				));
-				echo $this->Html->link(__('You can manage your API keys here.'), array(
+				echo $this->Html->link(__d('croogo', 'You can manage your API keys here.'), array(
 					'plugin' => 'settings',
 					'controller' => 'settings',
 					'action' => 'prefix',
@@ -96,7 +96,7 @@ echo $this->Form->create('Type');
 			<div id="type-params" class="tab-pane">
 			<?php
 				echo $this->Form->input('Type.params', array(
-					'placeholder' => __('Params'),
+					'placeholder' => __d('croogo', 'Params'),
 				));
 			?>
 			</div>
@@ -107,19 +107,19 @@ echo $this->Form->create('Type');
 
 	<div class="span4">
 	<?php
-		echo $this->Html->beginBox(__('Publishing')) .
-			$this->Form->button(__('Save'), array('button' => 'default')) .
+		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+			$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
 			$this->Html->link(
-				__('Cancel'),
+				__d('croogo', 'Cancel'),
 				array('action' => 'index'),
 				array('button' => 'danger')
 			) .
 			$this->Form->input('format_show_author', array(
-				'label' => __('Show author\'s name'),
+				'label' => __d('croogo', 'Show author\'s name'),
 				'class' => false,
 			)) .
 			$this->Form->input('format_show_date', array(
-				'label' => __('Show date'),
+				'label' => __d('croogo', 'Show date'),
 				'class' => false,
 			)) .
 			$this->Html->endBox();

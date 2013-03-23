@@ -39,7 +39,7 @@ class AclHelper extends Helper {
 		$key = AuthComponent::$sessionKey . '.aclUpgrade';
 		if ($this->_View->Session->read($key)) {
 			$link = $this->_View->Croogo->adminAction(
-				__('Upgrade Acl database'),
+				__d('croogo', 'Upgrade Acl database'),
 				array('controller' => 'acl_permissions', 'action' => 'upgrade'),
 				array('button' => 'primary')
 			);

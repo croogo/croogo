@@ -67,12 +67,12 @@ class MetaHelper extends AppHelper {
 	public function field($key = '', $value = null, $id = null, $options = array()) {
 		$_options = array(
 			'key' => array(
-				'label' => __('Key'),
+				'label' => __d('croogo', 'Key'),
 				'value' => $key,
 				'class' => 'span12'
 			),
 			'value' => array(
-				'label' => __('Value'),
+				'label' => __d('croogo', 'Value'),
 				'value' => $value,
 				'class' => 'span12',
 				'type' => 'textarea',
@@ -102,7 +102,7 @@ class MetaHelper extends AppHelper {
 		$deleteUrl[] = $id;
 		$deleteUrl = $this->url($deleteUrl);
 		$actions = $this->Html->link(
-			__('Remove'),
+			__d('croogo', 'Remove'),
 			$deleteUrl,
 			array('class' => 'remove-meta', 'rel' => $id)
 		);

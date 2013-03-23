@@ -200,7 +200,7 @@ class CroogoComponent extends Component {
  */
 	public function fieldToggle(Model $model, $id, $status, $field = 'status') {
 		if (empty($id) || $status === null) {
-			throw new CakeException(__('Invalid content'));
+			throw new CakeException(__d('croogo', 'Invalid content'));
 		}
 		$model->id = $id;
 		$status = !$status;
@@ -209,7 +209,7 @@ class CroogoComponent extends Component {
 			$this->_controller->set(compact('id', 'status'));
 			$this->_controller->render('Common/admin_toggle');
 		} else {
-			throw new CakeException(__('Failed toggling field %s to %s', $field, $status));
+			throw new CakeException(__d('croogo', 'Failed toggling field %s to %s', $field, $status));
 		}
 	}
 

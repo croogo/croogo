@@ -158,7 +158,7 @@ class CroogoAppController extends Controller {
 			Configure::read('Site.status') == 0) {
 			$this->layout = 'maintenance';
 			$this->response->statusCode(503);
-			$this->set('title_for_layout', __('Site down for maintenance'));
+			$this->set('title_for_layout', __d('croogo', 'Site down for maintenance'));
 			$this->render('../Elements/blank');
 		}
 

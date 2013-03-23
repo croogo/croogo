@@ -21,7 +21,7 @@
 				'name' => 'q',
 				'value' => $qValue,
 			));
-			echo $this->Form->button(__('Search'));
+			echo $this->Form->button(__d('croogo', 'Search'));
 		?>
 		</form>
 	</div>

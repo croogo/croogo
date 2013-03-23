@@ -54,7 +54,7 @@ class CroogoErrorController extends AppController {
 			$this->startupProcess();
 		}
 		catch (CakeException $e) {
-			CakeLog::write('critical', __('Errors in CakeErrorController: %s', $e->getMessage()));
+			CakeLog::write('critical', __d('croogo', 'Errors in CakeErrorController: %s', $e->getMessage()));
 		}
 
 		$this->_set(array('cacheAction' => false, 'viewPath' => 'Errors'));

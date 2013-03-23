@@ -147,7 +147,7 @@ class AclExtras extends Object {
 		list($plugin, $model) = pluginSplit($this->args[0]);
 		App::uses($model, $plugin . '.Model');
 		if (!class_exists($model)) {
-			$this->err(__('Model %s cannot be found.', $model));
+			$this->err(__d('croogo', 'Model %s cannot be found.', $model));
 			return false;
 		}
 
@@ -170,7 +170,7 @@ class AclExtras extends Object {
 				'foreign_key' => $row[$model][$primaryKey],
 				));
 			$acoNode = $this->Aco->save();
-			$this->out(__('Created Aco node: %s', $path), 1, Shell::VERBOSE);
+			$this->out(__d('croogo', 'Created Aco node: %s', $path), 1, Shell::VERBOSE);
 		}
 		return true;
 	}
@@ -190,7 +190,7 @@ class AclExtras extends Object {
 		} else {
 			$plugin = $params['plugin'];
 			if (!in_array($plugin, App::objects('plugin')) || !CakePlugin::loaded($plugin)) {
-				$this->err(__('<error>Plugin %s not found or not activated</error>', $plugin));
+				$this->err(__d('croogo', '<error>Plugin %s not found or not activated</error>', $plugin));
 				return false;
 			}
 			$plugins = array($params['plugin']);
@@ -204,9 +204,9 @@ class AclExtras extends Object {
 			$this->_updateControllers($pluginRoot, $controllers, $plugin);
 		}
 		if ($this->_clean) {
-			$this->out(__('<success>Aco Sync Complete</success>'));
+			$this->out(__d('croogo', '<success>Aco Sync Complete</success>'));
 		} else {
-			$this->out(__('<success>Aco Update Complete</success>'));
+			$this->out(__d('croogo', '<success>Aco Update Complete</success>'));
 		}
 		return true;
 	}
@@ -237,7 +237,7 @@ class AclExtras extends Object {
 
 			$path = $this->rootNode . '/' . $pluginPath . $controllerName;
 			if (in_array($path, $this->_skipList)) {
-				$this->out(__('Skipped Aco node: <warning>%s</warning>', $path), 1, Shell::VERBOSE);
+				$this->out(__d('croogo', 'Skipped Aco node: <warning>%s</warning>', $path), 1, Shell::VERBOSE);
 				continue;
 			}
 
@@ -257,7 +257,7 @@ class AclExtras extends Object {
 				$name = $alias . 'Controller';
 				if (!isset($controllerFlip[$name]) && !isset($controllerFlip[$alias])) {
 					if ($this->Aco->delete($ctrlNode['Aco']['id'])) {
-						$this->out(__(
+						$this->out(__d('croogo', 
 							'Deleted %s and all children',
 							$this->rootNode . '/' . $ctrlNode['Aco']['alias']
 						), 1, Shell::VERBOSE);
@@ -301,7 +301,7 @@ class AclExtras extends Object {
 			$node = $this->Aco->save();
 			$node['Aco']['id'] = $this->Aco->id;
 			$this->created++;
-			$this->out(__('Created Aco node: <success>%s</success>', $path), 1, Shell::VERBOSE);
+			$this->out(__d('croogo', 'Created Aco node: <success>%s</success>', $path), 1, Shell::VERBOSE);
 		} else {
 			$node = $node[0];
 		}
@@ -338,7 +338,7 @@ class AclExtras extends Object {
 					$this->Aco->id = $action['Aco']['id'];
 					if ($this->Aco->delete()) {
 						$path = $this->rootNode . '/' . $controllerName . '/' . $action['Aco']['alias'];
-						$this->out(__('Deleted Aco node: <warning>%s</warning>', $path), 1, Shell::VERBOSE);
+						$this->out(__d('croogo', 'Deleted Aco node: <warning>%s</warning>', $path), 1, Shell::VERBOSE);
 					}
 				}
 			}
@@ -357,7 +357,7 @@ class AclExtras extends Object {
 		$type = Inflector::camelize($this->args[0]);
 		$return = $this->Acl->{$type}->verify();
 		if ($return === true) {
-			$this->out(__('<success>Tree is valid and strong</success>'));
+			$this->out(__d('croogo', '<success>Tree is valid and strong</success>'));
 		} else {
 			$this->err(print_r($return, true));
 			return false;
@@ -375,9 +375,9 @@ class AclExtras extends Object {
 		$type = Inflector::camelize($this->args[0]);
 		$return = $this->Acl->{$type}->recover();
 		if ($return === true) {
-			$this->out(__('Tree has been recovered, or tree did not need recovery.'));
+			$this->out(__d('croogo', 'Tree has been recovered, or tree did not need recovery.'));
 		} else {
-			$this->err(__('<error>Tree recovery failed.</error>'));
+			$this->err(__d('croogo', '<error>Tree recovery failed.</error>'));
 			return false;
 		}
 	}

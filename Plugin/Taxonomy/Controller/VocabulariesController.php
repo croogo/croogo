@@ -39,7 +39,7 @@ class VocabulariesController extends TaxonomyAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Vocabularies'));
+		$this->set('title_for_layout', __d('croogo', 'Vocabularies'));
 
 		$this->Vocabulary->recursive = 0;
 		$this->paginate['Vocabulary']['order'] = 'Vocabulary.weight ASC';
@@ -53,15 +53,15 @@ class VocabulariesController extends TaxonomyAppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Vocabulary'));
+		$this->set('title_for_layout', __d('croogo', 'Add Vocabulary'));
 
 		if (!empty($this->request->data)) {
 			$this->Vocabulary->create();
 			if ($this->Vocabulary->save($this->request->data)) {
-				$this->Session->setFlash(__('The Vocabulary has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Vocabulary has been saved'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Vocabulary could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Vocabulary could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
 
@@ -77,18 +77,18 @@ class VocabulariesController extends TaxonomyAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Vocabulary'));
+		$this->set('title_for_layout', __d('croogo', 'Edit Vocabulary'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Vocabulary'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Vocabulary'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Vocabulary->save($this->request->data)) {
-				$this->Session->setFlash(__('The Vocabulary has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Vocabulary has been saved'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Vocabulary could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Vocabulary could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -108,11 +108,11 @@ class VocabulariesController extends TaxonomyAppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Vocabulary'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Vocabulary'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Vocabulary->delete($id)) {
-			$this->Session->setFlash(__('Vocabulary deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Vocabulary deleted'), 'default', array('class' => 'success'));
 			$this->redirect(array('action' => 'index'));
 		}
 	}
@@ -127,9 +127,9 @@ class VocabulariesController extends TaxonomyAppController {
  */
 	public function admin_moveup($id, $step = 1) {
 		if ($this->Vocabulary->moveUp($id, $step)) {
-			$this->Session->setFlash(__('Moved up successfully'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'default', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(__('Could not move up'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'default', array('class' => 'error'));
 		}
 
 		$this->redirect(array('action' => 'index'));
@@ -145,9 +145,9 @@ class VocabulariesController extends TaxonomyAppController {
  */
 	public function admin_movedown($id, $step = 1) {
 		if ($this->Vocabulary->moveDown($id, $step)) {
-			$this->Session->setFlash(__('Moved down successfully'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'default', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(__('Could not move down'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'default', array('class' => 'error'));
 		}
 
 		$this->redirect(array('action' => 'index'));

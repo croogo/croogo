@@ -4,9 +4,9 @@ $this->extend('/Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Blocks'), array(
+	->addCrumb(__d('croogo', 'Blocks'), array(
 		'plugin' => 'blocks', 'controller' => 'blocks', 'action' => 'index'))
-	->addCrumb(__('Regions'), array(
+	->addCrumb(__d('croogo', 'Regions'), array(
 		'plugin' => 'blocks', 'controller' => 'regions', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
@@ -17,7 +17,7 @@ if ($this->request->params['action'] == 'admin_edit') {
 }
 
 if ($this->request->params['action'] == 'admin_add') {
-	$this->Html->addCrumb(__('Add'), $this->here);
+	$this->Html->addCrumb(__d('croogo', 'Add'), $this->here);
 }
 
 ?>
@@ -28,7 +28,7 @@ if ($this->request->params['action'] == 'admin_add') {
 
 		<ul class="nav nav-tabs">
 		<?php
-			echo $this->Croogo->adminTab(__('Region'), '#region-main');
+			echo $this->Croogo->adminTab(__d('croogo', 'Region'), '#region-main');
 			echo $this->Croogo->adminTabs();
 		?>
 		</ul>
@@ -42,10 +42,10 @@ if ($this->request->params['action'] == 'admin_add') {
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'placeholder' => __('Title'),
+					'placeholder' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('alias', array(
-					'placeholder' => __('Alias'),
+					'placeholder' => __d('croogo', 'Alias'),
 				));
 			?>
 			</div>
@@ -56,10 +56,10 @@ if ($this->request->params['action'] == 'admin_add') {
 
 	<div class="span4">
 		<?php
-			echo $this->Html->beginBox(__('Publishing')) .
-				$this->Form->button(__('Apply'), array('name' => 'apply', 'button' => 'default')) .
-				$this->Form->button(__('Save'), array('button' => 'default')) .
-				$this->Html->link(__('Cancel'), array('action' => 'index'), array('button' => 'danger')) .
+			echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+				$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply', 'button' => 'default')) .
+				$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
+				$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
 				$this->Html->endBox();
 			echo $this->Croogo->adminBoxes();
 		?>

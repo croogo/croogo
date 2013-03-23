@@ -30,17 +30,17 @@ class SettingsShell extends AppShell {
 		return parent::getOptionParser()
 			->description('Croogo Settings utility')
 			->addSubCommand('read', array(
-				'help' => __('Displays setting values'),
+				'help' => __d('croogo', 'Displays setting values'),
 				'parser' => array(
 					'arguments' => array(
 						'key' => array(
-							'help' => __('Setting key'),
+							'help' => __d('croogo', 'Setting key'),
 							'required' => false,
 						),
 					),
 					'options' => array(
 						'all' => array(
-							'help' => __('List all settings'),
+							'help' => __d('croogo', 'List all settings'),
 							'short' => 'a',
 							'boolean' => true,
 						)
@@ -48,15 +48,15 @@ class SettingsShell extends AppShell {
 				),
 			))
 			->addSubcommand('write', array(
-				'help' => __('Write setting value for a given key'),
+				'help' => __d('croogo', 'Write setting value for a given key'),
 				'parser' => array(
 					'arguments' => array(
 						'key' => array(
-							'help' => __('Setting key'),
+							'help' => __d('croogo', 'Setting key'),
 							'required' => true,
 						),
 						'value' => array(
-							'help' => __('Setting value'),
+							'help' => __d('croogo', 'Setting value'),
 							'required' => true,
 						),
 					),
@@ -86,18 +86,18 @@ class SettingsShell extends AppShell {
 				)
 			))
 			->addSubcommand('delete', array(
-				'help' => __('Delete setting based on key'),
+				'help' => __d('croogo', 'Delete setting based on key'),
 				'parser' => array(
 					'arguments' => array(
 						'key' => array(
-							'help' => __('Setting key'),
+							'help' => __d('croogo', 'Setting key'),
 							'required' => true,
 						),
 					),
 				)
 			))
 			->addSubcommand('update_version_info', array(
-				'help' => __('Update version string from git tag information'),
+				'help' => __d('croogo', 'Update version string from git tag information'),
 			));
 	}
 
@@ -126,7 +126,7 @@ class SettingsShell extends AppShell {
 		));
 		$this->out("Settings: ", 2);
 		foreach ($settings as $data) {
-			$this->out(__("    %-30s: %s", $data['Setting']['key'], $data['Setting']['value']));
+			$this->out(__d('croogo', "    %-30s: %s", $data['Setting']['key'], $data['Setting']['value']));
 		}
 		$this->out();
 	}
@@ -147,15 +147,15 @@ class SettingsShell extends AppShell {
 				'Setting.key' => $key,
 			),
 		));
-		$this->out(__('Updating %s', $key), 2);
-		$ask = __("Confirm update");
+		$this->out(__d('croogo', 'Updating %s', $key), 2);
+		$ask = __d('croogo', "Confirm update");
 		if ($setting || $this->params['create']) {
 			$text = '-';
 			if ($setting) {
-				$text = __('- %s', $setting['Setting']['value']);
+				$text = __d('croogo', '- %s', $setting['Setting']['value']);
 			}
 			$this->warn($text);
-			$this->success(__('+ %s', $val));
+			$this->success(__d('croogo', '+ %s', $val));
 			if ('y' == $this->in($ask, array('y', 'n'), 'n')) {
 				$keys = array(
 					'title' => null, 'description' => null,
@@ -163,12 +163,12 @@ class SettingsShell extends AppShell {
 				);
 				$options = array_intersect_key($this->params, $keys);
 				$this->Setting->write($key, $val, $options);
-				$this->success(__('Setting updated'));
+				$this->success(__d('croogo', 'Setting updated'));
 			} else {
-				$this->warn(__('Cancelled'));
+				$this->warn(__d('croogo', 'Cancelled'));
 			}
 		} else {
-			$this->warn(__('Key: %s not found', $key));
+			$this->warn(__d('croogo', 'Key: %s not found', $key));
 		}
 	}
 
@@ -186,17 +186,17 @@ class SettingsShell extends AppShell {
 				'Setting.key' => $key,
 			),
 		));
-		$this->out(__('Deleting %s', $key), 2);
-		$ask = __('Delete?');
+		$this->out(__d('croogo', 'Deleting %s', $key), 2);
+		$ask = __d('croogo', 'Delete?');
 		if ($setting) {
 			if ('y' == $this->in($ask, array('y', 'n'), 'n')) {
 				$this->Setting->deleteKey($setting['Setting']['key']);
-				$this->success(__('Setting deleted'));
+				$this->success(__d('croogo', 'Setting deleted'));
 			} else {
-				$this->warn(__('Cancelled'));
+				$this->warn(__d('croogo', 'Cancelled'));
 			}
 		} else {
-			$this->warn(__('Key: %s not found', $key));
+			$this->warn(__d('croogo', 'Key: %s not found', $key));
 		}
 	}
 

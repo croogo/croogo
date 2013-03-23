@@ -2,7 +2,7 @@
 
 CroogoNav::add('media', array(
 	'icon' => array('picture', 'large'),
-	'title' => __('Media'),
+	'title' => __d('croogo', 'Media'),
 	'url' => array(
 		'admin' => true,
 		'plugin' => 'file_manager',
@@ -12,7 +12,7 @@ CroogoNav::add('media', array(
 	'weight' => 40,
 	'children' => array(
 		'attachments' => array(
-			'title' => __('Attachments'),
+			'title' => __d('croogo', 'Attachments'),
 			'url' => array(
 				'admin' => true,
 				'plugin' => 'file_manager',
@@ -21,7 +21,7 @@ CroogoNav::add('media', array(
 			),
 		),
 		'file_manager' => array(
-			'title' => __('File Manager'),
+			'title' => __d('croogo', 'File Manager'),
 			'url' => array(
 				'admin' => true,
 				'plugin' => 'file_manager',

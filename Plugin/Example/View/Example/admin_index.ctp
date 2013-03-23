@@ -3,14 +3,14 @@
 <?php $this->start('actions'); ?>
 <?php
 	echo $this->Croogo->adminAction(
-		__('New Tab'),
+		__d('croogo', 'New Tab'),
 		array('action' => 'add')
 	);
 	echo $this->Croogo->adminAction(
-		__('Chooser Example'),
+		__d('croogo', 'Chooser Example'),
 		array('action' => 'chooser')
 	);
 ?>
 <?php $this->end(); ?>
 
-<p><?php echo __('content here'); ?></p>
+<p><?php echo __d('croogo', 'content here'); ?></p>

@@ -115,7 +115,7 @@ class Comment extends AppModel {
 
 		$node = $this->Node->findById($nodeId);
 		if (empty($node)) {
-			throw new NotFoundException(__d('comments', 'Invalid Node id'));
+			throw new NotFoundException(__d('croogo', 'Invalid Node id'));
 		}
 
 		if (!is_null($parentId)) {
@@ -174,7 +174,7 @@ class Comment extends AppModel {
  */
 	public function isValidLevel($commentId) {
 		if (!$this->exists($commentId)) {
-			throw new NotFoundException(__d('comments', 'Invalid Comment id'));
+			throw new NotFoundException(__d('croogo', 'Invalid Comment id'));
 		}
 
 		$path = $this->getPath($commentId, array($this->escapeField()));

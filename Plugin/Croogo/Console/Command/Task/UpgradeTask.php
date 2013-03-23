@@ -59,9 +59,9 @@ class UpgradeTask extends AppShell {
 	public function getOptionParser() {
 		return parent::getOptionParser()
 			->addSubCommand('acl', array(
-				'help' => __('Upgrade ACL database for core controllers.'),
+				'help' => __d('croogo', 'Upgrade ACL database for core controllers.'),
 				'parser' => array(
-					'description' => __(
+					'description' => __d('croogo', 
 	'Upgrades the ACO hierarchy from 1.3/1.4 so it follows the default ' .
 	'behavior in normal CakePHP applications. The primary difference is that ' .
 	'plugin controllers now are stored underneath its own Plugin ACO record, ' .
@@ -73,16 +73,16 @@ class UpgradeTask extends AppShell {
 					),
 				))
 			->addSubCommand('settings', array(
-				'help' => __('Create settings.json from database'),
+				'help' => __d('croogo', 'Create settings.json from database'),
 				))
 			->addSubCommand('bootstraps', array(
-				'help' => __('Update Hook.bootstrap settings'),
+				'help' => __d('croogo', 'Update Hook.bootstrap settings'),
 				))
 			->addSubCommand('links', array(
-				'help' => __('Update Links in database'),
+				'help' => __d('croogo', 'Update Links in database'),
 				))
 			->addSubCommand('all', array(
-				'help' => __('Run all upgrade tasks'),
+				'help' => __d('croogo', 'Run all upgrade tasks'),
 				));
 	}
 
@@ -92,7 +92,7 @@ class UpgradeTask extends AppShell {
 	public function settings($keys = array()) {
 		$this->_loadSettingsPlugin();
 		if (file_exists(APP . 'Config' . DS . 'settings.json')) {
-			$this->err(__('<warning>Config/settings.json already exist</warning>'));
+			$this->err(__d('croogo', '<warning>Config/settings.json already exist</warning>'));
 		} else {
 			$defaultPlugins = array(
 				'Settings', 'Comments', 'Contacts', 'Nodes', 'Meta', 'Menus',
@@ -122,7 +122,7 @@ class UpgradeTask extends AppShell {
 				'input_type' => 'checkbox',
 				'editable' => true,
 			));
-			$this->out(__('<success>Config/settings.yml created based on `settings` table</success>'));
+			$this->out(__d('croogo', '<success>Config/settings.yml created based on `settings` table</success>'));
 		}
 	}
 
@@ -167,14 +167,14 @@ class UpgradeTask extends AppShell {
 				$url['plugin'] = $this->_controllerMap[$url['controller']];
 				$linkString = $Menus->urlToLinkString($url);
 				$Link->id = $link['Link']['id'];
-				$this->out(__('Updating Link %s', $Link->id));
-				$this->warn(__('- %s', $link['Link']['link']));
-				$this->success(__('+ %s', $linkString), 2);
+				$this->out(__d('croogo', 'Updating Link %s', $Link->id));
+				$this->warn(__d('croogo', '- %s', $link['Link']['link']));
+				$this->success(__d('croogo', '+ %s', $linkString), 2);
 				$Link->saveField('link', $linkString, false);
 				$count++;
 			}
 		}
-		$this->out(__('Links updated: %d rows', $count));
+		$this->out(__d('croogo', 'Links updated: %d rows', $count));
 	}
 
 /**
@@ -203,7 +203,7 @@ class UpgradeTask extends AppShell {
 		$plugins = array_flip($plugins);
 		$this->Setting->write('Hook.bootstraps', join(',', $plugins));
 
-		$this->out(__('Hook.bootstraps updated'));
+		$this->out(__d('croogo', 'Hook.bootstraps updated'));
 	}
 
 /**
@@ -215,7 +215,7 @@ class UpgradeTask extends AppShell {
 			if ($name === 'all') {
 				continue;
 			}
-			$this->out(__('Upgrade "%s"', $name));
+			$this->out(__d('croogo', 'Upgrade "%s"', $name));
 			$this->$name();
 		}
 	}
@@ -229,7 +229,7 @@ class UpgradeTask extends AppShell {
 		if ($command[0] != '_' && in_array($command, $commands)) {
 			return $this->{$command}();
 		} else {
-			$this->out(__('Command not recognized'));
+			$this->out(__d('croogo', 'Command not recognized'));
 		}
 	}
 

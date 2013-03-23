@@ -16,7 +16,7 @@ if (Configure::read('Site.acl_plugin') == 'Acl') {
 	Croogo::hookBehavior('Role', 'Acl.RoleAro');
 
 	CroogoNav::add('users.children.permissions', array(
-		'title' => __('Permissions'),
+		'title' => __d('croogo', 'Permissions'),
 		'url' => array(
 			'admin' => true,
 			'plugin' => 'acl',
@@ -27,7 +27,7 @@ if (Configure::read('Site.acl_plugin') == 'Acl') {
 	));
 
 	CroogoNav::add('settings.children.acl', array(
-		'title' => __('Access Control'),
+		'title' => __d('croogo', 'Access Control'),
 		'url' => array(
 			'admin' => true,
 			'plugin' => 'settings',

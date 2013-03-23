@@ -5,7 +5,7 @@ Croogo::hookComponent('*', 'Taxonomy.Taxonomies');
 Croogo::hookHelper('*', 'Taxonomy.Taxonomies');
 
 CroogoNav::add('content.children.content_types', array(
-	'title' => __('Content Types'),
+	'title' => __d('croogo', 'Content Types'),
 	'url' => array(
 		'plugin' => 'taxonomy',
 		'admin' => true,
@@ -16,7 +16,7 @@ CroogoNav::add('content.children.content_types', array(
 ));
 
 CroogoNav::add('content.children.taxonomy', array(
-	'title' => __('Taxonomy'),
+	'title' => __d('croogo', 'Taxonomy'),
 	'url' => array(
 		'plugin' => 'taxonomy',
 		'admin' => true,
@@ -26,7 +26,7 @@ CroogoNav::add('content.children.taxonomy', array(
 	'weight' => 40,
 	'children' => array(
 		'list' => array(
-			'title' => __('List'),
+			'title' => __d('croogo', 'List'),
 				'url' => array(
 				'plugin' => 'taxonomy',
 				'admin' => true,
@@ -36,7 +36,7 @@ CroogoNav::add('content.children.taxonomy', array(
 			'weight' => 10,
 		),
 		'add_new' => array(
-			'title' => __('Add new'),
+			'title' => __d('croogo', 'Add new'),
 			'url' => array(
 				'plugin' => 'taxonomy',
 				'admin' => true,

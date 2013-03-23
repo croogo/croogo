@@ -69,7 +69,7 @@ class CroogoEventManager extends CakeEventManager {
 					if (class_exists($class)) {
 						$cached[] = compact('plugin', 'class', 'eventKey', 'eventOptions');
 					} else {
-						logError(__('EventHandler %s not found in plugin %s', $class, $plugin));
+						logError(__d('croogo', 'EventHandler %s not found in plugin %s', $class, $plugin));
 					}
 				}
 			}

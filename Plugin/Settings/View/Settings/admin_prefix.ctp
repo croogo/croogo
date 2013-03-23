@@ -1,7 +1,7 @@
 <h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
 <?php
 $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'index'))
 	->addCrumb($prefix, $this->here);
 ?>
 <?php
@@ -56,8 +56,8 @@ echo $this->Form->create('Setting', array(
 	<div class="span4">
 		<?php
 		echo $this->Html->beginBox('Saving') .
-			$this->Form->button(__('Save')) .
-			$this->Html->link(__('Cancel'), array('action' => 'index'), array('class' => 'btn btn-danger')) .
+			$this->Form->button(__d('croogo', 'Save')) .
+			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'btn btn-danger')) .
 			$this->Html->endBox();
 		echo $this->Croogo->adminBoxes();
 		?>

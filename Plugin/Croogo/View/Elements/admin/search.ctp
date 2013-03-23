@@ -36,7 +36,7 @@ if (!empty($searchFields)):
 		echo $this->Form->input($field, $options);
 	}
 
-	echo $this->Form->submit(__('Filter'), array('div' => 'input submit'));
+	echo $this->Form->submit(__d('croogo', 'Filter'), array('div' => 'input submit'));
 	echo $this->Form->end();
 ?>
 </div>

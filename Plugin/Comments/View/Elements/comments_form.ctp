@@ -1,10 +1,10 @@
 <div class="comment-form">
-	<h3><?php echo __('Add new comment'); ?></h3>
+	<h3><?php echo __d('croogo', 'Add new comment'); ?></h3>
 	<?php
 		$type = $types_for_layout[$node['Node']['type']];
 
 		if ($this->params['controller'] == 'comments') {
-			$nodeLink = $this->Html->link(__('Go back to original post') . ': ' . $node['Node']['title'], $node['Node']['url']);
+			$nodeLink = $this->Html->link(__d('croogo', 'Go back to original post') . ': ' . $node['Node']['title'], $node['Node']['url']);
 			echo $this->Html->tag('p', $nodeLink, array('class' => 'back'));
 		}
 
@@ -21,31 +21,31 @@
 		echo $this->Form->create('Comment', array('url' => $formUrl));
 			if ($this->Session->check('Auth.User.id')) {
 				echo $this->Form->input('Comment.name', array(
-					'label' => __('Name'),
+					'label' => __d('croogo', 'Name'),
 					'value' => $this->Session->read('Auth.User.name'),
 					'readonly' => 'readonly',
 				));
 				echo $this->Form->input('Comment.email', array(
-					'label' => __('Email'),
+					'label' => __d('croogo', 'Email'),
 					'value' => $this->Session->read('Auth.User.email'),
 					'readonly' => 'readonly',
 				));
 				echo $this->Form->input('Comment.website', array(
-					'label' => __('Website'),
+					'label' => __d('croogo', 'Website'),
 					'value' => $this->Session->read('Auth.User.website'),
 					'readonly' => 'readonly',
 				));
 				echo $this->Form->input('Comment.body', array('label' => false));
 			} else {
-				echo $this->Form->input('Comment.name', array('label' => __('Name')));
-				echo $this->Form->input('Comment.email', array('label' => __('Email')));
-				echo $this->Form->input('Comment.website', array('label' => __('Website')));
+				echo $this->Form->input('Comment.name', array('label' => __d('croogo', 'Name')));
+				echo $this->Form->input('Comment.email', array('label' => __d('croogo', 'Email')));
+				echo $this->Form->input('Comment.website', array('label' => __d('croogo', 'Website')));
 				echo $this->Form->input('Comment.body', array('label' => false));
 			}
 
 			if ($type['Type']['comment_captcha']) {
 				echo $this->Recaptcha->display_form();
 			}
-		echo $this->Form->end(__('Post comment'));
+		echo $this->Form->end(__d('croogo', 'Post comment'));
 	?>
 </div>

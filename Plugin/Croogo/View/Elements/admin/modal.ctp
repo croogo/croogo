@@ -16,6 +16,6 @@ if (empty($class)) {
 	<div class="modal-body">
 	</div>
 	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo __('Close'); ?></button>
+		<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo __d('croogo', 'Close'); ?></button>
 	</div>
 </div>

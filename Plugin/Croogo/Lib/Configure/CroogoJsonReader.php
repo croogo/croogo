@@ -37,7 +37,7 @@ class CroogoJsonReader implements ConfigReaderInterface {
  */
 	public function read($key) {
 		if (strpos($key, '..') !== false) {
-			throw new ConfigureException(__('Cannot load configuration files with ../ in them.'));
+			throw new ConfigureException(__d('croogo', 'Cannot load configuration files with ../ in them.'));
 		}
 		if (substr($key, -5) === '.json') {
 			$key = substr($key, 0, -5);
@@ -52,7 +52,7 @@ class CroogoJsonReader implements ConfigReaderInterface {
 		$file .= '.json';
 		if (!is_file($file)) {
 			if (!is_file(substr($file, 0, -4))) {
-				throw new ConfigureException(__('Could not load configuration files: %s or %s', $file, substr($file, 0, -4)));
+				throw new ConfigureException(__d('croogo', 'Could not load configuration files: %s or %s', $file, substr($file, 0, -4)));
 			}
 		}
 		$config = json_decode(file_get_contents($file), true);
