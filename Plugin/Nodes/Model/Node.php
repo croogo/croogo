@@ -182,8 +182,9 @@ class Node extends NodesAppModel {
  * @return array
  */
 	public function beforeFind($queryData) {
-		if ($this->type != null && !isset($queryData['conditions']['Node.type'])) {
-			$queryData['conditions']['Node.type'] = $this->type;
+		$typeField = $this->alias . '.type';
+		if ($this->type != null && !isset($queryData['conditions'][$typeField])) {
+			$queryData['conditions'][$typeField] = $this->type;
 		}
 		return $queryData;
 	}
@@ -195,7 +196,7 @@ class Node extends NodesAppModel {
  */
 	public function beforeSave($options = array()) {
 		if ($this->type != null) {
-			$this->data['Node']['type'] = $this->type;
+			$this->data[$this->alias]['type'] = $this->type;
 		}
 
 		$dateFields = array('created');
@@ -248,7 +249,7 @@ class Node extends NodesAppModel {
 				),
 			));
 			$terms = Hash::combine($taxonomies, '{n}.Term.id', '{n}.Term.slug');
-			$this->data['Node']['terms'] = $this->encodeData($terms, array(
+			$this->data[$this->alias]['terms'] = $this->encodeData($terms, array(
 				'trim' => false,
 				'json' => true,
 			));
