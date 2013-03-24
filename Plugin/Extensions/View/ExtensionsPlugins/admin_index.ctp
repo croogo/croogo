@@ -41,19 +41,21 @@ $this->Html
 		}
 
 		$toggleText = $pluginData['active'] ? __d('croogo', 'Deactivate') : __d('croogo', 'Activate');
-		$iconImage = $this->Html->status($pluginData['active']);
-		$icon = $pluginData['active'] ? 'off' : 'bolt';
+		$statusIcon = $this->Html->status($pluginData['active']);
 
 		$actions  = array();
-		$actions[] = $this->Croogo->adminRowAction('',
-			array('action' => 'toggle',	$pluginAlias),
-			array('icon' => $icon, 'tooltip' => $toggleText, 'method' => 'post')
-		);
-		$actions[] = $this->Croogo->adminRowAction('',
-			array('action' => 'delete', $pluginAlias),
-			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Delete')),
-			__d('croogo', 'Are you sure?')
-		);
+		if (!in_array($pluginAlias, $bundledPlugins)):
+			$icon = $pluginData['active'] ? 'off' : 'bolt';
+			$actions[] = $this->Croogo->adminRowAction('',
+				array('action' => 'toggle',	$pluginAlias),
+				array('icon' => $icon, 'tooltip' => $toggleText, 'method' => 'post')
+			);
+			$actions[] = $this->Croogo->adminRowAction('',
+				array('action' => 'delete', $pluginAlias),
+				array('icon' => 'trash', 'tooltip' => __d('croogo', 'Delete')),
+				__d('croogo', 'Are you sure?')
+			);
+		endif;
 
 		if ($pluginData['active'] && !in_array($pluginAlias, $bundledPlugins)) {
 			$actions[] = $this->Croogo->adminRowAction('',
@@ -83,12 +85,7 @@ $this->Html
 			$pluginAlias,
 			$pluginData['name'],
 			$pluginData['description'],
-			$this->Form->postLink($iconImage, array(
-				'action' => 'toggle',
-				$pluginAlias,
-			), array(
-				'escape' => false,
-			)),
+			$statusIcon,
 			$actions,
 		);
 	endforeach;

@@ -171,6 +171,16 @@ class CroogoPlugin extends Object {
 					$pluginData = array();
 				}
 				return $pluginData;
+			} elseif (in_array($alias, $this->bundledPlugins)) {
+				if ($this->needMigration($alias, true)) {
+					$pluginData = array(
+						'name' => $alias,
+						'description' => "Croogo $alias plugin",
+						'active' => true,
+						'needMigration' => true,
+					);
+					return $pluginData;
+				}
 			}
 		}
 		return false;
@@ -308,7 +318,7 @@ class CroogoPlugin extends Object {
 /**
  * Check if a plugin need a database migration
  *
- * @param strign $plugin Plugin name
+ * @param string $plugin Plugin name
  * @param string $isActive If the plugin is active
  * @return boolean
  */
