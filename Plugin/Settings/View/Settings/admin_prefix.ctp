@@ -22,20 +22,25 @@ echo $this->Form->create('Setting', array(
 		<ul class="nav nav-tabs">
 		<?php
 			echo $this->Croogo->adminTab($prefix, '#settings-main');
+			echo $this->Croogo->adminTabs();
 		?>
 		</ul>
 
 		<div class="tab-content">
 
-			<div id="settings-main">
+			<div id="settings-main" class="tab-pane">
 			<?php
 				$i = 0;
 				foreach ($settings as $setting) :
+					if (!empty($setting['Params']['tab'])) {
+						continue;
+					}
 					$keyE = explode('.', $setting['Setting']['key']);
 					$keyTitle = Inflector::humanize($keyE['1']);
 
 					$label = ($setting['Setting']['title'] != null) ? $setting['Setting']['title'] : $keyTitle;
 
+					$i = $setting['Setting']['id'];
 					echo
 						$this->Form->input("Setting.$i.id", array(
 							'value' => $setting['Setting']['id'],
@@ -43,7 +48,7 @@ echo $this->Form->create('Setting', array(
 						$this->Form->input("Setting.$i.key", array(
 							'type' => 'hidden', 'value' => $setting['Setting']['key']
 						)) .
-						$this->Croogo->settingsInput($setting, $label, $i);
+						$this->SettingsForm->input($setting, $label, $i);
 					$i++;
 				endforeach;
 			?>

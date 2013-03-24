@@ -72,7 +72,7 @@ class SettingsShell extends AppShell {
 							'short' => 'd',
 						),
 						'input_type' => array(
-							'choices' => array('text', 'textarea', 'checkbox', 'multiple'),
+							'choices' => array('text', 'textarea', 'checkbox', 'multiple', 'radio'),
 							'short' => 'i',
 						),
 						'editable' => array(
