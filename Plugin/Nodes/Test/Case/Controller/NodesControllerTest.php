@@ -159,6 +159,7 @@ class NodesControllerTest extends CroogoControllerTestCase {
 					'type' => 'blog',
 					'token_key' => 1,
 					'body' => '',
+					'created' => '',
 				),
 				'Role' => array(
 					'Role' => array(),
@@ -167,6 +168,37 @@ class NodesControllerTest extends CroogoControllerTestCase {
 		));
 		$newBlog = $this->NodesController->Node->findBySlug('new-blog');
 		$this->assertEqual($newBlog['Node']['title'], 'New Blog');
+		$this->assertNotEmpty($newBlog['Node']['created']);
+		$this->assertNotEquals('0000-00-00 00:00:00', $newBlog['Node']['created']);
+	}
+
+/**
+ * testAdminAddCustomCreated
+ *
+ * @return void
+ */
+	public function testAdminAddCustomCreated() {
+		$this->expectFlashAndRedirect('Node has been saved');
+		$title = 'New Blog (custom created value)';
+		$slug = 'new-blog-custom-created-value';
+		$this->testAction('/admin/nodes/nodes/add', array(
+			'data' => array(
+				'Node' => array(
+					'title' => $title,
+					'slug' => $slug,
+					'type' => 'blog',
+					'token_key' => 1,
+					'body' => '',
+					'created' => '2012-03-24 01:02:03',
+				),
+				'Role' => array(
+					'Role' => array(),
+				),
+			),
+		));
+		$newBlog = $this->NodesController->Node->findBySlug($slug);
+		$this->assertEqual($newBlog['Node']['title'], $title);
+		$this->assertNotEmpty($newBlog['Node']['created'], '2012-03-24 01:02:03');
 	}
 
 /**
