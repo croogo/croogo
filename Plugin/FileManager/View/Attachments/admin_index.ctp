@@ -27,35 +27,35 @@ $this->Html
 	$rows = array();
 	foreach ($attachments as $attachment) {
 		$actions = array();
-		$actions[] = $this->Croogo->adminRowActions($attachment['Node']['id']);
+		$actions[] = $this->Croogo->adminRowActions($attachment['Attachment']['id']);
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('controller' => 'attachments', 'action' => 'edit', $attachment['Node']['id']),
+			array('controller' => 'attachments', 'action' => 'edit', $attachment['Attachment']['id']),
 			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('controller' => 'attachments', 'action' => 'delete', $attachment['Node']['id']),
+			array('controller' => 'attachments', 'action' => 'delete', $attachment['Attachment']['id']),
 			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
 			__d('croogo', 'Are you sure?'));
 
-		$mimeType = explode('/', $attachment['Node']['mime_type']);
+		$mimeType = explode('/', $attachment['Attachment']['mime_type']);
 		$mimeType = $mimeType['0'];
 		if ($mimeType == 'image') {
-			$imgUrl = $this->Image->resize('/uploads/' . $attachment['Node']['slug'], 100, 200, true, array('class' => 'img-polaroid'));
-			$thumbnail = $this->Html->link($imgUrl, $attachment['Node']['path'],
-			array('escape' => false, 'class' => 'thickbox', 'title' => $attachment['Node']['title']));
+			$imgUrl = $this->Image->resize('/uploads/' . $attachment['Attachment']['slug'], 100, 200, true, array('class' => 'img-polaroid'));
+			$thumbnail = $this->Html->link($imgUrl, $attachment['Attachment']['path'],
+			array('escape' => false, 'class' => 'thickbox', 'title' => $attachment['Attachment']['title']));
 		} else {
-			$thumbnail = $this->Html->image('/croogo/img/icons/page_white.png') . ' ' . $attachment['Node']['mime_type'] . ' (' . $this->Filemanager->filename2ext($attachment['Node']['slug']) . ')';
+			$thumbnail = $this->Html->image('/croogo/img/icons/page_white.png') . ' ' . $attachment['Attachment']['mime_type'] . ' (' . $this->Filemanager->filename2ext($attachment['Attachment']['slug']) . ')';
 		}
 
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
 		$rows[] = array(
-			$attachment['Node']['id'],
+			$attachment['Attachment']['id'],
 			$thumbnail,
-			$attachment['Node']['title'],
+			$attachment['Attachment']['title'],
 			$this->Html->link(
-				$this->Html->url($attachment['Node']['path'], true),
-				$attachment['Node']['path'],
+				$this->Html->url($attachment['Attachment']['path'], true),
+				$attachment['Attachment']['path'],
 				array(
 					'target' => '_blank',
 				)

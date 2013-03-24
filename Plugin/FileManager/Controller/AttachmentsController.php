@@ -19,20 +19,12 @@ App::uses('FileManagerAppController', 'FileManager.Controller');
 class AttachmentsController extends FileManagerAppController {
 
 /**
- * Controller name
- *
- * @var string
- * @access public
- */
-	public $name = 'Attachments';
-
-/**
  * Models used by the Controller
  *
  * @var array
  * @access public
  */
-	public $uses = array('Nodes.Node');
+	public $uses = array('FileManager.Attachment');
 
 /**
  * Helpers used by the Controller
@@ -43,25 +35,33 @@ class AttachmentsController extends FileManagerAppController {
 	public $helpers = array('FileManager.FileManager', 'Text', 'Croogo.Image');
 
 /**
- * Node type
- *
- * If the Controller uses Node model,
- * this is, most of the time, the singular of the Controller name in lowercase.
- *
- * @var string
- * @access public
+ * Provides backwards compatibility access to the deprecated properties
  */
-	public $type = 'attachment';
+	public function __get($name) {
+		switch ($name) {
+			case 'type':
+			case 'uploadsDir':
+				return $this->Attachment->{$name};
+			break;
+			default:
+				return parent::__get($name);
+		}
+	}
 
 /**
- * Uploads directory
- *
- * relative to the webroot.
- *
- * @var string
- * @access public
+ * Provides backwards compatibility access for settings values to deprecated
+ * properties
  */
-	public $uploadsDir = 'uploads';
+	public function __set($name, $val) {
+		switch ($name) {
+			case 'type':
+			case 'uploadsDir':
+				return $this->Attachment->{$name} = $val;
+			break;
+			default:
+				return parent::__set($name, $val);
+		}
+	}
 
 /**
  * Before executing controller actions
@@ -73,11 +73,18 @@ class AttachmentsController extends FileManagerAppController {
 		parent::beforeFilter();
 
 		// Comment, Category, Tag not needed
-		$this->Node->unbindModel(array('hasMany' => array('Comment'), 'hasAndBelongsToMany' => array('Category', 'Tag')));
+		$this->Attachment->unbindModel(array(
+			'hasMany' => array('Comment'),
+			'hasAndBelongsToMany' => array('Category', 'Tag'))
+		);
 
-		$this->Node->type = $this->type;
-		$this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->type)));
-		$this->set('type', $this->type);
+		$this->Attachment->type = $this->type;
+		$this->Attachment->Behaviors->attach('Tree', array(
+			'scope' => array(
+				$this->Attachment->alias . '.type' => $this->type,
+			)
+		));
+		$this->set('type', $this->Attachment->type);
 
 		if ($this->action == 'admin_add') {
 			$this->Security->csrfCheck = false;
@@ -93,8 +100,8 @@ class AttachmentsController extends FileManagerAppController {
 	public function admin_index() {
 		$this->set('title_for_layout', __d('croogo', 'Attachments'));
 
-		$this->Node->recursive = 0;
-		$this->paginate['Node']['order'] = 'Node.created DESC';
+		$this->Attachment->recursive = 0;
+		$this->paginate['Attachment']['order'] = 'Attachment.created DESC';
 		$this->set('attachments', $this->paginate());
 	}
 
@@ -113,43 +120,13 @@ class AttachmentsController extends FileManagerAppController {
 
 		if ($this->request->is('post') || !empty($this->request->data)) {
 
-			if (empty($this->data['Node'])) {
-				$this->Node->invalidate('file', __d('croogo', 'Upload failed. Please ensure size does not exceed the server limit.'));
+			if (empty($this->data['Attachment'])) {
+				$this->Attachment->invalidate('file', __d('croogo', 'Upload failed. Please ensure size does not exceed the server limit.'));
 				return;
 			}
 
-			$file = $this->request->data['Node']['file'];
-			unset($this->request->data['Node']['file']);
-
-			// check if file with same path exists
-			$destination = WWW_ROOT . $this->uploadsDir . DS . $file['name'];
-			if (file_exists($destination)) {
-				$newFileName = String::uuid() . '-' . $file['name'];
-				$destination = WWW_ROOT . $this->uploadsDir . DS . $newFileName;
-			} else {
-				$newFileName = $file['name'];
-			}
-
-			// remove the extension for title
-			if (explode('.', $file['name']) > 0) {
-				$fileTitleE = explode('.', $file['name']);
-				array_pop($fileTitleE);
-				$fileTitle = implode('.', $fileTitleE);
-			} else {
-				$fileTitle = $file['name'];
-			}
-
-			$this->request->data['Node']['title'] = $fileTitle;
-			$this->request->data['Node']['slug'] = $newFileName;
-			$this->request->data['Node']['mime_type'] = $file['type'];
-			//$this->request->data['Node']['guid'] = Router::url('/' . $this->uploadsDir . '/' . $newFileName, true);
-			$this->request->data['Node']['path'] = '/' . $this->uploadsDir . '/' . $newFileName;
-
-			// move the file
-			$moved = move_uploaded_file($file['tmp_name'], $destination);
-
-			$this->Node->create();
-			if ($moved && $this->Node->save($this->request->data)) {
+			$this->Attachment->create();
+			if ($this->Attachment->save($this->request->data)) {
 
 				$this->Session->setFlash(__d('croogo', 'The Attachment has been saved'), 'default', array('class' => 'success'));
 
@@ -179,7 +156,7 @@ class AttachmentsController extends FileManagerAppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
-			if ($this->Node->save($this->request->data)) {
+			if ($this->Attachment->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Attachment has been saved'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -187,7 +164,7 @@ class AttachmentsController extends FileManagerAppController {
 			}
 		}
 		if (empty($this->request->data)) {
-			$this->request->data = $this->Node->read(null, $id);
+			$this->request->data = $this->Attachment->read(null, $id);
 		}
 	}
 
@@ -204,18 +181,9 @@ class AttachmentsController extends FileManagerAppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$attachment = $this->Node->find('first', array(
-			'conditions' => array(
-				'Node.id' => $id,
-				'Node.type' => $this->type,
-			),
-		));
-		if (isset($attachment['Node'])) {
-			if ($this->Node->delete($id)) {
-				unlink(WWW_ROOT . $this->uploadsDir . DS . $attachment['Node']['slug']);
-				$this->Session->setFlash(__d('croogo', 'Attachment deleted'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
-			}
+		if ($this->Attachment->delete($id)) {
+			$this->Session->setFlash(__d('croogo', 'Attachment deleted'), 'default', array('class' => 'success'));
+			$this->redirect(array('action' => 'index'));
 		} else {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Attachment'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));

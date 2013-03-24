@@ -5,9 +5,9 @@ $this->extend('/Common/admin_edit');
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Attachments'), array('plugin' => 'file_manager', 'controller' => 'attachments', 'action' => 'index'))
-	->addCrumb($this->data['Node']['title'], $this->here);
+	->addCrumb($this->data['Attachment']['title'], $this->here);
 
-echo $this->Form->create('Node', array('url' => array('controller' => 'attachments', 'action' => 'edit')));
+echo $this->Form->create('Attachment', array('url' => array('controller' => 'attachments', 'action' => 'edit')));
 
 ?>
 <div class="row-fluid">
@@ -25,14 +25,14 @@ echo $this->Form->create('Node', array('url' => array('controller' => 'attachmen
 			<?php
 				echo $this->Form->input('id');
 
-				$fileType = explode('/', $this->data['Node']['mime_type']);
+				$fileType = explode('/', $this->data['Attachment']['mime_type']);
 				$fileType = $fileType['0'];
 				if ($fileType == 'image') {
-					$imgUrl = $this->Image->resize('/uploads/'.$this->data['Node']['slug'], 200, 300, true, array('class' => 'img-polaroid'));
+					$imgUrl = $this->Image->resize('/uploads/' . $this->data['Attachment']['slug'], 200, 300, true, array('class' => 'img-polaroid'));
 				} else {
-					$imgUrl = $this->Html->image('/croogo/img/icons/' . $this->Filemanager->mimeTypeToImage($this->data['Node']['mime_type'])) . ' ' . $this->data['Node']['mime_type'];
+					$imgUrl = $this->Html->image('/croogo/img/icons/' . $this->Filemanager->mimeTypeToImage($this->data['Attachment']['mime_type'])) . ' ' . $this->data['Attachment']['mime_type'];
 				}
-				echo $this->Html->link($imgUrl, $this->data['Node']['path'], array(
+				echo $this->Html->link($imgUrl, $this->data['Attachment']['path'], array(
 					'class' => 'thickbox pull-right',
 				));
 				$this->Form->inputDefaults(array(
@@ -48,13 +48,13 @@ echo $this->Form->create('Node', array('url' => array('controller' => 'attachmen
 
 				echo $this->Form->input('file_url', array(
 					'placeholder' => __d('croogo', 'File URL'),
-					'value' => Router::url($this->data['Node']['path'], true),
+					'value' => Router::url($this->data['Attachment']['path'], true),
 					'readonly' => 'readonly')
 				);
 
 				echo $this->Form->input('file_type', array(
 					'placeholder' => __d('croogo', 'Mime Type'),
-					'value' => $this->data['Node']['mime_type'],
+					'value' => $this->data['Attachment']['mime_type'],
 					'readonly' => 'readonly')
 				);
 

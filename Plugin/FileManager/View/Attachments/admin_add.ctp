@@ -12,7 +12,7 @@ $formUrl = array('controller' => 'attachments', 'action' => 'add');
 if (isset($this->params['named']['editor'])) {
 	$formUrl['editor'] = 1;
 }
-echo $this->Form->create('Node', array('url' => $formUrl, 'type' => 'file'));
+echo $this->Form->create('Attachment', array('url' => $formUrl, 'type' => 'file'));
 
 ?>
 <div class="row-fluid">
@@ -28,7 +28,7 @@ echo $this->Form->create('Node', array('url' => $formUrl, 'type' => 'file'));
 
 			<div id="attachment-upload" class="tab-pane">
 			<?php
-			echo $this->Form->input('Node.file', array('label' => __d('croogo', 'Upload'), 'type' => 'file'));
+			echo $this->Form->input('file', array('label' => __d('croogo', 'Upload'), 'type' => 'file'));
 			?>
 			</div>
 
