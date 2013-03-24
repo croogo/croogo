@@ -43,7 +43,7 @@ echo $this->Form->create('Setting', array(
 						$this->Form->input("Setting.$i.key", array(
 							'type' => 'hidden', 'value' => $setting['Setting']['key']
 						)) .
-						$this->Croogo->settingsInput($setting, $label, $i);
+						$this->SettingsForm->input($setting, $label, $i);
 					$i++;
 				endforeach;
 			?>
