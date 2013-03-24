@@ -23,6 +23,19 @@ class CroogoHelper extends AppHelper {
 	);
 
 /**
+ * Provides backward compatibility for deprecated methods
+ */
+	public function __call($method, $params) {
+		if ($method == 'settingsInput') {
+			if (!$this->_View->Helpers->loaded('SettingsForm')) {
+				$this->_View->Helpers->load('Settings.SettingsForm');
+			}
+			$callable = array($this->_View->SettingsForm, 'input');
+			return call_user_func_array($callable, $params);
+		}
+	}
+
+/**
  * Default Constructor
  *
  * @param View $View The View this helper is being attached to.
@@ -315,60 +328,6 @@ class CroogoHelper extends AppHelper {
 			}
 		}
 
-		return $output;
-	}
-
-	protected function _settingsInputCheckbox($setting, $label, $i) {
-		$tooltip = array(
-			'data-trigger' => 'hover',
-			'data-placement' => 'right',
-			'data-title' => $setting['Setting']['description'],
-		);
-		if ($setting['Setting']['value'] == 1) {
-			$output = $this->Form->input("Setting.$i.value", array(
-				'type' => $setting['Setting']['input_type'],
-				'checked' => 'checked',
-				'tooltip' => $tooltip,
-				'label' => $label
-			));
-		} else {
-			$output = $this->Form->input("Setting.$i.value", array(
-				'type' => $setting['Setting']['input_type'],
-				'tooltip' => $tooltip,
-				'label' => $label
-			));
-		}
-		return $output;
-	}
-
-	public function settingsInput($setting, $label, $i) {
-		$output = '';
-		$inputType = ($setting['Setting']['input_type'] != null) ? $setting['Setting']['input_type'] : 'text';
-		if ($setting['Setting']['input_type'] == 'multiple') {
-			$multiple = true;
-			if (isset($setting['Params']['multiple'])) {
-				$multiple = $setting['Params']['multiple'];
-			};
-			$selected = json_decode($setting['Setting']['value']);
-			$options = json_decode($setting['Params']['options'], true);
-			$output = $this->Form->input("Setting.$i.values", array(
-				'label' => $setting['Setting']['title'],
-				'multiple' => $multiple,
-				'options' => $options,
-				'selected' => $selected,
-			));
-		} elseif ($setting['Setting']['input_type'] == 'checkbox') {
-			$output = $this->_settingsInputCheckbox($setting, $label, $i);
-		} else {
-			$output = $this->Form->input("Setting.$i.value", array(
-				'type' => $inputType,
-				'class' => 'span10',
-				'value' => $setting['Setting']['value'],
-				'help' => $setting['Setting']['description'],
-				'label' => false,
-				'placeholder' => $label,
-			));
-		}
 		return $output;
 	}
 
