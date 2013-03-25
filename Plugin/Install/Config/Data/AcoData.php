@@ -1530,7 +1530,7 @@ class AcoData {
 			'parent_id' => '1',
 			'model' => '',
 			'foreign_key' => '',
-			'alias' => 'Tinymce',
+			'alias' => 'Ckeditor',
 			'lft' => '338',
 			'rght' => '339'
 		),

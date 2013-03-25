@@ -96,7 +96,7 @@ class UpgradeTask extends AppShell {
 		} else {
 			$defaultPlugins = array(
 				'Settings', 'Comments', 'Contacts', 'Nodes', 'Meta', 'Menus',
-				'Users', 'Blocks', 'Taxonomy', 'FileManager', 'Tinymce',
+				'Users', 'Blocks', 'Taxonomy', 'FileManager', 'Ckeditor',
 			);
 			$Setting = $this->Setting;
 			$setting = $Setting->findByKey('Hook.bootstraps');
@@ -183,22 +183,32 @@ class UpgradeTask extends AppShell {
 	public function bootstraps() {
 		$this->_loadSettingsPlugin();
 
-		// activate/move Wysiwyg before Tinymce
+		// activate/move Wysiwyg before Ckeditor/Tinymce
 		$bootstraps = Configure::read('Hook.bootstraps');
 		$plugins = array_flip(explode(',', $bootstraps));
-		if (empty($plugins['Tinymce'])) {
+		if (empty($plugins['Ckeditor']) && empty($plugins['Tinymce'])) {
 			return;
 		}
 		foreach ($plugins as $plugin => &$value) {
 			$value *= 10;
 		}
-		if (empty($plugins['Wysiwyg'])) {
-			$plugins['Wysiwyg'] = $plugins['Tinymce'] - 1;
+
+		if (!empty($plugins['Ckeditor']) && !empty($plugins['Tinymce'])) {
+			$editor = ($plugins['Ckeditor'] < $plugins['Tinymce']) ? $plugins['Ckeditor'] : $plugins['Tinymce'];
+		} else if (!empty($plugins['Ckeditor'])) {
+			$editor = $plugins['Ckeditor'];
 		} else {
-			if ($plugins['Wysiwyg'] >= $plugin['Tinymce']) {
-				$plugins['Wysiwyg'] = $plugins['Tinymce'] - 1;
+			$editor = $plugins['Tinymce'];
+		}
+
+		if (empty($plugins['Wysiwyg'])) {
+			$plugins['Wysiwyg'] = $editor - 1;
+		} else {
+			if ($plugins['Wysiwyg'] >= $editor) {
+				$plugins['Wysiwyg'] = $editor - 1;
 			}
 		}
+
 		asort($plugins);
 		$plugins = array_flip($plugins);
 		$this->Setting->write('Hook.bootstraps', join(',', $plugins));
