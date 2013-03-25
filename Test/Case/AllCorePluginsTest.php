@@ -22,7 +22,7 @@ class AllCorePluginsTest extends PHPUnit_Framework_TestSuite {
 			'Meta',
 			'Settings',
 			'Taxonomy',
-			'Tinymce',
+			'Ckeditor',
 			'Translate',
 			'Users',
 		);
