@@ -1,5 +1,6 @@
 <?php
 
+App::uses('CakeEmail', 'Network/Email');
 App::uses('ContactsAppController', 'Contacts.Controller');
 
 /**
@@ -32,7 +33,6 @@ class ContactsController extends ContactsAppController {
  */
 	public $components = array(
 		'Croogo.Akismet',
-		'Email',
 		'Croogo.Recaptcha',
 	);
 

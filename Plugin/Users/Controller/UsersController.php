@@ -1,5 +1,6 @@
 <?php
 
+App::uses('CakeEmail', 'Network/Email');
 App::uses('UsersAppController', 'Users.Controller');
 
 /**
@@ -31,7 +32,6 @@ class UsersController extends UsersAppController {
  * @access public
  */
 	public $components = array(
-		'Email',
 		'Search.Prg' => array(
 			'presetForm' => array(
 				'paramType' => 'querystring',
@@ -281,13 +281,14 @@ class UsersController extends UsersAppController {
 			if ($this->User->save($this->request->data)) {
 				Croogo::dispatchEvent('Controller.Users.registrationSuccessful', $this);
 				$this->request->data['User']['password'] = null;
-				$this->Email->from = Configure::read('Site.title') . ' ' .
-					'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
-				$this->Email->to = $this->request->data['User']['email'];
-				$this->Email->subject = __d('croogo', '[%s] Please activate your account', Configure::read('Site.title'));
-				$this->Email->template = 'Users.register';
-				$this->set('user', $this->request->data);
-				$this->Email->send();
+				$email = new CakeEmail();
+				$email->from(Configure::read('Site.title') . ' ' .
+					'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>')
+					->to($this->request->data['User']['email'])
+					->subject(__d('croogo', '[%s] Please activate your account', Configure::read('Site.title')))
+					->template('Users.register')
+					->viewVars(array('user' => $this->request->data))
+					->send();
 
 				$this->Session->setFlash(__d('croogo', 'You have successfully registered an account. An email has been sent with further instructions.'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'login'));
