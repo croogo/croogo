@@ -50,4 +50,34 @@
 	//	position: absolute;
 	}
 
+	// sub menus with pointer
+	#sidebar-menu {
+		li ul li:first-child {
+			position: relative;
+		}
+		li ul li:first-child a:before {
+			right: 100%;
+			border: solid transparent;
+			content: " ";
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;
+		}
+		li ul li:first-child a:after {
+			border-color: @crSubNavPointerAfter;
+			border-right-color: @crSubNavBgColor;
+			border-width: 7px;
+			top: 40%;
+			margin-top: -5px;
+		}
+		li ul li:first-child a:before {
+			border-color: @crSubNavPointerBefore;
+			border-right-color: @crSubNavBgColor;
+			border-width: 7px;
+			top: 50%;
+			margin-top: -5px;
+		}
+	}
+
 }
