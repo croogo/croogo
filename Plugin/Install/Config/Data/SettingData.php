@@ -301,6 +301,17 @@ class SettingData {
 			'weight' => '26',
 			'params' => 'multiple=checkboxoptions={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "Menus.Link": "Link"}'
 		),
+		array(
+			'id' => '37',
+			'key' => 'Site.csrfExpires',
+			'value' => '+30 minutes',
+			'title' => 'Lifetime of CSRF Token',
+			'description' => 'The duration from when a CSRF token is created that it will expire on.',
+			'input_type' => 'radio',
+			'editable' => '1',
+			'weight' => '27',
+			'params' => 'options={"+10 minutes": "10 minutes", "+30 minutes": "30 minutes", "+1 hour": "1 hour", "+2 hours": "2 hours"}',
+		),
 	);
 
 }
