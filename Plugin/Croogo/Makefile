@@ -28,10 +28,10 @@ all: css js assets
 	@echo "Done."
 
 webroot/fontAwesome:
-	git clone ${REPO_FONTAWESOME} webroot/fontAwesome
+	git clone -b ${FONTAWESOME_TAG} ${REPO_FONTAWESOME} webroot/fontAwesome
 
 webroot/bootstrap:
-	git clone ${REPO_BOOTSTRAP} webroot/bootstrap
+	git clone -b ${BOOTSTRAP_TAG} ${REPO_BOOTSTRAP} webroot/bootstrap
 
 deps: webroot/fontAwesome webroot/bootstrap
 
