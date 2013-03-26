@@ -15,7 +15,7 @@ AclPermissions.templates = {
 <td> \
 	<div class="<%= classes %>" data-alias="<%= alias %>" \
 		data-level="<%= level %>" data-id="<%= id %>" > \
-	<%= alias %> \
+	<%= alias %><i class="pull-right icon-none"></i> \
 	</div> \
 </td>'),
 
@@ -112,7 +112,7 @@ AclPermissions.tableToggle = function() {
 		}
 		var $row = $el.parents('tr');
 		$(rows).insertAfter($row);
-		$el.removeClass('loading');
+		$el.find('i').removeClass('icon-spinner icon-spin');
 	};
 
 	// create table cells for role permissions
@@ -150,7 +150,7 @@ AclPermissions.tableToggle = function() {
 		var id = $el.data('id');
 		var level = $el.data('level');
 
-		$el.addClass('loading');
+		$el.find('i').addClass('icon-spin icon-spinner');
 		if ($el.hasClass('perm-expand')) {
 			$el.removeClass('perm-expand').addClass('perm-collapse');
 		} else {
@@ -159,7 +159,8 @@ AclPermissions.tableToggle = function() {
 				var childId = $('.controller', this).data('id')
 				$('tr[data-parent_id=' + childId + ']').remove();
 			}).remove();
-			$el.removeClass('loading perm-collapse').addClass('perm-expand');
+			$el.removeClass('perm-collapse').addClass('perm-expand')
+				.find('i').removeClass('icon-spin icon-spinner');
 			return;
 		}
 
