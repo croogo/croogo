@@ -295,7 +295,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 		$vars = $this->testAction(
 			sprintf('/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
 			array(
-			'return' => 'vars'
+				'return' => 'vars'
 			)
 		);
 		$this->assertTrue(isset($vars['key']));
@@ -334,10 +334,9 @@ class UsersControllerTest extends CroogoControllerTestCase {
 					'User' => array(
 						'password' => 'newpassword',
 						'verify_password' => 'newpassword',
-						)
 					)
 				)
-			);
+			));
 		$user = $this->Users->User->findByUsername('yvonne');
 
 		$expected = AuthComponent::password('newpassword');
