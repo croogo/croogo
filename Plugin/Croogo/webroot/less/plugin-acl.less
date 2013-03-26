@@ -1,5 +1,11 @@
 
-img.permission-toggle:hover { cursor: pointer; }
+.permission-toggle {
+	&:hover { cursor: pointer; }
+	&.permission-disabled {
+		color: @gray;
+		cursor: text;
+	}
+}
 img.hook-toggle:hover { cursor: pointer; }
 
 .perm-collapse {
