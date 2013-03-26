@@ -185,6 +185,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  * Move up a plugin in bootstrap order
  *
  * @param string $plugin
+ * @throws CakeException
  */
 	public function admin_moveup($plugin = null) {
 		if ($plugin === null) {
@@ -208,6 +209,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  * Move down a plugin in bootstrap order
  *
  * @param string $plugin
+ * @throws CakeException
  */
 	public function admin_movedown($plugin = null) {
 		if ($plugin === null) {

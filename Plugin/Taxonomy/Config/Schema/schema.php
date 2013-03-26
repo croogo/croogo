@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 class TaxonomySchema extends CakeSchema {
 
 	public function before($event = array()) {
@@ -86,4 +87,5 @@ class TaxonomySchema extends CakeSchema {
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 	);
+
 }

@@ -20,6 +20,7 @@ App::uses('BaseAuthenticate', 'Controller/Component/Auth');
  *
  * @copyright   Copyright (c) 2012 Ceeram
  * @license     http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @see AclAutoLoginComponent
  */
 class CookieAuthenticate extends BaseAuthenticate {
 
@@ -31,6 +32,7 @@ class CookieAuthenticate extends BaseAuthenticate {
  * @param CakeRequest $request The unused request object
  * @param CakeResponse $response Unused response object.
  * @return mixed.  False on login failure.  An array of User data on success.
+ * @throws CakeException
  */
 	public function authenticate(CakeRequest $request, CakeResponse $response) {
 		if (!isset($this->_Collection->Cookie) || !$this->_Collection->Cookie instanceof CookieComponent) {

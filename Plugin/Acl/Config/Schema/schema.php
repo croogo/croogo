@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 class AclSchema extends CakeSchema {
 
 	public function before($event = array()) {
@@ -49,4 +50,5 @@ class AclSchema extends CakeSchema {
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 	);
+
 }

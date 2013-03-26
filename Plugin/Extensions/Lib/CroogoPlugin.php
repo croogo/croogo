@@ -240,7 +240,7 @@ class CroogoPlugin extends Object {
 			$check = false;
 			foreach ($pluginPaths as $pluginPath) {
 				if (is_dir($pluginPath . $p)) {
-				$check = true;
+					$check = true;
 				}
 			}
 			if (!$check) {

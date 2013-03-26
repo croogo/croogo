@@ -25,20 +25,20 @@ class InstallShell extends AppShell {
  */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
-		$parser->description(__d('croogo', 'Install Utilities')
-			)->addSubcommand('main', array(
+		$parser->description(__d('croogo', 'Install Utilities'))
+			->addSubcommand('main', array(
 				'help' => 'Generate croogo.php, database.php, settings.json and create admin user.',
 				'parser' => array(
 					'description' => 'Generate croogo.php, database.php, settings.json and create admin user.',
-					)
 				)
-			)->addSubcommand('setup_acos', array(
+			))
+			->addSubcommand('setup_acos', array(
 				'help' => 'Setup default ACOs for roles',
 				'parser' => array(
 					'description' => 'Generate default role settings during release',
-					)
 				)
-			)->addSubcommand('data', array(
+			))
+			->addSubcommand('data', array(
 				'help' => 'Generate data files',
 				'parser' => array(
 					'description' => 'Generate installation data files.',
@@ -46,11 +46,10 @@ class InstallShell extends AppShell {
 						'table' => array(
 							'required' => true,
 							'help' => 'table name',
-							),
 						),
 					),
-				)
-			);
+				),
+			));
 		return $parser;
 	}
 

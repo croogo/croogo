@@ -26,15 +26,15 @@ class CroogoShell extends AppShell {
  */
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
-		$parser->description(__d('croogo', 'Croogo Utilities')
-			)->addSubCommand('make', array(
+		$parser->description(__d('croogo', 'Croogo Utilities'))
+			->addSubCommand('make', array(
 				'help' => __d('croogo', 'Compile/Generate CSS'),
-				)
-			)->addSubCommand('upgrade', array(
+			))
+			->addSubCommand('upgrade', array(
 				'help' => __d('croogo', 'Upgrade Croogo'),
 				'parser' => $this->Upgrade->getOptionParser(),
-				)
-			)->addSubcommand('password', array(
+			))
+			->addSubcommand('password', array(
 				'help' => 'Get hashed password',
 				'parser' => array(
 					'description' => 'Get hashed password',
@@ -42,11 +42,10 @@ class CroogoShell extends AppShell {
 						'password' => array(
 							'required' => true,
 							'help' => 'Password to hash',
-							),
 						),
 					),
-				)
-			);
+				),
+			));
 		return $parser;
 	}
 
