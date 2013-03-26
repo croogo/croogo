@@ -1,5 +1,6 @@
 <?php
 
+App::uses('CakeEmail', 'Network/Email');
 App::uses('CommentsAppController', 'Comments.Controller');
 
 /**
@@ -32,7 +33,6 @@ class CommentsController extends CommentsAppController {
  */
 	public $components = array(
 		'Croogo.Akismet',
-		'Email',
 		'Croogo.Recaptcha',
 		'Search.Prg' => array(
 			'presetForm' => array(
@@ -329,16 +329,16 @@ class CommentsController extends CommentsAppController {
  * @access protected
  */
 	protected function _sendEmail($node, $data) {
-		$this->Email->from = Configure::read('Site.title') . ' ' .
-			'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
-		$this->Email->to = Configure::read('Site.email');
-		$this->Email->subject = '[' . Configure::read('Site.title') . '] ' .
-			__d('croogo', 'New comment posted under') . ' ' . $node['Node']['title'];
-		$this->set('node', $node);
-		$this->set('data', $data);
-		$this->set('commentId', $this->Comment->id);
-		$this->Email->template = 'Comments.comment';
-		$this->Email->send();
+		$email = new CakeEmail();
+		$commentId = $this->Comment->id;
+		return $email->from(Configure::read('Site.title') . ' ' .
+			'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>')
+			->to(Configure::read('Site.email'))
+			->subject('[' . Configure::read('Site.title') . '] ' .
+				__d('croogo', 'New comment posted under') . ' ' . $node['Node']['title'])
+			->viewVars(compact('node', 'data', 'commentId'))
+			->template('Comments.comment')
+			->send();
 	}
 
 /**

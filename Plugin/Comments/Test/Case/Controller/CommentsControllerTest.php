@@ -215,15 +215,17 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 	public function testAdd() {
 		Configure::write('Comment.email_notification', 1);
 		$Comments = $this->generate('Comments', array(
+			'methods' => array(
+				'_sendEmail',
+			),
 			'components' => array(
-				'Email' => array('send'),
 				'Session',
 			),
 		));
 		$Comments->plugin = 'Comments';
-		$Comments->Email
+		$Comments
 			->expects($this->once())
-			->method('send')
+			->method('_sendEmail')
 			->will($this->returnValue(true));
 		$Comments->request->params['action'] = 'add';
 		$Comments->request->params['url']['url'] = 'comments/comments/add';
@@ -255,14 +257,12 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 	public function testAddWithParent() {
 		Configure::write('Comment.email_notification', 1);
 		$Comments = $this->generate('Comments', array(
-			'components' => array(
-				'Email' => array('send'),
-			),
+			'methods' => array('_sendEmail'),
 		));
 		$Comments->plugin = 'Comments';
-		$Comments->Email
+		$Comments
 			->expects($this->once())
-			->method('send')
+			->method('_sendEmail')
 			->will($this->returnValue(true));
 		$Comments->request->params['action'] = 'add';
 		$Comments->request->params['url']['url'] = 'comments/comments/add';
