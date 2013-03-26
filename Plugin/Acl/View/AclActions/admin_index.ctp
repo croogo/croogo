@@ -43,6 +43,7 @@ $this->Html
 <?php
 
 	$currentController = '';
+	$icon = '<i class="icon-none pull-right"></i>';
 	foreach ($acos as $acoIndex => $aco) {
 		$id = $aco['Aco']['id'];
 		$alias = $aco['Aco']['alias'];
@@ -86,7 +87,7 @@ $this->Html
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 		$row = array(
 			$id,
-			$this->Html->div(trim($class), $alias, array(
+			$this->Html->div(trim($class), $alias . $icon, array(
 				'data-id' => $id,
 				'data-alias' => $alias,
 				'data-level' => $level,
