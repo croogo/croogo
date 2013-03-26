@@ -35,6 +35,7 @@ class LayoutHelperTest extends CroogoTestCase {
 		);
 		$view = new View(new TheLayoutTestController($request, new CakeResponse()));
 		$this->Layout = new LayoutHelper($view);
+		$this->Html = new CroogoHtmlHelper($view);
 		$this->_appEncoding = Configure::read('App.encoding');
 		$this->_asset = Configure::read('Asset');
 		$this->_debug = Configure::read('debug');
@@ -72,10 +73,12 @@ class LayoutHelperTest extends CroogoTestCase {
  * testStatus
  */
 	public function testStatus() {
-		$this->assertEqual($this->Layout->status(true), $this->Layout->Html->image('/croogo/img/icons/tick.png'));
-		$this->assertEqual($this->Layout->status(1), $this->Layout->Html->image('/croogo/img/icons/tick.png'));
-		$this->assertEqual($this->Layout->status(false), $this->Layout->Html->image('/croogo/img/icons/cross.png'));
-		$this->assertEqual($this->Layout->status(0), $this->Layout->Html->image('/croogo/img/icons/cross.png'));
+		$ok = $this->Html->icon('ok', array('class' => 'green'));
+		$remove = $this->Html->icon('remove', array('class' => 'red'));
+		$this->assertEqual($this->Layout->status(true), $ok);
+		$this->assertEqual($this->Layout->status(1), $ok);
+		$this->assertEqual($this->Layout->status(false), $remove);
+		$this->assertEqual($this->Layout->status(0), $remove);
 	}
 
 /**
@@ -171,7 +174,7 @@ class LayoutHelperTest extends CroogoTestCase {
 			'options' => array(),
 		);
 		$result = $this->Layout->displayField($rows[0], 'User', 'status', $options);
-		$this->assertContains('tick.png', $result);
+		$this->assertContains('icon-ok', $result);
 
 		$expected = '<a href="/users/view/1">admin</a>';
 		$options = array(

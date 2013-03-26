@@ -108,7 +108,7 @@ $this->Html
 				'data-id' => $id,
 				'data-alias' => $alias,
 				'data-level' => $level,
-				)),
+			)),
 		);
 
 		foreach ($roles as $roleId => $roleTitle) {
