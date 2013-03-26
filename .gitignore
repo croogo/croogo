@@ -17,5 +17,5 @@ tmp/
 !./Plugin/Extensions
 !./Plugin/Example
 !./Plugin/Install
-!./Plugin/Tinymce
+!./Plugin/Ckeditor
 !./Plugin/Translate

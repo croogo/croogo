@@ -1,0 +1,14 @@
+{
+	"name" : "CKEditor",
+	"description" : "Integrates CKEditor WYSIWYG editor into Croogo",
+
+	"author" : "Fahad Ibnay Heylaal",
+	"authorEmail" : "contact@fahad19.com",
+	"authorUrl" : "http://fahad19.com",
+
+	"dependencies": {
+		"plugins": [
+			"Wysiwyg"
+		]
+	}
+}
