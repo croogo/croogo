@@ -59,7 +59,7 @@ class ExtensionsInstaller {
  */
 	public function getPluginName($path = null) {
 		if (empty($path)) {
-			throw new CakeException(__('Invalid plugin path'));
+			throw new CakeException(__d('croogo', 'Invalid plugin path'));
 		}
 		if (isset($this->_pluginName[$path])) {
 			return $this->_pluginName[$path];
@@ -69,13 +69,13 @@ class ExtensionsInstaller {
 			$search = 'Config/plugin.json';
 			$indexJson = $Zip->locateName('plugin.json', ZIPARCHIVE::FL_NODIR);
 			if ($indexJson === false) {
-				throw new CakeException(__('Invalid zip archive'));
+				throw new CakeException(__d('croogo', 'Invalid zip archive'));
 			} else {
 				$fileName = $Zip->getNameIndex($indexJson);
 				$fileJson = json_decode($Zip->getFromIndex($indexJson));
 
 				if (empty($fileJson->name)) {
-					throw new CakeException(__('Invalid plugin'));
+					throw new CakeException(__d('croogo', 'Invalid plugin'));
 				}
 
 				$this->_rootPath[$path] = str_replace($search, '', $fileName);
@@ -90,18 +90,18 @@ class ExtensionsInstaller {
 
 				foreach ($searches as $search) {
 					if ($Zip->locateName($search, ZIPARCHIVE::FL_NODIR) === false) {
-						throw new CakeException(__('Invalid plugin'));
+						throw new CakeException(__d('croogo', 'Invalid plugin'));
 					}
 				}
 			}
 			$Zip->close();
 			if (!$plugin) {
-				throw new CakeException(__('Invalid plugin'));
+				throw new CakeException(__d('croogo', 'Invalid plugin'));
 			}
 			$this->_pluginName[$path] = $plugin;
 			return $plugin;
 		} else {
-			throw new CakeException(__('Invalid zip archive'));
+			throw new CakeException(__d('croogo', 'Invalid zip archive'));
 		}
 		return false;
 	}
@@ -116,7 +116,7 @@ class ExtensionsInstaller {
  */
 	public function extractPlugin($path = null, $plugin = null) {
 		if (!file_exists($path)) {
-			throw new CakeException(__('Invalid plugin file path'));
+			throw new CakeException(__d('croogo', 'Invalid plugin file path'));
 		}
 
 		if (empty($plugin)) {
@@ -127,7 +127,7 @@ class ExtensionsInstaller {
 		$pluginHome = reset($pluginHome);
 		$pluginPath = $pluginHome . $plugin . DS;
 		if (is_dir($pluginPath)) {
-			throw new CakeException(__('Plugin already exists'));
+			throw new CakeException(__d('croogo', 'Plugin already exists'));
 		}
 
 		$Zip = new ZipArchive;
@@ -143,7 +143,7 @@ class ExtensionsInstaller {
 			$Zip->close();
 			return true;
 		} else {
-			throw new CakeException(__('Failed to extract plugin'));
+			throw new CakeException(__d('croogo', 'Failed to extract plugin'));
 		}
 		return false;
 	}
@@ -156,13 +156,13 @@ class ExtensionsInstaller {
  */
 	public function getThemeName($path = null) {
 		if (empty($path)) {
-			throw new CakeException(__('Invalid theme path'));
+			throw new CakeException(__d('croogo', 'Invalid theme path'));
 		}
-                
+
 		if (isset($this->_themeName[$path])) {
 			return $this->_themeName[$path];
 		}
-                
+
 		$Zip = new ZipArchive;
 		if ($Zip->open($path) === true) {
 			$search = 'webroot/theme.json';
@@ -177,12 +177,12 @@ class ExtensionsInstaller {
 			}
 			$Zip->close();
 			if (!$theme) {
-				throw new CakeException(__('Invalid theme'));
+				throw new CakeException(__d('croogo', 'Invalid theme'));
 			}
 			$this->_themeName[$path] = $theme;
 			return $theme;
 		} else {
-			throw new CakeException(__('Invalid zip archive'));
+			throw new CakeException(__d('croogo', 'Invalid zip archive'));
 		}
 		return false;
 	}
@@ -197,7 +197,7 @@ class ExtensionsInstaller {
  */
 	public function extractTheme($path = null, $theme = null) {
 		if (!file_exists($path)) {
-			throw new CakeException(__('Invalid theme file path'));
+			throw new CakeException(__d('croogo', 'Invalid theme file path'));
 		}
 
 		if (empty($theme)) {
@@ -208,7 +208,7 @@ class ExtensionsInstaller {
 		$themeHome = reset($themeHome) . 'Themed' . DS;
 		$themePath = $themeHome . $theme . DS;
 		if (is_dir($themePath)) {
-			throw new CakeException(__('Theme already exists'));
+			throw new CakeException(__d('croogo', 'Theme already exists'));
 		}
 
 		$Zip = new ZipArchive;
@@ -224,7 +224,7 @@ class ExtensionsInstaller {
 			$Zip->close();
 			return true;
 		} else {
-			throw new CakeException(__('Failed to extract theme'));
+			throw new CakeException(__d('croogo', 'Failed to extract theme'));
 		}
 		return false;
 	}
@@ -243,11 +243,11 @@ class ExtensionsInstaller {
 			'type' => 'plugin',
 		), $data);
 		if (empty($data['package']) || strpos($data['package'], '/') === false) {
-			throw new CakeException(__('Must specify a valid package name: vendor/name.'));
+			throw new CakeException(__d('croogo', 'Must specify a valid package name: vendor/name.'));
 		}
 		// TODO: Enable theme support when custom install paths are enabled in composer/installers
 		if ($data['type'] == 'theme') {
-			throw new CakeException(__('Themes installed via composer are not yet supported.'));
+			throw new CakeException(__d('croogo', 'Themes installed via composer are not yet supported.'));
 		}
 		$this->_CroogoComposer->getComposer();
 		$this->_CroogoComposer->setConfig(array(

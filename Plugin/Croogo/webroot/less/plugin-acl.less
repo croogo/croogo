@@ -1,0 +1,72 @@
+
+img.permission-toggle:hover { cursor: pointer; }
+img.hook-toggle:hover { cursor: pointer; }
+
+.perm-collapse {
+	background: url('../img/icons/bullet_arrow_down.png') no-repeat;
+	padding-left: 15px;
+}
+
+.perm-expand {
+	background: url('../img/icons/bullet_arrow_right.png') no-repeat;
+	padding-left: 15px;
+}
+
+td {
+	.controller {
+		margin-left: -4px;
+	}
+}
+.controller {
+	padding-left: 15px;
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	&.loading {
+		background: url('../img/ajax/circle_ball.gif') no-repeat scroll 100% 0 transparent;
+	}
+}
+
+.controller-row {
+	background: #6f6f6f;
+	background-color: @gray;
+	color: @white;
+	a {
+		color: #efefef;
+		&:hover {
+			color: #fff;
+		}
+	}
+
+	&.level-1 {
+		background: @grayLight;
+		color: #f1f1f1;
+	}
+}
+
+.permission-table {
+
+	.level-0 {
+	}
+	.level-1 {
+		margin-left: 30px;
+	}
+	.level-2 {
+		margin-left: 60px;
+	}
+
+	.item-actions {
+		a {
+			margin-right: 10px;
+			.icon-trash {
+				color: #e44;
+				&:hover {
+					color: darken(#e44, 25%)
+				}
+			}
+		}
+	}
+
+}

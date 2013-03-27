@@ -31,16 +31,38 @@ Croogo::hookHelper('Nodes', 'Example.Example');
  * Admin menu (navigation)
  */
 CroogoNav::add('extensions.children.example', array(
-	'title' => __('Example'),
+	'title' => __d('croogo', 'Example'),
 	'url' => '#',
 	'children' => array(
 		'example1' => array(
-			'title' => __('Example 1'),
-			'url' => '#',
+			'title' => __d('croogo', 'Example 1'),
+			'url' => array(
+				'admin' => true,
+				'plugin' => 'example',
+				'controller' => 'example',
+				'action' => 'index',
+			),
 		),
 		'example2' => array(
-			'title' => __('Example 2'),
+			'title' => __d('croogo', 'Example 2 with a title that won\'t fit in the sidebar'),
 			'url' => '#',
+			'children' => array(
+				'example-2-1' => array(
+					'title' => 'Example 2-1',
+					'url' => '#',
+					'children' => array(
+						'example-2-1-1' => array(
+							'title' => 'Example 2-1-1',
+							'url' => '#',
+							'children' => array(
+								'example-2-1-1-1' => array(
+									'title' => 'Example 2-1-1-1',
+								),
+							),
+						),
+					),
+				),
+			),
 		),
 	),
 ));
@@ -52,6 +74,30 @@ CroogoNav::add('extensions.children.example', array(
  * an extra link called 'Example' will be placed under 'Actions' column.
  */
 Croogo::hookAdminRowAction('Nodes/admin_index', 'Example', 'plugin:example/controller:example/action:index/:id');
+
+/* Row action with link options */
+Croogo::hookAdminRowAction('Nodes/admin_index', 'Button with Icon', array(
+	'plugin:example/controller:example/action:index/:id' => array(
+		'options' => array(
+			'icon' => 'key',
+			'button' => 'success',
+		),
+	),
+));
+
+/* Row action with icon */
+Croogo::hookAdminRowAction('Nodes/admin_index', 'Icon Only', array(
+	'plugin:example/controller:example/action:index/:id' => array(
+		'title' => false,
+		'options' => array(
+			'icon' => 'picture',
+			'tooltip' => array(
+				'data-title' => 'A nice and simple action with tooltip',
+				'data-placement' => 'left',
+			),
+		),
+	),
+));
 
 /**
  * Admin tab

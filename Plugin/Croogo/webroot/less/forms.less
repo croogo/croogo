@@ -1,0 +1,55 @@
+form.inline {
+	div {
+		float: left;
+	}
+}
+
+.input {
+
+	&.inline {
+		float: left;
+		label, input, select {
+			margin-right: @crGeneralMargin; 
+		}
+	}
+
+	&.submit,
+	&.select,
+	&.radio,
+	&.checkbox,
+	&.password,
+	&.datetime,
+	&.date,
+	&.email,
+	&.file,
+	&.tel,
+	&.time,
+	&.number,
+	&.textarea,
+	&.text {
+		margin: @crGeneralMargin;
+	}
+
+	&.radio,
+	&.checkbox {
+		display: table;
+	}
+
+	&.date,
+	&.time,
+	&.datetime, {
+		select {
+			width: auto;
+		}
+	}
+}
+
+.label-hidden {
+	label {
+		display: none;
+	}
+}
+
+form .span8 + .span4 {
+	margin-top: 37px;
+}

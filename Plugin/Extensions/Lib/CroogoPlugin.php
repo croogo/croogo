@@ -1,8 +1,9 @@
 <?php
-
-App::uses('CroogoEventManager', 'Event');
+App::uses('CroogoEventManager', 'Croogo.Event');
 App::uses('ClassRegistry', 'Utility');
 App::uses('Folder', 'Utility');
+App::uses('Hash', 'Utility');
+App::uses('MigrationVersion', 'Migrations.Lib');
 
 /**
  * CroogoPlugin utility class
@@ -20,6 +21,14 @@ App::uses('Folder', 'Utility');
 class CroogoPlugin extends Object {
 
 /**
+ * List of migration errors
+ * Updated in case of errors when running migrations
+ *
+ * @var array
+ */
+	public $migrationErrors = array();
+
+/**
  * PluginActivation class
  *
  * @var object
@@ -27,10 +36,56 @@ class CroogoPlugin extends Object {
 	protected $_PluginActivation = null;
 
 /**
+ * MigrationVersion class
+ *
+ * @var MigrationVersion
+ */
+	protected $_MigrationVersion = null;
+
+/**
+ * Core plugins
+ *
+ * Typically these plugins must be active and should not be deactivated
+ *
+ * @var array
+ * @access public
+ */
+	public $corePlugins = array(
+		'Acl',
+		'Croogo',
+		'Extensions',
+		'Migrations',
+		'Search',
+		'Settings',
+	);
+
+/**
+ * Bundled plugins providing core functionalities but could be deactivated
+ *
+ * @var array
+ * @access public
+ */
+	public $bundledPlugins = array(
+		'Blocks',
+		'Comments',
+		'Contacts',
+		'FileManager',
+		'Meta',
+		'Menus',
+		'Nodes',
+		'Taxonomy',
+		'Users',
+	);
+
+/**
  * __construct
  */
-	public function __construct() {
-		$this->Setting = ClassRegistry::init('Setting');
+	public function __construct($migrationVersion = null) {
+		$this->Setting = ClassRegistry::init('Settings.Setting');
+
+		if (!is_null($migrationVersion)) {
+			$this->_MigrationVersion = $migrationVersion;
+		}
 	}
 
 /**
@@ -59,14 +114,10 @@ class CroogoPlugin extends Object {
 			$pluginFolders = $this->folder->read();
 			foreach ($pluginFolders[0] as $pluginFolder) {
 				if (substr($pluginFolder, 0, 1) != '.') {
-					$this->folder->path = $pluginPath . $pluginFolder . DS . 'Config';
-					if (!file_exists($this->folder->path)) {
+					if (!$this->_isCroogoPlugin($pluginPath, $pluginFolder)) {
 						continue;
 					}
-					$pluginFolderContent = $this->folder->read();
-					if (in_array('plugin.json', $pluginFolderContent[1])) {
-						$plugins[$pluginFolder] = $pluginFolder;
-					}
+					$plugins[$pluginFolder] = $pluginFolder;
 				}
 			}
 		}
@@ -74,24 +125,62 @@ class CroogoPlugin extends Object {
 	}
 
 /**
+ * Checks wether $pluginDir/$path is a Croogo plugin
+ *
+ * @param string $pluginDir plugin directory
+ * @param string $path plugin alias
+ * @return bool true if path is a Croogo plugin
+ */
+	protected function _isCroogoPlugin($pluginDir, $path) {
+		$dir = $pluginDir . $path . DS;
+		if (file_exists($dir . 'Config' . DS . 'plugin.json')) {
+			return true;
+		}
+		return false;
+	}
+
+/**
+ * Checks whether $plugin is builtin
+ *
+ * @param string $plugin plugin alias
+ * @return boolean true if $plugin is builtin
+ */
+	protected function _isBuiltin($plugin) {
+		return
+			in_array($plugin, $this->bundledPlugins) ||
+			in_array($plugin, $this->corePlugins);
+	}
+
+/**
  * Get the content of plugin.json file of a plugin
  *
  * @param string $alias plugin folder name
- * @return array
+ * @return array|bool array of plugin manifest or boolean false
  */
 	public function getData($alias = null) {
 		$pluginPaths = App::path('plugins');
 		foreach ($pluginPaths as $pluginPath) {
 			$manifestFile = $pluginPath . $alias . DS . 'Config' . DS . 'plugin.json';
-			if (file_exists($manifestFile)) {
+			$hasManifest = file_exists($manifestFile);
+			if ($hasManifest) {
 				$pluginData = json_decode(file_get_contents($manifestFile), true);
 				if (!empty($pluginData)) {
 					$pluginData['active'] = $this->isActive($alias);
-					unset($pluginManifest);
+					$pluginData['needMigration'] = $this->needMigration($alias, $pluginData['active']);
 				} else {
 					$pluginData = array();
 				}
 				return $pluginData;
+			} elseif (in_array($alias, $this->bundledPlugins)) {
+				if ($this->needMigration($alias, true)) {
+					$pluginData = array(
+						'name' => $alias,
+						'description' => "Croogo $alias plugin",
+						'active' => true,
+						'needMigration' => true,
+					);
+					return $pluginData;
+				}
 			}
 		}
 		return false;
@@ -109,29 +198,74 @@ class CroogoPlugin extends Object {
 	}
 
 /**
+ * Get a list of plugins available with all available meta data.
+ * Plugin without metadata are excluded.
+ *
+ * @return array array of plugins, listed according to bootstrap order
+ */
+	public function plugins() {
+		$pluginAliases = $this->getPlugins();
+		$allPlugins = array();
+		foreach ($pluginAliases as $pluginAlias) {
+			$allPlugins[$pluginAlias] = $this->getData($pluginAlias);
+		}
+
+		$activePlugins = array();
+		$bootstraps = explode(',', Configure::read('Hook.bootstraps'));
+		foreach ($bootstraps as $pluginAlias) {
+			if ($pluginData = $this->getData($pluginAlias)) {
+				$activePlugins[$pluginAlias] = $pluginData;
+			}
+		}
+
+		$plugins = array();
+		foreach ($activePlugins as $plugin => $pluginData) {
+			$plugins[$plugin] = $pluginData;
+		}
+		$plugins = Hash::merge($plugins, $allPlugins);
+		return $plugins;
+	}
+
+/**
  * Check if plugin is dependent on any other plugin.
  * If yes, check if that plugin is available in plugins directory.
  *
- * @param  string $plugin plugin alias (underscrored)
+ * @param  string $plugin plugin alias
  * @return boolean
  */
 	public function checkDependency($plugin = null) {
-		$pluginData = $this->getPluginData($plugin);
+		$dependencies = $this->getDependencies($plugin);
 		$pluginPaths = App::path('plugins');
-		if (isset($pluginData['dependencies']['plugins']) && is_array($pluginData['dependencies']['plugins'])) {
-			foreach ($pluginData['dependencies']['plugins'] as $p) {
-				$check = false;
-				foreach ($pluginPaths as $pluginPath) {
-					if (is_dir($pluginPath . $p)) {
-						$check = true;
-					}
+		foreach ($dependencies as $p) {
+			$check = false;
+			foreach ($pluginPaths as $pluginPath) {
+				if (is_dir($pluginPath . $p)) {
+				$check = true;
 				}
-				if (!$check) {
-					return false;
-				}
+			}
+			if (!$check) {
+				return false;
 			}
 		}
 		return true;
+	}
+
+/**
+ * getDependencies
+ *
+ * @param  string $plugin plugin alias (underscrored)
+ * @return array list of plugin that $plugin depends on
+ */
+	public function getDependencies($plugin) {
+		$pluginData = $this->getData($plugin);
+		if (!isset($pluginData['dependencies']['plugins'])) {
+			$pluginData['dependencies']['plugins'] = array();
+		}
+		$dependencies = array();
+		foreach ($pluginData['dependencies']['plugins'] as $i => $plugin) {
+			$dependencies[] = Inflector::camelize($plugin);
+		}
+		return $dependencies;
 	}
 
 /**
@@ -182,6 +316,69 @@ class CroogoPlugin extends Object {
 	}
 
 /**
+ * Check if a plugin need a database migration
+ *
+ * @param string $plugin Plugin name
+ * @param string $isActive If the plugin is active
+ * @return boolean
+ */
+	public function needMigration($plugin, $isActive) {
+		$needMigration = false;
+		if ($isActive) {
+			$mapping = $this->_getMigrationVersion()->getMapping($plugin);
+			$currentVersion = $this->_getMigrationVersion()->getVersion($plugin);
+			if ($mapping) {
+				$lastVersion = max(array_keys($mapping));
+				$needMigration = ($lastVersion - $currentVersion != 0);
+			}
+		}
+		return $needMigration;
+	}
+
+/**
+ * Migrate a plugin
+ *
+ * @param string $plugin Plugin name
+ * @return boolean Success of the migration
+ */
+	public function migrate($plugin) {
+		$success = false;
+		$mapping = $this->_getMigrationVersion()->getMapping($plugin);
+		if ($mapping) {
+			$lastVersion = max(array_keys($mapping));
+			$executionResult = $this->_MigrationVersion->run(array(
+				'version' => $lastVersion,
+				'type' => $plugin
+			));
+
+			$success = $executionResult === true;
+			if (!$success) {
+				array_push($this->migrationErrors, $executionResult);
+			}
+		}
+		return $success;
+	}
+
+	public function unmigrate($plugin) {
+		$success = false;
+		if ($this->_getMigrationVersion()->getMapping($plugin)) {
+			$success = $this->_getMigrationVersion()->run(array(
+				'version' => 0,
+				'type' => $plugin,
+				'direction' => 'down'
+			));
+		}
+		return $success;
+	}
+
+	protected function _getMigrationVersion() {
+		if (!($this->_MigrationVersion instanceof MigrationVersion)) {
+			$this->_MigrationVersion = new MigrationVersion();
+		}
+		return $this->_MigrationVersion;
+	}
+
+/**
  * Loads plugin's bootstrap.php file
  *
  * @param string $plugin Plugin name
@@ -200,12 +397,11 @@ class CroogoPlugin extends Object {
 		}
 
 		if (array_search($plugin, $plugins) !== false) {
-			$plugins = $hookBootstraps;
+			$plugins = (array)$hookBootstraps;
 		} else {
 			$plugins[] = $plugin;
-			$plugins = implode(',', $plugins);
 		}
-		$this->Setting->write('Hook.bootstraps', $plugins);
+		$this->_saveBootstraps($plugins);
 	}
 
 /**
@@ -239,12 +435,7 @@ class CroogoPlugin extends Object {
 			unset($plugins[$k]);
 		}
 
-		if (count($plugins) == 0) {
-			$plugins = '';
-		} else {
-			$plugins = implode(',', $plugins);
-		}
-		$this->Setting->write('Hook.bootstraps', $plugins);
+		$this->_saveBootstraps($plugins);
 	}
 
 /**
@@ -284,7 +475,7 @@ class CroogoPlugin extends Object {
  */
 	public function activate($plugin) {
 		if (CakePlugin::loaded($plugin)) {
-			return __('Plugin "%s" is already active.', $plugin);
+			return __d('croogo', 'Plugin "%s" is already active.', $plugin);
 		}
 		$pluginActivation = $this->getActivator($plugin);
 		if (!isset($pluginActivation) ||
@@ -303,16 +494,16 @@ class CroogoPlugin extends Object {
 			}
 			if ($dependencies) {
 				$this->addBootstrap($plugin);
+				CroogoPlugin::load($plugin);
 				if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
 					$pluginActivation->onActivation($this->_Controller);
 				}
-				CroogoPlugin::load($plugin);
 				Cache::delete('EventHandlers', 'setting_write_configuration');
 				return true;
 			} else {
-				return __('Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin);
+				return __d('croogo', 'Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin);
 			}
-			return __('Plugin "%s" could not be activated. Please, try again.', $plugin);
+			return __d('croogo', 'Plugin "%s" could not be activated. Please, try again.', $plugin);
 		}
 	}
 
@@ -324,7 +515,7 @@ class CroogoPlugin extends Object {
  */
 	public function deactivate($plugin) {
 		if (!CakePlugin::loaded($plugin)) {
-			return __('Plugin "%s" is not active.', $plugin);
+			return __d('croogo', 'Plugin "%s" is not active.', $plugin);
 		}
 		$pluginActivation = $this->getActivator($plugin);
 		if (!isset($pluginActivation) ||
@@ -337,7 +528,7 @@ class CroogoPlugin extends Object {
 			Cache::delete('EventHandlers', 'setting_write_configuration');
 			return true;
 		} else {
-			return __('Plugin could not be deactivated. Please, try again.');
+			return __d('croogo', 'Plugin could not be deactivated. Please, try again.');
 		}
 	}
 
@@ -404,6 +595,84 @@ class CroogoPlugin extends Object {
 			return $folder->errors();
 		}
 		return true;
+	}
+
+/**
+ * Move plugin up or down in the bootstrap order
+ *
+ * @param string $dir valid values 'up' or 'down'
+ * @param string $plugin plugin alias
+ * @param array $bootstraps current bootstrap order
+ * @return array|string array when successful, string contains error message
+ */
+	protected function _move($dir, $plugin, $bootstraps) {
+		$index = array_search($plugin, $bootstraps);
+
+		if ($dir === 'up') {
+			if ($index) {
+				$swap = $bootstraps[$index - 1];
+			}
+			if ($index == 0 || $this->_isBuiltin($swap)) {
+				return __d('croogo', '%s is already at the first position', $plugin);
+			}
+			$before = array_slice($bootstraps, 0, $index - 1);
+			$after = array_slice($bootstraps, $index + 1);
+			$dependencies = $this->getDependencies($plugin);
+			if (in_array($swap, $dependencies)) {
+				return __d('croogo', 'Plugin %s depends on %s', $plugin, $swap);
+			}
+			$reordered = array_merge($before, (array)$plugin, (array)$swap);
+		} elseif ($dir === 'down') {
+			if ($index >= count($bootstraps) - 1) {
+				return __d('croogo', '%s is already at the last position', $plugin);
+			}
+			$swap = $bootstraps[$index + 1];
+			$before = array_slice($bootstraps, 0, $index);
+			$after = array_slice($bootstraps, $index + 2);
+			$dependencies = $this->getDependencies($swap);
+			if (in_array($plugin, $dependencies)) {
+				return __d('croogo', 'Plugin %s depends on %s', $swap, $plugin);
+			}
+			$reordered = array_merge($before, (array)$swap, (array)$plugin);
+		} else {
+			return __d('croogo', 'Invalid direction');
+		}
+		$reordered = array_merge($reordered, $after);
+
+		if ($this->_isBuiltin($swap)) {
+			return __d('croogo', 'Plugin %s cannot be reordered', $swap);
+		}
+
+		return $reordered;
+	}
+
+/**
+ * Write Hook.bootstraps settings to database and json file
+ *
+ * @param array $bootstrap array of plugin aliases
+ * @return boolean
+ */
+	protected function _saveBootstraps($bootstraps) {
+		return $this->Setting->write('Hook.bootstraps', implode(',', $bootstraps));
+	}
+
+/**
+ * Move plugin in the bootstrap order
+ *
+ * @param string $dir direction 'up' or 'down'
+ * @param string $plugin plugin alias
+ * @param array $bootstraps array of plugin aliases
+ * @return string|bool true when successful, string contains error message
+ */
+	public function move($dir, $plugin, $bootstraps = null) {
+		if (empty($bootstraps)) {
+			$bootstraps = explode(',', Configure::read('Hook.bootstraps'));
+		}
+		$reordered = $this->_move(strtolower($dir), $plugin, $bootstraps);
+		if (is_string($reordered)) {
+			return $reordered;
+		}
+		return $this->_saveBootstraps($reordered);
 	}
 
 }

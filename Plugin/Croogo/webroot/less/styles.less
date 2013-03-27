@@ -1,0 +1,130 @@
+.content {
+	padding: 0px @crContentPadding;
+	margin-top: @crContainerMarginTop; // For breadcrumb when it is fixed
+
+	table {
+		margin: @crGeneralMargin 0px;
+	}
+}
+
+h2.hidden-desktop {
+	margin-top: 0;
+}
+
+// For Filter box
+.filter {
+	form {
+		margin: 10px;
+	}
+	background-color: @crFilterBackground;
+	.border-top-radius(@borderRadiusSmall);
+	text-align: left;
+	.input {
+		label {
+			margin: 0 10px 0 0;
+		}
+		display: inline-block;
+	}
+	input, select {
+		width: auto;
+	}
+}
+
+.loading {
+	 background: url('/img/ajax/circle_ball.gif') no-repeat scroll 100% 0 transparent;
+}
+
+.ajax-toggle:hover {
+	text-decoration: none;
+}
+
+// For "Boxes" on form.
+.box {
+	.well;
+	padding: 10px;
+	border: 1px solid #ddd;
+	margin-bottom: @crBoxMarginVertical;
+	.border-radius(2px);
+	.box-title {
+		padding-left: @crContentPadding;
+		font-weight: bold;
+		color: lighten(@gray, 2%);
+		color: @black;
+		cursor: pointer;
+	}
+
+	.box-content {
+		margin: @crGeneralMargin;
+		.submit {
+			display: inline-block;
+		}
+
+		.input {
+			clear: both;
+			margin-top: @crGeneralMargin;
+		}
+	}
+}
+
+// Actions in admin_index 
+.actions {
+	margin: @crGeneralMargin 0px;
+}
+
+.tab-content {
+	.border-radius(0px 0px 2px 2px);
+	background-color: @white;
+	min-height: 200px;
+	margin-top: -20px;
+	padding: 0px;
+	border: 0px;
+	min-height: 200px;
+
+	fieldset {
+		padding: 0px;
+		legend {
+			margin: 0;
+			line-height: 35px;
+			font-size: 100%;
+		}
+	}
+}
+
+
+.navbar-inverse .brand,
+.navbar-inverse .nav > li > a.brand {
+	color: #fff;
+}
+
+.navbar-inverse .nav > li > a {
+	font-size: 12px;
+}
+
+dl.inline {
+	float: left;
+	margin: 1em 0;
+
+	dt {
+		clear: left;
+		float: left;
+		padding: 4px;
+		min-width: 100px;
+	}
+
+	dd {
+		float: left;
+		padding: 4px;
+		min-width: 300px;
+		max-width: 800px;
+	}
+}
+
+a {
+	&.sort {
+		.sortDirections();
+	}
+
+	&.action:hover {
+		text-decoration: none;
+	}
+}

@@ -1,5 +1,7 @@
 <?php
+
 App::uses('CroogoComposer', 'Extensions.Lib');
+App::uses('CroogoTestCase', 'Croogo.Lib/TestSuite');
 
 /**
  * Croogo Composer Test
@@ -13,7 +15,7 @@ App::uses('CroogoComposer', 'Extensions.Lib');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoComposerTest extends CakeTestCase {
+class CroogoComposerTest extends CroogoTestCase {
 
 /**
  * setUp

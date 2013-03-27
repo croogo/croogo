@@ -1,51 +1,68 @@
-<div class="extensions-locales">
-	<h2><?php echo $title_for_layout; ?></h2>
+<?php
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('Upload'), array('action' => 'add')); ?></li>
-		</ul>
-	</div>
+$this->extend('Common/admin_index');
 
-	<table cellpadding="0" cellspacing="0">
-	<?php
-		$tableHeaders = $this->Html->tableHeaders(array(
-			'',
-			__('Locale'),
-			__('Default'),
-			__('Actions'),
-		));
-		echo $tableHeaders;
+$this->Html
+	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Locales'), $this->here);
 
-		$rows = array();
-		foreach ($locales as $locale) {
-			$actions  = '';
-			$actions .= $this->Form->postLink(__('Activate'), array(
-				'action' => 'activate',
-				$locale,
-			));
-			$actions .= ' ' . $this->Html->link(__('Edit'), array('action' => 'edit', $locale));
-			$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
-				'action' => 'delete',
-				$locale,
-			), null, __('Are you sure?'));
+?>
+<?php echo $this->start('actions') ?>
+<?php
+	echo $this->Croogo->adminAction(__d('croogo', 'Upload'),
+		array('action' => 'add')
+	);
+?>
+<?php echo $this->end('actions') ?>
 
-			if ($locale == Configure::read('Site.locale')) {
-				$status = $this->Layout->status(1);
-			} else {
-				$status = $this->Layout->status(0);
-			}
+<table class="table table-striped">
+<?php
+	$tableHeaders = $this->Html->tableHeaders(array(
+		'',
+		__d('croogo', 'Locale'),
+		__d('croogo', 'Default'),
+		__d('croogo', 'Actions'),
+	));
+?>
+	<thead>
+		<?php echo $tableHeaders; ?>
+	</thead>
 
-			$rows[] = array(
-				'',
-				$locale,
-				$status,
-				$actions,
-			);
+<?php 
+	$rows = array();
+	foreach ($locales AS $locale):
+		$actions = array();
+
+		$actions[] = $this->Croogo->adminRowAction('',
+			array('action' => 'activate', $locale),
+			array('icon' => 'bolt', 'tooltip' => __d('croogo', 'Activate'), 'method' => 'post')
+		);
+		$actions[] = $this->Croogo->adminRowAction('',
+			array('action' => 'edit', $locale),
+			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
+		);
+		$actions[] = $this->Croogo->adminRowAction('',
+			array('action' => 'delete', $locale),
+			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
+			__d('croogo', 'Are you sure?')
+		);
+
+		$actions = $this->Html->div('item-actions', implode(' ', $actions));
+		if ($locale == Configure::read('Site.locale')) {
+			$status = $this->Html->status(1);
+		} else {
+			$status = $this->Html->status(0);
 		}
 
-		echo $this->Html->tableCells($rows);
-		echo $tableHeaders;
-	?>
-	</table>
-</div>
+		$rows[] = array(
+			'',
+			$locale,
+			$status,
+			$actions,
+		);
+	endforeach;
+
+	echo $this->Html->tableCells($rows);
+?>
+</table>

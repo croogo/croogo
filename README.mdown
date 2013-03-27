@@ -28,11 +28,26 @@ It is powered by [CakePHP](http://cakephp.org) MVC framework.
   * Rename:
     * `app/Config/database.php.install` to `database.php`, and edit the details.
     * `app/Config/croogo.php.install` to `croogo.php`, and edit the details.
-    * `app/Config/settings.yml.install` to `settings.yml`
+    * `app/Config/settings.json.install` to `settings.json`
   * You can access your admin panel at http://your-site.com/admin. The installer should
     display a page for you to create the administrative user.
 
 It is recommended that you install Croogo using the web based installer for security reasons.
+
+#### Installation using git
+
+  * Ensure you have a recent cakephp version 2.3
+  * Run `git submodule update --init`
+  * After running the web installer, you will need to generate the assets:
+
+	`Console/cake croogo make` that will fetch twitter bootstrap and FontAwesome
+	and subsequently compile the CSS assets using lessphp.
+
+	Alternatively, you could use `lessc` or `recess` as the compiler as they
+	generate a better result.  Edit the `COMPILE` value in the `Makefile`
+	accordingly and run:
+
+	`( cd Plugin/Croogo ; make )`
 
 ## Links
 
@@ -42,5 +57,4 @@ It is recommended that you install Croogo using the web based installer for secu
   * **Issue Tracker**: [http://croogo.lighthouseapp.com](http://croogo.lighthouseapp.com)
   * **Wiki**: [http://wiki.croogo.org](http://wiki.croogo.org)
   * **Google Group**: [http://groups.google.com/group/croogo](http://groups.google.com/group/croogo)
-  * **Fahad's Blog**: [http://fahad19.com/blog/term/croogo](http://fahad19.com/blog/term/croogo)
-  * **IRC Channel**: #croogo on irc.freenode.net
+  * **IRC Channel**: [#croogo](irc://irc.freenode.net/croogo) on irc.freenode.net
