@@ -69,15 +69,15 @@ class AssetGenerator extends Object {
 			chdir($this->_croogoPath);
 			CakeLog::info('Cloning Bootstrap...');
 			$command = sprintf('git clone -b %s %s %s',
-				$this->_tags['bootstrap'],
-				$this->_repos['bootstrap'],
-				$bootstrapPath
+				escapeshellarg($this->_tags['bootstrap']),
+				escapeshellarg($this->_repos['bootstrap']),
+				escapeshellarg($bootstrapPath)
 			);
 			CakeLog::info("	$command");
 			exec($command);
 		}
 		chdir($bootstrapPath);
-		exec(sprintf('git checkout -f %s', $this->_tags['bootstrap']));
+		exec(sprintf('git checkout -f %s', escapeshellarg($this->_tags['bootstrap'])));
 
 		App::import('Vendor', 'Croogo.Lessc', array(
 			'file' => 'lessphp' . DS . 'lessc.inc.php',
@@ -113,7 +113,7 @@ class AssetGenerator extends Object {
 		$bootstrapPath = $this->_croogoWebroot . 'bootstrap';
 		$outputFile = $this->_croogoWebroot . 'js' . DS . 'croogo-bootstrap.js';
 		chdir($bootstrapPath);
-		$rc = exec('cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > ' . $outputFile);
+		$rc = exec('cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > ' . escapeshellarg($outputFile));
 
 		$out = str_replace(APP, '', $outputFile);
 		if ($rc == 0) {
@@ -139,15 +139,15 @@ class AssetGenerator extends Object {
 			}
 			CakeLog::info('Cloning FontAwesome...');
 			$command = sprintf('git clone -b %s %s %s',
-				$this->_tags['fontAwesome'],
-				$this->_repos['fontAwesome'],
-				$fontAwesomePath
+				escapeshellarg($this->_tags['fontAwesome']),
+				escapeshellarg($this->_repos['fontAwesome']),
+				escapeshellarg($fontAwesomePath)
 			);
 			CakeLog::info("	$command");
 			exec($command);
 		}
 		chdir($fontAwesomePath);
-		exec(sprintf('git checkout -f %s', $this->_tags['fontAwesome']));
+		exec(sprintf('git checkout -f %s', escapeshellarg($this->_tags['fontAwesome'])));
 		$targetPath = $croogoPath . 'webroot' . DS . 'font' . DS;
 		$Folder = new Folder($targetPath, true);
 		$fontPath = $croogoPath . 'webroot' . DS . 'fontAwesome' . DS . 'font';
