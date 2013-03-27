@@ -260,6 +260,7 @@ class ContactsController extends ContactsAppController {
 				->to($contact['Contact']['email'])
 				->subject(__d('croogo', '[%s] %s', $siteTitle, $contact['Contact']['title']))
 				->template('Contacts.contact')
+				->theme($this->theme)
 				->viewVars(array(
 					'contact' => $contact,
 					'message' => $this->request->data,

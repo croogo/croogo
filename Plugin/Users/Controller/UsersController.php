@@ -18,14 +18,6 @@ App::uses('UsersAppController', 'Users.Controller');
 class UsersController extends UsersAppController {
 
 /**
- * Controller name
- *
- * @var string
- * @access public
- */
-	public $name = 'Users';
-
-/**
  * Components
  *
  * @var array
@@ -60,44 +52,51 @@ class UsersController extends UsersAppController {
 	public $uses = array('Users.User');
 
 /**
- * beforeFilter
+ * implementedEvents
  *
- * @return void
- * @access public
+ * @return array
  */
-	public function beforeFilter() {
-		parent::beforeFilter();
-
-		if ($this->request->is('post') && in_array($this->request->params['action'], array('admin_login', 'login'))) {
-			$field = $this->Auth->authenticate['all']['fields']['username'];
-			if (!empty($this->request->data) && empty($this->request->data['User'][$field])) {
-				$this->redirect(array('action' => $this->request->params['action']));
-			}
-			$cacheName = 'auth_failed_' . $this->request->data['User'][$field];
-			if (Cache::read($cacheName, 'users_login') >= Configure::read('User.failed_login_limit')) {
-				$this->Session->setFlash(__d('croogo', 'You have reached maximum limit for failed login attempts. Please try again after a few minutes.'), 'default', array('class' => 'error'));
-				$this->redirect(array('action' => $this->request->params['action']));
-			}
-		}
+	public function implementedEvents() {
+		return  parent::implementedEvents() + array(
+			'Controller.Users.beforeAdminLogin' => 'onBeforeAdminLogin',
+			'Controller.Users.adminLoginFailure' => 'onAdminLoginFailure',
+		);
 	}
 
 /**
- * beforeRender
+ * Notify user when failed_login_limit hash been hit
  *
- * @return void
+ * @return bool
+ */
+	public function onBeforeAdminLogin() {
+		$field = $this->Auth->authenticate['all']['fields']['username'];
+		if (empty($this->request->data)) {
+			return true;
+		}
+		$cacheName = 'auth_failed_' . $this->request->data['User'][$field];
+		$cacheValue = Cache::read($cacheName, 'users_login');
+		if (Cache::read($cacheName, 'users_login') >= Configure::read('User.failed_login_limit')) {
+			$this->Session->setFlash(__('You have reached maximum limit for failed login attempts. Please try again after a few minutes.'), 'default', array('class' => 'error'));
+			return $this->redirect(array('action' => $this->request->params['action']));
+		}
+		return true;
+	}
+
+/**
+ * Record the number of times a user has failed authentication in cache
+ *
+ * @return bool
  * @access public
  */
-	public function beforeRender() {
-		parent::beforeRender();
-
-		if (in_array($this->request->params['action'], array('admin_login', 'login'))) {
-			if ($this->request->is('post') && !empty($this->request->data)) {
-				$field = $this->Auth->authenticate['all']['fields']['username'];
-				$cacheName = 'auth_failed_' . $this->request->data['User'][$field];
-				$cacheValue = Cache::read($cacheName, 'users_login');
-				Cache::write($cacheName, (int)$cacheValue + 1, 'users_login');
-			}
+	public function onAdminLoginFailure() {
+		$field = $this->Auth->authenticate['all']['fields']['username'];
+		if (empty($this->request->data)) {
+			return true;
 		}
+		$cacheName = 'auth_failed_' . $this->request->data['User'][$field];
+		$cacheValue = Cache::read($cacheName, 'users_login');
+		Cache::write($cacheName, (int)$cacheValue + 1, 'users_login');
+		return true;
 	}
 
 /**
@@ -228,6 +227,7 @@ class UsersController extends UsersAppController {
 		$this->set('title_for_layout', __d('croogo', 'Admin Login'));
 		$this->layout = "admin_login";
 		if ($this->request->is('post')) {
+			Croogo::dispatchEvent('Controller.Users.beforeAdminLogin', $this);
 			if ($this->Auth->login()) {
 				Croogo::dispatchEvent('Controller.Users.adminLoginSuccessful', $this);
 				$this->redirect($this->Auth->redirect());

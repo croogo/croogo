@@ -12,7 +12,13 @@ class CroogoRouterTest extends CroogoTestCase {
 		'plugin.taxonomy.vocabulary',
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.types_vocabulary',
-		);
+	);
+
+	public function setUp() {
+		parent::setUp();
+		// This test case is only valid for 2.3.x series
+		$this->skipIf(version_compare(Configure::version(), '2.3.1', '<'));
+	}
 
 	public function testContentType() {
 		$params = array(
@@ -21,7 +27,7 @@ class CroogoRouterTest extends CroogoTestCase {
 			'controller' => 'nodes',
 			'action' => 'index',
 			'type' => 'blog',
-			);
+		);
 		$result = Router::reverse($params);
 		$this->assertEquals('/nodes/nodes/index/type:blog', $result);
 
@@ -37,7 +43,7 @@ class CroogoRouterTest extends CroogoTestCase {
 			'controller' => 'nodes',
 			'action' => 'index',
 			'type' => 'page',
-			);
+		);
 		$result = Router::reverse($params);
 		$this->assertEquals('/page', $result);
 	}
@@ -48,7 +54,7 @@ class CroogoRouterTest extends CroogoTestCase {
 			'title' => 'Press Release',
 			'alias' => 'press-release',
 			'description' => '',
-			));
+		));
 		$Type->save($type);
 		Cache::clear(false, 'croogo_types');
 		$type = $Type->findByAlias('press-release');
@@ -60,7 +66,7 @@ class CroogoRouterTest extends CroogoTestCase {
 			'controller' => 'nodes',
 			'action' => 'index',
 			'type' => 'press-release',
-			);
+		);
 		$result = Router::reverse($params);
 		$this->assertEquals('/nodes/nodes/index/type:press-release', $result);
 

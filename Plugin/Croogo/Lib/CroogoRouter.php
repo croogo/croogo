@@ -26,9 +26,9 @@ class CroogoRouter {
  *
  * Returns this object's routes array. Returns false if there are no routes available.
  *
- * @param string $route			An empty string, or a route string "/"
- * @param array $default		NULL or an array describing the default route
- * @param array $params			An array matching the named elements in the route to regular expressions which that element should match.
+ * @param string $route         An empty string, or a route string "/"
+ * @param array $default        NULL or an array describing the default route
+ * @param array $params         An array matching the named elements in the route to regular expressions which that element should match.
  * @return void
  */
 	public static function connect($route, $default = array(), $params = array()) {
