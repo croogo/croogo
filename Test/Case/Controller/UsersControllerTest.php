@@ -87,9 +87,10 @@ class UsersControllerTest extends CroogoControllerTestCase {
 		$this->UsersController = $this->generate('Users', array(
 			'methods' => array(
 				'redirect',
+				'onAdminLoginFailure',
 			),
 			'components' => array(
-				'Auth' => array('user'),
+				'Auth' => array('user', 'identify', 'login'),
 				'Session',
 				'Security',
 			),
@@ -98,6 +99,15 @@ class UsersControllerTest extends CroogoControllerTestCase {
 			->staticExpects($this->any())
 			->method('user')
 			->will($this->returnCallback(array($this, 'authUserCallback')));
+
+		$this->UsersController->Auth
+			->staticExpects($this->any())
+			->method('identify')
+			->will($this->returnCallback(array($this, 'authIdentifyFalse')));
+	}
+
+	public function authIdentifyFalse() {
+		return false;
 	}
 
 /**
@@ -295,7 +305,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 		$vars = $this->testAction(
 			sprintf('/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
 			array(
-			'return' => 'vars'
+				'return' => 'vars'
 			)
 		);
 		$this->assertTrue(isset($vars['key']));
@@ -334,10 +344,9 @@ class UsersControllerTest extends CroogoControllerTestCase {
 					'User' => array(
 						'password' => 'newpassword',
 						'verify_password' => 'newpassword',
-						)
 					)
 				)
-			);
+			));
 		$user = $this->Users->User->findByUsername('yvonne');
 
 		$expected = AuthComponent::password('newpassword');
@@ -359,11 +368,39 @@ class UsersControllerTest extends CroogoControllerTestCase {
 						'id' => 3,
 						'password' => 'otherpassword',
 						'verify_password' => 'other password',
-						)
 					)
 				)
-			);
+			)
+		);
 		$this->assertContains('Passwords do not match', $this->contents);
+	}
+
+/**
+ * testAdminLoginFailureEvent
+ *
+ * @return void
+ */
+	public function testAdminLoginFailureEvent() {
+		$this->controller->Auth->request = $this->controller->request;
+		$this->controller->Auth->response = $this->controller->response;
+		$this->controller->Auth->Session = $this->controller->Session;
+		$this->controller->expects($this->once())
+			->method('onAdminLoginFailure')
+			->will($this->returnValue(true));
+		$this->testAction(
+			'/admin/users/login',
+			array(
+				'method' => 'POST',
+				'return' => 'result',
+				'data' => array(
+					'User' => array(
+						'username' => 'orange',
+						'password' => 'banana',
+						'verify_password' => 'banana',
+					)
+				)
+			)
+		);
 	}
 
 }

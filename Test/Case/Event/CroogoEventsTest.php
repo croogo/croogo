@@ -63,6 +63,7 @@ class CroogoEventsTest extends CroogoTestCase {
 		$eventNames = array(
 			'Controller.Users.activationFailure',
 			'Controller.Users.activationSuccessful',
+			'Controller.Users.beforeAdminLogin',
 			'Controller.Users.adminLoginFailure',
 			'Controller.Users.adminLoginSuccessful',
 			'Controller.Users.adminLogoutSuccessful',
@@ -73,7 +74,15 @@ class CroogoEventsTest extends CroogoTestCase {
 			'Controller.Users.loginSuccessful',
 			'Controller.Users.registrationFailure',
 			'Controller.Users.registrationSuccessful',
-			);
+		);
+		$Auth = $this->getMock('AuthComponent', array(), array($this->Users->Components));
+		$Auth->authenticate = array(
+			'all' => array(
+				'userModel' => 'User',
+				'fields' => array('username' => 'username', 'password' => 'password'),
+			),
+		);
+		$this->Users->Auth = $Auth;
 		foreach ($eventNames as $name) {
 			$event = Croogo::dispatchEvent($name, $this->Users);
 			$this->assertTrue($event->result, sprintf('Event: %s', $name));
