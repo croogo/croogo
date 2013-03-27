@@ -26,7 +26,7 @@ class AssetGenerator extends Object {
 			}
 			CakeLog::info('Cloning Bootstrap...');
 			chdir($this->_croogoPath);
-			exec('git clone git://github.com/twitter/bootstrap ' . $bootstrapPath);
+			exec('git clone git://github.com/twitter/bootstrap '. escapeshellarg($bootstrapPath);
 		}
 		chdir($bootstrapPath);
 		exec('git checkout -f v2.2.0');
@@ -65,7 +65,7 @@ class AssetGenerator extends Object {
 		$bootstrapPath = $this->_croogoWebroot . 'bootstrap';
 		$outputFile = $this->_croogoWebroot . 'js' . DS . 'croogo-bootstrap.js';
 		chdir($bootstrapPath);
-		$rc = exec('cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > ' . $outputFile);
+		$rc = exec('cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > ' . escapeshellarg($outputFile));
 
 		$out = str_replace(APP, '', $outputFile);
 		if ($rc == 0) {
@@ -90,7 +90,7 @@ class AssetGenerator extends Object {
 				throw new Exception('You don\'t have "fontAwesome" in ' . WWW_ROOT);
 			}
 			CakeLog::info('Cloning FontAwesome...</info>');
-			exec('git clone git://github.com/FortAwesome/Font-Awesome ' . $fontAwesomePath);
+			exec('git clone git://github.com/FortAwesome/Font-Awesome ' . escapeshellarg($fontAwesomePath));
 		}
 		chdir($fontAwesomePath);
 		exec('git checkout -f master');
