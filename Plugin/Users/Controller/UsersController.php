@@ -287,6 +287,7 @@ class UsersController extends UsersAppController {
 					->to($this->request->data['User']['email'])
 					->subject(__d('croogo', '[%s] Please activate your account', Configure::read('Site.title')))
 					->template('Users.register')
+					->theme($this->theme)
 					->viewVars(array('user' => $this->request->data))
 					->send();
 
@@ -366,6 +367,7 @@ class UsersController extends UsersAppController {
 			$this->Email->to = $user['User']['email'];
 			$this->Email->subject = __d('croogo', '[%s] Reset Password', Configure::read('Site.title'));
 			$this->Email->template = 'Users.forgot_password';
+			$this->Email->theme($this->theme);
 			if ($this->Email->send()) {
 				$this->Session->setFlash(__d('croogo', 'An email has been sent with instructions for resetting your password.'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'login'));

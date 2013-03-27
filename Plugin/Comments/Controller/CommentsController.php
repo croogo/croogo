@@ -338,6 +338,7 @@ class CommentsController extends CommentsAppController {
 				__d('croogo', 'New comment posted under') . ' ' . $node['Node']['title'])
 			->viewVars(compact('node', 'data', 'commentId'))
 			->template('Comments.comment')
+			->theme($this->theme)
 			->send();
 	}
 

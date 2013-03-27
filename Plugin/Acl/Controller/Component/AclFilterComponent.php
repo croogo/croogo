@@ -44,6 +44,12 @@ class AclFilterComponent extends Component {
  * @return void
  */
 	protected function _configure() {
+		if (!$this->_Collection->loaded('Acl.AclAutoLogin')) {
+			$this->_Collection->load('Acl.AclAutoLogin');
+		}
+		if (!$this->_Collection->loaded('Cookie')) {
+			$this->_Collection->load('Cookie');
+		}
 		//Configure AuthComponent
 		$this->_controller->Auth->authenticate = array(
 			AuthComponent::ALL => array(
@@ -56,6 +62,7 @@ class AclFilterComponent extends Component {
 					'User.status' => 1,
 				),
 			),
+			'Acl.Cookie',
 			'Form',
 		);
 		$this->_controller->Auth->authorize = array(
