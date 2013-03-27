@@ -12,10 +12,13 @@ Configure::write('Site.acl_plugin', 'Acl');
 /**
  * Cache configuration
  */
+$defaultEngine = Configure::read('Cache.defaultEngine');
+$defaultPrefix = Configure::read('Cache.defaultPrefix');
 $cacheConfig = array(
 	'duration' => '+1 hour',
 	'path' => CACHE . 'queries',
-	'engine' => Configure::read('Cache.defaultEngine'),
+	'engine' => $defaultEngine,
+	'prefix' => $defaultPrefix,
 );
 
 // models
@@ -45,6 +48,8 @@ Configure::write('User.failed_login_limit', 5);
 Configure::write('User.failed_login_duration', $failedLoginDuration);
 Cache::config('users_login', array_merge($cacheConfig, array(
 	'duration' => '+' . $failedLoginDuration . ' seconds',
+	'engine' => $defaultEngine,
+	'prefix' => $defaultPrefix,
 )));
 
 /**

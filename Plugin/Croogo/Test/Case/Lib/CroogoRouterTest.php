@@ -1,5 +1,6 @@
 <?php
 
+App::uses('Cache', 'Cache');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 App::uses('Router', 'Routing');
 App::uses('CroogoRouter', 'Croogo.Lib');
@@ -49,6 +50,7 @@ class CroogoRouterTest extends CroogoTestCase {
 			'description' => '',
 			));
 		$Type->save($type);
+		Cache::clear(false, 'croogo_types');
 		$type = $Type->findByAlias('press-release');
 		CroogoRouter::routableContentTypes();
 
@@ -64,6 +66,7 @@ class CroogoRouterTest extends CroogoTestCase {
 
 		$type['Type']['params'] = 'routes=1';
 		$Type->save($type);
+		Cache::clear(false, 'croogo_types');
 		Router::$routes = array();
 		CroogoRouter::routableContentTypes();
 
