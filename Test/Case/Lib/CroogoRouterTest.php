@@ -13,6 +13,12 @@ class CroogoRouterTest extends CroogoTestCase {
 		'types_vocabulary',
 	);
 
+	public function setUp() {
+		parent::setUp();
+		// This test case is only valid for 2.2.x series
+		$this->skipIf(version_compare(Configure::version(), '2.2.7', '>'));
+	}
+
 	public function testContentType() {
 		$params = array(
 			'url' => array(),
