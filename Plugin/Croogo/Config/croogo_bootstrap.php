@@ -103,8 +103,8 @@ $pluginBootstraps = Configure::read('Hook.bootstraps');
 $plugins = array_filter(explode(',', $pluginBootstraps));
 
 // Re-order plugins based on denpendencies:
-// for e.g, Tinymce depends on Wysiwyg
-// if in Hook.bootstraps Tinymce appears before Wysiwyg,
+// for e.g, Ckeditor depends on Wysiwyg
+// if in Hook.bootstraps Ckeditor appears before Wysiwyg,
 // we will reorder it so that it loads right after Wysiwyg
 $pluginsOrdered = $plugins;
 foreach ($plugins as $p) {
