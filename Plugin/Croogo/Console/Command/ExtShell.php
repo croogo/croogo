@@ -103,7 +103,7 @@ class ExtShell extends AppShell {
 			$this->err(__d('croogo', 'Theme cannot be deactivated, instead activate another theme.'));
 			return false;
 		}
-		if (!empty($ext) && !in_array($ext, $extensions) && !$active) {
+		if (!empty($ext) && !in_array($ext, $extensions) && !$active && !$force) {
 			$this->err(__d('croogo', '%s "%s" not found.', ucfirst($type), $ext));
 			return false;
 		}
@@ -187,6 +187,9 @@ class ExtShell extends AppShell {
 			$this->err($result);
 		} else {
 			$this->err(__d('croogo', 'Plugin "%s" could not be deactivated. Please, try again.', $plugin));
+		}
+		if ($result !== true && isset($this->params['force'])) {
+			$this->_CroogoPlugin->removeBootstrap($plugin);
 		}
 		return false;
 	}

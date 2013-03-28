@@ -119,6 +119,24 @@ class ExtShellTest extends CroogoTestCase {
 	}
 
 /**
+ * testForceDeactivation
+ */
+	public function testForceDeactivation() {
+		$Shell = $this->getMock('ExtShell', array('out', 'err'));
+
+		$result = $this->Setting->findByKey('Hook.bootstraps');
+		$bogus = $result['Setting']['value'] . ',Bogus';
+		$this->Setting->write('Hook.bootstraps', $bogus);
+
+		$Shell->args = array('deactivate', 'plugin', 'Bogus');
+		$Shell->params['force'] = true;
+		$Shell->main();
+
+		$result = $this->Setting->findByKey('Hook.bootstraps');
+		$this->assertFalse(in_array('Bogus', explode(',', $result['Setting']['value'])));
+	}
+
+/**
  * testTheme
  *
  * @return void
