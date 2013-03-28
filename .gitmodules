@@ -1,4 +1,4 @@
-[submodule "locale"]
+[submodule "Locale"]
 	path = Locale
 	url = git://github.com/croogo/locale.git
 [submodule "Plugin/Migrations"]
