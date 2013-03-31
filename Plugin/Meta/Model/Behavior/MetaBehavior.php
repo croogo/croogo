@@ -71,9 +71,9 @@ class MetaBehavior extends ModelBehavior {
 	}
 
 /**
- * Private method for MetaBehavior::prepareData()
+ * Protected method for MetaBehavior::prepareData()
  *
- * @param Model$model
+ * @param Model $model
  * @param array $data
  * @return array
  */
