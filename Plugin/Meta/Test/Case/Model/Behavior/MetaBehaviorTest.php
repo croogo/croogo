@@ -78,18 +78,21 @@ class MetaBehaviorTest extends CroogoTestCase {
 				),
 			),
 		);
-		$this->assertEqual($this->Node->prepareData($data), array(
-			'Meta' => array(
-				'0' => array(
-					'key' => 'key1',
-					'value' => 'value1',
-				),
-				'1' => array(
-					'key' => 'key2',
-					'value' => 'value2',
+		$this->assertEquals(
+			array(
+				'Meta' => array(
+					'0' => array(
+						'key' => 'key1',
+						'value' => 'value1',
+					),
+					'1' => array(
+						'key' => 'key2',
+						'value' => 'value2',
+					),
 				),
 			),
-		));
+			$this->Node->prepareData($data)
+		);
 	}
 
 }
