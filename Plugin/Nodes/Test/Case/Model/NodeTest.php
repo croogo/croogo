@@ -232,6 +232,6 @@ class NodeTest extends CroogoTestCase {
 
 		$this->assertTrue($this->Node->updateAllNodesPaths());
 		$node = $this->Node->find('first');
-		$this->assertEquals('/nodes/nodes/view/type:blog/slug:hello-world', $node['Node']['path']);
+		$this->assertEquals('/blog/hello-world', $node['Node']['path']);
 	}
 }
