@@ -245,4 +245,93 @@ class NodeTest extends CroogoTestCase {
 		$this->assertEquals(Node::STATUS_PROMOTED, $results[0]['Node']['promote']);
 	}
 
+/**
+ * test processActionDelete
+ */
+	public function testProcessActionDelete(){
+		$ids = array('1','2');
+
+		$success = $this->Node->processAction('delete', $ids);
+		$count = $this->Node->find('count');
+
+		$this->assertTrue($success);
+		$this->assertEquals(0, $count);
+	}
+
+/**
+ * test processActionPromote
+ */
+	public function testProcessActionPromote(){
+		$ids = array('1','2');
+
+		$success = $this->Node->processAction('promote', $ids);
+		$newRecords = $this->Node->find('all');
+
+		$this->assertTrue($success);
+		foreach($newRecords as $record){
+			$this->assertTrue($record['Node']['promote']);
+		}
+	}
+
+/**
+ * test processActionUnpromote
+ */
+	public function testProcessActionUnpromote(){
+		$ids = array('1','2');
+
+		$success = $this->Node->processAction('unpromote', $ids);
+		$newRecords = $this->Node->find('all');
+
+		$this->assertTrue($success);
+		foreach($newRecords as $record){
+			$this->assertFalse($record['Node']['promote']);
+		}
+	}
+
+/**
+ * test processActionPublish
+ */
+	public function testProcessActionPublish(){
+		$ids = array('1','2');
+
+		$success = $this->Node->processAction('publish', $ids);
+		$newRecords = $this->Node->find('all');
+
+		$this->assertTrue($success);
+		foreach($newRecords as $record){
+			$this->assertTrue($record['Node']['status']);
+		}
+	}
+
+/**
+ * test processActionUnpublish
+ */
+	public function testProcessActionUnpublish(){
+		$ids = array('1','2');
+
+		$success = $this->Node->processAction('unpublish', $ids);
+		$newRecords = $this->Node->find('all');
+
+		$this->assertTrue($success);
+		foreach($newRecords as $record){
+			$this->assertFalse($record['Node']['status']);
+		}
+	}
+
+/**
+ * test processActionInvalidAction
+ */
+	public function testProcessActionInvalidAction(){
+		$this->setExpectedException('InvalidArgumentException');
+		$this->Node->processAction('avadakadavra', array(1,2));
+	}
+
+/**
+ * test processActionWithoutIds
+ */
+	public function testProcessActionWithoutIds(){
+		$this->setExpectedException('InvalidArgumentException');
+		$this->Node->processAction('delete', array());
+	}
+
 }

@@ -202,6 +202,24 @@ class NodesControllerTest extends CroogoControllerTestCase {
 	}
 
 /**
+ * testAdminProcessWithInvalidAction
+ *
+ * @return void
+ */
+	public function testAdminProcessWithInvalidAction() {
+		$this->setExpectedException('InvalidArgumentException');
+		$this->testAction('/admin/nodes/nodes/process', array(
+			'data' => array(
+				'Node' => array(
+					'action' => 'avadakadavra',
+					'1' => 0,
+					'2' => 1,
+				),
+			),
+		));
+	}
+
+/**
  * testAdminEdit
  *
  * @return void

@@ -34,6 +34,20 @@ class Node extends NodesAppModel {
 
 	const STATUS_UNPROMOTED = 0;
 
+	const PUBLICATION_STATE_FIELD = 'status';
+
+	const PROMOTION_STATE_FIELD = 'promote';
+
+	const UNPROCESSED_ACTION = 'delete';
+
+	public $actionsMapping = array(
+		'delete' => 'deleteAll',
+		'publish' => '_publish',
+		'promote' => '_promote',
+		'unpublish' => '_unpublish',
+		'unpromote' => '_unpromote',
+	);
+
 /**
  * Behaviors used by the Model
  *
@@ -365,6 +379,33 @@ class Node extends NodesAppModel {
 	}
 
 /**
+ * Process action pass as argument
+ *
+ * @param $action string actionToPerfom
+ * @param $ids array nodes ids to perform action upon
+ */
+	public function processAction($action, $ids) {
+		$success = true;
+		$actionToPerform = strtolower($action);
+
+		if (!in_array($actionToPerform, array_keys($this->actionsMapping))) {
+			throw new InvalidArgumentException(__d('croogo', 'Invalid action to perform'));
+		}
+
+		if (empty($ids)) {
+			throw new InvalidArgumentException(__d('croogo', 'No target to process action upon'));
+		}
+
+		if ($actionToPerform === self::UNPROCESSED_ACTION) {
+			$success = $this->{$this->actionsMapping[$actionToPerform]}(array($this->escapeField() => $ids));
+		} else {
+			$success = $this->{$this->actionsMapping[$actionToPerform]}($ids);
+		}
+
+		return $success;
+	}
+
+/**
  * Format data for saving
  *
  * @param $data array Node and related data such as Taxonomy and Role
@@ -533,6 +574,25 @@ class Node extends NodesAppModel {
 		} else {
 			$query[$key] = $values;
 		}
+	}
+
+	protected function _publish($ids) {
+		return $this->_saveStatus($ids, self::PUBLICATION_STATE_FIELD, self::STATUS_PUBLISHED);
+	}
+
+	protected function _unpublish($ids) {
+		return $this->_saveStatus($ids, self::PUBLICATION_STATE_FIELD, self::STATUS_UNPUBLISHED);
+	}
+	protected function _promote($ids) {
+		return $this->_saveStatus($ids, self::PROMOTION_STATE_FIELD, self::STATUS_PROMOTED);
+	}
+
+	protected function _unpromote($ids) {
+		return $this->_saveStatus($ids, self::PROMOTION_STATE_FIELD, self::STATUS_UNPROMOTED);
+	}
+
+	protected function _saveStatus($ids, $field, $status) {
+		return $this->updateAll(array($this->escapeField($field) => $status), array($this->escapeField() => $ids));
 	}
 
 }

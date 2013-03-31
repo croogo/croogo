@@ -307,26 +307,29 @@ class NodesController extends NodesAppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		if ($action == 'delete' &&
-			$this->Node->deleteAll(array('Node.id' => $ids), true, true)) {
-			Croogo::dispatchEvent('Controller.Nodes.afterDelete', $this, compact($ids));
-			$this->Session->setFlash(__d('croogo', 'Nodes deleted.'), 'default', array('class' => 'success'));
-		} elseif ($action == 'publish' &&
-			$this->Node->updateAll(array('Node.status' => 1), array('Node.id' => $ids))) {
-			Croogo::dispatchEvent('Controller.Nodes.afterPublish', $this, compact($ids));
-			$this->Session->setFlash(__d('croogo', 'Nodes published'), 'default', array('class' => 'success'));
-		} elseif ($action == 'unpublish' &&
-			$this->Node->updateAll(array('Node.status' => 0), array('Node.id' => $ids))) {
-			Croogo::dispatchEvent('Controller.Nodes.afterUnpublish', $this, compact($ids));
-			$this->Session->setFlash(__d('croogo', 'Nodes unpublished'), 'default', array('class' => 'success'));
-		} elseif ($action == 'promote' &&
-			$this->Node->updateAll(array('Node.promote' => 1), array('Node.id' => $ids))) {
-			Croogo::dispatchEvent('Controller.Nodes.afterPromote', $this, compact($ids));
-			$this->Session->setFlash(__d('croogo', 'Nodes promoted'), 'default', array('class' => 'success'));
-		} elseif ($action == 'unpromote' &&
-			$this->Node->updateAll(array('Node.promote' => 0), array('Node.id' => $ids))) {
-			Croogo::dispatchEvent('Controller.Nodes.afterUnpromote', $this, compact($ids));
-			$this->Session->setFlash(__d('croogo', 'Nodes unpromoted'), 'default', array('class' => 'success'));
+		$actionProcessed = $this->Node->processAction($action, $ids);
+		$eventName = 'Controller.Nodes.after' . ucfirst($action);
+
+		if ($actionProcessed) {
+			switch ($action) {
+				case 'delete':
+					$messageFlash = __d('croogo', 'Nodes deleted');
+				break;
+				case 'publish':
+					$messageFlash = __d('croogo', 'Nodes published');
+				break;
+				case 'unpublish':
+					$messageFlash = __d('croogo', 'Nodes unpublished');
+				break;
+				case 'promote':
+					$messageFlash = __d('croogo', 'Nodes promoted');
+				break;
+				case 'unpromote':
+					$messageFlash = __d('croogo', 'Nodes unpromoted');
+				break;
+			}
+			$this->Session->setFlash($messageFlash, 'default', array('class' => 'success'));
+			Croogo::dispatchEvent($eventName, $this, compact($ids));
 		} else {
 			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
 		}
