@@ -500,24 +500,14 @@ class NodesController extends NodesAppController {
 	public function promoted() {
 		$this->set('title_for_layout', __('Nodes'));
 
-		$this->paginate['Node']['order'] = 'Node.created DESC';
-		$this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
+		$this->paginate['Node']['type'] = 'promoted';
 		$this->paginate['Node']['conditions'] = array(
-			'Node.status' => 1,
-			'Node.promote' => 1,
 			'OR' => array(
 				'Node.visibility_roles' => '',
 				'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
 			),
 		);
-		$this->paginate['Node']['contain'] = array(
-			'Meta',
-			'Taxonomy' => array(
-				'Term',
-				'Vocabulary',
-			),
-			'User',
-		);
+
 
 		if (isset($this->request->params['named']['type'])) {
 			$type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($this->request->params['named']['type']);
