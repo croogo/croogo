@@ -542,7 +542,9 @@ class Node extends NodesAppModel {
 
 	private function __mergeQueryFilters(&$query, $key, $values){
 		if (!empty($query[$key])) {
-			$query[$key] = array_merge($query[$key], $values);
+			if (is_array($query[$key])) {
+				$query[$key] = array_merge($query[$key], $values);
+			}
 		} else {
 			$query[$key] = $values;
 		}
