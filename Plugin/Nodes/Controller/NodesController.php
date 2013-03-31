@@ -307,28 +307,15 @@ class NodesController extends NodesAppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		if ($action == 'delete' &&
-			$this->Node->deleteAll(array('Node.id' => $ids), true, true)) {
-			Croogo::dispatchEvent('Controller.Nodes.afterDelete', $this, compact($ids));
-			$this->Session->setFlash(__('Nodes deleted.'), 'default', array('class' => 'success'));
-		} elseif ($action == 'publish' &&
-			$this->Node->updateAll(array('Node.status' => 1), array('Node.id' => $ids))) {
-			Croogo::dispatchEvent('Controller.Nodes.afterPublish', $this, compact($ids));
-			$this->Session->setFlash(__('Nodes published'), 'default', array('class' => 'success'));
-		} elseif ($action == 'unpublish' &&
-			$this->Node->updateAll(array('Node.status' => 0), array('Node.id' => $ids))) {
-			Croogo::dispatchEvent('Controller.Nodes.afterUnpublish', $this, compact($ids));
-			$this->Session->setFlash(__('Nodes unpublished'), 'default', array('class' => 'success'));
-		} elseif ($action == 'promote' &&
-			$this->Node->updateAll(array('Node.promote' => 1), array('Node.id' => $ids))) {
-			Croogo::dispatchEvent('Controller.Nodes.afterPromote', $this, compact($ids));
-			$this->Session->setFlash(__('Nodes promoted'), 'default', array('class' => 'success'));
-		} elseif ($action == 'unpromote' &&
-			$this->Node->updateAll(array('Node.promote' => 0), array('Node.id' => $ids))) {
-			Croogo::dispatchEvent('Controller.Nodes.afterUnpromote', $this, compact($ids));
-			$this->Session->setFlash(__('Nodes unpromoted'), 'default', array('class' => 'success'));
+		$actionProcessed = $this->Node->processAction($action, $ids);
+		$messageFlash = __d('nodes', 'Nodes ' . $action . 'ed');
+		$eventName = 'Controller.Nodes.after' . ucfirst($action);
+
+		if ($actionProcessed) {
+			$this->Session->setFlash($messageFlash, 'default', array('class' => 'success'));
+			Croogo::dispatchEvent($eventName, $this, compact($ids));
 		} else {
-			$this->Session->setFlash(__('An error occurred.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('An error occurred.'), 'default', array('class' => 'error'));
 		}
 
 		$this->redirect(array('action' => 'index'));

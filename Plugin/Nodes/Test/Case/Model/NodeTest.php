@@ -234,4 +234,76 @@ class NodeTest extends CroogoTestCase {
 		$node = $this->Node->find('first');
 		$this->assertEquals('/blog/hello-world', $node['Node']['path']);
 	}
+
+/**
+ * test processAction
+ */
+	public function testProcessActionDelete(){
+		$ids = array('1','2');
+
+		$success = $this->Node->processAction('delete', $ids);
+		$count = $this->Node->find('count');
+
+		$this->assertTrue($success);
+		$this->assertEquals(0, $count);
+	}
+
+	public function testProcessActionPromote(){
+		$ids = array('1','2');
+
+		$success = $this->Node->processAction('promote', $ids);
+		$newRecords = $this->Node->find('all');
+
+		$this->assertTrue($success);
+		foreach($newRecords as $record){
+			$this->assertTrue($record['Node']['promote']);
+		}
+	}
+
+	public function testProcessActionUnPromote(){
+		$ids = array('1','2');
+
+		$success = $this->Node->processAction('unpromote', $ids);
+		$newRecords = $this->Node->find('all');
+
+		$this->assertTrue($success);
+		foreach($newRecords as $record){
+			$this->assertFalse($record['Node']['promote']);
+		}
+	}
+
+	public function testProcessActionPublish(){
+		$ids = array('1','2');
+
+		$success = $this->Node->processAction('publish', $ids);
+		$newRecords = $this->Node->find('all');
+
+		$this->assertTrue($success);
+		foreach($newRecords as $record){
+			$this->assertTrue($record['Node']['status']);
+		}
+	}
+
+	public function testProcessActionUnPublish(){
+		$ids = array('1','2');
+
+		$success = $this->Node->processAction('unpublish', $ids);
+		$newRecords = $this->Node->find('all');
+
+		$this->assertTrue($success);
+		foreach($newRecords as $record){
+			$this->assertFalse($record['Node']['status']);
+		}
+	}
+
+	public function testProcessAction_WhenActionIsInvalid(){
+		$this->setExpectedException('InvalidArgumentException');
+		$this->Node->processAction('avadakadavra', array(1,2));
+	}
+
+	public function testProcessAction_WhenNoIds(){
+		$this->setExpectedException('InvalidArgumentException');
+		$this->Node->processAction('delete', array());
+	}
+
 }
