@@ -22,7 +22,7 @@ class ExampleHelper extends AppHelper {
  */
 	public $helpers = array(
 		'Html',
-		'Layout',
+		'Croogo.Layout',
 		'Nodes' => array('className' => 'Nodes.Nodes'),
 	);
 

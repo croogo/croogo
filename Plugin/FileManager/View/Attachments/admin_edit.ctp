@@ -4,10 +4,10 @@ $this->extend('/Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Attachments'), array('plugin' => 'file_manager', 'controller' => 'attachments', 'action' => 'index'))
-	->addCrumb($this->data['Node']['title'], $this->here);
+	->addCrumb(__d('croogo', 'Attachments'), array('plugin' => 'file_manager', 'controller' => 'attachments', 'action' => 'index'))
+	->addCrumb($this->data['Attachment']['title'], $this->here);
 
-echo $this->Form->create('Node', array('url' => array('controller' => 'attachments', 'action' => 'edit')));
+echo $this->Form->create('Attachment', array('url' => array('controller' => 'attachments', 'action' => 'edit')));
 
 ?>
 <div class="row-fluid">
@@ -15,7 +15,7 @@ echo $this->Form->create('Node', array('url' => array('controller' => 'attachmen
 
 		<ul class="nav nav-tabs">
 		<?php
-			echo $this->Croogo->adminTab(__('Attachment'), '#attachment-main');
+			echo $this->Croogo->adminTab(__d('croogo', 'Attachment'), '#attachment-main');
 		?>
 		</ul>
 
@@ -25,14 +25,14 @@ echo $this->Form->create('Node', array('url' => array('controller' => 'attachmen
 			<?php
 				echo $this->Form->input('id');
 
-				$fileType = explode('/', $this->data['Node']['mime_type']);
+				$fileType = explode('/', $this->data['Attachment']['mime_type']);
 				$fileType = $fileType['0'];
 				if ($fileType == 'image') {
-					$imgUrl = $this->Image->resize('/uploads/'.$this->data['Node']['slug'], 200, 300, true, array('class' => 'img-polaroid'));
+					$imgUrl = $this->Image->resize('/uploads/' . $this->data['Attachment']['slug'], 200, 300, true, array('class' => 'img-polaroid'));
 				} else {
-					$imgUrl = $this->Html->image('/img/icons/' . $this->Filemanager->mimeTypeToImage($this->data['Node']['mime_type'])) . ' ' . $this->data['Node']['mime_type'];
+					$imgUrl = $this->Html->image('/croogo/img/icons/' . $this->Filemanager->mimeTypeToImage($this->data['Attachment']['mime_type'])) . ' ' . $this->data['Attachment']['mime_type'];
 				}
-				echo $this->Html->link($imgUrl, $this->data['Node']['path'], array(
+				echo $this->Html->link($imgUrl, $this->data['Attachment']['path'], array(
 					'class' => 'thickbox pull-right',
 				));
 				$this->Form->inputDefaults(array(
@@ -40,21 +40,21 @@ echo $this->Form->create('Node', array('url' => array('controller' => 'attachmen
 					'label' => false,
 				));
 				echo $this->Form->input('title', array(
-					'placeholder' => __('Title'),
+					'placeholder' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('excerpt', array(
-					'placeholder' => __('Caption'),
+					'placeholder' => __d('croogo', 'Caption'),
 				));
 
 				echo $this->Form->input('file_url', array(
-					'placeholder' => __('File URL'),
-					'value' => Router::url($this->data['Node']['path'], true),
+					'placeholder' => __d('croogo', 'File URL'),
+					'value' => Router::url($this->data['Attachment']['path'], true),
 					'readonly' => 'readonly')
 				);
 
 				echo $this->Form->input('file_type', array(
-					'placeholder' => __('Mime Type'),
-					'value' => $this->data['Node']['mime_type'],
+					'placeholder' => __d('croogo', 'Mime Type'),
+					'value' => $this->data['Attachment']['mime_type'],
 					'readonly' => 'readonly')
 				);
 
@@ -67,10 +67,10 @@ echo $this->Form->create('Node', array('url' => array('controller' => 'attachmen
 
 	<div class="span4">
 	<?php
-		echo $this->Html->beginBox(__('Publishing')) .
-			$this->Form->button(__('Save')) .
+		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+			$this->Form->button(__d('croogo', 'Save')) .
 			$this->Html->link(
-				__('Cancel'),
+				__d('croogo', 'Cancel'),
 				array('action' => 'index'),
 				array('class' => 'cancel', 'button' => 'danger')
 			).

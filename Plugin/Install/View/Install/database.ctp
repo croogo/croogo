@@ -1,5 +1,5 @@
 <?php
-echo $this->Form->create(null, array(
+echo $this->Form->create(false, array(
 	'url' => array(
 		'plugin' => 'install',
 		'controller' => 'install',
@@ -16,8 +16,8 @@ echo $this->Form->create(null, array(
 			'label' => false,
 			'class' => 'span10',
 		));
-		echo $this->Form->input('Install.datasource', array(
-			'label' => __('Database'),
+		echo $this->Form->input('datasource', array(
+			'label' => __d('croogo', 'Database'),
 			'default' => 'Database/Mysql',
 			'empty' => false,
 			'class' => false,
@@ -28,42 +28,42 @@ echo $this->Form->create(null, array(
 				'Database/Sqlserver' => 'mssql',
 			),
 		));
-		echo $this->Form->input('Install.host', array(
-			'placeholder' => __('Host'),
+		echo $this->Form->input('host', array(
+			'placeholder' => __d('croogo', 'Host'),
 			'default' => 'localhost',
-			'tooltip' => __('Database hostname or IP Address'),
+			'tooltip' => __d('croogo', 'Database hostname or IP Address'),
 			'before' => '<span class="add-on"><i class="icon-home"></i></span>',
 			'div' => 'input input-prepend',
 		));
-		echo $this->Form->input('Install.login', array(
-			'placeholder' => __('Login'),
+		echo $this->Form->input('login', array(
+			'placeholder' => __d('croogo', 'Login'),
 			'default' => 'root',
-			'tooltip' => __('Database login/username'),
+			'tooltip' => __d('croogo', 'Database login/username'),
 			'before' => '<span class="add-on"><i class="icon-user"></i></span>',
 			'div' => 'input input-prepend',
 		));
-		echo $this->Form->input('Install.password', array(
-			'placeholder' => __('Password'),
-			'tooltip' => __('Database password'),
+		echo $this->Form->input('password', array(
+			'placeholder' => __d('croogo', 'Password'),
+			'tooltip' => __d('croogo', 'Database password'),
 			'before' => '<span class="add-on"><i class="icon-key"></i></span>',
 			'div' => 'input input-prepend',
 		));
-		echo $this->Form->input('Install.database', array(
-			'placeholder' => __('Name'),
+		echo $this->Form->input('database', array(
+			'placeholder' => __d('croogo', 'Name'),
 			'default' => 'croogo',
-			'tooltip' => __('Database name'),
+			'tooltip' => __d('croogo', 'Database name'),
 			'before' => '<span class="add-on"><i class="icon-briefcase"></i></span>',
 			'div' => 'input input-prepend',
 		));
-		echo $this->Form->input('Install.prefix', array(
-			'placeholder' => __('Prefix'),
-			'tooltip' => __('Table prefix (leave blank if unknown)'),
+		echo $this->Form->input('prefix', array(
+			'placeholder' => __d('croogo', 'Prefix'),
+			'tooltip' => __d('croogo', 'Table prefix (leave blank if unknown)'),
 			'before' => '<span class="add-on"><i class="icon-minus"></i></span>',
 			'div' => 'input input-prepend',
 		));
-		echo $this->Form->input('Install.port', array(
-			'placeholder' => __('Port'),
-			'tooltip' => __('Database port (leave blank if unknown)'),
+		echo $this->Form->input('port', array(
+			'placeholder' => __d('croogo', 'Port'),
+			'tooltip' => __d('croogo', 'Database port (leave blank if unknown)'),
 			'before' => '<span class="add-on"><i class="icon-asterisk"></i></span>',
 			'div' => 'input input-prepend',
 		));

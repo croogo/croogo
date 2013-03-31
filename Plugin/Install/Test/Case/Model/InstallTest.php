@@ -1,9 +1,10 @@
 <?php
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 App::uses('MigrationVersion', 'Migrations.Lib');
 App::uses('User', 'Users.Model');
 
 class InstallTest extends CroogoTestCase {
+
 	public $fixtures = array(
 		'aro',
 		'plugin.install.user',
@@ -38,8 +39,8 @@ class InstallTest extends CroogoTestCase {
 	public function testSetDatabaseMigrationError() {
 		$croogoPlugin = $this->getMock('CroogoPlugin');
 		$croogoPlugin->expects($this->any())
-				->method('migrate')
-				->will($this->returnValue(false));		
+			->method('migrate')
+			->will($this->returnValue(false));
 		$this->_runProtectedMethod('_setCroogoPlugin', array($croogoPlugin));
 		$this->assertEquals(false, $this->Install->setDatabase());
 	}

@@ -4,7 +4,7 @@ Croogo::hookComponent('*', 'Settings.Settings');
 
 CroogoNav::add('settings', array(
 	'icon' => array('cog', 'large'),
-	'title' => __('Settings'),
+	'title' => __d('croogo', 'Settings'),
 	'url' => array(
 		'admin' => true,
 		'plugin' => 'settings',
@@ -15,7 +15,7 @@ CroogoNav::add('settings', array(
 	'weight' => 60,
 	'children' => array(
 		'site' => array(
-			'title' => __('Site'),
+			'title' => __d('croogo', 'Site'),
 			'url' => array(
 				'admin' => true,
 				'plugin' => 'settings',
@@ -27,7 +27,7 @@ CroogoNav::add('settings', array(
 		),
 
 		'meta' => array(
-			'title' => __('Meta'),
+			'title' => __d('croogo', 'Meta'),
 			'url' => array(
 				'admin' => true,
 				'plugin' => 'settings',
@@ -39,7 +39,7 @@ CroogoNav::add('settings', array(
 		),
 
 		'reading' => array(
-			'title' => __('Reading'),
+			'title' => __d('croogo', 'Reading'),
 			'url' => array(
 				'admin' => true,
 				'plugin' => 'settings',
@@ -51,7 +51,7 @@ CroogoNav::add('settings', array(
 		),
 
 		'writing' => array(
-			'title' => __('Writing'),
+			'title' => __d('croogo', 'Writing'),
 			'url' => array(
 				'admin' => true,
 				'plugin' => 'settings',
@@ -63,7 +63,7 @@ CroogoNav::add('settings', array(
 		),
 
 		'comment' => array(
-			'title' => __('Comment'),
+			'title' => __d('croogo', 'Comment'),
 			'url' => array(
 				'admin' => true,
 				'plugin' => 'settings',
@@ -75,7 +75,7 @@ CroogoNav::add('settings', array(
 		),
 
 		'service' => array(
-			'title' => __('Service'),
+			'title' => __d('croogo', 'Service'),
 			'url' => array(
 				'admin' => true,
 				'plugin' => 'settings',
@@ -87,7 +87,7 @@ CroogoNav::add('settings', array(
 		),
 
 		'languages' => array(
-			'title' => __('Languages'),
+			'title' => __d('croogo', 'Languages'),
 			'url' => array(
 				'admin' => true,
 				'plugin' => 'settings',

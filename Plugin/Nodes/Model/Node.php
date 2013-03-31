@@ -47,10 +47,10 @@ class Node extends NodesAppModel {
  */
 	public $actsAs = array(
 		'Tree',
-		'Encoder',
+		'Croogo.Encoder',
 		'Meta.Meta',
-		'Url',
-		'Cached' => array(
+		'Croogo.Url',
+		'Croogo.Cached' => array(
 			'prefix' => array(
 				'node_',
 				'nodes_',
@@ -201,8 +201,9 @@ class Node extends NodesAppModel {
  * @return array
  */
 	public function beforeFind($queryData) {
-		if ($this->type != null && !isset($queryData['conditions']['Node.type'])) {
-			$queryData['conditions']['Node.type'] = $this->type;
+		$typeField = $this->alias . '.type';
+		if ($this->type != null && !isset($queryData['conditions'][$typeField])) {
+			$queryData['conditions'][$typeField] = $this->type;
 		}
 		return $queryData;
 	}
@@ -214,8 +215,26 @@ class Node extends NodesAppModel {
  */
 	public function beforeSave($options = array()) {
 		if ($this->type != null) {
-			$this->data['Node']['type'] = $this->type;
+			$this->data[$this->alias]['type'] = $this->type;
 		}
+
+		$dateFields = array('created');
+		foreach ($dateFields as $dateField) {
+			if (!array_key_exists($dateField, $this->data[$this->alias])) {
+				continue;
+			}
+			if (empty($this->data[$this->alias][$dateField])) {
+				$db = $this->getDataSource();
+				$colType = array_merge(array(
+					'formatter' => 'date',
+					), $db->columns[$this->getColumnType($dateField)]
+				);
+				$this->data[$this->alias][$dateField] = call_user_func(
+					$colType['formatter'], $colType['format']
+				);
+			}
+		}
+
 		$this->cacheTerms();
 
 		return true;
@@ -249,7 +268,7 @@ class Node extends NodesAppModel {
 				),
 			));
 			$terms = Hash::combine($taxonomies, '{n}.Term.id', '{n}.Term.slug');
-			$this->data['Node']['terms'] = $this->encodeData($terms, array(
+			$this->data[$this->alias]['terms'] = $this->encodeData($terms, array(
 				'trim' => false,
 				'json' => true,
 			));
@@ -328,6 +347,7 @@ class Node extends NodesAppModel {
 				),
 			);
 		}
+
 		return $conditions;
 	}
 

@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 class NodesSchema extends CakeSchema {
 
 	public function before($event = array()) {

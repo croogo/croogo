@@ -249,7 +249,7 @@ class SettingData {
 		array(
 			'id' => '32',
 			'key' => 'Hook.bootstraps',
-			'value' => 'Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Tinymce',
+			'value' => 'Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Wysiwyg,Ckeditor',
 			'title' => '',
 			'description' => '',
 			'input_type' => '',
@@ -299,7 +299,8 @@ class SettingData {
 			'input_type' => 'multiple',
 			'editable' => '1',
 			'weight' => '26',
-			'params' => 'multiple=checkboxoptions={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "Menus.Link": "Link"}'
+			'params' => 'multiple=checkbox
+options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "Menus.Link": "Link"}'
 		),
 	);
 

@@ -1,13 +1,13 @@
 <?php
 
-App::uses('CroogoControllerTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
 class TranslateControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
-		'app.aro',
-		'app.aco',
-		'app.aros_aco',
+		'plugin.croogo.aro',
+		'plugin.croogo.aco',
+		'plugin.croogo.aros_aco',
 		'plugin.comments.comment',
 		'plugin.menus.menu',
 		'plugin.meta.meta',

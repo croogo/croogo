@@ -9,8 +9,8 @@ class MenusComponent extends Component {
  * @access public
  */
 	public $components = array(
-		'Croogo',
-		);
+		'Croogo.Croogo',
+	);
 
 /**
  * Menus for layout
@@ -27,7 +27,11 @@ class MenusComponent extends Component {
  */
 	public function initialize(Controller $controller) {
 		$this->controller = $controller;
-		$this->Link = ClassRegistry::init('Menus.Link');
+		if (isset($controller->Link)) {
+			$this->Link = $controller->Link;
+		} else {
+			$this->Link = ClassRegistry::init('Menus.Link');
+		}
 	}
 
 /**

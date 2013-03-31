@@ -1,5 +1,5 @@
 <div class="users form">
-	<h2><?php echo __('Login'); ?></h2>
+	<h2><?php echo __d('croogo', 'Login'); ?></h2>
 	<?php echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'login')));?>
 		<fieldset>
 		<?php

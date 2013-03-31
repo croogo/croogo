@@ -59,7 +59,7 @@ class AclUpgrade extends Object {
 		$actionPath = 'controllers/';
 		$root = $this->Aco->node(str_replace('/', '', $actionPath));
 		if (empty($root)) {
-			return __('No root node found');
+			return __d('croogo', 'No root node found');
 		} else {
 			$root = $root[0];
 		}
@@ -67,7 +67,7 @@ class AclUpgrade extends Object {
 		$upgraded = $this->Aco->node('controllers/Nodes/Nodes/admin_index');
 		$upgraded = !empty($upgraded);
 		if ($upgraded) {
-			return array(__('<warning>ACL Database seems to have already been upgraded</warning>'));
+			return array(__d('croogo', '<warning>ACL Database seems to have already been upgraded</warning>'));
 		}
 
 		$this->Aco->begin();
@@ -107,7 +107,7 @@ class AclUpgrade extends Object {
 					$correctControllerPath = $actionPath . $plugin . '/' . $controllerName;
 					$correctControllerNode = $this->Aco->node($correctControllerPath);
 					if (empty($correctControllerNode)) {
-						$errors[] = __('%s not found', $controllerPath);
+						$errors[] = __d('croogo', '%s not found', $controllerPath);
 					}
 				}
 			}
@@ -131,19 +131,19 @@ class AclUpgrade extends Object {
 		$public = $this->Aro->node(array('model' => 'Role', 'foreign_key' => 3));
 
 		if (empty($public)) {
-			$errors[] = __('Role: Public not found');
+			$errors[] = __d('croogo', 'Role: Public not found');
 		}
 		if ($registered) {
 			$registered[0]['Aro']['parent_id'] = $public[0]['Aro']['id'];
 			$this->Aro->save($registered[0]);
 		} else {
-			$errors[] = __('Role: Registered not found');
+			$errors[] = __d('croogo', 'Role: Registered not found');
 		}
 		if ($admin) {
 			$admin[0]['Aro']['parent_id'] = $registered[0]['Aro']['id'];
 			$this->Aro->save($admin[0]);
 		} else {
-			$errors[] = __('Role: Admin not found');
+			$errors[] = __d('croogo', 'Role: Admin not found');
 		}
 		return array();
 	}

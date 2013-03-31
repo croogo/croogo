@@ -1,4 +1,6 @@
 <?php
+
+App::uses('CroogoTestCase', 'Croogo.Lib/TestSuite');
 App::uses('ExtensionsInstaller', 'Extensions.Lib');
 App::uses('Folder', 'Utility');
 
@@ -14,7 +16,7 @@ App::uses('Folder', 'Utility');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtensionsInstallerTest extends CakeTestCase {
+class ExtensionsInstallerTest extends CroogoTestCase {
 
 /**
  * setUp

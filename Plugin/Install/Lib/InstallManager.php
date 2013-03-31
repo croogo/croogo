@@ -42,7 +42,7 @@ class InstallManager {
 		}
 
 		if (!$file->write($content)) {
-			return __('Could not write database.php file.');
+			return __d('croogo', 'Could not write database.php file.');
 		}
 
 		try {
@@ -50,10 +50,10 @@ class InstallManager {
 			$db = ConnectionManager::getDataSource('default');
 		}
 		catch (MissingConnectionException $e) {
-			return __('Could not connect to database: ') . $e->getMessage();
+			return __d('croogo', 'Could not connect to database: ') . $e->getMessage();
 		}
 		if (!$db->isConnected()) {
-			return __('Could not connect to database.');
+			return __d('croogo', 'Could not connect to database.');
 		}
 
 		return true;

@@ -4,7 +4,7 @@ $this->extend('/Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Blocks'), array('action' => 'index'));
+	->addCrumb(__d('croogo', 'Blocks'), array('action' => 'index'));
 
 echo $this->Form->create('Block',
 	array('url' => array('controller' => 'blocks', 'action' => 'process')),
@@ -23,7 +23,7 @@ $chooser = isset($this->request->query['chooser']);
 		$this->Paginator->sort('alias'),
 		$this->Paginator->sort('region_id'),
 		$this->Paginator->sort('status'),
-		__('Actions'),
+		__d('croogo', 'Actions'),
 	));
 ?>
 	<thead>
@@ -35,28 +35,28 @@ $chooser = isset($this->request->query['chooser']);
 		$actions = array();
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'blocks', 'action' => 'moveup', $block['Block']['id']),
-			array('icon' => 'arrow-up', 'tooltip' => __('Move up'),
+			array('icon' => 'arrow-up', 'tooltip' => __d('croogo', 'Move up'),
 		));
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'blocks', 'action' => 'movedown', $block['Block']['id']),
-			array('icon' => 'arrow-down', 'tooltip' => __('Move down'),
+			array('icon' => 'arrow-down', 'tooltip' => __d('croogo', 'Move down'),
 			)
 		);
 		$actions[] = $this->Croogo->adminRowActions($block['Block']['id']);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id']),
-			array('icon' => 'pencil', 'tooltip' => __('Edit this item'))
+			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Block' . $block['Block']['id'] . 'Id',
-			array('icon' => 'trash', 'tooltip' => __('Remove this item'), 'rowAction' => 'delete'),
-			__('Are you sure?')
+			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item'), 'rowAction' => 'delete'),
+			__d('croogo', 'Are you sure?')
 		);
 
 		if ($chooser) {
 			$checkbox = null;
 			$actions = array(
-				$this->Croogo->adminRowAction(__('Choose'), '#', array(
+				$this->Croogo->adminRowAction(__d('croogo', 'Choose'), '#', array(
 					'class' => 'item-choose',
 					'data-chooser_type' => 'Block',
 					'data-chooser_id' => $block['Block']['id'],
@@ -95,15 +95,15 @@ $chooser = isset($this->request->query['chooser']);
 				'label' => false,
 				'div' => 'input inline',
 				'options' => array(
-					'publish' => __('Publish'),
-					'unpublish' => __('Unpublish'),
-					'delete' => __('Delete'),
+					'publish' => __d('croogo', 'Publish'),
+					'unpublish' => __d('croogo', 'Unpublish'),
+					'delete' => __d('croogo', 'Delete'),
 				),
 				'empty' => true,
 			));
 		?>
 		<div class="controls">
-			<?php echo $this->Form->end(__('Submit')); ?>
+			<?php echo $this->Form->end(__d('croogo', 'Submit')); ?>
 		</div>
 	</div>
 </div>

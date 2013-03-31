@@ -1,5 +1,6 @@
 <?php
 
+App::uses('CakeEmail', 'Network/Email');
 App::uses('ContactsAppController', 'Contacts.Controller');
 
 /**
@@ -31,9 +32,8 @@ class ContactsController extends ContactsAppController {
  * @access public
  */
 	public $components = array(
-		'Akismet',
-		'Email',
-		'Recaptcha',
+		'Croogo.Akismet',
+		'Croogo.Recaptcha',
 	);
 
 /**
@@ -51,7 +51,7 @@ class ContactsController extends ContactsAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Contacts'));
+		$this->set('title_for_layout', __d('croogo', 'Contacts'));
 
 		$this->Contact->recursive = 0;
 		$this->paginate['Contact']['order'] = 'Contact.title ASC';
@@ -66,15 +66,15 @@ class ContactsController extends ContactsAppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Contact'));
+		$this->set('title_for_layout', __d('croogo', 'Add Contact'));
 
 		if (!empty($this->request->data)) {
 			$this->Contact->create();
 			if ($this->Contact->save($this->request->data)) {
-				$this->Session->setFlash(__('The Contact has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Contact has been saved'), 'default', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Contact->id));
 			} else {
-				$this->Session->setFlash(__('The Contact could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Contact could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
 	}
@@ -87,18 +87,18 @@ class ContactsController extends ContactsAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Contact'));
+		$this->set('title_for_layout', __d('croogo', 'Edit Contact'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Contact'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Contact'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Contact->save($this->request->data)) {
-				$this->Session->setFlash(__('The Contact has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Contact has been saved'), 'default', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Contact->id));
 			} else {
-				$this->Session->setFlash(__('The Contact could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Contact could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -115,11 +115,11 @@ class ContactsController extends ContactsAppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Contact'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Contact'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Contact->delete($id)) {
-			$this->Session->setFlash(__('Contact deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Contact deleted'), 'default', array('class' => 'success'));
 			$this->redirect(array('action' => 'index'));
 		}
 	}
@@ -166,10 +166,10 @@ class ContactsController extends ContactsAppController {
 			$continue = $this->_send_email($continue, $contact);
 
 			if ($continue === true) {
-				//$this->Session->setFlash(__('Your message has been received.'));
+				//$this->Session->setFlash(__d('croogo', 'Your message has been received.'));
 				//unset($this->request->data['Message']);
 
-				echo $this->flash(__('Your message has been received...'), '/');
+				echo $this->flash(__d('croogo', 'Your message has been received...'), '/');
 			}
 		}
 
@@ -217,7 +217,7 @@ class ContactsController extends ContactsAppController {
 			$this->Akismet->setCommentContent($this->request->data['Message']['body']);
 			if ($this->Akismet->isCommentSpam()) {
 				$continue = false;
-				$this->Session->setFlash(__('Sorry, the message appears to be spam.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Sorry, the message appears to be spam.'), 'default', array('class' => 'error'));
 			}
 		}
 
@@ -238,7 +238,7 @@ class ContactsController extends ContactsAppController {
 			$continue === true &&
 			!$this->Recaptcha->valid($this->request)) {
 			$continue = false;
-			$this->Session->setFlash(__('Invalid captcha entry'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid captcha entry'), 'default', array('class' => 'error'));
 		}
 
 		return $continue;
@@ -258,8 +258,9 @@ class ContactsController extends ContactsAppController {
 			$siteTitle = Configure::read('Site.title');
 			$email->from($this->request->data['Message']['email'])
 				->to($contact['Contact']['email'])
-				->subject(__('[%s] %s', $siteTitle, $contact['Contact']['title']))
+				->subject(__d('croogo', '[%s] %s', $siteTitle, $contact['Contact']['title']))
 				->template('Contacts.contact')
+				->theme($this->theme)
 				->viewVars(array(
 					'contact' => $contact,
 					'message' => $this->request->data,

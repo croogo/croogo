@@ -24,7 +24,7 @@ class NodesHelper extends AppHelper {
 		'Form',
 		'Session',
 		'Js',
-		'Layout',
+		'Croogo.Layout',
 	);
 
 /**
@@ -155,7 +155,7 @@ class NodesHelper extends AppHelper {
 		);
 		$options = array_merge($_options, $options);
 
-		$output  = $this->Layout->hook('beforeNodeInfo');
+		$output = $this->Layout->hook('beforeNodeInfo');
 		$output .= $this->_View->element($options['element']);
 		$output .= $this->Layout->hook('afterNodeInfo');
 		return $output;
@@ -173,7 +173,7 @@ class NodesHelper extends AppHelper {
 		);
 		$options = array_merge($_options, $options);
 
-		$output  = $this->Layout->hook('beforeNodeExcerpt');
+		$output = $this->Layout->hook('beforeNodeExcerpt');
 		$output .= $this->_View->element($options['element']);
 		$output .= $this->Layout->hook('afterNodeExcerpt');
 		return $output;
@@ -191,7 +191,7 @@ class NodesHelper extends AppHelper {
 		);
 		$options = array_merge($_options, $options);
 
-		$output  = $this->Layout->hook('beforeNodeBody');
+		$output = $this->Layout->hook('beforeNodeBody');
 		$output .= $this->_View->element($options['element']);
 		$output .= $this->Layout->hook('afterNodeBody');
 		return $output;
@@ -209,7 +209,7 @@ class NodesHelper extends AppHelper {
 		);
 		$options = array_merge($_options, $options);
 
-		$output  = $this->Layout->hook('beforeNodeMoreInfo');
+		$output = $this->Layout->hook('beforeNodeMoreInfo');
 		$output .= $this->_View->element($options['element']);
 		$output .= $this->Layout->hook('afterNodeMoreInfo');
 		return $output;

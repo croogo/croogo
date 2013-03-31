@@ -32,7 +32,7 @@ class Taxonomy extends TaxonomyAppModel {
  */
 	public $actsAs = array(
 		'Tree',
-		'Cached' => array(
+		'Croogo.Cached' => array(
 			'prefix' => array(
 				'node_',
 				'nodes_',
@@ -75,8 +75,8 @@ class Taxonomy extends TaxonomyAppModel {
  */
 	public function getTree($alias, $options = array()) {
 		$_options = array(
-			'key' => 'slug',		// Term.slug
-			'value' => 'title',	 // Term.title
+			'key' => 'slug', // Term.slug
+			'value' => 'title', // Term.title
 			'taxonomyId' => false,
 			'cache' => false,
 		);
@@ -105,13 +105,13 @@ class Taxonomy extends TaxonomyAppModel {
 		}
 		$this->Behaviors->attach('Tree', array(
 			'scope' => array(
-				'Taxonomy.vocabulary_id' => $vocabulary['Vocabulary']['id'],
+				$this->alias . '.vocabulary_id' => $vocabulary['Vocabulary']['id'],
 			),
 		));
 		$treeConditions = array(
-			'Taxonomy.vocabulary_id' => $vocabulary['Vocabulary']['id'],
+			$this->alias . '.vocabulary_id' => $vocabulary['Vocabulary']['id'],
 		);
-		$tree = $this->generateTreeList($treeConditions, '{n}.Taxonomy.term_id', '{n}.Taxonomy.id');
+		$tree = $this->generateTreeList($treeConditions, '{n}.' . $this->alias . '.term_id', '{n}.' . $this->alias . '.id');
 		$termsIds = array_keys($tree);
 		$terms = $this->Term->find('list', array(
 			'conditions' => array(
@@ -166,12 +166,12 @@ class Taxonomy extends TaxonomyAppModel {
 	public function termInVocabulary($termId, $vocabularyId) {
 		$taxonomy = $this->find('first', array(
 			'conditions' => array(
-				'Taxonomy.term_id' => $termId,
-				'Taxonomy.vocabulary_id' => $vocabularyId,
+				$this->alias . '.term_id' => $termId,
+				$this->alias . '.vocabulary_id' => $vocabularyId,
 			),
 		));
-		if (isset($taxonomy['Taxonomy']['id'])) {
-			return $taxonomy['Taxonomy']['id'];
+		if (isset($taxonomy[$this->alias]['id'])) {
+			return $taxonomy[$this->alias]['id'];
 		}
 		return false;
 	}

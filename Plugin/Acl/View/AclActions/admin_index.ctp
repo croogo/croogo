@@ -7,22 +7,22 @@ $this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentR
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
-	->addCrumb(__('Permissions'), array(
+	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Permissions'), array(
 		'plugin' => 'acl', 'controller' => 'acl_permissions',
 	))
-	->addCrumb(__('Actions'), array('plugin' => 'acl', 'controller' => 'acl_actions', 'action' => 'index', 'permission' => 1));
+	->addCrumb(__d('croogo', 'Actions'), array('plugin' => 'acl', 'controller' => 'acl_actions', 'action' => 'index', 'permission' => 1));
 
 ?>
 <?php $this->start('actions'); ?>
 <?php
-	echo $this->Croogo->adminAction(__('New Action'),
+	echo $this->Croogo->adminAction(__d('croogo', 'New Action'),
 		array('action'=>'add')
 	);
-	echo $this->Croogo->adminAction(__('Generate Actions'),
+	echo $this->Croogo->adminAction(__d('croogo', 'Generate Actions'),
 		array('action'=>'generate')
 	);
-	echo $this->Croogo->adminAction(__('Sync Actions'),
+	echo $this->Croogo->adminAction(__d('croogo', 'Sync Actions'),
 		array('controller' => 'acl_actions', 'action'=>'generate', 'permissions' => 1, 'sync' => 1),
 		array('method' => 'post')
 	);
@@ -32,9 +32,9 @@ $this->Html
 <table class="table permission-table">
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
-		__('Id'),
-		__('Alias'),
-		__('Actions'),
+		__d('croogo', 'Id'),
+		__d('croogo', 'Alias'),
+		__d('croogo', 'Actions'),
 	));
 ?>
 	<thead>
@@ -67,21 +67,21 @@ $this->Html
 		$actions = array();
 		$actions[] = $this->Html->link('',
 			array('action' => 'move', $id, 'up'),
-			array('icon' => 'chevron-up', 'tooltip' => __('Move up'))
+			array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'))
 		);
 		$actions[] = $this->Html->link('',
 			array('action' => 'move', $id, 'down'),
-			array('icon' => 'chevron-down', 'tooltip' => __('Move down'))
+			array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'))
 		);
 
 		$actions[] = $this->Html->link('',
 			array('action' => 'edit', $id),
-			array('icon' => 'pencil', 'tooltip' => __('Edit this item'))
+			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Form->postLink('',
 			array('action' => 'delete',	$id),
-			array('icon' => 'trash', 'tooltip' => __('Remove this item')),
-			__('Are you sure?')
+			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
+			__d('croogo', 'Are you sure?')
 		);
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 		$row = array(

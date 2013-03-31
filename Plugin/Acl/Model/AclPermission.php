@@ -52,6 +52,13 @@ class AclPermission extends Permission {
 	);
 
 /**
+ * afterSave
+ */
+	public function afterSave($created) {
+		Cache::clearGroup('permissions', 'permissions');
+	}
+
+/**
  * Generate allowed actions for current logged in Role
  *
  * @param integer $roleId

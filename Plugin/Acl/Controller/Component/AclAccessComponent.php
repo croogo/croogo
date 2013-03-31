@@ -50,7 +50,7 @@ class AclAccessComponent extends Component {
  * Hook admin menu element to set role parent
  */
 	protected function _setupRole() {
-		$title = __('Parent Role');
+		$title = __d('croogo', 'Parent Role');
 		$element = 'Acl.admin/parent_role';
 		Croogo::hookAdminTab('Roles/admin_add', $title, $element);
 		Croogo::hookAdminTab('Roles/admin_edit', $title, $element);

@@ -50,7 +50,7 @@ class RowLevelAclComponent extends Component {
 		$this->_controller = $controller;
 		$Model = $controller->{$controller->modelClass};
 		$Model->Behaviors->load('Acl', array(
-			'className' => 'CroogoAcl', 'type' => 'controlled',
+			'className' => 'Croogo.CroogoAcl', 'type' => 'controlled',
 		));
 		$Model->Behaviors->load('RowLevelAcl', array(
 			'className' => 'Acl.RowLevelAcl'
@@ -66,7 +66,7 @@ class RowLevelAclComponent extends Component {
 			$adminTabActions += $this->settings['adminTabActions'];
 		}
 		foreach ($adminTabActions as $action) {
-			Croogo::hookAdminTab("$name/$action", __('Permissions'), $element);
+			Croogo::hookAdminTab("$name/$action", __d('croogo', 'Permissions'), $element);
 		}
 	}
 

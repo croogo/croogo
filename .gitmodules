@@ -7,3 +7,6 @@
 [submodule "Plugin/Search"]
 	path = Plugin/Search
 	url = git://github.com/CakeDC/search.git
+[submodule "Plugin/Ckeditor"]
+	path = Plugin/Ckeditor
+	url = git://github.com/croogo/Ckeditor.git

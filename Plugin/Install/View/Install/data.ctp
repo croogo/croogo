@@ -3,20 +3,20 @@
 
 	<p>
 	<?php
-	echo __('Create tables and load initial data');
+	echo __d('croogo', 'Create tables and load initial data');
 	?>
 	</p>
 </div>
 <div class="form-actions">
 <?php
-echo $this->Html->link(__('Build database'), array(
+echo $this->Html->link(__d('croogo', 'Build database'), array(
 	'plugin' => 'install',
 	'controller' => 'install',
 	'action' => 'data',
 	'run' => 1,
 ), array(
 	'tooltip' => array(
-		'data-title' => __('Click here to build your database'),
+		'data-title' => __d('croogo', 'Click here to build your database'),
 		'data-placement' => 'left',
 	),
 	'button' => 'success',

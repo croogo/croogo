@@ -2,7 +2,7 @@
 App::uses('MenusHelper', 'Menus.View/Helper');
 App::uses('SessionComponent', 'Controller/Component');
 App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 class TheMenuTestController extends Controller {
 

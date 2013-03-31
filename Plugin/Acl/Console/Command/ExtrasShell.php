@@ -22,8 +22,8 @@ App::uses('AclExtras', 'Acl.Lib');
 /**
  * Shell for ACO extras
  *
- * @package		acl_extras
- * @subpackage	acl_extras.Console.Command
+ * @package     Croogo
+ * @subpackage  Acl.Console.Command
  */
 class ExtrasShell extends Shell {
 
@@ -91,52 +91,56 @@ class ExtrasShell extends Shell {
 	public function getOptionParser() {
 		$plugin = array(
 			'short' => 'p',
-			'help' => __('Plugin to process'),
+			'help' => __d('croogo', 'Plugin to process'),
 		);
 		return parent::getOptionParser()
-			->description(__("Better manage, and easily synchronize you application's ACO tree"))
+			->description(__d('croogo', "Better manage, and easily synchronize you application's ACO tree"))
 			->addSubcommand('aco_update', array(
 				'parser' => array(
 					'options' => compact('plugin'),
 				),
-				'help' => __('Add new ACOs for new controllers and actions. Does not remove nodes from the ACO table.')
-			))->addSubcommand('aco_sync', array(
+				'help' => __d('croogo', 'Add new ACOs for new controllers and actions. Does not remove nodes from the ACO table.')
+			))
+			->addSubcommand('aco_sync', array(
 				'parser' => array(
 					'options' => compact('plugin'),
 				),
-				'help' => __('Perform a full sync on the ACO table.' .
+				'help' => __d('croogo', 'Perform a full sync on the ACO table.' .
 					'Will create new ACOs or missing controllers and actions.' .
 					'Will also remove orphaned entries that no longer have a matching controller/action')
-			))->addSubcommand('aco_sync_contents', array(
-				'help' => __('Perform a full content sync on the ACO table.' .
+			))
+			->addSubcommand('aco_sync_contents', array(
+				'help' => __d('croogo', 'Perform a full content sync on the ACO table.' .
 					'Will create new ACOs or missing contents.' .
 					'Will also remove orphaned entries that no longer have a matching contents'),
 				'parser' => array(
 					'arguments' => array(
 						'model' => array(
 							'required' => true,
-							'help' => __('The content model name '),
+							'help' => __d('croogo', 'The content model name '),
 						)
 					),
 				),
-			))->addSubcommand('verify', array(
-				'help' => __('Verify the tree structure of either your Aco or Aro Trees'),
+			))
+			->addSubcommand('verify', array(
+				'help' => __d('croogo', 'Verify the tree structure of either your Aco or Aro Trees'),
 				'parser' => array(
 					'arguments' => array(
 						'type' => array(
 							'required' => true,
-							'help' => __('The type of tree to verify'),
+							'help' => __d('croogo', 'The type of tree to verify'),
 							'choices' => array('aco', 'aro')
 						)
 					)
 				)
-			))->addSubcommand('recover', array(
-				'help' => __('Recover a corrupted Tree'),
+			))
+			->addSubcommand('recover', array(
+				'help' => __d('croogo', 'Recover a corrupted Tree'),
 				'parser' => array(
 					'arguments' => array(
 						'type' => array(
 							'required' => true,
-							'help' => __('The type of tree to recover'),
+							'help' => __d('croogo', 'The type of tree to recover'),
 							'choices' => array('aco', 'aro')
 						)
 					)
@@ -166,4 +170,5 @@ class ExtrasShell extends Shell {
 		$this->AclExtras->args = $this->args;
 		$this->AclExtras->recover();
 	}
+
 }

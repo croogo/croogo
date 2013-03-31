@@ -4,15 +4,15 @@ $this->extend('/Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'prefix', 'Site'))
-	->addCrumb(__('Language'), array('plugin' => 'settings', 'controller' => 'languages', 'action' => 'index'));
+	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'prefix', 'Site'))
+	->addCrumb(__d('croogo', 'Language'), array('plugin' => 'settings', 'controller' => 'languages', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
 	$this->Html->addCrumb($this->data['Language']['title'], $this->here);
 }
 
 if ($this->request->params['action'] == 'admin_add') {
-	$this->Html->addCrumb(__('Add'), $this->here);
+	$this->Html->addCrumb(__d('croogo', 'Add'), $this->here);
 }
 
 echo $this->Form->create('Language');
@@ -22,7 +22,7 @@ echo $this->Form->create('Language');
 	<div class="span8">
 		<ul class="nav nav-tabs">
 		<?php
-			echo $this->Croogo->adminTab(__('Language'), '#language-main');
+			echo $this->Croogo->adminTab(__d('croogo', 'Language'), '#language-main');
 			echo $this->Croogo->adminTabs();
 		?>
 		</ul>
@@ -36,15 +36,15 @@ echo $this->Form->create('Language');
 				echo $this->Form->input('id');
 				echo $this->Form->input('title', array(
 					'label' => false,
-					'placeholder' => __('Title'),
+					'placeholder' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('native', array(
 					'label' => false,
-					'placeholder' => __('Native'),
+					'placeholder' => __d('croogo', 'Native'),
 				));
 				echo $this->Form->input('alias', array(
 					'label' => false,
-					'placeholder' => __('Alias'),
+					'placeholder' => __d('croogo', 'Alias'),
 				));
 			?>
 			</div>
@@ -55,10 +55,10 @@ echo $this->Form->create('Language');
 
 	<div class="span4">
 		<?php
-			echo $this->Html->beginBox(__('Publishing')) .
-				$this->Form->button(__('Save'), array('button' => 'default')).
+			echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+				$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')).
 				$this->Html->link(
-					__('Cancel'),
+					__d('croogo', 'Cancel'),
 					array('action' => 'index'),
 					array('class' => 'cancel', 'button' => 'danger')
 				) .

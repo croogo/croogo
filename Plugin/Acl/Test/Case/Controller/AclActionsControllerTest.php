@@ -1,6 +1,6 @@
 <?php
 
-App::uses('CroogoControllerTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
 /**
  * AclActionsController Test
@@ -13,13 +13,14 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.aro',
-		'app.aco',
-		'app.aros_aco',
+		'plugin.croogo.aro',
+		'plugin.croogo.aco',
+		'plugin.croogo.aros_aco',
 		'plugin.menus.menu',
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.types_vocabulary',
 		'plugin.taxonomy.vocabulary',
+		'plugin.translate.i18n',
 		'plugin.settings.setting',
 	);
 
@@ -47,7 +48,7 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
 			->expects($this->any())
 			->method('setFlash')
 			->with(
-				$this->matchesRegularExpression('/(Created Aco node:)|.*Aco Update Complete.*/'),
+				$this->matchesRegularExpression('/(Created Aco node:)|.*Aco Update Complete.*|(Skipped Aco node:)/'),
 				$this->equalTo('default'),
 				$this->anything(),
 				$this->equalTo('flash')

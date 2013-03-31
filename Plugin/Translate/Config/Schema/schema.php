@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 class TranslateSchema extends CakeSchema {
 
 	public function before($event = array()) {
@@ -24,4 +25,5 @@ class TranslateSchema extends CakeSchema {
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 	);
+
 }

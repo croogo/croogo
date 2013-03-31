@@ -1,0 +1,83 @@
+# How to contribute
+
+There are several ways to help out:
+
+* Submit bug reports in Lighthouse. Search for existing tickets first.
+  * Clearly describe the issue including steps to reproduce when it is a bug.
+  * Make sure you fill in the earliest version that you know has the issue.
+* Write testcases for open tickets
+* Write patches for open bug/feature tickets, preferably with testcases included
+* Contribute to the [documentation](https://github.com/croogo/docs)
+
+## Making Changes
+
+* Fork the repository on GitHub.
+* Create a topic branch from where you want to base your work:
+
+        `git checkout -b my_contribution --no-track origin/master`
+
+  It's better to avoid working directly on the `master` branch to prevent
+  conflicts when you pull in updates from upstream.
+* Try to make commits in logical units.
+* Use descriptive and [well formed](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) commit messages and reference the #ticket number
+  when appropriate
+* Check for unnecessary whitespace with `git diff --check` before committing.
+* Core testcases should continue to pass. You can run tests locally, or enable
+  [travis-ci](https://travis-ci.org/) on your fork.
+* Your work should follow the [CakePHP coding standards](http://book.cakephp.org/2.0/en/contributing/cakephp-coding-conventions.html).
+* Your submission needs to be MIT Licensed, following the original project license. Third party code is acceptable as long as it is compatible with the MIT License.
+
+## Which branch to base your work
+
+* Bugfixes should be based on master.
+* New features that are backwards compatible should be based on next minor release branch.
+* New features or other non-BC changes will go in the next major release branch.
+
+## Keeping your local branch up-to-date
+
+* Add new remote for upstream, and fetch changes:
+
+	`git remote add upstream git://github.com/croogo/croogo.git`
+
+* Fetch latest changes and apply it in your local branch:
+
+	`git pull --rebase upstream master`
+
+* For long running topic branch, sometimes it required to rebase your
+  `my_contribution` branch on top of `master` branch:
+
+	`git fetch upstream ; git rebase my_contribution upstream/master`
+
+## Submitting Changes
+
+* Push your changes to a topic branch in your fork of the repository:
+
+	`git push -u origin my_contribution`
+
+  The `-u` flag is only needed during the first push.
+
+* Submit a pull request to the repository in the cakephp organization with the
+  correct target branch.
+
+## Testcases and codesniffer
+
+* Croogo tests requires [PHPUnit](http://www.phpunit.de/manual/current/en/installation.html)
+3.5 or higher. To run the testcases locally use the following command:
+
+	`./Console/cake test core AllTests --stderr`
+
+* To run the sniffs using CakePHP coding standards:
+
+	`phpcs -p --extensions=php --standard=CakePHP .`
+
+Check the [cakephp-codesniffer](https://github.com/cakephp/cakephp-codesniffer)
+repository to setup the CakePHP standard. The README contains installation info
+for the sniff and phpcs.
+
+# Additional Resources
+
+* [CakePHP coding standards](http://book.cakephp.org/2.0/en/contributing/cakephp-coding-conventions.html)
+* [Bug tracker](http://croogo.lighthouseapp.com/projects/32818-croogo/)
+* [General GitHub documentation](http://help.github.com/)
+* [GitHub pull request documentation](http://help.github.com/send-pull-requests/)
+* [#croogo](irc://irc.freenode.net/#croogo) IRC channel on freenode.org

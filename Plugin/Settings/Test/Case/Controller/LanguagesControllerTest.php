@@ -1,13 +1,13 @@
 <?php
 App::uses('LanguagesController', 'Settings.Controller');
-App::uses('CroogoControllerTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
 class LanguagesControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
-		'aco',
-		'aro',
-		'aros_aco',
+		'plugin.croogo.aco',
+		'plugin.croogo.aro',
+		'plugin.croogo.aros_aco',
 		'plugin.blocks.block',
 		'plugin.comments.comment',
 		'plugin.contacts.contact',
@@ -132,7 +132,7 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
  */
 	public function testAdminMoveUp() {
 		$id = $this->_addLanguages();
-		$this->assertEqual(3, $id, __('Could not add a new language.'));
+		$this->assertEqual(3, $id, __d('croogo', 'Could not add a new language.'));
 
 		// move up
 		$this->expectFlashAndRedirect('Moved up successfully');
@@ -155,7 +155,7 @@ class LanguagesControllerTest extends CroogoControllerTestCase {
  */
 	public function testAdminMoveUpWithSteps() {
 		$id = $this->_addLanguages();
-		$this->assertEqual(3, $id, __('Could not add a new language.'));
+		$this->assertEqual(3, $id, __d('croogo', 'Could not add a new language.'));
 
 		// move up with steps
 		$this->expectFlashAndRedirect('Moved up successfully');

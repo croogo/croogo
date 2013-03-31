@@ -1,10 +1,10 @@
 <div class="row-fluid">
 	<div class="span12">
 	<?php
-		echo __('Sort by:');
-		echo ' ' . $this->Paginator->sort('id', __('Id'), array('class' => 'sort'));
-		echo ', ' . $this->Paginator->sort('title', __('Title'), array('class' => 'sort'));
-		echo ', ' . $this->Paginator->sort('created', __('Created'), array('class' => 'sort'));
+		echo __d('croogo', 'Sort by:');
+		echo ' ' . $this->Paginator->sort('id', __d('croogo', 'Id'), array('class' => 'sort'));
+		echo ', ' . $this->Paginator->sort('title', __d('croogo', 'Title'), array('class' => 'sort'));
+		echo ', ' . $this->Paginator->sort('created', __d('croogo', 'Created'), array('class' => 'sort'));
 	?>
 	</div>
 </div>
@@ -42,11 +42,11 @@
 			));
 
 			$popup = array();
-			$type = __($nodeTypes[$node['Node']['type']]);
-			$popup[] = array(__('Promoted'), $this->Layout->status($node['Node']['promote'])
+			$type = __d('croogo', $nodeTypes[$node['Node']['type']]);
+			$popup[] = array(__d('croogo', 'Promoted'), $this->Layout->status($node['Node']['promote'])
 			);
-			$popup[] = array(__('Status'), $this->Layout->status($node['Node']['status']));
-			$popup[] = array(__('Created'), $this->Time->niceShort($node['Node']['created']));
+			$popup[] = array(__d('croogo', 'Status'), $this->Layout->status($node['Node']['status']));
+			$popup[] = array(__d('croogo', 'Created'), $this->Time->niceShort($node['Node']['created']));
 			$popup = $this->Html->tag('table', $this->Html->tableCells($popup));
 			$a = $this->Html->link('', '#', array(
 				'class' => 'popovers action',

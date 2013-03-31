@@ -3,16 +3,16 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title><?php echo $title_for_layout; ?> - <?php echo __('Croogo'); ?></title>
+	<title><?php echo $title_for_layout; ?> - <?php echo __d('croogo', 'Croogo'); ?></title>
 	<?php
 		echo $this->Html->css(array(
-			'croogo-bootstrap',
-			'croogo-bootstrap-responsive',
+			'/croogo/css/croogo-bootstrap',
+			'/croogo/css/croogo-bootstrap-responsive',
 		));
 		echo $this->element('styles', array(), array('plugin' => 'install'));
 		echo $this->Html->script(array(
-			'jquery/jquery.min',
-			'croogo-bootstrap',
+			'/croogo/js/jquery/jquery.min',
+			'/croogo/js/croogo-bootstrap',
 		));
 		echo $scripts_for_layout;
 	?>
@@ -24,7 +24,7 @@
 		<header class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container-fluid">
-					<span class="brand"><?php echo __('Install Croogo'); ?></span>
+					<span class="brand"><?php echo __d('croogo', 'Install Croogo'); ?></span>
 				</div>
 			</div>
 		</header>

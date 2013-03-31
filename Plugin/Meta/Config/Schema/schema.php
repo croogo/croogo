@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 class MetaSchema extends CakeSchema {
 
 	public function before($event = array()) {
@@ -20,4 +21,5 @@ class MetaSchema extends CakeSchema {
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 	);
+
 }

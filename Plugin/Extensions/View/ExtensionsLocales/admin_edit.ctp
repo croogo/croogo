@@ -6,8 +6,8 @@ $this->set('className', 'extensions-locales');
 <?php
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
-	->addCrumb(__('Locales'), array('plugin' => 'extensions', 'controller' => 'extensions_locales', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Locales'), array('plugin' => 'extensions', 'controller' => 'extensions_locales', 'action' => 'index'))
 	->addCrumb($this->params['pass'][0], $this->here);
 
 echo $this->Form->create('Locale', array(
@@ -25,7 +25,7 @@ echo $this->Form->create('Locale', array(
 
 		<ul class="nav nav-tabs">
 		<?php
-			echo $this->Croogo->adminTab(__('Content'), '#locale-content');
+			echo $this->Croogo->adminTab(__d('croogo', 'Content'), '#locale-content');
 			echo $this->Croogo->adminTabs();
 		?>
 		</ul>
@@ -35,7 +35,7 @@ echo $this->Form->create('Locale', array(
 			<?php
 				echo $this->Form->input('Locale.content', array(
 					'label' => false,
-					'placeholder' => __('Content'),
+					'placeholder' => __d('croogo', 'Content'),
 					'data-placement' => 'top',
 					'value' => $content,
 					'type' => 'textarea',
@@ -48,9 +48,9 @@ echo $this->Form->create('Locale', array(
 	</div>
 	<div class="span4">
 		<?php
-			echo $this->Html->beginBox(__('Actions')) .
-				$this->Form->button(__('Save'), array('button' => 'primary')) .
-				$this->Html->link(__('Cancel'),
+			echo $this->Html->beginBox(__d('croogo', 'Actions')) .
+				$this->Form->button(__d('croogo', 'Save'), array('button' => 'primary')) .
+				$this->Html->link(__d('croogo', 'Cancel'),
 					array('action' => 'index'),
 					array('button' => 'danger')
 				) .

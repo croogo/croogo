@@ -39,7 +39,7 @@ class RolesController extends UsersAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Roles'));
+		$this->set('title_for_layout', __d('croogo', 'Roles'));
 
 		$this->Role->recursive = 0;
 		$this->paginate['Role']['order'] = "Role.id ASC";
@@ -54,15 +54,15 @@ class RolesController extends UsersAppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Role'));
+		$this->set('title_for_layout', __d('croogo', 'Add Role'));
 
 		if (!empty($this->request->data)) {
 			$this->Role->create();
 			if ($this->Role->save($this->request->data)) {
-				$this->Session->setFlash(__('The Role has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Role has been saved'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Role could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Role could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
 	}
@@ -75,18 +75,18 @@ class RolesController extends UsersAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Role'));
+		$this->set('title_for_layout', __d('croogo', 'Edit Role'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Role'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Role'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Role->save($this->request->data)) {
-				$this->Session->setFlash(__('The Role has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Role has been saved'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Role could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Role could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -103,11 +103,11 @@ class RolesController extends UsersAppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Role'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Role'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Role->delete($id)) {
-			$this->Session->setFlash(__('Role deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Role deleted'), 'default', array('class' => 'success'));
 			$this->redirect(array('action' => 'index'));
 		}
 	}

@@ -1,14 +1,14 @@
 <?php
 App::uses('CommentsController', 'Comments.Controller');
-App::uses('CroogoControllerTestCase', 'TestSuite');
-App::uses('CroogoTestFixture', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
+App::uses('CroogoTestFixture', 'Croogo.TestSuite');
 
 class CommentsControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
-		'aco',
-		'aro',
-		'aros_aco',
+		'plugin.croogo.aco',
+		'plugin.croogo.aro',
+		'plugin.croogo.aros_aco',
 		'plugin.blocks.block',
 		'plugin.comments.comment',
 		'plugin.contacts.contact',
@@ -31,6 +31,8 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		'plugin.taxonomy.vocabulary',
 	);
 
+	protected $_level;
+
 /**
  * setUp
  *
@@ -38,6 +40,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+		$this->_level = Configure::write('Comment.level');
 		$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 		$_SERVER['SERVER_NAME'] = 'localhost';
 		$this->CommentsController = $this->generate('Comments.Comments', array(
@@ -62,6 +65,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
+		Configure::write('Comment.level', $this->_level);
 		unset($this->CommentsController);
 	}
 
@@ -211,15 +215,17 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 	public function testAdd() {
 		Configure::write('Comment.email_notification', 1);
 		$Comments = $this->generate('Comments', array(
+			'methods' => array(
+				'_sendEmail',
+			),
 			'components' => array(
-				'Email' => array('send'),
 				'Session',
 			),
 		));
 		$Comments->plugin = 'Comments';
-		$Comments->Email
+		$Comments
 			->expects($this->once())
-			->method('send')
+			->method('_sendEmail')
 			->will($this->returnValue(true));
 		$Comments->request->params['action'] = 'add';
 		$Comments->request->params['url']['url'] = 'comments/comments/add';
@@ -251,14 +257,12 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 	public function testAddWithParent() {
 		Configure::write('Comment.email_notification', 1);
 		$Comments = $this->generate('Comments', array(
-			'components' => array(
-				'Email' => array('send'),
-			),
+			'methods' => array('_sendEmail'),
 		));
 		$Comments->plugin = 'Comments';
-		$Comments->Email
+		$Comments
 			->expects($this->once())
-			->method('send')
+			->method('_sendEmail')
 			->will($this->returnValue(true));
 		$Comments->request->params['action'] = 'add';
 		$Comments->request->params['url']['url'] = 'comments/comments/add';
@@ -272,6 +276,8 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 			'body' => 'text here...',
 		);
 		$node = $Comments->Comment->Node->findBySlug('hello-world');
+
+		Configure::write('Comment.level', 2);
 		$Comments->add($node['Node']['id'], 1); // under the comment by Mr Croogo
 		$this->assertEqual($Comments->viewVars['success'], 1);
 
@@ -344,6 +350,25 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		);
 		$this->CommentsController->add(1);
 		$this->assertEqual($this->CommentsController->viewVars['success'], 0);
+	}
+
+/**
+ * testAddShouldWorkWhenLoggedIn
+ */
+	public function testAddShouldWorkWhenLoggedIn() {
+		Configure::write('Comment.email_notification', 0);
+		$this->CommentsController->request->params['action'] = 'add';
+		$this->CommentsController->request->params['url']['url'] = 'comments/add';
+
+		$this->CommentsController->request->data['Comment'] = array(
+			'name' => 'John Smith',
+			'email' => 'john.smith@example.com',
+			'website' => 'http://example.com',
+			'body' => 'text here...',
+		);
+		$this->CommentsController->add(1);
+
+		$this->assertEqual($this->CommentsController->viewVars['success'], 1);
 	}
 
 }

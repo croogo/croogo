@@ -52,7 +52,7 @@ class TypesController extends AppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Type'));
+		$this->set('title_for_layout', __d('croogo', 'Type'));
 
 		$this->Type->recursive = 0;
 		$this->paginate['Type']['order'] = 'Type.title ASC';
@@ -67,15 +67,15 @@ class TypesController extends AppController {
  * @access public
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Add Type'));
+		$this->set('title_for_layout', __d('croogo', 'Add Type'));
 
 		if (!empty($this->request->data)) {
 			$this->Type->create();
 			if ($this->Type->save($this->request->data)) {
-				$this->Session->setFlash(__('The Type has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Type has been saved'), 'default', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Type->id));
 			} else {
-				$this->Session->setFlash(__('The Type could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Type could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
 
@@ -91,18 +91,18 @@ class TypesController extends AppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Type'));
+		$this->set('title_for_layout', __d('croogo', 'Edit Type'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Type'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Type'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Type->save($this->request->data)) {
-				$this->Session->setFlash(__('The Type has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Type has been saved'), 'default', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Type->id));
 			} else {
-				$this->Session->setFlash(__('The Type could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Type could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -122,11 +122,11 @@ class TypesController extends AppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Type'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Type'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Type->delete($id)) {
-			$this->Session->setFlash(__('Type deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Type deleted'), 'default', array('class' => 'success'));
 			$this->redirect(array('action' => 'index'));
 		}
 	}

@@ -2,9 +2,9 @@
 <?php
 	$commentHeading = $node['Node']['comment_count'] . ' ';
 	if ($node['Node']['comment_count'] == 1) {
-		$commentHeading .= __('Comment');
+		$commentHeading .= __d('croogo', 'Comment');
 	} else {
-		$commentHeading .= __('Comments');
+		$commentHeading .= __d('croogo', 'Comments');
 	}
 	echo $this->Html->tag('h3', $commentHeading);
 

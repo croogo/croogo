@@ -5,7 +5,7 @@ $this->Html->script(array('Menus.links'), false);
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Menus'), array('plugin' => 'menus', 'controller' => 'menus', 'action' => 'index'));
+	->addCrumb(__d('croogo', 'Menus'), array('plugin' => 'menus', 'controller' => 'menus', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_add') {
 	$this->Html
@@ -13,7 +13,7 @@ if ($this->request->params['action'] == 'admin_add') {
 			'plugin' => 'menus', 'controller' => 'links', 'action' => 'index',
 			'?' => array('menu_id' => $menuId))
 		)
-		->addCrumb(__('Add'), $this->here);
+		->addCrumb(__d('croogo', 'Add'), $this->here);
 	$formUrl = array(
 		'controller' => 'links', 'action' => 'add', 'menu' => $menuId
 	);
@@ -38,9 +38,9 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 
 		<ul class="nav nav-tabs">
 		<?php
-			echo $this->Croogo->adminTab(__('Link'), '#link-basic');
-			echo $this->Croogo->adminTab(__('Access'), '#link-access');
-			echo $this->Croogo->adminTab(__('Misc.'), '#link-misc');
+			echo $this->Croogo->adminTab(__d('croogo', 'Link'), '#link-basic');
+			echo $this->Croogo->adminTab(__d('croogo', 'Access'), '#link-access');
+			echo $this->Croogo->adminTab(__d('croogo', 'Misc.'), '#link-misc');
 			echo $this->Croogo->adminTabs();
 		?>
 		</ul>
@@ -53,7 +53,7 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 					'selected' => $menuId,
 				));
 				echo $this->Form->input('parent_id', array(
-					'title' => __('Parent'),
+					'title' => __d('croogo', 'Parent'),
 					'options' => $parentLinks,
 					'empty' => true,
 				));
@@ -62,13 +62,13 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 				));
 				echo $this->Form->input('title', array(
 					'label' => false,
-					'placeholder' => __('Title'),
+					'placeholder' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('link', array(
 					'label' => false,
-					'placeholder' => __('Link'),
+					'placeholder' => __d('croogo', 'Link'),
 				));
-				echo $this->Html->link(__('Link to a Node'), Router::url(array(
+				echo $this->Html->link(__d('croogo', 'Link to a Node'), Router::url(array(
 					'plugin' => 'nodes',
 					'controller' => 'nodes',
 					'action' => 'index',
@@ -98,23 +98,23 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 			<?php
 				echo $this->Form->input('class', array(
 					'label' => false,
-					'placeholder' => __('Class'),
+					'placeholder' => __d('croogo', 'Class'),
 				));
 				echo $this->Form->input('description', array(
 					'label' => false,
-					'placeholder' => __('Description'),
+					'placeholder' => __d('croogo', 'Description'),
 				));
 				echo $this->Form->input('rel', array(
 					'label' => false,
-					'placeholder' => __('Rel'),
+					'placeholder' => __d('croogo', 'Rel'),
 				));
 				echo $this->Form->input('target', array(
 					'label' => false,
-					'placeholder' => __('Target'),
+					'placeholder' => __d('croogo', 'Target'),
 				));
 				echo $this->Form->input('params', array(
 					'label' => false,
-					'placeholder' => __('Params'),
+					'placeholder' => __d('croogo', 'Params'),
 				));
 			?>
 			</div>
@@ -126,12 +126,12 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 
 	<div class="span4">
 	<?php
-		echo $this->Html->beginBox(__('Publishing')) .
-			$this->Form->button(__('Apply'), array('name' => 'apply', 'button' => 'default')) .
-			$this->Form->button(__('Save'), array('button' => 'default')) .
-			$this->Html->link(__('Cancel'), array('action' => 'index'), array('button' => 'danger')) .
+		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply', 'button' => 'default')) .
+			$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
+			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
 			$this->Form->input('status', array(
-				'label' => __('Status'),
+				'label' => __d('croogo', 'Status'),
 				'class' => false,
 			)) .
 			$this->Html->endBox();

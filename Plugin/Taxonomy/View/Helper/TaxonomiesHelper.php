@@ -16,7 +16,7 @@ class TaxonomiesHelper extends AppHelper {
 
 	public $helpers = array(
 		'Html',
-		);
+	);
 
 /**
  * constructor
@@ -102,7 +102,7 @@ class TaxonomiesHelper extends AppHelper {
 		if (empty($this->_View->viewVars['taxonomy']) || $controller == 'Terms') {
 			return;
 		}
-		$title = __('Terms');
+		$title = __d('croogo', 'Terms');
 		$element = 'Taxonomy.admin/terms_tab';
 		Croogo::hookAdminTab("$controller/admin_add", $title, $element);
 		Croogo::hookAdminTab("$controller/admin_edit", $title, $element);
@@ -126,7 +126,7 @@ class TaxonomiesHelper extends AppHelper {
 			for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
 				$options[$attributes[1][$j]] = $attributes[2][$j];
 			}
-			$content = str_replace($tagMatches[0][$i], $this->vocabulary($vocabularyAlias,$options), $content);
+			$content = str_replace($tagMatches[0][$i], $this->vocabulary($vocabularyAlias, $options), $content);
 		}
 		return $content;
 	}

@@ -32,7 +32,7 @@ class Role extends UsersAppModel {
  */
 	public $actsAs = array(
 		'Acl' => array(
-			'className' => 'CroogoAcl',
+			'className' => 'Croogo.CroogoAcl',
 			'type' => 'requester',
 		),
 	);

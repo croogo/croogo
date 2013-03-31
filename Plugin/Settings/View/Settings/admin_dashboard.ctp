@@ -2,5 +2,5 @@
 <?php
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('Dashboard'), $this->here);
+	->addCrumb(__d('croogo', 'Dashboard'), $this->here);
 ?>

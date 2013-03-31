@@ -1,5 +1,6 @@
 <?php
 
+App::uses('CakeEmail', 'Network/Email');
 App::uses('CommentsAppController', 'Comments.Controller');
 
 /**
@@ -31,9 +32,8 @@ class CommentsController extends CommentsAppController {
  * @access public
  */
 	public $components = array(
-		'Akismet',
-		'Email',
-		'Recaptcha',
+		'Croogo.Akismet',
+		'Croogo.Recaptcha',
 		'Search.Prg' => array(
 			'presetForm' => array(
 				'paramType' => 'querystring',
@@ -79,7 +79,7 @@ class CommentsController extends CommentsAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Comments'));
+		$this->set('title_for_layout', __d('croogo', 'Comments'));
 		$this->Prg->commonProcess();
 
 		$this->Comment->recursive = 0;
@@ -105,18 +105,18 @@ class CommentsController extends CommentsAppController {
  * @access public
  */
 	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __('Edit Comment'));
+		$this->set('title_for_layout', __d('croogo', 'Edit Comment'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__('Invalid Comment'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Comment'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Comment->save($this->request->data)) {
-				$this->Session->setFlash(__('The Comment has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Comment has been saved'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The Comment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Comment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -133,11 +133,11 @@ class CommentsController extends CommentsAppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Comment'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Comment'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Comment->delete($id)) {
-			$this->Session->setFlash(__('Comment deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Comment deleted'), 'default', array('class' => 'success'));
 			$this->redirect(array('action' => 'index'));
 		}
 	}
@@ -158,21 +158,21 @@ class CommentsController extends CommentsAppController {
 		}
 
 		if (count($ids) == 0 || $action == null) {
-			$this->Session->setFlash(__('No items selected.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'No items selected.'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 
 		if ($action == 'delete' &&
 			$this->Comment->deleteAll(array('Comment.id' => $ids), true, true)) {
-			$this->Session->setFlash(__('Comments deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Comments deleted'), 'default', array('class' => 'success'));
 		} elseif ($action == 'publish' &&
 			$this->Comment->updateAll(array('Comment.status' => true), array('Comment.id' => $ids))) {
-			$this->Session->setFlash(__('Comments published'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Comments published'), 'default', array('class' => 'success'));
 		} elseif ($action == 'unpublish' &&
 			$this->Comment->updateAll(array('Comment.status' => false), array('Comment.id' => $ids))) {
-			$this->Session->setFlash(__('Comments unpublished'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Comments unpublished'), 'default', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(__('An error occurred.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
 		}
 
 		$this->redirect(array('action' => 'index'));
@@ -185,7 +185,7 @@ class CommentsController extends CommentsAppController {
  * @access public
  */
 	public function index() {
-		$this->set('title_for_layout', __('Comments'));
+		$this->set('title_for_layout', __d('croogo', 'Comments'));
 
 		if (!isset($this->request['ext']) ||
 			$this->request['ext'] != 'rss') {
@@ -211,7 +211,7 @@ class CommentsController extends CommentsAppController {
  */
 	public function add($nodeId = null, $parentId = null) {
 		if (!$nodeId) {
-			$this->Session->setFlash(__('Invalid Node'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Node'), 'default', array('class' => 'error'));
 			$this->redirect('/');
 		}
 
@@ -221,24 +221,17 @@ class CommentsController extends CommentsAppController {
 				'Node.status' => 1,
 			),
 		));
-		if (!isset($node['Node']['id'])) {
-			$this->Session->setFlash(__('Invalid Node'), 'default', array('class' => 'error'));
-			$this->redirect('/');
+
+		if (!is_null($parentId) && !$this->Comment->isValidLevel($parentId)) {
+			$this->Session->setFlash(__d('croogo', 'Maximum level reached. You cannot reply to that comment.'), 'default', array('class' => 'error'));
+			$this->redirect($node['Node']['url']);
 		}
-		if ($parentId) {
-			$commentPath = $this->Comment->getPath($parentId, array('Comment.id'));
-			$commentLevel = count($commentPath);
-			if ($commentLevel > Configure::read('Comment.level')) {
-				$this->Session->setFlash(__('Maximum level reached. You cannot reply to that comment.'), 'default', array('class' => 'error'));
-				$this->redirect($node['Node']['url']);
-			}
-		}
+
 		$type = $this->Comment->Node->Taxonomy->Vocabulary->Type->findByAlias($node['Node']['type']);
-		$continue = false;
-		if ($type['Type']['comment_status'] == 2 && $node['Node']['comment_status']) {
-			$continue = true;
-		} else {
-			$this->Session->setFlash(__('Comments are not allowed.'), 'default', array('class' => 'error'));
+		$continue = $type['Type']['comment_status'] == 2 && $node['Node']['comment_status'];
+
+		if (!$continue) {
+			$this->Session->setFlash(__d('croogo', 'Comments are not allowed.'), 'default', array('class' => 'error'));
 			$this->redirect(array(
 				'controller' => 'nodes',
 				'action' => 'view',
@@ -250,58 +243,26 @@ class CommentsController extends CommentsAppController {
 		// spam protection and captcha
 		$continue = $this->_spam_protection($continue, $type, $node);
 		$continue = $this->_captcha($continue, $type, $node);
-
-		$success = 0;
+		$success = false;
 		if (!empty($this->request->data) && $continue === true) {
-			$data = array();
-			if ($parentId &&
-				$this->Comment->hasAny(array(
-					'Comment.id' => $parentId,
-					'Comment.node_id' => $nodeId,
-					'Comment.status' => 1,
-				))) {
-				$data['parent_id'] = $parentId;
-			}
-			$data['node_id'] = $nodeId;
-			if ($this->Session->check('Auth.User.id')) {
-				$data['user_id'] = $this->Session->read('Auth.User.id');
-				$data['name'] = $this->Session->read('Auth.User.name');
-				$data['email'] = $this->Session->read('Auth.User.email');
-				$data['website'] = $this->Session->read('Auth.User.website');
-			} else {
-				$data['name'] = htmlspecialchars($this->request->data['Comment']['name']);
-				$data['email'] = $this->request->data['Comment']['email'];
-				$data['website'] = $this->request->data['Comment']['website'];
-			}
-			$data['body'] = htmlspecialchars($this->request->data['Comment']['body']);
-			$data['ip'] = $_SERVER['REMOTE_ADDR'];
-			$data['type'] = $node['Node']['type'];
-			if ($type['Type']['comment_approve']) {
-				$data['status'] = 1;
-			} else {
-				$data['status'] = 0;
+			$data = $this->request->data;
+			$data['Comment']['ip'] = env('REMOTE_ADDR');
+			$userData = array();
+			if ($this->Auth->user()) {
+				$userData['User'] = $this->Auth->user();
 			}
 
-			if ($this->Comment->save($data)) {
-				$success = 1;
+			$success = $this->Comment->add($data, $nodeId, $type, $parentId, $userData);
+			if ($success) {
 				if ($type['Type']['comment_approve']) {
-					$this->Session->setFlash(__('Your comment has been added successfully.'), 'default', array('class' => 'success'));
+					$messageFlash = __d('croogo', 'Your comment has been added successfully.');
 				} else {
-					$this->Session->setFlash(__('Your comment will appear after moderation.'), 'default', array('class' => 'success'));
+					$messageFlash = __d('croogo', 'Your comment will appear after moderation.');
 				}
+				$this->Session->setFlash($messageFlash, 'default', array('class' => 'success'));
 
-				// Email notification
 				if (Configure::read('Comment.email_notification')) {
-					$this->Email->from = Configure::read('Site.title') . ' ' .
-						'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>';
-					$this->Email->to = Configure::read('Site.email');
-					$this->Email->subject = '[' . Configure::read('Site.title') . '] ' .
-						__('New comment posted under') . ' ' . $node['Node']['title'];
-					$this->set('node', $node);
-					$this->set('data', $data);
-					$this->set('commentId', $this->Comment->id);
-					$this->Email->template = 'Comments.comment';
-					$this->Email->send();
+					$this->_sendEmail($node, $data);
 				}
 
 				$this->redirect(Router::url($node['Node']['url'], true) . '#comment-' . $this->Comment->id);
@@ -331,7 +292,7 @@ class CommentsController extends CommentsAppController {
 			//$this->Akismet->setPermalink(Router::url($node['Node']['url'], true));
 			if ($this->Akismet->isCommentSpam()) {
 				$continue = false;
-				$this->Session->setFlash(__('Sorry, the comment appears to be spam.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Sorry, the comment appears to be spam.'), 'default', array('class' => 'error'));
 			}
 		}
 
@@ -353,10 +314,32 @@ class CommentsController extends CommentsAppController {
 			$continue === true &&
 			!$this->Recaptcha->valid($this->request)) {
 			$continue = false;
-			$this->Session->setFlash(__('Invalid captcha entry'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid captcha entry'), 'default', array('class' => 'error'));
 		}
 
 		return $continue;
+	}
+
+/**
+ * sendEmail
+ *
+ * @param array $node Node data
+ * @param array $comment Comment data
+ * @return void
+ * @access protected
+ */
+	protected function _sendEmail($node, $data) {
+		$email = new CakeEmail();
+		$commentId = $this->Comment->id;
+		return $email->from(Configure::read('Site.title') . ' ' .
+			'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>')
+			->to(Configure::read('Site.email'))
+			->subject('[' . Configure::read('Site.title') . '] ' .
+				__d('croogo', 'New comment posted under') . ' ' . $node['Node']['title'])
+			->viewVars(compact('node', 'data', 'commentId'))
+			->template('Comments.comment')
+			->theme($this->theme)
+			->send();
 	}
 
 /**

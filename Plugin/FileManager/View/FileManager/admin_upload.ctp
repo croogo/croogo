@@ -1,8 +1,8 @@
 <?php
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__('File Manager'), array('plugin' => 'file_manager', 'controller' => 'file_manager', 'action' => 'browse'))
-	->addCrumb(__('Upload'), $this->here);
+	->addCrumb(__d('croogo', 'File Manager'), array('plugin' => 'file_manager', 'controller' => 'file_manager', 'action' => 'browse'))
+	->addCrumb(__d('croogo', 'Upload'), $this->here);
 
 echo $this->Form->create('FileManager', array(
 	'type' => 'file',
@@ -12,9 +12,9 @@ echo $this->Form->create('FileManager', array(
 	), true) . '?path=' . urlencode($path),
 ));
 ?>
-<h2 class="hidden-desktop"><?php echo __('Upload file'); ?> </h2>
+<h2 class="hidden-desktop"><?php echo __d('croogo', 'Upload file'); ?> </h2>
 <div class="breadcrumb">
-	<a href="#"><?php echo __('You are here') . ' '; ?> </a> <span class="divider"> &gt; </span>
+	<a href="#"><?php echo __d('croogo', 'You are here') . ' '; ?> </a> <span class="divider"> &gt; </span>
 	<?php $breadcrumb = $this->FileManager->breadcrumb($path); ?>
 	<?php foreach ($breadcrumb as $pathname => $p) : ?>
 		<?php echo $this->FileManager->linkDirectory($pathname, $p); ?>
@@ -28,7 +28,7 @@ echo $this->Form->create('FileManager', array(
 	<div class="span8">
 		<ul class="nav nav-tabs">
 		<?php
-			echo $this->Croogo->adminTab(__('Upload'), '#filemanager-upload');
+			echo $this->Croogo->adminTab(__d('croogo', 'Upload'), '#filemanager-upload');
 		?>
 		</ul>
 
@@ -45,9 +45,9 @@ echo $this->Form->create('FileManager', array(
 
 	<div class="span4">
 	<?php
-		echo $this->Html->beginBox(__('Publishing')) .
-			$this->Form->button(__('Save'), array('button' => 'default')) .
-			$this->Html->link(__('Cancel'), array('action' => 'index'), array('button' => 'danger')) .
+		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+			$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
+			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
 			$this->Html->endBox();
 
 		echo $this->Croogo->adminBoxes();

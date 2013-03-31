@@ -21,7 +21,7 @@ class TaxonomiesComponent extends Component {
  * @access public
  */
 	public $components = array(
-		'Croogo',
+		'Croogo.Croogo',
 	);
 
 /**
@@ -48,7 +48,11 @@ class TaxonomiesComponent extends Component {
  */
 	public function startup(Controller $controller) {
 		$this->controller = $controller;
-		$this->Node = ClassRegistry::init('Nodes.Node');
+		if (isset($controller->Node)) {
+			$this->Node = $controller->Node;
+		} else {
+			$this->Node = ClassRegistry::init('Nodes.Node');
+		}
 
 		if (!isset($this->controller->request->params['admin']) && !isset($this->controller->request->params['requested'])) {
 			$this->types();

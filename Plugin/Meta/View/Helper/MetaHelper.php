@@ -66,14 +66,14 @@ class MetaHelper extends AppHelper {
  */
 	public function field($key = '', $value = null, $id = null, $options = array()) {
 		$_options = array(
-			'key'   => array(
-				'label'   => __('Key'),
-				'value'   => $key,
+			'key' => array(
+				'label' => __d('croogo', 'Key'),
+				'value' => $key,
 				'class' => 'span12'
 			),
 			'value' => array(
-				'label'   => __('Value'),
-				'value'   => $value,
+				'label' => __d('croogo', 'Value'),
+				'value' => $value,
 				'class' => 'span12',
 				'type' => 'textarea',
 				'rows' => 2,
@@ -82,7 +82,7 @@ class MetaHelper extends AppHelper {
 		$options = Hash::merge($_options, $options);
 		$uuid = String::uuid();
 
-		$fields  = '';
+		$fields = '';
 		if ($id != null) {
 			$fields .= $this->Form->input('Meta.' . $uuid . '.id', array('type' => 'hidden', 'value' => $id));
 			$this->Form->unlockField('Meta.' . $uuid . '.id');
@@ -102,7 +102,7 @@ class MetaHelper extends AppHelper {
 		$deleteUrl[] = $id;
 		$deleteUrl = $this->url($deleteUrl);
 		$actions = $this->Html->link(
-			__('Remove'),
+			__d('croogo', 'Remove'),
 			$deleteUrl,
 			array('class' => 'remove-meta', 'rel' => $id)
 		);
