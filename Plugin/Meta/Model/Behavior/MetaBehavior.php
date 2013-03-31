@@ -71,13 +71,14 @@ class MetaBehavior extends ModelBehavior {
 	}
 
 /**
- * Private method for MetaBehavior::prepareData()
+ * Protected method for MetaBehavior::prepareData()
  *
  * @param Model$model
  * @param array $data
  * @return array
  */
 	protected function _prepareMeta($data) {
+
 		if (isset($data['Meta']) &&
 			is_array($data['Meta']) &&
 			count($data['Meta']) > 0 &&
