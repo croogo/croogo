@@ -412,22 +412,26 @@ class Node extends NodesAppModel {
 	}
 
 	protected function _getNodeRelativePath($data){
-		if (empty($data[$this->alias]['type'])) {
-			$type = is_null($this->type) ? self::DEFAULT_TYPE : $this->type;
-		} else {
-			$type = $data[$this->alias]['type'];
-		}
 		return Croogo::getRelativePath(array(
 			'plugin' => 'nodes',
 			'admin' => false,
 			'controller' => 'nodes',
 			'action' => 'view',
-			'type' => $type,
+			'type' => $this->_getType($data),
 			'slug' => $data[$this->alias]['slug'],
 
 		));
 	}
 
+	protected function _getType($data){
+		if (empty($data[$this->alias]['type'])) {
+			$type = is_null($this->type) ? self::DEFAULT_TYPE : $this->type;
+		} else {
+			$type = $data[$this->alias]['type'];
+		}
+
+		return $type;
+	}
 	protected function _findPromoted($state, $query, $results = array()){
 		if ($state === 'before') {
 			$_defaultFilters = array('contain', 'limit', 'order', 'conditions');
