@@ -219,7 +219,7 @@ class NodeTest extends CroogoTestCase {
 		$this->assertEquals(1, count($results));
 		$this->assertEquals($expectedId, $results[0]['Node']['id']);
 		$this->assertEquals(Node::STATUS_PUBLISHED, $results[0]['Node']['status']);
-		$this->assertEquals(Node::PROMOTED, $results[0]['Node']['promote']);
+		$this->assertEquals(Node::STATUS_PROMOTED, $results[0]['Node']['promote']);
 	}
 
 /**

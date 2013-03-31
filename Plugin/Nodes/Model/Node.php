@@ -26,8 +26,8 @@ class Node extends NodesAppModel {
 	const DEFAULT_TYPE = 'node';
 	const STATUS_PUBLISHED = 1;
 	const STATUS_UNPUBLISHED = 0;
-	const PROMOTED = 1;
-	const NOT_PROMOTED = 0;
+	const STATUS_PROMOTED = 1;
+	const STATUS_UNPROMOTED = 0;
 
 /**
  * Behaviors used by the Model
@@ -445,7 +445,7 @@ class Node extends NodesAppModel {
 			);
 			$_defaultConditions = array(
 				'Node.status' => self::STATUS_PUBLISHED,
-				'Node.promote' => self::PROMOTED,
+				'Node.promote' => self::STATUS_PROMOTED,
 				'OR' => array(
 					'Node.visibility_roles' => '',
 				),
