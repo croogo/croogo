@@ -200,7 +200,7 @@ class NodesController extends NodesAppController {
 		$type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
 
 		if (!empty($this->request->data)) {
-			$data = $this->Node->prepareData($typeAlias, $this->request->data);
+			$data = $this->Node->formatData($this->request->data, $typeAlias);
 			if ($this->Node->saveWithMeta($data)) {
 				Croogo::dispatchEvent('Controller.Nodes.afterEdit', $this, compact('data'));
 				$this->Session->setFlash(__('%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));

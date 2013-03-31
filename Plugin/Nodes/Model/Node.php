@@ -327,7 +327,7 @@ class Node extends NodesAppModel {
 	public function add($typeAlias = self::DEFAULT_TYPE, $data = array()) {
 		$result = false;
 
-		$data = $this->prepareData($typeAlias, $data);
+		$data = $this->formatData($data, $typeAlias);
 		$result = (bool) $this->saveWithMeta($data);
 		Croogo::dispatchEvent('Model.Node.afterAdd', $this, compact('data'));
 
@@ -336,11 +336,11 @@ class Node extends NodesAppModel {
 
 /**
  * Prepare data in order to be saved
- * @param $typeAlias 		string Node type alias
  * @param $data 			array Node data, and related data such as taxonomy and role
+ * @param $typeAlias 		string Node type alias
  * @return $preparedData	array
  */
-	public function prepareData($typeAlias, $data){
+	public function formatData($data, $typeAlias = self::DEFAULT_TYPE){
 		$preparedData = $roles = $type = array();
 		$type = $this->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
 
