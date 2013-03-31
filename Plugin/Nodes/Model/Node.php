@@ -456,19 +456,30 @@ class Node extends NodesAppModel {
  * @return string relative node path
  */
 	protected function _getNodeRelativePath($node) {
-		if (empty($data[$this->alias]['type'])) {
-			$type = is_null($this->type) ? self::DEFAULT_TYPE : $this->type;
-		} else {
-			$type = $node[$this->alias]['type'];
-		}
 		return Croogo::getRelativePath(array(
 			'plugin' => 'nodes',
 			'admin' => false,
 			'controller' => 'nodes',
 			'action' => 'view',
-			'type' => $type,
+			'type' => $this->_getType($node),
 			'slug' => $node[$this->alias]['slug'],
 		));
+	}
+
+/**
+ * _getType
+ *
+ * @param array $data Node data
+ * @return string type
+ */
+	protected function _getType($data) {
+		if (empty($data[$this->alias]['type'])) {
+			$type = is_null($this->type) ? self::DEFAULT_TYPE : $this->type;
+		} else {
+			$type = $data[$this->alias]['type'];
+		}
+
+		return $type;
 	}
 
 /**
