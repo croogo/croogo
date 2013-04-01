@@ -15,7 +15,7 @@ $this->Html
 			<?php
 				echo $this->Html->link(
 					__d('croogo', 'New Language'),
-					array('action'=>'add'),
+					array('action' => 'add'),
 					array('button' => 'default')
 				);
 			?>

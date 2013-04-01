@@ -257,7 +257,7 @@ class AclExtras extends Object {
 				$name = $alias . 'Controller';
 				if (!isset($controllerFlip[$name]) && !isset($controllerFlip[$alias])) {
 					if ($this->Aco->delete($ctrlNode['Aco']['id'])) {
-						$this->out(__d('croogo', 
+						$this->out(__d('croogo',
 							'Deleted %s and all children',
 							$this->rootNode . '/' . $ctrlNode['Aco']['alias']
 						), 1, Shell::VERBOSE);

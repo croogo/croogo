@@ -19,7 +19,7 @@ App::uses('InstallManager','Install.Lib');
 class InstallController extends Controller {
 
 /**
- * No components required
+ * Components
  *
  * @var array
  * @access public

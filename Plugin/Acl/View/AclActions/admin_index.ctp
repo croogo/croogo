@@ -17,13 +17,13 @@ $this->Html
 <?php $this->start('actions'); ?>
 <?php
 	echo $this->Croogo->adminAction(__d('croogo', 'New Action'),
-		array('action'=>'add')
+		array('action' => 'add')
 	);
 	echo $this->Croogo->adminAction(__d('croogo', 'Generate Actions'),
-		array('action'=>'generate')
+		array('action' => 'generate')
 	);
 	echo $this->Croogo->adminAction(__d('croogo', 'Sync Actions'),
-		array('controller' => 'acl_actions', 'action'=>'generate', 'permissions' => 1, 'sync' => 1),
+		array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1, 'sync' => 1),
 		array('method' => 'post')
 	);
 ?>

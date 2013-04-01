@@ -96,8 +96,8 @@ class InstallShell extends AppShell {
 
 		do {
 			$password = $this->in(__d('croogo', 'Password'));
-			$password2 = $this->in(__d('croogo', 'Verify Password'));
-			$passwordsMatched = $password == $password2;
+			$verify = $this->in(__d('croogo', 'Verify Password'));
+			$passwordsMatched = $password == $verify;
 			if (!$passwordsMatched) {
 				$this->err('Passwords do not match');
 			}

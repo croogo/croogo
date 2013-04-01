@@ -22,7 +22,7 @@ $this->Html
 		array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1, 'sync' => 1)
 	);
 	echo $this->Croogo->adminAction(__d('croogo', 'Edit Actions'),
-		array('controller' => 'acl_actions', 'action'=>'index', 'permissions' => 1)
+		array('controller' => 'acl_actions', 'action' => 'index', 'permissions' => 1)
 	);
 ?>
 <?php $this->end(); ?>

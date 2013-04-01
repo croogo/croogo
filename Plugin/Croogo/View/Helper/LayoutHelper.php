@@ -93,7 +93,7 @@ class LayoutHelper extends AppHelper {
 		);
 
 		if (!isset($mapMethods[$method])) {
-			trigger_error(__d('cake_dev', 'Method %1$s::%2$s does not exist', get_class($this), $method), E_USER_WARNING);
+			trigger_error(__d('croogo', 'Method %1$s::%2$s does not exist', get_class($this), $method), E_USER_WARNING);
 			return;
 		}
 

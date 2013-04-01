@@ -39,13 +39,13 @@ echo $this->element('admin/modal', array(
 <?php $this->start('actions'); ?>
 <?php
 	echo $this->Croogo->adminAction(__d('croogo', 'Unread'), array(
-		'action'=>'index',
+		'action' => 'index',
 		'?' => array(
 			'status' => '0',
 		),
 	));
 	echo $this->Croogo->adminAction(__d('croogo', 'Read'), array(
-		'action'=>'index',
+		'action' => 'index',
 		'?' => array(
 			'status' => '1',
 		),

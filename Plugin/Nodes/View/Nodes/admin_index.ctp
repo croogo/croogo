@@ -11,7 +11,7 @@ $this->Html
 <?php
 	echo $this->Croogo->adminAction(
 		__d('croogo', 'Create content'),
-		array('action'=>'create'),
+		array('action' => 'create'),
 		array('button' => 'success')
 	);
 ?>

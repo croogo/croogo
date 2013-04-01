@@ -17,7 +17,7 @@ $this->Html
 		array(
 			'plugin' => 'settings',
 			'controller' => 'languages',
-			'action'=>'select',
+			'action' => 'select',
 			$record[$modelAlias]['id'],
 			$modelAlias
 		),
