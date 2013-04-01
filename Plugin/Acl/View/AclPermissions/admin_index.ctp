@@ -13,14 +13,49 @@ $this->Html
 
 ?>
 <?php $this->start('actions'); ?>
+<li class="btn-group">
 <?php
-	echo $this->Croogo->adminAction(__d('croogo', 'Generate Actions'),
-		array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1),
-		array('method' => 'post')
+	echo $this->Html->link(
+		__d('croogo', 'Tools') . ' ' . '<span class="caret"></span>',
+		'#',
+		array(
+			'class' => 'btn dropdown-toggle',
+			'data-toggle' => 'dropdown',
+		)
 	);
-	echo $this->Croogo->adminAction(__d('croogo', 'Sync Actions'),
-		array('controller' => 'acl_actions', 'action' => 'generate', 'permissions' => 1, 'sync' => 1)
+
+	$generateUrl = array(
+		'plugin' => 'acl',
+		'controller' => 'acl_actions',
+		'action' => 'generate',
+		'permissions' => 1
 	);
+	$out = $this->Croogo->adminAction(__d('croogo', 'Generate'),
+		$generateUrl,
+		array(
+			'button' => false,
+			'method' => 'post',
+			'tooltip' => array(
+				'data-title' => __d('croogo', 'Create new actions (no removal)'),
+				'data-placement' => 'right',
+			),
+		)
+	);
+	$out .= $this->Croogo->adminAction(__d('croogo', 'Synchronize'),
+		$generateUrl + array('sync' => 1),
+		array(
+			'button' => false,
+			'method' => 'post',
+			'tooltip' => array(
+				'data-title' => __d('croogo', 'Create new & remove orphaned actions'),
+				'data-placement' => 'right',
+			),
+		)
+	);
+	echo $this->Html->tag('ul', $out, array('class' => 'dropdown-menu'));
+?>
+</li>
+<?php
 	echo $this->Croogo->adminAction(__d('croogo', 'Edit Actions'),
 		array('controller' => 'acl_actions', 'action' => 'index', 'permissions' => 1)
 	);
