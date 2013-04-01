@@ -44,7 +44,7 @@ class NodeTest extends CroogoTestCase {
 /**
  * Test before Callbacks.
  */
-	public function testBeforeSave(){
+	public function testBeforeSave() {
 		$this->Node->type = 'whut ?';
 		$data = array(
 			'user_id' => 42,
@@ -56,11 +56,11 @@ class NodeTest extends CroogoTestCase {
 			'path' => '/no-way'
 		);
 		$result = $this->Node->save($data);
-		$this->assertTrue((bool) $result);
+		$this->assertTrue((bool)$result);
 		$this->assertEquals('whut ?', $result['Node']['type']);
 	}
 
-	public function testBeforeFind(){
+	public function testBeforeFind() {
 		$this->Node->type = 'blog';
 		$node = $this->Node->find('first', array('conditions' => array('DATE(created)' => '2009-12-25'), 'recursive' => -1));
 		$this->assertNotEmpty($node);
@@ -112,7 +112,7 @@ class NodeTest extends CroogoTestCase {
 /**
  * test saving node.
  */
-	public function testAddNode(){
+	public function testAddNode() {
 		$this->Node->Behaviors->disable('Tree');
 		$oldNodeCount = $this->Node->find('count');
 
@@ -134,7 +134,7 @@ class NodeTest extends CroogoTestCase {
 /**
  * testAddNodeWithTaxonomyData
  */
-	public function testAddNodeWithTaxonomyData(){
+	public function testAddNodeWithTaxonomyData() {
 		$oldNodeCount = $this->Node->find('count');
 
 		$data = array(
@@ -157,7 +157,7 @@ class NodeTest extends CroogoTestCase {
 /**
  * testAddNodeWithVisibilityRole
  */
-	public function testAddNodeWithVisibilityRole(){
+	public function testAddNodeWithVisibilityRole() {
 		$oldNodeCount = $this->Node->find('count');
 
 		$data = array(
@@ -180,7 +180,7 @@ class NodeTest extends CroogoTestCase {
 /**
  * testAddNodeWithInvalidNodeType
  */
-	public function testAddNodeWithInvalidNodeType(){
+	public function testAddNodeWithInvalidNodeType() {
 		$this->setExpectedException('InvalidArgumentException');
 		$data = array(
 			'title' => 'Test Content',
@@ -195,7 +195,7 @@ class NodeTest extends CroogoTestCase {
 /**
  * Test filtering methods
  */
-	public function testFilterNodesByTitle(){
+	public function testFilterNodesByTitle() {
 		$filterConditions = $this->Node->filterNodes(array('filter' => 'Hello'));
 		$node = $this->Node->find('first', array('conditions' => $filterConditions));
 
@@ -203,7 +203,7 @@ class NodeTest extends CroogoTestCase {
 		$this->assertEquals(1, $node['Node']['id']);
 	}
 
-	public function testFilterNodesByBody(){
+	public function testFilterNodesByBody() {
 		$filterConditions = $this->Node->filterNodes(array('filter' => 'example'));
 		$node = $this->Node->find('first', array('conditions' => $filterConditions));
 
@@ -211,7 +211,7 @@ class NodeTest extends CroogoTestCase {
 		$this->assertEquals(2, $node['Node']['id']);
 	}
 
-	public function testFilterNodesWithoutKeyword(){
+	public function testFilterNodesWithoutKeyword() {
 		$filterConditions = $this->Node->filterNodes();
 		$nodes = $this->Node->find('all', array('conditions' => $filterConditions));
 
@@ -221,10 +221,10 @@ class NodeTest extends CroogoTestCase {
 /**
  * test updateAllNodesPaths
  */
-	public function testUpdateAllNodesPaths(){
+	public function testUpdateAllNodesPaths() {
 		$node = $this->Node->findById(1);
 		$node['Node']['path'] = 'invalid one';
-		$this->assertTrue((bool) $this->Node->save($node));
+		$this->assertTrue((bool)$this->Node->save($node));
 
 		CroogoRouter::contentType('blog');
 		$this->assertTrue($this->Node->updateAllNodesPaths());
@@ -235,7 +235,7 @@ class NodeTest extends CroogoTestCase {
 /**
  * Test find('promoted')
  */
-	public function testFindPromoted(){
+	public function testFindPromoted() {
 		$results = $this->Node->find('promoted');
 		$expectedId = 1;
 
@@ -248,7 +248,7 @@ class NodeTest extends CroogoTestCase {
 /**
  * test processActionDelete
  */
-	public function testProcessActionDelete(){
+	public function testProcessActionDelete() {
 		$ids = array('1','2');
 
 		$success = $this->Node->processAction('delete', $ids);
@@ -261,14 +261,14 @@ class NodeTest extends CroogoTestCase {
 /**
  * test processActionPromote
  */
-	public function testProcessActionPromote(){
+	public function testProcessActionPromote() {
 		$ids = array('1','2');
 
 		$success = $this->Node->processAction('promote', $ids);
 		$newRecords = $this->Node->find('all');
 
 		$this->assertTrue($success);
-		foreach($newRecords as $record){
+		foreach ($newRecords as $record) {
 			$this->assertTrue($record['Node']['promote']);
 		}
 	}
@@ -276,14 +276,14 @@ class NodeTest extends CroogoTestCase {
 /**
  * test processActionUnpromote
  */
-	public function testProcessActionUnpromote(){
+	public function testProcessActionUnpromote() {
 		$ids = array('1','2');
 
 		$success = $this->Node->processAction('unpromote', $ids);
 		$newRecords = $this->Node->find('all');
 
 		$this->assertTrue($success);
-		foreach($newRecords as $record){
+		foreach ($newRecords as $record) {
 			$this->assertFalse($record['Node']['promote']);
 		}
 	}
@@ -291,14 +291,14 @@ class NodeTest extends CroogoTestCase {
 /**
  * test processActionPublish
  */
-	public function testProcessActionPublish(){
+	public function testProcessActionPublish() {
 		$ids = array('1','2');
 
 		$success = $this->Node->processAction('publish', $ids);
 		$newRecords = $this->Node->find('all');
 
 		$this->assertTrue($success);
-		foreach($newRecords as $record){
+		foreach ($newRecords as $record) {
 			$this->assertTrue($record['Node']['status']);
 		}
 	}
@@ -306,14 +306,14 @@ class NodeTest extends CroogoTestCase {
 /**
  * test processActionUnpublish
  */
-	public function testProcessActionUnpublish(){
+	public function testProcessActionUnpublish() {
 		$ids = array('1','2');
 
 		$success = $this->Node->processAction('unpublish', $ids);
 		$newRecords = $this->Node->find('all');
 
 		$this->assertTrue($success);
-		foreach($newRecords as $record){
+		foreach ($newRecords as $record) {
 			$this->assertFalse($record['Node']['status']);
 		}
 	}
@@ -321,7 +321,7 @@ class NodeTest extends CroogoTestCase {
 /**
  * test processActionInvalidAction
  */
-	public function testProcessActionInvalidAction(){
+	public function testProcessActionInvalidAction() {
 		$this->setExpectedException('InvalidArgumentException');
 		$this->Node->processAction('avadakadavra', array(1,2));
 	}
@@ -329,7 +329,7 @@ class NodeTest extends CroogoTestCase {
 /**
  * test processActionWithoutIds
  */
-	public function testProcessActionWithoutIds(){
+	public function testProcessActionWithoutIds() {
 		$this->setExpectedException('InvalidArgumentException');
 		$this->Node->processAction('delete', array());
 	}

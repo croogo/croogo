@@ -226,7 +226,6 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public function admin_update_paths() {
-
 		if ($this->Node->updateAllNodesPaths()) {
 			$messageFlash = __d('croogo', 'Paths updated.');
 			$class = 'success';
@@ -523,7 +522,6 @@ class NodesController extends NodesAppController {
 				'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
 			),
 		);
-
 
 		if (isset($this->request->params['named']['type'])) {
 			$type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($this->request->params['named']['type']);

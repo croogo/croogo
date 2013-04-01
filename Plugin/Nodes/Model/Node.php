@@ -349,10 +349,10 @@ class Node extends NodesAppModel {
 			$filter = '%' . $data['filter'] . '%';
 			$conditions = array(
 				'OR' => array(
-					$this->alias . '.title LIKE'  => $filter,
-					$this->alias . '.excerpt LIKE'  => $filter,
-					$this->alias . '.body LIKE'  => $filter,
-					$this->alias . '.terms LIKE'  => $filter,
+					$this->alias . '.title LIKE' => $filter,
+					$this->alias . '.excerpt LIKE' => $filter,
+					$this->alias . '.body LIKE' => $filter,
+					$this->alias . '.terms LIKE' => $filter,
 				),
 			);
 		}
@@ -383,6 +383,7 @@ class Node extends NodesAppModel {
  *
  * @param $action string actionToPerfom
  * @param $ids array nodes ids to perform action upon
+ * @throws InvalidArgumentException
  */
 	public function processAction($action, $ids) {
 		$success = true;
@@ -411,13 +412,14 @@ class Node extends NodesAppModel {
  * @param $data array Node and related data such as Taxonomy and Role
  * @param $typeAlias string Node type alias
  * @return array formatted data
+ * @throws InvalidArgumentException
  */
 	public function formatData($data, $typeAlias = self::DEFAULT_TYPE) {
 		$prepared = $roles = $type = array();
 		$type = $this->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
 
 		if (!array_key_exists($this->alias, $data)) {
-			$prepared  = array($this->alias => $data);
+			$prepared = array($this->alias => $data);
 		} else {
 			$prepared = $data;
 		}
@@ -427,7 +429,7 @@ class Node extends NodesAppModel {
 		}
 
 		$this->type = $type['Type']['alias'];
-		if(!$this->Behaviors->enabled('Tree')) {
+		if (!$this->Behaviors->enabled('Tree')) {
 			$this->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->type)));
 		}
 
@@ -583,6 +585,7 @@ class Node extends NodesAppModel {
 	protected function _unpublish($ids) {
 		return $this->_saveStatus($ids, self::PUBLICATION_STATE_FIELD, self::STATUS_UNPUBLISHED);
 	}
+
 	protected function _promote($ids) {
 		return $this->_saveStatus($ids, self::PROMOTION_STATE_FIELD, self::STATUS_PROMOTED);
 	}
