@@ -24,6 +24,30 @@ class Node extends NodesAppModel {
  */
 	public $name = 'Node';
 
+	const DEFAULT_TYPE = 'node';
+
+	const STATUS_PUBLISHED = 1;
+
+	const STATUS_UNPUBLISHED = 0;
+
+	const STATUS_PROMOTED = 1;
+
+	const STATUS_UNPROMOTED = 0;
+
+	const PUBLICATION_STATE_FIELD = 'status';
+
+	const PROMOTION_STATE_FIELD = 'promote';
+
+	const UNPROCESSED_ACTION = 'delete';
+
+	public $actionsMapping = array(
+		'delete' => 'deleteAll',
+		'publish' => '_publish',
+		'promote' => '_promote',
+		'unpublish' => '_unpublish',
+		'unpromote' => '_unpromote',
+	);
+
 /**
  * Behaviors used by the Model
  *
@@ -175,6 +199,10 @@ class Node extends NodesAppModel {
 		),
 	);
 
+	public $findMethods = array(
+		'promoted' => true
+	);
+
 /**
  * beforeFind callback
  *
@@ -316,19 +344,255 @@ class Node extends NodesAppModel {
  * Return filter condition for Nodes
  */
 	public function filterNodes($data = array()) {
-		if (empty($data['filter'])) {
-			return;
+		$conditions = array();
+		if (!empty($data['filter'])) {
+			$filter = '%' . $data['filter'] . '%';
+			$conditions = array(
+				'OR' => array(
+					$this->alias . '.title LIKE'  => $filter,
+					$this->alias . '.excerpt LIKE'  => $filter,
+					$this->alias . '.body LIKE'  => $filter,
+					$this->alias . '.terms LIKE'  => $filter,
+				),
+			);
 		}
-		$filter = '%' . $data['filter'] . '%';
-		$conditions = array(
-			'OR' => array(
-				$this->alias . '.title LIKE' => $filter,
-				$this->alias . '.excerpt LIKE' => $filter,
-				$this->alias . '.body LIKE' => $filter,
-				$this->alias . '.terms LIKE' => $filter,
-			),
-		);
 		return $conditions;
+	}
+
+/**
+ * Create/update a Node record
+ *
+ * @param $data array Node data
+ * @param $typeAlias string Node type alias
+ * @return mixed see Model::saveAll()
+ * @see MetaBehavior::saveWithMeta()
+ */
+	public function saveNode($data, $typeAlias = self::DEFAULT_TYPE) {
+		$result = false;
+
+		$data = $this->formatData($data, $typeAlias);
+		Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, compact('data'));
+		$result = $this->saveWithMeta($data);
+		Croogo::dispatchEvent('Model.Node.afterSaveNode', $this, compact('data'));
+
+		return $result;
+	}
+
+/**
+ * Process action pass as argument
+ *
+ * @param $action string actionToPerfom
+ * @param $ids array nodes ids to perform action upon
+ */
+	public function processAction($action, $ids) {
+		$success = true;
+		$actionToPerform = strtolower($action);
+
+		if (!in_array($actionToPerform, array_keys($this->actionsMapping))) {
+			throw new InvalidArgumentException(__d('croogo', 'Invalid action to perform'));
+		}
+
+		if (empty($ids)) {
+			throw new InvalidArgumentException(__d('croogo', 'No target to process action upon'));
+		}
+
+		if ($actionToPerform === self::UNPROCESSED_ACTION) {
+			$success = $this->{$this->actionsMapping[$actionToPerform]}(array($this->escapeField() => $ids));
+		} else {
+			$success = $this->{$this->actionsMapping[$actionToPerform]}($ids);
+		}
+
+		return $success;
+	}
+
+/**
+ * Format data for saving
+ *
+ * @param $data array Node and related data such as Taxonomy and Role
+ * @param $typeAlias string Node type alias
+ * @return array formatted data
+ */
+	public function formatData($data, $typeAlias = self::DEFAULT_TYPE) {
+		$prepared = $roles = $type = array();
+		$type = $this->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
+
+		if (!array_key_exists($this->alias, $data)) {
+			$prepared  = array($this->alias => $data);
+		} else {
+			$prepared = $data;
+		}
+
+		if (empty($type)) {
+			throw new InvalidArgumentException(__('Invalid Content Type'));
+		}
+
+		$this->type = $type['Type']['alias'];
+		if(!$this->Behaviors->enabled('Tree')) {
+			$this->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->type)));
+		}
+
+		$this->_parseTaxonomyData($prepared);
+		$prepared[$this->alias]['path'] = $this->_getNodeRelativePath($prepared);
+
+		if (!array_key_exists('Role', $prepared) || empty($prepared['Role']['Role'])) {
+			$roles = '';
+		} else {
+			$roles = $prepared['Role']['Role'];
+		}
+
+		$prepared[$this->alias]['visibility_roles'] = $this->encodeData($roles);
+		unset($this->type);
+
+		return $prepared;
+	}
+
+	public function updateAllNodesPaths() {
+		$types = $this->Taxonomy->Vocabulary->Type->find('list', array(
+			'fields' => array(
+				'Type.id',
+				'Type.alias',
+			),
+		));
+		$typesAlias = array_values($types);
+
+		$nodes = $this->find('all', array(
+			'conditions' => array(
+				$this->alias . '.type' => $typesAlias,
+			),
+			'fields' => array(
+				$this->alias . '.id',
+				$this->alias . '.slug',
+				$this->alias . '.type',
+				$this->alias . '.path',
+			),
+			'recursive' => '-1',
+		));
+		foreach ($nodes as &$node) {
+			$node[$this->alias]['path'] = $this->_getNodeRelativePath($node);
+		}
+
+		return $this->saveMany($nodes);
+	}
+
+/**
+ * parseTaxonomyData
+ *
+ * @param array $node Node array
+ * @return void
+ */
+	protected function _parseTaxonomyData(&$node) {
+		if (array_key_exists('TaxonomyData', $node)) {
+			$node['Taxonomy'] = array('Taxonomy' => array());
+			foreach ($node['TaxonomyData'] as $vocabularyId => $taxonomyIds) {
+				$node['Taxonomy']['Taxonomy'] = array_merge($node['Taxonomy']['Taxonomy'], (array)$taxonomyIds);
+			}
+			unset($node['TaxonomyData']);
+		}
+	}
+
+/**
+ * getNodeRelativePath
+ *
+ * @param array $node Node array
+ * @return string relative node path
+ */
+	protected function _getNodeRelativePath($node) {
+		return Croogo::getRelativePath(array(
+			'plugin' => 'nodes',
+			'admin' => false,
+			'controller' => 'nodes',
+			'action' => 'view',
+			'type' => $this->_getType($node),
+			'slug' => $node[$this->alias]['slug'],
+		));
+	}
+
+/**
+ * _getType
+ *
+ * @param array $data Node data
+ * @return string type
+ */
+	protected function _getType($data) {
+		if (empty($data[$this->alias]['type'])) {
+			$type = is_null($this->type) ? self::DEFAULT_TYPE : $this->type;
+		} else {
+			$type = $data[$this->alias]['type'];
+		}
+
+		return $type;
+	}
+
+/**
+ * Find promoted nodes
+ *
+ * @see Model::find()
+ * @see Model::_findAll()
+ */
+	protected function _findPromoted($state, $query, $results = array()) {
+		if ($state === 'before') {
+			$_defaultFilters = array('contain', 'limit', 'order', 'conditions');
+			$_defaultContain = array(
+				'Meta',
+				'Taxonomy' => array(
+					'Term',
+					'Vocabulary',
+				),
+				'User',
+			);
+			$_defaultConditions = array(
+				'Node.status' => self::STATUS_PUBLISHED,
+				'Node.promote' => self::STATUS_PROMOTED,
+				'OR' => array(
+					'Node.visibility_roles' => '',
+				),
+			);
+			$_defaultOrder = $this->alias . '.created DESC';
+			$_defaultLimit = Configure::read('Reading.nodes_per_page');
+
+			foreach ($_defaultFilters as $filter) {
+				$this->_mergeQueryFilters($query, $filter, ${'_default' . ucfirst($filter)});
+			}
+
+			return $query;
+		} else {
+			return $results;
+		}
+	}
+
+/**
+ * mergeQueryFilters
+ *
+ * @see Node::_findPromoted()
+ * @return void
+ */
+	protected function _mergeQueryFilters(&$query, $key, $values) {
+		if (!empty($query[$key])) {
+			if (is_array($query[$key])) {
+				$query[$key] = array_merge($query[$key], $values);
+			}
+		} else {
+			$query[$key] = $values;
+		}
+	}
+
+	protected function _publish($ids) {
+		return $this->_saveStatus($ids, self::PUBLICATION_STATE_FIELD, self::STATUS_PUBLISHED);
+	}
+
+	protected function _unpublish($ids) {
+		return $this->_saveStatus($ids, self::PUBLICATION_STATE_FIELD, self::STATUS_UNPUBLISHED);
+	}
+	protected function _promote($ids) {
+		return $this->_saveStatus($ids, self::PROMOTION_STATE_FIELD, self::STATUS_PROMOTED);
+	}
+
+	protected function _unpromote($ids) {
+		return $this->_saveStatus($ids, self::PROMOTION_STATE_FIELD, self::STATUS_UNPROMOTED);
+	}
+
+	protected function _saveStatus($ids, $field, $status) {
+		return $this->updateAll(array($this->escapeField($field) => $status), array($this->escapeField() => $ids));
 	}
 
 }

@@ -170,26 +170,7 @@ class NodesController extends NodesAppController {
 		));
 
 		if (!empty($this->request->data)) {
-			if (isset($this->request->data['TaxonomyData'])) {
-				$this->request->data['Taxonomy'] = array(
-					'Taxonomy' => array(),
-				);
-				foreach ($this->request->data['TaxonomyData'] as $vocabularyId => $taxonomyIds) {
-					if (is_array($taxonomyIds)) {
-						$this->request->data['Taxonomy']['Taxonomy'] = array_merge($this->request->data['Taxonomy']['Taxonomy'], $taxonomyIds);
-					}
-				}
-			}
-			$this->Node->create();
-			$this->request->data['Node']['path'] = Croogo::getRelativePath(array(
-				'admin' => false,
-				'controller' => 'nodes',
-				'action' => 'view',
-				'type' => $this->Node->type,
-				'slug' => $this->request->data['Node']['slug'],
-			));
-			$this->request->data['Node']['visibility_roles'] = $this->Node->encodeData($this->request->data['Role']['Role']);
-			if ($this->Node->saveWithMeta($this->request->data)) {
+			if ($this->Node->saveNode($this->request->data, $typeAlias)) {
 				Croogo::dispatchEvent('Controller.Nodes.afterAdd', $this, array('data' => $this->request->data));
 				$this->Session->setFlash(__d('croogo', '%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Node->id));
@@ -200,16 +181,7 @@ class NodesController extends NodesAppController {
 			$this->request->data['Node']['user_id'] = $this->Session->read('Auth.User.id');
 		}
 
-		$nodes = $this->Node->generateTreeList();
-		$roles = $this->Node->User->Role->find('list');
-		$users = $this->Node->User->find('list');
-		$vocabularies = Hash::combine($type['Vocabulary'], '{n}.id', '{n}');
-		$taxonomy = array();
-		foreach ($type['Vocabulary'] as $vocabulary) {
-			$vocabularyId = $vocabulary['id'];
-			$taxonomy[$vocabularyId] = $this->Node->Taxonomy->getTree($vocabulary['alias'], array('taxonomyId' => true));
-		}
-		$this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy', 'users'));
+		$this->_setCommonVariables($type);
 	}
 
 /**
@@ -224,40 +196,13 @@ class NodesController extends NodesAppController {
 			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
-
 		$this->Node->id = $id;
 		$typeAlias = $this->Node->field('type');
-
 		$type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
-		if (!isset($type['Type']['alias'])) {
-			$this->Session->setFlash(__d('croogo', 'Content type does not exist.'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'create'));
-		}
-
-		$this->Node->type = $type['Type']['alias'];
-		$this->Node->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->Node->type)));
 
 		if (!empty($this->request->data)) {
-			if (isset($this->request->data['TaxonomyData'])) {
-				$this->request->data['Taxonomy'] = array(
-					'Taxonomy' => array(),
-				);
-				foreach ($this->request->data['TaxonomyData'] as $vocabularyId => $taxonomyIds) {
-					if (is_array($taxonomyIds)) {
-						$this->request->data['Taxonomy']['Taxonomy'] = array_merge($this->request->data['Taxonomy']['Taxonomy'], $taxonomyIds);
-					}
-				}
-			}
-			$this->request->data['Node']['path'] = Croogo::getRelativePath(array(
-				'admin' => false,
-				'controller' => 'nodes',
-				'action' => 'view',
-				'type' => $this->Node->type,
-				'slug' => $this->request->data['Node']['slug'],
-			));
-			$this->request->data['Node']['visibility_roles'] = $this->Node->encodeData($this->request->data['Role']['Role']);
-			if ($this->Node->saveWithMeta($this->request->data)) {
-				Croogo::dispatchEvent('Controller.Nodes.afterEdit', $this, array('data' => $this->request->data));
+			if ($this->Node->saveNode($this->request->data, $typeAlias)) {
+				Croogo::dispatchEvent('Controller.Nodes.afterEdit', $this, compact('data'));
 				$this->Session->setFlash(__d('croogo', '%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Node->id));
 			} else {
@@ -271,17 +216,7 @@ class NodesController extends NodesAppController {
 		}
 
 		$this->set('title_for_layout', __d('croogo', 'Edit %s: %s', $type['Type']['title'], $this->request->data['Node']['title']));
-
-		$nodes = $this->Node->generateTreeList();
-		$roles = $this->Node->User->Role->find('list');
-		$users = $this->Node->User->find('list');
-		$vocabularies = Hash::combine($type['Vocabulary'], '{n}.id', '{n}');
-		$taxonomy = array();
-		foreach ($type['Vocabulary'] as $vocabulary) {
-			$vocabularyId = $vocabulary['id'];
-			$taxonomy[$vocabularyId] = $this->Node->Taxonomy->getTree($vocabulary['alias'], array('taxonomyId' => true));
-		}
-		$this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy', 'users'));
+		$this->_setCommonVariables($type);
 	}
 
 /**
@@ -291,39 +226,16 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public function admin_update_paths() {
-		$types = $this->Node->Taxonomy->Vocabulary->Type->find('list', array(
-			'fields' => array(
-				'Type.id',
-				'Type.alias',
-			),
-		));
-		$typesAlias = array_values($types);
 
-		$nodes = $this->Node->find('all', array(
-			'conditions' => array(
-				'Node.type' => $typesAlias,
-			),
-			'fields' => array(
-				'Node.id',
-				'Node.slug',
-				'Node.type',
-				'Node.path',
-			),
-			'recursive' => '-1',
-		));
-		foreach ($nodes as $node) {
-			$node['Node']['path'] = Croogo::getRelativePath(array(
-				'admin' => false,
-				'controller' => 'nodes',
-				'action' => 'view',
-				'type' => $node['Node']['type'],
-				'slug' => $node['Node']['slug'],
-			));
-			$this->Node->id = false;
-			$this->Node->save($node);
+		if ($this->Node->updateAllNodesPaths()) {
+			$messageFlash = __d('croogo', 'Paths updated.');
+			$class = 'success';
+		} else {
+			$messageFlash = __d('croogo', 'Something went wrong while updating paths.' . "\n" . 'Please try again');
+			$class = 'error';
 		}
 
-		$this->Session->setFlash(__d('croogo', 'Paths updated.'), 'default', array('class' => 'success'));
+		$this->Session->setFlash($messageFlash, 'default', compact('class'));
 		$this->redirect(array('action' => 'index'));
 	}
 
@@ -395,26 +307,29 @@ class NodesController extends NodesAppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		if ($action == 'delete' &&
-			$this->Node->deleteAll(array('Node.id' => $ids), true, true)) {
-			Croogo::dispatchEvent('Controller.Nodes.afterDelete', $this, compact($ids));
-			$this->Session->setFlash(__d('croogo', 'Nodes deleted.'), 'default', array('class' => 'success'));
-		} elseif ($action == 'publish' &&
-			$this->Node->updateAll(array('Node.status' => 1), array('Node.id' => $ids))) {
-			Croogo::dispatchEvent('Controller.Nodes.afterPublish', $this, compact($ids));
-			$this->Session->setFlash(__d('croogo', 'Nodes published'), 'default', array('class' => 'success'));
-		} elseif ($action == 'unpublish' &&
-			$this->Node->updateAll(array('Node.status' => 0), array('Node.id' => $ids))) {
-			Croogo::dispatchEvent('Controller.Nodes.afterUnpublish', $this, compact($ids));
-			$this->Session->setFlash(__d('croogo', 'Nodes unpublished'), 'default', array('class' => 'success'));
-		} elseif ($action == 'promote' &&
-			$this->Node->updateAll(array('Node.promote' => 1), array('Node.id' => $ids))) {
-			Croogo::dispatchEvent('Controller.Nodes.afterPromote', $this, compact($ids));
-			$this->Session->setFlash(__d('croogo', 'Nodes promoted'), 'default', array('class' => 'success'));
-		} elseif ($action == 'unpromote' &&
-			$this->Node->updateAll(array('Node.promote' => 0), array('Node.id' => $ids))) {
-			Croogo::dispatchEvent('Controller.Nodes.afterUnpromote', $this, compact($ids));
-			$this->Session->setFlash(__d('croogo', 'Nodes unpromoted'), 'default', array('class' => 'success'));
+		$actionProcessed = $this->Node->processAction($action, $ids);
+		$eventName = 'Controller.Nodes.after' . ucfirst($action);
+
+		if ($actionProcessed) {
+			switch ($action) {
+				case 'delete':
+					$messageFlash = __d('croogo', 'Nodes deleted');
+				break;
+				case 'publish':
+					$messageFlash = __d('croogo', 'Nodes published');
+				break;
+				case 'unpublish':
+					$messageFlash = __d('croogo', 'Nodes unpublished');
+				break;
+				case 'promote':
+					$messageFlash = __d('croogo', 'Nodes promoted');
+				break;
+				case 'unpromote':
+					$messageFlash = __d('croogo', 'Nodes unpromoted');
+				break;
+			}
+			$this->Session->setFlash($messageFlash, 'default', array('class' => 'success'));
+			Croogo::dispatchEvent($eventName, $this, compact($ids));
 		} else {
 			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
 		}
@@ -601,24 +516,14 @@ class NodesController extends NodesAppController {
 	public function promoted() {
 		$this->set('title_for_layout', __d('croogo', 'Nodes'));
 
-		$this->paginate['Node']['order'] = 'Node.created DESC';
-		$this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
+		$this->paginate['Node']['type'] = 'promoted';
 		$this->paginate['Node']['conditions'] = array(
-			'Node.status' => 1,
-			'Node.promote' => 1,
 			'OR' => array(
 				'Node.visibility_roles' => '',
 				'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
 			),
 		);
-		$this->paginate['Node']['contain'] = array(
-			'Meta',
-			'Taxonomy' => array(
-				'Term',
-				'Vocabulary',
-			),
-			'User',
-		);
+
 
 		if (isset($this->request->params['named']['type'])) {
 			$type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($this->request->params['named']['type']);
@@ -635,13 +540,14 @@ class NodesController extends NodesAppController {
 		}
 
 		if ($this->usePaginationCache) {
+			$limit = !empty($this->paginate['Node']['limit']) ? $this->paginate['Node']['limit'] : Configure::read('Reading.nodes_per_page');
 			$cacheNamePrefix = 'nodes_promoted_' . $this->Croogo->roleId . '_' . Configure::read('Config.language');
 			if (isset($type)) {
 				$cacheNamePrefix .= '_' . $type['Type']['alias'];
 			}
 			$this->paginate['page'] = isset($this->request->params['named']['page']) ? $this->params['named']['page'] : 1;
-			$cacheName = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $this->paginate['Node']['limit'];
-			$cacheNamePaging = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $this->paginate['Node']['limit'] . '_paging';
+			$cacheName = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $limit;
+			$cacheNamePaging = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $limit . '_paging';
 			$cacheConfig = 'nodes_promoted';
 			$nodes = Cache::read($cacheName, $cacheConfig);
 			if (!$nodes) {
@@ -883,4 +789,22 @@ class NodesController extends NodesAppController {
 		}
 	}
 
+/**
+ * Set common form variables to views
+ * @param array $type Type data
+ * @return void
+ */
+	protected function _setCommonVariables($type) {
+		$nodes = $this->Node->generateTreeList();
+		$roles = $this->Node->User->Role->find('list');
+		$users = $this->Node->User->find('list');
+		$vocabularies = Hash::combine($type['Vocabulary'], '{n}.id', '{n}');
+		$taxonomy = array();
+		foreach ($type['Vocabulary'] as $vocabulary) {
+			$vocabularyId = $vocabulary['id'];
+			$taxonomy[$vocabularyId] = $this->Node->Taxonomy->getTree($vocabulary['alias'], array('taxonomyId' => true));
+		}
+		$typeAlias = $type['Type']['alias'];
+		$this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy', 'users'));
+	}
 }
