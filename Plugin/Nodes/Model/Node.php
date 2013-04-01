@@ -1,7 +1,6 @@
 <?php
-
 App::uses('NodesAppModel', 'Nodes.Model');
-
+App::uses('Router', 'Routing');
 /**
  * Node
  *
@@ -24,6 +23,22 @@ class Node extends NodesAppModel {
  */
 	public $name = 'Node';
 
+	const DEFAULT_TYPE = 'node';
+	const STATUS_PUBLISHED = 1;
+	const STATUS_UNPUBLISHED = 0;
+	const STATUS_PROMOTED = 1;
+	const STATUS_UNPROMOTED = 0;
+	const PUBLICATION_STATE_FIELD = 'status';
+	const PROMOTION_STATE_FIELD = 'promote';
+	const UNPROCESSED_ACTION = 'delete';
+
+	public $actionsMapping = array(
+		'delete' => 'deleteAll',
+		'publish' => '_publish',
+		'promote' => '_promote',
+		'unpublish' => '_unpublish',
+		'unpromote' => '_unpromote',
+	);
 /**
  * Behaviors used by the Model
  *
@@ -175,6 +190,10 @@ class Node extends NodesAppModel {
 		),
 	);
 
+	public $findMethods = array(
+		'promoted' => true
+	);
+
 /**
  * beforeFind callback
  *
@@ -316,19 +335,218 @@ class Node extends NodesAppModel {
  * Return filter condition for Nodes
  */
 	public function filterNodes($data = array()) {
-		if (empty($data['filter'])) {
-			return;
+		$conditions = array();
+		if (!empty($data['filter'])) {
+			$filter = '%' . $data['filter'] . '%';
+			$conditions = array(
+				'OR' => array(
+					$this->alias . '.title LIKE'  => $filter,
+					$this->alias . '.excerpt LIKE'  => $filter,
+					$this->alias . '.body LIKE'  => $filter,
+					$this->alias . '.terms LIKE'  => $filter,
+				),
+			);
 		}
-		$filter = '%' . $data['filter'] . '%';
-		$conditions = array(
-			'OR' => array(
-				$this->alias . '.title LIKE' => $filter,
-				$this->alias . '.excerpt LIKE' => $filter,
-				$this->alias . '.body LIKE' => $filter,
-				$this->alias . '.terms LIKE' => $filter,
-			),
-		);
+
 		return $conditions;
 	}
 
+/**
+ * Add a node
+ */
+	public function add($typeAlias = self::DEFAULT_TYPE, $data = array()) {
+		$result = false;
+
+		$data = $this->formatData($data, $typeAlias);
+		$result = (bool) $this->saveWithMeta($data);
+		Croogo::dispatchEvent('Model.Node.afterAdd', $this, compact('data'));
+
+		return $result;
+	}
+
+/**
+ * Process action pass as argument
+ * @param $action 			string actionToPerfom
+ * @param $ids 			nodes ids to perform action upon
+ */
+	public function processAction($action, $ids){
+		$success = true;
+		$actionToPerform = strtolower($action);
+
+		if (!in_array($actionToPerform, array_keys($this->actionsMapping))) {
+			throw new InvalidArgumentException(__d('nodes', 'Invalid action to perform'));
+		}
+
+		if (empty($ids)) {
+			throw new InvalidArgumentException(__d('nodes', 'No target to process action upon'));
+		}
+
+		if ($actionToPerform === self::UNPROCESSED_ACTION) {
+			$success = $this->{$this->actionsMapping[$actionToPerform]}(array($this->escapeField() => $ids));
+		} else {
+			$success = $this->{$this->actionsMapping[$actionToPerform]}($ids);
+		}
+
+		return $success;
+	}
+
+/**
+ * Prepare data in order to be saved
+ * @param $data 			array Node data, and related data such as taxonomy and role
+ * @param $typeAlias 		string Node type alias
+ * @return $preparedData	array
+ */
+	public function formatData($data, $typeAlias = self::DEFAULT_TYPE){
+		$preparedData = $roles = $type = array();
+		$type = $this->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
+
+		if (!array_key_exists($this->alias, $data)) {
+			$preparedData  = array($this->alias => $data);
+		} else {
+			$preparedData = $data;
+		}
+
+		if (empty($type)) {
+			throw new InvalidArgumentException(__('Invalid Content Type'));
+		}
+
+		$this->type = $type['Type']['alias'];
+		if(!$this->Behaviors->enabled('Tree')) {
+			$this->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->type)));
+		}
+		$this->_parseTaxonomyData($preparedData);
+		$preparedData[$this->alias]['path'] = $this->_getNodeRelativePath($preparedData);
+
+		if (!array_key_exists('Role', $preparedData) || empty($preparedData['Role']['Role'])) {
+			$roles = '';
+		} else {
+			$roles = $preparedData['Role']['Role'];
+		}
+
+		$preparedData[$this->alias]['visibility_roles'] = $this->encodeData($roles);
+		unset($this->type);
+
+		return $preparedData;
+	}
+
+	public function updateAllNodesPaths(){
+		$types = $this->Taxonomy->Vocabulary->Type->find('list', array(
+			'fields' => array(
+				'Type.id',
+				'Type.alias',
+			),
+		));
+		$typesAlias = array_values($types);
+
+		$nodes = $this->find('all', array(
+			'conditions' => array(
+				$this->alias . '.type' => $typesAlias,
+			),
+			'fields' => array(
+				$this->alias . '.id',
+				$this->alias . '.slug',
+				$this->alias . '.type',
+				$this->alias . '.path',
+			),
+			'recursive' => '-1',
+		));
+		foreach ($nodes as &$node) {
+			$node[$this->alias]['path'] = $this->_getNodeRelativePath($node);
+		}
+
+		return $this->saveMany($nodes);
+	}
+
+	protected function _parseTaxonomyData(&$nodeData) {
+		if (array_key_exists('TaxonomyData', $nodeData)) {
+			$nodeData['Taxonomy'] = array('Taxonomy' => array());
+			foreach ($nodeData['TaxonomyData'] as $vocabularyId => $taxonomyIds) {
+				$nodeData['Taxonomy']['Taxonomy'] = array_merge($nodeData['Taxonomy']['Taxonomy'], (array) $taxonomyIds);
+			}
+			unset($nodeData['TaxonomyData']);
+		}
+	}
+
+	protected function _getNodeRelativePath($data){
+		return Croogo::getRelativePath(array(
+			'plugin' => 'nodes',
+			'admin' => false,
+			'controller' => 'nodes',
+			'action' => 'view',
+			'type' => $this->_getType($data),
+			'slug' => $data[$this->alias]['slug'],
+
+		));
+	}
+
+	protected function _getType($data){
+		if (empty($data[$this->alias]['type'])) {
+			$type = is_null($this->type) ? self::DEFAULT_TYPE : $this->type;
+		} else {
+			$type = $data[$this->alias]['type'];
+		}
+
+		return $type;
+	}
+
+	protected function _findPromoted($state, $query, $results = array()){
+		if ($state === 'before') {
+			$_defaultFilters = array('contain', 'limit', 'order', 'conditions');
+			$_defaultContain = array(
+				'Meta',
+				'Taxonomy' => array(
+					'Term',
+					'Vocabulary',
+				),
+				'User',
+			);
+			$_defaultConditions = array(
+				'Node.status' => self::STATUS_PUBLISHED,
+				'Node.promote' => self::STATUS_PROMOTED,
+				'OR' => array(
+					'Node.visibility_roles' => '',
+				),
+			);
+			$_defaultOrder = $this->alias . '.created DESC';
+			$_defaultLimit = Configure::read('Reading.nodes_per_page');
+
+			foreach ($_defaultFilters as $filter){
+				$this->__mergeQueryFilters($query, $filter, ${'_default' . ucfirst($filter)});
+			}
+
+			return $query;
+		} else {
+			return $results;
+		}
+	}
+
+	protected function _publish($ids){
+		return $this->__saveStatuts($ids, self::PUBLICATION_STATE_FIELD, self::STATUS_PUBLISHED);
+	}
+
+	protected function _unpublish($ids){
+		return $this->__saveStatuts($ids, self::PUBLICATION_STATE_FIELD, self::STATUS_UNPUBLISHED);
+	}
+	protected function _promote($ids){
+		return $this->__saveStatuts($ids, self::PROMOTION_STATE_FIELD, self::STATUS_PROMOTED);
+	}
+
+	protected function _unpromote($ids){
+		return $this->__saveStatuts($ids, self::PROMOTION_STATE_FIELD, self::STATUS_UNPROMOTED);
+	}
+
+	private function __saveStatuts($ids, $field, $status){
+		return $this->updateAll(array($this->escapeField($field) => $status), array($this->escapeField() => $ids));
+
+	}
+
+	private function __mergeQueryFilters(&$query, $key, $values){
+		if (!empty($query[$key])) {
+			if (is_array($query[$key])) {
+				$query[$key] = array_merge($query[$key], $values);
+			}
+		} else {
+			$query[$key] = $values;
+		}
+	}
 }

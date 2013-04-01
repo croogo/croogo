@@ -78,6 +78,7 @@ class MetaBehavior extends ModelBehavior {
  * @return array
  */
 	protected function _prepareMeta($data) {
+
 		if (isset($data['Meta']) &&
 			is_array($data['Meta']) &&
 			count($data['Meta']) > 0 &&
