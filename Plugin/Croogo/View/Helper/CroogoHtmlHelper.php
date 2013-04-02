@@ -102,10 +102,15 @@ class CroogoHtmlHelper extends HtmlHelper {
 		}
 
 		if (isset($options['icon'])) {
+			$iconSize = 'icon-large';
+			if (isset($options['iconSize']) && $options['iconSize'] === 'small') {
+				$iconSize = '';
+				unset($options['iconSize']);
+			}
 			if (empty($options['iconInline'])) {
-				$title = $this->icon($options['icon']) . $title;
+				$title = $this->icon($options['icon'], array('class' => $iconSize)) . $title;
 			} else {
-				$icon = 'icon-large icon-' . $options['icon'];
+				$icon = trim($iconSize . ' icon-' . $options['icon']);
 				if (isset($options['class'])) {
 					$options['class'] .= ' ' . $icon;
 				} else {
