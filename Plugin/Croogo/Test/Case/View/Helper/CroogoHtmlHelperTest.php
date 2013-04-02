@@ -74,7 +74,52 @@ class CroogoHtmlHelperTest extends CroogoTestCase{
 	public function testLink() {
 		$result = $this->CroogoHtml->link('', '/remove', array('icon' => 'remove', 'button' => 'danger'));
 		$this->assertContains('class="btn btn-danger"', $result);
+		$this->assertContains('<i class="icon-remove icon-large"></i>', $result);
+	}
+
+/**
+ * testLinkWithSmallIcon
+ */
+	public function testLinkWithSmallIcon() {
+		$result = $this->CroogoHtml->link('', '/remove', array(
+			'icon' => 'remove',
+			'iconSize' => 'small',
+			'button' => 'danger'
+		));
+		$this->assertContains('class="btn btn-danger"', $result);
 		$this->assertContains('<i class="icon-remove"></i>', $result);
+	}
+
+/**
+ * testLinkWithInlineIcon
+ */
+	public function testLinkWithInlineIcon() {
+		$result = $this->CroogoHtml->link('', '/remove', array(
+			'icon' => 'remove',
+			'iconSize' => 'small',
+			'iconInline' => true,
+			'button' => 'danger'
+		));
+		$expected = array(
+			'a' => array(
+				'href',
+				'class' => 'btn btn-danger icon-remove',
+			),
+		);
+		$this->assertTags($result, $expected);
+
+		$result = $this->CroogoHtml->link('', '/remove', array(
+			'icon' => 'remove',
+			'iconInline' => true,
+			'button' => 'danger'
+		));
+		$expected = array(
+			'a' => array(
+				'href',
+				'class' => 'btn btn-danger icon-large icon-remove',
+			),
+		);
+		$this->assertTags($result, $expected);
 	}
 
 	public function testLinkDefaultButton() {

@@ -182,7 +182,7 @@ class CroogoHelper extends AppHelper {
 			}
 		}
 		if (isset($options['icon']) && empty($title)) {
-			$options['iconInline'] = true;
+			$options['iconInline'] = false;
 		}
 
 		if (!empty($options['rowAction'])) {
@@ -215,7 +215,7 @@ class CroogoHelper extends AppHelper {
 			$options['data-confirm-message'] = $confirmMessage;
 		}
 		if (isset($options['icon'])) {
-			$options['iconInline'] = true;
+			$options['iconInline'] = false;
 		}
 		$output = $this->Html->link($title, $url, $options);
 		return $output;
