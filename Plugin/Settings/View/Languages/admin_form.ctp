@@ -36,15 +36,15 @@ echo $this->Form->create('Language');
 				echo $this->Form->input('id');
 				echo $this->Form->input('title', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Title'),
+					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('native', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Native'),
+					'label' => __d('croogo', 'Native'),
 				));
 				echo $this->Form->input('alias', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Alias'),
+					'label' => __d('croogo', 'Alias'),
 				));
 			?>
 			</div>

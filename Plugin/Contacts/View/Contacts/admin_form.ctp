@@ -37,19 +37,19 @@ echo $this->Form->create('Contact');
 				$this->Form->inputDefaults(array('class' => 'span10'));
 				echo $this->Form->input('title', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Title'),
+					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('alias', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Alias'),
+					'label' => __d('croogo', 'Alias'),
 				));
 				echo $this->Form->input('email', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Email')
+					'label' => __d('croogo', 'Email')
 				));
 				echo $this->Form->input('body', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Body'),
+					'label' => __d('croogo', 'Body'),
 				));
 			?>
 			</div>
@@ -58,39 +58,39 @@ echo $this->Form->create('Contact');
 			<?php
 				echo $this->Form->input('name', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Name'),
+					'label' => __d('croogo', 'Name'),
 				));
 				echo $this->Form->input('position', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Position'),
+					'label' => __d('croogo', 'Position'),
 				));
 				echo $this->Form->input('address', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Address'),
+					'label' => __d('croogo', 'Address'),
 				));
 				echo $this->Form->input('address2', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Address2'),
+					'label' => __d('croogo', 'Address2'),
 				));
 				echo $this->Form->input('state', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'State'),
+					'label' => __d('croogo', 'State'),
 				));
 				echo $this->Form->input('country', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Country'),
+					'label' => __d('croogo', 'Country'),
 				));
 				echo $this->Form->input('postcode', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Post Code'),
+					'label' => __d('croogo', 'Post Code'),
 				));
 				echo $this->Form->input('phone', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Phone'),
+					'label' => __d('croogo', 'Phone'),
 				));
 				echo $this->Form->input('fax', array(
 					'label' => false,
-					'placeholder' => __d('croogo', 'Fax'),
+					'label' => __d('croogo', 'Fax'),
 				));
 			?>
 			</div>

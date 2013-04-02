@@ -47,7 +47,7 @@ $primaryTab = strtolower(Inflector::slug($singularHumanName, '-'));
 						$fieldLabel = Inflector::humanize($field);
 						echo <<<EOF
 				echo \$this->Form->input('{$field}', array(
-					'placeholder' => '$fieldLabel',
+					'label' => '$fieldLabel',
 				));\n
 EOF;
 					}

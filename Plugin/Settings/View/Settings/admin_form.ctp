@@ -40,10 +40,10 @@ echo $this->Form->create('Setting');
 				));
 				echo $this->Form->input('key', array(
 					'rel' => __d('croogo', "e.g., 'Site.title'"),
-					'placeholder' => __d('croogo', 'Key'),
+					'label' => __d('croogo', 'Key'),
 				));
 				echo $this->Form->input('value', array(
-					'placeholder' => __d('croogo', 'Value'),
+					'label' => __d('croogo', 'Value'),
 				));
 			?>
 			</div>
@@ -51,13 +51,13 @@ echo $this->Form->create('Setting');
 			<div id="setting-misc" class="tab-pane">
 			<?php
 				echo $this->Form->input('title', array(
-					'placeholder' => __d('croogo', 'Title'),
+					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('description', array(
-					'placeholder' => __d('croogo', 'Description'),
+					'label' => __d('croogo', 'Description'),
 				));
 				echo $this->Form->input('input_type', array(
-					'placeholder' => __d('croogo', 'Input Type'),
+					'label' => __d('croogo', 'Input Type'),
 					'rel' => __d('croogo', "e.g., 'text' or 'textarea'"),
 				));
 				echo $this->Form->input('editable', array(
@@ -65,7 +65,7 @@ echo $this->Form->create('Setting');
 					'class' => false,
 				));
 				echo $this->Form->input('params', array(
-					'placeholder' => __d('croogo', 'Params'),
+					'label' => __d('croogo', 'Params'),
 				));
 			?>
 			</div>

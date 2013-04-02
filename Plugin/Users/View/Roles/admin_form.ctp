@@ -34,10 +34,10 @@ if ($this->request->params['action'] == 'admin_add') {
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'placeholder' => __d('croogo', 'Title'),
+					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('alias', array(
-					'placeholder' => __d('croogo', 'Alias'),
+					'label' => __d('croogo', 'Alias'),
 				));
 			?>
 			</div>

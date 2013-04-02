@@ -40,20 +40,20 @@ echo $this->Form->create('Attachment', array('url' => array('controller' => 'att
 					'label' => false,
 				));
 				echo $this->Form->input('title', array(
-					'placeholder' => __d('croogo', 'Title'),
+					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('excerpt', array(
-					'placeholder' => __d('croogo', 'Caption'),
+					'label' => __d('croogo', 'Caption'),
 				));
 
 				echo $this->Form->input('file_url', array(
-					'placeholder' => __d('croogo', 'File URL'),
+					'label' => __d('croogo', 'File URL'),
 					'value' => Router::url($this->data['Attachment']['path'], true),
 					'readonly' => 'readonly')
 				);
 
 				echo $this->Form->input('file_type', array(
-					'placeholder' => __d('croogo', 'Mime Type'),
+					'label' => __d('croogo', 'Mime Type'),
 					'value' => $this->data['Attachment']['mime_type'],
 					'readonly' => 'readonly')
 				);

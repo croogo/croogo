@@ -30,10 +30,10 @@ echo $this->Form->create('Comment');
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'placeholder' => __d('croogo', 'Title'),
+					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('body', array(
-					'placeholder' => __d('croogo', 'Body'),
+					'label' => __d('croogo', 'Body'),
 				));
 			?>
 			</div>
@@ -52,7 +52,7 @@ echo $this->Form->create('Comment');
 					array('button' => 'danger')
 				) .
 				$this->Form->input('status', array(
-					'placeholder' => __d('croogo', 'Published'),
+					'label' => __d('croogo', 'Published'),
 					'class' => false,
 				)) .
 				$this->Html->endBox();
