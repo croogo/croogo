@@ -97,6 +97,7 @@ class Install extends InstallAppModel {
 						$modelObject->useTable, $modelObject->primaryKey
 					);
 				}
+				ClassRegistry::removeObject($modelAlias);
 			}
 		}
 
