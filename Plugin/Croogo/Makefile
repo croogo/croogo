@@ -1,5 +1,5 @@
-BOOTSTRAP_TAG=v2.2.0
-FONTAWESOME_TAG=master
+BOOTSTRAP_TAG=v2.3.1
+FONTAWESOME_TAG=v3.0.2
 
 REPO_FONTAWESOME=git://github.com/FortAwesome/Font-Awesome.git
 REPO_BOOTSTRAP=git://github.com/twitter/bootstrap
@@ -28,10 +28,10 @@ all: css js assets
 	@echo "Done."
 
 webroot/fontAwesome:
-	git clone ${REPO_FONTAWESOME} webroot/fontAwesome
+	git clone -b ${FONTAWESOME_TAG} ${REPO_FONTAWESOME} webroot/fontAwesome
 
 webroot/bootstrap:
-	git clone ${REPO_BOOTSTRAP} webroot/bootstrap
+	git clone -b ${BOOTSTRAP_TAG} ${REPO_BOOTSTRAP} webroot/bootstrap
 
 deps: webroot/fontAwesome webroot/bootstrap
 

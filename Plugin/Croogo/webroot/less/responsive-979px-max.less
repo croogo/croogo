@@ -30,7 +30,8 @@
 
 	// Display sub-menu link (previously hide)
 	.sub-nav > li > a {
-		i {
+		i[class*=" icon-"],
+		i[class^="icon-"] {
 			display: none;
 		}
 		&> span {

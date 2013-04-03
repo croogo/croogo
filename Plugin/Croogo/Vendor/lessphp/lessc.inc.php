@@ -1,7 +1,7 @@
 <?php
 
 /**
- * lessphp v0.3.8
+ * lessphp v0.3.9
  * http://leafo.net/lessphp
  *
  * LESS css compiler, adapted from http://lesscss.org
@@ -38,7 +38,7 @@
  * handling things like indentation.
  */
 class lessc {
-	static public $VERSION = "v0.3.8";
+	static public $VERSION = "v0.3.9";
 	static protected $TRUE = array("keyword", "true");
 	static protected $FALSE = array("keyword", "false");
 
@@ -327,6 +327,9 @@ class lessc {
 						$parts[] = "($q[1])";
 					}
 					break;
+				case "variable":
+					$parts[] = $this->compileValue($this->reduce($q));
+				break;
 				}
 			}
 
@@ -434,7 +437,7 @@ class lessc {
 		foreach ($selectors as $s) {
 			if (is_array($s)) {
 				list(, $value) = $s;
-				$out[] = $this->compileValue($this->reduce($value));
+				$out[] = trim($this->compileValue($this->reduce($value)));
 			} else {
 				$out[] = $s;
 			}
@@ -727,8 +730,7 @@ class lessc {
 		case 'list':
 			// [1] - delimiter
 			// [2] - array of values
-			$delimiter = $value[1] == ',' ? $value[1] . ' ' : $value[1];
-			return implode($delimiter, array_map(array($this, 'compileValue'), $value[2]));
+			return implode($value[1], array_map(array($this, 'compileValue'), $value[2]));
 		case 'raw_color':
 			if (!empty($this->formatter->compressColors)) {
 				return $this->compileValue($this->coerceColor($value));
@@ -765,7 +767,7 @@ class lessc {
 			$b = round($b);
 
 			if (count($value) == 5 && $value[4] != 1) { // rgba
-				return 'rgba('.$r.', '.$g.', '.$b.', '.$value[4].')';
+				return 'rgba('.$r.','.$g.','.$b.','.$value[4].')';
 			}
 
 			$h = sprintf("#%02x%02x%02x", $r, $g, $b);
@@ -893,6 +895,16 @@ class lessc {
 	protected function lib_round($arg) {
 		$value = $this->assertNumber($arg);
 		return array("number", round($value), $arg[2]);
+	}
+
+	protected function lib_unit($arg) {
+		if ($arg[0] == "list") {
+			list($number, $newUnit) = $arg[2];
+			return array("number", $this->assertNumber($number),
+				$this->compileValue($this->lib_e($newUnit)));
+		} else {
+			return array("number", $this->assertNumber($arg), "");
+		}
 	}
 
 	/**
@@ -1115,7 +1127,7 @@ class lessc {
 	 * Expects H to be in range of 0 to 360, S and L in 0 to 100
 	 */
 	protected function toRGB($color) {
-		if ($color == 'color') return $color;
+		if ($color[0] == 'color') return $color;
 
 		$H = $color[1] / 360;
 		$S = $color[2] / 100;
@@ -1203,6 +1215,14 @@ class lessc {
 
 	protected function reduce($value, $forExpression = false) {
 		switch ($value[0]) {
+		case "interpolate":
+			$reduced = $this->reduce($value[1]);
+			$var = $this->compileValue($reduced);
+			$res = $this->reduce(array("variable", $this->vPrefix . $var));
+
+			if (empty($value[2])) $res = $this->lib_e($res);
+
+			return $res;
 		case "variable":
 			$key = $value[1];
 			if (is_array($key)) {
@@ -1478,7 +1498,7 @@ class lessc {
 		if (is_null($color)) {
 			$this->throwError('color expected for red()');
 		}
-		
+
 		return $color[1];
 	}
 
@@ -1487,7 +1507,7 @@ class lessc {
 		if (is_null($color)) {
 			$this->throwError('color expected for green()');
 		}
-		
+
 		return $color[2];
 	}
 
@@ -1496,7 +1516,7 @@ class lessc {
 		if (is_null($color)) {
 			$this->throwError('color expected for blue()');
 		}
-		
+
 		return $color[3];
 	}
 
@@ -2576,6 +2596,9 @@ class lessc_parser {
 			$out = array("mediaExp", $feature);
 			if ($value) $out[] = $value;
 			return true;
+		} elseif ($this->variable($variable)) {
+			$out = array('variable', $variable);
+			return true;
 		}
 
 		$this->seek($s);
@@ -2629,11 +2652,10 @@ class lessc_parser {
 				continue;
 			}
 
-			if (in_array($tok, $rejectStrs)) {
-				$count = null;
+			if (!empty($rejectStrs) && in_array($tok, $rejectStrs)) {
+				$ount = null;
 				break;
 			}
-
 
 			$content[] = $tok;
 			$this->count+= strlen($tok);
@@ -2709,10 +2731,10 @@ class lessc_parser {
 
 		$s = $this->seek();
 		if ($this->literal("@{") &&
-			$this->keyword($var) &&
+			$this->openString("}", $interp, null, array("'", '"', ";")) &&
 			$this->literal("}", false))
 		{
-			$out = array("variable", $this->lessc->vPrefix . $var);
+			$out = array("interpolate", $interp);
 			$this->eatWhiteDefault = $oldWhite;
 			if ($this->eatWhiteDefault) $this->whitespace();
 			return true;
@@ -2886,38 +2908,73 @@ class lessc_parser {
 		return false;
 	}
 
-	// a single tag
+	// a space separated list of selectors
 	protected function tag(&$tag, $simple = false) {
 		if ($simple)
-			$chars = '^,:;{}\][>\(\) "\'';
+			$chars = '^@,:;{}\][>\(\) "\'';
 		else
-			$chars = '^,;{}["\'';
+			$chars = '^@,;{}["\'';
+
+		$s = $this->seek();
 
 		if (!$simple && $this->tagExpression($tag)) {
 			return true;
 		}
 
-		$tag = '';
-		while ($this->tagBracket($first)) $tag .= $first;
+		$hasExpression = false;
+		$parts = array();
+		while ($this->tagBracket($first)) $parts[] = $first;
+
+		$oldWhite = $this->eatWhiteDefault;
+		$this->eatWhiteDefault = false;
 
 		while (true) {
 			if ($this->match('(['.$chars.'0-9]['.$chars.']*)', $m)) {
-				$tag .= $m[1];
+				$parts[] = $m[1];
 				if ($simple) break;
 
-				while ($this->tagBracket($brack)) $tag .= $brack;
-				continue;
-			} elseif ($this->unit($unit)) { // for keyframes
-				$tag .= $unit[1] . $unit[2];
+				while ($this->tagBracket($brack)) {
+					$parts[] = $brack;
+				}
 				continue;
 			}
+
+			if (isset($this->buffer[$this->count]) && $this->buffer[$this->count] == "@") {
+				if ($this->interpolation($interp)) {
+					$hasExpression = true;
+					$interp[2] = true; // don't unescape
+					$parts[] = $interp;
+					continue;
+				}
+
+				if ($this->literal("@")) {
+					$parts[] = "@";
+					continue;
+				}
+			}
+
+			if ($this->unit($unit)) { // for keyframes
+				$parts[] = $unit[1];
+				$parts[] = $unit[2];
+				continue;
+			}
+
 			break;
 		}
 
+		$this->eatWhiteDefault = $oldWhite;
+		if (!$parts) {
+			$this->seek($s);
+			return false;
+		}
 
-		$tag = trim($tag);
-		if ($tag == '') return false;
+		if ($hasExpression) {
+			$tag = array("exp", array("string", "", $parts));
+		} else {
+			$tag = trim(implode($parts));
+		}
 
+		$this->whitespace();
 		return true;
 	}
 
