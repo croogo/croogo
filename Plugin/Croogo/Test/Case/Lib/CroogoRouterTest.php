@@ -20,6 +20,48 @@ class CroogoRouterTest extends CroogoTestCase {
 		$this->skipIf(version_compare(Configure::version(), '2.3.1', '<'));
 	}
 
+/**
+ * testHomeRoute
+ */
+	public function testHomeRoute() {
+		$promoted = array(
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'promoted',
+		);
+		$result = CroogoRouter::connect('/', $promoted);
+
+		$this->assertEquals(1, count($result));
+		$this->assertNotEmpty($result[0]);
+		$this->assertInstanceOf('CakeRoute', $result[0]);
+		$reversed = Router::parse('/');
+		$this->assertEquals($promoted, array_intersect($promoted, $reversed));
+
+		// another route
+		$index = array(
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'index',
+		);
+		$result = CroogoRouter::connect('/nodes', $index);
+		$this->assertEquals(2, count($result));
+		$reversed = Router::parse('/');
+		$this->assertEquals($promoted, array_intersect($promoted, $reversed));
+
+		$terms = array(
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'terms',
+		);
+		$result = CroogoRouter::connect('/', $terms);
+		$this->assertEquals(3, count($result));
+
+		// override '/' route
+		Router::promote();
+		$reversed = Router::parse('/');
+		$this->assertEquals($terms, array_intersect($terms, $reversed));
+	}
+
 	public function testContentType() {
 		$params = array(
 			'url' => array(),

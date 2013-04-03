@@ -28,15 +28,19 @@ class CroogoRouter {
  *
  * @param string $route         An empty string, or a route string "/"
  * @param array $default        NULL or an array describing the default route
- * @param array $params         An array matching the named elements in the route to regular expressions which that element should match.
- * @return void
+ * @param array $params         An array matching the named elements in the
+ *                              route to regular expressions which that element
+ *                              should match.
+ * @return array                Array of routes
+ * @see Router::connect()
+ * @throws RouterException
  */
 	public static function connect($route, $default = array(), $params = array()) {
 		$localizedRoute = $route == '/' ? '' : $route;
 		if (Configure::read('Translate')) {
 			Router::connect('/:locale' . $localizedRoute, $default, array_merge(array('locale' => '[a-z]{3}'), $params));
 		}
-		Router::connect($route, $default, $params);
+		return Router::connect($route, $default, $params);
 	}
 
 /**
