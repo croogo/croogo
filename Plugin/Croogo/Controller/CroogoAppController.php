@@ -141,6 +141,11 @@ class CroogoAppController extends Controller {
 		$this->Security->blackHoleCallback = 'securityError';
 		$this->Security->requirePost('admin_delete');
 
+		$csrfExpires = Configure::read('Site.csrfExpires');
+		if (strtotime($csrfExpires) !== false) {
+			$this->Security->csrfExpires = $csrfExpires;
+		}
+
 		if (isset($this->request->params['admin'])) {
 			$this->layout = 'admin';
 		}
