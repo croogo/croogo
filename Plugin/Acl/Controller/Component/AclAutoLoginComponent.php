@@ -121,6 +121,7 @@ class AclAutoLoginComponent extends Component {
 		if (empty($userId)) {
 			$request->data = $this->_verify();
 			if ($request->data === false) {
+				$this->Cookie->delete($this->_userModel);
 				throw new UnauthorizedException('Invalid cookie');
 			}
 			if ($this->Auth->login()) {
