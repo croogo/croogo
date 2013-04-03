@@ -202,7 +202,7 @@ class UpgradeTask extends AppShell {
 /**
  * Activate/move Wysiwyg before Ckeditor/Tinymce when appropriate
  */
-	protected function _bootstrapSetupEditor($plugins);
+	protected function _bootstrapSetupEditor($plugins) {
 		$plugins = array_flip($plugins);
 		if (empty($plugins['Ckeditor']) && empty($plugins['Tinymce'])) {
 			return;
