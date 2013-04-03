@@ -173,11 +173,20 @@ class LayoutHelper extends AppHelper {
  */
 	public function status($value) {
 		if ($value == 1) {
-			$output = $this->Html->image('/croogo/img/icons/tick.png');
+			$icon = 'ok';
+			$class = 'green';
 		} else {
-			$output = $this->Html->image('/croogo/img/icons/cross.png');
+			$icon = 'remove';
+			$class = 'red';
 		}
-		return $output;
+		if (method_exists($this->Html, 'icon')) {
+			return $this->Html->icon($icon, compact('class'));
+		} else {
+			if (empty($this->_View->CroogoHtml)) {
+				$this->_View->Helpers->load('Croogo.CroogoHtml');
+			}
+			return $this->_View->CroogoHtml->icon($icon, compact('class'));
+		}
 	}
 
 /**

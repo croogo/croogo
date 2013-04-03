@@ -129,7 +129,7 @@ Admin.form = function() {
 
 	var ajaxToggle = function(e) {
 		var $this = $(this);
-		$this.addClass('loading').find('i').attr('class', 'icon-none');
+		$this.addClass('icon-spinner icon-spin').find('i').attr('class', 'icon-none');
 		var url = $this.data('url');
 		$.post(url, function(data) {
 			$this.parent().html(data);

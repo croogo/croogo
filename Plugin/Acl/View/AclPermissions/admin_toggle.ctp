@@ -2,12 +2,20 @@
 
 if ($success == 1) {
 	if ($permitted == 1) {
-		echo $this->Html->image('/croogo/img/icons/tick.png', array('class' => 'permission-toggle', 'data-aco_id' => $acoId, 'data-aro_id' => $aroId));
+		echo $this->Html->tag('i', null, array(
+			'class' => 'permission-toggle icon-ok green',
+			'data-aco_id' => $acoId,
+			'data-aro_id' => $aroId
+		));
 	} else {
-		echo $this->Html->image('/croogo/img/icons/cross.png', array('class' => 'permission-toggle', 'data-aco_id' => $acoId, 'data-aro_id' => $aroId));
+		echo $this->Html->tag('i', null, array(
+			'class' => 'permission-toggle icon-remove red',
+			'data-aco_id' => $acoId,
+			'data-aro_id' => $aroId
+		));
 	}
 } else {
-	__d('croogo', 'error');
+	echo __d('croogo', 'error');
 }
 
 Configure::write('debug', 0);

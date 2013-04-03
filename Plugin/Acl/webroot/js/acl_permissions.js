@@ -15,13 +15,13 @@ AclPermissions.templates = {
 <td> \
 	<div class="<%= classes %>" data-alias="<%= alias %>" \
 		data-level="<%= level %>" data-id="<%= id %>" > \
-	<%= alias %> \
+	<%= alias %><i class="pull-right icon-none"></i> \
 	</div> \
 </td>'),
 
 	toggleButton: _.template('\
-<td><img src="<%= Croogo.basePath %>croogo/img/icons/<%= icon %>" class="<%= classes.trim() %>" \
-		data-aro_id="<%= aroId %>" data-aco_id="<%= acoId %>"> \
+<td><i class="<%= classes.trim() %>" \
+		data-aro_id="<%= aroId %>" data-aco_id="<%= acoId %>"></i> \
 </td>'),
 
 	editLinks: _.template('<td><div class="item-actions"><%= up %> <%= down %> <%= edit %> <%= del %> </div></td>')
@@ -45,13 +45,15 @@ AclPermissions.documentReady = function() {
  * @return void
  */
 AclPermissions.permissionToggle = function() {
-	$('.permission-table').one('click', '.permission-toggle', function() {
+	$('.permission-table').one('click', '.permission-toggle:not(.permission-disabled)', function() {
 		var $this = $(this);
 		var acoId = $this.data('aco_id');
 		var aroId = $this.data('aro_id');
 
 		// show loader
-		$this.attr('src', Croogo.basePath+'croogo/img/ajax/circle_ball.gif');
+		$this
+			.removeClass('icon-ok icon-remove')
+			.addClass('icon-spin icon-spinner');
 
 		// prepare loadUrl
 		var loadUrl = Croogo.basePath+'admin/acl/acl_permissions/toggle/';
@@ -112,7 +114,7 @@ AclPermissions.tableToggle = function() {
 		}
 		var $row = $el.parents('tr');
 		$(rows).insertAfter($row);
-		$el.removeClass('loading');
+		$el.find('i').removeClass('icon-spinner icon-spin');
 	};
 
 	// create table cells for role permissions
@@ -122,7 +124,7 @@ AclPermissions.tableToggle = function() {
 			var cell = {
 				aroId: aros[aroIndex],
 				acoId: acoId,
-				classes: "permission-toggle"
+				classes: "permission-toggle "
 			};
 			if (roles['children'] > 0) {
 				text += '<td>&nbsp;</td>';
@@ -131,13 +133,12 @@ AclPermissions.tableToggle = function() {
 
 			var allowed = roles['roles'][aroIndex];
 			if (aroIndex == 1) {
-				cell.icon = "tick_disabled.png";
-				cell.classes = " permission-disabled";
+				cell.classes += "icon-ok lightgray permission-disabled";
 			} else {
 				if (allowed) {
-					cell.icon = "tick.png";
+					cell.classes += "icon-ok green";
 				} else {
-					cell.icon = "cross.png";
+					cell.classes += "icon-remove red";
 				}
 			}
 			text += AclPermissions.templates.toggleButton(cell);
@@ -150,7 +151,7 @@ AclPermissions.tableToggle = function() {
 		var id = $el.data('id');
 		var level = $el.data('level');
 
-		$el.addClass('loading');
+		$el.find('i').addClass('icon-spin icon-spinner');
 		if ($el.hasClass('perm-expand')) {
 			$el.removeClass('perm-expand').addClass('perm-collapse');
 		} else {
@@ -159,7 +160,8 @@ AclPermissions.tableToggle = function() {
 				var childId = $('.controller', this).data('id')
 				$('tr[data-parent_id=' + childId + ']').remove();
 			}).remove();
-			$el.removeClass('loading perm-collapse').addClass('perm-expand');
+			$el.removeClass('perm-collapse').addClass('perm-expand')
+				.find('i').removeClass('icon-spin icon-spinner');
 			return;
 		}
 

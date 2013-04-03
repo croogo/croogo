@@ -1,5 +1,11 @@
 
-img.permission-toggle:hover { cursor: pointer; }
+.permission-toggle {
+	&:hover { cursor: pointer; }
+	&.permission-disabled {
+		color: @gray;
+		cursor: text;
+	}
+}
 img.hook-toggle:hover { cursor: pointer; }
 
 .perm-collapse {
@@ -22,10 +28,6 @@ td {
 
 	&:hover {
 		cursor: pointer;
-	}
-
-	&.loading {
-		background: url('../img/ajax/circle_ball.gif') no-repeat scroll 100% 0 transparent;
 	}
 }
 

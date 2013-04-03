@@ -79,6 +79,7 @@ $this->Html
 	</thead>
 <?php
 
+	$icon = '<i class="pull-right"></i>';
 	$currentController = '';
 	foreach ($acos as $index => $aco) {
 		$id = $aco['Aco']['id'];
@@ -103,11 +104,11 @@ $this->Html
 
 		$row = array(
 			$id,
-			$this->Html->div(trim($class), $alias, array(
+			$this->Html->div(trim($class), $alias . $icon, array(
 				'data-id' => $id,
 				'data-alias' => $alias,
 				'data-level' => $level,
-				)),
+			)),
 		);
 
 		foreach ($roles as $roleId => $roleTitle) {

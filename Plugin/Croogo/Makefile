@@ -1,5 +1,5 @@
 BOOTSTRAP_TAG=v2.2.0
-FONTAWESOME_TAG=master
+FONTAWESOME_TAG=v3.0.2
 
 REPO_FONTAWESOME=git://github.com/FortAwesome/Font-Awesome.git
 REPO_BOOTSTRAP=git://github.com/twitter/bootstrap
