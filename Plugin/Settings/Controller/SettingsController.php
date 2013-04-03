@@ -194,7 +194,15 @@ class SettingsController extends SettingsAppController {
 			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array('admin' => true, 'controller' => 'settings', 'action' => 'index'));
+		if (!$redirect = $this->referer()) {
+			$redirect = array(
+				'admin' => true,
+				'plugin' => 'settings',
+				'controller' => 'settings',
+				'action' => 'index'
+			);
+		}
+		$this->redirect($redirect);
 	}
 
 /**
