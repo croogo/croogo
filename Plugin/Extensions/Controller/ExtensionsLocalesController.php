@@ -169,7 +169,7 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$poFile =  APP . 'Locale' . DS . $locale . DS . 'LC_MESSAGES' . DS . 'croogo.po';
+		$poFile = APP . 'Locale' . DS . $locale . DS . 'LC_MESSAGES' . DS . 'croogo.po';
 
 		if (!file_exists($poFile)) {
 			$this->Session->setFlash(__d('croogo', 'The file %s does not exist.', basename($poFile)), 'default', array('class' => 'error'));

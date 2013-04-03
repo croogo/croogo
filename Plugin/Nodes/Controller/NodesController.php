@@ -805,4 +805,5 @@ class NodesController extends NodesAppController {
 		$typeAlias = $type['Type']['alias'];
 		$this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy', 'users'));
 	}
+
 }

@@ -1,4 +1,7 @@
 <?php
+
+App::uses('BaseAuthorize', 'Controller/Component/Auth');
+
 /**
  * AclCachedAuthorize
  *
@@ -10,8 +13,6 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-App::uses('BaseAuthorize', 'Controller/Component/Auth');
-
 class AclCachedAuthorize extends BaseAuthorize {
 
 	public function __construct(ComponentCollection $collection, $settings = array()) {

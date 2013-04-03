@@ -1,4 +1,5 @@
 <?php
+
 App::uses('Controller', 'Controller');
 
 /**
@@ -234,4 +235,5 @@ class CroogoAppController extends Controller {
 		}
 		return parent::render($view, $layout);
 	}
+
 }

@@ -342,6 +342,8 @@ class Node extends NodesAppModel {
 
 /**
  * Return filter condition for Nodes
+ *
+ * @return array Array of conditions
  */
 	public function filterNodes($data = array()) {
 		$conditions = array();
@@ -448,6 +450,12 @@ class Node extends NodesAppModel {
 		return $prepared;
 	}
 
+/**
+ * Update values for all nodes 'path' field
+ *
+ * @return bool|array Depending on atomicity
+ * @see Model::saveMany()
+ */
 	public function updateAllNodesPaths() {
 		$types = $this->Taxonomy->Vocabulary->Type->find('list', array(
 			'fields' => array(
@@ -578,22 +586,42 @@ class Node extends NodesAppModel {
 		}
 	}
 
+/**
+ * Internal helper function to change state fields
+ * @see Node::processAction()
+ */
 	protected function _publish($ids) {
 		return $this->_saveStatus($ids, self::PUBLICATION_STATE_FIELD, self::STATUS_PUBLISHED);
 	}
 
+/**
+ * Internal helper function to change state fields
+ * @see Node::processAction()
+ */
 	protected function _unpublish($ids) {
 		return $this->_saveStatus($ids, self::PUBLICATION_STATE_FIELD, self::STATUS_UNPUBLISHED);
 	}
 
+/**
+ * Internal helper function to change state fields
+ * @see Node::processAction()
+ */
 	protected function _promote($ids) {
 		return $this->_saveStatus($ids, self::PROMOTION_STATE_FIELD, self::STATUS_PROMOTED);
 	}
 
+/**
+ * Internal helper function to change state fields
+ * @see Node::processAction()
+ */
 	protected function _unpromote($ids) {
 		return $this->_saveStatus($ids, self::PROMOTION_STATE_FIELD, self::STATUS_UNPROMOTED);
 	}
 
+/**
+ * Internal helper function to change state fields
+ * @see Node::processAction()
+ */
 	protected function _saveStatus($ids, $field, $status) {
 		return $this->updateAll(array($this->escapeField($field) => $status), array($this->escapeField() => $ids));
 	}

@@ -1,4 +1,7 @@
 <?php
+
+App::uses('AppModel', 'Model');
+
 /**
  * Taxonomy App Model
  *

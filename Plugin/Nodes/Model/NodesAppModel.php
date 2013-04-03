@@ -1,4 +1,7 @@
 <?php
+
+App::uses('AppModel', 'Model');
+
 /**
  * Nodes App Model
  *

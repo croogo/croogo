@@ -1,4 +1,5 @@
 <?php
+
 App::uses('BaseAuthenticate', 'Controller/Component/Auth');
 
 /**

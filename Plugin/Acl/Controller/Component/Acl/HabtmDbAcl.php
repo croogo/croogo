@@ -1,4 +1,5 @@
 <?php
+
 App::uses('DbAcl', 'Controller/Component/Acl');
 
 /**

@@ -21,17 +21,17 @@ $cacheConfig = array(
 	'prefix' => $defaultPrefix,
 );
 
-// models
+// Models
 Cache::config('setting_write_configuration', $cacheConfig);
 
-// components
+// Components
 Cache::config('croogo_blocks', $cacheConfig);
 Cache::config('croogo_menus', $cacheConfig);
 Cache::config('croogo_nodes', $cacheConfig);
 Cache::config('croogo_types', $cacheConfig);
 Cache::config('croogo_vocabularies', $cacheConfig);
 
-// controllers
+// Controllers
 Cache::config('nodes_view', $cacheConfig);
 Cache::config('nodes_promoted', $cacheConfig);
 Cache::config('nodes_term', $cacheConfig);

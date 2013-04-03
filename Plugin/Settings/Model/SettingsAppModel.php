@@ -1,5 +1,7 @@
 <?php
 
+App::uses('AppModel', 'Model');
+
 /**
  * Settings Application model
  *

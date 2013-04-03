@@ -1,4 +1,5 @@
 <?php
+
 App::uses('CakeSession', 'Model/Datasource');
 App::uses('CroogoTestFixture', 'Croogo.TestSuite');
 
@@ -26,8 +27,9 @@ class CroogoControllerTestCase extends ControllerTestCase {
 	}
 
 	protected static function _restoreSettings() {
-		$source = CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS . 'settings.default';
-		$target = CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS . 'settings.json';
+		$configDir = CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS;
+		$source = $configDir . 'settings.default';
+		$target = $configDir . 'settings.json';
 		copy($source, $target);
 	}
 
@@ -39,9 +41,11 @@ class CroogoControllerTestCase extends ControllerTestCase {
 	public function setUp() {
 		parent::setUp();
 
+		$appDir = CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS;
+
 		App::build(array(
-			'Plugin' => array(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
-			'View' => array(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'View' . DS),
+			'Plugin' => array($appDir . 'Plugin' . DS),
+			'View' => array($appDir . 'View' . DS),
 		), App::PREPEND);
 
 		if (!isset($_SERVER['REMOTE_ADDR'])) {
@@ -53,7 +57,7 @@ class CroogoControllerTestCase extends ControllerTestCase {
 		CakePlugin::load('Example');
 		Configure::write('Acl.database', 'test');
 		$Setting = ClassRegistry::init('Settings.Setting');
-		$Setting->settingsPath = CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS . 'settings.json';
+		$Setting->settingsPath = $appDir . 'Config' . DS . 'settings.json';
 		Configure::drop('settings');
 		Configure::config('settings', new CroogoJsonReader(dirname($Setting->settingsPath) . DS ));
 		CakeLog::drop('stdout');

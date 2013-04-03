@@ -16,6 +16,9 @@ App::uses('ModelBehavior', 'Model');
  */
 class UserAroBehavior extends ModelBehavior {
 
+/**
+ * Setup
+ */
 	public function setup(Model $model, $config = array()) {
 		$this->_setupMultirole($model);
 	}

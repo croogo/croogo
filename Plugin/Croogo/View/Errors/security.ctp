@@ -5,7 +5,7 @@
 </p>
 <?php if (Configure::read('debug') > 0): ?>
 <p class="notice">
-	Request blackholed due to "<?php echo $type; ?>" violation.
+	<?php echo __('croogo', 'Request blackholed due to "%s" violation.', $type; ?>
 </p>
 <?php endif; ?>
 <?php Configure::write('debug', 0); ?>
