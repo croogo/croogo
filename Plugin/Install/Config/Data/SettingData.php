@@ -45,7 +45,7 @@ class SettingData {
 			'description' => '',
 			'input_type' => 'checkbox',
 			'editable' => '1',
-			'weight' => '5',
+			'weight' => '6',
 			'params' => ''
 		),
 		array(
@@ -301,6 +301,18 @@ class SettingData {
 			'weight' => '26',
 			'params' => 'multiple=checkbox
 options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "Menus.Link": "Link"}'
+		),
+
+		array(
+			'id' => '37',
+			'key' => 'Site.autoLoginDuration',
+			'value' => '+1 week',
+			'title' => '"Remember Me" Duration',
+			'description' => 'Eg: +1 day, +1 week',
+			'input_type' => 'text',
+			'editable' => '1',
+			'weight' => '5',
+			'params' => ''
 		),
 	);
 

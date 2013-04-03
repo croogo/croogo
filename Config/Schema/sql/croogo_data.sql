@@ -362,7 +362,7 @@ INSERT IGNORE INTO `settings` (`id`, `key`, `value`, `title`, `description`, `in
 (6, 'Site.title', 'Croogo', '', '', '', 1, 1, ''),
 (7, 'Site.tagline', 'A CakePHP powered Content Management System.', '', '', 'textarea', 1, 2, ''),
 (8, 'Site.email', 'you@your-site.com', '', '', '', 1, 3, ''),
-(9, 'Site.status', '1', '', '', 'checkbox', 1, 5, ''),
+(9, 'Site.status', '1', '', '', 'checkbox', 1, 6, ''),
 (12, 'Meta.robots', 'index, follow', '', '', '', 1, 6, ''),
 (13, 'Meta.keywords', 'croogo, Croogo', '', '', 'textarea', 1, 7, ''),
 (14, 'Meta.description', 'Croogo - A CakePHP powered Content Management System', '', '', 'textarea', 1, 8, ''),
@@ -386,7 +386,8 @@ INSERT IGNORE INTO `settings` (`id`, `key`, `value`, `title`, `description`, `in
 (34, 'Access Control.multiRole', '0', 'Enable Multiple Roles', '', 'checkbox', 1, 25, ''),
 (35, 'Access Control.rowLevel', '0', 'Row Level Access Control', '', 'checkbox', 1, 26, ''),
 (36, 'Access Control.models', '', 'Models with Row Level Acl', 'Select models to activate Row Level Access Control on', 'multiple', 1, 27, 'multiple=checkbox
-options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "Menus.Link": "Link"}');
+options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "Menus.Link": "Link"}')
+(37, 'Site.autoLoginDuration', '+1 week', '"Remember Me" Duration', 'Eg: +1 day, +1 week', 'text', 1, 6, '');
 
 --
 -- Dumping data for table `taxonomies`
