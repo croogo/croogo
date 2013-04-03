@@ -112,14 +112,11 @@ foreach ($plugins as $plugin) {
 		CakeLog::error('Plugin not found during bootstrap: ' . $pluginName);
 		continue;
 	}
-	$bootstrapFile = $pluginPath . DS . 'Config' . DS . 'bootstrap.php';
-	$bootstrap = file_exists($bootstrapFile);
-	$routesFile =  $pluginPath . DS . 'Config' . DS . 'routes.php';
-	$routes = file_exists($routesFile);
 	$option = array(
 		$pluginName => array(
-			'bootstrap' => $bootstrap,
-			'routes' => $routes,
+			'bootstrap' => true,
+			'routes' => true,
+			'ignoreMissing' => true,
 		)
 	);
 	CroogoPlugin::load($option);
