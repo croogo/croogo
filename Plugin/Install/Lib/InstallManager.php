@@ -78,8 +78,22 @@ class InstallManager {
 		return true;
 	}
 
+/**
+ * Create settings.json from default file
+ *
+ * @return bool true when successful
+ */
 	public function createSettingsFile() {
-		copy(APP . 'Config' . DS . 'settings.json.install', APP . 'Config' . DS . 'settings.json');
+		return copy(APP . 'Config' . DS . 'settings.json.install', APP . 'Config' . DS . 'settings.json');
+	}
+
+/**
+ * Mark installation as complete
+ *
+ * @return bool true when successful
+ */
+	public function installCompleted() {
+		return ClassRegistry::init('Settings.Setting')->write('Croogo.installed', 1);
 	}
 
 }

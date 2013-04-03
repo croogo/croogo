@@ -111,6 +111,7 @@ class InstallShell extends AppShell {
 
 		$Install->addAdminUser($user);
 		$InstallManager->createSettingsFile();
+		$InstallManager->installCompleted();
 
 		$this->out();
 		$this->success('Congratulations, Croogo has been installed successfully.');
