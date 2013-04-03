@@ -189,9 +189,21 @@ class UpgradeTask extends AppShell {
 	public function bootstraps() {
 		$this->_loadSettingsPlugin();
 
-		// activate/move Wysiwyg before Ckeditor/Tinymce
 		$bootstraps = Configure::read('Hook.bootstraps');
-		$plugins = array_flip(explode(',', $bootstraps));
+		$plugins = explode(',', $bootstraps);
+
+		$plugins = $this->_bootstrapReorderByDependency($plugins);
+		$plugins = $this->_bootstrapSetupEditor($plugins);
+
+		$this->Setting->write('Hook.bootstraps', join(',', $plugins));
+		$this->out(__d('croogo', 'Hook.bootstraps updated'));
+	}
+
+/**
+ * Activate/move Wysiwyg before Ckeditor/Tinymce when appropriate
+ */
+	protected function _bootstrapSetupEditor($plugins);
+		$plugins = array_flip($plugins);
 		if (empty($plugins['Ckeditor']) && empty($plugins['Tinymce'])) {
 			return;
 		}
@@ -217,9 +229,36 @@ class UpgradeTask extends AppShell {
 
 		asort($plugins);
 		$plugins = array_flip($plugins);
-		$this->Setting->write('Hook.bootstraps', join(',', $plugins));
+	}
 
-		$this->out(__d('croogo', 'Hook.bootstraps updated'));
+/**
+ * Re-order plugins based on dependencies:
+ * for e.g, Ckeditor depends on Wysiwyg
+ * if in Hook.bootstraps Ckeditor appears before Wysiwyg,
+ * we will reorder it so that it loads right after Wysiwyg
+ */
+	protected function _reorderByDependency($plugins) {
+		$pluginsOrdered = $plugins;
+		foreach ($plugins as $p) {
+			$jsonPath = APP . 'Plugin' . DS . $p . DS . 'Config' . DS . 'plugin.json';
+			if (file_exists($jsonPath)) {
+				$pluginData = json_decode(file_get_contents($jsonPath), true);
+				if (isset($pluginData['dependencies']['plugins'])) {
+					foreach ($pluginData['dependencies']['plugins'] as $d) {
+						$k = array_search($p, $pluginsOrdered);
+						$dk = array_search($d, $pluginsOrdered);
+						if ($dk > $k) {
+							unset($pluginsOrdered[$k]);
+							$pluginsOrdered = array_slice($pluginsOrdered, 0, $k + 1, true) +
+								array($p => $p) +
+								array_slice($pluginsOrdered, $k + 1, count($pluginsOrdered) - 1, true);
+							$pluginsOrdered = array_values($pluginsOrdered);
+						}
+					}
+				}
+			}
+		}
+		return $pluginsOrdered;
 	}
 
 /**

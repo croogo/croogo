@@ -102,49 +102,21 @@ $aclPlugin = Configure::read('Site.acl_plugin');
 $pluginBootstraps = Configure::read('Hook.bootstraps');
 $plugins = array_filter(explode(',', $pluginBootstraps));
 
-// Re-order plugins based on denpendencies:
-// for e.g, Ckeditor depends on Wysiwyg
-// if in Hook.bootstraps Ckeditor appears before Wysiwyg,
-// we will reorder it so that it loads right after Wysiwyg
-$pluginsOrdered = $plugins;
-foreach ($plugins as $p) {
-	$jsonPath = APP . 'Plugin' . DS . $p . DS . 'Config' . DS . 'plugin.json';
-	if (file_exists($jsonPath)) {
-		$pluginData = json_decode(file_get_contents($jsonPath), true);
-		if (isset($pluginData['dependencies']) && isset($pluginData['dependencies']['plugins'])) {
-			foreach ($pluginData['dependencies']['plugins'] as $d) {
-				$k = array_search($p, $pluginsOrdered);
-				$dk = array_search($d, $pluginsOrdered);
-				if ($dk > $k) {
-					unset($pluginsOrdered[$k]);
-					$pluginsOrdered = array_slice($pluginsOrdered, 0, $k + 1, true) +
-						array($p => $p) +
-						array_slice($pluginsOrdered, $k + 1, count($pluginsOrdered) - 1, true);
-					$pluginsOrdered = array_values($pluginsOrdered);
-				}
-			}
-		}
-	}
-}
-$plugins = $pluginsOrdered;
-
 if (!in_array($aclPlugin, $plugins)) {
 	$plugins = Hash::merge((array)$aclPlugin, $plugins);
 }
 foreach ($plugins as $plugin) {
 	$pluginName = Inflector::camelize($plugin);
-	if (!file_exists(APP . 'Plugin' . DS . $pluginName)) {
-		CakeLog::write(LOG_ERR, 'Plugin not found during bootstrap: ' . $pluginName);
+	$pluginPath = APP . 'Plugin' . DS . $pluginName;
+	if (!file_exists($pluginPath)) {
+		CakeLog::error('Plugin not found during bootstrap: ' . $pluginName);
 		continue;
 	}
-	$bootstrapFile = APP . 'Plugin' . DS . $pluginName . DS . 'Config' . DS . 'bootstrap.php';
-	$bootstrap = file_exists($bootstrapFile);
-	$routesFile = APP . 'Plugin' . DS . $pluginName . DS . 'Config' . DS . 'routes.php';
-	$routes = file_exists($routesFile);
 	$option = array(
 		$pluginName => array(
-			'bootstrap' => $bootstrap,
-			'routes' => $routes,
+			'bootstrap' => true,
+			'routes' => true,
+			'ignoreMissing' => true,
 		)
 	);
 	CroogoPlugin::load($option);

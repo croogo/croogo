@@ -197,6 +197,11 @@ class InstallController extends Controller {
 
 		$InstallManager = new InstallManager();
 		$result = $InstallManager->createSettingsFile();
+		if ($result) {
+			$InstallManager->installCompleted();
+		} else {
+			$this->log(__d('croogo', 'Installation failed: Unable to create settings file'));
+		}
 
 		$urlBlogAdd = Router::url(array(
 			'plugin' => 'nodes',
