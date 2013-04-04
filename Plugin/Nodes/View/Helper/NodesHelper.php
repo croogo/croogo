@@ -129,9 +129,7 @@ class NodesHelper extends AppHelper {
 	public function field($field = 'id', $value = null) {
 		$model = 'Node';
 		if (strstr($field, '.')) {
-			$fieldE = explode('.', $field);
-			$model = $fieldE['0'];
-			$field = $fieldE['1'];
+			list($model, $field) = explode('.', $field);
 		}
 
 		if ($field && $value) {

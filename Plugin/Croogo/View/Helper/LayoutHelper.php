@@ -394,10 +394,7 @@ class LayoutHelper extends AppHelper {
 			if (!is_string($helper) || in_array($helper, $this->coreHelpers)) {
 				continue;
 			}
-			if (strstr($helper, '.')) {
-				$helperE = explode('.', $helper);
-				$helper = $helperE['1'];
-			}
+			list(, $helper) = pluginSplit($helper);
 			if (isset($this->_View->{$helper}) && method_exists($this->_View->{$helper}, $methodName)) {
 				$output .= $this->_View->{$helper}->$methodName();
 			}
