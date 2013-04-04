@@ -20,11 +20,12 @@
 		}
 
 		// php version
-		if (phpversion() > 5) {
-			echo '<p class="success">' . sprintf(__d('croogo', 'PHP version %s > 5'), phpversion()) . '</p>';
+		$minPhpVersion = '5.2.8';
+		if (version_compare(phpversion(), $minPhpVersion, '>=')) {
+			echo '<p class="success">' . sprintf(__d('croogo', 'PHP version %s >= %s'), phpversion(), $minPhpVersion) . '</p>';
 		} else {
 			$check = false;
-			echo '<p class="error">' . sprintf(__d('croogo', 'PHP version %s < 5'), phpversion()) . '</p>';
+			echo '<p class="error">' . sprintf(__d('croogo', 'PHP version %s < %s'), phpversion(), $minPhpVersion) . '</p>';
 		}
 
 		// cakephp version
