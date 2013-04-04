@@ -237,7 +237,7 @@ class UpgradeTask extends AppShell {
  * if in Hook.bootstraps Ckeditor appears before Wysiwyg,
  * we will reorder it so that it loads right after Wysiwyg
  */
-	protected function _reorderByDependency($plugins) {
+	protected function _bootstrapReorderByDependency($plugins) {
 		$pluginsOrdered = $plugins;
 		foreach ($plugins as $p) {
 			$jsonPath = APP . 'Plugin' . DS . $p . DS . 'Config' . DS . 'plugin.json';
