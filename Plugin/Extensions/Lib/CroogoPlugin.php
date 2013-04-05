@@ -133,6 +133,16 @@ class CroogoPlugin extends Object {
  */
 	protected function _isCroogoPlugin($pluginDir, $path) {
 		$dir = $pluginDir . $path . DS;
+		$composerFile = $dir . 'composer.json';
+		if (file_exists($composerFile)) {
+			$pluginData = json_decode(file_get_contents($composerFile), true);
+			if (
+				$pluginData['type'] == 'cakephp-plugin' ||
+				isset($pluginData['require']['croogo/installers'])
+			) {
+				return true;
+			}
+		}
 		if (file_exists($dir . 'Config' . DS . 'plugin.json')) {
 			return true;
 		}
@@ -162,8 +172,23 @@ class CroogoPlugin extends Object {
 		foreach ($pluginPaths as $pluginPath) {
 			$manifestFile = $pluginPath . $alias . DS . 'Config' . DS . 'plugin.json';
 			$hasManifest = file_exists($manifestFile);
-			if ($hasManifest) {
-				$pluginData = json_decode(file_get_contents($manifestFile), true);
+			$composerFile = $pluginPath . $alias . DS . 'composer.json';
+			$hasComposer = file_exists($composerFile);
+			if ($hasManifest || $hasComposer) {
+				if ($hasManifest) {
+					$pluginData = json_decode(file_get_contents($manifestFile), true);
+				}
+
+				if ($hasComposer) {
+					$composerData = json_decode(file_get_contents($composerFile), true);
+					$isCroogoPlugin =
+						$composerData['type'] == 'cakephp-plugin' ||
+						isset($composerData['require']['croogo/installers']);
+					if ($isCroogoPlugin) {
+						$pluginData = $composerData;
+					}
+				}
+
 				if (!empty($pluginData)) {
 					$pluginData['active'] = $this->isActive($alias);
 					$pluginData['needMigration'] = $this->needMigration($alias, $pluginData['active']);
