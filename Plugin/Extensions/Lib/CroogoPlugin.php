@@ -168,6 +168,7 @@ class CroogoPlugin extends Object {
 					$pluginData['active'] = $this->isActive($alias);
 					$pluginData['needMigration'] = $this->needMigration($alias, $pluginData['active']);
 				} else {
+					$this->log('plugin.json exists but cannot be decoded.');
 					$pluginData = array();
 				}
 				return $pluginData;
