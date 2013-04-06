@@ -78,9 +78,13 @@ class AclFilterComponent extends Component {
 					'User.status' => 1,
 				),
 			),
-			'Acl.Cookie',
-			'Form',
 		);
+		if ($this->_config('autoLoginDuration')) {
+			$this->_controller->Auth->authenticate[] = 'Acl.Cookie';
+		}
+		$this->_controller->Auth->authenticate[] = 'Form';
+		}
+
 		$this->_controller->Auth->authorize = array(
 			AuthComponent::ALL => array(
 				'actionPath' => 'controllers',

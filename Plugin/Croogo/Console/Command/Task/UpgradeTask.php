@@ -122,7 +122,7 @@ class UpgradeTask extends AppShell {
 				'input_type' => 'checkbox',
 				'editable' => true,
 			));
-			$Setting->write('Site.autoLoginDuration', '+1 week', array(
+			$Setting->write('Access Control.autoLoginDuration', '+1 week', array(
 				'title' => '"Remember Me" Cookie Lifetime',
 				'description' => 'Eg: +1 day, +1 week',
 				'input_type' => 'text',
