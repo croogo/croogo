@@ -32,10 +32,26 @@ class AclFilterComponent extends Component {
 	public function initialize(Controller $controller) {
 		$this->_controller = $controller;
 
-		if (Configure::read('Access Control.multiRole')) {
+		if ($this->_config('multiRole')) {
 			Croogo::hookAdminTab('Users/admin_add', 'Roles', 'Acl.admin/roles');
 			Croogo::hookAdminTab('Users/admin_edit', 'Roles', 'Acl.admin/roles');
 		}
+	}
+
+/**
+ * Helper function to retrieve value from `Access Control` settings
+ *
+ * @return mixed null when config key is not found
+ */
+	protected function _config($key) {
+		static $config = null;
+		if (empty($config)) {
+			$config = Configure::read('Access Control');
+		}
+		if (array_key_exists($key, $config)) {
+			return $config[$key];
+		}
+		return null;
 	}
 
 /**
@@ -62,9 +78,29 @@ class AclFilterComponent extends Component {
 					'User.status' => 1,
 				),
 			),
-			'Acl.Cookie',
-			'Form',
 		);
+		if ($this->_config('autoLoginDuration')) {
+			if (!function_exists('mcrypt_encrypt')) {
+				$notice = __d('croogo', '"AutoLogin" (Remember Me) disabled since mcrypt_encrypt is not available');
+				$this->log($notice, LOG_CRIT);
+				if (isset($this->_controller->request->params['admin'])) {
+					$this->_controller->Session->setFlash($notice, 'default', null, array('class', 'error'));
+				}
+				if (isset($this->_controller->Setting)) {
+					$Setting = $this->_controller->Setting;
+				} else {
+					$Setting = ClassRegistry::init('Settings.Setting');
+				}
+				$Setting->write('Access Control.autoLoginDuration', '');
+			}
+			$this->_controller->Auth->authenticate[] = 'Acl.Cookie';
+		}
+		if ($this->_config('multiColumn')) {
+			$this->_controller->Auth->authenticate[] = 'Acl.MultiColumn';
+		} else {
+			$this->_controller->Auth->authenticate[] = 'Form';
+		}
+
 		$this->_controller->Auth->authorize = array(
 			AuthComponent::ALL => array(
 				'actionPath' => 'controllers',

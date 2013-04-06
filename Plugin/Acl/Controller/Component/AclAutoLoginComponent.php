@@ -139,7 +139,7 @@ class AclAutoLoginComponent extends Component {
 	public function onAdminLoginSuccessful($event) {
 		$request = $event->subject->request;
 		$remember = !empty($request->data[$this->_userModel]['remember']);
-		$expires = Configure::read('Site.autoLoginDuration');
+		$expires = Configure::read('Access Control.autoLoginDuration');
 		if (strtotime($expires) === false) {
 			$expires = '+1 week';
 		}

@@ -17,7 +17,7 @@
 			'div' => 'input-prepend password',
 			'class' => 'span11',
 		));
-		if (Configure::read('Site.autoLoginDuration')):
+		if (Configure::read('Access Control.autoLoginDuration')):
 			echo $this->Form->input('remember', array(
 				'label' => __d('croogo', 'Remember me?'),
 				'type' => 'checkbox',

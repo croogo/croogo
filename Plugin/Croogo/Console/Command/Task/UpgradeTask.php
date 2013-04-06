@@ -112,6 +112,11 @@ class UpgradeTask extends AppShell {
 			if ($version = file_get_contents(APP . 'VERSION.txt')) {
 				$Setting->write('Croogo.version', $version);
 			}
+			$Setting->write('Access Control.multiColumn', '', array(
+				'title' => 'Allow login by username or email',
+				'input_type' => 'checkbox',
+				'editable' => true,
+			));
 			$Setting->write('Access Control.multiRole', 0, array(
 				'title' => 'Enable Multiple Roles',
 				'input_type' => 'checkbox',
@@ -122,7 +127,7 @@ class UpgradeTask extends AppShell {
 				'input_type' => 'checkbox',
 				'editable' => true,
 			));
-			$Setting->write('Site.autoLoginDuration', '+1 week', array(
+			$Setting->write('Access Control.autoLoginDuration', '+1 week', array(
 				'title' => '"Remember Me" Cookie Lifetime',
 				'description' => 'Eg: +1 day, +1 week',
 				'input_type' => 'text',
