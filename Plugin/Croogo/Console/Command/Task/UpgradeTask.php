@@ -81,6 +81,9 @@ class UpgradeTask extends AppShell {
 			->addSubCommand('links', array(
 				'help' => __d('croogo', 'Update Links in database'),
 			))
+			->addSubCommand('first_migrations', array(
+				'help' => __d('croogo', 'Create first migration records'),
+			))
 			->addSubCommand('all', array(
 				'help' => __d('croogo', 'Run all upgrade tasks'),
 			));
@@ -265,6 +268,42 @@ class UpgradeTask extends AppShell {
 			}
 		}
 		return $pluginsOrdered;
+	}
+
+/**
+ * create schema_migrations record for $plugin
+ */
+	protected function _createFirstMigration($plugin) {
+		static $Migration;
+		if (empty($Migration)) {
+			$Migration = ClassRegistry::init(array(
+				'class' => 'AppModel',
+				'table' => 'schema_migrations',
+			));
+		}
+		$className = 'FirstMigration' . $plugin;
+		$migration = $Migration->findByClass($className);
+		if (!empty($migration)) {
+			return true;
+		}
+		$Migration->create();
+		return $Migration->save(array(
+			'class' => $className,
+			'type' => $plugin,
+		));
+	}
+
+/**
+ * Create default FirstMigration records for installations using croogo_data.sql
+ */
+	public function first_migrations() {
+		foreach ((array)Configure::read('Core.corePlugins') as $plugin) {
+			$result = $this->_createFirstMigration($plugin);
+			if (!$result) {
+				$this->error(sprintf('Unable to setup FirstMigration records for %s', $plugin));
+			}
+		}
+		$this->success('FirstMigration default records created');
 	}
 
 /**
