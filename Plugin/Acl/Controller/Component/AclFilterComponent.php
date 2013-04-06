@@ -80,6 +80,19 @@ class AclFilterComponent extends Component {
 			),
 		);
 		if ($this->_config('autoLoginDuration')) {
+			if (!function_exists('mcrypt_encrypt')) {
+				$notice = __d('croogo', '"AutoLogin" (Remember Me) disabled since mcrypt_encrypt is not available');
+				$this->log($notice, LOG_CRIT);
+				if (isset($this->_controller->request->params['admin'])) {
+					$this->_controller->Session->setFlash($notice, 'default', null, array('class', 'error'));
+				}
+				if (isset($this->_controller->Setting)) {
+					$Setting = $this->_controller->Setting;
+				} else {
+					$Setting = ClassRegistry::init('Settings.Setting');
+				}
+				$Setting->write('Access Control.autoLoginDuration', '');
+			}
 			$this->_controller->Auth->authenticate[] = 'Acl.Cookie';
 		}
 		$this->_controller->Auth->authenticate[] = 'Form';
