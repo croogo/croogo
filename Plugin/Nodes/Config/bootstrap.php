@@ -4,6 +4,25 @@ Croogo::hookComponent('*', 'Nodes.Nodes');
 
 Croogo::hookHelper('*', 'Nodes.Nodes');
 
+// Configure Wysiwyg
+Croogo::mergeConfig('Wysiwyg.actions', array(
+	'Nodes/admin_add' => array(
+		array(
+			'elements' => 'NodeBody',
+		),
+	),
+	'Nodes/admin_edit' => array(
+		array(
+			'elements' => 'NodeBody',
+		),
+	),
+	'Translate/admin_edit' => array(
+		array(
+			'elements' => 'NodeBody',
+		),
+	),
+));
+
 CroogoNav::add('content', array(
 	'icon' => array('edit', 'large'),
 	'title' => __d('croogo', 'Content'),

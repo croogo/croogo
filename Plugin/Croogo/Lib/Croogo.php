@@ -246,4 +246,18 @@ class Croogo {
 		return $path;
 	}
 
+/**
+ * Merge Configuration
+ *
+ * @param string $key Configure key
+ * @param array $config New configuration to merge
+ * @param return array Array of merged configurations
+ */
+	public static function mergeConfig($key, $config) {
+		$values = Configure::read($key);
+		$values = Hash::merge((array)$values, $config);
+		Configure::write($key, $values);
+		return $values;
+	}
+
 }
