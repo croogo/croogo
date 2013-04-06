@@ -32,10 +32,26 @@ class AclFilterComponent extends Component {
 	public function initialize(Controller $controller) {
 		$this->_controller = $controller;
 
-		if (Configure::read('Access Control.multiRole')) {
+		if ($this->_config('multiRole')) {
 			Croogo::hookAdminTab('Users/admin_add', 'Roles', 'Acl.admin/roles');
 			Croogo::hookAdminTab('Users/admin_edit', 'Roles', 'Acl.admin/roles');
 		}
+	}
+
+/**
+ * Helper function to retrieve value from `Access Control` settings
+ *
+ * @return mixed null when config key is not found
+ */
+	protected function _config($key) {
+		static $config = null;
+		if (empty($config)) {
+			$config = Configure::read('Access Control');
+		}
+		if (array_key_exists($key, $config)) {
+			return $config[$key];
+		}
+		return null;
 	}
 
 /**
