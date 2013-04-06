@@ -112,6 +112,11 @@ class UpgradeTask extends AppShell {
 			if ($version = file_get_contents(APP . 'VERSION.txt')) {
 				$Setting->write('Croogo.version', $version);
 			}
+			$Setting->write('Access Control.multiColumn', '', array(
+				'title' => 'Allow login by username or email',
+				'input_type' => 'checkbox',
+				'editable' => true,
+			));
 			$Setting->write('Access Control.multiRole', 0, array(
 				'title' => 'Enable Multiple Roles',
 				'input_type' => 'checkbox',

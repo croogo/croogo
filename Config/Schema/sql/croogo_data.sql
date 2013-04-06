@@ -383,6 +383,7 @@ INSERT IGNORE INTO `settings` (`id`, `key`, `value`, `title`, `description`, `in
 (29, 'Site.timezone', '0', '', 'zero (0) for GMT', '', 1, 4, ''),
 (32, 'Hook.bootstraps', 'Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Wysiwyg,Ckeditor', '', '', '', 0, 23, ''),
 (33, 'Comment.email_notification', '1', 'Enable email notification', '', '', 1, 24, ''),
+(34, 'Access Control.multiColumn', '0', 'Allow login by username or email', '', 'checkbox', 1, 25, ''),
 (34, 'Access Control.multiRole', '0', 'Enable Multiple Roles', '', 'checkbox', 1, 25, ''),
 (35, 'Access Control.rowLevel', '0', 'Row Level Access Control', '', 'checkbox', 1, 26, ''),
 (36, 'Access Control.autoLoginDuration', '+1 week', '"Remember Me" Duration', 'Eg: +1 day, +1 week. Leave empty to disable.', 'text', 1, 27, ''),

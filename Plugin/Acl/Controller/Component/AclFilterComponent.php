@@ -95,7 +95,10 @@ class AclFilterComponent extends Component {
 			}
 			$this->_controller->Auth->authenticate[] = 'Acl.Cookie';
 		}
-		$this->_controller->Auth->authenticate[] = 'Form';
+		if ($this->_config('multiColumn')) {
+			$this->_controller->Auth->authenticate[] = 'Acl.MultiColumn';
+		} else {
+			$this->_controller->Auth->authenticate[] = 'Form';
 		}
 
 		$this->_controller->Auth->authorize = array(
