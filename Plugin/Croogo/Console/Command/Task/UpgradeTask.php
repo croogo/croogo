@@ -234,6 +234,7 @@ class UpgradeTask extends AppShell {
 
 		asort($plugins);
 		$plugins = array_flip($plugins);
+		return $plugins;
 	}
 
 /**
