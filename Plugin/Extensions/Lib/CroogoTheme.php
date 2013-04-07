@@ -33,14 +33,21 @@ class CroogoTheme extends Object {
 		);
 		$this->folder = new Folder;
 		$viewPaths = App::path('views');
+		$expected = array('name' => '', 'description' => '');
 		foreach ($viewPaths as $viewPath) {
 			$this->folder->path = $viewPath . 'Themed';
 			$themeFolders = $this->folder->read();
 			foreach ($themeFolders['0'] as $themeFolder) {
 				$this->folder->path = $viewPath . 'Themed' . DS . $themeFolder . DS . 'webroot';
 				$themeFolderContent = $this->folder->read();
+				$themeJson = $this->folder->path . DS . 'theme.json';
 				if (in_array('theme.json', $themeFolderContent['1'])) {
-					$themes[$themeFolder] = $themeFolder;
+					$contents = file_get_contents($themeJson);
+					$json = json_decode($contents, true);
+					$intersect = array_intersect_key($expected, $json);
+					if ($json !== null && $intersect == $expected) {
+						$themes[$themeFolder] = $themeFolder;
+					}
 				}
 			}
 		}
