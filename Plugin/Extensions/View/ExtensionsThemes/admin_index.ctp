@@ -25,13 +25,15 @@ $this->Html
 				<h3><?php echo __d('croogo', 'Current Theme'); ?></h3>
 				<?php
 					$currentTheme = Sanitize::clean($currentTheme);
-					if (!Configure::read('Site.theme')) :
-						echo $this->Html->image($currentTheme['screenshot'], array('class' => 'img-polaroid'));
-					else:
-						echo $this->Html->tag('div',
-							$this->Html->image('/theme/' . Configure::read('Site.theme') . '/img/' . $currentTheme['screenshot'], array('class' => 'img-polaroid')),
-							array('class' => 'screenshot')
-						);
+					if (isset($currentTheme['screenshot'])):
+						if (!Configure::read('Site.theme')) :
+							echo $this->Html->image($currentTheme['screenshot'], array('class' => 'img-polaroid'));
+						else:
+							echo $this->Html->tag('div',
+								$this->Html->image('/theme/' . Configure::read('Site.theme') . '/img/' . $currentTheme['screenshot'], array('class' => 'img-polaroid')),
+								array('class' => 'screenshot')
+							);
+						endif;
 					endif;
 				?>
 			</div>
@@ -39,15 +41,20 @@ $this->Html
 			<div class="span8">
 				<h3>
 				<?php
-					$author = $currentTheme['author'];
+					$author = isset($currentTheme['author']) ? $currentTheme['author'] : null;
 					if (isset($currentTheme['authorUrl']) && strlen($currentTheme['authorUrl']) > 0) {
 						$author = $this->Html->link($author, $currentTheme['authorUrl']);
 					}
-					echo $currentTheme['name'] . ' ' . __d('croogo', 'by') . ' ' . $author;
+					echo $currentTheme['name'];
+					if (!empty($author)):
+						echo ' ' . __d('croogo', 'by') . ' ' . $author;
+					endif;
 				?>
 				</h3>
 				<p class="description"><?php echo $currentTheme['description']; ?></p>
+				<?php if (isset($currentTheme['regions'])): ?>
 				<p class="regions"><?php echo __d('croogo', 'Regions supported: ') . implode(', ', $currentTheme['regions']); ?></p>
+				<?php endif; ?>
 			</div>
 		</div>
 
@@ -68,15 +75,19 @@ $this->Html
 					if ($themeAlias == 'default') {
 						echo $this->Html->tag('div', $this->Html->image($theme['screenshot'], array('class' => 'img-polaroid')), array('class' => 'screenshot span4'));
 					} else {
-						echo $this->Html->tag('div', $this->Html->image('/theme/' . $themeAlias . '/img/' . $theme['screenshot'], array('class' => 'img-polaroid')), array('class' => 'screenshot span4'));
+						if (isset($theme['screenshot'])):
+							echo $this->Html->tag('div', $this->Html->image('/theme/' . $themeAlias . '/img/' . $theme['screenshot'], array('class' => 'img-polaroid')), array('class' => 'screenshot span4'));
+						endif;
 					}
-					$author = $theme['author'];
+					$author = isset($theme['author']) ? $theme['author'] : null;
 					if (isset($theme['authorUrl']) && strlen($theme['authorUrl']) > 0) {
 						$author = $this->Html->link($author, $theme['authorUrl']);
 					}
 					$out = $this->Html->tag('h3', $theme['name'] . ' ' . __d('croogo', 'by') . ' ' . $author, array());
 					$out .= $this->Html->tag('p', $theme['description'], array('class' => 'description'));
-					$out .= $this->Html->tag('p', __d('croogo', 'Regions supported: ') . implode(', ', $theme['regions']), array('class' => 'regions'));
+					if (isset($theme['regions'])):
+						$out .= $this->Html->tag('p', __d('croogo', 'Regions supported: ') . implode(', ', $theme['regions']), array('class' => 'regions'));
+					endif;
 					$out .= $this->Html->tag('div',
 						$this->Form->postLink(__d('croogo', 'Activate'), array(
 							'action' => 'activate',
