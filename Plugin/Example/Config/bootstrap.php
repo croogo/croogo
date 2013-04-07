@@ -64,6 +64,15 @@ CroogoNav::add('extensions.children.example', array(
 				),
 			),
 		),
+		'example3' => array(
+			'title' => 'Chooser Example',
+			'url' => array(
+				'admin' => true,
+				'plugin' => 'example',
+				'controller' => 'example',
+				'action' => 'chooser',
+			),
+		),
 		'example4' => array(
 			'title' => 'RTE Example',
 			'url' => array(
