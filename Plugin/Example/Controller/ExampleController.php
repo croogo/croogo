@@ -63,4 +63,9 @@ class ExampleController extends ExampleAppController {
 	public function admin_add() {
 	}
 
+	public function admin_rte_example() {
+		$notice = 'If editors are now displayed correctly, check that `Ckeditor` plugin is loaded after `Example` plugin.';
+		$this->Session->setFlash($notice, 'default', array('class' => 'success'));
+	}
+
 }

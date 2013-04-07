@@ -64,6 +64,44 @@ CroogoNav::add('extensions.children.example', array(
 				),
 			),
 		),
+		'example4' => array(
+			'title' => 'RTE Example',
+			'url' => array(
+				'admin' => true,
+				'plugin' => 'example',
+				'controller' => 'example',
+				'action' => 'rte_example',
+			),
+		),
+	),
+));
+
+$Localization= new L10n();
+Croogo::mergeConfig('Wysiwyg.actions', array(
+	'Example/admin_rte_example' => array(
+		array(
+			'elements' => 'ExampleBasic',
+			'preset' => 'basic',
+		),
+		array(
+			'elements' => 'ExampleStandard',
+			'preset' => 'standard',
+			'language' => 'ja',
+		),
+		array(
+			'elements' => 'ExampleFull',
+			'preset' => 'full',
+			'language' => $Localization->map(Configure::read('Site.locale')),
+		),
+		array(
+			'elements' => 'ExampleCustom',
+			'toolbar' => array(
+				array('Format', 'Bold', 'Italic'),
+				array('Copy', 'Paste'),
+			),
+			'uiColor' => '#ffe79a',
+			'language' => 'fr',
+		),
 	),
 ));
 
