@@ -85,7 +85,7 @@ CroogoNav::add('extensions.children.example', array(
 	),
 ));
 
-$Localization= new L10n();
+$Localization = new L10n();
 Croogo::mergeConfig('Wysiwyg.actions', array(
 	'Example/admin_rte_example' => array(
 		array(
