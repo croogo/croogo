@@ -31,11 +31,11 @@ Croogo::hookHelper('Nodes', 'Example.Example');
  * Admin menu (navigation)
  */
 CroogoNav::add('extensions.children.example', array(
-	'title' => __d('croogo', 'Example'),
+	'title' => 'Example',
 	'url' => '#',
 	'children' => array(
 		'example1' => array(
-			'title' => __d('croogo', 'Example 1'),
+			'title' => 'Example 1',
 			'url' => array(
 				'admin' => true,
 				'plugin' => 'example',
@@ -44,7 +44,7 @@ CroogoNav::add('extensions.children.example', array(
 			),
 		),
 		'example2' => array(
-			'title' => __d('croogo', 'Example 2 with a title that won\'t fit in the sidebar'),
+			'title' => 'Example 2 with a title that won\'t fit in the sidebar',
 			'url' => '#',
 			'children' => array(
 				'example-2-1' => array(

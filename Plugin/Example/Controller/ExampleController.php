@@ -38,7 +38,7 @@ class ExampleController extends ExampleAppController {
  * @return void
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __d('croogo', 'Example'));
+		$this->set('title_for_layout', 'Example');
 	}
 
 /**
@@ -47,7 +47,7 @@ class ExampleController extends ExampleAppController {
  * @return void
  */
 	public function admin_chooser() {
-		$this->set('title_for_layout', __d('croogo', 'Chooser Example'));
+		$this->set('title_for_layout', 'Chooser Example');
 	}
 
 /**
@@ -56,7 +56,7 @@ class ExampleController extends ExampleAppController {
  * @return void
  */
 	public function index() {
-		$this->set('title_for_layout', __d('croogo', 'Example'));
+		$this->set('title_for_layout', 'Example');
 		$this->set('exampleVariable', 'value here');
 	}
 
