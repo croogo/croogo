@@ -115,7 +115,7 @@ class AttachmentsController extends FileManagerAppController {
 		$this->set('title_for_layout', __d('croogo', 'Add Attachment'));
 
 		if (isset($this->request->params['named']['editor'])) {
-			$this->layout = 'admin_full';
+			$this->layout = 'admin_popup';
 		}
 
 		if ($this->request->is('post') || !empty($this->request->data)) {
@@ -150,6 +150,10 @@ class AttachmentsController extends FileManagerAppController {
  */
 	public function admin_edit($id = null) {
 		$this->set('title_for_layout', __d('croogo', 'Edit Attachment'));
+
+		if (isset($this->request->params['named']['editor'])) {
+			$this->layout = 'admin_popup';
+		}
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Attachment'), 'default', array('class' => 'error'));
