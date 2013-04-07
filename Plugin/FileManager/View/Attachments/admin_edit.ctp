@@ -67,11 +67,15 @@ echo $this->Form->create('Attachment', array('url' => array('controller' => 'att
 
 	<div class="span4">
 	<?php
+		$redirect = array('action' => 'index');
+		if ($this->Session->check('Wysiwyg.redirect')) {
+			$redirect = $this->Session->read('Wysiwyg.redirect');
+		}
 		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 			$this->Form->button(__d('croogo', 'Save')) .
 			$this->Html->link(
 				__d('croogo', 'Cancel'),
-				array('action' => 'index'),
+				$redirect,
 				array('class' => 'cancel', 'button' => 'danger')
 			).
 			$this->Html->endBox();
