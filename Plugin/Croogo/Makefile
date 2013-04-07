@@ -16,8 +16,11 @@ CROOGO_RESPONSIVE_CSS=croogo-bootstrap-responsive.css
 BOOTSTRAP_JS=croogo-bootstrap.js
 
 DATE=$(shell date +%I:%M%p)
-COMPILE=recess --compile
-COMPILE=lessc # we can use lessc since sometimes it gives better error messages
+ifeq ($(RELEASE), true)
+	COMPILE=recess --compress
+else
+	COMPILE=lessc # for debugging as it provides better error messages
+endif
 
 CHECK=\033[32m✔\033[39m
 HR=\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
@@ -54,6 +57,9 @@ js: webroot/bootstrap
 	cd webroot/bootstrap ; \
 	cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > "${JS_DIR}"/"${BOOTSTRAP_JS}" \
 	)
+	@if [ ! -z "${RELEASE}" ]; then \
+		uglifyjs --overwrite -nc "${JS_DIR}"/"${BOOTSTRAP_JS}" ;\
+	fi
 	@echo "File: ${JS_DIR}/${BOOTSTRAP_JS} ${CHECK}"
 
 assets:
