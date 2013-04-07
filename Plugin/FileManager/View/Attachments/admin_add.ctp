@@ -38,10 +38,14 @@ echo $this->Form->create('Attachment', array('url' => $formUrl, 'type' => 'file'
 
 	<div class="span4">
 	<?php
+		$redirect = array('action' => 'index');
+		if ($this->Session->check('Wysiwyg.redirect')) {
+			$redirect = $this->Session->read('Wysiwyg.redirect');
+		}
 		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 			$this->Form->button(__d('croogo', 'Upload'), array('button' => 'default')) .
 			$this->Form->end() .
-			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
+			$this->Html->link(__d('croogo', 'Cancel'), $redirect, array('button' => 'danger')) .
 			$this->Html->endBox();
 		echo $this->Croogo->adminBoxes();
 	?>

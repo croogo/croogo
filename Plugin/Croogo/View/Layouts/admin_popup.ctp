@@ -16,6 +16,8 @@
 			'/croogo/js/jquery/jquery.min',
 			'/croogo/js/jquery/jquery.slug',
 			'/croogo/js/croogo-bootstrap.js',
+			'/croogo/js/underscore-min',
+			'/croogo/js/admin',
 		));
 
 		echo $this->fetch('script');

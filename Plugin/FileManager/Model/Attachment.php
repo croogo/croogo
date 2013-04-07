@@ -92,6 +92,9 @@ class Attachment extends Node {
 		if (isset($data[$this->alias]['file']['tmp_name'])) {
 			$data = $this->_saveUploadedFile($data);
 		}
+		if (!$data) {
+			return $this->invalidate('file', __d('croogo', 'Error during file upload'));
+		}
 		return parent::save($data, $validate, $fieldList);
 	}
 

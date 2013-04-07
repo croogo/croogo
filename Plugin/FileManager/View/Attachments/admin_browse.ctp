@@ -31,13 +31,14 @@
 		foreach ($attachments as $attachment):
 			$actions = array();
 			$actions[] = $this->Croogo->adminRowAction('',
-				array('controller' => 'attachments', 'action' => 'edit', $attachment['Attachment']['id']),
+				array('controller' => 'attachments', 'action' => 'edit', $attachment['Attachment']['id'], 'editor' => 1),
 				array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit'))
 			);
 			$actions[] = $this->Croogo->adminRowAction('', array(
 				'controller' => 'attachments',
 				'action' => 'delete',
 				$attachment['Attachment']['id'],
+				'editor' => 1,
 			), array('icon' => 'trash', 'tooltip' => __d('croogo', 'Delete')), __d('croogo', 'Are you sure?'));
 
 			$mimeType = explode('/', $attachment['Attachment']['mime_type']);
