@@ -70,6 +70,7 @@ assets:
 	fi
 	@for file in webroot/fontAwesome/font/* ; do \
 		cp $${file} webroot/font/ ; \
+		chmod 644 webroot/font/`basename $${file}` ; \
 		echo "Copied: webroot/font/`basename $${file}` ${CHECK}" ;\
 	done
 
