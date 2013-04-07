@@ -48,9 +48,9 @@ css: deps
 	@echo "${HR}"
 	@echo "Compiling..."
 	@${COMPILE} ${CROOGO_LESS} > "${CSS_DIR}"/"${CROOGO_CSS}"
-	@echo "File: ${CSS_DIR}/${CROOGO_CSS} ${CHECK}"
+	@DIR=${CSS_DIR} && echo "File: $${DIR#${CURDIR}/}/${CROOGO_CSS} ${CHECK}"
 	@${COMPILE} ${CROOGO_RESPONSIVE_LESS} > "${CSS_DIR}"/"${CROOGO_RESPONSIVE_CSS}"
-	@echo "File: ${CSS_DIR}/${CROOGO_RESPONSIVE_CSS} ${CHECK}"
+	@DIR=${CSS_DIR} && echo "File: $${DIR#${CURDIR}/}/${CROOGO_RESPONSIVE_CSS} ${CHECK}"
 
 js: webroot/bootstrap
 	@( \
@@ -60,7 +60,7 @@ js: webroot/bootstrap
 	@if [ ! -z "${RELEASE}" ]; then \
 		uglifyjs --overwrite -nc "${JS_DIR}"/"${BOOTSTRAP_JS}" ;\
 	fi
-	@echo "File: ${JS_DIR}/${BOOTSTRAP_JS} ${CHECK}"
+	@DIR=${JS_DIR} && echo "File: $${DIR#${CURDIR}/}/${BOOTSTRAP_JS} ${CHECK}"
 
 assets:
 	@echo "${HR}"
@@ -70,7 +70,7 @@ assets:
 	fi
 	@for file in webroot/fontAwesome/font/* ; do \
 		cp $${file} webroot/font/ ; \
-		echo "Copied: webroot/fontAwesome/font/`basename $${file}` ${CHECK}" ;\
+		echo "Copied: webroot/font/`basename $${file}` ${CHECK}" ;\
 	done
 
 clean:

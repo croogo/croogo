@@ -160,8 +160,9 @@ class AssetGenerator extends Object {
 		foreach ($files[1] as $file) {
 			$File = new File($fontPath . DS . $file);
 			$newFile = $targetPath . $file;
+			$displayFilename = str_replace(APP, '', $newFile);
 			if ($File->copy($newFile)) {
-				$text = __d('croogo', 'Font: %s copied', $file);
+				$text = __d('croogo', 'Font: %s copied', $displayFilename);
 				CakeLog::info($text);
 			} else {
 				$text = __d('croogo', 'File: %s not copied', $file);
