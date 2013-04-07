@@ -12,18 +12,20 @@ var Admin = {};
  * @return void
  */
 Admin.navigation = function() {
-	$('ul.sf-menu').supersubs({
-		minWidth: 12,
-		maxWidth: 27,
-		extraWidth: 1
-	}).superfish({
-		delay: 200,
-		animation: {opacity:'show',height:'show'},
-		speed: 'fast',
-		autoArrows: true,
-		dropShadows: false,
-		disableHI: true
-	});
+	if (typeof $.prototype.supersubs == 'function') {
+		$('ul.sf-menu').supersubs({
+			minWidth: 12,
+			maxWidth: 27,
+			extraWidth: 1
+		}).superfish({
+			delay: 200,
+			animation: {opacity:'show',height:'show'},
+			speed: 'fast',
+			autoArrows: true,
+			dropShadows: false,
+			disableHI: true
+		});
+	}
 
 	var $sidebar = $('#sidebar-menu');
 	var $topLevelMenus = $('#sidebar-menu > li > .hasChild');
@@ -124,8 +126,10 @@ Admin.navigation = function() {
  */
 Admin.form = function() {
 	// Tooltips activation
-	$('[rel=tooltip],*[data-title],input[title],textarea[title]').tooltip();
-	$('a.tooltip').tipsy({gravity: 's', html: false}); // Legacy tooltip
+	$('[rel=tooltip],*[data-title]:not([data-content]),input[title],textarea[title]').tooltip();
+	if (typeof $.prototype.tipsy == 'function') {
+		$('a.tooltip').tipsy({gravity: 's', html: false}); // Legacy tooltip
+	}
 
 	var ajaxToggle = function(e) {
 		var $this = $(this);
@@ -178,8 +182,12 @@ Admin.extra = function() {
 		$(this).next().slideToggle();
 	});
 
-	$('.tabs').tabs(); // legacy tabs from jquery-ui
-	$('textarea').not('.content').elastic();
+	if (typeof $.prototype.tabs == 'function') {
+		$('.tabs').tabs(); // legacy tabs from jquery-ui
+	}
+	if (typeof $.prototype.elastic == 'function') {
+		$('textarea').not('.content').elastic();
+	}
 	$("div.message").addClass("notice");
 	$('#loading p').addClass('ui-corner-bl ui-corner-br');
 }
