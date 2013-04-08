@@ -1,27 +1,33 @@
 Authors ordered by contribution
 
-Fahad Ibnay Heylaal <fahad19@gmail.com>
 Rachman Chavik <rchavik@xintesa.com>
+Fahad Ibnay Heylaal <fahad19@gmail.com>
 Kyle Robinson Young <kyle@dontkry.com>
+Derbois Aymeric <aymeric@occi-tech.com>
+Damien Biasotto <damien@occi-tech.com>
+Pierre Martin <pierre@occi-tech.com>
 AD7six <andydawson76@gmail.com>
+Eko Tristiyono <eko@xintesa.com>
 euromark <euromark@web.de>
 SCV Geo <scv@scvgeo.com>
 Heiner Gassen <hg@dynweb.net>
 Paulino Calderon <paulino@calder0n.com>
 pinchsoftware <contact@pinchsoft.com>
 John <john@midianegocios.com.br>
-Pierre Martin <contact@pierre-martin.fr>
 Vitor Pacheco <vitor-p.c@hotmail.com>
 primeminister <primeminister@mowd.nl>
 ADmad <admad.coder@gmail.com>
+Grégory Salvan <gregory@occi-tech.com>
 James Sapara <james.sapara@gmail.com>
+Lukas Marks <lukas.marks@lumax-web.de>
 Matt Curry <matt@pseudocoder.com>
+thoth <thomas.rader@tigerclawtech.com>
 Josué Silva Santos <josue.silva.santos@gmail.com>
 daniel <daniel@daniels-MacBook-Air.local>
-thoth <thomas.rader@tigerclawtech.com>
 tmaiaroto <tom@shift8creative.com>
 Adam Taylor <ataylor32@gmail.com>
 Andrew Weir <andru.weir@gmail.com>
+Arie Sutanto <asutanto@xintesa.com>
 Ceeram <c33ram@gmail.com>
 Dirk Brünsicke <d1rk@gmx.de>
 Jeremy Harris <jeremy@42pixels.com>
@@ -29,8 +35,10 @@ Joachim Nyqvist <Joachim@JNyqvist.se>
 Kory Marks <kory.marks@mac.com>
 Léo Haddad <scoup001@gmail.com>
 Marek Sebera <marek.sebera@gmail.com>
+Mike Pagé <mike@nedwave.com>
 Paulo Pinto <paulorpinto@gmail.com>
 Sam Bernard <sam@sambernard.net>
+Wiena Lorentz <lorentz@xintesa.com>
 alevilar <alevilar@gmail.com>
 joseph-d <joseph.d@nirada.co.th>
 romaing <pourri@dixit-productions.com>
