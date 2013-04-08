@@ -203,6 +203,7 @@ class AclExtras extends Object {
 			$pluginRoot = $this->_checkNode($path, $plugin, $root['Aco']['id']);
 			$this->_updateControllers($pluginRoot, $controllers, $plugin);
 		}
+		Cache::clearGroup('permissions', 'permissions');
 		if ($this->_clean) {
 			$this->out(__d('croogo', '<success>Aco Sync Complete</success>'));
 		} else {
