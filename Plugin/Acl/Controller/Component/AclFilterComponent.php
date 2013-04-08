@@ -108,6 +108,16 @@ class AclFilterComponent extends Component {
 			),
 			'Acl.AclCached',
 		);
+
+		$this->configureLoginActions();
+	}
+
+/**
+ * Load login actions configurations
+ *
+ * @return void
+ */
+	public function configureLoginActions() {
 		$this->_controller->Auth->loginAction = array(
 			'plugin' => 'users',
 			'controller' => 'users',
@@ -126,13 +136,13 @@ class AclFilterComponent extends Component {
 
 		$config = Configure::read('Acl');
 		if (!empty($config['Auth']) && is_array($config['Auth'])) {
-			$isAdminRoute = isset($this->_controller->request->params['admin']);
+			$isAdminRequest = !empty($this->_controller->request->params['admin']);
 			$authActions = array('loginAction', 'loginRedirect', 'logoutRedirect');
 			foreach ($config['Auth'] as $property => $value) {
-				if (in_array($property, $authActions)) {
-					if ($isAdminRoute && is_array($value) && !isset($value['admin'])) {
-						continue;
-					}
+				$isAdminRoute = !empty($value['admin']);
+				$isAuthAction = in_array($property, $authActions);
+				if ($isAdminRequest !== $isAdminRoute && $isAuthAction) {
+					continue;
 				}
 				$this->_controller->Auth->{$property} = $value;
 			}
@@ -196,8 +206,8 @@ class AclFilterComponent extends Component {
 				'Permission._read' => 1,
 				'Permission._update' => 1,
 				'Permission._delete' => 1,
-				)
-			));
+			)
+		));
 
 		$authorized = $allowedActions = array();
 		foreach ($permissions as $permission) {
