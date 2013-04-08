@@ -141,7 +141,7 @@ class AclFilterComponent extends Component {
 			foreach ($config['Auth'] as $property => $value) {
 				$isAdminRoute = !empty($value['admin']);
 				$isAuthAction = in_array($property, $authActions);
-				if ($isAdminRequest !== $isAdminRoute && $isAuthAction) {
+				if (!is_string($value) && $isAdminRequest !== $isAdminRoute && $isAuthAction) {
 					continue;
 				}
 				$this->_controller->Auth->{$property} = $value;

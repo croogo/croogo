@@ -232,6 +232,25 @@ class AclFilterComponentTest extends CroogoTestCase {
 		);
 		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
 
+		// string values
+		Configure::write('Acl.Auth.loginAction', '/');
+		$this->Controller->request->params['admin'] = true;
+		$this->Controller->AclFilter->configureLoginActions();
+		$expected = '/';
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
+		Configure::write('Acl.Auth.loginAction', '/');
+		$this->Controller->request->params['admin'] = false;
+		$this->Controller->AclFilter->configureLoginActions();
+		$expected = '/';
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
+		Configure::write('Acl.Auth.loginAction', '/');
+		unset($this->Controller->request->params['admin']);
+		$this->Controller->AclFilter->configureLoginActions();
+		$expected = '/';
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
 		unset($this->Controller->AclFilter);
 		unset($this->Controller);
 	}
