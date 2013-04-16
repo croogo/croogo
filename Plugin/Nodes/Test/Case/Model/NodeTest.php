@@ -50,7 +50,6 @@ class NodeTest extends CroogoTestCase {
 			'user_id' => 42,
 			'title' => 'Test Content',
 			'slug' => 'test-content',
-			'type' => 'blog',
 			'token_key' => 1,
 			'body' => '',
 			'path' => '/no-way'
@@ -114,6 +113,7 @@ class NodeTest extends CroogoTestCase {
  */
 	public function testAddNode() {
 		$this->Node->Behaviors->disable('Tree');
+		$this->Node->type = null;
 		$oldNodeCount = $this->Node->find('count');
 
 		$data = array(
@@ -124,6 +124,7 @@ class NodeTest extends CroogoTestCase {
 			'body' => '',
 		);
 		$result = $this->Node->saveNode($data, Node::DEFAULT_TYPE);
+		$this->Node->type = null;
 		$newNodeCount = $this->Node->find('count');
 
 		$this->assertTrue($result);
@@ -135,6 +136,7 @@ class NodeTest extends CroogoTestCase {
  * testAddNodeWithTaxonomyData
  */
 	public function testAddNodeWithTaxonomyData() {
+		$this->Node->type = null;
 		$oldNodeCount = $this->Node->find('count');
 
 		$data = array(
@@ -148,6 +150,7 @@ class NodeTest extends CroogoTestCase {
 			'TaxonomyData' => array(1 => array(0 => '1', 1 => '2'))
 		);
 		$result = $this->Node->saveNode($data, Node::DEFAULT_TYPE);
+		$this->Node->type = null;
 		$newNodeCount = $this->Node->find('count');
 
 		$this->assertTrue($result);
@@ -158,6 +161,7 @@ class NodeTest extends CroogoTestCase {
  * testAddNodeWithVisibilityRole
  */
 	public function testAddNodeWithVisibilityRole() {
+		$this->Node->type = null;
 		$oldNodeCount = $this->Node->find('count');
 
 		$data = array(
@@ -171,6 +175,7 @@ class NodeTest extends CroogoTestCase {
 			'Role' => array('Role' => array('3')) //Public
 		);
 		$result = $this->Node->saveNode($data, Node::DEFAULT_TYPE);
+		$this->Node->type = null;
 		$newNodeCount = $this->Node->find('count');
 
 		$this->assertTrue($result);

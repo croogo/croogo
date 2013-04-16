@@ -161,15 +161,11 @@ class NodesController extends NodesAppController {
 			$this->redirect(array('action' => 'create'));
 		}
 
-		$this->set('title_for_layout', __d('croogo', 'Create content: %s', $type['Type']['title']));
-		$this->Node->type = $type['Type']['alias'];
-		$this->Node->Behaviors->attach('Tree', array(
-			'scope' => array(
-				'Node.type' => $this->Node->type,
-			),
-		));
-
 		if (!empty($this->request->data)) {
+			if (isset($this->request->data[$this->Node->alias]['type'])) {
+				$typeAlias = $this->request->data['Node']['type'];
+				$this->Node->type = $typeAlias;
+			}
 			if ($this->Node->saveNode($this->request->data, $typeAlias)) {
 				Croogo::dispatchEvent('Controller.Nodes.afterAdd', $this, array('data' => $this->request->data));
 				$this->Session->setFlash(__d('croogo', '%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));
@@ -179,9 +175,17 @@ class NodesController extends NodesAppController {
 			}
 		} else {
 			$this->request->data['Node']['user_id'] = $this->Session->read('Auth.User.id');
-		}
 
-		$this->_setCommonVariables($type);
+			$this->set('title_for_layout', __d('croogo', 'Create content: %s', $type['Type']['title']));
+			$this->Node->type = $type['Type']['alias'];
+			$this->Node->Behaviors->attach('Tree', array(
+				'scope' => array(
+					'Node.type' => $this->Node->type,
+				),
+			));
+
+			$this->_setCommonVariables($type);
+		}
 	}
 
 /**

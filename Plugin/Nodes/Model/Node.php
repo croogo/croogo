@@ -223,7 +223,7 @@ class Node extends NodesAppModel {
  * @return boolean
  */
 	public function beforeSave($options = array()) {
-		if ($this->type != null) {
+		if (empty($this->data[$this->alias]['type']) && $this->type != null) {
 			$this->data[$this->alias]['type'] = $this->type;
 		}
 
@@ -430,6 +430,9 @@ class Node extends NodesAppModel {
 			throw new InvalidArgumentException(__('Invalid Content Type'));
 		}
 
+		if (empty($prepared[$this->alias]['type'])) {
+			$prepared[$this->alias]['type'] = $typeAlias;
+		}
 		$this->type = $type['Type']['alias'];
 		if (!$this->Behaviors->enabled('Tree')) {
 			$this->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->type)));
@@ -445,7 +448,6 @@ class Node extends NodesAppModel {
 		}
 
 		$prepared[$this->alias]['visibility_roles'] = $this->encodeData($roles);
-		unset($this->type);
 
 		return $prepared;
 	}
