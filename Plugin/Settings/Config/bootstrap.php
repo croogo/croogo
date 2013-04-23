@@ -1,5 +1,7 @@
 <?php
 
+Cache::config('setting_write_configuration', Configure::read('Cache.defaultConfig'));
+
 Croogo::hookComponent('*', 'Settings.Settings');
 
 CroogoNav::add('settings', array(

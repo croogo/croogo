@@ -1,5 +1,12 @@
 <?php
 
+$cacheConfig = Configure::read('Cache.defaultConfig');
+Cache::config('croogo_nodes', $cacheConfig);
+Cache::config('nodes_view', $cacheConfig);
+Cache::config('nodes_promoted', $cacheConfig);
+Cache::config('nodes_term', $cacheConfig);
+Cache::config('nodes_index', $cacheConfig);
+
 Croogo::hookComponent('*', 'Nodes.Nodes');
 
 Croogo::hookHelper('*', 'Nodes.Nodes');

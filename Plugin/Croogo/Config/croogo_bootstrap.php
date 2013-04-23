@@ -20,37 +20,7 @@ $cacheConfig = array(
 	'engine' => $defaultEngine,
 	'prefix' => $defaultPrefix,
 );
-
-// Models
-Cache::config('setting_write_configuration', $cacheConfig);
-
-// Components
-Cache::config('croogo_blocks', $cacheConfig);
-Cache::config('croogo_menus', $cacheConfig);
-Cache::config('croogo_nodes', $cacheConfig);
-Cache::config('croogo_types', $cacheConfig);
-Cache::config('croogo_vocabularies', $cacheConfig);
-
-// Controllers
-Cache::config('nodes_view', $cacheConfig);
-Cache::config('nodes_promoted', $cacheConfig);
-Cache::config('nodes_term', $cacheConfig);
-Cache::config('nodes_index', $cacheConfig);
-Cache::config('contacts_view', $cacheConfig);
-
-/**
- * Failed login attempts
- *
- * Default is 5 failed login attempts in every 5 minutes
- */
-$failedLoginDuration = 300;
-Configure::write('User.failed_login_limit', 5);
-Configure::write('User.failed_login_duration', $failedLoginDuration);
-Cache::config('users_login', array_merge($cacheConfig, array(
-	'duration' => '+' . $failedLoginDuration . ' seconds',
-	'engine' => $defaultEngine,
-	'prefix' => $defaultPrefix,
-)));
+Configure::write('Cache.defaultConfig', $cacheConfig);
 
 /**
  * Settings

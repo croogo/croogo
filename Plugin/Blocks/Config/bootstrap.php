@@ -1,5 +1,7 @@
 <?php
 
+Cache::config('croogo_blocks', Configure::read('Cache.defaultConfig'));
+
 Croogo::hookComponent('*', array(
 	'Blocks.Blocks' => array(
 		'priority' => 5,

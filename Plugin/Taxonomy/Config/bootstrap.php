@@ -1,5 +1,9 @@
 <?php
 
+$cacheConfig = Configure::read('Cache.defaultConfig');
+Cache::config('croogo_types', $cacheConfig);
+Cache::config('croogo_vocabularies', $cacheConfig);
+
 Croogo::hookComponent('*', 'Taxonomy.Taxonomies');
 
 Croogo::hookHelper('*', 'Taxonomy.Taxonomies');
