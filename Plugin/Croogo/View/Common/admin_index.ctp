@@ -14,7 +14,7 @@ $showActions = isset($showActions) ? $showActions : true;
 		<?php echo $titleBlock; ?>
 	<?php else: ?>
 		<?php
-		echo!empty($title_for_layout) ? $title_for_layout : $this->name;
+		echo !empty($title_for_layout) ? $title_for_layout : $this->name;
 		?>
 	<?php endif; ?>
 </h2>
