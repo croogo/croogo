@@ -1,5 +1,7 @@
 <?php
 
+Cache::config('contacts_view', Configure::read('Cache.defaultConfig'));
+
 CroogoNav::add('contacts', array(
 	'icon' => array('comments', 'large'),
 	'title' => __d('croogo', 'Contacts'),

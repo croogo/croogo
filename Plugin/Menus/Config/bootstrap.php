@@ -1,5 +1,7 @@
 <?php
 
+Cache::config('croogo_menus', Configure::read('Cache.defaultConfig'));
+
 Croogo::hookComponent('*', 'Menus.Menus');
 
 Croogo::hookHelper('*', 'Menus.Menus');

@@ -88,6 +88,7 @@ class CroogoAppModel extends Model {
 			if (isset($cacheName)) {
 				$cacheName .= '_' . Configure::read('Config.language');
 				Cache::write($cacheName, $results, $options['cache']['config']);
+				$this->cacheConfig = $options['cache']['config'];
 			}
 		}
 		return $results;
