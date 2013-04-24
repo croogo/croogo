@@ -18,9 +18,9 @@ class AclFilterTestController extends Controller {
 class AclFilterComponentTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.croogo.aro',
-		'plugin.croogo.aco',
-		'plugin.croogo.aros_aco',
+		'plugin.users.aro',
+		'plugin.users.aco',
+		'plugin.users.aros_aco',
 		'plugin.users.user',
 		'plugin.users.role',
 		'plugin.settings.setting',

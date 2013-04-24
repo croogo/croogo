@@ -5,9 +5,9 @@ App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 class TranslateControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
-		'plugin.croogo.aro',
-		'plugin.croogo.aco',
-		'plugin.croogo.aros_aco',
+		'plugin.users.aro',
+		'plugin.users.aco',
+		'plugin.users.aros_aco',
 		'plugin.comments.comment',
 		'plugin.menus.menu',
 		'plugin.meta.meta',

@@ -42,9 +42,9 @@ class ExtShellTest extends CroogoTestCase {
 		'plugin.taxonomy.types_vocabulary',
 		'plugin.users.user',
 		'plugin.taxonomy.vocabulary',
-		'plugin.croogo.aro',
-		'plugin.croogo.aco',
-		'plugin.croogo.aros_aco',
+		'plugin.users.aro',
+		'plugin.users.aco',
+		'plugin.users.aros_aco',
 	);
 
 /**
