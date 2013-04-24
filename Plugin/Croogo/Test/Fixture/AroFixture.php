@@ -19,57 +19,57 @@ class AroFixture extends CroogoTestFixture {
 	public $records = array(
 		array(
 			'id' => 1,
-			'parent_id' => null,
+			'parent_id' => 2,
 			'model' => 'Role',
 			'foreign_key' => 1,
-			'alias' => '',
-			'lft' => 1,
-			'rght' => 6
+			'alias' => 'Role-admin',
+			'lft' => 3,
+			'rght' => 8,
 		),
 		array(
 			'id' => 2,
-			'parent_id' => null,
+			'parent_id' => 3,
 			'model' => 'Role',
 			'foreign_key' => 2,
-			'alias' => '',
-			'lft' => 7,
-			'rght' => 8
+			'alias' => 'Role-registered',
+			'lft' => 2,
+			'rght' => 11,
 		),
 		array(
 			'id' => 3,
 			'parent_id' => null,
 			'model' => 'Role',
 			'foreign_key' => 3,
-			'alias' => '',
-			'lft' => 9,
-			'rght' => 10
+			'alias' => 'Role-public',
+			'lft' => 1,
+			'rght' => 12,
+		),
+		array(
+			'id' => 4,
+			'parent_id' => 1,
+			'model' => 'User',
+			'foreign_key' => 1,
+			'alias' => 'admin',
+			'lft' => 4,
+			'rght' => 5
 		),
 		array(
 			'id' => 5,
 			'parent_id' => 1,
 			'model' => 'User',
-			'foreign_key' => 1,
-			'alias' => '',
-			'lft' => 2,
-			'rght' => 3
+			'foreign_key' => 2,
+			'alias' => 'rchavik',
+			'lft' => 6,
+			'rght' => 7,
 		),
 		array(
 			'id' => 6,
-			'parent_id' => 1,
-			'model' => 'User',
-			'foreign_key' => 2,
-			'alias' => '',
-			'lft' => 4,
-			'rght' => 5
-		),
-		array(
-			'id' => 7,
-			'parent_id' => 1,
+			'parent_id' => 3,
 			'model' => 'User',
 			'foreign_key' => 3,
-			'alias' => '',
-			'lft' => 11,
-			'rght' => 12,
+			'alias' => 'yvonne',
+			'lft' => 9,
+			'rght' => 10,
 		),
 	);
 }

@@ -20,7 +20,6 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.types_vocabulary',
 		'plugin.taxonomy.vocabulary',
-		'plugin.translate.i18n',
 		'plugin.settings.setting',
 	);
 

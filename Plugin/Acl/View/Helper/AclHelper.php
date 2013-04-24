@@ -1,6 +1,6 @@
 <?php
 
-App::uses('Helper', 'View/Helper');
+App::uses('Helper', 'View');
 
 /**
  * Acl Helper
@@ -64,6 +64,7 @@ class AclHelper extends Helper {
 /**
  * Check if url is allowed for the Role
  *
+ * @param $url array
  * @return boolean
  */
 	public function linkIsAllowedByRoleId($roleId, $url) {
@@ -76,7 +77,7 @@ class AclHelper extends Helper {
 			array(':controller', ':action', ':plugin/'),
 			array(Inflector::camelize($url['controller']), $url['action'], $plugin),
 			'controllers/' . $path
-			);
+		);
 		$linkAction = str_replace('//', '/', $path);
 		if (in_array($linkAction, $this->getAllowedActionsByRoleId($roleId))) {
 			return true;
