@@ -9,9 +9,9 @@ class AclHelperTest extends CroogoTestCase {
 	public $fixtures = array(
 		'plugin.users.user',
 		'plugin.users.role',
-		'plugin.croogo.aro',
-		'plugin.croogo.aco',
-		'plugin.croogo.aros_aco',
+		'plugin.users.aro',
+		'plugin.users.aco',
+		'plugin.users.aros_aco',
 	);
 
 	public function setUp() {

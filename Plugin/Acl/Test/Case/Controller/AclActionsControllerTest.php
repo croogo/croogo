@@ -13,9 +13,9 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.croogo.aro',
-		'plugin.croogo.aco',
-		'plugin.croogo.aros_aco',
+		'plugin.users.aro',
+		'plugin.users.aco',
+		'plugin.users.aros_aco',
 		'plugin.menus.menu',
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.types_vocabulary',

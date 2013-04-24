@@ -13,9 +13,9 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.croogo.aco',
-		'plugin.croogo.aro',
-		'plugin.croogo.aros_aco',
+		'plugin.users.aco',
+		'plugin.users.aro',
+		'plugin.users.aros_aco',
 		'plugin.blocks.block',
 		'plugin.comments.comment',
 		'plugin.contacts.contact',
