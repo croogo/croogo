@@ -462,7 +462,10 @@ class UsersController extends UsersAppController {
  * @return void
  * @access public
  */
-	public function view($username) {
+	public function view($username = null) {
+		if ($username == null) {
+			$username = $this->Auth->user('username');
+		}
 		$user = $this->User->findByUsername($username);
 		if (!isset($user['User']['id'])) {
 			$this->Session->setFlash(__d('croogo', 'Invalid User.'), 'default', array('class' => 'error'));
