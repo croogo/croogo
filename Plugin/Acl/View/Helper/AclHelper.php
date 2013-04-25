@@ -15,14 +15,6 @@ App::uses('Helper', 'View');
 class AclHelper extends Helper {
 
 /**
- * Other helpers used by this helper
- *
- * @var array
- * @access public
- */
-	public $helpers = array();
-
-/**
  * Cached actions per Role
  *
  * @var array
@@ -48,8 +40,9 @@ class AclHelper extends Helper {
 	}
 
 /**
- * Generate allowed actions for current logged in Role
+ * Returns an array of allowed actions for current logged in Role
  *
+ * @param integer $roleId Role id
  * @return array
  */
 	public function getAllowedActionsByRoleId($roleId) {
@@ -64,6 +57,7 @@ class AclHelper extends Helper {
 /**
  * Check if url is allowed for the Role
  *
+ * @param integer $roleId Role id
  * @param $url array
  * @return boolean
  */
@@ -86,8 +80,9 @@ class AclHelper extends Helper {
 	}
 
 /**
- * Generate allowed actions for current logged in User
+ * Returns an array of allowed actions for current logged in User
  *
+ * @param integer $userId Role id
  * @return array
  */
 	public function getAllowedActionsByUserId($roleId) {
