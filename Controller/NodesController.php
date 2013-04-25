@@ -101,7 +101,12 @@ class NodesController extends AppController {
 
 		if (isset($this->request->params['named']['q'])) {
 			App::uses('Sanitize', 'Utility');
-			$q = Sanitize::clean($this->request->params['named']['q']);
+			$q = $this->request->params['named']['q'];
+			// Use encode=false on Sanitize::clean to prevent äüöß etc. getting
+			// replaced by html entities but use strip_tags instead to prevent
+			// html injection
+			$q = strip_tags($q);
+			$q = Sanitize::clean($q, array('encode' => false));
 			$this->paginate['Node']['conditions']['OR'] = array(
 				'Node.title LIKE' => '%' . $q . '%',
 				'Node.excerpt LIKE' => '%' . $q . '%',
@@ -665,8 +670,12 @@ class NodesController extends AppController {
 			$this->redirect('/');
 		}
 
-		App::uses('Sanitize', 'Utility');
-		$q = Sanitize::clean($this->request->params['named']['q']);
+		$q = $this->request->params['named']['q'];
+		// Use encode=false on Sanitize::clean to prevent äüöß etc. getting
+		// replaced by html entities but use strip_tags instead to prevent
+		// html injection
+		$q = strip_tags($q);
+		$q = Sanitize::clean($q, array('encode' => false));
 		$this->paginate['Node']['order'] = 'Node.created DESC';
 		$this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
 		$this->paginate['Node']['conditions'] = array(
