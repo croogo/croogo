@@ -1,12 +1,12 @@
 [submodule "Locale"]
 	path = Locale
 	url = git://github.com/croogo/locale.git
-[submodule "Plugin/Migrations"]
+[submodule "Migrations"]
 	path = Plugin/Migrations
 	url = git://github.com/CakeDC/migrations.git
-[submodule "Plugin/Search"]
+[submodule "Search"]
 	path = Plugin/Search
 	url = git://github.com/CakeDC/search.git
-[submodule "Plugin/Ckeditor"]
+[submodule "Ckeditor"]
 	path = Plugin/Ckeditor
 	url = git://github.com/croogo/Ckeditor.git
