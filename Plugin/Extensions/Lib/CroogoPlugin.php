@@ -10,7 +10,7 @@ App::uses('Folder', 'Utility');
  * PHP version 5
  *
  * @category Component
- * @package  Croogo
+ * @package  Croogo.Extensions
  * @version  1.4
  * @since    1.4
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>

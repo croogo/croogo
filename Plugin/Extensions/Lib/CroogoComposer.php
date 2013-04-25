@@ -8,7 +8,7 @@ App::uses('CroogoJson', 'Lib');
  * Croogo Composer Wrapper
  *
  * @category Lib
- * @package  Extension
+ * @package  Croogo.Extensions
  * @since    1.4
  * @author   Kyle Robinson Young <kyle@dontkry.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
