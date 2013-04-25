@@ -3,6 +3,7 @@
 App::uses('Helper', 'View/Helper');
 
 /**
+ * @package Croogo
  * @version 1.1
  * @author Josh Hundley
  * @author Jorge Orpinel <jop@levogiro.net> (changes)

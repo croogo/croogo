@@ -8,7 +8,7 @@ App::uses('Component', 'Controller');
  * PHP version 5
  *
  * @category Component
- * @package  Croogo
+ * @package  Croogo.Acl
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
@@ -82,11 +82,15 @@ class AclAccessComponent extends Component {
 	}
 
 /**
- * ACL: add ACO
+ * Add ACO
  *
  * Creates ACOs with permissions for roles.
+
+ * Action Path format:
+ * - ControllerName
+ * - ControllerName/method_name
  *
- * @param string $action possible values: ControllerName, ControllerName/method_name
+ * @param string $action action path
  * @param array $allowRoles Role aliases
  * @return void
  */
@@ -100,11 +104,15 @@ class AclAccessComponent extends Component {
 	}
 
 /**
- * ACL: remove ACO
+ * Remove ACO
  *
  * Removes ACOs and their Permissions
  *
- * @param string $action possible values: ControllerName, ControllerName/method_name
+ * Action Path format:
+ * - ControllerName
+ * - ControllerName/method_name
+ *
+ * @param string $action action path
  * @return void
  */
 	public function removeAco($action) {

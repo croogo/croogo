@@ -9,6 +9,8 @@ App::uses('ModelBehavior', 'Model');
  * @license MIT
  * @version 2.1
  * @modified 27. august 2008
+ * @package Croogo
+ * @category Behavior
  *
  * This behavior lets you order items in a very similar way to the tree
  * behavior, only there is only 1 level. You can however have many

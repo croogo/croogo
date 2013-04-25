@@ -1,4 +1,5 @@
 <?php
+
 App::uses('Model', 'Model');
 
 /**
@@ -48,9 +49,9 @@ class CroogoAppModel extends Model {
 /**
  * Constructor
  *
- * @param mixed  $id    Set this ID for this model on startup, can also be an array of options, see above.
+ * @param mixed  $id Set this ID for this model on startup, can also be an array of options, see above.
  * @param string $table Name of database table to use.
- * @param string $ds    DataSource connection name.
+ * @param string $ds DataSource connection name.
  */
 	public function __construct($id = false, $table = null, $ds = null) {
 		Croogo::applyHookProperties('Hook.model_properties', $this);
@@ -63,9 +64,9 @@ class CroogoAppModel extends Model {
  * Caching can be done either by unique names,
  * or prefixes where a hashed value of $options array is appended to the name
  *
- * @param mixed $type
- * @param array $options
- * @return mixed
+ * @param mixed $type Type of find operation (all / first / count / neighbors / list / threaded)
+ * @param array $options Option fields (conditions / fields / joins / limit / offset / order / page / group / callbacks)
+ * @return array Array of records, or Null of failure
  * @access public
  */
 	public function find($type = 'first', $options = array()) {
@@ -99,7 +100,7 @@ class CroogoAppModel extends Model {
  *
  * @param mixed $type
  * @param array $options
- * @return void
+ * @return array Array of records, or False when no records found in cache
  * @access private
  */
 	protected function _findCached($type, $options) {
@@ -124,8 +125,8 @@ class CroogoAppModel extends Model {
  *
  * call afterSave() callback after successful update.
  *
- * @param array $fields Set of fields and values, indexed by fields.
- *   Fields are treated as SQL snippets, to insert literal values manually escape your data.
+ * @param array $fields	 Set of fields and values, indexed by fields.
+ *     Fields are treated as SQL snippets, to insert literal values manually escape your data.
  * @param mixed $conditions Conditions to match, true for all records
  * @return boolean True on success, false on failure
  * @access public

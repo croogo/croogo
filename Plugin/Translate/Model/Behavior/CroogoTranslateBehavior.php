@@ -273,8 +273,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 
 if (!defined('CAKEPHP_UNIT_TEST_EXECUTION')) {
 /**
- * @package	 cake
- * @subpackage  cake.cake.libs.model.behaviors
+ * @package	 Croogo
  */
 	class I18nModel extends AppModel {
 

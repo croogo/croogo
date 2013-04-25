@@ -7,7 +7,7 @@ App::uses('CroogoComposer', 'Extensions.Lib');
  * Extensions Installer
  *
  * @category Extensions.Model
- * @package  Croogo
+ * @package  Croogo.Extensions
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
@@ -245,7 +245,6 @@ class ExtensionsInstaller {
 		if (empty($data['package']) || strpos($data['package'], '/') === false) {
 			throw new CakeException(__d('croogo', 'Must specify a valid package name: vendor/name.'));
 		}
-		// TODO: Enable theme support when custom install paths are enabled in composer/installers
 		if ($data['type'] == 'theme') {
 			throw new CakeException(__d('croogo', 'Themes installed via composer are not yet supported.'));
 		}
@@ -255,4 +254,5 @@ class ExtensionsInstaller {
 		));
 		return $this->_CroogoComposer->runComposer();
 	}
+
 }
