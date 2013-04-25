@@ -133,11 +133,19 @@ class AclFilterComponent extends Component {
 			'controller' => 'users',
 			'action' => 'index',
 		);
+		$this->_controller->Auth->unauthorizedRedirect = array(
+			'plugin' => 'users',
+			'controller' => 'users',
+			'action' => 'login',
+		);
 
 		$config = Configure::read('Acl');
 		if (!empty($config['Auth']) && is_array($config['Auth'])) {
 			$isAdminRequest = !empty($this->_controller->request->params['admin']);
-			$authActions = array('loginAction', 'loginRedirect', 'logoutRedirect');
+			$authActions = array(
+				'loginAction', 'loginRedirect', 'logoutRedirect',
+				'unauthorizedRedirect',
+			);
 			foreach ($config['Auth'] as $property => $value) {
 				$isAdminRoute = !empty($value['admin']);
 				$isAuthAction = in_array($property, $authActions);
