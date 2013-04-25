@@ -3,7 +3,7 @@
 /**
  * UpgradeTask
  *
- * @package  Console.Command.Task
+ * @package  Croogo.Croogo.Console.Command.Task
  * @since    1.5
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

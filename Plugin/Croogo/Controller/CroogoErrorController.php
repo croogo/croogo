@@ -13,7 +13,7 @@ App::uses('AppController', 'Controller');
  * PHP version 5
  *
  * @category Controllers
- * @package  Croogo
+ * @package  Croogo.Croogo.Controller
  * @version  1.0
  * @author   Rachman Chavik <rchavik@xintesa.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

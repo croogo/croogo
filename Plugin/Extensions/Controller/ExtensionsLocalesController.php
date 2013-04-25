@@ -10,7 +10,7 @@ App::uses('ExtensionsAppController', 'Extensions.Controller');
  * PHP version 5
  *
  * @category Controller
- * @package  Croogo.Extensions
+ * @package  Croogo.Extensions.Controller
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

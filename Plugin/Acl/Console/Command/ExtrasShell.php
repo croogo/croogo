@@ -22,7 +22,7 @@ App::uses('AclExtras', 'Acl.Lib');
 /**
  * Shell for ACO extras
  *
- * @package     Croogo
+ * @package     Croogo.Acl.Console.Command
  * @subpackage  Acl.Console.Command
  */
 class ExtrasShell extends Shell {

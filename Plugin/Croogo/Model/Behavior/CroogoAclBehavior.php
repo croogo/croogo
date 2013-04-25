@@ -8,7 +8,7 @@ App::uses('AclBehavior', 'Model/Behavior');
  * PHP version 5
  *
  * @category Behavior
- * @package  Croogo
+ * @package  Croogo.Croogo.Model.Behavior
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

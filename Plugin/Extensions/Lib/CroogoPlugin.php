@@ -11,7 +11,7 @@ App::uses('MigrationVersion', 'Migrations.Lib');
  * PHP version 5
  *
  * @category Component
- * @package  Croogo.Extensions
+ * @package  Croogo.Extensions.Lib
  * @version  1.4
  * @since    1.4
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>

@@ -19,6 +19,7 @@ App::uses('BaseAuthenticate', 'Controller/Component/Auth');
  *	)
  * }}}
  *
+ * @package     Croogo.Acl.Controller.Component.Auth
  * @copyright   Copyright (c) 2012 Ceeram
  * @license     http://www.opensource.org/licenses/mit-license.php The MIT License
  * @see AclAutoLoginComponent

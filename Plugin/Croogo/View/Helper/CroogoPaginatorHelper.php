@@ -2,6 +2,11 @@
 
 App::uses('PaginatorHelper', 'View/Helper');
 
+/**
+ * Croogo Paginator Helper
+ *
+ * @package Croogo.Croogo.View.Helper
+ */
 class CroogoPaginatorHelper extends PaginatorHelper {
 
 /**

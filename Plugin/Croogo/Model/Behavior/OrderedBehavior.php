@@ -9,7 +9,7 @@ App::uses('ModelBehavior', 'Model');
  * @license MIT
  * @version 2.1
  * @modified 27. august 2008
- * @package Croogo
+ * @package Croogo.Croogo.Model.Behavior
  * @category Behavior
  *
  * This behavior lets you order items in a very similar way to the tree

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Menus Component
+ *
+ * @package Croogo.Menus.Controller.Component
+ */
 class MenusComponent extends Component {
 
 /**

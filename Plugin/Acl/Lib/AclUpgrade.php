@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Utility class to assist upgrading default aco records from 1.4 to 1.5
+ *
+ * @package Croogo.Acl.Lib
+ */
 class AclUpgrade extends Object {
 
 /**

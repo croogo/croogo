@@ -7,7 +7,7 @@ App::uses('CakeEventManager', 'Event');
  * Descendant of CakeEventManager, customized to map event listener objects
  *
  * @since 1.4
- * @package Croogo
+ * @package Croogo.Croogo.Event
  * @see CakeEventManager
  * @author   Rachman Chavik <rchavik@xintesa.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

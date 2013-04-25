@@ -8,7 +8,7 @@ App::uses('Component', 'Controller');
  * PHP version 5
  *
  * @category Component
- * @package  Acl
+ * @package  Croogo.Acl.Controller.Component
  * @since    1.5
  * @author   Rachman Chavik <rchavik@xintesa.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

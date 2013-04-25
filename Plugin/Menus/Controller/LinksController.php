@@ -8,7 +8,7 @@ App::uses('MenusAppController', 'Menus.Controller');
  * PHP version 5
  *
  * @category Controller
- * @package  Menus
+ * @package  Croogo.Menus.Controller
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

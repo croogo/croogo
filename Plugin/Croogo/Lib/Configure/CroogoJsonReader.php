@@ -5,7 +5,7 @@ App::uses('CroogoJson', 'Croogo.Lib');
 /**
  * CroogoJsonReader
  *
- * @package  Croogo.Configure
+ * @package  Croogo.Croogo.Lib.Configure
  * @since    1.5
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

@@ -6,6 +6,7 @@ App::uses('DbAcl', 'Controller/Component/Acl');
  * HabtmDbAcl implements an ACL control system in the database like DbAcl with
  * User habtm Group checks
  *
+ * @package Croogo.Acl.Controller.Component.Acl
  * @author Ceeram
  * @license MIT
  * @link http://github.com/ceeram/Authorize

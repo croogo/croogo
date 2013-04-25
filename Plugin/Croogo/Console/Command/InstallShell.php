@@ -13,7 +13,7 @@ App::uses('CroogoTheme', 'Extensions.Lib');
  *	./Console/croogo install plugin shama myplugin
  *
  * @category Shell
- * @package  Croogo
+ * @package  Croogo.Croogo.Console.Command
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

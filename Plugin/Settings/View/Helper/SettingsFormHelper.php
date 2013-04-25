@@ -7,7 +7,7 @@ App::uses('AppHelper', 'View/Helper');
  * PHP version 5
  *
  * @category Helper
- * @package  Settings
+ * @package  Croogo.Settings.View.Helper
  * @version  1.0
  * @author   Rachman Chavik <rchavik@xintesa.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

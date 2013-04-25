@@ -6,7 +6,7 @@
  * PHP version 5
  *
  * @category Menus.View/Helper
- * @package  Croogo.Menus
+ * @package  Croogo.Menus.View.Helper
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

@@ -10,7 +10,7 @@ App::uses('Helper', 'View');
  * PHP version 5
  *
  * @category Helpers
- * @package  Croogo
+ * @package  Croogo.Croogo.View.Helper
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

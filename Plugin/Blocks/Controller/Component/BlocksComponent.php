@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Blocks Component
+ *
+ * @package Croogo.Blocks.Controller.Component
+ */
 class BlocksComponent extends Component {
 
 /**

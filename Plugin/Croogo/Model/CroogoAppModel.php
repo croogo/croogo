@@ -8,7 +8,7 @@ App::uses('Model', 'Model');
  * PHP version 5
  *
  * @category Croogo.Model
- * @package  Croogo
+ * @package  Croogo.Croogo.Model
  * @version  1.5
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Meta Component
+ *
+ * @package Croogo.Meta.Controller.Component
+ */
 class MetaComponent extends Component {
 
 /**

@@ -26,8 +26,7 @@ App::uses('Shell', 'Console');
 /**
  * Shell for ACO extras
  *
- * @package		acl_extras
- * @subpackage	acl_extras.Console.Command
+ * @package Croogo.Acl.Lib
  */
 class AclExtras extends Object {
 

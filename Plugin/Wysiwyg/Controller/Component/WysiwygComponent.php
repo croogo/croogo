@@ -8,7 +8,7 @@ App::uses('Component', 'Controller');
  * PHP version 5
  *
  * @category Wysiwyg.Controller.Component
- * @package  Croogo
+ * @package  Croogo.Wysiwyg.Controller.Component
  * @version  1.5
  * @author   Rachman Chavik <rchavik@xintesa.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

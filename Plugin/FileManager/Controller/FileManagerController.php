@@ -9,7 +9,7 @@ App::uses('File', 'Utility');
  * PHP version 5
  *
  * @category FileManager.Controller
- * @package  Croogo
+ * @package  Croogo.FileManager.Controller
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

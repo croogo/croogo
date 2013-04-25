@@ -14,7 +14,6 @@
  *
  * See the Akismet class documentation page linked to below for usage information.
  *
- * @package        Croogo
  * @author         Alex Potsides, {@link http://www.achingbrain.net http://www.achingbrain.net}
  * @version        0.4
  * @copyright      Alex Potsides, {@link http://www.achingbrain.net http://www.achingbrain.net}
@@ -56,7 +55,7 @@ App::uses('Component', 'Controller');
  *   }
  * </code>
  *
- *  @package    Croogo
+ *  @package    Croogo.Croogo.Controller.Component
  *  @name       Akismet
  *  @version    0.4
  *  @author     Alex Potsides
@@ -303,7 +302,7 @@ class AkismetComponent extends Component
  *
  *    N.B. It is not necessary to call this class directly to use the Akismet class.  This is included here mainly out of a sense of completeness.
  *
- *  @package    Croogo
+ *  @package    Croogo.Croogo.Controller.Component
  *  @name       SocketWriteRead
  *  @version    0.1
  *  @author     Alex Potsides

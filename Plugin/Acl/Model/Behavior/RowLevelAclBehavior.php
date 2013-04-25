@@ -1,10 +1,17 @@
 <?php
 
+/**
+ * RowLevelAcl Behavior
+ *
+ * @package Croogo.Acl.Model.Behavior
+ * @since 1.5
+ */
 class RowLevelAclBehavior extends ModelBehavior {
 
 /**
  * parentNode
  *
+ * @param $model Model model instance
  */
 	public function parentNode($model) {
 		if (!$model->id && empty($model->data)) {

@@ -19,6 +19,7 @@ App::uses('FormAuthenticate', 'Controller/Component/Auth');
  *	)
  * }}}
  *
+ * @package Croogo.Acl.Controller.Component.Auth
  */
 class MultiColumnAuthenticate extends FormAuthenticate {
 

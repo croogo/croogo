@@ -2,6 +2,11 @@
 
 App::uses('FormHelper', 'View/Helper');
 
+/**
+ * Croogo Form Helper
+ *
+ * @package Croogo.Croogo.View.Helper
+ */
 class CroogoFormHelper extends FormHelper {
 
 	public $helpers = array(

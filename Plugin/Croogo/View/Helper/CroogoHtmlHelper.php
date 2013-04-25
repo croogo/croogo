@@ -2,6 +2,11 @@
 
 App::uses('HtmlHelper', 'View/Helper');
 
+/**
+ * Croogo Html Helper
+ *
+ * @package Croogo.Croogo.View.Helper
+ */
 class CroogoHtmlHelper extends HtmlHelper {
 
 	public function __construct(View $View, $settings = array()) {
