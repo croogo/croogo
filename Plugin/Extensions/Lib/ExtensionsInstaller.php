@@ -158,11 +158,11 @@ class ExtensionsInstaller {
 		if (empty($path)) {
 			throw new CakeException(__('Invalid theme path'));
 		}
-                
+
 		if (isset($this->_themeName[$path])) {
 			return $this->_themeName[$path];
 		}
-                
+
 		$Zip = new ZipArchive;
 		if ($Zip->open($path) === true) {
 			$search = 'webroot/theme.json';
@@ -245,7 +245,6 @@ class ExtensionsInstaller {
 		if (empty($data['package']) || strpos($data['package'], '/') === false) {
 			throw new CakeException(__('Must specify a valid package name: vendor/name.'));
 		}
-		// TODO: Enable theme support when custom install paths are enabled in composer/installers
 		if ($data['type'] == 'theme') {
 			throw new CakeException(__('Themes installed via composer are not yet supported.'));
 		}
@@ -255,4 +254,5 @@ class ExtensionsInstaller {
 		));
 		return $this->_CroogoComposer->runComposer();
 	}
+
 }

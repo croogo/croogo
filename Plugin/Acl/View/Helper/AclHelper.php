@@ -24,7 +24,7 @@ class AclHelper extends Helper {
 
 /**
  * Cached actions per Role
- * 
+ *
  * @var array
  * @access public
  */
@@ -45,7 +45,7 @@ class AclHelper extends Helper {
 
 /**
  * Check if url is allowed for the Role
- * 
+ *
  * @return boolean
  */
 	public function linkIsAllowedByRoleId($roleId, $url) {

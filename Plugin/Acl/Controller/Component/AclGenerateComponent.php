@@ -32,7 +32,7 @@ class AclGenerateComponent extends Component {
 	protected $_folder = null;
 
 /**
- * @param object $controller controller
+ * @param Controller $controller controller
  * @param array  $settings   settings
  */
 	public function initialize(Controller $controller) {
@@ -43,7 +43,7 @@ class AclGenerateComponent extends Component {
 /**
  * List all controllers (including plugin controllers)
  *
- * @return array
+ * @return array map of Controller name and its path
  */
 	public function listControllers() {
 		$controllerPaths = array();
