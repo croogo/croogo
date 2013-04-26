@@ -42,6 +42,6 @@ if (Configure::read('Site.acl_plugin') == 'Acl') {
 		'path' => CACHE . 'queries',
 		'engine' => Configure::read('Cache.defaultEngine'),
 		'prefix' => Configure::read('Cache.defaultPrefix'),
-		'groups' => array('permissions')
+		'groups' => array('acl')
 	));
 }

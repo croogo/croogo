@@ -1,6 +1,9 @@
 <?php
 
-Cache::config('setting_write_configuration', Configure::read('Cache.defaultConfig'));
+Cache::config('setting_write_configuration', array_merge(
+	Configure::read('Cache.defaultConfig'),
+	array('groups' => array('settings'))
+));
 
 Croogo::hookComponent('*', 'Settings.Settings');
 

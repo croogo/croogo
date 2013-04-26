@@ -1,6 +1,9 @@
 <?php
 
-Cache::config('contacts_view', Configure::read('Cache.defaultConfig'));
+Cache::config('contacts_view', array_merge(
+	Configure::read('Cache.defaultConfig'),
+	array('groups' => array('contacts'))
+));
 
 CroogoNav::add('contacts', array(
 	'icon' => array('comments', 'large'),

@@ -1,6 +1,9 @@
 <?php
 
-$cacheConfig = Configure::read('Cache.defaultConfig');
+$cacheConfig = array_merge(
+	Configure::read('Cache.defaultConfig'),
+	array('groups' => array('nodes'))
+);
 Cache::config('croogo_nodes', $cacheConfig);
 Cache::config('nodes_view', $cacheConfig);
 Cache::config('nodes_promoted', $cacheConfig);

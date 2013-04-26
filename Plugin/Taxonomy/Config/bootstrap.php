@@ -1,6 +1,9 @@
 <?php
 
-$cacheConfig = Configure::read('Cache.defaultConfig');
+$cacheConfig = array_merge(
+	Configure::read('Cache.defaultConfig'),
+	array('groups' => array('taxonomy'))
+);
 Cache::config('croogo_types', $cacheConfig);
 Cache::config('croogo_vocabularies', $cacheConfig);
 

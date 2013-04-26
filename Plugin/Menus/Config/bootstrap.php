@@ -1,6 +1,9 @@
 <?php
 
-Cache::config('croogo_menus', Configure::read('Cache.defaultConfig'));
+Cache::config('croogo_menus', array_merge(
+	Configure::read('Cache.defaultConfig'),
+	array('groups' => array('menus'))
+));
 
 Croogo::hookComponent('*', 'Menus.Menus');
 
