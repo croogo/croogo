@@ -92,7 +92,7 @@ class NodesComponent extends Component {
 				'order' => $options['order'],
 				'limit' => $options['limit'],
 				'cache' => array(
-					'prefix' => 'croogo_nodes_' . $alias . '_',
+					'name' => 'nodes_' . $alias,
 					'config' => 'croogo_nodes',
 				),
 			));

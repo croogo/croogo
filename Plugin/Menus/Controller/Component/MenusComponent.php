@@ -97,7 +97,7 @@ class MenusComponent extends Component {
 					'Menu.link_count >' => 0,
 				),
 				'cache' => array(
-					'name' => 'croogo_menu_' . $menuAlias,
+					'name' => $menuAlias,
 					'config' => 'croogo_menus',
 				),
 				'recursive' => '-1',
@@ -121,7 +121,7 @@ class MenusComponent extends Component {
 						'Link.lft' => 'ASC',
 					),
 					'cache' => array(
-						'name' => 'croogo_menu_' . $menu['Menu']['id'] . '_links_' . $roleId,
+						'name' => $menu['Menu']['alias'] . '_links_' . $roleId,
 						'config' => 'croogo_menus',
 					),
 					'recursive' => -1,

@@ -80,7 +80,7 @@ class BlocksComponent extends Component {
 				'Region.alias',
 			),
 			'cache' => array(
-				'name' => 'croogo_regions',
+				'name' => 'regions',
 				'config' => 'croogo_blocks',
 			),
 		));
@@ -112,7 +112,7 @@ class BlocksComponent extends Component {
 					'Block.weight' => 'ASC'
 				),
 				'cache' => array(
-					'prefix' => 'croogo_blocks_' . $regionAlias . '_' . $roleId . '_',
+					'name' => 'blocks_' . $regionAlias . '_' . $roleId,
 					'config' => 'croogo_blocks',
 				),
 				'recursive' => '-1',

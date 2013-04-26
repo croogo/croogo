@@ -142,7 +142,7 @@ class ContactsController extends ContactsAppController {
 				'Contact.status' => 1,
 			),
 			'cache' => array(
-				'name' => 'contact_' . $alias,
+				'name' => $alias,
 				'config' => 'contacts_view',
 			),
 		));

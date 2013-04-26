@@ -110,7 +110,7 @@ class TaxonomiesComponent extends Component {
 	public function types() {
 		$types = $this->Node->Taxonomy->Vocabulary->Type->find('all', array(
 			'cache' => array(
-				'name' => 'croogo_types',
+				'name' => 'types',
 				'config' => 'croogo_types',
 			),
 		));
@@ -141,7 +141,7 @@ class TaxonomiesComponent extends Component {
 					'Vocabulary.alias' => $vocabularyAlias,
 				),
 				'cache' => array(
-					'name' => 'croogo_vocabulary_' . $vocabularyAlias,
+					'name' => 'vocabulary_' . $vocabularyAlias,
 					'config' => 'croogo_vocabularies',
 				),
 				'recursive' => '-1',
@@ -155,7 +155,7 @@ class TaxonomiesComponent extends Component {
 						'Term',
 					),
 					'cache' => array(
-						'name' => 'croogo_vocabulary_threaded_' . $vocabularyAlias,
+						'name' => 'vocabulary_threaded_' . $vocabularyAlias,
 						'config' => 'croogo_vocabularies',
 					),
 					'order' => 'Taxonomy.lft ASC',
