@@ -24,7 +24,7 @@ class AclHelperTest extends CroogoTestCase {
  * testLinkIsAllowedByRoleId
  */
 	public function testLinkIsAllowedByRoleId() {
-		Cache::clearGroup('permissions');
+		Cache::clearGroup('acl', 'permissions');
 		$resetUrl = array(
 			'controller' => 'Users',
 			'action' => 'reset',
@@ -52,7 +52,7 @@ class AclHelperTest extends CroogoTestCase {
  * testLinkIsAllowedByUserId
  */
 	public function testLinkIsAllowedByUserId() {
-		Cache::clearGroup('permissions');
+		Cache::clearGroup('acl', 'permissions');
 		$resetUrl = 'controllers/Users/reset';
 		$nodeViewUrl = 'controllers/Nodes/view';
 
