@@ -4,11 +4,11 @@ $cacheConfig = array_merge(
 	Configure::read('Cache.defaultConfig'),
 	array('groups' => array('nodes'))
 );
-Cache::config('croogo_nodes', $cacheConfig);
-Cache::config('nodes_view', $cacheConfig);
-Cache::config('nodes_promoted', $cacheConfig);
-Cache::config('nodes_term', $cacheConfig);
-Cache::config('nodes_index', $cacheConfig);
+CroogoCache::config('nodes', $cacheConfig);
+CroogoCache::config('nodes_view', $cacheConfig);
+CroogoCache::config('nodes_promoted', $cacheConfig);
+CroogoCache::config('nodes_term', $cacheConfig);
+CroogoCache::config('nodes_index', $cacheConfig);
 
 Croogo::hookComponent('*', 'Nodes.Nodes');
 

@@ -1,6 +1,6 @@
 <?php
 
-Cache::config('croogo_menus', array_merge(
+CroogoCache::config('croogo_menus', array_merge(
 	Configure::read('Cache.defaultConfig'),
 	array('groups' => array('menus'))
 ));

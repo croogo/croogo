@@ -37,10 +37,9 @@ class Comment extends AppModel {
 	public $actsAs = array(
 		'Tree',
 		'Croogo.Cached' => array(
-			'prefix' => array(
-				'comment_',
-				'nodes_',
-				'node_',
+			'groups' => array(
+				'comments',
+				'nodes',
 			),
 		),
 		'Search.Searchable',

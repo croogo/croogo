@@ -90,7 +90,7 @@ class RowLevelAclComponent extends Component {
 		$Permission = $this->_controller->Acl->Aro->Permission;
 		$Role = ClassRegistry::init('Users.Role');
 		$roles = $Role->find('list', array(
-			'cache' => array('name' => 'roles', 'config' => 'nodes_index'),
+			'cache' => array('name' => 'roles', 'config' => 'permissions'),
 		));
 		$modelClass = $this->_controller->modelClass;
 		$aco = array('model' => $modelClass, 'foreign_key' => $id);

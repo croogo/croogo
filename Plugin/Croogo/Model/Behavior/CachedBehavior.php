@@ -28,7 +28,7 @@ class CachedBehavior extends ModelBehavior {
 			$config = array($config);
 		}
 
-		$default = array('config' => 'default', 'prefix' => null);
+		$default = array('config' => 'default', 'prefix' => null, 'groups' => array());
 		$this->settings[$model->alias] = Hash::merge($default, $config);
 	}
 
@@ -60,15 +60,10 @@ class CachedBehavior extends ModelBehavior {
  * @return void
  */
 	protected function _deleteCachedFiles(Model $model) {
-		$config = 'default';
-		if (!empty($this->settings[$model->alias]['config'])) {
-			$config = $this->settings[$model->alias]['config'];
-		}
-		foreach ($this->settings[$model->alias]['prefix'] as $prefix) {
-			$cacheName = $prefix . Configure::read('Config.language');
-			Cache::delete($cacheName, $config);
-			if (isset($model->cacheConfig)) {
-				Cache::delete($cacheName, $model->cacheConfig);
+		foreach ($this->settings[$model->alias]['groups'] as $group) {
+			$configs = CroogoCache::groupConfigs($group);
+			foreach ($configs[$group] as $config) {
+				Cache::clearGroup($group, $config);
 			}
 		}
 	}

@@ -4,8 +4,8 @@ $cacheConfig = array_merge(
 	Configure::read('Cache.defaultConfig'),
 	array('groups' => array('taxonomy'))
 );
-Cache::config('croogo_types', $cacheConfig);
-Cache::config('croogo_vocabularies', $cacheConfig);
+CroogoCache::config('croogo_types', $cacheConfig);
+CroogoCache::config('croogo_vocabularies', $cacheConfig);
 
 Croogo::hookComponent('*', 'Taxonomy.Taxonomies');
 

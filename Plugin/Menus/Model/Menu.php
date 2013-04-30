@@ -32,10 +32,8 @@ class Menu extends MenusAppModel {
  */
 	public $actsAs = array(
 		'Croogo.Cached' => array(
-			'prefix' => array(
-				'link_',
-				'menu_',
-				'croogo_menu_',
+			'groups' => array(
+				'menus',
 			),
 		),
 		'Croogo.Params',

@@ -32,13 +32,9 @@ class Term extends TaxonomyAppModel {
  */
 	public $actsAs = array(
 		'Croogo.Cached' => array(
-			'prefix' => array(
-				'term_',
-				'node_',
-				'nodes_',
-				'croogo_nodes_',
-				'croogo_vocabularies_',
-				'croogo_vocabulary_',
+			'groups' => array(
+				'taxonomy',
+				'nodes',
 			),
 		),
 	);

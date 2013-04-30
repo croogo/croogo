@@ -1,6 +1,6 @@
 <?php
 
-Cache::config('setting_write_configuration', array_merge(
+CroogoCache::config('setting_write_configuration', array_merge(
 	Configure::read('Cache.defaultConfig'),
 	array('groups' => array('settings'))
 ));
