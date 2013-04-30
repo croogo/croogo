@@ -50,7 +50,7 @@ class CroogoEventManager extends CakeEventManager {
  */
 	public static function loadListeners() {
 		$eventManager = CroogoEventManager::instance();
-		$cached = Cache::read('EventHandlers', 'setting_write_configuration');
+		$cached = Cache::read('EventHandlers', 'cached_settings');
 		if ($cached === false) {
 			$eventHandlers = Configure::read('EventHandlers');
 			$validKeys = array('eventKey' => null, 'options' => array());
