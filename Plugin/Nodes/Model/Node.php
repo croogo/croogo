@@ -60,10 +60,8 @@ class Node extends NodesAppModel {
 		'Meta.Meta',
 		'Croogo.Url',
 		'Croogo.Cached' => array(
-			'prefix' => array(
-				'node_',
-				'nodes_',
-				'croogo_nodes_',
+			'groups' => array(
+				'nodes',
 			),
 		),
 		'Search.Searchable',

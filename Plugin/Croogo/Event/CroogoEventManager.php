@@ -50,7 +50,7 @@ class CroogoEventManager extends CakeEventManager {
  */
 	public static function loadListeners() {
 		$eventManager = CroogoEventManager::instance();
-		$cached = Cache::read('EventHandlers', 'setting_write_configuration');
+		$cached = Cache::read('EventHandlers', 'cached_settings');
 		if ($cached === false) {
 			$eventHandlers = Configure::read('EventHandlers');
 			$validKeys = array('eventKey' => null, 'options' => array());
@@ -70,9 +70,10 @@ class CroogoEventManager extends CakeEventManager {
 					if (class_exists($class)) {
 						$cached[] = compact('plugin', 'class', 'eventKey', 'eventOptions');
 					} else {
-						logError(__d('croogo', 'EventHandler %s not found in plugin %s', $class, $plugin));
+						CakeLog::error(__d('croogo', 'EventHandler %s not found in plugin %s', $class, $plugin));
 					}
 				}
+				Cache::write('EventHandlers', $cached, 'cached_settings');
 			}
 		}
 		foreach ($cached as $cache) {

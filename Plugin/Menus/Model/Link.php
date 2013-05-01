@@ -34,10 +34,8 @@ class Link extends MenusAppModel {
 		'Croogo.Encoder',
 		'Tree',
 		'Croogo.Cached' => array(
-			'prefix' => array(
-				'link_',
-				'menu_',
-				'croogo_menu_',
+			'groups' => array(
+				'menus',
 			),
 		),
 		'Croogo.Params',

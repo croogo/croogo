@@ -38,13 +38,12 @@ class CachedBehaviorTest extends CroogoTestCase {
  */
 	public function testClearCache() {
 		$cacheName = 'users';
+		$prefixed = $cacheName . '_' . Configure::read('Config.language');
 		Cache::delete($cacheName . '_eng', 'users_login');
 		$this->User->useCache = true;
 		$this->User->Behaviors->load('Croogo.Cached', array(
 			'config' => 'users_login',
-			'prefix' => array(
-				'users_',
-			),
+			'groups' => array('users'),
 		));
 
 		// find() causes cache file to be created
@@ -52,21 +51,17 @@ class CachedBehaviorTest extends CroogoTestCase {
 			'cache' => array(
 				'name' => $cacheName,
 				'config' => 'users_login',
-				'prefix' => '',
 			),
 		));
 
-		$cacheFile = CACHE . 'queries' . DS . $this->defaultPrefix . $cacheName . '_' . Configure::read('Config.language');
-		$fileExists = file_exists($cacheFile);
-		$this->assertEquals(true, $fileExists);
-		$this->assertEquals(3, count($users));
-		$this->assertNotEmpty($users);
+		$cached = Cache::read($prefixed, 'users_login');
+		$this->assertEquals(3, count($cached));
 
 		// delete() should delete/invalidate the cache
 		$this->User->id = 2;
 		$this->User->delete();
-		$fileExists = file_exists($cacheFile);
-		$this->assertEquals(false, $fileExists);
+		$cached = Cache::read($prefixed, 'users_login');
+		$this->assertFalse($cached);
 
 		// find() should recreate the cache file with the correct user count
 		$users = $this->User->find('list', array(
@@ -77,8 +72,8 @@ class CachedBehaviorTest extends CroogoTestCase {
 			),
 		));
 		$this->assertEquals(2, count($users));
-		$fileExists = file_exists($cacheFile);
-		$this->assertEquals(true, $fileExists);
+		$cached = Cache::read($prefixed, 'users_login');
+		$this->assertEquals(2, count($cached));
 	}
 
 }

@@ -33,12 +33,9 @@ class Taxonomy extends TaxonomyAppModel {
 	public $actsAs = array(
 		'Tree',
 		'Croogo.Cached' => array(
-			'prefix' => array(
-				'node_',
-				'nodes_',
-				'nodes_taxonomy_',
-				'croogo_nodes_',
-				'croogo_vocabulary_',
+			'groups' => array(
+				'nodes',
+				'taxonomy',
 			),
 		),
 	);

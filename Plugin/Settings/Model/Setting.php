@@ -44,8 +44,8 @@ class Setting extends SettingsAppModel {
 			'foreign_key' => false,
 		),
 		'Croogo.Cached' => array(
-			'prefix' => array(
-				'setting_',
+			'groups' => array(
+				'settings',
 			),
 		),
 	);
