@@ -109,7 +109,7 @@ class CroogoRouter {
 		try {
 			$types = ClassRegistry::init('Taxonomy.Type')->find('all', array(
 				'cache' => array(
-					'name' => 'croogo_types',
+					'name' => 'types',
 					'config' => 'croogo_types',
 				),
 			));

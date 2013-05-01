@@ -32,10 +32,8 @@ class Type extends TaxonomyAppModel {
  */
 	public $actsAs = array(
 		'Croogo.Cached' => array(
-			'prefix' => array(
-				'croogo_types_',
-				'types_',
-				'type_',
+			'groups' => array(
+				'taxonomy',
 			),
 		),
 		'Croogo.Params',

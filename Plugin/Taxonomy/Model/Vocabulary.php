@@ -36,10 +36,8 @@ class Vocabulary extends TaxonomyAppModel {
 			'foreign_key' => false,
 		),
 		'Croogo.Cached' => array(
-			'prefix' => array(
-				'vocabulary_',
-				'croogo_vocabulary_',
-				'croogo_vocabularies_',
+			'groups' => array(
+				'taxonomy',
 			),
 		),
 	);

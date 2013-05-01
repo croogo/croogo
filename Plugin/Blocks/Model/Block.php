@@ -37,10 +37,8 @@ class Block extends BlocksAppModel {
 			'foreign_key' => false,
 		),
 		'Croogo.Cached' => array(
-			'prefix' => array(
-				'block_',
-				'blocks_',
-				'croogo_blocks_',
+			'groups' => array(
+				'blocks',
 			),
 		),
 		'Croogo.Params',

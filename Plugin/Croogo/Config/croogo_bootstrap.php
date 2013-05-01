@@ -12,6 +12,7 @@ Configure::write('Site.acl_plugin', 'Acl');
 /**
  * Cache configuration
  */
+App::uses('CroogoCache', 'Croogo.Cache');
 $defaultEngine = Configure::read('Cache.defaultEngine');
 $defaultPrefix = Configure::read('Cache.defaultPrefix');
 $cacheConfig = array(
