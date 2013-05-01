@@ -331,15 +331,19 @@ class CommentsController extends CommentsAppController {
 	protected function _sendEmail($node, $data) {
 		$email = new CakeEmail();
 		$commentId = $this->Comment->id;
-		return $email->from(Configure::read('Site.title') . ' ' .
-			'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>')
-			->to(Configure::read('Site.email'))
-			->subject('[' . Configure::read('Site.title') . '] ' .
-				__d('croogo', 'New comment posted under') . ' ' . $node['Node']['title'])
-			->viewVars(compact('node', 'data', 'commentId'))
-			->template('Comments.comment')
-			->theme($this->theme)
-			->send();
+		try {
+			return $email->from(Configure::read('Site.title') . ' ' .
+				'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>')
+				->to(Configure::read('Site.email'))
+				->subject('[' . Configure::read('Site.title') . '] ' .
+					__d('croogo', 'New comment posted under') . ' ' . $node['Node']['title'])
+				->viewVars(compact('node', 'data', 'commentId'))
+				->template('Comments.comment')
+				->theme($this->theme)
+				->send();
+		} catch (SocketException $e) {
+			$this->log(sprintf('Error sending comment notification: %s', $e->getMessage()));
+		}
 	}
 
 /**

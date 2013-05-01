@@ -254,8 +254,12 @@ class ContactsController extends ContactsAppController {
  */
 	protected function _send_email($continue, $contact) {
 		$email = new CakeEmail();
-		if ($contact['Contact']['message_notify'] && $continue === true) {
-			$siteTitle = Configure::read('Site.title');
+		if (!$contact['Contact']['message_notify'] || $continue !== true) {
+			return $continue;
+		}
+
+		$siteTitle = Configure::read('Site.title');
+		try {
 			$email->from($this->request->data['Message']['email'])
 				->to($contact['Contact']['email'])
 				->subject(__d('croogo', '[%s] %s', $siteTitle, $contact['Contact']['title']))
@@ -269,6 +273,9 @@ class ContactsController extends ContactsAppController {
 			if (!$email->send()) {
 				$continue = false;
 			}
+		} catch (SocketException $e) {
+			$this->log(sprintf('Error sending contact notification: %s', $e->getMessage()));
+			$continue = false;
 		}
 
 		return $continue;

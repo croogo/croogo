@@ -262,6 +262,22 @@ class UsersController extends UsersAppController {
 		$this->set('title_for_layout', __d('croogo', 'Users'));
 	}
 
+	protected function _sendEmail() {
+		try {
+			$email = new CakeEmail();
+			$email->from(Configure::read('Site.title') . ' ' .
+				'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>')
+				->to($this->request->data['User']['email'])
+				->subject(__d('croogo', '[%s] Please activate your account', Configure::read('Site.title')))
+				->template('Users.register')
+				->theme($this->theme)
+				->viewVars(array('user' => $this->request->data))
+				->send();
+		} catch (SocketException $e) {
+			$this->log(sprintf('Error sending user activation notification: %s', $e->getMessage()));
+		}
+	}
+
 /**
  * Add
  *
@@ -281,15 +297,7 @@ class UsersController extends UsersAppController {
 			if ($this->User->save($this->request->data)) {
 				Croogo::dispatchEvent('Controller.Users.registrationSuccessful', $this);
 				$this->request->data['User']['password'] = null;
-				$email = new CakeEmail();
-				$email->from(Configure::read('Site.title') . ' ' .
-					'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>')
-					->to($this->request->data['User']['email'])
-					->subject(__d('croogo', '[%s] Please activate your account', Configure::read('Site.title')))
-					->template('Users.register')
-					->theme($this->theme)
-					->viewVars(array('user' => $this->request->data))
-					->send();
+				$this->_sendEmail();
 
 				$this->Session->setFlash(__d('croogo', 'You have successfully registered an account. An email has been sent with further instructions.'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'login'));
