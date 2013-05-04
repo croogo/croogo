@@ -587,8 +587,12 @@ class CroogoPlugin extends Object {
  *
  * @param string $plugin Plugin name
  * @return boolean true when successful, false or array of error messages when failed
+ * @throws InvalidArgumentException
  */
 	public function delete($plugin) {
+		if (empty($plugin)) {
+			throw new InvalidArgumentException(__d('croogo', 'Invalid plugin'));
+		}
 		$pluginPath = APP . 'Plugin' . DS . $plugin;
 		$folder = new Folder();
 		$result = $folder->delete($pluginPath);
