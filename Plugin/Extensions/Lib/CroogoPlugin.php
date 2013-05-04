@@ -594,6 +594,9 @@ class CroogoPlugin extends Object {
 			throw new InvalidArgumentException(__d('croogo', 'Invalid plugin'));
 		}
 		$pluginPath = APP . 'Plugin' . DS . $plugin;
+		if (is_link($pluginPath)) {
+			return unlink($pluginPath);
+		}
 		$folder = new Folder();
 		$result = $folder->delete($pluginPath);
 		if ($result !== true) {
