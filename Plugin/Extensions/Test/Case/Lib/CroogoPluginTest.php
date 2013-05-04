@@ -266,4 +266,12 @@ class CroogoPluginTest extends CroogoTestCase {
 		$this->assertEquals($expected, $result);
 	}
 
+/**
+ * testDeleteEmptyPlugin
+ * @expectedException InvalidArgumentException
+ */
+	public function testDeleteEmptyPlugin() {
+		$this->CroogoPlugin->delete(null);
+	}
+
 }
