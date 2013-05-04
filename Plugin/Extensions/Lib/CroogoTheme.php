@@ -109,4 +109,38 @@ class CroogoTheme extends Object {
 		return $this->Setting->write('Site.theme', $alias);
 	}
 
+/**
+ * Delete theme
+ *
+ * @param string $alias Theme alias
+ * @return boolean true when successful, false or array or error messages when failed
+ * @throws InvalidArgumentException
+ * @throws UnexpectedValueException
+ */
+	public function delete($alias) {
+		if (empty($alias)) {
+			throw new InvalidArgumentException(__d('croogo', 'Invalid theme'));
+		}
+		$paths = array(
+			APP . 'webroot' . DS . 'theme' . DS . $alias,
+			APP . 'View' . DS . 'Themed' . DS . $alias,
+		);
+		$folder = new Folder;
+		foreach ($paths as $path) {
+			if (!file_exists($path)) {
+				continue;
+			}
+			if (is_link($path)) {
+				return unlink($path);
+			} elseif (is_dir($path)) {
+				if ($folder->delete($path)) {
+					return true;
+				} else {
+					return $folder->errors();
+				}
+			}
+		}
+		throw new UnexpectedValueException(__d('croogo', 'Theme %s not found', $alias));
+	}
+
 }

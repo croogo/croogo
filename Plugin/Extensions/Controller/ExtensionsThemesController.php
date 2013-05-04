@@ -148,25 +148,14 @@ class ExtensionsThemesController extends ExtensionsAppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$paths = array(
-			APP . 'webroot' . DS . 'theme' . DS . $alias . DS,
-			APP . 'View' . DS . 'Themed' . DS . $alias . DS,
-		);
+		$result = $this->_CroogoTheme->delete($alias);
 
-		$error = 0;
-		$folder =& new Folder;
-		foreach ($paths as $path) {
-			if (is_dir($path)) {
-				if (!$folder->delete($path)) {
-					$error = 1;
-				}
-			}
-		}
-
-		if ($error == 1) {
-			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
-		} else {
+		if ($result === true) {
 			$this->Session->setFlash(__d('croogo', 'Theme deleted successfully.'), 'default', array('class' => 'success'));
+		} elseif (!empty($result[0])) {
+			$this->Session->setFlash($result[0], 'default', array('class' => 'error'));
+		} else {
+			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
 		}
 
 		$this->redirect(array('action' => 'index'));
