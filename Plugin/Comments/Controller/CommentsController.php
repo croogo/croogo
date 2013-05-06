@@ -332,15 +332,17 @@ class CommentsController extends CommentsAppController {
 		$email = new CakeEmail();
 		$commentId = $this->Comment->id;
 		try {
-			return $email->from(Configure::read('Site.title') . ' ' .
+			$email->from(Configure::read('Site.title') . ' ' .
 				'<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>')
 				->to(Configure::read('Site.email'))
 				->subject('[' . Configure::read('Site.title') . '] ' .
 					__d('croogo', 'New comment posted under') . ' ' . $node['Node']['title'])
 				->viewVars(compact('node', 'data', 'commentId'))
-				->template('Comments.comment')
-				->theme($this->theme)
-				->send();
+				->template('Comments.comment');
+			if ($this->theme) {
+				$email->theme($this->theme);
+			}
+			return $email->send();
 		} catch (SocketException $e) {
 			$this->log(sprintf('Error sending comment notification: %s', $e->getMessage()));
 		}

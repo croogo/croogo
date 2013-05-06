@@ -264,11 +264,13 @@ class ContactsController extends ContactsAppController {
 				->to($contact['Contact']['email'])
 				->subject(__d('croogo', '[%s] %s', $siteTitle, $contact['Contact']['title']))
 				->template('Contacts.contact')
-				->theme($this->theme)
 				->viewVars(array(
 					'contact' => $contact,
 					'message' => $this->request->data,
 				));
+			if ($this->theme) {
+				$email->theme($this->theme);
+			}
 
 			if (!$email->send()) {
 				$continue = false;
