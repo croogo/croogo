@@ -93,7 +93,9 @@ class InstallManager {
  * @return bool true when successful
  */
 	public function installCompleted() {
-		return ClassRegistry::init('Settings.Setting')->write('Croogo.installed', 1);
+		$Setting = ClassRegistry::init('Settings.Setting');
+		$Setting->Behaviors->disable('Cached');
+		return $Setting->write('Croogo.installed', 1);
 	}
 
 }
