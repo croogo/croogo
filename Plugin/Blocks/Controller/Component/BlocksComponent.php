@@ -112,7 +112,7 @@ class BlocksComponent extends Component {
 					'Block.weight' => 'ASC'
 				),
 				'cache' => array(
-					'name' => 'blocks_' . $regionAlias . '_' . $roleId,
+					'prefix' => 'blocks_' . $regionAlias . '_' . $roleId,
 					'config' => 'croogo_blocks',
 				),
 				'recursive' => '-1',
