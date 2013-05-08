@@ -45,7 +45,7 @@ class SettingData {
 			'description' => '',
 			'input_type' => 'checkbox',
 			'editable' => '1',
-			'weight' => '5',
+			'weight' => '6',
 			'params' => ''
 		),
 		array(
@@ -249,7 +249,7 @@ class SettingData {
 		array(
 			'id' => '32',
 			'key' => 'Hook.bootstraps',
-			'value' => 'Tinymce',
+			'value' => 'Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Wysiwyg,Ckeditor',
 			'title' => '',
 			'description' => '',
 			'input_type' => '',
@@ -268,6 +268,52 @@ class SettingData {
 			'weight' => '24',
 			'params' => ''
 		),
+		array(
+			'id' => '34',
+			'key' => 'Access Control.multiRole',
+			'value' => '0',
+			'title' => 'Enable Multiple Roles',
+			'description' => '',
+			'input_type' => 'checkbox',
+			'editable' => '1',
+			'weight' => '25',
+			'params' => ''
+		),
+		array(
+			'id' => '35',
+			'key' => 'Access Control.rowLevel',
+			'value' => '0',
+			'title' => 'Row Level Access Control',
+			'description' => '',
+			'input_type' => 'checkbox',
+			'editable' => '1',
+			'weight' => '26',
+			'params' => ''
+		),
+		array(
+			'id' => '36',
+			'key' => 'Access Control.autoLoginDuration',
+			'value' => '+1 week',
+			'title' => '"Remember Me" Duration',
+			'description' => 'Eg: +1 day, +1 week. Leave empty to disable.',
+			'input_type' => 'text',
+			'editable' => '1',
+			'weight' => '27',
+			'params' => ''
+		),
+		array(
+			'id' => '37',
+			'key' => 'Access Control.models',
+			'value' => '',
+			'title' => 'Models with Row Level Acl',
+			'description' => 'Select models to activate Row Level Access Control on',
+			'input_type' => 'multiple',
+			'editable' => '1',
+			'weight' => '26',
+			'params' => 'multiple=checkbox
+options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "Menus.Link": "Link"}'
+		),
+
 	);
 
 }

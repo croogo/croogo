@@ -2,13 +2,13 @@
 
 App::uses('File', 'Utility');
 App::uses('HttpSocket', 'Network/Http');
-App::uses('CroogoJson', 'Lib');
+App::uses('CroogoJson', 'Croogo.Lib');
 
 /**
  * Croogo Composer Wrapper
  *
  * @category Lib
- * @package  Croogo.Extensions
+ * @package  Croogo.Extensions.Lib
  * @since    1.4
  * @author   Kyle Robinson Young <kyle@dontkry.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

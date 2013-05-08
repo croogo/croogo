@@ -1,0 +1,9 @@
+{
+	"name": "Editors",
+	"description": "Editors plugin",
+	"dependencies": {
+		"plugins": [
+			"Widgets"
+		]
+	}
+}

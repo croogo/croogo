@@ -1,66 +1,95 @@
 <?php
 $this->extend('/Common/admin_index');
 $this->name = 'extensions-plugins';
-?>
 
-<?php $this->start('tabs'); ?>
-<li><?php echo $this->Html->link(__('Upload'), array('action' => 'add')); ?></li>
+$this->Html
+	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Plugins'), $this->here);
+
+?>
+<?php $this->start('actions'); ?>
+<?php
+	echo $this->Croogo->adminAction(
+		__d('croogo', 'Upload'),
+		array('action' => 'add')
+	);
+?>
 <?php $this->end(); ?>
 
-<table cellpadding="0" cellspacing="0">
+<table class="table table-striped">
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
 		'',
-		__('Alias'),
-		__('Name'),
-		__('Description'),
-		__('Active'),
-		__('Actions'),
+		__d('croogo', 'Alias'),
+		__d('croogo', 'Name'),
+		__d('croogo', 'Description'),
+		__d('croogo', 'Active'),
+		__d('croogo', 'Actions'),
 	));
-	echo $tableHeaders;
+?>
+	<thead>
+		<?php echo $tableHeaders; ?>
+	</thead>
 
+<?php
 	$rows = array();
 	$plugins = Sanitize::clean($plugins);
-	foreach ($plugins as $pluginAlias => $pluginData) {
+	foreach ($plugins as $pluginAlias => $pluginData):
 		if (in_array($pluginAlias, $corePlugins)) {
 			continue;
 		}
 
-		if ($pluginData['active']) {
-			$icon = 'tick.png';
-			$toggleText = __('Deactivate');
-		} else {
-			$icon = 'cross.png';
-			$toggleText = __('Activate');
-		}
-		$iconImage = $this->Html->image('icons/' . $icon);
+		$toggleText = $pluginData['active'] ? __d('croogo', 'Deactivate') : __d('croogo', 'Activate');
+		$statusIcon = $this->Html->status($pluginData['active']);
 
-		$actions  = '';
-		$actions .= ' ' . $this->Form->postLink($toggleText, array(
-			'action' => 'toggle',
-			$pluginAlias,
-		));
-		$actions .= ' ' . $this->Form->postLink(__('Delete'), array(
-			'action' => 'delete',
-			$pluginAlias,
-		), null, __('Are you sure?'));
+		$actions  = array();
+		if (!in_array($pluginAlias, $bundledPlugins)):
+			$icon = $pluginData['active'] ? 'off' : 'bolt';
+			$actions[] = $this->Croogo->adminRowAction('',
+				array('action' => 'toggle',	$pluginAlias),
+				array('icon' => $icon, 'tooltip' => $toggleText, 'method' => 'post')
+			);
+			$actions[] = $this->Croogo->adminRowAction('',
+				array('action' => 'delete', $pluginAlias),
+				array('icon' => 'trash', 'tooltip' => __d('croogo', 'Delete')),
+				__d('croogo', 'Are you sure?')
+			);
+		endif;
+
+		if ($pluginData['active'] && !in_array($pluginAlias, $bundledPlugins)) {
+			$actions[] = $this->Croogo->adminRowAction('',
+				array('action' => 'moveup', $pluginAlias),
+				array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'), 'method' => 'post'),
+				__d('croogo', 'Are you sure?')
+			);
+
+			$actions[] = $this->Croogo->adminRowAction('',
+				array('action' => 'movedown', $pluginAlias),
+				array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'), 'method' => 'post'),
+				__d('croogo', 'Are you sure?')
+			);
+		}
+
+		if ($pluginData['needMigration']) {
+			$actions[] = $this->Croogo->adminRowAction(__d('croogo', 'Migrate'), array(
+				'action' => 'migrate',
+				$pluginAlias,
+			), array(), __d('croogo', 'Are you sure?'));
+		}
+
+		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
 		$rows[] = array(
 			'',
 			$pluginAlias,
 			$pluginData['name'],
 			$pluginData['description'],
-			$this->Form->postLink($iconImage, array(
-				'action' => 'toggle',
-				$pluginAlias,
-			), array(
-				'escape' => false,
-			)),
+			$statusIcon,
 			$actions,
 		);
-	}
+	endforeach;
 
 	echo $this->Html->tableCells($rows);
-	echo $tableHeaders;
 ?>
 </table>

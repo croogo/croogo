@@ -38,7 +38,16 @@ class ExampleController extends ExampleAppController {
  * @return void
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Example'));
+		$this->set('title_for_layout', 'Example');
+	}
+
+/**
+ * admin_chooser
+ *
+ * @return void
+ */
+	public function admin_chooser() {
+		$this->set('title_for_layout', 'Chooser Example');
 	}
 
 /**
@@ -47,8 +56,16 @@ class ExampleController extends ExampleAppController {
  * @return void
  */
 	public function index() {
-		$this->set('title_for_layout', __('Example'));
+		$this->set('title_for_layout', 'Example');
 		$this->set('exampleVariable', 'value here');
+	}
+
+	public function admin_add() {
+	}
+
+	public function admin_rte_example() {
+		$notice = 'If editors are not displayed correctly, check that `Ckeditor` plugin is loaded after `Example` plugin.';
+		$this->Session->setFlash($notice, 'default', array('class' => 'success'));
 	}
 
 }

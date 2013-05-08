@@ -1,6 +1,6 @@
 <?php
 
-App::uses('AppModel', 'Model');
+App::uses('AclNode', 'Model');
 
 /**
  * AclAro Model
@@ -8,13 +8,13 @@ App::uses('AppModel', 'Model');
  * PHP version 5
  *
  * @category Model
- * @package  Croogo.Acl
+ * @package  Croogo.Acl.Model
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AclAro extends AppModel {
+class AclAro extends AclNode {
 
 /**
  * name
@@ -31,10 +31,23 @@ class AclAro extends AppModel {
 	public $useTable = 'aros';
 
 /**
- * actsAs
- *
- * @var array
+ * alias
  */
-	public $actsAs = array('Tree');
+	public $alias = 'Aro';
+
+/**
+ * Get a list of Role AROs
+ *
+ * @return array array of Aro.id indexed by Role.id
+ */
+	public function getRoles($roles) {
+		$aros = $this->find('all', array(
+			'conditions' => array(
+				'Aro.model' => 'Role',
+				'Aro.foreign_key' => array_keys($roles),
+			),
+		));
+		return Hash::combine($aros, '{n}.Aro.foreign_key', '{n}.Aro.id');
+	}
 
 }

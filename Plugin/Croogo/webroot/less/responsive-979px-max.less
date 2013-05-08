@@ -1,0 +1,54 @@
+@media (max-width: @navbarCollapseWidth) {
+
+	html,
+	body {
+		padding: 0;
+		margin: 0;
+	}
+
+	.sidebar {
+		width: @crNavWidth767;
+		background-color: @grayLighter;
+	}
+
+	.content {
+		margin-top: 0px;
+	}
+
+	#content {
+		margin-left: @crNavWidth767;
+	}
+
+	#inner-content {
+		margin-top: 0px;
+	}
+
+	// Hide menu link
+	.nav > li > a > span {
+		display: none;
+	}
+
+	// Display sub-menu link (previously hide)
+	.sub-nav > li > a {
+		i[class*=" icon-"],
+		i[class^="icon-"] {
+			display: none;
+		}
+		&> span {
+			display: block;
+		}
+	}
+
+	.dropdown-submenu {
+		&> a:after {
+			display: none;
+		}
+	}
+
+	.dropdown-open {
+	//	margin-left: 40px;
+	//	margin-top: -41px;
+	//	position: absolute;
+	}
+
+}

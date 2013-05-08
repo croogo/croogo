@@ -1,0 +1,46 @@
+.table {
+	tr:last-child {
+		border-bottom: 1px solid @tableBorder;
+	}
+	td:last-child {
+		min-width: @actionsButtonsWidth;
+	}
+	th {
+		a {
+			.sortDirections();
+		}
+	}
+}
+
+table {
+	.center {
+		text-align: center;
+		vertical-align: middle;
+	}
+
+	.item-actions {
+		white-space: nowrap;
+		a {
+			margin-right: @crGeneralMargin;
+			&:focus {
+				outline: none;
+			}
+			&:hover {
+				text-decoration: none;
+			}
+			&.icon-trash,
+			&.delete {
+				color: @red;
+				&:hover {
+					color: darken(@red, 25%);
+				}
+			}
+		}
+		a [class^="icon-"],
+		a [class*=" icon-"] {
+			vertical-align: middle;
+			text-align: center;
+			width: 1.25em;
+		}
+	}
+}

@@ -6,7 +6,7 @@
  * PHP version 5
  *
  * @category Component
- * @package  Croogo.Extensions
+ * @package  Croogo.Extensions.Lib
  * @version  1.4
  * @since    1.4
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
@@ -19,7 +19,7 @@ class CroogoTheme extends Object {
  * Constructor
  */
 	public function __construct() {
-		$this->Setting = ClassRegistry::init('Setting');
+		$this->Setting = ClassRegistry::init('Settings.Setting');
 	}
 
 /**
@@ -33,14 +33,21 @@ class CroogoTheme extends Object {
 		);
 		$this->folder = new Folder;
 		$viewPaths = App::path('views');
+		$expected = array('name' => '', 'description' => '');
 		foreach ($viewPaths as $viewPath) {
 			$this->folder->path = $viewPath . 'Themed';
 			$themeFolders = $this->folder->read();
 			foreach ($themeFolders['0'] as $themeFolder) {
 				$this->folder->path = $viewPath . 'Themed' . DS . $themeFolder . DS . 'webroot';
 				$themeFolderContent = $this->folder->read();
+				$themeJson = $this->folder->path . DS . 'theme.json';
 				if (in_array('theme.json', $themeFolderContent['1'])) {
-					$themes[$themeFolder] = $themeFolder;
+					$contents = file_get_contents($themeJson);
+					$json = json_decode($contents, true);
+					$intersect = array_intersect_key($expected, $json);
+					if ($json !== null && $intersect == $expected) {
+						$themes[$themeFolder] = $themeFolder;
+					}
 				}
 			}
 		}
@@ -55,7 +62,7 @@ class CroogoTheme extends Object {
  */
 	public function getData($alias = null) {
 		if ($alias == null || $alias == 'default') {
-			$manifestFile = WWW_ROOT . 'theme.json';
+			$manifestFile = CakePlugin::path('Croogo') . 'webroot' . DS . 'theme.json';
 		} else {
 			$viewPaths = App::path('views');
 			foreach ($viewPaths as $viewPath) {
@@ -65,7 +72,7 @@ class CroogoTheme extends Object {
 				}
 			}
 			if (!isset($manifestFile)) {
-				$manifestFile = WWW_ROOT . 'theme.json';
+				$manifestFile = CakePlugin::path('Croogo') . 'webroot' . DS . 'theme.json';
 			}
 		}
 		if (isset($manifestFile) && file_exists($manifestFile)) {
@@ -100,6 +107,40 @@ class CroogoTheme extends Object {
 			$alias = '';
 		}
 		return $this->Setting->write('Site.theme', $alias);
+	}
+
+/**
+ * Delete theme
+ *
+ * @param string $alias Theme alias
+ * @return boolean true when successful, false or array or error messages when failed
+ * @throws InvalidArgumentException
+ * @throws UnexpectedValueException
+ */
+	public function delete($alias) {
+		if (empty($alias)) {
+			throw new InvalidArgumentException(__d('croogo', 'Invalid theme'));
+		}
+		$paths = array(
+			APP . 'webroot' . DS . 'theme' . DS . $alias,
+			APP . 'View' . DS . 'Themed' . DS . $alias,
+		);
+		$folder = new Folder;
+		foreach ($paths as $path) {
+			if (!file_exists($path)) {
+				continue;
+			}
+			if (is_link($path)) {
+				return unlink($path);
+			} elseif (is_dir($path)) {
+				if ($folder->delete($path)) {
+					return true;
+				} else {
+					return $folder->errors();
+				}
+			}
+		}
+		throw new UnexpectedValueException(__d('croogo', 'Theme %s not found', $alias));
 	}
 
 }

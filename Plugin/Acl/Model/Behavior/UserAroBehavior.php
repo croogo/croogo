@@ -8,13 +8,37 @@ App::uses('ModelBehavior', 'Model');
  * PHP version 5
  *
  * @category Behavior
- * @package  Croogo.Acl
+ * @package  Croogo.Acl.Model.Behavior
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
 class UserAroBehavior extends ModelBehavior {
+
+/**
+ * Setup
+ */
+	public function setup(Model $model, $config = array()) {
+		$this->_setupMultirole($model);
+	}
+
+/**
+ * Enable Multiple Role, dynamically bind User Habtm Role
+ */
+	protected function _setupMultirole(Model $model) {
+		if (!Configure::read('Access Control.multiRole')) {
+			return;
+		}
+		$model->bindModel(array(
+			'hasAndBelongsToMany' => array(
+				'Role' => array(
+					'className' => 'Users.Role',
+					'unique' => 'keepExisting',
+				),
+			)
+		), false);
+	}
 
 /**
  * parentNode
@@ -29,6 +53,9 @@ class UserAroBehavior extends ModelBehavior {
 		$data = $model->data;
 		if (empty($model->data)) {
 			$data = $model->read();
+		}
+		if (!isset($data['User']['role_id'])) {
+			$data['User']['role_id'] = $model->field('role_id');
 		}
 		if (!isset($data['User']['role_id']) || !$data['User']['role_id']) {
 			return null;
@@ -45,13 +72,12 @@ class UserAroBehavior extends ModelBehavior {
  * @return void
  */
 	public function afterSave(Model $model, $created) {
-		if (!$created) {
-			$parent = $model->parentNode();
-			$parent = $model->node($parent);
+		// update ACO alias
+		if (!empty($model->data['User']['username'])) {
 			$node = $model->node();
 			$aro = $node[0];
-			$aro['Aro']['parent_id'] = $parent[0]['Aro']['id'];
-			$model->Aro->save($aro);
+			$model->Aro->id = $aro['Aro']['id'];
+			$model->Aro->saveField('alias', $model->data['User']['username']);
 		}
 	}
 
