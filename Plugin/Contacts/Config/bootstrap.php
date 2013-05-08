@@ -16,7 +16,7 @@ CroogoNav::add('contacts', array(
 	),
 	'weight' => 50,
 	'children' => array(
-		'attachments' => array(
+		'contacts' => array(
 			'title' => __d('croogo', 'Contacts'),
 			'url' => array(
 				'admin' => true,
@@ -25,7 +25,7 @@ CroogoNav::add('contacts', array(
 				'action' => 'index',
 			),
 		),
-		'file_manager' => array(
+		'messages' => array(
 			'title' => __d('croogo', 'Messages'),
 			'url' => array(
 				'admin' => true,
