@@ -1,4 +1,5 @@
 <?php
+
 App::uses('MenusHelper', 'Menus.View/Helper');
 App::uses('SessionComponent', 'Controller/Component');
 App::uses('Controller', 'Controller');
@@ -27,14 +28,10 @@ class MenusHelperTest extends CroogoTestCase {
 		parent::setUp();
 		$this->ComponentCollection = new ComponentCollection();
 
-		$request = new CakeRequest('nodes/index');
-		$request->params = array(
-			'controller' => 'nodes',
-			'action' => 'index',
-			'named' => array(),
-		);
-		$view = new View(new TheMenuTestController($request, new CakeResponse()));
-		$this->Menus = new MenusHelper($view);
+		$request = $this->getMock('CakeRequest');
+		$response = $this->getMock('CakeResponse');
+		$this->View = new View(new TheMenuTestController($request, $response));
+		$this->Menus = new MenusHelper($this->View);
 		$this->_appEncoding = Configure::read('App.encoding');
 		$this->_asset = Configure::read('Asset');
 		$this->_debug = Configure::read('debug');
@@ -164,6 +161,24 @@ class MenusHelperTest extends CroogoTestCase {
 		$url = array('some' => 'random', 1, 2, 'array' => 'must', 'work');
 		$expected = 'some:random/1/2/array:must/work';
 		$this->assertEquals($expected, $this->Menus->urlToLinkString($url));
+	}
+
+/**
+ * Test [menu] shortcode
+ */
+	public function testMenuShortcode() {
+		$content = '[menu:blogroll]';
+		$this->View->viewVars['menus_for_layout']['blogroll'] = array(
+			'Menu' => array(
+				'id' => 6,
+				'title' => 'Blogroll',
+				'alias' => 'blogroll',
+			),
+			'threaded' => array(),
+		);
+		Croogo::dispatchEvent('Helper.Layout.beforeFilter', $this->View, array('content' => &$content));
+		$this->assertContains('menu-6', $content);
+		$this->assertContains('class="menu"', $content);
 	}
 
 }
