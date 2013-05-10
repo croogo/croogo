@@ -797,6 +797,8 @@ class NodesController extends NodesAppController {
  * @return void
  */
 	protected function _setCommonVariables($type) {
+		$typeAlias = $type['Type']['alias'];
+		$this->Node->type = $typeAlias;
 		$nodes = $this->Node->generateTreeList();
 		$roles = $this->Node->User->Role->find('list');
 		$users = $this->Node->User->find('list');
@@ -806,7 +808,6 @@ class NodesController extends NodesAppController {
 			$vocabularyId = $vocabulary['id'];
 			$taxonomy[$vocabularyId] = $this->Node->Taxonomy->getTree($vocabulary['alias'], array('taxonomyId' => true));
 		}
-		$typeAlias = $type['Type']['alias'];
 		$this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy', 'users'));
 	}
 
