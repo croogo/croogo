@@ -236,4 +236,21 @@ class CroogoAppController extends Controller {
 		return parent::render($view, $layout);
 	}
 
+/**
+ * Croogo uses this callback to load Paginator helper when one is not supplied.
+ * This is required so that pagination variables are correctly set with caching
+ * is used.
+ *
+ * @return void
+ * @see Controller::beforeRender()
+ */
+	public function beforeRender() {
+		if (!$this->usePaginationCache) {
+			return;
+		}
+		if (!isset($this->helpers['Paginator']) && !in_array('Paginator', $this->helpers)) {
+			$this->helpers[] = 'Paginator';
+		}
+	}
+
 }

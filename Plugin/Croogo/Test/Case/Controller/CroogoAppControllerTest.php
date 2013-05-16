@@ -100,4 +100,34 @@ class AppControllerTest extends CroogoControllerTestCase {
 		$this->assertNotContains('nav-buttons', $result);
 	}
 
+/**
+ * testPaginatorIsNotLoadedWithoutCache
+ */
+	public function testPaginatorIsNotLoadedWithoutCache() {
+		$this->controller->viewVars = array(
+			'displayFields' => array(),
+		);
+		$this->assertFalse(in_array('Paginator', $this->controller->helpers));
+		$this->controller->usePaginationCache = false;
+		$result = $this->testAction('/admin/test_app/index', array(
+			'return' => 'view',
+		));
+		$this->assertFalse(in_array('Paginator', $this->controller->helpers));
+	}
+
+/**
+ * testPaginatorIsLoadedWithCache
+ */
+	public function testPaginatorIsLoadedWithCache() {
+		$this->controller->viewVars = array(
+			'displayFields' => array(),
+		);
+		$this->assertFalse(in_array('Paginator', $this->controller->helpers));
+		$this->controller->usePaginationCache = true;
+		$result = $this->testAction('/admin/test_app/index', array(
+			'return' => 'view',
+		));
+		$this->assertTrue(in_array('Paginator', $this->controller->helpers));
+	}
+
 }
