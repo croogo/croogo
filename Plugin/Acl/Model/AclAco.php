@@ -44,6 +44,15 @@ class AclAco extends AclNode {
 	public $alias = 'Aco';
 
 /**
+ * hasAndBelongsToMany
+ */
+	public $hasAndBelongsToMany = array(
+		'Aro' => array(
+			'with' => 'Acl.AclPermission',
+		),
+	);
+
+/**
  * getChildren
  *
  * @param integer aco id
