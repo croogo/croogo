@@ -21,10 +21,12 @@ class CroogoTestCase extends CakeTestCase {
 
 	public static function setUpBeforeClass() {
 		self::_restoreSettings();
+		Configure::write('Config.language', 'eng');
 	}
 
 	public static function tearDownAfterClass() {
 		self::_restoreSettings();
+		Configure::write('Config.language', Configure::read('Site.locale'));
 	}
 
 	protected static function _restoreSettings() {
