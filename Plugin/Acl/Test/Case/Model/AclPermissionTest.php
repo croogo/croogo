@@ -10,7 +10,20 @@ class AclPermissionTest extends CroogoTestCase {
 		'plugin.users.aco',
 		'plugin.users.aros_aco',
 		'plugin.users.role',
+		'plugin.users.user',
 	);
+
+/**
+ * setUp
+ */
+	public function setUp() {
+		parent::setUp();
+		$this->Permission = ClassRegistry::init('Acl.AclPermission');
+		$this->Permission->allow(
+			array('model' => 'Role', 'foreign_key' => 1),
+			'controllers/AclActions'
+		);
+	}
 
 /**
  * testPermissionCacheClearedAfterSave
@@ -25,8 +38,7 @@ class AclPermissionTest extends CroogoTestCase {
 		$result = Cache::read($key, $config);
 		$this->assertEquals($value, $result);
 
-		$Permission = ClassRegistry::init('Acl.AclPermission');
-		$Permission->allow(
+		$this->Permission->allow(
 			array('model' => 'Role', 'foreign_key' => 1),
 			'controllers/AclActions'
 		);
@@ -34,6 +46,15 @@ class AclPermissionTest extends CroogoTestCase {
 		$expected = false;
 		$result = Cache::read($key, $config);
 		$this->assertEquals($expected, $result);
+	}
+
+/**
+ * testNoDuplicateActions
+ */
+	public function testNoDuplicateActions() {
+		$permissions = $this->Permission->getAllowedActionsByUserId(3);
+		$expected = count(array_unique($permissions));
+		$this->assertEquals($expected, count($permissions));
 	}
 
 }
