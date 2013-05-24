@@ -134,6 +134,9 @@ class AclPermission extends Permission {
 		$permissionsByActions = array();
 		foreach ($permissionsForCurrentUser as $acoId) {
 			$path = $this->Aco->getPath($acoId);
+			if (!$path) {
+				continue;
+			}
 			$path = join('/', Hash::extract($path, '{n}.Aco.alias'));
 			if (!in_array($path, $permissionsByActions)) {
 				$permissionsByActions[] = $path;
