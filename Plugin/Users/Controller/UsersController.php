@@ -515,7 +515,8 @@ class UsersController extends UsersAppController {
 		$this->set(compact('user'));
 	}
 
-	protected function _getSenderEmail(){
+	protected function _getSenderEmail() {
 		return 'croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME']));
 	}
+
 }

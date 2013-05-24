@@ -62,13 +62,13 @@ class UpgradeTask extends AppShell {
 				'help' => __d('croogo', 'Upgrade ACL database for core controllers.'),
 				'parser' => array(
 					'description' => __d('croogo',
-	'Upgrades the ACO hierarchy from 1.3/1.4 so it follows the default ' .
-	'behavior in normal CakePHP applications. The primary difference is that ' .
-	'plugin controllers now are stored underneath its own Plugin ACO record, ' .
-	'whereas previous version assumes all Controllers belongs to the root ' .
-	'\'controllers\' node.' . $this->nl(2) . '<warning>' .
-	'Ensure that you have a backup of your aros, acos, and aros_acos table ' .
-	'before upgrading.</warning>'
+		'Upgrades the ACO hierarchy from 1.3/1.4 so it follows the default ' .
+		'behavior in normal CakePHP applications. The primary difference is ' .
+		'plugin controllers now are stored underneath its own Plugin ACO record, ' .
+		'whereas previous version assumes all Controllers belongs to the root ' .
+		'\'controllers\' node.%s' .
+		'<warning>Ensure that you have a backup of your aros, acos, and aros_acos table ' .
+		'before upgrading.</warning>', $this->nl(2)
 					),
 				),
 			))

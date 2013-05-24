@@ -1,6 +1,6 @@
 <?php
 App::uses('Comment', 'Comments.Model');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 class CommentTest extends CroogoTestCase {
 

@@ -85,7 +85,7 @@ class AclAccessComponent extends Component {
  * Add ACO
  *
  * Creates ACOs with permissions for roles.
-
+ *
  * Action Path format:
  * - ControllerName
  * - ControllerName/method_name

@@ -97,7 +97,7 @@ class Comment extends AppModel {
  * Add a new Comment
  *
  * @param array $data Comment data (Usually POSTed data from Comment form)
- * @param int 	$nodeId Node Id (Node Id from where comment was posted).
+ * @param int   $nodeId Node Id (Node Id from where comment was posted).
  * @param array $nodeType Type data (Node's Type data)
  * @param mixed int/null $parentId id of parent comment (if it is a reply)
  * @param array $userData author data (User data (if logged in) / Author fields from Comment form)

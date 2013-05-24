@@ -56,7 +56,7 @@ class BlocksController extends BlocksAppController {
  * @var array
  * @access public
  */
-	public $uses = array('Blocks.Block', 'Role');
+	public $uses = array('Blocks.Block', 'Users.Role');
 
 /**
  * afterConstruct
