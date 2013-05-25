@@ -2,6 +2,11 @@
 
 App::uses('Shell', 'Console');
 
+/**
+ * Base class for Croogo Shell
+ *
+ * @package Croogo.Console
+ */
 class CroogoAppShell extends Shell {
 
 /**
