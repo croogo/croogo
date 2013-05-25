@@ -79,6 +79,14 @@ class UserAroBehavior extends ModelBehavior {
 			$model->Aro->id = $aro['Aro']['id'];
 			$model->Aro->saveField('alias', $model->data['User']['username']);
 		}
+		Cache::clearGroup('acl', 'permissions');
+	}
+
+/**
+ * afterDelete
+ */
+	public function afterDelete(Model $model) {
+		Cache::clearGroup('acl', 'permissions');
 	}
 
 }

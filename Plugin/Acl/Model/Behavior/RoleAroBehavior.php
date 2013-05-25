@@ -62,6 +62,7 @@ class RoleAroBehavior extends ModelBehavior {
 			$aro['Aro']['parent_id'] = $model->data['Role']['parent_id'];
 		}
 		$model->Aro->save($aro);
+		Cache::clearGroup('acl', 'permissions');
 	}
 
 /**
@@ -115,6 +116,13 @@ class RoleAroBehavior extends ModelBehavior {
 			'NOT' => array($model->alias . '.id' => $excludes),
 		));
 		return $model->find('list', $options);
+	}
+
+/**
+ * afterDelete
+ */
+	public function afterDelete(Model $model) {
+		Cache::clearGroup('acl', 'permissions');
 	}
 
 }
