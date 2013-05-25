@@ -3,13 +3,13 @@
 App::uses('BaseAuthorize', 'Controller/Component/Auth');
 
 /**
- * AclCachedAuthorize
+ * An authentication adapter for AuthComponent. Provides similar functionality
+ * to ActionsAuthorize class from CakePHP core _with_ caching capability.
  *
- * Similar to ActionsAuthorize with cached result
- *
- * @package  Croogo.Acl
+ * @package  Croogo.Acl.Controller.Component.Auth
  * @since    1.5
  * @author   Rachman Chavik <rchavik@xintesa.com>
+ * @see      RowLevelAclComponent
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */

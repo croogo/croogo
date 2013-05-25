@@ -3,7 +3,9 @@
 App::uses('Component', 'Controller');
 
 /**
- * AclAutoLogin Component
+ * Provides "Remember me" feature (via CookieAuthenticate) by listening to
+ * to Controller.Users.adminLoginSuccessful event and creating the appropriate
+ * cookie.
  *
  * PHP version 5
  *
