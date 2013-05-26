@@ -425,7 +425,7 @@ class Node extends NodesAppModel {
 		}
 
 		if (empty($type)) {
-			throw new InvalidArgumentException(__('Invalid Content Type'));
+			throw new InvalidArgumentException(__d('croogo', 'Invalid Content Type'));
 		}
 
 		if (empty($prepared[$this->alias]['type'])) {
