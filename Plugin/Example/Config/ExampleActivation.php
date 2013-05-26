@@ -30,18 +30,19 @@ class ExampleActivation {
  */
 	public function onActivation(&$controller) {
 		// ACL: set ACOs with permissions
-		$controller->Croogo->addAco('Example'); // ExampleController
-		$controller->Croogo->addAco('Example/admin_index'); // ExampleController::admin_index()
-		$controller->Croogo->addAco('Example/index', array('registered', 'public')); // ExampleController::index()
+		$controller->Croogo->addAco('Example/Example/admin_index'); // ExampleController::admin_index()
+		$controller->Croogo->addAco('Example/Example/index', array('registered', 'public')); // ExampleController::index()
+
+		$this->Link = ClassRegistry::init('Menus.Link');
 
 		// Main menu: add an Example link
-		$mainMenu = $controller->Link->Menu->findByAlias('main');
-		$controller->Link->Behaviors->attach('Tree', array(
+		$mainMenu = $this->Link->Menu->findByAlias('main');
+		$this->Link->Behaviors->attach('Tree', array(
 			'scope' => array(
 				'Link.menu_id' => $mainMenu['Menu']['id'],
 			),
 		));
-		$controller->Link->save(array(
+		$this->Link->save(array(
 			'menu_id' => $mainMenu['Menu']['id'],
 			'title' => 'Example',
 			'link' => 'plugin:example/controller:example/action:index',
@@ -70,23 +71,33 @@ class ExampleActivation {
 		// ACL: remove ACOs with permissions
 		$controller->Croogo->removeAco('Example'); // ExampleController ACO and it's actions will be removed
 
+		$this->Link = ClassRegistry::init('Menus.Link');
+
 		// Main menu: delete Example link
-		$link = $controller->Link->find('first', array(
+		$link = $this->Link->find('first', array(
+			'joins' => array(
+				array(
+					'table' => 'menus',
+					'alias' => 'JoinMenu',
+					'conditions' => array(
+						'JoinMenu.alias' => 'main',
+					),
+				),
+			),
 			'conditions' => array(
-				'Menu.alias' => 'main',
 				'Link.link' => 'plugin:example/controller:example/action:index',
 			),
 		));
 		if (empty($link)) {
 			return;
 		}
-		$controller->Link->Behaviors->attach('Tree', array(
+		$this->Link->Behaviors->attach('Tree', array(
 			'scope' => array(
 				'Link.menu_id' => $link['Link']['menu_id'],
 			),
 		));
 		if (isset($link['Link']['id'])) {
-			$controller->Link->delete($link['Link']['id']);
+			$this->Link->delete($link['Link']['id']);
 		}
 	}
 }

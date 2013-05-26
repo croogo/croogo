@@ -1,7 +1,8 @@
 <?php
 
+App::uses('ComponentCollection', 'Controller');
 App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'TestSuite');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 class AclFilterTestController extends Controller {
 
@@ -10,39 +11,35 @@ class AclFilterTestController extends Controller {
 		'Acl',
 		'Session',
 		'Acl.AclFilter',
-		);
+	);
 
 }
 
 class AclFilterComponentTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'app.aro',
-		'app.aco',
-		'app.aros_aco',
-		'app.user',
-		'app.role',
-		'app.setting',
-		);
+		'plugin.users.aro',
+		'plugin.users.aco',
+		'plugin.users.aros_aco',
+		'plugin.users.user',
+		'plugin.users.role',
+		'plugin.settings.setting',
+	);
 
 	public function testAllowedActions() {
 		$request = new CakeRequest('/users/view/yvonne');
 		$request->addParams(array(
 			'controller' => 'users',
 			'action' => 'view',
-			));
-		$response = $this->getMock('CakeRequest');
+		));
+		$response = $this->getMock('CakeResponse');
 		$this->Controller = new AclFilterTestController($request, $response);
+		$this->Controller->name = 'Users';
 		$this->Controller->constructClasses();
-		$this->Controller->Session->write('Auth.User', array(
-			'id' => 3,
-			'role_id' => 3,
-			'username' => 'yvonne',
-			));
 		$this->Controller->startupProcess();
 		$this->Controller->AclFilter->auth();
 		$result = $this->Controller->Auth->allowedActions;
-		$this->assertEquals(array('view'), $result);
+		$this->assertTrue(in_array('view', $result));
 	}
 
 	public function testPrefixedAllowedActions() {
@@ -52,7 +49,7 @@ class AclFilterComponentTest extends CroogoTestCase {
 			'controller' => 'users',
 			'action' => 'admin_add',
 			3,
-			));
+		));
 		$response = $this->getMock('CakeRequest');
 		$this->Controller = new AclFilterTestController($request, $response);
 		$this->Controller->constructClasses();
@@ -76,12 +73,186 @@ class AclFilterComponentTest extends CroogoTestCase {
 		// new permission active
 		$allowed = $this->Controller->Acl->check($aro, $aco);
 		$this->assertEquals(true, $allowed);
+	}
 
-		// and gets picked up by AclFilterComponent::auth() correctly
+	public function testLoginActionOverrides() {
+		$this->Controller = new AclFilterTestController(
+			$this->getMock('CakeRequest'), $this->getMock('CakeResponse')
+		);
+		$this->Controller->constructClasses();
 		$this->Controller->startupProcess();
-		$this->Controller->AclFilter->auth();
-		$result = $this->Controller->Auth->allowedActions;
-		$this->assertEquals(array('admin_add'), $result);
+		$expected = array(
+			'plugin' => null,
+			'controller' => 'users',
+			'action' => 'login',
+		);
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
+		// X vs X
+		Configure::write('Acl.Auth.loginAction', array(
+			'plugin' => 'example',
+			'controller' => 'example',
+			'action' => 'index',
+		));
+		unset($this->Controller->request->params['admin']);
+		$this->Controller->AclFilter->configureLoginActions();
+		$expected = array(
+			'plugin' => 'example',
+			'controller' => 'example',
+			'action' => 'index',
+		);
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
+		// X vs 0
+		Configure::write('Acl.Auth.loginAction', array(
+			'plugin' => 'example',
+			'controller' => 'example',
+			'action' => 'index',
+		));
+		$this->Controller->request->params['admin'] = false;
+		$this->Controller->AclFilter->configureLoginActions();
+		$expected = array(
+			'plugin' => 'example',
+			'controller' => 'example',
+			'action' => 'index',
+		);
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
+		// X vs 1
+		Configure::write('Acl.Auth.loginAction', array(
+			'plugin' => 'example',
+			'controller' => 'example',
+			'action' => 'index',
+		));
+		$this->Controller->request->params['admin'] = true;
+		$this->Controller->AclFilter->configureLoginActions();
+		$expected = array(
+			'plugin' => 'users',
+			'controller' => 'users',
+			'action' => 'login',
+		);
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
+		// 0 vs X
+		Configure::write('Acl.Auth.loginAction', array(
+			'admin' => false,
+			'plugin' => 'example',
+			'controller' => 'example',
+			'action' => 'index',
+		));
+		unset($this->Controller->request->params['admin']);
+		$this->Controller->AclFilter->configureLoginActions();
+		$expected = array(
+			'admin' => false,
+			'plugin' => 'example',
+			'controller' => 'example',
+			'action' => 'index',
+		);
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
+		// 0 VS 0
+		Configure::write('Acl.Auth.loginAction', array(
+			'admin' => false,
+			'plugin' => 'example',
+			'controller' => 'example',
+			'action' => 'index',
+		));
+		$this->Controller->request->params['admin'] = false;
+		$this->Controller->AclFilter->configureLoginActions();
+		$expected = array(
+			'admin' => false,
+			'plugin' => 'example',
+			'controller' => 'example',
+			'action' => 'index',
+		);
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
+		// 0 VS 1
+		Configure::write('Acl.Auth.loginAction', array(
+			'admin' => false,
+			'plugin' => 'example',
+			'controller' => 'example',
+			'action' => 'index',
+		));
+		$this->Controller->request->params['admin'] = true;
+		$this->Controller->AclFilter->configureLoginActions();
+		$expected = array(
+			'plugin' => 'users',
+			'controller' => 'users',
+			'action' => 'login',
+		);
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
+		// 1 VS x
+		Configure::write('Acl.Auth.loginAction', array(
+			'admin' => true,
+			'plugin' => 'example',
+			'controller' => 'example',
+			'action' => 'index',
+		));
+		unset($this->Controller->request->params['admin']);
+		$this->Controller->AclFilter->configureLoginActions();
+		$expected = array(
+			'plugin' => 'users',
+			'controller' => 'users',
+			'action' => 'login',
+		);
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
+		// 1 VS 0
+		Configure::write('Acl.Auth.loginAction', array(
+			'admin' => true,
+			'plugin' => 'example',
+			'controller' => 'example',
+			'action' => 'index',
+		));
+		$this->Controller->request->params['admin'] = false;
+		$this->Controller->AclFilter->configureLoginActions();
+		$expected = array(
+			'plugin' => 'users',
+			'controller' => 'users',
+			'action' => 'login',
+		);
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
+		// 1 VS 1
+		Configure::write('Acl.Auth.loginAction', array(
+			'admin' => true,
+			'plugin' => 'example',
+			'controller' => 'example',
+			'action' => 'index',
+		));
+		$this->Controller->request->params['admin'] = true;
+		$this->Controller->AclFilter->configureLoginActions();
+		$expected = array(
+			'admin' => true,
+			'plugin' => 'example',
+			'controller' => 'example',
+			'action' => 'index',
+		);
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
+		// string values
+		Configure::write('Acl.Auth.loginAction', '/');
+		$this->Controller->request->params['admin'] = true;
+		$this->Controller->AclFilter->configureLoginActions();
+		$expected = '/';
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
+		Configure::write('Acl.Auth.loginAction', '/');
+		$this->Controller->request->params['admin'] = false;
+		$this->Controller->AclFilter->configureLoginActions();
+		$expected = '/';
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
+		Configure::write('Acl.Auth.loginAction', '/');
+		unset($this->Controller->request->params['admin']);
+		$this->Controller->AclFilter->configureLoginActions();
+		$expected = '/';
+		$this->assertEquals($expected, $this->Controller->Auth->loginAction);
+
+		unset($this->Controller->AclFilter);
+		unset($this->Controller);
 	}
 
 }

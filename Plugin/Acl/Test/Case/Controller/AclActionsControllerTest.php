@@ -1,6 +1,6 @@
 <?php
 
-App::uses('CroogoControllerTestCase', 'TestSuite');
+App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
 /**
  * AclActionsController Test
@@ -13,14 +13,14 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.aro',
-		'app.aco',
-		'app.aros_aco',
-		'app.menu',
-		'app.type',
-		'app.types_vocabulary',
-		'app.vocabulary',
-		'app.setting',
+		'plugin.users.aro',
+		'plugin.users.aco',
+		'plugin.users.aros_aco',
+		'plugin.menus.menu',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.types_vocabulary',
+		'plugin.taxonomy.vocabulary',
+		'plugin.settings.setting',
 	);
 
 /**
@@ -36,17 +36,18 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
 			'components' => array(
 				'Auth' => array('user'),
 				'Session',
+				'Menus.Menus',
 			),
 		));
 		$AclActions->Auth
 			->staticExpects($this->any())
 			->method('user')
-			->will($this->returnValue(2));
+			->will($this->returnValue(array('id' => 2, 'role_id' => 1)));
 		$AclActions->Session
-			->expects($this->once())
+			->expects($this->any())
 			->method('setFlash')
 			->with(
-				$this->matchesRegularExpression('/Created [0-9]+ new permissions/'),
+				$this->matchesRegularExpression('/(Created Aco node:)|.*Aco Update Complete.*|(Skipped Aco node:)/'),
 				$this->equalTo('default'),
 				$this->anything(),
 				$this->equalTo('flash')

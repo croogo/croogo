@@ -1,12 +1,13 @@
 <?php
 
-App::uses('Shell', 'Console');
+App::uses('CroogoAppShell', 'Croogo.Console');
 
 /**
- * AppShell
+ * Base Application Shell
  *
- * @package Croogo
+ * @package  Croogo
+ * @link     http://www.croogo.org
  */
-class AppShell extends Shell {
+class AppShell extends CroogoAppShell {
 
 }

@@ -13,7 +13,7 @@ App::uses('Sanitize', 'Utility');
  * PHP version 5
  *
  * @category Controller
- * @package  Croogo.Extensions
+ * @package  Croogo.Extensions.Controller
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
@@ -35,7 +35,10 @@ class ExtensionsThemesController extends ExtensionsAppController {
  * @var array
  * @access public
  */
-	public $uses = array('Setting', 'User');
+	public $uses = array(
+		'Settings.Setting',
+		'Users.User',
+	);
 
 /**
  * CroogoTheme instance
@@ -56,7 +59,7 @@ class ExtensionsThemesController extends ExtensionsAppController {
  * @return void
  */
 	public function admin_index() {
-		$this->set('title_for_layout', __('Themes'));
+		$this->set('title_for_layout', __d('croogo', 'Themes'));
 
 		$themes = $this->_CroogoTheme->getThemes();
 		$themesData = array();
@@ -77,9 +80,9 @@ class ExtensionsThemesController extends ExtensionsAppController {
  */
 	public function admin_activate($alias = null) {
 		if ($this->_CroogoTheme->activate($alias)) {
-			$this->Session->setFlash(__('Theme activated.'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Theme activated.'), 'default', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(__('Theme activation failed.'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Theme activation failed.'), 'default', array('class' => 'success'));
 		}
 
 		$this->redirect(array('action' => 'index'));
@@ -91,7 +94,7 @@ class ExtensionsThemesController extends ExtensionsAppController {
  * @return void
  */
 	public function admin_add() {
-		$this->set('title_for_layout', __('Upload a new theme'));
+		$this->set('title_for_layout', __d('croogo', 'Upload a new theme'));
 
 		if (!empty($this->request->data)) {
 			$file = $this->request->data['Theme']['file'];
@@ -100,7 +103,7 @@ class ExtensionsThemesController extends ExtensionsAppController {
 			$Installer = new ExtensionsInstaller;
 			try {
 				$Installer->extractTheme($file['tmp_name']);
-				$this->Session->setFlash(__('Theme uploaded successfully.'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'Theme uploaded successfully.'), 'default', array('class' => 'success'));
 			} catch (CakeException $e) {
 				$this->Session->setFlash($e->getMessage(), 'default', array('class' => 'error'));
 			}
@@ -114,7 +117,7 @@ class ExtensionsThemesController extends ExtensionsAppController {
  * @return void
  */
 	public function admin_editor() {
-		$this->set('title_for_layout', __('Theme Editor'));
+		$this->set('title_for_layout', __d('croogo', 'Theme Editor'));
 	}
 
 /**
@@ -133,37 +136,26 @@ class ExtensionsThemesController extends ExtensionsAppController {
  */
 	public function admin_delete($alias = null) {
 		if ($alias == null) {
-			$this->Session->setFlash(__('Invalid Theme.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Theme.'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 
 		if ($alias == 'default') {
-			$this->Session->setFlash(__('Default theme cannot be deleted.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Default theme cannot be deleted.'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		} elseif ($alias == Configure::read('Site.theme')) {
-			$this->Session->setFlash(__('You cannot delete a theme that is currently active.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'You cannot delete a theme that is currently active.'), 'default', array('class' => 'error'));
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$paths = array(
-			APP . 'webroot' . DS . 'theme' . DS . $alias . DS,
-			APP . 'View' . DS . 'Themed' . DS . $alias . DS,
-		);
+		$result = $this->_CroogoTheme->delete($alias);
 
-		$error = 0;
-		$folder =& new Folder;
-		foreach ($paths as $path) {
-			if (is_dir($path)) {
-				if (!$folder->delete($path)) {
-					$error = 1;
-				}
-			}
-		}
-
-		if ($error == 1) {
-			$this->Session->setFlash(__('An error occurred.'), 'default', array('class' => 'error'));
+		if ($result === true) {
+			$this->Session->setFlash(__d('croogo', 'Theme deleted successfully.'), 'default', array('class' => 'success'));
+		} elseif (!empty($result[0])) {
+			$this->Session->setFlash($result[0], 'default', array('class' => 'error'));
 		} else {
-			$this->Session->setFlash(__('Theme deleted successfully.'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
 		}
 
 		$this->redirect(array('action' => 'index'));
