@@ -13,11 +13,11 @@ SCV Geo <scv@scvgeo.com>
 Heiner Gassen <hg@dynweb.net>
 Paulino Calderon <paulino@calder0n.com>
 pinchsoftware <contact@pinchsoft.com>
+Grégory Salvan <gregory@occi-tech.com>
 John <john@midianegocios.com.br>
 Vitor Pacheco <vitor-p.c@hotmail.com>
 primeminister <primeminister@mowd.nl>
 ADmad <admad.coder@gmail.com>
-Grégory Salvan <gregory@occi-tech.com>
 James Sapara <james.sapara@gmail.com>
 Lukas Marks <lukas.marks@lumax-web.de>
 Matt Curry <matt@pseudocoder.com>
@@ -41,5 +41,6 @@ Sam Bernard <sam@sambernard.net>
 Wiena Lorentz <lorentz@xintesa.com>
 alevilar <alevilar@gmail.com>
 joseph-d <joseph.d@nirada.co.th>
+liamkeily <liam@simplywebsites.com>
 romaing <pourri@dixit-productions.com>
 stefanozoffoli <stefano.zoffoli@librasoftsnc.it>
