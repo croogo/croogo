@@ -63,3 +63,11 @@ CroogoNav::add('content.children.taxonomy', array(
 		)
 	)
 ));
+
+Croogo::mergeConfig('Translate.models.Term', array(
+	'fields' => array(
+		'title' => 'titleTranslation',
+		'description' => 'descriptionTranslation',
+	),
+	'translateModel' => 'Taxonomy.Term',
+));

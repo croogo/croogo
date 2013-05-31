@@ -69,3 +69,12 @@ CroogoNav::add('content', array(
 
 	)
 ));
+
+Croogo::mergeConfig('Translate.models.Node', array(
+	'fields' => array(
+		'title' => 'titleTranslation',
+		'excerpt' => 'excerptTranslation',
+		'body' => 'bodyTranslation',
+	),
+	'translateModel' => 'Nodes.Node',
+));

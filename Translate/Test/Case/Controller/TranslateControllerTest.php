@@ -1,6 +1,8 @@
 <?php
 
 App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
+App::uses('TranslateEventHandler', 'Translate.Event');
+App::uses('Translations', 'Translate.Lib');
 
 class TranslateControllerTest extends CroogoControllerTestCase {
 
@@ -29,7 +31,10 @@ class TranslateControllerTest extends CroogoControllerTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		CakePlugin::load('Translate', array('bootstrap' => true));
+		if (!CakePlugin::loaded('Translate')) {
+			CakePlugin::load('Translate');
+		}
+		Translations::translateModels();
 		$this->TranslateController = $this->generate('Translate.Translate', array(
 			'methods' => array(
 				'redirect',
