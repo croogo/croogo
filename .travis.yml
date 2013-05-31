@@ -10,14 +10,20 @@ env:
   - DB=sqlite
   - DB=pgsql
 
+before_install:
+  - git clone --depth 1 git://github.com/croogo/app -b master app
+  - mkdir -p app/Vendor/cakephp app/Vendor/croogo
+  - git clone --depth 1 git://github.com/cakephp/cakephp -b master app/Vendor/cakephp/cakephp
+  - ln -s `pwd` app/Vendor/croogo/croogo
+  - composer -n -vv install
+  - for d in Plugin/* ; do ln -s `pwd`/$d app/$d; done
+
 before_script:
-  - sh -c "cd .. ; mkdir lib ; cd lib ; git clone --depth 1 git://github.com/cakephp/cakephp -b master"
-  - sh -c "cd ../lib ; ln -s cakephp/lib/Cake Cake"
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE croogo_test;'; fi"
   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE croogo_test;' -U postgres; fi"
   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE SCHEMA croogo_test;' -U postgres -d croogo_test; fi"
-  - cp Config/settings.json.install Config/settings.json
-  - cp Config/croogo.php.install Config/croogo.php
+  - cp app/Config/settings.json.install app/Config/settings.json
+  - cp app/Config/croogo.php.install app/Config/croogo.php
   - set +H
   - echo "<?php
     class DATABASE_CONFIG {
@@ -77,10 +83,10 @@ before_script:
         \$this->{\$source} = \$config;
       }
     }
-    }" > Config/database.php
+    }" > app/Config/database.php
 
 script:
-  - ./Console/cake test app AllTests --stderr
+  - cd app ; ./Console/cake test croogo CroogoTests --stderr
 
 notifications:
   email: false
