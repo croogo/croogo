@@ -2,13 +2,13 @@
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 /**
- *  AllCorePluginsTest
+ *  CroogoCorePluginsTest
  *
  */
-class AllCorePluginsTest extends PHPUnit_Framework_TestSuite {
+class CroogoCorePluginsTest extends PHPUnit_Framework_TestSuite {
 
 	public static function suite() {
-		$suite = new CakeTestSuite('All core plugins tests');
+		$suite = new CakeTestSuite('Croogo core plugins tests');
 		$plugins = array(
 			'Acl',
 			'Blocks',
