@@ -217,6 +217,15 @@ class CroogoAppController extends Controller {
  * @see Controller::render()
  */
 	public function render($view = null, $layout = null) {
+		list($plugin, ) = pluginSplit(App::location(get_parent_class($this)));
+		if ($plugin) {
+			App::build(array(
+				'View' => array(
+					CakePlugin::path($plugin) . 'View' . DS,
+				),
+			), App::APPEND);
+		}
+
 		if (strpos($view, '/') !== false) {
 			return parent::render($view, $layout);
 		}
