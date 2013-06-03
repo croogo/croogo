@@ -517,7 +517,7 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public function promoted() {
-		$this->set('title_for_layout', __d('croogo', 'Nodes'));
+		$this->set('title_for_layout', __d('croogo', 'Home'));
 
 		$this->paginate['Node']['type'] = 'promoted';
 		$this->paginate['Node']['conditions'] = array(
