@@ -460,9 +460,13 @@ class CroogoPlugin extends Object {
 		$plugin = Inflector::camelize($plugin);
 		if (!isset($this->_PluginActivation)) {
 			$className = $plugin . 'Activation';
-			$configFile = APP . 'Plugin' . DS . $plugin . DS . 'Config' . DS . $className . '.php';
-			if (file_exists($configFile) && include $configFile) {
-				$this->_PluginActivation = new $className;
+
+			$pluginPaths = App::path('plugins');
+			foreach ($pluginPaths as $path) {
+				$configFile = $path . DS . $plugin . DS . 'Config' . DS . $className . '.php';
+				if (file_exists($configFile) && include $configFile) {
+					$this->_PluginActivation = new $className;
+				}
 			}
 		}
 		return $this->_PluginActivation;
