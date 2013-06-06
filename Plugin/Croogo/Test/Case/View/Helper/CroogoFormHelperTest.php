@@ -96,6 +96,53 @@ class CroogoFormHelperTest extends CroogoTestCase{
 		$this->assertTags($result, $expected);
 	}
 
+/**
+ * testInputAutoTooltips
+ */
+	public function testInputAutoTooltips() {
+		// automatic tooltips
+		$result = $this->CroogoForm->input('username', array(
+			'label' => false,
+			'placeholder' => 'Username',
+		));
+		$expected = array(
+			'div' => array(
+				'class',
+			),
+			'input' => array(
+				'name',
+				'placeholder',
+				'data-placement',
+				'data-trigger',
+				'data-title',
+				'type',
+				'id',
+			),
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+
+		// disable auto tooltips
+		$result = $this->CroogoForm->input('username', array(
+			'label' => false,
+			'placeholder' => 'Username',
+			'tooltip' => false,
+		));
+		$expected = array(
+			'div' => array(
+				'class',
+			),
+			'input' => array(
+				'name',
+				'placeholder',
+				'type',
+				'id',
+			),
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+	}
+
 	public function testButtonDefault() {
 		$result = $this->CroogoForm->button('Button');
 		$expected = array(
