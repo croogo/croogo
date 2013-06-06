@@ -36,19 +36,15 @@ echo $this->Form->create('Contact');
 				echo $this->Form->input('id');
 				$this->Form->inputDefaults(array('class' => 'span10'));
 				echo $this->Form->input('title', array(
-					'label' => false,
 					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('alias', array(
-					'label' => false,
 					'label' => __d('croogo', 'Alias'),
 				));
 				echo $this->Form->input('email', array(
-					'label' => false,
 					'label' => __d('croogo', 'Email')
 				));
 				echo $this->Form->input('body', array(
-					'label' => false,
 					'label' => __d('croogo', 'Body'),
 				));
 			?>
@@ -57,39 +53,30 @@ echo $this->Form->create('Contact');
 			<div id="contact-details" class="tab-pane">
 			<?php
 				echo $this->Form->input('name', array(
-					'label' => false,
 					'label' => __d('croogo', 'Name'),
 				));
 				echo $this->Form->input('position', array(
-					'label' => false,
 					'label' => __d('croogo', 'Position'),
 				));
 				echo $this->Form->input('address', array(
-					'label' => false,
 					'label' => __d('croogo', 'Address'),
 				));
 				echo $this->Form->input('address2', array(
-					'label' => false,
 					'label' => __d('croogo', 'Address2'),
 				));
 				echo $this->Form->input('state', array(
-					'label' => false,
 					'label' => __d('croogo', 'State'),
 				));
 				echo $this->Form->input('country', array(
-					'label' => false,
 					'label' => __d('croogo', 'Country'),
 				));
 				echo $this->Form->input('postcode', array(
-					'label' => false,
 					'label' => __d('croogo', 'Post Code'),
 				));
 				echo $this->Form->input('phone', array(
-					'label' => false,
 					'label' => __d('croogo', 'Phone'),
 				));
 				echo $this->Form->input('fax', array(
-					'label' => false,
 					'label' => __d('croogo', 'Fax'),
 				));
 			?>
