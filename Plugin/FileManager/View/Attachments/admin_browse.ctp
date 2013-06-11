@@ -18,9 +18,9 @@
 	<table class="table table-striped">
 	<?php
 		$tableHeaders = $this->Html->tableHeaders(array(
-			$this->Paginator->sort('id'),
+			$this->Paginator->sort('id', __d('croogo', 'Id')),
 			'&nbsp;',
-			$this->Paginator->sort('title'),
+			$this->Paginator->sort('title', __d('croogo', 'Title')),
 			'&nbsp;',
 			__d('croogo', 'URL'),
 			__d('croogo', 'Actions'),

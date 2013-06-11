@@ -28,7 +28,7 @@ $showActions = isset($showActions) ? $showActions : true;
 			<?php else: ?>
 			<?php
 				echo $this->Croogo->adminAction(
-					__d('croogo', 'New %s', Inflector::singularize($this->name)),
+					__d('croogo', 'New %s', __d('croogo', Inflector::singularize($this->name))),
 					array('action' => 'add'),
 					array('button' => 'success')
 				);
@@ -51,9 +51,9 @@ $showActions = isset($showActions) ? $showActions : true;
 				$tableHeaders = array();
 				foreach ($displayFields as $field => $arr) {
 					if ($arr['sort']) {
-						$tableHeaders[] = $this->Paginator->sort($field, $arr['label']);
+						$tableHeaders[] = $this->Paginator->sort($field, __d('croogo', $arr['label']));
 					} else {
-						$tableHeaders[] = $arr['label'];
+						$tableHeaders[] = __d('croogo', $arr['label']);
 					}
 				}
 				$tableHeaders[] = __d('croogo', 'Actions');

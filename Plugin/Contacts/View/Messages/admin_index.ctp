@@ -62,11 +62,11 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
 		'',
-		$this->Paginator->sort('id'),
-		$this->Paginator->sort('contact_id'),
-		$this->Paginator->sort('name'),
-		$this->Paginator->sort('email'),
-		$this->Paginator->sort('title'),
+		$this->Paginator->sort('id', __d('croogo', 'Id')),
+		$this->Paginator->sort('contact_id', __d('croogo', 'Contact')),
+		$this->Paginator->sort('name', __d('croogo', 'Name')),
+		$this->Paginator->sort('email', __d('croogo', 'Email')),
+		$this->Paginator->sort('title', __d('croogo', 'Title')),
 		__d('croogo', 'Actions'),
 	));
 ?>

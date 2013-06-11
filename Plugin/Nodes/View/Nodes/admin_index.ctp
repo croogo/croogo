@@ -35,11 +35,11 @@ echo $this->Form->create(
 		<?php
 			$tableHeaders =  $this->Html->tableHeaders(array(
 				'',
-				$this->Paginator->sort('id'),
-				$this->Paginator->sort('title'),
-				$this->Paginator->sort('type'),
-				$this->Paginator->sort('user_id'),
-				$this->Paginator->sort('status'),
+				$this->Paginator->sort('id', __d('croogo', 'Id')),
+				$this->Paginator->sort('title', __d('croogo', 'Title')),
+				$this->Paginator->sort('type', __d('croogo', 'Type')),
+				$this->Paginator->sort('user_id', __d('croogo', 'User')),
+				$this->Paginator->sort('status', __d('croogo', 'Status')),
 				''
 			));
 		?>
