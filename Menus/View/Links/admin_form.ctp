@@ -32,6 +32,13 @@ if ($this->request->params['action'] == 'admin_edit') {
 
 echo $this->Form->create('Link', array('url' => $formUrl));
 
+$linkChooserUrl = $this->Html->url(array(
+	'admin' => true,
+	'plugin' => 'menus',
+	'controllers' => 'links',
+	'action' => 'link_chooser',
+));
+
 ?>
 <div class="row-fluid">
 	<div class="span8">
@@ -63,24 +70,19 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 				echo $this->Form->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));
+
 				echo $this->Form->input('link', array(
 					'label' => __d('croogo', 'Link'),
+					'div' => 'input text required input-append',
+					'after' => $this->Html->link('', '#link_choosers', array(
+						'button' => 'default',
+						'icon' => array('link'),
+						'iconSize' => 'small',
+						'data-title' => 'Link Chooser',
+						'data-toggle' => 'modal',
+						'data-remote' => $linkChooserUrl,
+					)),
 				));
-				echo $this->Html->link(__d('croogo', 'Link to a Node'), Router::url(array(
-					'plugin' => 'nodes',
-					'controller' => 'nodes',
-					'action' => 'index',
-					'?' => array(
-						'chooser' => 1,
-						'KeepThis' => true,
-						'TB_iframe' => true,
-						'height' => 400,
-						'width' => 600,
-					)), true),
-					array(
-						'class' => 'link chooser',
-					)
-				);
 			?>
 			</div>
 
@@ -135,9 +137,8 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 </div>
 <?php echo $this->Form->end(); ?>
 <?php
-$script = <<<EOF
-$('.link.chooser').itemChooser({
-	fields: [{ type: "Node", target: "#LinkLink", attr: "rel" }]
-});
-EOF;
-$this->Js->buffer($script);
+echo $this->element('Croogo.admin/modal', array(
+	'id' => 'link_choosers',
+	'class' => 'hide',
+	'title' => __d('croogo', 'Choose Link'),
+));

@@ -80,6 +80,11 @@ class TermsController extends TaxonomyAppController {
 		));
 		$terms = Hash::combine($terms, '{n}.Term.id', '{n}.Term');
 		$this->set(compact('termsTree', 'vocabulary', 'terms'));
+
+		if (isset($this->request->params['named']['links']) || isset($this->request->query['chooser'])) {
+			$this->layout = 'admin_popup';
+			$this->render('admin_chooser');
+		}
 	}
 
 /**
