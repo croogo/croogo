@@ -61,28 +61,86 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'label' => false,
 					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('link', array(
-					'label' => false,
 					'label' => __d('croogo', 'Link'),
 				));
-				echo $this->Html->link(__d('croogo', 'Link to a Node'), Router::url(array(
-					'plugin' => 'nodes',
-					'controller' => 'nodes',
-					'action' => 'index',
-					'?' => array(
-						'chooser' => 1,
-						'KeepThis' => true,
-						'TB_iframe' => true,
-						'height' => 400,
-						'width' => 600,
-					)), true),
-					array(
-						'class' => 'link chooser',
-					)
-				);
+
+				?>
+
+				<div class="btn-group">
+				<?php
+
+					$linkAdders = array(
+						'Page'=>array(
+							'plugin'=>'nodes',
+							'controller'=>'nodes',
+							'action'=>'index',
+							'?'=>array(
+								'type'=>'page',
+								'chooser' => 1,
+								'KeepThis' => true,
+								'TB_iframe' => true,
+								'height' => 400,
+								'width' => 600
+								)
+						),
+						'Article'=>array(
+							'plugin'=>'nodes',
+							'controller'=>'nodes',
+							'action'=>'index',
+							'?'=>array(
+								'type'=>'article',
+								'chooser' => 1,
+								'KeepThis' => true,
+								'TB_iframe' => true,
+								'height' => 400,
+								'width' => 600
+								)
+						),
+						'Event'=>array(
+							'plugin'=>'nodes',
+							'controller'=>'nodes',
+							'action'=>'index',
+							'?'=>array(
+								'type'=>'event',
+								'chooser' => 1,
+								'KeepThis' => true,
+								'TB_iframe' => true,
+								'height' => 400,
+								'width' => 600
+								)
+						),
+						'Article Category'=>array(
+							'plugin'=>'taxonomy',
+							'controller'=>'terms',
+							'action'=>'index',
+							'1',
+							'?'=>array(
+								'type'=>'event',
+								'chooser' => 1,
+								'KeepThis' => true,
+								'TB_iframe' => true,
+								'height' => 400,
+								'width' => 600
+								)
+						)
+					);
+
+					foreach($linkAdders as $name => $route){
+						echo $this->Html->link(__d('croogo', 'Link to '.$name), $route,
+						array(
+							'class' => 'btn link chooser',
+						)
+						);
+					}
+
+				?>
+				</div>
+
+				<?php
+
 			?>
 			</div>
 
@@ -97,23 +155,18 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 			<div id="link-misc" class="tab-pane">
 			<?php
 				echo $this->Form->input('class', array(
-					'label' => false,
 					'label' => __d('croogo', 'Class'),
 				));
 				echo $this->Form->input('description', array(
-					'label' => false,
 					'label' => __d('croogo', 'Description'),
 				));
 				echo $this->Form->input('rel', array(
-					'label' => false,
 					'label' => __d('croogo', 'Rel'),
 				));
 				echo $this->Form->input('target', array(
-					'label' => false,
 					'label' => __d('croogo', 'Target'),
 				));
 				echo $this->Form->input('params', array(
-					'label' => false,
 					'label' => __d('croogo', 'Params'),
 				));
 			?>

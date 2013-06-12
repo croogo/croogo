@@ -43,16 +43,13 @@ echo $this->Form->create('Node', array('url' => $formUrl));
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'label' => false,
 					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('slug', array(
-					'label' => false,
 					'class' => 'span10 slug',
 					'label' => __d('croogo', 'Slug'),
 				));
 				echo $this->Form->input('excerpt', array(
-					'label' => false,
 					'label' => __d('croogo', 'Excerpt'),
 				));
 				echo $this->Form->input('body', array(

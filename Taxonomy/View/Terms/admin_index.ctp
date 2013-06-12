@@ -68,10 +68,19 @@ $this->Html
 			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
 			__d('croogo', 'Are you sure?'));
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
+
+		$typeLinks = "";
+		foreach($vocabulary['Type'] as $type){
+			$typeLinks .= $this->Html->link($type['alias'],array('plugin'=>'nodes','controller'=>'nodes','action'=>'term','type'=>$type['alias'],'slug'=>$terms[$id]['slug'],'admin'=>0))." ";
+		}
+
+		$titleCol = $this->Html->link($title,array('plugin'=>'nodes','controller'=>'nodes','action'=>'term','type'=>$vocabulary['Type'][0]['alias'],'slug'=>$terms[$id]['slug'],'admin'=>0)).
+			" <small>(".$typeLinks.")</small>";
+
 		$rows[] = array(
 			'',
 			$id,
-			$title,
+			$titleCol,
 			$terms[$id]['slug'],
 			$actions,
 		);
