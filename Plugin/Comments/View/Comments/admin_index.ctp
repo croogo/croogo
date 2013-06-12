@@ -46,7 +46,6 @@ echo $this->element('admin/modal', array(
 	$tableHeaders = $this->Html->tableHeaders(array(
 		'',
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
-		//$this->Paginator->sort('title'),
 		$this->Paginator->sort('name', __d('croogo', 'Name')),
 		$this->Paginator->sort('email', __d('croogo', 'Email')),
 		$this->Paginator->sort('node_id', __d('croogo', 'Node')),

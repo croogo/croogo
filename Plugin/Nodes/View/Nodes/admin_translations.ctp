@@ -22,7 +22,6 @@
 	<?php
 		$tableHeaders = $this->Html->tableHeaders(array(
 			'',
-			//__d('croogo', 'Id'),
 			__d('croogo', 'Title'),
 			__d('croogo', 'Locale'),
 			__d('croogo', 'Actions'),
@@ -36,7 +35,6 @@
 
 			$rows[] = array(
 				'',
-				//$translation[$RuntimeModelAlias]['id'],
 				$translation[$runtimeModelAlias]['content'],
 				$translation[$runtimeModelAlias]['locale'],
 				$actions,
