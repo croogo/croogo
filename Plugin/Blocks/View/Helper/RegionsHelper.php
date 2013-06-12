@@ -44,6 +44,11 @@ class RegionsHelper extends AppHelper {
 			return $output;
 		}
 
+		$options = Hash::merge(array(
+			'elementOptions' => array(),
+		), $options);
+		$elementOptions = $options['elementOptions'];
+
 		$defaultElement = 'Blocks.block';
 		$blocks = $this->_View->viewVars['blocks_for_layout'][$regionAlias];
 		foreach ($blocks as $block) {
@@ -51,7 +56,7 @@ class RegionsHelper extends AppHelper {
 			$exists = $this->_View->elementExists($element);
 			$blockOutput = '';
 			if ($exists) {
-				$blockOutput = $this->_View->element($element, compact('block'));
+				$blockOutput = $this->_View->element($element, compact('block'), $elementOptions);
 			} else {
 				if (!empty($element)) {
 					$this->log(sprintf('Missing element `%s` in block `%s` (%s)',
@@ -60,13 +65,13 @@ class RegionsHelper extends AppHelper {
 						$block['Block']['id']
 					), LOG_WARNING);
 				}
-				$blockOutput = $this->_View->element($defaultElement, compact('block'), array('ignoreMissing' => true));
+				$blockOutput = $this->_View->element($defaultElement, compact('block'), array('ignoreMissing' => true) + $elementOptions);
 			}
 			$enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
 			if ($exists && $element != $defaultElement && $enclosure) {
 				$block['Block']['body'] = $blockOutput;
 				$block['Block']['element'] = null;
-				$output .= $this->_View->element($defaultElement, compact('block'));
+				$output .= $this->_View->element($defaultElement, compact('block'), $elementOptions);
 			} else {
 				$output .= $blockOutput;
 			}
