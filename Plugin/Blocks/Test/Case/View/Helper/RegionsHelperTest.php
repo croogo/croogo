@@ -33,9 +33,13 @@ class RegionsHelperTest extends CroogoTestCase {
 			'action' => 'index',
 			'named' => array(),
 		);
-		$view = new View(new TheRegionsTestController($request, new CakeResponse()));
-		$view->loadHelper('Croogo.Layout');
-		$this->Regions = $this->getMock('RegionsHelper', array('log'), array($view));
+		$controller = new TheRegionsTestController($request, new CakeResponse());
+		$this->View = $this->getMock('View',
+			array('element', 'elementExists'),
+			array($controller)
+		);
+		$this->View->loadHelper('Croogo.Layout');
+		$this->Regions = $this->getMock('RegionsHelper', array('log'), array($this->View));
 		$this->_appEncoding = Configure::read('App.encoding');
 		$this->_asset = Configure::read('Asset');
 		$this->_debug = Configure::read('debug');
@@ -71,7 +75,7 @@ class RegionsHelperTest extends CroogoTestCase {
  * testBlocks
  */
 	public function testBlocks() {
-		$this->Regions->_View->viewVars['blocks_for_layout'] = array(
+		$blocksForLayout = array(
 			'right' => array(
 				0 => array(
 					'Block' => array(
@@ -85,18 +89,21 @@ class RegionsHelperTest extends CroogoTestCase {
 				),
 			),
 		);
+		$this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
 		$this->Regions->expects($this->never())->method('log');
+		$this->View->expects($this->once())->method('element')
+			->with(
+				'Blocks.block',
+				array('block' => $blocksForLayout['right'][0])
+			);
 		$result = $this->Regions->blocks('right');
-		$this->assertContains('id="block-1"', $result);
-		$this->assertContains('block-hello-world', $result);
-		$this->assertContains('hello world', $result);
 	}
 
 /**
  * testBlocks with invalid/missing element
  */
 	public function testBlockWithInvalidElement() {
-		$this->Regions->_View->viewVars['blocks_for_layout'] = array(
+		$blocksForLayout = array(
 			'right' => array(
 				0 => array(
 					'Block' => array(
@@ -110,14 +117,15 @@ class RegionsHelperTest extends CroogoTestCase {
 				),
 			),
 		);
+		$this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
 		$this->Regions
 			->expects($this->once())
 			->method('log')
 			->with('Missing element `non-existent` in block `hello-world` (1)');
+		$this->View->expects($this->once())
+			->method('element')
+			->with('Blocks.block', array('block' => $blocksForLayout['right'][0]));
 		$result = $this->Regions->blocks('right');
-		$this->assertContains('id="block-1"', $result);
-		$this->assertContains('block-hello-world', $result);
-		$this->assertContains('hello world', $result);
 	}
 
 }
