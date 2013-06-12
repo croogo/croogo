@@ -46,8 +46,19 @@ $this->Html
 <thead>
 	<?php echo $tableHeaders; ?>
 </thead>
-<?php	
+<?php
 	$rows = array();
+
+	// Default Content Type
+	if(isset($vocabulary['Type'][0])){
+		$defaultType = $vocabulary['Type'][0];
+	}
+	if(isset($this->params->query['type_id'])){
+		if(isset($vocabulary['Type'][$this->params->query['type_id']])){
+			$defaultType = $vocabulary['Type'][$this->params->query['type_id']];
+		}
+	}
+
 	foreach ($termsTree as $id => $title):
 		$actions = array();
 		$actions[] = $this->Croogo->adminRowActions($id);
@@ -69,13 +80,32 @@ $this->Html
 			__d('croogo', 'Are you sure?'));
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
-		$typeLinks = "";
-		foreach($vocabulary['Type'] as $type){
-			$typeLinks .= $this->Html->link($type['alias'],array('plugin'=>'nodes','controller'=>'nodes','action'=>'term','type'=>$type['alias'],'slug'=>$terms[$id]['slug'],'admin'=>0))." ";
+		// Title Column
+		$titleCol = $title;
+		if(isset($defaultType['alias'])){
+			$titleCol = $this->Html->link($title,array(
+			'plugin'=>'nodes',
+			'controller'=>'nodes',
+			'action'=>'term',
+			'type'=>$defaultType['alias'],
+			'slug'=>$terms[$id]['slug'],
+			'admin'=>0));
 		}
 
-		$titleCol = $this->Html->link($title,array('plugin'=>'nodes','controller'=>'nodes','action'=>'term','type'=>$vocabulary['Type'][0]['alias'],'slug'=>$terms[$id]['slug'],'admin'=>0)).
-			" <small>(".$typeLinks.")</small>";
+		// Build link list
+		$typeLinks = "";
+		if(count($vocabulary['Type']) > 1){
+			foreach($vocabulary['Type'] as $type){
+			$typeLinks .= $this->Html->link($type['title'],array(
+				'admin'=>false,
+				'plugin'=>'nodes',
+				'controller'=>'nodes',
+				'action'=>'term',
+				'type'=>$type['alias'],
+				'slug'=>$terms[$id]['slug']))." ";
+			}
+		}
+		$titleCol .= " <small>(".$typeLinks.")</small>";
 
 		$rows[] = array(
 			'',
