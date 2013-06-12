@@ -100,6 +100,48 @@ class RegionsHelperTest extends CroogoTestCase {
 	}
 
 /**
+ * testBlocksOptions
+ */
+	public function testBlocksOptions() {
+		$blocksForLayout = array(
+			'right' => array(
+				0 => array(
+					'Block' => array(
+						'id' => 1,
+						'alias' => 'hello-world',
+						'body' => 'hello world',
+						'show_title' => false,
+						'class' => null,
+						'element' => null,
+					),
+					'Params' => array(
+						'enclosure' => false,
+					),
+				),
+			),
+		);
+		$this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
+		$this->View->expects($this->once())
+			->method('elementExists')
+			->will($this->returnValue(true));
+
+		$this->View->expects($this->once())->method('element')
+			->with(
+				null,
+				array(
+					'block' => $blocksForLayout['right'][0],
+					'class' => 'right-blocks',
+				),
+				array('callbacks' => true)
+			);
+
+		$result = $this->Regions->blocks('right', array(
+			'class' => 'right-blocks',
+			'elementOptions' => array('callbacks' => true)
+		));
+	}
+
+/**
  * testBlocks with invalid/missing element
  */
 	public function testBlockWithInvalidElement() {
