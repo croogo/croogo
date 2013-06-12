@@ -27,29 +27,34 @@ $url = isset($url) ? $url : array('action' => 'index');
 				'tooltip' => false,
 			));
 
-			echo $this->Form->input('type', array(
-				'options' => $nodeTypes,
-				'empty' => __d('croogo', 'Type'),
-				'div' => 'input select span2',
-			));
+			if(!$this->request->query['chooser']){
 
-			echo $this->Form->input('status', array(
-				'options' => array(
-					'1' => __d('croogo', 'Published'),
-					'0' => __d('croogo', 'Unpublished'),
-				),
-				'empty' => __d('croogo', 'Status'),
-				'div' => 'input select span2',
-			));
+				echo $this->Form->input('type', array(
+					'options' => $nodeTypes,
+					'empty' => __d('croogo', 'Type'),
+					'div' => 'input select span2',
+				));
 
-			echo $this->Form->input('promote', array(
-				'options' => array(
-					'1' => __d('croogo', 'Yes'),
-					'0' => __d('croogo', 'No'),
-				),
-				'empty' => __d('croogo', 'Promoted'),
-				'div' => 'input select span2',
-			));
+				echo $this->Form->input('status', array(
+					'options' => array(
+						'1' => __d('croogo', 'Published'),
+						'0' => __d('croogo', 'Unpublished'),
+					),
+					'empty' => __d('croogo', 'Status'),
+					'div' => 'input select span2',
+				));
+
+				echo $this->Form->input('promote', array(
+					'options' => array(
+						'1' => __d('croogo', 'Yes'),
+						'0' => __d('croogo', 'No'),
+					),
+					'empty' => __d('croogo', 'Promoted'),
+					'div' => 'input select span2',
+				));
+
+			}
+
 			echo $this->Form->submit(__d('croogo', 'Filter'), array('class' => 'btn',
 				'div' => 'input submit span2'
 			));

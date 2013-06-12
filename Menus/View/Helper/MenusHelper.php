@@ -250,4 +250,30 @@ class MenusHelper extends AppHelper {
 		return join('/', $result);
 	}
 
+/**
+ * Adds buttons to link choosers.
+ *
+ * @param array $url link
+ * @return string
+ */
+
+	public function linkChoosers(){
+
+		$html = '<div class="btn-group"><a href="#" class="btn"><i class="icon-link"></i></a>';
+
+		$linkChoosers = Configure::read('Menus.linkChoosers');
+		foreach($linkChoosers as $name => $chooser){
+			$html .= $this->Html->link(__d('croogo', $name), $chooser['route'],
+			array(
+				'class' => 'btn link chooser',
+			)
+			);
+		}
+
+		$html .= '</div>';
+
+		return $html;
+
+	}
+
 }

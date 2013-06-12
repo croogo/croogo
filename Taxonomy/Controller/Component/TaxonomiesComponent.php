@@ -59,6 +59,7 @@ class TaxonomiesComponent extends Component {
 			$this->vocabularies();
 		} else {
 			$this->_adminData();
+			$this->_hookLinkChoosers();
 		}
 	}
 
@@ -167,4 +168,37 @@ class TaxonomiesComponent extends Component {
 		}
 	}
 
+
+/**
+ * Hook link choosers for adding menu links.
+ *
+ * @return void
+ */
+	public function _hookLinkChoosers(){
+
+		$this->vocabulary = ClassRegistry::init('Vocabulary');
+		$types_vocabularies = $this->vocabulary->query("SELECT Vocabulary.id, Vocabulary.alias, Vocabulary.title, Type.id, Type.title, Type.alias FROM `types_vocabularies` tv INNER JOIN `vocabularies` Vocabulary  ON Vocabulary.id = tv.vocabulary_id INNER JOIN `types` Type ON tv.type_id=Type.id");
+
+		$linkChoosers = array();
+		foreach($types_vocabularies as $result){
+			$title = $result['Type']['title'].' '.$result['Vocabulary']['title'];
+			$linkChoosers[$title] = array(
+			'route'=>array(
+				'plugin'=>'taxonomy',
+				'controller'=>'terms',
+				'action'=>'index',
+				$result['Vocabulary']['id'],
+				'?'=>array(
+					'type'=>$result['Type']['alias'],
+					'chooser' => 1,
+					'KeepThis' => true,
+					'TB_iframe' => true,
+					'height' => 400,
+					'width' => 600
+					)
+				)
+			);
+		}
+		Croogo::mergeConfig('Menus.linkChoosers',$linkChoosers);
+	}
 }
