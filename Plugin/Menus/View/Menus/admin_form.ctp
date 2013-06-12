@@ -37,15 +37,12 @@ echo $this->Form->create('Menu');
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'label' => false,
 					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('alias', array(
-					'label' => false,
 					'label' => __d('croogo', 'Alias'),
 				));
 				echo $this->Form->input('description', array(
-					'label' => false,
 					'label' => __d('croogo', 'Description'),
 				));
 			?>
@@ -54,13 +51,13 @@ echo $this->Form->create('Menu');
 			<div id="menu-misc" class="tab-pane">
 			<?php
 				echo $this->Form->input('params', array(
-					'label' => false,
 					'label' => __d('croogo', 'Params'),
 				));
 			?>
 			</div>
 
 			<?php echo $this->Croogo->adminTabs(); ?>
+
 		</div>
 	</div>
 
