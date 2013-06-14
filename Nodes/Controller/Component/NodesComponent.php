@@ -111,7 +111,8 @@ class NodesComponent extends Component {
  */
 
 	public function _hookLinkChoosers(Controller $controller){
-			$type = ClassRegistry::init('Type');
+
+			$type = ClassRegistry::init('Taxonomy.Type');
 			$types = $type->find('list',array('fields'=>array('alias','title')));
 
 			$linkChoosers = array();

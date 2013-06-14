@@ -27,7 +27,7 @@ $url = isset($url) ? $url : array('action' => 'index');
 				'tooltip' => false,
 			));
 
-			if(!$this->request->query['chooser']){
+			if(!isset($this->request->query['chooser'])){
 
 				echo $this->Form->input('type', array(
 					'options' => $nodeTypes,
