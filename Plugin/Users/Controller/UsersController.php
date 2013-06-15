@@ -224,6 +224,9 @@ class UsersController extends UsersAppController {
  * @access public
  */
 	public function admin_login() {
+		if(AuthComponent::User('id')) {
+			$this->redirect(array('admin'=>true,'plugin'=>'settings','controller'=>'settings','action'=>'dashboard'));
+		}
 		$this->set('title_for_layout', __d('croogo', 'Admin Login'));
 		$this->layout = "admin_login";
 		if ($this->request->is('post')) {
