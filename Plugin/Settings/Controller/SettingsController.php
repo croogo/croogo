@@ -47,6 +47,9 @@ class SettingsController extends SettingsAppController {
  * @access public
  */
 	public function admin_dashboard() {
+		if(!AuthComponent::User('id')){
+			$this->redirect(array('admin'=>true,'plugin'=>'users','controller'=>'users','action'=>'login'));
+		}
 		$this->set('title_for_layout', __d('croogo', 'Dashboard'));
 	}
 
