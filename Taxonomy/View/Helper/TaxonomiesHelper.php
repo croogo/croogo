@@ -104,8 +104,8 @@ class TaxonomiesHelper extends AppHelper {
 		}
 		$title = __d('croogo', 'Terms');
 		$element = 'Taxonomy.admin/terms_tab';
-		Croogo::hookAdminTab("$controller/admin_add", $title, $element);
-		Croogo::hookAdminTab("$controller/admin_edit", $title, $element);
+		Croogo::hookAdminBox("$controller/admin_add", $title, $element);
+		Croogo::hookAdminBox("$controller/admin_edit", $title, $element);
 	}
 
 /**

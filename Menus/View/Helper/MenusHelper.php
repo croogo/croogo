@@ -173,11 +173,11 @@ class MenusHelper extends AppHelper {
 				$linkAttr['class'] .= ' ' . $options['selected'];
 			}
 
-			$linkOutput = $this->Html->link($link['Link']['title'], $link['Link']['link'], $linkAttr);
+			$linkOutput = $this->Html->link($link['Link']['title'], $link['Link']['link']);
 			if (isset($link['children']) && count($link['children']) > 0) {
 				$linkOutput .= $this->nestedLinks($link['children'], $options, $depth + 1);
 			}
-			$linkOutput = $this->Html->tag('li', $linkOutput);
+			$linkOutput = $this->Html->tag('li', $linkOutput,$linkAttr);
 			$output .= $linkOutput;
 		}
 		if ($output != null) {
@@ -259,7 +259,7 @@ class MenusHelper extends AppHelper {
 
 	public function linkChoosers(){
 
-		$html = '<div class="btn-group"><a href="#" class="btn"><i class="icon-link"></i></a>';
+		$html = '<div class="btn-group"><a href="#" class="btn btn-primary"><i class="icon-link"></i></a>';
 
 		$linkChoosers = Configure::read('Menus.linkChoosers');
 		foreach($linkChoosers as $name => $chooser){

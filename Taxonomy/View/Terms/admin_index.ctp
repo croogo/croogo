@@ -95,6 +95,7 @@ $this->Html
 		// Build link list
 		$typeLinks = "";
 		if(count($vocabulary['Type']) > 1){
+			$typeLinks = "(";
 			foreach($vocabulary['Type'] as $type){
 			$typeLinks .= $this->Html->link($type['title'],array(
 				'admin'=>false,
@@ -104,8 +105,9 @@ $this->Html
 				'type'=>$type['alias'],
 				'slug'=>$terms[$id]['slug']))." ";
 			}
+			$typeinks = ")";
 		}
-		$titleCol .= " <small>(".$typeLinks.")</small>";
+		$titleCol .= " <small>".$typeLinks."</small>";
 
 		$rows[] = array(
 			'',
