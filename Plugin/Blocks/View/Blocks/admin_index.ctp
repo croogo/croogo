@@ -18,11 +18,11 @@ $chooser = isset($this->request->query['chooser']);
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
 		'',
-		$this->Paginator->sort('id'),
-		$this->Paginator->sort('title'),
-		$this->Paginator->sort('alias'),
-		$this->Paginator->sort('region_id'),
-		$this->Paginator->sort('status'),
+		$this->Paginator->sort('id', __d('croogo', 'Id')),
+		$this->Paginator->sort('title', __d('croogo', 'Title')),
+		$this->Paginator->sort('alias', __d('croogo', 'Alias')),
+		$this->Paginator->sort('region_id', __d('croogo', 'Region')),
+		$this->Paginator->sort('status', __d('croogo', 'Status')),
 		__d('croogo', 'Actions'),
 	));
 ?>

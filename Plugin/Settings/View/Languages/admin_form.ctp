@@ -35,15 +35,12 @@ echo $this->Form->create('Language');
 				));
 				echo $this->Form->input('id');
 				echo $this->Form->input('title', array(
-					'label' => false,
 					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('native', array(
-					'label' => false,
 					'label' => __d('croogo', 'Native'),
 				));
 				echo $this->Form->input('alias', array(
-					'label' => false,
 					'label' => __d('croogo', 'Alias'),
 				));
 			?>

@@ -61,11 +61,9 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'label' => false,
 					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('link', array(
-					'label' => false,
 					'label' => __d('croogo', 'Link'),
 				));
 				echo $this->Html->link(__d('croogo', 'Link to a Node'), Router::url(array(
@@ -97,23 +95,18 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 			<div id="link-misc" class="tab-pane">
 			<?php
 				echo $this->Form->input('class', array(
-					'label' => false,
 					'label' => __d('croogo', 'Class'),
 				));
 				echo $this->Form->input('description', array(
-					'label' => false,
 					'label' => __d('croogo', 'Description'),
 				));
 				echo $this->Form->input('rel', array(
-					'label' => false,
 					'label' => __d('croogo', 'Rel'),
 				));
 				echo $this->Form->input('target', array(
-					'label' => false,
 					'label' => __d('croogo', 'Target'),
 				));
 				echo $this->Form->input('params', array(
-					'label' => false,
 					'label' => __d('croogo', 'Params'),
 				));
 			?>

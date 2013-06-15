@@ -33,7 +33,6 @@ $this->Html
 	<?php
 		$tableHeaders = $this->Html->tableHeaders(array(
 			'',
-			//__d('croogo', 'Id'),
 			__d('croogo', 'Title'),
 			__d('croogo', 'Locale'),
 			__d('croogo', 'Actions'),

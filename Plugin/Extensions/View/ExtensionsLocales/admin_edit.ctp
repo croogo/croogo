@@ -34,7 +34,6 @@ echo $this->Form->create('Locale', array(
 			<div class="locale-content" class="tab-pane">
 			<?php
 				echo $this->Form->input('Locale.content', array(
-					'label' => false,
 					'label' => __d('croogo', 'Content'),
 					'data-placement' => 'top',
 					'value' => $content,
