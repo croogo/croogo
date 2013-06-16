@@ -119,6 +119,7 @@ class NodesController extends NodesAppController {
 		$this->paginate['Node']['conditions']['Node.type'] = $typeAliases;
 
 		$nodes = $this->paginate($this->Node->parseCriteria($this->request->query));
+		$this->Croogo->setReferer();
 		$nodeTypes = $this->Node->Taxonomy->Vocabulary->Type->find('list', array(
 			'fields' => array('Type.alias', 'Type.title')
 			));
