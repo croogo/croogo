@@ -176,18 +176,57 @@ class CroogoComponent extends Component {
 	}
 
 /**
+ * Sets the referer page
+ *
+ * We need to know where were you, to get you back there
+ *
+ * @return void
+ * @see CroogoComponent::redirect()
+ */
+	public function setReferer() {
+		$controller = $this->_controller;
+		$getParams = array(
+			'plugin' => null,
+			'controller' => null,
+			'action' => null,
+			'pass' => null,
+			'named' => null,
+			'prefix' => null,
+			'admin' => null,
+		);
+		$referer['url'] =
+			array_intersect_key($controller->request->params, $getParams) +
+			$controller->request->params["named"] +
+			array('?' => $controller->request->query);
+		$referer += array(
+			'base' => $controller->request->base,
+			'webroot' => $controller->request->webroot,
+			'here' => $controller->request->here
+		);
+		$this->Session->write('Croogo.referer', $referer);
+	}
+
+/**
  * Croogo flavored redirect
- * If 'save' pressed, redirect to action 'index' instead of 'edit'
+ *
+ * If 'save' pressed, redirect to referer or 'index' action instead of 'edit'
  *
  * @param string $url
  * @param integer $status
  * @param boolean $exit
  * @return void
+ * @see CroogoComponent::setReferer()
  */
 	public function redirect($url, $status = null, $exit = true) {
 		if (is_array($url)) {
 			if (isset($url['action']) && $url['action'] === 'edit' && !isset($this->_controller->request->data['apply'])) {
-				$url = array('action' => 'index');
+				$referer = $this->Session->read('Croogo.referer');
+				if (isset($referer['url'])) {
+					$url = $referer['url'];
+				} else {
+					$url = array('action' => 'index');
+				}
+				$this->Session->delete('Croogo.referer');
 			}
 		}
 		$this->_controller->redirect($url, $status, $exit);
