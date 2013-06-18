@@ -77,7 +77,7 @@ class AclUpgrade extends Object {
 
 		$this->Aco->begin();
 		$this->_renameFileManagerAco();
-		$errors = $this->update_role_hierarchy();
+		$errors = $this->updateRoleHierarchy();
 		foreach ($this->_acoMap as $plugin => $controllers) {
 			$pluginPath = $actionPath . $plugin;
 			$pluginNode = $this->Aco->node($pluginPath);
@@ -128,7 +128,7 @@ class AclUpgrade extends Object {
 /**
  * Setup role hierarchy
  */
-	public function update_role_hierarchy() {
+	public function updateRoleHierarchy() {
 		$errors = array();
 
 		$admin = $this->Aro->node(array('model' => 'Role', 'foreign_key' => 1));

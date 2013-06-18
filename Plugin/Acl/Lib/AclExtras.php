@@ -132,9 +132,9 @@ class AclExtras extends Object {
  *
  * @return void
  **/
-	public function aco_sync($params = array()) {
+	public function acoSync($params = array()) {
 		$this->_clean = true;
-		return $this->aco_update($params);
+		return $this->acoUpdate($params);
 	}
 
 /**
@@ -142,7 +142,7 @@ class AclExtras extends Object {
  *
  * @return bool
  */
-	public function aco_update_contents($params = array()) {
+	public function acoUpdateContents($params = array()) {
 		list($plugin, $model) = pluginSplit($this->args[0]);
 		App::uses($model, $plugin . '.Model');
 		if (!class_exists($model)) {
@@ -179,7 +179,7 @@ class AclExtras extends Object {
  *
  * @return void
  **/
-	public function aco_update($params = array()) {
+	public function acoUpdate($params = array()) {
 		$root = $this->_checkNode($this->rootNode, $this->rootNode, null);
 
 		if (empty($params['plugin'])) {

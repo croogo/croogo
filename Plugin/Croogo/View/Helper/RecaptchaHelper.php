@@ -9,7 +9,7 @@ class RecaptchaHelper extends AppHelper {
 
 	public $helpers = array('Form');
 
-	public function display_form($outputMethod = 'return', $error = null, $useSsl = false) {
+	public function displayForm($outputMethod = 'return', $error = null, $useSsl = false) {
 		$this->Form->unlockField('recaptcha_challenge_field');
 		$this->Form->unlockField('recaptcha_response_field');
 		$data = $this->__form(Configure::read("Recaptcha.pubKey"), $error, $useSsl);
@@ -19,8 +19,12 @@ class RecaptchaHelper extends AppHelper {
 			return $data;
 	}
 
-	public function hide_mail($email = '', $outputMethod = 'return') {
-		$data = $this->recaptcha_mailhide_html(Configure::read('Recaptcha.pubKey'), Configure::read('Recaptcha.privateKey'), $email);
+	public function hideMail($email = '', $outputMethod = 'return') {
+		$data = $this->recaptchaMailhideHtml(
+			Configure::read('Recaptcha.pubKey'),
+			Configure::read('Recaptcha.privateKey'),
+			$email
+		);
 		if ($outputMethod == "echo")
 			echo $data;
 		else
@@ -38,7 +42,10 @@ class RecaptchaHelper extends AppHelper {
  */
 	private function __form($pubkey, $error = null, $useSsl = false) {
 		if ($pubkey == null || $pubkey == '') {
-			die ("To use reCAPTCHA you must get an API key from <a href='http://recaptcha.net/api/getkey'>http://recaptcha.net/api/getkey</a>");
+			die (
+				"To use reCAPTCHA you must get an API key from " .
+				"<a href='http://recaptcha.net/api/getkey'>http://recaptcha.net/api/getkey</a>"
+			);
 		}
 
 		if ($useSsl) {
@@ -81,7 +88,7 @@ class RecaptchaHelper extends AppHelper {
 /**
  * gets the reCAPTCHA Mailhide url for a given email, public key and private key
  */
-	public function recaptcha_mailhide_url($pubkey, $privkey, $email) {
+	public function recaptchaMailhideUrl($pubkey, $privkey, $email) {
 		if ($pubkey == '' || $pubkey == null || $privkey == "" || $privkey == null) {
 			die (
 				"To use reCAPTCHA Mailhide, you have to sign up for a public and private key, " .
@@ -119,13 +126,14 @@ class RecaptchaHelper extends AppHelper {
  *
  * http://mailhide.recaptcha.net/apikey
  */
-	public function recaptcha_mailhide_html($pubkey, $privkey, $email) {
+	public function recaptchaMailhideHtml($pubkey, $privkey, $email) {
 		$emailparts = $this->_recaptchaMailhideEmailParts($email);
-		$url = $this->recaptcha_mailhide_url($pubkey, $privkey, $email);
+		$url = $this->recaptchaMailhideUrl($pubkey, $privkey, $email);
 
 		return htmlentities($emailparts[0]) . "<a href='" . htmlentities($url) .
 						"' onclick=\"window.open('" . htmlentities($url) .
-						"', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;\" title=\"Reveal this e-mail address\">...</a>@" .
+						"', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); " .
+						"return false;\" title=\"Reveal this e-mail address\">...</a>@" .
 						htmlentities($emailparts[1]);
 	}
 
