@@ -1,5 +1,4 @@
 <?php
-
 $this->extend('/Common/admin_index');
 
 $this->Html
@@ -46,7 +45,7 @@ $this->Html
 <thead>
 	<?php echo $tableHeaders; ?>
 </thead>
-<?php	
+<?php
 	$rows = array();
 	foreach ($termsTree as $id => $title):
 		$actions = array();

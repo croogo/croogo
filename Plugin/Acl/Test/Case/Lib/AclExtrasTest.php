@@ -59,7 +59,7 @@ class AclExtrasTest extends CroogoTestCase {
 			'search', 'view',
 		);
 
-		$this->AclExtras->aco_sync(array('plugin' => 'Nodes'));
+		$this->AclExtras->acoSync(array('plugin' => 'Nodes'));
 
 		$node = $this->AclExtras->Aco->node('controllers/Nodes/Nodes');
 		$result = $this->AclExtras->Aco->children($node[0]['Aco']['id'], true);

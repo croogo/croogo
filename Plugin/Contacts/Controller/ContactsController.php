@@ -161,9 +161,9 @@ class ContactsController extends ContactsAppController {
 			$this->request->data['Message']['name'] = htmlspecialchars($this->request->data['Message']['name']);
 			$this->request->data['Message']['body'] = htmlspecialchars($this->request->data['Message']['body']);
 			$continue = $this->_validation($continue, $contact);
-			$continue = $this->_spam_protection($continue, $contact);
+			$continue = $this->_spamProtection($continue, $contact);
 			$continue = $this->_captcha($continue, $contact);
-			$continue = $this->_send_email($continue, $contact);
+			$continue = $this->_sendEmail($continue, $contact);
 
 			if ($continue === true) {
 				//$this->Session->setFlash(__d('croogo', 'Your message has been received.'));
@@ -208,7 +208,7 @@ class ContactsController extends ContactsAppController {
  * @return boolean
  * @access protected
  */
-	protected function _spam_protection($continue, $contact) {
+	protected function _spamProtection($continue, $contact) {
 		if (!empty($this->request->data) &&
 			$contact['Contact']['message_spam_protection'] &&
 			$continue === true) {
@@ -252,7 +252,7 @@ class ContactsController extends ContactsAppController {
  * @return boolean
  * @access protected
  */
-	protected function _send_email($continue, $contact) {
+	protected function _sendEmail($continue, $contact) {
 		$email = new CakeEmail();
 		if (!$contact['Contact']['message_notify'] || $continue !== true) {
 			return $continue;

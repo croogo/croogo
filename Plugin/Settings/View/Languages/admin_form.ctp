@@ -1,5 +1,4 @@
 <?php
-
 $this->extend('/Common/admin_edit');
 
 $this->Html
@@ -53,7 +52,7 @@ echo $this->Form->create('Language');
 	<div class="span4">
 		<?php
 			echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-				$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')).
+				$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
 				$this->Html->link(
 					__d('croogo', 'Cancel'),
 					array('action' => 'index'),
@@ -66,4 +65,4 @@ echo $this->Form->create('Language');
 		?>
 	</div>
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end();

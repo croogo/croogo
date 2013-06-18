@@ -65,7 +65,7 @@ $showActions = isset($showActions) ? $showActions : true;
 						$actions = array();
 
 						if (isset($this->request->query['chooser'])):
-							$title = isset($item[$modelClass]['title']) ? $item[$modelClass]['title']  : null;
+							$title = isset($item[$modelClass]['title']) ? $item[$modelClass]['title'] : null;
 							$actions[] = $this->Croogo->adminRowAction(__d('croogo', 'Choose'), '#', array(
 								'class' => 'item-choose',
 								'data-chooser_type' => $modelClass,

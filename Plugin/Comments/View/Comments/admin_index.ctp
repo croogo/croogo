@@ -1,5 +1,4 @@
 <?php
-
 if (!$this->request->is('ajax') && isset($this->request->params['admin'])):
 	$this->Html->script('Comments.admin', array('inline' => false));
 endif;

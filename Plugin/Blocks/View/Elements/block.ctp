@@ -7,7 +7,7 @@ if ($block['Block']['class'] != null) {
 }
 ?>
 <div id="block-<?php echo $b['id']; ?>" class="<?php echo $class; ?>">
-<?php if ($b['show_title'] == 1):  ?>
+<?php if ($b['show_title'] == 1): ?>
 	<h3><?php echo $b['title']; ?></h3>
 <?php endif; ?>
 	<div class="block-body">

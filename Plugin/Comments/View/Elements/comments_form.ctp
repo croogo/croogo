@@ -44,7 +44,7 @@
 			}
 
 			if ($type['Type']['comment_captcha']) {
-				echo $this->Recaptcha->display_form();
+				echo $this->Recaptcha->displayForm();
 			}
 		echo $this->Form->end(__d('croogo', 'Post comment'));
 	?>

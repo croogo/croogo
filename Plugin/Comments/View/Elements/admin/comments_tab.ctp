@@ -11,4 +11,3 @@ echo $this->Form->input('comment_status', array(
 	'legend' => false,
 	'label' => true
 ));
-?>

@@ -65,7 +65,7 @@ class ExtrasShell extends Shell {
  * @return void
  **/
 	public function aco_sync() {
-		$this->AclExtras->aco_sync($this->params);
+		$this->AclExtras->acoSync($this->params);
 	}
 
 /**
@@ -75,7 +75,7 @@ class ExtrasShell extends Shell {
  */
 	public function aco_sync_contents() {
 		$this->AclExtras->args = $this->args;
-		$this->AclExtras->aco_update_contents($this->params);
+		$this->AclExtras->acoUpdateContents($this->params);
 	}
 
 /**
@@ -84,7 +84,7 @@ class ExtrasShell extends Shell {
  * @return void
  **/
 	public function aco_update() {
-		$this->AclExtras->aco_update($this->params);
+		$this->AclExtras->acoUpdate($this->params);
 		return true;
 	}
 

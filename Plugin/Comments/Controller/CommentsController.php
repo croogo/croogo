@@ -241,7 +241,7 @@ class CommentsController extends CommentsAppController {
 		}
 
 		// spam protection and captcha
-		$continue = $this->_spam_protection($continue, $type, $node);
+		$continue = $this->_spamProtection($continue, $type, $node);
 		$continue = $this->_captcha($continue, $type, $node);
 		$success = false;
 		if (!empty($this->request->data) && $continue === true) {
@@ -281,7 +281,7 @@ class CommentsController extends CommentsAppController {
  * @return boolean
  * @access protected
  */
-	protected function _spam_protection($continue, $type, $node) {
+	protected function _spamProtection($continue, $type, $node) {
 		if (!empty($this->request->data) &&
 			$type['Type']['comment_spam_protection'] &&
 			$continue === true) {

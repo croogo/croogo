@@ -1,5 +1,4 @@
 <?php
-
 $this->extend('/Common/admin_index');
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
@@ -117,7 +116,7 @@ echo $this->Form->input('user_id', array(
 </fieldset>
 <?php
 
-$script =<<<EOF
+$script = <<<EOF
 $('.chooser').itemChooser({
 	fields: [
 		{ type: "Node", target: '#SettingNodeId', attr: 'data-chooser_id' },

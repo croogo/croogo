@@ -18,7 +18,7 @@ echo $this->Form->create('FileManager', array(
 	<?php $breadcrumb = $this->FileManager->breadcrumb($path); ?>
 	<?php foreach ($breadcrumb as $pathname => $p) : ?>
 		<?php echo $this->FileManager->linkDirectory($pathname, $p); ?>
-			<span class="divider"> <?php echo DS;  ?> </span>
+			<span class="divider"> <?php echo DS; ?> </span>
 	<?php endforeach; ?>
 </div>
 
@@ -58,4 +58,4 @@ echo $this->Form->create('FileManager', array(
 	</div>
 
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end();

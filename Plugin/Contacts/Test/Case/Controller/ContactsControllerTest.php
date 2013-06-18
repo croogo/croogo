@@ -41,7 +41,7 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 		$this->ContactsController = $this->generate('Contacts.Contacts', array(
 			'methods' => array(
 				'redirect',
-				'_send_email',
+				'_sendEmail',
 			),
 			'components' => array(
 				'Auth' => array('user'),
@@ -133,12 +133,12 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 	public function testView() {
 		$Contacts = $this->generate('Contacts', array(
 			'methods' => array(
-				'_send_email'
+				'_sendEmail'
 			),
 		));
 		$Contacts->plugin = 'Contacts';
 		$Contacts->expects($this->once())
-			->method('_send_email')
+			->method('_sendEmail')
 			->will($this->returnValue(true));
 		$this->controller->request->params['action'] = 'view';
 		$this->controller->request->params['url']['url'] = 'contacts/contacts/view/contact';

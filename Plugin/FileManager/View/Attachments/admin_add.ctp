@@ -1,12 +1,10 @@
 <?php
-
 $this->extend('/Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Attachments'), array('plugin' => 'file_manager', 'controller' => 'attachments', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Upload'), $this->here)
-;
+	->addCrumb(__d('croogo', 'Upload'), $this->here);
 
 $formUrl = array('controller' => 'attachments', 'action' => 'add');
 if (isset($this->params['named']['editor'])) {
@@ -52,4 +50,4 @@ echo $this->Form->create('Attachment', array('url' => $formUrl, 'type' => 'file'
 	</div>
 
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end();

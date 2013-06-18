@@ -1,5 +1,4 @@
 <?php
-
 $this->extend('/Common/admin_edit');
 
 $this->Html
@@ -77,9 +76,9 @@ echo $this->Form->create('Attachment', array('url' => array('controller' => 'att
 				__d('croogo', 'Cancel'),
 				$redirect,
 				array('class' => 'cancel', 'button' => 'danger')
-			).
+			) .
 			$this->Html->endBox();
 	?>
 	</div>
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end();

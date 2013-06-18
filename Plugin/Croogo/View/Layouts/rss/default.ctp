@@ -10,4 +10,3 @@ if (!isset($channel['title'])) {
 <?php
 $channelEl = $this->Rss->channel(array(), $channel, $items);
 echo $this->Rss->document(array(), $channelEl);
-?>

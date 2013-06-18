@@ -1,5 +1,6 @@
 <?php
 App::uses('AppHelper', 'View/Helper');
+
 /**
  * Example Helper
  *

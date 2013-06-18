@@ -50,4 +50,4 @@ echo $this->Form->create('Plugin', array(
 	</div>
 
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end();

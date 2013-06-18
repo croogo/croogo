@@ -40,4 +40,4 @@ if (!empty($searchFields)):
 	echo $this->Form->end();
 ?>
 </div>
-<?php endif; ?>
+<?php endif;

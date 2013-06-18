@@ -13,4 +13,4 @@ a:hover { text-decoration: underline; color:#44E; }
 <p><?php echo __d('croogo', 'Site down for maintenance.'); ?></p>
 </body>
 </html>
-<?php Configure::write('debug', 0); ?>
+<?php Configure::write('debug', 0);

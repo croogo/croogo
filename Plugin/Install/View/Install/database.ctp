@@ -72,4 +72,4 @@ echo $this->Form->create(false, array(
 <div class="form-actions">
 	<?php echo $this->Form->submit('Submit', array('button' => 'success', 'div' => 'input submit')); ?>
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end();

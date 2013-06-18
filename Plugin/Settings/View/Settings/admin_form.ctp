@@ -87,4 +87,4 @@ echo $this->Form->create('Setting');
 	</div>
 
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end();

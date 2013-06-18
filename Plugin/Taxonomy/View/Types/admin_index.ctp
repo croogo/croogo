@@ -5,4 +5,3 @@ $this->Html
 	->addCrumb(__d('croogo', 'Types'), $this->here);
 
 echo $this->extend('/Common/admin_index');
-?>

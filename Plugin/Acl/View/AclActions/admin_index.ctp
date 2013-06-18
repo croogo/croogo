@@ -1,5 +1,4 @@
 <?php
-
 $this->extend('/Common/admin_index');
 $this->name = 'acos';
 $this->Html->script('/acl/js/acl_permissions.js', false);

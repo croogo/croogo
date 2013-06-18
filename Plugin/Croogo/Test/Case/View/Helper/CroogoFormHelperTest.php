@@ -4,7 +4,7 @@ App::uses('CroogoFormHelper', 'Croogo.View/Helper');
 App::uses('Controller', 'Controller');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
-class CroogoFormHelperTest extends CroogoTestCase{
+class CroogoFormHelperTest extends CroogoTestCase {
 
 	public function setUp() {
 		$controller = null;

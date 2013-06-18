@@ -1,11 +1,9 @@
 <?php
-
 $this->extend('/Common/admin_index');
 
 $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'prefix', 'Site'))
 	->addCrumb(__d('croogo', 'Languages'), $this->here);
-
 ?>
 <div class="row-fluid">
 	<div class="span12">
