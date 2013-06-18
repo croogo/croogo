@@ -134,7 +134,7 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 </div>
 <?php echo $this->Form->end(); ?>
 <?php
-$script =<<<EOF
+$script = <<<EOF
 $('.link.chooser').itemChooser({
 	fields: [{ type: "Node", target: "#LinkLink", attr: "rel" }]
 });

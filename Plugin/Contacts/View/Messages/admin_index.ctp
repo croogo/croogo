@@ -17,7 +17,7 @@ if (isset($criteria['Message.status'])) {
 	}
 }
 
-$script =<<<EOF
+$script = <<<EOF
 $(".comment-view").on("click", function() {
 	var el= \$(this)
 	var modal = \$('#comment-modal');

@@ -117,7 +117,7 @@ echo $this->Form->input('user_id', array(
 </fieldset>
 <?php
 
-$script =<<<EOF
+$script = <<<EOF
 $('.chooser').itemChooser({
 	fields: [
 		{ type: "Node", target: '#SettingNodeId', attr: 'data-chooser_id' },

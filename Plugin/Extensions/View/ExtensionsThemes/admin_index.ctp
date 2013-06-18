@@ -64,7 +64,7 @@ $this->Html
 			<?php
 				$hasAvailable = false;
 				$themesData = Sanitize::clean($themesData);
-				foreach ($themesData AS $themeAlias => $theme):
+				foreach ($themesData as $themeAlias => $theme):
 					$isAdminOnly = (!isset($theme['adminOnly']) || $theme['adminOnly'] != 'true');
 					$isDefault = !($themeAlias == 'default' && !Configure::read('Site.theme'));
 					$display = $themeAlias != Configure::read('Site.theme') && $isAdminOnly && $isDefault;

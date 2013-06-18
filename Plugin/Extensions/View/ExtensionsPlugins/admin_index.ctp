@@ -43,7 +43,7 @@ $this->Html
 		$toggleText = $pluginData['active'] ? __d('croogo', 'Deactivate') : __d('croogo', 'Activate');
 		$statusIcon = $this->Html->status($pluginData['active']);
 
-		$actions  = array();
+		$actions = array();
 		if (!in_array($pluginAlias, $bundledPlugins)):
 			$icon = $pluginData['active'] ? 'off' : 'bolt';
 			$actions[] = $this->Croogo->adminRowAction('',

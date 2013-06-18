@@ -30,7 +30,7 @@
 
 		$rows = array();
 		foreach ($translations as $translation) {
-			$actions  = $this->Html->link(__d('croogo', 'Edit'), array('action' => 'translate', $id, 'locale' => $translation[$runtimeModelAlias]['locale']));
+			$actions = $this->Html->link(__d('croogo', 'Edit'), array('action' => 'translate', $id, 'locale' => $translation[$runtimeModelAlias]['locale']));
 			$actions .= ' ' . $this->Form->postLink(__d('croogo', 'Delete'), array('action' => 'delete_translation', $translation[$runtimeModelAlias]['locale'], $id), null, __d('croogo', 'Are you sure?'));
 
 			$rows[] = array(

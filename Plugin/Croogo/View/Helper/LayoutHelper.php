@@ -382,7 +382,7 @@ class LayoutHelper extends AppHelper {
 		}
 		return $content;
 	}
-	
+
 /**
  * Filter content for Menus
  *
@@ -451,8 +451,6 @@ class LayoutHelper extends AppHelper {
 		}
 		return $content;
 	}
-
-
 
 /**
  * Hook

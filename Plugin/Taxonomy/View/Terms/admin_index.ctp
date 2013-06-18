@@ -46,7 +46,7 @@ $this->Html
 <thead>
 	<?php echo $tableHeaders; ?>
 </thead>
-<?php	
+<?php
 	$rows = array();
 	foreach ($termsTree as $id => $title):
 		$actions = array();
