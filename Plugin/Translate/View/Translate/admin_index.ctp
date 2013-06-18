@@ -2,7 +2,6 @@
 $this->extend('/Common/admin_index');
 $this->name = 'translate';
 
-
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Translate'), $this->here)

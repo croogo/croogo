@@ -1,5 +1,4 @@
 <?php
-
 $this->extend('/Common/admin_edit');
 
 $this->Html
@@ -20,7 +19,7 @@ if ($this->request->params['action'] == 'admin_add') {
 <?php $this->start('actions'); ?>
 <?php if ($this->request->params['action'] == 'admin_edit'): ?>
 <?php
-	echo $this->Croogo->adminAction(__d('croogo', 'Reset password'), array('action' => 'reset_password', $this->params['pass']['0']));
+echo $this->Croogo->adminAction(__d('croogo', 'Reset password'), array('action' => 'reset_password', $this->params['pass']['0']));
 ?>
 <?php endif; ?>
 <?php $this->end(); ?>
@@ -86,4 +85,4 @@ if ($this->request->params['action'] == 'admin_add') {
 	</div>
 
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end();

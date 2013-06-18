@@ -1,5 +1,4 @@
 <?php
-
 $dashboardUrl = array(
 	'admin' => true,
 	'plugin' => 'settings',
@@ -31,7 +30,7 @@ $dashboardUrl = array(
 				<ul class="nav pull-right">
 					<li>
 						<a href="#">
-							<?php echo sprintf(__d('croogo', "You are logged in as: %s"), $this->Session->read('Auth.User.username')); ?>
+							<?php echo __d('croogo', "You are logged in as: %s", $this->Session->read('Auth.User.username')); ?>
 						</a>
 					</li>
 					<li>

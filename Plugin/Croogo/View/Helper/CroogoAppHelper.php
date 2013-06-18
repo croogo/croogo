@@ -1,5 +1,4 @@
 <?php
-
 App::uses('Helper', 'View');
 
 /**

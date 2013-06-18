@@ -55,4 +55,3 @@ if ($check) {
 	$out = '<p>' . __d('croogo', 'Installation cannot continue as minimum requirements are not met.') . '</p>';
 }
 echo $this->Html->div('form-actions', $out);
-?>

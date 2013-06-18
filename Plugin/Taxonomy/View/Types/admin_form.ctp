@@ -1,5 +1,4 @@
 <?php
-
 $this->extend('/Common/admin_edit');
 
 $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
@@ -128,4 +127,4 @@ echo $this->Form->create('Type');
 	?>
 	</div>
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end();

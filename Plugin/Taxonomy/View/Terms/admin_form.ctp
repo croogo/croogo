@@ -79,4 +79,4 @@ echo $this->Form->create('Term', array(
 	?>
 	</div>
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end();

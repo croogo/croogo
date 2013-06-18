@@ -20,4 +20,3 @@ echo $this->Html->link(
 	array('action' => 'add_meta'),
 	array('class' => 'add-meta')
 );
-?>

@@ -1,5 +1,4 @@
 <?php
-
 $this->extend('/Common/admin_edit');
 
 $this->Html
@@ -66,4 +65,4 @@ if ($this->request->params['action'] == 'admin_add') {
 	</div>
 
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end();

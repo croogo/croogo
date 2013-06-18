@@ -34,6 +34,4 @@ echo $this->Form->create(null, array(
 	<?php echo $this->Form->submit(__d('croogo', 'Save'), array('class' => 'btn btn-success', 'div' => false)); ?>
 	<?php echo $this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array( 'class' => 'btn cancel')); ?>
 </div>
-<?php
-	echo $this->Form->end();
-?>
+<?php echo $this->Form->end();

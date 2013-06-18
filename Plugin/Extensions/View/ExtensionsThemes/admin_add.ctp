@@ -1,5 +1,4 @@
 <?php
-
 $this->Html
 	->addCrumb($this->Html->icon('home'), '/admin')
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
@@ -54,4 +53,4 @@ echo $this->Form->create('Theme', array(
 	</div>
 
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->Form->end();

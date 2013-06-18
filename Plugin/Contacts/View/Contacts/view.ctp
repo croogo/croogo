@@ -4,7 +4,7 @@
 	<?php echo $contact['Contact']['body']; ?>
 	</div>
 
-	<?php if ($contact['Contact']['message_status']):  ?>
+	<?php if ($contact['Contact']['message_status']): ?>
 	<div class="contact-form">
 	<?php
 		echo $this->Form->create('Message', array(

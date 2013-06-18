@@ -44,7 +44,7 @@
 
 	<?php echo $this->element('admin/footer'); ?>
 	<?php
-	$script =<<<EOF
+	$script = <<<EOF
 $('[rel=tooltip],input[data-title]').tooltip();
 EOF;
 	$this->Js->buffer($script);

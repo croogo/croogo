@@ -1,5 +1,4 @@
 <?php
-
 $this->extend('/Common/admin_edit');
 $this->Html->script(array('Menus.links'), false);
 
@@ -134,7 +133,7 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 </div>
 <?php echo $this->Form->end(); ?>
 <?php
-$script =<<<EOF
+$script = <<<EOF
 $('.link.chooser').itemChooser({
 	fields: [{ type: "Node", target: "#LinkLink", attr: "rel" }]
 });

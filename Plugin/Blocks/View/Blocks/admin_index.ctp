@@ -1,5 +1,4 @@
 <?php
-
 $this->extend('/Common/admin_index');
 
 $this->Html
@@ -107,4 +106,4 @@ $chooser = isset($this->request->query['chooser']);
 		</div>
 	</div>
 </div>
-<?php endif; ?>
+<?php endif;

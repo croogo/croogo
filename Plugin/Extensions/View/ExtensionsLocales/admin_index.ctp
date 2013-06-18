@@ -1,5 +1,4 @@
 <?php
-
 $this->extend('Common/admin_index');
 
 $this->Html
@@ -29,9 +28,9 @@ $this->Html
 		<?php echo $tableHeaders; ?>
 	</thead>
 
-<?php 
+<?php
 	$rows = array();
-	foreach ($locales AS $locale):
+	foreach ($locales as $locale):
 		$actions = array();
 
 		$actions[] = $this->Croogo->adminRowAction('',
