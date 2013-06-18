@@ -176,28 +176,49 @@ class TaxonomiesComponent extends Component {
  */
 	public function _hookLinkChoosers(){
 
-		$this->vocabulary = ClassRegistry::init('Vocabulary');
-		$types_vocabularies = $this->vocabulary->query("SELECT Vocabulary.id, Vocabulary.alias, Vocabulary.title, Type.id, Type.title, Type.alias FROM `types_vocabularies` tv INNER JOIN `vocabularies` Vocabulary  ON Vocabulary.id = tv.vocabulary_id INNER JOIN `types` Type ON tv.type_id=Type.id");
+		$this->Vocabulary = ClassRegistry::init('Taxonomy.Vocabulary');
+
+		$vocabularies = $this->Vocabulary->find('all', 
+			array(
+			    'joins' => array(
+				array(
+				    'table' => 'types_vocabularies',
+				    'alias' => 'TypesVocabulary',
+				    'conditions' => 'Vocabulary.id = TypesVocabulary.vocabulary_id'
+				),
+				array(
+				    'table' => 'types',
+				    'alias' => 'Type',
+				    'conditions' => 'TypesVocabulary.type_id = Type.id'
+				)
+			    )
+			)
+		);
+
+		print_r($types_vocabularies);
+
 
 		$linkChoosers = array();
-		foreach($types_vocabularies as $result){
-			$title = $result['Type']['title'].' '.$result['Vocabulary']['title'];
-			$linkChoosers[$title] = array(
-			'route'=>array(
-				'plugin'=>'taxonomy',
-				'controller'=>'terms',
-				'action'=>'index',
-				$result['Vocabulary']['id'],
-				'?'=>array(
-					'type'=>$result['Type']['alias'],
-					'chooser' => 1,
-					'KeepThis' => true,
-					'TB_iframe' => true,
-					'height' => 400,
-					'width' => 600
+		foreach($vocabularies as $vocabulary){
+			foreach($vocabulary['Type'] as $type){
+				$title = $type['title'].' '.$vocabulary['Vocabulary']['title'];
+				$linkChoosers[$title] = array(
+				'route'=>array(
+					'plugin'=>'taxonomy',
+					'controller'=>'terms',
+					'action'=>'index',
+					$vocabulary['Vocabulary']['id'],
+					'?'=>array(
+						'type'=>$type['alias'],
+						'chooser' => 1,
+						'KeepThis' => true,
+						'TB_iframe' => true,
+						'height' => 400,
+						'width' => 600
+						)
 					)
-				)
-			);
+				);
+			}
 		}
 		Croogo::mergeConfig('Menus.linkChoosers',$linkChoosers);
 	}
