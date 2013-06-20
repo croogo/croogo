@@ -48,6 +48,7 @@ class NodesComponent extends Component {
 				),
 			), false);
 		}
+
 	}
 
 /**
@@ -60,6 +61,9 @@ class NodesComponent extends Component {
 		if (!isset($controller->request->params['admin']) && !isset($controller->request->params['requested'])) {
 			$this->nodes();
 		}
+
+
+		$this->_hookLinkChoosers($controller);
 	}
 
 /**
@@ -101,6 +105,43 @@ class NodesComponent extends Component {
 	}
 
 /**
+ * hookLinkChoosers
+ *
+ * Adds link chooosers to the add link page
+ *
+ * @return void
+ */
+
+	public function _hookLinkChoosers(Controller $controller){
+			$type = ClassRegistry::init('Type');
+			$types = $type->find('list',array('fields'=>array('alias','title')));
+
+			$linkChoosers = array();
+
+			foreach($types as $alias => $type){
+
+				$linkChoosers[$type] = array(
+					'route'=>array(
+						'plugin'=>'nodes',
+						'controller'=>'nodes',
+						'action'=>'index',
+						'?'=>array(
+							'type'=>$alias,
+							'chooser' => 1,
+							'KeepThis' => true,
+							'TB_iframe' => true,
+							'height' => 400,
+							'width' => 600
+							)
+						)
+					);
+			}
+
+			
+			Croogo::mergeConfig('Menus.linkChoosers',$linkChoosers);
+	}
+
+/**
  * beforeRender
  *
  * @param object $controller instance of controller
@@ -108,6 +149,8 @@ class NodesComponent extends Component {
  */
 	public function beforeRender(Controller $controller) {
 		$controller->set('nodes_for_layout', $this->nodesForLayout);
+
+		
 	}
 
 }

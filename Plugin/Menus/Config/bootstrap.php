@@ -1,4 +1,5 @@
-<?php
+
+		<?php
 
 CroogoCache::config('croogo_menus', array_merge(
 	Configure::read('Cache.defaultConfig'),

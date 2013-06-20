@@ -66,23 +66,14 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 				echo $this->Form->input('link', array(
 					'label' => __d('croogo', 'Link'),
 				));
-				echo $this->Html->link(__d('croogo', 'Link to a Node'), Router::url(array(
-					'plugin' => 'nodes',
-					'controller' => 'nodes',
-					'action' => 'index',
-					'?' => array(
-						'chooser' => 1,
-						'KeepThis' => true,
-						'TB_iframe' => true,
-						'height' => 400,
-						'width' => 600,
-					)), true),
-					array(
-						'class' => 'link chooser',
-					)
-				);
-			?>
+
+				?>
+
+				<?php
+				echo $this->Menus->linkChoosers();
+				?>
 			</div>
+
 
 			<div id="link-access" class="tab-pane">
 			<?php
@@ -136,7 +127,9 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 <?php
 $script = <<<EOF
 $('.link.chooser').itemChooser({
-	fields: [{ type: "Node", target: "#LinkLink", attr: "rel" }]
+	fields: [
+	{ type: "Node", target: "#LinkLink", attr: "rel" }
+	]
 });
 EOF;
 $this->Js->buffer($script);
