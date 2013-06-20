@@ -4,16 +4,16 @@ $this->extend('/Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'Attachments'), $this->here);
+	->addCrumb(__d('croogo', 'Attachments'), '/' . $this->request->url);
 
 ?>
 <table class="table table-striped">
 <?php
 
 	$tableHeaders = $this->Html->tableHeaders(array(
-		$this->Paginator->sort('id'),
+		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		'&nbsp;',
-		$this->Paginator->sort('title'),
+		$this->Paginator->sort('title', __d('croogo', 'Title')),
 		__d('croogo', 'URL'),
 		__d('croogo', 'Actions'),
 	));

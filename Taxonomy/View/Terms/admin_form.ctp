@@ -11,14 +11,14 @@ if ($this->request->params['action'] == 'admin_edit') {
 	$this->Html
 		->addCrumb(__d('croogo', 'Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index'))
 		->addCrumb($vocabulary['Vocabulary']['title'], array('plugin' => 'taxonomy', 'controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id']))
-		->addCrumb($this->request->data['Term']['title'], $this->here);
+		->addCrumb($this->request->data['Term']['title'], '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'admin_add') {
 	$this->Html
 		->addCrumb(__d('croogo', 'Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index', $vocabulary['Vocabulary']['id'],))
 		->addCrumb($vocabulary['Vocabulary']['title'], array('plugin' => 'taxonomy', 'controller' => 'terms', 'action' => 'index'))
-		->addCrumb(__d('croogo', 'Add'), $this->here);
+		->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
 echo $this->Form->create('Term', array(

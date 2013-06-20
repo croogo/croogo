@@ -5,7 +5,7 @@ $this->name = 'extensions-plugins';
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Plugins'), $this->here);
+	->addCrumb(__d('croogo', 'Plugins'), '/' . $this->request->url);
 
 ?>
 <?php $this->start('actions'); ?>
@@ -43,7 +43,7 @@ $this->Html
 		$toggleText = $pluginData['active'] ? __d('croogo', 'Deactivate') : __d('croogo', 'Activate');
 		$statusIcon = $this->Html->status($pluginData['active']);
 
-		$actions  = array();
+		$actions = array();
 		if (!in_array($pluginAlias, $bundledPlugins)):
 			$icon = $pluginData['active'] ? 'off' : 'bolt';
 			$actions[] = $this->Croogo->adminRowAction('',

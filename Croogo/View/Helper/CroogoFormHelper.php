@@ -98,7 +98,12 @@ class CroogoFormHelper extends FormHelper {
 	public function input($fieldName, $options = array()) {
 		$options = $this->_placeholderOptions($fieldName, $options);
 
-		if (empty($options['title']) && empty($options['label']) && !empty($options['placeholder']) && empty($options['tooltip'])) {
+		// Automatic tooltip when label is 'false'. Leftover from 1.5.0.
+		//
+		// TODO:
+		// Remove this behavior in 1.6.x, ie: tooltip needs to be implicitly
+		// requested by caller.
+		if (empty($options['title']) && empty($options['label']) && !empty($options['placeholder']) && !isset($options['tooltip'])) {
 			$options['tooltip'] = $options['placeholder'];
 		}
 

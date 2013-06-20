@@ -65,14 +65,14 @@ $this->Html
 <table class="table permission-table">
 <?php
 	$roleTitles = array_values($roles);
-	$roleIds   = array_keys($roles);
+	$roleIds = array_keys($roles);
 
 	$tableHeaders = array(
 		__d('croogo', 'Id'),
 		__d('croogo', 'Alias'),
 	);
 	$tableHeaders = array_merge($tableHeaders, $roleTitles);
-	$tableHeaders =  $this->Html->tableHeaders($tableHeaders);
+	$tableHeaders = $this->Html->tableHeaders($tableHeaders);
 ?>
 	<thead>
 		<?php echo $tableHeaders; ?>

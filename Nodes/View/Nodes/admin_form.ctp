@@ -11,12 +11,12 @@ if ($this->request->params['action'] == 'admin_add') {
 	$formUrl = array('action' => 'add', $typeAlias);
 	$this->Html
 		->addCrumb(__d('croogo', 'Create'), array('controller' => 'nodes', 'action' => 'create'))
-		->addCrumb($type['Type']['title'], $this->here);
+		->addCrumb($type['Type']['title'], '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'admin_edit') {
 	$formUrl = array('action' => 'edit');
-	$this->Html->addCrumb($this->request->data['Node']['title'], $this->here);
+	$this->Html->addCrumb($this->request->data['Node']['title'], '/' . $this->request->url);
 }
 
 echo $this->Form->create('Node', array('url' => $formUrl));
@@ -43,16 +43,13 @@ echo $this->Form->create('Node', array('url' => $formUrl));
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'label' => false,
 					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('slug', array(
-					'label' => false,
 					'class' => 'span10 slug',
 					'label' => __d('croogo', 'Slug'),
 				));
 				echo $this->Form->input('excerpt', array(
-					'label' => false,
 					'label' => __d('croogo', 'Excerpt'),
 				));
 				echo $this->Form->input('body', array(

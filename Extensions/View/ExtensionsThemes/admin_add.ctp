@@ -4,7 +4,7 @@ $this->Html
 	->addCrumb($this->Html->icon('home'), '/admin')
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Themes'), array('plugin' => 'extensions', 'controller' => 'extensions_themes', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Upload'), $this->here);
+	->addCrumb(__d('croogo', 'Upload'), '/' . $this->request->url);
 
 ?>
 <h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>

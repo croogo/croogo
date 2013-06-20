@@ -6,7 +6,7 @@ $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Comments'), array('plugin' => 'comments', 'controller' => 'comments', 'action' => 'index'))
-	->addCrumb($this->request->data['Comment']['id'], $this->here);
+	->addCrumb($this->request->data['Comment']['id'], '/' . $this->request->url);
 
 echo $this->Form->create('Comment');
 

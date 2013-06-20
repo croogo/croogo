@@ -3,7 +3,7 @@
 
 $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Content'), array('controller' => 'nodes', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Create'), $this->here);
+	->addCrumb(__d('croogo', 'Create'), '/' . $this->request->url);
 
 ?>
 <div class="row-fluid">

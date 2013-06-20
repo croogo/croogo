@@ -4,7 +4,7 @@ App::uses('CroogoFormHelper', 'Croogo.View/Helper');
 App::uses('Controller', 'Controller');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
-class CroogoFormHelperTest extends CroogoTestCase{
+class CroogoFormHelperTest extends CroogoTestCase {
 
 	public function setUp() {
 		$controller = null;
@@ -91,6 +91,53 @@ class CroogoFormHelperTest extends CroogoTestCase{
 			'label' => array('for' => 'username'),
 			'Username',
 			'/label',
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+	}
+
+/**
+ * testInputAutoTooltips
+ */
+	public function testInputAutoTooltips() {
+		// automatic tooltips
+		$result = $this->CroogoForm->input('username', array(
+			'label' => false,
+			'placeholder' => 'Username',
+		));
+		$expected = array(
+			'div' => array(
+				'class',
+			),
+			'input' => array(
+				'name',
+				'placeholder',
+				'data-placement',
+				'data-trigger',
+				'data-title',
+				'type',
+				'id',
+			),
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+
+		// disable auto tooltips
+		$result = $this->CroogoForm->input('username', array(
+			'label' => false,
+			'placeholder' => 'Username',
+			'tooltip' => false,
+		));
+		$expected = array(
+			'div' => array(
+				'class',
+			),
+			'input' => array(
+				'name',
+				'placeholder',
+				'type',
+				'id',
+			),
 			'/div',
 		);
 		$this->assertTags($result, $expected);

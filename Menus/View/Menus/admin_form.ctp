@@ -7,11 +7,11 @@ $this->Html
 	->addCrumb(__d('croogo', 'Menus'), array('plugin' => 'menus', 'controller' => 'menus', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->request->data['Menu']['title'], $this->here);
+	$this->Html->addCrumb($this->request->data['Menu']['title'], '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'admin_add') {
-	$this->Html->addCrumb(__d('croogo', 'Add'), $this->here);
+	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
 echo $this->Form->create('Menu');
@@ -37,15 +37,12 @@ echo $this->Form->create('Menu');
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'label' => false,
 					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('alias', array(
-					'label' => false,
 					'label' => __d('croogo', 'Alias'),
 				));
 				echo $this->Form->input('description', array(
-					'label' => false,
 					'label' => __d('croogo', 'Description'),
 				));
 			?>
@@ -54,7 +51,6 @@ echo $this->Form->create('Menu');
 			<div id="menu-misc" class="tab-pane">
 			<?php
 				echo $this->Form->input('params', array(
-					'label' => false,
 					'label' => __d('croogo', 'Params'),
 				));
 			?>

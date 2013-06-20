@@ -8,7 +8,7 @@ $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Locales'), array('plugin' => 'extensions', 'controller' => 'extensions_locales', 'action' => 'index'))
-	->addCrumb($this->params['pass'][0], $this->here);
+	->addCrumb($this->params['pass'][0], '/' . $this->request->url);
 
 echo $this->Form->create('Locale', array(
 	'url' => array(
@@ -34,7 +34,6 @@ echo $this->Form->create('Locale', array(
 			<div class="locale-content" class="tab-pane">
 			<?php
 				echo $this->Form->input('Locale.content', array(
-					'label' => false,
 					'label' => __d('croogo', 'Content'),
 					'data-placement' => 'top',
 					'value' => $content,

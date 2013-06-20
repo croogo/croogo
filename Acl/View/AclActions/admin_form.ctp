@@ -8,11 +8,11 @@ $this->Html
 	->addCrumb(__d('croogo', 'Actions'), array('plugin' => 'acl', 'controller' => 'acl_actions', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->data['Aco']['id'] . ': ' . $this->data['Aco']['alias'], $this->here);
+	$this->Html->addCrumb($this->data['Aco']['id'] . ': ' . $this->data['Aco']['alias'], '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'admin_add') {
-	$this->Html->addCrumb(__d('croogo', 'Add'), $this->here);
+	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
 ?>

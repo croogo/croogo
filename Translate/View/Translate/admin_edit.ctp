@@ -4,7 +4,7 @@ $this->set('className', 'translate');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'Translate'), $this->here)
+	->addCrumb(__d('croogo', 'Translate'), '/' . $this->request->url)
 	->addCrumb($modelAlias)
 	->addCrumb($this->data[$modelAlias]['title']);
 

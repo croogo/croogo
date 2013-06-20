@@ -13,7 +13,7 @@ if ($this->request->params['action'] == 'admin_add') {
 			'plugin' => 'menus', 'controller' => 'links', 'action' => 'index',
 			'?' => array('menu_id' => $menuId))
 		)
-		->addCrumb(__d('croogo', 'Add'), $this->here);
+		->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 	$formUrl = array(
 		'controller' => 'links', 'action' => 'add', 'menu' => $menuId
 	);
@@ -24,7 +24,7 @@ if ($this->request->params['action'] == 'admin_edit') {
 		->addCrumb($this->data['Menu']['title'], array(
 			'plugin' => 'menus', 'controller' => 'links', 'action' => 'index',
 			'?' => array('menu_id' => $this->data['Menu']['id'])))
-		->addCrumb($this->request->data['Link']['title'], $this->here);
+		->addCrumb($this->request->data['Link']['title'], '/' . $this->request->url);
 	$formUrl = array(
 		'controller' => 'links', 'action' => 'edit', 'menu' => $menuId
 	);
@@ -61,11 +61,9 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
-					'label' => false,
 					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('link', array(
-					'label' => false,
 					'label' => __d('croogo', 'Link'),
 				));
 				echo $this->Html->link(__d('croogo', 'Link to a Node'), Router::url(array(
@@ -97,23 +95,18 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 			<div id="link-misc" class="tab-pane">
 			<?php
 				echo $this->Form->input('class', array(
-					'label' => false,
 					'label' => __d('croogo', 'Class'),
 				));
 				echo $this->Form->input('description', array(
-					'label' => false,
 					'label' => __d('croogo', 'Description'),
 				));
 				echo $this->Form->input('rel', array(
-					'label' => false,
 					'label' => __d('croogo', 'Rel'),
 				));
 				echo $this->Form->input('target', array(
-					'label' => false,
 					'label' => __d('croogo', 'Target'),
 				));
 				echo $this->Form->input('params', array(
-					'label' => false,
 					'label' => __d('croogo', 'Params'),
 				));
 			?>
@@ -141,7 +134,7 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 </div>
 <?php echo $this->Form->end(); ?>
 <?php
-$script =<<<EOF
+$script = <<<EOF
 $('.link.chooser').itemChooser({
 	fields: [{ type: "Node", target: "#LinkLink", attr: "rel" }]
 });

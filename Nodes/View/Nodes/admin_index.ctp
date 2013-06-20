@@ -4,7 +4,7 @@ $this->Html->script(array('Nodes.nodes'), false);
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'Content'), $this->here);
+	->addCrumb(__d('croogo', 'Content'), '/' . $this->request->url);
 
 ?>
 <?php $this->start('actions'); ?>
@@ -33,13 +33,13 @@ echo $this->Form->create(
 	<div class="span12">
 		<table class="table table-striped">
 		<?php
-			$tableHeaders =  $this->Html->tableHeaders(array(
+			$tableHeaders = $this->Html->tableHeaders(array(
 				'',
-				$this->Paginator->sort('id'),
-				$this->Paginator->sort('title'),
-				$this->Paginator->sort('type'),
-				$this->Paginator->sort('user_id'),
-				$this->Paginator->sort('status'),
+				$this->Paginator->sort('id', __d('croogo', 'Id')),
+				$this->Paginator->sort('title', __d('croogo', 'Title')),
+				$this->Paginator->sort('type', __d('croogo', 'Type')),
+				$this->Paginator->sort('user_id', __d('croogo', 'User')),
+				$this->Paginator->sort('status', __d('croogo', 'Status')),
 				''
 			));
 		?>
@@ -50,7 +50,7 @@ echo $this->Form->create(
 			<tbody>
 			<?php foreach ($nodes as $node): ?>
 				<tr>
-					<td><?php echo $this->Form->checkbox('Node.'.$node['Node']['id'].'.id'); ?></td>
+					<td><?php echo $this->Form->checkbox('Node.' . $node['Node']['id'] . '.id'); ?></td>
 					<td><?php echo $node['Node']['id']; ?></td>
 					<td>
 						<span>
