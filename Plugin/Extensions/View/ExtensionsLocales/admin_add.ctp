@@ -3,7 +3,7 @@ $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Locales'), array('plugin' => 'extensions', 'controller' => 'extensions_locales', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Upload'), $this->here);
+	->addCrumb(__d('croogo', 'Upload'), '/' . $this->request->url);
 
 echo $this->Form->create('Locale', array(
 	'url' => array(

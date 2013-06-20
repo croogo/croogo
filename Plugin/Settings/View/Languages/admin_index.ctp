@@ -4,7 +4,7 @@ $this->extend('/Common/admin_index');
 
 $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'prefix', 'Site'))
-	->addCrumb(__d('croogo', 'Languages'), $this->here);
+	->addCrumb(__d('croogo', 'Languages'), '/' . $this->request->url);
 
 ?>
 <div class="row-fluid">

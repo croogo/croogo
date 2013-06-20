@@ -4,7 +4,7 @@ $this->extend('/Common/admin_index');
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb('Example', array('controller' => 'example', 'action' => 'index'))
-	->addCrumb('RTE Example', $this->here);
+	->addCrumb('RTE Example', '/' . $this->request->url);
 
 echo $this->Form->create('Example');
 

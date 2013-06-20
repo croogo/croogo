@@ -2,7 +2,7 @@
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'File Manager'), array('plugin' => 'file_manager', 'controller' => 'file_manager', 'action' => 'browse'))
-	->addCrumb(__d('croogo', 'Create Directory'), $this->here);
+	->addCrumb(__d('croogo', 'Create Directory'), '/' . $this->request->url);
 
 echo $this->Form->create('FileManager', array(
 	'url' => $this->Html->url(array(

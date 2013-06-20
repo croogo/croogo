@@ -11,12 +11,12 @@ if ($this->request->params['action'] == 'admin_add') {
 	$formUrl = array('action' => 'add', $typeAlias);
 	$this->Html
 		->addCrumb(__d('croogo', 'Create'), array('controller' => 'nodes', 'action' => 'create'))
-		->addCrumb($type['Type']['title'], $this->here);
+		->addCrumb($type['Type']['title'], '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'admin_edit') {
 	$formUrl = array('action' => 'edit');
-	$this->Html->addCrumb($this->request->data['Node']['title'], $this->here);
+	$this->Html->addCrumb($this->request->data['Node']['title'], '/' . $this->request->url);
 }
 
 echo $this->Form->create('Node', array('url' => $formUrl));

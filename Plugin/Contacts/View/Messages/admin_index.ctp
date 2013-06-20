@@ -9,10 +9,10 @@ $this->Html
 
 if (isset($criteria['Message.status'])) {
 	if ($criteria['Message.status'] == '1') {
-		$this->Html->addCrumb(__d('croogo', 'Read'), $this->here);
+		$this->Html->addCrumb(__d('croogo', 'Read'), '/' . $this->request->url);
 		$this->viewVars['title_for_layout'] = __d('croogo', 'Messages: Read');
 	} else {
-		$this->Html->addCrumb(__d('croogo', 'Unread'), $this->here);
+		$this->Html->addCrumb(__d('croogo', 'Unread'), '/' . $this->request->url);
 		$this->viewVars['title_for_layout'] = __d('croogo', 'Messages: Unread');
 	}
 }

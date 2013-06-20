@@ -13,7 +13,7 @@ if ($this->request->params['action'] == 'admin_add') {
 			'plugin' => 'menus', 'controller' => 'links', 'action' => 'index',
 			'?' => array('menu_id' => $menuId))
 		)
-		->addCrumb(__d('croogo', 'Add'), $this->here);
+		->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 	$formUrl = array(
 		'controller' => 'links', 'action' => 'add', 'menu' => $menuId
 	);
@@ -24,7 +24,7 @@ if ($this->request->params['action'] == 'admin_edit') {
 		->addCrumb($this->data['Menu']['title'], array(
 			'plugin' => 'menus', 'controller' => 'links', 'action' => 'index',
 			'?' => array('menu_id' => $this->data['Menu']['id'])))
-		->addCrumb($this->request->data['Link']['title'], $this->here);
+		->addCrumb($this->request->data['Link']['title'], '/' . $this->request->url);
 	$formUrl = array(
 		'controller' => 'links', 'action' => 'edit', 'menu' => $menuId
 	);

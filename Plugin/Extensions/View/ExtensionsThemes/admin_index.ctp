@@ -4,7 +4,7 @@ $this->extend('/Common/admin_index');
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Themes'), $this->here);
+	->addCrumb(__d('croogo', 'Themes'), '/' . $this->request->url);
 
 ?>
 <h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>

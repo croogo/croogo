@@ -2,7 +2,7 @@
 <?php
 $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'index'))
-	->addCrumb($prefix, $this->here);
+	->addCrumb($prefix, '/' . $this->request->url);
 ?>
 <?php
 

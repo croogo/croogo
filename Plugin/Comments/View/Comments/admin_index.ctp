@@ -13,10 +13,10 @@ $this->Html
 
 if (isset($criteria['Comment.status'])) {
 	if ($criteria['Comment.status'] == '1') {
-		$this->Html->addCrumb(__d('croogo', 'Published'), $this->here);
+		$this->Html->addCrumb(__d('croogo', 'Published'), '/' . $this->request->url);
 		$this->viewVars['title_for_layout'] = __d('croogo', 'Comments: Published');
 	} else {
-		$this->Html->addCrumb(__d('croogo', 'Approval'), $this->here);
+		$this->Html->addCrumb(__d('croogo', 'Approval'), '/' . $this->request->url);
 		$this->viewVars['title_for_layout'] = __d('croogo', 'Comments: Approval');
 	}
 }

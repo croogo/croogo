@@ -4,7 +4,7 @@ $this->extend('/Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'Attachments'), $this->here);
+	->addCrumb(__d('croogo', 'Attachments'), '/' . $this->request->url);
 
 ?>
 <table class="table table-striped">

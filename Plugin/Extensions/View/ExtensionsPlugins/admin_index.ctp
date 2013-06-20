@@ -5,7 +5,7 @@ $this->name = 'extensions-plugins';
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Plugins'), $this->here);
+	->addCrumb(__d('croogo', 'Plugins'), '/' . $this->request->url);
 
 ?>
 <?php $this->start('actions'); ?>

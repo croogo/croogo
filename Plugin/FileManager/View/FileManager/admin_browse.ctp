@@ -4,7 +4,7 @@ $this->extend('/Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'File Manager'), $this->here);
+	->addCrumb(__d('croogo', 'File Manager'), '/' . $this->request->url);
 
 ?>
 

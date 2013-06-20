@@ -5,7 +5,7 @@ $this->extend('/Common/admin_index');
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Vocabularies'), $this->here);
+	->addCrumb(__d('croogo', 'Vocabularies'), '/' . $this->request->url);
 
 ?>
 <table class="table table-striped">

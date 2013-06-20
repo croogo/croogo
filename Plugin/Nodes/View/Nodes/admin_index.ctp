@@ -4,7 +4,7 @@ $this->Html->script(array('Nodes.nodes'), false);
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'Content'), $this->here);
+	->addCrumb(__d('croogo', 'Content'), '/' . $this->request->url);
 
 ?>
 <?php $this->start('actions'); ?>
