@@ -174,7 +174,7 @@ class TaxonomiesComponent extends Component {
  *
  * @return void
  */
-	public function _hookLinkChoosers(){
+	protected function _hookLinkChoosers(){
 
 		$this->Vocabulary = ClassRegistry::init('Taxonomy.Vocabulary');
 
@@ -203,7 +203,7 @@ class TaxonomiesComponent extends Component {
 			foreach($vocabulary['Type'] as $type){
 				$title = $type['title'].' '.$vocabulary['Vocabulary']['title'];
 				$linkChoosers[$title] = array(
-				'route'=>array(
+				'url'=>array(
 					'plugin'=>'taxonomy',
 					'controller'=>'terms',
 					'action'=>'index',
