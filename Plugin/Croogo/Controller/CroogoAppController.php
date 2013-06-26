@@ -137,7 +137,7 @@ class CroogoAppController extends Controller {
 			throw new MissingComponentException(array('class' => $aclFilterComponent));
 		}
 		$this->{$aclFilterComponent}->auth();
-		$this->RequestHandler->setContent('json', 'text/x-json');
+		$this->RequestHandler->setContent('json', array('text/x-json', 'application/json'));
 		$this->Security->blackHoleCallback = 'securityError';
 		$this->Security->requirePost('admin_delete');
 
