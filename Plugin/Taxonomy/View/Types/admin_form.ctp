@@ -67,7 +67,7 @@ echo $this->Form->create('Type');
 						'1' => __d('croogo', 'Read only'),
 						'2' => __d('croogo', 'Read/Write'),
 					),
-					'value' => 2,
+					'default' => 2,
 					'legend' => false,
 					'label' => true,
 					'class' => false,
