@@ -104,7 +104,7 @@ class AclPermissionsController extends AclAppController {
  */
 	public function admin_toggle($acoId, $aroId) {
 		if (!$this->RequestHandler->isAjax()) {
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
 		// see if acoId and aroId combination exists
@@ -143,7 +143,7 @@ class AclPermissionsController extends AclAppController {
 		} else {
 			$this->Session->setFlash(join('<br>', $result), 'default', array('class' => 'error'));
 		}
-		$this->redirect($this->referer());
+		return $this->redirect($this->referer());
 	}
 
 }

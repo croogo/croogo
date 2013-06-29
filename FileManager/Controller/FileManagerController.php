@@ -94,7 +94,7 @@ class FileManagerController extends FileManagerAppController {
  * @access public
  */
 	public function admin_index() {
-		$this->redirect(array('action' => 'browse'));
+		return $this->redirect(array('action' => 'browse'));
 	}
 
 /**
@@ -146,11 +146,11 @@ class FileManagerController extends FileManagerAppController {
 			$path = $this->request->query['path'];
 			$absolutefilepath = $path;
 		} else {
-			$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 		if (!$this->_isEditable($path)) {
 			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'default', array('class' => 'error'));
-			$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 		$this->set('title_for_layout', __d('croogo', 'Edit file: %s', $path));
 
@@ -195,7 +195,7 @@ class FileManagerController extends FileManagerAppController {
 			$this->Session->setFlash(__d('croogo', 'File uploaded successfully.'), 'default', array('class' => 'success'));
 			$redirectUrl = Router::url(array('controller' => 'file_manager', 'action' => 'browse'), true) . '?path=' . urlencode($path);
 
-			$this->redirect($redirectUrl);
+			return $this->redirect($redirectUrl);
 		}
 	}
 
@@ -209,12 +209,12 @@ class FileManagerController extends FileManagerAppController {
 		if (!empty($this->request->data['path'])) {
 			$path = $this->request->data['path'];
 		} else {
-			$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 
 		if (!$this->_isDeletable($path)) {
 			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'default', array('class' => 'error'));
-			$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 
 		if (file_exists($path) && unlink($path)) {
@@ -224,9 +224,9 @@ class FileManagerController extends FileManagerAppController {
 		}
 
 		if (isset($_SERVER['HTTP_REFERER'])) {
-			$this->redirect($_SERVER['HTTP_REFERER']);
+			return $this->redirect($_SERVER['HTTP_REFERER']);
 		} else {
-			$this->redirect(array('controller' => 'file_manager', 'action' => 'index'));
+			return $this->redirect(array('controller' => 'file_manager', 'action' => 'index'));
 		}
 
 		exit();
@@ -242,7 +242,7 @@ class FileManagerController extends FileManagerAppController {
 		if (!empty($this->request->data['path'])) {
 			$path = $this->request->data['path'];
 		} else {
-			$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 
 		if (is_dir($path) && rmdir($path)) {
@@ -252,9 +252,9 @@ class FileManagerController extends FileManagerAppController {
 		}
 
 		if (isset($_SERVER['HTTP_REFERER'])) {
-			$this->redirect($_SERVER['HTTP_REFERER']);
+			return $this->redirect($_SERVER['HTTP_REFERER']);
 		} else {
-			$this->redirect(array('controller' => 'file_manager', 'action' => 'index'));
+			return $this->redirect(array('controller' => 'file_manager', 'action' => 'index'));
 		}
 
 		exit;
@@ -270,7 +270,7 @@ class FileManagerController extends FileManagerAppController {
 		if (isset($this->request->query['path'])) {
 			$path = $this->request->query['path'];
 		} else {
-			$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 
 		if (isset($this->request->query['newpath'])) {
@@ -278,9 +278,9 @@ class FileManagerController extends FileManagerAppController {
 		}
 
 		if (isset($_SERVER['HTTP_REFERER'])) {
-			$this->redirect($_SERVER['HTTP_REFERER']);
+			return $this->redirect($_SERVER['HTTP_REFERER']);
 		} else {
-			$this->redirect(array('controller' => 'file_manager', 'action' => 'index'));
+			return $this->redirect(array('controller' => 'file_manager', 'action' => 'index'));
 		}
 	}
 
@@ -296,7 +296,7 @@ class FileManagerController extends FileManagerAppController {
 		if (isset($this->request->query['path'])) {
 			$path = $this->request->query['path'];
 		} else {
-			$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 
 		if (!empty($this->request->data)) {
@@ -304,7 +304,7 @@ class FileManagerController extends FileManagerAppController {
 			if ($this->folder->create($path . $this->request->data['FileManager']['name'])) {
 				$this->Session->setFlash(__d('croogo', 'Directory created successfully.'), 'default', array('class' => 'success'));
 				$redirectUrl = Router::url(array('controller' => 'file_manager', 'action' => 'browse'), true) . '?path=' . urlencode($path);
-				$this->redirect($redirectUrl);
+				return $this->redirect($redirectUrl);
 			} else {
 				$this->Session->setFlash(__d('croogo', 'An error occured'), 'default', array('class' => 'error'));
 			}
@@ -325,14 +325,14 @@ class FileManagerController extends FileManagerAppController {
 		if (isset($this->request->query['path'])) {
 			$path = $this->request->query['path'];
 		} else {
-			$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 
 		if (!empty($this->request->data)) {
 			if (touch($path . $this->request->data['FileManager']['name'])) {
 				$this->Session->setFlash(__d('croogo', 'File created successfully.'), 'default', array('class' => 'success'));
 				$redirectUrl = Router::url(array('controller' => 'file_manager', 'action' => 'browse'), true) . '?path=' . urlencode($path);
-				$this->redirect($redirectUrl);
+				return $this->redirect($redirectUrl);
 			} else {
 				$this->Session->setFlash(__d('croogo', 'An error occured'), 'default', array('class' => 'error'));
 			}

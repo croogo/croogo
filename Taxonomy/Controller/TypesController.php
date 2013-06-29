@@ -95,7 +95,7 @@ class TypesController extends AppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Type'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Type->save($this->request->data)) {
@@ -123,11 +123,11 @@ class TypesController extends AppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Type'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->Type->delete($id)) {
 			$this->Session->setFlash(__d('croogo', 'Type deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 	}
 }

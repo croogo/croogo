@@ -66,7 +66,7 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 	public function admin_activate($locale = null) {
 		if ($locale == null || !is_dir(APP . 'Locale' . DS . $locale)) {
 			$this->Session->setFlash(__d('croogo', 'Locale does not exist.'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
 		$result = $this->Setting->write('Site.locale', $locale);
@@ -75,7 +75,7 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 		} else {
 			$this->Session->setFlash(__d('croogo', 'Could not save Locale setting.'), 'default', array('class' => 'error'));
 		}
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 /**
@@ -111,12 +111,12 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 
 			if (!$locale) {
 				$this->Session->setFlash(__d('croogo', 'Invalid locale.'), 'default', array('class' => 'error'));
-				$this->redirect(array('action' => 'add'));
+				return $this->redirect(array('action' => 'add'));
 			}
 
 			if (is_dir(APP . 'Locale' . DS . $locale)) {
 				$this->Session->setFlash(__d('croogo', 'Locale already exists.'), 'default', array('class' => 'error'));
-				$this->redirect(array('action' => 'add'));
+				return $this->redirect(array('action' => 'add'));
 			}
 
 			// extract
@@ -151,7 +151,7 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 			}
 			zip_close($zip);
 
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 	}
 
@@ -166,14 +166,14 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 
 		if (!$locale) {
 			$this->Session->setFlash(__d('croogo', 'Invalid locale.'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
 		$poFile = APP . 'Locale' . DS . $locale . DS . 'LC_MESSAGES' . DS . 'croogo.po';
 
 		if (!file_exists($poFile)) {
 			$this->Session->setFlash(__d('croogo', 'The file %s does not exist.', basename($poFile)), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
 		$file =& new File($poFile, true);
@@ -183,7 +183,7 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 			// save
 			if ($file->write($this->request->data['Locale']['content'])) {
 				$this->Session->setFlash(__d('croogo', 'Locale updated successfully'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			}
 		}
 
@@ -199,7 +199,7 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 	public function admin_delete($locale = null) {
 		if (!$locale) {
 			$this->Session->setFlash(__d('croogo', 'Invalid locale'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
 		$folder =& new Folder;
@@ -209,7 +209,7 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 			$this->Session->setFlash(__d('croogo', 'Local could not be deleted.'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 }

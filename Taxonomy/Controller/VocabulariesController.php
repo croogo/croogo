@@ -59,7 +59,7 @@ class VocabulariesController extends TaxonomyAppController {
 			$this->Vocabulary->create();
 			if ($this->Vocabulary->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Vocabulary has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Vocabulary could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -81,12 +81,12 @@ class VocabulariesController extends TaxonomyAppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Vocabulary'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Vocabulary->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Vocabulary has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Vocabulary could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -109,11 +109,11 @@ class VocabulariesController extends TaxonomyAppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Vocabulary'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->Vocabulary->delete($id)) {
 			$this->Session->setFlash(__d('croogo', 'Vocabulary deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 	}
 
@@ -132,7 +132,7 @@ class VocabulariesController extends TaxonomyAppController {
 			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 /**
@@ -150,7 +150,7 @@ class VocabulariesController extends TaxonomyAppController {
 			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 }
