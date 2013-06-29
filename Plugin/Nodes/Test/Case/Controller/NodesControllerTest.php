@@ -240,8 +240,8 @@ class NodesControllerTest extends CroogoControllerTestCase {
 			'data' => array(
 				'Node' => array(
 					'action' => 'avadakadavra',
-					'1' => 0,
-					'2' => 1,
+					'1' => array('id' => 0),
+					'2' => array('id' => 1),
 				),
 			),
 		));
