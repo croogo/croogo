@@ -256,17 +256,22 @@ class MenusHelper extends AppHelper {
  * @return string
  */
 
-	public function linkChoosers(){
+	public function linkChooserDialog(){
 
-		$html = '<div class="btn-group"><a href="#" class="btn btn-primary"><i class="icon-link"></i></a>';
+		$this->Html->css('Menus.linkchoosers',null,array('inline'=>false));
+		
+		$this->Html->script('Menus.linkchoosers',array('inline'=>false));
+
+		$html = '<div id="link_choosers" title="Link Chooser">';
 
 		$linkChoosers = Configure::read('Menus.linkChoosers');
 		foreach($linkChoosers as $name => $chooser){
-			$html .= $this->Html->link(__d('croogo', $name), $chooser['url'],
+			$html .= '<div class="link_chooser"><div class="pull-left"><h5>'.$name.'</h3><p>'.$chooser['description'].'</p></div>'.$this->Html->link(__d('croogo','Link to '.$name), $chooser['url'],
 			array(
-				'class' => 'btn link chooser',
+				'class' => 'btn link chooser pull-right',
+				'style' => 'margin:10px;',
 			)
-			);
+			).'<div class="clearfix"></div></div>';
 		}
 
 		$html .= '</div>';

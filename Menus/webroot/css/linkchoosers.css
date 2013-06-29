@@ -1,0 +1,16 @@
+.link_chooser {
+height:80px;
+border-bottom:1px solid #ccc;
+}
+
+.link_chooser a {
+
+}
+
+.link_chooser p {
+font-size:10px;
+width:300px;
+height:30px;
+line-height:15px;
+overflow:hidden;
+}

@@ -113,17 +113,19 @@ class NodesComponent extends Component {
 	protected function _hookLinkChoosers(Controller $controller){
 
 			$type = ClassRegistry::init('Taxonomy.Type');
-			$types = $type->find('list',array('fields'=>array('alias','title')));
+			$types = $type->find('all',array('fields'=>array('alias','title','description')));
 
 			$linkChoosers = array();
-			foreach($types as $alias => $type){
-				$linkChoosers[$type] = array(
+			foreach($types as $type){
+				$linkChoosers[$type['Type']['title']] = array(
+					'title' => $type['Type']['title'],
+					'description'=>$type['Type']['description'],
 					'url'=>array(
 						'plugin'=>'nodes',
 						'controller'=>'nodes',
 						'action'=>'index',
 						'?'=>array(
-							'type'=>$alias,
+							'type'=>$type['Type']['alias'],
 							'chooser' => 1,
 							'KeepThis' => true,
 							'TB_iframe' => true,

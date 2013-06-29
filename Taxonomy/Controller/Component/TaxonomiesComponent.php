@@ -203,6 +203,7 @@ class TaxonomiesComponent extends Component {
 			foreach($vocabulary['Type'] as $type){
 				$title = $type['title'].' '.$vocabulary['Vocabulary']['title'];
 				$linkChoosers[$title] = array(
+				'description'=>$vocabulary['Vocabulary']['description'],
 				'url'=>array(
 					'plugin'=>'taxonomy',
 					'controller'=>'terms',

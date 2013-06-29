@@ -63,14 +63,22 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 				echo $this->Form->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));
+				
+				echo '<div class="input text required input-append">';
+				echo '<label for="LinkLink">'.__d('croogo',Link).'</label>';	
 				echo $this->Form->input('link', array(
-					'label' => __d('croogo', 'Link'),
+					'label' => false,
+					'div'=>false,
 				));
+				echo $this->Html->link('<i class="icon-link"></i>','#',array(
+					'class'=>'btn launch_link_choosers'
+				));
+				echo '</div>';
 
 				?>
 
 				<?php
-				echo $this->Menus->linkChoosers();
+				echo $this->Menus->linkChooserDialog();
 				?>
 			</div>
 
