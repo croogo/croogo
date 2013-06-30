@@ -91,7 +91,7 @@ class ContactsController extends ContactsAppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Contact'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Contact->save($this->request->data)) {
@@ -116,11 +116,11 @@ class ContactsController extends ContactsAppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Contact'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->Contact->delete($id)) {
 			$this->Session->setFlash(__d('croogo', 'Contact deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 	}
 
@@ -133,7 +133,7 @@ class ContactsController extends ContactsAppController {
  */
 	public function view($alias = null) {
 		if (!$alias) {
-			$this->redirect('/');
+			return $this->redirect('/');
 		}
 
 		$contact = $this->Contact->find('first', array(
@@ -147,7 +147,7 @@ class ContactsController extends ContactsAppController {
 			),
 		));
 		if (!isset($contact['Contact']['id'])) {
-			$this->redirect('/');
+			return $this->redirect('/');
 		}
 		$this->set('contact', $contact);
 

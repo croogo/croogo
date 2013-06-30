@@ -80,7 +80,7 @@ class InstallController extends Controller {
 	protected function _check() {
 		if (Configure::read('Install.installed') && Configure::read('Install.secured')) {
 			$this->Session->setFlash('Already Installed');
-			$this->redirect('/');
+			return $this->redirect('/');
 		}
 	}
 
@@ -112,7 +112,7 @@ class InstallController extends Controller {
 		$this->set('title_for_layout', __d('croogo', 'Step 1: Database'));
 
 		if (Configure::read('Install.installed')) {
-			$this->redirect(array('action' => 'adminuser'));
+			return $this->redirect(array('action' => 'adminuser'));
 		}
 
 		if (!empty($this->request->data)) {
@@ -123,7 +123,7 @@ class InstallController extends Controller {
 			if ($result !== true) {
 				$this->Session->setFlash($result, 'default', array('class' => 'error'));
 			} else {
-				$this->redirect(array('action' => 'data'));
+				return $this->redirect(array('action' => 'data'));
 			}
 		}
 	}
@@ -155,7 +155,7 @@ class InstallController extends Controller {
 			$InstallManager = new InstallManager();
 			$result = $InstallManager->createCroogoFile();
 
-			$this->redirect(array('action' => 'adminuser'));
+			return $this->redirect(array('action' => 'adminuser'));
 		}
 	}
 
@@ -164,7 +164,7 @@ class InstallController extends Controller {
  */
 	public function adminuser() {
 		if (!file_exists(APP . 'Config' . DS . 'database.php')) {
-			$this->redirect('/');
+			return $this->redirect('/');
 		}
 
 		if ($this->request->is('post')) {
@@ -177,7 +177,7 @@ class InstallController extends Controller {
 				$user = $this->Install->addAdminUser($this->request->data);
 				if ($user) {
 					$this->Session->write('Install.user', $user);
-					$this->redirect(array('action' => 'finish'));
+					return $this->redirect(array('action' => 'finish'));
 				}
 			}
 		}

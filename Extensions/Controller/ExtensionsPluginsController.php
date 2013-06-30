@@ -93,9 +93,9 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 				$Installer->extractPlugin($file['tmp_name']);
 			} catch (CakeException $e) {
 				$this->Session->setFlash($e->getMessage(), 'default', array('class' => 'error'));
-				$this->redirect(array('action' => 'add'));
+				return $this->redirect(array('action' => 'add'));
 			}
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 	}
 
@@ -108,11 +108,11 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 	public function admin_delete($plugin = null) {
 		if (!$plugin) {
 			$this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->_CroogoPlugin->isActive($plugin)) {
 			$this->Session->setFlash(__d('croogo', 'You cannot delete a plugin that is currently active.'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
 		$result = $this->_CroogoPlugin->delete($plugin);
@@ -124,7 +124,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 			$this->Session->setFlash(__d('croogo', 'Plugin could not be deleted.'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 /**
@@ -136,7 +136,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 	public function admin_toggle($plugin = null) {
 		if (!$plugin) {
 			$this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
 		if ($this->_CroogoPlugin->isActive($plugin)) {
@@ -158,7 +158,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 				$this->Session->setFlash(__d('croogo', 'Plugin could not be activated. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 /**
@@ -178,7 +178,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 				array('class' => 'success')
 			);
 		}
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 /**
@@ -202,7 +202,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 		}
 		$this->Session->setFlash($message, 'default', array('class' => $class));
 
-		$this->redirect($this->referer());
+		return $this->redirect($this->referer());
 	}
 
 /**
@@ -226,7 +226,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 		}
 		$this->Session->setFlash($message, 'default', array('class' => $class));
 
-		$this->redirect($this->referer());
+		return $this->redirect($this->referer());
 	}
 
 }

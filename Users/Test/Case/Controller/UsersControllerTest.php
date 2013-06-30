@@ -206,7 +206,6 @@ class UsersControllerTest extends CroogoControllerTestCase {
 				),
 			),
 		));
-		$this->assertNotEmpty($this->vars['editFields']);
 		$expected = 'Administrator [modified]';
 		$this->assertEquals($expected, $this->controller->request->data['User']['name']);
 		$result = $this->controller->User->findByUsername('admin');

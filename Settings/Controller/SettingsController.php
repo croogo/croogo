@@ -77,7 +77,7 @@ class SettingsController extends SettingsAppController {
 	public function admin_view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Setting.'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		$this->set('setting', $this->Setting->read(null, $id));
 	}
@@ -95,7 +95,7 @@ class SettingsController extends SettingsAppController {
 			$this->Setting->create();
 			if ($this->Setting->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Setting has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Setting could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -114,12 +114,12 @@ class SettingsController extends SettingsAppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Setting'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Setting->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Setting has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Setting could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -139,11 +139,11 @@ class SettingsController extends SettingsAppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Setting'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->Setting->delete($id)) {
 			$this->Session->setFlash(__d('croogo', 'Setting deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 	}
 
@@ -160,7 +160,7 @@ class SettingsController extends SettingsAppController {
 		$this->Setting->Behaviors->attach('Params');
 		if (!empty($this->request->data) && $this->Setting->saveAll($this->request->data['Setting'])) {
 			$this->Session->setFlash(__d('croogo', "Settings updated successfully"), 'default', array('class' => 'success'));
-			$this->redirect(array('action' => 'prefix', $prefix));
+			return $this->redirect(array('action' => 'prefix', $prefix));
 		}
 
 		$settings = $this->Setting->find('all', array(
@@ -202,7 +202,7 @@ class SettingsController extends SettingsAppController {
 				'action' => 'index'
 			);
 		}
-		$this->redirect($redirect);
+		return $this->redirect($redirect);
 	}
 
 /**
@@ -220,7 +220,7 @@ class SettingsController extends SettingsAppController {
 			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array('admin' => true, 'controller' => 'settings', 'action' => 'index'));
+		return $this->redirect(array('admin' => true, 'controller' => 'settings', 'action' => 'index'));
 	}
 
 }

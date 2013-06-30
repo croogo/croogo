@@ -59,7 +59,7 @@ class LanguagesController extends SettingsAppController {
 			$this->Language->create();
 			if ($this->Language->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Language has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Language could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -78,12 +78,12 @@ class LanguagesController extends SettingsAppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Language'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Language->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Language has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Language could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -103,11 +103,11 @@ class LanguagesController extends SettingsAppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Language'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->Language->delete($id)) {
 			$this->Session->setFlash(__d('croogo', 'Language deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 	}
 
@@ -126,7 +126,7 @@ class LanguagesController extends SettingsAppController {
 			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 /**
@@ -144,7 +144,7 @@ class LanguagesController extends SettingsAppController {
 			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 /**
@@ -158,7 +158,7 @@ class LanguagesController extends SettingsAppController {
 	public function admin_select($id = null, $modelAlias = null) {
 		if ($id == null ||
 			$modelAlias == null) {
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
 		$this->set('title_for_layout', __d('croogo', 'Select a language'));

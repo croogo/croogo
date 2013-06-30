@@ -78,7 +78,7 @@ class AclActionsController extends AclAppController {
 
 			if ($this->Acl->Aco->save($this->request->data['Aco'])) {
 				$this->Session->setFlash(sprintf(__d('croogo', 'The %s has been saved'), $acoType), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(sprintf(__d('croogo', 'The %s could not be saved. Please, try again.'), $acoType), 'default', array('class' => 'error'));
 			}
@@ -98,12 +98,12 @@ class AclActionsController extends AclAppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Action'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Acl->Aco->save($this->request->data['Aco'])) {
 				$this->Session->setFlash(__d('croogo', 'The Action has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Action could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -124,11 +124,11 @@ class AclActionsController extends AclAppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Action'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->Acl->Aco->delete($id)) {
 			$this->Session->setFlash(__d('croogo', 'Action deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 	}
 
@@ -142,17 +142,17 @@ class AclActionsController extends AclAppController {
 	public function admin_move($id, $direction = 'up', $step = '1') {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Action'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if ($direction == 'up') {
 			if ($this->Acl->Aco->moveUp($id)) {
 				$this->Session->setFlash(__d('croogo', 'Action moved up'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			}
 		} else {
 			if ($this->Acl->Aco->moveDown($id)) {
 				$this->Session->setFlash(__d('croogo', 'Action moved down'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			}
 		}
 	}
@@ -181,9 +181,9 @@ class AclActionsController extends AclAppController {
 		$this->Session->setFlash(join('<br>', $output), 'default', array('class' => $class));
 
 		if (isset($this->params['named']['permissions'])) {
-			$this->redirect(array('plugin' => 'acl', 'controller' => 'acl_permissions', 'action' => 'index'));
+			return $this->redirect(array('plugin' => 'acl', 'controller' => 'acl_permissions', 'action' => 'index'));
 		} else {
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 	}
 
