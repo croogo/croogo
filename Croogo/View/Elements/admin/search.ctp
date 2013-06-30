@@ -7,7 +7,6 @@ if (!isset($className)) {
 }
 if (!empty($searchFields)):
 ?>
-
 <div class="<?php echo $className; ?> filter row-fluid">
 <?php
 	echo $this->Form->create($modelClass, array(

@@ -4,7 +4,7 @@
  * RoleLevelAcl Component
  *
  * When "Access Control.rowLevel" Setting is active, this component will perform
- * the necesary setup on controller's primary model and hook the element for 
+ * the necesary setup on controller's primary model and hook the element for
  * backend use.
  *
  * You can also use it to configure the action mappings used by AclCachedAuthorize
@@ -84,7 +84,7 @@ class RowLevelAclComponent extends Component {
  * Retrieve a list of roles with access status for a given node
  *
  * @param integer $id Node id
- * @return array 
+ * @return array
  */
 	protected function _rolePermissions($id) {
 		$Permission = $this->_controller->Acl->Aro->Permission;
