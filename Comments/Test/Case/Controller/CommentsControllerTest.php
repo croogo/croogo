@@ -240,13 +240,13 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		);
 		$node = $Comments->Comment->Node->findBySlug('hello-world');
 		$Comments->add($node['Node']['id']);
-		$this->assertEqual($Comments->viewVars['success'], 1);
 
 		$comments = $Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
 		$commenters = array_values($comments);
 		$this->assertEqual($commenters, array('Mr Croogo', 'Mrs Croogo', 'John Smith'));
 
 		$Comments->testView = true;
+		$Comments->set(compact('node'));
 		$output = $Comments->render('add');
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
@@ -279,13 +279,13 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 
 		Configure::write('Comment.level', 2);
 		$Comments->add($node['Node']['id'], 1); // under the comment by Mr Croogo
-		$this->assertEqual($Comments->viewVars['success'], 1);
 
 		$comments = $Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
 		$commenters = array_values($comments);
 		$this->assertEqual($commenters, array('Mr Croogo', '_John Smith', 'Mrs Croogo'));
 
 		$Comments->testView = true;
+		$Comments->set(compact('node'));
 		$output = $Comments->render('add');
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
@@ -312,13 +312,13 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		);
 		$node = $Comments->Comment->Node->findBySlug('hello-world');
 		$Comments->add($node['Node']['id']);
-		$this->assertEqual($Comments->viewVars['success'], 1);
 
 		$comments = $Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
 		$commenters = array_values($comments);
 		$this->assertEqual($commenters, array('Mr Croogo', 'Mrs Croogo', 'John Smith'));
 
 		$Comments->testView = true;
+		$Comments->set(compact('node'));
 		$output = $Comments->render('add');
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
@@ -349,7 +349,6 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 			'body' => 'text here...',
 		);
 		$this->CommentsController->add(1);
-		$this->assertEqual($this->CommentsController->viewVars['success'], 0);
 	}
 
 /**
@@ -359,6 +358,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		Configure::write('Comment.email_notification', 0);
 		$this->CommentsController->request->params['action'] = 'add';
 		$this->CommentsController->request->params['url']['url'] = 'comments/add';
+		$this->expectFlashAndRedirect('Your comment has been added successfully.');
 
 		$this->CommentsController->request->data['Comment'] = array(
 			'name' => 'John Smith',
@@ -367,8 +367,6 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 			'body' => 'text here...',
 		);
 		$this->CommentsController->add(1);
-
-		$this->assertEqual($this->CommentsController->viewVars['success'], 1);
 	}
 
 }
