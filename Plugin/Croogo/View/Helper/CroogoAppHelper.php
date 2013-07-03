@@ -27,7 +27,7 @@ class CroogoAppHelper extends Helper {
  * @access public
  */
 	public function url($url = null, $full = false) {
-		if (!isset($url['locale']) && isset($this->params['locale'])) {
+		if (!isset($url['locale']) && isset($this->params['locale']) && is_array($url)) {
 			$url['locale'] = $this->params['locale'];
 		}
 		return parent::url($url, $full);
