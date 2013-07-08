@@ -23,13 +23,16 @@ Lukas Marks <lukas.marks@lumax-web.de>
 Matt Curry <matt@pseudocoder.com>
 thoth <thomas.rader@tigerclawtech.com>
 Josué Silva Santos <josue.silva.santos@gmail.com>
+Mischa ter Smitten <mischa@tersmitten.nl>
 daniel <daniel@daniels-MacBook-Air.local>
+liamkeily <liam@simplywebsites.com>
 tmaiaroto <tom@shift8creative.com>
 Adam Taylor <ataylor32@gmail.com>
 Andrew Weir <andru.weir@gmail.com>
 Arie Sutanto <asutanto@xintesa.com>
 Ceeram <c33ram@gmail.com>
 Dirk Brünsicke <d1rk@gmx.de>
+Elias Coronado <ecor.rck@hotmail.com>
 Jeremy Harris <jeremy@42pixels.com>
 Joachim Nyqvist <Joachim@JNyqvist.se>
 Kory Marks <kory.marks@mac.com>
@@ -41,6 +44,5 @@ Sam Bernard <sam@sambernard.net>
 Wiena Lorentz <lorentz@xintesa.com>
 alevilar <alevilar@gmail.com>
 joseph-d <joseph.d@nirada.co.th>
-liamkeily <liam@simplywebsites.com>
 romaing <pourri@dixit-productions.com>
 stefanozoffoli <stefano.zoffoli@librasoftsnc.it>
