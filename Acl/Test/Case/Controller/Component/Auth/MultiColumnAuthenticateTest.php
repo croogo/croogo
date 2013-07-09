@@ -64,7 +64,8 @@ class MultiColumnAuthenticateTest extends CroogoTestCase {
 			'user' => 'mariano',
 			'email' => 'mariano@example.com',
 			'created' => '2007-03-17 01:16:23',
-			'updated' => '2007-03-17 01:18:31'
+			'updated' => '2007-03-17 01:18:31',
+			'token' => '12345'
 		);
 
 		$request->data = array('MultiUser' => array(
