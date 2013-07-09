@@ -1,5 +1,8 @@
 <?php
-class MultiUserFixture extends CakeTestFixture {
+
+App::uses('CroogoTestFixture', 'Croogo.TestSuite');
+
+class MultiUserFixture extends CroogoTestFixture {
 
 /**
  * name property
