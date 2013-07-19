@@ -126,6 +126,25 @@ class InstallController extends Controller {
 				return $this->redirect(array('action' => 'data'));
 			}
 		}
+
+		$currentConfiguration = array(
+			'exists' => false,
+			'valid' => false,
+		);
+		if (file_exists(APP . 'Config' . DS . 'database.php')) {
+			$currentConfiguration['exists'] = true;
+		}
+		if ($currentConfiguration['exists']) {
+			try {
+				$this->loadModel('Install.Install');
+				$ds = $this->Install->getDataSource();
+				$ds->cacheSources = false;
+				$sources = $ds->listSources();
+				$currentConfiguration['valid'] = true;
+			} catch (Exception $e) {
+			}
+		}
+		$this->set(compact('currentConfiguration'));
 	}
 
 /**
@@ -149,7 +168,7 @@ class InstallController extends Controller {
 			);
 		}
 
-		if (isset($this->params['named']['run'])) {
+		if ($this->request->query('run')) {
 			set_time_limit(10 * MINUTE);
 			$this->Install->setupDatabase();
 

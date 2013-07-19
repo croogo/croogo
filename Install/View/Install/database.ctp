@@ -11,6 +11,19 @@ echo $this->Form->create(false, array(
 ?>
 <div class="install">
 	<h2><?php echo $title_for_layout; ?></h2>
+
+	<?php if ($currentConfiguration['exists']) { ?>
+		<p>
+		There seems to be an already existing `database.php` file.
+		This file is <?php echo ($currentConfiguration['valid'] ? 'Valid' : 'Invalid'); ?>.
+		<?php if ($currentConfiguration['valid'] ) { ?>
+			<?php echo $this->Html->link('Continue without replacing this file?', array('action' => 'data')); ?>
+		<?php } else { ?>
+			This file will be replaced.
+		<?php } ?>
+		</p>
+	<?php } ?>
+
 	<?php
 		$this->Form->inputDefaults(array(
 			'label' => false,
