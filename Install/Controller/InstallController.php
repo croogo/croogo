@@ -150,6 +150,7 @@ class InstallController extends Controller {
 		}
 
 		if (isset($this->params['named']['run'])) {
+			set_time_limit(10 * MINUTE);
 			$this->Install->setupDatabase();
 
 			$InstallManager = new InstallManager();
