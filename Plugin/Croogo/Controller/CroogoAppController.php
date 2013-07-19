@@ -217,7 +217,7 @@ class CroogoAppController extends Controller {
  * @see Controller::render()
  */
 	public function render($view = null, $layout = null) {
-		if (strpos($view, '/') !== false) {
+		if (strpos($view, '/') !== false || $this instanceof CakeErrorController) {
 			return parent::render($view, $layout);
 		}
 		$viewPaths = App::path('View', $this->plugin);
