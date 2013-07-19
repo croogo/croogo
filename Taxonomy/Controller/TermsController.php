@@ -91,60 +91,41 @@ class TermsController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function admin_add($vocabularyId = null) {
-		if (!$vocabularyId) {
+	public function admin_add($vocabularyId = null) {		
+		$vocabulary = $this->Term->Vocabulary->findById($vocabularyId);
+		
+		if (empty($vocabulary)) {
 			return $this->redirect(array(
 				'controller' => 'vocabularies',
 				'action' => 'index',
 			));
-		}
-		$vocabulary = $this->Term->Vocabulary->find('first', array(
-			'conditions' => array(
-				'Vocabulary.id' => $vocabularyId,
-			),
-		));
-		if (!isset($vocabulary['Vocabulary']['id'])) {
-			return $this->redirect(array(
-				'controller' => 'vocabularies',
-				'action' => 'index',
-			));
-		}
-		$this->set('title_for_layout', __d('croogo', '%s: Add Term', $vocabulary['Vocabulary']['title']));
-
+		}				
+						
 		if (!empty($this->request->data)) {
-			$termId = $this->Term->saveAndGetId($this->request->data['Term']);
+			$termId = $this->Term->saveAndGetId($this->request->data['Term']);										
+			
 			if ($termId) {
-				$termInVocabulary = $this->Term->Taxonomy->hasAny(array(
-					'Taxonomy.vocabulary_id' => $vocabularyId,
-					'Taxonomy.term_id' => $termId,
-				));
-				if ($termInVocabulary) {
-					$this->Session->setFlash(__d('croogo', 'Term with same slug already exists in the vocabulary.'), 'default', array('class' => 'error'));
-				} else {
-					$this->Term->Taxonomy->Behaviors->attach('Tree', array(
-						'scope' => array(
-							'Taxonomy.vocabulary_id' => $vocabularyId,
-						),
+				if ($this->Term->Taxonomy->addTermToVocabulary($termId, $vocabularyId, $this->request->data['Taxonomy']['parent_id'])) {
+					$this->Session->setFlash(__d('croogo', 'Term saved successfuly.'), 'default', array('class' => 'success'));
+					return $this->redirect(array(
+						'action' => 'index',
+						$vocabularyId,
 					));
-					$taxonomy = array(
-						'parent_id' => $this->request->data['Taxonomy']['parent_id'],
-						'term_id' => $termId,
-						'vocabulary_id' => $vocabularyId,
-					);
-					if ($this->Term->Taxonomy->save($taxonomy)) {
-						$this->Session->setFlash(__d('croogo', 'Term saved successfuly.'), 'default', array('class' => 'success'));
-						return $this->redirect(array(
-							'action' => 'index',
-							$vocabularyId,
-						));
+				} else {
+					if(isset($this->Term->Taxonomy->validationErrors['term_id'][0])) {
+						$errorFlashMessage = $this->Term->Taxonomy->validationErrors['term_id'][0];
 					} else {
-						$this->Session->setFlash(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'), 'default', array('class' => 'error'));
-					}
-				}
+						$errorFlashMessage = 'Term could not be added to the vocabulary. Please try again.';
+					}										
+				}				
 			} else {
-				$this->Session->setFlash(__d('croogo', 'Term could not be saved. Please try again.'), 'default', array('class' => 'error'));
+				$errorFlashMessage = 'Term could not be saved. Please try again.';				
 			}
+			
+			$this->Session->setFlash(__d('croogo', $errorFlashMessage), 'default', array('class' => 'error'));
 		}
+		
+		$this->set('title_for_layout', __d('croogo', '%s: Add Term', $vocabulary['Vocabulary']['title']));
 		$parentTree = $this->Term->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array('taxonomyId' => true));
 		$this->set(compact('vocabulary', 'parentTree', 'vocabularyId'));
 	}
