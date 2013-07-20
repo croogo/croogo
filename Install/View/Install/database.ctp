@@ -12,17 +12,32 @@ echo $this->Form->create(false, array(
 <div class="install">
 	<h2><?php echo $title_for_layout; ?></h2>
 
-	<?php if ($currentConfiguration['exists']) { ?>
-		<p>
-		There seems to be an already existing `database.php` file.
-		This file is <?php echo ($currentConfiguration['valid'] ? 'Valid' : 'Invalid'); ?>.
-		<?php if ($currentConfiguration['valid'] ) { ?>
-			<?php echo $this->Html->link('Continue without replacing this file?', array('action' => 'data')); ?>
-		<?php } else { ?>
-			This file will be replaced.
-		<?php } ?>
-		</p>
-	<?php } ?>
+	<?php if ($currentConfiguration['exists']):  ?>
+		<div class="alert alert-warning">
+			<strong><?php echo __d('croogo', 'Warning'); ?>:</strong>
+			<?php echo __d('croogo', 'A `database.php` file already exists.'); ?>
+			<?php
+			if ($currentConfiguration['valid']):
+				$valid = __d('croogo', 'Valid');
+				$class = 'text-success';
+			else:
+				$valid = __d('croogo', 'Invalid');
+				$class = 'text-error';
+			endif;
+			echo __d('croogo', 'This file is %s.', $this->Html->tag('span', $valid, $class));
+			?>
+			<?php if ($currentConfiguration['valid']): ?>
+			<?php
+				echo $this->Html->link(
+					__d('croogo', 'Reuse this file and proceed.'),
+					array('action' => 'data')
+				);
+			?>
+			<?php else: ?>
+				<?php echo __d('croogo', 'This file will be replaced.'); ?>
+			<?php endif; ?>
+		</div>
+	<?php endif; ?>
 
 	<?php
 		$this->Form->inputDefaults(array(
