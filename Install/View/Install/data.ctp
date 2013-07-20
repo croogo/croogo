@@ -13,7 +13,7 @@ echo $this->Html->link(__d('croogo', 'Build database'), array(
 	'plugin' => 'install',
 	'controller' => 'install',
 	'action' => 'data',
-	'run' => 1,
+	'?' => array('run' => 1),
 ), array(
 	'tooltip' => array(
 		'data-title' => __d('croogo', 'Click here to build your database'),
