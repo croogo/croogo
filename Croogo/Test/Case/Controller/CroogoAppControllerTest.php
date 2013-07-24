@@ -130,4 +130,27 @@ class AppControllerTest extends CroogoControllerTestCase {
 		$this->assertTrue(in_array('Paginator', $this->controller->helpers));
 	}
 
+/**
+ * Test Setup Component
+ */
+	public function testSetupComponent() {
+		$request = new CakeRequest('/api/v1.0/users');
+		$request->addParams(array(
+			'api' => 'api',
+			'prefix' => 'v1.0',
+		));
+
+		$controller = new TestAppController($request);
+		$defaultComponents = $controller->components;
+		$this->assertEmpty($controller->_apiComponents);
+
+		$key = 'Hook.controller_properties.TestApp._apiComponents';
+		Configure::write($key, array('BogusApi'));
+		$controller = new TestAppController($request);
+		$this->assertNotEmpty($controller->_apiComponents);
+
+		$merged = Hash::merge($defaultComponents, array('BogusApi'));
+		$this->assertEquals($merged, $controller->components);
+	}
+
 }

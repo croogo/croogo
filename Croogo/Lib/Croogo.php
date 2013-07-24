@@ -37,7 +37,7 @@ class Croogo {
 		if (is_string($componentName)) {
 			$componentName = array($componentName);
 		}
-		self::hookControllerProperty($controllerName, 'components', $componentName);
+		self::hookControllerProperty($controllerName, '_appComponents', $componentName);
 	}
 
 /**

@@ -17,12 +17,12 @@ App::uses('Controller', 'Controller');
 class CroogoAppController extends Controller {
 
 /**
- * Components
+ * Default Components
  *
  * @var array
  * @access public
  */
-	public $components = array(
+	protected $_defaultComponents = array(
 		'Croogo.Croogo',
 		'Security',
 		'Acl',
@@ -30,6 +30,22 @@ class CroogoAppController extends Controller {
 		'Session',
 		'RequestHandler',
 	);
+
+/**
+ * List of registered Application Components
+ *
+ * These components are typically hooked into the application during bootstrap.
+ * @see Croogo::hookComponent
+ */
+	protected $_appComponents = array();
+
+/**
+ * List of registered API Components
+ *
+ * These components are typically hooked into the application during bootstrap.
+ * @see Croogo::hookApiComponent
+ */
+	protected $_apiComponents = array();
 
 /**
  * Helpers
@@ -113,6 +129,7 @@ class CroogoAppController extends Controller {
  */
 	public function afterConstruct() {
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
+		$this->_setupComponents();
 		if (isset($this->request->params['admin'])) {
 			$this->helpers[] = 'Croogo.Croogo';
 			if (empty($this->helpers['Html'])) {
@@ -125,6 +142,35 @@ class CroogoAppController extends Controller {
 				$this->helpers['Paginator'] = array('className' => 'Croogo.CroogoPaginator');
 			}
 		}
+	}
+
+/**
+ * Setup the components array
+ *
+ * @param void
+ * @return void
+ */
+	protected function _setupComponents() {
+		if (!$this->request->is('api')) {
+			$this->components = Hash::merge(
+				$this->_defaultComponents,
+				$this->_appComponents,
+				$this->components
+			);
+			return;
+		}
+
+		$this->components = Hash::merge(
+			$this->components,
+			array('Acl', 'Auth', 'Session', 'RequestHandler', 'Acl.AclFilter'),
+			$this->_apiComponents
+		);
+		$apiComponents = array();
+		foreach ($this->_apiComponents as $component) {
+			list(, $apiComponent) = pluginSplit($component);
+			$apiComponents[] = $apiComponent;
+		}
+		$this->_apiComponents = $apiComponents;
 	}
 
 /**
