@@ -86,6 +86,9 @@ class CroogoAppController extends Controller {
  */
 	public function __construct($request = null, $response = null) {
 		parent::__construct($request, $response);
+		$request->addDetector('api', array(
+			'callback' => array('CroogoRouter', 'isApiRequest'),
+		));
 		$this->getEventManager()->dispatch(new CakeEvent('Controller.afterConstruct', $this));
 	}
 
@@ -138,8 +141,11 @@ class CroogoAppController extends Controller {
 		}
 		$this->{$aclFilterComponent}->auth();
 		$this->RequestHandler->setContent('json', array('text/x-json', 'application/json'));
-		$this->Security->blackHoleCallback = 'securityError';
-		$this->Security->requirePost('admin_delete');
+
+		if (!$this->request->is('api')) {
+			$this->Security->blackHoleCallback = 'securityError';
+			$this->Security->requirePost('admin_delete');
+		}
 
 		if (isset($this->request->params['admin'])) {
 			$this->layout = 'admin';

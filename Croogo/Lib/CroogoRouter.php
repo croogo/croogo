@@ -44,6 +44,26 @@ class CroogoRouter {
 	}
 
 /**
+ * Check wether request is a API call.
+ *
+ * @see CakeRequest::addDetector()
+ * @param $request CakeRequest Request object
+ * @return bool True when request contains the necessary route parameters
+ */
+	public static function isApiRequest(CakeRequest $request) {
+		if (!$request) {
+			return false;
+		}
+		if (empty($request['api']) || empty($request['prefix'])) {
+			return false;
+		}
+		if ($request['api'] !== Configure::read('Croogo.Api.path')) {
+			return false;
+		}
+		return true;
+	}
+
+/**
  * If you want your non-routed controler actions (like /users/add) to support locale based urls,
  * this method must be called AFTER all the routes.
  *
