@@ -41,6 +41,19 @@ class Croogo {
 	}
 
 /**
+ * Loads an API component to a controller during route setup.
+ *
+ * @param string $controllerName Controller Name
+ * @param mixed $componentName  Component name or array of Component and settings
+ */
+	public static function hookApiComponent($controllerName, $componentName) {
+		if (is_string($componentName)) {
+			$componentName = array($componentName);
+		}
+		self::hookControllerProperty($controllerName, '_apiComponents', $componentName);
+	}
+
+/**
  * Attaches Behavior to a Model whenever loaded.
  *
  * @param string $modelName
