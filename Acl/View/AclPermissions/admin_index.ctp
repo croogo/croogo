@@ -62,65 +62,22 @@ $this->Html
 ?>
 <?php $this->end(); ?>
 
-<table class="table permission-table">
-<?php
-	$roleTitles = array_values($roles);
-	$roleIds = array_keys($roles);
+<div class="row-fluid">
+	<div class="span-16">
 
-	$tableHeaders = array(
-		__d('croogo', 'Id'),
-		__d('croogo', 'Alias'),
-	);
-	$tableHeaders = array_merge($tableHeaders, $roleTitles);
-	$tableHeaders = $this->Html->tableHeaders($tableHeaders);
-?>
-	<thead>
-		<?php echo $tableHeaders; ?>
-	</thead>
-<?php
+		<ul id="permissions-tab" class="nav nav-tabs">
+		<?php
+			echo $this->Croogo->adminTabs();
+		?>
+		</ul>
 
-	$icon = '<i class="pull-right"></i>';
-	$currentController = '';
-	foreach ($acos as $index => $aco) {
-		$id = $aco['Aco']['id'];
-		$alias = $aco['Aco']['alias'];
-		$class = '';
-		if (substr($alias, 0, 1) == '_') {
-			$level = 1;
-			$class .= 'level-' . $level;
-			$oddOptions = array('class' => 'hidden controller-' . $currentController);
-			$evenOptions = array('class' => 'hidden controller-' . $currentController);
-			$alias = substr_replace($alias, '', 0, 1);
-		} else {
-			$level = 0;
-			$class .= ' controller';
-			if ($aco['Aco']['children'] > 0) {
-				$class .= ' perm-expand';
-			}
-			$oddOptions = array();
-			$evenOptions = array();
-			$currentController = $alias;
-		}
+		<div class="tab-content">
+			<?php echo $this->Croogo->adminTabs(); ?>
+		</div>
 
-		$row = array(
-			$id,
-			$this->Html->div(trim($class), $alias . $icon, array(
-				'data-id' => $id,
-				'data-alias' => $alias,
-				'data-level' => $level,
-			)),
-		);
+	</div>
+</div>
 
-		foreach ($roles as $roleId => $roleTitle) {
-			$row[] = '';
-		}
-
-		echo $this->Html->tableCells(array($row), $oddOptions, $evenOptions);
-	}
-
-?>
-	<thead>
-		<?php echo $tableHeaders; ?>
-	</thead>
-
-</table>
+<script>
+AclPermissions.tabSwitcher();
+</script>
