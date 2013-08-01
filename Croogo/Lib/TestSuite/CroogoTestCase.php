@@ -68,4 +68,16 @@ class CroogoTestCase extends CakeTestCase {
 		App::build($this->_paths);
 	}
 
+/**
+ * Helper method to create an test API request (with the appropriate detector)
+ */
+	protected function _apiRequest($params) {
+		$request = new CakeRequest();
+		$request->addParams($params);
+		$request->addDetector('api', array(
+			'callback' => array('CroogoRouter', 'isApiRequest'),
+		));
+		return $request;
+	}
+
 }

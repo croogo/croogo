@@ -1,5 +1,7 @@
 <?php
 
+Croogo::hookApiComponent('Users', 'Users.UserApi');
+
 /**
  * Failed login attempts
  *

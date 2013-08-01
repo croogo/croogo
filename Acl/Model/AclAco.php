@@ -135,4 +135,34 @@ class AclAco extends AclNode {
 		}
 	}
 
+/**
+ * Get valid permission roots
+ *
+ * @return array Array of valid permission roots
+ */
+	public function getPermissionRoots() {
+		$roots = $this->find('list', array(
+			'fields' => array('id', 'alias'),
+			'conditions' => array(
+				'parent_id' => null,
+				'alias' => array('controllers', 'api'),
+			),
+		));
+
+		$apiRoot = array_search('api', $roots);
+		unset($roots[$apiRoot]);
+
+		$versionRoots = $this->find('list', array(
+			'fields' => array('id', 'alias'),
+			'conditions' => array(
+				'parent_id' => $apiRoot,
+			),
+		));
+		foreach ($versionRoots as &$versionRoot) {
+			$versionRoot = strtolower(str_replace('_', '.', $versionRoot));
+		}
+
+		return array_merge($roots, $versionRoots);
+	}
+
 }

@@ -40,6 +40,32 @@ AclPermissions.documentReady = function() {
 };
 
 /**
+ * Load permissions tab using ajax
+ */
+AclPermissions.tabSwitcher = function() {
+	$('body').on('show', '#permissions-tab', function(e) {
+		var $target = $(e.target);
+		var matches = (e.target.toString().match(/#.+/gi));
+		var pane = matches[0];
+		var alias = $target.text().trim();
+		var $span = $('.icon-spin', $target);
+		if ($span.length > 0) {
+			$span.addClass('icon-spinner');
+		} else {
+			$target.append(' <span class="icon-spin icon-spinner"></span>');
+		}
+		$(pane).load(
+			Croogo.basePath + 'admin/acl/acl_permissions/',
+			$.param({ root: alias }),
+			function(responseText, textStatus, xhr) {
+				$('span', $target).removeClass('icon-spinner');
+				AclPermissions.documentReady();
+			}
+		);
+	});
+}
+
+/**
  * Toggle permissions (enable/disable)
  *
  * @return void

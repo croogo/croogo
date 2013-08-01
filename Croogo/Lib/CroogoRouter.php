@@ -1,5 +1,6 @@
 <?php
 
+App::uses('ApiRoute', 'Croogo.Routing/Route');
 App::uses('Router', 'Routing');
 
 /**
@@ -41,6 +42,47 @@ class CroogoRouter {
 			Router::connect('/:locale' . $localizedRoute, $default, array_merge(array('locale' => '[a-z]{3}'), $params));
 		}
 		return Router::connect($route, $default, $params);
+	}
+
+/**
+ * Check wether request is a API call.
+ *
+ * @see CakeRequest::addDetector()
+ * @param $request CakeRequest Request object
+ * @return bool True when request contains the necessary route parameters
+ */
+	public static function isApiRequest(CakeRequest $request) {
+		if (!$request) {
+			return false;
+		}
+		if (empty($request['api']) || empty($request['prefix'])) {
+			return false;
+		}
+		if ($request['api'] !== Configure::read('Croogo.Api.path')) {
+			return false;
+		}
+		return true;
+	}
+
+/**
+ * Creates REST resource routes for the given controller(s).
+ *
+ * @param string|array $controller string or array of controller names
+ * @return array Array of mapped resources
+ * @see Router::mapResources()
+ */
+	public function mapResources($controller, $options = array()) {
+		$options = array_merge(array(
+			'routeClass' => 'ApiRoute',
+		), $options);
+		static $defaultRouteClass;
+		if (empty($defaultRouteClass)) {
+			$defaultRouteClass = Router::defaultRouteClass();
+		}
+		Router::defaultRouteClass('ApiRoute');
+		$routes = Router::mapResources($controller, $options);
+		Router::defaultRouteClass($defaultRouteClass);
+		return $routes;
 	}
 
 /**

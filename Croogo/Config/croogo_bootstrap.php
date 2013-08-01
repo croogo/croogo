@@ -5,6 +5,11 @@
 Configure::write('Site.acl_plugin', 'Acl');
 
 /**
+ * Default API Route Prefix. This can be overriden in settings.
+ */
+Configure::write('Croogo.Api.path', 'api');
+
+/**
  * Admin theme
  */
 //Configure::write('Site.admin_theme', 'sample');

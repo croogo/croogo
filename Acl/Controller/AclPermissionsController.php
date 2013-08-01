@@ -58,9 +58,13 @@ class AclPermissionsController extends AclAppController {
  */
 	public function admin_index($id = null, $level = null) {
 		$this->set('title_for_layout', __d('croogo', 'Permissions'));
+		if (isset($this->request->query['root'])) {
+			$query = strtolower($this->request->query['root']);
+		}
 
 		if ($id == null) {
-			$root = $this->AclAco->node('controllers');
+			$root = isset($query) ? $query : 'controllers';
+			$root = $this->AclAco->node(str_replace('.', '_', $root));
 			$root = $root[0];
 		} else {
 			$root = $this->AclAco->read(null, $id);
@@ -92,7 +96,21 @@ class AclPermissionsController extends AclAppController {
 		} else {
 			$permissions = array();
 		}
-		$this->set(compact('aros', 'permissions'));
+
+		$roots = $this->AclAco->getPermissionRoots();
+		foreach ($roots as $id => $alias) {
+			Croogo::hookAdminTab(
+				'AclPermissions/admin_index',
+				__d('croogo', $alias),
+				'Croogo.blank'
+			);
+		}
+
+		$this->set(compact('aros', 'permissions', 'roots'));
+
+		if ($this->request->is('ajax') && isset($query)) {
+			$this->render('Acl.Elements/admin/acl_permissions_table');
+		}
 	}
 
 /**

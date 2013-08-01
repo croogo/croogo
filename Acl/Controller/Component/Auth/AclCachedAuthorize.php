@@ -64,6 +64,41 @@ class AclCachedAuthorize extends BaseAuthorize {
 	}
 
 /**
+ * Get the action path for a given request.
+ *
+ * @see BaseAuthorize::action()
+ */
+	public function action(CakeRequest $request, $path = '/:plugin/:controller/:action') {
+		$apiPath = Configure::read('Croogo.Api.path');
+		if (!$request->is('api')) {
+			$path = str_replace(
+				array($apiPath, ':prefix/'),
+				array(null, null),
+				$path);
+			return parent::action($request, $path);
+		}
+
+		$api = isset($request['api']) ? $apiPath : null;
+		if (isset($request['prefix'])) {
+			$prefix = $request['prefix'];
+			$action = str_replace($request['prefix'] . '_', '', $request['action']);
+		} else {
+			$prefix = null;
+			$action = $request['action'];
+		}
+		$plugin = empty($request['plugin']) ? null : Inflector::camelize($request['plugin']);
+		$controller = Inflector::camelize($request['controller']);
+
+		$path = str_replace(
+			array($apiPath,  ':prefix', ':plugin', ':controller', ':action'),
+			array($api, $prefix, $plugin, $controller, $action),
+			$this->settings['actionPath'] . $path
+		);
+		$path = str_replace('//', '/', $path);
+		return trim($path, '/');
+	}
+
+/**
  * check request request authorization
  *
  */
@@ -72,7 +107,12 @@ class AclCachedAuthorize extends BaseAuthorize {
 		$Acl = $this->_Collection->load('Acl');
 		list($plugin, $userModel) = pluginSplit($this->settings['userModel']);
 		$user = array($userModel => $user);
-		$action = $this->action($request);
+
+		$path = '/:plugin/:controller/:action';
+		if ($request->is('api')) {
+			$path = '/:prefix' . $path;
+		}
+		$action = $this->action($request, $path);
 
 		$cacheName = 'permissions_' . strval($user['User']['id']);
 		if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
