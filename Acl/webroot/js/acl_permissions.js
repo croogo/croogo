@@ -47,7 +47,7 @@ AclPermissions.tabSwitcher = function() {
 		var $target = $(e.target);
 		var matches = (e.target.toString().match(/#.+/gi));
 		var pane = matches[0];
-		var alias = $target.text().trim();
+		var alias = $target.data('alias');
 		var $span = $('.icon-spin', $target);
 		if ($span.length > 0) {
 			$span.addClass('icon-spinner');

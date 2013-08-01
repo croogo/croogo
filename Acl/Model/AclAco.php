@@ -141,7 +141,8 @@ class AclAco extends AclNode {
  * @return array Array of valid permission roots
  */
 	public function getPermissionRoots() {
-		$roots = $this->find('list', array(
+		$roots = $this->find('all', array(
+			'recursive' => -1,
 			'fields' => array('id', 'alias'),
 			'conditions' => array(
 				'parent_id' => null,
@@ -149,17 +150,32 @@ class AclAco extends AclNode {
 			),
 		));
 
-		$apiRoot = array_search('api', $roots);
-		unset($roots[$apiRoot]);
+		foreach ($roots as $i => &$root) {
+			if ($root['Aco']['alias'] === 'api') {
+				$apiRoot = $root;
+				$apiIndex = $i;
+			}
+			$root['Aco']['title'] = ucfirst($root['Aco']['alias']);
+		}
+		if (isset($apiIndex)) {
+			unset($roots[$apiIndex]);
+		}
 
-		$versionRoots = $this->find('list', array(
+		$versionRoots = $this->find('all', array(
+			'recursive' => -1,
 			'fields' => array('id', 'alias'),
 			'conditions' => array(
-				'parent_id' => $apiRoot,
+				'parent_id' => $apiRoot['Aco']['id'],
 			),
 		));
+
+		$apiCount = count($versionRoots);
+
+		$api = __d('croogo', 'API');
 		foreach ($versionRoots as &$versionRoot) {
-			$versionRoot = strtolower(str_replace('_', '.', $versionRoot));
+			$alias = strtolower(str_replace('_', '.', $versionRoot['Aco']['alias']));
+			$versionRoot['Aco']['alias'] = $alias;
+			$versionRoot['Aco']['title'] = $apiCount == 1 ? $api : $api . ' ' . $alias;
 		}
 
 		return array_merge($roots, $versionRoots);
