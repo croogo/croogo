@@ -265,6 +265,12 @@ class CroogoHelper extends AppHelper {
 		$tabs = Configure::read('Admin.tabs.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
 		if (is_array($tabs)) {
 			foreach ($tabs as $title => $tab) {
+				$tab = Hash::merge(array(
+					'options' => array(
+						'linkOptions' => array(),
+					),
+				), $tab);
+
 				if (!isset($tab['options']['type']) || (isset($tab['options']['type']) && (in_array($this->_View->viewVars['typeAlias'], $tab['options']['type'])))) {
 					$domId = strtolower(Inflector::singularize($this->params['controller'])) . '-' . strtolower(Inflector::slug($title, '-'));
 					if ($this->adminTabs) {
@@ -275,7 +281,7 @@ class CroogoHelper extends AppHelper {
 						));
 						$output .= '</div>';
 					} else {
-						$output .= $this->adminTab(__d('croogo', $title), '#' . $domId);
+						$output .= $this->adminTab(__d('croogo', $title), '#' . $domId, $tab['options']['linkOptions']);
 					}
 				}
 			}
