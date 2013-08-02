@@ -70,6 +70,9 @@ echo $this->Form->create('Node', array('url' => $formUrl));
 	</div>
 	<div class="span4">
 	<?php
+		$username = isset($this->data['User']['username']) ?
+			$this->data['User']['username'] :
+			$this->Session->read('Auth.User.username');
 		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply', 'class' => 'btn')) .
 			$this->Form->button(__d('croogo', 'Save'), array('class' => 'btn btn-primary')) .
@@ -82,9 +85,19 @@ echo $this->Form->create('Node', array('url' => $formUrl));
 				'label' => __d('croogo', 'Promoted to front page'),
 				'class' => false,
 			)) .
-			$this->Form->input('user_id', array(
+			$this->Form->autocomplete('user_id', array(
+				'type' => 'text',
 				'label' => __d('croogo', 'Publish as '),
+				'default' => $username,
+				'autocomplete' => array(
+					'data-displayField' => 'username',
+					'data-primaryKey' => 'id',
+					'data-queryField' => 'name',
+					'data-relatedElement' => '#NodeUserId',
+					'data-url' => '/api/v1.0/users/lookup.json',
+				),
 			)) .
+
 			$this->Form->input('created', array(
 				'type' => 'text',
 				'class' => 'span10',

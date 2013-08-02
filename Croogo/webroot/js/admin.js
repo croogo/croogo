@@ -140,6 +140,9 @@ Admin.form = function() {
 		});
 	}
 
+	// Autocomplete
+	$('input.typeahead-autocomplete').typeahead_autocomplete();
+
 	// Row Actions
 	$('body')
 		.on('click', 'a[data-row-action]', Admin.processLink)
