@@ -150,9 +150,10 @@ class AclAco extends AclNode {
 			),
 		));
 
+		$apiRoot = -1;
 		foreach ($roots as $i => &$root) {
 			if ($root['Aco']['alias'] === 'api') {
-				$apiRoot = $root;
+				$apiRoot = $root['Aco']['id'];
 				$apiIndex = $i;
 			}
 			$root['Aco']['title'] = ucfirst($root['Aco']['alias']);
@@ -165,7 +166,7 @@ class AclAco extends AclNode {
 			'recursive' => -1,
 			'fields' => array('id', 'alias'),
 			'conditions' => array(
-				'parent_id' => $apiRoot['Aco']['id'],
+				'parent_id' => $apiRoot,
 			),
 		));
 
