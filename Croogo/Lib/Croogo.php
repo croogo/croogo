@@ -47,10 +47,17 @@ class Croogo {
  * @param mixed $componentName  Component name or array of Component and settings
  */
 	public static function hookApiComponent($controllerName, $componentName) {
+		$defaults = array(
+			'priority' => 8,
+		);
 		if (is_string($componentName)) {
-			$componentName = array($componentName);
+			$component = array($componentName => $defaults);
+		} else {
+			$cName = key($componentName);
+			$settings = Hash::merge($defaults, $componentName[$cName]);
+			$component = array($cName => $settings);
 		}
-		self::hookControllerProperty($controllerName, '_apiComponents', $componentName);
+		self::hookControllerProperty($controllerName, '_apiComponents', $component);
 	}
 
 /**

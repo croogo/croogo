@@ -166,9 +166,16 @@ class CroogoAppController extends Controller {
 			$this->_apiComponents
 		);
 		$apiComponents = array();
-		foreach ($this->_apiComponents as $component) {
+		$priority = 8;
+		foreach ($this->_apiComponents as $component => $setting) {
+			if (is_string($setting)) {
+				$component = $setting;
+				$setting = array();
+			}
+			$className = $component;
 			list(, $apiComponent) = pluginSplit($component);
-			$apiComponents[] = $apiComponent;
+			$setting = Hash::merge(compact('className', 'priority'), $setting);
+			$apiComponents[$apiComponent] = $setting;
 		}
 		$this->_apiComponents = $apiComponents;
 	}
@@ -183,7 +190,7 @@ class CroogoAppController extends Controller {
 			$params = $request->params;
 			$prefix = isset($params['prefix']) ? $params['prefix'] : '';
 			$action = str_replace($prefix . '_', '', $params['action']);
-			foreach ($this->_apiComponents as $component) {
+			foreach ($this->_apiComponents as $component => $setting) {
 				if (empty($this->{$component})) {
 					continue;
 				}

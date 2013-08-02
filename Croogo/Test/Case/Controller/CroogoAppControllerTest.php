@@ -146,11 +146,29 @@ class AppControllerTest extends CroogoControllerTestCase {
 
 		$key = 'Hook.controller_properties.TestApp._apiComponents';
 		Configure::write($key, array('BogusApi'));
-		$controller = new TestAppController($request);
-		$this->assertNotEmpty($controller->_apiComponents);
+		Croogo::hookApiComponent('TestApp', 'Example.ImaginaryApi');
 
-		$merged = Hash::merge($defaultComponents, array('BogusApi'));
+		$expected = array(
+			'BogusApi' => array(
+				'className' => 'BogusApi',
+				'priority' => 8,
+			),
+			'ImaginaryApi' => array(
+				'className' => 'Example.ImaginaryApi',
+				'priority' => 8,
+			),
+		);
+		$controller = new TestAppController($request);
+		$this->assertEquals($expected, $controller->_apiComponents);
+
+		$merged = Hash::merge(
+			$defaultComponents,
+			array('BogusApi'),
+			array('Example.ImaginaryApi' => array('priority' => 8))
+		);
 		$this->assertEquals($merged, $controller->components);
+
+		Configure::delete('Hook.controller_properties.TestApp');
 	}
 
 }

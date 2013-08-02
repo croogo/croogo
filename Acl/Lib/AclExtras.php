@@ -325,7 +325,7 @@ class AclExtras extends Object {
 				continue;
 			}
 
-			foreach ($apiComponents as $apiComponent) {
+			foreach ($apiComponents as $apiComponent => $setting) {
 				$this->_checkApiMethods($plugin, $controllerName, $apiComponent);
 			}
 		}
