@@ -101,7 +101,7 @@ class BlocksComponent extends Component {
 						array(
 							'OR' => array(
 								'Block.visibility_paths' => '',
-								'Block.visibility_paths LIKE' => '%"' . $this->controller->request->here . '"%',
+								'Block.visibility_paths LIKE' => '%"/' . $this->controller->request->url . '"%',
 							),
 						),
 					),

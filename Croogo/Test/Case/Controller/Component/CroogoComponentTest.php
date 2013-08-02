@@ -1,11 +1,10 @@
 <?php
 
-App::uses('CroogoComponent', 'Controller/Component');
-App::uses('Component', 'Controller');
-app::uses('ComponentCollection', 'Controller/Component');
 App::uses('AppController', 'Controller');
+App::uses('Component', 'Controller');
+App::uses('ComponentCollection', 'Controller');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
-app::uses('CroogoComponent', 'Croogo.Controller/Component');
+App::uses('CroogoComponent', 'Croogo.Controller/Component');
 
 class MockCroogoComponent extends CroogoComponent {
 
