@@ -27,6 +27,7 @@
 			'/croogo/js/underscore-min',
 			'/croogo/js/admin',
 			'/croogo/js/choose',
+			'/croogo/js/typeahead_autocomplete',
 			'/croogo/js/croogo-bootstrap.js',
 		));
 

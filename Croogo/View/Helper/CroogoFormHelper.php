@@ -118,6 +118,60 @@ class CroogoFormHelper extends FormHelper {
 		return parent::input($fieldName, $options);
 	}
 
+/**
+ * Generates an autocomplete text input that works with bootstrap's typeahead
+ *
+ * Besides the standard Form::input() $options, this method accepts:
+ *
+ *   'autocomplete' array with the following keys to configure fields to use
+ *   from the AJAX result:
+ *      `data-displayField`: field to display in the autocomplete dropdown
+ *      `data-primaryKey`: field to use as the primary identifier
+ *      `data-queryField`: field to use as the AJAX querystring
+ *      `data-relatedElement`: selector to the input storing the actual value
+ *      `data-url`: url to retrieve autocomplete data
+ *
+ * @see FormHelper::input()
+ */
+	public function autocomplete($fieldName, $options = array()) {
+		$options = Hash::merge(array(
+			'type' => 'text',
+			'default' => null,
+			'class' => null,
+			'autocomplete' => array(
+				'data-displayField' => null,
+				'data-primaryKey' => null,
+				'data-queryField' => null,
+				'data-relatedElement' => null,
+				'data-url' => null,
+			),
+		), $options);
+		$out = $this->input($fieldName, array('type' => 'hidden'));
+
+		if (strpos('.', $fieldName) !== false) {
+			list($model, $field) = explode('.', $fieldName);
+			$unlockField = $model . '.' . $field;
+		} else {
+			$field = $fieldName;
+			$unlockField = $this->defaultModel . '.' . $field;
+		}
+
+		$this->unlockField($unlockField);
+
+		$autocomplete = $options['autocomplete'];
+		$label = isset($options['label']) ? $options['label'] : Inflector::humanize($field);
+		$autocomplete = Hash::merge($autocomplete, array(
+			'type' => $options['type'],
+			'label' => $label,
+			'class' => trim($options['class'] . ' typeahead-autocomplete'),
+			'default' => $options['default'],
+			'autocomplete' => 'off',
+		));
+		$out .= $this->input("autocomplete_${field}", $autocomplete);
+
+		return $out;
+	}
+
 	public function button($title, $options = array()) {
 		$defaults = array('class' => 'btn');
 		$options = array_merge($defaults, $options);

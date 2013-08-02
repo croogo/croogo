@@ -802,14 +802,13 @@ class NodesController extends NodesAppController {
 		$this->Node->type = $typeAlias;
 		$nodes = $this->Node->generateTreeList();
 		$roles = $this->Node->User->Role->find('list');
-		$users = $this->Node->User->find('list');
 		$vocabularies = Hash::combine($type['Vocabulary'], '{n}.id', '{n}');
 		$taxonomy = array();
 		foreach ($type['Vocabulary'] as $vocabulary) {
 			$vocabularyId = $vocabulary['id'];
 			$taxonomy[$vocabularyId] = $this->Node->Taxonomy->getTree($vocabulary['alias'], array('taxonomyId' => true));
 		}
-		$this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy', 'users'));
+		$this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy'));
 	}
 
 }
