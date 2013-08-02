@@ -71,7 +71,7 @@ class CroogoRouter {
  * @return array Array of mapped resources
  * @see Router::mapResources()
  */
-	public function mapResources($controller, $options = array()) {
+	public static function mapResources($controller, $options = array()) {
 		$options = array_merge(array(
 			'routeClass' => 'ApiRoute',
 		), $options);
