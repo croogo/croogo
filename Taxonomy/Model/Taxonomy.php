@@ -25,6 +25,19 @@ class Taxonomy extends TaxonomyAppModel {
 	public $name = 'Taxonomy';
 
 /**
+ * Validation
+ *
+ * @var array
+ * @access public
+ */		
+	public $validate = array(
+        'term_id' => array(
+            'rule'    => array('isTermInVocabulary'),
+            'message' => 'Term with same slug already exists in the vocabulary.'
+        ),		
+		
+    );
+/**
  * Behaviors used by the Model
  *
  * @var array
@@ -70,7 +83,7 @@ class Taxonomy extends TaxonomyAppModel {
  * @param  array  $options
  * @return array
  */
-	public function getTree($alias, $options = array()) {
+	public function getTree($alias, $options = array()) {		
 		$_options = array(
 			'key' => 'slug', // Term.slug
 			'value' => 'title', // Term.title
@@ -160,7 +173,7 @@ class Taxonomy extends TaxonomyAppModel {
  * @param integer $vocabularyId
  * @return boolean
  */
-	public function termInVocabulary($termId, $vocabularyId) {
+	public function termInVocabulary($termId, $vocabularyId) {		
 		$taxonomy = $this->find('first', array(
 			'conditions' => array(
 				$this->alias . '.term_id' => $termId,
@@ -171,5 +184,42 @@ class Taxonomy extends TaxonomyAppModel {
 			return $taxonomy[$this->alias]['id'];
 		}
 		return false;
+	}
+	
+/**
+ * Validates that term_id and vocabulary_id are unique
+ *
+ *
+ * @param integer $termId
+ * @param integer $vocabularyId
+ * @return boolean
+ */
+	public function isTermInVocabulary($termId) {
+		return !is_numeric($this->termInVocabulary($termId, $this->data[$this->name]['vocabulary_id']));
+	}	
+	
+	
+/**
+ * Validates that term_id and vocabulary_id are unique
+ *
+ *
+ * @param integer $termId
+ * @param integer $vocabularyId
+ * @return boolean
+ */
+	public function addTermToVocabulary($termId, $vocabularyId, $parentId = NULL) {		
+		$this->Behaviors->attach('Tree', array(
+			'scope' => array(
+				'Taxonomy.vocabulary_id' => $vocabularyId,
+			),
+		));
+		
+		$taxonomy = array(
+			'parent_id' => $parentId,
+			'term_id' => $termId,
+			'vocabulary_id' => $vocabularyId,
+		);
+		
+		return $this->save($taxonomy);		
 	}
 }

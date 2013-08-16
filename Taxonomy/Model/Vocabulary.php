@@ -87,5 +87,5 @@ class Vocabulary extends TaxonomyAppModel {
 			'deleteQuery' => '',
 			'insertQuery' => '',
 		),
-	);
+	);		
 }
