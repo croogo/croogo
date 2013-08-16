@@ -78,7 +78,7 @@ class InstallController extends Controller {
  * @return void
  */
 	protected function _check() {
-		if (Configure::read('Install.installed') && Configure::read('Install.secured')) {
+		if (Configure::read('Croogo.installed') && Configure::read('Install.secured')) {
 			$this->Session->setFlash('Already Installed');
 			$this->redirect('/');
 		}
@@ -111,7 +111,7 @@ class InstallController extends Controller {
 		$this->_check();
 		$this->set('title_for_layout', __d('croogo', 'Step 1: Database'));
 
-		if (Configure::read('Install.installed')) {
+		if (Configure::read('Croogo.installed')) {
 			$this->redirect(array('action' => 'adminuser'));
 		}
 
