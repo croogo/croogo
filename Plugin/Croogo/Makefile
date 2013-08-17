@@ -2,7 +2,7 @@ BOOTSTRAP_TAG=v2.2.0
 FONTAWESOME_TAG=v3.0.2
 
 REPO_FONTAWESOME=git://github.com/FortAwesome/Font-Awesome.git
-REPO_BOOTSTRAP=git://github.com/twitter/bootstrap
+REPO_BOOTSTRAP=git://github.com/twbs/bootstrap
 
 CROOGO_LESS = ./webroot/less/admin.less
 CROOGO_RESPONSIVE_LESS = ./webroot/less/admin-responsive.less
