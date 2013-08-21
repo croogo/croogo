@@ -119,6 +119,33 @@ class CroogoFormHelper extends FormHelper {
 	}
 
 /**
+ * Try to guess autocomplete default values
+ *
+ * @param string $field field name
+ * @param array $config setting passed to CroogoFormHelper::autocomplete()
+ * @return array Array of id and display value
+ */
+	protected function _acDefaults($field, $config) {
+		$displayKey = $displayValue = null;
+		if (isset($this->data[$this->defaultModel][$field])) {
+			$displayKey = $this->data[$this->defaultModel][$field];
+		}
+
+		if (substr($field, -3) === '_id') {
+			$varName = Inflector::variable(Inflector::pluralize(substr($field, 0, -3)));
+			if (isset($this->_View->viewVars[$varName])) {
+				$lookupData = $this->_View->viewVars[$varName];
+				if (isset($lookupData[$displayKey])) {
+					$displayValue = $lookupData[$displayKey];
+				}
+			}
+		}
+
+		$defaults = array($displayKey => $displayValue);
+		return array_filter($defaults);
+	}
+
+/**
  * Generates an autocomplete text input that works with bootstrap's typeahead
  *
  * Besides the standard Form::input() $options, this method accepts:
@@ -149,13 +176,6 @@ class CroogoFormHelper extends FormHelper {
 			),
 		), $options);
 
-		$hiddenOptions = array_filter(array(
-			'type' => 'hidden',
-			'default' => $options['default'],
-			'value' => $options['value']
-		));
-		$out = $this->input($fieldName, $hiddenOptions);
-
 		if (strpos($fieldName, '.') !== false) {
 			list($model, $field) = explode('.', $fieldName);
 			$unlockField = $model . '.' . $field;
@@ -163,16 +183,26 @@ class CroogoFormHelper extends FormHelper {
 			$field = $fieldName;
 			$unlockField = $this->defaultModel . '.' . $field;
 		}
+		$defaults = $this->_acDefaults($field, $options['autocomplete']);
+
+		$default = isset($options['default']) ? $options['default'] : key($defaults);
+		$hiddenOptions = array_filter(array(
+			'type' => 'hidden',
+			'default' => $default,
+		));
+		$out = $this->input($fieldName, $hiddenOptions);
 
 		$this->unlockField($unlockField);
 
 		$autocomplete = $options['autocomplete'];
 		$label = isset($options['label']) ? $options['label'] : Inflector::humanize($field);
+
+		$default = isset($autocomplete['default']) ? $autocomplete['default'] : array_shift($defaults);
 		$autocomplete = Hash::merge($autocomplete, array(
 			'type' => $options['type'],
 			'label' => $label,
 			'class' => trim($options['class'] . ' typeahead-autocomplete'),
-			'default' => $options['autocomplete']['default'],
+			'default' => $default,
 			'autocomplete' => 'off',
 		));
 		$out .= $this->input("autocomplete_${field}", $autocomplete);

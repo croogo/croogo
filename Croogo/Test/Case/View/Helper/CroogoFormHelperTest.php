@@ -408,4 +408,55 @@ class CroogoFormHelperTest extends CroogoTestCase {
 		$this->assertTags($result, $expected);
 	}
 
+/**
+ * testAutocompleteWithDefaultFromViewVars
+ */
+	public function testAutocompleteWithDefaultFromViewVars() {
+		$this->CroogoForm->defaultModel = 'Node';
+		$this->View->set('users', array(
+			3 => 'yvonne',
+		));
+		$this->View->request->data = array(
+			'Node' => array(
+				'id' => 10,
+				'user_id' => 3,
+			),
+		);
+		$result = $this->CroogoForm->autocomplete('Node.user_id', array(
+			'autocomplete' => array(
+				'data-relatedField' => '#NodeUserId',
+				'data-displayField' => 'username',
+				'data-url' => 'http://croogo.org',
+			),
+		));
+		$expected = array(
+			array(
+				'input' => array(
+					'type' => 'hidden',
+					'name',
+					'value' => 3,
+					'id',
+				),
+			),
+			'div' => array(
+				'class',
+			),
+			'label' => array('for'),
+			'User Id',
+			'/label',
+			array(
+				'input' => array(
+					'name' => 'data[autocomplete_user_id]',
+					'value' => 'yvonne',
+					'data-displayField' => 'username',
+					'data-url' => 'http://croogo.org',
+					'data-relatedField',
+					'id',
+				),
+			),
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+	}
+
 }
