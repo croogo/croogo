@@ -137,8 +137,10 @@ class CroogoFormHelper extends FormHelper {
 		$options = Hash::merge(array(
 			'type' => 'text',
 			'default' => null,
+			'value' => null,
 			'class' => null,
 			'autocomplete' => array(
+				'default' => null,
 				'data-displayField' => null,
 				'data-primaryKey' => null,
 				'data-queryField' => null,
@@ -146,7 +148,13 @@ class CroogoFormHelper extends FormHelper {
 				'data-url' => null,
 			),
 		), $options);
-		$out = $this->input($fieldName, array('type' => 'hidden'));
+
+		$hiddenOptions = array_filter(array(
+			'type' => 'hidden',
+			'default' => $options['default'],
+			'value' => $options['value']
+		));
+		$out = $this->input($fieldName, $hiddenOptions);
 
 		if (strpos('.', $fieldName) !== false) {
 			list($model, $field) = explode('.', $fieldName);
@@ -164,7 +172,7 @@ class CroogoFormHelper extends FormHelper {
 			'type' => $options['type'],
 			'label' => $label,
 			'class' => trim($options['class'] . ' typeahead-autocomplete'),
-			'default' => $options['default'],
+			'default' => $options['autocomplete']['default'],
 			'autocomplete' => 'off',
 		));
 		$out .= $this->input("autocomplete_${field}", $autocomplete);

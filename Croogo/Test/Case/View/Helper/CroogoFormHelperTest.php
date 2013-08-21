@@ -364,4 +364,48 @@ class CroogoFormHelperTest extends CroogoTestCase {
 		$this->assertTags($result, $expected);
 	}
 
+/**
+ * testAutocompleteWithDefault
+ */
+	public function testAutocompleteWithDefault() {
+		$result = $this->CroogoForm->autocomplete('user_id', array(
+			'default' => 3,
+			'autocomplete' => array(
+				'default' => 'yvonne',
+				'data-relatedField' => '#user_id',
+				'data-url' => 'http://croogo.org',
+			),
+		));
+		$expected = array(
+			array(
+				'input' => array(
+					'type' => 'hidden',
+					'name',
+					'value' => 3,
+					'id',
+				),
+			),
+			'div' => array(
+				'class',
+			),
+			'label' => array('for'),
+			'User Id',
+			'/label',
+			array(
+				'input' => array(
+					'name' => 'data[autocomplete_user_id]',
+					'data-relatedField' => '#user_id',
+					'data-url' => 'http://croogo.org',
+					'class' => 'typeahead-autocomplete',
+					'autocomplete' => 'off',
+					'type' => 'text',
+					'value' => 'yvonne',
+					'id'
+				),
+			),
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+	}
+
 }

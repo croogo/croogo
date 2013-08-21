@@ -88,8 +88,8 @@ echo $this->Form->create('Node', array('url' => $formUrl));
 			$this->Form->autocomplete('user_id', array(
 				'type' => 'text',
 				'label' => __d('croogo', 'Publish as '),
-				'default' => $username,
 				'autocomplete' => array(
+					'default' => $username,
 					'data-displayField' => 'username',
 					'data-primaryKey' => 'id',
 					'data-queryField' => 'name',
