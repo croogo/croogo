@@ -156,7 +156,7 @@ class CroogoFormHelper extends FormHelper {
 		));
 		$out = $this->input($fieldName, $hiddenOptions);
 
-		if (strpos('.', $fieldName) !== false) {
+		if (strpos($fieldName, '.') !== false) {
 			list($model, $field) = explode('.', $fieldName);
 			$unlockField = $model . '.' . $field;
 		} else {
