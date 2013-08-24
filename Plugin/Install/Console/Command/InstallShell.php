@@ -107,7 +107,7 @@ class InstallShell extends AppShell {
 		} while (empty($password) || !$passwordsMatched);
 
 		$user['User']['username'] = $username;
-		$user['User']['password'] = AuthComponent::password($password);
+		$user['User']['password'] = $password;
 
 		$Install->addAdminUser($user);
 		$InstallManager->createSettingsFile();
