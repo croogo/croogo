@@ -88,7 +88,7 @@ class MenusComponent extends Component {
 		}
 		$menus = Hash::merge($menus, array_keys($this->controller->Blocks->blocksData['menus']));
 
-		$roleId = $this->controller->Auth->user('role_id');
+		$roleId = $this->controller->Croogo->roleId;
 		foreach ($menus as $menuAlias) {
 			$menu = $this->Link->Menu->find('first', array(
 				'conditions' => array(
