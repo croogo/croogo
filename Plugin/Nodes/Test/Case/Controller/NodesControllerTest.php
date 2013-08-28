@@ -404,4 +404,29 @@ class NodesControllerTest extends CroogoControllerTestCase {
 		unset($this->Nodes);
 	}
 
+/**
+ * testViewFallback for core NodesController with default theme
+ *
+ * @return void
+ */
+	public function testViewFallbackWithDefaultTheme() {
+		App::build(array(
+			'View' => array(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Nodes' . DS . 'View' . DS),
+		), App::APPEND);
+
+		$this->Nodes = $this->getMock('TestNodesController',
+			array('render'), array(new CakeRequest(), new CakeResponse())
+		);
+		$this->Nodes->theme = null;
+		$this->Nodes->plugin = null;
+		$this->Nodes
+			->expects($this->once())
+			->method('render')
+			->with(
+				$this->equalTo('index_node')
+			);
+		$this->Nodes->viewFallback(array('index_node'));
+		unset($this->Nodes);
+	}
+
 }
