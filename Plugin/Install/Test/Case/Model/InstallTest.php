@@ -27,22 +27,13 @@ class InstallTest extends CroogoTestCase {
 		$this->assertEquals(true, $this->Install->runMigrations('Users'));
 	}
 
-	public function testRunMigrationsKo() {
+	public function testRunMigrationsFailed() {
 		$croogoPlugin = $this->getMock('CroogoPlugin');
 		$croogoPlugin->expects($this->any())
 				->method('migrate')
 				->will($this->returnValue(false));
 		$this->_runProtectedMethod('_setCroogoPlugin', array($croogoPlugin));
 		$this->assertEquals(false, $this->Install->runMigrations('Users'));
-	}
-
-	public function testSetDatabaseMigrationError() {
-		$croogoPlugin = $this->getMock('CroogoPlugin');
-		$croogoPlugin->expects($this->any())
-			->method('migrate')
-			->will($this->returnValue(false));
-		$this->_runProtectedMethod('_setCroogoPlugin', array($croogoPlugin));
-		$this->assertEquals(false, $this->Install->setDatabase());
 	}
 
 	public function testAddAdminUserOk() {
@@ -66,6 +57,7 @@ class InstallTest extends CroogoTestCase {
 	}
 
 	protected function _runProtectedMethod($name, $args = array()) {
+		$this->skipIf(version_compare(PHP_VERSION, '5.3.0', '<'), 'PHP >= 5.3.0 required to run this test.');
 		$method = new ReflectionMethod(get_class($this->Install), $name);
 		$method->setAccessible(true);
 		return $method->invokeArgs($this->Install, $args);
