@@ -778,14 +778,14 @@ class NodesController extends NodesAppController {
 					}
 				}
 			}
-
-			$nodesViewPaths = App::path('View', 'Nodes');
-			foreach ($views as $view) {
-				foreach ($nodesViewPaths as $viewPath) {
-					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
-					if (file_exists($viewPath)) {
-						return $this->render($viewPath);
-					}
+		}
+		
+		$nodesViewPaths = App::path('View', 'Nodes');
+		foreach ($views as $view) {
+			foreach ($nodesViewPaths as $viewPath) {
+				$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
+				if (file_exists($viewPath)) {
+					return $this->render($viewPath);
 				}
 			}
 		}
