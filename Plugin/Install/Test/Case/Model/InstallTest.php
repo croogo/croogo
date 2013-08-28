@@ -6,9 +6,9 @@ App::uses('User', 'Users.Model');
 class InstallTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'aro',
-		'plugin.install.user',
-		'plugin.install.role',
+		'plugin.users.aro',
+		'plugin.install.install_user',
+		'plugin.install.install_role',
 	);
 
 	public function setUp() {
