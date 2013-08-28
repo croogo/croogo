@@ -42,8 +42,14 @@ class InstallTest extends CroogoTestCase {
 			'password' => '123456',
 		));
 		$this->Install->addAdminUser($user);
-		$count = ClassRegistry::init('Users.User')->find('count');
+		$User = ClassRegistry::init('Users.User');
+
+		$count = $User->find('count');
 		$this->assertEqual($count, 1);
+
+		$saved = $User->findByUsername('admin');
+		$expected = AuthComponent::password($user['User']['password']);
+		$this->assertEqual($expected, $saved['User']['password'], 'Password mismatch');
 	}
 
 	public function testAddAdminUserBadPassword() {
