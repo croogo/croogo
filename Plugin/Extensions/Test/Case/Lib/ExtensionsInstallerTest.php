@@ -27,13 +27,13 @@ class ExtensionsInstallerTest extends CroogoTestCase {
 		parent::setUp();
 		$path = CakePlugin::path('Extensions') . 'Test' . DS;
 		App::build(array(
-			'Plugin' => array(CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
-			'View' => array(CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'View' . DS),
+			'Plugin' => array($path . 'test_app' . DS . 'Plugin' . DS),
+			'View' => array($path . 'test_app' . DS . 'View' . DS),
 		), App::PREPEND);
-		$this->testPlugin = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_plugin.zip';
+		$this->testPlugin = $path . 'test_files' . DS . 'example_plugin.zip';
 		$this->minimalPlugin = $path . 'test_files' . DS . 'minimal_plugin.zip';
 		$this->invalidPlugin = $path . 'test_files' . DS . 'invalid_plugin.zip';
-		$this->testTheme = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_theme.zip';
+		$this->testTheme = $path . 'test_files' . DS . 'example_theme.zip';
 		$this->ExtensionsInstaller = new ExtensionsInstaller();
 	}
 
