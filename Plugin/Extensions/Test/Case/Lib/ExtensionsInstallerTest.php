@@ -25,12 +25,15 @@ class ExtensionsInstallerTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+		$path = CakePlugin::path('Extensions') . 'Test' . DS;
 		App::build(array(
-			'Plugin' => array(CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
-			'View' => array(CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'View' . DS),
+			'Plugin' => array($path . 'test_app' . DS . 'Plugin' . DS),
+			'View' => array($path . 'test_app' . DS . 'View' . DS),
 		), App::PREPEND);
-		$this->testPlugin = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_plugin.zip';
-		$this->testTheme = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_theme.zip';
+		$this->testPlugin = $path . 'test_files' . DS . 'example_plugin.zip';
+		$this->minimalPlugin = $path . 'test_files' . DS . 'minimal_plugin.zip';
+		$this->invalidPlugin = $path . 'test_files' . DS . 'invalid_plugin.zip';
+		$this->testTheme = $path . 'test_files' . DS . 'example_theme.zip';
 		$this->ExtensionsInstaller = new ExtensionsInstaller();
 	}
 
@@ -47,6 +50,42 @@ class ExtensionsInstallerTest extends CroogoTestCase {
 		$path = CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Minimal';
 		$Folder = new Folder($path);
 		$Folder->delete();
+		if (file_exists($this->minimalPlugin)) {
+			unlink($this->minimalPlugin);
+		}
+		if (file_exists($this->invalidPlugin)) {
+			unlink($this->invalidPlugin);
+		}
+	}
+
+/**
+ * Helper method to create test zip file
+ */
+	protected function _addDirectoryToZip($zip, $dir, $base) {
+		$newFolder = str_replace($base, '', $dir);
+		$zip->addEmptyDir($newFolder);
+		foreach (glob($dir . '/*') as $file) {
+			if (is_dir($file)) {
+				$zip = $this->_addDirectoryToZip($zip, $file, $base);
+			} else {
+				$newFile = str_replace($base, '', $file);
+				$zip->addFile($file, $newFile);
+			}
+		}
+		return $zip;
+	}
+
+/**
+ * Create a test zip file $zipPath from $dirName
+ */
+	protected function _createZip($zipPath, $dirName) {
+		$dir = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS;
+		chdir($dir);
+		$zip = new ZipArchive();
+		$zip->open($zipPath, ZipArchive::OVERWRITE);
+		$this->_addDirectoryToZip($zip, $dirName, $dir);
+		$zip->close();
+		$this->assertTrue(file_exists($zipPath), 'Test zip not created');
 	}
 
 /**
@@ -57,6 +96,28 @@ class ExtensionsInstallerTest extends CroogoTestCase {
 	public function testGetPluginName() {
 		$result = $this->ExtensionsInstaller->getPluginName($this->testPlugin);
 		$this->assertEquals('Example', $result);
+	}
+
+/**
+ * testGetPluginName
+ *
+ * @return void
+ */
+	public function testGetPluginNameMinimal() {
+		$this->_createZip($this->minimalPlugin, 'Minimal');
+		$result = $this->ExtensionsInstaller->getPluginName($this->minimalPlugin);
+		$this->assertEquals('Minimal', $result);
+	}
+
+/**
+ * testGetPluginNameInvalid
+ *
+ * @return void
+ * @expectedException CakeException
+ */
+	public function testGetPluginNameInvalid() {
+		$this->_createZip($this->invalidPlugin, 'Invalid');
+		$result = $this->ExtensionsInstaller->getPluginName($this->invalidPlugin);
 	}
 
 /**
