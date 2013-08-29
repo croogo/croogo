@@ -1,9 +1,15 @@
 <?php
+
 /**
- * UserFixture
+ * InstallUserFixture
  *
  */
-class UserFixture extends CakeTestFixture {
+class InstallUserFixture extends CakeTestFixture {
+
+/**
+ * Table name
+ */
+	public $table = 'users';
 
 /**
  * Fields

@@ -16,7 +16,7 @@ CroogoRouter::connect('/search/*', array(
 // Content types
 CroogoRouter::contentType('blog');
 CroogoRouter::contentType('node');
-if (Configure::read('Install.installed')) {
+if (Configure::read('Croogo.installed')) {
 	CroogoRouter::routableContentTypes();
 }
 
