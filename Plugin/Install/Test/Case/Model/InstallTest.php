@@ -6,9 +6,9 @@ App::uses('User', 'Users.Model');
 class InstallTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'aro',
-		'plugin.install.user',
-		'plugin.install.role',
+		'plugin.users.aro',
+		'plugin.install.install_user',
+		'plugin.install.install_role',
 	);
 
 	public function setUp() {
@@ -27,7 +27,7 @@ class InstallTest extends CroogoTestCase {
 		$this->assertEquals(true, $this->Install->runMigrations('Users'));
 	}
 
-	public function testRunMigrationsKo() {
+	public function testRunMigrationsFailed() {
 		$croogoPlugin = $this->getMock('CroogoPlugin');
 		$croogoPlugin->expects($this->any())
 				->method('migrate')
@@ -36,23 +36,20 @@ class InstallTest extends CroogoTestCase {
 		$this->assertEquals(false, $this->Install->runMigrations('Users'));
 	}
 
-	public function testSetDatabaseMigrationError() {
-		$croogoPlugin = $this->getMock('CroogoPlugin');
-		$croogoPlugin->expects($this->any())
-			->method('migrate')
-			->will($this->returnValue(false));
-		$this->_runProtectedMethod('_setCroogoPlugin', array($croogoPlugin));
-		$this->assertEquals(false, $this->Install->setDatabase());
-	}
-
 	public function testAddAdminUserOk() {
 		$user = array('User' => array(
 			'username' => 'admin',
 			'password' => '123456',
 		));
 		$this->Install->addAdminUser($user);
-		$count = ClassRegistry::init('Users.User')->find('count');
+		$User = ClassRegistry::init('Users.User');
+
+		$count = $User->find('count');
 		$this->assertEqual($count, 1);
+
+		$saved = $User->findByUsername('admin');
+		$expected = AuthComponent::password($user['User']['password']);
+		$this->assertEqual($expected, $saved['User']['password'], 'Password mismatch');
 	}
 
 	public function testAddAdminUserBadPassword() {
@@ -66,6 +63,7 @@ class InstallTest extends CroogoTestCase {
 	}
 
 	protected function _runProtectedMethod($name, $args = array()) {
+		$this->skipIf(version_compare(PHP_VERSION, '5.3.0', '<'), 'PHP >= 5.3.0 required to run this test.');
 		$method = new ReflectionMethod(get_class($this->Install), $name);
 		$method->setAccessible(true);
 		return $method->invokeArgs($this->Install, $args);

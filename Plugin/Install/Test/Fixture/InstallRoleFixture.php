@@ -1,9 +1,15 @@
 <?php
+
 /**
- * RoleFixture
+ * InstallRoleFixture
  *
  */
-class RoleFixture extends CakeTestFixture {
+class InstallRoleFixture extends CakeTestFixture {
+
+/**
+ * Table name
+ */
+	public $table = 'roles';
 
 /**
  * Fields
