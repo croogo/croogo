@@ -132,4 +132,32 @@ class CroogoShell extends AppShell {
 		$this->out('File updated at: ' . $rootJsonFile);
 	}
 
+	public function cachePluginPaths() {
+		$settingsPath = APP . 'Config/settings.json';
+		if (!file_exists($settingsPath)) {
+			$settingsPath = $settingsPath . '.install';
+		}
+		$settings = json_decode(file_get_contents($settingsPath), true);
+		$plugins = explode(',', $settings['Hook']['bootstraps']);
+		$plugins = array_merge(array('Croogo'), $plugins);
+
+		$pluginPaths = array();
+		foreach ($plugins as $plugin) {
+			$pluginPath = APP . 'Plugin' . DS . $plugin;
+			if (!file_exists($pluginPath)) {
+				$pluginPath = APP . 'Vendor' . DS . 'croogo' . DS . 'croogo' . DS . $plugin;
+				if (!file_exists($pluginPath)) {
+					continue;
+				}
+			}
+
+			$pluginPaths[$plugin] = $pluginPath;
+		}
+
+		$write = TMP . 'plugin_paths.json';
+		touch($write);
+		file_put_contents($write, json_encode($pluginPaths));
+		$this->out('File written at: ' . $write);
+	}
+
 }
