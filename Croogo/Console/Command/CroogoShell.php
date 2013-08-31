@@ -2,6 +2,7 @@
 
 App::uses('AppShell', 'Console/Command');
 App::uses('Security', 'Utility');
+App::uses('CroogoJson', 'Croogo.Lib');
 
 /**
  * Croogo Shell
@@ -74,6 +75,61 @@ class CroogoShell extends AppShell {
 			$this->err('<error>' . $e->getMessage() . '</error>');
 		}
 		CakePlugin::unload('Install');
+	}
+
+/**
+ * Usage: ./Console/cake croogo aggregateManifestFile package.json
+ *        ./Console/cake croogo aggregateManifestFile bower.json
+ */
+	public function aggregateManifestFile() {
+		$jsonFileName = 'package.json';
+		if (isset($this->args['0'])) {
+			$jsonFileName = $this->args['0'];
+		}
+
+		$settingsPath = APP . 'Config/settings.json';
+		if (!file_exists($settingsPath)) {
+			$settingsPath = $settingsPath . '.install';
+		}
+		$settings = json_decode(file_get_contents($settingsPath), true);
+		$plugins = explode(',', $settings['Hook']['bootstraps']);
+		$plugins = array_merge(array('Croogo'), $plugins);
+
+		$deps = array();
+		foreach ($plugins as $plugin) {
+			$pluginPath = APP . 'Plugin' . DS . $plugin;
+			if (!file_exists($pluginPath)) {
+				$pluginPath = APP . 'Vendor' . DS . 'croogo' . DS . 'croogo' . DS . $plugin;
+				if (!file_exists($pluginPath)) {
+					continue;
+				}
+			}
+
+			$jsonPath = $pluginPath . '/' . $jsonFileName;
+			if (file_exists($jsonPath)) {
+				$json = json_decode(file_get_contents($jsonPath), true);
+				if (isset($json['dependencies'])) {
+					foreach ($json['dependencies'] as $dep => $version) {
+						if (!isset($deps[$dep])) {
+							$deps[$dep] = $version;
+						} else {
+							if ($version > $deps[$dep]) {
+								$version = $version;
+							} else {
+								$version = $deps[$dep];
+							}
+							$deps[$dep] = $version;
+						}
+					}
+				}
+			}
+		}
+
+		$rootJsonFile = APP . $jsonFileName;
+		$rootJson = json_decode(file_get_contents($rootJsonFile), true);
+		$rootJson['devDependencies'] = $deps;
+		file_put_contents($rootJsonFile, CroogoJson::stringify($rootJson));
+		$this->out('File updated at: ' . $rootJsonFile);
 	}
 
 }

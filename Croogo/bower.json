@@ -1,0 +1,7 @@
+{
+  "name": "Croogo",
+  "dependencies": {
+    "bootstrap": "2.3.x",
+    "font-awesome": "3.2.x"
+  }
+}
