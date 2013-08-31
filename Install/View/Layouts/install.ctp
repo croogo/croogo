@@ -6,13 +6,13 @@
 	<title><?php echo $title_for_layout; ?> - <?php echo __d('croogo', 'Croogo'); ?></title>
 	<?php
 		echo $this->Html->css(array(
-			'/croogo/css/croogo-bootstrap',
-			'/croogo/css/croogo-bootstrap-responsive',
+			'/css/croogo-bootstrap',
+			'/css/croogo-bootstrap-responsive',
 		));
 		echo $this->element('styles', array(), array('plugin' => 'install'));
 		echo $this->Html->script(array(
 			'/croogo/js/jquery/jquery.min',
-			'/croogo/js/croogo-bootstrap',
+			'/js/croogo-bootstrap',
 		));
 		echo $scripts_for_layout;
 	?>

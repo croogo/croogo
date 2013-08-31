@@ -6,8 +6,8 @@
 	<title><?php echo $title_for_layout; ?> - <?php echo __d('croogo', 'Croogo'); ?></title>
 	<?php
 		echo $this->Html->css(array(
-			'/croogo/css/croogo-bootstrap',
-			'/croogo/css/croogo-bootstrap-responsive',
+			'/css/croogo-bootstrap',
+			'/css/croogo-bootstrap-responsive',
 			'/croogo/css/thickbox',
 		));
 		echo $this->Layout->js();
@@ -23,7 +23,7 @@
 			'/croogo/js/jquery/thickbox-compressed',
 			'/croogo/js/underscore-min',
 			'/croogo/js/admin',
-			'/croogo/js/croogo-bootstrap.js',
+			'/js/croogo-bootstrap.js',
 		));
 		echo $this->Blocks->get('css');
 		echo $this->Blocks->get('script');

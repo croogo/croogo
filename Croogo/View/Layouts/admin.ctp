@@ -7,8 +7,8 @@
 		<?php
 
 		echo $this->Html->css(array(
-			'/croogo/css/croogo-bootstrap',
-			'/croogo/css/croogo-bootstrap-responsive',
+			'/css/croogo-bootstrap',
+			'/css/croogo-bootstrap-responsive',
 			'/croogo/css/thickbox',
 		));
 		echo $this->Layout->js();
@@ -28,7 +28,7 @@
 			'/croogo/js/admin',
 			'/croogo/js/choose',
 			'/croogo/js/typeahead_autocomplete',
-			'/croogo/js/croogo-bootstrap.js',
+			'/js/croogo-bootstrap.js',
 		));
 
 		echo $this->fetch('script');
