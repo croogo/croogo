@@ -36,15 +36,11 @@ $this->Html
 	$rows = array();
 	$plugins = Sanitize::clean($plugins);
 	foreach ($plugins as $pluginAlias => $pluginData):
-		if (in_array($pluginAlias, $corePlugins)) {
-			continue;
-		}
-
 		$toggleText = $pluginData['active'] ? __d('croogo', 'Deactivate') : __d('croogo', 'Activate');
 		$statusIcon = $this->Html->status($pluginData['active']);
 
 		$actions = array();
-		if (!in_array($pluginAlias, $bundledPlugins)):
+		if (!in_array($pluginAlias, $bundledPlugins) && !in_array($pluginAlias, $corePlugins)):
 			$icon = $pluginData['active'] ? 'off' : 'bolt';
 			$actions[] = $this->Croogo->adminRowAction('',
 				array('action' => 'toggle',	$pluginAlias),
@@ -57,7 +53,7 @@ $this->Html
 			);
 		endif;
 
-		if ($pluginData['active'] && !in_array($pluginAlias, $bundledPlugins)) {
+		if ($pluginData['active'] && !in_array($pluginAlias, $bundledPlugins) && !in_array($pluginAlias, $corePlugins)) {
 			$actions[] = $this->Croogo->adminRowAction('',
 				array('action' => 'moveup', $pluginAlias),
 				array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'), 'method' => 'post'),

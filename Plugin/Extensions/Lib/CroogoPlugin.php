@@ -172,7 +172,7 @@ class CroogoPlugin extends Object {
 					$pluginData = array();
 				}
 				return $pluginData;
-			} elseif (in_array($alias, $this->bundledPlugins)) {
+			} elseif ($this->_isBuiltin($alias)) {
 				if ($this->needMigration($alias, true)) {
 					$pluginData = array(
 						'name' => $alias,
