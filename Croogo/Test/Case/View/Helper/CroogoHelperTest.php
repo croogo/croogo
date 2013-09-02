@@ -282,11 +282,18 @@ class CroogoHelperTest extends CroogoTestCase {
 
 		$options = array('class' => 'test-class');
 		$message = 'Are you sure?';
+		$onclick = "return confirm('" . $message . "');";
+		if (version_compare(Configure::version(), '2.4.0', '>=')) {
+			$onclick = sprintf(
+				"if (confirm(&quot;%s&quot;)) { return true; } return false;",
+				$message
+			);
+		}
 		$expected = array(
 			'a' => array(
 				'href' => '/users/edit/1',
 				'class' => 'test-class edit',
-				'onclick' => "return confirm('" . $message . "');",
+				'onclick' => $onclick,
 			),
 			'Edit',
 			'/a',
