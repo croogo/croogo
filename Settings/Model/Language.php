@@ -32,6 +32,7 @@ class Language extends AppModel {
  */
 	public $actsAs = array(
 		'Croogo.Ordered' => array('field' => 'weight', 'foreign_key' => null),
+		'Croogo.Trackable',
 	);
 
 /**

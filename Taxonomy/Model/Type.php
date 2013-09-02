@@ -37,6 +37,7 @@ class Type extends TaxonomyAppModel {
 			),
 		),
 		'Croogo.Params',
+		'Croogo.Trackable',
 	);
 
 /**

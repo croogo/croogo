@@ -39,6 +39,7 @@ class Link extends MenusAppModel {
 			),
 		),
 		'Croogo.Params',
+		'Croogo.Trackable',
 	);
 
 /**

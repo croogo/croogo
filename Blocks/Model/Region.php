@@ -37,6 +37,7 @@ class Region extends BlocksAppModel {
 				'blocks',
 			),
 		),
+		'Croogo.Trackable',
 	);
 
 /**

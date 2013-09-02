@@ -48,6 +48,7 @@ class Setting extends SettingsAppModel {
 				'settings',
 			),
 		),
+		'Croogo.Trackable',
 	);
 
 /**
