@@ -32,7 +32,21 @@ class TrackableBehavior extends ModelBehavior {
  */
 	public function setup(Model $model, $config = array()) {
 		$this->settings[$model->alias] = Set::merge($this->_defaults, $config);
-		$this->_setupBelongsTo($model);
+		if ($this->_hasTrackableFields($model)) {
+			$this->_setupBelongsTo($model);
+		}
+	}
+
+/**
+ * Checks wether model has the required fields
+ *
+ * @return bool True if $model has the required fields
+ */
+	protected function _hasTrackableFields(Model $model) {
+		$fields = $this->settings[$model->alias]['fields'];
+		return
+			$model->hasField($fields['created_by']) &&
+			$model->hasField($fields['updated_by']);
 	}
 
 /**
@@ -76,6 +90,9 @@ class TrackableBehavior extends ModelBehavior {
  * Note that value stored in this variable overrides session data.
  */
 	public function beforeSave(Model $model) {
+		if (!$this->_hasTrackableFields($model)) {
+			return true;
+		}
 		$config = $this->settings[$model->name];
 
 		$User = ClassRegistry::init($config['userModel']);
