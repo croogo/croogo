@@ -2,6 +2,7 @@
 
 App::uses('ModelBehavior', 'Model');
 App::uses('AuthComponent', 'Controller/Component');
+App::uses('CakeSession', 'Model/Datasource');
 
 /**
  * Trackable Behavior
@@ -100,7 +101,7 @@ class TrackableBehavior extends ModelBehavior {
 		$userPk = $User->primaryKey;
 
 		$user = Configure::read('Trackable.Auth.User');
-		if (!$user) {
+		if (!$user && CakeSession::started()) {
 			$user = AuthComponent::user();
 		}
 
