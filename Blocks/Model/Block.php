@@ -42,6 +42,7 @@ class Block extends BlocksAppModel {
 			),
 		),
 		'Croogo.Params',
+		'Croogo.Trackable',
 		'Search.Searchable',
 	);
 

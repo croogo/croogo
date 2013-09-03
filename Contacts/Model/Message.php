@@ -31,6 +31,7 @@ class Message extends ContactsAppModel {
  * @access public
  */
 	public $actsAs = array(
+		'Croogo.Trackable',
 		'Search.Searchable',
 	);
 

@@ -59,6 +59,12 @@ if ($this->request->params['action'] == 'admin_add') {
 				echo $this->Form->input('website', array(
 					'label' => __d('croogo', 'Website'),
 				));
+				echo $this->Form->input('timezone', array(
+					'type' => 'select',
+					'empty' => true,
+					'options' => $this->Time->listTimezones(),
+					'label' => __d('croogo', 'Timezone'),
+				));
 			?>
 			</div>
 

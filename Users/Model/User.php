@@ -44,6 +44,7 @@ class User extends UsersAppModel {
 			'className' => 'Croogo.CroogoAcl',
 			'type' => 'requester',
 		),
+		'Croogo.Trackable',
 		'Search.Searchable',
 	);
 

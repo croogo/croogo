@@ -33,6 +33,15 @@ class Meta extends MetaAppModel {
 	public $useTable = 'meta';
 
 /**
+ * Behaviors
+ *
+ * @var array
+ */
+	public $actsAs = array(
+		'Croogo.Trackable',
+	);
+
+/**
  * Model associations: belongsTo
  *
  * @var array

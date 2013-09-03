@@ -57,6 +57,7 @@ class Node extends NodesAppModel {
 	public $actsAs = array(
 		'Tree',
 		'Croogo.Encoder',
+		'Croogo.Trackable',
 		'Meta.Meta',
 		'Croogo.Url',
 		'Croogo.Cached' => array(

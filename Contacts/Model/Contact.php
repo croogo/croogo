@@ -36,6 +36,7 @@ class Contact extends ContactsAppModel {
 				'contacts',
 			),
 		),
+		'Croogo.Trackable',
 	);
 
 /**
