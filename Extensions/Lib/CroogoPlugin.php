@@ -81,8 +81,6 @@ class CroogoPlugin extends Object {
  * __construct
  */
 	public function __construct($migrationVersion = null) {
-		$this->Setting = ClassRegistry::init('Settings.Setting');
-
 		if (!is_null($migrationVersion)) {
 			$this->_MigrationVersion = $migrationVersion;
 		}
@@ -665,7 +663,14 @@ class CroogoPlugin extends Object {
  * @return boolean
  */
 	protected function _saveBootstraps($bootstraps) {
-		return $this->Setting->write('Hook.bootstraps', implode(',', $bootstraps));
+		static $Setting = null;
+		if (empty($Setting)) {
+			if (!Configure::read('Croogo.installed')) {
+				throw new CakeException('Unable to save Hook.bootstraps when Croogo is not fully installed');
+			}
+			$Setting = ClassRegistry::init('Settings.Setting');
+		}
+		return $Setting->write('Hook.bootstraps', implode(',', $bootstraps));
 	}
 
 /**
