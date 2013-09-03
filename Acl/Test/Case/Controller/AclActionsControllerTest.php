@@ -37,6 +37,9 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
 				'Auth' => array('user'),
 				'Session',
 				'Menus.Menus',
+				'Blocks.Blocks',
+				'Nodes.Nodes',
+				'Taxonomy.Taxonomies',
 			),
 		));
 		$AclActions->Auth
