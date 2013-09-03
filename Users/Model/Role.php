@@ -35,6 +35,7 @@ class Role extends UsersAppModel {
 			'className' => 'Croogo.CroogoAcl',
 			'type' => 'requester',
 		),
+		'Croogo.Trackable',
 	);
 
 /**

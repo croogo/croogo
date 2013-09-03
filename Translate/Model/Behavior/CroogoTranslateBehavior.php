@@ -176,6 +176,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 		}
 
 		$RuntimeModel = $this->translateModel($model);
+		$RuntimeModel->Behaviors->attach('Croogo.Trackable');
 		$conditions = array('model' => $model->alias, 'foreign_key' => $model->id);
 
 		foreach ($model->data[$model->alias] as $field => $value) {

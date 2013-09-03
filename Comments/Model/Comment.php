@@ -42,6 +42,7 @@ class Comment extends AppModel {
 				'nodes',
 			),
 		),
+		'Croogo.Trackable',
 		'Search.Searchable',
 	);
 

@@ -40,6 +40,7 @@ class Vocabulary extends TaxonomyAppModel {
 				'taxonomy',
 			),
 		),
+		'Croogo.Trackable',
 	);
 
 /**
