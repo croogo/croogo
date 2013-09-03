@@ -102,9 +102,11 @@ class CroogoAppController extends Controller {
  */
 	public function __construct($request = null, $response = null) {
 		parent::__construct($request, $response);
-		$request->addDetector('api', array(
-			'callback' => array('CroogoRouter', 'isApiRequest'),
-		));
+		if ($request) {
+			$request->addDetector('api', array(
+				'callback' => array('CroogoRouter', 'isApiRequest'),
+			));
+		}
 		$this->getEventManager()->dispatch(new CakeEvent('Controller.afterConstruct', $this));
 	}
 
@@ -151,7 +153,7 @@ class CroogoAppController extends Controller {
  * @return void
  */
 	protected function _setupComponents() {
-		if (!$this->request->is('api')) {
+		if ($this->request && !$this->request->is('api')) {
 			$this->components = Hash::merge(
 				$this->_defaultComponents,
 				$this->_appComponents,
