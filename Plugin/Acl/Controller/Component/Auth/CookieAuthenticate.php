@@ -163,6 +163,9 @@ class CookieAuthenticate extends BaseAuthenticate {
  * @see BaseAuthenticate::authenticate()
  */
 	public function authenticate(CakeRequest $request, CakeResponse $response) {
+		if (!empty($request->data) || $request->is('post')) {
+			return false;
+		}
 		return $this->getUser($request);
 	}
 

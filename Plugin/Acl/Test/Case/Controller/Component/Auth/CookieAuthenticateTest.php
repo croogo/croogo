@@ -81,4 +81,36 @@ class CookieAuthenticateTest extends CakeTestCase {
 		$this->assertFalse($result);
 	}
 
+/**
+ * Test Ignore requests with data
+ */
+	public function testIgnoreRequestWithData() {
+		$request = $this->getMock('CakeRequest', null);
+		$response = $this->getMock('CakeResponse');
+		$request->data = array('User' => array('somedata'));
+		$collection = $this->controller->Components;
+		$cookieAuth = $this->getMock(
+			'TestCookieAuthenticate', array('getUser'), array($collection, null)
+		);
+		$cookieAuth->expects($this->never())->method('getUser');
+		$result = $cookieAuth->authenticate($request, $response);
+		$this->assertFalse($result);
+	}
+
+/**
+ * Test Ignore POST requests
+ */
+	public function testIgnorePostRequest() {
+		$request = $this->getMock('CakeRequest', null);
+		$response = $this->getMock('CakeResponse');
+		$collection = $this->controller->Components;
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$cookieAuth = $this->getMock(
+			'TestCookieAuthenticate', array('getUser'), array($collection, null)
+		);
+		$cookieAuth->expects($this->never())->method('getUser');
+		$result = $cookieAuth->authenticate($request, $response);
+		$this->assertFalse($result);
+	}
+
 }
