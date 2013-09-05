@@ -15,6 +15,9 @@ App::uses('BaseAuthorize', 'Controller/Component/Auth');
  */
 class AclCachedAuthorize extends BaseAuthorize {
 
+/**
+ * Constructor
+ */
 	public function __construct(ComponentCollection $collection, $settings = array()) {
 		parent::__construct($collection, $settings);
 		$this->_setPrefixMappings();
@@ -64,10 +67,35 @@ class AclCachedAuthorize extends BaseAuthorize {
 	}
 
 /**
+ * Checks whether $user is an administrator
+ *
+ * @param bool True if user has administrative role
+ */
+	protected function _isAdmin($user) {
+		static $Role = null;
+		if (empty($user['role_id'])) {
+			return false;
+		}
+		if (empty($this->_adminRole)) {
+			if (empty($Role)) {
+				$Role = ClassRegistry::init('Users.Role');
+				$Role->Behaviors->attach('Croogo.Aliasable');
+			}
+			$this->_adminRole = $Role->byAlias('admin');
+		}
+		return $user['role_id'] == $this->_adminRole;
+	}
+
+/**
  * check request request authorization
  *
  */
 	public function authorize($user, CakeRequest $request) {
+		// Admin role is allowed to perform all actions, bypassing ACL
+		if ($this->_isAdmin($user)) {
+			return true;
+		}
+
 		$allowed = false;
 		$Acl = $this->_Collection->load('Acl');
 		list($plugin, $userModel) = pluginSplit($this->settings['userModel']);
