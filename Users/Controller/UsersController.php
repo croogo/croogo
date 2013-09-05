@@ -226,6 +226,13 @@ class UsersController extends UsersAppController {
 	public function admin_login() {
 		$this->set('title_for_layout', __d('croogo', 'Admin Login'));
 		$this->layout = "admin_login";
+		if ($this->Auth->user('id')) {
+			$this->Session->setFlash(
+				__d('croogo', 'You are already logged in'), 'default',
+				array('class' => 'alert'), 'auth'
+			);
+			return $this->redirect($this->Auth->redirect());
+		}
 		if ($this->request->is('post')) {
 			Croogo::dispatchEvent('Controller.Users.beforeAdminLogin', $this);
 			if ($this->Auth->login()) {

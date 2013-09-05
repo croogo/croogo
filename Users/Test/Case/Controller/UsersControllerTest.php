@@ -56,15 +56,18 @@ class UsersControllerTest extends CroogoControllerTestCase {
 				'Security',
 			),
 		));
-		$this->controller->Auth
-			->staticExpects($this->any())
-			->method('user')
-			->will($this->returnCallback(array($this, 'authUserCallback')));
 
 		$this->controller->Auth
 			->staticExpects($this->any())
 			->method('identify')
 			->will($this->returnCallback(array($this, 'authIdentifyFalse')));
+	}
+
+	protected function _setupAuthUser() {
+		$this->controller->Auth
+			->staticExpects($this->any())
+			->method('user')
+			->will($this->returnCallback(array($this, 'authUserCallback')));
 	}
 
 	public function authIdentifyFalse() {
@@ -87,6 +90,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminIndex() {
+		$this->_setupAuthUser();
 		$this->testAction('/admin/users/users/index');
 		$this->assertNotEmpty($this->vars['displayFields']);
 		$this->assertNotEmpty($this->vars['users']);
@@ -99,6 +103,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminIndexSearch() {
+		$this->_setupAuthUser();
 		$this->testAction('/admin/users/users/index?name=admin');
 		$this->assertEquals(1, count($this->vars['users']));
 	}
@@ -109,6 +114,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAddInvalidPassword() {
+		$this->_setupAuthUser();
 		$_SERVER['SERVER_NAME'] = 'croogo.dev';
 		$this->UsersController->Session
 			->expects($this->once())
@@ -140,6 +146,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAddtestAddOtherErrors() {
+		$this->_setupAuthUser();
 		$_SERVER['SERVER_NAME'] = 'croogo.dev';
 		$this->UsersController->Session
 			->expects($this->once())
@@ -174,6 +181,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminAdd() {
+		$this->_setupAuthUser();
 		$this->expectFlashAndRedirect('The User has been saved');
 		$this->testAction('/admin/users/users/add', array(
 			'data' => array(
@@ -196,6 +204,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminEdit() {
+		$this->_setupAuthUser();
 		$this->expectFlashAndRedirect('The User has been saved');
 		$this->testAction('/admin/users/users/edit/1', array(
 			'data' => array(
@@ -218,6 +227,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminDelete() {
+		$this->_setupAuthUser();
 		$this->expectFlashAndRedirect('User deleted');
 		$this->testAction('/admin/users/users/delete/2'); // ID of rchavik
 		$hasAny = $this->UsersController->User->hasAny(array(
@@ -232,6 +242,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminDeleteCurrentUser() {
+		$this->_setupAuthUser();
 		// check that another admin exists
 		$hasAny = $this->UsersController->User->hasAny(array(
 			'User.username' => 'rchavik',
@@ -255,6 +266,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testResetPasswordWithValidInfo() {
+		$this->_setupAuthUser();
 		$this->testAction(
 			sprintf('/users/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2')
 		);
@@ -267,6 +279,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testResetPasswordWithInvalidInfo() {
+		$this->_setupAuthUser();
 		$this->UsersController->Session
 			->expects($this->once())
 			->method('setFlash')
@@ -289,6 +302,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testResetPasswordUpdatesPassword() {
+		$this->_setupAuthUser();
 		$this->testAction(
 			sprintf('/users/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
 			array(
@@ -312,6 +326,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testResetPasswordWithMismatchValues() {
+		$this->_setupAuthUser();
 		$this->testAction(
 			sprintf('/users/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
 			array(
