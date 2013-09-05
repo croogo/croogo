@@ -42,11 +42,20 @@ class AclAutoLoginComponent extends Component {
 	protected $_fields;
 
 /**
+ * Constructor
+ */
+	public function __construct(ComponentCollection $collection, $settings = array()) {
+		$settings = Hash::merge(array(
+			'cookieName' => 'CAL',
+		), $settings);
+		return parent::__construct($collection, $settings);
+	}
+
+/**
  * Component startup
  */
 	public function startup(Controller $controller) {
 		$this->_Controller = $controller;
-		$this->Cookie->name = 'CAL';
 		$controller->getEventManager()->attach(
 			array($this, 'onAdminLogoutSuccessful'),
 			'Controller.Users.adminLogoutSuccessful'
