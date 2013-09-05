@@ -99,15 +99,59 @@ class AclAutoLoginComponent extends Component {
 	}
 
 /**
+ * Helper method to write autologin cookie
+ *
+ * @see CookieComponent::write()
+ * @return void
+ */
+	protected function _writeCookie($key, $value = null, $encrypt = true, $expires = null) {
+		$this->Cookie->name = $this->settings['cookieName'];
+		$this->Cookie->write($key, $value, $encrypt, $expires);
+	}
+
+/**
+ * Helper method to read autologin cookie
+ *
+ * @see CookieComponent::read()
+ * @return string or null, value for specified key
+ */
+	protected function _readCookie($key = null) {
+		$this->Cookie->name = $this->settings['cookieName'];
+		return $this->Cookie->read($key);
+	}
+
+/**
+ * Helper method to check autologin cookie
+ *
+ * @see CookieComponent::check()
+ * @return boolean True if variable is there
+ */
+	protected function _checkCookie($key) {
+		$this->Cookie->name = $this->settings['cookieName'];
+		return $this->Cookie->check($key);
+	}
+
+/**
+ * Helper method to delete autologin cookie
+ *
+ * @see CookieComponent::delete()
+ * @return void
+ */
+	protected function _deleteCookie($key) {
+		$this->Cookie->name = $this->settings['cookieName'];
+		$this->Cookie->delete($key);
+	}
+
+/**
  * Verify cookie data
  *
  * return array|boolean false when data is invalid
  */
 	protected function _verify() {
-		if (!$this->Cookie->check($this->_userModel)) {
+		if (!$this->_checkCookie($this->_userModel)) {
 			return array();
 		}
-		$data = $this->Cookie->read($this->_userModel);
+		$data = $this->_readCookie($this->_userModel);
 		if (is_array($data) && !empty($data['time'])) {
 			$hash = $data['hash'];
 			$time = $data['time'];
@@ -132,7 +176,7 @@ class AclAutoLoginComponent extends Component {
 		if (empty($userId)) {
 			$request->data = $this->_verify();
 			if ($request->data === false) {
-				$this->Cookie->delete($this->_userModel);
+				$this->_deleteCookie($this->_userModel);
 				throw new UnauthorizedException('Invalid cookie');
 			}
 			if ($this->Auth->login()) {
@@ -156,7 +200,7 @@ class AclAutoLoginComponent extends Component {
 		}
 		if ($request->is('post') && $remember) {
 			$data = $this->_cookie($request);
-			$this->Cookie->write($this->_userModel, $data, true, $expires);
+			$this->_writeCookie($this->_userModel, $data, true, $expires);
 		}
 		return true;
 	}
@@ -167,7 +211,7 @@ class AclAutoLoginComponent extends Component {
  * @return bool
  */
 	public function onAdminLogoutSuccessful($event) {
-		$this->Cookie->delete($this->_userModel);
+		$this->_deleteCookie($this->_userModel);
 		return true;
 	}
 
