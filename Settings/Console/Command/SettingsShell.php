@@ -209,6 +209,9 @@ class SettingsShell extends AppShell {
 			$this->err('Git repository not found');
 			return false;
 		}
+		if (!is_dir($gitDir)) {
+			$gitDir = dirname($gitDir);
+		}
 
 		$git = trim(shell_exec('which git'));
 		if (empty($git)) {
