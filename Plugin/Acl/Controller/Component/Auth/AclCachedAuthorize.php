@@ -15,6 +15,9 @@ App::uses('BaseAuthorize', 'Controller/Component/Auth');
  */
 class AclCachedAuthorize extends BaseAuthorize {
 
+/**
+ * Constructor
+ */
 	public function __construct(ComponentCollection $collection, $settings = array()) {
 		parent::__construct($collection, $settings);
 		$this->_setPrefixMappings();
@@ -64,17 +67,41 @@ class AclCachedAuthorize extends BaseAuthorize {
 	}
 
 /**
+ * Checks whether $user is an administrator
+ *
+ * @param bool True if user has administrative role
+ */
+	protected function _isAdmin($user) {
+		static $Role = null;
+		if (empty($user['role_id'])) {
+			return false;
+		}
+		if (empty($this->_adminRole)) {
+			if (empty($Role)) {
+				$Role = ClassRegistry::init('Users.Role');
+				$Role->Behaviors->attach('Croogo.Aliasable');
+			}
+			$this->_adminRole = $Role->byAlias('admin');
+		}
+		return $user['role_id'] == $this->_adminRole;
+	}
+
+/**
  * check request request authorization
  *
  */
 	public function authorize($user, CakeRequest $request) {
+		// Admin role is allowed to perform all actions, bypassing ACL
+		if ($this->_isAdmin($user)) {
+			return true;
+		}
+
 		$allowed = false;
 		$Acl = $this->_Collection->load('Acl');
 		list($plugin, $userModel) = pluginSplit($this->settings['userModel']);
-		$user = array($userModel => $user);
 		$action = $this->action($request);
 
-		$cacheName = 'permissions_' . strval($user['User']['id']);
+		$cacheName = 'permissions_' . strval($user['id']);
 		if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
 			$permissions = array();
 			Cache::write($cacheName, $permissions, 'permissions');
@@ -82,7 +109,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 
 		if (!isset($permissions[$action])) {
 			$User = ClassRegistry::init($this->settings['userModel']);
-			$User->id = $user['User']['id'];
+			$User->id = $user['id'];
 			$allowed = $Acl->check($User, $action);
 			$permissions[$action] = $allowed;
 			Cache::write($cacheName, $permissions, 'permissions');
@@ -95,7 +122,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		if (Configure::read('debug')) {
 			$status = $allowed ? ' allowed.' : ' denied.';
 			$cached = $hit ? ' (cache hit)' : ' (cache miss)';
-			CakeLog::write(LOG_ERR, $user['User']['username'] . ' - ' . $action . $status . $cached);
+			CakeLog::write(LOG_ERR, $user['username'] . ' - ' . $action . $status . $cached);
 		}
 
 		if (!$allowed) {
@@ -130,7 +157,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		foreach ($ids as $id) {
 			if (is_numeric($id)) {
 				try {
-					$allowed = $this->_authorizeByContent($user['User'], $request, $id);
+					$allowed = $this->_authorizeByContent($user, $request, $id);
 				} catch (CakeException $e) {
 					$allowed = false;
 				}
@@ -168,7 +195,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		$alias = sprintf('%s.%s', $acoNode['model'], $acoNode['foreign_key']);
 		$action = $this->settings['actionMap'][$request->params['action']];
 
-		$cacheName = 'permissions_content_' . strval($user['User']['id']);
+		$cacheName = 'permissions_content_' . strval($user['id']);
 		if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
 			$permissions = array();
 			Cache::write($cacheName, $permissions, 'permissions');
@@ -193,7 +220,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		if (Configure::read('debug')) {
 			$status = $allowed ? ' allowed.' : ' denied.';
 			$cached = $hit ? ' (cache hit)' : ' (cache miss)';
-			CakeLog::write(LOG_ERR, $user['User']['username'] . ' - ' . $action . '/' . $id . $status . $cached);
+			CakeLog::write(LOG_ERR, $user['username'] . ' - ' . $action . '/' . $id . $status . $cached);
 		}
 		return $allowed;
 	}

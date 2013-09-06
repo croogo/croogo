@@ -16,6 +16,7 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
 		'plugin.users.aro',
 		'plugin.users.aco',
 		'plugin.users.aros_aco',
+		'plugin.users.role',
 		'plugin.menus.menu',
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.types_vocabulary',
