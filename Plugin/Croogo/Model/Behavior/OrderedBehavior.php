@@ -161,7 +161,7 @@ class OrderedBehavior extends ModelBehavior {
  * @todo add new model with weight. clean up after
  * @param Model $Model
  */
-	public function beforeSave(Model $Model) {
+	public function beforeSave(Model $Model, $options = array()) {
 		// Check if weight id is set. If not add to end, if set update all
 		// rows from ID and up
 		if (!isset($Model->data[$Model->alias][$Model->primaryKey])) {
