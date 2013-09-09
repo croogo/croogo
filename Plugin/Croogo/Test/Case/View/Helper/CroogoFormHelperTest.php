@@ -324,4 +324,34 @@ class CroogoFormHelperTest extends CroogoTestCase {
 		$this->assertTags($result, $expected);
 	}
 
+/**
+ * Test placeholder with nested model fields
+ */
+	public function testInputPlaceholderNestedModel() {
+		$expected = array(
+			'div' => array(
+				'class',
+			),
+			'label' => array(
+				'for',
+			),
+			'Node',
+			'/label',
+			'select' => array(
+				'name',
+				'placeholder' => 'Node',
+				'data-placement',
+				'data-trigger',
+				'data-title',
+				'id',
+			),
+			'/select',
+			'/div',
+		);
+		$result = $this->CroogoForm->input('User.Comment.node_id', array(
+			'placeholder' => true,
+		));
+		$this->assertTags($result, $expected);
+	}
+
 }
