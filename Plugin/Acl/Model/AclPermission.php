@@ -54,7 +54,7 @@ class AclPermission extends Permission {
 /**
  * afterSave
  */
-	public function afterSave($created) {
+	public function afterSave($created, $options = array()) {
 		Cache::clearGroup('acl', 'permissions');
 	}
 

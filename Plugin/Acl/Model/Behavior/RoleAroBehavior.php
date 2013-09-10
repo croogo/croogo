@@ -50,7 +50,7 @@ class RoleAroBehavior extends ModelBehavior {
  *
  * Update the corresponding ACO record alias
  */
-	public function afterSave(Model $model, $created) {
+	public function afterSave(Model $model, $created, $options = array()) {
 		$node = $model->node();
 		$aro = $node[0];
 		if (!empty($model->data[$model->alias]['alias'])) {

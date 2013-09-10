@@ -47,7 +47,7 @@ class RowLevelAclBehavior extends ModelBehavior {
  * creator. If 'RolePermission' is present, 'grant' or 'inherit' permissions
  * for the role.
  */
-	public function afterSave(Model $model, $created) {
+	public function afterSave(Model $model, $created, $options = array()) {
 		if (empty($model->data[$model->alias][$model->primaryKey])) {
 			return;
 		}
