@@ -57,7 +57,7 @@ class TrackableBehavior extends ModelBehavior {
 		if (!empty($model->belongsTo['TrackableCreator'])) {
 			return;
 		}
-		$config = $this->settings[$model->name];
+		$config = $this->settings[$model->alias];
 		list($plugin, $modelName) = pluginSplit($config['userModel']);
 		if (isset($this->{$modelName})) {
 			$User = $this->{$modelName};
@@ -94,7 +94,7 @@ class TrackableBehavior extends ModelBehavior {
 		if (!$this->_hasTrackableFields($model)) {
 			return true;
 		}
-		$config = $this->settings[$model->name];
+		$config = $this->settings[$model->alias];
 
 		$User = ClassRegistry::init($config['userModel']);
 		$userAlias = $User->alias;
@@ -105,7 +105,11 @@ class TrackableBehavior extends ModelBehavior {
 			$user = AuthComponent::user();
 		}
 
-		if (empty($user) || !array_key_exists($userPk, $user)) {
+		if ($user && array_key_exists($userPk, $user)) {
+			$userId = $user[$userPk];
+		}
+
+		if (empty($user) || empty($userId)) {
 			return true;
 		}
 
@@ -118,8 +122,12 @@ class TrackableBehavior extends ModelBehavior {
 				$model->data[$alias][$createdByField] = $user[$userPk];
 			}
 		}
+		$model->data[$alias][$updatedByField] = $userId;
 
-		$model->data[$alias][$updatedByField] = $user[$userPk];
+		if (!empty($model->whitelist)) {
+			$model->whitelist[] = $createdByField;
+			$model->whitelist[] = $updatedByField;
+		}
 
 		return true;
 	}

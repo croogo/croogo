@@ -1,12 +1,28 @@
 <?php
 
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
+App::uses('User', 'Users.Model');
+
+class TrackableUserModel extends User {
+
+	public $useTable = 'users';
+
+	public $order = 'TrackableUserModel.name';
+
+	public $actsAs = array(
+		'Croogo.Trackable' => array(
+			'userModel' => 'TrackableUserModel',
+		),
+	);
+}
 
 class TrackableBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
 		'plugin.croogo.trackable',
 		'plugin.users.user',
+		'plugin.users.role',
+		'plugin.settings.setting',
 	);
 
 	public function setUp() {
@@ -91,6 +107,53 @@ class TrackableBehaviorTest extends CroogoTestCase {
 		$this->assertNotEmpty($data['created_by']);
 		$this->assertEquals($data['created_by'], $data['updated_by']);
 		$this->assertEquals('yvonne', $result['TrackableCreator']['username']);
+	}
+
+/**
+ * Test with uncommon/inherited User model
+ */
+	public function testUncommonInheritedUserModel() {
+		$User = ClassRegistry::init('TrackableUserModel');
+		$User->Behaviors->detach('UserAro');
+		$User->Behaviors->detach('Acl');
+
+		$user = $User->findById(1);
+		$this->assertTrue(isset($user['TrackableCreator']));
+		$this->assertTrue(isset($user['TrackableUpdater']));
+
+		$user['TrackableUserModel']['bio'] = 'I am the law';
+
+		$this->_authTrackable();
+		$User->id = $user['TrackableUserModel']['id'];
+		$user['TrackableUserModel']['bio'] = 'I am the admin';
+		unset($user['TrackableUserModel']['website']);
+		$User->save($user);
+		$user = $User->findById(1);
+
+		$this->assertEquals('1', $user['TrackableUserModel']['updated_by']);
+		$this->assertEquals('1', $user['TrackableUpdater']['id']);
+	}
+
+/**
+ * Test Trackable saveField
+ */
+	public function testTrackableSaveField() {
+		$User = ClassRegistry::init('TrackableUserModel');
+		$User->Behaviors->detach('UserAro');
+		$User->Behaviors->detach('Acl');
+
+		$user = $User->findById(1);
+		$this->assertTrue(isset($user['TrackableCreator']));
+		$this->assertTrue(isset($user['TrackableUpdater']));
+
+		$this->_authTrackable('id', 3);
+		$User->id = $user['TrackableUserModel']['id'];
+		$saved = $User->saveField('bio', 'Rockstar');
+		$user = $User->findById(1);
+
+		$this->assertEquals('Rockstar', $user['TrackableUserModel']['bio']);
+		$this->assertEquals('3', $user['TrackableUserModel']['updated_by']);
+		$this->assertEquals('3', $user['TrackableUpdater']['id']);
 	}
 
 }
