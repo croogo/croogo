@@ -142,7 +142,7 @@ class OrderedBehavior extends ModelBehavior {
 			$oldWeight = $Model->data[$Model->alias][$this->settings[$Model->alias]['field']];
 
 			// update the weight of all models of higher weight by
-			$action = array($this->settings[$Model->alias]['field'] => $this->settings[$Model->alias]['field'] . ' - 1');
+			$action = array($this->settings[$Model->alias]['field'] => $Model->alias . '.' . $this->settings[$Model->alias]['field'] . ' - 1');
 			$conditions = array(
 					$Model->alias . '.' . $this->settings[$Model->alias]['field'] . ' >' => $oldWeight);
 			if ($this->settings[$Model->alias]['foreign_key']) {

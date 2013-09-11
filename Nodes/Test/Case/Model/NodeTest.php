@@ -78,7 +78,13 @@ class NodeTest extends CroogoTestCase {
 			),
 		);
 		$this->Node->cacheTerms();
-		$this->assertEqual($this->Node->data['Node']['terms'], '{"1":"uncategorized","2":"announcements"}');
+
+		$terms = json_decode($this->Node->data['Node']['terms'], true);
+		ksort($terms, SORT_NUMERIC);
+		$result = json_encode($terms);
+
+		$expected = '{"1":"uncategorized","2":"announcements"}';
+		$this->assertEquals($expected, $result);
 	}
 
 	public function testNodeDeleteDependent() {

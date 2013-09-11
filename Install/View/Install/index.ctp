@@ -21,18 +21,20 @@
 
 		// php version
 		$minPhpVersion = '5.2.8';
-		if (version_compare(phpversion(), $minPhpVersion, '>=')) {
-			echo '<p class="success">' . sprintf(__d('croogo', 'PHP version %s >= %s'), phpversion(), $minPhpVersion) . '</p>';
+		$operator = '>=';
+		if (version_compare(phpversion(), $minPhpVersion, $operator)) {
+			echo '<p class="success">' . sprintf(__d('croogo', 'PHP version %s %s %s'), phpversion(), $operator, $minPhpVersion) . '</p>';
 		} else {
 			$check = false;
 			echo '<p class="error">' . sprintf(__d('croogo', 'PHP version %s < %s'), phpversion(), $minPhpVersion) . '</p>';
 		}
 
 		// cakephp version
-		$minCakeVersion = '2.3.0';
+		$minCakeVersion = '2.4.0';
 		$cakeVersion = Configure::version();
-		if (version_compare($cakeVersion, $minCakeVersion, '>=')) {
-			echo '<p class="success">' . __d('croogo', 'CakePhp version %s >= %s', $cakeVersion, $minCakeVersion) . '</p>';
+		$operator = '>';
+		if (version_compare($cakeVersion, $minCakeVersion, $operator)) {
+			echo '<p class="success">' . __d('croogo', 'CakePhp version %s %s %s', $cakeVersion, $operator, $minCakeVersion) . '</p>';
 		} else {
 			$check = false;
 			echo '<p class="error">' . __d('croogo', 'CakePHP version %s < %s', $cakeVersion, $minCakeVersion) . '</p>';

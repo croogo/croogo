@@ -39,7 +39,7 @@ class CachedBehavior extends ModelBehavior {
  * @param boolean $created
  * @return void
  */
-	public function afterSave(Model $model, $created) {
+	public function afterSave(Model $model, $created, $options = array()) {
 		$this->_deleteCachedFiles($model);
 	}
 

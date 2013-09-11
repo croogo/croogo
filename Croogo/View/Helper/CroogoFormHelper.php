@@ -85,7 +85,11 @@ class CroogoFormHelper extends FormHelper {
 				$options['placeholder'] = $options['title'];
 			} else {
 				if (strpos($fieldName, '.') !== false) {
-					list(, $placeholder) = explode('.', $fieldName);
+					$fieldNameE = explode('.', $fieldName);
+					$placeholder = end($fieldNameE);
+					if (substr($placeholder, -3) == '_id') {
+						$placeholder = substr($placeholder, 0, -3);
+					}
 				} else {
 					$placeholder = $fieldName;
 				}

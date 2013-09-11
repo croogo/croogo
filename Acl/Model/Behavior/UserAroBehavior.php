@@ -71,7 +71,7 @@ class UserAroBehavior extends ModelBehavior {
  * @param boolean $created
  * @return void
  */
-	public function afterSave(Model $model, $created) {
+	public function afterSave(Model $model, $created, $options = array()) {
 		// update ACO alias
 		if (!empty($model->data['User']['username'])) {
 			$node = $model->node();

@@ -86,7 +86,7 @@ class Setting extends SettingsAppModel {
  *
  * @return void
  */
-	public function afterSave($created) {
+	public function afterSave($created, $options = array()) {
 		$this->updateJson();
 		$this->writeConfiguration();
 	}
