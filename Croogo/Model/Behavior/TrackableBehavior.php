@@ -90,7 +90,7 @@ class TrackableBehavior extends ModelBehavior {
  *
  * Note that value stored in this variable overrides session data.
  */
-	public function beforeSave(Model $model) {
+	public function beforeSave(Model $model, $options = array()) {
 		if (!$this->_hasTrackableFields($model)) {
 			return true;
 		}

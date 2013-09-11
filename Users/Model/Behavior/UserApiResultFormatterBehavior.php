@@ -10,7 +10,7 @@ class UserApiResultFormatterBehavior extends ModelBehavior {
 /**
  * afterFind
  */
-	public function afterFind(Model $model, $results, $primary) {
+	public function afterFind(Model $model, $results, $primary = true) {
 		$user = array();
 		foreach ($results as $result) {
 			$row = array();
