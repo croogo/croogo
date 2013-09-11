@@ -101,7 +101,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return array Modified results
  * @access public
  */
-	public function afterFind(Model $model, $results, $primary) {
+	public function afterFind(Model $model, $results, $primary = true) {
 		$locale = $this->_getLocale($model);
 
 		if (empty($locale) || empty($results)) {
