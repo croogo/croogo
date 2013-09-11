@@ -59,11 +59,6 @@ class TrackableBehavior extends ModelBehavior {
 		}
 		$config = $this->settings[$model->alias];
 		list($plugin, $modelName) = pluginSplit($config['userModel']);
-		if (isset($this->{$modelName})) {
-			$User = $this->{$modelName};
-		} else {
-			$User = ClassRegistry::init($config['userModel']);
-		}
 		$className = isset($plugin) ? $plugin . '.' . $modelName : $modelName;
 		$model->bindModel(array(
 			'belongsTo' => array(
