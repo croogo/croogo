@@ -77,5 +77,28 @@ class NodeFixture extends CroogoTestFixture {
 			'updated' => '2009-12-25 22:00:00',
 			'created' => '2009-12-25 22:00:00'
 		),
+		array(
+			'id' => 3,
+			'parent_id' => null,
+			'user_id' => 1,
+			'title' => 'Protected',
+			'slug' => 'protected',
+			'body' => '<p>This page is only visible to admin</p>',
+			'excerpt' => '',
+			'status' => 1,
+			'mime_type' => '',
+			'comment_status' => 0,
+			'comment_count' => 0,
+			'promote' => 1,
+			'path' => '/page/protected',
+			'terms' => '',
+			'sticky' => 0,
+			'lft' => 3,
+			'rght' => 4,
+			'visibility_roles' => '["1"]',
+			'type' => 'page',
+			'updated' => '2013-09-12 20:00:00',
+			'created' => '2013-09-12 20:00:00'
+		),
 	);
 }

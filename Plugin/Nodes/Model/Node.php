@@ -579,7 +579,7 @@ class Node extends NodesAppModel {
 	protected function _mergeQueryFilters(&$query, $key, $values) {
 		if (!empty($query[$key])) {
 			if (is_array($query[$key])) {
-				$query[$key] = array_merge($query[$key], $values);
+				$query[$key] = Hash::merge($query[$key], $values);
 			}
 		} else {
 			$query[$key] = $values;

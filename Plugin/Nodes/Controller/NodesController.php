@@ -519,11 +519,16 @@ class NodesController extends NodesAppController {
 	public function promoted() {
 		$this->set('title_for_layout', __d('croogo', 'Nodes'));
 
+		$roleId = $this->Auth->user('role_id');
+		if (empty($roleId)) {
+			$roleId = $this->Croogo->roleId;
+		}
+
 		$this->paginate['Node']['type'] = 'promoted';
 		$this->paginate['Node']['conditions'] = array(
 			'OR' => array(
 				'Node.visibility_roles' => '',
-				'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
+				'Node.visibility_roles LIKE' => '%"' . $roleId . '"%',
 			),
 		);
 
