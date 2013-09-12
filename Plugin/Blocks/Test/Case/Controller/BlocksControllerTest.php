@@ -175,6 +175,8 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 			'blogroll',
 			'recent_posts',
 			'meta',
+			'block-visible-by-public',
+			'block-visible-by-admin-or-registered',
 		));
 	}
 
@@ -201,6 +203,8 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 			'categories',
 			'recent_posts',
 			'meta',
+			'block-visible-by-public',
+			'block-visible-by-admin-or-registered',
 		));
 	}
 
@@ -227,6 +231,8 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 			'blogroll',
 			'recent_posts',
 			'meta',
+			'block-visible-by-public',
+			'block-visible-by-admin-or-registered',
 		));
 	}
 
@@ -253,6 +259,8 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 			'search',
 			'recent_posts',
 			'meta',
+			'block-visible-by-public',
+			'block-visible-by-admin-or-registered',
 		));
 	}
 
@@ -288,6 +296,8 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 			'search',
 			'categories',
 			'recent_posts',
+			'block-visible-by-public',
+			'block-visible-by-admin-or-registered',
 		));
 	}
 
@@ -344,6 +354,8 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 			'blogroll',
 			'recent_posts',
 			'meta',
+			'block-visible-by-public',
+			'block-visible-by-admin-or-registered',
 		));
 	}
 
@@ -382,6 +394,8 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		$this->assertEqual($blockAliases, array(
 			'categories',
 			'recent_posts',
+			'block-visible-by-public',
+			'block-visible-by-admin-or-registered',
 		));
 	}
 
