@@ -166,10 +166,10 @@ class CommentsController extends CommentsAppController {
 			$this->Comment->deleteAll(array('Comment.id' => $ids), true, true)) {
 			$this->Session->setFlash(__d('croogo', 'Comments deleted'), 'default', array('class' => 'success'));
 		} elseif ($action == 'publish' &&
-			$this->Comment->updateAll(array('Comment.status' => true), array('Comment.id' => $ids))) {
+			$this->Comment->changeStatus($ids, true)) {
 			$this->Session->setFlash(__d('croogo', 'Comments published'), 'default', array('class' => 'success'));
 		} elseif ($action == 'unpublish' &&
-			$this->Comment->updateAll(array('Comment.status' => false), array('Comment.id' => $ids))) {
+			$this->Comment->changeStatus($ids, false)) {
 			$this->Session->setFlash(__d('croogo', 'Comments unpublished'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
