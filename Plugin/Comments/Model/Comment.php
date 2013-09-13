@@ -182,4 +182,15 @@ class Comment extends AppModel {
 		return Configure::read('Comment.level') > $level;
 	}
 
+	public function changeStatus($ids, $status) {
+		$dataArray = array();
+		foreach ($ids as $id) {
+			$dataArray[] = array(
+				$this->primaryKey => $id,
+				'status' => $status
+			);
+		}
+		return $this->saveMany($dataArray, array('validate' => false));
+	}
+
 }

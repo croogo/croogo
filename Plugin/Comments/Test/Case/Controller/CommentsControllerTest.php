@@ -153,7 +153,10 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 			'id' => 1,
 			'status' => 0,
 		));
+		$relevantNode = $this->CommentsController->Comment->Node->findById(1);
 		$this->assertTrue($comment);
+		//Ensure that the counterCache field has been updated for the rest of the test
+		$this->assertEqual($relevantNode['Node']['comment_count'], 0);
 
 		$this->expectFlashAndRedirect('Comments published');
 
@@ -179,6 +182,9 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		$this->assertEqual($list, array(
 			'1' => 'Mr Croogo',
 		));
+
+		$relevantNode = $this->CommentsController->Comment->Node->findById(1);
+		$this->assertEqual($relevantNode['Node']['comment_count'], 1);
 	}
 
 /**
@@ -207,6 +213,9 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 			'order' => 'Comment.lft ASC',
 		));
 		$this->assertEqual($list, array());
+
+		$relevantNode = $this->CommentsController->Comment->Node->findById(1);
+		$this->assertEqual($relevantNode['Node']['comment_count'], 0);
 	}
 
 /**
