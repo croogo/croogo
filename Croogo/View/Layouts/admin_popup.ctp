@@ -7,15 +7,15 @@
 		<?php
 
 		echo $this->Html->css(array(
-			'/croogo/css/croogo-bootstrap',
-			'/croogo/css/croogo-bootstrap-responsive',
+			'/css/croogo-bootstrap',
+			'/css/croogo-bootstrap-responsive',
 		));
 		echo $this->Layout->js();
 		echo $this->Html->script(array(
 			'/croogo/js/html5',
 			'/croogo/js/jquery/jquery.min',
 			'/croogo/js/jquery/jquery.slug',
-			'/croogo/js/croogo-bootstrap.js',
+			'/js/croogo-bootstrap.js',
 			'/croogo/js/underscore-min',
 			'/croogo/js/admin',
 		));

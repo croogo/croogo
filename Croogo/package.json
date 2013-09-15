@@ -1,0 +1,8 @@
+{
+  "name": "Croogo",
+  "dependencies": {
+    "grunt-shell": "0.3.x",
+    "grunt-contrib-less": "0.5.x",
+    "grunt-contrib-concat": "0.2.x"
+  }
+}
