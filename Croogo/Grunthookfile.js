@@ -6,7 +6,6 @@ module.exports = function(grunt, initConfig) {
 
 	var files = {};
 	var dir = String(__dirname).replace(initConfig.rootPath + '/', '');
-	console.log(dir);
 	files['webroot/css/croogo-bootstrap.css'] = dir + '/webroot/less/admin.less';
 	files['webroot/css/croogo-bootstrap-responsive.css'] = dir + '/webroot/less/admin-responsive.less';
 
