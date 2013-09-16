@@ -2,6 +2,7 @@
 
 App::uses('CakeLog', 'Log');
 App::uses('ClassRegistry', 'Core');
+App::uses('File', 'Utility');
 App::uses('Model', 'Model');
 
 /**
@@ -59,6 +60,75 @@ class DataMigration {
 			ClassRegistry::removeObject($modelAlias);
 		}
 		return true;
+	}
+
+/**
+ * Generate data files
+ *
+ * The first two arguments will be passed to Model::find().
+ * `$options` accepts the following keys:
+ * - `model`: accepts `name`, `table`, and `ds`. See `ClassRegistry::init()`
+ * - `output`: Path to output file
+ *
+ * @param string $type Type of query, eg: 'first' or 'all'. See Model::find()
+ * @param array $query Query options passed as second argument to Model::find()
+ * @param array $options Array of options. Accepts `model` and `output` keys
+ * @see Model::find()
+ */
+	public function generate($type, $query = array(), $options = array()) {
+		$options = Hash::merge(array(
+			'model' => array(
+				'name' => null,
+				'table' => null,
+				'ds' => null,
+			),
+			'output' => null,
+		), $options);
+
+		$modelOptions = $options['model'];
+		$name = $modelOptions['name'];
+		$table = $modelOptions['table'];
+		$ds = $modelOptions['ds'];
+
+		$Model = new Model(array(
+			'name' => $name,
+			'table' => $table,
+			'ds' => $ds,
+		));
+		$records = $Model->find($type, $query);
+
+		// generate file content
+		$recordString = '';
+		foreach ($records as $record) {
+			$values = array();
+			foreach ($record[$name] as $field => $value) {
+				$values[] = "\t\t\t'$field' => '$value'";
+			}
+			$recordString .= "\t\tarray(\n";
+			$recordString .= implode(",\n", $values);
+			$recordString .= "\n\t\t),\n";
+		}
+		$content = "<?php\n\n";
+			$content .= "class " . $name . "Data" . " {\n\n";
+				$content .= "\tpublic \$table = '" . $table . "';\n\n";
+				$content .= "\tpublic \$records = array(\n";
+					$content .= $recordString;
+				$content .= "\t);\n\n";
+			$content .= "}\n";
+
+		return $this->_writeFile($options['output'], $content);
+	}
+
+/**
+ * Writes outputfile
+ *
+ * @param string $outputFile Output file name
+ * @param string $content File content
+ * @return boolean Success
+ */
+	protected function _writeFile($outputFile, $content) {
+		$File = new File($outputFile, true);
+		return $File->write($content);
 	}
 
 }
