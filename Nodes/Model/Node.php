@@ -399,7 +399,7 @@ class Node extends NodesAppModel {
 		}
 
 		if ($actionToPerform === self::UNPROCESSED_ACTION) {
-			$success = $this->{$this->actionsMapping[$actionToPerform]}(array($this->escapeField() => $ids));
+			$success = $this->{$this->actionsMapping[$actionToPerform]}(array($this->escapeField() => $ids), true, true);
 		} else {
 			$success = $this->{$this->actionsMapping[$actionToPerform]}($ids);
 		}
