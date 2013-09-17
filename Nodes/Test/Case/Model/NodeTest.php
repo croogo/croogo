@@ -262,11 +262,26 @@ class NodeTest extends CroogoTestCase {
 	public function testProcessActionDelete() {
 		$ids = array('1','2');
 
+		$commentCount = $this->Node->Comment->find('count', array(
+			'conditions' => array(
+				'Comment.node_id' => $ids,
+			)
+		));
+		$this->assertTrue($commentCount > 0);
+
 		$success = $this->Node->processAction('delete', $ids);
 		$count = $this->Node->find('count');
 
 		$this->assertTrue($success);
 		$this->assertEquals(0, $count);
+
+		// verifies that related comments are deleted (by afterDelete callback)
+		$commentCount = $this->Node->Comment->find('count', array(
+			'conditions' => array(
+				'Comment.node_id' => $ids,
+			)
+		));
+		$this->assertTrue($commentCount === 0);
 	}
 
 /**
