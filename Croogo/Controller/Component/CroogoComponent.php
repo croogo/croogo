@@ -36,6 +36,7 @@ class CroogoComponent extends Component {
  *
  * @var integer
  * @access public
+ * @deprecated Will be removed in 1.6 and replaced with an API
  */
 	public $roleId = 3;
 

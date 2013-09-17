@@ -81,15 +81,20 @@ class NodesControllerTest extends CroogoControllerTestCase {
 			),
 			'components' => array(
 				'Auth' => array('user'),
-				'Session',
+				'Session' => array('read', 'setFlash'),
 				'Security' => array('blackHole'),
 			),
 		));
+
 		$this->NodesController->Node->Behaviors->detach('Acl');
 		$this->NodesController->Auth
 			->staticExpects($this->any())
 			->method('user')
 			->will($this->returnCallback(array($this, 'authUserCallback')));
+		$this->NodesController->Session
+			->staticExpects($this->any())
+			->method('read')
+			->will($this->returnValue(array('id' => 1, 'role_id' => 1)));
 		$this->NodesController->Security->Session = $this->getMock('CakeSession');
 	}
 
@@ -111,10 +116,40 @@ class NodesControllerTest extends CroogoControllerTestCase {
 	public function testAdminIndex() {
 		$this->testAction('/admin/nodes/index');
 		$this->assertNotEmpty($this->vars['nodes']);
-		$this->assertEquals(2, count($this->vars['nodes']));
+		$this->assertEquals(3, count($this->vars['nodes']));
 		$this->assertNotEmpty($this->vars['nodes'][0]['Node']);
 		$this->assertNotEmpty($this->vars['nodes'][0]['User']);
 		$this->assertArrayHasKey('CustomFields', $this->vars['nodes'][0]);
+	}
+
+/**
+ * testPromotedWithVisibilityRole
+ *
+ * @return void
+ */
+	public function testPromotedWithVisibilityRole() {
+		CakeSession::write('Auth.User', array(
+			'id' => 1,
+			'role_id' => 1,
+		));
+		$this->testAction('/nodes/nodes/promoted');
+		$this->assertTrue(count($this->vars['nodes']) === 2);
+	}
+
+/**
+ * testIndexWithVisibilityRole
+ *
+ * @return void
+ */
+	public function testIndexWithVisibilityRole() {
+		CakeSession::write('Auth.User', array(
+			'id' => 1,
+			'role_id' => 1,
+		));
+		$this->testAction('/nodes/nodes/index/type:page', array(
+			'return' => 'vars',
+		));
+		$this->assertTrue(count($this->vars['nodes']) === 2);
 	}
 
 /**
@@ -138,10 +173,12 @@ class NodesControllerTest extends CroogoControllerTestCase {
 		$this->testAction('/admin/nodes/nodes/index/links:1/filter:about');
 		$this->assertEquals('admin_popup', $this->controller->View->layout);
 		$this->assertNotEmpty($this->vars['nodes']);
+
+		$about = $this->vars['nodes'][1];
 		$this->assertNotEmpty($this->vars['nodes'][0]['Node']);
-		$this->assertEquals('about', $this->vars['nodes'][0]['Node']['slug']);
-		$this->assertNotEmpty($this->vars['nodes'][0]['User']);
-		$this->assertArrayHasKey('CustomFields', $this->vars['nodes'][0]);
+		$this->assertEquals('about', $about['Node']['slug']);
+		$this->assertNotEmpty($about['User']);
+		$this->assertArrayHasKey('CustomFields', $about);
 	}
 
 /**
@@ -401,6 +438,31 @@ class NodesControllerTest extends CroogoControllerTestCase {
 			->expects($this->never())
 			->method('render');
 		$this->Nodes->viewFallback(array('view_1', 'view_blog'));
+		unset($this->Nodes);
+	}
+
+/**
+ * testViewFallback for core NodesController with default theme
+ *
+ * @return void
+ */
+	public function testViewFallbackWithDefaultTheme() {
+		App::build(array(
+			'View' => array(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Nodes' . DS . 'View' . DS),
+		), App::APPEND);
+
+		$this->Nodes = $this->getMock('TestNodesController',
+			array('render'), array(new CakeRequest(), new CakeResponse())
+		);
+		$this->Nodes->theme = null;
+		$this->Nodes->plugin = null;
+		$this->Nodes
+			->expects($this->once())
+			->method('render')
+			->with(
+				$this->equalTo('index_node')
+			);
+		$this->Nodes->viewFallback(array('index_node'));
 		unset($this->Nodes);
 	}
 

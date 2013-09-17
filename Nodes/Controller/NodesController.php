@@ -520,11 +520,16 @@ class NodesController extends NodesAppController {
 	public function promoted() {
 		$this->set('title_for_layout', __d('croogo', 'Home'));
 
+		$roleId = $this->Auth->user('role_id');
+		if (empty($roleId)) {
+			$roleId = $this->Croogo->roleId;
+		}
+
 		$this->paginate['Node']['type'] = 'promoted';
 		$this->paginate['Node']['conditions'] = array(
 			'OR' => array(
 				'Node.visibility_roles' => '',
-				'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
+				'Node.visibility_roles LIKE' => '%"' . $roleId . '"%',
 			),
 		);
 
@@ -755,19 +760,24 @@ class NodesController extends NodesAppController {
 			$views = array($views);
 		}
 
-		if ($this->theme) {
-			$viewPaths = App::path('View');
-			foreach ($views as $view) {
-				foreach ($viewPaths as $viewPath) {
+		$viewPaths = App::path('View');
+		$nodesViewPaths = App::path('View', 'Nodes');
+		$viewPaths = array_merge($viewPaths, $nodesViewPaths);
+		foreach ($views as $view) {
+			foreach ($viewPaths as $viewPath) {
+				if ($this->theme) {
 					$viewPath = $viewPath . 'Themed' . DS . $this->theme . DS . $this->name . DS . $view . $this->ext;
-					if (file_exists($viewPath)) {
-						return $this->render($view);
-					}
+				} else {
+					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
+				}
+				if (file_exists($viewPath)) {
+					return $this->render($view);
 				}
 			}
-
 		}
 
+		// Handle fallback to views from core Nodes plugin for controllers
+		// extending NodesController
 		if ($this->plugin && $this->plugin !== 'Nodes') {
 			$views[] = $this->action;
 			$viewPaths = App::path('View', $this->plugin);
@@ -790,6 +800,8 @@ class NodesController extends NodesAppController {
 				}
 			}
 		}
+
+		return null;
 	}
 
 /**

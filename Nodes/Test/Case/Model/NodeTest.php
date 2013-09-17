@@ -226,7 +226,7 @@ class NodeTest extends CroogoTestCase {
 		$filterConditions = $this->Node->filterNodes();
 		$nodes = $this->Node->find('all', array('conditions' => $filterConditions));
 
-		$this->assertEquals(2, count($nodes));
+		$this->assertEquals(3, count($nodes));
 	}
 
 /**
@@ -260,7 +260,7 @@ class NodeTest extends CroogoTestCase {
  * test processActionDelete
  */
 	public function testProcessActionDelete() {
-		$ids = array('1','2');
+		$ids = array('1', '2');
 
 		$commentCount = $this->Node->Comment->find('count', array(
 			'conditions' => array(
@@ -273,7 +273,7 @@ class NodeTest extends CroogoTestCase {
 		$count = $this->Node->find('count');
 
 		$this->assertTrue($success);
-		$this->assertEquals(0, $count);
+		$this->assertEquals(1, $count);
 
 		// verifies that related comments are deleted (by afterDelete callback)
 		$commentCount = $this->Node->Comment->find('count', array(
@@ -288,7 +288,7 @@ class NodeTest extends CroogoTestCase {
  * test processActionPromote
  */
 	public function testProcessActionPromote() {
-		$ids = array('1','2');
+		$ids = array('1', '2');
 
 		$success = $this->Node->processAction('promote', $ids);
 		$newRecords = $this->Node->find('all');
@@ -303,7 +303,7 @@ class NodeTest extends CroogoTestCase {
  * test processActionUnpromote
  */
 	public function testProcessActionUnpromote() {
-		$ids = array('1','2');
+		$ids = array('1', '2', '3');
 
 		$success = $this->Node->processAction('unpromote', $ids);
 		$newRecords = $this->Node->find('all');
@@ -318,7 +318,7 @@ class NodeTest extends CroogoTestCase {
  * test processActionPublish
  */
 	public function testProcessActionPublish() {
-		$ids = array('1','2');
+		$ids = array('1', '2');
 
 		$success = $this->Node->processAction('publish', $ids);
 		$newRecords = $this->Node->find('all');
@@ -333,7 +333,7 @@ class NodeTest extends CroogoTestCase {
  * test processActionUnpublish
  */
 	public function testProcessActionUnpublish() {
-		$ids = array('1','2');
+		$ids = array('1', '2', '3');
 
 		$success = $this->Node->processAction('unpublish', $ids);
 		$newRecords = $this->Node->find('all');

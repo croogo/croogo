@@ -37,6 +37,7 @@ Jeremy Harris <jeremy@42pixels.com>
 Joachim Nyqvist <Joachim@JNyqvist.se>
 Kory Marks <kory.marks@mac.com>
 Léo Haddad <scoup001@gmail.com>
+Marcin Jóźwikowski <marcin@jozwikowski.pl>
 Marek Sebera <marek.sebera@gmail.com>
 Mike Pagé <mike@nedwave.com>
 Paulo Pinto <paulorpinto@gmail.com>
@@ -44,5 +45,8 @@ Sam Bernard <sam@sambernard.net>
 Wiena Lorentz <lorentz@xintesa.com>
 alevilar <alevilar@gmail.com>
 joseph-d <joseph.d@nirada.co.th>
+phpMagpie <phpmagpie@webbedit.co.uk>
+roland-w <roland-w@users.noreply.github.com>
 romaing <pourri@dixit-productions.com>
+sherwinrobles <sherwinrobles@gmail.com>
 stefanozoffoli <stefano.zoffoli@librasoftsnc.it>
