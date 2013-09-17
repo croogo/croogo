@@ -70,10 +70,7 @@ class NodesComponent extends Component {
  * @return void
  */
 	public function nodes() {
-		if ($this->controller->Session->check('Auth.User.role_id')) {
-			$this->controller->Croogo->roleId = $this->controller->Auth->user('role_id');
-		}
-		$roleId = $this->controller->Croogo->roleId;
+		$roleId = $this->controller->Croogo->roleId();
 
 		$nodes = $this->controller->Blocks->blocksData['nodes'];
 		$_nodeOptions = array(
