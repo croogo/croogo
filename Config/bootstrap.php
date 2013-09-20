@@ -48,7 +48,6 @@
  * Inflector::rules('plural', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
  *
  */
-CakePlugin::load('Croogo', array('bootstrap' => true));
 
 Configure::write('Dispatcher.filters', array(
 	'AssetDispatcher',
@@ -64,3 +63,5 @@ CakeLog::config('error', array(
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
+
+CakePlugin::load('Croogo', array('bootstrap' => true));
