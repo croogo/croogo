@@ -106,6 +106,7 @@ class CroogoTheme extends Object {
 		if ($alias == 'default' || $alias == null) {
 			$alias = '';
 		}
+		Cache::delete('file_map', '_cake_core_');
 		return $this->Setting->write('Site.theme', $alias);
 	}
 
