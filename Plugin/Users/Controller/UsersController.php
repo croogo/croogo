@@ -191,9 +191,7 @@ class UsersController extends UsersAppController {
 				$this->Session->setFlash(__d('croogo', 'Password could not be reset. Please, try again.'), 'default', array('class' => 'error'));
 			}
 		}
-		if (empty($this->request->data)) {
-			$this->request->data = $this->User->read(null, $id);
-		}
+		$this->request->data = $this->User->findById($id);
 	}
 
 /**

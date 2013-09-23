@@ -56,6 +56,11 @@ class UsersControllerTest extends CroogoControllerTestCase {
 				'Security',
 			),
 		));
+		$this->controller->helpers = array(
+			'Html' => array(
+				'className' => 'Croogo.CroogoHtml',
+			),
+		);
 		$this->controller->Auth
 			->staticExpects($this->any())
 			->method('user')
@@ -211,6 +216,43 @@ class UsersControllerTest extends CroogoControllerTestCase {
 		$this->assertEquals($expected, $this->controller->request->data['User']['name']);
 		$result = $this->controller->User->findByUsername('admin');
 		$this->assertEquals($expected, $result['User']['name']);
+	}
+
+/**
+ * testAdminResetPassword
+ *
+ * @return void
+ */
+	public function testAdminResetPassword() {
+		$this->expectFlashAndRedirect('Password has been reset.');
+		$this->testAction('/admin/users/users/reset_password/1', array(
+			'data' => array(
+				'User' => array(
+					'id' => 1,
+					'password' => 'foobar',
+					'verify_password' => 'foobar',
+				),
+			),
+		));
+	}
+
+/**
+ * testAdminResetPasswordValidationErrors
+ *
+ * @return void
+ */
+	public function testAdminResetPasswordValidationErrors() {
+		$result = $this->testAction('/admin/users/users/reset_password/1', array(
+			'data' => array(
+				'User' => array(
+					'id' => 1,
+					'password' => '123',
+					'verify_password' => '123',
+				),
+			),
+			'return' => 'view',
+		));
+		$this->assertContains('Passwords must be at least 6 characters long.', $result);
 	}
 
 /**
