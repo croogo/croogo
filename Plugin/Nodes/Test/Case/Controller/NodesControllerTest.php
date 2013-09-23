@@ -261,6 +261,7 @@ class NodesControllerTest extends CroogoControllerTestCase {
 				),
 			),
 		));
+		$this->NodesController->Node->type = 'blog';
 		$newBlog = $this->NodesController->Node->findBySlug($slug);
 		$this->assertEqual($newBlog['Node']['title'], $title);
 		$this->assertNotEmpty($newBlog['Node']['created'], '2012-03-24 01:02:03');
