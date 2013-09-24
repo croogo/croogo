@@ -109,6 +109,11 @@ class AclFilterComponent extends Component {
 			'Acl.AclCached',
 		);
 
+		if (isset($this->_controller->request->params['admin']) &&
+			!$this->_controller->Auth->loggedIn()) {
+			$this->_controller->Auth->authError = false;
+		}
+
 		$this->configureLoginActions();
 	}
 

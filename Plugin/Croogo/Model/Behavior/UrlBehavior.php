@@ -53,7 +53,7 @@ class UrlBehavior extends ModelBehavior {
  * @param boolean $primary
  * @return array
  */
-	public function afterFind(Model $model, $results, $primary = true) {
+	public function afterFind(Model $model, $results, $primary = false) {
 		if ($primary && isset($results[0][$model->alias])) {
 			foreach ($results as $i => $result) {
 				$url = $this->settings[$model->alias]['url'];

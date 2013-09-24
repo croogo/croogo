@@ -36,9 +36,15 @@ class CroogoTheme extends Object {
 		$expected = array('name' => '', 'description' => '');
 		foreach ($viewPaths as $viewPath) {
 			$this->folder->path = $viewPath . 'Themed';
+			if (!is_dir($this->folder->path)) {
+				continue;
+			}
 			$themeFolders = $this->folder->read();
 			foreach ($themeFolders['0'] as $themeFolder) {
 				$this->folder->path = $viewPath . 'Themed' . DS . $themeFolder . DS . 'webroot';
+				if (!is_dir($this->folder->path)) {
+					continue;
+				}
 				$themeFolderContent = $this->folder->read();
 				$themeJson = $this->folder->path . DS . 'theme.json';
 				if (in_array('theme.json', $themeFolderContent['1'])) {
@@ -106,6 +112,7 @@ class CroogoTheme extends Object {
 		if ($alias == 'default' || $alias == null) {
 			$alias = '';
 		}
+		Cache::delete('file_map', '_cake_core_');
 		return $this->Setting->write('Site.theme', $alias);
 	}
 

@@ -89,7 +89,7 @@ class RoleAroBehavior extends ModelBehavior {
  *
  * When 'parent_id' is present, copy its value from Aro to Role data.
  */
-	public function afterFind(Model $model, $results, $primary = true) {
+	public function afterFind(Model $model, $results, $primary = false) {
 		if (!empty($results[0]['Aro']['parent_id'])) {
 			$results[0][$model->alias]['parent_id'] = $results[0]['Aro']['parent_id'];
 			return $results;
