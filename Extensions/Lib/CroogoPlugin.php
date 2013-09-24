@@ -502,6 +502,7 @@ class CroogoPlugin extends Object {
 					$pluginActivation->onActivation($this->_Controller);
 				}
 				Cache::delete('EventHandlers', 'cached_settings');
+				Cache::delete('file_map', '_cake_core_');
 				return true;
 			} else {
 				return __d('croogo', 'Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin);
@@ -529,6 +530,7 @@ class CroogoPlugin extends Object {
 			}
 			CroogoPlugin::unload($plugin);
 			Cache::delete('EventHandlers', 'cached_settings');
+			Cache::delete('file_map', '_cake_core_');
 			return true;
 		} else {
 			return __d('croogo', 'Plugin could not be deactivated. Please, try again.');

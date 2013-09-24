@@ -303,6 +303,43 @@ class CroogoHelperTest extends CroogoTestCase {
 	}
 
 /**
+ * testAdminRowActionEscapedConfirmMessage
+ */
+	public function testAdminRowActionEscapedConfirmMessage() {
+		$url = array('action' => 'delete', 1);
+		$options = array();
+		$sure = 'Are you sure?';
+		$expected = array(
+			'form' => array(
+				'action',
+				'name',
+				'id',
+				'style',
+				'method',
+			),
+			'input' => array(
+				'type',
+				'name',
+				'value',
+			),
+			'/form',
+			'a' => array(
+				'href' => '#',
+				'class' => 'delete',
+				'onclick',
+			),
+			'span' => array(),
+			'Del',
+			'/span',
+			'/a',
+		);
+		$result = $this->Croogo->adminRowAction('<span>Del</span>', $url, array(), $sure);
+		$this->assertTags($result, $expected);
+		$quot = '&quot;';
+		$this->assertContains($quot . $sure . $quot, $result);
+	}
+
+/**
  * testAdminRowActionBulkDelete
  */
 	public function testAdminRowActionBulkDelete() {
