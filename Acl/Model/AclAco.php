@@ -5,8 +5,6 @@ App::uses('AclNode', 'Model');
 /**
  * AclAco Model
  *
- * PHP version 5
- *
  * @category Model
  * @package  Croogo.Acl.Model
  * @version  1.0

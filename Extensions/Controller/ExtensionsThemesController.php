@@ -10,8 +10,6 @@ App::uses('Sanitize', 'Utility');
 /**
  * Extensions Themes Controller
  *
- * PHP version 5
- *
  * @category Controller
  * @package  Croogo.Extensions.Controller
  * @version  1.0

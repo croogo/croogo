@@ -1,4 +1,5 @@
 <?php
+
 App::uses('CroogoEventManager', 'Croogo.Event');
 App::uses('ClassRegistry', 'Utility');
 App::uses('Folder', 'Utility');
@@ -7,8 +8,6 @@ App::uses('MigrationVersion', 'Migrations.Lib');
 
 /**
  * CroogoPlugin utility class
- *
- * PHP version 5
  *
  * @category Component
  * @package  Croogo.Extensions.Lib
@@ -663,6 +662,7 @@ class CroogoPlugin extends Object {
  *
  * @param array $bootstrap array of plugin aliases
  * @return boolean
+ * @throws CakeException
  */
 	protected function _saveBootstraps($bootstraps) {
 		static $Setting = null;

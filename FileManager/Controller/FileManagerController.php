@@ -6,8 +6,6 @@ App::uses('File', 'Utility');
 /**
  * FileManager Controller
  *
- * PHP version 5
- *
  * @category FileManager.Controller
  * @package  Croogo.FileManager.Controller
  * @version  1.0

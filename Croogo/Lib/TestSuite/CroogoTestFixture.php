@@ -5,8 +5,6 @@ App::uses('CakeTestFixture', 'TestSuite/Fixture');
 /**
  * CroogoTestFixture class
  *
- * PHP version 5
- *
  * @category TestSuite
  * @package  Croogo
  * @version  1.4

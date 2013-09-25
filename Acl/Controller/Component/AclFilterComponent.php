@@ -5,8 +5,6 @@ App::uses('Component', 'Controller');
 /**
  * AclFilter Component
  *
- * PHP version 5
- *
  * @category Component
  * @package  Croogo.Acl.Controller.Component
  * @version  1.0
@@ -236,7 +234,7 @@ class AclFilterComponent extends Component {
 				// plugin controller/action
 				$controller = $path[2]['Aco']['alias'];
 				$action = $path[3]['Aco']['alias'];
-			} else if ($acos == 3) {
+			} elseif ($acos == 3) {
 				// app controller/action
 				$controller = $path[1]['Aco']['alias'];
 				$action = $path[2]['Aco']['alias'];

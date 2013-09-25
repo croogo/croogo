@@ -221,7 +221,7 @@ class UpgradeTask extends AppShell {
 
 		if (!empty($plugins['Ckeditor']) && !empty($plugins['Tinymce'])) {
 			$editor = ($plugins['Ckeditor'] < $plugins['Tinymce']) ? $plugins['Ckeditor'] : $plugins['Tinymce'];
-		} else if (!empty($plugins['Ckeditor'])) {
+		} elseif (!empty($plugins['Ckeditor'])) {
 			$editor = $plugins['Ckeditor'];
 		} else {
 			$editor = $plugins['Tinymce'];

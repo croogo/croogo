@@ -5,8 +5,6 @@ App::uses('UsersAppModel', 'Users.Model');
 /**
  * Role
  *
- * PHP version 5
- *
  * @category Model
  * @package  Croogo.Users.Model
  * @version  1.0

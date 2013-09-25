@@ -1,9 +1,9 @@
 <?php
 
+App::uses('AppHelper', 'View/Helper');
+
 /**
  * Comments Helper
- *
- * PHP version 5
  *
  * @category Comments.View/Helper
  * @package  Croogo.Comments.View.Helper

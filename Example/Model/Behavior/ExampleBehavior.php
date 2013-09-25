@@ -1,10 +1,9 @@
 <?php
+
 App::uses('ModelBehavior', 'Model');
 
 /**
  * Example Behavior
- *
- * PHP version 5
  *
  * @category Behavior
  * @package  Croogo

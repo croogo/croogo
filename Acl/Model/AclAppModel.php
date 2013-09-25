@@ -3,11 +3,9 @@
 App::uses('AppModel', 'Model');
 
 /**
- * AclApp Model
+ * Acl App Model
  *
- * PHP version 5
- *
- * @category Model
+ * @category Acl.Model
  * @package  Croogo.Acl.Model
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>

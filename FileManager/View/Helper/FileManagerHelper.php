@@ -5,8 +5,6 @@ App::uses('AppHelper', 'View/Helper');
 /**
  * FileManager Helper
  *
- * PHP version 5
- *
  * @category Helper
  * @package  Croogo.FileManager.View.Helper
  * @version  1.0

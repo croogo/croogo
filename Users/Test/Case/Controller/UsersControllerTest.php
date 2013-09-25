@@ -312,7 +312,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 	public function testResetPasswordWithValidInfo() {
 		$this->_setupAuthUser();
 		$this->testAction(
-			sprintf('/users/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2')
+			sprintf('/users/users/reset/%s/%s', 'yvonne', '92e35177eba73c6524d4561d3047c0c2')
 		);
 		$this->assertTrue(isset($this->vars['key']));
 	}
@@ -336,7 +336,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 			->expects($this->once())
 			->method('redirect');
 		$this->testAction(
-			sprintf('/users/users/reset/%s/%s', 'yvonne','invalid')
+			sprintf('/users/users/reset/%s/%s', 'yvonne', 'invalid')
 		);
 	}
 
@@ -348,7 +348,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 	public function testResetPasswordUpdatesPassword() {
 		$this->_setupAuthUser();
 		$this->testAction(
-			sprintf('/users/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
+			sprintf('/users/users/reset/%s/%s', 'yvonne', '92e35177eba73c6524d4561d3047c0c2'),
 			array(
 				'data' => array(
 					'User' => array(
@@ -372,7 +372,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 	public function testResetPasswordWithMismatchValues() {
 		$this->_setupAuthUser();
 		$this->testAction(
-			sprintf('/users/users/reset/%s/%s', 'yvonne','92e35177eba73c6524d4561d3047c0c2'),
+			sprintf('/users/users/reset/%s/%s', 'yvonne', '92e35177eba73c6524d4561d3047c0c2'),
 			array(
 				'return' => 'contents',
 				'data' => array(

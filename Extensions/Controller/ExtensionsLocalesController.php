@@ -7,8 +7,6 @@ App::uses('ExtensionsAppController', 'Extensions.Controller');
 /**
  * Extensions Locales Controller
  *
- * PHP version 5
- *
  * @category Controller
  * @package  Croogo.Extensions.Controller
  * @version  1.0

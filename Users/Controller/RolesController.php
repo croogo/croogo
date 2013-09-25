@@ -5,8 +5,6 @@ App::uses('UsersAppController', 'Users.Controller');
 /**
  * Roles Controller
  *
- * PHP version 5
- *
  * @category Controller
  * @package  Croogo.Users.Controller
  * @version  1.0

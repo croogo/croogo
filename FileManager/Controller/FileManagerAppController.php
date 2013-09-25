@@ -1,8 +1,7 @@
 <?php
+
 /**
  * FileManager App Controller
- *
- * PHP version 5
  *
  * @category FileManager.Controller
  * @package  Croogo.FileManager.Controller

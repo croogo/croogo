@@ -3,10 +3,8 @@
 App::uses('Component', 'Controller');
 
 /**
- * AclAccess Component provides * various methods to manipulate Aros and Acos,
+ * AclAccess Component provides various methods to manipulate Aros and Acos,
  * and additionaly setup various settings for backend/admin use.
- *
- * PHP version 5
  *
  * @category Component
  * @package  Croogo.Acl.Controller.Component

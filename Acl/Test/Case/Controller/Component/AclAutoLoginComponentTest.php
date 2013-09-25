@@ -34,13 +34,14 @@ class TestAclAutoLoginComponent extends AclAutoLoginComponent {
 
 	public function testCookie($username) {
 		$request = new CakeRequest();
-		$request->data =  array(
+		$request->data = array(
 			'User' => array(
 				'username' => $username,
 			),
 		);
 		return $this->_cookie($request);
 	}
+
 }
 
 class AclAutoLoginComponentTest extends CakeTestCase {

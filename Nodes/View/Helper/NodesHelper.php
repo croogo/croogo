@@ -1,8 +1,9 @@
 <?php
+
+App::uses('AppHelper', 'View/Helper');
+
 /**
  * Nodes Helper
- *
- * PHP version 5
  *
  * @category Helper
  * @package  Croogo.Nodes
@@ -104,7 +105,7 @@ class NodesHelper extends AppHelper {
 			for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
 				$options[$attributes[1][$j]] = $attributes[2][$j];
 			}
-			$content = str_replace($tagMatches[0][$i], $this->nodeList($alias,$options), $content);
+			$content = str_replace($tagMatches[0][$i], $this->nodeList($alias, $options), $content);
 		}
 		return $content;
 	}

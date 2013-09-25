@@ -5,8 +5,6 @@ App::uses('TaxonomyAppController', 'Taxonomy.Controller');
 /**
  * Terms Controller
  *
- * PHP version 5
- *
  * @category Taxonomy.Controller
  * @package  Croogo
  * @version  1.0

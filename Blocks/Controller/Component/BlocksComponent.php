@@ -1,5 +1,7 @@
 <?php
 
+App::uses('Component', 'Controller');
+
 /**
  * Blocks Component
  *

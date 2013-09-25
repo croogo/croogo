@@ -5,8 +5,6 @@ App::uses('BlocksAppModel', 'Blocks.Model');
 /**
  * Region
  *
- * PHP version 5
- *
  * @category Blocks.Model
  * @package  Croogo.Blocks.Model
  * @version  1.0

@@ -349,7 +349,7 @@ class NodeTest extends CroogoTestCase {
  */
 	public function testProcessActionInvalidAction() {
 		$this->setExpectedException('InvalidArgumentException');
-		$this->Node->processAction('avadakadavra', array(1,2));
+		$this->Node->processAction('avadakadavra', array(1, 2));
 	}
 
 /**

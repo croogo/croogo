@@ -5,8 +5,6 @@ App::uses('AppController', 'Controller');
 /**
  * Contacts App Controller
  *
- * PHP version 5
- *
  * @category Contacts.Controller
  * @package  Croogo.Contacts.Controller
  * @version  1.0

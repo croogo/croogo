@@ -6,8 +6,6 @@ App::uses('AuthComponent', 'Controller/Component');
 /**
  * User
  *
- * PHP version 5
- *
  * @category Model
  * @package  Croogo.Users.Model
  * @version  1.0

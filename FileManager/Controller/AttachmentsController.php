@@ -7,8 +7,6 @@ App::uses('FileManagerAppController', 'FileManager.Controller');
  *
  * This file will take care of file uploads (with rich text editor integration).
  *
- * PHP version 5
- *
  * @category FileManager.Controller
  * @package  Croogo.FileManager.Controller
  * @version  1.0

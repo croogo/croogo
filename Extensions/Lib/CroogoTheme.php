@@ -3,8 +3,6 @@
 /**
  * CroogoTheme class
  *
- * PHP version 5
- *
  * @category Component
  * @package  Croogo.Extensions.Lib
  * @version  1.4

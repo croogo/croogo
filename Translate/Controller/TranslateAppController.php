@@ -5,8 +5,6 @@ App::uses('AppController', 'Controller');
 /**
  * Translate App Controller
  *
- * PHP version 5
- *
  * @category Translate.Controller
  * @package  Croogo.Translate.Controller
  * @version  1.0
