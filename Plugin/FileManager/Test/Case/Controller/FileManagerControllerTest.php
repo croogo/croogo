@@ -1,4 +1,5 @@
 <?php
+
 App::uses('FileManagerController', 'FileManager.Controller');
 App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 

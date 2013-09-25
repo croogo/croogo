@@ -1,4 +1,7 @@
 <?php
+
+App::uses('AppHelper', 'View/Helper');
+
 /**
  * Nodes Helper
  *

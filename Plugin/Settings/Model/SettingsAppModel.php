@@ -3,9 +3,7 @@
 App::uses('AppModel', 'Model');
 
 /**
- * Settings Application model
- *
- * This file is the base model of all other models
+ * Settings App Model
  *
  * PHP version 5
  *
@@ -16,7 +14,6 @@ App::uses('AppModel', 'Model');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-
 class SettingsAppModel extends AppModel {
 
 }

@@ -1,4 +1,7 @@
 <?php
+
+App::uses('CakeEventListener', 'Event');
+
 /**
  * Example Event Handler
  *

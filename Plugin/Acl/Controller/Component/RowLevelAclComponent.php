@@ -1,8 +1,8 @@
 <?php
 
+App::uses('Component', 'Controller');
+
 /**
- * RoleLevelAcl Component
- *
  * When "Access Control.rowLevel" Setting is active, this component will perform
  * the necesary setup on controller's primary model and hook the element for 
  * backend use.

@@ -1,4 +1,5 @@
 <?php
+
 App::uses('CroogoEventManager', 'Croogo.Event');
 App::uses('ClassRegistry', 'Utility');
 App::uses('Folder', 'Utility');
