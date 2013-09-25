@@ -4,6 +4,11 @@ App::uses('Component', 'Controller');
 
 /**
  * Base Api Component class
+ *
+ * @package Croogo.Croogo.Controller.Component
+ * @since 1.6
+ * @license http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link http://www.croogo.org
  */
 class BaseApiComponent extends Component {
 

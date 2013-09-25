@@ -20,6 +20,7 @@ App::uses('BaseAuthenticate', 'Controller/Component/Auth');
  *	)
  * }}}
  *
+ * @package     Croogo.Acl.Controller.Component.Auth
  */
 class TokenAuthenticate extends BaseAuthenticate {
 
