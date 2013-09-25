@@ -358,7 +358,7 @@ class NodesController extends NodesAppController {
 			'Node.status' => 1,
 			'OR' => array(
 				'Node.visibility_roles' => '',
-				'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
+				'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId() . '"%',
 			),
 		);
 		$this->paginate['Node']['contain'] = array(
@@ -391,7 +391,7 @@ class NodesController extends NodesAppController {
 		}
 
 		if ($this->usePaginationCache) {
-			$cacheNamePrefix = 'nodes_index_' . $this->Croogo->roleId . '_' . Configure::read('Config.language');
+			$cacheNamePrefix = 'nodes_index_' . $this->Croogo->roleId() . '_' . Configure::read('Config.language');
 			if (isset($type)) {
 				$cacheNamePrefix .= '_' . $type['Type']['alias'];
 			}
@@ -450,7 +450,7 @@ class NodesController extends NodesAppController {
 			'Node.terms LIKE' => '%"' . $this->request->params['named']['slug'] . '"%',
 			'OR' => array(
 				'Node.visibility_roles' => '',
-				'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
+				'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId() . '"%',
 			),
 		);
 		$this->paginate['Node']['contain'] = array(
@@ -483,7 +483,7 @@ class NodesController extends NodesAppController {
 		}
 
 		if ($this->usePaginationCache) {
-			$cacheNamePrefix = 'nodes_term_' . $this->Croogo->roleId . '_' . $this->request->params['named']['slug'] . '_' . Configure::read('Config.language');
+			$cacheNamePrefix = 'nodes_term_' . $this->Croogo->roleId() . '_' . $this->request->params['named']['slug'] . '_' . Configure::read('Config.language');
 			if (isset($type)) {
 				$cacheNamePrefix .= '_' . $type['Type']['alias'];
 			}
@@ -520,11 +520,7 @@ class NodesController extends NodesAppController {
 	public function promoted() {
 		$this->set('title_for_layout', __d('croogo', 'Home'));
 
-		$roleId = $this->Auth->user('role_id');
-		if (empty($roleId)) {
-			$roleId = $this->Croogo->roleId;
-		}
-
+		$roleId = $this->Croogo->roleId();
 		$this->paginate['Node']['type'] = 'promoted';
 		$this->paginate['Node']['conditions'] = array(
 			'OR' => array(
@@ -549,7 +545,7 @@ class NodesController extends NodesAppController {
 
 		if ($this->usePaginationCache) {
 			$limit = !empty($this->paginate['Node']['limit']) ? $this->paginate['Node']['limit'] : Configure::read('Reading.nodes_per_page');
-			$cacheNamePrefix = 'nodes_promoted_' . $this->Croogo->roleId . '_' . Configure::read('Config.language');
+			$cacheNamePrefix = 'nodes_promoted_' . $this->Croogo->roleId() . '_' . Configure::read('Config.language');
 			if (isset($type)) {
 				$cacheNamePrefix .= '_' . $type['Type']['alias'];
 			}
@@ -602,7 +598,7 @@ class NodesController extends NodesAppController {
 				array(
 					'OR' => array(
 						'Node.visibility_roles' => '',
-						'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
+						'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId() . '"%',
 					),
 				),
 			),
@@ -663,7 +659,7 @@ class NodesController extends NodesAppController {
 					'Node.status' => 1,
 					'OR' => array(
 						'Node.visibility_roles' => '',
-						'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
+						'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId() . '"%',
 					),
 				),
 				'contain' => array(
@@ -675,7 +671,7 @@ class NodesController extends NodesAppController {
 					'User',
 				),
 				'cache' => array(
-					'name' => 'node_' . $this->Croogo->roleId . '_' . $this->request->params['named']['type'] . '_' . $this->params['named']['slug'],
+					'name' => 'node_' . $this->Croogo->roleId() . '_' . $this->request->params['named']['type'] . '_' . $this->params['named']['slug'],
 					'config' => 'nodes_view',
 				),
 			));
@@ -689,7 +685,7 @@ class NodesController extends NodesAppController {
 					'Node.status' => 1,
 					'OR' => array(
 						'Node.visibility_roles' => '',
-						'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId . '"%',
+						'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId() . '"%',
 					),
 				),
 				'contain' => array(
@@ -701,7 +697,7 @@ class NodesController extends NodesAppController {
 					'User',
 				),
 				'cache' => array(
-					'name' => 'node_' . $this->Croogo->roleId . '_' . $id,
+					'name' => 'node_' . $this->Croogo->roleId() . '_' . $id,
 					'config' => 'nodes_view',
 				),
 			));

@@ -1,5 +1,6 @@
 <?php
 
+App::uses('AuthComponent', 'Controller/Component');
 App::uses('Component', 'Controller');
 App::uses('CroogoPlugin', 'Extensions.Lib');
 App::uses('CroogoTheme', 'Extensions.Lib');
@@ -30,15 +31,13 @@ class CroogoComponent extends Component {
 	);
 
 /**
- * Role ID of current user
+ * Default Role ID
  *
  * Default is 3 (public)
  *
  * @var integer
- * @access public
- * @deprecated Will be removed in 1.6 and replaced with an API
  */
-	public $roleId = 3;
+	protected $_defaultRoleId = 3;
 
 /**
  * Blocks data: contains parsed value of bb-code like strings
@@ -76,6 +75,8 @@ class CroogoComponent extends Component {
 					}
 				}
 				return $this->{$name};
+			case 'roleId':
+				return $this->roleId();
 			default:
 				return parent::__get($name);
 		}
@@ -89,10 +90,6 @@ class CroogoComponent extends Component {
  */
 	public function startup(Controller $controller) {
 		$this->_controller = $controller;
-
-		if ($this->Session->check('Auth.User.id')) {
-			$this->roleId = $this->Session->read('Auth.User.role_id');
-		}
 
 		if (!isset($this->_controller->request->params['admin']) && !isset($this->_controller->request->params['requested'])) {
 		} else {
@@ -119,6 +116,16 @@ class CroogoComponent extends Component {
 				}
 			}
 		}
+	}
+
+/**
+ * Gets the Role Id of the current user
+ *
+ * @return integer Role Id
+ */
+	public function roleId() {
+		$roleId = AuthComponent::user('role_id');
+		return $roleId ? $roleId : $this->_defaultRoleId;
 	}
 
 /**
