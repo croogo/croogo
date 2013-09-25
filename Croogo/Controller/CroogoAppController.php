@@ -182,6 +182,8 @@ class CroogoAppController extends Controller {
 
 /**
  * Allows extending action from component
+ *
+ * @throws MissingActionException
  */
 	public function invokeAction(CakeRequest $request) {
 		try {

@@ -51,7 +51,7 @@ class TrackableBehaviorTest extends CroogoTestCase {
 /**
  * testFieldPopulation
  */
-	public function _testFieldPopulation($authCallback) {
+	protected function _testFieldPopulation($authCallback) {
 		$this->{$authCallback}();
 
 		$this->model->create(array('id' => 1, 'title' => 'foobar'));

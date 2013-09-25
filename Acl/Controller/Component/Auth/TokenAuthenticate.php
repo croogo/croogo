@@ -56,6 +56,7 @@ class TokenAuthenticate extends BaseAuthenticate {
  *
  * @param ComponentCollection $collection The Component collection used on this request.
  * @param array $settings Array of settings to use.
+ * @throws CakeException
  */
 	public function __construct(ComponentCollection $collection, $settings) {
 		parent::__construct($collection, $settings);
@@ -106,7 +107,7 @@ class TokenAuthenticate extends BaseAuthenticate {
  * @param string $password Unused password.
  * @return Mixed Either false on failure, or an array of user data.
  */
-	public function _findUser($username, $password = null) {
+	protected function _findUser($username, $password = null) {
 		$userModel = $this->settings['userModel'];
 		list($plugin, $model) = pluginSplit($userModel);
 		$fields = $this->settings['fields'];

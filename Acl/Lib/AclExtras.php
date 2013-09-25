@@ -269,7 +269,6 @@ class AclExtras extends Object {
 	}
 
 	protected function _checkApiMethods($plugin, $className, $apiComponent) {
-
 		$Aco = ClassRegistry::init('Acl.AclAco');
 
 		list($cPlugin, $component) = pluginSplit($apiComponent);
@@ -310,7 +309,6 @@ class AclExtras extends Object {
 				}
 			}
 		}
-
 	}
 
 	protected function _updateApiComponents($controllers, $plugin) {

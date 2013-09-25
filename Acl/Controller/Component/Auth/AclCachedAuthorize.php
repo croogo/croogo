@@ -113,7 +113,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		$controller = Inflector::camelize($request['controller']);
 
 		$path = str_replace(
-			array($apiPath,  ':prefix', ':plugin', ':controller', ':action'),
+			array($apiPath, ':prefix', ':plugin', ':controller', ':action'),
 			array($api, $prefix, $plugin, $controller, $action),
 			$this->settings['actionPath'] . $path
 		);

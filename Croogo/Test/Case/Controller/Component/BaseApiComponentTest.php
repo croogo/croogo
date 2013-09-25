@@ -20,9 +20,11 @@ class TestBaseApiController extends Controller {
 
 	public $components = array('TestApi');
 
-	public function index() {}
+	public function index() {
+	}
 
-	public function view() {}
+	public function view() {
+	}
 
 }
 

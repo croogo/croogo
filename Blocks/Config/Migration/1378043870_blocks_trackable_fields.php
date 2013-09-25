@@ -45,7 +45,7 @@ class BlocksTrackableFields extends CakeMigration {
 					'updated' => array(
 						'type' => 'datetime',
 						'null' => true,
-						'after' =>'created_by',
+						'after' => 'created_by',
 					),
 					'updated_by' => array(
 						'type' => 'integer',

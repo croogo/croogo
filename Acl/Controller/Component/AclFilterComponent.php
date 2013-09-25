@@ -230,7 +230,7 @@ class AclFilterComponent extends Component {
 				// api controller/action
 				$controller = $path[3]['Aco']['alias'];
 				$action = $path[1]['Aco']['alias'] . '_' . $path[4]['Aco']['alias'];
-			} else if ($acos == 4) {
+			} elseif ($acos == 4) {
 				// plugin controller/action
 				$controller = $path[2]['Aco']['alias'];
 				$action = $path[3]['Aco']['alias'];

@@ -88,7 +88,6 @@ class LinksController extends MenusAppController {
 				'controller' => 'menus',
 				'action' => 'index',
 			));
-			return;
 		}
 		$menu = $this->Link->Menu->findById($menuId);
 		if (!isset($menu['Menu']['id'])) {
@@ -96,7 +95,6 @@ class LinksController extends MenusAppController {
 				'controller' => 'menus',
 				'action' => 'index',
 			));
-			return;
 		}
 		$this->set('title_for_layout', __d('croogo', 'Links: %s', $menu['Menu']['title']));
 
