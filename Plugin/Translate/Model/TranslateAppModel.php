@@ -5,8 +5,6 @@ App::uses('AppModel', 'Model');
 /**
  * Translate App Model
  *
- * PHP version 5
- *
  * @category Translate.Model
  * @package  Croogo.Translate.Model
  * @version  1.0

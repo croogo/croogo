@@ -5,8 +5,6 @@ App::uses('AppController', 'Controller');
 /**
  * Comments App Controller
  *
- * PHP version 5
- *
  * @category Comments.Controller
  * @package  Croogo.Comments.Controller
  * @version  1.0

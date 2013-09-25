@@ -5,8 +5,6 @@ App::uses('MetaAppModel', 'Meta.Model');
 /**
  * Meta
  *
- * PHP version 5
- *
  * @category Meta.Model
  * @package  Croogo.Meta
  * @version  1.0

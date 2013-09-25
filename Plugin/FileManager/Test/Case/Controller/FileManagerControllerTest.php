@@ -6,8 +6,6 @@ App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 /**
  * FileManager Controller Test
  *
- * PHP version 5
- *
  * @category Test
  * @package  Croogo
  * @version  1.4

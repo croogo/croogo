@@ -5,8 +5,6 @@ App::uses('AppHelper', 'View/Helper');
 /**
  * SettingForms Helper
  *
- * PHP version 5
- *
  * @category Helper
  * @package  Croogo.Settings.View.Helper
  * @version  1.0

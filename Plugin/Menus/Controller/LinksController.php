@@ -5,8 +5,6 @@ App::uses('MenusAppController', 'Menus.Controller');
 /**
  * Links Controller
  *
- * PHP version 5
- *
  * @category Controller
  * @package  Croogo.Menus.Controller
  * @version  1.0

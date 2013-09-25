@@ -6,8 +6,6 @@ App::uses('Croogo', 'Lib');
 /**
  * Nodes Controller
  *
- * PHP version 5
- *
  * @category Nodes.Controller
  * @package  Croogo.Nodes
  * @version  1.0

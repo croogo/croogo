@@ -6,8 +6,6 @@ App::uses('CroogoTestCase', 'Croogo.Lib/TestSuite');
 /**
  * Croogo Composer Test
  *
- * PHP version 5
- *
  * @category Test
  * @package  Croogo
  * @version  1.4

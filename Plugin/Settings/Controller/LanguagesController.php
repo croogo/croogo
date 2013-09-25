@@ -5,8 +5,6 @@ App::uses('SettingsAppController', 'Settings.Controller');
 /**
  * Languages Controller
  *
- * PHP version 5
- *
  * @category Settings.Controller
  * @package  Croogo.Settings
  * @version  1.0

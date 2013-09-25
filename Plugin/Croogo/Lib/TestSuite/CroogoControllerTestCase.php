@@ -6,8 +6,6 @@ App::uses('CroogoTestFixture', 'Croogo.TestSuite');
 /**
  * CroogoTestCase class
  *
- * PHP version 5
- *
  * @category TestSuite
  * @package  Croogo
  * @version  1.4

@@ -5,8 +5,6 @@ App::uses('TaxonomyAppModel', 'Taxonomy.Model');
 /**
  * Taxonomy
  *
- * PHP version 5
- *
  * @category Taxonomy.Model
  * @package  Croogo
  * @since    1.3.1

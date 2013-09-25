@@ -5,8 +5,6 @@ App::uses('AppHelper', 'View/Helper');
 /**
  * Nodes Helper
  *
- * PHP version 5
- *
  * @category Helper
  * @package  Croogo.Nodes
  * @version  1.0

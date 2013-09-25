@@ -5,10 +5,6 @@ App::uses('AppController', 'Controller');
 /**
  * Users Application controller
  *
- * This file is the base controller of all other controllers
- *
- * PHP version 5
- *
  * @category Controllers
  * @package  Croogo.Users.Controller
  * @since    1.5

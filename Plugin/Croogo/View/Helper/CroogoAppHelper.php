@@ -5,10 +5,6 @@ App::uses('Helper', 'View');
 /**
  * Croogo Application helper
  *
- * This file is the base helper of all other helpers
- *
- * PHP version 5
- *
  * @category Helpers
  * @package  Croogo.Croogo.View.Helper
  * @version  1.0

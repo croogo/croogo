@@ -5,8 +5,6 @@ App::uses('AppModel', 'Model');
 /**
  * Example App Model
  *
- * PHP version 5
- *
  * @category Example.Model
  * @package  Croogo.Example.Model
  * @version  1.0

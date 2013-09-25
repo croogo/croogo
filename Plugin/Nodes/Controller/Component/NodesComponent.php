@@ -5,8 +5,6 @@ App::uses('Component', 'Controller');
 /**
  * Nodes Component
  *
- * PHP version 5
- *
  * @category Component
  * @package  Croogo.Nodes.Controller.Component
  * @version  1.0

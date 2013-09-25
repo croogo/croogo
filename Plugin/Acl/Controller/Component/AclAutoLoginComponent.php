@@ -7,8 +7,6 @@ App::uses('Component', 'Controller');
  * to Controller.Users.adminLoginSuccessful event and creating the appropriate
  * cookie.
  *
- * PHP version 5
- *
  * @category Component
  * @package  Croogo.Acl.Controller.Component
  * @since    1.5

@@ -5,8 +5,6 @@ App::uses('NodesAppModel', 'Nodes.Model');
 /**
  * Node
  *
- * PHP version 5
- *
  * @category Nodes.Model
  * @package  Croogo.Nodes.Model
  * @version  1.0

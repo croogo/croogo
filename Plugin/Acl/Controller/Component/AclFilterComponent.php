@@ -5,8 +5,6 @@ App::uses('Component', 'Controller');
 /**
  * AclFilter Component
  *
- * PHP version 5
- *
  * @category Component
  * @package  Croogo.Acl.Controller.Component
  * @version  1.0

@@ -7,8 +7,6 @@ App::uses('InstallManager', 'Install.Lib');
 /**
  * Install Controller
  *
- * PHP version 5
- *
  * @category Controller
  * @package  Croogo
  * @version  1.0

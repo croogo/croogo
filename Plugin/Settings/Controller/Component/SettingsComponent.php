@@ -5,8 +5,6 @@ App::uses('Component', 'Controller');
 /**
  * Settings Component
  *
- * PHP version 5
- *
  * @category Component
  * @package  Croogo.Settings.Controller.Component
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>

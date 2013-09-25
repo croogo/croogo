@@ -5,8 +5,6 @@ App::uses('AppHelper', 'View/Helper');
 /**
  * Taxonomies Helper
  *
- * PHP version 5
- *
  * @category Taxonomy.View/Helper
  * @package  Croogo.Taxonomy
  * @version  1.0

@@ -6,8 +6,6 @@ App::uses('UsersAppController', 'Users.Controller');
 /**
  * Users Controller
  *
- * PHP version 5
- *
  * @category Controller
  * @package  Croogo.Users.Controller
  * @version  1.0

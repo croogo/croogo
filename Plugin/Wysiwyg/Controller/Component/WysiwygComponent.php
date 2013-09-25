@@ -5,8 +5,6 @@ App::uses('Component', 'Controller');
 /**
  * Wysiwyg Component
  *
- * PHP version 5
- *
  * @category Wysiwyg.Controller.Component
  * @package  Croogo.Wysiwyg.Controller.Component
  * @version  1.5

@@ -9,8 +9,6 @@ App::uses('AuthComponent', 'Controller/Component');
 /**
  * Install Shell
  *
- * PHP version 5
- *
  * @category Shell
  * @package  Croogo.Install.Console.Command
  * @version  1.0

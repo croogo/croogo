@@ -5,8 +5,6 @@ App::uses('ModelBehavior', 'Model');
 /**
  * RoleAro Behavior
  *
- * PHP version 5
- *
  * @category Behavior
  * @package  Croogo.Acl.Model.Behavior
  * @version  1.0

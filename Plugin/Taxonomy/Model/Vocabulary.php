@@ -5,8 +5,6 @@ App::uses('TaxonomyAppModel', 'Taxonomy.Model');
 /**
  * Vocabulary
  *
- * PHP version 5
- *
  * @category Taxonomy.Model
  * @package  Croogo
  * @version  1.0

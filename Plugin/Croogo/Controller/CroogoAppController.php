@@ -5,8 +5,6 @@ App::uses('Controller', 'Controller');
 /**
  * Croogo App Controller
  *
- * PHP version 5
- *
  * @category Croogo.Controller
  * @package  Croogo.Croogo.Controller
  * @version  1.5

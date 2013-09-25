@@ -5,8 +5,6 @@ App::uses('ModelBehavior', 'Model');
 /**
  * Meta Behavior
  *
- * PHP version 5
- *
  * @category Behavior
  * @package  Croogo.Meta.Model.Behavior
  * @version  1.0

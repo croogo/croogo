@@ -5,8 +5,6 @@ App::uses('ModelBehavior', 'Model');
 /**
  * Params Behavior
  *
- * PHP version 5
- *
  * @category Behavior
  * @package  Croogo.Croogo.Model.Behavior
  * @since    1.3.1

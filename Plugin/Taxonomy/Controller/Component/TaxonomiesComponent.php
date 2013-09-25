@@ -5,8 +5,6 @@ App::uses('Component', 'Controller');
 /**
  * Taxonomies Component
  *
- * PHP version 5
- *
  * @category Component
  * @package  Taxonomy
  * @version  1.0

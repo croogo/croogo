@@ -5,8 +5,6 @@ App::uses('AppModel', 'Model');
 /**
  * Comment
  *
- * PHP version 5
- *
  * @category Model
  * @package  Croogo.Comments.Model
  * @version  1.0

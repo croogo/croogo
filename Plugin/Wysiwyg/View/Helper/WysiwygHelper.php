@@ -5,8 +5,6 @@ App::uses('AppHelper', 'View/Helper');
 /**
  * Wysiwyg Helper
  *
- * PHP version 5
- *
  * @category Wysiwyg.Helper
  * @package  Croogo.Wysiwyg.View.Helper
  * @version  1.5

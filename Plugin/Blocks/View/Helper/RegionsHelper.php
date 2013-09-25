@@ -1,9 +1,9 @@
 <?php
 
+App::uses('AppHelper', 'View/Helper');
+
 /**
  * Regions Helper
- *
- * PHP version 5
  *
  * @category Helper
  * @package  Croogo.Blocks.View.Helper

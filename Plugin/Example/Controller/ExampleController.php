@@ -5,8 +5,6 @@ App::uses('ExampleAppController', 'Example.Controller');
 /**
  * Example Controller
  *
- * PHP version 5
- *
  * @category Controller
  * @package  Croogo
  * @version  1.0

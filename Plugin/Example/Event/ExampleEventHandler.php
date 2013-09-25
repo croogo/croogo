@@ -5,8 +5,6 @@ App::uses('CakeEventListener', 'Event');
 /**
  * Example Event Handler
  *
- * PHP version 5
- *
  * @category Event
  * @package  Croogo
  * @version  1.0

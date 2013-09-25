@@ -5,8 +5,6 @@ App::uses('AclBehavior', 'Model/Behavior');
 /**
  * CroogoAcl Behavior
  *
- * PHP version 5
- *
  * @category Behavior
  * @package  Croogo.Croogo.Model.Behavior
  * @version  1.0

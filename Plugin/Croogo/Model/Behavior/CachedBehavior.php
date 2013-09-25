@@ -5,8 +5,6 @@ App::uses('ModelBehavior', 'Model');
 /**
  * Cached Behavior
  *
- * PHP version 5
- *
  * @category Behavior
  * @package  Croogo.Croogo.Model.Behavior
  * @version  1.0

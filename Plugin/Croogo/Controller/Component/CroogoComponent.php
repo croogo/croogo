@@ -8,8 +8,6 @@ App::uses('Croogo', 'Croogo.Lib');
 /**
  * Croogo Component
  *
- * PHP version 5
- *
  * @category Component
  * @package  Croogo.Croogo.Controller.Component
  * @version  1.0

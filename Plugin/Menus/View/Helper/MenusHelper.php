@@ -5,8 +5,6 @@ App::uses('AppHelper', 'View/Helper');
 /**
  * Menus Helper
  *
- * PHP version 5
- *
  * @category Menus.View/Helper
  * @package  Croogo.Menus.View.Helper
  * @version  1.0

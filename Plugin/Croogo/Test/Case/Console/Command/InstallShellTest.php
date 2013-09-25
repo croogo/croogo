@@ -33,8 +33,6 @@ class TestInstallShell extends InstallShell {
 /**
  * Install Shell Test
  *
- * PHP version 5
- *
  * @category Test
  * @package  Croogo
  * @version  1.4

@@ -5,8 +5,6 @@ App::uses('AppController', 'Controller');
 /**
  * Settings Application controller
  *
- * PHP version 5
- *
  * @category Settings.Controllers
  * @package  Croogo.Settings
  * @version  1.0

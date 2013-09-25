@@ -5,8 +5,6 @@ App::uses('AclAppController', 'Acl.Controller');
 /**
  * AclPermissions Controller
  *
- * PHP version 5
- *
  * @category Controller
  * @package  Croogo.Acl
  * @version  1.0
