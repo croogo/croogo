@@ -659,6 +659,7 @@ class CroogoPlugin extends Object {
  *
  * @param array $bootstrap array of plugin aliases
  * @return boolean
+ * @throws CakeException
  */
 	protected function _saveBootstraps($bootstraps) {
 		static $Setting = null;

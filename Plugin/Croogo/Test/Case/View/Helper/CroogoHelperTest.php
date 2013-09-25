@@ -236,7 +236,7 @@ class CroogoHelperTest extends CroogoTestCase {
 		$setting['Setting']['value'] = 0;
 		$setting['Setting']['description'] = 'A description';
 		$result = $this->Croogo->settingsInput($setting, 'MyLabel', 0);
-		$this->assertContains('type="checkbox"',$result);
+		$this->assertContains('type="checkbox"', $result);
 	}
 
 	public function testSettingsInputCheckboxChecked() {

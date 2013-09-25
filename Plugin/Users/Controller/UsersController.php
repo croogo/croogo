@@ -402,7 +402,7 @@ class UsersController extends UsersAppController {
 				'Users.forgot_password',
 				'reset password',
 				$this->theme,
-				compact('user','activationKey')
+				compact('user', 'activationKey')
 			);
 
 			if ($emailSent) {

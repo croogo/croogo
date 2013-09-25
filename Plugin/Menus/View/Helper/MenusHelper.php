@@ -92,7 +92,7 @@ class MenusHelper extends AppHelper {
 			for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
 				$options[$attributes[1][$j]] = $attributes[2][$j];
 			}
-			$content = str_replace($tagMatches[0][$i], $this->menu($menuAlias,$options), $content);
+			$content = str_replace($tagMatches[0][$i], $this->menu($menuAlias, $options), $content);
 		}
 		return $content;
 	}
