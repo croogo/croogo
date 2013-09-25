@@ -493,8 +493,9 @@ class UsersController extends UsersAppController {
 	public function logout() {
 		Croogo::dispatchEvent('Controller.Users.beforeLogout', $this);
 		$this->Session->setFlash(__d('croogo', 'Log out successful.'), 'default', array('class' => 'success'));
-		return $this->redirect($this->Auth->logout());
+		$redirect = $this->Auth->logout();
 		Croogo::dispatchEvent('Controller.Users.afterLogout', $this);
+		return $this->redirect($redirect);
 	}
 
 /**
