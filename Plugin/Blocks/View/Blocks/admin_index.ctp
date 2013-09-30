@@ -1,5 +1,9 @@
 <?php
 
+if (!$this->request->is('ajax') && isset($this->request->params['admin'])):
+    $this->Html->script('Blocks.blocks', array('inline' => false));
+endif;
+
 $this->extend('/Common/admin_index');
 
 $this->Html
@@ -17,7 +21,7 @@ $chooser = isset($this->request->query['chooser']);
 <table class="table table-striped">
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
-		'',
+		$this->Form->checkbox('checkAllAuto'),
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		$this->Paginator->sort('title', __d('croogo', 'Title')),
 		$this->Paginator->sort('alias', __d('croogo', 'Alias')),

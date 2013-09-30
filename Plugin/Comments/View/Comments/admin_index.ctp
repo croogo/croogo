@@ -1,7 +1,7 @@
 <?php
 
 if (!$this->request->is('ajax') && isset($this->request->params['admin'])):
-	$this->Html->script('Comments.admin', array('inline' => false));
+	$this->Html->script('Comments.comments', array('inline' => false));
 endif;
 
 $this->extend('/Common/admin_index');
@@ -44,7 +44,7 @@ echo $this->element('admin/modal', array(
 <table class="table table-striped">
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
-		'',
+		$this->Form->checkbox('checkAllAuto'),
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		$this->Paginator->sort('name', __d('croogo', 'Name')),
 		$this->Paginator->sort('email', __d('croogo', 'Email')),

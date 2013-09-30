@@ -158,4 +158,8 @@ $(document).ready(function() {
 			Nodes.slug();
 		}
 	}
+	
+	$('#NodeCheckAllAuto').click(function() {
+        $("INPUT[type='checkbox']").attr('checked', $('#NodeCheckAllAuto').is(':checked'));    
+    });
 });

@@ -1,5 +1,9 @@
 <?php
 
+if (!$this->request->is('ajax') && isset($this->request->params['admin'])):
+    $this->Html->script('Contacts.messages', array('inline' => false));
+endif;
+
 $this->extend('/Common/admin_index');
 
 $this->Html
@@ -61,7 +65,7 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 <table class="table table-striped">
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
-		'',
+		$this->Form->checkbox('checkAllAuto'),
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		$this->Paginator->sort('contact_id', __d('croogo', 'Contact')),
 		$this->Paginator->sort('name', __d('croogo', 'Name')),
