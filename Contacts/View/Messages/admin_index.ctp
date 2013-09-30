@@ -1,5 +1,7 @@
 <?php
 
+$this->Croogo->adminScript('Contacts.admin');
+
 $this->extend('/Common/admin_index');
 
 $this->Html
@@ -61,7 +63,7 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 <table class="table table-striped">
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
-		'',
+		$this->Form->checkbox('checkAll'),
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		$this->Paginator->sort('contact_id', __d('croogo', 'Contact')),
 		$this->Paginator->sort('name', __d('croogo', 'Name')),
@@ -94,7 +96,7 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
 		$rows[] = array(
-			$this->Form->checkbox('Message.' . $message['Message']['id'] . '.id'),
+			$this->Form->checkbox('Message.' . $message['Message']['id'] . '.id', array('class' => 'row-select')),
 			$message['Message']['id'],
 			$message['Contact']['title'],
 			$message['Message']['name'],

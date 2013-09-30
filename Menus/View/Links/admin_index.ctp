@@ -1,5 +1,7 @@
 <?php
 
+$this->Croogo->adminscript('Menus.admin');
+
 $this->extend('/Common/admin_index');
 
 $this->Html
@@ -37,7 +39,7 @@ $this->Html
 <table class="table table-striped">
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
-		'',
+		$this->Form->checkbox('checkAll'),
 		__d('croogo', 'Id'),
 		__d('croogo', 'Title'),
 		__d('croogo', 'Status'),
@@ -79,7 +81,7 @@ $this->Html
 		);
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 		$rows[] = array(
-			$this->Form->checkbox('Link.' . $linkId . '.id'),
+			$this->Form->checkbox('Link.' . $linkId . '.id', array('class' => 'row-select')),
 			$linkId,
 			$linkTitle,
 			$this->element('admin/toggle', array(

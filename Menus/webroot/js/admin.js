@@ -22,10 +22,12 @@ Links.slug = function() {
  *
  * @return void
  */
-$(document).ready(function() {
+$(function() {
 	if (Croogo.params.controller == 'links') {
 		if (['admin_add', 'admin_edit'].indexOf(Croogo.params.action) >= 0) {
 			Links.slug();
 		}
 	}
+
+	Admin.toggleRowSelection('#LinkCheckAll');
 });
