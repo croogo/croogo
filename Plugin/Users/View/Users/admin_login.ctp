@@ -12,7 +12,7 @@
 			'class' => 'span11',
 		));
 		echo $this->Form->input('password', array(
-			'placeholder' => 'Password',
+			'placeholder' => __d('croogo', 'Password'),
 			'before' => '<span class="add-on"><i class="icon-key"></i></span>',
 			'div' => 'input-prepend password',
 			'class' => 'span11',
