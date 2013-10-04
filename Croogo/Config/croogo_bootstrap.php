@@ -80,11 +80,17 @@ foreach ($plugins as $plugin) {
 	$pluginName = Inflector::camelize($plugin);
 	$pluginPath = APP . 'Plugin' . DS . $pluginName;
 	if (!file_exists($pluginPath)) {
-		$pluginPath = APP . 'Vendor' . DS . 'croogo' . DS . 'croogo' . DS . $pluginName;
-		if (!file_exists($pluginPath)) {
+	        $pluginFound = false;
+	        foreach(App::path('Plugin') as $path){
+			if(is_dir($path.$pluginName)){
+				$pluginFound=true;
+				break;
+			}
+	        }
+	        if(!$pluginFound){
 			CakeLog::error('Plugin not found during bootstrap: ' . $pluginName);
 			continue;
-		}
+	        }
 	}
 	$option = array(
 		$pluginName => array(
