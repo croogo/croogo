@@ -95,6 +95,7 @@ class DataMigration {
 			'table' => $table,
 			'ds' => $ds,
 		));
+		$ds = $Model->getDataSource();
 		$records = $Model->find($type, $query);
 
 		// generate file content
@@ -102,7 +103,8 @@ class DataMigration {
 		foreach ($records as $record) {
 			$values = array();
 			foreach ($record[$name] as $field => $value) {
-				$values[] = "\t\t\t'$field' => '$value'";
+				$value = $ds->value($value);
+				$values[] = "\t\t\t'$field' => $value";
 			}
 			$recordString .= "\t\tarray(\n";
 			$recordString .= implode(",\n", $values);
