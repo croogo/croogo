@@ -116,7 +116,12 @@ $this->Html
 		);
 		$actions[] = $this->Form->postLink('',
 			array('action' => 'delete',	$id),
-			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
+			array(
+				'icon' => 'trash',
+				'tooltip' => __d('croogo', 'Remove this item'),
+				'escapeTitle' => false,
+				'escape' => true,
+			),
 			__d('croogo', 'Are you sure?')
 		);
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
