@@ -69,7 +69,7 @@ class InstallManager {
 		$contents = preg_replace('/(?<=Configure::write\(\'Security.salt\', \')([^\' ]+)(?=\'\))/', $salt, $contents);
 		$contents = preg_replace('/(?<=Configure::write\(\'Security.cipherSeed\', \')(\d+)(?=\'\))/', $seed, $contents);
 		if (!$File->write($contents)) {
-			$this->log('Unable to write your Config' . DS . 'croogo.php file. Please check the permissions.');
+			CakeLog::critical('Unable to write your Config' . DS . 'croogo.php file. Please check the permissions.');
 			return false;
 		}
 		Configure::write('Security.salt', $salt);
