@@ -34,7 +34,7 @@ echo $this->Form->create(
 		<table class="table table-striped">
 		<?php
 			$tableHeaders = $this->Html->tableHeaders(array(
-				'',
+				$this->Form->checkbox('checkAllAuto'),
 				$this->Paginator->sort('id', __d('croogo', 'Id')),
 				$this->Paginator->sort('title', __d('croogo', 'Title')),
 				$this->Paginator->sort('type', __d('croogo', 'Type')),

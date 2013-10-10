@@ -13,5 +13,9 @@ Comments.modals = function() {
 }
 
 $(function() {
-	Comments.modals()
+	Comments.modals();
+	
+	$('#CommentCheckAllAuto').click(function() {
+        $("INPUT[type='checkbox']").attr('checked', $('#CommentCheckAllAuto').is(':checked'));    
+    });
 });

@@ -1,5 +1,9 @@
 <?php
 
+if (!$this->request->is('ajax') && isset($this->request->params['admin'])):
+    $this->Html->script('Menus.links', array('inline' => false));
+endif;
+
 $this->extend('/Common/admin_index');
 
 $this->Html
@@ -37,7 +41,7 @@ $this->Html
 <table class="table table-striped">
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
-		'',
+		$this->Form->checkbox('checkAllAuto'),
 		__d('croogo', 'Id'),
 		__d('croogo', 'Title'),
 		__d('croogo', 'Status'),

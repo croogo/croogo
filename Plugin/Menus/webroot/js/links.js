@@ -28,4 +28,8 @@ $(document).ready(function() {
 			Links.slug();
 		}
 	}
+	
+	$('#LinkCheckAllAuto').click(function() {
+        $("INPUT[type='checkbox']").attr('checked', $('#LinkCheckAllAuto').is(':checked'));    
+    });
 });
