@@ -18,4 +18,11 @@ if (file_exists(APP . 'Config' . DS . 'croogo.php')) {
 		'renderer' => 'ExceptionRenderer',
 		'log' => true
 	));
+
+	Configure::write('Session', array(
+		'defaults' => 'php',
+		'ini' => array(
+			'session.cookie_httponly' => 1
+		)
+	));
 }
