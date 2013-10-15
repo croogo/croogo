@@ -184,9 +184,8 @@ class NodesController extends NodesAppController {
 					'Node.type' => $this->Node->type,
 				),
 			));
-
-			$this->_setCommonVariables($type);
 		}
+		$this->_setCommonVariables($type);
 	}
 
 /**
