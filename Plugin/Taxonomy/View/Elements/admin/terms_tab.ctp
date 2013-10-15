@@ -5,7 +5,7 @@ if (count($taxonomy) > 0):
 		echo $this->Form->input('TaxonomyData.' . $vocabularyId, array(
 			'label' => $vocabularies[$vocabularyId]['title'],
 			'type' => 'select',
-			'multiple' => true,
+			'multiple' => $vocabularies[$vocabularyId]['multiple'],
 			'options' => $taxonomyTree,
 			'value' => $taxonomyIds,
 			'class' => false,
