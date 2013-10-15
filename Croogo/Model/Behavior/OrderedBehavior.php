@@ -164,7 +164,7 @@ class OrderedBehavior extends ModelBehavior {
 	public function beforeSave(Model $Model, $options = array()) {
 		// Check if weight id is set. If not add to end, if set update all
 		// rows from ID and up
-		if (!isset($Model->data[$Model->alias][$Model->primaryKey])) {
+		if (empty($Model->data[$Model->alias][$Model->primaryKey])) {
 			// get highest current row
 			$highest = $this->_highest($Model);
 			// set new weight to model as last by using current highest one + 1
