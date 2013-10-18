@@ -23,6 +23,7 @@ class CroogoHelperTest extends CroogoTestCase {
 		'plugin.users.aros_aco',
 		'plugin.settings.setting',
 		'plugin.users.role',
+		'plugin.taxonomy.type',
 	);
 
 /**
