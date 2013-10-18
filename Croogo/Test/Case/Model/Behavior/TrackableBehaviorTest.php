@@ -38,6 +38,7 @@ class TrackableBehaviorTest extends CroogoTestCase {
 
 	public function tearDown() {
 		Configure::delete('Trackable.Auth');
+		CakeSession::delete('Auth.User');
 	}
 
 	protected function _authTrackable($userIdField = 'id', $userId = 1) {
