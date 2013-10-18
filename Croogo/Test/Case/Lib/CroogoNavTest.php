@@ -4,6 +4,10 @@ App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 class CroogoNavTest extends CroogoTestCase {
 
+	public $fixtures = array(
+		'plugin.settings.setting',
+	);
+
 	protected static $_menus = array();
 
 	public function setUp() {
