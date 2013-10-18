@@ -5,6 +5,10 @@ App::uses('ApiRoute', 'Croogo.Routing/Route');
 
 class ApiRouteTest extends CroogoTestCase {
 
+	public $fixtures = array(
+		'plugin.settings.setting',
+	);
+
 	public function testParse() {
 		$apiPath = Configure::read('Croogo.Api.path');
 		$url = '/' . $apiPath . '/v1.0/users/';
