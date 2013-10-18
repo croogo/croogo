@@ -19,6 +19,9 @@ class LayoutHelperTest extends CroogoTestCase {
 		'plugin.users.user',
 		'plugin.users.role',
 		'plugin.settings.setting',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.vocabulary',
+		'plugin.taxonomy.types_vocabulary',
 	);
 
 /**
