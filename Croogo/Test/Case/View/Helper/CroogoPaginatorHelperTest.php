@@ -8,6 +8,10 @@ App::uses('HtmlHelper', 'View/Helper');
 
 class CroogoPaginatorHelperTest extends CroogoTestCase {
 
+	public $fixtures = array(
+		'plugin.taxonomy.type',
+	);
+
 	public function setUp() {
 		$controller = null;
 		$this->View = new View($controller);
