@@ -4,6 +4,10 @@ App::uses('CroogoJson', 'Croogo.Lib');
 
 class CroogoJsonTest extends CroogoTestCase {
 
+	public $fixtures = array(
+		'plugin.settings.setting',
+	);
+
 /**
  * testStringify
  */
