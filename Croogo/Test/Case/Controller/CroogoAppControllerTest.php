@@ -25,6 +25,12 @@ class TestAppController extends CroogoAppController {
 
 class AppControllerTest extends CroogoControllerTestCase {
 
+	public $fixtures = array(
+		'plugin.settings.setting',
+		'plugin.taxonomy.type',
+		'plugin.nodes.node',
+	);
+
 	public function setUp() {
 		parent::setUp();
 		$this->generate('TestApp', array(
