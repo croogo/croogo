@@ -30,6 +30,10 @@ class TestBaseApiController extends Controller {
 
 class BaseApiComponentTest extends CroogoTestCase {
 
+	public $fixtures = array(
+		'plugin.settings.setting',
+	);
+
 	public function setUp() {
 		parent::setUp();
 		$request = $this->_apiRequest(array(
