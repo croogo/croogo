@@ -3,6 +3,7 @@ App::uses('LayoutHelper', 'Croogo.View/Helper');
 App::uses('SessionComponent', 'Controller/Component');
 App::uses('Controller', 'Controller');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
+App::uses('CroogoHtmlHelper', 'Croogo.View/Helper');
 
 class TheLayoutTestController extends Controller {
 
