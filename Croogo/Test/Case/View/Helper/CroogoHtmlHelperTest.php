@@ -9,6 +9,10 @@ App::uses('HtmlHelper', 'View/Helper');
 
 class CroogoHtmlHelperTest extends CroogoTestCase {
 
+	public $fixtures = array(
+		'plugin.taxonomy.type',
+	);
+
 	public function setUp() {
 		$controller = null;
 		$this->View = new View($controller);
