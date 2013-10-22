@@ -65,7 +65,7 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 				));
 				
 				echo '<div class="input text required input-append">';
-				echo '<label for="LinkLink">'.__d('croogo',Link).'</label>';	
+				echo '<label for="LinkLink">'.__d('croogo','Link').'</label>';	
 				echo $this->Form->input('link', array(
 					'label' => false,
 					'div'=>false,

@@ -195,8 +195,6 @@ class TaxonomiesComponent extends Component {
 			)
 		);
 
-		print_r($types_vocabularies);
-
 
 		$linkChoosers = array();
 		foreach($vocabularies as $vocabulary){
