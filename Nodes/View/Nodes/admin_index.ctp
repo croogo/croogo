@@ -1,6 +1,6 @@
 <?php
 $this->extend('/Common/admin_index');
-$this->Html->script(array('Nodes.nodes'), false);
+$this->Croogo->adminScript(array('Nodes.admin'));
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
@@ -34,7 +34,7 @@ echo $this->Form->create(
 		<table class="table table-striped">
 		<?php
 			$tableHeaders = $this->Html->tableHeaders(array(
-				'',
+				$this->Form->checkbox('checkAll'),
 				$this->Paginator->sort('id', __d('croogo', 'Id')),
 				$this->Paginator->sort('title', __d('croogo', 'Title')),
 				$this->Paginator->sort('type', __d('croogo', 'Type')),
@@ -50,7 +50,7 @@ echo $this->Form->create(
 			<tbody>
 			<?php foreach ($nodes as $node): ?>
 				<tr>
-					<td><?php echo $this->Form->checkbox('Node.' . $node['Node']['id'] . '.id'); ?></td>
+					<td><?php echo $this->Form->checkbox('Node.' . $node['Node']['id'] . '.id', array('class' => 'row-select')); ?></td>
 					<td><?php echo $node['Node']['id']; ?></td>
 					<td>
 						<span>

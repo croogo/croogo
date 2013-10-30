@@ -195,6 +195,18 @@ Admin.extra = function() {
 	$('#loading p').addClass('ui-corner-bl ui-corner-br');
 }
 
+/**
+ * Helper callback for toggling record selection
+ */
+Admin.toggleRowSelection = function(selector, checkboxSelector) {
+	var $selector = $(selector);
+	if (typeof checkboxSelector == 'undefined') {
+		checkboxSelector = "input.row-select[type='checkbox']";
+	}
+	$selector.on('click', function(e) {
+		$(checkboxSelector).attr('checked', $selector.is(':checked'));
+	});
+}
 
 /**
  * Document ready

@@ -44,6 +44,25 @@ class CroogoHelper extends AppHelper {
 		parent::__construct($View, $settings);
 	}
 
+
+/**
+ * Convenience method to Html::script() for admin views
+ *
+ * This method does nothing if request is ajax or not in admin prefix.
+ *
+ * @see HtmlHelper::script()
+ * @param $url string|array Javascript files to include
+ * @param array|boolean Options or Html attributes
+ * @return mixed String of <script /> tags or null
+ */
+	public function adminScript($url, $options = array()) {
+		$options = Hash::merge(array('inline' => false), $options);
+		if ($this->request->is('ajax') || empty($this->request->params['admin'])) {
+			return;
+		}
+		return $this->Html->script($url, $options);
+	}
+
 /** Generate Admin menus added by CroogoNav::add()
  *
  * @param array $menus

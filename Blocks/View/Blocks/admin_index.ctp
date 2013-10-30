@@ -1,5 +1,7 @@
 <?php
 
+$this->Croogo->adminScript('Blocks.admin');
+
 $this->extend('/Common/admin_index');
 
 $this->Html
@@ -17,7 +19,7 @@ $chooser = isset($this->request->query['chooser']);
 <table class="table table-striped">
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
-		'',
+		$this->Form->checkbox('checkAll'),
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		$this->Paginator->sort('title', __d('croogo', 'Title')),
 		$this->Paginator->sort('alias', __d('croogo', 'Alias')),
@@ -64,7 +66,7 @@ $chooser = isset($this->request->query['chooser']);
 				)),
 			);
 		} else {
-			$checkbox = $this->Form->checkbox('Block.' . $block['Block']['id'] . '.id');
+			$checkbox = $this->Form->checkbox('Block.' . $block['Block']['id'] . '.id', array('class' => 'row-select'));
 		}
 
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
