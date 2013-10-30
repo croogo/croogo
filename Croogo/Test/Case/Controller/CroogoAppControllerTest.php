@@ -23,7 +23,7 @@ class TestAppController extends CroogoAppController {
 
 }
 
-class AppControllerTest extends CroogoControllerTestCase {
+class CroogoAppControllerTest extends CroogoControllerTestCase {
 
 	public function setUp() {
 		parent::setUp();
