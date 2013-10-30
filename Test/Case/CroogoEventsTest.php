@@ -5,7 +5,7 @@ class CroogoEventsTest extends PHPUnit_Framework_TestSuite {
 
 	public static function suite() {
 		$suite = new CakeTestSuite('Croogo events tests');
-		$path = APP . 'Test' . DS . 'Case' . DS . 'Event' . DS;
+		$path = APP . DS . 'Vendor' . DS . 'croogo' . DS . 'croogo' . DS . 'Croogo' . DS . 'Test' . DS . 'Case' . DS . 'Event' . DS;
 		$suite->addTestDirectory($path);
 		return $suite;
 	}
