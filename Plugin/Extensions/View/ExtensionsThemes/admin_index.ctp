@@ -110,7 +110,7 @@ $this->Html
 				endforeach;
 
 				if (!$hasAvailable):
-					echo $this->Html->tag('li', 'No available theme');
+					echo $this->Html->tag('li', __d('croogo', 'No available theme'));
 				endif;
 			?>
 			</ul>
