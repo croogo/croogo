@@ -1,6 +1,7 @@
 <?php
 
 App::uses('CroogoTestFixture', 'Croogo.TestSuite');
+App::uses('CroogoRouter', 'Croogo.Lib');
 
 /**
  * CroogoTestCase class

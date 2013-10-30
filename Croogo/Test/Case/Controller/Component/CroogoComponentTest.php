@@ -30,6 +30,7 @@ class CroogoComponentTest extends CroogoTestCase {
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.vocabulary',
 		'plugin.taxonomy.types_vocabulary',
+		'plugin.nodes.node',
 	);
 
 	public function setUp() {

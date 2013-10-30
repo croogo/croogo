@@ -72,8 +72,10 @@ class CroogoControllerTestCase extends ControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		CakeSession::clear();
-		CakeSession::destroy();
+		if (CakeSession::started()) {
+			CakeSession::clear();
+			CakeSession::destroy();
+		}
 		ClassRegistry::flush();
 	}
 

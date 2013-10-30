@@ -4,6 +4,10 @@ App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 class CroogoTest extends CroogoTestCase {
 
+	public $fixtures = array(
+		'plugin.settings.setting',
+	);
+
 	public function testCrossPluginHooks() {
 		CakePlugin::load(array('Shops', 'Suppliers'), array(
 			'bootstrap' => true,
