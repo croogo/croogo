@@ -141,7 +141,9 @@ Admin.form = function() {
 	}
 
 	// Autocomplete
-	$('input.typeahead-autocomplete').typeahead_autocomplete();
+	if (typeof $.fn.typeahead_autocomplete === 'function') {
+		$('input.typeahead-autocomplete').typeahead_autocomplete();
+	}
 
 	// Row Actions
 	$('body')
