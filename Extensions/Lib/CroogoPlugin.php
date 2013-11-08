@@ -159,10 +159,11 @@ class CroogoPlugin extends Object {
 		foreach ($pluginPaths as $pluginPath) {
 			$manifestFile = $pluginPath . $alias . DS . 'Config' . DS . 'plugin.json';
 			$hasManifest = file_exists($manifestFile);
+			$active = $this->isActive($alias);
 			if ($hasManifest) {
 				$pluginData = json_decode(file_get_contents($manifestFile), true);
 				if (!empty($pluginData)) {
-					$pluginData['active'] = $this->isActive($alias);
+					$pluginData['active'] = $active;
 					$pluginData['needMigration'] = $this->needMigration($alias, $pluginData['active']);
 				} else {
 					$this->log('plugin.json exists but cannot be decoded.');
@@ -170,7 +171,7 @@ class CroogoPlugin extends Object {
 				}
 				return $pluginData;
 			} elseif ($this->_isBuiltin($alias)) {
-				if ($this->needMigration($alias, true)) {
+				if ($this->needMigration($alias, $active)) {
 					$pluginData = array(
 						'name' => $alias,
 						'description' => "Croogo $alias plugin",

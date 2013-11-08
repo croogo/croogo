@@ -96,6 +96,7 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 			<?php
 				echo $this->Form->input('class', array(
 					'label' => __d('croogo', 'Class'),
+					'class' => 'span10 class',
 				));
 				echo $this->Form->input('description', array(
 					'label' => __d('croogo', 'Description'),

@@ -34,8 +34,11 @@ class ImageHelper extends Helper {
 		$fullpath = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.$uploadsDir.DS;
 		$url = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.$path;
 
-		if (!($size = getimagesize($url)))
+		if (!file_exists($url)) {
 			return; // image doesn't exist
+		}
+
+		$size = getimagesize($url);
 
 		if ($aspect) { // adjust to aspect.
 			if (($size[1]/$height) > ($size[0]/$width))  // $size[0]:width, [1]:height, [2]:type
