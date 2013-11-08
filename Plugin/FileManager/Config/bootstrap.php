@@ -1,5 +1,9 @@
 <?php
 
+Croogo::mergeConfig('Wysiwyg.actions', array(
+	'Attachments/admin_browse',
+));
+
 CroogoNav::add('media', array(
 	'icon' => array('picture', 'large'),
 	'title' => __d('croogo', 'Media'),
