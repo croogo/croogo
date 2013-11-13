@@ -24,12 +24,19 @@ class ImageHelper extends Helper {
 	 * @return mixed  Either string or echos the value, depends on AUTO_OUTPUT and $return.
 	 * @access public
 	 */
-	public function resize($path, $width, $height, $aspect = true, $htmlAttributes = array(), $return = false) {
+	public function resize($path, $width, $height, $options = array(), $htmlAttributes = array(), $return = false) {
+		if (is_bool($options)) {
+			$options = array('aspect' => $options);
+		}
+		$options = Hash::merge(array(
+			'aspect' => true,
+			'uploadsDir' => 'uploads',
+		), $options);
+		$aspect = $options['aspect'];
+		$uploadsDir = $options['uploadsDir'];
 		$types = array(1 => "gif", "jpeg", "png", "swf", "psd", "wbmp"); // used to determine image type
 		$transparency = array("gif", "png");	// image types with transparency
 		if (empty($htmlAttributes['alt'])) $htmlAttributes['alt'] = 'thumb';  // Ponemos alt default
-
-		$uploadsDir = 'uploads';
 
 		$fullpath = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.$uploadsDir.DS;
 		$url = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.$path;
