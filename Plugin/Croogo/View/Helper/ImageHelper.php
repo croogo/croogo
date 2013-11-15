@@ -10,6 +10,12 @@ App::uses('Helper', 'View/Helper');
  */
 class ImageHelper extends Helper {
 	public $helpers = array('Html');
+
+	/**
+	 * Cache Directory name
+	 *
+	 * @deprecated Will be removed in 1.6
+	 */
 	public $cacheDir = 'resized'; // relative to 'img'.DS
 
 	/**
