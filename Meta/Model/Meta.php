@@ -5,8 +5,6 @@ App::uses('MetaAppModel', 'Meta.Model');
 /**
  * Meta
  *
- * PHP version 5
- *
  * @category Meta.Model
  * @package  Croogo.Meta
  * @version  1.0
@@ -31,6 +29,15 @@ class Meta extends MetaAppModel {
  * @access public
  */
 	public $useTable = 'meta';
+
+/**
+ * Behaviors
+ *
+ * @var array
+ */
+	public $actsAs = array(
+		'Croogo.Trackable',
+	);
 
 /**
  * Model associations: belongsTo

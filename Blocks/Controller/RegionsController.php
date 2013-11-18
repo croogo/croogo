@@ -5,8 +5,6 @@ App::uses('BlocksAppController', 'Blocks.Controller');
 /**
  * Regions Controller
  *
- * PHP version 5
- *
  * @category Blocks.Controller
  * @package  Croogo.Blocks.Controller
  * @version  1.0
@@ -89,7 +87,7 @@ class RegionsController extends BlocksAppController {
 			$this->Region->create();
 			if ($this->Region->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Region has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Region could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -108,12 +106,12 @@ class RegionsController extends BlocksAppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Region'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Region->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Region has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Region could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -133,11 +131,11 @@ class RegionsController extends BlocksAppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Region'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->Region->delete($id)) {
 			$this->Session->setFlash(__d('croogo', 'Region deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 	}
 

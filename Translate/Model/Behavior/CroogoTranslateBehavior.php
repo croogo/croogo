@@ -101,7 +101,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
  * @return array Modified results
  * @access public
  */
-	public function afterFind(Model $model, $results, $primary) {
+	public function afterFind(Model $model, $results, $primary = false) {
 		$locale = $this->_getLocale($model);
 
 		if (empty($locale) || empty($results)) {
@@ -176,6 +176,7 @@ class CroogoTranslateBehavior extends ModelBehavior {
 		}
 
 		$RuntimeModel = $this->translateModel($model);
+		$RuntimeModel->Behaviors->attach('Croogo.Trackable');
 		$conditions = array('model' => $model->alias, 'foreign_key' => $model->id);
 
 		foreach ($model->data[$model->alias] as $field => $value) {

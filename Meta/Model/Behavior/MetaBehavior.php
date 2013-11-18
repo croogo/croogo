@@ -5,8 +5,6 @@ App::uses('ModelBehavior', 'Model');
 /**
  * Meta Behavior
  *
- * PHP version 5
- *
  * @category Behavior
  * @package  Croogo.Meta.Model.Behavior
  * @version  1.0
@@ -39,7 +37,7 @@ class MetaBehavior extends ModelBehavior {
  * @param boolean $primary
  * @return array
  */
-	public function afterFind(Model $model, $results, $primary) {
+	public function afterFind(Model $model, $results, $primary = false) {
 		if ($primary && isset($results[0][$model->alias])) {
 			foreach ($results as $i => $result) {
 				$customFields = array();

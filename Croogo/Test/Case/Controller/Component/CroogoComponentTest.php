@@ -1,18 +1,15 @@
 <?php
 
-App::uses('CroogoComponent', 'Controller/Component');
-App::uses('Component', 'Controller');
-app::uses('ComponentCollection', 'Controller/Component');
 App::uses('AppController', 'Controller');
+App::uses('Component', 'Controller');
+App::uses('ComponentCollection', 'Controller');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
-app::uses('CroogoComponent', 'Croogo.Controller/Component');
+App::uses('CroogoComponent', 'Croogo.Controller/Component');
 
 class MockCroogoComponent extends CroogoComponent {
 
 	public function startup(Controller $controller) {
 		$this->_controller = $controller;
-		$this->_CroogoPlugin = new CroogoPlugin();
-		$this->_CroogoPlugin->Setting->writeConfiguration();
 	}
 
 }
@@ -33,6 +30,7 @@ class CroogoComponentTest extends CroogoTestCase {
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.vocabulary',
 		'plugin.taxonomy.types_vocabulary',
+		'plugin.nodes.node',
 	);
 
 	public function setUp() {

@@ -11,11 +11,11 @@ $this->Html
 	));
 
 if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->data['Setting']['key'], $this->here);
+	$this->Html->addCrumb($this->data['Setting']['key'], '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'admin_add') {
-	$this->Html->addCrumb(__d('croogo', 'Add'), $this->here);
+	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
 echo $this->Form->create('Setting');

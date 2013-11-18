@@ -5,8 +5,6 @@ App::uses('NodesAppModel', 'Nodes.Model');
 /**
  * Node
  *
- * PHP version 5
- *
  * @category Nodes.Model
  * @package  Croogo.Nodes.Model
  * @version  1.0
@@ -57,6 +55,7 @@ class Node extends NodesAppModel {
 	public $actsAs = array(
 		'Tree',
 		'Croogo.Encoder',
+		'Croogo.Trackable',
 		'Meta.Meta',
 		'Croogo.Url',
 		'Croogo.Cached' => array(
@@ -398,7 +397,7 @@ class Node extends NodesAppModel {
 		}
 
 		if ($actionToPerform === self::UNPROCESSED_ACTION) {
-			$success = $this->{$this->actionsMapping[$actionToPerform]}(array($this->escapeField() => $ids));
+			$success = $this->{$this->actionsMapping[$actionToPerform]}(array($this->escapeField() => $ids), true, true);
 		} else {
 			$success = $this->{$this->actionsMapping[$actionToPerform]}($ids);
 		}
@@ -579,7 +578,7 @@ class Node extends NodesAppModel {
 	protected function _mergeQueryFilters(&$query, $key, $values) {
 		if (!empty($query[$key])) {
 			if (is_array($query[$key])) {
-				$query[$key] = array_merge($query[$key], $values);
+				$query[$key] = Hash::merge($query[$key], $values);
 			}
 		} else {
 			$query[$key] = $values;

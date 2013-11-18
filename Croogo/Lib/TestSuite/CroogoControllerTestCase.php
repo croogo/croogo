@@ -6,8 +6,6 @@ App::uses('CroogoTestFixture', 'Croogo.TestSuite');
 /**
  * CroogoTestCase class
  *
- * PHP version 5
- *
  * @category TestSuite
  * @package  Croogo
  * @version  1.4
@@ -74,8 +72,10 @@ class CroogoControllerTestCase extends ControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		CakeSession::clear();
-		CakeSession::destroy();
+		if (CakeSession::started()) {
+			CakeSession::clear();
+			CakeSession::destroy();
+		}
 		ClassRegistry::flush();
 	}
 

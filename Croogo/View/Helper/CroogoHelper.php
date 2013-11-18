@@ -4,8 +4,6 @@ App::uses('AppHelper', 'View/Helper');
 /**
  * Croogo Helper
  *
- * PHP version 5
- *
  * @category Helper
  * @package  Croogo.Croogo.View.Helper
  * @version  1.0
@@ -44,6 +42,25 @@ class CroogoHelper extends AppHelper {
 	public function __construct(View $View, $settings = array()) {
 		$this->helpers[] = Configure::read('Site.acl_plugin') . '.' . Configure::read('Site.acl_plugin');
 		parent::__construct($View, $settings);
+	}
+
+
+/**
+ * Convenience method to Html::script() for admin views
+ *
+ * This method does nothing if request is ajax or not in admin prefix.
+ *
+ * @see HtmlHelper::script()
+ * @param $url string|array Javascript files to include
+ * @param array|boolean Options or Html attributes
+ * @return mixed String of <script /> tags or null
+ */
+	public function adminScript($url, $options = array()) {
+		$options = Hash::merge(array('inline' => false), $options);
+		if ($this->request->is('ajax') || empty($this->request->params['admin'])) {
+			return;
+		}
+		return $this->Html->script($url, $options);
 	}
 
 /** Generate Admin menus added by CroogoNav::add()
@@ -173,6 +190,10 @@ class CroogoHelper extends AppHelper {
  */
 	public function adminRowAction($title, $url = null, $options = array(), $confirmMessage = false) {
 		$action = false;
+		$options = Hash::merge(array(
+			'escapeTitle' => false,
+			'escape' => true,
+		), $options);
 		if (is_array($url)) {
 			$action = $url['action'];
 			if (isset($options['class'])) {
@@ -265,6 +286,12 @@ class CroogoHelper extends AppHelper {
 		$tabs = Configure::read('Admin.tabs.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
 		if (is_array($tabs)) {
 			foreach ($tabs as $title => $tab) {
+				$tab = Hash::merge(array(
+					'options' => array(
+						'linkOptions' => array(),
+					),
+				), $tab);
+
 				if (!isset($tab['options']['type']) || (isset($tab['options']['type']) && (in_array($this->_View->viewVars['typeAlias'], $tab['options']['type'])))) {
 					$domId = strtolower(Inflector::singularize($this->params['controller'])) . '-' . strtolower(Inflector::slug($title, '-'));
 					if ($this->adminTabs) {
@@ -275,7 +302,7 @@ class CroogoHelper extends AppHelper {
 						));
 						$output .= '</div>';
 					} else {
-						$output .= $this->adminTab(__d('croogo', $title), '#' . $domId);
+						$output .= $this->adminTab(__d('croogo', $title), '#' . $domId, $tab['options']['linkOptions']);
 					}
 				}
 			}

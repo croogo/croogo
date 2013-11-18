@@ -7,11 +7,11 @@ $this->Html
 	->addCrumb(__d('croogo', 'Menus'), array('plugin' => 'menus', 'controller' => 'menus', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->request->data['Menu']['title'], $this->here);
+	$this->Html->addCrumb($this->request->data['Menu']['title'], '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'admin_add') {
-	$this->Html->addCrumb(__d('croogo', 'Add'), $this->here);
+	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
 echo $this->Form->create('Menu');

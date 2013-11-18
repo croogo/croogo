@@ -142,7 +142,7 @@ class OrderedBehavior extends ModelBehavior {
 			$oldWeight = $Model->data[$Model->alias][$this->settings[$Model->alias]['field']];
 
 			// update the weight of all models of higher weight by
-			$action = array($this->settings[$Model->alias]['field'] => $this->settings[$Model->alias]['field'] . ' - 1');
+			$action = array($this->settings[$Model->alias]['field'] => $Model->alias . '.' . $this->settings[$Model->alias]['field'] . ' - 1');
 			$conditions = array(
 					$Model->alias . '.' . $this->settings[$Model->alias]['field'] . ' >' => $oldWeight);
 			if ($this->settings[$Model->alias]['foreign_key']) {
@@ -161,10 +161,10 @@ class OrderedBehavior extends ModelBehavior {
  * @todo add new model with weight. clean up after
  * @param Model $Model
  */
-	public function beforeSave(Model $Model) {
+	public function beforeSave(Model $Model, $options = array()) {
 		// Check if weight id is set. If not add to end, if set update all
 		// rows from ID and up
-		if (!isset($Model->data[$Model->alias][$Model->primaryKey])) {
+		if (empty($Model->data[$Model->alias][$Model->primaryKey])) {
 			// get highest current row
 			$highest = $this->_highest($Model);
 			// set new weight to model as last by using current highest one + 1

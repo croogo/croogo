@@ -5,8 +5,6 @@ App::uses('Node', 'Nodes.Model');
 /**
  * Attachment Model
  *
- * PHP version 5
- *
  * @category FileManager.Model
  * @package  Croogo.FileManager.Model
  * @version  1.0

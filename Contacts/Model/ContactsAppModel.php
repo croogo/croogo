@@ -1,8 +1,9 @@
 <?php
+
+App::uses('AppModel', 'Model');
+
 /**
  * Contacts App Model
- *
- * PHP version 5
  *
  * @category Contacts.Model
  * @package  Croogo.Contacts.Model

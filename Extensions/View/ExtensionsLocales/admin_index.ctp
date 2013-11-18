@@ -5,7 +5,7 @@ $this->extend('Common/admin_index');
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Locales'), $this->here);
+	->addCrumb(__d('croogo', 'Locales'), '/' . $this->request->url);
 
 ?>
 <?php echo $this->start('actions') ?>
@@ -29,9 +29,9 @@ $this->Html
 		<?php echo $tableHeaders; ?>
 	</thead>
 
-<?php 
+<?php
 	$rows = array();
-	foreach ($locales AS $locale):
+	foreach ($locales as $locale):
 		$actions = array();
 
 		$actions[] = $this->Croogo->adminRowAction('',

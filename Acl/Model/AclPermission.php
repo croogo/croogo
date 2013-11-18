@@ -5,8 +5,6 @@ App::uses('Permission', 'Model');
 /**
  * AclPermission Model
  *
- * PHP version 5
- *
  * @category Model
  * @package  Croogo.Acl.Model
  * @version  1.0
@@ -54,7 +52,7 @@ class AclPermission extends Permission {
 /**
  * afterSave
  */
-	public function afterSave($created) {
+	public function afterSave($created, $options = array()) {
 		Cache::clearGroup('acl', 'permissions');
 	}
 

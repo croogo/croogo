@@ -1,4 +1,5 @@
 <?php
+
 App::uses('CroogoEventManager', 'Croogo.Event');
 App::uses('ClassRegistry', 'Utility');
 App::uses('Folder', 'Utility');
@@ -7,8 +8,6 @@ App::uses('MigrationVersion', 'Migrations.Lib');
 
 /**
  * CroogoPlugin utility class
- *
- * PHP version 5
  *
  * @category Component
  * @package  Croogo.Extensions.Lib
@@ -81,8 +80,6 @@ class CroogoPlugin extends Object {
  * __construct
  */
 	public function __construct($migrationVersion = null) {
-		$this->Setting = ClassRegistry::init('Settings.Setting');
-
 		if (!is_null($migrationVersion)) {
 			$this->_MigrationVersion = $migrationVersion;
 		}
@@ -162,18 +159,19 @@ class CroogoPlugin extends Object {
 		foreach ($pluginPaths as $pluginPath) {
 			$manifestFile = $pluginPath . $alias . DS . 'Config' . DS . 'plugin.json';
 			$hasManifest = file_exists($manifestFile);
+			$active = $this->isActive($alias);
 			if ($hasManifest) {
 				$pluginData = json_decode(file_get_contents($manifestFile), true);
 				if (!empty($pluginData)) {
-					$pluginData['active'] = $this->isActive($alias);
+					$pluginData['active'] = $active;
 					$pluginData['needMigration'] = $this->needMigration($alias, $pluginData['active']);
 				} else {
 					$this->log('plugin.json exists but cannot be decoded.');
 					$pluginData = array();
 				}
 				return $pluginData;
-			} elseif (in_array($alias, $this->bundledPlugins)) {
-				if ($this->needMigration($alias, true)) {
+			} elseif ($this->_isBuiltin($alias)) {
+				if ($this->needMigration($alias, $active)) {
 					$pluginData = array(
 						'name' => $alias,
 						'description' => "Croogo $alias plugin",
@@ -504,6 +502,7 @@ class CroogoPlugin extends Object {
 					$pluginActivation->onActivation($this->_Controller);
 				}
 				Cache::delete('EventHandlers', 'cached_settings');
+				Cache::delete('file_map', '_cake_core_');
 				return true;
 			} else {
 				return __d('croogo', 'Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin);
@@ -531,6 +530,7 @@ class CroogoPlugin extends Object {
 			}
 			CroogoPlugin::unload($plugin);
 			Cache::delete('EventHandlers', 'cached_settings');
+			Cache::delete('file_map', '_cake_core_');
 			return true;
 		} else {
 			return __d('croogo', 'Plugin could not be deactivated. Please, try again.');
@@ -663,9 +663,17 @@ class CroogoPlugin extends Object {
  *
  * @param array $bootstrap array of plugin aliases
  * @return boolean
+ * @throws CakeException
  */
 	protected function _saveBootstraps($bootstraps) {
-		return $this->Setting->write('Hook.bootstraps', implode(',', $bootstraps));
+		static $Setting = null;
+		if (empty($Setting)) {
+			if (!Configure::read('Croogo.installed')) {
+				throw new CakeException('Unable to save Hook.bootstraps when Croogo is not fully installed');
+			}
+			$Setting = ClassRegistry::init('Settings.Setting');
+		}
+		return $Setting->write('Hook.bootstraps', implode(',', $bootstraps));
 	}
 
 /**

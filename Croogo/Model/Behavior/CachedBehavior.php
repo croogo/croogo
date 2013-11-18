@@ -5,8 +5,6 @@ App::uses('ModelBehavior', 'Model');
 /**
  * Cached Behavior
  *
- * PHP version 5
- *
  * @category Behavior
  * @package  Croogo.Croogo.Model.Behavior
  * @version  1.0
@@ -39,7 +37,7 @@ class CachedBehavior extends ModelBehavior {
  * @param boolean $created
  * @return void
  */
-	public function afterSave(Model $model, $created) {
+	public function afterSave(Model $model, $created, $options = array()) {
 		$this->_deleteCachedFiles($model);
 	}
 

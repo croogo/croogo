@@ -7,6 +7,7 @@ class CachedBehaviorTest extends CroogoTestCase {
 	public $fixtures = array(
 		'plugin.users.role',
 		'plugin.users.user',
+		'plugin.settings.setting',
 	);
 
 /**

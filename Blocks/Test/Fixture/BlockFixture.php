@@ -134,5 +134,41 @@ class BlockFixture extends CroogoTestFixture {
 			'updated' => '2010-04-08 21:09:31',
 			'created' => '2009-12-22 05:17:32'
 		),
+		array(
+			'id' => 10,
+			'region_id' => 4,
+			'title' => 'Block Visible by Public',
+			'alias' => 'block-visible-by-public',
+			'body' => 'Block Visible by Public',
+			'show_title' => 1,
+			'class' => '',
+			'status' => 1,
+			'weight' => 7,
+			'element' => '',
+			'visibility_roles' => '["3"]',
+			'visibility_paths' => '',
+			'visibility_php' => '',
+			'params' => '',
+			'updated' => '2010-04-08 21:09:31',
+			'created' => '2009-12-22 05:17:32'
+		),
+		array(
+			'id' => 11,
+			'region_id' => 4,
+			'title' => 'Block Visible by Admin or Registered',
+			'alias' => 'block-visible-by-admin-or-registered',
+			'body' => 'Block Visible by Admin or Registered',
+			'show_title' => 1,
+			'class' => '',
+			'status' => 1,
+			'weight' => 8,
+			'element' => '',
+			'visibility_roles' => '["1","2"]',
+			'visibility_paths' => '',
+			'visibility_php' => '',
+			'params' => '',
+			'updated' => '2010-04-08 21:09:31',
+			'created' => '2009-12-22 05:17:32'
+		),
 	);
 }

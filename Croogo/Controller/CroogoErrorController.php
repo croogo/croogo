@@ -10,8 +10,6 @@ App::uses('AppController', 'Controller');
  * - loads its own set of components and helpers
  * - aware of Site.theme and Site.admin_theme
  *
- * PHP version 5
- *
  * @category Controllers
  * @package  Croogo.Croogo.Controller
  * @version  1.0

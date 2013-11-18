@@ -1,7 +1,7 @@
 <?php
 
 $this->extend('/Common/admin_edit');
-$this->Html->script(array('Nodes.nodes'), false);
+$this->Html->script(array('Nodes.admin'), false);
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
@@ -11,12 +11,12 @@ if ($this->request->params['action'] == 'admin_add') {
 	$formUrl = array('action' => 'add', $typeAlias);
 	$this->Html
 		->addCrumb(__d('croogo', 'Create'), array('controller' => 'nodes', 'action' => 'create'))
-		->addCrumb($type['Type']['title'], $this->here);
+		->addCrumb($type['Type']['title'], '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'admin_edit') {
 	$formUrl = array('action' => 'edit');
-	$this->Html->addCrumb($this->request->data['Node']['title'], $this->here);
+	$this->Html->addCrumb($this->request->data['Node']['title'], '/' . $this->request->url);
 }
 
 echo $this->Form->create('Node', array('url' => $formUrl));
@@ -70,6 +70,9 @@ echo $this->Form->create('Node', array('url' => $formUrl));
 	</div>
 	<div class="span4">
 	<?php
+		$username = isset($this->data['User']['username']) ?
+			$this->data['User']['username'] :
+			$this->Session->read('Auth.User.username');
 		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply', 'class' => 'btn')) .
 			$this->Form->button(__d('croogo', 'Save'), array('class' => 'btn btn-primary')) .
@@ -82,9 +85,19 @@ echo $this->Form->create('Node', array('url' => $formUrl));
 				'label' => __d('croogo', 'Promoted to front page'),
 				'class' => false,
 			)) .
-			$this->Form->input('user_id', array(
+			$this->Form->autocomplete('user_id', array(
+				'type' => 'text',
 				'label' => __d('croogo', 'Publish as '),
+				'autocomplete' => array(
+					'default' => $username,
+					'data-displayField' => 'username',
+					'data-primaryKey' => 'id',
+					'data-queryField' => 'name',
+					'data-relatedElement' => '#NodeUserId',
+					'data-url' => '/api/v1.0/users/lookup.json',
+				),
 			)) .
+
 			$this->Form->input('created', array(
 				'type' => 'text',
 				'class' => 'span10',

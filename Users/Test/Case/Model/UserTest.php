@@ -288,6 +288,8 @@ class UserTest extends CroogoTestCase {
 			'status' => array(),
 			'updated' => array(),
 			'created' => array(),
+			'updated_by' => array(),
+			'created_by' => array(),
 		);
 		$this->assertEquals($expected, $result);
 

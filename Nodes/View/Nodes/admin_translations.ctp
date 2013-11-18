@@ -22,7 +22,6 @@
 	<?php
 		$tableHeaders = $this->Html->tableHeaders(array(
 			'',
-			//__d('croogo', 'Id'),
 			__d('croogo', 'Title'),
 			__d('croogo', 'Locale'),
 			__d('croogo', 'Actions'),
@@ -31,12 +30,11 @@
 
 		$rows = array();
 		foreach ($translations as $translation) {
-			$actions  = $this->Html->link(__d('croogo', 'Edit'), array('action' => 'translate', $id, 'locale' => $translation[$runtimeModelAlias]['locale']));
+			$actions = $this->Html->link(__d('croogo', 'Edit'), array('action' => 'translate', $id, 'locale' => $translation[$runtimeModelAlias]['locale']));
 			$actions .= ' ' . $this->Form->postLink(__d('croogo', 'Delete'), array('action' => 'delete_translation', $translation[$runtimeModelAlias]['locale'], $id), null, __d('croogo', 'Are you sure?'));
 
 			$rows[] = array(
 				'',
-				//$translation[$RuntimeModelAlias]['id'],
 				$translation[$runtimeModelAlias]['content'],
 				$translation[$runtimeModelAlias]['locale'],
 				$actions,

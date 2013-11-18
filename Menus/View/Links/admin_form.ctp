@@ -1,7 +1,7 @@
 <?php
 
 $this->extend('/Common/admin_edit');
-$this->Html->script(array('Menus.links'), false);
+$this->Html->script(array('Menus.admin'), false);
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
@@ -13,7 +13,7 @@ if ($this->request->params['action'] == 'admin_add') {
 			'plugin' => 'menus', 'controller' => 'links', 'action' => 'index',
 			'?' => array('menu_id' => $menuId))
 		)
-		->addCrumb(__d('croogo', 'Add'), $this->here);
+		->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 	$formUrl = array(
 		'controller' => 'links', 'action' => 'add', 'menu' => $menuId
 	);
@@ -24,7 +24,7 @@ if ($this->request->params['action'] == 'admin_edit') {
 		->addCrumb($this->data['Menu']['title'], array(
 			'plugin' => 'menus', 'controller' => 'links', 'action' => 'index',
 			'?' => array('menu_id' => $this->data['Menu']['id'])))
-		->addCrumb($this->request->data['Link']['title'], $this->here);
+		->addCrumb($this->request->data['Link']['title'], '/' . $this->request->url);
 	$formUrl = array(
 		'controller' => 'links', 'action' => 'edit', 'menu' => $menuId
 	);
@@ -63,15 +63,16 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 				echo $this->Form->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));
-				
+
 				echo '<div class="input text required input-append">';
-				echo '<label for="LinkLink">'.__d('croogo','Link').'</label>';	
+				echo '<label for="LinkLink">'.__d('croogo','Link').'</label>';
 				echo $this->Form->input('link', array(
-					'label' => false,
-					'div'=>false,
+                    'label' => false,
+                    'div'=>false
 				));
-				echo $this->Html->link('<i class="icon-link"></i>','#',array(
-					'class'=>'btn launch_link_choosers'
+				echo $this->Html->link('<i class="icon-link"></i>','#link_choosers',array(
+                    'class'=>'btn',
+                    'data-toggle'=>'modal'
 				));
 				echo '</div>';
 
@@ -94,6 +95,7 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 			<?php
 				echo $this->Form->input('class', array(
 					'label' => __d('croogo', 'Class'),
+					'class' => 'span10 class',
 				));
 				echo $this->Form->input('description', array(
 					'label' => __d('croogo', 'Description'),
@@ -130,11 +132,16 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 	?>
 	</div>
 </div>
-<?php echo $this->Form->end(); ?>
-<?php
-$script =<<<EOF
+<?php echo $this->Form->end();
+
+$script = <<<EOF
 $('.link.chooser').itemChooser({
 	fields: [{ type: "Node", target: "#LinkLink", attr: "rel" }]
 });
+
+$(".link_chooser a").click(function(){
+    $("#link_choosers").modal('hide');
+});
 EOF;
+
 $this->Js->buffer($script);

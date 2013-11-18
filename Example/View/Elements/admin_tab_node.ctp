@@ -1,3 +1,3 @@
 <?php
-	echo $this->Form->input('example_field');
+echo $this->Form->input('example_field');
 ?>

@@ -2,10 +2,9 @@
 $this->extend('/Common/admin_index');
 $this->name = 'translate';
 
-
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'Translate'), $this->here)
+	->addCrumb(__d('croogo', 'Translate'), '/' . $this->request->url)
 	->addCrumb($modelAlias)
 	->addCrumb($record[$modelAlias]['title'], array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'edit', $record[$modelAlias]['id']));
 
@@ -33,7 +32,6 @@ $this->Html
 	<?php
 		$tableHeaders = $this->Html->tableHeaders(array(
 			'',
-			//__d('croogo', 'Id'),
 			__d('croogo', 'Title'),
 			__d('croogo', 'Locale'),
 			__d('croogo', 'Actions'),

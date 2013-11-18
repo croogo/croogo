@@ -166,6 +166,15 @@ class ArosAcoData {
 			'_update' => '1',
 			'_delete' => '1'
 		),
+		array(
+			'id' => '19',
+			'aro_id' => '3',
+			'aco_id' => '183',
+			'_create' => '1',
+			'_read' => '1',
+			'_update' => '1',
+			'_delete' => '1'
+		),
 	);
 
 }

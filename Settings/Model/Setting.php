@@ -6,8 +6,6 @@ App::uses('File', 'Utility');
 /**
  * Setting
  *
- * PHP version 5
- *
  * @category Model
  * @package  Croogo.Settings.Model
  * @version  1.0
@@ -48,6 +46,7 @@ class Setting extends SettingsAppModel {
 				'settings',
 			),
 		),
+		'Croogo.Trackable',
 	);
 
 /**
@@ -85,7 +84,7 @@ class Setting extends SettingsAppModel {
  *
  * @return void
  */
-	public function afterSave($created) {
+	public function afterSave($created, $options = array()) {
 		$this->updateJson();
 		$this->writeConfiguration();
 	}
@@ -123,6 +122,7 @@ class Setting extends SettingsAppModel {
 				'description' => '',
 				'input_type' => '',
 				'editable' => 0,
+				'weight' => 0,
 				'params' => '',
 			), $options);
 
@@ -133,6 +133,7 @@ class Setting extends SettingsAppModel {
 			$setting['description'] = $options['description'];
 			$setting['input_type'] = $options['input_type'];
 			$setting['editable'] = $options['editable'];
+			$setting['weight'] = $options['weight'];
 			$setting['params'] = $options['params'];
 		}
 

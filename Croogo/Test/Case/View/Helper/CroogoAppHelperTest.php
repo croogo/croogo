@@ -20,6 +20,13 @@ class CroogoAppHelperTest extends CroogoTestCase {
  */
 	public $AppHelper;
 
+	public $fixtures = array(
+		'plugin.settings.setting',
+		'plugin.taxonomy.type',
+		'plugin.taxonomy.vocabulary',
+		'plugin.taxonomy.types_vocabulary',
+	);
+
 	public function setUp() {
 		parent::setUp();
 		CakePlugin::load('Translate', array('bootstrap' => true));

@@ -1,5 +1,5 @@
 <?php
-$this->Html->script(array('Nodes.nodes'), false);
+$this->Html->script(array('Nodes.admin'), false);
 if (Configure::read('Writing.wysiwyg')) {
 	$this->Html->scriptBlock($tinymce->fileBrowserCallBack(), array('inline' => false));
 	$this->Html->scriptBlock($tinymce->init('NodeBody'), array('inline' => false));
@@ -25,8 +25,8 @@ if (Configure::read('Writing.wysiwyg')) {
 				foreach ($fields as $field) {
 					echo $this->Form->input('Node.' . $field);
 				}
-			 ?>
-			 </div>
+			?>
+			</div>
 		</div>
 	</fieldset>
 	<?php echo $this->Form->end('Submit');?>

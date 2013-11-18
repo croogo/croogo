@@ -5,8 +5,6 @@ App::uses('BlocksAppController', 'Blocks.Controller');
 /**
  * Blocks Controller
  *
- * PHP version 5
- *
  * @category Blocks.Controller
  * @package  Croogo.Blocks.Controller
  * @version  1.0
@@ -149,7 +147,7 @@ class BlocksController extends BlocksAppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Block'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			$this->request->data['Block']['visibility_roles'] = $this->Block->encodeData($this->request->data['Role']['Role']);
@@ -184,11 +182,11 @@ class BlocksController extends BlocksAppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Block'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->Block->delete($id)) {
 			$this->Session->setFlash(__d('croogo', 'Block deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 	}
 
@@ -207,7 +205,7 @@ class BlocksController extends BlocksAppController {
 			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 /**
@@ -225,7 +223,7 @@ class BlocksController extends BlocksAppController {
 			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 /**
@@ -245,7 +243,7 @@ class BlocksController extends BlocksAppController {
 
 		if (count($ids) == 0 || $action == null) {
 			$this->Session->setFlash(__d('croogo', 'No items selected.'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
 		if ($action == 'delete' &&
@@ -261,7 +259,7 @@ class BlocksController extends BlocksAppController {
 			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 }

@@ -5,8 +5,6 @@ App::uses('AppHelper', 'View/Helper');
 /**
  * Wysiwyg Helper
  *
- * PHP version 5
- *
  * @category Wysiwyg.Helper
  * @package  Croogo.Wysiwyg.View.Helper
  * @version  1.5
@@ -34,11 +32,9 @@ class WysiwygHelper extends AppHelper {
  */
 	public function beforeRender($viewFile) {
 		Configure::write('Js.Wysiwyg.uploadsPath', Router::url('/uploads/'));
-		Configure::write('Js.Wysiwyg.attachmentsPath', $this->Html->url(array(
-			'plugin' => 'file_manager',
-			'controller' => 'attachments',
-			'action' => 'browse',
-		)));
+		Configure::write('Js.Wysiwyg.attachmentsPath',
+			$this->Html->url(Configure::read('Wysiwyg.attachmentBrowseUrl'))
+		);
 
 		$this->Html->script('/wysiwyg/js/wysiwyg', array('inline' => false));
 	}

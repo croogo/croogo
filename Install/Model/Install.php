@@ -1,10 +1,11 @@
 <?php
 
-App::uses('InstallAppModel', 'Install.Model');
 App::uses('CakeTime', 'Utility');
-App::uses('Security', 'Utility');
-App::uses('File', 'Utility');
 App::uses('CroogoPlugin', 'Extensions.Lib');
+App::uses('DataMigration', 'Extensions.Lib/Utility');
+App::uses('File', 'Utility');
+App::uses('InstallAppModel', 'Install.Model');
+App::uses('Security', 'Utility');
 
 class Install extends InstallAppModel {
 
@@ -74,31 +75,9 @@ class Install extends InstallAppModel {
 		}
 
 		if ($migrationsSucceed) {
+			$DataMigration = new DataMigration();
 			$path = App::pluginPath('Install') . DS . 'Config' . DS . 'Data' . DS;
-			$dataObjects = App::objects('class', $path);
-			foreach ($dataObjects as $data) {
-				include ($path . $data . '.php');
-				$classVars = get_class_vars($data);
-				$modelAlias = substr($data, 0, -4);
-				$table = $classVars['table'];
-				$records = $classVars['records'];
-				App::uses('Model', 'Model');
-				$modelObject =& new Model(array(
-					'name' => $modelAlias,
-					'table' => $table,
-					'ds' => 'default',
-				));
-				if (is_array($records) && count($records) > 0) {
-					foreach ($records as $record) {
-						$modelObject->create($record);
-						$modelObject->save();
-					}
-					$modelObject->getDatasource()->resetSequence(
-						$modelObject->useTable, $modelObject->primaryKey
-					);
-				}
-				ClassRegistry::removeObject($modelAlias);
-			}
+			$DataMigration->load($path);
 		}
 
 		return $migrationsSucceed;

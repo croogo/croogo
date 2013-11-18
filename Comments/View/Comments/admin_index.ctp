@@ -1,8 +1,6 @@
 <?php
 
-if (!$this->request->is('ajax') && isset($this->request->params['admin'])):
-	$this->Html->script('Comments.admin', array('inline' => false));
-endif;
+$this->Croogo->adminScript('Comments.admin');
 
 $this->extend('/Common/admin_index');
 
@@ -13,10 +11,10 @@ $this->Html
 
 if (isset($criteria['Comment.status'])) {
 	if ($criteria['Comment.status'] == '1') {
-		$this->Html->addCrumb(__d('croogo', 'Published'), $this->here);
+		$this->Html->addCrumb(__d('croogo', 'Published'), '/' . $this->request->url);
 		$this->viewVars['title_for_layout'] = __d('croogo', 'Comments: Published');
 	} else {
-		$this->Html->addCrumb(__d('croogo', 'Approval'), $this->here);
+		$this->Html->addCrumb(__d('croogo', 'Approval'), '/' . $this->request->url);
 		$this->viewVars['title_for_layout'] = __d('croogo', 'Comments: Approval');
 	}
 }
@@ -44,14 +42,13 @@ echo $this->element('admin/modal', array(
 <table class="table table-striped">
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
+		$this->Form->checkbox('checkAll'),
+		$this->Paginator->sort('id', __d('croogo', 'Id')),
+		$this->Paginator->sort('name', __d('croogo', 'Name')),
+		$this->Paginator->sort('email', __d('croogo', 'Email')),
+		$this->Paginator->sort('node_id', __d('croogo', 'Node')),
 		'',
-		$this->Paginator->sort('id'),
-		//$this->Paginator->sort('title'),
-		$this->Paginator->sort('name'),
-		$this->Paginator->sort('email'),
-		$this->Paginator->sort('node_id'),
-		'',
-		$this->Paginator->sort('created'),
+		$this->Paginator->sort('created', __d('croogo', 'Created')),
 		__d('croogo', 'Actions'),
 	));
 ?>
@@ -78,7 +75,7 @@ echo $this->element('admin/modal', array(
 
 		$title = empty($comment['Comment']['title']) ? 'Comment' : $comment['Comment']['title'];
 		$rows[] = array(
-			$this->Form->checkbox('Comment.' . $comment['Comment']['id'] . '.id'),
+			$this->Form->checkbox('Comment.' . $comment['Comment']['id'] . '.id', array('class' => 'row-select')),
 			$comment['Comment']['id'],
 			$comment['Comment']['name'],
 			$comment['Comment']['email'],

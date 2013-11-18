@@ -37,4 +37,12 @@ class CroogoThemeTest extends CroogoTestCase {
 		$this->CroogoTheme->delete('Bogus');
 	}
 
+/**
+ * testGetThemes
+ */
+	public function testGetThemes() {
+		$themes = $this->CroogoTheme->getThemes();
+		$this->assertTrue(array_key_exists('Mytheme', $themes));
+	}
+
 }

@@ -26,6 +26,9 @@ class CroogoCorePluginsTest extends PHPUnit_Framework_TestSuite {
 			'Translate',
 			'Users',
 		);
+		if ((integer)Configure::read('debug') > 0) {
+			$plugins[] = 'Install';
+		}
 		foreach ($plugins as $plugin) {
 			CakePlugin::load($plugin);
 			$suite->addTestDirectoryRecursive(CakePlugin::path($plugin) . 'Test' . DS);

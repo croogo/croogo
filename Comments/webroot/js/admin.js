@@ -13,5 +13,6 @@ Comments.modals = function() {
 }
 
 $(function() {
-	Comments.modals()
+	Comments.modals();
+	Admin.toggleRowSelection('#CommentCheckAll');
 });

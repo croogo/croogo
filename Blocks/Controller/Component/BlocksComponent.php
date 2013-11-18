@@ -1,5 +1,7 @@
 <?php
 
+App::uses('Component', 'Controller');
+
 /**
  * Blocks Component
  *
@@ -84,7 +86,8 @@ class BlocksComponent extends Component {
 				'config' => 'croogo_blocks',
 			),
 		));
-		$roleId = $this->controller->Auth->user('role_id');
+
+		$roleId = $this->controller->Croogo->roleId();
 		foreach ($regions as $regionId => $regionAlias) {
 			$this->blocksForLayout[$regionAlias] = array();
 			$findOptions = array(
@@ -101,7 +104,7 @@ class BlocksComponent extends Component {
 						array(
 							'OR' => array(
 								'Block.visibility_paths' => '',
-								'Block.visibility_paths LIKE' => '%"' . $this->controller->request->here . '"%',
+								'Block.visibility_paths LIKE' => '%"/' . $this->controller->request->url . '"%',
 							),
 						),
 					),

@@ -5,15 +5,15 @@ $this->extend('/Common/admin_index');
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Vocabularies'), $this->here);
+	->addCrumb(__d('croogo', 'Vocabularies'), '/' . $this->request->url);
 
 ?>
 <table class="table table-striped">
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
-		$this->Paginator->sort('id'),
-		$this->Paginator->sort('title'),
-		$this->Paginator->sort('alias'),
+		$this->Paginator->sort('id', __d('croogo', 'Id')),
+		$this->Paginator->sort('title', __d('croogo', 'Title')),
+		$this->Paginator->sort('alias', __d('croogo', 'Alias')),
 		__d('croogo', 'Actions'),
 	));
 ?>

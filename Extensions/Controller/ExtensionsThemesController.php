@@ -10,8 +10,6 @@ App::uses('Sanitize', 'Utility');
 /**
  * Extensions Themes Controller
  *
- * PHP version 5
- *
  * @category Controller
  * @package  Croogo.Extensions.Controller
  * @version  1.0
@@ -85,7 +83,7 @@ class ExtensionsThemesController extends ExtensionsAppController {
 			$this->Session->setFlash(__d('croogo', 'Theme activation failed.'), 'default', array('class' => 'success'));
 		}
 
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 /**
@@ -107,7 +105,7 @@ class ExtensionsThemesController extends ExtensionsAppController {
 			} catch (CakeException $e) {
 				$this->Session->setFlash($e->getMessage(), 'default', array('class' => 'error'));
 			}
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 	}
 
@@ -137,15 +135,15 @@ class ExtensionsThemesController extends ExtensionsAppController {
 	public function admin_delete($alias = null) {
 		if ($alias == null) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Theme.'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
 		if ($alias == 'default') {
 			$this->Session->setFlash(__d('croogo', 'Default theme cannot be deleted.'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		} elseif ($alias == Configure::read('Site.theme')) {
 			$this->Session->setFlash(__d('croogo', 'You cannot delete a theme that is currently active.'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
 		$result = $this->_CroogoTheme->delete($alias);
@@ -158,7 +156,7 @@ class ExtensionsThemesController extends ExtensionsAppController {
 			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 }

@@ -158,4 +158,6 @@ $(document).ready(function() {
 			Nodes.slug();
 		}
 	}
+
+	Admin.toggleRowSelection('#NodeCheckAll');
 });

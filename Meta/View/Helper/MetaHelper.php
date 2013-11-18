@@ -1,9 +1,9 @@
 <?php
 
+App::uses('AppHelper', 'View/Helper');
+
 /**
  * Meta Helper
- *
- * PHP version 5
  *
  * @category Meta.View/Helper
  * @package  Croogo.Meta

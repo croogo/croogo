@@ -5,8 +5,6 @@ App::uses('ModelBehavior', 'Model');
 /**
  * Params Behavior
  *
- * PHP version 5
- *
  * @category Behavior
  * @package  Croogo.Croogo.Model.Behavior
  * @since    1.3.1
@@ -39,7 +37,7 @@ class ParamsBehavior extends ModelBehavior {
  * @param boolean $primary
  * @return array
  */
-	public function afterFind(Model $model, $results, $primary) {
+	public function afterFind(Model $model, $results, $primary = false) {
 		if ($primary && isset($results[0][$model->alias])) {
 			foreach ($results as $i => $result) {
 				$params = array();

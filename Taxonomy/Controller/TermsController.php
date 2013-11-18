@@ -5,8 +5,6 @@ App::uses('TaxonomyAppController', 'Taxonomy.Controller');
 /**
  * Terms Controller
  *
- * PHP version 5
- *
  * @category Taxonomy.Controller
  * @package  Croogo
  * @version  1.0
@@ -56,7 +54,7 @@ class TermsController extends TaxonomyAppController {
  */
 	public function admin_index($vocabularyId = null) {
 		if (!$vocabularyId) {
-			$this->redirect(array(
+			return $this->redirect(array(
 				'controller' => 'vocabularies',
 				'action' => 'index',
 			));
@@ -64,7 +62,7 @@ class TermsController extends TaxonomyAppController {
 		$vocabulary = $this->Term->Vocabulary->findById($vocabularyId);
 		if (!isset($vocabulary['Vocabulary']['id'])) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Vocabulary ID.'), 'default', array('class' => 'error'));
-			$this->redirect(array(
+			return $this->redirect(array(
 				'controller' => 'vocabularies',
 				'action' => 'index',
 			));
@@ -101,7 +99,7 @@ class TermsController extends TaxonomyAppController {
  */
 	public function admin_add($vocabularyId = null) {
 		if (!$vocabularyId) {
-			$this->redirect(array(
+			return $this->redirect(array(
 				'controller' => 'vocabularies',
 				'action' => 'index',
 			));
@@ -112,7 +110,7 @@ class TermsController extends TaxonomyAppController {
 			),
 		));
 		if (!isset($vocabulary['Vocabulary']['id'])) {
-			$this->redirect(array(
+			return $this->redirect(array(
 				'controller' => 'vocabularies',
 				'action' => 'index',
 			));
@@ -141,7 +139,7 @@ class TermsController extends TaxonomyAppController {
 					);
 					if ($this->Term->Taxonomy->save($taxonomy)) {
 						$this->Session->setFlash(__d('croogo', 'Term saved successfuly.'), 'default', array('class' => 'success'));
-						$this->redirect(array(
+						return $this->redirect(array(
 							'action' => 'index',
 							$vocabularyId,
 						));
@@ -167,7 +165,7 @@ class TermsController extends TaxonomyAppController {
  */
 	public function admin_edit($id = null, $vocabularyId = null) {
 		if (!$vocabularyId) {
-			$this->redirect(array(
+			return $this->redirect(array(
 				'controller' => 'vocabularies',
 				'action' => 'index',
 			));
@@ -178,7 +176,7 @@ class TermsController extends TaxonomyAppController {
 			),
 		));
 		if (!isset($vocabulary['Vocabulary']['id'])) {
-			$this->redirect(array(
+			return $this->redirect(array(
 				'controller' => 'vocabularies',
 				'action' => 'index',
 			));
@@ -189,7 +187,7 @@ class TermsController extends TaxonomyAppController {
 			),
 		));
 		if (!isset($term['Term']['id'])) {
-			$this->redirect(array(
+			return $this->redirect(array(
 				'controller' => 'vocabularies',
 				'action' => 'index',
 			));
@@ -201,7 +199,7 @@ class TermsController extends TaxonomyAppController {
 			),
 		));
 		if (!isset($taxonomy['Taxonomy']['id'])) {
-			$this->redirect(array(
+			return $this->redirect(array(
 				'controller' => 'vocabularies',
 				'action' => 'index',
 			));
@@ -246,7 +244,7 @@ class TermsController extends TaxonomyAppController {
 					);
 					if ($this->Term->Taxonomy->save($taxonomy)) {
 						$this->Session->setFlash(__d('croogo', 'Term saved successfuly.'), 'default', array('class' => 'success'));
-						$this->redirect(array(
+						return $this->redirect(array(
 							'action' => 'index',
 							$vocabularyId,
 						));
@@ -276,14 +274,14 @@ class TermsController extends TaxonomyAppController {
 	public function admin_delete($id = null, $vocabularyId = null) {
 		if (!$id || !$vocabularyId) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Term'), 'default', array('class' => 'error'));
-			$this->redirect(array(
+			return $this->redirect(array(
 				'action' => 'index',
 				$vocabularyId,
 			));
 		}
 		$taxonomyId = $this->Term->Taxonomy->termInVocabulary($id, $vocabularyId);
 		if (!$taxonomyId) {
-			$this->redirect(array(
+			return $this->redirect(array(
 				'action' => 'index',
 				$vocabularyId,
 			));
@@ -298,7 +296,7 @@ class TermsController extends TaxonomyAppController {
 		} else {
 			$this->Session->setFlash(__d('croogo', 'Term could not be deleted. Please, try again.'), 'default', array('class' => 'error'));
 		}
-		$this->redirect(array(
+		return $this->redirect(array(
 			'action' => 'index',
 			$vocabularyId,
 		));
@@ -316,14 +314,14 @@ class TermsController extends TaxonomyAppController {
 	public function admin_moveup($id = null, $vocabularyId = null, $step = 1) {
 		if (!$id || !$vocabularyId) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Term'), 'default', array('class' => 'error'));
-			$this->redirect(array(
+			return $this->redirect(array(
 				'action' => 'index',
 				$vocabularyId,
 			));
 		}
 		$taxonomyId = $this->Term->Taxonomy->termInVocabulary($id, $vocabularyId);
 		if (!$taxonomyId) {
-			$this->redirect(array(
+			return $this->redirect(array(
 				'action' => 'index',
 				$vocabularyId,
 			));
@@ -339,7 +337,7 @@ class TermsController extends TaxonomyAppController {
 			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array(
+		return $this->redirect(array(
 			'action' => 'index',
 			$vocabularyId,
 		));
@@ -357,14 +355,14 @@ class TermsController extends TaxonomyAppController {
 	public function admin_movedown($id = null, $vocabularyId = null, $step = 1) {
 		if (!$id || !$vocabularyId) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Term'), 'default', array('class' => 'error'));
-			$this->redirect(array(
+			return $this->redirect(array(
 				'action' => 'index',
 				$vocabularyId,
 			));
 		}
 		$taxonomyId = $this->Term->Taxonomy->termInVocabulary($id, $vocabularyId);
 		if (!$taxonomyId) {
-			$this->redirect(array(
+			return $this->redirect(array(
 				'action' => 'index',
 				$vocabularyId,
 			));
@@ -381,7 +379,7 @@ class TermsController extends TaxonomyAppController {
 			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array(
+		return $this->redirect(array(
 			'action' => 'index',
 			$vocabularyId,
 		));

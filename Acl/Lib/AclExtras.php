@@ -201,6 +201,7 @@ class AclExtras extends Object {
 			$path = $this->rootNode . '/' . $plugin;
 			$pluginRoot = $this->_checkNode($path, $plugin, $root['Aco']['id']);
 			$this->_updateControllers($pluginRoot, $controllers, $plugin);
+			$this->_updateApiComponents($controllers, $plugin);
 		}
 		Cache::clearGroup('acl', 'permissions');
 		if ($this->_clean) {
@@ -267,6 +268,67 @@ class AclExtras extends Object {
 		}
 	}
 
+	protected function _checkApiMethods($plugin, $className, $apiComponent) {
+		$Aco = ClassRegistry::init('Acl.AclAco');
+
+		list($cPlugin, $component) = pluginSplit($apiComponent);
+		$componentName = $component . 'Component';
+		App::uses($componentName, $cPlugin . '.Controller/Component');
+		$reflection = new ReflectionClass($componentName);
+		$props = $reflection->getDefaultProperties();
+		$version = str_replace('.', '_', $props['_apiVersion']);
+		$methods = $props['_apiMethods'];
+
+		foreach ($methods as $method) {
+			$path = sprintf(
+				'api/%s/%s/%s/%s',
+				$version, $plugin, $className, $method
+			);
+			$node = $Aco->node($path);
+			if (empty($node)) {
+				$aco = $Aco->createFromPath($path);
+				$this->created++;
+				$this->out(__d('croogo', 'Created Aco node: <success>%s</success>', $path), 1, Shell::VERBOSE);
+				continue;
+			}
+
+			if ($this->_clean) {
+				$path = sprintf('api/%s/%s/%s', $version, $plugin, $className);
+				$node = $Aco->node($path);
+				$actionNodes = $this->Aco->children($node[0]['Aco']['id']);
+				foreach ($actionNodes as $action) {
+					if (in_array($action['Aco']['alias'], $methods)) {
+						continue;
+					}
+
+					$this->Aco->id = $action['Aco']['id'];
+					if ($this->Aco->delete()) {
+						$acoPath = $path . '/' . $action['Aco']['alias'];
+						$this->out(__d('croogo', 'Deleted Aco node: <warning>%s</warning>', $acoPath), 1, Shell::VERBOSE);
+					}
+				}
+			}
+		}
+	}
+
+	protected function _updateApiComponents($controllers, $plugin) {
+		$hook = 'Hook.controller_properties.%s._apiComponents';
+		foreach ($controllers as $controller) {
+			$controllerName = str_replace('Controller', '', $controller);
+
+			$path = sprintf($hook, $controllerName);
+			$apiComponents = Configure::read($path);
+
+			if (!is_array($apiComponents)) {
+				continue;
+			}
+
+			foreach ($apiComponents as $apiComponent => $setting) {
+				$this->_checkApiMethods($plugin, $controllerName, $apiComponent);
+			}
+		}
+	}
+
 /**
  * Get a list of controllers in the app and plugins.
  *
@@ -312,7 +374,13 @@ class AclExtras extends Object {
  * Get a list of registered callback methods
  */
 	protected function _getCallbacks($className) {
+		$callbacks = array();
 		$reflection = new ReflectionClass($className);
+		try {
+			$method = $reflection->getMethod('implementedEvents');
+		} catch (ReflectionException $e) {
+			return $callbacks;
+		}
 		$method = $reflection->getMethod('implementedEvents');
 		if (version_compare(phpversion(), '5.4', '>=')) {
 			$object = $reflection->newInstanceWithoutConstructor();

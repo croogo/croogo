@@ -5,8 +5,6 @@ App::uses('AppModel', 'Model');
 /**
  * Language
  *
- * PHP version 5
- *
  * @category Model
  * @package  Croogo.Settings.Model
  * @version  1.0
@@ -32,6 +30,7 @@ class Language extends AppModel {
  */
 	public $actsAs = array(
 		'Croogo.Ordered' => array('field' => 'weight', 'foreign_key' => null),
+		'Croogo.Trackable',
 	);
 
 /**

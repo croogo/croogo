@@ -63,6 +63,8 @@ class CroogoRouterTest extends CroogoTestCase {
 	}
 
 	public function testContentType() {
+		Router::$initialized = true;
+
 		$params = array(
 			'url' => array(),
 			'plugin' => 'nodes',
@@ -88,6 +90,8 @@ class CroogoRouterTest extends CroogoTestCase {
 		);
 		$result = Router::reverse($params);
 		$this->assertEquals('/page', $result);
+
+		Router::$initialized = false;
 	}
 
 	public function testRoutableContentTypes() {

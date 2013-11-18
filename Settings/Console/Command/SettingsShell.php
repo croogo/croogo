@@ -204,10 +204,13 @@ class SettingsShell extends AppShell {
  * Update Croogo.version in settings.json
  */
 	public function update_version_info() {
-		$gitDir = APP . '.git';
+		$gitDir = realpath(CakePlugin::path('Croogo') . '..') . DS . '.git';
 		if (!file_exists($gitDir)) {
 			$this->err('Git repository not found');
 			return false;
+		}
+		if (!is_dir($gitDir)) {
+			$gitDir = dirname($gitDir);
 		}
 
 		$git = trim(shell_exec('which git'));

@@ -1,4 +1,5 @@
 <?php
+
 App::uses('ShellDispatcher', 'Console');
 App::uses('AppShell', 'Console/Command');
 App::uses('Shell', 'Console');
@@ -31,8 +32,6 @@ class TestInstallShell extends InstallShell {
 
 /**
  * Install Shell Test
- *
- * PHP version 5
  *
  * @category Test
  * @package  Croogo

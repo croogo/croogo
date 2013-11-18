@@ -18,7 +18,9 @@ class UserFixture extends CroogoTestFixture {
 		'timezone' => array('type' => 'string', 'null' => true, 'default' => '0', 'length' => 10),
 		'status' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'updated_by' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'created_by' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
 	);

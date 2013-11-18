@@ -6,11 +6,11 @@ $this->Html
 	->addCrumb(__d('croogo', 'Roles'), array('plugin' => 'users', 'controller' => 'roles', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->request->data['Role']['title'], $this->here);
+	$this->Html->addCrumb($this->request->data['Role']['title'], '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'admin_add') {
-	$this->Html->addCrumb(__d('croogo', 'Add'), $this->here);
+	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 ?>
 <?php echo $this->Form->create('Role');?>

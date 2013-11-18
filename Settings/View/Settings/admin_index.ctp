@@ -17,10 +17,10 @@ if (!empty($this->request->params['named']['p'])) {
 <table class="table table-striped">
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
-		$this->Paginator->sort('id'),
-		$this->Paginator->sort('key'),
-		$this->Paginator->sort('value'),
-		$this->Paginator->sort('editable'),
+		$this->Paginator->sort('id', __d('croogo', 'Id')),
+		$this->Paginator->sort('key', __d('croogo', 'Key')),
+		$this->Paginator->sort('value', __d('croogo', 'Value')),
+		$this->Paginator->sort('editable', __d('croogo', 'Editable')),
 		__d('croogo', 'Actions'),
 	));
 ?>

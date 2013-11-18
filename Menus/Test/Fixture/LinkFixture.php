@@ -242,5 +242,23 @@ class LinkFixture extends CroogoTestFixture {
 			'updated' => '2009-10-27 17:46:54',
 			'created' => '2009-10-27 17:46:54'
 		),
+		array(
+			'id' => 18,
+			'parent_id' => null,
+			'menu_id' => 4,
+			'title' => 'Public Link Only',
+			'class' => 'public-link-only',
+			'description' => '',
+			'link' => '/public-link-only',
+			'target' => '',
+			'rel' => '',
+			'status' => 1,
+			'lft' => 7,
+			'rght' => 8,
+			'visibility_roles' => '["3"]',
+			'params' => '',
+			'updated' => '2009-10-27 17:46:54',
+			'created' => '2009-10-27 17:46:54'
+		),
 	);
 }

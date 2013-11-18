@@ -23,6 +23,7 @@ class CroogoHelperTest extends CroogoTestCase {
 		'plugin.users.aros_aco',
 		'plugin.settings.setting',
 		'plugin.users.role',
+		'plugin.taxonomy.type',
 	);
 
 /**
@@ -236,7 +237,7 @@ class CroogoHelperTest extends CroogoTestCase {
 		$setting['Setting']['value'] = 0;
 		$setting['Setting']['description'] = 'A description';
 		$result = $this->Croogo->settingsInput($setting, 'MyLabel', 0);
-		$this->assertContains('type="checkbox"',$result);
+		$this->assertContains('type="checkbox"', $result);
 	}
 
 	public function testSettingsInputCheckboxChecked() {
@@ -282,17 +283,61 @@ class CroogoHelperTest extends CroogoTestCase {
 
 		$options = array('class' => 'test-class');
 		$message = 'Are you sure?';
+		$onclick = "return confirm('" . $message . "');";
+		if (version_compare(Configure::version(), '2.4.0', '>=')) {
+			$onclick = sprintf(
+				"if (confirm(&quot;%s&quot;)) { return true; } return false;",
+				$message
+			);
+		}
 		$expected = array(
 			'a' => array(
 				'href' => '/users/edit/1',
 				'class' => 'test-class edit',
-				'onclick' => "return confirm('" . $message . "');",
+				'onclick' => $onclick,
 			),
 			'Edit',
 			'/a',
 		);
 		$result = $this->Croogo->adminRowAction('Edit', $url, $options, $message);
 		$this->assertTags($result, $expected);
+	}
+
+/**
+ * testAdminRowActionEscapedConfirmMessage
+ */
+	public function testAdminRowActionEscapedConfirmMessage() {
+		$url = array('action' => 'delete', 1);
+		$options = array();
+		$sure = 'Are you sure?';
+		$expected = array(
+			'form' => array(
+				'action',
+				'name',
+				'id',
+				'style',
+				'method',
+			),
+			'input' => array(
+				'type',
+				'name',
+				'value',
+			),
+			'/form',
+			'a' => array(
+				'href' => '#',
+				'class' => 'delete',
+				'onclick',
+			),
+			'span' => array(),
+			'Del',
+			'/span',
+			'/a',
+		);
+		$result = $this->Croogo->adminRowAction('<span>Del</span>', $url, array(), $sure);
+		$this->assertTags($result, $expected);
+		$quot = '&quot;';
+		$this->assertContains($quot . $sure . $quot, $result);
 	}
 
 /**

@@ -6,8 +6,6 @@ App::uses('CommentsAppController', 'Comments.Controller');
 /**
  * Comments Controller
  *
- * PHP version 5
- *
  * @category Controller
  * @package  Croogo.Comments.Controller
  * @version  1.0
@@ -109,12 +107,12 @@ class CommentsController extends CommentsAppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Comment'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Comment->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Comment has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Comment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -134,11 +132,11 @@ class CommentsController extends CommentsAppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Comment'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->Comment->delete($id)) {
 			$this->Session->setFlash(__d('croogo', 'Comment deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 	}
 
@@ -159,23 +157,23 @@ class CommentsController extends CommentsAppController {
 
 		if (count($ids) == 0 || $action == null) {
 			$this->Session->setFlash(__d('croogo', 'No items selected.'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
 		if ($action == 'delete' &&
 			$this->Comment->deleteAll(array('Comment.id' => $ids), true, true)) {
 			$this->Session->setFlash(__d('croogo', 'Comments deleted'), 'default', array('class' => 'success'));
 		} elseif ($action == 'publish' &&
-			$this->Comment->updateAll(array('Comment.status' => true), array('Comment.id' => $ids))) {
+			$this->Comment->changeStatus($ids, true)) {
 			$this->Session->setFlash(__d('croogo', 'Comments published'), 'default', array('class' => 'success'));
 		} elseif ($action == 'unpublish' &&
-			$this->Comment->updateAll(array('Comment.status' => false), array('Comment.id' => $ids))) {
+			$this->Comment->changeStatus($ids, false)) {
 			$this->Session->setFlash(__d('croogo', 'Comments unpublished'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 /**
@@ -189,7 +187,7 @@ class CommentsController extends CommentsAppController {
 
 		if (!isset($this->request['ext']) ||
 			$this->request['ext'] != 'rss') {
-			$this->redirect('/');
+			return $this->redirect('/');
 		}
 
 		$this->paginate['Comment']['order'] = 'Comment.created DESC';
@@ -212,7 +210,7 @@ class CommentsController extends CommentsAppController {
 	public function add($nodeId = null, $parentId = null) {
 		if (!$nodeId) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Node'), 'default', array('class' => 'error'));
-			$this->redirect('/');
+			return $this->redirect('/');
 		}
 
 		$node = $this->Comment->Node->find('first', array(
@@ -224,7 +222,7 @@ class CommentsController extends CommentsAppController {
 
 		if (!is_null($parentId) && !$this->Comment->isValidLevel($parentId)) {
 			$this->Session->setFlash(__d('croogo', 'Maximum level reached. You cannot reply to that comment.'), 'default', array('class' => 'error'));
-			$this->redirect($node['Node']['url']);
+			return $this->redirect($node['Node']['url']);
 		}
 
 		$type = $this->Comment->Node->Taxonomy->Vocabulary->Type->findByAlias($node['Node']['type']);
@@ -232,7 +230,7 @@ class CommentsController extends CommentsAppController {
 
 		if (!$continue) {
 			$this->Session->setFlash(__d('croogo', 'Comments are not allowed.'), 'default', array('class' => 'error'));
-			$this->redirect(array(
+			return $this->redirect(array(
 				'controller' => 'nodes',
 				'action' => 'view',
 				'type' => $node['Node']['type'],
@@ -265,7 +263,7 @@ class CommentsController extends CommentsAppController {
 					$this->_sendEmail($node, $data);
 				}
 
-				$this->redirect(Router::url($node['Node']['url'], true) . '#comment-' . $this->Comment->id);
+				return $this->redirect(Router::url($node['Node']['url'], true) . '#comment-' . $this->Comment->id);
 			}
 		}
 

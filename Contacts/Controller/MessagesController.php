@@ -5,8 +5,6 @@ App::uses('ContactsAppController', 'Contacts.Controller');
 /**
  * Messages Controller
  *
- * PHP version 5
- *
  * @category Contacts.Controller
  * @package  Croogo.Contacts.Controller
  * @version  1.0
@@ -88,12 +86,12 @@ class MessagesController extends ContactsAppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Message'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Message->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Message has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Message could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -113,11 +111,11 @@ class MessagesController extends ContactsAppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Message'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->Message->delete($id)) {
 			$this->Session->setFlash(__d('croogo', 'Message deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 	}
 
@@ -138,7 +136,7 @@ class MessagesController extends ContactsAppController {
 
 		if (count($ids) == 0 || $action == null) {
 			$this->Session->setFlash(__d('croogo', 'No items selected.'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
 		if ($action == 'delete' &&
@@ -154,7 +152,7 @@ class MessagesController extends ContactsAppController {
 			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
 }

@@ -1,11 +1,10 @@
 <?php
 
 App::uses('CroogoTestFixture', 'Croogo.TestSuite');
+App::uses('CroogoRouter', 'Croogo.Lib');
 
 /**
  * CroogoTestCase class
- *
- * PHP version 5
  *
  * @category TestSuite
  * @package  Croogo
@@ -66,6 +65,18 @@ class CroogoTestCase extends CakeTestCase {
 		parent::tearDown();
 
 		App::build($this->_paths);
+	}
+
+/**
+ * Helper method to create an test API request (with the appropriate detector)
+ */
+	protected function _apiRequest($params) {
+		$request = new CakeRequest();
+		$request->addParams($params);
+		$request->addDetector('api', array(
+			'callback' => array('CroogoRouter', 'isApiRequest'),
+		));
+		return $request;
 	}
 
 }

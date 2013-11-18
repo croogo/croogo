@@ -7,11 +7,11 @@ $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Types'), array('plugin' => 'taxonomy', 'controller' => 'types', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->request->data['Type']['title'], $this->here);
+	$this->Html->addCrumb($this->request->data['Type']['title'], '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'admin_add') {
-	$this->Html->addCrumb(__d('croogo', 'Add'), $this->here);
+	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
 echo $this->Form->create('Type');
@@ -67,7 +67,7 @@ echo $this->Form->create('Type');
 						'1' => __d('croogo', 'Read only'),
 						'2' => __d('croogo', 'Read/Write'),
 					),
-					'value' => 2,
+					'default' => 2,
 					'legend' => false,
 					'label' => true,
 					'class' => false,

@@ -48,6 +48,9 @@ class FirstMigrationMeta extends CakeMigration {
  * @access public
  */
 	public function before($direction) {
+		if ($direction === 'down') {
+			return false;
+		}
 		return true;
 	}
 

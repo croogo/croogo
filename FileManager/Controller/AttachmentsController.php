@@ -7,8 +7,6 @@ App::uses('FileManagerAppController', 'FileManager.Controller');
  *
  * This file will take care of file uploads (with rich text editor integration).
  *
- * PHP version 5
- *
  * @category FileManager.Controller
  * @package  Croogo.FileManager.Controller
  * @version  1.0
@@ -131,9 +129,9 @@ class AttachmentsController extends FileManagerAppController {
 				$this->Session->setFlash(__d('croogo', 'The Attachment has been saved'), 'default', array('class' => 'success'));
 
 				if (isset($this->request->params['named']['editor'])) {
-					$this->redirect(array('action' => 'browse'));
+					return $this->redirect(array('action' => 'browse'));
 				} else {
-					$this->redirect(array('action' => 'index'));
+					return $this->redirect(array('action' => 'index'));
 				}
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Attachment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
@@ -157,12 +155,12 @@ class AttachmentsController extends FileManagerAppController {
 
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Attachment'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Attachment->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Attachment has been saved'), 'default', array('class' => 'success'));
-				$this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Attachment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
@@ -182,15 +180,15 @@ class AttachmentsController extends FileManagerAppController {
 	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Attachment'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
 		if ($this->Attachment->delete($id)) {
 			$this->Session->setFlash(__d('croogo', 'Attachment deleted'), 'default', array('class' => 'success'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		} else {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Attachment'), 'default', array('class' => 'error'));
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 	}
 

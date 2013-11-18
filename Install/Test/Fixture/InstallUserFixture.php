@@ -1,9 +1,15 @@
 <?php
+
 /**
- * UserFixture
+ * InstallUserFixture
  *
  */
-class UserFixture extends CakeTestFixture {
+class InstallUserFixture extends CakeTestFixture {
+
+/**
+ * Table name
+ */
+	public $table = 'users';
 
 /**
  * Fields
@@ -24,7 +30,9 @@ class UserFixture extends CakeTestFixture {
 		'timezone' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 10, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
 		'status' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'updated_by' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
+		'created_by' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1)
 		),

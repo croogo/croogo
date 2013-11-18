@@ -1,9 +1,9 @@
 <?php
 
+App::uses('AppHelper', 'View/Helper');
+
 /**
  * Menus Helper
- *
- * PHP version 5
  *
  * @category Menus.View/Helper
  * @package  Croogo.Menus.View.Helper
@@ -92,7 +92,7 @@ class MenusHelper extends AppHelper {
 			for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
 				$options[$attributes[1][$j]] = $attributes[2][$j];
 			}
-			$content = str_replace($tagMatches[0][$i], $this->menu($menuAlias,$options), $content);
+			$content = str_replace($tagMatches[0][$i], $this->menu($menuAlias, $options), $content);
 		}
 		return $content;
 	}
@@ -259,23 +259,20 @@ class MenusHelper extends AppHelper {
 	public function linkChooserDialog(){
 
 		$this->Html->css('Menus.linkchoosers',null,array('inline'=>false));
-		
-		$this->Html->script('Menus.linkchoosers',array('inline'=>false));
 
-		$html = '<div id="link_choosers" title="Link Chooser">';
+        $html = '<div id="link_choosers" role="dialog" class="modal hide fade">';
+        $html .= '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3>Link Choosers</h3></div>';
+        $html .= '<div class="modal-body">';
 
 		$linkChoosers = Configure::read('Menus.linkChoosers');
 		foreach($linkChoosers as $name => $chooser){
-			$html .= '<div class="link_chooser"><div class="pull-left"><h5>'.$name.'</h3><p>'.$chooser['description'].'</p></div>'.$this->Html->link(__d('croogo','Link to '.$name), $chooser['url'],
-			array(
-				'class' => 'btn link chooser pull-right',
-				'style' => 'margin:10px;',
-			)
-			).'<div class="clearfix"></div></div>';
+            $html .= '<div class="link_chooser">';
+            $html .= '<div class="pull-left"><h5>'.$name.'</h5><p>'.$chooser["description"].'</p></div>';
+            $html .= '<a href="'.$this->Html->url($chooser['url']).'" class="btn link chooser pull-right" data-dismiss="modal">'.__d('croogo','Link to '.$name).'</a>';
+			$html .= '<div class="clearfix"></div></div>';
 		}
 
-		$html .= '</div>';
-
+        $html .= '</div></div>';
 		return $html;
 
 	}

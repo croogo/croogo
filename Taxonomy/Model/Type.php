@@ -5,10 +5,8 @@ App::uses('AppModel', 'Model');
 /**
  * Type
  *
- * PHP version 5
- *
- * @category Model
- * @package  Croogo
+ * @category Taxonomy.Model
+ * @package  Croogo.Taxonomy.Model
  * @version  1.0
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
@@ -37,6 +35,7 @@ class Type extends TaxonomyAppModel {
 			),
 		),
 		'Croogo.Params',
+		'Croogo.Trackable',
 	);
 
 /**

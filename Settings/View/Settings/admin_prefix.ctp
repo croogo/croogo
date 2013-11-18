@@ -2,7 +2,7 @@
 <?php
 $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'index'))
-	->addCrumb($prefix, $this->here);
+	->addCrumb($prefix, '/' . $this->request->url);
 ?>
 <?php
 
@@ -60,7 +60,7 @@ echo $this->Form->create('Setting', array(
 
 	<div class="span4">
 		<?php
-		echo $this->Html->beginBox('Saving') .
+		echo $this->Html->beginBox(__d('croogo', 'Saving')) .
 			$this->Form->button(__d('croogo', 'Save')) .
 			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'btn btn-danger')) .
 			$this->Html->endBox();

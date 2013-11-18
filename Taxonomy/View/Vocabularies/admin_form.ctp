@@ -9,13 +9,13 @@ $this->Html
 if ($this->request->params['action'] == 'admin_edit') {
 	$this->Html
 		->addCrumb(__d('croogo', 'Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index', $this->request->data['Vocabulary']['id'],))
-		->addCrumb($this->request->data['Vocabulary']['title'], $this->here);
+		->addCrumb($this->request->data['Vocabulary']['title'], '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'admin_add') {
 	$this->Html
 		->addCrumb(__d('croogo', 'Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index',))
-		->addCrumb(__d('croogo', 'Add'), $this->here);
+		->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
 echo $this->Form->create('Vocabulary');

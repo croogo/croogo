@@ -5,8 +5,6 @@ App::uses('AppHelper', 'View/Helper');
 /**
  * Layout Helper
  *
- * PHP version 5
- *
  * @category Helper
  * @package  Croogo.Croogo.View.Helper
  * @version  1.0

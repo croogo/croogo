@@ -5,8 +5,6 @@ App::uses('AppModel', 'Model');
 /**
  * Comment
  *
- * PHP version 5
- *
  * @category Model
  * @package  Croogo.Comments.Model
  * @version  1.0
@@ -42,6 +40,7 @@ class Comment extends AppModel {
 				'nodes',
 			),
 		),
+		'Croogo.Trackable',
 		'Search.Searchable',
 	);
 
@@ -180,6 +179,25 @@ class Comment extends AppModel {
 		$level = count($path);
 
 		return Configure::read('Comment.level') > $level;
+	}
+
+/**
+ * Change status of given Comment Ids
+ *
+ * @param array $ids array of Comment Ids
+ * @param boolean
+ * @return mixed
+ * @see Model::saveMany()
+ */
+	public function changeStatus($ids, $status) {
+		$dataArray = array();
+		foreach ($ids as $id) {
+			$dataArray[] = array(
+				$this->primaryKey => $id,
+				'status' => $status
+			);
+		}
+		return $this->saveMany($dataArray, array('validate' => false));
 	}
 
 }

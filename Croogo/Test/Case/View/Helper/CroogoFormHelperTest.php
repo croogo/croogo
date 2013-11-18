@@ -4,7 +4,7 @@ App::uses('CroogoFormHelper', 'Croogo.View/Helper');
 App::uses('Controller', 'Controller');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
-class CroogoFormHelperTest extends CroogoTestCase{
+class CroogoFormHelperTest extends CroogoTestCase {
 
 	public function setUp() {
 		$controller = null;
@@ -91,6 +91,53 @@ class CroogoFormHelperTest extends CroogoTestCase{
 			'label' => array('for' => 'username'),
 			'Username',
 			'/label',
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+	}
+
+/**
+ * testInputAutoTooltips
+ */
+	public function testInputAutoTooltips() {
+		// automatic tooltips
+		$result = $this->CroogoForm->input('username', array(
+			'label' => false,
+			'placeholder' => 'Username',
+		));
+		$expected = array(
+			'div' => array(
+				'class',
+			),
+			'input' => array(
+				'name',
+				'placeholder',
+				'data-placement',
+				'data-trigger',
+				'data-title',
+				'type',
+				'id',
+			),
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+
+		// disable auto tooltips
+		$result = $this->CroogoForm->input('username', array(
+			'label' => false,
+			'placeholder' => 'Username',
+			'tooltip' => false,
+		));
+		$expected = array(
+			'div' => array(
+				'class',
+			),
+			'input' => array(
+				'name',
+				'placeholder',
+				'type',
+				'id',
+			),
 			'/div',
 		);
 		$this->assertTags($result, $expected);
@@ -274,6 +321,171 @@ class CroogoFormHelperTest extends CroogoTestCase{
 			),
 			'/div',
 		);
+		$this->assertTags($result, $expected);
+	}
+
+/**
+ * testAutocomplete
+ */
+	public function testAutocomplete() {
+		$result = $this->CroogoForm->autocomplete('user_id', array(
+			'autocomplete' => array(
+				'data-relatedField' => '#user_id',
+				'data-url' => 'http://croogo.org',
+			),
+		));
+		$expected = array(
+			array(
+				'input' => array(
+					'type' => 'hidden',
+					'name',
+					'id',
+				),
+			),
+			'div' => array(
+				'class',
+			),
+			'label' => array('for'),
+			'User Id',
+			'/label',
+			array(
+				'input' => array(
+					'name' => 'data[autocomplete_user_id]',
+					'data-relatedField' => '#user_id',
+					'data-url' => 'http://croogo.org',
+					'class' => 'typeahead-autocomplete',
+					'autocomplete' => 'off',
+					'type' => 'text',
+					'id'
+				),
+			),
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+	}
+
+/**
+ * testAutocompleteWithDefault
+ */
+	public function testAutocompleteWithDefault() {
+		$result = $this->CroogoForm->autocomplete('user_id', array(
+			'default' => 3,
+			'autocomplete' => array(
+				'default' => 'yvonne',
+				'data-relatedField' => '#user_id',
+				'data-url' => 'http://croogo.org',
+			),
+		));
+		$expected = array(
+			array(
+				'input' => array(
+					'type' => 'hidden',
+					'name',
+					'value' => 3,
+					'id',
+				),
+			),
+			'div' => array(
+				'class',
+			),
+			'label' => array('for'),
+			'User Id',
+			'/label',
+			array(
+				'input' => array(
+					'name' => 'data[autocomplete_user_id]',
+					'data-relatedField' => '#user_id',
+					'data-url' => 'http://croogo.org',
+					'class' => 'typeahead-autocomplete',
+					'autocomplete' => 'off',
+					'type' => 'text',
+					'value' => 'yvonne',
+					'id'
+				),
+			),
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+	}
+
+/**
+ * testAutocompleteWithDefaultFromViewVars
+ */
+	public function testAutocompleteWithDefaultFromViewVars() {
+		$this->CroogoForm->defaultModel = 'Node';
+		$this->View->set('users', array(
+			3 => 'yvonne',
+		));
+		$this->View->request->data = array(
+			'Node' => array(
+				'id' => 10,
+				'user_id' => 3,
+			),
+		);
+		$result = $this->CroogoForm->autocomplete('Node.user_id', array(
+			'autocomplete' => array(
+				'data-relatedField' => '#NodeUserId',
+				'data-displayField' => 'username',
+				'data-url' => 'http://croogo.org',
+			),
+		));
+		$expected = array(
+			array(
+				'input' => array(
+					'type' => 'hidden',
+					'name',
+					'value' => 3,
+					'id',
+				),
+			),
+			'div' => array(
+				'class',
+			),
+			'label' => array('for'),
+			'User Id',
+			'/label',
+			array(
+				'input' => array(
+					'name' => 'data[autocomplete_user_id]',
+					'value' => 'yvonne',
+					'data-displayField' => 'username',
+					'data-url' => 'http://croogo.org',
+					'data-relatedField',
+					'id',
+				),
+			),
+			'/div',
+		);
+		$this->assertTags($result, $expected);
+	}
+
+/**
+ * Test placeholder with nested model fields
+ */
+	public function testInputPlaceholderNestedModel() {
+		$expected = array(
+			'div' => array(
+				'class',
+			),
+			'label' => array(
+				'for',
+			),
+			'Node',
+			'/label',
+			'select' => array(
+				'name',
+				'placeholder' => 'Node',
+				'data-placement',
+				'data-trigger',
+				'data-title',
+				'id',
+			),
+			'/select',
+			'/div',
+		);
+		$result = $this->CroogoForm->input('User.Comment.node_id', array(
+			'placeholder' => true,
+		));
 		$this->assertTags($result, $expected);
 	}
 

@@ -5,8 +5,6 @@ App::uses('AclAppController', 'Acl.Controller');
 /**
  * AclPermissions Controller
  *
- * PHP version 5
- *
  * @category Controller
  * @package  Croogo.Acl
  * @version  1.0
@@ -58,9 +56,13 @@ class AclPermissionsController extends AclAppController {
  */
 	public function admin_index($id = null, $level = null) {
 		$this->set('title_for_layout', __d('croogo', 'Permissions'));
+		if (isset($this->request->query['root'])) {
+			$query = strtolower($this->request->query['root']);
+		}
 
 		if ($id == null) {
-			$root = $this->AclAco->node('controllers');
+			$root = isset($query) ? $query : 'controllers';
+			$root = $this->AclAco->node(str_replace('.', '_', $root));
 			$root = $root[0];
 		} else {
 			$root = $this->AclAco->read(null, $id);
@@ -92,7 +94,31 @@ class AclPermissionsController extends AclAppController {
 		} else {
 			$permissions = array();
 		}
+
 		$this->set(compact('aros', 'permissions'));
+
+		if ($this->request->is('ajax') && isset($query)) {
+			$this->render('Acl.Elements/admin/acl_permissions_table');
+		} else {
+			$this->_setPermissionRoots();
+		}
+	}
+
+	protected function _setPermissionRoots() {
+		$roots = $this->AclAco->getPermissionRoots();
+		foreach ($roots as $id => $root) {
+			Croogo::hookAdminTab(
+				'AclPermissions/admin_index',
+				__d('croogo', $root['Aco']['title']),
+				'Croogo.blank',
+				array(
+					'linkOptions' => array(
+						'data-alias' => $root['Aco']['alias'],
+					),
+				)
+			);
+		}
+		$this->set(compact('roots'));
 	}
 
 /**
@@ -104,7 +130,7 @@ class AclPermissionsController extends AclAppController {
  */
 	public function admin_toggle($acoId, $aroId) {
 		if (!$this->RequestHandler->isAjax()) {
-			$this->redirect(array('action' => 'index'));
+			return $this->redirect(array('action' => 'index'));
 		}
 
 		// see if acoId and aroId combination exists
@@ -143,7 +169,7 @@ class AclPermissionsController extends AclAppController {
 		} else {
 			$this->Session->setFlash(join('<br>', $result), 'default', array('class' => 'error'));
 		}
-		$this->redirect($this->referer());
+		return $this->redirect($this->referer());
 	}
 
 }

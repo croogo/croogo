@@ -5,8 +5,6 @@ App::uses('AppModel', 'Model');
 /**
  * Menus App Model
  *
- * PHP version 5
- *
  * @category Menus.Model
  * @package  Croogo.Menus.Model
  * @version  1.0

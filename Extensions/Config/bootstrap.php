@@ -2,7 +2,7 @@
 
 CroogoNav::add('extensions', array(
 	'icon' => array('magic', 'large'),
-	'title' => 'Extensions',
+	'title' => __d('croogo', 'Extensions'),
 	'url' => array(
 		'plugin' => 'extensions',
 		'controller' => 'extensions_plugins',

@@ -6,8 +6,6 @@ App::uses('Security', 'Utility');
 /**
  * Croogo Shell
  *
- * PHP version 5
- *
  * @category Shell
  * @package  Croogo.Croogo.Console.Command
  * @version  1.0

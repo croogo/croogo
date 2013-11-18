@@ -5,8 +5,6 @@ App::uses('ModelBehavior', 'Model');
 /**
  * RoleAro Behavior
  *
- * PHP version 5
- *
  * @category Behavior
  * @package  Croogo.Acl.Model.Behavior
  * @version  1.0
@@ -50,7 +48,7 @@ class RoleAroBehavior extends ModelBehavior {
  *
  * Update the corresponding ACO record alias
  */
-	public function afterSave(Model $model, $created) {
+	public function afterSave(Model $model, $created, $options = array()) {
 		$node = $model->node();
 		$aro = $node[0];
 		if (!empty($model->data[$model->alias]['alias'])) {
@@ -89,7 +87,7 @@ class RoleAroBehavior extends ModelBehavior {
  *
  * When 'parent_id' is present, copy its value from Aro to Role data.
  */
-	public function afterFind(Model $model, $results, $primary) {
+	public function afterFind(Model $model, $results, $primary = false) {
 		if (!empty($results[0]['Aro']['parent_id'])) {
 			$results[0][$model->alias]['parent_id'] = $results[0]['Aro']['parent_id'];
 			return $results;

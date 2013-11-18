@@ -1,5 +1,7 @@
 <?php
 
+$this->Croogo->adminScript('Contacts.admin');
+
 $this->extend('/Common/admin_index');
 
 $this->Html
@@ -9,15 +11,15 @@ $this->Html
 
 if (isset($criteria['Message.status'])) {
 	if ($criteria['Message.status'] == '1') {
-		$this->Html->addCrumb(__d('croogo', 'Read'), $this->here);
+		$this->Html->addCrumb(__d('croogo', 'Read'), '/' . $this->request->url);
 		$this->viewVars['title_for_layout'] = __d('croogo', 'Messages: Read');
 	} else {
-		$this->Html->addCrumb(__d('croogo', 'Unread'), $this->here);
+		$this->Html->addCrumb(__d('croogo', 'Unread'), '/' . $this->request->url);
 		$this->viewVars['title_for_layout'] = __d('croogo', 'Messages: Unread');
 	}
 }
 
-$script =<<<EOF
+$script = <<<EOF
 $(".comment-view").on("click", function() {
 	var el= \$(this)
 	var modal = \$('#comment-modal');
@@ -61,12 +63,12 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 <table class="table table-striped">
 <?php
 	$tableHeaders = $this->Html->tableHeaders(array(
-		'',
-		$this->Paginator->sort('id'),
-		$this->Paginator->sort('contact_id'),
-		$this->Paginator->sort('name'),
-		$this->Paginator->sort('email'),
-		$this->Paginator->sort('title'),
+		$this->Form->checkbox('checkAll'),
+		$this->Paginator->sort('id', __d('croogo', 'Id')),
+		$this->Paginator->sort('contact_id', __d('croogo', 'Contact')),
+		$this->Paginator->sort('name', __d('croogo', 'Name')),
+		$this->Paginator->sort('email', __d('croogo', 'Email')),
+		$this->Paginator->sort('title', __d('croogo', 'Title')),
 		__d('croogo', 'Actions'),
 	));
 ?>
@@ -94,7 +96,7 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
 		$rows[] = array(
-			$this->Form->checkbox('Message.' . $message['Message']['id'] . '.id'),
+			$this->Form->checkbox('Message.' . $message['Message']['id'] . '.id', array('class' => 'row-select')),
 			$message['Message']['id'],
 			$message['Contact']['title'],
 			$message['Message']['name'],

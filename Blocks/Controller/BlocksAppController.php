@@ -5,8 +5,6 @@ App::uses('AppController', 'Controller');
 /**
  * Blocks App Controller
  *
- * PHP version 5
- *
  * @category Blocks.Controller
  * @package  Croogo.Blocks.Controller
  * @version  1.0

@@ -6,8 +6,6 @@ App::uses('AuthComponent', 'Controller/Component');
 /**
  * User
  *
- * PHP version 5
- *
  * @category Model
  * @package  Croogo.Users.Model
  * @version  1.0
@@ -44,6 +42,7 @@ class User extends UsersAppModel {
 			'className' => 'Croogo.CroogoAcl',
 			'type' => 'requester',
 		),
+		'Croogo.Trackable',
 		'Search.Searchable',
 	);
 

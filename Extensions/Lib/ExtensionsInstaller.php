@@ -75,7 +75,7 @@ class ExtensionsInstaller {
 				$fileJson = json_decode($Zip->getFromIndex($indexJson));
 
 				if (empty($fileJson->name)) {
-					throw new CakeException(__d('croogo', 'Invalid plugin'));
+					throw new CakeException(__d('croogo', 'Invalid plugin.json or missing plugin name'));
 				}
 
 				$this->_rootPath[$path] = str_replace($search, '', $fileName);
@@ -88,10 +88,16 @@ class ExtensionsInstaller {
 					$plugin . 'Helper.php'
 				);
 
+				$hasFile = false;
 				foreach ($searches as $search) {
-					if ($Zip->locateName($search, ZIPARCHIVE::FL_NODIR) === false) {
-						throw new CakeException(__d('croogo', 'Invalid plugin'));
+					if ($Zip->locateName($search, ZIPARCHIVE::FL_NODIR) !== false) {
+						$hasFile = true;
+						break;
 					}
+				}
+				if (!$hasFile) {
+					CakeLog::critical(__d('croogo', 'Missing expected files: %s in: %s', implode(',', $searches), $path));
+					throw new CakeException(__d('croogo', 'Invalid plugin or missing expected files'));
 				}
 			}
 			$Zip->close();

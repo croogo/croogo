@@ -5,8 +5,7 @@ $this->extend('/Common/admin_edit');
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Attachments'), array('plugin' => 'file_manager', 'controller' => 'attachments', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Upload'), $this->here)
-;
+	->addCrumb(__d('croogo', 'Upload'), '/' . $this->request->url);
 
 $formUrl = array('controller' => 'attachments', 'action' => 'add');
 if (isset($this->params['named']['editor'])) {

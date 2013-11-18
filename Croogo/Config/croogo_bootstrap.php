@@ -5,6 +5,11 @@
 Configure::write('Site.acl_plugin', 'Acl');
 
 /**
+ * Default API Route Prefix. This can be overriden in settings.
+ */
+Configure::write('Croogo.Api.path', 'api');
+
+/**
  * Admin theme
  */
 //Configure::write('Site.admin_theme', 'sample');
@@ -43,11 +48,6 @@ Configure::write('Config.language', Configure::read('Site.locale'));
 $croogoPath = CakePlugin::path('Croogo');
 App::build(array(
 	'Console/Command' => array($croogoPath . 'Console' . DS . 'Command' . DS),
-	'Controller' => array($croogoPath . 'Controller' . DS),
-	'Controller/Component' => array($croogoPath . 'Controller' . DS . 'Component' . DS),
-	'Lib' => array($croogoPath . 'Lib' . DS),
-	'Model' => array($croogoPath . 'Model' . DS),
-	'Model/Behavior' => array($croogoPath . 'Model' . DS . 'Behavior' . DS),
 	'View' => array($croogoPath . 'View' . DS),
 	'View/Helper' => array($croogoPath . 'View' . DS . 'Helper' . DS),
 ), App::APPEND);
@@ -80,8 +80,14 @@ foreach ($plugins as $plugin) {
 	$pluginName = Inflector::camelize($plugin);
 	$pluginPath = APP . 'Plugin' . DS . $pluginName;
 	if (!file_exists($pluginPath)) {
-		$pluginPath = APP . 'Vendor' . DS . 'croogo' . DS . 'croogo' . DS . $pluginName;
-		if (!file_exists($pluginPath)) {
+		$pluginFound = false;
+		foreach (App::path('Plugin') as $path) {
+			if (is_dir($path . $pluginName)) {
+				$pluginFound = true;
+				break;
+			}
+		}
+		if (!$pluginFound) {
 			CakeLog::error('Plugin not found during bootstrap: ' . $pluginName);
 			continue;
 		}

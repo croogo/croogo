@@ -26,6 +26,7 @@ class ImageHelper extends Helper {
 	 */
 	public function resize($path, $width, $height, $aspect = true, $htmlAttributes = array(), $return = false) {
 		$types = array(1 => "gif", "jpeg", "png", "swf", "psd", "wbmp"); // used to determine image type
+		$transparency = array("gif", "png");	// image types with transparency
 		if (empty($htmlAttributes['alt'])) $htmlAttributes['alt'] = 'thumb';  // Ponemos alt default
 
 		$uploadsDir = 'uploads';
@@ -33,8 +34,11 @@ class ImageHelper extends Helper {
 		$fullpath = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.$uploadsDir.DS;
 		$url = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.$path;
 
-		if (!($size = getimagesize($url)))
+		if (!file_exists($url)) {
 			return; // image doesn't exist
+		}
+
+		$size = getimagesize($url);
 
 		if ($aspect) { // adjust to aspect.
 			if (($size[1]/$height) > ($size[0]/$width))  // $size[0]:width, [1]:height, [2]:type
@@ -64,9 +68,21 @@ class ImageHelper extends Helper {
 		if ($resize) {
 			$image = call_user_func('imagecreatefrom'.$types[$size[2]], $url);
 			if (function_exists("imagecreatetruecolor") && ($temp = imagecreatetruecolor ($width, $height))) {
+				if (in_array($types[$size[2]],$transparency)) {
+					imagealphablending($temp, false);
+					imagesavealpha($temp,true);
+					$transparent = imagecolorallocatealpha($temp, 255, 255, 255, 127);
+					imagefilledrectangle($temp, 0, 0, $width, $height, $transparent);
+				}
 				imagecopyresampled ($temp, $image, 0, 0, 0, 0, $width, $height, $size[0], $size[1]);
 			} else {
 				$temp = imagecreate ($width, $height);
+				if (in_array($types[$size[2]],$transparency)) {
+					imagealphablending($temp, false);
+					imagesavealpha($temp,true);
+					$transparent = imagecolorallocatealpha($temp, 255, 255, 255, 127);
+					imagefilledrectangle($temp, 0, 0, $width, $height, $transparent);
+				}
 				imagecopyresized ($temp, $image, 0, 0, 0, 0, $width, $height, $size[0], $size[1]);
 			}
 			call_user_func("image".$types[$size[2]], $temp, $cachefile);

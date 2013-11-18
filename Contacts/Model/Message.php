@@ -5,8 +5,6 @@ App::uses('ContactsAppModel', 'Contacts.Model');
 /**
  * Message
  *
- * PHP version 5
- *
  * @category Model
  * @package  Croogo.Contacts.Model
  * @version  1.0
@@ -31,6 +29,7 @@ class Message extends ContactsAppModel {
  * @access public
  */
 	public $actsAs = array(
+		'Croogo.Trackable',
 		'Search.Searchable',
 	);
 

@@ -5,8 +5,6 @@ App::uses('Component', 'Controller');
 /**
  * AclFilter Component
  *
- * PHP version 5
- *
  * @category Component
  * @package  Croogo.Acl.Controller.Component
  * @version  1.0
@@ -101,13 +99,21 @@ class AclFilterComponent extends Component {
 			$this->_controller->Auth->authenticate[] = 'Form';
 		}
 
+		$actionPath = $this->_controller->request->is('api') ? 'api' : 'controllers';
 		$this->_controller->Auth->authorize = array(
 			AuthComponent::ALL => array(
 				'actionPath' => 'controllers',
 				'userModel' => 'Users.User',
 			),
-			'Acl.AclCached',
+			'Acl.AclCached' => array(
+				'actionPath' => $actionPath,
+			),
 		);
+
+		if (isset($this->_controller->request->params['admin']) &&
+			!$this->_controller->Auth->loggedIn()) {
+			$this->_controller->Auth->authError = false;
+		}
 
 		$this->configureLoginActions();
 	}
@@ -165,11 +171,6 @@ class AclFilterComponent extends Component {
 	public function auth() {
 		$this->_configure();
 		$user = $this->_controller->Auth->user();
-		// Admin role is allowed to perform all actions, bypassing ACL
-		if (!empty($user['role_id']) && $user['role_id'] == 1) {
-			$this->_controller->Auth->allow();
-			return;
-		}
 
 		// authorization for authenticated user is handled by authorize object
 		if ($user) {
@@ -182,9 +183,10 @@ class AclFilterComponent extends Component {
 			$perms = $this->getPermissions('Role', 3);
 			Cache::write($cacheName, $perms, 'permissions');
 		}
-		if (!empty($perms['allowed'][$this->_controller->name])) {
+		$actionPath = $this->_controller->request->is('api') ? 'api' : 'controllers';
+		if (!empty($perms['allowed'][$actionPath][$this->_controller->name])) {
 			$this->_controller->Auth->allow(
-				$perms['allowed'][$this->_controller->name]
+				$perms['allowed'][$actionPath][$this->_controller->name]
 			);
 		}
 	}
@@ -224,11 +226,15 @@ class AclFilterComponent extends Component {
 				continue;
 			}
 			$acos = count($path);
-			if ($acos == 4) {
+			if ($acos == 5) {
+				// api controller/action
+				$controller = $path[3]['Aco']['alias'];
+				$action = $path[1]['Aco']['alias'] . '_' . $path[4]['Aco']['alias'];
+			} elseif ($acos == 4) {
 				// plugin controller/action
 				$controller = $path[2]['Aco']['alias'];
 				$action = $path[3]['Aco']['alias'];
-			} else if ($acos == 3) {
+			} elseif ($acos == 3) {
 				// app controller/action
 				$controller = $path[1]['Aco']['alias'];
 				$action = $path[2]['Aco']['alias'];
@@ -239,7 +245,8 @@ class AclFilterComponent extends Component {
 				));
 				$this->log($path);
 			}
-			$allowedActions[$controller][] = $action;
+			$actionPath = $path[0]['Aco']['alias'];
+			$allowedActions[$actionPath][$controller][] = $action;
 			$authorized[] = implode('/', Hash::extract($path, '{n}.Aco.alias'));
 		}
 		return array('authorized' => $authorized, 'allowed' => $allowedActions);

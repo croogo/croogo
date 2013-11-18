@@ -5,7 +5,7 @@ $this->extend('/Common/admin_edit');
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Attachments'), array('plugin' => 'file_manager', 'controller' => 'attachments', 'action' => 'index'))
-	->addCrumb($this->data['Attachment']['title'], $this->here);
+	->addCrumb($this->data['Attachment']['title'], '/' . $this->request->url);
 
 echo $this->Form->create('Attachment', array('url' => array('controller' => 'attachments', 'action' => 'edit')));
 
@@ -77,7 +77,7 @@ echo $this->Form->create('Attachment', array('url' => array('controller' => 'att
 				__d('croogo', 'Cancel'),
 				$redirect,
 				array('class' => 'cancel', 'button' => 'danger')
-			).
+			) .
 			$this->Html->endBox();
 	?>
 	</div>

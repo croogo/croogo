@@ -23,7 +23,13 @@ class TestAppController extends CroogoAppController {
 
 }
 
-class AppControllerTest extends CroogoControllerTestCase {
+class CroogoAppControllerTest extends CroogoControllerTestCase {
+
+	public $fixtures = array(
+		'plugin.settings.setting',
+		'plugin.taxonomy.type',
+		'plugin.nodes.node',
+	);
 
 	public function setUp() {
 		parent::setUp();
@@ -128,6 +134,47 @@ class AppControllerTest extends CroogoControllerTestCase {
 			'return' => 'view',
 		));
 		$this->assertTrue(in_array('Paginator', $this->controller->helpers));
+	}
+
+/**
+ * Test Setup Component
+ */
+	public function testSetupComponent() {
+		$request = new CakeRequest('/api/v1.0/users');
+		$request->addParams(array(
+			'api' => 'api',
+			'prefix' => 'v1.0',
+		));
+
+		$controller = new TestAppController($request);
+		$defaultComponents = $controller->components;
+		$this->assertEmpty($controller->_apiComponents);
+
+		$key = 'Hook.controller_properties.TestApp._apiComponents';
+		Configure::write($key, array('BogusApi'));
+		Croogo::hookApiComponent('TestApp', 'Example.ImaginaryApi');
+
+		$expected = array(
+			'BogusApi' => array(
+				'className' => 'BogusApi',
+				'priority' => 8,
+			),
+			'ImaginaryApi' => array(
+				'className' => 'Example.ImaginaryApi',
+				'priority' => 8,
+			),
+		);
+		$controller = new TestAppController($request);
+		$this->assertEquals($expected, $controller->_apiComponents);
+
+		$merged = Hash::merge(
+			$defaultComponents,
+			array('BogusApi'),
+			array('Example.ImaginaryApi' => array('priority' => 8))
+		);
+		$this->assertEquals($merged, $controller->components);
+
+		Configure::delete('Hook.controller_properties.TestApp');
 	}
 
 }

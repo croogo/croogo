@@ -4,16 +4,16 @@ $this->extend('/Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'Attachments'), $this->here);
+	->addCrumb(__d('croogo', 'Attachments'), '/' . $this->request->url);
 
 ?>
 <table class="table table-striped">
 <?php
 
 	$tableHeaders = $this->Html->tableHeaders(array(
-		$this->Paginator->sort('id'),
+		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		'&nbsp;',
-		$this->Paginator->sort('title'),
+		$this->Paginator->sort('title', __d('croogo', 'Title')),
 		__d('croogo', 'URL'),
 		__d('croogo', 'Actions'),
 	));
@@ -40,11 +40,11 @@ $this->Html
 		$mimeType = explode('/', $attachment['Attachment']['mime_type']);
 		$mimeType = $mimeType['0'];
 		if ($mimeType == 'image') {
-			$imgUrl = $this->Image->resize('/uploads/' . $attachment['Attachment']['slug'], 100, 200, true, array('class' => 'img-polaroid'));
+			$imgUrl = $this->Image->resize('/uploads/' . $attachment['Attachment']['slug'], 100, 200, true, array('class' => 'img-polaroid', 'alt' => $attachment['Attachment']['title']));
 			$thumbnail = $this->Html->link($imgUrl, $attachment['Attachment']['path'],
 			array('escape' => false, 'class' => 'thickbox', 'title' => $attachment['Attachment']['title']));
 		} else {
-			$thumbnail = $this->Html->image('/croogo/img/icons/page_white.png') . ' ' . $attachment['Attachment']['mime_type'] . ' (' . $this->Filemanager->filename2ext($attachment['Attachment']['slug']) . ')';
+			$thumbnail = $this->Html->image('/croogo/img/icons/page_white.png', array('alt' => $attachment['Attachment']['mime_type'])) . ' ' . $attachment['Attachment']['mime_type'] . ' (' . $this->Filemanager->filename2ext($attachment['Attachment']['slug']) . ')';
 		}
 
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));

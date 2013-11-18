@@ -5,8 +5,6 @@ App::uses('BlocksAppModel', 'Blocks.Model');
 /**
  * Block
  *
- * PHP version 5
- *
  * @category Blocks.Model
  * @package  Croogo.Blocks.Model
  * @version  1.0
@@ -42,6 +40,7 @@ class Block extends BlocksAppModel {
 			),
 		),
 		'Croogo.Params',
+		'Croogo.Trackable',
 		'Search.Searchable',
 	);
 

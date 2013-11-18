@@ -2,7 +2,7 @@
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'File Manager'), array('plugin' => 'file_manager', 'controller' => 'file_manager', 'action' => 'browse'))
-	->addCrumb(__d('croogo', 'Upload'), $this->here);
+	->addCrumb(__d('croogo', 'Upload'), '/' . $this->request->url);
 
 echo $this->Form->create('FileManager', array(
 	'type' => 'file',
@@ -18,7 +18,7 @@ echo $this->Form->create('FileManager', array(
 	<?php $breadcrumb = $this->FileManager->breadcrumb($path); ?>
 	<?php foreach ($breadcrumb as $pathname => $p) : ?>
 		<?php echo $this->FileManager->linkDirectory($pathname, $p); ?>
-			<span class="divider"> <?php echo DS;  ?> </span>
+			<span class="divider"> <?php echo DS; ?> </span>
 	<?php endforeach; ?>
 </div>
 
