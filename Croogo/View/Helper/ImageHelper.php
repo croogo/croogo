@@ -24,15 +24,25 @@ class ImageHelper extends Helper {
 	 * @return mixed  Either string or echos the value, depends on AUTO_OUTPUT and $return.
 	 * @access public
 	 */
-	public function resize($path, $width, $height, $aspect = true, $htmlAttributes = array(), $return = false) {
+	public function resize($path, $width, $height, $options = array(), $htmlAttributes = array(), $return = false) {
+		if (is_bool($options)) {
+			$options = array('aspect' => $options);
+		}
+		$options = Hash::merge(array(
+			'aspect' => true,
+			'uploadsDir' => 'uploads',
+			'cacheDir' => $this->cacheDir,
+			'resizedInd' => '.resized-',
+		), $options);
+		$aspect = $options['aspect'];
+		$uploadsDir = $options['uploadsDir'];
+		$cacheDir = $options['cacheDir'];
+		$resizedInd = $options['resizedInd'];
 		$types = array(1 => "gif", "jpeg", "png", "swf", "psd", "wbmp"); // used to determine image type
 		$transparency = array("gif", "png");	// image types with transparency
 		if (empty($htmlAttributes['alt'])) $htmlAttributes['alt'] = 'thumb';  // Ponemos alt default
 
-		$uploadsDir = 'uploads';
-
-		$fullpath = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.$uploadsDir.DS;
-		$url = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.$path;
+		$url = WWW_ROOT . DS . $path;
 
 		if (!file_exists($url)) {
 			return; // image doesn't exist
@@ -47,8 +57,25 @@ class ImageHelper extends Helper {
 				$height = ceil($width / ($size[0]/$size[1]));
 		}
 
-		$relfile = $this->webroot.$uploadsDir.'/'.$this->cacheDir.'/'.$width.'x'.$height.'_'.basename($path); // relative file
-		$cachefile = $fullpath.$this->cacheDir.DS.$width.'x'.$height.'_'.basename($path);  // location on server
+		$dimension = $resizedInd . $width . 'x' . $height;
+		$parts = pathinfo(WWW_ROOT . $path);
+		if ($resizedInd === 'resized') {
+			// legacy format
+			$resized = $width . 'x' . $height . '_' . $parts['filename'] . '.' . $parts['extension'];
+		} elseif (strpos($path, $resizedInd) === false) {
+			$resized = $parts['filename'] . $dimension . '.' . $parts['extension'];
+		} else {
+			$resized = $parts['filename'] . '.' . $parts['extension'];
+		}
+		$relfile = '/';
+		if ($uploadsDir) {
+			$relfile .= ltrim($uploadsDir, '/') . '/';
+		}
+		if ($cacheDir) {
+			$relfile .= ltrim($cacheDir, '/') . '/';
+		}
+		$relfile .= $resized;
+		$cachefile = WWW_ROOT . ltrim($relfile, '/');
 
 		if (file_exists($cachefile)) {
 			$csize = getimagesize($cachefile);
