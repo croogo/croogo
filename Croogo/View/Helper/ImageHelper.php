@@ -59,13 +59,15 @@ class ImageHelper extends Helper {
 
 		$dimension = $resizedInd . $width . 'x' . $height;
 		$parts = pathinfo(WWW_ROOT . $path);
-		if ($resizedInd === 'resized') {
+		if ($resizedInd === '') {
 			// legacy format
-			$resized = $width . 'x' . $height . '_' . $parts['filename'] . '.' . $parts['extension'];
-		} elseif (strpos($path, $resizedInd) === false) {
-			$resized = $parts['filename'] . $dimension . '.' . $parts['extension'];
+			$filename = $parts['filename'];
+			$filename = preg_replace('/^[0-9]*x[0-9]*_/', '', $filename);
+			$resized = $width . 'x' . $height . '_' . $filename . '.' . $parts['extension'];
 		} else {
-			$resized = $parts['filename'] . '.' . $parts['extension'];
+			$filename = $parts['filename'];
+			$filename = preg_replace('/' . preg_quote($resizedInd) . '[0-9]*x[0-9]*/', '', $filename);
+			$resized = $filename . $dimension . '.' . $parts['extension'];
 		}
 		$relfile = '/';
 		if ($uploadsDir) {
