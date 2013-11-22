@@ -31,6 +31,7 @@
 				'class' => 'item-choose',
 				'data-chooser_type' => 'Node',
 				'data-chooser_id' => $node['Node']['id'],
+				'data-chooser_title' => $node['Node']['title'],
 				'rel' => sprintf(
 					'plugin:%s/controller:%s/action:%s/type:%s/slug:%s',
 					'nodes',
