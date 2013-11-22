@@ -9,14 +9,8 @@ App::uses('Helper', 'View/Helper');
  * @author Jorge Orpinel <jop@levogiro.net> (changes)
  */
 class ImageHelper extends Helper {
-	public $helpers = array('Html');
 
-	/**
-	 * Cache Directory name
-	 *
-	 * @deprecated Will be removed in 1.6
-	 */
-	public $cacheDir = 'resized'; // relative to 'img'.DS
+	public $helpers = array('Html');
 
 	/**
 	 * Automatically resizes an image and returns formatted IMG tag
@@ -37,7 +31,7 @@ class ImageHelper extends Helper {
 		$options = Hash::merge(array(
 			'aspect' => true,
 			'uploadsDir' => 'uploads',
-			'cacheDir' => $this->cacheDir,
+			'cacheDir' => 'resized',
 			'resizedInd' => '.resized-',
 		), $options);
 		$aspect = $options['aspect'];
