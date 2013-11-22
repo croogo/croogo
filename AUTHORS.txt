@@ -22,6 +22,8 @@ James Sapara <james.sapara@gmail.com>
 Lukas Marks <lukas.marks@lumax-web.de>
 Matt Curry <matt@pseudocoder.com>
 thoth <thomas.rader@tigerclawtech.com>
+Elias Coronado <ecor.rck@hotmail.com>
+Hadrien Collongues <chadrien@chadrien.fr>
 Josué Silva Santos <josue.silva.santos@gmail.com>
 Mischa ter Smitten <mischa@tersmitten.nl>
 daniel <daniel@daniels-MacBook-Air.local>
@@ -31,8 +33,10 @@ Adam Taylor <ataylor32@gmail.com>
 Andrew Weir <andru.weir@gmail.com>
 Arie Sutanto <asutanto@xintesa.com>
 Ceeram <c33ram@gmail.com>
+Cezary Nowak <korpirkor@users.noreply.github.com>
 Dirk Brünsicke <d1rk@gmx.de>
-Elias Coronado <ecor.rck@hotmail.com>
+Gilles Bedel <gilles@occi-tech.com>
+Ivan <gsitex@gmail.com>
 Jeremy Harris <jeremy@42pixels.com>
 Joachim Nyqvist <Joachim@JNyqvist.se>
 Kory Marks <kory.marks@mac.com>
@@ -44,6 +48,8 @@ Paulo Pinto <paulorpinto@gmail.com>
 Sam Bernard <sam@sambernard.net>
 Wiena Lorentz <lorentz@xintesa.com>
 alevilar <alevilar@gmail.com>
+elbakai <elbakai@users.noreply.github.com>
+eryw <kristeryw@gmail.com>
 joseph-d <joseph.d@nirada.co.th>
 phpMagpie <phpmagpie@webbedit.co.uk>
 roland-w <roland-w@users.noreply.github.com>
