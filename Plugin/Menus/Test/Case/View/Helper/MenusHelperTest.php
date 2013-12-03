@@ -52,36 +52,51 @@ class MenusHelperTest extends CroogoTestCase {
  * testLinkStringToArray
  */
 	public function testLinkStringToArray() {
-		$this->assertEqual($this->Menus->linkStringToArray('controller:nodes/action:index'), array(
-			'plugin' => null,
-			'controller' => 'nodes',
-			'action' => 'index',
+		$this->assertEqual($this->Menus->linkStringToArray('controller:nodes/action:index'), array_merge(
+			array_fill_keys((array)Configure::read('Routing.prefixes'), false),
+			array(
+				'plugin' => null,
+				'controller' => 'nodes',
+				'action' => 'index',
+			)
 		));
-		$this->assertEqual($this->Menus->linkStringToArray('controller:nodes/action:index/pass/pass2'), array(
-			'plugin' => null,
-			'controller' => 'nodes',
-			'action' => 'index',
-			'pass',
-			'pass2',
+		$this->assertEqual($this->Menus->linkStringToArray('controller:nodes/action:index/pass/pass2'), array_merge(
+			array_fill_keys((array)Configure::read('Routing.prefixes'), false),
+			array(
+				'plugin' => null,
+				'controller' => 'nodes',
+				'action' => 'index',
+				'pass',
+				'pass2',
+			)
 		));
-		$this->assertEqual($this->Menus->linkStringToArray('controller:nodes/action:index/param:value'), array(
-			'plugin' => null,
-			'controller' => 'nodes',
-			'action' => 'index',
-			'param' => 'value',
+		$this->assertEqual($this->Menus->linkStringToArray('controller:nodes/action:index/param:value'), array_merge(
+			array_fill_keys((array)Configure::read('Routing.prefixes'), false),
+			array(
+				'plugin' => null,
+				'controller' => 'nodes',
+				'action' => 'index',
+				'param' => 'value',
+			)
 		));
-		$this->assertEqual($this->Menus->linkStringToArray('controller:nodes/action:index/with-slash/'), array(
-			'plugin' => null,
-			'controller' => 'nodes',
-			'action' => 'index',
-			'with-slash',
+		$this->assertEqual($this->Menus->linkStringToArray('controller:nodes/action:index/with-slash/'), array_merge(
+			array_fill_keys((array)Configure::read('Routing.prefixes'), false),
+			array(
+				'plugin' => null,
+				'controller' => 'nodes',
+				'action' => 'index',
+				'with-slash',
+			)
 		));
 
-		$expected = array(
-			'plugin' => 'contacts',
-			'controller' => 'contacts',
-			'action' => 'view',
-			'contact',
+		$expected = array_merge(
+			array_fill_keys((array)Configure::read('Routing.prefixes'), false),
+			array(
+				'plugin' => 'contacts',
+				'controller' => 'contacts',
+				'action' => 'view',
+				'contact',
+			)
 		);
 		$string = 'plugin:contacts/controller:contacts/action:view/contact';
 		$this->assertEqual($expected, $this->Menus->linkStringToArray($string));
