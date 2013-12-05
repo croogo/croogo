@@ -38,8 +38,10 @@ $this->Html
 			__d('croogo', 'Are you sure?'));
 
 		$mimeType = explode('/', $attachment['Attachment']['mime_type']);
+		$imageType = $mimeType['1'];
 		$mimeType = $mimeType['0'];
-		if ($mimeType == 'image') {
+		$imagecreatefrom = array('gif', 'jpeg', 'png', 'string', 'wbmp', 'webp', 'xbm', 'xpm');
+		if ($mimeType == 'image' && in_array($imageType, $imagecreatefrom)) {
 			$imgUrl = $this->Image->resize('/uploads/' . $attachment['Attachment']['slug'], 100, 200, true, array('class' => 'img-polaroid', 'alt' => $attachment['Attachment']['title']));
 			$thumbnail = $this->Html->link($imgUrl, $attachment['Attachment']['path'],
 			array('escape' => false, 'class' => 'thickbox', 'title' => $attachment['Attachment']['title']));
