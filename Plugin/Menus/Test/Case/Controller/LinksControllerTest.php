@@ -157,6 +157,34 @@ class LinksControllerTest extends CroogoControllerTestCase {
 		$this->assertEquals('Home [modified]', $result['Link']['title']);
 	}
 
+	public function testAdminEditShouldReorderLinkWhenChangingLinkMenu() {
+		$contactLink = $this->LinksController->Link->findById(15);
+
+		$this->testAction('/admin/links/edit/' . $contactLink['Link']['id'], array(
+			'data' => array(
+				'Link' => array_merge($contactLink['Link'], array('menu_id' => 5)),
+				'Role' => array('Role' => array()),
+			),
+		));
+
+		$newContactLink = $this->LinksController->Link->findById($contactLink['Link']['id']);
+		$this->assertNotEquals($contactLink['Link']['lft'], $newContactLink['Link']['lft']);
+	}
+
+	public function testAdminEditShouldReorderOldMenuWhenChangingLinkMenu() {
+		$homeLink = $this->LinksController->Link->findById(7);
+
+		$this->testAction('/admin/links/edit/' . $homeLink['Link']['id'], array(
+			'data' => array(
+				'Link' => array_merge($homeLink['Link'], array('menu_id' => 5)),
+				'Role' => array('Role' => array()),
+			),
+		));
+
+		$newAboutLink = $this->LinksController->Link->findById(8);
+		$this->assertEquals(1, $newAboutLink['Link']['lft']);
+	}
+
 /**
  * testAdminDelete
  *
