@@ -129,11 +129,7 @@ class LinksController extends MenusAppController {
 		if (!empty($this->request->data)) {
 			$this->Link->create();
 			$this->request->data['Link']['visibility_roles'] = $this->Link->encodeData($this->request->data['Role']['Role']);
-			$this->Link->Behaviors->attach('Tree', array(
-				'scope' => array(
-					'Link.menu_id' => $this->request->data['Link']['menu_id'],
-				),
-			));
+			$this->Link->scopeTreeToMenu($this->request->data['Link']['menu_id']);
 			if ($this->Link->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Link has been saved'), 'default', array('class' => 'success'));
 				if (isset($this->request->data['apply'])) {
@@ -177,11 +173,8 @@ class LinksController extends MenusAppController {
 		}
 		if (!empty($this->request->data)) {
 			$this->request->data['Link']['visibility_roles'] = $this->Link->encodeData($this->request->data['Role']['Role']);
-			$this->Link->Behaviors->attach('Tree', array(
-				'scope' => array(
-					'Link.menu_id' => $this->request->data['Link']['menu_id'],
-				),
-			));
+
+			$this->Link->scopeTreeToMenu($this->request->data['Link']['menu_id']);
 			if ($this->Link->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Link has been saved'), 'default', array('class' => 'success'));
 				if (isset($this->request->data['apply'])) {
@@ -236,11 +229,7 @@ class LinksController extends MenusAppController {
 				'action' => 'index',
 			));
 		}
-		$this->Link->Behaviors->attach('Tree', array(
-			'scope' => array(
-				'Link.menu_id' => $link['Link']['menu_id'],
-			),
-		));
+		$this->Link->scopeTreeToMenu($link['Link']['menu_id']);
 		if ($this->Link->delete($id)) {
 			$this->Session->setFlash(__d('croogo', 'Link deleted'), 'default', array('class' => 'success'));
 			$this->redirect(array(
@@ -269,11 +258,7 @@ class LinksController extends MenusAppController {
 				'action' => 'index',
 			));
 		}
-		$this->Link->Behaviors->attach('Tree', array(
-			'scope' => array(
-				'Link.menu_id' => $link['Link']['menu_id'],
-			),
-		));
+		$this->Link->scopeTreeToMenu($link['Link']['menu_id']);
 		if ($this->Link->moveUp($id, $step)) {
 			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'default', array('class' => 'success'));
 		} else {
@@ -304,11 +289,7 @@ class LinksController extends MenusAppController {
 				'action' => 'index',
 			));
 		}
-		$this->Link->Behaviors->attach('Tree', array(
-			'scope' => array(
-				'Link.menu_id' => $link['Link']['menu_id'],
-			),
-		));
+		$this->Link->scopeTreeToMenu($link['Link']['menu_id']);
 		if ($this->Link->moveDown($id, $step)) {
 			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'default', array('class' => 'success'));
 		} else {
@@ -351,11 +332,7 @@ class LinksController extends MenusAppController {
 				'action' => 'index',
 			));
 		}
-		$this->Link->Behaviors->attach('Tree', array(
-			'scope' => array(
-				'Link.menu_id' => $menuId,
-			),
-		));
+		$this->Link->scopeTreeToMenu($menuId);
 
 		if ($action == 'delete' &&
 			$this->Link->deleteAll(array('Link.id' => $ids), true, true)) {
