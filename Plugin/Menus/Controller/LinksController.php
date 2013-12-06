@@ -188,10 +188,20 @@ class LinksController extends MenusAppController {
 			));
 		}
 		if (!empty($this->request->data)) {
+			$previousMenuId = $this->Link->field('menu_id', array(
+				'id' => $this->request->data['Link']['id']
+			));
 			$this->request->data['Link']['visibility_roles'] = $this->Link->encodeData($this->request->data['Role']['Role']);
 
 			$this->__scopeTreeToMenu($this->request->data['Link']['menu_id']);
 			if ($this->Link->save($this->request->data)) {
+				$hasMenuChanged = ($previousMenuId != $this->request->data['Link']['menu_id']);
+				if ($hasMenuChanged) {
+					$this->Link->recover();
+					$this->__scopeTreeToMenu($previousMenuId);
+					$this->Link->recover();
+				}
+
 				$this->Session->setFlash(__d('croogo', 'The Link has been saved'), 'default', array('class' => 'success'));
 				if (isset($this->request->data['apply'])) {
 					$this->redirect(array('action' => 'edit', $this->Link->id));
