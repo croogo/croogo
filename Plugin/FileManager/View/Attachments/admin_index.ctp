@@ -54,13 +54,13 @@ $this->Html
 		$rows[] = array(
 			$attachment['Attachment']['id'],
 			$thumbnail,
-			$attachment['Attachment']['title'],
-			$this->Html->link(
-				$this->Html->url($attachment['Attachment']['path'], true),
-				$attachment['Attachment']['path'],
-				array(
-					'target' => '_blank',
-				)
+			$this->Html->tag('div', $attachment['Attachment']['title'], array('class' => 'ellipsis')),
+			$this->Html->tag('div',
+				$this->Html->link(
+					$this->Html->url($attachment['Attachment']['path'], true),
+					$attachment['Attachment']['path'],
+					array('target' => '_blank')
+				), array('class' => 'ellipsis')
 			),
 			$actions,
 		);
