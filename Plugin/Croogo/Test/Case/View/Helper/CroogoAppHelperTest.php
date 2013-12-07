@@ -33,29 +33,29 @@ class CroogoAppHelperTest extends CroogoTestCase {
 
 	public function testUrlWithoutLocale() {
 		$url = $this->AppHelper->url();
-		$this->assertEqual($url, Router::url('/'));
+		$this->assertEquals(Router::url('/'), $url);
 	}
 
 	public function testUrlWithLocale() {
 		$url = $this->AppHelper->url(array('locale' => 'por'));
-		$this->assertEqual($url, Router::url('/por/index'));
+		$this->assertEquals(Router::url('/por/index'), $url);
 	}
 
 	public function testFullUrlWithLocale() {
 		$url = $this->AppHelper->url(array('locale' => 'por'), true);
-		$this->assertEqual($url, Router::url('/por/index', true));
+		$this->assertEquals(Router::url('/por/index', true), $url);
 	}
 
 	public function testUrlWithRequestParams() {
 		$this->AppHelper->request->params['locale'] = 'por';
 		$url = $this->AppHelper->url();
-		$this->assertEqual($url, Router::url('/por/index'));
+		$this->assertEquals(Router::url('/por/index'), $url);
 	}
 
 	public function testFullUrlWithRequestParams() {
 		$this->AppHelper->request->params['locale'] = 'por';
 		$url = $this->AppHelper->url(null, true);
-		$this->assertEqual($url, Router::url('/por/index', true));
+		$this->assertEquals(Router::url('/por/index', true), $url);
 	}
 
 	public function testUrlWithStringParameterContainingLocale() {
