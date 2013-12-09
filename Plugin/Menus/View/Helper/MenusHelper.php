@@ -202,7 +202,7 @@ class MenusHelper extends AppHelper {
 			$link = key($link);
 		}
 		$link = explode('/', $link);
-		$linkArr = array();
+		$linkArr = array_fill_keys(Configure::read('Routing.prefixes'), false);
 		foreach ($link as $linkElement) {
 			if ($linkElement != null) {
 				$linkElementE = explode(':', $linkElement);
