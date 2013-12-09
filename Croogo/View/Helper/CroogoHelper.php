@@ -289,6 +289,8 @@ class CroogoHelper extends AppHelper {
 				$tab = Hash::merge(array(
 					'options' => array(
 						'linkOptions' => array(),
+						'elementData' => array(),
+						'elementOptions' => array(),
 					),
 				), $tab);
 
@@ -296,10 +298,11 @@ class CroogoHelper extends AppHelper {
 					$domId = strtolower(Inflector::singularize($this->params['controller'])) . '-' . strtolower(Inflector::slug($title, '-'));
 					if ($this->adminTabs) {
 						list($plugin, $element) = pluginSplit($tab['element']);
-						$output .= '<div id="' . $domId . '" class="tab-pane">';
-						$output .= $this->_View->element($element, array(), array(
+						$elementOptions = Hash::merge(array(
 							'plugin' => $plugin,
-						));
+						), $tab['options']['elementOptions']);
+						$output .= '<div id="' . $domId . '" class="tab-pane">';
+						$output .= $this->_View->element($element, $tab['options']['elementData'], $elementOptions);
 						$output .= '</div>';
 					} else {
 						$output .= $this->adminTab(__d('croogo', $title), '#' . $domId, $tab['options']['linkOptions']);
