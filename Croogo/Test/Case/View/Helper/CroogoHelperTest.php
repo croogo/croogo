@@ -178,6 +178,37 @@ class CroogoHelperTest extends CroogoTestCase {
 		$this->assertContains('test-title', $result);
 	}
 
+/**
+ * testAdminTabsOptions
+ */
+	public function testAdminTabsOptions() {
+		$this->Croogo->params = array(
+			'controller' => 'test',
+			'action' => 'action',
+		);
+		$testData = 'hellow world';
+		Configure::write('Admin.tabs.Test/action', array(
+			'Title' => array(
+				'element' => 'tab_options',
+				'options' => array(
+					'elementData' => array(
+						'dataFromHookAdminTab' => $testData,
+					),
+					'elementOptions' => array(
+						'ignoreMissing' => true,
+					),
+				),
+			),
+		));
+		$result = $this->Croogo->adminTabs();
+		$expected = '<li><a href="#test-title" data-toggle="tab">Title</a></li>';
+		$this->assertEquals($expected, $result);
+
+		$result = $this->Croogo->adminTabs(true);
+		$this->assertContains($testData, $result);
+		$this->assertContains('test-title', $result);
+	}
+
 	public function testAdminBoxes() {
 		$this->Croogo->params = array(
 			'controller' => 'test',
