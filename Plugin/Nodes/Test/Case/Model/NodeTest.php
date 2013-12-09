@@ -4,6 +4,8 @@ App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 class NodeTest extends CroogoTestCase {
 
+	public $testBody = 'body set from event';
+
 	public $fixtures = array(
 		'plugin.users.aco',
 		'plugin.users.aro',
@@ -186,6 +188,60 @@ class NodeTest extends CroogoTestCase {
 
 		$this->assertTrue($result);
 		$this->assertEquals($oldNodeCount + 1, $newNodeCount);
+	}
+
+/**
+ * Test onBeforeSaveNode Event Callbacks
+ */
+	public function onBeforeSaveNode($Event) {
+		$Event->data['data']['Node']['body'] = $this->testBody;
+	}
+
+/**
+ * Test onAfterSaveNode Event Callbacks
+ */
+	public function onAfterSaveNode($Event) {
+		$this->assertEquals($this->testBody, $Event->data['data']['Node']['body']);
+	}
+
+/**
+ * testSaveNodeEvents
+ */
+	public function testSaveNodeEvents() {
+		$this->Node->type = null;
+		$oldNodeCount = $this->Node->find('count');
+
+		$data = array(
+			'Node' => array(
+				'title' => 'Test Content',
+				'slug' => 'test-content',
+				'type' => 'blog',
+				'token_key' => 1,
+				'body' => '',
+			),
+			'Role' => array('Role' => array('3')) //Public
+		);
+
+		$manager = CakeEventManager::instance();
+		$manager->attach(array($this, 'onBeforeSaveNode'), 'Model.Node.beforeSaveNode');
+		$manager->attach(array($this, 'onAfterSaveNode'), 'Model.Node.afterSaveNode');
+
+		$result = $this->Node->saveNode($data, Node::DEFAULT_TYPE);
+		$this->Node->type = null;
+		$node = $this->Node->find('first', array(
+			'fields' => array('id', 'title', 'slug', 'body'),
+			'recursive' => -1,
+			'conditions' => array(
+				'Node.id' => $this->Node->id,
+			),
+		));
+
+		$this->assertTrue($result);
+		$this->assertEquals('Test Content', $node['Node']['title']);
+		$this->assertEquals($this->testBody, $node['Node']['body']);
+
+		$manager->detach(array($this, 'onBeforeSaveNode'));
+		$manager->detach(array($this, 'onAfterSaveNode'));
 	}
 
 /**
