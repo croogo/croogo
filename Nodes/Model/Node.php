@@ -370,9 +370,9 @@ class Node extends NodesAppModel {
 		$result = false;
 
 		$data = $this->formatData($data, $typeAlias);
-		Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, compact('data'));
-		$result = $this->saveWithMeta($data);
-		Croogo::dispatchEvent('Model.Node.afterSaveNode', $this, compact('data'));
+		$event = Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, compact('data'));
+		$result = $this->saveWithMeta($event->data['data']);
+		Croogo::dispatchEvent('Model.Node.afterSaveNode', $this, $event->data);
 
 		return $result;
 	}

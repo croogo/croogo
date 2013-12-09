@@ -198,14 +198,24 @@ class CroogoTranslateBehavior extends ModelBehavior {
 				$conditions['locale'] = $_locale;
 				$conditions['content'] = $_value;
 				if (array_key_exists($_locale, $translations)) {
+					$created = false;
 					if (!$RuntimeModel->save(array($RuntimeModel->alias => array_merge($conditions, array('id' => $translations[$_locale]))))) {
 						return false;
 					}
 				} else {
+					$created = true;
 					if (!$RuntimeModel->save(array($RuntimeModel->alias => $conditions))) {
 						return false;
 					}
 				}
+			}
+
+			if ($model->Behaviors->loaded('Cached')) {
+				$model->Behaviors->trigger(
+					'afterSave',
+					array($model, $created),
+					array('breakOn' => array('Cached'))
+				);
 			}
 		}
 

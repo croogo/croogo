@@ -155,7 +155,7 @@ class SettingsController extends SettingsAppController {
 	public function admin_prefix($prefix = null) {
 		$this->set('title_for_layout', __d('croogo', 'Settings: %s', $prefix));
 
-		$this->Setting->Behaviors->attach('Params');
+		$this->Setting->Behaviors->attach('Croogo.Params');
 		if (!empty($this->request->data) && $this->Setting->saveAll($this->request->data['Setting'])) {
 			$this->Session->setFlash(__d('croogo', "Settings updated successfully"), 'default', array('class' => 'success'));
 			return $this->redirect(array('action' => 'prefix', $prefix));

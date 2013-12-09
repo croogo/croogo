@@ -65,15 +65,37 @@ class CroogoTranslateBehaviorTest extends CroogoTestCase {
  * @return void
  */
 	public function testSaveTranslation() {
-		$this->Node->id = 2; // About
-		$this->Node->locale = 'ben';
-		$this->Node->saveTranslation(array(
+		$translationData = array(
 			'Node' => array(
 				'title' => 'About [Translated in Bengali]',
 			),
-		));
+		);
+		$this->__addNewTranslation(2, 'ben', $translationData);
 		$about = $this->Node->findById('2');
 		$this->assertEqual($about['Node']['title'], 'About [Translated in Bengali]');
 	}
+
+
+	public function testSaveTranslationShouldFlushCacheOfModelBeingTranslated() {
+		$translationData =  array('Node' => array('title' => 'Some french content'));
+		$Behaviors = $this->getMock('Behaviors', array('trigger', 'dispatchMethod'));
+		$Behaviors->expects($this->any())
+			->method('trigger')
+			->with(
+				$this->equalTo('afterSave'),
+				$this->equalTo(array($this->Node, false)),
+				$this->equalTo(array('breakOn' => array('Cached')))
+			);
+
+		$this->Node->Behaviors = $Behaviors;
+		$this->__addNewTranslation(2, 'fra',$translationData);
+	}
+
+	private function __addNewTranslation($id, $locale, $translationData) {
+		$this->Node->id = $id;
+		$this->Node->locale = $locale;
+		$this->Node->saveTranslation($translationData);
+	}
+
 
 }
