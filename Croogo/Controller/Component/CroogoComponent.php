@@ -190,26 +190,12 @@ class CroogoComponent extends Component {
  * @see CroogoComponent::redirect()
  */
 	public function setReferer() {
-		$controller = $this->_controller;
-		$getParams = array(
-			'plugin' => null,
-			'controller' => null,
-			'action' => null,
-			'pass' => null,
-			'named' => null,
-			'prefix' => null,
-			'admin' => null,
+		$default = array(
+			'controller' => $this->_controller->request->params['controller'],
+			'action' => 'index',
 		);
-		$referer['url'] =
-			array_intersect_key($controller->request->params, $getParams) +
-			$controller->request->params["named"] +
-			array('?' => $controller->request->query);
-		$referer += array(
-			'base' => $controller->request->base,
-			'webroot' => $controller->request->webroot,
-			'here' => $controller->request->here
-		);
-		$this->Session->write('Croogo.referer', $referer);
+		$referer = $this->_controller->referer($default, true);
+		$this->Session->write('Croogo.referer', array('url' => $referer));
 	}
 
 /**

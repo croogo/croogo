@@ -117,7 +117,6 @@ class NodesController extends NodesAppController {
 		$this->paginate['Node']['conditions']['Node.type'] = $typeAliases;
 
 		$nodes = $this->paginate($this->Node->parseCriteria($this->request->query));
-		$this->Croogo->setReferer();
 		$nodeTypes = $this->Node->Taxonomy->Vocabulary->Type->find('list', array(
 			'fields' => array('Type.alias', 'Type.title')
 			));
@@ -173,6 +172,7 @@ class NodesController extends NodesAppController {
 				$this->Session->setFlash(__d('croogo', '%s could not be saved. Please, try again.', $type['Type']['title']), 'default', array('class' => 'error'));
 			}
 		} else {
+			$this->Croogo->setReferer();
 			$this->request->data['Node']['user_id'] = $this->Session->read('Auth.User.id');
 		}
 
@@ -213,6 +213,7 @@ class NodesController extends NodesAppController {
 			}
 		}
 		if (empty($this->request->data)) {
+			$this->Croogo->setReferer();
 			$data = $this->Node->read(null, $id);
 			$data['Role']['Role'] = $this->Node->decodeData($data['Node']['visibility_roles']);
 			$this->request->data = $data;
