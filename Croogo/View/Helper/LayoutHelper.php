@@ -339,10 +339,16 @@ class LayoutHelper extends AppHelper {
  * @param string $content content
  * @return string
  */
-	public function filter($content) {
-		Croogo::dispatchEvent('Helper.Layout.beforeFilter', $this->_View, array('content' => &$content));
-		$content = $this->filterElements($content);
-		Croogo::dispatchEvent('Helper.Layout.afterFilter', $this->_View, array('content' => &$content));
+	public function filter($content, $options = array()) {
+		Croogo::dispatchEvent('Helper.Layout.beforeFilter', $this->_View, array(
+			'content' => &$content,
+			'options' => $options,
+		));
+		$content = $this->filterElements($content, $options);
+		Croogo::dispatchEvent('Helper.Layout.afterFilter', $this->_View, array(
+			'content' => &$content,
+			'options' => $options,
+		));
 		return $content;
 	}
 
@@ -355,7 +361,7 @@ class LayoutHelper extends AppHelper {
  * @param string $content
  * @return string
  */
-	public function filterElements($content) {
+	public function filterElements($content, $options = array()) {
 		preg_match_all('/\[(element|e):([A-Za-z0-9_\-\/]*)(.*?)\]/i', $content, $tagMatches);
 		$validOptions = array('plugin', 'cache', 'callbacks');
 		for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {

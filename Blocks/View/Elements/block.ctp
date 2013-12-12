@@ -11,6 +11,10 @@ if ($block['Block']['class'] != null) {
 	<h3><?php echo $b['title']; ?></h3>
 <?php endif; ?>
 	<div class="block-body">
-<?php echo $this->Layout->filter($b['body']); ?>
+<?php
+	echo $this->Layout->filter($b['body'], array(
+		'model' => 'Block', 'id' => $b['id']
+	));
+?>
 	</div>
 </div>

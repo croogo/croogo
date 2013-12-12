@@ -116,7 +116,7 @@ class TaxonomiesHelper extends AppHelper {
  * @param string $content
  * @return string
  */
-	public function filter(&$content) {
+	public function filter(&$content, $options = array()) {
 		preg_match_all('/\[(vocabulary|v):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
 		for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
 			$regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
