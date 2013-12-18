@@ -69,4 +69,16 @@ class Link extends MenusAppModel {
 		)
 	);
 
+/**
+ * Allow to change Tree scope to a specific menu
+ *
+ * @param int $id menu id
+ * @return void
+ */
+	public function scopeTreeToMenu($id) {
+		$this->Behaviors->attach('Tree', array(
+			'scope' => array($this->alias . '.menu_id' => $id),
+		));
+	}
+
 }
