@@ -131,7 +131,7 @@ class ContactsController extends ContactsAppController {
  */
 	public function view($alias = null) {
 		if (!$alias) {
-			return $this->redirect('/');
+			$alias = 'contact';
 		}
 
 		$contact = $this->Contact->find('first', array(
@@ -145,7 +145,7 @@ class ContactsController extends ContactsAppController {
 			),
 		));
 		if (!isset($contact['Contact']['id'])) {
-			return $this->redirect('/');
+			throw new NotFoundException();
 		}
 		$this->set('contact', $contact);
 
