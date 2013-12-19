@@ -62,7 +62,7 @@ if (!empty($this->request->params['named']['p'])) {
 			$setting['Setting']['id'],
 			$this->Html->link($keyPrefix, array('controller' => 'settings', 'action' => 'index', 'p' => $keyPrefix)) . $keyTitle,
 			$this->Text->truncate($setting['Setting']['value'], 20),
-			$setting['Setting']['editable'],
+			$this->Html->status($setting['Setting']['editable']),
 			$actions,
 		);
 	endforeach;
