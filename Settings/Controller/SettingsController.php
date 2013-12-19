@@ -31,12 +31,32 @@ class SettingsController extends SettingsAppController {
 	public $uses = array('Settings.Setting');
 
 /**
+ * Components used by the Controller
+ */
+	public $components = array(
+		'Search.Prg' => array(
+			'presetForm' => array(
+				'paramType' => 'querystring',
+			),
+			'commonProcess' => array(
+				'paramType' => 'querystring',
+				'filterEmpty' => true,
+			),
+		),
+	);
+
+/**
  * Helpers used by the Controller
  *
  * @var array
  * @access public
  */
 	public $helpers = array('Html', 'Form');
+
+/**
+ * Preset Variables Search
+ */
+	public $presetVars = true;
 
 /**
  * Admin dashboard
@@ -56,13 +76,12 @@ class SettingsController extends SettingsAppController {
  */
 	public function admin_index() {
 		$this->set('title_for_layout', __d('croogo', 'Settings'));
+		$this->Prg->commonProcess();
 
 		$this->Setting->recursive = 0;
 		$this->paginate['Setting']['order'] = "Setting.weight ASC";
-		if (isset($this->request->params['named']['p'])) {
-			$this->paginate['Setting']['conditions'] = "Setting.key LIKE '" . $this->request->params['named']['p'] . "%'";
-		}
-		$this->set('settings', $this->paginate());
+		$criteria = $this->Setting->parseCriteria($this->Prg->parsedParams());
+		$this->set('settings', $this->paginate($criteria));
 	}
 
 /**

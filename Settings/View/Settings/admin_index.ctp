@@ -60,7 +60,7 @@ if (!empty($this->request->params['named']['p'])) {
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 		$rows[] = array(
 			$setting['Setting']['id'],
-			$this->Html->link($keyPrefix, array('controller' => 'settings', 'action' => 'index', 'p' => $keyPrefix)) . $keyTitle,
+			$this->Html->link($keyPrefix, array('controller' => 'settings', 'action' => 'index', '?' => array('key' => $keyPrefix))) . $keyTitle,
 			$this->Text->truncate($setting['Setting']['value'], 20),
 			$this->Html->status($setting['Setting']['editable']),
 			$actions,

@@ -47,6 +47,7 @@ class Setting extends SettingsAppModel {
 			),
 		),
 		'Croogo.Trackable',
+		'Search.Searchable',
 	);
 
 /**
@@ -69,6 +70,13 @@ class Setting extends SettingsAppModel {
 	);
 
 /**
+ * Filter search fields
+ */
+	public $filterArgs = array(
+		'key' => array('type' => 'like', 'field' => 'Setting.key'),
+	);
+
+/**
  * __construct
  *
  * @param mixed $id
@@ -79,6 +87,7 @@ class Setting extends SettingsAppModel {
 		parent::__construct($id, $table, $ds);
 		$this->settingsPath = APP . 'Config' . DS . 'settings.json';
 	}
+
 /**
  * afterSave callback
  *
