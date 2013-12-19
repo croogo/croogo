@@ -133,10 +133,18 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 	public function testView() {
 		$Contacts = $this->generate('Contacts', array(
 			'methods' => array(
+				'_spam_protection',
+				'_captcha',
 				'_send_email'
 			),
 		));
 		$Contacts->plugin = 'Contacts';
+		$Contacts->expects($this->once())
+			->method('_spam_protection')
+			->will($this->returnValue(true));
+		$Contacts->expects($this->once())
+			->method('_captcha')
+			->will($this->returnValue(true));
 		$Contacts->expects($this->once())
 			->method('_send_email')
 			->will($this->returnValue(true));

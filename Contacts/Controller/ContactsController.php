@@ -158,11 +158,12 @@ class ContactsController extends ContactsAppController {
 			$this->request->data['Message']['title'] = htmlspecialchars($this->request->data['Message']['title']);
 			$this->request->data['Message']['name'] = htmlspecialchars($this->request->data['Message']['name']);
 			$this->request->data['Message']['body'] = htmlspecialchars($this->request->data['Message']['body']);
-			$continue = $this->_validation($continue, $contact);
 			$continue = $this->_spam_protection($continue, $contact);
 			$continue = $this->_captcha($continue, $contact);
+			$continue = $this->_validation($continue, $contact);
 			$continue = $this->_send_email($continue, $contact);
 
+			$this->set(compact('continue'));
 			if ($continue === true) {
 				//$this->Session->setFlash(__d('croogo', 'Your message has been received.'));
 				//unset($this->request->data['Message']);
@@ -172,7 +173,6 @@ class ContactsController extends ContactsAppController {
 		}
 
 		$this->set('title_for_layout', $contact['Contact']['title']);
-		$this->set(compact('continue'));
 	}
 
 /**
