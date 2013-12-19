@@ -165,11 +165,11 @@ class ContactsController extends ContactsAppController {
 
 			$this->set(compact('continue'));
 			if ($continue === true) {
-				//$this->Session->setFlash(__d('croogo', 'Your message has been received.'));
-				//unset($this->request->data['Message']);
-
-				echo $this->flash(__d('croogo', 'Your message has been received...'), '/');
+				$this->Session->setFlash(__d('croogo', 'Your message has been received...'), 'default', array('class' => 'success'));
+				return $this->Croogo->redirect('/');
 			}
+		} else {
+			$this->Croogo->setReferer();
 		}
 
 		$this->set('title_for_layout', $contact['Contact']['title']);
