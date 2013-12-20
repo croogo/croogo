@@ -60,6 +60,7 @@
 
 			$insertCode = $this->Html->link('', '#', array(
 				'onclick' => "Croogo.Wysiwyg.choose('" . $attachment['Attachment']['slug'] . "');",
+				'escapeTitle' => false,
 				'icon' => 'paper-clip',
 				'tooltip' => __d('croogo', 'Insert')
 			));

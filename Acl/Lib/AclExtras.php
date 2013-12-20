@@ -376,6 +376,9 @@ class AclExtras extends Object {
 	protected function _getCallbacks($className) {
 		$callbacks = array();
 		$reflection = new ReflectionClass($className);
+		if ($reflection->isAbstract()) {
+			return $callbacks;
+		}
 		try {
 			$method = $reflection->getMethod('implementedEvents');
 		} catch (ReflectionException $e) {

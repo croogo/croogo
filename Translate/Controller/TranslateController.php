@@ -149,11 +149,16 @@ class TranslateController extends TranslateAppController {
 		if (!empty($this->request->data)) {
 			if ($model->saveTranslation($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'Record has been translated'), 'default', array('class' => 'success'));
-				return $this->redirect(array(
+				$redirect = array(
 					'action' => 'index',
 					$id,
 					$modelAlias,
-				));
+				);
+				if (isset($this->request->data['apply'])) {
+					$redirect['action'] = 'edit';
+					$redirect['locale'] = $model->locale;
+				}
+				return $this->redirect($redirect);
 			} else {
 				$this->Session->setFlash(__d('croogo', 'Record could not be translated. Please, try again.'), 'default', array('class' => 'error'));
 			}

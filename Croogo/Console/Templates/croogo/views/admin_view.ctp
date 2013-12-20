@@ -7,7 +7,7 @@ $header =<<<EOF
 \$this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', '${pluralHumanName}'), array('action' => 'index'));
-	
+
 ?>\n
 EOF;
 
@@ -20,9 +20,9 @@ echo $header;
 		<ul class="nav-buttons">
 <?php
 	echo "\t\t<li><?php echo \$this->Html->link(__d('croogo', 'Edit " . $singularHumanName ."'), array('action' => 'edit', \${$singularVar}['{$modelClass}']['{$primaryKey}']), array('button' => 'default')); ?> </li>\n";
-	echo "\t\t<li><?php echo \$this->Form->postLink(__d('croogo', 'Delete " . $singularHumanName . "'), array('action' => 'delete', \${$singularVar}['{$modelClass}']['{$primaryKey}']), array('button' => 'default'), __d('croogo', 'Are you sure you want to delete # %s?', \${$singularVar}['{$modelClass}']['{$primaryKey}'])); ?> </li>\n";
+	echo "\t\t<li><?php echo \$this->Form->postLink(__d('croogo', 'Delete " . $singularHumanName . "'), array('action' => 'delete', \${$singularVar}['{$modelClass}']['{$primaryKey}']), array('button' => 'danger', 'escape' => true), __d('croogo', 'Are you sure you want to delete # %s?', \${$singularVar}['{$modelClass}']['{$primaryKey}'])); ?> </li>\n";
 	echo "\t\t<li><?php echo \$this->Html->link(__d('croogo', 'List " . $pluralHumanName . "'), array('action' => 'index'), array('button' => 'default')); ?> </li>\n";
-	echo "\t\t<li><?php echo \$this->Html->link(__d('croogo', 'New " . $singularHumanName . "'), array('action' => 'add'), array('button' => 'default')); ?> </li>\n";
+	echo "\t\t<li><?php echo \$this->Html->link(__d('croogo', 'New " . $singularHumanName . "'), array('action' => 'add'), array('button' => 'success')); ?> </li>\n";
 
 	$done = array();
 	foreach ($associations as $type => $data) {

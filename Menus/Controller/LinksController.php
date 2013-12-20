@@ -63,6 +63,22 @@ class LinksController extends MenusAppController {
 	}
 
 /**
+ * Allow to change Tree scope to a specific menu
+ *
+ * FIXME: This is a temporary method introduced to fix #368 in a backward
+ * compatible way and DRY.  The ideal place for this method is in Link model
+ * where it will be moved to in 1.6
+ *
+ * @param int $id menu id
+ * @return void
+ */
+	private function __scopeTreeToMenu($id) {
+		$this->Link->Behaviors->attach('Tree', array(
+			'scope' => array($this->Link->alias . '.menu_id' => $id),
+		));
+	}
+
+/**
  * Toggle Link status
  *
  * @param $id string Link id
@@ -127,11 +143,7 @@ class LinksController extends MenusAppController {
 		if (!empty($this->request->data)) {
 			$this->Link->create();
 			$this->request->data['Link']['visibility_roles'] = $this->Link->encodeData($this->request->data['Role']['Role']);
-			$this->Link->Behaviors->attach('Tree', array(
-				'scope' => array(
-					'Link.menu_id' => $this->request->data['Link']['menu_id'],
-				),
-			));
+			$this->__scopeTreeToMenu($this->request->data['Link']['menu_id']);
 			if ($this->Link->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Link has been saved'), 'default', array('class' => 'success'));
 				if (isset($this->request->data['apply'])) {
@@ -174,13 +186,20 @@ class LinksController extends MenusAppController {
 			));
 		}
 		if (!empty($this->request->data)) {
-			$this->request->data['Link']['visibility_roles'] = $this->Link->encodeData($this->request->data['Role']['Role']);
-			$this->Link->Behaviors->attach('Tree', array(
-				'scope' => array(
-					'Link.menu_id' => $this->request->data['Link']['menu_id'],
-				),
+			$previousMenuId = $this->Link->field('menu_id', array(
+				'id' => $this->request->data['Link']['id']
 			));
+			$this->request->data['Link']['visibility_roles'] = $this->Link->encodeData($this->request->data['Role']['Role']);
+
+			$this->__scopeTreeToMenu($this->request->data['Link']['menu_id']);
 			if ($this->Link->save($this->request->data)) {
+				$hasMenuChanged = ($previousMenuId != $this->request->data['Link']['menu_id']);
+				if ($hasMenuChanged) {
+					$this->Link->recover();
+					$this->__scopeTreeToMenu($previousMenuId);
+					$this->Link->recover();
+				}
+
 				$this->Session->setFlash(__d('croogo', 'The Link has been saved'), 'default', array('class' => 'success'));
 				if (isset($this->request->data['apply'])) {
 					return $this->redirect(array('action' => 'edit', $this->Link->id));
@@ -234,11 +253,7 @@ class LinksController extends MenusAppController {
 				'action' => 'index',
 			));
 		}
-		$this->Link->Behaviors->attach('Tree', array(
-			'scope' => array(
-				'Link.menu_id' => $link['Link']['menu_id'],
-			),
-		));
+		$this->__scopeTreeToMenu($link['Link']['menu_id']);
 		if ($this->Link->delete($id)) {
 			$this->Session->setFlash(__d('croogo', 'Link deleted'), 'default', array('class' => 'success'));
 			return $this->redirect(array(
@@ -267,11 +282,7 @@ class LinksController extends MenusAppController {
 				'action' => 'index',
 			));
 		}
-		$this->Link->Behaviors->attach('Tree', array(
-			'scope' => array(
-				'Link.menu_id' => $link['Link']['menu_id'],
-			),
-		));
+		$this->__scopeTreeToMenu($link['Link']['menu_id']);
 		if ($this->Link->moveUp($id, $step)) {
 			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'default', array('class' => 'success'));
 		} else {
@@ -302,11 +313,7 @@ class LinksController extends MenusAppController {
 				'action' => 'index',
 			));
 		}
-		$this->Link->Behaviors->attach('Tree', array(
-			'scope' => array(
-				'Link.menu_id' => $link['Link']['menu_id'],
-			),
-		));
+		$this->__scopeTreeToMenu($link['Link']['menu_id']);
 		if ($this->Link->moveDown($id, $step)) {
 			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'default', array('class' => 'success'));
 		} else {
@@ -349,11 +356,7 @@ class LinksController extends MenusAppController {
 				'action' => 'index',
 			));
 		}
-		$this->Link->Behaviors->attach('Tree', array(
-			'scope' => array(
-				'Link.menu_id' => $menuId,
-			),
-		));
+		$this->__scopeTreeToMenu($menuId);
 
 		if ($action == 'delete' &&
 			$this->Link->deleteAll(array('Link.id' => $ids), true, true)) {

@@ -20,7 +20,7 @@ class MetaHelper extends AppHelper {
 	public $helpers = array(
 		'Html',
 		'Form',
-		);
+	);
 
 /**
  * Meta tags

@@ -45,7 +45,7 @@ echo $header;
 		echo "\t\t<td class=\"item-actions\">\n";
 		echo "\t\t\t<?php echo \$this->Croogo->adminRowAction('', array('action' => 'view', \${$singularVar}['{$modelClass}']['{$primaryKey}']), array('icon' => 'eye-open')); ?>\n";
 		echo "\t\t\t<?php echo \$this->Croogo->adminRowAction('', array('action' => 'edit', \${$singularVar}['{$modelClass}']['{$primaryKey}']), array('icon' => 'pencil')); ?>\n";
-		echo "\t\t\t<?php echo \$this->Croogo->adminRowAction('', array('action' => 'delete', \${$singularVar}['{$modelClass}']['{$primaryKey}']), array('icon' => 'trash'), __d('croogo', 'Are you sure you want to delete # %s?', \${$singularVar}['{$modelClass}']['{$primaryKey}'])); ?>\n";
+		echo "\t\t\t<?php echo \$this->Croogo->adminRowAction('', array('action' => 'delete', \${$singularVar}['{$modelClass}']['{$primaryKey}']), array('icon' => 'trash', 'escape' => true), __d('croogo', 'Are you sure you want to delete # %s?', \${$singularVar}['{$modelClass}']['{$primaryKey}'])); ?>\n";
 		echo "\t\t</td>\n";
 	echo "\t</tr>\n";
 
