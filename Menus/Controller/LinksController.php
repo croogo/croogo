@@ -128,6 +128,9 @@ class LinksController extends MenusAppController {
 			),
 		));
 		$this->set(compact('linksTree', 'linksStatus', 'menu'));
+		if ($this->request->ext === 'json') {
+			$this->set('_serialize', array('linksTree', 'menu', 'linksStatus'));
+		}
 	}
 
 /**
