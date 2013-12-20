@@ -1,5 +1,5 @@
 <?php
-
+App::uses('CroogoRouter', 'Croogo.Lib');
 App::uses('Helper', 'View');
 
 /**
@@ -23,10 +23,17 @@ class CroogoAppHelper extends Helper {
  * @access public
  */
 	public function url($url = null, $full = false) {
-		if (!isset($url['locale']) && isset($this->params['locale'])) {
-			$url['locale'] = $this->params['locale'];
+		$arrayUrl = array();
+		if (!is_array($url)) {
+			$arrayUrl = Router::parse($url, $full);
+		} else {
+			$arrayUrl = $url;
 		}
-		return parent::url($url, $full);
+
+		if (empty($arrayUrl['locale']) && !empty($this->request->params['locale'])) {
+			$arrayUrl['locale'] = $this->request->params['locale'];
+		}
+		return parent::url($arrayUrl, $full);
 	}
 
 }
