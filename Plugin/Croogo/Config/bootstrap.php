@@ -1,12 +1,10 @@
 <?php
 
 App::uses('CakeLog', 'Log');
-App::uses('CroogoPlugin', 'Extensions.Lib');
 App::uses('CroogoEventManager', 'Croogo.Event');
 App::uses('Croogo', 'Croogo.Lib');
 App::uses('CroogoNav', 'Croogo.Lib');
 
-CakePlugin::load(array('Extensions'), array('bootstrap' => true));
 require_once 'croogo_bootstrap.php';
 
 if (Configure::read('Croogo.installed')) {

@@ -38,6 +38,12 @@ if (file_exists(APP . 'Config' . DS . 'settings.json')) {
 Configure::write('Config.language', Configure::read('Site.locale'));
 
 /**
+ * Extensions
+ */
+CakePlugin::load(array('Extensions'), array('bootstrap' => true));
+App::uses('CroogoPlugin', 'Extensions.Lib');
+
+/**
  * Setup custom paths
  */
 $croogoPath = CakePlugin::path('Croogo');
