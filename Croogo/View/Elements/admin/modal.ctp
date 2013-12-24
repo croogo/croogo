@@ -1,4 +1,5 @@
 <?php
+$title = isset($title) ? $title : null;
 if (empty($id)) {
 	$id = 'modal';
 }
@@ -11,7 +12,7 @@ if (empty($class)) {
 <div id="<?php echo $id; ?>" class="<?php echo trim($class); ?>">
 	<div class="modal-header">
 		 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		 <h3></h3>
+		 <h3><?php echo $title; ?></h3>
 	</div>
 	<div class="modal-body">
 	</div>
