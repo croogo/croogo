@@ -59,6 +59,7 @@ class TaxonomiesComponent extends Component {
 			$this->vocabularies();
 		} else {
 			$this->_adminData();
+			$this->_hookLinkChoosers();
 		}
 	}
 
@@ -167,4 +168,57 @@ class TaxonomiesComponent extends Component {
 		}
 	}
 
+
+/**
+ * Hook link choosers for adding menu links.
+ *
+ * @return void
+ */
+	protected function _hookLinkChoosers(){
+
+		$this->Vocabulary = ClassRegistry::init('Taxonomy.Vocabulary');
+
+		$vocabularies = $this->Vocabulary->find('all', 
+			array(
+			    'joins' => array(
+				array(
+				    'table' => 'types_vocabularies',
+				    'alias' => 'TypesVocabulary',
+				    'conditions' => 'Vocabulary.id = TypesVocabulary.vocabulary_id'
+				),
+				array(
+				    'table' => 'types',
+				    'alias' => 'Type',
+				    'conditions' => 'TypesVocabulary.type_id = Type.id'
+				)
+			    )
+			)
+		);
+
+
+		$linkChoosers = array();
+		foreach($vocabularies as $vocabulary){
+			foreach($vocabulary['Type'] as $type){
+				$title = $type['title'].' '.$vocabulary['Vocabulary']['title'];
+				$linkChoosers[$title] = array(
+				'description'=>$vocabulary['Vocabulary']['description'],
+				'url'=>array(
+					'plugin'=>'taxonomy',
+					'controller'=>'terms',
+					'action'=>'index',
+					$vocabulary['Vocabulary']['id'],
+					'?'=>array(
+						'type'=>$type['alias'],
+						'chooser' => 1,
+						'KeepThis' => true,
+						'TB_iframe' => true,
+						'height' => 400,
+						'width' => 600
+						)
+					)
+				);
+			}
+		}
+		Croogo::mergeConfig('Menus.linkChoosers',$linkChoosers);
+	}
 }

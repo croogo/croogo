@@ -32,6 +32,16 @@ class LinksController extends MenusAppController {
 		'Menus.Link',
 		'Users.Role',
 	);
+/**
+ * Helpers used by the Controller
+ *
+ * @var array
+ * @access public
+ */
+
+	public $helpers = array(
+		'Menus',
+	);
 
 /**
  * Menu ID

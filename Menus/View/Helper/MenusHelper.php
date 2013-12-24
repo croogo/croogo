@@ -173,11 +173,11 @@ class MenusHelper extends AppHelper {
 				$linkAttr['class'] .= ' ' . $options['selected'];
 			}
 
-			$linkOutput = $this->Html->link($link['Link']['title'], $link['Link']['link'], $linkAttr);
+			$linkOutput = $this->Html->link($link['Link']['title'], $link['Link']['link']);
 			if (isset($link['children']) && count($link['children']) > 0) {
 				$linkOutput .= $this->nestedLinks($link['children'], $options, $depth + 1);
 			}
-			$linkOutput = $this->Html->tag('li', $linkOutput);
+			$linkOutput = $this->Html->tag('li', $linkOutput,$linkAttr);
 			$output .= $linkOutput;
 		}
 		if ($output != null) {
@@ -248,6 +248,33 @@ class MenusHelper extends AppHelper {
 			}
 		}
 		return join('/', $result);
+	}
+
+/**
+ * Output link choosers
+ *
+ * @return string
+ */
+
+	public function linkChooserDialog(){
+
+		$this->Html->css('Menus.linkchoosers',null,array('inline'=>false));
+
+        $html = '<div id="link_choosers" role="dialog" class="modal hide fade">';
+        $html .= '<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3>Link Choosers</h3></div>';
+        $html .= '<div class="modal-body">';
+
+		$linkChoosers = Configure::read('Menus.linkChoosers');
+		foreach($linkChoosers as $name => $chooser){
+            $html .= '<div class="link_chooser">';
+            $html .= '<div class="pull-left"><h5>'.$name.'</h5><p>'.$chooser["description"].'</p></div>';
+            $html .= '<a href="'.$this->Html->url($chooser['url']).'" class="btn link chooser pull-right" data-dismiss="modal">'.__d('croogo','Link to '.$name).'</a>';
+			$html .= '<div class="clearfix"></div></div>';
+		}
+
+        $html .= '</div></div>';
+		return $html;
+
 	}
 
 }

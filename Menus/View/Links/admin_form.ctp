@@ -63,25 +63,24 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 				echo $this->Form->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));
+
+				echo '<div class="input text required input-append">';
+				echo '<label for="LinkLink">'.__d('croogo','Link').'</label>';
 				echo $this->Form->input('link', array(
-					'label' => __d('croogo', 'Link'),
+                    'label' => false,
+                    'div'=>false
 				));
-				echo $this->Html->link(__d('croogo', 'Link to a Node'), Router::url(array(
-					'plugin' => 'nodes',
-					'controller' => 'nodes',
-					'action' => 'index',
-					'?' => array(
-						'chooser' => 1,
-						'KeepThis' => true,
-						'TB_iframe' => true,
-						'height' => 400,
-						'width' => 600,
-					)), true),
-					array(
-						'class' => 'link chooser',
-					)
-				);
-			?>
+				echo $this->Html->link('<i class="icon-link"></i>','#link_choosers',array(
+                    'class'=>'btn',
+                    'data-toggle'=>'modal'
+				));
+				echo '</div>';
+
+				?>
+
+				<?php
+				echo $this->Menus->linkChooserDialog();
+				?>
 			</div>
 
 			<div id="link-access" class="tab-pane">
@@ -133,11 +132,16 @@ echo $this->Form->create('Link', array('url' => $formUrl));
 	?>
 	</div>
 </div>
-<?php echo $this->Form->end(); ?>
-<?php
+<?php echo $this->Form->end();
+
 $script = <<<EOF
 $('.link.chooser').itemChooser({
 	fields: [{ type: "Node", target: "#LinkLink", attr: "rel" }]
 });
+
+$(".link_chooser a").click(function(){
+    $("#link_choosers").modal('hide');
+});
 EOF;
+
 $this->Js->buffer($script);
