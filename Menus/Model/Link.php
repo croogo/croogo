@@ -77,9 +77,14 @@ class Link extends MenusAppModel {
  * @return void
  */
 	public function setTreeScope($menuId) {
-		$this->Behaviors->attach('Tree', array(
+		$settings = array(
 			'scope' => array($this->alias . '.menu_id' => $menuId),
-		));
+		);
+		if ($this->Behaviors->loaded('Tree')) {
+			$this->Behaviors->Tree->setup($this, $settings);
+		} else {
+			$this->Behaviors->load('Tree', $settings);
+		}
 	}
 
 /**
