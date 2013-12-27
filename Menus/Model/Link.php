@@ -87,4 +87,40 @@ class Link extends MenusAppModel {
 		}
 	}
 
+/**
+ * If we are moving between Menus, save original id so that Link::afterSave()
+ * recover() can recover the tree
+ *
+ */
+	public function beforeSave($options = array()) {
+		if (!isset($this->data['Link']['menu_id']) || !isset($this->data['Link']['id'])) {
+			return true;
+		}
+		$previousMenuId = $this->field('menu_id', array(
+			$this->escapeField('id') => $this->data['Link']['id']
+		));
+		$hasMenuChanged = ($previousMenuId != $this->data['Link']['menu_id']);
+		if ($hasMenuChanged) {
+			$this->_previousMenuId = $previousMenuId;
+		}
+
+		return true;
+	}
+
+/**
+ * Calls TreeBehavior::recover when we are changing scope
+ */
+	public function afterSave($created, $options = array()) {
+		if ($created) {
+			return;
+		}
+		if (isset($this->_previousMenuId)) {
+			$this->setTreeScope($this->data['Link']['menu_id']);
+			$this->recover();
+			$this->setTreeScope($this->_previousMenuId);
+			$this->recover();
+			unset($this->_previousMenuId);
+		}
+	}
+
 }
