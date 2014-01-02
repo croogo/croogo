@@ -12,6 +12,9 @@ App::uses('CakeEventListener', 'Event');
  */
 class NodesEventHandler implements CakeEventListener {
 
+/**
+ * implementedEvents
+ */
 	public function implementedEvents() {
 		return array(
 			'Controller.Links.setupLinkChooser' => array(
