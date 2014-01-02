@@ -24,7 +24,7 @@ echo $this->Form->create(false, array(
 				$valid = __d('croogo', 'Invalid');
 				$class = 'text-error';
 			endif;
-			echo __d('croogo', 'This file is %s.', $this->Html->tag('span', $valid, $class));
+			echo __d('croogo', 'This file is %s.', $this->Html->tag('span', $valid, compact('class')));
 			?>
 			<?php if ($currentConfiguration['valid']): ?>
 			<?php
