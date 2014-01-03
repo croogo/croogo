@@ -497,7 +497,6 @@ class CroogoPlugin extends Object {
 				if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
 					$pluginActivation->onActivation($this->_Controller);
 				}
-				Cache::delete('EventHandlers', 'cached_settings');
 				Cache::delete('file_map', '_cake_core_');
 				return true;
 			} else {
@@ -525,7 +524,6 @@ class CroogoPlugin extends Object {
 				$pluginActivation->onDeactivation($this->_Controller);
 			}
 			CroogoPlugin::unload($plugin);
-			Cache::delete('EventHandlers', 'cached_settings');
 			Cache::delete('file_map', '_cake_core_');
 			return true;
 		} else {
@@ -548,6 +546,7 @@ class CroogoPlugin extends Object {
 		if (is_string($plugin)) {
 			$plugin = array($plugin => $config);
 		}
+		Cache::delete('EventHandlers', 'cached_settings');
 		foreach ($plugin as $name => $conf) {
 			list($name, $conf) = (is_numeric($name)) ? array($conf, $config) : array($name, $conf);
 			$file = CakePlugin::path($name) . 'Config' . DS . 'events.php';
@@ -580,6 +579,7 @@ class CroogoPlugin extends Object {
 			}
 		}
 		CakePlugin::unload($plugin);
+		Cache::delete('EventHandlers', 'cached_settings');
 	}
 
 /**
