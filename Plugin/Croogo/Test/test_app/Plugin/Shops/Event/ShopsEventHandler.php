@@ -6,48 +6,48 @@ class ShopsEventHandler extends Object implements CakeEventListener {
 		return array(
 			'Controller.Users.activationFailure' => array(
 				'callable' => 'onActivationFailure',
-				),
+			),
 			'Controller.Users.activationSuccessful' => array(
 				'callable' => 'onActivationSuccessful',
-				),
+			),
 			'Controller.Users.adminLoginSuccessful' => array(
 				'callable' => 'onAdminLoginSuccessful',
-				),
+			),
 			'Controller.Users.adminLoginFailure' => array(
 				'callable' => 'onAdminLoginFailure',
-				),
+			),
 			'Controller.Users.adminLogoutSuccessful' => array(
 				'callable' => 'onAdminLogoutSuccessful',
-				),
+			),
 			'Controller.Users.afterLogout' => array(
 				'callable' => 'onAfterLogout',
-				),
+			),
 			'Controller.Users.beforeLogin' => array(
 				'callable' => 'onBeforeLogin',
-				),
+			),
 			'Controller.Users.beforeLogout' => array(
 				'callable' => 'onBeforeLogout',
-				),
+			),
 			'Controller.Users.loginFailure' => array(
 				'callable' => 'onLoginFailure',
-				),
+			),
 			'Controller.Users.loginSuccessful' => array(
 				'callable' => 'onLoginSuccessful',
-				),
+			),
 			'Controller.Users.registrationFailure' => array(
 				'callable' => 'onRegistrationFailure',
-				),
+			),
 			'Controller.Users.registrationSuccessful' => array(
 				'callable' => 'onRegistrationSuccessful',
-				),
+			),
 
 			'Helper.Layout.beforeFilter' => array(
 				'callable' => 'onLayoutBeforeFilter',
-				),
+			),
 			'Helper.Layout.afterFilter' => array(
 				'callable' => 'onLayoutAfterFilter',
-				),
-			);
+			),
+		);
 	}
 
 	public function onActivationFailure($event) {

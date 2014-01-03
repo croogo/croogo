@@ -130,7 +130,7 @@ class CroogoPaginatorHelperTest extends CroogoTestCase {
 				'options' => array('page' => 1),
 				'paramType' => 'named'
 		));
-				$result = $this->Paginator->numbers();
+		$result = $this->Paginator->numbers();
 		$this->assertContains('>22</a>', $result);
 		$this->assertContains('class="active">30</a>', $result);
 	}

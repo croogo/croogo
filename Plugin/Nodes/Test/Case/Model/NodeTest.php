@@ -107,12 +107,12 @@ class NodeTest extends CroogoTestCase {
 
 		$commentCount = $this->Node->Comment->find('count',
 			array('conditions' => array('Comment.node_id' => 1))
-			);
+		);
 		$this->assertEqual(0, $commentCount);
 
 		$metaCount = $this->Node->Meta->find('count',
 			array('conditions' => array('model' => 'Node', 'foreign_key' => 1))
-			);
+		);
 		$this->assertEqual(0, $metaCount);
 	}
 

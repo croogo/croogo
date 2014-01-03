@@ -13,7 +13,7 @@ class CroogoEventsTest extends CroogoTestCase {
 
 	public $fixtures = array(
 		'plugin.settings.setting',
-		);
+	);
 
 	public function setUp() {
 		parent::setUp();
@@ -102,7 +102,7 @@ class CroogoEventsTest extends CroogoTestCase {
 			'Controller.Nodes.afterPublish',
 			'Controller.Nodes.afterUnpromote',
 			'Controller.Nodes.afterUnpublish',
-			);
+		);
 		foreach ($eventNames as $name) {
 			$event = Croogo::dispatchEvent($name, $this->Nodes);
 			$this->assertTrue($event->result, sprintf('Event: %s', $name));
@@ -117,7 +117,7 @@ class CroogoEventsTest extends CroogoTestCase {
 		$eventNames = array(
 			'Helper.Layout.afterFilter',
 			'Helper.Layout.beforeFilter',
-			);
+		);
 		App::uses('View', 'View');
 		$View = new View();
 		foreach ($eventNames as $name) {

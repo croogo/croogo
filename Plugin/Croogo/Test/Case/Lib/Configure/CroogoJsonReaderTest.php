@@ -23,7 +23,7 @@ class CroogoJsonReaderTest extends CroogoTestCase {
 		$this->CroogoJsonReader = $this->getMock('MockCroogoJsonReader',
 			null,
 			array(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS)
-			);
+		);
 		$this->testFile = $this->CroogoJsonReader->getPath() . 'test.json';
 	}
 
