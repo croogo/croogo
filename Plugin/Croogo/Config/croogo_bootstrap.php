@@ -61,7 +61,6 @@ if ($theme = Configure::read('Site.theme')) {
 /**
  * List of core plugins
  */
-
 Configure::write('Core.corePlugins', array(
 	'Settings', 'Acl', 'Blocks', 'Comments', 'Contacts', 'Menus', 'Meta',
 	'Nodes', 'Taxonomy', 'Users',

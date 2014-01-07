@@ -46,7 +46,7 @@ if (!empty($this->request->params['named']['p'])) {
 		$actions[] = $this->Croogo->adminRowActions($setting['Setting']['id']);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'settings', 'action' => 'delete', $setting['Setting']['id']),
-			array('icon' => 'trash','tooltip' => __d('croogo', 'Remove this item')),
+			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
 			__d('croogo', 'Are you sure?'));
 
 		$key = $setting['Setting']['key'];
