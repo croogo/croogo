@@ -41,7 +41,6 @@ class CroogoEventManagerTest extends CroogoTestCase {
  * triggerred by calling CroogoPlugin::unload(null)
  */
 	public function testDetachPluginSubscribers() {
-		$eventManager = CroogoEventManager::instance();
 		$loaded = CakePlugin::loaded('Shops');
 		$this->assertNotEmpty($loaded);
 
@@ -54,6 +53,33 @@ class CroogoEventManagerTest extends CroogoTestCase {
 		$eventName = 'Controller.Users.activationFailure';
 		$event = Croogo::dispatchEvent($eventName, $this->Users);
 		$this->assertNull($event->result, sprintf('Event: %s', $eventName));
+	}
+
+/**
+ * Test Reuse the same Event Listener class
+ */
+	public function testAliasingEventListener() {
+		$eventManager = CroogoEventManager::instance();
+		$listeners = $eventManager->listeners('Controller.Nodes.afterAdd');
+		foreach ($listeners as $listener) {
+			$eventManager->detach($listener['callable']);
+		}
+		$handlers = array(
+			'Shops.ShopsNodesEventHandler',
+			'CustomShopsNodesEventHandler' => array(
+				'options' => array(
+					'className' => 'Shops.ShopsNodesEventHandler',
+				),
+			),
+		);
+		Configure::write('EventHandlers', $handlers);
+		Cache::delete('EventHandlers', 'cached_settings');
+		CroogoEventManager::loadListeners();
+
+		$listeners = $eventManager->listeners('Controller.Nodes.afterAdd');
+		foreach ($listeners as $listener) {
+			$this->assertInstanceOf('ShopsNodesEventHandler', $listener['callable'][0]);
+		}
 	}
 
 /**

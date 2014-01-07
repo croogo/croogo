@@ -44,6 +44,7 @@ class CroogoEventManager extends CakeEventManager {
  *             'options' => array(
  *                 'priority' => 1,
  *                 'passParams' => false,
+ *                 'className' => 'Plugin.ClassName',
  *      )));
  *
  * @return void
@@ -66,6 +67,9 @@ class CroogoEventManager extends CakeEventManager {
 					if (!empty($eventOptions)) {
 						extract(array_intersect_key($eventOptions, $validKeys));
 					}
+					if (isset($eventOptions['options']['className'])) {
+						list($plugin, $class) = pluginSplit($eventOptions['options']['className']);
+					}
 					App::uses($class, $plugin . '.Event');
 					if (class_exists($class)) {
 						$cached[] = compact('plugin', 'class', 'eventKey', 'eventOptions');
@@ -80,7 +84,8 @@ class CroogoEventManager extends CakeEventManager {
 			extract($cache);
 			if (CakePlugin::loaded($plugin)) {
 				App::uses($class, $plugin . '.Event');
-				$listener = new $class();
+				$settings = isset($eventOptions['options']) ? $eventOptions['options'] : array();
+				$listener = new $class($settings);
 				$eventManager->attach($listener, $eventKey, $eventOptions);
 			}
 		}
