@@ -79,9 +79,9 @@ class CroogoNavTest extends CroogoTestCase {
 				'plugin' => 'acl',
 				'controller' => 'acl_permissions',
 				'action' => 'index',
-				),
+			),
 			'weight' => 30,
-			));
+		));
 		$this->assertEquals($expected, $items['users']['children']['permissions']);
 
 		$item = array(
@@ -91,9 +91,9 @@ class CroogoNavTest extends CroogoTestCase {
 				'plugin' => 'acl_extras',
 				'controller' => 'acl_extras_permissions',
 				'action' => 'index',
-				),
+			),
 			'weight' => 30,
-			);
+		);
 		CroogoNav::add('users.children.permissions', $item);
 		$items = CroogoNav::items();
 
@@ -104,9 +104,9 @@ class CroogoNavTest extends CroogoTestCase {
 				'plugin' => 'acl_extras',
 				'controller' => 'acl_extras_permissions',
 				'action' => 'index',
-				),
+			),
 			'weight' => 30,
-			));
+		));
 
 		$this->assertEquals($expected, $items['users']['children']['permissions']);
 	}

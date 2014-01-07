@@ -23,7 +23,7 @@ class CroogoJsonTest extends CroogoTestCase {
 		$data = array(
 			'foo' => 'bar',
 			'spam' => 'eggs',
-			);
+		);
 		$expected = <<<END
 {
 \s+"foo": "bar",
@@ -40,12 +40,12 @@ END;
 			'nested' => array(
 				'hello' => 'world',
 				'value' => 20,
-				),
+			),
 			'combination' => array(
 				'spam', 'eggs',
 				'hello' => 'world',
-				),
-			);
+			),
+		);
 		$expected = <<<END
 {
 \s+"name": "rchavik\/sites",
