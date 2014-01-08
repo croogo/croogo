@@ -416,4 +416,27 @@ class NodeTest extends CroogoTestCase {
 		$this->Node->processAction('delete', array());
 	}
 
+/**
+ * testFindViewById
+ */
+	public function testFindViewById() {
+		$this->Node->useCache = false;
+		$node = $this->Node->find('viewById', array(
+			'id' => 1,
+		));
+		$this->assertEquals('Hello World', $node['Node']['title']);
+	}
+
+/**
+ * testFindViewBySlug
+ */
+	public function testFindViewBySlug() {
+		$this->Node->useCache = false;
+		$node = $this->Node->find('viewBySlug', array(
+			'slug' => 'about',
+			'type' => 'page',
+		));
+		$this->assertEquals('About', $node['Node']['title']);
+	}
+
 }

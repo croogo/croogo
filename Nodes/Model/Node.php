@@ -197,7 +197,9 @@ class Node extends NodesAppModel {
 	);
 
 	public $findMethods = array(
-		'promoted' => true
+		'promoted' => true,
+		'viewBySlug' => true,
+		'viewById' => true,
 	);
 
 /**
@@ -567,6 +569,99 @@ class Node extends NodesAppModel {
 		} else {
 			return $results;
 		}
+	}
+
+/**
+ * Find a single node by id
+ */
+	protected function _findViewById($state, $query, $results = array()) {
+		if ($state == 'after') {
+			if (isset($results[0])) {
+				return $results[0];
+			}
+			return $results;
+		}
+
+		if ($query['conditions'] === null) {
+			$query = Hash::merge($query, array(
+				'conditions' => array(),
+			));
+		}
+
+		$keys = array('id' => null, 'roleId' => null);
+		$args = array_merge($keys, array_intersect_key($query, $keys));
+		$query = array_diff_key($query, $args);
+		$query = Hash::merge(array(
+			'conditions' => array(
+				'Node.id' => $args['id'],
+				'Node.status' => 1,
+				'OR' => array(
+					'Node.visibility_roles' => '',
+					'Node.visibility_roles LIKE' => '%"' . $args['roleId'] . '"%',
+				),
+			),
+			'contain' => array(
+				'Meta',
+				'Taxonomy' => array(
+					'Term',
+					'Vocabulary',
+				),
+				'User',
+			),
+			'cache' => array(
+				'name' => 'node_' . $args['roleId'] . '_' . $args['id'],
+				'config' => 'nodes_view',
+			),
+		), $query);
+
+		return $query;
+	}
+
+/**
+ * Find a single node by slug
+ */
+	protected function _findViewBySlug($state, $query, $results = array()) {
+		if ($state == 'after') {
+			if (isset($results[0])) {
+				return $results[0];
+			}
+			return $results;
+		}
+
+		if ($query['conditions'] === null) {
+			$query = Hash::merge($query, array(
+				'conditions' => array(),
+			));
+		}
+
+		$keys = array('slug' => null, 'type' => null, 'roleId' => null);
+		$args = array_merge($keys, array_intersect_key($query, $keys));
+		$query = array_diff_key($query, $args);
+		$query = Hash::merge(array(
+			'conditions' => array(
+				'Node.slug' => $args['slug'],
+				'Node.type' => $args['type'],
+				'Node.status' => 1,
+				'OR' => array(
+					'Node.visibility_roles' => '',
+					'Node.visibility_roles LIKE' => '%"' . $args['roleId'] . '"%',
+                    ),
+                ),
+			'contain' => array(
+				'Meta',
+				'Taxonomy' => array(
+					'Term',
+					'Vocabulary',
+				),
+				'User',
+			),
+			'cache' => array(
+				'name' => 'node_' . $args['roleId'] . '_' . $args['type'] . '_' . $args['slug'],
+				'config' => 'nodes_view',
+			),
+		), $query);
+
+		return $query;
 	}
 
 /**
