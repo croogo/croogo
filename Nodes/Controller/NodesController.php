@@ -651,54 +651,18 @@ class NodesController extends NodesAppController {
 					'config' => 'nodes_view',
 				),
 			));
-			$node = $this->Node->find('first', array(
-				'conditions' => array(
-					'Node.slug' => $this->request->params['named']['slug'],
-					'Node.type' => $this->request->params['named']['type'],
-					'Node.status' => 1,
-					'OR' => array(
-						'Node.visibility_roles' => '',
-						'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId() . '"%',
-					),
-				),
-				'contain' => array(
-					'Meta',
-					'Taxonomy' => array(
-						'Term',
-						'Vocabulary',
-					),
-					'User',
-				),
-				'cache' => array(
-					'name' => 'node_' . $this->Croogo->roleId() . '_' . $this->request->params['named']['type'] . '_' . $this->params['named']['slug'],
-					'config' => 'nodes_view',
-				),
+			$node = $this->Node->find('viewBySlug', array(
+				'slug' => $this->request->params['named']['slug'],
+				'type' => $this->request->params['named']['type'],
+				'roleId' => $this->Croogo->roleId(),
 			));
 		} elseif ($id == null) {
 			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'default', array('class' => 'error'));
 			return $this->redirect('/');
 		} else {
-			$node = $this->Node->find('first', array(
-				'conditions' => array(
-					'Node.id' => $id,
-					'Node.status' => 1,
-					'OR' => array(
-						'Node.visibility_roles' => '',
-						'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId() . '"%',
-					),
-				),
-				'contain' => array(
-					'Meta',
-					'Taxonomy' => array(
-						'Term',
-						'Vocabulary',
-					),
-					'User',
-				),
-				'cache' => array(
-					'name' => 'node_' . $this->Croogo->roleId() . '_' . $id,
-					'config' => 'nodes_view',
-				),
+			$node = $this->Node->find('viewById', array(
+				'id' => $id,
+				'roleId' => $this->Croogo->roleId,
 			));
 			$this->Node->type = $node['Node']['type'];
 			$type = $this->Node->Taxonomy->Vocabulary->Type->find('first', array(
