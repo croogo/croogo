@@ -58,6 +58,16 @@ class CroogoComponent extends Component {
 	protected $_controller = null;
 
 /**
+ * initialize 
+ *
+ * @param object $controller instance of controller
+ * @return void
+ */	
+	public function initialize(Controller $controller) {
+		$this->_controller = $controller;
+	}
+
+/**
  * Method to lazy load classes
  *
  * @return Object
@@ -295,6 +305,19 @@ class CroogoComponent extends Component {
  */
 	public function pluginIsActive($plugin) {
 		return $this->_CroogoPlugin->isActive($plugin);
+	}
+
+/**
+ * Check if Client IP is in maintenance whitelist
+ *
+ * 
+ * @return boolean
+ */	
+	public function checkIpWhitlist() {	
+		$clientIP = $this->_controller->request->clientIp();
+		if ($clientIP == '::1') { $clientIP = '192.168.1.1';}		
+		$whitelist = Configure::read('Site.maintenance_ip_whitelist');
+		if (strpos($whitelist,$clientIP) !== false) { return TRUE;} else {return FALSE;}		
 	}
 
 }
