@@ -126,4 +126,36 @@ class CroogoRouterTest extends CroogoTestCase {
 		$this->assertEquals('/press-release', $result);
 	}
 
+/**
+ * testWhitelistedDetectorWithInvalidIp
+ */
+	public function testWhitelistedDetectorWithInvalidIp() {
+		$request = $this->getMock('CakeRequest', array('clientIp'));
+		$request->addDetector('whitelisted', array(
+			'callback' => array('CroogoRouter', 'isWhitelistedRequest'),
+		));
+
+		Configure::write('Site.ipWhitelist', '127.0.0.2');
+		$request->expects($this->once())
+			->method('clientIp')
+			->will($this->returnValue('8.8.8.8'));
+		$this->assertFalse($request->is('whitelisted'));
+	}
+
+/**
+ * testWhitelistedDetectorWithValidIp
+ */
+	public function testWhitelistedDetectorWithValidIp() {
+		$request = $this->getMock('CakeRequest', array('clientIp'));
+		$request->addDetector('whitelisted', array(
+			'callback' => array('CroogoRouter', 'isWhitelistedRequest'),
+		));
+
+		Configure::write('Site.ipWhitelist', '127.0.0.2');
+		$request->expects($this->once())
+			->method('clientIp')
+			->will($this->returnValue('127.0.0.2'));
+		$this->assertTrue($request->is('whitelisted'));
+	}
+
 }

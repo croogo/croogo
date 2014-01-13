@@ -104,6 +104,9 @@ class CroogoAppController extends Controller {
 			$request->addDetector('api', array(
 				'callback' => array('CroogoRouter', 'isApiRequest'),
 			));
+			$request->addDetector('whitelisted', array(
+				'callback' => array('CroogoRouter', 'isWhitelistedRequest'),
+			));
 		}
 		$this->getEventManager()->dispatch(new CakeEvent('Controller.afterConstruct', $this));
 	}
@@ -244,10 +247,12 @@ class CroogoAppController extends Controller {
 			Configure::read('Site.status') == 0 &&
 			$this->Auth->user('role_id') != 1
 		) {
-			$this->layout = 'maintenance';
-			$this->response->statusCode(503);
-			$this->set('title_for_layout', __d('croogo', 'Site down for maintenance'));
-			$this->render('../Elements/blank');
+			if (!$this->request->is('whitelisted')) {
+				$this->layout = 'maintenance';
+				$this->response->statusCode(503);
+				$this->set('title_for_layout', __d('croogo', 'Site down for maintenance'));
+				$this->render('../Elements/blank');
+			}
 		}
 
 		if (isset($this->request->params['locale'])) {
