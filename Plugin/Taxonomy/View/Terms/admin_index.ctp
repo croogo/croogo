@@ -24,14 +24,6 @@ $this->Html
 			$this->Paginator->options['url'][] = $nn . ':' . $nv;
 		}
 	}
-
-	echo $this->Form->create('Term', array(
-		'url' => array(
-			'controller' => 'terms',
-			'action' => 'process',
-			'vocabulary' => $vocabulary['Vocabulary']['id'],
-		),
-	));
 ?>
 <table class="table table-striped">
 <?php
