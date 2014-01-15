@@ -97,7 +97,7 @@ class Link extends MenusAppModel {
 			return true;
 		}
 		$previousMenuId = $this->field('menu_id', array(
-			'id' => $this->data['Link']['id']
+			$this->escapeField('id') => $this->data['Link']['id']
 		));
 		$hasMenuChanged = ($previousMenuId != $this->data['Link']['menu_id']);
 		if ($hasMenuChanged) {
