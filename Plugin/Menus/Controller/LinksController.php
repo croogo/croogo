@@ -189,7 +189,7 @@ class LinksController extends MenusAppController {
 		}
 		if (!empty($this->request->data)) {
 			$previousMenuId = $this->Link->field('menu_id', array(
-				'id' => $this->request->data['Link']['id']
+				$this->Link->escapeField('id') => $this->request->data['Link']['id']
 			));
 			$this->request->data['Link']['visibility_roles'] = $this->Link->encodeData($this->request->data['Role']['Role']);
 
