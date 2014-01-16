@@ -65,6 +65,25 @@ class CroogoRouter {
 	}
 
 /**
+ * Check wether request is from a whitelisted IP address
+ *
+ * @see CakeRequest::addDetector()
+ * @param $request CakeRequest Request object
+ * @return boolean True when request is from a whitelisted IP Address
+ */
+	public function isWhitelistedRequest(CakeRequest $request) {
+		if (!$request) {
+			return false;
+		}
+		$clientIp = $request->clientIp();
+		$whitelist = array_map(
+			'trim',
+			(array)explode(',', Configure::read('Site.ipWhitelist'))
+		);
+		return in_array($clientIp, $whitelist);
+	}
+
+/**
  * Creates REST resource routes for the given controller(s).
  *
  * @param string|array $controller string or array of controller names

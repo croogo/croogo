@@ -313,6 +313,17 @@ class SettingData {
 			'params' => 'multiple=checkbox
 options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "Menus.Link": "Link"}'
 		),
+		array(
+			'id' => '38',
+			'key' => 'Site.ipWhitelist',
+			'value' => '127.0.0.1',
+			'title' => 'Whitelisted IP Addresses',
+			'description' => 'Separate multiple IP addresses with comma',
+			'input_type' => 'text',
+			'editable' => '1',
+			'weight' => '27',
+			'params' => ''
+		),
 
 	);
 
