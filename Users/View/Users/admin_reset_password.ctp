@@ -7,6 +7,8 @@ $this->Html
 		'action' => 'edit', $this->request->data['User']['id'],
 	))
 	->addCrumb(__d('croogo', 'Reset Password'), '/' . $this->request->url);
+
+$this->set('title_for_layout', __d('croogo', 'Reset Password for %s', $this->data['User']['username']));
 ?>
 <?php echo $this->Form->create('User', array('url' => array('action' => 'reset_password')));?>
 <div class="row-fluid">
