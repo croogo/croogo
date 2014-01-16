@@ -77,7 +77,7 @@
 		endforeach;
 	endforeach;
 	if (!empty($compact)):
-		echo "\t\t\$this->set(compact(".join(', ', $compact)."));\n";
+		echo "\t\t\$this->set(compact(" . join(', ', $compact) . "));\n";
 	endif;
 ?>
 	}
@@ -123,7 +123,7 @@
 			endforeach;
 		endforeach;
 		if (!empty($compact)):
-			echo "\t\t\$this->set(compact(".join(', ', $compact)."));\n";
+			echo "\t\t\$this->set(compact(" . join(', ', $compact) . "));\n";
 		endif;
 	?>
 	}
