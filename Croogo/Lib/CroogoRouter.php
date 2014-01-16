@@ -71,7 +71,7 @@ class CroogoRouter {
  * @param $request CakeRequest Request object
  * @return boolean True when request is from a whitelisted IP Address
  */
-	public function isWhitelistedRequest(CakeRequest $request) {
+	public static function isWhitelistedRequest(CakeRequest $request) {
 		if (!$request) {
 			return false;
 		}
