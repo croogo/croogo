@@ -18,6 +18,7 @@ class DataMigration {
  * @param string $path Path to directory containing data files
  * @param array $options Options array
  * @return bool True if loading was successful
+ * @throws CakeException
  */
 	public function load($path, $options = array()) {
 		if (!is_dir($path)) {

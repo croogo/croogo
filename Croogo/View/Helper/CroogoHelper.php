@@ -44,7 +44,6 @@ class CroogoHelper extends AppHelper {
 		parent::__construct($View, $settings);
 	}
 
-
 /**
  * Convenience method to Html::script() for admin views
  *

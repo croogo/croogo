@@ -22,6 +22,6 @@ class OrderRecordFixture extends CroogoTestFixture {
 			'updated' => '2009-11-02 21:37:38',
 			'created' => '2009-11-02 20:52:00'
 		),
-    );
+	);
 
 }

@@ -28,7 +28,7 @@ class TaxonomiesEventHandler implements CakeEventListener {
  *
  * @return void
  */
-	public function onSetupLinkChooser($event){
+	public function onSetupLinkChooser($event) {
 		$this->Vocabulary = ClassRegistry::init('Taxonomy.Vocabulary');
 		$vocabularies = $this->Vocabulary->find('all', array(
 			'joins' => array(

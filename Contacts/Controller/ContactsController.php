@@ -128,6 +128,7 @@ class ContactsController extends ContactsAppController {
  * @param string $alias
  * @return void
  * @access public
+ * @throws NotFoundException
  */
 	public function view($alias = null) {
 		if (!$alias) {

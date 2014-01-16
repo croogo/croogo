@@ -645,8 +645,8 @@ class Node extends NodesAppModel {
 				'OR' => array(
 					'Node.visibility_roles' => '',
 					'Node.visibility_roles LIKE' => '%"' . $args['roleId'] . '"%',
-                    ),
-                ),
+				),
+			),
 			'contain' => array(
 				'Meta',
 				'Taxonomy' => array(

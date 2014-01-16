@@ -38,7 +38,7 @@ class OrderedBehaviorTest extends CroogoTestCase {
 		);
 
 		$saved = $this->OrderRecord->save($data);
-		$this->assertTrue((bool) $saved);
+		$this->assertTrue((bool)$saved);
 
 		$latestRecord = $this->OrderRecord->findById(2);
 		$this->assertNotNull($latestRecord['OrderRecord']['weight']);
