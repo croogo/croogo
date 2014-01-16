@@ -128,7 +128,7 @@ class CroogoAppController extends Controller {
  * @return void
  * @throws MissingComponentException
  */
-	public function beforeFilter() {
+	public function beforeFilter() {		
 		parent::beforeFilter();
 		$aclFilterComponent = Configure::read('Site.acl_plugin') . 'Filter';
 		if (empty($this->{$aclFilterComponent})) {
@@ -152,13 +152,16 @@ class CroogoAppController extends Controller {
 		} elseif (Configure::read('Site.admin_theme') && isset($this->request->params['admin'])) {
 			$this->theme = Configure::read('Site.admin_theme');
 		}
-
+		
 		if (!isset($this->request->params['admin']) &&
-			Configure::read('Site.status') == 0) {
-			$this->layout = 'maintenance';
-			$this->response->statusCode(503);
-			$this->set('title_for_layout', __d('croogo', 'Site down for maintenance'));
-			$this->render('../Elements/blank');
+			Configure::read('Site.status') == 0 &&
+			$this->Auth->user('role_id')!=1) {
+				if (!$this->Croogo->checkIpWhitlist()){
+					$this->layout = 'maintenance';
+					$this->response->statusCode(503);
+					$this->set('title_for_layout', __d('croogo', 'Site down for maintenance'));
+					$this->render('../Elements/blank');
+				}
 		}
 
 		if (isset($this->request->params['locale'])) {
