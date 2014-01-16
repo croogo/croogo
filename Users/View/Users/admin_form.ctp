@@ -11,6 +11,9 @@ if ($this->request->params['action'] == 'admin_edit') {
 		'plugin' => 'users', 'controller' => 'users', 'action' => 'edit',
 		$this->data['User']['id']
 	));
+	$this->set('title_for_layout', __d('croogo', 'Edit user %s', $this->data['User']['username']));
+} else {
+	$this->set('title_for_layout', __d('croogo', 'New user'));
 }
 
 if ($this->request->params['action'] == 'admin_add') {
