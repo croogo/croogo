@@ -75,9 +75,11 @@ class CroogoTranslateBehaviorTest extends CroogoTestCase {
 		$this->assertEqual($about['Node']['title'], 'About [Translated in Bengali]');
 	}
 
-
+/**
+ * testSaveTranslationShouldFlushCacheOfModelBeingTranslated
+ */
 	public function testSaveTranslationShouldFlushCacheOfModelBeingTranslated() {
-		$translationData =  array('Node' => array('title' => 'Some french content'));
+		$translationData = array('Node' => array('title' => 'Some french content'));
 		$Behaviors = $this->getMock('Behaviors', array('trigger', 'dispatchMethod'));
 		$Behaviors->expects($this->any())
 			->method('trigger')
@@ -88,14 +90,16 @@ class CroogoTranslateBehaviorTest extends CroogoTestCase {
 			);
 
 		$this->Node->Behaviors = $Behaviors;
-		$this->__addNewTranslation(2, 'fra',$translationData);
+		$this->__addNewTranslation(2, 'fra', $translationData);
 	}
 
+/**
+ * __addNewTranslation
+ */
 	private function __addNewTranslation($id, $locale, $translationData) {
 		$this->Node->id = $id;
 		$this->Node->locale = $locale;
 		$this->Node->saveTranslation($translationData);
 	}
-
 
 }

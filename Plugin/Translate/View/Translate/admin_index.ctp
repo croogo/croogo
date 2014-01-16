@@ -61,7 +61,7 @@ $this->Html
 			), array(
 				'icon' => 'trash',
 				'tooltip' => __d('croogo', 'Remove this item'),
-			) , __d('croogo', 'Are you sure?'));
+			), __d('croogo', 'Are you sure?'));
 
 			$actions = $this->Html->div('item-actions', implode(' ', $actions));
 			$rows[] = array(

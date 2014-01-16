@@ -1,6 +1,6 @@
 <?php
 
-$header =<<<EOF
+$header = <<<EOF
 <?php
 \$this->viewVars['title_for_layout'] = __d('croogo', '$pluralHumanName');
 \$this->extend('/Common/admin_edit');

@@ -14,7 +14,7 @@ if ($this->request->params['action'] == 'admin_edit') {
 }
 
 if ($this->request->params['action'] == 'admin_add') {
-	$this->Html->addCrumb(__d('croogo', 'Add'), array('plugin' => 'users','controller' => 'users', 'action' => 'add'));
+	$this->Html->addCrumb(__d('croogo', 'Add'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'add'));
 }
 ?>
 <?php $this->start('actions'); ?>

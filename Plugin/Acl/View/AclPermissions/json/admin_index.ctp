@@ -7,7 +7,7 @@ if (isset($this->request->query['urls'])) {
 				array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'))
 			),
 			'down' => $this->Html->link('',
-				array('controller' => 'acl_actions','action' => 'movedown', $acoId, 'down'),
+				array('controller' => 'acl_actions', 'action' => 'movedown', $acoId, 'down'),
 				array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'))
 			),
 			'edit' => $this->Html->link('',

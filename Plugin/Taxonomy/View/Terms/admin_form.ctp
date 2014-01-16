@@ -16,7 +16,7 @@ if ($this->request->params['action'] == 'admin_edit') {
 
 if ($this->request->params['action'] == 'admin_add') {
 	$this->Html
-		->addCrumb(__d('croogo', 'Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index', $vocabulary['Vocabulary']['id'],))
+		->addCrumb(__d('croogo', 'Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index', $vocabulary['Vocabulary']['id']))
 		->addCrumb($vocabulary['Vocabulary']['title'], array('plugin' => 'taxonomy', 'controller' => 'terms', 'action' => 'index'))
 		->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
