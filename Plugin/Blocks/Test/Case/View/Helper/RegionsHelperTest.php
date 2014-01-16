@@ -123,13 +123,13 @@ class RegionsHelperTest extends CroogoTestCase {
 		$this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
 		$this->View->expects($this->once())
 			->method('elementExists')
-			->will($this->returnValue(true));
+			->will($this->returnValue(false));
 
 		$this->View->expects($this->once())->method('element')
 			->with(
-				null,
+				'Blocks.block',
 				array('block' => $blocksForLayout['right'][0]),
-				array('class' => 'some-class')
+				array('class' => 'some-class', 'ignoreMissing' => true)
 			);
 
 		$result = $this->Regions->blocks('right', array(
