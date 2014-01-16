@@ -146,6 +146,18 @@ Croogo::hookAdminRowAction('Nodes/admin_index', 'Icon Only', array(
 	),
 ));
 
+/* Row action with confirm message */
+Croogo::hookAdminRowAction('Nodes/admin_index', 'Reload Page', array(
+	'admin:true/plugin:nodes/controller:nodes/action:index' => array(
+		'title' => false,
+		'options' => array(
+			'icon' => 'refresh',
+			'tooltip' => 'Reload page',
+		),
+		'confirmMessage' => 'Reload this page?',
+	),
+));
+
 /**
  * Admin tab
  *

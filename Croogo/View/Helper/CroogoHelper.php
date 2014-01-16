@@ -155,10 +155,15 @@ class CroogoHelper extends AppHelper {
 		if (is_array($rowActions)) {
 			foreach ($rowActions as $title => $link) {
 				$linkOptions = $options;
+				$confirmMessage = false;
 				if (is_array($link)) {
 					$config = $link[key($link)];
 					if (isset($config['options'])) {
 						$linkOptions = Hash::merge($options, $config['options']);
+					}
+					if (isset($config['confirmMessage'])) {
+						$confirmMessage = $config['confirmMessage'];
+						unset($config['confirmMessage']);
 					}
 					if (isset($config['title'])) {
 						$title = $config['title'];
@@ -166,7 +171,7 @@ class CroogoHelper extends AppHelper {
 					$link = key($link);
 				}
 				$link = $this->Menus->linkStringToArray(str_replace(':id', $id, $link));
-				$output .= $this->adminRowAction($title, $link, $linkOptions);
+				$output .= $this->adminRowAction($title, $link, $linkOptions, $confirmMessage);
 			}
 		}
 		return $output;
