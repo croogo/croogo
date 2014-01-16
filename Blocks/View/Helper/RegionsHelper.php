@@ -34,6 +34,11 @@ class RegionsHelper extends AppHelper {
 /**
  * Show Blocks for a particular Region
  *
+ * By default block are rendered using Blocks.block element. If `Block.element` is
+ * set and exists, the render process will pass it through given element before wrapping
+ * it inside the Blocks.block container. You disable the wrapping by setting
+ * `enclosure=false` in the `params` field.
+ *
  * @param string $regionAlias Region alias
  * @param array $options
  * @return string

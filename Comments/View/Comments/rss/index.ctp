@@ -1,4 +1,5 @@
 <?php
+
 function rss_transform($item) {
 	$name = $item['Comment']['name'];
 	if ($item['User']['name']) {

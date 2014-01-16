@@ -6,7 +6,7 @@ $config = array(
 		'Shops.ShopsEventHandler' => array(
 			'options' => array(
 				'priority' => 1,
-				),
 			),
 		),
-	);
+	),
+);

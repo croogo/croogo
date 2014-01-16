@@ -7,6 +7,14 @@ $cacheConfig = array_merge(
 CroogoCache::config('croogo_types', $cacheConfig);
 CroogoCache::config('croogo_vocabularies', $cacheConfig);
 
+if (CakePlugin::loaded('Nodes')) {
+	Croogo::hookModelProperty('Taxonomy', 'hasAndBelongsToMany', array(
+		'Node' => array(
+			'className' => 'Nodes.Node',
+		),
+	));
+}
+
 Croogo::hookComponent('*', 'Taxonomy.Taxonomies');
 
 Croogo::hookHelper('*', 'Taxonomy.Taxonomies');

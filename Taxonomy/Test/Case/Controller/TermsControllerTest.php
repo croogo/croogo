@@ -173,9 +173,20 @@ class TermsControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminDelete() {
+		$NodesTaxonomy = ClassRegistry::init('NodesTaxonomy');
+		$options = array('conditions' => array(
+			'taxonomy_id' => 1,
+		));
+		$count = $NodesTaxonomy->find('count', $options);
+		$this->assertEquals(1, $count);
+
 		$this->expectFlashAndRedirect('Term deleted');
 		$this->testAction('admin/taxonomy/terms/delete/1/1'); // ID of Uncategorized and Categories
 		$termsTree = $this->TermsController->Term->Taxonomy->getTree('categories');
+
+		$count = $NodesTaxonomy->find('count', $options);
+		$this->assertEquals(0, $count);
+
 		$expected = array(
 			'announcements' => 'Announcements',
 		);
