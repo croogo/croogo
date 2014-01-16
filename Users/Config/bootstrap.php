@@ -19,6 +19,18 @@ CroogoCache::config('users_login', array_merge($cacheConfig, array(
 	'groups' => array('users'),
 )));
 
+Croogo::hookAdminRowAction('Users/admin_index', 'Reset Password', array(
+	'admin:true/plugin:users/controller:users/action:reset_password/:id' => array(
+		'title' => false,
+		'options' => array(
+			'icon' => 'unlock',
+			'tooltip' => array(
+				'data-title' => __d('croogo', 'Reset password'),
+			),
+		),
+	),
+));
+
 CroogoNav::add('users', array(
 	'icon' => array('user', 'large'),
 	'title' => __d('croogo', 'Users'),
