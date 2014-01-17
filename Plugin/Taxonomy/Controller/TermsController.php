@@ -284,7 +284,11 @@ class TermsController extends TaxonomyAppController {
 			),
 		));
 		if ($this->Term->Taxonomy->delete($taxonomyId)) {
-			$this->Session->setFlash(__d('croogo', 'Term deleted'), 'default', array('class' => 'success'));
+			if ($this->Term->delete($id)) {
+				$this->Session->setFlash(__d('croogo', 'Term deleted'), 'default', array('class' => 'success'));
+			} else {
+				$this->Session->setFlash(__d('croogo', 'Term in Vocabulary deleted'), 'default', array('class' => 'alert'));
+			}
 		} else {
 			$this->Session->setFlash(__d('croogo', 'Term could not be deleted. Please, try again.'), 'default', array('class' => 'error'));
 		}
