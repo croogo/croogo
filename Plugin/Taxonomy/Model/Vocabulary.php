@@ -86,4 +86,15 @@ class Vocabulary extends TaxonomyAppModel {
 			'insertQuery' => '',
 		),
 	);
+
+/**
+ * Model associations: hasMany
+ */
+	public $hasMany = array(
+		'Taxonomy' => array(
+			'className' => 'Taxonomy.Taxonomy',
+			'dependent' => true,
+		),
+	);
+
 }
