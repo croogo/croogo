@@ -104,4 +104,21 @@ class Term extends TaxonomyAppModel {
 		}
 		return false;
 	}
+
+/**
+ * Allow delete on whether given Term has any association left with Taxonomy
+ *
+ * @return bool
+ */
+	public function beforeDelete($cascade = true) {
+		$Taxonomy = ClassRegistry::init('Taxonomy.Taxonomy');
+		$count = $Taxonomy->find('count', array(
+			'recursive' => -1,
+			'conditions' => array(
+				$Taxonomy->escapeField('term_id') => $this->id,
+			),
+		));
+		return $count === 0;
+	}
+
 }
