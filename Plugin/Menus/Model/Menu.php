@@ -81,4 +81,20 @@ class Menu extends MenusAppModel {
 			'counterQuery' => '',
 		),
 	);
+
+/**
+ * beforeDelete callback
+ */
+	public function beforeDelete($cascade = true) {
+		// Set tree scope for Link association
+		$settings = array(
+			'scope' => array($this->Link->alias . '.menu_id' => $this->id),
+		);
+		if ($this->Link->Behaviors->loaded('Tree')) {
+			$this->Link->Behaviors->Tree->setup($this->Link, $settings);
+		} else {
+			$this->Link->Behaviors->load('Tree', $settings);
+		}
+	}
+
 }
