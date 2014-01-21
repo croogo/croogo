@@ -69,7 +69,12 @@ echo $this->element('admin/modal', array(
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Comment' . $comment['Comment']['id'] . 'Id',
-			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item'), 'rowAction' => 'delete'),
+			array(
+				'icon' => 'trash',
+				'class' => 'delete',
+				'tooltip' => __d('croogo', 'Remove this item'),
+				'rowAction' => 'delete',
+			),
 			__d('croogo', 'Are you sure?')
 		);
 

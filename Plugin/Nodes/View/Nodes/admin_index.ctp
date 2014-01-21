@@ -92,7 +92,12 @@ echo $this->Form->create(
 							);
 							echo ' ' . $this->Croogo->adminRowAction('',
 								'#Node' . $node['Node']['id'] . 'Id',
-								array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item'), 'rowAction' => 'delete'),
+								array(
+									'icon' => 'trash',
+									'class' => 'delete',
+									'tooltip' => __d('croogo', 'Remove this item'),
+									'rowAction' => 'delete',
+								),
 								__d('croogo', 'Are you sure?')
 							);
 						?>

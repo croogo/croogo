@@ -72,6 +72,7 @@ $this->Html
 		$actions[] = $this->Croogo->adminRowAction('', '#Link' . $linkId . 'Id',
 			array(
 				'icon' => 'trash',
+				'class' => 'delete',
 				'tooltip' => __d('croogo', 'Delete this item'),
 				'rowAction' => 'delete',
 			),

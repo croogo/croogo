@@ -86,7 +86,12 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Message' . $message['Message']['id'] . 'Id',
-			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item'), 'rowAction' => 'delete'),
+			array(
+				'icon' => 'trash',
+				'class' => 'delete',
+				'tooltip' => __d('croogo', 'Remove this item'),
+				'rowAction' => 'delete',
+			),
 			__d('croogo', 'Are you sure?')
 		);
 		$actions[] = $this->Croogo->adminRowActions($message['Message']['id']);
