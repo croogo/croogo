@@ -86,4 +86,28 @@ class MenuTest extends CroogoTestCase {
 		$this->assertEquals($totalLinks, $currentLinks + $toDelete);
 	}
 
+/**
+ * Test deleting a menu should not mess up other menu Link hierarchy
+ */
+	public function testDeleteMenuLinkIntegrity() {
+		$settings = array('scope' => array('Link.menu_id' => 3));
+
+		$expected = array(
+			(int) 7 => 'Home',
+			(int) 8 => 'About',
+			(int) 9 => '_Child link',
+			(int) 15 => 'Contact'
+		);
+
+		$this->Menu->Link->Behaviors->Tree->setup($this->Menu->Link, $settings);
+		$links =  $this->Menu->Link->generateTreeList(array('menu_id' => 3));
+		$this->assertEquals($expected, $links);
+
+		$this->Menu->delete(6);
+
+		$this->Menu->Link->Behaviors->Tree->setup($this->Menu->Link, $settings);
+		$links =  $this->Menu->Link->generateTreeList(array('menu_id' => 3));
+		$this->assertEquals($expected, $links);
+	}
+
 }
