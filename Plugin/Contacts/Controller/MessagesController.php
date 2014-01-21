@@ -64,7 +64,7 @@ class MessagesController extends ContactsAppController {
 		$this->Prg->commonProcess();
 
 		$this->Message->recursive = 0;
-		$criteria = $this->Message->parseCriteria($this->request->query);
+		$criteria = $this->Message->parseCriteria($this->Prg->parsedParams());
 		$contacts = $this->Message->Contact->find('list');
 		$messages = $this->paginate($criteria);
 		$searchFields = array('contact_id', 'status' => array(

@@ -67,7 +67,6 @@ class Region extends BlocksAppModel {
  * @access public
  */
 	public $filterArgs = array(
-		'chooser' => array('type' => null),
 		'title' => array('type' => 'like', 'field' => array('Region.title'))
 	);
 
