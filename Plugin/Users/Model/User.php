@@ -124,7 +124,6 @@ class User extends UsersAppModel {
  * @access public
  */
 	public $filterArgs = array(
-		'chooser' => array('type' => null),
 		'name' => array('type' => 'like', 'field' => array('User.name', 'User.username')),
 		'role_id' => array('type' => 'value'),
 	);
