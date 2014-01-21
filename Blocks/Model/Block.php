@@ -74,7 +74,6 @@ class Block extends BlocksAppModel {
  * @access public
  */
 	public $filterArgs = array(
-		'chooser' => array('type' => null),
 		'title' => array('type' => 'like', 'field' => array('Block.title', 'Block.alias')),
 		'region_id' => array('type' => 'value'),
 	);
