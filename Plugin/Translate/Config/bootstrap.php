@@ -26,6 +26,13 @@ Configure::write('Translate.models', array(
 		),
 		'translateModel' => 'Menus.Link',
 	),
+	'Term' => array(
+		'fields' => array(
+			'title' => 'titleTranslation',
+			'description' => 'descriptionTranslation',
+		),
+		'translateModel' => 'Taxonomy.Term',
+	),
 ));
 
 /**
