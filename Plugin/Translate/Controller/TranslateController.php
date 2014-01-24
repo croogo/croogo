@@ -104,7 +104,7 @@ class TranslateController extends TranslateAppController {
 			));
 		}
 
-		if (!isset($this->params['named']['locale'])) {
+		if (!isset($this->request->params['named']['locale'])) {
 			$this->Session->setFlash(__d('croogo', 'Invalid locale'), 'default', array('class' => 'error'));
 			$this->redirect(array(
 				'plugin' => null,
@@ -118,7 +118,7 @@ class TranslateController extends TranslateAppController {
 
 		$language = $this->Language->find('first', array(
 			'conditions' => array(
-				'Language.alias' => $this->params['named']['locale'],
+				'Language.alias' => $this->request->params['named']['locale'],
 				'Language.status' => 1,
 			),
 		));
@@ -144,7 +144,7 @@ class TranslateController extends TranslateAppController {
 		$this->set('title_for_layout', sprintf(__d('croogo', 'Translate content: %s (%s)'), $language['Language']['title'], $language['Language']['native']));
 
 		$model->id = $id;
-		$model->locale = $this->params['named']['locale'];
+		$model->locale = $this->request->params['named']['locale'];
 		$fields = $model->getTranslationFields();
 		if (!empty($this->request->data)) {
 			if ($model->saveTranslation($this->request->data)) {
