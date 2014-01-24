@@ -149,11 +149,15 @@ class LayoutHelper extends AppHelper {
 		} else {
 			$croogo['basePath'] = Router::url('/');
 		}
-		$croogo['params'] = array(
-			'plugin' => $this->request->params['plugin'],
-			'controller' => $this->request->params['controller'],
-			'action' => $this->request->params['action'],
-			'named' => $this->request->params['named'],
+		$validKeys = array(
+			'plugin' => null,
+			'controller' => null,
+			'action' => null,
+			'named' => null,
+		);
+		$croogo['params'] = array_intersect_key(
+			array_merge($validKeys, $this->request->params),
+			$validKeys
 		);
 		if (is_array(Configure::read('Js'))) {
 			$croogo = Hash::merge($croogo, Configure::read('Js'));
