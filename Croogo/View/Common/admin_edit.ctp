@@ -79,7 +79,7 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 			if ($buttonsBlock = $this->fetch('buttons')):
 				echo $buttonsBlock;
 			else :
-				echo $this->Html->beginBox('Publishing') .
+				echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 					$this->Form->button(__d('croogo', 'Save'), array('button' => 'primary')) .
 					$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
 					$this->Html->endBox();
