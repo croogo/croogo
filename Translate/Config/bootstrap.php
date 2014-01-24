@@ -34,5 +34,9 @@ Configure::write('Translate.models', array(
  */
 foreach (Configure::read('Translate.models') as $translateModel => $config) {
 	Croogo::hookBehavior($translateModel, 'Translate.CroogoTranslate', $config);
-	Croogo::hookAdminRowAction(Inflector::pluralize($translateModel) . '/admin_index', 'Translate', 'admin:true/plugin:translate/controller:translate/action:index/:id/' . $translateModel);
+	Croogo::hookAdminRowAction(
+		Inflector::pluralize($translateModel) . '/admin_index',
+		__d('croogo', 'Translate'),
+		'admin:true/plugin:translate/controller:translate/action:index/:id/' . $translateModel
+	);
 }
