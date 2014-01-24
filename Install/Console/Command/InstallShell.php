@@ -22,6 +22,7 @@ class InstallShell extends AppShell {
  * Display help/options
  */
 	public function getOptionParser() {
+		$drivers = array('Mysql', 'Postgres', 'Sqlite', 'Sqlserver');
 		$parser = parent::getOptionParser();
 		$parser->description(__d('croogo', 'Install Utilities'))
 			->addSubcommand('main', array(
@@ -35,26 +36,88 @@ class InstallShell extends AppShell {
 				'parser' => array(
 					'description' => 'Generate default role settings during release',
 				)
+			))
+			->addOption('datasource', array(
+				'help' => 'Database Driver',
+				'short' => 'd',
+				'required' => true,
+				'options' => $drivers,
+			))
+			->addOption('host', array(
+				'help' => 'Database Host',
+				'short' => 'h',
+				'required' => true,
+			))
+			->addOption('login', array(
+				'help' => 'Database User',
+				'short' => 'l',
+				'required' => true,
+			))
+			->addOption('password', array(
+				'help' => 'Database Password',
+				'short' => 'p',
+				'required' => true,
+			))
+			->addOption('database-name', array(
+				'help' => 'Database Name',
+				'short' => 'n',
+				'required' => true,
+			))
+			->addOption('port', array(
+				'help' => 'Database Port',
+				'short' => 't',
+				'required' => true,
+			))
+			->addOption('prefix', array(
+				'help' => 'Table Prefix',
+				'short' => 'x',
+				'required' => true,
+			))
+			->addArgument('admin-user', array(
+				'help' => 'Admin username',
+			))
+			->addArgument('admin-password', array(
+				'help' => 'Admin password',
 			));
 		return $parser;
+	}
+
+/**
+ * Convenient wrapper for Shell::in() that gets the default from CLI options
+ */
+	protected function _in($prompt, $options = null, $default = null, $argument = null) {
+		if (isset($this->params[$argument])) {
+			return $this->params[$argument];
+		}
+		return $this->in($prompt, $options, $default);
+	}
+
+/**
+ * Convenient wrapper for Shell::in() that gets the default from CLI argument
+ */
+	protected function _args($prompt, $options = null, $default = null, $index = null) {
+		if (isset($this->args[$index])) {
+			return $this->args[$index];
+		}
+		return $this->in($prompt, $options, $default);
 	}
 
 	public function main() {
 		$this->out();
 		$this->out('Database settings:');
-		$install['Install']['datasource'] = $this->in(__d('croogo', 'DataSource'), array(
+		$install['Install']['datasource'] = $this->_in(__d('croogo', 'DataSource'), array(
 			'Mysql',
 			'Sqlite',
 			'Postgres',
 			'Sqlserver'
-		), 'Mysql');
+		), 'Mysql', 'datasource');
 		$install['Install']['datasource'] = 'Database/' . $install['Install']['datasource'];
-		$install['Install']['host'] = $this->in(__d('croogo', 'Host'), null, 'localhost');
-		$install['Install']['login'] = $this->in(__d('croogo', 'Login'), null, 'root');
-		$install['Install']['password'] = $this->in(__d('croogo', 'Password'), null, '');
-		$install['Install']['database'] = $this->in(__d('croogo', 'Database'), null, 'croogo');
-		$install['Install']['prefix'] = $this->in(__d('croogo', 'Prefix'), null, '');
-		$install['Install']['port'] = $this->in(__d('croogo', 'Port'), null, null);
+		$install['Install']['host'] = $this->_in(__d('croogo', 'Host'), null, 'localhost', 'host');
+		$install['Install']['login'] = $this->_in(__d('croogo', 'Login'), null, 'root', 'login');
+		$install['Install']['password'] = $this->_in(__d('croogo', 'Password'), null, '', 'password');
+		$install['Install']['database'] = $this->_in(__d('croogo', 'Database'), null, 'croogo', 'database-name');
+		$install['Install']['prefix'] = $this->_in(__d('croogo', 'Prefix'), null, '', 'prefix');
+		$install['Install']['port'] = $this->_in(__d('croogo', 'Port'), null, null, 'port');
 
 		$InstallManager = new InstallManager();
 		$InstallManager->createDatabaseFile($install);
@@ -71,21 +134,28 @@ class InstallShell extends AppShell {
 		$InstallManager->createCroogoFile();
 
 		$this->out();
-		$this->out('Create Admin user:');
+		if (empty($this->args)) {
+			$this->out('Create Admin user:');
+		}
 
 		do {
-			$username = $this->in(__d('croogo', 'Username'), null, null);
+			$username = $this->_args(__d('croogo', 'Username'), null, null, 0);
 			if (empty($username)) {
 				$this->err('Username must not be empty');
 			}
 		} while (empty($username));
 
 		do {
-			$password = $this->in(__d('croogo', 'Password'));
-			$verify = $this->in(__d('croogo', 'Verify Password'));
-			$passwordsMatched = $password == $verify;
-			if (!$passwordsMatched) {
-				$this->err('Passwords do not match');
+			$password = $this->_args(__d('croogo', 'Password'), null, null, 1);
+			if (empty($this->args)) {
+				$verify = $this->_in(__d('croogo', 'Verify Password'), null, null, 1);
+				$passwordsMatched = $password == $verify;
+
+				if (!$passwordsMatched) {
+					$this->err('Passwords do not match');
+				}
+			} else {
+				$passwordsMatched = true;
 			}
 			if (empty($password)) {
 				$this->err('Password must not be empty');
