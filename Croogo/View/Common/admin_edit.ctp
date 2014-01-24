@@ -77,7 +77,7 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 		<div class="span4">
 		<?php
 			if ($buttonsBlock = $this->fetch('buttons')):
-				$publishing = $buttonsBlock;
+				echo $buttonsBlock;
 			else :
 				echo $this->Html->beginBox('Publishing') .
 					$this->Form->button(__d('croogo', 'Save'), array('button' => 'primary')) .
