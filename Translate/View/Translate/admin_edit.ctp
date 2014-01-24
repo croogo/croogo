@@ -14,7 +14,7 @@ echo $this->Form->create($modelAlias, array('url' => array(
 	'action' => 'edit',
 	$id,
 	$modelAlias,
-	'locale' => $this->params['named']['locale'],
+	'locale' => $this->request->params['named']['locale'],
 )));
 ?>
 <div class="row-fluid">

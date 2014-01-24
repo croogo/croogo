@@ -93,20 +93,20 @@ class MenuTest extends CroogoTestCase {
 		$settings = array('scope' => array('Link.menu_id' => 3));
 
 		$expected = array(
-			(int) 7 => 'Home',
-			(int) 8 => 'About',
-			(int) 9 => '_Child link',
-			(int) 15 => 'Contact'
+			7 => 'Home',
+			8 => 'About',
+			9 => '_Child link',
+			15 => 'Contact'
 		);
 
 		$this->Menu->Link->Behaviors->Tree->setup($this->Menu->Link, $settings);
-		$links =  $this->Menu->Link->generateTreeList(array('menu_id' => 3));
+		$links = $this->Menu->Link->generateTreeList(array('menu_id' => 3));
 		$this->assertEquals($expected, $links);
 
 		$this->Menu->delete(6);
 
 		$this->Menu->Link->Behaviors->Tree->setup($this->Menu->Link, $settings);
-		$links =  $this->Menu->Link->generateTreeList(array('menu_id' => 3));
+		$links = $this->Menu->Link->generateTreeList(array('menu_id' => 3));
 		$this->assertEquals($expected, $links);
 	}
 

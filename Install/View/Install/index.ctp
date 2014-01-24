@@ -30,9 +30,9 @@
 		}
 
 		// cakephp version
-		$minCakeVersion = '2.4.0';
+		$minCakeVersion = '2.4.4';
 		$cakeVersion = Configure::version();
-		$operator = '>';
+		$operator = '>=';
 		if (version_compare($cakeVersion, $minCakeVersion, $operator)) {
 			echo '<p class="success">' . __d('croogo', 'CakePhp version %s %s %s', $cakeVersion, $operator, $minCakeVersion) . '</p>';
 		} else {
