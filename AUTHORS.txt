@@ -13,6 +13,7 @@ SCV Geo <scv@scvgeo.com>
 Heiner Gassen <hg@dynweb.net>
 Paulino Calderon <paulino@calder0n.com>
 pinchsoftware <contact@pinchsoft.com>
+Elias Coronado <ecor.rck@hotmail.com>
 Grégory Salvan <gregory@occi-tech.com>
 John <john@midianegocios.com.br>
 Vitor Pacheco <vitor-p.c@hotmail.com>
@@ -22,15 +23,17 @@ James Sapara <james.sapara@gmail.com>
 Lukas Marks <lukas.marks@lumax-web.de>
 Matt Curry <matt@pseudocoder.com>
 thoth <thomas.rader@tigerclawtech.com>
-Elias Coronado <ecor.rck@hotmail.com>
 Hadrien Collongues <chadrien@chadrien.fr>
 Josué Silva Santos <josue.silva.santos@gmail.com>
 Mischa ter Smitten <mischa@tersmitten.nl>
+chadrien <chadrien@chadrien.fr>
 daniel <daniel@daniels-MacBook-Air.local>
 liamkeily <liam@simplywebsites.com>
+phpMagpie <phpmagpie@webbedit.co.uk>
 tmaiaroto <tom@shift8creative.com>
 Adam Taylor <ataylor32@gmail.com>
 Andrew Weir <andru.weir@gmail.com>
+Appsbender <regz24@gmail.com>
 Arie Sutanto <asutanto@xintesa.com>
 Ceeram <c33ram@gmail.com>
 Cezary Nowak <korpirkor@users.noreply.github.com>
@@ -41,6 +44,7 @@ Jeremy Harris <jeremy@42pixels.com>
 Joachim Nyqvist <Joachim@JNyqvist.se>
 Kory Marks <kory.marks@mac.com>
 Léo Haddad <scoup001@gmail.com>
+Marce Romagnoli <marce.romagnoli@gmail.com>
 Marcin Jóźwikowski <marcin@jozwikowski.pl>
 Marek Sebera <marek.sebera@gmail.com>
 Mike Pagé <mike@nedwave.com>
@@ -50,8 +54,8 @@ Wiena Lorentz <lorentz@xintesa.com>
 alevilar <alevilar@gmail.com>
 elbakai <elbakai@users.noreply.github.com>
 eryw <kristeryw@gmail.com>
+ingvaar <igorpletenev@gmail.com>
 joseph-d <joseph.d@nirada.co.th>
-phpMagpie <phpmagpie@webbedit.co.uk>
 roland-w <roland-w@users.noreply.github.com>
 romaing <pourri@dixit-productions.com>
 sherwinrobles <sherwinrobles@gmail.com>
