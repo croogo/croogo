@@ -92,11 +92,11 @@ class Term extends TaxonomyAppModel {
 	public function saveAndGetId($data) {
 		$term = $this->find('first', array(
 			'conditions' => array(
-				'Term.slug' => $data['slug'],
+				$this->escapeField('slug') => $data['slug'],
 			),
 		));
-		if (isset($term['Term']['id'])) {
-			return $term['Term']['id'];
+		if (isset($term[$this->alias][$this->primaryKey])) {
+			return $term[$this->alias][$this->primaryKey];
 		}
 
 		$this->id = false;
