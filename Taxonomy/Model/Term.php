@@ -126,7 +126,7 @@ class Term extends TaxonomyAppModel {
 		if (!is_null($taxonomyId)) {
 			$conditions['Taxonomy.id !='] = $taxonomyId;
 		}
-		return $this->Taxonomy->hasAny($conditions);
+		return $this->Vocabulary->Taxonomy->hasAny($conditions);
 	}
 
 	public function add($data, $vocabularyId) {
@@ -197,10 +197,10 @@ class Term extends TaxonomyAppModel {
 		$scopeSettings = array('scope' => array(
 			'Taxonomy.vocabulary_id' => $vocabularyId,
 		));
-		if ($this->Taxonomy->Behaviors->loaded('Tree')) {
-			$this->Taxonomy->Behaviors->Tree->setup($this->Taxonomy, $scopeSettings);
+		if ($this->Vocabulary->Taxonomy->Behaviors->loaded('Tree')) {
+			$this->Vocabulary->Taxonomy->Behaviors->Tree->setup($this->Vocabulary->Taxonomy, $scopeSettings);
 		} else {
-			$this->Taxonomy->Behaviors->load('Tree', $scopeSettings);
+			$this->Vocabulary->Taxonomy->Behaviors->load('Tree', $scopeSettings);
 		}
 	}
 }
