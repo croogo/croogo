@@ -95,4 +95,58 @@ class TermTest extends CroogoTestCase {
 		$this->assertEquals($expectedTermIds,$termIds);
 	}
 
+	public function testTermIsInVocabularyShouldReturnsTrueIfTermAlreadyInVocabulary() {
+		$inVocabulary = $this->Term->isInVocabulary(1, 1);
+		$this->assertTrue($inVocabulary);
+	}
+
+	public function testAddShouldAddNewTerm() {
+		$newTermData = array(
+			'Taxonomy' => array('parent_id' => null),
+			'Term' => array(
+				'title' => 'Bazinga',
+				'slug' => 'bazinga',
+				'description' => ''
+			)
+		);
+
+		$this->Term->add($newTermData, 1);
+		$newTerm = $this->Term->find('first', array('conditions' => array('slug' => 'bazinga')));
+
+		$this->assertNotEmpty($newTerm);
+	}
+
+	public function testHasSlugChangedShouldReturnTrueIfSlugChanged() {
+		$changed = $this->Term->hasSlugChanged(1, 'drunk-robot');
+		$this->assertTrue($changed);
+	}
+
+	public function testHasSlugShouldReturnFalseIfSlugStilltheSame() {
+		$changed = $this->Term->hasSlugChanged(1, 'uncategorized');
+		$this->assertFalse($changed);
+	}
+
+	public function testHasSlugChangedShouldTrhowExceptionOnInvalidId() {
+		$this->setExpectedException('NotFoundException');
+		$this->Term->hasSlugChanged('invalid', 'blah');
+	}
+
+	public function testEditShouldReturnsTrueWhenRecordSaved() {
+		$record = $this->Term->find('first', array('conditions' => array('id' => '1')));
+		$record['Taxonomy'] = array('id' => 1, 'parent_id' => null);
+		$edited = $this->Term->edit($record, 1);
+		$this->assertTrue((bool) $edited);
+	}
+
+	public function testEditShouldUpdateRecor() {
+		$record = $this->Term->find('first', array('conditions' => array('id' => '1')));
+		$record['Term']['slug'] = 'drifting-monkey';
+		$record['Taxonomy'] = array('id' => 1, 'parent_id' => null);
+		$edited = $this->Term->edit($record, 1);
+
+		$newSlug = $this->Term->field('slug', array('id' => 1));
+		$expected = 'drifting-monkey';
+		$this->assertEquals($expected, $newSlug);
+	}
+
 }
