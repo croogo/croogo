@@ -41,46 +41,36 @@ $this->Html
 <?php
 	$rows = array();
 
-	// Default Content Type
-	if (isset($vocabulary['Type'][0])) {
-		$defaultType = $vocabulary['Type'][0];
-	}
-	if (isset($this->params->query['type_id'])) {
-		if (isset($vocabulary['Type'][$this->params->query['type_id']])) {
-			$defaultType = $vocabulary['Type'][$this->params->query['type_id']];
-		}
-	}
-
-	foreach ($termsTree as $id => $title):
+	foreach ($terms as $term):
 		$actions = array();
-		$actions[] = $this->Croogo->adminRowActions($id);
+		$actions[] = $this->Croogo->adminRowActions($term['Term']['id']);
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('action' => 'moveup',	$id, $vocabulary['Vocabulary']['id']),
+			array('action' => 'moveup',	$term['Term']['id'], $vocabulary['Vocabulary']['id']),
 			array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('action' => 'movedown', $id, $vocabulary['Vocabulary']['id']),
+			array('action' => 'movedown', $term['Term']['id'], $vocabulary['Vocabulary']['id']),
 			array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('action' => 'edit', $id, $vocabulary['Vocabulary']['id']),
+			array('action' => 'edit', $term['Term']['id'], $vocabulary['Vocabulary']['id']),
 			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('action' => 'delete',	$id, $vocabulary['Vocabulary']['id']),
+			array('action' => 'delete', $term['Term']['id'], $vocabulary['Vocabulary']['id']),
 			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
 			__d('croogo', 'Are you sure?'));
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
 		// Title Column
-		$titleCol = $title;
+		$titleCol = $term['Term']['title'];
 		if (isset($defaultType['alias'])) {
-			$titleCol = $this->Html->link($title, array(
+			$titleCol = $this->Html->link($term['Term']['title'], array(
 				'plugin' => 'nodes',
 				'controller' => 'nodes',
 				'action' => 'term',
 				'type' => $defaultType['alias'],
-				'slug' => $terms[$id]['slug'],
+				'slug' => $term['Term']['slug'],
 				'admin' => 0,
 			), array(
 				'target' => '_blank',
@@ -88,28 +78,16 @@ $this->Html
 		}
 
 		// Build link list
-		$typeLinks = array();
-		if (count($vocabulary['Type']) > 1) {
-			foreach ($vocabulary['Type'] as $type) {
-				$typeLinks[] = $this->Html->link($type['title'], array(
-					'admin' => false,
-					'plugin' => 'nodes',
-					'controller' => 'nodes',
-					'action' => 'term',
-					'type' => $type['alias'],
-					'slug' => $terms[$id]['slug'],
-				), array(
-					'target' => '_blank',
-				));
-			}
+		$typeLinks = $this->Taxonomies->generateTypeLinks($vocabulary['Type'], $term);
+		if (!empty($typeLinks)) {
+			$titleCol .= $this->Html->tag('small', $typeLinks);
 		}
-		$titleCol .= " <small>(" . implode(', ', $typeLinks) . ")</small>";
 
 		$rows[] = array(
 			'',
-			$id,
+			$term['Term']['id'],
 			$titleCol,
-			$terms[$id]['slug'],
+			$term['Term']['slug'],
 			$actions,
 		);
 	endforeach;

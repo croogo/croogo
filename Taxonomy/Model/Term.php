@@ -22,6 +22,10 @@ class Term extends TaxonomyAppModel {
  */
 	public $name = 'Term';
 
+	public $findMethods = array(
+		'byVocabulary' => true,
+	);
+
 /**
  * Behaviors used by the Model
  *
@@ -112,6 +116,23 @@ class Term extends TaxonomyAppModel {
 			),
 		));
 		return $count === 0;
+	}
+
+	protected function _findByVocabulary($state, $query, $results = array()) {
+		if (empty($query['vocabulary_id'])) {
+			trigger_error(__d('croogo', '"vocabulary_id" key not found'));
+		}
+		if ($state == 'before') {
+			$vocabularyAlias = $this->Vocabulary->field('alias', array('id' => $query['vocabulary_id']));
+			$termsId = $this->Vocabulary->Taxonomy->getTree($vocabularyAlias, array('key' => 'id', 'value' => 'title'));
+			$defaultQuery = array(
+				'conditions' => array(
+					$this->escapeField() => array_keys($termsId)
+				)
+			);
+			return array_merge((array) $query, $defaultQuery);
+		}
+		return $results;
 	}
 
 }

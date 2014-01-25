@@ -81,4 +81,18 @@ class TermTest extends CroogoTestCase {
 		$this->assertFalse(in_array($termId, $existingIds));
 	}
 
+	public function testFindByVocabularyWithNoVocabularyIdShouldTriggerError() {
+		$this->setExpectedException('PHPUnit_Framework_error');
+		$this->Term->find('byVocabulary');
+	}
+
+	public function testFindByVocabularyShouldReturnsTermsOfVocabulary() {
+		$terms = $this->Term->find('byVocabulary', array('vocabulary_id' => 1));
+		$termIds = Hash::extract($terms, '{n}.Term.id');
+		sort($termIds);
+		$expectedTermIds = array(1, 2);
+
+		$this->assertEquals($expectedTermIds, $termIds);
+	}
+
 }

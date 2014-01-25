@@ -53,33 +53,24 @@ class TermsController extends TaxonomyAppController {
  * @access public
  */
 	public function admin_index($vocabularyId = null) {
+		$redirectUrl = array(
+			'controller' => 'vocabularies',
+			'action' => 'index',
+		);
 		if (!$vocabularyId) {
-			return $this->redirect(array(
-				'controller' => 'vocabularies',
-				'action' => 'index',
-			));
+			return $this->redirect($redirectUrl);
 		}
-		$vocabulary = $this->Term->Vocabulary->findById($vocabularyId);
-		if (!isset($vocabulary['Vocabulary']['id'])) {
+		if (!$this->Term->Vocabulary->exists($vocabularyId)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Vocabulary ID.'), 'default', array('class' => 'error'));
-			return $this->redirect(array(
-				'controller' => 'vocabularies',
-				'action' => 'index',
-			));
+			return $this->redirect($redirectUrl);
 		}
+
+		$vocabulary = $this->Term->Vocabulary->read(null, $vocabularyId);
+		$defaultType = $this->__getDefaultType($vocabulary);
 		$this->set('title_for_layout', __d('croogo', 'Vocabulary: %s', $vocabulary['Vocabulary']['title']));
 
-		$termsTree = $this->Term->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array(
-			'key' => 'id',
-			'value' => 'title',
-		));
-		$terms = $this->Term->find('all', array(
-			'conditions' => array(
-				'Term.id' => array_keys($termsTree),
-			),
-		));
-		$terms = Hash::combine($terms, '{n}.Term.id', '{n}.Term');
-		$this->set(compact('termsTree', 'vocabulary', 'terms'));
+		$terms = $this->Term->find('byVocabulary', array('vocabulary_id' => $vocabularyId));
+		$this->set(compact('vocabulary', 'terms', 'defaultType'));
 
 		if (isset($this->request->params['named']['links']) || isset($this->request->query['chooser'])) {
 			$this->layout = 'admin_popup';
@@ -385,6 +376,18 @@ class TermsController extends TaxonomyAppController {
 			'action' => 'index',
 			$vocabularyId,
 		));
+	}
+
+	private function __getDefaultType($vocabulary) {
+		if (isset($vocabulary['Type'][0])) {
+			$defaultType = $vocabulary['Type'][0];
+		}
+		if (isset($this->params->query['type_id'])) {
+			if (isset($vocabulary['Type'][$this->request->query['type_id']])) {
+				$defaultType = $vocabulary['Type'][$this->request->query['type_id']];
+			}
+		}
+		return $defaultType;
 	}
 
 }
