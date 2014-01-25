@@ -202,4 +202,31 @@ class TaxonomiesHelper extends AppHelper {
 		return $output;
 	}
 
+	public function generateTypeLinks($typeData, $termData) {
+		$typeLinks = '';
+		if ($this->__hasSeveralTypes($typeData)) {
+			$typeLink = array();
+			$typeLink[] = ' (';
+
+			foreach($typeData as $type) {
+				$typeLink[] = $this->Html->link($type['title'], array(
+					'admin' => false,
+					'plugin' => 'nodes',
+					'controller' => 'nodes',
+					'action' => 'term',
+					'type' => $type['alias'],
+					'slug' => $termData['Term']['slug']
+				));
+			}
+
+			$typeLink[] = ')';
+			$typeLinks = implode(' ', $typeLink);
+		}
+
+		return $typeLinks;
+	}
+
+	private function __hasSeveralTypes($typeData) {
+		return count($typeData) > 1;
+	}
 }

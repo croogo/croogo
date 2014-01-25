@@ -77,8 +77,9 @@ class TermsControllerTest extends CroogoControllerTestCase {
 		$expected = array(
 			'1' => 'Uncategorized',
 			'2' => 'Announcements',
-		);
-		$this->assertEquals($expected, $this->vars['termsTree']);
+        );
+        $termsTree = Hash::combine($this->vars['terms'], '{n}.Term.id', '{n}.Term.title');
+		$this->assertEquals($expected, $termsTree);
 	}
 
 /**
