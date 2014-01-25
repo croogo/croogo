@@ -43,7 +43,9 @@
 
 			$mimeType = explode('/', $attachment['Attachment']['mime_type']);
 			$mimeType = $mimeType['0'];
-			if ($mimeType == 'image') {
+			$imageType = $mimeType[1];
+			$imagecreatefrom = array('gif', 'jpeg', 'png', 'string', 'wbmp', 'webp', 'xbm', 'xpm');
+			if ($mimeType == 'image' && in_array($imageType, $imagecreatefrom)) {
 				$thumbnail = $this->Html->link($this->Image->resize($attachment['Attachment']['path'], 100, 200), $attachment['Attachment']['path'], array(
 					'class' => 'thickbox',
 					'escape' => false,
