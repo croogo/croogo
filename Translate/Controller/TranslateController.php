@@ -63,6 +63,7 @@ class TranslateController extends TranslateAppController {
 		}
 
 		$model = ClassRegistry::init($config['translateModel']);
+		$displayField = $model->displayField;
 		$record = $model->findById($id);
 		if (!isset($record[$modelAlias]['id'])) {
 			$this->Session->setFlash(__d('croogo', 'Invalid record.'), 'default', array('class' => 'error'));
@@ -72,7 +73,7 @@ class TranslateController extends TranslateAppController {
 				'action' => 'index',
 			));
 		}
-		$this->set('title_for_layout', sprintf(__d('croogo', 'Translations: %s'), $record[$modelAlias][$model->displayField]));
+		$this->set('title_for_layout', sprintf(__d('croogo', 'Translations: %s'), $record[$modelAlias][$displayField]));
 
 		$runtimeModel = $model->translateModel();
 		$runtimeModelAlias = $runtimeModel->alias;
@@ -84,7 +85,7 @@ class TranslateController extends TranslateAppController {
 			),
 		));
 
-		$this->set(compact('runtimeModelAlias', 'translations', 'record', 'modelAlias', 'id'));
+		$this->set(compact('runtimeModelAlias', 'translations', 'record', 'modelAlias', 'displayField', 'id'));
 	}
 
 /**
@@ -132,6 +133,7 @@ class TranslateController extends TranslateAppController {
 		}
 
 		$model = ClassRegistry::init($config['translateModel']);
+		$displayField = $model->displayField;
 		$record = $model->findById($id);
 		if (!isset($record[$modelAlias]['id'])) {
 			$this->Session->setFlash(__d('croogo', 'Invalid record.'), 'default', array('class' => 'error'));
@@ -166,7 +168,7 @@ class TranslateController extends TranslateAppController {
 		if (empty($this->request->data)) {
 			$this->request->data = $model->read(null, $id);
 		}
-		$this->set(compact('fields', 'language', 'modelAlias', 'id'));
+		$this->set(compact('fields', 'language', 'modelAlias', 'displayField', 'id'));
 	}
 
 /**
