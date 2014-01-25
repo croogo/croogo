@@ -2,11 +2,17 @@
 $this->extend('/Common/admin_index');
 $this->name = 'translate';
 
+
+$plugin = $controller = 'nodes';
+if (isset($this->request->params['models'][$modelAlias])) {
+	$plugin = $this->request->params['models'][$modelAlias]['plugin'];
+	$controller = strtolower(Inflector::pluralize($modelAlias));
+}
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Translate'), '/' . $this->request->url)
 	->addCrumb($modelAlias)
-	->addCrumb($record[$modelAlias]['title'], array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'edit', $record[$modelAlias]['id']));
+	->addCrumb($record[$modelAlias][$displayField], array('plugin' => $plugin, 'controller' => $controller, 'action' => 'edit', $record[$modelAlias]['id']));
 
 ?>
 <?php $this->start('actions'); ?>

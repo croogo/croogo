@@ -44,3 +44,11 @@ CroogoNav::add('blocks', array(
 		),
 	),
 ));
+
+Croogo::mergeConfig('Translate.models.Block', array(
+	'fields' => array(
+		'title' => 'titleTranslation',
+		'body' => 'bodyTranslation',
+	),
+	'translateModel' => 'Blocks.Block',
+));

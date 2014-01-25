@@ -41,6 +41,9 @@ class CroogoTranslateBehaviorTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->Node = ClassRegistry::init('Nodes.Node');
+		if (!CakePlugin::loaded('Translate')) {
+			CakePlugin::load('Translate');
+		}
 		$this->Node->Behaviors->attach('Translate.CroogoTranslate', array(
 			'fields' => array(
 				'title' => 'titleTranslation',

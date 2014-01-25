@@ -1,5 +1,8 @@
 <?php
 
+App::uses('CakeEvent', 'Event');
+App::uses('CakeEventManager', 'Event');
+
 /**
  * Croogo
  *
@@ -244,9 +247,13 @@ class Croogo {
  * @param object $subject the object that this event applies to
  * @param mixed $data any value you wish to be transported with this event
  */
-	public static function dispatchEvent($name, $subject, $data = null) {
+	public static function dispatchEvent($name, $subject = null, $data = null) {
 		$event = new CakeEvent($name, $subject, $data);
-		$subject->getEventManager()->dispatch($event);
+		if ($subject) {
+			$subject->getEventManager()->dispatch($event);
+		} else {
+			CakeEventManager::instance()->dispatch($event);
+		}
 		return $event;
 	}
 

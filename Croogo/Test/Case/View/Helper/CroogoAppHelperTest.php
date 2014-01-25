@@ -29,10 +29,16 @@ class CroogoAppHelperTest extends CroogoTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		CakePlugin::load('Translate', array('bootstrap' => true));
+		CakePlugin::load('Translate');
 		$this->View = new View(null);
 		$this->AppHelper = new CroogoAppHelper($this->View);
 		$this->AppHelper->request = new CakeRequest(null, false);
+	}
+
+	public function tearDown() {
+		parent::tearDown();
+		CakePlugin::unload('Translate');
+		unset($this->AppHelper->request, $this->AppHelper, $this->View);
 	}
 
 	public function testUrlWithoutLocale() {
@@ -60,11 +66,6 @@ class CroogoAppHelperTest extends CroogoTestCase {
 		$this->AppHelper->request->params['locale'] = 'por';
 		$url = $this->AppHelper->url(null, true);
 		$this->assertEqual($url, Router::url('/por/index', true));
-	}
-
-	public function tearDown() {
-		parent::tearDown();
-		unset($this->AppHelper->request, $this->AppHelper, $this->View);
 	}
 
 }

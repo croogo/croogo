@@ -107,3 +107,4 @@ foreach ($plugins as $plugin) {
 	CroogoPlugin::load($option);
 }
 CroogoEventManager::loadListeners();
+Croogo::dispatchEvent('Croogo.bootstrapComplete');

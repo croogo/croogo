@@ -43,3 +43,11 @@ CroogoNav::add('menus', array(
 		),
 	),
 ));
+
+Croogo::mergeConfig('Translate.models.Link', array(
+	'fields' => array(
+		'title' => 'titleTranslation',
+		'description' => 'descriptionTranslation',
+	),
+	'translateModel' => 'Menus.Link',
+));

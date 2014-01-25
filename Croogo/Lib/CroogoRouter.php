@@ -38,7 +38,7 @@ class CroogoRouter {
  */
 	public static function connect($route, $default = array(), $params = array()) {
 		$localizedRoute = $route == '/' ? '' : $route;
-		if (Configure::read('Translate')) {
+		if (CakePlugin::loaded('Translate')) {
 			Router::connect('/:locale' . $localizedRoute, $default, array_merge(array('locale' => '[a-z]{3}'), $params));
 		}
 		return Router::connect($route, $default, $params);
@@ -111,7 +111,7 @@ class CroogoRouter {
  * @return void
  */
 	public static function localize() {
-		if (Configure::read('Translate')) {
+		if (CakePlugin::loaded('Translate')) {
 			Router::connect('/:locale/:controller/:action/*', array(), array('locale' => '[a-z]{3}'));
 		}
 	}
