@@ -138,7 +138,7 @@ class TermTest extends CroogoTestCase {
 		$this->assertTrue((bool) $edited);
 	}
 
-	public function testEditShouldUpdateRecor() {
+	public function testEditShouldUpdateRecord() {
 		$record = $this->Term->find('first', array('conditions' => array('id' => '1')));
 		$record['Term']['slug'] = 'drifting-monkey';
 		$record['Taxonomy'] = array('id' => 1, 'parent_id' => null);
