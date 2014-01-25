@@ -2,8 +2,6 @@
 App::uses('Node', 'Nodes.Model');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
-CakePlugin::load('Translate');
-
 class UrlBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(

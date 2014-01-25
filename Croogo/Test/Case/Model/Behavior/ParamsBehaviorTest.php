@@ -2,8 +2,6 @@
 App::uses('Type', 'Taxonomy.Model');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
-CakePlugin::load('Translate');
-
 class ParamsBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(

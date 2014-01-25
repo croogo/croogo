@@ -24,7 +24,6 @@ class CroogoRouterTest extends CroogoTestCase {
  * testHomeRoute
  */
 	public function testHomeRoute() {
-		CakePlugin::unload('Translate');
 		$promoted = array(
 			'plugin' => 'nodes',
 			'controller' => 'nodes',
