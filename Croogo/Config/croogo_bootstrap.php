@@ -46,6 +46,7 @@ Configure::write('Config.language', Configure::read('Site.locale'));
  * Extensions
  */
 CakePlugin::load(array('Extensions'), array('bootstrap' => true));
+Configure::load('Extensions.events');
 App::uses('CroogoPlugin', 'Extensions.Lib');
 
 /**
