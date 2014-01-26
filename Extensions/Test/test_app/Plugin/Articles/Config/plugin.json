@@ -1,0 +1,9 @@
+{
+	"name": "Articles",
+	"description": "Articles plugin",
+	"dependencies": {
+		"plugins": [
+			"Widgets"
+		]
+	}
+}

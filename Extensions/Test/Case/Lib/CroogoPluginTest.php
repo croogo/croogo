@@ -274,4 +274,21 @@ class CroogoPluginTest extends CroogoTestCase {
 		$this->CroogoPlugin->delete(null);
 	}
 
+/**
+ * testUsedBy
+ */
+	public function testUsedBy() {
+		Cache::delete('pluginDeps', 'cached_settings');
+		CroogoPlugin::load('Widgets');
+		CroogoPlugin::load('Editors');
+		CroogoPlugin::load('Articles');
+		CroogoPlugin::cacheDependencies();
+		$usedBy = $this->CroogoPlugin->usedBy('Widgets');
+		$this->assertTrue(in_array('Articles', $usedBy));
+		$this->assertTrue(in_array('Editors', $usedBy));
+		CroogoPlugin::unload('Articles');
+		CroogoPlugin::unload('Editors');
+		CroogoPlugin::unload('Widgets');
+	}
+
 }

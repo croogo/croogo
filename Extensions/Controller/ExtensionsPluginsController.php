@@ -138,6 +138,11 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 		}
 
 		if ($this->_CroogoPlugin->isActive($plugin)) {
+			$usedBy = $this->_CroogoPlugin->usedBy($plugin);
+			if ($usedBy !== false) {
+				$this->Session->setFlash(__d('croogo', 'Plugin "%s" could not be deactivated since "%s" depends on it.', $plugin, implode(', ', $usedBy)), 'default', array('class' => 'error'));
+				return $this->redirect(array('action' => 'index'));
+			}
 			$result = $this->_CroogoPlugin->deactivate($plugin);
 			if ($result === true) {
 				$this->Session->setFlash(__d('croogo', 'Plugin "%s" deactivated successfully.', $plugin), 'default', array('class' => 'success'));

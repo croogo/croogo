@@ -522,6 +522,23 @@ class CroogoPlugin extends Object {
 	}
 
 /**
+ * Return a list of plugins that uses $plugin
+ *
+ * @return array|bool Boolean false or Array of plugin names
+ */
+	public function usedBy($plugin) {
+		$deps = Configure::read('pluginDeps');
+		if (empty($deps['usedBy'][$plugin])) {
+			return false;
+		}
+		$usedBy = array_filter($deps['usedBy'][$plugin], array('CakePlugin', 'loaded'));
+		if (!empty($usedBy)) {
+			return $usedBy;
+		}
+		return false;
+	}
+
+/**
  * Deactivate plugin
  *
  * @param string $plugin Plugin name
