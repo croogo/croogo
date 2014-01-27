@@ -172,6 +172,9 @@ class InstallController extends Controller {
 
 			$InstallManager = new InstallManager();
 			$result = $InstallManager->createCroogoFile();
+			if ($result !== true) {
+				return $this->Session->setFlash($result, 'default', array('class' => 'error'));
+			}
 
 			return $this->redirect(array('action' => 'adminuser'));
 		}
@@ -214,11 +217,13 @@ class InstallController extends Controller {
 		$this->_check();
 
 		$InstallManager = new InstallManager();
-		$result = $InstallManager->createSettingsFile();
-		if ($result) {
+		$installed = $InstallManager->createSettingsFile();
+		if ($installed === true) {
 			$InstallManager->installCompleted();
 		} else {
-			$this->log(__d('croogo', 'Installation failed: Unable to create settings file'));
+			$this->set('title_for_layout', __d('croogo', 'Installation failed'));
+			$msg = __d('croogo', 'Installation failed: Unable to create settings file');
+			$this->Session->setFlash($msg, 'default', array('class' => 'error'));
 		}
 
 		$urlBlogAdd = Router::url(array(
@@ -237,8 +242,10 @@ class InstallController extends Controller {
 		));
 
 		$this->set('user', $this->Session->read('Install.user'));
-		$this->Session->destroy();
-		$this->set(compact('urlBlogAdd', 'urlSettings'));
+		if ($installed) {
+			$this->Session->destroy();
+		}
+		$this->set(compact('urlBlogAdd', 'urlSettings', 'installed'));
 	}
 
 }

@@ -1,6 +1,7 @@
 <div class="install">
 	<h2><?php echo $title_for_layout; ?></h2>
 
+<?php if ($installed): ?>
 	<p class="success">
 	<?php echo __d('croogo', '
 		The user %s has been created with administrative rights.',
@@ -20,6 +21,7 @@
 		);
 	?>
 	</p>
+<?php endif; ?>
 
 	<blockquote>
 		<h3><?php echo __d('croogo', 'Resources'); ?></h3>

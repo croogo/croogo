@@ -33,7 +33,10 @@ class InstallManager {
 			}
 		}
 
-		copy(APP . 'Config' . DS . 'database.php.install', APP . 'Config' . DS . 'database.php');
+		$result = copy(APP . 'Config' . DS . 'database.php.install', APP . 'Config' . DS . 'database.php');
+		if (!$result) {
+			return __d('croogo', 'Could not copy database.php file.');
+		}
 		$file = new File(APP . 'Config' . DS . 'database.php', true);
 		$content = $file->read();
 
@@ -61,7 +64,13 @@ class InstallManager {
 
 	public function createCroogoFile() {
 		$croogoConfigFile = APP . 'Config' . DS . 'croogo.php';
-		copy($croogoConfigFile . '.install', $croogoConfigFile);
+		$result = copy($croogoConfigFile . '.install', $croogoConfigFile);
+		if (!$result) {
+			$msg = 'Unable to copy file "croogo.php"';
+			CakeLog::critical($msg);
+			return $msg;
+		}
+
 		$File =& new File($croogoConfigFile);
 		$salt = Security::generateAuthKey();
 		$seed = mt_rand() . mt_rand();
@@ -69,8 +78,8 @@ class InstallManager {
 		$contents = preg_replace('/(?<=Configure::write\(\'Security.salt\', \')([^\' ]+)(?=\'\))/', $salt, $contents);
 		$contents = preg_replace('/(?<=Configure::write\(\'Security.cipherSeed\', \')(\d+)(?=\'\))/', $seed, $contents);
 		if (!$File->write($contents)) {
-			CakeLog::critical('Unable to write your Config' . DS . 'croogo.php file. Please check the permissions.');
-			return false;
+			$msg = 'Unable to write your Config' . DS . 'croogo.php file. Please check the permissions.';
+			return $msg;
 		}
 		Configure::write('Security.salt', $salt);
 		Configure::write('Security.cipherSeed', $seed);
