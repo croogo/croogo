@@ -86,6 +86,17 @@ class CroogoPlugin extends Object {
 	}
 
 /**
+ * Get instance
+ */
+	public static function instance() {
+		static $self = null;
+		if ($self === null) {
+			$self = new CroogoPlugin();
+		}
+		return $self;
+	}
+
+/**
  * AppController setter
  *
  * @return void
@@ -511,6 +522,23 @@ class CroogoPlugin extends Object {
 	}
 
 /**
+ * Return a list of plugins that uses $plugin
+ *
+ * @return array|bool Boolean false or Array of plugin names
+ */
+	public function usedBy($plugin) {
+		$deps = Configure::read('pluginDeps');
+		if (empty($deps['usedBy'][$plugin])) {
+			return false;
+		}
+		$usedBy = array_filter($deps['usedBy'][$plugin], array('CakePlugin', 'loaded'));
+		if (!empty($usedBy)) {
+			return $usedBy;
+		}
+		return false;
+	}
+
+/**
  * Deactivate plugin
  *
  * @param string $plugin Plugin name
@@ -533,6 +561,27 @@ class CroogoPlugin extends Object {
 		} else {
 			return __d('croogo', 'Plugin could not be deactivated. Please, try again.');
 		}
+	}
+
+/**
+ * Cache plugin dependency list
+ */
+	public static function cacheDependencies() {
+		$pluginDeps = Cache::read('pluginDeps', 'cached_settings');
+		if (!$pluginDeps) {
+			$self = self::instance();
+			$plugins = CakePlugin::loaded();
+			$dependencies = $usedBy = array();
+			foreach ($plugins as $plugin) {
+				$dependencies[$plugin] = $self->getDependencies($plugin);
+				foreach ($dependencies[$plugin] as $dependent) {
+					$usedBy[$dependent][] = $plugin;
+				}
+			}
+			$pluginDeps = compact('dependencies', 'usedBy');
+			Cache::write('pluginDeps', $pluginDeps, 'cached_settings');
+		}
+		Configure::write('pluginDeps', $pluginDeps);
 	}
 
 /**

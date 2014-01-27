@@ -79,6 +79,7 @@ class ExtShellTest extends CroogoTestCase {
 		$Shell = $this->getMock('ExtShell', array('out', 'err'));
 
 		$Shell->args = array('deactivate', 'plugin', 'Example');
+		$Shell->params = array('force' => false);
 		$Shell->main();
 		$result = $this->Setting->findByKey('Hook.bootstraps');
 		$this->assertFalse(in_array('Example', explode(',', $result['Setting']['value'])));

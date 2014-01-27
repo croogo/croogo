@@ -179,17 +179,31 @@ class ExtShell extends AppShell {
  * @return boolean
  */
 	protected function _deactivatePlugin($plugin) {
-		$result = $this->_CroogoPlugin->deactivate($plugin);
+		$usedBy = $this->_CroogoPlugin->usedBy($plugin);
+		if ($usedBy === false) {
+			$result = $this->_CroogoPlugin->deactivate($plugin);
+			if ($result === false) {
+				$this->err(__d('croogo', 'Plugin "%s" could not be deactivated. Please, try again.', $plugin));
+			} elseif (is_string($result)) {
+				$this->err($result);
+			}
+		} else {
+			$result = false;
+			if ($usedBy !== false) {
+				if ($this->params['force'] === false) {
+					$this->err(__d('croogo', 'Plugin "%s" could not be deactivated since "%s" depends on it.', $plugin, implode(', ', $usedBy)));
+				} else {
+					$result = true;
+				}
+			}
+		}
+		if ($this->params['force'] === true || $result === true) {
+			$this->_CroogoPlugin->removeBootstrap($plugin);
+			$result = true;
+		}
 		if ($result === true) {
 			$this->out(__d('croogo', 'Plugin "%s" deactivated successfully.', $plugin));
 			return true;
-		} elseif (is_string($result)) {
-			$this->err($result);
-		} else {
-			$this->err(__d('croogo', 'Plugin "%s" could not be deactivated. Please, try again.', $plugin));
-		}
-		if ($result !== true && isset($this->params['force'])) {
-			$this->_CroogoPlugin->removeBootstrap($plugin);
 		}
 		return false;
 	}
