@@ -2,7 +2,7 @@
 
 There are several ways to help out:
 
-* Submit bug reports in Lighthouse. Search for existing tickets first.
+* Submit bug reports in Github [Issues](https://github.com/croogo/croogo/issues). Search for existing tickets first.
   * Clearly describe the issue including steps to reproduce when it is a bug.
   * Make sure you fill in the earliest version that you know has the issue.
 * Write testcases for open tickets
@@ -77,7 +77,7 @@ for the sniff and phpcs.
 # Additional Resources
 
 * [CakePHP coding standards](http://book.cakephp.org/2.0/en/contributing/cakephp-coding-conventions.html)
-* [Bug tracker](http://croogo.lighthouseapp.com/projects/32818-croogo/)
+* [Bug tracker](http://github.com/croogo/croogo/issues)
 * [General GitHub documentation](http://help.github.com/)
 * [GitHub pull request documentation](http://help.github.com/send-pull-requests/)
 * [#croogo](irc://irc.freenode.net/#croogo) IRC channel on freenode.org
