@@ -195,7 +195,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		$alias = sprintf('%s.%s', $acoNode['model'], $acoNode['foreign_key']);
 		$action = $this->settings['actionMap'][$request->params['action']];
 
-		$cacheName = 'permissions_content_' . strval($user['id']);
+		$cacheName = 'permissions_content_' . strval($user['User']['id']);
 		if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
 			$permissions = array();
 			Cache::write($cacheName, $permissions, 'permissions');
@@ -220,7 +220,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		if (Configure::read('debug')) {
 			$status = $allowed ? ' allowed.' : ' denied.';
 			$cached = $hit ? ' (cache hit)' : ' (cache miss)';
-			CakeLog::write(LOG_ERR, $user['username'] . ' - ' . $action . '/' . $id . $status . $cached);
+			CakeLog::write(LOG_ERR, $user['User']['username'] . ' - ' . $action . '/' . $id . $status . $cached);
 		}
 		return $allowed;
 	}
