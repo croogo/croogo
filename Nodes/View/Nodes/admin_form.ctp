@@ -78,8 +78,11 @@ echo $this->Form->create('Node', array('url' => $formUrl));
 			$this->Form->button(__d('croogo', 'Save'), array('class' => 'btn btn-primary')) .
 			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'cancel btn btn-danger')) .
 			$this->Form->input('status', array(
-				'label' => __d('croogo', 'Published'),
+				'legend' => false,
+				'type' => 'radio',
 				'class' => false,
+				'default' => CroogoStatus::UNPUBLISHED,
+				'options' => $this->Croogo->statuses(),
 			)) .
 			$this->Form->input('promote', array(
 				'label' => __d('croogo', 'Promoted to front page'),

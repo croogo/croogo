@@ -12,7 +12,7 @@ class NodeFixture extends CroogoTestFixture {
 		'slug' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique'),
 		'body' => array('type' => 'text', 'null' => false, 'default' => null, 'key' => 'index'),
 		'excerpt' => array('type' => 'text', 'null' => true, 'default' => null),
-		'status' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
+		'status' => array('type' => 'integer', 'length' => 1, 'null' => false, 'default' => '0'),
 		'mime_type' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 100),
 		'comment_status' => array('type' => 'integer', 'null' => false, 'default' => '1', 'length' => 1),
 		'comment_count' => array('type' => 'integer', 'null' => true, 'default' => '0'),
