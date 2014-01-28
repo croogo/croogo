@@ -19,6 +19,8 @@ class LinkFixture extends CroogoTestFixture {
 		'rght' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'visibility_roles' => array('type' => 'text', 'null' => true, 'default' => null),
 		'params' => array('type' => 'text', 'null' => true, 'default' => null),
+		'publish_start' => array('type' => 'datetime', 'null' => true, 'default' => null),
+		'publish_end' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),

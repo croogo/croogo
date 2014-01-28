@@ -26,6 +26,18 @@ class BlocksPublishingFields extends CakeMigration {
 					),
 				),
 			),
+			'create_field' => array(
+				'blocks' => array(
+					'publish_start' => array(
+						'type' => 'datetime',
+						'after' => 'params',
+					),
+					'publish_end' => array(
+						'type' => 'datetime',
+						'after' => 'publish_start',
+					),
+				),
+			),
 		),
 		'down' => array(
 			'alter_field' => array(
@@ -33,6 +45,12 @@ class BlocksPublishingFields extends CakeMigration {
 					'status' => array(
 						'type' => 'boolean',
 					),
+				),
+			),
+			'drop_field' => array(
+				'blocks' => array(
+					'publish_start',
+					'publish_end',
 				),
 			),
 		),

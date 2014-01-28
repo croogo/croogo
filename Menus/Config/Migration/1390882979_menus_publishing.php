@@ -32,6 +32,28 @@ class MenusPublishingFields extends CakeMigration {
 					),
 				),
 			),
+			'create_field' => array(
+				'menus' => array(
+					'publish_start' => array(
+						'type' => 'datetime',
+						'after' => 'params',
+					),
+					'publish_end' => array(
+						'type' => 'datetime',
+						'after' => 'publish_start',
+					),
+				),
+				'links' => array(
+					'publish_start' => array(
+						'type' => 'datetime',
+						'after' => 'params',
+					),
+					'publish_end' => array(
+						'type' => 'datetime',
+						'after' => 'publish_start',
+					),
+				),
+			),
 		),
 		'down' => array(
 			'alter_field' => array(
@@ -44,6 +66,16 @@ class MenusPublishingFields extends CakeMigration {
 					'status' => array(
 						'type' => 'boolean',
 					),
+				),
+			),
+			'drop_field' => array(
+				'menus' => array(
+					'publish_start',
+					'publish_end',
+				),
+				'links' => array(
+					'publish_start',
+					'publish_end',
 				),
 			),
 		),

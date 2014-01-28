@@ -19,6 +19,8 @@ class BlockFixture extends CroogoTestFixture {
 		'visibility_paths' => array('type' => 'text', 'null' => true, 'default' => null),
 		'visibility_php' => array('type' => 'text', 'null' => true, 'default' => null),
 		'params' => array('type' => 'text', 'null' => true, 'default' => null),
+		'publish_start' => array('type' => 'datetime', 'null' => true, 'default' => null),
+		'publish_end' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'alias' => array('column' => 'alias', 'unique' => 1)),
