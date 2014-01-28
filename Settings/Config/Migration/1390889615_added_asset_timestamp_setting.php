@@ -54,13 +54,12 @@ class AddedAssetTimestampSetting extends CakeMigration {
 	public function before($direction) {
 		$success = true;
 
-		$Setting = ClassRegistry::init('Settings.Setting');
+		$Setting = ClassRegistry::init('Setting');
 		if ($direction === 'up') {
-			$success = $Setting->write(
-				$this->__assetTimestampSetting['key'],
-				$this->__assetTimestampSetting['value'],
+			$data = $Setting->create(
 				$this->__assetTimestampSetting
 			);
+			$success = $Setting->save();
 		} else {
 			$success = $Setting->deleteKey($this->__assetTimestampSetting['key']);
 		}
