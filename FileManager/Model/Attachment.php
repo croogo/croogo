@@ -110,10 +110,15 @@ class Attachment extends Node {
 		));
 
 		$filename = $attachment[$this->alias]['slug'];
-		$fullpath = WWW_ROOT . $this->uploadsDir . DS . $filename;
+		$uploadsDir = WWW_ROOT . $this->uploadsDir . DS;
+		$fullpath = $uploadsDir . DS . $filename;
 		if (file_exists($fullpath)) {
-			$result = unlink(WWW_ROOT . $this->uploadsDir . DS . $filename);
+			$result = unlink($fullpath);
 			if ($result) {
+				$info = pathinfo($filename);
+				array_map('unlink', glob(
+					$uploadsDir . DS . 'resized' . DS . $info['filename'] . '.resized-*.' . $info['extension']
+				));
 				return parent::delete($id, $cascade);
 			} else {
 				return false;
