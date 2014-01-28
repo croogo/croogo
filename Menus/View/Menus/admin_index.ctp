@@ -16,6 +16,7 @@ $this->Html
 					$this->Paginator->sort('title', __d('croogo', 'Title')),
 					$this->Paginator->sort('alias', __d('croogo', 'Alias')),
 					$this->Paginator->sort('link_count', __d('croogo', 'Link Count')),
+					$this->Paginator->sort('status', __d('croogo', 'Status')),
 					__d('croogo', 'Actions'),
 				));
 			?>
@@ -45,11 +46,27 @@ $this->Html
 					__d('croogo', 'Are you sure?')
 				);
 				$actions = $this->Html->div('item-actions', implode(' ', $actions));
+
+				$title = $this->Html->link($menu['Menu']['title'], array(
+					'controller' => 'links',
+					'?' => array(
+						'menu_id' => $menu['Menu']['id']
+					)
+				));
+				if ($menu['Menu']['status'] === CroogoStatus::PREVIEW) {
+					$title .= ' ' . $this->Html->tag('span', __d('croogo', 'preview'),
+						array('class' => 'label label-warning')
+					);
+				}
+
+				$status = $this->Html->status($menu['Menu']['status']);
+
 				$rows[] = array(
 					$menu['Menu']['id'],
-					$this->Html->link($menu['Menu']['title'], array('controller' => 'links',	'?' => array('menu_id' => $menu['Menu']['id']))),
+					$title,
 					$menu['Menu']['alias'],
 					$menu['Menu']['link_count'],
+					$status,
 					$this->Html->div('item-actions', $actions),
 				);
 			endforeach;
