@@ -61,7 +61,7 @@ class Install extends InstallAppModel {
 /**
  * Run Migrations and add data in table
  *
- * @return If migrations have succeeded
+ * @return bool True if migrations have succeeded
  */
 	public function setupDatabase() {
 		$plugins = Configure::read('Core.corePlugins');
@@ -70,6 +70,7 @@ class Install extends InstallAppModel {
 		foreach ($plugins as $plugin) {
 			$migrationsSucceed = $this->runMigrations($plugin);
 			if (!$migrationsSucceed) {
+				$this->log('Migrations failed for ' . $plugin, LOG_CRITICAL);
 				break;
 			}
 		}
@@ -87,7 +88,12 @@ class Install extends InstallAppModel {
 		if (!CakePlugin::loaded($plugin)) {
 			CakePlugin::load($plugin);
 		}
-		return $this->_getCroogoPlugin()->migrate($plugin);
+		$CroogoPlugin = $this->_getCroogoPlugin();
+		$result = $CroogoPlugin->migrate($plugin);
+		if (!$result) {
+			$this->log($CroogoPlugin->migrationErrors);
+		}
+		return $result;
 	}
 
 	protected function _getCroogoPlugin() {
