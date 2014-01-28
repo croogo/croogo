@@ -311,7 +311,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 		$this->BlocksController->Block->id = 3; // About
 		$this->BlocksController->Block->save(array(
 			'id' => 3,
-			'status' => false,
+			'status' => CroogoStatus::UNPUBLISHED,
 		));
 		$this->BlocksController->Block->id = false;
 		$about = $this->BlocksController->Block->hasAny(array(

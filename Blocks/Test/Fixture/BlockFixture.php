@@ -12,7 +12,7 @@ class BlockFixture extends CroogoTestFixture {
 		'body' => array('type' => 'text', 'null' => false, 'default' => null),
 		'show_title' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 		'class' => array('type' => 'string', 'null' => true, 'default' => null),
-		'status' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
+		'status' => array('type' => 'integer', 'length' => 1, 'null' => false, 'default' => '0'),
 		'weight' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'element' => array('type' => 'string', 'null' => true, 'default' => null),
 		'visibility_roles' => array('type' => 'text', 'null' => true, 'default' => null),
