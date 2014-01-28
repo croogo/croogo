@@ -39,6 +39,26 @@ class MenusController extends MenusAppController {
 	}
 
 /**
+ * beforeFilter
+ *
+ */
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Security->unlockedActions[] = 'admin_toggle';
+	}
+
+/**
+ * Toggle Link status
+ *
+ * @param $id string Link id
+ * @param $status integer Current Link status
+ * @return void
+ */
+	public function admin_toggle($id = null, $status = null) {
+		$this->Croogo->fieldToggle($this->Menu, $id, $status);
+	}
+
+/**
  * Admin index
  *
  * @return void

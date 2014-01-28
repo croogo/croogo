@@ -237,7 +237,7 @@ class CroogoComponent extends Component {
 			throw new CakeException(__d('croogo', 'Invalid content'));
 		}
 		$model->id = $id;
-		$status = !$status;
+		$status = (int)!$status;
 		$this->_controller->layout = 'ajax';
 		if ($model->saveField($field, $status)) {
 			$this->_controller->set(compact('id', 'status'));

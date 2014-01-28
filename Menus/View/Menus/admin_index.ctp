@@ -59,7 +59,10 @@ $this->Html
 					);
 				}
 
-				$status = $this->Html->status($menu['Menu']['status']);
+				$status = $this->element('admin/toggle', array(
+					'id' => $menu['Menu']['id'],
+					'status' => $menu['Menu']['status'],
+				));
 
 				$rows[] = array(
 					$menu['Menu']['id'],
