@@ -1,6 +1,7 @@
 <?php
 
 App::uses('Component', 'Controller');
+App::uses('StringConverter', 'Croogo.Lib/Utility');
 
 /**
  * Blocks Component
@@ -30,12 +31,18 @@ class BlocksComponent extends Component {
 	);
 
 /**
+ * StringConverter instance
+ */
+	protected $_stringConverter = null;
+
+/**
  * initialize
  *
  * @param Controller $controller instance of controller
  */
 	public function initialize(Controller $controller) {
 		$this->controller = $controller;
+		$this->_stringConverter = new StringConverter();
 		if (isset($controller->Block)) {
 			$this->Block = $controller->Block;
 		} else {
@@ -131,18 +138,19 @@ class BlocksComponent extends Component {
  * @return void
  */
 	public function processBlocksData($blocks) {
+		$converter = $this->_stringConverter;
 		foreach ($blocks as $block) {
 			$this->blocksData['menus'] = Hash::merge(
 				$this->blocksData['menus'],
-				$this->parseString('menu|m', $block['Block']['body'])
+				$converter->parseString('menu|m', $block['Block']['body'])
 			);
 			$this->blocksData['vocabularies'] = Hash::merge(
 				$this->blocksData['vocabularies'],
-				$this->parseString('vocabulary|v', $block['Block']['body'])
+				$converter->parseString('vocabulary|v', $block['Block']['body'])
 			);
 			$this->blocksData['nodes'] = Hash::merge(
 				$this->blocksData['nodes'],
-				$this->parseString('node|n', $block['Block']['body'],
+				$converter->parseString('node|n', $block['Block']['body'],
 				array('convertOptionsToArray' => true)
 			));
 		}
@@ -161,37 +169,15 @@ class BlocksComponent extends Component {
  *         )
  * )
  *
+ * @deprecated Use StringConverter::parseString()
+ * @see StringConverter::parseString()
  * @param string $exp
  * @param string $text
  * @param array  $options
  * @return array
  */
 	public function parseString($exp, $text, $options = array()) {
-		$_options = array(
-			'convertOptionsToArray' => false,
-		);
-		$options = array_merge($_options, $options);
-
-		$output = array();
-		preg_match_all('/\[(' . $exp . '):([A-Za-z0-9_\-]*)(.*?)\]/i', $text, $tagMatches);
-		for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
-			$regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
-			preg_match_all($regex, $tagMatches[3][$i], $attributes);
-			$alias = $tagMatches[2][$i];
-			$aliasOptions = array();
-			for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
-				$aliasOptions[$attributes[1][$j]] = $attributes[2][$j];
-			}
-			if ($options['convertOptionsToArray']) {
-				foreach ($aliasOptions as $optionKey => $optionValue) {
-					if (!is_array($optionValue) && strpos($optionValue, ':') !== false) {
-						$aliasOptions[$optionKey] = $this->stringToArray($optionValue);
-					}
-				}
-			}
-			$output[$alias] = $aliasOptions;
-		}
-		return $output;
+		return $this->_stringConverter->parseString($exp, $text, $options);
 	}
 
 /**
@@ -200,23 +186,13 @@ class BlocksComponent extends Component {
  * A string formatted like 'Node.type:blog;' will be converted to
  * array('Node.type' => 'blog');
  *
+ * @deprecated Use StringConverter::stringToArray()
+ * @see StringConverter::stringToArray()
  * @param string $string in this format: Node.type:blog;Node.user_id:1;
  * @return array
  */
 	public function stringToArray($string) {
-		$string = explode(';', $string);
-		$stringArr = array();
-		foreach ($string as $stringElement) {
-			if ($stringElement != null) {
-				$stringElementE = explode(':', $stringElement);
-				if (isset($stringElementE['1'])) {
-					$stringArr[$stringElementE['0']] = $stringElementE['1'];
-				} else {
-					$stringArr[] = $stringElement;
-				}
-			}
-		}
-		return $stringArr;
+		return $this->_stringConverter->stringToArray($string);
 	}
 
 }
