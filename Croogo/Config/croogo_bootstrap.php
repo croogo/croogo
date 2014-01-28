@@ -43,6 +43,18 @@ if (file_exists(APP . 'Config' . DS . 'settings.json')) {
 Configure::write('Config.language', Configure::read('Site.locale'));
 
 /**
+ * Assets
+ */
+if (Configure::check('Site.asset_timestamp')) {
+	$timestamp = Configure::read('Site.asset_timestamp');
+	Configure::write(
+		'Asset.timestamp',
+		is_numeric($timestamp) ? (bool) $timestamp : $timestamp
+	);
+	unset($timestamp);
+}
+
+/**
  * Extensions
  */
 CakePlugin::load(array('Extensions'), array('bootstrap' => true));
