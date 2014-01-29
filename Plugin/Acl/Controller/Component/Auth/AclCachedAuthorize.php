@@ -187,7 +187,6 @@ class AclCachedAuthorize extends BaseAuthorize {
 		}
 
 		list($plugin, $userModel) = pluginSplit($this->settings['userModel']);
-		$user = array($userModel => $user);
 		$acoNode = array(
 			'model' => $this->_Controller->modelClass,
 			'foreign_key' => $id,
@@ -195,7 +194,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		$alias = sprintf('%s.%s', $acoNode['model'], $acoNode['foreign_key']);
 		$action = $this->settings['actionMap'][$request->params['action']];
 
-		$cacheName = 'permissions_content_' . strval($user['User']['id']);
+		$cacheName = 'permissions_content_' . strval($user['id']);
 		if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
 			$permissions = array();
 			Cache::write($cacheName, $permissions, 'permissions');
@@ -204,7 +203,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		if (!isset($permissions[$alias][$action])) {
 			$Acl = $this->_Collection->load('Acl');
 			try {
-				$allowed = $Acl->check($user, $acoNode, $action);
+				$allowed = $Acl->check(array($userModel => $user), $acoNode, $action);
 			} catch (Exception $e) {
 				CakeLog::warning('authorizeByContent: ' . $e->getMessage());
 				$allowed = false;
@@ -220,7 +219,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		if (Configure::read('debug')) {
 			$status = $allowed ? ' allowed.' : ' denied.';
 			$cached = $hit ? ' (cache hit)' : ' (cache miss)';
-			CakeLog::write(LOG_ERR, $user['User']['username'] . ' - ' . $action . '/' . $id . $status . $cached);
+			CakeLog::write(LOG_ERR, $user['username'] . ' - ' . $action . '/' . $id . $status . $cached);
 		}
 		return $allowed;
 	}
