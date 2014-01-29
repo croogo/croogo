@@ -324,7 +324,16 @@ options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "M
 			'weight' => '27',
 			'params' => ''
 		),
-
+		array(
+			'key' => 'Site.asset_timestamp',
+			'value' => 'force',
+			'title' => 'Asset timestamp',
+			'description' => 'Appends a timestamp which is last modified time of the particular file at the end of asset files URLs (CSS, JavaScript, Image). Useful to prevent visitors to visit the site with an outdated version of these files in their browser cache.',
+			'editable' => 1,
+			'input_type' => 'radio',
+			'weight' => 28,
+			'params' => 'options={"0": "Disabled", "1": "Enabled in debug mode only", "force": "Always enabled"}',
+		),
 	);
 
 }

@@ -1,4 +1,7 @@
 <?php
+
+App::uses('DataMigration', 'Extensions.Utility');
+
 class AddedAssetTimestampSetting extends CakeMigration {
 
 /**
@@ -22,27 +25,7 @@ class AddedAssetTimestampSetting extends CakeMigration {
 		),
 	);
 
-	private $__assetTimestampSetting = array(); // initialized in constructor
-
-	public function __construct($options = array()) {
-		$this->__assetTimestampSetting = array(
-			'key' => 'Site.asset_timestamp',
-			'value' => 'force',
-			'title' => 'Asset timestamp',
-			'description' => implode('<br />', array(
-				'Appends a timestamp which is last modified time of the particular file at the end of asset files URLs (CSS, JavaScript, Image).',
-				'Useful to prevent visitors to visit the site with an outdated version of these files in their browser cache.'
-			)),
-			'editable' => 1,
-			'input_type' => 'radio',
-			'params' => 'options=' . json_encode(array(
-				'0' => 'Disabled',
-				'1' => 'Enabled in debug mode only',
-				'force' => 'Always enabled',
-			))
-		);
-		parent::__construct($options);
-	}
+	protected $_assetTimestamp = 'Site.asset_timestamp';
 
 /**
  * Before migration callback
@@ -54,14 +37,19 @@ class AddedAssetTimestampSetting extends CakeMigration {
 	public function before($direction) {
 		$success = true;
 
-		$Setting = ClassRegistry::init('Setting');
 		if ($direction === 'up') {
-			$data = $Setting->create(
-				$this->__assetTimestampSetting
-			);
-			$success = $Setting->save();
+			if (Configure::read('Croogo.installed')) {
+				CakePlugin::load('Install');
+				$dm = new DataMigration();
+				$dir = CakePlugin::path('Install') . 'Config' . DS . 'Data' . DS;
+				$dm->loadFile($dir . 'SettingData.php', array(
+					'extract' => sprintf('{n}[key=%s]',$this->_assetTimestamp),
+				));
+				CakePlugin::unload('Install');
+			}
 		} else {
-			$success = $Setting->deleteKey($this->__assetTimestampSetting['key']);
+			$Setting = ClassRegistry::init('Settings.Setting');
+			$success = $Setting->deleteKey($this->_assetTimestamp);
 		}
 
 		return $success;
