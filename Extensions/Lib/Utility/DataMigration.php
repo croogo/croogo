@@ -13,7 +13,37 @@ App::uses('Model', 'Model');
 class DataMigration {
 
 /**
+ * Load a single data file
+ *
+ * Options:
+ *   `extract` - Path to identify an entry for `Hash::extract()`
+ *
+ * @param string $path Path to directory containing data files
+ * @param array $options Options array
+ * @return bool True if loading was successful
+ * @throws CakeException
+ */
+	public function loadFile($file, $options) {
+		if (!file_exists($file)) {
+			throw new CakeException($file . ' not found');
+		}
+		if (!is_readable($file)) {
+			throw new CakeException($file . ' not readable');
+		}
+		$dir = dirname($file);
+		$pathinfo = pathinfo($file);
+		$options = Hash::merge(array(
+			'class' => $pathinfo['filename'],
+		), $options);
+		return $this->load($dir, $options);
+	}
+
+/**
  * Load data files
+ *
+ * Options:
+ *   `class` - Class to load. Default to load all classes in directory
+ *   `extract` - Path to identify an entry for `Hash::extract()`
  *
  * @param string $path Path to directory containing data files
  * @param array $options Options array
@@ -28,12 +58,20 @@ class DataMigration {
 			'ds' => 'default',
 		), $options);
 		$dataObjects = App::objects('class', $path);
+		if (isset($options['class']) && in_array($options['class'], $dataObjects)) {
+			$dataObjects = array($options['class']);
+		}
 		foreach ($dataObjects as $data) {
-			include ($path . DS . $data . '.php');
+			if (!class_exists($data)) {
+				include ($path . DS . $data . '.php');
+			}
 			$classVars = get_class_vars($data);
 			$modelAlias = substr($data, 0, -4);
 			$table = $classVars['table'];
 			$records = $classVars['records'];
+			if (!empty($options['extract'])) {
+				$records = Hash::extract($records, $options['extract']);
+			}
 			$Model = new Model(array(
 				'name' => $modelAlias,
 				'table' => $table,
