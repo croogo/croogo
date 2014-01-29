@@ -71,10 +71,12 @@ Configure::write('Install.installed',
 if (!Configure::read('Install.installed') || !Configure::read('Install.secured')) {
 	CakePlugin::load('Install', array('routes' => true));
 }
-Configure::write('Dispatcher.filters', array(
-	'AssetDispatcher',
-	'CacheDispatcher'
-));
+Configure::write('Dispatcher.filters', 
+	array_merge((array) Configure::read('Dispatcher.filters'), array(
+		'AssetDispatcher',
+		'CacheDispatcher')
+	)
+);
 CakeLog::config('debug', array(
 	'engine' => 'FileLog',
 	'types' => array('notice', 'info', 'debug'),
