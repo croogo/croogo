@@ -34,8 +34,9 @@ before_script:
     private \$identities = array(
       'mysql' => array(
         'datasource' => 'Database/Mysql',
-        'host' => '0.0.0.0',
-        'login' => 'travis'
+        'host' => 'localhost',
+        'login' => 'travis',
+        'database' => 'croogo_test',
       ),
       'pgsql' => array(
         'datasource' => 'Database/Postgres',
