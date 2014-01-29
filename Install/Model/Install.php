@@ -70,7 +70,7 @@ class Install extends InstallAppModel {
 		foreach ($plugins as $plugin) {
 			$migrationsSucceed = $this->runMigrations($plugin);
 			if (!$migrationsSucceed) {
-				$this->log('Migrations failed for ' . $plugin, LOG_CRITICAL);
+				$this->log('Migrations failed for ' . $plugin, LOG_CRIT);
 				break;
 			}
 		}
