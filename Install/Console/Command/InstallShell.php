@@ -125,7 +125,11 @@ class InstallShell extends AppShell {
 		$this->out('Setting up database objects. Please wait...');
 		$Install = ClassRegistry::init('Install.Install');
 		try {
-			$Install->setupDatabase();
+			$result = $Install->setupDatabase();
+			if ($result !== true) {
+				$this->err($result);
+				return $this->_stop();
+			}
 		} catch (Exception $e) {
 			$this->err($e->getMessage());
 			$this->err('Please verify you have the correct credentials');
