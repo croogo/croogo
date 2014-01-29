@@ -187,7 +187,6 @@ class AclCachedAuthorize extends BaseAuthorize {
 		}
 
 		list($plugin, $userModel) = pluginSplit($this->settings['userModel']);
-		$user = array($userModel => $user);
 		$acoNode = array(
 			'model' => $this->_Controller->modelClass,
 			'foreign_key' => $id,
@@ -204,7 +203,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		if (!isset($permissions[$alias][$action])) {
 			$Acl = $this->_Collection->load('Acl');
 			try {
-				$allowed = $Acl->check($user, $acoNode, $action);
+				$allowed = $Acl->check(array($userModel => $user), $acoNode, $action);
 			} catch (Exception $e) {
 				CakeLog::warning('authorizeByContent: ' . $e->getMessage());
 				$allowed = false;
