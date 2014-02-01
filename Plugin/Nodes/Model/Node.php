@@ -539,7 +539,7 @@ class Node extends NodesAppModel {
  */
 	protected function _findPromoted($state, $query, $results = array()) {
 		if ($state === 'before') {
-			$_defaultFilters = array('contain', 'order', 'conditions');
+			$_defaultFilters = array('contain', 'limit', 'order', 'conditions');
 			$_defaultContain = array(
 				'Meta',
 				'Taxonomy' => array(
@@ -556,6 +556,7 @@ class Node extends NodesAppModel {
 				),
 			);
 			$_defaultOrder = $this->alias . '.created DESC';
+			$_defaultLimit = Configure::read('Reading.nodes_per_page');
 
 			foreach ($_defaultFilters as $filter) {
 				$this->_mergeQueryFilters($query, $filter, ${'_default' . ucfirst($filter)});
