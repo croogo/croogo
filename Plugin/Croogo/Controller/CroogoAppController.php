@@ -50,9 +50,7 @@ class CroogoAppController extends Controller {
  * Pagination
  */
 	public $paginate = array(
-		'Node' => array(
-			'limit' => 10,
-		),
+		'limit' => 10,
 	);
 
 /**
