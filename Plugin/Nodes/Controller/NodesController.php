@@ -524,6 +524,7 @@ class NodesController extends NodesAppController {
 		}
 
 		$this->paginate['Node']['type'] = 'promoted';
+		$this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
 		$this->paginate['Node']['conditions'] = array(
 			'OR' => array(
 				'Node.visibility_roles' => '',
@@ -546,14 +547,13 @@ class NodesController extends NodesAppController {
 		}
 
 		if ($this->usePaginationCache) {
-			$limit = !empty($this->paginate['Node']['limit']) ? $this->paginate['Node']['limit'] : Configure::read('Reading.nodes_per_page');
 			$cacheNamePrefix = 'nodes_promoted_' . $this->Croogo->roleId . '_' . Configure::read('Config.language');
 			if (isset($type)) {
 				$cacheNamePrefix .= '_' . $type['Type']['alias'];
 			}
 			$this->paginate['page'] = isset($this->request->params['named']['page']) ? $this->params['named']['page'] : 1;
-			$cacheName = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $limit;
-			$cacheNamePaging = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $limit . '_paging';
+			$cacheName = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $this->paginate['Node']['limit'];
+			$cacheNamePaging = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $this->paginate['Node']['limit'] . '_paging';
 			$cacheConfig = 'nodes_promoted';
 			$nodes = Cache::read($cacheName, $cacheConfig);
 			if (!$nodes) {
