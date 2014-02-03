@@ -1,4 +1,7 @@
 <?php
+
+App::uses('CroogoStatus', 'Croogo.Lib');
+
 /**
  * Default Acl plugin.  Custom Acl plugin should override this value.
  */

@@ -127,8 +127,11 @@ $linkChooserUrl = $this->Html->url(array(
 			$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
 			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index', '?' => array('menu_id' => $menuId)), array('button' => 'danger')) .
 			$this->Form->input('status', array(
-				'label' => __d('croogo', 'Status'),
+				'type' => 'radio',
+				'legend' => false,
 				'class' => false,
+				'default' => CroogoStatus::UNPUBLISHED,
+				'options' => $this->Croogo->statuses(),
 			)) .
 			$this->Html->endBox();
 		echo $this->Croogo->adminBoxes();
