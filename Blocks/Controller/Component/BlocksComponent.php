@@ -95,11 +95,12 @@ class BlocksComponent extends Component {
 		));
 
 		$roleId = $this->controller->Croogo->roleId();
+		$status = $this->Block->status();
 		foreach ($regions as $regionId => $regionAlias) {
 			$this->blocksForLayout[$regionAlias] = array();
 			$findOptions = array(
 				'conditions' => array(
-					'Block.status' => 1,
+					'Block.status' => $status,
 					'Block.region_id' => $regionId,
 					'AND' => array(
 						array(

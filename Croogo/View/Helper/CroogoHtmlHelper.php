@@ -61,8 +61,8 @@ class CroogoHtmlHelper extends HtmlHelper {
 	}
 
 	public function status($value, $url = array()) {
-		$icon = $value == 1 ? 'ok' : 'remove';
-		$class = $value == 1 ? 'green' : 'red';
+		$icon = $value == CroogoStatus::PUBLISHED ? 'ok' : 'remove';
+		$class = $value == CroogoStatus::PUBLISHED ? 'green' : 'red';
 
 		if (empty($url)) {
 			return $this->icon($icon, array('class' => $class));

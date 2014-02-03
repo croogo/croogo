@@ -24,8 +24,20 @@ class Node extends NodesAppModel {
 
 	const DEFAULT_TYPE = 'node';
 
+/**
+ * Publish status
+ *
+ * @see PublishableBehavior
+ * @deprecated Use CroogoStatus::PUBLISHED
+ */
 	const STATUS_PUBLISHED = 1;
 
+/**
+ * Unpublish status
+ *
+ * @see PublishableBehavior
+ * @deprecated Use CroogoStatus::UNPUBLISHED
+ */
 	const STATUS_UNPUBLISHED = 0;
 
 	const STATUS_PROMOTED = 1;
@@ -55,6 +67,7 @@ class Node extends NodesAppModel {
 	public $actsAs = array(
 		'Tree',
 		'Croogo.Encoder',
+		'Croogo.Publishable',
 		'Croogo.Trackable',
 		'Meta.Meta',
 		'Croogo.Url',
@@ -552,7 +565,7 @@ class Node extends NodesAppModel {
 				'User',
 			);
 			$_defaultConditions = array(
-				'Node.status' => self::STATUS_PUBLISHED,
+				'Node.status' => $this->status(),
 				'Node.promote' => self::STATUS_PROMOTED,
 				'OR' => array(
 					'Node.visibility_roles' => '',
@@ -594,7 +607,7 @@ class Node extends NodesAppModel {
 		$query = Hash::merge(array(
 			'conditions' => array(
 				'Node.id' => $args['id'],
-				'Node.status' => 1,
+				'Node.status' => $this->status(),
 				'OR' => array(
 					'Node.visibility_roles' => '',
 					'Node.visibility_roles LIKE' => '%"' . $args['roleId'] . '"%',
@@ -641,7 +654,7 @@ class Node extends NodesAppModel {
 			'conditions' => array(
 				'Node.slug' => $args['slug'],
 				'Node.type' => $args['type'],
-				'Node.status' => 1,
+				'Node.status' => $this->status(),
 				'OR' => array(
 					'Node.visibility_roles' => '',
 					'Node.visibility_roles LIKE' => '%"' . $args['roleId'] . '"%',

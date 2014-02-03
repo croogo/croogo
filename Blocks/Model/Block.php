@@ -34,6 +34,7 @@ class Block extends BlocksAppModel {
 			'field' => 'weight',
 			'foreign_key' => false,
 		),
+		'Croogo.Publishable',
 		'Croogo.Cached' => array(
 			'groups' => array(
 				'blocks',
@@ -89,7 +90,7 @@ class Block extends BlocksAppModel {
 			'className' => 'Blocks.Region',
 			'foreignKey' => 'region_id',
 			'counterCache' => true,
-			'counterScope' => array('Block.status' => 1),
+			'counterScope' => array('Block.status >=' => CroogoStatus::PUBLISHED),
 		),
 	);
 

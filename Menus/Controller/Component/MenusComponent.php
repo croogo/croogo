@@ -91,10 +91,11 @@ class MenusComponent extends Component {
 		$menus = Hash::merge($menus, array_keys($this->controller->Blocks->blocksData['menus']));
 
 		$roleId = $this->controller->Croogo->roleId();
+		$status = $this->Link->status();
 		foreach ($menus as $menuAlias) {
 			$menu = $this->Link->Menu->find('first', array(
 				'conditions' => array(
-					'Menu.status' => 1,
+					'Menu.status' => $status,
 					'Menu.alias' => $menuAlias,
 					'Menu.link_count >' => 0,
 				),
@@ -109,7 +110,7 @@ class MenusComponent extends Component {
 				$findOptions = array(
 					'conditions' => array(
 						'Link.menu_id' => $menu['Menu']['id'],
-						'Link.status' => 1,
+						'Link.status' => $status,
 						'AND' => array(
 							array(
 								'OR' => array(

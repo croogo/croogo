@@ -35,6 +35,7 @@ class Menu extends MenusAppModel {
 			),
 		),
 		'Croogo.Params',
+		'Croogo.Publishable',
 		'Croogo.Trackable',
 	);
 

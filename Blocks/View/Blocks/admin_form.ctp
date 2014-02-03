@@ -98,8 +98,12 @@ echo $this->Form->create('Block');
 			$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
 			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
 			$this->Form->input('status', array(
-				'label' => __d('croogo', 'Status'),
+				'legend' => false,
+				'type' => 'radio',
 				'class' => false,
+				'label' => true,
+				'default' => CroogoStatus::UNPUBLISHED,
+				'options' => $this->Croogo->statuses(),
 			)) .
 			$this->Form->input('show_title', array(
 				'label' => __d('croogo', 'Show title ?'),

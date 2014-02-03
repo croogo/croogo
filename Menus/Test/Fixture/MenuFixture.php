@@ -9,10 +9,12 @@ class MenuFixture extends CroogoTestFixture {
 		'title' => array('type' => 'string', 'null' => false, 'default' => null),
 		'alias' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique'),
 		'description' => array('type' => 'text', 'null' => true, 'default' => null),
-		'status' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
+		'status' => array('type' => 'integer', 'length' => 1, 'null' => false, 'default' => '1'),
 		'weight' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'link_count' => array('type' => 'integer', 'null' => false, 'default' => null),
 		'params' => array('type' => 'text', 'null' => true, 'default' => null),
+		'publish_start' => array('type' => 'datetime', 'null' => true, 'default' => null),
+		'publish_end' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(

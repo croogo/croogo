@@ -70,11 +70,22 @@ $chooser = isset($this->request->query['chooser']);
 		}
 
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
+		$title = $this->Html->link($block['Block']['title'], array(
+			'controller' => 'blocks',
+			'action' => 'edit',
+			$block['Block']['id'],
+		));
+
+		if ($block['Block']['status'] == CroogoStatus::PREVIEW) {
+			$title .= ' ' . $this->Html->tag('span', __d('croogo', 'preview'),
+				array('class' => 'label label-warning')
+			);
+		}
 
 		$rows[] = array(
 			$checkbox,
 			$block['Block']['id'],
-			$this->Html->link($block['Block']['title'], array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id'])),
+			$title,
 			$block['Block']['alias'],
 			$block['Region']['title'],
 			$this->element('admin/toggle', array(

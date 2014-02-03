@@ -66,6 +66,13 @@ echo $this->Form->create('Menu');
 			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply', 'button' => 'default')) .
 			$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
 			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
+			$this->Form->input('status', array(
+				'type' => 'radio',
+				'legend' => false,
+				'class' => false,
+				'default' => CroogoStatus::UNPUBLISHED,
+				'options' => $this->Croogo->statuses(),
+			)) .
 			$this->Html->endBox();
 
 		$this->Croogo->adminBoxes();

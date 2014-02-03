@@ -355,7 +355,7 @@ class NodesController extends NodesAppController {
 		$this->paginate['Node']['order'] = 'Node.created DESC';
 		$this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
 		$this->paginate['Node']['conditions'] = array(
-			'Node.status' => 1,
+			'Node.status' => $this->Node->status(),
 			'OR' => array(
 				'Node.visibility_roles' => '',
 				'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId() . '"%',
@@ -446,7 +446,7 @@ class NodesController extends NodesAppController {
 		$this->paginate['Node']['order'] = 'Node.created DESC';
 		$this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
 		$this->paginate['Node']['conditions'] = array(
-			'Node.status' => 1,
+			'Node.status' => $this->Node->status(),
 			'Node.terms LIKE' => '%"' . $this->request->params['named']['slug'] . '"%',
 			'OR' => array(
 				'Node.visibility_roles' => '',
@@ -585,7 +585,7 @@ class NodesController extends NodesAppController {
 		$this->paginate['Node']['order'] = 'Node.created DESC';
 		$this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
 		$this->paginate['Node']['conditions'] = array(
-			'Node.status' => 1,
+			'Node.status' => $this->Node->status(),
 			'AND' => array(
 				array(
 					'OR' => array(

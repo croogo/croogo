@@ -1,5 +1,7 @@
 <?php
+
 App::uses('AppHelper', 'View/Helper');
+App::uses('CroogoStatus', 'Croogo.Lib');
 
 /**
  * Croogo Helper
@@ -42,6 +44,11 @@ class CroogoHelper extends AppHelper {
 	public function __construct(View $View, $settings = array()) {
 		$this->helpers[] = Configure::read('Site.acl_plugin') . '.' . Configure::read('Site.acl_plugin');
 		parent::__construct($View, $settings);
+		$this->_CroogoStatus = new CroogoStatus();
+	}
+
+	public function statuses() {
+		return $this->_CroogoStatus->statuses();
 	}
 
 /**

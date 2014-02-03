@@ -381,7 +381,7 @@ class NodeTest extends CroogoTestCase {
 
 		$this->assertTrue($success);
 		foreach ($newRecords as $record) {
-			$this->assertTrue($record['Node']['status']);
+			$this->assertEquals(CroogoStatus::PUBLISHED, $record['Node']['status']);
 		}
 	}
 
@@ -396,7 +396,7 @@ class NodeTest extends CroogoTestCase {
 
 		$this->assertTrue($success);
 		foreach ($newRecords as $record) {
-			$this->assertFalse($record['Node']['status']);
+			$this->assertEquals(CroogoStatus::UNPUBLISHED, $record['Node']['status']);
 		}
 	}
 

@@ -81,6 +81,13 @@ $this->Html
 			__d('croogo', 'Are you sure?')
 		);
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
+
+		if ($linksStatus[$linkId] == CroogoStatus::PREVIEW) {
+			$linkTitle .= ' ' . $this->Html->tag('span', __d('croogo', 'preview'),
+			array('class' => 'label label-warning')
+			);
+		}
+
 		$rows[] = array(
 			$this->Form->checkbox('Link.' . $linkId . '.id', array('class' => 'row-select')),
 			$linkId,

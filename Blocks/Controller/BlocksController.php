@@ -251,10 +251,10 @@ class BlocksController extends BlocksAppController {
 			$this->Block->deleteAll(array('Block.id' => $ids), true, true)) {
 			$this->Session->setFlash(__d('croogo', 'Blocks deleted'), 'default', array('class' => 'success'));
 		} elseif ($action == 'publish' &&
-			$this->Block->updateAll(array('Block.status' => true), array('Block.id' => $ids))) {
+			$this->Block->updateAll(array('Block.status' => CroogoStatus::PUBLISHED), array('Block.id' => $ids))) {
 			$this->Session->setFlash(__d('croogo', 'Blocks published'), 'default', array('class' => 'success'));
 		} elseif ($action == 'unpublish' &&
-			$this->Block->updateAll(array('Block.status' => false), array('Block.id' => $ids))) {
+			$this->Block->updateAll(array('Block.status' => CroogoStatus::UNPUBLISHED), array('Block.id' => $ids))) {
 			$this->Session->setFlash(__d('croogo', 'Blocks unpublished'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
