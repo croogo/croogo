@@ -42,11 +42,11 @@ $this->Html
 	$rows = array();
 
 	// Default Content Type
-	if(isset($vocabulary['Type'][0])){
+	if (isset($vocabulary['Type'][0])) {
 		$defaultType = $vocabulary['Type'][0];
 	}
-	if(isset($this->params->query['type_id'])){
-		if(isset($vocabulary['Type'][$this->params->query['type_id']])){
+	if (isset($this->params->query['type_id'])) {
+		if (isset($vocabulary['Type'][$this->params->query['type_id']])) {
 			$defaultType = $vocabulary['Type'][$this->params->query['type_id']];
 		}
 	}
@@ -74,32 +74,36 @@ $this->Html
 
 		// Title Column
 		$titleCol = $title;
-		if(isset($defaultType['alias'])){
-			$titleCol = $this->Html->link($title,array(
-			'plugin'=>'nodes',
-			'controller'=>'nodes',
-			'action'=>'term',
-			'type'=>$defaultType['alias'],
-			'slug'=>$terms[$id]['slug'],
-			'admin'=>0));
+		if (isset($defaultType['alias'])) {
+			$titleCol = $this->Html->link($title, array(
+				'plugin' => 'nodes',
+				'controller' => 'nodes',
+				'action' => 'term',
+				'type' => $defaultType['alias'],
+				'slug' => $terms[$id]['slug'],
+				'admin' => 0,
+			), array(
+				'target' => '_blank',
+			));
 		}
 
 		// Build link list
-		$typeLinks = "";
-		if(count($vocabulary['Type']) > 1){
-			$typeLinks = "(";
-			foreach($vocabulary['Type'] as $type){
-			$typeLinks .= $this->Html->link($type['title'],array(
-				'admin'=>false,
-				'plugin'=>'nodes',
-				'controller'=>'nodes',
-				'action'=>'term',
-				'type'=>$type['alias'],
-				'slug'=>$terms[$id]['slug']))." ";
+		$typeLinks = array();
+		if (count($vocabulary['Type']) > 1) {
+			foreach ($vocabulary['Type'] as $type) {
+				$typeLinks[] = $this->Html->link($type['title'], array(
+					'admin' => false,
+					'plugin' => 'nodes',
+					'controller' => 'nodes',
+					'action' => 'term',
+					'type' => $type['alias'],
+					'slug' => $terms[$id]['slug'],
+				), array(
+					'target' => '_blank',
+				));
 			}
-			$typeinks = ")";
 		}
-		$titleCol .= " <small>".$typeLinks."</small>";
+		$titleCol .= " <small>(" . implode(', ', $typeLinks) . ")</small>";
 
 		$rows[] = array(
 			'',
