@@ -20,7 +20,7 @@
 		}
 
 		// php version
-		$minPhpVersion = '5.2.8';
+		$minPhpVersion = '5.3.10';
 		$operator = '>=';
 		if (version_compare(phpversion(), $minPhpVersion, $operator)) {
 			echo '<p class="success">' . sprintf(__d('croogo', 'PHP version %s %s %s'), phpversion(), $operator, $minPhpVersion) . '</p>';
