@@ -63,8 +63,8 @@ echo $this->Form->create('Menu');
 	<div class="span4">
 		<?php
 		echo $this->Html->beginBox('Publishing') .
-			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply', 'button' => 'default')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
+			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
 			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
 			$this->Html->endBox();
 
