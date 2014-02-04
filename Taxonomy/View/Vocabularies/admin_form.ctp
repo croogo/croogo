@@ -81,7 +81,7 @@ echo $this->Form->create('Vocabulary');
 	<div class="span4">
 	<?php
 		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
+			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
 			$this->Html->link(
 				__d('croogo', 'Cancel'),
 				array('action' => 'index'),

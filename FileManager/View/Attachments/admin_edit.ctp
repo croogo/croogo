@@ -72,7 +72,7 @@ echo $this->Form->create('Attachment', array('url' => array('controller' => 'att
 			$redirect = $this->Session->read('Wysiwyg.redirect');
 		}
 		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Save')) .
+			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
 			$this->Html->link(
 				__d('croogo', 'Cancel'),
 				$redirect,

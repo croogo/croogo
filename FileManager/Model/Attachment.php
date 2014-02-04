@@ -69,6 +69,7 @@ class Attachment extends Node {
 
 		$data[$this->alias]['title'] = $fileTitle;
 		$data[$this->alias]['slug'] = $newFileName;
+		$data[$this->alias]['body'] = '';
 		$data[$this->alias]['mime_type'] = $file['type'];
 		$data[$this->alias]['type'] = $this->type;
 		$data[$this->alias]['path'] = '/' . $this->uploadsDir . '/' . $newFileName;
