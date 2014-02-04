@@ -76,7 +76,7 @@ class AclActionsController extends AclAppController {
 
 			if ($this->Acl->Aco->save($this->request->data['Aco'])) {
 				$this->Session->setFlash(sprintf(__d('croogo', 'The %s has been saved'), $acoType), 'default', array('class' => 'success'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->Croogo->redirect(array('action' => 'edit', $this->Acl->Aco->id));
 			} else {
 				$this->Session->setFlash(sprintf(__d('croogo', 'The %s could not be saved. Please, try again.'), $acoType), 'default', array('class' => 'error'));
 			}
@@ -101,7 +101,7 @@ class AclActionsController extends AclAppController {
 		if (!empty($this->request->data)) {
 			if ($this->Acl->Aco->save($this->request->data['Aco'])) {
 				$this->Session->setFlash(__d('croogo', 'The Action has been saved'), 'default', array('class' => 'success'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->Croogo->redirect(array('action' => 'edit', $this->Acl->Aco->id));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Action could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}

@@ -158,7 +158,7 @@ class UsersController extends UsersAppController {
 		if (!empty($this->request->data)) {
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The User has been saved'), 'default', array('class' => 'success'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->Croogo->redirect(array('action' => 'edit', $this->User->id));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The User could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}

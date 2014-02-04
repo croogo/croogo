@@ -82,7 +82,7 @@ class RolesController extends UsersAppController {
 		if (!empty($this->request->data)) {
 			if ($this->Role->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Role has been saved'), 'default', array('class' => 'success'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->Croogo->redirect(array('action' => 'edit', $this->Role->id));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Role could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}

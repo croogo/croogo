@@ -241,8 +241,9 @@ class TermsController extends TaxonomyAppController {
 					);
 					if ($this->Term->Taxonomy->save($taxonomy)) {
 						$this->Session->setFlash(__d('croogo', 'Term saved successfuly.'), 'default', array('class' => 'success'));
-						return $this->redirect(array(
-							'action' => 'index',
+						return $this->Croogo->redirect(array(
+							'action' => 'edit',
+							$termId,
 							$vocabularyId,
 						));
 					} else {

@@ -84,7 +84,7 @@ class VocabulariesController extends TaxonomyAppController {
 		if (!empty($this->request->data)) {
 			if ($this->Vocabulary->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Vocabulary has been saved'), 'default', array('class' => 'success'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->Croogo->redirect(array('action' => 'edit', $this->Vocabulary->id));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Vocabulary could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}

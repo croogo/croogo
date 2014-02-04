@@ -160,7 +160,7 @@ class AttachmentsController extends FileManagerAppController {
 		if (!empty($this->request->data)) {
 			if ($this->Attachment->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Attachment has been saved'), 'default', array('class' => 'success'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->Croogo->redirect(array('action' => 'edit', $this->Attachment->id));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Attachment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
