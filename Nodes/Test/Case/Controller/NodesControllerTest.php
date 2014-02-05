@@ -371,6 +371,7 @@ class NodesControllerTest extends CroogoControllerTestCase {
 		$this->Nodes->Node->Behaviors->detach('Tree');
 
 		$this->Nodes->theme = 'Mytheme';
+		$this->Nodes->plugin = 'Nodes';
 		$result = $this->Nodes->viewFallback(array('index_blog'));
 		$this->assertContains('index_blog.ctp in Mytheme', $result->body());
 
@@ -390,12 +391,6 @@ class NodesControllerTest extends CroogoControllerTestCase {
 		);
 		$this->Nodes->theme = null;
 		$this->Nodes->plugin = 'TestPlugin';
-		$this->Nodes
-			->expects($this->once())
-			->method('render')
-			->with(
-				$this->equalTo('index_event')
-			);
 		$this->Nodes->viewFallback(array('index_event'));
 		unset($this->Nodes);
 	}
@@ -409,17 +404,11 @@ class NodesControllerTest extends CroogoControllerTestCase {
 	public function testViewFallbackInPluginsWithTheme() {
 		CakePlugin::load('TestPlugin');
 		$this->Nodes = $this->getMock('TestNodesController',
-			array('render'), array(new CakeRequest(), new CakeResponse())
+			null, array(new CakeRequest(), new CakeResponse())
 		);
-		$this->Nodes->theme = 'Mytheme';
+		$this->Nodes->theme = 'OurTheme';
 		$this->Nodes->plugin = 'TestPlugin';
-		$this->Nodes
-			->expects($this->once())
-			->method('render')
-			->with(
-				$this->equalTo('index_blog')
-			);
-		$this->Nodes->viewFallback(array('index_blog'));
+		$this->Nodes->viewFallback(array('index_event'));
 		unset($this->Nodes);
 	}
 

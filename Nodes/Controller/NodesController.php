@@ -730,6 +730,30 @@ class NodesController extends NodesAppController {
 		));
 	}
 
+	protected function _viewPaths() {
+		$defaultViewPaths = App::path('View');
+		$pos = array_search(APP . 'View' . DS, $defaultViewPaths);
+		if ($pos !== false) {
+			$viewPaths = array_splice($defaultViewPaths, 0, $pos + 1);
+		} else {
+			$viewPaths = $defaultViewPaths;
+		}
+		if ($this->theme) {
+			$themePath = App::themePath($this->theme);
+			$viewPaths[] = $themePath;
+			if ($this->plugin) {
+				$viewPaths[] = $themePath . 'Plugin' . DS . $this->plugin . DS;
+			}
+		}
+
+		if ($this->plugin) {
+			$viewPaths = array_merge($viewPaths, App::path('View', $this->plugin));
+		}
+
+		$viewPaths = array_merge($viewPaths, $defaultViewPaths);
+		return $viewPaths;
+	}
+
 /**
  * View Fallback
  *
@@ -742,43 +766,12 @@ class NodesController extends NodesAppController {
 			$views = array($views);
 		}
 
-		$viewPaths = App::path('View');
-		$nodesViewPaths = App::path('View', 'Nodes');
-		$viewPaths = array_merge($viewPaths, $nodesViewPaths);
+		$viewPaths = $this->_viewPaths();
 		foreach ($views as $view) {
 			foreach ($viewPaths as $viewPath) {
-				if ($this->theme) {
-					$viewPath = $viewPath . 'Themed' . DS . $this->theme . DS . $this->name . DS . $view . $this->ext;
-				} else {
-					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
-				}
+				$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
 				if (file_exists($viewPath)) {
 					return $this->render($view);
-				}
-			}
-		}
-
-		// Handle fallback to views from core Nodes plugin for controllers
-		// extending NodesController
-		if ($this->plugin && $this->plugin !== 'Nodes') {
-			$views[] = $this->action;
-			$viewPaths = App::path('View', $this->plugin);
-			foreach ($views as $view) {
-				foreach ($viewPaths as $viewPath) {
-					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
-					if (file_exists($viewPath)) {
-						return $this->render($view);
-					}
-				}
-			}
-
-			$nodesViewPaths = App::path('View', 'Nodes');
-			foreach ($views as $view) {
-				foreach ($nodesViewPaths as $viewPath) {
-					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
-					if (file_exists($viewPath)) {
-						return $this->render($viewPath);
-					}
 				}
 			}
 		}
