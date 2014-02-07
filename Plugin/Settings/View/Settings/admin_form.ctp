@@ -39,7 +39,7 @@ echo $this->Form->create('Setting');
 					'class' => 'span10',
 				));
 				echo $this->Form->input('key', array(
-					'rel' => __d('croogo', "e.g., 'Site.title'"),
+					'help' => __d('croogo', "e.g., 'Site.title'"),
 					'label' => __d('croogo', 'Key'),
 				));
 				echo $this->Form->input('value', array(
@@ -58,7 +58,7 @@ echo $this->Form->create('Setting');
 				));
 				echo $this->Form->input('input_type', array(
 					'label' => __d('croogo', 'Input Type'),
-					'rel' => __d('croogo', "e.g., 'text' or 'textarea'"),
+					'help' => __d('croogo', "e.g., 'text' or 'textarea'"),
 				));
 				echo $this->Form->input('editable', array(
 					'label' => __d('croogo', 'Editable'),

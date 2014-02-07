@@ -44,11 +44,11 @@ echo $this->Form->create('Block');
 
 				echo $this->Form->input('alias', array(
 					'label' => __d('croogo', 'Alias'),
-					'rel' => __d('croogo', 'unique name for your block'),
+					'help' => __d('croogo', 'unique name for your block'),
 				));
 				echo $this->Form->input('region_id', array(
 					'label' => __d('croogo', 'Region'),
-					'rel' => __d('croogo', 'if you are not sure, choose \'none\''),
+					'help' => __d('croogo', 'if you are not sure, choose \'none\''),
 				));
 				echo $this->Form->input('body', array(
 					'label' => __d('croogo', 'Body'),
@@ -74,7 +74,7 @@ echo $this->Form->create('Block');
 			<?php
 				echo $this->Form->input('Block.visibility_paths', array(
 					'label' => __d('croogo', 'Visibility Paths'),
-					'rel' => __d('croogo', 'Enter one URL per line. Leave blank if you want this Block to appear in all pages.')
+					'help' => __d('croogo', 'Enter one URL per line. Leave blank if you want this Block to appear in all pages.')
 				));
 			?>
 			</div>
