@@ -86,7 +86,7 @@ class ExtShell extends AppShell {
 		$method = $this->args[0];
 		$type = $this->args[1];
 		$ext = isset($args[2]) ? $args[2] : null;
-		$force = isset($this->params['force']) ? $this->params['force'] : false;
+		$force = isset($this->request->params['force']) ? $this->request->params['force'] : false;
 		if ($type == 'theme') {
 			$extensions = $this->_CroogoTheme->getThemes();
 			$theme = Configure::read('Site.theme');
@@ -188,7 +188,7 @@ class ExtShell extends AppShell {
 		} else {
 			$this->err(__d('croogo', 'Plugin "%s" could not be deactivated. Please, try again.', $plugin));
 		}
-		if ($result !== true && isset($this->params['force'])) {
+		if ($result !== true && isset($this->request->params['force'])) {
 			$this->_CroogoPlugin->removeBootstrap($plugin);
 		}
 		return false;
@@ -214,7 +214,7 @@ class ExtShell extends AppShell {
  */
 	public function plugins($plugin = null) {
 		App::uses('CroogoPlugin', 'Extensions.Lib');
-		$all = $this->params['all'];
+		$all = $this->request->params['all'];
 		$plugins = $plugin == null ? App::objects('plugins') : array($plugin);
 		$loaded = CakePlugin::loaded();
 		$CroogoPlugin = new CroogoPlugin();
@@ -240,7 +240,7 @@ class ExtShell extends AppShell {
  */
 	public function themes($theme = null) {
 		$CroogoTheme = new CroogoTheme();
-		$all = $this->params['all'];
+		$all = $this->request->params['all'];
 		$current = Configure::read('Site.theme');
 		$themes = $theme == null ? $CroogoTheme->getThemes() : array($theme);
 		$this->out("Themes:", 2);
