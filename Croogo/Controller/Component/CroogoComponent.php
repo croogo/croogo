@@ -334,4 +334,69 @@ class CroogoComponent extends Component {
 		return $this->_CroogoPlugin->isActive($plugin);
 	}
 
+/**
+ * Get a list of possible view paths for current request
+ *
+ * The default view paths are retrieved view App::path('View').  This method
+ * injects the theme path and also considers whether a plugin is used.
+ *
+ * The paths that will be used for fallback is typically:
+ *
+ *   - APP/View/<Controller>
+ *   - APP/Themed/<Theme>/<Controller>
+ *   - APP/Themed/<Theme>/Plugin/<Plugin>/<Controller>
+ *   - APP/Plugin/<Plugin/View/<Controller>
+ *   - APP/Vendor/croogo/croogo/Croogo/View
+ *
+ * @param Controller $controller
+ * @return array A list of view paths
+ */
+	protected function _setupViewPaths(Controller $controller) {
+		$defaultViewPaths = App::path('View');
+		$pos = array_search(APP . 'View' . DS, $defaultViewPaths);
+		if ($pos !== false) {
+			$viewPaths = array_splice($defaultViewPaths, 0, $pos + 1);
+		} else {
+			$viewPaths = $defaultViewPaths;
+		}
+		if ($controller->theme) {
+			$themePath = App::themePath($controller->theme);
+			$viewPaths[] = $themePath;
+			if ($controller->plugin) {
+				$viewPaths[] = $themePath . 'Plugin' . DS . $controller->plugin . DS;
+			}
+		}
+		if ($controller->plugin) {
+			$viewPaths = array_merge($viewPaths, App::path('View', $controller->plugin));
+		}
+		$viewPaths = array_merge($viewPaths, $defaultViewPaths);
+		return $viewPaths;
+	}
+
+/**
+ * View Fallback
+ *
+ * Looks for view file through the available view paths.  If the view is found,
+ * set Controller::$view variable.
+ *
+ * @param string|array $views view path or array of view paths
+ * @return void
+ */
+	public function viewFallback($views) {
+		if (is_string($views)) {
+			$views = array($views);
+		}
+		$controller = $this->_controller;
+		$viewPaths = $this->_setupViewPaths($controller);
+		foreach ($views as $view) {
+			foreach ($viewPaths as $viewPath) {
+				$viewPath = $viewPath . $controller->name . DS . $view . $controller->ext;
+				if (file_exists($viewPath)) {
+					$controller->view = $viewPath;
+					return;
+				}
+			}
+		}
+	}
+
 }

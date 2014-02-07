@@ -421,7 +421,7 @@ class NodesController extends NodesAppController {
 		}
 
 		$this->set(compact('type', 'nodes'));
-		$this->_viewFallback(array(
+		$this->Croogo->viewFallback(array(
 			'index_' . $type['Type']['alias'],
 		));
 	}
@@ -520,7 +520,7 @@ class NodesController extends NodesAppController {
 		}
 
 		$this->set(compact('term', 'type', 'nodes'));
-		$this->_viewFallback(array(
+		$this->Croogo->viewFallback(array(
 			'term_' . $term['Term']['id'],
 			'term_' . $type['Type']['alias'],
 		));
@@ -649,7 +649,7 @@ class NodesController extends NodesAppController {
 		$this->set('title_for_layout', __d('croogo', 'Search Results: %s', $q));
 		$this->set(compact('q', 'nodes'));
 		if ($typeAlias) {
-			$this->_viewFallback(array(
+			$this->Croogo->viewFallback(array(
 				'search_' . $typeAlias,
 			));
 		}
@@ -724,34 +724,10 @@ class NodesController extends NodesAppController {
 
 		$this->set('title_for_layout', $node['Node']['title']);
 		$this->set(compact('node', 'type', 'comments'));
-		$this->_viewFallback(array(
+		$this->Croogo->viewFallback(array(
 			'view_' . $node['Node']['id'],
 			'view_' . $type['Type']['alias'],
 		));
-	}
-
-	protected function _viewPaths() {
-		$defaultViewPaths = App::path('View');
-		$pos = array_search(APP . 'View' . DS, $defaultViewPaths);
-		if ($pos !== false) {
-			$viewPaths = array_splice($defaultViewPaths, 0, $pos + 1);
-		} else {
-			$viewPaths = $defaultViewPaths;
-		}
-		if ($this->theme) {
-			$themePath = App::themePath($this->theme);
-			$viewPaths[] = $themePath;
-			if ($this->plugin) {
-				$viewPaths[] = $themePath . 'Plugin' . DS . $this->plugin . DS;
-			}
-		}
-
-		if ($this->plugin) {
-			$viewPaths = array_merge($viewPaths, App::path('View', $this->plugin));
-		}
-
-		$viewPaths = array_merge($viewPaths, $defaultViewPaths);
-		return $viewPaths;
 	}
 
 /**
@@ -760,23 +736,10 @@ class NodesController extends NodesAppController {
  * @param mixed $views
  * @return string
  * @access protected
+ * @deprecated Use CroogoComponent::viewFallback()
  */
 	protected function _viewFallback($views) {
-		if (is_string($views)) {
-			$views = array($views);
-		}
-
-		$viewPaths = $this->_viewPaths();
-		foreach ($views as $view) {
-			foreach ($viewPaths as $viewPath) {
-				$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
-				if (file_exists($viewPath)) {
-					return $this->render($view);
-				}
-			}
-		}
-
-		return null;
+		return $this->Croogo->viewFallback($views);
 	}
 
 /**
