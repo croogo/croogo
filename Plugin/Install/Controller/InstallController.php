@@ -147,7 +147,7 @@ class InstallController extends Controller {
 			);
 		}
 
-		if (isset($this->params['named']['run'])) {
+		if (isset($this->request->params['named']['run'])) {
 			$this->Install->setupDatabase();
 
 			$InstallManager = new InstallManager();

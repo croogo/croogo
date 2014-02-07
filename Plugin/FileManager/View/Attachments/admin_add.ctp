@@ -8,7 +8,7 @@ $this->Html
 	->addCrumb(__d('croogo', 'Upload'), '/' . $this->request->url);
 
 $formUrl = array('controller' => 'attachments', 'action' => 'add');
-if (isset($this->params['named']['editor'])) {
+if (isset($this->request->params['named']['editor'])) {
 	$formUrl['editor'] = 1;
 }
 echo $this->Form->create('Attachment', array('url' => $formUrl, 'type' => 'file'));

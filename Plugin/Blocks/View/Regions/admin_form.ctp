@@ -12,7 +12,7 @@ $this->Html
 if ($this->request->params['action'] == 'admin_edit') {
 	$this->Html->addCrumb($this->data['Region']['title'], array(
 		'plugin' => 'blocks', 'controller' => 'regions', 'action' => 'edit',
-		$this->params['pass'][0]
+		$this->request->params['pass'][0]
 	));
 }
 

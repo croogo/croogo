@@ -160,8 +160,8 @@ class MenusHelper extends AppHelper {
 			}
 
 			// Remove locale part before comparing links
-			if (!empty($this->params['locale'])) {
-				$currentUrl = substr($this->_View->request->url, strlen($this->params['locale']));
+			if (!empty($this->_View->request->params['locale'])) {
+				$currentUrl = substr($this->_View->request->url, strlen($this->_View->request->params['locale']));
 			} else {
 				$currentUrl = $this->_View->request->url;
 			}
