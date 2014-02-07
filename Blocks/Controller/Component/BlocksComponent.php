@@ -2,6 +2,7 @@
 
 App::uses('Component', 'Controller');
 App::uses('StringConverter', 'Croogo.Lib/Utility');
+App::uses('VisibilityFilter', 'Croogo.Lib/Utility');
 
 /**
  * Blocks Component
@@ -96,37 +97,53 @@ class BlocksComponent extends Component {
 
 		$roleId = $this->controller->Croogo->roleId();
 		$status = $this->Block->status();
+		$request = $this->controller->request;
+		$slug = Inflector::slug(strtolower($request->url));
+		$Filter = new VisibilityFilter($request);
 		foreach ($regions as $regionId => $regionAlias) {
+			$cacheKey = $regionAlias . '_' . $roleId;
 			$this->blocksForLayout[$regionAlias] = array();
-			$findOptions = array(
-				'conditions' => array(
-					'Block.status' => $status,
-					'Block.region_id' => $regionId,
-					'AND' => array(
-						array(
-							'OR' => array(
-								'Block.visibility_roles' => '',
-								'Block.visibility_roles LIKE' => '%"' . $roleId . '"%',
-							),
-						),
-						array(
-							'OR' => array(
-								'Block.visibility_paths' => '',
-								'Block.visibility_paths LIKE' => '%"/' . $this->controller->request->url . '"%',
+
+			$visibilityCachePrefix = 'visibility_' .  $slug . '_' . $cacheKey;
+			$blocks = Cache::read($visibilityCachePrefix, 'croogo_blocks');
+			if ($blocks === false) {
+				$findOptions = array(
+					'conditions' => array(
+						'Block.status' => $status,
+						'Block.region_id' => $regionId,
+						'AND' => array(
+							array(
+								'OR' => array(
+									'Block.visibility_roles' => '',
+									'Block.visibility_roles LIKE' => '%"' . $roleId . '"%',
+								),
 							),
 						),
 					),
-				),
-				'order' => array(
-					'Block.weight' => 'ASC'
-				),
-				'cache' => array(
-					'prefix' => 'blocks_' . $regionAlias . '_' . $roleId,
-					'config' => 'croogo_blocks',
-				),
-				'recursive' => '-1',
-			);
-			$blocks = $this->Block->find('all', $findOptions);
+					'order' => array(
+						'Block.weight' => 'ASC'
+					),
+					'cache' => array(
+						'prefix' => 'blocks_' . $cacheKey,
+						'config' => 'croogo_blocks',
+					),
+					'recursive' => '-1',
+				);
+				$blocks = $this->Block->find('all', $findOptions);
+				foreach ($blocks as &$block) {
+					$block['Block']['visibility_paths'] = $this->Block->decodeData($block['Block']['visibility_paths']);
+				}
+
+				$blocks = $Filter->remove($blocks, array(
+					'model' => $this->Block->alias,
+					'field' => 'visibility_paths',
+					'cache' => array(
+						'prefix' => $visibilityCachePrefix,
+						'config' => 'croogo_blocks',
+					),
+				));
+				Cache::write($visibilityCachePrefix, $blocks, 'croogo_blocks');
+			}
 			$this->processBlocksData($blocks);
 			$this->blocksForLayout[$regionAlias] = $blocks;
 		}
