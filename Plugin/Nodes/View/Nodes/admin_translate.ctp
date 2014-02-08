@@ -11,7 +11,7 @@ if (Configure::read('Writing.wysiwyg')) {
 	<?php
 		echo $this->Form->create('Node', array('url' => array(
 			'action' => 'translate',
-			'locale' => $this->params['named']['locale'],
+			'locale' => $this->request->params['named']['locale'],
 		)));
 	?>
 	<fieldset>
