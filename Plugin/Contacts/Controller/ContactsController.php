@@ -173,6 +173,57 @@ class ContactsController extends ContactsAppController {
 
 		$this->set('title_for_layout', $contact['Contact']['title']);
 		$this->set(compact('continue'));
+		$this->_viewFallback(array(
+	    		'view_' . $contact['Contact']['id'],
+		));
+	}
+	
+/**
+ * View Fallback
+ *
+ * @param mixed $views
+ * @return string
+ * @access protected
+ */
+	protected function _viewFallback($views) {
+		if (is_string($views)) {
+			$views = array($views);
+		}
+	
+		if ($this->theme) {
+			$viewPaths = App::path('View');
+			foreach ($views as $view) {
+				foreach ($viewPaths as $viewPath) {
+					$viewPath = $viewPath . 'Themed' . DS . $this->theme . DS . $this->name . DS . $view . $this->ext;
+					if (file_exists($viewPath)) {
+						return $this->render($view);
+					}
+				}
+			}
+		}
+	
+		if ($this->plugin && $this->plugin !== 'Contacts') {
+			$views[] = $this->action;
+			$viewPaths = App::path('View', $this->plugin);
+			foreach ($views as $view) {
+				foreach ($viewPaths as $viewPath) {
+					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
+					if (file_exists($viewPath)) {
+						return $this->render($view);
+					}
+				}
+			}
+	
+			$contactsViewPaths = App::path('View', 'Contacts');
+			foreach ($views as $view) {
+				foreach ($contactsViewPaths as $viewPath) {
+					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
+					if (file_exists($viewPath)) {
+						return $this->render($viewPath);
+					}
+				}
+			}
+		}
 	}
 
 /**
