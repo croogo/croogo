@@ -25,6 +25,7 @@ class OrderRecordFixture extends CroogoTestFixture {
 			'created' => '2009-11-02 20:52:00'
 		),
 		array(
+			'id' => 2,
 			'title' => 'Second record',
 			'weight' => 1,
 			'updated' => '2009-11-02 21:37:38',
@@ -33,6 +34,7 @@ class OrderRecordFixture extends CroogoTestFixture {
 			'end' => '2014-01-31 08:00:00',
 		),
 		array(
+			'id' => 3,
 			'title' => 'Third record',
 			'weight' => 1,
 			'updated' => '2009-11-02 21:37:38',
@@ -41,6 +43,7 @@ class OrderRecordFixture extends CroogoTestFixture {
 			'end' => '2014-01-31 08:00:00',
 		),
 		array(
+			'id' => 4,
 			'title' => 'Fourth record',
 			'weight' => 1,
 			'updated' => '2009-11-02 21:37:38',
@@ -48,6 +51,7 @@ class OrderRecordFixture extends CroogoTestFixture {
 			'start' => '2014-01-31 09:10:00',
 		),
 		array(
+			'id' => 5,
 			'title' => 'Fifth record',
 			'weight' => 1,
 			'updated' => '2009-11-02 21:37:38',
