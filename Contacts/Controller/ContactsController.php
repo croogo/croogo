@@ -173,6 +173,10 @@ class ContactsController extends ContactsAppController {
 			$this->Croogo->setReferer();
 		}
 
+		$this->Croogo->viewFallback(array(
+			'view_' . $contact['Contact']['id'],
+			'view_' . $contact['Contact']['alias'],
+		));
 		$this->set('title_for_layout', $contact['Contact']['title']);
 	}
 

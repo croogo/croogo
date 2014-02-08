@@ -421,7 +421,7 @@ class NodesController extends NodesAppController {
 		}
 
 		$this->set(compact('type', 'nodes'));
-		$this->_viewFallback(array(
+		$this->Croogo->viewFallback(array(
 			'index_' . $type['Type']['alias'],
 		));
 	}
@@ -520,7 +520,7 @@ class NodesController extends NodesAppController {
 		}
 
 		$this->set(compact('term', 'type', 'nodes'));
-		$this->_viewFallback(array(
+		$this->Croogo->viewFallback(array(
 			'term_' . $term['Term']['id'],
 			'term_' . $type['Type']['alias'],
 		));
@@ -649,7 +649,7 @@ class NodesController extends NodesAppController {
 		$this->set('title_for_layout', __d('croogo', 'Search Results: %s', $q));
 		$this->set(compact('q', 'nodes'));
 		if ($typeAlias) {
-			$this->_viewFallback(array(
+			$this->Croogo->viewFallback(array(
 				'search_' . $typeAlias,
 			));
 		}
@@ -724,7 +724,7 @@ class NodesController extends NodesAppController {
 
 		$this->set('title_for_layout', $node['Node']['title']);
 		$this->set(compact('node', 'type', 'comments'));
-		$this->_viewFallback(array(
+		$this->Croogo->viewFallback(array(
 			'view_' . $node['Node']['id'],
 			'view_' . $type['Type']['alias'],
 		));
@@ -736,54 +736,10 @@ class NodesController extends NodesAppController {
  * @param mixed $views
  * @return string
  * @access protected
+ * @deprecated Use CroogoComponent::viewFallback()
  */
 	protected function _viewFallback($views) {
-		if (is_string($views)) {
-			$views = array($views);
-		}
-
-		$viewPaths = App::path('View');
-		$nodesViewPaths = App::path('View', 'Nodes');
-		$viewPaths = array_merge($viewPaths, $nodesViewPaths);
-		foreach ($views as $view) {
-			foreach ($viewPaths as $viewPath) {
-				if ($this->theme) {
-					$viewPath = $viewPath . 'Themed' . DS . $this->theme . DS . $this->name . DS . $view . $this->ext;
-				} else {
-					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
-				}
-				if (file_exists($viewPath)) {
-					return $this->render($view);
-				}
-			}
-		}
-
-		// Handle fallback to views from core Nodes plugin for controllers
-		// extending NodesController
-		if ($this->plugin && $this->plugin !== 'Nodes') {
-			$views[] = $this->action;
-			$viewPaths = App::path('View', $this->plugin);
-			foreach ($views as $view) {
-				foreach ($viewPaths as $viewPath) {
-					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
-					if (file_exists($viewPath)) {
-						return $this->render($view);
-					}
-				}
-			}
-
-			$nodesViewPaths = App::path('View', 'Nodes');
-			foreach ($views as $view) {
-				foreach ($nodesViewPaths as $viewPath) {
-					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
-					if (file_exists($viewPath)) {
-						return $this->render($viewPath);
-					}
-				}
-			}
-		}
-
-		return null;
+		return $this->Croogo->viewFallback($views);
 	}
 
 /**
