@@ -18,3 +18,4 @@ tmp/
 !./Plugin/Example
 !./Plugin/Install
 !./Plugin/Translate
+/nbproject/private/

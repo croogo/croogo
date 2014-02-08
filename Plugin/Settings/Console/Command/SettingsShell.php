@@ -109,7 +109,7 @@ class SettingsShell extends AppShell {
  */
 	public function read() {
 		if (empty($this->args)) {
-			if ($this->params['all'] === true) {
+			if ($this->request->params['all'] === true) {
 				$key = null;
 			} else {
 				$this->out($this->OptionParser->help('get'));
@@ -149,7 +149,7 @@ class SettingsShell extends AppShell {
 		));
 		$this->out(__d('croogo', 'Updating %s', $key), 2);
 		$ask = __d('croogo', "Confirm update");
-		if ($setting || $this->params['create']) {
+		if ($setting || $this->request->params['create']) {
 			$text = '-';
 			if ($setting) {
 				$text = __d('croogo', '- %s', $setting['Setting']['value']);
@@ -161,7 +161,7 @@ class SettingsShell extends AppShell {
 					'title' => null, 'description' => null,
 					'input_type' => null, 'editable' => null, 'params' => null,
 				);
-				$options = array_intersect_key($this->params, $keys);
+				$options = array_intersect_key($this->request->params, $keys);
 				$this->Setting->write($key, $val, $options);
 				$this->success(__d('croogo', 'Setting updated'));
 			} else {

@@ -25,7 +25,7 @@ class CroogoPaginatorHelper extends PaginatorHelper {
 		$options = array_merge($defaults, $options);
 		extract($options);
 
-		$params = $this->params($options['model']);
+		$params = $this->request->params($options['model']);
 		extract($params);
 
 		$begin = $page - floor($modulus / 2);

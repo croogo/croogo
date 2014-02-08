@@ -19,7 +19,7 @@
 		}
 	}
 
-	if ($this->params['action'] != 'view' && $type['Type']['comment_status']) {
+	if ($this->request->params['action'] != 'view' && $type['Type']['comment_status']) {
 		if (isset($nodeTerms) && count($nodeTerms) > 0) {
 			echo ' | ';
 		}
