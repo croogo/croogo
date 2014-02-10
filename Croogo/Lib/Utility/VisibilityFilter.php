@@ -95,14 +95,24 @@ class VisibilityFilter {
 	protected function _ruleMatch($rule) {
 		if (strpos($rule, ':') !== false) {
 			$url = array_filter($this->_converter->linkStringToArray($rule));
+			if (isset($url['?'])) {
+				$queryString = $url['?'];
+				unset($url['?']);
+			}
 		} else {
 			$url = Router::parse($rule);
 			$named = array_diff_key($url, $this->_urlKeys);
 			$url['named'] = $named;
 		}
 
-		$intersect = array_intersect_key($this->_request->params, $ruleUrl);
-		return $intersect == $ruleUrl;
+		$intersect = array_intersect_key($this->_request->params, $url);
+		$matched = $intersect == $url;
+
+		if ($matched && isset($queryString)) {
+			$matched = $this->_request->query == $queryString;
+		}
+
+		return $matched;
 	}
 
 /**

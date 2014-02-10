@@ -51,6 +51,14 @@ class VisibilityFilterTest extends CroogoTestCase {
 					),
 				),
 			),
+			array(
+				'Block' => array(
+					'id' => 6,
+					'visibility_paths' => array(
+						'plugin:nodes/controller:nodes/action:index/type:blog?page=8',
+					),
+				),
+			),
 		);
 	}
 
@@ -82,6 +90,9 @@ class VisibilityFilterTest extends CroogoTestCase {
 
 		// same plugin, different controller
 		$this->assertFalse(Hash::check($results, '{n}.Block[id=5]'));
+
+		// with query string
+		$this->assertFalse(Hash::check($results, '{n}.Block[id=6]'));
 	}
 
 	public function testLinkstringRuleWithContacts() {
@@ -109,6 +120,32 @@ class VisibilityFilterTest extends CroogoTestCase {
 
 		// partial rule
 		$this->assertTrue(Hash::check($results, '{n}.Block[id=5]'));
+
+		// with query string
+		$this->assertFalse(Hash::check($results, '{n}.Block[id=6]'));
+	}
+
+	public function testLinkstringRuleWithQueryString() {
+		$request = new CakeRequest();
+		$request->addParams(array(
+			'controller' => 'nodes',
+			'plugin' => 'nodes',
+			'action' => 'index',
+			'type' => 'blog',
+		));
+		$request->query = array(
+			'page' => '8',
+		);
+		$Filter = new VisibilityFilter($request);
+		$blocks = $this->_testData();
+		Configure::write('foo', true);
+		$results = $Filter->remove($blocks, array(
+			'model' => 'Block',
+			'field' => 'visibility_paths',
+		));
+
+		// exact match with query string
+		$this->assertTrue(Hash::check($results, '{n}.Block[id=6]'));
 	}
 
 }
