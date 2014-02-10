@@ -158,38 +158,22 @@ class TermsController extends TaxonomyAppController {
  * @access public
  */
 	public function admin_delete($id = null, $vocabularyId = null) {
-		if (!$id || !$vocabularyId) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Term'), 'default', array('class' => 'error'));
-			return $this->redirect(array(
-				'action' => 'index',
-				$vocabularyId,
-			));
-		}
+		$redirectUrl = array('action' => 'index', $vocabularyId);
+		$this->__ensureVocabularyIdExists($vocabularyId, $redirectUrl);
+		$this->__ensureTermExists($id, $redirectUrl);
 		$taxonomyId = $this->Term->Taxonomy->termInVocabulary($id, $vocabularyId);
-		if (!$taxonomyId) {
-			return $this->redirect(array(
-				'action' => 'index',
-				$vocabularyId,
-			));
-		}
-		$this->Term->Taxonomy->Behaviors->attach('Tree', array(
-			'scope' => array(
-				'Taxonomy.vocabulary_id' => $vocabularyId,
-			),
-		));
-		if ($this->Term->Taxonomy->delete($taxonomyId)) {
-			if ($this->Term->delete($id)) {
-				$this->Session->setFlash(__d('croogo', 'Term deleted'), 'default', array('class' => 'success'));
-			} else {
-				$this->Session->setFlash(__d('croogo', 'Term in Vocabulary deleted'), 'default', array('class' => 'alert'));
-			}
+		$this->__ensureVocabularyIdExists($vocabularyId, $redirectUrl);
+
+		if ($this->Term->remove($id, $vocabularyId)) {
+			$messageFlash = __d('croogo', 'Term deleted');
+			$cssClass = array('class' => 'success');
 		} else {
-			$this->Session->setFlash(__d('croogo', 'Term could not be deleted. Please, try again.'), 'default', array('class' => 'error'));
+			$messageFlash = __d('croogo', 'Term could not be deleted. Please, try again.');
+			$cssClass = array('class' => 'error');
 		}
-		return $this->redirect(array(
-			'action' => 'index',
-			$vocabularyId,
-		));
+
+		$this->Session->setFlash($messageFlash, 'default', $cssClass);
+		return $this->redirect($redirectUrl);
 	}
 
 /**

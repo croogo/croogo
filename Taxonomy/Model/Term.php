@@ -192,6 +192,20 @@ class Term extends TaxonomyAppModel {
 	}
 
 /**
+ * Remove term
+ *
+ * @param integer $id Term Id
+ * @param integer $vocabularyId Vocabulary Id
+ */
+	public function remove($id, $vocabularyId) {
+		$taxonomyId = $this->Vocabulary->Taxonomy->field('id', array(
+			'term_id' => $id, 'vocabulary_id' => $vocabularyId
+		));
+		$this->setScopeForTaxonomy($vocabularyId);
+		return $this->Taxonomy->delete($taxonomyId) && $this->delete($id);
+	}
+
+/**
  * Save new/updated term data
  *
  * @param array $data Term data

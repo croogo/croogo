@@ -150,4 +150,13 @@ class TermTest extends CroogoTestCase {
 		$this->assertEquals($expected, $newSlug);
 	}
 
+	public function testRemoveShouldDeleteTerm() {
+		$oldCount = $this->Term->find('count');
+
+		$this->Term->remove(1, 1);
+
+		$newCount = $this->Term->find('count');
+		$this->assertEquals($oldCount - 1, $newCount);
+	}
+
 }
