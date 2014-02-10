@@ -170,7 +170,7 @@ class Term extends TaxonomyAppModel {
 
 		$termId = $this->saveAndGetId($data);
 		if (!$this->isInVocabulary($termId, $vocabularyId, $taxonomyId)) {
-			$this->__setScopeForTaxonomy($vocabularyId);
+			$this->setScopeForTaxonomy($vocabularyId);
 			$dataToPersist = array(
 				'parent_id' => $data['Taxonomy']['parent_id'],
 				'term_id' => $termId,
@@ -201,7 +201,7 @@ class Term extends TaxonomyAppModel {
 		return $results;
 	}
 
-	private function __setScopeForTaxonomy($vocabularyId) {
+	public function setScopeForTaxonomy($vocabularyId) {
 		$scopeSettings = array('scope' => array(
 			'Taxonomy.vocabulary_id' => $vocabularyId,
 		));
