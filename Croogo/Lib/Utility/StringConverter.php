@@ -91,12 +91,17 @@ class StringConverter {
 			$link = key($link);
 		}
 		$link = explode('/', $link);
-		$linkArr = array_fill_keys(Configure::read('Routing.prefixes'), false);
+		$prefixes = Configure::read('Routing.prefixes');
+		$linkArr = array_fill_keys($prefixes, false);
 		foreach ($link as $linkElement) {
 			if ($linkElement != null) {
 				$linkElementE = explode(':', $linkElement);
 				if (isset($linkElementE['1'])) {
-					$linkArr[$linkElementE['0']] = $linkElementE['1'];
+					if (in_array($linkElementE['0'], $prefixes)) {
+						$linkArr[$linkElementE['0']] = strcasecmp($linkElementE['1'], 'false') === 0 ? false : true;
+					} else {
+						$linkArr[$linkElementE['0']] = $linkElementE['1'];
+					}
 				} else {
 					$linkArr[] = $linkElement;
 				}
