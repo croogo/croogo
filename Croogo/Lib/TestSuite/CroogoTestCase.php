@@ -18,6 +18,12 @@ class CroogoTestCase extends CakeTestCase {
 
 	protected $_paths = array();
 
+/**
+ * Setup settings.json file for the test application. Tests not requiring
+ * settings fixture can turn it off by setting this to false.
+ */
+	public $setupSettings = true;
+
 	public static function setUpBeforeClass() {
 		self::_restoreSettings();
 		Configure::write('Config.language', 'eng');
@@ -54,6 +60,14 @@ class CroogoTestCase extends CakeTestCase {
 		CakePlugin::unload('Install');
 		CakePlugin::load('Example');
 		Configure::write('Acl.database', 'test');
+		$this->setupSettings($appDir);
+	}
+
+	public function setupSettings($appDir) {
+		if (!$this->setupSettings) {
+			return;
+		}
+
 		$Setting = ClassRegistry::init('Settings.Setting');
 		$Setting->settingsPath = $appDir . 'Config' . DS . 'settings.json';
 		Configure::drop('settings');

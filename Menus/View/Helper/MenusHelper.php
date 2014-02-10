@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppHelper', 'View/Helper');
+App::uses('StringConverter', 'Croogo.Lib/Utility');
 
 /**
  * Menus Helper
@@ -24,6 +25,7 @@ class MenusHelper extends AppHelper {
 	public function __construct(View $view, $settings = array()) {
 		parent::__construct($view);
 		$this->_setupEvents();
+		$this->_converter = new StringConverter();
 	}
 
 /**
@@ -196,28 +198,10 @@ class MenusHelper extends AppHelper {
  *
  * @param string|array $link link
  * @return array
+ * @see Use StringConverter::linkStringToArray()
  */
 	public function linkStringToArray($link) {
-		if (is_array($link)) {
-			$link = key($link);
-		}
-		$link = explode('/', $link);
-		$linkArr = array_fill_keys(Configure::read('Routing.prefixes'), false);
-		foreach ($link as $linkElement) {
-			if ($linkElement != null) {
-				$linkElementE = explode(':', $linkElement);
-				if (isset($linkElementE['1'])) {
-					$linkArr[$linkElementE['0']] = $linkElementE['1'];
-				} else {
-					$linkArr[] = $linkElement;
-				}
-			}
-		}
-		if (!isset($linkArr['plugin'])) {
-			$linkArr['plugin'] = false;
-		}
-
-		return $linkArr;
+		return $this->_converter->linkStringToArray($link);
 	}
 
 /**
@@ -225,29 +209,10 @@ class MenusHelper extends AppHelper {
  *
  * @param array $url link
  * @return array
+ * @see StringConverter::urlToLinkString()
  */
 	public function urlToLinkString($url) {
-		$result = array();
-		$actions = array_merge(array(
-			'admin' => false, 'plugin' => false,
-			'controller' => false, 'action' => false
-			),
-			$url
-		);
-		foreach ($actions as $key => $val) {
-			if (is_string($key)) {
-				if (is_bool($val)) {
-					if ($val === true) {
-						$result[] = $key;
-					}
-				} else {
-					$result[] = $key . ':' . $val;
-				}
-			} else {
-				$result[] = $val;
-			}
-		}
-		return join('/', $result);
+		return $this->_converter->urlToLinkString($url);
 	}
 
 }

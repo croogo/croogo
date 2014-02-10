@@ -80,4 +80,79 @@ class StringConverter {
 		return $stringArr;
 	}
 
+/**
+ * Converts strings like controller:abc/action:xyz/ to arrays
+ *
+ * @param string|array $link link
+ * @return array
+ */
+	public function linkStringToArray($link) {
+		if (is_array($link)) {
+			$link = key($link);
+		}
+		if (($pos = strpos($link, '?')) !== false) {
+			parse_str(substr($link, $pos + 1), $query);
+			$link = substr($link, 0, $pos);
+		}
+		$link = explode('/', $link);
+		$prefixes = Configure::read('Routing.prefixes');
+		$linkArr = array_fill_keys($prefixes, false);
+		foreach ($link as $linkElement) {
+			if ($linkElement != null) {
+				$linkElementE = explode(':', $linkElement);
+				if (isset($linkElementE['1'])) {
+					if (in_array($linkElementE['0'], $prefixes)) {
+						$linkArr[$linkElementE['0']] = strcasecmp($linkElementE['1'], 'false') === 0 ? false : true;
+					} else {
+						$linkArr[$linkElementE['0']] = urldecode($linkElementE['1']);
+					}
+				} else {
+					$linkArr[] = $linkElement;
+				}
+			}
+		}
+		if (!isset($linkArr['plugin'])) {
+			$linkArr['plugin'] = false;
+		}
+
+		if (isset($query)) {
+			$linkArr['?'] = $query;
+		}
+
+		return $linkArr;
+	}
+
+/**
+ * Converts array into string controller:abc/action:xyz/value1/value2?foo=bar
+ *
+ * @param array $url link
+ * @return array
+ */
+	public function urlToLinkString($url) {
+		$result = array();
+		$actions = array_merge(array(
+			'admin' => false, 'plugin' => false,
+			'controller' => false, 'action' => false
+			),
+			$url
+		);
+		$queryString = null;
+		foreach ($actions as $key => $val) {
+			if (is_string($key)) {
+				if (is_bool($val)) {
+					if ($val === true) {
+						$result[] = $key;
+					}
+				} elseif ($key == '?') {
+					$queryString = '?' . http_build_query($val);
+				} else {
+					$result[] = $key . ':' . $val;
+				}
+			} else {
+				$result[] = $val;
+			}
+		}
+		return join('/', $result) . $queryString;
+	}
+
 }
