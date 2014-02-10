@@ -70,6 +70,65 @@ class StringConverterTest extends CroogoTestCase {
 	}
 
 /**
+ * testLinkStringToArrayWithQueryString
+ */
+	public function testLinkStringToArrayWithQueryString() {
+		$expected = array(
+			'admin' => true,
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'index',
+			'?' => array(
+				'foo' => 'bar',
+			),
+		);
+		$result = $this->Converter->linkStringToArray(
+			'admin:true/plugin:nodes/controller:nodes/action:index?foo=bar'
+		);
+		$this->assertEquals($expected, $result);
+	}
+
+/**
+ * testLinkStringToArrayWithQueryStringAndPassedArgs
+ */
+	public function testLinkStringToArrayWithQueryStringAndPassedArgs() {
+		$expected = array(
+			'admin' => true,
+			'plugin' => 'settings',
+			'controller' => 'settings',
+			'action' => 'prefix',
+			'Site',
+			'?' => array(
+				'key' => 'Site.title',
+			),
+		);
+		$result = $this->Converter->linkStringToArray(
+			'admin:true/plugin:settings/controller:settings/action:prefix/Site?key=Site.title'
+		);
+		$this->assertEquals($expected, $result);
+	}
+
+/**
+ * testLinkStringToArrayWithQueryStringAndPassedAndNamedArgs
+ */
+	public function testLinkStringToArrayWithQueryStringAndPassedAndNamedArgs() {
+		$expected = array(
+			'admin' => false,
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'index',
+			'type' => 'blog',
+			'?' => array(
+				'slug' => 'hello-world',
+			),
+		);
+		$result = $this->Converter->linkStringToArray(
+			'admin:false/plugin:nodes/controller:nodes/action:index/type:blog?slug=hello-world'
+		);
+		$this->assertEquals($expected, $result);
+	}
+
+/**
  * testUrlToLinkString
  */
 	public function testUrlToLinkString() {
@@ -139,6 +198,33 @@ class StringConverterTest extends CroogoTestCase {
 
 		$url = array('some' => 'random', 1, 2, 'array' => 'must', 'work');
 		$expected = 'some:random/1/2/array:must/work';
+		$this->assertEquals($expected, $this->Converter->urlToLinkString($url));
+	}
+
+	public function testUrlToLinkStringWithQueryStringAndNamedArgs() {
+
+		$url = array(
+			'controller' => 'contacts',
+			'action' => 'view',
+			'plugin' => 'contacts',
+			'?' => array(
+				'slug' => 'contact',
+				'page' => '8',
+			),
+		);
+		$expected = 'plugin:contacts/controller:contacts/action:view?slug=contact&page=8';
+		$this->assertEquals($expected, $this->Converter->urlToLinkString($url));
+
+		$url = array(
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'term',
+			'type' => 'page',
+			'?' => array(
+				'slug' => 'uncategorized',
+			),
+		);
+		$expected = 'plugin:nodes/controller:nodes/action:term/type:page?slug=uncategorized';
 		$this->assertEquals($expected, $this->Converter->urlToLinkString($url));
 	}
 

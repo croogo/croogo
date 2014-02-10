@@ -90,6 +90,10 @@ class StringConverter {
 		if (is_array($link)) {
 			$link = key($link);
 		}
+		if (($pos = strpos($link, '?')) !== false) {
+			parse_str(substr($link, $pos + 1), $query);
+			$link = substr($link, 0, $pos);
+		}
 		$link = explode('/', $link);
 		$prefixes = Configure::read('Routing.prefixes');
 		$linkArr = array_fill_keys($prefixes, false);
@@ -111,11 +115,15 @@ class StringConverter {
 			$linkArr['plugin'] = false;
 		}
 
+		if (isset($query)) {
+			$linkArr['?'] = $query;
+		}
+
 		return $linkArr;
 	}
 
 /**
- * Converts array into string controller:abc/action:xyz/value1/value2
+ * Converts array into string controller:abc/action:xyz/value1/value2?foo=bar
  *
  * @param array $url link
  * @return array
@@ -128,12 +136,15 @@ class StringConverter {
 			),
 			$url
 		);
+		$queryString = null;
 		foreach ($actions as $key => $val) {
 			if (is_string($key)) {
 				if (is_bool($val)) {
 					if ($val === true) {
 						$result[] = $key;
 					}
+				} elseif ($key == '?') {
+					$queryString = '?' . http_build_query($val);
 				} else {
 					$result[] = $key . ':' . $val;
 				}
@@ -141,7 +152,7 @@ class StringConverter {
 				$result[] = $val;
 			}
 		}
-		return join('/', $result);
+		return join('/', $result) . $queryString;
 	}
 
 }
