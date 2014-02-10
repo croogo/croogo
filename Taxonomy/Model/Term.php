@@ -157,6 +157,14 @@ class Term extends TaxonomyAppModel {
 		return $this->hasAny(compact('slug'));
 	}
 
+	public function remove($id, $vocabularyId) {
+		$taxonomyId = $this->Vocabulary->Taxonomy->field('id', array(
+			'term_id' => $id, 'vocabulary_id' => $vocabularyId
+		));
+		$this->setScopeForTaxonomy($vocabularyId);
+		return $this->Taxonomy->delete($taxonomyId) && $this->delete($id);
+	}
+
 	protected function _save($data, $vocabularyId, $taxonomyId = null) {
 		$added = false;
 
