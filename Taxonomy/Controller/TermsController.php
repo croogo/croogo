@@ -184,35 +184,7 @@ class TermsController extends TaxonomyAppController {
  * @access public
  */
 	public function admin_moveup($id = null, $vocabularyId = null, $step = 1) {
-		if (!$id || !$vocabularyId) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Term'), 'default', array('class' => 'error'));
-			return $this->redirect(array(
-				'action' => 'index',
-				$vocabularyId,
-			));
-		}
-		$taxonomyId = $this->Term->Taxonomy->termInVocabulary($id, $vocabularyId);
-		if (!$taxonomyId) {
-			return $this->redirect(array(
-				'action' => 'index',
-				$vocabularyId,
-			));
-		}
-		$this->Term->Taxonomy->Behaviors->attach('Tree', array(
-			'scope' => array(
-				'Taxonomy.vocabulary_id' => $vocabularyId,
-			),
-		));
-		if ($this->Term->Taxonomy->moveUp($taxonomyId, $step)) {
-			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'default', array('class' => 'success'));
-		} else {
-			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'default', array('class' => 'error'));
-		}
-
-		return $this->redirect(array(
-			'action' => 'index',
-			$vocabularyId,
-		));
+		$this->__move('up', $id, $vocabularyId, $step);
 	}
 
 /**
@@ -225,38 +197,37 @@ class TermsController extends TaxonomyAppController {
  * @access public
  */
 	public function admin_movedown($id = null, $vocabularyId = null, $step = 1) {
-		if (!$id || !$vocabularyId) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Term'), 'default', array('class' => 'error'));
-			return $this->redirect(array(
-				'action' => 'index',
-				$vocabularyId,
-			));
-		}
-		$taxonomyId = $this->Term->Taxonomy->termInVocabulary($id, $vocabularyId);
-		if (!$taxonomyId) {
-			return $this->redirect(array(
-				'action' => 'index',
-				$vocabularyId,
-			));
-		}
-		$this->Term->Taxonomy->Behaviors->attach('Tree', array(
-			'scope' => array(
-				'Taxonomy.vocabulary_id' => $vocabularyId,
-			),
-		));
-
-		if ($this->Term->Taxonomy->moveDown($taxonomyId, $step)) {
-			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'default', array('class' => 'success'));
-		} else {
-			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'default', array('class' => 'error'));
-		}
-
-		return $this->redirect(array(
-			'action' => 'index',
-			$vocabularyId,
-		));
+		$this->__move('down', $id, $vocabularyId, $step);
 	}
 
+/**
+ *  __move
+ *  @param string $direction either 'up' or 'down'
+ * @param integer $id
+ * @param integer $vocabularyId
+ * @param integer $step
+ * @return void
+ * @access private
+ */
+	private function __move($direction, $id, $vocabularyId, $step) {
+		$redirectUrl = array('action' => 'index', $vocabularyId);
+		$this->__ensureVocabularyIdExists($vocabularyId, $redirectUrl);
+		$this->__ensureTermExists($id, $redirectUrl);
+		$taxonomyId = $this->Term->Taxonomy->termInVocabulary($id, $vocabularyId);
+		$this->__ensureVocabularyIdExists($vocabularyId, $redirectUrl);
+
+		$this->Term->setScopeForTaxonomy($vocabularyId);
+
+		if ($this->Term->Taxonomy->{'move' . ucfirst($direction)}($taxonomyId, $step)) {
+			$messageFlash = __d('croogo', 'Moved %s successfully', $direction);
+			$cssClass = array('class' => 'success');
+		} else {
+			$messageFlash = __d('croogo', 'Could not move %s', $direction);
+			$cssClass = array('class' => 'error');
+		}
+		$this->Session->setFlash($messageFlash, 'default', $cssClass);
+		return $this->redirect($redirectUrl);
+	}
 	private function __getDefaultType($vocabulary) {
 		if(isset($vocabulary['Type'][0])){
 			$defaultType = $vocabulary['Type'][0];
@@ -269,28 +240,31 @@ class TermsController extends TaxonomyAppController {
 		return $defaultType;
 	}
 
-	private function __ensureTermExists($id) {
+	private function __ensureTermExists($id, $url = null) {
+		$redirectUrl = is_null($url) ? $this->_redirectUrl : $url;
 		if (!$this->Term->exists($id)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Term ID.'), 'default', array('class' => 'error'));
-			return $this->redirect($this->_redirectUrl);
+			return $this->redirect($redirectUrl);
 		}
 	}
 
-	private function __ensureTaxonomyExists($id, $vocabularyId) {
+	private function __ensureTaxonomyExists($id, $vocabularyId, $url = null) {
+		$redirectUrl = is_null($url) ? $this->_redirectUrl : $url;
 		if (!$this->Term->Taxonomy->hasAny(array('term_id' => $id, 'vocabulary_id' => $vocabularyId))) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Taxonomy.'), 'default', array('class' => 'error'));
-			return $this->redirect($this->_redirectUrl);
+			return $this->redirect($redirectUrl);
 		}
 	}
 
-	private function __ensureVocabularyIdExists($vocabularyId) {
+	private function __ensureVocabularyIdExists($vocabularyId, $url = null) {
+		$redirectUrl = is_null($url) ? $this->_redirectUrl : $url;
 		if (!$vocabularyId) {
-			return $this->redirect($this->_redirectUrl);
+			return $this->redirect($redirectUrl);
 		}
 
 		if (!$this->Term->Vocabulary->exists($vocabularyId)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Vocabulary ID.'), 'default', array('class' => 'error'));
-			return $this->redirect($this->_redirectUrl);
+			return $this->redirect($redirectUrl);
 		}
 	}
 }
