@@ -104,7 +104,7 @@ class StringConverter {
 					if (in_array($linkElementE['0'], $prefixes)) {
 						$linkArr[$linkElementE['0']] = strcasecmp($linkElementE['1'], 'false') === 0 ? false : true;
 					} else {
-						$linkArr[$linkElementE['0']] = $linkElementE['1'];
+						$linkArr[$linkElementE['0']] = urldecode($linkElementE['1']);
 					}
 				} else {
 					$linkArr[] = $linkElement;

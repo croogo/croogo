@@ -129,6 +129,80 @@ class StringConverterTest extends CroogoTestCase {
 	}
 
 /**
+ * testLinkStringToArrayWithUtf8
+ */
+	public function testLinkStringToArrayWithUtf8() {
+		$expected = array(
+			'admin' => false,
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'view',
+			'type' => 'blog',
+			'slug' => 'ハローワールド',
+		);
+		$result = $this->Converter->linkStringToArray(
+			'admin:false/plugin:nodes/controller:nodes/action:view/type:blog/slug:ハローワールド'
+		);
+		$this->assertEquals($expected, $result);
+	}
+
+/**
+ * testLinkStringToArrayWithUtf8PassedArgs
+ */
+	public function testLinkStringToArrayWithUtf8PassedArgs() {
+		$expected = array(
+			'admin' => false,
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'view',
+			'ハローワールド',
+			'좋은 아침',
+		);
+		$result = $this->Converter->linkStringToArray(
+			'admin:false/plugin:nodes/controller:nodes/action:view/ハローワールド/좋은 아침'
+		);
+		$this->assertEquals($expected, $result);
+	}
+
+/**
+ * testLinkStringToArrayWithUtf8InQueryString
+ */
+	public function testLinkStringToArrayWithUtf8InQueryString() {
+		$expected = array(
+			'admin' => false,
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'view',
+			'?' => array(
+				'slug' => 'ハローワールド',
+				'page' => '8',
+			),
+		);
+		$result = $this->Converter->linkStringToArray(
+			'admin:false/plugin:nodes/controller:nodes/action:view/?slug=ハローワールド&page=8'
+		);
+		$this->assertEquals($expected, $result);
+	}
+
+/**
+ * testLinkStringToArrayWithEncodedUtf8
+ */
+	public function testLinkStringToArrayWithEncodedUtf8() {
+		$expected = array(
+			'admin' => false,
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'view',
+			'type' => 'blog',
+			'slug' => 'ハローワールド',
+		);
+		$result = $this->Converter->linkStringToArray(
+			'admin:false/plugin:nodes/controller:nodes/action:view/type:blog/slug:%E3%83%8F%E3%83%AD%E3%83%BC%E3%83%AF%E3%83%BC%E3%83%AB%E3%83%89'
+		);
+		$this->assertEquals($expected, $result);
+	}
+
+/**
  * testUrlToLinkString
  */
 	public function testUrlToLinkString() {
