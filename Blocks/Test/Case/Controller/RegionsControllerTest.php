@@ -18,7 +18,7 @@ class RegionsControllerTest extends CroogoControllerTestCase {
 		'plugin.contacts.message',
 		'plugin.meta.meta',
 		'plugin.nodes.node',
-		'plugin.taxonomy.nodes_taxonomy',
+		'plugin.taxonomy.model_taxonomy',
 		'plugin.blocks.region',
 		'plugin.users.role',
 		'plugin.settings.setting',
