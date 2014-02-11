@@ -256,8 +256,6 @@ class Node extends NodesAppModel {
 			}
 		}
 
-		$this->cacheTerms();
-
 		return true;
 	}
 
@@ -273,37 +271,6 @@ class Node extends NodesAppModel {
 			}
 		}
 		return true;
-	}
-
-/**
- * Caches Term in Node.terms field
- *
- * @return void
- */
-	public function cacheTerms() {
-		if (isset($this->data['Taxonomy']['Taxonomy']) && count($this->data['Taxonomy']['Taxonomy']) > 0) {
-			$taxonomyIds = $this->data['Taxonomy']['Taxonomy'];
-			$taxonomies = $this->Taxonomy->find('all', array(
-				'conditions' => array(
-					'Taxonomy.id' => $taxonomyIds,
-				),
-			));
-			$terms = Hash::combine($taxonomies, '{n}.Term.id', '{n}.Term.slug');
-			$this->data[$this->alias]['terms'] = $this->encodeData($terms, array(
-				'trim' => false,
-				'json' => true,
-			));
-		}
-	}
-
-/**
- * Caches Term in Node.terms field
- *
- * @deprecated for backward compatibility
- * @see Node::cacheTerms()
- */
-	public function __cacheTerms() {
-		return $this->cacheTerms();
 	}
 
 /**
