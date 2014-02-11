@@ -21,6 +21,45 @@ class TaxonomizableBehavior extends ModelBehavior {
  */
 	public function setup(Model $model, $config = array()) {
 		$this->settings[$model->alias] = $config;
+
+		$this->_setupRelationships($model);
+	}
+
+/**
+ * Setup relationships
+ *
+ * @return void
+ */
+	protected function _setupRelationships(Model $model) {
+		$model->bindModel(array(
+			'hasAndBelongsToMany' => array(
+				'Taxonomy' => array(
+					'className' => 'Taxonomy.Taxonomy',
+					'with' => 'Taxonomy.ModelTaxonomy',
+					'foreignKey' => 'foreign_key',
+					'associationForeignKey' => 'taxonomy_id',
+					'unique' => true,
+					'conditions' => array(
+						'model' => $model->alias,
+					),
+				),
+			),
+		), false);
+
+		$model->Taxonomy->bindModel(array(
+			'hasAndBelongsToMany' => array(
+				$model->alias => array(
+					'className' => $model->plugin . '.' . $model->alias,
+					'with' => 'Taxonomy.ModelTaxonomy',
+					'foreignKey' => 'foreign_key',
+					'associationForeignKey' => 'taxonomy_id',
+					'unique' => true,
+					'conditions' => array(
+						'model' => $model->alias,
+					),
+				),
+			),
+		), false);
 	}
 
 /**

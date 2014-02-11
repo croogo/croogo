@@ -17,10 +17,22 @@ class NodesEventHandler implements CakeEventListener {
  */
 	public function implementedEvents() {
 		return array(
+			'Croogo.bootstrapComplete' => array(
+				'callable' => 'onBootstrapComplete',
+			),
 			'Controller.Links.setupLinkChooser' => array(
 				'callable' => 'onSetupLinkChooser',
 			),
 		);
+	}
+
+/**
+ * onBootstrapComplete
+ */
+	public function onBootstrapComplete($event) {
+		if (CakePlugin::loaded('Taxonomy')) {
+			Croogo::hookBehavior('Node', 'Taxonomy.Taxonomizable');
+		}
 	}
 
 /**

@@ -184,31 +184,6 @@ class Node extends NodesAppModel {
 		),
 	);
 
-/**
- * Model associations: hasAndBelongsToMany
- *
- * @var array
- * @access public
- */
-	public $hasAndBelongsToMany = array(
-		'Taxonomy' => array(
-			'className' => 'Taxonomy.Taxonomy',
-			'with' => 'Taxonomy.NodesTaxonomy',
-			'joinTable' => 'nodes_taxonomies',
-			'foreignKey' => 'node_id',
-			'associationForeignKey' => 'taxonomy_id',
-			'unique' => true,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => '',
-		),
-	);
-
 	public $findMethods = array(
 		'promoted' => true,
 		'viewBySlug' => true,
