@@ -78,7 +78,8 @@ class TermsControllerTest extends CroogoControllerTestCase {
 			'1' => 'Uncategorized',
 			'2' => 'Announcements',
 		);
-		$this->assertEquals($expected, $this->vars['termsTree']);
+		$termsTree = Hash::combine($this->vars['terms'], '{n}.Term.id', '{n}.Term.title');
+		$this->assertEquals($expected, $termsTree);
 	}
 
 /**
@@ -150,9 +151,11 @@ class TermsControllerTest extends CroogoControllerTestCase {
 		$this->testAction('/admin/taxonomy/terms/edit/1/1', array(
 			'data' => array(
 				'Taxonomy' => array(
+					'id' => 1,
 					'parent_id' => null,
 				),
 				'Term' => array(
+					'id' => 1,
 					'title' => 'New Category',
 					'slug' => 'new-category',
 					'description' => 'category description here',

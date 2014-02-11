@@ -22,6 +22,10 @@ class Term extends TaxonomyAppModel {
  */
 	public $name = 'Term';
 
+	public $findMethods = array(
+		'byVocabulary' => true,
+	);
+
 /**
  * Behaviors used by the Model
  *
@@ -71,14 +75,6 @@ class Term extends TaxonomyAppModel {
 			'foreignKey' => 'term_id',
 			'associationForeignKey' => 'vocabulary_id',
 			'unique' => true,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => '',
 		),
 	);
 
@@ -90,17 +86,21 @@ class Term extends TaxonomyAppModel {
  * @return integer
  */
 	public function saveAndGetId($data) {
+		$dataToPersist = $data;
+		if (!array_key_exists($this->alias, $data)) {
+			$dataToPersist = array($this->alias => $data);
+		}
 		$term = $this->find('first', array(
 			'conditions' => array(
-				'Term.slug' => $data['slug'],
+				$this->escapeField('slug') => $dataToPersist[$this->alias]['slug'],
 			),
 		));
-		if (isset($term['Term']['id'])) {
-			return $term['Term']['id'];
+		if (isset($term[$this->alias][$this->primaryKey])) {
+			return $term[$this->alias][$this->primaryKey];
 		}
 
 		$this->id = false;
-		if ($this->save($data)) {
+		if ($this->save($dataToPersist)) {
 			return $this->id;
 		}
 		return false;
@@ -122,4 +122,145 @@ class Term extends TaxonomyAppModel {
 		return $count === 0;
 	}
 
+/**
+ * Convenience method to check whether term exists within a vocabulary
+ *
+ * @param integer $id Term Id
+ * @param integer $vocabularyId Vocabulary Id
+ * @param integer $taxonomyId Taxonomy Id
+ * @return bool True if Term exists in Vocabulary
+ */
+	public function isInVocabulary($id, $vocabularyId, $taxonomyId = null) {
+		$conditions = array('term_id' => $id, 'vocabulary_id' => $vocabularyId);
+		if (!is_null($taxonomyId)) {
+			$conditions['Taxonomy.id !='] = $taxonomyId;
+		}
+		return $this->Vocabulary->Taxonomy->hasAny($conditions);
+	}
+
+/**
+ * Save term
+ *
+ * @see Term::_save()
+ * @return array|bool Array of saved term or boolean false
+ */
+	public function add($data, $vocabularyId) {
+		return $this->_save($data, $vocabularyId);
+	}
+
+/**
+ * Edit term
+ *
+ * @see Term::_save()
+ * @return array|bool Array of saved term or boolean false
+ */
+	public function edit($data, $vocabularyId) {
+		$id = $data[$this->alias][$this->primaryKey];
+		$slug = $data[$this->alias]['slug'];
+
+		if ($this->hasSlugChanged($id, $slug) && $this->slugExists($slug)) {
+			$edited = false;
+		} else {
+			$taxonomyId = !empty($data['Taxonomy']['id']) ? $data['Taxonomy']['id'] : null;
+			$edited = $this->_save($data, $vocabularyId, $taxonomyId);
+		}
+		return $edited;
+	}
+
+/**
+ * Checks wether slug has changed for given Term id
+ *
+ * @param int $id Term Id
+ * @param string $slug Slug
+ * @return bool True if slug has changed
+ * @throws NotFoundException
+ */
+	public function hasSlugChanged($id, $slug) {
+		if (!is_numeric($id) || !$this->exists($id)) {
+			throw new NotFoundException(__d('croogo', 'Invalid Term Id'));
+		}
+		return $this->field('slug', array($this->escapeField() => $id)) != $slug;
+	}
+
+/**
+ * Convenience check for slug
+ *
+ * @return bool
+ */
+	public function slugExists($slug) {
+		return $this->hasAny(compact('slug'));
+	}
+
+/**
+ * Remove term
+ *
+ * @param integer $id Term Id
+ * @param integer $vocabularyId Vocabulary Id
+ */
+	public function remove($id, $vocabularyId) {
+		$taxonomyId = $this->Vocabulary->Taxonomy->field('id', array(
+			'term_id' => $id, 'vocabulary_id' => $vocabularyId
+		));
+		$this->setScopeForTaxonomy($vocabularyId);
+		return $this->Taxonomy->delete($taxonomyId) && $this->delete($id);
+	}
+
+/**
+ * Save new/updated term data
+ *
+ * @param array $data Term data
+ * @param integer $vocabularyId Vocabulary Id
+ * @param integer $taxonomyId Taxonomy Id
+ */
+	protected function _save($data, $vocabularyId, $taxonomyId = null) {
+		$added = false;
+
+		$termId = $this->saveAndGetId($data);
+		if (!$this->isInVocabulary($termId, $vocabularyId, $taxonomyId)) {
+			$this->setScopeForTaxonomy($vocabularyId);
+			$dataToPersist = array(
+				'parent_id' => $data['Taxonomy']['parent_id'],
+				'term_id' => $termId,
+				'vocabulary_id' => $vocabularyId,
+			);
+			if (!is_null($taxonomyId)) {
+				$dataToPersist['id'] = $taxonomyId;
+			}
+			$added = $this->Taxonomy->save($dataToPersist);
+		}
+		return $added;
+	}
+
+	protected function _findByVocabulary($state, $query, $results = array()) {
+		if (empty($query['vocabulary_id'])) {
+			trigger_error(__d('croogo', '"vocabulary_id" key not found'));
+		}
+		if ($state == 'before') {
+			$vocabularyAlias = $this->Vocabulary->field('alias', array('id' => $query['vocabulary_id']));
+			$termsId = $this->Vocabulary->Taxonomy->getTree($vocabularyAlias, array('key' => 'id', 'value' => 'title'));
+			$defaultQuery = array(
+				'conditions' => array(
+					$this->escapeField() => array_keys($termsId)
+				)
+			);
+			return array_merge_recursive($defaultQuery, (array)$query);
+		}
+		return $results;
+	}
+
+/**
+ * Set Scope
+ *
+ * @param integer $vocabularyId Vocabulary Id
+ */
+	public function setScopeForTaxonomy($vocabularyId) {
+		$scopeSettings = array('scope' => array(
+			'Taxonomy.vocabulary_id' => $vocabularyId,
+		));
+		if ($this->Vocabulary->Taxonomy->Behaviors->loaded('Tree')) {
+			$this->Vocabulary->Taxonomy->Behaviors->Tree->setup($this->Vocabulary->Taxonomy, $scopeSettings);
+		} else {
+			$this->Vocabulary->Taxonomy->Behaviors->load('Tree', $scopeSettings);
+		}
+	}
 }

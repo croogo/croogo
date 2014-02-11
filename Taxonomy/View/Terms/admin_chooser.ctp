@@ -13,48 +13,36 @@
 <?php
 	$rows = array();
 
-	// Default Content Type
-	if (isset($vocabulary['Type'][0])) {
-		$type = $vocabulary['Type'][0]['alias'];
-	}
-
-	// Passed Content Type
-	if (isset($this->params->query['type'])) {
-		$type = $this->params->query['type'];
-	}
-
-	foreach ($termsTree as $id => $title):
-
-		// Title Column
-		$titleCol = $title;
-		if (isset($type)) {
-			$titleCol = $this->Html->link($title, array(
+	foreach ($terms as $term):
+		$titleCol = $term['Term']['title'];
+		if (isset($defaultType)) {
+			$titleCol = $this->Html->link($term['Term']['title'], array(
 				'plugin' => 'nodes',
 				'controller' => 'nodes',
 				'action' => 'term',
-				'type' => $type,
-				'slug' => $terms[$id]['slug'],
+				'type' => $defaultType['alias'],
+				'slug' => $term['Term']['slug'],
 				'admin' => false
 			), array(
 				'class' => 'item-choose',
 				'data-chooser_type' => 'Node',
-				'data-chooser_id' => $id,
+				'data-chooser_id' => $term['Term']['id'],
 				'rel' => sprintf(
 					'plugin:%s/controller:%s/action:%s/type:%s/slug:%s',
 					'nodes',
 					'nodes',
 					'term',
-					$type,
-					$terms[$id]['slug']
+					$defaultType['alias'],
+					$term['Term']['slug']
 				),
 			));
 		}
 
 		$rows[] = array(
 			'',
-			$id,
+			$term['Term']['id'],
 			$titleCol,
-			$terms[$id]['slug'],
+			$term['Term']['slug'],
 		);
 
 	endforeach;
