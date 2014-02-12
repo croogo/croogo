@@ -202,20 +202,20 @@ class CommentsController extends CommentsAppController {
 /**
  * add
  *
- * @param integer $nodeId
+ * @param integer $foreignKey
  * @param integer $parentId
  * @return void
  * @access public
  */
-	public function add($nodeId = null, $parentId = null) {
-		if (!$nodeId) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Node'), 'default', array('class' => 'error'));
+	public function add($model, $foreignKey = null, $parentId = null) {
+		if (!$foreignKey) {
+			$this->Session->setFlash(__d('croogo', 'Invalid id'), 'default', array('class' => 'error'));
 			return $this->redirect('/');
 		}
 
 		$node = $this->Comment->Node->find('first', array(
 			'conditions' => array(
-				'Node.id' => $nodeId,
+				'Node.id' => $foreignKey,
 				'Node.status' => 1,
 			),
 		));
@@ -250,7 +250,7 @@ class CommentsController extends CommentsAppController {
 				$userData['User'] = $this->Auth->user();
 			}
 
-			$success = $this->Comment->add($data, $nodeId, $type, $parentId, $userData);
+			$success = $this->Comment->add($data, $model, $foreignKey, $type, $parentId, $userData);
 			if ($success) {
 				if ($type['Type']['comment_approve']) {
 					$messageFlash = __d('croogo', 'Your comment has been added successfully.');
@@ -267,7 +267,7 @@ class CommentsController extends CommentsAppController {
 			}
 		}
 
-		$this->set(compact('success', 'node', 'type', 'nodeId', 'parentId'));
+		$this->set(compact('success', 'node', 'type', 'model', 'foreignKey', 'parentId'));
 	}
 
 /**

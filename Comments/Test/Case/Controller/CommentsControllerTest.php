@@ -248,9 +248,9 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 			'body' => 'text here...',
 		);
 		$node = $Comments->Comment->Node->findBySlug('hello-world');
-		$Comments->add($node['Node']['id']);
+		$Comments->add('Node', $node['Node']['id']);
 
-		$comments = $Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
+		$comments = $Comments->Comment->generateTreeList(array('Comment.foreign_key' => $node['Node']['id'], 'Comment.model' => 'Node'), '{n}.Comment.id', '{n}.Comment.name');
 		$commenters = array_values($comments);
 		$this->assertEqual($commenters, array('Mr Croogo', 'Mrs Croogo', 'John Smith'));
 
@@ -287,9 +287,9 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		$node = $Comments->Comment->Node->findBySlug('hello-world');
 
 		Configure::write('Comment.level', 2);
-		$Comments->add($node['Node']['id'], 1); // under the comment by Mr Croogo
+		$Comments->add('Node', $node['Node']['id'], 1); // under the comment by Mr Croogo
 
-		$comments = $Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
+		$comments = $Comments->Comment->generateTreeList(array('Comment.foreign_key' => $node['Node']['id'], 'Comment.model' => 'Node'), '{n}.Comment.id', '{n}.Comment.name');
 		$commenters = array_values($comments);
 		$this->assertEqual($commenters, array('Mr Croogo', '_John Smith', 'Mrs Croogo'));
 
@@ -320,9 +320,9 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 			'body' => 'text here...',
 		);
 		$node = $Comments->Comment->Node->findBySlug('hello-world');
-		$Comments->add($node['Node']['id']);
+		$Comments->add('Node', $node['Node']['id']);
 
-		$comments = $Comments->Comment->generateTreeList(array('Comment.node_id' => $node['Node']['id']), '{n}.Comment.id', '{n}.Comment.name');
+		$comments = $Comments->Comment->generateTreeList(array('Comment.foreign_key' => $node['Node']['id'], 'Comment.model' => 'Node'), '{n}.Comment.id', '{n}.Comment.name');
 		$commenters = array_values($comments);
 		$this->assertEqual($commenters, array('Mr Croogo', 'Mrs Croogo', 'John Smith'));
 
@@ -357,7 +357,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 			'website' => 'http://example.com',
 			'body' => 'text here...',
 		);
-		$this->CommentsController->add(1);
+		$this->CommentsController->add('Node', 1);
 	}
 
 /**
@@ -375,7 +375,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 			'website' => 'http://example.com',
 			'body' => 'text here...',
 		);
-		$this->CommentsController->add(1);
+		$this->CommentsController->add('Node', 1);
 	}
 
 }

@@ -96,7 +96,8 @@ class Comment extends AppModel {
  * Add a new Comment
  *
  * @param array $data Comment data (Usually POSTed data from Comment form)
- * @param int   $nodeId Node Id (Node Id from where comment was posted).
+ * @param string $model Model alias
+ * @param int $foreignKey Foreign Key (Node Id from where comment was posted).
  * @param array $nodeType Type data (Node's Type data)
  * @param mixed int/null $parentId id of parent comment (if it is a reply)
  * @param array $userData author data (User data (if logged in) / Author fields from Comment form)
@@ -104,20 +105,23 @@ class Comment extends AppModel {
  * @return bool true if comment was added, false otherwise.
  * @throws NotFoundException
  */
-	public function add($data, $nodeId, $nodeType, $parentId = null, $userData = array()) {
+	public function add($data, $model, $foreignKey, $nodeType, $parentId = null, $userData = array()) {
 		$record = array();
 		$node = array();
 
-		$nodeId = (int)$nodeId;
+		$foreignKey = (int)$foreignKey;
 		$parentId = is_null($parentId) ? null : (int)$parentId;
 
-		$node = $this->Node->findById($nodeId);
+		$node = $this->{$model}->findById($foreignKey);
 		if (empty($node)) {
 			throw new NotFoundException(__d('croogo', 'Invalid Node id'));
 		}
 
 		if (!is_null($parentId)) {
-			if ($this->isValidLevel($parentId) && $this->isApproved($parentId, $nodeId)) {
+			if (
+				$this->isValidLevel($parentId) &&
+				$this->isApproved($parentId, $model, $foreignKey)
+			) {
 				$record['parent_id'] = $parentId;
 			} else {
 				return false;
@@ -136,7 +140,8 @@ class Comment extends AppModel {
 		}
 
 		$record['ip'] = $data[$this->alias]['ip'];
-		$record['node_id'] = $node['Node']['id'];
+		$record['model'] = $model;
+		$record['foreign_key'] = $node[$this->{$model}->alias]['id'];
 		$record['body'] = h($data[$this->alias]['body']);
 		$record['type'] = $nodeType['Type']['alias'];
 
@@ -156,10 +161,11 @@ class Comment extends AppModel {
  * @param integer $nodeId node id
  * @return boolean true if comment is approved
  */
-	public function isApproved($commentId, $nodeId) {
+	public function isApproved($commentId, $model, $foreignKey) {
 		return $this->hasAny(array(
 			$this->escapeField() => $commentId,
-			$this->escapeField('node_id') => $nodeId,
+			$this->escapeField('model') => $model,
+			$this->escapeField('foreign_key') => $foreignKey,
 			$this->escapeField('status') => 1,
 		));
 	}

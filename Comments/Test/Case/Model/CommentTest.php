@@ -51,6 +51,7 @@ class CommentTest extends CroogoTestCase {
 
 		$result = $this->Comment->add(
 			$data,
+			'Node',
 			1,
 			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 2))
 		);
@@ -79,6 +80,7 @@ class CommentTest extends CroogoTestCase {
 
 		$result = $this->Comment->add(
 			$data,
+			'Node',
 			1,
 			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 2)),
 			1
@@ -127,6 +129,7 @@ class CommentTest extends CroogoTestCase {
 
 		$result = $this->Comment->add(
 			$data,
+			'Node',
 			1,
 			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 2)),
 			1,
@@ -158,6 +161,7 @@ class CommentTest extends CroogoTestCase {
 
 		$result = $this->Comment->add(
 			$data,
+			'Node',
 			1,
 			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 0)),
 			1
@@ -189,6 +193,7 @@ class CommentTest extends CroogoTestCase {
 
 		$result = $this->Comment->add(
 			$data,
+			'Node',
 			1,
 			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 2)),
 			1
@@ -209,6 +214,7 @@ class CommentTest extends CroogoTestCase {
 		$this->setExpectedException('NotFoundException');
 		$this->Comment->add(
 			array('Comment' => array('name', 'email', 'body')),
+			'Node',
 			'invalid',
 			array()
 		);
@@ -230,6 +236,7 @@ class CommentTest extends CroogoTestCase {
 		);
 		$this->Comment->add(
 			$data,
+			'Node',
 			1,
 			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 2)),
 			'invalid'

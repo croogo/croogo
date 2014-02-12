@@ -12,6 +12,7 @@
 			'plugin' => 'comments',
 			'controller' => 'comments',
 			'action' => 'add',
+			'Node',
 			$node['Node']['id'],
 		);
 		if (isset($parentId) && $parentId != null) {

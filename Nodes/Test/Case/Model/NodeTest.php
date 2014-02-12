@@ -91,9 +91,12 @@ class NodeTest extends CroogoTestCase {
 
 	public function testNodeDeleteDependent() {
 		// assert existing count
-		$commentCount = $this->Node->Comment->find('count',
-			array('conditions' => array('Comment.node_id' => 1))
-			);
+		$commentCount = $this->Node->Comment->find('count', array(
+			'conditions' => array(
+				'Comment.model' => 'Node',
+				'Comment.foreign_key' => 1
+			)
+		));
 		$this->assertEquals(2, $commentCount);
 
 		$metaCount = $this->Node->Meta->find('count',
@@ -105,9 +108,12 @@ class NodeTest extends CroogoTestCase {
 		$this->Node->id = 1;
 		$this->Node->delete();
 
-		$commentCount = $this->Node->Comment->find('count',
-			array('conditions' => array('Comment.node_id' => 1))
-		);
+		$commentCount = $this->Node->Comment->find('count', array(
+			'conditions' => array(
+				'Comment.model' => 'Node',
+				'Comment.foreign_key' => 1,
+			)
+		));
 		$this->assertEqual(0, $commentCount);
 
 		$metaCount = $this->Node->Meta->find('count',
@@ -362,7 +368,8 @@ class NodeTest extends CroogoTestCase {
 
 		$commentCount = $this->Node->Comment->find('count', array(
 			'conditions' => array(
-				'Comment.node_id' => $ids,
+				'Comment.model' => 'Node',
+				'Comment.foreign_key' => $ids,
 			)
 		));
 		$this->assertTrue($commentCount > 0);
@@ -376,7 +383,8 @@ class NodeTest extends CroogoTestCase {
 		// verifies that related comments are deleted (by afterDelete callback)
 		$commentCount = $this->Node->Comment->find('count', array(
 			'conditions' => array(
-				'Comment.node_id' => $ids,
+				'Comment.model' => 'Node',
+				'Comment.foreign_key' => $ids,
 			)
 		));
 		$this->assertTrue($commentCount === 0);
