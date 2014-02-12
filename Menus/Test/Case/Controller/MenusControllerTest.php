@@ -15,7 +15,7 @@ class MenusControllerTest extends CroogoControllerTestCase {
 		'plugin.settings.language',
 		'plugin.contacts.message',
 		'plugin.nodes.node',
-		'plugin.taxonomy.nodes_taxonomy',
+		'plugin.taxonomy.model_taxonomy',
 		'plugin.blocks.region',
 		'plugin.users.role',
 		'plugin.settings.setting',
