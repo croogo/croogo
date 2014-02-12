@@ -33,6 +33,9 @@ class NodesEventHandler implements CakeEventListener {
 		if (CakePlugin::loaded('Taxonomy')) {
 			Croogo::hookBehavior('Node', 'Taxonomy.Taxonomizable');
 		}
+		if (CakePlugin::loaded('Meta')) {
+			Croogo::hookBehavior('Node', 'Meta.Meta');
+		}
 	}
 
 /**
