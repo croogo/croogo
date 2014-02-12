@@ -27,6 +27,24 @@ class MetaBehavior extends ModelBehavior {
 		}
 
 		$this->settings[$model->alias] = $config;
+
+		$model->bindModel(array(
+			'hasMany' => array(
+				'Meta' => array(
+					'className' => 'Meta.Meta',
+					'foreignKey' => 'foreign_key',
+					'dependent' => true,
+					'conditions' => array(
+						'Meta.model' => $model->alias,
+					),
+					'order' => 'Meta.key ASC',
+				),
+			),
+		), false);
+
+		$callback = array($this, 'onBeforeSaveNode');
+		$eventManager = $model->getEventManager();
+		$eventManager->attach($callback, 'Model.Node.beforeSaveNode');
 	}
 
 /**
@@ -93,12 +111,23 @@ class MetaBehavior extends ModelBehavior {
 	}
 
 /**
+ * Handle Model.Node.beforeSaveNode event
+ *
+ * @param CakeEvent $event
+ */
+	public function onBeforeSaveNode($event) {
+		$event->data['data'] = $this->_prepareMeta($event->data['data']);
+		return true;
+	}
+
+/**
  * Save with meta
  *
  * @param Model $model
  * @param array $data
  * @param array $options
  * @return void
+ * @deprecated Use standard Model::saveAll()
  */
 	public function saveWithMeta(Model $model, $data, $options = array()) {
 		$data = $this->_prepareMeta($data);

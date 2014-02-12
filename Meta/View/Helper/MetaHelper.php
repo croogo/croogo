@@ -23,6 +23,15 @@ class MetaHelper extends AppHelper {
 	);
 
 /**
+* beforeRender
+ */
+	public function beforeRender($viewFile) {
+		if (isset($this->request->params['admin'])) {
+			$this->Html->script('Meta.admin', array('inline' => false));
+		}
+	}
+
+/**
  * Meta tags
  *
  * @return string

@@ -267,6 +267,7 @@ class NodesController extends NodesAppController {
  * @param integer $id
  * @return void
  * @access public
+ * @deprecated Use MetaController::admin_delete_meta()
  */
 	public function admin_delete_meta($id = null) {
 		$success = false;
@@ -286,6 +287,7 @@ class NodesController extends NodesAppController {
  *
  * @return void
  * @access public
+ * @deprecated Use MetaController::admin_add_meta()
  */
 	public function admin_add_meta() {
 		$this->layout = 'ajax';

@@ -169,19 +169,6 @@ class Node extends NodesAppModel {
 			'finderQuery' => '',
 			'counterQuery' => '',
 		),
-		'Meta' => array(
-			'className' => 'Meta.Meta',
-			'foreignKey' => 'foreign_key',
-			'dependent' => true,
-			'conditions' => array('Meta.model' => 'Node'),
-			'fields' => '',
-			'order' => 'Meta.key ASC',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => '',
-		),
 	);
 
 	public $findMethods = array(
@@ -321,14 +308,13 @@ class Node extends NodesAppModel {
  * @param $data array Node data
  * @param $typeAlias string Node type alias
  * @return mixed see Model::saveAll()
- * @see MetaBehavior::saveWithMeta()
  */
 	public function saveNode($data, $typeAlias = self::DEFAULT_TYPE) {
 		$result = false;
 
 		$data = $this->formatData($data, $typeAlias);
 		$event = Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, compact('data', 'typeAlias'));
-		$result = $this->saveWithMeta($event->data['data']);
+		$result = $this->saveAll($event->data['data']);
 		Croogo::dispatchEvent('Model.Node.afterSaveNode', $this, $event->data);
 
 		return $result;
