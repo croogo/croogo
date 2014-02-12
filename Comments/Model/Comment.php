@@ -73,11 +73,6 @@ class Comment extends AppModel {
  * @access public
  */
 	public $belongsTo = array(
-		'Node' => array(
-			'className' => 'Nodes.Node',
-			'counterCache' => true,
-			'counterScope' => array('Comment.status' => self::STATUS_APPROVED),
-		),
 		'User' => array(
 			'className' => 'Users.User',
 		),

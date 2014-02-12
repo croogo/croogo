@@ -30,6 +30,21 @@ class NodesEventHandler implements CakeEventListener {
  * onBootstrapComplete
  */
 	public function onBootstrapComplete($event) {
+		if (CakePlugin::loaded('Comments')) {
+			App::uses('Comment', 'Comments.Model');
+			Croogo::hookBehavior('Node', 'Comments.Commentable');
+			Croogo::hookModelProperty('Comment', 'belongsTo', array(
+				'Node' => array(
+					'className' => 'Nodes.Node',
+					'foreignKey' => 'foreign_key',
+					'counterCache' => true,
+					'counterScope' => array(
+						'Comment.model' => 'Node',
+						'Comment.status' => Comment::STATUS_APPROVED,
+					),
+				),
+			));
+		}
 		if (CakePlugin::loaded('Taxonomy')) {
 			Croogo::hookBehavior('Node', 'Taxonomy.Taxonomizable');
 		}
