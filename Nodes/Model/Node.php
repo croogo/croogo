@@ -327,7 +327,7 @@ class Node extends NodesAppModel {
 		$result = false;
 
 		$data = $this->formatData($data, $typeAlias);
-		$event = Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, compact('data'));
+		$event = Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, compact('data', 'typeAlias'));
 		$result = $this->saveWithMeta($event->data['data']);
 		Croogo::dispatchEvent('Model.Node.afterSaveNode', $this, $event->data);
 
@@ -365,45 +365,31 @@ class Node extends NodesAppModel {
 /**
  * Format data for saving
  *
- * @param $data array Node and related data such as Taxonomy and Role
- * @param $typeAlias string Node type alias
+ * @param array $data Node and related data, eg Taxonomy and Role
+ * @param string $typeAlias string Node type alias
  * @return array formatted data
  * @throws InvalidArgumentException
  */
 	public function formatData($data, $typeAlias = self::DEFAULT_TYPE) {
-		$prepared = $roles = $type = array();
-		$type = $this->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
+		$roles = $type = array();
 
 		if (!array_key_exists($this->alias, $data)) {
-			$prepared = array($this->alias => $data);
+			$data = array($this->alias => $data);
 		} else {
-			$prepared = $data;
+			$data = $data;
 		}
 
-		if (empty($type)) {
-			throw new InvalidArgumentException(__d('croogo', 'Invalid Content Type'));
-		}
+		$data[$this->alias]['path'] = $this->_getNodeRelativePath($data);
 
-		if (empty($prepared[$this->alias]['type'])) {
-			$prepared[$this->alias]['type'] = $typeAlias;
-		}
-		$this->type = $type['Type']['alias'];
-		if (!$this->Behaviors->enabled('Tree')) {
-			$this->Behaviors->attach('Tree', array('scope' => array('Node.type' => $this->type)));
-		}
-
-		$this->_parseTaxonomyData($prepared);
-		$prepared[$this->alias]['path'] = $this->_getNodeRelativePath($prepared);
-
-		if (!array_key_exists('Role', $prepared) || empty($prepared['Role']['Role'])) {
+		if (!array_key_exists('Role', $data) || empty($data['Role']['Role'])) {
 			$roles = '';
 		} else {
-			$roles = $prepared['Role']['Role'];
+			$roles = $data['Role']['Role'];
 		}
 
-		$prepared[$this->alias]['visibility_roles'] = $this->encodeData($roles);
+		$data[$this->alias]['visibility_roles'] = $this->encodeData($roles);
 
-		return $prepared;
+		return $data;
 	}
 
 /**
@@ -438,22 +424,6 @@ class Node extends NodesAppModel {
 		}
 
 		return $this->saveMany($nodes);
-	}
-
-/**
- * parseTaxonomyData
- *
- * @param array $node Node array
- * @return void
- */
-	protected function _parseTaxonomyData(&$node) {
-		if (array_key_exists('TaxonomyData', $node)) {
-			$node['Taxonomy'] = array('Taxonomy' => array());
-			foreach ($node['TaxonomyData'] as $vocabularyId => $taxonomyIds) {
-				$node['Taxonomy']['Taxonomy'] = array_merge($node['Taxonomy']['Taxonomy'], (array)$taxonomyIds);
-			}
-			unset($node['TaxonomyData']);
-		}
 	}
 
 /**

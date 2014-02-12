@@ -23,6 +23,7 @@ class TaxonomizableBehavior extends ModelBehavior {
 		$this->settings[$model->alias] = $config;
 
 		$this->_setupRelationships($model);
+		$this->_setupEvents($model);
 	}
 
 /**
@@ -60,6 +61,64 @@ class TaxonomizableBehavior extends ModelBehavior {
 				),
 			),
 		), false);
+	}
+
+/**
+ * Setup Event handlers
+ *
+ * @return void
+ */
+	protected function _setupEvents($model) {
+		$callback = array($this, 'onBeforeSaveNode');
+		$eventManager = $model->getEventManager();
+		$eventManager->attach($callback, 'Model.Node.beforeSaveNode');
+	}
+
+/**
+ * Transform TaxonomyData array to a format that can be used for save operation
+ *
+ * @param array $data Array containing relevant Taxonomy data
+ * @param string $typeAlias string Node type alias
+ * @return array Formatted data
+ * @throws InvalidArgumentException
+ */
+	public function formatTaxonomyData(Model $model, &$data, $typeAlias) {
+		$type = $model->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
+		if (empty($type)) {
+			throw new InvalidArgumentException(__d('croogo', 'Invalid Content Type'));
+		}
+		if (empty($data[$model->alias]['type'])) {
+			$data[$model->alias]['type'] = $typeAlias;
+		}
+		$model->type = $type['Type']['alias'];
+
+		if (!$model->Behaviors->enabled('Tree')) {
+			$model->Behaviors->attach('Tree', array(
+				'scope' => array(
+					$model->escapeField('type') => $model->type,
+				),
+			));
+		}
+
+		if (array_key_exists('TaxonomyData', $data)) {
+			$data['Taxonomy'] = array('Taxonomy' => array());
+			foreach ($data['TaxonomyData'] as $vocabularyId => $taxonomyIds) {
+				$data['Taxonomy']['Taxonomy'] = array_merge($data['Taxonomy']['Taxonomy'], (array)$taxonomyIds);
+			}
+			unset($data['TaxonomyData']);
+		}
+	}
+
+/**
+ * Handle Model.Node.beforeSaveNode event
+ *
+ * @param CakeEvent $event Event containing `data` and `typeAlias`
+ */
+	public function onBeforeSaveNode($event) {
+		$data = $event->data['data'];
+		$typeAlias = $event->data['typeAlias'];
+		$this->formatTaxonomyData($event->subject, $data, $typeAlias);
+		$event->data['data'] = $data;
 	}
 
 /**
