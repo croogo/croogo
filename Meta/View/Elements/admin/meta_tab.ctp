@@ -17,7 +17,7 @@
 <?php
 echo $this->Html->link(
 	__d('croogo', 'Add another field'),
-	array('action' => 'add_meta'),
+	array('plugin' => 'meta', 'controller' => 'meta', 'action' => 'add_meta'),
 	array('class' => 'add-meta')
 );
 ?>
