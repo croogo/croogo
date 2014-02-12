@@ -14,8 +14,6 @@ var Nodes = {};
  */
 Nodes.documentReady = function() {
 	Nodes.filter();
-	Nodes.addMeta();
-	Nodes.removeMeta();
 }
 
 /**
@@ -70,50 +68,6 @@ Nodes.filter = function() {
 		}
 
 		window.location = loadUrl;
-		return false;
-	});
-}
-
-/**
- * add meta field
- *
- * @return void
- */
-Nodes.addMeta = function() {
-	$('a.add-meta').click(function(e) {
-		var aAddMeta = $(this);
-		$.get(aAddMeta.attr('href'), function(data) {
-			aAddMeta.parent().find('.clear:first').before(data);
-			$('div.meta a.remove-meta').unbind();
-			Nodes.removeMeta();
-		});
-		e.preventDefault();
-	});
-}
-
-/**
- * remove meta field
- *
- * @return void
- */
-Nodes.removeMeta = function() {
-	$('div.meta a.remove-meta').click(function(e) {
-		var aRemoveMeta = $(this);
-		if (aRemoveMeta.attr('rel') != '') {
-			if (!confirm('Remove this meta field?')) {
-				return false;
-			}
-			$.getJSON(aRemoveMeta.attr('href') + '.json', function(data) {
-				if (data.success) {
-					aRemoveMeta.parents('.meta').remove();
-				} else {
-					// error
-				}
-			});
-		} else {
-			aRemoveMeta.parents('.meta').remove();
-		}
-		e.preventDefault();
 		return false;
 	});
 }
