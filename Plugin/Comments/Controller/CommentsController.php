@@ -278,6 +278,7 @@ class CommentsController extends CommentsAppController {
  * @param array $node
  * @return boolean
  * @access protected
+ * @deprecated This method will be renamed to _spamProtection() in the future
  */
 	protected function _spam_protection($continue, $type, $node) {
 		if (!empty($this->request->data) &&
