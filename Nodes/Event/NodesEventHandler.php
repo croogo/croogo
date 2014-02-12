@@ -33,6 +33,7 @@ class NodesEventHandler implements CakeEventListener {
 		if (CakePlugin::loaded('Comments')) {
 			App::uses('Comment', 'Comments.Model');
 			Croogo::hookBehavior('Node', 'Comments.Commentable');
+			Croogo::hookComponent('Nodes', 'Comments.Comments');
 			Croogo::hookModelProperty('Comment', 'belongsTo', array(
 				'Node' => array(
 					'className' => 'Nodes.Node',
