@@ -48,10 +48,10 @@ class TaxonomiesComponent extends Component {
  */
 	public function startup(Controller $controller) {
 		$this->controller = $controller;
-		if (isset($controller->Node)) {
-			$this->Node = $controller->Node;
+		if (isset($controller->Taxonomy)) {
+			$this->Taxonomy = $controller->Taxonomy;
 		} else {
-			$this->Node = ClassRegistry::init('Nodes.Node');
+			$this->Taxonomy = ClassRegistry::init('Taxonomy.Taxonomy');
 		}
 
 		if (!isset($this->controller->request->params['admin']) && !isset($this->controller->request->params['requested'])) {
@@ -75,7 +75,7 @@ class TaxonomiesComponent extends Component {
  */
 	protected function _adminData() {
 		// types
-		$types = $this->Node->Taxonomy->Vocabulary->Type->find('all', array(
+		$types = $this->Taxonomy->Vocabulary->Type->find('all', array(
 			'conditions' => array(
 				'OR' => array(
 					'Type.plugin LIKE' => '',
@@ -87,7 +87,7 @@ class TaxonomiesComponent extends Component {
 		$this->controller->set('types_for_admin_layout', $types);
 
 		// vocabularies
-		$vocabularies = $this->Node->Taxonomy->Vocabulary->find('all', array(
+		$vocabularies = $this->Taxonomy->Vocabulary->find('all', array(
 			'recursive' => '-1',
 			'conditions' => array(
 				'OR' => array(
@@ -108,7 +108,7 @@ class TaxonomiesComponent extends Component {
  * @return void
  */
 	public function types() {
-		$types = $this->Node->Taxonomy->Vocabulary->Type->find('all', array(
+		$types = $this->Taxonomy->Vocabulary->Type->find('all', array(
 			'cache' => array(
 				'name' => 'types',
 				'config' => 'croogo_types',
@@ -136,7 +136,7 @@ class TaxonomiesComponent extends Component {
 		$vocabularies = Hash::merge($vocabularies, array_keys($this->controller->Blocks->blocksData['vocabularies']));
 		$vocabularies = array_unique($vocabularies);
 		foreach ($vocabularies as $vocabularyAlias) {
-			$vocabulary = $this->Node->Taxonomy->Vocabulary->find('first', array(
+			$vocabulary = $this->Taxonomy->Vocabulary->find('first', array(
 				'conditions' => array(
 					'Vocabulary.alias' => $vocabularyAlias,
 				),
@@ -147,7 +147,7 @@ class TaxonomiesComponent extends Component {
 				'recursive' => '-1',
 			));
 			if (isset($vocabulary['Vocabulary']['id'])) {
-				$threaded = $this->Node->Taxonomy->find('threaded', array(
+				$threaded = $this->Taxonomy->find('threaded', array(
 					'conditions' => array(
 						'Taxonomy.vocabulary_id' => $vocabulary['Vocabulary']['id'],
 					),

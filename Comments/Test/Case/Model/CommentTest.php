@@ -8,7 +8,7 @@ class CommentTest extends CroogoTestCase {
 		'plugin.comments.comment',
 		'plugin.meta.meta',
 		'plugin.nodes.node',
-		'plugin.taxonomy.nodes_taxonomy',
+		'plugin.taxonomy.model_taxonomy',
 		'plugin.taxonomy.taxonomy',
 		'plugin.taxonomy.type',
 		'plugin.users.user',

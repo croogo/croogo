@@ -29,7 +29,7 @@ class VocabularyFixture extends CroogoTestFixture {
 			'title' => 'Categories',
 			'alias' => 'categories',
 			'description' => '',
-			'required' => 0,
+			'required' => 1,
 			'multiple' => 1,
 			'tags' => 0,
 			'plugin' => '',

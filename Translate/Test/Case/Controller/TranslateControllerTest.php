@@ -17,7 +17,7 @@ class TranslateControllerTest extends CroogoControllerTestCase {
 		'plugin.settings.language',
 		'plugin.settings.setting',
 		'plugin.taxonomy.taxonomy',
-		'plugin.taxonomy.nodes_taxonomy',
+		'plugin.taxonomy.model_taxonomy',
 		'plugin.taxonomy.type',
 		'plugin.taxonomy.types_vocabulary',
 		'plugin.taxonomy.vocabulary',
