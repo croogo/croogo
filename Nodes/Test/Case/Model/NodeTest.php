@@ -155,7 +155,7 @@ class NodeTest extends CroogoTestCase {
 				'token_key' => 1,
 				'body' => '',
 			),
-			'TaxonomyData' => array(1 => array(0 => '1', 1 => '2'))
+			'TaxonomyData' => array(1 => array(0 => '1')),
 		);
 		$result = $this->Node->saveNode($data, Node::DEFAULT_TYPE);
 		$this->Node->type = null;
@@ -163,6 +163,48 @@ class NodeTest extends CroogoTestCase {
 
 		$this->assertTrue($result);
 		$this->assertEquals($oldNodeCount + 1, $newNodeCount);
+	}
+
+/**
+ * testAddNodeWithTaxonomyRequiredValidationError
+ */
+	public function testAddNodeWithTaxonomyRequiredValidationError() {
+		$this->Node->type = null;
+		$data = array(
+			'Node' => array(
+				'title' => 'Test Content',
+				'slug' => 'test-content',
+				'type' => 'blog',
+				'token_key' => 1,
+				'body' => '',
+			),
+			'TaxonomyData' => array(1 => null),
+		);
+		$result = $this->Node->saveNode($data, Node::DEFAULT_TYPE);
+		$this->assertFalse($result);
+		$this->assertEquals('Please select at least 1 value', $this->Node->validationErrors['TaxonomyData.1'][0]);
+		$this->Node->type = null;
+	}
+
+/**
+ * testAddNodeWithTaxonomyNonMultipleValidationError
+ */
+	public function testAddNodeWithTaxonomyNonMultipleValidationError() {
+		$this->Node->type = null;
+		$data = array(
+			'Node' => array(
+				'title' => 'Test Content',
+				'slug' => 'test-content',
+				'type' => 'blog',
+				'token_key' => 1,
+				'body' => '',
+			),
+			'TaxonomyData' => array(1 => array(0 => '1', 1 => 2)),
+		);
+		$result = $this->Node->saveNode($data, Node::DEFAULT_TYPE);
+		$this->assertFalse($result);
+		$this->assertEquals('Please select at most 1 value', $this->Node->validationErrors['TaxonomyData.1'][0]);
+		$this->Node->type = null;
 	}
 
 /**

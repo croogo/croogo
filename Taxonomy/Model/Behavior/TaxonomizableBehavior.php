@@ -15,6 +15,11 @@ App::uses('ModelBehavior', 'Model/Behavior');
 class TaxonomizableBehavior extends ModelBehavior {
 
 /**
+ * Taxonomy instance
+ */
+	protected $_Taxonomy = null;
+
+/**
  * Setup behavior
  *
  * @return void
@@ -24,6 +29,8 @@ class TaxonomizableBehavior extends ModelBehavior {
 
 		$this->_setupRelationships($model);
 		$this->_setupEvents($model);
+
+		$this->_Taxonomy = $model->Taxonomy;
 	}
 
 /**
@@ -75,6 +82,61 @@ class TaxonomizableBehavior extends ModelBehavior {
 	}
 
 /**
+ * Validate Taxonomy data
+ */
+	public function validateTaxonomyData(Model $model) {
+		$typeField = 'type';
+		$data =& $model->data;
+		if (
+			!array_key_exists('Taxonomy', $data) ||
+			!array_key_exists('Taxonomy', $data['Taxonomy'])
+		) {
+			return true;
+		}
+		$type = $this->_Taxonomy->Vocabulary->Type->find('first', array(
+			'fields' => array('id', 'title', 'alias'),
+			'contain' => array(
+				'Vocabulary' => array(
+					'fields' => array('id', 'title', 'alias', 'required', 'multiple'),
+				),
+			),
+			'conditions' => array(
+				'alias' => $data[$model->alias][$typeField],
+			),
+		));
+		$selectedTerms = array_filter($data['Taxonomy']['Taxonomy']);
+
+		$result = true;
+		$requiredError = __d('croogo', 'Please select at least 1 value');
+		$multipleError = __d('croogo', 'Please select at most 1 value');
+		foreach ($type['Vocabulary'] as $vocabulary) {
+			$fieldName = 'TaxonomyData.' . $vocabulary['id'];
+			$terms = $this->_Taxonomy->find('all', array(
+				'recursive' => -1,
+				'fields' => 'term_id',
+				'conditions' => array(
+					'vocabulary_id' => $vocabulary['id'],
+				),
+			));
+			$terms = Hash::extract($terms, '{n}.Taxonomy.term_id');
+			$selected = count(array_intersect($selectedTerms, $terms));
+			if ($vocabulary['required']) {
+				if ($selected == 0) {
+					$model->invalidate($fieldName, $requiredError);
+					$result = false;
+				}
+			}
+			if ($vocabulary['multiple']) {
+				if ($selected > 1) {
+					$model->invalidate($fieldName, $multipleError);
+					$result = false;
+				}
+			}
+		}
+		return $result;
+	}
+
+/**
  * Transform TaxonomyData array to a format that can be used for save operation
  *
  * @param array $data Array containing relevant Taxonomy data
@@ -107,6 +169,8 @@ class TaxonomizableBehavior extends ModelBehavior {
 			}
 			unset($data['TaxonomyData']);
 		}
+
+		$this->cacheTerms($model, $data);
 	}
 
 /**
@@ -127,25 +191,33 @@ class TaxonomizableBehavior extends ModelBehavior {
  * @return bool
  */
 	public function beforeSave(Model $model, $options = array()) {
-		$model->cacheTerms();
+		$result = $this->validateTaxonomyData($model);
+		if ($result !== true) {
+			return $result;
+		}
 		return true;
 	}
 
 /**
  * Caches Term in `terms` field
  *
+ * @param Model model
+ * @param array $data
  * @return void
  */
-	public function cacheTerms(Model $model) {
-		if (isset($model->data['Taxonomy']['Taxonomy'])) {
-			$taxonomyIds = $model->data['Taxonomy']['Taxonomy'];
+	public function cacheTerms(Model $model, &$data = null) {
+		if ($data === null) {
+			$data =& $model->data;
+		}
+		if (isset($data['Taxonomy']['Taxonomy'])) {
+			$taxonomyIds = $data['Taxonomy']['Taxonomy'];
 			$taxonomies = $model->Taxonomy->find('all', array(
 				'conditions' => array(
 					'Taxonomy.id' => $taxonomyIds,
 				),
 			));
 			$terms = Hash::combine($taxonomies, '{n}.Term.id', '{n}.Term.slug');
-			$model->data[$model->alias]['terms'] = $model->encodeData($terms, array(
+			$data[$model->alias]['terms'] = $model->encodeData($terms, array(
 				'trim' => false,
 				'json' => true,
 			));
