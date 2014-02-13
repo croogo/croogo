@@ -258,10 +258,12 @@ class UsersController extends UsersAppController {
 		$this->set('title_for_layout', __d('croogo', 'Admin Login'));
 		$this->layout = "admin_login";
 		if ($this->Auth->user('id')) {
-			$this->Session->setFlash(
-				__d('croogo', 'You are already logged in'), 'default',
-				array('class' => 'alert'), 'auth'
-			);
+			if (!$this->Session->check('Message.auth')) {
+				$this->Session->setFlash(
+					__d('croogo', 'You are already logged in'), 'default',
+					array('class' => 'alert'), 'auth'
+				);
+			}
 			return $this->redirect($this->Auth->redirect());
 		}
 		if ($this->request->is('post')) {
