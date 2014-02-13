@@ -97,4 +97,17 @@ class CommentableBehavior extends ModelBehavior {
 		return $defaultSetting;
 	}
 
+/**
+ * Convenience method for Comment::add()
+ *
+ * @return bool
+ * @see Comment::add()
+ */
+	public function addComment(Model $Model, $data, $options = array()) {
+		if (!isset($Model->id)) {
+			throw new UnexpectedValueException('Id is not set');
+		}
+		return $Model->Comment->add($data, $Model->alias, $Model->id, $options);
+	}
+
 }

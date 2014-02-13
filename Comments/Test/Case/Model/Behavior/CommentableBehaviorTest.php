@@ -35,6 +35,37 @@ class CommentableBehaviorTest extends CroogoTestCase {
 	}
 
 /**
+ * Test Commentable Add
+ */
+	public function testCommentableAdd() {
+		$count = $this->Comment->find('count', array('recursive' => -1));
+
+		$this->Comment->Node->id = 1;
+		$result = $this->Comment->Node->addComment(array(
+			'Comment' => array(
+				'body' => 'hello world',
+				'name' => 'Your name',
+				'email' => 'your@email.dev',
+				'status' => 1,
+				'website' => '/',
+				'ip' => '127.0.0.1',
+			),
+		));
+
+		$this->assertTrue($result);
+		$result = $this->Comment->find('count', array('recursive' => -1));
+		$this->assertEquals($count + 1, $result);
+	}
+
+/**
+ * @expectedException UnexpectedValueException
+ */
+	public function testCommentableAddWithMissingId() {
+		unset($this->Comment->Node->id);
+		$this->Comment->Node->addComment(array());
+	}
+
+/**
  * Test Get Type Setting
  */
 	public function testGetTypeSetting() {
