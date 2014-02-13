@@ -82,7 +82,7 @@ class CommentsController extends CommentsAppController {
 
 		$this->Comment->recursive = 0;
 		$this->paginate['Comment']['conditions'] = array(
-			'Comment.status' => 1,
+			'Comment.status' => $this->Comment->status('approval'),
 			'Comment.comment_type' => 'comment',
 		);
 
@@ -193,7 +193,7 @@ class CommentsController extends CommentsAppController {
 		$this->paginate['Comment']['order'] = 'Comment.created DESC';
 		$this->paginate['Comment']['limit'] = Configure::read('Comment.feed_limit');
 		$this->paginate['Comment']['conditions'] = array(
-			'Comment.status' => 1,
+			'Comment.status' => $this->Comment->status('approval'),
 		);
 		$comments = $this->paginate();
 		$this->set(compact('comments'));
