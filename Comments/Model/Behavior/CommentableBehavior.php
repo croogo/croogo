@@ -59,4 +59,42 @@ class CommentableBehavior extends ModelBehavior {
 		return true;
 	}
 
+/**
+ * Get Comment settings from Type
+ *
+ * @param Model Model instance
+ * @param array $data Model data to check
+ * @return bool
+ */
+	public function getTypeSetting(Model $model, $data) {
+		$defaultSetting = array(
+			'commentable' => false,
+			'autoApprove' => false,
+			'spamProtection' => false,
+			'captchaProtection' => false,
+		);
+		if (!CakePlugin::loaded('Taxonomy')) {
+			return $defaultSetting;
+		}
+		if (empty($data[$model->alias]['type'])) {
+			return $defaultSetting;
+		}
+		$Type = ClassRegistry::init('Taxonomy.Type');
+		$type = $Type->find('first', array(
+			'recursive' => -1,
+			'conditions' => array(
+				$Type->escapeField('alias') => $data[$model->alias]['type'],
+			),
+		));
+		if ($type) {
+			return array(
+				'commentable' => $type['Type']['comment_status'] == 2,
+				'autoApprove' => $type['Type']['comment_approve'] == 1,
+				'spamProtection' => $type['Type']['comment_spam_protection'],
+				'captchaProtection' => $type['Type']['comment_captcha'],
+			);
+		}
+		return $defaultSetting;
+	}
+
 }

@@ -255,7 +255,9 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		$this->assertEqual($commenters, array('Mr Croogo', 'Mrs Croogo', 'John Smith'));
 
 		$Comments->testView = true;
-		$Comments->set(compact('node'));
+		$model = 'Node';
+		$data = $node;
+		$Comments->set(compact('model', 'data'));
 		$output = $Comments->render('add');
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
@@ -294,7 +296,9 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		$this->assertEqual($commenters, array('Mr Croogo', '_John Smith', 'Mrs Croogo'));
 
 		$Comments->testView = true;
-		$Comments->set(compact('node'));
+		$model = 'Node';
+		$data = $node;
+		$Comments->set(compact('model', 'data'));
 		$output = $Comments->render('add');
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
@@ -327,7 +331,9 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 		$this->assertEqual($commenters, array('Mr Croogo', 'Mrs Croogo', 'John Smith'));
 
 		$Comments->testView = true;
-		$Comments->set(compact('node'));
+		$model = 'Node';
+		$data = $node;
+		$Comments->set(compact('model', 'data'));
 		$output = $Comments->render('add');
 		$this->assertFalse(strpos($output, '<pre class="cake-debug">'));
 	}
