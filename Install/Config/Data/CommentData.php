@@ -7,7 +7,8 @@ class CommentData {
 		array(
 			'id' => '1',
 			'parent_id' => '',
-			'node_id' => '1',
+			'model' => 'Node',
+			'foreign_key' => '1',
 			'user_id' => '0',
 			'name' => 'Mr Croogo',
 			'email' => 'email@example.com',

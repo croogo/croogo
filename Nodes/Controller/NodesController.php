@@ -706,23 +706,9 @@ class NodesController extends NodesAppController {
 			return $this->redirect('/');
 		}
 
-		if ($node['Node']['comment_count'] > 0) {
-			$comments = $this->Node->Comment->find('threaded', array(
-				'conditions' => array(
-					'Comment.node_id' => $node['Node']['id'],
-					'Comment.status' => 1,
-				),
-				'contain' => array(
-					'User',
-				),
-				'cache' => array(
-					'name' => 'comment_node_' . $node['Node']['id'],
-					'config' => 'nodes_view',
-				),
-			));
-		} else {
-			$comments = array();
-		}
+		$data = $node;
+		$event = new CakeEvent('Controller.Nodes.view', $this, compact('data'));
+		$this->getEventManager()->dispatch($event);
 
 		$this->set('title_for_layout', $node['Node']['title']);
 		$this->set(compact('node', 'type', 'comments'));

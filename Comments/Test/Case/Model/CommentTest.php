@@ -45,14 +45,15 @@ class CommentTest extends CroogoTestCase {
 				'email' => 'visitor@test.fr',
 				'website' => 'http://www.test.fr',
 				'body' => 'TESTEH',
-				'ip' => '127.0.0.1'
+				'ip' => '127.0.0.1',
+				'status' => 1,
 			)
 		);
 
 		$result = $this->Comment->add(
 			$data,
-			1,
-			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 2))
+			'Node',
+			1
 		);
 		$this->assertTrue($result);
 
@@ -79,9 +80,11 @@ class CommentTest extends CroogoTestCase {
 
 		$result = $this->Comment->add(
 			$data,
+			'Node',
 			1,
-			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 2)),
-			1
+			array(
+				'parentId' => 1,
+			)
 		);
 		$newCount = $this->Comment->find('count');
 		$newComment = $this->Comment->find('first', array('order' => 'Comment.created DESC'));
@@ -102,7 +105,8 @@ class CommentTest extends CroogoTestCase {
 				'email' => '',
 				'website' => 'http://www.test.fr',
 				'body' => 'TESTEH',
-				'ip' => '127.0.0.1'
+				'ip' => '127.0.0.1',
+				'status' => 1,
 			)
 		);
 
@@ -127,10 +131,12 @@ class CommentTest extends CroogoTestCase {
 
 		$result = $this->Comment->add(
 			$data,
+			'Node',
 			1,
-			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 2)),
-			1,
-			$userData
+			array(
+				'parentId' => 1,
+				'userData' => $userData
+			)
 		);
 		$newCount = $this->Comment->find('count');
 		$newComment = $this->Comment->find('first', array('order' => 'Comment.created DESC'));
@@ -158,9 +164,11 @@ class CommentTest extends CroogoTestCase {
 
 		$result = $this->Comment->add(
 			$data,
+			'Node',
 			1,
-			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 0)),
-			1
+			array(
+				'foreignKey' => 1,
+			)
 		);
 		$newCount = $this->Comment->find('count');
 		$newComment = $this->Comment->find('first', array('order' => 'Comment.created DESC'));
@@ -189,9 +197,11 @@ class CommentTest extends CroogoTestCase {
 
 		$result = $this->Comment->add(
 			$data,
+			'Node',
 			1,
-			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 2)),
-			1
+			array(
+				'parentId' => 1,
+			)
 		);
 
 		$this->assertFalse($result);
@@ -209,6 +219,7 @@ class CommentTest extends CroogoTestCase {
 		$this->setExpectedException('NotFoundException');
 		$this->Comment->add(
 			array('Comment' => array('name', 'email', 'body')),
+			'Node',
 			'invalid',
 			array()
 		);
@@ -230,9 +241,11 @@ class CommentTest extends CroogoTestCase {
 		);
 		$this->Comment->add(
 			$data,
+			'Node',
 			1,
-			array('Type' => array('alias' => 'blog', 'comment_status' => 2, 'comment_approve' => 2)),
-			'invalid'
+			array(
+				'parentId' => 'invalid',
+			)
 		);
 	}
 

@@ -20,6 +20,10 @@ class CroogoStatus implements ArrayAccess {
 
 	const PREVIEW = 2;
 
+	const PENDING = 0;
+
+	const APPROVED = 1;
+
 	protected $_statuses = array();
 
 /**
@@ -31,6 +35,10 @@ class CroogoStatus implements ArrayAccess {
 				self::UNPUBLISHED => __d('croogo', 'Unpublished'),
 				self::PUBLISHED => __d('croogo', 'Published'),
 				self::PREVIEW => __d('croogo', 'Preview'),
+			),
+			'approval' => array(
+				self::APPROVED => __d('croogo', 'Approved'),
+				self::PENDING => __d('croogo', 'Pending'),
 			),
 		);
 		$event = Croogo::dispatchEvent('Croogo.Status.setup', null, $this);
