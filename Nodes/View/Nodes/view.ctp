@@ -8,6 +8,7 @@
 	?>
 </div>
 
+<?php if (CakePlugin::loaded('Comments')): ?>
 <div id="comments" class="node-comments">
 <?php
 	$type = $types_for_layout[$this->Nodes->field('type')];
@@ -21,3 +22,4 @@
 	}
 ?>
 </div>
+<?php endif; ?>
