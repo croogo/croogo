@@ -3,7 +3,7 @@
 	<?php
 		$type = $types_for_layout[$data[$model]['type']];
 
-		if ($this->params['controller'] == 'comments') {
+		if ($this->request->params['controller'] == 'comments') {
 			$backLink = $this->Html->link(__d('croogo', 'Go back to original post') . ': ' . $data[$model]['title'], $data[$model]['url']);
 			echo $this->Html->tag('p', $backLink, array('class' => 'back'));
 		}

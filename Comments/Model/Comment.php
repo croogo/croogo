@@ -23,8 +23,14 @@ class Comment extends AppModel {
  */
 	public $name = 'Comment';
 
+/**
+ * @deprecated
+ */
 	const STATUS_APPROVED = 1;
 
+/**
+ * @deprecated
+ */
 	const STATUS_PENDING = 0;
 
 /**

@@ -158,7 +158,7 @@ class CroogoHelper extends AppHelper {
  */
 	public function adminRowActions($id, $options = array()) {
 		$output = '';
-		$rowActions = Configure::read('Admin.rowActions.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
+		$rowActions = Configure::read('Admin.rowActions.' . Inflector::camelize($this->request->params['controller']) . '/' . $this->request->params['action']);
 		if (is_array($rowActions)) {
 			foreach ($rowActions as $title => $link) {
 				$linkOptions = $options;
@@ -294,7 +294,7 @@ class CroogoHelper extends AppHelper {
 		}
 
 		$output = '';
-		$tabs = Configure::read('Admin.tabs.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
+		$tabs = Configure::read('Admin.tabs.' . Inflector::camelize($this->request->params['controller']) . '/' . $this->request->params['action']);
 		if (is_array($tabs)) {
 			foreach ($tabs as $title => $tab) {
 				$tab = Hash::merge(array(
@@ -306,7 +306,7 @@ class CroogoHelper extends AppHelper {
 				), $tab);
 
 				if (!isset($tab['options']['type']) || (isset($tab['options']['type']) && (in_array($this->_View->viewVars['typeAlias'], $tab['options']['type'])))) {
-					$domId = strtolower(Inflector::singularize($this->params['controller'])) . '-' . strtolower(Inflector::slug($title, '-'));
+					$domId = strtolower(Inflector::singularize($this->request->params['controller'])) . '-' . strtolower(Inflector::slug($title, '-'));
 					if ($this->adminTabs) {
 						list($plugin, $element) = pluginSplit($tab['element']);
 						$elementOptions = Hash::merge(array(
@@ -337,7 +337,7 @@ class CroogoHelper extends AppHelper {
 		}
 
 		$output = '';
-		$allBoxes = Configure::read('Admin.boxes.' . Inflector::camelize($this->params['controller']) . '/' . $this->params['action']);
+		$allBoxes = Configure::read('Admin.boxes.' . Inflector::camelize($this->request->params['controller']) . '/' . $this->request->params['action']);
 		$allBoxes = empty($allBoxes) ? array() : $allBoxes;
 		$boxNames = array();
 

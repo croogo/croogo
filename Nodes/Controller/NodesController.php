@@ -405,7 +405,7 @@ class NodesController extends NodesAppController {
 			if (isset($type)) {
 				$cacheNamePrefix .= '_' . $type['Type']['alias'];
 			}
-			$this->paginate['page'] = isset($this->request->params['named']['page']) ? $this->params['named']['page'] : 1;
+			$this->paginate['page'] = isset($this->request->params['named']['page']) ? $this->request->params['named']['page'] : 1;
 			$cacheName = $cacheNamePrefix . '_' . $this->request->params['named']['type'] . '_' . $this->paginate['page'] . '_' . $limit;
 			$cacheNamePaging = $cacheNamePrefix . '_' . $this->request->params['named']['type'] . '_' . $this->paginate['page'] . '_' . $limit . '_paging';
 			$cacheConfig = 'nodes_index';
@@ -504,7 +504,7 @@ class NodesController extends NodesAppController {
 			if (isset($type)) {
 				$cacheNamePrefix .= '_' . $type['Type']['alias'];
 			}
-			$this->paginate['page'] = isset($this->request->params['named']['page']) ? $this->params['named']['page'] : 1;
+			$this->paginate['page'] = isset($this->request->params['named']['page']) ? $this->request->params['named']['page'] : 1;
 			$cacheName = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $limit;
 			$cacheNamePaging = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $limit . '_paging';
 			$cacheConfig = 'nodes_term';
@@ -573,7 +573,7 @@ class NodesController extends NodesAppController {
 			if (isset($type)) {
 				$cacheNamePrefix .= '_' . $type['Type']['alias'];
 			}
-			$this->paginate['page'] = isset($this->request->params['named']['page']) ? $this->params['named']['page'] : 1;
+			$this->paginate['page'] = isset($this->request->params['named']['page']) ? $this->request->params['named']['page'] : 1;
 			$cacheName = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $limit;
 			$cacheNamePaging = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $limit . '_paging';
 			$cacheConfig = 'nodes_promoted';
@@ -665,7 +665,7 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public function view($id = null) {
-		if (isset($this->request->params['named']['slug']) && isset($this->params['named']['type'])) {
+		if (isset($this->request->params['named']['slug']) && isset($this->request->params['named']['type'])) {
 			$this->Node->type = $this->request->params['named']['type'];
 			$type = $this->Node->Taxonomy->Vocabulary->Type->find('first', array(
 				'conditions' => array(

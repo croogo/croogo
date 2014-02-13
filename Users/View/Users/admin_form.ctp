@@ -23,7 +23,7 @@ if ($this->request->params['action'] == 'admin_add') {
 <?php $this->start('actions'); ?>
 <?php if ($this->request->params['action'] == 'admin_edit'): ?>
 <?php
-	echo $this->Croogo->adminAction(__d('croogo', 'Reset password'), array('action' => 'reset_password', $this->params['pass']['0']));
+	echo $this->Croogo->adminAction(__d('croogo', 'Reset password'), array('action' => 'reset_password', $this->request->params['pass']['0']));
 ?>
 <?php endif; ?>
 <?php $this->end(); ?>
