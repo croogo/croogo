@@ -7,7 +7,9 @@ class CommentFixture extends CroogoTestFixture {
 	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'primary'),
 		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 20),
-		'node_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20),
+		'user_id' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 20),
+		'model' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50),
+		'foreign_key' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20),
 		'user_id' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 20),
 		'name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50),
 		'email' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100),
@@ -32,7 +34,8 @@ class CommentFixture extends CroogoTestFixture {
 		array(
 			'id' => 1,
 			'parent_id' => null,
-			'node_id' => 1,
+			'model' => 'Node',
+			'foreign_key' => 1,
 			'user_id' => 0,
 			'name' => 'Mr Croogo',
 			'email' => 'email@example.com',
@@ -53,7 +56,8 @@ class CommentFixture extends CroogoTestFixture {
 		array(
 			'id' => 2,
 			'parent_id' => null,
-			'node_id' => 1,
+			'model' => 'Node',
+			'foreign_key' => 1,
 			'user_id' => 0,
 			'name' => 'Mrs Croogo',
 			'email' => 'email@example.com',

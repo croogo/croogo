@@ -149,28 +149,6 @@ class Node extends NodesAppModel {
 		),
 	);
 
-/**
- * Model associations: hasMany
- *
- * @var array
- * @access public
- */
-	public $hasMany = array(
-		'Comment' => array(
-			'className' => 'Comments.Comment',
-			'foreignKey' => 'node_id',
-			'dependent' => true,
-			'conditions' => array('Comment.status' => 1),
-			'fields' => '',
-			'order' => '',
-			'limit' => '5',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => '',
-		),
-	);
-
 	public $findMethods = array(
 		'promoted' => true,
 		'viewBySlug' => true,
@@ -218,20 +196,6 @@ class Node extends NodesAppModel {
 			}
 		}
 
-		return true;
-	}
-
-/**
- * beforeDelete callback
- *
- * @return boolean
- */
-	public function beforeDelete($cascade = true) {
-		if ($cascade) {
-			if (isset($this->hasMany['Comment'])) {
-				$this->hasMany['Comment']['conditions'] = '';
-			}
-		}
 		return true;
 	}
 

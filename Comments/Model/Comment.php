@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppModel', 'Model');
+App::uses('CroogoStatus', 'Croogo.Lib');
 
 /**
  * Comment
@@ -40,6 +41,7 @@ class Comment extends AppModel {
 				'nodes',
 			),
 		),
+		'Croogo.Publishable',
 		'Croogo.Trackable',
 		'Search.Searchable',
 	);
@@ -73,11 +75,6 @@ class Comment extends AppModel {
  * @access public
  */
 	public $belongsTo = array(
-		'Node' => array(
-			'className' => 'Nodes.Node',
-			'counterCache' => true,
-			'counterScope' => array('Comment.status' => self::STATUS_APPROVED),
-		),
 		'User' => array(
 			'className' => 'Users.User',
 		),
@@ -95,36 +92,50 @@ class Comment extends AppModel {
 /**
  * Add a new Comment
  *
- * @param array $data Comment data (Usually POSTed data from Comment form)
- * @param int   $nodeId Node Id (Node Id from where comment was posted).
- * @param array $nodeType Type data (Node's Type data)
- * @param mixed int/null $parentId id of parent comment (if it is a reply)
- * @param array $userData author data (User data (if logged in) / Author fields from Comment form)
+ * Options:
+ * - parentId id of parent comment (if it is a reply)
+ * - userData author data (User data (if logged in) / Author fields from Comment form)
  *
+ * @param array $data Comment data (Usually POSTed data from Comment form)
+ * @param string $model Model alias
+ * @param int $foreignKey Foreign Key (Node Id from where comment was posted).
+ * @param array $options Options
  * @return bool true if comment was added, false otherwise.
  * @throws NotFoundException
  */
-	public function add($data, $nodeId, $nodeType, $parentId = null, $userData = array()) {
+	public function add($data, $model, $foreignKey, $options = array()) {
+		$options = Hash::merge(array(
+			'parentId' => null,
+			'userData' => array(),
+		), $options);
 		$record = array();
 		$node = array();
 
-		$nodeId = (int)$nodeId;
-		$parentId = is_null($parentId) ? null : (int)$parentId;
+		$foreignKey = (int)$foreignKey;
+		$parentId = is_null($options['parentId']) ? null : (int)$options['parentId'];
+		$userData = $options['userData'];
 
-		$node = $this->Node->findById($nodeId);
+		if (empty($this->{$model})) {
+			throw new UnexpectedValueException(sprintf('%s not configured for Comments', $model));
+		}
+
+		$node = $this->{$model}->findById($foreignKey);
 		if (empty($node)) {
 			throw new NotFoundException(__d('croogo', 'Invalid Node id'));
 		}
 
 		if (!is_null($parentId)) {
-			if ($this->isValidLevel($parentId) && $this->isApproved($parentId, $nodeId)) {
+			if (
+				$this->isValidLevel($parentId) &&
+				$this->isApproved($parentId, $model, $foreignKey)
+			) {
 				$record['parent_id'] = $parentId;
 			} else {
 				return false;
 			}
 		}
 
-		if (!empty($userData)) {
+		if (!empty($userData) && is_array($userData)) {
 			$record['user_id'] = $userData['User']['id'];
 			$record['name'] = $userData['User']['name'];
 			$record['email'] = $userData['User']['email'];
@@ -136,14 +147,20 @@ class Comment extends AppModel {
 		}
 
 		$record['ip'] = $data[$this->alias]['ip'];
-		$record['node_id'] = $node['Node']['id'];
+		$record['model'] = $model;
+		$record['foreign_key'] = $node[$this->{$model}->alias]['id'];
 		$record['body'] = h($data[$this->alias]['body']);
-		$record['type'] = $nodeType['Type']['alias'];
 
-		if ($nodeType['Type']['comment_approve']) {
-			$record['status'] = self::STATUS_APPROVED;
+		if (isset($node[$this->{$model}->alias]['type'])) {
+			$record['type'] = $node[$this->{$model}->alias]['type'];
 		} else {
-			$record['status'] = self::STATUS_PENDING;
+			$record['type'] = '';
+		}
+
+		if (isset($data[$this->alias]['status'])) {
+			$record['status'] = $data[$this->alias]['status'];
+		} else {
+			$record['status'] = CroogoStatus::PENDING;
 		}
 
 		return (bool)$this->save($record);
@@ -156,10 +173,11 @@ class Comment extends AppModel {
  * @param integer $nodeId node id
  * @return boolean true if comment is approved
  */
-	public function isApproved($commentId, $nodeId) {
+	public function isApproved($commentId, $model, $foreignKey) {
 		return $this->hasAny(array(
 			$this->escapeField() => $commentId,
-			$this->escapeField('node_id') => $nodeId,
+			$this->escapeField('model') => $model,
+			$this->escapeField('foreign_key') => $foreignKey,
 			$this->escapeField('status') => 1,
 		));
 	}

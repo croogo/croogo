@@ -1,18 +1,19 @@
 <div class="comment-form">
 	<h3><?php echo __d('croogo', 'Add new comment'); ?></h3>
 	<?php
-		$type = $types_for_layout[$node['Node']['type']];
+		$type = $types_for_layout[$data[$model]['type']];
 
 		if ($this->params['controller'] == 'comments') {
-			$nodeLink = $this->Html->link(__d('croogo', 'Go back to original post') . ': ' . $node['Node']['title'], $node['Node']['url']);
-			echo $this->Html->tag('p', $nodeLink, array('class' => 'back'));
+			$backLink = $this->Html->link(__d('croogo', 'Go back to original post') . ': ' . $data[$model]['title'], $data[$model]['url']);
+			echo $this->Html->tag('p', $backLink, array('class' => 'back'));
 		}
 
 		$formUrl = array(
 			'plugin' => 'comments',
 			'controller' => 'comments',
 			'action' => 'add',
-			$node['Node']['id'],
+			'Node',
+			$data[$model]['id'],
 		);
 		if (isset($parentId) && $parentId != null) {
 			$formUrl[] = $parentId;

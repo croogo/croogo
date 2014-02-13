@@ -20,6 +20,7 @@
 				'plugin' => 'comments',
 				'controller' => 'comments',
 				'action' => 'add',
+				'Node',
 				$node['Node']['id'],
 				$comment['Comment']['id'],
 			));
