@@ -29,5 +29,8 @@
 		"croogo/Ckeditor": "~1.0",
 		"cakedc/search": "dev-master",
 		"cakedc/migrations": "~2.2"
+	},
+	"suggest": {
+		"croogo/locale": "Localization for Croogo"
 	}
 }
