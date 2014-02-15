@@ -62,7 +62,7 @@ class MenusHelper extends AppHelper {
 		$menus = $this->_View->viewVars['menus_for_admin_layout'];
 		foreach ($menus as $m) {
 			$weight = 9999 + $m['Menu']['weight'];
-			CroogoNav::add('menus.children.' . $m['Menu']['alias'], array(
+			CroogoNav::add('sidebar', 'menus.children.' . $m['Menu']['alias'], array(
 				'title' => $m['Menu']['title'],
 				'url' => array(
 					'plugin' => 'menus',

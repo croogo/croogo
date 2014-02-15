@@ -47,6 +47,17 @@ class CroogoHelper extends AppHelper {
 		$this->_CroogoStatus = new CroogoStatus();
 	}
 
+/**
+ * Before Render callback
+ */
+	public function beforeRender($viewFile) {
+		if (isset($this->request->params['admin'])) {
+			$eventManager = $this->_View->getEventManager();
+			$event = new CakeEvent('Croogo.setupAdminData', $this->_View);
+			$eventManager->dispatch($event);
+		}
+	}
+
 	public function statuses() {
 		return $this->_CroogoStatus->statuses();
 	}

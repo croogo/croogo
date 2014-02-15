@@ -89,9 +89,11 @@ class CroogoComponent extends Component {
 	public function startup(Controller $controller) {
 		$this->_controller = $controller;
 
-		if (!isset($this->_controller->request->params['admin']) && !isset($this->_controller->request->params['requested'])) {
-		} else {
-			$this->_adminData();
+		if (isset($this->_controller->request->params['admin'])) {
+			if (!isset($this->_controller->request->params['requested'])) {
+				$this->_adminData();
+			}
+			$this->_adminMenus();
 		}
 	}
 
