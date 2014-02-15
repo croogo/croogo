@@ -31,7 +31,7 @@ class CroogoNav {
  * @var array
  */
 	protected static $_defaults = array(
-		'icon' => false,
+		'icon' => '',
 		'title' => false,
 		'url' => '#',
 		'weight' => 9999,

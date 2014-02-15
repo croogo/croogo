@@ -111,6 +111,11 @@ class CroogoHelper extends AppHelper {
 		$currentRole = $this->Role->byId($this->Layout->getRoleId());
 
 		foreach ($sorted as $menu) {
+			if (isset($menu['separator'])) {
+				$liOptions['class'] = 'divider';
+				$out .= $this->Html->tag('li', null, $liOptions);
+				continue;
+			}
 			$htmlAttributes = $options['htmlAttributes'];
 			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByUserId($userId, $menu['url'])) {
 				continue;
@@ -123,7 +128,8 @@ class CroogoHelper extends AppHelper {
 				), $menu['htmlAttributes']);
 			}
 			$title = '';
-			if (empty($menu['icon'])) {
+			if ($menu['icon'] === false) {
+			} elseif (empty($menu['icon'])) {
 				$menu['htmlAttributes'] += array('icon' => 'white');
 			} else {
 				$menu['htmlAttributes'] += array('icon' => $menu['icon']);
@@ -173,6 +179,15 @@ class CroogoHelper extends AppHelper {
 				$menu['htmlAttributes']['class'] = 'dropdown-toggle';
 				$menu['htmlAttributes']['data-toggle'] = 'dropdown';
 			}
+
+			if (isset($menu['before'])) {
+				$title = $menu['before'] . $title;
+			}
+
+			if (isset($menu['after'])) {
+				$title = $title . $menu['after'];
+			}
+
 			$link = $this->Html->link($title, $menu['url'], $menu['htmlAttributes']);
 			$liOptions = array();
 			if ($sidebar && !empty($children) && $depth > 0) {
