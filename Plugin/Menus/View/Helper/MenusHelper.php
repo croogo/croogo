@@ -148,10 +148,14 @@ class MenusHelper extends AppHelper {
 				'class' => $link['Link']['class'],
 			);
 
+			$linkAttr = array_merge($linkAttr,$link['Params']);
 			foreach ($linkAttr as $attrKey => $attrValue) {
 				if ($attrValue == null) {
 					unset($linkAttr[$attrKey]);
 				}
+                		else if ($attrValue === 'false'){
+                    			$linkAttr[$attrKey] = false;
+                		}
 			}
 
 			// if link is in the format: controller:contacts/action:view
