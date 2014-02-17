@@ -99,4 +99,27 @@ class ParamsBehaviorTest extends CroogoTestCase {
 		$this->assertEqual($type['Params'], $expected);
 	}
 
+	public function testEmbeddedOptions() {
+		$this->Type->save(array(
+			'title' => 'Article',
+			'alias' => 'article',
+			'description' => 'Article Types',
+			'params' => "param1=value1\r\n[options:linkAttr escape=true escapeTitle=false foo=a:b;c:d;e:f]",
+		));
+		$type = $this->Type->findByAlias('article');
+		$expected = array(
+			'param1' => 'value1',
+			'linkAttr' => array(
+				'escape' => 'true',
+				'escapeTitle' => 'false',
+				'foo' => array(
+					'a' => 'b',
+					'c' => 'd',
+					'e' => 'f',
+				),
+			),
+		);
+		$this->assertEqual($type['Params'], $expected);
+	}
+
 }

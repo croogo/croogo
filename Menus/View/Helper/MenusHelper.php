@@ -150,6 +150,10 @@ class MenusHelper extends AppHelper {
 				'class' => $link['Link']['class'],
 			);
 
+			if (isset($link['Params']['linkAttr'])) {
+				$linkAttr = array_merge($linkAttr, $link['Params']['linkAttr']);
+			}
+
 			foreach ($linkAttr as $attrKey => $attrValue) {
 				if ($attrValue == null) {
 					unset($linkAttr[$attrKey]);

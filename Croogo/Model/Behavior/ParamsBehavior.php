@@ -1,6 +1,7 @@
 <?php
 
 App::uses('ModelBehavior', 'Model');
+App::uses('StringConverter', 'Croogo.Utility');
 
 /**
  * Params Behavior
@@ -69,10 +70,21 @@ class ParamsBehavior extends ModelBehavior {
  * @return array
  */
 	public function paramsToArray(Model $model, $params) {
+		$converter = new StringConverter();
 		$output = array();
 		$params = preg_split('/[\r\n]+/', $params);
 		foreach ($params as $param) {
 			if (strlen($param) == 0) {
+				continue;
+			}
+
+			if ($param[0] === '[') {
+				$options = $converter->parseString('options', $param, array(
+					'convertOptionsToArray' => true,
+				));
+				if (!empty($options)) {
+					$output = array_merge($output, $options);
+				}
 				continue;
 			}
 
