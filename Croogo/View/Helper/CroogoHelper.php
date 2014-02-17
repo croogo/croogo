@@ -47,6 +47,17 @@ class CroogoHelper extends AppHelper {
 		$this->_CroogoStatus = new CroogoStatus();
 	}
 
+/**
+ * Before Render callback
+ */
+	public function beforeRender($viewFile) {
+		if (isset($this->request->params['admin'])) {
+			$eventManager = $this->_View->getEventManager();
+			$event = new CakeEvent('Croogo.setupAdminData', $this->_View);
+			$eventManager->dispatch($event);
+		}
+	}
+
 	public function statuses() {
 		return $this->_CroogoStatus->statuses();
 	}
@@ -77,6 +88,7 @@ class CroogoHelper extends AppHelper {
  */
 	public function adminMenus($menus, $options = array(), $depth = 0) {
 		$options = Hash::merge(array(
+			'type' => 'sidebar',
 			'children' => true,
 			'htmlAttributes' => array(
 				'class' => 'nav nav-stacked',
@@ -89,6 +101,7 @@ class CroogoHelper extends AppHelper {
 			return '';
 		}
 
+		$sidebar = $options['type'] === 'sidebar';
 		$out = null;
 		$sorted = Hash::sort($menus, '{s}.weight', 'ASC');
 		if (empty($this->Role)) {
@@ -98,6 +111,11 @@ class CroogoHelper extends AppHelper {
 		$currentRole = $this->Role->byId($this->Layout->getRoleId());
 
 		foreach ($sorted as $menu) {
+			if (isset($menu['separator'])) {
+				$liOptions['class'] = 'divider';
+				$out .= $this->Html->tag('li', null, $liOptions);
+				continue;
+			}
 			$htmlAttributes = $options['htmlAttributes'];
 			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByUserId($userId, $menu['url'])) {
 				continue;
@@ -110,23 +128,37 @@ class CroogoHelper extends AppHelper {
 				), $menu['htmlAttributes']);
 			}
 			$title = '';
-			if (empty($menu['icon'])) {
+			if ($menu['icon'] === false) {
+			} elseif (empty($menu['icon'])) {
 				$menu['htmlAttributes'] += array('icon' => 'white');
 			} else {
 				$menu['htmlAttributes'] += array('icon' => $menu['icon']);
 			}
-			$title .= '<span>' . $menu['title'] . '</span>';
+			if ($sidebar) {
+				$title .= '<span>' . $menu['title'] . '</span>';
+			} else {
+				$title .= $menu['title'];
+			}
 			$children = '';
 			if (!empty($menu['children'])) {
-				$childClass = 'nav nav-stacked sub-nav ';
-				$childClass .= ' submenu-' . Inflector::slug(strtolower($menu['title']), '-');
-				if ($depth > 0) {
-					$childClass .= ' dropdown-menu';
+				$childClass = '';
+				if ($sidebar) {
+					$childClass = 'nav nav-stacked sub-nav ';
+					$childClass .= ' submenu-' . Inflector::slug(strtolower($menu['title']), '-');
+					if ($depth > 0) {
+						$childClass .= ' dropdown-menu';
+					}
+				} else {
+					if ($depth == 0) {
+						$childClass = 'dropdown-menu';
+					}
 				}
 				$children = $this->adminMenus($menu['children'], array(
+					'type' => $options['type'],
 					'children' => true,
 					'htmlAttributes' => array('class' => $childClass),
 				), $depth + 1);
+
 				$menu['htmlAttributes']['class'] .= ' hasChild dropdown-close';
 			}
 			$menu['htmlAttributes']['class'] .= ' sidebar-item';
@@ -139,13 +171,42 @@ class CroogoHelper extends AppHelper {
 					$menu['htmlAttributes']['class'] = 'current';
 				}
 			}
+
+			if (!$sidebar && !empty($children)) {
+				if ($depth == 0) {
+					$title .= ' <b class="caret"></b>';
+				}
+				$menu['htmlAttributes']['class'] = 'dropdown-toggle';
+				$menu['htmlAttributes']['data-toggle'] = 'dropdown';
+			}
+
+			if (isset($menu['before'])) {
+				$title = $menu['before'] . $title;
+			}
+
+			if (isset($menu['after'])) {
+				$title = $title . $menu['after'];
+			}
+
 			$link = $this->Html->link($title, $menu['url'], $menu['htmlAttributes']);
 			$liOptions = array();
-			if (!empty($children) && $depth > 0) {
+			if ($sidebar && !empty($children) && $depth > 0) {
 				$liOptions['class'] = ' dropdown-submenu';
+			}
+			if (!$sidebar && !empty($children)) {
+				if ($depth > 0) {
+					$liOptions['class'] = ' dropdown-submenu';
+				} else {
+					$liOptions['class'] = ' dropdown';
+				}
 			}
 			$out .= $this->Html->tag('li', $link . $children, $liOptions);
 		}
+
+		if (!$sidebar && $depth > 0) {
+			$htmlAttributes['class'] = 'dropdown-menu';
+		}
+
 		return $this->Html->tag('ul', $out, $htmlAttributes);
 	}
 

@@ -17,10 +17,103 @@ class TaxonomiesEventHandler implements CakeEventListener {
  */
 	public function implementedEvents() {
 		return array(
+			'Croogo.setupAdminData' => array(
+				'callable' => 'onSetupAdminData',
+			),
 			'Controller.Links.setupLinkChooser' => array(
 				'callable' => 'onSetupLinkChooser',
 			),
 		);
+	}
+
+/**
+ * Setup admin data
+ */
+	public function onSetupAdminData($event) {
+		CroogoNav::add('sidebar', 'content.children.content_types', array(
+			'title' => __d('croogo', 'Content Types'),
+			'url' => array(
+				'plugin' => 'taxonomy',
+				'admin' => true,
+				'controller' => 'types',
+				'action' => 'index',
+			),
+			'weight' => 30,
+		));
+
+		CroogoNav::add('sidebar', 'content.children.taxonomy', array(
+			'title' => __d('croogo', 'Taxonomy'),
+			'url' => array(
+				'plugin' => 'taxonomy',
+				'admin' => true,
+				'controller' => 'vocabularies',
+				'action' => 'index',
+			),
+			'weight' => 40,
+			'children' => array(
+				'list' => array(
+					'title' => __d('croogo', 'List'),
+						'url' => array(
+						'plugin' => 'taxonomy',
+						'admin' => true,
+						'controller' => 'vocabularies',
+						'action' => 'index',
+					),
+					'weight' => 10,
+				),
+				'add_new' => array(
+					'title' => __d('croogo', 'Add new'),
+					'url' => array(
+						'plugin' => 'taxonomy',
+						'admin' => true,
+						'controller' => 'vocabularies',
+						'action' => 'add',
+					),
+					'weight' => 20,
+					'htmlAttributes' => array('class' => 'separator'),
+				)
+			)
+		));
+
+		$View = $event->subject;
+
+		if (empty($View->viewVars['types_for_admin_layout'])) {
+			$types = array();
+		} else {
+			$types = $View->viewVars['types_for_admin_layout'];
+		}
+		foreach ($types as $t) {
+			CroogoNav::add('sidebar', 'content.children.create.children.' . $t['Type']['alias'], array(
+				'title' => $t['Type']['title'],
+				'url' => array(
+					'plugin' => 'nodes',
+					'admin' => true,
+					'controller' => 'nodes',
+					'action' => 'add',
+					$t['Type']['alias'],
+				),
+			));
+		};
+
+		if (empty($View->viewVars['vocabularies_for_admin_layout'])) {
+			$vocabularies = array();
+		} else {
+			$vocabularies = $View->viewVars['vocabularies_for_admin_layout'];
+		}
+		foreach ($vocabularies as $v) {
+			$weight = 9999 + $v['Vocabulary']['weight'];
+			CroogoNav::add('sidebar', 'content.children.taxonomy.children.' . $v['Vocabulary']['alias'], array(
+				'title' => $v['Vocabulary']['title'],
+				'url' => array(
+					'plugin' => 'taxonomy',
+					'admin' => true,
+					'controller' => 'terms',
+					'action' => 'index',
+					$v['Vocabulary']['id'],
+				),
+				'weight' => $weight,
+			));
+		};
 	}
 
 /**

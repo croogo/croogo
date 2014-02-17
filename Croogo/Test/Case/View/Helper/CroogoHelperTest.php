@@ -60,7 +60,7 @@ class CroogoHelperTest extends CroogoTestCase {
  */
 	public function tearDown() {
 		ClassRegistry::flush();
-		CroogoNav::items($this->menus);
+		CroogoNav::items('sidebar', $this->menus);
 		unset($this->Croogo);
 	}
 

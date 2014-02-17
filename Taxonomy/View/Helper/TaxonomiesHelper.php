@@ -46,52 +46,8 @@ class TaxonomiesHelper extends AppHelper {
  */
 	public function beforeRender($viewFile) {
 		if (isset($this->request->params['admin']) && !$this->request->is('ajax')) {
-			$this->_adminMenu();
 			$this->_adminTabs();
 		}
-	}
-
-/**
- * Inject admin menu items
- */
-	protected function _adminMenu() {
-		if (empty($this->_View->viewVars['types_for_admin_layout'])) {
-			$types = array();
-		} else {
-			$types = $this->_View->viewVars['types_for_admin_layout'];
-		}
-		foreach ($types as $t) {
-			CroogoNav::add('content.children.create.children.' . $t['Type']['alias'], array(
-				'title' => $t['Type']['title'],
-				'url' => array(
-					'plugin' => 'nodes',
-					'admin' => true,
-					'controller' => 'nodes',
-					'action' => 'add',
-					$t['Type']['alias'],
-				),
-			));
-		};
-
-		if (empty($this->_View->viewVars['vocabularies_for_admin_layout'])) {
-			$vocabularies = array();
-		} else {
-			$vocabularies = $this->_View->viewVars['vocabularies_for_admin_layout'];
-		}
-		foreach ($vocabularies as $v) {
-			$weight = 9999 + $v['Vocabulary']['weight'];
-			CroogoNav::add('content.children.taxonomy.children.' . $v['Vocabulary']['alias'], array(
-				'title' => $v['Vocabulary']['title'],
-				'url' => array(
-					'plugin' => 'taxonomy',
-					'admin' => true,
-					'controller' => 'terms',
-					'action' => 'index',
-					$v['Vocabulary']['id'],
-				),
-				'weight' => $weight,
-			));
-		};
 	}
 
 /**

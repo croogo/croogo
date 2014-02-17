@@ -9,14 +9,21 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoNav extends Object {
+class CroogoNav {
+
+/**
+ * Current active menu
+ *
+ * @see CroogoNav::activeMenu()
+ */
+	protected static $_activeMenu = 'sidebar';
 
 /**
  * _items
  *
  * @var array
  */
-	protected static $_items = array();
+	protected static $_items = array('sidebar' => array());
 
 /**
  * _defaults
@@ -24,7 +31,7 @@ class CroogoNav extends Object {
  * @var array
  */
 	protected static $_defaults = array(
-		'icon' => false,
+		'icon' => '',
 		'title' => false,
 		'url' => '#',
 		'weight' => 9999,
@@ -34,6 +41,29 @@ class CroogoNav extends Object {
 		'children' => array(),
 		'htmlAttributes' => array(),
 	);
+
+/**
+ * Getter/setter for activeMenu
+ */
+	public static function activeMenu($menu = null) {
+		if ($menu === null) {
+			$activeMenu = self::$_activeMenu;
+		} else {
+			$activeMenu = $menu;
+		}
+
+		if (!array_key_exists($activeMenu, self::$_items)) {
+			self::$_items[$activeMenu] = array();
+		}
+
+		self::$_activeMenu = $activeMenu;
+
+		return $activeMenu;
+	}
+
+	public static function menus() {
+		return array_keys(self::$_items);
+	}
 
 /**
  * _setupOptions
@@ -55,22 +85,31 @@ class CroogoNav extends Object {
  * @param array $options menu options array
  * @return void
  */
-	public static function add($path, $options) {
+	public static function add($menu, $path, $options = array()) {
+		// Juggle argument for backward compatibility
+		if (is_array($path)) {
+			$options = $path;
+			$path = $menu;
+			$menu = self::activeMenu();
+		} else {
+			self::activeMenu($menu);
+		}
+
 		$pathE = explode('.', $path);
 		$pathE = array_splice($pathE, 0, count($pathE) - 2);
 		$parent = join('.', $pathE);
-		if (!empty($parent) && !Hash::check(self::$_items, $parent)) {
+		if (!empty($parent) && !Hash::check(self::$_items[$menu], $parent)) {
 			$title = Inflector::humanize(end($pathE));
 			$o = array('title' => $title);
 			self::_setupOptions($o);
 			self::add($parent, $o);
 		}
 		self::_setupOptions($options);
-		$current = Hash::extract(self::$_items, $path);
+		$current = Hash::extract(self::$_items[$menu], $path);
 		if (!empty($current)) {
-			self::_replace(self::$_items, $path, $options);
+			self::_replace(self::$_items[$menu], $path, $options);
 		} else {
-			self::$_items = Hash::insert(self::$_items, $path, $options);
+			self::$_items[$menu] = Hash::insert(self::$_items[$menu], $path, $options);
 		}
 	}
 
@@ -126,8 +165,16 @@ class CroogoNav extends Object {
  *
  * @return void
  */
-	public static function clear() {
-		self::$_items = array();
+	public static function clear($menu = 'sidebar') {
+		if ($menu) {
+			if (array_key_exists($menu, self::$_items)) {
+				self::$_items[$menu] = array();
+			} else {
+				throw new UnexpectedValueException('Invalid menu: ' . $menu);
+			}
+		} else {
+			self::$_items = array();
+		}
 	}
 
 /**
@@ -135,12 +182,20 @@ class CroogoNav extends Object {
  *
  * @param $items array if empty, the current menu is returned.
  * @return array
+ * @throws UnexpectedValueException
  */
-	public static function items($items = null) {
-		if (!empty($items)) {
-			self::$_items = $items;
+	public static function items($menu = 'sidebar', $items = null) {
+		if (!is_string($menu)) {
+			throw new UnexpectedValueException('Menu id is not a string');
 		}
-		return self::$_items;
+		if (!empty($items)) {
+			self::$_items[$menu] = $items;
+		}
+		if (!array_key_exists($menu, self::$_items)) {
+			CakeLog::error('Invalid menu: ' . $menu);
+			return array();
+		}
+		return self::$_items[$menu];
 	}
 
 /**
