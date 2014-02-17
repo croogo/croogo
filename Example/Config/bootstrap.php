@@ -30,7 +30,7 @@ Croogo::hookHelper('Nodes', 'Example.Example');
 /**
  * Admin menu (navigation)
  */
-CroogoNav::add('extensions.children.example', array(
+CroogoNav::add('sidebar', 'extensions.children.example', array(
 	'title' => 'Example',
 	'url' => '#',
 	'children' => array(

@@ -12,21 +12,6 @@ var Admin = {};
  * @return void
  */
 Admin.navigation = function() {
-	if (typeof $.prototype.supersubs == 'function') {
-		$('ul.sf-menu').supersubs({
-			minWidth: 12,
-			maxWidth: 27,
-			extraWidth: 1
-		}).superfish({
-			delay: 200,
-			animation: {opacity:'show',height:'show'},
-			speed: 'fast',
-			autoArrows: true,
-			dropShadows: false,
-			disableHI: true
-		});
-	}
-
 	var $sidebar = $('#sidebar-menu');
 	var $topLevelMenus = $('#sidebar-menu > li > .hasChild');
 

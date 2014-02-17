@@ -16,29 +16,32 @@ $dashboardUrl = array(
 				<span class="icon-bar"></span>
 			</a>
 			<span class="hidden-phone">
-			<?php echo $this->Html->link(Configure::read('Site.title'), $dashboardUrl, array('class' => 'brand')); ?>
+			<?php echo $this->Html->link(Configure::read('Site.title'), $dashboardUrl, array('class' => 'brand ellipsis')); ?>
 			</span>
 			<span class="hidden-desktop hidden-tablet">
 			<?php echo $this->Html->link(__d('croogo', 'Dashboard'), $dashboardUrl, array('class' => 'brand')); ?>
 			</span>
 			<div class="nav-collapse collapse" style="height: 0px; ">
-				<ul class="nav">
-					<li>
-						<?php echo $this->Html->link(__d('croogo', 'Visit website'), '/', array('target' => '_blank')); ?>
-					</li>
-				</ul>
-				<?php if ($this->Session->read('Auth.User.id')): ?>
-				<ul class="nav pull-right">
-					<li>
-						<a href="#">
-							<?php echo __d('croogo', "You are logged in as: %s", $this->Session->read('Auth.User.username')); ?>
-						</a>
-					</li>
-					<li>
-						<?php echo $this->Html->link(__d('croogo', "Log out"), array('plugin' => 'users', 'controller' => 'users', 'action' => 'logout')); ?>
-					</li>
-				</ul>
-				<?php endif; ?>
+			<?php
+				echo $this->Croogo->adminMenus(CroogoNav::items('top-left'), array(
+					'type' => 'dropdown',
+					'htmlAttributes' => array(
+						'id' => 'top-left-menu',
+						'class' => 'nav',
+					),
+				));
+			?>
+			<?php if ($this->Session->read('Auth.User.id')): ?>
+			<?php
+				echo $this->Croogo->adminMenus(CroogoNav::items('top-right'), array(
+					'type' => 'dropdown',
+					'htmlAttributes' => array(
+						'id' => 'top-right-menu',
+						'class' => 'nav pull-right',
+					),
+				));
+			?>
+			<?php endif; ?>
 			</div>
 		</div>
 	</div>

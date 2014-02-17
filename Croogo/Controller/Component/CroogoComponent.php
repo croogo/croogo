@@ -89,9 +89,11 @@ class CroogoComponent extends Component {
 	public function startup(Controller $controller) {
 		$this->_controller = $controller;
 
-		if (!isset($this->_controller->request->params['admin']) && !isset($this->_controller->request->params['requested'])) {
-		} else {
-			$this->_adminData();
+		if (isset($this->_controller->request->params['admin'])) {
+			if (!isset($this->_controller->request->params['requested'])) {
+				$this->_adminData();
+			}
+			$this->_adminMenus();
 		}
 	}
 
@@ -114,6 +116,57 @@ class CroogoComponent extends Component {
 				}
 			}
 		}
+		$this->_adminMenus();
+	}
+
+/**
+ * Setup admin menu
+ */
+	protected function _adminMenus() {
+		CroogoNav::add('top-left', 'site', array(
+			'icon' => false,
+			'title' => __d('croogo', 'Visit website'),
+			'url' => '/',
+			'weight' => 0,
+			'htmlAttributes' => array(
+				'target' => '_blank',
+			),
+		));
+
+		$user = $this->Session->read('Auth.User');
+		$gravatarUrl = '<img src="http://www.gravatar.com/avatar/' . md5($user['email']) . '?s=23" class="img-rounded"/> ';
+		CroogoNav::add('top-right', 'user', array(
+			'icon' => false,
+			'title' => $user['username'],
+			'before' => $gravatarUrl,
+			'url' => '#',
+			'children' => array(
+				'profile' => array(
+					'title' => __d('croogo', 'Profile'),
+					'icon' => 'user',
+					'url' => array(
+						'admin' => true,
+						'plugin' => 'users',
+						'controller' => 'users',
+						'action' => 'edit',
+						$user['id'],
+					),
+				),
+				'separator-1' => array(
+					'separator' => true,
+				),
+				'logout' => array(
+					'icon' => 'off',
+					'title' => 'Logout',
+					'url' => array(
+						'admin' => true,
+						'plugin' => 'users',
+						'controller' => 'users',
+						'action' => 'logout',
+					),
+				),
+			),
+		));
 	}
 
 /**

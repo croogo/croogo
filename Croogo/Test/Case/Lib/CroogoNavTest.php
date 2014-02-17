@@ -4,20 +4,20 @@ App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 class CroogoNavTest extends CroogoTestCase {
 
-	public $fixtures = array(
-		'plugin.settings.setting',
-	);
+	public $setupSettings = false;
 
 	protected static $_menus = array();
 
 	public function setUp() {
 		parent::setUp();
-		self::$_menus = CroogoNav::items();
+		self::$_menus = CroogoNav::items('sidebar');
+		CroogoNav::activeMenu('sidebar');
 	}
 
 	public function tearDown() {
 		parent::tearDown();
-		CroogoNav::items(self::$_menus);
+		CroogoNav::clear(null);
+		CroogoNav::items('sidebar', self::$_menus);
 	}
 
 	public function testNav() {
@@ -51,8 +51,51 @@ class CroogoNavTest extends CroogoTestCase {
 		$expected['extensions']['children']['plugins']['children']['example'] = Hash::merge($defaults, $example);
 		$this->assertEqual($result, $expected);
 
-		CroogoNav::items($saved);
+		CroogoNav::items('sidebar', $saved);
 		$this->assertEquals($saved, CroogoNav::items());
+	}
+
+/**
+ * @expectedException UnexpectedValueException
+ */
+	public function testNavClearWithException() {
+		CroogoNav::clear('bogus');
+	}
+
+/**
+ * testNavItemsWithBogusMenu
+ */
+	public function testNavItemsWithBogusMenu() {
+		$result = CroogoNav::items('bogus');
+		$this->assertEquals(array(), $result);
+	}
+
+/**
+ * Test Get Menus
+ */
+	public function testNavGetMenus() {
+		$result = CroogoNav::menus();
+		$this->assertEquals(array('sidebar'), $result);
+
+		CroogoNav::activeMenu('top');
+		CroogoNav::add('foo', array('title' => 'foo'));
+
+		$result = CroogoNav::menus();
+		$this->assertEquals(array('sidebar', 'top'), $result);
+	}
+
+/**
+ * Test multiple menu
+ */
+	public function testNavMultipleMenus() {
+		CroogoNav::activeMenu('top');
+		CroogoNav::add('foo', array('title' => 'foo'));
+
+		$menus = array_keys(CroogoNav::items());
+		$this->assertFalse(in_array('foo', $menus), 'foo exists in sidebar');
+
+		$menus = array_keys(CroogoNav::items('top'));
+		$this->assertTrue(in_array('foo', $menus), 'foo missing in top');
 	}
 
 	public function testNavMerge() {
@@ -69,6 +112,7 @@ class CroogoNavTest extends CroogoTestCase {
 	}
 
 	public function testNavOverwrite() {
+		Croogo::dispatchEvent('Croogo.setupAdminData', null);
 		$defaults = CroogoNav::getDefaults();
 
 		$items = CroogoNav::items();
