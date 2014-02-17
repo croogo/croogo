@@ -84,6 +84,9 @@ class UpgradeTask extends AppShell {
 			->addSubCommand('first_migrations', array(
 				'help' => __d('croogo', 'Create first migration records'),
 			))
+			->addSubCommand('migrations', array(
+				'help' => __d('croogo', 'Run all pending migrations for core plugins'),
+			))
 			->addSubCommand('all', array(
 				'help' => __d('croogo', 'Run all upgrade tasks'),
 			));
@@ -304,6 +307,19 @@ class UpgradeTask extends AppShell {
 			}
 		}
 		$this->success('FirstMigration default records created');
+	}
+
+/**
+ * Runs all available pending migrations for core plugins
+ */
+	public function migrations() {
+		$CroogoPlugin = new CroogoPlugin();
+		foreach ((array)Configure::read('Core.corePlugins') as $plugin) {
+			$result = $CroogoPlugin->migrate($plugin);
+			if (!$result) {
+				$this->out($CroogoPlugin->migrationErrors);
+			}
+		}
 	}
 
 /**
