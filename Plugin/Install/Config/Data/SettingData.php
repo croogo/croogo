@@ -209,7 +209,7 @@ class SettingData {
 			'title' => '',
 			'description' => '',
 			'input_type' => 'text',
-			'editable' => '0',
+			'editable' => '1',
 			'weight' => '20',
 			'params' => ''
 		),
