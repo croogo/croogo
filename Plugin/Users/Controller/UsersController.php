@@ -124,6 +124,37 @@ class UsersController extends UsersAppController {
 	}
 
 /**
+ * Send activation email
+ */
+	private function __sendActivationEmail() {
+		if (empty($this->request->data['User']['notification'])) {
+			return;
+		}
+
+		$user = $this->request->data['User'];
+		$activationUrl = Router::url(array(
+			'admin' => false,
+			'plugin' => 'users',
+			'controller' => 'users',
+			'action' => 'activate',
+			$user['username'],
+			$user['activation_key'],
+		), true);
+		$this->_sendEmail(
+			array(Configure::read('Site.title'), $this->_getSenderEmail()),
+			$user['email'],
+			__d('croogo', '[%s] Please activate your account', Configure::read('Site.title')),
+			'Users.register',
+			'user activation',
+			$this->theme,
+			array(
+				'user' => $this->request->data,
+				'url' => $activationUrl,
+			)
+		);
+	}
+
+/**
  * Admin add
  *
  * @return void
@@ -134,6 +165,9 @@ class UsersController extends UsersAppController {
 			$this->User->create();
 			$this->request->data['User']['activation_key'] = md5(uniqid());
 			if ($this->User->save($this->request->data)) {
+				$this->request->data['User']['id'] = $this->User->id;
+				$this->__sendActivationEmail();
+
 				$this->Session->setFlash(__d('croogo', 'The User has been saved'), 'default', array('class' => 'success'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -345,6 +379,15 @@ class UsersController extends UsersAppController {
 			$this->redirect(array('action' => 'login'));
 		}
 
+		if ($this->Auth->user('id')) {
+			$this->Session->setFlash(
+				__d('croogo', 'You are currently logged in as:') . ' ' .
+				$this->Auth->user('username')
+			);
+			return $this->redirect($this->referer());
+		}
+
+		$redirect = array('action' => 'login');
 		if (
 			$this->User->hasAny(array(
 				'User.username' => $username,
@@ -364,6 +407,10 @@ class UsersController extends UsersAppController {
 				$this->User->escapeField('id') => $this->User->id
 			));
 
+			if (isset($user) && empty($user['User']['password'])) {
+				$redirect = array('action' => 'reset', $username, $key);
+			}
+
 			Croogo::dispatchEvent('Controller.Users.activationSuccessful', $this);
 			$this->Session->setFlash(__d('croogo', 'Account activated successfully.'), 'default', array('class' => 'success'));
 		} else {
@@ -371,7 +418,9 @@ class UsersController extends UsersAppController {
 			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
 		}
 
-		$this->redirect(array('action' => 'login'));
+		if ($redirect) {
+			return $this->redirect($redirect);
+		}
 	}
 
 /**
