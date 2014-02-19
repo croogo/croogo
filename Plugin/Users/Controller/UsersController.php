@@ -345,15 +345,25 @@ class UsersController extends UsersAppController {
 			$this->redirect(array('action' => 'login'));
 		}
 
-		if ($this->User->hasAny(array(
+		if (
+			$this->User->hasAny(array(
 				'User.username' => $username,
 				'User.activation_key' => $key,
 				'User.status' => 0,
-			))) {
+			))
+		) {
 			$user = $this->User->findByUsername($username);
 			$this->User->id = $user['User']['id'];
-			$this->User->saveField('status', 1);
-			$this->User->saveField('activation_key', md5(uniqid()));
+
+			$db = $this->User->getDataSource();
+			$key = md5(uniqid());
+			$this->User->updateAll(array(
+				$this->User->escapeField('status') => $db->value(1),
+				$this->User->escapeField('activation_key') => $db->value($key),
+			), array(
+				$this->User->escapeField('id') => $this->User->id
+			));
+
 			Croogo::dispatchEvent('Controller.Users.activationSuccessful', $this);
 			$this->Session->setFlash(__d('croogo', 'Account activated successfully.'), 'default', array('class' => 'success'));
 		} else {
