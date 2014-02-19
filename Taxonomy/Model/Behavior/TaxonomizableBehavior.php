@@ -87,12 +87,16 @@ class TaxonomizableBehavior extends ModelBehavior {
 	public function validateTaxonomyData(Model $model) {
 		$typeField = 'type';
 		$data =& $model->data;
-		if (
-			!array_key_exists('Taxonomy', $data) ||
-			!array_key_exists('Taxonomy', $data['Taxonomy'])
-		) {
-			return true;
+
+		if (isset($data[$model->alias][$typeField])) {
+			$typeAlias = $data[$model->alias][$typeField];
+		} elseif (isset($model->type)) {
+			$typeAlias = $model->type;
+		} else {
+			$this->log('Unable to determine type for model ' . $model->alias);
+			return false;
 		}
+
 		$type = $this->_Taxonomy->Vocabulary->Type->find('first', array(
 			'fields' => array('id', 'title', 'alias'),
 			'contain' => array(
@@ -101,9 +105,15 @@ class TaxonomizableBehavior extends ModelBehavior {
 				),
 			),
 			'conditions' => array(
-				'alias' => $data[$model->alias][$typeField],
+				'alias' => $typeAlias,
 			),
 		));
+
+		if (empty($type)) {
+			$this->log('Type ' . $typeAlias . ' cannot be found');
+			return true;
+		}
+
 		$selectedTerms = array_filter($data['Taxonomy']['Taxonomy']);
 
 		$result = true;
@@ -191,6 +201,9 @@ class TaxonomizableBehavior extends ModelBehavior {
  * @return bool
  */
 	public function beforeSave(Model $model, $options = array()) {
+		if (!empty($options['fieldList'])) {
+			return true;
+		}
 		$result = $this->validateTaxonomyData($model);
 		if ($result !== true) {
 			return $result;

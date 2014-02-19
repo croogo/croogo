@@ -373,7 +373,7 @@ class Node extends NodesAppModel {
 			$node[$this->alias]['path'] = $this->_getNodeRelativePath($node);
 		}
 
-		return $this->saveMany($nodes);
+		return $this->saveMany($nodes, array('fieldList' => array('path')));
 	}
 
 /**
