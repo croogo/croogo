@@ -334,6 +334,16 @@ options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "M
 			'weight' => 28,
 			'params' => 'options={"0": "Disabled", "1": "Enabled in debug mode only", "force": "Always enabled"}',
 		),
+		array(
+			'key' => 'Site.admin_theme',
+			'value' => '',
+			'title' => 'Administration Theme',
+			'description' => '',
+			'input_type' => 'text',
+			'editable' => '1',
+			'weight' => '29',
+			'params' => ''
+		),
 	);
 
 }
