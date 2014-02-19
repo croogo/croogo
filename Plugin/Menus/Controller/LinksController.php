@@ -286,6 +286,7 @@ class LinksController extends MenusAppController {
 		}
 		$this->__scopeTreeToMenu($link['Link']['menu_id']);
 		if ($this->Link->moveUp($id, $step)) {
+			Cache::clearGroup('menus','croogo_menus');
 			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'default', array('class' => 'error'));
@@ -317,6 +318,7 @@ class LinksController extends MenusAppController {
 		}
 		$this->__scopeTreeToMenu($link['Link']['menu_id']);
 		if ($this->Link->moveDown($id, $step)) {
+			Cache::clearGroup('menus','croogo_menus');
 			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'default', array('class' => 'error'));
