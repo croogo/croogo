@@ -27,16 +27,16 @@ $this->Html
 					$currentTheme = Sanitize::clean($currentTheme);
 					if (isset($currentTheme['screenshot'])):
 						if (!Configure::read('Site.theme')) :
-							echo $this->Html->image($currentTheme['screenshot'], array('class' => 'img-polaroid'));
+							$file = $currentTheme['screenshot'];
 						else:
 							$file = '/theme/' . Configure::read('Site.theme') . '/img/' . $currentTheme['screenshot'];
-							$imgUrl = $this->Html->image($file, array('class' => 'img-polaroid'));
-							$link = $this->Html->link($imgUrl, $file, array(
-								'escape' => false,
-								'class' => 'thickbox',
-							));
-							echo $this->Html->tag('div', $link);
 						endif;
+						$imgUrl = $this->Html->image($file, array('class' => 'img-polaroid'));
+						$link = $this->Html->link($imgUrl, $file, array(
+							'escape' => false,
+							'class' => 'thickbox',
+						));
+						echo $this->Html->tag('div', $link);
 					endif;
 				?>
 			</div>
