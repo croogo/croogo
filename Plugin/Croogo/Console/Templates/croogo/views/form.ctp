@@ -57,10 +57,13 @@ EOF;
 						echo "\t\t\t\techo \$this->Form->input('{$assocName}');\n";
 					}
 				}
-				echo "\t\t\t\techo \$this->Croogo->adminTabs();\n";
-				echo "\t\t\t?>\n";
+
+			echo "\t\t\t?>\n";
 ?>
 			</div>
+<?php
+			echo "\t\t\t<?php echo \$this->Croogo->adminTabs(); ?>\n";
+?>
 		</div>
 
 	</div>
