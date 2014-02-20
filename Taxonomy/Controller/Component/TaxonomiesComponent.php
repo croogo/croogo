@@ -167,4 +167,42 @@ class TaxonomiesComponent extends Component {
 		}
 	}
 
+/**
+ * Prepare required taxonomy baseline data for use in views
+ *
+ * @param array $type Type data
+ * @param array $options Options
+ * @return void
+ * @throws UnexpectedException
+ */
+	public function prepareCommonData($type, $options = array()) {
+		$options = Hash::merge(array(
+			'modelClass' => $this->controller->modelClass,
+		), $options);
+		$typeAlias = $type['Type']['alias'];
+		$modelClass = $options['modelClass'];
+
+		if (isset($this->controller->{$modelClass})) {
+			$Model = $this->controller->{$modelClass};
+		} else {
+			throw new UnexpectedException(sprintf(
+				'Model %s not found in controller %s',
+				$model, $this->controller->name
+			));
+		}
+		$Model->type = $typeAlias;
+		$vocabularies = Hash::combine($type['Vocabulary'], '{n}.id', '{n}');
+		$taxonomy = array();
+		foreach ($type['Vocabulary'] as $vocabulary) {
+			$vocabularyId = $vocabulary['id'];
+			$taxonomy[$vocabularyId] = $Model->Taxonomy->getTree(
+				$vocabulary['alias'],
+				array('taxonomyId' => true)
+			);
+		}
+		$this->controller->set(compact(
+			'type', 'typeAlias', 'taxonomy', 'vocabularies'
+		));
+	}
+
 }
