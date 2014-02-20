@@ -258,6 +258,10 @@ class CroogoAppController extends Controller {
 		if (isset($this->request->params['locale'])) {
 			Configure::write('Config.language', $this->request->params['locale']);
 		}
+
+		if (isset($this->request->params['admin'])) {
+			Croogo::dispatchEvent('Croogo.beforeSetupAdminData', $this);
+		}
 	}
 
 /**

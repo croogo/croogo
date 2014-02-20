@@ -20,10 +20,27 @@ class ExtensionsEventHandler implements CakeEventListener {
 			'Croogo.bootstrapComplete' => array(
 				'callable' => 'onBootstrapComplete',
 			),
+			'Croogo.beforeSetupAdminData' => array(
+				'callable' => 'onBeforeSetupAdminData',
+			),
 			'Croogo.setupAdminData' => array(
 				'callable' => 'onSetupAdminData',
 			),
 		);
+	}
+
+/**
+ * Before Setup admin data
+ */
+	public function onBeforeSetupAdminData($event) {
+		$plugins = CakePlugin::loaded();
+		$config = 'Config' . DS . 'admin.php';
+		foreach ($plugins as $plugin) {
+			$file = CakePlugin::path($plugin) . $config;
+			if (file_exists($file)) {
+				require $file;
+			}
+		}
 	}
 
 /**
