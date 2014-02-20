@@ -200,6 +200,9 @@ class NodesControllerTest extends CroogoControllerTestCase {
 				'Role' => array(
 					'Role' => array(),
 				),
+				'TaxonomyData' => array(
+					1 => array(1),
+				),
 			),
 		));
 		$newBlog = $this->NodesController->Node->findBySlug('new-node');
@@ -227,6 +230,9 @@ class NodesControllerTest extends CroogoControllerTestCase {
 				),
 				'Role' => array(
 					'Role' => array(),
+				),
+				'TaxonomyData' => array(
+					1 => array(1),
 				),
 			),
 		));
@@ -258,6 +264,9 @@ class NodesControllerTest extends CroogoControllerTestCase {
 				),
 				'Role' => array(
 					'Role' => array(),
+				),
+				'TaxonomyData' => array(
+					1 => array(1),
 				),
 			),
 		));
@@ -303,6 +312,9 @@ class NodesControllerTest extends CroogoControllerTestCase {
 				),
 				'Role' => array(
 					'Role' => array(),
+				),
+				'TaxonomyData' => array(
+					1 => array(1),
 				),
 			),
 		));
