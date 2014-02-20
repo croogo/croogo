@@ -21,16 +21,5 @@ CroogoNav::add('sidebar', 'menus', array(
 			),
 			'weight' => 10,
 		),
-		'add_new' => array(
-			'title' => __d('croogo', 'Add new'),
-			'url' => array(
-				'plugin' => 'menus',
-				'admin' => true,
-				'controller' => 'menus',
-				'action' => 'add',
-			),
-			'weight' => 20,
-			'htmlAttributes' => array('class' => 'separator'),
-		),
 	),
 ));
