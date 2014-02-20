@@ -32,24 +32,6 @@ class TaxonomiesEventHandler implements CakeEventListener {
 	public function onSetupAdminData($event) {
 		$View = $event->subject;
 
-		if (empty($View->viewVars['types_for_admin_layout'])) {
-			$types = array();
-		} else {
-			$types = $View->viewVars['types_for_admin_layout'];
-		}
-		foreach ($types as $t) {
-			CroogoNav::add('sidebar', 'content.children.create.children.' . $t['Type']['alias'], array(
-				'title' => $t['Type']['title'],
-				'url' => array(
-					'plugin' => 'nodes',
-					'admin' => true,
-					'controller' => 'nodes',
-					'action' => 'add',
-					$t['Type']['alias'],
-				),
-			));
-		};
-
 		if (empty($View->viewVars['vocabularies_for_admin_layout'])) {
 			$vocabularies = array();
 		} else {
