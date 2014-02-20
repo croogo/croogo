@@ -52,9 +52,7 @@ class CroogoHelper extends AppHelper {
  */
 	public function beforeRender($viewFile) {
 		if (isset($this->request->params['admin'])) {
-			$eventManager = $this->_View->getEventManager();
-			$event = new CakeEvent('Croogo.setupAdminData', $this->_View);
-			$eventManager->dispatch($event);
+			Croogo::dispatchEvent('Croogo.setupAdminData', $this->_View);
 		}
 	}
 
