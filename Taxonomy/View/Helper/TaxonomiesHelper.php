@@ -182,6 +182,8 @@ class TaxonomiesHelper extends AppHelper {
 				'action' => 'term',
 				'type' => $type['alias'],
 				'slug' => $termData['Term']['slug']
+			), array(
+				'target' => '_blank',
 			));
 		}
 
