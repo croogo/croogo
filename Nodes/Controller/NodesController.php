@@ -736,17 +736,12 @@ class NodesController extends NodesAppController {
  * @return void
  */
 	protected function _setCommonVariables($type) {
-		$typeAlias = $type['Type']['alias'];
-		$this->Node->type = $typeAlias;
+		if (isset($this->Taxonomies)) {
+			$this->Taxonomies->prepareCommonData($type);
+		}
 		$nodes = $this->Node->generateTreeList();
 		$roles = $this->Node->User->Role->find('list');
-		$vocabularies = Hash::combine($type['Vocabulary'], '{n}.id', '{n}');
-		$taxonomy = array();
-		foreach ($type['Vocabulary'] as $vocabulary) {
-			$vocabularyId = $vocabulary['id'];
-			$taxonomy[$vocabularyId] = $this->Node->Taxonomy->getTree($vocabulary['alias'], array('taxonomyId' => true));
-		}
-		$this->set(compact('typeAlias', 'type', 'nodes', 'roles', 'vocabularies', 'taxonomy'));
+		$this->set(compact('nodes', 'roles'));
 	}
 
 }

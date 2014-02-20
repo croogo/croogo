@@ -131,11 +131,16 @@ class NodeTest extends CroogoTestCase {
 		$oldNodeCount = $this->Node->find('count');
 
 		$data = array(
-			'title' => 'Test Content',
-			'slug' => 'test-content',
-			'type' => 'blog',
-			'token_key' => 1,
-			'body' => '',
+			'Node' => array(
+				'title' => 'Test Content',
+				'slug' => 'test-content',
+				'type' => 'blog',
+				'token_key' => 1,
+				'body' => '',
+			),
+			'TaxonomyData' => array(
+				1 => array(1),
+			)
 		);
 		$result = $this->Node->saveNode($data, Node::DEFAULT_TYPE);
 		$this->Node->type = null;
@@ -228,7 +233,10 @@ class NodeTest extends CroogoTestCase {
 				'token_key' => 1,
 				'body' => '',
 			),
-			'Role' => array('Role' => array('3')) //Public
+			'Role' => array('Role' => array('3')), //Public
+			'TaxonomyData' => array(
+				1 => array(1),
+			)
 		);
 		$result = $this->Node->saveNode($data, Node::DEFAULT_TYPE);
 		$this->Node->type = null;
@@ -267,7 +275,10 @@ class NodeTest extends CroogoTestCase {
 				'token_key' => 1,
 				'body' => '',
 			),
-			'Role' => array('Role' => array('3')) //Public
+			'Role' => array('Role' => array('3')), //Public
+			'TaxonomyData' => array(
+				1 => array(1),
+			)
 		);
 
 		$manager = CakeEventManager::instance();
@@ -337,12 +348,21 @@ class NodeTest extends CroogoTestCase {
  * test updateAllNodesPaths
  */
 	public function testUpdateAllNodesPaths() {
-		$node = $this->Node->findById(1);
-		$node['Node']['path'] = 'invalid one';
-		$this->assertTrue((bool)$this->Node->save($node));
 
-		CroogoRouter::contentType('blog');
-		$this->assertTrue($this->Node->updateAllNodesPaths());
+		$this->Node->id = 1;
+		$result = $this->Node->saveField('path', 'invalid one');
+		$this->assertTrue((bool)$result);
+
+		CroogoRouter::connect('/blog/:slug', array(
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'view',
+			'type' => 'blog',
+		));
+		Router::promote();
+		$result = $this->Node->updateAllNodesPaths();
+		$this->assertTrue($result);
+		$this->Node->type = 'blog';
 		$node = $this->Node->findById(1);
 		$this->assertEquals('/blog/hello-world', $node['Node']['path']);
 	}
