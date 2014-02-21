@@ -8,6 +8,7 @@ Damien Biasotto <damien@occi-tech.com>
 Pierre Martin <pierre@occi-tech.com>
 chadrien <chadrien@chadrien.fr>
 euromark <euromark@web.de>
+Damien Biasotto <damien@occitech.fr>
 AD7six <andydawson76@gmail.com>
 Eko Tristiyono <eko@xintesa.com>
 Elias Coronado <ecor.rck@hotmail.com>
@@ -31,6 +32,7 @@ liamkeily <liam@simplywebsites.com>
 thoth <thomas.rader@tigerclawtech.com>
 Ivan <gsitex@gmail.com>
 Josué Silva Santos <josue.silva.santos@gmail.com>
+Lukas Strassel <lukasstrassel@googlemail.com>
 cdbruin <casper@ectrader.nl>
 daniel <daniel@daniels-MacBook-Air.local>
 phpMagpie <phpmagpie@webbedit.co.uk>
@@ -44,7 +46,6 @@ Gilles Bedel <gilles@occi-tech.com>
 Jeremy Harris <jeremy@42pixels.com>
 Joachim Nyqvist <Joachim@JNyqvist.se>
 Kory Marks <kory.marks@mac.com>
-Lukas Strassel <lukasstrassel@googlemail.com>
 Léo Haddad <scoup001@gmail.com>
 Marce Romagnoli <marce.romagnoli@gmail.com>
 Marcin Jóźwikowski <marcin@jozwikowski.pl>
