@@ -52,7 +52,9 @@ App::build(array(
 	'View' => array($croogoPath . 'View' . DS),
 	'View/Helper' => array($croogoPath . 'View' . DS . 'Helper' . DS),
 ), App::APPEND);
-if ($theme == Configure::read('Site.theme')) {
+
+$theme = Configure::read('Site.theme');
+if (Configure::read('Site.theme') != 'Default') {
 	App::build(array(
 		'View/Helper' => array(App::themePath($theme) . 'Helper' . DS),
 	));
