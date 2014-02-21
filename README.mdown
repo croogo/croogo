@@ -22,17 +22,12 @@ It is powered by [CakePHP](http://cakephp.org) MVC framework.
 #### Manual installation
 
   * Extract the archive. Upload the content to your server.
-  * Create a new MySQL database (`utf8_unicode_ci` collation), and use these two SQL dump files in given order:
-    * `Vendor/croogo/croogo/Config/Schema/sql/croogo.sql`
-    * `Vendor/croogo/croogo/Config/Schema/sql/croogo_data.sql`
-  * Rename:
+  * Locate your `app` directory, and rename the following files:
     * `Config/database.php.install` to `database.php`, and edit the details.
     * `Config/croogo.php.install` to `croogo.php`, and edit the details.
     * `Config/settings.json.install` to `settings.json`
   * You can access your admin panel at http://your-site.com/admin. The installer should
     display a page for you to create the administrative user.
-
-It is recommended that you install Croogo using the web based installer for security reasons.
 
 #### Installation using git
 
@@ -40,15 +35,13 @@ Beginning version 1.6.x, Croogo has been updated to be installed as a vendor
 package. This is intended to ease integration with an existing cakephp
 application.
 
-  * Ensure you have a recent cakephp version 2.3
+  * Ensure you have a recent cakephp version 2.4
   * Run the following commands:
 
-    git clone git://github.com/croogo/croogo-app
-    mkdir -p croogo-app/Vendor/croogo
-    cd croogo-app/Vendor/croogo
-    git clone git://github.com/croogo/croogo
+    git clone git://github.com/croogo/app app
+    cd app && Console/add_submodule
 
-  * After running the web installer, you will need to generate the assets by
+  * After running the web installer, you might need to generate the assets by
     running the following command from the application root directory:
 
     `Console/cake croogo make`
