@@ -85,7 +85,7 @@ $this->Html
 						echo $this->Html->tag('div', $link, array('class' => 'screenshot span4'));
 					} else {
 						if (isset($theme['screenshot'])):
-							$file = '/theme/' . $themeAlias . '/img/' . $currentTheme['screenshot'];
+							$file = '/theme/' . $themeAlias . '/img/' . $theme['screenshot'];
 							$imgUrl = $this->Html->image($file, array('class' => 'img-polaroid'));
 							$link = $this->Html->link($imgUrl, $file, array(
 								'escape' => false,
