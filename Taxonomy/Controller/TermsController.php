@@ -59,7 +59,7 @@ class TermsController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function admin_index($vocabularyId) {
+	public function admin_index($vocabularyId = null) {
 		$this->__ensureVocabularyIdExists($vocabularyId);
 
 		$vocabulary = $this->Term->Vocabulary->read(null, $vocabularyId);
@@ -232,7 +232,11 @@ class TermsController extends TaxonomyAppController {
 		return $this->redirect($redirectUrl);
 	}
 
+/**
+ * Get default type from Vocabulary
+ */
 	private function __getDefaultType($vocabulary) {
+		$defaultType = null;
 		if (isset($vocabulary['Type'][0])) {
 			$defaultType = $vocabulary['Type'][0];
 		}

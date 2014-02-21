@@ -96,7 +96,13 @@ class Term extends TaxonomyAppModel {
 			),
 		));
 		if (isset($term[$this->alias][$this->primaryKey])) {
-			return $term[$this->alias][$this->primaryKey];
+			$id = $term[$this->alias][$this->primaryKey];
+			$update = $dataToPersist[$this->alias];
+			if ($id && isset($update['description'])) {
+				$this->id = $id;
+				$this->saveField('description', $update['description']);
+			}
+			return $id;
 		}
 
 		$this->id = false;

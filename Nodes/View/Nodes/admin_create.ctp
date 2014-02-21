@@ -11,6 +11,11 @@ $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
 		<div class="box">
 			<div class="box-content">
 				<?php foreach ($types as $type): ?>
+					<?php
+						if (!empty($type['Type']['plugin'])):
+							continue;
+						endif;
+					?>
 					<div class="type">
 						<h3><?php echo $this->Html->link($type['Type']['title'], array('action' => 'add', $type['Type']['alias'])); ?></h3>
 						<p><?php echo $type['Type']['description']; ?></p>

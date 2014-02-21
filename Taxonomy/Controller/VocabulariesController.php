@@ -63,7 +63,7 @@ class VocabulariesController extends TaxonomyAppController {
 			}
 		}
 
-		$types = $this->Vocabulary->Type->find('list');
+		$types = $this->Vocabulary->Type->pluginTypes();
 		$this->set(compact('types'));
 	}
 
@@ -93,7 +93,11 @@ class VocabulariesController extends TaxonomyAppController {
 			$this->request->data = $this->Vocabulary->read(null, $id);
 		}
 
-		$types = $this->Vocabulary->Type->find('list');
+		$plugin = null;
+		if (isset($this->request->data['Vocabulary']['plugin'])) {
+			$plugin = $this->request->data['Vocabulary']['plugin'];
+		}
+		$types = $this->Vocabulary->Type->pluginTypes($plugin);
 		$this->set(compact('types'));
 	}
 
