@@ -23,6 +23,7 @@ Lukas Marks <lukas.marks@lumax-web.de>
 Vitor Pacheco <vitor-p.c@hotmail.com>
 primeminister <primeminister@mowd.nl>
 ADmad <admad.coder@gmail.com>
+Appsbender <regz24@gmail.com>
 James Sapara <james.sapara@gmail.com>
 Matt Curry <matt@pseudocoder.com>
 Mischa ter Smitten <mischa@tersmitten.nl>
@@ -36,7 +37,6 @@ phpMagpie <phpmagpie@webbedit.co.uk>
 tmaiaroto <tom@shift8creative.com>
 Adam Taylor <ataylor32@gmail.com>
 Andrew Weir <andru.weir@gmail.com>
-Appsbender <regz24@gmail.com>
 Arie Sutanto <asutanto@xintesa.com>
 Cezary Nowak <korpirkor@users.noreply.github.com>
 Dirk Brünsicke <d1rk@gmx.de>
@@ -44,6 +44,7 @@ Gilles Bedel <gilles@occi-tech.com>
 Jeremy Harris <jeremy@42pixels.com>
 Joachim Nyqvist <Joachim@JNyqvist.se>
 Kory Marks <kory.marks@mac.com>
+Lukas Strassel <lukasstrassel@googlemail.com>
 Léo Haddad <scoup001@gmail.com>
 Marce Romagnoli <marce.romagnoli@gmail.com>
 Marcin Jóźwikowski <marcin@jozwikowski.pl>
@@ -64,5 +65,6 @@ joseph-d <joseph.d@nirada.co.th>
 mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
 roland-w <roland-w@users.noreply.github.com>
 romaing <pourri@dixit-productions.com>
+sakulstra <lukasstrassel@googlemail.com>
 sherwinrobles <sherwinrobles@gmail.com>
 stefanozoffoli <stefano.zoffoli@librasoftsnc.it>
