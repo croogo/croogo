@@ -95,6 +95,7 @@ class Type extends TaxonomyAppModel {
 		'title',
 		'alias',
 		'description',
+		'plugin',
 	);
 
 /**

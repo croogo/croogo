@@ -14,6 +14,7 @@ $this->Html
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		$this->Paginator->sort('title', __d('croogo', 'Title')),
 		$this->Paginator->sort('alias', __d('croogo', 'Alias')),
+		$this->Paginator->sort('plugin', __d('croogo', 'Plugin')),
 		__d('croogo', 'Actions'),
 	));
 ?>
@@ -51,6 +52,7 @@ $this->Html
 			$vocabulary['Vocabulary']['id'],
 			$this->Html->link($vocabulary['Vocabulary']['title'], array('controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id'])),
 			$vocabulary['Vocabulary']['alias'],
+			$vocabulary['Vocabulary']['plugin'],
 			$actions,
 		);
 	endforeach;
