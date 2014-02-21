@@ -77,10 +77,7 @@ class TaxonomiesComponent extends Component {
 		// types
 		$types = $this->Taxonomy->Vocabulary->Type->find('all', array(
 			'conditions' => array(
-				'OR' => array(
-					'Type.plugin LIKE' => '',
-					'Type.plugin' => null,
-				),
+				'Type.plugin' => null,
 			),
 			'order' => 'Type.alias ASC',
 		));
@@ -90,10 +87,7 @@ class TaxonomiesComponent extends Component {
 		$vocabularies = $this->Taxonomy->Vocabulary->find('all', array(
 			'recursive' => '-1',
 			'conditions' => array(
-				'OR' => array(
-					'Vocabulary.plugin LIKE' => '',
-					'Vocabulary.plugin' => null,
-				),
+				'Vocabulary.plugin' => null,
 			),
 			'order' => 'Vocabulary.alias ASC',
 		));

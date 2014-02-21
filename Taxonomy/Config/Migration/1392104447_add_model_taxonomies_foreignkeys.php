@@ -57,6 +57,14 @@ class AddModelTaxonomyForeignKey extends CakeMigration {
  * @access public
  */
 	public function before($direction) {
+		ClassRegistry::init('Taxonomy.Type')->updateAll(
+			array('plugin' => null),
+			array('plugin' => '')
+		);
+		ClassRegistry::init('Taxonomy.Vocabulary')->updateAll(
+			array('plugin' => null),
+			array('plugin' => '')
+		);
 		return true;
 	}
 
