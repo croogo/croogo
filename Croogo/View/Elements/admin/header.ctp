@@ -1,11 +1,7 @@
 <?php
 
-$dashboardUrl = array(
-	'admin' => true,
-	'plugin' => 'settings',
-	'controller' => 'settings',
-	'action' => 'dashboard',
-);
+$dashboardUrl = Configure::read('Croogo.dashboardUrl');
+
 ?>
 <header class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-inner">
