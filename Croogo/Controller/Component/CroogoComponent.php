@@ -266,12 +266,13 @@ class CroogoComponent extends Component {
 		$referer = $this->Session->read('Croogo.referer');
 		$this->Session->delete('Croogo.referer');
 		if (is_array($url)) {
-			if (isset($url['action']) && $url['action'] === 'edit' && !isset($this->_controller->request->data['apply'])) {
-				$url = array('action' => 'index');
+			if (isset($url['action']) && $url['action'] === 'edit') {
+				if (!isset($this->_controller->request->data['apply'])) {
+					$url = array('action' => 'index');
+				}
+			} elseif (isset($referer['url'])) {
+				$url = $referer['url'];
 			}
-		}
-		if (isset($referer['url'])) {
-			$url = $referer['url'];
 		}
 		$this->_controller->redirect($url, $status, $exit);
 	}
