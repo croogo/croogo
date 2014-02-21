@@ -41,6 +41,9 @@ class NodesEventHandler implements CakeEventListener {
 			$types = $View->viewVars['types_for_admin_layout'];
 		}
 		foreach ($types as $t) {
+			if (!empty($t['Type']['plugin'])) {
+				continue;
+			}
 			CroogoNav::add('sidebar', 'content.children.create.children.' . $t['Type']['alias'], array(
 				'title' => $t['Type']['title'],
 				'url' => array(

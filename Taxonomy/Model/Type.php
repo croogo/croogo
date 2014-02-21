@@ -95,5 +95,26 @@ class Type extends TaxonomyAppModel {
 		'title',
 		'alias',
 		'description',
+		'plugin',
 	);
+
+/**
+ * Get a list of relevant types for given plugin
+ */
+	public function pluginTypes($plugin = null) {
+		if ($plugin === null) {
+			$conditions = array();
+		} elseif ($plugin) {
+			$conditions = array('plugin' => $plugin);
+		} else {
+			$conditions = array(
+				'OR' => array(
+					'plugin LIKE' => '',
+					'plugin' => null,
+				),
+			);
+		}
+		return $this->find('list', compact('conditions'));
+	}
+
 }
