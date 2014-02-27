@@ -1,7 +1,7 @@
 <?php
 
 App::uses('CakeLog', 'Log');
-App::uses('ClassRegistry', 'Core');
+App::uses('ClassRegistry', 'Utility');
 App::uses('File', 'Utility');
 App::uses('Model', 'Model');
 
