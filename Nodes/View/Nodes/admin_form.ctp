@@ -19,6 +19,12 @@ if ($this->request->params['action'] == 'admin_edit') {
 	$this->Html->addCrumb($this->request->data['Node']['title'], '/' . $this->request->url);
 }
 
+$lookupUrl = $this->Html->apiUrl(array(
+	'plugin' => 'users',
+	'controller' => 'users',
+	'action' => 'lookup',
+));
+
 echo $this->Form->create('Node', array('url' => $formUrl));
 
 ?>
@@ -97,7 +103,7 @@ echo $this->Form->create('Node', array('url' => $formUrl));
 					'data-primaryKey' => 'id',
 					'data-queryField' => 'name',
 					'data-relatedElement' => '#NodeUserId',
-					'data-url' => '/api/v1.0/users/lookup.json',
+					'data-url' => $lookupUrl,
 				),
 			)) .
 

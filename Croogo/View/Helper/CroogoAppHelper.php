@@ -31,4 +31,23 @@ class CroogoAppHelper extends Helper {
 		return parent::url($url, $full);
 	}
 
+/**
+ * Convenience method to generate an API Url
+ *
+ * @param string|array $url
+ * @param bool $full
+ * @return string
+ */
+	public function apiUrl($url = null, $full = false) {
+		if (is_array($url)) {
+			$url = Hash::merge(array(
+				'admin' => false,
+				'api' => Configure::read('Croogo.Api.path'),
+				'prefix' => 'v1.0',
+				'ext' => 'json',
+			), $url);
+		}
+		return parent::url($url, $full);
+	}
+
 }
