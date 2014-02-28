@@ -12,7 +12,7 @@ class VocabularyData {
 			'required' => '0',
 			'multiple' => '1',
 			'tags' => '0',
-			'plugin' => '',
+			'plugin' => null,
 			'weight' => '1',
 			'updated' => '2010-05-17 20:03:11',
 			'created' => '2009-07-22 02:16:21'
@@ -25,7 +25,7 @@ class VocabularyData {
 			'required' => '0',
 			'multiple' => '1',
 			'tags' => '0',
-			'plugin' => '',
+			'plugin' => null,
 			'weight' => '2',
 			'updated' => '2010-05-17 20:03:11',
 			'created' => '2009-07-22 02:16:34'
