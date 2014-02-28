@@ -58,7 +58,16 @@ class MetaHelper extends AppHelper {
 
 		$output = '';
 		foreach ($metaForLayout as $name => $content) {
-			$output .= '<meta name="' . $name . '" content="' . $content . '" />';
+			if (is_array($content) && isset($content['content'])) {
+				$attr = key($content);
+				$attrValue = $content[$attr];
+				$value = $content['content'];
+			} else {
+				$attr = 'name';
+				$attrValue = $name;
+				$value = $content;
+			}
+			$output .= '<meta ' . $attr . '="' . $attrValue . '" content="' . $value . '" />';
 		}
 
 		return $output;
