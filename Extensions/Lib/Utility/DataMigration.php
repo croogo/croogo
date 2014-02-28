@@ -77,9 +77,26 @@ class DataMigration {
 				'table' => $table,
 				'ds' => $options['ds'],
 			));
+
+			if (!empty($classVars['uniqueFields'])) {
+				$uniqueKeys = array_flip((array)$classVars['uniqueFields']);
+				foreach ((array)$classVars['uniqueFields'] as $field) {
+					if (!$Model->hasField($classVars['uniqueFields'])) {
+						throw new UnexpectedException("$field is not found in table $table");
+					}
+				}
+			}
+
 			if (is_array($records) && count($records) > 0) {
 				$i = 0;
 				foreach ($records as $record) {
+					if (isset($uniqueKeys)) {
+						$conditions = array_intersect_key($record, $uniqueKeys);
+						$count = $Model->find('count', compact('conditions'));
+						if ($count > 0) {
+							continue;
+						}
+					}
 					$Model->create($record);
 					$saved = $Model->save();
 					if (!$saved) {
