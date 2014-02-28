@@ -713,6 +713,7 @@ class NodesController extends NodesAppController {
 		$this->set('title_for_layout', $node['Node']['title']);
 		$this->set(compact('node', 'type', 'comments'));
 		$this->Croogo->viewFallback(array(
+			'view_' . $type['Type']['alias'] . '_' . $node['Node']['slug'],
 			'view_' . $node['Node']['id'],
 			'view_' . $type['Type']['alias'],
 		));
