@@ -39,12 +39,28 @@ class CroogoTheme extends Object {
 			}
 			$themeFolders = $this->folder->read();
 			foreach ($themeFolders['0'] as $themeFolder) {
-				$this->folder->path = $viewPath . 'Themed' . DS . $themeFolder . DS . 'webroot';
-				if (!is_dir($this->folder->path)) {
+				$themeRoot = $viewPath . 'Themed' . DS . $themeFolder . DS;
+
+				$composerJson = $themeRoot . 'composer.json';
+				$this->folder->path = $themeRoot;
+				$themeRootFolderContent = $this->folder->read();
+				if (in_array('composer.json', $themeRootFolderContent['1'])) {
+					$contents = file_get_contents($composerJson);
+					$json = json_decode($contents, true);
+					if (isset($json['type']) && $json['type'] === 'croogo-theme') {
+						$themes[$themeFolder] = $themeFolder;
+						continue;
+					}
+				}
+
+				$themeWebroot = $themeRoot . 'webroot' . DS;
+				if (!is_dir($themeWebroot)) {
 					continue;
 				}
+
+				$themeJson = $themeWebroot . 'theme.json';
+				$this->folder->path = $themeWebroot;
 				$themeFolderContent = $this->folder->read();
-				$themeJson = $this->folder->path . DS . 'theme.json';
 				if (in_array('theme.json', $themeFolderContent['1'])) {
 					$contents = file_get_contents($themeJson);
 					$json = json_decode($contents, true);
@@ -59,34 +75,60 @@ class CroogoTheme extends Object {
 	}
 
 /**
- * Get the content of theme.json file from a theme
+ * Get the content of theme.json or composer.json file from a theme
  *
  * @param string $alias theme folder name
  * @return array
  */
 	public function getData($alias = null) {
+		$themeData = array(
+			'name' => $alias,
+			'regions' => array(),
+			'screenshot' => null,
+		);
+		$default = CakePlugin::path('Croogo') . 'webroot' . DS . 'theme.json';
+
 		if ($alias == null || $alias == 'default') {
-			$manifestFile = CakePlugin::path('Croogo') . 'webroot' . DS . 'theme.json';
+			$manifestFile = $default;
 		} else {
 			$viewPaths = App::path('views');
 			foreach ($viewPaths as $viewPath) {
-				if (file_exists($viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'theme.json')) {
-					$manifestFile = $viewPath . 'Themed' . DS . $alias . DS . 'webroot' . DS . 'theme.json';
-					continue;
+				$themeRoot = $viewPath . 'Themed' . DS . $alias . DS;
+				$themeJson = $themeRoot . 'webroot' . DS . 'theme.json';
+				if (file_exists($themeJson)) {
+					$manifestFile = $themeJson;
+				}
+
+				if (file_exists($themeRoot . 'composer.json')) {
+					$composerJson = $themeRoot . 'composer.json';
+				}
+
+				if (isset($manifestFile) || isset($composerJson)) {
+					break;
 				}
 			}
-			if (!isset($manifestFile)) {
-				$manifestFile = CakePlugin::path('Croogo') . 'webroot' . DS . 'theme.json';
+		}
+
+		if (!isset($manifestFile) && !isset($composerJson)) {
+			return array();
+		}
+
+		if (isset($manifestFile)) {
+			$json = json_decode(file_get_contents($manifestFile), true);
+			if ($json) {
+				$themeData = array_merge($themeData, $json);
 			}
 		}
-		if (isset($manifestFile) && file_exists($manifestFile)) {
-			$themeData = json_decode(file_get_contents($manifestFile), true);
-			if ($themeData == null) {
-				$themeData = array();
+
+		if (isset($composerJson)) {
+			$json = json_decode(file_get_contents($composerJson), true);
+			if ($json) {
+				$json['vendor'] = $json['name'];
+				unset($json['name']);
+				$themeData = array_merge($themeData, $json);
 			}
-		} else {
-			$themeData = array();
 		}
+
 		return $themeData;
 	}
 

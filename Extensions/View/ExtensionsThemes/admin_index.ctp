@@ -84,7 +84,7 @@ $this->Html
 						));
 						echo $this->Html->tag('div', $link, array('class' => 'screenshot span4'));
 					} else {
-						if (isset($theme['screenshot'])):
+						if (!empty($theme['screenshot'])):
 							$file = '/theme/' . $themeAlias . '/img/' . $theme['screenshot'];
 							$imgUrl = $this->Html->image($file, array('class' => 'img-polaroid'));
 							$link = $this->Html->link($imgUrl, $file, array(
@@ -94,12 +94,17 @@ $this->Html
 							echo $this->Html->tag('div', $link, array(
 								'class' => 'screenshot span4',
 							));
+						else:
+							echo $this->Html->tag('div', '', array(
+								'class' => 'span4',
+							));
 						endif;
 					}
 					$author = isset($theme['author']) ? $theme['author'] : null;
 					if (isset($theme['authorUrl']) && strlen($theme['authorUrl']) > 0) {
 						$author = $this->Html->link($author, $theme['authorUrl']);
 					}
+
 					$out = $this->Html->tag('h3', $theme['name'] . ' ' . __d('croogo', 'by') . ' ' . $author, array());
 					$out .= $this->Html->tag('p', $theme['description'], array('class' => 'description'));
 					if (isset($theme['regions'])):

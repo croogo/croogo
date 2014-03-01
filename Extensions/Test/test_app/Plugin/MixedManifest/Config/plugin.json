@@ -1,0 +1,6 @@
+{
+	"description": "MixedManifest Test Croogo plugin",
+	"dependencies": {
+		"plugins": [ "Acl" ]
+	}
+}
