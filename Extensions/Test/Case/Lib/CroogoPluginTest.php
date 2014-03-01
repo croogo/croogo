@@ -95,9 +95,29 @@ class CroogoPluginTest extends CroogoTestCase {
 	}
 
 	public function testGetDataWithEmptyJson() {
+		$expected = array(
+			'needMigration' => false, 'active' => false, 'name' => 'EmptyJson',
+		);
 		$data = $this->CroogoPlugin->getData('EmptyJson');
-		$this->assertEquals(array(), $data);
+		$this->assertEquals($expected, $data);
 	}
+
+	public function testGetDataWithMixedManifest() {
+		$data = $this->CroogoPlugin->getData('MixedManifest');
+		$expected = array(
+			'active', 'dependencies', 'description', 'name', 'needMigration',
+			'type', 'vendor',
+		);
+
+		$keys = array_keys($data);
+		sort($keys);
+
+		$this->assertEquals($expected, $keys);
+		$this->assertContains('test plugin with mixed', $data['description']);
+		$this->assertEquals('croogo-plugin', $data['type']);
+		$this->assertEquals('MixedManifest', $data['name']);
+	}
+
 
 	public function testNeedMigrationPluginNotExists() {
 		$migrationVersion = $this->_getMockMigrationVersion();

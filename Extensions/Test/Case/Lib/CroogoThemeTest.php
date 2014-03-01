@@ -45,4 +45,28 @@ class CroogoThemeTest extends CroogoTestCase {
 		$this->assertTrue(array_key_exists('Mytheme', $themes));
 	}
 
+/**
+ * testGetDataBogusTheme
+ */
+	public function testGetDataBogusTheme() {
+		$data = $this->CroogoTheme->getData('BogusTheme');
+		$this->assertSame(array(), $data);
+	}
+
+/**
+ * testGetDataMixedManifest
+ */
+	public function testGetDataMixedManifest() {
+		$data = $this->CroogoTheme->getData('MixedManifest');
+
+		$keys = array_keys($data);
+		sort($keys);
+
+		$expected = array('name', 'regions', 'screenshot', 'type', 'vendor');
+		$this->assertEquals($expected, $keys);
+
+		$this->assertEquals('MixedManifest', $data['name']);
+		$this->assertEquals('croogo/mixed-manifest-theme', $data['vendor']);
+	}
+
 }
