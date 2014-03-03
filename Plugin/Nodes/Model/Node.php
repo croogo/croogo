@@ -263,6 +263,7 @@ class Node extends NodesAppModel {
  * Caches Term in Node.terms field
  *
  * @return void
+ * @deprecated This method will be removed in future versions
  */
 	public function cacheTerms() {
 		if (isset($this->data['Taxonomy']['Taxonomy']) && count($this->data['Taxonomy']['Taxonomy']) > 0) {
@@ -487,6 +488,7 @@ class Node extends NodesAppModel {
  *
  * @param array $node Node array
  * @return void
+ * @deprecated This method will be removed in future versions
  */
 	protected function _parseTaxonomyData(&$node) {
 		if (array_key_exists('TaxonomyData', $node)) {

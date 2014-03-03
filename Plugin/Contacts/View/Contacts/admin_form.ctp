@@ -123,7 +123,7 @@ echo $this->Form->create('Contact');
 	<?php
 		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-			$this->Form->button(__d('croogo', 'Save')) .
+			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
 			$this->Html->link(
 			__d('croogo', 'Cancel'),
 			array('action' => 'index'),

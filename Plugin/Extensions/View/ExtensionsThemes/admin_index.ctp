@@ -27,13 +27,16 @@ $this->Html
 					$currentTheme = Sanitize::clean($currentTheme);
 					if (isset($currentTheme['screenshot'])):
 						if (!Configure::read('Site.theme')) :
-							echo $this->Html->image($currentTheme['screenshot'], array('class' => 'img-polaroid'));
+							$file = $currentTheme['screenshot'];
 						else:
-							echo $this->Html->tag('div',
-								$this->Html->image('/theme/' . Configure::read('Site.theme') . '/img/' . $currentTheme['screenshot'], array('class' => 'img-polaroid')),
-								array('class' => 'screenshot')
-							);
+							$file = '/theme/' . Configure::read('Site.theme') . '/img/' . $currentTheme['screenshot'];
 						endif;
+						$imgUrl = $this->Html->image($file, array('class' => 'img-polaroid'));
+						$link = $this->Html->link($imgUrl, $file, array(
+							'escape' => false,
+							'class' => 'thickbox',
+						));
+						echo $this->Html->tag('div', $link);
 					endif;
 				?>
 			</div>
@@ -73,10 +76,24 @@ $this->Html
 					endif;
 					echo '<li class="span12">';
 					if ($themeAlias == 'default') {
-						echo $this->Html->tag('div', $this->Html->image($theme['screenshot'], array('class' => 'img-polaroid')), array('class' => 'screenshot span4'));
+						$imgUrl = $this->Html->image($theme['screenshot'], array(
+							'class' => 'img-polaroid'));
+						$link = $this->Html->link($imgUrl, $theme['screenshot'], array(
+							'escape' => false,
+							'class' => 'thickbox',
+						));
+						echo $this->Html->tag('div', $link, array('class' => 'screenshot span4'));
 					} else {
 						if (isset($theme['screenshot'])):
-							echo $this->Html->tag('div', $this->Html->image('/theme/' . $themeAlias . '/img/' . $theme['screenshot'], array('class' => 'img-polaroid')), array('class' => 'screenshot span4'));
+							$file = '/theme/' . $themeAlias . '/img/' . $theme['screenshot'];
+							$imgUrl = $this->Html->image($file, array('class' => 'img-polaroid'));
+							$link = $this->Html->link($imgUrl, $file, array(
+								'escape' => false,
+								'class' => 'thickbox',
+							));
+							echo $this->Html->tag('div', $link, array(
+								'class' => 'screenshot span4',
+							));
 						endif;
 					}
 					$author = isset($theme['author']) ? $theme['author'] : null;

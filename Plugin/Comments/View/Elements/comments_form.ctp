@@ -3,7 +3,7 @@
 	<?php
 		$type = $types_for_layout[$node['Node']['type']];
 
-		if ($this->params['controller'] == 'comments') {
+		if ($this->request->params['controller'] == 'comments') {
 			$nodeLink = $this->Html->link(__d('croogo', 'Go back to original post') . ': ' . $node['Node']['title'], $node['Node']['url']);
 			echo $this->Html->tag('p', $nodeLink, array('class' => 'back'));
 		}

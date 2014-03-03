@@ -43,6 +43,7 @@ class SettingsController extends SettingsAppController {
  *
  * @return void
  * @access public
+ * @deprecated This method will be moved to Extensions plugin
  */
 	public function admin_dashboard() {
 		$this->set('title_for_layout', __d('croogo', 'Dashboard'));

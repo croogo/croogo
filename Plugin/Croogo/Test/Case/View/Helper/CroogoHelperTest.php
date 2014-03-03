@@ -83,7 +83,7 @@ class CroogoHelperTest extends CroogoTestCase {
  * testAdminRowActions
  */
 	public function testAdminRowActions() {
-		$this->Croogo->params = array(
+		$this->Croogo->request->params = array(
 			'controller' => 'test',
 			'action' => 'action',
 		);
@@ -159,7 +159,7 @@ class CroogoHelperTest extends CroogoTestCase {
  * testAdminTabs
  */
 	public function testAdminTabs() {
-		$this->Croogo->params = array(
+		$this->Croogo->request->params = array(
 			'controller' => 'test',
 			'action' => 'action',
 		);
@@ -178,7 +178,7 @@ class CroogoHelperTest extends CroogoTestCase {
 	}
 
 	public function testAdminBoxes() {
-		$this->Croogo->params = array(
+		$this->Croogo->request->params = array(
 			'controller' => 'test',
 			'action' => 'action',
 		);
@@ -211,7 +211,7 @@ class CroogoHelperTest extends CroogoTestCase {
 	}
 
 	public function testAdminBoxesAll() {
-		$this->Croogo->params = array(
+		$this->Croogo->request->params = array(
 			'controller' => 'test',
 			'action' => 'action',
 		);
