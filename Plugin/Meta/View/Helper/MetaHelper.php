@@ -100,7 +100,6 @@ class MetaHelper extends AppHelper {
 		));
 		$deleteUrl['action'] = 'delete_meta';
 		$deleteUrl[] = $id;
-		$deleteUrl = $this->url($deleteUrl);
 		$actions = $this->Html->link(
 			__d('croogo', 'Remove'),
 			$deleteUrl,
