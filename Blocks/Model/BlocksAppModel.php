@@ -1,7 +1,7 @@
 <?php
 
-App::uses('AppModel', 'Model');
-
+App::uses('CroogoAppModel', 'Croogo.Model');
+App::uses('BlocksAppValidator', 'Blocks.Model/Validator');
 /**
  * Blocks App Model
  *
@@ -12,6 +12,5 @@ App::uses('AppModel', 'Model');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class BlocksAppModel extends AppModel {
-
+class BlocksAppModel extends CroogoAppModel {
 }
