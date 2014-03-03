@@ -114,6 +114,7 @@ class MenusHelper extends AppHelper {
 			'dropdown' => false,
 			'dropdownClass' => 'sf-menu',
 			'element' => 'Menus.menu',
+			'liAttributes' => array(),
 		);
 		$options = array_merge($_options, $options);
 
@@ -183,7 +184,7 @@ class MenusHelper extends AppHelper {
 			if (isset($link['children']) && count($link['children']) > 0) {
 				$linkOutput .= $this->nestedLinks($link['children'], $options, $depth + 1);
 			}
-			$linkOutput = $this->Html->tag('li', $linkOutput);
+			$linkOutput = $this->Html->tag('li', $linkOutput,$options['liAttributes']);
 			$output .= $linkOutput;
 		}
 		if ($output != null) {
