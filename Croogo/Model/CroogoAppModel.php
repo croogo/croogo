@@ -54,6 +54,8 @@ class CroogoAppModel extends Model {
 	public function __construct($id = false, $table = null, $ds = null) {
 		Croogo::applyHookProperties('Hook.model_properties', $this);
 		parent::__construct($id, $table, $ds);
+
+		$this->_loadModelValidator();
 	}
 
 /**
@@ -228,40 +230,28 @@ class CroogoAppModel extends Model {
 		return $out;
 	}
 
-/**
- * Validation method for alias field
- * @return bool true when validation successful
- * @deprecated Protected validation methods are no longer supported
- */
-	protected function _validAlias($check) {
-		return $this->validAlias($check);
+	protected function _getModelValidatorClassName() {
+		return $this->alias. 'Validator';
 	}
 
-/**
- * Validation method for name or title fields
- * @return bool true when validation successful
- * @deprecated Protected validation methods are no longer supported
- */
-	protected function _validName($check) {
-		return $this->validName($check);
+	protected function _getAppModelValidatorClassName() {
+		return $this->plugin . 'AppValidator';
 	}
 
-/**
- * Validation method for alias field
- *
- * @return bool true when validation successful
- */
-	public function validAlias($check) {
-		return (preg_match('/^[\p{Ll}\p{Lm}\p{Lo}\p{Lt}\p{Lu}\p{Nd}-_]+$/mu', $check[key($check)]) == 1);
+	protected function _hasModelValidator($validatorClassName) {
+		App::uses($validatorClassName, $this->plugin . '.' . 'Model/Validator');
+		return class_exists($validatorClassName);
 	}
 
-/**
- * Validation method for name or title fields
- *
- * @return bool true when validation successful
- */
-	public function validName($check) {
-		return (preg_match('/^[\p{Ll}\p{Lm}\p{Lo}\p{Lt}\p{Lu}\p{Nd}-_\[\]\(\) ]+$/mu', $check[key($check)]) == 1);
+	protected function _loadModelValidator() {
+		$modelValidatorClassName = $this->_getModelValidatorClassName();
+		if ($this->_hasModelValidator($modelValidatorClassName)) {
+			$this->validator(new $modelValidatorClassName($this));
+		} else {
+			$appModelValidatorClassName = $this->_getAppModelValidatorClassName();
+			if ($this->_hasModelValidator($appModelValidatorClassName)) {
+				$this->validator(new $appModelValidatorClassName($this));
+			}
+		}
 	}
-
 }
