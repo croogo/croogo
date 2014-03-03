@@ -109,6 +109,7 @@ class MenusHelper extends AppHelper {
 			'tag' => 'ul',
 			'tagAttributes' => array(),
 			'selected' => 'selected',
+                        'selectedTag' => 'a',
 			'dropdown' => false,
 			'dropdownClass' => 'sf-menu',
 			'element' => 'Menus.menu',
@@ -147,7 +148,8 @@ class MenusHelper extends AppHelper {
 				'title' => $link['Link']['description'],
 				'class' => $link['Link']['class'],
 			);
-
+                        $liOptions = array();
+                        
 			foreach ($linkAttr as $attrKey => $attrValue) {
 				if ($attrValue == null) {
 					unset($linkAttr[$attrKey]);
@@ -170,14 +172,17 @@ class MenusHelper extends AppHelper {
 				if (!isset($linkAttr['class'])) {
 					$linkAttr['class'] = '';
 				}
-				$linkAttr['class'] .= ' ' . $options['selected'];
+				if($options['selectedTag'] === 'a')
+                                    $linkAttr['class'] .= ' ' . $options['selected'];
+                                else
+                                    $liOptions = array_merge($liOptions, array('class' => $options['selected']));
 			}
 
 			$linkOutput = $this->Html->link($link['Link']['title'], $link['Link']['link'], $linkAttr);
 			if (isset($link['children']) && count($link['children']) > 0) {
 				$linkOutput .= $this->nestedLinks($link['children'], $options, $depth + 1);
 			}
-			$linkOutput = $this->Html->tag('li', $linkOutput);
+			$linkOutput = $this->Html->tag('li', $linkOutput, $liOptions);
 			$output .= $linkOutput;
 		}
 		if ($output != null) {
