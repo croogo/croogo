@@ -151,8 +151,17 @@ class AclHelper extends Helper {
 			$path = $url;
 		}
 		$linkAction = str_replace('//', '/', $path);
+
 		if (in_array($linkAction, $this->getAllowedActionsByUserId($userId))) {
 			return true;
+		} else {
+			$userAro = array('model' => 'User', 'foreign_key' => $userId);
+			$nodes = $this->AclPermission->Aro->node($userAro);
+			if (isset($nodes[0]['Aro'])) {
+				if ($this->AclPermission->check($nodes[0]['Aro'], $linkAction)) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}
