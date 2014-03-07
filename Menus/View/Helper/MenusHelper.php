@@ -62,6 +62,7 @@ class MenusHelper extends AppHelper {
 		$menus = $this->_View->viewVars['menus_for_admin_layout'];
 		foreach ($menus as $m) {
 			$weight = 9999 + $m['Menu']['weight'];
+			$htmlAttributes = $this->__isCurrentMenu($m['Menu']['id']) ? array('class' => 'current') : array();
 			CroogoNav::add('sidebar', 'menus.children.' . $m['Menu']['alias'], array(
 				'title' => $m['Menu']['title'],
 				'url' => array(
@@ -70,10 +71,16 @@ class MenusHelper extends AppHelper {
 					'controller' => 'links',
 					'action' => 'index',
 					'?' => array('menu_id' => $m['Menu']['id'])
-					),
+				),
 				'weight' => $weight,
-				));
+				'htmlAttributes' => $htmlAttributes
+			));
 		};
+	}
+
+	private function __isCurrentMenu($id) {
+		$currentMenuId = $this->_View->get('menuId');
+		return $currentMenuId === $id;
 	}
 
 /**
