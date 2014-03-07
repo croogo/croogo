@@ -149,7 +149,7 @@ class TaxonomizableBehavior extends ModelBehavior {
 					$result = false;
 				}
 			}
-			if ($vocabulary['multiple']) {
+			if (!$vocabulary['multiple']) {
 				if ($selected > 1) {
 					$model->invalidate($fieldName, $multipleError);
 					$result = false;
