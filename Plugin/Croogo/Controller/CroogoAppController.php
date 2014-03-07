@@ -218,19 +218,18 @@ class CroogoAppController extends Controller {
 		if (strpos($view, '/') !== false || $this instanceof CakeErrorController) {
 			return parent::render($view, $layout);
 		}
-		$viewPaths = App::path('View', $this->plugin);
-		$rootPath = $viewPaths[0] . $this->viewPath . DS;
-		$requested = $rootPath . $view . '.ctp';
-		if (in_array($this->request->action, array('admin_edit', 'admin_add', 'edit', 'add'))) {
-			$viewPath = $rootPath . $this->request->action . '.ctp';
-			if (!file_exists($requested) && !file_exists($viewPath)) {
-				if (strpos($this->request->action, 'admin_') === false) {
-					$view = 'form';
-				} else {
-					$view = 'admin_form';
-				}
+
+		$fallbackView = $this->__getDefaultFallbackView();
+		if (is_null($view) && in_array($this->request->action, array('admin_edit', 'admin_add', 'edit', 'add'))) {
+			$viewPaths = App::path('View', $this->plugin);
+			$themePath = $this->theme ? App::themePath($this->theme) : null;
+			$searchPaths = array_merge((array)$themePath, $viewPaths);
+			$view = $this->__findRequestedView($searchPaths);
+			if (empty($view)) {
+				$view = $fallbackView;
 			}
 		}
+
 		return parent::render($view, $layout);
 	}
 
@@ -251,4 +250,43 @@ class CroogoAppController extends Controller {
 		}
 	}
 
+/**
+ * Get Default Fallback View
+ *
+ * @return string
+ */
+	private function __getDefaultFallbackView() {
+		$fallbackView = 'form';
+		if (!empty($this->request->params['prefix']) && $this->request->params['prefix'] === 'admin') {
+			$fallbackView = 'admin_form';
+		}
+		return $fallbackView;
+	}
+
+/**
+ * Search for existing view override in registered view paths
+ *
+ * @return string
+ */
+	private function __findRequestedView($viewPaths) {
+		if (empty($viewPaths)) {
+			return false;
+		}
+		foreach ($viewPaths as $path) {
+			$file = $this->viewPath . DS . $this->request->action . '.ctp';
+			$requested = $path . $file;
+			if (file_exists($requested)) {
+				return $requested;
+			} else {
+				if (!$this->plugin) {
+					continue;
+				}
+				$requested = $path . 'Plugin' . DS . $this->plugin . DS . $file;
+				if (file_exists($requested)) {
+					return $requested;
+				}
+			}
+		}
+		return false;
+	}
 }

@@ -3,6 +3,7 @@
 App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 App::uses('CroogoTestFixture', 'Croogo.TestSuite');
 App::uses('CroogoAppController', 'Croogo.Controller');
+App::uses('File', 'Utility');
 
 class TestAppController extends CroogoAppController {
 
@@ -62,6 +63,27 @@ class AppControllerTest extends CroogoControllerTestCase {
 			'return' => 'view',
 		));
 		$this->assertEquals('admin_form', trim($result));
+	}
+
+/**
+ * testRenderOverridenAdminFormWithTheme
+ */
+	public function testRenderOverridenAdminFormWithTheme() {
+		$theme = 'Mytheme';
+		$this->controller->theme = $theme;
+		$filePath = App::themePath($theme) . 'TestApp'. DS . 'admin_edit.ctp';
+
+		$expected = '<h1>I should be displayed</h1>';
+		$File = new File($filePath, true, 0777);
+		$File->write($expected);
+		$File->close();
+
+		$result = $this->testAction('/admin/test_app/edit', array(
+			'return' => 'contents',
+		));
+
+		$File->delete();
+		$this->assertContains($expected, trim($result));
 	}
 
 /**
