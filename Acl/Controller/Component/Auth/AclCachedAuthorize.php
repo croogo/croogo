@@ -186,7 +186,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		if ($request->is('get') && !empty($request->params['pass'][0])) {
 			// collect id from actions such as: Nodes/admin_edit/1
 			$ids[] = $request->params['pass'][0];
-		} elseif ($request->is('post') || $request->is('put') && isset($request->data[$model]['action'])) {
+		} elseif (($request->is('post') || $request->is('put')) && isset($request->data[$model]['action'])) {
 			// collect ids from 'bulk' processing action such as: Nodes/admin_process
 			foreach ($request->data[$model] as $id => $flag) {
 				if (isset($flag[$primaryKey]) && $flag[$primaryKey] == 1) {
