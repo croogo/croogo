@@ -5,6 +5,7 @@
  */
 
 App::uses('AclAutoLoginComponent', 'Acl.Controller/Component');
+App::uses('Controller', 'Controller');
 
 class TestAclAutoLoginComponent extends AclAutoLoginComponent {
 
@@ -46,12 +47,41 @@ class TestAclAutoLoginComponent extends AclAutoLoginComponent {
 
 class AclAutoLoginComponentTest extends CakeTestCase {
 
+	private $__mockEventManager;
+
 	public function setUp() {
 		$this->skipIf(!function_exists('mcrypt_decrypt'), 'mcrypt not found');
-		$this->controller = $this->getMock('Controller', null);
-		$collection = $this->controller->Components;
+
+		$this->controller = $this->getMock('Controller', array());
+		$collection = new ComponentCollection();
+		$collection->init($this->controller);
+
+		$this->__mockEventManager = $this->getMock('CakeEventManager');
+		$this->controller->expects($this->any())
+			->method('getEventManager')
+			->will($this->returnValue($this->__mockEventManager));
+
 		$this->autoLogin = new TestAclAutoLoginComponent($collection, null);
 		$this->autoLogin->setupTestVars();
+	}
+
+/**
+ * Test event attaching
+ */
+	public function testComponentShouldListenLogoutSuccessfulEvent() {
+		$this->__mockEventManager->expects($this->at(0))
+			->method('attach')
+			->with($this->anything(), 'Controller.Users.adminLogoutSuccessful');
+		$this->autoLogin->startup($this->controller);
+	}
+
+	public function testComponentShouldListenLoginSuccessfulEvent() {
+		$this->__mockEventManager->expects($this->at(1))
+			->method('attach')
+			->with(
+				$this->contains('onAdminLoginSuccessful'),
+				'Controller.Users.adminLoginSuccessful'
+			);
 		$this->autoLogin->startup($this->controller);
 	}
 
@@ -59,7 +89,9 @@ class AclAutoLoginComponentTest extends CakeTestCase {
  * Test login succesfull event
  */
 	public function testLoginSuccessful() {
-		$cookie = $this->autoLogin->readCookie('User');
+		$this->autoLogin->startup($this->controller);
+
+		$cookie = $this->autoLogin->Cookie->read('User');
 		$this->assertNull($cookie);
 
 		$request = new CakeRequest();
@@ -74,8 +106,10 @@ class AclAutoLoginComponentTest extends CakeTestCase {
 		$compare = $this->autoLogin->cookie($request);
 
 		$_SERVER['REQUEST_METHOD'] = 'POST';
-		Croogo::dispatchEvent('Controller.Users.adminLoginSuccessful', $subject);
-		$cookie = $this->autoLogin->readCookie('User');
+		$Event = new CakeEvent('Controller.Users.adminLoginSuccessful', $subject);
+		$this->autoLogin->onAdminLoginSuccessful($Event);
+
+		$cookie = $this->autoLogin->Cookie->read('User');
 		$this->assertNotNull($cookie);
 		$this->assertEquals($compare, $cookie);
 	}
