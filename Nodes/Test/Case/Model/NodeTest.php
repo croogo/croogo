@@ -177,6 +177,27 @@ class NodeTest extends CroogoTestCase {
 	}
 
 /**
+ * testAddNodeWithTaxonomyMultipleTerms
+ */
+	public function testAddNodeWithTaxonomyMultipleTerms() {
+		$this->Node->type = null;
+		$data = array(
+			'Node' => array(
+				'title' => 'Test Content',
+				'slug' => 'test-content',
+				'type' => 'blog',
+				'token_key' => 1,
+				'body' => '',
+			),
+			'TaxonomyData' => array(1 => array(0 => '1', 1 => 2)),
+		);
+		$result = $this->Node->saveNode($data, Node::DEFAULT_TYPE);
+		$this->assertTrue($result);
+		$this->assertEmpty($this->Node->validationErrors);
+		$this->Node->type = null;
+	}
+
+/**
  * testAddNodeWithTaxonomyRequiredValidationError
  */
 	public function testAddNodeWithTaxonomyRequiredValidationError() {
@@ -201,6 +222,8 @@ class NodeTest extends CroogoTestCase {
  * testAddNodeWithTaxonomyNonMultipleValidationError
  */
 	public function testAddNodeWithTaxonomyNonMultipleValidationError() {
+		$this->Node->Taxonomy->Vocabulary->id = 1;
+		$this->Node->Taxonomy->Vocabulary->saveField('multiple', false);
 		$this->Node->type = null;
 		$data = array(
 			'Node' => array(
@@ -216,6 +239,8 @@ class NodeTest extends CroogoTestCase {
 		$this->assertFalse($result);
 		$this->assertEquals('Please select at most 1 value', $this->Node->validationErrors['TaxonomyData.1'][0]);
 		$this->Node->type = null;
+		$this->Node->Taxonomy->Vocabulary->id = 1;
+		$this->Node->Taxonomy->Vocabulary->saveField('multiple', true);
 	}
 
 /**
