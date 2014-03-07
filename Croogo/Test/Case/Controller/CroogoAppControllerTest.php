@@ -75,18 +75,18 @@ class CroogoAppControllerTest extends CroogoControllerTestCase {
 		$File->delete();
 	}
 
-    public function testRenderOverridenAdminView() {
-        $filePath = $this->__getOverridenViewPath();
+	public function testRenderOverridenAdminView() {
+		$filePath = $this->__getOverridenViewPath();
 
-        $File = $this->__generateOverridenAdminView($filePath);
+		$File = $this->__generateOverridenAdminView($filePath);
 
-        $result = $this->testAction('/admin/nodes/nodes/edit', array(
-            'return' => 'contents',
-        ));
+		$result = $this->testAction('/admin/nodes/nodes/edit', array(
+			'return' => 'contents',
+		));
 
-        $this->assertContains('<h1>I should be displayed</h1>', trim($result));
-        $File->delete();
-    }
+		$this->assertContains('<h1>I should be displayed</h1>', trim($result));
+		$File->delete();
+	}
 
 /**
  * testRenderAdminFormFallback
@@ -205,18 +205,18 @@ class CroogoAppControllerTest extends CroogoControllerTestCase {
 		Configure::delete('Hook.controller_properties.TestApp');
 	}
 
-    private function __getOverridenViewPath($themeName = 'Mytheme', $controllerName = 'TestApp', $viewFileName = 'admin_edit') {
-        $themePath = App::themePath($themeName);
-        return $themePath . $controllerName . DS . $viewFileName . '.ctp';
-    }
+	private function __getOverridenViewPath($themeName = 'Mytheme', $controllerName = 'TestApp', $viewFileName = 'admin_edit') {
+		$themePath = App::themePath($themeName);
+		return $themePath . $controllerName . DS . $viewFileName . '.ctp';
+	}
 
-    private function __generateOverridenAdminView($viewPath)
-    {
-        App::uses('File', 'Utility');
-        $File = new File($viewPath, true, 0777);
-        $File->write('<h1>I should be displayed</h1>');
-        $File->close();
+	private function __generateOverridenAdminView($viewPath)
+	{
+		App::uses('File', 'Utility');
+		$File = new File($viewPath, true, 0777);
+		$File->write('<h1>I should be displayed</h1>');
+		$File->close();
 
-        return $File;
-    }
+		return $File;
+	}
 }
