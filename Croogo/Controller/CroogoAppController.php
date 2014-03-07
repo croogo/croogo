@@ -325,19 +325,19 @@ class CroogoAppController extends Controller {
 		if (strpos($view, '/') !== false || $this instanceof CakeErrorController) {
 			return parent::render($view, $layout);
 		}
-		$viewPaths = App::path('View', $this->plugin);
-		$rootPath = $viewPaths[0] . $this->viewPath . DS;
-		$requested = $rootPath . $view . '.ctp';
-		if (in_array($this->request->action, array('admin_edit', 'admin_add', 'edit', 'add'))) {
-			$viewPath = $rootPath . $this->request->action . '.ctp';
-			if (!file_exists($requested) && !file_exists($viewPath)) {
-				if (strpos($this->request->action, 'admin_') === false) {
-					$view = 'form';
-				} else {
-					$view = 'admin_form';
-				}
+
+		$fallBackview = $this->__getDefaultViewFallback();
+
+		if (is_null($view) && in_array($this->request->action, array('admin_edit', 'admin_add', 'edit', 'add'))) {
+			$viewPaths = App::path('View', $this->plugin);
+			$themePaths = $this->__getThemesPath($viewPaths);
+			$view = $this->__findRequestedViewIn(array_merge($themePaths, $viewPaths));
+
+			if (empty($view)) {
+				$view = $fallBackview;
 			}
 		}
+
 		return parent::render($view, $layout);
 	}
 
@@ -358,4 +358,46 @@ class CroogoAppController extends Controller {
 		}
 	}
 
+	private function __getDefaultViewFallback()
+	{
+		$fallBackview = 'form';
+		if (!empty($this->request->params['prefix']) && $this->request->params['prefix'] === 'admin') {
+			$fallBackview = 'admin_form';
+		}
+		return $fallBackview;
+	}
+
+   private function __getThemesPath(array $viewPaths)
+	{
+		$themesPath = array();
+		App::uses('Folder', 'Utility');
+		$Folder = new Folder();
+		foreach($viewPaths as $path) {
+			if ($Folder->cd($path . 'Themed')) {
+				$themesPath[] = $Folder->read(true, array('empty'), true);
+			}
+		}
+
+		return $this->__formatThemesPaths($themesPath);
+	}
+
+	private function __formatThemesPaths($rowThemesPath) {
+		$themesPath = current(array_filter(Hash::extract($rowThemesPath, '{n}.{n}')));
+		foreach ($themesPath as &$path) {
+			$path .= DS;
+		}
+
+		return $themesPath;
+	}
+
+	private function __findRequestedViewIn($viewPaths)
+	{
+		foreach ($viewPaths as $path) {
+			$requested = $path . $this->viewPath . DS . $this->request->action . '.ctp';
+			if (file_exists($requested)) {
+				return $requested;
+			};
+		}
+		return false;
+	}
 }
