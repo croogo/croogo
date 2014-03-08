@@ -382,21 +382,26 @@ class CroogoAppController extends Controller {
 	}
 
 	private function __formatThemesPaths($rowThemesPath) {
-		$themesPath = current(array_filter(Hash::extract($rowThemesPath, '{n}.{n}')));
-		foreach ($themesPath as &$path) {
-			$path .= DS;
-		}
+		$themesPath = array();
+		if (!empty($rowThemesPath)) {
+			$themesPath = current(array_filter(Hash::extract($rowThemesPath, '{n}.{n}')));
 
+			foreach ($themesPath as $index => $path) {
+				$themesPath[$index] = $path . DS;
+			}
+		}
 		return $themesPath;
 	}
 
 	private function __findRequestedViewIn($viewPaths)
 	{
-		foreach ($viewPaths as $path) {
-			$requested = $path . $this->viewPath . DS . $this->request->action . '.ctp';
-			if (file_exists($requested)) {
-				return $requested;
-			};
+	    if (!empty($viewPaths)) {
+			foreach ($viewPaths as $path) {
+				$requested = $path . $this->viewPath . DS . $this->request->action . '.ctp';
+				if (file_exists($requested)) {
+					return $requested;
+				};
+			}
 		}
 		return false;
 	}

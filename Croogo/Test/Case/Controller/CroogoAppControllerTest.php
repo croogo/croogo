@@ -71,21 +71,8 @@ class CroogoAppControllerTest extends CroogoControllerTestCase {
 			'return' => 'contents',
 		));
 
-		$this->assertContains('<h1>I should be displayed</h1>', trim($result));
 		$File->delete();
-	}
-
-	public function testRenderOverridenAdminView() {
-		$filePath = $this->__getOverridenViewPath();
-
-		$File = $this->__generateOverridenAdminView($filePath);
-
-		$result = $this->testAction('/admin/nodes/nodes/edit', array(
-			'return' => 'contents',
-		));
-
 		$this->assertContains('<h1>I should be displayed</h1>', trim($result));
-		$File->delete();
 	}
 
 /**
