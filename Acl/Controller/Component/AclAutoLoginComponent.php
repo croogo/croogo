@@ -106,28 +106,6 @@ class AclAutoLoginComponent extends Component {
 	}
 
 /**
- * Helper method to read autologin cookie
- *
- * @see CookieComponent::read()
- * @return string or null, value for specified key
- */
-	protected function _readCookie($key = null) {
-		$this->Cookie->name = $this->settings['cookieName'];
-		return $this->Cookie->read($key);
-	}
-
-/**
- * Helper method to check autologin cookie
- *
- * @see CookieComponent::check()
- * @return boolean True if variable is there
- */
-	protected function _checkCookie($key) {
-		$this->Cookie->name = $this->settings['cookieName'];
-		return $this->Cookie->check($key);
-	}
-
-/**
  * Helper method to delete autologin cookie
  *
  * @see CookieComponent::delete()

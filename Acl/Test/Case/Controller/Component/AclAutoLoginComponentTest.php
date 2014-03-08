@@ -29,10 +29,6 @@ class TestAclAutoLoginComponent extends AclAutoLoginComponent {
 		return $this->_cookie($request);
 	}
 
-	public function readCookie($key) {
-		return $this->_readCookie($key);
-	}
-
 	public function testCookie($username) {
 		$request = new CakeRequest();
 		$request->data = array(
