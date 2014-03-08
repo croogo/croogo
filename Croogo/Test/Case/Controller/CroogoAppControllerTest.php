@@ -28,7 +28,9 @@ class CroogoAppControllerTest extends CroogoControllerTestCase {
 	public $fixtures = array(
 		'plugin.settings.setting',
 		'plugin.taxonomy.type',
-		'plugin.nodes.node',
+        'plugin.taxonomy.vocabulary',
+        'plugin.taxonomy.types_vocabulary',
+        'plugin.nodes.node',
 	);
 
 	public function setUp() {
@@ -58,6 +60,19 @@ class CroogoAppControllerTest extends CroogoControllerTestCase {
 			'return' => 'view',
 		));
 		$this->assertEquals('admin_edit', trim($result));
+	}
+
+	public function testRenderOverridenAdminViewInTheme() {
+		$filePath = $this->__getOverridenViewPath();
+
+		$File = $this->__generateOverridenAdminView($filePath);
+
+		$result = $this->testAction('/admin/test_app/edit', array(
+			'return' => 'contents',
+		));
+
+		$File->delete();
+		$this->assertContains('<h1>I should be displayed</h1>', trim($result));
 	}
 
 /**
@@ -177,4 +192,18 @@ class CroogoAppControllerTest extends CroogoControllerTestCase {
 		Configure::delete('Hook.controller_properties.TestApp');
 	}
 
+	private function __getOverridenViewPath($themeName = 'Mytheme', $controllerName = 'TestApp', $viewFileName = 'admin_edit') {
+		$themePath = App::themePath($themeName);
+		return $themePath . $controllerName . DS . $viewFileName . '.ctp';
+	}
+
+	private function __generateOverridenAdminView($viewPath)
+	{
+		App::uses('File', 'Utility');
+		$File = new File($viewPath, true, 0777);
+		$File->write('<h1>I should be displayed</h1>');
+		$File->close();
+
+		return $File;
+	}
 }
