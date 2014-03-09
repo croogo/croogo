@@ -787,10 +787,16 @@ class NodesController extends NodesAppController {
 		$viewPaths = array_merge($viewPaths, $nodesViewPaths);
 		foreach ($views as $view) {
 			foreach ($viewPaths as $viewPath) {
+				$viewFile = $this->name . DS . $view . $this->ext;
 				if ($this->theme) {
-					$viewPath = $viewPath . 'Themed' . DS . $this->theme . DS . $this->name . DS . $view . $this->ext;
+					$baseViewPath = $viewPath;
+					$themePath = $baseViewPath . 'Themed' . DS . $this->theme . DS;
+					$viewPath = $themePath . 'Plugin' . DS . $this->plugin . DS . $viewFile;
+					if (!file_exists($viewPath)){
+						$viewPath = $themePath . $viewFile;
+					}
 				} else {
-					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
+					$viewPath = $viewPath . $viewFile;
 				}
 				if (file_exists($viewPath)) {
 					return $this->render($view);
