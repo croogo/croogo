@@ -789,8 +789,9 @@ class NodesController extends NodesAppController {
 			foreach ($viewPaths as $viewPath) {
 				if ($this->theme) {
                                         $viewPath = $viewPath . 'Themed' . DS . $this->theme . DS .  'Plugin' . DS . $this->plugin . DS . $this->name . DS . $view . $this->ext;
-					if(!file_exists($viewPath))
-                                            $viewPath = $viewPath . 'Themed' . DS . $this->theme . DS . $this->name . DS . $view . $this->ext;
+					if (!file_exists($viewPath)){
+                                                $viewPath = $viewPath . 'Themed' . DS . $this->theme . DS . $this->name . DS . $view . $this->ext;
+                                        }
 				} else {
 					$viewPath = $viewPath . $this->name . DS . $view . $this->ext;
 				}
