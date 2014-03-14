@@ -357,7 +357,10 @@ class Node extends NodesAppModel {
 		));
 		$typesAlias = array_values($types);
 
-		$nodes = $this->find('all', array(
+		$idField = $this->escapeField('id');
+		$batch = 30;
+		$options = array(
+			'order' => $idField,
 			'conditions' => array(
 				$this->alias . '.type' => $typesAlias,
 			),
@@ -368,9 +371,25 @@ class Node extends NodesAppModel {
 				$this->alias . '.path',
 			),
 			'recursive' => '-1',
-		));
-		foreach ($nodes as &$node) {
-			$node[$this->alias]['path'] = $this->_getNodeRelativePath($node);
+			'limit' => $batch,
+		);
+
+		$results = array();
+		while ($nodes = $this->find('all', $options)) {
+			foreach ($nodes as &$node) {
+				$node[$this->alias]['path'] = $this->_getNodeRelativePath($node);
+			}
+			$result = $this->saveMany($nodes, array('fieldList' => array('path')));
+			if ($result === false) {
+				$this->log('updateAllNodesPath batch failed:');
+				$this->log($this->validationErrors);
+				return false;
+			}
+			$results[] = $result;
+			$options['conditions'][$idField . ' >'] = $node[$this->alias]['id'];
+			if (count($nodes) < $batch) {
+				break;
+			}
 		}
 
 		return $this->saveMany($nodes, array('fieldList' => array('path')));
