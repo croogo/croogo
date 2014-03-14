@@ -86,7 +86,7 @@ before_script:
     }" > Config/database.php
 
 script:
-  - sh -c "if [ '$PHPCOV' = '1' ]; then ./Console/cake test app AllTests --stderr --coverage-clover coverage.clover && wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; else ./Console/cake test app AllTests --stderr ; fi"
+  - sh -c "if [ '$PHPCOV' = '1' ]; then ./Console/cake test app AllTests --stderr --filter AppHelper --coverage-clover coverage.clover && wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; else ./Console/cake test app AllTests --stderr --filter AppHelper ; fi"
 
 notifications:
   email: false
