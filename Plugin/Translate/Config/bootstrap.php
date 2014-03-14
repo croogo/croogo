@@ -19,6 +19,13 @@ Configure::write('Translate.models', array(
 		),
 		'translateModel' => 'Blocks.Block',
 	),
+	'Contact' => array(
+		'fields' => array(
+			'title' => 'titleTranslation',
+			'body' => 'bodyTranslation',
+		),
+		'translateModel' => 'Contacts.Contact',
+	),
 	'Link' => array(
 		'fields' => array(
 			'title' => 'titleTranslation',
