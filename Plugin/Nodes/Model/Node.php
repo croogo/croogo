@@ -508,9 +508,6 @@ class Node extends NodesAppModel {
 
 		$results = array();
 		while ($nodes = $this->find('all', $options)) {
-			if (empty($nodes)) {
-				break;
-			}
 			foreach ($nodes as &$node) {
 				$node[$this->alias]['path'] = $this->_getNodeRelativePath($node);
 			}
@@ -522,6 +519,9 @@ class Node extends NodesAppModel {
 			}
 			$results[] = $result;
 			$options['conditions'][$idField . ' >'] = $node[$this->alias]['id'];
+			if (count($nodes) < $batch) {
+				break;
+			}
 		}
 
 		return count(array_keys($results, true)) == count($results);
