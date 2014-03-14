@@ -9,6 +9,12 @@ env:
   - DB=sqlite
   - DB=pgsql
 
+matrix:
+  include:
+    - php: 5.4
+      env:
+        - DB=mysql PHPCOV=1
+
 before_install:
   - git clone --depth 1 git://github.com/croogo/app -b master app
   - mkdir -p app/Vendor/cakephp app/Vendor/croogo
@@ -90,7 +96,7 @@ before_script:
     }" > app/Config/database.php
 
 script:
-  - cd app ; ./Console/cake test croogo CroogoTests --stderr
+  - sh -c "if [ '$PHPCOV' = '1' ]; then cd app && ./Console/cake test croogo CroogoTests --stderr --coverage-clover coverage.clover && wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; else cd app && ./Console/cake test croogo CroogoTests --stderr ; fi"
 
 notifications:
   email: false
