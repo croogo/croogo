@@ -267,10 +267,35 @@ class Node extends NodesAppModel {
  */
 	public function cacheTerms() {
 		if (isset($this->data['Taxonomy']['Taxonomy']) && count($this->data['Taxonomy']['Taxonomy']) > 0) {
+			$Taxonomy = $this->Taxonomy;
+			$Term = $this->Taxonomy->Term;
+
+			$taxonomyIdField = $Taxonomy->escapeField('id');
+			$taxonomyTermIdField = $Taxonomy->escapeField('term_id');
+			$termIdField = $Term->escapeField('id');
+			$termSlugField = $Term->escapeField('slug');
+
 			$taxonomyIds = $this->data['Taxonomy']['Taxonomy'];
 			$taxonomies = $this->Taxonomy->find('all', array(
+				'recursive' => -1,
+				'fields' => array(
+					$taxonomyIdField, $taxonomyTermIdField,
+					$termIdField, $termSlugField,
+				),
+				'joins' => array(
+					array(
+						'type' => 'LEFT',
+						'table' => $Term->useTable,
+						'alias' => $Term->alias,
+						'conditions' => array(
+							sprintf('%s = %s',
+								$taxonomyTermIdField, $termIdField
+							),
+						),
+					),
+				),
 				'conditions' => array(
-					'Taxonomy.id' => $taxonomyIds,
+					$taxonomyIdField => $taxonomyIds,
 				),
 			));
 			$terms = Hash::combine($taxonomies, '{n}.Term.id', '{n}.Term.slug');
