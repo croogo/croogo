@@ -10,6 +10,12 @@ env:
   - DB=sqlite
   - DB=pgsql
 
+matrix:
+  include:
+    - php: 5.4
+      env:
+        - DB=mysql PHPCOV=1
+
 before_script:
   - sh -c "cd .. ; mkdir lib ; cd lib ; git clone --depth 1 git://github.com/cakephp/cakephp -b master"
   - sh -c "cd ../lib ; ln -s cakephp/lib/Cake Cake"
@@ -80,7 +86,7 @@ before_script:
     }" > Config/database.php
 
 script:
-  - ./Console/cake test app AllTests --stderr
+  - sh -c "if [ '$PHPCOV' = '1' ]; then ./Console/cake test app AllTests --stderr --coverage-clover coverage.clover && wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; else ./Console/cake test app AllTests --stderr ; fi"
 
 notifications:
   email: false
