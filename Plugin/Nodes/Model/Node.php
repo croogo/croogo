@@ -489,7 +489,10 @@ class Node extends NodesAppModel {
 		));
 		$typesAlias = array_values($types);
 
+		$idField = $this->escapeField('id');
+		$batch = 30;
 		$options = array(
+			'order' => $idField,
 			'conditions' => array(
 				$this->alias . '.type' => $typesAlias,
 			),
@@ -500,19 +503,14 @@ class Node extends NodesAppModel {
 				$this->alias . '.path',
 			),
 			'recursive' => '-1',
+			'limit' => $batch,
 		);
 
-		$total = $this->find('count', $options);
-		$batch = 30;
 		$results = array();
-		$pages = ceil($total / $batch);
-
-		for ($page = 1; $page <= $pages; $page++) {
-			$offset = ($page - 1) * $batch;
-			$options['limit'] = $batch;
-			$options['offset'] = $offset;
-
-			$nodes = $this->find('all', $options);
+		while ($nodes = $this->find('all', $options)) {
+			if (empty($nodes)) {
+				break;
+			}
 			foreach ($nodes as &$node) {
 				$node[$this->alias]['path'] = $this->_getNodeRelativePath($node);
 			}
@@ -523,6 +521,7 @@ class Node extends NodesAppModel {
 				return false;
 			}
 			$results[] = $result;
+			$options['conditions'][$idField . ' >'] = $node[$this->alias]['id'];
 		}
 
 		return count(array_keys($results, true)) == count($results);
