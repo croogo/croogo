@@ -71,7 +71,7 @@ class CroogoErrorController extends AppController {
 		if (Configure::read('Site.theme') && !isset($this->request->params['admin'])) {
 			$this->theme = Configure::read('Site.theme');
 		} elseif (isset($this->request->params['admin'])) {
-			if ($adminTheme = Configure::read('Site.admin_theme')) {
+			if ($adminTheme == Configure::read('Site.admin_theme')) {
 				$this->theme = $adminTheme;
 			}
 			$this->layout = 'admin_full';
