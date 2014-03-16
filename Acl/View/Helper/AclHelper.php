@@ -35,6 +35,9 @@ class AclHelper extends Helper {
 			'pathWhitelist' => $this->_pathWhitelist
 		), $settings);
 		parent::__construct($View, $settings);
+		$plugin = Configure::read('Site.acl_plugin');
+		App::uses('AclPermission', $plugin . '.Model');
+		$this->AclPermission = ClassRegistry::init($plugin . '.AclPermission');
 	}
 
 /**
@@ -75,7 +78,7 @@ class AclHelper extends Helper {
 			return $this->allowedActions[$roleId];
 		}
 
-		$this->allowedActions[$roleId] = ClassRegistry::init('Acl.AclPermission')->getAllowedActionsByRoleId($roleId);
+		$this->allowedActions[$roleId] = $this->AclPermission->getAllowedActionsByRoleId($roleId);
 		return $this->allowedActions[$roleId];
 	}
 
@@ -118,7 +121,7 @@ class AclHelper extends Helper {
 			return $this->allowedActions[$roleId];
 		}
 
-		$this->allowedActions[$roleId] = ClassRegistry::init('Acl.AclPermission')->getAllowedActionsByUserId($roleId);
+		$this->allowedActions[$roleId] = $this->AclPermission->getAllowedActionsByUserId($roleId);
 		return $this->allowedActions[$roleId];
 	}
 
