@@ -17,8 +17,8 @@ CroogoNav::add('blocks', array(
 	'icon' => array('columns', 'large'),
 	'title' => __d('croogo', 'Blocks'),
 	'url' => array(
-		'plugin' => 'blocks',
 		'admin' => true,
+		'plugin' => 'blocks',
 		'controller' => 'blocks',
 		'action' => 'index',
 	),
@@ -27,8 +27,8 @@ CroogoNav::add('blocks', array(
 		'blocks' => array(
 			'title' => __d('croogo', 'Blocks'),
 			'url' => array(
-				'plugin' => 'blocks',
 				'admin' => true,
+				'plugin' => 'blocks',
 				'controller' => 'blocks',
 				'action' => 'index',
 			),
@@ -36,8 +36,8 @@ CroogoNav::add('blocks', array(
 		'regions' => array(
 			'title' => __d('croogo', 'Regions'),
 			'url' => array(
-				'plugin' => 'blocks',
 				'admin' => true,
+				'plugin' => 'blocks',
 				'controller' => 'regions',
 				'action' => 'index',
 			),

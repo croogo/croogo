@@ -13,8 +13,8 @@ CroogoNav::add('menus', array(
 	'icon' => array('sitemap', 'large'),
 	'title' => __d('croogo', 'Menus'),
 	'url' => array(
-		'plugin' => 'menus',
 		'admin' => true,
+		'plugin' => 'menus',
 		'controller' => 'menus',
 		'action' => 'index',
 	),
@@ -23,8 +23,8 @@ CroogoNav::add('menus', array(
 		'menus' => array(
 			'title' => __d('croogo', 'Menus'),
 			'url' => array(
-				'plugin' => 'menus',
 				'admin' => true,
+				'plugin' => 'menus',
 				'controller' => 'menus',
 				'action' => 'index',
 			),
@@ -33,8 +33,8 @@ CroogoNav::add('menus', array(
 		'add_new' => array(
 			'title' => __d('croogo', 'Add new'),
 			'url' => array(
-				'plugin' => 'menus',
 				'admin' => true,
+				'plugin' => 'menus',
 				'controller' => 'menus',
 				'action' => 'add',
 			),

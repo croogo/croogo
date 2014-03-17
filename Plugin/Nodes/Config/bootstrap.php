@@ -37,8 +37,8 @@ CroogoNav::add('content', array(
 	'icon' => array('edit', 'large'),
 	'title' => __d('croogo', 'Content'),
 	'url' => array(
-		'plugin' => 'nodes',
 		'admin' => true,
+		'plugin' => 'nodes',
 		'controller' => 'nodes',
 		'action' => 'index',
 	),
@@ -48,8 +48,8 @@ CroogoNav::add('content', array(
 		'list' => array(
 			'title' => __d('croogo', 'List'),
 			'url' => array(
-				'plugin' => 'nodes',
 				'admin' => true,
+				'plugin' => 'nodes',
 				'controller' => 'nodes',
 				'action' => 'index',
 			),
@@ -59,8 +59,8 @@ CroogoNav::add('content', array(
 		'create' => array(
 			'title' => __d('croogo', 'Create'),
 			'url' => array(
-				'plugin' => 'nodes',
 				'admin' => true,
+				'plugin' => 'nodes',
 				'controller' => 'nodes',
 				'action' => 'create',
 			),
