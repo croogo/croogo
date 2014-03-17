@@ -115,7 +115,7 @@ class CroogoHelper extends AppHelper {
 				$out .= $this->Html->tag('li', null, $liOptions);
 				continue;
 			}
-			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByUserId($userId, $menu['url'])) {
+			if (is_array($menu['url']) &&  $currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByUserId($userId, $menu['url'])) {
 				continue;
 			}
 
