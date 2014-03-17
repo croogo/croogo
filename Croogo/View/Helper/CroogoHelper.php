@@ -100,6 +100,7 @@ class CroogoHelper extends AppHelper {
 		}
 
 		$sidebar = $options['type'] === 'sidebar';
+		$htmlAttributes = $options['htmlAttributes'];
 		$out = null;
 		$sorted = Hash::sort($menus, '{s}.weight', 'ASC');
 		if (empty($this->Role)) {
@@ -114,7 +115,6 @@ class CroogoHelper extends AppHelper {
 				$out .= $this->Html->tag('li', null, $liOptions);
 				continue;
 			}
-			$htmlAttributes = $options['htmlAttributes'];
 			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByUserId($userId, $menu['url'])) {
 				continue;
 			}
