@@ -40,4 +40,21 @@ class OrderedBehaviorTest extends CroogoTestCase {
 		$this->assertNotEmpty($result['Block']['weight']);
 	}
 
+/**
+ * testInsertOnEmptyTable
+ */
+	public function testInsertOnEmptyTable() {
+		$this->Block->deleteAll('1 = 1');
+		$count = $this->Block->find('count');
+		$this->assertEquals(0, $count);
+		$result = $this->Block->save(array(
+			'Block' => array(
+				'title' => 'My other block',
+				'alias' => 'my-other-block',
+				'body' => 'This is my other block',
+			),
+		));
+		$this->assertEquals(1, $result['Block']['weight']);
+	}
+
 }
