@@ -94,7 +94,7 @@ class NodesController extends NodesAppController {
  * @return void
  */
 	public function admin_toggle($id = null, $status = null) {
-		$this->Croogo->fieldToggle($this->Node, $id, $status);
+		$this->Croogo->fieldToggle($this->{$this->modelClass}, $id, $status);
 	}
 
 /**
@@ -107,18 +107,21 @@ class NodesController extends NodesAppController {
 		$this->set('title_for_layout', __d('croogo', 'Content'));
 		$this->Prg->commonProcess();
 
-		$this->Node->recursive = 0;
-		$this->paginate['Node']['order'] = 'Node.created DESC';
-		$this->paginate['Node']['conditions'] = array();
-		$this->paginate['Node']['contain'] = array('User');
+		$Node = $this->{$this->modelClass};
+		$Node->recursive = 0;
 
-		$types = $this->Node->Taxonomy->Vocabulary->Type->find('all');
+		$alias = $this->modelClass;
+		$this->paginate[$alias]['order'] = $Node->escapeField('created') . ' DESC';
+		$this->paginate[$alias]['conditions'] = array();
+		$this->paginate[$alias]['contain'] = array('User');
+
+		$types = $Node->Taxonomy->Vocabulary->Type->find('all');
 		$typeAliases = Hash::extract($types, '{n}.Type.alias');
-		$this->paginate['Node']['conditions']['Node.type'] = $typeAliases;
+		$this->paginate[$alias]['conditions'][$Node->escapeField('type')] = $typeAliases;
 
-		$criteria = $this->Node->parseCriteria($this->Prg->parsedParams());
+		$criteria = $Node->parseCriteria($this->Prg->parsedParams());
 		$nodes = $this->paginate($criteria);
-		$nodeTypes = $this->Node->Taxonomy->Vocabulary->Type->find('list', array(
+		$nodeTypes = $Node->Taxonomy->Vocabulary->Type->find('list', array(
 			'fields' => array('Type.alias', 'Type.title')
 			));
 		$this->set(compact('nodes', 'types', 'typeAliases', 'nodeTypes'));
@@ -138,7 +141,7 @@ class NodesController extends NodesAppController {
 	public function admin_create() {
 		$this->set('title_for_layout', __d('croogo', 'Create content'));
 
-		$types = $this->Node->Taxonomy->Vocabulary->Type->find('all', array(
+		$types = $this->{$this->modelClass}->Taxonomy->Vocabulary->Type->find('all', array(
 			'order' => array(
 				'Type.alias' => 'ASC',
 			),
@@ -154,34 +157,35 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public function admin_add($typeAlias = 'node') {
-		$type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
+		$Node = $this->{$this->modelClass};
+		$type = $Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
 		if (!isset($type['Type']['alias'])) {
 			$this->Session->setFlash(__d('croogo', 'Content type does not exist.'));
 			return $this->redirect(array('action' => 'create'));
 		}
 
 		if (!empty($this->request->data)) {
-			if (isset($this->request->data[$this->Node->alias]['type'])) {
-				$typeAlias = $this->request->data['Node']['type'];
-				$this->Node->type = $typeAlias;
+			if (isset($this->request->data[$Node->alias]['type'])) {
+				$typeAlias = $this->request->data[$Node->alias]['type'];
+				$Node->type = $typeAlias;
 			}
-			if ($this->Node->saveNode($this->request->data, $typeAlias)) {
+			if ($Node->saveNode($this->request->data, $typeAlias)) {
 				Croogo::dispatchEvent('Controller.Nodes.afterAdd', $this, array('data' => $this->request->data));
 				$this->Session->setFlash(__d('croogo', '%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));
-				$this->Croogo->redirect(array('action' => 'edit', $this->Node->id));
+				$this->Croogo->redirect(array('action' => 'edit', $Node->id));
 			} else {
 				$this->Session->setFlash(__d('croogo', '%s could not be saved. Please, try again.', $type['Type']['title']), 'default', array('class' => 'error'));
 			}
 		} else {
 			$this->Croogo->setReferer();
-			$this->request->data['Node']['user_id'] = $this->Session->read('Auth.User.id');
+			$this->request->data[$Node->alias]['user_id'] = $this->Session->read('Auth.User.id');
 		}
 
 		$this->set('title_for_layout', __d('croogo', 'Create content: %s', $type['Type']['title']));
-		$this->Node->type = $type['Type']['alias'];
-		$this->Node->Behaviors->attach('Tree', array(
+		$Node->type = $type['Type']['alias'];
+		$Node->Behaviors->attach('Tree', array(
 			'scope' => array(
-				'Node.type' => $this->Node->type,
+				$Node->escapeField('type') => $Node->type,
 			),
 		));
 
@@ -200,27 +204,28 @@ class NodesController extends NodesAppController {
 			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'default', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
-		$this->Node->id = $id;
-		$typeAlias = $this->Node->field('type');
-		$type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
+		$Node = $this->{$this->modelClass};
+		$Node->id = $id;
+		$typeAlias = $Node->field('type');
+		$type = $Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
 
 		if (!empty($this->request->data)) {
-			if ($this->Node->saveNode($this->request->data, $typeAlias)) {
+			if ($Node->saveNode($this->request->data, $typeAlias)) {
 				Croogo::dispatchEvent('Controller.Nodes.afterEdit', $this, compact('data'));
 				$this->Session->setFlash(__d('croogo', '%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));
-				$this->Croogo->redirect(array('action' => 'edit', $this->Node->id));
+				$this->Croogo->redirect(array('action' => 'edit', $Node->id));
 			} else {
 				$this->Session->setFlash(__d('croogo', '%s could not be saved. Please, try again.', $type['Type']['title']), 'default', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
 			$this->Croogo->setReferer();
-			$data = $this->Node->read(null, $id);
-			$data['Role']['Role'] = $this->Node->decodeData($data['Node']['visibility_roles']);
+			$data = $Node->read(null, $id);
+			$data['Role']['Role'] = $Node->decodeData($data[$Node->alias]['visibility_roles']);
 			$this->request->data = $data;
 		}
 
-		$this->set('title_for_layout', __d('croogo', 'Edit %s: %s', $type['Type']['title'], $this->request->data['Node']['title']));
+		$this->set('title_for_layout', __d('croogo', 'Edit %s: %s', $type['Type']['title'], $this->request->data[$Node->alias]['title']));
 		$this->_setCommonVariables($type);
 	}
 
@@ -231,7 +236,8 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public function admin_update_paths() {
-		if ($this->Node->updateAllNodesPaths()) {
+		$Node = $this->{$this->modelClass};
+		if ($Node->updateAllNodesPaths()) {
 			$messageFlash = __d('croogo', 'Paths updated.');
 			$class = 'success';
 		} else {
@@ -255,7 +261,9 @@ class NodesController extends NodesAppController {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Node'), 'default', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
-		if ($this->Node->delete($id)) {
+
+		$Node = $this->{$this->modelClass};
+		if ($Node->delete($id)) {
 			$this->Session->setFlash(__d('croogo', 'Node deleted'), 'default', array('class' => 'success'));
 			return $this->redirect(array('action' => 'index'));
 		}
@@ -271,10 +279,11 @@ class NodesController extends NodesAppController {
  */
 	public function admin_delete_meta($id = null) {
 		$success = false;
-		if ($id != null && $this->Node->Meta->delete($id)) {
+		$Node = $this->{$this->modelClass};
+		if ($id != null && $Node->Meta->delete($id)) {
 			$success = true;
 		} else {
-			if (!$this->Node->Meta->exists($id)) {
+			if (!$Node->Meta->exists($id)) {
 				$success = true;
 			}
 		}
@@ -300,10 +309,11 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public function admin_process() {
-		$action = $this->request->data['Node']['action'];
+		$Node = $this->{$this->modelClass};
+		$action = $this->request->data[$Node->alias]['action'];
 		$ids = array();
-		foreach ($this->request->data['Node'] as $id => $value) {
-			if ($id != 'action' && $value['id'] == 1) {
+		foreach ($this->request->data[$Node->alias] as $id => $value) {
+			if ($id != 'action' && $value[$Node->primaryKey] == 1) {
 				$ids[] = $id;
 			}
 		}
@@ -313,7 +323,7 @@ class NodesController extends NodesAppController {
 			return $this->redirect(array('action' => 'index'));
 		}
 
-		$actionProcessed = $this->Node->processAction($action, $ids);
+		$actionProcessed = $Node->processAction($action, $ids);
 		$eventName = 'Controller.Nodes.after' . ucfirst($action);
 
 		if ($actionProcessed) {
@@ -354,12 +364,14 @@ class NodesController extends NodesAppController {
 			$this->request->params['named']['type'] = 'node';
 		}
 
-		$this->paginate['Node']['order'] = 'Node.created DESC';
-		$this->paginate['Node']['conditions'] = array(
-			'Node.status' => $this->Node->status(),
+		$Node = $this->{$this->modelClass};
+		$this->paginate[$Node->alias]['order'] = $Node->escapeField('created') . ' DESC';
+		$visibilityRolesField = $Node->escapeField('visibility_roles');
+		$this->paginate[$Node->alias]['conditions'] = array(
+			$Node->escapeField('status') => $Node->status(),
 			'OR' => array(
-				'Node.visibility_roles' => '',
-				'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId() . '"%',
+				$visibilityRolesField => '',
+				$visibilityRolesField . ' LIKE' => '%"' . $this->Croogo->roleId() . '"%',
 			),
 		);
 
@@ -369,7 +381,7 @@ class NodesController extends NodesAppController {
 			$limit = Configure::read('Reading.nodes_per_page');
 		}
 
-		$this->paginate['Node']['contain'] = array(
+		$this->paginate[$Node->alias]['contain'] = array(
 			'Meta',
 			'Taxonomy' => array(
 				'Term',
@@ -378,7 +390,7 @@ class NodesController extends NodesAppController {
 			'User',
 		);
 		if (isset($this->request->params['named']['type'])) {
-			$type = $this->Node->Taxonomy->Vocabulary->Type->find('first', array(
+			$type = $Node->Taxonomy->Vocabulary->Type->find('first', array(
 				'conditions' => array(
 					'Type.alias' => $this->request->params['named']['type'],
 				),
@@ -394,11 +406,11 @@ class NodesController extends NodesAppController {
 			if (isset($type['Params']['nodes_per_page']) && empty($this->request->params['named']['limit'])) {
 				$limit = $type['Params']['nodes_per_page'];
 			}
-			$this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
+			$this->paginate[$Node->alias]['conditions']['Node.type'] = $type['Type']['alias'];
 			$this->set('title_for_layout', $type['Type']['title']);
 		}
 
-		$this->paginate['Node']['limit'] = $limit;
+		$this->paginate[$Node->alias]['limit'] = $limit;
 
 		if ($this->usePaginationCache) {
 			$cacheNamePrefix = 'nodes_index_' . $this->Croogo->roleId() . '_' . Configure::read('Config.language');
@@ -411,7 +423,7 @@ class NodesController extends NodesAppController {
 			$cacheConfig = 'nodes_index';
 			$nodes = Cache::read($cacheName, $cacheConfig);
 			if (!$nodes) {
-				$nodes = $this->paginate('Node');
+				$nodes = $this->paginate($Node->alias);
 				Cache::write($cacheName, $nodes, $cacheConfig);
 				Cache::write($cacheNamePaging, $this->request->params['paging'], $cacheConfig);
 			} else {
@@ -419,7 +431,7 @@ class NodesController extends NodesAppController {
 				$this->request->params['paging'] = $paging;
 			}
 		} else {
-			$nodes = $this->paginate('Node');
+			$nodes = $this->paginate($Node->alias);
 		}
 
 		$this->set(compact('type', 'nodes'));
@@ -435,7 +447,8 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public function term() {
-		$term = $this->Node->Taxonomy->Term->find('first', array(
+		$Node = $this->{$this->modelClass};
+		$term = $Node->Taxonomy->Term->find('first', array(
 			'conditions' => array(
 				'Term.slug' => $this->request->params['named']['slug'],
 			),
@@ -459,16 +472,17 @@ class NodesController extends NodesAppController {
 			$limit = Configure::read('Reading.nodes_per_page');
 		}
 
-		$this->paginate['Node']['order'] = 'Node.created DESC';
-		$this->paginate['Node']['conditions'] = array(
-			'Node.status' => $this->Node->status(),
-			'Node.terms LIKE' => '%"' . $this->request->params['named']['slug'] . '"%',
+		$this->paginate[$Node->alias]['order'] = $Node->escapeField('created') .' DESC';
+		$visibilityRolesField = $Node->escapeField('visibility_roles');
+		$this->paginate[$Node->alias]['conditions'] = array(
+			$Node->escapeField('status') => $Node->status(),
+			$Node->escapeField('terms') . ' LIKE' => '%"' . $this->request->params['named']['slug'] . '"%',
 			'OR' => array(
-				'Node.visibility_roles' => '',
-				'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId() . '"%',
+				$visibilityRolesField => '',
+				$visibilityRolesField . ' LIKE' => '%"' . $this->Croogo->roleId() . '"%',
 			),
 		);
-		$this->paginate['Node']['contain'] = array(
+		$this->paginate[$Node->alias]['contain'] = array(
 			'Meta',
 			'Taxonomy' => array(
 				'Term',
@@ -477,7 +491,7 @@ class NodesController extends NodesAppController {
 			'User',
 		);
 		if (isset($this->request->params['named']['type'])) {
-			$type = $this->Node->Taxonomy->Vocabulary->Type->find('first', array(
+			$type = $Node->Taxonomy->Vocabulary->Type->find('first', array(
 				'conditions' => array(
 					'Type.alias' => $this->request->params['named']['type'],
 				),
@@ -493,11 +507,11 @@ class NodesController extends NodesAppController {
 			if (isset($type['Params']['nodes_per_page']) && empty($this->request->params['named']['limit'])) {
 				$limit = $type['Params']['nodes_per_page'];
 			}
-			$this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
+			$this->paginate[$Node->alias]['conditions'][$Node->escapeField('type')] = $type['Type']['alias'];
 			$this->set('title_for_layout', $term['Term']['title']);
 		}
 
-		$this->paginate['Node']['limit'] = $limit;
+		$this->paginate[$Node->alias]['limit'] = $limit;
 
 		if ($this->usePaginationCache) {
 			$cacheNamePrefix = 'nodes_term_' . $this->Croogo->roleId() . '_' . $this->request->params['named']['slug'] . '_' . Configure::read('Config.language');
@@ -510,7 +524,7 @@ class NodesController extends NodesAppController {
 			$cacheConfig = 'nodes_term';
 			$nodes = Cache::read($cacheName, $cacheConfig);
 			if (!$nodes) {
-				$nodes = $this->paginate('Node');
+				$nodes = $this->paginate($Node->alias);
 				Cache::write($cacheName, $nodes, $cacheConfig);
 				Cache::write($cacheNamePaging, $this->request->params['paging'], $cacheConfig);
 			} else {
@@ -518,7 +532,7 @@ class NodesController extends NodesAppController {
 				$this->request->params['paging'] = $paging;
 			}
 		} else {
-			$nodes = $this->paginate('Node');
+			$nodes = $this->paginate($Node->alias);
 		}
 
 		$this->set(compact('term', 'type', 'nodes'));
@@ -535,14 +549,16 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public function promoted() {
+		$Node = $this->{$this->modelClass};
 		$this->set('title_for_layout', __d('croogo', 'Home'));
 
 		$roleId = $this->Croogo->roleId();
-		$this->paginate['Node']['type'] = 'promoted';
-		$this->paginate['Node']['conditions'] = array(
+		$this->paginate[$Node->alias]['type'] = 'promoted';
+		$visibilityRolesField = $Node->escapeField('visibility_roles');
+		$this->paginate[$Node->alias]['conditions'] = array(
 			'OR' => array(
-				'Node.visibility_roles' => '',
-				'Node.visibility_roles LIKE' => '%"' . $roleId . '"%',
+				$visibilityRolesField => '',
+				$visibilityRolesField . ' LIKE' => '%"' . $roleId . '"%',
 			),
 		);
 
@@ -553,7 +569,7 @@ class NodesController extends NodesAppController {
 		}
 
 		if (isset($this->request->params['named']['type'])) {
-			$type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($this->request->params['named']['type']);
+			$type = $Node->Taxonomy->Vocabulary->Type->findByAlias($this->request->params['named']['type']);
 			if (!isset($type['Type']['id'])) {
 				$this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'default', array('class' => 'error'));
 				return $this->redirect('/');
@@ -561,12 +577,12 @@ class NodesController extends NodesAppController {
 			if (isset($type['Params']['nodes_per_page']) && empty($this->request->params['named']['limit'])) {
 				$limit = $type['Params']['nodes_per_page'];
 			}
-			$this->paginate['Node']['conditions']['Node.type'] = $type['Type']['alias'];
+			$this->paginate[$Node->alias]['conditions'][$Node->escapeField('type')] = $type['Type']['alias'];
 			$this->set('title_for_layout', $type['Type']['title']);
 			$this->set(compact('type'));
 		}
 
-		$this->paginate['Node']['limit'] = $limit;
+		$this->paginate[$Node->alias]['limit'] = $limit;
 
 		if ($this->usePaginationCache) {
 			$cacheNamePrefix = 'nodes_promoted_' . $this->Croogo->roleId() . '_' . Configure::read('Config.language');
@@ -579,7 +595,7 @@ class NodesController extends NodesAppController {
 			$cacheConfig = 'nodes_promoted';
 			$nodes = Cache::read($cacheName, $cacheConfig);
 			if (!$nodes) {
-				$nodes = $this->paginate('Node');
+				$nodes = $this->paginate($Node->alias);
 				Cache::write($cacheName, $nodes, $cacheConfig);
 				Cache::write($cacheNamePaging, $this->request->params['paging'], $cacheConfig);
 			} else {
@@ -587,7 +603,7 @@ class NodesController extends NodesAppController {
 				$this->request->params['paging'] = $paging;
 			}
 		} else {
-			$nodes = $this->paginate('Node');
+			$nodes = $this->paginate($Node->alias);
 		}
 		$this->set(compact('nodes'));
 	}
@@ -604,30 +620,34 @@ class NodesController extends NodesAppController {
 			return $this->redirect('/');
 		}
 
+		$Node = $this->{$this->modelClass};
+
 		App::uses('Sanitize', 'Utility');
 		$q = Sanitize::clean($this->request->params['named']['q']);
-		$this->paginate['Node']['order'] = 'Node.created DESC';
-		$this->paginate['Node']['limit'] = Configure::read('Reading.nodes_per_page');
-		$this->paginate['Node']['conditions'] = array(
-			'Node.status' => $this->Node->status(),
+		$query = '%' . $q . '%';
+		$this->paginate[$Node->alias]['order'] = 'Node.created DESC';
+		$this->paginate[$Node->alias]['limit'] = Configure::read('Reading.nodes_per_page');
+		$visibilityRolesField = $Node->escapeField('visibility_roles');
+		$this->paginate[$Node->alias]['conditions'] = array(
+			$Node->escapeField('status') => $Node->status(),
 			'AND' => array(
 				array(
 					'OR' => array(
-						'Node.title LIKE' => '%' . $q . '%',
-						'Node.excerpt LIKE' => '%' . $q . '%',
-						'Node.body LIKE' => '%' . $q . '%',
-						'Node.terms LIKE' => '%"' . $q . '"%',
+						$Node->escapeField('title') . ' LIKE' => $query,
+						$Node->escapeField('excerpt') . ' LIKE' => $query,
+						$Node->escapeField('body') . ' LIKE' => $query,
+						$Node->escapeField('terms') . ' LIKE' => $query,
 					),
 				),
 				array(
 					'OR' => array(
-						'Node.visibility_roles' => '',
-						'Node.visibility_roles LIKE' => '%"' . $this->Croogo->roleId() . '"%',
+						$visibilityRolesField => '',
+						$visibilityRolesField . ' LIKE' => '%"' . $this->Croogo->roleId() . '"%',
 					),
 				),
 			),
 		);
-		$this->paginate['Node']['contain'] = array(
+		$this->paginate[$Node->alias]['contain'] = array(
 			'Meta',
 			'Taxonomy' => array(
 				'Term',
@@ -636,18 +656,18 @@ class NodesController extends NodesAppController {
 			'User',
 		);
 		if ($typeAlias) {
-			$type = $this->Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
+			$type = $Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
 			if (!isset($type['Type']['id'])) {
 				$this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'default', array('class' => 'error'));
 				return $this->redirect('/');
 			}
 			if (isset($type['Params']['nodes_per_page'])) {
-				$this->paginate['Node']['limit'] = $type['Params']['nodes_per_page'];
+				$this->paginate[$Node->alias]['limit'] = $type['Params']['nodes_per_page'];
 			}
-			$this->paginate['Node']['conditions']['Node.type'] = $typeAlias;
+			$this->paginate[$Node->alias]['conditions']['Node.type'] = $typeAlias;
 		}
 
-		$nodes = $this->paginate('Node');
+		$nodes = $this->paginate($Node->alias);
 		$this->set('title_for_layout', __d('croogo', 'Search Results: %s', $q));
 		$this->set(compact('q', 'nodes'));
 		if ($typeAlias) {
@@ -665,18 +685,19 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public function view($id = null) {
+		$Node = $this->{$this->modelClass};
 		if (isset($this->request->params['named']['slug']) && isset($this->request->params['named']['type'])) {
-			$this->Node->type = $this->request->params['named']['type'];
-			$type = $this->Node->Taxonomy->Vocabulary->Type->find('first', array(
+			$Node->type = $this->request->params['named']['type'];
+			$type = $Node->Taxonomy->Vocabulary->Type->find('first', array(
 				'conditions' => array(
-					'Type.alias' => $this->Node->type,
+					'Type.alias' => $Node->type,
 				),
 				'cache' => array(
-					'name' => 'type_' . $this->Node->type,
+					'name' => 'type_' . $Node->type,
 					'config' => 'nodes_view',
 				),
 			));
-			$node = $this->Node->find('viewBySlug', array(
+			$node = $Node->find('viewBySlug', array(
 				'slug' => $this->request->params['named']['slug'],
 				'type' => $this->request->params['named']['type'],
 				'roleId' => $this->Croogo->roleId(),
@@ -685,23 +706,23 @@ class NodesController extends NodesAppController {
 			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'default', array('class' => 'error'));
 			return $this->redirect('/');
 		} else {
-			$node = $this->Node->find('viewById', array(
+			$node = $Node->find('viewById', array(
 				'id' => $id,
 				'roleId' => $this->Croogo->roleId,
 			));
-			$this->Node->type = $node['Node']['type'];
-			$type = $this->Node->Taxonomy->Vocabulary->Type->find('first', array(
+			$Node->type = $node[$Node->alias]['type'];
+			$type = $Node->Taxonomy->Vocabulary->Type->find('first', array(
 				'conditions' => array(
-					'Type.alias' => $this->Node->type,
+					'Type.alias' => $Node->type,
 				),
 				'cache' => array(
-					'name' => 'type_' . $this->Node->type,
+					'name' => 'type_' . $Node->type,
 					'config' => 'nodes_view',
 				),
 			));
 		}
 
-		if (!isset($node['Node']['id'])) {
+		if (!isset($node[$Node->alias][$Node->primaryKey])) {
 			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'default', array('class' => 'error'));
 			return $this->redirect('/');
 		}
@@ -710,11 +731,11 @@ class NodesController extends NodesAppController {
 		$event = new CakeEvent('Controller.Nodes.view', $this, compact('data'));
 		$this->getEventManager()->dispatch($event);
 
-		$this->set('title_for_layout', $node['Node']['title']);
+		$this->set('title_for_layout', $node[$Node->alias]['title']);
 		$this->set(compact('node', 'type', 'comments'));
 		$this->Croogo->viewFallback(array(
-			'view_' . $type['Type']['alias'] . '_' . $node['Node']['slug'],
-			'view_' . $node['Node']['id'],
+			'view_' . $type['Type']['alias'] . '_' . $node[$Node->alias]['slug'],
+			'view_' . $node[$Node->alias][$Node->primaryKey],
 			'view_' . $type['Type']['alias'],
 		));
 	}
@@ -740,8 +761,9 @@ class NodesController extends NodesAppController {
 		if (isset($this->Taxonomies)) {
 			$this->Taxonomies->prepareCommonData($type);
 		}
-		$nodes = $this->Node->generateTreeList();
-		$roles = $this->Node->User->Role->find('list');
+		$Node = $this->{$this->modelClass};
+		$nodes = $Node->generateTreeList();
+		$roles = $Node->User->Role->find('list');
 		$this->set(compact('nodes', 'roles'));
 	}
 
