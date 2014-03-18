@@ -96,6 +96,14 @@ class NodesComponent extends Component {
 				'conditions' => $options['conditions'],
 				'order' => $options['order'],
 				'limit' => $options['limit'],
+				'contain' => array(
+					'Meta',
+					'Taxonomy' => array(
+						'Term',
+						'Vocabulary',
+					),
+					'User',
+				),
 				'cache' => array(
 					'prefix' => 'nodes_' . $alias,
 					'config' => 'croogo_nodes',
