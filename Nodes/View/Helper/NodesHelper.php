@@ -235,4 +235,23 @@ class NodesHelper extends AppHelper {
 		return $output;
 	}
 
+/**
+ * Convenience method to generate url to a node or current node
+ *
+ * @param array $node Node data
+ * @return string
+ */
+	public function url($node = array()) {
+		if (empty($node)) {
+			$node = $this->node;
+		}
+		return $this->Html->url(array(
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'view',
+			'type' => $node['Node']['type'],
+			'slug' => $node['Node']['slug']
+		));
+	}
+
 }
