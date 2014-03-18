@@ -155,4 +155,51 @@ class StringConverter {
 		return join('/', $result) . $queryString;
 	}
 
+/**
+ * Extract the first paragraph from $text
+ *
+ * Options:
+ *
+ * - `tag` Wrap the returned value with a <p> tag. Default is `true`
+ * - `regex` Regex expression to determine a paragraph
+ * - `stripTags Strip all tags within the paragraph. Default is `true`
+ * - `newline` Determine paragraph based on newlines instead of html <p> tag.
+ *    Default is false
+ *
+ * @param string $text Html text
+ * @param array $options Options
+ * @return string
+ */
+	public function firstPara($text, $options = array()) {
+		$paragraph = null;
+		$options = array_merge(array(
+			'tag' => false,
+			'regex' => '#<p[^>]*>(.*)</p>#isU',
+			'stripTags' => true,
+			'newline' => false,
+		), $options);
+
+		if ($options['regex']) {
+			preg_match($options['regex'], $text, $matches);
+			if (isset($matches[1])) {
+				$paragraph = $matches[1];
+			}
+		}
+
+		if (empty($paragraph) && $options['newline']) {
+			$paragraphs = preg_split('/\r\n|\r|\n/', $text);
+			$paragraph = empty($paragraphs[0]) ? null : $paragraphs[0];
+		}
+
+		if ($paragraph) {
+			if ($options['stripTags']) {
+				$paragraph = strip_tags($paragraph);
+			}
+			if ($options['tag']) {
+				$paragraph = '<p>' . $paragraph . '</p>';
+			}
+		}
+		return $paragraph;
+	}
+
 }

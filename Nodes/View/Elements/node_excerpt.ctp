@@ -1,3 +1,5 @@
+<?php if (isset($excerpt)): ?>
 <div class="node-excerpt">
-	<?php echo $this->Nodes->field('excerpt'); ?>
+	<?php echo $excerpt; ?>
 </div>
+<?php endif; ?>

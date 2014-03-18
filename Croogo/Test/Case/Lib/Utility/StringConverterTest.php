@@ -302,4 +302,39 @@ class StringConverterTest extends CroogoTestCase {
 		$this->assertEquals($expected, $this->Converter->urlToLinkString($url));
 	}
 
+/**
+ * testFirstPara
+ */
+	public function testFirstPara() {
+		$text = '<p>First paragraph</p>';
+		$expected = 'First paragraph';
+		$result = $this->Converter->firstPara($text);
+		$this->assertEquals($expected, $result);
+
+		$text = '<p class="foo"><span style="font-size: 100%">First<span> paragraph</p>';
+		$expected = 'First paragraph';
+		$result = $this->Converter->firstPara($text);
+		$this->assertEquals($expected, $result);
+
+		$expected = '<p>First paragraph</p>';
+		$result = $this->Converter->firstPara($text, array('tag' => true));
+		$this->assertEquals($expected, $result);
+
+		$text = '<p class="foo"><span style="font-size: 100%">First<span> paragraph</p>';
+		$expected = '<p><span style="font-size: 100%">First<span> paragraph</p>';
+		$result = $this->Converter->firstPara($text, array('tag' => true, 'stripTags' => false));
+		$this->assertEquals($expected, $result);
+
+		$text = "This is the first paragraph.  And this is the second sentence.
+This should be the second paragraph.  And this is the fourth sentence, located in the second paragraph";
+		$expected = 'This is the first paragraph.  And this is the second sentence.';
+		$result = $this->Converter->firstPara($text, array('newline' => true));
+		$this->assertEquals($expected, $result);
+
+		$text = "This is the first paragraph.\nThis should be the second paragraph.";
+		$expected = '<p>This is the first paragraph.</p>';
+		$result = $this->Converter->firstPara($text, array('tag' => true, 'newline' => true));
+		$this->assertEquals($expected, $result);
+	}
+
 }

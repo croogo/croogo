@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppHelper', 'View/Helper');
+App::uses('StringConverter', 'Croogo.Lib/Utility');
 
 /**
  * Nodes Helper
@@ -37,10 +38,18 @@ class NodesHelper extends AppHelper {
 	public $node = null;
 
 /**
+ * StringConverter instance
+ *
+ * @var StringConventer
+ */
+	protected $_converter = null;
+
+/**
  * constructor
  */
 	public function __construct(View $view, $settings = array()) {
 		parent::__construct($view);
+		$this->_converter = new StringConverter();
 		$this->_setupEvents();
 	}
 
@@ -163,17 +172,29 @@ class NodesHelper extends AppHelper {
 /**
  * Node excerpt (summary)
  *
+ * Options:
+ * - `element`: Element to use when rendering excerpt
+ * - `body`: Extract first paragraph from body as excerpt. Default is `false`
+ *
  * @param array $options
  * @return string
  */
 	public function excerpt($options = array()) {
 		$_options = array(
 			'element' => 'Nodes.node_excerpt',
+			'body' => false,
 		);
 		$options = array_merge($_options, $options);
 
+		$excerpt = $this->node['Node']['excerpt'];
+		if ($options['body'] && empty($excerpt)) {
+			$excerpt = $this->_converter->firstPara($this->node['Node']['body'],
+				array('tag' => true)
+			);
+		}
+
 		$output = $this->Layout->hook('beforeNodeExcerpt');
-		$output .= $this->_View->element($options['element']);
+		$output .= $this->_View->element($options['element'], compact('excerpt'));
 		$output .= $this->Layout->hook('afterNodeExcerpt');
 		return $output;
 	}
