@@ -10,12 +10,6 @@ env:
   - DB=sqlite
   - DB=pgsql
 
-matrix:
-  include:
-    - php: 5.4
-      env:
-        - DB=mysql PHPCOV=1
-
 before_script:
   - sh -c "cd .. ; mkdir lib ; cd lib ; git clone --depth 1 git://github.com/cakephp/cakephp -b master"
   - sh -c "cd ../lib ; ln -s cakephp/lib/Cake Cake"
