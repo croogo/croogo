@@ -217,7 +217,8 @@ class MenusHelper extends AppHelper {
 			if (isset($link['children']) && count($link['children']) > 0) {
 				$linkOutput .= $this->nestedLinks($link['children'], $options, $depth + 1);
 			}
-			$linkOutput = $this->Html->tag('li', $linkOutput);
+			$liAttr = $this->_mergeLinkParams($link, 'liAttr');
+			$linkOutput = $this->Html->tag('li', $linkOutput, $liAttr);
 			$output .= $linkOutput;
 		}
 		if ($output != null) {
