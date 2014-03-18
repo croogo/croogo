@@ -241,17 +241,23 @@ class NodesHelper extends AppHelper {
  * @param array $node Node data
  * @return string
  */
-	public function url($node = array()) {
-		if (empty($node)) {
-			$node = $this->node;
+	public function url($url = null, $full = false) {
+		if ($url === null && $this->node) {
+			$url = $this->node;
 		}
-		return $this->Html->url(array(
-			'plugin' => 'nodes',
-			'controller' => 'nodes',
-			'action' => 'view',
-			'type' => $node['Node']['type'],
-			'slug' => $node['Node']['slug']
-		));
+		$alias = is_array($url) ? key($url) : null;
+		if (isset($url[$alias]['url'])) {
+			$url = $url[$alias]['url'];
+		} elseif (isset($url[$alias]['type']) && isset($url[$alias]['slug'])) {
+			$url = array(
+				'plugin' => 'nodes',
+				'controller' => 'nodes',
+				'action' => 'view',
+				'type' => $url[$alias]['type'],
+				'slug' => $url[$alias]['slug']
+			);
+		}
+		return parent::url($url, $full);
 	}
 
 }

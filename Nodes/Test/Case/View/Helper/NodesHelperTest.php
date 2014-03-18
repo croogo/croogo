@@ -53,4 +53,29 @@ class NodesHelperTest extends CroogoTestCase {
 		$this->assertContains('class="node-list"', $content);
 	}
 
+/**
+ * Test NodesHelper::url()
+ */
+	public function testNodesUrl() {
+		$result = $this->Nodes->url(null);
+		$this->assertEquals('/', $result);
+
+		$result = $this->Nodes->url('/page/about');
+		$this->assertEquals('/page/about', $result);
+
+		$node = array(
+			'Node' => array(
+				'type' => 'page',
+				'slug' => 'about',
+			)
+		);
+		$result = $this->Nodes->url($node);
+		$expected = '/nodes/nodes/view/type:page/slug:about';
+		$this->assertEquals($expected, $result);
+
+		$fullBaseUrl = Configure::read('App.fullBaseUrl');
+		$result = $this->Nodes->url($node, true);
+		$this->assertEquals($fullBaseUrl . $expected, $result);
+	}
+
 }
