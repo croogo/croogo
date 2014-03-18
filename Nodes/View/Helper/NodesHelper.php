@@ -169,11 +169,18 @@ class NodesHelper extends AppHelper {
 	public function excerpt($options = array()) {
 		$_options = array(
 			'element' => 'Nodes.node_excerpt',
+			'length' => 130,
+			'append' => '&#8230'
 		);
 		$options = array_merge($_options, $options);
 
+		$excerpt = $this->node['Node']['excerpt']; 
+		if (empty($excerpt)) {
+			$excerpt = substr($this->node['Node']['body'],0,$options['length']).$options['append'];
+		}
+
 		$output = $this->Layout->hook('beforeNodeExcerpt');
-		$output .= $this->_View->element($options['element']);
+		$output .= $this->_View->element($options['element'],array('excerpt'=>$excerpt));
 		$output .= $this->Layout->hook('afterNodeExcerpt');
 		return $output;
 	}
@@ -212,6 +219,24 @@ class NodesHelper extends AppHelper {
 		$output .= $this->_View->element($options['element']);
 		$output .= $this->Layout->hook('afterNodeMoreInfo');
 		return $output;
+	}
+
+/**
+ * Node url 
+ *
+ * @return string
+ */
+	public function url($node = array()) {
+		if (empty($node)) {
+			$node = $this->node;
+		}
+		return $this->Html->url(array(
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'view',
+			'type' => $node['Node']['type'],
+			'slug' => $node['Node']['slug']
+		));
 	}
 
 }
