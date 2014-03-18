@@ -357,7 +357,7 @@ class Node extends NodesAppModel {
 		));
 		$typesAlias = array_values($types);
 
-		$idField = $this->escapeField('id');
+		$idField = $this->escapeField();
 		$batch = 30;
 		$options = array(
 			'order' => $idField,
@@ -446,13 +446,13 @@ class Node extends NodesAppModel {
 				'User',
 			);
 			$_defaultConditions = array(
-				'Node.status' => $this->status(),
-				'Node.promote' => self::STATUS_PROMOTED,
+				$this->escapeField('status') => $this->status(),
+				$this->escapeField('promote') => self::STATUS_PROMOTED,
 				'OR' => array(
-					'Node.visibility_roles' => '',
+					$this->escapeField('visibility_roles') => '',
 				),
 			);
-			$_defaultOrder = $this->alias . '.created DESC';
+			$_defaultOrder = $this->escapeField('created') . ' DESC';
 			$_defaultLimit = Configure::read('Reading.nodes_per_page');
 
 			foreach ($_defaultFilters as $filter) {
@@ -485,13 +485,14 @@ class Node extends NodesAppModel {
 		$keys = array('id' => null, 'roleId' => null);
 		$args = array_merge($keys, array_intersect_key($query, $keys));
 		$query = array_diff_key($query, $args);
+		$visibilityRolesField = $this->escapeField('visibility_roles');
 		$query = Hash::merge(array(
 			'conditions' => array(
-				'Node.id' => $args['id'],
-				'Node.status' => $this->status(),
+				$this->escapeField() => $args['id'],
+				$this->escapeField('status') => $this->status(),
 				'OR' => array(
-					'Node.visibility_roles' => '',
-					'Node.visibility_roles LIKE' => '%"' . $args['roleId'] . '"%',
+					$visibilityRolesField => '',
+					$visibilityRolesField . ' LIKE' => '%"' . $args['roleId'] . '"%',
 				),
 			),
 			'contain' => array(
@@ -531,14 +532,15 @@ class Node extends NodesAppModel {
 		$keys = array('slug' => null, 'type' => null, 'roleId' => null);
 		$args = array_merge($keys, array_intersect_key($query, $keys));
 		$query = array_diff_key($query, $args);
+		$visibilityRolesField = $this->escapeField('visibility_roles');
 		$query = Hash::merge(array(
 			'conditions' => array(
-				'Node.slug' => $args['slug'],
-				'Node.type' => $args['type'],
-				'Node.status' => $this->status(),
+				$this->escapeField('slug') => $args['slug'],
+				$this->escapeField('type') => $args['type'],
+				$this->escapeField('status') => $this->status(),
 				'OR' => array(
-					'Node.visibility_roles' => '',
-					'Node.visibility_roles LIKE' => '%"' . $args['roleId'] . '"%',
+					$visibilityRolesField => '',
+					$visibilityRolesField . ' LIKE' => '%"' . $args['roleId'] . '"%',
 				),
 			),
 			'contain' => array(
