@@ -219,5 +219,24 @@ class NodesHelper extends AppHelper {
 		$output .= $this->_View->element($options['element']);
 		$output .= $this->Layout->hook('afterNodeMoreInfo');
 		return $output;
-  }
+	}
+
+/**
+ * Node url 
+ *
+ * @return string
+ */
+	public function url($node = array()) {
+		if (empty($node)) {
+			$node = $this->node;
+		}
+		return $this->Html->url(array(
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'view',
+			'type' => $node['Node']['type'],
+			'slug' => $node['Node']['slug']
+		));
+	}
+
 }
