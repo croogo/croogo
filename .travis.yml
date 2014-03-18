@@ -96,7 +96,7 @@ before_script:
     }" > app/Config/database.php
 
 script:
-  - sh -c "if [ '$PHPCOV' = '1' ]; then cd app && ./Console/cake test croogo CroogoTests --stderr --coverage-clover coverage.clover && wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; else cd app && ./Console/cake test croogo CroogoTests --stderr ; fi"
+  - sh -c "if [ '$PHPCOV' = '1' ]; then cd app && ./Console/cake test croogo CroogoTests --stderr --coverage-clover ../coverage.clover && cd .. && wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; else cd app && ./Console/cake test croogo CroogoTests --stderr ; fi"
 
 notifications:
   email: false
