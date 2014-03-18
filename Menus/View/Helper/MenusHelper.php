@@ -145,6 +145,32 @@ class MenusHelper extends AppHelper {
 	}
 
 /**
+ * Merge Link options retrieved from Params behavior
+ *
+ * @param array $link Link data
+ * @param string $param Parameter name
+ * @param array $attributes Default options
+ * @return string
+ */
+	protected function _mergeLinkParams($link, $param, $options = array()) {
+		if (isset($link['Params'][$param])) {
+			$options = array_merge($options, $link['Params'][$param]);
+		}
+
+		$booleans = array('true', 'false');
+		foreach ($options as $key => $val) {
+			if ($val == null) {
+				unset($options[$key]);
+			}
+			if (is_string($val) && in_array(strtolower($val), $booleans)) {
+				$options[$key] = (bool)$val;
+			}
+		}
+
+		return $options;
+	}
+
+/**
  * Nested Links
  *
  * @param array $links model output (threaded)
@@ -166,15 +192,7 @@ class MenusHelper extends AppHelper {
 				'class' => $link['Link']['class'],
 			);
 
-			if (isset($link['Params']['linkAttr'])) {
-				$linkAttr = array_merge($linkAttr, $link['Params']['linkAttr']);
-			}
-
-			foreach ($linkAttr as $attrKey => $attrValue) {
-				if ($attrValue == null) {
-					unset($linkAttr[$attrKey]);
-				}
-			}
+			$linkAttr = $this->_mergeLinkParams($link, 'linkAttr', $linkAttr);
 
 			// if link is in the format: controller:contacts/action:view
 			if (strstr($link['Link']['link'], 'controller:')) {
