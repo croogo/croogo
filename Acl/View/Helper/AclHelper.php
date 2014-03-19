@@ -87,8 +87,8 @@ class AclHelper extends Helper {
  * @return boolean
  */
 	public function linkIsAllowedByRoleId($roleId, $url) {
-		if ($this->_isWhitelist($url)) {
-			return true;
+		if (is_string($url)) {
+			return $this->_isWhitelist($url);
 		}
 		if (isset($url['admin']) && $url['admin'] == true) {
 			$url['action'] = 'admin_' . $url['action'];
