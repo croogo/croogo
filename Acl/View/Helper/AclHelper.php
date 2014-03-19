@@ -23,6 +23,31 @@ class AclHelper extends Helper {
 	public $allowedActions = array();
 
 /**
+ * Path Whitelist
+ */
+	protected $_pathWhitelist = array('/', '#');
+
+/**
+ * Constructor
+ */
+	public function __construct(View $View, $settings = array()) {
+		$settings = Hash::merge(array(
+			'pathWhitelist' => $this->_pathWhitelist
+		), $settings);
+		parent::__construct($View, $settings);
+	}
+
+/**
+ * Checks whether path is in whitelist
+ *
+ * @param string $path Path
+ * @return bool True if path is in the whitelist
+ */
+	protected function _isWhitelist($url) {
+		return in_array($url, $this->settings['pathWhitelist']);
+	}
+
+/**
  * beforeRender
  *
  */
@@ -62,6 +87,9 @@ class AclHelper extends Helper {
  * @return boolean
  */
 	public function linkIsAllowedByRoleId($roleId, $url) {
+		if ($this->_isWhitelist($url)) {
+			return true;
+		}
 		if (isset($url['admin']) && $url['admin'] == true) {
 			$url['action'] = 'admin_' . $url['action'];
 		}
@@ -114,6 +142,9 @@ class AclHelper extends Helper {
 				'controllers/' . $path
 			);
 		} else {
+			if ($this->_isWhitelist($url)) {
+				return true;
+			}
 			$path = $url;
 		}
 		$linkAction = str_replace('//', '/', $path);

@@ -46,6 +46,12 @@ class AclHelperTest extends CroogoTestCase {
 
 		$result = $this->AclHelper->linkIsAllowedByRoleId(3, $resetUrl);
 		$this->assertTrue($result);
+
+		$result = $this->AclHelper->linkIsAllowedByRoleId(3, '#');
+		$this->assertTrue($result);
+
+		$result = $this->AclHelper->linkIsAllowedByRoleId(3, '/admin');
+		$this->assertFalse($result);
 	}
 
 /**
@@ -67,6 +73,12 @@ class AclHelperTest extends CroogoTestCase {
 
 		$result = $this->AclHelper->linkIsAllowedByUserId(2, $resetUrl);
 		$this->assertTrue($result);
+
+		$result = $this->AclHelper->linkIsAllowedByUserId(3, '#');
+		$this->assertTrue($result);
+
+		$result = $this->AclHelper->linkIsAllowedByUserId(3, '/admin');
+		$this->assertFalse($result);
 	}
 
 }
