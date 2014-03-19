@@ -99,7 +99,56 @@ class CroogoFormHelper extends FormHelper {
 		return $options;
 	}
 
+/**
+ * Normalize field name
+ *
+ * @return array Map of normalized field names and corresponding list of roleIds
+ */
+	protected function _setupFieldAccess($fieldAccess) {
+		$map = array();
+		foreach ($fieldAccess as $field => $config) {
+			if (strpos($field, '.') === false) {
+				$field = $this->defaultModel . '.' . $field;
+			}
+			$map[$field] = (array)$config;
+		}
+		return $map;
+	}
+
+/**
+ * Checks if field is editable by current user's role
+ *
+ * @return bool True if field is editable
+ */
+	protected function _isEditable($field) {
+		if (strpos($field, '.') === false) {
+			$field = $this->defaultModel . '.' . $field;
+		}
+		if (isset($this->_fieldAccess[$field])) {
+			return in_array($this->_currentRoleId, $this->_fieldAccess[$field]);
+		}
+		return true;
+	}
+
+/**
+ * Returns an HTML FORM element.
+ *
+ * @see FormHelper::create()
+ * @return string A formatted opening FORM tag
+ */
+	public function create($model = null, $options = array()) {
+		if (!empty($options['fieldAccess'])) {
+			$this->_fieldAccess = $this->_setupFieldAccess($options['fieldAccess']);
+			$this->_currentRoleId = $this->_View->Layout->getRoleId();
+			unset($options['fieldAcess']);
+		}
+		return parent::create($model, $options);
+	}
+
 	public function input($fieldName, $options = array()) {
+		if (!$this->_isEditable($fieldName)) {
+			return null;
+		}
 		$options = $this->_placeholderOptions($fieldName, $options);
 
 		// Automatic tooltip when label is 'false'. Leftover from 1.5.0.
