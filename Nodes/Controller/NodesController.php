@@ -616,45 +616,21 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public function search($typeAlias = null) {
-		if (!isset($this->request->params['named']['q'])) {
-			return $this->redirect('/');
-		}
+		$this->Prg->commonProcess();
 
 		$Node = $this->{$this->modelClass};
 
-		App::uses('Sanitize', 'Utility');
-		$q = Sanitize::clean($this->request->params['named']['q']);
-		$query = '%' . $q . '%';
-		$this->paginate[$Node->alias]['order'] = 'Node.created DESC';
-		$this->paginate[$Node->alias]['limit'] = Configure::read('Reading.nodes_per_page');
-		$visibilityRolesField = $Node->escapeField('visibility_roles');
-		$this->paginate[$Node->alias]['conditions'] = array(
-			$Node->escapeField('status') => $Node->status(),
-			'AND' => array(
-				array(
-					'OR' => array(
-						$Node->escapeField('title') . ' LIKE' => $query,
-						$Node->escapeField('excerpt') . ' LIKE' => $query,
-						$Node->escapeField('body') . ' LIKE' => $query,
-						$Node->escapeField('terms') . ' LIKE' => $query,
-					),
-				),
-				array(
-					'OR' => array(
-						$visibilityRolesField => '',
-						$visibilityRolesField . ' LIKE' => '%"' . $this->Croogo->roleId() . '"%',
-					),
-				),
-			),
+		$this->paginate = array(
+			'published',
+			'roleId' => $this->Croogo->roleId(),
 		);
-		$this->paginate[$Node->alias]['contain'] = array(
-			'Meta',
-			'Taxonomy' => array(
-				'Term',
-				'Vocabulary',
-			),
-			'User',
-		);
+
+		$q = null;
+		if (isset($this->request->query['q'])) {
+			$q = $this->request->query['q'];
+			$this->paginate['q'] = $q;
+		}
+
 		if ($typeAlias) {
 			$type = $Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
 			if (!isset($type['Type']['id'])) {
@@ -662,13 +638,13 @@ class NodesController extends NodesAppController {
 				return $this->redirect('/');
 			}
 			if (isset($type['Params']['nodes_per_page'])) {
-				$this->paginate[$Node->alias]['limit'] = $type['Params']['nodes_per_page'];
+				$this->paginate['limit'] = $type['Params']['nodes_per_page'];
 			}
-			$this->paginate[$Node->alias]['conditions']['Node.type'] = $typeAlias;
+			$this->paginate['typeAlias'] = $typeAlias;
 		}
 
-		$nodes = $this->paginate($Node->alias);
-		$this->set('title_for_layout', __d('croogo', 'Search Results: %s', $q));
+		$criteria = $Node->parseCriteria($this->Prg->parsedParams());
+		$nodes = $this->paginate($criteria);
 		$this->set(compact('q', 'nodes'));
 		if ($typeAlias) {
 			$this->Croogo->viewFallback(array(

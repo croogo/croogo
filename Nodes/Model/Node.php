@@ -127,6 +127,7 @@ class Node extends NodesAppModel {
  * @access public
  */
 	public $filterArgs = array(
+		'q' => array('type' => 'query', 'method' => 'filterPublishedNodes'),
 		'filter' => array('type' => 'query', 'method' => 'filterNodes'),
 		'type' => array('type' => 'value'),
 		'status' => array('type' => 'value'),
@@ -153,6 +154,7 @@ class Node extends NodesAppModel {
 		'promoted' => true,
 		'viewBySlug' => true,
 		'viewById' => true,
+		'published' => true,
 	);
 
 /**
@@ -260,6 +262,37 @@ class Node extends NodesAppModel {
 					$this->alias . '.excerpt LIKE' => $filter,
 					$this->alias . '.body LIKE' => $filter,
 					$this->alias . '.terms LIKE' => $filter,
+				),
+			);
+		}
+		return $conditions;
+	}
+
+/**
+ * Return filter condition for Nodes
+ *
+ * @return array Array of conditions
+ */
+	public function filterPublishedNodes($data = array()) {
+		$conditions = array();
+		if (!empty($data['filter'])) {
+			$filter = '%' . $data['filter'] . '%';
+			$conditions = array(
+				$this->escapeField('status') => $this->status(),
+				'AND' => array(
+					array(
+						'OR' => array(
+							$this->alias . '.title LIKE' => $filter,
+							$this->alias . '.excerpt LIKE' => $filter,
+							$this->alias . '.body LIKE' => $filter,
+							$this->alias . '.terms LIKE' => $filter,
+						),
+					),
+					array(
+						$visibilityRolesField => '',
+						$visibilityRolesField . ' LIKE' => '%"' . $this->Croogo->roleId() . '"%',
+
+					),
 				),
 			);
 		}
@@ -556,6 +589,57 @@ class Node extends NodesAppModel {
 				'config' => 'nodes_view',
 			),
 		), $query);
+
+		return $query;
+	}
+
+/**
+ * Search published nodes
+ */
+	protected function _findPublished($state, $query, $results = array()) {
+		if ($state == 'after') {
+			return $results;
+		}
+
+		$q = isset($query['q']) ? '%' . $query['q'] . '%' : null;
+		$roleId = isset($query['roleId']) ? $query['roleId'] : null;
+		$typeAlias = isset($query['typeAlias']) ? $query['typeAlias'] : null;
+		$visibilityRolesField = $this->escapeField('visibility_roles');
+		$defaults = array(
+			'order' => $this->escapeField('created') . ' DESC',
+			'limit' => Configure::read('Reading.nodes_per_page'),
+			'conditions' => array(
+				$this->escapeField('status') => $this->status(),
+				'AND' => array(
+					array(
+						'OR' => array(
+							$this->escapeField('title') . ' LIKE' => $q,
+							$this->escapeField('excerpt') . ' LIKE' => $q,
+							$this->escapeField('body') . ' LIKE' => $q,
+							$this->escapeField('terms') . ' LIKE' => $q,
+						),
+					),
+					array(
+						'OR' => array(
+							$visibilityRolesField => '',
+							$visibilityRolesField . ' LIKE' => '%"' . $roleId . '"%',
+						),
+					),
+				),
+			),
+			'contain' => array(
+				'Meta',
+				'Taxonomy' => array(
+					'Term',
+					'Vocabulary',
+				),
+				'User',
+			),
+		);
+		if (isset($typeAlias)) {
+			$defaults['conditions'][$this->escapeField('type')] = $typeAlias;
+		}
+		$query = Hash::merge($defaults, $query);
 
 		return $query;
 	}

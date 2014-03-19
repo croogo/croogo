@@ -1,3 +1,8 @@
+<?php
+
+$title_for_layout = __d('croogo', 'Search Results: %s', h($q));
+
+?>
 <div class="nodes search">
 	<h2><?php echo $title_for_layout; ?></h2>
 
