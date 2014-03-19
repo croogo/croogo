@@ -28,7 +28,13 @@ if ($this->request->params['action'] == 'admin_add') {
 <?php endif; ?>
 <?php $this->end(); ?>
 
-<?php echo $this->Form->create('User');?>
+<?php
+echo $this->Form->create('User', array(
+	'fieldAccess' => array(
+		'User.role_id' => 1,
+	),
+));
+?>
 
 <div class="row-fluid">
 	<div class="span8">
