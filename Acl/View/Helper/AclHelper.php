@@ -1,6 +1,7 @@
 <?php
 
 App::uses('Helper', 'View');
+App::uses('Acl', 'Controller/Component');
 
 /**
  * Acl Helper
@@ -130,6 +131,9 @@ class AclHelper extends Helper {
  * @return boolean
  */
 	public function linkIsAllowedByUserId($userId, $url) {
+		$this->User = ClassRegistry::init('User');
+		$this->Acl = new AclComponent(new ComponentCollection());
+
 		if (is_array($url)) {
 			if (isset($url['admin']) && $url['admin'] == true && strpos($url['action'], 'admin_') === false) {
 				$url['action'] = 'admin_' . $url['action'];
@@ -148,7 +152,10 @@ class AclHelper extends Helper {
 			$path = $url;
 		}
 		$linkAction = str_replace('//', '/', $path);
-		if (in_array($linkAction, $this->getAllowedActionsByUserId($userId))) {
+
+		$user = $this->User;
+		$user->id = $userId;
+		if ($this->Acl->check($user,$linkAction)) {
 			return true;
 		}
 		return false;
