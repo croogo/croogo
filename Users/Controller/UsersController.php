@@ -73,7 +73,7 @@ class UsersController extends UsersAppController {
 		}
 		$cacheName = 'auth_failed_' . $this->request->data['User'][$field];
 		$cacheValue = Cache::read($cacheName, 'users_login');
-		if (Cache::read($cacheName, 'users_login') >= Configure::read('User.failed_login_limit')) {
+		if ($cacheValue >= Configure::read('User.failed_login_limit')) {
 			$this->Session->setFlash(__d('croogo', 'You have reached maximum limit for failed login attempts. Please try again after a few minutes.'), 'default', array('class' => 'error'));
 			return $this->redirect(array('action' => $this->request->params['action']));
 		}
