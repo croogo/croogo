@@ -81,19 +81,7 @@ class BlocksComponent extends Component {
  * @return void
  */
 	public function blocks() {
-		$regions = $this->Block->Region->find('list', array(
-			'conditions' => array(
-				'Region.block_count >' => '0',
-			),
-			'fields' => array(
-				'Region.id',
-				'Region.alias',
-			),
-			'cache' => array(
-				'name' => 'regions',
-				'config' => 'croogo_blocks',
-			),
-		));
+		$regions = $this->Block->Region->find('active');
 
 		$roleId = $this->controller->Croogo->roleId();
 		$status = $this->Block->status();
