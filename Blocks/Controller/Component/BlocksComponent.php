@@ -83,6 +83,7 @@ class BlocksComponent extends Component {
 	public function blocks() {
 		$regions = $this->Block->Region->find('active');
 
+		$alias = $this->Block->alias;
 		$roleId = $this->controller->Croogo->roleId();
 		$status = $this->Block->status();
 		$request = $this->controller->request;
@@ -95,35 +96,18 @@ class BlocksComponent extends Component {
 			$visibilityCachePrefix = 'visibility_' .  $slug . '_' . $cacheKey;
 			$blocks = Cache::read($visibilityCachePrefix, 'croogo_blocks');
 			if ($blocks === false) {
-				$findOptions = array(
-					'conditions' => array(
-						'Block.status' => $status,
-						'Block.region_id' => $regionId,
-						'AND' => array(
-							array(
-								'OR' => array(
-									'Block.visibility_roles' => '',
-									'Block.visibility_roles LIKE' => '%"' . $roleId . '"%',
-								),
-							),
-						),
-					),
-					'order' => array(
-						'Block.weight' => 'ASC'
-					),
-					'cache' => array(
-						'prefix' => 'blocks_' . $cacheKey,
-						'config' => 'croogo_blocks',
-					),
-					'recursive' => '-1',
-				);
-				$blocks = $this->Block->find('all', $findOptions);
+
+				$blocks = $this->Block->find('published', array(
+					'regionId' => $regionId,
+					'roleId' => $roleId,
+					'cacheKey' => $cacheKey,
+				));
 				foreach ($blocks as &$block) {
-					$block['Block']['visibility_paths'] = $this->Block->decodeData($block['Block']['visibility_paths']);
+					$block[$alias]['visibility_paths'] = $this->Block->decodeData($block[$alias]['visibility_paths']);
 				}
 
 				$blocks = $Filter->remove($blocks, array(
-					'model' => $this->Block->alias,
+					'model' => $alias,
 					'field' => 'visibility_paths',
 					'cache' => array(
 						'prefix' => $visibilityCachePrefix,
