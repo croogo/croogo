@@ -20,6 +20,12 @@ class BlocksEventHandler implements CakeEventListener {
 			'Helper.Nodes.beforeSetNode' => array(
 				'callable' => 'filterBlockShortcode',
 			),
+			'Helper.Regions.beforeSetBlock' => array(
+				'callable' => 'filterBlockShortcode',
+			),
+			'Helper.Regions.afterSetBlock' => array(
+				'callable' => 'filterBlockShortcode',
+			),
 		);
 	}
 
