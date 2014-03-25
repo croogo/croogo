@@ -85,13 +85,13 @@ class AclHelper extends Helper {
  * @param integer $userId Role id
  * @return array
  */
-	public function getAllowedActionsByUserId($roleId) {
-		if (!empty($this->allowedActions[$roleId])) {
-			return $this->allowedActions[$roleId];
+	public function getAllowedActionsByUserId($userId) {
+		if (!empty($this->allowedActions[$userId])) {
+			return $this->allowedActions[$userId];
 		}
 
-		$this->allowedActions[$roleId] = ClassRegistry::init('Acl.AclPermission')->getAllowedActionsByUserId($roleId);
-		return $this->allowedActions[$roleId];
+		$this->allowedActions[$userId] = ClassRegistry::init('Acl.AclPermission')->getAllowedActionsByUserId($userId);
+		return $this->allowedActions[$userId];
 	}
 
 /**
