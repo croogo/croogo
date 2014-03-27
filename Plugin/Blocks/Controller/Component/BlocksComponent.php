@@ -213,7 +213,7 @@ class BlocksComponent extends Component {
 			if ($stringElement != null) {
 				$stringElementE = explode(':', $stringElement);
 				if (isset($stringElementE['1'])) {
-					$stringArr[$stringElementE['0']] = $stringElementE['1'];
+					$stringArr[$stringElementE['0']] = explode(',', $stringElementE['1']);
 				} else {
 					$stringArr[] = $stringElement;
 				}
