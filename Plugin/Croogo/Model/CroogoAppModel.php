@@ -137,7 +137,7 @@ class CroogoAppModel extends Model {
 			$options = array();
 			$field = sprintf('%s.%s', $this->alias, $this->primaryKey);
 			if (!empty($args[1][$field])) {
-				foreach ($args[1][$field] as $id) {
+				foreach ((array)$args[1][$field] as $id) {
 					$this->id = $id;
 					$event = new CakeEvent('Model.afterSave', $this, array(
 						$created, $options
