@@ -25,6 +25,15 @@ $lookupUrl = $this->Html->apiUrl(array(
 	'action' => 'lookup',
 ));
 
+$parentTitle = isset($parentTitle) ? $parentTitle : null;
+$apiUrl = $this->Form->apiUrl(array(
+	'controller' => 'nodes',
+	'action' => 'lookup',
+	'?' => array(
+		'type' => $type['Type']['alias'],
+	),
+));
+
 echo $this->Form->create('Node', array('url' => $formUrl));
 
 ?>
@@ -43,7 +52,20 @@ echo $this->Form->create('Node', array('url' => $formUrl));
 
 			<div id="node-main" class="tab-pane">
 			<?php
-				echo $this->Form->input('parent_id', array('type' => 'select', 'options' => $nodes, 'empty' => true));
+
+				echo $this->Form->autocomplete('parent_id', array(
+					'label' => __d('croogo', 'Parent'),
+					'type' => 'text',
+					'autocomplete' => array(
+						'default' => $parentTitle,
+						'data-displayField' => 'title',
+						'data-primaryKey' => 'id',
+						'data-queryField' => 'title',
+						'data-relatedElement' => '#NodeParentId',
+						'data-url' => $apiUrl,
+					),
+					'class' => 'span10',
+				));
 				echo $this->Form->input('id');
 				$this->Form->inputDefaults(array(
 					'class' => 'span10',

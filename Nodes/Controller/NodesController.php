@@ -738,9 +738,12 @@ class NodesController extends NodesAppController {
 			$this->Taxonomies->prepareCommonData($type);
 		}
 		$Node = $this->{$this->modelClass};
-		$nodes = $Node->generateTreeList();
+		if (!empty($this->data[$Node->alias]['parent_id'])) {
+			$Node->id = $this->data[$Node->alias]['parent_id'];
+			$parentTitle = $Node->field('title');
+		}
 		$roles = $Node->User->Role->find('list');
-		$this->set(compact('nodes', 'roles'));
+		$this->set(compact('parentTitle', 'roles'));
 	}
 
 }
