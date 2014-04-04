@@ -44,31 +44,34 @@ class CroogoPaginatorHelper extends PaginatorHelper {
 		return $output;
 	}
 
-	protected function _defaultOptions($options, $escape = true) {
+	protected function _defaultOptions($options) {
 		if (!isset($options['tag'])) {
 			$options['tag'] = 'li';
 		}
-		$options['escape'] = $escape;
 
 		return $options;
 	}
 
 	public function prev($title = '<< Previous', $options = array(), $disabledTitle = null, $disabledOptions = array()) {
+		$options['escape'] = isset($options['escape']) ? $options['escape'] : false;
 		$options = $this->_defaultOptions($options, false);
 		return parent::prev($title, $options, $this->link($title), $disabledOptions);
 	}
 
 	public function next($title = 'Next >>', $options = array(), $disabledTitle = null, $disabledOptions = array()) {
+		$options['escape'] = isset($options['escape']) ? $options['escape'] : false;
 		$options = $this->_defaultOptions($options, false);
 		return parent::next($title, $options, $this->link($title), $disabledOptions);
 	}
 
 	public function first($first = '<< first', $options = array()) {
+		$options['escape'] = isset($options['escape']) ? $options['escape'] : true;
 		$options = $this->_defaultOptions($options);
 		return parent::first($first, $options);
 	}
 
 	public function last($last = 'last >>', $options = array()) {
+		$options['escape'] = isset($options['escape']) ? $options['escape'] : true;
 		$options = $this->_defaultOptions($options);
 		return parent::last($last, $options);
 	}
