@@ -57,6 +57,11 @@ if ($theme = Configure::read('Site.theme')) {
 		'View/Helper' => array(App::themePath($theme) . 'Helper' . DS),
 	));
 }
+if ($adminTheme = Configure::read('Site.admin_theme')) {
+	App::build(array(
+		'View/Helper' => array(App::themePath($adminTheme) . 'Helper' . DS),
+	));
+}
 
 /**
  * List of core plugins
