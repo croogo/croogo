@@ -80,7 +80,7 @@ $this->Html
 			'',
 			$pluginAlias,
 			$pluginData['name'],
-			$pluginData['description'],
+			!empty($pluginData['description']) ? $pluginData['description'] : '',
 			$statusIcon,
 			$actions,
 		);
