@@ -58,21 +58,7 @@ class Comment extends AppModel {
  * @var array
  * @access public
  */
-	public $validate = array(
-		'body' => array(
-			'rule' => 'notEmpty',
-			'message' => 'This field cannot be left blank.',
-		),
-		'name' => array(
-			'rule' => 'notEmpty',
-			'message' => 'This field cannot be left blank.',
-		),
-		'email' => array(
-			'rule' => 'email',
-			'required' => true,
-			'message' => 'Please enter a valid email address.',
-		),
-	);
+	public $validate = array();
 
 /**
  * Model associations: belongsTo

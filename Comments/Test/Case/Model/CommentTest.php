@@ -5,6 +5,7 @@ App::uses('CroogoTestCase', 'Croogo.TestSuite');
 class CommentTest extends CroogoTestCase {
 
 	public $fixtures = array(
+		'plugin.settings.setting',
 		'plugin.comments.comment',
 		'plugin.meta.meta',
 		'plugin.nodes.node',
@@ -12,6 +13,7 @@ class CommentTest extends CroogoTestCase {
 		'plugin.taxonomy.taxonomy',
 		'plugin.taxonomy.type',
 		'plugin.users.user',
+		'plugin.translate.i18n',
 	);
 
 	public $Comment;
