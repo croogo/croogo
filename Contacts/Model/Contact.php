@@ -43,26 +43,7 @@ class Contact extends ContactsAppModel {
  * @var array
  * @access public
  */
-	public $validate = array(
-		'title' => array(
-			'rule' => 'notEmpty',
-			'message' => 'This field cannot be left blank.',
-		),
-		'alias' => array(
-			'isUnique' => array(
-				'rule' => 'isUnique',
-				'message' => 'This alias has already been taken.',
-			),
-			'minLength' => array(
-				'rule' => array('minLength', 1),
-				'message' => 'Alias cannot be empty.',
-			),
-		),
-		'email' => array(
-			'rule' => 'email',
-			'message' => 'Please provide a valid email address.',
-		),
-	);
+	public $validate = array();
 
 /**
  * Model associations: hasMany

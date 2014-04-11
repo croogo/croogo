@@ -45,24 +45,7 @@ class Message extends ContactsAppModel {
  * @var array
  * @access public
  */
-	public $validate = array(
-		'name' => array(
-			'rule' => 'notEmpty',
-			'message' => 'This field cannot be left blank.',
-		),
-		'email' => array(
-			'rule' => 'email',
-			'message' => 'Please provide a valid email address.',
-		),
-		'title' => array(
-			'rule' => 'notEmpty',
-			'message' => 'This field cannot be left blank.',
-		),
-		'body' => array(
-			'rule' => 'notEmpty',
-			'message' => 'This field cannot be left blank.',
-		),
-	);
+	public $validate = array();
 
 /**
  * Model associations: belongsTo

@@ -23,5 +23,20 @@ class MessageFixture extends CroogoTestFixture {
 	);
 
 	public $records = array(
+		array(
+			'id' => 1,
+			'contact_id' => 1,
+			'name' => 'Foo Bar',
+			'email' => 'foo@bar.baz',
+			'title' => 'Test title',
+			'body' => 'Test body',
+			'website' => 'Test website',
+			'phone' => 'Test phone',
+			'address' => 'Test address',
+			'message_type' => 'Test message type',
+			'status' => '1',
+			'updated' => '2014-04-11 23:53:57',
+			'created' => '2014-04-11 23:53:57',
+		),
 	);
 }
