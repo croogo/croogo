@@ -28,5 +28,15 @@ class LanguageFixture extends CroogoTestFixture {
 			'updated' => '2009-11-02 21:37:38',
 			'created' => '2009-11-02 20:52:00'
 		),
+		array(
+			'id' => 2,
+			'title' => 'French',
+			'native' => 'Français',
+			'alias' => 'fra',
+			'status' => 1,
+			'weight' => 2,
+			'updated' => '2014-04-12 00:42:00',
+			'created' => '2014-04-12 00:42:00'
+		),
 	);
 }

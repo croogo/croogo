@@ -56,18 +56,7 @@ class Setting extends SettingsAppModel {
  * @var array
  * @access public
  */
-	public $validate = array(
-		'key' => array(
-			'isUnique' => array(
-				'rule' => 'isUnique',
-				'message' => 'This key has already been taken.',
-			),
-			'minLength' => array(
-				'rule' => array('minLength', 1),
-				'message' => 'Key cannot be empty.',
-			),
-		),
-	);
+	public $validate = array();
 
 /**
  * Filter search fields
