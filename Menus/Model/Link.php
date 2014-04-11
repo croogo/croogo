@@ -47,16 +47,7 @@ class Link extends MenusAppModel {
  * @var array
  * @access public
  */
-	public $validate = array(
-		'title' => array(
-			'rule' => array('minLength', 1),
-			'message' => 'Title cannot be empty.',
-		),
-		'link' => array(
-			'rule' => array('minLength', 1),
-			'message' => 'Link cannot be empty.',
-		),
-	);
+	public $validate = array();
 
 /**
  * Model associations: belongsTo

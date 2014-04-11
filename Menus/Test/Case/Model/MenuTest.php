@@ -35,6 +35,7 @@ class MenuTest extends CroogoTestCase {
 		'plugin.users.aros_aco',
 		'plugin.settings.setting',
 		'plugin.menus.menu',
+		'plugin.translate.i18n',
 		'plugin.menus.link',
 	);
 
