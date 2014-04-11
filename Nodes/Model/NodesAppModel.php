@@ -1,6 +1,6 @@
 <?php
 
-App::uses('AppModel', 'Model');
+App::uses('CroogoAppModel', 'Croogo.Model');
 
 /**
  * Nodes App Model
@@ -12,6 +12,6 @@ App::uses('AppModel', 'Model');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class NodesAppModel extends AppModel {
+class NodesAppModel extends CroogoAppModel {
 
 }
