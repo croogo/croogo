@@ -10,6 +10,7 @@ class BlockValidatorTest extends CroogoTestCase {
 		'plugin.settings.setting',
 		'plugin.blocks.block',
 		'plugin.blocks.region',
+		'plugin.translate.i18n',
 	);
 
 	public $Validator;

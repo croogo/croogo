@@ -9,6 +9,7 @@ class BlockValidatorTest extends CroogoTestCase {
 	public $fixtures = array(
 		'plugin.settings.setting',
 		'plugin.blocks.block',
+		'plugin.translate.i18n',
 	);
 
 	public $Validator;
