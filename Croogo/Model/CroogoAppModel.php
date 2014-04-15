@@ -239,7 +239,6 @@ class CroogoAppModel extends Model {
 	}
 
 	protected function _hasModelValidator($validatorClassName) {
-		App::uses($validatorClassName, $this->plugin . '.' . 'Model/Validator');
 		return class_exists($validatorClassName);
 	}
 
