@@ -1,6 +1,6 @@
 <?php
-App::uses('CroogoModelValidator', 'Croogo.Model/Validator');
-class LanguageValidator extends CroogoModelValidator {
+App::uses('CroogoAppModelValidator', 'Croogo.Model/Validator');
+class LanguageValidator extends CroogoAppModelValidator {
 
 	public function __construct(Model $Model) {
 		parent::__construct($Model);

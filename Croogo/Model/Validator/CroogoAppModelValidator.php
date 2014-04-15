@@ -1,6 +1,6 @@
 <?php
 App::uses('ModelValidator', 'Model');
-class CroogoModelValidator extends ModelValidator {
+class CroogoAppModelValidator extends ModelValidator {
     public $customValidationRules = array('validAlias', 'validName');
 
     /**

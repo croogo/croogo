@@ -1,7 +1,7 @@
 <?php
-App::uses('CroogoModelValidator', 'Croogo.Model/Validator');
+App::uses('CroogoAppModelValidator', 'Croogo.Model/Validator');
 
-class CommentValidator extends CroogoModelValidator {
+class CommentValidator extends CroogoAppModelValidator {
 	public function __construct(Model $Model) {
 		parent::__construct($Model);
 		$this->add('body', 'notempty',  array(

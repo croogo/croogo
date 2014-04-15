@@ -1,9 +1,8 @@
 <?php
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('Model', 'Model');
-App::uses('AppModel', 'Model');
-App::uses('User', 'Users.Model');
 App::uses('AuthComponent', 'Controller/Component');
+App::uses('CroogoTestCase', 'Croogo.TestSuite');
+App::uses('User', 'Users.Model');
+App::uses('UserValidator', 'Users.Model/Validator');
 
 /**
  * TestUser
@@ -17,7 +16,6 @@ class TestUser extends User {
  * @var string
  */
 	public $alias = 'User';
-
 }
 
 /**
@@ -37,6 +35,7 @@ class UserTest extends CroogoTestCase {
 		'plugin.users.aros_aco',
 		'plugin.users.role',
 		'plugin.users.user',
+		'plugin.settings.setting',
 	);
 
 /**
@@ -55,6 +54,7 @@ class UserTest extends CroogoTestCase {
 		parent::setUp();
 		$this->User = ClassRegistry::init('TestUser');
 		$this->User->Aro->useDbConfig = 'test';
+		$this->User->validator(new UserValidator($this->User));
 	}
 
 /**
@@ -104,18 +104,6 @@ class UserTest extends CroogoTestCase {
 		$this->assertContains('Passwords must be at least 6 characters long.', print_r($this->User->validationErrors, true));
 		$newUser = $this->User->read();
 		$this->assertEqual($newUser['User']['password'], $oldPassword);
-	}
-
-/**
- * testValidIdenticalPassword method
- *
- * @return void
- */
-	public function testValidIdenticalPassword() {
-		$this->User->data['User'] = array('password' => '123456');
-		$this->assertTrue($this->User->validIdentical(array('verify_password' => '123456')));
-		$this->User->data['User'] = array('password' => '123456');
-		$this->assertContains('Passwords do not match. Please, try again.', $this->User->validIdentical(array('verify_password' => 'other-value')));
 	}
 
 /**

@@ -44,6 +44,7 @@ class ExtShellTest extends CroogoTestCase {
 		'plugin.users.aro',
 		'plugin.users.aco',
 		'plugin.users.aros_aco',
+		'plugin.translate.i18n',
 	);
 
 /**

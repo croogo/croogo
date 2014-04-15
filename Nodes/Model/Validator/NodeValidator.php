@@ -1,6 +1,6 @@
 <?php
-App::uses('CroogoModelValidator', 'Croogo.Model/Validator');
-class NodeValidator extends CroogoModelValidator {
+App::uses('CroogoAppModelValidator', 'Croogo.Model/Validator');
+class NodeValidator extends CroogoAppModelValidator {
 
 	public $customValidationRules = array('isUniquePerType');
 	public function __construct(Model $Model) {
