@@ -313,7 +313,7 @@ class NodesController extends NodesAppController {
 		$action = $this->request->data[$Node->alias]['action'];
 		$ids = array();
 		foreach ($this->request->data[$Node->alias] as $id => $value) {
-			if ($id != 'action' && $value[$Node->primaryKey] == 1) {
+			if (is_int($id) && isset($value[$Node->primaryKey]) && $value[$Node->primaryKey] == 1) {
 				$ids[] = $id;
 			}
 		}
