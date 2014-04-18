@@ -295,6 +295,33 @@ class NodesControllerTest extends CroogoControllerTestCase {
 	}
 
 /**
+ * testAdminProcessDataFormat
+ *
+ * @return void
+ */
+	public function testAdminProcessDataFormat() {
+		$this->testAction('/admin/nodes/nodes/process', array(
+			'data' => array(
+				'Node' => array(
+					'checkAll' => '0',
+					'action' => 'unpublish',
+					'1' => array('id' => 0),
+					'2' => array('id' => 1),
+				),
+			),
+		));
+		$Node = $this->NodesController->Node;
+
+		$Node->id = 1;
+		$result = $Node->field('status');
+		$this->assertEquals('1', $result);
+
+		$Node->id = 2;
+		$result = $Node->field('status');
+		$this->assertEquals('0', $result);
+	}
+
+/**
  * testAdminEdit
  *
  * @return void
