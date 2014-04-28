@@ -155,6 +155,7 @@ class Node extends NodesAppModel {
 		'viewBySlug' => true,
 		'viewById' => true,
 		'published' => true,
+		'publishedPlusIds' => true,
 	);
 
 /**
@@ -592,6 +593,66 @@ class Node extends NodesAppModel {
 
 		return $query;
 	}
+
+/**
+ * Search published nodes plus all nodes on the node_ids array, which can be
+ * passed from the controller.
+ */
+	protected function _findPublishedPlusIds($state, $query, $results = array()) {
+		if ($state == 'after') {
+			return $results;
+		}
+
+		$q = isset($query['q']) ? '%' . $query['q'] . '%' : null;
+		$roleId = isset($query['roleId']) ? $query['roleId'] : null;
+		$typeAlias = isset($query['typeAlias']) ? $query['typeAlias'] : null;
+		$visibilityRolesField = $this->escapeField('visibility_roles');
+
+        $nodeOrConditions = array(
+            $this->escapeField('title') . ' LIKE' => $q,
+            $this->escapeField('excerpt') . ' LIKE' => $q,
+            $this->escapeField('body') . ' LIKE' => $q,
+            $this->escapeField('terms') . ' LIKE' => $q,
+        );
+        // If a non empty array with node ids exist, add it to conditions
+        if (!empty($query['node_ids'])) {
+            $nodeOrConditions[$this->escapeField('id')] = $query['node_ids'];
+        }
+
+		$defaults = array(
+			'order' => $this->escapeField('created') . ' DESC',
+			'limit' => Configure::read('Reading.nodes_per_page'),
+			'conditions' => array(
+				$this->escapeField('status') => $this->status(),
+				'AND' => array(
+					array(
+						'OR' => $nodeOrConditions,
+					),
+					array(
+						'OR' => array(
+							$visibilityRolesField => '',
+							$visibilityRolesField . ' LIKE' => '%"' . $roleId . '"%',
+						),
+					),
+				),
+			),
+			'contain' => array(
+				'Meta',
+				'Taxonomy' => array(
+					'Term',
+					'Vocabulary',
+				),
+				'User',
+			),
+		);
+		if (isset($typeAlias)) {
+			$defaults['conditions'][$this->escapeField('type')] = $typeAlias;
+		}
+		$query = Hash::merge($defaults, $query);
+
+		return $query;
+	}
+
 
 /**
  * Search published nodes
