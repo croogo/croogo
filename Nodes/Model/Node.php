@@ -595,8 +595,8 @@ class Node extends NodesAppModel {
 	}
 
 /**
- * Search published nodes plus all nodes on the node_ids array, which can be
- * passed from the controller.
+ * Search published nodes plus the possibility to add a list of nodes to the
+ * query, which can be passed from the controller through a node_ids array.
  */
 	protected function _findPublishedPlusIds($state, $query, $results = array()) {
 		if ($state == 'after') {
@@ -614,6 +614,7 @@ class Node extends NodesAppModel {
             $this->escapeField('body') . ' LIKE' => $q,
             $this->escapeField('terms') . ' LIKE' => $q,
         );
+
         // If a non empty array with node ids exist, add it to conditions
         if (!empty($query['node_ids'])) {
             $nodeOrConditions[$this->escapeField('id')] = $query['node_ids'];
