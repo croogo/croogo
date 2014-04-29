@@ -155,7 +155,6 @@ class Node extends NodesAppModel {
 		'viewBySlug' => true,
 		'viewById' => true,
 		'published' => true,
-		'publishedPlusIds' => true,
 	);
 
 /**
@@ -595,68 +594,8 @@ class Node extends NodesAppModel {
 	}
 
 /**
- * Search published nodes plus the possibility to add a list of nodes to the
- * query, which can be passed from the controller through a node_ids array.
- */
-	protected function _findPublishedPlusIds($state, $query, $results = array()) {
-		if ($state == 'after') {
-			return $results;
-		}
-
-		$q = isset($query['q']) ? '%' . $query['q'] . '%' : null;
-		$roleId = isset($query['roleId']) ? $query['roleId'] : null;
-		$typeAlias = isset($query['typeAlias']) ? $query['typeAlias'] : null;
-		$visibilityRolesField = $this->escapeField('visibility_roles');
-
-        $nodeOrConditions = array(
-            $this->escapeField('title') . ' LIKE' => $q,
-            $this->escapeField('excerpt') . ' LIKE' => $q,
-            $this->escapeField('body') . ' LIKE' => $q,
-            $this->escapeField('terms') . ' LIKE' => $q,
-        );
-
-        // If a non empty array with node ids exist, add it to conditions
-        if (!empty($query['node_ids'])) {
-            $nodeOrConditions[$this->escapeField('id')] = $query['node_ids'];
-        }
-
-		$defaults = array(
-			'order' => $this->escapeField('created') . ' DESC',
-			'limit' => Configure::read('Reading.nodes_per_page'),
-			'conditions' => array(
-				$this->escapeField('status') => $this->status(),
-				'AND' => array(
-					array(
-						'OR' => $nodeOrConditions,
-					),
-					array(
-						'OR' => array(
-							$visibilityRolesField => '',
-							$visibilityRolesField . ' LIKE' => '%"' . $roleId . '"%',
-						),
-					),
-				),
-			),
-			'contain' => array(
-				'Meta',
-				'Taxonomy' => array(
-					'Term',
-					'Vocabulary',
-				),
-				'User',
-			),
-		);
-		if (isset($typeAlias)) {
-			$defaults['conditions'][$this->escapeField('type')] = $typeAlias;
-		}
-		$query = Hash::merge($defaults, $query);
-
-		return $query;
-	}
-
-
-/**
- * Search published nodes
+ * Search published nodes. If an array of node-ids is passed through
+ * $query['node_ids'], then this nodes will be appended to the resulting nodes.
  */
 	protected function _findPublished($state, $query, $results = array()) {
 		if ($state == 'after') {
@@ -667,6 +606,26 @@ class Node extends NodesAppModel {
 		$roleId = isset($query['roleId']) ? $query['roleId'] : null;
 		$typeAlias = isset($query['typeAlias']) ? $query['typeAlias'] : null;
 		$visibilityRolesField = $this->escapeField('visibility_roles');
+
+		$nodeOrConditions = array(
+			$this->escapeField('title') . ' LIKE' => $q,
+			$this->escapeField('excerpt') . ' LIKE' => $q,
+			$this->escapeField('body') . ' LIKE' => $q,
+			$this->escapeField('terms') . ' LIKE' => $q,
+		);
+
+		// If a non empty array with node ids exist, add it to conditions
+		if (isset($query['node_ids'])) {
+			$node_ids = (array)$query['node_ids'];
+			// filter any non integer values
+			$node_ids = array_filter($node_ids, function($i) {
+				return is_int($i); });
+			// Check again if array is not empty after filtering it
+			if (!empty($node_ids)) {
+				$nodeOrConditions[$this->escapeField('id')] = $node_ids;
+			}
+		}
+
 		$defaults = array(
 			'order' => $this->escapeField('created') . ' DESC',
 			'limit' => Configure::read('Reading.nodes_per_page'),
@@ -674,12 +633,7 @@ class Node extends NodesAppModel {
 				$this->escapeField('status') => $this->status(),
 				'AND' => array(
 					array(
-						'OR' => array(
-							$this->escapeField('title') . ' LIKE' => $q,
-							$this->escapeField('excerpt') . ' LIKE' => $q,
-							$this->escapeField('body') . ' LIKE' => $q,
-							$this->escapeField('terms') . ' LIKE' => $q,
-						),
+						'OR' => $nodeOrConditions,
 					),
 					array(
 						'OR' => array(
