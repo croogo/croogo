@@ -62,4 +62,12 @@ $(function() {
 	$('#LinkMenuId').on('change', Links.reloadParents);
 
 	Admin.toggleRowSelection('#LinkCheckAll');
+
+	$("#ParentLinks").hide();
+	$("#LinkAction").change(function(){
+		$("#ParentLinks").hide();
+		if($(this).val() == 'reparent'){
+			$("#ParentLinks").show();
+		}
+	});
 });

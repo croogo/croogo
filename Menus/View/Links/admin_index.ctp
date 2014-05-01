@@ -114,8 +114,17 @@ $this->Html
 					'publish' => __d('croogo', 'Publish'),
 					'unpublish' => __d('croogo', 'Unpublish'),
 					'delete' => __d('croogo', 'Delete'),
+					'reparent' => __d('croogo', 'Re-parent'),
 				),
 				'empty' => true,
+			));
+
+			echo $this->Form->input('Link.parent_id',array(
+				'id' => 'ParentLinks',
+				'div' => 'input inline',
+				'label' => false,
+				'options' => $linksTree,
+				'empty' => true
 			));
 		?>
 		<div class="controls">
