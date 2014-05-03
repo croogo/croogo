@@ -250,9 +250,9 @@ class Croogo {
 	public static function dispatchEvent($name, $subject = null, $data = null) {
 		$event = new CakeEvent($name, $subject, $data);
 		if ($subject) {
-			$subject->getEventManager()->dispatch($event);
+			$event = $subject->getEventManager()->dispatch($event);
 		} else {
-			CakeEventManager::instance()->dispatch($event);
+			$event = CakeEventManager::instance()->dispatch($event);
 		}
 		return $event;
 	}
