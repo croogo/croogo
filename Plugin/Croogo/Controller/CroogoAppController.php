@@ -141,6 +141,11 @@ class CroogoAppController extends Controller {
 
 		if (isset($this->request->params['admin'])) {
 			$this->layout = 'admin';
+			if ($adminTheme = Configure::read('Site.admin_theme')) {
+				App::build(array(
+					'View/Helper' => array(App::themePath($adminTheme) . 'Helper' . DS),
+				));
+			}
 		}
 
 		if ($this->RequestHandler->isAjax()) {
