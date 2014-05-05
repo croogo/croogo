@@ -171,7 +171,7 @@ class CroogoAppController extends Controller {
  *
  * @see Controller::beforeRedirect()
  */
-	public function beforeRedirect($url, $status, $exit = true) {
+	public function beforeRedirect($url, $status = null, $exit = true) {
 		if (isset($this->request->params['locale'])) {
 			if (is_string($url)) {
 				$url = array(
