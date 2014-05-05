@@ -75,6 +75,7 @@ class StringConverter {
 					if (strpos($value, ',') !== false) {
 						$value = explode(',', $value);
 					}
+					$stringArr[$stringElementE['0']] = $value;
 				} else {
 					$stringArr[] = $stringElement;
 				}
