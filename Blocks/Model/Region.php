@@ -97,4 +97,41 @@ class Region extends BlocksAppModel {
 		'alias',
 	);
 
+/**
+ * Find methods
+ */
+	public $findMethods = array(
+		'active' => true,
+	);
+
+/**
+ * Find Regions currently in use
+ */
+	protected function _findActive($state, $query, $results = array()) {
+		if ($state == 'after') {
+			if ($results) {
+				$keyPath = '{n}.'. $this->alias . '.id';
+				$valuePath = '{n}.'. $this->alias . '.alias';
+				$results = Hash::combine($results, $keyPath, $valuePath);
+			}
+			return $results;
+		}
+
+		$query = Hash::merge($query, array(
+			'recursive' => -1,
+			'conditions' => array(
+				$this->escapeField('block_count') . ' >' => '0',
+			),
+			'fields' => array(
+				$this->escapeField(),
+				$this->escapeField('alias'),
+			),
+			'cache' => array(
+				'name' => 'regions',
+				'config' => 'croogo_blocks',
+			),
+		));
+		return $query;
+	}
+
 }

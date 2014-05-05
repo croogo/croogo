@@ -60,6 +60,11 @@ class RegionsHelper extends AppHelper {
 			$element = $block['Block']['element'];
 			$exists = $this->_View->elementExists($element);
 			$blockOutput = '';
+
+			Croogo::dispatchEvent('Helper.Regions.beforeSetBlock', $this->_View, array(
+				'content' => &$block['Block']['body'],
+			));
+
 			if ($exists) {
 				$blockOutput = $this->_View->element($element, compact('block'), $elementOptions);
 			} else {
@@ -72,6 +77,11 @@ class RegionsHelper extends AppHelper {
 				}
 				$blockOutput = $this->_View->element($defaultElement, compact('block'), array('ignoreMissing' => true) + $elementOptions);
 			}
+
+			Croogo::dispatchEvent('Helper.Regions.afterSetBlock', $this->_View, array(
+				'content' => &$blockOutput,
+			));
+
 			$enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
 			if ($exists && $element != $defaultElement && $enclosure) {
 				$block['Block']['body'] = $blockOutput;
