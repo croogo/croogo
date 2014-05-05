@@ -126,8 +126,14 @@ class NodesHelper extends AppHelper {
  * @return void
  */
 	public function set($node) {
-		$this->node = $node;
+		$event = Croogo::dispatchEvent('Helper.Nodes.beforeSetNode', $this->_View, array(
+			'node' => $node,
+		));
+		$this->node = $event->data['node'];
 		$this->Layout->hook('afterSetNode');
+		Croogo::dispatchEvent('Helper.Nodes.afterSetNode', $this->_View, array(
+			'node' => $this->node
+		));
 	}
 
 /**

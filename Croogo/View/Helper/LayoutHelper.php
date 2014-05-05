@@ -410,4 +410,104 @@ class LayoutHelper extends AppHelper {
 		return $output;
 	}
 
+/**
+ * Gets a value of view variables based on path
+ *
+ * @param string $name Variable name to retrieve from View::viewVars
+ * @param string $path Extraction path following the Hash path syntax
+ * @return array
+ */
+	public function valueOf($name, $path, $options = array()) {
+		if (!isset($this->_View->viewVars[$name])) {
+			$this->log(sprintf('Invalid viewVars "%s"', $name));
+			return array();
+		}
+		$result = Hash::extract($this->_View->viewVars[$name], $path);
+		$result = isset($result[0]) ? $result[0] : $result;
+		return $result;
+	}
+
+/**
+ * Compute default options for snippet()
+ *
+ * @param string $type Type
+ * @return array Array of options
+ */
+	private function __snippetDefaults($type) {
+		$varName = strtolower(Inflector::pluralize($type)) . '_for_layout';
+		$modelAlias = Inflector::classify($type);
+		$checkField = 'alias';
+		$valueField = 'body';
+		$filter = true;
+		$format = '{s}.{n}.%s[%s=%s].%s';
+		switch ($type) {
+			case 'type':
+				$valueField = 'description';
+				$format = '{s}.%s[%s=%s].%s';
+			break;
+			case 'vocabulary':
+				$valueField = 'title';
+				$format = '{s}.%s[%s=%s].%s';
+			break;
+			case 'menu':
+				$valueField = 'title';
+				$format = '{s}.%s[%s=%s].%s';
+			break;
+			case 'node':
+				$checkField = 'slug';
+			break;
+		}
+		return compact('checkField', 'filter', 'format', 'modelAlias', 'valueField', 'varName');
+	}
+
+/**
+ * Simple method to retrieve value from view variables using Hash path format
+ *
+ * Example:
+ *
+ *   // display the 'about' block
+ *   echo $this->Layout->snippet('about');
+ *   // display the 'hello world' node
+ *   echo $this->Layout->snippet('hello-world', 'node');
+ *
+ * You can customize the return value by supplying a custom path:
+ *   // display the 'main' menu array
+ *   echo $this->Layout->snippet('main', 'menu', array(
+ *       'format' => '{s}.%s[%s=%s].%s',
+ *   ));
+ *   // display the 'main' menu description field
+ *   echo $this->Layout->snippet('main', 'menu', array(
+ *       'valueField' => 'description',
+ *       'format' => '{s}.%s[%s=%s].%s',
+ *   ));
+ *
+ * Options:
+ * - checkField Field name that will be checked against $name
+ * - filter Filter view data. Defaults to true
+ * - format Hash path format
+ * - modelAlias Model alias
+ * - valueField Field name that will be returned if data is found
+ * - varName Variable name as it is stored in viewVars
+ *
+ * @param string $name Identifier
+ * @param string $type String of `block`, `nodes`, `node`
+ * @param array $options Options array
+ * @return string
+ */
+	public function snippet($name, $type = 'block', $options = array()) {
+		$options = array_merge($this->__snippetDefaults($type), $options);
+		extract($options);
+		$path = sprintf($format, $modelAlias, $checkField, $name, $valueField);
+		$result = $this->valueOf($options['varName'], $path);
+		if ($result) {
+			if ($options['filter'] === true && is_string($result)) {
+				return $this->filter($result, $options);
+			} else {
+				return $result;
+			}
+		} else {
+			return null;
+		}
+	}
+
 }
