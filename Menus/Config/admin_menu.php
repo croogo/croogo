@@ -4,8 +4,8 @@ CroogoNav::add('sidebar', 'menus', array(
 	'icon' => array('sitemap', 'large'),
 	'title' => __d('croogo', 'Menus'),
 	'url' => array(
-		'plugin' => 'menus',
 		'admin' => true,
+		'plugin' => 'menus',
 		'controller' => 'menus',
 		'action' => 'index',
 	),
@@ -14,8 +14,8 @@ CroogoNav::add('sidebar', 'menus', array(
 		'menus' => array(
 			'title' => __d('croogo', 'Menus'),
 			'url' => array(
-				'plugin' => 'menus',
 				'admin' => true,
+				'plugin' => 'menus',
 				'controller' => 'menus',
 				'action' => 'index',
 			),

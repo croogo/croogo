@@ -3,8 +3,8 @@
 CroogoNav::add('sidebar', 'content.children.content_types', array(
 	'title' => __d('croogo', 'Content Types'),
 	'url' => array(
-		'plugin' => 'taxonomy',
 		'admin' => true,
+		'plugin' => 'taxonomy',
 		'controller' => 'types',
 		'action' => 'index',
 	),
@@ -14,8 +14,8 @@ CroogoNav::add('sidebar', 'content.children.content_types', array(
 CroogoNav::add('sidebar', 'content.children.taxonomy', array(
 	'title' => __d('croogo', 'Taxonomy'),
 	'url' => array(
-		'plugin' => 'taxonomy',
 		'admin' => true,
+		'plugin' => 'taxonomy',
 		'controller' => 'vocabularies',
 		'action' => 'index',
 	),
@@ -23,9 +23,9 @@ CroogoNav::add('sidebar', 'content.children.taxonomy', array(
 	'children' => array(
 		'list' => array(
 			'title' => __d('croogo', 'List'),
-				'url' => array(
-				'plugin' => 'taxonomy',
+			'url' => array(
 				'admin' => true,
+				'plugin' => 'taxonomy',
 				'controller' => 'vocabularies',
 				'action' => 'index',
 			),
@@ -34,8 +34,8 @@ CroogoNav::add('sidebar', 'content.children.taxonomy', array(
 		'add_new' => array(
 			'title' => __d('croogo', 'Add new'),
 			'url' => array(
-				'plugin' => 'taxonomy',
 				'admin' => true,
+				'plugin' => 'taxonomy',
 				'controller' => 'vocabularies',
 				'action' => 'add',
 			),

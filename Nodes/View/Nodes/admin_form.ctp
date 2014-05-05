@@ -110,7 +110,7 @@ echo $this->Form->create('Node', array('url' => $formUrl));
 
 			$this->Form->input('created', array(
 				'type' => 'text',
-				'class' => 'span10',
+				'class' => 'span10 input-datetime',
 			));
 
 		echo $this->Html->endBox();

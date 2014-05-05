@@ -230,6 +230,11 @@ class CroogoAppController extends Controller {
 
 		if (isset($this->request->params['admin'])) {
 			$this->layout = 'admin';
+			if ($adminTheme = Configure::read('Site.admin_theme')) {
+				App::build(array(
+					'View/Helper' => array(App::themePath($adminTheme) . 'Helper' . DS),
+				));
+			}
 		}
 
 		if ($this->RequestHandler->isAjax()) {
@@ -262,6 +267,26 @@ class CroogoAppController extends Controller {
 		if (isset($this->request->params['admin'])) {
 			Croogo::dispatchEvent('Croogo.beforeSetupAdminData', $this);
 		}
+	}
+
+/**
+ * Avoid losing 'locale' in redirects
+ *
+ * @see Controller::beforeRedirect()
+ */
+	public function beforeRedirect($url, $status = null, $exit = true) {
+		if (isset($this->request->params['locale'])) {
+			if (is_string($url)) {
+				$url = array(
+					'url' => '/' . $this->request->params['locale'] . $url,
+					'status' => $status,
+					'exit' => $exit,
+				);
+			} elseif (isset($url['url'])) {
+				$url['url']['locale'] = $this->request->params['locale'];
+			}
+		}
+		return $url;
 	}
 
 /**

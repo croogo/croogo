@@ -167,8 +167,13 @@ class OrderedBehavior extends ModelBehavior {
 		if (empty($Model->data[$Model->alias][$Model->primaryKey])) {
 			// get highest current row
 			$highest = $this->_highest($Model);
+			if (empty($highest)) {
+				$weight = 1;
+			} else {
+				$weight = $highest[$Model->alias][$this->settings[$Model->alias]['field']] + 1;
+			}
 			// set new weight to model as last by using current highest one + 1
-			$Model->data[$Model->alias][$this->settings[$Model->alias]['field']] = $highest[$Model->alias][$this->settings[$Model->alias]['field']] + 1;
+			$Model->data[$Model->alias][$this->settings[$Model->alias]['field']] = $weight;
 		}
 		return true;
 	}
