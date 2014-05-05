@@ -35,6 +35,9 @@ class AclHelper extends Helper {
 			'pathWhitelist' => $this->_pathWhitelist
 		), $settings);
 		parent::__construct($View, $settings);
+		$plugin = Configure::read('Site.acl_plugin');
+		App::uses('AclPermission', $plugin . '.Model');
+		$this->AclPermission = ClassRegistry::init($plugin . '.AclPermission');
 	}
 
 /**
@@ -75,7 +78,7 @@ class AclHelper extends Helper {
 			return $this->allowedActions[$roleId];
 		}
 
-		$this->allowedActions[$roleId] = ClassRegistry::init('Acl.AclPermission')->getAllowedActionsByRoleId($roleId);
+		$this->allowedActions[$roleId] = $this->AclPermission->getAllowedActionsByRoleId($roleId);
 		return $this->allowedActions[$roleId];
 	}
 
@@ -118,7 +121,7 @@ class AclHelper extends Helper {
 			return $this->allowedActions[$userId];
 		}
 
-		$this->allowedActions[$userId] = ClassRegistry::init('Acl.AclPermission')->getAllowedActionsByUserId($userId);
+		$this->allowedActions[$userId] = $this->AclPermission->getAllowedActionsByUserId($userId);
 		return $this->allowedActions[$userId];
 	}
 
@@ -148,8 +151,17 @@ class AclHelper extends Helper {
 			$path = $url;
 		}
 		$linkAction = str_replace('//', '/', $path);
+
 		if (in_array($linkAction, $this->getAllowedActionsByUserId($userId))) {
 			return true;
+		} else {
+			$userAro = array('model' => 'User', 'foreign_key' => $userId);
+			$nodes = $this->AclPermission->Aro->node($userAro);
+			if (isset($nodes[0]['Aro'])) {
+				if ($this->AclPermission->check($nodes[0]['Aro'], $linkAction)) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}
