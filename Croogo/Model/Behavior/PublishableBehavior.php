@@ -77,6 +77,10 @@ class PublishableBehavior extends ModelBehavior {
 		$start = $model->escapeField($settings['fields']['publish_start']);
 		$end = $model->escapeField($settings['fields']['publish_end']);
 
+		if (is_string($query['conditions'])) {
+			$query['conditions'] = (array)$query['conditions'];
+		}
+
 		$query['conditions'][] = array(
 			'OR' => array(
 				$start => null,
