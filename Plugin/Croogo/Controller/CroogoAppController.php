@@ -172,26 +172,6 @@ class CroogoAppController extends Controller {
 	}
 
 /**
- * Avoid losing 'locale' in redirects
- *
- * @see Controller::beforeRedirect()
- */
-	public function beforeRedirect($url, $status = null, $exit = true) {
-		if (isset($this->request->params['locale'])) {
-			if (is_string($url)) {
-				$url = array(
-					'url' => '/' . $this->request->params['locale'] . $url,
-					'status' => $status,
-					'exit' => $exit,
-				);
-			} elseif (isset($url['url'])) {
-				$url['url']['locale'] = $this->request->params['locale'];
-			}
-		}
-		return $url;
-	}
-
-/**
  * blackHoleCallback for SecurityComponent
  *
  * @return void
