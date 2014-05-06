@@ -133,6 +133,16 @@ $linkChooserUrl = $this->Html->url(array(
 				'default' => CroogoStatus::UNPUBLISHED,
 				'options' => $this->Croogo->statuses(),
 			)) .
+			$this->Html->div('input-daterange',
+				$this->Form->input('publish_start', array(
+					'label' => __d('croogo', 'Publish Start'),
+					'type' => 'text',
+				)) .
+				$this->Form->input('publish_end', array(
+					'label' => __d('croogo', 'Publish End'),
+					'type' => 'text',
+				))
+			) .
 			$this->Html->endBox();
 		echo $this->Croogo->adminBoxes();
 	?>

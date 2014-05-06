@@ -8,6 +8,7 @@
 		echo $this->Html->css(array(
 			'/croogo/css/croogo-bootstrap',
 			'/croogo/css/croogo-bootstrap-responsive',
+			'admin',
 		));
 		echo $this->Layout->js();
 		echo $this->Html->script(array(

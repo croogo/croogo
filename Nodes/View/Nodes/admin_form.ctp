@@ -133,7 +133,18 @@ echo $this->Form->create('Node', array('url' => $formUrl));
 			$this->Form->input('created', array(
 				'type' => 'text',
 				'class' => 'span10 input-datetime',
-			));
+			)) .
+
+			$this->Html->div('input-daterange',
+				$this->Form->input('publish_start', array(
+					'label' => __d('croogo', 'Publish Start'),
+					'type' => 'text',
+				)) .
+				$this->Form->input('publish_end', array(
+					'label' => __d('croogo', 'Publish End'),
+					'type' => 'text',
+				))
+			);
 
 		echo $this->Html->endBox();
 
