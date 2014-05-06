@@ -165,7 +165,7 @@ class CroogoAppController extends Controller {
 
 		$this->components = Hash::merge(
 			$this->components,
-			array('Acl', 'Auth', 'Session', 'RequestHandler', 'Acl.AclFilter'),
+			array('Acl', 'Auth', 'Security', 'Session', 'RequestHandler', 'Acl.AclFilter'),
 			$this->_apiComponents
 		);
 		$apiComponents = array();
