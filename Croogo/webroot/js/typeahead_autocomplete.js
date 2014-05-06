@@ -49,7 +49,19 @@
 			var results = [];
 			var map = {};
 			var $rel = $(options.relatedElement);
-			$(plugin.element).typeahead({
+			var $element = $(plugin.element);
+
+			$element
+				.on('focus', function(e) {
+					$rel.val('');
+				})
+				.on('blur', function(e) {
+					if ($rel.val().length == 0) {
+						this.value = '';
+					}
+				});
+
+			$element.typeahead({
 				matcher: function(item) {
 					if (item && item.toLowerCase().indexOf(this.query.trim().toLowerCase()) !== -1) {
 						return true;
