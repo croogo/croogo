@@ -1,5 +1,17 @@
 <?php
 
+CroogoRouter::mapResources('Nodes.Nodes', array(
+	'prefix' => '/:api/:prefix/',
+));
+
+Router::connect('/:api/:prefix/nodes/lookup', array(
+	'plugin' => 'nodes',
+	'controller' => 'nodes',
+	'action' => 'lookup',
+), array(
+	'routeClass' => 'ApiRoute',
+));
+
 // Basic
 CroogoRouter::connect('/', array(
 	'plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'promoted'
