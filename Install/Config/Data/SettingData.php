@@ -3,6 +3,8 @@ class SettingData {
 
 	public $table = 'settings';
 
+	public $uniqueFields = 'key';
+
 	public $records = array(
 		array(
 			'id' => '6',
@@ -342,6 +344,16 @@ options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "M
 			'input_type' => 'text',
 			'editable' => '1',
 			'weight' => '29',
+			'params' => ''
+		),
+		array(
+			'key' => 'Site.home_url',
+			'value' => '',
+			'title' => 'Home Url',
+			'description' => 'Default action for home page in link string format.',
+			'input_type' => 'text',
+			'editable' => '1',
+			'weight' => '30',
 			'params' => ''
 		),
 	);

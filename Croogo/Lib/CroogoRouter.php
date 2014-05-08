@@ -200,4 +200,20 @@ class CroogoRouter {
 			CakeLog::write('critical', __d('croogo', 'Unable to get routeable content types: %s', $e->getMessage()));
 		}
 	}
+
+/**
+ * Setup Site.home_url
+ *
+ * @return void
+ */
+	public static function routes() {
+		$homeUrl = Configure::read('Site.home_url');
+		if ($homeUrl && strpos($homeUrl, ':') !== false) {
+			$converter = new StringConverter();
+			$url = $converter->linkStringToArray($homeUrl);
+			CroogoRouter::connect('/', $url, array(), array('promote' => true));
+		}
+		CakePlugin::routes();
+	}
+
 }
