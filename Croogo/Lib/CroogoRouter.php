@@ -36,12 +36,28 @@ class CroogoRouter {
  * @see Router::connect()
  * @throws RouterException
  */
-	public static function connect($route, $default = array(), $params = array()) {
+	public static function connect($route, $default = array(), $params = array(), $options = array()) {
+		return self::__connect($route, $default, $params, $options);
+	}
+
+/**
+ *
+ * @see Router::connect()
+ */
+	private static function __connect($route, $default = array(), $params = array(), $options = array()) {
+		$options = Hash::merge(array('promote' => false), $options);
 		$localizedRoute = $route == '/' ? '' : $route;
 		if (CakePlugin::loaded('Translate')) {
 			Router::connect('/:locale' . $localizedRoute, $default, array_merge(array('locale' => '[a-z]{3}'), $params));
+			if ($options['promote']) {
+				Router::promote();
+			}
 		}
-		return Router::connect($route, $default, $params);
+		$return = Router::connect($route, $default, $params);
+		if ($options['promote']) {
+			Router::promote();
+		}
+		return $return;
 	}
 
 /**
@@ -184,4 +200,20 @@ class CroogoRouter {
 			CakeLog::write('critical', __d('croogo', 'Unable to get routeable content types: %s', $e->getMessage()));
 		}
 	}
+
+/**
+ * Setup Site.home_url
+ *
+ * @return void
+ */
+	public static function routes() {
+		$homeUrl = Configure::read('Site.home_url');
+		if ($homeUrl && strpos($homeUrl, ':') !== false) {
+			$converter = new StringConverter();
+			$url = $converter->linkStringToArray($homeUrl);
+			CroogoRouter::connect('/', $url, array(), array('promote' => true));
+		}
+		CakePlugin::routes();
+	}
+
 }

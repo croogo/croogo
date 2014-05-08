@@ -2,7 +2,7 @@
 
 App::uses('DataMigration', 'Extensions.Utility');
 
-class ExposeSiteThemeAndLocale extends CakeMigration {
+class ExposeSiteThemeAndLocaleAndHomeUrl extends CakeMigration {
 
 /**
  * Migration description
@@ -37,7 +37,9 @@ class ExposeSiteThemeAndLocale extends CakeMigration {
 
 		if ($direction === 'up') {
 			if (Configure::read('Croogo.installed')) {
-				$settingsToUpdate = array('Site.locale', 'Site.admin_theme');
+				$settingsToUpdate = array(
+					'Site.locale', 'Site.admin_theme', 'Site.home_url',
+				);
 				CakePlugin::load('Install');
 				$dm = new DataMigration();
 				$dir = CakePlugin::path('Install') . 'Config' . DS . 'Data' . DS;
