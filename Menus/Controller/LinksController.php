@@ -314,6 +314,7 @@ class LinksController extends MenusAppController {
  */
 	public function admin_process($menuId = null) {
 		$action = $this->request->data['Link']['action'];
+		$new_parent_id = $this->request->data['Link']['parent_id'];
 		$ids = array();
 		foreach ($this->request->data['Link'] as $id => $value) {
 			if ($id != 'action' && $value['id'] == 1) {
@@ -345,6 +346,13 @@ class LinksController extends MenusAppController {
 		} elseif ($action == 'unpublish' &&
 			$this->Link->updateAll(array('Link.status' => 0), array('Link.id' => $ids))) {
 			$this->Session->setFlash(__d('croogo', 'Links unpublished'), 'default', array('class' => 'success'));
+		} elseif ($action == 'reparent' && $new_parent_id > 0){
+			foreach($ids as $id){
+				$link = $this->Link->findById($id);
+				$link['Link']['parent_id'] = $new_parent_id;
+				$this->Link->save($link);
+			}
+			$this->Session->setFlash(__d('croogo', 'Links re-parented'), 'default', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
 		}
