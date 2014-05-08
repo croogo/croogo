@@ -69,6 +69,7 @@ class DataMigration {
 			$modelAlias = substr($data, 0, -4);
 			$table = $classVars['table'];
 			$records = $classVars['records'];
+			$uniqueKeys = null;
 			if (!empty($options['extract'])) {
 				$records = Hash::extract($records, $options['extract']);
 			}
