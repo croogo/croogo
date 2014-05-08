@@ -534,4 +534,20 @@ class NodeTest extends CroogoTestCase {
 		$this->assertEquals('About', $node['Node']['title']);
 	}
 
+/**
+ * testFindPublish
+ */
+	public function testFindPublished() {
+		$Node = $this->Node;
+		$Node->useCache = false;
+		$Node->id = 3;
+		$Node->saveField('status', 0);
+
+		$nodes = $Node->find('published', array(
+			'fields' => array('id'),
+		));
+		$extracted = Hash::extract($nodes, '{n}.Node.status');
+		$this->assertEquals(2, count($nodes));
+	}
+
 }

@@ -596,16 +596,35 @@ class Node extends NodesAppModel {
 
 /**
  * Search published nodes
+ *
+ * $query options:
+ *
+ * - `q`: term to search
+ * - `roleId`: Role Id
+ * - `typeAlias`: Type alias
  */
 	protected function _findPublished($state, $query, $results = array()) {
 		if ($state == 'after') {
 			return $results;
 		}
 
-		$q = isset($query['q']) ? '%' . $query['q'] . '%' : null;
+		$q = isset($query['q']) ? $query['q'] : null;
+		$like = empty($q) ? '%' : '%' . $q . '%';
 		$roleId = isset($query['roleId']) ? $query['roleId'] : null;
 		$typeAlias = isset($query['typeAlias']) ? $query['typeAlias'] : null;
 		$visibilityRolesField = $this->escapeField('visibility_roles');
+
+		$nodeOrConditions = array();
+
+		if ($like) {
+			$nodeOrConditions = array_merge($nodeOrConditions, array(
+				$this->escapeField('title') . ' LIKE' => $like,
+				$this->escapeField('excerpt') . ' LIKE' => $like,
+				$this->escapeField('body') . ' LIKE' => $like,
+				$this->escapeField('terms') . ' LIKE' => $like,
+			));
+		}
+
 		$defaults = array(
 			'order' => $this->escapeField('created') . ' DESC',
 			'limit' => Configure::read('Reading.nodes_per_page'),
@@ -613,12 +632,7 @@ class Node extends NodesAppModel {
 				$this->escapeField('status') => $this->status(),
 				'AND' => array(
 					array(
-						'OR' => array(
-							$this->escapeField('title') . ' LIKE' => $q,
-							$this->escapeField('excerpt') . ' LIKE' => $q,
-							$this->escapeField('body') . ' LIKE' => $q,
-							$this->escapeField('terms') . ' LIKE' => $q,
-						),
+						'OR' => $nodeOrConditions,
 					),
 					array(
 						'OR' => array(
@@ -639,6 +653,10 @@ class Node extends NodesAppModel {
 		);
 		if (isset($typeAlias)) {
 			$defaults['conditions'][$this->escapeField('type')] = $typeAlias;
+		}
+
+		if (empty($query['conditions'])) {
+			$query['conditions'] = array();
 		}
 		$query = Hash::merge($defaults, $query);
 
