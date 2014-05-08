@@ -363,7 +363,9 @@ class Node extends NodesAppModel {
 			$data = $data;
 		}
 
-		$data[$this->alias]['path'] = $this->_getNodeRelativePath($data);
+		if (empty($data[$this->alias]['path'])) {
+			$data[$this->alias]['path'] = $this->_getNodeRelativePath($data);
+		}
 
 		if (!array_key_exists('Role', $data) || empty($data['Role']['Role'])) {
 			$roles = '';

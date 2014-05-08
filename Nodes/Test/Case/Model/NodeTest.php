@@ -550,4 +550,18 @@ class NodeTest extends CroogoTestCase {
 		$this->assertEquals(2, count($nodes));
 	}
 
+/**
+ * testFormatDataPreserveSuppliedPath
+ */
+	public function testFormatDataPreserveSuppliedPath() {
+		$Node = $this->Node;
+		$result = $Node->formatData(array(
+			'Node' => array(
+				'slug' => 'foo',
+				'path' => '/bar/foo',
+			),
+		));
+		$this->assertEquals('/bar/foo', $result['Node']['path']);
+	}
+
 }
