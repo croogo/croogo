@@ -313,13 +313,9 @@ class LinksController extends MenusAppController {
  * @access public
  */
 	public function admin_process($menuId = null) {
-		$action = $this->request->data['Link']['action'];
-		$ids = array();
-		foreach ($this->request->data['Link'] as $id => $value) {
-			if ($id != 'action' && $value['id'] == 1) {
-				$ids[] = $id;
-			}
-		}
+		$Link = $this->{$this->modelClass};
+		list($action, $ids) = $this->Croogo->getBulkProcessVars($Link->alias);
+
 		if (count($ids) == 0 || $action == null) {
 			$this->Session->setFlash(__d('croogo', 'No items selected.'), 'default', array('class' => 'error'));
 			return $this->redirect(array(

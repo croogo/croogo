@@ -310,13 +310,7 @@ class NodesController extends NodesAppController {
  */
 	public function admin_process() {
 		$Node = $this->{$this->modelClass};
-		$action = $this->request->data[$Node->alias]['action'];
-		$ids = array();
-		foreach ($this->request->data[$Node->alias] as $id => $value) {
-			if (!empty($value[$Node->primaryKey])) {
-				$ids[] = $id;
-			}
-		}
+		list($action, $ids) = $this->Croogo->getBulkProcessVars($Node->alias);
 
 		if (count($ids) == 0 || $action == null) {
 			$this->Session->setFlash(__d('croogo', 'No items selected.'), 'default', array('class' => 'error'));

@@ -234,13 +234,8 @@ class BlocksController extends BlocksAppController {
  * @access public
  */
 	public function admin_process() {
-		$action = $this->request->data['Block']['action'];
-		$ids = array();
-		foreach ($this->request->data['Block'] as $id => $value) {
-			if ($id != 'action' && $value['id'] == 1) {
-				$ids[] = $id;
-			}
-		}
+		$Block = $this->{$this->modelClass};
+		list($action, $ids) = $this->Croogo->getBulkProcessVars($Block->alias);
 
 		if (count($ids) == 0 || $action == null) {
 			$this->Session->setFlash(__d('croogo', 'No items selected.'), 'default', array('class' => 'error'));

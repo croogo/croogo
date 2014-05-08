@@ -126,13 +126,8 @@ class MessagesController extends ContactsAppController {
  * @access public
  */
 	public function admin_process() {
-		$action = $this->request->data['Message']['action'];
-		$ids = array();
-		foreach ($this->request->data['Message'] as $id => $value) {
-			if ($id != 'action' && $value['id'] == 1) {
-				$ids[] = $id;
-			}
-		}
+		$Message = $this->{$this->modelClass};
+		list($action, $ids) = $this->Croogo->getBulkProcessVars($Message->alias);
 
 		if (count($ids) == 0 || $action == null) {
 			$this->Session->setFlash(__d('croogo', 'No items selected.'), 'default', array('class' => 'error'));
