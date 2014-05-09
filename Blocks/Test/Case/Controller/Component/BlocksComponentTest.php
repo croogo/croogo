@@ -31,6 +31,8 @@ class BlocksComponentTest extends CroogoControllerTestCase {
 		'plugin.blocks.region',
 		'plugin.menus.menu',
 		'plugin.menus.link',
+		'plugin.taxonomy.type',
+		'plugin.translate.i18n',
 	);
 
 	public function setUp() {
