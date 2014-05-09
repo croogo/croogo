@@ -12,6 +12,7 @@ echo $this->Form->create('Setting', array(
 		'action' => 'prefix',
 		$prefix,
 	),
+	'class' => 'protected-form',
 ));
 
 ?>

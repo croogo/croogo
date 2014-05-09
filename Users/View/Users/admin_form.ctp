@@ -33,6 +33,7 @@ echo $this->Form->create('User', array(
 	'fieldAccess' => array(
 		'User.role_id' => 1,
 	),
+	'class' => 'protected-form',
 ));
 ?>
 

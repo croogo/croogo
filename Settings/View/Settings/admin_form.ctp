@@ -18,7 +18,9 @@ if ($this->request->params['action'] == 'admin_add') {
 	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
-echo $this->Form->create('Setting');
+echo $this->Form->create('Setting', array(
+	'class' => 'protected-form',
+));
 
 ?>
 <div class="row-fluid">
