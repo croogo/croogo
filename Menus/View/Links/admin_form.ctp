@@ -30,7 +30,10 @@ if ($this->request->params['action'] == 'admin_edit') {
 	);
 }
 
-echo $this->Form->create('Link', array('url' => $formUrl));
+echo $this->Form->create('Link', array(
+	'url' => $formUrl,
+	'class' => 'protected-form',
+));
 
 $linkChooserUrl = $this->Html->url(array(
 	'admin' => true,

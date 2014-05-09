@@ -34,7 +34,10 @@ $apiUrl = $this->Form->apiUrl(array(
 	),
 ));
 
-echo $this->Form->create('Node', array('url' => $formUrl));
+echo $this->Form->create('Node', array(
+	'url' => $formUrl,
+	'class' => 'protected-form',
+));
 
 ?>
 <div class="row-fluid">

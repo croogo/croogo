@@ -138,6 +138,50 @@ Admin.form = function() {
 }
 
 /**
+ * Protect forms for accidental page refresh
+ */
+Admin.protectForms = function() {
+	var forms  = document.getElementsByClassName('protected-form');
+	if (forms.length > 0) {
+		var watchElements = ['input', 'select', 'textarea'];
+		var ignored = ['button', '[type=submit]', '.cancel'];
+		for (var i = 0; i < forms.length; i++) {
+			var $form = $(forms[i]);
+			var customIgnore = $form.data('ignore-elements');
+			var whitelist = ignored.join(',');
+			if (customIgnore) {
+				whitelist += ',' + customIgnore;
+			}
+			$form
+				.on('change', watchElements.join(','), function(e) {
+					$form.data('dirty', true);
+				})
+				.on('click', whitelist, function(e) {
+					$form.data('dirty', false);
+					Croogo.Wysiwyg.resetDirty();
+				});
+		}
+
+		window.onbeforeunload = function(e) {
+			var dirty = false;
+			for (var i = 0; i < forms.length; i++) {
+				if ($(forms[i]).data('dirty') === true) {
+					dirty = true;
+					break;
+				}
+			}
+			if (!dirty && !Croogo.Wysiwyg.checkDirty()) {
+				return;
+			}
+
+			var confirmationMessage = 'Please save your changes';
+			(e || window.event).returnValue = confirmationMessage;
+			return confirmationMessage;
+		};
+	}
+}
+
+/**
  * Helper to process row action links
  */
 Admin.processLink = function(event) {
@@ -203,5 +247,6 @@ Admin.toggleRowSelection = function(selector, checkboxSelector) {
 $(document).ready(function() {
 	Admin.navigation();
 	Admin.form();
+	Admin.protectForms();
 	Admin.extra();
 });
