@@ -4,7 +4,7 @@ App::uses('Block', 'Blocks.Model');
 App::uses('Region', 'Blocks.Model');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
-class BlockValidatorTest extends CroogoTestCase {
+class BlocksAppValidatorTest extends CroogoTestCase {
 
 	public $fixtures = array(
 		'plugin.settings.setting',
