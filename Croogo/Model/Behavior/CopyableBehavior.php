@@ -1,4 +1,8 @@
 <?php
+
+App::uses('Croogo', 'Croogo.Lib');
+App::uses('ModelBehavior', 'Model');
+
 /**
  * Copyable Behavior class file.
  *
@@ -49,8 +53,13 @@ class CopyableBehavior extends ModelBehavior {
  * will look in the $this->contain array.
  */
 	protected $_defaults = array(
-		'recursive' => true,
-		'habtm' => true,
+		'recursive' => false,
+		'habtm' => false,
+		'autoFields' => array(
+			'title',
+			'slug',
+			'alias',
+		),
 		'stripFields' => array(
 			'id',
 			'created',
@@ -101,7 +110,13 @@ class CopyableBehavior extends ModelBehavior {
 			return false;
 		}
 
-		return $this->_copyRecord($Model);
+		$result = false;
+		try {
+			$result = $this->_copyRecord($Model);
+		} catch (PDOException $e) {
+			$this->log('Error executing _copyRecord: ' . $e->getMessage());
+		}
+		return $result;
 	}
 
 /**
@@ -188,6 +203,12 @@ class CopyableBehavior extends ModelBehavior {
  * Strips primary and parent foreign keys (where applicable)
  * from $this->record in preparation for saving.
  *
+ * When `autoFields` is set, it will iterate listed fields and append
+ * ' (copy)' for titles or '-copy' for slug/alias fields.
+ *
+ * Plugins can also perform custom/additional data conversion by listening
+ * on `Behavior.Copyable.convertData`
+ *
  * @param object $Model Model object
  * @return array $this->record
  */
@@ -195,6 +216,28 @@ class CopyableBehavior extends ModelBehavior {
 		$this->record[$Model->alias] = $this->_stripFields($Model, $this->record[$Model->alias]);
 		$this->record = $this->_convertHabtm($Model, $this->record);
 		$this->record = $this->_convertChildren($Model, $this->record);
+
+		if (!empty($this->settings[$Model->alias]['autoFields'])) {
+			$autoFields = (array)$this->settings[$Model->alias]['autoFields'];
+			$slugFields = array('slug', 'alias');
+			foreach ($autoFields as $field) {
+				if (!$Model->hasField($field)) {
+					continue;
+				}
+				if (in_array($field, $slugFields)) {
+					$this->record[$Model->alias][$field] .= '-copy';
+				} else {
+					$this->record[$Model->alias][$field] .= ' (copy)';
+				}
+			}
+		}
+
+		$eventName = 'Behavior.Copyable.convertData';
+		$event = Croogo::dispatchEvent($eventName, $Model, array(
+			'record' => $this->record,
+		));
+
+		$this->record = $event->data['record'];
 		return $this->record;
 	}
 
