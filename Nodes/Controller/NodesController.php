@@ -30,6 +30,7 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public $components = array(
+		'Croogo.BulkProcess',
 		'Croogo.Recaptcha',
 		'Search.Prg' => array(
 			'presetForm' => array(
@@ -310,41 +311,18 @@ class NodesController extends NodesAppController {
  */
 	public function admin_process() {
 		$Node = $this->{$this->modelClass};
-		list($action, $ids) = $this->Croogo->getBulkProcessVars($Node->alias);
+		list($action, $ids) = $this->BulkProcess->getRequestVars($Node->alias);
 
-		if (count($ids) == 0 || $action == null) {
-			$this->Session->setFlash(__d('croogo', 'No items selected.'), 'default', array('class' => 'error'));
-			return $this->redirect(array('action' => 'index'));
-		}
-
-		$actionProcessed = $Node->processAction($action, $ids);
-		$eventName = 'Controller.Nodes.after' . ucfirst($action);
-
-		if ($actionProcessed) {
-			switch ($action) {
-				case 'delete':
-					$messageFlash = __d('croogo', 'Nodes deleted');
-				break;
-				case 'publish':
-					$messageFlash = __d('croogo', 'Nodes published');
-				break;
-				case 'unpublish':
-					$messageFlash = __d('croogo', 'Nodes unpublished');
-				break;
-				case 'promote':
-					$messageFlash = __d('croogo', 'Nodes promoted');
-				break;
-				case 'unpromote':
-					$messageFlash = __d('croogo', 'Nodes unpromoted');
-				break;
-			}
-			$this->Session->setFlash($messageFlash, 'default', array('class' => 'success'));
-			Croogo::dispatchEvent($eventName, $this, compact($ids));
-		} else {
-			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
-		}
-
-		return $this->redirect(array('action' => 'index'));
+		$options = array(
+			'messageMap' => array(
+				'delete' => __d('croogo', 'Nodes deleted'),
+				'publish' => __d('croogo', 'Nodes published'),
+				'unpublish' => __d('croogo', 'Nodes unpublished'),
+				'promote' => __d('croogo', 'Nodes promoted'),
+				'unpromote' => __d('croogo', 'Nodes unpromoted'),
+			),
+		);
+		return $this->BulkProcess->process($Node, $action, $ids, $options);
 	}
 
 /**
