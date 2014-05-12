@@ -40,23 +40,30 @@ class Node extends NodesAppModel {
  */
 	const STATUS_UNPUBLISHED = 0;
 
+/**
+ * @deprecated Use CroogoStatus::PROMOTED
+ */
 	const STATUS_PROMOTED = 1;
 
+/**
+ * @deprecated Use CroogoStatus::UNPROMOTED
+ */
 	const STATUS_UNPROMOTED = 0;
 
+/**
+ * @deprecated Use BulkProcessBehavior `fields` settings
+ */
 	const PUBLICATION_STATE_FIELD = 'status';
 
+/**
+ * @deprecated Use BulkProcessBehavior `fields` settings
+ */
 	const PROMOTION_STATE_FIELD = 'promote';
 
+/**
+ * @deprecated
+ */
 	const UNPROCESSED_ACTION = 'delete';
-
-	public $actionsMapping = array(
-		'delete' => 'deleteAll',
-		'publish' => '_publish',
-		'promote' => '_promote',
-		'unpublish' => '_unpublish',
-		'unpromote' => '_unpromote',
-	);
 
 /**
  * Behaviors used by the Model
@@ -66,6 +73,12 @@ class Node extends NodesAppModel {
  */
 	public $actsAs = array(
 		'Tree',
+		'Croogo.BulkProcess' => array(
+			'actionsMap' => array(
+				'promote' => 'bulkPromote',
+				'unpromote' => 'bulkUnpromote',
+			),
+		),
 		'Croogo.Encoder',
 		'Croogo.Publishable',
 		'Croogo.Trackable',
@@ -316,34 +329,6 @@ class Node extends NodesAppModel {
 		Croogo::dispatchEvent('Model.Node.afterSaveNode', $this, $event->data);
 
 		return $result;
-	}
-
-/**
- * Process action pass as argument
- *
- * @param $action string actionToPerfom
- * @param $ids array nodes ids to perform action upon
- * @throws InvalidArgumentException
- */
-	public function processAction($action, $ids) {
-		$success = true;
-		$actionToPerform = strtolower($action);
-
-		if (!in_array($actionToPerform, array_keys($this->actionsMapping))) {
-			throw new InvalidArgumentException(__d('croogo', 'Invalid action to perform'));
-		}
-
-		if (empty($ids)) {
-			throw new InvalidArgumentException(__d('croogo', 'No target to process action upon'));
-		}
-
-		if ($actionToPerform === self::UNPROCESSED_ACTION) {
-			$success = $this->{$this->actionsMapping[$actionToPerform]}(array($this->escapeField() => $ids), true, true);
-		} else {
-			$success = $this->{$this->actionsMapping[$actionToPerform]}($ids);
-		}
-
-		return $success;
 	}
 
 /**
@@ -679,46 +664,6 @@ class Node extends NodesAppModel {
 		} else {
 			$query[$key] = $values;
 		}
-	}
-
-/**
- * Internal helper function to change state fields
- * @see Node::processAction()
- */
-	protected function _publish($ids) {
-		return $this->_saveStatus($ids, self::PUBLICATION_STATE_FIELD, self::STATUS_PUBLISHED);
-	}
-
-/**
- * Internal helper function to change state fields
- * @see Node::processAction()
- */
-	protected function _unpublish($ids) {
-		return $this->_saveStatus($ids, self::PUBLICATION_STATE_FIELD, self::STATUS_UNPUBLISHED);
-	}
-
-/**
- * Internal helper function to change state fields
- * @see Node::processAction()
- */
-	protected function _promote($ids) {
-		return $this->_saveStatus($ids, self::PROMOTION_STATE_FIELD, self::STATUS_PROMOTED);
-	}
-
-/**
- * Internal helper function to change state fields
- * @see Node::processAction()
- */
-	protected function _unpromote($ids) {
-		return $this->_saveStatus($ids, self::PROMOTION_STATE_FIELD, self::STATUS_UNPROMOTED);
-	}
-
-/**
- * Internal helper function to change state fields
- * @see Node::processAction()
- */
-	protected function _saveStatus($ids, $field, $status) {
-		return $this->updateAll(array($this->escapeField($field) => $status), array($this->escapeField() => $ids));
 	}
 
 }

@@ -302,26 +302,6 @@ class CroogoComponent extends Component {
 	}
 
 /**
- * Get variables used for bulk processing
- *
- * @param string $model Model alias
- * @param string $primaryKey Primary key
- * @return array Array with 2 elements. First element is action name, second is
- *               array of model IDs
- */
-	public function getBulkProcessVars($model, $primaryKey = 'id') {
-		$data = $this->_controller->request->data($model);
-		$action = !empty($data['action']) ? $data['action'] : null;
-		$ids = array();
-		foreach ($data as $id => $value) {
-			if (!empty($value[$primaryKey])) {
-				$ids[] = $id;
-			}
-		}
-		return array($action, $ids);
-	}
-
-/**
  * Loads plugin's bootstrap.php file
  *
  * @param string $plugin Plugin name (underscored)
