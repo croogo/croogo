@@ -29,6 +29,7 @@ class BlocksController extends BlocksAppController {
  * @access public
  */
 	public $components = array(
+		'Croogo.BulkProcess',
 		'Search.Prg' => array(
 			'presetForm' => array(
 				'paramType' => 'querystring',
@@ -235,27 +236,17 @@ class BlocksController extends BlocksAppController {
  */
 	public function admin_process() {
 		$Block = $this->{$this->modelClass};
-		list($action, $ids) = $this->Croogo->getBulkProcessVars($Block->alias);
+		list($action, $ids) = $this->BulkProcess->getRequestVars($Block->alias);
 
-		if (count($ids) == 0 || $action == null) {
-			$this->Session->setFlash(__d('croogo', 'No items selected.'), 'default', array('class' => 'error'));
-			return $this->redirect(array('action' => 'index'));
-		}
+		$options = array(
+			'messageMap' => array(
+				'delete' => __d('croogo', 'Blocks deleted'),
+				'publish' => __d('croogo', 'Blocks published'),
+				'unpublish' => __d('croogo', 'Blocks unpublished'),
+			),
+		);
 
-		if ($action == 'delete' &&
-			$this->Block->deleteAll(array('Block.id' => $ids), true, true)) {
-			$this->Session->setFlash(__d('croogo', 'Blocks deleted'), 'default', array('class' => 'success'));
-		} elseif ($action == 'publish' &&
-			$this->Block->updateAll(array('Block.status' => CroogoStatus::PUBLISHED), array('Block.id' => $ids))) {
-			$this->Session->setFlash(__d('croogo', 'Blocks published'), 'default', array('class' => 'success'));
-		} elseif ($action == 'unpublish' &&
-			$this->Block->updateAll(array('Block.status' => CroogoStatus::UNPUBLISHED), array('Block.id' => $ids))) {
-			$this->Session->setFlash(__d('croogo', 'Blocks unpublished'), 'default', array('class' => 'success'));
-		} else {
-			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
-		}
-
-		return $this->redirect(array('action' => 'index'));
+		return $this->BulkProcess->process($Block, $action, $ids, $options);
 	}
 
 }
