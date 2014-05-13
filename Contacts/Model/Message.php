@@ -29,6 +29,12 @@ class Message extends ContactsAppModel {
  * @access public
  */
 	public $actsAs = array(
+		'Croogo.BulkProcess' => array(
+			'actionsMap' => array(
+				'read' => 'bulkRead',
+				'unread' => 'bulkUnread',
+			),
+		),
 		'Croogo.Trackable',
 		'Search.Searchable',
 	);
@@ -92,5 +98,31 @@ class Message extends ContactsAppModel {
 			'type' => 'value',
 		),
 	);
+
+/**
+ * Mark messages as read in bulk
+ *
+ * @param array $ids Array of Message Ids
+ * @return boolean True if successful, false otherwise
+ */
+	public function bulkRead($ids) {
+		return $this->updateAll(
+			array($this->escapeField('status') => 1),
+			array($this->escapeField() => $ids)
+		);
+	}
+
+/**
+ * Mark messages as Unread in bulk
+ *
+ * @param array $ids Array of Message Ids
+ * @return boolean True if successful, false otherwise
+ */
+	public function bulkUnread($ids) {
+		return $this->updateAll(
+			array($this->escapeField('status') => 0),
+			array($this->escapeField() => $ids)
+		);
+	}
 
 }
