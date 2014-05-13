@@ -24,6 +24,10 @@ class CroogoStatus implements ArrayAccess {
 
 	const APPROVED = 1;
 
+	const PROMOTED = 1;
+
+	const UNPROMOTED = 0;
+
 	protected $_statuses = array();
 
 /**

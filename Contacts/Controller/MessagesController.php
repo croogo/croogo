@@ -37,6 +37,7 @@ class MessagesController extends ContactsAppController {
  * @access public
  */
 	public $components = array(
+		'Croogo.BulkProcess',
 		'Search.Prg' => array(
 			'presetForm' => array(
 				'paramType' => 'querystring',
@@ -127,27 +128,14 @@ class MessagesController extends ContactsAppController {
  */
 	public function admin_process() {
 		$Message = $this->{$this->modelClass};
-		list($action, $ids) = $this->Croogo->getBulkProcessVars($Message->alias);
+		list($action, $ids) = $this->BulkProcess->getRequestVars($Message->alias);
 
-		if (count($ids) == 0 || $action == null) {
-			$this->Session->setFlash(__d('croogo', 'No items selected.'), 'default', array('class' => 'error'));
-			return $this->redirect(array('action' => 'index'));
-		}
-
-		if ($action == 'delete' &&
-			$this->Message->deleteAll(array('Message.id' => $ids), true, true)) {
-			$this->Session->setFlash(__d('croogo', 'Messages deleted.'), 'default', array('class' => 'success'));
-		} elseif ($action == 'read' &&
-			$this->Message->updateAll(array('Message.status' => 1), array('Message.id' => $ids))) {
-			$this->Session->setFlash(__d('croogo', 'Messages marked as read'), 'default', array('class' => 'success'));
-		} elseif ($action == 'unread' &&
-			$this->Message->updateAll(array('Message.status' => 0), array('Message.id' => $ids))) {
-			$this->Session->setFlash(__d('croogo', 'Messages marked as unread'), 'default', array('class' => 'success'));
-		} else {
-			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
-		}
-
-		return $this->redirect(array('action' => 'index'));
+		$messageMap = array(
+			'delete' => __d('croogo', 'Messages deleted'),
+			'read' => __d('croogo', 'Messages marked as read'),
+			'unread' => __d('croogo', 'Messages marked as unread'),
+		);
+		return $this->BulkProcess->process($Message, $action, $ids, $messageMap);
 	}
 
 }
