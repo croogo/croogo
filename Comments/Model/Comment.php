@@ -224,4 +224,18 @@ class Comment extends AppModel {
 		return $this->saveMany($dataArray, array('validate' => false));
 	}
 
+/**
+ * Provide our own bulkPublish since BulkProcessBehavior::bulkPublish is incompatible with boolean status
+ */
+	public function bulkPublish($ids) {
+		return $this->changeStatus($ids, true);
+	}
+
+/**
+ * Provide our own bulkUnpublish since BulkProcessBehavior::bulkUnpublish is incompatible with boolean status
+ */
+	public function bulkUnpublish($ids) {
+		return $this->changeStatus($ids, false);
+	}
+
 }
