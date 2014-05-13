@@ -17,6 +17,7 @@ class Croogo {
  * Plugin name is added to Hook.routes key of Configure object.
  *
  * @param string $pluginName plugin name
+ * @deprecated Will be removed in the future.
  */
 	public static function hookRoutes($pluginName) {
 		$hooks = Configure::read('Hook.routes');
