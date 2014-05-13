@@ -71,6 +71,17 @@ $this->Html
 			), array(
 			'icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'),
 		));
+
+		$actions[] = $this->Croogo->adminRowAction('',
+			'#Link' . $linkId . 'Id',
+			array(
+				'icon' => 'copy',
+				'tooltip' => __d('croogo', 'Create a copy'),
+				'rowAction' => 'copy',
+			),
+			__d('croogo', 'Create a copy of this Link?')
+		);
+
 		$actions[] = $this->Croogo->adminRowAction('', '#Link' . $linkId . 'Id',
 			array(
 				'icon' => 'trash',
@@ -114,6 +125,7 @@ $this->Html
 					'publish' => __d('croogo', 'Publish'),
 					'unpublish' => __d('croogo', 'Unpublish'),
 					'delete' => __d('croogo', 'Delete'),
+					'copy' => __d('croogo', 'Copy'),
 				),
 				'empty' => true,
 			));

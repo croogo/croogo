@@ -26,7 +26,10 @@ if ($this->request->params['action'] == 'admin_edit') {
 			'?' => array('menu_id' => $this->data['Menu']['id'])))
 		->addCrumb($this->request->data['Link']['title'], '/' . $this->request->url);
 	$formUrl = array(
-		'controller' => 'links', 'action' => 'edit', 'menu' => $menuId
+		'controller' => 'links', 'action' => 'edit',
+		'?' => array(
+			'menu_id' => $menuId,
+		),
 	);
 }
 

@@ -51,6 +51,15 @@ $chooser = isset($this->request->query['chooser']);
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Block' . $block['Block']['id'] . 'Id',
+			array(
+				'icon' => 'copy',
+				'tooltip' => __d('croogo', 'Create a copy'),
+				'rowAction' => 'copy',
+			),
+			__d('croogo', 'Create a copy of this Block?')
+		);
+		$actions[] = $this->Croogo->adminRowAction('',
+			'#Block' . $block['Block']['id'] . 'Id',
 			array('icon' => 'trash', 'class' => 'delete', 'tooltip' => __d('croogo', 'Remove this item'), 'rowAction' => 'delete'),
 			__d('croogo', 'Are you sure?')
 		);
@@ -111,6 +120,7 @@ $chooser = isset($this->request->query['chooser']);
 					'publish' => __d('croogo', 'Publish'),
 					'unpublish' => __d('croogo', 'Unpublish'),
 					'delete' => __d('croogo', 'Delete'),
+					'copy' => __d('croogo', 'Copy'),
 				),
 				'empty' => true,
 			));

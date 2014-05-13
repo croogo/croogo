@@ -96,6 +96,14 @@ echo $this->Form->create(
 							echo ' ' . $this->Croogo->adminRowAction('',
 								'#Node' . $node['Node']['id'] . 'Id',
 								array(
+									'icon' => 'copy',
+									'tooltip' => __d('croogo', 'Create a copy'),
+									'rowAction' => 'copy',
+								)
+							);
+							echo ' ' . $this->Croogo->adminRowAction('',
+								'#Node' . $node['Node']['id'] . 'Id',
+								array(
 									'icon' => 'trash',
 									'class' => 'delete',
 									'tooltip' => __d('croogo', 'Remove this item'),
@@ -124,6 +132,7 @@ echo $this->Form->create(
 						'promote' => __d('croogo', 'Promote'),
 						'unpromote' => __d('croogo', 'Unpromote'),
 						'delete' => __d('croogo', 'Delete'),
+						'copy' => __d('croogo', 'Copy'),
 					),
 					'empty' => true,
 				));
