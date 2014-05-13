@@ -34,6 +34,15 @@ class LinksController extends MenusAppController {
 	);
 
 /**
+ * Components
+ *
+ * @var array
+ */
+	public $components = array(
+		'Croogo.BulkProcess',
+	);
+
+/**
  * Menu ID
  *
  * holds the current menu ID (if any)
@@ -314,43 +323,24 @@ class LinksController extends MenusAppController {
  */
 	public function admin_process($menuId = null) {
 		$Link = $this->{$this->modelClass};
-		list($action, $ids) = $this->Croogo->getBulkProcessVars($Link->alias);
+		list($action, $ids) = $this->BulkProcess->getRequestVars($Link->alias);
 
-		if (count($ids) == 0 || $action == null) {
-			$this->Session->setFlash(__d('croogo', 'No items selected.'), 'default', array('class' => 'error'));
-			return $this->redirect(array(
-				'action' => 'index',
-				$menuId,
-			));
-		}
+		$redirect = array('action' => 'index');
+
 		$menu = $this->Link->Menu->findById($menuId);
-		if (!isset($menu['Menu']['id'])) {
-			return $this->redirect(array(
-				'controller' => 'menus',
-				'action' => 'index',
-			));
+		if (isset($menu['Menu']['id'])) {
+			$redirect['?'] = array('menu_id' => $menuId);
 		}
 		$this->Link->setTreeScope($menuId);
 
-		if ($action == 'delete' &&
-			$this->Link->deleteAll(array('Link.id' => $ids), true, true)) {
-			$this->Session->setFlash(__d('croogo', 'Links deleted.'), 'default', array('class' => 'success'));
-		} elseif ($action == 'publish' &&
-			$this->Link->updateAll(array('Link.status' => 1), array('Link.id' => $ids))) {
-			$this->Session->setFlash(__d('croogo', 'Links published'), 'default', array('class' => 'success'));
-		} elseif ($action == 'unpublish' &&
-			$this->Link->updateAll(array('Link.status' => 0), array('Link.id' => $ids))) {
-			$this->Session->setFlash(__d('croogo', 'Links unpublished'), 'default', array('class' => 'success'));
-		} else {
-			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
-		}
+		$messageMap = array(
+			'delete' => __d('croogo', 'Links deleted'),
+			'publish' => __d('croogo', 'Links published'),
+			'unpublish' => __d('croogo', 'Links unpublished'),
+		);
+		$options = compact('redirect', 'messageMap');
+		return $this->BulkProcess->process($this->Link, $action, $ids, $options);
 
-		return $this->redirect(array(
-			'action' => 'index',
-			'?' => array(
-				'menu_id' => $menuId,
-			),
-		));
 	}
 
 	public function admin_link_chooser() {
