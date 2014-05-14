@@ -96,12 +96,15 @@ class BulkProcessComponent extends Component {
 	public function process(Model $Model, $action, $ids, $options = array()) {
 		$Controller = $this->_controller;
 		$emptyMessage = __d('croogo', 'No item selected');
+		$noMultipleMessage = __d('croogo', 'Please choose only one item for this operation');
 		$options = Hash::merge(array(
+			'multiple' => array(),
 			'redirect' => array(
 				'action' => 'index',
 			),
 			'messageMap' => array(
 				'empty' => $emptyMessage,
+				'noMultiple' => $noMultipleMessage,
 			),
 		), $options);
 		$messageMap = $options['messageMap'];
@@ -111,6 +114,12 @@ class BulkProcessComponent extends Component {
 		$valid = $this->_validateSelection($noItems, $options, 'empty');
 		if (!$valid) {
 			return;
+		}
+
+		$tooMany = isset($options['multiple'][$action]) && $options['multiple'][$action] === false && $itemCount > 1;
+		$valid = $this->_validateSelection($tooMany, $options, 'noMultiple');
+		if (!$valid) {
+			return false;
 		}
 
 		if (!$Model->Behaviors->loaded('BulkProcess')) {
