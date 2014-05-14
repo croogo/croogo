@@ -88,7 +88,7 @@ class CopyableBehavior extends ModelBehavior {
 		$this->generateContain($Model);
 		$this->record = $Model->find('first', array(
 			'conditions' => array(
-				$Model->alias . '.id' => $id
+				$Model->escapeField() => $id
 			),
 			'contain' => $this->contain
 		));
@@ -134,8 +134,8 @@ class CopyableBehavior extends ModelBehavior {
 		}
 		$ignore = array_unique($this->settings[$Model->alias]['ignore']);
 		foreach ($ignore as $path) {
-			if (Set::check($this->contain, $path)) {
-				$this->contain = Set::remove($this->contain, $path);
+			if (Hash::check($this->contain, $path)) {
+				$this->contain = Hash::remove($this->contain, $path);
 			}
 		}
 		return true;
@@ -221,7 +221,7 @@ class CopyableBehavior extends ModelBehavior {
 				continue;
 			}
 
-			$joinInfo = Set::extract($record[$className], '{n}.' . $val['with']);
+			$joinInfo = Hash::extract($record[$className], '{n}.' . $val['with']);
 			if (empty($joinInfo)) {
 				continue;
 			}
@@ -273,7 +273,7 @@ class CopyableBehavior extends ModelBehavior {
 	protected function _updateMasterKey(Model $Model) {
 		$record = $Model->find('first', array(
 			'conditions' => array(
-				$Model->alias . '.id' => $Model->id
+				$Model->escapeField() => $Model->id
 			),
 			'contain' => $this->contain
 		));
