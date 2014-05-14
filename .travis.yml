@@ -11,8 +11,10 @@ env:
   - DB=pgsql
 
 before_script:
-  - sh -c "cd .. ; mkdir lib ; cd lib ; git clone --depth 1 git://github.com/cakephp/cakephp -b master"
-  - sh -c "cd ../lib ; ln -s cakephp/lib/Cake Cake"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.2' ]; then composer global require 'phpunit/phpunit=3.7.33'; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.2' ]; then ln -s ~/.composer/vendor/phpunit/phpunit/PHPUnit ./Vendor/PHPUnit; fi"
+  - sh -c "git clone --depth 1 git://github.com/cakephp/cakephp -b master"
+  - sh -c "mkdir ../lib && ln -s `pwd`/cakephp/lib/Cake ../lib/"
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE croogo_test;'; fi"
   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE croogo_test;' -U postgres; fi"
   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE SCHEMA croogo_test;' -U postgres -d croogo_test; fi"
