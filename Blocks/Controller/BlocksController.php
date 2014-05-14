@@ -243,6 +243,7 @@ class BlocksController extends BlocksAppController {
 				'delete' => __d('croogo', 'Blocks deleted'),
 				'publish' => __d('croogo', 'Blocks published'),
 				'unpublish' => __d('croogo', 'Blocks unpublished'),
+				'copy' => __d('croogo', 'Blocks copied'),
 			),
 		);
 

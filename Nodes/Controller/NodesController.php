@@ -314,12 +314,14 @@ class NodesController extends NodesAppController {
 		list($action, $ids) = $this->BulkProcess->getRequestVars($Node->alias);
 
 		$options = array(
+			'multiple' => array('copy' => false),
 			'messageMap' => array(
 				'delete' => __d('croogo', 'Nodes deleted'),
 				'publish' => __d('croogo', 'Nodes published'),
 				'unpublish' => __d('croogo', 'Nodes unpublished'),
 				'promote' => __d('croogo', 'Nodes promoted'),
 				'unpromote' => __d('croogo', 'Nodes unpromoted'),
+				'copy' => __d('croogo', 'Nodes copied'),
 			),
 		);
 		return $this->BulkProcess->process($Node, $action, $ids, $options);
