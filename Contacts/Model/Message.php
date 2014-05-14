@@ -89,10 +89,7 @@ class Message extends ContactsAppModel {
  */
 	public $filterArgs = array(
 		'contact_id' => array(
-			'type' => 'lookup',
-			'model' => 'Contact',
-			'modelField' => 'id',
-			'formField' => 'contact_id',
+			'type' => 'value',
 		),
 		'status' => array(
 			'type' => 'value',
