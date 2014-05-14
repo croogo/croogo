@@ -333,12 +333,13 @@ class LinksController extends MenusAppController {
 		}
 		$this->Link->setTreeScope($menuId);
 
+		$multiple = array('copy' => false);
 		$messageMap = array(
 			'delete' => __d('croogo', 'Links deleted'),
 			'publish' => __d('croogo', 'Links published'),
 			'unpublish' => __d('croogo', 'Links unpublished'),
 		);
-		$options = compact('redirect', 'messageMap');
+		$options = compact('multiple', 'redirect', 'messageMap');
 		return $this->BulkProcess->process($this->Link, $action, $ids, $options);
 
 	}

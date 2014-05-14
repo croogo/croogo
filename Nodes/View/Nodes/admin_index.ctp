@@ -81,7 +81,7 @@ echo $this->Form->create(
 						<?php
 							echo $this->element('admin/toggle', array(
 								'id' => $node['Node']['id'],
-								'status' => $node['Node']['status'],
+								'status' => (int)$node['Node']['status'],
 							));
 						?>
 					</td>
@@ -92,6 +92,14 @@ echo $this->Form->create(
 							echo ' ' . $this->Croogo->adminRowAction('',
 								array('action' => 'edit', $node['Node']['id']),
 								array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
+							);
+							echo ' ' . $this->Croogo->adminRowAction('',
+								'#Node' . $node['Node']['id'] . 'Id',
+								array(
+									'icon' => 'copy',
+									'tooltip' => __d('croogo', 'Create a copy'),
+									'rowAction' => 'copy',
+								)
 							);
 							echo ' ' . $this->Croogo->adminRowAction('',
 								'#Node' . $node['Node']['id'] . 'Id',
@@ -124,6 +132,7 @@ echo $this->Form->create(
 						'promote' => __d('croogo', 'Promote'),
 						'unpromote' => __d('croogo', 'Unpromote'),
 						'delete' => __d('croogo', 'Delete'),
+						'copy' => __d('croogo', 'Copy'),
 					),
 					'empty' => true,
 				));

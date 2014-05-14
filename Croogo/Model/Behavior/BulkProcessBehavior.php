@@ -41,6 +41,7 @@ class BulkProcessBehavior extends ModelBehavior {
 				'promote' => false,
 				'unpublish' => 'bulkUnpublish',
 				'unpromote' => false,
+				'copy' => 'bulkCopy',
 			),
 		);
 		$config = Hash::merge($defaults, $config);
@@ -154,6 +155,33 @@ class BulkProcessBehavior extends ModelBehavior {
  */
 	public function bulkDelete(Model $model, $ids) {
 		return $model->deleteAll(array($model->escapeField() => $ids), true, true);
+	}
+
+/**
+ * Bulk Copy
+ *
+ * @param Model $model Model object
+ * @param array $ids Array of IDs
+ * @return boolean True on success, false on failure
+ */
+	public function bulkCopy(Model $model, $ids) {
+		if (!$model->Behaviors->loaded('Copyable')) {
+			$model->Behaviors->load('Croogo.Copyable');
+		}
+		$result = false;
+		$ds = $model->getDataSource();
+		$ds->begin();
+		foreach ($ids as $id) {
+			$result = $model->copy($id);
+			if (!$result) {
+				$ds->rollback();
+				break;
+			}
+		}
+		if ($result) {
+			$ds->commit();
+		}
+		return $result;
 	}
 
 }
