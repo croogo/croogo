@@ -13,39 +13,45 @@ AD7six <andydawson76@gmail.com>
 Eko Tristiyono <eko@xintesa.com>
 Elias Coronado <ecor.rck@hotmail.com>
 SCV Geo <scv@scvgeo.com>
+Appsbender <regz24@gmail.com>
 Heiner Gassen <hg@dynweb.net>
 Paulino Calderon <paulino@calder0n.com>
+phpMagpie <phpmagpie@webbedit.co.uk>
 pinchsoftware <contact@pinchsoft.com>
 Ceeram <c33ram@gmail.com>
 Grégory Salvan <gregory@occi-tech.com>
 Hadrien Collongues <chadrien@chadrien.fr>
+Ivan <gsitex@gmail.com>
 John <john@midianegocios.com.br>
 Lukas Marks <lukas.marks@lumax-web.de>
 Vitor Pacheco <vitor-p.c@hotmail.com>
+mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
 primeminister <primeminister@mowd.nl>
 ADmad <admad.coder@gmail.com>
-Appsbender <regz24@gmail.com>
 James Sapara <james.sapara@gmail.com>
 Matt Curry <matt@pseudocoder.com>
 Mischa ter Smitten <mischa@tersmitten.nl>
 liamkeily <liam@simplywebsites.com>
 thoth <thomas.rader@tigerclawtech.com>
-Ivan <gsitex@gmail.com>
 Josué Silva Santos <josue.silva.santos@gmail.com>
+Liam <liam@simplywebsites.com>
 Lukas Strassel <lukasstrassel@googlemail.com>
 cdbruin <casper@ectrader.nl>
 daniel <daniel@daniels-MacBook-Air.local>
-phpMagpie <phpmagpie@webbedit.co.uk>
 tmaiaroto <tom@shift8creative.com>
 Adam Taylor <ataylor32@gmail.com>
+Adrien Louis-Rossignol <adrien.louis.r@gmail.com>
+Andrea de la Huerta <info@metamorfosys.de>
 Andrew Weir <andru.weir@gmail.com>
 Arie Sutanto <asutanto@xintesa.com>
 Cezary Nowak <korpirkor@users.noreply.github.com>
 Dirk Brünsicke <d1rk@gmx.de>
+DirtyF <frank.taillandier@gmail.com>
 Gilles Bedel <gilles@occi-tech.com>
 Jeremy Harris <jeremy@42pixels.com>
 Joachim Nyqvist <Joachim@JNyqvist.se>
 Kory Marks <kory.marks@mac.com>
+Liam Keily <liam@simplywebsites.com>
 Léo Haddad <scoup001@gmail.com>
 Marce Romagnoli <marce.romagnoli@gmail.com>
 Marcin Jóźwikowski <marcin@jozwikowski.pl>
@@ -63,7 +69,7 @@ elbakai <elbakai@users.noreply.github.com>
 eryw <kristeryw@gmail.com>
 ingvaar <igorpletenev@gmail.com>
 joseph-d <joseph.d@nirada.co.th>
-mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
+phpMagpie <paul@highten.co.uk>
 roland-w <roland-w@users.noreply.github.com>
 romaing <pourri@dixit-productions.com>
 sakulstra <lukasstrassel@googlemail.com>
