@@ -99,7 +99,7 @@ $chooser = isset($this->request->query['chooser']);
 			$block['Region']['title'],
 			$this->element('admin/toggle', array(
 				'id' => $block['Block']['id'],
-				'status' => $block['Block']['status'],
+				'status' => (int)$block['Block']['status'],
 			)),
 			$actions,
 		);

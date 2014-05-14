@@ -81,7 +81,7 @@ echo $this->Form->create(
 						<?php
 							echo $this->element('admin/toggle', array(
 								'id' => $node['Node']['id'],
-								'status' => $node['Node']['status'],
+								'status' => (int)$node['Node']['status'],
 							));
 						?>
 					</td>

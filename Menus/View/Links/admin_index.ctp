@@ -105,7 +105,7 @@ $this->Html
 			$linkTitle,
 			$this->element('admin/toggle', array(
 				'id' => $linkId,
-				'status' => $linksStatus[$linkId],
+				'status' => (int)$linksStatus[$linkId],
 			)),
 			$actions,
 		);
