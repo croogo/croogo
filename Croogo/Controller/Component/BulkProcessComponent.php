@@ -60,7 +60,38 @@ class BulkProcessComponent extends Component {
 	}
 
 /**
- * Process
+ * Convenience method to check for selection count and redirect request
+ *
+ * @param bool $condition True will redirect request to $options['redirect']
+ * @param array $options Options array as passed to process()
+ * @return bool True if selection is valid
+ */
+	protected function _validateSelection($condition, $options, $messageName) {
+		$messageMap = $options['messageMap'];
+		$message = $messageMap[$messageName];
+
+		if ($condition === true) {
+			$this->Session->setFlash($message, 'default', array('class' => 'error'));
+			$this->_controller->redirect($options['redirect']);
+		}
+		return !$condition;
+	}
+
+/**
+ * Process Bulk Request
+ *
+ * Operates on $Model object and assumes that bulk processing will be delegated
+ * to BulkProcessBehavior
+ *
+ * Options:
+ * - redirect URL to redirect in array format
+ * - messageMap Map of error name and its message
+ *
+ * @param Model $Model Model instance
+ * @param string $action Action name to process
+ * @param array $ids Array of IDs
+ * @param array $options Options
+ * @return void
  */
 	public function process(Model $Model, $action, $ids, $options = array()) {
 		$Controller = $this->_controller;
@@ -74,15 +105,12 @@ class BulkProcessComponent extends Component {
 			),
 		), $options);
 		$messageMap = $options['messageMap'];
+		$itemCount = count($ids);
 
-		if ((count($ids) === 0 || $action == null)) {
-			if (!empty($messageMap['empty'])) {
-				$message = $messageMap['empty'];
-			} else {
-				$message = $emptyMessage;
-			}
-			$this->Session->setFlash($message, 'default', array('class' => 'error'));
-			return $Controller->redirect(array('action' => 'index'));
+		$noItems = $itemCount === 0 || $action == null;
+		$valid = $this->_validateSelection($noItems, $options, 'empty');
+		if (!$valid) {
+			return;
 		}
 
 		if (!$Model->Behaviors->loaded('BulkProcess')) {
