@@ -52,7 +52,7 @@ class BulkProcessComponent extends Component {
 		$action = !empty($data['action']) ? $data['action'] : null;
 		$ids = array();
 		foreach ($data as $id => $value) {
-			if (!empty($value[$primaryKey])) {
+			if (is_array($value) && !empty($value[$primaryKey])) {
 				$ids[] = $id;
 			}
 		}
