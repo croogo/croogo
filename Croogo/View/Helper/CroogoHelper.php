@@ -413,15 +413,25 @@ class CroogoHelper extends AppHelper {
 		}
 
 		foreach ($boxNames as $title => $box) {
+			$box = Hash::merge(array(
+				'options' => array(
+					'linkOptions' => array(),
+					'elementData' => array(),
+					'elementOptions' => array(),
+				),
+			), $box);
 			$issetType = isset($box['options']['type']);
 			$typeInTypeAlias = $issetType && in_array($this->_View->viewVars['typeAlias'], $box['options']['type']);
 			if (!$issetType || $typeInTypeAlias) {
 				list($plugin, $element) = pluginSplit($box['element']);
+				$elementOptions = Hash::merge(array(
+					'plugin' => $plugin,
+				), $box['options']['elementOptions']);
 				$output .= $this->Html->beginBox($title);
 				$output .= $this->_View->element(
 					$element,
-					array(),
-					array('plugin' => $plugin)
+					$box['options']['elementData'],
+					$elementOptions
 				);
 				$output .= $this->Html->endBox();
 				$this->boxAlreadyPrinted[] = $title;
