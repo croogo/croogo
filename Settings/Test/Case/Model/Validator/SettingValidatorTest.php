@@ -1,5 +1,5 @@
 <?php
-App::uses('SettingValidator', '.Model/Validator');
+App::uses('SettingValidator', 'Settings.Model/Validator');
 App::uses('Setting', 'Settings.Model');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 

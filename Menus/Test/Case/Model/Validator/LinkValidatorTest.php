@@ -4,7 +4,7 @@ App::uses('LinkValidator', 'Menus.Model/Validator');
 App::uses('Link', 'Menus.Model');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
-class ContactValidatorTest extends CroogoTestCase {
+class LinkValidatorTest extends CroogoTestCase {
 	public $fixtures = array(
 		'plugin.settings.setting',
 		'plugin.translate.i18n',

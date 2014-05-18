@@ -17,7 +17,7 @@ class BlocksAppValidator extends CroogoAppModelValidator {
 
 		$this->add('alias', 'notempty',  array(
 			'rule' => 'notEmpty',
-			'required' => true,
+			'required' => $Model->alias == 'Region',
 			'message' => __d('croogo', 'Alias cannot be empty.'),
 		));
 	}

@@ -108,6 +108,7 @@ class RegionsControllerTest extends CroogoControllerTestCase {
 				'Region' => array(
 					'id' => 4, // right
 					'title' => 'right_modified',
+					'alias' => 'right'
 				),
 			),
 		));

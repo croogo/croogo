@@ -127,6 +127,7 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 				'Block' => array(
 					'id' => 3, // About
 					'title' => 'About [modified]',
+					'body' => 'modified one',
 					'visibility_paths' => '',
 				),
 				'Role' => array(
@@ -309,10 +310,9 @@ class BlocksControllerTest extends CroogoControllerTestCase {
 	public function testAdminProcessPublish() {
 		// unpublish a Block for testing
 		$this->BlocksController->Block->id = 3; // About
-		$this->BlocksController->Block->save(array(
-			'id' => 3,
-			'status' => CroogoStatus::UNPUBLISHED,
-		));
+		$this->BlocksController->Block->saveField(
+			'status', CroogoStatus::UNPUBLISHED
+		);
 		$this->BlocksController->Block->id = false;
 		$about = $this->BlocksController->Block->hasAny(array(
 			'id' => 3,
