@@ -112,11 +112,10 @@ class MetaHelper extends AppHelper {
 		$fields = $this->Html->tag('div', $fields, array('class' => 'fields'));
 
 		$id = is_null($id) ? $uuid : $id;
-		$deleteUrl = array_intersect_key($this->request->params, array(
-			'admin' => null, 'plugin' => null,
-			'controller' => null, 'named' => null,
-		));
-		$deleteUrl['action'] = 'delete_meta';
+		$deleteUrl = array(
+			'admin' => true, 'plugin' => 'meta',
+			'controller' => 'meta', 'action' => 'delete_meta'
+		);
 		$deleteUrl[] = $id;
 		$actions = $this->Html->link(
 			__d('croogo', 'Remove'),
