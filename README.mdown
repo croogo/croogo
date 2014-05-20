@@ -15,6 +15,14 @@ It is powered by [CakePHP](http://cakephp.org) MVC framework.
 
 ## Installation
 
+#### Installation using composer
+
+The preferred way to install Croogo is by using [composer](http::/getcomposer.org).
+
+    composer create-project croogo/croogo-app myapp
+    cd myapp
+    composer install
+
 #### Web based installer
 
   * Extract the archive. Upload the content to your server.
@@ -33,18 +41,19 @@ It is powered by [CakePHP](http://cakephp.org) MVC framework.
 
 #### Installation using git
 
-Beginning version 1.6.x, Croogo has been updated to be installed as a vendor
+Beginning version 2.0.0, Croogo has been updated to be installed as a vendor
 package. This is intended to ease integration with an existing cakephp
 application.
 
-  * Ensure you have a recent cakephp version 2.4
+  * Ensure you have a recent cakephp version 2.5
   * Run the following commands:
 
     git clone git://github.com/croogo/app app
     cd app && Console/add_submodule
 
-  * After running the web installer, you might need to generate the assets by
-    running the following command from the application root directory:
+  * If you intend to modify the default administration theme, you will need
+    to regenerate the assets by running the following command from the
+    application root directory:
 
     `Console/cake croogo make`
 
@@ -56,14 +65,6 @@ application.
     accordingly and run:
 
     `( cd Vendor/croogo/croogo/Croogo ; make )`
-
-#### Installation using composer
-
-An alternative way to install Croogo is by using [composer](http::/getcomposer.org).
-
-    composer create-project croogo/croogo-app myapp
-    cd myapp
-    composer install
 
 ## Links
 
