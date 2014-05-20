@@ -90,8 +90,8 @@ class NodesController extends NodesAppController {
 /**
  * Toggle Node status
  *
- * @param $id string Node id
- * @param $status integer Current Node status
+ * @param string $id Node id
+ * @param integer $status Current Node status
  * @return void
  */
 	public function admin_toggle($id = null, $status = null) {
