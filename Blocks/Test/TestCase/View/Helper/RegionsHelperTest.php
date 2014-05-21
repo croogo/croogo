@@ -25,7 +25,7 @@ class RegionsHelperTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->ComponentCollection = new ComponentCollection();
+		$this->ComponentRegistry = new ComponentRegistry();
 
 		$request = new CakeRequest('nodes/nodes/index');
 		$request->params = array(

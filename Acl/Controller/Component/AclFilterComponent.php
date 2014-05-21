@@ -59,11 +59,11 @@ class AclFilterComponent extends Component {
  * @return void
  */
 	protected function _configure() {
-		if (!$this->_Collection->loaded('Acl.AclAutoLogin')) {
-			$this->_Collection->load('Acl.AclAutoLogin');
+		if (!$this->_registry->loaded('Acl.AclAutoLogin')) {
+			$this->_registry->load('Acl.AclAutoLogin');
 		}
-		if (!$this->_Collection->loaded('Cookie')) {
-			$this->_Collection->load('Cookie');
+		if (!$this->_registry->loaded('Cookie')) {
+			$this->_registry->load('Cookie');
 		}
 		//Configure AuthComponent
 		$this->_controller->Auth->authenticate = array(

@@ -3,7 +3,7 @@
 namespace Croogo\Croogo\Test\TestCase\Controller\Component;
 App::uses('AppController', 'Controller');
 App::uses('Component', 'Controller');
-App::uses('ComponentCollection', 'Controller');
+App::uses('ComponentRegistry', 'Controller');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 App::uses('CroogoComponent', 'Croogo.Controller/Component');
 
@@ -87,7 +87,7 @@ class CroogoComponentTest extends CroogoTestCase {
 		$Controller->expects($this->once())
 			->method('redirect')
 			->with($this->equalTo($expected));
-		$CroogoComponent = new CroogoComponent(new ComponentCollection());
+		$CroogoComponent = new CroogoComponent(new ComponentRegistry());
 		$CroogoComponent->startup($Controller);
 		$CroogoComponent->redirect($url);
 	}

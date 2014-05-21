@@ -27,7 +27,7 @@ class MenusHelperTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->ComponentCollection = new ComponentCollection();
+		$this->ComponentRegistry = new ComponentRegistry();
 
 		$request = $this->getMock('CakeRequest');
 		$response = $this->getMock('CakeResponse');

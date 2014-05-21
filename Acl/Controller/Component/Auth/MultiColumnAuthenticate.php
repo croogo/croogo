@@ -51,8 +51,8 @@ class MultiColumnAuthenticate extends FormAuthenticate {
  * Change the default use of Hash::merge() to array_merge() since Hash::merge()
  * 'combines' the 'column' values instead of replacing them
  */
-	public function __construct(ComponentCollection $collection, $settings) {
-		$this->_Collection = $collection;
+	public function __construct(ComponentRegistry $collection, $settings) {
+		$this->_registry = $collection;
 		$this->settings = array_merge($this->settings, $settings);
 	}
 

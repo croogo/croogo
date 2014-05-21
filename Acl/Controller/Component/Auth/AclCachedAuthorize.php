@@ -19,7 +19,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 /**
  * Constructor
  */
-	public function __construct(ComponentCollection $collection, $settings = array()) {
+	public function __construct(ComponentRegistry $collection, $settings = array()) {
 		parent::__construct($collection, $settings);
 		$this->_setPrefixMappings();
 	}
@@ -133,7 +133,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		}
 
 		$allowed = false;
-		$Acl = $this->_Collection->load('Acl');
+		$Acl = $this->_registry->load('Acl');
 		list($plugin, $userModel) = pluginSplit($this->settings['userModel']);
 
 		$path = '/:plugin/:controller/:action';
@@ -242,7 +242,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		}
 
 		if (!isset($permissions[$alias][$action])) {
-			$Acl = $this->_Collection->load('Acl');
+			$Acl = $this->_registry->load('Acl');
 			try {
 				$allowed = $Acl->check(array($userModel => $user), $acoNode, $action);
 			} catch (Exception $e) {

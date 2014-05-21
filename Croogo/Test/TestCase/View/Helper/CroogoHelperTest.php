@@ -32,7 +32,7 @@ class CroogoHelperTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->ComponentCollection = new ComponentCollection();
+		$this->ComponentRegistry = new ComponentRegistry();
 
 		$request = new CakeRequest('nodes/index');
 		$request->params = array(

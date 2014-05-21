@@ -12,7 +12,7 @@
  */
 namespace Croogo\Acl\Test\TestCase\Controller\Component\Acl;
 
-App::uses('ComponentCollection', 'Controller');
+App::uses('ComponentRegistry', 'Controller');
 App::uses('HabtmDbAcl', 'Acl.Controller/Component/Acl');
 
 class Employee extends CakeTestModel {
@@ -44,7 +44,7 @@ class HabtmDbAclTest extends CakeTestCase {
 		parent::setUp();
 		Configure::write('Acl.classname', 'HabtmDbAcl');
 		Configure::write('Acl.database', 'test');
-		$Collection = new ComponentCollection();
+		$Collection = new ComponentRegistry();
 		$this->Acl = $Collection->load('Acl', array('habtm' => array(
 			'userModel' => 'Employee',
 			'groupAlias' => 'Department',

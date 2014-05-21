@@ -35,7 +35,7 @@ class CookieAuthenticate extends BaseAuthenticate {
 /**
  * Constructor
  */
-	public function __construct(ComponentCollection $collection, $settings) {
+	public function __construct(ComponentRegistry $collection, $settings) {
 		$this->settings['cookie'] = array(
 			'name' => 'CAL',
 			'time' => '+2 weeks',
@@ -71,7 +71,7 @@ class CookieAuthenticate extends BaseAuthenticate {
 		}
 
 		$username = $data[$fields['username']] . $data['time'];
-		if ($data['hash'] === $this->_Collection->Auth->password($username)) {
+		if ($data['hash'] === $this->_registry->Auth->password($username)) {
 			return $data;
 		}
 
@@ -88,7 +88,7 @@ class CookieAuthenticate extends BaseAuthenticate {
  * @throws CakeException
  */
 	public function getUser(CakeRequest $request) {
-		if (!isset($this->_Collection->Cookie) || !$this->_Collection->Cookie instanceof CookieComponent) {
+		if (!isset($this->_registry->Cookie) || !$this->_registry->Cookie instanceof CookieComponent) {
 			throw new CakeException('CookieComponent is not loaded');
 		}
 
@@ -96,12 +96,12 @@ class CookieAuthenticate extends BaseAuthenticate {
 		if ($this->settings['crypt'] == 'rijndael' && !function_exists('mcrypt_encrypt')) {
 			throw new CakeException('Cannot use type rijndael, mcrypt_encrypt() is required');
 		}
-		$this->_Collection->Cookie->type($this->settings['crypt']);
+		$this->_registry->Cookie->type($this->settings['crypt']);
 
 		list(, $model) = pluginSplit($this->settings['userModel']);
 
-		$this->_Collection->Cookie->name = $this->settings['cookie']['name'];
-		$cookie = $this->_Collection->Cookie->read($model);
+		$this->_registry->Cookie->name = $this->settings['cookie']['name'];
+		$cookie = $this->_registry->Cookie->read($model);
 		$data = $this->_verify($cookie);
 		if (!$data) {
 			return false;
@@ -114,7 +114,7 @@ class CookieAuthenticate extends BaseAuthenticate {
 
 		$user = $this->_findUser($data[$username]);
 		if ($user) {
-			$this->_Collection->Session->write(AuthComponent::$sessionKey, $user);
+			$this->_registry->Session->write(AuthComponent::$sessionKey, $user);
 			return $user;
 		}
 		return false;
@@ -174,7 +174,7 @@ class CookieAuthenticate extends BaseAuthenticate {
  * Logout
  */
 	public function logout($user) {
-		$this->_Collection->Cookie->destroy();
+		$this->_registry->Cookie->destroy();
 	}
 
 }

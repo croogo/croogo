@@ -43,7 +43,7 @@ class AclAutoLoginComponent extends Component {
 /**
  * Constructor
  */
-	public function __construct(ComponentCollection $collection, $settings = array()) {
+	public function __construct(ComponentRegistry $collection, $settings = array()) {
 		$settings = Hash::merge(array(
 			'cookieName' => 'CAL',
 		), $settings);

@@ -2,7 +2,7 @@
 
 namespace Croogo\Acl\Test\TestCase\Controller\Component\Auth;
 App::uses('AclCachedAuthorize', 'Acl.Controller/Component/Auth');
-App::uses('ComponentCollection', 'Controller');
+App::uses('ComponentRegistry', 'Controller');
 App::uses('Controller', 'Controller');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 

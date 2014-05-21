@@ -30,7 +30,7 @@ class LayoutHelperTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->ComponentCollection = new ComponentCollection();
+		$this->ComponentRegistry = new ComponentRegistry();
 
 		$request = new CakeRequest('nodes/index');
 		$request->params = array(
@@ -90,7 +90,7 @@ class LayoutHelperTest extends CroogoTestCase {
  * testIsLoggedIn
  */
 	public function testIsLoggedIn() {
-		$session = new SessionComponent($this->ComponentCollection);
+		$session = new SessionComponent($this->ComponentRegistry);
 		$session->delete('Auth');
 		$this->assertFalse($this->Layout->isLoggedIn());
 
@@ -106,7 +106,7 @@ class LayoutHelperTest extends CroogoTestCase {
  * testGetRoleId
  */
 	public function testGetRoleId() {
-		$session = new SessionComponent($this->ComponentCollection);
+		$session = new SessionComponent($this->ComponentRegistry);
 		$session->write('Auth.User', array(
 			'id' => 1,
 			'username' => 'admin',

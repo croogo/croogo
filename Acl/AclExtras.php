@@ -19,7 +19,7 @@
 namespace Croogo\Acl;
 
 App::uses('Controller', 'Controller');
-App::uses('ComponentCollection', 'Controller');
+App::uses('ComponentRegistry', 'Controller');
 App::uses('AclComponent', 'Controller/Component');
 App::uses('DbAcl', 'Model');
 App::uses('Shell', 'Console');
@@ -103,7 +103,7 @@ class AclExtras extends Object {
 		if (!$controller) {
 			$controller = new Controller(new CakeRequest());
 		}
-		$collection = new ComponentCollection();
+		$collection = new ComponentRegistry();
 		$this->Acl = new AclComponent($collection);
 		$this->Acl->startup($controller);
 		$this->Aco = $this->Acl->Aco;
