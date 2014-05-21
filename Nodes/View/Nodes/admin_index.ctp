@@ -132,7 +132,11 @@ echo $this->Form->create(
 						'promote' => __d('croogo', 'Promote'),
 						'unpromote' => __d('croogo', 'Unpromote'),
 						'delete' => __d('croogo', 'Delete'),
-						'copy' => __d('croogo', 'Copy'),
+						'copy' => array(
+							'value' => 'copy',
+							'name' => __d('croogo', 'Copy'),
+							'hidden' => true,
+						),
 					),
 					'empty' => true,
 				));
