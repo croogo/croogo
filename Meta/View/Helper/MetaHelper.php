@@ -26,8 +26,8 @@ class MetaHelper extends AppHelper {
 * beforeRender
  */
 	public function beforeRender($viewFile) {
-		if (isset($this->request->params['admin'])) {
-			$this->Html->script('Meta.admin', array('inline' => false));
+		if ($this->_View->Layout->isLoggedIn()) {
+			return $this->_View->Croogo->adminScript('Meta.admin');
 		}
 	}
 
