@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Taxonomy\Test\TestCase\View\Helper;
 App::uses('TaxonomiesHelper', 'Taxonomy.View/Helper');
 App::uses('Controller', 'Controller');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');

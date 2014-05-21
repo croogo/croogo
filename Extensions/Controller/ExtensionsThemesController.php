@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Extensions\Controller;
 App::uses('File', 'Utility');
 App::uses('Folder', 'Utility');
 App::uses('ExtensionsAppController', 'Extensions.Controller');

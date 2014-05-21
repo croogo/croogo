@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Install;
 App::uses('CakePlugin', 'Core');
 
 class AssetGenerator extends Object {

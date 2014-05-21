@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Model\Behavior;
 App::uses('AuthComponent', 'Controller/Component');
 App::uses('CroogoStatus', 'Croogo.Lib');
 

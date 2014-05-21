@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Comments\Test\TestCase\Model;
 App::uses('Comment', 'Comments.Model');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 

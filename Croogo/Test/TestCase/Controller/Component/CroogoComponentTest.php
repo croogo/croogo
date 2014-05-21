@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Test\TestCase\Controller\Component;
 App::uses('AppController', 'Controller');
 App::uses('Component', 'Controller');
 App::uses('ComponentCollection', 'Controller');

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Taxonomy\Test\Fixture;
 class ModelTaxonomyFixture extends CroogoTestFixture {
 
 	public $name = 'ModelTaxonomy';

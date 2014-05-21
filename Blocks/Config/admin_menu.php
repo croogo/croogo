@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Blocks\Config;
 CroogoNav::add('sidebar', 'blocks', array(
 	'icon' => array('columns', 'large'),
 	'title' => __d('croogo', 'Blocks'),

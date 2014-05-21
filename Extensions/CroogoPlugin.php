@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Extensions;
 App::uses('CroogoEventManager', 'Croogo.Event');
 App::uses('ClassRegistry', 'Utility');
 App::uses('Folder', 'Utility');

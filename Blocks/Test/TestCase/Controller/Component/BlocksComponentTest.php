@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Blocks\Test\TestCase\Controller\Component;
 App::uses('Controller', 'Controller');
 App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 

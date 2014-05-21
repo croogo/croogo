@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Acl\Test\Fixture;
 App::uses('CroogoTestFixture', 'Croogo.TestSuite');
 
 class DepartmentFixture extends CroogoTestFixture {

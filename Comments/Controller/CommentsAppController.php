@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Comments\Controller;
 App::uses('AppController', 'Controller');
 
 /**

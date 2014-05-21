@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Meta\Test\TestCase\Model\Behavior;
 App::uses('Node', 'Nodes.Model');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 

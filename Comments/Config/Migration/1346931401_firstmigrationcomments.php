@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Comments\Config\Migration;
 class FirstMigrationComments extends CakeMigration {
 
 /**

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Test\Fixture;
 App::uses('CroogoTestFixture', 'Croogo.TestSuite');
 
 class TrackableFixture extends CroogoTestFixture {

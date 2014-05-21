@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Install\Config\Data;
 class ArosAcoData {
 
 	public $table = 'aros_acos';

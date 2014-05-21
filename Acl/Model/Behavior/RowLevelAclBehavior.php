@@ -6,6 +6,7 @@
  * @package Croogo.Acl.Model.Behavior
  * @since 1.5
  */
+namespace Croogo\Acl\Model\Behavior;
 class RowLevelAclBehavior extends ModelBehavior {
 
 /**

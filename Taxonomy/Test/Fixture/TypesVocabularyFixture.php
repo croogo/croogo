@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Taxonomy\Test\Fixture;
 class TypesVocabularyFixture extends CroogoTestFixture {
 
 	public $name = 'TypesVocabulary';

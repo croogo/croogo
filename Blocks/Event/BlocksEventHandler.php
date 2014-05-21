@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Blocks\Event;
 App::uses('CakeEventListener', 'Event');
 App::uses('StringConverter', 'Croogo.Lib/Utility');
 

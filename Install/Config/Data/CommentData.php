@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Install\Config\Data;
 class CommentData {
 
 	public $table = 'comments';

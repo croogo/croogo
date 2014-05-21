@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Contacts\Test\TestCase\Controller;
 App::uses('ContactsController', 'Contacts.Controller');
 App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 App::uses('CroogoTestFixture', 'Croogo.TestSuite');

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\FileManager\Config;
 Configure::write('Wysiwyg.attachmentBrowseUrl', array(
 	'plugin' => 'file_manager',
 	'controller' => 'attachments',

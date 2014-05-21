@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Nodes\Config\Schema;
 class NodesSchema extends CakeSchema {
 
 	public function before($event = array()) {

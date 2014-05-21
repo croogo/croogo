@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Translate\Test\TestCase\Model\Behavior;
 App::uses('Node', 'Model');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Routing\Route;
 App::uses('CakeRoute', 'Routing/Route');
 
 /**

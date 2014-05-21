@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Blocks\View\Helper;
 App::uses('AppHelper', 'View/Helper');
 
 /**

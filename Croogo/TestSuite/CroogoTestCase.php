@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\TestSuite;
 App::uses('CroogoTestFixture', 'Croogo.TestSuite');
 App::uses('CroogoRouter', 'Croogo.Lib');
 

@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Croogo\Test\TestCase\View\Helper;
 App::uses('View', 'View');
 App::uses('CroogoFormHelper', 'Croogo.View/Helper');
 App::uses('Controller', 'Controller');

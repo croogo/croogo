@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Extensions;
 App::uses('Folder', 'Utility');
 App::uses('CroogoComposer', 'Extensions.Lib');
 

@@ -16,6 +16,7 @@
  * @since         CakePHP(tm) v 1.2.0.4667
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+namespace Croogo\Acl\Test\Fixture;
 
 App::uses('CroogoTestFixture', 'Croogo.TestSuite');
 

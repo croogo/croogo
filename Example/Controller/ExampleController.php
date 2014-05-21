@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Example\Controller;
 App::uses('ExampleAppController', 'Example.Controller');
 
 /**

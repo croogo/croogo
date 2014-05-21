@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo;
 App::uses('AuthComponent', 'Controller/Component');
 App::uses('CakeLog', 'Log');
 App::uses('Permission', 'Model');

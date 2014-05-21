@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Comments\Test\TestCase\Model\Behavior;
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 class CommentableBehaviorTest extends CroogoTestCase {

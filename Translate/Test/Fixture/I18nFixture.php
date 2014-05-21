@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Translate\Test\Fixture;
 class I18nFixture extends CroogoTestFixture {
 
 	public $name = 'I18n';

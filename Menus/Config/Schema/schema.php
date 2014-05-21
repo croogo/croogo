@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Menus\Config\Schema;
 class MenusSchema extends CakeSchema {
 
 	public function before($event = array()) {

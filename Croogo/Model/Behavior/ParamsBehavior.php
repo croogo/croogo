@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Model\Behavior;
 App::uses('ModelBehavior', 'Model');
 App::uses('StringConverter', 'Croogo.Utility');
 

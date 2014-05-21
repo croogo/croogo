@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Menus\Config\Migration;
 class FirstMigrationMenus extends CakeMigration {
 
 /**

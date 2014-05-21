@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Extensions\Model;
 App::uses('AppModel', 'Model');
 
 /**

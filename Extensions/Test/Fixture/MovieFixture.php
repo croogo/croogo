@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Extensions\Test\Fixture;
 App::uses('CroogoTestFixture', 'Croogo.TestSuite');
 
 class MovieFixture extends CroogoTestFixture {

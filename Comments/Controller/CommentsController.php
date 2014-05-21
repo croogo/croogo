@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Comments\Controller;
 App::uses('CakeEmail', 'Network/Email');
 App::uses('CommentsAppController', 'Comments.Controller');
 

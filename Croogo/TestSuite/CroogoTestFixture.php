@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\TestSuite;
 App::uses('CakeTestFixture', 'TestSuite/Fixture');
 
 /**

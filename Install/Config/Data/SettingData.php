@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Install\Config\Data;
 class SettingData {
 
 	public $table = 'settings';

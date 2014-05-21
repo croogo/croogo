@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Install\Console\Command;
 App::uses('AppShell', 'Console/Command');
 App::uses('InstallManager', 'Install.Lib');
 App::uses('Install', 'Install.Model');

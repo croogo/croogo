@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Menus\Test\TestCase;
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 class AllMenusTestsTest extends PHPUnit_Framework_TestSuite {

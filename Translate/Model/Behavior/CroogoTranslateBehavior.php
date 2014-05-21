@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Translate\Model\Behavior;
 App::uses('ModelBehavior', 'Model');
 App::uses('AppModel', 'Model');
 

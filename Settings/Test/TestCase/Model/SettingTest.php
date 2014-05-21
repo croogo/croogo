@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Settings\Test\TestCase\Model;
 App::uses('Setting', 'Settings.Model');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 

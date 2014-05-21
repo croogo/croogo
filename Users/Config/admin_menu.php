@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Users\Config;
 CroogoNav::add('sidebar', 'users', array(
 	'icon' => array('user', 'large'),
 	'title' => __d('croogo', 'Users'),

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Contacts\Test\Fixture;
 class MessageFixture extends CroogoTestFixture {
 
 	public $name = 'Message';

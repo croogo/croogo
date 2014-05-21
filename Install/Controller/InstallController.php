@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Install\Controller;
 App::uses('Controller', 'Controller');
 App::uses('File', 'Utility');
 App::uses('InstallManager', 'Install.Lib');

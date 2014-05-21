@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Extensions;
 App::uses('File', 'Utility');
 App::uses('HttpSocket', 'Network/Http');
 App::uses('CroogoJson', 'Croogo.Lib');

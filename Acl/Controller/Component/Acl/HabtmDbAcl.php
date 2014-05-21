@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Acl\Controller\Component\Acl;
 App::uses('DbAcl', 'Controller/Component/Acl');
 
 /**

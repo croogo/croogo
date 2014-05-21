@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Users\Controller\Component;
 App::uses('BaseApiComponent', 'Croogo.Controller/Component');
 
 class UserApiComponent extends BaseApiComponent {

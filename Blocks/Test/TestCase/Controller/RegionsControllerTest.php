@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Blocks\Test\TestCase\Controller;
 App::uses('RegionsController', 'Blocks.Controller');
 App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Blocks\Test\Fixture;
 class BlockFixture extends CroogoTestFixture {
 
 	public $name = 'Block';

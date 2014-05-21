@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Blocks\Model;
 App::uses('BlocksAppModel', 'Blocks.Model');
 
 /**

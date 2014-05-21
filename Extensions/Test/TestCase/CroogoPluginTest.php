@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Extensions\Test\TestCase;
 App::uses('MigrationVersion', 'Migrations.Lib');
 App::uses('CroogoPlugin', 'Extensions.Lib');
 App::uses('CroogoTestCase', 'Croogo.Lib/TestSuite');

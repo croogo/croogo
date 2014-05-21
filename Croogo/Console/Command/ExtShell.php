@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Console\Command;
 App::uses('AppShell', 'Console/Command');
 App::uses('CakeRequest', 'Network');
 App::uses('CakeResponse', 'Network');

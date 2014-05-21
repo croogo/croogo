@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Menus\Test\TestCase\Controller;
 App::uses('LinksController', 'Menus.Controller');
 App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 

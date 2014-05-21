@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Users\Config\Migration;
 class UsersTrackableFields extends CakeMigration {
 
 /**

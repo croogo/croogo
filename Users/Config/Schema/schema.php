@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Users\Config\Schema;
 class UsersSchema extends CakeSchema {
 
 	public function before($event = array()) {

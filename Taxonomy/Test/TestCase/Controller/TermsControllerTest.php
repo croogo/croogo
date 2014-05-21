@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Taxonomy\Test\TestCase\Controller;
 App::uses('TermsController', 'Taxonomy.Controller');
 App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 

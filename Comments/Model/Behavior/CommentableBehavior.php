@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Comments\Model\Behavior;
 App::uses('ModelBehavior', 'Model/Behavior');
 
 /**

@@ -5,6 +5,7 @@
  *
  * @package Croogo.Acl.Lib
  */
+namespace Croogo\Acl;
 class AclUpgrade extends Object {
 
 /**

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Comments\Test\Fixture;
 class CommentFixture extends CroogoTestFixture {
 
 	public $name = 'Comment';

@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Blocks\Test\TestCase\View\Helper;
 App::uses('RegionsHelper', 'Blocks.View/Helper');
 App::uses('LayoutHelper', 'Croogo.View/Helper');
 App::uses('SessionComponent', 'Controller/Component');

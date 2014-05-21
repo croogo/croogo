@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Model\Behavior;
 App::uses('CroogoStatus', 'Croogo.Lib');
 App::uses('ModelBehavior', 'Model');
 

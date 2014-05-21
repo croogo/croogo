@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Shops\Config;
 $config = array(
 	'EventHandlers' => array(
 		'Shops.ShopsNodesEventHandler',

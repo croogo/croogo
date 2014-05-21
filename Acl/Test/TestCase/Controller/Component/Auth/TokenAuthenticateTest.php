@@ -16,6 +16,7 @@
  * @since         CakePHP(tm) v 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+namespace Croogo\Acl\Test\TestCase\Controller\Component\Auth;
 
 App::uses('AuthComponent', 'Controller/Component');
 App::uses('TokenAuthenticate', 'Acl.Controller/Component/Auth');

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Comments\Event;
 App::uses('CakeEventListener', 'Event');
 
 /**

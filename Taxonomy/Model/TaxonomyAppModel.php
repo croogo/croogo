@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Taxonomy\Model;
 App::uses('AppModel', 'Model');
 
 /**

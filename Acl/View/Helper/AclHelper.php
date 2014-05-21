@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Acl\View\Helper;
 App::uses('Helper', 'View');
 
 /**

@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Install\Test\TestCase\Model;
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 App::uses('MigrationVersion', 'Migrations.Lib');
 App::uses('User', 'Users.Model');

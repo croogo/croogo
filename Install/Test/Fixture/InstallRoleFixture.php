@@ -4,6 +4,7 @@
  * InstallRoleFixture
  *
  */
+namespace Croogo\Install\Test\Fixture;
 class InstallRoleFixture extends CakeTestFixture {
 
 /**

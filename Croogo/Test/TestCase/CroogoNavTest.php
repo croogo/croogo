@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Croogo\Test\TestCase;
 App::uses('CroogoNav', 'Croogo.Lib');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 

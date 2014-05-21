@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Acl\Config\Migration;
 class FirstMigrationAcl extends CakeMigration {
 
 /**

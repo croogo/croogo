@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Menus\Config;
 CroogoNav::add('sidebar', 'menus', array(
 	'icon' => array('sitemap', 'large'),
 	'title' => __d('croogo', 'Menus'),

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo;
 App::uses('ApiRoute', 'Croogo.Routing/Route');
 App::uses('Router', 'Routing');
 

@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Taxonomy\Test\TestCase\Model;
 App::uses('Taxonomy', 'Taxonomy.Model');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 

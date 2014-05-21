@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Acl\Test\TestCase;
 class AllAclControllersTest extends PHPUnit_Framework_TestSuite {
 
 	public static function suite() {

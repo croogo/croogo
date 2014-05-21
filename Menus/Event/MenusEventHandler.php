@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Menus\Event;
 App::uses('CakeEventListener', 'Event');
 
 /**

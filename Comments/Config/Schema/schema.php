@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Comments\Config\Schema;
 class CommentsSchema extends CakeSchema {
 
 	public function before($event = array()) {

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Users\Controller;
 App::uses('CakeEmail', 'Network/Email');
 App::uses('UsersAppController', 'Users.Controller');
 

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Menus\Test\TestCase\View\Helper;
 App::uses('MenusHelper', 'Menus.View/Helper');
 App::uses('SessionComponent', 'Controller/Component');
 App::uses('Controller', 'Controller');

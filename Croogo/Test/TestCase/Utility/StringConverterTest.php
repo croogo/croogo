@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Test\TestCase\Utility;
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 App::uses('StringConverter', 'Croogo.Utility');
 

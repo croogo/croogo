@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Croogo\Test\TestCase\View\Helper;
 App::uses('CroogoHelper', 'Croogo.View/Helper');
 App::uses('SessionComponent', 'Controller/Component');
 App::uses('AuthComponent', 'Controller/Component');

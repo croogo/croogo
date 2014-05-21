@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Comments\Model;
 App::uses('AppModel', 'Model');
 App::uses('CroogoStatus', 'Croogo.Lib');
 

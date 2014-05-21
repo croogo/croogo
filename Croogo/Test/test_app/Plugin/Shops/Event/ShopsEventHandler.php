@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Shops\Event;
 class ShopsEventHandler extends Object implements CakeEventListener {
 
 	public function implementedEvents() {

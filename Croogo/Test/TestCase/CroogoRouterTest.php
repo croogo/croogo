@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Test\TestCase;
 App::uses('Cache', 'Cache');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 App::uses('Router', 'Routing');

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Contacts\Test\Fixture;
 class ContactFixture extends CroogoTestFixture {
 
 	public $name = 'Contact';

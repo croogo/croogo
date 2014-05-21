@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Extensions\Test\TestCase\Utility;
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 App::uses('DataMigration', 'Extensions.Utility');
 

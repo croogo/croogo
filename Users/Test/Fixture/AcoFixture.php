@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Users\Test\Fixture;
 class AcoFixture extends CroogoTestFixture {
 
 	public $name = 'Aco';

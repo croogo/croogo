@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Blocks\Config\Migration;
 class FirstMigrationBlocks extends CakeMigration {
 
 /**

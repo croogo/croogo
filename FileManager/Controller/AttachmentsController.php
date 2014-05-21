@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\FileManager\Controller;
 App::uses('FileManagerAppController', 'FileManager.Controller');
 
 /**

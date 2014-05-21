@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Settings\Test\TestCase\Controller;
 App::uses('LanguagesController', 'Settings.Controller');
 App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 

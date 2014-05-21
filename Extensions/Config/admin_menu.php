@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Extensions\Config;
 CroogoNav::add('sidebar', 'extensions', array(
 	'icon' => array('magic', 'large'),
 	'title' => __d('croogo', 'Extensions'),

@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Croogo\Test\TestCase\Event;
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 App::uses('UsersController', 'Users.Controller');
 App::uses('NodesController', 'Nodes.Controller');

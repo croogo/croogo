@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Install\Model;
 App::uses('CakeTime', 'Utility');
 App::uses('CroogoPlugin', 'Extensions.Lib');
 App::uses('DataMigration', 'Extensions.Lib/Utility');

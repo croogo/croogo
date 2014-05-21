@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Meta\Test\Fixture;
 class MetaFixture extends CroogoTestFixture {
 
 	public $name = 'Meta';

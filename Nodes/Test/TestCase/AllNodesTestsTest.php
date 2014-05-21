@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Nodes\Test\TestCase;
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
 class AllNodesTestsTest extends PHPUnit_Framework_TestSuite {

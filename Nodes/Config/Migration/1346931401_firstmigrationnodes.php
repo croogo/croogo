@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Nodes\Config\Migration;
 class FirstMigrationNodes extends CakeMigration {
 
 /**

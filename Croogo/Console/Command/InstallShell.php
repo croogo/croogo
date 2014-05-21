@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Console\Command;
 App::uses('AppShell', 'Console/Command');
 App::uses('ExtensionsInstaller', 'Extensions.Lib');
 App::uses('CroogoPlugin', 'Extensions.Lib');

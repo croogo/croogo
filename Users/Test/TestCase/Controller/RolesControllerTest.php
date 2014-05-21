@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Users\Test\TestCase\Controller;
 App::uses('RolesController', 'Users.Controller');
 App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 

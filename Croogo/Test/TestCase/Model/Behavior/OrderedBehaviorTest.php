@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
 App::uses('Block', 'Blocks.Model');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 App::uses('OrderedBehavior', 'Croogo.Model/Behavior');

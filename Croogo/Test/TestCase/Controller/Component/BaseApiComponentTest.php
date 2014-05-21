@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Test\TestCase\Controller\Component;
 App::uses('BaseApiComponent', 'Croogo.Controller/Component');
 App::uses('Component', 'Controller');
 App::uses('Controller', 'Controller');

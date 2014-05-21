@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Translate\Config\Schema;
 class TranslateSchema extends CakeSchema {
 
 	public function before($event = array()) {

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Translate\Test\TestCase\Controller;
 App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 App::uses('TranslateEventHandler', 'Translate.Event');
 App::uses('Translations', 'Translate.Lib');

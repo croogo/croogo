@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\FileManager\View\Helper;
 App::uses('AppHelper', 'View/Helper');
 
 /**

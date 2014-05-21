@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Cache;
 App::uses('Cache', 'Cache');
 
 /**

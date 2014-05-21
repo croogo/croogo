@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Nodes\Config;
 CroogoNav::add('sidebar', 'content', array(
 	'icon' => array('edit', 'large'),
 	'title' => __d('croogo', 'Content'),

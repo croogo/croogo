@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Croogo\Test\TestCase\View\Helper;
 App::uses('CroogoHelper', 'Croogo.View/Helper');
 App::uses('CroogoPaginatorHelper', 'Croogo.View/Helper');
 App::uses('Controller', 'Controller');

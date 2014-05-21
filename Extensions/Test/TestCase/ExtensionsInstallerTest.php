@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Extensions\Test\TestCase;
 App::uses('CroogoTestCase', 'Croogo.Lib/TestSuite');
 App::uses('ExtensionsInstaller', 'Extensions.Lib');
 App::uses('Folder', 'Utility');

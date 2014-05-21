@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Install\Config\Data;
 class ModelTaxonomyData {
 
 	public $table = 'model_taxonomies';

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Menus\Test\Fixture;
 class MenuFixture extends CroogoTestFixture {
 
 	public $name = 'Menu';

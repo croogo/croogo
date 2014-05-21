@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Comments\Test\TestCase\Controller;
 App::uses('CommentsController', 'Comments.Controller');
 App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 App::uses('CroogoTestFixture', 'Croogo.TestSuite');

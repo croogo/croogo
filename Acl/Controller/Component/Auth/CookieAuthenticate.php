@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Acl\Controller\Component\Auth;
 App::uses('BaseAuthenticate', 'Controller/Component/Auth');
 App::uses('AuthComponent', 'Controller/Component');
 App::uses('Router', 'Routing');

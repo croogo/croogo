@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Console;
 App::uses('Shell', 'Console');
 
 /**

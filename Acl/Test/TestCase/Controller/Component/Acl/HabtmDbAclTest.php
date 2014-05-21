@@ -10,6 +10,7 @@
  *
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+namespace Croogo\Acl\Test\TestCase\Controller\Component\Acl;
 
 App::uses('ComponentCollection', 'Controller');
 App::uses('HabtmDbAcl', 'Acl.Controller/Component/Acl');

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Test\TestCase\Console\Command;
 App::uses('ShellDispatcher', 'Console');
 App::uses('AppShell', 'Console/Command');
 App::uses('Shell', 'Console');

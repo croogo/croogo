@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Users\Test\TestCase;
 class AllUsersTestsTest extends PHPUnit_Framework_TestSuite {
 
 	public static function suite() {

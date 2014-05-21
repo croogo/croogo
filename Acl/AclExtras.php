@@ -16,6 +16,7 @@
  * @author Mark Story <mark@mark-story.com>
  * @license http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+namespace Croogo\Acl;
 
 App::uses('Controller', 'Controller');
 App::uses('ComponentCollection', 'Controller');

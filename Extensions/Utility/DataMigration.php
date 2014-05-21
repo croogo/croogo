@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Extensions\Utility;
 App::uses('CakeLog', 'Log');
 App::uses('ClassRegistry', 'Utility');
 App::uses('File', 'Utility');

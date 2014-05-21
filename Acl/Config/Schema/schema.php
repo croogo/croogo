@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Acl\Config\Schema;
 class AclSchema extends CakeSchema {
 
 	public function before($event = array()) {

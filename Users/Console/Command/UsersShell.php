@@ -5,6 +5,7 @@
  *
  * @package Croogo.Users.Console.Command
  */
+namespace Croogo\Users\Console\Command;
 class UsersShell extends AppShell {
 
 	public $uses = array(

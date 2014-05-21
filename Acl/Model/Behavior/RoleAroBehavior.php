@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Acl\Model\Behavior;
 App::uses('ModelBehavior', 'Model');
 
 /**

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Acl\Test\TestCase\Model;
 App::uses('AclPermission', 'Acl.Model');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 

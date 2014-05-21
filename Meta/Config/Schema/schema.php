@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Meta\Config\Schema;
 class MetaSchema extends CakeSchema {
 
 	public function before($event = array()) {

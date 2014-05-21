@@ -3,6 +3,7 @@
  * AclAutoLoginComponent test
  *
  */
+namespace Croogo\Acl\Test\TestCase\Controller\Component;
 
 App::uses('AclAutoLoginComponent', 'Acl.Controller/Component');
 

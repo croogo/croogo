@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Comments\Config;
 CroogoNav::add('sidebar', 'content.children.comments', array(
 	'title' => __d('croogo', 'Comments'),
 	'url' => array(

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Acl\Model;
 App::uses('Permission', 'Model');
 
 /**

@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Acl\Controller\Component\Auth;
 App::uses('FormAuthenticate', 'Controller/Component/Auth');
 
 /**

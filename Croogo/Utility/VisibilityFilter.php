@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Croogo\Utility;
 App::uses('StringConverter', 'Croogo.Lib/Utility');
 
 /**

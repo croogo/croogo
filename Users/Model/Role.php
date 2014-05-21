@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Users\Model;
 App::uses('UsersAppModel', 'Users.Model');
 
 /**

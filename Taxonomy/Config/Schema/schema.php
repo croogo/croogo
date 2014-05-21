@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Taxonomy\Config\Schema;
 class TaxonomySchema extends CakeSchema {
 
 	public function before($event = array()) {

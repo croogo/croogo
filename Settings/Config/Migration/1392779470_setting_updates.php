@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Settings\Config\Migration;
 App::uses('DataMigration', 'Extensions.Utility');
 
 class ExposeSiteThemeAndLocaleAndHomeUrl extends CakeMigration {

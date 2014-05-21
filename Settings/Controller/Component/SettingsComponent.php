@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Settings\Controller\Component;
 App::uses('Component', 'Controller');
 
 /**

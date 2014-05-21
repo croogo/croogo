@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Nodes\Test\TestCase\View\Helper;
 App::uses('NodesHelper', 'Nodes.View/Helper');
 App::uses('Controller', 'Controller');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');

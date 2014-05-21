@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Taxonomy\Config;
 CroogoNav::add('sidebar', 'content.children.content_types', array(
 	'title' => __d('croogo', 'Content Types'),
 	'url' => array(

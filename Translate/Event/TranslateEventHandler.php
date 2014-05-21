@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Translate\Event;
 App::uses('CakeEventListener', 'Event');
 App::uses('Translations', 'Translate.Lib');
 

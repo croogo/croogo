@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Blocks\Test\Fixture;
 class RegionFixture extends CroogoTestFixture {
 
 	public $name = 'Region';

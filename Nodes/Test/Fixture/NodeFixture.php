@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Nodes\Test\Fixture;
 class NodeFixture extends CroogoTestFixture {
 
 	public $name = 'Node';

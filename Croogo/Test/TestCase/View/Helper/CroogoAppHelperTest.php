@@ -1,4 +1,5 @@
 <?php
+namespace Croogo\Croogo\Test\TestCase\View\Helper;
 App::uses('View', 'View');
 App::uses('CroogoAppHelper', 'Croogo.View/Helper');
 App::uses('Router', 'Routing');

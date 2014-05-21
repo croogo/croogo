@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Nodes\View\Helper;
 App::uses('AppHelper', 'View/Helper');
 App::uses('StringConverter', 'Croogo.Lib/Utility');
 

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Blocks\Controller\Component;
 App::uses('Component', 'Controller');
 App::uses('StringConverter', 'Croogo.Lib/Utility');
 App::uses('VisibilityFilter', 'Croogo.Lib/Utility');

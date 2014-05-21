@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Blocks\Config\Migration;
 class BlocksPublishingFields extends CakeMigration {
 
 /**

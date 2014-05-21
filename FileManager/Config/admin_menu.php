@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\FileManager\Config;
 CroogoNav::add('sidebar', 'media', array(
 	'icon' => array('picture', 'large'),
 	'title' => __d('croogo', 'Media'),
