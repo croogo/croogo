@@ -289,7 +289,9 @@ class NodesController extends NodesAppController {
 			}
 		}
 
+		$success = array('success' => $success);
 		$this->set(compact('success'));
+		$this->set('_serialize', 'success');
 	}
 
 /**
