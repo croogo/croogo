@@ -333,7 +333,7 @@ class UpgradeTask extends AppShell {
 		}
 	}
 
-	public function execute() {
+	public function main() {
 		if (empty($this->args)) {
 			return $this->out($this->OptionParser->help());
 		}

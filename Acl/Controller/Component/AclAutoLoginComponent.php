@@ -65,7 +65,7 @@ class AclAutoLoginComponent extends Component {
 			return;
 		}
 
-		$this->Cookie->type('rijndael');
+		$this->Cookie->encryption('rijndael');
 
 		$setting = $this->Auth->authenticate['all'];
 		list(, $this->_userModel) = pluginSplit($setting['userModel']);
