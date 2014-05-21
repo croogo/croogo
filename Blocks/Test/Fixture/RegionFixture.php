@@ -6,16 +6,13 @@ class RegionFixture extends CroogoTestFixture {
 	public $name = 'Region';
 
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
-		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100),
-		'alias' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100, 'key' => 'unique'),
-		'description' => array('type' => 'text', 'null' => false, 'default' => null),
-		'block_count' => array('type' => 'integer', 'null' => false, 'default' => '0'),
-		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'region_alias' => array('column' => 'alias', 'unique' => 1),
-			),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null],
+		'title' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 100],
+		'alias' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 100],
+		'description' => ['type' => 'text', 'null' => false, 'default' => null],
+		'block_count' => ['type' => 'integer', 'null' => false, 'default' => '0'],
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id'], 'region_alias' => ['type' => 'unique', 'columns' => 'alias']],
+		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 
 	public $records = array(

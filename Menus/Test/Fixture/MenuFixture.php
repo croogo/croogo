@@ -6,23 +6,20 @@ class MenuFixture extends CroogoTestFixture {
 	public $name = 'Menu';
 
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
-		'title' => array('type' => 'string', 'null' => false, 'default' => null),
-		'alias' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique'),
-		'description' => array('type' => 'text', 'null' => true, 'default' => null),
-		'status' => array('type' => 'integer', 'length' => 1, 'null' => false, 'default' => '1'),
-		'weight' => array('type' => 'integer', 'null' => true, 'default' => null),
-		'link_count' => array('type' => 'integer', 'null' => false, 'default' => null),
-		'params' => array('type' => 'text', 'null' => true, 'default' => null),
-		'publish_start' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'publish_end' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
-		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
-		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'menu_alias' => array('column' => 'alias', 'unique' => 1),
-			),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+		'title' => ['type' => 'string', 'null' => false, 'default' => null],
+		'alias' => ['type' => 'string', 'null' => false, 'default' => null],
+		'description' => ['type' => 'text', 'null' => true, 'default' => null],
+		'status' => ['type' => 'integer', 'length' => 1, 'null' => false, 'default' => '1'],
+		'weight' => ['type' => 'integer', 'null' => true, 'default' => null],
+		'link_count' => ['type' => 'integer', 'null' => false, 'default' => null],
+		'params' => ['type' => 'text', 'null' => true, 'default' => null],
+		'publish_start' => ['type' => 'datetime', 'null' => true, 'default' => null],
+		'publish_end' => ['type' => 'datetime', 'null' => true, 'default' => null],
+		'updated' => ['type' => 'datetime', 'null' => false, 'default' => null],
+		'created' => ['type' => 'datetime', 'null' => false, 'default' => null],
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id'], 'menu_alias' => ['type' => 'unique', 'columns' => 'alias']],
+		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 
 	public $records = array(

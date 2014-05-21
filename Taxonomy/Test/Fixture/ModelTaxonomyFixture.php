@@ -6,12 +6,12 @@ class ModelTaxonomyFixture extends CroogoTestFixture {
 	public $name = 'ModelTaxonomy';
 
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'primary'),
-		'model' => array('type' => 'string', 'null' => false, 'default' => 'Node', 'length' => 50),
-		'foreign_key' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 20),
-		'taxonomy_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 20],
+		'model' => ['type' => 'string', 'null' => false, 'default' => 'Node', 'length' => 50],
+		'foreign_key' => ['type' => 'integer', 'null' => false, 'default' => '0', 'length' => 20],
+		'taxonomy_id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 20],
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id']],
+		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 
 	public $records = array(

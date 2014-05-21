@@ -11,12 +11,13 @@ class MovieFixture extends CroogoTestFixture {
  * @var array
  */
 	public $fields = array(
-		'id' => array('type' => 'integer', 'key' => 'primary'),
-		'title' => array('type' => 'string', 'null' => false),
-		'year' => array('type' => 'integer', 'null' => false),
-		'user_id' => array('type' => 'integer', 'null' => true),
+		'id' => ['type' => 'integer'],
+		'title' => ['type' => 'string', 'null' => false],
+		'year' => ['type' => 'integer', 'null' => false],
+		'user_id' => ['type' => 'integer', 'null' => true],
 		'created' => 'datetime',
-		'updated' => 'datetime'
+		'updated' => 'datetime',
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]]
 	);
 
 /**

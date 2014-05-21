@@ -6,26 +6,26 @@ class BlockFixture extends CroogoTestFixture {
 	public $name = 'Block';
 
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'primary'),
-		'region_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 20),
-		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100),
-		'alias' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 100, 'key' => 'unique'),
-		'body' => array('type' => 'text', 'null' => false, 'default' => null),
-		'show_title' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-		'class' => array('type' => 'string', 'null' => true, 'default' => null),
-		'status' => array('type' => 'integer', 'length' => 1, 'null' => false, 'default' => '0'),
-		'weight' => array('type' => 'integer', 'null' => true, 'default' => null),
-		'element' => array('type' => 'string', 'null' => true, 'default' => null),
-		'visibility_roles' => array('type' => 'text', 'null' => true, 'default' => null),
-		'visibility_paths' => array('type' => 'text', 'null' => true, 'default' => null),
-		'visibility_php' => array('type' => 'text', 'null' => true, 'default' => null),
-		'params' => array('type' => 'text', 'null' => true, 'default' => null),
-		'publish_start' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'publish_end' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
-		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1), 'alias' => array('column' => 'alias', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 20],
+		'region_id' => ['type' => 'integer', 'null' => true, 'default' => null, 'length' => 20],
+		'title' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 100],
+		'alias' => ['type' => 'string', 'null' => true, 'default' => null, 'length' => 100],
+		'body' => ['type' => 'text', 'null' => false, 'default' => null],
+		'show_title' => ['type' => 'boolean', 'null' => false, 'default' => '1'],
+		'class' => ['type' => 'string', 'null' => true, 'default' => null],
+		'status' => ['type' => 'integer', 'length' => 1, 'null' => false, 'default' => '0'],
+		'weight' => ['type' => 'integer', 'null' => true, 'default' => null],
+		'element' => ['type' => 'string', 'null' => true, 'default' => null],
+		'visibility_roles' => ['type' => 'text', 'null' => true, 'default' => null],
+		'visibility_paths' => ['type' => 'text', 'null' => true, 'default' => null],
+		'visibility_php' => ['type' => 'text', 'null' => true, 'default' => null],
+		'params' => ['type' => 'text', 'null' => true, 'default' => null],
+		'publish_start' => ['type' => 'datetime', 'null' => true, 'default' => null],
+		'publish_end' => ['type' => 'datetime', 'null' => true, 'default' => null],
+		'updated' => ['type' => 'datetime', 'null' => false, 'default' => null],
+		'created' => ['type' => 'datetime', 'null' => false, 'default' => null],
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id'], 'alias' => ['type' => 'unique', 'columns' => 'alias']],
+		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 
 	public $records = array(

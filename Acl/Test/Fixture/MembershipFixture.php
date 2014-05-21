@@ -11,9 +11,10 @@ class MembershipFixture extends CroogoTestFixture {
  * @var array
  */
 	public $fields = array(
-		'id' => array('type' => 'integer', 'key' => 'primary'),
-		'employee_id' => array('type' => 'integer', 'null' => false),
-		'department_id' => array('type' => 'integer', 'null' => false),
+		'id' => ['type' => 'integer'],
+		'employee_id' => ['type' => 'integer', 'null' => false],
+		'department_id' => ['type' => 'integer', 'null' => false],
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]]
 	);
 
 /**

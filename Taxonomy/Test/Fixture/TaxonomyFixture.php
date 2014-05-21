@@ -6,14 +6,14 @@ class TaxonomyFixture extends CroogoTestFixture {
 	public $name = 'Taxonomy';
 
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'primary'),
-		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 20),
-		'term_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10),
-		'vocabulary_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10),
-		'lft' => array('type' => 'integer', 'null' => true, 'default' => null),
-		'rght' => array('type' => 'integer', 'null' => true, 'default' => null),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 20],
+		'parent_id' => ['type' => 'integer', 'null' => true, 'default' => null, 'length' => 20],
+		'term_id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+		'vocabulary_id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+		'lft' => ['type' => 'integer', 'null' => true, 'default' => null],
+		'rght' => ['type' => 'integer', 'null' => true, 'default' => null],
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id']],
+		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 
 	public $records = array(

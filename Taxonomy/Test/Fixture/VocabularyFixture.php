@@ -6,22 +6,19 @@ class VocabularyFixture extends CroogoTestFixture {
 	public $name = 'Vocabulary';
 
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
-		'title' => array('type' => 'string', 'null' => false, 'default' => null),
-		'alias' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique'),
-		'description' => array('type' => 'text', 'null' => true, 'default' => null),
-		'required' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'multiple' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'tags' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'plugin' => array('type' => 'string', 'null' => true, 'default' => null),
-		'weight' => array('type' => 'integer', 'null' => true, 'default' => null),
-		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
-		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
-		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'vocabulary_alias' => array('column' => 'alias', 'unique' => 1),
-			),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+		'title' => ['type' => 'string', 'null' => false, 'default' => null],
+		'alias' => ['type' => 'string', 'null' => false, 'default' => null],
+		'description' => ['type' => 'text', 'null' => true, 'default' => null],
+		'required' => ['type' => 'boolean', 'null' => false, 'default' => '0'],
+		'multiple' => ['type' => 'boolean', 'null' => false, 'default' => '0'],
+		'tags' => ['type' => 'boolean', 'null' => false, 'default' => '0'],
+		'plugin' => ['type' => 'string', 'null' => true, 'default' => null],
+		'weight' => ['type' => 'integer', 'null' => true, 'default' => null],
+		'updated' => ['type' => 'datetime', 'null' => false, 'default' => null],
+		'created' => ['type' => 'datetime', 'null' => false, 'default' => null],
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id'], 'vocabulary_alias' => ['type' => 'unique', 'columns' => 'alias']],
+		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 
 	public $records = array(

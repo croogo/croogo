@@ -6,12 +6,12 @@ class TypesVocabularyFixture extends CroogoTestFixture {
 	public $name = 'TypesVocabulary';
 
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
-		'type_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10),
-		'vocabulary_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10),
-		'weight' => array('type' => 'integer', 'null' => true, 'default' => null),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+		'type_id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+		'vocabulary_id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+		'weight' => ['type' => 'integer', 'null' => true, 'default' => null],
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id']],
+		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 
 	public $records = array(

@@ -6,25 +6,22 @@ class TypeFixture extends CroogoTestFixture {
 	public $name = 'Type';
 
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
-		'title' => array('type' => 'string', 'null' => false, 'default' => null),
-		'alias' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique'),
-		'description' => array('type' => 'text', 'null' => false, 'default' => null),
-		'format_show_author' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-		'format_show_date' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-		'comment_status' => array('type' => 'integer', 'null' => false, 'default' => '1', 'length' => 1),
-		'comment_approve' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-		'comment_spam_protection' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'comment_captcha' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-		'params' => array('type' => 'text', 'null' => true, 'default' => null),
-		'plugin' => array('type' => 'string', 'null' => true, 'default' => null),
-		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
-		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
-		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'type_alias' => array('column' => 'alias', 'unique' => 1),
-			),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+		'title' => ['type' => 'string', 'null' => false, 'default' => null],
+		'alias' => ['type' => 'string', 'null' => false, 'default' => null],
+		'description' => ['type' => 'text', 'null' => false, 'default' => null],
+		'format_show_author' => ['type' => 'boolean', 'null' => false, 'default' => '1'],
+		'format_show_date' => ['type' => 'boolean', 'null' => false, 'default' => '1'],
+		'comment_status' => ['type' => 'integer', 'null' => false, 'default' => '1', 'length' => 1],
+		'comment_approve' => ['type' => 'boolean', 'null' => false, 'default' => '1'],
+		'comment_spam_protection' => ['type' => 'boolean', 'null' => false, 'default' => '0'],
+		'comment_captcha' => ['type' => 'boolean', 'null' => false, 'default' => '0'],
+		'params' => ['type' => 'text', 'null' => true, 'default' => null],
+		'plugin' => ['type' => 'string', 'null' => true, 'default' => null],
+		'updated' => ['type' => 'datetime', 'null' => false, 'default' => null],
+		'created' => ['type' => 'datetime', 'null' => false, 'default' => null],
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id'], 'type_alias' => ['type' => 'unique', 'columns' => 'alias']],
+		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 
 	public $records = array(

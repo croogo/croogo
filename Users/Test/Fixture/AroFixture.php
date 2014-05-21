@@ -6,15 +6,15 @@ class AroFixture extends CroogoTestFixture {
 	public $name = 'Aro';
 
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
-		'parent_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 10),
-		'model' => array('type' => 'string', 'null' => true),
-		'foreign_key' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 10),
-		'alias' => array('type' => 'string', 'null' => true),
-		'lft' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 10),
-		'rght' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 10),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+		'parent_id' => ['type' => 'integer', 'null' => true, 'default' => null, 'length' => 10],
+		'model' => ['type' => 'string', 'null' => true],
+		'foreign_key' => ['type' => 'integer', 'null' => true, 'default' => null, 'length' => 10],
+		'alias' => ['type' => 'string', 'null' => true],
+		'lft' => ['type' => 'integer', 'null' => true, 'default' => null, 'length' => 10],
+		'rght' => ['type' => 'integer', 'null' => true, 'default' => null, 'length' => 10],
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id']],
+		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 
 	public $records = array(

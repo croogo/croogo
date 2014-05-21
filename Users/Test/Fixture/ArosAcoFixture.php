@@ -6,15 +6,15 @@ class ArosAcoFixture extends CroogoTestFixture {
 	public $name = 'ArosAco';
 
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
-		'aro_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10),
-		'aco_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10),
-		'_create' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2),
-		'_read' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2),
-		'_update' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2),
-		'_delete' => array('type' => 'string', 'null' => false, 'default' => '0', 'length' => 2),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+		'aro_id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+		'aco_id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+		'_create' => ['type' => 'string', 'null' => false, 'default' => '0', 'length' => 2],
+		'_read' => ['type' => 'string', 'null' => false, 'default' => '0', 'length' => 2],
+		'_update' => ['type' => 'string', 'null' => false, 'default' => '0', 'length' => 2],
+		'_delete' => ['type' => 'string', 'null' => false, 'default' => '0', 'length' => 2],
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id']],
+		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 
 	public $records = array(

@@ -6,16 +6,16 @@ class LanguageFixture extends CroogoTestFixture {
 	public $name = 'Language';
 
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
-		'title' => array('type' => 'string', 'null' => false, 'default' => null),
-		'native' => array('type' => 'string', 'null' => true, 'default' => null),
-		'alias' => array('type' => 'string', 'null' => false, 'default' => null),
-		'status' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-		'weight' => array('type' => 'integer', 'null' => true, 'default' => null),
-		'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
-		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1)),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null],
+		'title' => ['type' => 'string', 'null' => false, 'default' => null],
+		'native' => ['type' => 'string', 'null' => true, 'default' => null],
+		'alias' => ['type' => 'string', 'null' => false, 'default' => null],
+		'status' => ['type' => 'boolean', 'null' => false, 'default' => '1'],
+		'weight' => ['type' => 'integer', 'null' => true, 'default' => null],
+		'updated' => ['type' => 'datetime', 'null' => false, 'default' => null],
+		'created' => ['type' => 'datetime', 'null' => false, 'default' => null],
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id']],
+		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 
 	public $records = array(

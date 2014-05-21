@@ -11,11 +11,12 @@ class EmployeeFixture extends CroogoTestFixture {
  * @var array
  */
 	public $fields = array(
-		'id' => array('type' => 'integer', 'key' => 'primary'),
-		'username' => array('type' => 'string', 'null' => false),
-		'primary_department_id' => array('type' => 'integer', 'null' => true),
+		'id' => ['type' => 'integer'],
+		'username' => ['type' => 'string', 'null' => false],
+		'primary_department_id' => ['type' => 'integer', 'null' => true],
 		'created' => 'datetime',
-		'updated' => 'datetime'
+		'updated' => 'datetime',
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]]
 	);
 
 /**

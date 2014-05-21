@@ -11,8 +11,9 @@ class DepartmentFixture extends CroogoTestFixture {
  * @var array
  */
 	public $fields = array(
-		'id' => array('type' => 'integer', 'key' => 'primary'),
-		'name' => array('type' => 'string', 'null' => false),
+		'id' => ['type' => 'integer'],
+		'name' => ['type' => 'string', 'null' => false],
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]]
 	);
 
 /**

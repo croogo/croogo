@@ -6,16 +6,13 @@ class RoleFixture extends CroogoTestFixture {
 	public $name = 'Role';
 
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
-		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100),
-		'alias' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 100, 'key' => 'unique'),
-		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'updated' => array('type' => 'datetime', 'null' => true, 'default' => null),
-		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'role_alias' => array('column' => 'alias', 'unique' => 1),
-			),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null],
+		'title' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 100],
+		'alias' => ['type' => 'string', 'null' => true, 'default' => null, 'length' => 100],
+		'created' => ['type' => 'datetime', 'null' => true, 'default' => null],
+		'updated' => ['type' => 'datetime', 'null' => true, 'default' => null],
+		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id'], 'role_alias' => ['type' => 'unique', 'columns' => 'alias']],
+		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 
 	public $records = array(
