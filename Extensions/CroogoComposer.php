@@ -2,7 +2,7 @@
 
 namespace Croogo\Extensions;
 
-use App\Network\Http\HttpSocket;
+use App\Network\Http\Client;
 use Cake\Utility\File;
 use Croogo\Lib\CroogoJson;
 /**
