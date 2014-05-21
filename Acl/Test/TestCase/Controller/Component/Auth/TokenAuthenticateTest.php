@@ -18,12 +18,13 @@
  */
 namespace Croogo\Acl\Test\TestCase\Controller\Component\Auth;
 
-App::uses('AuthComponent', 'Controller/Component');
-App::uses('TokenAuthenticate', 'Acl.Controller/Component/Auth');
-App::uses('AppModel', 'Model');
-App::uses('CakeRequest', 'Network');
-App::uses('CakeResponse', 'Network');
-App::uses('Controller', 'Controller');
+use Acl\Controller\Component\Auth\TokenAuthenticate;
+use App\Controller\Component\AuthComponent;
+use App\Model\AppModel;
+use Cake\Controller\Controller;
+use Cake\Network\Request;
+use Cake\Network\Response;
+use Cake\TestSuite\TestCase;
 
 /**
  * Test case for FormAuthentication
@@ -53,7 +54,7 @@ class TokenAuthenticateTest extends CakeTestCase {
 		$password = Security::hash('password', null, true);
 		$User = ClassRegistry::init('MultiUser');
 		$User->updateAll(array('password' => $User->getDataSource()->value($password)));
-		$this->response = $this->getMock('CakeResponse');
+		$this->response = $this->getMock('Response');
 	}
 
 /**
@@ -63,7 +64,7 @@ class TokenAuthenticateTest extends CakeTestCase {
  */
 	public function testAuthenticateTokenParameter() {
 		$this->auth->settings['_parameter'] = 'token';
-		$request = new CakeRequest('posts/index?_token=54321');
+		$request = new Request('posts/index?_token=54321');
 
 		$result = $this->auth->getUser($request, $this->response);
 		$this->assertFalse($result);
@@ -76,12 +77,12 @@ class TokenAuthenticateTest extends CakeTestCase {
 			'created' => '2007-03-17 01:16:23',
 			'updated' => '2007-03-17 01:18:31'
 		);
-		$request = new CakeRequest('posts/index?_token=12345');
+		$request = new Request('posts/index?_token=12345');
 		$result = $this->auth->getUser($request, $this->response);
 		$this->assertEquals($expected, $result);
 
 		$this->auth->settings['parameter'] = 'tokenname';
-		$request = new CakeRequest('posts/index?tokenname=12345');
+		$request = new Request('posts/index?tokenname=12345');
 		$result = $this->auth->getUser($request, $this->response);
 		$this->assertEquals($expected, $result);
 	}
@@ -93,7 +94,7 @@ class TokenAuthenticateTest extends CakeTestCase {
  */
 	public function testAuthenticateTokenHeader() {
 		$_SERVER['HTTP_X_APITOKEN'] = '54321';
-		$request = new CakeRequest('posts/index', false);
+		$request = new Request('posts/index', false);
 
 		$result = $this->auth->getUser($request, $this->response);
 		$this->assertFalse($result);

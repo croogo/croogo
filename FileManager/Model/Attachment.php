@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\FileManager\Model;
-App::uses('Node', 'Nodes.Model');
 
+use Nodes\Model\Node;
 /**
  * Attachment Model
  *

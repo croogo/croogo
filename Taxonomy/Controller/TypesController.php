@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Taxonomy\Controller;
-App::uses('AppController', 'Controller');
 
+use App\Controller\AppController;
 /**
  * Types Controller
  *

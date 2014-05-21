@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\View\Helper;
-App::uses('HtmlHelper', 'View/Helper');
 
+use App\View\Helper\HtmlHelper;
 /**
  * Croogo Html Helper
  *

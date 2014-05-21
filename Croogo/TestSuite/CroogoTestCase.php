@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Croogo\TestSuite;
-App::uses('CroogoTestFixture', 'Croogo.TestSuite');
-App::uses('CroogoRouter', 'Croogo.Lib');
 
+use Croogo\Lib\CroogoRouter;
+use Croogo\TestSuite\CroogoTestFixture;
 /**
  * CroogoTestCase class
  *
@@ -36,7 +36,7 @@ class CroogoTestCase extends CakeTestCase {
 	}
 
 	protected static function _restoreSettings() {
-		$configDir = CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS;
+		$configDir = Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS;
 		$source = $configDir . 'settings.default';
 		$target = $configDir . 'settings.json';
 		copy($source, $target);
@@ -50,7 +50,7 @@ class CroogoTestCase extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$appDir = CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS;
+		$appDir = Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS;
 
 		App::build(array(
 			'Plugin' => array($appDir . 'Plugin' . DS),
@@ -58,8 +58,8 @@ class CroogoTestCase extends CakeTestCase {
 		), App::PREPEND);
 		$this->_paths = App::paths();
 
-		CakePlugin::unload('Install');
-		CakePlugin::load('Example');
+		Plugin::unload('Install');
+		Plugin::load('Example');
 		Configure::write('Acl.database', 'test');
 		$this->setupSettings($appDir);
 	}
@@ -86,7 +86,7 @@ class CroogoTestCase extends CakeTestCase {
  * Helper method to create an test API request (with the appropriate detector)
  */
 	protected function _apiRequest($params) {
-		$request = new CakeRequest();
+		$request = new Request();
 		$request->addParams($params);
 		$request->addDetector('api', array(
 			'callback' => array('CroogoRouter', 'isApiRequest'),

@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\View\Helper;
-App::uses('Helper', 'View/Helper');
 
+use App\View\Helper\Helper;
 /**
  * @package Croogo.Croogo.View.Helper
  * @version 1.1

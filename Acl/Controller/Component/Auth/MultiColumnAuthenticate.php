@@ -1,7 +1,7 @@
 <?php
 namespace Croogo\Acl\Controller\Component\Auth;
-App::uses('FormAuthenticate', 'Controller/Component/Auth');
 
+use App\Controller\Component\Auth\FormAuthenticate;
 /**
  * An authentication adapter for AuthComponent.  Provides the ability to authenticate using POST
  * data. The username form input can be checked against multiple table columns, for instance username and email

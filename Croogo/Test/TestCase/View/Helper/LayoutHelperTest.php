@@ -1,11 +1,11 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\View\Helper;
-App::uses('LayoutHelper', 'Croogo.View/Helper');
-App::uses('SessionComponent', 'Controller/Component');
-App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('CroogoHtmlHelper', 'Croogo.View/Helper');
 
+use App\Controller\Component\SessionComponent;
+use Cake\Controller\Controller;
+use Croogo\TestSuite\CroogoTestCase;
+use Croogo\View\Helper\CroogoHtmlHelper;
+use Croogo\View\Helper\LayoutHelper;
 class TheLayoutTestController extends Controller {
 
 	public $name = 'TheTest';
@@ -32,13 +32,13 @@ class LayoutHelperTest extends CroogoTestCase {
 		parent::setUp();
 		$this->ComponentRegistry = new ComponentRegistry();
 
-		$request = new CakeRequest('nodes/index');
+		$request = new Request('nodes/index');
 		$request->params = array(
 			'controller' => 'nodes',
 			'action' => 'index',
 			'named' => array(),
 		);
-		$view = new View(new TheLayoutTestController($request, new CakeResponse()));
+		$view = new View(new TheLayoutTestController($request, new Response()));
 		$this->Layout = new LayoutHelper($view);
 		$this->Html = new CroogoHtmlHelper($view);
 		$this->_appEncoding = Configure::read('App.encoding');

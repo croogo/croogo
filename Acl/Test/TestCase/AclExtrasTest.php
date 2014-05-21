@@ -1,10 +1,10 @@
 <?php
 
 namespace Croogo\Acl\Test\TestCase;
-App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('AclExtras', 'Acl.Lib');
 
+use Acl\Lib\AclExtras;
+use Cake\Controller\Controller;
+use Croogo\TestSuite\CroogoTestCase;
 class AclExtrasTest extends CroogoTestCase {
 
 /**

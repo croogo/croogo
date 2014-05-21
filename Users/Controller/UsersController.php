@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Users\Controller;
-App::uses('CakeEmail', 'Network/Email');
-App::uses('UsersAppController', 'Users.Controller');
 
+use App\Network\Email\Email;
+use Users\Controller\UsersAppController;
 /**
  * Users Controller
  *
@@ -322,7 +322,7 @@ class UsersController extends UsersAppController {
 		$success = false;
 
 		try {
-			$email = new CakeEmail();
+			$email = new Email();
 			$email->from($from[1], $from[0]);
 			$email->to($to);
 			$email->subject($subject);

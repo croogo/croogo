@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Croogo\View\Helper;
-App::uses('AppHelper', 'View/Helper');
-App::uses('CroogoStatus', 'Croogo.Lib');
 
+use App\View\Helper\AppHelper;
+use Croogo\Lib\CroogoStatus;
 /**
  * Croogo Helper
  *

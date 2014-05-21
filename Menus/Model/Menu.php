@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Menus\Model;
-App::uses('MenusAppModel', 'Menus.Model');
 
+use Menus\Model\MenusAppModel;
 /**
  * Menu
  *

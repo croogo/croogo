@@ -1,10 +1,10 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\View\Helper;
-App::uses('View', 'View');
-App::uses('CroogoAppHelper', 'Croogo.View/Helper');
-App::uses('Router', 'Routing');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Cake\Routing\Router;
+use Cake\View\View;
+use Croogo\TestSuite\CroogoTestCase;
+use Croogo\View\Helper\CroogoAppHelper;
 class CroogoAppHelperTest extends CroogoTestCase {
 
 /**
@@ -30,15 +30,15 @@ class CroogoAppHelperTest extends CroogoTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		CakePlugin::load('Translate');
+		Plugin::load('Translate');
 		$this->View = new View(null);
 		$this->AppHelper = new CroogoAppHelper($this->View);
-		$this->AppHelper->request = new CakeRequest(null, false);
+		$this->AppHelper->request = new Request(null, false);
 	}
 
 	public function tearDown() {
 		parent::tearDown();
-		CakePlugin::unload('Translate');
+		Plugin::unload('Translate');
 		unset($this->AppHelper->request, $this->AppHelper, $this->View);
 	}
 

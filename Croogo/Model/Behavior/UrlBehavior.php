@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\Model\Behavior;
-App::uses('ModelBehavior', 'Model');
 
+use App\Model\ModelBehavior;
 /**
  * Url Behavior
  *

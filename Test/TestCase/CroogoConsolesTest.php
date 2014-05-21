@@ -1,7 +1,7 @@
 <?php
 namespace Croogo\Test\TestCase;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoTestCase;
 class CroogoConsolesTests extends PHPUnit_Framework_TestSuite {
 
 	public static function suite() {

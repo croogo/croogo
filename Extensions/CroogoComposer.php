@@ -1,10 +1,10 @@
 <?php
 
 namespace Croogo\Extensions;
-App::uses('File', 'Utility');
-App::uses('HttpSocket', 'Network/Http');
-App::uses('CroogoJson', 'Croogo.Lib');
 
+use App\Network\Http\HttpSocket;
+use Cake\Utility\File;
+use Croogo\Lib\CroogoJson;
 /**
  * Croogo Composer Wrapper
  *

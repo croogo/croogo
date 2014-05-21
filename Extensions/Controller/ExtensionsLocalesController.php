@@ -1,10 +1,10 @@
 <?php
 
 namespace Croogo\Extensions\Controller;
-App::uses('File', 'Utility');
-App::uses('Folder', 'Utility');
-App::uses('ExtensionsAppController', 'Extensions.Controller');
 
+use Cake\Utility\File;
+use Cake\Utility\Folder;
+use Extensions\Controller\ExtensionsAppController;
 /**
  * Extensions Locales Controller
  *

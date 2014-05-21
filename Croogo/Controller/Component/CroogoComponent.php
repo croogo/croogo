@@ -1,12 +1,12 @@
 <?php
 
 namespace Croogo\Croogo\Controller\Component;
-App::uses('AuthComponent', 'Controller/Component');
-App::uses('Component', 'Controller');
-App::uses('CroogoPlugin', 'Extensions.Lib');
-App::uses('CroogoTheme', 'Extensions.Lib');
-App::uses('Croogo', 'Croogo.Lib');
 
+use App\Controller\Component\AuthComponent;
+use Cake\Controller\Component;
+use Croogo\Lib\Croogo;
+use Extensions\Lib\CroogoPlugin;
+use Extensions\Lib\CroogoTheme;
 /**
  * Croogo Component
  *
@@ -105,12 +105,12 @@ class CroogoComponent extends Component {
  */
 	protected function _adminData() {
 		if (!Configure::read('Croogo.version')) {
-			if (CakePlugin::loaded('Settings')) {
+			if (Plugin::loaded('Settings')) {
 				if ($this->_controller->Setting instanceof Model) {
 					if (file_exists(APP . 'VERSION.txt')) {
 						$file = APP . 'VERSION.txt';
 					} else {
-						$file = dirname(CakePlugin::path('Croogo')) . DS . 'VERSION.txt';
+						$file = dirname(Plugin::path('Croogo')) . DS . 'VERSION.txt';
 					}
 					$version = trim(file_get_contents($file));
 					$this->_controller->Setting->write('Croogo.version', $version);

@@ -1,10 +1,10 @@
 <?php
 
 namespace Croogo\Extensions\Test\TestCase;
-App::uses('CroogoTestCase', 'Croogo.Lib/TestSuite');
-App::uses('ExtensionsInstaller', 'Extensions.Lib');
-App::uses('Folder', 'Utility');
 
+use Cake\Utility\Folder;
+use Croogo\Lib\TestSuite\CroogoTestCase;
+use Extensions\Lib\ExtensionsInstaller;
 /**
  * Extensions Installer Test
  *
@@ -24,7 +24,7 @@ class ExtensionsInstallerTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$path = CakePlugin::path('Extensions') . 'Test' . DS;
+		$path = Plugin::path('Extensions') . 'Test' . DS;
 		App::build(array(
 			'Plugin' => array($path . 'test_app' . DS . 'Plugin' . DS),
 			'View' => array($path . 'test_app' . DS . 'View' . DS),
@@ -43,10 +43,10 @@ class ExtensionsInstallerTest extends CroogoTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		$path = CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example';
+		$path = Plugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example';
 		$Folder = new Folder($path);
 		$Folder->delete();
-		$path = CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Minimal';
+		$path = Plugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Minimal';
 		$Folder = new Folder($path);
 		$Folder->delete();
 		if (file_exists($this->minimalPlugin)) {
@@ -78,7 +78,7 @@ class ExtensionsInstallerTest extends CroogoTestCase {
  * Create a test zip file $zipPath from $dirName
  */
 	protected function _createZip($zipPath, $dirName) {
-		$dir = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS;
+		$dir = Plugin::path('Extensions') . 'Test' . DS . 'test_files' . DS;
 		chdir($dir);
 		$zip = new ZipArchive();
 		$zip->open($zipPath, ZipArchive::OVERWRITE);
@@ -125,7 +125,7 @@ class ExtensionsInstallerTest extends CroogoTestCase {
 	public function testExtractPlugin() {
 		$result = $this->ExtensionsInstaller->extractPlugin($this->testPlugin);
 		$this->assertTrue($result);
-		$path = CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example' . DS;
+		$path = Plugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example' . DS;
 		$Folder = new Folder($path);
 		$files = $Folder->findRecursive();
 		foreach ($files as $key => $file) {
@@ -150,7 +150,7 @@ class ExtensionsInstallerTest extends CroogoTestCase {
 	public function testExtractTheme() {
 		$result = $this->ExtensionsInstaller->extractTheme($this->testTheme);
 		$this->assertTrue($result);
-		$path = CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Minimal' . DS;
+		$path = Plugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Minimal' . DS;
 		$Folder = new Folder($path);
 		$files = $Folder->findRecursive();
 		foreach ($files as $key => $file) {

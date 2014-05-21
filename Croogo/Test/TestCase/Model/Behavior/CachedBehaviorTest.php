@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
-App::uses('User', 'Users.Model');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoTestCase;
+use Users\Model\User;
 class CachedBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(

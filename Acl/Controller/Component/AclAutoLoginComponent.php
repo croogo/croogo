@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Acl\Controller\Component;
-App::uses('Component', 'Controller');
 
+use Cake\Controller\Component;
 /**
  * Provides "Remember me" feature (via CookieAuthenticate) by listening to
  * to Controller.Users.adminLoginSuccessful event and creating the appropriate

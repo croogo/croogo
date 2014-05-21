@@ -1,9 +1,9 @@
 <?php
 
-App::uses('CakeLog', 'Log');
-App::uses('CroogoEventManager', 'Croogo.Event');
-App::uses('Croogo', 'Croogo.Lib');
-App::uses('CroogoNav', 'Croogo.Lib');
+use Cake\Log\Log;
+use Croogo\Event\CroogoEventManager;
+use Croogo\Lib\Croogo;
+use Croogo\Lib\CroogoNav;
 
 require_once 'croogo_bootstrap.php';
 
@@ -23,5 +23,5 @@ Configure::write('Croogo.installed',
 	file_exists(APP . 'Config' . DS . 'croogo.php')
 );
 if (!Configure::read('Croogo.installed') || !Configure::read('Install.secured')) {
-	CakePlugin::load('Install', array('routes' => true));
+	Plugin::load('Install', array('routes' => true));
 }

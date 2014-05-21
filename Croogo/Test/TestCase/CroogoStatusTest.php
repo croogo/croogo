@@ -1,10 +1,10 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase;
-App::uses('CroogoStatus', 'Croogo.Lib');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
-class CroogoStatusTest extends CroogoTestCase implements CakeEventListener {
+use Croogo\Lib\CroogoStatus;
+use Croogo\TestSuite\CroogoTestCase;
+class CroogoStatusTest extends CroogoTestCase implements EventListener {
 
 	public function implementedEvents() {
 		return array(
@@ -25,7 +25,7 @@ class CroogoStatusTest extends CroogoTestCase implements CakeEventListener {
  * setUp
  */
 	public function setUp() {
-		CakeEventManager::instance()->attach($this);
+		EventManager::instance()->attach($this);
 		$this->CroogoStatus = new CroogoStatus();
 	}
 
@@ -33,7 +33,7 @@ class CroogoStatusTest extends CroogoTestCase implements CakeEventListener {
  * tearDown
  */
 	public function tearDown() {
-		CakeEventManager::instance()->detach($this);
+		EventManager::instance()->detach($this);
 		unset($this->CroogoStatus);
 	}
 
@@ -91,8 +91,8 @@ class CroogoStatusTest extends CroogoTestCase implements CakeEventListener {
  */
 	public function testStatusModifiedByEventHandler() {
 		$callback = array($this, 'modifyStatus');
-		CakeEventManager::instance()->detach($this);
-		CakeEventManager::instance()->attach($callback, 'Croogo.Status.status');
+		EventManager::instance()->detach($this);
+		EventManager::instance()->attach($callback, 'Croogo.Status.status');
 
 		// test status is modified for 'webmaster' type by event handler
 		$expected = array(CroogoStatus::PUBLISHED, CroogoStatus::PREVIEW);
@@ -105,7 +105,7 @@ class CroogoStatusTest extends CroogoTestCase implements CakeEventListener {
 		$result = $this->CroogoStatus->status('publishing', 'bogus');
 		$this->assertEquals($expected, $result);
 
-		CakeEventManager::instance()->detach($callback, 'Croogo.Status.status');
+		EventManager::instance()->detach($callback, 'Croogo.Status.status');
 	}
 
 /**

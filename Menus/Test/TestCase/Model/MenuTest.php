@@ -1,9 +1,9 @@
 <?php
 namespace Croogo\Menus\Test\TestCase\Model;
-App::uses('Menu', 'Menus.Model');
-App::uses('MenusAppModel', 'Menus.Model');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoTestCase;
+use Menus\Model\Menu;
+use Menus\Model\MenusAppModel;
 /**
  * TestMenu
  *

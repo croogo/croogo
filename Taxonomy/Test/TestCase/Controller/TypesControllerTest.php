@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Taxonomy\Test\TestCase\Controller;
-App::uses('TypesController', 'Taxonomy.Controller');
-App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoControllerTestCase;
+use Taxonomy\Controller\TypesController;
 class TypesControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(

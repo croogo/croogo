@@ -1,12 +1,12 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase\Controller\Component;
-App::uses('AppController', 'Controller');
-App::uses('Component', 'Controller');
-App::uses('ComponentRegistry', 'Controller');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('CroogoComponent', 'Croogo.Controller/Component');
 
+use App\Controller\AppController;
+use Cake\Controller\Component;
+use Cake\Controller\ComponentRegistry;
+use Croogo\Controller\Component\CroogoComponent;
+use Croogo\TestSuite\CroogoTestCase;
 class MockCroogoComponent extends CroogoComponent {
 
 	public function startup(Controller $controller) {
@@ -37,7 +37,7 @@ class CroogoComponentTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$this->Controller = new CroogoTestController(new CakeRequest(), new CakeResponse());
+		$this->Controller = new CroogoTestController(new Request(), new Response());
 		$this->Controller->constructClasses();
 		$this->Controller->Croogo = new MockCroogoComponent($this->Controller->Components);
 		$this->Controller->Components->unload('Blocks');
@@ -82,7 +82,7 @@ class CroogoComponentTest extends CroogoTestCase {
  * @dataProvider redirectData
  */
 	public function testRedirect($expected, $url, $data = array()) {
-		$Controller = $this->getMock('CroogoTestController', array('redirect'), array(new CakeRequest(), new CakeResponse()));
+		$Controller = $this->getMock('CroogoTestController', array('redirect'), array(new Request(), new Response()));
 		$Controller->request->data = $data;
 		$Controller->expects($this->once())
 			->method('redirect')

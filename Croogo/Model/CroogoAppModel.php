@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\Model;
-App::uses('Model', 'Model');
 
+use App\Model\Model;
 /**
  * Croogo App Model
  *
@@ -140,7 +140,7 @@ class CroogoAppModel extends Model {
 			if (!empty($args[1][$field])) {
 				foreach ((array)$args[1][$field] as $id) {
 					$this->id = $id;
-					$event = new CakeEvent('Model.afterSave', $this, array(
+					$event = new Event('Model.afterSave', $this, array(
 						$created, $options
 					));
 					$this->getEventManager()->dispatch($event);

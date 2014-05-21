@@ -1,13 +1,13 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase\Console\Command;
-App::uses('ShellDispatcher', 'Console');
-App::uses('AppShell', 'Console/Command');
-App::uses('Shell', 'Console');
-App::uses('InstallShell', 'Croogo.Console/Command');
-App::uses('Folder', 'Utility');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use App\Console\Command\AppShell;
+use Cake\Console\Shell;
+use Cake\Console\ShellDispatcher;
+use Cake\Utility\Folder;
+use Croogo\Console\Command\InstallShell;
+use Croogo\TestSuite\CroogoTestCase;
 /**
  * TestInstallShell class
  */
@@ -60,8 +60,8 @@ class InstallShellTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 		App::build(array(
-			'Plugin' => array(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
-			'View' => array(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'View' . DS),
+			'Plugin' => array(Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
+			'View' => array(Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'View' . DS),
 		), App::PREPEND);
 	}
 
@@ -77,9 +77,9 @@ class InstallShellTest extends CroogoTestCase {
 		foreach ($files as $file) {
 			unlink(TMP . $file);
 		}
-		$Folder = new Folder(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
+		$Folder = new Folder(Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
 		$Folder->delete();
-		$Folder = new Folder(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Minimal');
+		$Folder = new Folder(Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Minimal');
 		$Folder->delete();
 	}
 
@@ -203,7 +203,7 @@ class InstallShellTest extends CroogoTestCase {
 		$argOne = func_get_arg(0);
 		preg_match('/ -o (.+) /', $argOne, $zip);
 		$dest = $zip[1];
-		$src = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_plugin.zip';
+		$src = Plugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_plugin.zip';
 		copy($src, $dest);
 		return 'Here is that thing you wanted';
 	}
@@ -215,7 +215,7 @@ class InstallShellTest extends CroogoTestCase {
 		$argOne = func_get_arg(0);
 		preg_match('/ -o (.+) /', $argOne, $zip);
 		$dest = $zip[1];
-		$src = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_theme.zip';
+		$src = Plugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_theme.zip';
 		copy($src, $dest);
 		return 'Here is that thing you wanted';
 	}

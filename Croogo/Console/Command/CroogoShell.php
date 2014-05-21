@@ -1,9 +1,10 @@
 <?php
 
 namespace Croogo\Croogo\Console\Command;
-App::uses('AppShell', 'Console/Command');
-App::uses('Security', 'Utility');
 
+use App\Console\Command\AppShell;
+use Cake\Utility\Security;
+use Install\Lib\AssetGenerator;
 /**
  * Croogo Shell
  *
@@ -62,9 +63,8 @@ class CroogoShell extends AppShell {
  * Compile assets for admin ui
  */
 	public function make() {
-		App::uses('AssetGenerator', 'Install.Lib');
-		if (!CakePlugin::loaded('Install')) {
-			CakePlugin::load('Install');
+				if (!Plugin::loaded('Install')) {
+			Plugin::load('Install');
 		}
 		$generator = new AssetGenerator();
 		try {
@@ -72,7 +72,7 @@ class CroogoShell extends AppShell {
 		} catch (Exception $e) {
 			$this->err('<error>' . $e->getMessage() . '</error>');
 		}
-		CakePlugin::unload('Install');
+		Plugin::unload('Install');
 	}
 
 }

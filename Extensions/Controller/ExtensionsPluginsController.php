@@ -1,11 +1,11 @@
 <?php
 
 namespace Croogo\Extensions\Controller;
-App::uses('ExtensionsAppController', 'Extensions.Controller');
-App::uses('ExtensionsInstaller', 'Extensions.Lib');
-App::uses('CroogoPlugin', 'Extensions.Lib');
-App::uses('Sanitize', 'Utility');
 
+use App\Utility\Sanitize;
+use Extensions\Controller\ExtensionsAppController;
+use Extensions\Lib\CroogoPlugin;
+use Extensions\Lib\ExtensionsInstaller;
 /**
  * Extensions Plugins Controller
  *

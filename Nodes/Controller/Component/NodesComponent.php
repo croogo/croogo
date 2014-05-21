@@ -1,8 +1,9 @@
 <?php
 
 namespace Croogo\Nodes\Controller\Component;
-App::uses('Component', 'Controller');
 
+use Acl\Controller\Component\Acl\HabtmDbAcl;
+use Cake\Controller\Component;
 /**
  * Nodes Component
  *
@@ -38,8 +39,7 @@ class NodesComponent extends Component {
 
 		if (Configure::read('Access Control.multiRole')) {
 			Configure::write('Acl.classname', 'Acl.HabtmDbAcl');
-			App::uses('HabtmDbAcl', 'Acl.Controller/Component/Acl');
-			$controller->Acl->adapter('HabtmDbAcl');
+						$controller->Acl->adapter('HabtmDbAcl');
 			$this->Node->User->bindModel(array(
 				'hasAndBelongsToMany' => array(
 					'Role' => array(

@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Comments\Model\Behavior;
-App::uses('ModelBehavior', 'Model/Behavior');
 
+use App\Model\Behavior\ModelBehavior;
 /**
  * CommentableBehavior
  *
@@ -74,7 +74,7 @@ class CommentableBehavior extends ModelBehavior {
 			'spamProtection' => false,
 			'captchaProtection' => false,
 		);
-		if (!CakePlugin::loaded('Taxonomy')) {
+		if (!Plugin::loaded('Taxonomy')) {
 			return $defaultSetting;
 		}
 		if (empty($data[$model->alias]['type'])) {

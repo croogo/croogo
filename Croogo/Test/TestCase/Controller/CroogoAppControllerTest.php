@@ -1,11 +1,11 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase\Controller;
-App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
-App::uses('CroogoTestFixture', 'Croogo.TestSuite');
-App::uses('CroogoAppController', 'Croogo.Controller');
-App::uses('File', 'Utility');
 
+use Cake\Utility\File;
+use Croogo\Controller\CroogoAppController;
+use Croogo\TestSuite\CroogoControllerTestCase;
+use Croogo\TestSuite\CroogoTestFixture;
 class TestAppController extends CroogoAppController {
 
 	public function admin_edit() {
@@ -163,7 +163,7 @@ class CroogoAppControllerTest extends CroogoControllerTestCase {
  * Test Setup Component
  */
 	public function testSetupComponent() {
-		$request = new CakeRequest('/api/v1.0/users');
+		$request = new Request('/api/v1.0/users');
 		$request->addParams(array(
 			'api' => 'api',
 			'prefix' => 'v1.0',

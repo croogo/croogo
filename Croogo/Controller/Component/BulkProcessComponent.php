@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\Controller\Component;
-App::uses('Component', 'Controller');
 
+use Cake\Controller\Component;
 /**
  * BulkProcess Component
  *

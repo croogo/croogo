@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoTestCase;
 class PublishableBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(

@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Contacts\Event;
-App::uses('CakeEventListener', 'Event');
 
+use Cake\Event\EventListener;
 /**
  * Contacts Event Handler
  *
@@ -11,7 +11,7 @@ App::uses('CakeEventListener', 'Event');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ContactsEventHandler implements CakeEventListener {
+class ContactsEventHandler implements EventListener {
 
 /**
  * implementEvents

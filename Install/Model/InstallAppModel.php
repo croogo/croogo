@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Install\Model;
-App::uses('AppModel', 'Model');
 
+use App\Model\AppModel;
 /**
  * Install App Model
  *

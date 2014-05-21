@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Acl\Controller\Component\Acl;
-App::uses('DbAcl', 'Controller/Component/Acl');
 
+use App\Controller\Component\Acl\DbAcl;
 /**
  * HabtmDbAcl implements an ACL control system in the database like DbAcl with
  * User habtm Group checks

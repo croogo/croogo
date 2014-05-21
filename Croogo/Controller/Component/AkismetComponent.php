@@ -21,7 +21,9 @@
  */
 namespace Croogo\Croogo\Controller\Component;
 
-App::uses('Component', 'Controller');
+use Cake\Controller\Component;
+use Cake\Controller\Controller;
+use Cake\Core\Configure;
 
 /**
  *    The Akismet PHP5 Class

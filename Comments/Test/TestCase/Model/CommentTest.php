@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Comments\Test\TestCase\Model;
-App::uses('Comment', 'Comments.Model');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Comments\Model\Comment;
+use Croogo\TestSuite\CroogoTestCase;
 class CommentTest extends CroogoTestCase {
 
 	public $fixtures = array(

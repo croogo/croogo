@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\FileManager\Controller;
-App::uses('FileManagerAppController', 'FileManager.Controller');
 
+use FileManager\Controller\FileManagerAppController;
 /**
  * Attachments Controller
  *

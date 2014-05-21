@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Translate\Model;
-App::uses('AppModel', 'Model');
 
+use App\Model\AppModel;
 /**
  * Translate App Model
  *

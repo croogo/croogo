@@ -1,8 +1,9 @@
 <?php
 
 namespace Croogo\Acl\Controller;
-App::uses('AclAppController', 'Acl.Controller');
 
+use Acl\Controller\AclAppController;
+use Acl\Lib\AclExtras;
 /**
  * AclActions Controller
  *
@@ -160,8 +161,7 @@ class AclActionsController extends AclAppController {
  * admin_generate
  */
 	public function admin_generate() {
-		App::uses('AclExtras', 'Acl.Lib');
-		$AclExtras = new AclExtras();
+				$AclExtras = new AclExtras();
 		$AclExtras->startup($this);
 		if (isset($this->request->named['sync'])) {
 			$result = $AclExtras->aco_sync();

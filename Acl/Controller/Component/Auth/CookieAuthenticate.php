@@ -1,9 +1,10 @@
 <?php
 namespace Croogo\Acl\Controller\Component\Auth;
-App::uses('BaseAuthenticate', 'Controller/Component/Auth');
-App::uses('AuthComponent', 'Controller/Component');
-App::uses('Router', 'Routing');
 
+use App\Controller\Component\AuthComponent;
+use App\Controller\Component\Auth\BaseAuthenticate;
+use Cake\Routing\Router;
+use type rijndael, mcrypt_encrypt() is required');
 /**
  * An authentication adapter for AuthComponent.  Provides the ability to authenticate using COOKIE
  *
@@ -83,19 +84,18 @@ class CookieAuthenticate extends BaseAuthenticate {
  * to find COOKIE data that is used to find a matching record in the `settings.userModel`.  Will return false if
  * there is no cookie data, either username or password is missing, of if the scope conditions have not been met.
  *
- * @param CakeRequest $request The unused request object
+ * @param Request $request The unused request object
  * @return mixed False on login failure. An array of User data on success.
  * @throws CakeException
  */
-	public function getUser(CakeRequest $request) {
+	public function getUser(Request $request) {
 		if (!isset($this->_registry->Cookie) || !$this->_registry->Cookie instanceof CookieComponent) {
 			throw new CakeException('CookieComponent is not loaded');
 		}
 
 		$this->settings = array_merge(array('crypt' => 'rijndael'), $this->settings);
 		if ($this->settings['crypt'] == 'rijndael' && !function_exists('mcrypt_encrypt')) {
-			throw new CakeException('Cannot use type rijndael, mcrypt_encrypt() is required');
-		}
+			throw new CakeException('Cannot 		}
 		$this->_registry->Cookie->type($this->settings['crypt']);
 
 		list(, $model) = pluginSplit($this->settings['userModel']);
@@ -163,7 +163,7 @@ class CookieAuthenticate extends BaseAuthenticate {
  *
  * @see BaseAuthenticate::authenticate()
  */
-	public function authenticate(CakeRequest $request, CakeResponse $response) {
+	public function authenticate(Request $request, Response $response) {
 		if (!empty($request->data) || $request->is('post')) {
 			return false;
 		}

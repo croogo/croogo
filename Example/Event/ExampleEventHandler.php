@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Example\Event;
-App::uses('CakeEventListener', 'Event');
 
+use Cake\Event\EventListener;
 /**
  * Example Event Handler
  *
@@ -13,7 +13,7 @@ App::uses('CakeEventListener', 'Event');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExampleEventHandler extends Object implements CakeEventListener {
+class ExampleEventHandler extends Object implements EventListener {
 
 /**
  * implementedEvents
@@ -37,7 +37,7 @@ class ExampleEventHandler extends Object implements CakeEventListener {
 /**
  * onAdminLoginSuccessful
  *
- * @param CakeEvent $event
+ * @param Event $event
  * @return void
  */
 	public function onAdminLoginSuccessful($event) {
@@ -55,7 +55,7 @@ class ExampleEventHandler extends Object implements CakeEventListener {
 /**
  * onLayoutBeforeFilter
  *
- * @param CakeEvent $event
+ * @param Event $event
  * @return void
  */
 	public function onLayoutBeforeFilter($event) {
@@ -70,7 +70,7 @@ class ExampleEventHandler extends Object implements CakeEventListener {
 /**
  * onLayoutAfterFilter
  *
- * @param CakeEvent $event
+ * @param Event $event
  * @return void
  */
 	public function onLayoutAfterFilter($event) {

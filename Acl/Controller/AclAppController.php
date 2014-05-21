@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Acl\Controller;
-App::uses('AppController', 'Controller');
 
+use App\Controller\AppController;
 /**
  * AclApp Controller
  *

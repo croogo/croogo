@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Meta\Model\Behavior;
-App::uses('ModelBehavior', 'Model');
 
+use App\Model\ModelBehavior;
 /**
  * Meta Behavior
  *
@@ -114,7 +114,7 @@ class MetaBehavior extends ModelBehavior {
 /**
  * Handle Model.Node.beforeSaveNode event
  *
- * @param CakeEvent $event
+ * @param Event $event
  */
 	public function onBeforeSaveNode($event) {
 		$event->data['data'] = $this->_prepareMeta($event->data['data']);

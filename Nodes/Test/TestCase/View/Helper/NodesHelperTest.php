@@ -1,10 +1,10 @@
 <?php
 
 namespace Croogo\Nodes\Test\TestCase\View\Helper;
-App::uses('NodesHelper', 'Nodes.View/Helper');
-App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Cake\Controller\Controller;
+use Croogo\TestSuite\CroogoTestCase;
+use Nodes\View\Helper\NodesHelper;
 class TheNodesTestController extends Controller {
 
 	public $uses = null;
@@ -19,8 +19,8 @@ class NodesHelperTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$request = $this->getMock('CakeRequest');
-		$response = $this->getMock('CakeResponse');
+		$request = $this->getMock('Request');
+		$response = $this->getMock('Response');
 
 		$this->View = new View(new TheNodesTestController($request, $response));
 		$this->Nodes = new NodesHelper($this->View);

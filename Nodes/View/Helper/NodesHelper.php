@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Nodes\View\Helper;
-App::uses('AppHelper', 'View/Helper');
-App::uses('StringConverter', 'Croogo.Lib/Utility');
 
+use App\View\Helper\AppHelper;
+use Croogo\Lib\Utility\StringConverter;
 /**
  * Nodes Helper
  *

@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\View\Helper;
-App::uses('AppHelper', 'View/Helper');
 
+use App\View\Helper\AppHelper;
 /**
  * Layout Helper
  *

@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Extensions\Controller;
-App::uses('AppController', 'Controller');
 
+use App\Controller\AppController;
 /**
  * ExtensionsApp Controller
  *

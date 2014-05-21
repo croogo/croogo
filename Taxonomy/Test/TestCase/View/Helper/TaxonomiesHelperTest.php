@@ -1,10 +1,10 @@
 <?php
 
 namespace Croogo\Taxonomy\Test\TestCase\View\Helper;
-App::uses('TaxonomiesHelper', 'Taxonomy.View/Helper');
-App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Cake\Controller\Controller;
+use Croogo\TestSuite\CroogoTestCase;
+use Taxonomy\View\Helper\TaxonomiesHelper;
 class TheTaxonomyTestController extends Controller {
 
 	public $uses = null;
@@ -20,8 +20,8 @@ class TaxonomiesHelperTest extends CroogoTestCase {
 		parent::setUp();
 		$this->ComponentRegistry = new ComponentRegistry();
 
-		$request = $this->getMock('CakeRequest');
-		$response = $this->getMock('CakeResponse');
+		$request = $this->getMock('Request');
+		$response = $this->getMock('Response');
 		$this->View = new View(new TheTaxonomyTestController($request, $response));
 		$this->Taxonomies = new TaxonomiesHelper($this->View);
 	}

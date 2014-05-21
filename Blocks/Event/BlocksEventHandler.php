@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Blocks\Event;
-App::uses('CakeEventListener', 'Event');
-App::uses('StringConverter', 'Croogo.Lib/Utility');
 
+use Cake\Event\EventListener;
+use Croogo\Lib\Utility\StringConverter;
 /**
  * BlocksEventHandler
  *
@@ -11,7 +11,7 @@ App::uses('StringConverter', 'Croogo.Lib/Utility');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class BlocksEventHandler implements CakeEventListener {
+class BlocksEventHandler implements EventListener {
 
 /**
  * implementedEvents
@@ -34,7 +34,7 @@ class BlocksEventHandler implements CakeEventListener {
  * Filter block shortcode in node body, eg [block:snippet] and replace it with
  * the block content
  *
- * @param CakeEvent $event
+ * @param Event $event
  * @return void
  */
 	public function filterBlockShortcode($event) {

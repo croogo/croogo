@@ -1,10 +1,10 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\View\Helper;
-App::uses('View', 'View');
-App::uses('CroogoFormHelper', 'Croogo.View/Helper');
-App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Cake\Controller\Controller;
+use Cake\View\View;
+use Croogo\TestSuite\CroogoTestCase;
+use Croogo\View\Helper\CroogoFormHelper;
 class CroogoFormHelperTest extends CroogoTestCase {
 
 	public function setUp() {

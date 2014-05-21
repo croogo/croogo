@@ -1,13 +1,13 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase\View\Helper;
-App::uses('CroogoHelper', 'Croogo.View/Helper');
-App::uses('CroogoHtmlHelper', 'Croogo.View/Helper');
-App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('View', 'View');
-App::uses('HtmlHelper', 'View/Helper');
 
+use App\View\Helper\HtmlHelper;
+use Cake\Controller\Controller;
+use Cake\View\View;
+use Croogo\TestSuite\CroogoTestCase;
+use Croogo\View\Helper\CroogoHelper;
+use Croogo\View\Helper\CroogoHtmlHelper;
 class CroogoHtmlHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(

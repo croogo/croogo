@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Extensions;
-App::uses('Folder', 'Utility');
-App::uses('CroogoComposer', 'Extensions.Lib');
 
+use Cake\Utility\Folder;
+use Extensions\Lib\CroogoComposer;
 /**
  * Extensions Installer
  *
@@ -97,7 +97,7 @@ class ExtensionsInstaller {
 					}
 				}
 				if (!$hasFile) {
-					CakeLog::critical(__d('croogo', 'Missing expected files: %s in: %s', implode(',', $searches), $path));
+					Log::critical(__d('croogo', 'Missing expected files: %s in: %s', implode(',', $searches), $path));
 					throw new CakeException(__d('croogo', 'Invalid plugin or missing expected files'));
 				}
 			}

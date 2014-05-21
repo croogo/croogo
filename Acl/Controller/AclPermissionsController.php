@@ -1,8 +1,9 @@
 <?php
 
 namespace Croogo\Acl\Controller;
-App::uses('AclAppController', 'Acl.Controller');
 
+use Acl\Controller\AclAppController;
+use Acl\Lib\AclUpgrade;
 /**
  * AclPermissions Controller
  *
@@ -161,8 +162,7 @@ class AclPermissionsController extends AclAppController {
  * @return void
  */
 	public function admin_upgrade() {
-		App::uses('AclUpgrade', 'Acl.Lib');
-		$AclUpgrade = new AclUpgrade();
+				$AclUpgrade = new AclUpgrade();
 		$result = $AclUpgrade->upgrade();
 		if ($result === true) {
 			$this->Session->delete(AuthComponent::$sessionKey . '.aclUpgrade');

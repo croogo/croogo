@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Acl\Controller\Component;
-App::uses('Component', 'Controller');
 
+use Cake\Controller\Component;
 /**
  * When "Access Control.rowLevel" Setting is active, this component will perform
  * the necessary setup on controller's primary model and hook the element for

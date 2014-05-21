@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Taxonomy\Model\Behavior;
-App::uses('ModelBehavior', 'Model/Behavior');
 
+use App\Model\Behavior\ModelBehavior;
 /**
  * TaxonomizableBehavior
  *
@@ -214,7 +214,7 @@ class TaxonomizableBehavior extends ModelBehavior {
 /**
  * Handle Model.Node.beforeSaveNode event
  *
- * @param CakeEvent $event Event containing `data` and `typeAlias`
+ * @param Event $event Event containing `data` and `typeAlias`
  */
 	public function onBeforeSaveNode($event) {
 		$data = $event->data['data'];

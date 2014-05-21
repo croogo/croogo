@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\FileManager\Test\TestCase\Controller;
-App::uses('FileManagerController', 'FileManager.Controller');
-App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoControllerTestCase;
+use FileManager\Controller\FileManagerController;
 /**
  * FileManager Controller Test
  *
@@ -49,8 +49,8 @@ class FileManagerControllerTest extends CroogoControllerTestCase {
  */
 	public function testAdminBrowseRestricted() {
 		$url = '/admin/file_manager/file_manager/browse?path=' . urlencode(APP . '../../..');
-		$request = new CakeRequest($url);
-		$response = new CakeResponse();
+		$request = new Request($url);
+		$response = new Response();
 		$this->FileManager = new FileManagerController($request, $response);
 		$this->FileManager->request->addParams(array(
 			'prefix' => 'admin',
@@ -84,8 +84,8 @@ class FileManagerControllerTest extends CroogoControllerTestCase {
  */
 	public function testAdminBrowse() {
 		$url = '/admin/file_manager/file_manager/browse?path=' . urlencode(APP);
-		$request = new CakeRequest($url);
-		$response = new CakeResponse();
+		$request = new Request($url);
+		$response = new Response();
 		$this->FileManager = new FileManagerController($request, $response);
 		$this->FileManager->request->addParams(array(
 			'prefix' => 'admin',
@@ -119,8 +119,8 @@ class FileManagerControllerTest extends CroogoControllerTestCase {
  */
 	public function testAdminBrowseSubfolder() {
 		$url = '/admin/file_manager/file_manager/browse?path=' . urlencode(APP) . 'webroot';
-		$request = new CakeRequest($url);
-		$response = new CakeResponse();
+		$request = new Request($url);
+		$response = new Response();
 		$this->FileManager = new FileManagerController($request, $response);
 		$this->FileManager->request->addParams(array(
 			'prefix' => 'admin',

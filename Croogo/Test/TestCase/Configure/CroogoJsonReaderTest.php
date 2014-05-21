@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase\Configure;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('CroogoJsonReader', 'Croogo.Configure');
 
+use Croogo\Configure\CroogoJsonReader;
+use Croogo\TestSuite\CroogoTestCase;
 class MockCroogoJsonReader extends CroogoJsonReader {
 
 	public $written = null;
@@ -27,7 +27,7 @@ class CroogoJsonReaderTest extends CroogoTestCase {
 		parent::setUp();
 		$this->CroogoJsonReader = $this->getMock('MockCroogoJsonReader',
 			null,
-			array(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS)
+			array(Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS)
 		);
 		$this->testFile = $this->CroogoJsonReader->getPath() . 'test.json';
 	}
@@ -46,7 +46,7 @@ class CroogoJsonReaderTest extends CroogoTestCase {
  */
 	public function testDefaultPath() {
 		$path = $this->CroogoJsonReader->getPath();
-		$this->assertEquals(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS, $path);
+		$this->assertEquals(Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS, $path);
 	}
 
 /**

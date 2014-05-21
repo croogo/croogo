@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Meta\Controller\Component;
-App::uses('Component', 'Controller');
 
+use Cake\Controller\Component;
 /**
  * Meta Component
  *

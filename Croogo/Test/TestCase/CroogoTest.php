@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoTestCase;
 class CroogoTest extends CroogoTestCase {
 
 	public $fixtures = array(
@@ -10,7 +10,7 @@ class CroogoTest extends CroogoTestCase {
 	);
 
 	public function testCrossPluginHooks() {
-		CakePlugin::load(array('Shops', 'Suppliers'), array(
+		Plugin::load(array('Shops', 'Suppliers'), array(
 			'bootstrap' => true,
 		));
 		$Order = ClassRegistry::init('Shops.Order');

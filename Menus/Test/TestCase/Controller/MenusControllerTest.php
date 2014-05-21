@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Menus\Test\TestCase\Controller;
-App::uses('MenusController', 'Menus.Controller');
-App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoControllerTestCase;
+use Menus\Controller\MenusController;
 class MenusControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(

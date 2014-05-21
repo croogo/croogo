@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Comments\View\Helper;
-App::uses('AppHelper', 'View/Helper');
 
+use App\View\Helper\AppHelper;
 /**
  * Comments Helper
  *

@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Translate\Controller;
-App::uses('TranslateAppController', 'Translate.Controller');
 
+use Translate\Controller\TranslateAppController;
 /**
  * Translate Controller
  *

@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Install;
-App::uses('CakePlugin', 'Core');
 
+use Cake\Core\Plugin;
 class AssetGenerator extends Object {
 
 	protected $_croogoPath;
@@ -14,7 +14,7 @@ class AssetGenerator extends Object {
 	protected $_repos = array();
 
 	public function __construct() {
-		$this->_croogoPath = CakePlugin::path('Croogo');
+		$this->_croogoPath = Plugin::path('Croogo');
 		$this->_croogoWebroot = $this->_croogoPath . 'webroot' . DS;
 
 		$this->_readMakefile();
@@ -68,13 +68,13 @@ class AssetGenerator extends Object {
 				throw new Exception('You don\'t have "bootstrap" directory in ' . WWW_ROOT);
 			}
 			chdir($this->_croogoPath);
-			CakeLog::info('Cloning Bootstrap...');
+			Log::info('Cloning Bootstrap...');
 			$command = sprintf('git clone -b %s %s %s',
 				escapeshellarg($this->_tags['bootstrap']),
 				escapeshellarg($this->_repos['bootstrap']),
 				escapeshellarg($bootstrapPath)
 			);
-			CakeLog::info("	$command");
+			Log::info("	$command");
 			exec($command);
 		}
 		chdir($bootstrapPath);
@@ -99,10 +99,10 @@ class AssetGenerator extends Object {
 			$out = str_replace(APP, '', $output);
 			if ($lessc->compileFile($file, $output)) {
 				$text = __d('croogo', 'CSS : %s created', $out);
-				CakeLog::info($text);
+				Log::info($text);
 			} else {
 				$text = __d('croogo', 'CSS : %s failed', $out);
-				CakeLog::error($text);
+				Log::error($text);
 			}
 		}
 	}
@@ -119,10 +119,10 @@ class AssetGenerator extends Object {
 		$out = str_replace(APP, '', $outputFile);
 		if ($rc == 0) {
 			$text = __d('croogo', 'JS  : %s created', $out);
-			CakeLog::info($text);
+			Log::info($text);
 		} else {
 			$text = __d('croogo', 'JS  : %s failed', $out);
-			CakeLog::error($text);
+			Log::error($text);
 		}
 	}
 
@@ -132,19 +132,19 @@ class AssetGenerator extends Object {
  * @throws Exception
  */
 	protected function _copyFonts() {
-		$croogoPath = CakePlugin::path('Croogo');
+		$croogoPath = Plugin::path('Croogo');
 		$fontAwesomePath = $croogoPath . 'webroot' . DS . 'fontAwesome';
 		if (!file_exists($fontAwesomePath)) {
 			if (!$this->_clone) {
 				throw new Exception('You don\'t have "fontAwesome" in ' . WWW_ROOT);
 			}
-			CakeLog::info('Cloning FontAwesome...');
+			Log::info('Cloning FontAwesome...');
 			$command = sprintf('git clone -b %s %s %s',
 				escapeshellarg($this->_tags['fontAwesome']),
 				escapeshellarg($this->_repos['fontAwesome']),
 				escapeshellarg($fontAwesomePath)
 			);
-			CakeLog::info("	$command");
+			Log::info("	$command");
 			exec($command);
 		}
 		chdir($fontAwesomePath);
@@ -155,7 +155,7 @@ class AssetGenerator extends Object {
 		$Folder = new Folder($fontPath);
 		$files = $Folder->read();
 		if (empty($files[1])) {
-			CakeLog::error('No font files found');
+			Log::error('No font files found');
 			$this->_stop();
 		}
 		foreach ($files[1] as $file) {
@@ -164,10 +164,10 @@ class AssetGenerator extends Object {
 			$displayFilename = str_replace(APP, '', $newFile);
 			if ($File->copy($newFile)) {
 				$text = __d('croogo', 'Font: %s copied', $displayFilename);
-				CakeLog::info($text);
+				Log::info($text);
 			} else {
 				$text = __d('croogo', 'File: %s not copied', $file);
-				CakeLog::error($text);
+				Log::error($text);
 			}
 		}
 	}

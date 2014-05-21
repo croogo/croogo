@@ -1,10 +1,9 @@
 <?php
 
 namespace Croogo\Blocks\Test\TestCase\Controller\Component;
-App::uses('Controller', 'Controller');
-App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
-App::uses('Controller', 'Controller');
+use Cake\Controller\Controller;
+use Croogo\TestSuite\CroogoControllerTestCase;
 
 class BlocksTestController extends Controller {
 
@@ -36,7 +35,7 @@ class BlocksComponentTest extends CroogoControllerTestCase {
 
 	public function setUp() {
 		$this->_paths = App::paths();
-		$app = CakePlugin::path('Blocks') . 'Test' . DS . 'test_app' . DS;
+		$app = Plugin::path('Blocks') . 'Test' . DS . 'test_app' . DS;
 		App::build(array(
 			'Controller' => array(
 				$app . 'Controller' . DS,

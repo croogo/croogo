@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Blocks\Model;
-App::uses('BlocksAppModel', 'Blocks.Model');
 
+use Blocks\Model\BlocksAppModel;
 /**
  * Region
  *

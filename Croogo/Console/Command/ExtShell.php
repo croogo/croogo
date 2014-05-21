@@ -1,14 +1,14 @@
 <?php
 
 namespace Croogo\Croogo\Console\Command;
-App::uses('AppShell', 'Console/Command');
-App::uses('CakeRequest', 'Network');
-App::uses('CakeResponse', 'Network');
-App::uses('Controller', 'Controller');
-App::uses('AppController', 'Controller');
-App::uses('CroogoPlugin', 'Extensions.Lib');
-App::uses('CroogoTheme', 'Extensions.Lib');
 
+use App\Console\Command\AppShell;
+use App\Controller\AppController;
+use Cake\Controller\Controller;
+use Cake\Network\Request;
+use Cake\Network\Response;
+use Extensions\Lib\CroogoPlugin;
+use Extensions\Lib\CroogoTheme;
 /**
  * Ext Shell
  *
@@ -67,9 +67,9 @@ class ExtShell extends AppShell {
 		parent::__construct($stdout, $stderr, $stdin);
 		$this->_CroogoPlugin = new CroogoPlugin();
 		$this->_CroogoTheme = new CroogoTheme();
-		$CakeRequest = new CakeRequest();
-		$CakeResponse = new CakeResponse();
-		$this->_Controller = new AppController($CakeRequest, $CakeResponse);
+		$Request = new Request();
+		$Response = new Response();
+		$this->_Controller = new AppController($Request, $Response);
 		$this->_Controller->constructClasses();
 		$this->_Controller->startupProcess();
 		$this->_CroogoPlugin->setController($this->_Controller);
@@ -98,7 +98,7 @@ class ExtShell extends AppShell {
 				$plugins = array_combine($p = App::objects('plugins'), $p);
 				$extensions += $plugins;
 			}
-			$active = CakePlugin::loaded($ext);
+			$active = Plugin::loaded($ext);
 		}
 		if ($type == 'theme' && $method == 'deactivate') {
 			$this->err(__d('croogo', 'Theme cannot be deactivated, instead activate another theme.'));
@@ -228,10 +228,9 @@ class ExtShell extends AppShell {
  * List plugins
  */
 	public function plugins($plugin = null) {
-		App::uses('CroogoPlugin', 'Extensions.Lib');
-		$all = $this->params['all'];
+				$all = $this->params['all'];
 		$plugins = $plugin == null ? App::objects('plugins') : array($plugin);
-		$loaded = CakePlugin::loaded();
+		$loaded = Plugin::loaded();
 		$CroogoPlugin = new CroogoPlugin();
 		$this->out(__d('croogo', 'Plugins:'), 2);
 		$this->out(__d('croogo', '%-20s%-50s%s', __d('croogo', 'Plugin'), __d('croogo', 'Author'), __d('croogo', 'Status')));

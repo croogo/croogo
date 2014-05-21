@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Acl\Model;
-App::uses('AclNode', 'Model');
 
+use App\Model\AclNode;
 /**
  * AclAro Model
  *

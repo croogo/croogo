@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\View\Helper;
-App::uses('Helper', 'View');
 
+use Cake\View\Helper;
 /**
  * Croogo Application helper
  *

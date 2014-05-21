@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Blocks\Test\TestCase\Controller;
-App::uses('RegionsController', 'Blocks.Controller');
-App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
+use Blocks\Controller\RegionsController;
+use Croogo\TestSuite\CroogoControllerTestCase;
 class RegionsControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
@@ -39,7 +39,7 @@ class RegionsControllerTest extends CroogoControllerTestCase {
 	public function setUp() {
 		parent::setUp();
 		App::build(array(
-			'View' => array(CakePlugin::path('Blocks') . 'View' . DS)
+			'View' => array(Plugin::path('Blocks') . 'View' . DS)
 		), App::APPEND);
 		$this->RegionsController = $this->generate('Blocks.Regions', array(
 			'methods' => array(

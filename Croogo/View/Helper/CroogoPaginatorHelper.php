@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\View\Helper;
-App::uses('PaginatorHelper', 'View/Helper');
 
+use App\View\Helper\PaginatorHelper;
 /**
  * Croogo Paginator Helper
  *

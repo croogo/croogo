@@ -1,7 +1,7 @@
 <?php
 namespace Croogo\Acl\Controller\Component\Auth;
-App::uses('BaseAuthenticate', 'Controller/Component/Auth');
 
+use App\Controller\Component\Auth\BaseAuthenticate;
 /**
  * An authentication adapter for AuthComponent.  Provides the ability to authenticate using Token
  *
@@ -69,11 +69,11 @@ class TokenAuthenticate extends BaseAuthenticate {
 
 /**
  *
- * @param CakeRequest $request The request object
- * @param CakeResponse $response response object.
+ * @param Request $request The request object
+ * @param Response $response response object.
  * @return mixed.  False on login failure.  An array of User data on success.
  */
-	public function authenticate(CakeRequest $request, CakeResponse $response) {
+	public function authenticate(Request $request, Response $response) {
 		$user = $this->getUser($request);
 		if (!$user) {
 			$response->statusCode(401);
@@ -85,10 +85,10 @@ class TokenAuthenticate extends BaseAuthenticate {
 /**
  * Get token information from the request.
  *
- * @param CakeRequest $request Request object.
+ * @param Request $request Request object.
  * @return mixed Either false or an array of user information
  */
-	public function getUser(CakeRequest $request) {
+	public function getUser(Request $request) {
 		if (!empty($this->settings['header'])) {
 			$token = $request->header($this->settings['header']);
 			if ($token) {

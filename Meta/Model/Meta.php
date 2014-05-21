@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Meta\Model;
-App::uses('MetaAppModel', 'Meta.Model');
 
+use Meta\Model\MetaAppModel;
 /**
  * Meta
  *

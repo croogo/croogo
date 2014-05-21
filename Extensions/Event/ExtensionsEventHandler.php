@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Extensions\Event;
-App::uses('CakeEventListener', 'Event');
 
+use Cake\Event\EventListener;
 /**
  * ExtensionsEventHandler
  *
@@ -11,7 +11,7 @@ App::uses('CakeEventListener', 'Event');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtensionsEventHandler implements CakeEventListener {
+class ExtensionsEventHandler implements EventListener {
 
 /**
  * implementedEvents
@@ -34,10 +34,10 @@ class ExtensionsEventHandler implements CakeEventListener {
  * Before Setup admin data
  */
 	public function onBeforeSetupAdminData($event) {
-		$plugins = CakePlugin::loaded();
+		$plugins = Plugin::loaded();
 		$config = 'Config' . DS . 'admin.php';
 		foreach ($plugins as $plugin) {
-			$file = CakePlugin::path($plugin) . $config;
+			$file = Plugin::path($plugin) . $config;
 			if (file_exists($file)) {
 				require $file;
 			}
@@ -48,10 +48,10 @@ class ExtensionsEventHandler implements CakeEventListener {
  * Setup admin data
  */
 	public function onSetupAdminData($event) {
-		$plugins = CakePlugin::loaded();
+		$plugins = Plugin::loaded();
 		$config = 'Config' . DS . 'admin_menu.php';
 		foreach ($plugins as $plugin) {
-			$file = CakePlugin::path($plugin) . $config;
+			$file = Plugin::path($plugin) . $config;
 			if (file_exists($file)) {
 				require $file;
 			}

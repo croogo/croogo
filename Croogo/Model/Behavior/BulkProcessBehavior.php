@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Croogo\Model\Behavior;
-App::uses('CroogoStatus', 'Croogo.Lib');
-App::uses('ModelBehavior', 'Model');
 
+use App\Model\ModelBehavior;
+use Croogo\Lib\CroogoStatus;
 /**
  * BulkProcess Behavior
  *

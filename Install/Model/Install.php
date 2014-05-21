@@ -1,13 +1,13 @@
 <?php
 
 namespace Croogo\Install\Model;
-App::uses('CakeTime', 'Utility');
-App::uses('CroogoPlugin', 'Extensions.Lib');
-App::uses('DataMigration', 'Extensions.Lib/Utility');
-App::uses('File', 'Utility');
-App::uses('InstallAppModel', 'Install.Model');
-App::uses('Security', 'Utility');
 
+use Cake\Utility\File;
+use Cake\Utility\Security;
+use Cake\Utility\Time;
+use Extensions\Lib\CroogoPlugin;
+use Extensions\Lib\Utility\DataMigration;
+use Install\Model\InstallAppModel;
 class Install extends InstallAppModel {
 
 /**
@@ -37,8 +37,8 @@ class Install extends InstallAppModel {
  * @return If user is created
  */
 	public function addAdminUser($user) {
-		if (!CakePlugin::loaded('Users')) {
-			CakePlugin::load('Users');
+		if (!Plugin::loaded('Users')) {
+			Plugin::load('Users');
 		}
 		$User = ClassRegistry::init('Users.User');
 		$Role = ClassRegistry::init('Users.Role');
@@ -86,8 +86,8 @@ class Install extends InstallAppModel {
 	}
 
 	public function runMigrations($plugin) {
-		if (!CakePlugin::loaded($plugin)) {
-			CakePlugin::load($plugin);
+		if (!Plugin::loaded($plugin)) {
+			Plugin::load($plugin);
 		}
 		$CroogoPlugin = $this->_getCroogoPlugin();
 		$result = $CroogoPlugin->migrate($plugin);

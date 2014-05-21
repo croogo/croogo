@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Nodes\Test\TestCase\Controller;
-App::uses('NodesController', 'Nodes.Controller');
-App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoControllerTestCase;
+use Nodes\Controller\NodesController;
 class TestNodesController extends NodesController {
 
 	public $name = 'Nodes';
@@ -96,7 +96,7 @@ class NodesControllerTest extends CroogoControllerTestCase {
 			->staticExpects($this->any())
 			->method('read')
 			->will($this->returnValue(array('id' => 1, 'role_id' => 1)));
-		$this->NodesController->Security->Session = $this->getMock('CakeSession');
+		$this->NodesController->Security->Session = $this->getMock('Session');
 	}
 
 /**
@@ -129,7 +129,7 @@ class NodesControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testPromotedWithVisibilityRole() {
-		CakeSession::write('Auth.User', array(
+		Session::write('Auth.User', array(
 			'id' => 1,
 			'role_id' => 1,
 		));
@@ -143,7 +143,7 @@ class NodesControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testIndexWithVisibilityRole() {
-		CakeSession::write('Auth.User', array(
+		Session::write('Auth.User', array(
 			'id' => 1,
 			'role_id' => 1,
 		));
@@ -373,8 +373,8 @@ class NodesControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testBlackholedRequest() {
-		$request = new CakeRequest('/admin/nodes/nodes/delete/1');
-		$response = new CakeResponse();
+		$request = new Request('/admin/nodes/nodes/delete/1');
+		$response = new Response();
 		$this->Nodes = new TestNodesController($request, $response);
 		$this->Nodes->constructClasses();
 		$this->Nodes->request->params['plugin'] = 'nodes';
@@ -400,11 +400,11 @@ class NodesControllerTest extends CroogoControllerTestCase {
  */
 	public function testViewFallback() {
 		App::build(array(
-			'View' => array(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Mytheme' . DS),
+			'View' => array(Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Mytheme' . DS),
 		), App::PREPEND);
 
-		$request = new CakeRequest('/admin/nodes/nodes/delete/1');
-		$response = new CakeResponse();
+		$request = new Request('/admin/nodes/nodes/delete/1');
+		$response = new Response();
 		$this->Nodes = new TestNodesController($request, $response);
 		$this->Nodes->constructClasses();
 		$this->Nodes->startupProcess();
@@ -427,11 +427,11 @@ class NodesControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testViewFallbackInPlugins() {
-		CakePlugin::load('TestPlugin');
+		Plugin::load('TestPlugin');
 		$this->Nodes = $this->getMock('TestNodesController',
-			array('render'), array(new CakeRequest(), new CakeResponse())
+			array('render'), array(new Request(), new Response())
 		);
-		$this->Nodes = new TestNodesController(new CakeRequest(), new CakeResponse);
+		$this->Nodes = new TestNodesController(new Request(), new Response);
 		$this->Nodes->constructClasses();
 		$this->Nodes->startupProcess();
 		$this->Nodes->theme = null;
@@ -448,9 +448,9 @@ class NodesControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testViewFallbackInPluginsWithTheme() {
-		CakePlugin::load('TestPlugin');
+		Plugin::load('TestPlugin');
 		$this->Nodes = $this->getMock('TestNodesController',
-			null, array(new CakeRequest(), new CakeResponse())
+			null, array(new Request(), new Response())
 		);
 		$this->Nodes->constructClasses();
 		$this->Nodes->startupProcess();
@@ -467,9 +467,9 @@ class NodesControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testViewFallbackToCorePlugins() {
-		CakePlugin::load('TestPlugin');
+		Plugin::load('TestPlugin');
 		$this->Nodes = $this->getMock('TestNodesController',
-			array('render'), array(new CakeRequest(), new CakeResponse())
+			array('render'), array(new Request(), new Response())
 		);
 		$this->Nodes->theme = null;
 		$this->Nodes->plugin = 'TestPlugin';
@@ -490,11 +490,11 @@ class NodesControllerTest extends CroogoControllerTestCase {
  */
 	public function testViewFallbackWithDefaultTheme() {
 		App::build(array(
-			'View' => array(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Nodes' . DS . 'View' . DS),
+			'View' => array(Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Nodes' . DS . 'View' . DS),
 		), App::APPEND);
 
 		$this->Nodes = $this->getMock('TestNodesController',
-			array('render'), array(new CakeRequest(), new CakeResponse())
+			array('render'), array(new Request(), new Response())
 		);
 		$this->Nodes->constructClasses();
 		$this->Nodes->startupProcess();

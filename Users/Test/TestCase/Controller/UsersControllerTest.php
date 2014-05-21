@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Users\Test\TestCase\Controller;
-App::uses('UsersController', 'Users.Controller');
-App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoControllerTestCase;
+use Users\Controller\UsersController;
 /**
  * UsersController Test
  */

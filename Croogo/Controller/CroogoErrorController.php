@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\Controller;
-App::uses('AppController', 'Controller');
 
+use App\Controller\AppController;
 /**
  * Error Handling Controller
  *
@@ -39,10 +39,10 @@ class CroogoErrorController extends AppController {
 /**
  * __construct
  *
- * @param CakeRequest $request
- * @param CakeResponse $response
+ * @param Request $request
+ * @param Response $response
  */
-	public function __construct(CakeRequest $request, CakeResponse $response) {
+	public function __construct(Request $request, Response $response) {
 		parent::__construct($request, $response);
 		if (count(Router::extensions())) {
 			$this->components[] = 'RequestHandler';
@@ -53,7 +53,7 @@ class CroogoErrorController extends AppController {
 			$this->startupProcess();
 		}
 		catch (CakeException $e) {
-			CakeLog::write('critical', __d('croogo', 'Errors in CakeErrorController: %s', $e->getMessage()));
+			Log::write('critical', __d('croogo', 'Errors in CakeErrorController: %s', $e->getMessage()));
 		}
 
 		$this->_set(array('cacheAction' => false, 'viewPath' => 'Errors'));

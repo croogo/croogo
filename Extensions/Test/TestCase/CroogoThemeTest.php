@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Extensions\Test\TestCase;
-App::uses('CroogoTheme', 'Extensions.Lib');
-App::uses('CroogoTestCase', 'Croogo.Lib/TestSuite');
 
+use Croogo\Lib\TestSuite\CroogoTestCase;
+use Extensions\Lib\CroogoTheme;
 class CroogoThemeTest extends CroogoTestCase {
 
 /**

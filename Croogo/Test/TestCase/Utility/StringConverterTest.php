@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase\Utility;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('StringConverter', 'Croogo.Utility');
 
+use Croogo\TestSuite\CroogoTestCase;
+use Croogo\Utility\StringConverter;
 class StringConverterTest extends CroogoTestCase {
 
 	public $setupSettings = false;

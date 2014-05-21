@@ -1,11 +1,11 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase;
-App::uses('Cache', 'Cache');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('Router', 'Routing');
-App::uses('CroogoRouter', 'Croogo.Lib');
 
+use Cake\Cache\Cache;
+use Cake\Routing\Router;
+use Croogo\Lib\CroogoRouter;
+use Croogo\TestSuite\CroogoTestCase;
 class CroogoRouterTest extends CroogoTestCase {
 
 	public $fixtures = array(
@@ -34,7 +34,7 @@ class CroogoRouterTest extends CroogoTestCase {
 
 		$this->assertEquals(1, count($result));
 		$this->assertNotEmpty($result[0]);
-		$this->assertInstanceOf('CakeRoute', $result[0]);
+		$this->assertInstanceOf('Route', $result[0]);
 		$reversed = Router::parse('/');
 		$this->assertEquals($promoted, array_intersect_key($promoted, $reversed));
 
@@ -131,7 +131,7 @@ class CroogoRouterTest extends CroogoTestCase {
  * testWhitelistedDetectorWithInvalidIp
  */
 	public function testWhitelistedDetectorWithInvalidIp() {
-		$request = $this->getMock('CakeRequest', array('clientIp'));
+		$request = $this->getMock('Request', array('clientIp'));
 		$request->addDetector('whitelisted', array(
 			'callback' => array('CroogoRouter', 'isWhitelistedRequest'),
 		));
@@ -147,7 +147,7 @@ class CroogoRouterTest extends CroogoTestCase {
  * testWhitelistedDetectorWithValidIp
  */
 	public function testWhitelistedDetectorWithValidIp() {
-		$request = $this->getMock('CakeRequest', array('clientIp'));
+		$request = $this->getMock('Request', array('clientIp'));
 		$request->addDetector('whitelisted', array(
 			'callback' => array('CroogoRouter', 'isWhitelistedRequest'),
 		));

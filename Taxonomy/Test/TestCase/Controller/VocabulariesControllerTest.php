@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Taxonomy\Test\TestCase\Controller;
-App::uses('VocabulariesController', 'Taxonomy.Controller');
-App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoControllerTestCase;
+use Taxonomy\Controller\VocabulariesController;
 /**
  * VocabulariesController Test
  */
@@ -45,7 +45,7 @@ class VocabulariesControllerTest extends CroogoControllerTestCase {
 	public function setUp() {
 		parent::setUp();
 		App::build(array(
-			'View' => array(CakePlugin::path('Taxonomy') . 'View' . DS)
+			'View' => array(Plugin::path('Taxonomy') . 'View' . DS)
 		), App::APPEND);
 		$this->VocabulariesController = $this->generate('Taxonomy.Vocabularies', array(
 			'methods' => array(

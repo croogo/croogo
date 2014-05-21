@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Settings\Model;
-App::uses('AppModel', 'Model');
-App::uses('File', 'Utility');
 
+use App\Model\AppModel;
+use Cake\Utility\File;
 /**
  * Setting
  *

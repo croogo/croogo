@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase\Utility;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('VisibilityFilter', 'Croogo.Utility');
 
+use Croogo\TestSuite\CroogoTestCase;
+use Croogo\Utility\VisibilityFilter;
 class VisibilityFilterTest extends CroogoTestCase {
 
 	public $setupSettings = false;
@@ -64,7 +64,7 @@ class VisibilityFilterTest extends CroogoTestCase {
 	}
 
 	public function testLinkstringRule() {
-		$request = new CakeRequest();
+		$request = new Request();
 		$request->addParams(array(
 			'controller' => 'nodes',
 			'plugin' => 'nodes',
@@ -97,7 +97,7 @@ class VisibilityFilterTest extends CroogoTestCase {
 	}
 
 	public function testLinkstringRuleWithContacts() {
-		$request = new CakeRequest();
+		$request = new Request();
 		$request->addParams(array(
 			'controller' => 'contacts',
 			'plugin' => 'contacts',
@@ -127,7 +127,7 @@ class VisibilityFilterTest extends CroogoTestCase {
 	}
 
 	public function testLinkstringRuleWithQueryString() {
-		$request = new CakeRequest();
+		$request = new Request();
 		$request->addParams(array(
 			'controller' => 'nodes',
 			'plugin' => 'nodes',

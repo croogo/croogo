@@ -1,12 +1,12 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\View\Helper;
-App::uses('CroogoHelper', 'Croogo.View/Helper');
-App::uses('CroogoPaginatorHelper', 'Croogo.View/Helper');
-App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('View', 'View');
-App::uses('HtmlHelper', 'View/Helper');
 
+use App\View\Helper\HtmlHelper;
+use Cake\Controller\Controller;
+use Cake\View\View;
+use Croogo\TestSuite\CroogoTestCase;
+use Croogo\View\Helper\CroogoHelper;
+use Croogo\View\Helper\CroogoPaginatorHelper;
 class CroogoPaginatorHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(
@@ -17,7 +17,7 @@ class CroogoPaginatorHelperTest extends CroogoTestCase {
 		$controller = null;
 		$this->View = new View($controller);
 		$this->Paginator = new CroogoPaginatorHelper($this->View);
-		$this->Paginator->request = new CakeRequest(null, false);
+		$this->Paginator->request = new Request(null, false);
 		$this->Paginator->Html = new HtmlHelper($this->View);
 	}
 

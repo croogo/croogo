@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Croogo\Model\Behavior;
-App::uses('AuthComponent', 'Controller/Component');
-App::uses('CroogoStatus', 'Croogo.Lib');
 
+use App\Controller\Component\AuthComponent;
+use Croogo\Lib\CroogoStatus;
 /**
  * Publishable Behavior
  *

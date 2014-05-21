@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Taxonomy\Controller\Component;
-App::uses('Component', 'Controller');
 
+use Cake\Controller\Component;
 /**
  * Taxonomies Component
  *

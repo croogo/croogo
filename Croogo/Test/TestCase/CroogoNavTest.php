@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase;
-App::uses('CroogoNav', 'Croogo.Lib');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\Lib\CroogoNav;
+use Croogo\TestSuite\CroogoTestCase;
 class CroogoNavTest extends CroogoTestCase {
 
 	public $setupSettings = false;

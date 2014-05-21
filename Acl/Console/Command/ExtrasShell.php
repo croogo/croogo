@@ -18,7 +18,8 @@
  */
 namespace Croogo\Acl\Console\Command;
 
-App::uses('AclExtras', 'Acl.Lib');
+use Acl\Lib\AclExtras;
+use Cake\Console\Shell;
 
 /**
  * Shell for ACO extras

@@ -1,7 +1,7 @@
 <?php
 namespace Croogo\Example\View\Helper;
-App::uses('AppHelper', 'View/Helper');
 
+use App\View\Helper\AppHelper;
 /**
  * Example Helper
  *

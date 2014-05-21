@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Extensions\Controller;
-App::uses('ExtensionsAppController', 'Extensions.Controller');
 
+use Extensions\Controller\ExtensionsAppController;
 class ExtensionsDashboardController extends ExtensionsAppController {
 
 /**

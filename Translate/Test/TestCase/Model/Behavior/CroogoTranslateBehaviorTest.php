@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Translate\Test\TestCase\Model\Behavior;
-App::uses('Node', 'Model');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use App\Model\Node;
+use Croogo\TestSuite\CroogoTestCase;
 class CroogoTranslateBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
@@ -42,8 +42,8 @@ class CroogoTranslateBehaviorTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->Node = ClassRegistry::init('Nodes.Node');
-		if (!CakePlugin::loaded('Translate')) {
-			CakePlugin::load('Translate');
+		if (!Plugin::loaded('Translate')) {
+			Plugin::load('Translate');
 		}
 		$this->Node->Behaviors->attach('Translate.CroogoTranslate', array(
 			'fields' => array(

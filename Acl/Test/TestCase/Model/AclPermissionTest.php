@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Acl\Test\TestCase\Model;
-App::uses('AclPermission', 'Acl.Model');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Acl\Model\AclPermission;
+use Croogo\TestSuite\CroogoTestCase;
 class AclPermissionTest extends CroogoTestCase {
 
 	public $fixtures = array(

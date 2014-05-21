@@ -1,9 +1,9 @@
 <?php
 namespace Croogo\Contacts\Test\TestCase\Controller;
-App::uses('ContactsController', 'Contacts.Controller');
-App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
-App::uses('CroogoTestFixture', 'Croogo.TestSuite');
 
+use Contacts\Controller\ContactsController;
+use Croogo\TestSuite\CroogoControllerTestCase;
+use Croogo\TestSuite\CroogoTestFixture;
 class ContactsControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(

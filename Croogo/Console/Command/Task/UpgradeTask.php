@@ -46,8 +46,8 @@ class UpgradeTask extends AppShell {
  * Load Settings plugin and model
  */
 	protected function _loadSettingsPlugin() {
-		if (!CakePlugin::loaded('Settings')) {
-			CakePlugin::load('Settings');
+		if (!Plugin::loaded('Settings')) {
+			Plugin::load('Settings');
 		}
 		if (!$this->Setting) {
 			$this->Setting = ClassRegistry::init('Settings.Setting');
@@ -148,8 +148,7 @@ class UpgradeTask extends AppShell {
  * Upgrade ACL database
  */
 	public function acl() {
-		App::uses('AclUpgrade', 'Acl.Lib');
-		if (!CakePlugin::loaded('Acl') || !class_exists('AclUpgrade')) {
+				if (!Plugin::loaded('Acl') || !class_exists('AclUpgrade')) {
 			$this->err('AclUpgrade class not found or Acl plugin not loaded');
 			$this->_stop();
 		}
@@ -162,13 +161,10 @@ class UpgradeTask extends AppShell {
 	}
 
 	public function links() {
-		if (!CakePlugin::loaded('Menus')) {
-			CakePlugin::load('Menus');
+		if (!Plugin::loaded('Menus')) {
+			Plugin::load('Menus');
 		}
-		App::uses('View', 'View');
-		App::uses('AppHelper', 'View/Helper');
-		App::uses('MenusHelper', 'Menus.View/Helper');
-		$Menus = new MenusHelper(new View());
+								$Menus = new MenusHelper(new View());
 		$Link = ClassRegistry::init('Menus.Link');
 		$links = $Link->find('all', array('fields' => array('id', 'title', 'link')));
 

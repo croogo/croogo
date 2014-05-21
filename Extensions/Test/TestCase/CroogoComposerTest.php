@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Extensions\Test\TestCase;
-App::uses('CroogoComposer', 'Extensions.Lib');
-App::uses('CroogoTestCase', 'Croogo.Lib/TestSuite');
 
+use Croogo\Lib\TestSuite\CroogoTestCase;
+use Extensions\Lib\CroogoComposer;
 /**
  * Croogo Composer Test
  *
@@ -24,13 +24,13 @@ class CroogoComposerTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 		App::build(array(
-			'Plugin' => array(CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
-			'View' => array(CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'View' . DS),
+			'Plugin' => array(Plugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
+			'View' => array(Plugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'View' . DS),
 		), App::PREPEND);
-		$this->testPlugin = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_plugin.zip';
-		$this->testTheme = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_theme.zip';
+		$this->testPlugin = Plugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_plugin.zip';
+		$this->testTheme = Plugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_theme.zip';
 		$this->CroogoComposer = new CroogoComposer();
-		$this->CroogoComposer->appPath = CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS;
+		$this->CroogoComposer->appPath = Plugin::path('Extensions') . 'Test' . DS . 'test_app' . DS;
 	}
 
 /**
@@ -40,13 +40,13 @@ class CroogoComposerTest extends CroogoTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		$path = CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example';
+		$path = Plugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example';
 		$Folder = new Folder($path);
 		$Folder->delete();
-		$path = CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Minimal';
+		$path = Plugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Minimal';
 		$Folder = new Folder($path);
 		$Folder->delete();
-		$File = new File(CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'composer.json');
+		$File = new File(Plugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'composer.json');
 		$File->delete();
 	}
 

@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
-App::uses('Type', 'Taxonomy.Model');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoTestCase;
+use Taxonomy\Model\Type;
 class ParamsBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(

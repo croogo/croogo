@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Acl\Controller\Component;
-App::uses('Component', 'Controller');
 
+use Cake\Controller\Component;
 /**
  * AclFilter Component
  *

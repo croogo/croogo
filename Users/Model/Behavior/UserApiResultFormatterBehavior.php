@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Users\Model\Behavior;
-App::uses('ModelBehavior', 'Model');
 
+use App\Model\ModelBehavior;
 /**
  * User Api Result Formatter
  *

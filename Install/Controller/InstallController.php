@@ -1,10 +1,11 @@
 <?php
 
 namespace Croogo\Install\Controller;
-App::uses('Controller', 'Controller');
-App::uses('File', 'Utility');
-App::uses('InstallManager', 'Install.Lib');
 
+use Cake\Controller\Controller;
+use Cake\Utility\File;
+use Install\Lib\AssetGenerator;
+use Install\Lib\InstallManager;
 /**
  * Install Controller
  *
@@ -58,10 +59,9 @@ class InstallController extends Controller {
  * Generate assets
  */
 	protected function _generateAssets() {
-		$file = CakePlugin::path('Croogo') . 'webroot' . DS . 'css' . DS . 'croogo-bootstrap.css';
+		$file = Plugin::path('Croogo') . 'webroot' . DS . 'css' . DS . 'croogo-bootstrap.css';
 		if (!file_exists($file)) {
-			App::uses('AssetGenerator', 'Install.Lib');
-			$generator = new AssetGenerator();
+						$generator = new AssetGenerator();
 			try {
 				$generator->generate();
 			} catch (Exception $e) {
@@ -190,8 +190,8 @@ class InstallController extends Controller {
 		}
 
 		if ($this->request->is('post')) {
-			if (!CakePlugin::loaded('Users')) {
-				CakePlugin::load('Users');
+			if (!Plugin::loaded('Users')) {
+				Plugin::load('Users');
 			}
 			$this->loadModel('Users.User');
 			$this->User->set($this->request->data);

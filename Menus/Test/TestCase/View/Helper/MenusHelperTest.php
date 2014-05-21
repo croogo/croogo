@@ -1,11 +1,11 @@
 <?php
 
 namespace Croogo\Menus\Test\TestCase\View\Helper;
-App::uses('MenusHelper', 'Menus.View/Helper');
-App::uses('SessionComponent', 'Controller/Component');
-App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use App\Controller\Component\SessionComponent;
+use Cake\Controller\Controller;
+use Croogo\TestSuite\CroogoTestCase;
+use Menus\View\Helper\MenusHelper;
 class TheMenuTestController extends Controller {
 
 	public $name = 'TheTest';
@@ -29,8 +29,8 @@ class MenusHelperTest extends CroogoTestCase {
 		parent::setUp();
 		$this->ComponentRegistry = new ComponentRegistry();
 
-		$request = $this->getMock('CakeRequest');
-		$response = $this->getMock('CakeResponse');
+		$request = $this->getMock('Request');
+		$response = $this->getMock('Response');
 		$this->View = new View(new TheMenuTestController($request, $response));
 		$this->Menus = new MenusHelper($this->View);
 		$this->_appEncoding = Configure::read('App.encoding');

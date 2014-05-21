@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Wysiwyg\Controller\Component;
-App::uses('Component', 'Controller');
 
+use Cake\Controller\Component;
 /**
  * Wysiwyg Component
  *

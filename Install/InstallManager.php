@@ -24,9 +24,7 @@ class InstallManager {
 	);
 
 	public function createDatabaseFile($data) {
-		App::uses('File', 'Utility');
-		App::uses('ConnectionManager', 'Model');
-		$config = $this->defaultConfig;
+						$config = $this->defaultConfig;
 
 		foreach ($data['Install'] as $key => $value) {
 			if (isset($data['Install'][$key])) {
@@ -68,7 +66,7 @@ class InstallManager {
 		$result = copy($croogoConfigFile . '.install', $croogoConfigFile);
 		if (!$result) {
 			$msg = 'Unable to copy file "croogo.php"';
-			CakeLog::critical($msg);
+			Log::critical($msg);
 			return $msg;
 		}
 

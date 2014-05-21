@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\Routing\Route;
-App::uses('CakeRoute', 'Routing/Route');
 
+use App\Routing\Route\Route;
 /**
  * API Route class
  *
@@ -11,7 +11,7 @@ App::uses('CakeRoute', 'Routing/Route');
  * @license http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link http://www.croogo.org
  */
-class ApiRoute extends CakeRoute {
+class ApiRoute extends Route {
 
 	public function __construct($template, $defaults = array(), $options = array()) {
 		$options = Hash::merge(array(
@@ -29,7 +29,7 @@ class ApiRoute extends CakeRoute {
  *
  * @param string $url The URL to attempt to parse.
  * @return mixed Boolean false on failure, otherwise an array or parameters
- * @see CakeRoute::parse()
+ * @see Route::parse()
  */
 	public function parse($url) {
 		$parsed = parent::parse($url);
@@ -45,7 +45,7 @@ class ApiRoute extends CakeRoute {
  *
  * @param array $url An array of parameters to check matching with.
  * @return mixed Either a string URL for the parameters if they match or false.
- * @see CakeRoute::match()
+ * @see Route::match()
  */
 	public function match($url) {
 		if (isset($url['prefix']) && isset($url['action'])) {

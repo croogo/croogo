@@ -18,7 +18,7 @@
  */
 namespace Croogo\Acl\Test\Fixture;
 
-App::uses('CakeTestFixture', 'TestSuite/Fixture');
+use App\TestSuite\Fixture\CakeTestFixture;
 
 class AclAroFixture extends CakeTestFixture {
 

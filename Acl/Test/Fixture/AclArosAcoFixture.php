@@ -18,7 +18,7 @@
  */
 namespace Croogo\Acl\Test\Fixture;
 
-App::uses('CroogoTestFixture', 'Croogo.TestSuite');
+use Croogo\TestSuite\CroogoTestFixture;
 
 class AclArosAcoFixture extends CroogoTestFixture {
 

@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('CroogoJson', 'Croogo.Lib');
 
+use Croogo\Lib\CroogoJson;
+use Croogo\TestSuite\CroogoTestCase;
 class CroogoJsonTest extends CroogoTestCase {
 
 	public $fixtures = array(

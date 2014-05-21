@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase\Routing\Route;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('ApiRoute', 'Croogo.Routing/Route');
 
+use Croogo\Routing\Route\ApiRoute;
+use Croogo\TestSuite\CroogoTestCase;
 class ApiRouteTest extends CroogoTestCase {
 
 	public $fixtures = array(

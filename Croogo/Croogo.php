@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Croogo;
-App::uses('CakeEvent', 'Event');
-App::uses('CakeEventManager', 'Event');
 
+use Cake\Event\Event;
+use Cake\Event\EventManager;
 /**
  * Croogo
  *
@@ -242,19 +242,19 @@ class Croogo {
 /**
  * Convenience method to dispatch event.
  *
- * Creates, dispatches, and returns a new CakeEvent object.
+ * Creates, dispatches, and returns a new Event object.
  *
- * @see CakeEvent::__construct()
+ * @see Event::__construct()
  * @param string $name Name of the event
  * @param object $subject the object that this event applies to
  * @param mixed $data any value you wish to be transported with this event
  */
 	public static function dispatchEvent($name, $subject = null, $data = null) {
-		$event = new CakeEvent($name, $subject, $data);
+		$event = new Event($name, $subject, $data);
 		if ($subject) {
 			$event = $subject->getEventManager()->dispatch($event);
 		} else {
-			$event = CakeEventManager::instance()->dispatch($event);
+			$event = EventManager::instance()->dispatch($event);
 		}
 		return $event;
 	}

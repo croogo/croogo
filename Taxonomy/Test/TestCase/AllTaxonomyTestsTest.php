@@ -1,7 +1,7 @@
 <?php
 namespace Croogo\Taxonomy\Test\TestCase;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoTestCase;
 class AllTaxonomyTestsTest extends PHPUnit_Framework_TestSuite {
 
 /**
@@ -11,7 +11,7 @@ class AllTaxonomyTestsTest extends PHPUnit_Framework_TestSuite {
  */
 	public static function suite() {
 		$suite = new CakeTestSuite('All Taxonomy tests');
-		$suite->addTestDirectoryRecursive(CakePlugin::path('Taxonomy') . 'Test' . DS . 'Case' . DS);
+		$suite->addTestDirectoryRecursive(Plugin::path('Taxonomy') . 'Test' . DS . 'Case' . DS);
 		return $suite;
 	}
 

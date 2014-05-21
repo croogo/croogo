@@ -1,7 +1,7 @@
 <?php
 namespace Croogo\Test\TestCase;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoTestCase;
 /**
  *  CroogoCorePluginsTest
  *
@@ -31,8 +31,8 @@ class CroogoCorePluginsTest extends PHPUnit_Framework_TestSuite {
 			$plugins[] = 'Install';
 		}
 		foreach ($plugins as $plugin) {
-			CakePlugin::load($plugin);
-			$suite->addTestDirectoryRecursive(CakePlugin::path($plugin) . 'Test' . DS);
+			Plugin::load($plugin);
+			$suite->addTestDirectoryRecursive(Plugin::path($plugin) . 'Test' . DS);
 		}
 		return $suite;
 	}

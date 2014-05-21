@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Users\Model;
-App::uses('UsersAppModel', 'Users.Model');
-App::uses('AuthComponent', 'Controller/Component');
 
+use App\Controller\Component\AuthComponent;
+use Users\Model\UsersAppModel;
 /**
  * User
  *

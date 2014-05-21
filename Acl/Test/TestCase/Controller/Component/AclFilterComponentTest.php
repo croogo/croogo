@@ -1,10 +1,10 @@
 <?php
 
 namespace Croogo\Acl\Test\TestCase\Controller\Component;
-App::uses('ComponentRegistry', 'Controller');
-App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Cake\Controller\ComponentRegistry;
+use Cake\Controller\Controller;
+use Croogo\TestSuite\CroogoTestCase;
 class AclFilterTestController extends Controller {
 
 	public $components = array(
@@ -28,12 +28,12 @@ class AclFilterComponentTest extends CroogoTestCase {
 	);
 
 	public function testAllowedActions() {
-		$request = new CakeRequest('/users/view/yvonne');
+		$request = new Request('/users/view/yvonne');
 		$request->addParams(array(
 			'controller' => 'users',
 			'action' => 'view',
 		));
-		$response = $this->getMock('CakeResponse');
+		$response = $this->getMock('Response');
 		$this->Controller = new AclFilterTestController($request, $response);
 		$this->Controller->name = 'Users';
 		$this->Controller->constructClasses();
@@ -44,14 +44,14 @@ class AclFilterComponentTest extends CroogoTestCase {
 	}
 
 	public function testPrefixedAllowedActions() {
-		$request = new CakeRequest('/admin/users/view/3');
+		$request = new Request('/admin/users/view/3');
 		$request->addParams(array(
 			'admin' => true,
 			'controller' => 'users',
 			'action' => 'admin_add',
 			3,
 		));
-		$response = $this->getMock('CakeRequest');
+		$response = $this->getMock('Request');
 		$this->Controller = new AclFilterTestController($request, $response);
 		$this->Controller->constructClasses();
 		$user = array(
@@ -78,7 +78,7 @@ class AclFilterComponentTest extends CroogoTestCase {
 
 	public function testLoginActionOverrides() {
 		$this->Controller = new AclFilterTestController(
-			$this->getMock('CakeRequest'), $this->getMock('CakeResponse')
+			$this->getMock('Request'), $this->getMock('Response')
 		);
 		$this->Controller->constructClasses();
 		$this->Controller->startupProcess();

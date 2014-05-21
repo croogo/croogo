@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\Utility;
-App::uses('StringConverter', 'Croogo.Lib/Utility');
 
+use Croogo\Lib\Utility\StringConverter;
 /**
  * VisibilityFilter
  *
@@ -33,13 +33,13 @@ class VisibilityFilter {
 /**
  * Constructor
  *
- * @param CakeRequest $request
+ * @param Request $request
  */
-	public function __construct(CakeRequest $request = null) {
+	public function __construct(Request $request = null) {
 		if ($request) {
 			$this->_request = $request;
 		} else {
-			$this->_request = new CakeRequest();
+			$this->_request = new Request();
 		}
 		$this->_converter = new StringConverter();
 	}
@@ -140,7 +140,7 @@ class VisibilityFilter {
 				continue;
 			}
 			if (!is_array($value[$model][$field])) {
-				CakeLog::error('Invalid visibility_path rule');
+				Log::error('Invalid visibility_path rule');
 			}
 
 			if ($this->_isVisible($value[$model][$field])) {

@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\View\Helper;
-App::uses('FormHelper', 'View/Helper');
 
+use App\View\Helper\FormHelper;
 /**
  * Croogo Form Helper
  *

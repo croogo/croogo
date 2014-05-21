@@ -1,11 +1,11 @@
 <?php
 
 namespace Croogo\Extensions\Utility;
-App::uses('CakeLog', 'Log');
-App::uses('ClassRegistry', 'Utility');
-App::uses('File', 'Utility');
-App::uses('Model', 'Model');
 
+use App\Model\Model;
+use App\Utility\ClassRegistry;
+use Cake\Log\Log;
+use Cake\Utility\File;
 /**
  * Data Migration Utility class
  *
@@ -102,7 +102,7 @@ class DataMigration {
 					$Model->create($record);
 					$saved = $Model->save();
 					if (!$saved) {
-						CakeLog::error(sprintf(
+						Log::error(sprintf(
 							'Error loading row #%s for table `%s`',
 							$i + 1,
 							$table

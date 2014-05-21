@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Blocks\View\Helper;
-App::uses('AppHelper', 'View/Helper');
 
+use App\View\Helper\AppHelper;
 /**
  * Regions Helper
  *

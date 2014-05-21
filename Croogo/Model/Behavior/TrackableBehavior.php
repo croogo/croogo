@@ -1,10 +1,10 @@
 <?php
 
 namespace Croogo\Croogo\Model\Behavior;
-App::uses('ModelBehavior', 'Model');
-App::uses('AuthComponent', 'Controller/Component');
-App::uses('CakeSession', 'Model/Datasource');
 
+use App\Controller\Component\AuthComponent;
+use App\Model\Datasource\Session;
+use App\Model\ModelBehavior;
 /**
  * Trackable Behavior
  *
@@ -97,7 +97,7 @@ class TrackableBehavior extends ModelBehavior {
 		$userPk = $User->primaryKey;
 
 		$user = Configure::read('Trackable.Auth.User');
-		if (!$user && CakeSession::started()) {
+		if (!$user && Session::started()) {
 			$user = AuthComponent::user();
 		}
 

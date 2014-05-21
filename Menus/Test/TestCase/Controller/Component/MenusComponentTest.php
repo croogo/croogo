@@ -1,10 +1,9 @@
 <?php
 
 namespace Croogo\Menus\Test\TestCase\Controller\Component;
-App::uses('Controller', 'Controller');
-App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
-App::uses('Controller', 'Controller');
+use Cake\Controller\Controller;
+use Croogo\TestSuite\CroogoControllerTestCase;
 
 class MenusTestController extends Controller {
 
@@ -37,7 +36,7 @@ class MenusComponentTest extends CroogoControllerTestCase {
 
 	public function setUp() {
 		$this->_paths = App::paths();
-		$app = CakePlugin::path('Menus') . 'Test' . DS . 'test_app' . DS;
+		$app = Plugin::path('Menus') . 'Test' . DS . 'test_app' . DS;
 		App::build(array(
 			'Controller' => array(
 				$app . 'Controller' . DS,

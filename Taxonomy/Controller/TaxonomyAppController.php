@@ -1,6 +1,5 @@
 <?php
 namespace Croogo\Taxonomy\Controller;
-App::uses('CroogoAppController', 'Croogo.Controller');
 /**
  * Taxonomy App Controller
  *

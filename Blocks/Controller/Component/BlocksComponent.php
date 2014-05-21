@@ -1,10 +1,10 @@
 <?php
 
 namespace Croogo\Blocks\Controller\Component;
-App::uses('Component', 'Controller');
-App::uses('StringConverter', 'Croogo.Lib/Utility');
-App::uses('VisibilityFilter', 'Croogo.Lib/Utility');
 
+use Cake\Controller\Component;
+use Croogo\Lib\Utility\StringConverter;
+use Croogo\Lib\Utility\VisibilityFilter;
 /**
  * Blocks Component
  *

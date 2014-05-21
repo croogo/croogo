@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Acl\Model\Behavior;
-App::uses('ModelBehavior', 'Model');
 
+use App\Model\ModelBehavior;
 /**
  * UserAro Behavior
  *

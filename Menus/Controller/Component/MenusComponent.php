@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Menus\Controller\Component;
-App::uses('Component', 'Controller');
 
+use Cake\Controller\Component;
 /**
  * Menus Component
  *

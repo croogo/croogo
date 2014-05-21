@@ -1,11 +1,11 @@
 <?php
 namespace Croogo\Blocks\Test\TestCase\View\Helper;
-App::uses('RegionsHelper', 'Blocks.View/Helper');
-App::uses('LayoutHelper', 'Croogo.View/Helper');
-App::uses('SessionComponent', 'Controller/Component');
-App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use App\Controller\Component\SessionComponent;
+use Blocks\View\Helper\RegionsHelper;
+use Cake\Controller\Controller;
+use Croogo\TestSuite\CroogoTestCase;
+use Croogo\View\Helper\LayoutHelper;
 class TheRegionsTestController extends Controller {
 
 	public $components = array();
@@ -27,14 +27,14 @@ class RegionsHelperTest extends CroogoTestCase {
 		parent::setUp();
 		$this->ComponentRegistry = new ComponentRegistry();
 
-		$request = new CakeRequest('nodes/nodes/index');
+		$request = new Request('nodes/nodes/index');
 		$request->params = array(
 			'plugin' => 'nodes',
 			'controller' => 'nodes',
 			'action' => 'index',
 			'named' => array(),
 		);
-		$controller = new TheRegionsTestController($request, new CakeResponse());
+		$controller = new TheRegionsTestController($request, new Response());
 		$this->View = $this->getMock('View',
 			array('element', 'elementExists'),
 			array($controller)

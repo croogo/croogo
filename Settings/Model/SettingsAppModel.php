@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Settings\Model;
-App::uses('AppModel', 'Model');
 
+use App\Model\AppModel;
 /**
  * Settings App Model
  *

@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
-App::uses('Node', 'Nodes.Model');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoTestCase;
+use Nodes\Model\Node;
 class UrlBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(

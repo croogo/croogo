@@ -1,10 +1,10 @@
 <?php
 
 namespace Croogo\Extensions\Test\TestCase;
-App::uses('MigrationVersion', 'Migrations.Lib');
-App::uses('CroogoPlugin', 'Extensions.Lib');
-App::uses('CroogoTestCase', 'Croogo.Lib/TestSuite');
 
+use Croogo\Lib\TestSuite\CroogoTestCase;
+use Extensions\Lib\CroogoPlugin;
+use Migrations\Lib\MigrationVersion;
 class CroogoPluginTest extends CroogoTestCase {
 
 /**
@@ -16,7 +16,7 @@ class CroogoPluginTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 		App::build(array(
-			'Plugin' => array(CakePlugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
+			'Plugin' => array(Plugin::path('Extensions') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
 		), App::PREPEND);
 
 		$this->CroogoPlugin = $this->getMock('CroogoPlugin', array(

@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Acl\Model;
-App::uses('Permission', 'Model');
 
+use App\Model\Permission;
 /**
  * AclPermission Model
  *

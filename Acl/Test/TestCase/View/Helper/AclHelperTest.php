@@ -1,10 +1,10 @@
 <?php
 
 namespace Croogo\Acl\Test\TestCase\View\Helper;
-App::uses('AclHelper', 'Acl.View/Helper');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('View', 'View');
 
+use Acl\View\Helper\AclHelper;
+use Cake\View\View;
+use Croogo\TestSuite\CroogoTestCase;
 class AclHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(

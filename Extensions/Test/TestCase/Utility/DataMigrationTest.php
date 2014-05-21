@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Extensions\Test\TestCase\Utility;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('DataMigration', 'Extensions.Utility');
 
+use Croogo\TestSuite\CroogoTestCase;
+use Extensions\Utility\DataMigration;
 class DataMigrationTest extends CroogoTestCase {
 
 	public $fixtures = array(

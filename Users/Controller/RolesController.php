@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Users\Controller;
-App::uses('UsersAppController', 'Users.Controller');
 
+use Users\Controller\UsersAppController;
 /**
  * Roles Controller
  *

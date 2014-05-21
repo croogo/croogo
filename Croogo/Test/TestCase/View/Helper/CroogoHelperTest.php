@@ -1,13 +1,13 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\View\Helper;
-App::uses('CroogoHelper', 'Croogo.View/Helper');
-App::uses('SessionComponent', 'Controller/Component');
-App::uses('AuthComponent', 'Controller/Component');
-App::uses('CakeSession', 'Model/Datasource');
-App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('AclHelper', 'Acl.View/Helper');
 
+use Acl\View\Helper\AclHelper;
+use App\Controller\Component\AuthComponent;
+use App\Controller\Component\SessionComponent;
+use App\Model\Datasource\Session;
+use Cake\Controller\Controller;
+use Croogo\TestSuite\CroogoTestCase;
+use Croogo\View\Helper\CroogoHelper;
 class TheCroogoTestController extends Controller {
 
 	public $uses = null;
@@ -34,13 +34,13 @@ class CroogoHelperTest extends CroogoTestCase {
 		parent::setUp();
 		$this->ComponentRegistry = new ComponentRegistry();
 
-		$request = new CakeRequest('nodes/index');
+		$request = new Request('nodes/index');
 		$request->params = array(
 			'controller' => 'nodes',
 			'action' => 'index',
 			'named' => array(),
 		);
-		$view = new View(new TheCroogoTestController($request, new CakeResponse()));
+		$view = new View(new TheCroogoTestController($request, new Response()));
 		$this->Croogo = new CroogoHelper($view);
 		$aclHelper = Configure::read('Site.acl_plugin') . 'Helper';
 		$this->Croogo->Acl = $this->getMock(
@@ -69,7 +69,7 @@ class CroogoHelperTest extends CroogoTestCase {
  * testAdminMenus
  */
 	public function testAdminMenus() {
-		CakeSession::write('Auth.User', array('id' => 1, 'role_id' => 1));
+		Session::write('Auth.User', array('id' => 1, 'role_id' => 1));
 		CroogoNav::add('contents', array(
 			'title' => 'Contents',
 			'url' => '#',

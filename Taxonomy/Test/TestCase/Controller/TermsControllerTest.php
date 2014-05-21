@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Taxonomy\Test\TestCase\Controller;
-App::uses('TermsController', 'Taxonomy.Controller');
-App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoControllerTestCase;
+use Taxonomy\Controller\TermsController;
 class TermsControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
@@ -39,7 +39,7 @@ class TermsControllerTest extends CroogoControllerTestCase {
 	public function setUp() {
 		parent::setUp();
 		App::build(array(
-			'View' => array(CakePlugin::path('Taxonomy') . 'View' . DS)
+			'View' => array(Plugin::path('Taxonomy') . 'View' . DS)
 		), App::APPEND);
 		$this->TermsController = $this->generate('Taxonomy.Terms', array(
 			'methods' => array(

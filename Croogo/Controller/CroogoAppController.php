@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\Controller;
-App::uses('Controller', 'Controller');
 
+use Cake\Controller\Controller;
 /**
  * Croogo App Controller
  *
@@ -109,7 +109,7 @@ class CroogoAppController extends Controller {
 				'callback' => array('CroogoRouter', 'isWhitelistedRequest'),
 			));
 		}
-		$this->getEventManager()->dispatch(new CakeEvent('Controller.afterConstruct', $this));
+		$this->getEventManager()->dispatch(new Event('Controller.afterConstruct', $this));
 	}
 
 /**
@@ -189,7 +189,7 @@ class CroogoAppController extends Controller {
  *
  * @throws MissingActionException
  */
-	public function invokeAction(CakeRequest $request) {
+	public function invokeAction(Request $request) {
 		try {
 			return parent::invokeAction($request);
 		} catch (MissingActionException $e) {
@@ -323,7 +323,7 @@ class CroogoAppController extends Controller {
 		if ($plugin) {
 			App::build(array(
 				'View' => array(
-					CakePlugin::path($plugin) . 'View' . DS,
+					Plugin::path($plugin) . 'View' . DS,
 				),
 			), App::APPEND);
 		}

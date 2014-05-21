@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Comments\Controller;
-App::uses('AppController', 'Controller');
 
+use App\Controller\AppController;
 /**
  * Comments App Controller
  *

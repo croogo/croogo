@@ -1,15 +1,15 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase\Controller\Component;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('BulkProcessComponent', 'Croogo.Controller/Component');
 
+use Croogo\Controller\Component\BulkProcessComponent;
+use Croogo\TestSuite\CroogoTestCase;
 class BulkProcessComponentTest extends CroogoTestCase {
 
 	public $setupSettings = false;
 
 	protected function _createController($data) {
-		$request = new CakeRequest();
+		$request = new Request();
 		$request->data = $data;
 		$controller = new Controller($request);
 		$controller->components = array('Croogo.BulkProcess');

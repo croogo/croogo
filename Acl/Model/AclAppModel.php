@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Acl\Model;
-App::uses('AppModel', 'Model');
 
+use App\Model\AppModel;
 /**
  * Acl App Model
  *

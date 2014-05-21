@@ -1,10 +1,10 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
-App::uses('Block', 'Blocks.Model');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('OrderedBehavior', 'Croogo.Model/Behavior');
 
+use Blocks\Model\Block;
+use Croogo\Model\Behavior\OrderedBehavior;
+use Croogo\TestSuite\CroogoTestCase;
 class OrderedBehaviorTest extends CroogoTestCase {
 
 /**

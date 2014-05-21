@@ -18,11 +18,17 @@
  */
 namespace Croogo\Acl;
 
-App::uses('Controller', 'Controller');
-App::uses('ComponentRegistry', 'Controller');
-App::uses('AclComponent', 'Controller/Component');
-App::uses('DbAcl', 'Model');
-App::uses('Shell', 'Console');
+use App\Controller\Component\AclComponent;
+use App\Model\DbAcl;
+use Cake\Cache\Cache;
+use Cake\Console\Shell;
+use Cake\Controller\ComponentRegistry;
+use Cake\Controller\Controller;
+use Cake\Core\App;
+use Cake\Core\Configure;
+use Cake\Core\Object;
+use Cake\Core\Plugin;
+use Cake\Utility\Inflector;
 
 /**
  * Shell for ACO extras
@@ -101,7 +107,7 @@ class AclExtras extends Object {
  **/
 	public function startup($controller = null) {
 		if (!$controller) {
-			$controller = new Controller(new CakeRequest());
+			$controller = new Controller(new Request());
 		}
 		$collection = new ComponentRegistry();
 		$this->Acl = new AclComponent($collection);
@@ -145,7 +151,7 @@ class AclExtras extends Object {
  */
 	public function aco_update_contents($params = array()) {
 		list($plugin, $model) = pluginSplit($this->args[0]);
-		App::uses($model, $plugin . '.Model');
+		/* TODO: App::uses($model, $plugin . '.Model'); */
 		if (!class_exists($model)) {
 			$this->err(__d('croogo', 'Model %s cannot be found.', $model));
 			return false;
@@ -186,10 +192,10 @@ class AclExtras extends Object {
 		if (empty($params['plugin'])) {
 			$controllers = $this->getControllerList();
 			$this->_updateControllers($root, $controllers);
-			$plugins = CakePlugin::loaded();
+			$plugins = Plugin::loaded();
 		} else {
 			$plugin = $params['plugin'];
-			if (!in_array($plugin, App::objects('plugin')) || !CakePlugin::loaded($plugin)) {
+			if (!in_array($plugin, App::objects('plugin')) || !Plugin::loaded($plugin)) {
 				$this->err(__d('croogo', '<error>Plugin %s not found or not activated</error>', $plugin));
 				return false;
 			}
@@ -229,12 +235,12 @@ class AclExtras extends Object {
 		}
 		$appIndex = array_search($plugin . 'AppController', $controllers);
 		if ($appIndex !== false) {
-			App::uses($plugin . 'AppController', $dotPlugin . 'Controller');
+			/* TODO: App::uses($plugin . 'AppController', $dotPlugin . 'Controller'); */
 			unset($controllers[$appIndex]);
 		}
 		// look at each controller
 		foreach ($controllers as $controller) {
-			App::uses($controller, $dotPlugin . 'Controller');
+			/* TODO: App::uses($controller, $dotPlugin . 'Controller'); */
 			$controllerName = preg_replace('/Controller$/', '', $controller);
 
 			$path = $this->rootNode . '/' . $pluginPath . $controllerName;
@@ -274,7 +280,7 @@ class AclExtras extends Object {
 
 		list($cPlugin, $component) = pluginSplit($apiComponent);
 		$componentName = $component . 'Component';
-		App::uses($componentName, $cPlugin . '.Controller/Component');
+		/* TODO: App::uses($componentName, $cPlugin . '.Controller/Component'); */
 		$reflection = new ReflectionClass($componentName);
 		$props = $reflection->getDefaultProperties();
 		$version = str_replace('.', '_', $props['_apiVersion']);

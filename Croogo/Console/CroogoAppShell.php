@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\Console;
-App::uses('Shell', 'Console');
 
+use Cake\Console\Shell;
 /**
  * Base class for Croogo Shell
  *

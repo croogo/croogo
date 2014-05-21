@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Meta\Controller;
-App::uses('MetaAppController', 'Meta.Controller');
 
+use Meta\Controller\MetaAppController;
 /**
  * Meta Controller
  *

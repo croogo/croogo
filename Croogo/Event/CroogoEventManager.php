@@ -1,20 +1,20 @@
 <?php
 namespace Croogo\Croogo\Event;
-App::uses('CakeEventManager', 'Event');
 
+use Cake\Event\EventManager;
 /**
  * Croogo Event Manager class
  *
- * Descendant of CakeEventManager, customized to map event listener objects
+ * Descendant of EventManager, customized to map event listener objects
  *
  * @since 1.4
  * @package Croogo.Croogo.Event
- * @see CakeEventManager
+ * @see EventManager
  * @author   Rachman Chavik <rchavik@xintesa.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoEventManager extends CakeEventManager {
+class CroogoEventManager extends EventManager {
 
 /**
  * A map of registered event listeners
@@ -71,11 +71,11 @@ class CroogoEventManager extends CakeEventManager {
 					if (isset($eventOptions['options']['className'])) {
 						list($plugin, $class) = pluginSplit($eventOptions['options']['className']);
 					}
-					App::uses($class, $plugin . '.Event');
+					$class = App::className($eventHandler, 'Event');
 					if (class_exists($class)) {
 						$cached[] = compact('plugin', 'class', 'eventKey', 'eventOptions');
 					} else {
-						CakeLog::error(__d('croogo', 'EventHandler %s not found in plugin %s', $class, $plugin));
+						Log::error(__d('croogo', 'EventHandler %s not found in plugin %s', $class, $plugin));
 					}
 				}
 				Cache::write('EventHandlers', $cached, 'cached_settings');
@@ -83,8 +83,8 @@ class CroogoEventManager extends CakeEventManager {
 		}
 		foreach ($cached as $cache) {
 			extract($cache);
-			if (CakePlugin::loaded($plugin)) {
-				App::uses($class, $plugin . '.Event');
+			if (Plugin::loaded($plugin)) {
+				$class = App::className($class, 'Event');
 				$settings = isset($eventOptions['options']) ? $eventOptions['options'] : array();
 				$listener = new $class($settings);
 				$eventManager->attach($listener, $eventKey, $eventOptions);
@@ -94,7 +94,7 @@ class CroogoEventManager extends CakeEventManager {
 
 /**
  * Adds a new listener to an event.
- * @see CakeEventManager::attach()
+ * @see EventManager::attach()
  * @return void
  */
 	public function attach($callable, $eventKey = null, $options = array()) {
@@ -107,7 +107,7 @@ class CroogoEventManager extends CakeEventManager {
 
 /**
  * Removes a listener from the active listeners.
- * @see CakeEventManager::detach()
+ * @see EventManager::detach()
  * @return void
  */
 	public function detach($callable, $eventKey = null) {

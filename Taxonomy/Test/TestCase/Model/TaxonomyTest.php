@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Taxonomy\Test\TestCase\Model;
-App::uses('Taxonomy', 'Taxonomy.Model');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoTestCase;
+use Taxonomy\Model\Taxonomy;
 class TaxonomyTest extends CroogoTestCase {
 
 	public $fixtures = array(

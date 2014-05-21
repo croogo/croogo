@@ -1,11 +1,11 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase\Controller\Component;
-App::uses('BaseApiComponent', 'Croogo.Controller/Component');
-App::uses('Component', 'Controller');
-App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Cake\Controller\Component;
+use Cake\Controller\Controller;
+use Croogo\Controller\Component\BaseApiComponent;
+use Croogo\TestSuite\CroogoTestCase;
 class TestApiComponent extends BaseApiComponent {
 
 	protected $_apiVersion = 'v1.0';

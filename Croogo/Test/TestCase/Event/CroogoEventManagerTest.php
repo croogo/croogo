@@ -1,9 +1,10 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\Event;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('UsersController', 'Users.Controller');
-App::uses('NodesController', 'Nodes.Controller');
 
+use Cake\View\View;
+use Croogo\TestSuite\CroogoTestCase;
+use Nodes\Controller\NodesController;
+use Users\Controller\UsersController;
 class TestUsersEventController extends UsersController {
 }
 
@@ -21,8 +22,8 @@ class CroogoEventManagerTest extends CroogoTestCase {
 		CroogoPlugin::unload('Example');
 		CroogoPlugin::load('Shops');
 		CroogoEventManager::loadListeners();
-		$request = $this->getMock('CakeRequest');
-		$response = $this->getMock('CakeResponse');
+		$request = $this->getMock('Request');
+		$response = $this->getMock('Response');
 		$this->Users = new TestUsersEventController($request, $response);
 		$this->Nodes = new TestNodesEventController($request, $response);
 	}
@@ -42,7 +43,7 @@ class CroogoEventManagerTest extends CroogoTestCase {
  * triggerred by calling CroogoPlugin::unload(null)
  */
 	public function testDetachPluginSubscribers() {
-		$loaded = CakePlugin::loaded('Shops');
+		$loaded = Plugin::loaded('Shops');
 		$this->assertNotEmpty($loaded);
 
 		$eventName = 'Controller.Users.activationFailure';
@@ -145,8 +146,7 @@ class CroogoEventManagerTest extends CroogoTestCase {
 			'Helper.Layout.afterFilter',
 			'Helper.Layout.beforeFilter',
 		);
-		App::uses('View', 'View');
-		$View = new View();
+				$View = new View();
 		foreach ($eventNames as $name) {
 			$event = Croogo::dispatchEvent($name, $View);
 			$this->assertTrue($event->result, sprintf('Event: %s', $name));

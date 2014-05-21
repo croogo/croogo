@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Settings\Test\TestCase\Model;
-App::uses('Setting', 'Settings.Model');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoTestCase;
+use Settings\Model\Setting;
 class SettingTest extends CroogoTestCase {
 
 	public $fixtures = array(

@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Acl\Controller\Component\Auth;
-App::uses('BaseAuthorize', 'Controller/Component/Auth');
 
+use App\Controller\Component\Auth\BaseAuthorize;
 /**
  * An authentication adapter for AuthComponent. Provides similar functionality
  * to ActionsAuthorize class from CakePHP core _with_ caching capability.
@@ -92,7 +92,7 @@ class AclCachedAuthorize extends BaseAuthorize {
  *
  * @see BaseAuthorize::action()
  */
-	public function action(CakeRequest $request, $path = '/:plugin/:controller/:action') {
+	public function action(Request $request, $path = '/:plugin/:controller/:action') {
 		$apiPath = Configure::read('Croogo.Api.path');
 		if (!$request->is('api')) {
 			$path = str_replace(
@@ -126,7 +126,7 @@ class AclCachedAuthorize extends BaseAuthorize {
  * check request request authorization
  *
  */
-	public function authorize($user, CakeRequest $request) {
+	public function authorize($user, Request $request) {
 		// Admin role is allowed to perform all actions, bypassing ACL
 		if ($this->_isAdmin($user)) {
 			return true;
@@ -163,7 +163,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		if (Configure::read('debug')) {
 			$status = $allowed ? ' allowed.' : ' denied.';
 			$cached = $hit ? ' (cache hit)' : ' (cache miss)';
-			CakeLog::write(LOG_ERR, $user['username'] . ' - ' . $action . $status . $cached);
+			Log::write(LOG_ERR, $user['username'] . ' - ' . $action . $status . $cached);
 		}
 
 		if (!$allowed) {
@@ -218,7 +218,7 @@ class AclCachedAuthorize extends BaseAuthorize {
  *
  * @throws CakeException
  */
-	protected function _authorizeByContent($user, CakeRequest $request, $id) {
+	protected function _authorizeByContent($user, Request $request, $id) {
 		if (!isset($this->settings['actionMap'][$request->params['action']])) {
 			throw new CakeException(
 				__d('croogo', '_authorizeByContent() - Access of un-mapped action "%1$s" in controller "%2$s"',
@@ -246,7 +246,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 			try {
 				$allowed = $Acl->check(array($userModel => $user), $acoNode, $action);
 			} catch (Exception $e) {
-				CakeLog::warning('authorizeByContent: ' . $e->getMessage());
+				Log::warning('authorizeByContent: ' . $e->getMessage());
 				$allowed = false;
 			}
 			$permissions[$alias][$action] = $allowed;
@@ -260,7 +260,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 		if (Configure::read('debug')) {
 			$status = $allowed ? ' allowed.' : ' denied.';
 			$cached = $hit ? ' (cache hit)' : ' (cache miss)';
-			CakeLog::write(LOG_ERR, $user['username'] . ' - ' . $action . '/' . $id . $status . $cached);
+			Log::write(LOG_ERR, $user['username'] . ' - ' . $action . '/' . $id . $status . $cached);
 		}
 		return $allowed;
 	}

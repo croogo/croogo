@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('User', 'Users.Model');
 
+use Croogo\TestSuite\CroogoTestCase;
+use Users\Model\User;
 class TrackableUserModel extends User {
 
 	public $useTable = 'users';
@@ -39,7 +39,7 @@ class TrackableBehaviorTest extends CroogoTestCase {
 
 	public function tearDown() {
 		Configure::delete('Trackable.Auth');
-		CakeSession::delete('Auth.User');
+		Session::delete('Auth.User');
 	}
 
 	protected function _authTrackable($userIdField = 'id', $userId = 1) {
@@ -47,7 +47,7 @@ class TrackableBehaviorTest extends CroogoTestCase {
 	}
 
 	protected function _authSession($userIdField = 'id', $userId = 1) {
-		CakeSession::write('Auth.User', array($userIdField => $userId));
+		Session::write('Auth.User', array($userIdField => $userId));
 	}
 
 /**

@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\Model\Behavior;
-App::uses('AclBehavior', 'Model/Behavior');
 
+use App\Model\Behavior\AclBehavior;
 /**
  * CroogoAcl Behavior
  *

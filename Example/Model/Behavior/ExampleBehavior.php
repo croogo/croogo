@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Example\Model\Behavior;
-App::uses('ModelBehavior', 'Model');
 
+use App\Model\ModelBehavior;
 /**
  * Example Behavior
  *

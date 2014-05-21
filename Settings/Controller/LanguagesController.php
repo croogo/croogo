@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Settings\Controller;
-App::uses('SettingsAppController', 'Settings.Controller');
 
+use Settings\Controller\SettingsAppController;
 /**
  * Languages Controller
  *

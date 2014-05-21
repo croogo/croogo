@@ -1,12 +1,12 @@
 <?php
 
 namespace Croogo\Install\Console\Command;
-App::uses('AppShell', 'Console/Command');
-App::uses('InstallManager', 'Install.Lib');
-App::uses('Install', 'Install.Model');
-App::uses('ComponentRegistry', 'Controller');
-App::uses('AuthComponent', 'Controller/Component');
 
+use App\Console\Command\AppShell;
+use App\Controller\Component\AuthComponent;
+use Cake\Controller\ComponentRegistry;
+use Install\Lib\InstallManager;
+use Install\Model\Install;
 /**
  * Install Shell
  *

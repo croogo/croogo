@@ -1,13 +1,13 @@
 <?php
 
 namespace Croogo\Extensions\Controller;
-App::uses('File', 'Utility');
-App::uses('Folder', 'Utility');
-App::uses('ExtensionsAppController', 'Extensions.Controller');
-App::uses('ExtensionsInstaller', 'Extensions.Lib');
-App::uses('CroogoTheme', 'Extensions.Lib');
-App::uses('Sanitize', 'Utility');
 
+use App\Utility\Sanitize;
+use Cake\Utility\File;
+use Cake\Utility\Folder;
+use Extensions\Controller\ExtensionsAppController;
+use Extensions\Lib\CroogoTheme;
+use Extensions\Lib\ExtensionsInstaller;
 /**
  * Extensions Themes Controller
  *

@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Blocks\Controller;
-App::uses('BlocksAppController', 'Blocks.Controller');
 
+use Blocks\Controller\BlocksAppController;
 /**
  * Blocks Controller
  *

@@ -1,8 +1,11 @@
 <?php
 
 namespace Croogo\Croogo\Config;
-App::uses('CroogoStatus', 'Croogo.Lib');
 
+use Croogo\Cache\CroogoCache;
+use Croogo\Configure\CroogoJsonReader;
+use Croogo\Lib\CroogoStatus;
+use Extensions\Lib\CroogoPlugin;
 /**
  * Default Acl plugin.  Custom Acl plugin should override this value.
  */
@@ -21,7 +24,6 @@ Configure::write('Croogo.Api.path', 'api');
 /**
  * Cache configuration
  */
-App::uses('CroogoCache', 'Croogo.Cache');
 $defaultEngine = Configure::read('Cache.defaultEngine');
 $defaultPrefix = Configure::read('Cache.defaultPrefix');
 $cacheConfig = array(
@@ -35,7 +37,6 @@ Configure::write('Cache.defaultConfig', $cacheConfig);
 /**
  * Settings
  */
-App::uses('CroogoJsonReader', 'Croogo.Configure');
 Configure::config('settings', new CroogoJsonReader());
 if (file_exists(APP . 'Config' . DS . 'settings.json')) {
 	Configure::load('settings', 'settings');
@@ -61,14 +62,13 @@ if (Configure::check('Site.asset_timestamp')) {
 /**
  * Extensions
  */
-CakePlugin::load(array('Extensions'), array('bootstrap' => true, 'routes' => true));
+Plugin::load(array('Extensions'), array('bootstrap' => true, 'routes' => true));
 Configure::load('Extensions.events');
-App::uses('CroogoPlugin', 'Extensions.Lib');
 
 /**
  * Setup custom paths
  */
-$croogoPath = CakePlugin::path('Croogo');
+$croogoPath = Plugin::path('Croogo');
 App::build(array(
 	'Console/Command' => array($croogoPath . 'Console' . DS . 'Command' . DS),
 	'View' => array($croogoPath . 'View' . DS),
@@ -110,7 +110,7 @@ foreach ($plugins as $plugin) {
 			}
 		}
 		if (!$pluginFound) {
-			CakeLog::error('Plugin not found during bootstrap: ' . $pluginName);
+			Log::error('Plugin not found during bootstrap: ' . $pluginName);
 			continue;
 		}
 	}

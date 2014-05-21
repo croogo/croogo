@@ -1,11 +1,11 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\Model;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('Model', 'Model');
-App::uses('CroogoAppModel', 'Croogo.Model');
-App::uses('User', 'Model');
-App::uses('AuthComponent', 'Controller/Component');
 
+use App\Controller\Component\AuthComponent;
+use App\Model\Model;
+use App\Model\User;
+use Croogo\Model\CroogoAppModel;
+use Croogo\TestSuite\CroogoTestCase;
 /**
  * CroogoAppModelTest file
  *

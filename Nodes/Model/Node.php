@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Nodes\Model;
-App::uses('NodesAppModel', 'Nodes.Model');
 
+use Nodes\Model\NodesAppModel;
 /**
  * Node
  *

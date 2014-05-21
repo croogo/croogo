@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Acl\View\Helper;
-App::uses('Helper', 'View');
 
+use Cake\View\Helper;
 /**
  * Acl Helper
  *
@@ -37,7 +37,7 @@ class AclHelper extends Helper {
 		), $settings);
 		parent::__construct($View, $settings);
 		$plugin = Configure::read('Site.acl_plugin');
-		App::uses('AclPermission', $plugin . '.Model');
+		/* TODO: App::uses('AclPermission', $plugin . '.Model'); */
 		$this->AclPermission = ClassRegistry::init($plugin . '.AclPermission');
 	}
 

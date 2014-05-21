@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Croogo;
-App::uses('ApiRoute', 'Croogo.Routing/Route');
-App::uses('Router', 'Routing');
 
+use Cake\Routing\Router;
+use Croogo\Routing\Route\ApiRoute;
 /**
  * CroogoRouter
  *
@@ -48,7 +48,7 @@ class CroogoRouter {
 	private static function __connect($route, $default = array(), $params = array(), $options = array()) {
 		$options = Hash::merge(array('promote' => false), $options);
 		$localizedRoute = $route == '/' ? '' : $route;
-		if (CakePlugin::loaded('Translate')) {
+		if (Plugin::loaded('Translate')) {
 			Router::connect('/:locale' . $localizedRoute, $default, array_merge(array('locale' => '[a-z]{3}'), $params));
 			if ($options['promote']) {
 				Router::promote();
@@ -64,11 +64,11 @@ class CroogoRouter {
 /**
  * Check wether request is a API call.
  *
- * @see CakeRequest::addDetector()
- * @param $request CakeRequest Request object
+ * @see Request::addDetector()
+ * @param $request Request Request object
  * @return bool True when request contains the necessary route parameters
  */
-	public static function isApiRequest(CakeRequest $request) {
+	public static function isApiRequest(Request $request) {
 		if (!$request) {
 			return false;
 		}
@@ -84,11 +84,11 @@ class CroogoRouter {
 /**
  * Check wether request is from a whitelisted IP address
  *
- * @see CakeRequest::addDetector()
- * @param $request CakeRequest Request object
+ * @see Request::addDetector()
+ * @param $request Request Request object
  * @return boolean True when request is from a whitelisted IP Address
  */
-	public static function isWhitelistedRequest(CakeRequest $request) {
+	public static function isWhitelistedRequest(Request $request) {
 		if (!$request) {
 			return false;
 		}
@@ -128,7 +128,7 @@ class CroogoRouter {
  * @return void
  */
 	public static function localize() {
-		if (CakePlugin::loaded('Translate')) {
+		if (Plugin::loaded('Translate')) {
 			Router::connect('/:locale/:controller/:action/*', array(), array('locale' => '[a-z]{3}'));
 		}
 	}
@@ -198,7 +198,7 @@ class CroogoRouter {
 			}
 		}
 		catch (MissingConnectionException $e) {
-			CakeLog::write('critical', __d('croogo', 'Unable to get routeable content types: %s', $e->getMessage()));
+			Log::write('critical', __d('croogo', 'Unable to get routeable content types: %s', $e->getMessage()));
 		}
 	}
 
@@ -214,7 +214,7 @@ class CroogoRouter {
 			$url = $converter->linkStringToArray($homeUrl);
 			CroogoRouter::connect('/', $url, array(), array('promote' => true));
 		}
-		CakePlugin::routes();
+		Plugin::routes();
 	}
 
 }

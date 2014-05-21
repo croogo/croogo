@@ -1,7 +1,7 @@
 <?php
 namespace Croogo\Blocks\Test\TestCase;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoTestCase;
 class AllBlocksTestsTest extends PHPUnit_Framework_TestSuite {
 
 /**
@@ -11,7 +11,7 @@ class AllBlocksTestsTest extends PHPUnit_Framework_TestSuite {
  */
 	public static function suite() {
 		$suite = new CakeTestSuite('All Blocks tests');
-		$suite->addTestDirectoryRecursive(CakePlugin::path('Blocks') . 'Test' . DS . 'Case' . DS);
+		$suite->addTestDirectoryRecursive(Plugin::path('Blocks') . 'Test' . DS . 'Case' . DS);
 		return $suite;
 	}
 

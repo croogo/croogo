@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Comments\Test\TestCase\Model\Behavior;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoTestCase;
 class CommentableBehaviorTest extends CroogoTestCase {
 
 	public $setupSettings = false;

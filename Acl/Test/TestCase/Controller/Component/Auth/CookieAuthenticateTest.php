@@ -18,8 +18,8 @@
  */
 namespace Croogo\Acl\Test\TestCase\Controller\Component\Auth;
 
+use Acl\Controller\Component\Auth\CookieAuthenticate;
 require_once dirname(__FILE__) . '/../AclAutoLoginComponentTest.php';
-App::uses('CookieAuthenticate', 'Acl.Controller/Component/Auth');
 
 class TestCookieAuthenticate extends CookieAuthenticate {
 
@@ -86,8 +86,8 @@ class CookieAuthenticateTest extends CakeTestCase {
  * Test Ignore requests with data
  */
 	public function testIgnoreRequestWithData() {
-		$request = $this->getMock('CakeRequest', null);
-		$response = $this->getMock('CakeResponse');
+		$request = $this->getMock('Request', null);
+		$response = $this->getMock('Response');
 		$request->data = array('User' => array('somedata'));
 		$collection = $this->controller->Components;
 		$cookieAuth = $this->getMock(
@@ -102,8 +102,8 @@ class CookieAuthenticateTest extends CakeTestCase {
  * Test Ignore POST requests
  */
 	public function testIgnorePostRequest() {
-		$request = $this->getMock('CakeRequest', null);
-		$response = $this->getMock('CakeResponse');
+		$request = $this->getMock('Request', null);
+		$response = $this->getMock('Response');
 		$collection = $this->controller->Components;
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$cookieAuth = $this->getMock(

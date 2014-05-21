@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Nodes\Test\TestCase\Model;
-App::uses('Node', 'Nodes.Model');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoTestCase;
+use Nodes\Model\Node;
 class NodeTest extends CroogoTestCase {
 
 	public $testBody = 'body set from event';
@@ -307,7 +307,7 @@ class NodeTest extends CroogoTestCase {
 			)
 		);
 
-		$manager = CakeEventManager::instance();
+		$manager = EventManager::instance();
 		$manager->attach(array($this, 'onBeforeSaveNode'), 'Model.Node.beforeSaveNode');
 		$manager->attach(array($this, 'onAfterSaveNode'), 'Model.Node.afterSaveNode');
 

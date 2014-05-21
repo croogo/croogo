@@ -1,12 +1,12 @@
 <?php
 
 namespace Croogo\Extensions\Console\Command;
-App::uses('AppShell', 'Console/Command');
-App::uses('ExtensionsInstaller', 'Extensions.Lib');
-App::uses('CroogoPlugin', 'Extensions.Lib');
-App::uses('CroogoTheme', 'Extensions.Lib');
-App::uses('DataMigration', 'Extensions.Lib/Utility');
 
+use App\Console\Command\AppShell;
+use Extensions\Lib\CroogoPlugin;
+use Extensions\Lib\CroogoTheme;
+use Extensions\Lib\ExtensionsInstaller;
+use Extensions\Lib\Utility\DataMigration;
 /**
  * DataMigration Shell
  *
@@ -61,7 +61,7 @@ class DataMigrationShell extends AppShell {
 		}
 		$table = trim($this->args['0']);
 		$name = Inflector::camelize(Inflector::singularize($table));
-		$root = isset($plugin) ? CakePlugin::path($plugin) : APP;
+		$root = isset($plugin) ? Plugin::path($plugin) : APP;
 		$output = $root . 'Config' . DS . 'Data' . DS . $name . 'Data.php';
 		$records = array();
 

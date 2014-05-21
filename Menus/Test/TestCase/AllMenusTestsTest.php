@@ -1,7 +1,7 @@
 <?php
 namespace Croogo\Menus\Test\TestCase;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoTestCase;
 class AllMenusTestsTest extends PHPUnit_Framework_TestSuite {
 
 /**
@@ -11,7 +11,7 @@ class AllMenusTestsTest extends PHPUnit_Framework_TestSuite {
  */
 	public static function suite() {
 		$suite = new CakeTestSuite('All Menus tests');
-		$suite->addTestDirectoryRecursive(CakePlugin::path('Menus') . 'Test' . DS . 'Case' . DS);
+		$suite->addTestDirectoryRecursive(Plugin::path('Menus') . 'Test' . DS . 'Case' . DS);
 		return $suite;
 	}
 

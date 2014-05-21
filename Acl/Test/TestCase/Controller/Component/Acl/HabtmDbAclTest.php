@@ -12,8 +12,9 @@
  */
 namespace Croogo\Acl\Test\TestCase\Controller\Component\Acl;
 
-App::uses('ComponentRegistry', 'Controller');
-App::uses('HabtmDbAcl', 'Acl.Controller/Component/Acl');
+use Acl\Controller\Component\Acl\HabtmDbAcl;
+use Cake\Controller\ComponentRegistry;
+use Cake\Core\Configure;
 
 class Employee extends CakeTestModel {
 

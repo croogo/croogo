@@ -5,7 +5,7 @@
  */
 namespace Croogo\Acl\Test\TestCase\Controller\Component;
 
-App::uses('AclAutoLoginComponent', 'Acl.Controller/Component');
+use Acl\Controller\Component\AclAutoLoginComponent;
 
 class TestAclAutoLoginComponent extends AclAutoLoginComponent {
 
@@ -34,7 +34,7 @@ class TestAclAutoLoginComponent extends AclAutoLoginComponent {
 	}
 
 	public function testCookie($username) {
-		$request = new CakeRequest();
+		$request = new Request();
 		$request->data = array(
 			'User' => array(
 				'username' => $username,
@@ -63,7 +63,7 @@ class AclAutoLoginComponentTest extends CakeTestCase {
 		$cookie = $this->autoLogin->readCookie('User');
 		$this->assertNull($cookie);
 
-		$request = new CakeRequest();
+		$request = new Request();
 		$request->data = array('User' => array(
 			'username' => 'rchavik',
 			'password' => 'rchavik',

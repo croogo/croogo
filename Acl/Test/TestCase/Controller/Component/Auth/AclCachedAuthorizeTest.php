@@ -1,11 +1,11 @@
 <?php
 
 namespace Croogo\Acl\Test\TestCase\Controller\Component\Auth;
-App::uses('AclCachedAuthorize', 'Acl.Controller/Component/Auth');
-App::uses('ComponentRegistry', 'Controller');
-App::uses('Controller', 'Controller');
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+use Acl\Controller\Component\Auth\AclCachedAuthorize;
+use Cake\Controller\ComponentRegistry;
+use Cake\Controller\Controller;
+use Croogo\TestSuite\CroogoTestCase;
 class AclCachedAuthorizeController extends Controller {
 
 }
@@ -20,8 +20,8 @@ class AclCachedAuthorizeTest extends CroogoTestCase {
 		$this->actionPath = sprintf(
 			'/%s/:prefix/:plugin/:controller/:action', $this->apiPath
 		);
-		$request = new CakeRequest();
-		$response = $this->getMock('CakeResponse');
+		$request = new Request();
+		$response = $this->getMock('Response');
 		$Controller = new AclCachedAuthorizeController($request, $response);
 		$Controller->constructClasses();
 		$Controller->startupProcess();

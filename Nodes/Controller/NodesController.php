@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Nodes\Controller;
-App::uses('NodesAppController', 'Nodes.Controller');
-App::uses('Croogo', 'Lib');
 
+use App\Lib\Croogo;
+use Nodes\Controller\NodesAppController;
 /**
  * Nodes Controller
  *
@@ -681,7 +681,7 @@ class NodesController extends NodesAppController {
 		}
 
 		$data = $node;
-		$event = new CakeEvent('Controller.Nodes.view', $this, compact('data'));
+		$event = new Event('Controller.Nodes.view', $this, compact('data'));
 		$this->getEventManager()->dispatch($event);
 
 		$this->set('title_for_layout', $node[$Node->alias]['title']);

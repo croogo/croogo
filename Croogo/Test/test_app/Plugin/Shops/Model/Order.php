@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Shops\Model;
-App::uses('AppModel', 'Model');
 
+use App\Model\AppModel;
 class Order extends AppModel {
 
 	public $useTable = false;

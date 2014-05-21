@@ -1,11 +1,11 @@
 <?php
 
 namespace Croogo\Croogo\Console\Command;
-App::uses('AppShell', 'Console/Command');
-App::uses('ExtensionsInstaller', 'Extensions.Lib');
-App::uses('CroogoPlugin', 'Extensions.Lib');
-App::uses('CroogoTheme', 'Extensions.Lib');
 
+use App\Console\Command\AppShell;
+use Extensions\Lib\CroogoPlugin;
+use Extensions\Lib\CroogoTheme;
+use Extensions\Lib\ExtensionsInstaller;
 /**
  * Install Shell
  *

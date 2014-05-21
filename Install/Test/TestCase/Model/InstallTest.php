@@ -1,9 +1,9 @@
 <?php
 namespace Croogo\Install\Test\TestCase\Model;
-App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('MigrationVersion', 'Migrations.Lib');
-App::uses('User', 'Users.Model');
 
+use Croogo\TestSuite\CroogoTestCase;
+use Migrations\Lib\MigrationVersion;
+use Users\Model\User;
 class InstallTest extends CroogoTestCase {
 
 	public $fixtures = array(
@@ -15,7 +15,7 @@ class InstallTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		CakePlugin::load('Install');
+		Plugin::load('Install');
 		$this->Install = ClassRegistry::init('Install.Install');
 	}
 

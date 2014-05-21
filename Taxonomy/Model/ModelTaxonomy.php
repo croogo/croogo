@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Taxonomy\Model;
-App::uses('TaxonomyAppModel', 'Taxonomy.Model');
 
+use Taxonomy\Model\TaxonomyAppModel;
 /**
  * ModelTaxonomy
  *

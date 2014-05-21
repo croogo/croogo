@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Comments\Controller\Component;
-App::uses('Component', 'Controller');
 
+use Cake\Controller\Component;
 /**
  * Comments Component
  *

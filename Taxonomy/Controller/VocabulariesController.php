@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Taxonomy\Controller;
-App::uses('TaxonomyAppController', 'Taxonomy.Controller');
 
+use Taxonomy\Controller\TaxonomyAppController;
 /**
  * Vocabularies Controller
  *

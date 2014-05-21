@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Croogo\Model\Behavior;
-App::uses('ModelBehavior', 'Model');
-App::uses('StringConverter', 'Croogo.Utility');
 
+use App\Model\ModelBehavior;
+use Croogo\Utility\StringConverter;
 /**
  * Params Behavior
  *

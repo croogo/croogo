@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\Configure;
-App::uses('CroogoJson', 'Croogo.Lib');
 
+use Croogo\Lib\CroogoJson;
 /**
  * CroogoJsonReader
  *

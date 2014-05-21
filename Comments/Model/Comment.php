@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Comments\Model;
-App::uses('AppModel', 'Model');
-App::uses('CroogoStatus', 'Croogo.Lib');
 
+use App\Model\AppModel;
+use Croogo\Lib\CroogoStatus;
 /**
  * Comment
  *

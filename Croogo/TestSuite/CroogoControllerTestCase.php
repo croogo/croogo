@@ -1,9 +1,9 @@
 <?php
 
 namespace Croogo\Croogo\TestSuite;
-App::uses('CakeSession', 'Model/Datasource');
-App::uses('CroogoTestFixture', 'Croogo.TestSuite');
 
+use App\Model\Datasource\Session;
+use Croogo\TestSuite\CroogoTestFixture;
 /**
  * CroogoTestCase class
  *
@@ -28,7 +28,7 @@ class CroogoControllerTestCase extends ControllerTestCase {
 	}
 
 	protected static function _restoreSettings() {
-		$configDir = CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS;
+		$configDir = Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS;
 		$source = $configDir . 'settings.default';
 		$target = $configDir . 'settings.json';
 		copy($source, $target);
@@ -42,7 +42,7 @@ class CroogoControllerTestCase extends ControllerTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$appDir = CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS;
+		$appDir = Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS;
 
 		App::build(array(
 			'Plugin' => array($appDir . 'Plugin' . DS),
@@ -53,16 +53,16 @@ class CroogoControllerTestCase extends ControllerTestCase {
 			$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 		}
 
-		CakePlugin::unload('Install');
-		CakePlugin::load(array('Users'), array('bootstrap' => true));
-		CakePlugin::load('Example');
+		Plugin::unload('Install');
+		Plugin::load(array('Users'), array('bootstrap' => true));
+		Plugin::load('Example');
 		Configure::write('Acl.database', 'test');
 		$Setting = ClassRegistry::init('Settings.Setting');
 		$Setting->settingsPath = $appDir . 'Config' . DS . 'settings.json';
 		Configure::drop('settings');
 		Configure::config('settings', new CroogoJsonReader(dirname($Setting->settingsPath) . DS ));
-		CakeLog::drop('stdout');
-		CakeLog::drop('stderr');
+		Log::drop('stdout');
+		Log::drop('stderr');
 		$Setting->writeConfiguration();
 	}
 
@@ -73,9 +73,9 @@ class CroogoControllerTestCase extends ControllerTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		if (CakeSession::started()) {
-			CakeSession::clear();
-			CakeSession::destroy();
+		if (Session::started()) {
+			Session::clear();
+			Session::destroy();
 		}
 		ClassRegistry::flush();
 	}

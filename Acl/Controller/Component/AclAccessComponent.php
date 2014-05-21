@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Acl\Controller\Component;
-App::uses('Component', 'Controller');
 
+use Cake\Controller\Component;
 /**
  * AclAccess Component provides various methods to manipulate Aros and Acos,
  * and additionaly setup various settings for backend/admin use.

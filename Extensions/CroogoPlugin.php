@@ -1,12 +1,12 @@
 <?php
 
 namespace Croogo\Extensions;
-App::uses('CroogoEventManager', 'Croogo.Event');
-App::uses('ClassRegistry', 'Utility');
-App::uses('Folder', 'Utility');
-App::uses('Hash', 'Utility');
-App::uses('MigrationVersion', 'Migrations.Lib');
 
+use App\Utility\ClassRegistry;
+use Cake\Utility\Folder;
+use Cake\Utility\Hash;
+use Croogo\Event\CroogoEventManager;
+use Migrations\Lib\MigrationVersion;
 /**
  * CroogoPlugin utility class
  *
@@ -526,7 +526,7 @@ class CroogoPlugin extends Object {
  * @return boolean true when successful, false or error message when failed
  */
 	public function activate($plugin) {
-		if (CakePlugin::loaded($plugin)) {
+		if (Plugin::loaded($plugin)) {
 			return __d('croogo', 'Plugin "%s" is already active.', $plugin);
 		}
 		$pluginActivation = $this->getActivator($plugin);
@@ -537,7 +537,7 @@ class CroogoPlugin extends Object {
 			if (!empty($pluginData['dependencies']['plugins'])) {
 				foreach ($pluginData['dependencies']['plugins'] as $requiredPlugin) {
 					$requiredPlugin = ucfirst($requiredPlugin);
-					if (!CakePlugin::loaded($requiredPlugin)) {
+					if (!Plugin::loaded($requiredPlugin)) {
 						$dependencies = false;
 						$missingPlugin = $requiredPlugin;
 						break;
@@ -569,7 +569,7 @@ class CroogoPlugin extends Object {
 		if (empty($deps['usedBy'][$plugin])) {
 			return false;
 		}
-		$usedBy = array_filter($deps['usedBy'][$plugin], array('CakePlugin', 'loaded'));
+		$usedBy = array_filter($deps['usedBy'][$plugin], array('Plugin', 'loaded'));
 		if (!empty($usedBy)) {
 			return $usedBy;
 		}
@@ -583,7 +583,7 @@ class CroogoPlugin extends Object {
  * @return boolean true when successful, false or error message when failed
  */
 	public function deactivate($plugin) {
-		if (!CakePlugin::loaded($plugin)) {
+		if (!Plugin::loaded($plugin)) {
 			return __d('croogo', 'Plugin "%s" is not active.', $plugin);
 		}
 		$pluginActivation = $this->getActivator($plugin);
@@ -608,7 +608,7 @@ class CroogoPlugin extends Object {
 		$pluginDeps = Cache::read('pluginDeps', 'cached_settings');
 		if (!$pluginDeps) {
 			$self = self::instance();
-			$plugins = CakePlugin::loaded();
+			$plugins = Plugin::loaded();
 			$dependencies = $usedBy = array();
 			foreach ($plugins as $plugin) {
 				$dependencies[$plugin] = $self->getDependencies($plugin);
@@ -625,22 +625,22 @@ class CroogoPlugin extends Object {
 /**
  * Loads a plugin and optionally loads bootstrapping and routing files.
  *
- * This method is identical to CakePlugin::load() with extra functionality
+ * This method is identical to Plugin::load() with extra functionality
  * that loads event configuration when Plugin/Config/events.php is present.
  *
- * @see CakePlugin::load()
+ * @see Plugin::load()
  * @param mixed $plugin name of plugin, or array of plugin and its config
  * @return void
  */
 	public static function load($plugin, $config = array()) {
-		CakePlugin::load($plugin, $config);
+		Plugin::load($plugin, $config);
 		if (is_string($plugin)) {
 			$plugin = array($plugin => $config);
 		}
 		Cache::delete('EventHandlers', 'cached_settings');
 		foreach ($plugin as $name => $conf) {
 			list($name, $conf) = (is_numeric($name)) ? array($conf, $config) : array($name, $conf);
-			$file = CakePlugin::path($name) . 'Config' . DS . 'events.php';
+			$file = Plugin::path($name) . 'Config' . DS . 'events.php';
 			if (file_exists($file)) {
 				Configure::load($name . '.events');
 			}
@@ -650,10 +650,10 @@ class CroogoPlugin extends Object {
 /**
  * Forgets a loaded plugin or all of them if first parameter is null
  *
- * This method is identical to CakePlugin::load() with extra functionality
+ * This method is identical to Plugin::load() with extra functionality
  * that unregister event listeners when a plugin in unloaded.
  *
- * @see CakePlugin::unload()
+ * @see Plugin::unload()
  * @param string $plugin name of the plugin to forget
  * @return void
  */
@@ -661,7 +661,7 @@ class CroogoPlugin extends Object {
 		$eventManager = CroogoEventManager::instance();
 		if ($eventManager instanceof CroogoEventManager) {
 			if ($plugin == null) {
-				$activePlugins = CakePlugin::loaded();
+				$activePlugins = Plugin::loaded();
 				foreach ($activePlugins as $activePlugin) {
 					$eventManager->detachPluginSubscribers($activePlugin);
 				}
@@ -669,7 +669,7 @@ class CroogoPlugin extends Object {
 				$eventManager->detachPluginSubscribers($plugin);
 			}
 		}
-		CakePlugin::unload($plugin);
+		Plugin::unload($plugin);
 		Cache::delete('EventHandlers', 'cached_settings');
 	}
 

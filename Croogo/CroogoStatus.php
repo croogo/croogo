@@ -1,10 +1,10 @@
 <?php
 
 namespace Croogo\Croogo;
-App::uses('AuthComponent', 'Controller/Component');
-App::uses('CakeLog', 'Log');
-App::uses('Permission', 'Model');
 
+use App\Controller\Component\AuthComponent;
+use App\Model\Permission;
+use Cake\Log\Log;
 /**
  * CroogoStatus
  *
@@ -119,7 +119,7 @@ class CroogoStatus implements ArrayAccess {
 					'controllers/Nodes/Nodes/admin_edit'
 				);
 			} catch (CakeException $e) {
-				CakeLog::error($e->getMessage());
+				Log::error($e->getMessage());
 			}
 		}
 

@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Settings\Test\TestCase\Controller;
-App::uses('LanguagesController', 'Settings.Controller');
-App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoControllerTestCase;
+use Settings\Controller\LanguagesController;
 class LanguagesControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(

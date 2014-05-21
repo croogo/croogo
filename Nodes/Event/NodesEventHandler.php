@@ -1,8 +1,9 @@
 <?php
 
 namespace Croogo\Nodes\Event;
-App::uses('CakeEventListener', 'Event');
 
+use Cake\Event\EventListener;
+use Comments\Model\Comment;
 /**
  * Nodes Event Handler
  *
@@ -11,7 +12,7 @@ App::uses('CakeEventListener', 'Event');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class NodesEventHandler implements CakeEventListener {
+class NodesEventHandler implements EventListener {
 
 /**
  * implementedEvents
@@ -62,9 +63,8 @@ class NodesEventHandler implements CakeEventListener {
  * onBootstrapComplete
  */
 	public function onBootstrapComplete($event) {
-		if (CakePlugin::loaded('Comments')) {
-			App::uses('Comment', 'Comments.Model');
-			Croogo::hookBehavior('Node', 'Comments.Commentable');
+		if (Plugin::loaded('Comments')) {
+						Croogo::hookBehavior('Node', 'Comments.Commentable');
 			Croogo::hookComponent('Nodes', 'Comments.Comments');
 			Croogo::hookModelProperty('Comment', 'belongsTo', array(
 				'Node' => array(
@@ -78,10 +78,10 @@ class NodesEventHandler implements CakeEventListener {
 				),
 			));
 		}
-		if (CakePlugin::loaded('Taxonomy')) {
+		if (Plugin::loaded('Taxonomy')) {
 			Croogo::hookBehavior('Node', 'Taxonomy.Taxonomizable');
 		}
-		if (CakePlugin::loaded('Meta')) {
+		if (Plugin::loaded('Meta')) {
 			Croogo::hookBehavior('Node', 'Meta.Meta');
 		}
 	}

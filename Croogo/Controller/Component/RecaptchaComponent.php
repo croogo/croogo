@@ -1,7 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\Controller\Component;
-App::uses('Component', 'Controller');
+
+use Cake\Controller\Component;
 
 /**
  * Recaptcha Component

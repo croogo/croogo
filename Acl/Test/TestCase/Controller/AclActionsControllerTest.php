@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Acl\Test\TestCase\Controller;
-App::uses('CroogoControllerTestCase', 'Croogo.TestSuite');
 
+use Croogo\TestSuite\CroogoControllerTestCase;
 /**
  * AclActionsController Test
  */
