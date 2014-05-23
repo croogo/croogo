@@ -238,6 +238,7 @@ class Term extends TaxonomyAppModel {
 	}
 
 	protected function _findByVocabulary($state, $query, $results = array()) {
+		static $termsId = null;
 		if (empty($query['vocabulary_id'])) {
 			trigger_error(__d('croogo', '"vocabulary_id" key not found'));
 		}
@@ -251,7 +252,20 @@ class Term extends TaxonomyAppModel {
 			);
 			return array_merge_recursive($defaultQuery, (array)$query);
 		}
-		return $results;
+
+		$ordered = array_keys($termsId);
+		$terms = array();
+		foreach ($results as $tempTerm) {
+			$term = $tempTerm;
+			$id = $term[$this->alias][$this->primaryKey];
+			$term[$this->alias]['indent'] = substr_count($termsId[$id], '_');
+			$position = array_search($id, $ordered);
+			$terms[$position] = $term;
+		}
+		ksort($terms);
+
+		$termsId = null;
+		return $terms;
 	}
 
 /**

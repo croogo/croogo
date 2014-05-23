@@ -77,6 +77,10 @@ $this->Html
 			));
 		}
 
+		if (!empty($term['Term']['indent'])):
+			$titleCol = str_repeat('&emsp;', $term['Term']['indent']) . $titleCol;
+		endif;
+
 		// Build link list
 		$typeLinks = $this->Taxonomies->generateTypeLinks($vocabulary['Type'], $term);
 		if (!empty($typeLinks)) {
