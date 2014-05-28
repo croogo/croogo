@@ -8,7 +8,7 @@
 			'http://www.croogo.org'
 		);
 	?>
-	Powered by <?php echo $link; ?>
+	<?php echo __d('croogo', 'Powered by %s', $link); ?>
 	<?php echo $this->Html->image('http://assets.croogo.org/powered_by.png'); ?>
 	</div>
 
