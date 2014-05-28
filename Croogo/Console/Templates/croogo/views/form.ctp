@@ -1,13 +1,13 @@
 <?php
-
+$underscoredPluginName = Inflector::underscore($plugin);
 $header = <<<EOF
 <?php
-\$this->viewVars['title_for_layout'] = __d('croogo', '$pluralHumanName');
+\$this->viewVars['title_for_layout'] = __d('$underscoredPluginName', '$pluralHumanName');
 \$this->extend('/Common/admin_edit');
 
 \$this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', '${pluralHumanName}'), array('action' => 'index'));
+	->addCrumb(__d('$underscoredPluginName', '${pluralHumanName}'), array('action' => 'index'));
 
 if (\$this->action == 'admin_edit') {
 	\$this->Html->addCrumb(\$this->data['$modelClass']['$displayField'], '/' . \$this->request->url);
@@ -29,7 +29,7 @@ $primaryTab = strtolower(Inflector::slug($singularHumanName, '-'));
 	<div class="span8">
 		<ul class="nav nav-tabs">
 		<?php echo "<?php\n"; ?>
-		<?php echo "\techo \$this->Croogo->adminTab(__d('croogo', '$singularHumanName'), '#$primaryTab');\n"; ?>
+		<?php echo "\techo \$this->Croogo->adminTab(__d('$underscoredPluginName', '$singularHumanName'), '#$primaryTab');\n"; ?>
 		<?php echo "\techo \$this->Croogo->adminTabs();\n"; ?>
 		<?php echo "?>\n"; ?>
 		</ul>
