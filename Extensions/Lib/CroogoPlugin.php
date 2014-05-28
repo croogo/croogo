@@ -146,7 +146,7 @@ class CroogoPlugin extends Object {
 			$pluginData = json_decode(file_get_contents($composerFile), true);
 			if (
 				isset($pluginData['require']['croogo/croogo']) ||
-				$pluginData['type'] == 'croogo-plugin'
+				(isset($pluginData['type']) && $pluginData['type'] == 'croogo-plugin')
 			) {
 				return true;
 			}
