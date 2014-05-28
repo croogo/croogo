@@ -1,13 +1,13 @@
 <?php
-
+$underscoredPluginName = Inflector::underscore($plugin);
 $header = <<<EOF
 <?php
-\$this->viewVars['title_for_layout'] = __d('croogo', '$pluralHumanName');
+\$this->viewVars['title_for_layout'] = __d('$underscoredPluginName', '$pluralHumanName');
 \$this->extend('/Common/$action');
 
 \$this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', '${pluralHumanName}'), array('action' => 'index'));
+	->addCrumb(__d('$underscoredPluginName', '${pluralHumanName}'), array('action' => 'index'));
 
 ?>\n
 EOF;
