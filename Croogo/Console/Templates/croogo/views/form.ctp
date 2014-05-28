@@ -77,6 +77,8 @@ EOF;
 			\$this->Form->button(__d('croogo', 'Save'), array('class' => 'btn btn-primary')) .
 			\$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'btn btn-danger')) .
 			\$this->Html->endBox();
+
+		echo \$this->Croogo->adminBoxes();
 		?>\n
 EOF;
 	?>
