@@ -79,6 +79,7 @@ EOF;
 			\$this->Html->endBox();
 		?>\n
 EOF;
+                echo "\t\t\t<?php echo \$this->Croogo->adminBoxes(); ?>\n";
 	?>
 	</div>
 
