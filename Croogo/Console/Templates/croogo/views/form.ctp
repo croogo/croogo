@@ -81,6 +81,7 @@ EOF;
 		echo \$this->Croogo->adminBoxes();
 		?>\n
 EOF;
+                echo "\t\t\t<?php echo \$this->Croogo->adminBoxes(); ?>\n";
 	?>
 	</div>
 
