@@ -31,9 +31,11 @@ class WysiwygHelper extends AppHelper {
  * @return void
  */
 	public function beforeRender($viewFile) {
-		Configure::write('Js.Wysiwyg.uploadsPath',
-			Router::url(Configure::read('Wysiwyg.uploadsPath'))
-		);
+		$uploadsPath = Configure::read('Wysiwyg.uploadsPath');
+		if ($uploadsPath) {
+			$uploadsPath = Router::url($uploadsPath);
+		}
+		Configure::write('Js.Wysiwyg.uploadsPath', $uploadsPath);
 		Configure::write('Js.Wysiwyg.attachmentsPath',
 			$this->Html->url(Configure::read('Wysiwyg.attachmentBrowseUrl'))
 		);
