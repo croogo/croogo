@@ -46,6 +46,11 @@ if (file_exists(APP . 'Config' . DS . 'settings.json')) {
 Configure::write('Config.language', Configure::read('Site.locale'));
 
 /**
+ * Timezone
+ */
+date_default_timezone_set(Configure::read('Site.timezone'));
+
+/**
  * Assets
  */
 if (Configure::check('Site.asset_timestamp')) {
