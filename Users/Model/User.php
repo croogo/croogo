@@ -174,9 +174,9 @@ class User extends UsersAppModel {
 		if ($this->field('role_id') == $adminRoleId) {
 			$count = $this->find('count', array(
 				'conditions' => array(
-					'User.id <>' => $this->id,
-					'User.role_id' => $adminRoleId,
-					'User.status' => true,
+					$this->escapeField() . ' <>' => $this->id,
+					$this->escapeField('role_id') => $adminRoleId,
+					$this->escapeField('status') => true,
 				)
 			));
 			return ($count > 0);
@@ -191,8 +191,8 @@ class User extends UsersAppModel {
  * @return boolean
  */
 	public function beforeSave($options = array()) {
-		if (!empty($this->data['User']['password'])) {
-			$this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
+		if (!empty($this->data[$this->alias]['password'])) {
+			$this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
 		}
 		return true;
 	}
@@ -215,8 +215,8 @@ class User extends UsersAppModel {
  * @return boolean
  */
 	public function validIdentical($check) {
-		if (isset($this->data['User']['password'])) {
-			if ($this->data['User']['password'] != $check['verify_password']) {
+		if (isset($this->data[$this->alias]['password'])) {
+			if ($this->data[$this->alias]['password'] != $check['verify_password']) {
 				return __d('croogo', 'Passwords do not match. Please, try again.');
 			}
 		}
