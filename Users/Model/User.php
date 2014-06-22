@@ -174,7 +174,7 @@ class User extends UsersAppModel {
 		if ($this->field('role_id') == $adminRoleId) {
 			$count = $this->find('count', array(
 				'conditions' => array(
-					$this->escapeField().' <>' => $this->id,
+					$this->escapeField() . ' <>' => $this->id,
 					$this->escapeField('role_id') => $adminRoleId,
 					$this->escapeField('status') => true,
 				)
