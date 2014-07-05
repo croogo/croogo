@@ -48,7 +48,7 @@ application.
   * Ensure you have a recent cakephp version 2.5
   * Run the following commands:
 
-    git clone git://github.com/croogo/app app
+    git clone git://github.com/croogo/app app &&
     cd app && Console/add_submodule
 
   * If you intend to modify the default administration theme, you will need
