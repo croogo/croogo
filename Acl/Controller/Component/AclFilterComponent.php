@@ -134,11 +134,7 @@ class AclFilterComponent extends Component {
 			'controller' => 'users',
 			'action' => 'login',
 		);
-		$this->_controller->Auth->loginRedirect = array(
-			'plugin' => 'settings',
-			'controller' => 'settings',
-			'action' => 'dashboard',
-		);
+		$this->_controller->Auth->loginRedirect = Configure::read('Croogo.dashboardUrl');
 		$this->_controller->Auth->unauthorizedRedirect = array(
 			'plugin' => 'users',
 			'controller' => 'users',
