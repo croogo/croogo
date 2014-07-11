@@ -12,7 +12,7 @@ Router::connect('/:api/:prefix/users/lookup', array(
 	'controller' => 'users',
 	'action' => 'lookup',
 ), array(
-	'routeClass' => 'ApiRoute',
+	'routeClass' => 'Croogo\Croogo\Routing\Route\ApiRoute',
 ));
 
 // Users
