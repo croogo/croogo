@@ -78,7 +78,7 @@ class TaxonomizableBehavior extends ModelBehavior {
  */
 	protected function _setupEvents($model) {
 		$callback = array($this, 'onBeforeSaveNode');
-		$eventManager = $model->getEventManager();
+		$eventManager = $model->eventManager();
 		$eventManager->attach($callback, 'Model.Node.beforeSaveNode');
 	}
 

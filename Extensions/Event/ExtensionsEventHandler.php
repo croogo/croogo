@@ -3,6 +3,9 @@
 namespace Croogo\Extensions\Event;
 
 use Cake\Event\EventListener;
+
+use Croogo\Extensions\CroogoPlugin;
+
 /**
  * ExtensionsEventHandler
  *

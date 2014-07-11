@@ -1,19 +1,20 @@
 <?php
 
-namespace Croogo\Croogo\Model;
+namespace Croogo\Croogo\Model\Table;
 
-use App\Model\Model;
+use Cake\ORM\Table;
+
 /**
- * Croogo App Model
+ * Croogo Base Table class
  *
  * @category Croogo.Model
- * @package  Croogo.Croogo.Model
+ * @package  Croogo.Croogo.Model.Table
  * @version  1.5
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoAppModel extends Model {
+class CroogoTable extends Table {
 
 /**
  * use Caching
@@ -143,7 +144,7 @@ class CroogoAppModel extends Model {
 					$event = new Event('Model.afterSave', $this, array(
 						$created, $options
 					));
-					$this->getEventManager()->dispatch($event);
+					$this->eventManager()->dispatch($event);
 				}
 			}
 			$this->_clearCache();

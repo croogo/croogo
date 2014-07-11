@@ -2,7 +2,9 @@
 
 namespace Croogo\Croogo\Cache;
 
+use Cake\Core\Configure;
 use Cake\Cache\Cache;
+
 /**
  * CroogoCache
  *

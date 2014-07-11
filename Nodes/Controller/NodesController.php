@@ -2,8 +2,11 @@
 
 namespace Croogo\Nodes\Controller;
 
-use App\Lib\Croogo;
-use Nodes\Controller\NodesAppController;
+use Cake\Event\Event;
+
+use Croogo\Croogo\Croogo;
+use Croogo\Nodes\Controller\NodesAppController;
+
 /**
  * Nodes Controller
  *
@@ -76,8 +79,8 @@ class NodesController extends NodesAppController {
  * @return void
  * @access public
  */
-	public function beforeFilter() {
-		parent::beforeFilter();
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
 
 		if (isset($this->request->params['slug'])) {
 			$this->request->params['named']['slug'] = $this->request->params['slug'];
@@ -85,7 +88,7 @@ class NodesController extends NodesAppController {
 		if (isset($this->request->params['type'])) {
 			$this->request->params['named']['type'] = $this->request->params['type'];
 		}
-		$this->Security->unlockedActions[] = 'admin_toggle';
+		$this->Security->config('unlockedActions', 'admin_toggle');
 	}
 
 /**
@@ -682,7 +685,7 @@ class NodesController extends NodesAppController {
 
 		$data = $node;
 		$event = new Event('Controller.Nodes.view', $this, compact('data'));
-		$this->getEventManager()->dispatch($event);
+		$this->eventManager()->dispatch($event);
 
 		$this->set('title_for_layout', $node[$Node->alias]['title']);
 		$this->set(compact('node', 'type', 'comments'));

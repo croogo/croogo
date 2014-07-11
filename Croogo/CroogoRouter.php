@@ -2,8 +2,14 @@
 
 namespace Croogo\Croogo;
 
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
+use Cake\Utility\Hash;
+
 use Croogo\Routing\Route\ApiRoute;
+
 /**
  * CroogoRouter
  *

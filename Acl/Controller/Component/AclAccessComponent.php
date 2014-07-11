@@ -3,6 +3,8 @@
 namespace Croogo\Acl\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Event\Event;
+
 /**
  * AclAccess Component provides various methods to manipulate Aros and Acos,
  * and additionaly setup various settings for backend/admin use.
@@ -26,9 +28,10 @@ class AclAccessComponent extends Component {
 /**
  * startup
  *
- * @param Controller $controller
+ * @param Event $event
  */
-	public function startup(Controller $controller) {
+	public function startup(Event $event) {
+		$controller = $event->subject();
 		$this->_controller = $controller;
 		$adminPrefix = isset($controller->request->params['admin']);
 		if (!$adminPrefix) {

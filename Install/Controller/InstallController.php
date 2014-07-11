@@ -2,10 +2,15 @@
 
 namespace Croogo\Install\Controller;
 
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
+
 use Cake\Controller\Controller;
+use Cake\Event\Event;
 use Cake\Utility\File;
-use Install\Lib\AssetGenerator;
-use Install\Lib\InstallManager;
+use Install\AssetGenerator;
+use Install\InstallManager;
+
 /**
  * Install Controller
  *
@@ -48,8 +53,8 @@ class InstallController extends Controller {
  * @return void
  * @access public
  */
-	public function beforeFilter() {
-		parent::beforeFilter();
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
 
 		$this->layout = 'install';
 		$this->_generateAssets();

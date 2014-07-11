@@ -3,6 +3,11 @@
 namespace Croogo\Menus\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Core\Configure;
+use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
+
 /**
  * Menus Component
  *
@@ -33,12 +38,12 @@ class MenusComponent extends Component {
  *
  * @param Controller $controller instance of controller
  */
-	public function initialize(Controller $controller) {
-		$this->controller = $controller;
+	public function initialize(Event $event) {
+		$this->controller = $event->subject();
 		if (isset($controller->Link)) {
 			$this->Link = $controller->Link;
 		} else {
-			$this->Link = ClassRegistry::init('Menus.Link');
+			$this->Link = TableRegistry::get('Menus.Link');
 		}
 	}
 
@@ -48,7 +53,8 @@ class MenusComponent extends Component {
  * @param object $controller instance of controller
  * @return void
  */
-	public function startup(Controller $controller) {
+	public function startup(Event $event) {
+		$controller = $event->subject();
 		if (!isset($controller->request->params['admin']) && !isset($controller->request->params['requested'])) {
 			$this->menus();
 

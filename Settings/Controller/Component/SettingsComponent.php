@@ -3,6 +3,8 @@
 namespace Croogo\Settings\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Event\Event;
+
 /**
  * Settings Component
  *
@@ -22,9 +24,9 @@ class SettingsComponent extends Component {
 /**
  * startup
  */
-	public function startup(Controller $controller) {
-		$this->_controller = $controller;
-		$controller->loadModel('Settings.Setting');
+	public function startup(Event $event) {
+		$this->_controller = $event->subject();
+		$this->_controller->loadModel('Settings.Setting');
 	}
 
 }

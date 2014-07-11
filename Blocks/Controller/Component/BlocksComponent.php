@@ -3,8 +3,11 @@
 namespace Croogo\Blocks\Controller\Component;
 
 use Cake\Controller\Component;
-use Croogo\Lib\Utility\StringConverter;
-use Croogo\Lib\Utility\VisibilityFilter;
+use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
+
+use Croogo\Croogo\Utility\StringConverter;
+use Croogo\Croogo\Utility\VisibilityFilter;
 /**
  * Blocks Component
  *
@@ -42,13 +45,13 @@ class BlocksComponent extends Component {
  *
  * @param Controller $controller instance of controller
  */
-	public function initialize(Controller $controller) {
-		$this->controller = $controller;
+	public function initialize(Event $event) {
+		$this->controller = $event->subject();
 		$this->_stringConverter = new StringConverter();
 		if (isset($controller->Block)) {
 			$this->Block = $controller->Block;
 		} else {
-			$this->Block = ClassRegistry::init('Blocks.Block');
+			$this->Block = TableRegistry::get('Blocks.Block');
 		}
 	}
 

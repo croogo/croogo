@@ -2,7 +2,14 @@
 
 namespace Croogo\Acl\Controller\Component;
 
+use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Cake\Controller\Component;
+use Cake\Controller\Component\AuthComponent;
+use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
+
 /**
  * AclFilter Component
  *
@@ -28,8 +35,8 @@ class AclFilterComponent extends Component {
  * @param Controller $controller instance of controller
  * @return void
  */
-	public function initialize(Controller $controller) {
-		$this->_controller = $controller;
+	public function initialize(Event  $event) {
+		$this->_controller = $event->subject();
 
 		if ($this->_config('multiRole')) {
 			Croogo::hookAdminTab('Users/admin_add', 'Roles', 'Acl.admin/roles');
@@ -88,7 +95,7 @@ class AclFilterComponent extends Component {
 				if (isset($this->_controller->Setting)) {
 					$Setting = $this->_controller->Setting;
 				} else {
-					$Setting = ClassRegistry::init('Settings.Setting');
+					$Setting = TableRegistry::get('Settings.Setting');
 				}
 				$Setting->write('Access Control.autoLoginDuration', '');
 			}

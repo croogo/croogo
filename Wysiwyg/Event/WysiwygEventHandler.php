@@ -3,6 +3,8 @@
 namespace Croogo\Wysiwyg\Event;
 
 use Cake\Event\EventListener;
+use Croogo\Croogo\Croogo;
+
 /**
  * Wysiwyg Event Handler
  *

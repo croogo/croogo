@@ -2,13 +2,20 @@
 
 namespace Croogo\Extensions;
 
-use App\Utility\ClassRegistry;
+use Cake\Cache\Cache;
+use Cake\Core\App;
+use Cake\Core\Plugin;
+use Cake\Core\Configure;
 use Cake\Utility\Folder;
 use Cake\Utility\Hash;
+use Cake\Utility\ClassRegistry;
+use Cake\Utility\Inflector;
+use Cake\Log\LogTrait;
 use Croogo\Event\CroogoEventManager;
-use Migrations\Lib\MigrationVersion;
+use Migrations\MigrationVersion;
+
 /**
- * CroogoPlugin utility class
+ * Plugin utility class
  *
  * @category Component
  * @package  Croogo.Extensions.Lib
@@ -18,7 +25,9 @@ use Migrations\Lib\MigrationVersion;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoPlugin extends Object {
+class CroogoPlugin {
+
+	use LogTrait;
 
 /**
  * List of migration errors

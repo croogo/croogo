@@ -3,6 +3,9 @@
 namespace Croogo\Acl\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Controller\ComponentRegistry;
+use Cake\Utility\Hash;
+
 /**
  * Provides "Remember me" feature (via CookieAuthenticate) by listening to
  * to Controller.Users.adminLoginSuccessful event and creating the appropriate
@@ -55,7 +58,7 @@ class AclAutoLoginComponent extends Component {
  */
 	public function startup(Controller $controller) {
 		$this->_Controller = $controller;
-		$controller->getEventManager()->attach(
+		$controller->eventManager()->attach(
 			array($this, 'onAdminLogoutSuccessful'),
 			'Controller.Users.adminLogoutSuccessful'
 		);
@@ -71,7 +74,7 @@ class AclAutoLoginComponent extends Component {
 		list(, $this->_userModel) = pluginSplit($setting['userModel']);
 		$this->_fields = $setting['fields'];
 
-		$controller->getEventManager()->attach(
+		$controller->eventManager()->attach(
 			array($this, 'onAdminLoginSuccessful'),
 			'Controller.Users.adminLoginSuccessful'
 		);

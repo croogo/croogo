@@ -2,8 +2,12 @@
 
 namespace Croogo\Nodes\Event;
 
+use Cake\Core\Plugin;
 use Cake\Event\EventListener;
-use Comments\Model\Comment;
+
+use Croogo\Croogo\Croogo;
+use Croogo\Comments\Model\Comment;
+
 /**
  * Nodes Event Handler
  *

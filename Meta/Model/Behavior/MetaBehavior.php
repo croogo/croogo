@@ -44,7 +44,7 @@ class MetaBehavior extends ModelBehavior {
 		), false);
 
 		$callback = array($this, 'onBeforeSaveNode');
-		$eventManager = $model->getEventManager();
+		$eventManager = $model->eventManager();
 		$eventManager->attach($callback, 'Model.Node.beforeSaveNode');
 	}
 

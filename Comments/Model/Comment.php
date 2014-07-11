@@ -2,8 +2,9 @@
 
 namespace Croogo\Comments\Model;
 
-use App\Model\AppModel;
-use Croogo\Lib\CroogoStatus;
+use Croogo\Croogo\Model\Table\CroogoTable;
+use Croogo\Croogo\CroogoStatus;
+
 /**
  * Comment
  *
@@ -14,7 +15,7 @@ use Croogo\Lib\CroogoStatus;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Comment extends AppModel {
+class Comment extends CroogoTable {
 
 /**
  * Model name

@@ -63,7 +63,7 @@ class NodesHelper extends AppHelper {
 				'callable' => 'filter', 'passParams' => true,
 			),
 		);
-		$eventManager = $this->_View->getEventManager();
+		$eventManager = $this->_View->eventManager();
 		foreach ($events as $name => $config) {
 			$eventManager->attach(array($this, 'filter'), $name, $config);
 		}

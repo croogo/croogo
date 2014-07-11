@@ -2,8 +2,11 @@
 
 namespace Croogo\Croogo;
 
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
+use Cake\Utility\Hash;
+
 /**
  * Croogo
  *
@@ -253,7 +256,7 @@ class Croogo {
 	public static function dispatchEvent($name, $subject = null, $data = null) {
 		$event = new Event($name, $subject, $data);
 		if ($subject) {
-			$event = $subject->getEventManager()->dispatch($event);
+			$event = $subject->eventManager()->dispatch($event);
 		} else {
 			$event = EventManager::instance()->dispatch($event);
 		}

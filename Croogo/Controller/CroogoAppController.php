@@ -2,7 +2,15 @@
 
 namespace Croogo\Croogo\Controller;
 
+use Cake\Core\Configure;
 use Cake\Controller\Controller;
+use Cake\Controller\Error\MissingComponentException;
+use Cake\Event\Event;
+use Cake\Utility\Hash;
+
+use Croogo\Croogo\Croogo;
+use Croogo\Croogo\PropertyHookTrait;
+
 /**
  * Croogo App Controller
  *
@@ -14,6 +22,8 @@ use Cake\Controller\Controller;
  * @link     http://www.croogo.org
  */
 class CroogoAppController extends Controller {
+
+	use PropertyHookTrait;
 
 /**
  * Default Components
@@ -99,8 +109,8 @@ class CroogoAppController extends Controller {
  *
  * @access public
  */
-	public function __construct($request = null, $response = null) {
-		parent::__construct($request, $response);
+	public function __construct($request = null, $response = null, $name = null) {
+		parent::__construct($request, $response, $name);
 		if ($request) {
 			$request->addDetector('api', array(
 				'callback' => array('CroogoRouter', 'isApiRequest'),
@@ -109,7 +119,8 @@ class CroogoAppController extends Controller {
 				'callback' => array('CroogoRouter', 'isWhitelistedRequest'),
 			));
 		}
-		$this->getEventManager()->dispatch(new Event('Controller.afterConstruct', $this));
+		$this->eventManager()->dispatch(new Event('Controller.afterConstruct', $this));
+		$this->afterConstruct();
 	}
 
 /**
@@ -189,7 +200,8 @@ class CroogoAppController extends Controller {
  *
  * @throws MissingActionException
  */
-	public function invokeAction(Request $request) {
+	public function invokeAction() {
+		$request = $this->request;
 		try {
 			return parent::invokeAction($request);
 		} catch (MissingActionException $e) {
@@ -215,8 +227,8 @@ class CroogoAppController extends Controller {
  * @return void
  * @throws MissingComponentException
  */
-	public function beforeFilter() {
-		parent::beforeFilter();
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
 		$aclFilterComponent = Configure::read('Site.acl_plugin') . 'Filter';
 		if (empty($this->{$aclFilterComponent})) {
 			throw new MissingComponentException(array('class' => $aclFilterComponent));
@@ -238,7 +250,7 @@ class CroogoAppController extends Controller {
 			}
 		}
 
-		if ($this->RequestHandler->isAjax()) {
+		if ($this->request->is('ajax')) {
 			$this->layout = 'ajax';
 		}
 
@@ -354,7 +366,7 @@ class CroogoAppController extends Controller {
  * @return void
  * @see Controller::beforeRender()
  */
-	public function beforeRender() {
+	public function beforeRender(Event $event) {
 		if (!$this->usePaginationCache) {
 			return;
 		}

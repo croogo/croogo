@@ -2,7 +2,8 @@
 
 namespace Croogo\Croogo\View\Helper;
 
-use App\View\Helper\HtmlHelper;
+use Cake\View\Helper\HtmlHelper;
+
 /**
  * Croogo Html Helper
  *
@@ -90,7 +91,7 @@ class CroogoHtmlHelper extends HtmlHelper {
  * @param string $confirmMessage JavaScript confirmation message.
  * @return string An `<a />` element.
  */
-	public function link($title, $url = null, $options = array(), $confirmMessage = false) {
+	public function link($title, $url = null, array $options = [], $confirmMessage = false) {
 		$defaults = array('escape' => false);
 		$options = is_null($options) ? array() : $options;
 		$options = array_merge($defaults, $options);
@@ -160,7 +161,7 @@ class CroogoHtmlHelper extends HtmlHelper {
 		return $this;
 	}
 
-	public function addCrumb($name, $link = null, $options = null) {
+	public function addCrumb($name, $link = null, array $options = null) {
 		parent::addCrumb($name, $link, $options);
 		return $this;
 	}

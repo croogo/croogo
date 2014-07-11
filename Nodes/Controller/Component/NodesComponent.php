@@ -4,6 +4,10 @@ namespace Croogo\Nodes\Controller\Component;
 
 use Acl\Controller\Component\Acl\HabtmDbAcl;
 use Cake\Controller\Component;
+use Cake\Core\Configure;
+use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
+
 /**
  * Nodes Component
  *
@@ -29,12 +33,12 @@ class NodesComponent extends Component {
  *
  * @param Controller $controller instance of controller
  */
-	public function initialize(Controller $controller) {
-		$this->controller = $controller;
+	public function initialize(Event $event) {
+		$this->controller = $event->subject;
 		if (isset($controller->Node)) {
 			$this->Node = $controller->Node;
 		} else {
-			$this->Node = ClassRegistry::init('Nodes.Node');
+			$this->Node = TableRegistry::get('Nodes.Nodes');
 		}
 
 		if (Configure::read('Access Control.multiRole')) {
@@ -57,7 +61,8 @@ class NodesComponent extends Component {
  * @param Controller $controller instance of controller
  * @return void
  */
-	public function startup(Controller $controller) {
+	public function startup(Event $event) {
+		$controller = $event->subject();
 		if (!isset($controller->request->params['admin']) && !isset($controller->request->params['requested'])) {
 			$this->nodes();
 		}

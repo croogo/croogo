@@ -2,7 +2,10 @@
 
 namespace Croogo\Croogo\Routing\Route;
 
-use App\Routing\Route\Route;
+use Cake\Core\Configure;
+use Cake\Routing\Route\Route;
+use Cake\Utility\Hash;
+
 /**
  * API Route class
  *
@@ -47,7 +50,7 @@ class ApiRoute extends Route {
  * @return mixed Either a string URL for the parameters if they match or false.
  * @see Route::match()
  */
-	public function match($url) {
+	public function match(array $url, array $context = []) {
 		if (isset($url['prefix']) && isset($url['action'])) {
 			$prefix = $url['prefix'];
 			$url['prefix'] = str_replace('_', '.', $url['prefix']);

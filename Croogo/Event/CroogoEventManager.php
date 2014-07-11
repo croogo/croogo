@@ -1,7 +1,14 @@
 <?php
+
 namespace Croogo\Croogo\Event;
 
+use Cake\Cache\Cache;
+use Cake\Core\App;
+use Cake\Core\Plugin;
+use Cake\Core\Configure;
 use Cake\Event\EventManager;
+use Cake\Log\Log;
+
 /**
  * Croogo Event Manager class
  *
@@ -97,7 +104,7 @@ class CroogoEventManager extends EventManager {
  * @see EventManager::attach()
  * @return void
  */
-	public function attach($callable, $eventKey = null, $options = array()) {
+	public function attach($callable, $eventKey = null, array $options = array()) {
 		parent::attach($callable, $eventKey, $options);
 		if (is_object($callable)) {
 			$key = get_class($callable);

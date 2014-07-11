@@ -1,5 +1,10 @@
 <?php
 
+namespace Croogo\Extensions;
+
+use Cake\Core\Plugin;
+use Cake\ORM\TableRegistry;
+
 /**
  * CroogoTheme class
  *
@@ -11,14 +16,13 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-namespace Croogo\Extensions;
-class CroogoTheme extends Object {
+class CroogoTheme {
 
 /**
  * Constructor
  */
 	public function __construct() {
-		$this->Setting = ClassRegistry::init('Settings.Setting');
+		$this->Setting = TableRegistry::get('Settings.Setting');
 	}
 
 /**
@@ -87,7 +91,7 @@ class CroogoTheme extends Object {
 			'regions' => array(),
 			'screenshot' => null,
 		);
-		$default = CakePlugin::path('Croogo') . 'webroot' . DS . 'theme.json';
+		$default = Plugin::path('Croogo') . 'webroot' . DS . 'theme.json';
 
 		if ($alias == null || $alias == 'default') {
 			$manifestFile = $default;

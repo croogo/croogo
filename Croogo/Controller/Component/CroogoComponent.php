@@ -2,11 +2,15 @@
 
 namespace Croogo\Croogo\Controller\Component;
 
-use App\Controller\Component\AuthComponent;
+use Cake\Core\App;
+use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Component;
-use Croogo\Lib\Croogo;
-use Extensions\Lib\CroogoPlugin;
-use Extensions\Lib\CroogoTheme;
+use Cake\Event\Event;
+
+use Croogo\Croogo\Croogo;
+use Croogo\Extensions\CroogoPlugin;
+use Croogo\Extensions\CroogoTheme;
+
 /**
  * Croogo Component
  *
@@ -87,8 +91,8 @@ class CroogoComponent extends Component {
  * @param object $controller instance of controller
  * @return void
  */
-	public function startup(Controller $controller) {
-		$this->_controller = $controller;
+	public function startup(Event $event) {
+		$this->_controller = $event->subject();
 
 		if (isset($this->_controller->request->params['admin'])) {
 			if (!isset($this->_controller->request->params['requested'])) {
