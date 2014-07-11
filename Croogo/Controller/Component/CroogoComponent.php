@@ -71,7 +71,7 @@ class CroogoComponent extends Component {
 			case '_CroogoPlugin':
 			case '_CroogoTheme':
 				if (!isset($this->{$name})) {
-					$class = substr($name, 1);
+					$class = 'Croogo\\Extensions\\' . substr($name, 1);
 					$this->{$name} = new $class();
 					if (method_exists($this->{$name}, 'setController')) {
 						$this->{$name}->setController($this->_controller);
