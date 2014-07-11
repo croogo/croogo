@@ -222,17 +222,18 @@ class Croogo {
 		}
 		if (is_array($hookProperties)) {
 			foreach ($hookProperties as $property => $value) {
-				if (!isset($object->$property)) {
-					$object->$property = $value;
+				if (!$object->getProperty($property)) {
+					$object->setProperty($property, $value);
 				} else {
-					if (is_array($object->$property)) {
+					$currentValues = $object->getProperty($property);
+					if (is_array($currentValues)) {
 						if (is_array($value)) {
-							$object->$property = Hash::merge($object->$property, $value);
+							$object->setProperty($property, Hash::merge($object->$property, $value));
 						} else {
-							$object->$property = $value;
+							$object->setPropery($property, $value);
 						}
 					} else {
-						$object->$property = $value;
+						$object->setProperty($property, $value);
 					}
 				}
 			}
