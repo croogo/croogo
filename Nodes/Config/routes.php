@@ -9,8 +9,8 @@ CroogoRouter::mapResources('Nodes.Nodes', array(
 ));
 
 Router::connect('/:api/:prefix/nodes/lookup', array(
-	'plugin' => 'nodes',
-	'controller' => 'nodes',
+	'plugin' => 'Nodes',
+	'controller' => 'Nodes',
 	'action' => 'lookup',
 ), array(
 	'routeClass' => 'ApiRoute',
@@ -18,15 +18,15 @@ Router::connect('/:api/:prefix/nodes/lookup', array(
 
 // Basic
 CroogoRouter::connect('/', array(
-	'plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'promoted'
+	'plugin' => 'Nodes', 'controller' => 'Nodes', 'action' => 'promoted'
 ));
 
 CroogoRouter::connect('/promoted/*', array(
-	'plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'promoted'
+	'plugin' => 'Nodes', 'controller' => 'Nodes', 'action' => 'promoted'
 ));
 
 CroogoRouter::connect('/search/*', array(
-	'plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'search'
+	'plugin' => 'Nodes', 'controller' => 'Nodes', 'action' => 'search'
 ));
 
 // Content types
@@ -38,10 +38,10 @@ if (Configure::read('Croogo.installed')) {
 
 // Page
 CroogoRouter::connect('/about', array(
-	'plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'view',
+	'plugin' => 'Nodes', 'controller' => 'Nodes', 'action' => 'view',
 	'type' => 'page', 'slug' => 'about'
 ));
 CroogoRouter::connect('/page/:slug', array(
-	'plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'view',
+	'plugin' => 'Nodes', 'controller' => 'Nodes', 'action' => 'view',
 	'type' => 'page'
 ));
