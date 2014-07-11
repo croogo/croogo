@@ -13,12 +13,12 @@ Configure::write('Croogo.dashboardUrl', array(
 	'action' => 'index',
 ));
 
-if (!CakePlugin::loaded('Migrations')) {
-	CakePlugin::load('Migrations');
+if (!Plugin::loaded('Migrations')) {
+	Plugin::load('Migrations', ['autoload' => true, 'classBase' => false]);
 }
-if (!CakePlugin::loaded('Settings')) {
-	CakePlugin::load('Settings');
+if (!Plugin::loaded('Settings')) {
+	Plugin::load('Settings', ['bootstrap' => true, 'classBase' => false]);
 }
-if (!CakePlugin::loaded('Search')) {
-	CakePlugin::load('Search');
+if (!Plugin::loaded('Search')) {
+	Plugin::load('Search', ['autoload' => true, 'classBase' => false]);
 }
