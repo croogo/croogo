@@ -180,7 +180,7 @@ class CroogoComponent extends Component {
  * @return integer Role Id
  */
 	public function roleId() {
-		$roleId = AuthComponent::user('role_id');
+		$roleId = $this->_controller->Session->read('Auth.User.role_id');
 		return $roleId ? $roleId : $this->_defaultRoleId;
 	}
 
