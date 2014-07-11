@@ -1,3 +1,8 @@
+<?php
+
+use Cake\Core\Configure;
+
+?>
 <?php $title_for_layout = __d('croogo', 'Page not found'); ?>
 <h2><?php echo __d('croogo', 'Error'); ?></h2>
 <p class="error">
