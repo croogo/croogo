@@ -2,7 +2,7 @@
 
 namespace Croogo\Nodes\Controller\Component;
 
-use Acl\Controller\Component\Acl\HabtmDbAcl;
+use Cake\Acl\Controller\Component\Acl\HabtmDbAcl;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\Event\Event;

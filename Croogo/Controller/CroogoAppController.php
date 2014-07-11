@@ -34,7 +34,7 @@ class CroogoAppController extends Controller {
 	protected $_defaultComponents = array(
 		'Croogo.Croogo',
 		'Security',
-		'Acl',
+		'Cake/Acl.Acl',
 		'Auth',
 		'Session',
 		'RequestHandler',
@@ -177,7 +177,7 @@ class CroogoAppController extends Controller {
 
 		$this->components = Hash::merge(
 			$this->components,
-			array('Acl', 'Auth', 'Security', 'Session', 'RequestHandler', 'Acl.AclFilter'),
+			array('Cake/Acl.Acl', 'Auth', 'Security', 'Session', 'RequestHandler', 'Acl.AclFilter'),
 			$this->_apiComponents
 		);
 		$apiComponents = array();

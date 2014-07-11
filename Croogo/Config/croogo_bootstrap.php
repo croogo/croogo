@@ -69,6 +69,9 @@ if (Configure::check('Site.asset_timestamp')) {
 	unset($timestamp);
 }
 
+// CakePHP Acl
+Plugin::load(['Cake/Acl' => ['autoload' => true]]);
+
 /**
  * Extensions
  */
