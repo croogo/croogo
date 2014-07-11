@@ -1,5 +1,8 @@
 <?php
 
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
+
 /**
  * Dashboard URL
  */

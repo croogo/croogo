@@ -1,5 +1,9 @@
 <?php
 
+use Cake\Core\Configure;
+use Cake\Routing\Router;
+use Croogo\Croogo\CroogoRouter;
+
 CroogoRouter::mapResources('Nodes.Nodes', array(
 	'prefix' => '/:api/:prefix/',
 ));

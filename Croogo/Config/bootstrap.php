@@ -1,9 +1,8 @@
 <?php
 
-use Cake\Log\Log;
-use Croogo\Event\CroogoEventManager;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Croogo\Lib\Croogo;
-use Croogo\Lib\CroogoNav;
 
 require_once 'croogo_bootstrap.php';
 

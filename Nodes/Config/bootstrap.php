@@ -1,5 +1,10 @@
 <?php
 
+use Cake\Core\Configure;
+use Cake\Routing\Router;
+use Croogo\Croogo\Cache\CroogoCache;
+use Croogo\Croogo\Croogo;
+
 $cacheConfig = array_merge(
 	Configure::read('Cache.defaultConfig'),
 	array('groups' => array('nodes'))
