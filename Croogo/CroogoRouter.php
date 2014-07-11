@@ -115,16 +115,11 @@ class CroogoRouter {
  */
 	public static function mapResources($controller, $options = array()) {
 		$options = array_merge(array(
-			'routeClass' => 'ApiRoute',
+			'connectOptions' => [
+				'Croogo\Croogo\Routing\Route\ApiRoute',
+			],
 		), $options);
-		static $defaultRouteClass;
-		if (empty($defaultRouteClass)) {
-			$defaultRouteClass = Router::defaultRouteClass();
-		}
-		Router::defaultRouteClass('ApiRoute');
-		$routes = Router::mapResources($controller, $options);
-		Router::defaultRouteClass($defaultRouteClass);
-		return $routes;
+		return Router::mapResources($controller, $options);
 	}
 
 /**
