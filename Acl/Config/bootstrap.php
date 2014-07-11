@@ -22,8 +22,8 @@ if (Configure::read('Site.acl_plugin') == 'Acl') {
 	Cache::config('permissions', array(
 		'duration' => '+1 hour',
 		'path' => CACHE . 'queries' . DS,
-		'engine' => Configure::read('Cache.defaultEngine'),
-		'prefix' => Configure::read('Cache.defaultPrefix'),
+		'className' => Configure::read('Croogo.Cache.defaultEngine'),
+		'prefix' => Configure::read('Croogo.Cache.defaultPrefix'),
 		'groups' => array('acl')
 	));
 }
