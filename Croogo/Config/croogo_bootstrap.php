@@ -2,10 +2,20 @@
 
 namespace Croogo\Croogo\Config;
 
-use Croogo\Cache\CroogoCache;
-use Croogo\Configure\CroogoJsonReader;
-use Croogo\Lib\CroogoStatus;
-use Extensions\Lib\CroogoPlugin;
+use Cake\Core\App;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Cake\Log\Log;
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
+
+use Croogo\Croogo\Croogo;
+use Croogo\Croogo\Cache\CroogoCache;
+use Croogo\Croogo\Configure\CroogoJsonReader;
+use Croogo\Croogo\CroogoStatus;
+use Croogo\Croogo\Event\CroogoEventManager;
+use Croogo\Extensions\CroogoPlugin;
+
 /**
  * Default Acl plugin.  Custom Acl plugin should override this value.
  */
@@ -29,7 +39,7 @@ $defaultPrefix = Configure::read('Cache.defaultPrefix');
 $cacheConfig = array(
 	'duration' => '+1 hour',
 	'path' => CACHE . 'queries' . DS,
-	'engine' => $defaultEngine,
+	'className' => $defaultEngine,
 	'prefix' => $defaultPrefix,
 );
 Configure::write('Cache.defaultConfig', $cacheConfig);
@@ -62,7 +72,13 @@ if (Configure::check('Site.asset_timestamp')) {
 /**
  * Extensions
  */
-Plugin::load(array('Extensions'), array('bootstrap' => true, 'routes' => true));
+Plugin::load(['Extensions' => [
+	'autoload' => true,
+	'bootstrap' => true,
+	'routes' => true,
+	'namespace' => 'Croogo\\Extensions\\',
+	'classBase' => false,
+]]);
 Configure::load('Extensions.events');
 
 /**
@@ -83,10 +99,11 @@ if ($theme = Configure::read('Site.theme')) {
 /**
  * List of core plugins
  */
-Configure::write('Core.corePlugins', array(
+$corePlugins = [
 	'Settings', 'Acl', 'Blocks', 'Comments', 'Contacts', 'Menus', 'Meta',
-	'Nodes', 'Taxonomy', 'Users',
-));
+	'Nodes', 'Taxonomy', 'Users', 'Wysiwyg', 'Ckeditor',
+];
+Configure::write('Core.corePlugins', $corePlugins);
 
 /**
  * Plugins
@@ -116,11 +133,16 @@ foreach ($plugins as $plugin) {
 	}
 	$option = array(
 		$pluginName => array(
+			'autoload' => true,
 			'bootstrap' => true,
-			'routes' => true,
 			'ignoreMissing' => true,
+			'routes' => true,
 		)
 	);
+	if (in_array($pluginName, $corePlugins)) {
+		$option[$pluginName]['namespace'] = 'Croogo\\' . $pluginName . '\\';
+		$option[$pluginName]['classBase'] = false;
+	}
 	CroogoPlugin::load($option);
 }
 CroogoEventManager::loadListeners();
