@@ -76,9 +76,13 @@ class TaxonomizableBehavior extends ModelBehavior {
  * @return void
  */
 	protected function _setupEvents($model) {
-		$callback = array($this, 'onBeforeSaveNode');
 		$eventManager = $model->getEventManager();
+
+		$callback = array($this, 'onBeforeSaveNode');
 		$eventManager->attach($callback, 'Model.Node.beforeSaveNode');
+
+		$callback = array($this, 'onAfterSaveNode');
+		$eventManager->attach($callback, 'Model.Node.afterSaveNode');
 	}
 
 /**
@@ -220,6 +224,28 @@ class TaxonomizableBehavior extends ModelBehavior {
 		$typeAlias = $event->data['typeAlias'];
 		$this->formatTaxonomyData($event->subject, $data, $typeAlias);
 		$event->data['data'] = $data;
+	}
+
+/**
+ * Handle Model.Node.afterSaveNode event
+ *
+ * @param CakeEvent $event Event containing `data` and `typeAlias`
+ */
+	public function onAfterSaveNode($event) {
+		$model = $event->subject;
+		$data = $event->data['data'];
+		if (isset($model->id)) {
+			$id = $model->id;
+		}
+		if (isset($data[$model->alias][$model->primaryKey])) {
+			$id = $data[$model->alias][$model->primaryKey];
+		}
+		if ($id && array_key_exists('Taxonomy', $data) && empty($data['Taxonomy'])) {
+			$model->Taxonomy->ModelTaxonomy->deleteAll(array(
+				'model' => $model->alias,
+				'foreign_key' => $id,
+			));
+		}
 	}
 
 /**
