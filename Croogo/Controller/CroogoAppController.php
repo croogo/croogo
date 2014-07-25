@@ -133,6 +133,7 @@ class CroogoAppController extends Controller {
 	public function afterConstruct() {
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
 		$this->_setupComponents();
+		$this->_setupTheme();
 		if (isset($this->request->params['admin'])) {
 			$this->helpers[] = 'Croogo.Croogo';
 			if (empty($this->helpers['Html'])) {
@@ -184,6 +185,27 @@ class CroogoAppController extends Controller {
 	}
 
 /**
+ * Setup themes
+ *
+ * @return void
+ */
+	protected function _setupTheme() {
+		$isAdmin = isset($this->request->params['admin']);
+		if ($isAdmin) {
+			$theme = Configure::read('Site.admin_theme');
+			if ($theme) {
+				App::build(array(
+					'View/Helper' => array(App::themePath($theme) . 'Helper' . DS),
+				));
+			}
+			$this->layout = 'admin';
+		} else {
+			$theme = Configure::read('Site.theme');
+		}
+		$this->theme = $theme;
+	}
+
+/**
  * Allows extending action from component
  *
  * @throws MissingActionException
@@ -228,23 +250,8 @@ class CroogoAppController extends Controller {
 			$this->Security->requirePost('admin_delete');
 		}
 
-		if (isset($this->request->params['admin'])) {
-			$this->layout = 'admin';
-			if ($adminTheme = Configure::read('Site.admin_theme')) {
-				App::build(array(
-					'View/Helper' => array(App::themePath($adminTheme) . 'Helper' . DS),
-				));
-			}
-		}
-
 		if ($this->RequestHandler->isAjax()) {
 			$this->layout = 'ajax';
-		}
-
-		if (Configure::read('Site.theme') && !isset($this->request->params['admin'])) {
-			$this->theme = Configure::read('Site.theme');
-		} elseif (Configure::read('Site.admin_theme') && isset($this->request->params['admin'])) {
-			$this->theme = Configure::read('Site.admin_theme');
 		}
 
 		if (
