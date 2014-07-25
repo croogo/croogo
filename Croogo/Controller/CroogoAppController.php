@@ -1,6 +1,7 @@
 <?php
 
 App::uses('Controller', 'Controller');
+App::uses('CroogoTheme', 'Extensions.Lib');
 
 /**
  * Croogo App Controller
@@ -134,18 +135,6 @@ class CroogoAppController extends Controller {
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
 		$this->_setupComponents();
 		$this->_setupTheme();
-		if (isset($this->request->params['admin'])) {
-			$this->helpers[] = 'Croogo.Croogo';
-			if (empty($this->helpers['Html'])) {
-				$this->helpers['Html'] = array('className' => 'Croogo.CroogoHtml');
-			}
-			if (empty($this->helpers['Form'])) {
-				$this->helpers['Form'] = array('className' => 'Croogo.CroogoForm');
-			}
-			if (empty($this->helpers['Paginator'])) {
-				$this->helpers['Paginator'] = array('className' => 'Croogo.CroogoPaginator');
-			}
-		}
 	}
 
 /**
@@ -199,10 +188,43 @@ class CroogoAppController extends Controller {
 				));
 			}
 			$this->layout = 'admin';
+			$this->helpers[] = 'Croogo.Croogo';
 		} else {
 			$theme = Configure::read('Site.theme');
 		}
 		$this->theme = $theme;
+
+		$croogoTheme = new CroogoTheme();
+		$data = $croogoTheme->getData($theme);
+
+		$defaults = array(
+			'' => array(
+				'Html' => array(),
+				'Form' => array(),
+			),
+			'admin' => array(
+				'Html' => array('className' => 'Croogo.CroogoHtml'),
+				'Form' => array('className' => 'Croogo.CroogoForm'),
+				'Paginator' => array('className' => 'Croogo.CroogoPaginator'),
+			),
+		);
+
+		if (empty($data['helpers']['prefixes'])) {
+			$prefixes = $defaults;
+		} else {
+			$prefixes = Hash::merge($defaults, $data['helpers']['prefixes']);
+		}
+
+		foreach ($prefixes as $prefix => $helpers) {
+			if (($prefix && isset($this->request->params[$prefix])) ||
+				(!$prefix && !isset($this->request->params[$prefix]))
+			) {
+				foreach ($helpers as $helper => $setting) {
+					$this->helpers[$helper] = $setting;
+				}
+			}
+		}
+
 	}
 
 /**
