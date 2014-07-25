@@ -22,6 +22,13 @@ class MetaHelper extends AppHelper {
 		'Form',
 	);
 
+	public $settings = array(
+		'deleteUrl' => array(
+			'admin' => true, 'plugin' => 'meta',
+			'controller' => 'meta', 'action' => 'delete_meta',
+		),
+	);
+
 /**
 * beforeRender
  */
@@ -112,10 +119,7 @@ class MetaHelper extends AppHelper {
 		$fields = $this->Html->tag('div', $fields, array('class' => 'fields'));
 
 		$id = is_null($id) ? $uuid : $id;
-		$deleteUrl = array(
-			'admin' => true, 'plugin' => 'meta',
-			'controller' => 'meta', 'action' => 'delete_meta'
-		);
+		$deleteUrl = $this->settings['deleteUrl'];
 		$deleteUrl[] = $id;
 		$actions = $this->Html->link(
 			__d('croogo', 'Remove'),
