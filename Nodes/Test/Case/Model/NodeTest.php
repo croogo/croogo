@@ -152,6 +152,42 @@ class NodeTest extends CroogoTestCase {
 	}
 
 /**
+ * test saving node with non default type.
+ */
+	public function testAddNodeNonDefaultType() {
+		CroogoRouter::connect('/blog/:slug', array(
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'view',
+			'type' => 'blog',
+		));
+		$this->Node->Behaviors->disable('Tree');
+		$this->Node->type = null;
+		$oldNodeCount = $this->Node->find('count');
+
+		$data = array(
+			'Node' => array(
+				'title' => 'Test Content',
+				'slug' => 'test-content',
+				'token_key' => 1,
+				'body' => '',
+			),
+			'TaxonomyData' => array(
+				1 => array(1),
+			)
+		);
+		$result = $this->Node->saveNode($data, 'blog');
+		$this->Node->type = null;
+		$newNode = $this->Node->findById($this->Node->id);
+		$newNodeCount = $this->Node->find('count');
+
+		$this->assertTrue($result);
+		$this->assertTrue($this->Node->Behaviors->enabled('Tree'));
+		$this->assertEquals($oldNodeCount + 1, $newNodeCount);
+		$this->assertEquals('/blog/test-content', $newNode['Node']['path']);
+	}
+
+/**
  * testAddNodeWithTaxonomyData
  */
 	public function testAddNodeWithTaxonomyData() {
