@@ -157,7 +157,7 @@ class CroogoComponent extends Component {
 				),
 				'logout' => array(
 					'icon' => 'off',
-					'title' => 'Logout',
+					'title' => __d('croogo', 'Logout'),
 					'url' => array(
 						'admin' => true,
 						'plugin' => 'users',
