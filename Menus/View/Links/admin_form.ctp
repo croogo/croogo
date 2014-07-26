@@ -63,10 +63,11 @@ $linkChooserUrl = $this->Html->url(array(
 			<?php
 				echo $this->Form->input('id');
 				echo $this->Form->input('menu_id', array(
+					'label' => __d('croogo', 'Menu'),
 					'selected' => $menuId,
 				));
 				echo $this->Form->input('parent_id', array(
-					'title' => __d('croogo', 'Parent'),
+					'label' => __d('croogo', 'Parent'),
 					'options' => $parentLinks,
 					'empty' => true,
 				));
@@ -84,7 +85,7 @@ $linkChooserUrl = $this->Html->url(array(
 						'button' => 'default',
 						'icon' => array('link'),
 						'iconSize' => 'small',
-						'data-title' => 'Link Chooser',
+						'data-title' => __d('croogo', 'Link Chooser'),
 						'data-toggle' => 'modal',
 						'data-remote' => $linkChooserUrl,
 					)),
@@ -95,6 +96,7 @@ $linkChooserUrl = $this->Html->url(array(
 			<div id="link-access" class="tab-pane">
 			<?php
 				echo $this->Form->input('Role.Role', array(
+					'label' => __d('croogo', 'Role'),
 					'class' => false,
 				));
 			?>

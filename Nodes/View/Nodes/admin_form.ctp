@@ -91,7 +91,10 @@ echo $this->Form->create('Node', array(
 
 			<div id="node-access" class="tab-pane">
 			<?php
-				echo $this->Form->input('Role.Role', array('class' => false));
+				echo $this->Form->input('Role.Role', array(
+					'class' => false,
+					'label' => __d('croogo', 'Role')
+				));
 			?>
 			</div>
 
@@ -136,6 +139,7 @@ echo $this->Form->create('Node', array(
 			$this->Form->input('created', array(
 				'type' => 'text',
 				'class' => 'span10 input-datetime',
+				'label' => __d('croogo', 'Created'),
 			)) .
 
 			$this->Html->div('input-daterange',

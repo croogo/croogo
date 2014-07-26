@@ -67,6 +67,7 @@ echo $this->Form->create('Block', array(
 			<div id="block-access" class="tab-pane">
 			<?php
 				echo $this->Form->input('Role.Role', array(
+					'label' => __d('croogo', 'Role'),
 					'class' => false,
 				));
 			?>
