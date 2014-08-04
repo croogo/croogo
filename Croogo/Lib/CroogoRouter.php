@@ -128,6 +128,7 @@ class CroogoRouter {
  */
 	public static function localize() {
 		if (CakePlugin::loaded('Translate')) {
+			Router::connect('/:locale/:plugin/:controller/:action/*', array(),array('locale'=>'[a-z]{3}'));
 			Router::connect('/:locale/:controller/:action/*', array(), array('locale' => '[a-z]{3}'));
 		}
 	}
