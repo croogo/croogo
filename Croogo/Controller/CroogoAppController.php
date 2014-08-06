@@ -1,6 +1,7 @@
 <?php
 
 App::uses('Controller', 'Controller');
+App::uses('CroogoTheme', 'Extensions.Lib');
 
 /**
  * Croogo App Controller
@@ -133,18 +134,7 @@ class CroogoAppController extends Controller {
 	public function afterConstruct() {
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
 		$this->_setupComponents();
-		if (isset($this->request->params['admin'])) {
-			$this->helpers[] = 'Croogo.Croogo';
-			if (empty($this->helpers['Html'])) {
-				$this->helpers['Html'] = array('className' => 'Croogo.CroogoHtml');
-			}
-			if (empty($this->helpers['Form'])) {
-				$this->helpers['Form'] = array('className' => 'Croogo.CroogoForm');
-			}
-			if (empty($this->helpers['Paginator'])) {
-				$this->helpers['Paginator'] = array('className' => 'Croogo.CroogoPaginator');
-			}
-		}
+		$this->_setupTheme();
 	}
 
 /**
@@ -181,6 +171,60 @@ class CroogoAppController extends Controller {
 			$apiComponents[$apiComponent] = $setting;
 		}
 		$this->_apiComponents = $apiComponents;
+	}
+
+/**
+ * Setup themes
+ *
+ * @return void
+ */
+	protected function _setupTheme() {
+		$isAdmin = isset($this->request->params['admin']);
+		if ($isAdmin) {
+			$theme = Configure::read('Site.admin_theme');
+			if ($theme) {
+				App::build(array(
+					'View/Helper' => array(App::themePath($theme) . 'Helper' . DS),
+				));
+			}
+			$this->layout = 'admin';
+			$this->helpers[] = 'Croogo.Croogo';
+		} else {
+			$theme = Configure::read('Site.theme');
+		}
+		$this->theme = $theme;
+
+		$croogoTheme = new CroogoTheme();
+		$data = $croogoTheme->getData($theme);
+
+		$defaults = array(
+			'' => array(
+				'Html' => array(),
+				'Form' => array(),
+			),
+			'admin' => array(
+				'Html' => array('className' => 'Croogo.CroogoHtml'),
+				'Form' => array('className' => 'Croogo.CroogoForm'),
+				'Paginator' => array('className' => 'Croogo.CroogoPaginator'),
+			),
+		);
+
+		if (empty($data['helpers']['prefixes'])) {
+			$prefixes = $defaults;
+		} else {
+			$prefixes = Hash::merge($defaults, $data['helpers']['prefixes']);
+		}
+
+		foreach ($prefixes as $prefix => $helpers) {
+			if (($prefix && isset($this->request->params[$prefix])) ||
+				(!$prefix && !isset($this->request->params[$prefix]))
+			) {
+				foreach ($helpers as $helper => $setting) {
+					$this->helpers[$helper] = $setting;
+				}
+			}
+		}
+
 	}
 
 /**
@@ -228,23 +272,8 @@ class CroogoAppController extends Controller {
 			$this->Security->requirePost('admin_delete');
 		}
 
-		if (isset($this->request->params['admin'])) {
-			$this->layout = 'admin';
-			if ($adminTheme = Configure::read('Site.admin_theme')) {
-				App::build(array(
-					'View/Helper' => array(App::themePath($adminTheme) . 'Helper' . DS),
-				));
-			}
-		}
-
 		if ($this->RequestHandler->isAjax()) {
 			$this->layout = 'ajax';
-		}
-
-		if (Configure::read('Site.theme') && !isset($this->request->params['admin'])) {
-			$this->theme = Configure::read('Site.theme');
-		} elseif (Configure::read('Site.admin_theme') && isset($this->request->params['admin'])) {
-			$this->theme = Configure::read('Site.admin_theme');
 		}
 
 		if (
