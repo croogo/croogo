@@ -48,7 +48,11 @@ Configure::write('Config.language', Configure::read('Site.locale'));
 /**
  * Timezone
  */
-date_default_timezone_set(Configure::read('Site.timezone'));
+$timezone = Configure::read('Site.timezone');
+if (!$timezone) {
+	$timezone = 'UTC';
+}
+date_default_timezone_set($timezone);
 
 /**
  * Assets
