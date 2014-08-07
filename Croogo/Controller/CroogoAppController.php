@@ -188,7 +188,6 @@ class CroogoAppController extends Controller {
 				));
 			}
 			$this->layout = 'admin';
-			$this->helpers[] = 'Croogo.Croogo';
 		} else {
 			$theme = Configure::read('Site.theme');
 		}
@@ -208,6 +207,10 @@ class CroogoAppController extends Controller {
 				'Paginator' => array('className' => 'Croogo.CroogoPaginator'),
 			),
 		);
+
+		if (empty($data['helpers']['prefixes']['admin']['Croogo.Croogo'])) {
+			$this->helpers[] = 'Croogo.Croogo';
+		}
 
 		if (empty($data['helpers']['prefixes'])) {
 			$prefixes = $defaults;
