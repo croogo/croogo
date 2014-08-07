@@ -134,7 +134,7 @@ class FileManagerHelper extends AppHelper {
 		}
 
 		if (isset($url['action']) && ($url['action'] == 'delete_directory' || $url['action'] == 'delete_file')) {
-			$output = $this->Form->postLink($title, $url, array('data' => compact('path')), __d('croogo', 'Are you sure?'));
+			$output = $this->Form->postLink($title, $url, array('data' => compact('path'), 'escape' => true), __d('croogo', 'Are you sure?'));
 		} else {
 			$output = '<a class="' . $class . '" href="' . $this->Html->url($url) . "?{$pathKey}=" . urlencode($path) . '">' . $title . '</a>';
 		}
