@@ -159,6 +159,7 @@ class ContactsController extends ContactsAppController {
 			$this->request->data['Message']['title'] = htmlspecialchars($this->request->data['Message']['title']);
 			$this->request->data['Message']['name'] = htmlspecialchars($this->request->data['Message']['name']);
 			$this->request->data['Message']['body'] = htmlspecialchars($this->request->data['Message']['body']);
+			Croogo::dispatchEvent('Controller.Contacts.beforeMessage', $this);
 			$continue = $this->_spam_protection($continue, $contact);
 			$continue = $this->_captcha($continue, $contact);
 			$continue = $this->_validation($continue, $contact);
@@ -166,6 +167,7 @@ class ContactsController extends ContactsAppController {
 
 			$this->set(compact('continue'));
 			if ($continue === true) {
+				Croogo::dispatchEvent('Controller.Contacts.afterMessage', $this);
 				$this->Session->setFlash(__d('croogo', 'Your message has been received...'), 'default', array('class' => 'success'));
 				return $this->Croogo->redirect('/');
 			}
