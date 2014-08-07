@@ -186,6 +186,11 @@ class FileManagerController extends FileManagerAppController {
 		}
 		$this->set(compact('path'));
 
+		if (isset($path) && !$this->_isDeletable($path)) {
+			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'default', array('class' => 'error'));
+			return $this->redirect($this->referer());
+		}
+
 		if (isset($this->request->data['FileManager']['file']['tmp_name']) &&
 			is_uploaded_file($this->request->data['FileManager']['file']['tmp_name'])) {
 			$destination = $path . $this->request->data['FileManager']['file']['name'];
@@ -243,6 +248,11 @@ class FileManagerController extends FileManagerAppController {
 			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 
+		if (isset($path) && !$this->_isDeletable($path)) {
+			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'default', array('class' => 'error'));
+			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+		}
+
 		if (is_dir($path) && rmdir($path)) {
 			$this->Session->setFlash(__d('croogo', 'Directory deleted'), 'default', array('class' => 'success'));
 		} else {
@@ -297,6 +307,11 @@ class FileManagerController extends FileManagerAppController {
 			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 
+		if (isset($path) && !$this->_isDeletable($path)) {
+			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'default', array('class' => 'error'));
+			return $this->redirect($this->referer());
+		}
+
 		if (!empty($this->request->data)) {
 			$this->folder = new Folder;
 			if ($this->folder->create($path . $this->request->data['FileManager']['name'])) {
@@ -324,6 +339,11 @@ class FileManagerController extends FileManagerAppController {
 			$path = $this->request->query['path'];
 		} else {
 			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+		}
+
+		if (isset($path) && !$this->_isEditable($path)) {
+			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'default', array('class' => 'error'));
+			return $this->redirect($this->referer());
 		}
 
 		if (!empty($this->request->data)) {
