@@ -12,18 +12,18 @@ class ImageHelper extends Helper {
 
 	public $helpers = array('Html');
 
-	/**
-	 * Automatically resizes an image and returns formatted IMG tag
-	 *
-	 * @param string $path Path to the image file, relative to the webroot/img/ directory.
-	 * @param integer $width Image of returned image
-	 * @param integer $height Height of returned image
-	 * @param boolean $aspect Maintain aspect ratio (default: true)
-	 * @param array	$htmlAttributes Array of HTML attributes.
-	 * @param boolean $return Wheter this method should return a value or output it. This overrides AUTO_OUTPUT.
-	 * @return mixed  Either string or echos the value, depends on AUTO_OUTPUT and $return.
-	 * @access public
-	 */
+/**
+ * Automatically resizes an image and returns formatted IMG tag
+ *
+ * @param string $path Path to the image file, relative to the webroot/img/ directory.
+ * @param integer $width Image of returned image
+ * @param integer $height Height of returned image
+ * @param boolean $aspect Maintain aspect ratio (default: true)
+ * @param array	$htmlAttributes Array of HTML attributes.
+ * @param boolean $return Whether this method should return a value or output it. This overrides AUTO_OUTPUT.
+ * @return mixed Either string or echoes the value, depends on AUTO_OUTPUT and $return.
+ * @access public
+ */
 	public function resize($path, $width, $height, $options = array(), $htmlAttributes = array(), $return = false) {
 		if (is_bool($options)) {
 			$options = array('aspect' => $options);
