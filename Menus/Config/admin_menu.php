@@ -1,7 +1,7 @@
 <?php
 
 CroogoNav::add('sidebar', 'menus', array(
-	'icon' => array('sitemap', 'large'),
+	'icon' => 'sitemap',
 	'title' => __d('croogo', 'Menus'),
 	'url' => array(
 		'admin' => true,

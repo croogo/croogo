@@ -1,7 +1,7 @@
 <?php
 
 CroogoNav::add('sidebar', 'contacts', array(
-	'icon' => array('comments', 'large'),
+	'icon' => 'comments',
 	'title' => __d('croogo', 'Contacts'),
 	'url' => array(
 		'admin' => true,
