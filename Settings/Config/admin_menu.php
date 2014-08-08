@@ -1,7 +1,7 @@
 <?php
 
 CroogoNav::add('sidebar', 'settings', array(
-	'icon' => array('cog', 'large'),
+	'icon' => 'cog',
 	'title' => __d('croogo', 'Settings'),
 	'url' => array(
 		'admin' => true,

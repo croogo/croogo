@@ -1,7 +1,7 @@
 <?php
 
 CroogoNav::add('sidebar', 'blocks', array(
-	'icon' => array('columns', 'large'),
+	'icon' => 'columns',
 	'title' => __d('croogo', 'Blocks'),
 	'url' => array(
 		'admin' => true,

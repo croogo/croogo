@@ -1,7 +1,7 @@
 <?php
 
 CroogoNav::add('sidebar', 'users', array(
-	'icon' => array('user', 'large'),
+	'icon' => 'user',
 	'title' => __d('croogo', 'Users'),
 	'url' => array(
 		'admin' => true,
