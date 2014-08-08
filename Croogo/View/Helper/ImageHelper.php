@@ -79,6 +79,11 @@ class ImageHelper extends Helper {
 		$relfile .= $resized;
 		$cachefile = WWW_ROOT . ltrim($relfile, '/');
 
+		$targetDir = dirname($cachefile);
+		if (!is_dir($targetDir)) {
+			mkdir($targetDir);
+		}
+
 		if (file_exists($cachefile)) {
 			$csize = getimagesize($cachefile);
 			$cached = ($csize[0] == $width && $csize[1] == $height); // image is cached
