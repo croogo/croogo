@@ -15,11 +15,17 @@ class ImageHelper extends Helper {
 /**
  * Automatically resizes an image and returns formatted IMG tag
  *
+ * Options:
+ * - aspect Maintain aspect ratio. Default: true
+ * - uploadsDir Upload directory name. Default: 'uploads'
+ * - cachedir Cache directory name. Default: 'resized'
+ * - resizeInd: String to check in filename indicating that it was resized
+ *
  * @param string $path Path to the image file, relative to the webroot/img/ directory.
  * @param integer $width Image of returned image
  * @param integer $height Height of returned image
- * @param boolean $aspect Maintain aspect ratio (default: true)
- * @param array	$htmlAttributes Array of HTML attributes.
+ * @param array $options Options
+ * @param array $htmlAttributes Array of HTML attributes.
  * @param boolean $return Whether this method should return a value or output it. This overrides AUTO_OUTPUT.
  * @return mixed Either string or echoes the value, depends on AUTO_OUTPUT and $return.
  * @access public
@@ -38,23 +44,25 @@ class ImageHelper extends Helper {
 		$uploadsDir = $options['uploadsDir'];
 		$cacheDir = $options['cacheDir'];
 		$resizedInd = $options['resizedInd'];
-		$types = array(1 => "gif", "jpeg", "png", "swf", "psd", "wbmp"); // used to determine image type
-		$transparency = array("gif", "png");	// image types with transparency
-		if (empty($htmlAttributes['alt'])) $htmlAttributes['alt'] = 'thumb';  // Ponemos alt default
 
-		$url = WWW_ROOT . DS . $path;
-
-		if (!file_exists($url)) {
-			return; // image doesn't exist
+		if (empty($htmlAttributes['alt'])) {
+			$htmlAttributes['alt'] = 'thumb';
 		}
 
-		$size = getimagesize($url);
+		$sourcefile = WWW_ROOT . DS . $path;
 
-		if ($aspect) { // adjust to aspect.
-			if (($size[1]/$height) > ($size[0]/$width))  // $size[0]:width, [1]:height, [2]:type
+		if (!file_exists($sourcefile)) {
+			return;
+		}
+
+		$size = getimagesize($sourcefile);
+
+		if ($aspect) {
+			if (($size[1]/$height) > ($size[0]/$width)) {
 				$width = ceil(($size[0]/$size[1]) * $height);
-			else
+			} else {
 				$height = ceil($width / ($size[0]/$size[1]));
+			}
 		}
 
 		$dimension = $resizedInd . $width . 'x' . $height;
@@ -84,13 +92,17 @@ class ImageHelper extends Helper {
 			mkdir($targetDir);
 		}
 
+		$cached = false;
 		if (file_exists($cachefile)) {
 			$csize = getimagesize($cachefile);
-			$cached = ($csize[0] == $width && $csize[1] == $height); // image is cached
-			if (@filemtime($cachefile) < @filemtime($url)) // check if up to date
+
+			// image is cached
+			$cached = ($csize[0] == $width && $csize[1] == $height);
+
+			// check if up to date
+			if (filemtime($cachefile) < filemtime($sourcefile)) {
 				$cached = false;
-		} else {
-			$cached = false;
+			}
 		}
 
 		if (!$cached) {
@@ -100,32 +112,64 @@ class ImageHelper extends Helper {
 		}
 
 		if ($resize) {
-			$image = call_user_func('imagecreatefrom'.$types[$size[2]], $url);
-			if (function_exists("imagecreatetruecolor") && ($temp = imagecreatetruecolor ($width, $height))) {
-				if (in_array($types[$size[2]],$transparency)) {
-					imagealphablending($temp, false);
-					imagesavealpha($temp,true);
-					$transparent = imagecolorallocatealpha($temp, 255, 255, 255, 127);
-					imagefilledrectangle($temp, 0, 0, $width, $height, $transparent);
-				}
-				imagecopyresampled ($temp, $image, 0, 0, 0, 0, $width, $height, $size[0], $size[1]);
-			} else {
-				$temp = imagecreate ($width, $height);
-				if (in_array($types[$size[2]],$transparency)) {
-					imagealphablending($temp, false);
-					imagesavealpha($temp,true);
-					$transparent = imagecolorallocatealpha($temp, 255, 255, 255, 127);
-					imagefilledrectangle($temp, 0, 0, $width, $height, $transparent);
-				}
-				imagecopyresized ($temp, $image, 0, 0, 0, 0, $width, $height, $size[0], $size[1]);
-			}
-			call_user_func("image".$types[$size[2]], $temp, $cachefile);
-			imagedestroy ($image);
-			imagedestroy ($temp);
+			$this->_resize($sourcefile, $size, $cachefile, $width, $height);
 		} else {
 			//copy($url, $cachefile);
 		}
 
 		return $this->output(sprintf($this->Html->_tags['image'], $this->webroot($relfile), $this->Html->_parseAttributes($htmlAttributes, null, '', ' ')), $return);
 	}
+
+/**
+ * Convenience method to resize image
+ *
+ * @param string $source File name of the source image
+ * @param array $sourceSize Result of getimagesize() against $source
+ * @param string $target File name of the target image
+ * @param int $w Target Image width
+ * @param int $h Target image height
+ * @return void
+ */
+	protected function _resize($source, $sourceSize, $target, $w, $h) {
+		$types = array(1 => "gif", "jpeg", "png", "swf", "psd", "wbmp");
+		$transparency = array("gif", "png");
+
+		$format = $types[$sourceSize[2]];
+		$sw = $sourceSize[0];
+		$sh = $sourceSize[1];
+
+		$image = call_user_func('imagecreatefrom' . $format, $source);
+		if (function_exists('imagecreatetruecolor')) {
+			$temp = imagecreatetruecolor($w, $h);
+			if (in_array($format, $transparency)) {
+				$this->_setupTransparency($temp, $w, $h);
+			}
+			imagecopyresampled($temp, $image, 0, 0, 0, 0, $w, $h, $sw, $sh);
+		} else {
+			$temp = imagecreate($w, $h);
+			if (in_array($format, $transparency)) {
+				$this->_setupTransparency($temp, $w, $h);
+			}
+			imagecopyresized($temp, $image, 0, 0, 0, 0, $w, $h, $sw, $sh);
+		}
+		call_user_func('image' . $format, $temp, $target);
+		imagedestroy ($image);
+		imagedestroy ($temp);
+	}
+
+/**
+ * Convenience method to setup image transparency
+ *
+ * @param resource $image Image resource
+ * @param int $w Width
+ * @param int $h Height
+ * @return void
+ */
+	protected function _setupTransparency($image, $w, $h) {
+		imagealphablending($image, false);
+		imagesavealpha($image, true);
+		$transparent = imagecolorallocatealpha($image, 255, 255, 255, 127);
+		imagefilledrectangle($image, 0, 0, $w, $h, $transparent);
+	}
+
 }
