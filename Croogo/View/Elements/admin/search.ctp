@@ -31,6 +31,12 @@ if (!empty($searchFields)):
 		if (!empty($fieldOptions)) {
 			$options = Hash::merge($fieldOptions, $options);
 		}
+                $label = $field;
+                if (substr($label, -3) === '_id') {
+                        $label = substr($label, 0, -3);
+                }
+                $label = __(Inflector::humanize(Inflector::underscore($label)));
+                $options['label'] = __d('croogo', $label);
 		$this->Form->unlockField($field);
 		echo $this->Form->input($field, $options);
 	}

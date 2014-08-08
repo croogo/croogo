@@ -39,7 +39,7 @@ echo $this->Form->create('Setting', array(
 					$keyE = explode('.', $setting['Setting']['key']);
 					$keyTitle = Inflector::humanize($keyE['1']);
 
-					$label = ($setting['Setting']['title'] != null) ? $setting['Setting']['title'] : $keyTitle;
+					$label = ($setting['Setting']['title'] != null) ? __d('croogo', $setting['Setting']['title']) : __d('croogo', $keyTitle);
 
 					$i = $setting['Setting']['id'];
 					echo

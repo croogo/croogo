@@ -15,7 +15,7 @@ $this->Html
 <?php $this->start('actions'); ?>
 <?php
 	echo $this->Croogo->adminAction(
-		__d('croogo', 'New %s', Inflector::singularize($this->name)),
+		__d('croogo', 'New %s', __d('croogo', Inflector::singularize($this->name))),
 		array('action' => 'add', $menu['Menu']['id']),
 		array('button' => 'success')
 	);
