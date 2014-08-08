@@ -10,14 +10,27 @@ App::uses('HtmlHelper', 'View/Helper');
 class CroogoHtmlHelper extends HtmlHelper {
 
 	public function __construct(View $View, $settings = array()) {
+		$settings = Hash::merge(array(
+			'iconDefaults' => array(
+				'classDefault' => '',
+				'largeIconClass' => 'icon-large',
+				'smallIconClass' => '',
+				'classPrefix' => 'icon-',
+			),
+		), $settings);
 		parent::__construct($View, $settings);
+
+		$boxIconClass = trim(
+			$settings['iconDefaults']['classDefault'] . ' ' .
+			$settings['iconDefaults']['classPrefix'] . 'list'
+		);
 
 		$this->_tags['beginbox'] =
 			'<div class="row-fluid">
 				<div class="span12">
 					<div class="box">
 						<div class="box-title">
-							<i class="icon-list"></i>
+							<i class="' . $boxIconClass. '"></i>
 							%s
 						</div>
 						<div class="box-content %s">';
@@ -41,11 +54,12 @@ class CroogoHtmlHelper extends HtmlHelper {
 	}
 
 	public function icon($name, $options = array()) {
+		$iconDefaults = $this->settings['iconDefaults'];
 		$defaults = array('class' => '');
 		$options = array_merge($defaults, $options);
-		$class = '';
+		$class = $iconDefaults['classDefault'];
 		foreach ((array)$name as $iconName) {
-			$class .= ' icon-' . $iconName;
+			$class .= ' ' . $iconDefaults['classPrefix'] . $iconName;
 		}
 		$class .= ' ' . $options['class'];
 		$class = trim($class);
@@ -63,13 +77,14 @@ class CroogoHtmlHelper extends HtmlHelper {
 	public function status($value, $url = array()) {
 		$icon = $value == CroogoStatus::PUBLISHED ? 'ok' : 'remove';
 		$class = $value == CroogoStatus::PUBLISHED ? 'green' : 'red';
+		$iconDefaults = $this->settings['iconDefaults'];
 
 		if (empty($url)) {
 			return $this->icon($icon, array('class' => $class));
 		} else {
 			return $this->link('', 'javascript:void(0);', array(
 				'data-url' => $this->url($url),
-				'class' => 'icon-' . $icon . ' ' . $class . ' ajax-toggle',
+				'class' => $iconDefaults['classPrefix'] . $icon . ' ' . $class . ' ajax-toggle',
 			));
 		}
 	}
@@ -93,6 +108,7 @@ class CroogoHtmlHelper extends HtmlHelper {
 		$defaults = array('escape' => false);
 		$options = is_null($options) ? array() : $options;
 		$options = array_merge($defaults, $options);
+		$iconDefaults = $this->settings['iconDefaults'];
 
 		if (!empty($options['button'])) {
 			$buttons = array('btn');
@@ -107,15 +123,15 @@ class CroogoHtmlHelper extends HtmlHelper {
 		}
 
 		if (isset($options['icon'])) {
-			$iconSize = 'icon-large';
+			$iconSize = $iconDefaults['largeIconClass'];
 			if (isset($options['iconSize']) && $options['iconSize'] === 'small') {
-				$iconSize = '';
+				$iconSize = $iconDefaults['smallIconClass'];
 				unset($options['iconSize']);
 			}
 			if (empty($options['iconInline'])) {
 				$title = $this->icon($options['icon'], array('class' => $iconSize)) . $title;
 			} else {
-				$icon = trim($iconSize . ' icon-' . $options['icon']);
+				$icon = trim($iconSize . ' ' . $iconDefaults['classPrefix'] . $options['icon']);
 				if (isset($options['class'])) {
 					$options['class'] .= ' ' . $icon;
 				} else {
