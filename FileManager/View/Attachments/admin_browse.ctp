@@ -42,7 +42,7 @@
 			), array('icon' => 'trash', 'tooltip' => __d('croogo', 'Delete')), __d('croogo', 'Are you sure?'));
 
 			$mimeType = explode('/', $attachment['Attachment']['mime_type']);
-			$mimeType = $mimeType['0'];
+			$mimeType = $mimeType[0];
 			$imageType = $mimeType[1];
 			$imagecreatefrom = array('gif', 'jpeg', 'png', 'string', 'wbmp', 'webp', 'xbm', 'xpm');
 			if ($mimeType == 'image' && in_array($imageType, $imagecreatefrom)) {
