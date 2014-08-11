@@ -148,6 +148,11 @@ class CroogoFormHelper extends FormHelper {
 			$this->_currentRoleId = $this->_View->Layout->getRoleId();
 			unset($options['fieldAcess']);
 		}
+		if (!empty($this->settings['inputDefaults'])) {
+			$options = Hash::merge(array(
+				'inputDefaults' => $this->settings['inputDefaults'],
+			), $options);
+		}
 		return parent::create($model, $options);
 	}
 
