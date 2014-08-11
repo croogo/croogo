@@ -70,6 +70,102 @@ class RegionsHelperTest extends CroogoTestCase {
 		);
 		$this->assertFalse($this->Regions->isEmpty('right'));
 	}
+	
+/**
+ * testBlock
+ */
+	public function testBlock() {
+		$blocksForLayout = array(
+			'right' => array(
+				0 => array(
+					'Block' => array(
+						'id' => 1,
+						'alias' => 'hello-world',
+						'body' => 'hello world',
+						'show_title' => false,
+						'class' => null,
+						'element' => null,
+					)
+				),
+			),
+		);
+		$this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
+		$this->Regions->expects($this->never())->method('log');
+		$this->View->expects($this->once())->method('element')
+			->with(
+				'Blocks.block',
+				array('block' => $blocksForLayout['right'][0])
+			);
+		$result = $this->Regions->block('hello-world');
+	}
+
+/**
+ * testBlockOptions
+ */
+	public function testBlockOptions() {
+		$blocksForLayout = array(
+			'right' => array(
+				0 => array(
+					'Block' => array(
+						'id' => 1,
+						'alias' => 'hello-world',
+						'body' => 'hello world',
+						'show_title' => false,
+						'class' => null,
+						'element' => null,
+					),
+					'Params' => array(
+						'enclosure' => false,
+					),
+				),
+			),
+		);
+		$this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
+		$this->View->expects($this->once())
+			->method('elementExists')
+			->will($this->returnValue(false));
+
+		$this->View->expects($this->once())->method('element')
+			->with(
+				'Blocks.block',
+				array('block' => $blocksForLayout['right'][0]),
+				array('class' => 'some-class', 'ignoreMissing' => true)
+			);
+
+		$result = $this->Regions->block('hello-world', array(
+			'elementOptions' => array('class' => 'some-class')
+		));
+	}
+
+
+/**
+ * testBlock with invalid/missing element
+ */
+	public function testBlockWithInvalidElement() {
+		$blocksForLayout = array(
+			'right' => array(
+				0 => array(
+					'Block' => array(
+						'id' => 1,
+						'alias' => 'hello-world',
+						'body' => 'hello world',
+						'show_title' => false,
+						'class' => null,
+						'element' => 'non-existent',
+					)
+				),
+			),
+		);
+		$this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
+		$this->Regions
+			->expects($this->once())
+			->method('log')
+			->with('Missing element `non-existent` in block `hello-world` (1)');
+		$this->View->expects($this->once())
+			->method('element')
+			->with('Blocks.block', array('block' => $blocksForLayout['right'][0]));
+		$result = $this->Regions->block('hello-world');
+	}
 
 /**
  * testBlocks
@@ -140,7 +236,7 @@ class RegionsHelperTest extends CroogoTestCase {
 /**
  * testBlocks with invalid/missing element
  */
-	public function testBlockWithInvalidElement() {
+	public function testBlocksWithInvalidElement() {
 		$blocksForLayout = array(
 			'right' => array(
 				0 => array(
