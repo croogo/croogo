@@ -44,9 +44,6 @@ echo $this->Form->create('Term', array(
 					'empty' => true,
 					'label' => __d('croogo', 'Parent'),
 				));
-				$this->Form->inputDefaults(array(
-					'label' => false,
-				));
 				echo $this->Form->hidden('Taxonomy.id');
 				echo $this->Form->hidden('id');
 				echo $this->Form->input('title', array(

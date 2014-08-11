@@ -34,9 +34,6 @@ echo $this->Form->create('Type');
 			<div id="type-main" class="tab-pane">
 			<?php
 				echo $this->Form->input('id');
-				$this->Form->inputDefaults(array(
-					'label' => false,
-				));
 				echo $this->Form->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));

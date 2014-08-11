@@ -27,9 +27,6 @@ echo $this->Form->create('Message');
 			<div id="message-main">
 			<?php
 				echo $this->Form->input('id');
-				$this->Form->inputDefaults(array(
-					'label' => false,
-				));
 				echo $this->Form->input('name', array(
 					'label' => __d('croogo', 'Name'),
 				));

@@ -6,9 +6,6 @@ echo $this->Form->create(null, array(
 <div class="install">
 	<h2><?php echo __d('croogo', 'Step 3: Create Admin User'); ?></h2>
 	<?php
-		$this->Form->inputDefaults(array(
-			'label' => false,
-		));
 		echo $this->Form->input('User.username', array(
 			'placeholder' => __d('croogo', 'Username'),
 			'before' => '<span class="add-on"><i class="icon-user"></i></span>',

@@ -36,9 +36,6 @@ echo $this->Form->create('Setting', array(
 			<div id="setting-basic" class="tab-pane">
 			<?php
 				echo $this->Form->input('id');
-				$this->Form->inputDefaults(array(
-					'label' => false,
-				));
 				echo $this->Form->input('key', array(
 					'help' => __d('croogo', "e.g., 'Site.title'"),
 					'label' => __d('croogo', 'Key'),

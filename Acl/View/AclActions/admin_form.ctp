@@ -39,9 +39,6 @@ if ($this->request->params['action'] == 'admin_add') {
 					'label' => __d('croogo', 'Parent'),
 					'help' => __d('croogo', 'Choose none if the Aco is a controller.'),
 				));
-				$this->Form->inputDefaults(array(
-					'label' => false,
-				));
 				echo $this->Form->input('alias', array(
 					'label' => __d('croogo', 'Alias'),
 				));

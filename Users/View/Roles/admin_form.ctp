@@ -29,9 +29,6 @@ if ($this->request->params['action'] == 'admin_add') {
 			<div id="role-main" class="tab-pane">
 			<?php
 				echo $this->Form->input('id');
-				$this->Form->inputDefaults(array(
-					'label' => false,
-				));
 				echo $this->Form->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));

@@ -40,9 +40,6 @@ echo $this->Form->create(false, array(
 	<?php endif; ?>
 
 	<?php
-		$this->Form->inputDefaults(array(
-			'label' => false,
-		));
 		echo $this->Form->input('datasource', array(
 			'placeholder' => __d('croogo', 'Database'),
 			'default' => 'Database/Mysql',

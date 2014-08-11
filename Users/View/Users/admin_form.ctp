@@ -53,9 +53,6 @@ echo $this->Form->create('User', array(
 			<?php
 				echo $this->Form->input('id');
 				echo $this->Form->input('role_id', array('label' => __d('croogo', 'Role')));
-				$this->Form->inputDefaults(array(
-					'label' => false,
-				));
 				echo $this->Form->input('username', array(
 					'label' => __d('croogo', 'Username'),
 				));
