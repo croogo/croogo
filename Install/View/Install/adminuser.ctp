@@ -8,7 +8,6 @@ echo $this->Form->create(null, array(
 	<?php
 		$this->Form->inputDefaults(array(
 			'label' => false,
-			'class' => 'span10',
 		));
 		echo $this->Form->input('User.username', array(
 			'placeholder' => __d('croogo', 'Username'),

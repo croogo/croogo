@@ -67,12 +67,8 @@ echo $this->Form->create('Node', array(
 						'data-relatedElement' => '#NodeParentId',
 						'data-url' => $apiUrl,
 					),
-					'class' => 'span10',
 				));
 				echo $this->Form->input('id');
-				$this->Form->inputDefaults(array(
-					'class' => 'span10',
-				));
 				echo $this->Form->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));
@@ -125,7 +121,6 @@ echo $this->Form->create('Node', array(
 			$this->Form->autocomplete('user_id', array(
 				'type' => 'text',
 				'label' => __d('croogo', 'Publish as '),
-				'class' => 'span10',
 				'autocomplete' => array(
 					'default' => $username,
 					'data-displayField' => 'username',

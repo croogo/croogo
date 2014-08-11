@@ -38,7 +38,6 @@ echo $this->Form->create('Locale', array(
 					'data-placement' => 'top',
 					'value' => $content,
 					'type' => 'textarea',
-					'class' => 'span10',
 				));
 			?>
 			</div>

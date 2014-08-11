@@ -29,9 +29,6 @@ echo $this->Form->create($modelAlias, array('url' => array(
 		<div class="tab-content">
 			<div id="translate-main" class="tab-pane">
 			<?php
-				$this->Form->inputDefaults(array(
-					'class' => 'span10',
-				));
 				foreach ($fields as $field):
 					echo $this->Form->input($modelAlias . '.' . $field);
 				endforeach;

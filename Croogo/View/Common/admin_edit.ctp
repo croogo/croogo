@@ -52,12 +52,9 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 					if (is_string($opts)) {
 						$field = $opts;
 						$opts = array(
-							'class' => 'span10',
 							'label' => false,
 							'tooltip' => ucfirst($field),
 						);
-					} else {
-						$opts = Hash::merge(array('class' => 'span10'), $opts);
 					}
 					$content .= $this->Form->input($field, $opts);
 				endforeach;

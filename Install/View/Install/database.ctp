@@ -42,7 +42,6 @@ echo $this->Form->create(false, array(
 	<?php
 		$this->Form->inputDefaults(array(
 			'label' => false,
-			'class' => 'span10',
 		));
 		echo $this->Form->input('datasource', array(
 			'placeholder' => __d('croogo', 'Database'),

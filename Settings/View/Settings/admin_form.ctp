@@ -38,7 +38,6 @@ echo $this->Form->create('Setting', array(
 				echo $this->Form->input('id');
 				$this->Form->inputDefaults(array(
 					'label' => false,
-					'class' => 'span10',
 				));
 				echo $this->Form->input('key', array(
 					'help' => __d('croogo', "e.g., 'Site.title'"),

@@ -38,7 +38,6 @@ echo $this->Form->create('Vocabulary');
 			<?php
 				echo $this->Form->input('id');
 				$this->Form->inputDefaults(array(
-					'class' => 'span10',
 					'label' => false,
 				));
 				echo $this->Form->input('title', array(

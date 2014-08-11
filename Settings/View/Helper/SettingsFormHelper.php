@@ -86,7 +86,6 @@ class SettingsFormHelper extends AppHelper {
 		} else {
 			$output = $this->Form->input("Setting.$i.value", array(
 				'type' => $inputType,
-				'class' => 'span10',
 				'value' => $setting['Setting']['value'],
 				'help' => $setting['Setting']['description'],
 				'label' => $label,

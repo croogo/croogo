@@ -41,7 +41,6 @@ if ($this->request->params['action'] == 'admin_add') {
 				));
 				$this->Form->inputDefaults(array(
 					'label' => false,
-					'class' => 'span10',
 				));
 				echo $this->Form->input('alias', array(
 					'label' => __d('croogo', 'Alias'),

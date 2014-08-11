@@ -45,7 +45,6 @@ echo $this->Form->create('Term', array(
 					'label' => __d('croogo', 'Parent'),
 				));
 				$this->Form->inputDefaults(array(
-					'class' => 'span10',
 					'label' => false,
 				));
 				echo $this->Form->hidden('Taxonomy.id');

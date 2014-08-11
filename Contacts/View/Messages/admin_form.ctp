@@ -29,7 +29,6 @@ echo $this->Form->create('Message');
 				echo $this->Form->input('id');
 				$this->Form->inputDefaults(array(
 					'label' => false,
-					'class' => 'span10',
 				));
 				echo $this->Form->input('name', array(
 					'label' => __d('croogo', 'Name'),

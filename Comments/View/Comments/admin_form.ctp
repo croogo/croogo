@@ -26,9 +26,6 @@ echo $this->Form->create('Comment');
 			<div id="comment-main" class="tab-pane">
 			<?php
 				echo $this->Form->input('id');
-				$this->Form->inputDefaults(array(
-					'class' => 'span10',
-				));
 				echo $this->Form->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));

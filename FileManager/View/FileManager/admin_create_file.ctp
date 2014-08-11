@@ -40,7 +40,6 @@ echo $this->Form->create('FileManager', array(
 				echo $this->Form->input('FileManager.name', array(
 					'type' => 'text',
 					'label' => __d('croogo', 'Filename'),
-					'class' => 'span10',
 				));
 			?>
 			</div>

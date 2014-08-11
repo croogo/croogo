@@ -54,7 +54,6 @@ echo $this->Form->create('User', array(
 				echo $this->Form->input('id');
 				echo $this->Form->input('role_id', array('label' => __d('croogo', 'Role')));
 				$this->Form->inputDefaults(array(
-					'class' => 'span10',
 					'label' => false,
 				));
 				echo $this->Form->input('username', array(
