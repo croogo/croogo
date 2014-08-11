@@ -19,6 +19,8 @@ if ($this->request->params['action'] == 'admin_add') {
 }
 
 echo $this->Form->create('Vocabulary');
+$inputDefaults = $this->Form->inputDefaults();
+$inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null
 
 ?>
 <div class="row-fluid">
@@ -41,7 +43,7 @@ echo $this->Form->create('Vocabulary');
 					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('alias', array(
-					'class' => 'alias span10',
+					'class' => trim($inputClass . ' alias'),
 					'label' => __d('croogo', 'Alias'),
 				));
 				echo $this->Form->input('description', array(

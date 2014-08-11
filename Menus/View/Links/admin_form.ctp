@@ -38,6 +38,9 @@ echo $this->Form->create('Link', array(
 	'class' => 'protected-form',
 ));
 
+$inputDefaults = $this->Form->inputDefaults();
+$inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
+
 $linkChooserUrl = $this->Html->url(array(
 	'admin' => true,
 	'plugin' => 'menus',
@@ -103,7 +106,7 @@ $linkChooserUrl = $this->Html->url(array(
 			<?php
 				echo $this->Form->input('class', array(
 					'label' => __d('croogo', 'Class'),
-					'class' => 'span10 class',
+					'class' => trim($inputClass . ' class'),
 				));
 				echo $this->Form->input('description', array(
 					'label' => __d('croogo', 'Description'),

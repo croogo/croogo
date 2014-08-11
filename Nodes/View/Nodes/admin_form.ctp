@@ -38,6 +38,8 @@ echo $this->Form->create('Node', array(
 	'url' => $formUrl,
 	'class' => 'protected-form',
 ));
+$inputDefaults = $this->Form->inputDefaults();
+$inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 
 ?>
 <div class="row-fluid">
@@ -73,7 +75,7 @@ echo $this->Form->create('Node', array(
 					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('slug', array(
-					'class' => 'span10 slug',
+					'class' => trim($inputClass . ' slug'),
 					'label' => __d('croogo', 'Slug'),
 				));
 				echo $this->Form->input('excerpt', array(
@@ -133,7 +135,7 @@ echo $this->Form->create('Node', array(
 
 			$this->Form->input('created', array(
 				'type' => 'text',
-				'class' => 'span10 input-datetime',
+				'class' => trim($inputClass . ' input-datetime'),
 				'label' => __d('croogo', 'Created'),
 			)) .
 

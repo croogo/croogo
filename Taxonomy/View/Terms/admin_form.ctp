@@ -24,6 +24,8 @@ if ($this->request->params['action'] == 'admin_add') {
 echo $this->Form->create('Term', array(
 	'url' => '/' . $this->request->url,
 ));
+$inputDefaults = $this->Form->inputDefaults();
+$inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 
 ?>
 <div class="row-fluid">
@@ -51,7 +53,7 @@ echo $this->Form->create('Term', array(
 				));
 				echo $this->Form->input('slug', array(
 					'label' => __d('croogo', 'Slug'),
-					'class' => 'slug span10',
+					'class' => trim($inputClass . ' slug'),
 				));
 				echo $this->Form->input('description', array(
 					'label' => __d('croogo', 'Description'),
