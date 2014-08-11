@@ -90,8 +90,11 @@ class RegionsHelperTest extends CroogoTestCase {
 			),
 		);
 		$this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
-		$this->Regions->expects($this->never())->method('log');
-		$this->View->expects($this->once())->method('element')
+		$this->Regions
+			->expects($this->never())
+			->method('log');
+		$this->View
+			->expects($this->once())->method('element')
 			->with(
 				'Blocks.block',
 				array('block' => $blocksForLayout['right'][0])
@@ -121,11 +124,13 @@ class RegionsHelperTest extends CroogoTestCase {
 			),
 		);
 		$this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
-		$this->View->expects($this->once())
+		$this->View
+			->expects($this->once())
 			->method('elementExists')
 			->will($this->returnValue(false));
 
-		$this->View->expects($this->once())->method('element')
+		$this->View
+			->expects($this->once())->method('element')
 			->with(
 				'Blocks.block',
 				array('block' => $blocksForLayout['right'][0]),
@@ -161,7 +166,8 @@ class RegionsHelperTest extends CroogoTestCase {
 			->expects($this->once())
 			->method('log')
 			->with('Missing element `non-existent` in block `hello-world` (1)');
-		$this->View->expects($this->once())
+		$this->View
+			->expects($this->once())
 			->method('element')
 			->with('Blocks.block', array('block' => $blocksForLayout['right'][0]));
 		$result = $this->Regions->block('hello-world');
@@ -186,8 +192,12 @@ class RegionsHelperTest extends CroogoTestCase {
 			),
 		);
 		$this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
-		$this->Regions->expects($this->never())->method('log');
-		$this->View->expects($this->once())->method('element')
+		$this->Regions
+			->expects($this->never())
+			->method('log');
+		$this->View
+			->expects($this->once())
+			->method('element')
 			->with(
 				'Blocks.block',
 				array('block' => $blocksForLayout['right'][0])
@@ -221,7 +231,8 @@ class RegionsHelperTest extends CroogoTestCase {
 			->method('elementExists')
 			->will($this->returnValue(false));
 
-		$this->View->expects($this->once())->method('element')
+		$this->View->expects($this->once())
+			->method('element')
 			->with(
 				'Blocks.block',
 				array('block' => $blocksForLayout['right'][0]),
@@ -256,7 +267,8 @@ class RegionsHelperTest extends CroogoTestCase {
 			->expects($this->once())
 			->method('log')
 			->with('Missing element `non-existent` in block `hello-world` (1)');
-		$this->View->expects($this->once())
+		$this->View
+			->expects($this->once())
 			->method('element')
 			->with('Blocks.block', array('block' => $blocksForLayout['right'][0]));
 		$result = $this->Regions->blocks('right');
