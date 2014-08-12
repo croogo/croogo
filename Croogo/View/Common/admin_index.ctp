@@ -21,7 +21,7 @@ $showActions = isset($showActions) ? $showActions : true;
 
 <?php if ($showActions): ?>
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span12 actions">
+	<div class="actions <?php echo $this->Layout->cssClass('columnFull'); ?>">
 		<ul class="nav-buttons">
 			<?php if ($actionsBlock = $this->fetch('actions')): ?>
 				<?php echo $actionsBlock; ?>
@@ -40,7 +40,7 @@ $showActions = isset($showActions) ? $showActions : true;
 <?php endif; ?>
 
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span12">
+	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 		<?php if ($contentBlock = $this->fetch('content')): ?>
 			<?php echo $this->element('admin/search'); ?>
 			<?php echo $contentBlock; ?>
@@ -116,7 +116,7 @@ $showActions = isset($showActions) ? $showActions : true;
 </div>
 
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span12">
+	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 		<?php if ($pagingBlock = $this->fetch('paging')): ?>
 			<?php echo $pagingBlock; ?>
 		<?php else: ?>

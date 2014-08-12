@@ -8,7 +8,7 @@ $this->Html
 ?>
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
 
-	<div class="span12 actions">
+	<div class="actions <?php echo $this->Layout->cssClass('columnFull'); ?>">
 		<ul class="nav-buttons">
 			<li>
 			<?php
@@ -22,7 +22,7 @@ $this->Html
 		</ul>
 	</div>
 
-	<div class="languages span12">
+	<div class="languages <?php echo $this->Layout->cssClass('columnFull'); ?>">
 
 	<h4><?php echo $title_for_layout; ?></h4>
 

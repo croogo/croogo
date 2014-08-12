@@ -1,5 +1,5 @@
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span12">
+	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 	<?php
 		echo __d('croogo', 'Sort by:');
 		echo ' ' . $this->Paginator->sort('id', __d('croogo', 'Id'), array('class' => 'sort'));

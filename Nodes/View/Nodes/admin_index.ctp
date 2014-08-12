@@ -30,7 +30,7 @@ echo $this->Form->create(
 
 ?>
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span12">
+	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 		<table class="table table-striped">
 		<?php
 			$tableHeaders = $this->Html->tableHeaders(array(

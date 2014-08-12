@@ -63,7 +63,7 @@ $this->Html
 <?php $this->end(); ?>
 
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span-16">
+	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 
 		<ul id="permissions-tab" class="nav nav-tabs">
 		<?php

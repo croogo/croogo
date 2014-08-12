@@ -29,7 +29,7 @@
 	<body class="popup">
 		<div class="<?php echo $this->Layout->cssClass('container'); ?>">
 			<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-				<div id="content" class="span12">
+				<div id="content" class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 					<?php echo $this->Layout->sessionFlash(); ?>
 					<?php echo $this->fetch('content'); ?>
 				</div>

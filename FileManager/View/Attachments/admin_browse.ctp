@@ -3,7 +3,7 @@
 	<h2><?php echo $title_for_layout; ?></h2>
 
 	<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-		<div class="span12 actions">
+		<div class="actions <?php echo $this->Layout->cssClass('columnFull'); ?>">
 			<ul class="nav-buttons">
 			<?php
 				echo $this->Croogo->adminAction(
@@ -87,7 +87,7 @@
 </div>
 
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span12">
+	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 		<?php echo $this->element('admin/pagination'); ?>
 	</div>
 </div>

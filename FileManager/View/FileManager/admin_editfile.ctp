@@ -39,7 +39,6 @@ echo $this->Form->create('FileManager', array(
 				echo $this->Form->input('FileManager.content', array(
 					'type' => 'textarea',
 					'value' => $content,
-					'class' => 'span12',
 					'label' => false,
 				));
 			?>

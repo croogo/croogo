@@ -2,7 +2,7 @@
 $url = isset($url) ? $url : array('action' => 'index');
 ?>
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span12">
+	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 		<div class="clearfix filter">
 			<?php
 			echo $this->Form->create('Node', array(

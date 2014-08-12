@@ -47,7 +47,7 @@
 				<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 					<div id="content" class="clearfix">
 						<?php echo $this->element('admin/breadcrumb'); ?>
-						<div id="inner-content" class="span12">
+						<div id="inner-content" class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 							<?php echo $this->Layout->sessionFlash(); ?>
 							<?php echo $this->fetch('content'); ?>
 						</div>

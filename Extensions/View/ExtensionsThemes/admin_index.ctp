@@ -18,7 +18,7 @@ $this->Html
 <?php $this->end(); ?>
 
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span12 extensions-themes">
+	<div class="extensions-themes <?php echo $this->Layout->cssClass('columnFull'); ?>">
 
 		<div class="current-theme <?php echo $this->Layout->cssClass('row'); ?>">
 			<div class="screenshot <?php echo $this->Layout->cssClass('columnRight'); ?>">
@@ -74,7 +74,7 @@ $this->Html
 					if (!$display):
 						continue;
 					endif;
-					echo '<li class="span12">';
+					echo '<li class="' . $this->Layout->cssClass('columnFull') . '">';
 					if ($themeAlias == 'default') {
 						$imgUrl = $this->Html->image($theme['screenshot'], array(
 							'class' => 'img-polaroid'));

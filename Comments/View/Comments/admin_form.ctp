@@ -55,9 +55,9 @@ echo $this->Form->create('Comment');
 				$this->Html->endBox();
 
 			echo $this->Html->beginBox(__d('croogo', 'Contact')) .
-				$this->Form->input('name', array('label' => __d('croogo', 'Name'), 'class' => 'span12')) .
-				$this->Form->input('email', array('label' => __d('croogo', 'Email'), 'class' => 'span12')) .
-				$this->Form->input('website', array('label' => __d('croogo', 'Website'), 'class' => 'span12')) .
+				$this->Form->input('name', array('label' => __d('croogo', 'Name'))) .
+				$this->Form->input('email', array('label' => __d('croogo', 'Email'))) .
+				$this->Form->input('website', array('label' => __d('croogo', 'Website'))) .
 				$this->Form->input('ip', array('disabled' => 'disabled', 'label' => __d('croogo', 'Ip'))) .
 				$this->Html->endBox();
 

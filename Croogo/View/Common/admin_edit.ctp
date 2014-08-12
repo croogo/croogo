@@ -19,7 +19,7 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 
 <?php if ($actionsBlock = $this->fetch('actions')): ?>
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span12 actions">
+	<div class="actions <?php echo $this->Layout->cssClass('columnFull'); ?>">
 		<ul class="nav-buttons">
 			<?php echo $actionsBlock; ?>
 		</ul>

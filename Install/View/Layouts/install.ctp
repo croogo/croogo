@@ -31,7 +31,7 @@
 
 		<div id="main" class="<?php echo $this->Layout->cssClass('container'); ?>">
 			<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-				<div id="install" class="span12">
+				<div id="install" class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 				<?php
 					echo $this->Layout->sessionFlash();
 					echo $content_for_layout;

@@ -39,7 +39,7 @@
 		<div id="content-container" class="<?php echo $this->Layout->cssClass('container'); ?>">
 			<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 				<div id="content" class="clearfix">
-					<div id="inner-content" class="span12">
+					<div id="inner-content" class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 					<?php
 						echo $this->Layout->sessionFlash();
 						echo $content_for_layout;
