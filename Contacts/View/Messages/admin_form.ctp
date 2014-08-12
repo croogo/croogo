@@ -15,7 +15,7 @@ echo $this->Form->create('Message');
 
 ?>
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span8">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 		<ul class="nav nav-tabs">
 		<?php
 			echo $this->Croogo->adminTab(__d('croogo', 'Message'), '#message-main');

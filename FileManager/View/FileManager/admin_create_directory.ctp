@@ -24,7 +24,7 @@ echo $this->Form->create('FileManager', array(
 &nbsp;
 
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span8">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 
 		<ul class="nav nav-tabs">
 		<?php

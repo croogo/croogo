@@ -24,7 +24,7 @@ if ($this->request->params['action'] == 'admin_add') {
 <?php echo $this->Form->create('Region');?>
 
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span8">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 
 		<ul class="nav nav-tabs">
 		<?php

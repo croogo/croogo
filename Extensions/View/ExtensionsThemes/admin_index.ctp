@@ -41,7 +41,7 @@ $this->Html
 				?>
 			</div>
 
-			<div class="span8">
+			<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 				<h3>
 				<?php
 					$author = isset($currentTheme['author']) ? $currentTheme['author'] : null;
@@ -126,7 +126,7 @@ $this->Html
 							'icon' => 'trash',
 						), __d('croogo', 'Are you sure?')),
 						array('class' => 'actions'));
-					echo $this->Html->div('span8', $out);
+					echo $this->Html->div($this->Layout->cssClass('columnLeft'), $out);
 					echo '</li>';
 					$hasAvailable = true;
 				endforeach;

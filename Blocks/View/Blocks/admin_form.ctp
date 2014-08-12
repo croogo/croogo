@@ -19,7 +19,7 @@ echo $this->Form->create('Block', array(
 
 ?>
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span8">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 
 		<ul class="nav nav-tabs">
 		<?php

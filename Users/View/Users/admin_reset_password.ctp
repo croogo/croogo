@@ -12,7 +12,7 @@ $this->set('title_for_layout', __d('croogo', 'Reset Password for %s', $this->dat
 ?>
 <?php echo $this->Form->create('User', array('url' => array('action' => 'reset_password')));?>
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span8">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 		<ul class="nav nav-tabs">
 		<?php
 			echo $this->Croogo->adminTab(__d('croogo', 'Reset Password'), '#reset-password');

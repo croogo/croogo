@@ -20,7 +20,7 @@ if ($this->request->params['action'] == 'admin_add') {
 <?php echo $this->Form->create('Aco', array('url' => array('controller' => 'acl_actions', 'action' => 'add'))); ?>
 
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span8">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 
 		<ul class="nav nav-tabs">
 		<?php

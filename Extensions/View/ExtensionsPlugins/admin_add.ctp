@@ -17,7 +17,7 @@ echo $this->Form->create('Plugin', array(
 ?>
 <h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="span8">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 
 		<ul class="nav nav-tabs">
 		<?php
