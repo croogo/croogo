@@ -11,7 +11,7 @@ $this->Html
 $this->set('title_for_layout', __d('croogo', 'Reset Password for %s', $this->data['User']['username']));
 ?>
 <?php echo $this->Form->create('User', array('url' => array('action' => 'reset_password')));?>
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div class="span8">
 		<ul class="nav nav-tabs">
 		<?php

@@ -6,7 +6,7 @@ $this->Html
 	->addCrumb(__d('croogo', 'Languages'), array('plugin' => 'settings', 'controller' => 'languages', 'action' => 'index'));
 
 ?>
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 
 	<div class="span12 actions">
 		<ul class="nav-buttons">

@@ -29,7 +29,7 @@ echo $this->Form->create(
 );
 
 ?>
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div class="span12">
 		<table class="table table-striped">
 		<?php
@@ -120,7 +120,7 @@ echo $this->Form->create(
 
 		</table>
 
-		<div class="row-fluid">
+		<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 			<div id="bulk-action" class="control-group">
 			<?php
 				echo $this->Form->input('Node.action', array(

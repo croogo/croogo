@@ -110,7 +110,7 @@ $chooser = isset($this->request->query['chooser']);
 </table>
 
 <?php if (!$chooser): ?>
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div id="bulk-action" class="control-group">
 		<?php
 			echo $this->Form->input('Block.action', array(

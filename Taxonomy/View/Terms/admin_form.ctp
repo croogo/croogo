@@ -28,7 +28,7 @@ $inputDefaults = $this->Form->inputDefaults();
 $inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 
 ?>
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div class="span8">
 
 		<ul class="nav nav-tabs">

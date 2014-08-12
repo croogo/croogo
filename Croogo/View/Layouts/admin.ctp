@@ -44,7 +44,7 @@
 			<?php echo $this->element('admin/navigation'); ?>
 			<div id="push"></div>
 			<div id="content-container" class="<?php echo $this->Layout->cssClass('container'); ?>">
-				<div class="row-fluid">
+				<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 					<div id="content" class="clearfix">
 						<?php echo $this->element('admin/breadcrumb'); ?>
 						<div id="inner-content" class="span12">

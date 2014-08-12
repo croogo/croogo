@@ -19,7 +19,7 @@ if ($this->request->params['action'] == 'admin_add') {
 <h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
 <?php echo $this->Form->create('Aco', array('url' => array('controller' => 'acl_actions', 'action' => 'add'))); ?>
 
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div class="span8">
 
 		<ul class="nav nav-tabs">

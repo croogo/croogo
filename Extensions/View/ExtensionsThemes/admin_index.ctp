@@ -17,10 +17,10 @@ $this->Html
 ?>
 <?php $this->end(); ?>
 
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div class="span12 extensions-themes">
 
-		<div class="current-theme row-fluid">
+		<div class="current-theme <?php echo $this->Layout->cssClass('row'); ?>">
 			<div class="screenshot span4">
 				<h3><?php echo __d('croogo', 'Current Theme'); ?></h3>
 				<?php
@@ -61,7 +61,7 @@ $this->Html
 			</div>
 		</div>
 
-		<div class="available-themes row-fluid">
+		<div class="available-themes <?php echo $this->Layout->cssClass('row'); ?>">
 			<h3><?php echo __d('croogo', 'Available Themes'); ?></h3>
 			<ul>
 			<?php

@@ -1,7 +1,7 @@
 <?php
 $url = isset($url) ? $url : array('action' => 'index');
 ?>
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div class="span12">
 		<div class="clearfix filter">
 			<?php

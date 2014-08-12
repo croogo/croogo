@@ -11,7 +11,7 @@ $this->Html
 echo $this->Form->create('Comment');
 
 ?>
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div class="span8">
 
 		<ul class="nav nav-tabs">

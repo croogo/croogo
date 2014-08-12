@@ -18,7 +18,7 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 </h2>
 
 <?php if ($actionsBlock = $this->fetch('actions')): ?>
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div class="span12 actions">
 		<ul class="nav-buttons">
 			<?php echo $actionsBlock; ?>
@@ -37,7 +37,7 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 			echo $this->Form->input('id');
 		}
 	?>
-	<div class="row-fluid">
+	<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 		<div class="span8">
 			<ul class="nav nav-tabs">
 			<?php

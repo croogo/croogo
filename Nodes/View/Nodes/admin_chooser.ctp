@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div class="span12">
 	<?php
 		echo __d('croogo', 'Sort by:');
@@ -9,7 +9,7 @@
 	</div>
 </div>
 
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<?php
 		echo $this->element('Nodes.admin/nodes_search');
 	?>

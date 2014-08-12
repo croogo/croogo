@@ -14,7 +14,7 @@ if (isset($this->request->params['named']['editor'])) {
 echo $this->Form->create('Attachment', array('url' => $formUrl, 'type' => 'file'));
 
 ?>
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div class="span8">
 
 		<ul class="nav nav-tabs">

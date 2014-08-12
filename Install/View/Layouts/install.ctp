@@ -30,7 +30,7 @@
 		</header>
 
 		<div id="main" class="<?php echo $this->Layout->cssClass('container'); ?>">
-			<div class="row-fluid">
+			<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 				<div id="install" class="span12">
 				<?php
 					echo $this->Layout->sessionFlash();

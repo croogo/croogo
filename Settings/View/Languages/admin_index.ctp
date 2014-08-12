@@ -7,7 +7,7 @@ $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Languages'), '/' . $this->request->url);
 
 ?>
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div class="span12">
 		<table class="table table-striped">
 			<?php

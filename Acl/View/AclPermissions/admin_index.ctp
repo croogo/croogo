@@ -62,7 +62,7 @@ $this->Html
 ?>
 <?php $this->end(); ?>
 
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div class="span-16">
 
 		<ul id="permissions-tab" class="nav nav-tabs">
