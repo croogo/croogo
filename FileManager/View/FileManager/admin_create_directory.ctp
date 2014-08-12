@@ -47,7 +47,7 @@ echo $this->Form->create('FileManager', array(
 		</div>
 	</div>
 
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 	<?php
 		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 			$this->Form->button(__d('croogo', 'Create'), array('button' => 'default')) .

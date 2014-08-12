@@ -40,7 +40,7 @@ echo $this->Form->create('Locale', array(
 
 	</div>
 
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 	<?php
 		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 			$this->Form->button(__d('croogo', 'Upload'), array('button' => 'default')) .

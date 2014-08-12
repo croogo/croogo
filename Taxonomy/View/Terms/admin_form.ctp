@@ -65,7 +65,7 @@ $inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 		</div>
 	</div>
 
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 	<?php
 		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .

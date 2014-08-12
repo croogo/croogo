@@ -59,7 +59,7 @@ echo $this->Form->create('Setting', array(
 		</div>
 	</div>
 
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 		<?php
 		echo $this->Html->beginBox(__d('croogo', 'Saving')) .
 			$this->Form->button(__d('croogo', 'Save')) .

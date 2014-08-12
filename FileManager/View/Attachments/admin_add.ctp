@@ -35,7 +35,7 @@ echo $this->Form->create('Attachment', array('url' => $formUrl, 'type' => 'file'
 		</div>
 	</div>
 
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 	<?php
 		$redirect = array('action' => 'index');
 		if ($this->Session->check('Wysiwyg.redirect')) {

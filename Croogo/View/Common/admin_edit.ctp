@@ -71,7 +71,7 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 			?>
 			</div>
 		</div>
-		<div class="span4">
+		<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 		<?php
 			if ($buttonsBlock = $this->fetch('buttons')):
 				echo $buttonsBlock;

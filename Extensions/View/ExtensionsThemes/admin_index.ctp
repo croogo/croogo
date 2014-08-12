@@ -21,7 +21,7 @@ $this->Html
 	<div class="span12 extensions-themes">
 
 		<div class="current-theme <?php echo $this->Layout->cssClass('row'); ?>">
-			<div class="screenshot span4">
+			<div class="screenshot <?php echo $this->Layout->cssClass('columnRight'); ?>">
 				<h3><?php echo __d('croogo', 'Current Theme'); ?></h3>
 				<?php
 					$currentTheme = Sanitize::clean($currentTheme);
@@ -82,7 +82,7 @@ $this->Html
 							'escape' => false,
 							'class' => 'thickbox',
 						));
-						echo $this->Html->tag('div', $link, array('class' => 'screenshot span4'));
+						echo $this->Html->tag('div', $link, array('class' => 'screenshot ' . $this->Layout->cssClass('columnRight')));
 					} else {
 						if (!empty($theme['screenshot'])):
 							$file = '/theme/' . $themeAlias . '/img/' . $theme['screenshot'];
@@ -92,11 +92,11 @@ $this->Html
 								'class' => 'thickbox',
 							));
 							echo $this->Html->tag('div', $link, array(
-								'class' => 'screenshot span4',
+								'class' => 'screenshot ' . $this->Layout->cssClass('columnRight'),
 							));
 						else:
 							echo $this->Html->tag('div', '', array(
-								'class' => 'span4',
+								'class' => $this->Layout->cssClass('columnRight'),
 							));
 						endif;
 					}

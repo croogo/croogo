@@ -37,7 +37,7 @@ echo $this->Form->create('Plugin', array(
 			<?php echo $this->Croogo->adminTabs(); ?>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 	<?php
 		echo $this->Html->beginBox('Publishing') .
 			$this->Form->button(__d('croogo', 'Upload'), array('button' => 'default')) .
