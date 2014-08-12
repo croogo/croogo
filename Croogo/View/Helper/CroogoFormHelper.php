@@ -268,10 +268,16 @@ class CroogoFormHelper extends FormHelper {
 		$label = isset($options['label']) ? $options['label'] : Inflector::humanize($field);
 
 		$default = isset($autocomplete['default']) ? $autocomplete['default'] : array_shift($defaults);
+		$inputDefaults = $this->_View->Form->inputDefaults();
+		$class = null;
+		if (!empty($inputDefaults['class'])) {
+			$class = $inputDefaults['class'];
+		}
+		$class = $options['class'] ? $options['class'] : $class;
 		$autocomplete = Hash::merge($autocomplete, array(
 			'type' => $options['type'],
 			'label' => $label,
-			'class' => trim($options['class'] . ' typeahead-autocomplete'),
+			'class' => trim($class . ' typeahead-autocomplete'),
 			'default' => $default,
 			'autocomplete' => 'off',
 		));

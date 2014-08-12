@@ -227,7 +227,7 @@ class CroogoHelperTest extends CroogoTestCase {
 		));
 
 		$result = $this->Croogo->adminBoxes('Title');
-		$this->assertContains('class="box"', $result);
+		$this->assertContains("class='box'", $result);
 	}
 
 	public function testAdminBoxesAlreadyPrinted() {

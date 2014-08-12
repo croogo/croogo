@@ -20,20 +20,21 @@ class CroogoHtmlHelper extends HtmlHelper {
 		), $settings);
 		parent::__construct($View, $settings);
 
+		$themeCss = $this->_View->Layout->cssClass();
 		$boxIconClass = trim(
 			$settings['iconDefaults']['classDefault'] . ' ' .
 			$settings['iconDefaults']['classPrefix'] . 'list'
 		);
 
 		$this->_tags['beginbox'] =
-			'<div class="row-fluid">
-				<div class="span12">
-					<div class="box">
-						<div class="box-title">
-							<i class="' . $boxIconClass. '"></i>
+			"<div class='$themeCss[row]'>
+				<div class='$themeCss[columnFull]'>
+					<div class='box'>
+						<div class='box-title'>
+							<i class='$boxIconClass'></i>
 							%s
 						</div>
-						<div class="box-content %s">';
+						<div class='box-content %s'>";
 		$this->_tags['endbox'] =
 						'</div>
 					</div>
