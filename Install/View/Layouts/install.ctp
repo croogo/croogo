@@ -23,13 +23,13 @@
 	<div id="wrap" class="install">
 		<header class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
-				<div class="container-fluid">
+				<div class="<?php echo $this->Layout->cssClass('container'); ?>">
 					<span class="brand"><?php echo __d('croogo', 'Install Croogo'); ?></span>
 				</div>
 			</div>
 		</header>
 
-		<div id="main" class="container-fluid">
+		<div id="main" class="<?php echo $this->Layout->cssClass('container'); ?>">
 			<div class="row-fluid">
 				<div id="install" class="span12">
 				<?php

@@ -24,7 +24,7 @@
 
 			<header class="navbar navbar-inverse navbar-fixed-top">
 				<div class="navbar-inner">
-					<div class="container-fluid">
+					<div class="<?php echo $this->Layout->cssClass('container'); ?>">
 						<?php echo $this->Html->link(
 							__d('croogo', 'Back to') . ' ' . Configure::read('Site.title'),
 							'/',
@@ -35,7 +35,7 @@
 			</header>
 
 			<div id="push"></div>
-			<div id="content-container" class="container-fluid">
+			<div id="content-container" class="<?php echo $this->Layout->cssClass('container'); ?>">
 				<div class="row-fluid">
 					<div id="admin-login">
 					<?php

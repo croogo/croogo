@@ -43,7 +43,7 @@
 			<?php echo $this->element('admin/header'); ?>
 			<?php echo $this->element('admin/navigation'); ?>
 			<div id="push"></div>
-			<div id="content-container" class="container-fluid">
+			<div id="content-container" class="<?php echo $this->Layout->cssClass('container'); ?>">
 				<div class="row-fluid">
 					<div id="content" class="clearfix">
 						<?php echo $this->element('admin/breadcrumb'); ?>

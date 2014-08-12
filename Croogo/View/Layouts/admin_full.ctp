@@ -36,7 +36,7 @@
 	<div id="wrap" class="full">
 		<?php echo $this->element('admin/header'); ?>
 		<div id="push"></div>
-		<div id="content-container" class="container-fluid">
+		<div id="content-container" class="<?php echo $this->Layout->cssClass('container'); ?>">
 			<div class="row-fluid">
 				<div id="content" class="clearfix">
 					<div id="inner-content" class="span12">
