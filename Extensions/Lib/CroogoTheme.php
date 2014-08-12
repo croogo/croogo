@@ -85,6 +85,29 @@ class CroogoTheme extends Object {
 			'name' => $alias,
 			'regions' => array(),
 			'screenshot' => null,
+			'settings' => array(
+				'prefixes' => array(
+					'' => array(
+						'helpers' => array(
+							'Html' => array(),
+							'Form' => array(),
+						),
+					),
+					'admin' => array(
+						'helpers' => array(
+							'Html' => array(
+								'className' => 'Croogo.CroogoHtml',
+							),
+							'Form' => array(
+								'className' => 'Croogo.CroogoForm',
+							),
+							'Paginator' => array(
+								'className' => 'Croogo.CroogoPaginator',
+							),
+						),
+					),
+				),
+			),
 		);
 		$default = CakePlugin::path('Croogo') . 'webroot' . DS . 'theme.json';
 
@@ -116,7 +139,7 @@ class CroogoTheme extends Object {
 		if (isset($manifestFile)) {
 			$json = json_decode(file_get_contents($manifestFile), true);
 			if ($json) {
-				$themeData = array_merge($themeData, $json);
+				$themeData = Hash::merge($themeData, $json);
 			}
 		}
 
@@ -125,7 +148,7 @@ class CroogoTheme extends Object {
 			if ($json) {
 				$json['vendor'] = $json['name'];
 				unset($json['name']);
-				$themeData = array_merge($themeData, $json);
+				$themeData = Hash::merge($themeData, $json);
 			}
 		}
 

@@ -179,8 +179,8 @@ class CroogoAppController extends Controller {
  * @return void
  */
 	protected function _setupTheme() {
-		$isAdmin = isset($this->request->params['admin']);
-		if ($isAdmin) {
+		$prefix = isset($this->request->params['prefix']) ? $this->request->params['prefix'] : '';
+		if ($prefix === 'admin') {
 			$theme = Configure::read('Site.admin_theme');
 			if ($theme) {
 				App::build(array(
@@ -195,39 +195,17 @@ class CroogoAppController extends Controller {
 
 		$croogoTheme = new CroogoTheme();
 		$data = $croogoTheme->getData($theme);
+		$settings = $data['settings'];
 
-		$defaults = array(
-			'' => array(
-				'Html' => array(),
-				'Form' => array(),
-			),
-			'admin' => array(
-				'Html' => array('className' => 'Croogo.CroogoHtml'),
-				'Form' => array('className' => 'Croogo.CroogoForm'),
-				'Paginator' => array('className' => 'Croogo.CroogoPaginator'),
-			),
-		);
-
-		if (empty($data['helpers']['prefixes']['admin']['Croogo.Croogo'])) {
+		if (empty($settings['prefixes']['admin']['helpers']['Croogo.Croogo'])) {
 			$this->helpers[] = 'Croogo.Croogo';
 		}
 
-		if (empty($data['helpers']['prefixes'])) {
-			$prefixes = $defaults;
-		} else {
-			$prefixes = Hash::merge($defaults, $data['helpers']['prefixes']);
-		}
-
-		foreach ($prefixes as $prefix => $helpers) {
-			if (($prefix && isset($this->request->params[$prefix])) ||
-				(!$prefix && !isset($this->request->params[$prefix]))
-			) {
-				foreach ($helpers as $helper => $setting) {
-					$this->helpers[$helper] = $setting;
-				}
+		if (isset($settings['prefixes'][$prefix])) {
+			foreach ($settings['prefixes'][$prefix]['helpers'] as $helper => $settings) {
+				$this->helpers[$helper] = $settings;
 			}
 		}
-
 	}
 
 /**
