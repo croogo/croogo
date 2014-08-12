@@ -62,7 +62,7 @@ class CroogoThemeTest extends CroogoTestCase {
 		$keys = array_keys($data);
 		sort($keys);
 
-		$expected = array('name', 'regions', 'screenshot', 'type', 'vendor');
+		$expected = array('name', 'regions', 'screenshot', 'settings', 'type', 'vendor');
 		$this->assertEquals($expected, $keys);
 
 		$this->assertEquals('MixedManifest', $data['name']);

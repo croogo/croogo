@@ -40,6 +40,11 @@ class CroogoHelperTest extends CroogoTestCase {
 			'named' => array(),
 		);
 		$view = new View(new TheCroogoTestController($request, new CakeResponse()));
+		$croogoTheme = new CroogoTheme();
+		$data = $croogoTheme->getData();
+		$settings = $data['settings'];
+		$view->set('themeSettings', $settings);
+
 		$this->Croogo = new CroogoHelper($view);
 		$aclHelper = Configure::read('Site.acl_plugin') . 'Helper';
 		$this->Croogo->Acl = $this->getMock(

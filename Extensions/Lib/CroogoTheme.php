@@ -86,6 +86,14 @@ class CroogoTheme extends Object {
 			'regions' => array(),
 			'screenshot' => null,
 			'settings' => array(
+				'css' => array(
+					'container' => 'container-fluid',
+					'row' => 'row-fluid',
+					'columnFull' => 'span12',
+					'columnLeft' => 'span8',
+					'columnRight' => 'span4',
+					'formInput' => 'input-block-level',
+				),
 				'prefixes' => array(
 					'' => array(
 						'helpers' => array(

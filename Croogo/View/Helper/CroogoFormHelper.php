@@ -153,6 +153,12 @@ class CroogoFormHelper extends FormHelper {
 				'inputDefaults' => $this->settings['inputDefaults'],
 			), $options);
 		}
+		if (
+			empty($options['inputDefaults']['class']) &&
+			isset($this->_View->viewVars['themeSettings']['css']['formInput'])
+		) {
+			$options['inputDefaults']['class'] = $this->_View->viewVars['themeSettings']['css']['formInput'];
+		}
 		return parent::create($model, $options);
 	}
 
