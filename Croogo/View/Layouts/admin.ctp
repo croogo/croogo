@@ -27,6 +27,7 @@
 			'/croogo/js/jquery/thickbox-compressed',
 			'/croogo/js/underscore-min',
 			'/croogo/js/admin',
+			'/croogo/js/sidebar',
 			'/croogo/js/choose',
 			'/croogo/js/typeahead_autocomplete',
 			'/croogo/js/croogo-bootstrap.js',
