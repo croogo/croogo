@@ -5,6 +5,8 @@
  */
 var AclPermissions = {};
 
+AclPermissions._firstLoad = true;
+
 // row/cell templates
 AclPermissions.templates = {
 
@@ -39,30 +41,38 @@ AclPermissions.documentReady = function() {
 	$('tr:has(div.controller)').addClass('controller-row');
 };
 
+AclPermissions.tabLoad = function(e) {
+	var $target = $(e.target);
+	var matches = (e.target.toString().match(/#.+/gi));
+	var pane = matches[0];
+	var alias = $target.data('alias');
+	var $span = $('.icon-spin', $target);
+	if ($span.length > 0) {
+		$span.addClass('icon-spinner');
+	} else {
+		$target.append(' <span class="icon-spin icon-spinner"></span>');
+	};
+	$(pane).load(
+		Croogo.basePath + 'admin/acl/acl_permissions/',
+		$.param({ root: alias }),
+		function(responseText, textStatus, xhr) {
+			$('span', $target).removeClass('icon-spinner');
+			AclPermissions.documentReady();
+		}
+	);
+	this._firstLoad = false;
+};
+
 /**
  * Load permissions tab using ajax
  */
 AclPermissions.tabSwitcher = function() {
-	$('body').on('show', '#permissions-tab', function(e) {
-		var $target = $(e.target);
-		var matches = (e.target.toString().match(/#.+/gi));
-		var pane = matches[0];
-		var alias = $target.data('alias');
-		var $span = $('.icon-spin', $target);
-		if ($span.length > 0) {
-			$span.addClass('icon-spinner');
-		} else {
-			$target.append(' <span class="icon-spin icon-spinner"></span>');
-		}
-		$(pane).load(
-			Croogo.basePath + 'admin/acl/acl_permissions/',
-			$.param({ root: alias }),
-			function(responseText, textStatus, xhr) {
-				$('span', $target).removeClass('icon-spinner');
-				AclPermissions.documentReady();
-			}
-		);
-	});
+	$('body').on('shown.bs.tab', '#permissions-tab', AclPermissions.tabLoad);
+	if (this._firstLoad) {
+		AclPermissions.tabLoad({
+			target: $('#permissions-tab li:first-child a').get(0)
+		});
+	};
 }
 
 /**

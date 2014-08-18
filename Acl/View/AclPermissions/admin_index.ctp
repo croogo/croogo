@@ -78,6 +78,6 @@ $this->Html
 	</div>
 </div>
 
-<script>
-AclPermissions.tabSwitcher();
-</script>
+<?php
+
+$this->Js->buffer('AclPermissions.tabSwitcher();');
