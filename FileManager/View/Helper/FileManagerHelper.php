@@ -130,7 +130,7 @@ class FileManagerHelper extends AppHelper {
 		$class = '';
 		if (isset($url['action'])
 			&& ($url['action'] == 'create_directory' || $url['action'] == 'upload' || $url['action'] == 'create_file')) {
-			$class = 'btn';
+			$class = 'btn btn-default';
 		}
 
 		if (isset($url['action']) && ($url['action'] == 'delete_directory' || $url['action'] == 'delete_file')) {

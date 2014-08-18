@@ -111,14 +111,15 @@ class CroogoHtmlHelper extends HtmlHelper {
 		$iconDefaults = $this->settings['iconDefaults'];
 
 		if (!empty($options['button'])) {
+			if (!empty($options['class'])) {
+				$class = $options['class'];
+			}
 			$buttons = array('btn');
 			foreach ((array)$options['button'] as $button) {
-				if ($button == 'default') {
-					continue;
-				}
 				$buttons[] = 'btn-' . $button;
 			}
 			$options['class'] = trim(join(' ', $buttons));
+			$options['class'] .= isset($class) ? ' ' . $class : null;
 			unset($options['button']);
 		}
 

@@ -128,7 +128,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 
 	public function testLinkDefaultButton() {
 		$result = $this->CroogoHtml->link('Remove', '/remove', array('button' => 'default'));
-		$this->assertContains('<a href="/remove" class="btn">Remove</a>', $result);
+		$this->assertContains('<a href="/remove" class="btn btn-default">Remove</a>', $result);
 	}
 
 	public function testLinkOptionsIsNull() {

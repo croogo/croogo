@@ -147,7 +147,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 		$result = $this->CroogoForm->button('Button');
 		$expected = array(
 			'button' => array(
-				'class' => 'btn',
+				'class' => 'btn btn-default',
 				'type' => 'submit'
 			),
 			'Button',
@@ -175,7 +175,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 
 		$expected = array(
 			'button' => array(
-				'class' => 'btn',
+				'class' => 'btn btn-default',
 				'type' => 'submit'
 			),
 			array(
@@ -199,7 +199,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			array(
 				'input' => array(
-					'class' => 'btn',
+					'class' => 'btn btn-default',
 					'type' => 'submit',
 					'value' => 'Send'
 				)

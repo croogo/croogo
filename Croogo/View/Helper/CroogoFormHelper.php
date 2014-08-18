@@ -15,7 +15,13 @@ class CroogoFormHelper extends FormHelper {
 
 	protected function _bootstrapGenerate($title, $options) {
 		if (isset($options['button'])) {
-			$options['class'] .= $options['button'] != 'default' ? ' btn-' . $options['button'] : '';
+			$class = isset($options['class']) ? $options['class'] : null;
+			if ($options['button'] === 'default') {
+				$options['class'] = 'btn btn-default';
+			} else {
+				$options['class'] = 'btn btn-' . $options['button'];
+			}
+			$options['class'] .= $class ? ' ' . $class : null;
 			unset($options['button']);
 		}
 		if (isset($options['icon'])) {
@@ -264,7 +270,7 @@ class CroogoFormHelper extends FormHelper {
 	}
 
 	public function button($title, $options = array()) {
-		$defaults = array('class' => 'btn');
+		$defaults = array('button' => 'default');
 		$options = array_merge($defaults, $options);
 
 		list($title, $options) = $this->_bootstrapGenerate($title, $options);
@@ -273,7 +279,7 @@ class CroogoFormHelper extends FormHelper {
 	}
 
 	public function submit($caption = null, $options = array()) {
-		$defaults = array('class' => 'btn', 'escape' => false);
+		$defaults = array('button' => 'default', 'escape' => false);
 		$options = array_merge($defaults, $options);
 
 		list($caption, $options) = $this->_bootstrapGenerate($caption, $options);
