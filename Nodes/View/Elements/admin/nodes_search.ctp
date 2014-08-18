@@ -6,13 +6,11 @@ $url = isset($url) ? $url : array('action' => 'index');
 		<div class="clearfix filter">
 			<?php
 			echo $this->Form->create('Node', array(
-				'class' => 'inline',
+				'class' => 'form-inline',
 				'url' => $url,
-			));
-
-			$this->Form->inputDefaults(array(
-				'label' => false,
-				'class' => 'span11',
+				'inputDefaults' => array(
+					'label' => false,
+				),
 			));
 
 			echo $this->Form->input('chooser', array(
@@ -23,7 +21,6 @@ $url = isset($url) ? $url : array('action' => 'index');
 			echo $this->Form->input('filter', array(
 				'title' => __d('croogo', 'Search'),
 				'placeholder' => __d('croogo', 'Search...'),
-				'div' => 'input text span3',
 				'tooltip' => false,
 			));
 
@@ -32,7 +29,6 @@ $url = isset($url) ? $url : array('action' => 'index');
 				echo $this->Form->input('type', array(
 					'options' => $nodeTypes,
 					'empty' => __d('croogo', 'Type'),
-					'div' => 'input select span2',
 				));
 
 				echo $this->Form->input('status', array(
@@ -41,7 +37,6 @@ $url = isset($url) ? $url : array('action' => 'index');
 						'0' => __d('croogo', 'Unpublished'),
 					),
 					'empty' => __d('croogo', 'Status'),
-					'div' => 'input select span2',
 				));
 
 				echo $this->Form->input('promote', array(
@@ -50,13 +45,13 @@ $url = isset($url) ? $url : array('action' => 'index');
 						'0' => __d('croogo', 'No'),
 					),
 					'empty' => __d('croogo', 'Promoted'),
-					'div' => 'input select span2',
 				));
 
 			}
 
-			echo $this->Form->submit(__d('croogo', 'Filter'), array('class' => 'btn',
-				'div' => 'input submit span2'
+			echo $this->Form->submit(__d('croogo', 'Filter'), array(
+				'button' => 'default',
+				'div' => false,
 			));
 			echo $this->Form->end();
 			?>

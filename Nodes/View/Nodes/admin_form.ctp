@@ -90,7 +90,6 @@ $inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 			<div id="node-access" class="tab-pane">
 			<?php
 				echo $this->Form->input('Role.Role', array(
-					'class' => false,
 					'label' => __d('croogo', 'Role')
 				));
 			?>
@@ -112,7 +111,6 @@ $inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 			$this->Form->input('status', array(
 				'legend' => false,
 				'type' => 'radio',
-				'class' => false,
 				'default' => CroogoStatus::UNPUBLISHED,
 				'options' => $this->Croogo->statuses(),
 			)) .
