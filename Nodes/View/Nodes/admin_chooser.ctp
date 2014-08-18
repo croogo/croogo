@@ -63,7 +63,7 @@
 		</li>
 	<?php } ?>
 	</ul>
-	<div class="pagination"><ul><?php echo $this->Paginator->numbers(); ?></ul></div>
+	<?php echo $this->element('admin/pagination'); ?>
 </div>
 <?php
 
