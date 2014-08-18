@@ -112,7 +112,7 @@ class CroogoAppControllerTest extends CroogoControllerTestCase {
 		$result = $this->testAction('/admin/test_app/index', array(
 			'return' => 'view',
 		));
-		$this->assertContains('nav-buttons', $result);
+		$this->assertContains('btn-group', $result);
 	}
 
 /**

@@ -335,6 +335,8 @@ class CroogoHelper extends AppHelper {
 		}
 		if (isset($list)) {
 			$out = $this->Html->tag('li', $out);
+		} else {
+			$out = $this->Html->div('btn-group', $out);
 		}
 		return $out;
 	}

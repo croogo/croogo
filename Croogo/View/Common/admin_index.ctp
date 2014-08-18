@@ -22,19 +22,17 @@ $showActions = isset($showActions) ? $showActions : true;
 <?php if ($showActions): ?>
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div class="actions <?php echo $this->Layout->cssClass('columnFull'); ?>">
-		<ul class="nav-buttons">
-			<?php if ($actionsBlock = $this->fetch('actions')): ?>
-				<?php echo $actionsBlock; ?>
-			<?php else: ?>
-			<?php
-				echo $this->Croogo->adminAction(
-					__d('croogo', 'New %s', __d('croogo', Inflector::singularize($this->name))),
-					array('action' => 'add'),
-					array('button' => 'success')
-				);
-			?>
-			<?php endif; ?>
-		</ul>
+		<?php if ($actionsBlock = $this->fetch('actions')): ?>
+			<?php echo $actionsBlock; ?>
+		<?php else: ?>
+		<?php
+			echo $this->Croogo->adminAction(
+				__d('croogo', 'New %s', __d('croogo', Inflector::singularize($this->name))),
+				array('action' => 'add'),
+				array('button' => 'success')
+			);
+		?>
+		<?php endif; ?>
 	</div>
 </div>
 <?php endif; ?>

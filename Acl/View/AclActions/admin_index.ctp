@@ -15,13 +15,14 @@ $this->Html
 
 ?>
 <?php $this->start('actions'); ?>
-<li class="btn-group">
+<div class="btn-group">
 <?php
 	echo $this->Html->link(
 		__d('croogo', 'Tools') . ' ' . '<span class="caret"></span>',
 		'#',
 		array(
-			'class' => 'btn dropdown-toggle',
+			'button' => 'default',
+			'class' => 'dropdown-toggle',
 			'data-toggle' => 'dropdown',
 		)
 	);
@@ -36,6 +37,7 @@ $this->Html
 		$generateUrl,
 		array(
 			'button' => false,
+			'list' => true,
 			'method' => 'post',
 			'tooltip' => array(
 				'data-title' => __d('croogo', 'Create new actions (no removal)'),
@@ -47,6 +49,7 @@ $this->Html
 		$generateUrl + array('sync' => 1),
 		array(
 			'button' => false,
+			'list' => true,
 			'method' => 'post',
 			'tooltip' => array(
 				'data-title' => __d('croogo', 'Create new & remove orphaned actions'),
@@ -56,7 +59,7 @@ $this->Html
 	);
 	echo $this->Html->tag('ul', $out, array('class' => 'dropdown-menu'));
 ?>
-</li>
+</div>
 <?php
 	echo $this->Croogo->adminAction(__d('croogo', 'Edit Actions'),
 		array('controller' => 'acl_actions', 'action' => 'index', 'permissions' => 1)
