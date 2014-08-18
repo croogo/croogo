@@ -63,7 +63,7 @@ class AclHelper extends Helper {
 				array('controller' => 'acl_permissions', 'action' => 'upgrade'),
 				array('button' => 'primary')
 			);
-			$this->_View->Blocks->append('actions', sprintf('<li>%s</li>', $link));
+			$this->_View->Blocks->append('actions', $link);
 		}
 	}
 

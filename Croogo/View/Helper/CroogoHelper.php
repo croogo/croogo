@@ -322,15 +322,21 @@ class CroogoHelper extends AppHelper {
 		$options = Hash::merge(array(
 			'button' => 'default',
 			'method' => 'get',
+			'list' => false,
 		), $options);
-		if (strcasecmp($options['method'], 'post') == 0) {
-			return $this->Html->tag('li',
-				$this->Form->postLink($title, $url, $options)
-			);
+		if ($options['list'] === true) {
+			$list = true;
+			unset($options['list']);
 		}
-		return $this->Html->tag('li',
-			$this->Html->link($title, $url, $options)
-		);
+		if (strcasecmp($options['method'], 'post') == 0) {
+			$out = $this->Form->postLink($title, $url, $options);
+		} else {
+			$out = $this->Html->link($title, $url, $options);
+		}
+		if (isset($list)) {
+			$out = $this->Html->tag('li', $out);
+		}
+		return $out;
 	}
 
 /**
