@@ -1,7 +1,7 @@
 <?php
 $this->extend('/Common/admin_edit');
 
-$this->Html->script(array('/taxonomy/js/terms'), false);
+$this->Croogo->adminScript('Taxonomy.terms');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))

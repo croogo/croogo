@@ -1,7 +1,7 @@
 <?php
 
 $this->extend('/Common/admin_edit');
-$this->Html->script(array('Menus.admin'), false);
+$this->Croogo->adminScript('Menus.admin');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))

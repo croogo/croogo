@@ -71,7 +71,10 @@ class CroogoHelper extends AppHelper {
  * @return mixed String of <script /> tags or null
  */
 	public function adminScript($url, $options = array()) {
-		$options = Hash::merge(array('inline' => false), $options);
+		$options = Hash::merge(array(
+			'inline' => false,
+			'block' => 'scriptBottom',
+		), $options);
 		if ($this->request->is('ajax') || empty($this->request->params['admin'])) {
 			return;
 		}

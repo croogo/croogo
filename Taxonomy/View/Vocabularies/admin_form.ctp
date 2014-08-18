@@ -1,5 +1,5 @@
 <?php
-$this->Html->script(array('/taxonomy/js/vocabularies'), false);
+$this->Croogo->adminScript('Taxonomy.vocabularies');
 $this->extend('/Common/admin_edit');
 
 $this->Html

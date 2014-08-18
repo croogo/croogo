@@ -2,7 +2,7 @@
 
 $this->extend('/Common/admin_index');
 $this->name = 'acl_permissions';
-$this->Html->script('/acl/js/acl_permissions.js', false);
+$this->Croogo->adminScript('Acl.acl_permissions');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
