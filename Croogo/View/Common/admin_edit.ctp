@@ -27,64 +27,90 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 </div>
 <?php endif; ?>
 
-<?php if ($contentBlock = $this->fetch('content')): ?>
-	<?php echo $contentBlock; ?>
-<?php else: ?>
-	<?php
-		$tabId = 'tabitem-' . Inflector::slug(strtolower($modelClass), '-');
-		echo $this->Form->create($modelClass);
-		if (isset($this->request->data[$modelClass]['id'])) {
-			echo $this->Form->input('id');
-		}
-	?>
-	<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-		<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
-			<ul class="nav nav-tabs">
-			<?php
+<?php
+if ($contentBlock = trim($this->fetch('content'))):
+	echo $contentBlock;
+	return;
+endif;
+
+if ($formStart = trim($this->fetch('form-start'))):
+	echo $formStart;
+else:
+	echo $this->Form->create($modelClass);
+	if (isset($this->request->data[$modelClass]['id'])):
+		echo $this->Form->input('id');
+	endif;
+endif;
+
+$tabId = 'tabitem-' . Inflector::slug(strtolower($modelClass), '-');
+
+?>
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
+
+		<ul class="nav nav-tabs">
+		<?php
+			if ($tabHeading = $this->fetch('tab-heading')):
+				echo $tabHeading;
+			else:
 				echo $this->Croogo->adminTab(__d('croogo', $modelClass), "#$tabId");
 				echo $this->Croogo->adminTabs();
-			?>
-			</ul>
+			endif;
+		?>
+		</ul>
 
-			<?php
-				$content = '';
-				foreach ($editFields as $field => $opts):
-					if (is_string($opts)) {
-						$field = $opts;
-						$opts = array(
-							'label' => false,
-							'tooltip' => ucfirst($field),
-						);
-					}
-					$content .= $this->Form->input($field, $opts);
-				endforeach;
-			?>
-
-			<div class="tab-content">
-			<?php
-				if (!empty($content)):
-					echo $this->Html->div('tab-pane', $content, array(
-						'id' => $tabId,
-					));
-				endif;
-				echo $this->Croogo->adminTabs();
-			?>
-			</div>
-		</div>
-		<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 		<?php
+
+		$tabContent = trim($this->fetch('tab-content'));
+		if (!$tabContent):
+			$content = '';
+			foreach ($editFields as $field => $opts):
+				if (is_string($opts)) {
+					$field = $opts;
+					$opts = array(
+						'label' => false,
+						'tooltip' => ucfirst($field),
+					);
+				}
+				$content .= $this->Form->input($field, $opts);
+			endforeach;
+		endif;
+		?>
+
+		<?php
+		if (empty($tabContent) && !empty($content)):
+			$tabContent = $this->Html->div('tab-pane', $content, array(
+				'id' => $tabId,
+			));
+			$tabContent .= $this->Croogo->adminTabs();
+		endif;
+		echo $this->Html->div('tab-content', $tabContent);
+		?>
+	</div>
+
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
+	<?php
+		if ($rightCol = $this->fetch('panels')):
+			echo $rightCol;
+		else:
 			if ($buttonsBlock = $this->fetch('buttons')):
 				echo $buttonsBlock;
-			else :
+			else:
 				echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 					$this->Form->button(__d('croogo', 'Save'), array('button' => 'primary')) .
 					$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
 					$this->Html->endBox();
-
 			endif;
 			echo $this->Croogo->adminBoxes();
-		?>
-		</div>
+		endif;
+	?>
 	</div>
-	<?php echo $this->Form->end(); ?>
-<?php endif; ?>
+
+</div>
+<?php
+
+if ($formEnd = trim($this->fetch('form-end'))):
+	echo $formEnd;
+else:
+	echo $this->Form->end();
+endif;
