@@ -34,124 +34,113 @@ $apiUrl = $this->Form->apiUrl(array(
 	),
 ));
 
-echo $this->Form->create('Node', array(
+$this->append('form-start', $this->Form->create('Node', array(
 	'url' => $formUrl,
 	'class' => 'protected-form',
-));
+)));
 $inputDefaults = $this->Form->inputDefaults();
 $inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 
-?>
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
+$this->append('tab-heading');
+	echo $this->Croogo->adminTab(__d('croogo', $type['Type']['title']), '#node-main');
+	echo $this->Croogo->adminTab(__d('croogo', 'Access'), '#node-access');
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-		<ul class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTab(__d('croogo', $type['Type']['title']), '#node-main');
-			echo $this->Croogo->adminTab(__d('croogo', 'Access'), '#node-access');
-			echo $this->Croogo->adminTabs();
-		?>
-		</ul>
+$this->append('tab-content');
 
-		<div class="tab-content">
+	echo $this->Html->tabStart('node-main') .
+		$this->Form->autocomplete('parent_id', array(
+			'label' => __d('croogo', 'Parent'),
+			'type' => 'text',
+			'autocomplete' => array(
+				'default' => $parentTitle,
+				'data-displayField' => 'title',
+				'data-primaryKey' => 'id',
+				'data-queryField' => 'title',
+				'data-relatedElement' => '#NodeParentId',
+				'data-url' => $apiUrl,
+			),
+		)) .
+		$this->Form->input('id') .
+		$this->Form->input('title', array(
+			'label' => __d('croogo', 'Title'),
+		)) .
+		$this->Form->input('slug', array(
+			'class' => trim($inputClass . ' slug'),
+			'label' => __d('croogo', 'Slug'),
+		)) .
+		$this->Form->input('excerpt', array(
+			'label' => __d('croogo', 'Excerpt'),
+		)) .
+		$this->Form->input('body', array(
+			'label' => __d('croogo', 'Body'),
+		)) .
+	$this->Html->tabEnd();
 
-			<div id="node-main" class="tab-pane">
-			<?php
+	echo $this->Html->tabStart('node-access') .
+		$this->Form->input('Role.Role', array(
+			'label' => __d('croogo', 'Role')
+		)) .
+	$this->Html->tabEnd();
 
-				echo $this->Form->autocomplete('parent_id', array(
-					'label' => __d('croogo', 'Parent'),
-					'type' => 'text',
-					'autocomplete' => array(
-						'default' => $parentTitle,
-						'data-displayField' => 'title',
-						'data-primaryKey' => 'id',
-						'data-queryField' => 'title',
-						'data-relatedElement' => '#NodeParentId',
-						'data-url' => $apiUrl,
-					),
-				));
-				echo $this->Form->input('id');
-				echo $this->Form->input('title', array(
-					'label' => __d('croogo', 'Title'),
-				));
-				echo $this->Form->input('slug', array(
-					'class' => trim($inputClass . ' slug'),
-					'label' => __d('croogo', 'Slug'),
-				));
-				echo $this->Form->input('excerpt', array(
-					'label' => __d('croogo', 'Excerpt'),
-				));
-				echo $this->Form->input('body', array(
-					'label' => __d('croogo', 'Body'),
-				));
-			?>
-			</div>
+	echo $this->Croogo->adminTabs();
 
-			<div id="node-access" class="tab-pane">
-			<?php
-				echo $this->Form->input('Role.Role', array(
-					'label' => __d('croogo', 'Role')
-				));
-			?>
-			</div>
+$this->end();
 
-			<?php echo $this->Croogo->adminTabs(); ?>
-		</div>
+$username = isset($this->data['User']['username']) ?
+	$this->data['User']['username'] :
+	$this->Session->read('Auth.User.username');
 
-	</div>
-	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
-	<?php
-		$username = isset($this->data['User']['username']) ?
-			$this->data['User']['username'] :
-			$this->Session->read('Auth.User.username');
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
-			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'cancel btn btn-danger')) .
-			$this->Form->input('status', array(
-				'legend' => false,
-				'type' => 'radio',
-				'default' => CroogoStatus::UNPUBLISHED,
-				'options' => $this->Croogo->statuses(),
-			)) .
-			$this->Form->input('promote', array(
-				'label' => __d('croogo', 'Promoted to front page'),
-				'class' => false,
-			)) .
-			$this->Form->autocomplete('user_id', array(
+$this->start('panels');
+	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+		$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+		$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
+		$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'cancel btn btn-danger')) .
+		$this->Form->input('status', array(
+			'legend' => false,
+			'type' => 'radio',
+			'default' => CroogoStatus::UNPUBLISHED,
+			'options' => $this->Croogo->statuses(),
+		)) .
+		$this->Form->input('promote', array(
+			'label' => __d('croogo', 'Promoted to front page'),
+			'class' => false,
+		)) .
+		$this->Form->autocomplete('user_id', array(
+			'type' => 'text',
+			'label' => __d('croogo', 'Publish as '),
+			'autocomplete' => array(
+				'default' => $username,
+				'data-displayField' => 'username',
+				'data-primaryKey' => 'id',
+				'data-queryField' => 'name',
+				'data-relatedElement' => '#NodeUserId',
+				'data-url' => $lookupUrl,
+			),
+		)) .
+
+		$this->Form->input('created', array(
+			'type' => 'text',
+			'class' => trim($inputClass . ' input-datetime'),
+			'label' => __d('croogo', 'Created'),
+		)) .
+
+		$this->Html->div('input-daterange',
+			$this->Form->input('publish_start', array(
+				'label' => __d('croogo', 'Publish Start'),
 				'type' => 'text',
-				'label' => __d('croogo', 'Publish as '),
-				'autocomplete' => array(
-					'default' => $username,
-					'data-displayField' => 'username',
-					'data-primaryKey' => 'id',
-					'data-queryField' => 'name',
-					'data-relatedElement' => '#NodeUserId',
-					'data-url' => $lookupUrl,
-				),
 			)) .
-
-			$this->Form->input('created', array(
+			$this->Form->input('publish_end', array(
+				'label' => __d('croogo', 'Publish End'),
 				'type' => 'text',
-				'class' => trim($inputClass . ' input-datetime'),
-				'label' => __d('croogo', 'Created'),
-			)) .
+			))
+		);
 
-			$this->Html->div('input-daterange',
-				$this->Form->input('publish_start', array(
-					'label' => __d('croogo', 'Publish Start'),
-					'type' => 'text',
-				)) .
-				$this->Form->input('publish_end', array(
-					'label' => __d('croogo', 'Publish End'),
-					'type' => 'text',
-				))
-			);
+	echo $this->Html->endBox();
 
-		echo $this->Html->endBox();
+	echo $this->Croogo->adminBoxes();
 
-		echo $this->Croogo->adminBoxes();
-	?>
-	</div>
-</div>
-<?php echo $this->Form->end(); ?>
+$this->end();
+
+$this->append('form-end', $this->Form->end());
