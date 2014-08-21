@@ -14,126 +14,112 @@ if ($this->request->params['action'] == 'admin_add') {
 	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
-echo $this->Form->create('Contact');
+$this->append('form-start', $this->Form->create('Contact'));
 
-?>
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
+$this->append('tab-heading');
+	echo $this->Croogo->adminTab(__d('croogo', 'Contact'), '#contact-basic');
+	echo $this->Croogo->adminTab(__d('croogo', 'Details'), '#contact-details');
+	echo $this->Croogo->adminTab(__d('croogo', 'Message'), '#contact-message');
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-		<ul class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTab(__d('croogo', 'Contact'), '#contact-basic');
-			echo $this->Croogo->adminTab(__d('croogo', 'Details'), '#contact-details');
-			echo $this->Croogo->adminTab(__d('croogo', 'Message'), '#contact-message');
-			echo $this->Croogo->adminTabs();
-		?>
-		</ul>
+$this->append('tab-content');
 
-		<div class="tab-content">
+	echo $this->Html->tabStart('contact-basic') .
+		$this->Form->input('id') .
+		$this->Form->input('title', array(
+			'label' => __d('croogo', 'Title'),
+		)) .
+		$this->Form->input('alias', array(
+			'label' => __d('croogo', 'Alias'),
+		)) .
+		$this->Form->input('email', array(
+			'label' => __d('croogo', 'Email')
+		)) .
+		$this->Form->input('body', array(
+			'label' => __d('croogo', 'Body'),
+		));
+	echo $this->Html->tabEnd();
 
-			<div id="contact-basic" class="tab-pane">
-			<?php
-				echo $this->Form->input('id');
-				echo $this->Form->input('title', array(
-					'label' => __d('croogo', 'Title'),
-				));
-				echo $this->Form->input('alias', array(
-					'label' => __d('croogo', 'Alias'),
-				));
-				echo $this->Form->input('email', array(
-					'label' => __d('croogo', 'Email')
-				));
-				echo $this->Form->input('body', array(
-					'label' => __d('croogo', 'Body'),
-				));
-			?>
-			</div>
+	echo $this->Html->tabStart('contact-details') .
+		$this->Form->input('name', array(
+			'label' => __d('croogo', 'Name'),
+		)) .
+		$this->Form->input('position', array(
+			'label' => __d('croogo', 'Position'),
+		)) .
+		$this->Form->input('address', array(
+			'label' => __d('croogo', 'Address'),
+		)) .
+		$this->Form->input('address2', array(
+			'label' => __d('croogo', 'Address2'),
+		)) .
+		$this->Form->input('state', array(
+			'label' => __d('croogo', 'State'),
+		)) .
+		$this->Form->input('country', array(
+			'label' => __d('croogo', 'Country'),
+		)) .
+		$this->Form->input('postcode', array(
+			'label' => __d('croogo', 'Post Code'),
+		)) .
+		$this->Form->input('phone', array(
+			'label' => __d('croogo', 'Phone'),
+		)) .
+		$this->Form->input('fax', array(
+			'label' => __d('croogo', 'Fax'),
+		));
+	echo $this->Html->tabEnd();
 
-			<div id="contact-details" class="tab-pane">
-			<?php
-				echo $this->Form->input('name', array(
-					'label' => __d('croogo', 'Name'),
-				));
-				echo $this->Form->input('position', array(
-					'label' => __d('croogo', 'Position'),
-				));
-				echo $this->Form->input('address', array(
-					'label' => __d('croogo', 'Address'),
-				));
-				echo $this->Form->input('address2', array(
-					'label' => __d('croogo', 'Address2'),
-				));
-				echo $this->Form->input('state', array(
-					'label' => __d('croogo', 'State'),
-				));
-				echo $this->Form->input('country', array(
-					'label' => __d('croogo', 'Country'),
-				));
-				echo $this->Form->input('postcode', array(
-					'label' => __d('croogo', 'Post Code'),
-				));
-				echo $this->Form->input('phone', array(
-					'label' => __d('croogo', 'Phone'),
-				));
-				echo $this->Form->input('fax', array(
-					'label' => __d('croogo', 'Fax'),
-				));
-			?>
-			</div>
+	echo $this->Html->tabStart('contact-message') .
+		$this->Form->input('message_status', array(
+			'label' => __d('croogo', 'Let users leave a message'),
+			'class' => false,
+		)) .
+		$this->Form->input('message_archive', array(
+			'label' => __d('croogo', 'Save messages in database'),
+			'class' => false,
+		)) .
+		$this->Form->input('message_notify', array(
+			'label' => __d('croogo', 'Notify by email instantly'),
+			'class' => false,
+		)) .
+		$this->Form->input('message_spam_protection', array(
+			'label' => __d('croogo', 'Spam protection (requires Akismet API key)'),
+			'class' => false,
+		)) .
+		$this->Form->input('message_captcha', array(
+			'label' => __d('croogo', 'Use captcha? (requires Recaptcha API key)'),
+			'class' => false,
+		));
 
-			<div id="contact-message" class="tab-pane">
-			<?php
-				echo $this->Form->input('message_status', array(
-					'label' => __d('croogo', 'Let users leave a message'),
-					'class' => false,
-				));
-				echo $this->Form->input('message_archive', array(
-					'label' => __d('croogo', 'Save messages in database'),
-					'class' => false,
-				));
-				echo $this->Form->input('message_notify', array(
-					'label' => __d('croogo', 'Notify by email instantly'),
-					'class' => false,
-				));
-				echo $this->Form->input('message_spam_protection', array(
-					'label' => __d('croogo', 'Spam protection (requires Akismet API key)'),
-					'class' => false,
-				));
-				echo $this->Form->input('message_captcha', array(
-					'label' => __d('croogo', 'Use captcha? (requires Recaptcha API key)'),
-					'class' => false,
-				));
+		echo $this->Html->link(__d('croogo', 'You can manage your API keys here.'), array(
+			'plugin' => 'settings',
+			'controller' => 'settings',
+			'action' => 'prefix',
+			'Service',
+		));
+	echo $this->Html->tabEnd();
 
-				echo $this->Html->link(__d('croogo', 'You can manage your API keys here.'), array(
-					'plugin' => 'settings',
-					'controller' => 'settings',
-					'action' => 'prefix',
-					'Service',
-				));
-			?>
-			</div>
-			<?php
-				echo $this->Croogo->adminTabs();
-			?>
-		</div>
-	</div>
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
-	<?php
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
-			$this->Html->link(
+$this->append('panels');
+	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+		$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+		$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
+		$this->Html->link(
 			__d('croogo', 'Cancel'),
 			array('action' => 'index'),
 			array('button' => 'danger')
 		) .
-			$this->Form->input('status', array('label' => __d('croogo', 'Published'), 'class' => false)) .
-		$this->Html->endBox();
+		$this->Form->input('status', array(
+			'label' => __d('croogo', 'Published'),
+			'class' => false,
+		));
+	echo $this->Html->endBox();
 
-		echo $this->Croogo->adminBoxes();
-	?>
-	</div>
-</div>
+	echo $this->Croogo->adminBoxes();
+$this->end();
 
-<?php echo $this->Form->end(); ?>
+$this->append('form-end', $this->Form->end());
