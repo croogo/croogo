@@ -1,5 +1,7 @@
-<h2 class="hidden-desktop"><?php echo __d('croogo', 'Reset password'); ?>: <?php echo $this->data['User']['username']; ?></h2>
 <?php
+
+$this->extend('/Common/admin_edit');
+
 $this->Html
 	->addCrumb($this->Html->icon('home'), '/admin')
 	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
@@ -8,42 +10,48 @@ $this->Html
 	))
 	->addCrumb(__d('croogo', 'Reset Password'), '/' . $this->request->url);
 
-$this->set('title_for_layout', __d('croogo', 'Reset Password for %s', $this->data['User']['username']));
-?>
-<?php echo $this->Form->create('User', array('url' => array('action' => 'reset_password')));?>
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
-		<ul class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTab(__d('croogo', 'Reset Password'), '#reset-password');
-			echo $this->Croogo->adminTabs();
-		?>
-		</ul>
+$this->set('title_for_layout', __d('croogo', 'Reset Password: %s', $this->data['User']['username']));
 
-		<div class="tab-content">
-			<div id="reset-password" class="tab-pane">
-			<?php
-				echo $this->Form->input('id');
-				echo $this->Form->input('password', array('label' => __d('croogo', 'New Password'), 'value' => ''));
-				echo $this->Form->input('verify_password', array('label' => __d('croogo', 'Verify Password'), 'type' => 'password', 'value' => ''));
-			?>
-			</div>
+$this->append('form-start', $this->Form->create('User', array(
+	'url' => array(
+		'action' => 'reset_password',
+	)
+)));
 
-			<?php echo $this->Croogo->adminTabs(); ?>
-		</div>
-	</div>
-	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
-	<?php
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Reset'), array('button' => 'default')) .
-			$this->Html->link(
-				__d('croogo', 'Cancel'),
-				array('action' => 'index'),
-				array('button' => 'primary')) .
-			$this->Html->endBox();
+$this->append('tab-heading');
+	echo $this->Croogo->adminTab(__d('croogo', 'Reset Password'), '#reset-password');
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-		echo $this->Croogo->adminBoxes();
-	?>
-	</div>
-</div>
-<?php echo $this->Form->end(); ?>
+$this->append('tab-content');
+
+	echo $this->Html->tabStart('reset-password') .
+		$this->Form->input('id') .
+		$this->Form->input('password', array(
+			'label' => __d('croogo', 'New Password'),
+			'value' => '',
+		)) .
+		$this->Form->input('verify_password', array(
+			'label' => __d('croogo', 'Verify Password'),
+			'type' => 'password',
+			'value' => '',
+		));
+	echo $this->Html->tabEnd();
+
+	echo $this->Croogo->adminTabs();
+$this->end();
+
+$this->append('panels');
+	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+		$this->Form->button(__d('croogo', 'Reset')) .
+		$this->Html->link(
+			__d('croogo', 'Cancel'),
+			array('action' => 'index'),
+			array('button' => 'primary')
+		);
+	echo $this->Html->endBox();
+
+	echo $this->Croogo->adminBoxes();
+$this->end();
+
+$this->append('form-end', $this->Form->end());

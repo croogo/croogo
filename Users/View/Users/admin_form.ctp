@@ -19,119 +19,102 @@ if ($this->request->params['action'] == 'admin_edit') {
 if ($this->request->params['action'] == 'admin_add') {
 	$this->Html->addCrumb(__d('croogo', 'Add'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'add'));
 }
-?>
-<?php $this->start('actions'); ?>
-<?php if ($this->request->params['action'] == 'admin_edit'): ?>
-<?php
-	echo $this->Croogo->adminAction(__d('croogo', 'Reset password'), array('action' => 'reset_password', $this->request->params['pass']['0']));
-?>
-<?php endif; ?>
-<?php $this->end(); ?>
 
-<?php
-echo $this->Form->create('User', array(
+$this->start('actions');
+if ($this->request->params['action'] == 'admin_edit'):
+	echo $this->Croogo->adminAction(__d('croogo', 'Reset password'), array('action' => 'reset_password', $this->request->params['pass']['0']));
+endif;
+$this->end();
+
+$this->append('form-start', $this->Form->create('User', array(
 	'fieldAccess' => array(
 		'User.role_id' => 1,
 	),
 	'class' => 'protected-form',
-));
-?>
+)));
 
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
+$this->append('tab-heading');
+	echo $this->Croogo->adminTab(__d('croogo', 'User'), '#user-main');
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-		<ul class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTab(__d('croogo', 'User'), '#user-main');
-			echo $this->Croogo->adminTabs();
-		?>
-		</ul>
+$this->append('tab-content');
 
-		<div class="tab-content">
+	echo $this->Html->tabStart('user-main') .
+		$this->Form->input('id') .
+		$this->Form->input('role_id', array('label' => __d('croogo', 'Role'))) .
+		$this->Form->input('username', array(
+			'label' => __d('croogo', 'Username'),
+		)) .
+		$this->Form->input('name', array(
+			'label' => __d('croogo', 'Name'),
+		)) .
+		$this->Form->input('email', array(
+			'label' => __d('croogo', 'Email'),
+		)) .
+		$this->Form->input('website', array(
+			'label' => __d('croogo', 'Website'),
+		)) .
+		$this->Form->input('timezone', array(
+			'type' => 'select',
+			'empty' => true,
+			'options' => $this->Time->listTimezones(),
+			'label' => __d('croogo', 'Timezone'),
+		));
+	echo $this->Html->tabEnd();
 
-			<div id="user-main" class="tab-pane">
-			<?php
-				echo $this->Form->input('id');
-				echo $this->Form->input('role_id', array('label' => __d('croogo', 'Role')));
-				echo $this->Form->input('username', array(
-					'label' => __d('croogo', 'Username'),
-				));
-				echo $this->Form->input('name', array(
-					'label' => __d('croogo', 'Name'),
-				));
-				echo $this->Form->input('email', array(
-					'label' => __d('croogo', 'Email'),
-				));
-				echo $this->Form->input('website', array(
-					'label' => __d('croogo', 'Website'),
-				));
-				echo $this->Form->input('timezone', array(
-					'type' => 'select',
-					'empty' => true,
-					'options' => $this->Time->listTimezones(),
-					'label' => __d('croogo', 'Timezone'),
-				));
-			?>
-			</div>
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-			<?php echo $this->Croogo->adminTabs(); ?>
-		</div>
-	</div>
-
-	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
-	<?php
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
-			$this->Html->link(
+$this->append('panels');
+	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+		$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+		$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
+		$this->Html->link(
 			__d('croogo', 'Cancel'), array('action' => 'index'),
-			array('button' => 'danger'));
+			array('button' => 'danger')
+		);
 
-		if ($this->request->params['action'] == 'admin_add'):
-			echo $this->Form->input('notification', array(
-				'label' => __d('croogo', 'Send Activation Email'),
-				'type' => 'checkbox',
-				'class' => false,
-			));
-		endif;
-
-		echo $this->Form->input('status', array(
-			'label' => __d('croogo', 'Status'),
+	if ($this->request->params['action'] == 'admin_add'):
+		echo $this->Form->input('notification', array(
+			'label' => __d('croogo', 'Send Activation Email'),
+			'type' => 'checkbox',
 			'class' => false,
 		));
+	endif;
 
-		$showPassword = !empty($this->data['User']['status']);
-		if ($this->request->params['action'] == 'admin_add'):
-			$out = $this->Form->input('password', array(
-				'label' => __d('croogo', 'Password'),
-				'class' => false,
-				'disabled' => !$showPassword,
-			));
-			$out .= $this->Form->input('verify_password', array(
-				'label' => __d('croogo', 'Verify Password'),
-				'class' => false,
-				'disabled' => !$showPassword,
-				'type' => 'password'
-			));
+	echo $this->Form->input('status', array(
+		'label' => __d('croogo', 'Status'),
+		'class' => false,
+	));
 
-			$this->Form->unlockField('User.password');
-			$this->Form->unlockField('User.verify_password');
+	$showPassword = !empty($this->data['User']['status']);
+	if ($this->request->params['action'] == 'admin_add'):
+		$out = $this->Form->input('password', array(
+			'label' => __d('croogo', 'Password'),
+			'disabled' => !$showPassword,
+		));
+		$out .= $this->Form->input('verify_password', array(
+			'label' => __d('croogo', 'Verify Password'),
+			'disabled' => !$showPassword,
+			'type' => 'password'
+		));
 
-			echo $this->Html->div(null, $out, array(
-				'id' => 'passwords',
-				'style' => $showPassword ? '' : 'display: none',
-			));
-		endif;
+		$this->Form->unlockField('User.password');
+		$this->Form->unlockField('User.verify_password');
 
-		echo $this->Html->endBox();
+		echo $this->Html->div(null, $out, array(
+			'id' => 'passwords',
+			'style' => $showPassword ? '' : 'display: none',
+		));
+	endif;
 
-		echo $this->Croogo->adminBoxes();
-	?>
-	</div>
+	echo $this->Html->endBox();
 
-</div>
-<?php echo $this->Form->end(); ?>
-<?php
+	echo $this->Croogo->adminBoxes();
+$this->end();
+
+$this->append('form-end', $this->Form->end());
 
 $script = <<<EOF
 	$('#UserStatus').on('change', function(e) {
