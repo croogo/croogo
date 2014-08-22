@@ -112,7 +112,7 @@ class RegionsController extends BlocksAppController {
 		if (!empty($this->request->data)) {
 			if ($this->Region->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Region has been saved'), 'default', array('class' => 'success'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->Croogo->redirect(array('action' => 'edit', $id));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'The Region could not be saved. Please, try again.'), 'default', array('class' => 'error'));
 			}
