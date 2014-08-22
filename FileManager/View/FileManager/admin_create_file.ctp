@@ -1,60 +1,55 @@
 <?php
+
+$this->extend('/Common/admin_edit');
+
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'File Manager'), array('plugin' => 'file_manager', 'controller' => 'file_manager', 'action' => 'browse'))
 	->addCrumb(__d('croogo', 'Create File'), '/' . $this->request->url);
 
-echo $this->Form->create('FileManager', array(
+$this->append('page-heading');
+?>
+<div class="breadcrumb">
+	<a href="#"><?php echo __d('croogo', 'You are here') . ' '; ?> </a> <span class="divider"> &gt; </span>
+	<?php
+	$breadcrumb = $this->FileManager->breadcrumb($path);
+	foreach ($breadcrumb as $pathname => $p):
+		echo $this->FileManager->linkDirectory($pathname, $p);
+		echo $this->Html->tag('span', DS, array('class' => 'divider'));
+	endforeach;
+	?>
+</div> &nbsp;
+<?php
+$this->end();
+
+$this->append('form-start', $this->Form->create('FileManager', array(
 	'url' => $this->Html->url(array(
 		'controller' => 'file_manager',
 		'action' => 'create_file',
 	), true) . '?path=' . urlencode($path),
-));
+)));
 
-?>
-<h2 class="hidden-desktop"><?php echo __d('croogo', 'Create file'); ?> </h2>
-<div class="breadcrumb">
-	<a href="#"><?php echo __d('croogo', 'You are here') . ' '; ?> </a> <span class="divider"> &gt; </span>
-	<?php $breadcrumb = $this->FileManager->breadcrumb($path); ?>
-	<?php foreach ($breadcrumb as $pathname => $p) : ?>
-		<?php echo $this->FileManager->linkDirectory($pathname, $p); ?>
-			<span class="divider"> <?php echo DS; ?> </span>
-	<?php endforeach; ?>
-</div>
+$this->append('tab-heading');
+	echo $this->Croogo->adminTab(__d('croogo', 'File'), '#filemanager-createfile');
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-&nbsp;
+$this->append('tab-content');
+	echo $this->Html->tabStart('filemanager-createfile') .
+		$this->Form->input('FileManager.name', array(
+			'type' => 'text',
+			'label' => __d('croogo', 'Filename'),
+		));
+	echo $this->Html->tabEnd();
 
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-		<ul class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTab(__d('croogo', 'File'), '#filemanager-createfile');
-			echo $this->Croogo->adminTabs();
-		?>
-		</ul>
+$this->append('panels');
+	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+		$this->Form->button(__d('croogo', 'Save')) .
+		$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger'));
+	echo $this->Html->endBox();
+$this->end();
 
-		<div class="tab-content">
-			<div id="filemanager-createfile" class="tab-pane">
-			<?php
-				echo $this->Form->input('FileManager.name', array(
-					'type' => 'text',
-					'label' => __d('croogo', 'Filename'),
-				));
-			?>
-			</div>
-
-			<?php echo $this->Croogo->adminTabs(); ?>
-		</div>
-	</div>
-	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
-		<?php
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
-			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
-			$this->Html->endBox();
-		?>
-	</div>
-
-</div>
-<?php echo $this->Form->end(); ?>
+$this->append('form-end', $this->Form->end());
