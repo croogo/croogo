@@ -17,6 +17,12 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 ?>
 </h2>
 
+<?php
+if ($pageHeading = trim($this->fetch('page-heading'))):
+	echo $pageHeading;
+endif;
+?>
+
 <?php if ($actionsBlock = $this->fetch('actions')): ?>
 <div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div class="actions <?php echo $this->Layout->cssClass('columnFull'); ?>">
@@ -113,4 +119,8 @@ if ($formEnd = trim($this->fetch('form-end'))):
 	echo $formEnd;
 else:
 	echo $this->Form->end();
+endif;
+
+if ($pageFooter = trim($this->fetch('page-footer'))):
+	echo $pageFooter;
 endif;
