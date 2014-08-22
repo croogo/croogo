@@ -21,63 +21,53 @@ if ($this->request->params['action'] == 'admin_add') {
 		->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
-echo $this->Form->create('Term', array(
-	'url' => '/' . $this->request->url,
-));
+$this->Form->create('Term', array('url' => '/' . $this->request->url,));
 $inputDefaults = $this->Form->inputDefaults();
 $inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 
-?>
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
+$this->append('tab-heading');
+	echo $this->Croogo->adminTab(__d('croogo', 'Term'), '#term-basic');
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-		<ul class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTab(__d('croogo', 'Term'), '#term-basic');
-			echo $this->Croogo->adminTabs();
-		?>
-		</ul>
+$this->append('tab-content');
 
-		<div class="tab-content">
-			<div id="term-basic" class="tab-pane">
-			<?php
-				echo $this->Form->input('Taxonomy.parent_id', array(
-					'options' => $parentTree,
-					'empty' => true,
-					'label' => __d('croogo', 'Parent'),
-				));
-				echo $this->Form->hidden('Taxonomy.id');
-				echo $this->Form->hidden('id');
-				echo $this->Form->input('title', array(
-					'label' => __d('croogo', 'Title'),
-				));
-				echo $this->Form->input('slug', array(
-					'label' => __d('croogo', 'Slug'),
-					'class' => trim($inputClass . ' slug'),
-				));
-				echo $this->Form->input('description', array(
-					'label' => __d('croogo', 'Description'),
-				));
-			?>
-			</div>
+	echo $this->Html->tabStart('term-basic') .
+		$this->Form->input('Taxonomy.parent_id', array(
+			'options' => $parentTree,
+			'empty' => true,
+			'label' => __d('croogo', 'Parent'),
+		)) .
+		$this->Form->hidden('Taxonomy.id') .
+		$this->Form->hidden('id') .
+		$this->Form->input('title', array(
+			'label' => __d('croogo', 'Title'),
+		)) .
+		$this->Form->input('slug', array(
+			'label' => __d('croogo', 'Slug'),
+			'class' => trim($inputClass . ' slug'),
+		)) .
+		$this->Form->input('description', array(
+			'label' => __d('croogo', 'Description'),
+		));
+	echo $this->Html->tabEnd();
 
-			<?php echo $this->Croogo->adminTabs(); ?>
-		</div>
-	</div>
+	echo $this->Croogo->adminTabs();
 
-	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
-	<?php
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
-			$this->Html->link(
-				__d('croogo', 'Cancel'),
-				array('action' => 'index', $vocabularyId),
-				array('button' => 'danger')
-			) .
-			$this->Html->endBox();
+$this->end();
+
+$this->start('panels');
+	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+		$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+		$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
+		$this->Html->link(
+			__d('croogo', 'Cancel'),
+			array('action' => 'index', $vocabularyId),
+			array('button' => 'danger')
+		) .
+		$this->Html->endBox();
+
 		echo $this->Croogo->adminBoxes();
-	?>
-	</div>
-</div>
-<?php echo $this->Form->end(); ?>
+$this->end();
+
+$this->append('form-end', $this->Form->end());
