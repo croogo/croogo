@@ -1,55 +1,47 @@
 <?php
+
+$this->extend('/Common/admin_edit');
+
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Locales'), array('plugin' => 'extensions', 'controller' => 'extensions_locales', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Upload'), '/' . $this->request->url);
 
-echo $this->Form->create('Locale', array(
+$this->append('form-start', $this->Form->create('Locale', array(
 	'url' => array(
 		'plugin' => 'extensions',
 		'controller' => 'extensions_locales',
 		'action' => 'add',
 	),
 	'type' => 'file',
-));
+)));
 
-?>
-<h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
+$this->append('tab-heading');
+	echo $this->Croogo->adminTab(__d('croogo', 'Upload'), '#locale-upload');
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
+$this->append('tab-content');
+	echo $this->Html->tabStart('locale-upload') .
+		$this->Form->input('Locale.file', array(
+			'type' => 'file',
+		));
+	echo $this->Html->tabEnd();
 
-		<ul class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTab(__d('croogo', 'Upload'), '#locale-upload');
-		?>
-		</ul>
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-		<div class="tab-content">
-			<div id="locale-upload" class="tab-pane">
-			<?php
-				echo $this->Form->input('Locale.file', array(
-					'type' => 'file',
-				));
-			?>
-			</div>
+$this->append('panels');
+	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+		$this->Form->button(__d('croogo', 'Upload')) .
+		$this->Html->link(__d('croogo', 'Cancel'),
+			array('action' => 'index'),
+		array('button' => 'danger')
+		);
+	echo $this->Html->endBox();
 
-			<?php echo $this->Croogo->adminTabs(); ?>
-		</div>
+	echo $this->Croogo->adminBoxes();
+$this->end();
 
-	</div>
-
-	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
-	<?php
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Upload'), array('button' => 'default')) .
-			$this->Form->end() .
-			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
-			$this->Html->endBox();
-
-		echo $this->Croogo->adminBoxes();
-	?>
-	</div>
-</div>
-<?php echo $this->Form->end(); ?>
+$this->append('form-end', $this->Form->end());
