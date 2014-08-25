@@ -119,6 +119,11 @@ echo $this->Form->create('Type');
 				'label' => __d('croogo', 'Show date'),
 				'class' => false,
 			)) .
+			$this->Form->input('format_use_wysiwyg', array(
+				'label' => __d('croogo', 'Enable WYSIWYG editor'),
+				'default' => true,
+				'class' => false,
+			)) .
 			$this->Html->endBox();
 
 		echo $this->Croogo->adminBoxes();
