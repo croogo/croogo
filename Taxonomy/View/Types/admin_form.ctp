@@ -36,6 +36,10 @@ $this->append('tab-content');
 		)) .
 		$this->Form->input('description', array(
 			'label' => __d('croogo', 'Description'),
+		)) .
+		$this->Form->input('format_use_wysiwyg', array(
+			'label' => __d('croogo', 'Enable Wysiwyg Editor'),
+			'class' => false,
 		));
 	echo $this->Html->tabEnd();
 
