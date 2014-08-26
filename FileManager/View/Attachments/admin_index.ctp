@@ -6,10 +6,7 @@ $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Attachments'), '/' . $this->request->url);
 
-?>
-<table class="table table-striped">
-<?php
-
+$this->start('table-heading');
 	$tableHeaders = $this->Html->tableHeaders(array(
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		'&nbsp;',
@@ -17,13 +14,10 @@ $this->Html
 		__d('croogo', 'URL'),
 		__d('croogo', 'Actions'),
 	));
+	echo $this->Html->tag('thead', $tableHeaders);
+$this->end();
 
-?>
-	<thead>
-	<?php echo $tableHeaders; ?>
-	</thead>
-<?php
-
+$this->append('table-body');
 	$rows = array();
 	foreach ($attachments as $attachment) {
 		$actions = array();
@@ -68,5 +62,4 @@ $this->Html
 
 	echo $this->Html->tableCells($rows);
 
-?>
-</table>
+$this->end();
