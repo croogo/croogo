@@ -83,7 +83,7 @@ $inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 				));
 				echo $this->Form->input('body', array(
 					'label' => __d('croogo', 'Body'),
-					'id' => ($type['Type']['format_use_wysiwyg'] ? 'NodeBody' : 'NodeBodyNoWysiwyg'),
+					'class' => 'span10' . (!$type['Type']['format_use_wysiwyg'] ? ' no-wysiwyg' : ''),
 				));
 			?>
 			</div>
