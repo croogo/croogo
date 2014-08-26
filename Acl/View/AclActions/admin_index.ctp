@@ -13,11 +13,8 @@ $this->Html
 	))
 	->addCrumb(__d('croogo', 'Actions'), array('plugin' => 'acl', 'controller' => 'acl_actions', 'action' => 'index', 'permission' => 1));
 
-?>
-<?php $this->start('actions'); ?>
-<div class="btn-group">
-<?php
-	echo $this->Html->link(
+$this->append('actions');
+	$toolsButton = $this->Html->link(
 		__d('croogo', 'Tools') . ' ' . '<span class="caret"></span>',
 		'#',
 		array(
@@ -57,29 +54,27 @@ $this->Html
 			),
 		)
 	);
-	echo $this->Html->tag('ul', $out, array('class' => 'dropdown-menu'));
-?>
-</div>
-<?php
+	echo $this->Html->div('btn-group',
+		$toolsButton .
+		$this->Html->tag('ul', $out, array('class' => 'dropdown-menu'))
+	);
+
 	echo $this->Croogo->adminAction(__d('croogo', 'Edit Actions'),
 		array('controller' => 'acl_actions', 'action' => 'index', 'permissions' => 1)
 	);
-?>
-<?php $this->end(); ?>
+$this->end();
 
-<table class="table permission-table">
-<?php
+$this->set('tableClass', 'table permission-table');
+$this->start('table-heading');
 	$tableHeaders = $this->Html->tableHeaders(array(
 		__d('croogo', 'Id'),
 		__d('croogo', 'Alias'),
 		__d('croogo', 'Actions'),
 	));
-?>
-	<thead>
-		<?php echo $tableHeaders; ?>
-	</thead>
-<?php
+	echo $this->Html->tag('thead', $tableHeaders);
+$this->end();
 
+$this->append('table-body');
 	$currentController = '';
 	$icon = '<i class="icon-none pull-right"></i>';
 	foreach ($acos as $acoIndex => $aco) {
@@ -140,10 +135,5 @@ $this->Html
 
 		echo $this->Html->tableCells(array($row), $oddOptions, $evenOptions);
 	}
-?>
-	<thead>
-		<?php echo $tableHeaders; ?>
-	</thead>
-<?php
-?>
-</table>
+	echo $this->Html->tag('thead', $tableHeaders);
+$this->end();
