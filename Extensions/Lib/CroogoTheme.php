@@ -93,6 +93,7 @@ class CroogoTheme extends Object {
 					'columnLeft' => 'span8',
 					'columnRight' => 'span4',
 					'formInput' => 'input-block-level',
+					'tableClass' => 'table',
 				),
 				'prefixes' => array(
 					'' => array(

@@ -55,8 +55,11 @@ $showActions = isset($showActions) ? $showActions : true;
 				echo $formStart;
 			endif;
 
+			if (!isset($tableClass) || $tableClass == false):
+				$tableClass = $this->Layout->cssClass('tableClass');
+			endif;
 		?>
-			<table class="table table-striped">
+			<table class="<?php echo $tableClass; ?>">
 			<?php
 				$tableHeaders = trim($this->fetch('table-heading'));
 				if (!$tableHeaders):
