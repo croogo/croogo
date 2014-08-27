@@ -91,10 +91,7 @@ class TermsController extends TaxonomyAppController {
 		if ($this->request->is('post')) {
 			if ($this->Term->add($this->request->data, $vocabularyId)) {
 				$this->Session->setFlash(__d('croogo', 'Term saved successfuly.'), 'default', array('class' => 'success'));
-				return $this->redirect(array(
-					'action' => 'index',
-					$vocabularyId,
-				));
+                                $this->Croogo->redirect(array('action' => 'edit', $this->Term->id, $vocabularyId));
 			} else {
 				$this->Session->setFlash(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'), 'default', array('class' => 'error'));
 			}
@@ -134,10 +131,14 @@ class TermsController extends TaxonomyAppController {
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Term->edit($this->request->data, $vocabularyId)) {
 				$this->Session->setFlash(__d('croogo', 'Term saved successfuly.'), 'default', array('class' => 'success'));
-				return $this->redirect(array(
-					'action' => 'index',
-					$vocabularyId,
-				));
+                                if (isset($this->request->data['apply'])) {
+					return $this->redirect(array('action' => 'edit', $id, $vocabularyId));
+				}else{
+                                        return $this->redirect(array(
+                                                'action' => 'index',
+                                                $vocabularyId,
+                                        ));
+                                }
 			} else {
 				$this->Session->setFlash(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'), 'default', array('class' => 'error'));
 			}
