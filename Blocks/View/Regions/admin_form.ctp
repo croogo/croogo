@@ -20,46 +20,38 @@ if ($this->request->params['action'] == 'admin_add') {
 	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
-?>
-<?php echo $this->Form->create('Region');?>
+$this->append('form-start', $this->Form->create('Region'));
 
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
+$this->append('tab-heading');
+	echo $this->Croogo->adminTab(__d('croogo', 'Region'), '#region-main');
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-		<ul class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTab(__d('croogo', 'Region'), '#region-main');
-			echo $this->Croogo->adminTabs();
-		?>
-		</ul>
+$this->append('tab-content');
 
-		<div class="tab-content">
-			<div id="region-main" class="tab-pane">
-			<?php
-				echo $this->Form->input('id');
-				echo $this->Form->input('title', array(
-					'label' => __d('croogo', 'Title'),
-				));
-				echo $this->Form->input('alias', array(
-					'label' => __d('croogo', 'Alias'),
-				));
-			?>
-			</div>
+	echo $this->Html->tabStart('region-main') .
+		$this->Form->input('id') .
+		$this->Form->input('title', array(
+			'label' => __d('croogo', 'Title'),
+		)) .
+		$this->Form->input('alias', array(
+			'label' => __d('croogo', 'Alias'),
+		));
+	echo $this->Html->tabEnd();
 
-			<?php echo $this->Croogo->adminTabs(); ?>
-		</div>
-	</div>
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
-		<?php
-			echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-				$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-				$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
-				$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
-				$this->Html->endBox();
-			echo $this->Croogo->adminBoxes();
-		?>
-	</div>
+$this->append('panels');
+	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+		$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+		$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
+		$this->Html->link(__d('croogo', 'Cancel'),
+			array('action' => 'index'),
+			array('button' => 'danger')
+		);
+	echo $this->Html->endBox();
+	echo $this->Croogo->adminBoxes();
+$this->end();
 
-</div>
-<?php echo $this->Form->end(); ?>
+$this->append('form-end', $this->Form->end());

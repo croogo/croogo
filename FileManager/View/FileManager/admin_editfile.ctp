@@ -1,17 +1,14 @@
 <?php
+
+$this->extend('/Common/admin_edit');
+
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'File Manager'), array('plugin' => 'file_manager', 'controller' => 'file_manager', 'action' => 'browse'))
 	->addCrumb(basename($absolutefilepath), '/' . $this->request->url);
 
-echo $this->Form->create('FileManager', array(
-	'url' => $this->Html->url(array(
-		'controller' => 'file_manager',
-		'action' => 'editfile',
-	), true) . '?path=' . urlencode($absolutefilepath),
-));
+$this->append('page-heading');
 ?>
-<h2 class="hidden-desktop"><?php echo __d('croogo', 'Edit file'); ?> </h2>
 <div class="breadcrumb">
 	<a href="#"><?php echo __d('croogo', 'You are here') . ' '; ?> </a> <span class="divider"> &gt; </span>
 	<?php $breadcrumb = $this->FileManager->breadcrumb($path); ?>
@@ -20,40 +17,42 @@ echo $this->Form->create('FileManager', array(
 		<span class="divider"> <?php echo DS; ?> </span>
 	<?php endforeach; ?>
 	</ul>
-</div>
+</div> &nbsp;
+<?php
+$this->end();
 
-&nbsp;
+$this->append('form-start', $this->Form->create('FileManager', array(
+	'url' => $this->Html->url(array(
+		'controller' => 'file_manager',
+		'action' => 'editfile',
+	), true) . '?path=' . urlencode($absolutefilepath),
+)));
 
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
-		<ul class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTab(__d('croogo', 'Edit'), '#filemanager-edit');
-			echo $this->Croogo->adminTabs();
-		?>
-		</ul>
+$this->append('tab-heading');
+	echo $this->Croogo->adminTab(__d('croogo', 'Edit'), '#filemanager-edit');
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-		<div class="tab-content">
-			<div id="filemanager-edit" class="tab-pane">
-			<?php
-				echo $this->Form->input('FileManager.content', array(
-					'type' => 'textarea',
-					'value' => $content,
-					'label' => false,
-				));
-			?>
-			</div>
-			<?php echo $this->Croogo->adminTabs(); ?>
-		</div>
-	</div>
-	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
-		<?php
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
-			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
-			$this->Html->endBox();
-		?>
-	</div>
+$this->append('tab-content');
+	echo $this->Html->tabStart('filemanager-edit') .
+		$this->Form->input('FileManager.content', array(
+			'type' => 'textarea',
+			'value' => $content,
+			'label' => false,
+		));
+	echo $this->Html->tabEnd();
 
-</div>
-<?php echo $this->Form->end(); ?>
+	echo $this->Croogo->adminTabs();
+$this->end();
+
+$this->append('panels');
+	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+		$this->Form->button(__d('croogo', 'Save')),
+		$this->Html->link(__d('croogo', 'Cancel'),
+			array('action' => 'index'),
+			array('button' => 'danger')
+		);
+	echo $this->Html->endBox();
+$this->end();
+
+$this->append('form-end', $this->Form->end());

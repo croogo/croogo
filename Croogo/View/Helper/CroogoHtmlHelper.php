@@ -228,4 +228,28 @@ class CroogoHtmlHelper extends HtmlHelper {
 		return !empty($this->_crumbs);
 	}
 
+/**
+ * Starts a new tab pane
+ *
+ * @param string $id Tab pane id
+ * @param array $options Options array
+ * @return string
+ */
+	public function tabStart($id, $options = array()) {
+		$options = Hash::merge(array(
+			'id' => $id,
+			'class' => 'tab-pane',
+		), $options);
+		return $this->useTag('blockstart', $options);
+	}
+
+/**
+ * Ends a tab pane
+ *
+ * @return string
+ */
+	public function tabEnd() {
+		return $this->useTag('blockend');
+	}
+
 }
