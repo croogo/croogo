@@ -123,7 +123,7 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 ?>
 
 </table>
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div id="bulk-action" class="control-group">
 		<?php
 			echo $this->Form->input('Message.action', array(

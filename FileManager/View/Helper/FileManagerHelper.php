@@ -114,7 +114,7 @@ class FileManagerHelper extends AppHelper {
  * adminAction
  */
 	public function adminAction($title, $url, $path, $pathKey = 'path') {
-		return $this->Html->tag('li', $this->link($title, $url, $path, $pathKey));
+		return $this->link($title, $url, $path, $pathKey);
 	}
 
 /**

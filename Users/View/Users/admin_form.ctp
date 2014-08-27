@@ -37,8 +37,8 @@ echo $this->Form->create('User', array(
 ));
 ?>
 
-<div class="row-fluid">
-	<div class="span8">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 
 		<ul class="nav nav-tabs">
 		<?php
@@ -53,10 +53,6 @@ echo $this->Form->create('User', array(
 			<?php
 				echo $this->Form->input('id');
 				echo $this->Form->input('role_id', array('label' => __d('croogo', 'Role')));
-				$this->Form->inputDefaults(array(
-					'class' => 'span10',
-					'label' => false,
-				));
 				echo $this->Form->input('username', array(
 					'label' => __d('croogo', 'Username'),
 				));
@@ -82,7 +78,7 @@ echo $this->Form->create('User', array(
 		</div>
 	</div>
 
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 	<?php
 		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .

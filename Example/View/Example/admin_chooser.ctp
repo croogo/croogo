@@ -15,7 +15,7 @@ echo $this->Form->create(null);
 
 echo $this->Form->input('node_id', array(
 	'type' => 'text',
-	'class' => 'span8',
+	'class' => $this->Layout->cssClass('columnLeft'),
 	'after' => ' ' . $this->Html->link('Choose Node',
 		array(
 			'plugin' => 'nodes',
@@ -35,7 +35,7 @@ echo $this->Form->input('node_id', array(
 
 echo $this->Form->input('node_url', array(
 	'type' => 'text',
-	'class' => 'span8',
+	'class' => $this->Layout->cssClass('columnLeft'),
 	'after' => ' ' . $this->Html->link('Choose Node',
 		array(
 			'plugin' => 'nodes',
@@ -55,7 +55,7 @@ echo $this->Form->input('node_url', array(
 
 echo $this->Form->input('block_id', array(
 	'type' => 'text',
-	'class' => 'span8',
+	'class' => $this->Layout->cssClass('columnLeft'),
 	'after' => ' ' . $this->Html->link('Choose Block Id',
 		array(
 			'plugin' => 'blocks',
@@ -75,7 +75,7 @@ echo $this->Form->input('block_id', array(
 
 echo $this->Form->input('block_title', array(
 	'type' => 'text',
-	'class' => 'span8',
+	'class' => $this->Layout->cssClass('columnLeft'),
 	'after' => ' ' . $this->Html->link('Choose Block Title',
 		array(
 			'plugin' => 'blocks',
@@ -95,7 +95,7 @@ echo $this->Form->input('block_title', array(
 
 echo $this->Form->input('user_id', array(
 	'type' => 'text',
-	'class' => 'span8',
+	'class' => $this->Layout->cssClass('columnLeft'),
 	'after' => ' ' . $this->Html->link('Choose User Id',
 		array(
 			'plugin' => 'users',

@@ -9,8 +9,11 @@ form.inline {
 	&.inline {
 		float: left;
 		label, input, select {
-			margin-right: @crGeneralMargin; 
+			margin-right: @crGeneralMargin;
+			width: auto;
+			display: inline-block;
 		}
+
 	}
 
 	&.submit,
@@ -33,6 +36,10 @@ form.inline {
 	&.radio,
 	&.checkbox {
 		display: table;
+		.input-block-level {
+			min-height: inherit;
+			margin-top: 0px;
+		}
 	}
 
 	&.date,

@@ -14,8 +14,8 @@ if ($this->request->params['action'] == 'admin_edit') {
 echo $this->Form->create('Message');
 
 ?>
-<div class="row-fluid">
-	<div class="span8">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 		<ul class="nav nav-tabs">
 		<?php
 			echo $this->Croogo->adminTab(__d('croogo', 'Message'), '#message-main');
@@ -27,10 +27,6 @@ echo $this->Form->create('Message');
 			<div id="message-main">
 			<?php
 				echo $this->Form->input('id');
-				$this->Form->inputDefaults(array(
-					'label' => false,
-					'class' => 'span10',
-				));
 				echo $this->Form->input('name', array(
 					'label' => __d('croogo', 'Name'),
 				));
@@ -56,7 +52,7 @@ echo $this->Form->create('Message');
 		</div>
 	</div>
 
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 	<?php
 		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 			$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .

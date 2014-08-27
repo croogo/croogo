@@ -38,6 +38,9 @@ echo $this->Form->create('Link', array(
 	'class' => 'protected-form',
 ));
 
+$inputDefaults = $this->Form->inputDefaults();
+$inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
+
 $linkChooserUrl = $this->Html->url(array(
 	'admin' => true,
 	'plugin' => 'menus',
@@ -46,8 +49,8 @@ $linkChooserUrl = $this->Html->url(array(
 ));
 
 ?>
-<div class="row-fluid">
-	<div class="span8">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 
 		<ul class="nav nav-tabs">
 		<?php
@@ -70,9 +73,6 @@ $linkChooserUrl = $this->Html->url(array(
 					'label' => __d('croogo', 'Parent'),
 					'options' => $parentLinks,
 					'empty' => true,
-				));
-				$this->Form->inputDefaults(array(
-					'class' => 'span10',
 				));
 				echo $this->Form->input('title', array(
 					'label' => __d('croogo', 'Title'),
@@ -106,7 +106,7 @@ $linkChooserUrl = $this->Html->url(array(
 			<?php
 				echo $this->Form->input('class', array(
 					'label' => __d('croogo', 'Class'),
-					'class' => 'span10 class',
+					'class' => trim($inputClass . ' class'),
 				));
 				echo $this->Form->input('description', array(
 					'label' => __d('croogo', 'Description'),
@@ -128,7 +128,7 @@ $linkChooserUrl = $this->Html->url(array(
 
 	</div>
 
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 	<?php
 		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .

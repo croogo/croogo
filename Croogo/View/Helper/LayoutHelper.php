@@ -510,4 +510,17 @@ class LayoutHelper extends AppHelper {
 		}
 	}
 
+/**
+ * Helper method to retrieve css settings as configured in theme.json
+ *
+ * @param string $class Name of class/configuration to retrieve
+ * @return string
+ */
+	public function cssClass($class = null) {
+		if ($class) {
+			$class = '.' . $class;
+		}
+		return Hash::get($this->_View->viewVars, 'themeSettings.css' . $class);
+	}
+
 }

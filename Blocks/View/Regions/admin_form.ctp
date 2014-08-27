@@ -23,8 +23,8 @@ if ($this->request->params['action'] == 'admin_add') {
 ?>
 <?php echo $this->Form->create('Region');?>
 
-<div class="row-fluid">
-	<div class="span8">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 
 		<ul class="nav nav-tabs">
 		<?php
@@ -37,10 +37,6 @@ if ($this->request->params['action'] == 'admin_add') {
 			<div id="region-main" class="tab-pane">
 			<?php
 				echo $this->Form->input('id');
-				$this->Form->inputDefaults(array(
-					'label' => false,
-					'class' => 'span10',
-				));
 				echo $this->Form->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));
@@ -54,7 +50,7 @@ if ($this->request->params['action'] == 'admin_add') {
 		</div>
 	</div>
 
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 		<?php
 			echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 				$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .

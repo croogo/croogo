@@ -23,15 +23,15 @@
 	<div id="wrap" class="install">
 		<header class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
-				<div class="container-fluid">
+				<div class="<?php echo $this->Layout->cssClass('container'); ?>">
 					<span class="brand"><?php echo __d('croogo', 'Install Croogo'); ?></span>
 				</div>
 			</div>
 		</header>
 
-		<div id="main" class="container-fluid">
-			<div class="row-fluid">
-				<div id="install" class="span12">
+		<div id="main" class="<?php echo $this->Layout->cssClass('container'); ?>">
+			<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+				<div id="install" class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 				<?php
 					echo $this->Layout->sessionFlash();
 					echo $content_for_layout;

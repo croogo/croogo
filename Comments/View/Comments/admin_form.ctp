@@ -11,8 +11,8 @@ $this->Html
 echo $this->Form->create('Comment');
 
 ?>
-<div class="row-fluid">
-	<div class="span8">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 
 		<ul class="nav nav-tabs">
 		<?php
@@ -26,9 +26,6 @@ echo $this->Form->create('Comment');
 			<div id="comment-main" class="tab-pane">
 			<?php
 				echo $this->Form->input('id');
-				$this->Form->inputDefaults(array(
-					'class' => 'span10',
-				));
 				echo $this->Form->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));
@@ -42,7 +39,7 @@ echo $this->Form->create('Comment');
 		</div>
 	</div>
 
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 		<?php
 			echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 				$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
@@ -58,9 +55,9 @@ echo $this->Form->create('Comment');
 				$this->Html->endBox();
 
 			echo $this->Html->beginBox(__d('croogo', 'Contact')) .
-				$this->Form->input('name', array('label' => __d('croogo', 'Name'), 'class' => 'span12')) .
-				$this->Form->input('email', array('label' => __d('croogo', 'Email'), 'class' => 'span12')) .
-				$this->Form->input('website', array('label' => __d('croogo', 'Website'), 'class' => 'span12')) .
+				$this->Form->input('name', array('label' => __d('croogo', 'Name'))) .
+				$this->Form->input('email', array('label' => __d('croogo', 'Email'))) .
+				$this->Form->input('website', array('label' => __d('croogo', 'Website'))) .
 				$this->Form->input('ip', array('disabled' => 'disabled', 'label' => __d('croogo', 'Ip'))) .
 				$this->Html->endBox();
 

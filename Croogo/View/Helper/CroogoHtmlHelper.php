@@ -9,6 +9,9 @@ App::uses('HtmlHelper', 'View/Helper');
  */
 class CroogoHtmlHelper extends HtmlHelper {
 
+/**
+ * Constructor
+ */
 	public function __construct(View $View, $settings = array()) {
 		$settings = Hash::merge(array(
 			'iconDefaults' => array(
@@ -17,23 +20,28 @@ class CroogoHtmlHelper extends HtmlHelper {
 				'smallIconClass' => '',
 				'classPrefix' => 'icon-',
 			),
+			'icons' => array(
+				'check-mark' => 'ok',
+				'x-mark' => 'remove',
+			),
 		), $settings);
 		parent::__construct($View, $settings);
 
+		$themeCss = $this->_View->Layout->cssClass();
 		$boxIconClass = trim(
 			$settings['iconDefaults']['classDefault'] . ' ' .
 			$settings['iconDefaults']['classPrefix'] . 'list'
 		);
 
 		$this->_tags['beginbox'] =
-			'<div class="row-fluid">
-				<div class="span12">
-					<div class="box">
-						<div class="box-title">
-							<i class="' . $boxIconClass. '"></i>
+			"<div class='$themeCss[row]'>
+				<div class='$themeCss[columnFull]'>
+					<div class='box'>
+						<div class='box-title'>
+							<i class='$boxIconClass'></i>
 							%s
 						</div>
-						<div class="box-content %s">';
+						<div class='box-content %s'>";
 		$this->_tags['endbox'] =
 						'</div>
 					</div>
@@ -42,6 +50,14 @@ class CroogoHtmlHelper extends HtmlHelper {
 		$this->_tags['icon'] = '<i class="%s"%s></i> ';
 	}
 
+/**
+ * Create a string representing the start of a box container
+ *
+ * @param string $title Box title
+ * @param boolean $isHidden When true, container will have 'hidden' class
+ * @param boolean $isLabelHidden When true, container will have 'label-hidden' class
+ * @returns string Start of box markup
+ */
 	public function beginBox($title, $isHidden = false, $isLabelHidden = false) {
 		$isHidden = $isHidden ? 'hidden' : '';
 		$isLabelHidden = $isLabelHidden ? 'label-hidden' : '';
@@ -49,10 +65,22 @@ class CroogoHtmlHelper extends HtmlHelper {
 		return $this->useTag('beginbox', $title, $class);
 	}
 
+/**
+ * Create a string that ends a box container
+ *
+ * @return string Box end markup
+ */
 	public function endBox() {
 		return $this->useTag('endbox');
 	}
 
+/**
+ * Returns a icon markup
+ *
+ * @param string $name Icon name/identifier without the prefix
+ * @param array $options Icon html attributes
+ * @return string Icon markup
+ */
 	public function icon($name, $options = array()) {
 		$iconDefaults = $this->settings['iconDefaults'];
 		$defaults = array('class' => '');
@@ -74,17 +102,29 @@ class CroogoHtmlHelper extends HtmlHelper {
 		return sprintf($this->_tags['icon'], $class, $attributes);
 	}
 
+/**
+ * Create a link with icons with XHR toggleable status values
+ *
+ * @param string $value Current value
+ * @param array $url Url in array format
+ */
 	public function status($value, $url = array()) {
-		$icon = $value == CroogoStatus::PUBLISHED ? 'ok' : 'remove';
-		$class = $value == CroogoStatus::PUBLISHED ? 'green' : 'red';
 		$iconDefaults = $this->settings['iconDefaults'];
+		$icons = $this->settings['icons'];
+		$icon = $value == CroogoStatus::PUBLISHED ? $icons['check-mark'] : $icons['x-mark'];
+		$class = $value == CroogoStatus::PUBLISHED ? 'green' : 'red';
 
 		if (empty($url)) {
 			return $this->icon($icon, array('class' => $class));
 		} else {
 			return $this->link('', 'javascript:void(0);', array(
 				'data-url' => $this->url($url),
-				'class' => $iconDefaults['classPrefix'] . $icon . ' ' . $class . ' ajax-toggle',
+				'class' => trim(implode(' ', array(
+					$iconDefaults['classDefault'],
+					$iconDefaults['classPrefix'] . $icon,
+					$class,
+					'ajax-toggle',
+				)))
 			));
 		}
 	}
@@ -164,6 +204,9 @@ class CroogoHtmlHelper extends HtmlHelper {
 		return parent::link($title, $url, $options, $confirmMessage);
 	}
 
+/**
+ * @deprecated Use FileManagerHelper::breadcrumb()
+ */
 	public function addPath($path, $separator) {
 		$path = explode($separator, $path);
 		$currentPath = '';
@@ -176,11 +219,11 @@ class CroogoHtmlHelper extends HtmlHelper {
 		return $this;
 	}
 
-	public function addCrumb($name, $link = null, $options = null) {
-		parent::addCrumb($name, $link, $options);
-		return $this;
-	}
-
+/**
+ * Checks that crumbs has been added/initialied
+ *
+ * @return boolean True if crumbs has been populated
+ */
 	public function hasCrumbs() {
 		return !empty($this->_crumbs);
 	}

@@ -108,7 +108,7 @@ echo $this->element('admin/modal', array(
 ?>
 
 </table>
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div id="bulk-action" class="control-group">
 		<?php
 			echo $this->Form->input('Comment.action', array(

@@ -29,8 +29,8 @@ echo $this->Form->create(
 );
 
 ?>
-<div class="row-fluid">
-	<div class="span12">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 		<table class="table table-striped">
 		<?php
 			$tableHeaders = $this->Html->tableHeaders(array(
@@ -120,7 +120,7 @@ echo $this->Form->create(
 
 		</table>
 
-		<div class="row-fluid">
+		<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 			<div id="bulk-action" class="control-group">
 			<?php
 				echo $this->Form->input('Node.action', array(

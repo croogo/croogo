@@ -38,10 +38,12 @@ echo $this->Form->create('Node', array(
 	'url' => $formUrl,
 	'class' => 'protected-form',
 ));
+$inputDefaults = $this->Form->inputDefaults();
+$inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 
 ?>
-<div class="row-fluid">
-	<div class="span8">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 
 		<ul class="nav nav-tabs">
 		<?php
@@ -67,17 +69,13 @@ echo $this->Form->create('Node', array(
 						'data-relatedElement' => '#NodeParentId',
 						'data-url' => $apiUrl,
 					),
-					'class' => 'span10',
 				));
 				echo $this->Form->input('id');
-				$this->Form->inputDefaults(array(
-					'class' => 'span10',
-				));
 				echo $this->Form->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));
 				echo $this->Form->input('slug', array(
-					'class' => 'span10 slug',
+					'class' => trim($inputClass . ' slug'),
 					'label' => __d('croogo', 'Slug'),
 				));
 				echo $this->Form->input('excerpt', array(
@@ -92,7 +90,6 @@ echo $this->Form->create('Node', array(
 			<div id="node-access" class="tab-pane">
 			<?php
 				echo $this->Form->input('Role.Role', array(
-					'class' => false,
 					'label' => __d('croogo', 'Role')
 				));
 			?>
@@ -102,7 +99,7 @@ echo $this->Form->create('Node', array(
 		</div>
 
 	</div>
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 	<?php
 		$username = isset($this->data['User']['username']) ?
 			$this->data['User']['username'] :
@@ -114,7 +111,6 @@ echo $this->Form->create('Node', array(
 			$this->Form->input('status', array(
 				'legend' => false,
 				'type' => 'radio',
-				'class' => false,
 				'default' => CroogoStatus::UNPUBLISHED,
 				'options' => $this->Croogo->statuses(),
 			)) .
@@ -125,7 +121,6 @@ echo $this->Form->create('Node', array(
 			$this->Form->autocomplete('user_id', array(
 				'type' => 'text',
 				'label' => __d('croogo', 'Publish as '),
-				'class' => 'span10',
 				'autocomplete' => array(
 					'default' => $username,
 					'data-displayField' => 'username',
@@ -138,7 +133,7 @@ echo $this->Form->create('Node', array(
 
 			$this->Form->input('created', array(
 				'type' => 'text',
-				'class' => 'span10 input-datetime',
+				'class' => trim($inputClass . ' input-datetime'),
 				'label' => __d('croogo', 'Created'),
 			)) .
 

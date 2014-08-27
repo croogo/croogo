@@ -20,27 +20,25 @@ $showActions = isset($showActions) ? $showActions : true;
 </h2>
 
 <?php if ($showActions): ?>
-<div class="row-fluid">
-	<div class="span12 actions">
-		<ul class="nav-buttons">
-			<?php if ($actionsBlock = $this->fetch('actions')): ?>
-				<?php echo $actionsBlock; ?>
-			<?php else: ?>
-			<?php
-				echo $this->Croogo->adminAction(
-					__d('croogo', 'New %s', __d('croogo', Inflector::singularize($this->name))),
-					array('action' => 'add'),
-					array('button' => 'success')
-				);
-			?>
-			<?php endif; ?>
-		</ul>
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="actions <?php echo $this->Layout->cssClass('columnFull'); ?>">
+		<?php if ($actionsBlock = $this->fetch('actions')): ?>
+			<?php echo $actionsBlock; ?>
+		<?php else: ?>
+		<?php
+			echo $this->Croogo->adminAction(
+				__d('croogo', 'New %s', __d('croogo', Inflector::singularize($this->name))),
+				array('action' => 'add'),
+				array('button' => 'success')
+			);
+		?>
+		<?php endif; ?>
 	</div>
 </div>
 <?php endif; ?>
 
-<div class="row-fluid">
-	<div class="span12">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 		<?php if ($contentBlock = $this->fetch('content')): ?>
 			<?php echo $this->element('admin/search'); ?>
 			<?php echo $contentBlock; ?>
@@ -115,8 +113,8 @@ $showActions = isset($showActions) ? $showActions : true;
 	</div>
 </div>
 
-<div class="row-fluid">
-	<div class="span12">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 		<?php if ($pagingBlock = $this->fetch('paging')): ?>
 			<?php echo $pagingBlock; ?>
 		<?php else: ?>

@@ -9,6 +9,7 @@ $this->Html
 ?>
 
 <?php $this->start('actions'); ?>
+<div class="btn-group">
 <?php
 	echo $this->FileManager->adminAction(__d('croogo', 'Upload here'),
 		array('controller' => 'file_manager', 'action' => 'upload'),
@@ -23,6 +24,7 @@ $this->Html
 		$path
 	);
 ?>
+</div>
 <?php $this->end(); ?>
 
 <div class="breadcrumb">

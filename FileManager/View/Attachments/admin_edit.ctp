@@ -10,8 +10,8 @@ $this->Html
 echo $this->Form->create('Attachment', array('url' => array('controller' => 'attachments', 'action' => 'edit')));
 
 ?>
-<div class="row-fluid">
-	<div class="span8">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 
 		<ul class="nav nav-tabs">
 		<?php
@@ -24,21 +24,6 @@ echo $this->Form->create('Attachment', array('url' => array('controller' => 'att
 			<div id="attachment-main" class="tab-pane">
 			<?php
 				echo $this->Form->input('id');
-
-				$fileType = explode('/', $this->data['Attachment']['mime_type']);
-				$fileType = $fileType['0'];
-				if ($fileType == 'image') {
-					$imgUrl = $this->Image->resize('/uploads/' . $this->data['Attachment']['slug'], 200, 300, true, array('class' => 'img-polaroid'));
-				} else {
-					$imgUrl = $this->Html->image('/croogo/img/icons/' . $this->Filemanager->mimeTypeToImage($this->data['Attachment']['mime_type'])) . ' ' . $this->data['Attachment']['mime_type'];
-				}
-				echo $this->Html->link($imgUrl, $this->data['Attachment']['path'], array(
-					'class' => 'thickbox pull-right',
-				));
-				$this->Form->inputDefaults(array(
-					'class' => 'span6',
-					'label' => false,
-				));
 				echo $this->Form->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));
@@ -57,7 +42,6 @@ echo $this->Form->create('Attachment', array('url' => array('controller' => 'att
 					'value' => $this->data['Attachment']['mime_type'],
 					'readonly' => 'readonly')
 				);
-
 			?>
 			</div>
 
@@ -65,7 +49,7 @@ echo $this->Form->create('Attachment', array('url' => array('controller' => 'att
 		</div>
 	</div>
 
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 	<?php
 		$redirect = array('action' => 'index');
 		if ($this->Session->check('Wysiwyg.redirect')) {
@@ -79,6 +63,20 @@ echo $this->Form->create('Attachment', array('url' => array('controller' => 'att
 				$redirect,
 				array('class' => 'cancel', 'button' => 'danger')
 			) .
+			$this->Html->endBox();
+
+		$fileType = explode('/', $this->data['Attachment']['mime_type']);
+		$fileType = $fileType['0'];
+		if ($fileType == 'image'):
+			$imgUrl = $this->Image->resize('/uploads/' . $this->data['Attachment']['slug'], 200, 300, true, array('class' => 'img-polaroid'));
+		else:
+			$imgUrl = $this->Html->image('/croogo/img/icons/' . $this->Filemanager->mimeTypeToImage($this->data['Attachment']['mime_type'])) . ' ' . $this->data['Attachment']['mime_type'];
+		endif;
+		$preview = $this->Html->link($imgUrl, $this->data['Attachment']['path'], array(
+			'class' => 'thickbox',
+		));
+		echo $this->Html->beginBox(__d('croogo', 'Preview')) .
+			$preview .
 			$this->Html->endBox();
 	?>
 	</div>

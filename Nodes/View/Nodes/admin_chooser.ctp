@@ -1,5 +1,5 @@
-<div class="row-fluid">
-	<div class="span12">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 	<?php
 		echo __d('croogo', 'Sort by:');
 		echo ' ' . $this->Paginator->sort('id', __d('croogo', 'Id'), array('class' => 'sort'));
@@ -9,7 +9,7 @@
 	</div>
 </div>
 
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<?php
 		echo $this->element('Nodes.admin/nodes_search');
 	?>

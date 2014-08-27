@@ -19,8 +19,8 @@ if ($this->request->params['action'] == 'admin_add') {
 <h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
 <?php echo $this->Form->create('Aco', array('url' => array('controller' => 'acl_actions', 'action' => 'add'))); ?>
 
-<div class="row-fluid">
-	<div class="span8">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 
 		<ul class="nav nav-tabs">
 		<?php
@@ -39,10 +39,6 @@ if ($this->request->params['action'] == 'admin_add') {
 					'label' => __d('croogo', 'Parent'),
 					'help' => __d('croogo', 'Choose none if the Aco is a controller.'),
 				));
-				$this->Form->inputDefaults(array(
-					'label' => false,
-					'class' => 'span10',
-				));
 				echo $this->Form->input('alias', array(
 					'label' => __d('croogo', 'Alias'),
 				));
@@ -53,7 +49,7 @@ if ($this->request->params['action'] == 'admin_add') {
 		</div>
 	</div>
 
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 	<?php
 		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .

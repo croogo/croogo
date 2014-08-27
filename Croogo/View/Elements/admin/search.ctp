@@ -7,7 +7,7 @@ if (!isset($className)) {
 }
 if (!empty($searchFields)):
 ?>
-<div class="<?php echo $className; ?> filter row-fluid">
+<div class="<?php echo $className; ?> filter">
 <?php
 	echo $this->Form->create($modelClass, array(
 		'class' => 'form-inline',
@@ -41,7 +41,7 @@ if (!empty($searchFields)):
 		echo $this->Form->input($field, $options);
 	}
 
-	echo $this->Form->submit(__d('croogo', 'Filter'), array('div' => 'input submit'));
+	echo $this->Form->submit(__d('croogo', 'Filter'), array('div' => false));
 	echo $this->Form->end();
 ?>
 </div>

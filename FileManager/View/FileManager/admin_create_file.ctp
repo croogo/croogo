@@ -24,8 +24,8 @@ echo $this->Form->create('FileManager', array(
 
 &nbsp;
 
-<div class="row-fluid">
-	<div class="span8">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 
 		<ul class="nav nav-tabs">
 		<?php
@@ -40,7 +40,6 @@ echo $this->Form->create('FileManager', array(
 				echo $this->Form->input('FileManager.name', array(
 					'type' => 'text',
 					'label' => __d('croogo', 'Filename'),
-					'class' => 'span10',
 				));
 			?>
 			</div>
@@ -48,7 +47,7 @@ echo $this->Form->create('FileManager', array(
 			<?php echo $this->Croogo->adminTabs(); ?>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 		<?php
 		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 			$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .

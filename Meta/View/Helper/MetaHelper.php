@@ -94,12 +94,10 @@ class MetaHelper extends AppHelper {
 			'key' => array(
 				'label' => __d('croogo', 'Key'),
 				'value' => $key,
-				'class' => 'span12'
 			),
 			'value' => array(
 				'label' => __d('croogo', 'Value'),
 				'value' => $value,
-				'class' => 'span12',
 				'type' => 'textarea',
 				'rows' => 2,
 			),

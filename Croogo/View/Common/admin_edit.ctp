@@ -18,11 +18,11 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 </h2>
 
 <?php if ($actionsBlock = $this->fetch('actions')): ?>
-<div class="row-fluid">
-	<div class="span12 actions">
-		<ul class="nav-buttons">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="actions <?php echo $this->Layout->cssClass('columnFull'); ?>">
+		<div class="btn-group">
 			<?php echo $actionsBlock; ?>
-		</ul>
+		</div>
 	</div>
 </div>
 <?php endif; ?>
@@ -37,8 +37,8 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 			echo $this->Form->input('id');
 		}
 	?>
-	<div class="row-fluid">
-		<div class="span8">
+	<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+		<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 			<ul class="nav nav-tabs">
 			<?php
 				echo $this->Croogo->adminTab(__d('croogo', $modelClass), "#$tabId");
@@ -52,12 +52,9 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 					if (is_string($opts)) {
 						$field = $opts;
 						$opts = array(
-							'class' => 'span10',
 							'label' => false,
 							'tooltip' => ucfirst($field),
 						);
-					} else {
-						$opts = Hash::merge(array('class' => 'span10'), $opts);
 					}
 					$content .= $this->Form->input($field, $opts);
 				endforeach;
@@ -74,7 +71,7 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 			?>
 			</div>
 		</div>
-		<div class="span4">
+		<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 		<?php
 			if ($buttonsBlock = $this->fetch('buttons')):
 				echo $buttonsBlock;

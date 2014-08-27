@@ -115,7 +115,7 @@ $this->Html
 	?>
 
 </table>
-<div class="row-fluid">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 	<div id="bulk-action" class="control-group">
 		<?php
 			echo $this->Form->input('Link.action', array(

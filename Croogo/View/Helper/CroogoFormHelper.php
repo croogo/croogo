@@ -148,6 +148,17 @@ class CroogoFormHelper extends FormHelper {
 			$this->_currentRoleId = $this->_View->Layout->getRoleId();
 			unset($options['fieldAcess']);
 		}
+		if (!empty($this->settings['inputDefaults'])) {
+			$options = Hash::merge(array(
+				'inputDefaults' => $this->settings['inputDefaults'],
+			), $options);
+		}
+		if (
+			empty($options['inputDefaults']['class']) &&
+			isset($this->_View->viewVars['themeSettings']['css']['formInput'])
+		) {
+			$options['inputDefaults']['class'] = $this->_View->viewVars['themeSettings']['css']['formInput'];
+		}
 		return parent::create($model, $options);
 	}
 
@@ -257,10 +268,16 @@ class CroogoFormHelper extends FormHelper {
 		$label = isset($options['label']) ? $options['label'] : Inflector::humanize($field);
 
 		$default = isset($autocomplete['default']) ? $autocomplete['default'] : array_shift($defaults);
+		$inputDefaults = $this->_View->Form->inputDefaults();
+		$class = null;
+		if (!empty($inputDefaults['class'])) {
+			$class = $inputDefaults['class'];
+		}
+		$class = $options['class'] ? $options['class'] : $class;
 		$autocomplete = Hash::merge($autocomplete, array(
 			'type' => $options['type'],
 			'label' => $label,
-			'class' => trim($options['class'] . ' typeahead-autocomplete'),
+			'class' => trim($class . ' typeahead-autocomplete'),
 			'default' => $default,
 			'autocomplete' => 'off',
 		));
