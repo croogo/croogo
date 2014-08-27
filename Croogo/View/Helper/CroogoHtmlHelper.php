@@ -219,11 +219,6 @@ class CroogoHtmlHelper extends HtmlHelper {
 		return $this;
 	}
 
-	public function addCrumb($name, $link = null, $options = null) {
-		parent::addCrumb($name, $link, $options);
-		return $this;
-	}
-
 /**
  * Checks that crumbs has been added/initialied
  *
