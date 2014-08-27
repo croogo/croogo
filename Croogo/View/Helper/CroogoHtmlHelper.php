@@ -17,6 +17,10 @@ class CroogoHtmlHelper extends HtmlHelper {
 				'smallIconClass' => '',
 				'classPrefix' => 'icon-',
 			),
+			'icons' => array(
+				'check-mark' => 'ok',
+				'x-mark' => 'remove',
+			),
 		), $settings);
 		parent::__construct($View, $settings);
 
@@ -76,16 +80,22 @@ class CroogoHtmlHelper extends HtmlHelper {
 	}
 
 	public function status($value, $url = array()) {
-		$icon = $value == CroogoStatus::PUBLISHED ? 'ok' : 'remove';
-		$class = $value == CroogoStatus::PUBLISHED ? 'green' : 'red';
 		$iconDefaults = $this->settings['iconDefaults'];
+		$icons = $this->settings['icons'];
+		$icon = $value == CroogoStatus::PUBLISHED ? $icons['check-mark'] : $icons['x-mark'];
+		$class = $value == CroogoStatus::PUBLISHED ? 'green' : 'red';
 
 		if (empty($url)) {
 			return $this->icon($icon, array('class' => $class));
 		} else {
 			return $this->link('', 'javascript:void(0);', array(
 				'data-url' => $this->url($url),
-				'class' => $iconDefaults['classPrefix'] . $icon . ' ' . $class . ' ajax-toggle',
+				'class' => trim(implode(' ', array(
+					$iconDefaults['classDefault'],
+					$iconDefaults['classPrefix'] . $icon,
+					$class,
+					'ajax-toggle',
+				)))
 			));
 		}
 	}
