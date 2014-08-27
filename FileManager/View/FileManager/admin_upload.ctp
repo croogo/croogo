@@ -1,18 +1,14 @@
 <?php
+
+$this->extend('/Common/admin_edit');
+
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'File Manager'), array('plugin' => 'file_manager', 'controller' => 'file_manager', 'action' => 'browse'))
 	->addCrumb(__d('croogo', 'Upload'), '/' . $this->request->url);
 
-echo $this->Form->create('FileManager', array(
-	'type' => 'file',
-	'url' => $this->Html->url(array(
-		'controller' => 'file_manager',
-		'action' => 'upload',
-	), true) . '?path=' . urlencode($path),
-));
+$this->append('page-heading');
 ?>
-<h2 class="hidden-desktop"><?php echo __d('croogo', 'Upload file'); ?> </h2>
 <div class="breadcrumb">
 	<a href="#"><?php echo __d('croogo', 'You are here') . ' '; ?> </a> <span class="divider"> &gt; </span>
 	<?php $breadcrumb = $this->FileManager->breadcrumb($path); ?>
@@ -20,39 +16,44 @@ echo $this->Form->create('FileManager', array(
 		<?php echo $this->FileManager->linkDirectory($pathname, $p); ?>
 			<span class="divider"> <?php echo DS; ?> </span>
 	<?php endforeach; ?>
-</div>
+</div> &nbsp;
+<?php
+$this->end();
 
-&nbsp;
+$this->append('form-start', $this->Form->create('FileManager', array(
+	'type' => 'file',
+	'url' => $this->Html->url(array(
+		'controller' => 'file_manager',
+		'action' => 'upload',
+	), true) . '?path=' . urlencode($path),
+)));
 
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
-		<ul class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTab(__d('croogo', 'Upload'), '#filemanager-upload');
-		?>
-		</ul>
+$this->append('tab-heading');
+	echo $this->Croogo->adminTab(__d('croogo', 'Upload'), '#filemanager-upload');
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-		<div class="tab-content">
-			<div id="filemanager-upload" class="tab-pane">
-			<?php
-				echo $this->Form->input('FileManager.file', array('type' => 'file', 'label' => ''));
-			?>
-			</div>
+$this->append('tab-content');
+	echo $this->Html->tabStart('filemanager-upload') .
+		$this->Form->input('FileManager.file', array(
+			'type' => 'file',
+			'label' => '',
+		));
+	echo $this->Html->tabEnd();
 
-			<?php echo $this->Croogo->adminTabs(); ?>
-		</div>
-	</div>
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
-	<?php
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
-			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
-			$this->Html->endBox();
+$this->append('panels');
+	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+		$this->Form->button(__d('croogo', 'Save')) .
+		$this->Html->link(__d('croogo', 'Cancel'),
+			array('action' => 'index'),
+			array('button' => 'danger',
+		));
+	echo $this->Html->endBox();
 
-		echo $this->Croogo->adminBoxes();
-	?>
-	</div>
+	echo $this->Croogo->adminBoxes();
+$this->end();
 
-</div>
-<?php echo $this->Form->end(); ?>
+$this->append('form-end', $this->Form->end());

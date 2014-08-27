@@ -18,77 +18,66 @@ if ($this->request->params['action'] == 'admin_add') {
 		->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
-echo $this->Form->create('Vocabulary');
+$this->append('form-start', $this->Form->create('Vocabulary'));
 $inputDefaults = $this->Form->inputDefaults();
-$inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null
+$inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 
-?>
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
+$this->append('tab-heading');
+	echo $this->Croogo->adminTab(__d('croogo', 'Vocabulary'), '#vocabulary-basic');
+	echo $this->Croogo->adminTab(__d('croogo', 'Options'), '#vocabulary-options');
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-		<ul class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTab(__d('croogo', 'Vocabulary'), '#vocabulary-basic');
-			echo $this->Croogo->adminTab(__d('croogo', 'Options'), '#vocabulary-options');
-			echo $this->Croogo->adminTabs();
-		?>
-		</ul>
+$this->append('tab-content');
 
-		<div class="tab-content">
+	echo $this->Html->tabStart('vocabulary-basic') .
+		$this->Form->input('id') .
+		$this->Form->input('title', array(
+			'label' => __d('croogo', 'Title'),
+			)) .
+		$this->Form->input('alias', array(
+			'class' => trim($inputClass . ' alias'),
+			'label' => __d('croogo', 'Alias'),
+			)) .
+		$this->Form->input('description', array(
+			'label' => __d('croogo', 'Description'),
+			)) .
+		$this->Form->input('Type.Type', array(
+			'label' => __d('croogo', 'Type'),
+		));
+	echo $this->Html->tabEnd();
 
-			<div id="vocabulary-basic" class="tab-pane">
-			<?php
-				echo $this->Form->input('id');
-				echo $this->Form->input('title', array(
-					'label' => __d('croogo', 'Title'),
-				));
-				echo $this->Form->input('alias', array(
-					'class' => trim($inputClass . ' alias'),
-					'label' => __d('croogo', 'Alias'),
-				));
-				echo $this->Form->input('description', array(
-					'label' => __d('croogo', 'Description'),
-				));
-				echo $this->Form->input('Type.Type', array(
-					'label' => __d('croogo', 'Type'),
-				));
-			?>
-			</div>
+	echo $this->Html->tabStart('vocabulary-options') .
+		$this->Form->input('required', array(
+			'label' => __d('croogo', 'Required'),
+			'class' => false,
+			)) .
+		$this->Form->input('multiple', array(
+			'label' => __d('croogo', 'Multiple'),
+			'class' => false,
+			)) .
+		$this->Form->input('tags', array(
+			'label' => __d('croogo', 'Tags'),
+			'class' => false,
+		));
+	echo $this->Html->tabEnd();
 
-			<div id="vocabulary-options" class="tab-pane">
-			<?php
-				echo $this->Form->input('required', array(
-					'label' => __d('croogo', 'Required'),
-					'class' => false,
-				));
-				echo $this->Form->input('multiple', array(
-					'label' => __d('croogo', 'Multiple'),
-					'class' => false,
-				));
-				echo $this->Form->input('tags', array(
-					'label' => __d('croogo', 'Tags'),
-					'class' => false,
-				));
-			?>
-			</div>
+	echo $this->Croogo->adminTabs();
 
-			<?php echo $this->Croogo->adminBoxes(); ?>
-		</div>
-	</div>
+$this->end();
 
-	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
-	<?php
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
-			$this->Html->link(
-				__d('croogo', 'Cancel'),
-				array('action' => 'index'),
-				array('button' => 'danger')
-			) .
-			$this->Html->endBox();
-	?>
-	</div>
+$this->start('panels');
+	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+		$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+		$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
+		$this->Html->link(
+			__d('croogo', 'Cancel'),
+			array('action' => 'index'),
+			array('button' => 'danger')
+		);
 
-</div>
-<?php echo $this->Form->end(); ?>
+	echo $this->Html->endBox();
+
+	echo $this->end('panels');
+
+$this->append('form-end', $this->Form->end());

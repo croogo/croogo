@@ -1,73 +1,60 @@
-<h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
 <?php
+
+$this->extend('/Common/admin_edit');
+
 $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'index'))
 	->addCrumb($prefix, '/' . $this->request->url);
-?>
-<?php
 
-echo $this->Form->create('Setting', array(
+$this->append('form-start', $this->Form->create('Setting', array(
 	'url' => array(
 		'controller' => 'settings',
 		'action' => 'prefix',
 		$prefix,
 	),
 	'class' => 'protected-form',
-));
+)));
 
-?>
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+$this->append('tab-heading');
+	echo $this->Croogo->adminTab($prefix, '#settings-main');
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
+$this->append('tab-content');
 
-		<ul class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTab($prefix, '#settings-main');
-			echo $this->Croogo->adminTabs();
-		?>
-		</ul>
+	echo $this->Html->tabStart('settings-main');
+		$i = 0;
+		foreach ($settings as $setting) :
+			if (!empty($setting['Params']['tab'])) {
+				continue;
+			}
+			$keyE = explode('.', $setting['Setting']['key']);
+			$keyTitle = Inflector::humanize($keyE['1']);
 
-		<div class="tab-content">
+			$label = ($setting['Setting']['title'] != null) ? $setting['Setting']['title'] : $keyTitle;
 
-			<div id="settings-main" class="tab-pane">
-			<?php
-				$i = 0;
-				foreach ($settings as $setting) :
-					if (!empty($setting['Params']['tab'])) {
-						continue;
-					}
-					$keyE = explode('.', $setting['Setting']['key']);
-					$keyTitle = Inflector::humanize($keyE['1']);
+			$i = $setting['Setting']['id'];
+			echo
+				$this->Form->input("Setting.$i.id", array(
+					'value' => $setting['Setting']['id'],
+				)) .
+				$this->Form->input("Setting.$i.key", array(
+					'type' => 'hidden', 'value' => $setting['Setting']['key']
+				)) .
+				$this->SettingsForm->input($setting, __d('croogo', $label), $i);
+			$i++;
+		endforeach;
+		echo $this->Croogo->adminTabs();
+	echo $this->Html->tabEnd();
 
-					$label = ($setting['Setting']['title'] != null) ? $setting['Setting']['title'] : $keyTitle;
+$this->end();
 
-					$i = $setting['Setting']['id'];
-					echo
-						$this->Form->input("Setting.$i.id", array(
-							'value' => $setting['Setting']['id'],
-						)) .
-						$this->Form->input("Setting.$i.key", array(
-							'type' => 'hidden', 'value' => $setting['Setting']['key']
-						)) .
-						$this->SettingsForm->input($setting, __d('croogo', $label), $i);
-					$i++;
-				endforeach;
-			?>
-			</div>
+$this->append('panels');
+	echo $this->Html->beginBox(__d('croogo', 'Saving')) .
+		$this->Form->button(__d('croogo', 'Save')) .
+		$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'btn btn-danger')) .
+	$this->Html->endBox();
+	echo $this->Croogo->adminBoxes();
+$this->end();
 
-			<?php echo $this->Croogo->adminTabs(); ?>
-		</div>
-	</div>
-
-	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
-		<?php
-		echo $this->Html->beginBox(__d('croogo', 'Saving')) .
-			$this->Form->button(__d('croogo', 'Save')) .
-			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'btn btn-danger')) .
-			$this->Html->endBox();
-		echo $this->Croogo->adminBoxes();
-		?>
-	</div>
-
-</div>
-<?php echo $this->Form->end(); ?>
+$this->append('form-end', $this->Form->end());
