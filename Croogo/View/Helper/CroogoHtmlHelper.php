@@ -9,6 +9,9 @@ App::uses('HtmlHelper', 'View/Helper');
  */
 class CroogoHtmlHelper extends HtmlHelper {
 
+/**
+ * Constructor
+ */
 	public function __construct(View $View, $settings = array()) {
 		$settings = Hash::merge(array(
 			'iconDefaults' => array(
@@ -47,6 +50,14 @@ class CroogoHtmlHelper extends HtmlHelper {
 		$this->_tags['icon'] = '<i class="%s"%s></i> ';
 	}
 
+/**
+ * Create a string representing the start of a box container
+ *
+ * @param string $title Box title
+ * @param boolean $isHidden When true, container will have 'hidden' class
+ * @param boolean $isLabelHidden When true, container will have 'label-hidden' class
+ * @returns string Start of box markup
+ */
 	public function beginBox($title, $isHidden = false, $isLabelHidden = false) {
 		$isHidden = $isHidden ? 'hidden' : '';
 		$isLabelHidden = $isLabelHidden ? 'label-hidden' : '';
@@ -54,10 +65,22 @@ class CroogoHtmlHelper extends HtmlHelper {
 		return $this->useTag('beginbox', $title, $class);
 	}
 
+/**
+ * Create a string that ends a box container
+ *
+ * @return string Box end markup
+ */
 	public function endBox() {
 		return $this->useTag('endbox');
 	}
 
+/**
+ * Returns a icon markup
+ *
+ * @param string $name Icon name/identifier without the prefix
+ * @param array $options Icon html attributes
+ * @return string Icon markup
+ */
 	public function icon($name, $options = array()) {
 		$iconDefaults = $this->settings['iconDefaults'];
 		$defaults = array('class' => '');
@@ -79,6 +102,12 @@ class CroogoHtmlHelper extends HtmlHelper {
 		return sprintf($this->_tags['icon'], $class, $attributes);
 	}
 
+/**
+ * Create a link with icons with XHR toggleable status values
+ *
+ * @param string $value Current value
+ * @param array $url Url in array format
+ */
 	public function status($value, $url = array()) {
 		$iconDefaults = $this->settings['iconDefaults'];
 		$icons = $this->settings['icons'];
@@ -175,6 +204,9 @@ class CroogoHtmlHelper extends HtmlHelper {
 		return parent::link($title, $url, $options, $confirmMessage);
 	}
 
+/**
+ * @deprecated Use FileManagerHelper::breadcrumb()
+ */
 	public function addPath($path, $separator) {
 		$path = explode($separator, $path);
 		$currentPath = '';
@@ -192,6 +224,11 @@ class CroogoHtmlHelper extends HtmlHelper {
 		return $this;
 	}
 
+/**
+ * Checks that crumbs has been added/initialied
+ *
+ * @return boolean True if crumbs has been populated
+ */
 	public function hasCrumbs() {
 		return !empty($this->_crumbs);
 	}
