@@ -7,29 +7,23 @@ $this->Html
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Locales'), '/' . $this->request->url);
 
-?>
-<?php echo $this->start('actions') ?>
-<?php
+$this->append('actions');
 	echo $this->Croogo->adminAction(__d('croogo', 'Upload'),
 		array('action' => 'add')
 	);
-?>
-<?php echo $this->end('actions') ?>
+$this->end();
 
-<table class="table table-striped">
-<?php
+$this->start('table-heading');
 	$tableHeaders = $this->Html->tableHeaders(array(
 		'',
 		__d('croogo', 'Locale'),
 		__d('croogo', 'Default'),
 		__d('croogo', 'Actions'),
 	));
-?>
-	<thead>
-		<?php echo $tableHeaders; ?>
-	</thead>
+	echo $this->Html->tag('thead', $tableHeaders);
+$this->end();
 
-<?php
+$this->append('table-body');
 	$rows = array();
 	foreach ($locales as $locale):
 		$actions = array();
@@ -64,5 +58,5 @@ $this->Html
 	endforeach;
 
 	echo $this->Html->tableCells($rows);
+$this->end();
 ?>
-</table>

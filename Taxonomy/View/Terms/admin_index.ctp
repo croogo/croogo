@@ -7,26 +7,20 @@ $this->Html
 	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index'))
 	->addCrumb($vocabulary['Vocabulary']['title'], array('plugin' => 'taxonomy', 'controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id']));
-?>
 
-<?php $this->start('actions'); ?>
-<?php
+$this->append('actions');
 	echo $this->Croogo->adminAction(
 		__d('croogo', 'New Term'),
 		array('action' => 'add', $vocabulary['Vocabulary']['id'])
 	);
-?>
-<?php $this->end(); ?>
+$this->end();
 
-<?php
 	if (isset($this->request->params['named'])) {
 		foreach ($this->request->params['named'] as $nn => $nv) {
 			$this->Paginator->options['url'][] = $nn . ':' . $nv;
 		}
 	}
-?>
-<table class="table table-striped">
-<?php
+$this->start('table-heading');
 	$tableHeaders = $this->Html->tableHeaders(array(
 		'',
 		__d('croogo', 'Id'),
@@ -34,11 +28,10 @@ $this->Html
 		__d('croogo', 'Slug'),
 		__d('croogo', 'Actions'),
 	));
-?>
-<thead>
-	<?php echo $tableHeaders; ?>
-</thead>
-<?php
+	echo $this->Html->tag('thead', $tableHeaders);
+$this->end();
+
+$this->append('table-body');
 	$rows = array();
 
 	foreach ($terms as $term):
@@ -95,8 +88,7 @@ $this->Html
 			$actions,
 		);
 	endforeach;
-
 	echo $this->Html->tableCells($rows);
+$this->end();
 
 ?>
-</table>

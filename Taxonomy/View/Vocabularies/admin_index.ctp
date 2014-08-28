@@ -7,9 +7,8 @@ $this->Html
 	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Vocabularies'), '/' . $this->request->url);
 
-?>
-<table class="table table-striped">
-<?php
+$this->start('table-heading');
+
 	$tableHeaders = $this->Html->tableHeaders(array(
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		$this->Paginator->sort('title', __d('croogo', 'Title')),
@@ -17,11 +16,11 @@ $this->Html
 		$this->Paginator->sort('plugin', __d('croogo', 'Plugin')),
 		__d('croogo', 'Actions'),
 	));
-?>
-	<thead>
-		<?php echo $tableHeaders; ?>
-	</thead>
-<?php
+
+	echo $this->Html->tag('thead', $tableHeaders);
+$this->end();
+
+$this->append('table-body');
 
 	$rows = array();
 	foreach ($vocabularies as $vocabulary) :
@@ -58,5 +57,5 @@ $this->Html
 	endforeach;
 
 	echo $this->Html->tableCells($rows);
-?>
-</table>
+
+$this->end();

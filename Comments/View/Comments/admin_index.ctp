@@ -19,14 +19,12 @@ if (isset($criteria['Comment.status'])) {
 	}
 }
 
-echo $this->element('admin/modal', array(
+$this->append('table-footer', $this->element('admin/modal', array(
 	'id' => 'comment-modal',
 	'class' => 'hide',
-));
+)));
 
-?>
-<?php $this->start('actions'); ?>
-<?php
+$this->append('actions');
 	echo $this->Croogo->adminAction(
 		__d('croogo', 'Published'),
 		array('action' => 'index', '?' => array('status' => '1'))
@@ -35,12 +33,10 @@ echo $this->element('admin/modal', array(
 		__d('croogo', 'Approval'),
 		array('action' => 'index', '?' => array('status' => '0'))
 	);
-?>
-<?php $this->end(); ?>
+$this->end();
 
-<?php echo $this->Form->create('Comment', array('url' => array('controller' => 'comments', 'action' => 'process'))); ?>
-<table class="table table-striped">
-<?php
+$this->append('form-start', $this->Form->create('Comment', array('url' => array('controller' => 'comments', 'action' => 'process', 'class' => 'form-inline'))));
+$this->start('table-heading');
 	$tableHeaders = $this->Html->tableHeaders(array(
 		$this->Form->checkbox('checkAll'),
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
@@ -51,12 +47,10 @@ echo $this->element('admin/modal', array(
 		$this->Paginator->sort('created', __d('croogo', 'Created')),
 		__d('croogo', 'Actions'),
 	));
-?>
-	<thead>
-	<?php echo $tableHeaders; ?>
-	</thead>
-<?php
+	echo $this->Html->tag('thead', $tableHeaders);
+$this->end();
 
+$this->append('table-body');
 	$rows = array();
 	foreach ($comments as $comment) {
 		$actions = array();
@@ -105,25 +99,23 @@ echo $this->element('admin/modal', array(
 	}
 
 	echo $this->Html->tableCells($rows);
-?>
+$this->end();
 
-</table>
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div id="bulk-action" class="control-group">
-		<?php
-			echo $this->Form->input('Comment.action', array(
-				'label' => false,
-				'div' => 'input inline',
-				'options' => array(
-					'publish' => __d('croogo', 'Publish'),
-					'unpublish' => __d('croogo', 'Unpublish'),
-					'delete' => __d('croogo', 'Delete'),
-				),
-				'empty' => true,
-			));
-		?>
-		<div class="controls">
-		<?php echo $this->Form->end(__d('croogo', 'Submit')); ?>
-		</div>
-	</div>
-</div>
+$this->start('bulk-action');
+	echo $this->Form->input('Comment.action', array(
+		'label' => false,
+		'div' => 'input inline',
+		'options' => array(
+			'publish' => __d('croogo', 'Publish'),
+			'unpublish' => __d('croogo', 'Unpublish'),
+			'delete' => __d('croogo', 'Delete'),
+		),
+		'empty' => true,
+	));
+	$button = $this->Form->button(__d('croogo', 'Submit'), array(
+		'type' => 'submit',
+		'value' => 'submit'
+	));
+	echo $this->Html->div('controls', $button);
+$this->end();
+$this->append('form-end', $this->Form->end());

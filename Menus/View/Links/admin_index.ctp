@@ -10,34 +10,30 @@ $this->Html
 	->addCrumb(__d('croogo', $menu['Menu']['title']), array(
 		'plugin' => 'menus', 'controller' => 'links', 'action' => 'index',
 		'?' => array('menu_id' => $menu['Menu']['id'])));
-?>
 
-<?php $this->start('actions'); ?>
-<?php
+$this->append('actions');
+
 	echo $this->Croogo->adminAction(
 		__d('croogo', 'New %s', __d('croogo', Inflector::singularize($this->name))),
 		array('action' => 'add', $menu['Menu']['id']),
 		array('button' => 'success')
 	);
-?>
-<?php $this->end('actions'); ?>
+$this->end();
 
-<?php
 	if (isset($this->request->params['named'])) {
 		foreach ($this->request->params['named'] as $nn => $nv) {
 			$this->Paginator->options['url'][] = $nn . ':' . $nv;
 		}
 	}
 
-	echo $this->Form->create('Link', array(
+	$this->append('form-start', $this->Form->create('Link', array(
 		'url' => array(
 			'action' => 'process',
 			$menu['Menu']['id'],
 		),
-	));
-?>
-<table class="table table-striped">
-<?php
+	)));
+
+$this->start('table-heading');
 	$tableHeaders = $this->Html->tableHeaders(array(
 		$this->Form->checkbox('checkAll'),
 		__d('croogo', 'Id'),
@@ -45,11 +41,11 @@ $this->Html
 		__d('croogo', 'Status'),
 		__d('croogo', 'Actions'),
 	));
-?>
-	<thead>
-		<?php echo $tableHeaders; ?>
-	</thead>
-	<?php
+	echo $this->Html->tag('thead', $tableHeaders);
+$this->end();
+
+$this->append('table-body');
+
 	$rows = array();
 	foreach ($linksTree as $linkId => $linkTitle):
 		$actions = array();
@@ -112,30 +108,31 @@ $this->Html
 	endforeach;
 
 	echo $this->Html->tableCells($rows);
-	?>
 
-</table>
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div id="bulk-action" class="control-group">
-		<?php
-			echo $this->Form->input('Link.action', array(
-				'div' => 'input inline',
-				'label' => false,
-				'options' => array(
-					'publish' => __d('croogo', 'Publish'),
-					'unpublish' => __d('croogo', 'Unpublish'),
-					'delete' => __d('croogo', 'Delete'),
-					'copy' => array(
-						'value' => 'copy',
-						'name' => __d('croogo', 'Copy'),
-						'hidden' => true,
-					),
-				),
-				'empty' => true,
-			));
-		?>
-		<div class="controls">
-			<?php echo $this->Form->end(__d('croogo', 'Submit')); ?>
-		</div>
-	</div>
-</div>
+$this->end();
+
+$this->start('bulk-action');
+	echo $this->Form->input('Link.action', array(
+		'div' => 'input inline',
+		'label' => false,
+		'options' => array(
+			'publish' => __d('croogo', 'Publish'),
+			'unpublish' => __d('croogo', 'Unpublish'),
+			'delete' => __d('croogo', 'Delete'),
+			'copy' => array(
+				'value' => 'copy',
+				'name' => __d('croogo', 'Copy'),
+				'hidden' => true,
+			),
+		),
+		'empty' => true,
+	));
+$button = $this->Form->button(__d('croogo', 'Submit'), array(
+		'type' => 'submit',
+		'value' => 'submit',
+	));
+echo $this->Html->div('controls', $button);
+
+$this->end();
+
+$this->append('form-end',$this->Form->end());

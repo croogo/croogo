@@ -13,9 +13,7 @@ $this->Html
 if (!empty($this->request->params['named']['p'])) {
 	$this->Html->addCrumb($this->request->params['named']['p']);
 }
-?>
-<table class="table table-striped">
-<?php
+$this->start('table-heading');
 	$tableHeaders = $this->Html->tableHeaders(array(
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		$this->Paginator->sort('key', __d('croogo', 'Key')),
@@ -23,11 +21,10 @@ if (!empty($this->request->params['named']['p'])) {
 		$this->Paginator->sort('editable', __d('croogo', 'Editable')),
 		__d('croogo', 'Actions'),
 	));
-?>
-	<thead>
-	<?php echo $tableHeaders; ?>
-	</thead>
-<?php
+	echo $this->Html->tag('thead', $tableHeaders);
+$this->end();
+
+$this->append('table-body');
 	$rows = array();
 	foreach ($settings as $setting):
 		$actions = array();
@@ -68,5 +65,4 @@ if (!empty($this->request->params['named']['p'])) {
 	endforeach;
 
 	echo $this->Html->tableCells($rows);
-?>
-</table>
+$this->end();
