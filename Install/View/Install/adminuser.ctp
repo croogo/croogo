@@ -10,12 +10,14 @@ echo $this->Form->create(null, array(
 			'placeholder' => __d('croogo', 'Username'),
 			'before' => '<span class="add-on"><i class="icon-user"></i></span>',
 			'div' => 'input text input-prepend',
+			'label' => false,
 		));
 		echo $this->Form->input('User.password', array(
 			'placeholder' => __d('croogo', 'New Password'),
 			'value' => '',
 			'before' => '<span class="add-on"><i class="icon-key"></i></span>',
 			'div' => 'input password input-prepend',
+			'label' => false,
 		));
 		echo $this->Form->input('User.verify_password', array(
 			'placeholder' => __d('croogo', 'Verify Password'),
@@ -23,6 +25,7 @@ echo $this->Form->create(null, array(
 			'value' => '',
 			'before' => '<span class="add-on"><i class="icon-key"></i></span>',
 			'div' => 'input password input-prepend',
+			'label' => false,
 		));
 	?>
 </div>
