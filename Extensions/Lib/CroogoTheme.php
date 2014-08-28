@@ -54,19 +54,24 @@ class CroogoTheme extends Object {
 				}
 
 				$themeWebroot = $themeRoot . 'webroot' . DS;
-				if (!is_dir($themeWebroot)) {
+				$themeConfig = $themeRoot . 'Config' . DS;
+				if (!is_dir($themeWebroot) && !is_dir($themeConfig)) {
 					continue;
 				}
 
-				$themeJson = $themeWebroot . 'theme.json';
-				$this->folder->path = $themeWebroot;
-				$themeFolderContent = $this->folder->read();
-				if (in_array('theme.json', $themeFolderContent['1'])) {
-					$contents = file_get_contents($themeJson);
-					$json = json_decode($contents, true);
-					$intersect = array_intersect_key($expected, $json);
-					if ($json !== null && $intersect == $expected) {
-						$themes[$themeFolder] = $themeFolder;
+				$paths = array($themeConfig, $themeWebroot);
+				foreach ($paths as $path) {
+					$this->folder->path = $path;
+					$themeFolderContent = $this->folder->read();
+					if (in_array('theme.json', $themeFolderContent['1'])) {
+						$themeJson = $path . 'theme.json';
+						$contents = file_get_contents($themeJson);
+						$json = json_decode($contents, true);
+						$intersect = array_intersect_key($expected, $json);
+						if ($json !== null && $intersect == $expected) {
+							$themes[$themeFolder] = $themeFolder;
+						}
+						continue;
 					}
 				}
 			}
@@ -126,9 +131,14 @@ class CroogoTheme extends Object {
 			$viewPaths = App::path('views');
 			foreach ($viewPaths as $viewPath) {
 				$themeRoot = $viewPath . 'Themed' . DS . $alias . DS;
-				$themeJson = $themeRoot . 'webroot' . DS . 'theme.json';
+				$themeJson = $themeRoot . 'Config' . DS . 'theme.json';
 				if (file_exists($themeJson)) {
 					$manifestFile = $themeJson;
+				} else {
+					$themeJson = $themeRoot . 'webroot' . DS . 'theme.json';
+					if (file_exists($themeJson)) {
+						$manifestFile = $themeJson;
+					}
 				}
 
 				if (file_exists($themeRoot . 'composer.json')) {
