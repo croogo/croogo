@@ -136,7 +136,7 @@ Admin.toggleRowSelection = function(selector, checkboxSelector) {
 		checkboxSelector = "input.row-select[type='checkbox']";
 	}
 	$selector.on('click', function(e) {
-		$(checkboxSelector).attr('checked', $selector.is(':checked'));
+		$(checkboxSelector).prop('checked', $selector.is(':checked'));
 	});
 }
 
