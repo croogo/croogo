@@ -520,7 +520,17 @@ class LayoutHelper extends AppHelper {
 		if ($class) {
 			$class = '.' . $class;
 		}
-		return Hash::get($this->_View->viewVars, 'themeSettings.css' . $class);
+		return $this->themeSetting('css' . $class);
+	}
+
+/**
+ * Helper method to retrieve theme settings as configured in theme.json
+ *
+ * @param string $class Name of class/configuration to retrieve
+ * @return string
+ */
+	public function themeSetting($key) {
+		return Hash::get($this->_View->viewVars, 'themeSettings.' . $key);
 	}
 
 }
