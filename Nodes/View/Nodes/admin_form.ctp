@@ -75,6 +75,7 @@ $this->append('tab-content');
 		)) .
 		$this->Form->input('body', array(
 			'label' => __d('croogo', 'Body'),
+			'class' => $inputClass . (!$type['Type']['format_use_wysiwyg'] ? ' no-wysiwyg' : ''),
 		)) .
 	$this->Html->tabEnd();
 
