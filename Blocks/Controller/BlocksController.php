@@ -125,7 +125,7 @@ class BlocksController extends BlocksAppController {
 			$this->Block->create();
 			$this->request->data['Block']['visibility_roles'] = $this->Block->encodeData($this->request->data['Role']['Role']);
 			$this->request->data['Block']['visibility_paths'] = $this->Block->encodeData(explode("\n", $this->request->data['Block']['visibility_paths']));
-			if ($this->Block->save($this->request->data)) {
+			if ($this->Block->saveAll($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Block has been saved'), 'default', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Block->id));
 			} else {
@@ -154,7 +154,7 @@ class BlocksController extends BlocksAppController {
 		if (!empty($this->request->data)) {
 			$this->request->data['Block']['visibility_roles'] = $this->Block->encodeData($this->request->data['Role']['Role']);
 			$this->request->data['Block']['visibility_paths'] = $this->Block->encodeData(explode("\n", $this->request->data['Block']['visibility_paths']));
-			if ($this->Block->save($this->request->data)) {
+			if ($this->Block->saveAll($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Block has been saved'), 'default', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $id));
 			} else {
