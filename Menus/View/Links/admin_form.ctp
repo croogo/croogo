@@ -71,8 +71,8 @@ $this->append('tab-content');
 		)) .
 		$this->Form->input('link', array(
 			'label' => __d('croogo', 'Link'),
-			'div' => 'input text required input-append',
-			'after' => $this->Html->link('', '#link_choosers', array(
+			'append' => true,
+			'addon' => $this->Html->link('', '#link_choosers', array(
 				'button' => 'default',
 				'icon' => array('link'),
 				'iconSize' => 'small',
