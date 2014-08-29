@@ -148,7 +148,7 @@ class CroogoFormHelper extends FormHelper {
  * @return array
  */
 	protected function _divOptionsAddon($options, $divOptions) {
-		if (isset($this->_addon)) {
+		if (isset($this->_addon) && isset($divOptions['class'])) {
 			$divOptions['class'] .= ' ' . $this->_addon;
 			unset($this->_addon);
 		}
@@ -165,12 +165,16 @@ class CroogoFormHelper extends FormHelper {
 		$options = parent::_parseOptions($options);
 		$options = $this->_parseOptionsAddon($options);
 
-		if (
-			isset($options['multiple']) &&
-			$options['multiple'] === 'checkbox' &&
-			$options['class'] === $this->_View->Layout->cssClass('formInput')
-		) {
-			unset($options['class']);
+		if (isset($options['class'])) {
+			$formInput = $this->_View->Layout->cssClass('formInput');
+			$isMultipleCheckbox = isset($options['multiple']) &&
+				$options['multiple'] === 'checkbox';
+			$isRadioOrCheckbox = isset($options['type']) &&
+				in_array($options['type'], array('checkbox', 'radio'));
+
+			if ($isMultipleCheckbox || $isRadioOrCheckbox) {
+				$options['class'] = str_replace($formInput, '', $options['class']);
+			}
 		}
 
 		return $options;
