@@ -106,6 +106,75 @@ class CroogoFormHelper extends FormHelper {
 	}
 
 /**
+ * Generate div options for input
+ *
+ * @param array $options Options list
+ * @return array
+ */
+	protected function _divOptions($options) {
+		$divOptions = parent::_divOptions($options);
+		$divOptions = $this->_divOptionsAddon($options, $divOptions);
+		return $divOptions;
+	}
+
+/**
+ * Generate addon specific options
+ *
+ * @param array $options Options list
+ * @return array
+ */
+	protected function _divOptionsAddon($options, $divOptions) {
+		if (isset($this->_addon)) {
+			$divOptions['class'] .= ' ' . $this->_addon;
+			unset($this->_addon);
+		}
+		return $divOptions;
+	}
+
+/**
+ * Generate input options array
+ *
+ * @param array $options Options list
+ * @return array
+ */
+	protected function _parseOptions($options) {
+		$options = parent::_parseOptions($options);
+		$options = $this->_parseOptionsAddon($options);
+		return $options;
+	}
+
+/**
+ * Generate addon specific input options array
+ *
+ * @param array $options Options list
+ * @return array
+ */
+	protected function _parseOptionsAddon($options) {
+		if (isset($options['append'])) {
+			$this->_addon = 'input-append';
+		}
+		if (isset($options['prepend'])) {
+			$this->_addon = 'input-prepend';
+		}
+
+		if (isset($this->_addon)) {
+			$options['class'] = $this->_View->Layout->cssClass('columnLeft');
+			if (isset($options['append'])) {
+				$options['between'] = '<div class="addon">';
+				$options['after'] = $options['addon'] . '</div>';
+			}
+			if (isset($options['prepend'])) {
+				$options['between'] = '<div class="addon">' . $options['addon'];
+				$options['after'] = '</div>';
+			}
+		}
+
+		unset($options['append'], $options['prepend'], $options['addon']);
+
+		return $options;
+	}
+
+/**
  * Normalize field name
  *
  * @return array Map of normalized field names and corresponding list of roleIds
