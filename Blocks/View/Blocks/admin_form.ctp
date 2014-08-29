@@ -55,7 +55,6 @@ $this->append('tab-content');
 	echo $this->Html->tabStart('block-access') .
 		$this->Form->input('Role.Role', array(
 			'label' => __d('croogo', 'Role'),
-			'class' => false,
 		));
 	echo $this->Html->tabEnd();
 
