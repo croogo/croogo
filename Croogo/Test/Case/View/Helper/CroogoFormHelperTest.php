@@ -184,7 +184,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 				)
 			),
 			'/i',
-			'  Button',
+			' Button',
 			'/button',
 		);
 		$this->assertTags($result, $expected);

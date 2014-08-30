@@ -47,7 +47,7 @@ class CroogoHtmlHelper extends HtmlHelper {
 					</div>
 				</div>
 			</div>';
-		$this->_tags['icon'] = '<i class="%s"%s></i> ';
+		$this->_tags['icon'] = '<i class="%s"%s></i>';
 	}
 
 /**
