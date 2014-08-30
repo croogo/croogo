@@ -50,15 +50,12 @@ $this->append('tab-content');
 	echo $this->Html->tabStart('vocabulary-options') .
 		$this->Form->input('required', array(
 			'label' => __d('croogo', 'Required'),
-			'class' => false,
 			)) .
 		$this->Form->input('multiple', array(
 			'label' => __d('croogo', 'Multiple'),
-			'class' => false,
 			)) .
 		$this->Form->input('tags', array(
 			'label' => __d('croogo', 'Tags'),
-			'class' => false,
 		));
 	echo $this->Html->tabEnd();
 

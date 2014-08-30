@@ -79,13 +79,11 @@ $this->append('panels');
 		echo $this->Form->input('notification', array(
 			'label' => __d('croogo', 'Send Activation Email'),
 			'type' => 'checkbox',
-			'class' => false,
 		));
 	endif;
 
 	echo $this->Form->input('status', array(
 		'label' => __d('croogo', 'Status'),
-		'class' => false,
 	));
 
 	$showPassword = !empty($this->data['User']['status']);

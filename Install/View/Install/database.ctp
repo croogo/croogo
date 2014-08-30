@@ -44,7 +44,6 @@ echo $this->Form->create(false, array(
 			'placeholder' => __d('croogo', 'Database'),
 			'default' => 'Database/Mysql',
 			'empty' => false,
-			'class' => false,
 			'options' => array(
 				'Database/Mysql' => 'mysql',
 				'Database/Sqlite' => 'sqlite',

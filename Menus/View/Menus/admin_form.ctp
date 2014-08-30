@@ -55,7 +55,6 @@ $this->start('panels');
 		$this->Form->input('status', array(
 			'type' => 'radio',
 			'legend' => false,
-			'class' => false,
 			'default' => CroogoStatus::UNPUBLISHED,
 			'options' => $this->Croogo->statuses(),
 		)) .

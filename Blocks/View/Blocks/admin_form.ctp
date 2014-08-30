@@ -82,14 +82,12 @@ $this->append('panels');
 		$this->Form->input('status', array(
 			'legend' => false,
 			'type' => 'radio',
-			'class' => false,
 			'label' => true,
 			'default' => CroogoStatus::UNPUBLISHED,
 			'options' => $this->Croogo->statuses(),
 		)) .
 		$this->Form->input('show_title', array(
 			'label' => __d('croogo', 'Show title ?'),
-			'class' => false,
 		)) .
 		$this->Html->div('input-daterange',
 			$this->Form->input('publish_start', array(

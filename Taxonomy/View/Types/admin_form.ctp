@@ -39,7 +39,6 @@ $this->append('tab-content');
 		)) .
 		$this->Form->input('format_use_wysiwyg', array(
 			'label' => __d('croogo', 'Enable Wysiwyg Editor'),
-			'class' => false,
 		));
 	echo $this->Html->tabEnd();
 
@@ -48,7 +47,7 @@ $this->end();
 $this->append('tab-content');
 	echo $this->Html->tabStart('type-taxonomy').
 		$this->Form->input('Vocabulary.Vocabulary', array(
-			'class' => false,
+			'label' => __d('croogo', 'Vocabulary'),
 		));
 	echo $this->Html->tabEnd();
 $this->end();
@@ -60,27 +59,21 @@ $this->append('tab-content');
 			'type' => 'radio',
 			'options' => array(
 				'0' => __d('croogo', 'Disabled'),
-
-
 				'1' => __d('croogo', 'Read only'),
 				'2' => __d('croogo', 'Read/Write'),
 				),
 			'default' => 2,
 			'legend' => false,
 			'label' => true,
-			'class' => false,
 			)) .
 		$this->Form->input('comment_approve', array(
 			'label' => 'Auto approve comments',
-			'class' => false,
 			)) .
 		$this->Form->input('comment_spam_protection', array(
 			'label' => __d('croogo', 'Spam protection (requires Akismet API key)'),
-			'class' => false,
 			)) .
 		$this->Form->input('comment_captcha', array(
 			'label' => __d('croogo', 'Use captcha? (requires Recaptcha API key)'),
-			'class' => false,
 			)) .
 		$this->Html->link(__d('croogo', 'You can manage your API keys here.'), array(
 			'plugin' => 'settings',
@@ -114,11 +107,9 @@ $this->start('panels');
 		) .
 		$this->Form->input('format_show_author', array(
 			'label' => __d('croogo', 'Show author\'s name'),
-			'class' => false,
 		)) .
 		$this->Form->input('format_show_date', array(
 			'label' => __d('croogo', 'Show date'),
-			'class' => false,
 		)) .
 		$this->Html->endBox();
 

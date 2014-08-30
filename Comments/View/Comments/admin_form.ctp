@@ -37,7 +37,6 @@ $this->start('panels');
 		$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
 		$this->Form->input('status', array(
 			'label' => __d('croogo', 'Published'),
-			'class' => false,
 		)) .
 		$this->Html->endBox();
 

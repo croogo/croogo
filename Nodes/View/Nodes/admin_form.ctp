@@ -107,7 +107,6 @@ $this->start('panels');
 		)) .
 		$this->Form->input('promote', array(
 			'label' => __d('croogo', 'Promoted to front page'),
-			'class' => false,
 		)) .
 		$this->Form->autocomplete('user_id', array(
 			'type' => 'text',

@@ -56,7 +56,9 @@ echo $this->Form->create('Language');
 					array('action' => 'index'),
 					array('class' => 'cancel', 'button' => 'danger')
 				) .
-				$this->Form->input('status', array('class' => false)) .
+				$this->Form->input('status', array(
+					'label' => __d('croogo', 'Status'),
+				)) .
 				$this->Html->endBox();
 
 			echo $this->Croogo->adminBoxes();
