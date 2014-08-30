@@ -74,7 +74,7 @@ class UsersController extends UsersAppController {
 		$cacheName = 'auth_failed_' . $this->request->data['User'][$field];
 		$cacheValue = Cache::read($cacheName, 'users_login');
 		if ($cacheValue >= Configure::read('User.failed_login_limit')) {
-			$this->Session->setFlash(__d('croogo', 'You have reached maximum limit for failed login attempts. Please try again after a few minutes.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'You have reached maximum limit for failed login attempts. Please try again after a few minutes.'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => $this->request->params['action']));
 		}
 		return true;
@@ -168,10 +168,10 @@ class UsersController extends UsersAppController {
 				$this->request->data['User']['id'] = $this->User->id;
 				$this->__sendActivationEmail();
 
-				$this->Session->setFlash(__d('croogo', 'The User has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The User has been saved'), 'flash', array('class' => 'success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The User could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The User could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 				unset($this->request->data['User']['password']);
 			}
 		} else {
@@ -191,10 +191,10 @@ class UsersController extends UsersAppController {
 	public function admin_edit($id = null) {
 		if (!empty($this->request->data)) {
 			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The User has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The User has been saved'), 'flash', array('class' => 'success'));
 				return $this->Croogo->redirect(array('action' => 'edit', $this->User->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The User could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The User could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		} else {
 			$this->request->data = $this->User->read(null, $id);
@@ -213,15 +213,15 @@ class UsersController extends UsersAppController {
  */
 	public function admin_reset_password($id = null) {
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid User'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid User'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'Password has been reset.'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'Password has been reset.'), 'flash', array('class' => 'success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'Password could not be reset. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Password could not be reset. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 		$this->request->data = $this->User->findById($id);
@@ -236,14 +236,14 @@ class UsersController extends UsersAppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for User'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for User'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->User->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'User deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'User deleted'), 'flash', array('class' => 'success'));
 			return $this->redirect(array('action' => 'index'));
 		} else {
-			$this->Session->setFlash(__d('croogo', 'User cannot be deleted'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'User cannot be deleted'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 	}
@@ -274,7 +274,7 @@ class UsersController extends UsersAppController {
 			} else {
 				Croogo::dispatchEvent('Controller.Users.adminLoginFailure', $this);
 				$this->Auth->authError = __d('croogo', 'Incorrect username or password');
-				$this->Session->setFlash($this->Auth->authError, 'default', array('class' => 'error'), 'auth');
+				$this->Session->setFlash($this->Auth->authError, 'flash', array('class' => 'error'), 'auth');
 				return $this->redirect($this->Auth->loginAction);
 			}
 		}
@@ -288,7 +288,7 @@ class UsersController extends UsersAppController {
  */
 	public function admin_logout() {
 		Croogo::dispatchEvent('Controller.Users.adminLogoutSuccessful', $this);
-		$this->Session->setFlash(__d('croogo', 'Log out successful.'), 'default', array('class' => 'success'));
+		$this->Session->setFlash(__d('croogo', 'Log out successful.'), 'flash', array('class' => 'success'));
 		return $this->redirect($this->Auth->logout());
 	}
 
@@ -366,11 +366,11 @@ class UsersController extends UsersAppController {
 					array('user' => $this->request->data)
 				);
 
-				$this->Session->setFlash(__d('croogo', 'You have successfully registered an account. An email has been sent with further instructions.'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'You have successfully registered an account. An email has been sent with further instructions.'), 'flash', array('class' => 'success'));
 				return $this->redirect(array('action' => 'login'));
 			} else {
 				Croogo::dispatchEvent('Controller.Users.registrationFailure', $this);
-				$this->Session->setFlash(__d('croogo', 'The User could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The User could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 	}
@@ -421,10 +421,10 @@ class UsersController extends UsersAppController {
 			}
 
 			Croogo::dispatchEvent('Controller.Users.activationSuccessful', $this);
-			$this->Session->setFlash(__d('croogo', 'Account activated successfully.'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Account activated successfully.'), 'flash', array('class' => 'success'));
 		} else {
 			Croogo::dispatchEvent('Controller.Users.activationFailure', $this);
-			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'flash', array('class' => 'error'));
 		}
 
 		if ($redirect) {
@@ -453,7 +453,7 @@ class UsersController extends UsersAppController {
 		if (!empty($this->request->data) && isset($this->request->data['User']['username'])) {
 			$user = $this->User->findByUsername($this->request->data['User']['username']);
 			if (!isset($user['User']['id'])) {
-				$this->Session->setFlash(__d('croogo', 'Invalid username.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Invalid username.'), 'flash', array('class' => 'error'));
 				return $this->redirect(array('action' => 'login'));
 			}
 
@@ -473,10 +473,10 @@ class UsersController extends UsersAppController {
 			);
 
 			if ($emailSent) {
-				$this->Session->setFlash(__d('croogo', 'An email has been sent with instructions for resetting your password.'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'An email has been sent with instructions for resetting your password.'), 'flash', array('class' => 'success'));
 				return $this->redirect(array('action' => 'login'));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'An error occurred. Please try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'An error occurred. Please try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 	}
@@ -493,7 +493,7 @@ class UsersController extends UsersAppController {
 		$this->set('title_for_layout', __d('croogo', 'Reset Password'));
 
 		if ($username == null || $key == null) {
-			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'login'));
 		}
 
@@ -504,7 +504,7 @@ class UsersController extends UsersAppController {
 			),
 		));
 		if (!isset($user['User']['id'])) {
-			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'login'));
 		}
 
@@ -515,10 +515,10 @@ class UsersController extends UsersAppController {
 			$user['User']['verify_password'] = $this->request->data['User']['verify_password'];
 			$options = array('fieldList' => array('password', 'verify_password', 'activation_key'));
 			if ($this->User->save($user['User'], $options)) {
-				$this->Session->setFlash(__d('croogo', 'Your password has been reset successfully.'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'Your password has been reset successfully.'), 'flash', array('class' => 'success'));
 				return $this->redirect(array('action' => 'login'));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'An error occurred. Please try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'An error occurred. Please try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 
@@ -540,7 +540,7 @@ class UsersController extends UsersAppController {
 				return $this->redirect($this->Auth->redirect());
 			} else {
 				Croogo::dispatchEvent('Controller.Users.loginFailure', $this);
-				$this->Session->setFlash($this->Auth->authError, 'default', array('class' => 'error'), 'auth');
+				$this->Session->setFlash($this->Auth->authError, 'flash', array('class' => 'error'), 'auth');
 				return $this->redirect($this->Auth->loginAction);
 			}
 		}
@@ -554,7 +554,7 @@ class UsersController extends UsersAppController {
  */
 	public function logout() {
 		Croogo::dispatchEvent('Controller.Users.beforeLogout', $this);
-		$this->Session->setFlash(__d('croogo', 'Log out successful.'), 'default', array('class' => 'success'));
+		$this->Session->setFlash(__d('croogo', 'Log out successful.'), 'flash', array('class' => 'success'));
 		$redirect = $this->Auth->logout();
 		Croogo::dispatchEvent('Controller.Users.afterLogout', $this);
 		return $this->redirect($redirect);
@@ -573,7 +573,7 @@ class UsersController extends UsersAppController {
 		}
 		$user = $this->User->findByUsername($username);
 		if (!isset($user['User']['id'])) {
-			$this->Session->setFlash(__d('croogo', 'Invalid User.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid User.'), 'flash', array('class' => 'error'));
 			return $this->redirect('/');
 		}
 

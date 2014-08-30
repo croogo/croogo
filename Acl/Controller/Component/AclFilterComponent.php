@@ -82,7 +82,7 @@ class AclFilterComponent extends Component {
 				$notice = __d('croogo', '"AutoLogin" (Remember Me) disabled since mcrypt_encrypt is not available');
 				$this->log($notice, LOG_CRIT);
 				if (isset($this->_controller->request->params['admin'])) {
-					$this->_controller->Session->setFlash($notice, 'default', null, array('class', 'error'));
+					$this->_controller->Session->setFlash($notice, 'flash', null, array('class', 'error'));
 				}
 				if (isset($this->_controller->Setting)) {
 					$Setting = $this->_controller->Setting;

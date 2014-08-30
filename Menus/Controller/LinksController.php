@@ -141,7 +141,7 @@ class LinksController extends MenusAppController {
 			$this->request->data['Link']['visibility_roles'] = $this->Link->encodeData($this->request->data['Role']['Role']);
 			$this->Link->setTreeScope($this->request->data['Link']['menu_id']);
 			if ($this->Link->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Link has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Link has been saved'), 'flash', array('class' => 'success'));
 				if (isset($this->request->data['apply'])) {
 					return $this->redirect(array('action' => 'edit', $this->Link->id));
 				} else {
@@ -153,7 +153,7 @@ class LinksController extends MenusAppController {
 					));
 				}
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Link could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Link could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 		$menus = $this->Link->Menu->find('list');
@@ -175,7 +175,7 @@ class LinksController extends MenusAppController {
 		$this->set('title_for_layout', __d('croogo', 'Edit Link'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Link'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Link'), 'flash', array('class' => 'error'));
 			return $this->redirect(array(
 				'controller' => 'menus',
 				'action' => 'index',
@@ -185,7 +185,7 @@ class LinksController extends MenusAppController {
 			$this->request->data['Link']['visibility_roles'] = $this->Link->encodeData($this->request->data['Role']['Role']);
 
 			if ($this->Link->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Link has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Link has been saved'), 'flash', array('class' => 'success'));
 				if (isset($this->request->data['apply'])) {
 					return $this->redirect(array('action' => 'edit', $this->Link->id));
 				} else {
@@ -197,7 +197,7 @@ class LinksController extends MenusAppController {
 					));
 				}
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Link could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Link could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -224,7 +224,7 @@ class LinksController extends MenusAppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Link'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Link'), 'flash', array('class' => 'error'));
 			return $this->redirect(array(
 				'controller' => 'menus',
 				'action' => 'index',
@@ -232,7 +232,7 @@ class LinksController extends MenusAppController {
 		}
 		$link = $this->Link->findById($id);
 		if (!isset($link['Link']['id'])) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Link'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Link'), 'flash', array('class' => 'error'));
 			return $this->redirect(array(
 				'controller' => 'menus',
 				'action' => 'index',
@@ -240,7 +240,7 @@ class LinksController extends MenusAppController {
 		}
 		$this->Link->setTreeScope($link['Link']['menu_id']);
 		if ($this->Link->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Link deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Link deleted'), 'flash', array('class' => 'success'));
 			return $this->redirect(array(
 				'action' => 'index',
 				'?' => array(
@@ -261,7 +261,7 @@ class LinksController extends MenusAppController {
 	public function admin_moveup($id, $step = 1) {
 		$link = $this->Link->findById($id);
 		if (!isset($link['Link']['id'])) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Link'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Link'), 'flash', array('class' => 'error'));
 			return $this->redirect(array(
 				'controller' => 'menus',
 				'action' => 'index',
@@ -270,9 +270,9 @@ class LinksController extends MenusAppController {
 		$this->Link->setTreeScope($link['Link']['menu_id']);
 		if ($this->Link->moveUp($id, $step)) {
 			Cache::clearGroup('menus','croogo_menus');
-			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'flash', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'flash', array('class' => 'error'));
 		}
 		return $this->redirect(array(
 			'action' => 'index',
@@ -293,7 +293,7 @@ class LinksController extends MenusAppController {
 	public function admin_movedown($id, $step = 1) {
 		$link = $this->Link->findById($id);
 		if (!isset($link['Link']['id'])) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Link'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Link'), 'flash', array('class' => 'error'));
 			return $this->redirect(array(
 				'controller' => 'menus',
 				'action' => 'index',
@@ -302,9 +302,9 @@ class LinksController extends MenusAppController {
 		$this->Link->setTreeScope($link['Link']['menu_id']);
 		if ($this->Link->moveDown($id, $step)) {
 			Cache::clearGroup('menus','croogo_menus');
-			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'flash', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'flash', array('class' => 'error'));
 		}
 		return $this->redirect(array(
 			'action' => 'index',

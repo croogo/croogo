@@ -52,9 +52,8 @@ class AclActionsControllerTest extends CroogoControllerTestCase {
 			->method('setFlash')
 			->with(
 				$this->matchesRegularExpression('/(Created Aco node:)|.*Aco Update Complete.*|(Skipped Aco node:)/'),
-				$this->equalTo('default'),
-				$this->anything(),
-				$this->equalTo('flash')
+				$this->equalTo('flash'),
+				$this->anything()
 			);
 		$AclActions
 			->expects($this->once())

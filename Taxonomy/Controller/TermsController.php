@@ -90,13 +90,13 @@ class TermsController extends TaxonomyAppController {
 
 		if ($this->request->is('post')) {
 			if ($this->Term->add($this->request->data, $vocabularyId)) {
-				$this->Session->setFlash(__d('croogo', 'Term saved successfuly.'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'Term saved successfuly.'), 'flash', array('class' => 'success'));
 				return $this->redirect(array(
 					'action' => 'index',
 					$vocabularyId,
 				));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 		$parentTree = $this->Term->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array('taxonomyId' => true));
@@ -133,13 +133,13 @@ class TermsController extends TaxonomyAppController {
 
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Term->edit($this->request->data, $vocabularyId)) {
-				$this->Session->setFlash(__d('croogo', 'Term saved successfuly.'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'Term saved successfuly.'), 'flash', array('class' => 'success'));
 				return $this->redirect(array(
 					'action' => 'index',
 					$vocabularyId,
 				));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'), 'flash', array('class' => 'error'));
 			}
 		} else {
 			$this->request->data['Taxonomy'] = $taxonomy['Taxonomy'];
@@ -172,7 +172,7 @@ class TermsController extends TaxonomyAppController {
 			$cssClass = array('class' => 'error');
 		}
 
-		$this->Session->setFlash($messageFlash, 'default', $cssClass);
+		$this->Session->setFlash($messageFlash, 'flash', $cssClass);
 		return $this->redirect($redirectUrl);
 	}
 
@@ -228,7 +228,7 @@ class TermsController extends TaxonomyAppController {
 			$messageFlash = __d('croogo', 'Could not move %s', $direction);
 			$cssClass = array('class' => 'error');
 		}
-		$this->Session->setFlash($messageFlash, 'default', $cssClass);
+		$this->Session->setFlash($messageFlash, 'flash', $cssClass);
 		return $this->redirect($redirectUrl);
 	}
 
@@ -258,7 +258,7 @@ class TermsController extends TaxonomyAppController {
 	private function __ensureTermExists($id, $url = null) {
 		$redirectUrl = is_null($url) ? $this->_redirectUrl : $url;
 		if (!$this->Term->exists($id)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Term ID.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Term ID.'), 'flash', array('class' => 'error'));
 			return $this->redirect($redirectUrl);
 		}
 	}
@@ -274,7 +274,7 @@ class TermsController extends TaxonomyAppController {
 	private function __ensureTaxonomyExists($id, $vocabularyId, $url = null) {
 		$redirectUrl = is_null($url) ? $this->_redirectUrl : $url;
 		if (!$this->Term->Taxonomy->hasAny(array('term_id' => $id, 'vocabulary_id' => $vocabularyId))) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Taxonomy.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Taxonomy.'), 'flash', array('class' => 'error'));
 			return $this->redirect($redirectUrl);
 		}
 	}
@@ -293,7 +293,7 @@ class TermsController extends TaxonomyAppController {
 		}
 
 		if (!$this->Term->Vocabulary->exists($vocabularyId)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Vocabulary ID.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Vocabulary ID.'), 'flash', array('class' => 'error'));
 			return $this->redirect($redirectUrl);
 		}
 	}

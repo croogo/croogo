@@ -172,10 +172,10 @@ class NodesController extends NodesAppController {
 			}
 			if ($Node->saveNode($this->request->data, $typeAlias)) {
 				Croogo::dispatchEvent('Controller.Nodes.afterAdd', $this, array('data' => $this->request->data));
-				$this->Session->setFlash(__d('croogo', '%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', '%s has been saved', $type['Type']['title']), 'flash', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $Node->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', '%s could not be saved. Please, try again.', $type['Type']['title']), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', '%s could not be saved. Please, try again.', $type['Type']['title']), 'flash', array('class' => 'error'));
 			}
 		} else {
 			$this->Croogo->setReferer();
@@ -202,7 +202,7 @@ class NodesController extends NodesAppController {
  */
 	public function admin_edit($id = null) {
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		$Node = $this->{$this->modelClass};
@@ -213,10 +213,10 @@ class NodesController extends NodesAppController {
 		if (!empty($this->request->data)) {
 			if ($Node->saveNode($this->request->data, $typeAlias)) {
 				Croogo::dispatchEvent('Controller.Nodes.afterEdit', $this, compact('data'));
-				$this->Session->setFlash(__d('croogo', '%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', '%s has been saved', $type['Type']['title']), 'flash', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $Node->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', '%s could not be saved. Please, try again.', $type['Type']['title']), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', '%s could not be saved. Please, try again.', $type['Type']['title']), 'flash', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -246,7 +246,7 @@ class NodesController extends NodesAppController {
 			$class = 'error';
 		}
 
-		$this->Session->setFlash($messageFlash, 'default', compact('class'));
+		$this->Session->setFlash($messageFlash, 'flash', compact('class'));
 		return $this->redirect(array('action' => 'index'));
 	}
 
@@ -259,13 +259,13 @@ class NodesController extends NodesAppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Node'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Node'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 
 		$Node = $this->{$this->modelClass};
 		if ($Node->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Node deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Node deleted'), 'flash', array('class' => 'success'));
 			return $this->redirect(array('action' => 'index'));
 		}
 	}
@@ -376,7 +376,7 @@ class NodesController extends NodesAppController {
 				),
 			));
 			if (!isset($type['Type']['id'])) {
-				$this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'flash', array('class' => 'error'));
 				return $this->redirect('/');
 			}
 			if (isset($type['Params']['nodes_per_page']) && empty($this->request->params['named']['limit'])) {
@@ -434,7 +434,7 @@ class NodesController extends NodesAppController {
 			),
 		));
 		if (!isset($term['Term']['id'])) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Term.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Term.'), 'flash', array('class' => 'error'));
 			return $this->redirect('/');
 		}
 
@@ -477,7 +477,7 @@ class NodesController extends NodesAppController {
 				),
 			));
 			if (!isset($type['Type']['id'])) {
-				$this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'flash', array('class' => 'error'));
 				return $this->redirect('/');
 			}
 			if (isset($type['Params']['nodes_per_page']) && empty($this->request->params['named']['limit'])) {
@@ -547,7 +547,7 @@ class NodesController extends NodesAppController {
 		if (isset($this->request->params['named']['type'])) {
 			$type = $Node->Taxonomy->Vocabulary->Type->findByAlias($this->request->params['named']['type']);
 			if (!isset($type['Type']['id'])) {
-				$this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'flash', array('class' => 'error'));
 				return $this->redirect('/');
 			}
 			if (isset($type['Params']['nodes_per_page']) && empty($this->request->params['named']['limit'])) {
@@ -610,7 +610,7 @@ class NodesController extends NodesAppController {
 		if ($typeAlias) {
 			$type = $Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
 			if (!isset($type['Type']['id'])) {
-				$this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'flash', array('class' => 'error'));
 				return $this->redirect('/');
 			}
 			if (isset($type['Params']['nodes_per_page'])) {
@@ -655,7 +655,7 @@ class NodesController extends NodesAppController {
 				'roleId' => $this->Croogo->roleId(),
 			));
 		} elseif ($id == null) {
-			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'flash', array('class' => 'error'));
 			return $this->redirect('/');
 		} else {
 			$node = $Node->find('viewById', array(
@@ -675,7 +675,7 @@ class NodesController extends NodesAppController {
 		}
 
 		if (!isset($node[$Node->alias][$Node->primaryKey])) {
-			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'flash', array('class' => 'error'));
 			return $this->redirect('/');
 		}
 
