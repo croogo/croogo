@@ -108,6 +108,22 @@ class CroogoTheme extends Object {
 				'icons' => array(
 					'check-mark' => 'ok',
 					'x-mark' => 'remove',
+					'power-off' => 'off',
+					'power-on' => 'bolt',
+					'create' => 'plus',
+					'read' => 'eye-open',
+					'update' => 'pencil',
+					'delete' => 'trash',
+					'inspect' => 'zoom-in',
+					'move-up' => 'chevron-up',
+					'move-down' => 'chevron-down',
+					'attach' => 'paper-clip',
+					'info-sign' => 'info-sign',
+					'copy' => 'copy',
+					'home' => 'home',
+					'refresh' => 'refresh',
+					'search' => 'search',
+					'link' => 'link',
 				),
 				'prefixes' => array(
 					'' => array(

@@ -51,6 +51,17 @@ class CroogoHtmlHelper extends HtmlHelper {
 	}
 
 /**
+ * Before render callback
+ *
+ * @param string $viewFiele The view file that is going to be rendered
+ * @return void
+ */
+	public function beforeRender($viewFile) {
+		$this->_View->set('_icons', $this->settings['icons']);
+		return parent::beforeRender($viewFile);
+	}
+
+/**
  * Create a string representing the start of a box container
  *
  * @param string $title Box title
