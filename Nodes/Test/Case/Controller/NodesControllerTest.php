@@ -170,6 +170,7 @@ class NodesControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminLinks() {
+		$this->controller->set('_icons', array('info-sign' => false));
 		$this->testAction('/admin/nodes/nodes/index/links:1/filter:about');
 		$this->assertEquals('admin_popup', $this->controller->View->layout);
 		$this->assertNotEmpty($this->vars['nodes']);

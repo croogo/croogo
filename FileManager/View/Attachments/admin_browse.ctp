@@ -32,14 +32,14 @@
 			$actions = array();
 			$actions[] = $this->Croogo->adminRowAction('',
 				array('controller' => 'attachments', 'action' => 'edit', $attachment['Attachment']['id'], 'editor' => 1),
-				array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit'))
+				array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit'))
 			);
 			$actions[] = $this->Croogo->adminRowAction('', array(
 				'controller' => 'attachments',
 				'action' => 'delete',
 				$attachment['Attachment']['id'],
 				'editor' => 1,
-			), array('icon' => 'trash', 'tooltip' => __d('croogo', 'Delete')), __d('croogo', 'Are you sure?'));
+			), array('icon' => $_icons['delete'], 'tooltip' => __d('croogo', 'Delete')), __d('croogo', 'Are you sure?'));
 
 			$mimeType = explode('/', $attachment['Attachment']['mime_type']);
 			$mimeType = $mimeType['0'];
@@ -63,7 +63,7 @@
 			$insertCode = $this->Html->link('', '#', array(
 				'onclick' => "Croogo.Wysiwyg.choose('" . $attachment['Attachment']['slug'] . "');",
 				'escapeTitle' => false,
-				'icon' => 'paper-clip',
+				'icon' => $_icons['attach'],
 				'tooltip' => __d('croogo', 'Insert')
 			));
 

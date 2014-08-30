@@ -1,4 +1,5 @@
 <?php
+
 $this->extend('/Common/admin_index');
 $this->name = 'translate';
 
@@ -9,7 +10,7 @@ if (isset($this->request->params['models'][$modelAlias])) {
 	$controller = strtolower(Inflector::pluralize($modelAlias));
 }
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Translate'), '/' . $this->request->url)
 	->addCrumb($modelAlias)
 	->addCrumb($record[$modelAlias][$displayField], array('plugin' => $plugin, 'controller' => $controller, 'action' => 'edit', $record[$modelAlias]['id']));
@@ -56,7 +57,7 @@ $this->Html
 				$modelAlias,
 				'locale' => $translation[$runtimeModelAlias]['locale'],
 			), array(
-				'icon' => 'pencil',
+				'icon' => $_icons['update'],
 				'tooltip' => __d('croogo', 'Edit this item'),
 			));
 			$actions[] = $this->Croogo->adminRowAction('', array(
@@ -65,7 +66,7 @@ $this->Html
 				$modelAlias,
 				$translation[$runtimeModelAlias]['locale'],
 			), array(
-				'icon' => 'trash',
+				'icon' => $_icons['delete'],
 				'tooltip' => __d('croogo', 'Remove this item'),
 			), __d('croogo', 'Are you sure?'));
 

@@ -1,8 +1,9 @@
 <?php
+
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Themes'), '/' . $this->request->url);
 
@@ -116,14 +117,14 @@ $this->Html
 							$themeAlias,
 						), array(
 							'button' => 'default',
-							'icon' => 'bolt',
+							'icon' => $_icons['power-on'],
 						)) .
 						$this->Form->postLink(__d('croogo', 'Delete'), array(
 							'action' => 'delete',
 							$themeAlias,
 						), array(
 							'button' => 'danger',
-							'icon' => 'trash',
+							'icon' => $_icons['delete'],
 						), __d('croogo', 'Are you sure?')),
 						array('class' => 'actions'));
 					echo $this->Html->div($this->Layout->cssClass('columnLeft'), $out);

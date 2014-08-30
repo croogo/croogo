@@ -3,7 +3,7 @@
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Vocabularies'), '/' . $this->request->url);
 
@@ -27,24 +27,24 @@ $this->append('table-body');
 		$actions = array();
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id']),
-			array('icon' => 'zoom-in', 'tooltip' => __d('croogo', 'View terms'))
+			array('icon' => $_icons['inspect'], 'tooltip' => __d('croogo', 'View terms'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'moveup', $vocabulary['Vocabulary']['id']),
-			array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'))
+			array('icon' => $_icons['move-up'], 'tooltip' => __d('croogo', 'Move up'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'movedown', $vocabulary['Vocabulary']['id']),
-			array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'))
+			array('icon' => $_icons['move-down'], 'tooltip' => __d('croogo', 'Move down'))
 		);
 		$actions[] = $this->Croogo->adminRowActions($vocabulary['Vocabulary']['id']);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'edit', $vocabulary['Vocabulary']['id']),
-			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'vocabularies', 'action' => 'delete', $vocabulary['Vocabulary']['id']),
-			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
+			array('icon' => $_icons['delete'], 'tooltip' => __d('croogo', 'Remove this item')),
 			__d('croogo', 'Are you sure?'));
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 		$rows[] = array(

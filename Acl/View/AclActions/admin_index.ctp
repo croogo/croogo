@@ -1,12 +1,13 @@
 <?php
 
 $this->extend('/Common/admin_index');
+
 $this->name = 'acos';
 $this->Html->script('/acl/js/acl_permissions.js', false);
 $this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentReady(); });", array('inline' => false));
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Permissions'), array(
 		'plugin' => 'acl', 'controller' => 'acl_permissions',
@@ -101,21 +102,21 @@ $this->append('table-body');
 		$actions = array();
 		$actions[] = $this->Html->link('',
 			array('action' => 'move', $id, 'up'),
-			array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'))
+			array('icon' => $_icons['move-up'], 'tooltip' => __d('croogo', 'Move up'))
 		);
 		$actions[] = $this->Html->link('',
 			array('action' => 'move', $id, 'down'),
-			array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'))
+			array('icon' => $_icons['move-down'], 'tooltip' => __d('croogo', 'Move down'))
 		);
 
 		$actions[] = $this->Html->link('',
 			array('action' => 'edit', $id),
-			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Form->postLink('',
 			array('action' => 'delete',	$id),
 			array(
-				'icon' => 'trash',
+				'icon' => $_icons['delete'],
 				'tooltip' => __d('croogo', 'Remove this item'),
 				'escapeTitle' => false,
 				'escape' => true,

@@ -3,7 +3,7 @@
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index'))
 	->addCrumb($vocabulary['Vocabulary']['title'], array('plugin' => 'taxonomy', 'controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id']));
@@ -39,19 +39,19 @@ $this->append('table-body');
 		$actions[] = $this->Croogo->adminRowActions($term['Term']['id']);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'moveup',	$term['Term']['id'], $vocabulary['Vocabulary']['id']),
-			array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'))
+			array('icon' => $_icons['move-up'], 'tooltip' => __d('croogo', 'Move up'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'movedown', $term['Term']['id'], $vocabulary['Vocabulary']['id']),
-			array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'))
+			array('icon' => $_icons['move-down'], 'tooltip' => __d('croogo', 'Move down'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'edit', $term['Term']['id'], $vocabulary['Vocabulary']['id']),
-			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'delete', $term['Term']['id'], $vocabulary['Vocabulary']['id']),
-			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
+			array('icon' => $_icons['delete'], 'tooltip' => __d('croogo', 'Remove this item')),
 			__d('croogo', 'Are you sure?'));
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
