@@ -141,6 +141,24 @@ Admin.toggleRowSelection = function(selector, checkboxSelector) {
 }
 
 /**
+ * Helper method to get the proper icon class name based on theme settings
+ */
+Admin.iconClass = function(icon, includeDefault) {
+	var result = '';
+	if (typeof Croogo.themeSettings.icons[icon] === 'string') {
+		icon = Croogo.themeSettings.icons[icon];
+	}
+	if (typeof includeDefault === 'undefined') {
+		includeDefault = true;
+	}
+	if (includeDefault) {
+		result = Croogo.themeSettings.iconDefaults['classDefault'] + ' ';
+	}
+	result += Croogo.themeSettings.iconDefaults['classPrefix'] + icon;
+	return result.trim();
+}
+
+/**
  * Document ready
  *
  * @return void
