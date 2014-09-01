@@ -57,12 +57,12 @@ $this->append('table-body');
 		$actions[] = $this->Croogo->adminRowActions($comment['Comment']['id']);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'edit', $comment['Comment']['id']),
-			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Comment' . $comment['Comment']['id'] . 'Id',
 			array(
-				'icon' => 'trash',
+				'icon' => $_icons['delete'],
 				'class' => 'delete',
 				'tooltip' => __d('croogo', 'Remove this item'),
 				'rowAction' => 'delete',

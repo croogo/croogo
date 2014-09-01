@@ -351,7 +351,7 @@ class CommentsControllerTest extends CroogoControllerTestCase {
 			->method('setFlash')
 			->with(
 				$this->equalTo('Comments are not allowed.'),
-				$this->equalTo('default'),
+				$this->equalTo('flash'),
 				$this->equalTo(array('class' => 'error'))
 			);
 		$this->CommentsController->request->params['action'] = 'add';

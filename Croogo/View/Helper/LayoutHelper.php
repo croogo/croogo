@@ -143,7 +143,7 @@ class LayoutHelper extends AppHelper {
  * @return string
  */
 	public function js() {
-		$croogo = array();
+		$croogo = $this->_mergeThemeSettings();
 		if (isset($this->request->params['locale'])) {
 			$croogo['basePath'] = Router::url('/' . $this->request->params['locale'] . '/');
 		} else {
@@ -163,6 +163,40 @@ class LayoutHelper extends AppHelper {
 			$croogo = Hash::merge($croogo, Configure::read('Js'));
 		}
 		return $this->Html->scriptBlock('var Croogo = ' . $this->Js->object($croogo) . ';');
+	}
+
+/**
+ * Merge helper and prefix specific settings
+ *
+ * @param array $croogoSetting Croogo JS settings
+ * @return array Merged settings
+ */
+	protected function _mergeThemeSettings($croogoSetting = array()) {
+		if (empty($this->_View->viewVars['themeSettings'])) {
+			return $croogoSetting;
+		}
+		$validKeys = array(
+			'css' => null,
+			'icons' => null,
+			'iconDefaults' => null,
+		);
+		$themeSettings = $this->_View->viewVars['themeSettings'];
+		$croogoSetting['themeSettings'] = array_intersect_key(
+			array_merge($validKeys, $themeSettings),
+			$validKeys
+		);
+
+		if ($this->_View->Helpers->loaded('Html')) {
+			unset($validKeys['css']);
+			$croogoSetting['themeSettings'] = Hash::merge(
+				$croogoSetting['themeSettings'],
+				array_intersect_key(
+					array_merge($validKeys, $this->_View->Html->settings),
+					$validKeys
+				)
+			);
+		}
+		return $croogoSetting;
 	}
 
 /**

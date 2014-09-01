@@ -3,7 +3,7 @@
 $this->extend('/Common/admin_edit');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Menus'), array('plugin' => 'menus', 'controller' => 'menus', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
@@ -55,7 +55,6 @@ $this->start('panels');
 		$this->Form->input('status', array(
 			'type' => 'radio',
 			'legend' => false,
-			'class' => false,
 			'default' => CroogoStatus::UNPUBLISHED,
 			'options' => $this->Croogo->statuses(),
 		)) .

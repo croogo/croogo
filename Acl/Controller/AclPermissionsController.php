@@ -165,9 +165,9 @@ class AclPermissionsController extends AclAppController {
 		$result = $AclUpgrade->upgrade();
 		if ($result === true) {
 			$this->Session->delete(AuthComponent::$sessionKey . '.aclUpgrade');
-			$this->Session->setFlash(__d('croogo', 'ACL database has been upgraded successfully'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'ACL database has been upgraded successfully'), 'flash', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(join('<br>', $result), 'default', array('class' => 'error'));
+			$this->Session->setFlash(join('<br>', $result), 'flash', array('class' => 'error'));
 		}
 		return $this->redirect($this->referer());
 	}

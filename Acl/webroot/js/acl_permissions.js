@@ -46,17 +46,18 @@ AclPermissions.tabLoad = function(e) {
 	var matches = (e.target.toString().match(/#.+/gi));
 	var pane = matches[0];
 	var alias = $target.data('alias');
-	var $span = $('.icon-spin', $target);
+	var $span = $('.' + Admin.iconClass('spinner', false), $target);
+	var spinnerClass = Admin.iconClass('spinner') + ' ' +Admin.iconClass('spin', false);
 	if ($span.length > 0) {
-		$span.addClass('icon-spinner');
+		$span.addClass(spinnerClass);
 	} else {
-		$target.append(' <span class="icon-spin icon-spinner"></span>');
+		$target.append(' <span class="' + spinnerClass + '"></span>');
 	};
 	$(pane).load(
 		Croogo.basePath + 'admin/acl/acl_permissions/',
 		$.param({ root: alias }),
 		function(responseText, textStatus, xhr) {
-			$('span', $target).removeClass('icon-spinner');
+			$('span', $target).removeClass(spinnerClass);
 			AclPermissions.documentReady();
 		}
 	);
@@ -85,11 +86,12 @@ AclPermissions.permissionToggle = function() {
 		var $this = $(this);
 		var acoId = $this.data('aco_id');
 		var aroId = $this.data('aro_id');
+		var spinnerClass = Admin.iconClass('spinner') + ' ' + Admin.iconClass('spin', false);
 
 		// show loader
 		$this
-			.removeClass('icon-ok icon-remove')
-			.addClass('icon-spin icon-spinner');
+			.removeClass(Admin.iconClass('check-mark') + ' ' + Admin.iconClass('x-mark'))
+			.addClass(spinnerClass);
 
 		// prepare loadUrl
 		var loadUrl = Croogo.basePath+'admin/acl/acl_permissions/toggle/';
@@ -118,6 +120,7 @@ AclPermissions.tableToggle = function() {
 		var $el = $(this);
 		var rows = '';
 		var id = $el.data('id');
+		var spinnerClass = Admin.iconClass('spinner') + ' ' + Admin.iconClass('spin');
 		for (var acoId in data.permissions) {
 			text = '<td>' + acoId + '</td>';
 			var aliases = data.permissions[acoId];
@@ -150,7 +153,7 @@ AclPermissions.tableToggle = function() {
 		}
 		var $row = $el.parents('tr');
 		$(rows).insertAfter($row);
-		$el.find('i').removeClass('icon-spinner icon-spin');
+		$el.find('i').removeClass(spinnerClass);
 	};
 
 	// create table cells for role permissions
@@ -169,12 +172,12 @@ AclPermissions.tableToggle = function() {
 
 			var allowed = roles['roles'][aroIndex];
 			if (aroIndex == 1) {
-				cell.classes += "icon-ok lightgray permission-disabled";
+				cell.classes += "lightgray permission-disabled " + Admin.iconClass("check-mark");
 			} else {
 				if (allowed) {
-					cell.classes += "icon-ok green";
+					cell.classes += "green " + Admin.iconClass("check-mark");
 				} else {
-					cell.classes += "icon-remove red";
+					cell.classes += "red " + Admin.iconClass("x-mark");
 				}
 			}
 			text += AclPermissions.templates.toggleButton(cell);
@@ -186,8 +189,9 @@ AclPermissions.tableToggle = function() {
 		var $el = $(this);
 		var id = $el.data('id');
 		var level = $el.data('level');
+		var spinnerClass = Admin.iconClass('spinner') + ' ' + Admin.iconClass('spin', false);
 
-		$el.find('i').addClass('icon-spin icon-spinner');
+		$el.find('i').addClass(spinnerClass);
 		if ($el.hasClass('perm-expand')) {
 			$el.removeClass('perm-expand').addClass('perm-collapse');
 		} else {
@@ -197,7 +201,7 @@ AclPermissions.tableToggle = function() {
 				$('tr[data-parent_id=' + childId + ']').remove();
 			}).remove();
 			$el.removeClass('perm-collapse').addClass('perm-expand')
-				.find('i').removeClass('icon-spin icon-spinner');
+				.find('i').removeClass(spinnerClass);
 			return;
 		}
 

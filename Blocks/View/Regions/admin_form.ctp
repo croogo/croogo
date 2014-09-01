@@ -3,7 +3,7 @@
 $this->extend('/Common/admin_edit');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Blocks'), array(
 		'plugin' => 'blocks', 'controller' => 'blocks', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Regions'), array(

@@ -112,7 +112,7 @@ class CroogoControllerTestCase extends ControllerTestCase {
 			$class = substr(get_class($this), 0, -4);
 		}
 		$flashOptions = Hash::merge(array(
-			'element' => 'default',
+			'element' => 'flash',
 			'params' => array(
 				'class' => 'success',
 			),

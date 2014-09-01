@@ -51,7 +51,7 @@
 			$popup = $this->Html->tag('table', $this->Html->tableCells($popup));
 			$a = $this->Html->link('', '#', array(
 				'class' => 'popovers action',
-				'icon' => 'info-sign',
+				'icon' => $_icons['info-sign'],
 				'data-title' => $type,
 				'data-trigger' => 'click',
 				'data-placement' => 'right',

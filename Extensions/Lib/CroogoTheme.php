@@ -17,7 +17,6 @@ class CroogoTheme extends Object {
  * Constructor
  */
 	public function __construct() {
-		$this->Setting = ClassRegistry::init('Settings.Setting');
 	}
 
 /**
@@ -99,6 +98,33 @@ class CroogoTheme extends Object {
 					'columnRight' => 'span4',
 					'formInput' => 'input-block-level',
 					'tableClass' => 'table',
+					'imageClass' => 'img-polaroid',
+				),
+				'iconDefaults' => array(
+					'classDefault' => '',
+					'largeIconClass' => 'icon-large',
+					'smallIconClass' => '',
+					'classPrefix' => 'icon-',
+				),
+				'icons' => array(
+					'check-mark' => 'ok',
+					'x-mark' => 'remove',
+					'power-off' => 'off',
+					'power-on' => 'bolt',
+					'create' => 'plus',
+					'read' => 'eye-open',
+					'update' => 'pencil',
+					'delete' => 'trash',
+					'inspect' => 'zoom-in',
+					'move-up' => 'chevron-up',
+					'move-down' => 'chevron-down',
+					'attach' => 'paper-clip',
+					'info-sign' => 'info-sign',
+					'copy' => 'copy',
+					'home' => 'home',
+					'refresh' => 'refresh',
+					'search' => 'search',
+					'link' => 'link',
 				),
 				'prefixes' => array(
 					'' => array(
@@ -195,7 +221,8 @@ class CroogoTheme extends Object {
 			$alias = '';
 		}
 		Cache::delete('file_map', '_cake_core_');
-		return $this->Setting->write('Site.theme', $alias);
+		$Setting = ClassRegistry::init('Settings.Setting');
+		return $Setting->write('Site.theme', $alias);
 	}
 
 /**

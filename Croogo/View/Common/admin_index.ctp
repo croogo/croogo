@@ -1,4 +1,5 @@
 <?php
+
 if (empty($modelClass)) {
 	$modelClass = Inflector::singularize($this->name);
 }
@@ -97,7 +98,7 @@ endif;
 							else:
 								$actions[] = $this->Croogo->adminRowAction('',
 									array('action' => 'edit', $item[$modelClass]['id']),
-									array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
+									array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
 								);
 								$actions[] = $this->Croogo->adminRowActions($item[$modelClass]['id']);
 								$actions[] = $this->Croogo->adminRowAction('',
@@ -106,7 +107,7 @@ endif;
 										$item[$modelClass]['id'],
 									),
 									array(
-										'icon' => 'trash',
+										'icon' => $_icons['delete'],
 										'tooltip' => __d('croogo', 'Remove this item')
 									),
 									__d('croogo', 'Are you sure?'));

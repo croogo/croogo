@@ -1,10 +1,11 @@
 <?php
 
 $this->extend('/Common/admin_edit');
+
 $this->Croogo->adminScript('Nodes.admin');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Content'), array('controller' => 'nodes', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_add') {
@@ -106,7 +107,6 @@ $this->start('panels');
 		)) .
 		$this->Form->input('promote', array(
 			'label' => __d('croogo', 'Promoted to front page'),
-			'class' => false,
 		)) .
 		$this->Form->autocomplete('user_id', array(
 			'type' => 'text',

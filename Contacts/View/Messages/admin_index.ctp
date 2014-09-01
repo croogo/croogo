@@ -5,7 +5,7 @@ $this->Croogo->adminScript('Contacts.admin');
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Contacts'), array('controller' => 'contacts', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Messages'), array('action' => 'index'));
 
@@ -76,12 +76,12 @@ $this->append('table-body');
 
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'edit', $message['Message']['id']),
-			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Message' . $message['Message']['id'] . 'Id',
 			array(
-				'icon' => 'trash',
+				'icon' => $_icons['delete'],
 				'class' => 'delete',
 				'tooltip' => __d('croogo', 'Remove this item'),
 				'rowAction' => 'delete',

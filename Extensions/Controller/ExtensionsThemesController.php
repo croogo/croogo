@@ -78,9 +78,9 @@ class ExtensionsThemesController extends ExtensionsAppController {
  */
 	public function admin_activate($alias = null) {
 		if ($this->_CroogoTheme->activate($alias)) {
-			$this->Session->setFlash(__d('croogo', 'Theme activated.'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Theme activated.'), 'flash', array('class' => 'success'));
 		} else {
-			$this->Session->setFlash(__d('croogo', 'Theme activation failed.'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Theme activation failed.'), 'flash', array('class' => 'success'));
 		}
 
 		return $this->redirect(array('action' => 'index'));
@@ -101,9 +101,9 @@ class ExtensionsThemesController extends ExtensionsAppController {
 			$Installer = new ExtensionsInstaller;
 			try {
 				$Installer->extractTheme($file['tmp_name']);
-				$this->Session->setFlash(__d('croogo', 'Theme uploaded successfully.'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'Theme uploaded successfully.'), 'flash', array('class' => 'success'));
 			} catch (CakeException $e) {
-				$this->Session->setFlash($e->getMessage(), 'default', array('class' => 'error'));
+				$this->Session->setFlash($e->getMessage(), 'flash', array('class' => 'error'));
 			}
 			return $this->redirect(array('action' => 'index'));
 		}
@@ -134,26 +134,26 @@ class ExtensionsThemesController extends ExtensionsAppController {
  */
 	public function admin_delete($alias = null) {
 		if ($alias == null) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Theme.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Theme.'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 
 		if ($alias == 'default') {
-			$this->Session->setFlash(__d('croogo', 'Default theme cannot be deleted.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Default theme cannot be deleted.'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		} elseif ($alias == Configure::read('Site.theme')) {
-			$this->Session->setFlash(__d('croogo', 'You cannot delete a theme that is currently active.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'You cannot delete a theme that is currently active.'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 
 		$result = $this->_CroogoTheme->delete($alias);
 
 		if ($result === true) {
-			$this->Session->setFlash(__d('croogo', 'Theme deleted successfully.'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Theme deleted successfully.'), 'flash', array('class' => 'success'));
 		} elseif (!empty($result[0])) {
-			$this->Session->setFlash($result[0], 'default', array('class' => 'error'));
+			$this->Session->setFlash($result[0], 'flash', array('class' => 'error'));
 		} else {
-			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'flash', array('class' => 'error'));
 		}
 
 		return $this->redirect(array('action' => 'index'));

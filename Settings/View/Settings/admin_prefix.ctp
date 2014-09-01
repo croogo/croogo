@@ -2,7 +2,7 @@
 
 $this->extend('/Common/admin_edit');
 
-$this->Html->addCrumb('', '/admin', array('icon' => 'home'))
+$this->Html->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'index'))
 	->addCrumb($prefix, '/' . $this->request->url);
 

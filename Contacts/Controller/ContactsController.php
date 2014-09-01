@@ -69,10 +69,10 @@ class ContactsController extends ContactsAppController {
 		if (!empty($this->request->data)) {
 			$this->Contact->create();
 			if ($this->Contact->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Contact has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Contact has been saved'), 'flash', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Contact->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Contact could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Contact could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 	}
@@ -88,15 +88,15 @@ class ContactsController extends ContactsAppController {
 		$this->set('title_for_layout', __d('croogo', 'Edit Contact'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Contact'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Contact'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Contact->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Contact has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Contact has been saved'), 'flash', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Contact->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Contact could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Contact could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -113,11 +113,11 @@ class ContactsController extends ContactsAppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Contact'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Contact'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->Contact->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Contact deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Contact deleted'), 'flash', array('class' => 'success'));
 			return $this->redirect(array('action' => 'index'));
 		}
 	}
@@ -168,7 +168,7 @@ class ContactsController extends ContactsAppController {
 			$this->set(compact('continue'));
 			if ($continue === true) {
 				Croogo::dispatchEvent('Controller.Contacts.afterMessage', $this);
-				$this->Session->setFlash(__d('croogo', 'Your message has been received...'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'Your message has been received...'), 'flash', array('class' => 'success'));
 				return $this->Croogo->redirect('/');
 			}
 		} else {
@@ -222,7 +222,7 @@ class ContactsController extends ContactsAppController {
 			$this->Akismet->setCommentContent($this->request->data['Message']['body']);
 			if ($this->Akismet->isCommentSpam()) {
 				$continue = false;
-				$this->Session->setFlash(__d('croogo', 'Sorry, the message appears to be spam.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Sorry, the message appears to be spam.'), 'flash', array('class' => 'error'));
 			}
 		}
 
@@ -243,7 +243,7 @@ class ContactsController extends ContactsAppController {
 			$continue === true &&
 			!$this->Recaptcha->valid($this->request)) {
 			$continue = false;
-			$this->Session->setFlash(__d('croogo', 'Invalid captcha entry'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid captcha entry'), 'flash', array('class' => 'error'));
 		}
 
 		return $continue;

@@ -3,7 +3,7 @@
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Attachments'), '/' . $this->request->url);
 
 $this->start('table-heading');
@@ -24,11 +24,11 @@ $this->append('table-body');
 		$actions[] = $this->Croogo->adminRowActions($attachment['Attachment']['id']);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'attachments', 'action' => 'edit', $attachment['Attachment']['id']),
-			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'attachments', 'action' => 'delete', $attachment['Attachment']['id']),
-			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
+			array('icon' => $_icons['delete'], 'tooltip' => __d('croogo', 'Remove this item')),
 			__d('croogo', 'Are you sure?'));
 
 		$mimeType = explode('/', $attachment['Attachment']['mime_type']);
@@ -36,7 +36,7 @@ $this->append('table-body');
 		$mimeType = $mimeType['0'];
 		$imagecreatefrom = array('gif', 'jpeg', 'png', 'string', 'wbmp', 'webp', 'xbm', 'xpm');
 		if ($mimeType == 'image' && in_array($imageType, $imagecreatefrom)) {
-			$imgUrl = $this->Image->resize('/uploads/' . $attachment['Attachment']['slug'], 100, 200, true, array('class' => 'img-polaroid', 'alt' => $attachment['Attachment']['title']));
+			$imgUrl = $this->Image->resize('/uploads/' . $attachment['Attachment']['slug'], 100, 200, true, array('alt' => $attachment['Attachment']['title']));
 			$thumbnail = $this->Html->link($imgUrl, $attachment['Attachment']['path'],
 			array('escape' => false, 'class' => 'thickbox', 'title' => $attachment['Attachment']['title']));
 		} else {

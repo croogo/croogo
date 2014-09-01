@@ -1,8 +1,9 @@
 <?php
+
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Themes'), '/' . $this->request->url);
 
@@ -31,7 +32,7 @@ $this->Html
 						else:
 							$file = '/theme/' . Configure::read('Site.theme') . '/img/' . $currentTheme['screenshot'];
 						endif;
-						$imgUrl = $this->Html->image($file, array('class' => 'img-polaroid'));
+						$imgUrl = $this->Html->image($file);
 						$link = $this->Html->link($imgUrl, $file, array(
 							'escape' => false,
 							'class' => 'thickbox',
@@ -76,8 +77,7 @@ $this->Html
 					endif;
 					echo '<li class="' . $this->Layout->cssClass('columnFull') . '">';
 					if ($themeAlias == 'default') {
-						$imgUrl = $this->Html->image($theme['screenshot'], array(
-							'class' => 'img-polaroid'));
+						$imgUrl = $this->Html->image($theme['screenshot']);
 						$link = $this->Html->link($imgUrl, $theme['screenshot'], array(
 							'escape' => false,
 							'class' => 'thickbox',
@@ -86,7 +86,7 @@ $this->Html
 					} else {
 						if (!empty($theme['screenshot'])):
 							$file = '/theme/' . $themeAlias . '/img/' . $theme['screenshot'];
-							$imgUrl = $this->Html->image($file, array('class' => 'img-polaroid'));
+							$imgUrl = $this->Html->image($file);
 							$link = $this->Html->link($imgUrl, $file, array(
 								'escape' => false,
 								'class' => 'thickbox',
@@ -116,14 +116,14 @@ $this->Html
 							$themeAlias,
 						), array(
 							'button' => 'default',
-							'icon' => 'bolt',
+							'icon' => $_icons['power-on'],
 						)) .
 						$this->Form->postLink(__d('croogo', 'Delete'), array(
 							'action' => 'delete',
 							$themeAlias,
 						), array(
 							'button' => 'danger',
-							'icon' => 'trash',
+							'icon' => $_icons['delete'],
 						), __d('croogo', 'Are you sure?')),
 						array('class' => 'actions'));
 					echo $this->Html->div($this->Layout->cssClass('columnLeft'), $out);

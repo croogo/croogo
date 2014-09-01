@@ -13,6 +13,30 @@ class CroogoFormHelper extends FormHelper {
 		'Html' => array('className' => 'Croogo.CroogoHtml')
 	);
 
+/**
+ * Constructor
+ */
+	public function __construct(View $View, $settings = array()) {
+		if (isset($View->viewVars['themeSettings'])) {
+			$themeSettings = $View->viewVars['themeSettings'];
+			$settings = Hash::merge(array(
+				'iconDefaults' => $themeSettings['iconDefaults'],
+				'icons' => $themeSettings['icons'],
+			), $settings);
+		} else {
+			$croogoTheme = new CroogoTheme();
+			$themeData = $croogoTheme->getData();
+			$themeSettings = $themeData['settings'];
+			$settings = Hash::merge($themeSettings, $settings);
+		}
+		parent::__construct($View, $settings);
+	}
+
+/**
+ * Generate bootstrap specific options
+ *
+ * @return array Options array
+ */
 	protected function _bootstrapGenerate($title, $options) {
 		if (isset($options['button'])) {
 			$class = isset($options['class']) ? $options['class'] : null;
@@ -124,7 +148,7 @@ class CroogoFormHelper extends FormHelper {
  * @return array
  */
 	protected function _divOptionsAddon($options, $divOptions) {
-		if (isset($this->_addon)) {
+		if (isset($this->_addon) && isset($divOptions['class'])) {
 			$divOptions['class'] .= ' ' . $this->_addon;
 			unset($this->_addon);
 		}
@@ -141,12 +165,16 @@ class CroogoFormHelper extends FormHelper {
 		$options = parent::_parseOptions($options);
 		$options = $this->_parseOptionsAddon($options);
 
-		if (
-			isset($options['multiple']) &&
-			$options['multiple'] === 'checkbox' &&
-			$options['class'] === $this->_View->Layout->cssClass('formInput')
-		) {
-			unset($options['class']);
+		if (isset($options['class'])) {
+			$formInput = $this->_View->Layout->cssClass('formInput');
+			$isMultipleCheckbox = isset($options['multiple']) &&
+				$options['multiple'] === 'checkbox';
+			$isRadioOrCheckbox = isset($options['type']) &&
+				in_array($options['type'], array('checkbox', 'radio'));
+
+			if ($isMultipleCheckbox || $isRadioOrCheckbox) {
+				$options['class'] = str_replace($formInput, '', $options['class']);
+			}
 		}
 
 		return $options;

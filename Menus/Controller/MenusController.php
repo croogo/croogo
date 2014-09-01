@@ -84,10 +84,10 @@ class MenusController extends MenusAppController {
 		if (!empty($this->request->data)) {
 			$this->Menu->create();
 			if ($this->Menu->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Menu has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Menu has been saved'), 'flash', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Menu->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Menu could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Menu could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 	}
@@ -103,15 +103,15 @@ class MenusController extends MenusAppController {
 		$this->set('title_for_layout', __d('croogo', 'Edit Menu'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Menu'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Menu'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Menu->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Menu has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Menu has been saved'), 'flash', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Menu->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Menu could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Menu could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -128,11 +128,11 @@ class MenusController extends MenusAppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Menu'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Menu'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->Menu->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Menu deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Menu deleted'), 'flash', array('class' => 'success'));
 			return $this->redirect(array('action' => 'index'));
 		}
 	}

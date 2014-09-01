@@ -3,7 +3,7 @@
 $this->extend('/Common/admin_edit');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Contacts'), array('controller' => 'contacts', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
@@ -74,23 +74,18 @@ $this->append('tab-content');
 	echo $this->Html->tabStart('contact-message') .
 		$this->Form->input('message_status', array(
 			'label' => __d('croogo', 'Let users leave a message'),
-			'class' => false,
 		)) .
 		$this->Form->input('message_archive', array(
 			'label' => __d('croogo', 'Save messages in database'),
-			'class' => false,
 		)) .
 		$this->Form->input('message_notify', array(
 			'label' => __d('croogo', 'Notify by email instantly'),
-			'class' => false,
 		)) .
 		$this->Form->input('message_spam_protection', array(
 			'label' => __d('croogo', 'Spam protection (requires Akismet API key)'),
-			'class' => false,
 		)) .
 		$this->Form->input('message_captcha', array(
 			'label' => __d('croogo', 'Use captcha? (requires Recaptcha API key)'),
-			'class' => false,
 		));
 
 		echo $this->Html->link(__d('croogo', 'You can manage your API keys here.'), array(
@@ -115,7 +110,6 @@ $this->append('panels');
 		) .
 		$this->Form->input('status', array(
 			'label' => __d('croogo', 'Published'),
-			'class' => false,
 		));
 	echo $this->Html->endBox();
 

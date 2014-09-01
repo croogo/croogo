@@ -107,15 +107,15 @@ class CommentsController extends CommentsAppController {
 		$this->set('title_for_layout', __d('croogo', 'Edit Comment'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Comment'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Comment'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Comment->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Comment has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Comment has been saved'), 'flash', array('class' => 'success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Comment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Comment could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -132,11 +132,11 @@ class CommentsController extends CommentsAppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Comment'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Comment'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->Comment->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Comment deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Comment deleted'), 'flash', array('class' => 'success'));
 			return $this->redirect(array('action' => 'index'));
 		}
 	}
@@ -195,7 +195,7 @@ class CommentsController extends CommentsAppController {
  */
 	public function add($model, $foreignKey = null, $parentId = null) {
 		if (!$foreignKey) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id'), 'flash', array('class' => 'error'));
 			return $this->redirect('/');
 		}
 
@@ -220,7 +220,7 @@ class CommentsController extends CommentsAppController {
 		}
 
 		if (!is_null($parentId) && !$this->Comment->isValidLevel($parentId)) {
-			$this->Session->setFlash(__d('croogo', 'Maximum level reached. You cannot reply to that comment.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Maximum level reached. You cannot reply to that comment.'), 'flash', array('class' => 'error'));
 			return $this->redirect($redirectUrl);
 		}
 
@@ -235,7 +235,7 @@ class CommentsController extends CommentsAppController {
 		$continue = $commentable && $data[$Model->alias]['comment_status'];
 
 		if (!$continue) {
-			$this->Session->setFlash(__d('croogo', 'Comments are not allowed.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Comments are not allowed.'), 'flash', array('class' => 'error'));
 			return $this->redirect($redirectUrl);
 		}
 
@@ -263,7 +263,7 @@ class CommentsController extends CommentsAppController {
 				} else {
 					$messageFlash = __d('croogo', 'Your comment will appear after moderation.');
 				}
-				$this->Session->setFlash($messageFlash, 'default', array('class' => 'success'));
+				$this->Session->setFlash($messageFlash, 'flash', array('class' => 'success'));
 
 				if (Configure::read('Comment.email_notification')) {
 					$this->_sendEmail($data, $comment);
@@ -296,7 +296,7 @@ class CommentsController extends CommentsAppController {
 			$this->Akismet->setCommentContent($this->request->data['Comment']['body']);
 			if ($this->Akismet->isCommentSpam()) {
 				$continue = false;
-				$this->Session->setFlash(__d('croogo', 'Sorry, the comment appears to be spam.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Sorry, the comment appears to be spam.'), 'flash', array('class' => 'error'));
 			}
 		}
 
@@ -318,7 +318,7 @@ class CommentsController extends CommentsAppController {
 			$continue === true &&
 			!$this->Recaptcha->valid($this->request)) {
 			$continue = false;
-			$this->Session->setFlash(__d('croogo', 'Invalid captcha entry'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid captcha entry'), 'flash', array('class' => 'error'));
 		}
 
 		return $continue;

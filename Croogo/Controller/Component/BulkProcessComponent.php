@@ -71,7 +71,7 @@ class BulkProcessComponent extends Component {
 		$message = $messageMap[$messageName];
 
 		if ($condition === true) {
-			$this->Session->setFlash($message, 'default', array('class' => 'error'));
+			$this->Session->setFlash($message, 'flash', array('class' => 'error'));
 			$this->_controller->redirect($options['redirect']);
 		}
 		return !$condition;
@@ -141,7 +141,7 @@ class BulkProcessComponent extends Component {
 			$message = __d('croogo', 'An error occured');
 			$setFlashOptions = array('class' => 'error');
 		}
-		$this->Session->setFlash($message, 'default', $setFlashOptions);
+		$this->Session->setFlash($message, 'flash', $setFlashOptions);
 
 		return $Controller->redirect($options['redirect']);
 	}

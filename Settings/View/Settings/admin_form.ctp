@@ -52,7 +52,6 @@ $this->start('tab-content');
 		)) .
 		$this->Form->input('editable', array(
 			'label' => __d('croogo', 'Editable'),
-			'class' => false,
 		)) .
 		$this->Form->input('params', array(
 			'label' => __d('croogo', 'Params'),

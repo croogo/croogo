@@ -3,7 +3,7 @@
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Menus'), '/' . $this->request->url);
 
 
@@ -26,18 +26,18 @@ $this->start('table-body');
 	$actions[] = $this->Croogo->adminRowAction(
 		'',
 		array('controller' => 'links', 'action' => 'index',	'?' => array('menu_id' => $menu['Menu']['id'])),
-		array('icon' => 'zoom-in', 'tooltip' => __d('croogo', 'View links'))
+		array('icon' => $_icons['inspect'], 'tooltip' => __d('croogo', 'View links'))
 	);
 	$actions[] = $this->Croogo->adminRowActions($menu['Menu']['id']);
 	$actions[] = $this->Croogo->adminRowAction(
 		'',
 		array('controller' => 'menus', 'action' => 'edit', $menu['Menu']['id']),
-		array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
+		array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
 	);
 	$actions[] = $this->Croogo->adminRowAction(
 		'',
 		array('controller' => 'menus', 'action' => 'delete', $menu['Menu']['id']),
-		array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
+		array('icon' => $_icons['delete'], 'tooltip' => __d('croogo', 'Remove this item')),
 		__d('croogo', 'Are you sure?')
 	);
 	$actions = $this->Html->div('item-actions', implode(' ', $actions));

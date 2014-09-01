@@ -2,7 +2,7 @@
 
 $this->extend('/Common/admin_edit');
 
-$this->Html->addCrumb('', '/admin', array('icon' => 'home'))
+$this->Html->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Comments'), array('plugin' => 'comments', 'controller' => 'comments', 'action' => 'index'))
 	->addCrumb($this->request->data['Comment']['id'], '/' . $this->request->url);
@@ -37,7 +37,6 @@ $this->start('panels');
 		$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
 		$this->Form->input('status', array(
 			'label' => __d('croogo', 'Published'),
-			'class' => false,
 		)) .
 		$this->Html->endBox();
 

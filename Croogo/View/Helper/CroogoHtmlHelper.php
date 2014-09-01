@@ -13,21 +13,21 @@ class CroogoHtmlHelper extends HtmlHelper {
  * Constructor
  */
 	public function __construct(View $View, $settings = array()) {
-		$settings = Hash::merge(array(
-			'iconDefaults' => array(
-				'classDefault' => '',
-				'largeIconClass' => 'icon-large',
-				'smallIconClass' => '',
-				'classPrefix' => 'icon-',
-			),
-			'icons' => array(
-				'check-mark' => 'ok',
-				'x-mark' => 'remove',
-			),
-		), $settings);
+		if (isset($View->viewVars['themeSettings'])) {
+			$themeSettings = $View->viewVars['themeSettings'];
+			$settings = Hash::merge(array(
+				'iconDefaults' => $themeSettings['iconDefaults'],
+				'icons' => $themeSettings['icons'],
+			), $settings);
+		} else {
+			$croogoTheme = new CroogoTheme();
+			$themeData = $croogoTheme->getData();
+			$themeSettings = $themeData['settings'];
+			$settings = Hash::merge($themeSettings, $settings);
+		}
 		parent::__construct($View, $settings);
 
-		$themeCss = $this->_View->Layout->cssClass();
+		$themeCss = $themeSettings['css'];
 		$boxIconClass = trim(
 			$settings['iconDefaults']['classDefault'] . ' ' .
 			$settings['iconDefaults']['classPrefix'] . 'list'
@@ -47,7 +47,34 @@ class CroogoHtmlHelper extends HtmlHelper {
 					</div>
 				</div>
 			</div>';
-		$this->_tags['icon'] = '<i class="%s"%s></i> ';
+		$this->_tags['icon'] = '<i class="%s"%s></i>';
+	}
+
+/**
+ * Before render callback
+ *
+ * @param string $viewFiele The view file that is going to be rendered
+ * @return void
+ */
+	public function beforeRender($viewFile) {
+		$this->_View->set('_icons', $this->settings['icons']);
+		return parent::beforeRender($viewFile);
+	}
+
+/**
+ * Creates a formatted IMG element.
+ *
+ * @see HtmlHelper::image()
+ * @param string $path Image Path
+ * @param array $options Options list
+ * @return string Completed img tag
+ */
+	public function image($path, $options = array()) {
+		$class = $this->_View->viewVars['themeSettings']['css']['imageClass'];
+		if (empty($options['class'])) {
+			$options['class'] = $class;
+		}
+		return parent::image($path, $options);
 	}
 
 /**

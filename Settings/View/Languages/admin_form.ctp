@@ -3,7 +3,7 @@
 $this->extend('/Common/admin_edit');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'prefix', 'Site'))
 	->addCrumb(__d('croogo', 'Language'), array('plugin' => 'settings', 'controller' => 'languages', 'action' => 'index'));
 
@@ -56,7 +56,9 @@ echo $this->Form->create('Language');
 					array('action' => 'index'),
 					array('class' => 'cancel', 'button' => 'danger')
 				) .
-				$this->Form->input('status', array('class' => false)) .
+				$this->Form->input('status', array(
+					'label' => __d('croogo', 'Status'),
+				)) .
 				$this->Html->endBox();
 
 			echo $this->Croogo->adminBoxes();

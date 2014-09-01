@@ -70,10 +70,10 @@ class TypesController extends AppController {
 		if (!empty($this->request->data)) {
 			$this->Type->create();
 			if ($this->Type->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Type has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Type has been saved'), 'flash', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Type->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Type could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Type could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 
@@ -92,15 +92,15 @@ class TypesController extends AppController {
 		$this->set('title_for_layout', __d('croogo', 'Edit Type'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Type'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Type'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Type->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Type has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Type has been saved'), 'flash', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Type->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Type could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Type could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -120,11 +120,11 @@ class TypesController extends AppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Type'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Type'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->Type->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Type deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Type deleted'), 'flash', array('class' => 'success'));
 			return $this->redirect(array('action' => 'index'));
 		}
 	}
