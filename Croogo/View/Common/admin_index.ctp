@@ -7,6 +7,10 @@ if (!isset($className)) {
 }
 
 $showActions = isset($showActions) ? $showActions : true;
+
+if ($pageHeading = trim($this->fetch('page-heading'))):
+	echo $pageHeading;
+endif;
 ?>
 
 <h2 class="hidden-desktop">
@@ -163,3 +167,8 @@ $showActions = isset($showActions) ? $showActions : true;
 		<?php endif; ?>
 	</div>
 </div>
+<?php
+
+if ($pageFooter = trim($this->fetch('page-footer'))):
+	echo $pageFooter;
+endif;
