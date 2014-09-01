@@ -17,7 +17,6 @@ class CroogoTheme extends Object {
  * Constructor
  */
 	public function __construct() {
-		$this->Setting = ClassRegistry::init('Settings.Setting');
 	}
 
 /**
@@ -99,6 +98,16 @@ class CroogoTheme extends Object {
 					'columnRight' => 'span4',
 					'formInput' => 'input-block-level',
 					'tableClass' => 'table',
+				),
+				'iconDefaults' => array(
+					'classDefault' => '',
+					'largeIconClass' => 'icon-large',
+					'smallIconClass' => '',
+					'classPrefix' => 'icon-',
+				),
+				'icons' => array(
+					'check-mark' => 'ok',
+					'x-mark' => 'remove',
 				),
 				'prefixes' => array(
 					'' => array(
@@ -195,7 +204,8 @@ class CroogoTheme extends Object {
 			$alias = '';
 		}
 		Cache::delete('file_map', '_cake_core_');
-		return $this->Setting->write('Site.theme', $alias);
+		$Setting = ClassRegistry::init('Settings.Setting');
+		return $Setting->write('Site.theme', $alias);
 	}
 
 /**

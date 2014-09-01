@@ -13,21 +13,21 @@ class CroogoHtmlHelper extends HtmlHelper {
  * Constructor
  */
 	public function __construct(View $View, $settings = array()) {
-		$settings = Hash::merge(array(
-			'iconDefaults' => array(
-				'classDefault' => '',
-				'largeIconClass' => 'icon-large',
-				'smallIconClass' => '',
-				'classPrefix' => 'icon-',
-			),
-			'icons' => array(
-				'check-mark' => 'ok',
-				'x-mark' => 'remove',
-			),
-		), $settings);
+		if (isset($View->viewVars['themeSettings'])) {
+			$themeSettings = $View->viewVars['themeSettings'];
+			$settings = Hash::merge(array(
+				'iconDefaults' => $themeSettings['iconDefaults'],
+				'icons' => $themeSettings['icons'],
+			), $settings);
+		} else {
+			$croogoTheme = new CroogoTheme();
+			$themeData = $croogoTheme->getData();
+			$themeSettings = $themeData['settings'];
+			$settings = Hash::merge($themeSettings, $settings);
+		}
 		parent::__construct($View, $settings);
 
-		$themeCss = $this->_View->Layout->cssClass();
+		$themeCss = $themeSettings['css'];
 		$boxIconClass = trim(
 			$settings['iconDefaults']['classDefault'] . ' ' .
 			$settings['iconDefaults']['classPrefix'] . 'list'
