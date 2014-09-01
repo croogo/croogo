@@ -32,7 +32,7 @@ $this->Html
 						else:
 							$file = '/theme/' . Configure::read('Site.theme') . '/img/' . $currentTheme['screenshot'];
 						endif;
-						$imgUrl = $this->Html->image($file, array('class' => 'img-polaroid'));
+						$imgUrl = $this->Html->image($file);
 						$link = $this->Html->link($imgUrl, $file, array(
 							'escape' => false,
 							'class' => 'thickbox',
@@ -77,8 +77,7 @@ $this->Html
 					endif;
 					echo '<li class="' . $this->Layout->cssClass('columnFull') . '">';
 					if ($themeAlias == 'default') {
-						$imgUrl = $this->Html->image($theme['screenshot'], array(
-							'class' => 'img-polaroid'));
+						$imgUrl = $this->Html->image($theme['screenshot']);
 						$link = $this->Html->link($imgUrl, $theme['screenshot'], array(
 							'escape' => false,
 							'class' => 'thickbox',
@@ -87,7 +86,7 @@ $this->Html
 					} else {
 						if (!empty($theme['screenshot'])):
 							$file = '/theme/' . $themeAlias . '/img/' . $theme['screenshot'];
-							$imgUrl = $this->Html->image($file, array('class' => 'img-polaroid'));
+							$imgUrl = $this->Html->image($file);
 							$link = $this->Html->link($imgUrl, $file, array(
 								'escape' => false,
 								'class' => 'thickbox',

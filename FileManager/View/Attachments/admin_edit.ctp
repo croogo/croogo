@@ -61,7 +61,7 @@ $this->append('panels');
 	$fileType = explode('/', $this->data['Attachment']['mime_type']);
 	$fileType = $fileType['0'];
 	if ($fileType == 'image'):
-		$imgUrl = $this->Image->resize('/uploads/' . $this->data['Attachment']['slug'], 200, 300, true, array('class' => 'img-polaroid'));
+		$imgUrl = $this->Image->resize('/uploads/' . $this->data['Attachment']['slug'], 200, 300, true);
 	else:
 		$imgUrl = $this->Html->image('/croogo/img/icons/' . $this->Filemanager->mimeTypeToImage($this->data['Attachment']['mime_type'])) . ' ' . $this->data['Attachment']['mime_type'];
 	endif;
