@@ -13,6 +13,16 @@ Configure::write('Site.acl_plugin', 'Acl');
 Configure::write('Croogo.Api.path', 'api');
 
 /**
+ * Default dashboard url
+ */
+Configure::write('Croogo.dashboardUrl', array(
+	'admin' => true,
+	'plugin' => 'croogo',
+	'controller' => 'dashboard',
+	'action' => 'index',
+));
+
+/**
  * Admin theme
  */
 //Configure::write('Site.admin_theme', 'sample');
@@ -69,7 +79,7 @@ if (Configure::check('Site.asset_timestamp')) {
 /**
  * Extensions
  */
-CakePlugin::load(array('Extensions'), array('bootstrap' => true, 'routes' => true));
+CakePlugin::load(array('Extensions'), array('bootstrap' => true));
 Configure::load('Extensions.events');
 App::uses('CroogoPlugin', 'Extensions.Lib');
 
@@ -96,7 +106,7 @@ if ($theme) {
  */
 Configure::write('Core.corePlugins', array(
 	'Settings', 'Acl', 'Blocks', 'Comments', 'Contacts', 'Menus', 'Meta',
-	'Nodes', 'Taxonomy', 'Users',
+	'Nodes', 'Taxonomy', 'Users', 'Dashboard'
 ));
 
 /**
