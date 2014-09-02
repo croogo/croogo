@@ -69,7 +69,7 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 
 		$result = $this->Setting->write('Site.locale', $locale);
 		if ($result) {
-			$this->Session->setFlash(sprintf(__d('croogo', "Locale '%s' set as flash"), $locale), 'flash', array('class' => 'success'));
+			$this->Session->setFlash(sprintf(__d('croogo', "Locale '%s' set as default"), $locale), 'flash', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__d('croogo', 'Could not save Locale setting.'), 'flash', array('class' => 'error'));
 		}
