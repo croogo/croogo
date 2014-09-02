@@ -96,7 +96,7 @@ if ($theme) {
  */
 Configure::write('Core.corePlugins', array(
 	'Settings', 'Acl', 'Blocks', 'Comments', 'Contacts', 'Menus', 'Meta',
-	'Nodes', 'Taxonomy', 'Users',
+	'Nodes', 'Taxonomy', 'Users', 'Dashboards',
 ));
 
 /**
