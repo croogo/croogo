@@ -143,7 +143,7 @@ $this->end();
 $this->append('form-end', $this->Form->end());
 
 $this->append('page-footer');
-	echo $this->element('Croogo.admin/modal', array(
+	echo $this->element('admin/modal', array(
 		'id' => 'link_choosers',
 		'title' => __d('croogo', 'Choose Link'),
 	));

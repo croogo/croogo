@@ -33,7 +33,6 @@ $this->Js->buffer($script);
 
 $this->append('table-footer', $this->element('admin/modal', array(
 	'id' => 'comment-modal',
-	'class' => 'hide',
 	)
 ));
 
