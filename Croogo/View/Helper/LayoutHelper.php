@@ -208,11 +208,16 @@ class LayoutHelper extends AppHelper {
  * @return string formatted img tag
  */
 	public function status($value) {
+		if (isset($this->_View->viewVars['_icons'])) {
+			$_icons = $this->_View->viewVars['_icons'];
+		} else {
+			$_icons = array('check-mark' => 'ok', 'x-mark' => 'remove');
+		}
 		if ($value == 1) {
-			$icon = 'ok';
+			$icon = $_icons['check-mark'];
 			$class = 'green';
 		} else {
-			$icon = 'remove';
+			$icon = $_icons['x-mark'];
 			$class = 'red';
 		}
 		if (method_exists($this->Html, 'icon')) {
