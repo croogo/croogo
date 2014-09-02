@@ -98,7 +98,8 @@ class CroogoTheme extends Object {
 					'columnRight' => 'span4',
 					'formInput' => 'input-block-level',
 					'tableClass' => 'table',
-					'imageClass' => 'img-polaroid',
+					'imageClass' => '',
+					'thumbnailClass' => 'img-polaroid',
 				),
 				'iconDefaults' => array(
 					'classDefault' => '',

@@ -40,7 +40,7 @@ $this->append('table-body');
 			$thumbnail = $this->Html->link($imgUrl, $attachment['Attachment']['path'],
 			array('escape' => false, 'class' => 'thickbox', 'title' => $attachment['Attachment']['title']));
 		} else {
-			$thumbnail = $this->Html->image('/croogo/img/icons/page_white.png', array('alt' => $attachment['Attachment']['mime_type'])) . ' ' . $attachment['Attachment']['mime_type'] . ' (' . $this->Filemanager->filename2ext($attachment['Attachment']['slug']) . ')';
+			$thumbnail = $this->Html->thumbnail('/croogo/img/icons/page_white.png', array('alt' => $attachment['Attachment']['mime_type'])) . ' ' . $attachment['Attachment']['mime_type'] . ' (' . $this->Filemanager->filename2ext($attachment['Attachment']['slug']) . ')';
 		}
 
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));

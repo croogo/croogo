@@ -78,6 +78,22 @@ class CroogoHtmlHelper extends HtmlHelper {
 	}
 
 /**
+ * Creates a formatted IMG element for preview images.
+ *
+ * @see HtmlHelper::image()
+ * @param string $path Image Path
+ * @param array $options Options list
+ * @return string Completed img tag
+ */
+	public function thumbnail($path, $options = array()) {
+		$class = $this->_View->viewVars['themeSettings']['css']['thumbnailClass'];
+		if (empty($options['class'])) {
+			$options['class'] = $class;
+		}
+		return parent::image($path, $options);
+	}
+
+/**
  * Create a string representing the start of a box container
  *
  * @param string $title Box title
