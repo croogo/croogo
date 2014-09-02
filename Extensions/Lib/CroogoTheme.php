@@ -121,11 +121,16 @@ class CroogoTheme extends Object {
 					'move-down' => 'chevron-down',
 					'attach' => 'paper-clip',
 					'info-sign' => 'info-sign',
+					'question-sign' => 'question-sign',
+					'warning-sign' => 'warning-sign',
+					'success-sign' => 'ok-sign',
+					'error-sign' => 'exclamation-sign',
 					'copy' => 'copy',
 					'home' => 'home',
 					'refresh' => 'refresh',
 					'search' => 'search',
 					'link' => 'link',
+					'comment' => 'comment-alt',
 				),
 				'prefixes' => array(
 					'' => array(

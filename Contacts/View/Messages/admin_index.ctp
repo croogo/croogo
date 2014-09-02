@@ -68,7 +68,7 @@ $this->start('table-heading');
 $this->end();
 
 $this->append('table-body');
-	$commentIcon = $this->Html->icon('comment-alt');
+	$commentIcon = $this->Html->icon($_icons['comment']);
 	$rows = array();
 	foreach ($messages as $message) {
 		$actions = array();
