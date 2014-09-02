@@ -7,13 +7,18 @@ Derbois Aymeric <aymeric@occi-tech.com>
 Damien Biasotto <damien@occi-tech.com>
 Pierre Martin <pierre@occi-tech.com>
 chadrien <chadrien@chadrien.fr>
+mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
 euromark <euromark@web.de>
+Yuan Chavik <yuan@xintesa.com>
 Damien Biasotto <damien@occitech.fr>
 AD7six <andydawson76@gmail.com>
+Dimas Abdul Aziiz <dimas@xintesa.com>
 Eko Tristiyono <eko@xintesa.com>
-Elias Coronado <ecor.rck@hotmail.com>
-SCV Geo <scv@scvgeo.com>
+Paul Gardner <phpmagpie@webbedit.co.uk>
 Appsbender <regz24@gmail.com>
+Elias Coronado <ecor.rck@hotmail.com>
+Liam Keily <liam@simplywebsites.com>
+SCV Geo <scv@scvgeo.com>
 Heiner Gassen <hg@dynweb.net>
 Paulino Calderon <paulino@calder0n.com>
 phpMagpie <phpmagpie@webbedit.co.uk>
@@ -24,20 +29,19 @@ Hadrien Collongues <chadrien@chadrien.fr>
 Ivan <gsitex@gmail.com>
 John <john@midianegocios.com.br>
 Lukas Marks <lukas.marks@lumax-web.de>
+Lukas Strassel <lukasstrassel@googlemail.com>
 Vitor Pacheco <vitor-p.c@hotmail.com>
-mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
 primeminister <primeminister@mowd.nl>
 ADmad <admad.coder@gmail.com>
 James Sapara <james.sapara@gmail.com>
 Matt Curry <matt@pseudocoder.com>
 Mischa ter Smitten <mischa@tersmitten.nl>
-liamkeily <liam@simplywebsites.com>
 thoth <thomas.rader@tigerclawtech.com>
 Josué Silva Santos <josue.silva.santos@gmail.com>
-Liam <liam@simplywebsites.com>
-Lukas Strassel <lukasstrassel@googlemail.com>
+Walther Lalk <walther@octoplus.co.za>
 cdbruin <casper@ectrader.nl>
 daniel <daniel@daniels-MacBook-Air.local>
+roland-w <roland-w@users.noreply.github.com>
 tmaiaroto <tom@shift8creative.com>
 Adam Taylor <ataylor32@gmail.com>
 Adrien Louis-Rossignol <adrien.louis.r@gmail.com>
@@ -51,7 +55,6 @@ Gilles Bedel <gilles@occi-tech.com>
 Jeremy Harris <jeremy@42pixels.com>
 Joachim Nyqvist <Joachim@JNyqvist.se>
 Kory Marks <kory.marks@mac.com>
-Liam Keily <liam@simplywebsites.com>
 Léo Haddad <scoup001@gmail.com>
 Marce Romagnoli <marce.romagnoli@gmail.com>
 Marcin Jóźwikowski <marcin@jozwikowski.pl>
@@ -64,14 +67,14 @@ SplicePHP <admin@splicephp.com>
 Walther Lalk <emailme@waltherlalk.com>
 Wiena Lorentz <lorentz@xintesa.com>
 alevilar <alevilar@gmail.com>
+avra911 <razvan@magnify.ro>
 damarev <damarev@gmail.com>
 elbakai <elbakai@users.noreply.github.com>
 eryw <kristeryw@gmail.com>
 ingvaar <igorpletenev@gmail.com>
 joseph-d <joseph.d@nirada.co.th>
-phpMagpie <paul@highten.co.uk>
-roland-w <roland-w@users.noreply.github.com>
+kareypowell <kareyp9@gmail.com>
 romaing <pourri@dixit-productions.com>
-sakulstra <lukasstrassel@googlemail.com>
 sherwinrobles <sherwinrobles@gmail.com>
 stefanozoffoli <stefano.zoffoli@librasoftsnc.it>
+stelioschar <stelioschar@gmail.com>
