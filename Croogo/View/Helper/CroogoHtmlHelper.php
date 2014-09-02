@@ -1,6 +1,7 @@
 <?php
 
 App::uses('HtmlHelper', 'View/Helper');
+App::uses('CroogoTheme', 'Extensions.Lib');
 
 /**
  * Croogo Html Helper

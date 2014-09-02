@@ -1,6 +1,7 @@
 <?php
 
 App::uses('FormHelper', 'View/Helper');
+App::uses('CroogoTheme', 'Extensions.Lib');
 
 /**
  * Croogo Form Helper
