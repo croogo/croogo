@@ -444,7 +444,7 @@ class CroogoComponent extends Component {
 		$viewPaths = $this->_setupViewPaths($controller);
 		foreach ($views as $view) {
 			foreach ($viewPaths as $viewPath) {
-				$viewPath = $viewPath . $controller->name . DS . $view . $controller->ext;
+				$viewPath = $viewPath . $controller->viewPath . DS . $view . $controller->ext;
 				if (file_exists($viewPath)) {
 					$controller->view = $viewPath;
 					return;
