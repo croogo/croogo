@@ -191,22 +191,22 @@ class Node extends NodesAppModel {
  * @return boolean
  */
 	public function beforeSave($options = array()) {
-		if (empty($this->request->data[$this->alias]['type']) && $this->type != null) {
-			$this->request->data[$this->alias]['type'] = $this->type;
+		if (empty($this->data[$this->alias]['type']) && $this->type != null) {
+			$this->data[$this->alias]['type'] = $this->type;
 		}
 
 		$dateFields = array('created');
 		foreach ($dateFields as $dateField) {
-			if (!array_key_exists($dateField, $this->request->data[$this->alias])) {
+			if (!array_key_exists($dateField, $this->data[$this->alias])) {
 				continue;
 			}
-			if (empty($this->request->data[$this->alias][$dateField])) {
+			if (empty($this->data[$this->alias][$dateField])) {
 				$db = $this->getDataSource();
 				$colType = array_merge(array(
 					'formatter' => 'date',
 					), $db->columns[$this->getColumnType($dateField)]
 				);
-				$this->request->data[$this->alias][$dateField] = call_user_func(
+				$this->data[$this->alias][$dateField] = call_user_func(
 					$colType['formatter'], $colType['format']
 				);
 			}
@@ -218,7 +218,7 @@ class Node extends NodesAppModel {
 /**
  * Returns false if any fields passed match any (by default, all if $or = false) of their matching values.
  *
- * @param array $fields Field/value pairs to search (if no values specified, they are pulled from $this->request->data)
+ * @param array $fields Field/value pairs to search (if no values specified, they are pulled from $this->data)
  * @param boolean $or If false, all fields specified must match in order for a false return value
  * @return boolean False if any records matching any fields are found
  * @access public
@@ -237,8 +237,8 @@ class Node extends NodesAppModel {
 				unset($fields[$field]);
 
 				$field = $value;
-				if (isset($this->request->data[$this->alias][$field])) {
-					$value = $this->request->data[$this->alias][$field];
+				if (isset($this->data[$this->alias][$field])) {
+					$value = $this->data[$this->alias][$field];
 				} else {
 					$value = null;
 				}
