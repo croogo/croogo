@@ -94,13 +94,13 @@ class Link extends MenusAppModel {
  *
  */
 	public function beforeSave($options = array()) {
-		if (!isset($this->data['Link']['menu_id']) || !isset($this->data['Link']['id'])) {
+		if (!isset($this->request->data['Link']['menu_id']) || !isset($this->request->data['Link']['id'])) {
 			return true;
 		}
 		$previousMenuId = $this->field('menu_id', array(
-			$this->escapeField('id') => $this->data['Link']['id']
+			$this->escapeField('id') => $this->request->data['Link']['id']
 		));
-		$hasMenuChanged = ($previousMenuId != $this->data['Link']['menu_id']);
+		$hasMenuChanged = ($previousMenuId != $this->request->data['Link']['menu_id']);
 		if ($hasMenuChanged) {
 			$this->_previousMenuId = $previousMenuId;
 		}
@@ -116,7 +116,7 @@ class Link extends MenusAppModel {
 			return;
 		}
 		if (isset($this->_previousMenuId)) {
-			$this->setTreeScope($this->data['Link']['menu_id']);
+			$this->setTreeScope($this->request->data['Link']['menu_id']);
 			$this->recover();
 			$this->setTreeScope($this->_previousMenuId);
 			$this->recover();

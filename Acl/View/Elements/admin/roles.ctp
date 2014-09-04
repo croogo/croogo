@@ -1,6 +1,6 @@
 <?php
-if (isset($roles[$this->data['User']['role_id']])) {
-	$validRoles = array_diff_key($roles, array($this->data['User']['role_id'] => null));
+if (isset($roles[$this->request->data['User']['role_id']])) {
+	$validRoles = array_diff_key($roles, array($this->request->data['User']['role_id'] => null));
 } else {
 	$validRoles = $roles;
 }
