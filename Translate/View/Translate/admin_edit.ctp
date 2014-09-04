@@ -6,7 +6,7 @@ $this->Html
 	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Translate'), '/' . $this->request->url)
 	->addCrumb($modelAlias)
-	->addCrumb($this->data[$modelAlias][$displayField]);
+	->addCrumb($this->request->data[$modelAlias][$displayField]);
 
 echo $this->Form->create($modelAlias, array('url' => array(
 	'plugin' => 'translate',

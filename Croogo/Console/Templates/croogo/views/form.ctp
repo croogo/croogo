@@ -10,8 +10,8 @@ $header = <<<EOF
 	->addCrumb(__d('$underscoredPluginName', '${pluralHumanName}'), array('action' => 'index'));
 
 if (\$this->action == 'admin_edit') {
-	\$this->Html->addCrumb(\$this->data['$modelClass']['$displayField'], '/' . \$this->request->url);
-	\$this->viewVars['title_for_layout'] = '$pluralHumanName: ' . \$this->data['$modelClass']['$displayField'];
+	\$this->Html->addCrumb(\$this->request->data['$modelClass']['$displayField'], '/' . \$this->request->url);
+	\$this->viewVars['title_for_layout'] = '$pluralHumanName: ' . \$this->request->data['$modelClass']['$displayField'];
 } else {
 	\$this->Html->addCrumb(__d('croogo', 'Add'), '/' . \$this->request->url);
 }

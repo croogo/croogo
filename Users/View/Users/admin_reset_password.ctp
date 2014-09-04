@@ -10,7 +10,7 @@ $this->Html
 	))
 	->addCrumb(__d('croogo', 'Reset Password'), '/' . $this->request->url);
 
-$this->set('title_for_layout', __d('croogo', 'Reset Password: %s', $this->data['User']['username']));
+$this->set('title_for_layout', __d('croogo', 'Reset Password: %s', $this->request->data['User']['username']));
 
 $this->append('form-start', $this->Form->create('User', array(
 	'url' => array(

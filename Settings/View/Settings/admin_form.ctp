@@ -11,7 +11,7 @@ $this->Html
 	));
 
 if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->data['Setting']['key'], '/' . $this->request->url);
+	$this->Html->addCrumb($this->request->data['Setting']['key'], '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'admin_add') {
