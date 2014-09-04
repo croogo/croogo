@@ -8,7 +8,7 @@ $this->Html
 	->addCrumb(__d('croogo', 'Actions'), array('plugin' => 'acl', 'controller' => 'acl_actions', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->data['Aco']['id'] . ': ' . $this->data['Aco']['alias'], '/' . $this->request->url);
+	$this->Html->addCrumb($this->request->data['Aco']['id'] . ': ' . $this->request->data['Aco']['alias'], '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'admin_add') {
