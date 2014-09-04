@@ -215,8 +215,8 @@ class Setting extends SettingsAppModel {
  * this is used for allowing 'multiple' input_type (select|checkbox) feature
  */
 	public function beforeSave($options = array()) {
-		if (isset($this->request->data[$this->alias]['values'])) {
-			$this->request->data[$this->alias]['value'] = json_encode($this->request->data[$this->alias]['values']);
+		if (isset($this->data[$this->alias]['values'])) {
+			$this->data[$this->alias]['value'] = json_encode($this->data[$this->alias]['values']);
 		}
 		return true;
 	}
