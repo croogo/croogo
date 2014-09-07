@@ -514,6 +514,8 @@ class NodesController extends NodesAppController {
 		$this->set(compact('term', 'type', 'nodes'));
 		$this->Croogo->viewFallback(array(
 			'term_' . $term['Term']['id'],
+			'term_' . $term['Term']['slug'],
+			'term_' . $type['Type']['alias'] . '_' . $term['Term']['slug'],
 			'term_' . $type['Type']['alias'],
 		));
 	}
