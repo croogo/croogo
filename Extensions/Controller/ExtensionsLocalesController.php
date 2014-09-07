@@ -43,15 +43,24 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 	public function admin_index() {
 		$this->set('title_for_layout', __d('croogo', 'Locales'));
 
+		$locales = array();
 		$folder =& new Folder;
-		$folder->path = APP . 'Locale';
-		$content = $folder->read();
-		$locales = $content['0'];
-		foreach ($locales as $i => $locale) {
-			if (strstr($locale, '.') !== false) {
-				unset($locales[$i]);
+		$paths = App::path('Locale');
+		foreach ($paths as $path) {
+			$folder->path = $path;
+			$content = $folder->read();
+			foreach ($content['0'] as $locale) {
+				if (strstr($locale, '.') !== false) {
+					continue;
+				}
+				if (!file_exists($path . $locale . DS . 'LC_MESSAGES' . DS . 'croogo.po')) {
+					continue;
+				}
+
+				$locales[] = $locale;
 			}
 		}
+
 		$this->set(compact('content', 'locales'));
 	}
 
@@ -62,7 +71,8 @@ class ExtensionsLocalesController extends ExtensionsAppController {
  * @return void
  */
 	public function admin_activate($locale = null) {
-		if ($locale == null || !is_dir(APP . 'Locale' . DS . $locale)) {
+		$poFile = $this->__getPoFile($locale);
+		if ($locale == null || !$poFile) {
 			$this->Session->setFlash(__d('croogo', 'Locale does not exist.'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
@@ -167,10 +177,10 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 			return $this->redirect(array('action' => 'index'));
 		}
 
-		$poFile = APP . 'Locale' . DS . $locale . DS . 'LC_MESSAGES' . DS . 'croogo.po';
+		$poFile = $this->__getPoFile($locale);
 
-		if (!file_exists($poFile)) {
-			$this->Session->setFlash(__d('croogo', 'The file %s does not exist.', basename($poFile)), 'flash', array('class' => 'error'));
+		if (!$poFile) {
+			$this->Session->setFlash(__d('croogo', 'The file %s does not exist.', 'croogo.po'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 
@@ -195,19 +205,39 @@ class ExtensionsLocalesController extends ExtensionsAppController {
  * @return void
  */
 	public function admin_delete($locale = null) {
-		if (!$locale) {
-			$this->Session->setFlash(__d('croogo', 'Invalid locale'), 'flash', array('class' => 'error'));
+		$poFile = $this->__getPoFile($locale);
+
+		if (!$poFile) {
+			$this->Session->setFlash(__d('croogo', 'The file %s does not exist.', 'croogo.po'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 
-		$folder =& new Folder;
-		if ($folder->delete(APP . 'Locale' . DS . $locale)) {
+		$file =& new File($poFile, true);
+		if ($file->delete()) {
 			$this->Session->setFlash(__d('croogo', 'Locale deleted successfully.'), 'flash', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__d('croogo', 'Local could not be deleted.'), 'flash', array('class' => 'error'));
 		}
 
 		return $this->redirect(array('action' => 'index'));
+	}
+
+	/**
+	 * Returns the path to the croogo.po file
+	 *
+	 * @param $locale
+	 */
+	private function __getPoFile($locale) {
+		$paths = App::path('Locale');
+		foreach ($paths as $path) {
+			$poFile = $path . $locale . DS . 'LC_MESSAGES' . DS . 'croogo.po';
+
+			if (file_exists($poFile)) {
+				return $poFile;
+			}
+		}
+
+		return false;
 	}
 
 }
