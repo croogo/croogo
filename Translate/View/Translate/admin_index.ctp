@@ -43,7 +43,7 @@ $this->Html
 			$modelAlias
 		),
 		array(
-			'button' => false,
+			'button' => 'success',
 		)
 	);
 ?>
