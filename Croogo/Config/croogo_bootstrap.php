@@ -81,6 +81,7 @@ App::build(array(
 	'Console/Command' => array($croogoPath . 'Console' . DS . 'Command' . DS),
 	'View' => array($croogoPath . 'View' . DS),
 	'View/Helper' => array($croogoPath . 'View' . DS . 'Helper' . DS),
+	'Locale' => array(APP . 'Vendor' . DS . 'croogo' . DS . 'locale' . DS ),
 ), App::APPEND);
 
 $theme = Configure::read('Site.theme');
