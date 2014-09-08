@@ -28,7 +28,7 @@ $this->Html
 			$modelAlias
 		),
 		array(
-			'button' => false,
+			'button' => 'default',
 		)
 	);
 ?>
