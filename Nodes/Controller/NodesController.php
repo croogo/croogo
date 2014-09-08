@@ -134,6 +134,83 @@ class NodesController extends NodesAppController {
 	}
 
 /**
+ * Display node hierarchy scoped on Content type
+ *
+ * @return void
+ */
+	public function admin_hierarchy() {
+		$this->Prg->commonProcess();
+
+		if (empty($this->request->query['type'])) {
+			$this->Session->setFlash(__d('croogo', 'Type must be specified'), 'flash', array(
+				'class' => 'error',
+			));
+			return $this->redirect(array('action' => 'index'));
+		}
+
+		$Node = $this->{$this->modelClass};
+		$Node->recursive = 0;
+
+		$alias = $this->modelClass;
+		$conditions = array();
+
+		$types = $Node->Taxonomy->Vocabulary->Type->find('all');
+		$typeAliases = Hash::extract($types, '{n}.Type.alias');
+
+		$criteria = $Node->parseCriteria($this->Prg->parsedParams());
+		$nodeTypes = $Node->Taxonomy->Vocabulary->Type->find('list', array(
+			'fields' => array('Type.alias', 'Type.title')
+			));
+
+		$nodesTree = $this->Node->generateTreeList($criteria);
+		$nodes = array();
+		foreach ($nodesTree as $nodeId => $title) {
+			$node = $Node->find('first', array(
+				'conditions' => array(
+					$Node->escapeField('id') => $nodeId,
+				),
+			));
+			if ($node) {
+				$depth = substr_count($title, '_', 0);
+				$node['Node']['depth'] = $depth;
+				$nodes[] = $node;
+			}
+		}
+		$this->set(compact('nodes', 'types', 'typeAliases', 'nodeTypes'));
+	}
+
+/**
+ * Move a node up when scoped to Content type
+ *
+ * @param integer $id Node id
+ * @param integer $step Step
+ * @return void
+ */
+	public function admin_moveup($id, $step = 1) {
+		if ($this->Node->moveUp($id, $step)) {
+			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'flash', array('class' => 'success'));
+		} else {
+			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'flash', array('class' => 'error'));
+		}
+		return $this->redirect($this->referer());
+	}
+
+/**
+ * Move a node down when scoped to Content type
+ *
+ * @param integer $id Node id
+ * @param integer $step Step
+ */
+	public function admin_movedown($id, $step = 1) {
+		if ($this->Node->moveDown($id, $step)) {
+			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'flash', array('class' => 'success'));
+		} else {
+			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'flash', array('class' => 'error'));
+		}
+		return $this->redirect($this->referer());
+	}
+
+/**
  * Admin create
  *
  * @return void
