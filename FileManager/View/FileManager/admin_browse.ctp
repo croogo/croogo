@@ -9,22 +9,13 @@ $this->Html
 ?>
 
 <?php $this->start('actions'); ?>
+<?php if(!empty($browseActions)): ?>
 <div class="btn-group">
-<?php
-	echo $this->FileManager->adminAction(__d('croogo', 'Upload here'),
-		array('controller' => 'file_manager', 'action' => 'upload'),
-		$path
-	);
-	echo $this->FileManager->adminAction(__d('croogo', 'Create directory'),
-		array('controller' => 'file_manager', 'action' => 'create_directory'),
-		$path
-	);
-	echo $this->FileManager->adminAction(__d('croogo', 'Create file'),
-		array('controller' => 'file_manager', 'action' => 'create_file'),
-		$path
-	);
-?>
+<?php foreach($browseActions as $label => $url): ?>
+	<?= $this->FileManager->adminAction($label, $url, $path); ?>
+<?php endforeach; ?>
 </div>
+<?php endif;?>
 <?php $this->end(); ?>
 
 <div class="breadcrumb">

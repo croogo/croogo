@@ -40,6 +40,12 @@ class FileManagerController extends FileManagerAppController {
 	public $deletablePaths = array();
 
 /**
+ * Actions to be displayed above breadcrumbs
+ * @var array Key is link label , the value is the matching url (can be string or array)
+ * @access public
+ */
+	public $browseActions = array();
+/**
  * beforeFilter
  *
  * @return void
@@ -47,11 +53,18 @@ class FileManagerController extends FileManagerAppController {
  */
 	public function beforeFilter() {
 		parent::beforeFilter();
+		$this->browseActions = array(
+			__d('croogo', 'Upload here') => array('controller' => 'file_manager', 'action' => 'upload'),
+			__d('croogo', 'Create directory') => array('controller' => 'file_manager', 'action' => 'create_directory'),
+			__d('croogo', 'Create file') => array('controller' => 'file_manager', 'action' => 'create_file'),
+		);
+
 		$this->deletablePaths = array(
 			APP . 'View' . DS . 'Themed' . DS,
 			WWW_ROOT,
 		);
 		$this->set('deletablePaths', $this->deletablePaths);
+		$this->set('browseActions', $this->browseActions);
 	}
 
 /**
@@ -284,6 +297,7 @@ class FileManagerController extends FileManagerAppController {
 		if (isset($this->request->query['newpath'])) {
 			// rename here
 		}
+
 
 		if (isset($_SERVER['HTTP_REFERER'])) {
 			return $this->redirect($_SERVER['HTTP_REFERER']);
