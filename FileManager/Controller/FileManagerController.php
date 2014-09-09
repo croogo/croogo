@@ -154,7 +154,6 @@ class FileManagerController extends FileManagerAppController {
 
 		$pathE = explode(DS, $path);
 		$n = count($pathE) - 1;
-		$filename = $pathE[$n];
 		unset($pathE[$n]);
 		$path = implode(DS, $pathE);
 		$this->file = new File($absolutefilepath, true);
