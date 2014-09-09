@@ -5,7 +5,7 @@ $this->extend('/Common/admin_edit');
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Attachments'), array('plugin' => 'file_manager', 'controller' => 'attachments', 'action' => 'index'))
-	->addCrumb($this->data['Attachment']['title'], '/' . $this->request->url);
+	->addCrumb($this->request->data['Attachment']['title'], '/' . $this->request->url);
 
 $this->append('form-start', $this->Form->create('Attachment', array(
 	'url' => array(
@@ -30,12 +30,12 @@ $this->append('tab-content');
 		)) .
 		$this->Form->input('file_url', array(
 			'label' => __d('croogo', 'File URL'),
-			'value' => Router::url($this->data['Attachment']['path'], true),
+			'value' => Router::url($this->request->data['Attachment']['path'], true),
 			'readonly' => 'readonly',
 		)) .
 		$this->Form->input('file_type', array(
 			'label' => __d('croogo', 'Mime Type'),
-			'value' => $this->data['Attachment']['mime_type'],
+			'value' => $this->request->data['Attachment']['mime_type'],
 			'readonly' => 'readonly')
 		);
 	echo $this->Html->tabEnd();
@@ -58,14 +58,14 @@ $this->append('panels');
 		);
 	echo $this->Html->endBox();
 
-	$fileType = explode('/', $this->data['Attachment']['mime_type']);
+	$fileType = explode('/', $this->request->data['Attachment']['mime_type']);
 	$fileType = $fileType['0'];
 	if ($fileType == 'image'):
-		$imgUrl = $this->Image->resize('/uploads/' . $this->data['Attachment']['slug'], 200, 300, true);
+		$imgUrl = $this->Image->resize('/uploads/' . $this->request->data['Attachment']['slug'], 200, 300, true);
 	else:
-		$imgUrl = $this->Html->thumbnail('/croogo/img/icons/' . $this->Filemanager->mimeTypeToImage($this->data['Attachment']['mime_type'])) . ' ' . $this->data['Attachment']['mime_type'];
+		$imgUrl = $this->Html->thumbnail('/croogo/img/icons/' . $this->Filemanager->mimeTypeToImage($this->request->data['Attachment']['mime_type'])) . ' ' . $this->request->data['Attachment']['mime_type'];
 	endif;
-	$preview = $this->Html->link($imgUrl, $this->data['Attachment']['path'], array(
+	$preview = $this->Html->link($imgUrl, $this->request->data['Attachment']['path'], array(
 		'class' => 'thickbox',
 	));
 	echo $this->Html->beginBox(__d('croogo', 'Preview')) .

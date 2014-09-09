@@ -90,8 +90,8 @@ $this->append('tab-content');
 
 $this->end();
 
-$username = isset($this->data['User']['username']) ?
-	$this->data['User']['username'] :
+$username = isset($this->request->data['User']['username']) ?
+	$this->request->data['User']['username'] :
 	$this->Session->read('Auth.User.username');
 
 $this->start('panels');

@@ -118,7 +118,7 @@ class AttachmentsController extends FileManagerAppController {
 
 		if ($this->request->is('post') || !empty($this->request->data)) {
 
-			if (empty($this->data['Attachment'])) {
+			if (empty($this->request->data['Attachment'])) {
 				$this->Attachment->invalidate('file', __d('croogo', 'Upload failed. Please ensure size does not exceed the server limit.'));
 				return;
 			}

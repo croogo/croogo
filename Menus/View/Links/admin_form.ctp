@@ -22,9 +22,9 @@ if ($this->request->params['action'] == 'admin_add') {
 
 if ($this->request->params['action'] == 'admin_edit') {
 	$this->Html
-		->addCrumb($this->data['Menu']['title'], array(
+		->addCrumb($this->request->data['Menu']['title'], array(
 			'plugin' => 'menus', 'controller' => 'links', 'action' => 'index',
-			'?' => array('menu_id' => $this->data['Menu']['id'])))
+			'?' => array('menu_id' => $this->request->data['Menu']['id'])))
 		->addCrumb($this->request->data['Link']['title'], '/' . $this->request->url);
 	$formUrl = array(
 		'controller' => 'links', 'action' => 'edit',

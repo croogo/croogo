@@ -16,7 +16,7 @@ if (isset($this->request->query['urls'])) {
 			),
 			'del' => $this->Form->postLink('',
 				array('controller' => 'acl_actions', 'action' => 'delete', $acoId),
-				array('icon' => $_icons['delete'], 'tooltip' => __d('croogo', 'Remove this item')),
+				array('icon' => $_icons['delete'], 'tooltip' => __d('croogo', 'Remove this item'), 'escapeTitle' => false, 'escape' => true, 'class' => 'red'),
 				__d('croogo', 'Are you sure?')
 			),
 		);

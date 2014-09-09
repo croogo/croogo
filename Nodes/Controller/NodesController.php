@@ -591,6 +591,8 @@ class NodesController extends NodesAppController {
 		$this->set(compact('term', 'type', 'nodes'));
 		$this->Croogo->viewFallback(array(
 			'term_' . $term['Term']['id'],
+			'term_' . $term['Term']['slug'],
+			'term_' . $type['Type']['alias'] . '_' . $term['Term']['slug'],
 			'term_' . $type['Type']['alias'],
 		));
 	}
@@ -791,8 +793,8 @@ class NodesController extends NodesAppController {
 			$this->Taxonomies->prepareCommonData($type);
 		}
 		$Node = $this->{$this->modelClass};
-		if (!empty($this->data[$Node->alias]['parent_id'])) {
-			$Node->id = $this->data[$Node->alias]['parent_id'];
+		if (!empty($this->request->data[$Node->alias]['parent_id'])) {
+			$Node->id = $this->request->data[$Node->alias]['parent_id'];
 			$parentTitle = $Node->field('title');
 		}
 		$roles = $Node->User->Role->find('list');

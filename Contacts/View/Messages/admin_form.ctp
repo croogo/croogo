@@ -8,7 +8,7 @@ $this->Html
 	->addCrumb(__d('croogo', 'Messages'), array('plugin' => 'contacts', 'controller' => 'messages', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->data['Message']['id'] . ': ' . $this->data['Message']['title'], '/' . $this->request->url);
+	$this->Html->addCrumb($this->request->data['Message']['id'] . ': ' . $this->request->data['Message']['title'], '/' . $this->request->url);
 }
 
 $this->append('form-start', $this->Form->create('Message'));

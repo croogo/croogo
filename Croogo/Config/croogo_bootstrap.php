@@ -81,8 +81,11 @@ App::build(array(
 	'Console/Command' => array($croogoPath . 'Console' . DS . 'Command' . DS),
 	'View' => array($croogoPath . 'View' . DS),
 	'View/Helper' => array($croogoPath . 'View' . DS . 'Helper' . DS),
+	'Locale' => array(APP . 'Vendor' . DS . 'croogo' . DS . 'locale' . DS ),
 ), App::APPEND);
-if ($theme = Configure::read('Site.theme')) {
+
+$theme = Configure::read('Site.theme');
+if ($theme) {
 	App::build(array(
 		'View/Helper' => array(App::themePath($theme) . 'Helper' . DS),
 	));

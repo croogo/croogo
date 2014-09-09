@@ -4,9 +4,19 @@ $this->set('className', 'translate');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $_icons['home']))
-	->addCrumb(__d('croogo', 'Translate'), '/' . $this->request->url)
-	->addCrumb($modelAlias)
-	->addCrumb($this->data[$modelAlias][$displayField]);
+	->addCrumb(Inflector::humanize(Inflector::pluralize($modelAlias)))
+	->addCrumb($this->data[$modelAlias][$displayField])
+	->addCrumb(
+		__d('croogo', 'Translations'),
+		array(
+			'plugin' => 'translate',
+			'controller' => 'translate',
+			'action' => 'index',
+			$id,
+			$modelAlias,
+		)
+	)
+	->addCrumb(__d('croogo', 'Translate'), '/' . $this->request->url);
 
 echo $this->Form->create($modelAlias, array('url' => array(
 	'plugin' => 'translate',

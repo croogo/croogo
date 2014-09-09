@@ -7,11 +7,11 @@ $this->Html
 	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->data['User']['name'], array(
+	$this->Html->addCrumb($this->request->data['User']['name'], array(
 		'plugin' => 'users', 'controller' => 'users', 'action' => 'edit',
-		$this->data['User']['id']
+		$this->request->data['User']['id']
 	));
-	$this->set('title_for_layout', __d('croogo', 'Edit user %s', $this->data['User']['username']));
+	$this->set('title_for_layout', __d('croogo', 'Edit user %s', $this->request->data['User']['username']));
 } else {
 	$this->set('title_for_layout', __d('croogo', 'New user'));
 }
@@ -86,7 +86,7 @@ $this->append('panels');
 		'label' => __d('croogo', 'Status'),
 	));
 
-	$showPassword = !empty($this->data['User']['status']);
+	$showPassword = !empty($this->request->data['User']['status']);
 	if ($this->request->params['action'] == 'admin_add'):
 		$out = $this->Form->input('password', array(
 			'label' => __d('croogo', 'Password'),
