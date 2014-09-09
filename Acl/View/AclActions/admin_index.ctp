@@ -3,8 +3,7 @@
 $this->extend('/Common/admin_index');
 
 $this->name = 'acos';
-$this->Html->script('/acl/js/acl_permissions.js', false);
-$this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentReady(); });", array('inline' => false));
+$this->Croogo->adminScript('Acl.acl_permissions');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $_icons['home']))
@@ -138,3 +137,5 @@ $this->append('table-body');
 	}
 	echo $this->Html->tag('thead', $tableHeaders);
 $this->end();
+
+$this->Js->buffer('AclPermissions.documentReady();');
