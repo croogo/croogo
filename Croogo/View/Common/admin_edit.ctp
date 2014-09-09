@@ -1,11 +1,21 @@
 <?php
+
 if (empty($modelClass)) {
 	$modelClass = Inflector::singularize($this->name);
 }
 if (!isset($className)) {
 	$className = strtolower($this->name);
 }
-$what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') : __d('croogo', 'Add');
+
+$what = isset($this->request->data[$modelClass]['id']) ?
+	__d('croogo', 'Edit') :
+	__d('croogo', 'Add');
+
+$cssClass = $this->Layout->cssClass('row');
+$columnLeft = $this->Layout->cssClass('columnLeft');
+$columnRight = $this->Layout->cssClass('columnRight');
+$columnFull = $this->Layout->cssClass('columnFull');
+
 ?>
 <h2 class="hidden-desktop">
 <?php
@@ -16,24 +26,24 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 	endif;
 ?>
 </h2>
-
 <?php
+
 if ($pageHeading = trim($this->fetch('page-heading'))):
 	echo $pageHeading;
 endif;
-?>
 
+?>
 <?php if ($actionsBlock = $this->fetch('actions')): ?>
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="actions <?php echo $this->Layout->cssClass('columnFull'); ?>">
+<div class="<?php echo $cssClass; ?>">
+	<div class="actions <?php echo $columnFull; ?>">
 		<div class="btn-group">
 			<?php echo $actionsBlock; ?>
 		</div>
 	</div>
 </div>
 <?php endif; ?>
-
 <?php
+
 if ($contentBlock = trim($this->fetch('content'))):
 	echo $contentBlock;
 	return;
@@ -51,8 +61,8 @@ endif;
 $tabId = 'tabitem-' . Inflector::slug(strtolower($modelClass), '-');
 
 ?>
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
+<div class="<?php echo $cssClass; ?>">
+	<div class="<?php echo $columnLeft; ?>">
 
 		<ul class="nav nav-tabs">
 		<?php
@@ -94,7 +104,7 @@ $tabId = 'tabitem-' . Inflector::slug(strtolower($modelClass), '-');
 		?>
 	</div>
 
-	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
+	<div class="<?php echo $columnRight; ?>">
 	<?php
 		if ($rightCol = $this->fetch('panels')):
 			echo $rightCol;

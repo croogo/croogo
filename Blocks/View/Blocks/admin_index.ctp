@@ -8,10 +8,9 @@ $this->Html
 	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Blocks'), array('action' => 'index'));
 
-$this->append('form-start', $this->Form->create('Block',
-	array('url' => array('controller' => 'blocks', 'action' => 'process')),
-	array('class' => 'form-inline')
-));
+$this->append('form-start', $this->Form->create('Block', array(
+	'url' => array('controller' => 'blocks', 'action' => 'process'),
+)));
 
 $chooser = isset($this->request->query['chooser']);
 $this->start('table-heading');
