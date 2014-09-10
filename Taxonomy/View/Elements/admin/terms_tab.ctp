@@ -27,6 +27,7 @@ if (count($taxonomy) > 0):
 			'type' => 'select',
 			'multiple' => $vocabularies[$vocabularyId]['multiple'],
 			'options' => $taxonomyTree,
+			'empty' => true,
 			'value' => $value,
 		));
 	endforeach;
