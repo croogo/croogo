@@ -18,6 +18,15 @@ class DashboardsHelper extends AppHelper {
 		'Croogo.Layout',
 	);
 
+/**
+ * Before Render callback
+ */
+	public function beforeRender($viewFile) {
+		if (isset($this->request->params['admin'])) {
+			Croogo::dispatchEvent('Croogo.setupAdminDashboardData', $this->_View);
+		}
+	}
+
 	public function dashboards($options = array()) {
 		$dashboards = Configure::read('Dashboards');
 		$userId = AuthComponent::user('id');
