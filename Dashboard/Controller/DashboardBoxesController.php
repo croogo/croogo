@@ -12,7 +12,7 @@ App::uses('DashboardAppController', 'Dashboard.Controller');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class DashboardDashboardController extends DashboardAppController {
+class DashboardBoxesController extends DashboardAppController {
 
 	public $helpers = array(
 		'Dashboard.Dashboard'
