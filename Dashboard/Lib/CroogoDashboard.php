@@ -29,7 +29,8 @@ class CroogoDashboard {
 		'weight' => 9999,
 		'element' => false,
 		'cache' => true,
-		'access' => array()
+		'access' => array(),
+		'full_width' => false
 	);
 
 /**

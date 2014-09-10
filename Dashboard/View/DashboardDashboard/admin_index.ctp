@@ -4,7 +4,5 @@ $this->Html
 	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Dashboard'), '/' . $this->request->url);
 
-echo '<div class="row-fluid">';
 echo $this->Dashboard->adminDashboard();
-echo '</div>';
 ?>
