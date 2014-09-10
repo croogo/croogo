@@ -57,7 +57,9 @@ class DashboardHelper extends AppHelper {
 				continue;
 			}
 
+			Croogo::dispatchEvent('Croogo.beforeRenderDashboard', $this->_View, compact('alias', 'dashboard'));
 			$dashboardBox = $this->_View->element('Dashboard.admin/dashboard', array('alias' => $alias, 'dashboard' => $dashboard));
+			Croogo::dispatchEvent('Croogo.afterRenderDashboard', $this->_View, compact('alias', 'dashboard', 'dashboardBox'));
 
 			$column = 2;
 			if ($dashboard['full_width'] == false) {
