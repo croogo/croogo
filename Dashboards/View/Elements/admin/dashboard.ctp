@@ -1,4 +1,4 @@
-<div class='box'>
+<div class='box box-<?php echo $alias; ?>'>
 	<div class='box-title'>
 		<i class='icon-<?php echo $dashboard['icon'] ?>'></i>
 		<?php echo $dashboard['title'] ?>

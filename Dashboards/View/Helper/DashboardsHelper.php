@@ -16,6 +16,7 @@ class DashboardsHelper extends AppHelper {
 
 	public $helpers = array(
 		'Croogo.Layout',
+		'Html' => array('className' => 'Croogo.CroogoHtml'),
 	);
 
 /**
@@ -34,7 +35,11 @@ class DashboardsHelper extends AppHelper {
 			return '';
 		}
 
-		$out = null;
+		$columns = array(
+			0 => array(),
+			1 => array(),
+			2 => array()
+		);
 		$sorted = Hash::sort($dashboards, '{s}.weight', 'ASC');
 		if (empty($this->Role)) {
 			$this->Role = ClassRegistry::init('Users.Role');
@@ -44,19 +49,34 @@ class DashboardsHelper extends AppHelper {
 
 		$cssSetting = $this->Layout->themeSetting('css');
 
-		foreach ($sorted as $dashboard) {
+		$index = 0;
+		foreach ($sorted as $alias => $dashboard) {
 			if ($currentRole != 'admin' && !in_array($currentRole, $dashboard['access'])) {
 				continue;
 			}
 
 			$opt = array(
+				'alias' => $alias,
 				'dashboard' => $dashboard,
-				'class' => $cssSetting['dashboardFull'],
 			);
-			$out .= $this->_View->element('Extensions.admin/dashboard', $opt);
+			$dashboardBox = $this->_View->element('Extensions.admin/dashboard', $opt);
+
+			$column = 2;
+			if ($dashboard['full_width'] == false) {
+				$column = $index % 2;
+				$index++;
+			}
+
+			$columns[$column][] = $dashboardBox;
 		}
 
-		return $out;
+		$columnDivs = array(
+			0 => $this->Html->tag('div', implode('', $columns[0]), array('class' => $cssSetting['dashboardLeft'])),
+			1 => $this->Html->tag('div', implode('', $columns[1]), array('class' => $cssSetting['dashboardRight']))
+		);
+
+		return $this->Html->tag('div', implode('', $columns[2]), array('class' => $cssSetting['row'])) .
+				$this->Html->tag('div', implode('', $columnDivs), array('class' => $cssSetting['row']));
 	}
 
 }
