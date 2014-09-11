@@ -1,6 +1,6 @@
 <div class="box box-<?php echo $alias; ?>" data-alias="<?php echo $alias ?>">
 	<div class="box-title">
-		<i class="icon-<?php echo $dashboard['icon'] ?>"></i>
+		<i class="icon-move move-handle"></i>
 		<?php echo $dashboard['title'] ?>
 		<div class="toggle-icon pull-right">
 			<?php echo($dashboard['collapsed'] ? '<i class="icon-plus"></i>' : '<i class="icon-minus"></i>') ?>

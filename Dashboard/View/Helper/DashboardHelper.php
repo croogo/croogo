@@ -27,11 +27,7 @@ class DashboardHelper extends AppHelper {
 		}
 	}
 
-	public function adminDashboard($options = array()) {
-		$options = Hash::merge(array(
-			'class' => 'span6',
-		), $options);
-
+	public function adminDashboard() {
 		$dashboards = CroogoDashboard::items();
 		$userId = AuthComponent::user('id');
 		if (empty($userId)) {
@@ -71,11 +67,12 @@ class DashboardHelper extends AppHelper {
 		}
 
 		$columnDivs = array(
-			0 => $this->Html->tag('div', implode('', $columns[0]), array('class' => $options['class'])),
-			1 => $this->Html->tag('div', implode('', $columns[1]), array('class' => $options['class']))
+			0 => $this->Html->tag('div', implode('', $columns[0]), array('class' => 'span6 sortable-column', 'id' => 'column-0')),
+			1 => $this->Html->tag('div', implode('', $columns[1]), array('class' => 'span6 sortable-column', 'id' => 'column-1'))
 		);
+		$fullDiv = $this->Html->tag('div', implode('', $columns[2]), array('class' => 'span12 sortable-column', 'id' => 'column-2'));
 
-		return $this->Html->tag('div', implode('', $columns[2]), array('class' => 'row-fluid')) .
+		return $this->Html->tag('div', $fullDiv, array('class' => 'row-fluid')) .
 				$this->Html->tag('div', implode('', $columnDivs), array('class' => 'row-fluid'));
 	}
 

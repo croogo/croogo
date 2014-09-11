@@ -24,7 +24,6 @@ class CroogoDashboard {
  * @var array
  */
 	protected static $_defaults = array(
-		'icon' => '',
 		'title' => false,
 		'weight' => 9999,
 		'element' => false,

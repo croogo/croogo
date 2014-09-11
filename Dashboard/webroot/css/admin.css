@@ -1,0 +1,14 @@
+.move-handle {
+	cursor: move;
+}
+
+.box-placeholder {
+	border: 2px dotted black;
+	margin: 0 1em 1em 0;
+	height: 50px;
+	background: #efefef;
+}
+
+.sortable-column {
+	min-height: 50px;
+}
