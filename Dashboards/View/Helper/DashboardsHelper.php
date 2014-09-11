@@ -28,7 +28,7 @@ class DashboardsHelper extends AppHelper {
 		}
 	}
 
-	public function dashboards($options = array()) {
+	public function dashboards() {
 		$dashboards = Configure::read('Dashboards');
 		$userId = AuthComponent::user('id');
 		if (empty($userId)) {
@@ -73,11 +73,12 @@ class DashboardsHelper extends AppHelper {
 		}
 
 		$columnDivs = array(
-			0 => $this->Html->tag('div', implode('', $columns[0]), array('class' => $cssSetting['dashboardLeft'])),
-			1 => $this->Html->tag('div', implode('', $columns[1]), array('class' => $cssSetting['dashboardRight']))
+			0 => $this->Html->tag('div', implode('', $columns[0]), array('class' => $cssSetting['dashboardLeft'] . ' sortable-column', 'id' => 'column-0')),
+			1 => $this->Html->tag('div', implode('', $columns[1]), array('class' => $cssSetting['dashboardRight'] . ' sortable-column', 'id' => 'column-1')),
 		);
+		$fullDiv = $this->Html->tag('div', implode('', $columns[2]), array('class' => 'span12 sortable-column', 'id' => 'column-2'));
 
-		return $this->Html->tag('div', implode('', $columns[2]), array('class' => $cssSetting['row'])) .
+		return $this->Html->tag('div', $fullDiv, array('class' => $cssSetting['row'])) .
 				$this->Html->tag('div', implode('', $columnDivs), array('class' => $cssSetting['row']));
 	}
 
