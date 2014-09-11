@@ -5,10 +5,13 @@
 .box-placeholder {
 	border: 2px dotted black;
 	margin: 0 1em 1em 0;
-	height: 50px;
+	height: 80px;
 	background: #efefef;
 }
 
-.sortable-column {
-	min-height: 50px;
+.sorting {
+	margin-bottom: 5px;
+	padding: 10px;
+	border: 1px dashed #444;
+	min-height: 100px !important;
 }
