@@ -34,6 +34,17 @@ class DashboardBoxesController extends DashboardAppController {
  */
 	public function admin_index() {
 		$this->set('title_for_layout', __d('croogo', 'Dashboard'));
+		$this->set('boxes_for_dashboard', $this->DashboardBox->find('all', array(
+			'fields' => array(
+				'DashboardBox.alias',
+				'DashboardBox.collapsed',
+				'DashboardBox.column',
+				'DashboardBox.order'
+			),
+			'order' => array(
+				'DashboardBox.order'
+			)
+		)));
 	}
 
 	public function admin_save() {

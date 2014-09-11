@@ -40,15 +40,26 @@ class DashboardHelper extends AppHelper {
 			//Column '2' is the full width column
 			2 => array()
 		);
-		$sorted = Hash::sort($dashboards, '{s}.weight', 'ASC');
 		if (empty($this->Role)) {
 			$this->Role = ClassRegistry::init('Users.Role');
 			$this->Role->Behaviors->attach('Croogo.Aliasable');
 		}
 		$currentRole = $this->Role->byId($this->Layout->getRoleId());
 
-		$index = 0;
-		foreach ($sorted as $alias => $dashboard) {
+		if (!empty($this->_View->viewVars['boxes_for_dashboard'])) {
+			$boxesForLayout = Hash::combine($this->_View->viewVars['boxes_for_dashboard'], '{n}.DashboardBox.alias', '{n}.DashboardBox');
+			foreach ($boxesForLayout as $alias => $userBox) {
+				if (isset($dashboards[$alias])) {
+					$dashboards[$alias] = array_merge($dashboards[$alias], $userBox);
+				}
+			}
+
+			$dashboards = Hash::sort($dashboards, '{s}.order', 'ASC');
+		} else {
+			$dashboards = Hash::sort($dashboards, '{s}.weight', 'ASC');
+		}
+
+		foreach ($dashboards as $alias => $dashboard) {
 			if ($currentRole != 'admin' && !in_array($currentRole, $dashboard['access'])) {
 				continue;
 			}
@@ -57,13 +68,11 @@ class DashboardHelper extends AppHelper {
 			$dashboardBox = $this->_View->element('Dashboard.admin/dashboard', array('alias' => $alias, 'dashboard' => $dashboard));
 			Croogo::dispatchEvent('Croogo.afterRenderDashboard', $this->_View, compact('alias', 'dashboard', 'dashboardBox'));
 
-			$column = 2;
-			if ($dashboard['full_width'] == false) {
-				$column = $index % 2;
-				$index++;
+			if ($dashboard['column'] === false) {
+				$dashboard['column'] = count($columns[0]) <= count($columns[1]) ? 0 : 1;
 			}
 
-			$columns[$column][] = $dashboardBox;
+			$columns[$dashboard['column']][] = $dashboardBox;
 		}
 
 		$columnDivs = array(
