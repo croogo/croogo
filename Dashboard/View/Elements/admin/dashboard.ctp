@@ -1,4 +1,4 @@
-<div class="box box-<?php echo $alias; ?>" data-alias="<?php echo $alias ?>">
+<div class="box box-<?php echo $alias; ?> dashboard-box" id="<?php echo $alias ?>">
 	<div class="box-title">
 		<i class="icon-move move-handle"></i>
 		<?php echo $dashboard['title'] ?>

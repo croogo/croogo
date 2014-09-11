@@ -9,3 +9,4 @@ $this->Html
 
 echo $this->Dashboard->adminDashboard();
 ?>
+<div id="dashboard-url" class="hidden"><?php echo $this->Html->url(array('action' => 'save'));?></div>

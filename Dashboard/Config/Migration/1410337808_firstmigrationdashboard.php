@@ -25,7 +25,6 @@ class FirstMigrationDashboard extends CakeMigration {
 					'column' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 20),
 					'order' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 20),
 					'collapsed' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-					'status' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 					'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
 					'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 					'indexes' => array(
