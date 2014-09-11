@@ -35,10 +35,10 @@ class DashboardHelper extends AppHelper {
 		}
 
 		$columns = array(
-			0 => array(),
-			1 => array(),
+			CroogoDashboard::LEFT => array(),
+			CroogoDashboard::RIGHT => array(),
 			//Column '2' is the full width column
-			2 => array()
+			CroogoDashboard::FULL => array()
 		);
 		if (empty($this->Role)) {
 			$this->Role = ClassRegistry::init('Users.Role');
@@ -69,17 +69,17 @@ class DashboardHelper extends AppHelper {
 			Croogo::dispatchEvent('Croogo.afterRenderDashboard', $this->_View, compact('alias', 'dashboard', 'dashboardBox'));
 
 			if ($dashboard['column'] === false) {
-				$dashboard['column'] = count($columns[0]) <= count($columns[1]) ? 0 : 1;
+				$dashboard['column'] = count($columns[0]) <= count($columns[1]) ? CroogoDashboard::LEFT : CroogoDashboard::RIGHT;
 			}
 
 			$columns[$dashboard['column']][] = $dashboardBox;
 		}
 
 		$columnDivs = array(
-			0 => $this->Html->tag('div', implode('', $columns[0]), array('class' => 'span6 sortable-column', 'id' => 'column-0')),
-			1 => $this->Html->tag('div', implode('', $columns[1]), array('class' => 'span6 sortable-column', 'id' => 'column-1'))
+			0 => $this->Html->tag('div', implode('', $columns[CroogoDashboard::LEFT]), array('class' => 'span6 sortable-column', 'id' => 'column-0')),
+			1 => $this->Html->tag('div', implode('', $columns[CroogoDashboard::RIGHT]), array('class' => 'span6 sortable-column', 'id' => 'column-1'))
 		);
-		$fullDiv = $this->Html->tag('div', implode('', $columns[2]), array('class' => 'span12 sortable-column', 'id' => 'column-2'));
+		$fullDiv = $this->Html->tag('div', implode('', $columns[CroogoDashboard::FULL]), array('class' => 'span12 sortable-column', 'id' => 'column-2'));
 
 		return $this->Html->tag('div', $fullDiv, array('class' => 'row-fluid')) .
 				$this->Html->tag('div', implode('', $columnDivs), array('class' => 'row-fluid'));

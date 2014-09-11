@@ -11,7 +11,13 @@
  */
 class CroogoDashboard {
 
-/**
+	const LEFT = 0;
+
+	const RIGHT = 1;
+
+	const FULL = 2;
+
+	/**
  * _items
  *
  * @var array
