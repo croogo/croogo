@@ -11,9 +11,10 @@ Dashboard.debounce = function(fn, delay) {
 	};
 };
 
-Dashboard.saveDashboard = function() {
+Dashboard.saveDashboard = function(e, ui) {
 	var
 		dashboard = [],
+		box = null,
 		serialize = function(column) {
 			return function(index) {
 				dashboard.push({
@@ -32,18 +33,43 @@ Dashboard.saveDashboard = function() {
 	$('#column-2').find('.box')
 		.each(serialize(2));
 
-	$.post($('#dashboard-url').text(), {dashboard: dashboard});
+	if (ui) {
+		box = ui.item;
+	} else {
+		box = $(this).closest('.box');
+	}
+
+	box
+		.find('.move-handle')
+		.removeClass('icon-move')
+		.addClass('icon-spinner icon-spin');
+
+	$.post($('#dashboard-url').text(), {dashboard: dashboard}, function() {
+		box
+			.find('.move-handle')
+			.removeClass('icon-spinner icon-spin')
+			.addClass('icon-move');
+	});
 };
 
 Dashboard.sortable = function(saveDashboard) {
-	$('#column-0, #column-1, #column-2')
+	var sortables = $('.sortable-column');
+	sortables
 		.sortable({
 			connectWith: '.sortable-column',
 			handle: '.move-handle',
 			placeholder: 'box-placeholder',
+			forcePlaceholderSize: true,
 			opacity: 0.75,
+			tolerance: "pointer",
+			start: function () {
+				sortables.addClass('sorting');
+			},
+			stop: function () {
+				sortables.removeClass('sorting');
+			},
 			update: saveDashboard
-		})
+		});
 };
 
 Dashboard.collapsable = function (saveDashboard) {
