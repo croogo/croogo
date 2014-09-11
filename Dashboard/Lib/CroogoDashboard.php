@@ -30,7 +30,8 @@ class CroogoDashboard {
 		'element' => false,
 		'cache' => true,
 		'access' => array(),
-		'full_width' => false
+		'full_width' => false,
+		'collapsed' => false
 	);
 
 /**
