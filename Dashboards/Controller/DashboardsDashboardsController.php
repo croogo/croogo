@@ -19,10 +19,28 @@ class DashboardsDashboardsController extends DashboardsAppController {
 	);
 
 /**
+ * beforeFilter
+ *
+ * @return void
+ * @access public
+ */
+	public function beforeFilter() {
+		parent::beforeFilter();
+		$this->Security->unlockedActions[] = 'admin_save';
+	}
+
+/**
  * Admin dashboard
  */
 	public function admin_index() {
 		$this->set('title_for_layout', __d('croogo', 'Dashboard'));
+	}
+
+	public function admin_save() {
+		$userId = $this->Auth->user('id');
+		$data = Hash::insert($this->request->data['dashboard'], '{n}.user_id', $userId);
+		$this->DashboardsDashboard->deleteAll(array('user_id' => $userId));
+		$this->DashboardsDashboard->saveMany($data);
 	}
 
 }

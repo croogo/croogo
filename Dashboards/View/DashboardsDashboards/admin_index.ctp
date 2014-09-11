@@ -8,3 +8,5 @@ $this->Html
 	->addCrumb(__d('croogo', 'Dashboard'), '/' . $this->request->url);
 
 echo $this->Dashboards->dashboards();
+?>
+<div id="dashboard-url" class="hidden"><?php echo $this->Html->url(array('action' => 'save'));?></div>

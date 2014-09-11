@@ -115,7 +115,9 @@ Admin.extra = function() {
 	// Box toggle
 	$('body').on('click', '.box-title', function() {
 		$(this)
-			.next().slideToggle().end()
+			.next().slideToggle(function() {
+				$(this).trigger('slide.toggle');
+			}).end()
 			.find('.icon-minus')
 			.switchClass('icon-minus', 'icon-plus').end()
 			.find('.icon-plus')
