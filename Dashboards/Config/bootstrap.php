@@ -10,5 +10,6 @@ Configure::write('Croogo.dashboardUrl', array(
 	'action' => 'index',
 ));
 
+App::uses('CroogoDashboard', 'Dashboards.Lib');
 App::uses('DashboardsConfigReader', 'Dashboards.Configure');
 Configure::config('dashboards', new DashboardsConfigReader());
