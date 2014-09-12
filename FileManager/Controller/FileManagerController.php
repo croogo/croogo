@@ -2,6 +2,7 @@
 
 App::uses('FileManagerAppController', 'FileManager.Controller');
 App::uses('File', 'Utility');
+App::uses('Folder', 'Utility');
 
 /**
  * FileManager Controller
@@ -57,6 +58,7 @@ class FileManagerController extends FileManagerAppController {
 			__d('croogo', 'Upload here') => array('controller' => 'file_manager', 'action' => 'upload'),
 			__d('croogo', 'Create directory') => array('controller' => 'file_manager', 'action' => 'create_directory'),
 			__d('croogo', 'Create file') => array('controller' => 'file_manager', 'action' => 'create_file'),
+			__d('croogo', 'Rename') => array('controller' => 'file_manager', 'action' => 'rename'),
 		);
 
 		$this->deletablePaths = array(
@@ -282,27 +284,58 @@ class FileManagerController extends FileManagerAppController {
 
 /**
  * Admin Rename
- *
+ * Quick attempt
+ * @TODO  extract me into model and test me
  * @return void
  * @access public
  */
 	public function admin_rename() {
-		if (isset($this->request->query['path'])) {
-			$path = $this->request->query['path'];
-		} else {
-			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+		$path = $this->request->query('path');
+		$pathFragments = array_filter(explode(DIRECTORY_SEPARATOR, $path));
+
+		if (!$this->_isRenamable($path)) {
+			$this->Session->setFlash(__d('croogo', 'Path "%s" cannot be renamed', $path), 'flash', array('class' => 'error'));
+			$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 
-		if (isset($this->request->query['newpath'])) {
-			// rename here
-		}
+		if ($this->request->is('post') || $this->request->is('put')) {
+			if (!is_null($this->request->data('FileManager.name')) && é!empty($this->request->data['FileManager']['name'])) {
+				$newName = trim($this->request->data['FileManager']['name']);
+				$oldName = array_pop($pathFragments);
+				$newPath = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $pathFragments) . DIRECTORY_SEPARATOR . $newName;
+				if ($oldName !== $newName) {
+					if (!is_dir($path) && is_file($path)) {
+						$oldFile = new File($path);
+						$newFile = new File ($newPath);
 
+						if ($oldFile->ext() !== $newFile->ext()) {
+							$this->Session->setFlash(__d('croogo', 'You should not change file extension'), 'flash', array('class' => 'error'));
+						} else {
+							if ($newFile->write($oldFile->read())) {
+								$this->Session->setFlash(__d('croogo', 'File "%s" has been renamed to "%s"', $oldFile->name(), $newName), 'flash', array('class' => 'success'));
+								$oldFile->delete();
+							} else {
+								$this->Session->setFlash(__d('croogo', 'File "%s" is not readable', $oldName), 'flash', array('class' => 'error'));
+							}
+						}
+					} else {
+						$Directory= new Folder($path);
+						if ($Directory->copy(array('to' => $newPath, 'from' => $path))) {
+							$this->Session->setFlash(__d('croogo', 'File "%s" has been renamed to "%s"', $oldName, $newName), 'flash', array('class' => 'success'));
+							$Directory->delete($path);
+						} else {
+							$this->Session->setFlash(__d('croogo', 'Could not renamed folder "%s" to "%s"', $oldName, $newName), 'flash', array('class' => 'error'));
+						}
+					}
+				} else {
+					$this->Session->setFlash(__d('croogo', 'Name has not changed'), 'flash', array('class' => 'alert'));
+				}
+			}
 
-		if (isset($_SERVER['HTTP_REFERER'])) {
-			return $this->redirect($_SERVER['HTTP_REFERER']);
-		} else {
-			return $this->redirect(array('controller' => 'file_manager', 'action' => 'index'));
+			$this->redirect(array('controller' => 'file_manager', 'action' => 'index'));
 		}
+		$this->request->data('FileManager.name', array_pop($pathFragments));
+		$this->set('path', $path);
 	}
 
 /**
@@ -379,6 +412,11 @@ class FileManagerController extends FileManagerAppController {
  * @access public
  */
 	public function admin_chmod() {
+	}
+
+
+	private function _isRenamable($path = null) {
+		return !is_null($path) && $this->_isEditable($path);
 	}
 
 }
