@@ -22,6 +22,18 @@ class FileManagerHelper extends AppHelper {
  */
 	public $helpers = array('Html', 'Form');
 
+	private $__actionsAsButton = array(
+		'upload',
+		'create_directory',
+		'create_file',
+		'rename'
+	);
+
+	private $__postLinkActions = array(
+		'delete_directory',
+		'delete_file'
+	);
+
 /**
  * Get extension from a file name.
  *
@@ -128,12 +140,11 @@ class FileManagerHelper extends AppHelper {
  */
 	public function link($title, $url, $path, $pathKey = 'path') {
 		$class = '';
-		if (isset($url['action'])
-			&& ($url['action'] == 'create_directory' || $url['action'] == 'upload' || $url['action'] == 'create_file')) {
+		if (isset($url['action']) && in_array($url['action'], $this->__actionsAsButton)) {
 			$class = 'btn btn-default';
 		}
 
-		if (isset($url['action']) && ($url['action'] == 'delete_directory' || $url['action'] == 'delete_file')) {
+		if (isset($url['action']) && in_array($url['action'], $this->__postLinkActions)) {
 			$output = $this->Form->postLink($title, $url, array('data' => compact('path'), 'escape' => true), __d('croogo', 'Are you sure?'));
 		} else {
 			$output = '<a class="' . $class . '" href="' . $this->Html->url($url) . "?{$pathKey}=" . urlencode($path) . '">' . $title . '</a>';
