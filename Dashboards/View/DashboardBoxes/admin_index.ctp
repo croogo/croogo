@@ -7,6 +7,6 @@ $this->Html
 	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Dashboard'), '/' . $this->request->url);
 
-echo $this->Dashboard->adminDashboard();
+echo $this->Dashboard->dashboard();
 ?>
 <div id="dashboard-url" class="hidden"><?php echo $this->Html->url(array('action' => 'save'));?></div>

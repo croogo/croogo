@@ -1,13 +1,13 @@
 <?php
 
-App::uses('CroogoDashboard', 'Dashboard.Lib');
+App::uses('CroogoDashboard', 'Dashboards.Lib');
 
 /**
  * Dashboard URL
  */
 Configure::write('Croogo.dashboardUrl', array(
 	'admin' => true,
-	'plugin' => 'dashboard',
+	'plugin' => 'dashboards',
 	'controller' => 'dashboard_boxes',
 	'action' => 'index',
 ));

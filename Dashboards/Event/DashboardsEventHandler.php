@@ -3,14 +3,14 @@
 App::uses('CakeEventListener', 'Event');
 
 /**
- * DashboardEventHandler
+ * DashboardsEventHandler
  *
- * @package  Croogo.Dashboard.Event
+ * @package  Croogo.Dashboards.Event
  * @author   Walther Lalk <emailme@waltherlalk.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class DashboardEventHandler implements CakeEventListener {
+class DashboardsEventHandler implements CakeEventListener {
 
 /**
  * implementedEvents

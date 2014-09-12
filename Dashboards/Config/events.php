@@ -2,7 +2,7 @@
 
 $config = array(
 	'EventHandlers' => array(
-		'Dashboard.DashboardEventHandler' => array(
+		'Dashboards.DashboardsEventHandler' => array(
 			'options' => array(
 				'priority' => 5,
 			),

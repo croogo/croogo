@@ -1,21 +1,21 @@
 <?php
 
-App::uses('DashboardAppController', 'Dashboard.Controller');
+App::uses('DashboardsAppController', 'Dashboards.Controller');
 
 /**
- * DashboardApp Controller
+ * DashboardBoxes Controller
  *
  * @category Controller
- * @package  Croogo.Dashboard.Controller
+ * @package  Croogo.Dashboards.Controller
  * @version  2.2
  * @author   Walther Lalk <emailme@waltherlalk.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class DashboardBoxesController extends DashboardAppController {
+class DashboardBoxesController extends DashboardsAppController {
 
 	public $helpers = array(
-		'Dashboard.Dashboard'
+		'Dashboards.Dashboard'
 	);
 
 /**

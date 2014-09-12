@@ -3,7 +3,7 @@
 /**
  * CroogoNav
  *
- * @package  Croogo.Dashboard.Lib
+ * @package  Croogo.Dashboards.Lib
  * @since    2.2
  * @author   Walther Lalk <emailme@waltherlalk.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License

@@ -79,7 +79,7 @@ if (Configure::check('Site.asset_timestamp')) {
 /**
  * Extensions
  */
-CakePlugin::load(array('Extensions'), array('bootstrap' => true));
+CakePlugin::load(array('Extensions'), array('bootstrap' => true, 'routes' => true));
 Configure::load('Extensions.events');
 App::uses('CroogoPlugin', 'Extensions.Lib');
 
@@ -106,7 +106,7 @@ if ($theme) {
  */
 Configure::write('Core.corePlugins', array(
 	'Settings', 'Acl', 'Blocks', 'Comments', 'Contacts', 'Menus', 'Meta',
-	'Nodes', 'Taxonomy', 'Users', 'Dashboard'
+	'Nodes', 'Taxonomy', 'Users', 'Dashboards'
 ));
 
 /**

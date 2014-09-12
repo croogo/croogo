@@ -27,7 +27,7 @@ class DashboardHelper extends AppHelper {
 		}
 	}
 
-	public function adminDashboard() {
+	public function dashboard() {
 		$dashboards = CroogoDashboard::items();
 		$userId = AuthComponent::user('id');
 		if (empty($userId)) {
