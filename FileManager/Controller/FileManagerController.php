@@ -1,6 +1,7 @@
 <?php
 
 App::uses('FileManagerAppController', 'FileManager.Controller');
+App::uses('FileManager', 'FileManager.Model');
 App::uses('File', 'Utility');
 App::uses('Folder', 'Utility');
 
@@ -22,7 +23,7 @@ class FileManagerController extends FileManagerAppController {
  * @var array
  * @access public
  */
-	public $uses = array('Settings.Setting', 'Users.User');
+	public $uses = array('Settings.Setting', 'Users.User', 'FileManager.FileManager');
 
 /**
  * Helpers used by the Controller
@@ -147,7 +148,7 @@ class FileManagerController extends FileManagerAppController {
 		} else {
 			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
-		if (!$this->_isEditable($path)) {
+		if (!$this->FileManager->isEditable($path)) {
 			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'flash', array('class' => 'error'));
 			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
