@@ -280,7 +280,7 @@ class FileManagerController extends FileManagerAppController {
 		$path = $this->request->query('path');
 		$pathFragments = array_filter(explode(DIRECTORY_SEPARATOR, $path));
 
-		if (!$this->_isEditable($path)) {
+		if (!$this->FileManager->isEditable($path)) {
 			$this->Session->setFlash(__d('croogo', 'Path "%s" cannot be renamed', $path), 'flash', array('class' => 'error'));
 			$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
@@ -291,28 +291,11 @@ class FileManagerController extends FileManagerAppController {
 				$oldName = array_pop($pathFragments);
 				$newPath = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $pathFragments) . DIRECTORY_SEPARATOR . $newName;
 				if ($oldName !== $newName) {
-					if (!is_dir($path) && is_file($path)) {
-						$oldFile = new File($path);
-						$newFile = new File ($newPath);
-
-						if ($oldFile->ext() !== $newFile->ext()) {
-							$this->Session->setFlash(__d('croogo', 'You should not change file extension'), 'flash', array('class' => 'error'));
-						} else {
-							if ($newFile->write($oldFile->read())) {
-								$this->Session->setFlash(__d('croogo', 'File "%s" has been renamed to "%s"', $oldFile->name(), $newName), 'flash', array('class' => 'success'));
-								$oldFile->delete();
-							} else {
-								$this->Session->setFlash(__d('croogo', 'File "%s" is not readable', $oldName), 'flash', array('class' => 'error'));
-							}
-						}
+					if($this->FileManager->rename($path, $newPath)) {
+						$this->Session->setFlash(__d('croogo', '"%s" has been renamed to "%s"', $oldName, $newName), 'flash', array('class' => 'success'));
+						$this->redirect(array('controller' => 'file_manager', 'action' => 'browse', '?' => array('path' => $newPath)));
 					} else {
-						$Directory= new Folder($path);
-						if ($Directory->copy(array('to' => $newPath, 'from' => $path))) {
-							$this->Session->setFlash(__d('croogo', 'File "%s" has been renamed to "%s"', $oldName, $newName), 'flash', array('class' => 'success'));
-							$Directory->delete($path);
-						} else {
-							$this->Session->setFlash(__d('croogo', 'Could not renamed folder "%s" to "%s"', $oldName, $newName), 'flash', array('class' => 'error'));
-						}
+						$this->Session->setFlash(__d('croogo', 'Could not renamed "%s" to "%s"', $oldName,$newName), 'flash', array('class' => 'error'));
 					}
 				} else {
 					$this->Session->setFlash(__d('croogo', 'Name has not changed'), 'flash', array('class' => 'alert'));
