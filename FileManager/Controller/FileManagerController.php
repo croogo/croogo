@@ -299,7 +299,7 @@ class FileManagerController extends FileManagerAppController {
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			if (!is_null($this->request->data('FileManager.name')) && é!empty($this->request->data['FileManager']['name'])) {
+			if (!is_null($this->request->data('FileManager.name')) && !empty($this->request->data['FileManager']['name'])) {
 				$newName = trim($this->request->data['FileManager']['name']);
 				$oldName = array_pop($pathFragments);
 				$newPath = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $pathFragments) . DIRECTORY_SEPARATOR . $newName;
