@@ -15,7 +15,7 @@ App::uses('DashboardsAppController', 'Dashboards.Controller');
 class DashboardBoxesController extends DashboardsAppController {
 
 	public $helpers = array(
-		'Dashboards.Dashboard'
+		'Dashboards.Dashboard',
 	);
 
 /**
@@ -39,11 +39,11 @@ class DashboardBoxesController extends DashboardsAppController {
 				'DashboardBox.alias',
 				'DashboardBox.collapsed',
 				'DashboardBox.column',
-				'DashboardBox.order'
+				'DashboardBox.order',
 			),
 			'order' => array(
-				'DashboardBox.order'
-			)
+				'DashboardBox.order',
+			),
 		)));
 	}
 

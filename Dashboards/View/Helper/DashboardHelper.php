@@ -38,7 +38,7 @@ class DashboardHelper extends AppHelper {
 			CroogoDashboard::LEFT => array(),
 			CroogoDashboard::RIGHT => array(),
 			//Column '2' is the full width column
-			CroogoDashboard::FULL => array()
+			CroogoDashboard::FULL => array(),
 		);
 		if (empty($this->Role)) {
 			$this->Role = ClassRegistry::init('Users.Role');

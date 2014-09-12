@@ -36,7 +36,7 @@ class CroogoDashboard {
 		'cache' => true,
 		'access' => array(),
 		'column' => false,
-		'collapsed' => false
+		'collapsed' => false,
 	);
 
 /**
