@@ -22,7 +22,10 @@
 		displayField: "title",
 
 		// field name that will be used when querying from the autocomplete URL
-		queryField: undefined
+		queryField: undefined,
+
+		//allow multiple entries per element
+		multiple: false
 	};
 
 	var pluginName = 'typeahead_autocomplete';
@@ -50,7 +53,6 @@
 			var map = {};
 			var $rel = $(options.relatedElement);
 			var $element = $(plugin.element);
-
 			$element
 				.on('focus', function(e) {
 					$rel.val('');
@@ -60,16 +62,36 @@
 						this.value = '';
 					}
 				});
-
 			$element.typeahead({
-				matcher: function(item) {
-					if (item && item.toLowerCase().indexOf(this.query.trim().toLowerCase()) !== -1) {
-						return true;
-					}
-				},
+				matcher: function (item) {
+				  var tQuery = '';
+				  if (options.multiple) {
+					  var result = /([^,]+)$/.exec(this.query);
+					  if(result && result[1]) {
+					  	  tQuery = result[1].trim();
+					  }
+					  if (tQuery && item && item.toLowerCase().indexOf(tQuery.toLowerCase()) !== -1) {
+				  		  return true;
+					  }
+				  }else {
+					  if (item && item.toLowerCase().indexOf(this.query.trim().toLowerCase()) !== -1) {
+					  	  return true;
+					  }
+				  }
+			    },
 				updater: function(item) {
-					$rel.val(map[item]);
-					return item;
+					if (options.multiple) {
+						var $data = [];
+						var complete = this.$element.val().replace(/[^,]*$/,'')+item;
+						$.each(complete.split(','), function(index, value){
+							$data.push(map[value]);
+						});
+						$rel.val($data.join());
+						return complete;
+					}else {
+						$rel.val(map[item]);
+						return item;
+					}
 				},
 				source: function(q, process) {
 					var param = {};
