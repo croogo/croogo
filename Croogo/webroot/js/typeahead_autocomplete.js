@@ -82,12 +82,12 @@
 				},
 				updater: function(item) {
 					if (options.multiple) {
-						var $data = [];
+						var data = [];
 						var complete = this.$element.val().replace(/[^,]*$/, '') + item;
 						$.each(complete.split(','), function(index, value) {
-							$data.push(map[value]);
+							data.push(map[value]);
 						});
-						$rel.val($data.join());
+						$rel.val(data.join());
 						return complete;
 					} else {
 						$rel.val(map[item]);
