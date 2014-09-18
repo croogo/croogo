@@ -400,6 +400,7 @@ class NodesController extends NodesAppController {
 
 		$displayName = Inflector::pluralize(Inflector::humanize($Node->alias));
 		$options = array(
+			'redirect' => $this->referer(),
 			'multiple' => array('copy' => false),
 			'messageMap' => array(
 				'delete' => __d('croogo', '%s deleted', $displayName),
