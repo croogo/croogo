@@ -96,6 +96,12 @@
 				},
 				source: function(q, process) {
 					var param = {};
+					if (options.multiple) {
+						q = q.split(',').pop().trim();
+						if (q == '' || q.length < options.minLength) {
+							return;
+						}
+					}
 					param[options.queryField] = q;
 					$.get(options.url, $.param(param), function (data) {
 						$.each(data, function (i, result) {
