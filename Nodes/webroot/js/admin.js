@@ -84,17 +84,22 @@ Nodes.slug = function() {
 	});
 }
 
-Nodes.confirmProcess = function(confirmMessage) {
-	var action = $('#NodeAction :selected');
+Nodes.confirmProcess = function(event) {
+	var $el = $(event.currentTarget);
+	var action = $($el.data('relatedelement') + ' :selected');
+	var confirmMessage = app[$el.data('confirmmessage')];
+	var noAction = 'Please select an action';
 	if (action.val() == '') {
-		confirmMessage = 'Please select an action';
+		confirmMessage = noAction;
 	}
 	if (confirmMessage == undefined) {
 		confirmMessage = 'Are you sure?';
 	} else {
 		confirmMessage = confirmMessage.replace(/\%s/, action.text());
 	}
-	if (confirm(confirmMessage)) {
+	if (confirmMessage == noAction) {
+		alert(confirmMessage);
+	} else if(confirm(confirmMessage)) {
 		action.get(0).form.submit();
 	}
 	return false;

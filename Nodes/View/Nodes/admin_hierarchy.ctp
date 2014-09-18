@@ -143,10 +143,13 @@ $this->start('bulk-action');
 	$jsVarName = uniqid('confirmMessage_');
 	$button = $this->Form->button(__d('croogo', 'Submit'), array(
 		'type' => 'button',
-		'onclick' => sprintf('return Nodes.confirmProcess(app.%s)', $jsVarName),
+		'class' => 'bulk-process',
+		'data-relatedElement' => '#' . $this->Form->domId('Node.action'),
+		'data-confirmMessage' => $jsVarName,
 	));
 	echo $this->Html->div('controls', $button);
 	$this->Js->set($jsVarName, __d('croogo', '%s selected items?'));
+	$this->Js->buffer("$('.bulk-process').on('click', Nodes.confirmProcess);");
 
 $this->end();
 
