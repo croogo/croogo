@@ -398,15 +398,16 @@ class NodesController extends NodesAppController {
 		$Node = $this->{$this->modelClass};
 		list($action, $ids) = $this->BulkProcess->getRequestVars($Node->alias);
 
+		$displayName = Inflector::pluralize(Inflector::humanize($Node->alias));
 		$options = array(
 			'multiple' => array('copy' => false),
 			'messageMap' => array(
-				'delete' => __d('croogo', 'Nodes deleted'),
-				'publish' => __d('croogo', 'Nodes published'),
-				'unpublish' => __d('croogo', 'Nodes unpublished'),
-				'promote' => __d('croogo', 'Nodes promoted'),
-				'unpromote' => __d('croogo', 'Nodes unpromoted'),
-				'copy' => __d('croogo', 'Nodes copied'),
+				'delete' => __d('croogo', '%s deleted', $displayName),
+				'publish' => __d('croogo', '%s published', $displayName),
+				'unpublish' => __d('croogo', '%s unpublished', $displayName),
+				'promote' => __d('croogo', '%s promoted', $displayName),
+				'unpromote' => __d('croogo', '%s unpromoted', $displayName),
+				'copy' => __d('croogo', '%s copied', $displayName),
 			),
 		);
 		return $this->BulkProcess->process($Node, $action, $ids, $options);
