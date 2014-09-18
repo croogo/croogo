@@ -42,3 +42,13 @@ Croogo::mergeConfig('Translate.models.Node', array(
 	),
 	'translateModel' => 'Nodes.Node',
 ));
+
+/**
+ * Default dashboard url
+ */
+Configure::write('Croogo.dashboardUrl', array(
+	'admin' => true,
+	'plugin' => 'nodes',
+	'controller' => 'nodes',
+	'action' => 'index',
+));

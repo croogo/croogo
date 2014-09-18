@@ -1,15 +1,4 @@
 <?php
-
-/**
- * Dashboard URL
- */
-Configure::write('Croogo.dashboardUrl', array(
-	'admin' => true,
-	'plugin' => 'extensions',
-	'controller' => 'extensions_dashboard',
-	'action' => 'index',
-));
-
 if (!CakePlugin::loaded('Migrations')) {
 	CakePlugin::load('Migrations');
 }
