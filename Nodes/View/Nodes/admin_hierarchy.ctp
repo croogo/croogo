@@ -5,7 +5,18 @@ $this->Croogo->adminScript(array('Nodes.admin'));
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $_icons['home']))
-	->addCrumb(__d('croogo', 'Content'), '/' . $this->request->url);
+	->addCrumb(__d('croogo', 'Content'), array(
+		'admin' => true,
+		'plugin' => 'nodes',
+		'controller' => 'nodes',
+		'action' => 'index',
+	));
+
+if (isset($type) && $this->request->query):
+	$typeUrl = '/' . $this->request->url;
+	$typeUrl .= '?' . http_build_query($this->request->query);
+	$this->Html->addCrumb($type['Type']['title'], $typeUrl);
+endif;
 
 $this->set('showActions', false);
 

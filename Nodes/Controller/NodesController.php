@@ -154,13 +154,19 @@ class NodesController extends NodesAppController {
 		$alias = $this->modelClass;
 		$conditions = array();
 
+		$type = $Node->Taxonomy->Vocabulary->Type->find('first', array(
+			'recursive' => -1,
+			'conditions' => array(
+				'alias' => $this->request->query('type'),
+			),
+		));
 		$types = $Node->Taxonomy->Vocabulary->Type->find('all');
 		$typeAliases = Hash::extract($types, '{n}.Type.alias');
 
 		$criteria = $Node->parseCriteria($this->Prg->parsedParams());
 		$nodeTypes = $Node->Taxonomy->Vocabulary->Type->find('list', array(
 			'fields' => array('Type.alias', 'Type.title')
-			));
+		));
 
 		$nodesTree = $this->Node->generateTreeList($criteria);
 		$nodes = array();
@@ -176,7 +182,7 @@ class NodesController extends NodesAppController {
 				$nodes[] = $node;
 			}
 		}
-		$this->set(compact('nodes', 'types', 'typeAliases', 'nodeTypes'));
+		$this->set(compact('nodes', 'type', 'types', 'typeAliases', 'nodeTypes'));
 	}
 
 /**
