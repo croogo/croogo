@@ -12,6 +12,9 @@
 		// URL to retrieve autocomplete results
 		url: undefined,
 
+		// allow multiple entries per element
+		multiple: false,
+
 		// selector of related element that stores the actual selected value
 		relatedElement: undefined,
 
@@ -60,19 +63,45 @@
 						this.value = '';
 					}
 				});
-
 			$element.typeahead({
-				matcher: function(item) {
-					if (item && item.toLowerCase().indexOf(this.query.trim().toLowerCase()) !== -1) {
-						return true;
+				matcher: function (item) {
+					var tQuery = '';
+					if (options.multiple) {
+						var result = /([^,]+)$/.exec(this.query);
+						if (result && result[1]) {
+							tQuery = result[1].trim();
+						}
+						if (tQuery && item && item.toLowerCase().indexOf(tQuery.toLowerCase()) !== -1) {
+							return true;
+						}
+					} else {
+						if (item && item.toLowerCase().indexOf(this.query.trim().toLowerCase()) !== -1) {
+							return true;
+						}
 					}
 				},
 				updater: function(item) {
-					$rel.val(map[item]);
-					return item;
+					if (options.multiple) {
+						var data = [];
+						var complete = this.$element.val().replace(/[^,]*$/, '') + item;
+						$.each(complete.split(','), function(index, value) {
+							data.push(map[value]);
+						});
+						$rel.val(data.join());
+						return complete;
+					} else {
+						$rel.val(map[item]);
+						return item;
+					}
 				},
 				source: function(q, process) {
 					var param = {};
+					if (options.multiple) {
+						q = q.split(',').pop().trim();
+						if (q == '' || q.length < options.minLength) {
+							return;
+						}
+					}
 					param[options.queryField] = q;
 					$.get(options.url, $.param(param), function (data) {
 						$.each(data, function (i, result) {
