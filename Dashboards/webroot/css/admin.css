@@ -17,3 +17,12 @@
 .sorting .box {
 	margin: 10px;
 }
+
+.blogfeed h1 {
+	font-size: 100%;
+	line-height: 20px;
+}
+
+.blogfeed p.lead {
+	font-size: 100%;
+}
