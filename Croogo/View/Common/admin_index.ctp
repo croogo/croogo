@@ -124,7 +124,7 @@ $tableFooters = trim($this->fetch('table-footer'));
 		endif;
 		echo $searchBlock;
 
-		if ($contentBlock = $this->fetch('content')):
+		if ($contentBlock = trim($this->fetch('content'))):
 			echo $this->element('admin/search');
 			echo $contentBlock;
 		else:
