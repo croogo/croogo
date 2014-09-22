@@ -114,7 +114,14 @@ Admin.extra = function() {
 
 	// Box toggle
 	$('body').on('click', '.box-title', function() {
-		$(this).next().slideToggle();
+		$(this)
+			.next().slideToggle(function() {
+				$(this).trigger('slide.toggle');
+			}).end()
+			.find('.icon-minus')
+			.switchClass('icon-minus', 'icon-plus').end()
+			.find('.icon-plus')
+			.switchClass('icon-plus', 'icon-minus');
 	});
 
 	if (typeof $.prototype.tabs == 'function') {
