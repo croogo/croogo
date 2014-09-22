@@ -42,7 +42,7 @@ class WysiwygHelper extends AppHelper {
 
 		$action = ucfirst($this->request->params['plugin']) . '/' . $this->request->params['action'];
 		$included = in_array($action, Configure::read('Wysiwyg.actions'));
-		if ($included) {
+		if ($included || array_key_exists($action, Configure::read('Wysiwyg.actions'))) {
 			$this->Html->script('/wysiwyg/js/wysiwyg', array('inline' => false));
 		}
 	}
