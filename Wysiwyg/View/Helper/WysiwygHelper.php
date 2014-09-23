@@ -42,9 +42,10 @@ class WysiwygHelper extends AppHelper {
                 
                 $actions = array();
                 foreach (Configure::read('Wysiwyg.actions') as $key => $value) {
-                    $actions[] = $key;
                     if (!is_array($value)) {
                         $actions[] = $value;
+                    }else{
+                        $actions[] = $key;
                     }
                 }
                 
