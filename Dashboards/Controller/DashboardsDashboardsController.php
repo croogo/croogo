@@ -58,10 +58,10 @@ class DashboardsDashboardsController extends DashboardsAppController {
 				$Dashboard->escapeField('collapsed'),
 				$Dashboard->escapeField('status'),
 				$Dashboard->escapeField('column'),
-				$Dashboard->escapeField('order'),
+				$Dashboard->escapeField('weight'),
 			),
 			'order' => array(
-				$Dashboard->escapeField('order'),
+				$Dashboard->escapeField('weight'),
 			),
 		)));
 	}
@@ -101,10 +101,45 @@ class DashboardsDashboardsController extends DashboardsAppController {
 /**
  * Toggle dashboard status
  *
+ * @param int $id Dashboard id
+ * @param int $status Status
  * @return void
  */
 	public function admin_toggle($id = null, $status = null) {
 		$this->Croogo->fieldToggle($this->{$this->modelClass}, $id, $status);
+	}
+
+/**
+ * Admin moveup
+ *
+ * @param integer $id Dashboard Id
+ * @param integer $step Step
+ * @return void
+ */
+	public function admin_moveup($id, $step = 1) {
+		if ($this->DashboardsDashboard->moveUp($id, $step)) {
+			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'flash', array('class' => 'success'));
+		} else {
+			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'flash', array('class' => 'error'));
+		}
+		return $this->redirect(array('action' => 'index'));
+	}
+
+/**
+ * Admin movedown
+ *
+ * @param integer $id Dashboard Id
+ * @param integer $step Step
+ * @return void
+ */
+	public function admin_movedown($id, $step = 1) {
+		if ($this->DashboardsDashboard->moveDown($id, $step)) {
+			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'flash', array('class' => 'success'));
+		} else {
+			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'flash', array('class' => 'error'));
+		}
+
+		return $this->redirect(array('action' => 'index'));
 	}
 
 }
