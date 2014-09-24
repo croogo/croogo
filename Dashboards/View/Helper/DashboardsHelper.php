@@ -20,6 +20,16 @@ class DashboardsHelper extends AppHelper {
 	);
 
 /**
+ * Constructor
+ */
+	public function __construct(View $View, $settings = array()) {
+		$settings = Hash::merge(array(
+			'dashboardTag' => 'div',
+		), $settings);
+		parent::__construct($View, $settings);
+	}
+
+/**
  * Before Render callback
  */
 	public function beforeRender($viewFile) {
@@ -28,6 +38,11 @@ class DashboardsHelper extends AppHelper {
 		}
 	}
 
+/**
+ * Gets the dashboard markup
+ *
+ * @return string
+ */
 	public function dashboards() {
 		$dashboards = Configure::read('Dashboards');
 		$userId = AuthComponent::user('id');
@@ -81,14 +96,24 @@ class DashboardsHelper extends AppHelper {
 			$columns[$dashboard['column']][] = $dashboardBox;
 		}
 
+		$dashboardTag = $this->settings['dashboardTag'];
 		$columnDivs = array(
-			0 => $this->Html->tag('div', implode('', $columns[CroogoDashboard::LEFT]), array('class' => $cssSetting['dashboardLeft'] . ' sortable-column', 'id' => 'column-0')),
-			1 => $this->Html->tag('div', implode('', $columns[CroogoDashboard::RIGHT]), array('class' => $cssSetting['dashboardRight'] . ' sortable-column', 'id' => 'column-1')),
+			0 => $this->Html->tag($dashboardTag, implode('', $columns[CroogoDashboard::LEFT]), array(
+				'class' => $cssSetting['dashboardLeft'] . ' ' . $cssSetting['dashboardClass'],
+				'id' => 'column-0',
+			)),
+			1 => $this->Html->tag($dashboardTag, implode('', $columns[CroogoDashboard::RIGHT]), array(
+				'class' => $cssSetting['dashboardRight'] . ' ' . $cssSetting['dashboardClass'],
+				'id' => 'column-1'
+			)),
 		);
-		$fullDiv = $this->Html->tag('div', implode('', $columns[CroogoDashboard::FULL]), array('class' => 'span12 sortable-column', 'id' => 'column-2'));
+		$fullDiv = $this->Html->tag($dashboardTag, implode('', $columns[CroogoDashboard::FULL]), array(
+			'class' => $cssSetting['dashboardFull'] . ' ' . $cssSetting['dashboardClass'],
+			'id' => 'column-2',
+		));
 
 		return $this->Html->tag('div', $fullDiv, array('class' => $cssSetting['row'])) .
-				$this->Html->tag('div', implode('', $columnDivs), array('class' => $cssSetting['row']));
+			$this->Html->tag('div', implode('', $columnDivs), array('class' => $cssSetting['row']));
 	}
 
 }
