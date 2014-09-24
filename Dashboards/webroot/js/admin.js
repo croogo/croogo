@@ -1,16 +1,5 @@
 var Dashboard = {};
 
-Dashboard.debounce = function(fn, delay) {
-	var timer = null;
-	return function () {
-		var context = this, args = arguments;
-		clearTimeout(timer);
-		timer = setTimeout(function () {
-			fn.apply(context, args);
-		}, delay);
-	};
-};
-
 Dashboard.saveDashboard = function(e, ui) {
 	var
 		dashboard = [],
