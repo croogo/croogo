@@ -39,6 +39,10 @@ Dashboard.saveDashboard = function(e, ui) {
 		box = $(this).closest('.box');
 	}
 
+	if (!box) {
+		return;
+	}
+
 	box
 		.find('.move-handle')
 		.removeClass('icon-move')
