@@ -1,9 +1,11 @@
-<?php $domId = Inflector::slug($alias, '-'); ?>
-<div id="<?php echo $domId; ?>" class="blogfeed"></div>
+<div class="blogfeed">
+	<?php echo $this->Html->icon(array('spin', 'spinner')); ?>
+</div>
 <?php
 
 $script =<<<EOF
-$.get("http://blog.croogo.org/promoted.rss", function(data) {
+var feedUrl = "http://blog.croogo.org/promoted.rss";
+$.get(feedUrl, { utm_source: "admin-dashboard" }, function(data) {
 	var xml = $(data);
 	var buffer = '';
 	var _title = _.template(
@@ -23,7 +25,7 @@ $.get("http://blog.croogo.org/promoted.rss", function(data) {
 		buffer += _title(item);
 		buffer += '<small>' + item.pubDate + '</small>';
 	});
-	$('#$domId').html(buffer);
+	$('#$alias .blogfeed').html(buffer);
 });
 EOF;
 
