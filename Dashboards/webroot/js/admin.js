@@ -56,11 +56,11 @@ Dashboard.saveDashboard = function(e, ui) {
 	});
 };
 
-Dashboard.sortable = function(saveDashboard) {
-	var sortables = $('.sortable-column');
+Dashboard.sortable = function(selector, saveDashboard) {
+	var sortables = $(selector);
 	sortables
 		.sortable({
-			connectWith: '.sortable-column',
+			connectWith: selector,
 			handle: '.move-handle',
 			placeholder: 'box-placeholder',
 			forcePlaceholderSize: true,
@@ -80,9 +80,8 @@ Dashboard.collapsable = function (saveDashboard) {
 	$('body').on('slide.toggle', '.dashboard-box .box-content', saveDashboard);
 };
 
-$(function () {
-	var saveDashboard = Dashboard.debounce(Dashboard.saveDashboard, 150);
-
-	Dashboard.sortable(saveDashboard);
+Dashboard.init = function() {
+	var saveDashboard = _.debounce(Dashboard.saveDashboard, 300);
+	Dashboard.sortable('.' + Croogo.themeSettings.css['dashboardClass'], saveDashboard);
 	Dashboard.collapsable(saveDashboard);
-});
+}
