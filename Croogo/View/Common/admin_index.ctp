@@ -124,7 +124,7 @@ $tableFooters = trim($this->fetch('table-footer'));
 		endif;
 		echo $searchBlock;
 
-		if ($contentBlock = $this->fetch('content')):
+		if ($contentBlock = trim($this->fetch('content'))):
 			echo $this->element('admin/search');
 			echo $contentBlock;
 		else:
@@ -133,6 +133,9 @@ $tableFooters = trim($this->fetch('table-footer'));
 				echo $formStart;
 			endif;
 
+			if ($mainBlock = trim($this->fetch('main'))):
+				echo $mainBlock;
+			else:
 			?>
 			<table class="<?php echo $tableClass; ?>">
 			<?php
@@ -143,6 +146,7 @@ $tableFooters = trim($this->fetch('table-footer'));
 				endif;
 			?>
 			</table>
+			<?php endif; ?>
 
 			<?php if ($bulkAction = trim($this->fetch('bulk-action'))): ?>
 			<div class="<?php echo $rowClass; ?>">

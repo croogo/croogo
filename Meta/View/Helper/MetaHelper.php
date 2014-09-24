@@ -18,6 +18,7 @@ class MetaHelper extends AppHelper {
  * Helpers
  */
 	public $helpers = array(
+		'Croogo.Layout',
 		'Html',
 		'Form',
 	);
@@ -90,6 +91,7 @@ class MetaHelper extends AppHelper {
  * @return string
  */
 	public function field($key = '', $value = null, $id = null, $options = array()) {
+		$inputClass = $this->Layout->cssClass('formInput');
 		$_options = array(
 			'key' => array(
 				'label' => __d('croogo', 'Key'),
@@ -102,6 +104,9 @@ class MetaHelper extends AppHelper {
 				'rows' => 2,
 			),
 		);
+		if ($inputClass) {
+			$_options['key']['class'] = $_options['value']['class'] = $inputClass;
+		}
 		$options = Hash::merge($_options, $options);
 		$uuid = String::uuid();
 

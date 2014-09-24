@@ -40,8 +40,17 @@ class WysiwygHelper extends AppHelper {
 			$this->Html->url(Configure::read('Wysiwyg.attachmentBrowseUrl'))
 		);
 
-		$action = ucfirst($this->request->params['plugin']) . '/' . $this->request->params['action'];
-		$included = in_array($action, Configure::read('Wysiwyg.actions'));
+		$actions = array();
+		foreach (Configure::read('Wysiwyg.actions') as $key => $value) {
+			if (is_string($value)) {
+				$actions[] = $value;
+			} else {
+				$actions[] = $key;
+			}
+		}
+
+		$currentAction = ucfirst($this->request->params['controller']) . '/' . $this->request->params['action'];
+		$included = in_array($currentAction, $actions, true);
 		if ($included) {
 			$this->Html->script('/wysiwyg/js/wysiwyg', array('inline' => false));
 		}
