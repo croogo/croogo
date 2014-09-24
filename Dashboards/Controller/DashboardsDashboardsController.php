@@ -30,6 +30,20 @@ class DashboardsDashboardsController extends DashboardsAppController {
 	}
 
 /**
+ * Dashboard index
+ *
+ * @return void
+ */
+	public function admin_index() {
+		$Dashboard = $this->DashboardsDashboard;
+		$this->paginate = array(
+			$Dashboard->escapeField('user_id') => $this->Auth->user('id'),
+		);
+		$dashboards = $this->paginate();
+		$this->set(compact('dashboards'));
+	}
+
+/**
  * Admin dashboard
  *
  * @return void
@@ -50,11 +64,36 @@ class DashboardsDashboardsController extends DashboardsAppController {
 		)));
 	}
 
+/**
+ * Saves dashboard setting
+ *
+ * @return void
+ */
 	public function admin_save() {
 		$userId = $this->Auth->user('id');
+		if (!$userId) {
+			throw new CakeException('You must be logged in');
+		}
 		$data = Hash::insert($this->request->data['dashboard'], '{n}.user_id', $userId);
 		$this->DashboardsDashboard->deleteAll(array('user_id' => $userId));
 		$this->DashboardsDashboard->saveMany($data);
+	}
+
+/**
+ * Delete a dashboard
+ *
+ * @param int $id Dashboard id
+ * @return void
+ */
+	public function admin_delete($id = null) {
+		if (!$id) {
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Dashboard'), 'flash', array('class' => 'error'));
+			return $this->redirect(array('action' => 'index'));
+		}
+		if ($this->DashboardsDashboard->delete($id)) {
+			$this->Session->setFlash(__d('croogo', 'Dashboard deleted'), 'flash', array('class' => 'success'));
+			return $this->redirect($this->referer());
+		}
 	}
 
 }

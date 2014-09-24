@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppHelper', 'View/Helper');
+App::uses('CroogoDashboard', 'Dashboards.Lib');
 
 /**
  * Dashboards Helper
@@ -114,6 +115,27 @@ class DashboardsHelper extends AppHelper {
 
 		return $this->Html->tag('div', $fullDiv, array('class' => $cssSetting['row'])) .
 			$this->Html->tag('div', implode('', $columnDivs), array('class' => $cssSetting['row']));
+	}
+
+/**
+ * Gets a readable name from constants
+ *
+ * @param int $id CroogoDashboard position constants
+ * @return string Readable position name
+ */
+	public function columnName($id) {
+		switch ($id) {
+			case CroogoDashboard::LEFT:
+				return __d('croogo', 'Left');
+			break;
+			case CroogoDashboard::RIGHT:
+				return __d('croogo', 'Right');
+			break;
+			case CroogoDashboard::FULL:
+				return __d('croogo', 'Full');
+			break;
+		}
+		return null;
 	}
 
 }
