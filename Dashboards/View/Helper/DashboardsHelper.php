@@ -45,7 +45,7 @@ class DashboardsHelper extends AppHelper {
  * @return string
  */
 	public function dashboards() {
-		$dashboards = Configure::read('Dashboards');
+		$registered = Configure::read('Dashboards');
 		$userId = AuthComponent::user('id');
 		if (empty($userId)) {
 			return '';
@@ -66,15 +66,17 @@ class DashboardsHelper extends AppHelper {
 
 		if (!empty($this->_View->viewVars['boxes_for_dashboard'])) {
 			$boxesForLayout = Hash::combine($this->_View->viewVars['boxes_for_dashboard'], '{n}.DashboardsDashboard.alias', '{n}.DashboardsDashboard');
+			$dashboards = array();
+			$registeredUnsaved = array_diff_key($registered, $boxesForLayout);
 			foreach ($boxesForLayout as $alias => $userBox) {
-				if (isset($dashboards[$alias])) {
-					$dashboards[$alias] = array_merge($dashboards[$alias], $userBox);
+				if (isset($registered[$alias]) && $userBox['status']) {
+					$dashboards[$alias] = array_merge($registered[$alias], $userBox);
 				}
 			}
-
-			$dashboards = Hash::sort($dashboards, '{s}.order', 'ASC');
-		} else {
+			$dashboards = Hash::merge($dashboards, $registeredUnsaved);
 			$dashboards = Hash::sort($dashboards, '{s}.weight', 'ASC');
+		} else {
+			$dashboards = Hash::sort($registered, '{s}.weight', 'ASC');
 		}
 
 		foreach ($dashboards as $alias => $dashboard) {

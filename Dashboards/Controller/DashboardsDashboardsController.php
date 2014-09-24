@@ -27,6 +27,7 @@ class DashboardsDashboardsController extends DashboardsAppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Security->unlockedActions[] = 'admin_save';
+		$this->Security->unlockedActions[] = 'admin_toggle';
 	}
 
 /**
@@ -55,6 +56,7 @@ class DashboardsDashboardsController extends DashboardsAppController {
 			'fields' => array(
 				$Dashboard->escapeField('alias'),
 				$Dashboard->escapeField('collapsed'),
+				$Dashboard->escapeField('status'),
 				$Dashboard->escapeField('column'),
 				$Dashboard->escapeField('order'),
 			),
@@ -94,6 +96,15 @@ class DashboardsDashboardsController extends DashboardsAppController {
 			$this->Session->setFlash(__d('croogo', 'Dashboard deleted'), 'flash', array('class' => 'success'));
 			return $this->redirect($this->referer());
 		}
+	}
+
+/**
+ * Toggle dashboard status
+ *
+ * @return void
+ */
+	public function admin_toggle($id = null, $status = null) {
+		$this->Croogo->fieldToggle($this->{$this->modelClass}, $id, $status);
 	}
 
 }

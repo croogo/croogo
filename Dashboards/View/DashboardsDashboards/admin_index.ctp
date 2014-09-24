@@ -29,8 +29,21 @@ foreach ($dashboards as $dashboard):
 		<td><?php echo h($dashboard['DashboardsDashboard']['id']); ?>&nbsp;</td>
 		<td><?php echo h($dashboard['DashboardsDashboard']['alias']); ?>&nbsp;</td>
 		<td><?php echo $this->Dashboards->columnName($dashboard['DashboardsDashboard']['column']); ?>&nbsp;</td>
-		<td><?php echo $this->Layout->status($dashboard['DashboardsDashboard']['collapsed']); ?></td>
-		<td><?php echo $this->Layout->status($dashboard['DashboardsDashboard']['status']); ?></td>
+		<td>
+			<?php
+			if ($dashboard['DashboardsDashboard']['collapsed']):
+				echo $this->Layout->status($dashboard['DashboardsDashboard']['collapsed']);
+			endif;
+			?>&nbsp;
+		</td>
+		<td>
+			<?php
+				echo $this->element('admin/toggle', array(
+					'id' => $dashboard['DashboardsDashboard']['id'],
+					'status' => (int)$dashboard['DashboardsDashboard']['status'],
+				));
+			?>
+		</td>
 		<td><?php echo h($dashboard['DashboardsDashboard']['updated']); ?>&nbsp;</td>
 		<td><?php echo h($dashboard['DashboardsDashboard']['created']); ?>&nbsp;</td>
 		<td class="item-actions">
