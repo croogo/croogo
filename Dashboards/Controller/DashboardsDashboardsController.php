@@ -31,8 +31,10 @@ class DashboardsDashboardsController extends DashboardsAppController {
 
 /**
  * Admin dashboard
+ *
+ * @return void
  */
-	public function admin_index() {
+	public function admin_dashboard() {
 		$this->set('title_for_layout', __d('croogo', 'Dashboard'));
 		$Dashboard = $this->DashboardsDashboard;
 		$this->set('boxes_for_dashboard', $Dashboard->find('all', array(
