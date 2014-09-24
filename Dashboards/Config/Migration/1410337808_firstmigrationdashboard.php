@@ -23,7 +23,7 @@ class FirstMigrationDashboard extends CakeMigration {
 					'alias' => array('type' => 'string', 'null' => false, 'default' => '', 'length' => 50),
 					'user_id' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 20),
 					'column' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 20),
-					'order' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 20),
+					'weight' => array('type' => 'integer', 'null' => false, 'default' => '0', 'length' => 20),
 					'collapsed' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
 					'status' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
 					'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),

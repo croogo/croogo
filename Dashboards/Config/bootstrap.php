@@ -7,7 +7,7 @@ Configure::write('Croogo.dashboardUrl', array(
 	'admin' => true,
 	'plugin' => 'dashboards',
 	'controller' => 'dashboards_dashboards',
-	'action' => 'index',
+	'action' => 'dashboard',
 ));
 
 App::uses('CroogoDashboard', 'Dashboards.Lib');

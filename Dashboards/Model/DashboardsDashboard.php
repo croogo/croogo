@@ -20,6 +20,16 @@ class DashboardsDashboard extends DashboardsAppModel {
 	public $useTable = 'dashboards';
 
 /**
+ * Behaviors
+ */
+	public $actsAs = array(
+		'Croogo.Ordered' => array(
+			'field' => 'weight',
+			'foreign_key' => 'user_id',
+		),
+	);
+
+/**
  * Model associations: belongsTo
  *
  * @var array

@@ -99,6 +99,7 @@ class CroogoTheme extends Object {
 					'dashboardFull' => 'span12',
 					'dashboardLeft' => 'span6',
 					'dashboardRight' => 'span6',
+					'dashboardClass' => 'sortable-column',
 					'formInput' => 'input-block-level',
 					'tableClass' => 'table',
 					'imageClass' => '',

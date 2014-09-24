@@ -1,16 +1,5 @@
 var Dashboard = {};
 
-Dashboard.debounce = function(fn, delay) {
-	var timer = null;
-	return function () {
-		var context = this, args = arguments;
-		clearTimeout(timer);
-		timer = setTimeout(function () {
-			fn.apply(context, args);
-		}, delay);
-	};
-};
-
 Dashboard.saveDashboard = function(e, ui) {
 	var
 		dashboard = [],
@@ -39,6 +28,10 @@ Dashboard.saveDashboard = function(e, ui) {
 		box = $(this).closest('.box');
 	}
 
+	if (!box) {
+		return;
+	}
+
 	box
 		.find('.move-handle')
 		.removeClass('icon-move')
@@ -52,11 +45,11 @@ Dashboard.saveDashboard = function(e, ui) {
 	});
 };
 
-Dashboard.sortable = function(saveDashboard) {
-	var sortables = $('.sortable-column');
+Dashboard.sortable = function(selector, saveDashboard) {
+	var sortables = $(selector);
 	sortables
 		.sortable({
-			connectWith: '.sortable-column',
+			connectWith: selector,
 			handle: '.move-handle',
 			placeholder: 'box-placeholder',
 			forcePlaceholderSize: true,
@@ -76,9 +69,8 @@ Dashboard.collapsable = function (saveDashboard) {
 	$('body').on('slide.toggle', '.dashboard-box .box-content', saveDashboard);
 };
 
-$(function () {
-	var saveDashboard = Dashboard.debounce(Dashboard.saveDashboard, 150);
-
-	Dashboard.sortable(saveDashboard);
+Dashboard.init = function() {
+	var saveDashboard = _.debounce(Dashboard.saveDashboard, 300);
+	Dashboard.sortable('.' + Croogo.themeSettings.css['dashboardClass'], saveDashboard);
 	Dashboard.collapsable(saveDashboard);
-});
+}

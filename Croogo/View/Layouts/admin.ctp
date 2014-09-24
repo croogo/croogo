@@ -58,6 +58,7 @@
 		</div>
 		<?php echo $this->element('admin/footer'); ?>
 		<?php
+		echo $this->element('admin/initializers');
 		echo $this->Blocks->get('scriptBottom');
 		echo $this->Js->writeBuffer();
 		?>
