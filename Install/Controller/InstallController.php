@@ -1,6 +1,7 @@
 <?php
 
 App::uses('Controller', 'Controller');
+App::uses('CroogoTheme', 'Extensions.Lib');
 App::uses('File', 'Utility');
 App::uses('InstallManager', 'Install.Lib');
 
@@ -50,6 +51,11 @@ class InstallController extends Controller {
 		parent::beforeFilter();
 
 		$this->layout = 'install';
+
+		$croogoTheme = new CroogoTheme();
+		$data = $croogoTheme->getData($theme);
+		$settings = $data['settings'];
+		$this->set('themeSettings', $settings);
 		$this->_generateAssets();
 	}
 

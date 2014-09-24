@@ -21,7 +21,7 @@ echo $this->Html->link(__d('croogo', 'Build database'), array(
 	),
 	'button' => 'success',
 	'icon' => 'none',
-	'onclick' => '$(this).find(\'i\').addClass(\'icon-spin icon-spinner\');',
+	'onclick' => '$(this).attr(\'disabled\', \'disabled\').find(\'i\').addClass(\'icon-spin icon-spinner\');',
 ));
 ?>
 </div>
