@@ -34,10 +34,13 @@ class DashboardsConfigReader extends PhpReader implements ConfigReaderInterface
 			'column' => false,
 			'collapsed' => false,
 		);
-		foreach ($config as $alias => &$setting) {
+		$settings = array();
+		foreach ($config as $alias => $setting) {
+			$alias = Inflector::slug($alias, '-');
 			$setting = Hash::merge($defaults, $setting);
+			$settings[$alias] = $setting;
 		}
-		$result = array($this->_settingKey => $config);
+		$result = array($this->_settingKey => $settings);
 		return $result;
 	}
 
