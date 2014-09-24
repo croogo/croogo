@@ -68,6 +68,7 @@ class CroogoPlugin extends Object {
 		'Blocks',
 		'Comments',
 		'Contacts',
+		'Dashboards',
 		'FileManager',
 		'Meta',
 		'Menus',
