@@ -3,7 +3,7 @@
  */
 var Meta = {};
 
-Meta._spinner = ' <i class="icon-spinner icon-spin"></i>';
+Meta._spinner = ' <i class="' + Admin.spinnerClass() + '"></i>';
 
 /**
  * functions to execute when document is ready
@@ -25,12 +25,13 @@ Meta.documentReady = function() {
 Meta.addMeta = function() {
 	$('a.add-meta').click(function(e) {
 		var aAddMeta = $(this);
+		var spinnerClass = Admin.iconClass('spinner', false);
 		aAddMeta.after(Meta._spinner);
 		$.get(aAddMeta.attr('href'), function(data) {
 			aAddMeta.parent().find('.clear:first').before(data);
 			$('div.meta a.remove-meta').unbind();
 			Meta.removeMeta();
-			aAddMeta.siblings('i.icon-spinner').remove();
+			aAddMeta.siblings('i.' + spinnerClass).remove();
 		});
 		e.preventDefault();
 	});
@@ -44,6 +45,7 @@ Meta.addMeta = function() {
 Meta.removeMeta = function() {
 	$('div.meta a.remove-meta').click(function(e) {
 		var aRemoveMeta = $(this);
+		var spinnerClass = Admin.iconClass('spinner', false);
 		if (aRemoveMeta.attr('rel') != '') {
 			if (!confirm('Remove this meta field?')) {
 				return false;
@@ -55,7 +57,7 @@ Meta.removeMeta = function() {
 				} else {
 					// error
 				}
-				aRemoveMeta.siblings('i.icon-spinner').remove();
+				aRemoveMeta.siblings('i.' + spinnerClass).remove();
 			});
 		} else {
 			aRemoveMeta.parents('.meta').remove();

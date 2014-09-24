@@ -6,6 +6,13 @@
 var Admin = typeof Admin == 'undefined' ? {} : Admin;
 
 /**
+ * Gets spinner class
+ */
+Admin.spinnerClass = function() {
+	return Admin.iconClass('spinner') + ' ' +Admin.iconClass('spin', false);
+}
+
+/**
  * Forms
  *
  * @return void
@@ -19,7 +26,8 @@ Admin.form = function() {
 
 	var ajaxToggle = function(e) {
 		var $this = $(this);
-		$this.addClass('icon-spinner icon-spin').find('i').attr('class', 'icon-none');
+		var spinnerClass = Admin.spinnerClass();
+		$this.addClass(spinnerClass).find('i').attr('class', 'icon-none');
 		var url = $this.data('url');
 		$.post(url, function(data) {
 			$this.parent().html(data);
