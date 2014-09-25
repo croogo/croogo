@@ -38,7 +38,9 @@ class DashboardsDashboardsController extends DashboardsAppController {
 	public function admin_index() {
 		$Dashboard = $this->DashboardsDashboard;
 		$this->paginate = array(
-			$Dashboard->escapeField('user_id') => $this->Auth->user('id'),
+			'conditions' => array(
+				$Dashboard->escapeField('user_id') => $this->Auth->user('id'),
+			),
 		);
 		$dashboards = $this->paginate();
 		$this->set(compact('dashboards'));
@@ -59,6 +61,9 @@ class DashboardsDashboardsController extends DashboardsAppController {
 				$Dashboard->escapeField('status'),
 				$Dashboard->escapeField('column'),
 				$Dashboard->escapeField('weight'),
+			),
+			'conditions' => array(
+				$Dashboard->escapeField('user_id') => $this->Auth->user('id'),
 			),
 			'order' => array(
 				$Dashboard->escapeField('weight'),
