@@ -3,13 +3,13 @@
 }
 
 .box-placeholder {
-	border: 2px dotted black;
+	border: 1px dotted black;
 	background: #efefef;
 }
 
 .sorting {
 	padding: 10px;
-	border: 1px dashed #444;
+	border: 1px dotted #444;
 	min-height: 100px !important;
 }
 
