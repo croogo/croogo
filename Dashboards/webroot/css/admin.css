@@ -4,18 +4,25 @@
 
 .box-placeholder {
 	border: 2px dotted black;
-	margin: 10px;
 	background: #efefef;
 }
 
 .sorting {
-	margin-bottom: 5px;
+	padding: 10px;
 	border: 1px dashed #444;
 	min-height: 100px !important;
 }
 
-.sorting .box {
-	margin: 10px;
+.sorting > * {
+	margin: 0px 0px 10px 0px;
+}
+
+.sorting > *:first-child {
+	margin-top: 0;
+}
+
+.sorting > *:last-child {
+	margin-bottom: 0;
 }
 
 .blogfeed h1 {
