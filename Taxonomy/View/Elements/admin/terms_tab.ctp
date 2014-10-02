@@ -22,12 +22,13 @@ if (count($taxonomy) > 0):
 			$value = $taxonomyIds;
 		endif;
 
+		$hasEmpty = !$vocabularies[$vocabularyId]['multiple'];
 		echo $this->Form->input('TaxonomyData.' . $vocabularyId, array(
 			'label' => $vocabularies[$vocabularyId]['title'],
 			'type' => 'select',
 			'multiple' => $vocabularies[$vocabularyId]['multiple'],
 			'options' => $taxonomyTree,
-			'empty' => true,
+			'empty' => $hasEmpty,
 			'value' => $value,
 		));
 	endforeach;
