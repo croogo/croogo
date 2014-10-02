@@ -24,14 +24,6 @@ class User extends UsersAppModel {
 	public $name = 'User';
 
 /**
- * Order
- *
- * @var string
- * @access public
- */
-	public $order = 'User.name ASC';
-
-/**
  * Behaviors used by the Model
  *
  * @var array
@@ -156,6 +148,20 @@ class User extends UsersAppModel {
 		'website',
 		'status',
 	);
+
+/**
+ * Constructor. Configures the order property.
+ *
+ * @param bool|int|string|array $id Set this ID for this model on startup,
+ * can also be an array of options, see above.
+ * @param string $table Name of database table to use.
+ * @param string $ds DataSource connection name.
+ */
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+
+		$this->order = $this->alias . '.name ASC';
+	}
 
 /**
  * beforeDelete
