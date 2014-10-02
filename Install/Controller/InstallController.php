@@ -53,7 +53,7 @@ class InstallController extends Controller {
 		$this->layout = 'install';
 
 		$croogoTheme = new CroogoTheme();
-		$data = $croogoTheme->getData($theme);
+		$data = $croogoTheme->getData($this->theme);
 		$settings = $data['settings'];
 		$this->set('themeSettings', $settings);
 		$this->_generateAssets();
