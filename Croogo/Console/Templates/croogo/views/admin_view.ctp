@@ -2,43 +2,55 @@
 
 $header = <<<EOF
 <?php
+
+\$this->extend('/Common/admin_view');
 \$this->viewVars['title_for_layout'] = sprintf('%s: %s', __d('croogo', '$pluralHumanName'), h(\${$singularVar}['$modelClass']['$displayField']));
 
 \$this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', '${pluralHumanName}'), array('action' => 'index'));
 
-?>\n
+if (isset(\${$singularVar}['$modelClass']['$displayField'])):
+	\$this->Html->addCrumb(\${$singularVar}['$modelClass']['$displayField'], '/' . \$this->request->url);
+endif;
+
+
 EOF;
 
 echo $header;
+
+echo "\$this->set('title', __d('croogo', '{$singularHumanName}'));\n\n";
+
+echo "\$this->append('actions');\n";
+	echo "\techo \$this->Croogo->adminAction(__d('croogo', 'Edit " . $singularHumanName . "'), array(\n\t\t'action' => 'edit',\n\t\t\${$singularVar}['{$modelClass}']['{$primaryKey}'],\n\t), array(\n\t\t'button' => 'default',\n\t));\n";
+	echo "\techo \$this->Croogo->adminAction(__d('croogo', 'Delete " . $singularHumanName . "'), array(\n\t\t'action' => 'delete', \${$singularVar}['{$modelClass}']['{$primaryKey}'],\n\t), array(\n\t\t'method' => 'post',\n\t\t'button' => 'danger',\n\t\t'escapeTitle' => true,\n\t),\n\t__d('croogo', 'Are you sure you want to delete # %s?', \${$singularVar}['{$modelClass}']['{$primaryKey}'])\n\t);\n";
+	echo "\techo \$this->Croogo->adminAction(__d('croogo', 'List " . $pluralHumanName . "'), array('action' => 'index'));\n";
+	echo "\techo \$this->Croogo->adminAction(__d('croogo', 'New " . $singularHumanName . "'), array('action' => 'add'), array('button' => 'success'));\n";
+
+$done = array();
+$excludeAssociations = array(
+	'TrackableCreator',
+	'TrackableUpdater',
+);
+
+foreach ($associations as $type => $data):
+	foreach ($data as $alias => $details):
+		if (in_array($alias, $excludeAssociations)):
+			continue;
+		endif;
+		if ($details['controller'] != $this->name && !in_array($details['controller'], $done)):
+			echo "\techo \$this->Croogo->adminAction(__d('croogo', 'List " . Inflector::humanize($details['controller']) . "'), array('controller' => '{$details['controller']}', 'action' => 'index'));\n";
+			echo "\techo \$this->Croogo->adminAction(__d('croogo', 'New " . Inflector::humanize(Inflector::underscore($alias)) . "'), array('controller' => '{$details['controller']}', 'action' => 'add'));\n";
+			$done[] = $details['controller'];
+		endif;
+	endforeach;
+endforeach;
+
+echo "\$this->end();\n\n";
+
+echo "\$this->append('main');\n?>\n";
+
 ?>
-<h2 class="hidden-desktop"><?php echo "<?php echo __d('croogo', '{$singularHumanName}'); ?>"; ?></h2>
-
-<div class="row-fluid">
-	<div class="span12 actions">
-		<ul class="nav-buttons">
-<?php
-	echo "\t\t<li><?php echo \$this->Html->link(__d('croogo', 'Edit " . $singularHumanName . "'), array('action' => 'edit', \${$singularVar}['{$modelClass}']['{$primaryKey}']), array('button' => 'default')); ?> </li>\n";
-	echo "\t\t<li><?php echo \$this->Form->postLink(__d('croogo', 'Delete " . $singularHumanName . "'), array('action' => 'delete', \${$singularVar}['{$modelClass}']['{$primaryKey}']), array('button' => 'danger', 'escape' => true), __d('croogo', 'Are you sure you want to delete # %s?', \${$singularVar}['{$modelClass}']['{$primaryKey}'])); ?> </li>\n";
-	echo "\t\t<li><?php echo \$this->Html->link(__d('croogo', 'List " . $pluralHumanName . "'), array('action' => 'index'), array('button' => 'default')); ?> </li>\n";
-	echo "\t\t<li><?php echo \$this->Html->link(__d('croogo', 'New " . $singularHumanName . "'), array('action' => 'add'), array('button' => 'success')); ?> </li>\n";
-
-	$done = array();
-	foreach ($associations as $type => $data) {
-		foreach ($data as $alias => $details) {
-			if ($details['controller'] != $this->name && !in_array($details['controller'], $done)) {
-				echo "\t\t<li><?php echo \$this->Html->link(__d('croogo', 'List " . Inflector::humanize($details['controller']) . "'), array('controller' => '{$details['controller']}', 'action' => 'index')); ?> </li>\n";
-				echo "\t\t<li><?php echo \$this->Html->link(__d('croogo', 'New " . Inflector::humanize(Inflector::underscore($alias)) . "'), array('controller' => '{$details['controller']}', 'action' => 'add')); ?> </li>\n";
-				$done[] = $details['controller'];
-			}
-		}
-	}
-?>
-		</ul>
-	</div>
-</div>
-
 <div class="<?php echo $pluralVar; ?> view">
 	<dl class="inline">
 <?php
@@ -62,3 +74,6 @@ foreach ($fields as $field) {
 ?>
 	</dl>
 </div>
+<?php
+
+echo "<?php \$this->end(); ?>";
