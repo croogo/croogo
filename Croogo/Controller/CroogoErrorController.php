@@ -79,18 +79,4 @@ class CroogoErrorController extends AppController {
 		}
 	}
 
-/**
- * Escapes the viewVars.
- *
- * @return void
- */
-	public function beforeRender() {
-		parent::beforeRender();
-		foreach ($this->viewVars as $key => $value) {
-			if (!is_object($value)) {
-				$this->viewVars[$key] = h($value);
-			}
-		}
-	}
-
 }
