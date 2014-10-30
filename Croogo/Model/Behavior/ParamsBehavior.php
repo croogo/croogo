@@ -92,8 +92,11 @@ class ParamsBehavior extends ModelBehavior {
 			if (count($paramE) == 2) {
 				$key = $paramE['0'];
 				$value = trim($paramE['1']);
+				$num_check = filter_var($value, FILTER_VALIDATE_INT, array('flags' => FILTER_FLAG_ALLOW_HEX));
 				$bool_check = filter_var($value, FILTER_VALIDATE_BOOLEAN, array('flags' => FILTER_NULL_ON_FAILURE));
-				if (!is_null($bool_check)) {
+				if ($num_check !== false) {
+					$value = $num_check;
+				} else if (!is_null($bool_check)) {
 					$value = $bool_check;
 				}
 				$output[$key] = $value;
