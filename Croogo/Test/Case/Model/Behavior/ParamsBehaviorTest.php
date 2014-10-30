@@ -139,6 +139,12 @@ class ParamsBehaviorTest extends CroogoTestCase {
 			'param6' => false,
 		);
 		$this->assertEqual($type['Params'], $expected);
+		$this->assertInternalType('boolean', $type['Params']['param1']);
+		$this->assertInternalType('boolean', $type['Params']['param2']);
+		$this->assertInternalType('boolean', $type['Params']['param3']);
+		$this->assertInternalType('boolean', $type['Params']['param4']);
+		$this->assertInternalType('boolean', $type['Params']['param5']);
+		$this->assertInternalType('boolean', $type['Params']['param6']);
 	}
 
 	public function testNumeric() {
@@ -146,16 +152,20 @@ class ParamsBehaviorTest extends CroogoTestCase {
 			'title' => 'Article',
 			'alias' => 'article',
 			'description' => 'Article Types',
-			'params' => "param1=22\nparam2=twentytwo\nparam3=0\nparam4=1",
+			'params' => "param1=22\nparam2=0x16\nparam3=0\nparam4=1",
 		));
 		$type = $this->Type->findByAlias('article');
 		$expected = array(
 			'param1' => 22,
-			'param2' => 'twentytwo',
+			'param2' => 22,
 			'param3' => 0,
 			'param4' => 1,
 		);
 		$this->assertEqual($type['Params'], $expected);
+		$this->assertInternalType('integer', $type['Params']['param1']);
+		$this->assertInternalType('integer', $type['Params']['param2']);
+		$this->assertInternalType('integer', $type['Params']['param3']);
+		$this->assertInternalType('integer', $type['Params']['param4']);
 	}
 
 }
