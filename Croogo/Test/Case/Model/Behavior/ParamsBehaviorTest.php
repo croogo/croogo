@@ -122,4 +122,40 @@ class ParamsBehaviorTest extends CroogoTestCase {
 		$this->assertEqual($type['Params'], $expected);
 	}
 
+	public function testBoolean() {
+		$this->Type->save(array(
+			'title' => 'Article',
+			'alias' => 'article',
+			'description' => 'Article Types',
+			'params' => "param1=true\nparam2=false\nparam3=yes\nparam4=no\nparam5=on\nparam6=off",
+		));
+		$type = $this->Type->findByAlias('article');
+		$expected = array(
+			'param1' => true,
+			'param2' => false,
+			'param3' => true,
+			'param4' => false,
+			'param5' => true,
+			'param6' => false,
+		);
+		$this->assertEqual($type['Params'], $expected);
+	}
+
+	public function testNumeric() {
+		$this->Type->save(array(
+			'title' => 'Article',
+			'alias' => 'article',
+			'description' => 'Article Types',
+			'params' => "param1=22\nparam2=twentytwo\nparam3=0\nparam4=1",
+		));
+		$type = $this->Type->findByAlias('article');
+		$expected = array(
+			'param1' => 22,
+			'param2' => 'twentytwo',
+			'param3' => 0,
+			'param4' => 1,
+		);
+		$this->assertEqual($type['Params'], $expected);
+	}
+
 }
