@@ -25,8 +25,7 @@ class FileManagerHelper extends AppHelper {
 	private $__actionsAsButton = array(
 		'upload',
 		'create_directory',
-		'create_file',
-		'rename'
+		'create_file'
 	);
 
 	private $__postLinkActions = array(

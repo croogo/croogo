@@ -59,7 +59,6 @@ class FileManagerController extends FileManagerAppController {
 			__d('croogo', 'Upload here') => array('controller' => 'file_manager', 'action' => 'upload'),
 			__d('croogo', 'Create directory') => array('controller' => 'file_manager', 'action' => 'create_directory'),
 			__d('croogo', 'Create file') => array('controller' => 'file_manager', 'action' => 'create_file'),
-			__d('croogo', 'Rename') => array('controller' => 'file_manager', 'action' => 'rename'),
 		);
 
 		$this->deletablePaths = array(
@@ -307,7 +306,7 @@ class FileManagerController extends FileManagerAppController {
 				if ($oldName !== $newName) {
 					if($this->FileManager->rename($path, $newPath)) {
 						$this->Session->setFlash(__d('croogo', '"%s" has been renamed to "%s"', $oldName, $newName), 'flash', array('class' => 'success'));
-						$this->redirect(array('controller' => 'file_manager', 'action' => 'browse', '?' => array('path' => $newPath)));
+						$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 					} else {
 						$this->Session->setFlash(__d('croogo', 'Could not renamed "%s" to "%s"', $oldName,$newName), 'flash', array('class' => 'error'));
 					}
