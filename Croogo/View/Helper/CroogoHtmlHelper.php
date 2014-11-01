@@ -71,9 +71,11 @@ class CroogoHtmlHelper extends HtmlHelper {
  * @return string Completed img tag
  */
 	public function image($path, $options = array()) {
-		$class = $this->_View->viewVars['themeSettings']['css']['imageClass'];
-		if (empty($options['class'])) {
-			$options['class'] = $class;
+		if (array_key_exists('themeSettings', $this->_View->viewVars)) {
+			$class = $this->_View->viewVars['themeSettings']['css']['imageClass'];
+			if (empty($options['class'])) {
+				$options['class'] = $class;
+			}
 		}
 		return parent::image($path, $options);
 	}
