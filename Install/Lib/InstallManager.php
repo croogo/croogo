@@ -104,6 +104,9 @@ class InstallManager {
 	public function installCompleted() {
 		$Setting = ClassRegistry::init('Settings.Setting');
 		$Setting->Behaviors->disable('Cached');
+		if (!function_exists('mcrypt_decrypt')) {
+			$Setting->write('Access Control.autoLoginDuration', '');
+		}
 		return $Setting->write('Croogo.installed', 1);
 	}
 
