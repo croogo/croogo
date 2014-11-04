@@ -252,6 +252,28 @@ class CroogoComponent extends Component {
 	}
 
 /**
+ * Prevent infinite redirect
+ *
+ * @param Controller $controler Controller
+ * @param string|array $url Redirect Url
+ * @param int $status Redirect status code
+ * @param bool $exit Will the script exit
+ * @return array|void Either an array or null
+ */
+	public function beforeRedirect(Controller $controller, $url, $status = null, $exit = true) {
+		$user = $controller->Auth->user();
+		$aro = array('model' => 'User', 'foreign_key' => $user['id']);
+		$aco = implode('/', array_filter(array(
+			$controller->plugin, $controller->name, $controller->action
+		)));
+		if ($user['id'] && !$controller->Acl->check($aro, $aco)) {
+			$this->log(sprintf('Redirect abort: %s - no access to: %s', $user['username'], $aco));
+			$url = '/';
+		}
+		return $url;
+	}
+
+/**
  * Croogo flavored redirect
  *
  * If 'save' pressed, redirect to referer or 'index' action instead of 'edit'
