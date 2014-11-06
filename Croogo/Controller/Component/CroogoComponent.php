@@ -266,7 +266,7 @@ class CroogoComponent extends Component {
 		$aco = implode('/', array_filter(array(
 			$controller->plugin, $controller->name, $controller->action
 		)));
-		if ($user['id'] && !$controller->Acl->check($aro, $aco)) {
+		if ($user['id'] && $user['role_id'] != 1 && !$controller->Acl->check($aro, $aco)) {
 			$this->log(sprintf('Redirect abort: %s - no access to: %s', $user['username'], $aco));
 			$url = '/';
 		}
