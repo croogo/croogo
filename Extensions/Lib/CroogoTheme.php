@@ -66,6 +66,10 @@ class CroogoTheme extends Object {
 						$themeJson = $path . 'theme.json';
 						$contents = file_get_contents($themeJson);
 						$json = json_decode($contents, true);
+						if ($json === null) {
+							$this->log('Invalid theme manifest:' . $themeJson);
+							$json = array();
+						}
 						$intersect = array_intersect_key($expected, $json);
 						if ($json !== null && $intersect == $expected) {
 							$themes[$themeFolder] = $themeFolder;
