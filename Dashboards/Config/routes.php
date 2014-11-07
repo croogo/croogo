@@ -1,6 +1,6 @@
 <?php
 
-CroogoRouter::connect('/admin/dashboards/', array(
+CroogoRouter::connect('/admin/dashboards', array(
 	'admin' => true,
 	'plugin' => 'dashboards',
 	'controller' => 'dashboards_dashboards',
