@@ -1,7 +1,10 @@
 <?php
 echo $this->Form->create(null, array(
 	'url' => array('controller' => 'install', 'action' => 'adminuser'),
-	));
+	'inputDefaults' => array(
+		'class' => 'span11',
+	),
+));
 ?>
 <div class="install">
 	<h2><?php echo __d('croogo', 'Step 3: Create Admin User'); ?></h2>

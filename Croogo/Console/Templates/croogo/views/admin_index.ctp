@@ -9,48 +9,56 @@ $header = <<<EOF
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('$underscoredPluginName', '${pluralHumanName}'), array('action' => 'index'));
 
-?>\n
+\$this->set('tableClass', 'table table-striped');
+
+
 EOF;
 echo $header;
 
-?>
+foreach ($fields as $field):
+	$columns[] = "\$this->Paginator->sort('{$field}')";
+endforeach;
+$columns[] = "array(__d('croogo', 'Actions') => array('class' => 'actions'))";
 
-<div class="<?php echo $pluralVar; ?> index">
-	<table class="table table-striped">
-	<tr>
-	<?php foreach ($fields as $field): ?>
-	<th><?php echo "<?php echo \$this->Paginator->sort('{$field}'); ?>"; ?></th>
-	<?php endforeach; ?>
-	<th class="actions"><?php echo "<?php echo __d('croogo', 'Actions'); ?>"; ?></th>
-	</tr>
-	<?php
-	echo "<?php foreach (\${$pluralVar} as \${$singularVar}): ?>\n";
-	echo "\t<tr>\n";
+$columnList = implode(",\n\t\t", $columns);
+$tableHeaders =<<<EOF
+\$this->append('table-heading');
+	\$tableHeaders = \$this->Html->tableHeaders(array(
+		$columnList,
+	));
+	echo \$this->Html->tag('thead', \$tableHeaders);
+\$this->end();
+
+
+EOF;
+echo $tableHeaders;
+
+?>
+<?php echo "\$this->append('table-body');\n"; ?>
+<?php
+	echo "\tforeach (\${$pluralVar} as \${$singularVar}):\n";
+	echo "\t\t\$row = array();\n";
 		foreach ($fields as $field) {
 			$isKey = false;
 			if (!empty($associations['belongsTo'])) {
 				foreach ($associations['belongsTo'] as $alias => $details) {
 					if ($field === $details['foreignKey']) {
 						$isKey = true;
-						echo "\t\t<td>\n\t\t\t<?php echo \$this->Html->link(\${$singularVar}['{$alias}']['{$details['displayField']}'], array('controller' => '{$details['controller']}', 'action' => 'view', \${$singularVar}['{$alias}']['{$details['primaryKey']}'])); ?>\n\t\t</td>\n";
+						echo "\t\t\$row[] = \$this->Html->link(\${$singularVar}['{$alias}']['{$details['displayField']}'], array(\n\t\t\t'controller' => '{$details['controller']}',\n\t\t'action' => 'view',\n\t\t\t\${$singularVar}['{$alias}']['{$details['primaryKey']}'],\n\t));\n";
 						break;
 					}
 				}
 			}
 			if ($isKey !== true) {
-				echo "\t\t<td><?php echo h(\${$singularVar}['{$modelClass}']['{$field}']); ?>&nbsp;</td>\n";
+				echo "\t\t\$row[] = h(\${$singularVar}['{$modelClass}']['{$field}']);\n";
 			}
 		}
 
-		echo "\t\t<td class=\"item-actions\">\n";
-		echo "\t\t\t<?php echo \$this->Croogo->adminRowActions(\${$singularVar}['{$modelClass}']['{$primaryKey}']); ?>\n";
-		echo "\t\t\t<?php echo \$this->Croogo->adminRowAction('', array('action' => 'view', \${$singularVar}['{$modelClass}']['{$primaryKey}']), array('icon' => 'eye-open')); ?>\n";
-		echo "\t\t\t<?php echo \$this->Croogo->adminRowAction('', array('action' => 'edit', \${$singularVar}['{$modelClass}']['{$primaryKey}']), array('icon' => 'pencil')); ?>\n";
-		echo "\t\t\t<?php echo \$this->Croogo->adminRowAction('', array('action' => 'delete', \${$singularVar}['{$modelClass}']['{$primaryKey}']), array('icon' => 'trash', 'escape' => true), __d('croogo', 'Are you sure you want to delete # %s?', \${$singularVar}['{$modelClass}']['{$primaryKey}'])); ?>\n";
-		echo "\t\t</td>\n";
-	echo "\t</tr>\n";
-
-	echo "<?php endforeach; ?>\n";
-	?>
-	</table>
-</div>
+		echo "\t\t\$row[] = array(\$this->Croogo->adminRowActions(\${$singularVar}['{$modelClass}']['{$primaryKey}']), array(\n\t\t\t'class' => 'item-actions',\n\t\t));\n";
+		echo "\t\t\$row[] = \$this->Croogo->adminRowAction('', array(\n\t\t\t'action' => 'view', \${$singularVar}['{$modelClass}']['{$primaryKey}']\n\t), array(\n\t\t\t'icon' => 'eye-open',\n\t\t));\n";
+		echo "\t\t\$row[] = \$this->Croogo->adminRowAction('', array(\n\t\t\t'action' => 'edit',\n\t\t\t\${$singularVar}['{$modelClass}']['{$primaryKey}'],\n\t\t), array(\n\t\t\t'icon' => 'pencil',\n\t\t));\n";
+		echo "\t\t\$row[] = \$this->Croogo->adminRowAction('', array(\n\t\t\t'action' => 'delete',\n\t\t\t\${$singularVar}['{$modelClass}']['{$primaryKey}'],\n\t\t), array(\n\t\t\t'icon' => 'trash',\n\t\t\t'escape' => true,\n\t\t),\n\t\t__d('croogo', 'Are you sure you want to delete # %s?', \${$singularVar}['{$modelClass}']['{$primaryKey}'])\n\t\t);\n";
+		echo "\t\t\$rows[] = \$this->Html->tableCells(\$row);\n";
+	echo "\tendforeach;\n";
+	echo "\techo \$this->Html->tag('tbody', implode('', \$rows));\n";
+echo "\$this->end();\n";

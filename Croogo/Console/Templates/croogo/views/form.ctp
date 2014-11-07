@@ -16,73 +16,55 @@ if (\$this->action == 'admin_edit') {
 	\$this->Html->addCrumb(__d('croogo', 'Add'), '/' . \$this->request->url);
 }
 
-echo \$this->Form->create('{$modelClass}');
+\$this->append('form-start', \$this->Form->create('{$modelClass}'));
 
-?>\n
+
 EOF;
 echo $header;
 
 $primaryTab = strtolower(Inflector::slug($singularHumanName, '-'));
 
-?>
-<div class="<?php echo $pluralVar; ?> row-fluid">
-	<div class="span8">
-		<ul class="nav nav-tabs">
-		<?php echo "<?php\n"; ?>
-		<?php echo "\techo \$this->Croogo->adminTab(__d('$underscoredPluginName', '$singularHumanName'), '#$primaryTab');\n"; ?>
-		<?php echo "\techo \$this->Croogo->adminTabs();\n"; ?>
-		<?php echo "?>\n"; ?>
-		</ul>
+echo "\$this->append('tab-heading');\n";
+	echo "\techo \$this->Croogo->adminTab(__d('$underscoredPluginName', '$singularHumanName'), '#$primaryTab');\n";
+	echo "\techo \$this->Croogo->adminTabs();\n";
+echo "\$this->end();\n\n";
 
-		<div class="tab-content">
-			<div id='<?php echo $primaryTab; ?>' class="tab-pane">
-<?php
-				echo "\t\t\t<?php\n";
-				echo "\t\t\t\techo \$this->Form->input('{$primaryKey}');\n";
-				echo "\t\t\t\t\$this->Form->inputDefaults(array('label' => false, 'class' => 'span10'));\n";
-				foreach ($fields as $field) {
-					if ($field == $primaryKey) {
-						continue;
-					} elseif (!in_array($field, array('created', 'modified', 'updated'))) {
-						$fieldLabel = Inflector::humanize($field);
-						echo <<<EOF
-				echo \$this->Form->input('{$field}', array(
-					'label' => '$fieldLabel',
-				));\n
+echo "\$this->append('tab-content');\n";
+	echo "\techo \$this->Form->input('{$primaryKey}');\n";
+	foreach ($fields as $field):
+		if ($field == $primaryKey):
+			continue;
+		elseif (!in_array($field, array('created', 'modified', 'updated'))):
+			$fieldLabel = Inflector::humanize($field);
+			echo <<<EOF
+	echo \$this->Form->input('{$field}', array(
+		'label' => '$fieldLabel',
+	));\n
 EOF;
-					}
-				}
-				if (!empty($associations['hasAndBelongsToMany'])) {
-					foreach ($associations['hasAndBelongsToMany'] as $assocName => $assocData) {
-						echo "\t\t\t\techo \$this->Form->input('{$assocName}');\n";
-					}
-				}
+		endif;
+	endforeach;
 
-			echo "\t\t\t?>\n";
-?>
-			</div>
-<?php
-			echo "\t\t\t<?php echo \$this->Croogo->adminTabs(); ?>\n";
-?>
-		</div>
+	if (!empty($associations['hasAndBelongsToMany'])):
+		foreach ($associations['hasAndBelongsToMany'] as $assocName => $assocData):
+			echo "\ttecho \$this->Form->input('{$assocName}');\n";
+		endforeach;
+	endif;
 
-	</div>
+	echo "\techo \$this->Croogo->adminTabs();\n";
+echo "\$this->end();\n\n";
 
-	<div class="span4">
-	<?php
-		echo <<<EOF
-<?php
-		echo \$this->Html->beginBox(__d('croogo', 'Publishing')) .
-			\$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-			\$this->Form->button(__d('croogo', 'Save'), array('class' => 'btn btn-primary')) .
-			\$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'btn btn-danger')) .
-			\$this->Html->endBox();
+echo <<<EOF
+\$this->append('panels');
+	echo \$this->Html->beginBox(__d('croogo', 'Publishing')) .
+		\$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+		\$this->Form->button(__d('croogo', 'Save'), array('button' => 'primary')) .
+		\$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger'));
+	echo \$this->Html->endBox();
 
-		echo \$this->Croogo->adminBoxes();
-		?>\n
+	echo \$this->Croogo->adminBoxes();
+\$this->end();
+
+
 EOF;
-	?>
-	</div>
 
-</div>
-<?php echo "<?php echo \$this->Form->end(); ?>\n"; ?>
+echo "\$this->append('form-end', \$this->Form->end());\n";
