@@ -92,13 +92,15 @@ class Term extends TaxonomyAppModel {
 		$termId = $this->field('id', array(
 			$this->escapeField('slug') => $data[$this->alias]['slug'],
 		));
+
 		$this->id = false;
 		if ($termId) {
 			$this->id = $termId;
 		}
-		if ($this->saveAll($data)) {
+		if ($this->save($data)) {
 			return $this->id;
 		}
+
 		return false;
 	}
 
