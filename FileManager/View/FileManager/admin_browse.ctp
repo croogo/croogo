@@ -9,22 +9,13 @@ $this->Html
 ?>
 
 <?php $this->start('actions'); ?>
+<?php if(!empty($browseActions)): ?>
 <div class="btn-group">
-<?php
-	echo $this->FileManager->adminAction(__d('croogo', 'Upload here'),
-		array('controller' => 'file_manager', 'action' => 'upload'),
-		$path
-	);
-	echo $this->FileManager->adminAction(__d('croogo', 'Create directory'),
-		array('controller' => 'file_manager', 'action' => 'create_directory'),
-		$path
-	);
-	echo $this->FileManager->adminAction(__d('croogo', 'Create file'),
-		array('controller' => 'file_manager', 'action' => 'create_file'),
-		$path
-	);
-?>
+<?php foreach($browseActions as $label => $url): ?>
+	<?= $this->FileManager->adminAction($label, $url, $path); ?>
+<?php endforeach; ?>
 </div>
+<?php endif;?>
 <?php $this->end(); ?>
 
 <div class="breadcrumb">
@@ -63,6 +54,10 @@ $this->Html
 					'action' => 'delete_directory',
 				), $fullpath);
 			}
+			$actions[] = $this->FileManager->link(__d('croogo', 'Rename'), array(
+				'controller' => 'file_manager',
+				'action' => 'rename',
+			), $fullpath);
 			$actions = $this->Html->div('item-actions', implode(' ', $actions));
 			$rows[] = array(
 				$this->Html->image('/croogo/img/icons/folder.png'),
@@ -104,6 +99,10 @@ $this->Html
 					'action' => 'delete_file',
 				), $fullpath);
 			}
+			$actions[] = $this->FileManager->link(__d('croogo', 'Rename'), array(
+				'controller' => 'file_manager',
+				'action' => 'rename',
+			), $fullpath);
 			$actions = $this->Html->div('item-actions', implode(' ', $actions));
 			$rows[] = array(
 				$this->Html->image('/croogo/img/icons/' . $icon),

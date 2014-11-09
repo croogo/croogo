@@ -1,5 +1,5 @@
 <?php
-
+App::uses('AppController', 'Controller');
 /**
  * FileManager App Controller
  *
