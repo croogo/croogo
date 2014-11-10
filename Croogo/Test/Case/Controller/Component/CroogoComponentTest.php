@@ -80,7 +80,7 @@ class CroogoComponentTest extends CroogoTestCase {
  * @return void
  * @dataProvider redirectData
  */
-	public function testRedirect($expected, $url, $data = array()) {
+	public function testRedirect($expected, $url, $data = array(), $indexUrl = array()) {
 		$Controller = $this->getMock('CroogoTestController', array('redirect'), array(new CakeRequest(), new CakeResponse()));
 		$Controller->request->data = $data;
 		$Controller->expects($this->once())
@@ -88,7 +88,7 @@ class CroogoComponentTest extends CroogoTestCase {
 			->with($this->equalTo($expected));
 		$CroogoComponent = new CroogoComponent(new ComponentCollection());
 		$CroogoComponent->startup($Controller);
-		$CroogoComponent->redirect($url);
+		$CroogoComponent->redirect($url, null, true, $indexUrl);
 	}
 
 /**
@@ -101,6 +101,8 @@ class CroogoComponentTest extends CroogoTestCase {
 			array('croogo.org', 'croogo.org'),
 			array(array('action' => 'index'), array('action' => 'edit', 1)),
 			array(array('action' => 'edit', 1), array('action' => 'edit', 1), array('apply' => 'Apply')),
+			array(array('action' => 'index', 1), array('action' => 'edit', 1), array(), array('action' => 'index', 1)),
+			array(array('action' => 'edit', 1), array('action' => 'edit', 1), array('apply' => 'Apply'), array('action' => 'index', 1)),
 		);
 	}
 
