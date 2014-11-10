@@ -254,21 +254,23 @@ class CroogoComponent extends Component {
 /**
  * Croogo flavored redirect
  *
- * If 'save' pressed, redirect to referer or 'index' action instead of 'edit'
+ * If 'save' pressed, redirect to referer or $indexUrl instead of 'edit'
  *
  * @param string $url
  * @param integer $status
  * @param boolean $exit
+ * @param array $indexUrl
  * @return void
  * @see CroogoComponent::setReferer()
  */
-	public function redirect($url, $status = null, $exit = true) {
+	public function redirect($url, $status = null, $exit = true, $indexUrl = array()) {
 		$referer = $this->Session->read('Croogo.referer');
 		$this->Session->delete('Croogo.referer');
 		if (is_array($url)) {
 			if (isset($url['action']) && $url['action'] === 'edit') {
 				if (!isset($this->_controller->request->data['apply'])) {
-					$url = array('action' => 'index');
+				  $indexUrl = !empty($indexUrl) ? $indexUrl : array('action' => 'index');
+					$url = $indexUrl;
 				}
 			} elseif (isset($referer['url'])) {
 				$url = $referer['url'];
