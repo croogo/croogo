@@ -60,8 +60,9 @@ class FileManagerController extends FileManagerAppController {
  * Checks wether given $path is editable.
  * A file is editable when it resides under the APP directory
  *
- * @param $path string
+ * @param string $path Path to check
  * @return boolean true if file is editable
+ * @deprecated Use FileManager::isEditable()
  */
 	protected function _isEditable($path) {
 		$path = realpath($path);
@@ -74,8 +75,9 @@ class FileManagerController extends FileManagerAppController {
  * A file is deleteable when it resides under directories registered in
  * FileManagerController::deletablePaths
  *
- * @param $path string
+ * @param string $path Path to check
  * @return boolean true when file is deletable
+ * @deprecated Use FileManager::isDeletable()
  */
 	protected function _isDeletable($path) {
 		$path = realpath($path);

@@ -53,8 +53,8 @@ class FileManagerHelper extends AppHelper {
 /**
  * Get icon from file extension
  *
- * @param string $ext
- * @return string
+ * @param string $ext Extension
+ * @return string Icon
  */
 	public function ext2icon($ext) {
 		$ext = strtolower($ext);
@@ -89,6 +89,7 @@ class FileManagerHelper extends AppHelper {
  * Get icon from file name
  *
  * @param string $filename file name
+ * @return string Icon
  */
 	public function filename2icon($filename) {
 		$ext = $this->filename2ext($filename);
@@ -123,6 +124,12 @@ class FileManagerHelper extends AppHelper {
 
 /**
  * adminAction
+ *
+ * @param string $title Title
+ * @param string|array $url Url
+ * @param string $path Path
+ * @param string $pathKey Query string variable name denoting path
+ * @return string Action link
  */
 	public function adminAction($title, $url, $path, $pathKey = 'path') {
 		return $this->link($title, $url, $path, $pathKey);
@@ -170,8 +177,8 @@ class FileManagerHelper extends AppHelper {
 /**
  * Generate anchor tag for file
  *
- * @param string $title
- * @param string $path
+ * @param string $title Title
+ * @param string $path File path
  * @return string
  */
 	public function linkFile($title, $path) {
@@ -228,8 +235,8 @@ class FileManagerHelper extends AppHelper {
 /**
  * Checks if searched location is under any of the paths
  *
- * @param array $paths
- * @param string $search
+ * @param array $paths Paths
+ * @param string $search Search string
  * @return boolean
  */
 	public function inPath($paths, $search) {
