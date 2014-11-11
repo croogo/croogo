@@ -290,19 +290,31 @@ class FileManagerController extends FileManagerAppController {
 				$newName = trim($this->request->data['FileManager']['name']);
 				$oldName = array_pop($pathFragments);
 				$newPath = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $pathFragments) . DIRECTORY_SEPARATOR . $newName;
+
+				$fileExists = file_exists($newPath);
 				if ($oldName !== $newName) {
-					if($this->FileManager->rename($path, $newPath)) {
-						$this->Session->setFlash(__d('croogo', '"%s" has been renamed to "%s"', $oldName, $newName), 'flash', array('class' => 'success'));
-						$this->redirect(array('controller' => 'file_manager', 'action' => 'browse', '?' => array('path' => $newPath)));
+					if ($fileExists) {
+						$message = __d('croogo', '%s already exists', $newName);
+						$alertType = 'error';
 					} else {
-						$this->Session->setFlash(__d('croogo', 'Could not renamed "%s" to "%s"', $oldName,$newName), 'flash', array('class' => 'error'));
+						if ($this->FileManager->rename($path, $newPath)) {
+							$message = __d('croogo', '"%s" has been renamed to "%s"', $oldName, $newName);
+							$alertType = 'success';
+						} else {
+							$message = __d('croogo', 'Could not renamed "%s" to "%s"', $oldName,$newName);
+							$alertType = 'error';
+						}
 					}
 				} else {
-					$this->Session->setFlash(__d('croogo', 'Name has not changed'), 'flash', array('class' => 'alert'));
+					$message = __d('croogo', 'Name has not changed');
+					$alertType = 'alert';
 				}
+				$this->Session->setFlash($message, 'flash', array('class' => $alertType));
 			}
 
-			$this->redirect(array('controller' => 'file_manager', 'action' => 'index'));
+			return $this->Croogo->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+		} else {
+			$this->Croogo->setReferer();
 		}
 		$this->request->data('FileManager.name', array_pop($pathFragments));
 		$this->set('path', $path);
