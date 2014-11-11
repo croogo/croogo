@@ -38,6 +38,17 @@ class ThemeHelper extends AppHelper {
 	}
 
 /**
+ * Setup deprecated view variables
+ *
+ * @param string $viewFile The view file that is going to be rendered
+ * @return void
+ */
+	public function beforeRender($viewFile = null) {
+		// TODO: Remove in 2.3
+		$this->_View->set('themeSettings', $this->_themeSettings);
+	}
+
+/**
  * Helper method to retrieve css settings as configured in theme.json
  *
  * @param string $class Name of class/configuration to retrieve
