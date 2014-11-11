@@ -22,6 +22,7 @@ class LayoutHelper extends AppHelper {
  */
 	public $helpers = array(
 		'Croogo.Croogo',
+		'Croogo.Theme',
 		'Html',
 		'Form',
 		'Session',
@@ -172,7 +173,8 @@ class LayoutHelper extends AppHelper {
  * @return array Merged settings
  */
 	protected function _mergeThemeSettings($croogoSetting = array()) {
-		if (empty($this->_View->viewVars['themeSettings'])) {
+		$themeSettings = $this->Theme->settings();
+		if (empty($themeSettings)) {
 			return $croogoSetting;
 		}
 		$validKeys = array(
@@ -180,7 +182,6 @@ class LayoutHelper extends AppHelper {
 			'icons' => null,
 			'iconDefaults' => null,
 		);
-		$themeSettings = $this->_View->viewVars['themeSettings'];
 		$croogoSetting['themeSettings'] = array_intersect_key(
 			array_merge($validKeys, $themeSettings),
 			$validKeys
@@ -554,12 +555,10 @@ class LayoutHelper extends AppHelper {
  *
  * @param string $class Name of class/configuration to retrieve
  * @return string
+ * @deprecated Use ThemeHelper::css()
  */
 	public function cssClass($class = null) {
-		if ($class) {
-			$class = '.' . $class;
-		}
-		return $this->themeSetting('css' . $class);
+		return $this->Theme->css($class);
 	}
 
 /**
@@ -567,9 +566,10 @@ class LayoutHelper extends AppHelper {
  *
  * @param string $class Name of class/configuration to retrieve
  * @return string
+ * @deprecated Use ThemeHelper::settings()
  */
 	public function themeSetting($key) {
-		return Hash::get($this->_View->viewVars, 'themeSettings.' . $key);
+		return $this->Theme->settings($key);
 	}
 
 }

@@ -10,22 +10,17 @@ App::uses('CroogoTheme', 'Extensions.Lib');
  */
 class CroogoHtmlHelper extends HtmlHelper {
 
+	public $helpers = array(
+		'Theme' => array('className' => 'Croogo.Theme'),
+	);
+
 /**
  * Constructor
  */
 	public function __construct(View $View, $settings = array()) {
-		if (isset($View->viewVars['themeSettings'])) {
-			$themeSettings = $View->viewVars['themeSettings'];
-			$settings = Hash::merge(array(
-				'iconDefaults' => $themeSettings['iconDefaults'],
-				'icons' => $themeSettings['icons'],
-			), $settings);
-		} else {
-			$croogoTheme = new CroogoTheme();
-			$themeData = $croogoTheme->getData();
-			$themeSettings = $themeData['settings'];
-			$settings = Hash::merge($themeSettings, $settings);
-		}
+		$themeConfig = CroogoTheme::config($View->theme);
+		$themeSettings = $themeConfig['settings'];
+		$settings = Hash::merge($themeSettings, $settings);
 		parent::__construct($View, $settings);
 
 		$themeCss = $themeSettings['css'];
@@ -71,7 +66,7 @@ class CroogoHtmlHelper extends HtmlHelper {
  * @return string Completed img tag
  */
 	public function image($path, $options = array()) {
-		$class = $this->_View->viewVars['themeSettings']['css']['imageClass'];
+		$class = $this->Theme->css('imageClass');
 		if (empty($options['class'])) {
 			$options['class'] = $class;
 		}
@@ -87,7 +82,7 @@ class CroogoHtmlHelper extends HtmlHelper {
  * @return string Completed img tag
  */
 	public function thumbnail($path, $options = array()) {
-		$class = $this->_View->viewVars['themeSettings']['css']['thumbnailClass'];
+		$class = $this->Theme->css('thumbnailClass');
 		if (empty($options['class'])) {
 			$options['class'] = $class;
 		}
