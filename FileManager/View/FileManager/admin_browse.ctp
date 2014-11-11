@@ -63,6 +63,10 @@ $this->Html
 					'action' => 'delete_directory',
 				), $fullpath);
 			}
+			$actions[] = $this->FileManager->link(__d('croogo', 'Rename'), array(
+				'controller' => 'file_manager',
+				'action' => 'rename',
+			), $fullpath);
 			$actions = $this->Html->div('item-actions', implode(' ', $actions));
 			$rows[] = array(
 				$this->Html->image('/croogo/img/icons/folder.png'),
@@ -104,6 +108,10 @@ $this->Html
 					'action' => 'delete_file',
 				), $fullpath);
 			}
+			$actions[] = $this->FileManager->link(__d('croogo', 'Rename'), array(
+				'controller' => 'file_manager',
+				'action' => 'rename',
+			), $fullpath);
 			$actions = $this->Html->div('item-actions', implode(' ', $actions));
 			$rows[] = array(
 				$this->Html->image('/croogo/img/icons/' . $icon),
