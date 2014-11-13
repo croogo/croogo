@@ -16,6 +16,8 @@ class ThemeHelper extends AppHelper {
 
 	protected $_themeSettings = array();
 
+	protected $_iconMap = array();
+
 /**
  * Other helpers used by this helper
  *
@@ -29,9 +31,13 @@ class ThemeHelper extends AppHelper {
 		$themeConfig = CroogoTheme::config($View->theme);
 		$this->_themeSettings = $themeConfig['settings'];
 
-		$settings = array();
-		if (isset($this->_themeData['settings'])) {
-			$settings = $this->_themeData['settings'];
+		$this->_iconMap = $this->_themeSettings['icons'];
+		$prefix = $View->request->param('prefix');
+		if (isset($this->_themeSettings['prefixes'][$prefix]['helpers']['Html']['icons'])) {
+			$this->_iconMap = Hash::merge(
+				$this->_iconMap,
+				$this->_themeSettings['prefixes'][$prefix]['helpers']['Html']['icons']
+			);
 		}
 
 		parent::__construct($View);
@@ -79,4 +85,14 @@ class ThemeHelper extends AppHelper {
 		return Hash::get($this->_themeSettings, $key);
 	}
 
+/**
+ * Returns a mapped icon identifier by on current active theme
+ *
+ * @param string $icon Icon name (without prefix)
+ * @return string a mapped icon identifier
+ */
+	public function icon($icon) {
+		$mapped = Hash::get($this->_iconMap, $icon);
+		return empty($mapped) ? $icon : $mapped;
+	}
 }
