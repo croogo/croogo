@@ -47,17 +47,6 @@ class CroogoHtmlHelper extends HtmlHelper {
 	}
 
 /**
- * Before render callback
- *
- * @param string $viewFiele The view file that is going to be rendered
- * @return void
- */
-	public function beforeRender($viewFile) {
-		$this->_View->set('_icons', $this->settings['icons']);
-		return parent::beforeRender($viewFile);
-	}
-
-/**
  * Creates a formatted IMG element.
  *
  * @see HtmlHelper::image()

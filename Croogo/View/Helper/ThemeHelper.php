@@ -51,6 +51,7 @@ class ThemeHelper extends AppHelper {
  */
 	public function beforeRender($viewFile = null) {
 		// TODO: Remove in 2.3
+		$this->_View->set('_icons', $this->_iconMap);
 		$this->_View->set('themeSettings', $this->_themeSettings);
 	}
 
