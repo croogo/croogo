@@ -6,9 +6,9 @@ $this->Html
 	->addCrumb(__d('croogo', 'Languages'), array('plugin' => 'settings', 'controller' => 'languages', 'action' => 'index'));
 
 ?>
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+<div class="<?php echo $this->Theme->css('row'); ?>">
 
-	<div class="actions <?php echo $this->Layout->cssClass('columnFull'); ?>">
+	<div class="actions <?php echo $this->Theme->css('columnFull'); ?>">
 		<ul class="nav-buttons">
 			<li>
 			<?php
@@ -22,7 +22,7 @@ $this->Html
 		</ul>
 	</div>
 
-	<div class="languages <?php echo $this->Layout->cssClass('columnFull'); ?>">
+	<div class="languages <?php echo $this->Theme->css('columnFull'); ?>">
 
 	<h4><?php echo $title_for_layout; ?></h4>
 

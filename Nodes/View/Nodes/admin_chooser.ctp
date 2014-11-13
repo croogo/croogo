@@ -1,5 +1,5 @@
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
+<div class="<?php echo $this->Theme->css('row'); ?>">
+	<div class="<?php echo $this->Theme->css('columnFull'); ?>">
 	<?php
 		echo __d('croogo', 'Sort by:');
 		echo ' ' . $this->Paginator->sort('id', __d('croogo', 'Id'), array('class' => 'sort'));
@@ -9,15 +9,15 @@
 	</div>
 </div>
 
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
+<div class="<?php echo $this->Theme->css('row'); ?>">
+	<div class="<?php echo $this->Theme->css('columnFull'); ?>">
 		<?php echo $this->element('Nodes.admin/nodes_search'); ?>
 		<hr />
 	</div>
 </div>
 
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
+<div class="<?php echo $this->Theme->css('row'); ?>">
+	<div class="<?php echo $this->Theme->css('columnFull'); ?>">
 		<ul id="nodes-for-links">
 		<?php foreach ($nodes as $node) { ?>
 			<li>

@@ -7,9 +7,9 @@ if (!isset($className)) {
 	$className = strtolower($this->name);
 }
 
-$rowClass = $this->Layout->cssClass('row');
-$columnFull = $this->Layout->cssClass('columnFull');
-$tableClass = isset($tableClass) ? $tableClass : $this->Layout->cssClass('tableClass');
+$rowClass = $this->Theme->css('row');
+$columnFull = $this->Theme->css('columnFull');
+$tableClass = isset($tableClass) ? $tableClass : $this->Theme->css('tableClass');
 
 $showActions = isset($showActions) ? $showActions : true;
 

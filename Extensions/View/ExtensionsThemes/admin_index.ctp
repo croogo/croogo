@@ -18,11 +18,11 @@ $this->Html
 ?>
 <?php $this->end(); ?>
 
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="extensions-themes <?php echo $this->Layout->cssClass('columnFull'); ?>">
+<div class="<?php echo $this->Theme->css('row'); ?>">
+	<div class="extensions-themes <?php echo $this->Theme->css('columnFull'); ?>">
 
-		<div class="current-theme <?php echo $this->Layout->cssClass('row'); ?>">
-			<div class="screenshot <?php echo $this->Layout->cssClass('columnRight'); ?>">
+		<div class="current-theme <?php echo $this->Theme->css('row'); ?>">
+			<div class="screenshot <?php echo $this->Theme->css('columnRight'); ?>">
 				<h3><?php echo __d('croogo', 'Current Theme'); ?></h3>
 				<?php
 					$currentTheme = Sanitize::clean($currentTheme);
@@ -42,7 +42,7 @@ $this->Html
 				?>
 			</div>
 
-			<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
+			<div class="<?php echo $this->Theme->css('columnLeft'); ?>">
 				<h3>
 				<?php
 					$author = isset($currentTheme['author']) ? $currentTheme['author'] : null;
@@ -62,7 +62,7 @@ $this->Html
 			</div>
 		</div>
 
-		<div class="available-themes <?php echo $this->Layout->cssClass('row'); ?>">
+		<div class="available-themes <?php echo $this->Theme->css('row'); ?>">
 			<h3><?php echo __d('croogo', 'Available Themes'); ?></h3>
 			<ul>
 			<?php
@@ -75,14 +75,14 @@ $this->Html
 					if (!$display):
 						continue;
 					endif;
-					echo '<li class="' . $this->Layout->cssClass('columnFull') . '">';
+					echo '<li class="' . $this->Theme->css('columnFull') . '">';
 					if ($themeAlias == 'default') {
 						$imgUrl = $this->Html->thumbnail($theme['screenshot']);
 						$link = $this->Html->link($imgUrl, $theme['screenshot'], array(
 							'escape' => false,
 							'class' => 'thickbox',
 						));
-						echo $this->Html->tag('div', $link, array('class' => 'screenshot ' . $this->Layout->cssClass('columnRight')));
+						echo $this->Html->tag('div', $link, array('class' => 'screenshot ' . $this->Theme->css('columnRight')));
 					} else {
 						if (!empty($theme['screenshot'])):
 							$file = '/theme/' . $themeAlias . '/img/' . $theme['screenshot'];
@@ -92,11 +92,11 @@ $this->Html
 								'class' => 'thickbox',
 							));
 							echo $this->Html->tag('div', $link, array(
-								'class' => 'screenshot ' . $this->Layout->cssClass('columnRight'),
+								'class' => 'screenshot ' . $this->Theme->css('columnRight'),
 							));
 						else:
 							echo $this->Html->tag('div', '', array(
-								'class' => $this->Layout->cssClass('columnRight'),
+								'class' => $this->Theme->css('columnRight'),
 							));
 						endif;
 					}
@@ -126,7 +126,7 @@ $this->Html
 							'icon' => $_icons['delete'],
 						), __d('croogo', 'Are you sure?')),
 						array('class' => 'actions'));
-					echo $this->Html->div($this->Layout->cssClass('columnLeft'), $out);
+					echo $this->Html->div($this->Theme->css('columnLeft'), $out);
 					echo '</li>';
 					$hasAvailable = true;
 				endforeach;

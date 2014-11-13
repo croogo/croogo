@@ -7,8 +7,8 @@ $this->Html->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Languages'), '/' . $this->request->url);
 
 ?>
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
+<div class="<?php echo $this->Theme->css('row'); ?>">
+	<div class="<?php echo $this->Theme->css('columnFull'); ?>">
 		<table class="table table-striped">
 			<?php
 				$tableHeaders = $this->Html->tableHeaders(array(

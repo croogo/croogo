@@ -2,8 +2,8 @@
 
 	<h2><?php echo $title_for_layout; ?></h2>
 
-	<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-		<div class="actions <?php echo $this->Layout->cssClass('columnFull'); ?>">
+	<div class="<?php echo $this->Theme->css('row'); ?>">
+		<div class="actions <?php echo $this->Theme->css('columnFull'); ?>">
 			<ul class="nav-buttons">
 			<?php
 				echo $this->Croogo->adminAction(
@@ -86,8 +86,8 @@
 	</table>
 </div>
 
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
+<div class="<?php echo $this->Theme->css('row'); ?>">
+	<div class="<?php echo $this->Theme->css('columnFull'); ?>">
 		<?php echo $this->element('admin/pagination'); ?>
 	</div>
 </div>

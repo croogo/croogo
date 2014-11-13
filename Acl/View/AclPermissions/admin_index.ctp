@@ -65,8 +65,8 @@ $this->Html
 ?>
 <?php $this->end(); ?>
 
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
+<div class="<?php echo $this->Theme->css('row'); ?>">
+	<div class="<?php echo $this->Theme->css('columnFull'); ?>">
 
 		<ul id="permissions-tab" class="nav nav-tabs">
 		<?php

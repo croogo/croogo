@@ -11,10 +11,10 @@ $what = isset($this->request->data[$modelClass]['id']) ?
 	__d('croogo', 'Edit') :
 	__d('croogo', 'Add');
 
-$cssClass = $this->Layout->cssClass('row');
-$columnLeft = $this->Layout->cssClass('columnLeft');
-$columnRight = $this->Layout->cssClass('columnRight');
-$columnFull = $this->Layout->cssClass('columnFull');
+$cssClass = $this->Theme->css('row');
+$columnLeft = $this->Theme->css('columnLeft');
+$columnRight = $this->Theme->css('columnRight');
+$columnFull = $this->Theme->css('columnFull');
 
 ?>
 <h2 class="hidden-desktop">

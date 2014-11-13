@@ -6,8 +6,8 @@ $this->Html->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Create'), '/' . $this->request->url);
 
 ?>
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
+<div class="<?php echo $this->Theme->css('row'); ?>">
+	<div class="<?php echo $this->Theme->css('columnFull'); ?>">
 		<div class="box">
 			<div class="box-content">
 				<?php foreach ($types as $type): ?>

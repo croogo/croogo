@@ -23,7 +23,7 @@
 
 			<header class="navbar navbar-inverse navbar-fixed-top">
 				<div class="navbar-inner">
-					<div class="<?php echo $this->Layout->cssClass('container'); ?>">
+					<div class="<?php echo $this->Theme->css('container'); ?>">
 						<?php echo $this->Html->link(
 							__d('croogo', 'Back to') . ' ' . Configure::read('Site.title'),
 							'/',
@@ -34,8 +34,8 @@
 			</header>
 
 			<div id="push"></div>
-			<div id="content-container" class="<?php echo $this->Layout->cssClass('container'); ?>">
-				<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+			<div id="content-container" class="<?php echo $this->Theme->css('container'); ?>">
+				<div class="<?php echo $this->Theme->css('row'); ?>">
 					<div id="admin-login">
 					<?php
 						echo $this->Layout->sessionFlash();
