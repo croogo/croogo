@@ -5,7 +5,7 @@ $this->Croogo->adminscript('Menus.admin');
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $_icons['home']))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
 	->addCrumb(__d('croogo', 'Menus'), array('plugin' => 'menus', 'controller' => 'menus', 'action' => 'index'))
 	->addCrumb(__d('croogo', $menu['Menu']['title']), array(
 		'plugin' => 'menus', 'controller' => 'links', 'action' => 'index',
@@ -52,26 +52,26 @@ $this->append('table-body');
 		$actions[] = $this->Croogo->adminRowAction('', array(
 			'controller' => 'links', 'action' => 'moveup', $linkId
 			), array(
-			'icon' => $_icons['move-up'],
+			'icon' => $this->Theme->icon('move-up'),
 			'tooltip' => __d('croogo', 'Move up'),
 		));
 		$actions[] = $this->Croogo->adminRowAction('', array(
 			'controller' => 'links', 'action' => 'movedown', $linkId,
 			), array(
-			'icon' => $_icons['move-down'],
+			'icon' => $this->Theme->icon('move-down'),
 			'tooltip' => __d('croogo', 'Move down'),
 		));
 		$actions[] = $this->Croogo->adminRowActions($linkId);
 		$actions[] = $this->Croogo->adminRowAction('', array(
 			'controller' => 'links', 'action' => 'edit', $linkId,
 			), array(
-			'icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'),
+			'icon' => $this->Theme->icon('update'), 'tooltip' => __d('croogo', 'Edit this item'),
 		));
 
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Link' . $linkId . 'Id',
 			array(
-				'icon' => $_icons['copy'],
+				'icon' => $this->Theme->icon('copy'),
 				'tooltip' => __d('croogo', 'Create a copy'),
 				'rowAction' => 'copy',
 			),
@@ -80,7 +80,7 @@ $this->append('table-body');
 
 		$actions[] = $this->Croogo->adminRowAction('', '#Link' . $linkId . 'Id',
 			array(
-				'icon' => $_icons['delete'],
+				'icon' => $this->Theme->icon('delete'),
 				'class' => 'delete',
 				'tooltip' => __d('croogo', 'Delete this item'),
 				'rowAction' => 'delete',

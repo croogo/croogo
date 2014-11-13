@@ -2,7 +2,7 @@
 
 $this->extend('/Common/admin_index');
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $_icons['home']))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
 	->addCrumb('Example', array('controller' => 'example', 'action' => 'index'))
 	->addCrumb('Chooser Example', array('controller' => 'example', 'action' => 'chooser'));
 

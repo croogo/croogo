@@ -5,7 +5,7 @@ $this->Croogo->adminScript('Contacts.admin');
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $_icons['home']))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
 	->addCrumb(__d('croogo', 'Contacts'), array('controller' => 'contacts', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Messages'), array('action' => 'index'));
 
@@ -68,19 +68,19 @@ $this->start('table-heading');
 $this->end();
 
 $this->append('table-body');
-	$commentIcon = $this->Html->icon($_icons['comment']);
+	$commentIcon = $this->Html->icon($this->Theme->icon('comment'));
 	$rows = array();
 	foreach ($messages as $message) {
 		$actions = array();
 
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'edit', $message['Message']['id']),
-			array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $this->Theme->icon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Message' . $message['Message']['id'] . 'Id',
 			array(
-				'icon' => $_icons['delete'],
+				'icon' => $this->Theme->icon('delete'),
 				'class' => 'delete',
 				'tooltip' => __d('croogo', 'Remove this item'),
 				'rowAction' => 'delete',

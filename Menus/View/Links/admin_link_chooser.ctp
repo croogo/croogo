@@ -3,7 +3,7 @@
 $rows = array();
 foreach ($linkChoosers as $name => $chooser):
 	$link = $this->Html->link('', $chooser['url'], array(
-		'icon' => $_icons['search'],
+		'icon' => $this->Theme->icon('search'),
 		'iconSize' => 'small',
 		'class' => 'btn btn-small link chooser pull-right',
 		'data-dismiss' => 'modal',

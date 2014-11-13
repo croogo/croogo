@@ -4,7 +4,7 @@ $this->extend('/Common/admin_edit');
 $this->Croogo->adminScript('Taxonomy.terms');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $_icons['home']))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
 	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {

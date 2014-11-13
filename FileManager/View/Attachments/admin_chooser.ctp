@@ -54,7 +54,7 @@
 				));
 				$a = $this->Html->link('', '#', array(
 					'class' => 'popovers action',
-					'icon' => $_icons['info-sign'],
+					'icon' => $this->Theme->icon('info-sign'),
 					'data-title' => $type,
 					'data-trigger' => 'click',
 					'data-placement' => 'right',
