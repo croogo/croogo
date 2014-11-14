@@ -10,22 +10,17 @@ App::uses('CroogoTheme', 'Extensions.Lib');
  */
 class CroogoHtmlHelper extends HtmlHelper {
 
+	public $helpers = array(
+		'Theme' => array('className' => 'Croogo.Theme'),
+	);
+
 /**
  * Constructor
  */
 	public function __construct(View $View, $settings = array()) {
-		if (isset($View->viewVars['themeSettings'])) {
-			$themeSettings = $View->viewVars['themeSettings'];
-			$settings = Hash::merge(array(
-				'iconDefaults' => $themeSettings['iconDefaults'],
-				'icons' => $themeSettings['icons'],
-			), $settings);
-		} else {
-			$croogoTheme = new CroogoTheme();
-			$themeData = $croogoTheme->getData();
-			$themeSettings = $themeData['settings'];
-			$settings = Hash::merge($themeSettings, $settings);
-		}
+		$themeConfig = CroogoTheme::config($View->theme);
+		$themeSettings = $themeConfig['settings'];
+		$settings = Hash::merge($themeSettings, $settings);
 		parent::__construct($View, $settings);
 
 		$themeCss = $themeSettings['css'];
@@ -52,17 +47,6 @@ class CroogoHtmlHelper extends HtmlHelper {
 	}
 
 /**
- * Before render callback
- *
- * @param string $viewFiele The view file that is going to be rendered
- * @return void
- */
-	public function beforeRender($viewFile) {
-		$this->_View->set('_icons', $this->settings['icons']);
-		return parent::beforeRender($viewFile);
-	}
-
-/**
  * Creates a formatted IMG element.
  *
  * @see HtmlHelper::image()
@@ -71,7 +55,7 @@ class CroogoHtmlHelper extends HtmlHelper {
  * @return string Completed img tag
  */
 	public function image($path, $options = array()) {
-		$class = $this->_View->viewVars['themeSettings']['css']['imageClass'];
+		$class = $this->Theme->css('imageClass');
 		if (empty($options['class'])) {
 			$options['class'] = $class;
 		}
@@ -87,7 +71,7 @@ class CroogoHtmlHelper extends HtmlHelper {
  * @return string Completed img tag
  */
 	public function thumbnail($path, $options = array()) {
-		$class = $this->_View->viewVars['themeSettings']['css']['thumbnailClass'];
+		$class = $this->Theme->css('thumbnailClass');
 		if (empty($options['class'])) {
 			$options['class'] = $class;
 		}
@@ -131,7 +115,7 @@ class CroogoHtmlHelper extends HtmlHelper {
 		$options = array_merge($defaults, $options);
 		$class = $iconDefaults['classDefault'];
 		foreach ((array)$name as $iconName) {
-			$class .= ' ' . $iconDefaults['classPrefix'] . $iconName;
+			$class .= ' ' . $iconDefaults['classPrefix'] . $this->Theme->icon($iconName);
 		}
 		$class .= ' ' . $options['class'];
 		$class = trim($class);
@@ -216,7 +200,7 @@ class CroogoHtmlHelper extends HtmlHelper {
 			if (empty($options['iconInline'])) {
 				$title = $this->icon($options['icon'], array('class' => $iconSize)) . $title;
 			} else {
-				$icon = trim($iconSize . ' ' . $iconDefaults['classPrefix'] . $options['icon']);
+				$icon = trim($iconSize . ' ' . $iconDefaults['classPrefix'] . $this->Theme->icon($options['icon']));
 				if (isset($options['class'])) {
 					$options['class'] .= ' ' . $icon;
 				} else {

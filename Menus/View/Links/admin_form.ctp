@@ -5,7 +5,7 @@ $this->extend('/Common/admin_edit');
 $this->Croogo->adminScript('Menus.admin');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $_icons['home']))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
 	->addCrumb(__d('croogo', 'Menus'), array('plugin' => 'menus', 'controller' => 'menus', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_add') {
@@ -75,7 +75,7 @@ $this->append('tab-content');
 			'append' => true,
 			'addon' => $this->Html->link('', '#link_choosers', array(
 				'button' => 'default',
-				'icon' => $_icons['link'],
+				'icon' => $this->Theme->icon('link'),
 				'iconSize' => 'small',
 				'data-title' => __d('croogo', 'Link Chooser'),
 				'data-toggle' => 'modal',

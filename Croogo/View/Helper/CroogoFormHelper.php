@@ -11,6 +11,7 @@ App::uses('CroogoTheme', 'Extensions.Lib');
 class CroogoFormHelper extends FormHelper {
 
 	public $helpers = array(
+		'Theme' => array('className' => 'Croogo.Theme'),
 		'Html' => array('className' => 'Croogo.CroogoHtml')
 	);
 
@@ -18,18 +19,9 @@ class CroogoFormHelper extends FormHelper {
  * Constructor
  */
 	public function __construct(View $View, $settings = array()) {
-		if (isset($View->viewVars['themeSettings'])) {
-			$themeSettings = $View->viewVars['themeSettings'];
-			$settings = Hash::merge(array(
-				'iconDefaults' => $themeSettings['iconDefaults'],
-				'icons' => $themeSettings['icons'],
-			), $settings);
-		} else {
-			$croogoTheme = new CroogoTheme();
-			$themeData = $croogoTheme->getData();
-			$themeSettings = $themeData['settings'];
-			$settings = Hash::merge($themeSettings, $settings);
-		}
+		$themeConfig = CroogoTheme::config($View->theme);
+		$themeSettings = $themeConfig['settings'];
+		$settings = Hash::merge($themeSettings, $settings);
 		parent::__construct($View, $settings);
 	}
 
@@ -167,7 +159,7 @@ class CroogoFormHelper extends FormHelper {
 		$options = $this->_parseOptionsAddon($options);
 
 		if (isset($options['class'])) {
-			$formInput = $this->_View->Layout->cssClass('formInput');
+			$formInput = $this->Theme->css('formInput');
 			$isMultipleCheckbox = isset($options['multiple']) &&
 				$options['multiple'] === 'checkbox';
 			$isRadioOrCheckbox = isset($options['type']) &&
@@ -196,7 +188,7 @@ class CroogoFormHelper extends FormHelper {
 		}
 
 		if (isset($this->_addon)) {
-			$options['class'] = $this->_View->Layout->cssClass('columnLeft');
+			$options['class'] = $this->Theme->css('columnLeft');
 			if (isset($options['append'])) {
 				$options['between'] = '<div class="addon">';
 				$options['after'] = $options['addon'] . '</div>';
@@ -260,11 +252,12 @@ class CroogoFormHelper extends FormHelper {
 				'inputDefaults' => $this->settings['inputDefaults'],
 			), $options);
 		}
+		$formInputClass = $this->Theme->css('formInput');
 		if (
 			empty($options['inputDefaults']['class']) &&
-			isset($this->_View->viewVars['themeSettings']['css']['formInput'])
+			!empty($formInputClass)
 		) {
-			$options['inputDefaults']['class'] = $this->_View->viewVars['themeSettings']['css']['formInput'];
+			$options['inputDefaults']['class'] = $formInputClass;
 		}
 		return parent::create($model, $options);
 	}

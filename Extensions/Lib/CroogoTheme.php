@@ -273,4 +273,24 @@ class CroogoTheme extends Object {
 		throw new UnexpectedValueException(__d('croogo', 'Theme %s not found', $alias));
 	}
 
+/**
+ * Helper method to retrieve given $theme settings
+ *
+ * @param string $theme Theme name
+ * @return array Theme configuration data
+ */
+	public static function config($theme = null) {
+		static $croogoTheme = null;
+		static $themeData = array();
+		if ($croogoTheme === null) {
+			$croogoTheme = new CroogoTheme();
+		}
+
+		if (empty($themeData[$theme])) {
+			$themeData[$theme] = $croogoTheme->getData($theme);
+		}
+
+		return $themeData[$theme];
+	}
+
 }

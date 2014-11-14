@@ -52,20 +52,20 @@ foreach ($dashboards as $dashboard):
 			$actions[] = $this->Croogo->adminRowAction('',
 				array('controller' => 'dashboards_dashboards', 'action' => 'moveup', $dashboard['DashboardsDashboard']['id']),
 				array(
-					'icon' => $_icons['move-up'],
+					'icon' => $this->Theme->icon('move-up'),
 					'tooltip' => __d('croogo', 'Move up'),
 				)
 			);
 			$actions[] = $this->Croogo->adminRowAction('',
 				array('controller' => 'dashboards_dashboards', 'action' => 'movedown', $dashboard['DashboardsDashboard']['id']),
 				array(
-					'icon' => $_icons['move-down'],
+					'icon' => $this->Theme->icon('move-down'),
 					'tooltip' => __d('croogo', 'Move down'),
 				)
 			);
 			$actions[] = $this->Croogo->adminRowAction('',
 				array('action' => 'delete', $dashboard['DashboardsDashboard']['id']),
-				array('icon' => $_icons['delete'], 'escape' => true),
+				array('icon' => $this->Theme->icon('delete'), 'escape' => true),
 				__d('croogo', 'Are you sure you want to delete # %s?', $dashboard['DashboardsDashboard']['id'])
 			);
 			echo implode(' ', $actions);

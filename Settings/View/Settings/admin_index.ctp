@@ -3,7 +3,7 @@
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $_icons['home']))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
 	->addCrumb(__d('croogo', 'Settings'), array(
 		'admin' => true,
 		'plugin' => 'settings',
@@ -30,20 +30,20 @@ $this->append('table-body');
 		$actions = array();
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'settings', 'action' => 'moveup', $setting['Setting']['id']),
-			array('icon' => $_icons['move-up'], 'tooltip' => __d('croogo', 'Move up'))
+			array('icon' => $this->Theme->icon('move-up'), 'tooltip' => __d('croogo', 'Move up'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'settings', 'action' => 'movedown', $setting['Setting']['id']),
-			array('icon' => $_icons['move-down'], 'tooltip' => __d('croogo', 'Move down'))
+			array('icon' => $this->Theme->icon('move-down'), 'tooltip' => __d('croogo', 'Move down'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'settings', 'action' => 'edit', $setting['Setting']['id']),
-			array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $this->Theme->icon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowActions($setting['Setting']['id']);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'settings', 'action' => 'delete', $setting['Setting']['id']),
-			array('icon' => $_icons['delete'], 'tooltip' => __d('croogo', 'Remove this item')),
+			array('icon' => $this->Theme->icon('delete'), 'tooltip' => __d('croogo', 'Remove this item')),
 			__d('croogo', 'Are you sure?'));
 
 		$key = $setting['Setting']['key'];

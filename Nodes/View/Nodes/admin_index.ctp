@@ -4,7 +4,7 @@ $this->extend('/Common/admin_index');
 $this->Croogo->adminScript(array('Nodes.admin'));
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $_icons['home']))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
 	->addCrumb(__d('croogo', 'Content'), '/' . $this->request->url);
 
 $this->append('actions');
@@ -93,12 +93,12 @@ $this->append('table-body');
 				echo $this->Croogo->adminRowActions($node['Node']['id']);
 				echo ' ' . $this->Croogo->adminRowAction('',
 					array('action' => 'edit', $node['Node']['id']),
-					array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
+					array('icon' => $this->Theme->icon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 				);
 				echo ' ' . $this->Croogo->adminRowAction('',
 					'#Node' . $node['Node']['id'] . 'Id',
 					array(
-						'icon' => $_icons['copy'],
+						'icon' => $this->Theme->icon('copy'),
 						'tooltip' => __d('croogo', 'Create a copy'),
 						'rowAction' => 'copy',
 					)
@@ -106,7 +106,7 @@ $this->append('table-body');
 				echo ' ' . $this->Croogo->adminRowAction('',
 					'#Node' . $node['Node']['id'] . 'Id',
 					array(
-						'icon' => $_icons['delete'],
+						'icon' => $this->Theme->icon('delete'),
 						'class' => 'delete',
 						'tooltip' => __d('croogo', 'Remove this item'),
 						'rowAction' => 'delete',
