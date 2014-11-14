@@ -17,6 +17,9 @@
 	],
 
 	"settings" : {
+		"icons": {
+			"translate": "flag"
+		},
 		"css" : {
 			"container" : "container-fluid",
 			"row" : "row-fluid",
