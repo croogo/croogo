@@ -43,7 +43,7 @@ $this->Html
 
 		$actions = array();
 		if (!in_array($pluginAlias, $bundledPlugins) && !in_array($pluginAlias, $corePlugins)):
-			$icon = $pluginData['active'] ? $this->Theme->icon('power-off'] : $this->Theme->icon('power-on');
+			$icon = $pluginData['active'] ? $this->Theme->icon('power-off') : $this->Theme->icon('power-on');
 			$actions[] = $this->Croogo->adminRowAction('',
 				array('action' => 'toggle',	$pluginAlias),
 				array('icon' => $icon, 'tooltip' => $toggleText, 'method' => 'post')
