@@ -159,7 +159,7 @@ class CroogoFormHelper extends FormHelper {
 		$options = $this->_parseOptionsAddon($options);
 
 		if (isset($options['class'])) {
-			$formInput = $this->Theme->css('formInput');
+			$formInput = $this->Theme->getCssClass('formInput');
 			$isMultipleCheckbox = isset($options['multiple']) &&
 				$options['multiple'] === 'checkbox';
 			$isRadioOrCheckbox = isset($options['type']) &&
@@ -188,7 +188,7 @@ class CroogoFormHelper extends FormHelper {
 		}
 
 		if (isset($this->_addon)) {
-			$options['class'] = $this->Theme->css('columnLeft');
+			$options['class'] = $this->Theme->getCssClass('columnLeft');
 			if (isset($options['append'])) {
 				$options['between'] = '<div class="addon">';
 				$options['after'] = $options['addon'] . '</div>';
@@ -252,7 +252,7 @@ class CroogoFormHelper extends FormHelper {
 				'inputDefaults' => $this->settings['inputDefaults'],
 			), $options);
 		}
-		$formInputClass = $this->Theme->css('formInput');
+		$formInputClass = $this->Theme->getCssClass('formInput');
 		if (
 			empty($options['inputDefaults']['class']) &&
 			!empty($formInputClass)

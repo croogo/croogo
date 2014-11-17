@@ -42,11 +42,11 @@
 			<?php echo $this->element('admin/header'); ?>
 			<?php echo $this->element('admin/navigation'); ?>
 			<div id="push"></div>
-			<div id="content-container" class="<?php echo $this->Theme->css('container'); ?>">
-				<div class="<?php echo $this->Theme->css('row'); ?>">
+			<div id="content-container" class="<?php echo $this->Theme->getCssClass('container'); ?>">
+				<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
 					<div id="content" class="clearfix">
 						<?php echo $this->element('admin/breadcrumb'); ?>
-						<div id="inner-content" class="<?php echo $this->Theme->css('columnFull'); ?>">
+						<div id="inner-content" class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
 							<?php echo $this->Layout->sessionFlash(); ?>
 							<?php echo $this->fetch('content'); ?>
 						</div>

@@ -61,7 +61,7 @@ class ThemeHelper extends AppHelper {
  * @param string $class Name of class/configuration to retrieve
  * @return string
  */
-	public function css($class = null) {
+	public function getCssClass($class = null) {
 		if ($class) {
 			$class = '.' . $class;
 		}
@@ -87,13 +87,16 @@ class ThemeHelper extends AppHelper {
 	}
 
 /**
- * Returns a mapped icon identifier by on current active theme
+ * Returns a mapped icon identifier based on current active theme
  *
  * @param string $icon Icon name (without prefix)
  * @return string a mapped icon identifier
  */
-	public function icon($icon) {
-		$mapped = Hash::get($this->_iconMap, $icon);
-		return empty($mapped) ? $icon : $mapped;
+	public function getIcon($icon) {
+		$mapped = $icon;
+		if (isset($this->_iconMap[$icon])) {
+			$mapped = $this->_iconMap[$icon];
+		}
+		return $mapped;
 	}
 }

@@ -1,5 +1,5 @@
-<div class="<?php echo $this->Theme->css('row'); ?>">
-	<div class="<?php echo $this->Theme->css('columnFull'); ?>">
+<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+	<div class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
 	<?php
 		echo __d('croogo', 'Sort by:');
 		echo ' ' . $this->Paginator->sort('id', __d('croogo', 'Id'), array('class' => 'sort'));
@@ -9,15 +9,15 @@
 	</div>
 </div>
 
-<div class="<?php echo $this->Theme->css('row'); ?>">
-	<div class="<?php echo $this->Theme->css('columnFull'); ?>">
+<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+	<div class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
 		<?php echo $this->element('Nodes.admin/nodes_search'); ?>
 		<hr />
 	</div>
 </div>
 
-<div class="<?php echo $this->Theme->css('row'); ?>">
-	<div class="<?php echo $this->Theme->css('columnFull'); ?>">
+<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+	<div class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
 		<ul id="nodes-for-links">
 		<?php foreach ($nodes as $node) { ?>
 			<li>
@@ -63,7 +63,7 @@
 				));
 				$a = $this->Html->link('', '#', array(
 					'class' => 'popovers action',
-					'icon' => $this->Theme->icon('info-sign'),
+					'icon' => $this->Theme->getIcon('info-sign'),
 					'data-title' => $type,
 					'data-trigger' => 'click',
 					'data-placement' => 'right',

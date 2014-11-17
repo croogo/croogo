@@ -5,7 +5,7 @@ $this->Croogo->adminScript('Blocks.admin');
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Blocks'), array('action' => 'index'));
 
 $this->append('form-start', $this->Form->create('Block', array(
@@ -32,22 +32,22 @@ $this->append('table-body');
 		$actions = array();
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'blocks', 'action' => 'moveup', $block['Block']['id']),
-			array('icon' => $this->Theme->icon('move-up'), 'tooltip' => __d('croogo', 'Move up'),
+			array('icon' => $this->Theme->getIcon('move-up'), 'tooltip' => __d('croogo', 'Move up'),
 		));
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'blocks', 'action' => 'movedown', $block['Block']['id']),
-			array('icon' => $this->Theme->icon('move-down'), 'tooltip' => __d('croogo', 'Move down'),
+			array('icon' => $this->Theme->getIcon('move-down'), 'tooltip' => __d('croogo', 'Move down'),
 			)
 		);
 		$actions[] = $this->Croogo->adminRowActions($block['Block']['id']);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id']),
-			array('icon' => $this->Theme->icon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Block' . $block['Block']['id'] . 'Id',
 			array(
-				'icon' => $this->Theme->icon('copy'),
+				'icon' => $this->Theme->getIcon('copy'),
 				'tooltip' => __d('croogo', 'Create a copy'),
 				'rowAction' => 'copy',
 			),
@@ -55,7 +55,7 @@ $this->append('table-body');
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Block' . $block['Block']['id'] . 'Id',
-			array('icon' => $this->Theme->icon('delete'), 'class' => 'delete', 'tooltip' => __d('croogo', 'Remove this item'), 'rowAction' => 'delete'),
+			array('icon' => $this->Theme->getIcon('delete'), 'class' => 'delete', 'tooltip' => __d('croogo', 'Remove this item'), 'rowAction' => 'delete'),
 			__d('croogo', 'Are you sure?')
 		);
 

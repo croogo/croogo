@@ -4,7 +4,7 @@ $this->Croogo->adminScript('Dashboards.admin');
 $this->Html->css('Dashboards.admin', array('inline' => false));
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Dashboard'), '/' . $this->request->url);
 
 echo $this->Dashboards->dashboards();

@@ -557,7 +557,7 @@ class LayoutHelper extends AppHelper {
  * @deprecated Use ThemeHelper::css()
  */
 	public function cssClass($class = null) {
-		return $this->Theme->css($class);
+		return $this->Theme->getCssClass($class);
 	}
 
 /**

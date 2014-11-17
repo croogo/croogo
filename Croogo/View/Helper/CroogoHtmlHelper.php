@@ -55,7 +55,7 @@ class CroogoHtmlHelper extends HtmlHelper {
  * @return string Completed img tag
  */
 	public function image($path, $options = array()) {
-		$class = $this->Theme->css('imageClass');
+		$class = $this->Theme->getCssClass('imageClass');
 		if (empty($options['class'])) {
 			$options['class'] = $class;
 		}
@@ -71,7 +71,7 @@ class CroogoHtmlHelper extends HtmlHelper {
  * @return string Completed img tag
  */
 	public function thumbnail($path, $options = array()) {
-		$class = $this->Theme->css('thumbnailClass');
+		$class = $this->Theme->getCssClass('thumbnailClass');
 		if (empty($options['class'])) {
 			$options['class'] = $class;
 		}
@@ -115,7 +115,7 @@ class CroogoHtmlHelper extends HtmlHelper {
 		$options = array_merge($defaults, $options);
 		$class = $iconDefaults['classDefault'];
 		foreach ((array)$name as $iconName) {
-			$class .= ' ' . $iconDefaults['classPrefix'] . $this->Theme->icon($iconName);
+			$class .= ' ' . $iconDefaults['classPrefix'] . $this->Theme->getIcon($iconName);
 		}
 		$class .= ' ' . $options['class'];
 		$class = trim($class);
@@ -200,7 +200,7 @@ class CroogoHtmlHelper extends HtmlHelper {
 			if (empty($options['iconInline'])) {
 				$title = $this->icon($options['icon'], array('class' => $iconSize)) . $title;
 			} else {
-				$icon = trim($iconSize . ' ' . $iconDefaults['classPrefix'] . $this->Theme->icon($options['icon']));
+				$icon = trim($iconSize . ' ' . $iconDefaults['classPrefix'] . $this->Theme->getIcon($options['icon']));
 				if (isset($options['class'])) {
 					$options['class'] .= ' ' . $icon;
 				} else {

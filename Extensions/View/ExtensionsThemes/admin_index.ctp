@@ -3,7 +3,7 @@
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Themes'), '/' . $this->request->url);
 
@@ -18,11 +18,11 @@ $this->Html
 ?>
 <?php $this->end(); ?>
 
-<div class="<?php echo $this->Theme->css('row'); ?>">
-	<div class="extensions-themes <?php echo $this->Theme->css('columnFull'); ?>">
+<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+	<div class="extensions-themes <?php echo $this->Theme->getCssClass('columnFull'); ?>">
 
-		<div class="current-theme <?php echo $this->Theme->css('row'); ?>">
-			<div class="screenshot <?php echo $this->Theme->css('columnRight'); ?>">
+		<div class="current-theme <?php echo $this->Theme->getCssClass('row'); ?>">
+			<div class="screenshot <?php echo $this->Theme->getCssClass('columnRight'); ?>">
 				<h3><?php echo __d('croogo', 'Current Theme'); ?></h3>
 				<?php
 					$currentTheme = Sanitize::clean($currentTheme);
@@ -42,7 +42,7 @@ $this->Html
 				?>
 			</div>
 
-			<div class="<?php echo $this->Theme->css('columnLeft'); ?>">
+			<div class="<?php echo $this->Theme->getCssClass('columnLeft'); ?>">
 				<h3>
 				<?php
 					$author = isset($currentTheme['author']) ? $currentTheme['author'] : null;
@@ -62,7 +62,7 @@ $this->Html
 			</div>
 		</div>
 
-		<div class="available-themes <?php echo $this->Theme->css('row'); ?>">
+		<div class="available-themes <?php echo $this->Theme->getCssClass('row'); ?>">
 			<h3><?php echo __d('croogo', 'Available Themes'); ?></h3>
 			<ul>
 			<?php
@@ -75,14 +75,14 @@ $this->Html
 					if (!$display):
 						continue;
 					endif;
-					echo '<li class="' . $this->Theme->css('columnFull') . '">';
+					echo '<li class="' . $this->Theme->getCssClass('columnFull') . '">';
 					if ($themeAlias == 'default') {
 						$imgUrl = $this->Html->thumbnail($theme['screenshot']);
 						$link = $this->Html->link($imgUrl, $theme['screenshot'], array(
 							'escape' => false,
 							'class' => 'thickbox',
 						));
-						echo $this->Html->tag('div', $link, array('class' => 'screenshot ' . $this->Theme->css('columnRight')));
+						echo $this->Html->tag('div', $link, array('class' => 'screenshot ' . $this->Theme->getCssClass('columnRight')));
 					} else {
 						if (!empty($theme['screenshot'])):
 							$file = '/theme/' . $themeAlias . '/img/' . $theme['screenshot'];
@@ -92,11 +92,11 @@ $this->Html
 								'class' => 'thickbox',
 							));
 							echo $this->Html->tag('div', $link, array(
-								'class' => 'screenshot ' . $this->Theme->css('columnRight'),
+								'class' => 'screenshot ' . $this->Theme->getCssClass('columnRight'),
 							));
 						else:
 							echo $this->Html->tag('div', '', array(
-								'class' => $this->Theme->css('columnRight'),
+								'class' => $this->Theme->getCssClass('columnRight'),
 							));
 						endif;
 					}
@@ -116,17 +116,17 @@ $this->Html
 							$themeAlias,
 						), array(
 							'button' => 'default',
-							'icon' => $this->Theme->icon('power-on'),
+							'icon' => $this->Theme->getIcon('power-on'),
 						)) .
 						$this->Form->postLink(__d('croogo', 'Delete'), array(
 							'action' => 'delete',
 							$themeAlias,
 						), array(
 							'button' => 'danger',
-							'icon' => $this->Theme->icon('delete'),
+							'icon' => $this->Theme->getIcon('delete'),
 						), __d('croogo', 'Are you sure?')),
 						array('class' => 'actions'));
-					echo $this->Html->div($this->Theme->css('columnLeft'), $out);
+					echo $this->Html->div($this->Theme->getCssClass('columnLeft'), $out);
 					echo '</li>';
 					$hasAvailable = true;
 				endforeach;

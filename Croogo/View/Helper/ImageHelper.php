@@ -49,7 +49,7 @@ class ImageHelper extends Helper {
 		$uploadsDir = $options['uploadsDir'];
 		$cacheDir = $options['cacheDir'];
 		$resizedInd = $options['resizedInd'];
-		$imgClass = $this->Theme->css('thumbnailClass');
+		$imgClass = $this->Theme->getCssClass('thumbnailClass');
 
 		if (empty($htmlAttributes['alt'])) {
 			$htmlAttributes['alt'] = 'thumb';
