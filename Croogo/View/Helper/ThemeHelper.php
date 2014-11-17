@@ -93,7 +93,10 @@ class ThemeHelper extends AppHelper {
  * @return string a mapped icon identifier
  */
 	public function getIcon($icon) {
-		$mapped = Hash::get($this->_iconMap, $icon);
-		return empty($mapped) ? $icon : $mapped;
+		$mapped = $icon;
+		if (isset($this->_iconMap[$icon])) {
+			$mapped = $this->_iconMap[$icon];
+		}
+		return $mapped;
 	}
 }
