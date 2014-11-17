@@ -1,14 +1,14 @@
 <?php
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Languages'), array('plugin' => 'settings', 'controller' => 'languages', 'action' => 'index'));
 
 ?>
-<div class="<?php echo $this->Theme->css('row'); ?>">
+<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
 
-	<div class="actions <?php echo $this->Theme->css('columnFull'); ?>">
+	<div class="actions <?php echo $this->Theme->getCssClass('columnFull'); ?>">
 		<ul class="nav-buttons">
 			<li>
 			<?php
@@ -22,7 +22,7 @@ $this->Html
 		</ul>
 	</div>
 
-	<div class="languages <?php echo $this->Theme->css('columnFull'); ?>">
+	<div class="languages <?php echo $this->Theme->getCssClass('columnFull'); ?>">
 
 	<h4><?php echo $title_for_layout; ?></h4>
 

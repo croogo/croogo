@@ -3,7 +3,7 @@ $this->extend('/Common/admin_edit');
 $this->set('className', 'translate');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(Inflector::humanize(Inflector::pluralize($modelAlias)))
 	->addCrumb($this->data[$modelAlias][$displayField])
 	->addCrumb(
@@ -27,8 +27,8 @@ echo $this->Form->create($modelAlias, array('url' => array(
 	'locale' => $this->request->params['named']['locale'],
 )));
 ?>
-<div class="<?php echo $this->Theme->css('row'); ?>">
-	<div class="<?php echo $this->Theme->css('columnLeft'); ?>">
+<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+	<div class="<?php echo $this->Theme->getCssClass('columnLeft'); ?>">
 		<ul class="nav nav-tabs">
 		<?php
 			echo $this->Croogo->adminTab(__d('croogo', 'Translate'), '#translate-main');
@@ -48,7 +48,7 @@ echo $this->Form->create($modelAlias, array('url' => array(
 			<?php echo $this->Croogo->adminTabs(); ?>
 		</div>
 	</div>
-	<div class="<?php echo $this->Theme->css('columnRight'); ?>">
+	<div class="<?php echo $this->Theme->getCssClass('columnRight'); ?>">
 		<?php echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply', 'class' => 'btn')) .
 			$this->Form->button(__d('croogo', 'Save'), array('class' => 'btn btn-primary')) .

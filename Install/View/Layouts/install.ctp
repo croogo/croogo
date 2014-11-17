@@ -23,15 +23,15 @@
 	<div id="wrap" class="install">
 		<header class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
-				<div class="<?php echo $this->Theme->css('container'); ?>">
+				<div class="<?php echo $this->Theme->getCssClass('container'); ?>">
 					<span class="brand"><?php echo __d('croogo', 'Install Croogo'); ?></span>
 				</div>
 			</div>
 		</header>
 
-		<div id="main" class="<?php echo $this->Theme->css('container'); ?>">
-			<div class="<?php echo $this->Theme->css('row'); ?>">
-				<div id="install" class="<?php echo $this->Theme->css('columnFull'); ?>">
+		<div id="main" class="<?php echo $this->Theme->getCssClass('container'); ?>">
+			<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+				<div id="install" class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
 				<?php
 					echo $this->Layout->sessionFlash();
 					echo $content_for_layout;

@@ -5,7 +5,7 @@ $this->name = 'acl_permissions';
 $this->Croogo->adminScript('Acl.acl_permissions');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Permissions'), array(
 		'plugin' => 'acl', 'controller' => 'acl_permissions',
@@ -65,8 +65,8 @@ $this->Html
 ?>
 <?php $this->end(); ?>
 
-<div class="<?php echo $this->Theme->css('row'); ?>">
-	<div class="<?php echo $this->Theme->css('columnFull'); ?>">
+<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+	<div class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
 
 		<ul id="permissions-tab" class="nav nav-tabs">
 		<?php

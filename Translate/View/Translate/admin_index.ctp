@@ -10,7 +10,7 @@ if (isset($this->request->params['models'][$modelAlias])) {
 	$controller = strtolower(Inflector::pluralize($modelAlias));
 }
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(
 		Inflector::pluralize($modelAlias),
 		array(
@@ -72,7 +72,7 @@ $this->Html
 				$modelAlias,
 				'locale' => $translation[$runtimeModelAlias]['locale'],
 			), array(
-				'icon' => $this->Theme->icon('update'),
+				'icon' => $this->Theme->getIcon('update'),
 				'tooltip' => __d('croogo', 'Edit this item'),
 			));
 			$actions[] = $this->Croogo->adminRowAction('', array(
@@ -81,7 +81,7 @@ $this->Html
 				$modelAlias,
 				$translation[$runtimeModelAlias]['locale'],
 			), array(
-				'icon' => $this->Theme->icon('delete'),
+				'icon' => $this->Theme->getIcon('delete'),
 				'tooltip' => __d('croogo', 'Remove this item'),
 			), __d('croogo', 'Are you sure?'));
 

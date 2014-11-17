@@ -1,13 +1,13 @@
 <h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
 <?php
 
-$this->Html->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
+$this->Html->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Content'), array('controller' => 'nodes', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Create'), '/' . $this->request->url);
 
 ?>
-<div class="<?php echo $this->Theme->css('row'); ?>">
-	<div class="<?php echo $this->Theme->css('columnFull'); ?>">
+<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+	<div class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
 		<div class="box">
 			<div class="box-content">
 				<?php foreach ($types as $type): ?>

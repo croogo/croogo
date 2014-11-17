@@ -2,7 +2,7 @@
 $this->extend('/Common/admin_edit');
 $this->set('className', 'acl_actions');
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->icon('home')))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Permissions'), array('plugin' => 'acl', 'controller' => 'acl_permissions'))
 	->addCrumb(__d('croogo', 'Actions'), array('plugin' => 'acl', 'controller' => 'acl_actions', 'action' => 'index'));
