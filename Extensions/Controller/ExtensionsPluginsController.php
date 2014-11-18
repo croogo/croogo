@@ -177,7 +177,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 		} else {
 			$this->Session->setFlash(
 				__d('croogo', 'Plugin "%s" could not be migrated. Error: %s', $plugin, implode('<br />', $this->_CroogoPlugin->migrationErrors)),
-				'default',
+				'flash',
 				array('class' => 'success')
 			);
 		}
