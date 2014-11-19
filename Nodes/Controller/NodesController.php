@@ -305,6 +305,9 @@ class NodesController extends NodesAppController {
 		if (empty($this->request->data)) {
 			$this->Croogo->setReferer();
 			$data = $Node->read(null, $id);
+			if (empty($data)) {
+				throw new NotFoundException('Invalid id: ' . $id);
+			}
 			$data['Role']['Role'] = $Node->decodeData($data[$Node->alias]['visibility_roles']);
 			$this->request->data = $data;
 		}
