@@ -287,7 +287,17 @@ class CroogoTheme extends Object {
 		}
 
 		if (empty($themeData[$theme])) {
-			$themeData[$theme] = $croogoTheme->getData($theme);
+			$data = $croogoTheme->getData($theme);
+			$request = Router::getRequest();
+			if ($request) {
+				$prefix = $request->param('prefix');
+				if (isset($data['settings']['prefixes'][$prefix]['css'])) {
+					$data['settings']['css'] = Hash::merge($data['settings']['prefixes'][$prefix]['css'],
+						$data['settings']['css']
+					);
+				}
+			}
+			$themeData[$theme] = $data;
 		}
 
 		return $themeData[$theme];
