@@ -43,7 +43,7 @@ if (!empty($searchFields)):
 		echo $this->Form->input($field, $options);
 	}
 
-	echo $this->Form->submit(__d('croogo', 'Filter'), array('div' => false));
+	echo $this->Form->input(__d('croogo', 'Filter'), array('type' => 'submit', 'label' => false));
 	echo $this->Form->end();
 ?>
 </div>
