@@ -4,7 +4,7 @@
 <?php
 
 $script =<<<EOF
-var feedUrl = "http://blog.croogo.org/promoted.rss";
+var feedUrl = "https://blog.croogo.org/promoted.rss";
 $.get(feedUrl, { utm_source: "admin-dashboard" }, function(data) {
 	var xml = $(data);
 	var buffer = '';
