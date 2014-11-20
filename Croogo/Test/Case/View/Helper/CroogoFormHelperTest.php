@@ -494,4 +494,32 @@ class CroogoFormHelperTest extends CroogoTestCase {
 		$this->assertTags($result, $expected);
 	}
 
+/**
+ * Test radio button class
+ */
+	public function testInputRadioButtonClass() {
+		$result = $this->CroogoForm->input('Node.promote', array(
+			'type' => 'radio',
+			'class' => 'super-radio-button',
+			'options' => array(
+				0 => 'Not promoted',
+				1 => 'Promoted',
+			),
+		));
+		$this->assertStringStartsWith('<div class="input radio">', $result);
+		$this->assertContains('class="super-radio-button"', $result);
+	}
+
+/**
+ * Test checkbox class
+ */
+	public function testInputCheckboxClass() {
+		$result = $this->CroogoForm->input('Node.promote', array(
+			'type' => 'checkbox',
+			'class' => 'super-checkbox-button',
+		));
+		$this->assertStringStartsWith('<div class="input checkbox">', $result);
+		$this->assertContains('class="super-checkbox-button"', $result);
+	}
+
 }

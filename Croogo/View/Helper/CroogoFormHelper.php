@@ -158,15 +158,25 @@ class CroogoFormHelper extends FormHelper {
 		$options = parent::_parseOptions($options);
 		$options = $this->_parseOptionsAddon($options);
 
-		if (isset($options['class'])) {
-			$formInput = $this->Theme->getCssClass('formInput');
-			$isMultipleCheckbox = isset($options['multiple']) &&
-				$options['multiple'] === 'checkbox';
-			$isRadioOrCheckbox = isset($options['type']) &&
-				in_array($options['type'], array('checkbox', 'radio'));
+		$formInput = $this->Theme->getCssClass('formInput');
+		$isMultipleCheckbox = isset($options['multiple']) &&
+			$options['multiple'] === 'checkbox';
+		$isRadioOrCheckbox = isset($options['type']) &&
+			in_array($options['type'], array('checkbox', 'radio'));
 
-			if ($isMultipleCheckbox || $isRadioOrCheckbox) {
-				$options['class'] = str_replace($formInput, '', $options['class']);
+		if ($isMultipleCheckbox || $isRadioOrCheckbox) {
+			if ($options['type'] == 'radio') {
+				$class = $this->Theme->getCssClass('radioClass');
+			} elseif ($options['type'] == 'checkbox') {
+				$class = $this->Theme->getCssClass('checkboxClass');
+			}
+			if (empty($class) && isset($options['class'])) {
+				$class = str_replace($formInput, '', $options['class']);
+			}
+			if (empty($class)) {
+				unset($options['class']);
+			} else {
+				$options['class'] = $class;
 			}
 		}
 
