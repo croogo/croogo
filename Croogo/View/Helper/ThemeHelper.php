@@ -41,6 +41,8 @@ class ThemeHelper extends AppHelper {
 		}
 
 		parent::__construct($View);
+
+		$this->__setupDeprecatedViewVars();
 	}
 
 /**
@@ -49,7 +51,7 @@ class ThemeHelper extends AppHelper {
  * @param string $viewFile The view file that is going to be rendered
  * @return void
  */
-	public function beforeRender($viewFile = null) {
+	private function __setupDeprecatedViewVars() {
 		// TODO: Remove in 2.3
 		$this->_View->set('_icons', $this->_iconMap);
 		$this->_View->set('themeSettings', $this->_themeSettings);
