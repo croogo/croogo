@@ -302,7 +302,7 @@ class FileManagerController extends FileManagerAppController {
 							$message = __d('croogo', '"%s" has been renamed to "%s"', $oldName, $newName);
 							$alertType = 'success';
 						} else {
-							$message = __d('croogo', 'Could not renamed "%s" to "%s"', $oldName,$newName);
+							$message = __d('croogo', 'Could not rename "%s" to "%s"', $oldName,$newName);
 							$alertType = 'error';
 						}
 					}

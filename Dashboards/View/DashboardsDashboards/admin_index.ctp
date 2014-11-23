@@ -1,10 +1,10 @@
 <?php
-$this->viewVars['title_for_layout'] = __d('dashboards', 'Dashboards');
+$this->viewVars['title_for_layout'] = __d('croogo', 'Dashboards');
 $this->extend('/Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('dashboards', 'Dashboards'), array('action' => 'index'));
+	->addCrumb(__d('croogo', 'Dashboards'), array('action' => 'index'));
 
 $this->set('showActions', false);
 
