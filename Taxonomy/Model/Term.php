@@ -86,29 +86,21 @@ class Term extends TaxonomyAppModel {
  * @return integer
  */
 	public function saveAndGetId($data) {
-		$dataToPersist = $data;
 		if (!array_key_exists($this->alias, $data)) {
-			$dataToPersist = array($this->alias => $data);
+			$data = array($this->alias => $data);
 		}
-		$term = $this->find('first', array(
-			'conditions' => array(
-				$this->escapeField('slug') => $dataToPersist[$this->alias]['slug'],
-			),
+		$termId = $this->field('id', array(
+			$this->escapeField('slug') => $data[$this->alias]['slug'],
 		));
-		if (isset($term[$this->alias][$this->primaryKey])) {
-			$id = $term[$this->alias][$this->primaryKey];
-			$update = $dataToPersist[$this->alias];
-			if ($id && isset($update['description'])) {
-				$this->id = $id;
-				$this->saveField('description', $update['description']);
-			}
-			return $id;
-		}
 
 		$this->id = false;
-		if ($this->save($dataToPersist)) {
+		if ($termId) {
+			$this->id = $termId;
+		}
+		if ($this->save($data)) {
 			return $this->id;
 		}
+
 		return false;
 	}
 
