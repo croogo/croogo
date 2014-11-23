@@ -46,7 +46,7 @@ EOF;
 
 	if (!empty($associations['hasAndBelongsToMany'])):
 		foreach ($associations['hasAndBelongsToMany'] as $assocName => $assocData):
-			echo "\ttecho \$this->Form->input('{$assocName}');\n";
+			echo "\techo \$this->Form->input('{$assocName}');\n";
 		endforeach;
 	endif;
 
