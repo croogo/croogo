@@ -19,6 +19,7 @@ $this->append('form-start', $this->Form->create('Attachment', array(
 
 $this->append('tab-heading');
 	echo $this->Croogo->adminTab(__d('croogo', 'Upload'), '#attachment-upload');
+	echo $this->Croogo->adminTabs();
 $this->end();
 
 $this->append('tab-content');
