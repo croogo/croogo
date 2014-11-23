@@ -260,7 +260,7 @@ class UsersController extends UsersAppController {
 		if ($this->Auth->user('id')) {
 			if (!$this->Session->check('Message.auth')) {
 				$this->Session->setFlash(
-					__d('croogo', 'You are already logged in'), 'default',
+					__d('croogo', 'You are already logged in'), 'flash',
 					array('class' => 'alert'), 'auth'
 				);
 			}
