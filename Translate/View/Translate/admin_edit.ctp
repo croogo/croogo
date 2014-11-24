@@ -18,42 +18,42 @@ $this->Html
 	)
 	->addCrumb(__d('croogo', 'Translate'), '/' . $this->request->url);
 
-echo $this->Form->create($modelAlias, array('url' => array(
-	'plugin' => 'translate',
-	'controller' => 'translate',
-	'action' => 'edit',
-	$id,
-	$modelAlias,
-	'locale' => $this->request->params['named']['locale'],
+$this->append('form-start', $this->Form->create($modelAlias, array(
+	'url' => array(
+		'plugin' => 'translate',
+		'controller' => 'translate',
+		'action' => 'edit',
+		$id,
+		$modelAlias,
+		'locale' => $this->request->params['named']['locale'],
+	)
 )));
-?>
-<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
-	<div class="<?php echo $this->Theme->getCssClass('columnLeft'); ?>">
-		<ul class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTab(__d('croogo', 'Translate'), '#translate-main');
-			echo $this->Croogo->adminTabs();
-		?>
-		</ul>
 
-		<div class="tab-content">
-			<div id="translate-main" class="tab-pane">
-			<?php
-				foreach ($fields as $field):
-					echo $this->Form->input($modelAlias . '.' . $field);
-				endforeach;
-			?>
-			</div>
+$this->append('tab-heading');
+	echo $this->Croogo->adminTab(__d('croogo', 'Translate'), '#translate-main');
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-			<?php echo $this->Croogo->adminTabs(); ?>
-		</div>
-	</div>
-	<div class="<?php echo $this->Theme->getCssClass('columnRight'); ?>">
-		<?php echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply', 'class' => 'btn')) .
-			$this->Form->button(__d('croogo', 'Save'), array('class' => 'btn btn-primary')) .
-			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index', $this->request->params['pass'][0], $this->request->params['pass'][1]), array('class' => 'cancel btn btn-danger')) .
-			$this->Html->endBox(); ?>
-	</div>
-</div>
-<?php echo $this->Form->end(); ?>
+$this->append('tab-content');
+
+	echo $this->Html->tabStart('translate-main');
+		foreach ($fields as $field):
+			echo $this->Form->input($modelAlias . '.' . $field);
+		endforeach;
+	echo $this->Html->tabEnd();
+
+	echo $this->Croogo->adminTabs();
+$this->end();
+
+$this->start('panels');
+	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+		$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+		$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
+		$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index', $this->request->params['pass'][0], $this->request->params['pass'][1]), array(
+			'class' => 'cancel',
+			'button' => 'danger'
+		));
+	echo $this->Html->endBox();
+$this->end();
+
+$this->append('form-end', $this->Form->end());
