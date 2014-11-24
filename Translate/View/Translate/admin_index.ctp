@@ -31,8 +31,9 @@ $this->Html
 	->addCrumb(__d('croogo', 'Translations'), '/' . $this->request->url);
 
 $this->start('actions');
-	echo $this->Croogo->adminAction(
-		__d('croogo', 'Translate in a new language'),
+	echo '<div class="btn-group">';
+	echo $this->Html->link(
+		__d('croogo', 'Translate in a new language') . ' <span class="caret"></span>',
 		array(
 			'plugin' => 'settings',
 			'controller' => 'languages',
@@ -42,8 +43,29 @@ $this->start('actions');
 		),
 		array(
 			'button' => 'default',
+			'class' => 'dropdown-toggle',
+			'data-toggle' => 'dropdown',
 		)
 	);
+	if (!empty($languages)):
+		$out = null;
+		foreach ($languages as $languageAlias => $languageDisplay):
+			$out .= $this->Croogo->adminAction($languageDisplay, array(
+				'admin' => true,
+				'plugin' => 'translate',
+				'controller' => 'translate',
+				'action' => 'edit',
+				$id,
+				$modelAlias,
+				'locale' => $languageAlias,
+			), array(
+				'button' => false,
+				'list' => true,
+			));
+		endforeach;
+		echo $this->Html->tag('ul', $out, array('class' => 'dropdown-menu'));
+	endif;
+	echo '</div>';
 $this->end();
 
 if (count($translations) == 0):
