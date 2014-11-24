@@ -18,3 +18,11 @@ Croogo::mergeConfig('Translate.models.Term', array(
 	),
 	'translateModel' => 'Taxonomy.Term',
 ));
+
+Croogo::mergeConfig('Translate.models.Type', array(
+	'fields' => array(
+		'title' => 'titleTranslation',
+		'description' => 'descriptionTranslation',
+	),
+	'translateModel' => 'Taxonomy.Type',
+));
