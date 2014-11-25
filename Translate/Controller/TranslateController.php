@@ -85,7 +85,14 @@ class TranslateController extends TranslateAppController {
 			),
 		));
 
-		$this->set(compact('runtimeModelAlias', 'translations', 'record', 'modelAlias', 'displayField', 'id'));
+		$languages = $this->Language->find('list', array(
+			'fields' => array('alias', 'native'),
+			'conditions' => array(
+				$this->Language->escapeField('status') => true,
+			),
+		));
+
+		$this->set(compact('runtimeModelAlias', 'translations', 'record', 'modelAlias', 'displayField', 'id', 'languages'));
 	}
 
 /**
