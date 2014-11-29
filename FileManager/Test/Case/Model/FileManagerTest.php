@@ -28,7 +28,7 @@ class FileManagerTest extends CroogoTestCase {
  * @group isEditable
  */
 	public function testIsEditableShouldReturnTrueWhenPathIsWithinEditablePaths() {
-		$isEditable = $this->FileManager->isEditable($this->__testAppPath . DS . 'renameMeTooPlease.txt');
+		$isEditable = $this->FileManager->isEditable($this->__testAppPath . 'renameMeTooPlease.txt');
 		$this->assertTrue($isEditable);
 	}
 
@@ -85,8 +85,8 @@ class FileManagerTest extends CroogoTestCase {
  * @group rename
  */
 	public function testRenameShouldReturnedTrueOnSuccess() {
-		$oldPath = $this->__testAppPath . DS . 'renameMe';
-		$newPath = $this->__testAppPath . DS . 'renamed';
+		$oldPath = $this->__testAppPath . 'renameMe';
+		$newPath = $this->__testAppPath . 'renamed';
 
 		$this->assertTrue($this->FileManager->rename($oldPath, $newPath));
 		$this->FileManager->rename($newPath, $oldPath);
@@ -96,8 +96,8 @@ class FileManagerTest extends CroogoTestCase {
  * @group rename
  */
 	public function testRenameShouldRenamedOldFileToNewFile() {
-		$oldPath = $this->__testAppPath . DS . 'renameMeTooPlease.txt';
-		$newPath = $this->__testAppPath . DS . 'renamed.txt';
+		$oldPath = $this->__testAppPath . 'renameMeTooPlease.txt';
+		$newPath = $this->__testAppPath . 'renamed.txt';
 
 		$this->FileManager->rename($oldPath, $newPath);
 		$this->assertTrue(file_exists($newPath) && !file_exists($oldPath));
