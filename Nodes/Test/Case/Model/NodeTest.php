@@ -405,6 +405,16 @@ class NodeTest extends CroogoTestCase {
 		$this->assertEquals(3, count($nodes));
 	}
 
+	public function testFilterPublishedNodes() {
+		$this->Node->id = 3;
+		$this->assertTrue((bool)$this->Node->saveField('status', CroogoStatus::UNPUBLISHED));
+
+		$filterConditions = $this->Node->filterPublishedNodes(array('filter' => 'This'));
+
+		$nodes = $this->Node->find('all', array('conditions' => $filterConditions));
+		$this->assertEquals(2, count($nodes));
+	}
+
 /**
  * test updateAllNodesPaths
  */

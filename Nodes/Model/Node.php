@@ -65,6 +65,8 @@ class Node extends NodesAppModel {
  */
 	const UNPROCESSED_ACTION = 'delete';
 
+	const DEFAULT_VISIBILITY_ROLE = 3;
+
 /**
  * Behaviors used by the Model
  *
@@ -291,6 +293,7 @@ class Node extends NodesAppModel {
 		$conditions = array();
 		if (!empty($data['filter'])) {
 			$filter = '%' . $data['filter'] . '%';
+			$visibilityRolesField = $this->escapeField('visibility_roles');
 			$conditions = array(
 				$this->escapeField('status') => $this->status(),
 				'AND' => array(
@@ -303,9 +306,10 @@ class Node extends NodesAppModel {
 						),
 					),
 					array(
-						$visibilityRolesField => '',
-						$visibilityRolesField . ' LIKE' => '%"' . $this->Croogo->roleId() . '"%',
-
+						'OR' => array(
+							array($visibilityRolesField . ' LIKE' => '%"' . self::DEFAULT_VISIBILITY_ROLE . '"%'),
+							array($visibilityRolesField => ''),
+						)
 					),
 				),
 			);
@@ -321,8 +325,6 @@ class Node extends NodesAppModel {
  * @return mixed see Model::saveAll()
  */
 	public function saveNode($data, $typeAlias = self::DEFAULT_TYPE) {
-		$result = false;
-
 		$data = $this->formatData($data, $typeAlias);
 		$event = Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, compact('data', 'typeAlias'));
 
