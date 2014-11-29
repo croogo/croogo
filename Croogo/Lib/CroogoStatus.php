@@ -45,7 +45,7 @@ class CroogoStatus implements ArrayAccess {
 				self::PENDING => __d('croogo', 'Pending'),
 			),
 		);
-		$event = Croogo::dispatchEvent('Croogo.Status.setup', null, $this);
+		Croogo::dispatchEvent('Croogo.Status.setup', null, $this);
 	}
 
 	public function offsetExists($offset) {
