@@ -14,6 +14,7 @@ App::uses('CakeEventManager', 'Event');
  */
 class Croogo {
 
+	const DEFAULT_ROLE_ID = 3;
 /**
  * Loads plugin's routes.php from app/config/routes.php.
  *
@@ -288,4 +289,9 @@ class Croogo {
 		return $values;
 	}
 
+	public static function getCurrentUserRoleId() {
+		return CakeSession::check('Auth.User.role_id') ?
+			CakeSession::read('Auth.User.role_id') :
+			self::DEFAULT_ROLE_ID;
+	}
 }
