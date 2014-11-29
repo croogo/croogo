@@ -40,6 +40,46 @@ class FileManagerTest extends CroogoTestCase {
 		$this->assertFalse($isEditable);
 	}
 
+	public function testGetEditablePaths() {
+		$expectedPaths = array('/foo/bar', '/no/pasaran');
+		Configure::write('FileManager.editablePaths', $expectedPaths);
+
+		$paths = $this->FileManager->getEditablePaths();
+		$this->assertEquals($expectedPaths, $paths);
+	}
+
+	public function testGetEditablePathsWithoutConfig() {
+		Configure::delete('FileManager.editablePaths');
+		$paths = $this->FileManager->getEditablePaths();
+		$this->assertEquals($this->FileManager->defaultEditablePaths, $paths);
+	}
+
+	public function testGetDeletablePaths() {
+		$expectedPaths = array('/foo/bar', '/nope/nope');
+		Configure::write('FileManager.deletablePaths', $expectedPaths);
+
+		$paths = $this->FileManager->getDeletablePaths();
+		$this->assertEquals($expectedPaths, $paths);
+	}
+
+	public function testGetDeletablePathsWithoutConfig() {
+		Configure::delete('FileManager.deletablePaths');
+		$paths = $this->FileManager->getDeletablePaths();
+		$this->assertEquals($this->FileManager->defaultDeletablePaths, $paths);
+	}
+
+	public function testGetDefaultBrowsingPath() {
+		$expectedPath = '/a/more/secure/path';
+		Configure::write('FileManager.defaultBrowsePath', $expectedPath);
+		$browsingPath = $this->FileManager->getDefaultBrowsingPath();
+
+		$this->assertEquals($expectedPath, $browsingPath);
+	}
+
+	public function testGetDefaultBrowsingPathWithoutConfig() {
+		$browsingPath = $this->FileManager->getDefaultBrowsingPath();
+		$this->assertEquals(APP. DS .WEBROOT_DIR, $browsingPath);
+	}
 
 /**
  * @group rename

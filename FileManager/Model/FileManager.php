@@ -16,6 +16,15 @@ class FileManager extends FileManagerAppModel {
 
 	public $useTable = false;
 
+	public $defaultBrowsingPath;
+	public $defaultEditablePaths = array();
+	public $defaultDeletablePaths = array();
+
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->defaultBrowsingPath = APP . DS .  WEBROOT_DIR;
+	}
+
 /**
  * Checks wether given $path is editable
  *
@@ -26,11 +35,7 @@ class FileManager extends FileManagerAppModel {
  * @return boolean true if file is editable
  */
 	public function isEditable($path) {
-		$editablePaths = Configure::check('FileManager.editablePaths') ?
-			Configure::read('FileManager.editablePaths') :
-			array();
-
-		foreach ($editablePaths as $editablePath) {
+		foreach ($this->getEditablePaths() as $editablePath) {
 			if ($this->_isWithinPath($editablePath, $path)) {
 				return true;
 			}
@@ -49,11 +54,7 @@ class FileManager extends FileManagerAppModel {
  * @return boolean true when file is deletable
  */
 	public function isDeletable($path) {
-		$deletablePaths = Configure::check('FileManager.deletablePaths') ?
-			Configure::read('FileManager.deletablePaths') :
-			array();
-
-		foreach ($deletablePaths as $deletablePath) {
+		foreach ($this->getDeletablePaths() as $deletablePath) {
 			if ($this->_isWithinPath($deletablePath, $path)) {
 				return true;
 			}
@@ -91,4 +92,31 @@ class FileManager extends FileManagerAppModel {
 		return preg_match($regex, $path) > 0;
 	}
 
+/**
+ * @return array|mixed editable (writable) paths
+ */
+	public function getEditablePaths() {
+		return Configure::check('FileManager.editablePaths') ?
+			Configure::read('FileManager.editablePaths') :
+			$this->defaultEditablePaths;
+	}
+
+/**
+ * @return array|mixed deletable paths
+ */
+	public function getDeletablePaths () {
+		return Configure::check('FileManager.deletablePaths') ?
+			Configure::read('FileManager.deletablePaths') :
+			$this->defaultDeletablePaths;
+	}
+
+/**
+ * @default
+ * @return mixed|string Return the default path when browsing folder
+ */
+	public function getDefaultBrowsingPath() {
+		return Configure::check('FileManager.defaultBrowsePath') ?
+			Configure::read('FileManager.defaultBrowsePath') :
+			$this->defaultBrowsingPath;
+	}
 }
