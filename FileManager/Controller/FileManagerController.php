@@ -104,12 +104,7 @@ class FileManagerController extends FileManagerAppController {
  */
 	public function admin_browse() {
 		$this->folder = new Folder;
-
-		if (isset($this->request->query['path'])) {
-			$path = $this->request->query['path'];
-		} else {
-			$path = APP;
-		}
+		$path = $this->__getPath();
 
 		$this->set('title_for_layout', __d('croogo', 'File Manager'));
 
@@ -176,13 +171,8 @@ class FileManagerController extends FileManagerAppController {
  */
 	public function admin_upload() {
 		$this->set('title_for_layout', __d('croogo', 'Upload'));
+		$path = $this->__getPath();
 
-		if (isset($this->request->query['path'])) {
-			$path = $this->request->query['path'];
-		} else {
-			$path = APP;
-		}
-		$this->set(compact('path'));
 		if (isset($path) && !$this->FileManager->isDeletable($path)) {
 			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'flash', array('class' => 'error'));
 			return $this->redirect($this->referer());
@@ -384,11 +374,24 @@ class FileManagerController extends FileManagerAppController {
 
 /**
  * Admin chmod
- *
+ * @TODO Create FileManager::chmod method and use it through this action.
  * @return void
  * @access public
  */
 	public function admin_chmod() {
+	}
+
+	/**
+	 * @return string
+	 */
+	private function __getPath() {
+		if (isset($this->request->query['path'])) {
+			$path = $this->request->query['path'];
+		} else {
+			$path = $this->FileManager->getDefaultBrowsingPath();
+		}
+		$this->set(compact('path'));
+		return $path;
 	}
 
 }
