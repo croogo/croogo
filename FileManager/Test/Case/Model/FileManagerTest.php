@@ -40,6 +40,22 @@ class FileManagerTest extends CroogoTestCase {
 		$this->assertFalse($isEditable);
 	}
 
+/**
+ * @group isDeletable
+ */
+	public function testIsDeletable() {
+		$isDeletable = $this->FileManager->isDeletable($this->__testAppPath .  'renameMeTooPlease.txt');
+		$this->assertTrue($isDeletable);
+	}
+
+/**
+ * @group isDeletable
+ */
+	public function testIsDeletableOnRestrictedPath() {
+		$isDeletable = $this->FileManager->isDeletable('/usr/bin/php');
+		$this->assertFalse($isDeletable);
+	}
+
 	public function testGetEditablePaths() {
 		$expectedPaths = array('/foo/bar', '/no/pasaran');
 		Configure::write('FileManager.editablePaths', $expectedPaths);
