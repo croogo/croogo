@@ -86,6 +86,8 @@ class FileManagerControllerTest extends CroogoControllerTestCase {
  * @return void
  */
 	public function testAdminBrowse() {
+		Configure::write('FileManager.editablePaths', array(APP));
+		Configure::write('FileManager.deletablePaths', array(APP));
 		$url = '/admin/file_manager/file_manager/browse?path=' . urlencode(APP);
 		$request = new CakeRequest($url);
 		$response = new CakeResponse();
