@@ -49,10 +49,7 @@ class FileManagerController extends FileManagerAppController {
  */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->deletablePaths = array(
-			APP . 'View' . DS . 'Themed' . DS,
-			WWW_ROOT,
-		);
+		$this->deletablePaths = $this->FileManager->getDeletablePaths();
 		$this->set('deletablePaths', $this->deletablePaths);
 	}
 
@@ -116,9 +113,7 @@ class FileManagerController extends FileManagerAppController {
 
 		$this->set('title_for_layout', __d('croogo', 'File Manager'));
 
-		$path = realpath($path) . DS;
-		$regex = '/^' . preg_quote(realpath(APP), '/') . '/';
-		if (preg_match($regex, $path) == false) {
+		if (!$this->FileManager->isEditable($path) || !$this->FileManager->isDeletable($path)) {
 			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'flash', array('class' => 'error'));
 			$path = APP;
 		}
@@ -188,8 +183,7 @@ class FileManagerController extends FileManagerAppController {
 			$path = APP;
 		}
 		$this->set(compact('path'));
-
-		if (isset($path) && !$this->_isDeletable($path)) {
+		if (isset($path) && !$this->FileManager->isDeletable($path)) {
 			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'flash', array('class' => 'error'));
 			return $this->redirect($this->referer());
 		}
@@ -218,7 +212,7 @@ class FileManagerController extends FileManagerAppController {
 			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 
-		if (!$this->_isDeletable($path)) {
+		if (!$this->FileManager->isDeletable($path)) {
 			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'flash', array('class' => 'error'));
 			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
@@ -251,7 +245,7 @@ class FileManagerController extends FileManagerAppController {
 			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 
-		if (isset($path) && !$this->_isDeletable($path)) {
+		if (isset($path) && !$this->FileManager->isDeletable($path)) {
 			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'flash', array('class' => 'error'));
 			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
