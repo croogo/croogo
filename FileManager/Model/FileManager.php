@@ -22,7 +22,7 @@ class FileManager extends FileManagerAppModel {
 
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		$this->defaultBrowsingPath = APP . DS .  WEBROOT_DIR;
+		$this->defaultBrowsingPath = APP . DS .  WEBROOT_DIR .DS . 'uploads';
 	}
 
 /**

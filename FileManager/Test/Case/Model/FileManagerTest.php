@@ -94,7 +94,7 @@ class FileManagerTest extends CroogoTestCase {
 
 	public function testGetDefaultBrowsingPathWithoutConfig() {
 		$browsingPath = $this->FileManager->getDefaultBrowsingPath();
-		$this->assertEquals(APP. DS .WEBROOT_DIR, $browsingPath);
+		$this->assertEquals($this->FileManager->defaultBrowsingPath, $browsingPath);
 	}
 
 /**
