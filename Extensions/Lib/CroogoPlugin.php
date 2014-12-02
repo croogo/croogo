@@ -78,6 +78,17 @@ class CroogoPlugin extends Object {
 	);
 
 /**
+ * Optional plugins
+ *
+ * Subset bundled plugins that can be enabled/deactivated via
+ * the Extensions panel
+ */
+	protected $_optionalPlugins = array(
+		'Comments',
+		'Dashboards',
+	);
+
+/**
  * __construct
  */
 	public function __construct($migrationVersion = null) {
@@ -253,6 +264,13 @@ class CroogoPlugin extends Object {
  */
 	public function plugins() {
 		$pluginAliases = $this->getPlugins();
+
+		$disabled = array_values(
+			array_diff($this->_optionalPlugins, CakePlugin::loaded())
+		);
+		$disabled = array_combine($disabled, $disabled);
+		$pluginAliases = array_merge($disabled, $pluginAliases);
+
 		$allPlugins = array();
 		foreach ($pluginAliases as $pluginAlias) {
 			$allPlugins[$pluginAlias] = $this->getData($pluginAlias);
