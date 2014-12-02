@@ -251,7 +251,7 @@ class SettingData {
 		array(
 			'id' => '32',
 			'key' => 'Hook.bootstraps',
-			'value' => 'Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Wysiwyg,Ckeditor',
+			'value' => 'Settings,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Wysiwyg,Ckeditor',
 			'title' => '',
 			'description' => '',
 			'input_type' => '',
