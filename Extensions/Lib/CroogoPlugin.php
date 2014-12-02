@@ -231,12 +231,14 @@ class CroogoPlugin extends Object {
 				$pluginData['needMigration'] = $this->needMigration($alias, $active);
 				return $pluginData;
 			} elseif ($this->_isBuiltin($alias)) {
-				if ($this->needMigration($alias, $active)) {
+				$needMigration = $this->needMigration($alias, $active);
+				$active = CakePlugin::loaded($alias);
+				if (in_array($alias, $this->_optionalPlugins)) {
 					$pluginData = array(
 						'name' => $alias,
 						'description' => "Croogo $alias plugin",
-						'active' => true,
-						'needMigration' => true,
+						'active' => $active,
+						'needMigration' => $needMigration,
 					);
 					return $pluginData;
 				}
