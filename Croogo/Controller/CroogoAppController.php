@@ -134,7 +134,6 @@ class CroogoAppController extends Controller {
 	public function afterConstruct() {
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
 		$this->_setupComponents();
-		$this->_setupTheme();
 	}
 
 /**
@@ -241,6 +240,9 @@ class CroogoAppController extends Controller {
  */
 	public function beforeFilter() {
 		parent::beforeFilter();
+
+		$this->_setupTheme();
+
 		$aclFilterComponent = Configure::read('Site.acl_plugin') . 'Filter';
 		if (empty($this->{$aclFilterComponent})) {
 			throw new MissingComponentException(array('class' => $aclFilterComponent));
