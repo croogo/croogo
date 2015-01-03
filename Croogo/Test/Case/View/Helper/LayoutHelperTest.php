@@ -178,7 +178,7 @@ class LayoutHelperTest extends CroogoTestCase {
 			'options' => array(),
 		);
 		$result = $this->Layout->displayField($rows[0], 'User', 'status', $options);
-		$this->assertContains('icon-ok', $result);
+		$this->assertContains('fa fa-check', $result);
 
 		$expected = '<a href="/users/view/1">admin</a>';
 		$options = array(

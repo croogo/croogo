@@ -54,7 +54,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 
 	public function testStatusRemove() {
 		$result = $this->CroogoHtml->status(0);
-		$this->assertContains('<i class="icon-remove red"></i>', $result);
+		$this->assertContains('<i class="fa fa-remove red"></i>', $result);
 	}
 
 	public function testStatusRemoveWithUrl() {
