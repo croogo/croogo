@@ -96,6 +96,7 @@ class CroogoTheme extends Object {
 			'settings' => array(
 				'css' => array(
 					'addonClass' => 'input-group',
+					'brand' => 'navbar-brand',
 					'columnFull' => 'col-sm-12',
 					'columnLeft' => 'col-sm-8',
 					'columnRight' => 'col-sm-4',
@@ -104,6 +105,7 @@ class CroogoTheme extends Object {
 					'dashboardLeft' => 'col-sm-6',
 					'dashboardRight' => 'col-sm-6',
 					'dashboardClass' => 'sortable-column',
+					'formClass' => 'form',
 					'formInput' => '',
 					'imageClass' => 'img-responsive',
 					'row' => 'row-fluid',
