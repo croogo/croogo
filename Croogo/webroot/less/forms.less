@@ -60,3 +60,37 @@ form.inline {
 form .span8 + .span4 {
 	margin-top: 37px;
 }
+
+// Fix some display issues
+.form-group{
+	.form-group;
+	clear:both;
+}
+
+// Radio group in admin boxes
+.radio-group{
+	.radio{
+		input{
+			margin:0px;
+		}
+		label{
+			margin-left:4px;
+		}
+	}
+}
+// Checkboxes in admin boxes
+.box-checkbox{
+	input{
+		margin:0px;
+	}
+	label{
+		padding-left:4px;
+		font-weight: normal;
+	}
+}
+
+// Checkboxes
+.input-checkbox{
+	.box-checkbox;
+	padding-left:10px;
+}

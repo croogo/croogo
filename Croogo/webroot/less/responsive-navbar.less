@@ -1,8 +1,52 @@
-@media (max-width: @navbarCollapseWidth) {
+@media (max-width: 979px) {
 
 	.navbar-fixed-top .navbar-inner,
 	.navbar-fixed-bottom .navbar-inner {
 		padding: 0px;
 	}
 
+	.sidebar{
+		.sub-nav{
+			width:152px;
+			left: -3px;
+			.border-right-radius(@border-radius-base);
+			background-color: lighten(@navbar-inverse-bg, 10%);
+			padding:0px;
+			padding-top:6px;
+			z-index: 1000;
+			li{
+				padding:0px;
+				margin:0px;
+			}
+			a{
+				padding:10px 11px;
+				margin:0px 6px;
+			}
+			// fix margin for large icons
+			[class^="fa-lg"], [class*=" fa-lg"] {
+				display: none;
+			}
+		}
+	}
+	.dropdown-submenu>.dropdown-menu {
+		top:0;
+		left:100%;
+		margin-top:-6px;
+		margin-left:-1px;
+		.border-radius(0px @border-radius-large @border-radius-large @border-radius-large);
+	}
+	// Link caret
+	.dropdown-submenu>a:after {
+		display:block;
+		content:" ";
+		float:right;
+		width:0;
+		height:0;
+		border-color:transparent;
+		border-style:solid;
+		border-width:5px 0 5px 5px;
+		border-left-color:#cccccc;
+		margin-top:-12px;
+		margin-right:0px;
+	}
 }

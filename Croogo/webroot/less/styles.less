@@ -6,18 +6,20 @@
 		margin: @crGeneralMargin 0px;
 	}
 }
-
-h2.hidden-desktop {
-	margin-top: 0;
+.hidden-lg{
+	h2{
+		margin-top: 0;
+	}
 }
 
 // For Filter box
 .filter {
+	.breadcrumb;
 	form {
-		margin: 10px 10px 0;
+		margin: 0px;
 	}
-	background-color: @crFilterBackground;
-	.border-top-radius(@borderRadiusSmall);
+	/*background-color: @crFilterBackground;*/
+	/*.border-top-radius(@border-radius-small);*/
 	text-align: left;
 	.input {
 		label {
@@ -31,7 +33,7 @@ h2.hidden-desktop {
 }
 
 .loading {
-	 background: url('/img/ajax/circle_ball.gif') no-repeat scroll 100% 0 transparent;
+	background: url('/img/ajax/circle_ball.gif') no-repeat scroll 100% 0 transparent;
 }
 
 .ajax-toggle:hover {
@@ -40,28 +42,36 @@ h2.hidden-desktop {
 
 // For "Boxes" on form.
 .box {
-	.well;
-	padding: 10px;
-	border: 1px solid #ddd;
-	margin-bottom: @crBoxMarginVertical;
-	.border-radius(2px);
-	.box-title {
-		padding-left: @crContentPadding;
-		font-weight: bold;
-		color: lighten(@gray, 2%);
-		color: @black;
-		cursor: pointer;
+	.panel;
+	.panel-default;
+	background-color: lighten(@gray-lighter, 5%);
+	.border-radius(0px);
+
+	.box-title{
+		.panel-title;
+		padding: @crGeneralMargin;
+		border-bottom: 1px solid @gray-lighter;
+		background: lighten(@gray-lighter, 2%);
 	}
 
-	.box-content {
-		margin: @crGeneralMargin;
+	.box-content{
+		.panel-body;
+
 		.submit {
 			display: inline-block;
 		}
 
-		.input {
-			clear: both;
-			margin-top: @crGeneralMargin;
+		/*		.input {
+					clear: both;
+					margin-top: @crGeneralMargin;
+				}*/
+
+		label{
+			font-weight: normal;
+		}
+		.form-control{
+			.form-control;
+			.input-sm;
 		}
 	}
 }
@@ -70,26 +80,6 @@ h2.hidden-desktop {
 .actions {
 	margin: @crGeneralMargin 0px;
 }
-
-.tab-content {
-	.border-radius(0px 0px 2px 2px);
-	background-color: @white;
-	min-height: 200px;
-	margin-top: -20px;
-	padding: 0px;
-	border: 0px;
-	min-height: 200px;
-
-	fieldset {
-		padding: 0px;
-		legend {
-			margin: 0;
-			line-height: 35px;
-			font-size: 100%;
-		}
-	}
-}
-
 
 .navbar-inverse .brand,
 .navbar-inverse .nav > li > a.brand {
@@ -138,4 +128,19 @@ a {
 	overflow: hidden;
 	white-space: nowrap;
 	max-width: 250px;
+}
+
+// Additionnal pagination-area to center text and add some margin
+.pagination-area{
+	.text-center;
+	margin:50px 0px 20px 0px;
+}
+// Remove default top margin
+.pagination{
+  margin-top: 0px;
+}
+
+// Making all trash icons red:
+.fa-trash, .delete{
+	.text-danger;
 }

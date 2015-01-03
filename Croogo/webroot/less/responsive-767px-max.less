@@ -36,11 +36,12 @@
 
 	.filter {
 		margin-bottom: @crGeneralMargin;
-		.border-bottom-radius(@borderRadiusSmall);
+		.border-bottom-radius(@border-radius-small);
 		.input {
 			&[class*="span"] {
-				margin-top: 0px;
-				margin-bottom: 0px;
+				display:inline;
+/*				margin-top: 0px;
+				margin-bottom: 0px;*/
 				&.submit {
 					input {
 						float: right;
@@ -51,7 +52,7 @@
 				}
 			}
 
-			margin: 5px 5px 5px 0;
+			/*margin: 5px 5px 5px 0;*/
 
 			input {
 				max-width: 150px;
@@ -60,14 +61,14 @@
 	}
 
 	#admin-login {
-		margin: @navbarHeight * 2 auto;
+		margin: @navbar-height * 2 auto;
 		max-width: @crLoginBox - 50px;
 	}
 
 	#sidebar-menu {
 		> li > .sub-nav {
 			border: 1px solid #ccc; // Fallback for IE7-8
-			border: 1px solid @dropdownBorder;
+			border: 1px solid @dropdown-border;
 			*border-top-width: 1px;
 			*border-right-width: 1px;
 			*border-bottom-width: 1px;
