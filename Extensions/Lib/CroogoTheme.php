@@ -109,6 +109,7 @@ class CroogoTheme extends Object {
 					'row' => 'row-fluid',
 					'tableClass' => 'table table-condensed table striped',
 					'thumbnailClass' => 'img-thumbnail',
+					'visibleDesktop' => 'visible-lg',
 				),
 				'iconDefaults' => array(
 					'classDefault' => 'fa ',
