@@ -7986,9 +7986,9 @@ button.close {
 }*/.btn:focus {
   outline: none;
 }
-/*.box .btn {
-	margin: 4px 4px 0px 4px;
-}*/
+.box .btn {
+  margin: 4px 4px 0px 4px;
+}
 .nav-buttons .btn-group li {
   margin: 0;
   width: 100%;
