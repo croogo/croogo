@@ -2,8 +2,7 @@
 .permission-toggle {
 	&:hover { cursor: pointer; }
 	&.permission-disabled {
-		color: @gray;
-		cursor: text;
+		.text-muted;
 	}
 }
 
@@ -29,23 +28,9 @@ td {
 }
 
 .controller-row {
-	background: #6f6f6f;
-	background-color: @gray;
-	color: @white;
-	a {
-		color: #efefef;
-		&:hover {
-			color: #fff;
-		}
-	}
-
+	background-color: @gray-lighter;
 	&.level-1 {
-		background: @grayLight;
-		color: #f1f1f1;
-	}
-
-	td {
-		border-top: 1px solid #7e7e7e;
+		background: lighten(@gray-lighter, 5%);
 	}
 }
 

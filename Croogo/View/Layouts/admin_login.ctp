@@ -6,13 +6,10 @@
 		<title><?php echo $title_for_layout; ?> - <?php echo __d('croogo', 'Croogo'); ?></title>
 		<?php
 		echo $this->Html->css(array(
-			'/croogo/css/croogo-bootstrap',
-			'/croogo/css/croogo-bootstrap-responsive',
+			'/croogo/css/admin.min',
 		));
 		echo $this->Layout->js();
-		echo $this->Html->script(array(
-			'/croogo/js/html5',
-		));
+		echo $this->Html->script(array());
 
 		echo $this->fetch('script');
 		echo $this->fetch('css');
@@ -27,7 +24,7 @@
 						<?php echo $this->Html->link(
 							__d('croogo', 'Back to') . ' ' . Configure::read('Site.title'),
 							'/',
-							array('class' => 'brand')
+							array('class' => $this->Theme->getCssClass('brand'))
 						); ?>
 					</div>
 				</div>

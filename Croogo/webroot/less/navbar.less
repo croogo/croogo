@@ -1,16 +1,16 @@
-
 // Sidebar
-.sidebar {
-	font-family: @sansFontFamily;
+.sidebar{
+	font-family: @font-family-sans-serif;
 	width: @crNavWidth;
-	padding-top: @navbarHeight;
+	padding-top: @navbar-height;
 	margin-bottom: 10px;
 	float: left;
+	text-overflow: ellipsis;
 
-	.nav {
-		margin-bottom: 0px;
+	// fix padding for large icons
+	[class^="fa-lg"], [class*=" fa-lg"] {
+		margin-right: 1em;
 	}
-
 	a {
 		// no annoying outline
 		&:focus {
@@ -18,148 +18,49 @@
 		}
 	}
 
-	.sidebar-item {
-		padding: 10px 15px;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		overflow: hidden;
+	// Items
+	.nav-stacked{
+		background-color: @navbar-inverse-bg;
 
-		// fix width for large icons
-		[class^="icon-large-"]:before,
-		[class*=" icon-large"]:before {
-			width: 1em;
-		}
-
-		&.current {
-			.sidebarActiveBackground;
-
-			&.dropdown-close {
-				.sidebarActiveBackground;
+		// Categories links
+		a{
+			color: @navbar-inverse-link-color;
+			&:hover, &:active, &:focus{
+				color: @navbar-inverse-link-hover-color;
+				background-color: @navbar-inverse-bg;
 			}
-
-			&.dropdown-open {
-				background: none;
+			// Top level current element
+			&.current{
+				.sidebarActiveParentBackground;
 			}
 		}
 
-		span {
-			margin: 0 8px;
-		}
+		// Sub-items
+		.sub-nav{
+			display:none;
+			// Sub-categories links
+			a{
+				background: lighten(@navbar-inverse-bg, 10%);
+				&:hover, &:active, &:focus{
+					background: lighten(@navbar-inverse-bg, 10%);
+				}
+				&.current{
+					.sidebarActiveBackground;
+					background-color: lighten(@navbar-inverse-bg, 10%);
 
-	}
-
-	.dropdown-submenu {
-		&:hover {
-			.sidebar-item {
-				[class^="icon-"],
-				[class*=" icon-"] {
-					background-image: none; // no glyphicons
 				}
 			}
-		}
-		.sidebar-item {
-			&.current:after {
-				display: none;
+
+			// Submenu items
+			li{
+				margin:0px;
 			}
 		}
 	}
 
-	.dropdown-submenu {
-		&:hover {
-			.sidebar-item {
-				[class^="icon-"],
-				[class*=" icon-"] {
-					background-image: none; // no glyphicons
-				}
-				&.current {
-					background: none; // hide active background when hovered
-				}
-			}
-		}
+	// Closed items
+	ul.dropdown-close{
+		/*display:none;*/
 	}
 
-	.dropdown-menu li > a:hover,
-	.dropdown-menu li > a:focus,
-	.dropdown-submenu:hover > a {
-		.noGradient; // resets gradient set by bootstrap
-	}
-
-	.sub-nav {
-		width: @crNavWidth;
-		#gradient > .horizontal(@navbarBackgroundHighlight, @navbarBackground);
-		z-index: @zindexModal;
-		margin-bottom: 0px;
-		display: none;
-
-		.sidebar-item {
-			&.current {
-				&:hover {
-					background: none;
-				}
-			}
-		}
-
-		.sub-nav {
-			position: absolute;
-			margin-left: 0;
-
-			&.dropdown-menu {
-				li:first-child > a {
-					border-top: none;
-				}
-				li:last-child > a {
-					border-bottom: none;
-				}
-			}
-		}
-	}
-
-	.nav-stacked > li > a {
-		color: @navbarLinkColor;
-		&:hover {
-			color: @navbarLinkColorHover;
-		}
-	}
-
-	.navbar-inner {
-		padding: 0;
-		border-color: none;
-		.border-radius(0);
-		border: none;
-	}
-
-	&.navbar-inverse {
-		background: @crMainBackgroundColor;
-
-		.navbar-inner {
-			background: @navbarInverseBackground;
-		}
-
-		.nav-stacked {
-			> li {
-				&:first-child > a {
-					border-top: 1px solid @navbarInverseBorder;
-				}
-				> a {
-					color: @navbarInverseLinkColor;
-					&:hover {
-						color: @navbarInverseLinkColorHover;
-					}
-					border-bottom: 1px solid @navbarInverseBorder;
-				}
-			}
-		}
-
-		.sub-nav {
-			background: lighten(@navbarInverseBackground, 10%);
-			.sub-nav {
-				.sidebar-item.current {
-					color: darken(@navbarInverseLinkColorHover, 10%);
-					&:hover {
-						color: @navbarInverseLinkColorHover;
-					}
-				}
-			}
-		}
-	}
 }

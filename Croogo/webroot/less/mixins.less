@@ -2,6 +2,10 @@
 	background: url(../img/icons/sidebar_active.png) no-repeat @crNavWidth - @crGeneralMargin 10px;
 }
 
+.sidebarActiveParentBackground {
+	background: url(../img/icons/sidebar_active_parent.png) no-repeat @crNavWidth - (@crGeneralMargin*2) 10px;
+}
+
 .noGradient {
 	background-color: transparent;
 	background-image: none;
@@ -13,7 +17,7 @@
 .sortDirections() {
 	&.asc {
 		&:after {
-		content: "\21e3";
+			content: "\21e3";
 		}
 	}
 	&.desc {
@@ -21,4 +25,11 @@
 			content: "\21e1";
 		}
 	}
+}
+
+.border-radius(@radius){
+	border-radius: @radius;
+}
+.border-top-right-radius(@radius){
+	border-top-right-radius: @radius;
 }

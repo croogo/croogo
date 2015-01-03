@@ -26,6 +26,7 @@ $this->append('tab-content');
 	echo $this->Html->tabStart('attachment-upload') .
 		$this->Form->input('file', array(
 			'type' => 'file',
+			'class'=>'',
 			'label' => __d('croogo', 'Upload'),
 		));
 	echo $this->Html->tabEnd();
