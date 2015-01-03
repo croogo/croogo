@@ -35,10 +35,20 @@ form.inline {
 
 	&.radio,
 	&.checkbox {
-		display: table;
+		/*display: table;*/
 		.input-block-level {
 			min-height: inherit;
 			margin-top: 0px;
+		}
+		margin-left: @crGeneralMargin*3;
+		label{
+			/*Line break*/
+			margin-left:-10px;
+			display: inline;
+			&:after{
+				content:"\A";
+				white-space:pre;;
+			}
 		}
 	}
 

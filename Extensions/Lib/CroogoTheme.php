@@ -109,7 +109,7 @@ class CroogoTheme extends Object {
 					'formInput' => 'form-control',
 					'hiddenLarge' => 'hidden-lg hidden-md',
 					'hiddenPhone' => 'hidden-sm hidden-xs',
-					'imageClass' => 'img-responsive',
+					'imageClass' => '',
 					'previousOne' => 'angle-left',
 					'previousFirst' => 'angle-double-left',
 					'nextOne' => 'angle-right',

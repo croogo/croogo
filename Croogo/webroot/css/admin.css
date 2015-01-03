@@ -8279,12 +8279,26 @@ form.inline div {
 }
 .input.radio,
 .input.checkbox {
-  display: table;
+  /*display: table;*/
+
+  margin-left: 30px;
 }
 .input.radio .input-block-level,
 .input.checkbox .input-block-level {
   min-height: inherit;
   margin-top: 0px;
+}
+.input.radio label,
+.input.checkbox label {
+  /*Line break*/
+
+  margin-left: -10px;
+  display: inline;
+}
+.input.radio label:after,
+.input.checkbox label:after {
+  content: "\A";
+  white-space: pre;
 }
 .input.date select,
 .input.time select,
@@ -8741,22 +8755,6 @@ select.box .box-content .form-control {
 textarea.box .box-content .form-control,
 select[multiple].box .box-content .form-control {
   height: auto;
-}
-.box .box-content .checkbox,
-.box .box-content .radio {
-  margin-left: 22px;
-}
-.box .box-content .checkbox label,
-.box .box-content .radio label {
-  /*Line break*/
-
-  margin-left: -10px;
-  display: inline;
-}
-.box .box-content .checkbox label:after,
-.box .box-content .radio label:after {
-  content: "\A";
-  white-space: pre;
 }
 .actions {
   margin: 10px 0px;
