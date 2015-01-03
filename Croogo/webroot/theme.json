@@ -7,7 +7,7 @@
 	"authorEmail" : "contact@fahad19.com",
 	"authorUrl" : "http://fahad19.com",
 	"editors": [
-		"Manuel Tancoigne <m.tancoigne@gmail.com>",
+		"Manuel Tancoigne <m.tancoigne@gmail.com>"
 	],
 	"menus" : [
 		"main",
@@ -16,29 +16,5 @@
 
 	"regions": [
 		"right"
-	],
-	"settings": {
-		"css": {
-			"container": "container-fluid",
-			"row": "row-fluid",
-			"tableClass": "table table-stripped",
-			"columnFull": "col-md-12",
-			"columnLeft": "col-sm-8",
-			"columnRight": "col-sm-4",
-			"formInput": "form-control",
-			"addonClass": "input-group"
-		},
-		"iconDefaults": {
-			"classDefault": "fa",
-			"largeIconClass": "fa-lg",
-			"smallIconClass": "",
-			"classPrefix": "fa-"
-		},
-		"icons": {
-			"translate": "flag",
-			"check-mark": "check",
-			"delete": "trash",
-			"power-off": "power-off"
-		}
-	}
+	]
 }
