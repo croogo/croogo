@@ -70,9 +70,22 @@
 			font-weight: normal;
 		}
 		.form-control{
-			.form-control;
+			/*.form-control;*/
 			.input-sm;
 		}
+		.checkbox, .radio{
+			margin-left:22px;
+			label{
+				/*Line break*/
+				margin-left:-10px;
+				display: inline;
+				&:after{
+					content:"\A";
+					white-space:pre;;
+				}
+			}
+		}
+
 	}
 }
 

@@ -7986,9 +7986,9 @@ button.close {
 }*/.btn:focus {
   outline: none;
 }
-.box .btn {
-  margin: 4px 4px 0px 4px;
-}
+/*.box .btn {
+	margin: 4px 4px 0px 4px;
+}*/
 .nav-buttons .btn-group li {
   margin: 0;
   width: 100%;
@@ -8233,15 +8233,16 @@ footer a:hover {
   /*display:none;*/
 
 }
-.pagination {
-  text-align: center;
-}
-.pagination ul > li > a:hover,
-.pagination ul > li > a {
-  text-shadow: 0 1px 0 #ffffff;
-  color: #555555;
-}
-.green {
+/*.pagination-zone {
+	text-align: center;
+}*/
+/*.pagination ul > li {
+	> a:hover,
+	> a {
+		text-shadow: 0 1px 0 @white;
+		color: @gray;
+	}
+}*/.green {
   color: #5cb85c;
 }
 .red {
@@ -8725,53 +8726,13 @@ div .success .alert-link {
   font-weight: normal;
 }
 .box .box-content .form-control {
-  display: block;
-  width: 100%;
-  height: 34px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.428571429;
-  color: #555555;
-  background-color: #ffffff;
-  background-image: none;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  /*.form-control;*/
+
   height: 30px;
   padding: 5px 10px;
   font-size: 12px;
   line-height: 1.5;
   border-radius: 3px;
-}
-.box .box-content .form-control:focus {
-  border-color: #66afe9;
-  outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
-}
-.box .box-content .form-control::-moz-placeholder {
-  color: #999999;
-  opacity: 1;
-}
-.box .box-content .form-control:-ms-input-placeholder {
-  color: #999999;
-}
-.box .box-content .form-control::-webkit-input-placeholder {
-  color: #999999;
-}
-.box .box-content .form-control[disabled],
-.box .box-content .form-control[readonly],
-fieldset[disabled] .box .box-content .form-control {
-  cursor: not-allowed;
-  background-color: #eeeeee;
-  opacity: 1;
-}
-textarea.box .box-content .form-control {
-  height: auto;
 }
 select.box .box-content .form-control {
   height: 30px;
@@ -8780,6 +8741,22 @@ select.box .box-content .form-control {
 textarea.box .box-content .form-control,
 select[multiple].box .box-content .form-control {
   height: auto;
+}
+.box .box-content .checkbox,
+.box .box-content .radio {
+  margin-left: 22px;
+}
+.box .box-content .checkbox label,
+.box .box-content .radio label {
+  /*Line break*/
+
+  margin-left: -10px;
+  display: inline;
+}
+.box .box-content .checkbox label:after,
+.box .box-content .radio label:after {
+  content: "\A";
+  white-space: pre;
 }
 .actions {
   margin: 10px 0px;
