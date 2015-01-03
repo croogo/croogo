@@ -34,7 +34,7 @@ form.inline {
 	}
 
 	&.radio,
-	&.checkbox {
+	&.checkbox{
 		/*display: table;*/
 		.input-block-level {
 			min-height: inherit;
@@ -48,6 +48,16 @@ form.inline {
 			&:after{
 				content:"\A";
 				white-space:pre;;
+			}
+		}
+	}
+
+	// For settings pages: hack to compensate the 'input select' wrong class
+	&.select{
+		.checkbox{
+			margin-left: @crGeneralMargin*2;
+			label{
+				margin-left:-10px;
 			}
 		}
 	}

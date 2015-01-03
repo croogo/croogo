@@ -6,7 +6,7 @@
 		<title><?php echo $title_for_layout; ?> - <?php echo __d('croogo', 'Croogo'); ?></title>
 		<?php
 		echo $this->Html->css(array(
-			'/croogo/css/admin',
+			'/croogo/css/admin.min',
 		));
 		echo $this->Layout->js();
 		echo $this->Html->script(array());

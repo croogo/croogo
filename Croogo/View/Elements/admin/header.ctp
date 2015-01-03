@@ -8,7 +8,8 @@ $dashboardUrl = Configure::read('Croogo.dashboardUrl');
 		<div class="<?php echo $this->Theme->getCssClass('container'); ?>">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-					<i class="fa fa-bars fa-2x"></i>
+					<span class="sr-only"><?php echo __d('croogo', 'Toggle navigation')?></span>
+					<i class="fa fa-bars fa-lg"></i>
 				</button>
 				<span class="<?php echo $this->Theme->getCssClass('hiddenPhone'); ?>">
 				<?php echo $this->Html->link(Configure::read('Site.title'), $dashboardUrl, array('class' => $this->Theme->getCssClass('brand'))); ?>
@@ -17,7 +18,7 @@ $dashboardUrl = Configure::read('Croogo.dashboardUrl');
 				<?php echo $this->Html->link(__d('croogo', 'Dashboard'), $dashboardUrl, array('class' => $this->Theme->getCssClass('brand'))); ?>
 				</span>
 			</div>
-			<div class="navbar-collapse collapse" style="height: 0px; ">
+			<div class="collapse navbar-collapse" id="navbar-collapse">
 			<?php
 				echo $this->Croogo->adminMenus(CroogoNav::items('top-left'), array(
 					'type' => 'dropdown',
@@ -26,8 +27,7 @@ $dashboardUrl = Configure::read('Croogo.dashboardUrl');
 						'class' => 'nav navbar-nav',
 					),
 				));
-			?>
-			<?php
+
 			if ($this->Session->read('Auth.User.id')):
 				echo $this->Croogo->adminMenus(CroogoNav::items('top-right'), array(
 					'type' => 'dropdown',

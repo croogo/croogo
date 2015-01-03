@@ -95,6 +95,7 @@ class CroogoTheme extends Object {
 			'screenshot' => null,
 			'settings' => array(
 				'css' => array(
+					'activeTab' => 'active',
 					'addonClass' => 'input-group',
 					'brand' => 'navbar-brand',
 					'columnFull' => 'col-sm-12',
