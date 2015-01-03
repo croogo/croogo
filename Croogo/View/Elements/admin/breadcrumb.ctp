@@ -6,9 +6,11 @@ $crumbs = $this->Html->getCrumbs(
 );
 ?>
 <?php if ($crumbs): ?>
-<div id="breadcrumb-container" class="span12 visible-desktop">
-	<div class="breadcrumb">
-		<?php echo $crumbs; ?>
+<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+	<div id="breadcrumb-container" class="<?php echo $this->Theme->getCssClass('columnFull'); ?> <?php echo $this->Theme->getCssClass('visibleDesktop'); ?>">
+		<div class="breadcrumb">
+			<?php echo $crumbs; ?>
+		</div>
 	</div>
 </div>
 <?php endif; ?>

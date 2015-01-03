@@ -17,7 +17,7 @@ $columnRight = $this->Theme->getCssClass('columnRight');
 $columnFull = $this->Theme->getCssClass('columnFull');
 
 ?>
-<h2 class="hidden-desktop">
+<h2 class="<?php echo $this->Theme->getCssClass('hiddenPhone'); ?>">
 <?php
 	if ($titleBlock = $this->fetch('title')):
 		echo $titleBlock;

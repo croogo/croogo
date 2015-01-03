@@ -7,29 +7,27 @@
 		<?php
 
 		echo $this->Html->css(array(
-			'/croogo/css/croogo-bootstrap',
-			'/croogo/css/croogo-bootstrap-responsive',
-			'/croogo/css/thickbox',
+			'/croogo/css/jquery-ui.min',
+			'/croogo/css/admin.min',
 		));
 		echo $this->Layout->js();
 		echo $this->Html->script(array(
-			'/croogo/js/html5',
-			'/croogo/js/jquery/jquery.min',
-			'/croogo/js/jquery/jquery-ui.min',
-			'/croogo/js/jquery/jquery.slug',
-			'/croogo/js/jquery/jquery.cookie',
-			'/croogo/js/jquery/jquery.hoverIntent.minified',
-			'/croogo/js/jquery/superfish',
-			'/croogo/js/jquery/supersubs',
-			'/croogo/js/jquery/jquery.tipsy',
-			'/croogo/js/jquery/jquery.elastic-1.6.1.js',
-			'/croogo/js/jquery/thickbox-compressed',
+			'/croogo/js/jquery/jquery-1.11.2.min.js',
+//			'http://code.jquery.com/jquery-migrate-1.2.1.js', // To debug some deprecated jQuery files
+			'/croogo/js/jquery/jquery-ui-1.11.2.min',
+			'/croogo/js/jquery/jquery.slug.min',
+			'/croogo/js/jquery/jquery.cookie.min',
+			'/croogo/js/jquery/jquery.hoverIntent-1.8.0.min',
+			'/croogo/js/jquery/jquery.superfish-1.7.5.min',
+			'/croogo/js/jquery/jquery.elastic-1.6.11.min.js',
+			'/croogo/js/jquery/jquery.thickbox-3.1.min',
+			'/croogo/js/bootstrap.min.js',
+			'/croogo/js/bootstrap3-typeahead-3.1.0.min',
 			'/croogo/js/underscore-min',
 			'/croogo/js/admin',
 			'/croogo/js/sidebar',
 			'/croogo/js/choose',
 			'/croogo/js/typeahead_autocomplete',
-			'/croogo/js/croogo-bootstrap.js',
 		));
 
 		echo $this->fetch('script');

@@ -1,4 +1,4 @@
-<div class="pagination">
+<div class="pagination-area">
 	<p>
 	<?php
 		echo $this->Paginator->counter(array(
@@ -6,7 +6,7 @@
 		));
 	?>
 	</p>
-	<ul>
+	<ul class="pagination">
 		<?php echo $this->Paginator->first('< ' . __d('croogo', 'first')); ?>
 		<?php echo $this->Paginator->prev('< ' . __d('croogo', 'prev')); ?>
 		<?php echo $this->Paginator->numbers(); ?>

@@ -26,12 +26,12 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 
 	public function testIcon() {
 		$result = $this->CroogoHtml->icon('remove');
-		$this->assertContains('<i class="icon-remove"></i>', $result);
+		$this->assertContains('<i class="fa fa-remove"></i>', $result);
 	}
 
 	public function testStatusOk() {
 		$result = $this->CroogoHtml->status(1);
-		$this->assertContains('<i class="icon-ok green"></i>', $result);
+		$this->assertContains('<i class="fa fa-check green"></i>', $result);
 	}
 
 	public function testStatusOkWithUrl() {
@@ -45,7 +45,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 			'a' => array(
 				'href',
 				'data-url' => '/admin/nodes/nodes/toggle',
-				'class' => 'icon-ok green ajax-toggle',
+				'class' => 'fa fa-check green ajax-toggle',
 			),
 			'/a',
 		);
@@ -68,7 +68,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 			'a' => array(
 				'href',
 				'data-url' => '/admin/nodes/nodes/delete',
-				'class' => 'icon-remove red ajax-toggle',
+				'class' => 'fa fa-remove red ajax-toggle',
 			),
 			'/a',
 		);
@@ -78,7 +78,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 	public function testLink() {
 		$result = $this->CroogoHtml->link('', '/remove', array('icon' => 'remove', 'button' => 'danger'));
 		$this->assertContains('class="btn btn-danger"', $result);
-		$this->assertContains('<i class="icon-remove icon-large"></i>', $result);
+		$this->assertContains('<i class="fa fa-remove fa-lg"></i>', $result);
 	}
 
 /**
@@ -91,7 +91,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 			'button' => 'danger'
 		));
 		$this->assertContains('class="btn btn-danger"', $result);
-		$this->assertContains('<i class="icon-remove"></i>', $result);
+		$this->assertContains('<i class="fa fa-remove"></i>', $result);
 	}
 
 /**
@@ -107,7 +107,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 		$expected = array(
 			'a' => array(
 				'href',
-				'class' => 'btn btn-danger icon-remove',
+				'class' => 'btn btn-danger fa fa-remove',
 			),
 		);
 		$this->assertTags($result, $expected);
@@ -120,7 +120,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 		$expected = array(
 			'a' => array(
 				'href',
-				'class' => 'btn btn-danger icon-large icon-remove',
+				'class' => 'btn btn-danger fa fa-lg fa-remove',
 			),
 		);
 		$this->assertTags($result, $expected);
