@@ -152,7 +152,7 @@ class CroogoHelperTest extends CroogoTestCase {
 				'class' => 'edit',
 			),
 			'i' => array(
-				'class' => 'fa fa-edit fa fa-lg',
+				'class' => 'fa fa-edit fa-lg',
 			),
 			'/i',
 			'/a',

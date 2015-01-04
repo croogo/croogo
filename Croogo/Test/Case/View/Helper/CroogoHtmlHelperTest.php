@@ -107,7 +107,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 		$expected = array(
 			'a' => array(
 				'href',
-				'class' => 'btn btn-danger fa fa-remove',
+				'class' => 'btn btn-danger fa-remove',
 			),
 		);
 		$this->assertTags($result, $expected);
@@ -120,7 +120,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 		$expected = array(
 			'a' => array(
 				'href',
-				'class' => 'btn btn-danger fa fa-lg fa-remove',
+				'class' => 'btn btn-danger fa-lg fa-remove',
 			),
 		);
 		$this->assertTags($result, $expected);

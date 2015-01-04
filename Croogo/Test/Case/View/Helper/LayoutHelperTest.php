@@ -77,7 +77,7 @@ class LayoutHelperTest extends CroogoTestCase {
  * testStatus
  */
 	public function testStatus() {
-		$ok = $this->Html->icon('ok', array('class' => 'green'));
+		$ok = $this->Html->icon('check', array('class' => 'green'));
 		$remove = $this->Html->icon('remove', array('class' => 'red'));
 		$this->assertEqual($this->Layout->status(true), $ok);
 		$this->assertEqual($this->Layout->status(1), $ok);
