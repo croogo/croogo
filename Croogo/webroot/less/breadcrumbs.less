@@ -3,7 +3,7 @@
 // --------------------------------------------------
 
 #breadcrumb-container {
-	background: @bodyBackground;
+	background: @body-bg;
 	float: left;
 }
 
@@ -12,18 +12,20 @@
 	list-style: none;
 	padding: @crContentPadding;
 	margin: @crBreadCrumbMargin 0 0;
-	z-index: @zindexDropdown;
+	z-index: @zindex-dropdown;
 
 	a {
 		text-decoration: none;
 		text-shadow: 0 1px 0 white;
+		.text-muted;
 	}
 
-	a:last-child { 
-		color: #999;
+	a:last-child {
+		color: @gray-darker;
 	}
 
 	.divider {
 		padding: 0px 8px;
+		.text-muted;
 	}
 }

@@ -309,7 +309,7 @@ class SettingData {
 			'value' => '',
 			'title' => 'Models with Row Level Acl',
 			'description' => 'Select models to activate Row Level Access Control on',
-			'input_type' => 'multiple',
+			'input_type' => 'checkbox',
 			'editable' => '1',
 			'weight' => '26',
 			'params' => 'multiple=checkbox

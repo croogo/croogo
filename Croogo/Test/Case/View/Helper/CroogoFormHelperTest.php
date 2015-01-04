@@ -180,7 +180,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			array(
 				'i' => array(
-					'class' => 'icon-pencil'
+					'class' => 'fa fa-pencil'
 				)
 			),
 			'/i',
