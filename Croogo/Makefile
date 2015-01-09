@@ -1,4 +1,4 @@
-BOOTSTRAP_TAG=v2.2.0
+BOOTSTRAP_TAG=v2.2.2
 FONTAWESOME_TAG=v3.0.2
 
 REPO_FONTAWESOME=git://github.com/FortAwesome/Font-Awesome.git
