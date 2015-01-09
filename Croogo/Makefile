@@ -1,18 +1,18 @@
-BOOTSTRAP_TAG=v2.2.0
-FONTAWESOME_TAG=v3.0.2
+BOOTSTRAP_TAG=v3.3.1
+FONTAWESOME_TAG=v4.2.0
 
 REPO_FONTAWESOME=git://github.com/FortAwesome/Font-Awesome.git
 REPO_BOOTSTRAP=git://github.com/twbs/bootstrap
 
 CROOGO_LESS = ./webroot/less/admin.less
-CROOGO_RESPONSIVE_LESS = ./webroot/less/admin-responsive.less
+#CROOGO_RESPONSIVE_LESS = ./webroot/less/admin-responsive.less
 
 CSS_DIR=$(CURDIR)/webroot/css
 JS_DIR=$(CURDIR)/webroot/js
 FONT_DIR=$(CURDIR)/webroot/font
 
-CROOGO_CSS=croogo-bootstrap.css
-CROOGO_RESPONSIVE_CSS=croogo-bootstrap-responsive.css
+CROOGO_CSS=admin.min.css
+#CROOGO_RESPONSIVE_CSS=croogo-bootstrap-responsive.css
 BOOTSTRAP_JS=croogo-bootstrap.js
 
 DATE=$(shell date +%I:%M%p)
