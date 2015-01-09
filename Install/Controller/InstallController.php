@@ -63,7 +63,7 @@ class InstallController extends Controller {
  * Generate assets
  */
 	protected function _generateAssets() {
-		$file = CakePlugin::path('Croogo') . 'webroot' . DS . 'css' . DS . 'croogo-bootstrap.css';
+		$file = CakePlugin::path('Croogo') . 'webroot' . DS . 'css' . DS . 'admin.min.css';
 		if (!file_exists($file)) {
 			App::uses('AssetGenerator', 'Install.Lib');
 			$generator = new AssetGenerator();
@@ -71,7 +71,7 @@ class InstallController extends Controller {
 				$generator->generate();
 			} catch (Exception $e) {
 				$this->log($e->getMessage());
-				$this->Session->setFlash('Asset generation failed. Please verify that dependencies exists and readable.', 'flash', array('class' => 'error'));
+				$this->Session->setFlash('Asset generation failed. Please verify that dependencies exists and are readable.', 'flash', array('class' => 'error'));
 			}
 		}
 	}

@@ -62,6 +62,9 @@ class AssetGenerator extends Object {
  */
 	protected function _compileCss() {
 		$bootstrapPath = $this->_croogoWebroot . 'bootstrap';
+		$fontAwesomePath = $this->_croogoWebroot . 'fontAwesome';
+
+		// Bootstrap check
 		if (!file_exists($bootstrapPath)) {
 			if (!$this->_clone) {
 				throw new Exception('You don\'t have "bootstrap" directory in ' . WWW_ROOT);
@@ -78,7 +81,26 @@ class AssetGenerator extends Object {
 		}
 		chdir($bootstrapPath);
 		exec(sprintf('git checkout -f %s', escapeshellarg($this->_tags['bootstrap'])));
+		echo 'OK for bootstrap;';
+		// FontAwesome check
+		if (!file_exists($fontAwesomePath)) {
+			if (!$this->_clone) {
+				throw new Exception('You don\'t have "fontAwesome" directory in ' . WWW_ROOT);
+			}
+			chdir($this->_croogoPath);
+			CakeLog::info('Cloning Bootstrap...');
+			$command = sprintf('git clone -b %s %s %s',
+				escapeshellarg($this->_tags['fontAwesome']),
+				escapeshellarg($this->_repos['fontAwesome']),
+				escapeshellarg($fontAwesomePath)
+			);
+			CakeLog::info("	$command");
+			exec($command);
+		}
+		chdir($fontAwesomePath);
+		exec(sprintf('git checkout -f %s', escapeshellarg($this->_tags['fontAwesome'])));
 
+		// LESSCSS compilation
 		App::import('Vendor', 'Croogo.Lessc', array(
 			'file' => 'lessphp' . DS . 'lessc.inc.php',
 		));
@@ -89,15 +111,15 @@ class AssetGenerator extends Object {
 		$lessc->setFormatter($formatter);
 
 		$files = array(
-			'less' . DS . 'admin.less' => 'css' . DS . 'croogo-bootstrap.css',
-			'less' . DS . 'admin-responsive.less' => 'css' . DS . 'croogo-bootstrap-responsive.css',
+			'less' . DS . 'admin.less' => 'css' . DS . 'admin.min.css',
+//			'less' . DS . 'admin-responsive.less' => 'css' . DS . 'croogo-bootstrap-responsive.css',
 		);
 		foreach ($files as $file => $output) {
 			$file = $this->_croogoWebroot . $file;
 			$output = $this->_croogoWebroot . $output;
 			$out = str_replace(APP, '', $output);
 			if ($lessc->compileFile($file, $output)) {
-				$text = __d('croogo', 'CSS : %s created', $out);
+				$text = __d('croogo', 'CSS : %s created, but not minified', $out);
 				CakeLog::info($text);
 			} else {
 				$text = __d('croogo', 'CSS : %s failed', $out);
@@ -111,13 +133,13 @@ class AssetGenerator extends Object {
  */
 	protected function _compileJs() {
 		$bootstrapPath = $this->_croogoWebroot . 'bootstrap';
-		$outputFile = $this->_croogoWebroot . 'js' . DS . 'croogo-bootstrap.js';
+		$outputFile = $this->_croogoWebroot . 'js' . DS . 'bootstrap.min.js';
 		chdir($bootstrapPath);
 		$rc = exec('cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > ' . escapeshellarg($outputFile));
 
 		$out = str_replace(APP, '', $outputFile);
 		if ($rc == 0) {
-			$text = __d('croogo', 'JS  : %s created', $out);
+			$text = __d('croogo', 'JS  : %s created, but not minified.', $out);
 			CakeLog::info($text);
 		} else {
 			$text = __d('croogo', 'JS  : %s failed', $out);

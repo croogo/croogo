@@ -198,13 +198,13 @@ class CroogoFormHelper extends FormHelper {
 		}
 
 		if (isset($this->_addon)) {
-			$options['class'] = $this->Theme->getCssClass('columnLeft');
+			$options['class'] = $this->Theme->getCssClass('formInput');
 			if (isset($options['append'])) {
-				$options['between'] = '<div class="addon">';
+				$options['between'] = '<div class="'.$this->Theme->getCssClass('formInput').'">';
 				$options['after'] = $options['addon'] . '</div>';
 			}
 			if (isset($options['prepend'])) {
-				$options['between'] = '<div class="addon">' . $options['addon'];
+				$options['between'] = '<div class="'.$this->Theme->getCssClass('formInput').'">' . $options['addon'];
 				$options['after'] = '</div>';
 			}
 		}

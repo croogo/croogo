@@ -80,7 +80,7 @@ class CroogoHelperTest extends CroogoTestCase {
 			)
 		);
 		$items = CroogoNav::items();
-		$expected = '<ul class="nav nav-stacked"><li><a href="#" class="menu-contents sidebar-item"><i class="icon-white icon-large"></i><span>Contents</span></a></li></ul>';
+		$expected = '<ul class="nav nav-stacked"><li><a href="#" class="menu-contents sidebar-item"><i class="fa fa-white fa-lg"></i><span>Contents</span></a></li></ul>';
 		$result = $this->Croogo->adminMenus(CroogoNav::items());
 		$this->assertEquals($expected, $result);
 	}
@@ -152,7 +152,7 @@ class CroogoHelperTest extends CroogoTestCase {
 				'class' => 'edit',
 			),
 			'i' => array(
-				'class' => 'icon-edit icon-large',
+				'class' => 'fa fa-edit fa-lg',
 			),
 			'/i',
 			'/a',

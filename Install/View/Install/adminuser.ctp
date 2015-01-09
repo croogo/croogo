@@ -2,7 +2,8 @@
 echo $this->Form->create(null, array(
 	'url' => array('controller' => 'install', 'action' => 'adminuser'),
 	'inputDefaults' => array(
-		'class' => 'span11',
+		'label' => false,
+		'div' => $this->Theme->getCssClass('addonClass').' input text',
 	),
 ));
 ?>
@@ -11,30 +12,24 @@ echo $this->Form->create(null, array(
 	<?php
 		echo $this->Form->input('User.username', array(
 			'placeholder' => __d('croogo', 'Username'),
-			'before' => '<span class="add-on"><i class="icon-user"></i></span>',
-			'div' => 'input text input-prepend',
-			'label' => false,
+			'before' => '<span class="input-group-addon">'.$this->Html->icon('user').'</span>',
 		));
 		echo $this->Form->input('User.password', array(
 			'placeholder' => __d('croogo', 'New Password'),
 			'value' => '',
-			'before' => '<span class="add-on"><i class="icon-key"></i></span>',
-			'div' => 'input password input-prepend',
-			'label' => false,
+			'before' => '<span class="input-group-addon">'.$this->Html->icon('key').'</span>',
 		));
 		echo $this->Form->input('User.verify_password', array(
 			'placeholder' => __d('croogo', 'Verify Password'),
 			'type' => 'password',
 			'value' => '',
-			'before' => '<span class="add-on"><i class="icon-key"></i></span>',
-			'div' => 'input password input-prepend',
-			'label' => false,
+			'before' => '<span class="input-group-addon">'.$this->Html->icon('key').'</span>',
 		));
 	?>
 </div>
 <div class="form-actions">
 	<?php echo $this->Form->submit(__d('croogo', 'Save'), array('class' => 'btn btn-success', 'div' => false)); ?>
-	<?php echo $this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array( 'class' => 'btn cancel')); ?>
+	<?php echo $this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array( 'class' => 'btn btn-danger')); ?>
 </div>
 <?php
 	echo $this->Form->end();

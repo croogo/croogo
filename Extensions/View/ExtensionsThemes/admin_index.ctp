@@ -8,7 +8,7 @@ $this->Html
 	->addCrumb(__d('croogo', 'Themes'), '/' . $this->request->url);
 
 ?>
-<h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
+
 
 <?php $this->start('actions'); ?>
 <?php
@@ -21,10 +21,23 @@ $this->Html
 <div class="<?php echo $this->Theme->getCssClass('row'); ?>">
 	<div class="extensions-themes <?php echo $this->Theme->getCssClass('columnFull'); ?>">
 
-		<div class="current-theme <?php echo $this->Theme->getCssClass('row'); ?>">
-			<div class="screenshot <?php echo $this->Theme->getCssClass('columnRight'); ?>">
-				<h3><?php echo __d('croogo', 'Current Theme'); ?></h3>
+		<div class="box">
+			<div class="box-title">
 				<?php
+				$author = isset($currentTheme['author']) ? $currentTheme['author'] : null;
+				if (isset($currentTheme['authorUrl']) && strlen($currentTheme['authorUrl']) > 0) {
+					$author = $this->Html->link($author, $currentTheme['authorUrl']);
+				}
+				echo $currentTheme['name'];
+				if (!empty($author)):
+					echo ' ' . __d('croogo', 'by') . ' ' . $author;
+				endif;
+				?>
+			</div>
+			<div class="box-content">
+				<div class="current-theme <?php echo $this->Theme->getCssClass('row'); ?>">
+					<div class="screenshot <?php echo $this->Theme->getCssClass('columnRight'); ?>">
+						<?php
 					$currentTheme = Sanitize::clean($currentTheme);
 					if (isset($currentTheme['screenshot'])):
 						if (!Configure::read('Site.theme')) :
@@ -42,29 +55,20 @@ $this->Html
 				?>
 			</div>
 
-			<div class="<?php echo $this->Theme->getCssClass('columnLeft'); ?>">
-				<h3>
-				<?php
-					$author = isset($currentTheme['author']) ? $currentTheme['author'] : null;
-					if (isset($currentTheme['authorUrl']) && strlen($currentTheme['authorUrl']) > 0) {
-						$author = $this->Html->link($author, $currentTheme['authorUrl']);
-					}
-					echo $currentTheme['name'];
-					if (!empty($author)):
-						echo ' ' . __d('croogo', 'by') . ' ' . $author;
-					endif;
-				?>
-				</h3>
+					<div class="<?php echo $this->Theme->getCssClass('columnLeft'); ?>">
 				<p class="description"><?php echo $currentTheme['description']; ?></p>
 				<?php if (isset($currentTheme['regions'])): ?>
 				<p class="regions"><?php echo __d('croogo', 'Regions supported: ') . implode(', ', $currentTheme['regions']); ?></p>
 				<?php endif; ?>
 			</div>
 		</div>
+			</div>
+		</div>
+
 
 		<div class="available-themes <?php echo $this->Theme->getCssClass('row'); ?>">
 			<h3><?php echo __d('croogo', 'Available Themes'); ?></h3>
-			<ul>
+			<ul class="theme-list">
 			<?php
 				$hasAvailable = false;
 				$themesData = Sanitize::clean($themesData);
@@ -75,7 +79,15 @@ $this->Html
 					if (!$display):
 						continue;
 					endif;
-					echo '<li class="' . $this->Theme->getCssClass('columnFull') . '">';
+					echo '<li class="box">';
+					echo '<div class="box-title">';
+					$author = isset($theme['author']) ? $theme['author'] : null;
+					if (isset($theme['authorUrl']) && strlen($theme['authorUrl']) > 0) {
+						$author = $this->Html->link($author, $theme['authorUrl']);
+					}
+					echo $theme['name'] . ' ' . __d('croogo', 'by') . ' ' . $author;
+					echo '</div>';
+					echo '<div class="box-content">';
 					if ($themeAlias == 'default') {
 						$imgUrl = $this->Html->thumbnail($theme['screenshot']);
 						$link = $this->Html->link($imgUrl, $theme['screenshot'], array(
@@ -100,18 +112,11 @@ $this->Html
 							));
 						endif;
 					}
-					$author = isset($theme['author']) ? $theme['author'] : null;
-					if (isset($theme['authorUrl']) && strlen($theme['authorUrl']) > 0) {
-						$author = $this->Html->link($author, $theme['authorUrl']);
-					}
-
-					$out = $this->Html->tag('h3', $theme['name'] . ' ' . __d('croogo', 'by') . ' ' . $author, array());
-					$out .= $this->Html->tag('p', $theme['description'], array('class' => 'description'));
+					$out = $this->Html->tag('p', $theme['description'], array('class' => 'description'));
 					if (isset($theme['regions'])):
 						$out .= $this->Html->tag('p', __d('croogo', 'Regions supported: ') . implode(', ', $theme['regions']), array('class' => 'regions'));
 					endif;
-					$out .= $this->Html->tag('div',
-						$this->Form->postLink(__d('croogo', 'Activate'), array(
+					$out .= $this->Html->tag('div', $this->Form->postLink(__d('croogo', 'Activate'), array(
 							'action' => 'activate',
 							$themeAlias,
 						), array(
@@ -123,10 +128,10 @@ $this->Html
 							$themeAlias,
 						), array(
 							'button' => 'danger',
-							'icon' => $this->Theme->getIcon('delete'),
-						), __d('croogo', 'Are you sure?')),
-						array('class' => 'actions'));
+											'icon' => $this->Theme->getIcon('delete'),
+													), __d('croogo', 'Are you sure?')), array('class' => 'actions'));
 					echo $this->Html->div($this->Theme->getCssClass('columnLeft'), $out);
+					echo '</div>';
 					echo '</li>';
 					$hasAvailable = true;
 				endforeach;

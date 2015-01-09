@@ -6,13 +6,12 @@
 	<title><?php echo $title_for_layout; ?> - <?php echo __d('croogo', 'Croogo'); ?></title>
 	<?php
 		echo $this->Html->css(array(
-			'/croogo/css/croogo-bootstrap',
-			'/croogo/css/croogo-bootstrap-responsive',
+			'/croogo/css/admin.min',
 		));
 		echo $this->element('styles', array(), array('plugin' => 'install'));
 		echo $this->Html->script(array(
-			'/croogo/js/jquery/jquery.min',
-			'/croogo/js/croogo-bootstrap',
+			'/croogo/js/jquery/jquery-1.11.2.min',
+			'/croogo/js/bootstrap.min',
 		));
 		echo $scripts_for_layout;
 	?>
@@ -24,7 +23,7 @@
 		<header class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="<?php echo $this->Theme->getCssClass('container'); ?>">
-					<span class="brand"><?php echo __d('croogo', 'Install Croogo'); ?></span>
+					<span class="<?php echo $this->Theme->getCssClass('brand'); ?>"><?php echo __d('croogo', 'Install Croogo'); ?></span>
 				</div>
 			</div>
 		</header>
