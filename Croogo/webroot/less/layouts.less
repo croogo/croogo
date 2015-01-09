@@ -12,7 +12,7 @@ body {
 
 	&.admin-login {
 		#content-container {
-			background-color: @bodyBackground
+			background-color: @body-bg
 		}
 	}
 }
@@ -23,7 +23,7 @@ body {
 	height: auto !important;
 	height: 100%;
 	/* Negative indent footer by it's height */
-	margin-bottom: -(@navbarHeight + 2);
+	margin-bottom: -(@crFooterHeight + 2);
 
 	.full  {
 		#content {
@@ -33,7 +33,7 @@ body {
 }
 
 #push {
-	height: @navbarHeight;
+	height: @navbar-height;
 }
 
 #content-container {
@@ -51,7 +51,7 @@ body {
 	border-bottom-left-radius: 8px;
 	margin-left: 170px;
 	margin-bottom: @crGeneralMargin;
-	padding: 20px;
+	padding: 20px 0px;
 	min-height: 400px;
 }
 
@@ -68,25 +68,22 @@ body {
 }
 
 #admin-login {
-	margin: @navbarHeight * 3 auto 0;
+	margin: @navbar-height * 3 auto 0;
 	max-width: @crLoginBox + 2;
 
 	#authMessage {
 		margin-bottom: @crContentPadding;
 	}
-
-	.box {
-		margin-top: @crGeneralMargin;
-		margin: auto;
-		max-width: @crLoginBox;
-
-		.box-content {
-			padding: @crContentPadding * 2;
-		}
+	.input-group {
+		margin-bottom: @crContentPadding;
 	}
 
-	.input-prepend {
-		margin-bottom: @crContentPadding;
+	.checkbox{
+		.form-control-static{
+			.form-control-static;
+			padding-top:3px;
+			margin-left: @crContentPadding;
+		}
 	}
 
 	.forgot {
@@ -96,16 +93,22 @@ body {
 
 }
 
+// Forcing icons to have the same width
+.input-group-addon{
+	min-width:40px
+}
+
 header {
 	border-bottom: 1px solid #707070;
 }
 
 footer {
-	background: @navbarInverseBackground;
+	background: @navbar-inverse-bg;
 	.navbar-inner {
 		.border-radius(0);
 		margin: 0 auto;
 		padding: 0;
+		height: @crFooterHeight;
 	}
 
 	.footer-content {
@@ -128,5 +131,5 @@ footer {
 
 
 .footer.navbar-inverse {
-	background: @navbarInverseBackground;
+	background: @navbar-inverse-bg;
 }

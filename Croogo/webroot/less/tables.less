@@ -1,36 +1,14 @@
 .table {
 	tr:last-child {
-		border-bottom: 1px solid @tableBorder;
+		border-bottom: 1px solid @table-border-color;
 	}
 	td:last-child {
-		min-width: @actionsButtonsWidth;
+		min-width: @crActionsButtonsWidth;
 	}
 	th {
 		a {
 			.sortDirections();
 		}
-	}
-}
-
-td {
-	&.level-1 {
-		padding-left: 20px;
-	}
-
-	&.level-2 {
-		padding-left: 40px;
-	}
-
-	&.level-3 {
-		padding-left: 60px;
-	}
-
-	&.level-4 {
-		padding-left: 80px;
-	}
-
-	&.level-5 {
-		padding-left: 100px;
 	}
 }
 
@@ -49,13 +27,6 @@ table {
 			}
 			&:hover {
 				text-decoration: none;
-			}
-			&.icon-trash,
-			&.delete {
-				color: @red;
-				&:hover {
-					color: darken(@red, 25%);
-				}
 			}
 		}
 		a [class^="icon-"],
