@@ -123,6 +123,8 @@ $this->Html
 							$themeAlias,
 						), array(
 							'button' => 'danger',
+							'escape' => true,
+							'escapeTitle' => false,
 							'icon' => $this->Theme->getIcon('delete'),
 						), __d('croogo', 'Are you sure?')),
 						array('class' => 'actions'));
