@@ -36,6 +36,7 @@ echo $tableHeaders;
 ?>
 <?php echo "\$this->append('table-body');\n"; ?>
 <?php
+	echo "\t\$rows = array();\n";
 	echo "\tforeach (\${$pluralVar} as \${$singularVar}):\n";
 	echo "\t\t\$row = array();\n";
 		foreach ($fields as $field) {
