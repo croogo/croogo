@@ -134,8 +134,10 @@ class AclFilterComponent extends Component {
 			'controller' => 'users',
 			'action' => 'login',
 		);
-		if ((isset($this->_controller->request->params['admin'])) && ($this->_controller->request->params['admin'])) {
+		if ($this->_controller->request->param('admin')) {
 			$this->_controller->Auth->loginRedirect = Configure::read('Croogo.dashboardUrl');
+		} else {
+			$this->_controller->Auth->loginRedirect = Configure::read('Site.homeUrl');
 		}
 		$this->_controller->Auth->unauthorizedRedirect = array(
 			'plugin' => 'users',
