@@ -7977,13 +7977,13 @@ button.close {
 .fa-picture:before {
   content: "\f03e";
 }
-/*[class^="icon-"],
-[class*=" icon-"] {
-	background-image: none;
-}*/
-/*.icon-white {
-	color: @gray-light + 20%;
-}*/.btn:focus {
+.fa-white {
+  min-width: 1em;
+}
+.fa-white:before {
+  content: '\0000a0';
+}
+.btn:focus {
   outline: none;
 }
 .box .btn {

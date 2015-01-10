@@ -7,12 +7,12 @@
 .@{fa-css-prefix}-picture:before{
 	content: @fa-var-picture-o;
 }
-// remove bootstrap defined background-image to avoid conflict with fontAwesome
-/*[class^="icon-"],
-[class*=" icon-"] {
-	background-image: none;
-}*/
 
-/*.icon-white {
-	color: @gray-light + 20%;
-}*/
+
+.@{fa-css-prefix}-white{
+	min-width: 1em;
+}
+
+.@{fa-css-prefix}-white:before{
+	content:'\0000a0';
+}
