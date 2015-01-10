@@ -10,9 +10,11 @@ $this->append('form-start', $this->Form->create(null));
 
 $this->append('main');
 echo $this->Form->input('node_id', array(
+	'placeholder' => __d('croogo', 'Node id'),
 	'type' => 'text',
-	'append' => true,
-	'addon' => $this->Html->link('Choose Node',
+	'label'=>false,
+	'div' => $this->Theme->getCssClass('addonClass').' input text',
+	'after' => $this->Html->link('Choose Node',
 		array(
 			'plugin' => 'nodes',
 			'controller' => 'nodes',
@@ -25,15 +27,17 @@ echo $this->Form->input('node_id', array(
 		),
 		array(
 			'button' => 'default',
-			'class' => 'action node chooser',
+			'class' => 'action node chooser input-group-addon',
 		)
 	)
 ));
 
 echo $this->Form->input('node_url', array(
+	'placeholder' => __d('croogo', 'Node url'),
 	'type' => 'text',
-	'append' => true,
-	'addon' => $this->Html->link('Choose Node',
+	'label'=>false,
+	'div' => $this->Theme->getCssClass('addonClass').' input text',
+	'after' => $this->Html->link('Choose Node',
 		array(
 			'plugin' => 'nodes',
 			'controller' => 'nodes',
@@ -46,15 +50,17 @@ echo $this->Form->input('node_url', array(
 		),
 		array(
 			'button' => 'default',
-			'class' => 'action node chooser',
+			'class' => 'action node chooser input-group-addon',
 		)
 	)
 ));
 
 echo $this->Form->input('block_id', array(
+	'placeholder' => __d('croogo', 'Block id'),
 	'type' => 'text',
-	'append' => true,
-	'addon' => $this->Html->link('Choose Block Id',
+	'label'=>false,
+	'div' => $this->Theme->getCssClass('addonClass').' input text',
+	'after' => $this->Html->link('Choose Block Id',
 		array(
 			'plugin' => 'blocks',
 			'controller' => 'blocks',
@@ -67,15 +73,17 @@ echo $this->Form->input('block_id', array(
 		),
 		array(
 			'button' => 'default',
-			'class' => 'action block chooser',
+			'class' => 'action block chooser input-group-addon',
 		)
 	)
 ));
 
 echo $this->Form->input('block_title', array(
+	'placeholder' => __d('croogo', 'Block title'),
 	'type' => 'text',
-	'append' => true,
-	'addon' => $this->Html->link('Choose Block Title',
+	'label'=>false,
+	'div' => $this->Theme->getCssClass('addonClass').' input text',
+	'after' => $this->Html->link('Choose Block Title',
 		array(
 			'plugin' => 'blocks',
 			'controller' => 'blocks',
@@ -88,15 +96,17 @@ echo $this->Form->input('block_title', array(
 		),
 		array(
 			'button' => 'default',
-			'class' => 'action block chooser',
+			'class' => 'action block chooser input-group-addon',
 		)
 	)
 ));
 
 echo $this->Form->input('user_id', array(
+	'placeholder' => __d('croogo', 'User id'),
 	'type' => 'text',
-	'append' => true,
-	'addon' => $this->Html->link('Choose User Id',
+	'label'=>false,
+	'div' => $this->Theme->getCssClass('addonClass').' input text',
+	'after' => $this->Html->link('Choose User Id',
 		array(
 			'plugin' => 'users',
 			'controller' => 'users',
@@ -109,7 +119,7 @@ echo $this->Form->input('user_id', array(
 		),
 		array(
 			'button' => 'default',
-			'class' => 'action user chooser',
+			'class' => 'action user chooser input-group-addon',
 		)
 	)
 ));
