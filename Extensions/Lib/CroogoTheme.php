@@ -149,6 +149,7 @@ class CroogoTheme extends Object {
 					'upload' => 'upload-alt',
 					'warning-sign' => 'warning-sign',
 					'x-mark' => 'remove',
+					'spacer'=>'white',
 				),
 				'prefixes' => array(
 					'' => array(
