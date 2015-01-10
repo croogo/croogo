@@ -71,14 +71,17 @@ $this->append('tab-content');
 			'label' => __d('croogo', 'Title'),
 		)) .
 		$this->Form->input('link', array(
-			'label' => __d('croogo', 'Link'),
-			'append' => true,
-			'addon' => $this->Html->link('', '#link_choosers', array(
+			'label' => false,
+			'placeholder' => __d('croogo', 'Link'),
+			'div' => $this->Theme->getCssClass('addonClass').' input text',
+			'before' => $this->Html->link('', '#', array(
 				'button' => 'default',
+				'class'=>'toggle input-group-addon',
 				'icon' => $this->Theme->getIcon('link'),
 				'iconSize' => 'small',
 				'data-title' => __d('croogo', 'Link Chooser'),
 				'data-toggle' => 'modal',
+				'data-target' => '#link_choosers',
 				'data-remote' => $linkChooserUrl,
 			)),
 		));
