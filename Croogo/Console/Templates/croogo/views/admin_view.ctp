@@ -23,7 +23,7 @@ echo "\$this->set('title', __d('croogo', '{$singularHumanName}'));\n\n";
 
 echo "\$this->append('actions');\n";
 	echo "\techo \$this->Croogo->adminAction(__d('croogo', 'Edit " . $singularHumanName . "'), array(\n\t\t'action' => 'edit',\n\t\t\${$singularVar}['{$modelClass}']['{$primaryKey}'],\n\t), array(\n\t\t'button' => 'default',\n\t));\n";
-	echo "\techo \$this->Croogo->adminAction(__d('croogo', 'Delete " . $singularHumanName . "'), array(\n\t\t'action' => 'delete', \${$singularVar}['{$modelClass}']['{$primaryKey}'],\n\t), array(\n\t\t'method' => 'post',\n\t\t'button' => 'danger',\n\t\t'escapeTitle' => true,\n\t),\n\t__d('croogo', 'Are you sure you want to delete # %s?', \${$singularVar}['{$modelClass}']['{$primaryKey}'])\n\t);\n";
+	echo "\techo \$this->Croogo->adminAction(__d('croogo', 'Delete " . $singularHumanName . "'), array(\n\t\t'action' => 'delete', \${$singularVar}['{$modelClass}']['{$primaryKey}'],\n\t), array(\n\t\t'method' => 'post',\n\t\t'button' => 'danger',\n\t\t'escapeTitle' => true,\n\t\t'escape' => false,\n\t),\n\t__d('croogo', 'Are you sure you want to delete # %s?', \${$singularVar}['{$modelClass}']['{$primaryKey}'])\n\t);\n";
 	echo "\techo \$this->Croogo->adminAction(__d('croogo', 'List " . $pluralHumanName . "'), array('action' => 'index'));\n";
 	echo "\techo \$this->Croogo->adminAction(__d('croogo', 'New " . $singularHumanName . "'), array('action' => 'add'), array('button' => 'success'));\n";
 
