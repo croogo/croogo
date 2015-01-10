@@ -1,5 +1,5 @@
 <?php
-$underscoredPluginName = Inflector::underscore($plugin);
+$underscoredPluginName = $plugin ? Inflector::underscore($plugin) : 'default';
 $header = <<<EOF
 <?php
 \$this->viewVars['title_for_layout'] = __d('$underscoredPluginName', '$pluralHumanName');
