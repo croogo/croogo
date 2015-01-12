@@ -16,10 +16,10 @@ Damien Biasotto <damien@occitech.fr>
 Dimas Abdul Aziiz <dimas@xintesa.com>
 AD7six <andydawson76@gmail.com>
 Eko Tristiyono <eko@xintesa.com>
+Marlin Cremers <m.cremers@cvo-technologies.com>
 Paul Gardner <phpmagpie@webbedit.co.uk>
 Elias Coronado <ecor.rck@hotmail.com>
 Liam Keily <liam@simplywebsites.com>
-Marlin Cremers <m.cremers@cvo-technologies.com>
 Mike Tallroth <mike.tallroth@gmail.com>
 SCV Geo <scv@scvgeo.com>
 Heiner Gassen <hg@dynweb.net>
@@ -58,12 +58,14 @@ Jeremy Harris <jeremy@42pixels.com>
 Joachim Nyqvist <Joachim@JNyqvist.se>
 Kory Marks <kory.marks@mac.com>
 Léo Haddad <scoup001@gmail.com>
+Manuel Tancoigne <m.tancoigne@gmail.com>
 Marce Romagnoli <marce.romagnoli@gmail.com>
 Marcin Jóźwikowski <marcin@jozwikowski.pl>
 Marek Sebera <marek.sebera@gmail.com>
 Mike Pagé <mike@nedwave.com>
 Nicholas Craig <nick@threadgroup.com>
 Paulo Pinto <paulorpinto@gmail.com>
+Rakesh Tembhurne <rakesh@tembhurne.com>
 Robbert Noordzij <robbert@xseeding.nl>
 Sam Bernard <sam@sambernard.net>
 SplicePHP <admin@splicephp.com>
