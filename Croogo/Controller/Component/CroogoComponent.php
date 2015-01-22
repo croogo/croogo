@@ -279,6 +279,30 @@ class CroogoComponent extends Component {
 	}
 
 /**
+ *
+ * Prevents infinite redirection to an unauthorized URL
+ *
+ * @param Controller $controller Controller with components to beforeRedirect
+ * @param string|array $url Either the string or URL array that is being redirected to.
+ * @param int $status The status code of the redirect
+ * @param bool $exit Will the script exit.
+ * @return array|void Either an array or null.
+ * @link http://book.cakephp.org/2.0/en/controllers/components.html#Component::beforeRedirect
+ */
+	public function beforeRedirect(Controller $controller, $url, $status = null, $exit = true) {
+		$key = 'Croogo.redirectCount.' . md5(json_encode($url));
+		$count = 0;
+		if ($this->Session->check($key)) {
+			$count = $this->Session->read($key);
+			if ($count > 1) {
+				$this->Session->delete($key);
+				return '/';
+			}
+		}
+		$this->Session->write($key, ++$count);
+	}
+
+/**
  * Toggle field status
  *
  * @param $model Model instance
