@@ -316,6 +316,15 @@ class SettingData {
 options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "Menus.Link": "Link"}'
 		),
 		array(
+			'key' => 'Access Control.splitSession',
+			'value' => '',
+			'title' => 'Separate front-end and admin session',
+			'input_type' => 'checkbox',
+			'editable' => '1',
+			'weight' => '27',
+			'params' => ''
+		),
+		array(
 			'id' => '38',
 			'key' => 'Site.ipWhitelist',
 			'value' => '127.0.0.1',
