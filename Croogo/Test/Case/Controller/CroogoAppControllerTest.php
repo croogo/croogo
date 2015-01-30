@@ -129,6 +129,34 @@ class CroogoAppControllerTest extends CroogoControllerTestCase {
 	}
 
 /**
+ * testSetFlashDefaults
+ */
+	public function testSetFlashDefaults() {
+		$this->controller->viewVars = array(
+			'displayFields' => array(),
+		);
+		$this->controller->Session->setFlash('Terms & Conditions', 'flash');
+		$result = $this->testAction('/admin/test_app/index', array(
+			'return' => 'contents',
+		));
+		$this->assertContains('Terms &amp; Conditions', $result);
+	}
+
+/**
+ * testSetFlashUnescaped
+ */
+	public function testSetFlashUnescaped() {
+		$this->controller->viewVars = array(
+			'displayFields' => array(),
+		);
+		$this->controller->Session->setFlash('Terms & Conditions', 'flash', array('escape' => false));
+		$result = $this->testAction('/admin/test_app/index', array(
+			'return' => 'contents',
+		));
+		$this->assertContains('Terms & Conditions', $result);
+	}
+
+/**
  * testPaginatorIsNotLoadedWithoutCache
  */
 	public function testPaginatorIsNotLoadedWithoutCache() {

@@ -42,12 +42,20 @@ class ExampleActivation {
 				'Link.menu_id' => $mainMenu['Menu']['id'],
 			),
 		));
+		$this->Link->create();
 		$this->Link->save(array(
+			// Menu in which the link should go
 			'menu_id' => $mainMenu['Menu']['id'],
+			// Link caption
 			'title' => 'Example',
+			// The link
 			'link' => 'plugin:example/controller:example/action:index',
+			// Status : activated or not (0 or 1)
 			'status' => 1,
+			// Link class
 			'class' => 'example',
+			// Roles which link is visible. Empty string means visible to all
+			'visibility_roles' => '["1","2","3"]',
 		));
 	}
 
