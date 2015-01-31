@@ -55,19 +55,16 @@ css: deps
 	@( cd webroot/bootstrap && git checkout -f ${BOOTSTRAP_TAG} > /dev/null 2>&1 )
 	@[ "$$?" -eq 0 ] && echo "bootstrap branch/tag: ${BOOTSTRAP_TAG} ${CHECK}"
 	@echo "${HR}"
-	@echo "Compiling..."
+	@echo "Compiling less files..."
 	@${COMPILE} ${CROOGO_LESS} > "${CSS_DIR}"/"${CROOGO_CSS}"
 	@DIR=${CSS_DIR} && echo "File: $${DIR#${CURDIR}/}/${CROOGO_CSS} ${CHECK}"
 
-js: webroot/bootstrap
-	@( \
-	cd webroot/bootstrap ; \
-	cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > "${JS_DIR}"/"${BOOTSTRAP_JS}" \
-	)
-	@if [ ! -z "${RELEASE}" ]; then \
-		uglifyjs --overwrite -nc "${JS_DIR}"/"${BOOTSTRAP_JS}" ;\
-	fi
-	@DIR=${JS_DIR} && echo "File: $${DIR#${CURDIR}/}/${BOOTSTRAP_JS} ${CHECK}"
+js: deps
+	@for file in webroot/bootstrap/dist/js/bootstrap*.js ; do \
+		cp $${file} webroot/js/ ; \
+		chmod 644 webroot/js/`basename $${file}` ; \
+		echo "Copied: webroot/js/`basename $${file}` ${CHECK}" ;\
+	done
 
 assets: deps
 	@echo "${HR}"
