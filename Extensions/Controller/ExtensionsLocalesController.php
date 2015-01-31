@@ -46,6 +46,7 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 		$locales = array();
 		$folder =& new Folder;
 		$paths = App::path('Locale');
+		$L10n = new L10n();
 		foreach ($paths as $path) {
 			$folder->path = $path;
 			$content = $folder->read();
@@ -53,15 +54,17 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 				if (strstr($locale, '.') !== false) {
 					continue;
 				}
-				if (!file_exists($path . $locale . DS . 'LC_MESSAGES' . DS . 'croogo.po')) {
+				$filename = $path . $locale . DS . 'LC_MESSAGES' . DS . 'croogo.po';
+				if (!file_exists($filename)) {
 					continue;
 				}
 
 				$locales[] = $locale;
+				$languages[] = $L10n->catalog($locale);
 			}
 		}
 
-		$this->set(compact('content', 'locales'));
+		$this->set(compact('content', 'locales', 'languages'));
 	}
 
 /**

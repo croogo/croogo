@@ -29,8 +29,12 @@ $this->end();
 
 $this->append('table-body');
 	$rows = array();
-	foreach ($locales as $locale):
+	foreach ($locales as $i => $locale):
 		$actions = array();
+		$language = null;
+		if (isset($languages[$i]['language'])) {
+			$language = $languages[$i]['language'];
+		}
 
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'activate', $locale),
@@ -56,6 +60,7 @@ $this->append('table-body');
 		$rows[] = array(
 			'',
 			$locale,
+			$language,
 			$status,
 			$actions,
 		);
