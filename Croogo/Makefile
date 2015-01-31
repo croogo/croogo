@@ -5,15 +5,12 @@ REPO_FONTAWESOME=git://github.com/FortAwesome/Font-Awesome.git
 REPO_BOOTSTRAP=git://github.com/twbs/bootstrap
 
 CROOGO_LESS = ./webroot/less/admin.less
-#CROOGO_RESPONSIVE_LESS = ./webroot/less/admin-responsive.less
 
 CSS_DIR=$(CURDIR)/webroot/css
 JS_DIR=$(CURDIR)/webroot/js
 FONT_DIR=$(CURDIR)/webroot/font
 
 CROOGO_CSS=admin.min.css
-#CROOGO_RESPONSIVE_CSS=croogo-bootstrap-responsive.css
-BOOTSTRAP_JS=croogo-bootstrap.js
 
 DATE=$(shell date +%I:%M%p)
 ifeq ($(RELEASE), true)
@@ -49,8 +46,6 @@ css: deps
 	@echo "Compiling..."
 	@${COMPILE} ${CROOGO_LESS} > "${CSS_DIR}"/"${CROOGO_CSS}"
 	@DIR=${CSS_DIR} && echo "File: $${DIR#${CURDIR}/}/${CROOGO_CSS} ${CHECK}"
-	@${COMPILE} ${CROOGO_RESPONSIVE_LESS} > "${CSS_DIR}"/"${CROOGO_RESPONSIVE_CSS}"
-	@DIR=${CSS_DIR} && echo "File: $${DIR#${CURDIR}/}/${CROOGO_RESPONSIVE_CSS} ${CHECK}"
 
 js: webroot/bootstrap
 	@( \
@@ -75,8 +70,7 @@ assets:
 	done
 
 clean:
-	@rm -f "${CSS_DIR}"/"${CROOGO_CSS}" "${CSS_DIR}"/"${CROOGO_RESPONSIVE_CSS}"
-	@rm -f "${JS_DIR}"/"${BOOTSTRAP_JS}"
+	@rm -f "${CSS_DIR}"/"${CROOGO_CSS}"
 	@rm -rf "${FONT_DIR}"
 	@echo "Generated files deleted: ${CHECK}"
 
