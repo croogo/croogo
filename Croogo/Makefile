@@ -8,7 +8,7 @@ CROOGO_LESS = ./webroot/less/admin.less
 
 CSS_DIR=$(CURDIR)/webroot/css
 JS_DIR=$(CURDIR)/webroot/js
-FONT_DIR=$(CURDIR)/webroot/font
+FONT_DIR=$(CURDIR)/webroot/fonts
 
 CROOGO_CSS=admin.min.css
 
@@ -63,10 +63,10 @@ assets:
 	@if [ ! -d ${FONT_DIR} ] ; then \
 		mkdir "${FONT_DIR}"; \
 	fi
-	@for file in webroot/fontAwesome/font/* ; do \
-		cp $${file} webroot/font/ ; \
-		chmod 644 webroot/font/`basename $${file}` ; \
-		echo "Copied: webroot/font/`basename $${file}` ${CHECK}" ;\
+	@for file in webroot/fontAwesome/fonts/* ; do \
+		cp $${file} ${FONT_DIR} ; \
+		chmod 644 ${FONT_DIR}/`basename $${file}` ; \
+		echo "Copied: ${FONT_DIR}/`basename $${file}` ${CHECK}" ;\
 	done
 
 clean:
