@@ -14,9 +14,9 @@ CROOGO_CSS=admin.min.css
 
 DATE=$(shell date +%I:%M%p)
 ifeq ($(RELEASE), true)
-	COMPILE=recess --compress
+	COMPILE=node_modules/.bin/lessc --compress
 else
-	COMPILE=lessc # for debugging as it provides better error messages
+	COMPILE=node_modules/.bin/lessc
 endif
 
 CHECK=\033[32m✔\033[39m
@@ -26,6 +26,9 @@ HR=\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\
 
 all: css js assets
 	@echo "Done."
+
+node_modules/.bin/lessc:
+	npm install
 
 webroot/fontAwesome:
 	git clone -b ${FONTAWESOME_TAG} ${REPO_FONTAWESOME} webroot/fontAwesome
