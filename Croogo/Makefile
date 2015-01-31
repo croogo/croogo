@@ -36,7 +36,16 @@ webroot/fontAwesome:
 webroot/bootstrap:
 	git clone -b ${BOOTSTRAP_TAG} ${REPO_BOOTSTRAP} webroot/bootstrap
 
-deps: webroot/fontAwesome webroot/bootstrap
+webroot/bootstrap/node_modules/.bin:
+	(cd webroot/bootstrap && npm install)
+
+webroot/bootstrap/dist/js/bootstrap.min.js:
+	@echo "Building bootstrap..."
+	@( cd webroot/bootstrap && grunt dist )
+
+deps: webroot/fontAwesome webroot/bootstrap \
+	webroot/bootstrap/node_modules/.bin webroot/bootstrap/dist/js/bootstrap.js \
+	node_modules/.bin/lessc
 
 css: deps
 	@echo "${HR}"
@@ -60,7 +69,7 @@ js: webroot/bootstrap
 	fi
 	@DIR=${JS_DIR} && echo "File: $${DIR#${CURDIR}/}/${BOOTSTRAP_JS} ${CHECK}"
 
-assets:
+assets: deps
 	@echo "${HR}"
 	@echo "Copying..."
 	@if [ ! -d ${FONT_DIR} ] ; then \
@@ -76,5 +85,3 @@ clean:
 	@rm -f "${CSS_DIR}"/"${CROOGO_CSS}"
 	@rm -rf "${FONT_DIR}"
 	@echo "Generated files deleted: ${CHECK}"
-
-.PHONY: bootstrap
