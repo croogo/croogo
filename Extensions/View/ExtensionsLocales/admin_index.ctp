@@ -11,6 +11,10 @@ $this->append('actions');
 	echo $this->Croogo->adminAction(__d('croogo', 'Upload'),
 		array('action' => 'add')
 	);
+	echo $this->Croogo->adminAction(__d('croogo', 'Reset'),
+		array('action' => 'reset_locale'),
+		array('method' => 'post')
+	);
 $this->end();
 
 $this->start('table-heading');
