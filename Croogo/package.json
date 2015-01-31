@@ -1,0 +1,7 @@
+{
+	"name": "AdminTheme",
+	"description": "Croogo Default Admin Theme",
+	"devDependencies": {
+		"less": "~1.7"
+	}
+}
