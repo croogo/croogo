@@ -87,6 +87,21 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 	}
 
 /**
+ * Reset to default locale
+ */
+	public function admin_reset_locale() {
+		if ($this->request->is('post')) {
+			$result = $this->Setting->write('Site.locale', null);
+			if ($result) {
+				$this->Session->setFlash(sprintf(__d('croogo', "Locale setting has been cleared"), $locale), 'flash', array('class' => 'success'));
+			} else {
+				$this->Session->setFlash(__d('croogo', 'Could not clear Locale setting.'), 'flash', array('class' => 'error'));
+			}
+		}
+		return $this->redirect($this->referer());
+	}
+
+/**
  * admin_add
  *
  * @return void
