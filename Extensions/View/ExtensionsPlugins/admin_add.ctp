@@ -26,6 +26,7 @@ $this->append('tab-content');
 	echo $this->Html->tabStart('plugin-upload') .
 		$this->Form->input('Plugin.file', array(
 			'type' => 'file',
+			'label' => __d('croogo', 'File'),
 		));
 	echo $this->Html->tabEnd();
 
