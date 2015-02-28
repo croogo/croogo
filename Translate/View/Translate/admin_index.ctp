@@ -66,6 +66,7 @@ $this->start('actions');
 		echo $this->Html->tag('ul', $out, array('class' => 'dropdown-menu'));
 	endif;
 	echo '</div>';
+	echo $this->Croogo->adminActions();
 $this->end();
 
 if (count($translations) == 0):
