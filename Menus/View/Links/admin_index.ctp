@@ -18,6 +18,7 @@ $this->append('actions');
 		array('action' => 'add', $menu['Menu']['id']),
 		array('button' => 'success')
 	);
+	echo $this->Croogo->adminActions();
 $this->end();
 
 	if (isset($this->request->params['named'])) {
