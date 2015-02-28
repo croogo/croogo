@@ -40,6 +40,7 @@ endif;
 				array('action' => 'add'),
 				array('button' => 'success')
 			);
+			echo $this->Croogo->adminActions();
 		endif;
 		?>
 	</div>
