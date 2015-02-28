@@ -62,6 +62,7 @@ $this->Html
 	echo $this->Croogo->adminAction(__d('croogo', 'Edit Actions'),
 		array('controller' => 'acl_actions', 'action' => 'index', 'permissions' => 1)
 	);
+	echo $this->Croogo->adminActions();
 ?>
 <?php $this->end(); ?>
 
