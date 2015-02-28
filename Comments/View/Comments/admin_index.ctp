@@ -33,6 +33,7 @@ $this->append('actions');
 		__d('croogo', 'Approval'),
 		array('action' => 'index', '?' => array('status' => '0'))
 	);
+	echo $this->Croogo->adminActions();
 $this->end();
 
 $this->append('form-start', $this->Form->create('Comment', array('url' => array('controller' => 'comments', 'action' => 'process', 'class' => 'form-inline'))));
