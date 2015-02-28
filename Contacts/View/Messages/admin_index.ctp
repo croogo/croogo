@@ -50,6 +50,7 @@ $this->append('actions');
 			'status' => '1',
 		),
 	));
+	echo $this->Croogo->adminActions();
 $this->end();
 
 $this->append('form-start', $this->Form->create('Message', array('url' => array('controller' => 'messages', 'action' => 'process', 'class' => 'form-inline'))));
