@@ -15,6 +15,7 @@ $this->append('actions');
 		array('action' => 'reset_locale'),
 		array('method' => 'post')
 	);
+	echo $this->Croogo->adminActions();
 $this->end();
 
 $this->start('table-heading');
