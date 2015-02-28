@@ -13,6 +13,7 @@ $this->append('actions');
 		array('action' => 'create'),
 		array('button' => 'success')
 	);
+	echo $this->Croogo->adminActions();
 $this->end();
 
 $this->append('search', $this->element('admin/nodes_search'));
