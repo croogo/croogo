@@ -13,6 +13,7 @@ $this->append('actions');
 		__d('croogo', 'New Term'),
 		array('action' => 'add', $vocabulary['Vocabulary']['id'])
 	);
+	echo $this->Croogo->adminActions();
 $this->end();
 
 	if (isset($this->request->params['named'])) {
