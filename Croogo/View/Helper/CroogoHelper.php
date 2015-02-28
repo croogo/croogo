@@ -349,6 +349,40 @@ class CroogoHelper extends AppHelper {
 	}
 
 /**
+* Show Actions buttons
+*
+* @param array $options
+* @return string
+*/
+	public function adminActions($options = array()) {
+		$output = '';
+		$viewActions = Configure::read('Admin.viewActions.' . Inflector::camelize($this->request->params['controller']) . '/' . $this->request->params['action']);
+		if (is_array($viewActions)) {
+		    foreach ($viewActions as $title => $link) {
+		        $linkOptions = $options;
+		        $confirmMessage = false;
+		        if (is_array($link)) {
+		            $config = $link[key($link)];
+		            if (isset($config['options'])) {
+		                $linkOptions = Hash::merge($options, $config['options']);
+		            }
+		            if (isset($config['confirmMessage'])) {
+		                $confirmMessage = $config['confirmMessage'];
+		                unset($config['confirmMessage']);
+		            }
+		            if (isset($config['title'])) {
+		                $title = $config['title'];
+		            }
+		            $link = key($link);
+		        }
+		        $link = $this->Menus->linkStringToArray($link);
+		        $output .= $this->adminAction($title, $link, $linkOptions, $confirmMessage);
+		    }
+		}
+		return $output;
+	}
+
+/**
  * Create a tab title/link
  */
 	public function adminTab($title, $url, $options = array()) {
