@@ -99,6 +99,25 @@ class Croogo {
 	}
 
 /**
+* In admin panel for the provided action, the link will appear in the top 'Actions'.
+*
+* @param string $action in the format ControllerName/action_name
+* @param string $title Link title
+* @param string $url
+*/
+	public static function hookAdminAction($action, $title, $url) {
+		$viewActions = Configure::read('Admin.viewActions');
+		if (!is_array($viewActions)) {
+		    $viewActions = array();
+		}
+		if (!isset($viewActions[$action])) {
+		    $viewActions[$action] = array();
+		}
+		$viewActions[$action][$title] = $url;
+		Configure::write('Admin.viewActions', $viewActions);
+	}
+
+/**
  * In admin panel for the provided action, the link will appear in table rows under 'Actions' column.
  *
  * @param string $action in the format ControllerName/action_name
