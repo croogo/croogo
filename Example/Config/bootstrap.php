@@ -115,6 +115,14 @@ Croogo::mergeConfig('Wysiwyg.actions', array(
 ));
 
 /**
+ * Admin action
+ *
+ * When browsing the content list in admin panel (Content > List),
+ * an extra button called 'Example' will be placed on the top actions.
+ */
+Croogo::hookAdminAction('Nodes/admin_index', 'Example', 'plugin:example/controller:example/action:index');
+
+/**
  * Admin row action
  *
  * When browsing the content list in admin panel (Content > List),
