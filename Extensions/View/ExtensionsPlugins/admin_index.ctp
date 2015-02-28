@@ -16,6 +16,7 @@ $this->Html
 		__d('croogo', 'Upload'),
 		array('action' => 'add')
 	);
+	echo $this->Croogo->adminActions();
 ?>
 <?php $this->end(); ?>
 
