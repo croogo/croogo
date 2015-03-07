@@ -540,7 +540,7 @@ class NodesController extends NodesAppController {
 		$visibilityRolesField = $Node->escapeField('visibility_roles');
 		$this->paginate[$Node->alias]['conditions'] = array(
 			$Node->escapeField('status') => $Node->status(),
-			$Node->escapeField('terms') . ' LIKE' => '%"' . $this->request->params['named']['slug'] . '"%',
+			$Node->escapeField('terms') . ' LIKE' => '%' . $this->request->params['named']['slug'] . '%',
 			'OR' => array(
 				$visibilityRolesField => '',
 				$visibilityRolesField . ' LIKE' => '%"' . $this->Croogo->roleId() . '"%',
