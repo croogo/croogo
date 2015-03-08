@@ -56,6 +56,11 @@ $this->append('tab-heading');
 	echo $this->Croogo->adminTabs();
 $this->end();
 
+if (Configure::read('Site.post_id_slug') == 1){
+	$slug_type = 'hidden';
+}else{
+	$slug_type = 'text';
+}
 $this->append('tab-content');
 
 	echo $this->Html->tabStart('node-main') .
@@ -77,6 +82,7 @@ $this->append('tab-content');
 		)) .
 		$this->Form->input('slug', array(
 			'class' => trim($inputClass . ' slug'),
+			'type' => $slug_type,
 			'label' => __d('croogo', 'Slug'),
 		)) .
 		$this->Form->input('excerpt', array(
