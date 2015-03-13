@@ -6,6 +6,8 @@ if (empty($modelClass)) {
 if (!isset($className)) {
 	$className = strtolower($this->name);
 }
+$humanName = Inflector::humanize(Inflector::underscore($modelClass));
+$i18nDomain = empty($this->params['plugin']) ? 'croogo' : $this->params['plugin'];
 
 $rowClass = $this->Theme->getCssClass('row');
 $columnFull = $this->Theme->getCssClass('columnFull');
@@ -36,7 +38,7 @@ endif;
 			echo $actionsBlock;
 		else:
 			echo $this->Croogo->adminAction(
-				__d('croogo', 'New %s', __d('croogo', Inflector::singularize($this->name))),
+				__d('croogo', 'New %s', __d($i18nDomain, $humanName)),
 				array('action' => 'add'),
 				array('button' => 'success')
 			);
