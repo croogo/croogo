@@ -11,7 +11,7 @@ $header = <<<EOF
 
 if (\$this->action == 'admin_edit') {
 	\$this->Html->addCrumb(\$this->request->data['$modelClass']['$displayField'], '/' . \$this->request->url);
-	\$this->viewVars['title_for_layout'] = '$pluralHumanName: ' . \$this->request->data['$modelClass']['$displayField'];
+	\$this->viewVars['title_for_layout'] = __d('$underscoredPluginName', '$pluralHumanName') . ': ' . \$this->request->data['$modelClass']['$displayField'];
 } else {
 	\$this->Html->addCrumb(__d('croogo', 'Add'), '/' . \$this->request->url);
 }
