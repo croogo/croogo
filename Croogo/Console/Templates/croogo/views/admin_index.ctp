@@ -51,7 +51,13 @@ echo $tableHeaders;
 				}
 			}
 			if ($isKey !== true) {
-				echo "\t\t\$row[] = h(\${$singularVar}['{$modelClass}']['{$field}']);\n";
+				switch ($schema[$field]['type']) {
+					case 'boolean':
+						echo "\t\t\$row[] = \$this->Html->status(\${$singularVar}['{$modelClass}']['{$field}']);\n";
+						break;
+					default:
+						echo "\t\t\$row[] = h(\${$singularVar}['{$modelClass}']['{$field}']);\n";
+				}
 			}
 		}
 
