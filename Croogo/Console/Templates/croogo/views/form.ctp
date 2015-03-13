@@ -35,10 +35,11 @@ echo "\$this->append('tab-content');\n";
 		if ($field == $primaryKey):
 			continue;
 		elseif (!in_array($field, array('created', 'modified', 'updated'))):
-			$fieldLabel = Inflector::humanize($field);
+			$fieldLabel = chop(chop($field, '_fk'), '_id');
+			$fieldLabel = Inflector::humanize($fieldLabel);
 			echo <<<EOF
 	echo \$this->Form->input('{$field}', array(
-		'label' => '$fieldLabel',
+		'label' =>  __d('$underscoredPluginName', '$fieldLabel'),
 	));\n
 EOF;
 		endif;
