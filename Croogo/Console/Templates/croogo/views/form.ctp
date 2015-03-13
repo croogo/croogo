@@ -34,7 +34,7 @@ echo "\$this->append('tab-content');\n";
 	foreach ($fields as $field):
 		if ($field == $primaryKey):
 			continue;
-		elseif (!in_array($field, array('created', 'modified', 'updated'))):
+		elseif (!in_array($field, array('created', 'modified', 'updated', 'created_by', 'updated_by'))):
 			$fieldLabel = Inflector::humanize($field);
 			echo <<<EOF
 	echo \$this->Form->input('{$field}', array(
