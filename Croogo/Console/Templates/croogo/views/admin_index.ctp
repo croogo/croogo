@@ -52,6 +52,9 @@ echo $tableHeaders;
 			}
 			if ($isKey !== true) {
 				switch ($schema[$field]['type']) {
+					case 'datetime':
+						echo "\t\t\$row[] = \$this->Time->format(\${$singularVar}['{$modelClass}']['{$field}'], '%Y-%m-%d %H:%M', __d('croogo', 'Invalid datetime'));\n";	
+						break;
 					case 'boolean':
 						echo "\t\t\$row[] = \$this->Html->status(\${$singularVar}['{$modelClass}']['{$field}']);\n";	
 						break;
