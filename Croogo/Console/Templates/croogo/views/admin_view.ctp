@@ -69,6 +69,9 @@ foreach ($fields as $field) {
 	if ($isKey !== true) {
 		echo "\t\t<dt><?php echo __d('croogo', '" . Inflector::humanize($field) . "'); ?></dt>\n";
 		switch ($schema[$field]['type']) {
+			case 'datetime':
+				echo "\t\t<dd>\n\t\t\t<?php echo \$this->Time->format(\${$singularVar}['{$modelClass}']['{$field}'], '%Y-%m-%d %H:%M:%S', __d('croogo', 'Invalid datetime')); ?>\n\t\t\t&nbsp;\n\t\t</dd>\n";
+				break;
 			case 'boolean':
 				echo "\t\t<dd>\n\t\t\t<?php echo \$this->Html->status(\${$singularVar}['{$modelClass}']['{$field}']); ?>\n\t\t\t&nbsp;\n\t\t</dd>\n";
 				break;
