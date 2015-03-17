@@ -29,8 +29,12 @@ echo "\$this->append('tab-heading');\n";
 	echo "\techo \$this->Croogo->adminTabs();\n";
 echo "\$this->end();\n\n";
 
-echo "\$this->append('tab-content');\n";
-	echo "\techo \$this->Form->input('{$primaryKey}');\n";
+echo "\$this->append('tab-content');\n\n";
+
+	echo "\techo \$this->Html->tabStart('{$primaryTab}');\n\n";
+
+	echo "\t\techo \$this->Form->input('{$primaryKey}');\n\n";
+
 	foreach ($fields as $field):
 		if ($field == $primaryKey):
 			continue;
@@ -50,7 +54,11 @@ EOF;
 		endforeach;
 	endif;
 
-	echo "\techo \$this->Croogo->adminTabs();\n";
+	echo "\n";
+	echo "\techo \$this->Html->tabEnd();\n\n";
+
+	echo "\techo \$this->Croogo->adminTabs();\n\n";
+
 echo "\$this->end();\n\n";
 
 echo <<<EOF
