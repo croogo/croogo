@@ -36,7 +36,9 @@ endif;
 			echo $actionsBlock;
 		else:
 			echo $this->Croogo->adminAction(
-				__d('croogo', 'New %s', __d('croogo', Inflector::singularize($this->name))),
+				__d('croogo', 'New %s', __d(
+					(empty($this->params['plugin']) ? 'croogo' : $this->params['plugin']),
+					Inflector::humanize(Inflector::underscore($this->name)))),
 				array('action' => 'add'),
 				array('button' => 'success')
 			);
