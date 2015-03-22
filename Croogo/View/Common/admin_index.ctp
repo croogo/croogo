@@ -54,9 +54,9 @@ if (!$tableHeaders && isset($displayFields)):
 	$tableHeaders = array();
 	foreach ($displayFields as $field => $arr):
 		if ($arr['sort']):
-			$tableHeaders[] = $this->Paginator->sort($field, __d('croogo', $arr['label']));
+			$tableHeaders[] = $this->Paginator->sort($field, __d($i18nDomain, $arr['label']));
 		else:
-			$tableHeaders[] = __d('croogo', $arr['label']);
+			$tableHeaders[] = __d($i18nDomain, $arr['label']);
 		endif;
 	endforeach;
 	$tableHeaders[] = __d('croogo', 'Actions');
