@@ -793,6 +793,9 @@ class NodesController extends NodesAppController {
 		$event = new CakeEvent('Controller.Nodes.view', $this, compact('data'));
 		$this->getEventManager()->dispatch($event);
 
+        	$this->Node->id = $node['Node']['id'];
+        	$this->Node->saveField('visite_count', $node['Node']['visite_count'] + 1);
+        
 		$this->set('title_for_layout', $node[$Node->alias]['title']);
 		$this->set(compact('node', 'type', 'comments'));
 		$this->Croogo->viewFallback(array(
