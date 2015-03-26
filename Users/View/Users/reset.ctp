@@ -7,5 +7,5 @@
 			echo $this->Form->input('verify_password', array('type' => 'password', 'label' => __d('croogo', 'Verify Password')));
 		?>
 		</fieldset>
-	<?php echo $this->Form->end('Submit');?>
+	<?php echo $this->Form->end(__d('croogo', 'Reset'));?>
 </div>
