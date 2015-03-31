@@ -164,7 +164,7 @@ class UsersController extends UsersAppController {
 		if (!empty($this->request->data)) {
 			$this->User->create();
 			$this->request->data['User']['activation_key'] = md5(uniqid());
-			if ($this->User->save($this->request->data)) {
+			if ($this->User->saveAssociated($this->request->data)) {
 				$this->request->data['User']['id'] = $this->User->id;
 				$this->__sendActivationEmail();
 
@@ -190,7 +190,7 @@ class UsersController extends UsersAppController {
  */
 	public function admin_edit($id = null) {
 		if (!empty($this->request->data)) {
-			if ($this->User->save($this->request->data)) {
+			if ($this->User->saveAssociated($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The User has been saved'), 'flash', array('class' => 'success'));
 				return $this->Croogo->redirect(array('action' => 'edit', $this->User->id));
 			} else {
