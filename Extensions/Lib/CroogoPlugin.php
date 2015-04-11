@@ -78,17 +78,6 @@ class CroogoPlugin extends Object {
 	);
 
 /**
- * Optional plugins
- *
- * Subset bundled plugins that can be enabled/deactivated via
- * the Extensions panel
- */
-	protected $_optionalPlugins = array(
-		'Comments',
-		'Dashboards',
-	);
-
-/**
  * __construct
  */
 	public function __construct($migrationVersion = null) {
@@ -231,14 +220,12 @@ class CroogoPlugin extends Object {
 				$pluginData['needMigration'] = $this->needMigration($alias, $active);
 				return $pluginData;
 			} elseif ($this->_isBuiltin($alias)) {
-				$needMigration = $this->needMigration($alias, $active);
-				$active = CakePlugin::loaded($alias);
-				if (in_array($alias, $this->_optionalPlugins)) {
+				if ($this->needMigration($alias, $active)) {
 					$pluginData = array(
 						'name' => $alias,
 						'description' => "Croogo $alias plugin",
-						'active' => $active,
-						'needMigration' => $needMigration,
+						'active' => true,
+						'needMigration' => true,
 					);
 					return $pluginData;
 				}
@@ -266,13 +253,6 @@ class CroogoPlugin extends Object {
  */
 	public function plugins() {
 		$pluginAliases = $this->getPlugins();
-
-		$disabled = array_values(
-			array_diff($this->_optionalPlugins, CakePlugin::loaded())
-		);
-		$disabled = array_combine($disabled, $disabled);
-		$pluginAliases = array_merge($disabled, $pluginAliases);
-
 		$allPlugins = array();
 		foreach ($pluginAliases as $pluginAlias) {
 			$allPlugins[$pluginAlias] = $this->getData($pluginAlias);

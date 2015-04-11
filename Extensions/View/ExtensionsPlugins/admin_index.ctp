@@ -42,19 +42,17 @@ $this->Html
 		$statusIcon = $this->Html->status($pluginData['active']);
 
 		$actions = array();
-		if (!in_array($pluginAlias, $corePlugins)):
+		if (!in_array($pluginAlias, $bundledPlugins) && !in_array($pluginAlias, $corePlugins)):
 			$icon = $pluginData['active'] ? $this->Theme->getIcon('power-off') : $this->Theme->getIcon('power-on');
 			$actions[] = $this->Croogo->adminRowAction('',
 				array('action' => 'toggle',	$pluginAlias),
 				array('icon' => $icon, 'tooltip' => $toggleText, 'method' => 'post')
 			);
-			if (!in_array($pluginAlias, $bundledPlugins)):
-				$actions[] = $this->Croogo->adminRowAction('',
-					array('action' => 'delete', $pluginAlias),
-					array('icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Delete')),
-					__d('croogo', 'Are you sure?')
-				);
-			endif;
+			$actions[] = $this->Croogo->adminRowAction('',
+				array('action' => 'delete', $pluginAlias),
+				array('icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Delete')),
+				__d('croogo', 'Are you sure?')
+			);
 		endif;
 
 		if ($pluginData['active'] && !in_array($pluginAlias, $bundledPlugins) && !in_array($pluginAlias, $corePlugins)) {

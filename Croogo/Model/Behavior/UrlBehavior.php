@@ -32,8 +32,6 @@ class UrlBehavior extends ModelBehavior {
 				'type',
 				'slug',
 			),
-			'pass' => array(
-			)
 		);
 
 		if (is_string($config)) {
@@ -58,18 +56,10 @@ class UrlBehavior extends ModelBehavior {
 			foreach ($results as $i => $result) {
 				$url = $this->settings[$model->alias]['url'];
 				$fields = $this->settings[$model->alias]['fields'];
-				$pass = $this->settings[$model->alias]['pass'];
 				if (is_array($fields)) {
 					foreach ($fields as $field) {
 						if (isset($results[$i][$model->alias][$field])) {
 							$url[$field] = $results[$i][$model->alias][$field];
-						}
-					}
-				}
-				if (is_array($pass)) {
-					foreach ($pass as $field) {
-						if (isset($results[$i][$model->alias][$field])) {
-							$url[] = $results[$i][$model->alias][$field];
 						}
 					}
 				}
@@ -78,18 +68,10 @@ class UrlBehavior extends ModelBehavior {
 		} elseif (isset($results[$model->alias])) {
 			$url = $this->settings[$model->alias]['url'];
 			$fields = $this->settings[$model->alias]['fields'];
-			$pass = $this->settings[$model->alias]['pass'];
 			if (is_array($fields)) {
 				foreach ($fields as $field) {
 					if (isset($results[$i][$model->alias][$field])) {
 						$url[$field] = $results[$i][$model->alias][$field];
-					}
-				}
-			}
-			if (is_array($pass)) {
-				foreach ($pass as $field) {
-					if (isset($results[$i][$model->alias][$field])) {
-						$url[] = $results[$i][$model->alias][$field];
 					}
 				}
 			}

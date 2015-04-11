@@ -251,7 +251,7 @@ class SettingData {
 		array(
 			'id' => '32',
 			'key' => 'Hook.bootstraps',
-			'value' => 'Settings,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Wysiwyg,Ckeditor',
+			'value' => 'Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Wysiwyg,Ckeditor',
 			'title' => '',
 			'description' => '',
 			'input_type' => '',
@@ -314,15 +314,6 @@ class SettingData {
 			'weight' => '26',
 			'params' => 'multiple=checkbox
 options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "Menus.Link": "Link"}'
-		),
-		array(
-			'key' => 'Access Control.splitSession',
-			'value' => '',
-			'title' => 'Separate front-end and admin session',
-			'input_type' => 'checkbox',
-			'editable' => '1',
-			'weight' => '27',
-			'params' => ''
 		),
 		array(
 			'id' => '38',
