@@ -183,7 +183,10 @@ class CroogoAppControllerTest extends CroogoControllerTestCase {
 		$result = $this->testAction('/admin/test_app/index', array(
 			'return' => 'view',
 		));
-		$this->assertTrue(in_array('Paginator', $this->controller->helpers));
+		$this->assertTrue(
+			in_array('Paginator', $this->controller->helpers) or
+			array_key_exists('Paginator', $this->controller->helpers)
+		);
 	}
 
 /**

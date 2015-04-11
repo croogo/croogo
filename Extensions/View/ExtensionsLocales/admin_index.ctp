@@ -11,6 +11,10 @@ $this->append('actions');
 	echo $this->Croogo->adminAction(__d('croogo', 'Upload'),
 		array('action' => 'add')
 	);
+	echo $this->Croogo->adminAction('Reset Locale',
+		array('action' => 'reset_locale'),
+		array('method' => 'post')
+	);
 $this->end();
 
 $this->start('table-heading');
@@ -25,8 +29,12 @@ $this->end();
 
 $this->append('table-body');
 	$rows = array();
-	foreach ($locales as $locale):
+	foreach ($locales as $i => $locale):
 		$actions = array();
+		$language = null;
+		if (isset($languages[$i]['language'])) {
+			$language = $languages[$i]['language'];
+		}
 
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'activate', $locale),
@@ -52,6 +60,7 @@ $this->append('table-body');
 		$rows[] = array(
 			'',
 			$locale,
+			$language,
 			$status,
 			$actions,
 		);

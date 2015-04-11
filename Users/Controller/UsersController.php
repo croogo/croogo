@@ -352,6 +352,7 @@ class UsersController extends UsersAppController {
 			$this->request->data['User']['username'] = htmlspecialchars($this->request->data['User']['username']);
 			$this->request->data['User']['website'] = htmlspecialchars($this->request->data['User']['website']);
 			$this->request->data['User']['name'] = htmlspecialchars($this->request->data['User']['name']);
+			Croogo::dispatchEvent('Controller.Users.beforeRegistration', $this);
 			if ($this->User->save($this->request->data)) {
 				Croogo::dispatchEvent('Controller.Users.registrationSuccessful', $this);
 				$this->request->data['User']['password'] = null;
