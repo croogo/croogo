@@ -126,6 +126,13 @@ Admin.extra = function() {
 		$('#content .nav-tabs > li:first-child a').tab('show');
 	}
 	
+	// Apply buttons jump to current tab for persistence
+	$('#content form button[type="submit"][name="apply"]').click(function() {
+		$(this).parents('#content form:first').attr('action',
+			$(this).parents('#content form:first').attr('action').split('#')[0]
+			+ window.location.hash);
+	});
+	
 	if (typeof $.prototype.tabs == 'function') {
 		$('.tabs').tabs(); // legacy tabs from jquery-ui
 	}
