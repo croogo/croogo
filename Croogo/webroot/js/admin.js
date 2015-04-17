@@ -117,9 +117,15 @@ Admin.processLink = function(event) {
  * @return void
  */
 Admin.extra = function() {
+	// Activates tab based if hash starting with tab_* is given
+	hash = document.location.hash;
+	if (hash && hash.match("^#tab_")) {
+		$('#content .nav-tabs a[href=' + hash.replace('tab_', '') + ']').tab('show');
 	// Activates the first tab in #content
-	$('#content .nav-tabs > li:first-child a').tab('show');
-
+	} else {
+		$('#content .nav-tabs a:first').tab('show');
+	}
+	
 	if (typeof $.prototype.tabs == 'function') {
 		$('.tabs').tabs(); // legacy tabs from jquery-ui
 	}
