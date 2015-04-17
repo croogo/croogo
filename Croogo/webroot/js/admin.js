@@ -121,7 +121,7 @@ Admin.extra = function() {
 	hash = document.location.hash;
 	if (hash && hash.match("^#tab_")) {
 		$('#content .nav-tabs a[href=' + hash.replace('tab_', '') + ']').tab('show');
-	// Activates the first tab in #content
+	// Activates the first tab in #contentc by default
 	} else {
 		$('#content .nav-tabs a:first').tab('show');
 	}
