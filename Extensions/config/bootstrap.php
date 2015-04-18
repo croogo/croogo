@@ -16,8 +16,8 @@ Configure::write('Croogo.dashboardUrl', array(
 if (!Plugin::loaded('Migrations')) {
 	Plugin::load('Migrations', ['autoload' => true, 'classBase' => false]);
 }
-if (!Plugin::loaded('Settings')) {
-	Plugin::load('Settings', ['bootstrap' => true, 'classBase' => false]);
+if (!Plugin::loaded('Croogo/Settings')) {
+	Plugin::load('Croogo/Settings', ['bootstrap' => true, 'path' => Plugin::path('Croogo/Croogo') . '..' . DS . 'Settings' . DS]);
 }
 if (!Plugin::loaded('Search')) {
 	Plugin::load('Search', ['autoload' => true, 'classBase' => false]);
