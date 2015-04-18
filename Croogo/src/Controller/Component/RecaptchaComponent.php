@@ -3,6 +3,8 @@
 namespace Croogo\Croogo\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Core\Configure;
+use Cake\Event\Event;
 
 /**
  * Recaptcha Component
@@ -20,7 +22,7 @@ class RecaptchaComponent extends Component {
 
 	protected $controller = null;
 
-	public function startup(Controller $controller) {
+	public function startup(Event $event) {
 		$this->publickey = Configure::read('Service.recaptcha_public_key');
 		$this->privatekey = Configure::read('Service.recaptcha_private_key');
 
@@ -30,7 +32,7 @@ class RecaptchaComponent extends Component {
 		Configure::write("Recaptcha.pubKey", $this->publickey);
 		Configure::write("Recaptcha.privateKey", $this->privatekey);
 
-		$this->controller = $controller;
+		$this->controller = $event->subject();
 		$this->controller->helpers[] = 'Croogo.Recaptcha';
 	}
 

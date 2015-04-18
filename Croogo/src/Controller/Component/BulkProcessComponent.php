@@ -3,6 +3,8 @@
 namespace Croogo\Croogo\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Controller\Controller;
+use Cake\Event\Event;
 
 /**
  * BulkProcess Component
@@ -36,9 +38,8 @@ class BulkProcessComponent extends Component {
 /**
  * Startup
  */
-	public function startup(Controller $controller) {
-		parent::startup($controller);
-		$this->_controller = $controller;
+	public function startup(Event $event) {
+		$this->_controller = $event->subject();
 	}
 
 /**
