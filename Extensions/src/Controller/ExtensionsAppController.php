@@ -3,6 +3,8 @@
 namespace Croogo\Extensions\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
+
 /**
  * ExtensionsApp Controller
  *

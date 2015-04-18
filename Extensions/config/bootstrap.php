@@ -2,6 +2,7 @@
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Croogo\Extensions\CroogoPlugin;
 
 /**
  * Dashboard URL
@@ -17,7 +18,7 @@ if (!Plugin::loaded('Migrations')) {
 	Plugin::load('Migrations', ['autoload' => true, 'classBase' => false]);
 }
 if (!Plugin::loaded('Croogo/Settings')) {
-	Plugin::load('Croogo/Settings', ['bootstrap' => true, 'path' => Plugin::path('Croogo/Croogo') . '..' . DS . 'Settings' . DS]);
+	Plugin::load('Croogo/Settings', ['bootstrap' => true, 'path' => CroogoPlugin::path('Croogo/Settings')]);
 }
 if (!Plugin::loaded('Search')) {
 	Plugin::load('Search', ['autoload' => true, 'classBase' => false]);

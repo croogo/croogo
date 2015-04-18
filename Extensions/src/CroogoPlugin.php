@@ -791,4 +791,20 @@ class CroogoPlugin {
 		return $this->_saveBootstraps($reordered);
 	}
 
+	/**
+	 * Returns the filesystem path for a plugin
+	 *
+	 * @param string $plugin name of the plugin in CamelCase format
+	 * @return string path to the plugin folder
+	 * @throws \Cake\Core\Exception\MissingPluginException if the folder for plugin was not found or plugin has not been loaded
+	 */
+	public static function path($plugin)
+	{
+		if (strstr($plugin, 'Croogo/')) {
+			return realpath(Plugin::path('Croogo/Croogo') . '..' . DS . substr($plugin, 7) . DS) . DS;
+		}
+
+		return Plugin::path($plugin);
+	}
+
 }
