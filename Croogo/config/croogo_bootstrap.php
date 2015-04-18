@@ -86,20 +86,6 @@ Plugin::load(['Croogo/Extensions' => [
 Configure::load('Croogo/Extensions.events');
 
 /**
- * Setup custom paths
- */
-App::build(array(
-	'Console/Command' => array($croogoPath . 'Console' . DS . 'Command' . DS),
-	'View' => array($croogoPath . 'View' . DS),
-	'View/Helper' => array($croogoPath . 'View' . DS . 'Helper' . DS),
-), App::APPEND);
-if ($theme = Configure::read('Site.theme')) {
-	App::build(array(
-		'View/Helper' => array(App::themePath($theme) . 'Helper' . DS),
-	));
-}
-
-/**
  * List of core plugins
  */
 $corePlugins = [
