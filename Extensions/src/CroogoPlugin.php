@@ -60,12 +60,12 @@ class CroogoPlugin {
  * @access public
  */
 	public $corePlugins = array(
-		'Acl',
-		'Croogo',
-		'Extensions',
+		'Croogo/Acl',
+		'Croogo/Croogo',
+		'Croogo/Extensions',
 		'Migrations',
 		'Search',
-		'Settings',
+		'Croogo/Settings',
 	);
 
 /**
@@ -75,15 +75,15 @@ class CroogoPlugin {
  * @access public
  */
 	public $bundledPlugins = array(
-		'Blocks',
-		'Comments',
-		'Contacts',
-		'FileManager',
-		'Meta',
-		'Menus',
-		'Nodes',
-		'Taxonomy',
-		'Users',
+		'Croogo/Blocks',
+		'Croogo/Comments',
+		'Croogo/Contacts',
+		'Croogo/FileManager',
+		'Croogo/Meta',
+		'Croogo/Menus',
+		'Croogo/Nodes',
+		'Croogo/Taxonomy',
+		'Croogo/Users',
 	);
 
 /**

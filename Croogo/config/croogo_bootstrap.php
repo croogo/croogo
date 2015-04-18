@@ -103,13 +103,15 @@ $aclPlugin = Configure::read('Site.acl_plugin');
 $pluginBootstraps = Configure::read('Hook.bootstraps');
 $plugins = array_filter(explode(',', $pluginBootstraps));
 
+$plugins[] = 'Croogo/Users';
+
 if (!in_array($aclPlugin, $plugins)) {
 	$plugins = Hash::merge((array)$aclPlugin, $plugins);
 }
 foreach ($plugins as $plugin) {
 	$pluginName = Inflector::camelize($plugin);
 	$pluginPath = APP . 'Plugin' . DS . $pluginName;
-	if (!file_exists($pluginPath)) {
+	if ((!file_exists($pluginPath)) && (!strstr($plugin, 'Croogo/'))) {
 		$pluginFound = false;
 		foreach (App::path('Plugin') as $path) {
 			if (is_dir($path . $pluginName)) {
@@ -131,8 +133,7 @@ foreach ($plugins as $plugin) {
 		)
 	);
 	if (in_array($pluginName, $corePlugins)) {
-		$option[$pluginName]['namespace'] = 'Croogo\\' . $pluginName . '\\';
-		$option[$pluginName]['classBase'] = false;
+		$option[$pluginName]['path'] = CroogoPlugin::path($plugin);
 	}
 	CroogoPlugin::load($option);
 }
