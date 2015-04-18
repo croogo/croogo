@@ -2,6 +2,7 @@
 
 namespace Croogo\Croogo\Config;
 
+use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
@@ -34,15 +35,16 @@ Configure::write('Croogo.Api.path', 'api');
 /**
  * Cache configuration
  */
-$defaultEngine = Configure::read('Cache.defaultEngine');
+//debug(Configure::read());exit();
+$defaultEngine = Cache::config('default')['className'];
 $defaultPrefix = Configure::read('Cache.defaultPrefix');
 $cacheConfig = array(
 	'duration' => '+1 hour',
 	'path' => CACHE . 'queries' . DS,
-	'className' => $defaultEngine,
+	'engine' => $defaultEngine,
 	'prefix' => $defaultPrefix,
 );
-Configure::write('Cache.defaultConfig', $cacheConfig);
+Configure::write('Croogo.Cache.defaultConfig', $cacheConfig);
 
 /**
  * Settings
