@@ -70,7 +70,7 @@ if (Configure::check('Site.asset_timestamp')) {
 }
 
 // CakePHP Acl
-Plugin::load(['Cake/Acl' => ['autoload' => true]]);
+Plugin::load(['Acl' => ['autoload' => true]]);
 
 /**
  * Extensions
