@@ -3,7 +3,7 @@
 namespace Croogo\Extensions;
 
 use Cake\Utility\Folder;
-use Extensions\Lib\CroogoComposer;
+use Croogo\Extensions\CroogoComposer;
 /**
  * Extensions Installer
  *

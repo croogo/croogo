@@ -1,14 +1,13 @@
 <?php
 
-namespace Croogo\Croogo\Console\Command;
+namespace Croogo\Croogo\Shell;
 
-use App\Console\Command\AppShell;
 use App\Controller\AppController;
 use Cake\Controller\Controller;
 use Cake\Network\Request;
 use Cake\Network\Response;
-use Extensions\Lib\CroogoPlugin;
-use Extensions\Lib\CroogoTheme;
+use Croogo\Extensions\CroogoPlugin;
+use Croogo\Extensions\CroogoTheme;
 /**
  * Ext Shell
  *
@@ -25,7 +24,7 @@ use Extensions\Lib\CroogoTheme;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtShell extends AppShell {
+class ExtShell extends CroogoAppShell {
 
 /**
  * Models we use

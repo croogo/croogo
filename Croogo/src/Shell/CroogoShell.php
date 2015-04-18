@@ -1,10 +1,9 @@
 <?php
 
-namespace Croogo\Croogo\Console\Command;
+namespace Croogo\Croogo\Shell;
 
-use App\Console\Command\AppShell;
 use Cake\Utility\Security;
-use Install\Lib\AssetGenerator;
+use Croogo\Install\AssetGenerator;
 /**
  * Croogo Shell
  *
@@ -15,10 +14,10 @@ use Install\Lib\AssetGenerator;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoShell extends AppShell {
+class CroogoShell extends CroogoAppShell {
 
 	public $tasks = array(
-		'Croogo.Upgrade',
+		'Croogo/Croogo.Upgrade',
 	);
 
 /**

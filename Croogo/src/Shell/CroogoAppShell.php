@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Console;
+namespace Croogo\Croogo\Shell;
 
 use Cake\Console\Shell;
 /**

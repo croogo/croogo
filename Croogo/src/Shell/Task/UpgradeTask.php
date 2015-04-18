@@ -9,8 +9,12 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-namespace Croogo\Croogo\Console\Command\Task;
-class UpgradeTask extends AppShell {
+
+namespace Croogo\Croogo\Shell\Task;
+
+use Croogo\Croogo\Shell\CroogoAppShell;
+
+class UpgradeTask extends CroogoAppShell {
 
 /**
  * maps 1.4 controllers to the current plugin

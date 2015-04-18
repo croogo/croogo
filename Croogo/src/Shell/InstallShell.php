@@ -1,11 +1,11 @@
 <?php
 
-namespace Croogo\Croogo\Console\Command;
+namespace Croogo\Croogo\Shell;
 
-use App\Console\Command\AppShell;
-use Extensions\Lib\CroogoPlugin;
-use Extensions\Lib\CroogoTheme;
-use Extensions\Lib\ExtensionsInstaller;
+use Croogo\Croogo\Shell\CroogoAppShell;
+use Croogo\Extensions\CroogoPlugin;
+use Croogo\Extensions\CroogoTheme;
+use Croogo\Extensions\ExtensionsInstaller;
 /**
  * Install Shell
  *
@@ -20,7 +20,7 @@ use Extensions\Lib\ExtensionsInstaller;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class InstallShell extends AppShell {
+class InstallShell extends CroogoAppShell {
 
 /**
  * Tmp path to download extensions to
