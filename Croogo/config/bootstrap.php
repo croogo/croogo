@@ -2,7 +2,7 @@
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Croogo\Lib\Croogo;
+use Croogo\Croogo;
 
 require_once 'croogo_bootstrap.php';
 
