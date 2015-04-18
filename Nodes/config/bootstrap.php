@@ -6,7 +6,7 @@ use Croogo\Croogo\Cache\CroogoCache;
 use Croogo\Croogo\Croogo;
 
 $cacheConfig = array_merge(
-	Configure::read('Cache.defaultConfig'),
+	Configure::read('Croogo.Cache.defaultConfig'),
 	array('groups' => array('nodes'))
 );
 CroogoCache::config('nodes', $cacheConfig);
