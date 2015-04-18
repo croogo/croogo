@@ -1,14 +1,14 @@
 <?php
 
-namespace Croogo\Extensions\Controller;
+namespace Croogo\Extensions\Controller\Admin;
 
-use Extensions\Controller\ExtensionsAppController;
+use Croogo\Extensions\Controller\ExtensionsAppController;
 class ExtensionsDashboardController extends ExtensionsAppController {
 
 /**
  * Admin dashboard
  */
-	public function admin_index() {
+	public function index() {
 		$this->set('title_for_layout', __d('croogo', 'Dashboard'));
 	}
 

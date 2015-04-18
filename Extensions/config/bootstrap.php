@@ -8,9 +8,9 @@ use Croogo\Extensions\CroogoPlugin;
  * Dashboard URL
  */
 Configure::write('Croogo.dashboardUrl', array(
-	'admin' => true,
-	'plugin' => 'extensions',
-	'controller' => 'extensions_dashboard',
+	'prefix' => 'admin',
+	'plugin' => 'Croogo/Extensions',
+	'controller' => 'ExtensionsDashboard',
 	'action' => 'index',
 ));
 

@@ -22,9 +22,10 @@ class ExtensionsAppController extends AppController {
  *
  * @return void
  */
-	public function beforeFilter() {
-		parent::beforeFilter();
-		$this->Security->requirePost('admin_delete', 'admin_toggle', 'admin_activate');
+	public function initialize() {
+		if (in_array($this->request->param('action'), array('admin_delete', 'admin_toggle', 'admin_activate'))) {
+			$this->request->allowMethod('post');
+		}
 	}
 
 }
