@@ -22,5 +22,5 @@ Configure::write('Croogo.installed',
 	file_exists(APP . 'Config' . DS . 'croogo.php')
 );
 if (!Configure::read('Croogo.installed') || !Configure::read('Install.secured')) {
-	Plugin::load('Install', array('routes' => true));
+	Plugin::load('Croogo/Install', ['routes' => true, 'path' => Plugin::path('Croogo/Croogo') . '..' . DS . 'Install' . DS]);
 }
