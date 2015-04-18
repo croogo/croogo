@@ -27,8 +27,8 @@ class CroogoRouterTest extends CroogoTestCase {
  */
 	public function testHomeRoute() {
 		$promoted = array(
-			'plugin' => 'nodes',
-			'controller' => 'nodes',
+			'plugin' => 'Croogo/nodes',
+			'controller' => 'Nodes',
 			'action' => 'promoted',
 		);
 		$result = CroogoRouter::connect('/', $promoted);
@@ -41,8 +41,8 @@ class CroogoRouterTest extends CroogoTestCase {
 
 		// another route
 		$index = array(
-			'plugin' => 'nodes',
-			'controller' => 'nodes',
+			'plugin' => 'Croogo/Nodes',
+			'controller' => 'Nodes',
 			'action' => 'index',
 		);
 		$result = CroogoRouter::connect('/nodes', $index);
@@ -51,15 +51,15 @@ class CroogoRouterTest extends CroogoTestCase {
 		$this->assertEquals($promoted, array_intersect_key($promoted, $reversed));
 
 		$terms = array(
-			'plugin' => 'nodes',
-			'controller' => 'nodes',
+			'plugin' => 'Croogo/Nodes',
+			'controller' => 'Nodes',
 			'action' => 'terms',
 		);
 		$result = CroogoRouter::connect('/', $terms);
 		$this->assertEquals(3, count($result));
 
 		// override '/' route
-		Router::promote();
+//		Router::promote();
 		$reversed = Router::parse('/');
 		$this->assertEquals($terms, array_intersect_key($terms, $reversed));
 	}
@@ -69,8 +69,8 @@ class CroogoRouterTest extends CroogoTestCase {
 
 		$params = array(
 			'url' => array(),
-			'plugin' => 'nodes',
-			'controller' => 'nodes',
+			'plugin' => 'Croogo/Nodes',
+			'controller' => 'Nodes',
 			'action' => 'index',
 			'type' => 'blog',
 		);
@@ -85,8 +85,8 @@ class CroogoRouterTest extends CroogoTestCase {
 		CroogoRouter::contentType('page');
 		$params = array(
 			'url' => array(),
-			'plugin' => 'nodes',
-			'controller' => 'nodes',
+			'plugin' => 'Croogo/Nodes',
+			'controller' => 'Nodes',
 			'action' => 'index',
 			'type' => 'page',
 		);
@@ -97,6 +97,8 @@ class CroogoRouterTest extends CroogoTestCase {
 	}
 
 	public function testRoutableContentTypes() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$Type = ClassRegistry::init('Taxonomy.Type');
 		$type = $Type->create(array(
 			'title' => 'Press Release',
@@ -132,6 +134,8 @@ class CroogoRouterTest extends CroogoTestCase {
  * testWhitelistedDetectorWithInvalidIp
  */
 	public function testWhitelistedDetectorWithInvalidIp() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$request = $this->getMock('Request', array('clientIp'));
 		$request->addDetector('whitelisted', array(
 			'callback' => array('CroogoRouter', 'isWhitelistedRequest'),
@@ -148,6 +152,8 @@ class CroogoRouterTest extends CroogoTestCase {
  * testWhitelistedDetectorWithValidIp
  */
 	public function testWhitelistedDetectorWithValidIp() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$request = $this->getMock('Request', array('clientIp'));
 		$request->addDetector('whitelisted', array(
 			'callback' => array('CroogoRouter', 'isWhitelistedRequest'),

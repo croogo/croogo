@@ -16,8 +16,8 @@ Router::connect('/:api/:prefix/users/lookup', array(
 ));
 
 // Users
-CroogoRouter::connect('/register', array('plugin' => 'users', 'controller' => 'users', 'action' => 'add'));
+CroogoRouter::connect('/register', array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'add'));
 
 CroogoRouter::connect('/user/:username', array(
-	'plugin' => 'users', 'controller' => 'users', 'action' => 'view'), array('pass' => array('username')
+	'plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'view'), array('pass' => array('username')
 ));

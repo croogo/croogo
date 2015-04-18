@@ -2,6 +2,8 @@
 
 namespace Croogo\Croogo\Shell;
 
+use Cake\Console\Exception\ConsoleException;
+use Cake\Utility\Inflector;
 use Croogo\Croogo\Shell\CroogoAppShell;
 use Croogo\Extensions\CroogoPlugin;
 use Croogo\Extensions\CroogoTheme;

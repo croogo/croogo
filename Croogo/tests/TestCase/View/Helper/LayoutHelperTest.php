@@ -11,14 +11,6 @@ use Croogo\Croogo\TestSuite\CroogoTestCase;
 use Croogo\Croogo\View\Helper\CroogoHtmlHelper;
 use Croogo\Croogo\View\Helper\LayoutHelper;
 
-class TheLayoutTestController extends Controller {
-
-	public $name = 'TheTest';
-
-	public $uses = null;
-
-}
-
 class LayoutHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(
@@ -43,7 +35,7 @@ class LayoutHelperTest extends CroogoTestCase {
 			'action' => 'index',
 			'named' => array(),
 		);
-		$view = new View(new TheLayoutTestController($request, new Response()));
+		$view = new View($request, new Response());
 		$this->Layout = new LayoutHelper($view);
 		$this->Html = new CroogoHtmlHelper($view);
 		$this->_appEncoding = Configure::read('App.encoding');
@@ -85,16 +77,18 @@ class LayoutHelperTest extends CroogoTestCase {
 	public function testStatus() {
 		$ok = $this->Html->icon('ok', array('class' => 'green'));
 		$remove = $this->Html->icon('remove', array('class' => 'red'));
-		$this->assertEqual($this->Layout->status(true), $ok);
-		$this->assertEqual($this->Layout->status(1), $ok);
-		$this->assertEqual($this->Layout->status(false), $remove);
-		$this->assertEqual($this->Layout->status(0), $remove);
+		$this->assertEquals($this->Layout->status(true), $ok);
+		$this->assertEquals($this->Layout->status(1), $ok);
+		$this->assertEquals($this->Layout->status(false), $remove);
+		$this->assertEquals($this->Layout->status(0), $remove);
 	}
 
 /**
  * testIsLoggedIn
  */
 	public function testIsLoggedIn() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$session = new SessionComponent($this->ComponentRegistry);
 		$session->delete('Auth');
 		$this->assertFalse($this->Layout->isLoggedIn());
@@ -111,6 +105,8 @@ class LayoutHelperTest extends CroogoTestCase {
  * testGetRoleId
  */
 	public function testGetRoleId() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$session = new SessionComponent($this->ComponentRegistry);
 		$session->write('Auth.User', array(
 			'id' => 1,
@@ -157,6 +153,8 @@ class LayoutHelperTest extends CroogoTestCase {
  * testDisplayFields
  */
 	public function testDisplayFields() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$User = ClassRegistry::init('Users.User');
 		$rows = $User->find('all');
 
@@ -262,8 +260,10 @@ class LayoutHelperTest extends CroogoTestCase {
  * Test filterElements shortcode detection
  */
 	public function testFilterElementWithoutAttributes() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$content = 'Lorem [element:element_name] ipsum';
-		$View = $this->getMock('View');
+		$View = $this->getMock('\\Cake\\View\\View');
 		$Layout = new LayoutHelper($View);
 
 		$View
@@ -285,8 +285,10 @@ class LayoutHelperTest extends CroogoTestCase {
  * Test filterElements with short syntax
  */
 	public function testFilterElementShortSyntax() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$content = 'Lorem [e:element_name] ipsum';
-		$View = $this->getMock('View');
+		$View = $this->getMock('\\Cake\\View\\View');
 		$Layout = new LayoutHelper($View);
 
 		$View
@@ -308,8 +310,10 @@ class LayoutHelperTest extends CroogoTestCase {
  * Test filterElements with multiple elements
  */
 	public function testFilterElementMultipleElements() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$content = 'Lorem [element:first] ipsum [element:second] dolor sit.';
-		$View = $this->getMock('View');
+		$View = $this->getMock('\\Cake\\View\\View');
 		$Layout = new LayoutHelper($View);
 
 		$View
@@ -332,8 +336,10 @@ class LayoutHelperTest extends CroogoTestCase {
  * Test filterElements and parameter parsing
  */
 	public function testFilterElementParseParams() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$content = 'Lorem [element:first id=123 cache=var1 nextvar="with quotes" and=\'simple quotes\'] ipsum';
-		$View = $this->getMock('View');
+		$View = $this->getMock('\\Cake\\View\\View');
 		$View->viewVars['block'] = array('title' => 'Hello world');
 		$Layout = new LayoutHelper($View);
 
@@ -357,8 +363,10 @@ class LayoutHelperTest extends CroogoTestCase {
  * Test filterElements with quoted digits
  */
 	public function testFilterElementParamsValueQuotedDigit() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$content = 'Lorem [element:issue_list issuesToShow="5"]';
-		$View = $this->getMock('View');
+		$View = $this->getMock('\\Cake\\View\\View');
 		$Layout = new LayoutHelper($View);
 
 		$View
@@ -376,8 +384,10 @@ class LayoutHelperTest extends CroogoTestCase {
  * Test filterElements with value containing '=' sign
  */
 	public function testFilterElementParamsValueContainsEqual() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$content = 'Lorem [element:map plugin="plugandrent" tricky-query="te=st" ]';
-		$View = $this->getMock('View');
+		$View = $this->getMock('\\Cake\\View\\View');
 		$Layout = new LayoutHelper($View);
 
 		$View

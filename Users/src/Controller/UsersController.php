@@ -3,7 +3,7 @@
 namespace Croogo\Users\Controller;
 
 use App\Network\Email\Email;
-use Users\Controller\UsersAppController;
+use Croogo\Users\Controller\UsersAppController;
 /**
  * Users Controller
  *

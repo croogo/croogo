@@ -1,6 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\Utility;
+use Cake\Core\Configure;
+use Cake\Log\Log;
 
 /**
  * StringConverter
@@ -101,7 +103,9 @@ class StringConverter {
 			$link = substr($link, 0, $pos);
 		}
 		$link = explode('/', $link);
-		$prefixes = Configure::read('Routing.prefixes');
+		//$prefixes = Configure::read('Routing.prefixes');
+		Log::write('notice', 'StringConverter::linkStringToArray doesn\'t know about the current prefixes. This needs to be looked at');
+		$prefixes = array();
 		$linkArr = array_fill_keys($prefixes, false);
 		foreach ($link as $linkElement) {
 			if ($linkElement != null) {

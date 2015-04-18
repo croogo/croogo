@@ -2,8 +2,6 @@
 
 namespace Croogo\Users\Model;
 
-use App\Controller\Component\AuthComponent;
-use Users\Model\UsersAppModel;
 /**
  * User
  *

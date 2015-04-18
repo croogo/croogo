@@ -13,6 +13,8 @@ class CroogoTest extends CroogoTestCase {
 	);
 
 	public function testCrossPluginHooks() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		Plugin::load(array('Shops', 'Suppliers'), array(
 			'bootstrap' => true,
 		));

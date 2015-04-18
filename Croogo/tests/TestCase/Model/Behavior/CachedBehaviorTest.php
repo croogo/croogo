@@ -1,9 +1,9 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
 
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Croogo\Croogo\TestSuite\CroogoTestCase;
-use Users\Model\User;
 class CachedBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
@@ -39,44 +39,46 @@ class CachedBehaviorTest extends CroogoTestCase {
 /**
  * testClearCache
  */
-//	public function testClearCache() {
-//		$cacheName = 'users';
-//		$prefixed = $cacheName . '_' . Configure::read('Config.language');
-//		Cache::delete($cacheName . '_eng', 'users_login');
-//		$this->User->useCache = true;
-//		$this->User->Behaviors->load('Croogo.Cached', array(
-//			'config' => 'users_login',
-//			'groups' => array('users'),
-//		));
-//
-//		// find() causes cache file to be created
-//		$users = $this->User->find('list', array(
-//			'cache' => array(
-//				'name' => $cacheName,
-//				'config' => 'users_login',
-//			),
-//		));
-//
-//		$cached = Cache::read($prefixed, 'users_login');
-//		$this->assertEquals(3, count($cached));
-//
-//		// delete() should delete/invalidate the cache
-//		$this->User->id = 2;
-//		$this->User->delete();
-//		$cached = Cache::read($prefixed, 'users_login');
-//		$this->assertFalse($cached);
-//
-//		// find() should recreate the cache file with the correct user count
-//		$users = $this->User->find('list', array(
-//			'cache' => array(
-//				'name' => $cacheName,
-//				'config' => 'users_login',
-//				'prefix' => '',
-//			),
-//		));
-//		$this->assertEquals(2, count($users));
-//		$cached = Cache::read($prefixed, 'users_login');
-//		$this->assertEquals(2, count($cached));
-//	}
+	public function testClearCache() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$cacheName = 'users';
+		$prefixed = $cacheName . '_' . Configure::read('Config.language');
+		Cache::delete($cacheName . '_eng', 'users_login');
+		$this->User->useCache = true;
+		$this->User->Behaviors->load('Croogo.Cached', array(
+			'config' => 'users_login',
+			'groups' => array('users'),
+		));
+
+		// find() causes cache file to be created
+		$users = $this->User->find('list', array(
+			'cache' => array(
+				'name' => $cacheName,
+				'config' => 'users_login',
+			),
+		));
+
+		$cached = Cache::read($prefixed, 'users_login');
+		$this->assertEquals(3, count($cached));
+
+		// delete() should delete/invalidate the cache
+		$this->User->id = 2;
+		$this->User->delete();
+		$cached = Cache::read($prefixed, 'users_login');
+		$this->assertFalse($cached);
+
+		// find() should recreate the cache file with the correct user count
+		$users = $this->User->find('list', array(
+			'cache' => array(
+				'name' => $cacheName,
+				'config' => 'users_login',
+				'prefix' => '',
+			),
+		));
+		$this->assertEquals(2, count($users));
+		$cached = Cache::read($prefixed, 'users_login');
+		$this->assertEquals(2, count($cached));
+	}
 
 }

@@ -75,10 +75,12 @@ $cache = [
 ];
 
 Cake\Cache\Cache::config($cache);
-Cake\Core\Plugin::load('Croogo/Croogo', ['path' => './']);
+Cake\Core\Plugin::load('Croogo/Croogo', ['bootstrap' => true, 'autoload' => true, 'path' => './']);
+Cake\Core\Plugin::load('Croogo/Extensions', ['autoload' => true, 'path' => '../Extensions/']);
 Cake\Core\Plugin::load('Croogo/Settings', ['autoload' => true, 'path' => '../Settings/']);
 Cake\Core\Plugin::load('Croogo/Nodes', ['autoload' => true, 'path' => '../Nodes/']);
 Cake\Core\Plugin::load('Croogo/Users', ['autoload' => true, 'path' => '../Users/']);
+Cake\Core\Plugin::load('Croogo/Example', ['autoload' => true, 'path' => '../Example/']);
 
 new Croogo\Settings\Test\Fixture\SettingFixture();
 

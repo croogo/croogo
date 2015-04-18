@@ -2,8 +2,13 @@
 
 namespace Croogo\Croogo\View\Helper;
 
-use App\View\Helper\AppHelper;
-use Croogo\Lib\CroogoStatus;
+use Cake\Controller\Component\AuthComponent;
+use Cake\Core\Configure;
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
+use Cake\View\Helper;
+use Cake\View\View;
+use Croogo\Croogo\CroogoStatus;
 /**
  * Croogo Helper
  *
@@ -14,7 +19,7 @@ use Croogo\Lib\CroogoStatus;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoHelper extends AppHelper {
+class CroogoHelper extends Helper {
 
 	public $helpers = array(
 		'Form' => array('className' => 'Croogo.CroogoForm'),

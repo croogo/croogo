@@ -5,6 +5,7 @@ namespace Croogo\Croogo\TestSuite;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\Network\Request;
 use Cake\TestSuite\TestCase;
 use Croogo\Croogo\Configure\CroogoJsonReader;
 use Croogo\Croogo\CroogoRouter;
@@ -41,7 +42,7 @@ class CroogoTestCase extends TestCase {
 	}
 
 	protected static function _restoreSettings() {
-		$configDir = Plugin::path('Croogo/Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS;
+		$configDir = Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'Config' . DS;
 		$source = $configDir . 'settings.default';
 		$target = $configDir . 'settings.json';
 		copy($source, $target);
@@ -55,7 +56,7 @@ class CroogoTestCase extends TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$appDir = Plugin::path('Croogo/Croogo') . 'Test' . DS . 'test_app' . DS;
+		$appDir = Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS;
 
 //		App::build(array(
 //			'Plugin' => array($appDir . 'Plugin' . DS),
@@ -63,8 +64,8 @@ class CroogoTestCase extends TestCase {
 //		), App::PREPEND);
 //		$this->_paths = App::paths();
 
-		Plugin::unload('Install');
-		Plugin::load('Example');
+		Plugin::unload('Croogo/Install');
+		Plugin::load('Croogo/Example', ['autoload' => true, 'path' => '../Example/']);
 		Configure::write('Acl.database', 'test');
 		$this->setupSettings($appDir);
 	}
@@ -74,11 +75,11 @@ class CroogoTestCase extends TestCase {
 			return;
 		}
 
-		$Setting = ClassRegistry::init('Settings.Setting');
-		$Setting->settingsPath = $appDir . 'Config' . DS . 'settings.json';
-		Configure::drop('settings');
-		Configure::config('settings', new CroogoJsonReader(dirname($Setting->settingsPath) . DS));
-		$Setting->writeConfiguration();
+//		$Setting = ClassRegistry::init('Settings.Setting');
+//		$Setting->settingsPath = $appDir . 'Config' . DS . 'settings.json';
+//		Configure::drop('settings');
+//		Configure::config('settings', new CroogoJsonReader(dirname($Setting->settingsPath) . DS));
+//		$Setting->writeConfiguration();
 	}
 
 	public function tearDown() {

@@ -3,6 +3,7 @@
 namespace Croogo\Croogo\Test\Fixture;
 
 use Croogo\Croogo\TestSuite\CroogoTestFixture;
+
 class OrderRecordFixture extends CroogoTestFixture {
 
 	public $fields = array(

@@ -2,7 +2,6 @@
 
 namespace Croogo\Users\Model;
 
-use App\Model\AppModel;
 /**
  * Users App Model
  *

@@ -2,7 +2,8 @@
 
 namespace Croogo\Croogo\Test\TestCase\Controller\Component;
 
-use Croogo\Controller\Component\BulkProcessComponent;
+use Cake\Controller\Controller;
+use Cake\Network\Request;
 use Croogo\Croogo\TestSuite\CroogoTestCase;
 class BulkProcessComponentTest extends CroogoTestCase {
 
@@ -12,8 +13,7 @@ class BulkProcessComponentTest extends CroogoTestCase {
 		$request = new Request();
 		$request->data = $data;
 		$controller = new Controller($request);
-		$controller->components = array('Croogo.BulkProcess');
-		$controller->constructClasses();
+		$controller->loadComponent('Croogo/Croogo.BulkProcess');
 		$controller->startupProcess();
 		return $controller;
 	}

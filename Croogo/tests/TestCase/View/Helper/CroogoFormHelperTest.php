@@ -39,7 +39,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			'/div',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 
 		$result = $this->CroogoForm->input('username', array(
 			'tooltip' => array(
@@ -65,7 +65,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			'/div',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 
 		$result = $this->CroogoForm->input('username', array(
 			'hiddenField' => false,
@@ -94,7 +94,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			'/label',
 			'/div',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 /**
@@ -121,7 +121,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			'/div',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 
 		// disable auto tooltips
 		$result = $this->CroogoForm->input('username', array(
@@ -141,7 +141,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			'/div',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 	public function testButtonDefault() {
@@ -154,7 +154,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			'Button',
 			'/button',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 	public function testButtonDanger() {
@@ -168,7 +168,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			'Button',
 			'/button',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 	public function testButtonWithIcon() {
@@ -188,7 +188,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			'  Button',
 			'/button',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 	public function testSubmitDefault() {
@@ -207,7 +207,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			'/div',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 	public function testSubmitDanger() {
@@ -226,7 +226,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			'/div',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 	public function testInputPlaceholders() {
@@ -251,7 +251,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			'/div',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 
 		$result = $this->CroogoForm->input('username', array(
 			'placeholder' => 'User/Email',
@@ -274,7 +274,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			'/div',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 
 		$tip = 'Enter your username or email address';
 		$result = $this->CroogoForm->input('username', array(
@@ -299,7 +299,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			'/div',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 
 		$result = $this->CroogoForm->input('username', array(
 			'placeholder' => false,
@@ -322,7 +322,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			'/div',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 /**
@@ -362,7 +362,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			'/div',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 /**
@@ -407,7 +407,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			'/div',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 /**
@@ -462,7 +462,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			'/div',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 /**
@@ -492,7 +492,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 		$result = $this->CroogoForm->input('User.Comment.node_id', array(
 			'placeholder' => true,
 		));
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 }

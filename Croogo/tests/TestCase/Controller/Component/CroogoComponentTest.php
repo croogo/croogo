@@ -5,12 +5,16 @@ namespace Croogo\Croogo\Test\TestCase\Controller\Component;
 use App\Controller\AppController;
 use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
+use Cake\Controller\Controller;
+use Cake\Event\Event;
+use Cake\Network\Request;
+use Cake\Network\Response;
 use Croogo\Croogo\Controller\Component\CroogoComponent;
 use Croogo\Croogo\TestSuite\CroogoTestCase;
 class MockCroogoComponent extends CroogoComponent {
 
-	public function startup(Controller $controller) {
-		$this->_controller = $controller;
+	public function startup(Event $event) {
+		$this->_controller = $event->subject();
 	}
 
 }
@@ -38,15 +42,17 @@ class CroogoComponentTest extends CroogoTestCase {
 		parent::setUp();
 
 		$this->Controller = new CroogoTestController(new Request(), new Response());
-		$this->Controller->constructClasses();
-		$this->Controller->Croogo = new MockCroogoComponent($this->Controller->Components);
-		$this->Controller->Components->unload('Blocks');
-		$this->Controller->Components->unload('Menus');
-		$this->Controller->Components->set('Croogo', $this->Controller->Croogo);
+//		$this->Controller->constructClasses();
+		$this->Controller->Croogo = new MockCroogoComponent($this->Controller->components());
+		$this->Controller->components()->unload('Blocks');
+		$this->Controller->components()->unload('Menus');
+		$this->Controller->components()->set('Croogo', $this->Controller->Croogo);
 		$this->Controller->startupProcess();
 	}
 
 	public function testAddRemoveAcos() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$Aco = ClassRegistry::init('Aco');
 
 		$this->Controller->Croogo->addAco('CroogoTestController');
@@ -82,7 +88,9 @@ class CroogoComponentTest extends CroogoTestCase {
  * @dataProvider redirectData
  */
 	public function testRedirect($expected, $url, $data = array()) {
-		$Controller = $this->getMock('CroogoTestController', array('redirect'), array(new Request(), new Response()));
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$Controller = $this->getMock('Croogo\\Croogo\\Test\\TestCase\\Controller\\Component\\CroogoTestController', array('redirect'), array(new Request(), new Response()));
 		$Controller->request->data = $data;
 		$Controller->expects($this->once())
 			->method('redirect')

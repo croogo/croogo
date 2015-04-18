@@ -2,9 +2,10 @@
 
 namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
 
-use Blocks\Model\Block;
-use Croogo\Model\Behavior\OrderedBehavior;
+use Cake\Core\Configure;
+use Croogo\Croogo\Test\Fixture\OrderRecordFixture;
 use Croogo\Croogo\TestSuite\CroogoTestCase;
+
 class OrderedBehaviorTest extends CroogoTestCase {
 
 /**
@@ -40,49 +41,55 @@ class OrderedBehaviorTest extends CroogoTestCase {
 //		ClassRegistry::flush();
 	}
 
-//	public function testNewRecordAddedShouldHaveAWeightSet() {
-//		$data = array(
-//			'id' => '',
-//			'title' => 'Some title',
-//		);
-//
-//		$saved = $this->OrderRecord->save($data);
-//		$this->assertTrue((bool)$saved);
-//
-//		$latestRecord = $this->OrderRecord->findById(2);
-//		$this->assertNotNull($latestRecord['OrderRecord']['weight']);
-//	}
-//
-///**
-// * testWeightMustBeSet
-// */
-//	public function testWeightMustBeSet() {
-//		$result = $this->Block->save(array(
-//			'Block' => array(
-//				'id' => '',
-//				'title' => 'My block',
-//				'alias' => 'my-block',
-//				'body' => 'This is my block',
-//			),
-//		));
-//		$this->assertNotEmpty($result['Block']['weight']);
-//	}
-//
-///**
-// * testInsertOnEmptyTable
-// */
-//	public function testInsertOnEmptyTable() {
-//		$this->Block->deleteAll('1 = 1');
-//		$count = $this->Block->find('count');
-//		$this->assertEquals(0, $count);
-//		$result = $this->Block->save(array(
-//			'Block' => array(
-//				'title' => 'My other block',
-//				'alias' => 'my-other-block',
-//				'body' => 'This is my other block',
-//			),
-//		));
-//		$this->assertEquals(1, $result['Block']['weight']);
-//	}
+	public function testNewRecordAddedShouldHaveAWeightSet() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$data = array(
+			'id' => '',
+			'title' => 'Some title',
+		);
+
+		$saved = $this->OrderRecord->save($data);
+		$this->assertTrue((bool)$saved);
+
+		$latestRecord = $this->OrderRecord->findById(2);
+		$this->assertNotNull($latestRecord['OrderRecord']['weight']);
+	}
+
+/**
+ * testWeightMustBeSet
+ */
+	public function testWeightMustBeSet() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$result = $this->Block->save(array(
+			'Block' => array(
+				'id' => '',
+				'title' => 'My block',
+				'alias' => 'my-block',
+				'body' => 'This is my block',
+			),
+		));
+		$this->assertNotEmpty($result['Block']['weight']);
+	}
+
+/**
+ * testInsertOnEmptyTable
+ */
+	public function testInsertOnEmptyTable() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$this->Block->deleteAll('1 = 1');
+		$count = $this->Block->find('count');
+		$this->assertEquals(0, $count);
+		$result = $this->Block->save(array(
+			'Block' => array(
+				'title' => 'My other block',
+				'alias' => 'my-other-block',
+				'body' => 'This is my other block',
+			),
+		));
+		$this->assertEquals(1, $result['Block']['weight']);
+	}
 
 }

@@ -1,8 +1,10 @@
 <?php
 
 namespace Croogo\Croogo\Utility;
+use Cake\Network\Request;
+use Cake\Utility\Hash;
+use Cake\Routing\Router;
 
-use Croogo\Lib\Utility\StringConverter;
 /**
  * VisibilityFilter
  *

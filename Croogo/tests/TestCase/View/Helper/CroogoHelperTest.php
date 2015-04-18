@@ -4,20 +4,13 @@ namespace Croogo\Croogo\Test\TestCase\View\Helper;
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\Network\Http\Response;
+use Cake\Network\Response;
 use Cake\Network\Request;
 use Cake\Network\Session;
 use Cake\View\View;
 use Croogo\Croogo\CroogoNav;
 use Croogo\Croogo\TestSuite\CroogoTestCase;
 use Croogo\Croogo\View\Helper\CroogoHelper;
-class TheCroogoTestController extends Controller {
-
-	public $uses = null;
-
-	public $components = array();
-
-}
 
 class CroogoHelperTest extends CroogoTestCase {
 
@@ -43,13 +36,13 @@ class CroogoHelperTest extends CroogoTestCase {
 			'action' => 'index',
 			'named' => array(),
 		);
-		$view = new View(new TheCroogoTestController($request, new Response()));
+		$view = new View($request, new Response());
 		$this->Croogo = new CroogoHelper($view);
 		$aclHelper = Configure::read('Site.acl_plugin') . 'Helper';
 		$this->Croogo->Acl = $this->getMock(
 			$aclHelper,
-			array('linkIsAllowedByRoleId'),
-			array($view)
+			array('linkIsAllowedByRoleId')
+//			array($view)
 		);
 		$this->Croogo->Acl
 			->expects($this->any())
@@ -104,7 +97,7 @@ class CroogoHelperTest extends CroogoTestCase {
 			'Title',
 			'/a',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($result, $expected);
 
 		// test row actions with options
 		Configure::write('Admin.rowActions.Test/action', array(
@@ -130,7 +123,7 @@ class CroogoHelperTest extends CroogoTestCase {
 			' Title',
 			'/a',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($result, $expected);
 
 		// test row actions with no title + icon
 		Configure::write('Admin.rowActions.Test/action', array(
@@ -157,7 +150,7 @@ class CroogoHelperTest extends CroogoTestCase {
 			' ',
 			'/a',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($result, $expected);
 	}
 
 /**
@@ -314,7 +307,7 @@ class CroogoHelperTest extends CroogoTestCase {
 			'/a',
 		);
 		$result = $this->Croogo->adminRowAction('Edit', $url);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($result, $expected);
 
 		$options = array('class' => 'test-class');
 		$message = 'Are you sure?';
@@ -335,7 +328,7 @@ class CroogoHelperTest extends CroogoTestCase {
 			'/a',
 		);
 		$result = $this->Croogo->adminRowAction('Edit', $url, $options, $message);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($result, $expected);
 	}
 
 /**
@@ -370,7 +363,7 @@ class CroogoHelperTest extends CroogoTestCase {
 			'/a',
 		);
 		$result = $this->Croogo->adminRowAction('<span>Del</span>', $url, array(), $sure);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($result, $expected);
 		$quot = '&quot;';
 		$this->assertContains($quot . $sure . $quot, $result);
 	}
@@ -394,7 +387,7 @@ class CroogoHelperTest extends CroogoTestCase {
 			'/a',
 		);
 		$result = $this->Croogo->adminRowAction('Delete', $url, $options, $message);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($result, $expected);
 	}
 
 }

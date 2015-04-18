@@ -3,6 +3,8 @@
 namespace Croogo\Croogo\Test\TestCase\View\Helper;
 
 use Cake\Controller\Controller;
+use Cake\Network\Request;
+use Cake\Network\Response;
 use Cake\View\View;
 use Croogo\Croogo\TestSuite\CroogoTestCase;
 use Croogo\Croogo\View\Helper\CroogoHtmlHelper;
@@ -14,7 +16,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 
 	public function setUp() {
 		$controller = null;
-		$this->View = new View($controller);
+		$this->View = new View(new Request, new Response);
 		$this->CroogoHtml = new CroogoHtmlHelper($this->View);
 	}
 
@@ -35,9 +37,9 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 
 	public function testStatusOkWithUrl() {
 		$result = $this->CroogoHtml->status(1, array(
-			'admin' => true,
-			'plugin' => 'nodes',
-			'controller' => 'nodes',
+			'prefix' => 'admin',
+			'plugin' => 'Croogo/Nodes',
+			'controller' => 'Nodes',
 			'action' => 'toggle',
 		));
 		$expected = array(
@@ -48,7 +50,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 			),
 			'/a',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 	public function testStatusRemove() {
@@ -58,9 +60,9 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 
 	public function testStatusRemoveWithUrl() {
 		$result = $this->CroogoHtml->status(0, array(
-			'admin' => true,
-			'plugin' => 'nodes',
-			'controller' => 'nodes',
+			'prefix' => 'admin',
+			'plugin' => 'Croogo/Nodes',
+			'controller' => 'Nodes',
 			'action' => 'delete',
 		));
 		$expected = array(
@@ -71,7 +73,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 			),
 			'/a',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 	public function testLink() {
@@ -109,7 +111,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 				'class' => 'btn btn-danger icon-remove',
 			),
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 
 		$result = $this->CroogoHtml->link('', '/remove', array(
 			'icon' => 'remove',
@@ -122,7 +124,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 				'class' => 'btn btn-danger icon-large icon-remove',
 			),
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 	public function testLinkDefaultButton() {
@@ -131,6 +133,8 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 	}
 
 	public function testLinkOptionsIsNull() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$result = $this->CroogoHtml->link('Remove', '/remove', null);
 	}
 
@@ -146,7 +150,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 			),
 			'/a',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 	public function testLinkButtonTooltipWithArrayOptions() {
@@ -169,7 +173,7 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 			),
 			'/a',
 		);
-		$this->assertTags($result, $expected);
+		$this->assertHtml($expected, $result);
 	}
 
 	public function testAddPathAndGetCrumbList() {

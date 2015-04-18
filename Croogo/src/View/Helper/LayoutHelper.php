@@ -1,8 +1,12 @@
 <?php
 
 namespace Croogo\Croogo\View\Helper;
-
-use App\View\Helper\AppHelper;
+use Cake\View\Helper;
+use Cake\Routing\Router;
+use Cake\Core\Configure;
+use Cake\Utility\Hash;
+use Croogo\Croogo\Croogo;
+use Cake\Utility\Inflector;
 
 /**
  * Layout Helper
@@ -14,7 +18,7 @@ use App\View\Helper\AppHelper;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class LayoutHelper extends AppHelper {
+class LayoutHelper extends Helper {
 
 /**
  * Other helpers used by this helper

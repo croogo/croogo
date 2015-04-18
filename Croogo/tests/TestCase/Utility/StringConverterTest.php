@@ -2,8 +2,9 @@
 
 namespace Croogo\Croogo\Test\TestCase\Utility;
 
+use Cake\Core\Configure;
 use Croogo\Croogo\TestSuite\CroogoTestCase;
-use Croogo\Utility\StringConverter;
+use Croogo\Croogo\Utility\StringConverter;
 class StringConverterTest extends CroogoTestCase {
 
 	public $setupSettings = false;
@@ -17,7 +18,7 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArray
  */
 	public function testLinkStringToArray() {
-		$this->assertEqual($this->Converter->linkStringToArray('controller:nodes/action:index'), array_merge(
+		$this->assertEquals($this->Converter->linkStringToArray('controller:nodes/action:index'), array_merge(
 			array_fill_keys((array)Configure::read('Routing.prefixes'), false),
 			array(
 				'plugin' => null,
@@ -25,7 +26,7 @@ class StringConverterTest extends CroogoTestCase {
 				'action' => 'index',
 			)
 		));
-		$this->assertEqual($this->Converter->linkStringToArray('controller:nodes/action:index/pass/pass2'), array_merge(
+		$this->assertEquals($this->Converter->linkStringToArray('controller:nodes/action:index/pass/pass2'), array_merge(
 			array_fill_keys((array)Configure::read('Routing.prefixes'), false),
 			array(
 				'plugin' => null,
@@ -35,7 +36,7 @@ class StringConverterTest extends CroogoTestCase {
 				'pass2',
 			)
 		));
-		$this->assertEqual($this->Converter->linkStringToArray('controller:nodes/action:index/param:value'), array_merge(
+		$this->assertEquals($this->Converter->linkStringToArray('controller:nodes/action:index/param:value'), array_merge(
 			array_fill_keys((array)Configure::read('Routing.prefixes'), false),
 			array(
 				'plugin' => null,
@@ -44,7 +45,7 @@ class StringConverterTest extends CroogoTestCase {
 				'param' => 'value',
 			)
 		));
-		$this->assertEqual($this->Converter->linkStringToArray('controller:nodes/action:index/with-slash/'), array_merge(
+		$this->assertEquals($this->Converter->linkStringToArray('controller:nodes/action:index/with-slash/'), array_merge(
 			array_fill_keys((array)Configure::read('Routing.prefixes'), false),
 			array(
 				'plugin' => null,
@@ -64,10 +65,10 @@ class StringConverterTest extends CroogoTestCase {
 			)
 		);
 		$string = 'plugin:contacts/controller:contacts/action:view/contact';
-		$this->assertEqual($expected, $this->Converter->linkStringToArray($string));
+		$this->assertEquals($expected, $this->Converter->linkStringToArray($string));
 
 		$string = '/plugin:contacts/controller:contacts/action:view/contact';
-		$this->assertEqual($expected, $this->Converter->linkStringToArray($string));
+		$this->assertEquals($expected, $this->Converter->linkStringToArray($string));
 	}
 
 /**

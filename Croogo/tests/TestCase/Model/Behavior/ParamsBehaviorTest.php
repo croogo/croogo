@@ -54,73 +54,81 @@ class ParamsBehaviorTest extends CroogoTestCase {
 //		ClassRegistry::flush();
 	}
 
-//	public function testSingle() {
-//		$this->Type->save(array(
-//			'title' => 'Article',
-//			'alias' => 'article',
-//			'description' => 'Article Types',
-//			'params' => 'param1=value1',
-//		));
-//		$type = $this->Type->findByAlias('article');
-//		$expected = array(
-//			'param1' => 'value1',
-//		);
-//		$this->assertEqual($type['Params'], $expected);
-//	}
-//
-//	public function testMultiple() {
-//		$this->Type->save(array(
-//			'title' => 'Article',
-//			'alias' => 'article',
-//			'description' => 'Article Types',
-//			'params' => "param1=value1\nparam2=value2",
-//		));
-//		$type = $this->Type->findByAlias('article');
-//		$expected = array(
-//			'param1' => 'value1',
-//			'param2' => 'value2',
-//		);
-//		$this->assertEqual($type['Params'], $expected);
-//	}
-//
-//	public function testMixedLineEndings() {
-//		$this->Type->save(array(
-//			'title' => 'Article',
-//			'alias' => 'article',
-//			'description' => 'Article Types',
-//			'params' => "param1=value1\r\nparam2=value2\rparam3=value3\nparam4=value4",
-//		));
-//		$type = $this->Type->findByAlias('article');
-//		$expected = array(
-//			'param1' => 'value1',
-//			'param2' => 'value2',
-//			'param3' => 'value3',
-//			'param4' => 'value4',
-//		);
-//		$this->assertEqual($type['Params'], $expected);
-//	}
-//
-//	public function testEmbeddedOptions() {
-//		$this->Type->save(array(
-//			'title' => 'Article',
-//			'alias' => 'article',
-//			'description' => 'Article Types',
-//			'params' => "param1=value1\r\n[options:linkAttr escape=true escapeTitle=false foo=a:b;c:d;e:f]",
-//		));
-//		$type = $this->Type->findByAlias('article');
-//		$expected = array(
-//			'param1' => 'value1',
-//			'linkAttr' => array(
-//				'escape' => 'true',
-//				'escapeTitle' => 'false',
-//				'foo' => array(
-//					'a' => 'b',
-//					'c' => 'd',
-//					'e' => 'f',
-//				),
-//			),
-//		);
-//		$this->assertEqual($type['Params'], $expected);
-//	}
+	public function testSingle() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$this->Type->save(array(
+			'title' => 'Article',
+			'alias' => 'article',
+			'description' => 'Article Types',
+			'params' => 'param1=value1',
+		));
+		$type = $this->Type->findByAlias('article');
+		$expected = array(
+			'param1' => 'value1',
+		);
+		$this->assertEqual($type['Params'], $expected);
+	}
+
+	public function testMultiple() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$this->Type->save(array(
+			'title' => 'Article',
+			'alias' => 'article',
+			'description' => 'Article Types',
+			'params' => "param1=value1\nparam2=value2",
+		));
+		$type = $this->Type->findByAlias('article');
+		$expected = array(
+			'param1' => 'value1',
+			'param2' => 'value2',
+		);
+		$this->assertEqual($type['Params'], $expected);
+	}
+
+	public function testMixedLineEndings() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$this->Type->save(array(
+			'title' => 'Article',
+			'alias' => 'article',
+			'description' => 'Article Types',
+			'params' => "param1=value1\r\nparam2=value2\rparam3=value3\nparam4=value4",
+		));
+		$type = $this->Type->findByAlias('article');
+		$expected = array(
+			'param1' => 'value1',
+			'param2' => 'value2',
+			'param3' => 'value3',
+			'param4' => 'value4',
+		);
+		$this->assertEqual($type['Params'], $expected);
+	}
+
+	public function testEmbeddedOptions() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$this->Type->save(array(
+			'title' => 'Article',
+			'alias' => 'article',
+			'description' => 'Article Types',
+			'params' => "param1=value1\r\n[options:linkAttr escape=true escapeTitle=false foo=a:b;c:d;e:f]",
+		));
+		$type = $this->Type->findByAlias('article');
+		$expected = array(
+			'param1' => 'value1',
+			'linkAttr' => array(
+				'escape' => 'true',
+				'escapeTitle' => 'false',
+				'foo' => array(
+					'a' => 'b',
+					'c' => 'd',
+					'e' => 'f',
+				),
+			),
+		);
+		$this->assertEqual($type['Params'], $expected);
+	}
 
 }

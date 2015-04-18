@@ -3,6 +3,8 @@
 namespace Croogo\Croogo\View\Helper;
 
 use Cake\View\Helper\HtmlHelper;
+use Cake\View\View;
+use Croogo\Croogo\CroogoStatus;
 
 /**
  * Croogo Html Helper
@@ -11,10 +13,14 @@ use Cake\View\Helper\HtmlHelper;
  */
 class CroogoHtmlHelper extends HtmlHelper {
 
+	public $helpers = [
+		'Url'
+	];
+
 	public function __construct(View $View, $settings = array()) {
 		parent::__construct($View, $settings);
 
-		$this->_tags['beginbox'] =
+		$this->_defaultConfig['templates']['beginbox'] =
 			'<div class="row-fluid">
 				<div class="span12">
 					<div class="box">
@@ -23,12 +29,12 @@ class CroogoHtmlHelper extends HtmlHelper {
 							%s
 						</div>
 						<div class="box-content %s">';
-		$this->_tags['endbox'] =
+		$this->_defaultConfig['templates']['endbox'] =
 						'</div>
 					</div>
 				</div>
 			</div>';
-		$this->_tags['icon'] = '<i class="%s"%s></i> ';
+		$this->_defaultConfig['templates']['icon'] = '<i class="%s"%s></i> ';
 	}
 
 	public function beginBox($title, $isHidden = false, $isLabelHidden = false) {
@@ -70,7 +76,7 @@ class CroogoHtmlHelper extends HtmlHelper {
 			return $this->icon($icon, array('class' => $class));
 		} else {
 			return $this->link('', 'javascript:void(0);', array(
-				'data-url' => $this->url($url),
+				'data-url' => $this->Url->build($url),
 				'class' => 'icon-' . $icon . ' ' . $class . ' ajax-toggle',
 			));
 		}
@@ -161,7 +167,7 @@ class CroogoHtmlHelper extends HtmlHelper {
 		return $this;
 	}
 
-	public function addCrumb($name, $link = null, array $options = null) {
+	public function addCrumb($name, $link = null, array $options = array()) {
 		parent::addCrumb($name, $link, $options);
 		return $this;
 	}

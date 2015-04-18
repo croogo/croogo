@@ -2,8 +2,11 @@
 
 namespace Croogo\Croogo\Test\TestCase\Utility;
 
+use Cake\Core\Configure;
+use Cake\Network\Request;
+use Cake\Utility\Hash;
 use Croogo\Croogo\TestSuite\CroogoTestCase;
-use Croogo\Utility\VisibilityFilter;
+use Croogo\Croogo\Utility\VisibilityFilter;
 class VisibilityFilterTest extends CroogoTestCase {
 
 	public $setupSettings = false;

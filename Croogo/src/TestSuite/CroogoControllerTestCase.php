@@ -35,7 +35,7 @@ class CroogoControllerTestCase extends TestCase {
 	}
 
 	protected static function _restoreSettings() {
-		$configDir = Plugin::path('Croogo/Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS;
+		$configDir = Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'Config' . DS;
 		$source = $configDir . 'settings.default';
 		$target = $configDir . 'settings.json';
 		copy($source, $target);
@@ -49,7 +49,7 @@ class CroogoControllerTestCase extends TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$appDir = Plugin::path('Croogo/Croogo') . 'Test' . DS . 'test_app' . DS;
+		$appDir = Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS;
 
 //		App::build(array(
 //			'Plugin' => array($appDir . 'Plugin' . DS),
@@ -61,16 +61,22 @@ class CroogoControllerTestCase extends TestCase {
 		}
 
 		Plugin::unload('Install');
-		Plugin::load(array('Users'), array('bootstrap' => true));
-		Plugin::load('Example');
+
+		/**
+		 * Thease plugins are being loaded in the test bootstrap file
+		 */
+//		Plugin::load(array('Croogo/Users'), ['bootstrap' => true, 'path' => '../Users/', 'autoload' => true]);
+//		Plugin::load('Example', ['path' => '../Example/', 'autoload' => true]);
+
 		Configure::write('Acl.database', 'test');
-		$Setting = ClassRegistry::init('Settings.Setting');
-		$Setting->settingsPath = $appDir . 'Config' . DS . 'settings.json';
-		Configure::drop('settings');
-		Configure::config('settings', new CroogoJsonReader(dirname($Setting->settingsPath) . DS ));
+
+//		$Setting = ClassRegistry::init('Settings.Setting');
+//		$Setting->settingsPath = $appDir . 'Config' . DS . 'settings.json';
+//		Configure::drop('settings');
+//		Configure::config('settings', new CroogoJsonReader(dirname($Setting->settingsPath) . DS ));
 		Log::drop('stdout');
 		Log::drop('stderr');
-		$Setting->writeConfiguration();
+//		$Setting->writeConfiguration();
 	}
 
 /**

@@ -2,17 +2,17 @@
 
 namespace Croogo\Extensions;
 
+use App\Controller\AppController;
 use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\Core\Plugin;
 use Cake\Core\Configure;
-use Cake\Utility\Folder;
+use Cake\Filesystem\Folder;
 use Cake\Utility\Hash;
-use Cake\Utility\ClassRegistry;
 use Cake\Utility\Inflector;
 use Cake\Log\LogTrait;
-use Croogo\Event\CroogoEventManager;
-use Migrations\MigrationVersion;
+use Croogo\Croogo\Event\CroogoEventManager;
+use InvalidArgumentException;
 
 /**
  * Plugin utility class

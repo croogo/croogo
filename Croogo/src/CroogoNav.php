@@ -11,6 +11,9 @@
  */
 namespace Croogo\Croogo;
 use Cake\Log\Log;
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
+use UnexpectedValueException;
 
 class CroogoNav {
 

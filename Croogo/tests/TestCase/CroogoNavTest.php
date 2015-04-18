@@ -29,7 +29,7 @@ class CroogoNavTest extends CroogoTestCase {
 		// test clear
 		CroogoNav::clear();
 		$items = CroogoNav::items();
-		$this->assertEqual($items, array());
+		$this->assertEquals($items, array());
 
 		// test first level addition
 		$defaults = CroogoNav::getDefaults();
@@ -37,14 +37,14 @@ class CroogoNavTest extends CroogoTestCase {
 		CroogoNav::add('extensions', $extensions);
 		$result = CroogoNav::items();
 		$expected = array('extensions' => Hash::merge($defaults, $extensions));
-		$this->assertEqual($result, $expected);
+		$this->assertEquals($result, $expected);
 
 		// tested nested insertion (1 level)
 		$plugins = array('title' => 'Plugins');
 		CroogoNav::add('extensions.children.plugins', $plugins);
 		$result = CroogoNav::items();
 		$expected['extensions']['children']['plugins'] = Hash::merge($defaults, $plugins);
-		$this->assertEqual($result, $expected);
+		$this->assertEquals($result, $expected);
 
 		// 2 levels deep
 		$example = array('title' => 'Example');
@@ -52,7 +52,7 @@ class CroogoNavTest extends CroogoTestCase {
 		$result = CroogoNav::items();
 
 		$expected['extensions']['children']['plugins']['children']['example'] = Hash::merge($defaults, $example);
-		$this->assertEqual($result, $expected);
+		$this->assertEquals($result, $expected);
 
 		CroogoNav::items('sidebar', $saved);
 		$this->assertEquals($saved, CroogoNav::items());

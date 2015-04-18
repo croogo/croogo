@@ -54,26 +54,30 @@ class UrlBehaviorTest extends CroogoTestCase {
 //		ClassRegistry::flush();
 	}
 
-//	public function testSingle() {
-//		$helloWorld = $this->Node->findBySlug('hello-world');
-//		$this->assertEqual($helloWorld['Node']['url'], array(
-//			'plugin' => 'nodes',
-//			'controller' => 'nodes',
-//			'action' => 'view',
-//			'type' => 'blog',
-//			'slug' => 'hello-world',
-//		));
-//	}
-//
-//	public function testMultiple() {
-//		$result = $this->Node->find('all');
-//		$this->assertEqual($result['0']['Node']['url'], array(
-//			'plugin' => 'nodes',
-//			'controller' => 'nodes',
-//			'action' => 'view',
-//			'type' => $result['0']['Node']['type'],
-//			'slug' => $result['0']['Node']['slug'],
-//		));
-//	}
+	public function testSingle() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$helloWorld = $this->Node->findBySlug('hello-world');
+		$this->assertEqual($helloWorld['Node']['url'], array(
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'view',
+			'type' => 'blog',
+			'slug' => 'hello-world',
+		));
+	}
+
+	public function testMultiple() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$result = $this->Node->find('all');
+		$this->assertEqual($result['0']['Node']['url'], array(
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'view',
+			'type' => $result['0']['Node']['type'],
+			'slug' => $result['0']['Node']['slug'],
+		));
+	}
 
 }

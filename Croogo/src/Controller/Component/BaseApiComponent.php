@@ -3,6 +3,8 @@
 namespace Croogo\Croogo\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Event\Event;
+
 /**
  * Base Api Component class
  *
@@ -39,9 +41,8 @@ class BaseApiComponent extends Component {
  * Setup properties and injects API methods to the controller
  * @return void
  */
-	public function initialize(Controller $controller) {
-		$this->_controller = $controller;
-		parent::initialize($controller);
+	public function beforeFilter(Event $event) {
+		$this->_controller = $event->subject();
 
 		$this->_apiVersionPrefix = str_replace('.', '_', $this->_apiVersion);
 
@@ -50,9 +51,12 @@ class BaseApiComponent extends Component {
 			$method = $this->_apiVersionPrefix . '_' . $method;
 		}
 
-		$controller->methods =
-			array_keys(array_flip($controller->methods) +
-			array_flip($methods));
+		/**
+		 * @todo The Controller::$methods property has been removed. You should now use Controller::isAction() to determine whether or not a method name is an action. This change was made to allow easier customization of what is and is not counted as an action.
+		 */
+//		$event->subject()->methods =
+//			array_keys(array_flip($event->subject()->methods) +
+//			array_flip($methods));
 	}
 
 /**
