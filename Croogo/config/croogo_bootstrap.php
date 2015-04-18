@@ -72,22 +72,22 @@ if (Configure::check('Site.asset_timestamp')) {
 // CakePHP Acl
 Plugin::load(['Acl' => ['autoload' => true]]);
 
+$croogoPath = Plugin::path('Croogo/Croogo');
+
 /**
  * Extensions
  */
-Plugin::load(['Extensions' => [
+Plugin::load(['Croogo/Extensions' => [
 	'autoload' => true,
 	'bootstrap' => true,
 	'routes' => true,
-	'namespace' => 'Croogo\\Extensions\\',
-	'classBase' => false,
+	'path' => $croogoPath . '..' . DS . 'Extensions' . DS,
 ]]);
 Configure::load('Extensions.events');
 
 /**
  * Setup custom paths
  */
-$croogoPath = Plugin::path('Croogo');
 App::build(array(
 	'Console/Command' => array($croogoPath . 'Console' . DS . 'Command' . DS),
 	'View' => array($croogoPath . 'View' . DS),
