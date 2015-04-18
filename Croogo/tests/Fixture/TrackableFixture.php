@@ -2,11 +2,12 @@
 
 namespace Croogo\Croogo\Test\Fixture;
 
-use Croogo\TestSuite\CroogoTestFixture;
+use Croogo\Croogo\TestSuite\CroogoTestFixture;
+
 class TrackableFixture extends CroogoTestFixture {
 
 	public $fields = array(
-		'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 20],
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null],
 		'title' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 60],
 		'created_by' => ['type' => 'integer', 'null' => false, 'default' => null],
 		'created' => ['type' => 'datetime', 'null' => false, 'default' => null],

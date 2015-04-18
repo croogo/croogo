@@ -1,10 +1,12 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\View\Helper;
 
+use Cake\Core\Plugin;
+use Cake\Network\Request;
 use Cake\Routing\Router;
 use Cake\View\View;
-use Croogo\TestSuite\CroogoTestCase;
-use Croogo\View\Helper\CroogoAppHelper;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Croogo\View\Helper\CroogoAppHelper;
 class CroogoAppHelperTest extends CroogoTestCase {
 
 /**
@@ -22,15 +24,15 @@ class CroogoAppHelperTest extends CroogoTestCase {
 	public $AppHelper;
 
 	public $fixtures = array(
-		'plugin.settings.setting',
-		'plugin.taxonomy.type',
-		'plugin.taxonomy.vocabulary',
-		'plugin.taxonomy.types_vocabulary',
+		'plugin.croogo\settings.setting',
+//		'plugin.taxonomy.type',
+//		'plugin.taxonomy.vocabulary',
+//		'plugin.taxonomy.types_vocabulary',
 	);
 
 	public function setUp() {
 		parent::setUp();
-		Plugin::load('Translate');
+		Plugin::load('Croogo/Translate');
 		$this->View = new View(null);
 		$this->AppHelper = new CroogoAppHelper($this->View);
 		$this->AppHelper->request = new Request(null, false);

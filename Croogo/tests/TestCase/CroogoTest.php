@@ -2,11 +2,14 @@
 
 namespace Croogo\Croogo\Test\TestCase;
 
-use Croogo\TestSuite\CroogoTestCase;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Croogo\Croogo\Croogo;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
 class CroogoTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.settings.setting',
+		'plugin.croogo/settings.setting',
 	);
 
 	public function testCrossPluginHooks() {

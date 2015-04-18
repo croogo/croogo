@@ -3,16 +3,17 @@
 namespace Croogo\Croogo\Test\TestCase;
 
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Cake\Routing\Router;
-use Croogo\Lib\CroogoRouter;
-use Croogo\TestSuite\CroogoTestCase;
+use Croogo\Croogo\CroogoRouter;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
 class CroogoRouterTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.settings.setting',
-		'plugin.taxonomy.vocabulary',
-		'plugin.taxonomy.type',
-		'plugin.taxonomy.types_vocabulary',
+		'plugin.croogo/settings.setting',
+//		'plugin.taxonomy.vocabulary',
+//		'plugin.taxonomy.type',
+//		'plugin.taxonomy.types_vocabulary',
 	);
 
 	public function setUp() {

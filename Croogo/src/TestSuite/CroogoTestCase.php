@@ -2,8 +2,13 @@
 
 namespace Croogo\Croogo\TestSuite;
 
-use Croogo\Lib\CroogoRouter;
-use Croogo\TestSuite\CroogoTestFixture;
+use Cake\Core\App;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Cake\TestSuite\TestCase;
+use Croogo\Croogo\Configure\CroogoJsonReader;
+use Croogo\Croogo\CroogoRouter;
+use Croogo\Croogo\TestSuite\CroogoTestFixture;
 /**
  * CroogoTestCase class
  *
@@ -15,7 +20,7 @@ use Croogo\TestSuite\CroogoTestFixture;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoTestCase extends CakeTestCase {
+class CroogoTestCase extends TestCase {
 
 	protected $_paths = array();
 
@@ -36,7 +41,7 @@ class CroogoTestCase extends CakeTestCase {
 	}
 
 	protected static function _restoreSettings() {
-		$configDir = Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS;
+		$configDir = Plugin::path('Croogo/Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS;
 		$source = $configDir . 'settings.default';
 		$target = $configDir . 'settings.json';
 		copy($source, $target);
@@ -50,13 +55,13 @@ class CroogoTestCase extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$appDir = Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS;
+		$appDir = Plugin::path('Croogo/Croogo') . 'Test' . DS . 'test_app' . DS;
 
-		App::build(array(
-			'Plugin' => array($appDir . 'Plugin' . DS),
-			'View' => array($appDir . 'View' . DS),
-		), App::PREPEND);
-		$this->_paths = App::paths();
+//		App::build(array(
+//			'Plugin' => array($appDir . 'Plugin' . DS),
+//			'View' => array($appDir . 'View' . DS),
+//		), App::PREPEND);
+//		$this->_paths = App::paths();
 
 		Plugin::unload('Install');
 		Plugin::load('Example');
@@ -79,7 +84,7 @@ class CroogoTestCase extends CakeTestCase {
 	public function tearDown() {
 		parent::tearDown();
 
-		App::build($this->_paths);
+//		App::build($this->_paths);
 	}
 
 /**

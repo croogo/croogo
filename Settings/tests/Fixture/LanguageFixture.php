@@ -1,6 +1,8 @@
 <?php
 
 namespace Croogo\Settings\Test\Fixture;
+use Croogo\Croogo\TestSuite\CroogoTestFixture;
+
 class LanguageFixture extends CroogoTestFixture {
 
 	public $name = 'Language';

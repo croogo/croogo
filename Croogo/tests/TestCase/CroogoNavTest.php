@@ -1,8 +1,10 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase;
 
-use Croogo\Lib\CroogoNav;
-use Croogo\TestSuite\CroogoTestCase;
+use Cake\Utility\Hash;
+use Croogo\Croogo\Croogo;
+use Croogo\Croogo\CroogoNav;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
 class CroogoNavTest extends CroogoTestCase {
 
 	public $setupSettings = false;

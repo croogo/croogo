@@ -3,7 +3,7 @@
 namespace Croogo\Croogo\Test\TestCase\Controller\Component;
 
 use Croogo\Controller\Component\BulkProcessComponent;
-use Croogo\TestSuite\CroogoTestCase;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
 class BulkProcessComponentTest extends CroogoTestCase {
 
 	public $setupSettings = false;

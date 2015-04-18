@@ -2,16 +2,14 @@
 
 namespace Croogo\Croogo\Test\TestCase\View\Helper;
 
-use App\View\Helper\HtmlHelper;
 use Cake\Controller\Controller;
 use Cake\View\View;
-use Croogo\TestSuite\CroogoTestCase;
-use Croogo\View\Helper\CroogoHelper;
-use Croogo\View\Helper\CroogoHtmlHelper;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Croogo\View\Helper\CroogoHtmlHelper;
 class CroogoHtmlHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.taxonomy.type',
+//		'plugin.taxonomy.type',
 	);
 
 	public function setUp() {

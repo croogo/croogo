@@ -1,8 +1,10 @@
 <?php
 
 namespace Croogo\Croogo\View\Helper;
+use Cake\View\Helper\FormHelper;
+use Cake\Utility\Inflector;
+use Cake\Utility\Hash;
 
-use App\View\Helper\FormHelper;
 /**
  * Croogo Form Helper
  *

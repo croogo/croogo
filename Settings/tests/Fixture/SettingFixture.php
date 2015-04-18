@@ -1,12 +1,14 @@
 <?php
 
 namespace Croogo\Settings\Test\Fixture;
+use Croogo\Croogo\TestSuite\CroogoTestFixture;
+
 class SettingFixture extends CroogoTestFixture {
 
 	public $name = 'Setting';
 
 	public $fields = array(
-		'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 20],
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null],
 		'key' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 64],
 		'value' => ['type' => 'text', 'null' => false, 'default' => null],
 		'title' => ['type' => 'string', 'null' => false, 'default' => null],
@@ -15,7 +17,11 @@ class SettingFixture extends CroogoTestFixture {
 		'editable' => ['type' => 'boolean', 'null' => false, 'default' => '1'],
 		'weight' => ['type' => 'integer', 'null' => true, 'default' => null],
 		'params' => ['type' => 'text', 'null' => false, 'default' => null],
-		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id'], 'key' => ['type' => 'unique', 'columns' => 'key']],
+		'_constraints' => [
+			'primary' => ['type' => 'primary', 'columns' => ['id']],
+			'PRIMARY' => ['type' => 'unique', 'columns' => 'id'],
+			'key' => ['type' => 'unique', 'columns' => 'key']
+		],
 		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 

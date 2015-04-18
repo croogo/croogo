@@ -2,7 +2,8 @@
 
 namespace Croogo\Croogo\TestSuite;
 
-use App\TestSuite\Fixture\CakeTestFixture;
+use Cake\TestSuite\Fixture\TestFixture;
+
 /**
  * CroogoTestFixture class
  *
@@ -14,7 +15,7 @@ use App\TestSuite\Fixture\CakeTestFixture;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoTestFixture extends CakeTestFixture {
+class CroogoTestFixture extends TestFixture {
 
 /**
  * _fixSequence

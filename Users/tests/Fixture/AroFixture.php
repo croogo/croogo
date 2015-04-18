@@ -1,12 +1,14 @@
 <?php
 
 namespace Croogo\Users\Test\Fixture;
+use Croogo\Croogo\TestSuite\CroogoTestFixture;
+
 class AroFixture extends CroogoTestFixture {
 
 	public $name = 'Aro';
 
 	public $fields = array(
-		'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null],
 		'parent_id' => ['type' => 'integer', 'null' => true, 'default' => null, 'length' => 10],
 		'model' => ['type' => 'string', 'null' => true],
 		'foreign_key' => ['type' => 'integer', 'null' => true, 'default' => null, 'length' => 10],

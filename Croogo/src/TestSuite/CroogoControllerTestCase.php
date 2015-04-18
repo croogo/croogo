@@ -2,8 +2,15 @@
 
 namespace Croogo\Croogo\TestSuite;
 
-use App\Model\Datasource\Session;
-use Croogo\TestSuite\CroogoTestFixture;
+use Cake\Core\App;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Cake\Log\Log;
+use Cake\Network\Session;
+use Cake\TestSuite\TestCase;
+use Cake\Utility\Hash;
+use Croogo\Croogo\Configure\CroogoJsonReader;
+use Croogo\Croogo\TestSuite\CroogoTestFixture;
 /**
  * CroogoTestCase class
  *
@@ -15,7 +22,7 @@ use Croogo\TestSuite\CroogoTestFixture;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoControllerTestCase extends ControllerTestCase {
+class CroogoControllerTestCase extends TestCase {
 
 	public static function setUpBeforeClass() {
 		self::_restoreSettings();
@@ -28,7 +35,7 @@ class CroogoControllerTestCase extends ControllerTestCase {
 	}
 
 	protected static function _restoreSettings() {
-		$configDir = Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS;
+		$configDir = Plugin::path('Croogo/Croogo') . 'Test' . DS . 'test_app' . DS . 'Config' . DS;
 		$source = $configDir . 'settings.default';
 		$target = $configDir . 'settings.json';
 		copy($source, $target);
@@ -42,12 +49,12 @@ class CroogoControllerTestCase extends ControllerTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$appDir = Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS;
+		$appDir = Plugin::path('Croogo/Croogo') . 'Test' . DS . 'test_app' . DS;
 
-		App::build(array(
-			'Plugin' => array($appDir . 'Plugin' . DS),
-			'View' => array($appDir . 'View' . DS),
-		), App::PREPEND);
+//		App::build(array(
+//			'Plugin' => array($appDir . 'Plugin' . DS),
+//			'View' => array($appDir . 'View' . DS),
+//		), App::PREPEND);
 
 		if (!isset($_SERVER['REMOTE_ADDR'])) {
 			$_SERVER['REMOTE_ADDR'] = '127.0.0.1';

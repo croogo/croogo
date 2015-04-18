@@ -1,13 +1,16 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\View\Helper;
 
-use Acl\View\Helper\AclHelper;
-use App\Controller\Component\AuthComponent;
-use App\Controller\Component\SessionComponent;
-use App\Model\Datasource\Session;
+use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
-use Croogo\TestSuite\CroogoTestCase;
-use Croogo\View\Helper\CroogoHelper;
+use Cake\Core\Configure;
+use Cake\Network\Http\Response;
+use Cake\Network\Request;
+use Cake\Network\Session;
+use Cake\View\View;
+use Croogo\Croogo\CroogoNav;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Croogo\View\Helper\CroogoHelper;
 class TheCroogoTestController extends Controller {
 
 	public $uses = null;
@@ -19,12 +22,12 @@ class TheCroogoTestController extends Controller {
 class CroogoHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.users.aco',
-		'plugin.users.aro',
-		'plugin.users.aros_aco',
-		'plugin.settings.setting',
-		'plugin.users.role',
-		'plugin.taxonomy.type',
+		'plugin.croogo\users.aco',
+		'plugin.croogo\users.aro',
+		'plugin.croogo\users.aros_aco',
+		'plugin.croogo\settings.setting',
+		'plugin.croogo\users.role',
+//		'plugin.taxonomy.type',
 	);
 
 /**
@@ -60,7 +63,7 @@ class CroogoHelperTest extends CroogoTestCase {
  * tearDown
  */
 	public function tearDown() {
-		ClassRegistry::flush();
+//		ClassRegistry::flush();
 		CroogoNav::items('sidebar', $this->menus);
 		unset($this->Croogo);
 	}

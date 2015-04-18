@@ -1,23 +1,23 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\View\Helper;
 
-use App\View\Helper\HtmlHelper;
 use Cake\Controller\Controller;
+use Cake\Network\Request;
+use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
-use Croogo\TestSuite\CroogoTestCase;
-use Croogo\View\Helper\CroogoHelper;
-use Croogo\View\Helper\CroogoPaginatorHelper;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Croogo\View\Helper\CroogoPaginatorHelper;
 class CroogoPaginatorHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.taxonomy.type',
+//		'plugin.taxonomy.type',
 	);
 
 	public function setUp() {
 		$controller = null;
 		$this->View = new View($controller);
 		$this->Paginator = new CroogoPaginatorHelper($this->View);
-		$this->Paginator->request = new Request(null, false);
+		$this->Paginator->request = new Request();
 		$this->Paginator->Html = new HtmlHelper($this->View);
 	}
 

@@ -5,8 +5,8 @@ namespace Croogo\Croogo\Test\TestCase\Controller\Component;
 use App\Controller\AppController;
 use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
-use Croogo\Controller\Component\CroogoComponent;
-use Croogo\TestSuite\CroogoTestCase;
+use Croogo\Croogo\Controller\Component\CroogoComponent;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
 class MockCroogoComponent extends CroogoComponent {
 
 	public function startup(Controller $controller) {
@@ -21,17 +21,17 @@ class CroogoTestController extends AppController {
 class CroogoComponentTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.users.aco',
-		'plugin.users.aro',
-		'plugin.users.aros_aco',
-		'plugin.settings.setting',
-		'plugin.menus.menu',
-		'plugin.menus.link',
-		'plugin.users.role',
-		'plugin.taxonomy.type',
-		'plugin.taxonomy.vocabulary',
-		'plugin.taxonomy.types_vocabulary',
-		'plugin.nodes.node',
+//		'plugin.croogo/users.aco',
+//		'plugin.croogo/users.aro',
+//		'plugin.croogo/users.aros_aco',
+		'plugin.croogo/settings.setting',
+//		'plugin.croogo/menus.menu',
+//		'plugin.croogo/menus.link',
+//		'plugin.croogo/users.role',
+//		'plugin.croogo/taxonomy.type',
+//		'plugin.croogo/taxonomy.vocabulary',
+//		'plugin.croogo/taxonomy.types_vocabulary',
+		'plugin.croogo/nodes.node',
 	);
 
 	public function setUp() {

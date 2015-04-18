@@ -4,8 +4,8 @@ namespace Croogo\Croogo\Test\TestCase\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
-use Croogo\Controller\Component\BaseApiComponent;
-use Croogo\TestSuite\CroogoTestCase;
+use Croogo\Croogo\Controller\Component\BaseApiComponent;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
 class TestApiComponent extends BaseApiComponent {
 
 	protected $_apiVersion = 'v1.0';
@@ -32,7 +32,7 @@ class TestBaseApiController extends Controller {
 class BaseApiComponentTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.settings.setting',
+		'plugin.croogo/settings.setting',
 	);
 
 	public function setUp() {

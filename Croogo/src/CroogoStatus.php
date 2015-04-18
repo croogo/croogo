@@ -2,8 +2,9 @@
 
 namespace Croogo\Croogo;
 
-use App\Controller\Component\AuthComponent;
 use App\Model\Permission;
+use ArrayAccess;
+use Cake\Controller\Component\AuthComponent;
 use Cake\Log\Log;
 /**
  * CroogoStatus

@@ -10,6 +10,8 @@
  * @link     http://www.croogo.org
  */
 namespace Croogo\Croogo;
+use Cake\Log\Log;
+
 class CroogoNav {
 
 /**
@@ -193,7 +195,7 @@ class CroogoNav {
 			self::$_items[$menu] = $items;
 		}
 		if (!array_key_exists($menu, self::$_items)) {
-			CakeLog::error('Invalid menu: ' . $menu);
+			Log::error('Invalid menu: ' . $menu);
 			return array();
 		}
 		return self::$_items[$menu];

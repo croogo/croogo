@@ -3,9 +3,8 @@
 namespace Croogo\Croogo\Test\TestCase\Controller;
 
 use Cake\Utility\File;
-use Croogo\Controller\CroogoAppController;
-use Croogo\TestSuite\CroogoControllerTestCase;
-use Croogo\TestSuite\CroogoTestFixture;
+use Croogo\Croogo\Controller\CroogoAppController;
+use Croogo\Croogo\TestSuite\CroogoControllerTestCase;
 class TestAppController extends CroogoAppController {
 
 	public function admin_edit() {
@@ -28,9 +27,9 @@ class TestAppController extends CroogoAppController {
 class CroogoAppControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
-		'plugin.settings.setting',
-		'plugin.taxonomy.type',
-		'plugin.nodes.node',
+		'plugin.croogo/settings.setting',
+//		'plugin.taxonomy.type',
+		'plugin.croogo/nodes.node',
 	);
 
 	public function setUp() {

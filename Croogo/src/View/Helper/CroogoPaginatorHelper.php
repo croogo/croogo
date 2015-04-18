@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Croogo\View\Helper;
+use Cake\View\Helper\PaginatorHelper;
 
-use App\View\Helper\PaginatorHelper;
 /**
  * Croogo Paginator Helper
  *

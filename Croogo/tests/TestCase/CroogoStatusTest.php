@@ -2,9 +2,11 @@
 
 namespace Croogo\Croogo\Test\TestCase;
 
-use Croogo\Lib\CroogoStatus;
-use Croogo\TestSuite\CroogoTestCase;
-class CroogoStatusTest extends CroogoTestCase implements EventListener {
+use Cake\Event\EventListenerInterface;
+use Cake\Event\EventManager;
+use Croogo\Croogo\CroogoStatus;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
+class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface {
 
 	public function implementedEvents() {
 		return array(

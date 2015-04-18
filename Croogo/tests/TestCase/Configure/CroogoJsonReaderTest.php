@@ -2,8 +2,8 @@
 
 namespace Croogo\Croogo\Test\TestCase\Configure;
 
-use Croogo\Configure\CroogoJsonReader;
-use Croogo\TestSuite\CroogoTestCase;
+use Croogo\Croogo\Configure\CroogoJsonReader;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
 class MockCroogoJsonReader extends CroogoJsonReader {
 
 	public $written = null;
@@ -17,7 +17,7 @@ class MockCroogoJsonReader extends CroogoJsonReader {
 class CroogoJsonReaderTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.settings.setting',
+		'plugin.croogo\settings.setting',
 	);
 
 /**

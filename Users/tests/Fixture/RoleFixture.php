@@ -1,6 +1,8 @@
 <?php
 
 namespace Croogo\Users\Test\Fixture;
+use Croogo\Croogo\TestSuite\CroogoTestFixture;
+
 class RoleFixture extends CroogoTestFixture {
 
 	public $name = 'Role';

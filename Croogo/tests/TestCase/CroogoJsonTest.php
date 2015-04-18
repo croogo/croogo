@@ -1,12 +1,12 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase;
 
-use Croogo\Lib\CroogoJson;
-use Croogo\TestSuite\CroogoTestCase;
+use Croogo\Croogo\CroogoJson;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
 class CroogoJsonTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.settings.setting',
+		'plugin.croogo/settings.setting',
 	);
 
 /**

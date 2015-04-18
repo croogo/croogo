@@ -2,7 +2,7 @@
 
 namespace Croogo\Croogo\Test\TestCase\Utility;
 
-use Croogo\TestSuite\CroogoTestCase;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
 use Croogo\Utility\VisibilityFilter;
 class VisibilityFilterTest extends CroogoTestCase {
 

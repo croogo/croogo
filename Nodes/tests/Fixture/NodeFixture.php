@@ -1,12 +1,14 @@
 <?php
 
 namespace Croogo\Nodes\Test\Fixture;
+use Croogo\Croogo\TestSuite\CroogoTestFixture;
+
 class NodeFixture extends CroogoTestFixture {
 
 	public $name = 'Node';
 
 	public $fields = array(
-		'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 20],
+		'id' => ['type' => 'integer', 'null' => false, 'default' => null],
 		'parent_id' => ['type' => 'integer', 'null' => true, 'default' => null, 'length' => 20],
 		'user_id' => ['type' => 'integer', 'null' => false, 'default' => '0', 'length' => 20],
 		'title' => ['type' => 'string', 'null' => false, 'default' => null],

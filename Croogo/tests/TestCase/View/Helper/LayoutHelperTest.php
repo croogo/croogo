@@ -1,11 +1,16 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\View\Helper;
 
-use App\Controller\Component\SessionComponent;
+use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
-use Croogo\TestSuite\CroogoTestCase;
-use Croogo\View\Helper\CroogoHtmlHelper;
-use Croogo\View\Helper\LayoutHelper;
+use Cake\Core\Configure;
+use Cake\Network\Request;
+use Cake\Network\Response;
+use Cake\View\View;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Croogo\View\Helper\CroogoHtmlHelper;
+use Croogo\Croogo\View\Helper\LayoutHelper;
+
 class TheLayoutTestController extends Controller {
 
 	public $name = 'TheTest';
@@ -17,12 +22,12 @@ class TheLayoutTestController extends Controller {
 class LayoutHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.users.user',
-		'plugin.users.role',
-		'plugin.settings.setting',
-		'plugin.taxonomy.type',
-		'plugin.taxonomy.vocabulary',
-		'plugin.taxonomy.types_vocabulary',
+		'plugin.croogo\users.user',
+		'plugin.croogo\users.role',
+		'plugin.croogo\settings.setting',
+//		'plugin.taxonomy.type',
+//		'plugin.taxonomy.vocabulary',
+//		'plugin.taxonomy.types_vocabulary',
 	);
 
 /**
@@ -53,7 +58,7 @@ class LayoutHelperTest extends CroogoTestCase {
 		Configure::write('App.encoding', $this->_appEncoding);
 		Configure::write('Asset', $this->_asset);
 		Configure::write('debug', $this->_debug);
-		ClassRegistry::flush();
+//		ClassRegistry::flush();
 		unset($this->Layout);
 	}
 
