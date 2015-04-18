@@ -83,7 +83,7 @@ Plugin::load(['Croogo/Extensions' => [
 	'autoload' => true,
 	'bootstrap' => true,
 	'routes' => true,
-	'path' => $croogoPath . '..' . DS . 'Extensions' . DS,
+	'path' => realpath($croogoPath . '..' . DS . 'Extensions') . DS,
 ]]);
 Configure::load('Croogo/Extensions.events');
 
