@@ -34,8 +34,8 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public $components = array(
-		'Croogo.BulkProcess',
-		'Croogo.Recaptcha',
+		'Croogo/Croogo.BulkProcess',
+		'Croogo/Croogo.Recaptcha',
 		'Search.Prg' => array(
 			'presetForm' => array(
 				'paramType' => 'querystring',
@@ -88,7 +88,7 @@ class NodesController extends NodesAppController {
 		if (isset($this->request->params['type'])) {
 			$this->request->params['named']['type'] = $this->request->params['type'];
 		}
-		$this->Security->config('unlockedActions', 'admin_toggle');
+//		$this->Security->config('unlockedActions', 'admin_toggle');
 	}
 
 /**
