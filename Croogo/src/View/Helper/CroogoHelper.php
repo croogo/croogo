@@ -22,8 +22,8 @@ use Croogo\Croogo\CroogoStatus;
 class CroogoHelper extends Helper {
 
 	public $helpers = array(
-		'Form' => array('className' => 'Croogo.CroogoForm'),
-		'Html' => array('className' => 'Croogo.CroogoHtml'),
+		'Form',
+		'Html',
 		'Croogo.Layout',
 		'Menus.Menus',
 	);
