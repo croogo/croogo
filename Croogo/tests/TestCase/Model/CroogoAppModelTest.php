@@ -65,20 +65,22 @@ class CroogoAppModelTest extends CroogoTestCase {
  * testValidName
  */
 	public function testValidName() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+		/** @var UsersTable $usersTable */
+		$usersTable = TableRegistry::get('Croogo/Users.Users');
 
-		$this->assertTrue($this->User->validName(array('name' => 'Kyle')));
-		$this->assertFalse($this->User->validName(array('name' => 'what%is@this#i*dont!even')));
+		$this->assertTrue($usersTable->validName(array('name' => 'Kyle')));
+		$this->assertFalse($usersTable->validName(array('name' => 'what%is@this#i*dont!even')));
 	}
 
 /**
  * testValidAlias
  */
 	public function testValidAlias() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+		/** @var UsersTable $usersTable */
+		$usersTable = TableRegistry::get('Croogo/Users.Users');
 
-		$this->assertTrue($this->User->validAlias(array('name' => 'Kyle')));
-		$this->assertFalse($this->User->validAlias(array('name' => 'Not an Alias')));
+		$this->assertTrue($usersTable->validAlias(array('name' => 'Kyle')));
+		$this->assertFalse($usersTable->validAlias(array('name' => 'Not an Alias')));
 	}
 
 }
