@@ -1,6 +1,7 @@
 <?php
 App::uses('Node', 'Nodes.Model');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
+App::uses('String', 'Utility');
 
 class MetaBehaviorTest extends CroogoTestCase {
 
