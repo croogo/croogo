@@ -3,8 +3,8 @@
 namespace Croogo\Nodes\Event;
 
 use Cake\Core\Plugin;
-use Cake\Event\EventListener;
 
+use Cake\Event\EventListenerInterface;
 use Croogo\Croogo\Croogo;
 use Croogo\Comments\Model\Comment;
 
@@ -16,7 +16,7 @@ use Croogo\Comments\Model\Comment;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class NodesEventHandler implements EventListener {
+class NodesEventHandler implements EventListenerInterface {
 
 /**
  * implementedEvents

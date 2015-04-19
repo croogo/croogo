@@ -2,8 +2,8 @@
 
 namespace Croogo\Extensions\Event;
 
-use Cake\Event\EventListener;
-
+use Cake\Core\Plugin;
+use Cake\Event\EventListenerInterface;
 use Croogo\Extensions\CroogoPlugin;
 
 /**
@@ -14,7 +14,7 @@ use Croogo\Extensions\CroogoPlugin;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtensionsEventHandler implements EventListener {
+class ExtensionsEventHandler implements EventListenerInterface {
 
 /**
  * implementedEvents

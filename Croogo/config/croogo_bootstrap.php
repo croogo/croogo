@@ -91,7 +91,7 @@ Configure::load('Croogo/Extensions.events');
  * List of core plugins
  */
 $corePlugins = [
-	'Croogo/Settings', 'Croogo/Acl', 'Croogo/Blocks', 'Crooog/Comments', 'Croogo/Contacts', 'CrooogoMenus', 'Croogo/Meta',
+	'Croogo/Settings', 'Croogo/Acl', 'Croogo/Blocks', 'Croogo/Comments', 'Croogo/Contacts', 'Croogo/Menus', 'Croogo/Meta',
 	'Croogo/Nodes', 'Croogo/Taxonomy', 'Croogo/Users', 'Croogo/Wysiwyg', 'Croogo/Ckeditor',
 ];
 Configure::write('Core.corePlugins', $corePlugins);
