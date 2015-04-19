@@ -8,6 +8,7 @@ use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
 use Cake\View\View;
+use Croogo\Croogo\Croogo;
 use Croogo\Croogo\CroogoStatus;
 /**
  * Croogo Helper
@@ -24,8 +25,11 @@ class CroogoHelper extends Helper {
 	public $helpers = array(
 		'Form',
 		'Html',
-		'Croogo.Layout',
-		'Menus.Menus',
+		'Url',
+		'Croogo/Croogo.Layout',
+		'Croogo/Croogo.CroogoForm',
+		'Croogo/Croogo.CroogoHtml',
+		'Croogo/Menus.Menus',
 	);
 
 /**
@@ -57,7 +61,7 @@ class CroogoHelper extends Helper {
  * Before Render callback
  */
 	public function beforeRender($viewFile) {
-		if (isset($this->request->params['admin'])) {
+		if ($this->request->param('prefix') === 'admin') {
 			Croogo::dispatchEvent('Croogo.setupAdminData', $this->_View);
 		}
 	}
@@ -167,7 +171,7 @@ class CroogoHelper extends Helper {
 			}
 			$menu['htmlAttributes']['class'] .= ' sidebar-item';
 
-			$menuUrl = $this->url($menu['url']);
+			$menuUrl = $this->Url->build($menu['url']);
 			if ($menuUrl == env('REQUEST_URI')) {
 				if (isset($menu['htmlAttributes']['class'])) {
 					$menu['htmlAttributes']['class'] .= ' current';
@@ -294,10 +298,10 @@ class CroogoHelper extends Helper {
 		}
 
 		if ($action == 'delete' || isset($usePost)) {
-			return $this->Form->postLink($title, $url, $options, $confirmMessage);
+			return $this->CroogoForm->postLink($title, $url, $options, $confirmMessage);
 		}
 
-		return $this->Html->link($title, $url, $options, $confirmMessage);
+		return $this->CroogoHtml->link($title, $url, $options, $confirmMessage);
 	}
 
 /**

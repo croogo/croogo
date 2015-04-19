@@ -31,7 +31,6 @@ class LayoutHelper extends Helper {
 		'Html',
 		'Form',
 		'Session',
-		'Js',
 	);
 
 /**
@@ -168,7 +167,7 @@ class LayoutHelper extends Helper {
 		if (is_array(Configure::read('Js'))) {
 			$croogo = Hash::merge($croogo, Configure::read('Js'));
 		}
-		return $this->Html->scriptBlock('var Croogo = ' . $this->Js->object($croogo) . ';');
+		return $this->Html->scriptBlock('var Croogo = ' . json_encode($croogo) . ';');
 	}
 
 /**
