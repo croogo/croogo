@@ -2,7 +2,9 @@
 
 namespace Croogo\Croogo\Model\Behavior;
 
-use App\Model\ModelBehavior;
+use Cake\ORM\Behavior;
+use Cake\ORM\Entity;
+
 /**
  * Encoder Behavior
  *
@@ -13,34 +15,18 @@ use App\Model\ModelBehavior;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class EncoderBehavior extends ModelBehavior {
-
-/**
- * setup
- *
- * @param Model $model
- * @param array $config
- * @return void
- */
-	public function setup(Model $model, $config = array()) {
-		if (is_string($config)) {
-			$config = array($config);
-		}
-
-		$this->settings[$model->alias] = $config;
-	}
+class EncoderBehavior extends Behavior {
 
 /**
  * Encode data
  *
  * Turn array into a JSON
  *
- * @param object $model model
  * @param array $data data
  * @param array $options (optional)
  * @return string
  */
-	public function encodeData(Model $model, $data, $options = array()) {
+	public function encodeData($data, $options = array()) {
 		$_options = array(
 			'json' => false,
 			'trim' => true,
@@ -81,11 +67,10 @@ class EncoderBehavior extends ModelBehavior {
 /**
  * Decode data
  *
- * @param Model $model
  * @param string $data
  * @return array
  */
-	public function decodeData(Model $model, $data) {
+	public function decodeData($data) {
 		if ($data == '') {
 			$output = '';
 		} else {
