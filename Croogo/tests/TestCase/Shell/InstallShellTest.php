@@ -79,9 +79,9 @@ class InstallShellTest extends CroogoTestCase {
 		foreach ($files as $file) {
 			unlink(TMP . $file);
 		}
-		$Folder = new Folder(Plugin::path('Croogo/Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
+		$Folder = new Folder(Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'plugins' . DS . 'Example');
 		$Folder->delete();
-		$Folder = new Folder(Plugin::path('Croogo/Croogo') . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Minimal');
+		$Folder = new Folder(Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'plugins' . DS . 'Minimal');
 		$Folder->delete();
 	}
 
@@ -91,8 +91,6 @@ class InstallShellTest extends CroogoTestCase {
  * @return void
  */
 	public function testInstallPlugin() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
 		$Shell = $this->getMock('\\Croogo\\Croogo\\Shell\\InstallShell', array('out', 'err', '_shellExec', 'dispatchShell'));
 		$Shell->expects($this->once())
 			->method('_shellExec')
@@ -116,8 +114,6 @@ class InstallShellTest extends CroogoTestCase {
  * @return void
  */
 	public function testInstallTheme() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
 		$Shell = $this->getMock('\\Croogo\\Croogo\\Shell\\InstallShell', array('out', 'err', '_shellExec', 'dispatchShell'));
 		$Shell->expects($this->once())
 			->method('_shellExec')
@@ -209,7 +205,7 @@ class InstallShellTest extends CroogoTestCase {
 		$argOne = func_get_arg(0);
 		preg_match('/ -o (.+) /', $argOne, $zip);
 		$dest = $zip[1];
-		$src = Plugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_plugin.zip';
+		$src = Plugin::path('Croogo/Extensions') . 'tests' . DS . 'test_files' . DS . 'example_plugin.zip';
 		copy($src, $dest);
 		return 'Here is that thing you wanted';
 	}
@@ -221,7 +217,7 @@ class InstallShellTest extends CroogoTestCase {
 		$argOne = func_get_arg(0);
 		preg_match('/ -o (.+) /', $argOne, $zip);
 		$dest = $zip[1];
-		$src = Plugin::path('Extensions') . 'Test' . DS . 'test_files' . DS . 'example_theme.zip';
+		$src = Plugin::path('Croogo/Extensions') . 'tests' . DS . 'test_files' . DS . 'example_theme.zip';
 		copy($src, $dest);
 		return 'Here is that thing you wanted';
 	}
