@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Suppliers\Model\Behavior;
+namespace Suppliers\Model\Behavior;
 
 use App\Model\ModelBehavior;
 class SuppliersOrderMonitorBehavior extends ModelBehavior {
