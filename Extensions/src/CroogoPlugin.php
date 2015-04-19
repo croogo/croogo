@@ -649,7 +649,7 @@ class CroogoPlugin {
 		Cache::delete('EventHandlers', 'cached_settings');
 		foreach ($plugin as $name => $conf) {
 			list($name, $conf) = (is_numeric($name)) ? array($conf, $config) : array($name, $conf);
-			$file = Plugin::path($name) . 'Config' . DS . 'events.php';
+			$file = Plugin::path($name) . 'config' . DS . 'events.php';
 			if (file_exists($file)) {
 				Configure::load($name . '.events');
 			}

@@ -12,7 +12,7 @@ Croogo::hookApiComponent('Users', 'Users.UserApi');
  * Default is 5 failed login attempts in every 5 minutes
  */
 $cacheConfig = array_merge(
-	Configure::read('Cache.defaultConfig'),
+	Configure::read('Croogo.Cache.defaultConfig'),
 	array('groups' => array('users'))
 );
 $failedLoginDuration = 300;

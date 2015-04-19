@@ -91,8 +91,8 @@ Configure::load('Croogo/Extensions.events');
  * List of core plugins
  */
 $corePlugins = [
-	'Settings', 'Acl', 'Blocks', 'Comments', 'Contacts', 'Menus', 'Meta',
-	'Nodes', 'Taxonomy', 'Users', 'Wysiwyg', 'Ckeditor',
+	'Croogo/Settings', 'Croogo/Acl', 'Croogo/Blocks', 'Crooog/Comments', 'Croogo/Contacts', 'CrooogoMenus', 'Croogo/Meta',
+	'Croogo/Nodes', 'Croogo/Taxonomy', 'Croogo/Users', 'Croogo/Wysiwyg', 'Croogo/Ckeditor',
 ];
 Configure::write('Core.corePlugins', $corePlugins);
 
@@ -103,7 +103,7 @@ $aclPlugin = Configure::read('Site.acl_plugin');
 $pluginBootstraps = Configure::read('Hook.bootstraps');
 $plugins = array_filter(explode(',', $pluginBootstraps));
 
-$plugins[] = 'Croogo/Users';
+$plugins = array_merge($plugins, $corePlugins);
 
 if (!in_array($aclPlugin, $plugins)) {
 	$plugins = Hash::merge((array)$aclPlugin, $plugins);
