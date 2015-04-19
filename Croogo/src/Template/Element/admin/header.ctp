@@ -1,5 +1,8 @@
 <?php
 
+use Cake\Core\Configure;
+use Croogo\Croogo\CroogoNav;
+
 $dashboardUrl = Configure::read('Croogo.dashboardUrl');
 
 ?>

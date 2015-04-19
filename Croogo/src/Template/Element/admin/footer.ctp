@@ -3,7 +3,9 @@
 
 	<div class="footer-content">
 	<?php
-		$link = $this->Html->link(
+	use Cake\Core\Configure;
+
+	$link = $this->Html->link(
 			__d('croogo', 'Croogo %s', strval(Configure::read('Croogo.version'))),
 			'http://www.croogo.org'
 		);

@@ -103,21 +103,21 @@ class CroogoHelper extends Helper {
 			),
 		), $options);
 
-		$aclPlugin = Configure::read('Site.acl_plugin');
-		$userId = AuthComponent::user('id');
-		if (empty($userId)) {
-			return '';
-		}
+//		$aclPlugin = Configure::read('Site.acl_plugin');
+//		$userId = AuthComponent::user('id');
+//		if (empty($userId)) {
+//			return '';
+//		}
 
 		$sidebar = $options['type'] === 'sidebar';
 		$htmlAttributes = $options['htmlAttributes'];
 		$out = null;
 		$sorted = Hash::sort($menus, '{s}.weight', 'ASC');
-		if (empty($this->Role)) {
-			$this->Role = ClassRegistry::init('Users.Role');
-			$this->Role->Behaviors->attach('Croogo.Aliasable');
-		}
-		$currentRole = $this->Role->byId($this->Layout->getRoleId());
+//		if (empty($this->Role)) {
+//			$this->Role = ClassRegistry::init('Users.Role');
+//			$this->Role->Behaviors->attach('Croogo.Aliasable');
+//		}
+//		$currentRole = $this->Role->byId($this->Layout->getRoleId());
 
 		foreach ($sorted as $menu) {
 			if (isset($menu['separator'])) {
@@ -125,9 +125,9 @@ class CroogoHelper extends Helper {
 				$out .= $this->Html->tag('li', null, $liOptions);
 				continue;
 			}
-			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByUserId($userId, $menu['url'])) {
-				continue;
-			}
+//			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByUserId($userId, $menu['url'])) {
+//				continue;
+//			}
 
 			if (empty($menu['htmlAttributes']['class'])) {
 				$menuClass = Inflector::slug(strtolower('menu-' . $menu['title']), '-');

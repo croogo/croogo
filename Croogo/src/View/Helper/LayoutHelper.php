@@ -71,70 +71,70 @@ class LayoutHelper extends Helper {
 /**
  * Provides backward compatibility for deprecated methods
  */
-	public function __call($method, $params) {
-		$mapMethods = array(
-			'meta' => array('Meta.Meta', 'meta'),
-			'metaField' => array('Meta.Meta', 'field'),
-			'blocks' => array('Blocks.Regions', 'blocks'),
-			'regionIsEmpty' => array('Blocks.Regions', 'isEmpty'),
-			'linkStringToArray' => array('Menus.Menus', 'linkStringToArray'),
-			'menu' => array('Menus.Menus', 'menu'),
-			'nestedLinks' => array('Menus.Menus', 'nestedLinks'),
-			'nestedTerms' => array('Taxonomy.Taxonomies', 'nestedTerms'),
-			'vocabulary' => array('Taxonomy.Taxonomies', 'vocabulary'),
-			'node' => array('Nodes.Nodes', 'field'),
-			'nodeBody' => array('Nodes.Nodes', 'body'),
-			'nodeExcerpt' => array('Nodes.Nodes', 'excerpt'),
-			'nodeInfo' => array('Nodes.Nodes', 'info'),
-			'nodeList' => array('Nodes.Nodes', 'nodeList'),
-			'nodeMoreInfo' => array('Nodes.Nodes', 'moreInfo'),
-			'setNode' => array('Nodes.Nodes', 'set'),
-			'setNodeField' => array('Nodes.Nodes', 'field'),
-			'adminRowActions' => array('Croogo', 'adminRowActions'),
-			'adminTabs' => array('Croogo', 'adminTabs'),
-			'adminMenus' => array('Croogo', 'adminMenus'),
-		);
-
-		if (!isset($mapMethods[$method])) {
-			trigger_error(__d('croogo', 'Method %1$s::%2$s does not exist', get_class($this), $method), E_USER_WARNING);
-			return;
-		}
-
-		$mapped = $mapMethods[$method];
-		list($helper, $method) = $mapped;
-		list($plugin, $helper) = pluginSplit($helper, true);
-		if (!$this->{$helper}) {
-			if (!$this->_View->Helpers->loaded($helper)) {
-				$this->_View->Helpers->load($helper);
-			}
-			$this->{$helper} = $this->_View->{$helper};
-		}
-		return call_user_func_array(array($this->{$helper}, $method), $params);
-	}
-
-/**
- * Provides backward compatibility for deprecated properties
- */
-	public function __get($name) {
-		switch ($name) {
-			case 'node':
-				return $this->_View->Nodes->node;
-			default:
-				return parent::__get($name);
-		}
-	}
+//	public function __call($method, $params) {
+//		$mapMethods = array(
+//			'meta' => array('Meta.Meta', 'meta'),
+//			'metaField' => array('Meta.Meta', 'field'),
+//			'blocks' => array('Blocks.Regions', 'blocks'),
+//			'regionIsEmpty' => array('Blocks.Regions', 'isEmpty'),
+//			'linkStringToArray' => array('Menus.Menus', 'linkStringToArray'),
+//			'menu' => array('Menus.Menus', 'menu'),
+//			'nestedLinks' => array('Menus.Menus', 'nestedLinks'),
+//			'nestedTerms' => array('Taxonomy.Taxonomies', 'nestedTerms'),
+//			'vocabulary' => array('Taxonomy.Taxonomies', 'vocabulary'),
+//			'node' => array('Nodes.Nodes', 'field'),
+//			'nodeBody' => array('Nodes.Nodes', 'body'),
+//			'nodeExcerpt' => array('Nodes.Nodes', 'excerpt'),
+//			'nodeInfo' => array('Nodes.Nodes', 'info'),
+//			'nodeList' => array('Nodes.Nodes', 'nodeList'),
+//			'nodeMoreInfo' => array('Nodes.Nodes', 'moreInfo'),
+//			'setNode' => array('Nodes.Nodes', 'set'),
+//			'setNodeField' => array('Nodes.Nodes', 'field'),
+//			'adminRowActions' => array('Croogo', 'adminRowActions'),
+//			'adminTabs' => array('Croogo', 'adminTabs'),
+//			'adminMenus' => array('Croogo', 'adminMenus'),
+//		);
+//
+//		if (!isset($mapMethods[$method])) {
+//			trigger_error(__d('croogo', 'Method %1$s::%2$s does not exist', get_class($this), $method), E_USER_WARNING);
+//			return;
+//		}
+//
+//		$mapped = $mapMethods[$method];
+//		list($helper, $method) = $mapped;
+//		list($plugin, $helper) = pluginSplit($helper, true);
+//		if (!$this->{$helper}) {
+//			if (!$this->_View->Helpers->loaded($helper)) {
+//				$this->_View->Helpers->load($helper);
+//			}
+//			$this->{$helper} = $this->_View->{$helper};
+//		}
+//		return call_user_func_array(array($this->{$helper}, $method), $params);
+//	}
 
 /**
  * Provides backward compatibility for deprecated properties
  */
-	public function __set($name, $val) {
-		switch ($name) {
-			case 'node':
-				return $this->_View->Nodes->node = $val;
-			default:
-				return parent::__set($name, $val);
-		}
-	}
+//	public function __get($name) {
+//		switch ($name) {
+//			case 'node':
+//				return $this->_View->Nodes->node;
+//			default:
+//				return parent::__get($name);
+//		}
+//	}
+//
+///**
+// * Provides backward compatibility for deprecated properties
+// */
+//	public function __set($name, $val) {
+//		switch ($name) {
+//			case 'node':
+//				return $this->_View->Nodes->node = $val;
+//			default:
+//				return parent::__set($name, $val);
+//		}
+//	}
 
 /**
  * Javascript variables
