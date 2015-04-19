@@ -105,7 +105,7 @@ class CroogoEventManager extends EventManager {
  * @return void
  */
 	public function attach($callable, $eventKey = null, array $options = array()) {
-		parent::attach($callable, $eventKey, $options);
+		parent::on($callable, $eventKey, $options);
 		if (is_object($callable)) {
 			$key = get_class($callable);
 			$this->_listenersMap[$key] = $callable;
@@ -122,7 +122,7 @@ class CroogoEventManager extends EventManager {
 			$key = get_class($callable);
 			unset($this->_listenersMap[$key]);
 		}
-		parent::detach($callable, $eventKey);
+		parent::off($callable, $eventKey);
 	}
 
 /**
@@ -138,9 +138,9 @@ class CroogoEventManager extends EventManager {
 		$eventHandlers = array_keys($eventHandlers);
 		$eventHandlers = preg_grep('/^' . $plugin . '/', $eventHandlers);
 		foreach ($eventHandlers as $eventHandler) {
-			list(, $class) = pluginSplit($eventHandler);
-			if (isset($this->_listenersMap[$class])) {
-				$this->detach($this->_listenersMap[$class]);
+			$className = App::className($eventHandler, 'Event');
+			if (isset($this->_listenersMap[$className])) {
+				$this->detach($this->_listenersMap[$className]);
 			}
 		}
 	}
