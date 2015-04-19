@@ -3,6 +3,7 @@
 namespace Croogo\Croogo\Configure;
 
 use Cake\Core\Configure\ConfigEngineInterface;
+use Croogo\Croogo\Core\Exception\Exception;
 use Croogo\Croogo\CroogoJson;
 
 /**
@@ -16,31 +17,31 @@ use Croogo\Croogo\CroogoJson;
  */
 class CroogoJsonReader implements ConfigEngineInterface {
 
-/**
- * Default path to store file
- */
+	/**
+	 * Default path to store file
+	 */
 	protected $_path = null;
 
-/**
- * __construct
- *
- */
+	/**
+	 * __construct
+	 *
+	 */
 	public function __construct($path = null) {
 		if (!$path) {
-			$path = APP . 'Config' . DS;
+			$path = CONFIG;
 		}
 		$this->_path = $path;
 	}
 
-/**
- * Read an json file and return the results as an array.
- *
- * @params $key string name key to read
- * @throws ConfigureException
- */
+	/**
+	 * Read an json file and return the results as an array.
+	 *
+	 * @params $key string name key to read
+	 * @throws Exception
+	 */
 	public function read($key) {
 		if (strpos($key, '..') !== false) {
-			throw new ConfigureException(__d('croogo', 'Cannot load configuration files with ../ in them.'));
+			throw new Exception(__d('croogo', 'Cannot load configuration files with ../ in them.'));
 		}
 		if (substr($key, -5) === '.json') {
 			$key = substr($key, 0, -5);
@@ -48,23 +49,23 @@ class CroogoJsonReader implements ConfigEngineInterface {
 		list($plugin, $key) = pluginSplit($key);
 
 		if ($plugin) {
-			$file = App::pluginPath($plugin) . 'Config' . DS . $key;
+			$file = Plugin::path($plugin) . 'config' . DS . $key;
 		} else {
 			$file = $this->_path . $key;
 		}
 		$file .= '.json';
 		if (!is_file($file)) {
 			if (!is_file(substr($file, 0, -4))) {
-				throw new ConfigureException(__d('croogo', 'Could not load configuration files: %s or %s', $file, substr($file, 0, -4)));
+				throw new Exception(__d('croogo', 'Could not load configuration files: %s or %s', $file, substr($file, 0, -4)));
 			}
 		}
 		$config = json_decode(file_get_contents($file), true);
 		return $config;
 	}
 
-/**
- * Dumps the state of Configure data into an json string.
- */
+	/**
+	 * Dumps the state of Configure data into an json string.
+	 */
 	public function dump($filename, array $data) {
 		$runtime = array(
 			'routes' => '',
@@ -85,10 +86,10 @@ class CroogoJsonReader implements ConfigEngineInterface {
 		return $this->_writeFile($this->_path . $filename, $contents);
 	}
 
-/**
- * _writeFile
- *
- */
+	/**
+	 * _writeFile
+	 *
+	 */
 	protected function _writeFile($file, $contents) {
 		return file_put_contents($file, $contents);
 	}

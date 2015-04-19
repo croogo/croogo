@@ -50,7 +50,7 @@ Configure::write('Croogo.Cache.defaultConfig', $cacheConfig);
  * Settings
  */
 Configure::config('settings', new CroogoJsonReader());
-if (file_exists(APP . 'Config' . DS . 'settings.json')) {
+if (file_exists(CONFIG . 'settings.json')) {
 	Configure::load('settings', 'settings');
 }
 
