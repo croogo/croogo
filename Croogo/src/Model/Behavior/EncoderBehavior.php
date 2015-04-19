@@ -3,7 +3,6 @@
 namespace Croogo\Croogo\Model\Behavior;
 
 use Cake\ORM\Behavior;
-use Cake\ORM\Entity;
 
 /**
  * Encoder Behavior
@@ -17,15 +16,15 @@ use Cake\ORM\Entity;
  */
 class EncoderBehavior extends Behavior {
 
-/**
- * Encode data
- *
- * Turn array into a JSON
- *
- * @param array $data data
- * @param array $options (optional)
- * @return string
- */
+	/**
+	 * Encode data
+	 *
+	 * Turn array into a JSON
+	 *
+	 * @param array $data data
+	 * @param array $options (optional)
+	 * @return string
+	 */
 	public function encodeData($data, $options = array()) {
 		$_options = array(
 			'json' => false,
@@ -64,12 +63,12 @@ class EncoderBehavior extends Behavior {
 		return $output;
 	}
 
-/**
- * Decode data
- *
- * @param string $data
- * @return array
- */
+	/**
+	 * Decode data
+	 *
+	 * @param string $data
+	 * @return array
+	 */
 	public function decodeData($data) {
 		if ($data == '') {
 			$output = '';
