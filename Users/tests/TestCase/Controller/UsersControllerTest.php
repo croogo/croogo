@@ -1,8 +1,7 @@
 <?php
 namespace Croogo\Users\Test\TestCase\Controller;
 
-use Croogo\TestSuite\CroogoControllerTestCase;
-use Users\Controller\UsersController;
+use Croogo\Croogo\TestSuite\CroogoControllerTestCase;
 /**
  * UsersController Test
  */

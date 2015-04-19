@@ -1,34 +1,33 @@
 <?php
 namespace Croogo\Users\Test\TestCase\Controller;
 
-use Croogo\TestSuite\CroogoControllerTestCase;
-use Users\Controller\RolesController;
+use Croogo\Croogo\TestSuite\CroogoControllerTestCase;
 class RolesControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
-		'plugin.users.aco',
-		'plugin.users.aro',
-		'plugin.users.aros_aco',
-		'plugin.blocks.block',
-		'plugin.comments.comment',
-		'plugin.contacts.contact',
-		'plugin.translate.i18n',
-		'plugin.settings.language',
-		'plugin.menus.link',
-		'plugin.menus.menu',
-		'plugin.contacts.message',
-		'plugin.meta.meta',
-		'plugin.nodes.node',
-		'plugin.taxonomy.model_taxonomy',
-		'plugin.blocks.region',
-		'plugin.users.role',
-		'plugin.settings.setting',
-		'plugin.taxonomy.taxonomy',
-		'plugin.taxonomy.term',
-		'plugin.taxonomy.type',
-		'plugin.taxonomy.types_vocabulary',
-		'plugin.users.user',
-		'plugin.taxonomy.vocabulary',
+		'plugin.croogo/users.aco',
+		'plugin.croogo/users.aro',
+		'plugin.croogo/users.aros_aco',
+//		'plugin.blocks.block',
+//		'plugin.comments.comment',
+//		'plugin.contacts.contact',
+//		'plugin.translate.i18n',
+		'plugin.croogo/settings.language',
+//		'plugin.menus.link',
+//		'plugin.menus.menu',
+//		'plugin.contacts.message',
+//		'plugin.meta.meta',
+		'plugin.croogo/nodes.node',
+//		'plugin.taxonomy.model_taxonomy',
+//		'plugin.blocks.region',
+		'plugin.croogo/users.role',
+		'plugin.croogo/settings.setting',
+//		'plugin.taxonomy.taxonomy',
+//		'plugin.taxonomy.term',
+//		'plugin.taxonomy.type',
+//		'plugin.taxonomy.types_vocabulary',
+		'plugin.croogo/users.user',
+//		'plugin.taxonomy.vocabulary',
 	);
 
 /**

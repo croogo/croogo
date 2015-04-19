@@ -1,25 +1,9 @@
 <?php
 namespace Croogo\Users\Test\TestCase\Model;
 
-use App\Controller\Component\AuthComponent;
-use App\Model\AppModel;
-use App\Model\Model;
-use Croogo\TestSuite\CroogoTestCase;
-use Users\Model\User;
-/**
- * TestUser
- *
- */
-class TestUser extends User {
-
-/**
- * model alias
- *
- * @var string
- */
-	public $alias = 'User';
-
-}
+use Cake\Controller\Component\AuthComponent;
+use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Users\Model\User;
 
 /**
  * TestUser
@@ -33,11 +17,11 @@ class UserTest extends CroogoTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'plugin.users.aco',
-		'plugin.users.aro',
-		'plugin.users.aros_aco',
-		'plugin.users.role',
-		'plugin.users.user',
+		'plugin.croogo/users.aco',
+		'plugin.croogo/users.aro',
+		'plugin.croogo/users.aros_aco',
+		'plugin.croogo/users.role',
+		'plugin.croogo/users.user',
 	);
 
 /**
@@ -54,8 +38,8 @@ class UserTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->User = ClassRegistry::init('TestUser');
-		$this->User->Aro->useDbConfig = 'test';
+//		$this->User = ClassRegistry::init('TestUser');
+//		$this->User->Aro->useDbConfig = 'test';
 	}
 
 /**
