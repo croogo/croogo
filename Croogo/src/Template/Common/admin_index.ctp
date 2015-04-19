@@ -1,4 +1,6 @@
 <?php
+use Cake\Utility\Inflector;
+
 if (empty($modelClass)) {
 	$modelClass = Inflector::singularize($this->name);
 }
@@ -42,10 +44,10 @@ $showActions = isset($showActions) ? $showActions : true;
 <div class="row-fluid">
 	<div class="span12">
 		<?php if ($contentBlock = $this->fetch('content')): ?>
-			<?php echo $this->element('admin/search'); ?>
+			<?php echo $this->element('Croogo/Croogo.admin/search'); ?>
 			<?php echo $contentBlock; ?>
 		<?php else: ?>
-			<?php echo $this->element('admin/search'); ?>
+			<?php echo $this->element('Croogo/Croogo.admin/search'); ?>
 			<table class="table table-striped">
 				<?php
 				$tableHeaders = array();

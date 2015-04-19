@@ -1,4 +1,6 @@
 <?php
+use Cake\Utility\Inflector;
+
 if (empty($modelClass)) {
 	$modelClass = Inflector::singularize($this->name);
 }

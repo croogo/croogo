@@ -1,8 +1,9 @@
 <?php
 
-namespace Croogo\Users\Controller;
+namespace Croogo\Users\Controller\Admin;
 
-use Users\Controller\UsersAppController;
+use Croogo\Users\Controller\UsersAppController;
+
 /**
  * Roles Controller
  *
@@ -14,22 +15,6 @@ use Users\Controller\UsersAppController;
  * @link     http://www.croogo.org
  */
 class RolesController extends UsersAppController {
-
-/**
- * Controller name
- *
- * @var string
- * @access public
- */
-	public $name = 'Roles';
-
-/**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
-	public $uses = array('Users.Role');
 
 /**
  * Admin index

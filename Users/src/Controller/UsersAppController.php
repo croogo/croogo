@@ -15,4 +15,8 @@ use App\Controller\AppController;
  */
 class UsersAppController extends AppController {
 
+	public $helpers = [
+		'Croogo/Croogo.Croogo'
+	];
+
 }
