@@ -1,20 +1,13 @@
 <?php
 
 function find_root() {
-	$root = dirname(__DIR__);
-	if (is_dir($root . '/vendor/cakephp/cakephp')) {
-		return $root;
+	$root = getcwd();
+
+	while (!is_dir($root . '/vendor/cakephp/cakephp')) {
+		$root = dirname($root);
 	}
 
-	$root = dirname(dirname(__DIR__));
-	if (is_dir($root . '/vendor/cakephp/cakephp')) {
-		return $root;
-	}
-
-	$root = dirname(dirname(dirname(__DIR__)));
-	if (is_dir($root . '/vendor/cakephp/cakephp')) {
-		return $root;
-	}
+	return $root;
 }
 
 function find_app() {
@@ -46,8 +39,8 @@ define('CAKE_CORE_INCLUDE_PATH', ROOT . '/vendor/cakephp/cakephp');
 define('CORE_PATH', CAKE_CORE_INCLUDE_PATH . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
 
-require ROOT . '/vendor/autoload.php';
-require CORE_PATH . 'config/bootstrap.php';
+require ROOT . DS . 'vendor' . DS . 'autoload.php';
+require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
 Cake\Core\Configure::write('App', [
 	'namespace' => 'App',
