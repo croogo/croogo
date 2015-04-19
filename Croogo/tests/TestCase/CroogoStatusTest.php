@@ -93,8 +93,8 @@ class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface 
  */
 	public function testStatusModifiedByEventHandler() {
 		$callback = array($this, 'modifyStatus');
-		EventManager::instance()->detach($this);
-		EventManager::instance()->attach($callback, 'Croogo.Status.status');
+		EventManager::instance()->on($this);
+		EventManager::instance()->on('Croogo.Status.status', $callback);
 
 		// test status is modified for 'webmaster' type by event handler
 		$expected = array(CroogoStatus::PUBLISHED, CroogoStatus::PREVIEW);
@@ -107,7 +107,7 @@ class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface 
 		$result = $this->CroogoStatus->status('publishing', 'bogus');
 		$this->assertEquals($expected, $result);
 
-		EventManager::instance()->detach($callback, 'Croogo.Status.status');
+		EventManager::instance()->on('Croogo.Status.status', $callback);
 	}
 
 /**
