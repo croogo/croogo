@@ -2,6 +2,7 @@
 
 namespace Croogo\Croogo\View\Helper;
 
+use Cake\Core\Configure;
 use Cake\View\Helper;
 /**
  * Croogo Application helper
@@ -14,6 +15,10 @@ use Cake\View\Helper;
  * @link     http://www.croogo.org
  */
 class CroogoAppHelper extends Helper {
+
+	public $helpers = [
+		'Url'
+	];
 
 /**
  * Url helper function
@@ -29,7 +34,7 @@ class CroogoAppHelper extends Helper {
 				$url['locale'] = $this->request->params['locale'];
 			}
 		}
-		return parent::url($url, $full);
+		return $this->Url->build($url, $full);
 	}
 
 /**
@@ -48,7 +53,7 @@ class CroogoAppHelper extends Helper {
 				'ext' => 'json',
 			), $url);
 		}
-		return parent::url($url, $full);
+		return $this->Url->build($url, $full);
 	}
 
 }

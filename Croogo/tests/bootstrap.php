@@ -85,6 +85,7 @@ Cake\Core\Plugin::load('Croogo/Settings', ['autoload' => true, 'path' => '../Set
 Cake\Core\Plugin::load('Croogo/Nodes', ['autoload' => true, 'path' => '../Nodes/']);
 Cake\Core\Plugin::load('Croogo/Users', ['autoload' => true, 'path' => '../Users/']);
 Cake\Core\Plugin::load('Croogo/Example', ['autoload' => true, 'path' => '../Example/']);
+Cake\Core\Plugin::load('Croogo/Translate', ['autoload' => true, 'path' => '../Translate/']);
 
 new Croogo\Settings\Test\Fixture\SettingFixture();
 
