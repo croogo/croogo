@@ -49,7 +49,16 @@ define('CAKE', CORE_PATH . 'src' . DS);
 require ROOT . '/vendor/autoload.php';
 require CORE_PATH . 'config/bootstrap.php';
 
-Cake\Core\Configure::write('App', ['namespace' => 'App']);
+Cake\Core\Configure::write('App', [
+	'namespace' => 'App',
+	'paths' => [
+		'plugins' => [
+			APP . 'plugins' . DS,
+		],
+		'templates' => [APP . 'Template' . DS],
+		'locales' => [APP . 'Locale' . DS],
+	],
+]);
 Cake\Core\Configure::write('debug', 2);
 
 $Tmp = new \Cake\Filesystem\Folder(TMP);
