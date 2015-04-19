@@ -21,16 +21,26 @@ class CroogoJsonReaderTest extends CroogoTestCase {
 		'plugin.croogo\settings.setting',
 	);
 
-/**
+	/**
+	 * @var CroogoJsonReader
+	 */
+	private $CroogoJsonReader;
+
+	/**
+	 * @var string
+	 */
+	private $testFile;
+
+	/**
  * setUp
  */
 	public function setUp() {
 		parent::setUp();
-		$this->CroogoJsonReader = $this->getMock('MockCroogoJsonReader',
-			null
-//			array(Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'Config' . DS)
+		$this->CroogoJsonReader = $this->getMock('\\Croogo\\Croogo\\Test\\TestCase\\Configure\\MockCroogoJsonReader',
+			null,
+			array(Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'config' . DS)
 		);
-//		$this->testFile = $this->CroogoJsonReader->getPath() . 'test.json';
+		$this->testFile = $this->CroogoJsonReader->getPath() . 'test.json';
 	}
 
 /**
@@ -46,18 +56,14 @@ class CroogoJsonReaderTest extends CroogoTestCase {
  * testDefaultPath
  */
 	public function testDefaultPath() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
 		$path = $this->CroogoJsonReader->getPath();
-		$this->assertEquals(Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'Config' . DS, $path);
+		$this->assertEquals(Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'config' . DS, $path);
 	}
 
 /**
  * testRead
  */
 	public function testRead() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
 		$settings = $this->CroogoJsonReader->read('settings', 'settings');
 		$expected = array(
 			'acl_plugin' => 'Acl',
@@ -77,8 +83,6 @@ class CroogoJsonReaderTest extends CroogoTestCase {
  * testDump
  */
 	public function testDump() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
 		$settings = array(
 			'Site' => array(
 				'title' => 'Croogo - Test (Edited)',
