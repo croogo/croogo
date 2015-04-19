@@ -9,6 +9,11 @@ class StringConverterTest extends CroogoTestCase {
 
 	public $setupSettings = false;
 
+	/**
+	 * @var StringConverter
+	 */
+	private $Converter;
+
 	public function setUp() {
 		parent::setUp();
 		$this->Converter = new StringConverter();
@@ -18,15 +23,15 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArray
  */
 	public function testLinkStringToArray() {
-		$this->assertEquals($this->Converter->linkStringToArray('controller:nodes/action:index'), array_merge(
+		$this->assertEquals(array_merge(
 			array_fill_keys((array)Configure::read('Routing.prefixes'), false),
 			array(
 				'plugin' => null,
 				'controller' => 'nodes',
 				'action' => 'index',
 			)
-		));
-		$this->assertEquals($this->Converter->linkStringToArray('controller:nodes/action:index/pass/pass2'), array_merge(
+		), $this->Converter->linkStringToArray('controller:nodes/action:index'));
+		$this->assertEquals(array_merge(
 			array_fill_keys((array)Configure::read('Routing.prefixes'), false),
 			array(
 				'plugin' => null,
@@ -35,8 +40,8 @@ class StringConverterTest extends CroogoTestCase {
 				'pass',
 				'pass2',
 			)
-		));
-		$this->assertEquals($this->Converter->linkStringToArray('controller:nodes/action:index/param:value'), array_merge(
+		), $this->Converter->linkStringToArray('controller:nodes/action:index/pass/pass2'));
+		$this->assertEquals(array_merge(
 			array_fill_keys((array)Configure::read('Routing.prefixes'), false),
 			array(
 				'plugin' => null,
@@ -44,8 +49,8 @@ class StringConverterTest extends CroogoTestCase {
 				'action' => 'index',
 				'param' => 'value',
 			)
-		));
-		$this->assertEquals($this->Converter->linkStringToArray('controller:nodes/action:index/with-slash/'), array_merge(
+		), $this->Converter->linkStringToArray('controller:nodes/action:index/param:value'));
+		$this->assertEquals(array_merge(
 			array_fill_keys((array)Configure::read('Routing.prefixes'), false),
 			array(
 				'plugin' => null,
@@ -53,7 +58,7 @@ class StringConverterTest extends CroogoTestCase {
 				'action' => 'index',
 				'with-slash',
 			)
-		));
+		), $this->Converter->linkStringToArray('controller:nodes/action:index/with-slash/'));
 
 		$expected = array_merge(
 			array_fill_keys((array)Configure::read('Routing.prefixes'), false),
@@ -75,10 +80,8 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArrayWithQueryString
  */
 	public function testLinkStringToArrayWithQueryString() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
 		$expected = array(
-			'admin' => true,
+			'prefix' => 'admin',
 			'plugin' => 'nodes',
 			'controller' => 'nodes',
 			'action' => 'index',
@@ -87,7 +90,7 @@ class StringConverterTest extends CroogoTestCase {
 			),
 		);
 		$result = $this->Converter->linkStringToArray(
-			'admin:true/plugin:nodes/controller:nodes/action:index?foo=bar'
+			'prefix:admin/plugin:nodes/controller:nodes/action:index?foo=bar'
 		);
 		$this->assertEquals($expected, $result);
 	}
@@ -96,10 +99,8 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArrayWithQueryStringAndPassedArgs
  */
 	public function testLinkStringToArrayWithQueryStringAndPassedArgs() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
 		$expected = array(
-			'admin' => true,
+			'prefix' => 'admin',
 			'plugin' => 'settings',
 			'controller' => 'settings',
 			'action' => 'prefix',
@@ -109,7 +110,7 @@ class StringConverterTest extends CroogoTestCase {
 			),
 		);
 		$result = $this->Converter->linkStringToArray(
-			'admin:true/plugin:settings/controller:settings/action:prefix/Site?key=Site.title'
+			'prefix:admin/plugin:settings/controller:settings/action:prefix/Site?key=Site.title'
 		);
 		$this->assertEquals($expected, $result);
 	}
@@ -118,10 +119,8 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArrayWithQueryStringAndPassedAndNamedArgs
  */
 	public function testLinkStringToArrayWithQueryStringAndPassedAndNamedArgs() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
 		$expected = array(
-			'admin' => false,
+			'prefix' => false,
 			'plugin' => 'nodes',
 			'controller' => 'nodes',
 			'action' => 'index',
@@ -131,7 +130,7 @@ class StringConverterTest extends CroogoTestCase {
 			),
 		);
 		$result = $this->Converter->linkStringToArray(
-			'admin:false/plugin:nodes/controller:nodes/action:index/type:blog?slug=hello-world'
+			'prefix:false/plugin:nodes/controller:nodes/action:index/type:blog?slug=hello-world'
 		);
 		$this->assertEquals($expected, $result);
 	}
@@ -140,10 +139,8 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArrayWithUtf8
  */
 	public function testLinkStringToArrayWithUtf8() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
 		$expected = array(
-			'admin' => false,
+			'prefix' => false,
 			'plugin' => 'nodes',
 			'controller' => 'nodes',
 			'action' => 'view',
@@ -151,7 +148,7 @@ class StringConverterTest extends CroogoTestCase {
 			'slug' => 'ハローワールド',
 		);
 		$result = $this->Converter->linkStringToArray(
-			'admin:false/plugin:nodes/controller:nodes/action:view/type:blog/slug:ハローワールド'
+			'prefix:false/plugin:nodes/controller:nodes/action:view/type:blog/slug:ハローワールド'
 		);
 		$this->assertEquals($expected, $result);
 	}
@@ -160,10 +157,8 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArrayWithUtf8PassedArgs
  */
 	public function testLinkStringToArrayWithUtf8PassedArgs() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
 		$expected = array(
-			'admin' => false,
+			'prefix' => false,
 			'plugin' => 'nodes',
 			'controller' => 'nodes',
 			'action' => 'view',
@@ -171,7 +166,7 @@ class StringConverterTest extends CroogoTestCase {
 			'좋은 아침',
 		);
 		$result = $this->Converter->linkStringToArray(
-			'admin:false/plugin:nodes/controller:nodes/action:view/ハローワールド/좋은 아침'
+			'prefix:false/plugin:nodes/controller:nodes/action:view/ハローワールド/좋은 아침'
 		);
 		$this->assertEquals($expected, $result);
 	}
@@ -180,10 +175,8 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArrayWithUtf8InQueryString
  */
 	public function testLinkStringToArrayWithUtf8InQueryString() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
 		$expected = array(
-			'admin' => false,
+			'prefix' => false,
 			'plugin' => 'nodes',
 			'controller' => 'nodes',
 			'action' => 'view',
@@ -193,7 +186,7 @@ class StringConverterTest extends CroogoTestCase {
 			),
 		);
 		$result = $this->Converter->linkStringToArray(
-			'admin:false/plugin:nodes/controller:nodes/action:view/?slug=ハローワールド&page=8'
+			'prefix:false/plugin:nodes/controller:nodes/action:view/?slug=ハローワールド&page=8'
 		);
 		$this->assertEquals($expected, $result);
 	}
@@ -202,10 +195,8 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArrayWithEncodedUtf8
  */
 	public function testLinkStringToArrayWithEncodedUtf8() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
 		$expected = array(
-			'admin' => false,
+			'prefix' => false,
 			'plugin' => 'nodes',
 			'controller' => 'nodes',
 			'action' => 'view',
@@ -213,7 +204,7 @@ class StringConverterTest extends CroogoTestCase {
 			'slug' => 'ハローワールド',
 		);
 		$result = $this->Converter->linkStringToArray(
-			'admin:false/plugin:nodes/controller:nodes/action:view/type:blog/slug:%E3%83%8F%E3%83%AD%E3%83%BC%E3%83%AF%E3%83%BC%E3%83%AB%E3%83%89'
+			'prefix:false/plugin:nodes/controller:nodes/action:view/type:blog/slug:%E3%83%8F%E3%83%AD%E3%83%BC%E3%83%AF%E3%83%BC%E3%83%AB%E3%83%89'
 		);
 		$this->assertEquals($expected, $result);
 	}

@@ -103,16 +103,13 @@ class StringConverter {
 			$link = substr($link, 0, $pos);
 		}
 		$link = explode('/', $link);
-		//$prefixes = Configure::read('Routing.prefixes');
-		Log::write('notice', 'StringConverter::linkStringToArray doesn\'t know about the current prefixes. This needs to be looked at');
-		$prefixes = array();
-		$linkArr = array_fill_keys($prefixes, false);
+		$linkArr = array();
 		foreach ($link as $linkElement) {
 			if ($linkElement != null) {
 				$linkElementE = explode(':', $linkElement);
 				if (isset($linkElementE['1'])) {
-					if (in_array($linkElementE['0'], $prefixes)) {
-						$linkArr[$linkElementE['0']] = strcasecmp($linkElementE['1'], 'false') === 0 ? false : true;
+					if (in_array($linkElementE['1'], array('true', 'false'))) {
+						$linkArr[$linkElementE['0']] = ($linkElementE['0'] === 'true') ? true : false;
 					} else {
 						$linkArr[$linkElementE['0']] = urldecode($linkElementE['1']);
 					}
