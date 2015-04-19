@@ -2,7 +2,8 @@
 
 namespace Croogo\Users\Controller;
 
-use App\Controller\AppController;
+use Croogo\Croogo\Controller\CroogoAppController;
+
 /**
  * Users Application controller
  *
@@ -13,7 +14,7 @@ use App\Controller\AppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class UsersAppController extends AppController {
+class UsersAppController extends CroogoAppController {
 
 	public $helpers = [
 		'Croogo/Croogo.Croogo'
