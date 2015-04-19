@@ -24,7 +24,9 @@ function find_app() {
 	}
 }
 
-define('DS', DIRECTORY_SEPARATOR);
+if (!defined('DS')) {
+	define('DS', DIRECTORY_SEPARATOR);
+}
 define('ROOT', find_root());
 define('APP_DIR', find_app());
 define('WEBROOT_DIR', 'webroot');
