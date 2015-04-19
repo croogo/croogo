@@ -1,6 +1,9 @@
 <?php
 
 namespace Croogo\Contacts\Config;
+
+use Croogo\Croogo\CroogoNav;
+
 CroogoNav::add('sidebar', 'contacts', array(
 	'icon' => array('comments', 'large'),
 	'title' => __d('croogo', 'Contacts'),
