@@ -4,8 +4,11 @@ namespace Croogo\Croogo\Test\TestCase\Model;
 use App\Controller\Component\AuthComponent;
 use App\Model\Model;
 use App\Model\User;
+use Cake\ORM\TableRegistry;
 use Croogo\Model\CroogoAppModel;
 use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Users\Model\Table\UsersTable;
+
 /**
  * CroogoAppModelTest file
  *
@@ -42,6 +45,11 @@ class CroogoAppModelTest extends CroogoTestCase {
 	public $User;
 
 /**
+ * @var UsersTable
+ */
+	public $usersTable;
+
+/**
  * setUp method
  *
  * @return void
@@ -49,6 +57,7 @@ class CroogoAppModelTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 //		$this->User = ClassRegistry::init('Users.User');
+		$this->usersTable = TableRegistry::get('Croogo/Users.Users');
 	}
 
 /**
@@ -65,22 +74,16 @@ class CroogoAppModelTest extends CroogoTestCase {
  * testValidName
  */
 	public function testValidName() {
-		/** @var UsersTable $usersTable */
-		$usersTable = TableRegistry::get('Croogo/Users.Users');
-
-		$this->assertTrue($usersTable->validName(array('name' => 'Kyle')));
-		$this->assertFalse($usersTable->validName(array('name' => 'what%is@this#i*dont!even')));
+		$this->assertTrue($this->usersTable->validName(array('name' => 'Kyle')));
+		$this->assertFalse($this->usersTable->validName(array('name' => 'what%is@this#i*dont!even')));
 	}
 
 /**
  * testValidAlias
  */
 	public function testValidAlias() {
-		/** @var UsersTable $usersTable */
-		$usersTable = TableRegistry::get('Croogo/Users.Users');
-
-		$this->assertTrue($usersTable->validAlias(array('name' => 'Kyle')));
-		$this->assertFalse($usersTable->validAlias(array('name' => 'Not an Alias')));
+		$this->assertTrue($this->usersTable->validAlias(array('name' => 'Kyle')));
+		$this->assertFalse($this->usersTable->validAlias(array('name' => 'Not an Alias')));
 	}
 
 }

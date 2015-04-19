@@ -3,6 +3,7 @@
 namespace Croogo\Croogo\Model\Table;
 
 use Cake\ORM\Table;
+use Croogo\Croogo\Croogo;
 
 /**
  * Croogo Base Table class
