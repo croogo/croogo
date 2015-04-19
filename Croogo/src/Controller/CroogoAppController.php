@@ -2,9 +2,10 @@
 
 namespace Croogo\Croogo\Controller;
 
+use Cake\Controller\Exception\MissingComponentException;
+use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Controller\Controller;
-use Cake\Controller\Error\MissingComponentException;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 
@@ -67,10 +68,9 @@ class CroogoAppController extends Controller {
 		'Form',
 		'Session',
 		'Text',
-		'Js',
 		'Time',
-		'Croogo.Layout',
-		'Custom',
+		'Croogo/Croogo.Layout',
+		'Croogo/Croogo.Custom',
 	);
 
 /**
@@ -94,7 +94,7 @@ class CroogoAppController extends Controller {
  * @var string
  * @access public
  */
-	public $viewClass = 'Theme';
+//	public $viewClass = 'Theme';
 
 /**
  * Theme
@@ -123,7 +123,14 @@ class CroogoAppController extends Controller {
 		$this->afterConstruct();
 	}
 
-/**
+	public function initialize() {
+		parent::initialize();
+
+		$this->loadComponent('Auth');
+	}
+
+
+	/**
  * implementedEvents
  */
 	public function implementedEvents() {
@@ -229,47 +236,42 @@ class CroogoAppController extends Controller {
  */
 	public function beforeFilter(Event $event) {
 		parent::beforeFilter($event);
-		$aclFilterComponent = Configure::read('Site.acl_plugin') . 'Filter';
-		if (empty($this->{$aclFilterComponent})) {
-			throw new MissingComponentException(array('class' => $aclFilterComponent));
-		}
-		$this->{$aclFilterComponent}->auth();
-		$this->RequestHandler->setContent('json', array('text/x-json', 'application/json'));
+//		$aclFilterComponent = Configure::read('Site.acl_plugin') . 'Filter';
+//		if (empty($this->{$aclFilterComponent})) {
+//			throw new MissingComponentException(array('class' => $aclFilterComponent));
+//		}
+//		$this->{$aclFilterComponent}->auth();
 
-		if (!$this->request->is('api')) {
-			$this->Security->blackHoleCallback = 'securityError';
-			$this->Security->requirePost('admin_delete');
-		}
+//		if (!$this->request->is('api')) {
+//			$this->Security->blackHoleCallback = 'securityError';
+//			$this->Security->requirePost('admin_delete');
+//		}
 
-		if (isset($this->request->params['admin'])) {
-			$this->layout = 'admin';
-			if ($adminTheme = Configure::read('Site.admin_theme')) {
-				App::build(array(
-					'View/Helper' => array(App::themePath($adminTheme) . 'Helper' . DS),
-				));
-			}
+		if ($this->request->param('prefix') === 'admin') {
+			$this->layout = 'Croogo/Croogo.admin';
 		}
 
 		if ($this->request->is('ajax')) {
 			$this->layout = 'ajax';
 		}
 
-		if (Configure::read('Site.theme') && !isset($this->request->params['admin'])) {
+		if (Configure::read('Site.theme') && $this->request->param('prefix') !== 'admin') {
 			$this->theme = Configure::read('Site.theme');
-		} elseif (Configure::read('Site.admin_theme') && isset($this->request->params['admin'])) {
+		} elseif (Configure::read('Site.admin_theme') && $this->request->param('prefix') === 'admin') {
 			$this->theme = Configure::read('Site.admin_theme');
 		}
 
 		if (
-			!isset($this->request->params['admin']) &&
+			$this->request->param('prefix') !== 'admin' &&
 			Configure::read('Site.status') == 0 &&
 			$this->Auth->user('role_id') != 1
 		) {
 			if (!$this->request->is('whitelisted')) {
-				$this->layout = 'maintenance';
+				$this->layout = 'Croogo/Croogo.maintenance';
 				$this->response->statusCode(503);
 				$this->set('title_for_layout', __d('croogo', 'Site down for maintenance'));
-				$this->render('../Elements/blank');
+				$this->viewPath = 'Maintenance';
+				$this->render('Croogo/Croogo.blank');
 			}
 		}
 
@@ -330,33 +332,33 @@ class CroogoAppController extends Controller {
  *
  * @see Controller::render()
  */
-	public function render($view = null, $layout = null) {
-		list($plugin, ) = pluginSplit(App::location(get_parent_class($this)));
-		if ($plugin) {
-			App::build(array(
-				'View' => array(
-					Plugin::path($plugin) . 'View' . DS,
-				),
-			), App::APPEND);
-		}
-
-		if (strpos($view, '/') !== false || $this instanceof CakeErrorController) {
-			return parent::render($view, $layout);
-		}
-
-		$fallbackView = $this->__getDefaultFallbackView();
-		if (is_null($view) && in_array($this->request->action, array('admin_edit', 'admin_add', 'edit', 'add'))) {
-			$viewPaths = App::path('View', $this->plugin);
-			$themePath = $this->theme ? App::themePath($this->theme) : null;
-			$searchPaths = array_merge((array)$themePath, $viewPaths);
-			$view = $this->__findRequestedView($searchPaths);
-			if (empty($view)) {
-				$view = $fallbackView;
-			}
-		}
-
-		return parent::render($view, $layout);
-	}
+//	public function render($view = null, $layout = null) {
+//		list($plugin, ) = pluginSplit(App::location(get_parent_class($this)));
+//		if ($plugin) {
+//			App::build(array(
+//				'View' => array(
+//					Plugin::path($plugin) . 'View' . DS,
+//				),
+//			), App::APPEND);
+//		}
+//
+//		if (strpos($view, '/') !== false || $this instanceof CakeErrorController) {
+//			return parent::render($view, $layout);
+//		}
+//
+//		$fallbackView = $this->__getDefaultFallbackView();
+//		if (is_null($view) && in_array($this->request->action, array('admin_edit', 'admin_add', 'edit', 'add'))) {
+//			$viewPaths = App::path('View', $this->plugin);
+//			$themePath = $this->theme ? App::themePath($this->theme) : null;
+//			$searchPaths = array_merge((array)$themePath, $viewPaths);
+//			$view = $this->__findRequestedView($searchPaths);
+//			if (empty($view)) {
+//				$view = $fallbackView;
+//			}
+//		}
+//
+//		return parent::render($view, $layout);
+//	}
 
 /**
  * Croogo uses this callback to load Paginator helper when one is not supplied.

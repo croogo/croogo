@@ -2,7 +2,8 @@
 
 namespace Croogo\Croogo\View\Helper;
 
-use App\View\Helper\Helper;
+use Cake\View\Helper;
+
 /**
  * Custom Helper
  *
