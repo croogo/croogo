@@ -54,37 +54,45 @@ class EncoderBehaviorTest extends CroogoTestCase {
 //		ClassRegistry::flush();
 	}
 
-//	public function testEncodeWithoutKeys() {
-//		$array = array('hello', 'world');
-//		$encoded = $this->Node->encodeData($array);
-//		$this->assertEqual($encoded, '["hello","world"]');
-//	}
-//
-//	public function testEncodeWithKeys() {
-//		$array = array(
-//			'first' => 'hello',
-//			'second' => 'world',
-//		);
-//		$encoded = $this->Node->encodeData($array, array(
-//			'json' => true,
-//			'trim' => false,
-//		));
-//		$this->assertEqual($encoded, '{"first":"hello","second":"world"}');
-//	}
-//
-//	public function testDecodeWithoutKeys() {
-//		$encoded = '["hello","world"]';
-//		$array = $this->Node->decodeData($encoded);
-//		$this->assertEqual($array, array('hello', 'world'));
-//	}
-//
-//	public function testDecodeWithKeys() {
-//		$encoded = '{"first":"hello","second":"world"}';
-//		$array = $this->Node->decodeData($encoded);
-//		$this->assertEqual($array, array(
-//			'first' => 'hello',
-//			'second' => 'world',
-//		));
-//	}
+	public function testEncodeWithoutKeys() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$array = array('hello', 'world');
+		$encoded = $this->Node->encodeData($array);
+		$this->assertEqual($encoded, '["hello","world"]');
+	}
+
+	public function testEncodeWithKeys() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$array = array(
+			'first' => 'hello',
+			'second' => 'world',
+		);
+		$encoded = $this->Node->encodeData($array, array(
+			'json' => true,
+			'trim' => false,
+		));
+		$this->assertEqual($encoded, '{"first":"hello","second":"world"}');
+	}
+
+	public function testDecodeWithoutKeys() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$encoded = '["hello","world"]';
+		$array = $this->Node->decodeData($encoded);
+		$this->assertEqual($array, array('hello', 'world'));
+	}
+
+	public function testDecodeWithKeys() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$encoded = '{"first":"hello","second":"world"}';
+		$array = $this->Node->decodeData($encoded);
+		$this->assertEqual($array, array(
+			'first' => 'hello',
+			'second' => 'world',
+		));
+	}
 
 }

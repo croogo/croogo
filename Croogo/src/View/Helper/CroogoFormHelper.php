@@ -13,7 +13,7 @@ use Cake\Utility\Hash;
 class CroogoFormHelper extends FormHelper {
 
 	public $helpers = array(
-		'Html' => array('className' => 'Croogo.CroogoHtml')
+		'Html' => array('className' => 'Croogo/Croogo.CroogoHtml')
 	);
 
 	protected function _bootstrapGenerate($title, $options) {

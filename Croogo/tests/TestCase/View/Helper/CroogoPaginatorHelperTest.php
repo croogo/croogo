@@ -26,6 +26,8 @@ class CroogoPaginatorHelperTest extends CroogoTestCase {
 	}
 
 	public function testPrev() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->Paginator->request->params['paging'] = array(
 			'Test' => array(
 				'page' => 3,
@@ -43,6 +45,8 @@ class CroogoPaginatorHelperTest extends CroogoTestCase {
 	}
 
 	public function testNext() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->Paginator->request->params['paging'] = array(
 			'Test' => array(
 				'page' => 3,
@@ -60,6 +64,8 @@ class CroogoPaginatorHelperTest extends CroogoTestCase {
 	}
 
 	public function testFirst() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->Paginator->request->params['paging'] = array(
 			'Test' => array(
 				'page' => 3,
@@ -77,6 +83,8 @@ class CroogoPaginatorHelperTest extends CroogoTestCase {
 	}
 
 	public function testLast() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->Paginator->request->params['paging'] = array(
 			'Test' => array(
 				'page' => 3,
@@ -94,6 +102,8 @@ class CroogoPaginatorHelperTest extends CroogoTestCase {
 	}
 
 	public function testNumbersFewPages() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->Paginator->request->params['paging'] = array(
 			'Test' => array(
 				'page' => 3,
@@ -110,6 +120,8 @@ class CroogoPaginatorHelperTest extends CroogoTestCase {
 	}
 
 	public function testNumbersManyPages() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->Paginator->request->params['paging'] = array(
 			'Test' => array(
 				'page' => 25,
@@ -126,6 +138,8 @@ class CroogoPaginatorHelperTest extends CroogoTestCase {
 	}
 
 	public function testNumbersPageEqualsEnd() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->Paginator->request->params['paging'] = array(
 			'Test' => array(
 				'page' => 30,

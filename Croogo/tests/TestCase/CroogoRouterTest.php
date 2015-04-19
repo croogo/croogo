@@ -26,6 +26,8 @@ class CroogoRouterTest extends CroogoTestCase {
  * testHomeRoute
  */
 	public function testHomeRoute() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$promoted = array(
 			'plugin' => 'Croogo/nodes',
 			'controller' => 'Nodes',
@@ -65,6 +67,8 @@ class CroogoRouterTest extends CroogoTestCase {
 	}
 
 	public function testContentType() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		Router::$initialized = true;
 
 		$params = array(

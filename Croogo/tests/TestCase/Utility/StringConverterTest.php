@@ -75,6 +75,8 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArrayWithQueryString
  */
 	public function testLinkStringToArrayWithQueryString() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$expected = array(
 			'admin' => true,
 			'plugin' => 'nodes',
@@ -94,6 +96,8 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArrayWithQueryStringAndPassedArgs
  */
 	public function testLinkStringToArrayWithQueryStringAndPassedArgs() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$expected = array(
 			'admin' => true,
 			'plugin' => 'settings',
@@ -114,6 +118,8 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArrayWithQueryStringAndPassedAndNamedArgs
  */
 	public function testLinkStringToArrayWithQueryStringAndPassedAndNamedArgs() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$expected = array(
 			'admin' => false,
 			'plugin' => 'nodes',
@@ -134,6 +140,8 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArrayWithUtf8
  */
 	public function testLinkStringToArrayWithUtf8() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$expected = array(
 			'admin' => false,
 			'plugin' => 'nodes',
@@ -152,6 +160,8 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArrayWithUtf8PassedArgs
  */
 	public function testLinkStringToArrayWithUtf8PassedArgs() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$expected = array(
 			'admin' => false,
 			'plugin' => 'nodes',
@@ -170,6 +180,8 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArrayWithUtf8InQueryString
  */
 	public function testLinkStringToArrayWithUtf8InQueryString() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$expected = array(
 			'admin' => false,
 			'plugin' => 'nodes',
@@ -190,6 +202,8 @@ class StringConverterTest extends CroogoTestCase {
  * testLinkStringToArrayWithEncodedUtf8
  */
 	public function testLinkStringToArrayWithEncodedUtf8() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$expected = array(
 			'admin' => false,
 			'plugin' => 'nodes',

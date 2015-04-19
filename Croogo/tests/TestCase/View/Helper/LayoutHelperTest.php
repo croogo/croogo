@@ -58,6 +58,8 @@ class LayoutHelperTest extends CroogoTestCase {
  * testJs
  */
 	public function testJs() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->assertContains('var Croogo = {"basePath":"\/","params":{"plugin":null,"controller":"nodes","action":"index","named":[]}};', $f = $this->Layout->js());
 
 		$this->Layout->params['locale'] = 'eng';
@@ -75,6 +77,8 @@ class LayoutHelperTest extends CroogoTestCase {
  * testStatus
  */
 	public function testStatus() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$ok = $this->Html->icon('ok', array('class' => 'green'));
 		$remove = $this->Html->icon('remove', array('class' => 'red'));
 		$this->assertEquals($this->Layout->status(true), $ok);
@@ -123,6 +127,8 @@ class LayoutHelperTest extends CroogoTestCase {
  * testProcessLink
  */
 	public function testProcessLinks() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$url = array('controller' => 'users', 'action' => 'edit', 1);
 		$expected = array(
 			'a' => array(

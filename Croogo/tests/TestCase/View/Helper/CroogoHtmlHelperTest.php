@@ -14,6 +14,11 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 //		'plugin.taxonomy.type',
 	);
 
+	/**
+	 * @var CroogoHtmlHelper
+	 */
+	private $CroogoHtml;
+
 	public function setUp() {
 		$controller = null;
 		$this->View = new View(new Request, new Response);
@@ -36,6 +41,8 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 	}
 
 	public function testStatusOkWithUrl() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$result = $this->CroogoHtml->status(1, array(
 			'prefix' => 'admin',
 			'plugin' => 'Croogo/Nodes',
@@ -59,6 +66,8 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 	}
 
 	public function testStatusRemoveWithUrl() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$result = $this->CroogoHtml->status(0, array(
 			'prefix' => 'admin',
 			'plugin' => 'Croogo/Nodes',

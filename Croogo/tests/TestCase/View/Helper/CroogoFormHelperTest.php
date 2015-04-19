@@ -7,6 +7,11 @@ use Croogo\Croogo\TestSuite\CroogoTestCase;
 use Croogo\Croogo\View\Helper\CroogoFormHelper;
 class CroogoFormHelperTest extends CroogoTestCase {
 
+	/**
+	 * @var CroogoFormHelper
+	 */
+	private $CroogoForm;
+
 	public function setUp() {
 		$controller = null;
 		$this->View = new View($controller);
@@ -19,6 +24,8 @@ class CroogoFormHelperTest extends CroogoTestCase {
 	}
 
 	public function testInputTooltips() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$result = $this->CroogoForm->input('username', array(
 			'tooltip' => 'Username',
 		));
@@ -329,6 +336,8 @@ class CroogoFormHelperTest extends CroogoTestCase {
  * testAutocomplete
  */
 	public function testAutocomplete() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$result = $this->CroogoForm->autocomplete('user_id', array(
 			'autocomplete' => array(
 				'data-relatedField' => '#user_id',
@@ -369,6 +378,8 @@ class CroogoFormHelperTest extends CroogoTestCase {
  * testAutocompleteWithDefault
  */
 	public function testAutocompleteWithDefault() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->skipIf(env('TRAVIS') == 'true');
 		$result = $this->CroogoForm->autocomplete('user_id', array(
 			'default' => 3,
@@ -414,6 +425,8 @@ class CroogoFormHelperTest extends CroogoTestCase {
  * testAutocompleteWithDefaultFromViewVars
  */
 	public function testAutocompleteWithDefaultFromViewVars() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->skipIf(env('TRAVIS') == 'true');
 		$this->CroogoForm->defaultModel = 'Node';
 		$this->View->set('users', array(

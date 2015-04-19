@@ -107,22 +107,25 @@ class CroogoStatus implements ArrayAccess {
 	protected function _defaultStatus($statusType) {
 		static $Permission = null;
 		$status[$statusType] = array(self::PUBLISHED);
-		$roleId = AuthComponent::user('role_id');
+//		$roleId = AuthComponent::user('role_id');
+		$roleId = -1;
 		$allow = false;
 
-		if ($roleId && $roleId != 1) {
-			if ($Permission === null) {
-				$Permission = ClassRegistry::init('Permission');
-			}
-			try {
-				$allow = $Permission->check(
-					array('model' => 'Role', 'foreign_key' => $roleId),
-					'controllers/Nodes/Nodes/admin_edit'
-				);
-			} catch (CakeException $e) {
-				Log::error($e->getMessage());
-			}
-		}
+		Log::notice('CroogoStatus::_defaultStatus cannot lookup role_id, this needs to be ported to CakePHP 3.0');
+
+//		if ($roleId && $roleId != 1) {
+//			if ($Permission === null) {
+//				$Permission = ClassRegistry::init('Permission');
+//			}
+//			try {
+//				$allow = $Permission->check(
+//					array('model' => 'Role', 'foreign_key' => $roleId),
+//					'controllers/Nodes/Nodes/admin_edit'
+//				);
+//			} catch (CakeException $e) {
+//				Log::error($e->getMessage());
+//			}
+//		}
 
 		switch ($statusType) {
 			case 'publishing':

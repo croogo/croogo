@@ -24,6 +24,8 @@ class CroogoNavTest extends CroogoTestCase {
 	}
 
 	public function testNav() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$saved = CroogoNav::items();
 
 		// test clear
@@ -115,6 +117,8 @@ class CroogoNavTest extends CroogoTestCase {
 	}
 
 	public function testNavOverwrite() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		Croogo::dispatchEvent('Croogo.setupAdminData', null);
 		$defaults = CroogoNav::getDefaults();
 

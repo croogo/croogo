@@ -53,6 +53,8 @@ class CroogoComponentTest extends CroogoTestCase {
 	public function testAddRemoveAcos() {
 		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$Aco = ClassRegistry::init('Aco');
 
 		$this->Controller->Croogo->addAco('CroogoTestController');
@@ -73,6 +75,8 @@ class CroogoComponentTest extends CroogoTestCase {
 	}
 
 	public function testPluginIsActive() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$result = $this->Controller->Croogo->pluginIsActive('Example');
 		$this->assertTrue($result);
 		$result = $this->Controller->Croogo->pluginIsActive('example');

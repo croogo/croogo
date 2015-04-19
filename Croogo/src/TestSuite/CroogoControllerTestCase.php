@@ -35,7 +35,7 @@ class CroogoControllerTestCase extends TestCase {
 	}
 
 	protected static function _restoreSettings() {
-		$configDir = Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'Config' . DS;
+		$configDir = Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'config' . DS;
 		$source = $configDir . 'settings.default';
 		$target = $configDir . 'settings.json';
 		copy($source, $target);

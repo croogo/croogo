@@ -12,6 +12,8 @@ class ApiRouteTest extends CroogoTestCase {
 	);
 
 	public function testParse() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$apiPath = Configure::read('Croogo.Api.path');
 		$url = '/' . $apiPath . '/v1.0/users/';
 
@@ -55,6 +57,8 @@ class ApiRouteTest extends CroogoTestCase {
 	}
 
 	public function testMatch() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$apiPath = Configure::read('Croogo.Api.path');
 		$url = '/' . $apiPath . '/v1.0/users/';
 

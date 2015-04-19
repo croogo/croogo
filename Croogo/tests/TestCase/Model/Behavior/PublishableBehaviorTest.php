@@ -37,34 +37,36 @@ class PublishableBehaviorTest extends CroogoTestCase {
 //		ClassRegistry::flush();
 	}
 
-///**
-// * testPeriodFilter
-// */
-//	public function testPeriodFilter() {
-//		$results = $this->OrderRecord->find('all', array(
-//			'date' => '2014-01-31 06:59:59',
-//		));
-//		$this->assertEquals(1, count($results));
-//
-//		$results = $this->OrderRecord->find('all', array(
-//			'date' => '2014-01-31 07:00:01',
-//		));
-//		$this->assertEquals(2, count($results));
-//
-//		$results = $this->OrderRecord->find('all', array(
-//			'date' => '2014-01-31 07:11:01',
-//		));
-//		$this->assertEquals(3, count($results));
-//
-//		$results = $this->OrderRecord->find('all', array(
-//			'date' => '2014-01-31 09:11:30',
-//		));
-//		$this->assertEquals(2, count($results));
-//
-//		$results = $this->OrderRecord->find('all', array(
-//			'date' => '2014-01-31 09:13:45',
-//		));
-//		$this->assertEquals(3, count($results));
-//	}
+/**
+ * testPeriodFilter
+ */
+	public function testPeriodFilter() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$results = $this->OrderRecord->find('all', array(
+			'date' => '2014-01-31 06:59:59',
+		));
+		$this->assertEquals(1, count($results));
+
+		$results = $this->OrderRecord->find('all', array(
+			'date' => '2014-01-31 07:00:01',
+		));
+		$this->assertEquals(2, count($results));
+
+		$results = $this->OrderRecord->find('all', array(
+			'date' => '2014-01-31 07:11:01',
+		));
+		$this->assertEquals(3, count($results));
+
+		$results = $this->OrderRecord->find('all', array(
+			'date' => '2014-01-31 09:11:30',
+		));
+		$this->assertEquals(2, count($results));
+
+		$results = $this->OrderRecord->find('all', array(
+			'date' => '2014-01-31 09:13:45',
+		));
+		$this->assertEquals(3, count($results));
+	}
 
 }

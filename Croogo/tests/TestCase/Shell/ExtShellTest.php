@@ -54,7 +54,7 @@ class ExtShellTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 		$Folder = new Folder(APP . 'Plugin' . DS . 'Example');
-		$Folder->copy(Plugin::path('Croogo/Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
+		$Folder->copy(Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
 //		$this->Setting = ClassRegistry::init('Settings.Setting');
 	}
 
@@ -65,7 +65,7 @@ class ExtShellTest extends CroogoTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		$Folder = new Folder(Plugin::path('Croogo/Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
+		$Folder = new Folder(Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
 		$Folder->delete();
 	}
 
@@ -74,102 +74,111 @@ class ExtShellTest extends CroogoTestCase {
  *
  * @return void
  */
-//	public function testPlugin() {
-//		$Link = ClassRegistry::init('Menus.Link');
-//		$Shell = $this->getMock('ExtShell', array('out', 'err'));
-//
-//		$Shell->args = array('deactivate', 'plugin', 'Example');
-//		$Shell->params = array('force' => false);
-//		$Shell->main();
-//		$result = $this->Setting->findByKey('Hook.bootstraps');
-//		$this->assertFalse(in_array('Example', explode(',', $result['Setting']['value'])));
-//		$result = $Link->findByTitle('Example');
-//		$this->assertFalse(!empty($result));
-//
-//		$Shell->args = array('activate', 'plugin', 'Example');
-//		$Shell->main();
-//		$result = $this->Setting->findByKey('Hook.bootstraps');
-//		$this->assertTrue(in_array('Example', explode(',', $result['Setting']['value'])));
-//		$result = $Link->findByTitle('Example');
-//		$this->assertTrue(!empty($result));
-//
-//		$bogusPlugin = 'Bogus';
-//		$Shell->args = array('activate', 'plugin', $bogusPlugin);
-//		$Shell->main();
-//		$result = $this->Setting->findByKey('Hook.bootstraps');
-//		$this->assertFalse(in_array($bogusPlugin, explode(',', $result['Setting']['value'])));
-//	}
+	public function testPlugin() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$Link = ClassRegistry::init('Menus.Link');
+		$Shell = $this->getMock('ExtShell', array('out', 'err'));
+
+		$Shell->args = array('deactivate', 'plugin', 'Example');
+		$Shell->params = array('force' => false);
+		$Shell->main();
+		$result = $this->Setting->findByKey('Hook.bootstraps');
+		$this->assertFalse(in_array('Example', explode(',', $result['Setting']['value'])));
+		$result = $Link->findByTitle('Example');
+		$this->assertFalse(!empty($result));
+
+		$Shell->args = array('activate', 'plugin', 'Example');
+		$Shell->main();
+		$result = $this->Setting->findByKey('Hook.bootstraps');
+		$this->assertTrue(in_array('Example', explode(',', $result['Setting']['value'])));
+		$result = $Link->findByTitle('Example');
+		$this->assertTrue(!empty($result));
+
+		$bogusPlugin = 'Bogus';
+		$Shell->args = array('activate', 'plugin', $bogusPlugin);
+		$Shell->main();
+		$result = $this->Setting->findByKey('Hook.bootstraps');
+		$this->assertFalse(in_array($bogusPlugin, explode(',', $result['Setting']['value'])));
+	}
 
 /**
  * testForceActivation
  */
-//	public function testForceActivation() {
-//		$Shell = $this->getMock('ExtShell', array('out', 'err'));
-//
-//		$Shell->args = array('activate', 'plugin', 'TestPlugin');
-//		$Shell->main();
-//		$result = $this->Setting->findByKey('Hook.bootstraps');
-//		$this->assertFalse(in_array('TestPlugin', explode(',', $result['Setting']['value'])));
-//
-//		$Shell->args = array('activate', 'plugin', 'TestPlugin');
-//		$Shell->params = array('force' => true);
-//		$Shell->main();
-//		$result = $this->Setting->findByKey('Hook.bootstraps');
-//		$this->assertTrue(in_array('TestPlugin', explode(',', $result['Setting']['value'])));
-//	}
+	public function testForceActivation() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$Shell = $this->getMock('ExtShell', array('out', 'err'));
+
+		$Shell->args = array('activate', 'plugin', 'TestPlugin');
+		$Shell->main();
+		$result = $this->Setting->findByKey('Hook.bootstraps');
+		$this->assertFalse(in_array('TestPlugin', explode(',', $result['Setting']['value'])));
+
+		$Shell->args = array('activate', 'plugin', 'TestPlugin');
+		$Shell->params = array('force' => true);
+		$Shell->main();
+		$result = $this->Setting->findByKey('Hook.bootstraps');
+		$this->assertTrue(in_array('TestPlugin', explode(',', $result['Setting']['value'])));
+	}
 
 /**
  * testForceDeactivation
  */
-//	public function testForceDeactivation() {
-//		$Shell = $this->getMock('ExtShell', array('out', 'err'));
-//
-//		$result = $this->Setting->findByKey('Hook.bootstraps');
-//		$bogus = $result['Setting']['value'] . ',Bogus';
-//		$this->Setting->write('Hook.bootstraps', $bogus);
-//
-//		$Shell->args = array('deactivate', 'plugin', 'Bogus');
-//		$Shell->params['force'] = true;
-//		$Shell->main();
-//
-//		$result = $this->Setting->findByKey('Hook.bootstraps');
-//		$this->assertFalse(in_array('Bogus', explode(',', $result['Setting']['value'])));
-//	}
+	public function testForceDeactivation() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$Shell = $this->getMock('ExtShell', array('out', 'err'));
+
+		$result = $this->Setting->findByKey('Hook.bootstraps');
+		$bogus = $result['Setting']['value'] . ',Bogus';
+		$this->Setting->write('Hook.bootstraps', $bogus);
+
+		$Shell->args = array('deactivate', 'plugin', 'Bogus');
+		$Shell->params['force'] = true;
+		$Shell->main();
+
+		$result = $this->Setting->findByKey('Hook.bootstraps');
+		$this->assertFalse(in_array('Bogus', explode(',', $result['Setting']['value'])));
+	}
 
 /**
  * testTheme
  *
  * @return void
  */
-//	public function testTheme() {
-//		$Shell = $this->getMock('ExtShell', array('out', 'err'));
-//		$Shell->args = array('activate', 'theme', 'Mytheme');
-//		$Shell->main();
-//		$result = $this->Setting->findByKey('Site.theme');
-//		$this->assertEquals('Mytheme', $result['Setting']['value']);
-//		$this->assertEquals('Mytheme', Configure::read('Site.theme'));
-//
-//		$Shell->args = array('activate', 'theme', 'Bogus');
-//		$Shell->main();
-//		$result = $this->Setting->findByKey('Site.theme');
-//		$this->assertEquals('Mytheme', $result['Setting']['value']);
-//		$this->assertEquals('Mytheme', Configure::read('Site.theme'));
-//
-//		$Shell->args = array('deactivate', 'theme');
-//		$Shell->main();
-//		$result = $this->Setting->findByKey('Site.theme');
-//		$this->assertEquals('Mytheme', $result['Setting']['value']);
-//
-//		$Shell->args = array('deactivate', 'theme', 'Mytheme');
-//		$Shell->main();
-//		$result = $this->Setting->findByKey('Site.theme');
-//		$this->assertEquals('Mytheme', $result['Setting']['value']);
-//
-//		$Shell->args = array('activate', 'theme', 'Mytheme');
-//		$Shell->main();
-//		$Shell->args = array('activate', 'theme', 'default');
-//		$Shell->main();
-//		$result = $this->Setting->findByKey('Site.theme');
-//		$this->assertEquals('', $result['Setting']['value']);
-//	}
+	public function testTheme() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
+		$Shell = $this->getMock('ExtShell', array('out', 'err'));
+		$Shell->args = array('activate', 'theme', 'Mytheme');
+		$Shell->main();
+		$result = $this->Setting->findByKey('Site.theme');
+		$this->assertEquals('Mytheme', $result['Setting']['value']);
+		$this->assertEquals('Mytheme', Configure::read('Site.theme'));
+
+		$Shell->args = array('activate', 'theme', 'Bogus');
+		$Shell->main();
+		$result = $this->Setting->findByKey('Site.theme');
+		$this->assertEquals('Mytheme', $result['Setting']['value']);
+		$this->assertEquals('Mytheme', Configure::read('Site.theme'));
+
+		$Shell->args = array('deactivate', 'theme');
+		$Shell->main();
+		$result = $this->Setting->findByKey('Site.theme');
+		$this->assertEquals('Mytheme', $result['Setting']['value']);
+
+		$Shell->args = array('deactivate', 'theme', 'Mytheme');
+		$Shell->main();
+		$result = $this->Setting->findByKey('Site.theme');
+		$this->assertEquals('Mytheme', $result['Setting']['value']);
+
+		$Shell->args = array('activate', 'theme', 'Mytheme');
+		$Shell->main();
+		$Shell->args = array('activate', 'theme', 'default');
+		$Shell->main();
+		$result = $this->Setting->findByKey('Site.theme');
+		$this->assertEquals('', $result['Setting']['value']);
+	}
+
 }

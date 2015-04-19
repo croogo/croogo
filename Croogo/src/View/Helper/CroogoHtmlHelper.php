@@ -65,7 +65,7 @@ class CroogoHtmlHelper extends HtmlHelper {
 		if ($attributes) {
 			$attributes = ' ' . $attributes;
 		}
-		return sprintf($this->_tags['icon'], $class, $attributes);
+		return sprintf($this->_defaultConfig['templates']['icon'], $class, $attributes);
 	}
 
 	public function status($value, $url = array()) {

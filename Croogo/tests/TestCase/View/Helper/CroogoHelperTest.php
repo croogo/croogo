@@ -49,6 +49,9 @@ class CroogoHelperTest extends CroogoTestCase {
 			->method('linkIsAllowedByRoleId')
 			->will($this->returnValue(true));
 		$this->menus = CroogoNav::items();
+
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		CroogoNav::clear();
 	}
 
@@ -65,6 +68,8 @@ class CroogoHelperTest extends CroogoTestCase {
  * testAdminMenus
  */
 	public function testAdminMenus() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		Session::write('Auth.User', array('id' => 1, 'role_id' => 1));
 		CroogoNav::add('contents', array(
 			'title' => 'Contents',
@@ -81,6 +86,8 @@ class CroogoHelperTest extends CroogoTestCase {
  * testAdminRowActions
  */
 	public function testAdminRowActions() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->Croogo->request->params = array(
 			'controller' => 'test',
 			'action' => 'action',
@@ -157,6 +164,8 @@ class CroogoHelperTest extends CroogoTestCase {
  * testAdminTabs
  */
 	public function testAdminTabs() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->Croogo->request->params = array(
 			'controller' => 'test',
 			'action' => 'action',
@@ -179,6 +188,8 @@ class CroogoHelperTest extends CroogoTestCase {
  * testAdminTabsOptions
  */
 	public function testAdminTabsOptions() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->Croogo->request->params = array(
 			'controller' => 'test',
 			'action' => 'action',
@@ -207,6 +218,8 @@ class CroogoHelperTest extends CroogoTestCase {
 	}
 
 	public function testAdminBoxes() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->Croogo->request->params = array(
 			'controller' => 'test',
 			'action' => 'action',
@@ -223,6 +236,8 @@ class CroogoHelperTest extends CroogoTestCase {
 	}
 
 	public function testAdminBoxesAlreadyPrinted() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->Croogo->params = array(
 			'controller' => 'test',
 			'action' => 'action',
@@ -240,6 +255,8 @@ class CroogoHelperTest extends CroogoTestCase {
 	}
 
 	public function testAdminBoxesAll() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->Croogo->request->params = array(
 			'controller' => 'test',
 			'action' => 'action',
@@ -261,6 +278,8 @@ class CroogoHelperTest extends CroogoTestCase {
 	}
 
 	public function testSettingsInputCheckbox() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$setting['Setting']['input_type'] = 'checkbox';
 		$setting['Setting']['value'] = 0;
 		$setting['Setting']['description'] = 'A description';
@@ -269,6 +288,8 @@ class CroogoHelperTest extends CroogoTestCase {
 	}
 
 	public function testSettingsInputCheckboxChecked() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$setting['Setting']['input_type'] = 'checkbox';
 		$setting['Setting']['value'] = 1;
 		$setting['Setting']['description'] = 'A description';
@@ -278,6 +299,8 @@ class CroogoHelperTest extends CroogoTestCase {
 	}
 
 	public function testSettingsInputTextbox() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$setting['Setting']['input_type'] = '';
 		$setting['Setting']['description'] = 'A description';
 		$setting['Setting']['value'] = 'Yes';
@@ -286,6 +309,8 @@ class CroogoHelperTest extends CroogoTestCase {
 	}
 
 	public function testSettingsInputTextarea() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$setting['Setting']['input_type'] = 'textarea';
 		$setting['Setting']['description'] = 'A description';
 		$setting['Setting']['value'] = 'Yes';
@@ -297,6 +322,8 @@ class CroogoHelperTest extends CroogoTestCase {
  * testAdminRowAction
  */
 	public function testAdminRowAction() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$url = array('controller' => 'users', 'action' => 'edit', 1);
 		$expected = array(
 			'a' => array(
@@ -335,6 +362,8 @@ class CroogoHelperTest extends CroogoTestCase {
  * testAdminRowActionEscapedConfirmMessage
  */
 	public function testAdminRowActionEscapedConfirmMessage() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$url = array('action' => 'delete', 1);
 		$options = array();
 		$sure = 'Are you sure?';
@@ -372,6 +401,8 @@ class CroogoHelperTest extends CroogoTestCase {
  * testAdminRowActionBulkDelete
  */
 	public function testAdminRowActionBulkDelete() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$url = '#Node1Id';
 		$options = array(
 			'rowAction' => 'delete',

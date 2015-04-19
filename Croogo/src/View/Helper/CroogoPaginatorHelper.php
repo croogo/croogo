@@ -10,6 +10,11 @@ use Cake\View\Helper\PaginatorHelper;
  */
 class CroogoPaginatorHelper extends PaginatorHelper {
 
+	public $helpers = [
+		'Html',
+		'Url'
+	];
+
 /**
  * doesn't use parent::numbers()
  *
@@ -40,7 +45,7 @@ class CroogoPaginatorHelper extends PaginatorHelper {
 		$output = '';
 		for ($i = $begin; $i < $end; $i++) {
 			$class = ($i == $page) ? 'active' : '';
-			$output .= $this->Html->tag($tag, $this->link($i, array('page' => $i), compact('class')));
+			$output .= $this->Html->tag($tag, $this->Html->link($i, array('page' => $i), compact('class')));
 		}
 		return $output;
 	}
@@ -56,13 +61,13 @@ class CroogoPaginatorHelper extends PaginatorHelper {
 	public function prev($title = '<< Previous', $options = array(), $disabledTitle = null, $disabledOptions = array()) {
 		$options['escape'] = isset($options['escape']) ? $options['escape'] : false;
 		$options = $this->_defaultOptions($options, false);
-		return parent::prev($title, $options, $this->link($title), $disabledOptions);
+		return parent::prev($title, $options, $this->Html->link($title), $disabledOptions);
 	}
 
 	public function next($title = 'Next >>', $options = array(), $disabledTitle = null, $disabledOptions = array()) {
 		$options['escape'] = isset($options['escape']) ? $options['escape'] : false;
 		$options = $this->_defaultOptions($options, false);
-		return parent::next($title, $options, $this->link($title), $disabledOptions);
+		return parent::next($title, $options, $this->Html->link($title), $disabledOptions);
 	}
 
 	public function first($first = '<< first', $options = array()) {
