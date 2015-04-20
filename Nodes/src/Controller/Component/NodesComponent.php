@@ -29,21 +29,21 @@ class NodesComponent extends Component {
 	public $nodesForLayout = array();
 
 /**
- * initialize
+ * beforeFilter
  *
- * @param Controller $controller instance of controller
+ * @param Event $event instance of controller
  */
-	public function initialize(Event $event) {
+	public function beforeFilter(Event $event) {
 		$this->controller = $event->subject;
-		if (isset($controller->Node)) {
-			$this->Node = $controller->Node;
+		if (isset($this->controller->Node)) {
+			$this->Node = $this->controller->Node;
 		} else {
 			$this->Node = TableRegistry::get('Nodes.Nodes');
 		}
 
 		if (Configure::read('Access Control.multiRole')) {
 			Configure::write('Acl.classname', 'Acl.HabtmDbAcl');
-						$controller->Acl->adapter('HabtmDbAcl');
+						$this->controller->Acl->adapter('HabtmDbAcl');
 			$this->Node->User->bindModel(array(
 				'hasAndBelongsToMany' => array(
 					'Role' => array(
