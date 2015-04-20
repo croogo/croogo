@@ -24,6 +24,5 @@ CroogoRouter::connect('/user/:username', array(
 
 CroogoRouter::connect('/admin/users/:controller/:action/*', [
 	'prefix' => 'admin',
-	'plugin' => 'Croogo/Users',
-	'action' => 'index'
+	'plugin' => 'Croogo/Users'
 ]);
