@@ -31,7 +31,10 @@ class NodeFixture extends CroogoTestFixture {
 		'publish_end' => ['type' => 'datetime', 'null' => true, 'default' => null],
 		'updated' => ['type' => 'datetime', 'null' => false, 'default' => null],
 		'created' => ['type' => 'datetime', 'null' => false, 'default' => null],
-		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id'], 'slug' => ['type' => 'unique', 'columns' => 'slug']],
+		'_constraints' => [
+			'primary' => ['type' => 'primary', 'columns' => ['id']],
+			'slug' => ['type' => 'unique', 'columns' => 'slug']
+		],
 		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 
