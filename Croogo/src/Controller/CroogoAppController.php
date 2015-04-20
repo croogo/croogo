@@ -36,9 +36,9 @@ class CroogoAppController extends Controller {
  */
 	protected $_defaultComponents = array(
 		'Croogo/Croogo.Croogo',
+		'Croogo/Acl.AclFilter',
 		'Security',
 		'Acl.Acl',
-		'Croogo/Acl.AclFilter',
 		'Auth',
 		'Flash',
 		'RequestHandler',
@@ -130,6 +130,15 @@ class CroogoAppController extends Controller {
 	}
 
 /**
+ * Initialize
+ */
+	public function initialize() {
+		parent::initialize();
+
+		$this->_setupComponents();
+	}
+
+/**
  * implementedEvents
  */
 	public function implementedEvents() {
@@ -150,7 +159,6 @@ class CroogoAppController extends Controller {
  */
 	public function afterConstruct() {
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
-		$this->_setupComponents();
 		if (isset($this->request->params['admin'])) {
 			$this->helpers[] = 'Croogo.Croogo';
 			if (empty($this->helpers['Html'])) {

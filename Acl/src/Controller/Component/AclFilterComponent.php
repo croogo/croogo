@@ -36,7 +36,7 @@ class AclFilterComponent extends Component {
  * @param Event $event instance of event
  * @return void
  */
-	public function beforeFilter(Event  $event) {
+	public function beforeFilter(Event $event) {
 		$this->_controller = $event->subject();
 
 		if ($this->_config('multiRole')) {
