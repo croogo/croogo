@@ -6,32 +6,6 @@ use Croogo\Croogo\TestSuite\CroogoTestCase;
 use Croogo\Nodes\Model\Table\NodesTable;
 class EncoderBehaviorTest extends CroogoTestCase {
 
-	public $fixtures = array(
-		'plugin.croogo\users.aco',
-		'plugin.croogo\users.aro',
-		'plugin.croogo\users.aros_aco',
-//		'plugin.blocks.block',
-//		'plugin.comments.comment',
-//		'plugin.contacts.contact',
-//		'plugin.translate.i18n',
-		'plugin.croogo\settings.language',
-//		'plugin.menus.link',
-//		'plugin.menus.menu',
-//		'plugin.contacts.message',
-//		'plugin.meta.meta',
-		'plugin.croogo\nodes.node',
-//		'plugin.taxonomy.model_taxonomy',
-//		'plugin.blocks.region',
-//		'plugin.users.role',
-//		'plugin.settings.setting',
-//		'plugin.taxonomy.taxonomy',
-//		'plugin.taxonomy.term',
-//		'plugin.taxonomy.type',
-//		'plugin.taxonomy.types_vocabulary',
-		'plugin.croogo\users.user',
-//		'plugin.taxonomy.vocabulary',
-	);
-
 	/**
 	 * @var NodesTable
 	 */
