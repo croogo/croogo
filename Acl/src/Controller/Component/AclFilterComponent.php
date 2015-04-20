@@ -133,26 +133,26 @@ class AclFilterComponent extends Component {
  * @return void
  */
 	public function configureLoginActions() {
-		$this->_controller->Auth->loginAction = array(
-			'plugin' => 'users',
-			'controller' => 'users',
+		$this->_controller->Auth->config('loginAction', [
+			'plugin' => 'Croogo/Users',
+			'controller' => 'Users',
 			'action' => 'login',
-		);
-		$this->_controller->Auth->logoutRedirect = array(
-			'plugin' => 'users',
-			'controller' => 'users',
+		]);
+		$this->_controller->Auth->config('logoutRedirect', [
+			'plugin' => 'Croogo/Users',
+			'controller' => 'Users',
 			'action' => 'login',
-		);
-		$this->_controller->Auth->loginRedirect = array(
-			'plugin' => 'settings',
-			'controller' => 'settings',
+		]);
+		$this->_controller->Auth->config('loginRedirect', [
+			'plugin' => 'Croogo/Settings',
+			'controller' => 'Settings',
 			'action' => 'dashboard',
-		);
-		$this->_controller->Auth->unauthorizedRedirect = array(
-			'plugin' => 'users',
-			'controller' => 'users',
+		]);
+		$this->_controller->Auth->config('unauthorizedRedirect', [
+			'plugin' => 'Croogo/Users',
+			'controller' => 'Users',
 			'action' => 'login',
-		);
+		]);
 
 		$config = Configure::read('Acl');
 		if (!empty($config['Auth']) && is_array($config['Auth'])) {
