@@ -2,8 +2,9 @@
 
 namespace Croogo\Croogo\Model\Behavior;
 
-use App\Model\ModelBehavior;
-use Croogo\Utility\StringConverter;
+use Cake\ORM\Behavior;
+use Croogo\Croogo\Utility\StringConverter;
+
 /**
  * Params Behavior
  *
@@ -14,7 +15,7 @@ use Croogo\Utility\StringConverter;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ParamsBehavior extends ModelBehavior {
+class ParamsBehavior extends Behavior {
 
 /**
  * Setup
