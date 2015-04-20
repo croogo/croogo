@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Acl\Model;
+namespace Croogo\Acl\Model\Entity;
 
 use Acl\Model\Entity\Aco;
 

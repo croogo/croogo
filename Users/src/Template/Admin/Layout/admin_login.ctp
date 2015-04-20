@@ -11,7 +11,6 @@ use Cake\Core\Configure;
 		echo $this->Html->css(array(
 			'Croogo/Croogo.croogo-bootstrap',
 			'Croogo/Croogo.croogo-bootstrap-responsive',
-			'admin',
 		));
 		echo $this->Layout->js();
 		echo $this->Html->script(array(
@@ -44,7 +43,7 @@ use Cake\Core\Configure;
 				<div class="row-fluid">
 					<div id="admin-login">
 					<?php
-					echo $this->Layout->sessionFlash();
+					echo $this->Flash->render('auth');
 					echo $this->fetch('content');
 					?>
 					</div>

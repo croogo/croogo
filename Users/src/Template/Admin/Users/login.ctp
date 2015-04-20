@@ -1,7 +1,7 @@
 <?php
 use Cake\Core\Configure;
 
-echo $this->Form->create('User', ['url' => ['action' => 'login']]);?>
+echo $this->Form->create(false, ['url' => ['action' => 'login']]);?>
 <div class="box">
 	<div class="box-content">
 	<?php

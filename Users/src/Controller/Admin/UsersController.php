@@ -60,11 +60,11 @@ class UsersController extends UsersAppController {
 		if (empty($this->request->data)) {
 			return true;
 		}
-		$cacheName = 'auth_failed_' . $this->request->data['User'][$field];
+		$cacheName = 'auth_failed_' . $this->request->data[$field];
 		$cacheValue = Cache::read($cacheName, 'users_login');
 		if ($cacheValue >= Configure::read('User.failed_login_limit')) {
 			$this->Flash->error(__d('croogo', 'You have reached maximum limit for failed login attempts. Please try again after a few minutes.'));
-			return $this->redirect(['action' => $this->request->params['action']]);
+			return $this->redirect(['action' => $this->request->param('action')]);
 		}
 		return true;
 	}
@@ -80,7 +80,7 @@ class UsersController extends UsersAppController {
 		if (empty($this->request->data)) {
 			return true;
 		}
-		$cacheName = 'auth_failed_' . $this->request->data['User'][$field];
+		$cacheName = 'auth_failed_' . $this->request->data[$field];
 		$cacheValue = Cache::read($cacheName, 'users_login');
 		Cache::write($cacheName, (int)$cacheValue + 1, 'users_login');
 		return true;
@@ -247,18 +247,21 @@ class UsersController extends UsersAppController {
 			if (!$this->request->session()->check('Message.auth')) {
 				$this->Flash->alert(__d('croogo', 'You are already logged in'), ['key' => 'auth']);
 			}
-			return $this->redirect($this->Auth->redirect());
+			return $this->redirect($this->Auth->redirectUrl());
 		}
 		if ($this->request->is('post')) {
 			Croogo::dispatchEvent('Controller.Users.beforeAdminLogin', $this);
-			if ($this->Auth->identify()) {
+			$user = $this->Auth->identify();
+			if ($user) {
+				$this->Auth->setUser($user);
+
 				Croogo::dispatchEvent('Controller.Users.adminLoginSuccessful', $this);
-				return $this->redirect($this->Auth->redirect());
+				return $this->redirect($this->Auth->redirectUrl());
 			} else {
 				Croogo::dispatchEvent('Controller.Users.adminLoginFailure', $this);
 				$this->Auth->authError = __d('croogo', 'Incorrect username or password');
 				$this->Flash->error($this->Auth->authError, ['key' => 'auth']);
-				return $this->redirect($this->Auth->loginAction);
+				return $this->redirect($this->Auth->config('loginAction'));
 			}
 		}
 	}
