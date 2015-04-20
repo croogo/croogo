@@ -45,3 +45,14 @@ CroogoRouter::connect('/page/:slug', array(
 	'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'view',
 	'type' => 'page'
 ));
+
+CroogoRouter::connect('/admin/nodes/:action/*', array(
+	'prefix' => 'admin',
+	'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
+));
+
+CroogoRouter::connect('/nodes/view/:type/:slug', array(
+	'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
+	'action' => 'view'
+));
+
