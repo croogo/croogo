@@ -1,8 +1,9 @@
 <?php
 
-namespace Croogo\Settings\Model;
+namespace Croogo\Settings\Model\Table;
 
-use App\Model\AppModel;
+use Croogo\Croogo\Model\Table\CroogoTable;
+
 /**
  * Language
  *
@@ -13,7 +14,7 @@ use App\Model\AppModel;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Language extends AppModel {
+class LanguagesTable extends CroogoTable {
 
 /**
  * Model name

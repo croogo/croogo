@@ -2,7 +2,8 @@
 
 namespace Croogo\Settings\View\Helper;
 
-use App\View\Helper\AppHelper;
+use Cake\View\Helper;
+
 /**
  * SettingForms Helper
  *
@@ -13,11 +14,11 @@ use App\View\Helper\AppHelper;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class SettingsFormHelper extends AppHelper {
+class SettingsFormHelper extends Helper {
 
 	public $helpers = array(
 		'Form' => array(
-			'className' => 'Croogo.CroogoForm',
+			'className' => 'Croogo/Croogo.CroogoForm',
 		),
 	);
 

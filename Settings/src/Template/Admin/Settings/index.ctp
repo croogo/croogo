@@ -5,9 +5,9 @@ $this->extend('/Common/admin_index');
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Settings'), array(
-		'admin' => true,
-		'plugin' => 'settings',
-		'controller' => 'settings',
+		'prefix' => 'admin',
+		'plugin' => 'Croogo/Settings',
+		'controller' => 'Settings',
 		'action' => 'index',
 	));
 if (!empty($this->request->params['named']['p'])) {

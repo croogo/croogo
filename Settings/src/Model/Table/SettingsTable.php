@@ -1,9 +1,11 @@
 <?php
 
-namespace Croogo\Settings\Model;
+namespace Croogo\Settings\Model\Table;
 
-use App\Model\AppModel;
-use Cake\Utility\File;
+use Cake\Core\Configure;
+use Cake\Utility\Hash;
+use Croogo\Croogo\Model\Table\CroogoTable;
+
 /**
  * Setting
  *
@@ -14,7 +16,7 @@ use Cake\Utility\File;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Setting extends SettingsAppModel {
+class SettingsTable extends CroogoTable {
 
 /**
  * Model name

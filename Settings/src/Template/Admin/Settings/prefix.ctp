@@ -1,14 +1,17 @@
+<?php
+use Cake\Utility\Inflector;
+?>
 <h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
 <?php
 $this->Html->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'Croogo/Settings', 'controller' => 'Settings', 'action' => 'index'))
 	->addCrumb($prefix, '/' . $this->request->url);
 ?>
 <?php
 
 echo $this->Form->create('Setting', array(
 	'url' => array(
-		'controller' => 'settings',
+		'controller' => 'Settings',
 		'action' => 'prefix',
 		$prefix,
 	),

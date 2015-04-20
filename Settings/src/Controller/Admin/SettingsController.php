@@ -40,7 +40,9 @@ class SettingsController extends CroogoAppController {
  * @var array
  * @access public
  */
-	public $helpers = array('Html', 'Form');
+	public $helpers = [
+
+	];
 
 /**
  * Preset Variables Search
@@ -164,17 +166,17 @@ class SettingsController extends CroogoAppController {
 	public function prefix($prefix = null) {
 		$this->set('title_for_layout', __d('croogo', 'Settings: %s', $prefix));
 
-		$this->Setting->Behaviors->attach('Croogo.Params');
+		$this->Settings->addBehavior('Croogo/Croogo.Params');
 		if (!empty($this->request->data) && $this->Setting->saveAll($this->request->data['Setting'])) {
 			$this->Session->setFlash(__d('croogo', "Settings updated successfully"), 'default', array('class' => 'success'));
 			return $this->redirect(array('action' => 'prefix', $prefix));
 		}
 
-		$settings = $this->Setting->find('all', array(
-			'order' => 'Setting.weight ASC',
+		$settings = $this->Settings->find('all', array(
+			'order' => 'Settings.weight ASC',
 			'conditions' => array(
-				'Setting.key LIKE' => $prefix . '.%',
-				'Setting.editable' => 1,
+				'Settings.key LIKE' => $prefix . '.%',
+				'Settings.editable' => 1,
 			),
 		));
 		$this->set(compact('settings'));
