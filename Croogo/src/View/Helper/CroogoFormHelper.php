@@ -12,9 +12,12 @@ use Cake\Utility\Hash;
  */
 class CroogoFormHelper extends FormHelper {
 
-	public $helpers = array(
-		'Html' => array('className' => 'Croogo/Croogo.CroogoHtml')
-	);
+	public $helpers = [
+		'Html' => [
+			'className' => 'Croogo/Croogo.CroogoHtml'
+		],
+		'Url'
+	];
 
 	protected function _bootstrapGenerate($title, $options) {
 		if (isset($options['button'])) {
@@ -139,7 +142,8 @@ class CroogoFormHelper extends FormHelper {
  * @see FormHelper::create()
  * @return string A formatted opening FORM tag
  */
-	public function create($model = null, $options = array()) {
+
+	public function create($model = null, array $options = []) {
 		if (!empty($options['fieldAccess'])) {
 			$this->_fieldAccess = $this->_setupFieldAccess($options['fieldAccess']);
 			$this->_currentRoleId = $this->_View->Layout->getRoleId();
@@ -148,7 +152,7 @@ class CroogoFormHelper extends FormHelper {
 		return parent::create($model, $options);
 	}
 
-	public function input($fieldName, $options = array()) {
+	public function input($fieldName, array $options = []) {
 		if (!$this->_isEditable($fieldName)) {
 			return null;
 		}
@@ -266,7 +270,7 @@ class CroogoFormHelper extends FormHelper {
 		return $out;
 	}
 
-	public function button($title, $options = array()) {
+	public function button($title, array $options = []) {
 		$defaults = array('class' => 'btn');
 		$options = array_merge($defaults, $options);
 
@@ -275,7 +279,7 @@ class CroogoFormHelper extends FormHelper {
 		return parent::button($title, $options);
 	}
 
-	public function submit($caption = null, $options = array()) {
+	public function submit($caption = null, array $options = []) {
 		$defaults = array('class' => 'btn', 'escape' => false);
 		$options = array_merge($defaults, $options);
 

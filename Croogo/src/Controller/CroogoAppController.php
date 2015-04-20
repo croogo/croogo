@@ -68,7 +68,9 @@ class CroogoAppController extends Controller {
  */
 	public $helpers = array(
 		'Html',
-		'Form',
+		'Form' => [
+			'className' => 'Croogo/Croogo.CroogoForm'
+		],
 		'Session',
 		'Text',
 		'Time',
