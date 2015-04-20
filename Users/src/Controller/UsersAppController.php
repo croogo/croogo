@@ -16,8 +16,5 @@ use Croogo\Croogo\Controller\CroogoAppController;
  */
 class UsersAppController extends CroogoAppController {
 
-	public $helpers = [
-		'Croogo/Croogo.Croogo'
-	];
 
 }

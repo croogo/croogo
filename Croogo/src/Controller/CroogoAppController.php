@@ -72,6 +72,7 @@ class CroogoAppController extends Controller {
 		'Session',
 		'Text',
 		'Time',
+		'Croogo/Croogo.Croogo',
 		'Croogo/Croogo.Layout',
 		'Croogo/Croogo.Custom',
 	);
