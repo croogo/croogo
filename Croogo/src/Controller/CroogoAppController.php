@@ -7,6 +7,8 @@ use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\Network\Request;
+use Cake\Network\Response;
 use Cake\Utility\Hash;
 
 use Croogo\Croogo\Croogo;
@@ -108,8 +110,11 @@ class CroogoAppController extends Controller {
  * Constructor
  *
  * @access public
+ * @param Request $request
+ * @param Response $response
+ * @param null $name
  */
-	public function __construct($request = null, $response = null, $name = null) {
+	public function __construct(Request $request = null, Response $response = null, $name = null) {
 		parent::__construct($request, $response, $name);
 		if ($request) {
 			$request->addDetector('api', array(
