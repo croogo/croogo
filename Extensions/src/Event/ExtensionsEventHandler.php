@@ -38,7 +38,7 @@ class ExtensionsEventHandler implements EventListenerInterface {
  */
 	public function onBeforeSetupAdminData($event) {
 		$plugins = Plugin::loaded();
-		$config = 'Config' . DS . 'admin.php';
+		$config = 'config' . DS . 'admin.php';
 		foreach ($plugins as $plugin) {
 			$file = Plugin::path($plugin) . $config;
 			if (file_exists($file)) {
@@ -52,7 +52,7 @@ class ExtensionsEventHandler implements EventListenerInterface {
  */
 	public function onSetupAdminData($event) {
 		$plugins = Plugin::loaded();
-		$config = 'Config' . DS . 'admin_menu.php';
+		$config = 'config' . DS . 'admin_menu.php';
 		foreach ($plugins as $plugin) {
 			$file = Plugin::path($plugin) . $config;
 			if (file_exists($file)) {
