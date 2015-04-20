@@ -6,16 +6,16 @@ use Cake\Core\Configure;
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width">
-		<title><?php echo $title_for_layout; ?> - <?php echo __d('croogo', 'Croogo'); ?></title>
+		<title><?php echo $this->fetch('title'); ?> - <?php echo __d('croogo', 'Croogo'); ?></title>
 		<?php
 		echo $this->Html->css(array(
-			'/croogo/css/croogo-bootstrap',
-			'/croogo/css/croogo-bootstrap-responsive',
+			'Croogo/Croogo.croogo-bootstrap',
+			'Croogo/Croogo.croogo-bootstrap-responsive',
 			'admin',
 		));
 		echo $this->Layout->js();
 		echo $this->Html->script(array(
-			'/croogo/js/html5',
+			'Croogo/Croogo.html5',
 		));
 
 		echo $this->fetch('script');
@@ -28,11 +28,13 @@ use Cake\Core\Configure;
 			<header class="navbar navbar-inverse navbar-fixed-top">
 				<div class="navbar-inner">
 					<div class="container-fluid">
-						<?php echo $this->Html->link(
+						<?php
+						echo $this->Html->link(
 							__d('croogo', 'Back to') . ' ' . Configure::read('Site.title'),
 							'/',
 							array('class' => 'brand')
-						); ?>
+						);
+						?>
 					</div>
 				</div>
 			</header>
@@ -42,8 +44,8 @@ use Cake\Core\Configure;
 				<div class="row-fluid">
 					<div id="admin-login">
 					<?php
-						echo $this->Layout->sessionFlash();
-						echo $this->fetch('content');
+					echo $this->Layout->sessionFlash();
+					echo $this->fetch('content');
 					?>
 					</div>
 				</div>
