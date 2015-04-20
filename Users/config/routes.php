@@ -22,37 +22,8 @@ CroogoRouter::connect('/user/:username', array(
 	'plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'view'), array('pass' => array('username')
 ));
 
-CroogoRouter::connect('/admin/users/login', [
-	'plugin' => 'Croogo/Users',
+CroogoRouter::connect('/admin/users/:controller/:action/*', [
 	'prefix' => 'admin',
-	'controller' => 'Users',
-	'action' => 'login'
-]);
-
-CroogoRouter::connect('/admin/users/index', [
 	'plugin' => 'Croogo/Users',
-	'prefix' => 'admin',
-	'controller' => 'Users',
 	'action' => 'index'
-]);
-
-CroogoRouter::connect('/admin/users/add', [
-	'plugin' => 'Croogo/Users',
-	'prefix' => 'admin',
-	'controller' => 'Users',
-	'action' => 'add'
-]);
-
-CroogoRouter::connect('/admin/users/edit/*', [
-	'plugin' => 'Croogo/Users',
-	'prefix' => 'admin',
-	'controller' => 'Users',
-	'action' => 'edit'
-]);
-
-CroogoRouter::connect('/admin/users/delete/*', [
-	'plugin' => 'Croogo/Users',
-	'prefix' => 'admin',
-	'controller' => 'Users',
-	'action' => 'delete'
 ]);
