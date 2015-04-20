@@ -1,24 +1,22 @@
 <?php
 use Cake\Core\Configure;
 
-echo $this->Form->create('User', ['url' => ['controller' => 'users', 'action' => 'login']]);?>
+echo $this->Form->create('User', ['url' => ['action' => 'login']]);?>
 <div class="box">
 	<div class="box-content">
 	<?php
 	$this->Form->templates([
 		'label' => false,
+		'textContainer' => '<div class="input-prepend {{type}}"><span class="add-on"><i class="icon-user"></i></span>{{content}}</div>',
+		'passwordContainer' => '<div class="input-prepend {{type}}"><span class="add-on"><i class="icon-key"></i></span>{{content}}</div>',
 	]);
 	echo $this->Form->input('username', [
 		'placeholder' => __d('croogo', 'Username'),
-		'before' => '<span class="add-on"><i class="icon-user"></i></span>',
-		'div' => 'input-prepend text',
-		'class' => 'span11',
+		'class' => 'span11'
 	]);
 	echo $this->Form->input('password', [
 		'placeholder' => __d('croogo', 'Password'),
-		'before' => '<span class="add-on"><i class="icon-key"></i></span>',
-		'div' => 'input-prepend password',
-		'class' => 'span11',
+		'class' => 'span11'
 	]);
 	if (Configure::read('Access Control.autoLoginDuration')):
 		echo $this->Form->input('remember', [
@@ -27,7 +25,7 @@ echo $this->Form->create('User', ['url' => ['controller' => 'users', 'action' =>
 			'default' => false,
 		]);
 	endif;
-	echo $this->Form->button(__d('croogo', 'Log In'));
+	echo $this->Form->button(__d('croogo', 'Log In'), ['class' => 'btn']);
 	echo $this->Html->link(__d('croogo', 'Forgot password?'), [
 		'prefix' => null,
 		'controller' => 'users',
