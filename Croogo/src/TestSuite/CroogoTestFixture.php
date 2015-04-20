@@ -2,6 +2,8 @@
 
 namespace Croogo\Croogo\TestSuite;
 
+use Cake\Database\Connection;
+use Cake\Database\Driver\Postgres;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
@@ -36,7 +38,7 @@ class CroogoTestFixture extends TestFixture {
  * @param Object $db
  * @return array
  */
-	public function insert($db) {
+	public function insert(Connection $db) {
 		$result = parent::insert($db);
 		if ($result === true && $db instanceof Postgres) {
 			$this->_fixSequence($db);
