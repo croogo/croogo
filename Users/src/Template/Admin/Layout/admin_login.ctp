@@ -1,3 +1,6 @@
+<?php
+use Cake\Core\Configure;
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -47,6 +50,6 @@
 			</div>
 
 		</div>
-		<?php echo $this->element('Croogo.admin/footer'); ?>
+		<?php echo $this->element('Croogo/Croogo.admin/footer'); ?>
 	</body>
 </html>

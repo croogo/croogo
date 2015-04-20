@@ -1,4 +1,7 @@
-<?php echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'login')));?>
+<?php
+use Cake\Core\Configure;
+
+echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'login')));?>
 <div class="box">
 	<div class="box-content">
 	<?php
@@ -26,7 +29,7 @@
 		endif;
 		echo $this->Form->button(__d('croogo', 'Log In'));
 		echo $this->Html->link(__d('croogo', 'Forgot password?'), array(
-			'admin' => false,
+			'prefix' => null,
 			'controller' => 'users',
 			'action' => 'forgot',
 			), array(
