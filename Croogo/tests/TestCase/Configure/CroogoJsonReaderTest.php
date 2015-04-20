@@ -17,10 +17,6 @@ class MockCroogoJsonReader extends CroogoJsonReader {
 
 class CroogoJsonReaderTest extends CroogoTestCase {
 
-	public $fixtures = array(
-		'plugin.croogo\settings.setting',
-	);
-
 	/**
 	 * @var CroogoJsonReader
 	 */
