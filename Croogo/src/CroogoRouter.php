@@ -162,19 +162,19 @@ class CroogoRouter {
  */
 	public static function contentType($alias) {
 		CroogoRouter::connect('/' . $alias, array(
-			'plugin' => 'nodes', 'controller' => 'nodes',
+			'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
 			'action' => 'index', 'type' => $alias
 		));
 		CroogoRouter::connect('/' . $alias . '/archives/*', array(
-			'plugin' => 'nodes', 'controller' => 'nodes',
+			'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
 			'action' => 'index', 'type' => $alias
 		));
 		CroogoRouter::connect('/' . $alias . '/:slug', array(
-			'plugin' => 'nodes', 'controller' => 'nodes',
+			'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
 			'action' => 'view', 'type' => $alias
 		));
 		CroogoRouter::connect('/' . $alias . '/term/:slug/*', array(
-			'plugin' => 'nodes', 'controller' => 'nodes',
+			'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
 			'action' => 'term', 'type' => $alias
 		));
 	}
