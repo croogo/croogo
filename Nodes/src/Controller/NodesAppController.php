@@ -2,7 +2,7 @@
 
 namespace Croogo\Nodes\Controller;
 
-use App\Controller\AppController;
+use Croogo\Croogo\Controller\CroogoAppController;
 
 /**
  * Nodes App Controller
@@ -14,6 +14,11 @@ use App\Controller\AppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class NodesAppController extends AppController {
+class NodesAppController extends CroogoAppController {
+
+	public $helpers = [
+		'Croogo/Croogo.Croogo',
+		'Croogo/Croogo.CroogoHtml'
+	];
 
 }

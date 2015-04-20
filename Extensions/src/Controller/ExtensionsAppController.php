@@ -2,8 +2,8 @@
 
 namespace Croogo\Extensions\Controller;
 
-use App\Controller\AppController;
 use Cake\Event\Event;
+use Croogo\Croogo\Controller\CroogoAppController;
 
 /**
  * ExtensionsApp Controller
@@ -15,7 +15,11 @@ use Cake\Event\Event;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtensionsAppController extends AppController {
+class ExtensionsAppController extends CroogoAppController {
+
+	public $helpers = [
+		'Croogo/Croogo.Croogo'
+	];
 
 /**
  * beforeFilter
