@@ -9,6 +9,7 @@ use Cake\Controller\Component\AuthComponent;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use Croogo\Croogo\Croogo;
 
 /**
  * AclFilter Component
@@ -30,12 +31,12 @@ class AclFilterComponent extends Component {
 	protected $_controller = null;
 
 /**
- * initialize
+ * beforeFilter
  *
- * @param Controller $controller instance of controller
+ * @param Event $event instance of event
  * @return void
  */
-	public function initialize(Event  $event) {
+	public function beforeFilter(Event  $event) {
 		$this->_controller = $event->subject();
 
 		if ($this->_config('multiRole')) {

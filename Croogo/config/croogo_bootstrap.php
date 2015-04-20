@@ -44,6 +44,8 @@ $cacheConfig = array(
 	'engine' => $defaultEngine,
 	'prefix' => $defaultPrefix,
 );
+Configure::write('Croogo.Cache.defaultEngine', $defaultEngine);
+Configure::write('Croogo.Cache.defaultPrefix', $defaultPrefix);
 Configure::write('Croogo.Cache.defaultConfig', $cacheConfig);
 
 /**
