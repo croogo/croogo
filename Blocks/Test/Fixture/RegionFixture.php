@@ -11,7 +11,10 @@ class RegionFixture extends CroogoTestFixture {
 		'alias' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 100],
 		'description' => ['type' => 'text', 'null' => false, 'default' => null],
 		'block_count' => ['type' => 'integer', 'null' => false, 'default' => '0'],
-		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id'], 'region_alias' => ['type' => 'unique', 'columns' => 'alias']],
+		'_constraints' => [
+			'primary' => ['type' => 'primary', 'columns' => ['id']],
+			'region_alias' => ['type' => 'unique', 'columns' => 'alias']
+		],
 		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 

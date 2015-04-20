@@ -34,7 +34,9 @@ class InstallUserFixture extends CakeTestFixture {
 		'updated_by' => ['type' => 'integer', 'null' => true, 'default' => null],
 		'created' => ['type' => 'datetime', 'null' => false, 'default' => null],
 		'created_by' => ['type' => 'integer', 'null' => true, 'default' => null],
-		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id']],
+		'_constraints' => [
+			'primary' => ['type' => 'primary', 'columns' => ['id']],
+		],
 		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 

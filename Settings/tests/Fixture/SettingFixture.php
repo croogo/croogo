@@ -19,7 +19,6 @@ class SettingFixture extends CroogoTestFixture {
 		'params' => ['type' => 'text', 'null' => false, 'default' => null],
 		'_constraints' => [
 			'primary' => ['type' => 'primary', 'columns' => ['id']],
-			'PRIMARY' => ['type' => 'unique', 'columns' => 'id'],
 			'key' => ['type' => 'unique', 'columns' => 'key']
 		],
 		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']

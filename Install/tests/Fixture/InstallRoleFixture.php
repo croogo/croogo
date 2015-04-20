@@ -23,7 +23,10 @@ class InstallRoleFixture extends CakeTestFixture {
 		'alias' => ['type' => 'string', 'null' => true, 'default' => null, 'length' => 100, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
 		'created' => ['type' => 'datetime', 'null' => true, 'default' => null],
 		'updated' => ['type' => 'datetime', 'null' => true, 'default' => null],
-		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id'], 'role_alias' => ['type' => 'unique', 'columns' => 'alias']],
+		'_constraints' => [
+			'primary' => ['type' => 'primary', 'columns' => ['id']],
+			'role_alias' => ['type' => 'unique', 'columns' => 'alias']
+		],
 		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 

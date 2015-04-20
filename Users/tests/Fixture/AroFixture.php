@@ -15,7 +15,9 @@ class AroFixture extends CroogoTestFixture {
 		'alias' => ['type' => 'string', 'null' => true],
 		'lft' => ['type' => 'integer', 'null' => true, 'default' => null, 'length' => 10],
 		'rght' => ['type' => 'integer', 'null' => true, 'default' => null, 'length' => 10],
-		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id']],
+		'_constraints' => [
+			'primary' => ['type' => 'primary', 'columns' => ['id']],
+		],
 		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 

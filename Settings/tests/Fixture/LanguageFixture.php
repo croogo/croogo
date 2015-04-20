@@ -16,7 +16,9 @@ class LanguageFixture extends CroogoTestFixture {
 		'weight' => ['type' => 'integer', 'null' => true, 'default' => null],
 		'updated' => ['type' => 'datetime', 'null' => false, 'default' => null],
 		'created' => ['type' => 'datetime', 'null' => false, 'default' => null],
-		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']], 'PRIMARY' => ['type' => 'unique', 'columns' => 'id']],
+		'_constraints' => [
+			'primary' => ['type' => 'primary', 'columns' => ['id']],
+		],
 		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
 	);
 
