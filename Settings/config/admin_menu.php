@@ -8,9 +8,9 @@ CroogoNav::add('sidebar', 'settings', array(
 	'icon' => array('cog', 'large'),
 	'title' => __d('croogo', 'Settings'),
 	'url' => array(
-		'admin' => true,
-		'plugin' => 'settings',
-		'controller' => 'settings',
+		'prefix' => 'admin',
+		'plugin' => 'Croogo/Settings',
+		'controller' => 'Settings',
 		'action' => 'prefix',
 		'Site',
 	),
@@ -19,9 +19,9 @@ CroogoNav::add('sidebar', 'settings', array(
 		'site' => array(
 			'title' => __d('croogo', 'Site'),
 			'url' => array(
-				'admin' => true,
-				'plugin' => 'settings',
-				'controller' => 'settings',
+				'prefix' => 'admin',
+				'plugin' => 'Croogo/Settings',
+				'controller' => 'Settings',
 				'action' => 'prefix',
 				'Site',
 			),
@@ -31,9 +31,9 @@ CroogoNav::add('sidebar', 'settings', array(
 		'meta' => array(
 			'title' => __d('croogo', 'Meta'),
 			'url' => array(
-				'admin' => true,
-				'plugin' => 'settings',
-				'controller' => 'settings',
+				'prefix' => 'admin',
+				'plugin' => 'Croogo/Settings',
+				'controller' => 'Settings',
 				'action' => 'prefix',
 				'Meta',
 			),
@@ -43,9 +43,9 @@ CroogoNav::add('sidebar', 'settings', array(
 		'reading' => array(
 			'title' => __d('croogo', 'Reading'),
 			'url' => array(
-				'admin' => true,
-				'plugin' => 'settings',
-				'controller' => 'settings',
+				'prefix' => 'admin',
+				'plugin' => 'Croogo/Settings',
+				'controller' => 'Settings',
 				'action' => 'prefix',
 				'Reading',
 			),
@@ -55,9 +55,9 @@ CroogoNav::add('sidebar', 'settings', array(
 		'writing' => array(
 			'title' => __d('croogo', 'Writing'),
 			'url' => array(
-				'admin' => true,
-				'plugin' => 'settings',
-				'controller' => 'settings',
+				'prefix' => 'admin',
+				'plugin' => 'Croogo/Settings',
+				'controller' => 'Settings',
 				'action' => 'prefix',
 				'Writing',
 			),
@@ -67,9 +67,9 @@ CroogoNav::add('sidebar', 'settings', array(
 		'comment' => array(
 			'title' => __d('croogo', 'Comment'),
 			'url' => array(
-				'admin' => true,
-				'plugin' => 'settings',
-				'controller' => 'settings',
+				'prefix' => 'admin',
+				'plugin' => 'Croogo/Settings',
+				'controller' => 'Settings',
 				'action' => 'prefix',
 				'Comment',
 			),
@@ -79,9 +79,9 @@ CroogoNav::add('sidebar', 'settings', array(
 		'service' => array(
 			'title' => __d('croogo', 'Service'),
 			'url' => array(
-				'admin' => true,
-				'plugin' => 'settings',
-				'controller' => 'settings',
+				'prefix' => 'admin',
+				'plugin' => 'Croogo/Settings',
+				'controller' => 'Settings',
 				'action' => 'prefix',
 				'Service',
 			),
@@ -91,9 +91,9 @@ CroogoNav::add('sidebar', 'settings', array(
 		'languages' => array(
 			'title' => __d('croogo', 'Languages'),
 			'url' => array(
-				'admin' => true,
-				'plugin' => 'settings',
-				'controller' => 'languages',
+				'prefix' => 'admin',
+				'plugin' => 'Croogo/Settings',
+				'controller' => 'Settings',
 				'action' => 'index',
 			),
 			'weight' => 70,

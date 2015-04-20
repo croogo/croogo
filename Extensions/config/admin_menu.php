@@ -8,9 +8,9 @@ CroogoNav::add('sidebar', 'extensions', array(
 	'icon' => array('magic', 'large'),
 	'title' => __d('croogo', 'Extensions'),
 	'url' => array(
-		'admin' => true,
-		'plugin' => 'extensions',
-		'controller' => 'extensions_plugins',
+		'prefix' => 'admin',
+		'plugin' => 'Croogo/Extensions',
+		'controller' => 'ExtensionsPlugins',
 		'action' => 'index',
 	),
 	'weight' => 35,
@@ -18,9 +18,9 @@ CroogoNav::add('sidebar', 'extensions', array(
 		'themes' => array(
 			'title' => __d('croogo', 'Themes'),
 			'url' => array(
-				'admin' => true,
-				'plugin' => 'extensions',
-				'controller' => 'extensions_themes',
+				'prefix' => 'admin',
+				'plugin' => 'Croogo/Extensions',
+				'controller' => 'ExtensionsThemes',
 				'action' => 'index',
 			),
 			'weight' => 10,
@@ -28,9 +28,9 @@ CroogoNav::add('sidebar', 'extensions', array(
 		'locales' => array(
 			'title' => __d('croogo', 'Locales'),
 			'url' => array(
-				'admin' => true,
-				'plugin' => 'extensions',
-				'controller' => 'extensions_locales',
+				'prefix' => 'admin',
+				'plugin' => 'Croogo/Extensions',
+				'controller' => 'ExtensionsLocales',
 				'action' => 'index',
 			),
 			'weight' => 20,
@@ -38,9 +38,9 @@ CroogoNav::add('sidebar', 'extensions', array(
 		'plugins' => array(
 			'title' => __d('croogo', 'Plugins'),
 			'url' => array(
-				'admin' => true,
-				'plugin' => 'extensions',
-				'controller' => 'extensions_plugins',
+				'prefix' => 'admin',
+				'plugin' => 'Croogo/Extensions',
+				'controller' => 'ExtensionsPlugins',
 				'action' => 'index',
 			),
 			'htmlAttributes' => array(
