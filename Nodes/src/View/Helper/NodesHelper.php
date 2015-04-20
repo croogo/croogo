@@ -2,8 +2,11 @@
 
 namespace Croogo\Nodes\View\Helper;
 
-use App\View\Helper\AppHelper;
-use Croogo\Lib\Utility\StringConverter;
+use Cake\View\Helper;
+use Cake\View\View;
+use Croogo\Croogo\Croogo;
+use Croogo\Croogo\Utility\StringConverter;
+
 /**
  * Nodes Helper
  *
@@ -14,7 +17,7 @@ use Croogo\Lib\Utility\StringConverter;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class NodesHelper extends AppHelper {
+class NodesHelper extends Helper {
 
 /**
  * Other helpers used by this helper
@@ -26,7 +29,6 @@ class NodesHelper extends AppHelper {
 		'Html',
 		'Form',
 		'Session',
-		'Js',
 		'Croogo.Layout',
 	);
 
@@ -41,7 +43,7 @@ class NodesHelper extends AppHelper {
 /**
  * StringConverter instance
  *
- * @var StringConventer
+ * @var StringConverter
  */
 	protected $_converter = null;
 

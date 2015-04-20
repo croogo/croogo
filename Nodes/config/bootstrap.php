@@ -18,7 +18,7 @@ CroogoCache::config('nodes_index', $cacheConfig);
 Croogo::hookApiComponent('Nodes', 'Nodes.NodeApi');
 Croogo::hookComponent('*', 'Nodes.Nodes');
 
-Croogo::hookHelper('*', 'Nodes.Nodes');
+Croogo::hookHelper('*', 'Croogo/Nodes.Nodes');
 
 // Configure Wysiwyg
 Croogo::mergeConfig('Wysiwyg.actions', array(
