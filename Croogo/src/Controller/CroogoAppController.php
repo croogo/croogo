@@ -262,7 +262,7 @@ class CroogoAppController extends Controller {
 
 		if (!$this->request->is('api')) {
 			$this->Security->blackHoleCallback = 'securityError';
-			if ($this->request->action == 'delete' && $this->request->prefix == 'admin') {
+			if ($this->request->param('action') == 'delete' && $this->request->param('prefix') == 'admin') {
 				$this->request->allowMethod('post');
 			}
 		}
