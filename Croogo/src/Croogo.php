@@ -231,9 +231,9 @@ class Croogo {
 					$currentValues = $object->getProperty($property);
 					if (is_array($currentValues)) {
 						if (is_array($value)) {
-							$object->setProperty($property, Hash::merge($object->$property, $value));
+							$object->setProperty($property, Hash::merge($object->getProperty($property), $value));
 						} else {
-							$object->setPropery($property, $value);
+							$object->setProperty($property, $value);
 						}
 					} else {
 						$object->setProperty($property, $value);

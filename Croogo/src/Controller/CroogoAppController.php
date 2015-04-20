@@ -152,7 +152,7 @@ class CroogoAppController extends Controller {
  */
 	public function afterConstruct() {
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
-//		$this->_setupComponents();
+		$this->_setupComponents();
 		if (isset($this->request->params['admin'])) {
 			$this->helpers[] = 'Croogo.Croogo';
 			if (empty($this->helpers['Html'])) {
@@ -173,37 +173,35 @@ class CroogoAppController extends Controller {
  * @param void
  * @return void
  */
-//	protected function _setupComponents() {
-//		if ($this->request && !$this->request->is('api')) {
-//			$this->components = Hash::merge(
-//				$this->_defaultComponents,
-//				$this->_appComponents,
-//				$this->components
-//			);
-//			var_dump($this->components);
-//			exit();
-//			return;
-//		}
-//
-//		$this->components = Hash::merge(
-//			$this->components,
-//			array('Acl.Acl', 'Auth', 'Security', 'Session', 'RequestHandler', 'Acl.AclFilter'),
-//			$this->_apiComponents
-//		);
-//		$apiComponents = array();
-//		$priority = 8;
-//		foreach ($this->_apiComponents as $component => $setting) {
-//			if (is_string($setting)) {
-//				$component = $setting;
-//				$setting = array();
-//			}
-//			$className = $component;
-//			list(, $apiComponent) = pluginSplit($component);
-//			$setting = Hash::merge(compact('className', 'priority'), $setting);
-//			$apiComponents[$apiComponent] = $setting;
-//		}
-//		$this->_apiComponents = $apiComponents;
-//	}
+	protected function _setupComponents() {
+		if ($this->request && !$this->request->is('api')) {
+			$this->components = Hash::merge(
+				$this->_defaultComponents,
+				$this->_appComponents,
+				$this->components
+			);
+			return;
+		}
+
+		$this->components = Hash::merge(
+			$this->components,
+			array('Acl.Acl', 'Auth', 'Security', 'Session', 'RequestHandler', 'Acl.AclFilter'),
+			$this->_apiComponents
+		);
+		$apiComponents = array();
+		$priority = 8;
+		foreach ($this->_apiComponents as $component => $setting) {
+			if (is_string($setting)) {
+				$component = $setting;
+				$setting = array();
+			}
+			$className = $component;
+			list(, $apiComponent) = pluginSplit($component);
+			$setting = Hash::merge(compact('className', 'priority'), $setting);
+			$apiComponents[$apiComponent] = $setting;
+		}
+		$this->_apiComponents = $apiComponents;
+	}
 
 /**
  * Allows extending action from component
