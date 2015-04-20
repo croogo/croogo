@@ -1,8 +1,9 @@
 <?php
 
-namespace Croogo\Settings\Controller;
+namespace Croogo\Settings\Controller\Admin;
 
-use Settings\Controller\SettingsAppController;
+use Croogo\Croogo\Controller\CroogoAppController;
+
 /**
  * Languages Controller
  *
@@ -13,23 +14,7 @@ use Settings\Controller\SettingsAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class LanguagesController extends SettingsAppController {
-
-/**
- * Controller name
- *
- * @var string
- * @access public
- */
-	public $name = 'Languages';
-
-/**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
-	public $uses = array('Settings.Language');
+class LanguagesController extends CroogoAppController {
 
 /**
  * Admin index
@@ -37,7 +22,7 @@ class LanguagesController extends SettingsAppController {
  * @return void
  * @access public
  */
-	public function admin_index() {
+	public function index() {
 		$this->set('title_for_layout', __d('croogo', 'Languages'));
 
 		$this->Language->recursive = 0;
@@ -51,7 +36,7 @@ class LanguagesController extends SettingsAppController {
  * @return void
  * @access public
  */
-	public function admin_add() {
+	public function add() {
 		$this->set('title_for_layout', __d('croogo', "Add Language"));
 
 		if (!empty($this->request->data)) {
@@ -72,7 +57,7 @@ class LanguagesController extends SettingsAppController {
  * @return void
  * @access public
  */
-	public function admin_edit($id = null) {
+	public function edit($id = null) {
 		$this->set('title_for_layout', __d('croogo', "Edit Language"));
 
 		if (!$id && empty($this->request->data)) {
@@ -99,7 +84,7 @@ class LanguagesController extends SettingsAppController {
  * @return void
  * @access public
  */
-	public function admin_delete($id = null) {
+	public function delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Language'), 'default', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
@@ -118,7 +103,7 @@ class LanguagesController extends SettingsAppController {
  * @return void
  * @access public
  */
-	public function admin_moveup($id, $step = 1) {
+	public function moveup($id, $step = 1) {
 		if ($this->Language->moveUp($id, $step)) {
 			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'default', array('class' => 'success'));
 		} else {
@@ -136,7 +121,7 @@ class LanguagesController extends SettingsAppController {
  * @return void
  * @access public
  */
-	public function admin_movedown($id, $step = 1) {
+	public function movedown($id, $step = 1) {
 		if ($this->Language->moveDown($id, $step)) {
 			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'default', array('class' => 'success'));
 		} else {
@@ -154,7 +139,7 @@ class LanguagesController extends SettingsAppController {
  * @return void
  * @access public
  */
-	public function admin_select($id = null, $modelAlias = null) {
+	public function select($id = null, $modelAlias = null) {
 		if ($id == null ||
 			$modelAlias == null) {
 			return $this->redirect(array('action' => 'index'));
