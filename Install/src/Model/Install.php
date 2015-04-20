@@ -78,7 +78,7 @@ class Install extends InstallAppModel {
 
 		if ($migrationsSucceed) {
 			$DataMigration = new DataMigration();
-			$path = App::pluginPath('Install') . DS . 'Config' . DS . 'Data' . DS;
+			$path = App::pluginPath('Install') . DS . 'config' . DS . 'Data' . DS;
 			$DataMigration->load($path);
 		}
 

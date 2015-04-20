@@ -102,8 +102,8 @@ class UpgradeTask extends CroogoAppShell {
  */
 	public function settings($keys = array()) {
 		$this->_loadSettingsPlugin();
-		if (file_exists(APP . 'Config' . DS . 'settings.json')) {
-			$this->err(__d('croogo', '<warning>Config/settings.json already exist</warning>'));
+		if (file_exists(APP . 'config' . DS . 'settings.json')) {
+			$this->err(__d('croogo', '<warning>config/settings.json already exist</warning>'));
 		} else {
 			$defaultPlugins = array(
 				'Settings', 'Comments', 'Contacts', 'Nodes', 'Meta', 'Menus',
@@ -253,7 +253,7 @@ class UpgradeTask extends CroogoAppShell {
 	protected function _bootstrapReorderByDependency($plugins) {
 		$pluginsOrdered = $plugins;
 		foreach ($plugins as $p) {
-			$jsonPath = APP . 'Plugin' . DS . $p . DS . 'Config' . DS . 'plugin.json';
+			$jsonPath = APP . 'Plugin' . DS . $p . DS . 'config' . DS . 'plugin.json';
 			if (file_exists($jsonPath)) {
 				$pluginData = json_decode(file_get_contents($jsonPath), true);
 				if (isset($pluginData['dependencies']['plugins'])) {

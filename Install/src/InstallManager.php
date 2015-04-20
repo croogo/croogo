@@ -32,11 +32,11 @@ class InstallManager {
 			}
 		}
 
-		$result = copy(APP . 'Config' . DS . 'database.php.install', APP . 'Config' . DS . 'database.php');
+		$result = copy(APP . 'config' . DS . 'database.php.install', APP . 'Config' . DS . 'database.php');
 		if (!$result) {
 			return __d('croogo', 'Could not copy database.php file.');
 		}
-		$file = new File(APP . 'Config' . DS . 'database.php', true);
+		$file = new File(APP . 'config' . DS . 'database.php', true);
 		$content = $file->read();
 
 		foreach ($config as $configKey => $configValue) {
@@ -62,7 +62,7 @@ class InstallManager {
 	}
 
 	public function createCroogoFile() {
-		$croogoConfigFile = APP . 'Config' . DS . 'croogo.php';
+		$croogoConfigFile = APP . 'config' . DS . 'croogo.php';
 		$result = copy($croogoConfigFile . '.install', $croogoConfigFile);
 		if (!$result) {
 			$msg = 'Unable to copy file "croogo.php"';
@@ -92,7 +92,7 @@ class InstallManager {
  * @return bool true when successful
  */
 	public function createSettingsFile() {
-		return copy(APP . 'Config' . DS . 'settings.json.install', APP . 'Config' . DS . 'settings.json');
+		return copy(APP . 'config' . DS . 'settings.json.install', APP . 'config' . DS . 'settings.json');
 	}
 
 /**

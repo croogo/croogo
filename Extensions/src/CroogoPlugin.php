@@ -161,7 +161,7 @@ class CroogoPlugin {
 				return true;
 			}
 		}
-		if (file_exists($dir . 'Config' . DS . 'plugin.json')) {
+		if (file_exists($dir . 'config' . DS . 'plugin.json')) {
 			return true;
 		}
 		return false;
@@ -190,7 +190,7 @@ class CroogoPlugin {
 		foreach ($pluginPaths as $pluginPath) {
 			$active = $this->isActive($alias);
 			$isCroogoPlugin = false;
-			$manifestFile = $pluginPath . $alias . DS . 'Config' . DS . 'plugin.json';
+			$manifestFile = $pluginPath . $alias . DS . 'config' . DS . 'plugin.json';
 			$hasManifest = file_exists($manifestFile);
 			$composerFile = $pluginPath . $alias . DS . 'composer.json';
 			$hasComposer = file_exists($composerFile);
@@ -519,7 +519,7 @@ class CroogoPlugin {
 
 			$pluginPaths = App::path('plugins');
 			foreach ($pluginPaths as $path) {
-				$configFile = $path . DS . $plugin . DS . 'Config' . DS . $className . '.php';
+				$configFile = $path . DS . $plugin . DS . 'config' . DS . $className . '.php';
 				if (file_exists($configFile) && include $configFile) {
 					$this->_PluginActivation = new $className;
 				}

@@ -34,7 +34,7 @@ class SettingTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->Setting = ClassRegistry::init('Settings.Setting');
-		$this->Setting->settingsPath = TESTS . 'test_app' . DS . 'Config' . DS . 'settings.json';
+		$this->Setting->settingsPath = TESTS . 'test_app' . DS . 'config' . DS . 'settings.json';
 	}
 
 	public function tearDown() {

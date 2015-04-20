@@ -147,7 +147,7 @@ class CroogoRouter {
 
 		$plugins = Configure::read('Hook.routes');
 		foreach ($plugins as $plugin) {
-			$path = App::pluginPath($plugin) . 'Config' . DS . 'routes.php';
+			$path = App::pluginPath($plugin) . 'config' . DS . 'routes.php';
 			if (file_exists($path)) {
 				include $path;
 			}

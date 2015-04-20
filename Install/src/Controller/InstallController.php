@@ -135,7 +135,7 @@ class InstallController extends Controller {
 			'exists' => false,
 			'valid' => false,
 		);
-		if (file_exists(APP . 'Config' . DS . 'database.php')) {
+		if (file_exists(APP . 'config' . DS . 'database.php')) {
 			$currentConfiguration['exists'] = true;
 		}
 		if ($currentConfiguration['exists']) {
@@ -190,7 +190,7 @@ class InstallController extends Controller {
  * Step 3: get username and passwords for administrative user
  */
 	public function adminuser() {
-		if (!file_exists(APP . 'Config' . DS . 'database.php')) {
+		if (!file_exists(APP . 'config' . DS . 'database.php')) {
 			return $this->redirect('/');
 		}
 

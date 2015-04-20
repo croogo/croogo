@@ -86,7 +86,7 @@ class Setting extends SettingsAppModel {
  */
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		$this->settingsPath = APP . 'Config' . DS . 'settings.json';
+		$this->settingsPath = APP . 'config' . DS . 'settings.json';
 	}
 
 /**

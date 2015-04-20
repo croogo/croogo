@@ -62,7 +62,7 @@ class DataMigrationShell extends AppShell {
 		$table = trim($this->args['0']);
 		$name = Inflector::camelize(Inflector::singularize($table));
 		$root = isset($plugin) ? Plugin::path($plugin) : APP;
-		$output = $root . 'Config' . DS . 'Data' . DS . $name . 'Data.php';
+		$output = $root . 'config' . DS . 'Data' . DS . $name . 'Data.php';
 		$records = array();
 
 		$options = array(
