@@ -2,7 +2,8 @@
 
 namespace Croogo\Acl\Model;
 
-use App\Model\AclNode;
+use Acl\Model\Entity\Aco;
+
 /**
  * AclAco Model
  *
@@ -13,7 +14,7 @@ use App\Model\AclNode;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AclAco extends AclNode {
+class AclAco extends Aco {
 
 /**
  * name

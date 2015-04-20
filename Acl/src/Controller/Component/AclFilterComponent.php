@@ -209,22 +209,22 @@ class AclFilterComponent extends Component {
  */
 	public function getPermissions($model, $id) {
 		$Acl =& $this->_controller->Acl;
-		$aro = array('model' => $model, 'foreign_key' => $id);
-		$node = $Acl->Aro->node($aro);
-		$nodes = $Acl->Aro->getPath($node[0]['Aro']['id']);
+		$aro = ['model' => $model, 'foreign_key' => $id];
+		$node = $Acl->Aro->node($aro)->all();
+		$nodes = $Acl->Aro->find('path', ['for' => $id])->all();
 
-		$aros = Hash::extract($node, '{n}.Aro.id');
+		$aros = collection($node)->extract('id')->toArray();
 		if (!empty($nodes)) {
-			$aros = Hash::merge($aros, Hash::extract($nodes, '{n}.Aro.id'));
+			$aros = Hash::merge($aros, collection($nodes)->extract('id')->toArray());
 		}
 
-		$permissions = $Acl->Aro->Permission->find('all', array(
+		$permissions = TableRegistry::get('Acl.Permissions')->find('all', array(
 			'conditions' => array(
-				'Permission.aro_id' => $aros,
-				'Permission._create' => 1,
-				'Permission._read' => 1,
-				'Permission._update' => 1,
-				'Permission._delete' => 1,
+				'Permissions.aro_id' => $aros,
+				'Permissions._create' => 1,
+				'Permissions._read' => 1,
+				'Permissions._update' => 1,
+				'Permissions._delete' => 1,
 			)
 		));
 
