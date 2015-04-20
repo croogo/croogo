@@ -10,8 +10,8 @@ class AclFilterTestController extends Controller {
 	public $components = array(
 		'Auth',
 		'Acl',
-		'Session',
-		'Acl.AclFilter',
+		'Flash',
+		'Croogo/Acl.AclFilter',
 	);
 
 }

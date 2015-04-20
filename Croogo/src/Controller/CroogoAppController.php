@@ -38,6 +38,7 @@ class CroogoAppController extends Controller {
 		'Croogo/Croogo.Croogo',
 		'Security',
 		'Acl.Acl',
+		'Croogo/Acl.AclFilter',
 		'Auth',
 		'Flash',
 		'RequestHandler',
@@ -184,9 +185,9 @@ class CroogoAppController extends Controller {
 					'Acl.Acl',
 					'Auth',
 					'Security',
-					'Session',
+					'Flash',
 					'RequestHandler',
-					'Acl.AclFilter'
+					'Croogo/Acl.AclFilter'
 				],
 				$this->_apiComponents
 			);
