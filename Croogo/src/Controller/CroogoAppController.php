@@ -35,17 +35,17 @@ class CroogoAppController extends Controller {
  * @access public
  */
 	protected $_defaultComponents = array(
-		'Croogo.Croogo',
+		'Croogo/Croogo.Croogo',
 		'Security',
 		'Acl.Acl',
 		'Auth',
-		'Session',
+		'Flash',
 		'RequestHandler',
 	);
 
 /**
  * List of registered Application Components
- *
+ *g
  * These components are typically hooked into the application during bootstrap.
  * @see Croogo::hookComponent
  */
@@ -128,15 +128,7 @@ class CroogoAppController extends Controller {
 		$this->afterConstruct();
 	}
 
-	public function initialize() {
-		parent::initialize();
-
-		$this->loadComponent('Auth');
-		$this->loadComponent('Croogo/Acl.AclFilter');
-	}
-
-
-	/**
+/**
  * implementedEvents
  */
 	public function implementedEvents() {
@@ -179,33 +171,44 @@ class CroogoAppController extends Controller {
  * @return void
  */
 	protected function _setupComponents() {
+		$components = [];
+
 		if ($this->request && !$this->request->is('api')) {
-			$this->components = Hash::merge(
+			$components = Hash::merge(
 				$this->_defaultComponents,
-				$this->_appComponents,
-				$this->components
+				$this->_appComponents
 			);
-			return;
+		} else {
+			$components = Hash::merge(
+				[
+					'Acl.Acl',
+					'Auth',
+					'Security',
+					'Session',
+					'RequestHandler',
+					'Acl.AclFilter'
+				],
+				$this->_apiComponents
+			);
+
+			$apiComponents = array();
+			$priority = 8;
+			foreach ($this->_apiComponents as $component => $setting) {
+				if (is_string($setting)) {
+					$component = $setting;
+					$setting = array();
+				}
+				$className = $component;
+				list(, $apiComponent) = pluginSplit($component);
+				$setting = Hash::merge(compact('className', 'priority'), $setting);
+				$apiComponents[$apiComponent] = $setting;
+			}
+			$this->_apiComponents = $apiComponents;
 		}
 
-		$this->components = Hash::merge(
-			$this->components,
-			array('Acl.Acl', 'Auth', 'Security', 'Session', 'RequestHandler', 'Acl.AclFilter'),
-			$this->_apiComponents
-		);
-		$apiComponents = array();
-		$priority = 8;
-		foreach ($this->_apiComponents as $component => $setting) {
-			if (is_string($setting)) {
-				$component = $setting;
-				$setting = array();
-			}
-			$className = $component;
-			list(, $apiComponent) = pluginSplit($component);
-			$setting = Hash::merge(compact('className', 'priority'), $setting);
-			$apiComponents[$apiComponent] = $setting;
+		foreach ($components as $component) {
+			$this->loadComponent($component);
 		}
-		$this->_apiComponents = $apiComponents;
 	}
 
 /**

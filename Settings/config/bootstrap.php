@@ -12,4 +12,4 @@ if (!in_array('cached_settings', $configured)) {
 	));
 }
 
-Croogo::hookComponent('*', 'Settings.Settings');
+Croogo::hookComponent('*', 'Croogo/Settings.Settings');

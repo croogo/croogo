@@ -16,7 +16,7 @@ CroogoCache::config('nodes_term', $cacheConfig);
 CroogoCache::config('nodes_index', $cacheConfig);
 
 Croogo::hookApiComponent('Nodes', 'Nodes.NodeApi');
-Croogo::hookComponent('*', 'Nodes.Nodes');
+Croogo::hookComponent('*', 'Croogo/Nodes.Nodes');
 
 Croogo::hookHelper('*', 'Croogo/Nodes.Nodes');
 
