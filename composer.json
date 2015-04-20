@@ -32,6 +32,9 @@
 	"require-dev": {
 		"phpunit/phpunit": "~4.8@dev"
 	},
+	"scripts": {
+		"post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
+	},
 	"suggest": {
 		"croogo/locale": "Localization for Croogo"
 	}
