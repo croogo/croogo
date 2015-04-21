@@ -4,6 +4,7 @@ namespace Croogo\Croogo\Model\Table;
 
 use Cake\ORM\Table;
 use Croogo\Croogo\Croogo;
+use Croogo\Croogo\PropertyHookTrait;
 
 /**
  * Croogo Base Table class
@@ -16,6 +17,8 @@ use Croogo\Croogo\Croogo;
  * @link     http://www.croogo.org
  */
 class CroogoTable extends Table {
+
+	use PropertyHookTrait;
 
 /**
  * use Caching
@@ -30,6 +33,8 @@ class CroogoTable extends Table {
 	public $actsAs = array(
 		'Containable',
 	);
+
+	public $hookedBehaviors = [];
 
 /**
  * Display fields for admin_index. Use displayFields()
@@ -55,11 +60,21 @@ class CroogoTable extends Table {
  * @param string $ds DataSource connection name.
  */
 	public function __construct($id = false, $table = null, $ds = null) {
-		Croogo::applyHookProperties('Hook.model_properties', $this);
+		Croogo::applyHookProperties('Hook.table_properties', $this);
+
 		parent::__construct($id, $table, $ds);
 	}
 
-/**
+	public function initialize(array $config) {
+		parent::initialize($config);
+
+		foreach ($this->hookedBehaviors as $behavior => $config) {
+			$this->behaviors()->load($behavior, $config);
+		}
+	}
+
+
+	/**
  * Override find function to use caching
  *
  * Caching can be done either by unique names,

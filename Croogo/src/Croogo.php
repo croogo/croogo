@@ -2,6 +2,7 @@
 
 namespace Croogo\Croogo;
 
+use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
@@ -69,14 +70,20 @@ class Croogo {
 	}
 
 /**
- * Attaches Behavior to a Model whenever loaded.
+ * Attaches Behavior to a Table whenever loaded.
  *
- * @param string $modelName
+ * @param string $tableName
  * @param string $behaviorName
  * @param array  $config
  */
-	public static function hookBehavior($modelName, $behaviorName, $config = array()) {
-		self::hookModelProperty($modelName, 'actsAs', array($behaviorName => $config));
+	public static function hookBehavior($tableName, $behaviorName, $config = array()) {
+		self::hookTableProperty(
+			App::className($tableName, 'Model/Table', 'Table'),
+			'hookedBehaviors',
+			[
+				$behaviorName => $config
+			]
+		);
 	}
 
 /**
@@ -159,17 +166,17 @@ class Croogo {
 	}
 
 /**
- * Hook model property
+ * Hook table property
  *
- * Useful when models need to be associated to another one, setting Behaviors, disabling cache, etc.
+ * Useful when tables need to be associated to another one, setting Behaviors, disabling cache, etc.
  *
- * @param string $modelName Model name (for e.g., Node)
+ * @param string $tableName Table name (for e.g., Nodes)
  * @param string $property  for e.g., actsAs
  * @param string $value     array or string
  */
-	public static function hookModelProperty($modelName, $property, $value) {
-		$configKeyPrefix = 'Hook.model_properties';
-		self::_hookProperty($configKeyPrefix, $modelName, $property, $value);
+	public static function hookTableProperty($tableName, $property, $value) {
+		$configKeyPrefix = 'Hook.table_properties';
+		self::_hookProperty($configKeyPrefix, $tableName, $property, $value);
 	}
 
 /**
