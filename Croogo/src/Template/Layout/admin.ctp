@@ -46,7 +46,7 @@
 					<div id="content" class="clearfix">
 						<?php echo $this->element('Croogo/Croogo.admin/breadcrumb'); ?>
 						<div id="inner-content" class="span12">
-							<?php echo $this->Layout->sessionFlash(); ?>
+							<?php echo $this->Flash->render(); ?>
 							<?php echo $this->fetch('content'); ?>
 						</div>
 					</div>
