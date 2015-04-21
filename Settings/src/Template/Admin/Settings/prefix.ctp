@@ -9,7 +9,7 @@ $this->CroogoHtml->addCrumb('', '/admin', array('icon' => 'home'))
 ?>
 <?php
 
-echo $this->Form->create('Setting', array(
+echo $this->Form->create('Settings', array(
 	'url' => array(
 		'controller' => 'Settings',
 		'action' => 'prefix',
@@ -33,29 +33,32 @@ echo $this->Form->create('Setting', array(
 		<div class="tab-content">
 
 			<div id="settings-main" class="tab-pane">
-			<?php
+				<?php
 				$i = 0;
 				foreach ($settings as $setting) :
 					if (!empty($setting['Params']['tab'])) {
 						continue;
 					}
-					$keyE = explode('.', $setting['Setting']['key']);
+					$keyE = explode('.', $setting->key);
 					$keyTitle = Inflector::humanize($keyE['1']);
 
-					$label = ($setting['Setting']['title'] != null) ? $setting['Setting']['title'] : $keyTitle;
+					$label = ($setting->title != null) ? $setting->title : $keyTitle;
 
-					$i = $setting['Setting']['id'];
-					echo
-						$this->Form->input("Setting.$i.id", array(
-							'value' => $setting['Setting']['id'],
-						)) .
-						$this->Form->input("Setting.$i.key", array(
-							'type' => 'hidden', 'value' => $setting['Setting']['key']
-						)) .
-						$this->SettingsForm->input($setting, $label, $i);
+					$i = $setting->id;
+					echo $this->Form->input('Setting.' . $i . '.id', array(
+						'type' => 'hidden',
+						'value' => $setting->id
+					));
+
+					echo $this->Form->input('Setting.' . $i . '.key', array(
+						'type' => 'hidden',
+						'value' => $setting->key
+					));
+
+					echo $this->SettingsForm->input($setting, $label, $i);
 					$i++;
 				endforeach;
-			?>
+				?>
 			</div>
 
 			<?php echo $this->Croogo->adminTabs(); ?>
