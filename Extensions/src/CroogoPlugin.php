@@ -226,18 +226,25 @@ class CroogoPlugin {
 					}
 				}
 
-				$pluginData['needMigration'] = $this->needMigration($alias, $active);
+				/**
+				 * @todo Port to the official Migrations plugin
+				 */
+//				$pluginData['needMigration'] = $this->needMigration($alias, $active);
+				$pluginData['needMigration'] = true;
 				return $pluginData;
 			} elseif ($this->_isBuiltin($alias)) {
-				if ($this->needMigration($alias, $active)) {
-					$pluginData = array(
-						'name' => $alias,
-						'description' => "Croogo $alias plugin",
-						'active' => true,
-						'needMigration' => true,
-					);
-					return $pluginData;
-				}
+				/**
+				 * @todo Port to the official Migrations plugin
+				 */
+//				if ($this->needMigration($alias, $active)) {
+//					$pluginData = array(
+//						'name' => $alias,
+//						'description' => "Croogo $alias plugin",
+//						'active' => true,
+//						'needMigration' => true,
+//					);
+//					return $pluginData;
+//				}
 			}
 		}
 		return false;
