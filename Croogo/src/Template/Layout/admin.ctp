@@ -10,7 +10,6 @@
 			'Croogo/Croogo.croogo-bootstrap',
 			'Croogo/Croogo.croogo-bootstrap-responsive',
 			'Croogo/Croogo.thickbox',
-			'Croogo/Croogo.admin',
 		));
 		echo $this->Layout->js();
 		echo $this->Html->script(array(
