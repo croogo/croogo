@@ -3,7 +3,7 @@ use Cake\Utility\Inflector;
 ?>
 <h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
 <?php
-$this->Html->addCrumb('', '/admin', array('icon' => 'home'))
+$this->CroogoHtml->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'Croogo/Settings', 'controller' => 'Settings', 'action' => 'index'))
 	->addCrumb($prefix, '/' . $this->request->url);
 ?>
@@ -64,10 +64,10 @@ echo $this->Form->create('Setting', array(
 
 	<div class="span4">
 		<?php
-		echo $this->Html->beginBox(__d('croogo', 'Saving')) .
-			$this->Form->button(__d('croogo', 'Save')) .
-			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'btn btn-danger')) .
-			$this->Html->endBox();
+		echo $this->CroogoHtml->beginBox(__d('croogo', 'Saving')) .
+			$this->CroogoForm->button(__d('croogo', 'Save')) .
+			$this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'btn btn-danger')) .
+			$this->CroogoHtml->endBox();
 		echo $this->Croogo->adminBoxes();
 		?>
 	</div>

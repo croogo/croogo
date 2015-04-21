@@ -198,7 +198,7 @@ class CroogoHelper extends Helper {
 
 			$menu['htmlAttributes']['escape'] = false;
 
-			$link = $this->Html->link($title, $menu['url'], $menu['htmlAttributes']);
+			$link = $this->CroogoHtml->link($title, $menu['url'], $menu['htmlAttributes']);
 			$liOptions = array();
 			if ($sidebar && !empty($children) && $depth > 0) {
 				$liOptions['class'] = ' dropdown-submenu';
