@@ -196,6 +196,8 @@ class CroogoHelper extends Helper {
 				$title = $title . $menu['after'];
 			}
 
+			$menu['htmlAttributes']['escape'] = false;
+
 			$link = $this->Html->link($title, $menu['url'], $menu['htmlAttributes']);
 			$liOptions = array();
 			if ($sidebar && !empty($children) && $depth > 0) {

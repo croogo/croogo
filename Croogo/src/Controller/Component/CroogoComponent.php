@@ -5,9 +5,12 @@ namespace Croogo\Croogo\Controller\Component;
 use Cake\Core\App;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Component;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Event\Event;
 
 use Croogo\Croogo\Croogo;
+use Croogo\Croogo\CroogoNav;
 use Croogo\Extensions\CroogoPlugin;
 use Croogo\Extensions\CroogoTheme;
 
@@ -84,7 +87,7 @@ class CroogoComponent extends Component {
 	public function startup(Event $event) {
 		$this->_controller = $event->subject();
 
-		if (isset($this->_controller->request->params['admin'])) {
+		if ($this->_controller->request->param('prefix') == 'admin') {
 			if (!isset($this->_controller->request->params['requested'])) {
 				$this->_adminData();
 			}
@@ -128,7 +131,7 @@ class CroogoComponent extends Component {
 			),
 		));
 
-		$user = $this->Session->read('Auth.User');
+		$user = $this->request->session()->read('Auth.User');
 		$gravatarUrl = '<img src="http://www.gravatar.com/avatar/' . md5($user['email']) . '?s=23" class="img-rounded"/> ';
 		CroogoNav::add('top-right', 'user', array(
 			'icon' => false,
@@ -140,9 +143,9 @@ class CroogoComponent extends Component {
 					'title' => __d('croogo', 'Profile'),
 					'icon' => 'user',
 					'url' => array(
-						'admin' => true,
-						'plugin' => 'users',
-						'controller' => 'users',
+						'prefix' => 'admin',
+						'plugin' => 'Croogo/Users',
+						'controller' => 'Users',
 						'action' => 'edit',
 						$user['id'],
 					),
@@ -154,9 +157,9 @@ class CroogoComponent extends Component {
 					'icon' => 'off',
 					'title' => 'Logout',
 					'url' => array(
-						'admin' => true,
-						'plugin' => 'users',
-						'controller' => 'users',
+						'prefix' => 'admin',
+						'plugin' => 'Croogo/Users',
+						'controller' => 'Users',
 						'action' => 'logout',
 					),
 				),
@@ -170,7 +173,7 @@ class CroogoComponent extends Component {
  * @return integer Role Id
  */
 	public function roleId() {
-		$roleId = $this->_controller->Session->read('Auth.User.role_id');
+		$roleId = $this->_controller->request->session()->read('Auth.User.role_id');
 		return $roleId ? $roleId : $this->_defaultRoleId;
 	}
 
