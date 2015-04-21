@@ -19,14 +19,6 @@ use Croogo\Croogo\Model\Table\CroogoTable;
 class SettingsTable extends CroogoTable {
 
 /**
- * Model name
- *
- * @var string
- * @access public
- */
-	public $name = 'Setting';
-
-/**
  * Path to settings file
  *
  * @var string
@@ -96,7 +88,7 @@ class SettingsTable extends CroogoTable {
  *
  * @return void
  */
-	public function afterSave($created, $options = array()) {
+	public function afterSave() {
 		$this->updateJson();
 		$this->writeConfiguration();
 	}
