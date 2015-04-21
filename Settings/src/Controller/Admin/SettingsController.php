@@ -180,12 +180,10 @@ class SettingsController extends CroogoAppController {
 			),
 		));
 
-		$this->set('settings', $settings);
-
-		if (count($settings) == 0) {
+		if ($settings->count() == 0) {
 			$this->Flash->error(__d('croogo', 'Invalid Setting key'));
 		}
-		$this->set("prefix", $prefix);
+		$this->set(compact('prefix', 'settings'));
 	}
 
 /**
