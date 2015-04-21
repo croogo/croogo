@@ -13,9 +13,7 @@ use Cake\Utility\Hash;
 class CroogoFormHelper extends FormHelper {
 
 	public $helpers = [
-		'Html' => [
-			'className' => 'Croogo/Croogo.CroogoHtml'
-		],
+		'Html',
 		'Url'
 	];
 

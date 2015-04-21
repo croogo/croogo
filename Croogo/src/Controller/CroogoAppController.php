@@ -68,12 +68,9 @@ class CroogoAppController extends Controller {
  */
 	public $helpers = array(
 		'Html',
-		'Form' => [
-			'className' => 'Croogo/Croogo.CroogoForm'
-		],
+		'Form',
 		'Text',
 		'Time',
-		'Croogo/Croogo.Croogo',
 		'Croogo/Croogo.Layout',
 		'Croogo/Croogo.Custom',
 	);
@@ -161,17 +158,11 @@ class CroogoAppController extends Controller {
  */
 	public function afterConstruct() {
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
-		if (isset($this->request->params['admin'])) {
-			$this->helpers[] = 'Croogo.Croogo';
-			if (empty($this->helpers['Html'])) {
-				$this->helpers['Html'] = array('className' => 'Croogo.CroogoHtml');
-			}
-			if (empty($this->helpers['Form'])) {
-				$this->helpers['Form'] = array('className' => 'Croogo.CroogoForm');
-			}
-			if (empty($this->helpers['Paginator'])) {
-				$this->helpers['Paginator'] = array('className' => 'Croogo.CroogoPaginator');
-			}
+		if ($this->request->param('prefix') == 'admin') {
+			$this->helpers[] = 'Croogo/Croogo.Croogo';
+			$this->helpers[] = 'Croogo/Croogo.CroogoHtml';
+			$this->helpers[] = 'Croogo/Croogo.CroogoForm';
+			$this->helpers[] = 'Croogo/Croogo.CroogoPaginator';
 		}
 	}
 

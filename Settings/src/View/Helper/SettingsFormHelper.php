@@ -17,9 +17,7 @@ use Cake\View\Helper;
 class SettingsFormHelper extends Helper {
 
 	public $helpers = array(
-		'Form' => array(
-			'className' => 'Croogo/Croogo.CroogoForm',
-		),
+		'Form'
 	);
 
 /**
