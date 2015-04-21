@@ -105,8 +105,6 @@ $aclPlugin = Configure::read('Site.acl_plugin');
 $pluginBootstraps = Configure::read('Hook.bootstraps');
 $plugins = array_filter(explode(',', $pluginBootstraps));
 
-$plugins = array_merge($plugins, $corePlugins);
-
 if (!in_array($aclPlugin, $plugins)) {
 	$plugins = Hash::merge((array)$aclPlugin, $plugins);
 }
@@ -134,9 +132,6 @@ foreach ($plugins as $plugin) {
 			'routes' => true,
 		)
 	);
-	if (in_array($pluginName, $corePlugins)) {
-		$option[$pluginName]['path'] = CroogoPlugin::path($plugin);
-	}
 	CroogoPlugin::load($option);
 }
 CroogoEventManager::loadListeners();
