@@ -1,8 +1,8 @@
 <?php
 
 namespace Croogo\Taxonomy\Model\Behavior;
+use Cake\ORM\Behavior;
 
-use App\Model\Behavior\ModelBehavior;
 /**
  * TaxonomizableBehavior
  *
@@ -13,7 +13,7 @@ use App\Model\Behavior\ModelBehavior;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TaxonomizableBehavior extends ModelBehavior {
+class TaxonomizableBehavior extends Behavior {
 
 /**
  * Taxonomy instance
@@ -25,16 +25,18 @@ class TaxonomizableBehavior extends ModelBehavior {
  *
  * @return void
  */
-	public function setup(Model $model, $config = array()) {
-		$this->settings[$model->alias] = $config;
+//	public function setup(Model $model, $config = array()) {
+//		$this->settings[$model->alias] = $config;
+//
+//		$this->_setupRelationships($model);
+//		$this->_setupEvents($model);
+//
+//		$this->_Taxonomy = $model->Taxonomy;
+//	}
 
-		$this->_setupRelationships($model);
-		$this->_setupEvents($model);
 
-		$this->_Taxonomy = $model->Taxonomy;
-	}
 
-/**
+	/**
  * Setup relationships
  *
  * @return void

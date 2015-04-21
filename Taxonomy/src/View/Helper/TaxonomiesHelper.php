@@ -2,7 +2,9 @@
 
 namespace Croogo\Taxonomy\View\Helper;
 
-use App\View\Helper\AppHelper;
+use Cake\View\Helper;
+use Cake\View\View;
+
 /**
  * Taxonomies Helper
  *
@@ -13,7 +15,7 @@ use App\View\Helper\AppHelper;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TaxonomiesHelper extends AppHelper {
+class TaxonomiesHelper extends Helper {
 
 	public $helpers = array(
 		'Html',
@@ -23,7 +25,7 @@ class TaxonomiesHelper extends AppHelper {
  * constructor
  */
 	public function __construct(View $view, $settings = array()) {
-		parent::__construct($view);
+		parent::__construct($view, $settings);
 		$this->_setupEvents();
 	}
 
