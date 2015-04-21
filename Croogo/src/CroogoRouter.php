@@ -4,6 +4,8 @@ namespace Croogo\Croogo;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\Database\Exception\MissingConnectionException;
+use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
@@ -186,7 +188,7 @@ class CroogoRouter {
  */
 	public static function routableContentTypes() {
 		try {
-			$types = ClassRegistry::init('Taxonomy.Type')->find('all', array(
+			$types = TableRegistry::get('Croogo/Taxonomy.Types')->find('all', array(
 				'cache' => array(
 					'name' => 'types',
 					'config' => 'croogo_types',
