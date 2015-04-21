@@ -26,21 +26,21 @@ class SettingsFormHelper extends Helper {
  *
  * @see SettingsFormHelper::input()
  */
-	protected function _inputCheckbox($setting, $label, $i) {
+	protected function _inputCheckbox($setting, $label) {
 		$tooltip = array(
 			'data-trigger' => 'hover',
 			'data-placement' => 'right',
 			'data-title' => $setting->description,
 		);
 		if ($setting['Setting']['value'] == 1) {
-			$output = $this->Form->input('Setting.' . $i . '.value', array(
+			$output = $this->Form->input($setting->id, array(
 				'type' => $setting->input_type,
 				'checked' => 'checked',
 				'tooltip' => $tooltip,
 				'label' => $label
 			));
 		} else {
-			$output = $this->Form->input('Setting.' . $i . '.value', array(
+			$output = $this->Form->input($setting->id, array(
 				'type' => $setting->input_type,
 				'tooltip' => $tooltip,
 				'label' => $label
@@ -57,7 +57,7 @@ class SettingsFormHelper extends Helper {
  * @param integer $i index
  * @return string
  */
-	public function input(Setting $setting, $label, $i) {
+	public function input(Setting $setting, $label) {
 		$output = '';
 		$inputType = ($setting->input_type != null) ? $setting->input_type : 'text';
 		if ($setting->input_type == 'multiple') {
@@ -67,25 +67,25 @@ class SettingsFormHelper extends Helper {
 			};
 			$selected = json_decode($setting->value);
 			$options = json_decode($setting['Params']['options'], true);
-			$output = $this->Form->input('Setting.' . $i . '.values', array(
+			$output = $this->Form->input($setting->id, array(
 				'label' => $setting->title,
 				'multiple' => $multiple,
 				'options' => $options,
 				'selected' => $selected,
 			));
 		} elseif ($setting->input_type == 'checkbox') {
-			$output = $this->_inputCheckbox($setting, $label, $i);
+			$output = $this->_inputCheckbox($setting, $label);
 		} elseif ($setting->input_type == 'radio') {
 			$value = $setting->value;
 			$options = json_decode($setting['Params']['options'], true);
-			$output = $this->Form->input('Setting.' . $i . '.value', array(
+			$output = $this->Form->input($setting->id, array(
 				'legend' => $setting->title,
 				'type' => 'radio',
 				'options' => $options,
 				'value' => $value,
 			));
 		} else {
-			$output = $this->Form->input('Setting.' . $i . '.value', array(
+			$output = $this->Form->input($setting->id, array(
 				'type' => $inputType,
 				'class' => 'span10',
 				'value' => $setting->value,

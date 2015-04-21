@@ -3,6 +3,8 @@
 namespace Croogo\Settings\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\Event\Event;
+use Cake\ORM\Entity;
 use Cake\Utility\Hash;
 use Croogo\Croogo\Model\Table\CroogoTable;
 
@@ -187,13 +189,14 @@ class SettingsTable extends CroogoTable {
 				'value',
 			),
 			'order' => array(
-				'Setting.key' => 'ASC',
+				'Settings.key' => 'ASC',
 			),
 		));
+
 		$settings = array_combine(
-			Hash::extract($settings, '{n}.Setting.key'),
-			Hash::extract($settings, '{n}.Setting.value')
-			);
+			collection($settings)->extract('key')->toArray(),
+			collection($settings)->extract('value')->toArray()
+		);
 		Configure::write($settings);
 		foreach ($settings as $key => $setting) {
 			list($key, $ignore) = explode('.', $key, 2);
@@ -202,18 +205,4 @@ class SettingsTable extends CroogoTable {
 		$keys = array_unique($keys);
 		Configure::dump('settings.json', 'settings', $keys);
 	}
-
-/**
- * beforeSave
- *
- * if 'values' is present, serialize it with json_encode and save it in 'value'.
- * this is used for allowing 'multiple' input_type (select|checkbox) feature
- */
-	public function beforeSave($options = array()) {
-		if (isset($this->data[$this->alias]['values'])) {
-			$this->data[$this->alias]['value'] = json_encode($this->data[$this->alias]['values']);
-		}
-		return true;
-	}
-
 }

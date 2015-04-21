@@ -167,22 +167,29 @@ class SettingsController extends CroogoAppController {
 		$this->set('title_for_layout', __d('croogo', 'Settings: %s', $prefix));
 
 		$this->Settings->addBehavior('Croogo/Croogo.Params');
-		if (!empty($this->request->data) && $this->Setting->saveAll($this->request->data['Setting'])) {
+
+		if ($this->request->is('post')) {
+			foreach ($this->request->data() as $id => $value) {
+				$setting = $this->Settings->get($id);
+				$setting->value = $value;
+				$this->Settings->save($setting);
+			}
 			$this->Flash->success(__d('croogo', 'Settings updated successfully'));
-			return $this->redirect(array('action' => 'prefix', $prefix));
+			return $this->redirect(['action' => 'prefix', $prefix]);
 		}
 
-		$settings = $this->Settings->find('all', array(
+		$settings = $this->Settings->find('all', [
 			'order' => 'Settings.weight ASC',
-			'conditions' => array(
+			'conditions' => [
 				'Settings.key LIKE' => $prefix . '.%',
 				'Settings.editable' => 1,
-			),
-		));
+			],
+		]);
 
 		if ($settings->count() == 0) {
 			$this->Flash->error(__d('croogo', 'Invalid Setting key'));
 		}
+
 		$this->set(compact('prefix', 'settings'));
 	}
 

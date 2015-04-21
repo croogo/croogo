@@ -45,17 +45,8 @@ echo $this->Form->create('Settings', array(
 					$label = ($setting->title != null) ? $setting->title : $keyTitle;
 
 					$i = $setting->id;
-					echo $this->Form->input('Setting.' . $i . '.id', array(
-						'type' => 'hidden',
-						'value' => $setting->id
-					));
 
-					echo $this->Form->input('Setting.' . $i . '.key', array(
-						'type' => 'hidden',
-						'value' => $setting->key
-					));
-
-					echo $this->SettingsForm->input($setting, $label, $i);
+					echo $this->SettingsForm->input($setting, $label);
 					$i++;
 				endforeach;
 				?>
