@@ -24,16 +24,6 @@ use Croogo\Extensions\CroogoTheme;
 class CroogoComponent extends Component {
 
 /**
- * Other components used by this component
- *
- * @var array
- * @access public
- */
-	public $components = array(
-		'Session',
-	);
-
-/**
  * Default Role ID
  *
  * Default is 3 (public)

@@ -29,8 +29,7 @@ class LayoutHelper extends Helper {
 	public $helpers = array(
 		'Croogo.Croogo',
 		'Html',
-		'Form',
-		'Session',
+		'Form'
 	);
 
 /**
@@ -56,7 +55,6 @@ class LayoutHelper extends Helper {
 		'Paginator',
 		'PrototypeEngine',
 		'Rss',
-		'Session',
 		'Text',
 		'Time',
 		'Xml',
@@ -248,11 +246,11 @@ class LayoutHelper extends Helper {
  * @return string
  */
 	public function sessionFlash() {
-		$messages = $this->Session->read('Message');
+		$messages = $this->request->session()->read('Message');
 		$output = '';
 		if (is_array($messages)) {
 			foreach (array_keys($messages) as $key) {
-				$output .= $this->Session->flash($key);
+				$output .= $this->request->session()->flash($key);
 			}
 		}
 		return $output;
@@ -266,7 +264,7 @@ class LayoutHelper extends Helper {
  * @return boolean
  */
 	public function isLoggedIn() {
-		if ($this->Session->check('Auth.User.id')) {
+		if ($this->request->session()->check('Auth.User.id')) {
 			return true;
 		} else {
 			return false;
@@ -312,7 +310,7 @@ class LayoutHelper extends Helper {
  */
 	public function getRoleId() {
 		if ($this->isLoggedIn()) {
-			$roleId = $this->Session->read('Auth.User.role_id');
+			$roleId = $this->request->session()->read('Auth.User.role_id');
 		} else {
 			// Public
 			$roleId = 3;

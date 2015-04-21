@@ -22,16 +22,16 @@ $dashboardUrl = Configure::read('Croogo.dashboardUrl');
 			</span>
 			<div class="nav-collapse collapse" style="height: 0px; ">
 			<?php
-				echo $this->Croogo->adminMenus(CroogoNav::items('top-left'), array(
-					'type' => 'dropdown',
-					'htmlAttributes' => array(
-						'id' => 'top-left-menu',
-						'class' => 'nav',
-					),
-				));
+			echo $this->Croogo->adminMenus(CroogoNav::items('top-left'), array(
+				'type' => 'dropdown',
+				'htmlAttributes' => array(
+					'id' => 'top-left-menu',
+					'class' => 'nav',
+				),
+			));
 			?>
-			<?php if ($this->Session->read('Auth.User.id')): ?>
-			<?php
+			<?php if ($this->request->session()->read('Auth.User.id')): ?>
+				<?php
 				echo $this->Croogo->adminMenus(CroogoNav::items('top-right'), array(
 					'type' => 'dropdown',
 					'htmlAttributes' => array(
@@ -39,7 +39,7 @@ $dashboardUrl = Configure::read('Croogo.dashboardUrl');
 						'class' => 'nav pull-right',
 					),
 				));
-			?>
+				?>
 			<?php endif; ?>
 			</div>
 		</div>

@@ -19,16 +19,6 @@ use Cake\Event\Event;
 class BulkProcessComponent extends Component {
 
 /**
- * Other components used by this component
- *
- * @var array
- * @access public
- */
-	public $components = array(
-		'Session',
-	);
-
-/**
  * controller
  *
  * @var Controller

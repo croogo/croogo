@@ -71,7 +71,6 @@ class CroogoAppController extends Controller {
 		'Form' => [
 			'className' => 'Croogo/Croogo.CroogoForm'
 		],
-		'Session',
 		'Text',
 		'Time',
 		'Croogo/Croogo.Croogo',
