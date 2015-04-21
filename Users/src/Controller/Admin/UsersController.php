@@ -4,8 +4,8 @@ namespace Croogo\Users\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Croogo\Croogo\Controller\CroogoAppController;
 use Croogo\Croogo\Croogo;
-use Croogo\Users\Controller\UsersAppController;
 
 /**
  * Users Controller
@@ -17,7 +17,7 @@ use Croogo\Users\Controller\UsersAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class UsersController extends UsersAppController {
+class UsersController extends CroogoAppController {
 
 /**
  * Initialize
