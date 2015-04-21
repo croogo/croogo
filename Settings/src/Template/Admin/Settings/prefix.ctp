@@ -9,7 +9,7 @@ $this->CroogoHtml->addCrumb('', '/admin', array('icon' => 'home'))
 ?>
 <?php
 
-echo $this->Form->create('Settings', array(
+echo $this->SettingsForm->create('Settings', array(
 	'url' => array(
 		'controller' => 'Settings',
 		'action' => 'prefix',
@@ -59,7 +59,7 @@ echo $this->Form->create('Settings', array(
 	<div class="span4">
 		<?php
 		echo $this->CroogoHtml->beginBox(__d('croogo', 'Saving')) .
-			$this->CroogoForm->button(__d('croogo', 'Save')) .
+			$this->SettingsForm->button(__d('croogo', 'Save')) .
 			$this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'btn btn-danger')) .
 			$this->CroogoHtml->endBox();
 		echo $this->Croogo->adminBoxes();
@@ -67,4 +67,4 @@ echo $this->Form->create('Settings', array(
 	</div>
 
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->SettingsForm->end(); ?>
