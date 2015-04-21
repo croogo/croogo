@@ -172,6 +172,7 @@ class SettingsController extends CroogoAppController {
 			foreach ($this->request->data() as $id => $value) {
 				$setting = $this->Settings->get($id);
 				$setting->value = $value;
+				$setting->dirty('params', false);
 				$this->Settings->save($setting);
 			}
 			$this->Flash->success(__d('croogo', 'Settings updated successfully'));
