@@ -4,7 +4,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Croogo\Croogo\Croogo;
 
-if (Configure::read('Site.acl_plugin') == 'Acl') {
+if (Configure::read('Site.acl_plugin') == 'Croogo/Acl') {
 
 	// activate AclFilter component only until after a succesful install
 	if (file_exists(APP . 'config' . DS . 'settings.json')) {
