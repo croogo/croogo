@@ -168,7 +168,7 @@ class SettingsController extends CroogoAppController {
 
 		$this->Settings->addBehavior('Croogo/Croogo.Params');
 		if (!empty($this->request->data) && $this->Setting->saveAll($this->request->data['Setting'])) {
-			$this->Session->setFlash(__d('croogo', "Settings updated successfully"), 'default', array('class' => 'success'));
+			$this->Flash->success(__d('croogo', 'Settings updated successfully'));
 			return $this->redirect(array('action' => 'prefix', $prefix));
 		}
 
@@ -179,12 +179,12 @@ class SettingsController extends CroogoAppController {
 				'Settings.editable' => 1,
 			),
 		));
-		$this->set(compact('settings'));
+
+		$this->set('settings', $settings);
 
 		if (count($settings) == 0) {
-			$this->Session->setFlash(__d('croogo', "Invalid Setting key"), 'default', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Invalid Setting key'));
 		}
-
 		$this->set("prefix", $prefix);
 	}
 
