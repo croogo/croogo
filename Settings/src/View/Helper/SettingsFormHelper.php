@@ -3,6 +3,7 @@
 namespace Croogo\Settings\View\Helper;
 
 use Cake\View\Helper;
+use Croogo\Settings\Model\Entity\Setting;
 
 /**
  * SettingForms Helper
@@ -29,18 +30,18 @@ class SettingsFormHelper extends Helper {
 		$tooltip = array(
 			'data-trigger' => 'hover',
 			'data-placement' => 'right',
-			'data-title' => $setting['Setting']['description'],
+			'data-title' => $setting->description,
 		);
 		if ($setting['Setting']['value'] == 1) {
-			$output = $this->Form->input("Setting.$i.value", array(
-				'type' => $setting['Setting']['input_type'],
+			$output = $this->Form->input('Setting.' . $i . '.value', array(
+				'type' => $setting->input_type,
 				'checked' => 'checked',
 				'tooltip' => $tooltip,
 				'label' => $label
 			));
 		} else {
-			$output = $this->Form->input("Setting.$i.value", array(
-				'type' => $setting['Setting']['input_type'],
+			$output = $this->Form->input('Setting.' . $i . '.value', array(
+				'type' => $setting->input_type,
 				'tooltip' => $tooltip,
 				'label' => $label
 			));
@@ -51,44 +52,44 @@ class SettingsFormHelper extends Helper {
 /**
  * Renders input setting according to its type
  *
- * @param array $setting setting data
+ * @param Setting $setting setting data
  * @param string $label Input label
  * @param integer $i index
  * @return string
  */
-	public function input($setting, $label, $i) {
+	public function input(Setting $setting, $label, $i) {
 		$output = '';
-		$inputType = ($setting['Setting']['input_type'] != null) ? $setting['Setting']['input_type'] : 'text';
-		if ($setting['Setting']['input_type'] == 'multiple') {
+		$inputType = ($setting->input_type != null) ? $setting->input_type : 'text';
+		if ($setting->input_type == 'multiple') {
 			$multiple = true;
 			if (isset($setting['Params']['multiple'])) {
 				$multiple = $setting['Params']['multiple'];
 			};
-			$selected = json_decode($setting['Setting']['value']);
+			$selected = json_decode($setting->value);
 			$options = json_decode($setting['Params']['options'], true);
-			$output = $this->Form->input("Setting.$i.values", array(
-				'label' => $setting['Setting']['title'],
+			$output = $this->Form->input('Setting.' . $i . '.values', array(
+				'label' => $setting->title,
 				'multiple' => $multiple,
 				'options' => $options,
 				'selected' => $selected,
 			));
-		} elseif ($setting['Setting']['input_type'] == 'checkbox') {
+		} elseif ($setting->input_type == 'checkbox') {
 			$output = $this->_inputCheckbox($setting, $label, $i);
-		} elseif ($setting['Setting']['input_type'] == 'radio') {
-			$value = $setting['Setting']['value'];
+		} elseif ($setting->input_type == 'radio') {
+			$value = $setting->value;
 			$options = json_decode($setting['Params']['options'], true);
-			$output = $this->Form->input("Setting.$i.value", array(
-				'legend' => $setting['Setting']['title'],
+			$output = $this->Form->input('Setting.' . $i . '.value', array(
+				'legend' => $setting->title,
 				'type' => 'radio',
 				'options' => $options,
 				'value' => $value,
 			));
 		} else {
-			$output = $this->Form->input("Setting.$i.value", array(
+			$output = $this->Form->input('Setting.' . $i . '.value', array(
 				'type' => $inputType,
 				'class' => 'span10',
-				'value' => $setting['Setting']['value'],
-				'help' => $setting['Setting']['description'],
+				'value' => $setting->value,
+				'help' => $setting->description,
 				'label' => $label,
 			));
 		}

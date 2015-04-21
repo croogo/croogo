@@ -408,7 +408,7 @@ class CroogoHelper extends Helper {
 		}
 
 		$output = '';
-		$allBoxes = Configure::read('Admin.boxes.' . Inflector::camelize($this->request->params['controller']) . '/' . $this->request->params['action']);
+		$allBoxes = Configure::read('Admin.boxes.' . Inflector::camelize($this->request->param('controller')) . '/' . $this->request->param('action'));
 		$allBoxes = empty($allBoxes) ? array() : $allBoxes;
 		$boxNames = array();
 

@@ -41,11 +41,11 @@ class CroogoHtmlHelper extends HtmlHelper {
 		$isHidden = $isHidden ? 'hidden' : '';
 		$isLabelHidden = $isLabelHidden ? 'label-hidden' : '';
 		$class = $isHidden . ' ' . $isLabelHidden;
-		return $this->useTag('beginbox', $title, $class);
+		return $this->tag('beginbox', $title, ['class' => $class]);
 	}
 
 	public function endBox() {
-		return $this->useTag('endbox');
+		return $this->tag('endbox');
 	}
 
 	public function icon($name, $options = array()) {

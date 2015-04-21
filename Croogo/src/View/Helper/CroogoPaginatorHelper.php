@@ -18,10 +18,10 @@ class CroogoPaginatorHelper extends PaginatorHelper {
 /**
  * doesn't use parent::numbers()
  *
- * @param type $options
+ * @param array $options
  * @return boolean
  */
-	public function numbers($options = array()) {
+	public function numbers(array $options = []) {
 		$defaults = array(
 			'tag' => 'li',
 			'model' => $this->defaultModel(),
@@ -58,25 +58,25 @@ class CroogoPaginatorHelper extends PaginatorHelper {
 		return $options;
 	}
 
-	public function prev($title = '<< Previous', $options = array(), $disabledTitle = null, $disabledOptions = array()) {
+	public function prev($title = '<< Previous', array $options = []) {
 		$options['escape'] = isset($options['escape']) ? $options['escape'] : false;
 		$options = $this->_defaultOptions($options, false);
-		return parent::prev($title, $options, $this->Html->link($title), $disabledOptions);
+		return parent::prev($title = '<< Previous', $options = []);
 	}
 
-	public function next($title = 'Next >>', $options = array(), $disabledTitle = null, $disabledOptions = array()) {
+	public function next($title = '<< Previous', array $options = []) {
 		$options['escape'] = isset($options['escape']) ? $options['escape'] : false;
 		$options = $this->_defaultOptions($options, false);
-		return parent::next($title, $options, $this->Html->link($title), $disabledOptions);
+		return parent::next($title = 'Next >>', $options = []);
 	}
 
-	public function first($first = '<< first', $options = array()) {
+	public function first($first = '<< first', array $options = []) {
 		$options['escape'] = isset($options['escape']) ? $options['escape'] : true;
 		$options = $this->_defaultOptions($options);
 		return parent::first($first, $options);
 	}
 
-	public function last($last = 'last >>', $options = array()) {
+	public function last($last = 'last >>', array $options = []) {
 		$options['escape'] = isset($options['escape']) ? $options['escape'] : true;
 		$options = $this->_defaultOptions($options);
 		return parent::last($last, $options);
