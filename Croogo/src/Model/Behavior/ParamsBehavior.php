@@ -2,7 +2,10 @@
 
 namespace Croogo\Croogo\Model\Behavior;
 
+use Cake\Datasource\ResultSetInterface;
+use Cake\Event\Event;
 use Cake\ORM\Behavior;
+use Cake\ORM\Query;
 use Croogo\Croogo\Utility\StringConverter;
 
 /**
@@ -18,46 +21,19 @@ use Croogo\Croogo\Utility\StringConverter;
 class ParamsBehavior extends Behavior {
 
 /**
- * Setup
- *
- * @param Model $model
- * @param array $config
- * @return void
+ * @param Event $event
+ * @param Query $query
+ * @param $options
  */
-	public function setup(Model $model, $config = array()) {
-		if (is_string($config)) {
-			$config = array($config);
-		}
-
-		$this->settings[$model->alias] = $config;
-	}
-
-/**
- * afterFind callback
- *
- * @param Model $model
- * @param array $created
- * @param boolean $primary
- * @return array
- */
-	public function afterFind(Model $model, $results, $primary = false) {
-		if ($primary && isset($results[0][$model->alias])) {
-			foreach ($results as $i => $result) {
-				$params = array();
-				if (isset($result[$model->alias]['params']) && strlen($result[$model->alias]['params']) > 0) {
-					$params = $this->paramsToArray($model, $result[$model->alias]['params']);
+	public function beforeFind(Event $event, Query $query, $options = []) {
+		$query->formatResults(function (ResultSetInterface $results) {
+			return $results->map(function ($row) {
+				if (isset($row['params']) && !empty($row['params'])) {
+					$row['params'] = $this->paramsToArray($row['params']);
 				}
-				$results[$i]['Params'] = $params;
-			}
-		} elseif (isset($results[$model->alias])) {
-			$params = array();
-			if (isset($results[$model->alias]['params']) && strlen($results[$model->alias]['params']) > 0) {
-				$params = $this->paramsToArray($model, $results[$model->alias]['params']);
-			}
-			$results['Params'] = $params;
-		}
-
-		return $results;
+				return $row;
+			});
+		}, $query::PREPEND);
 	}
 
 /**
@@ -71,9 +47,9 @@ class ParamsBehavior extends Behavior {
  * @param string $params
  * @return array
  */
-	public function paramsToArray(Model $model, $params) {
+	public function paramsToArray($params) {
 		$converter = new StringConverter();
-		$output = array();
+		$output = [];
 		$params = preg_split('/[\r\n]+/', $params);
 		foreach ($params as $param) {
 			if (strlen($param) == 0) {
@@ -81,9 +57,9 @@ class ParamsBehavior extends Behavior {
 			}
 
 			if ($param[0] === '[') {
-				$options = $converter->parseString('options', $param, array(
+				$options = $converter->parseString('options', $param, [
 					'convertOptionsToArray' => true,
-				));
+				]);
 				if (!empty($options)) {
 					$output = array_merge($output, $options);
 				}
