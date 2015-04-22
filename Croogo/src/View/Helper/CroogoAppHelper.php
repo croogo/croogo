@@ -3,6 +3,7 @@
 namespace Croogo\Croogo\View\Helper;
 
 use Cake\Core\Configure;
+use Cake\Utility\Hash;
 use Cake\View\Helper;
 /**
  * Croogo Application helper
