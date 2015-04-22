@@ -5,12 +5,12 @@ $url = isset($url) ? $url : array('action' => 'index');
 	<div class="span12">
 		<div class="clearfix filter">
 			<?php
-			echo $this->Form->create('Node', array(
+			echo $this->Form->create(false, array(
 				'class' => 'inline',
 				'url' => $url,
 			));
 
-			$this->Form->inputDefaults(array(
+			$this->Form->templates(array(
 				'label' => false,
 				'class' => 'span11',
 			));
