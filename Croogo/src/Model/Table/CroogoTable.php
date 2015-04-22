@@ -3,6 +3,8 @@
 namespace Croogo\Croogo\Model\Table;
 
 use Cake\ORM\Table;
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 use Croogo\Croogo\Croogo;
 use Croogo\Croogo\PropertyHookTrait;
 
