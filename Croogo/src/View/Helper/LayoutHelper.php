@@ -1,6 +1,7 @@
 <?php
 
 namespace Croogo\Croogo\View\Helper;
+use Cake\ORM\Entity;
 use Cake\View\Helper;
 use Cake\Routing\Router;
 use Cake\Core\Configure;
@@ -203,7 +204,7 @@ class LayoutHelper extends Helper {
  * @param $options array
  * @return string
  */
-	public function displayField($item, $model, $field, $options = array()) {
+	public function displayField(Entity $item, $model, $field, $options = array()) {
 		extract(array_intersect_key($options, array(
 			'type' => null,
 			'url' => array(),
@@ -211,10 +212,10 @@ class LayoutHelper extends Helper {
 		)));
 		switch ($type) {
 			case 'boolean':
-				$out = $this->status($item[$model][$field]);
+				$out = $this->status($item->$field);
 			break;
 			default:
-				$out = h($item[$model][$field]);
+				$out = h($item->$field);
 			break;
 		}
 
