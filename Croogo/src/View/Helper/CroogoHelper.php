@@ -229,7 +229,7 @@ class CroogoHelper extends Helper {
  */
 	public function adminRowActions($id, $options = array()) {
 		$output = '';
-		$rowActions = Configure::read('Admin.rowActions.' . Inflector::camelize($this->request->params['controller']) . '/' . $this->request->params['action']);
+		$rowActions = Configure::read('Admin.rowActions.' . Inflector::camelize($this->request->param('controller')) . '/' . $this->request->param('action'));
 		if (is_array($rowActions)) {
 			foreach ($rowActions as $title => $link) {
 				$linkOptions = $options;
@@ -276,6 +276,11 @@ class CroogoHelper extends Helper {
 			'escapeTitle' => false,
 			'escape' => true,
 		), $options);
+
+		if (!$confirmMessage) {
+			$options['confirm'] = $confirmMessage;
+		}
+
 		if (is_array($url)) {
 			$action = $url['action'];
 			if (isset($options['class'])) {
@@ -291,7 +296,7 @@ class CroogoHelper extends Helper {
 		if (!empty($options['rowAction'])) {
 			$options['data-row-action'] = $options['rowAction'];
 			unset($options['rowAction']);
-			return $this->_bulkRowAction($title, $url, $options, $confirmMessage);
+			return $this->_bulkRowAction($title, $url, $options);
 		}
 
 		if (!empty($options['method']) && strcasecmp($options['method'], 'post') == 0) {
@@ -300,10 +305,13 @@ class CroogoHelper extends Helper {
 		}
 
 		if ($action == 'delete' || isset($usePost)) {
-			return $this->CroogoForm->postLink($title, $url, $options, $confirmMessage);
+			$this->CroogoForm->_helperMap['Html']['class'] = 'Croogo/Croogo.CroogoHtml';
+			$postLink = $this->CroogoForm->postLink($title, $url, $options);
+			$this->CroogoForm->_helperMap['Html']['class'] = 'Html';
+			return $postLink;
 		}
 
-		return $this->CroogoHtml->link($title, $url, $options, $confirmMessage);
+		return $this->CroogoHtml->link($title, $url, $options);
 	}
 
 /**
