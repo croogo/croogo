@@ -67,22 +67,22 @@ $showActions = isset($showActions) ? $showActions : true;
 						$actions = array();
 
 						if (isset($this->request->query['chooser'])):
-							$title = isset($item[$modelClass]['title']) ? $item[$modelClass]['title'] : null;
+							$title = isset($item->title) ? $item->title : null;
 							$actions[] = $this->Croogo->adminRowAction(__d('croogo', 'Choose'), '#', array(
 								'class' => 'item-choose',
 								'data-chooser_type' => $modelClass,
-								'data-chooser_id' => $item[$modelClass]['id'],
+								'data-chooser_id' => $item->id,
 							));
 						else:
 							$actions[] = $this->Croogo->adminRowAction('',
-								array('action' => 'edit', $item[$modelClass]['id']),
+								array('action' => 'edit', $item->id),
 								array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 							);
-							$actions[] = $this->Croogo->adminRowActions($item[$modelClass]['id']);
+							$actions[] = $this->Croogo->adminRowActions($item->id);
 							$actions[] = $this->Croogo->adminRowAction('',
 								array(
 									'action' => 'delete',
-									$item[$modelClass]['id'],
+									$item->id,
 								),
 								array(
 									'icon' => 'trash',
