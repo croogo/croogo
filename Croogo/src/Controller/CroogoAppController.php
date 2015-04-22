@@ -134,6 +134,7 @@ class CroogoAppController extends Controller {
 	public function initialize() {
 		parent::initialize();
 
+		Croogo::applyHookProperties('Hook.controller_properties', $this);
 		$this->_setupComponents();
 	}
 
@@ -157,7 +158,6 @@ class CroogoAppController extends Controller {
  * behavior.
  */
 	public function afterConstruct() {
-		Croogo::applyHookProperties('Hook.controller_properties', $this);
 		if ($this->request->param('prefix') == 'admin') {
 			$this->helpers[] = 'Croogo/Croogo.Croogo';
 			$this->helpers[] = 'Croogo/Croogo.CroogoHtml';
@@ -208,12 +208,28 @@ class CroogoAppController extends Controller {
 			$this->_apiComponents = $apiComponents;
 		}
 
-		foreach ($components as $component) {
-			$this->loadComponent($component);
+		foreach ($components as $component => $config) {
+			if (!is_array($config)) {
+				$component = $config;
+				$config = [];
+			}
+
+			$this->loadComponent($component, $config);
 		}
 	}
 
-/**
+	public function loadComponent($name, array $config = []) {
+		list(, $prop) = pluginSplit($name);
+		list(, $modelProp) = pluginSplit($this->modelClass);
+		$component = $this->components()->load($name, $config);
+		if ($prop !== $modelProp) {
+			$this->{$prop} = $component;
+		}
+		return $component;
+	}
+
+
+	/**
  * Allows extending action from component
  *
  * @throws MissingActionException
