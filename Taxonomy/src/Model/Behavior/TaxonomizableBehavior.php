@@ -1,7 +1,10 @@
 <?php
 
 namespace Croogo\Taxonomy\Model\Behavior;
+use Cake\Log\Log;
 use Cake\ORM\Behavior;
+use Cake\ORM\Table;
+use Cake\Utility\Hash;
 
 /**
  * TaxonomizableBehavior
@@ -18,14 +21,14 @@ class TaxonomizableBehavior extends Behavior {
 /**
  * Taxonomy instance
  */
-	protected $_Taxonomy = null;
+	protected $Taxonomies = null;
 
 /**
  * Setup behavior
  *
  * @return void
  */
-//	public function setup(Model $model, $config = array()) {
+//	public function setup(Table $table, array $config = []) {
 //		$this->settings[$model->alias] = $config;
 //
 //		$this->_setupRelationships($model);
@@ -34,6 +37,18 @@ class TaxonomizableBehavior extends Behavior {
 //		$this->_Taxonomy = $model->Taxonomy;
 //	}
 
+/**
+ * Setup behavior
+ *
+ * @return void
+ */
+	public function __construct(Table $table, array $config = []) {
+		parent::__construct($table, $config);
+
+		$this->_setupRelationships($table);
+
+		$this->Taxonomies = $table->Taxonomies;
+	}
 
 
 	/**
@@ -41,50 +56,50 @@ class TaxonomizableBehavior extends Behavior {
  *
  * @return void
  */
-	protected function _setupRelationships(Model $model) {
-		$model->bindModel(array(
-			'hasAndBelongsToMany' => array(
-				'Taxonomy' => array(
-					'className' => 'Taxonomy.Taxonomy',
-					'with' => 'Taxonomy.ModelTaxonomy',
+	protected function _setupRelationships(Table $table) {
+		$table->addAssociations(array(
+			'belongsToMany' => array(
+				'Taxonomies' => array(
+					'className' => 'Croogo/Taxonomy.Taxonomies',
+					'with' => 'Croogo/Taxonomy.ModelTaxonomies',
 					'foreignKey' => 'foreign_key',
 					'associationForeignKey' => 'taxonomy_id',
 					'unique' => true,
 					'conditions' => array(
-						'model' => $model->alias,
+						'model' => $table->alias(),
 					),
 				),
 			),
-		), false);
-
-		$model->Taxonomy->bindModel(array(
-			'hasAndBelongsToMany' => array(
-				$model->alias => array(
-					'className' => $model->plugin . '.' . $model->alias,
-					'with' => 'Taxonomy.ModelTaxonomy',
+		));
+		$table->Taxonomies->addAssociations(array(
+			'belongsToMany' => array(
+				$table->alias() => array(
+					'className' => get_class($table),
+					'with' => 'Croogo/Taxonomy.ModelTaxonomy',
 					'foreignKey' => 'foreign_key',
 					'associationForeignKey' => 'taxonomy_id',
 					'unique' => true,
 					'conditions' => array(
-						'model' => $model->alias,
+						'model' => $table->alias(),
 					),
 				),
 			),
-		), false);
+		));
 	}
 
 /**
  * Setup Event handlers
- *
- * @return void
  */
-	protected function _setupEvents($model) {
-		$callback = array($this, 'onBeforeSaveNode');
-		$eventManager = $model->eventManager();
-		$eventManager->attach($callback, 'Model.Node.beforeSaveNode');
+	public function implementedEvents() {
+		$events = parent::implementedEvents();
+
+		$events['Model.Node.beforeSaveNode'] = 'onBeforeSaveNode';
+
+		return $events;
 	}
 
-/**
+
+	/**
  * Get selected terms from data
  */
 	protected function _getSelectedTerms($data) {
@@ -109,11 +124,11 @@ class TaxonomizableBehavior extends Behavior {
 		} elseif (isset($model->type)) {
 			$typeAlias = $model->type;
 		} else {
-			$this->log('Unable to determine type for model ' . $model->alias);
+			Log::error('Unable to determine type for model ' . $model->alias);
 			return false;
 		}
 
-		$type = $this->_Taxonomy->Vocabulary->Type->find('first', array(
+		$type = $this->Taxonomies->Vocabulary->Type->find('first', array(
 			'fields' => array('id', 'title', 'alias'),
 			'contain' => array(
 				'Vocabulary' => array(
@@ -126,7 +141,7 @@ class TaxonomizableBehavior extends Behavior {
 		));
 
 		if (empty($type)) {
-			$this->log('Type ' . $typeAlias . ' cannot be found');
+			Log::error('Type ' . $typeAlias . ' cannot be found');
 			return true;
 		}
 
@@ -137,7 +152,7 @@ class TaxonomizableBehavior extends Behavior {
 		$multipleError = __d('croogo', 'Please select at most 1 value');
 		foreach ($type['Vocabulary'] as $vocabulary) {
 			$fieldName = 'TaxonomyData.' . $vocabulary['id'];
-			$terms = $this->_Taxonomy->find('all', array(
+			$terms = $this->Taxonomies->find('all', array(
 				'recursive' => -1,
 				'fields' => 'term_id',
 				'conditions' => array(
