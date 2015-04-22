@@ -3,9 +3,6 @@
 namespace Croogo\Settings\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\Event\Event;
-use Cake\ORM\Entity;
-use Cake\Utility\Hash;
 use Croogo\Croogo\Model\Table\CroogoTable;
 
 /**
