@@ -1,8 +1,8 @@
 <?php
 
-$this->extend('/Common/admin_index');
+$this->extend('Croogo/Croogo./Common/admin_index');
 
-$this->Html
+$this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Settings'), array(
 		'prefix' => 'admin',
@@ -32,24 +32,24 @@ if (!empty($this->request->params['named']['p'])) {
 	foreach ($settings as $setting):
 		$actions = array();
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('controller' => 'settings', 'action' => 'moveup', $setting['Setting']['id']),
+			array('controller' => 'Settings', 'action' => 'moveup', $setting->id),
 			array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('controller' => 'settings', 'action' => 'movedown', $setting['Setting']['id']),
+			array('controller' => 'Settings', 'action' => 'movedown', $setting->id),
 			array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('controller' => 'settings', 'action' => 'edit', $setting['Setting']['id']),
+			array('controller' => 'Settings', 'action' => 'edit', $setting->id),
 			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 		);
-		$actions[] = $this->Croogo->adminRowActions($setting['Setting']['id']);
+		$actions[] = $this->Croogo->adminRowActions($setting->id);
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('controller' => 'settings', 'action' => 'delete', $setting['Setting']['id']),
+			array('controller' => 'Settings', 'action' => 'delete', $setting->id),
 			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
 			__d('croogo', 'Are you sure?'));
 
-		$key = $setting['Setting']['key'];
+		$key = $setting->key;
 		$keyE = explode('.', $key);
 		$keyPrefix = $keyE['0'];
 		if (isset($keyE['1'])) {
@@ -59,10 +59,10 @@ if (!empty($this->request->params['named']['p'])) {
 		}
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 		$rows[] = array(
-			$setting['Setting']['id'],
-			$this->Html->link($keyPrefix, array('controller' => 'settings', 'action' => 'index', '?' => array('key' => $keyPrefix))) . $keyTitle,
-			$this->Text->truncate($setting['Setting']['value'], 20),
-			$this->Html->status($setting['Setting']['editable']),
+			$setting->id,
+			$this->Html->link($keyPrefix, array('controller' => 'Settings', 'action' => 'index', '?' => array('key' => $keyPrefix))) . $keyTitle,
+			$this->Text->truncate($setting->value, 20),
+			$this->CroogoHtml->status($setting->editable),
 			$actions,
 		);
 	endforeach;

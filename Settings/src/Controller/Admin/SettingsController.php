@@ -33,32 +33,10 @@ class SettingsController extends CroogoAppController {
 		]);
 	}
 
-
-/**
- * Helpers used by the Controller
- *
- * @var array
- * @access public
- */
-	public $helpers = [
-
-	];
-
 /**
  * Preset Variables Search
  */
 	public $presetVars = true;
-
-/**
- * Admin dashboard
- *
- * @return void
- * @access public
- * @deprecated This method will be moved to Extensions plugin
- */
-	public function dashboard() {
-		$this->set('title_for_layout', __d('croogo', 'Dashboard'));
-	}
 
 /**
  * Admin index
@@ -67,12 +45,16 @@ class SettingsController extends CroogoAppController {
  * @access public
  */
 	public function index() {
-		$this->set('title_for_layout', __d('croogo', 'Settings'));
 		$this->Prg->commonProcess();
 
-		$this->Setting->recursive = 0;
-		$this->paginate['Setting']['order'] = "Setting.weight ASC";
-		$criteria = $this->Setting->parseCriteria($this->Prg->parsedParams());
+		$this->paginate = [
+			'order' => [
+				'Settings.weight' => 'DESC'
+			]
+		];
+
+		$criteria = $this->Settings->find('searchable', $this->Prg->parsedParams());
+
 		$this->set('settings', $this->paginate($criteria));
 	}
 
@@ -98,8 +80,6 @@ class SettingsController extends CroogoAppController {
  * @access public
  */
 	public function add() {
-		$this->set('title_for_layout', __d('croogo', 'Add Setting'));
-
 		if (!empty($this->request->data)) {
 			$this->Setting->create();
 			if ($this->Setting->save($this->request->data)) {
@@ -119,8 +99,6 @@ class SettingsController extends CroogoAppController {
  * @access public
  */
 	public function edit($id = null) {
-		$this->set('title_for_layout', __d('croogo', 'Edit Setting'));
-
 		if (!$id && empty($this->request->data)) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Setting'), 'default', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
@@ -164,8 +142,6 @@ class SettingsController extends CroogoAppController {
  * @access public
  */
 	public function prefix($prefix = null) {
-		$this->set('title_for_layout', __d('croogo', 'Settings: %s', $prefix));
-
 		$this->Settings->addBehavior('Croogo/Croogo.Params');
 
 		if ($this->request->is('post')) {

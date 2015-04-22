@@ -67,18 +67,17 @@ class SettingsTable extends CroogoTable {
  * Filter search fields
  */
 	public $filterArgs = array(
-		'key' => array('type' => 'like', 'field' => 'Setting.key'),
+		'key' => array('type' => 'like', 'field' => 'Settings.key'),
 	);
 
-/**
- * __construct
- *
- * @param mixed $id
- * @param string $table
- * @param DataSource $ds
- */
-	public function __construct($id = false, $table = null, $ds = null) {
-		parent::__construct($id, $table, $ds);
+	/**
+	 * @param array $config
+     */
+	public function initialize(array $config) {
+		parent::initialize($config);
+
+		$this->addBehavior('Search.Searchable');
+
 		$this->settingsPath = APP . 'config' . DS . 'settings.json';
 	}
 
