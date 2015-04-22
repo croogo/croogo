@@ -1,7 +1,7 @@
 <?php
 
-$this->extend('/Common/admin_edit');
-$this->Html->script(array('Nodes.admin'), false);
+$this->extend('Croogo/Croogo./Common/admin_edit');
+$this->Html->script(array('Croogo/Nodes.admin'), false);
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))

@@ -1,40 +1,39 @@
 <?php
 
-$this->extend('/Common/admin_edit');
-$this->Html->script(array('Nodes.admin'), false);
+use Croogo\Croogo\CroogoStatus;
+
+$this->extend('Croogo/Croogo./Common/admin_edit');
+//$this->Html->script(array('Croogo/Nodes.admin'), false);
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'Content'), array('controller' => 'nodes', 'action' => 'index'));
+	->addCrumb(__d('croogo', 'Content'), array('action' => 'index'));
 
-if ($this->request->params['action'] == 'admin_add') {
+if ($this->request->params['action'] == 'add') {
 	$formUrl = array('action' => 'add', $typeAlias);
 	$this->Html
-		->addCrumb(__d('croogo', 'Create'), array('controller' => 'nodes', 'action' => 'create'))
-		->addCrumb($type['Type']['title'], '/' . $this->request->url);
+		->addCrumb(__d('croogo', 'Create'), array('action' => 'create'))
+		->addCrumb($type->title, '/' . $this->request->url);
 }
 
-if ($this->request->params['action'] == 'admin_edit') {
+if ($this->request->params['action'] == 'edit') {
 	$formUrl = array('action' => 'edit');
-	$this->Html->addCrumb($this->request->data['Node']['title'], '/' . $this->request->url);
+	$this->Html->addCrumb($node->title, '/' . $this->request->url);
 }
 
-$lookupUrl = $this->Html->apiUrl(array(
-	'plugin' => 'users',
-	'controller' => 'users',
+$lookupUrl = $this->CroogoApp->apiUrl(array(
 	'action' => 'lookup',
 ));
 
 $parentTitle = isset($parentTitle) ? $parentTitle : null;
-$apiUrl = $this->Form->apiUrl(array(
-	'controller' => 'nodes',
+$apiUrl = $this->CroogoApp->apiUrl(array(
 	'action' => 'lookup',
 	'?' => array(
-		'type' => $type['Type']['alias'],
+		'type' => $type->alias,
 	),
 ));
 
-echo $this->Form->create('Node', array(
+echo $this->CroogoForm->create($node, array(
 	'url' => $formUrl,
 	'class' => 'protected-form',
 ));
@@ -45,7 +44,7 @@ echo $this->Form->create('Node', array(
 
 		<ul class="nav nav-tabs">
 		<?php
-			echo $this->Croogo->adminTab(__d('croogo', $type['Type']['title']), '#node-main');
+			echo $this->Croogo->adminTab(__d('croogo', $type->title), '#node-main');
 			echo $this->Croogo->adminTab(__d('croogo', 'Access'), '#node-access');
 			echo $this->Croogo->adminTabs();
 		?>
@@ -56,7 +55,7 @@ echo $this->Form->create('Node', array(
 			<div id="node-main" class="tab-pane">
 			<?php
 
-				echo $this->Form->autocomplete('parent_id', array(
+				echo $this->CroogoForm->autocomplete('parent_id', array(
 					'label' => __d('croogo', 'Parent'),
 					'type' => 'text',
 					'autocomplete' => array(
@@ -69,21 +68,21 @@ echo $this->Form->create('Node', array(
 					),
 					'class' => 'span10',
 				));
-				echo $this->Form->input('id');
-				$this->Form->inputDefaults(array(
+				echo $this->CroogoForm->input('id');
+				$this->CroogoForm->templates(array(
 					'class' => 'span10',
 				));
-				echo $this->Form->input('title', array(
+				echo $this->CroogoForm->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));
-				echo $this->Form->input('slug', array(
+				echo $this->CroogoForm->input('slug', array(
 					'class' => 'span10 slug',
 					'label' => __d('croogo', 'Slug'),
 				));
-				echo $this->Form->input('excerpt', array(
+				echo $this->CroogoForm->input('excerpt', array(
 					'label' => __d('croogo', 'Excerpt'),
 				));
-				echo $this->Form->input('body', array(
+				echo $this->CroogoForm->input('body', array(
 					'label' => __d('croogo', 'Body'),
 				));
 			?>
@@ -91,7 +90,7 @@ echo $this->Form->create('Node', array(
 
 			<div id="node-access" class="tab-pane">
 			<?php
-				echo $this->Form->input('Role.Role', array('class' => false));
+				echo $this->CroogoForm->input('Role.Role', array('class' => false));
 			?>
 			</div>
 
@@ -101,25 +100,25 @@ echo $this->Form->create('Node', array(
 	</div>
 	<div class="span4">
 	<?php
-		$username = isset($this->data['User']['username']) ?
-			$this->data['User']['username'] :
+		$username = isset($node->user->username) ?
+			$node->user->username :
 			$this->Session->read('Auth.User.username');
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
+		echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing')) .
+			$this->CroogoForm->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+			$this->CroogoForm->button(__d('croogo', 'Save'), array('button' => 'success')) .
 			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'cancel btn btn-danger')) .
-			$this->Form->input('status', array(
+			$this->CroogoForm->input('status', array(
 				'legend' => false,
 				'type' => 'radio',
 				'class' => false,
 				'default' => CroogoStatus::UNPUBLISHED,
 				'options' => $this->Croogo->statuses(),
 			)) .
-			$this->Form->input('promote', array(
+			$this->CroogoForm->input('promote', array(
 				'label' => __d('croogo', 'Promoted to front page'),
 				'class' => false,
 			)) .
-			$this->Form->autocomplete('user_id', array(
+			$this->CroogoForm->autocomplete('user_id', array(
 				'type' => 'text',
 				'label' => __d('croogo', 'Publish as '),
 				'class' => 'span10',
@@ -133,26 +132,26 @@ echo $this->Form->create('Node', array(
 				),
 			)) .
 
-			$this->Form->input('created', array(
+			$this->CroogoForm->input('created', array(
 				'type' => 'text',
 				'class' => 'span10 input-datetime',
 			)) .
 
 			$this->Html->div('input-daterange',
-				$this->Form->input('publish_start', array(
+				$this->CroogoForm->input('publish_start', array(
 					'label' => __d('croogo', 'Publish Start'),
 					'type' => 'text',
 				)) .
-				$this->Form->input('publish_end', array(
+				$this->CroogoForm->input('publish_end', array(
 					'label' => __d('croogo', 'Publish End'),
 					'type' => 'text',
 				))
 			);
 
-		echo $this->Html->endBox();
+		echo $this->CroogoHtml->endBox();
 
 		echo $this->Croogo->adminBoxes();
 	?>
 	</div>
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->CroogoForm->end(); ?>

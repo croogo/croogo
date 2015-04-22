@@ -114,8 +114,8 @@ class NodesComponent extends Component {
  * @param object $controller instance of controller
  * @return void
  */
-	public function beforeRender(Controller $controller) {
-		$controller->set('nodes_for_layout', $this->nodesForLayout);
+	public function beforeRender(Event $event) {
+		$event->subject()->set('nodes_for_layout', $this->nodesForLayout);
 	}
 
 }

@@ -6,6 +6,7 @@ use Cake\Event\Event;
 
 use Croogo\Croogo\Croogo;
 use Croogo\Nodes\Controller\NodesAppController;
+use Croogo\Nodes\Model\Table\NodesTable;
 
 /**
  * Nodes Controller

@@ -213,28 +213,33 @@ class NodesController extends NodesAppController {
 			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'default', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
-		$Node = $this->{$this->modelClass};
-		$Node->id = $id;
-		$typeAlias = $Node->field('type');
-		$type = $Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
+		$node = $this->Nodes->get($id, [
+			'contain' => [
+				'Users'
+			]
+		]);
+		$typeAlias = $node->type;
+		$type = $this->Nodes->Taxonomies->Vocabularies->Types->findByAlias($typeAlias)->contain('Vocabularies')->first();
 
 		if (!empty($this->request->data)) {
-			if ($Node->saveNode($this->request->data, $typeAlias)) {
+			$node = $this->Nodes->patchEntity($node, $this->request->data);
+			if ($this->Nodes->saveNode($node, $typeAlias)) {
 				Croogo::dispatchEvent('Controller.Nodes.afterEdit', $this, compact('data'));
-				$this->Session->setFlash(__d('croogo', '%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));
-				$this->Croogo->redirect(array('action' => 'edit', $Node->id));
+				$this->Flash->success(__d('croogo', '%s has been saved', $type->title));
+				$this->Croogo->redirect(array('action' => 'edit', $node->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', '%s could not be saved. Please, try again.', $type['Type']['title']), 'default', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', '%s could not be saved. Please, try again.', $type['Type']['title']));
 			}
 		}
 		if (empty($this->request->data)) {
 			$this->Croogo->setReferer();
-			$data = $Node->read(null, $id);
-			$data['Role']['Role'] = $Node->decodeData($data[$Node->alias]['visibility_roles']);
-			$this->request->data = $data;
+			$node->role = $this->Nodes->decodeData($node->visibility_roles);
+//			$this->request->data = $node;
 		}
 
-		$this->set('title_for_layout', __d('croogo', 'Edit %s: %s', $type['Type']['title'], $this->request->data[$Node->alias]['title']));
+		$this->set(compact('node'));
+
+		$this->set('title_for_layout', __d('croogo', 'Edit %s: %s', $type->title, $node->title));
 		$this->_setCommonVariables($type);
 	}
 
@@ -358,13 +363,13 @@ class NodesController extends NodesAppController {
 		if (isset($this->Taxonomies)) {
 			$this->Taxonomies->prepareCommonData($type);
 		}
-		$Node = $this->{$this->modelClass};
-		if (!empty($this->data[$Node->alias]['parent_id'])) {
-			$Node->id = $this->data[$Node->alias]['parent_id'];
-			$parentTitle = $Node->field('title');
-		}
-		$roles = $Node->User->Role->find('list');
-		$this->set(compact('parentTitle', 'roles'));
+//		$Node = $this->{$this->modelClass};
+//		if (!empty($this->data[$Node->alias]['parent_id'])) {
+//			$Node->id = $this->data[$Node->alias]['parent_id'];
+//			$parentTitle = $Node->field('title');
+//		}
+//		$roles = $Node->User->Role->find('list');
+//		$this->set(compact('parentTitle', 'roles'));
 	}
 
 }

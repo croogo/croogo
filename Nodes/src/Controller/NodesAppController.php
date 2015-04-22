@@ -18,7 +18,8 @@ class NodesAppController extends CroogoAppController {
 
 	public $helpers = [
 		'Croogo/Croogo.Croogo',
-		'Croogo/Croogo.CroogoHtml'
+		'Croogo/Croogo.CroogoHtml',
+		'Croogo/Croogo.CroogoApp',
 	];
 
 }
