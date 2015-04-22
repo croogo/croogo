@@ -80,15 +80,20 @@ class SettingsController extends CroogoAppController {
  * @access public
  */
 	public function add() {
-		if (!empty($this->request->data)) {
-			$this->Setting->create();
-			if ($this->Setting->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Setting has been saved'), 'default', array('class' => 'success'));
+		$setting = $this->Settings->newEntity();
+
+		if ($this->request->is('post')) {
+			$setting = $this->Settings->patchEntity($setting, $this->request->data());
+
+			if ($this->Settings->save($setting)) {
+				$this->Flash->success(__d('croogo', 'The Setting has been saved'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Setting could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'The Setting could not be saved. Please, try again.'));
 			}
 		}
+
+		$this->set(compact('setting'));
 	}
 
 /**
@@ -99,21 +104,25 @@ class SettingsController extends CroogoAppController {
  * @access public
  */
 	public function edit($id = null) {
-		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Setting'), 'default', array('class' => 'error'));
+		if (!$id) {
+			$this->Flash->error(__d('croogo', 'Invalid Setting'));
 			return $this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->request->data)) {
-			if ($this->Setting->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Setting has been saved'), 'default', array('class' => 'success'));
+
+		$setting = $this->Settings->get($id);
+
+		if ($this->request->is('put')) {
+			$setting = $this->Settings->patchEntity($setting, $this->request->data());
+
+			if ($this->Settings->save($setting)) {
+				$this->Flash->success(__d('croogo', 'The Setting has been saved'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Setting could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'The Setting could not be saved. Please, try again.'));
 			}
 		}
-		if (empty($this->request->data)) {
-			$this->request->data = $this->Setting->read(null, $id);
-		}
+
+		$this->set(compact('setting'));
 	}
 
 /**
@@ -125,11 +134,14 @@ class SettingsController extends CroogoAppController {
  */
 	public function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Setting'), 'default', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Invalid Setting'));
 			return $this->redirect(array('action' => 'index'));
 		}
-		if ($this->Setting->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Setting deleted'), 'default', array('class' => 'success'));
+
+		$setting = $this->Settings->get($id);
+
+		if ($this->Settings->delete($setting)) {
+			$this->Flash->success(__d('croogo', 'Setting deleted'));
 			return $this->redirect(array('action' => 'index'));
 		}
 	}

@@ -1,24 +1,23 @@
 <?php
-$this->extend('/Common/admin_edit');
+$this->extend('Croogo/Croogo./Common/admin_edit');
 
-$this->Html
-	->addCrumb($this->Html->icon('home'), '/admin')
+$this->CroogoHtml
+	->addCrumb($this->CroogoHtml->icon('home'), '/admin')
 	->addCrumb(__d('croogo', 'Settings'), array(
-		'admin' => true,
-		'plugin' => 'settings',
-		'controller' => 'settings',
+		'plugin' => 'Croogo/Settings',
+		'controller' => 'Settings',
 		'action' => 'index',
 	));
 
-if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->data['Setting']['key'], '/' . $this->request->url);
+if ($this->request->param('action') == 'edit') {
+	$this->CroogoHtml->addCrumb($setting->key, '/' . $this->request->url);
 }
 
-if ($this->request->params['action'] == 'admin_add') {
-	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
+if ($this->request->param('action') == 'add') {
+	$this->CroogoHtml->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
-echo $this->Form->create('Setting', array(
+echo $this->Form->create($setting, array(
 	'class' => 'protected-form',
 ));
 
@@ -36,10 +35,10 @@ echo $this->Form->create('Setting', array(
 			<div id="setting-basic" class="tab-pane">
 			<?php
 				echo $this->Form->input('id');
-				$this->Form->inputDefaults(array(
-					'label' => false,
-					'class' => 'span10',
-				));
+//				$this->Form->inputDefaults(array(
+//					'label' => false,
+//					'class' => 'span10',
+//				));
 				echo $this->Form->input('key', array(
 					'help' => __d('croogo', "e.g., 'Site.title'"),
 					'label' => __d('croogo', 'Key'),
@@ -78,11 +77,11 @@ echo $this->Form->create('Setting', array(
 
 	<div class="span4">
 	<?php
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'default')) .
-			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array(
+		echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing')) .
+			$this->CroogoForm->button(__d('croogo', 'Save'), array('button' => 'default')) .
+			$this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index'), array(
 				'button' => 'danger')) .
-			$this->Html->endBox();
+			$this->CroogoHtml->endBox();
 
 		echo $this->Croogo->adminBoxes();
 	?>

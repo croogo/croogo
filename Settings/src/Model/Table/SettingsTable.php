@@ -3,6 +3,8 @@
 namespace Croogo\Settings\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\Event\Event;
+use Cake\ORM\Query;
 use Croogo\Croogo\Model\Table\CroogoTable;
 
 /**
@@ -81,12 +83,20 @@ class SettingsTable extends CroogoTable {
 		$this->settingsPath = APP . 'config' . DS . 'settings.json';
 	}
 
+
+/**
+ * beforeSave callback
+ */
+	public function beforeSave() {
+		$this->connection()->driver()->autoQuoting(true);
+	}
+
 /**
  * afterSave callback
- *
- * @return void
  */
 	public function afterSave() {
+		$this->connection()->driver()->autoQuoting(false);
+
 		$this->updateJson();
 		$this->writeConfiguration();
 	}
