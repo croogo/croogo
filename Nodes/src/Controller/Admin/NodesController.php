@@ -99,7 +99,7 @@ class NodesController extends NodesAppController {
 	 * @return void
 	 */
 	public function toggle($id = null, $status = null) {
-		$this->Croogo->fieldToggle($this->{$this->modelClass}, $id, $status);
+		$this->Croogo->fieldToggle($this->Nodes, $id, $status);
 	}
 
 	/**
