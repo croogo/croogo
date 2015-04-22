@@ -328,7 +328,7 @@ class CroogoHelper extends Helper {
 		if (isset($options['icon'])) {
 			$options['iconInline'] = false;
 		}
-		$output = $this->Html->link($title, $url, $options);
+		$output = $this->CroogoHtml->link($title, $url, $options);
 		return $output;
 	}
 
@@ -341,12 +341,12 @@ class CroogoHelper extends Helper {
 			'method' => 'get',
 		), $options);
 		if (strcasecmp($options['method'], 'post') == 0) {
-			return $this->Html->tag('li',
-				$this->Form->postLink($title, $url, $options)
+			return $this->CroogoHtml->tag('li',
+				$this->CroogoForm->postLink($title, $url, $options)
 			);
 		}
-		return $this->Html->tag('li',
-			$this->Html->link($title, $url, $options)
+		return $this->CroogoHtml->tag('li',
+			$this->CroogoHtml->link($title, $url, $options)
 		);
 	}
 
@@ -354,8 +354,8 @@ class CroogoHelper extends Helper {
  * Create a tab title/link
  */
 	public function adminTab($title, $url, $options = array()) {
-		return $this->Html->tag('li',
-			$this->Html->link($title, $url, Hash::merge(array(
+		return $this->CroogoHtml->tag('li',
+			$this->CroogoHtml->link($title, $url, Hash::merge(array(
 				'data-toggle' => 'tab',
 				), $options)
 			)
