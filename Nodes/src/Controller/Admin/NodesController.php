@@ -148,11 +148,9 @@ class NodesController extends NodesAppController {
 	 * @access public
 	 */
 	public function create() {
-		$this->set('title_for_layout', __d('croogo', 'Create content'));
-
-		$types = $this->{$this->modelClass}->Taxonomy->Vocabulary->Type->find('all', array(
+		$types = $this->Nodes->Taxonomies->Vocabularies->Types->find('all', array(
 			'order' => array(
-				'Type.alias' => 'ASC',
+				'Types.alias' => 'ASC',
 			),
 		));
 		$this->set(compact('types'));
