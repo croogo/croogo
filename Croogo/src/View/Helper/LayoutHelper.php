@@ -212,10 +212,10 @@ class LayoutHelper extends Helper {
 		)));
 		switch ($type) {
 			case 'boolean':
-				$out = $this->status($item->$field);
+				$out = $this->status($item->{$field});
 			break;
 			default:
-				$out = h($item->$field);
+				$out = h((!isset($item->{$model})) ? $item->{$field} : $item->{$model}->{$field});
 			break;
 		}
 
