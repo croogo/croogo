@@ -76,13 +76,12 @@ class SettingsFormHelper extends Helper {
 		} elseif ($setting->input_type == 'checkbox') {
 			$output = $this->_inputCheckbox($setting, $label);
 		} elseif ($setting->input_type == 'radio') {
-			$value = $setting->value;
 			$options = json_decode($setting->params['options'], true);
 			$output = $this->CroogoForm->input($setting->id, array(
-				'legend' => $setting->title,
+				'label' => $setting->title,
 				'type' => 'radio',
 				'options' => $options,
-				'value' => $value,
+				'value' => $setting->value,
 			));
 		} else {
 			$output = $this->CroogoForm->input($setting->id, array(
