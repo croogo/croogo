@@ -15,6 +15,15 @@ class UsersTable extends CroogoTable {
 		'email',
 	);
 
+	protected $_editFields = array(
+		'role_id',
+		'username',
+		'name',
+		'email',
+		'website',
+		'status',
+	);
+
 	public $filterArgs = array(
 		'name' => array('type' => 'like', 'field' => array('Users.name', 'Users.username')),
 		'role_id' => array('type' => 'value'),
