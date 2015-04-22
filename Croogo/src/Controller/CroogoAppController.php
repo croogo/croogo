@@ -2,6 +2,7 @@
 
 namespace Croogo\Croogo\Controller;
 
+use Cake\Controller\ErrorController;
 use Cake\Controller\Exception\MissingComponentException;
 use Cake\Core\App;
 use Cake\Core\Configure;
@@ -361,7 +362,7 @@ class CroogoAppController extends Controller {
  *
  * @see Controller::render()
  */
-//	public function render($view = null, $layout = null) {
+	public function render($view = null, $layout = null) {
 //		list($plugin, ) = pluginSplit(App::location(get_parent_class($this)));
 //		if ($plugin) {
 //			App::build(array(
@@ -370,24 +371,24 @@ class CroogoAppController extends Controller {
 //				),
 //			), App::APPEND);
 //		}
-//
-//		if (strpos($view, '/') !== false || $this instanceof CakeErrorController) {
-//			return parent::render($view, $layout);
-//		}
-//
-//		$fallbackView = $this->__getDefaultFallbackView();
-//		if (is_null($view) && in_array($this->request->action, array('admin_edit', 'admin_add', 'edit', 'add'))) {
-//			$viewPaths = App::path('View', $this->plugin);
-//			$themePath = $this->theme ? App::themePath($this->theme) : null;
-//			$searchPaths = array_merge((array)$themePath, $viewPaths);
-//			$view = $this->__findRequestedView($searchPaths);
-//			if (empty($view)) {
-//				$view = $fallbackView;
-//			}
-//		}
-//
-//		return parent::render($view, $layout);
-//	}
+
+		if (strpos($view, '/') !== false || $this instanceof ErrorController) {
+			return parent::render($view, $layout);
+		}
+
+		$fallbackView = $this->__getDefaultFallbackView();
+		if (is_null($view) && in_array($this->request->action, array('edit', 'add'))) {
+			$viewPaths = App::path('View', $this->plugin);
+			$themePath = $this->theme ? App::themePath($this->theme) : null;
+			$searchPaths = array_merge((array)$themePath, $viewPaths);
+			$view = $this->__findRequestedView($searchPaths);
+			if (empty($view)) {
+				$view = $fallbackView;
+			}
+		}
+
+		return parent::render($view, $layout);
+	}
 
 /**
  * Croogo uses this callback to load Paginator helper when one is not supplied.
@@ -414,7 +415,7 @@ class CroogoAppController extends Controller {
 	private function __getDefaultFallbackView() {
 		$fallbackView = 'form';
 		if (!empty($this->request->params['prefix']) && $this->request->params['prefix'] === 'admin') {
-			$fallbackView = 'admin_form';
+			$fallbackView = 'form';
 		}
 		return $fallbackView;
 	}
