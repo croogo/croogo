@@ -1,2 +1,2 @@
 <?php
-echo $this->element('admin/toggle', compact('id', 'status'));
+echo $this->element('Croogo/Croogo.admin/toggle', compact('id', 'status'));

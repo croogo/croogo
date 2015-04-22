@@ -2,6 +2,7 @@
 
 namespace Croogo\Croogo\Controller\Component;
 
+use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Component;
@@ -9,6 +10,8 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Event\Event;
 
+use Cake\ORM\Table;
+use Croogo\Croogo\Core\Exception\Exception;
 use Croogo\Croogo\Croogo;
 use Croogo\Croogo\CroogoNav;
 use Croogo\Extensions\CroogoPlugin;
@@ -278,24 +281,27 @@ class CroogoComponent extends Component {
 /**
  * Toggle field status
  *
- * @param $model Model instance
+ * @param $table Table instance
  * @param $id integer Model id
  * @param $status integer current status
  * @param $field string field name to toggle
- * @throws CakeException
+ * @throws Exception
  */
-	public function fieldToggle(Model $model, $id, $status, $field = 'status') {
+	public function fieldToggle(Table $table, $id, $status, $field = 'status') {
 		if (empty($id) || $status === null) {
-			throw new CakeException(__d('croogo', 'Invalid content'));
+			throw new Exception(__d('croogo', 'Invalid content'));
 		}
-		$model->id = $id;
+
 		$status = (int)!$status;
+
+		$entity = $table->get($id);
+		$entity->{$field} = $status;
 		$this->_controller->layout = 'ajax';
-		if ($model->saveField($field, $status)) {
+		if ($table->save($entity)) {
 			$this->_controller->set(compact('id', 'status'));
-			$this->_controller->render('Common/admin_toggle');
+			$this->_controller->render('Croogo/Croogo./Common/admin_toggle');
 		} else {
-			throw new CakeException(__d('croogo', 'Failed toggling field %s to %s', $field, $status));
+			throw new Exception(__d('croogo', 'Failed toggling field %s to %s', $field, $status));
 		}
 	}
 
