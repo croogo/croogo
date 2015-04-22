@@ -233,28 +233,28 @@ class TaxonomizableBehavior extends Behavior {
  *
  * @param Event $event Event containing `data` and `typeAlias`
  */
-	public function onBeforeSaveNode($event) {
-		$data = $event->data['data'];
-		$typeAlias = $event->data['typeAlias'];
-		$this->formatTaxonomyData($event->subject, $data, $typeAlias);
-		$event->data['data'] = $data;
-	}
+//	public function onBeforeSaveNode($event) {
+//		$data = $event->data['data'];
+//		$typeAlias = $event->data['typeAlias'];
+//		$this->formatTaxonomyData($event->subject, $data, $typeAlias);
+//		$event->data['data'] = $data;
+//	}
 
 /**
  * beforeSave
  *
  * @return bool
  */
-	public function beforeSave(Model $model, $options = array()) {
-		if (!empty($options['fieldList'])) {
-			return true;
-		}
-		$result = $this->validateTaxonomyData($model);
-		if ($result !== true) {
-			return $result;
-		}
-		return true;
-	}
+//	public function beforeSave(Model $model, $options = array()) {
+//		if (!empty($options['fieldList'])) {
+//			return true;
+//		}
+//		$result = $this->validateTaxonomyData($model);
+//		if ($result !== true) {
+//			return $result;
+//		}
+//		return true;
+//	}
 
 /**
  * Caches Term in `terms` field
