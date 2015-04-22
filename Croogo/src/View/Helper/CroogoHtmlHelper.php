@@ -20,20 +20,6 @@ class CroogoHtmlHelper extends HtmlHelper {
 	public function __construct(View $View, $settings = array()) {
 		parent::__construct($View, $settings);
 
-		$this->_defaultConfig['templates']['beginbox'] =
-			'<div class="row-fluid">
-				<div class="span12">
-					<div class="box">
-						<div class="box-title">
-							<i class="icon-list"></i>
-							%s
-						</div>
-						<div class="box-content %s">';
-		$this->_defaultConfig['templates']['endbox'] =
-						'</div>
-					</div>
-				</div>
-			</div>';
 		$this->_defaultConfig['templates']['icon'] = '<i class="%s"%s></i> ';
 	}
 
@@ -41,11 +27,24 @@ class CroogoHtmlHelper extends HtmlHelper {
 		$isHidden = $isHidden ? 'hidden' : '';
 		$isLabelHidden = $isLabelHidden ? 'label-hidden' : '';
 		$class = $isHidden . ' ' . $isLabelHidden;
-		return $this->tag('beginbox', $title, ['class' => $class]);
+
+		$output = '
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="box">';
+
+		$output .= $this->div('box-title', '<i class="icon-list"></i> ' . $title, ['escape' => false]);
+
+		$output .= '<div class="box-content ' . $class . '">';
+
+		return $output;
 	}
 
 	public function endBox() {
-		return $this->tag('endbox');
+		return '		</div>
+					</div>
+				</div>
+			</div>';
 	}
 
 	public function icon($name, $options = array()) {
