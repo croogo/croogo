@@ -6,8 +6,17 @@ use Croogo\Croogo\Model\Table\CroogoTable;
 
 class UsersTable extends CroogoTable {
 
+	protected $_displayFields = array(
+		'id',
+		'Role.title' => 'Role',
+		'username',
+		'name',
+		'status' => array('type' => 'boolean'),
+		'email',
+	);
+
 	public $filterArgs = array(
-		'name' => array('type' => 'like', 'field' => array('User.name', 'User.username')),
+		'name' => array('type' => 'like', 'field' => array('Users.name', 'Users.username')),
 		'role_id' => array('type' => 'value'),
 	);
 
