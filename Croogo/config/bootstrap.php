@@ -2,7 +2,11 @@
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\Database\Type;
 use Croogo\Croogo;
+
+// Map our custom types
+Type::map('params', 'Croogo\Croogo\Database\Type\ParamsType');
 
 require_once 'croogo_bootstrap.php';
 
