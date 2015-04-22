@@ -9,7 +9,7 @@ $this->CroogoHtml->addCrumb('', '/admin', array('icon' => 'home'))
 ?>
 <?php
 
-echo $this->SettingsForm->create('Settings', array(
+echo $this->CroogoForm->create('Settings', array(
 	'url' => array(
 		'controller' => 'Settings',
 		'action' => 'prefix',
@@ -34,7 +34,6 @@ echo $this->SettingsForm->create('Settings', array(
 
 			<div id="settings-main" class="tab-pane">
 				<?php
-				$i = 0;
 				foreach ($settings as $setting) :
 					if (!empty($setting['Params']['tab'])) {
 						continue;
@@ -44,10 +43,7 @@ echo $this->SettingsForm->create('Settings', array(
 
 					$label = ($setting->title != null) ? $setting->title : $keyTitle;
 
-					$i = $setting->id;
-
 					echo $this->SettingsForm->input($setting, $label);
-					$i++;
 				endforeach;
 				?>
 			</div>
@@ -59,7 +55,7 @@ echo $this->SettingsForm->create('Settings', array(
 	<div class="span4">
 		<?php
 		echo $this->CroogoHtml->beginBox(__d('croogo', 'Saving')) .
-			$this->SettingsForm->button(__d('croogo', 'Save')) .
+			$this->CroogoForm->button(__d('croogo', 'Save')) .
 			$this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'btn btn-danger')) .
 			$this->CroogoHtml->endBox();
 		echo $this->Croogo->adminBoxes();
@@ -67,4 +63,4 @@ echo $this->SettingsForm->create('Settings', array(
 	</div>
 
 </div>
-<?php echo $this->SettingsForm->end(); ?>
+<?php echo $this->CroogoForm->end(); ?>

@@ -3,7 +3,6 @@
 namespace Croogo\Settings\View\Helper;
 
 use Cake\View\Helper;
-use Croogo\Croogo\View\Helper\CroogoFormHelper;
 use Croogo\Settings\Model\Entity\Setting;
 
 /**
@@ -16,7 +15,11 @@ use Croogo\Settings\Model\Entity\Setting;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class SettingsFormHelper extends CroogoFormHelper {
+class SettingsFormHelper extends Helper {
+
+	public $helpers = [
+		'Croogo/Croogo.CroogoForm'
+	];
 
 /**
  * _inputCheckbox
@@ -30,14 +33,14 @@ class SettingsFormHelper extends CroogoFormHelper {
 			'data-title' => $setting->description,
 		);
 		if ($setting['Setting']['value'] == 1) {
-			$output = parent::input($setting->id, array(
+			$output = $this->CroogoForm->input($setting->id, array(
 				'type' => $setting->input_type,
 				'checked' => 'checked',
 				'tooltip' => $tooltip,
 				'label' => $label
 			));
 		} else {
-			$output = parent::input($setting->id, array(
+			$output = $this->CroogoForm->input($setting->id, array(
 				'type' => $setting->input_type,
 				'tooltip' => $tooltip,
 				'label' => $label
@@ -64,7 +67,7 @@ class SettingsFormHelper extends CroogoFormHelper {
 			};
 			$selected = json_decode($setting->value);
 			$options = json_decode($setting->params['options'], true);
-			$output = parent::input($setting->id, array(
+			$output = $this->CroogoForm->input($setting->id, array(
 				'label' => $setting->title,
 				'multiple' => $multiple,
 				'options' => $options,
@@ -75,14 +78,14 @@ class SettingsFormHelper extends CroogoFormHelper {
 		} elseif ($setting->input_type == 'radio') {
 			$value = $setting->value;
 			$options = json_decode($setting->params['options'], true);
-			$output = parent::input($setting->id, array(
+			$output = $this->CroogoForm->input($setting->id, array(
 				'legend' => $setting->title,
 				'type' => 'radio',
 				'options' => $options,
 				'value' => $value,
 			));
 		} else {
-			$output = parent::input($setting->id, array(
+			$output = $this->CroogoForm->input($setting->id, array(
 				'type' => $inputType,
 				'class' => 'span10',
 				'value' => $setting->value,
