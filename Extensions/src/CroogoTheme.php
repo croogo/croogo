@@ -93,7 +93,7 @@ class CroogoTheme {
 			'regions' => array(),
 			'screenshot' => null,
 		);
-		$default = Plugin::path('Croogo') . 'webroot' . DS . 'theme.json';
+		$default = Plugin::path('Croogo/Croogo') . 'webroot' . DS . 'theme.json';
 
 		if ($alias == null || $alias == 'default') {
 			$manifestFile = $default;
