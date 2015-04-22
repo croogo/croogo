@@ -1,35 +1,35 @@
 <?php
 
-$this->extend('/Common/admin_edit');
+$this->extend('Croogo/Croogo./Common/admin_edit');
 
-$this->Html
-	->addCrumb($this->Html->icon('home'), '/admin')
-	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'));
+$this->CroogoHtml
+	->addCrumb($this->CroogoHtml->icon('home'), '/admin')
+	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'));
 
-if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->data['User']['name'], array(
-		'plugin' => 'users', 'controller' => 'users', 'action' => 'edit',
-		$this->data['User']['id']
+if ($this->request->param('action') == 'edit') {
+	$this->CroogoHtml->addCrumb($user->name, array(
+		'plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'edit',
+		$user->id
 	));
-	$this->set('title_for_layout', __d('croogo', 'Edit user %s', $this->data['User']['username']));
+	$this->set('title_for_layout', __d('croogo', 'Edit user %s', $user->username));
 } else {
 	$this->set('title_for_layout', __d('croogo', 'New user'));
 }
 
-if ($this->request->params['action'] == 'admin_add') {
-	$this->Html->addCrumb(__d('croogo', 'Add'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'add'));
+if ($this->request->param('action') == 'add') {
+	$this->Html->addCrumb(__d('croogo', 'Add'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'add'));
 }
 ?>
 <?php $this->start('actions'); ?>
-<?php if ($this->request->params['action'] == 'admin_edit'): ?>
+<?php if ($this->request->param('action') == 'edit'): ?>
 <?php
-	echo $this->Croogo->adminAction(__d('croogo', 'Reset password'), array('action' => 'reset_password', $this->request->params['pass']['0']));
+	echo $this->Croogo->adminAction(__d('croogo', 'Reset password'), array('action' => 'reset_password', $user->id));
 ?>
 <?php endif; ?>
 <?php $this->end(); ?>
 
 <?php
-echo $this->Form->create('User', array(
+echo $this->CroogoForm->create($user, array(
 	'fieldAccess' => array(
 		'User.role_id' => 1,
 	),
@@ -51,28 +51,27 @@ echo $this->Form->create('User', array(
 
 			<div id="user-main" class="tab-pane">
 			<?php
-				echo $this->Form->input('id');
-				echo $this->Form->input('role_id', array('label' => __d('croogo', 'Role')));
-				$this->Form->inputDefaults(array(
+				echo $this->CroogoForm->input('id');
+				echo $this->CroogoForm->input('role_id', array('label' => __d('croogo', 'Role')));
+				$this->CroogoForm->templates(array(
 					'class' => 'span10',
-					'label' => false,
 				));
-				echo $this->Form->input('username', array(
+				echo $this->CroogoForm->input('username', array(
 					'label' => __d('croogo', 'Username'),
 				));
-				echo $this->Form->input('name', array(
+				echo $this->CroogoForm->input('name', array(
 					'label' => __d('croogo', 'Name'),
 				));
-				echo $this->Form->input('email', array(
+				echo $this->CroogoForm->input('email', array(
 					'label' => __d('croogo', 'Email'),
 				));
-				echo $this->Form->input('website', array(
+				echo $this->CroogoForm->input('website', array(
 					'label' => __d('croogo', 'Website'),
 				));
-				echo $this->Form->input('timezone', array(
+				echo $this->CroogoForm->input('timezone', array(
 					'type' => 'select',
 					'empty' => true,
-					'options' => $this->Time->listTimezones(),
+					'options' => DateTimeZone::listIdentifiers(),
 					'label' => __d('croogo', 'Timezone'),
 				));
 			?>
@@ -84,57 +83,57 @@ echo $this->Form->create('User', array(
 
 	<div class="span4">
 	<?php
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
-			$this->Html->link(
+		echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing')) .
+			$this->CroogoForm->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+			$this->CroogoForm->button(__d('croogo', 'Save'), array('button' => 'success')) .
+			$this->CroogoHtml->link(
 			__d('croogo', 'Cancel'), array('action' => 'index'),
 			array('button' => 'danger'));
 
-		if ($this->request->params['action'] == 'admin_add'):
-			echo $this->Form->input('notification', array(
+		if ($this->request->param('action') == 'add'):
+			echo $this->CroogoForm->input('notification', array(
 				'label' => __d('croogo', 'Send Activation Email'),
 				'type' => 'checkbox',
 				'class' => false,
 			));
 		endif;
 
-		echo $this->Form->input('status', array(
+		echo $this->CroogoForm->input('status', array(
 			'label' => __d('croogo', 'Status'),
 			'class' => false,
 		));
 
-		$showPassword = !empty($this->data['User']['status']);
-		if ($this->request->params['action'] == 'admin_add'):
-			$out = $this->Form->input('password', array(
+		$showPassword = !empty($user->status);
+		if ($this->request->param('action') == 'add'):
+			$out = $this->CroogoForm->input('password', array(
 				'label' => __d('croogo', 'Password'),
 				'class' => false,
 				'disabled' => !$showPassword,
 			));
-			$out .= $this->Form->input('verify_password', array(
+			$out .= $this->CroogoForm->input('verify_password', array(
 				'label' => __d('croogo', 'Verify Password'),
 				'class' => false,
 				'disabled' => !$showPassword,
 				'type' => 'password'
 			));
 
-			$this->Form->unlockField('User.password');
-			$this->Form->unlockField('User.verify_password');
+			$this->CroogoForm->unlockField('User.password');
+			$this->CroogoForm->unlockField('User.verify_password');
 
-			echo $this->Html->div(null, $out, array(
+			echo $this->CroogoHtml->div(null, $out, array(
 				'id' => 'passwords',
 				'style' => $showPassword ? '' : 'display: none',
 			));
 		endif;
 
-		echo $this->Html->endBox();
+		echo $this->CroogoHtml->endBox();
 
 		echo $this->Croogo->adminBoxes();
 	?>
 	</div>
 
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->CroogoForm->end(); ?>
 <?php
 
 $script = <<<EOF
