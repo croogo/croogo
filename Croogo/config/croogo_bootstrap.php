@@ -2,10 +2,13 @@
 
 namespace Croogo\Croogo\Config;
 
+use Aura\Intl\Package;
+
 use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\I18n\I18n;
 use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
@@ -60,6 +63,12 @@ if (file_exists(CONFIG . 'settings.json')) {
  * Locale
  */
 Configure::write('Config.language', Configure::read('Site.locale'));
+
+I18n::config('croogo', function ($domain, $locale) {
+	return new Package(
+		'sprintf'
+	);
+});
 
 /**
  * Assets
