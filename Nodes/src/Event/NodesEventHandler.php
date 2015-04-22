@@ -82,8 +82,8 @@ class NodesEventHandler implements EventListenerInterface {
 				),
 			));
 		}
-		if (Plugin::loaded('Taxonomy')) {
-			Croogo::hookBehavior('Node', 'Taxonomy.Taxonomizable');
+		if (Plugin::loaded('Croogo/Taxonomy')) {
+			Croogo::hookBehavior('Croogo/Nodes.Nodes', 'Croogo/Taxonomy.Taxonomizable');
 		}
 		if (Plugin::loaded('Meta')) {
 			Croogo::hookBehavior('Node', 'Meta.Meta');

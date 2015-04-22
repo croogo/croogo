@@ -17,9 +17,11 @@ class NodesTable extends CroogoTable {
 
 
 	public function initialize(array $config) {
+		parent::initialize($config);
+
 		$this->addBehavior('Croogo/Croogo.Encoder');
 		$this->addBehavior('Search.Searchable');
-		$this->belongsTo('Users');
+		$this->belongsTo('Croogo/Users.Users');
 	}
 
 }
