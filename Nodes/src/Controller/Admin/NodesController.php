@@ -203,7 +203,7 @@ class NodesController extends NodesAppController {
 			],
 		]);
 
-		$this->_setCommonVariables($type);
+		$this->_setCommonVariables($type, $node);
 	}
 
 	/**
@@ -245,7 +245,7 @@ class NodesController extends NodesAppController {
 		$this->set(compact('node'));
 
 		$this->set('title_for_layout', __d('croogo', 'Edit %s: %s', $type->title, $node->title));
-		$this->_setCommonVariables($type);
+		$this->_setCommonVariables($type, $node);
 	}
 
 	/**
@@ -364,17 +364,16 @@ class NodesController extends NodesAppController {
 	 * @param array $type Type data
 	 * @return void
 	 */
-	protected function _setCommonVariables($type) {
+	protected function _setCommonVariables($type, Node $node = null) {
 		if (isset($this->Taxonomies)) {
 			$this->Taxonomies->prepareCommonData($type);
 		}
-//		$Node = $this->{$this->modelClass};
-//		if (!empty($this->data[$Node->alias]['parent_id'])) {
-//			$Node->id = $this->data[$Node->alias]['parent_id'];
-//			$parentTitle = $Node->field('title');
-//		}
-//		$roles = $Node->User->Role->find('list');
-//		$this->set(compact('parentTitle', 'roles'));
+		if (($node) && (!empty($node->parent_id))) {
+			$parentNode = $this->Nodes->get($node->parent_id);
+			$parentTitle = $parentNode->title;
+		}
+		$roles = $this->Nodes->Users->Roles->find('list');
+		$this->set(compact('parentTitle', 'roles'));
 	}
 
 }
