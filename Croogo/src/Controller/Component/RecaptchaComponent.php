@@ -33,7 +33,7 @@ class RecaptchaComponent extends Component {
 		Configure::write("Recaptcha.privateKey", $this->privatekey);
 
 		$this->controller = $event->subject();
-		$this->controller->helpers[] = 'Croogo.Recaptcha';
+		$this->controller->helpers[] = 'Croogo/Croogo.Recaptcha';
 	}
 
 	public function valid($request) {

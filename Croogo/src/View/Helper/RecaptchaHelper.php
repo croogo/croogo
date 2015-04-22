@@ -2,14 +2,14 @@
 
 namespace Croogo\Croogo\View\Helper;
 
-use App\View\Helper\AppHelper;
-use reCAPTCHA Mailhide, you need to have the mcrypt php module installed.");
-use reCAPTCHA you must get an API key from <a href='http://recaptcha.net/api/getkey'>http://recaptcha.net/api/getkey</a>");
+use Cake\Core\Configure;
+use Cake\View\Helper;
+
 /**
  * @package Croogo.Croogo.View.Helper
  * @link http://bakery.cakephp.org/articles/view/recaptcha-component-helper-for-cakephp
  */
-class RecaptchaHelper extends AppHelper {
+class RecaptchaHelper extends Helper {
 	public $helpers = array('Form');
 
 	public function display_form($output_method = 'return', $error = null, $use_ssl = false) {
@@ -41,7 +41,8 @@ class RecaptchaHelper extends AppHelper {
 	 */
 	private function __form($pubkey, $error = null, $use_ssl = false) {
 		if ($pubkey == null || $pubkey == '') {
-			die ("To 		}
+			die ("To use reCAPTCHA you must get an API key from <a href='http://recaptcha.net/api/getkey'>http://recaptcha.net/api/getkey</a>");
+		}
 
 		if ($use_ssl) {
 			$server = Configure::read('Recaptcha.apiSecureServer');
@@ -66,7 +67,8 @@ class RecaptchaHelper extends AppHelper {
 	/* Mailhide related code */
 	protected function _recaptcha_aes_encrypt($val,$ky) {
 		if (! function_exists ("mcrypt_encrypt")) {
-			die ("To 		}
+			die ("To use reCAPTCHA Mailhide, you need to have the mcrypt php module installed.");
+		}
 		$mode=MCRYPT_MODE_CBC;
 		$enc=MCRYPT_RIJNDAEL_128;
 		$val=$this->_recaptcha_aes_pad($val);
