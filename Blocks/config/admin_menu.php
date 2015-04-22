@@ -8,9 +8,9 @@ CroogoNav::add('sidebar', 'blocks', array(
 	'icon' => array('columns', 'large'),
 	'title' => __d('croogo', 'Blocks'),
 	'url' => array(
-		'admin' => true,
-		'plugin' => 'blocks',
-		'controller' => 'blocks',
+		'prefix' => 'admin',
+		'plugin' => 'Croogo/Blocks',
+		'controller' => 'Blocks',
 		'action' => 'index',
 	),
 	'weight' => 30,
@@ -18,18 +18,18 @@ CroogoNav::add('sidebar', 'blocks', array(
 		'blocks' => array(
 			'title' => __d('croogo', 'Blocks'),
 			'url' => array(
-				'admin' => true,
-				'plugin' => 'blocks',
-				'controller' => 'blocks',
+				'prefix' => 'admin',
+				'plugin' => 'Croogo/Blocks',
+				'controller' => 'Blocks',
 				'action' => 'index',
 			),
 		),
 		'regions' => array(
 			'title' => __d('croogo', 'Regions'),
 			'url' => array(
-				'admin' => true,
-				'plugin' => 'blocks',
-				'controller' => 'regions',
+				'prefix' => 'admin',
+				'plugin' => 'Croogo/Blocks',
+				'controller' => 'Regions',
 				'action' => 'index',
 			),
 		),

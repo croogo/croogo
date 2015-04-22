@@ -5,22 +5,22 @@ use Croogo\Croogo\Cache\CroogoCache;
 use Croogo\Croogo\Croogo;
 
 CroogoCache::config('croogo_blocks', array_merge(
-	Configure::read('Cache.defaultConfig'),
+	Configure::read('Croogo.Cache.defaultConfig'),
 	array('groups' => array('blocks'))
 ));
 
 Croogo::hookComponent('*', array(
-	'Blocks.Blocks' => array(
+	'Croogo/Blocks.Blocks' => array(
 		'priority' => 5,
 	)
 ));
 
-Croogo::hookHelper('*', 'Blocks.Regions');
+Croogo::hookHelper('*', 'Croogo/Blocks.Regions');
 
-Croogo::mergeConfig('Translate.models.Block', array(
+Croogo::mergeConfig('Translate.tables.Blocks', array(
 	'fields' => array(
 		'title' => 'titleTranslation',
 		'body' => 'bodyTranslation',
 	),
-	'translateModel' => 'Blocks.Block',
+	'translateTable' => 'Croogo/Blocks.Blocks',
 ));

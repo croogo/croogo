@@ -43,26 +43,26 @@ class BlocksComponent extends Component {
 /**
  * initialize
  *
- * @param Controller $controller instance of controller
+ * @param Event $event
  */
-	public function initialize(Event $event) {
+	public function beforeFilter(Event $event) {
 		$this->controller = $event->subject();
 		$this->_stringConverter = new StringConverter();
-		if (isset($controller->Block)) {
-			$this->Block = $controller->Block;
+		if (isset($this->controller->Blocks)) {
+			$this->Blocks = $this->controller->Blocks;
 		} else {
-			$this->Block = TableRegistry::get('Blocks.Block');
+			$this->Blocks = TableRegistry::get('Croogo/Blocks.Blocks');
 		}
 	}
 
 /**
  * Startup
  *
- * @param object $controller instance of controller
+ * @param Event $event
  * @return void
  */
-	public function startup(Controller $controller) {
-		if (!isset($controller->request->params['admin']) && !isset($controller->request->params['requested'])) {
+	public function startup(Event $event) {
+		if (!isset($event->subject()->request->params['admin']) && !isset($event->subject()->request->params['requested'])) {
 			$this->blocks();
 		}
 	}
@@ -70,11 +70,11 @@ class BlocksComponent extends Component {
 /**
  * beforeRender
  *
- * @param object $controller instance of controller
+ * @param object $event
  * @return void
  */
-	public function beforeRender(Controller $controller) {
-		$controller->set('blocks_for_layout', $this->blocksForLayout);
+	public function beforeRender(Event $event) {
+		$event->subject()->set('blocks_for_layout', $this->blocksForLayout);
 	}
 
 /**
@@ -85,7 +85,9 @@ class BlocksComponent extends Component {
  * @return void
  */
 	public function blocks() {
-		$regions = $this->Block->Region->find('active');
+		$this->blocksForLayout = [];
+		return;
+		$regions = $this->Blocks->Regions->find('active');
 
 		$alias = $this->Block->alias;
 		$roleId = $this->controller->Croogo->roleId();
