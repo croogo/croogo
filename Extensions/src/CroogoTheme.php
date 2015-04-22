@@ -2,7 +2,9 @@
 
 namespace Croogo\Extensions;
 
+use Cake\Core\App;
 use Cake\Core\Plugin;
+use Cake\Filesystem\Folder;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -34,7 +36,7 @@ class CroogoTheme {
 		$themes = array(
 			'default' => 'default',
 		);
-		$this->folder = new Folder;
+		$this->folder = new Folder();
 		$viewPaths = App::path('views');
 		$expected = array('name' => '', 'description' => '');
 		foreach ($viewPaths as $viewPath) {
