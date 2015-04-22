@@ -35,10 +35,9 @@ echo $this->Form->create($setting, array(
 			<div id="setting-basic" class="tab-pane">
 			<?php
 				echo $this->Form->input('id');
-//				$this->Form->inputDefaults(array(
-//					'label' => false,
-//					'class' => 'span10',
-//				));
+				$this->Form->templates(array(
+					'class' => 'span10',
+				));
 				echo $this->Form->input('key', array(
 					'help' => __d('croogo', "e.g., 'Site.title'"),
 					'label' => __d('croogo', 'Key'),
