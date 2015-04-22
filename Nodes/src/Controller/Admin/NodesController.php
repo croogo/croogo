@@ -7,13 +7,16 @@ use Cake\Event\Event;
 use Croogo\Croogo\Controller\Component\CroogoComponent;
 use Croogo\Croogo\Croogo;
 use Croogo\Nodes\Controller\NodesAppController;
+use Croogo\Nodes\Model\Entity\Node;
 use Croogo\Nodes\Model\Table\NodesTable;
+use Croogo\Taxonomy\Controller\Component\TaxonomiesComponent;
 
 /**
  * Nodes Controller
  *
  * @property NodesTable Nodes
  * @property CroogoComponent Croogo
+ * @property TaxonomiesComponent Taxonomies
  * @category Nodes.Controller
  * @package  Croogo.Nodes
  * @version  1.0
@@ -164,37 +167,41 @@ class NodesController extends NodesAppController {
 	 * @access public
 	 */
 	public function add($typeAlias = 'node') {
-		$Node = $this->{$this->modelClass};
-		$type = $Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
-		if (!isset($type['Type']['alias'])) {
-			$this->Session->setFlash(__d('croogo', 'Content type does not exist.'));
+		$type = $this->Nodes->Taxonomies->Vocabularies->Types->findByAlias($typeAlias)->contain('Vocabularies')->first();
+		if (!isset($type->alias)) {
+			$this->Flash->error(__d('croogo', 'Content type does not exist.'));
 			return $this->redirect(array('action' => 'create'));
 		}
 
+		/** @var Node $node */
+		$node = $this->Nodes->newEntity([
+			'type' => $type->alias,
+			'user_id' => $this->Auth->user('id')
+		]);
+
 		if (!empty($this->request->data)) {
-			if (isset($this->request->data[$Node->alias]['type'])) {
-				$typeAlias = $this->request->data[$Node->alias]['type'];
-				$Node->type = $typeAlias;
-			}
-			if ($Node->saveNode($this->request->data, $typeAlias)) {
-				Croogo::dispatchEvent('Controller.Nodes.afterAdd', $this, array('data' => $this->request->data));
-				$this->Session->setFlash(__d('croogo', '%s has been saved', $type['Type']['title']), 'default', array('class' => 'success'));
-				$this->Croogo->redirect(array('action' => 'edit', $Node->id));
+			$this->Nodes->patchEntity($node, $this->request->data);
+
+			$node = $this->Nodes->saveNode($node, $typeAlias);
+			if ($node) {
+				Croogo::dispatchEvent('Controller.Nodes.afterAdd', $this, compact('node'));
+				$this->Flash->success(__d('croogo', '%s has been saved', $type->title));
+				$this->Croogo->redirect(['action' => 'edit', $node->id]);
 			} else {
-				$this->Session->setFlash(__d('croogo', '%s could not be saved. Please, try again.', $type['Type']['title']), 'default', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', '%s could not be saved. Please, try again.', $type->title));
 			}
 		} else {
 			$this->Croogo->setReferer();
-			$this->request->data[$Node->alias]['user_id'] = $this->Session->read('Auth.User.id');
 		}
 
-		$this->set('title_for_layout', __d('croogo', 'Create content: %s', $type['Type']['title']));
-		$Node->type = $type['Type']['alias'];
-		$Node->Behaviors->attach('Tree', array(
-			'scope' => array(
-				$Node->escapeField('type') => $Node->type,
-			),
-		));
+		$this->set(compact('node'));
+
+		$this->Nodes->removeBehavior('Tree');
+		$this->Nodes->addBehavior('Tree', [
+			'scope' => [
+				'Nodes.type' => $node->type,
+			],
+		]);
 
 		$this->_setCommonVariables($type);
 	}

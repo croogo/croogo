@@ -10,6 +10,8 @@ $this->Html
 	->addCrumb(__d('croogo', 'Content'), array('action' => 'index'));
 
 if ($this->request->params['action'] == 'add') {
+	$this->assign('title', __d('croogo', 'Create content: %s', $type->title));
+
 	$formUrl = array('action' => 'add', $typeAlias);
 	$this->Html
 		->addCrumb(__d('croogo', 'Create'), array('action' => 'create'))
@@ -102,7 +104,7 @@ echo $this->CroogoForm->create($node, array(
 	<?php
 		$username = isset($node->user->username) ?
 			$node->user->username :
-			$this->Session->read('Auth.User.username');
+			$this->request->session()->read('Auth.User.username');
 		echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing')) .
 			$this->CroogoForm->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
 			$this->CroogoForm->button(__d('croogo', 'Save'), array('button' => 'success')) .
