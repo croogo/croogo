@@ -11,17 +11,25 @@ class ParamsType extends Type {
 
 	public function toPHP($value, Driver $driver)
 	{
-		return (empty($value)) ? '' : $this->paramsToArray($value);
+		if (empty($value) || $value === null) {
+			return $value;
+		}
+
+		return $this->paramsToArray($value);
 	}
 
 	public function marshal($value)
 	{
-		return;
+		if (is_array($value) || $value === null) {
+			return $value;
+		}
+
+		return $this->paramsToArray($value);
 	}
 
 	public function toDatabase($value, Driver $driver)
 	{
-		return;
+		return $this->arrayToParams($value);
 	}
 
 	public function toStatement($value, Driver $driver)
@@ -40,7 +48,6 @@ class ParamsType extends Type {
  * my_param_key=value_here
  * another_param=another_value
  *
- * @param Model $model
  * @param string $params
  * @return array
  */
@@ -71,5 +78,28 @@ class ParamsType extends Type {
 			}
 		}
 		return $output;
+	}
+
+/**
+ * Converts a array of formatted key/value pairs to an string of params
+ *
+ * @param $array
+ * @return array
+ */
+	public function arrayToParams($array) {
+		$params = '';
+
+		$i = 0;
+		foreach ($array as $key => $value) {
+			$params .= $key . '=' . $value;
+
+			if ($i != (count($array) - 1)) {
+				$params .= "\r\n";
+			}
+
+			$i++;
+		}
+
+		return $params;
 	}
 }
