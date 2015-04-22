@@ -97,6 +97,12 @@ class UsersController extends CroogoAppController {
 		$this->Prg->commonProcess();
 		$searchFields = ['role_id', 'name'];
 
+		$this->paginate = [
+			'contain' => [
+				'Roles'
+			]
+		];
+
 		$criteria = $this->Users->find('searchable', $this->Prg->parsedParams());
 
 		$this->set('users', $this->paginate($criteria));

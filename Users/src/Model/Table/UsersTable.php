@@ -8,7 +8,7 @@ class UsersTable extends CroogoTable {
 
 	protected $_displayFields = array(
 		'id',
-		'Role.title' => 'Role',
+		'role.title' => 'Role',
 		'username',
 		'name',
 		'status' => array('type' => 'boolean'),
