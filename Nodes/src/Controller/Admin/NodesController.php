@@ -4,6 +4,7 @@ namespace Croogo\Nodes\Controller\Admin;
 
 use Cake\Event\Event;
 
+use Croogo\Croogo\Controller\Component\CroogoComponent;
 use Croogo\Croogo\Croogo;
 use Croogo\Nodes\Controller\NodesAppController;
 use Croogo\Nodes\Model\Table\NodesTable;
@@ -12,6 +13,7 @@ use Croogo\Nodes\Model\Table\NodesTable;
  * Nodes Controller
  *
  * @property NodesTable Nodes
+ * @property CroogoComponent Croogo
  * @category Nodes.Controller
  * @package  Croogo.Nodes
  * @version  1.0
@@ -28,26 +30,6 @@ class NodesController extends NodesAppController {
 	 * @access public
 	 */
 	public $name = 'Nodes';
-
-	/**
-	 * Components
-	 *
-	 * @var array
-	 * @access public
-	 */
-//	public $components = array(
-//		'Croogo/Croogo.BulkProcess',
-//		'Croogo/Croogo.Recaptcha',
-//		'Search.Prg' => array(
-//			'presetForm' => array(
-//				'paramType' => 'querystring',
-//			),
-//			'commonProcess' => array(
-//				'paramType' => 'querystring',
-//				'filterEmpty' => true,
-//			),
-//		),
-//	);
 
 	/**
 	 * Preset Variable Search
@@ -78,7 +60,8 @@ class NodesController extends NodesAppController {
 	public function initialize() {
 		parent::initialize();
 
-		$this->loadComponent('Paginator');
+		$this->loadComponent('Croogo/Croogo.BulkProcess');
+		$this->loadComponent('Croogo/Croogo.Recaptcha');
 		$this->loadComponent('Search.Prg', [
 			'presetForm' => [
 				'paramType' => 'querystring',
@@ -96,17 +79,17 @@ class NodesController extends NodesAppController {
 	 * @return void
 	 * @access public
 	 */
-//	public function beforeFilter(Event $event) {
-//		parent::beforeFilter($event);
-//
-//		if (isset($this->request->params['slug'])) {
-//			$this->request->params['named']['slug'] = $this->request->params['slug'];
-//		}
-//		if (isset($this->request->params['type'])) {
-//			$this->request->params['named']['type'] = $this->request->params['type'];
-//		}
-////		$this->Security->config('unlockedActions', 'admin_toggle');
-//	}
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
+
+		if (isset($this->request->params['slug'])) {
+			$this->request->params['named']['slug'] = $this->request->params['slug'];
+		}
+		if (isset($this->request->params['type'])) {
+			$this->request->params['named']['type'] = $this->request->params['type'];
+		}
+		$this->Security->config('unlockedActions', 'admin_toggle');
+	}
 
 	/**
 	 * Toggle Node status
