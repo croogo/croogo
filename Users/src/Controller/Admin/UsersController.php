@@ -4,8 +4,13 @@ namespace Croogo\Users\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Network\Email\Email;
+use Cake\Routing\Router;
+use Cake\Utility\Hash;
+use Cake\Utility\Text;
 use Croogo\Croogo\Controller\CroogoAppController;
 use Croogo\Croogo\Croogo;
+use Croogo\Users\Model\Entity\User;
 
 /**
  * Users Controller
@@ -123,55 +128,55 @@ class UsersController extends CroogoAppController {
  * @access public
  */
 	public function add() {
-		if (!empty($this->request->data)) {
-			$this->User->create();
-			$this->request->data['User']['activation_key'] = md5(uniqid());
-			if ($this->User->save($this->request->data)) {
-				$this->request->data['User']['id'] = $this->User->id;
-				$this->__sendActivationEmail();
+		$user = $this->Users->newEntity();
+
+		if ($this->request->is('post')) {
+			$user = $this->Users->patchEntity($user, Hash::merge($this->request->data(), ['activation_key' => Text::uuid()]));
+
+			if ($this->Users->save($user)) {
+
+				if ($this->request->data('notification') != null) {
+					$this->__sendActivationEmail($user);
+				}
 
 				$this->Flash->success(__d('croogo', 'The User has been saved'));
-				return $this->redirect(['action' => 'index']);
+
+				if ($this->request->data('apply') === null) {
+					return $this->redirect(['action' => 'index']);
+				} else {
+					return $this->redirect(['action' => 'edit', $user->id]);
+				}
 			} else {
 				$this->Flash->error(__d('croogo', 'The User could not be saved. Please, try again.'));
-				unset($this->request->data['User']['password']);
 			}
-		} else {
-			$this->request->data['User']['role_id'] = 2; // default Role: Registered
 		}
-		$roles = $this->User->Role->find('list');
-		$this->set(compact('roles'));
+
+		$this->set('user', $user);
+		$this->set('roles', $this->Users->Roles->find('list'));
+		$this->set('editFields', $this->Users->editFields());
 	}
 
 /**
  * Send activation email
  */
-	private function __sendActivationEmail() {
-		if (empty($this->request->data['User']['notification'])) {
-			return;
-		}
-
-		$user = $this->request->data['User'];
-		$activationUrl = Router::url([
-			'prefix' => 'admin',
-			'plugin' => 'users',
-			'controller' => 'users',
+	private function __sendActivationEmail(User $user) {
+		$url = Router::url([
+			'prefix' => false,
+			'plugin' => 'Croogo/Users',
+			'controller' => 'Users',
 			'action' => 'activate',
-			$user['username'],
-			$user['activation_key'],
+			$user->username,
+			$user->activation_key,
 		], true);
-		$this->_sendEmail(
-			[Configure::read('Site.title'), $this->_getSenderEmail()],
-			$user['email'],
-			__d('croogo', '[%s] Please activate your account', Configure::read('Site.title')),
-			'Users.register',
-			'user activation',
-			$this->theme,
-			[
-				'user' => $this->request->data,
-				'url' => $activationUrl,
-			]
-		);
+
+
+		$email = new Email('default');
+		$email->from([$this->_getSenderEmail() => Configure::read('Site.title')])
+			->to($user->email)
+			->subject(__d('croogo', '[{0}] Please activate your account', Configure::read('Site.title')))
+			->template('Croogo/Users.register')
+			->viewVars(compact('url', 'user'))
+			->send();
 	}
 
 /**
@@ -182,19 +187,27 @@ class UsersController extends CroogoAppController {
  * @access public
  */
 	public function edit($id = null) {
-		if (!empty($this->request->data)) {
-			if ($this->User->save($this->request->data)) {
+		$user = $this->Users->get($id);
+
+		if ($this->request->is('put')) {
+			$this->Users->patchEntity($user, $this->request->data());
+
+			if ($this->Users->save($user)) {
 				$this->Flash->success(__d('croogo', 'The User has been saved'));
-				return $this->Croogo->redirect(['action' => 'edit', $this->User->id]);
+
+				if ($this->request->data('apply') === null) {
+					return $this->redirect(['action' => 'index']);
+				} else {
+					return $this->redirect(['action' => 'edit', $user->id]);
+				}
 			} else {
 				$this->Flash->error(__d('croogo', 'The User could not be saved. Please, try again.'));
 			}
-		} else {
-			$this->request->data = $this->User->read(null, $id);
 		}
-		$roles = $this->User->Role->find('list');
-		$this->set(compact('roles'));
-		$this->set('editFields', $this->User->editFields());
+
+		$this->set('user', $user);
+		$this->set('roles', $this->Users->Roles->find('list'));
+		$this->set('editFields', $this->Users->editFields());
 	}
 
 /**
@@ -205,19 +218,20 @@ class UsersController extends CroogoAppController {
  * @access public
  */
 	public function reset_password($id = null) {
-		if (!$id && empty($this->request->data)) {
-			$this->Flash->error(__d('croogo', 'Invalid User'));
-			return $this->redirect(['action' => 'index']);
-		}
-		if (!empty($this->request->data)) {
-			if ($this->User->save($this->request->data)) {
+		$user = $this->Users->get($id);
+
+		if ($this->request->is('put')) {
+			$user = $this->Users->patchEntity($user, $this->request->data());
+
+			if ($this->Users->save($user)) {
 				$this->Flash->success(__d('croogo', 'Password has been reset.'));
 				return $this->redirect(['action' => 'index']);
 			} else {
 				$this->Flash->error(__d('croogo', 'Password could not be reset. Please, try again.'));
 			}
 		}
-		$this->request->data = $this->User->findById($id);
+
+		$this->set('user', $user);
 	}
 
 /**
@@ -228,17 +242,14 @@ class UsersController extends CroogoAppController {
  * @access public
  */
 	public function delete($id = null) {
-		if (!$id) {
-			$this->Flash->error(__d('croogo', 'Invalid id for User'));
-			return $this->redirect(['action' => 'index']);
-		}
-		if ($this->User->delete($id)) {
+		$user = $this->Users->get($id);
+
+		if ($this->Users->delete($user)) {
 			$this->Flash->success(__d('croogo', 'User deleted'));
-			return $this->redirect(['action' => 'index']);
 		} else {
 			$this->Flash->error(__d('croogo', 'User cannot be deleted'));
-			return $this->redirect(['action' => 'index']);
 		}
+		return $this->redirect(['action' => 'index']);
 	}
 
 /**
@@ -280,7 +291,11 @@ class UsersController extends CroogoAppController {
  */
 	public function logout() {
 		Croogo::dispatchEvent('Controller.Users.adminLogoutSuccessful', $this);
-		$this->Flash->success(__d('croogo', 'Log out successful.'));
+		$this->Flash->success(__d('croogo', 'Log out successful.'), ['key' => 'auth']);
 		return $this->redirect($this->Auth->logout());
+	}
+
+	protected function _getSenderEmail() {
+		return 'croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME']));
 	}
 }
