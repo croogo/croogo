@@ -73,69 +73,6 @@ class CroogoTable extends Table {
 		}
 	}
 
-
-	/**
- * Override find function to use caching
- *
- * Caching can be done either by unique names,
- * or prefixes where a hashed value of $options array is appended to the name
- *
- * @param mixed $type Type of find operation (all / first / count / neighbors / list / threaded)
- * @param array $options Option fields (conditions / fields / joins / limit / offset / order / page / group / callbacks)
- * @return array Array of records, or Null of failure
- * @access public
- */
-	public function find($type = 'first', $options = array()) {
-		if ($this->useCache) {
-			$cachedResults = $this->_findCached($type, $options);
-			if ($cachedResults) {
-				return $cachedResults;
-			}
-		}
-
-		$args = func_get_args();
-		$results = call_user_func_array(array('parent', 'find'), $args);
-		if ($this->useCache) {
-			if (isset($options['cache']['name']) && isset($options['cache']['config'])) {
-				$cacheName = $options['cache']['name'];
-			} elseif (isset($options['cache']['prefix']) && isset($options['cache']['config'])) {
-				$cacheName = $options['cache']['prefix'] . md5(serialize($options));
-			}
-
-			if (isset($cacheName)) {
-				$cacheName .= '_' . Configure::read('Config.language');
-				Cache::write($cacheName, $results, $options['cache']['config']);
-				$this->cacheConfig = $options['cache']['config'];
-			}
-		}
-		return $results;
-	}
-
-/**
- * Check if find() was already cached
- *
- * @param mixed $type
- * @param array $options
- * @return array Array of records, or False when no records found in cache
- * @access private
- */
-	protected function _findCached($type, $options) {
-		if (isset($options['cache']['name']) && isset($options['cache']['config'])) {
-			$cacheName = $options['cache']['name'];
-		} elseif (isset($options['cache']['prefix']) && isset($options['cache']['config'])) {
-			$cacheName = $options['cache']['prefix'] . md5(serialize($options));
-		} else {
-			return false;
-		}
-
-		$cacheName .= '_' . Configure::read('Config.language');
-		$results = Cache::read($cacheName, $options['cache']['config']);
-		if ($results) {
-			return $results;
-		}
-		return false;
-	}
-
 /**
  * Updates multiple model records based on a set of conditions.
  *
