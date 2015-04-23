@@ -35,6 +35,7 @@
 	},
 	"autoload": {
 		"psr-4": {
+			"Croogo\\": "src",
 			"App\\": "Croogo/tests/test_app/src"
 		}
 	},
