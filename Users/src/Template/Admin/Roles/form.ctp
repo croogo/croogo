@@ -1,63 +1,62 @@
 <?php
-$this->extend('/Common/admin_edit');
-$this->Html
-	->addCrumb($this->Html->icon('home'), '/admin')
-	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Roles'), array('plugin' => 'users', 'controller' => 'roles', 'action' => 'index'));
+$this->extend('Croogo/Croogo./Common/admin_edit');
+$this->CroogoHtml
+	->addCrumb($this->CroogoHtml->icon('home'), '/admin')
+	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Roles'), array('plugin' => 'Croogo/Users', 'controller' => 'Roles', 'action' => 'index'));
 
-if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->request->data['Role']['title'], '/' . $this->request->url);
+if ($this->request->param('action') == 'edit') {
+	$this->CroogoHtml->addCrumb($role->title, '/' . $this->request->url);
 }
 
-if ($this->request->params['action'] == 'admin_add') {
-	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
+if ($this->request->param('action') == 'add') {
+	$this->CroogoHtml->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 ?>
-<?php echo $this->Form->create('Role');?>
+<?php echo $this->CroogoForm->create($role);?>
 
 <div class="row-fluid">
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
-		<?php
+			<?php
 			echo $this->Croogo->adminTab(__d('croogo', 'Role'), '#role-main');
 			echo $this->Croogo->adminTabs();
-		?>
+			?>
 		</ul>
 
 		<div class="tab-content">
 			<div id="role-main" class="tab-pane">
-			<?php
-				echo $this->Form->input('id');
-				$this->Form->inputDefaults(array(
-					'label' => false,
+				<?php
+				echo $this->CroogoForm->input('id');
+				$this->CroogoForm->templates(array(
 					'class' => 'span10',
 				));
-				echo $this->Form->input('title', array(
+				echo $this->CroogoForm->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));
-				echo $this->Form->input('alias', array(
+				echo $this->CroogoForm->input('alias', array(
 					'label' => __d('croogo', 'Alias'),
 				));
-			?>
+				?>
 			</div>
 
-		<?php echo $this->Croogo->adminTabs(); ?>
+			<?php echo $this->Croogo->adminTabs(); ?>
 		</div>
 	</div>
 	<div class="span4">
-	<?php
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
-			$this->Html->link(
+		<?php
+		echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing')) .
+			$this->CroogoForm->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+			$this->CroogoForm->button(__d('croogo', 'Save'), array('button' => 'success')) .
+			$this->CroogoHtml->link(
 				__d('croogo', 'Cancel'), array('action' => 'index'),
 				array('button' => 'danger')
 			) .
-			$this->Html->endBox();
+			$this->CroogoHtml->endBox();
 		echo $this->Croogo->adminBoxes();
-	?>
+		?>
 	</div>
 
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->CroogoForm->end(); ?>
