@@ -2,7 +2,7 @@
 
 namespace Croogo\Users\Controller\Admin;
 
-use Croogo\Users\Controller\UsersAppController;
+use Croogo\Croogo\Controller\CroogoAppController;
 
 /**
  * Roles Controller
@@ -14,7 +14,7 @@ use Croogo\Users\Controller\UsersAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class RolesController extends UsersAppController {
+class RolesController extends CroogoAppController {
 
 /**
  * Admin index
@@ -22,13 +22,9 @@ class RolesController extends UsersAppController {
  * @return void
  * @access public
  */
-	public function admin_index() {
-		$this->set('title_for_layout', __d('croogo', 'Roles'));
-
-		$this->Role->recursive = 0;
-		$this->paginate['Role']['order'] = "Role.id ASC";
-		$this->set('roles', $this->paginate());
-		$this->set('displayFields', $this->Role->displayFields());
+	public function index() {
+		$this->set('roles', $this->Roles->find('all'));
+		$this->set('displayFields', $this->Roles->displayFields());
 	}
 
 /**
@@ -37,18 +33,26 @@ class RolesController extends UsersAppController {
  * @return void
  * @access public
  */
-	public function admin_add() {
-		$this->set('title_for_layout', __d('croogo', 'Add Role'));
+	public function add() {
+		$role = $this->Roles->newEntity();
 
-		if (!empty($this->request->data)) {
-			$this->Role->create();
-			if ($this->Role->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Role has been saved'), 'default', array('class' => 'success'));
-				return $this->redirect(array('action' => 'index'));
+		if ($this->request->is('post')) {
+			$role = $this->Roles->patchEntity($role, $this->request->data());
+
+			if ($this->Roles->save($role)) {
+				$this->Flash->success(__d('croogo', 'The Role has been saved'));
+
+				if ($this->request->data('apply') === null) {
+					return $this->redirect(['action' => 'index']);
+				} else {
+					return $this->redirect(['action' => 'edit', $role->id]);
+				}
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Role could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'The Role could not be saved. Please, try again.'));
 			}
 		}
+
+		$this->set('role', $role);
 	}
 
 /**
@@ -58,24 +62,26 @@ class RolesController extends UsersAppController {
  * @return void
  * @access public
  */
-	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __d('croogo', 'Edit Role'));
+	public function edit($id = null) {
+		$role = $this->Roles->get($id);
 
-		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Role'), 'default', array('class' => 'error'));
-			return $this->redirect(array('action' => 'index'));
-		}
-		if (!empty($this->request->data)) {
-			if ($this->Role->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Role has been saved'), 'default', array('class' => 'success'));
-				return $this->Croogo->redirect(array('action' => 'edit', $this->Role->id));
+		if ($this->request->is('put')) {
+			$this->Roles->patchEntity($role, $this->request->data());
+
+			if ($this->Roles->save($role)) {
+				$this->Flash->success(__d('croogo', 'The Role has been saved'));
+
+				if ($this->request->data('apply') === null) {
+					return $this->redirect(['action' => 'index']);
+				} else {
+					return $this->redirect(['action' => 'edit', $role->id]);
+				}
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Role could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'The Role could not be saved. Please, try again.'));
 			}
 		}
-		if (empty($this->request->data)) {
-			$this->request->data = $this->Role->read(null, $id);
-		}
+
+		$this->set('role', $role);
 	}
 
 /**
@@ -85,15 +91,15 @@ class RolesController extends UsersAppController {
  * @return void
  * @access public
  */
-	public function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Role'), 'default', array('class' => 'error'));
-			return $this->redirect(array('action' => 'index'));
+	public function delete($id = null) {
+		$role = $this->Roles->get($id);
+
+		if ($this->Roles->delete($role)) {
+			$this->Flash->success(__d('croogo', 'Role deleted'));
+		} else {
+			$this->Flash->error(__d('croogo', 'Role cannot be deleted'));
 		}
-		if ($this->Role->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Role deleted'), 'default', array('class' => 'success'));
-			return $this->redirect(array('action' => 'index'));
-		}
+		return $this->redirect(['action' => 'index']);
 	}
 
 }
