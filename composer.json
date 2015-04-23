@@ -1,6 +1,7 @@
 {
 	"name": "croogo/croogo",
 	"description": "Croogo - Open Source CMS built for everyone",
+	"type": "cakephp-plugin",
 	"homepage": "http://github.com/croogo/croogo",
 	"license": "MIT",
 	"authors": [
