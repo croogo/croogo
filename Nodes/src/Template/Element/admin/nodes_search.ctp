@@ -13,6 +13,7 @@ $url = isset($url) ? $url : array('action' => 'index');
 			$this->Form->templates(array(
 				'label' => false,
 				'class' => 'span11',
+				'submitContainer' => '<div class="input submit span2">{{content}}</div>'
 			));
 
 			echo $this->Form->input('chooser', array(
@@ -55,9 +56,7 @@ $url = isset($url) ? $url : array('action' => 'index');
 
 			}
 
-			echo $this->Form->submit(__d('croogo', 'Filter'), array('class' => 'btn',
-				'div' => 'input submit span2'
-			));
+			echo $this->Form->submit(__d('croogo', 'Filter'), array('class' => 'btn'));
 			echo $this->Form->end();
 			?>
 		</div>
