@@ -7,28 +7,28 @@ use Croogo\Croogo\Model\Table\CroogoTable;
 
 class UsersTable extends CroogoTable {
 
-	protected $_displayFields = array(
+	protected $_displayFields = [
 		'id',
 		'role.title' => 'Role',
 		'username',
 		'name',
-		'status' => array('type' => 'boolean'),
+		'status' => ['type' => 'boolean'],
 		'email',
-	);
+	];
 
-	protected $_editFields = array(
+	protected $_editFields = [
 		'role_id',
 		'username',
 		'name',
 		'email',
 		'website',
 		'status',
-	);
+	];
 
-	public $filterArgs = array(
-		'name' => array('type' => 'like', 'field' => array('Users.name', 'Users.username')),
-		'role_id' => array('type' => 'value'),
-	);
+	public $filterArgs = [
+		'name' => ['type' => 'like', 'field' => ['Users.name', 'Users.username']],
+		'role_id' => ['type' => 'value'],
+	];
 
 	public function initialize(array $config) {
 		parent::initialize($config);
