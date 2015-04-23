@@ -260,17 +260,25 @@ class UsersController extends CroogoAppController {
  */
 	public function login() {
 		$this->layout = 'admin_login';
+
 		if ($this->Auth->user('id')) {
 			if (!$this->request->session()->check('Message.auth')) {
 				$this->Flash->alert(__d('croogo', 'You are already logged in'), ['key' => 'auth']);
 			}
 			return $this->redirect($this->Auth->redirectUrl());
 		}
+
 		if ($this->request->is('post')) {
 			Croogo::dispatchEvent('Controller.Users.beforeAdminLogin', $this);
 			$user = $this->Auth->identify();
 			if ($user) {
 				$this->Auth->setUser($user);
+
+				if ($this->Auth->authenticationProvider()->needsPasswordRehash()) {
+					$user = $this->Users->get($user['id']);
+					$user->password = $this->request->data('password');
+					$this->Users->save($user);
+				}
 
 				Croogo::dispatchEvent('Controller.Users.adminLoginSuccessful', $this);
 				return $this->redirect($this->Auth->redirectUrl());
