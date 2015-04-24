@@ -1,20 +1,20 @@
 <?php
 
-$this->extend('/Common/admin_edit');
+$this->extend('Croogo/Croogo./Common/admin_edit');
 
-$this->Html->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Types'), array('plugin' => 'taxonomy', 'controller' => 'types', 'action' => 'index'));
+$this->CroogoHtml->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Types'), array('plugin' => 'Croogo/Taxonomy', 'controller' => 'Types', 'action' => 'index'));
 
-if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->request->data['Type']['title'], '/' . $this->request->url);
+if ($this->request->params['action'] == 'edit') {
+	$this->CroogoHtml->addCrumb($this->request->data['Type']['title'], '/' . $this->request->url);
 }
 
-if ($this->request->params['action'] == 'admin_add') {
-	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
+if ($this->request->params['action'] == 'add') {
+	$this->CroogoHtml->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
-echo $this->Form->create('Type');
+echo $this->CroogoForm->create($type);
 
 ?>
 <div class="row-fluid">
@@ -33,18 +33,18 @@ echo $this->Form->create('Type');
 		<div class="tab-content">
 			<div id="type-main" class="tab-pane">
 			<?php
-				echo $this->Form->input('id');
-				$this->Form->inputDefaults(array(
+				echo $this->CroogoForm->input('id');
+				$this->CroogoForm->templates(array(
 					'label' => false,
 					'class' => 'span10',
 				));
-				echo $this->Form->input('title', array(
+				echo $this->CroogoForm->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));
-				echo $this->Form->input('alias', array(
+				echo $this->CroogoForm->input('alias', array(
 					'label' => __d('croogo', 'Alias'),
 				));
-				echo $this->Form->input('description', array(
+				echo $this->CroogoForm->input('description', array(
 					'label' => __d('croogo', 'Description'),
 				));
 			?>
@@ -52,7 +52,7 @@ echo $this->Form->create('Type');
 
 			<div id="type-taxonomy" class="tab-pane">
 			<?php
-				echo $this->Form->input('Vocabulary.Vocabulary', array(
+				echo $this->CroogoForm->input('Vocabulary.Vocabulary', array(
 					'class' => false,
 				));
 			?>
@@ -60,7 +60,7 @@ echo $this->Form->create('Type');
 
 			<div id="type-comments" class="tab-pane">
 			<?php
-				echo $this->Form->input('comment_status', array(
+				echo $this->CroogoForm->input('comment_status', array(
 					'type' => 'radio',
 					'options' => array(
 						'0' => __d('croogo', 'Disabled'),
@@ -72,21 +72,21 @@ echo $this->Form->create('Type');
 					'label' => true,
 					'class' => false,
 				));
-				echo $this->Form->input('comment_approve', array(
+				echo $this->CroogoForm->input('comment_approve', array(
 					'label' => 'Auto approve comments',
 					'class' => false,
 				));
-				echo $this->Form->input('comment_spam_protection', array(
+				echo $this->CroogoForm->input('comment_spam_protection', array(
 					'label' => __d('croogo', 'Spam protection (requires Akismet API key)'),
 					'class' => false,
 				));
-				echo $this->Form->input('comment_captcha', array(
+				echo $this->CroogoForm->input('comment_captcha', array(
 					'label' => __d('croogo', 'Use captcha? (requires Recaptcha API key)'),
 					'class' => false,
 				));
-				echo $this->Html->link(__d('croogo', 'You can manage your API keys here.'), array(
-					'plugin' => 'settings',
-					'controller' => 'settings',
+				echo $this->CroogoHtml->link(__d('croogo', 'You can manage your API keys here.'), array(
+					'plugin' => 'Croogo/Settings',
+					'controller' => 'Settings',
 					'action' => 'prefix',
 					'Service'
 				));
@@ -95,7 +95,7 @@ echo $this->Form->create('Type');
 
 			<div id="type-params" class="tab-pane">
 			<?php
-				echo $this->Form->input('Type.params', array(
+				echo $this->CroogoForm->input('Type.params', array(
 					'label' => __d('croogo', 'Params'),
 				));
 			?>
@@ -107,26 +107,26 @@ echo $this->Form->create('Type');
 
 	<div class="span4">
 	<?php
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
-			$this->Html->link(
+		echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing')) .
+			$this->CroogoForm->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+			$this->CroogoForm->button(__d('croogo', 'Save'), array('button' => 'success')) .
+			$this->CroogoHtml->link(
 				__d('croogo', 'Cancel'),
 				array('action' => 'index'),
 				array('button' => 'danger')
 			) .
-			$this->Form->input('format_show_author', array(
+			$this->CroogoForm->input('format_show_author', array(
 				'label' => __d('croogo', 'Show author\'s name'),
 				'class' => false,
 			)) .
-			$this->Form->input('format_show_date', array(
+			$this->CroogoForm->input('format_show_date', array(
 				'label' => __d('croogo', 'Show date'),
 				'class' => false,
 			)) .
-			$this->Html->endBox();
+			$this->CroogoHtml->endBox();
 
 		echo $this->Croogo->adminBoxes();
 	?>
 	</div>
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->CroogoForm->end(); ?>

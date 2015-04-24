@@ -4,10 +4,12 @@ namespace Croogo\Taxonomy\Controller\Admin;
 
 use Cake\Event\Event;
 use Croogo\Taxonomy\Controller\TaxonomyAppController;
+use Croogo\Taxonomy\Model\Table\TypesTable;
 
 /**
  * Types Controller
  *
+ * @property TypesTable Types
  * @category Controller
  * @package  Croogo
  * @version  1.0
@@ -75,17 +77,22 @@ class TypesController extends TaxonomyAppController {
 	public function add() {
 		$this->set('title_for_layout', __d('croogo', 'Add Type'));
 
+		$type = $this->Types->newEntity();
+
 		if (!empty($this->request->data)) {
-			$this->Type->create();
-			if ($this->Type->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Type has been saved'), 'default', array('class' => 'success'));
-				$this->Croogo->redirect(array('action' => 'edit', $this->Type->id));
+			$type = $this->Types->patchEntity($type, $this->request->data);
+			$type = $this->Types->save($type);
+			if ($type) {
+				$this->Flash->success(__d('croogo', 'The Type has been saved'));
+				$this->Croogo->redirect(array('action' => 'edit', $type->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Type could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'The Type could not be saved. Please, try again.'));
 			}
 		}
 
-		$vocabularies = $this->Type->Vocabulary->find('list');
+		$this->set(compact('type'));
+
+		$vocabularies = $this->Types->Vocabularies->find('list');
 		$this->set(compact('vocabularies'));
 	}
 
