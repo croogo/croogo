@@ -2,6 +2,8 @@
 
 namespace Croogo\Acl\Model\Table;
 use Cake\Utility\Hash;
+use Cake\ORM\TableRegistry;
+use Cake\Core\Configure;
 
 /**
  * AclPermission Model
@@ -93,7 +95,7 @@ class PermissionsTable extends \Acl\Model\Table\PermissionsTable {
 		}
 		$aroIds = Hash::extract($aro, '{n}.Aro.id');
 		if (Configure::read('Access Control.multiRole')) {
-			$RolesUser = ClassRegistry::init('Users.RolesUser');
+			$RolesUser = TableRegistry::get('Users.RolesUser');
 			$rolesAro = $RolesUser->getRolesAro($userId);
 			$aroIds = array_unique(Hash::merge($aroIds, $rolesAro));
 		}
@@ -136,20 +138,20 @@ class PermissionsTable extends \Acl\Model\Table\PermissionsTable {
  */
 	public function format($acos, $aros, $options = array()) {
 		$options = Hash::merge(array(
-			'model' => 'Role',
+			'model' => 'Roles',
 			'perms' => true
 		), $options);
 		extract($options);
 		$permissions = array();
 
 		foreach ($acos as $aco) {
-			$acoId = $aco['Aco']['id'];
-			$acoAlias = $aco['Aco']['alias'];
+			$acoId = $aco->id;
+			$acoAlias = $aco->alias;
 
-			$path = $this->Aco->getPath($acoId);
-			$path = join('/', Hash::extract($path, '{n}.Aco.alias'));
+			$path = $this->Acos->find('path', ['for' => $acoId]);
+			$path = join('/', collection($path)->extract('alias')->toArray());
 			$data = array(
-				'children' => $this->Aco->childCount($acoId, true),
+				'children' => $this->Acos->childCount($aco, true),
 				'depth' => substr_count($path, '/'),
 			);
 

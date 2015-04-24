@@ -33,10 +33,10 @@ class ArosTable extends \Acl\Model\Table\ArosTable {
 		$aros = $this->find('all', array(
 			'conditions' => array(
 				'Aros.model' => 'Roles',
-				'Aros.foreign_key' => array_keys($roles->toArray()),
+				'Aros.foreign_key IN' => array_keys($roles->toArray()),
 			),
 		));
-		return collection($aros)->combine('key','id');
+		return collection($aros)->combine('foreign_key','id')->toArray();
 	}
 
 }

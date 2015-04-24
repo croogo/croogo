@@ -88,7 +88,7 @@ class PermissionsController extends CroogoAppController {
 				$this->request->query,
 				array('perms' => null, 'urls' => null)
 			);
-			$cacheName = 'permissions_aco_' . $root['Aco']['id'];
+			$cacheName = 'permissions_aco_' . $root->id;
 			$permissions = Cache::read($cacheName, 'permissions');
 			if ($permissions === false) {
 				$permissions = $this->Permissions->format($acos, $aros, $options);

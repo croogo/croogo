@@ -31,10 +31,8 @@ class AcosTable extends \Acl\Model\Table\AcosTable {
  */
 	public function getChildren($acoId, $fields = array()) {
 		$fields = Hash::merge(array('id', 'parent_id', 'alias'), $fields);
-		$acos = $this->find('children', ['for' => $acoId]);
-		foreach ($acos as $aco) {
-			$aco->children = $this->childCount($aco);;
-		}
+		$acos = $this->find('children', ['for' => $acoId])
+			->find('threaded');
 		return $acos;
 	}
 
