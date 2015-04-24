@@ -37,7 +37,7 @@ class CroogoAppController extends Controller {
  */
 	protected $_defaultComponents = array(
 		'Croogo/Croogo.Croogo',
-		'Croogo/Acl.AclFilter',
+		'Croogo/Acl.Filter',
 		'Security',
 		'Acl.Acl',
 		'Auth' => [
@@ -273,7 +273,7 @@ class CroogoAppController extends Controller {
  */
 	public function beforeFilter(Event $event) {
 		parent::beforeFilter($event);
-		$aclFilterComponent = 'AclFilter';
+		$aclFilterComponent = 'Filter';
 		if (empty($this->{$aclFilterComponent})) {
 			throw new MissingComponentException(array('class' => $aclFilterComponent));
 		}
