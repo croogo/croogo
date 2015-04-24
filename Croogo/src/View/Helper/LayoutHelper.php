@@ -148,8 +148,8 @@ class LayoutHelper extends Helper {
  */
 	public function js() {
 		$croogo = array();
-		if (isset($this->request->params['locale'])) {
-			$croogo['basePath'] = Router::url('/' . $this->request->params['locale'] . '/');
+		if (!empty($this->request->param('locale'))) {
+			$croogo['basePath'] = Router::url('/' . $this->request->param('locale') . '/');
 		} else {
 			$croogo['basePath'] = Router::url('/');
 		}
@@ -157,6 +157,7 @@ class LayoutHelper extends Helper {
 			'plugin' => null,
 			'controller' => null,
 			'action' => null,
+			'prefix' => null,
 			'named' => null,
 		);
 		$croogo['params'] = array_intersect_key(
