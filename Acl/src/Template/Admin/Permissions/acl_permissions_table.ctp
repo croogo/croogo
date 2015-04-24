@@ -1,20 +1,21 @@
 <table class="table permission-table">
-<?php
-$roleTitles = array_values($roles->toArray());
-$roleIds = array_keys($roles->toArray());
+	<?php
+	$roleTitles = array_values($roles->toArray());
+	$roleIds = array_keys($roles->toArray());
 
-$tableHeaders = array(
-	__d('croogo', 'Id'),
-	__d('croogo', 'Alias'),
-);
-$tableHeaders = array_merge($tableHeaders, $roleTitles);
-$tableHeaders = $this->Html->tableHeaders($tableHeaders);
-?>
+	$tableHeaders = array(
+		__d('croogo', 'Id'),
+		__d('croogo', 'Alias'),
+	);
+	$tableHeaders = array_merge($tableHeaders, $roleTitles);
+	$tableHeaders = $this->Html->tableHeaders($tableHeaders);
+	?>
+
 	<thead>
 		<?php echo $tableHeaders; ?>
 	</thead>
-<?php
 
+	<?php
 	$icon = '<i class="pull-right"></i>';
 	$currentController = '';
 	foreach ($acos as $index => $aco) {
@@ -51,10 +52,10 @@ $tableHeaders = $this->Html->tableHeaders($tableHeaders);
 			$row[] = '';
 		}
 
-		echo $this->Html->tableCells(array($row), $oddOptions, $evenOptions);
+		echo $this->Html->tableCells($row, $oddOptions, $evenOptions);
 	}
+	?>
 
-?>
 	<thead>
 		<?php echo $tableHeaders; ?>
 	</thead>
