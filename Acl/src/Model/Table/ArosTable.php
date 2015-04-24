@@ -16,15 +16,6 @@ use Cake\Utility\Hash;
 class ArosTable extends \Acl\Model\Table\ArosTable {
 
 /**
- * hasAndBelongsToMany
- */
-	public $hasAndBelongsToMany = array(
-		'Aco' => array(
-			'with' => 'Acl.AclPermission',
-		),
-	);
-
-/**
  * Get a list of Role AROs
  *
  * @return array array of Aro.id indexed by Role.id

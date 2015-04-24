@@ -16,15 +16,6 @@ use Cake\Utility\Hash;
 class AcosTable extends \Acl\Model\Table\AcosTable {
 
 /**
- * hasAndBelongsToMany
- */
-	public $hasAndBelongsToMany = array(
-		'Aro' => array(
-			'with' => 'Acl.AclPermission',
-		),
-	);
-
-/**
  * getChildren
  *
  * @param integer aco id

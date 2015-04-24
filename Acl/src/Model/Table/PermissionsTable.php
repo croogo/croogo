@@ -18,22 +18,6 @@ use Cake\Core\Configure;
 class PermissionsTable extends \Acl\Model\Table\PermissionsTable {
 
 /**
- * belongsTo
- *
- * @var array
- */
-	public $belongsTo = array(
-		'Aro' => array(
-			'className' => 'Acl.AclAro',
-			'foreignKey' => 'aro_id',
-		),
-		'Aco' => array(
-			'className' => 'Acl.AclAco',
-			'foreignKey' => 'aco_id',
-		),
-	);
-
-/**
  * afterSave
  */
 	public function afterSave($created, $options = array()) {
