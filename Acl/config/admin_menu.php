@@ -9,7 +9,7 @@ CroogoNav::add('sidebar', 'users.children.permissions', array(
 	'url' => array(
 		'prefix' => 'admin',
 		'plugin' => 'Croogo/Acl',
-		'controller' => 'AclPermissions',
+		'controller' => 'Permissions',
 		'action' => 'index',
 	),
 	'weight' => 30,
