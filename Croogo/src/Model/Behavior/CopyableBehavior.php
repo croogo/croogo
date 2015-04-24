@@ -2,8 +2,10 @@
 
 namespace Croogo\Croogo\Model\Behavior;
 
-use App\Model\ModelBehavior;
-use Croogo\Lib\Croogo;
+use Cake\Network\Exception\NotImplementedException;
+use Cake\ORM\Behavior;
+use Cake\ORM\Table;
+
 /**
  * Copyable Behavior class file.
  *
@@ -26,7 +28,7 @@ use Croogo\Lib\Croogo;
  * @link http://github.com/jamienay/copyable_behavior
  * @link http://www.croogo.org
  */
-class CopyableBehavior extends ModelBehavior {
+class CopyableBehavior extends Behavior {
 
 /**
  * Behavior settings
@@ -76,29 +78,19 @@ class CopyableBehavior extends ModelBehavior {
 	);
 
 /**
- * Configuration method.
- *
- * @param object $Model Model object
- * @param array $settings Config array
- * @return boolean
- */
-	public function setup(Model $Model, $settings = array()) {
-		$this->settings[$Model->alias] = array_merge($this->_defaults, $settings);
-		return true;
-	}
-
-/**
  * Copy method.
  *
- * @param object $Model model object
+ * @param Table $table model object
  * @param mixed $id String or integer model ID
  * @return boolean
  */
-	public function copy(Model $Model, $id) {
-		$this->generateContain($Model);
-		$this->record = $Model->find('first', array(
+	public function copy(Table $table, $id) {
+		throw new NotImplementedException(__d('croogo', 'The copyable behavior hasn\'t been implemented yet'));
+
+		$this->generateContain($table);
+		$this->record = $table->find('first', array(
 			'conditions' => array(
-				$Model->escapeField() => $id
+				$table->escapeField() => $id
 			),
 			'contain' => $this->contain
 		));
@@ -107,13 +99,13 @@ class CopyableBehavior extends ModelBehavior {
 			return false;
 		}
 
-		if (!$this->_convertData($Model)) {
+		if (!$this->_convertData($table)) {
 			return false;
 		}
 
 		$result = false;
 		try {
-			$result = $this->_copyRecord($Model);
+			$result = $this->_copyRecord($table);
 		} catch (PDOException $e) {
 			$this->log('Error executing _copyRecord: ' . $e->getMessage());
 		}
