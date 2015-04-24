@@ -122,7 +122,7 @@ AclPermissions.tableToggle = function() {
 					level: data.level,
 					classes: classes.trim()
 				});
-				if (Croogo.params.controller == 'acl_permissions') {
+				if (Croogo.params.controller == 'Permissions') {
 					text += renderRoles(data.aros, acoId, aco);
 				} else {
 					text += AclPermissions.templates.editLinks(aco['url']);
