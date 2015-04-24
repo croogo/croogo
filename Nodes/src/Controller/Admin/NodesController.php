@@ -330,8 +330,8 @@ class NodesController extends NodesAppController {
 	 * @access public
 	 */
 	public function process() {
-		$Node = $this->{$this->modelClass};
-		list($action, $ids) = $this->BulkProcess->getRequestVars($Node->alias);
+		list($action, $ids) = $this->BulkProcess->getRequestVars($this->Nodes->alias());
+
 
 		$options = array(
 			'multiple' => array('copy' => false),
@@ -344,7 +344,7 @@ class NodesController extends NodesAppController {
 				'copy' => __d('croogo', 'Nodes copied'),
 			),
 		);
-		return $this->BulkProcess->process($Node, $action, $ids, $options);
+		return $this->BulkProcess->process($this->Nodes, $action, $ids, $options);
 	}
 
 	/**

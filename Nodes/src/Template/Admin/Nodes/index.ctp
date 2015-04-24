@@ -28,7 +28,8 @@ echo $this->Form->create(
 		'url' => [
 			'action' => 'process'
 		],
-		'class' => 'form-inline'
+		'class' => 'form-inline',
+		'id' => 'NodeAction'
 	)
 );
 
@@ -54,7 +55,7 @@ echo $this->Form->create(
 			<tbody>
 			<?php foreach ($nodes as $node): ?>
 				<tr>
-					<td><?php echo $this->Form->checkbox('Node.' . $node->id . '.id', array('class' => 'row-select')); ?></td>
+					<td><?php echo $this->Form->checkbox('Nodes.' . $node->id . '.id', array('class' => 'row-select')); ?></td>
 					<td><?php echo $node->id; ?></td>
 					<td>
 						<span>
@@ -126,7 +127,7 @@ echo $this->Form->create(
 		<div class="row-fluid">
 			<div id="bulk-action" class="control-group">
 			<?php
-				echo $this->Form->input('Node.action', array(
+				echo $this->Form->input('Nodes.action', array(
 					'label' => __d('croogo', 'Applying to selected'),
 					'div' => 'input inline',
 					'options' => array(
@@ -145,7 +146,7 @@ echo $this->Form->create(
 					$jsVarName = uniqid('confirmMessage_');
 					echo $this->Form->button(__d('croogo', 'Submit'), array(
 						'type' => 'button',
-						'onclick' => sprintf('return Nodes.confirmProcess(app.%s)', $jsVarName),
+						'onclick' => sprintf('return Nodes.confirmProcess(%s)', $jsVarName),
 					));
 				?>
 					<script>
