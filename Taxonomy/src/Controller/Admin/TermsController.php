@@ -1,8 +1,9 @@
 <?php
 
-namespace Croogo\Taxonomy\Controller;
+namespace Croogo\Taxonomy\Controller\Admin;
 
-use Taxonomy\Controller\TaxonomyAppController;
+use Croogo\Taxonomy\Controller\TaxonomyAppController;
+
 /**
  * Terms Controller
  *
@@ -60,7 +61,7 @@ class TermsController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function admin_index($vocabularyId = null) {
+	public function index($vocabularyId = null) {
 		$this->__ensureVocabularyIdExists($vocabularyId);
 
 		$vocabulary = $this->Term->Vocabulary->read(null, $vocabularyId);
@@ -83,7 +84,7 @@ class TermsController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function admin_add($vocabularyId) {
+	public function add($vocabularyId) {
 		$this->__ensureVocabularyIdExists($vocabularyId);
 
 		$vocabulary = $this->Term->Vocabulary->read(null, $vocabularyId);
@@ -112,7 +113,7 @@ class TermsController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function admin_edit($id, $vocabularyId) {
+	public function edit($id, $vocabularyId) {
 		$this->__ensureVocabularyIdExists($vocabularyId);
 		$this->__ensureTermExists($id);
 		$this->__ensureTaxonomyExists($id, $vocabularyId);
@@ -158,7 +159,7 @@ class TermsController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function admin_delete($id = null, $vocabularyId = null) {
+	public function delete($id = null, $vocabularyId = null) {
 		$redirectUrl = array('action' => 'index', $vocabularyId);
 		$this->__ensureVocabularyIdExists($vocabularyId, $redirectUrl);
 		$this->__ensureTermExists($id, $redirectUrl);
@@ -186,7 +187,7 @@ class TermsController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function admin_moveup($id = null, $vocabularyId = null, $step = 1) {
+	public function moveup($id = null, $vocabularyId = null, $step = 1) {
 		$this->__move('up', $id, $vocabularyId, $step);
 	}
 
@@ -199,7 +200,7 @@ class TermsController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function admin_movedown($id = null, $vocabularyId = null, $step = 1) {
+	public function movedown($id = null, $vocabularyId = null, $step = 1) {
 		$this->__move('down', $id, $vocabularyId, $step);
 	}
 

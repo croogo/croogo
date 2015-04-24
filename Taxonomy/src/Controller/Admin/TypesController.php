@@ -1,8 +1,9 @@
 <?php
 
-namespace Croogo\Taxonomy\Controller;
+namespace Croogo\Taxonomy\Controller\Admin;
 
-use App\Controller\AppController;
+use Croogo\Taxonomy\Controller\TaxonomyAppController;
+
 /**
  * Types Controller
  *
@@ -13,7 +14,7 @@ use App\Controller\AppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TypesController extends AppController {
+class TypesController extends TaxonomyAppController {
 
 /**
  * Controller name
@@ -50,7 +51,7 @@ class TypesController extends AppController {
  * @return void
  * @access public
  */
-	public function admin_index() {
+	public function index() {
 		$this->set('title_for_layout', __d('croogo', 'Type'));
 
 		$this->Type->recursive = 0;
@@ -65,7 +66,7 @@ class TypesController extends AppController {
  * @return void
  * @access public
  */
-	public function admin_add() {
+	public function add() {
 		$this->set('title_for_layout', __d('croogo', 'Add Type'));
 
 		if (!empty($this->request->data)) {
@@ -89,7 +90,7 @@ class TypesController extends AppController {
  * @return void
  * @access public
  */
-	public function admin_edit($id = null) {
+	public function edit($id = null) {
 		$this->set('title_for_layout', __d('croogo', 'Edit Type'));
 
 		if (!$id && empty($this->request->data)) {
@@ -119,7 +120,7 @@ class TypesController extends AppController {
  * @return void
  * @access public
  */
-	public function admin_delete($id = null) {
+	public function delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Type'), 'default', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));

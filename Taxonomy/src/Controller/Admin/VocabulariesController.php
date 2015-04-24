@@ -1,8 +1,9 @@
 <?php
 
-namespace Croogo\Taxonomy\Controller;
+namespace Croogo\Taxonomy\Controller\Admin;
 
-use Taxonomy\Controller\TaxonomyAppController;
+use Croogo\Taxonomy\Controller\TaxonomyAppController;
+
 /**
  * Vocabularies Controller
  *
@@ -37,7 +38,7 @@ class VocabulariesController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function admin_index() {
+	public function index() {
 		$this->set('title_for_layout', __d('croogo', 'Vocabularies'));
 
 		$this->Vocabulary->recursive = 0;
@@ -51,7 +52,7 @@ class VocabulariesController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function admin_add() {
+	public function add() {
 		$this->set('title_for_layout', __d('croogo', 'Add Vocabulary'));
 
 		if (!empty($this->request->data)) {
@@ -75,7 +76,7 @@ class VocabulariesController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function admin_edit($id = null) {
+	public function edit($id = null) {
 		$this->set('title_for_layout', __d('croogo', 'Edit Vocabulary'));
 
 		if (!$id && empty($this->request->data)) {
@@ -109,7 +110,7 @@ class VocabulariesController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function admin_delete($id = null) {
+	public function delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Vocabulary'), 'default', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
@@ -128,7 +129,7 @@ class VocabulariesController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function admin_moveup($id, $step = 1) {
+	public function moveup($id, $step = 1) {
 		if ($this->Vocabulary->moveUp($id, $step)) {
 			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'default', array('class' => 'success'));
 		} else {
@@ -146,7 +147,7 @@ class VocabulariesController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function admin_movedown($id, $step = 1) {
+	public function movedown($id, $step = 1) {
 		if ($this->Vocabulary->moveDown($id, $step)) {
 			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'default', array('class' => 'success'));
 		} else {
