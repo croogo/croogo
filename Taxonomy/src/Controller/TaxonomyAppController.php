@@ -1,5 +1,9 @@
 <?php
+
 namespace Croogo\Taxonomy\Controller;
+
+use Croogo\Croogo\Controller\CroogoAppController;
+
 /**
  * Taxonomy App Controller
  *

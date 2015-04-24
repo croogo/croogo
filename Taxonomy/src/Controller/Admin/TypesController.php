@@ -2,6 +2,7 @@
 
 namespace Croogo\Taxonomy\Controller\Admin;
 
+use Cake\Event\Event;
 use Croogo\Taxonomy\Controller\TaxonomyAppController;
 
 /**
@@ -38,9 +39,10 @@ class TypesController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function beforeFilter() {
-		parent::beforeFilter();
-		if ($this->action == 'admin_edit') {
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
+
+		if ($this->action == 'edit') {
 			$this->Security->disabledFields = array('alias');
 		}
 	}
@@ -52,12 +54,16 @@ class TypesController extends TaxonomyAppController {
  * @access public
  */
 	public function index() {
-		$this->set('title_for_layout', __d('croogo', 'Type'));
+		$this->paginate = [
+			'order' => [
+				'title' => 'ASC'
+			],
+		];
 
-		$this->Type->recursive = 0;
-		$this->paginate['Type']['order'] = 'Type.title ASC';
-		$this->set('types', $this->paginate());
-		$this->set('displayFields', $this->Type->displayFields());
+		$findQuery = $this->Types->find('all');
+
+		$this->set('types', $this->paginate($findQuery));
+		$this->set('displayFields', $this->Types->displayFields());
 	}
 
 /**
