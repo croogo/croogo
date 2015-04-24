@@ -3,7 +3,12 @@
 namespace Croogo\Croogo\Model\Behavior;
 
 use App\Model\ModelBehavior;
-use Croogo\Lib\CroogoStatus;
+use Cake\ORM\Behavior;
+use Cake\ORM\Table;
+use Cake\Utility\Hash;
+use Croogo\Croogo\CroogoStatus;
+use InvalidArgumentException;
+
 /**
  * BulkProcess Behavior
  *
@@ -25,42 +30,36 @@ use Croogo\Lib\CroogoStatus;
  * @link http://www.croogo.org
  *
  */
-class BulkProcessBehavior extends ModelBehavior {
+class BulkProcessBehavior extends Behavior {
 
-/**
- * Setup
- */
-	public function setup(Model $model, $config = array()) {
-		$defaults = array(
-			'fields' => array(
-				'status' => 'status',
-				'promote' => 'promote',
-			),
-			'actionsMap' => array(
-				'delete' => 'bulkDelete',
-				'publish' => 'bulkPublish',
-				'promote' => false,
-				'unpublish' => 'bulkUnpublish',
-				'unpromote' => false,
-				'copy' => 'bulkCopy',
-			),
-		);
-		$config = Hash::merge($defaults, $config);
-		$this->settings[$model->alias] = $config;
-	}
+	protected $_defaultConfig = [
+		'fields' => [
+			'status' => 'status',
+			'promote' => 'promote',
+		],
+		'actionsMap' => [
+			'delete' => 'bulkDelete',
+			'publish' => 'bulkPublish',
+			'promote' => false,
+			'unpublish' => 'bulkUnpublish',
+			'unpromote' => false,
+			'copy' => 'bulkCopy',
+		],
+	];
 
 /**
  * Bulk process using $action for each $ids
  *
- * @param Model $model Model object
+ * @param Table $table Table object
  * @param $action string actionToPerfom
  * @param $ids array nodes ids to perform action upon
  * @return bool True when successful, false otherwise
  * @throws InvalidArgumentException
  */
-	public function processAction(Model $model, $action, $ids) {
-		$settings = $this->settings[$model->alias];
-		$actionsMap = $settings['actionsMap'];
+	public function processAction($action, $ids) {
+		$table = $this->_table;
+
+		$actionsMap = $this->config('actionsMap');
 
 		if (empty($actionsMap[$action])) {
 			throw new InvalidArgumentException(__d('croogo', 'Invalid action to perform'));
@@ -76,113 +75,114 @@ class BulkProcessBehavior extends ModelBehavior {
 			throw new InvalidArgumentException(__d('croogo', 'Action %s is disabled'), $action);
 		}
 
-		if (in_array($mappedAction, get_class_methods($model))) {
-			return $model->{$mappedAction}($ids);
+		if (in_array($mappedAction, get_class_methods($table))) {
+			return $table->{$mappedAction}($ids);
 		}
 
-		return $this->{$mappedAction}($model, $ids);
+		return $this->{$mappedAction}($table, $ids);
 	}
 
 /**
  * Internal helper method to save status fields
  *
- * @param Model $model Model object
+ * @param Table $table Model object
  * @param array $ids Array of IDs
  * @param string $field Field to update
  * @param mixed $status Value to update
  * @return boolean True on success, false on failure
  */
-	protected function _saveStatus(Model $model, $ids, $field, $status) {
-		return $model->updateAll(
-			array($model->escapeField($field) => $status),
-			array($model->escapeField() => $ids)
-		);
+	protected function _saveStatus(Table $table, $ids, $field, $status) {
+		foreach ($ids as $id) {
+			$entity = $table->get($id);
+			$entity->{$field} = $status;
+			if (!$table->save($entity)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 /**
  * Bulk Publish
  *
- * @param Model $model Model object
+ * @param Table $table Model object
  * @param array $ids Array of IDs
  * @return boolean True on success, false on failure
  */
-	public function bulkPublish(Model $model, $ids) {
-		$field = $this->settings[$model->alias]['fields']['status'];
-		return $this->_saveStatus($model, $ids, $field, CroogoStatus::PUBLISHED);
+	public function bulkPublish(Table $table, $ids) {
+		$field = $this->config('fields.status');
+		return $this->_saveStatus($table, $ids, $field, CroogoStatus::PUBLISHED);
 	}
 
 /**
  * Bulk Publish
  *
- * @param Model $model Model object
+ * @param Table $table Model object
  * @param array $ids Array of IDs
  * @return boolean True on success, false on failure
  */
-	public function bulkUnpublish(Model $model, $ids) {
-		$field = $this->settings[$model->alias]['fields']['status'];
-		return $this->_saveStatus($model, $ids, $field, CroogoStatus::UNPUBLISHED);
+	public function bulkUnpublish(Table $table, $ids) {
+		$field = $this->config('fields.status');
+		return $this->_saveStatus($table, $ids, $field, CroogoStatus::UNPUBLISHED);
 	}
 
 /**
  * Bulk Promote
  *
- * @param Model $model Model object
+ * @param Table $table Model object
  * @param array $ids Array of IDs
  * @return boolean True on success, false on failure
  */
-	public function bulkPromote(Model $model, $ids) {
-		$field = $this->settings[$model->alias]['fields']['promote'];
-		return $this->_saveStatus($model, $ids, $field, CroogoStatus::PROMOTED);
+	public function bulkPromote(Table $table, $ids) {
+		$field = $this->config('fields.promote');
+		return $this->_saveStatus($table, $ids, $field, CroogoStatus::PROMOTED);
 	}
 
 /**
  * Bulk Unpromote
  *
- * @param Model $model Model object
+ * @param Table $table Model object
  * @param array $ids Array of IDs
  * @return boolean True on success, false on failure
  */
-	public function bulkUnpromote(Model $model, $ids) {
-		$field = $this->settings[$model->alias]['fields']['promote'];
-		return $this->_saveStatus($model, $ids, $field, CroogoStatus::UNPROMOTED);
+	public function bulkUnpromote(Table $table, $ids) {
+		$field = $this->config('fields.promote');
+		return $this->_saveStatus($table, $ids, $field, CroogoStatus::UNPROMOTED);
 	}
 
 /**
  * Bulk Delete
  *
- * @param Model $model Model object
+ * @param Table $table Model object
  * @param array $ids Array of IDs
  * @return boolean True on success, false on failure
  */
-	public function bulkDelete(Model $model, $ids) {
-		return $model->deleteAll(array($model->escapeField() => $ids), true, true);
+	public function bulkDelete(Table $table, $ids) {
+		return $table->deleteAll([
+			'id IN' => $ids
+		]);
 	}
 
 /**
  * Bulk Copy
  *
- * @param Model $model Model object
+ * @param Table $model Model object
  * @param array $ids Array of IDs
  * @return boolean True on success, false on failure
  */
-	public function bulkCopy(Model $model, $ids) {
-		if (!$model->Behaviors->loaded('Copyable')) {
-			$model->Behaviors->load('Croogo.Copyable');
+	public function bulkCopy(Table $table, $ids) {
+		if (!$table->hasBehavior('Copyable')) {
+			$table->addBehavior('Croogo/Croogo.Copyable');
 		}
-		$result = false;
-		$ds = $model->getDataSource();
-		$ds->begin();
+
 		foreach ($ids as $id) {
-			$result = $model->copy($id);
-			if (!$result) {
-				$ds->rollback();
-				break;
+			if (!$table->copy($id)) {
+				return false;
 			}
 		}
-		if ($result) {
-			$ds->commit();
-		}
-		return $result;
+
+		return true;
 	}
 
 }

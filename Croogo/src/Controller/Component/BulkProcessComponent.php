@@ -5,6 +5,10 @@ namespace Croogo\Croogo\Controller\Component;
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\ORM\Table;
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
+use Croogo\Croogo\Croogo;
 
 /**
  * BulkProcess Component
@@ -17,6 +21,10 @@ use Cake\Event\Event;
  * @link     http://www.croogo.org
  */
 class BulkProcessComponent extends Component {
+
+	public $components = [
+		'Flash'
+	];
 
 /**
  * controller
@@ -64,7 +72,7 @@ class BulkProcessComponent extends Component {
 		$message = $messageMap[$messageName];
 
 		if ($condition === true) {
-			$this->Session->setFlash($message, 'default', array('class' => 'error'));
+			$this->Flash->error($message);
 			$this->_controller->redirect($options['redirect']);
 		}
 		return !$condition;
@@ -80,13 +88,13 @@ class BulkProcessComponent extends Component {
  * - redirect URL to redirect in array format
  * - messageMap Map of error name and its message
  *
- * @param Model $Model Model instance
+ * @param Table $table Table instance
  * @param string $action Action name to process
  * @param array $ids Array of IDs
  * @param array $options Options
  * @return void
  */
-	public function process(Model $Model, $action, $ids, $options = array()) {
+	public function process(Table $table, $action, $ids, $options = array()) {
 		$Controller = $this->_controller;
 		$emptyMessage = __d('croogo', 'No item selected');
 		$noMultipleMessage = __d('croogo', 'Please choose only one item for this operation');
@@ -115,18 +123,18 @@ class BulkProcessComponent extends Component {
 			return false;
 		}
 
-		if (!$Model->Behaviors->loaded('BulkProcess')) {
-			$Model->Behaviors->load('Croogo.BulkProcess');
+		if (!$table->hasBehavior('BulkProcess')) {
+			$table->addBehavior('Croogo/Croogo.BulkProcess');
 		}
 
-		$processed = $Model->processAction($action, $ids);
+		$processed = $table->processAction($action, $ids);
 		$eventName = 'Controller.' . $Controller->name . '.after' . ucfirst($action);
 
 		if ($processed) {
 			if (!empty($messageMap[$action])) {
 				$message = $messageMap[$action];
 			} else {
-				$message = __d('croogo', '%s processed', Inflector::humanize($Model->alias));
+				$message = __d('croogo', '%s processed', Inflector::humanize($table->alias));
 			}
 			$setFlashOptions = array('class' => 'success');
 			Croogo::dispatchEvent($eventName, $Controller, compact($ids));
@@ -134,7 +142,7 @@ class BulkProcessComponent extends Component {
 			$message = __d('croogo', 'An error occured');
 			$setFlashOptions = array('class' => 'error');
 		}
-		$this->Session->setFlash($message, 'default', $setFlashOptions);
+		$this->Flash->{$setFlashOptions['class']}($message);
 
 		return $Controller->redirect($options['redirect']);
 	}
