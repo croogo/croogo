@@ -55,7 +55,7 @@ AclPermissions.tabSwitcher = function() {
 			$target.append(' <span class="icon-spin icon-spinner"></span>');
 		}
 		$(pane).load(
-			Croogo.basePath + 'admin/acl/acl_permissions/',
+			Croogo.basePath + 'admin/acl/Permissions/index',
 			$.param({ root: alias }),
 			function(responseText, textStatus, xhr) {
 				$('span', $target).removeClass('icon-spinner');
@@ -82,7 +82,7 @@ AclPermissions.permissionToggle = function() {
 			.addClass('icon-spin icon-spinner');
 
 		// prepare loadUrl
-		var loadUrl = Croogo.basePath+'admin/acl/acl_permissions/toggle/';
+		var loadUrl = Croogo.basePath+'admin/acl/Permissions/toggle/';
 		loadUrl    += acoId+'/'+aroId+'/';
 
 		// now load it
@@ -201,7 +201,7 @@ AclPermissions.tableToggle = function() {
 			});
 		}
 
-		var url = Croogo.basePath + 'admin/acl/acl_permissions/index/';
+		var url = Croogo.basePath + 'admin/acl/Permissions/index/';
 		$.getJSON(url + id + '/' + level, params, function(data, textStatus) {
 			renderPermissions.call($el[0], data, textStatus);
 		});
