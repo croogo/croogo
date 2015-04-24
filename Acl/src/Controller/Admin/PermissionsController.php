@@ -1,9 +1,16 @@
 <?php
 
-namespace Croogo\Acl\Controller;
+namespace Croogo\Acl\Controller\Admin;
 
 use Acl\Controller\AclAppController;
 use Acl\Lib\AclUpgrade;
+use Cake\Cache\Cache;
+use Cake\Event\Event;
+use Cake\Network\Exception\MethodNotAllowedException;
+use Cake\ORM\TableRegistry;
+use Croogo\Croogo\Controller\CroogoAppController;
+use Croogo\Croogo\Croogo;
+
 /**
  * AclPermissions Controller
  *
@@ -14,38 +21,33 @@ use Acl\Lib\AclUpgrade;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AclPermissionsController extends AclAppController {
+class PermissionsController extends CroogoAppController {
 
-/**
- * Controller name
- *
- * @var string
- * @access public
- */
-	public $name = 'AclPermissions';
+	private $Acos;
+	private $Aros;
+	private $Roles;
+	private $Permissions;
 
-/**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
-	public $uses = array(
-		'Acl.AclPermission',
-		'Acl.AclAco',
-		'Acl.AclAro',
-		'Users.Role',
-	);
+	public function initialize() {
+		parent::initialize();
 
-/**
+		$this->Acos = TableRegistry::get('Croogo/Acl.Acos');
+		$this->Aros = TableRegistry::get('Croogo/Acl.Aros');
+		$this->Roles = TableRegistry::get('Croogo/Users.Roles');
+		$this->Permissions = TableRegistry::get('Croogo/Acl.Permissions');
+	}
+
+	/**
  * beforeFilter
  *
  * @return void
  */
-	public function beforeFilter() {
-		parent::beforeFilter();
-		$this->Security->requirePost('admin_toggle');
-		if ($this->action == 'admin_toggle') {
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
+		if ($this->request->action == 'toggle') {
+			if (!$this->request->is('post')) {
+				throw new MethodNotAllowedException();
+			}
 			$this->Security->csrfCheck = false;
 		}
 	}
@@ -56,18 +58,17 @@ class AclPermissionsController extends AclAppController {
  * @param id integer aco id, when null, the root ACO is used
  * @return void
  */
-	public function admin_index($id = null, $level = null) {
-		$this->set('title_for_layout', __d('croogo', 'Permissions'));
+	public function index($id = null, $level = null) {
 		if (isset($this->request->query['root'])) {
-			$query = strtolower($this->request->query['root']);
+			$query = strtolower($this->request->query('root'));
 		}
 
 		if ($id == null) {
 			$root = isset($query) ? $query : 'controllers';
-			$root = $this->AclAco->node(str_replace('.', '_', $root));
-			$root = $root[0];
+			$root = $this->Acos->node(str_replace('.', '_', $root));
+			$root = $root->firstOrFail();
 		} else {
-			$root = $this->AclAco->read(null, $id);
+			$root = $this->Acos->get($id);
 		}
 
 		if ($level !== null) {
@@ -75,13 +76,13 @@ class AclPermissionsController extends AclAppController {
 		}
 
 		$acos = array();
-		$roles = $this->Role->find('list');
+		$roles = $this->Roles->find('list');
 		if ($root) {
-			$acos = $this->AclAco->getChildren($root['Aco']['id']);
+			$acos = $this->Acos->getChildren($root->id);
 		}
 		$this->set(compact('acos', 'roles', 'level'));
 
-		$aros = $this->AclAro->getRoles($roles);
+		$aros = $this->Aros->getRoles($roles);
 		if ($root && $this->RequestHandler->ext == 'json') {
 			$options = array_intersect_key(
 				$this->request->query,
@@ -90,7 +91,7 @@ class AclPermissionsController extends AclAppController {
 			$cacheName = 'permissions_aco_' . $root['Aco']['id'];
 			$permissions = Cache::read($cacheName, 'permissions');
 			if ($permissions === false) {
-				$permissions = $this->AclPermission->format($acos, $aros, $options);
+				$permissions = $this->Permissions->format($acos, $aros, $options);
 				Cache::write($cacheName, $permissions, 'permissions');
 			}
 		} else {
@@ -100,22 +101,22 @@ class AclPermissionsController extends AclAppController {
 		$this->set(compact('aros', 'permissions'));
 
 		if ($this->request->is('ajax') && isset($query)) {
-			$this->render('Acl.Elements/admin/acl_permissions_table');
+			$this->render('Croogo/Acl.acl_permissions_table');
 		} else {
 			$this->_setPermissionRoots();
 		}
 	}
 
 	protected function _setPermissionRoots() {
-		$roots = $this->AclAco->getPermissionRoots();
+		$roots = $this->Acos->getPermissionRoots();
 		foreach ($roots as $id => $root) {
 			Croogo::hookAdminTab(
-				'AclPermissions/admin_index',
-				__d('croogo', $root['Aco']['title']),
-				'Croogo.blank',
+				'Admin/Permissions/index',
+				__d('croogo', $root->title),
+				'Croogo/Croogo.blank',
 				array(
 					'linkOptions' => array(
-						'data-alias' => $root['Aco']['alias'],
+						'data-alias' => $root->alias,
 					),
 				)
 			);
@@ -130,7 +131,7 @@ class AclPermissionsController extends AclAppController {
  * @param integer $aroId
  * @return void
  */
-	public function admin_toggle($acoId, $aroId) {
+	public function toggle($acoId, $aroId) {
 		if (!$this->RequestHandler->isAjax()) {
 			return $this->redirect(array('action' => 'index'));
 		}
@@ -161,7 +162,7 @@ class AclPermissionsController extends AclAppController {
  * upgrades ACL database
  * @return void
  */
-	public function admin_upgrade() {
+	public function upgrade() {
 				$AclUpgrade = new AclUpgrade();
 		$result = $AclUpgrade->upgrade();
 		if ($result === true) {

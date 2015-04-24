@@ -4,6 +4,8 @@ namespace Croogo\Acl\Controller;
 
 use Acl\Controller\AclAppController;
 use Acl\Lib\AclExtras;
+use Croogo\Croogo\Controller\CroogoAppController;
+
 /**
  * AclActions Controller
  *
@@ -14,7 +16,7 @@ use Acl\Lib\AclExtras;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AclActionsController extends AclAppController {
+class ActionsController extends CroogoAppController {
 
 /**
  * name

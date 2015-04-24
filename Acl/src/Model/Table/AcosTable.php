@@ -1,8 +1,7 @@
 <?php
 
-namespace Croogo\Acl\Model\Entity;
-
-use Acl\Model\Entity\Aco;
+namespace Croogo\Acl\Model\Table;
+use Cake\Utility\Hash;
 
 /**
  * AclAco Model
@@ -14,34 +13,7 @@ use Acl\Model\Entity\Aco;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AclAco extends Aco {
-
-/**
- * name
- *
- * @var string
- */
-	public $name = 'AclAco';
-
-/**
- * useTable
- *
- * @var string
- */
-	public $useTable = 'acos';
-
-/**
- * actsAs
- *
- * @var array
- */
-	public $actsAs = array('Tree');
-
-/**
- * alias
- *
- */
-	public $alias = 'Aco';
+class AcosTable extends \Acl\Model\Table\AcosTable {
 
 /**
  * hasAndBelongsToMany
@@ -59,9 +31,9 @@ class AclAco extends Aco {
  */
 	public function getChildren($acoId, $fields = array()) {
 		$fields = Hash::merge(array('id', 'parent_id', 'alias'), $fields);
-		$acos = $this->children($acoId, true, $fields);
-		foreach ($acos as &$aco) {
-			$aco[$this->alias]['children'] = $this->childCount($aco[$this->alias]['id'], true);
+		$acos = $this->find('children', ['for' => $acoId]);
+		foreach ($acos as $aco) {
+			$aco->children = $this->childCount($aco);;
 		}
 		return $acos;
 	}
@@ -142,41 +114,39 @@ class AclAco extends Aco {
  */
 	public function getPermissionRoots() {
 		$roots = $this->find('all', array(
-			'recursive' => -1,
 			'fields' => array('id', 'alias'),
 			'conditions' => array(
-				'parent_id' => null,
-				'alias' => array('controllers', 'api'),
+				'parent_id IS' => null,
+				'alias IN' => array('controllers', 'api'),
 			),
-		));
+		))->toArray();
 
 		$apiRoot = -1;
 		foreach ($roots as $i => &$root) {
-			if ($root['Aco']['alias'] === 'api') {
-				$apiRoot = $root['Aco']['id'];
+			if ($root->alias === 'api') {
+				$apiRoot = $root->id;
 				$apiIndex = $i;
 			}
-			$root['Aco']['title'] = ucfirst($root['Aco']['alias']);
+			$root->title = ucfirst($root->alias);
 		}
 		if (isset($apiIndex)) {
 			unset($roots[$apiIndex]);
 		}
 
 		$versionRoots = $this->find('all', array(
-			'recursive' => -1,
 			'fields' => array('id', 'alias'),
 			'conditions' => array(
 				'parent_id' => $apiRoot,
 			),
-		));
+		))->toArray();
 
 		$apiCount = count($versionRoots);
 
 		$api = __d('croogo', 'API');
 		foreach ($versionRoots as &$versionRoot) {
-			$alias = strtolower(str_replace('_', '.', $versionRoot['Aco']['alias']));
-			$versionRoot['Aco']['alias'] = $alias;
-			$versionRoot['Aco']['title'] = $apiCount == 1 ? $api : $api . ' ' . $alias;
+			$alias = strtolower(str_replace('_', '.', $versionRoot->alias));
+			$versionRoot->alias = $alias;
+			$versionRoot->title = $apiCount == 1 ? $api : $api . ' ' . $alias;
 		}
 
 		return array_merge($roots, $versionRoots);

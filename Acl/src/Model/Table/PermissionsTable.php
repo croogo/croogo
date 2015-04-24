@@ -1,8 +1,7 @@
 <?php
 
-namespace Croogo\Acl\Model\Entity;
-
-use Acl\Model\Entity\Permission;
+namespace Croogo\Acl\Model\Table;
+use Cake\Utility\Hash;
 
 /**
  * AclPermission Model
@@ -14,26 +13,7 @@ use Acl\Model\Entity\Permission;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AclPermission extends Permission {
-
-/**
- * name
- *
- * @var string
- */
-	public $name = 'AclPermission';
-
-/**
- * useTable
- *
- * @var string
- */
-	public $useTable = 'aros_acos';
-
-/**
- * alias
- */
-	public $alias = 'Permission';
+class PermissionsTable extends \Acl\Model\Table\PermissionsTable {
 
 /**
  * belongsTo

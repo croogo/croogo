@@ -1,8 +1,7 @@
 <?php
 
-namespace Croogo\Acl\Model\Entity;
-
-use Acl\Model\Entity\Aro;
+namespace Croogo\Acl\Model\Table;
+use Cake\Utility\Hash;
 
 /**
  * AclAro Model
@@ -14,26 +13,7 @@ use Acl\Model\Entity\Aro;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AclAro extends Aro {
-
-/**
- * name
- *
- * @var string
- */
-	public $name = 'AclAro';
-
-/**
- * useTable
- *
- * @var string
- */
-	public $useTable = 'aros';
-
-/**
- * alias
- */
-	public $alias = 'Aro';
+class ArosTable extends \Acl\Model\Table\ArosTable {
 
 /**
  * hasAndBelongsToMany
@@ -52,11 +32,11 @@ class AclAro extends Aro {
 	public function getRoles($roles) {
 		$aros = $this->find('all', array(
 			'conditions' => array(
-				'Aro.model' => 'Role',
-				'Aro.foreign_key' => array_keys($roles),
+				'Aros.model' => 'Roles',
+				'Aros.foreign_key' => array_keys($roles->toArray()),
 			),
 		));
-		return Hash::combine($aros, '{n}.Aro.foreign_key', '{n}.Aro.id');
+		return collection($aros)->combine('key','id');
 	}
 
 }
