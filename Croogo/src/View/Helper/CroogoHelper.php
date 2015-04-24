@@ -373,7 +373,12 @@ class CroogoHelper extends Helper {
 		}
 
 		$output = '';
-		$tabs = Configure::read('Admin.tabs.' . Inflector::camelize($this->request->params['controller']) . '/' . $this->request->params['action']);
+		$actions = '';
+		if (!empty($this->request->param('prefix'))) {
+			$actions .= Inflector::camelize($this->request->param('prefix')) . '/';
+		}
+		$actions .= Inflector::camelize($this->request->param('controller')) . '/' . $this->request->param('action');
+		$tabs = Configure::read('Admin.tabs.' . $actions);
 		if (is_array($tabs)) {
 			foreach ($tabs as $title => $tab) {
 				$tab = Hash::merge(array(
@@ -387,12 +392,8 @@ class CroogoHelper extends Helper {
 				if (!isset($tab['options']['type']) || (isset($tab['options']['type']) && (in_array($this->_View->viewVars['typeAlias'], $tab['options']['type'])))) {
 					$domId = strtolower(Inflector::singularize($this->request->params['controller'])) . '-' . strtolower(Inflector::slug($title, '-'));
 					if ($this->adminTabs) {
-						list($plugin, $element) = pluginSplit($tab['element']);
-						$elementOptions = Hash::merge(array(
-							'plugin' => $plugin,
-						), $tab['options']['elementOptions']);
 						$output .= '<div id="' . $domId . '" class="tab-pane">';
-						$output .= $this->_View->element($element, $tab['options']['elementData'], $elementOptions);
+						$output .= $this->_View->element($tab['element'], $tab['options']['elementData'], $tab['options']['elementOptions']);
 						$output .= '</div>';
 					} else {
 						$output .= $this->adminTab(__d('croogo', $title), '#' . $domId, $tab['options']['linkOptions']);
