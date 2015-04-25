@@ -37,7 +37,7 @@
 		"psr-4": {
 			"Croogo\\": "src",
 			"Croogo\\Croogo\\": "Croogo/src",
-			"Croogo\\Croogo\\Test": "Croogo/tests",
+			"Croogo\\Croogo\\Test\\": "Croogo/tests",
 			"App\\": "Croogo/tests/test_app/src"
 		}
 	},
