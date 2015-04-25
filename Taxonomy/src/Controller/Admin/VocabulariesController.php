@@ -127,12 +127,16 @@ class VocabulariesController extends TaxonomyAppController {
  * @access public
  */
 	public function delete($id = null) {
+		$vocabulary = $this->Vocabularies->get($id);
+
 		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Vocabulary'), 'default', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Invalid id for Vocabulary'));
+
 			return $this->redirect(array('action' => 'index'));
 		}
-		if ($this->Vocabulary->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Vocabulary deleted'), 'default', array('class' => 'success'));
+		if ($this->Vocabularies->delete($vocabulary)) {
+			$this->Flash->success(__d('croogo', 'Vocabulary deleted'));
+
 			return $this->redirect(array('action' => 'index'));
 		}
 	}
