@@ -117,9 +117,22 @@ Admin.processLink = function(event) {
  * @return void
  */
 Admin.extra = function() {
-	// Activates the first tab in #content
-	$('#content .nav-tabs > li:first-child a').tab('show');
-
+	// Activates tab based if hash starting with tab_* is given
+	hash = document.location.hash;
+	if (hash && hash.match("^#tab_")) {
+		$('#content .nav-tabs a[href=' + hash.replace('tab_', '') + ']').tab('show');
+	// Activates the first tab in #content by default
+	} else {
+		$('#content .nav-tabs > li:first-child a').tab('show');
+	}
+	
+	// Apply buttons jump to current tab for persistence
+	$('#content form button[type="submit"][name="apply"]').click(function() {
+		$(this).parents('#content form:first').attr('action',
+			$(this).parents('#content form:first').attr('action').split('#')[0]
+			+ window.location.hash);
+	});
+	
 	if (typeof $.prototype.tabs == 'function') {
 		$('.tabs').tabs(); // legacy tabs from jquery-ui
 	}
