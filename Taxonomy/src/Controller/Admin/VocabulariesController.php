@@ -88,29 +88,34 @@ class VocabulariesController extends TaxonomyAppController {
  * @access public
  */
 	public function edit($id = null) {
-		$this->set('title_for_layout', __d('croogo', 'Edit Vocabulary'));
-
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Vocabulary'), 'default', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Invalid Vocabulary'));
+
 			return $this->redirect(array('action' => 'index'));
 		}
+
+		$vocabulary = $this->Vocabularies->get($id);
+
 		if (!empty($this->request->data)) {
-			if ($this->Vocabulary->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Vocabulary has been saved'), 'default', array('class' => 'success'));
-				return $this->Croogo->redirect(array('action' => 'edit', $this->Vocabulary->id));
+			$vocabulary = $this->Vocabularies->patchEntity($vocabulary, $this->request->data);
+
+			$vocabulary = $this->Vocabularies->save($vocabulary);
+			if ($vocabulary) {
+				$this->Flash->success(__d('croogo', 'The Vocabulary has been saved'));
+
+				return $this->Croogo->redirect(array('action' => 'edit', $vocabulary->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Vocabulary could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'The Vocabulary could not be saved. Please, try again.'));
 			}
 		}
-		if (empty($this->request->data)) {
-			$this->request->data = $this->Vocabulary->read(null, $id);
-		}
+
+		$this->set('vocabulary', $vocabulary);
 
 		$plugin = null;
-		if (isset($this->request->data['Vocabulary']['plugin'])) {
-			$plugin = $this->request->data['Vocabulary']['plugin'];
+		if ($this->request->data('plugin')) {
+			$plugin = $this->request->data('plugin');
 		}
-		$types = $this->Vocabulary->Type->pluginTypes($plugin);
+		$types = $this->Vocabularies->Types->pluginTypes($plugin);
 		$this->set(compact('types'));
 	}
 
