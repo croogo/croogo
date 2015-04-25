@@ -77,7 +77,7 @@ class AcosTable extends \Acl\Model\Table\AcosTable {
 		$this->createFromPath($action);
 		$Permission = ClassRegistry::init('Acl.AclPermission');
 		foreach ($roles as $roleId => $roleAlias) {
-			$Permission->allow(array('model' => 'Role', 'foreign_key' => $roleId), $action);
+			$Permission->allow(array('model' => 'Croogo/Acl.Aros', 'foreign_key' => $roleId), $action);
 		}
 	}
 
