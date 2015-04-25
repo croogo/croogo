@@ -104,25 +104,30 @@ class TypesController extends TaxonomyAppController {
  * @access public
  */
 	public function edit($id = null) {
-		$this->set('title_for_layout', __d('croogo', 'Edit Type'));
-
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Type'), 'default', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Invalid Type'));
+
 			return $this->redirect(array('action' => 'index'));
 		}
+
+		$type = $this->Types->get($id);
+
 		if (!empty($this->request->data)) {
-			if ($this->Type->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Type has been saved'), 'default', array('class' => 'success'));
-				$this->Croogo->redirect(array('action' => 'edit', $this->Type->id));
+			$type = $this->Types->patchEntity($type, $this->request->data);
+
+			$type = $this->Types->save($type);
+			if ($this->Types->save($type)) {
+				$this->Flash->success(__d('croogo', 'The Type has been saved'));
+
+				$this->Croogo->redirect(array('action' => 'edit', $type->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Type could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'The Type could not be saved. Please, try again.'));
 			}
 		}
-		if (empty($this->request->data)) {
-			$this->request->data = $this->Type->read(null, $id);
-		}
 
-		$vocabularies = $this->Type->Vocabulary->find('list');
+		$this->set('type', $type);
+
+		$vocabularies = $this->Types->Vocabularies->find('list');
 		$this->set(compact('vocabularies'));
 	}
 

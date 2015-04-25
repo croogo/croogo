@@ -7,7 +7,9 @@ $this->CroogoHtml->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Types'), array('plugin' => 'Croogo/Taxonomy', 'controller' => 'Types', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'edit') {
-	$this->CroogoHtml->addCrumb($this->request->data['Type']['title'], '/' . $this->request->url);
+	$this->assign('title', __d('croogo', 'Edit Type'));
+
+	$this->CroogoHtml->addCrumb($type->title, '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'add') {
