@@ -2,7 +2,7 @@
 
 $this->extend('Croogo/Croogo./Common/admin_index');
 
-$this->Html
+$this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Vocabularies'), '/' . $this->request->url);
@@ -10,7 +10,7 @@ $this->Html
 ?>
 <table class="table table-striped">
 <?php
-	$tableHeaders = $this->Html->tableHeaders(array(
+	$tableHeaders = $this->CroogoHtml->tableHeaders(array(
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		$this->Paginator->sort('title', __d('croogo', 'Title')),
 		$this->Paginator->sort('alias', __d('croogo', 'Alias')),
@@ -47,16 +47,16 @@ $this->Html
 			array('action' => 'delete', $vocabulary->id),
 			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
 			__d('croogo', 'Are you sure?'));
-		$actions = $this->Html->div('item-actions', implode(' ', $actions));
+		$actions = $this->CroogoHtml->div('item-actions', implode(' ', $actions));
 		$rows[] = array(
 			$vocabulary->id,
-			$this->Html->link($vocabulary->title, array('controller' => 'Terms', 'action' => 'index', $vocabulary->id)),
+			$this->CroogoHtml->link($vocabulary->title, array('controller' => 'Terms', 'action' => 'index', $vocabulary->id)),
 			$vocabulary->alias,
 			$vocabulary->plugin,
 			$actions,
 		);
 	endforeach;
 
-	echo $this->Html->tableCells($rows);
+	echo $this->CroogoHtml->tableCells($rows);
 ?>
 </table>

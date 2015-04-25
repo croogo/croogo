@@ -59,19 +59,24 @@ class VocabulariesController extends TaxonomyAppController {
  * @access public
  */
 	public function add() {
-		$this->set('title_for_layout', __d('croogo', 'Add Vocabulary'));
+		$vocabulary = $this->Vocabularies->newEntity();
 
 		if (!empty($this->request->data)) {
-			$this->Vocabulary->create();
-			if ($this->Vocabulary->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Vocabulary has been saved'), 'default', array('class' => 'success'));
+			$vocabulary = $this->Vocabularies->patchEntity($vocabulary, $this->request->data);
+
+			$vocabulary = $this->Vocabularies->save($vocabulary);
+			if ($vocabulary) {
+				$this->Flash->success(__d('croogo', 'The Vocabulary has been saved'));
+
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Vocabulary could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'The Vocabulary could not be saved. Please, try again.'));
 			}
 		}
 
-		$types = $this->Vocabulary->Type->pluginTypes();
+		$this->set('vocabulary', $vocabulary);
+
+		$types = $this->Vocabularies->Types->pluginTypes();
 		$this->set(compact('types'));
 	}
 
