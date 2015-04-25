@@ -20,22 +20,6 @@ use Croogo\Taxonomy\Model\Table\TypesTable;
 class TypesController extends TaxonomyAppController {
 
 /**
- * Controller name
- *
- * @var string
- * @access public
- */
-	public $name = 'Types';
-
-/**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
-	public $uses = array('Taxonomy.Type');
-
-/**
  * beforeFilter
  *
  * @return void
@@ -152,4 +136,5 @@ class TypesController extends TaxonomyAppController {
 			return $this->redirect(array('action' => 'index'));
 		}
 	}
+
 }
