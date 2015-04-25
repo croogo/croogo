@@ -26,6 +26,7 @@ $this->append('tab-content');
 	echo $this->Html->tabStart('plugin-upload') .
 		$this->Form->input('Plugin.file', array(
 			'type' => 'file',
+			'label' => __d('croogo', 'File'),
 		));
 	echo $this->Html->tabEnd();
 
@@ -33,7 +34,7 @@ $this->append('tab-content');
 $this->end();
 
 $this->append('panels');
-	echo $this->Html->beginBox('Publishing') .
+	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 		$this->Form->button(__d('croogo', 'Upload')) .
 		$this->Html->link(__d('croogo', 'Cancel'),
 			array('action' => 'index'),

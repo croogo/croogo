@@ -338,7 +338,7 @@ class CroogoHelper extends AppHelper {
 			$options['block'] = 'scriptBottom';
 			$out = $this->Form->postLink($title, $url, $options, $confirmMessage);
 		} else {
-			$out = $this->Html->link($title, $url, $options);
+			$out = $this->Html->link($title, $url, $options, $confirmMessage);
 		}
 		if (isset($list)) {
 			$out = $this->Html->tag('li', $out);

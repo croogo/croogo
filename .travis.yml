@@ -18,7 +18,7 @@ matrix:
 before_install:
   - git clone --depth 1 git://github.com/croogo/app -b master app
   - mkdir -p app/Vendor/cakephp app/Vendor/croogo
-  - git clone --depth 1 git://github.com/cakephp/cakephp -b master app/Vendor/cakephp/cakephp
+  - git clone --depth 1 git://github.com/cakephp/cakephp -b 2.7 app/Vendor/cakephp/cakephp
   - ln -s `pwd` app/Vendor/croogo/croogo
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.2' ] ; then git clone --depth 1 git://github.com/CakeDC/search -b master app/Plugin/Search ; fi"
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.2' ] ; then git clone --depth 1 git://github.com/CakeDC/migrations -b master app/Plugin/Migrations ; fi"
