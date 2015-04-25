@@ -118,7 +118,7 @@ Admin.processLink = function(event) {
  */
 Admin.extra = function() {
 	// Activates tab based if hash starting with tab_* is given
-	hash = document.location.hash;
+	var hash = document.location.hash;
 	if (hash && hash.match("^#tab_")) {
 		$('#content .nav-tabs a[href=' + hash.replace('tab_', '') + ']').tab('show');
 	// Activates the first tab in #content by default
