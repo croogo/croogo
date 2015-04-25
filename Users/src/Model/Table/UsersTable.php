@@ -40,8 +40,8 @@ class UsersTable extends CroogoTable {
 	public function validationDefault(Validator $validator) {
 		return $validator
 			->add('username', [
-				'notEmpty' => [
-					'rule' => 'notEmpty',
+				'notBlank' => [
+					'rule' => 'notBlank',
 					'message' => 'The username has already been taken.',
 					'last' => true
 				],
@@ -59,7 +59,7 @@ class UsersTable extends CroogoTable {
 			])
 			->add('email', [
 				'notEmpty' => [
-					'rule' => 'notEmpty',
+					'rule' => 'notBlank',
 					'message' => 'The username has already been taken.',
 					'last' => true
 				],
@@ -88,8 +88,8 @@ class UsersTable extends CroogoTable {
 				]
 			])
 			->add('name', [
-				'notEmpty' => [
-					'rule' => 'notEmpty',
+				'notBlank' => [
+					'rule' => 'notBlank',
 					'message' => 'This field cannot be left blank.',
 					'last' => true
 				],
