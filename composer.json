@@ -19,6 +19,11 @@
 			"name": "Kyle Robinson Young",
 			"email": "kyle@dontkry.com",
 			"homepage": "http://dontkry.com"
+		},
+		{
+			"name": "Marlin Cremers",
+			"email": "m.cremers@cvo-technologies.com",
+			"homepage": "https://cvo-technologies.com"
 		}
 	],
 	"require": {
