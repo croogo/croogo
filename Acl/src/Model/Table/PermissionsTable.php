@@ -1,6 +1,7 @@
 <?php
 
 namespace Croogo\Acl\Model\Table;
+use Cake\Cache\Cache;
 use Cake\Utility\Hash;
 use Cake\ORM\TableRegistry;
 use Cake\Core\Configure;

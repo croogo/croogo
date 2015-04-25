@@ -1,5 +1,7 @@
 <?php
 
+use Cake\Core\Configure;
+
 if ($success == 1) {
 	if ($permitted == 1) {
 		echo $this->Html->tag('i', null, array(
