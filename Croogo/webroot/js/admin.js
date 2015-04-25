@@ -117,15 +117,16 @@ Admin.processLink = function(event) {
  * @return void
  */
 Admin.extra = function() {
-	// Activates tab based if hash starting with tab_* is given
 	var hash = document.location.hash;
+	var $tabs = $('#content .nav-tabs');
 	if (hash && hash.match("^#tab_")) {
-		$('#content .nav-tabs a[href=' + hash.replace('tab_', '') + ']').tab('show');
-	// Activates the first tab in #content by default
+		// Activates tab if hash starting with tab_* is given
+		$tabs.find('a[href=' + hash.replace('tab_', '') + ']').tab('show');
 	} else {
-		$('#content .nav-tabs > li:first-child a').tab('show');
+		// Activates the first tab in #content by default
+		$tabs.find('li:first-child a').tab('show');
 	}
-	
+
 	// Apply buttons jump to current tab for persistence
 	$('#content form button[type="submit"][name="apply"]').click(function() {
 		$(this).parents('#content form:first').attr('action',
