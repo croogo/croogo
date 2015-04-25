@@ -35,7 +35,6 @@ echo $this->CroogoForm->create($type);
 			<?php
 				echo $this->CroogoForm->input('id');
 				$this->CroogoForm->templates(array(
-					'label' => false,
 					'class' => 'span10',
 				));
 				echo $this->CroogoForm->input('title', array(
@@ -69,7 +68,7 @@ echo $this->CroogoForm->create($type);
 					),
 					'default' => 2,
 					'legend' => false,
-					'label' => true,
+					'label' => __d('croogo', 'Comment status'),
 					'class' => false,
 				));
 				echo $this->CroogoForm->input('comment_approve', array(
