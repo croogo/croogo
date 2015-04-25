@@ -2,6 +2,7 @@
 
 namespace Croogo\Taxonomy\Controller\Admin;
 
+use Cake\Event\Event;
 use Croogo\Taxonomy\Controller\TaxonomyAppController;
 
 /**
@@ -45,8 +46,8 @@ class TermsController extends TaxonomyAppController {
  * @return void
  * @access public
  */
-	public function beforeFilter() {
-		parent::beforeFilter();
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
 		$this->vocabularyId = null;
 		if (isset($this->request->params['named']['vocabulary'])) {
 			$this->vocabularyId = $this->request->params['named']['vocabulary'];

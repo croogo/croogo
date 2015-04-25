@@ -1,13 +1,10 @@
 <?php
 
 namespace Croogo\Extensions\Controller;
+use Croogo\Extensions\CroogoTheme;
+use Cake\Core\Configure;
+use Croogo\Extensions\ExtensionsInstaller;
 
-use App\Utility\Sanitize;
-use Cake\Utility\File;
-use Cake\Utility\Folder;
-use Extensions\Controller\ExtensionsAppController;
-use Extensions\Lib\CroogoTheme;
-use Extensions\Lib\ExtensionsInstaller;
 /**
  * Extensions Themes Controller
  *

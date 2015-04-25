@@ -2,7 +2,9 @@
 
 namespace Croogo\Blocks\Controller;
 
-use Blocks\Controller\BlocksAppController;
+use Cake\Event\Event;
+use Croogo\Croogo\Controller\CroogoAppController;
+
 /**
  * Blocks Controller
  *
@@ -13,7 +15,7 @@ use Blocks\Controller\BlocksAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class BlocksController extends BlocksAppController {
+class BlocksController extends CroogoAppController {
 
 /**
  * Controller name
@@ -30,7 +32,7 @@ class BlocksController extends BlocksAppController {
  * @access public
  */
 	public $components = array(
-		'Croogo.BulkProcess',
+		'Croogo/Croogo.BulkProcess',
 		'Search.Prg' => array(
 			'presetForm' => array(
 				'paramType' => 'querystring',
@@ -73,8 +75,8 @@ class BlocksController extends BlocksAppController {
  * @return void
  * @access public
  */
-	public function beforeFilter() {
-		parent::beforeFilter();
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
 		$this->Security->unlockedActions[] = 'admin_toggle';
 	}
 

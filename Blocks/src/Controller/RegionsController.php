@@ -2,7 +2,8 @@
 
 namespace Croogo\Blocks\Controller;
 
-use Blocks\Controller\BlocksAppController;
+use Croogo\Croogo\Controller\CroogoAppController;
+
 /**
  * Regions Controller
  *
@@ -13,7 +14,7 @@ use Blocks\Controller\BlocksAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class RegionsController extends BlocksAppController {
+class RegionsController extends CroogoAppController {
 
 /**
  * Controller name

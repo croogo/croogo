@@ -1,10 +1,9 @@
 <?php
 
 namespace Croogo\Extensions\Controller;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 
-use Cake\Utility\File;
-use Cake\Utility\Folder;
-use Extensions\Controller\ExtensionsAppController;
 /**
  * Extensions Locales Controller
  *

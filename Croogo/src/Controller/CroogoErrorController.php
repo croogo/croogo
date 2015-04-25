@@ -3,6 +3,14 @@
 namespace Croogo\Croogo\Controller;
 
 use App\Controller\AppController;
+use Cake\Core\Configure;
+use Cake\Core\Exception\Exception;
+use Cake\Event\Event;
+use Cake\Log\Log;
+use Cake\Network\Request;
+use Cake\Network\Response;
+use Cake\Routing\Router;
+
 /**
  * Error Handling Controller
  *
@@ -42,24 +50,20 @@ class CroogoErrorController extends AppController {
  * @param Request $request
  * @param Response $response
  */
-	public function __construct(Request $request, Response $response) {
+	public function __construct($request = null, $response = null) {
 		parent::__construct($request, $response);
-		if (count(Router::extensions())) {
-			$this->components[] = 'RequestHandler';
+		if (count(Router::extensions()) && !isset($this->RequestHandler)
+		) {
+			$this->loadComponent('RequestHandler');
 		}
-
-		try {
-			$this->constructClasses();
-			$this->startupProcess();
+		$eventManager = $this->eventManager();
+		if (isset($this->Auth)) {
+			$eventManager->off($this->Auth);
 		}
-		catch (CakeException $e) {
-			Log::write('critical', __d('croogo', 'Errors in CakeErrorController: %s', $e->getMessage()));
+		if (isset($this->Security)) {
+			$eventManager->off($this->Security);
 		}
-
-		$this->_set(array('cacheAction' => false, 'viewPath' => 'Errors'));
-		if (isset($this->RequestHandler)) {
-			$this->RequestHandler->startup($this);
-		}
+		$this->viewPath = 'Error';
 	}
 
 /**
@@ -67,8 +71,8 @@ class CroogoErrorController extends AppController {
  *
  * @return void
  */
-	public function beforeFilter() {
-		parent::beforeFilter();
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
 		if (Configure::read('Site.theme') && !isset($this->request->params['admin'])) {
 			$this->theme = Configure::read('Site.theme');
 		} elseif (isset($this->request->params['admin'])) {
@@ -85,8 +89,8 @@ class CroogoErrorController extends AppController {
  *
  * @return void
  */
-	public function beforeRender() {
-		parent::beforeRender();
+	public function beforeRender(Event $event) {
+		parent::beforeRender($event);
 		foreach ($this->viewVars as $key => $value) {
 			if (!is_object($value)) {
 				$this->viewVars[$key] = h($value);

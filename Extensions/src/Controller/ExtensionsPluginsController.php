@@ -2,10 +2,11 @@
 
 namespace Croogo\Extensions\Controller;
 
-use App\Utility\Sanitize;
-use Extensions\Controller\ExtensionsAppController;
-use Extensions\Lib\CroogoPlugin;
-use Extensions\Lib\ExtensionsInstaller;
+use Cake\Event\Event;
+use Croogo\Extensions\CroogoPlugin;
+use Croogo\Extensions\ExtensionsInstaller;
+use Cake\Core\Exception\Exception;
+
 /**
  * Extensions Plugins Controller
  *
@@ -51,8 +52,8 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  *
  * @return void
  */
-	public function beforeFilter() {
-		parent::beforeFilter();
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
 
 		$this->_CroogoPlugin = new CroogoPlugin();
 		$this->_CroogoPlugin->setController($this);
@@ -193,7 +194,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  */
 	public function admin_moveup($plugin = null) {
 		if ($plugin === null) {
-			throw new CakeException(__d('croogo', 'Invalid plugin'));
+			throw new Exception(__d('croogo', 'Invalid plugin'));
 		}
 
 		$class = 'success';
@@ -217,7 +218,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  */
 	public function admin_movedown($plugin = null) {
 		if ($plugin === null) {
-			throw new CakeException(__d('croogo', 'Invalid plugin'));
+			throw new Exception(__d('croogo', 'Invalid plugin'));
 		}
 
 		$class = 'success';
