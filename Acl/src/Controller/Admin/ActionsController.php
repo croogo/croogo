@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Acl\Controller;
+namespace Croogo\Acl\Controller\Admin;
 
 use Acl\Controller\AclAppController;
 use Acl\Lib\AclExtras;
