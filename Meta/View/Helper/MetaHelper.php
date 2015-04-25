@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppHelper', 'View/Helper');
+App::uses('String', 'Utility');
 
 /**
  * Meta Helper
