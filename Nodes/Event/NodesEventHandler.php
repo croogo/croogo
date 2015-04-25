@@ -1,6 +1,7 @@
 <?php
 
 App::uses('CakeEventListener', 'Event');
+App::uses('Cache', 'Cache');
 
 /**
  * Nodes Event Handler
@@ -25,6 +26,21 @@ class NodesEventHandler implements CakeEventListener {
 			),
 			'Controller.Links.setupLinkChooser' => array(
 				'callable' => 'onSetupLinkChooser',
+			),
+			'Controller.Nodes.afterPublish' => array(
+				'callable' => 'onAfterBulkProcess',
+			),
+			'Controller.Nodes.afterUnpublish' => array(
+				'callable' => 'onAfterBulkProcess',
+			),
+			'Controller.Nodes.afterPromote' => array(
+				'callable' => 'onAfterBulkProcess',
+			),
+			'Controller.Nodes.afterUnpromote' => array(
+				'callable' => 'onAfterBulkProcess',
+			),
+			'Controller.Nodes.afterDelete' => array(
+				'callable' => 'onAfterBulkProcess',
 			),
 		);
 	}
@@ -116,6 +132,20 @@ class NodesEventHandler implements CakeEventListener {
 			);
 		}
 		Croogo::mergeConfig('Menus.linkChoosers', $linkChoosers);
+	}
+
+/**
+ * Clear Nodes related cache after bulk operation
+ *
+ * @param CakeEvent $event
+ * @return void
+ */
+	public function onAfterBulkProcess($event) {
+		Cache::clearGroup('nodes', 'nodes');
+		Cache::clearGroup('nodes', 'nodes_view');
+		Cache::clearGroup('nodes', 'nodes_promoted');
+		Cache::clearGroup('nodes', 'nodes_term');
+		Cache::clearGroup('nodes', 'nodes_index');
 	}
 
 }
