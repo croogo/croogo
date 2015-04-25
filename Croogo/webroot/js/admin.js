@@ -128,12 +128,13 @@ Admin.extra = function() {
 	}
 
 	// Apply buttons jump to current tab for persistence
-	$('#content form button[type="submit"][name="apply"]').click(function() {
-		$(this).parents('#content form:first').attr('action',
-			$(this).parents('#content form:first').attr('action').split('#')[0]
-			+ window.location.hash);
+	$('#content [name="apply"]').click(function() {
+		var activeTab = $tabs.find('.active [data-toggle=tab]').attr('href');
+		var form = $('#content form:first');
+		var action = form.attr('action').split('#')[0];
+		form.attr('action', action + activeTab.replace('#', '#tab_'));
 	});
-	
+
 	if (typeof $.prototype.tabs == 'function') {
 		$('.tabs').tabs(); // legacy tabs from jquery-ui
 	}
