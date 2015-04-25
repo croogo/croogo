@@ -139,12 +139,16 @@ class TypesController extends TaxonomyAppController {
  * @access public
  */
 	public function delete($id = null) {
+		$type = $this->Types->get($id);
+
 		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Type'), 'default', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Invalid id for Type'));
+
 			return $this->redirect(array('action' => 'index'));
 		}
-		if ($this->Type->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Type deleted'), 'default', array('class' => 'success'));
+		if ($this->Types->delete($type)) {
+			$this->Flash->success(__d('croogo', 'Type deleted'));
+
 			return $this->redirect(array('action' => 'index'));
 		}
 	}
