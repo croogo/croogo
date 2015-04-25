@@ -2,8 +2,9 @@
 
 namespace Croogo\Acl\Controller\Admin;
 
+use Acl\AclExtras;
 use Acl\Controller\AclAppController;
-use Acl\Lib\AclExtras;
+use Cake\Event\Event;
 use Croogo\Croogo\Controller\CroogoAppController;
 
 /**
@@ -19,27 +20,13 @@ use Croogo\Croogo\Controller\CroogoAppController;
 class ActionsController extends CroogoAppController {
 
 /**
- * name
- *
- * @var string
- */
-	public $name = 'AclActions';
-
-/**
- * uses
- *
- * @var array
- */
-	public $uses = array('Acl.AclAco');
-
-/**
  * beforeFilter
  *
  * @return void
  */
-	public function beforeFilter() {
-		parent::beforeFilter();
-		if ($this->action == 'admin_generate') {
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
+		if ($this->request->param('action') == 'generate' && $this->request->param('prefix') == 'admin') {
 			$this->Security->csrfCheck = false;
 		}
 	}
@@ -47,7 +34,7 @@ class ActionsController extends CroogoAppController {
 /**
  * admin_index
  */
-	public function admin_index($id = null) {
+	public function index($id = null) {
 		$this->set('title_for_layout', __d('croogo', 'Actions'));
 
 		if ($id == null) {
@@ -64,7 +51,7 @@ class ActionsController extends CroogoAppController {
 /**
  * admin_add
  */
-	public function admin_add() {
+	public function add() {
 		$this->set('title_for_layout', __d('croogo', 'Add Action'));
 
 		if (!empty($this->request->data)) {
@@ -95,7 +82,7 @@ class ActionsController extends CroogoAppController {
  *
  * @param integer $id
  */
-	public function admin_edit($id = null) {
+	public function edit($id = null) {
 		$this->set('title_for_layout', __d('croogo', 'Edit Action'));
 
 		if (!$id && empty($this->request->data)) {
@@ -123,7 +110,7 @@ class ActionsController extends CroogoAppController {
  *
  * @param integer $id
  */
-	public function admin_delete($id = null) {
+	public function delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Action'), 'default', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
@@ -141,7 +128,7 @@ class ActionsController extends CroogoAppController {
  * @param string $direction
  * @param string $step
  */
-	public function admin_move($id, $direction = 'up', $step = '1') {
+	public function move($id, $direction = 'up', $step = '1') {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Action'), 'default', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
@@ -162,27 +149,17 @@ class ActionsController extends CroogoAppController {
 /**
  * admin_generate
  */
-	public function admin_generate() {
-				$AclExtras = new AclExtras();
+	public function generate() {
+		$AclExtras = new AclExtras();
 		$AclExtras->startup($this);
-		if (isset($this->request->named['sync'])) {
-			$result = $AclExtras->aco_sync();
+		if (isset($this->request->query['sync'])) {
+			$AclExtras->acoSync();
 		} else {
-			$result = $AclExtras->aco_update();
-		}
-		$output = $AclExtras->output;
-		$output += $AclExtras->errors;
-		if ($result) {
-			$class = 'success';
-			$output[] = __d('croogo', 'Created %d new permissions', $AclExtras->created);
-		} else {
-			$class = 'error';
+			$AclExtras->acoUpdate();
 		}
 
-		$this->Session->setFlash(join('<br>', $output), 'default', array('class' => $class));
-
-		if (isset($this->request->params['named']['permissions'])) {
-			return $this->redirect(array('plugin' => 'acl', 'controller' => 'acl_permissions', 'action' => 'index'));
+		if (isset($this->request->query['permissions'])) {
+			return $this->redirect(array('plugin' => 'Croogo/Acl', 'controller' => 'Permissions', 'action' => 'index'));
 		} else {
 			return $this->redirect(array('action' => 'index'));
 		}
