@@ -41,9 +41,15 @@ class VocabulariesController extends TaxonomyAppController {
 	public function index() {
 		$this->set('title_for_layout', __d('croogo', 'Vocabularies'));
 
-		$this->Vocabulary->recursive = 0;
-		$this->paginate['Vocabulary']['order'] = 'Vocabulary.weight ASC';
-		$this->set('vocabularies', $this->paginate());
+		$this->paginate = [
+			'order' => [
+				'weight' => 'ASC'
+			]
+		];
+
+		$findQuery = $this->Vocabularies->find('all');
+
+		$this->set('vocabularies', $this->paginate($findQuery));
 	}
 
 /**
