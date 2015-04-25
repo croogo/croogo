@@ -2,8 +2,6 @@
 
 namespace Croogo\Acl\Controller\Admin;
 
-use Acl\Controller\AclAppController;
-use Acl\Lib\AclUpgrade;
 use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\Network\Exception\MethodNotAllowedException;
@@ -132,23 +130,20 @@ class PermissionsController extends CroogoAppController {
  * @return void
  */
 	public function toggle($acoId, $aroId) {
-		if (!$this->RequestHandler->isAjax()) {
+		if (!$this->request->is('ajax')) {
 			return $this->redirect(array('action' => 'index'));
 		}
 
 		// see if acoId and aroId combination exists
-		$this->AclPermission->Aro->id = $aroId;
-		$aro = $this->AclPermission->Aro->read();
-		$aro = $aro['Aro'];
-		$path = $this->AclPermission->Aco->getPath($acoId);
-		$path = join('/', Hash::extract($path, '{n}.Aco.alias'));
+		$aro = $this->Aros->get($aroId)->toArray();
+		$path = $this->Acos->find('path', ['for' => $acoId]);
+		$path = join('/', collection($path)->extract('alias')->toArray());
 
-		$permitted = !$this->AclPermission->check($aro, $path);
-		$success = $this->AclPermission->allow($aro, $path, '*', $permitted ? 1 : -1);
+		$permitted = !$this->Permissions->check($aro, $path);
+		$success = $this->Permissions->allow($aro, $path, '*', $permitted ? 1 : -1);
 		if ($success) {
-			$this->AclPermission->Aco->id = $acoId;
-			$parentAcoId = $this->AclPermission->Aco->field('parent_id');
-			$cacheName = 'permissions_aco_' . $parentAcoId;
+			$aco = $this->Acos->get($acoId);
+			$cacheName = 'permissions_aco_' . $aco->parent_id;
 			Cache::delete($cacheName, 'permissions');
 			Cache::delete('permissions_public', 'permissions');
 		}
@@ -163,7 +158,7 @@ class PermissionsController extends CroogoAppController {
  * @return void
  */
 	public function upgrade() {
-				$AclUpgrade = new AclUpgrade();
+		$AclUpgrade = new AclUpgrade();
 		$result = $AclUpgrade->upgrade();
 		if ($result === true) {
 			$this->Session->delete(AuthComponent::$sessionKey . '.aclUpgrade');
