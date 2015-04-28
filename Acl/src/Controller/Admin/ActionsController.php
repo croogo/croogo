@@ -5,6 +5,7 @@ namespace Croogo\Acl\Controller\Admin;
 use Acl\AclExtras;
 use Acl\Controller\AclAppController;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 use Croogo\Croogo\Controller\CroogoAppController;
 
 /**
@@ -19,7 +20,15 @@ use Croogo\Croogo\Controller\CroogoAppController;
  */
 class ActionsController extends CroogoAppController {
 
-/**
+	private $Acos;
+
+	public function initialize() {
+		parent::initialize();
+
+		$this->Acos = TableRegistry::get('Croogo/Acl.Acos');
+	}
+
+	/**
  * beforeFilter
  *
  * @return void
@@ -35,16 +44,13 @@ class ActionsController extends CroogoAppController {
  * admin_index
  */
 	public function index($id = null) {
-		$this->set('title_for_layout', __d('croogo', 'Actions'));
-
 		if ($id == null) {
-			$root = $this->Acl->Aco->node('controllers');
-			$root = $root[0];
+			$root = $this->Acos->node('controllers')->firstOrFail();
 		} else {
-			$root = $this->Acl->Aco->read(null, $id);
+			$root = $this->Acos->get($id);
 		}
 
-		$acos = $this->AclAco->getChildren($root['Aco']['id']);
+		$acos = $this->Acos->getChildren($root->id);
 		$this->set(compact('acos'));
 	}
 
@@ -52,29 +58,27 @@ class ActionsController extends CroogoAppController {
  * admin_add
  */
 	public function add() {
-		$this->set('title_for_layout', __d('croogo', 'Add Action'));
+		$aco = $this->Acos->newEntity();
 
-		if (!empty($this->request->data)) {
-			$this->Acl->Aco->create();
-
-			// if parent_id is null, assign 'controllers' as parent
-			if ($this->request->data['Aco']['parent_id'] == null) {
-				$this->request->data['Aco']['parent_id'] = 1;
-				$acoType = 'Controller';
+		if ($this->request->is('post')) {
+			$aco = $this->Acos->patchEntity($aco, $this->request->data());
+			if ($this->request->data('parent_id') == null) {
+				$aco->parent_id = 1;
+				$acoType = 'controller';
 			} else {
-				$acoType = 'Action';
+				$acoType = 'action';
 			}
 
-			if ($this->Acl->Aco->save($this->request->data['Aco'])) {
-				$this->Session->setFlash(sprintf(__d('croogo', 'The %s has been saved'), $acoType), 'default', array('class' => 'success'));
-				return $this->Croogo->redirect(array('action' => 'edit', $this->Acl->Aco->id));
+			if ($this->Acos->save($aco)) {
+				$this->Flash->success(sprintf(__d('croogo', 'The %s has been saved'), $acoType));
+				return $this->Croogo->redirect(['action' => 'index']);
 			} else {
-				$this->Session->setFlash(sprintf(__d('croogo', 'The %s could not be saved. Please, try again.'), $acoType), 'default', array('class' => 'error'));
+				$this->Flash->error(sprintf(__d('croogo', 'The %s could not be saved. Please, try again.'), $acoType));
 			}
 		}
 
-		$acos = $this->Acl->Aco->generateTreeList(null, '{n}.Aco.id', '{n}.Aco.alias');
-		$this->set(compact('acos'));
+		$acos = $this->Acos->find('treeList', [ 'keyPath' => 'id', 'valuePath' => 'alias' ]);
+		$this->set(compact('aco', 'acos'));
 	}
 
 /**
@@ -83,26 +87,27 @@ class ActionsController extends CroogoAppController {
  * @param integer $id
  */
 	public function edit($id = null) {
-		$this->set('title_for_layout', __d('croogo', 'Edit Action'));
+		$aco = $this->Acos->get($id);
 
-		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Action'), 'default', array('class' => 'error'));
-			return $this->redirect(array('action' => 'index'));
-		}
-		if (!empty($this->request->data)) {
-			if ($this->Acl->Aco->save($this->request->data['Aco'])) {
-				$this->Session->setFlash(__d('croogo', 'The Action has been saved'), 'default', array('class' => 'success'));
-				return $this->Croogo->redirect(array('action' => 'edit', $this->Acl->Aco->id));
+		if ($this->request->is('put')) {
+			$aco = $this->Acos->patchEntity($aco, $this->request->data());
+			if ($this->request->data('parent_id') == null) {
+				$aco->parent_id = 1;
+				$acoType = 'controller';
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Action could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$acoType = 'action';
+			}
+
+			if ($this->Acos->save($aco)) {
+				$this->Flash->success(sprintf(__d('croogo', 'The %s has been saved'), $acoType));
+				return $this->Croogo->redirect(array('action' => 'index'));
+			} else {
+				$this->Flash->error(sprintf(__d('croogo', 'The %s could not be saved. Please, try again.'), $acoType));
 			}
 		}
-		if (empty($this->request->data)) {
-			$this->request->data = $this->Acl->Aco->read(null, $id);
-		}
 
-		$acos = $this->Acl->Aco->generateTreeList(null, '{n}.Aco.id', '{n}.Aco.alias');
-		$this->set(compact('acos'));
+		$acos = $this->Acos->find('treeList', [ 'keyPath' => 'id', 'valuePath' => 'alias' ]);
+		$this->set(compact('aco', 'acos'));
 	}
 
 /**
@@ -111,12 +116,10 @@ class ActionsController extends CroogoAppController {
  * @param integer $id
  */
 	public function delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Action'), 'default', array('class' => 'error'));
-			return $this->redirect(array('action' => 'index'));
-		}
-		if ($this->Acl->Aco->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Action deleted'), 'default', array('class' => 'success'));
+		$aco = $this->Acos->get($id);
+
+		if ($this->Acos->delete($aco)) {
+			$this->Flash->success(__d('croogo', 'Action deleted'));
 			return $this->redirect(array('action' => 'index'));
 		}
 	}
@@ -129,18 +132,16 @@ class ActionsController extends CroogoAppController {
  * @param string $step
  */
 	public function move($id, $direction = 'up', $step = '1') {
-		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Action'), 'default', array('class' => 'error'));
-			return $this->redirect(array('action' => 'index'));
-		}
+		$aco = $this->Acos->get($id);
+
 		if ($direction == 'up') {
-			if ($this->Acl->Aco->moveUp($id)) {
-				$this->Session->setFlash(__d('croogo', 'Action moved up'), 'default', array('class' => 'success'));
+			if ($this->Acos->moveUp($aco)) {
+				$this->Flash->success(__d('croogo', 'Action moved up'));
 				return $this->redirect(array('action' => 'index'));
 			}
 		} else {
-			if ($this->Acl->Aco->moveDown($id)) {
-				$this->Session->setFlash(__d('croogo', 'Action moved down'), 'default', array('class' => 'success'));
+			if ($this->Acos->moveDown($aco)) {
+				$this->Flash->success(__d('croogo', 'Action moved down'));
 				return $this->redirect(array('action' => 'index'));
 			}
 		}
