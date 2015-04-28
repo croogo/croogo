@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
+use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
 use Croogo\Croogo\Croogo;
 use Croogo\Croogo\CroogoStatus;
@@ -306,8 +307,10 @@ class CroogoHelper extends Helper {
 
 		if ($action == 'delete' || isset($usePost)) {
 			$this->CroogoForm->_helperMap['Html']['class'] = 'Croogo/Croogo.CroogoHtml';
+			$this->CroogoForm->Html = new CroogoHtmlHelper($this->_View);
 			$postLink = $this->CroogoForm->postLink($title, $url, $options);
 			$this->CroogoForm->_helperMap['Html']['class'] = 'Html';
+			$this->CroogoForm->Html = new HtmlHelper($this->_View);
 			return $postLink;
 		}
 
