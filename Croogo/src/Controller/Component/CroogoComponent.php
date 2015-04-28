@@ -263,7 +263,7 @@ class CroogoComponent extends Component {
  * @return void
  * @see CroogoComponent::setReferer()
  */
-	public function redirect($url, $status = null, $exit = true) {
+	public function redirect($url, $status = null) {
 		$referer = $this->_controller->request->session()->read('Croogo.referer');
 		$this->_controller->request->session()->delete('Croogo.referer');
 		if (is_array($url)) {
@@ -275,7 +275,7 @@ class CroogoComponent extends Component {
 				$url = $referer['url'];
 			}
 		}
-		$this->_controller->redirect($url, $status, $exit);
+		$this->_controller->redirect($url, $status);
 	}
 
 /**
