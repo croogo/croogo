@@ -194,7 +194,7 @@ AclPermissions.tableToggle = function() {
 		var params = {
 			perms: true
 		};
-		if (Croogo.params.controller == 'acl_actions') {
+		if (Croogo.params.controller == 'Actions') {
 			params = $.extend(params, {
 				urls: true,
 				perms: false
