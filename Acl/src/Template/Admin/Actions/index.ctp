@@ -1,17 +1,17 @@
 <?php
 
-$this->extend('/Common/admin_index');
+$this->extend('Croogo/Croogo./Common/admin_index');
 $this->name = 'acos';
-$this->Html->script('/acl/js/acl_permissions.js', false);
-$this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentReady(); });", array('inline' => false));
+$this->Html->script('Croogo/Acl.acl_permissions', ['block' => true]);
+$this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentReady(); });", ['block' => true]);
 
-$this->Html
+$this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Permissions'), array(
-		'plugin' => 'acl', 'controller' => 'acl_permissions',
+		'plugin' => 'Croogo/Acl', 'controller' => 'Permissions',
 	))
-	->addCrumb(__d('croogo', 'Actions'), array('plugin' => 'acl', 'controller' => 'acl_actions', 'action' => 'index', 'permission' => 1));
+	->addCrumb(__d('croogo', 'Actions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Actions', 'action' => 'index', 'permission' => 1));
 
 ?>
 <?php $this->start('actions'); ?>
@@ -23,12 +23,13 @@ $this->Html
 		array(
 			'class' => 'btn dropdown-toggle',
 			'data-toggle' => 'dropdown',
+			'escape' => false
 		)
 	);
 
 	$generateUrl = array(
-		'plugin' => 'acl',
-		'controller' => 'acl_actions',
+		'plugin' => 'Croogo/Acl',
+		'controller' => 'Actions',
 		'action' => 'generate',
 		'permissions' => 1
 	);
@@ -79,9 +80,9 @@ $this->Html
 
 	$currentController = '';
 	$icon = '<i class="icon-none pull-right"></i>';
-	foreach ($acos as $acoIndex => $aco) {
-		$id = $aco['Aco']['id'];
-		$alias = $aco['Aco']['alias'];
+	foreach ($acos as $aco) {
+		$id = $aco->id;
+		$alias = $aco->alias;
 		$class = '';
 		if (substr($alias, 0, 1) == '_') {
 			$level = 1;
@@ -92,7 +93,7 @@ $this->Html
 		} else {
 			$level = 0;
 			$class .= ' controller';
-			if ($aco['Aco']['children'] > 0) {
+			if ($aco->children > 0) {
 				$class .= ' perm-expand';
 			}
 			$oddOptions = array();
@@ -101,30 +102,29 @@ $this->Html
 		}
 
 		$actions = array();
-		$actions[] = $this->Html->link('',
+		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'move', $id, 'up'),
 			array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'))
 		);
-		$actions[] = $this->Html->link('',
+		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'move', $id, 'down'),
 			array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'))
 		);
 
-		$actions[] = $this->Html->link('',
+		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'edit', $id),
 			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 		);
-		$actions[] = $this->Form->postLink('',
+		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'delete',	$id),
 			array(
 				'icon' => 'trash',
-				'tooltip' => __d('croogo', 'Remove this item'),
-				'escapeTitle' => false,
-				'escape' => true,
+				'tooltip' => __d('croogo', 'Remove this item')
 			),
 			__d('croogo', 'Are you sure?')
 		);
-		$actions = $this->Html->div('item-actions', implode(' ', $actions));
+
+		$actions = $this->CroogoHtml->div('item-actions', implode(' ', $actions));
 		$row = array(
 			$id,
 			$this->Html->div(trim($class), $alias . $icon, array(
@@ -135,7 +135,7 @@ $this->Html
 			$actions,
 		);
 
-		echo $this->Html->tableCells(array($row), $oddOptions, $evenOptions);
+		echo $this->Html->tableCells($row, $oddOptions, $evenOptions);
 	}
 ?>
 	<thead>

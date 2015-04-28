@@ -1,51 +1,47 @@
 <?php
-$this->extend('/Common/admin_edit');
-$this->set('className', 'acl_actions');
-$this->Html
+$this->extend('Croogo/Croogo./Common/admin_edit');
+
+$this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'users', 'controller' => 'users', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Permissions'), array('plugin' => 'acl', 'controller' => 'acl_permissions'))
-	->addCrumb(__d('croogo', 'Actions'), array('plugin' => 'acl', 'controller' => 'acl_actions', 'action' => 'index'));
+	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Permissions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Permissions'))
+	->addCrumb(__d('croogo', 'Actions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Actions', 'action' => 'index'));
 
-if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->data['Aco']['id'] . ': ' . $this->data['Aco']['alias'], '/' . $this->request->url);
+if ($this->request->param('action') == 'edit') {
+	$this->CroogoHtml->addCrumb($aco->id . ': ' . $aco->alias, '/' . $this->request->url);
 }
 
-if ($this->request->params['action'] == 'admin_add') {
-	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
+if ($this->request->param('action') == 'add') {
+	$this->CroogoHtml->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
-
 ?>
-<h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
-<?php echo $this->Form->create('Aco', array('url' => array('controller' => 'acl_actions', 'action' => 'add'))); ?>
+<?php echo $this->CroogoForm->create($aco); ?>
 
 <div class="row-fluid">
 	<div class="span8">
 
 		<ul class="nav nav-tabs">
 		<?php
-			echo $this->Croogo->adminTab(__d('croogo', 'Action'), '#action-main');
-			echo $this->Croogo->adminTabs();
+		echo $this->Croogo->adminTab(__d('croogo', 'Action'), '#action-main');
+		echo $this->Croogo->adminTabs();
 		?>
 		</ul>
 
 		<div class="tab-content">
 			<div id="action-main" class="tab-pane">
 			<?php
-				echo $this->Form->input('id');
-				echo $this->Form->input('parent_id', array(
-					'options' => $acos,
-					'empty' => true,
-					'label' => __d('croogo', 'Parent'),
-					'help' => __d('croogo', 'Choose none if the Aco is a controller.'),
-				));
-				$this->Form->inputDefaults(array(
-					'label' => false,
-					'class' => 'span10',
-				));
-				echo $this->Form->input('alias', array(
-					'label' => __d('croogo', 'Alias'),
-				));
+			echo $this->CroogoForm->input('parent_id', array(
+				'options' => $acos,
+				'empty' => true,
+				'label' => __d('croogo', 'Parent'),
+				'help' => __d('croogo', 'Choose none if the Aco is a controller.'),
+			));
+			$this->CroogoForm->templates(array(
+				'class' => 'span10',
+			));
+			echo $this->CroogoForm->input('alias', array(
+				'label' => __d('croogo', 'Alias'),
+			));
 			?>
 			</div>
 
@@ -55,14 +51,14 @@ if ($this->request->params['action'] == 'admin_add') {
 
 	<div class="span4">
 	<?php
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
-			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'cancel btn btn-danger')) .
-			$this->Html->endBox();
+		echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing')) .
+			$this->CroogoForm->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+			$this->CroogoForm->button(__d('croogo', 'Save'), array('button' => 'success')) .
+			$this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'cancel btn btn-danger')) .
+			$this->CroogoHtml->endBox();
 
 		echo $this->Croogo->adminBoxes();
 	?>
 	</div>
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->CroogoForm->end(); ?>
