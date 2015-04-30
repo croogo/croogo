@@ -87,27 +87,33 @@ class TermsController extends TaxonomyAppController {
  * Admin add
  *
  * @param integer $vocabularyId
- * @return void
  * @access public
  */
 	public function add($vocabularyId) {
-		$this->__ensureVocabularyIdExists($vocabularyId);
+		$response = $this->__ensureVocabularyIdExists($vocabularyId);
+		if ($response instanceof Response) {
+			return $response;
+		}
 
-		$vocabulary = $this->Term->Vocabulary->read(null, $vocabularyId);
-		$this->set('title_for_layout', __d('croogo', '%s: Add Term', $vocabulary['Vocabulary']['title']));
+		$vocabulary = $this->Terms->Vocabularies->get($vocabularyId);
+
+		$term = $this->Terms->newEntity();
+		$this->set('term', $term);
 
 		if ($this->request->is('post')) {
-			if ($this->Term->add($this->request->data, $vocabularyId)) {
-				$this->Session->setFlash(__d('croogo', 'Term saved successfuly.'), 'default', array('class' => 'success'));
+			$term = $this->Terms->patchEntity($term, $this->request->data);
+
+			if ($this->Terms->add($term, $vocabularyId)) {
+				$this->Flash->success(__d('croogo', 'Term saved successfuly.'));
 				return $this->redirect(array(
 					'action' => 'index',
 					$vocabularyId,
 				));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'), 'default', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'));
 			}
 		}
-		$parentTree = $this->Term->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array('taxonomyId' => true));
+		$parentTree = $this->Terms->Taxonomies->getTree($vocabulary->alias, array('taxonomyId' => true));
 		$this->set(compact('vocabulary', 'parentTree', 'vocabularyId'));
 	}
 
