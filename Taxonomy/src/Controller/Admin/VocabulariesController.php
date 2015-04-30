@@ -3,10 +3,12 @@
 namespace Croogo\Taxonomy\Controller\Admin;
 
 use Croogo\Taxonomy\Controller\TaxonomyAppController;
+use Croogo\Taxonomy\Model\Table\VocabulariesTable;
 
 /**
  * Vocabularies Controller
  *
+ * @property VocabulariesTable Vocabularies
  * @category Taxonomy.Controller
  * @package  Croogo
  * @version  1.0
@@ -150,10 +152,13 @@ class VocabulariesController extends TaxonomyAppController {
  * @access public
  */
 	public function moveup($id, $step = 1) {
-		if ($this->Vocabulary->moveUp($id, $step)) {
-			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'default', array('class' => 'success'));
+		$vocabulary = $this->Vocabularies->get($id);
+		$vocabulary->weight = $vocabulary->weight - $step;
+
+		if ($this->Vocabularies->save($vocabulary)) {
+			$this->Flash->success(__d('croogo', 'Moved up successfully'));
 		} else {
-			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'default', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Could not move up'), 'default', array('class' => 'error'));
 		}
 
 		return $this->redirect(array('action' => 'index'));
@@ -168,10 +173,13 @@ class VocabulariesController extends TaxonomyAppController {
  * @access public
  */
 	public function movedown($id, $step = 1) {
-		if ($this->Vocabulary->moveDown($id, $step)) {
-			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'default', array('class' => 'success'));
+		$vocabulary = $this->Vocabularies->get($id);
+		$vocabulary->weight = $vocabulary->weight + $step;
+
+		if ($this->Vocabularies->save($vocabulary)) {
+			$this->Flash->success(__d('croogo', 'Moved down successfully'));
 		} else {
-			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'default', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Could not move down'));
 		}
 
 		return $this->redirect(array('action' => 'index'));
