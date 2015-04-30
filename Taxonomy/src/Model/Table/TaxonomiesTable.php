@@ -73,7 +73,7 @@ class TaxonomiesTable extends CroogoTable {
 			'keyField' => $options['key'],
 			'valueField' => $options['value'],
 			'groupField' => 'id',
-		])->where(['id' => $termsIds])->toArray();
+		])->where(['id IN' => $termsIds])->toArray();
 
 		$termsTree = array();
 		foreach ($tree as $termId => $tvId) {

@@ -233,7 +233,7 @@ class TermsTable extends CroogoTable {
 		]);
 
 		$query->where([
-			$this->primaryKey() => array_keys($termsId)
+			$this->primaryKey() .' IN' => array_keys($termsId)
 		]);
 
 		return $query;
