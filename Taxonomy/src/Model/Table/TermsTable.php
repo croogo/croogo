@@ -1,8 +1,8 @@
 <?php
 
-namespace Croogo\Taxonomy\Model;
+namespace Croogo\Taxonomy\Model\Table;
 
-use Taxonomy\Model\TaxonomyAppModel;
+use Croogo\Croogo\Model\Table\CroogoTable;
 /**
  * Term
  *
@@ -13,7 +13,7 @@ use Taxonomy\Model\TaxonomyAppModel;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Term extends TaxonomyAppModel {
+class TermsTable extends CroogoTable {
 
 /**
  * Model name
