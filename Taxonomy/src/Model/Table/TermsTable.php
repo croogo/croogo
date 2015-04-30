@@ -26,10 +26,6 @@ class TermsTable extends CroogoTable {
  */
 	public $name = 'Term';
 
-	public $findMethods = array(
-		'byVocabulary' => true,
-	);
-
 /**
  * Behaviors used by the Model
  *
@@ -225,6 +221,24 @@ class TermsTable extends CroogoTable {
 		return $this->Taxonomy->delete($taxonomyId) && $this->delete($id);
 	}
 
+	public function findByVocabulary(Query $query, array $options) {
+		if (empty($options['vocabulary_id'])) {
+			trigger_error(__d('croogo', '"vocabulary_id" key not found'));
+		}
+
+		$vocabulary = $this->Vocabularies->find()->select('alias')->where(['id' => $options['vocabulary_id']])->first();
+
+		$termsId = $this->Vocabularies->Taxonomies->getTree($vocabulary->alias, [
+			'key' => 'id', 'value' => 'title'
+		]);
+
+		$query->where([
+			$this->primaryKey() => array_keys($termsId)
+		]);
+
+		return $query;
+	}
+
 /**
  * Save new/updated term data
  *
@@ -249,23 +263,6 @@ class TermsTable extends CroogoTable {
 			$added = $this->Taxonomy->save($dataToPersist);
 		}
 		return $added;
-	}
-
-	protected function _findByVocabulary($state, $query, $results = array()) {
-		if (empty($query['vocabulary_id'])) {
-			trigger_error(__d('croogo', '"vocabulary_id" key not found'));
-		}
-		if ($state == 'before') {
-			$vocabularyAlias = $this->Vocabulary->field('alias', array('id' => $query['vocabulary_id']));
-			$termsId = $this->Vocabulary->Taxonomy->getTree($vocabularyAlias, array('key' => 'id', 'value' => 'title'));
-			$defaultQuery = array(
-				'conditions' => array(
-					$this->escapeField() => array_keys($termsId)
-				)
-			);
-			return array_merge_recursive($defaultQuery, (array)$query);
-		}
-		return $results;
 	}
 
 /**
