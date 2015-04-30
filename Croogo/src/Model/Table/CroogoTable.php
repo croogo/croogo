@@ -86,27 +86,27 @@ class CroogoTable extends Table {
  * @return boolean True on success, false on failure
  * @access public
  */
-	public function updateAll($fields, $conditions = true) {
-		$args = func_get_args();
-		$output = call_user_func_array(array('parent', 'updateAll'), $args);
-		if ($output) {
-			$created = false;
-			$options = array();
-			$field = sprintf('%s.%s', $this->alias, $this->primaryKey);
-			if (!empty($args[1][$field])) {
-				foreach ((array)$args[1][$field] as $id) {
-					$this->id = $id;
-					$event = new Event('Model.afterSave', $this, array(
-						$created, $options
-					));
-					$this->eventManager()->dispatch($event);
-				}
-			}
-			$this->_clearCache();
-			return true;
-		}
-		return false;
-	}
+//	public function updateAll($fields, $conditions = true) {
+//		$args = func_get_args();
+//		$output = call_user_func_array(array('parent', 'updateAll'), $args);
+//		if ($output) {
+//			$created = false;
+//			$options = array();
+//			$field = sprintf('%s.%s', $this->alias(), $this->primaryKey);
+//			if (!empty($args[1][$field])) {
+//				foreach ((array)$args[1][$field] as $id) {
+//					$this->id = $id;
+//					$event = new Event('Model.afterSave', $this, array(
+//						$created, $options
+//					));
+//					$this->eventManager()->dispatch($event);
+//				}
+//			}
+//			$this->_clearCache();
+//			return true;
+//		}
+//		return false;
+//	}
 
 /**
  * Fix to the Model::invalidate() method to display localized validate messages
