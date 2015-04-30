@@ -2,6 +2,7 @@
 
 namespace Croogo\Taxonomy\Model\Table;
 
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Croogo\Croogo\Model\Table\CroogoTable;
 
@@ -9,6 +10,7 @@ use Croogo\Croogo\Model\Table\CroogoTable;
  * Term
  *
  * @property VocabulariesTable Vocabularies
+ * @property TaxonomiesTable Taxonomies
  * @category Taxonomy.Model
  * @package  Croogo.Taxonomy.Model
  * @version  1.0
@@ -82,43 +84,38 @@ class TermsTable extends CroogoTable {
 		parent::initialize($config);
 
 		$this->belongsToMany('Croogo/Taxonomy.Vocabularies', [
-			'joinTable' => 'Croogo/Taxonomy.Taxonomies',
+			'through' => 'Croogo/Taxonomy.Taxonomies',
 			'foreignKey' => 'term_id',
 			'targetForeignKey' => 'vocabulary_id',
 		]);
+		$this->hasMany('Croogo/Taxonomy.Taxonomies');
 	}
 
 /**
  * Save Term and return ID.
  * If another Term with same slug exists, return ID of that Term without saving.
  *
- * @param  array $data
+ * @param  Entity $entity
  * @return integer
  */
-	public function saveAndGetId($data) {
-		$dataToPersist = $data;
-		if (!array_key_exists($this->alias, $data)) {
-			$dataToPersist = array($this->alias => $data);
-		}
-		$term = $this->find('first', array(
-			'conditions' => array(
-				$this->escapeField('slug') => $dataToPersist[$this->alias]['slug'],
-			),
-		));
-		if (isset($term[$this->alias][$this->primaryKey])) {
-			$id = $term[$this->alias][$this->primaryKey];
-			$update = $dataToPersist[$this->alias];
-			if ($id && isset($update['description'])) {
+	public function saveAndGetId(Entity $entity) {
+		$term = $this->find()->where([
+			'slug' => $entity->slug,
+		])->first();
+		if ($term) {
+			$id = $term->{$this->primaryKey()};
+			if ($id && $entity->dirty('description')) {
 				$this->id = $id;
-				$this->saveField('description', $update['description']);
+				$this->save($entity);
 			}
 			return $id;
 		}
 
-		$this->id = false;
-		if ($this->save($dataToPersist)) {
-			return $this->id;
+		$savedEntity = $this->save($entity);
+		if ($savedEntity) {
+			return $savedEntity->id;
 		}
+
 		return false;
 	}
 
@@ -149,9 +146,9 @@ class TermsTable extends CroogoTable {
 	public function isInVocabulary($id, $vocabularyId, $taxonomyId = null) {
 		$conditions = array('term_id' => $id, 'vocabulary_id' => $vocabularyId);
 		if (!is_null($taxonomyId)) {
-			$conditions['Taxonomy.id !='] = $taxonomyId;
+			$conditions['Taxonomies.id !='] = $taxonomyId;
 		}
-		return $this->Vocabulary->Taxonomy->hasAny($conditions);
+		return (bool) $this->Vocabularies->Taxonomies->find('all')->where($conditions)->count();
 	}
 
 /**
@@ -242,25 +239,25 @@ class TermsTable extends CroogoTable {
 /**
  * Save new/updated term data
  *
- * @param array $data Term data
+ * @param Entity $entity Term \\
  * @param integer $vocabularyId Vocabulary Id
  * @param integer $taxonomyId Taxonomy Id
  */
-	protected function _save($data, $vocabularyId, $taxonomyId = null) {
+	protected function _save(Entity $entity, $vocabularyId, $taxonomyId = null) {
 		$added = false;
 
-		$termId = $this->saveAndGetId($data);
+		$termId = $this->saveAndGetId($entity);
 		if (!$this->isInVocabulary($termId, $vocabularyId, $taxonomyId)) {
 			$this->setScopeForTaxonomy($vocabularyId);
-			$dataToPersist = array(
-				'parent_id' => $data['Taxonomy']['parent_id'],
+			$dataToPersist = (!is_null($taxonomyId)) ? $this->Taxonomies->get($taxonomyId) : $this->Taxonomies->newEntity();
+
+			$dataToPersist = $this->Taxonomies->patchEntity($dataToPersist, [
+				'parent_id' => $entity->parent_id,
 				'term_id' => $termId,
 				'vocabulary_id' => $vocabularyId,
-			);
-			if (!is_null($taxonomyId)) {
-				$dataToPersist['id'] = $taxonomyId;
-			}
-			$added = $this->Taxonomy->save($dataToPersist);
+			]);
+
+			$added = $this->Taxonomies->save($dataToPersist);
 		}
 		return $added;
 	}
@@ -271,13 +268,13 @@ class TermsTable extends CroogoTable {
  * @param integer $vocabularyId Vocabulary Id
  */
 	public function setScopeForTaxonomy($vocabularyId) {
-		$scopeSettings = array('scope' => array(
-			'Taxonomy.vocabulary_id' => $vocabularyId,
-		));
-		if ($this->Vocabulary->Taxonomy->Behaviors->loaded('Tree')) {
-			$this->Vocabulary->Taxonomy->Behaviors->Tree->setup($this->Vocabulary->Taxonomy, $scopeSettings);
+		$scopeSettings = ['scope' => [
+			'Taxonomies.vocabulary_id' => $vocabularyId,
+		]];
+		if ($this->Vocabularies->Taxonomies->hasBehavior('Tree')) {
+			$this->Vocabularies->Taxonomies->behaviors()->get('Tree')->config($scopeSettings);
 		} else {
-			$this->Vocabulary->Taxonomy->Behaviors->load('Tree', $scopeSettings);
+			$this->Vocabularies->Taxonomies->addBehavior('Tree', $scopeSettings);
 		}
 	}
 }
