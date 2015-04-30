@@ -55,30 +55,25 @@ class TaxonomiesTable extends CroogoTable {
 		if (!isset($vocabulary->id)) {
 			return false;
 		}
-		/**
-		 * @todo Get taxonomies getTree to work
-		 */
-		return false;
-//		$this->Behaviors->attach('Tree', array(
-//			'scope' => array(
-//				$this->alias . '.vocabulary_id' => $vocabulary['Vocabulary']['id'],
-//			),
-//		));
+
+		$this->behaviors()->get('Tree')->config([
+			'scope' => [
+				$this->alias() . '.vocabulary_id' => $vocabulary->id,
+			]
+		]);
 		$treeConditions = array(
-			$this->alias() . '.vocabulary_id' => $vocabulary['Vocabulary']['id'],
+			$this->alias() . '.vocabulary_id' => $vocabulary->id,
 		);
-		$tree = $this->generateTreeList($treeConditions, '{n}.' . $this->alias() . '.term_id', '{n}.' . $this->alias() . '.id');
+		$tree = $this->find('treeList', [
+			'keyPath' => 'term_id',
+			'valuePath' => 'id'
+		])->where($treeConditions)->toArray();
 		$termsIds = array_keys($tree);
-		$terms = $this->Term->find('list', array(
-			'conditions' => array(
-				'Term.id' => $termsIds,
-			),
-			'fields' => array(
-				$options['key'],
-				$options['value'],
-				'id',
-			),
-		));
+		$terms = $this->Terms->find('list', [
+			'keyField' => $options['key'],
+			'valueField' => $options['value'],
+			'groupField' => 'id',
+		])->where(['id' => $termsIds])->toArray();
 
 		$termsTree = array();
 		foreach ($tree as $termId => $tvId) {
