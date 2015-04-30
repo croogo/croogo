@@ -2,10 +2,13 @@
 
 namespace Croogo\Taxonomy\Model\Table;
 
+use Cake\ORM\Query;
 use Croogo\Croogo\Model\Table\CroogoTable;
+
 /**
  * Term
  *
+ * @property VocabulariesTable Vocabularies
  * @category Taxonomy.Model
  * @package  Croogo.Taxonomy.Model
  * @version  1.0
@@ -78,6 +81,16 @@ class TermsTable extends CroogoTable {
 			'unique' => true,
 		),
 	);
+
+	public function initialize(array $config) {
+		parent::initialize($config);
+
+		$this->belongsToMany('Croogo/Taxonomy.Vocabularies', [
+			'joinTable' => 'Croogo/Taxonomy.Taxonomies',
+			'foreignKey' => 'term_id',
+			'targetForeignKey' => 'vocabulary_id',
+		]);
+	}
 
 /**
  * Save Term and return ID.
