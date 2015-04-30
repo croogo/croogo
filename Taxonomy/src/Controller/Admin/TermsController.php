@@ -2,12 +2,16 @@
 
 namespace Croogo\Taxonomy\Controller\Admin;
 
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
+use Cake\Network\Response;
 use Croogo\Taxonomy\Controller\TaxonomyAppController;
+use Croogo\Taxonomy\Model\Table\TermsTable;
 
 /**
  * Terms Controller
  *
+ * @property TermsTable Terms
  * @category Taxonomy.Controller
  * @package  Croogo
  * @version  1.0
@@ -26,10 +30,10 @@ class TermsController extends TaxonomyAppController {
 	public $name = 'Terms';
 
 	protected $_redirectUrl = array(
-		'plugin' => 'taxonomy',
-		'controller' => 'vocabularies',
+		'prefix' => 'admin',
+		'plugin' => 'Croogo/Taxonomy',
+		'controller' => 'Vocabularies',
 		'action' => 'index',
-		'admin' => true
 	);
 
 /**
@@ -59,17 +63,18 @@ class TermsController extends TaxonomyAppController {
  * Admin index
  *
  * @param integer $vocabularyId
- * @return void
  * @access public
  */
 	public function index($vocabularyId = null) {
-		$this->__ensureVocabularyIdExists($vocabularyId);
+		$response = $this->__ensureVocabularyIdExists($vocabularyId);
+		if ($response instanceof Response) {
+			return $response;
+		}
 
-		$vocabulary = $this->Term->Vocabulary->read(null, $vocabularyId);
+		$vocabulary = $this->Terms->Vocabularies->get($vocabularyId);
 		$defaultType = $this->__getDefaultType($vocabulary);
-		$this->set('title_for_layout', __d('croogo', 'Vocabulary: %s', $vocabulary['Vocabulary']['title']));
 
-		$terms = $this->Term->find('byVocabulary', array('vocabulary_id' => $vocabularyId));
+		$terms = $this->Terms->find('byVocabulary', array('vocabulary_id' => $vocabularyId));
 		$this->set(compact('vocabulary', 'terms', 'defaultType'));
 
 		if (isset($this->request->params['named']['links']) || isset($this->request->query['chooser'])) {
@@ -295,8 +300,11 @@ class TermsController extends TaxonomyAppController {
 			return $this->redirect($redirectUrl);
 		}
 
-		if (!$this->Term->Vocabulary->exists($vocabularyId)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Vocabulary ID.'), 'default', array('class' => 'error'));
+		try {
+			$this->Terms->Vocabularies->get($vocabularyId);
+		} catch (RecordNotFoundException $recordNotFoundException) {
+			$this->Flash->error(__d('croogo', 'Invalid Vocabulary ID.'));
+
 			return $this->redirect($redirectUrl);
 		}
 	}

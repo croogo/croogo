@@ -1,19 +1,21 @@
 <?php
 
-$this->extend('/Common/admin_index');
+$this->assign('title', __d('croogo', 'Vocabulary: %s', $vocabulary->title));
+
+$this->extend('Croogo/Croogo./Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index'))
-	->addCrumb($vocabulary['Vocabulary']['title'], array('plugin' => 'taxonomy', 'controller' => 'terms', 'action' => 'index', $vocabulary['Vocabulary']['id']));
+	->addCrumb($vocabulary->title, array('plugin' => 'taxonomy', 'controller' => 'terms', 'action' => 'index', $vocabulary->id));
 ?>
 
 <?php $this->start('actions'); ?>
 <?php
 	echo $this->Croogo->adminAction(
 		__d('croogo', 'New Term'),
-		array('action' => 'add', $vocabulary['Vocabulary']['id'])
+		array('action' => 'add', $vocabulary->id)
 	);
 ?>
 <?php $this->end(); ?>
@@ -43,34 +45,34 @@ $this->Html
 
 	foreach ($terms as $term):
 		$actions = array();
-		$actions[] = $this->Croogo->adminRowActions($term['Term']['id']);
+		$actions[] = $this->Croogo->adminRowActions($term->id);
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('action' => 'moveup',	$term['Term']['id'], $vocabulary['Vocabulary']['id']),
+			array('action' => 'moveup',	$term->id, $vocabulary->id),
 			array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('action' => 'movedown', $term['Term']['id'], $vocabulary['Vocabulary']['id']),
+			array('action' => 'movedown', $term->id, $vocabulary->id),
 			array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('action' => 'edit', $term['Term']['id'], $vocabulary['Vocabulary']['id']),
+			array('action' => 'edit', $term->id, $vocabulary->id),
 			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('action' => 'delete', $term['Term']['id'], $vocabulary['Vocabulary']['id']),
+			array('action' => 'delete', $term->id, $vocabulary->id),
 			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
 			__d('croogo', 'Are you sure?'));
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
 		// Title Column
-		$titleCol = $term['Term']['title'];
+		$titleCol = $term->title;
 		if (isset($defaultType['alias'])) {
-			$titleCol = $this->Html->link($term['Term']['title'], array(
+			$titleCol = $this->Html->link($term->title, array(
 				'plugin' => 'nodes',
 				'controller' => 'nodes',
 				'action' => 'term',
 				'type' => $defaultType['alias'],
-				'slug' => $term['Term']['slug'],
+				'slug' => $term->slug,
 				'admin' => 0,
 			), array(
 				'target' => '_blank',
@@ -85,9 +87,9 @@ $this->Html
 
 		$rows[] = array(
 			'',
-			$term['Term']['id'],
+			$term->id,
 			$titleCol,
-			$term['Term']['slug'],
+			$term->slug,
 			$actions,
 		);
 	endforeach;
