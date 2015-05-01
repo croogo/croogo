@@ -3,6 +3,6 @@
 namespace Croogo\Taxonomy\Config;
 $config = array(
 	'EventHandlers' => array(
-		'Taxonomy.TaxonomiesEventHandler',
+		'Croogo/Taxonomy.TaxonomiesEventHandler',
 	),
 );

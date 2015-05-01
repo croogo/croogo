@@ -2,7 +2,9 @@
 
 namespace Croogo\Taxonomy\Event;
 
-use Cake\Event\EventListener;
+use Cake\Event\EventListenerInterface;
+use Croogo\Croogo\CroogoNav;
+
 /**
  * Taxonomy Event Handler
  *
@@ -11,7 +13,7 @@ use Cake\Event\EventListener;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TaxonomiesEventHandler implements EventListener {
+class TaxonomiesEventHandler implements EventListenerInterface {
 
 /**
  * implementedEvents
@@ -39,15 +41,15 @@ class TaxonomiesEventHandler implements EventListener {
 			$vocabularies = $View->viewVars['vocabularies_for_admin_layout'];
 		}
 		foreach ($vocabularies as $v) {
-			$weight = 9999 + $v['Vocabulary']['weight'];
-			CroogoNav::add('sidebar', 'content.children.taxonomy.children.' . $v['Vocabulary']['alias'], array(
-				'title' => $v['Vocabulary']['title'],
+			$weight = 9999 + $v->weight;
+			CroogoNav::add('sidebar', 'content.children.taxonomy.children.' . $v->alias, array(
+				'title' => $v->title,
 				'url' => array(
-					'plugin' => 'taxonomy',
-					'admin' => true,
-					'controller' => 'terms',
+					'prefix' => 'admin',
+					'plugin' => 'Croogo/Taxonomy',
+					'controller' => 'Terms',
 					'action' => 'index',
-					$v['Vocabulary']['id'],
+					$v->id,
 				),
 				'weight' => $weight,
 			));

@@ -64,7 +64,7 @@ class TaxonomiesComponent extends Component {
 			$this->Taxonomies = TableRegistry::get('Croogo/Taxonomy.Taxonomies');
 		}
 
-		if (!isset($this->controller->request->params['admin']) && !isset($this->controller->request->params['requested'])) {
+		if ($this->controller->request->param('prefix') != 'admin' && !isset($this->controller->request->params['requested'])) {
 			$this->types();
 			$this->vocabularies();
 		} else {
@@ -85,21 +85,20 @@ class TaxonomiesComponent extends Component {
  */
 	protected function _adminData() {
 		// types
-		$types = $this->Taxonomies->Vocabulary->Type->find('all', array(
+		$types = $this->Taxonomies->Vocabularies->Types->find('all', array(
 			'conditions' => array(
-				'Type.plugin' => null,
+				'Types.plugin' => null,
 			),
-			'order' => 'Type.alias ASC',
+			'order' => 'Types.alias ASC',
 		));
 		$this->controller->set('types_for_admin_layout', $types);
 
 		// vocabularies
-		$vocabularies = $this->Taxonomies->Vocabulary->find('all', array(
-			'recursive' => '-1',
+		$vocabularies = $this->Taxonomies->Vocabularies->find('all', array(
 			'conditions' => array(
-				'Vocabulary.plugin' => null,
+				'Vocabularies.plugin IS NULL',
 			),
-			'order' => 'Vocabulary.alias ASC',
+			'order' => 'Vocabularies.alias ASC',
 		));
 		$this->controller->set('vocabularies_for_admin_layout', $vocabularies);
 	}
