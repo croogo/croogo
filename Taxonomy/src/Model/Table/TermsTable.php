@@ -167,32 +167,14 @@ class TermsTable extends CroogoTable {
  * @see Term::_save()
  * @return array|bool Array of saved term or boolean false
  */
-	public function edit($data, $vocabularyId) {
-		$id = $data[$this->alias][$this->primaryKey];
-		$slug = $data[$this->alias]['slug'];
-
-		if ($this->hasSlugChanged($id, $slug) && $this->slugExists($slug)) {
+	public function edit(Entity $entity, $vocabularyId) {
+		if ($entity->dirty('slug') && $this->slugExists($entity->slug)) {
 			$edited = false;
 		} else {
-			$taxonomyId = !empty($data['Taxonomy']['id']) ? $data['Taxonomy']['id'] : null;
-			$edited = $this->_save($data, $vocabularyId, $taxonomyId);
+			$taxonomyId = $entity->taxonomies[0]->id;
+			$edited = $this->_save($entity, $vocabularyId, $taxonomyId);
 		}
 		return $edited;
-	}
-
-/**
- * Checks wether slug has changed for given Term id
- *
- * @param int $id Term Id
- * @param string $slug Slug
- * @return bool True if slug has changed
- * @throws NotFoundException
- */
-	public function hasSlugChanged($id, $slug) {
-		if (!is_numeric($id) || !$this->exists($id)) {
-			throw new NotFoundException(__d('croogo', 'Invalid Term Id'));
-		}
-		return $this->field('slug', array($this->escapeField() => $id)) != $slug;
 	}
 
 /**
