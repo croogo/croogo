@@ -71,7 +71,11 @@ class TermsController extends TaxonomyAppController {
 			return $response;
 		}
 
-		$vocabulary = $this->Terms->Vocabularies->get($vocabularyId);
+		$vocabulary = $this->Terms->Vocabularies->get($vocabularyId, [
+			'contain' => [
+				'Types'
+			]
+		]);
 		$defaultType = $this->__getDefaultType($vocabulary);
 
 		$terms = $this->Terms->find('byVocabulary', array('vocabulary_id' => $vocabularyId));
@@ -255,8 +259,8 @@ class TermsController extends TaxonomyAppController {
  */
 	private function __getDefaultType($vocabulary) {
 		$defaultType = null;
-		if (isset($vocabulary['Type'][0])) {
-			$defaultType = $vocabulary['Type'][0];
+		if (isset($vocabulary->types[0])) {
+			$defaultType = $vocabulary->types[0];
 		}
 		if (isset($this->params->query['type_id'])) {
 			if (isset($vocabulary['Type'][$this->request->query['type_id']])) {

@@ -179,9 +179,9 @@ class TaxonomiesHelper extends Helper {
 
 		foreach ($typeData as $type) {
 			$typeLink[] = $this->Html->link($type['title'], array(
-				'admin' => false,
-				'plugin' => 'nodes',
-				'controller' => 'nodes',
+				'prefix' => false,
+				'plugin' => 'Croogo/Nodes',
+				'controller' => 'Nodes',
 				'action' => 'term',
 				'type' => $type['alias'],
 				'slug' => $termData['Term']['slug']

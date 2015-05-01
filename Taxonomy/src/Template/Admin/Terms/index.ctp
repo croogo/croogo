@@ -68,19 +68,19 @@ $this->Html
 		$titleCol = $term->title;
 		if (isset($defaultType['alias'])) {
 			$titleCol = $this->Html->link($term->title, array(
-				'plugin' => 'nodes',
-				'controller' => 'nodes',
+				'prefix' => false,
+				'plugin' => 'Croogo/Nodes',
+				'controller' => 'Nodes',
 				'action' => 'term',
 				'type' => $defaultType['alias'],
 				'slug' => $term->slug,
-				'admin' => 0,
 			), array(
 				'target' => '_blank',
 			));
 		}
 
 		// Build link list
-		$typeLinks = $this->Taxonomies->generateTypeLinks($vocabulary['Type'], $term);
+		$typeLinks = $this->Taxonomies->generateTypeLinks($vocabulary->types, $term);
 		if (!empty($typeLinks)) {
 			$titleCol .= $this->Html->tag('small', $typeLinks);
 		}
