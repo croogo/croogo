@@ -122,44 +122,48 @@ class TermsController extends TaxonomyAppController {
  *
  * @param integer $id
  * @param integer $vocabularyId
- * @return void
  * @access public
  */
 	public function edit($id, $vocabularyId) {
-		$this->__ensureVocabularyIdExists($vocabularyId);
-		$this->__ensureTermExists($id);
-		$this->__ensureTaxonomyExists($id, $vocabularyId);
+		$response = $this->__ensureVocabularyIdExists($vocabularyId);
+		if ($response instanceof Response) {
+			return $response;
+		}
+		$response = $this->__ensureTermExists($id);
+		if ($response instanceof Response) {
+			return $response;
+		}
+		$response = $this->__ensureTaxonomyExists($id, $vocabularyId);
+		if ($response instanceof Response) {
+			return $response;
+		}
 
-		$vocabulary = $this->Term->Vocabulary->read(null, $vocabularyId);
-		$term = $this->Term->find('first', array(
-			'conditions' => array(
-				'Term.id' => $id,
-			),
-		));
-		$taxonomy = $this->Term->Taxonomy->find('first', array(
-			'conditions' => array(
-				'Taxonomy.term_id' => $id,
-				'Taxonomy.vocabulary_id' => $vocabularyId,
-			),
-		));
+		$vocabulary = $this->Terms->Vocabularies->get($vocabularyId);
+		$term = $this->Terms->get($id, [
+			'contain' => [
+				'Taxonomies'
+			]
+		]);
+		$taxonomy = $this->Terms->Taxonomies->find()->where([
+				'Taxonomies.term_id' => $id,
+				'Taxonomies.vocabulary_id' => $vocabularyId,
+		])->first();
 
-		$this->set('title_for_layout', __d('croogo', '%s: Edit Term', $vocabulary['Vocabulary']['title']));
+		$this->set('title_for_layout', __d('croogo', '%s: Edit Term', $vocabulary->title));
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->Term->edit($this->request->data, $vocabularyId)) {
-				$this->Session->setFlash(__d('croogo', 'Term saved successfuly.'), 'default', array('class' => 'success'));
+			$term = $this->Terms->patchEntity($term, $this->request->data);
+			if ($this->Terms->edit($term, $vocabularyId)) {
+				$this->Flash->success(__d('croogo', 'Term saved successfuly.'));
 				return $this->redirect(array(
 					'action' => 'index',
 					$vocabularyId,
 				));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'), 'default', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'));
 			}
-		} else {
-			$this->request->data['Taxonomy'] = $taxonomy['Taxonomy'];
-			$this->request->data['Term'] = $term['Term'];
 		}
-		$parentTree = $this->Term->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array('taxonomyId' => true));
+		$parentTree = $this->Terms->Taxonomies->getTree($vocabulary->alias, array('taxonomyId' => true));
 		$this->set(compact('vocabulary', 'parentTree', 'term', 'taxonomy', 'vocabularyId'));
 	}
 
@@ -271,8 +275,10 @@ class TermsController extends TaxonomyAppController {
  */
 	private function __ensureTermExists($id, $url = null) {
 		$redirectUrl = is_null($url) ? $this->_redirectUrl : $url;
-		if (!$this->Term->exists($id)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Term ID.'), 'default', array('class' => 'error'));
+		try {
+			$this->Terms->get($id);
+		} catch (RecordNotFoundException $exception) {
+			$this->Flash->error(__d('croogo', 'Invalid Term ID.'));
 			return $this->redirect($redirectUrl);
 		}
 	}
@@ -287,8 +293,9 @@ class TermsController extends TaxonomyAppController {
  */
 	private function __ensureTaxonomyExists($id, $vocabularyId, $url = null) {
 		$redirectUrl = is_null($url) ? $this->_redirectUrl : $url;
-		if (!$this->Term->Taxonomy->hasAny(array('term_id' => $id, 'vocabulary_id' => $vocabularyId))) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Taxonomy.'), 'default', array('class' => 'error'));
+		$count = $this->Terms->Taxonomies->find()->where(['term_id' => $id, 'vocabulary_id' => $vocabularyId])->count();
+		if (!$count) {
+			$this->Flash->error(__d('croogo', 'Invalid Taxonomy.'));
 			return $this->redirect($redirectUrl);
 		}
 	}

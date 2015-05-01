@@ -11,7 +11,7 @@ if ($this->request->params['action'] == 'edit') {
 	$this->CroogoHtml
 		->addCrumb(__d('croogo', 'Vocabularies'), array('controller' => 'Vocabularies', 'action' => 'index'))
 		->addCrumb($vocabulary->title, array('action' => 'index', $vocabulary->id))
-		->addCrumb($this->request->data['Term']['title'], '/' . $this->request->url);
+		->addCrumb($term->title, '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'add') {
@@ -41,7 +41,7 @@ echo $this->CroogoForm->create($term, array(
 		<div class="tab-content">
 			<div id="term-basic" class="tab-pane">
 			<?php
-				echo $this->CroogoForm->input('Taxonomy.parent_id', array(
+				echo $this->CroogoForm->input('taxonomies.0.parent_id', array(
 					'options' => $parentTree,
 					'empty' => true,
 					'label' => __d('croogo', 'Parent'),
@@ -49,7 +49,7 @@ echo $this->CroogoForm->create($term, array(
 				$this->CroogoForm->templates(array(
 					'class' => 'span10',
 				));
-				echo $this->CroogoForm->hidden('Taxonomy.id');
+				echo $this->CroogoForm->hidden('taxonomies.0.id');
 				echo $this->CroogoForm->hidden('id');
 				echo $this->CroogoForm->input('title', array(
 					'label' => __d('croogo', 'Title'),
