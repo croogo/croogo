@@ -104,5 +104,26 @@ class TaxonomiesTable extends CroogoTable {
 		return $termsTree;
 	}
 
+/**
+ * Check if Term HABTM Vocabulary.
+ *
+ * If yes, return Taxonomy ID
+ * otherwise, return false
+ *
+ * @param integer $termId
+ * @param integer $vocabularyId
+ * @return boolean
+ */
+	public function termInVocabulary($termId, $vocabularyId) {
+		$taxonomy = $this->find()->where([
+			$this->alias() . '.term_id' => $termId,
+			$this->alias() . '.vocabulary_id' => $vocabularyId,
+		])->first();
+		if ($taxonomy) {
+			return $taxonomy->id;
+		}
+		return false;
+	}
+
 }
 

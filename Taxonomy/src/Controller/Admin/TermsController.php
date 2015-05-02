@@ -231,26 +231,35 @@ class TermsController extends TaxonomyAppController {
  * @param integer $id
  * @param integer $vocabularyId
  * @param integer $step
- * @return void
  * @access private
  */
 	private function __move($direction, $id, $vocabularyId, $step) {
 		$redirectUrl = array('action' => 'index', $vocabularyId);
-		$this->__ensureVocabularyIdExists($vocabularyId, $redirectUrl);
-		$this->__ensureTermExists($id, $redirectUrl);
-		$taxonomyId = $this->Term->Taxonomy->termInVocabulary($id, $vocabularyId);
-		$this->__ensureVocabularyIdExists($vocabularyId, $redirectUrl);
+		$response = $this->__ensureVocabularyIdExists($vocabularyId, $redirectUrl);
+		if ($response instanceof Response) {
+			return $response;
+		}
+		$response = $this->__ensureTermExists($id, $redirectUrl);
+		if ($response instanceof Response) {
+			return $response;
+		}
+		$taxonomyId = $this->Terms->Taxonomies->termInVocabulary($id, $vocabularyId);
+		$response = $this->__ensureVocabularyIdExists($vocabularyId, $redirectUrl);
+		if ($response instanceof Response) {
+			return $response;
+		}
 
-		$this->Term->setScopeForTaxonomy($vocabularyId);
+		$this->Terms->setScopeForTaxonomy($vocabularyId);
 
-		if ($this->Term->Taxonomy->{'move' . ucfirst($direction)}($taxonomyId, $step)) {
+		$taxonomy = $this->Terms->Taxonomies->get($taxonomyId);
+		if ($this->Terms->Taxonomies->{'move' . ucfirst($direction)}($taxonomy, $step)) {
 			$messageFlash = __d('croogo', 'Moved %s successfully', $direction);
 			$cssClass = array('class' => 'success');
 		} else {
 			$messageFlash = __d('croogo', 'Could not move %s', $direction);
 			$cssClass = array('class' => 'error');
 		}
-		$this->Session->setFlash($messageFlash, 'default', $cssClass);
+		$this->Flash->{$cssClass['class']}($messageFlash);
 		return $this->redirect($redirectUrl);
 	}
 
