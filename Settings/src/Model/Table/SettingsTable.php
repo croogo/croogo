@@ -120,12 +120,11 @@ class SettingsTable extends CroogoTable {
  * @return boolean
  */
 	public function write($key, $value, $options = array()) {
-		$setting = $this->findByKey($key);
-		if (isset($setting['Setting']['id'])) {
-			$setting['Setting']['id'] = $setting['Setting']['id'];
-			$setting['Setting']['value'] = $value;
+		$setting = $this->findByKey($key)->first();
+		if ($setting) {
+			$setting->value = $value;
 
-			$setting['Setting'] = $options + $setting['Setting'];
+			$setting = $this->patchEntity($setting, $options);
 
 		} else {
 
@@ -138,18 +137,18 @@ class SettingsTable extends CroogoTable {
 				'params' => '',
 			), $options);
 
-			$setting = array();
-			$setting['key'] = $key;
-			$setting['value'] = $value;
-			$setting['title'] = $options['title'];
-			$setting['description'] = $options['description'];
-			$setting['input_type'] = $options['input_type'];
-			$setting['editable'] = $options['editable'];
-			$setting['weight'] = $options['weight'];
-			$setting['params'] = $options['params'];
+			$setting = $this->newEntity([
+				'key' => $key,
+				'value' => $value,
+				'title' => $options['title'],
+				'description' => $options['description'],
+				'input_type' => $options['input_type'],
+				'editable' => $options['editable'],
+				'weight' => $options['weight'],
+				'params' => $options['params'],
+			]);
 		}
 
-		$this->id = false;
 		if ($this->save($setting)) {
 			Configure::write($key, $value);
 			return true;
