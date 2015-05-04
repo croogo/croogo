@@ -30,7 +30,8 @@ class LayoutHelper extends Helper {
 	public $helpers = array(
 		'Croogo.Croogo',
 		'Html',
-		'Form'
+		'Form',
+		'Flash'
 	);
 
 /**
@@ -248,14 +249,7 @@ class LayoutHelper extends Helper {
  * @return string
  */
 	public function sessionFlash() {
-		$messages = $this->request->session()->read('Message');
-		$output = '';
-		if (is_array($messages)) {
-			foreach (array_keys($messages) as $key) {
-				$output .= $this->request->session()->flash($key);
-			}
-		}
-		return $output;
+		return $this->Flash->render();
 	}
 
 /**
