@@ -2,7 +2,8 @@
 
 namespace Croogo\Croogo\Model\Behavior;
 
-use App\Model\ModelBehavior;
+use Cake\ORM\Behavior;
+
 /**
  * Aliasable Behavior
  *
@@ -15,7 +16,12 @@ use App\Model\ModelBehavior;
  * @link     http://www.croogo.org
  */
 
-class AliasableBehavior extends ModelBehavior {
+class AliasableBehavior extends Behavior {
+
+	protected $_defaultConfig = [
+		'id' => 'id',
+		'alias' => 'alias',
+	];
 
 /**
  * _byIds
@@ -31,49 +37,36 @@ class AliasableBehavior extends ModelBehavior {
  */
 	protected $_byAlias = array();
 
-/**
- * setup
- *
- * @param Model $model
- * @param array $config
- * @return void
- */
-	public function setup(Model $model, $config = array()) {
-		$config = Hash::merge(array(
-			'id' => 'id',
-			'alias' => 'alias',
-		), $config);
-		$this->settings[$model->alias] = $config;
-		$this->reload($model);
+	public function initialize(array $config) {
+		parent::initialize($config);
+
+		$this->reload();
 	}
 
-/**
+
+	/**
  * reload
  *
- * @param Model $model
  * @return void
  */
-	public function reload(Model $model) {
-		$config = $this->settings[$model->alias];
-		$this->_byIds[$model->alias] = $model->find('list', array(
-			'fields' => array($config['id'], $config['alias']),
-			'conditions' => array(
-				$model->alias . '.' . $config['alias'] . ' != ' => '',
-			),
-		));
-		$this->_byAlias[$model->alias] = array_flip($this->_byIds[$model->alias]);
+	public function reload() {
+		$this->_byIds = $this->_table->find('list', [
+			'keyField' => $this->config('id'),
+			'valueField' => $this->config('alias'),
+		])->where([$this->config('alias') . ' !=' => ''])->toArray();
+		$this->_byAlias = array_flip($this->_byIds);
 	}
 
 /**
  * byId
  *
- * @param Model $model
+ * @param
  * @param integer $id
  * @return boolean
  */
-	public function byId(Model $model, $id) {
-		if (!empty($this->_byIds[$model->alias][$id])) {
-			return $this->_byIds[$model->alias][$id];
+	public function byId($id) {
+		if (!empty($this->_byIds[$id])) {
+			return $this->_byIds[$id];
 		}
 		return false;
 	}
@@ -81,13 +74,12 @@ class AliasableBehavior extends ModelBehavior {
 /**
  * byAlias
  *
- * @param Model $model
  * @param string $alias
  * @return boolean
  */
-	public function byAlias(Model $model, $alias) {
-		if (!empty($this->_byAlias[$model->alias][$alias])) {
-			return $this->_byAlias[$model->alias][$alias];
+	public function byAlias($alias) {
+		if (!empty($this->_byAlias[$alias])) {
+			return $this->_byAlias[$alias];
 		}
 		return false;
 	}
@@ -95,21 +87,20 @@ class AliasableBehavior extends ModelBehavior {
 /**
  * listById
  *
- * @param Model $model
  * @return string
  */
-	public function listById(Model $model) {
-		return $this->_byIds[$model->alias];
+	public function listById() {
+		return $this->_byIds;
 	}
 
 /**
  * listByAlias
  *
- * @param Model $model
+ * @param
  * @return string
  */
-	public function listByAlias(Model $model) {
-		return $this->_byAlias[$model->alias];
+	public function listByAlias() {
+		return $this->_byAlias;
 	}
 
 }
