@@ -83,6 +83,7 @@ class CroogoAppController extends Controller {
 		'Time',
 		'Croogo/Croogo.Layout',
 		'Croogo/Croogo.Custom',
+		'Croogo/Croogo.CroogoForm',
 	);
 
 /**
