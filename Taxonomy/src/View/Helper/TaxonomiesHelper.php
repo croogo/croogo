@@ -2,6 +2,7 @@
 
 namespace Croogo\Taxonomy\View\Helper;
 
+use Cake\Event\Event;
 use Cake\View\Helper;
 use Cake\View\View;
 
@@ -72,11 +73,11 @@ class TaxonomiesHelper extends Helper {
  *
  * Replaces [vocabulary:vocabulary_alias] or [v:vocabulary_alias] with Terms list
  *
- * @param string $content
+ * @param Event $event
  * @return string
  */
-	public function filter(&$content, $options = array()) {
-		preg_match_all('/\[(vocabulary|v):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
+	public function filter(Event $event, $options = array()) {
+		preg_match_all('/\[(vocabulary|v):([A-Za-z0-9_\-]*)(.*?)\]/i', $event->data['content'], $tagMatches);
 		for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
 			$regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
 			preg_match_all($regex, $tagMatches[3][$i], $attributes);
@@ -85,9 +86,9 @@ class TaxonomiesHelper extends Helper {
 			for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
 				$options[$attributes[1][$j]] = $attributes[2][$j];
 			}
-			$content = str_replace($tagMatches[0][$i], $this->vocabulary($vocabularyAlias, $options), $content);
+			$event->data['content'] = str_replace($tagMatches[0][$i], $this->vocabulary($vocabularyAlias, $options), $event->data['content']);
 		}
-		return $content;
+		return $event->data;
 	}
 
 /**
