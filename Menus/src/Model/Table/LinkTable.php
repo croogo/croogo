@@ -2,7 +2,8 @@
 
 namespace Croogo\Menus\Model;
 
-use Menus\Model\MenusAppModel;
+use Croogo\Croogo\Model\Table\CroogoTable;
+
 /**
  * Link
  *
@@ -13,7 +14,7 @@ use Menus\Model\MenusAppModel;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Link extends MenusAppModel {
+class LinkTable extends CroogoTable {
 
 /**
  * Model name
