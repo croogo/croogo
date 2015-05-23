@@ -2,6 +2,7 @@
 
 namespace Croogo\Nodes\View\Helper;
 
+use Cake\Event\Event;
 use Cake\View\Helper;
 use Cake\View\View;
 use Croogo\Croogo\Croogo;
@@ -104,11 +105,11 @@ class NodesHelper extends Helper {
  *
  * Replaces [node:unique_name_for_query] or [n:unique_name_for_query] with Nodes list
  *
- * @param string $content
+ * @param Event $event
  * @return string
  */
-	public function filter(&$content, $options = array()) {
-		preg_match_all('/\[(node|n):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
+	public function filter(Event $event, $options = array()) {
+		preg_match_all('/\[(node|n):([A-Za-z0-9_\-]*)(.*?)\]/i', $event->data['content'], $tagMatches);
 		for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
 			$regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
 			preg_match_all($regex, $tagMatches[3][$i], $attributes);
@@ -117,9 +118,9 @@ class NodesHelper extends Helper {
 			for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
 				$options[$attributes[1][$j]] = $attributes[2][$j];
 			}
-			$content = str_replace($tagMatches[0][$i], $this->nodeList($alias, $options), $content);
+			$event->data['content'] = str_replace($tagMatches[0][$i], $this->nodeList($alias, $options), $event->data['content']);
 		}
-		return $content;
+		return $event->data;
 	}
 
 /**
@@ -146,19 +147,12 @@ class NodesHelper extends Helper {
  * @return string
  */
 	public function field($field = 'id', $value = null) {
-		$model = 'Node';
-		if (strstr($field, '.')) {
-			list($model, $field) = explode('.', $field);
+		if ($value) {
+			return $this->node->set($field, $value);
 		}
 
-		if ($field && $value) {
-			$this->node[$model][$field] = $value;
-		} elseif (isset($this->node[$model][$field])) {
-			return $this->node[$model][$field];
-		} else {
-			return false;
-		}
-	}
+		return $this->node->get($field);
+ 	}
 
 /**
  * Node info
@@ -168,7 +162,7 @@ class NodesHelper extends Helper {
  */
 	public function info($options = array()) {
 		$_options = array(
-			'element' => 'Nodes.node_info',
+			'element' => 'Croogo/Nodes.node_info',
 		);
 		$options = array_merge($_options, $options);
 
@@ -190,14 +184,14 @@ class NodesHelper extends Helper {
  */
 	public function excerpt($options = array()) {
 		$_options = array(
-			'element' => 'Nodes.node_excerpt',
+			'element' => 'Croogo/Nodes.node_excerpt',
 			'body' => false,
 		);
 		$options = array_merge($_options, $options);
 
-		$excerpt = $this->node['Node']['excerpt'];
+		$excerpt = $this->node->excerpt;
 		if ($options['body'] && empty($excerpt)) {
-			$excerpt = $this->_converter->firstPara($this->node['Node']['body'],
+			$excerpt = $this->_converter->firstPara($this->node->body,
 				array('tag' => true)
 			);
 		}
@@ -216,7 +210,7 @@ class NodesHelper extends Helper {
  */
 	public function body($options = array()) {
 		$_options = array(
-			'element' => 'Nodes.node_body',
+			'element' => 'Croogo/Nodes.node_body',
 		);
 		$options = array_merge($_options, $options);
 
@@ -234,7 +228,7 @@ class NodesHelper extends Helper {
  */
 	public function moreInfo($options = array()) {
 		$_options = array(
-			'element' => 'Nodes.node_more_info',
+			'element' => 'Croogo/Nodes.node_more_info',
 		);
 		$options = array_merge($_options, $options);
 
