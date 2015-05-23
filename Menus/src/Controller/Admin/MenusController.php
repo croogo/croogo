@@ -1,8 +1,9 @@
 <?php
 
-namespace Croogo\Menus\Controller;
+namespace Croogo\Menus\Controller\Admin;
 
-use Menus\Controller\MenusAppController;
+use Croogo\Menus\Controller\MenusAppController;
+
 /**
  * Menus Controller
  *
@@ -24,14 +25,6 @@ class MenusController extends MenusAppController {
 	public $name = 'Menus';
 
 /**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
-	public $uses = array('Menus.Menu');
-
-/**
  * afterConstruct
  */
 	public function afterConstruct() {
@@ -45,7 +38,8 @@ class MenusController extends MenusAppController {
  */
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Security->unlockedActions[] = 'admin_toggle';
+
+		$this->Security->unlockedActions[] = 'toggle';
 	}
 
 /**
@@ -65,7 +59,7 @@ class MenusController extends MenusAppController {
  * @return void
  * @access public
  */
-	public function admin_index() {
+	public function index() {
 		$this->set('title_for_layout', __d('croogo', 'Menus'));
 
 		$this->Menu->recursive = 0;
@@ -79,7 +73,7 @@ class MenusController extends MenusAppController {
  * @return void
  * @access public
  */
-	public function admin_add() {
+	public function add() {
 		$this->set('title_for_layout', __d('croogo', 'Add Menu'));
 
 		if (!empty($this->request->data)) {
@@ -100,7 +94,7 @@ class MenusController extends MenusAppController {
  * @return void
  * @access public
  */
-	public function admin_edit($id = null) {
+	public function edit($id = null) {
 		$this->set('title_for_layout', __d('croogo', 'Edit Menu'));
 
 		if (!$id && empty($this->request->data)) {
@@ -127,7 +121,7 @@ class MenusController extends MenusAppController {
  * @return void
  * @access public
  */
-	public function admin_delete($id = null) {
+	public function delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__d('croogo', 'Invalid id for Menu'), 'default', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));

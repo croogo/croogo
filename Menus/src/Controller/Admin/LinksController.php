@@ -1,8 +1,9 @@
 <?php
 
-namespace Croogo\Menus\Controller;
+namespace Croogo\Menus\Controller\Admin;
 
-use Menus\Controller\MenusAppController;
+use Croogo\Menus\Controller\MenusAppController;
+
 /**
  * Links Controller
  *
