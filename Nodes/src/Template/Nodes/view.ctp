@@ -1,4 +1,8 @@
-<?php $this->Nodes->set($node); ?>
+<?php
+use Cake\Core\Plugin;
+
+$this->Nodes->set($node);
+?>
 <div id="node-<?php echo $this->Nodes->field('id'); ?>" class="node node-type-<?php echo $this->Nodes->field('type'); ?>">
 	<h2><?php echo $this->Nodes->field('title'); ?></h2>
 	<?php
@@ -8,7 +12,7 @@
 	?>
 </div>
 
-<?php if (CakePlugin::loaded('Comments')): ?>
+<?php if (Plugin::loaded('Comments')): ?>
 <div id="comments" class="node-comments">
 <?php
 	$type = $types_for_layout[$this->Nodes->field('type')];

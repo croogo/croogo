@@ -2,6 +2,7 @@
 
 namespace Croogo\Nodes\Model\Table;
 
+use Cake\ORM\Query;
 use Croogo\Croogo\Croogo;
 use Croogo\Croogo\Model\Table\CroogoTable;
 use Croogo\Nodes\Model\Entity\Node;
@@ -22,6 +23,8 @@ class NodesTable extends CroogoTable {
 		parent::initialize($config);
 
 		$this->addBehavior('Croogo/Croogo.Encoder');
+		$this->addBehavior('Croogo/Croogo.Publishable');
+		$this->addBehavior('Croogo/Croogo.Url');
 		$this->addBehavior('Search.Searchable');
 		$this->belongsTo('Croogo/Users.Users');
 	}
@@ -74,6 +77,40 @@ class NodesTable extends CroogoTable {
 		$data[$this->alias]['visibility_roles'] = $this->encodeData($roles);
 
 		return $data;
+	}
+
+/**
+ * Find a single node by slug
+ */
+	public function findViewBySlug(Query $query, array $options = array()) {
+		$keys = array('slug' => null, 'type' => null, 'roleId' => null);
+		$args = array_merge($keys, array_intersect_key($options, $keys));
+		$options = array_diff_key($options, $args);
+		$query->where(array(
+			'slug' => $args['slug'],
+			'type' => $args['type'],
+			$this->alias() . '.status IN' => $this->status(),
+			'OR' => array(
+				'visibility_roles' => '',
+				'visibility_roles LIKE' => '%"' . $args['roleId'] . '"%',
+			),
+		));
+		$query->contain([
+//			'Metas',
+			'Taxonomies' => array(
+				'Terms',
+				'Vocabularies',
+			),
+			'Users',
+		]);
+		$query->applyOptions([
+			'cache' => array(
+				'name' => 'node_' . $args['roleId'] . '_' . $args['type'] . '_' . $args['slug'],
+				'config' => 'nodes_view',
+			),
+		]);
+
+		return $query;
 	}
 
 }
