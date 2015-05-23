@@ -45,7 +45,7 @@ use Cake\Core\Configure;
 
 		<div id="nav">
 			<div class="container_16">
-<!--				--><?php //echo $this->Menus->menu('main', array('dropdown' => true)); ?>
+				<?php echo $this->Menus->menu('main', array('dropdown' => true)); ?>
 			</div>
 		</div>
 
