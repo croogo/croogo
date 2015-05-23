@@ -100,7 +100,7 @@ class CroogoTheme {
 		} else {
 			$viewPaths = App::path('views');
 			foreach ($viewPaths as $viewPath) {
-				$themeRoot = $viewPath . 'Themed' . DS . $alias . DS;
+				$themeRoot = Plugin::path($alias);
 				$themeJson = $themeRoot . 'webroot' . DS . 'theme.json';
 				if (file_exists($themeJson)) {
 					$manifestFile = $themeJson;
