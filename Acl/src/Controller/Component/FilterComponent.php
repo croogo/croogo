@@ -144,9 +144,10 @@ class FilterComponent extends Component {
 			'action' => 'login',
 		]);
 		$this->_controller->Auth->config('loginRedirect', [
-			'plugin' => 'Croogo/Settings',
-			'controller' => 'Settings',
-			'action' => 'dashboard',
+			'prefix' => 'admin',
+			'plugin' => 'Croogo/Extensions',
+			'controller' => 'ExtensionsDashboard',
+			'action' => 'index',
 		]);
 		$this->_controller->Auth->config('unauthorizedRedirect', [
 			'plugin' => 'Croogo/Users',
