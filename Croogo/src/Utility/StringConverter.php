@@ -102,7 +102,7 @@ class StringConverter {
 			parse_str(substr($link, $pos + 1), $query);
 			$link = substr($link, 0, $pos);
 		}
-		$link = explode('/', $link);
+		$link = explode('|', $link);
 		$linkArr = array();
 		foreach ($link as $linkElement) {
 			if ($linkElement != null) {
