@@ -418,7 +418,7 @@ class CroogoComponent extends Component {
 			$viewPaths = $defaultViewPaths;
 		}
 		if ($controller->theme) {
-			$themePath = App::themePath($controller->theme);
+			$themePath = Plugin::path($controller->theme);
 			$viewPaths[] = $themePath;
 			if ($controller->plugin) {
 				$viewPaths[] = $themePath . 'Plugin' . DS . $controller->plugin . DS;
