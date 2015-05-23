@@ -61,7 +61,7 @@ class TaxonomizableBehavior extends Behavior {
 			'belongsToMany' => array(
 				'Taxonomies' => array(
 					'className' => 'Croogo/Taxonomy.Taxonomies',
-					'with' => 'Croogo/Taxonomy.ModelTaxonomies',
+					'through' => 'Croogo/Taxonomy.ModelTaxonomies',
 					'foreignKey' => 'foreign_key',
 					'associationForeignKey' => 'taxonomy_id',
 					'unique' => true,
@@ -75,7 +75,7 @@ class TaxonomizableBehavior extends Behavior {
 			'belongsToMany' => array(
 				$table->alias() => array(
 					'className' => get_class($table),
-					'with' => 'Croogo/Taxonomy.ModelTaxonomy',
+					'through' => 'Croogo/Taxonomy.ModelTaxonomy',
 					'foreignKey' => 'foreign_key',
 					'associationForeignKey' => 'taxonomy_id',
 					'unique' => true,
