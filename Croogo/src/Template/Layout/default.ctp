@@ -14,20 +14,20 @@ use Cake\Core\Configure;
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><?php echo $title_for_layout; ?> &raquo; <?php echo Configure::read('Site.title'); ?></title>
 	<?php
-		echo $this->Meta->meta();
+//		echo $this->Meta->meta();
 		echo $this->Layout->feed();
 		echo $this->Html->css(array(
-			'/croogo/css/reset',
-			'/croogo/css/960',
-			'/croogo/css/theme',
+			'Croogo/Croogo.reset',
+			'Croogo/Croogo.960',
+			'Croogo/Croogo.theme',
 		));
 		echo $this->Layout->js();
 		echo $this->Html->script(array(
-			'/croogo/js/jquery/jquery.min',
-			'/croogo/js/jquery/jquery.hoverIntent.minified',
-			'/croogo/js/jquery/superfish',
-			'/croogo/js/jquery/supersubs',
-			'/croogo/js/theme',
+			'Croogo/Croogo.jquery/jquery.min',
+			'Croogo/Croogo.jquery/jquery.hoverIntent.minified',
+			'Croogo/Croogo.jquery/superfish',
+			'Croogo/Croogo.jquery/supersubs',
+			'Croogo/Croogo.theme',
 		));
 		echo $this->Blocks->get('css');
 		echo $this->Blocks->get('script');
@@ -45,7 +45,7 @@ use Cake\Core\Configure;
 
 		<div id="nav">
 			<div class="container_16">
-				<?php echo $this->Menus->menu('main', array('dropdown' => true)); ?>
+<!--				--><?php //echo $this->Menus->menu('main', array('dropdown' => true)); ?>
 			</div>
 		</div>
 
@@ -53,7 +53,7 @@ use Cake\Core\Configure;
 			<div id="content" class="grid_11">
 			<?php
 				echo $this->Layout->sessionFlash();
-				echo $content_for_layout;
+				echo $this->fetch('content');
 			?>
 			</div>
 
@@ -78,7 +78,6 @@ use Cake\Core\Configure;
 	</div>
 	<?php
 		echo $this->Blocks->get('scriptBottom');
-		echo $this->Js->writeBuffer();
 	?>
 	</body>
 </html>
