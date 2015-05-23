@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Menus\Model;
+namespace Croogo\Menus\Model\Table;
 
 use Croogo\Croogo\Model\Table\CroogoTable;
 
@@ -14,7 +14,7 @@ use Croogo\Croogo\Model\Table\CroogoTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MenuTable extends CroogoTable {
+class MenusTable extends CroogoTable {
 
 /**
  * Model name

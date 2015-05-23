@@ -2,8 +2,12 @@
 
 namespace Croogo\Menus\View\Helper;
 
-use App\View\Helper\AppHelper;
-use Croogo\Lib\Utility\StringConverter;
+use Cake\Event\Event;
+use Cake\Routing\Router;
+use Cake\View\Helper;
+use Cake\View\View;
+use Croogo\Croogo\Utility\StringConverter;
+
 /**
  * Menus Helper
  *
@@ -14,7 +18,7 @@ use Croogo\Lib\Utility\StringConverter;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MenusHelper extends AppHelper {
+class MenusHelper extends Helper {
 
 	public $helpers = array(
 		'Html',
@@ -98,11 +102,11 @@ class MenusHelper extends AppHelper {
  *
  * Replaces [menu:menu_alias] or [m:menu_alias] with Menu list
  *
- * @param string $content
+ * @param Event $event
  * @return string
  */
-	public function filter(&$content, $options = array()) {
-		preg_match_all('/\[(menu|m):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
+	public function filter(Event $event, $options = array()) {
+		preg_match_all('/\[(menu|m):([A-Za-z0-9_\-]*)(.*?)\]/i', $event->data['content'], $tagMatches);
 		for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
 			$regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
 			preg_match_all($regex, $tagMatches[3][$i], $attributes);
@@ -111,9 +115,9 @@ class MenusHelper extends AppHelper {
 			for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
 				$options[$attributes[1][$j]] = $attributes[2][$j];
 			}
-			$content = str_replace($tagMatches[0][$i], $this->menu($menuAlias, $options), $content);
+			$event->data['content'] = str_replace($tagMatches[0][$i], $this->menu($menuAlias, $options), $event->data['content']);
 		}
-		return $content;
+		return $event->data;
 	}
 
 /**
@@ -130,7 +134,7 @@ class MenusHelper extends AppHelper {
 			'selected' => 'selected',
 			'dropdown' => false,
 			'dropdownClass' => 'sf-menu',
-			'element' => 'Menus.menu',
+			'element' => 'Croogo/Menus.menu',
 		);
 		$options = array_merge($_options, $options);
 
@@ -186,18 +190,18 @@ class MenusHelper extends AppHelper {
 		$output = '';
 		foreach ($links as $link) {
 			$linkAttr = array(
-				'id' => 'link-' . $link['Link']['id'],
-				'rel' => $link['Link']['rel'],
-				'target' => $link['Link']['target'],
-				'title' => $link['Link']['description'],
-				'class' => $link['Link']['class'],
+				'id' => 'link-' . $link->id,
+				'rel' => $link->rel,
+				'target' => $link->target,
+				'title' => $link->description,
+				'class' => $link->class,
 			);
 
 			$linkAttr = $this->_mergeLinkParams($link, 'linkAttr', $linkAttr);
 
 			// if link is in the format: controller:contacts/action:view
-			if (strstr($link['Link']['link'], 'controller:')) {
-				$link['Link']['link'] = $this->linkStringToArray($link['Link']['link']);
+			if (strstr($link->link, 'controller:')) {
+				$link->link = $this->linkStringToArray($link->link);
 			}
 
 			// Remove locale part before comparing links
@@ -207,14 +211,14 @@ class MenusHelper extends AppHelper {
 				$currentUrl = $this->_View->request->url;
 			}
 
-			if (Router::url($link['Link']['link']) == Router::url('/' . $currentUrl)) {
+			if (Router::url($link->link) == Router::url('/' . $currentUrl)) {
 				if (!isset($linkAttr['class'])) {
 					$linkAttr['class'] = '';
 				}
 				$linkAttr['class'] .= ' ' . $options['selected'];
 			}
 
-			$linkOutput = $this->Html->link($link['Link']['title'], $link['Link']['link'], $linkAttr);
+			$linkOutput = $this->Html->link($link->title, $link->link, $linkAttr);
 			if (isset($link['children']) && count($link['children']) > 0) {
 				$linkOutput .= $this->nestedLinks($link['children'], $options, $depth + 1);
 			}

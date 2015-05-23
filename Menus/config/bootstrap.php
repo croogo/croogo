@@ -5,18 +5,18 @@ use Croogo\Croogo\Cache\CroogoCache;
 use Croogo\Croogo\Croogo;
 
 CroogoCache::config('croogo_menus', array_merge(
-	Configure::read('Cache.defaultConfig'),
+	Configure::read('Croogo.Cache.defaultConfig'),
 	array('groups' => array('menus'))
 ));
 
-Croogo::hookComponent('*', 'Menus.Menus');
+Croogo::hookComponent('*', 'Croogo/Menus.Menus');
 
-Croogo::hookHelper('*', 'Menus.Menus');
+Croogo::hookHelper('*', 'Croogo/Menus.Menus');
 
 Croogo::mergeConfig('Translate.models.Link', array(
 	'fields' => array(
 		'title' => 'titleTranslation',
 		'description' => 'descriptionTranslation',
 	),
-	'translateModel' => 'Menus.Link',
+	'translateModel' => 'Croogo/Menus.Link',
 ));

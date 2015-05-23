@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Menus\Model;
+namespace Croogo\Menus\Model\Table;
 
 use Croogo\Croogo\Model\Table\CroogoTable;
 
@@ -14,34 +14,7 @@ use Croogo\Croogo\Model\Table\CroogoTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class LinkTable extends CroogoTable {
-
-/**
- * Model name
- *
- * @var string
- * @access public
- */
-	public $name = 'Link';
-
-/**
- * Behaviors used by the Model
- *
- * @var array
- * @access public
- */
-	public $actsAs = array(
-		'Croogo.Encoder',
-		'Tree',
-		'Croogo.Cached' => array(
-			'groups' => array(
-				'menus',
-			),
-		),
-		'Croogo.Params',
-		'Croogo.Publishable',
-		'Croogo.Trackable',
-	);
+class LinksTable extends CroogoTable {
 
 /**
  * Validation
@@ -60,20 +33,23 @@ class LinkTable extends CroogoTable {
 		),
 	);
 
-/**
- * Model associations: belongsTo
- *
- * @var array
- * @access public
- */
-	public $belongsTo = array(
-		'Menu' => array(
-			'className' => 'Menus.Menu',
-			'counterCache' => true,
-		)
-	);
+	public function initialize(array $config) {
+		parent::initialize($config);
 
-/**
+		$this->addBehavior('Croogo/Croogo.Encoder');
+		$this->addBehavior('Tree');
+//		$this->addBehavior('Croogo/Croogo.Cached');
+		$this->addBehavior('Croogo/Croogo.Params');
+		$this->addBehavior('Croogo/Croogo.Publishable');
+//		$this->addBehavior('Croogo/Croogo.Trackable');
+		$this->belongsTo('Menus', [
+			'className' => 'Croogo/Menus.Menus',
+			'counterCache' => true,
+		]);
+	}
+
+
+	/**
  * Allow to change Tree scope to a specific menu
  *
  * @param int $menuId menu id
