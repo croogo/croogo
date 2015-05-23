@@ -1,11 +1,12 @@
 <div class="users form">
 	<h2><?php echo __d('croogo', 'Login'); ?></h2>
-	<?php echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'login')));?>
+	<?php echo $this->CroogoForm->create(false, array('url' => array('action' => 'login')));?>
 		<fieldset>
 		<?php
-			echo $this->Form->input('username');
-			echo $this->Form->input('password');
+			echo $this->CroogoForm->input('username');
+			echo $this->CroogoForm->input('password');
 		?>
 		</fieldset>
-	<?php echo $this->Form->end('Submit');?>
+	<?php echo $this->CroogoForm->submit('Submit'); ?>
+	<?php echo $this->CroogoForm->end();?>
 </div>
