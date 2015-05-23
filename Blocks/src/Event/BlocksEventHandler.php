@@ -2,8 +2,12 @@
 
 namespace Croogo\Blocks\Event;
 
-use Cake\Event\EventListener;
-use Croogo\Lib\Utility\StringConverter;
+use Cake\Event\Event;
+use Cake\Event\EventListenerInterface;
+use Cake\Utility\Hash;
+use Croogo\Croogo\Croogo;
+use Croogo\Croogo\Utility\StringConverter;
+
 /**
  * BlocksEventHandler
  *
@@ -11,7 +15,7 @@ use Croogo\Lib\Utility\StringConverter;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class BlocksEventHandler implements EventListener {
+class BlocksEventHandler implements EventListenerInterface {
 
 /**
  * implementedEvents
@@ -37,7 +41,7 @@ class BlocksEventHandler implements EventListener {
  * @param Event $event
  * @return void
  */
-	public function filterBlockShortcode($event) {
+	public function filterBlockShortcode(Event $event) {
 		static $converter = null;
 		if (!$converter) {
 			$converter = new StringConverter();
@@ -48,7 +52,7 @@ class BlocksEventHandler implements EventListener {
 		if (isset($event->data['content'])) {
 			$body =& $event->data['content'];
 		} elseif (isset($event->data['node'])) {
-			$body =& $event->data['node'][key($event->data['node'])]['body'];
+			$body =& $event->data['node']->body;
 		}
 
 		$parsed = $converter->parseString('block|b', $body, array(
