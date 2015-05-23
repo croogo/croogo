@@ -2,7 +2,12 @@
 
 namespace Croogo\Croogo\Model\Behavior;
 
-use App\Model\ModelBehavior;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Event\Event;
+use Cake\ORM\Behavior;
+use Cake\ORM\Entity;
+use Cake\ORM\Query;
+
 /**
  * Url Behavior
  *
@@ -13,73 +18,38 @@ use App\Model\ModelBehavior;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class UrlBehavior extends ModelBehavior {
+class UrlBehavior extends Behavior {
 
-/**
- * Setup
- *
- * @param Modeo $model
- * @param array $config
- * @return void
- */
-	public function setup(Model $model, $config = array()) {
-		$_config = array(
-			'url' => array(
-				'plugin' => 'nodes',
-				'controller' => 'nodes',
-				'action' => 'view',
-			),
-			'fields' => array(
-				'type',
-				'slug',
-			),
-		);
+	protected $_defaultConfig = [
+		'url' => [
+			'plugin' => 'Croogo/Nodes',
+			'controller' => 'Nodes',
+			'action' => 'view',
+		],
+		'fields' => [
+			'type',
+			'slug',
+		],
+	];
 
-		if (is_string($config)) {
-			$config = array($config);
-		}
-
-		$config = array_merge($_config, $config);
-
-		$this->settings[$model->alias] = $config;
-	}
-
-/**
- * afterFind callback
- *
- * @param Modeo $model
- * @param array $created
- * @param boolean $primary
- * @return array
- */
-	public function afterFind(Model $model, $results, $primary = false) {
-		if ($primary && isset($results[0][$model->alias])) {
-			foreach ($results as $i => $result) {
-				$url = $this->settings[$model->alias]['url'];
-				$fields = $this->settings[$model->alias]['fields'];
+	public function beforeFind(Event $event, Query $query, $options) {
+		$query->formatResults(function (ResultSetInterface $results) {
+			return $results->map(function (Entity $row) {
+				$url = $this->config('url');
+				$fields = $this->config('fields');
 				if (is_array($fields)) {
 					foreach ($fields as $field) {
-						if (isset($results[$i][$model->alias][$field])) {
-							$url[$field] = $results[$i][$model->alias][$field];
+						if ($row->get($field)) {
+							$url[$field] = $row->get($field);
 						}
 					}
 				}
-				$results[$i][$model->alias]['url'] = $url;
-			}
-		} elseif (isset($results[$model->alias])) {
-			$url = $this->settings[$model->alias]['url'];
-			$fields = $this->settings[$model->alias]['fields'];
-			if (is_array($fields)) {
-				foreach ($fields as $field) {
-					if (isset($results[$i][$model->alias][$field])) {
-						$url[$field] = $results[$i][$model->alias][$field];
-					}
-				}
-			}
-			$results[$model->alias]['url'] = $url;
-		}
+				$row->set('url', $url);
+				$row->dirty('url', false);
 
-		return $results;
+				return $row;
+			});
+		});
 	}
 
 }
