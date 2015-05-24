@@ -1,0 +1,23 @@
+
+{
+	"name": "croogo/nodes",
+	"description": "Croogo Nodes",
+	"type": "cakephp-plugin",
+	"license": "MIT",
+	"require": {
+		"cakephp/cakephp": "~3.0",
+		"croogo/croogo": "dev-3.0-wip"
+	},
+	"autoload": {
+		"psr-4": {
+			"Croogo\\Nodes\\": "src",
+			"Croogo\\Nodes\\Test\\Fixture\\": "tests\\Fixture"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Croogo\\Nodes\\Test\\": "tests"
+		}
+	}
+}
+
