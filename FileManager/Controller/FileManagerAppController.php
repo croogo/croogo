@@ -10,6 +10,7 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
+namespace Croogo\FileManager\Controller;
 class FileManagerAppController extends AppController {
 
 }

@@ -1,7 +1,8 @@
 <?php
 
-App::uses('AppHelper', 'View/Helper');
+namespace Croogo\Wysiwyg\View\Helper;
 
+use App\View\Helper\AppHelper;
 /**
  * Wysiwyg Helper
  *

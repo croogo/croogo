@@ -1,7 +1,8 @@
 <?php
 
-App::uses('CakeEventListener', 'Event');
+namespace Croogo\Comments\Event;
 
+use Cake\Event\EventListener;
 /**
  * Comments Event Handler
  *
@@ -10,7 +11,7 @@ App::uses('CakeEventListener', 'Event');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CommentsEventHandler implements CakeEventListener {
+class CommentsEventHandler implements EventListener {
 
 /**
  * implementedEvents

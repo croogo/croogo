@@ -1,8 +1,9 @@
 <?php
 
-App::uses('CakeEmail', 'Network/Email');
-App::uses('ContactsAppController', 'Contacts.Controller');
+namespace Croogo\Contacts\Controller;
 
+use App\Network\Email\Email;
+use Contacts\Controller\ContactsAppController;
 /**
  * Contacts Controller
  *
@@ -256,7 +257,7 @@ class ContactsController extends ContactsAppController {
  * @access protected
  */
 	protected function _send_email($continue, $contact) {
-		$email = new CakeEmail();
+		$email = new Email();
 		if (!$contact['Contact']['message_notify'] || $continue !== true) {
 			return $continue;
 		}

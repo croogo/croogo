@@ -1,7 +1,8 @@
 <?php
 
-App::uses('AppModel', 'Model');
+namespace Croogo\FileManager\Model;
 
+use App\Model\AppModel;
 /**
  * FileManager App Model
  *

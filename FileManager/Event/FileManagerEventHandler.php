@@ -1,7 +1,8 @@
 <?php
 
-App::uses('CakeEventListener', 'Event');
+namespace Croogo\FileManager\Event;
 
+use Cake\Event\EventListener;
 /**
  * FileManagerEventHandler
  *
@@ -9,7 +10,7 @@ App::uses('CakeEventListener', 'Event');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class FileManagerEventHandler implements CakeEventListener {
+class FileManagerEventHandler implements EventListener {
 
 /**
  * implementedEvents

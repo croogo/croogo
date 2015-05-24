@@ -1,7 +1,9 @@
 <?php
 
-App::uses('AppModel', 'Model');
-App::uses('CroogoStatus', 'Croogo.Lib');
+namespace Croogo\Comments\Model;
+
+use Croogo\Croogo\Model\Table\CroogoTable;
+use Croogo\Croogo\CroogoStatus;
 
 /**
  * Comment
@@ -13,7 +15,7 @@ App::uses('CroogoStatus', 'Croogo.Lib');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Comment extends AppModel {
+class Comment extends CroogoTable {
 
 /**
  * Model name

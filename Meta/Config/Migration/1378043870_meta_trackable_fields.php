@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Meta\Config\Migration;
 class MetaTrackableFields extends CakeMigration {
 
 /**

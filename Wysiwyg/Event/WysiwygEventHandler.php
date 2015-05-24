@@ -1,6 +1,9 @@
 <?php
 
-App::uses('CakeEventListener', 'Event');
+namespace Croogo\Wysiwyg\Event;
+
+use Cake\Event\EventListener;
+use Croogo\Croogo\Croogo;
 
 /**
  * Wysiwyg Event Handler
@@ -10,7 +13,7 @@ App::uses('CakeEventListener', 'Event');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class WysiwygEventHandler implements CakeEventListener {
+class WysiwygEventHandler implements EventListener {
 
 /**
  * implementedEvents

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Comments\Config\Migration;
 class CommentsTrackableFields extends CakeMigration {
 
 /**

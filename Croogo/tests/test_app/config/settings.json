@@ -1,0 +1,45 @@
+{
+	"Site": {
+		"acl_plugin": "Acl",
+		"email": "you@your-site.com",
+		"feed_url": "",
+		"locale": "eng",
+		"status": 1,
+		"tagline": "A CakePHP powered Content Management System.",
+		"theme": "",
+		"timezone": 0,
+		"title": "Croogo - Test"
+	},
+	"Hook": {
+		"bootstraps": "Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Example"
+	},
+	"Comment": {
+		"date_time_format": "M d, Y",
+		"email_notification": 1,
+		"feed_limit": 10,
+		"level": 1
+	},
+	"Meta": {
+		"description": "Croogo - A CakePHP powered Content Management System",
+		"generator": "Croogo - Content Management System",
+		"keywords": "croogo, Croogo",
+		"robots": "index, follow"
+	},
+	"Reading": {
+		"date_time_format": "D, M d Y H:i:s",
+		"nodes_per_page": 5
+	},
+	"Service": {
+		"akismet_key": "your-key",
+		"akismet_url": "http://your-blog.com",
+		"recaptcha_private_key": "your-private-key",
+		"recaptcha_public_key": "your-public-key"
+	},
+	"Writing": {
+		"wysiwyg": 1
+	},
+	"Access Control": {
+		"multiRole" : 0,
+		"rowLevel": 0
+	}
+}

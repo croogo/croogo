@@ -1,7 +1,8 @@
 <?php
 
-App::uses('ContactsAppModel', 'Contacts.Model');
+namespace Croogo\Contacts\Model;
 
+use Contacts\Model\ContactsAppModel;
 /**
  * Message
  *

@@ -1,5 +1,6 @@
 <?php
 
+namespace Croogo\Contacts\Config\Schema;
 class ContactsSchema extends CakeSchema {
 
 	public function before($event = array()) {

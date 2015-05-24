@@ -1,8 +1,9 @@
 <?php
 
-App::uses('CakeEmail', 'Network/Email');
-App::uses('CommentsAppController', 'Comments.Controller');
+namespace Croogo\Comments\Controller;
 
+use App\Network\Email\Email;
+use Comments\Controller\CommentsAppController;
 /**
  * Comments Controller
  *
@@ -333,7 +334,7 @@ class CommentsController extends CommentsAppController {
  * @access protected
  */
 	protected function _sendEmail($node, $data) {
-		$email = new CakeEmail();
+		$email = new Email();
 		$commentId = $this->Comment->id;
 		try {
 			$email->from(Configure::read('Site.title') . ' ' .

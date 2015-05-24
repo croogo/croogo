@@ -1,6 +1,9 @@
 <?php
 
-App::uses('Component', 'Controller');
+namespace Croogo\Comments\Controller\Component;
+
+use Cake\Controller\Component;
+use Cake\Event\Event;
 
 /**
  * Comments Component
@@ -15,8 +18,8 @@ class CommentsComponent extends Component {
 /**
  * Initialize
  */
-	public function initialize(Controller $controller) {
-		$this->_setupEvents($controller);
+	public function initialize(Event $event) {
+		$this->_setupEvents($event);
 	}
 
 /**
@@ -24,9 +27,10 @@ class CommentsComponent extends Component {
  *
  * @return void
  */
-	protected function _setupEvents(Controller $controller) {
+	protected function _setupEvents(Event $event) {
+		$controller = $event->subject();
 		$callback = array($this, 'getCommentData');
-		$eventManager = $controller->getEventManager();
+		$eventManager = $controller->eventManager();
 		$eventManager->attach($callback, 'Controller.Nodes.view');
 	}
 

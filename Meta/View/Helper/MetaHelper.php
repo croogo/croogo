@@ -1,7 +1,8 @@
 <?php
 
-App::uses('AppHelper', 'View/Helper');
+namespace Croogo\Meta\View\Helper;
 
+use App\View\Helper\AppHelper;
 /**
  * Meta Helper
  *

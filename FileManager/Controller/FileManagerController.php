@@ -1,8 +1,9 @@
 <?php
 
-App::uses('FileManagerAppController', 'FileManager.Controller');
-App::uses('File', 'Utility');
+namespace Croogo\FileManager\Controller;
 
+use Cake\Utility\File;
+use FileManager\Controller\FileManagerAppController;
 /**
  * FileManager Controller
  *
