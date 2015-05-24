@@ -54,6 +54,18 @@
 		"croogo/locale": "Localization for Croogo"
 	},
 	"replace": {
-		"croogo/nodes": "self.version"
+		"croogo/acl": "dev-master",
+		"croogo/settings": "dev-master",
+		"croogo/comments": "dev-master",
+		"croogo/contacts": "dev-master",
+		"croogo/nodes": "dev-master",
+		"croogo/meta": "dev-master",
+		"croogo/menus": "dev-master",
+		"croogo/users": "dev-master",
+		"croogo/blocks": "dev-master",
+		"croogo/taxonomy": "dev-master",
+		"croogo/file_manager": "dev-master",
+		"croogo/wysiwyg": "dev-master",
+		"croogo/ckeditor": "dev-master"
 	}
 }
