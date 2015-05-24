@@ -52,5 +52,8 @@
 	},
 	"suggest": {
 		"croogo/locale": "Localization for Croogo"
+	},
+	"replace": {
+		"croogo/nodes": "self.version"
 	}
 }
