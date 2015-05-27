@@ -176,6 +176,17 @@ class CroogoFormHelper extends FormHelper {
 		return parent::input($fieldName, $options);
 	}
 
+	protected function _inputContainerTemplate($options) {
+		if (isset($options['options']['before'])) {
+			$options['content'] = $options['content'] . $options['options']['before'];
+		}
+		if (isset($options['options']['after'])) {
+			$options['content'] = $options['options']['after'] . $options['content'];
+		}
+
+		return parent::_inputContainerTemplate($options);
+	}
+
 /**
  * Try to guess autocomplete default values
  *
