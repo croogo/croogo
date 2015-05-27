@@ -2,7 +2,10 @@
 
 namespace Croogo\Wysiwyg\View\Helper;
 
-use App\View\Helper\AppHelper;
+use Cake\Core\Configure;
+use Cake\Routing\Router;
+use Cake\View\Helper;
+
 /**
  * Wysiwyg Helper
  *
@@ -13,7 +16,7 @@ use App\View\Helper\AppHelper;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class WysiwygHelper extends AppHelper {
+class WysiwygHelper extends Helper {
 
 /**
  * Other helpers used by this helper
@@ -21,9 +24,10 @@ class WysiwygHelper extends AppHelper {
  * @var array
  * @access public
  */
-	public $helpers = array(
+	public $helpers = [
 		'Html',
-	);
+		'Url'
+	];
 
 /**
  * beforeRender
@@ -38,9 +42,9 @@ class WysiwygHelper extends AppHelper {
 		}
 		Configure::write('Js.Wysiwyg.uploadsPath', $uploadsPath);
 		Configure::write('Js.Wysiwyg.attachmentsPath',
-			$this->Html->url(Configure::read('Wysiwyg.attachmentBrowseUrl'))
+			$this->Url->build(Configure::read('Wysiwyg.attachmentBrowseUrl'))
 		);
 
-		$this->Html->script('/wysiwyg/js/wysiwyg', array('inline' => false));
+		$this->Html->script('Croogo/Wysiwyg.wysiwyg', ['block' => true]);
 	}
 }

@@ -3,6 +3,7 @@
 namespace Croogo\Wysiwyg\Event;
 
 use Cake\Event\EventListener;
+use Cake\Event\EventListenerInterface;
 use Croogo\Croogo\Croogo;
 
 /**
@@ -13,7 +14,7 @@ use Croogo\Croogo\Croogo;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class WysiwygEventHandler implements EventListener {
+class WysiwygEventHandler implements EventListenerInterface {
 
 /**
  * implementedEvents
@@ -29,7 +30,7 @@ class WysiwygEventHandler implements EventListener {
 	}
 
 	public function onBootstrapComplete($event) {
-		Croogo::hookHelper('*', 'Wysiwyg.Wysiwyg');
+		Croogo::hookHelper('*', 'Croogo/Wysiwyg.Wysiwyg');
 	}
 
 }
