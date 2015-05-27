@@ -22,17 +22,17 @@ Croogo::hookHelper('*', 'Croogo/Nodes.Nodes');
 
 // Configure Wysiwyg
 Croogo::mergeConfig('Wysiwyg.actions', array(
-	'Nodes/admin_add' => array(
+	'Croogo\\Nodes\\Controller\\Admin\\NodesController.add' => array(
 		array(
 			'elements' => 'NodeBody',
 		),
 	),
-	'Nodes/admin_edit' => array(
+	'Croogo\\Nodes\\Controller\\Admin\\NodesController.edit' => array(
 		array(
 			'elements' => 'NodeBody',
 		),
 	),
-	'Translate/admin_edit' => array(
+	'Croogo\\Translate\\Controller\\Admin\\TranslateController.edit' => array(
 		array(
 			'elements' => 'NodeBody',
 		),

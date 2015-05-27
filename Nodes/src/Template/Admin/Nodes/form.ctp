@@ -86,6 +86,7 @@ echo $this->CroogoForm->create($node, array(
 				));
 				echo $this->CroogoForm->input('body', array(
 					'label' => __d('croogo', 'Body'),
+					'id' => 'NodeBody'
 				));
 			?>
 			</div>
