@@ -22,4 +22,3 @@ addCroogoPluginPath('Blocks');
 addCroogoPluginPath('Taxonomy');
 addCroogoPluginPath('FileManager');
 addCroogoPluginPath('Wysiwyg');
-addCroogoPluginPath('Ckeditor');
