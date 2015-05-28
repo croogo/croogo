@@ -178,10 +178,10 @@ class CroogoFormHelper extends FormHelper {
 
 	protected function _inputContainerTemplate($options) {
 		if (isset($options['options']['before'])) {
-			$options['content'] = $options['content'] . $options['options']['before'];
+			$options['content'] = $options['options']['before'] . $options['content'];
 		}
 		if (isset($options['options']['after'])) {
-			$options['content'] = $options['options']['after'] . $options['content'];
+			$options['content'] =  $options['content'] . $options['options']['after'];
 		}
 
 		return parent::_inputContainerTemplate($options);
