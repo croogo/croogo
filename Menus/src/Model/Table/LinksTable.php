@@ -2,6 +2,7 @@
 
 namespace Croogo\Menus\Model\Table;
 
+use Cake\Database\Schema\Table as Schema;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Croogo\Croogo\Model\Table\CroogoTable;
@@ -38,7 +39,6 @@ class LinksTable extends CroogoTable {
 	public function initialize(array $config) {
 		parent::initialize($config);
 
-		$this->addBehavior('Croogo/Croogo.Encoder');
 		$this->addBehavior('Tree');
 //		$this->addBehavior('Croogo/Croogo.Cached');
 		$this->addBehavior('Croogo/Croogo.Params');
@@ -50,6 +50,11 @@ class LinksTable extends CroogoTable {
 		]);
 	}
 
+	protected function _initializeSchema(Schema $table) {
+		$table->columnType('visibility_roles', 'encoded');
+
+		return parent::_initializeSchema($table);
+	}
 
 	/**
  * Allow to change Tree scope to a specific menu
