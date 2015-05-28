@@ -53,14 +53,24 @@
 			var map = {};
 			var $rel = $(options.relatedElement);
 			var $element = $(plugin.element);
+			var originalValues;
 
 			$element
-				.on('focus', function(e) {
-					$rel.val('');
+				.on('focus', function() {
+					originalValues = {
+						rel: $rel.val(),
+						el: this.value
+					};
 				})
 				.on('blur', function(e) {
+					if (this.value.length == 0) {
+						$rel.val('');
+					}
 					if ($rel.val().length == 0) {
 						this.value = '';
+					}
+					if (originalValues.rel === $rel.val()) {
+						this.value = originalValues.el;
 					}
 				});
 			$element.typeahead({
