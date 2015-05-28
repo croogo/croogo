@@ -7,6 +7,7 @@ use Croogo\Croogo;
 
 // Map our custom types
 Type::map('params', 'Croogo\Croogo\Database\Type\ParamsType');
+Type::map('encoded', 'Croogo\Croogo\Database\Type\EncodedType');
 
 require_once 'croogo_bootstrap.php';
 
