@@ -1,8 +1,10 @@
 <?php
 
-$this->extend('/Common/admin_index');
+use Croogo\Croogo\CroogoStatus;
 
-$this->Html
+$this->extend('Croogo/Croogo./Common/admin_index');
+
+$this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Menus'), '/' . $this->request->url);
 
@@ -11,7 +13,7 @@ $this->Html
 	<div class="span12">
 		<table class="table table-striped">
 			<?php
-				$tableHeaders = $this->Html->tableHeaders(array(
+				$tableHeaders = $this->CroogoHtml->tableHeaders(array(
 					$this->Paginator->sort('id', __d('croogo', 'Id')),
 					$this->Paginator->sort('title', __d('croogo', 'Title')),
 					$this->Paginator->sort('alias', __d('croogo', 'Alias')),
@@ -30,51 +32,51 @@ $this->Html
 				$actions = array();
 				$actions[] = $this->Croogo->adminRowAction(
 					'',
-					array('controller' => 'links', 'action' => 'index',	'?' => array('menu_id' => $menu['Menu']['id'])),
+					array('controller' => 'Links', 'action' => 'index',	'?' => array('menu_id' => $menu->id)),
 					array('icon' => 'zoom-in', 'tooltip' => __d('croogo', 'View links'))
 				);
-				$actions[] = $this->Croogo->adminRowActions($menu['Menu']['id']);
+				$actions[] = $this->Croogo->adminRowActions($menu->id);
 				$actions[] = $this->Croogo->adminRowAction(
 					'',
-					array('controller' => 'menus', 'action' => 'edit', $menu['Menu']['id']),
+					array('action' => 'edit', $menu->id),
 					array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
 				);
 				$actions[] = $this->Croogo->adminRowAction(
 					'',
-					array('controller' => 'menus', 'action' => 'delete', $menu['Menu']['id']),
+					array('action' => 'delete', $menu->id),
 					array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
 					__d('croogo', 'Are you sure?')
 				);
-				$actions = $this->Html->div('item-actions', implode(' ', $actions));
+				$actions = $this->CroogoHtml->div('item-actions', implode(' ', $actions));
 
-				$title = $this->Html->link($menu['Menu']['title'], array(
-					'controller' => 'links',
+				$title = $this->CroogoHtml->link($menu->title, array(
+					'controller' => 'Links',
 					'?' => array(
-						'menu_id' => $menu['Menu']['id']
+						'menu_id' => $menu->id
 					)
 				));
-				if ($menu['Menu']['status'] === CroogoStatus::PREVIEW) {
-					$title .= ' ' . $this->Html->tag('span', __d('croogo', 'preview'),
+				if ($menu->status === CroogoStatus::PREVIEW) {
+					$title .= ' ' . $this->CroogoHtml->tag('span', __d('croogo', 'preview'),
 						array('class' => 'label label-warning')
 					);
 				}
 
-				$status = $this->element('admin/toggle', array(
-					'id' => $menu['Menu']['id'],
-					'status' => $menu['Menu']['status'],
+				$status = $this->element('Croogo/Croogo.admin/toggle', array(
+					'id' => $menu->id,
+					'status' => $menu->status,
 				));
 
 				$rows[] = array(
-					$menu['Menu']['id'],
+					$menu->id,
 					$title,
-					$menu['Menu']['alias'],
-					$menu['Menu']['link_count'],
+					$menu->alias,
+					$menu->link_account,
 					$status,
-					$this->Html->div('item-actions', $actions),
+					$this->CroogoHtml->div('item-actions', $actions),
 				);
 			endforeach;
 
-			echo $this->Html->tableCells($rows);
+			echo $this->CroogoHtml->tableCells($rows);
 			?>
 		</table>
 	</div>
