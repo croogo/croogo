@@ -260,7 +260,7 @@ class CroogoComponent extends Component {
  * @param string $url
  * @param integer $status
  * @param boolean $exit
- * @return void
+ * @return void|\Cake\Network\Response
  * @see CroogoComponent::setReferer()
  */
 	public function redirect($url, $status = null) {
@@ -275,7 +275,7 @@ class CroogoComponent extends Component {
 				$url = $referer['url'];
 			}
 		}
-		$this->_controller->redirect($url, $status);
+		return $this->_controller->redirect($url, $status);
 	}
 
 /**
