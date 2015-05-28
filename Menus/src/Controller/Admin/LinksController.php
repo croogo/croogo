@@ -79,124 +79,115 @@ class LinksController extends CroogoAppController {
  * Admin add
  *
  * @param integer $menuId
- * @return void
- * @access public
  */
-	public function admin_add($menuId = null) {
+	public function add($menuId = null) {
 		$this->set('title_for_layout', __d('croogo', 'Add Link'));
 
-		if (!empty($this->request->data)) {
-			$this->Link->create();
-			$this->request->data['Link']['visibility_roles'] = $this->Link->encodeData($this->request->data['Role']['Role']);
-			$this->Link->setTreeScope($this->request->data['Link']['menu_id']);
-			if ($this->Link->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Link has been saved'), 'default', array('class' => 'success'));
-				if (isset($this->request->data['apply'])) {
-					return $this->redirect(array('action' => 'edit', $this->Link->id));
-				} else {
-					return $this->redirect(array(
-						'action' => 'index',
-						'?' => array(
-							'menu_id' => $this->request->data['Link']['menu_id']
-						)
-					));
-				}
-			} else {
-				$this->Session->setFlash(__d('croogo', 'The Link could not be saved. Please, try again.'), 'default', array('class' => 'error'));
-			}
+		$link = $this->Links->newEntity([
+			'menu_id' => $menuId
+		]);
+
+		$menus = $this->Links->Menus->find('list');
+		$menu = $this->Links->Menus->get($link->menu_id);
+		$roles = $this->Roles->find('list');
+		$parentLinks = $this->Links->find('treeList', [
+			'Links.menu_id' => $menuId,
+		]);
+		$this->set(compact('link', 'menu', 'menus', 'roles', 'parentLinks', 'menuId'));
+
+		if (!$this->request->is('post')) {
+			return;
 		}
-		$menus = $this->Link->Menu->find('list');
-		$roles = $this->Role->find('list');
-		$parentLinks = $this->Link->generateTreeList(array(
-			'Link.menu_id' => $menuId,
-		));
-		$this->set(compact('menus', 'roles', 'parentLinks', 'menuId'));
+
+
+
+		$link = $this->Links->patchEntity($link, $this->request->data);
+		$this->Links->setTreeScope($link->menu_id);
+		$link = $this->Links->save($link);
+		if (!$link) {
+			$this->Flash->error(__d('croogo', 'The Link could not be saved. Please, try again.'));
+
+			return;
+		}
+
+		$this->Flash->success(__d('croogo', 'The Link has been saved'));
+
+		if (isset($this->request->data['apply'])) {
+			return $this->redirect(array('action' => 'edit', $link->id));
+		} else {
+			return $this->redirect(array(
+				'action' => 'index',
+				'?' => array(
+					'menu_id' => $menuId
+				)
+			));
+		}
+
 	}
 
 /**
  * Admin edit
  *
  * @param integer $id
- * @return void
- * @access public
  */
-	public function admin_edit($id = null) {
+	public function edit($id = null) {
 		$this->set('title_for_layout', __d('croogo', 'Edit Link'));
 
-		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Link'), 'default', array('class' => 'error'));
+		$link = $this->Links->get($id);
+
+		$menus = $this->Links->Menus->find('list');
+		$roles = $this->Roles->find('list');
+		$menu = $this->Links->Menus->get($link->menu_id);
+		$parentLinks = $this->Links->find('treeList', [
+			'Link.menu_id' => $menu->id,
+		]);
+		$menuId = $menu->id;
+		$this->set(compact('link', 'menu', 'menus', 'roles', 'parentLinks', 'menuId'));
+
+		if (!$this->request->is('put')) {
+			return;
+		}
+
+		$link = $this->Links->patchEntity($link, $this->request->data);
+		if (!$this->Links->save($link)) {
+			$this->Flash->error(__d('croogo', 'The Link could not be saved. Please, try again.'));
+
+			return;
+		}
+
+		$this->Flash->success(__d('croogo', 'The Link has been saved'));
+		if (isset($this->request->data['apply'])) {
+			return $this->redirect(array('action' => 'edit', $this->Link->id));
+		} else {
 			return $this->redirect(array(
-				'controller' => 'menus',
 				'action' => 'index',
+				'?' => array(
+					'menu_id' => $menu->id
+				)
 			));
 		}
-		if (!empty($this->request->data)) {
-			$this->request->data['Link']['visibility_roles'] = $this->Link->encodeData($this->request->data['Role']['Role']);
-
-			if ($this->Link->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Link has been saved'), 'default', array('class' => 'success'));
-				if (isset($this->request->data['apply'])) {
-					return $this->redirect(array('action' => 'edit', $this->Link->id));
-				} else {
-					return $this->redirect(array(
-						'action' => 'index',
-						'?' => array(
-							'menu_id' => $this->request->data['Link']['menu_id']
-						)
-					));
-				}
-			} else {
-				$this->Session->setFlash(__d('croogo', 'The Link could not be saved. Please, try again.'), 'default', array('class' => 'error'));
-			}
-		}
-		if (empty($this->request->data)) {
-			$data = $this->Link->read(null, $id);
-			$data['Role']['Role'] = $this->Link->decodeData($data['Link']['visibility_roles']);
-			$this->request->data = $data;
-		}
-		$menus = $this->Link->Menu->find('list');
-		$roles = $this->Role->find('list');
-		$menu = $this->Link->Menu->findById($this->request->data['Link']['menu_id']);
-		$parentLinks = $this->Link->generateTreeList(array(
-			'Link.menu_id' => $menu['Menu']['id'],
-		));
-		$menuId = $menu['Menu']['id'];
-		$this->set(compact('menus', 'roles', 'parentLinks', 'menuId'));
 	}
 
 /**
  * Admin delete
  *
  * @param integer $id
- * @return void
- * @access public
  */
-	public function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Link'), 'default', array('class' => 'error'));
-			return $this->redirect(array(
-				'controller' => 'menus',
-				'action' => 'index',
-			));
+	public function delete($id = null) {
+		$link = $this->Links->get($id);
+
+		$this->Links->setTreeScope($link->menu_id);
+		if (!$this->Links->delete($link)) {
+			return;
 		}
-		$link = $this->Link->findById($id);
-		if (!isset($link['Link']['id'])) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Link'), 'default', array('class' => 'error'));
-			return $this->redirect(array(
-				'controller' => 'menus',
-				'action' => 'index',
-			));
-		}
-		$this->Link->setTreeScope($link['Link']['menu_id']);
-		if ($this->Link->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Link deleted'), 'default', array('class' => 'success'));
-			return $this->redirect(array(
-				'action' => 'index',
-				'?' => array(
-					'menu_id' => $link['Link']['menu_id'],
-				),
-			));
-		}
+
+		$this->Flash->success(__d('croogo', 'Link deleted'));
+		return $this->redirect(array(
+			'action' => 'index',
+			'?' => array(
+				'menu_id' => $link->menu_id,
+			),
+		));
 	}
 
 /**

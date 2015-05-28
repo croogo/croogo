@@ -1,48 +1,47 @@
 <?php
 
-$this->extend('/Common/admin_edit');
-$this->Html->script(array('Menus.admin'), false);
+use Croogo\Croogo\CroogoStatus;
 
-$this->Html
+$this->extend('Croogo/Croogo./Common/admin_edit');
+$this->Croogo->adminScript('Croogo/Menus.admin');
+
+$this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'Menus'), array('plugin' => 'menus', 'controller' => 'menus', 'action' => 'index'));
+	->addCrumb(__d('croogo', 'Menus'), array('controller' => 'Menus', 'action' => 'index'));
 
-if ($this->request->params['action'] == 'admin_add') {
-	$this->Html
-		->addCrumb($menus[$menuId], array(
-			'plugin' => 'menus', 'controller' => 'links', 'action' => 'index',
-			'?' => array('menu_id' => $menuId))
+if ($this->request->params['action'] == 'add') {
+	$this->CroogoHtml
+		->addCrumb($menu->title, array(
+			'action' => 'index',
+			'?' => array('menu_id' => $menu->id))
 		)
 		->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 	$formUrl = array(
-		'controller' => 'links', 'action' => 'add', 'menu' => $menuId
+		'action' => 'add', $menu->id
 	);
 }
 
-if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html
-		->addCrumb($this->data['Menu']['title'], array(
-			'plugin' => 'menus', 'controller' => 'links', 'action' => 'index',
-			'?' => array('menu_id' => $this->data['Menu']['id'])))
-		->addCrumb($this->request->data['Link']['title'], '/' . $this->request->url);
+if ($this->request->params['action'] == 'edit') {
+	$this->CroogoHtml
+		->addCrumb($menu->title, array(
+			'action' => 'index',
+			'?' => array('menu_id' => $menu->id)))
+		->addCrumb($link->title, '/' . $this->request->url);
 	$formUrl = array(
-		'controller' => 'links', 'action' => 'edit',
+		'action' => 'edit',
 		'?' => array(
 			'menu_id' => $menuId,
 		),
 	);
 }
 
-echo $this->Form->create('Link', array(
+echo $this->CroogoForm->create($link, array(
 	'url' => $formUrl,
 	'class' => 'protected-form',
 ));
 
-$linkChooserUrl = $this->Html->url(array(
-	'admin' => true,
-	'plugin' => 'menus',
-	'controllers' => 'links',
-	'action' => 'link_chooser',
+$linkChooserUrl = $this->Url->build(array(
+	'action' => 'linkChooser',
 ));
 
 ?>
@@ -61,26 +60,26 @@ $linkChooserUrl = $this->Html->url(array(
 		<div class="tab-content">
 			<div id="link-basic" class="tab-pane">
 			<?php
-				echo $this->Form->input('id');
-				echo $this->Form->input('menu_id', array(
+				echo $this->CroogoForm->input('id');
+				echo $this->CroogoForm->input('menu_id', array(
 					'selected' => $menuId,
 				));
-				echo $this->Form->input('parent_id', array(
+				echo $this->CroogoForm->input('parent_id', array(
 					'title' => __d('croogo', 'Parent'),
 					'options' => $parentLinks,
 					'empty' => true,
 				));
-				$this->Form->inputDefaults(array(
+				$this->CroogoForm->templates(array(
 					'class' => 'span10',
 				));
-				echo $this->Form->input('title', array(
+				echo $this->CroogoForm->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));
 
-				echo $this->Form->input('link', array(
+				echo $this->CroogoForm->input('link', array(
 					'label' => __d('croogo', 'Link'),
 					'div' => 'input text required input-append',
-					'after' => $this->Html->link('', '#link_choosers', array(
+					'after' => $this->CroogoHtml->link('', '#link_choosers', array(
 						'button' => 'default',
 						'icon' => array('link'),
 						'iconSize' => 'small',
@@ -94,28 +93,30 @@ $linkChooserUrl = $this->Html->url(array(
 
 			<div id="link-access" class="tab-pane">
 			<?php
-				echo $this->Form->input('Role.Role', array(
+				echo $this->CroogoForm->input('visibility_roles', array(
 					'class' => false,
+					'options' => $roles,
+					'multiple' => true
 				));
 			?>
 			</div>
 
 			<div id="link-misc" class="tab-pane">
 			<?php
-				echo $this->Form->input('class', array(
+				echo $this->CroogoForm->input('class', array(
 					'label' => __d('croogo', 'Class'),
 					'class' => 'span10 class',
 				));
-				echo $this->Form->input('description', array(
+				echo $this->CroogoForm->input('description', array(
 					'label' => __d('croogo', 'Description'),
 				));
-				echo $this->Form->input('rel', array(
+				echo $this->CroogoForm->input('rel', array(
 					'label' => __d('croogo', 'Rel'),
 				));
-				echo $this->Form->input('target', array(
+				echo $this->CroogoForm->input('target', array(
 					'label' => __d('croogo', 'Target'),
 				));
-				echo $this->Form->input('params', array(
+				echo $this->CroogoForm->input('params', array(
 					'label' => __d('croogo', 'Params'),
 				));
 			?>
@@ -128,35 +129,35 @@ $linkChooserUrl = $this->Html->url(array(
 
 	<div class="span4">
 	<?php
-		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
-			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index', '?' => array('menu_id' => $menuId)), array('button' => 'danger')) .
-			$this->Form->input('status', array(
+		echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing')) .
+			$this->CroogoForm->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+			$this->CroogoForm->button(__d('croogo', 'Save'), array('button' => 'success')) .
+			$this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index', '?' => array('menu_id' => $menuId)), array('button' => 'danger')) .
+			$this->CroogoForm->input('status', array(
 				'type' => 'radio',
 				'legend' => false,
 				'class' => false,
 				'default' => CroogoStatus::UNPUBLISHED,
 				'options' => $this->Croogo->statuses(),
 			)) .
-			$this->Html->div('input-daterange',
-				$this->Form->input('publish_start', array(
+			$this->CroogoHtml->div('input-daterange',
+				$this->CroogoForm->input('publish_start', array(
 					'label' => __d('croogo', 'Publish Start'),
 					'type' => 'text',
 				)) .
-				$this->Form->input('publish_end', array(
+				$this->CroogoForm->input('publish_end', array(
 					'label' => __d('croogo', 'Publish End'),
 					'type' => 'text',
 				))
 			) .
-			$this->Html->endBox();
+			$this->CroogoHtml->endBox();
 		echo $this->Croogo->adminBoxes();
 	?>
 	</div>
 </div>
-<?php echo $this->Form->end(); ?>
+<?php echo $this->CroogoForm->end(); ?>
 <?php
-echo $this->element('Croogo.admin/modal', array(
+echo $this->element('Croogo/Croogo.admin/modal', array(
 	'id' => 'link_choosers',
 	'class' => 'hide',
 	'title' => __d('croogo', 'Choose Link'),
