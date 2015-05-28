@@ -2,11 +2,17 @@
 
 namespace Croogo\Menus\Controller\Admin;
 
+use Cake\Event\Event;
+use Croogo\Croogo\Controller\Component\CroogoComponent;
+use Croogo\Croogo\Controller\CroogoAppController;
 use Croogo\Menus\Controller\MenusAppController;
+use Croogo\Menus\Model\Table\LinksTable;
 
 /**
  * Links Controller
  *
+ * @property CroogoComponent Croogo
+ * @property LinksTable Links
  * @category Controller
  * @package  Croogo.Menus.Controller
  * @version  1.0
@@ -14,53 +20,7 @@ use Croogo\Menus\Controller\MenusAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class LinksController extends MenusAppController {
-
-/**
- * Controller name
- *
- * @var string
- * @access public
- */
-	public $name = 'Links';
-
-/**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
-	public $uses = array(
-		'Menus.Link',
-		'Users.Role',
-	);
-
-/**
- * Components
- *
- * @var array
- */
-	public $components = array(
-		'Croogo.BulkProcess',
-	);
-
-/**
- * Menu ID
- *
- * holds the current menu ID (if any)
- *
- * @var string
- * @access public
- */
-	public $menuId = '';
-
-/**
- * afterConstruct
- */
-	public function afterConstruct() {
-		parent::afterConstruct();
-		$this->_setupAclComponent();
-	}
+class LinksController extends CroogoAppController {
 
 /**
  * beforeFilter
@@ -68,64 +28,51 @@ class LinksController extends MenusAppController {
  * @return void
  * @access public
  */
-	public function beforeFilter() {
-		parent::beforeFilter();
-		$this->Security->unlockedActions[] = 'admin_toggle';
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
+
+//		$this->Security->unlockedActions[] = 'admin_toggle';
 	}
 
-/**
+	public function initialize() {
+		parent::initialize();
+
+		$this->loadComponent('Croogo/Croogo.BulkProcess');
+		$this->loadModel('Croogo/Users.Roles');
+	}
+
+
+	/**
  * Toggle Link status
  *
  * @param $id string Link id
  * @param $status integer Current Link status
  * @return void
  */
-	public function admin_toggle($id = null, $status = null) {
-		$this->Croogo->fieldToggle($this->Link, $id, $status);
+	public function toggle($id = null, $status = null) {
+		$this->Croogo->fieldToggle($this->Links, $id, $status);
 	}
 
 /**
  * Admin index
- *
- * @return void
- * @access public
  */
-	public function admin_index() {
-		if (isset($this->request->query['menu_id'])) {
-			$menuId = $this->request->query['menu_id'];
-		}
-		if (empty($menuId)) {
-			return $this->redirect(array(
-				'controller' => 'menus',
-				'action' => 'index',
-			));
-		}
-		$menu = $this->Link->Menu->findById($menuId);
-		if (!isset($menu['Menu']['id'])) {
-			return $this->redirect(array(
-				'controller' => 'menus',
-				'action' => 'index',
-			));
-		}
-		$this->set('title_for_layout', __d('croogo', 'Links: %s', $menu['Menu']['title']));
+	public function index() {
+		$menuId = $this->request->query('menu_id');
 
-		$this->Link->recursive = 0;
-		$linksTree = $this->Link->generateTreeList(array(
-			'Link.menu_id' => $menuId,
-		));
-		$linksStatus = $this->Link->find('list', array(
-			'conditions' => array(
-				'Link.menu_id' => $menuId,
-			),
-			'fields' => array(
-				'Link.id',
-				'Link.status',
-			),
-		));
+		$menu = $this->Links->Menus->get($menuId);
+
+		$this->set('title_for_layout', __d('croogo', 'Links: %s', $menu->title));
+
+		$linksTree = $this->Links->find('treeList')->where([
+			'Links.menu_id' => $menuId,
+		]);
+		$linksStatus = $this->Links->find('list', [
+			'valueField' => 'status',
+		])->where([
+			'Links.menu_id' => $menuId,
+		])->toArray();
 		$this->set(compact('linksTree', 'linksStatus', 'menu'));
-		if ($this->request->ext === 'json') {
-			$this->set('_serialize', array('linksTree', 'menu', 'linksStatus'));
-		}
+		$this->set('_serialize', ['linksTree', 'menu', 'linksStatus']);
 	}
 
 /**
