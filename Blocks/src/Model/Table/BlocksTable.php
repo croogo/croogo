@@ -2,7 +2,8 @@
 
 namespace Croogo\Blocks\Model;
 
-use Blocks\Model\BlocksAppModel;
+use Cake\ORM\Table;
+
 /**
  * Block
  *
@@ -13,7 +14,7 @@ use Blocks\Model\BlocksAppModel;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Block extends BlocksAppModel {
+class BlocksTable extends Table {
 
 /**
  * Model name
