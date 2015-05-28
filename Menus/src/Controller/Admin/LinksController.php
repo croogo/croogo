@@ -6,7 +6,9 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Croogo\Core\Controller\Component\CroogoComponent;
+use Croogo\Core\Controller\CroogoAppController;
 use Croogo\Core\Croogo;
+use Croogo\Menus\Controller\MenusAppController;
 use Croogo\Menus\Model\Table\LinksTable;
 
 /**
@@ -21,39 +23,30 @@ use Croogo\Menus\Model\Table\LinksTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class LinksController extends AppController
-{
+class LinksController extends CroogoAppController {
 
-    /**
-     * {@inheritDoc}
-     */
-    public function initialize()
-    {
-        parent::initialize();
+	use \Crud\Controller\ControllerTrait;
 
-        $this->loadComponent('Croogo/Core.BulkProcess');
-        $this->loadModel('Croogo/Users.Roles');
-    }
+	public function initialize() {
+		parent::initialize();
 
-    /**
-     * Toggle Link status
-     *
-     * @param $id string Link id
-     * @param $status integer Current Link status
-     *
-     * @return void
-     */
-    public function toggle($id = null, $status = null)
-    {
-        $this->Croogo->fieldToggle($this->Links, $id, $status);
-    }
+		$this->loadComponent('Crud.Crud', [
+			'actions' => [
+				'toggle' => [
+					'className' => 'Crud.Bulk/Toggle',
+					'field' => 'status',
+				]
+			]
+		]);
+		$this->loadComponent('Croogo/Croogo.BulkProcess');
+		$this->loadModel('Croogo/Users.Roles');
+	}
 
-    /**
-     * Admin index
-     */
-    public function index()
-    {
-        $menuId = $this->request->query('menu_id');
+/**
+ * Admin index
+ */
+	public function index() {
+		$menuId = $this->request->query('menu_id');
 
         $menu = $this->Links->Menus->get($menuId);
 
