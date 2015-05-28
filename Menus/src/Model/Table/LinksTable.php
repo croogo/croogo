@@ -2,6 +2,8 @@
 
 namespace Croogo\Menus\Model\Table;
 
+use Cake\Event\Event;
+use Cake\ORM\Entity;
 use Croogo\Croogo\Model\Table\CroogoTable;
 
 /**
@@ -57,48 +59,27 @@ class LinksTable extends CroogoTable {
  */
 	public function setTreeScope($menuId) {
 		$settings = array(
-			'scope' => array($this->alias . '.menu_id' => $menuId),
+			'scope' => [$this->alias() . '.menu_id' => $menuId],
 		);
-		if ($this->Behaviors->loaded('Tree')) {
-			$this->Behaviors->Tree->setup($this, $settings);
+		if ($this->hasBehavior('Tree')) {
+			$this->behaviors()->get('Tree')->config($settings);
 		} else {
-			$this->Behaviors->load('Tree', $settings);
+			$this->addBehavior('Tree', $settings);
 		}
-	}
-
-/**
- * If we are moving between Menus, save original id so that Link::afterSave()
- * recover() can recover the tree
- *
- */
-	public function beforeSave($options = array()) {
-		if (!isset($this->data['Link']['menu_id']) || !isset($this->data['Link']['id'])) {
-			return true;
-		}
-		$previousMenuId = $this->field('menu_id', array(
-			$this->escapeField('id') => $this->data['Link']['id']
-		));
-		$hasMenuChanged = ($previousMenuId != $this->data['Link']['menu_id']);
-		if ($hasMenuChanged) {
-			$this->_previousMenuId = $previousMenuId;
-		}
-
-		return true;
 	}
 
 /**
  * Calls TreeBehavior::recover when we are changing scope
  */
-	public function afterSave($created, $options = array()) {
-		if ($created) {
+	public function afterSave(Event $event, Entity $entity, $options = array()) {
+		if ($entity->isNew()) {
 			return;
 		}
-		if (isset($this->_previousMenuId)) {
-			$this->setTreeScope($this->data['Link']['menu_id']);
+		if ($entity->dirty('menu_id')) {
+			$this->setTreeScope($entity->menu_id);
 			$this->recover();
-			$this->setTreeScope($this->_previousMenuId);
+			$this->setTreeScope($entity->getOriginal('menu_id'));
 			$this->recover();
-			unset($this->_previousMenuId);
 		}
 	}
 
