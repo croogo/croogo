@@ -159,7 +159,7 @@ class StringConverter {
 				$result[] = $val;
 			}
 		}
-		return join('/', $result) . $queryString;
+		return join('|', $result) . $queryString;
 	}
 
 /**
