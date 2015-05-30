@@ -8,6 +8,7 @@ use Croogo\Croogo;
 // Map our custom types
 Type::map('params', 'Croogo\Croogo\Database\Type\ParamsType');
 Type::map('encoded', 'Croogo\Croogo\Database\Type\EncodedType');
+Type::map('link', 'Croogo\Croogo\Database\Type\LinkType');
 
 require_once 'croogo_bootstrap.php';
 

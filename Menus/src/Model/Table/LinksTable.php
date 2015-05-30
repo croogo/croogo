@@ -52,6 +52,7 @@ class LinksTable extends CroogoTable {
 
 	protected function _initializeSchema(Schema $table) {
 		$table->columnType('visibility_roles', 'encoded');
+		$table->columnType('link', 'link');
 
 		return parent::_initializeSchema($table);
 	}

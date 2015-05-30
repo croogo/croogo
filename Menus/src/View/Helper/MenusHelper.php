@@ -199,11 +199,6 @@ class MenusHelper extends Helper {
 
 			$linkAttr = $this->_mergeLinkParams($link, 'linkAttr', $linkAttr);
 
-			// if link is in the format: controller:contacts/action:view
-			if (strstr($link->link, 'controller:')) {
-				$link->link = $this->linkStringToArray($link->link);
-			}
-
 			// Remove locale part before comparing links
 			if (!empty($this->_View->request->params['locale'])) {
 				$currentUrl = substr($this->_View->request->url, strlen($this->_View->request->params['locale'] . '/'));
@@ -218,7 +213,7 @@ class MenusHelper extends Helper {
 				$linkAttr['class'] .= ' ' . $options['selected'];
 			}
 
-			$linkOutput = $this->Html->link($link->title, $link->link, $linkAttr);
+			$linkOutput = $this->Html->link($link->title, $link->link->getUrl(), $linkAttr);
 			if (isset($link['children']) && count($link['children']) > 0) {
 				$linkOutput .= $this->nestedLinks($link['children'], $options, $depth + 1);
 			}
