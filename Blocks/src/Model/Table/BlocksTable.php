@@ -1,8 +1,9 @@
 <?php
 
-namespace Croogo\Blocks\Model;
+namespace Croogo\Blocks\Model\Table;
 
 use Cake\ORM\Table;
+use Croogo\Croogo\CroogoStatus;
 
 /**
  * Block
@@ -102,6 +103,18 @@ class BlocksTable extends Table {
 			'counterScope' => array('Block.status >=' => CroogoStatus::PUBLISHED),
 		),
 	);
+
+	public function initialize(array $config) {
+		parent::initialize($config);
+
+		$this->belongsTo('Regions', [
+			'className' => 'Croogo/Blocks.Regions',
+			'foreignKey' => 'region_id',
+			'counterCache' => true,
+			'counterScope' => array('Blocks.status >=' => CroogoStatus::PUBLISHED),
+		]);
+	}
+
 
 /**
  * Find Published blocks
