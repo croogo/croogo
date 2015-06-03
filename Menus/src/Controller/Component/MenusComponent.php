@@ -50,7 +50,7 @@ class MenusComponent extends Component {
 		}
 
 		$controller = $event->subject();
-		if (!isset($controller->request->params['admin']) && !isset($controller->request->params['requested'])) {
+		if (($controller->request->param('prefix') !== 'admin')  && !isset($controller->request->params['requested'])) {
 			$this->menus();
 
 		} else {
