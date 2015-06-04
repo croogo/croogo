@@ -93,10 +93,10 @@ class FilterComponent extends Component {
 				if (isset($this->_controller->request->params['admin'])) {
 					$this->_controller->Session->setFlash($notice, 'default', null, array('class', 'error'));
 				}
-				if (isset($this->_controller->Setting)) {
-					$Setting = $this->_controller->Setting;
+				if (isset($this->_controller->Settings)) {
+					$Setting = $this->_controller->Settings;
 				} else {
-					$Setting = TableRegistry::get('Settings.Setting');
+					$Setting = TableRegistry::get('Croogo/Settings.Settings');
 				}
 				$Setting->write('Access Control.autoLoginDuration', '');
 			}

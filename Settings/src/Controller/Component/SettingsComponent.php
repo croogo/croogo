@@ -26,7 +26,7 @@ class SettingsComponent extends Component {
  */
 	public function startup(Event $event) {
 		$this->_controller = $event->subject();
-		$this->_controller->loadModel('Settings.Setting');
+		$this->_controller->loadModel('Croogo/Settings.Settings');
 	}
 
 }
