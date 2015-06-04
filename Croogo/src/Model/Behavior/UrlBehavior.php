@@ -7,6 +7,7 @@ use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
+use Croogo\Croogo\Link;
 
 /**
  * Url Behavior
@@ -44,7 +45,7 @@ class UrlBehavior extends Behavior {
 						}
 					}
 				}
-				$row->set('url', $url);
+				$row->set('url', new Link($url));
 				$row->dirty('url', false);
 
 				return $row;
