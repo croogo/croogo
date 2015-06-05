@@ -267,7 +267,10 @@ class UsersController extends UsersAppController {
 		$this->set('title_for_layout', __d('croogo', 'Log in'));
 		if ($this->request->is('post')) {
 			Croogo::dispatchEvent('Controller.Users.beforeLogin', $this);
-			if ($this->Auth->identify()) {
+			$user = $this->Auth->identify();
+			if ($user) {
+				$this->Auth->setUser($user);
+
 				Croogo::dispatchEvent('Controller.Users.loginSuccessful', $this);
 				return $this->redirect($this->Auth->redirectUrl());
 			} else {
