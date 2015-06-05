@@ -225,7 +225,7 @@ class LayoutHelper extends Helper {
 			if (isset($url['pass'])) {
 				$passVars = is_string($url['pass']) ? array($url['pass']) : $url['pass'];
 				foreach ($passVars as $passField) {
-					$url[] = $item[$model][$passField];
+					$url[] = $item->get($passField);
 				}
 				unset($url['pass']);
 			}
@@ -233,7 +233,7 @@ class LayoutHelper extends Helper {
 			if (isset($url['named'])) {
 				$namedVars = is_string($url['named']) ? array($url['named']) : $url['named'];
 				foreach ($namedVars as $namedField) {
-					$url[$namedField] = $item[$model][$namedField];
+					$url[$namedField] = $item->get($namedField);
 				}
 				unset($url['named']);
 			}
