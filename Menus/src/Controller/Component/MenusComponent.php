@@ -62,7 +62,7 @@ class MenusComponent extends Component {
 		// menus
 		$menus = $this->Links->Menus->find('all', array(
 			'recursive' => '-1',
-			'order' => 'Menu.id ASC',
+			'order' => 'Menus.id ASC',
 		));
 		$this->controller->set('menus_for_admin_layout', $menus);
 	}
