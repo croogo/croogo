@@ -35,10 +35,10 @@ class NodesComponent extends Component {
  */
 	public function beforeFilter(Event $event) {
 		$this->controller = $event->subject;
-		if (isset($this->controller->Node)) {
-			$this->Node = $this->controller->Node;
+		if (isset($this->controller->Nodes)) {
+			$this->Nodes = $this->controller->Nodes;
 		} else {
-			$this->Node = TableRegistry::get('Nodes.Nodes');
+			$this->Nodes = TableRegistry::get('Croogo/Nodes.Nodes');
 		}
 
 		if (Configure::read('Access Control.multiRole')) {
