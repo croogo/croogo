@@ -34,3 +34,5 @@ Croogo::hookAdminRowAction('Users/admin_index', 'Reset Password', array(
 		),
 	),
 ));
+
+Croogo::hookComponent('*', 'Croogo/Users.LoggedInUser');
