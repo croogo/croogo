@@ -1,8 +1,13 @@
 <?php
 
 use Cake\Core\Configure;
+use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Croogo\Croogo\CroogoRouter;
+
+Router::plugin('Croogo/Nodes', function (RouteBuilder $routeBuilder) {
+	$routeBuilder->fallbacks();
+});
 
 CroogoRouter::mapResources('Nodes.Nodes', array(
 	'prefix' => '/:api/:prefix/',
