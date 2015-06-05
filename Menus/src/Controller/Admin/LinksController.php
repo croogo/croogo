@@ -2,9 +2,11 @@
 
 namespace Croogo\Menus\Controller\Admin;
 
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Croogo\Croogo\Controller\Component\CroogoComponent;
 use Croogo\Croogo\Controller\CroogoAppController;
+use Croogo\Croogo\Croogo;
 use Croogo\Menus\Controller\MenusAppController;
 use Croogo\Menus\Model\Table\LinksTable;
 
@@ -284,7 +286,7 @@ class LinksController extends CroogoAppController {
 
 	}
 
-	public function admin_link_chooser() {
+	public function linkChooser() {
 		Croogo::dispatchEvent('Controller.Links.setupLinkChooser', $this);
 		$linkChoosers = Configure::read('Menus.linkChoosers');
 		$this->set(compact('linkChoosers'));

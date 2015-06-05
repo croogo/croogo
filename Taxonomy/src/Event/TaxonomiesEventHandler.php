@@ -3,6 +3,8 @@
 namespace Croogo\Taxonomy\Event;
 
 use Cake\Event\EventListenerInterface;
+use Cake\ORM\TableRegistry;
+use Croogo\Croogo\Croogo;
 use Croogo\Croogo\CroogoNav;
 
 /**
@@ -62,35 +64,24 @@ class TaxonomiesEventHandler implements EventListenerInterface {
  * @return void
  */
 	public function onSetupLinkChooser($event) {
-		$this->Vocabulary = ClassRegistry::init('Taxonomy.Vocabulary');
-		$vocabularies = $this->Vocabulary->find('all', array(
-			'joins' => array(
-				array(
-					'table' => 'types_vocabularies',
-					'alias' => 'TypesVocabulary',
-					'conditions' => 'Vocabulary.id = TypesVocabulary.vocabulary_id'
-				),
-				array(
-					'table' => 'types',
-					'alias' => 'Type',
-					'conditions' => 'TypesVocabulary.type_id = Type.id',
-				),
-			),
-		));
+		$vocabulariesTable = TableRegistry::get('Croogo/Taxonomy.Vocabularies');
+		$vocabularies = $vocabulariesTable->find('all')->contain([
+			'Types'
+		]);
 
 		$linkChoosers = array();
 		foreach ($vocabularies as $vocabulary) {
-			foreach ($vocabulary['Type'] as $type) {
-				$title = $type['title'] . ' ' . $vocabulary['Vocabulary']['title'];
+			foreach ($vocabulary->types as $type) {
+				$title = $type->title . ' ' . $vocabulary->title;
 				$linkChoosers[$title] = array(
-					'description' => $vocabulary['Vocabulary']['description'],
+					'description' => $vocabulary->description,
 					'url' => array(
-						'plugin' => 'taxonomy',
-						'controller' => 'terms',
+						'plugin' => 'Croogo/Taxonomy',
+						'controller' => 'Terms',
 						'action' => 'index',
-						$vocabulary['Vocabulary']['id'],
+						$vocabulary->id,
 						'?' => array(
-							'type' => $type['alias'],
+							'type' => $type->alias,
 							'chooser' => 1,
 							'KeepThis' => true,
 							'TB_iframe' => true,

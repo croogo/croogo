@@ -5,6 +5,7 @@ namespace Croogo\Nodes\Event;
 use Cake\Core\Plugin;
 
 use Cake\Event\EventListenerInterface;
+use Cake\ORM\TableRegistry;
 use Croogo\Croogo\Croogo;
 use Croogo\Comments\Model\Comment;
 
@@ -96,21 +97,21 @@ class NodesEventHandler implements EventListenerInterface {
  * @return void
  */
 	public function onSetupLinkChooser($event) {
-		$Type = ClassRegistry::init('Taxonomy.Type');
-		$types = $Type->find('all', array(
+		$typesTable = TableRegistry::get('Croogo/Taxonomy.Types');
+		$types = $typesTable->find('all', array(
 			'fields' => array('alias', 'title', 'description'),
 		));
 		$linkChoosers = array();
 		foreach ($types as $type) {
-			$linkChoosers[$type['Type']['title']] = array(
-				'title' => $type['Type']['title'],
-				'description' => $type['Type']['description'],
+			$linkChoosers[$type->title] = array(
+				'title' => $type->title,
+				'description' => $type->description,
 				'url' => array(
-					'plugin' => 'nodes',
-					'controller' => 'nodes',
+					'plugin' => 'Croogo/Nodes',
+					'controller' => 'Nodes',
 					'action' => 'index',
 					'?' => array(
-						'type' => $type['Type']['alias'],
+						'type' => $type->alias,
 						'chooser' => 1,
 						'KeepThis' => true,
 						'TB_iframe' => true,

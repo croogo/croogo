@@ -2,7 +2,7 @@
 
 $rows = array();
 foreach ($linkChoosers as $name => $chooser):
-	$link = $this->Html->link('', $chooser['url'], array(
+	$link = $this->CroogoHtml->link('', $chooser['url'], array(
 		'icon' => 'search',
 		'iconSize' => 'small',
 		'class' => 'btn btn-small link chooser pull-right',
@@ -12,8 +12,8 @@ foreach ($linkChoosers as $name => $chooser):
 			'data-placement' => 'left',
 		),
 	));
-	$title = $this->Html->tag('h5', $name . $link);
-	$div = $this->Html->div('link_chooser', $title . $this->Html->tag('small', $chooser['description']));
+	$title = $this->CroogoHtml->tag('h5', $name . $link);
+	$div = $this->CroogoHtml->div('link_chooser', $title . $this->CroogoHtml->tag('small', $chooser['description']));
 	$rows[] = '<tr><td>' . $div . '</td></tr>';
 endforeach;
 ?>
@@ -31,4 +31,4 @@ $(".link_chooser a").click(function() {
 });
 EOF;
 
-echo $this->Html->scriptBlock($script);
+echo $this->CroogoHtml->scriptBlock($script);
