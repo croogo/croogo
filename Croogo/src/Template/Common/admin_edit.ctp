@@ -1,4 +1,5 @@
 <?php
+use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
 if (empty($modelClass)) {
@@ -7,7 +8,8 @@ if (empty($modelClass)) {
 if (!isset($className)) {
 	$className = strtolower($this->name);
 }
-$what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') : __d('croogo', 'Add');
+$entity = ${Inflector::variable(Inflector::singularize($this->name))};
+$what = !$entity->isNew() ? __d('croogo', 'Edit') : __d('croogo', 'Add');
 ?>
 <h2 class="hidden-desktop">
 <?php
@@ -34,10 +36,7 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 <?php else: ?>
 	<?php
 		$tabId = 'tabitem-' . Inflector::slug(strtolower($modelClass), '-');
-		echo $this->Form->create($modelClass);
-		if (isset($this->request->data[$modelClass]['id'])) {
-			echo $this->Form->input('id');
-		}
+		echo $this->CroogoForm->create($entity);
 	?>
 	<div class="row-fluid">
 		<div class="span8">
@@ -61,14 +60,14 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 					} else {
 						$opts = Hash::merge(array('class' => 'span10'), $opts);
 					}
-					$content .= $this->Form->input($field, $opts);
+					$content .= $this->CroogoForm->input($field, $opts);
 				endforeach;
 			?>
 
 			<div class="tab-content">
 			<?php
 				if (!empty($content)):
-					echo $this->Html->div('tab-pane', $content, array(
+					echo $this->CroogoHtml->div('tab-pane', $content, array(
 						'id' => $tabId,
 					));
 				endif;
@@ -81,15 +80,15 @@ $what = isset($this->request->data[$modelClass]['id']) ? __d('croogo', 'Edit') :
 			if ($buttonsBlock = $this->fetch('buttons')):
 				echo $buttonsBlock;
 			else :
-				echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-					$this->Form->button(__d('croogo', 'Save'), array('button' => 'primary')) .
-					$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
-					$this->Html->endBox();
+				echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing')) .
+					$this->CroogoForm->button(__d('croogo', 'Save'), array('button' => 'primary')) .
+					$this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
+					$this->CroogoHtml->endBox();
 
 			endif;
 			echo $this->Croogo->adminBoxes();
 		?>
 		</div>
 	</div>
-	<?php echo $this->Form->end(); ?>
+	<?php echo $this->CroogoForm->end(); ?>
 <?php endif; ?>
