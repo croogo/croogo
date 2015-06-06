@@ -159,7 +159,7 @@ class LinksController extends CroogoAppController {
 
 		$this->Flash->success(__d('croogo', 'The Link has been saved'));
 		if (isset($this->request->data['apply'])) {
-			return $this->redirect(array('action' => 'edit', $this->Link->id));
+			return $this->redirect(array('action' => 'edit', $id));
 		} else {
 			return $this->redirect(array(
 				'action' => 'index',
