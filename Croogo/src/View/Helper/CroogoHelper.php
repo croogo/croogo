@@ -377,7 +377,7 @@ class CroogoHelper extends Helper {
 
 		$output = '';
 		$actions = '';
-		if (!empty($this->request->param('prefix'))) {
+		if ($this->request->param('prefix')) {
 			$actions .= Inflector::camelize($this->request->param('prefix')) . '/';
 		}
 		$actions .= Inflector::camelize($this->request->param('controller')) . '/' . $this->request->param('action');
