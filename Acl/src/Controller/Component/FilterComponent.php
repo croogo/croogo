@@ -134,10 +134,19 @@ class FilterComponent extends Component {
  */
 	public function configureLoginActions() {
 		$this->_controller->Auth->config('loginAction', [
+			'prefix' => false,
 			'plugin' => 'Croogo/Users',
 			'controller' => 'Users',
 			'action' => 'login',
 		]);
+		if ($this->request->param('prefix') === 'admin') {
+			$this->_controller->Auth->config('loginAction', [
+				'prefix' => 'admin',
+				'plugin' => 'Croogo/Users',
+				'controller' => 'Users',
+				'action' => 'login',
+			]);
+		}
 		$this->_controller->Auth->config('logoutRedirect', [
 			'plugin' => 'Croogo/Users',
 			'controller' => 'Users',
