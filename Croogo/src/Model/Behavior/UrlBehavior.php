@@ -23,6 +23,7 @@ class UrlBehavior extends Behavior {
 
 	protected $_defaultConfig = [
 		'url' => [
+			'prefix' => false,
 			'plugin' => 'Croogo/Nodes',
 			'controller' => 'Nodes',
 			'action' => 'view',
