@@ -167,8 +167,8 @@ class CroogoFormHelper extends FormHelper {
  * @param array $options Options list
  * @return array
  */
-	protected function _parseOptions($options) {
-		$options = parent::_parseOptions($options);
+	protected function _parseOptions($fieldName, $options) {
+		$options = parent::_parseOptions($fieldName, $options);
 		$options = $this->_parseOptionsAddon($options);
 
 		if (isset($options['class'])) {

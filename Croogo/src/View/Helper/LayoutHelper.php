@@ -192,12 +192,12 @@ class LayoutHelper extends Helper {
 			$validKeys
 		);
 
-		if ($this->_View->Helpers->loaded('Html')) {
+		if ($this->_View->helpers()->has('CroogoHtml')) {
 			unset($validKeys['css']);
 			$croogoSetting['themeSettings'] = Hash::merge(
 				$croogoSetting['themeSettings'],
 				array_intersect_key(
-					array_merge($validKeys, $this->_View->Html->settings),
+					array_merge($validKeys, $this->_View->CroogoHtml->settings),
 					$validKeys
 				)
 			);

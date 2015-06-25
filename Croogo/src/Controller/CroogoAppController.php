@@ -178,7 +178,6 @@ class CroogoAppController extends AppController {
 		}
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
 		$this->_setupComponents();
-		$this->_setupTheme();
 	}
 
 /**
@@ -333,6 +332,8 @@ class CroogoAppController extends AppController {
 		if ($this->request->is('ajax')) {
 			$this->layout = 'ajax';
 		}
+
+		$this->_setupTheme();
 
 		if (
 			$this->request->param('prefix') !== 'admin' &&
