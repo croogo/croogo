@@ -9,7 +9,6 @@
 			'/croogo/css/croogo-bootstrap',
 			'/croogo/css/croogo-bootstrap-responsive',
 			'/croogo/css/thickbox',
-			'admin',
 		));
 		echo $this->Layout->js();
 		echo $this->Html->script(array(

@@ -1,7 +1,5 @@
 <?php
 
-namespace Croogo\Install\Controller;
-
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 
@@ -57,6 +55,11 @@ class InstallController extends Controller {
 		parent::beforeFilter($event);
 
 		$this->layout = 'install';
+
+		$croogoTheme = new CroogoTheme();
+		$data = $croogoTheme->getData($this->theme);
+		$settings = $data['settings'];
+		$this->set('themeSettings', $settings);
 		$this->_generateAssets();
 	}
 

@@ -19,6 +19,7 @@
 .install blockquote { background: #eee; padding: 10px; margin-bottom: 0px; border-radius: 4px; }
 .input .error-message { font-size: 14px; }
 .form-actions { text-align: right;  margin-bottom: 0px; }
+.btn i { margin-right: 5px; }
 
 form { margin: 0px; }
 </style>

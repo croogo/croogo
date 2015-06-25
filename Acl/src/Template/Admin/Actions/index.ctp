@@ -1,8 +1,11 @@
 <?php
 
 $this->name = 'acos';
+
 $this->Html->script('Croogo/Acl.acl_permissions', ['block' => true]);
 $this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentReady(); });", ['block' => true]);
+
+$this->Croogo->adminScript('Acl.acl_permissions');
 
 $this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => $_icons['home']))
@@ -138,3 +141,5 @@ $this->append('table-body');
 	}
 	echo $this->Html->tag('thead', $tableHeaders);
 $this->end();
+
+$this->Js->buffer('AclPermissions.documentReady();');

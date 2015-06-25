@@ -8,7 +8,7 @@ $this->Html
 	->addCrumb(__d('croogo', 'Language'), array('plugin' => 'settings', 'controller' => 'languages', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {
-	$this->Html->addCrumb($this->data['Language']['title'], '/' . $this->request->url);
+	$this->Html->addCrumb($this->request->data['Language']['title'], '/' . $this->request->url);
 }
 
 if ($this->request->params['action'] == 'admin_add') {

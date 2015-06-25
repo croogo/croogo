@@ -58,8 +58,17 @@ class WysiwygHelper extends Helper {
 			$namespace .= '/' . implode('/', $prefixes);
 		}
 
-		$action = App::classname($pluginPath . $controller, $namespace, 'Controller') . '.' . $this->request->param('action');
-		$included = in_array($action, Configure::read('Wysiwyg.actions'));
+		$actions = array();
+		foreach (Configure::read('Wysiwyg.actions') as $key => $value) {
+			if (is_string($value)) {
+				$actions[] = $value;
+			} else {
+				$actions[] = $key;
+			}
+		}
+
+		$currentAction = App::classname($pluginPath . $controller, $namespace, 'Controller') . '.' . $this->request->param('action');
+		$included = in_array($currentAction, $actions, true);
 		if ($included) {
 			$this->Html->script('Croogo/Wysiwyg.wysiwyg', ['block' => true]);
 		}

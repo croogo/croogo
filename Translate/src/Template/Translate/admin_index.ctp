@@ -11,9 +11,24 @@ if (isset($this->request->params['models'][$modelAlias])) {
 }
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $_icons['home']))
-	->addCrumb(__d('croogo', 'Translate'), '/' . $this->request->url)
-	->addCrumb($modelAlias)
-	->addCrumb($record[$modelAlias][$displayField], array('plugin' => $plugin, 'controller' => $controller, 'action' => 'edit', $record[$modelAlias]['id']));
+	->addCrumb(
+		Inflector::pluralize($modelAlias),
+		array(
+			'plugin' => Inflector::underscore($plugin),
+			'controller' => Inflector::underscore($controller),
+			'action' => 'index',
+		)
+	)
+	->addCrumb(
+		$record[$modelAlias][$displayField],
+		array(
+			'plugin' => Inflector::underscore($plugin),
+			'controller' =>  Inflector::underscore($controller),
+			'action' => 'edit',
+			$record[$modelAlias]['id'],
+		)
+	)
+	->addCrumb(__d('croogo', 'Translations'), '/' . $this->request->url);
 
 ?>
 <?php $this->start('actions'); ?>
@@ -28,7 +43,7 @@ $this->Html
 			$modelAlias
 		),
 		array(
-			'button' => false,
+			'button' => 'default',
 		)
 	);
 ?>

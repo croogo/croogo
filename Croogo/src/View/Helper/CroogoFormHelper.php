@@ -321,8 +321,8 @@ class CroogoFormHelper extends FormHelper {
  */
 	protected function _acDefaults($field, $config) {
 		$displayKey = $displayValue = null;
-		if (isset($this->data[$this->defaultModel][$field])) {
-			$displayKey = $this->data[$this->defaultModel][$field];
+		if (isset($this->request->data[$this->defaultModel][$field])) {
+			$displayKey = $this->request->data[$this->defaultModel][$field];
 		}
 
 		if (substr($field, -3) === '_id') {

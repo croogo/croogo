@@ -337,8 +337,14 @@ class CroogoHelper extends Helper {
 
 /**
  * Create an action button
+ *
+ * @param string $title Button title
+ * @param url|string $url URL
+ * @param array $options Options array
+ * @param string $confirmMessage Confirmation message
+ * @return string
  */
-	public function adminAction($title, $url, $options = array()) {
+	public function adminAction($title, $url, $options = array(), $confirmMessage = false) {
 		$options = Hash::merge(array(
 			'button' => 'default',
 			'method' => 'get',
@@ -349,7 +355,8 @@ class CroogoHelper extends Helper {
 			unset($options['list']);
 		}
 		if (strcasecmp($options['method'], 'post') == 0) {
-			$out = $this->CroogoForm->postLink($title, $url, $options);
+			$options['block'] = 'scriptBottom';
+			$out = $this->CroogoForm->postLink($title, $url, $options, $confirmMessage);
 		} else {
 			$out = $this->CroogoHtml->link($title, $url, $options);
 		}

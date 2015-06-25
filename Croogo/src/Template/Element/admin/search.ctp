@@ -24,10 +24,12 @@ if (!empty($searchFields)):
 	$this->CroogoForm->templates([
 		'submitContainer' => '<div class="input submit">{{content}}</div>'
 	]);
-	echo $this->CroogoForm->input('chooser', [
-		'type' => 'hidden',
-		'value' => isset($this->request->query['chooser']),
-	]);
+	if (isset($this->request->query['chooser'])):
+		echo $this->CroogoForm->input('chooser', [
+			'type' => 'hidden',
+			'value' => isset($this->request->query['chooser']),
+		]);
+	endif;
 	foreach ($searchFields as $field => $fieldOptions) {
 		$options = ['empty' => '', 'required' => false];
 		if (is_numeric($field) && is_string($fieldOptions)) {

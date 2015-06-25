@@ -47,7 +47,7 @@ AclPermissions.tabLoad = function(e) {
 	var pane = matches[0];
 	var alias = $target.data('alias');
 	var $span = $('.' + Admin.iconClass('spinner', false), $target);
-	var spinnerClass = Admin.iconClass('spinner') + ' ' +Admin.iconClass('spin', false);
+	var spinnerClass = Admin.spinnerClass();
 	if ($span.length > 0) {
 		$span.addClass(spinnerClass);
 	} else {
@@ -86,7 +86,7 @@ AclPermissions.permissionToggle = function() {
 		var $this = $(this);
 		var acoId = $this.data('aco_id');
 		var aroId = $this.data('aro_id');
-		var spinnerClass = Admin.iconClass('spinner') + ' ' + Admin.iconClass('spin', false);
+		var spinnerClass = Admin.spinnerClass();
 
 		// show loader
 		$this
@@ -120,7 +120,7 @@ AclPermissions.tableToggle = function() {
 		var $el = $(this);
 		var rows = '';
 		var id = $el.data('id');
-		var spinnerClass = Admin.iconClass('spinner') + ' ' + Admin.iconClass('spin');
+		var spinnerClass = Admin.spinnerClass();
 		for (var acoId in data.permissions) {
 			text = '<td>' + acoId + '</td>';
 			var aliases = data.permissions[acoId];
@@ -189,7 +189,7 @@ AclPermissions.tableToggle = function() {
 		var $el = $(this);
 		var id = $el.data('id');
 		var level = $el.data('level');
-		var spinnerClass = Admin.iconClass('spinner') + ' ' + Admin.iconClass('spin', false);
+		var spinnerClass = Admin.spinnerClass();
 
 		$el.find('i').addClass(spinnerClass);
 		if ($el.hasClass('perm-expand')) {

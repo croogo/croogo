@@ -5,6 +5,9 @@ echo $this->Form->create(false, array(
 		'controller' => 'install',
 		'action' => 'database'
 	),
+	'inputDefaults' => array(
+		'class' => 'span11',
+	),
 ), array(
 	'class' => 'inline',
 ));
