@@ -1,27 +1,24 @@
 <?php
 
-$this->extend('Croogo/Croogo./Common/admin_index');
 $this->name = 'acos';
 $this->Html->script('Croogo/Acl.acl_permissions', ['block' => true]);
 $this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentReady(); });", ['block' => true]);
 
 $this->CroogoHtml
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Permissions'), array(
 		'plugin' => 'Croogo/Acl', 'controller' => 'Permissions',
 	))
 	->addCrumb(__d('croogo', 'Actions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Actions', 'action' => 'index', 'permission' => 1));
 
-?>
-<?php $this->start('actions'); ?>
-<li class="btn-group">
-<?php
-	echo $this->Html->link(
+$this->append('actions');
+	$toolsButton = $this->Html->link(
 		__d('croogo', 'Tools') . ' ' . '<span class="caret"></span>',
 		'#',
 		array(
-			'class' => 'btn dropdown-toggle',
+			'button' => 'default',
+			'class' => 'dropdown-toggle',
 			'data-toggle' => 'dropdown',
 			'escape' => false
 		)
@@ -37,6 +34,7 @@ $this->CroogoHtml
 		$generateUrl,
 		array(
 			'button' => false,
+			'list' => true,
 			'method' => 'post',
 			'tooltip' => array(
 				'data-title' => __d('croogo', 'Create new actions (no removal)'),
@@ -48,6 +46,7 @@ $this->CroogoHtml
 		$generateUrl + array('sync' => 1),
 		array(
 			'button' => false,
+			'list' => true,
 			'method' => 'post',
 			'tooltip' => array(
 				'data-title' => __d('croogo', 'Create new & remove orphaned actions'),
@@ -55,29 +54,27 @@ $this->CroogoHtml
 			),
 		)
 	);
-	echo $this->Html->tag('ul', $out, array('class' => 'dropdown-menu'));
-?>
-</li>
-<?php
+	echo $this->Html->div('btn-group',
+		$toolsButton .
+		$this->Html->tag('ul', $out, array('class' => 'dropdown-menu'))
+	);
+
 	echo $this->Croogo->adminAction(__d('croogo', 'Edit Actions'),
 		array('controller' => 'acl_actions', 'action' => 'index', 'permissions' => 1)
 	);
-?>
-<?php $this->end(); ?>
+$this->end();
 
-<table class="table permission-table">
-<?php
+$this->set('tableClass', 'table permission-table');
+$this->start('table-heading');
 	$tableHeaders = $this->Html->tableHeaders(array(
 		__d('croogo', 'Id'),
 		__d('croogo', 'Alias'),
 		__d('croogo', 'Actions'),
 	));
-?>
-	<thead>
-		<?php echo $tableHeaders; ?>
-	</thead>
-<?php
+	echo $this->Html->tag('thead', $tableHeaders);
+$this->end();
 
+$this->append('table-body');
 	$currentController = '';
 	$icon = '<i class="icon-none pull-right"></i>';
 	foreach ($acos as $aco) {
@@ -104,22 +101,24 @@ $this->CroogoHtml
 		$actions = array();
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'move', $id, 'up'),
-			array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'))
+			array('icon' => $_icons['move-up'], 'tooltip' => __d('croogo', 'Move up'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'move', $id, 'down'),
-			array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'))
+			array('icon' => $_icons['move-down'], 'tooltip' => __d('croogo', 'Move down'))
 		);
 
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'edit', $id),
-			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'delete',	$id),
 			array(
-				'icon' => 'trash',
-				'tooltip' => __d('croogo', 'Remove this item')
+				'icon' => $_icons['delete'],
+				'tooltip' => __d('croogo', 'Remove this item'),
+				'escapeTitle' => false,
+				'escape' => true,
 			),
 			__d('croogo', 'Are you sure?')
 		);
@@ -137,10 +136,5 @@ $this->CroogoHtml
 
 		echo $this->Html->tableCells($row, $oddOptions, $evenOptions);
 	}
-?>
-	<thead>
-		<?php echo $tableHeaders; ?>
-	</thead>
-<?php
-?>
-</table>
+	echo $this->Html->tag('thead', $tableHeaders);
+$this->end();

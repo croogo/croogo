@@ -3,12 +3,13 @@
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'File Manager'), '/' . $this->request->url);
 
 ?>
 
 <?php $this->start('actions'); ?>
+<div class="btn-group">
 <?php
 	echo $this->FileManager->adminAction(__d('croogo', 'Upload here'),
 		array('controller' => 'file_manager', 'action' => 'upload'),
@@ -23,6 +24,7 @@ $this->Html
 		$path
 	);
 ?>
+</div>
 <?php $this->end(); ?>
 
 <div class="breadcrumb">

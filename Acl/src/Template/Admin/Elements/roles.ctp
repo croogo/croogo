@@ -5,4 +5,4 @@ if (isset($roles[$this->data['User']['role_id']])) {
 	$validRoles = $roles;
 }
 
-echo $this->Form->input('Role', array('values' => $validRoles, 'multiple' => 'checkbox'));
+echo $this->Form->input('Role', array('values' => $validRoles, 'class' => 'input checkbox', 'multiple' => 'checkbox'));

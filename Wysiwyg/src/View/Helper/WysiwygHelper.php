@@ -5,6 +5,7 @@ namespace Croogo\Wysiwyg\View\Helper;
 use Cake\Core\Configure;
 use Cake\Routing\Router;
 use Cake\View\Helper;
+use Cake\Core\App;
 
 /**
  * Wysiwyg Helper
@@ -45,6 +46,22 @@ class WysiwygHelper extends Helper {
 			$this->Url->build(Configure::read('Wysiwyg.attachmentBrowseUrl'))
 		);
 
-		$this->Html->script('Croogo/Wysiwyg.wysiwyg', ['block' => true]);
+		$namespace = 'Controller';
+		$pluginPath = $this->request->param('plugin') . '.';
+		$controller = $this->request->param('controller');
+
+		if ($this->request->param('prefix')) {
+			$prefixes = array_map(
+				'Cake\Utility\Inflector::camelize',
+				explode('/', $this->request->param('prefix'))
+			);
+			$namespace .= '/' . implode('/', $prefixes);
+		}
+
+		$action = App::classname($pluginPath . $controller, $namespace, 'Controller') . '.' . $this->request->param('action');
+		$included = in_array($action, Configure::read('Wysiwyg.actions'));
+		if ($included) {
+			$this->Html->script('Croogo/Wysiwyg.wysiwyg', ['block' => true]);
+		}
 	}
 }

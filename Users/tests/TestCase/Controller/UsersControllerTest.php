@@ -126,7 +126,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 			->method('setFlash')
 			->with(
 				$this->equalTo('The User could not be saved. Please, try again.'),
-				$this->equalTo('default'),
+				$this->equalTo('flash'),
 				$this->equalTo(array('class' => 'error'))
 			);
 		$this->testAction('/users/users/add', array(
@@ -158,7 +158,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 			->method('setFlash')
 			->with(
 				$this->equalTo('The User could not be saved. Please, try again.'),
-				$this->equalTo('default'),
+				$this->equalTo('flash'),
 				$this->equalTo(array('class' => 'error'))
 			);
 		$this->testAction('/users/users/add', array(
@@ -329,7 +329,7 @@ class UsersControllerTest extends CroogoControllerTestCase {
 			->method('setFlash')
 			->with(
 				$this->equalTo('An error occurred.'),
-				$this->equalTo('default'),
+				$this->equalTo('flash'),
 				$this->equalTo(array('class' => 'error'))
 			);
 		$this->UsersController

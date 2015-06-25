@@ -3,7 +3,7 @@ $this->extend('/Common/admin_edit');
 $this->set('className', 'translate');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Translate'), '/' . $this->request->url)
 	->addCrumb($modelAlias)
 	->addCrumb($this->data[$modelAlias][$displayField]);
@@ -17,8 +17,8 @@ echo $this->Form->create($modelAlias, array('url' => array(
 	'locale' => $this->request->params['named']['locale'],
 )));
 ?>
-<div class="row-fluid">
-	<div class="span8">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 		<ul class="nav nav-tabs">
 		<?php
 			echo $this->Croogo->adminTab(__d('croogo', 'Translate'), '#translate-main');
@@ -29,9 +29,6 @@ echo $this->Form->create($modelAlias, array('url' => array(
 		<div class="tab-content">
 			<div id="translate-main" class="tab-pane">
 			<?php
-				$this->Form->inputDefaults(array(
-					'class' => 'span10',
-				));
 				foreach ($fields as $field):
 					echo $this->Form->input($modelAlias . '.' . $field);
 				endforeach;
@@ -41,7 +38,7 @@ echo $this->Form->create($modelAlias, array('url' => array(
 			<?php echo $this->Croogo->adminTabs(); ?>
 		</div>
 	</div>
-	<div class="span4">
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
 		<?php echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply', 'class' => 'btn')) .
 			$this->Form->button(__d('croogo', 'Save'), array('class' => 'btn btn-primary')) .

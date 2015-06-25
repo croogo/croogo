@@ -1,8 +1,9 @@
 <?php
+
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Themes'), '/' . $this->request->url);
 
@@ -17,11 +18,11 @@ $this->Html
 ?>
 <?php $this->end(); ?>
 
-<div class="row-fluid">
-	<div class="span12 extensions-themes">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="extensions-themes <?php echo $this->Layout->cssClass('columnFull'); ?>">
 
-		<div class="current-theme row-fluid">
-			<div class="screenshot span4">
+		<div class="current-theme <?php echo $this->Layout->cssClass('row'); ?>">
+			<div class="screenshot <?php echo $this->Layout->cssClass('columnRight'); ?>">
 				<h3><?php echo __d('croogo', 'Current Theme'); ?></h3>
 				<?php
 					$currentTheme = Sanitize::clean($currentTheme);
@@ -31,7 +32,7 @@ $this->Html
 						else:
 							$file = '/theme/' . Configure::read('Site.theme') . '/img/' . $currentTheme['screenshot'];
 						endif;
-						$imgUrl = $this->Html->image($file, array('class' => 'img-polaroid'));
+						$imgUrl = $this->Html->thumbnail($file);
 						$link = $this->Html->link($imgUrl, $file, array(
 							'escape' => false,
 							'class' => 'thickbox',
@@ -41,7 +42,7 @@ $this->Html
 				?>
 			</div>
 
-			<div class="span8">
+			<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
 				<h3>
 				<?php
 					$author = isset($currentTheme['author']) ? $currentTheme['author'] : null;
@@ -61,7 +62,7 @@ $this->Html
 			</div>
 		</div>
 
-		<div class="available-themes row-fluid">
+		<div class="available-themes <?php echo $this->Layout->cssClass('row'); ?>">
 			<h3><?php echo __d('croogo', 'Available Themes'); ?></h3>
 			<ul>
 			<?php
@@ -74,29 +75,28 @@ $this->Html
 					if (!$display):
 						continue;
 					endif;
-					echo '<li class="span12">';
+					echo '<li class="' . $this->Layout->cssClass('columnFull') . '">';
 					if ($themeAlias == 'default') {
-						$imgUrl = $this->Html->image($theme['screenshot'], array(
-							'class' => 'img-polaroid'));
+						$imgUrl = $this->Html->thumbnail($theme['screenshot']);
 						$link = $this->Html->link($imgUrl, $theme['screenshot'], array(
 							'escape' => false,
 							'class' => 'thickbox',
 						));
-						echo $this->Html->tag('div', $link, array('class' => 'screenshot span4'));
+						echo $this->Html->tag('div', $link, array('class' => 'screenshot ' . $this->Layout->cssClass('columnRight')));
 					} else {
 						if (!empty($theme['screenshot'])):
 							$file = '/theme/' . $themeAlias . '/img/' . $theme['screenshot'];
-							$imgUrl = $this->Html->image($file, array('class' => 'img-polaroid'));
+							$imgUrl = $this->Html->thumbnail($file);
 							$link = $this->Html->link($imgUrl, $file, array(
 								'escape' => false,
 								'class' => 'thickbox',
 							));
 							echo $this->Html->tag('div', $link, array(
-								'class' => 'screenshot span4',
+								'class' => 'screenshot ' . $this->Layout->cssClass('columnRight'),
 							));
 						else:
 							echo $this->Html->tag('div', '', array(
-								'class' => 'span4',
+								'class' => $this->Layout->cssClass('columnRight'),
 							));
 						endif;
 					}
@@ -116,17 +116,17 @@ $this->Html
 							$themeAlias,
 						), array(
 							'button' => 'default',
-							'icon' => 'bolt',
+							'icon' => $_icons['power-on'],
 						)) .
 						$this->Form->postLink(__d('croogo', 'Delete'), array(
 							'action' => 'delete',
 							$themeAlias,
 						), array(
 							'button' => 'danger',
-							'icon' => 'trash',
+							'icon' => $_icons['delete'],
 						), __d('croogo', 'Are you sure?')),
 						array('class' => 'actions'));
-					echo $this->Html->div('span8', $out);
+					echo $this->Html->div($this->Layout->cssClass('columnLeft'), $out);
 					echo '</li>';
 					$hasAvailable = true;
 				endforeach;

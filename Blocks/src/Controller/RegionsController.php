@@ -89,10 +89,10 @@ class RegionsController extends CroogoAppController {
 		if (!empty($this->request->data)) {
 			$this->Region->create();
 			if ($this->Region->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Region has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Region has been saved'), 'flash', array('class' => 'success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Region could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Region could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 	}
@@ -108,15 +108,15 @@ class RegionsController extends CroogoAppController {
 		$this->set('title_for_layout', __d('croogo', 'Edit Region'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Region'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Region'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Region->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Region has been saved'), 'default', array('class' => 'success'));
-				return $this->redirect(array('action' => 'index'));
+				$this->Session->setFlash(__d('croogo', 'The Region has been saved'), 'flash', array('class' => 'success'));
+				return $this->Croogo->redirect(array('action' => 'edit', $id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Region could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Region could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -133,11 +133,11 @@ class RegionsController extends CroogoAppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Region'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Region'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->Region->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Region deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Region deleted'), 'flash', array('class' => 'success'));
 			return $this->redirect(array('action' => 'index'));
 		}
 	}

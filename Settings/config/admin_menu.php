@@ -5,7 +5,7 @@ namespace Croogo\Settings\Config;
 use Croogo\Croogo\CroogoNav;
 
 CroogoNav::add('sidebar', 'settings', array(
-	'icon' => array('cog', 'large'),
+	'icon' => 'cog',
 	'title' => __d('croogo', 'Settings'),
 	'url' => array(
 		'prefix' => 'admin',

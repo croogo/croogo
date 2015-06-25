@@ -4,9 +4,9 @@ if (empty($id)) {
 	$id = 'modal';
 }
 if (empty($class)) {
-	$class = 'modal';
+	$class = 'modal hide';
 } else {
-	$class .= ' modal';
+	$class .= ' modal hide';
 }
 ?>
 <div id="<?php echo $id; ?>" class="<?php echo trim($class); ?>">

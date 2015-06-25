@@ -326,6 +326,11 @@ class Node extends NodesAppModel {
 
 		$data = $this->formatData($data, $typeAlias);
 		$event = Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, compact('data', 'typeAlias'));
+
+		if (empty($event->data['data'][$this->alias]['path'])) {
+			$event->data['data'][$this->alias]['path'] = $this->_getNodeRelativePath($event->data['data']);
+		}
+
 		$result = $this->saveAll($event->data['data']);
 		Croogo::dispatchEvent('Model.Node.afterSaveNode', $this, $event->data);
 
@@ -347,10 +352,6 @@ class Node extends NodesAppModel {
 			$data = array($this->alias => $data);
 		} else {
 			$data = $data;
-		}
-
-		if (empty($data[$this->alias]['path'])) {
-			$data[$this->alias]['path'] = $this->_getNodeRelativePath($data);
 		}
 
 		if (!array_key_exists('Role', $data) || empty($data['Role']['Role'])) {

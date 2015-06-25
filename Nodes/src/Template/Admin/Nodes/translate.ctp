@@ -1,5 +1,5 @@
 <?php
-$this->Html->script(array('Nodes.admin'), false);
+$this->Croogo->adminScript('Nodes.admin');
 if (Configure::read('Writing.wysiwyg')) {
 	$this->Html->scriptBlock($tinymce->fileBrowserCallBack(), array('inline' => false));
 	$this->Html->scriptBlock($tinymce->init('NodeBody'), array('inline' => false));

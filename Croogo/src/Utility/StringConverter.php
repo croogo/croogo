@@ -91,10 +91,25 @@ class StringConverter {
 /**
  * Converts strings like controller:abc/action:xyz/ to arrays
  *
+ * Options:
+ * - `useCache`: Whether or not use cache results. Default is `true`
+ *
  * @param string|array $link link
+ * @param array $options Options array
  * @return array
  */
-	public function linkStringToArray($link) {
+	public function linkStringToArray($link, $options = array()) {
+		static $cached = array();
+		$options = array_merge(array(
+			'useCache' => true,
+		), $options);
+		$useCache = $options['useCache'];
+
+		$hash = md5($link);
+		if (isset($cached[$hash])) {
+			return $cached[$hash];
+		}
+
 		if (is_array($link)) {
 			$link = key($link);
 		}
@@ -126,6 +141,7 @@ class StringConverter {
 			$linkArr['?'] = $query;
 		}
 
+		$cached[$hash] = $linkArr;
 		return $linkArr;
 	}
 

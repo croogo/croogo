@@ -26,9 +26,8 @@ use Cake\Core\Configure;
 
 			<header class="navbar navbar-inverse navbar-fixed-top">
 				<div class="navbar-inner">
-					<div class="container-fluid">
-						<?php
-						echo $this->Html->link(
+					<div class="<?php echo $this->Layout->cssClass('container'); ?>">
+						<?php echo $this->Html->link(
 							__d('croogo', 'Back to') . ' ' . Configure::read('Site.title'),
 							'/',
 							array('class' => 'brand')
@@ -39,8 +38,8 @@ use Cake\Core\Configure;
 			</header>
 
 			<div id="push"></div>
-			<div id="content-container" class="container-fluid">
-				<div class="row-fluid">
+			<div id="content-container" class="<?php echo $this->Layout->cssClass('container'); ?>">
+				<div class="<?php echo $this->Layout->cssClass('row'); ?>">
 					<div id="admin-login">
 					<?php
 					echo $this->Flash->render('auth');

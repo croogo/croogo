@@ -4,6 +4,8 @@ namespace Croogo\Croogo\View\Helper;
 use Cake\View\Helper\FormHelper;
 use Cake\Utility\Inflector;
 use Cake\Utility\Hash;
+use Cake\View\View;
+use Croogo\Extensions\CroogoTheme;
 
 /**
  * Croogo Form Helper
@@ -17,9 +19,39 @@ class CroogoFormHelper extends FormHelper {
 		'Url'
 	];
 
+/**
+ * Constructor
+ */
+	public function __construct(View $View, $settings = array()) {
+		if (isset($View->viewVars['themeSettings'])) {
+			$themeSettings = $View->viewVars['themeSettings'];
+			$settings = Hash::merge(array(
+				'iconDefaults' => $themeSettings['iconDefaults'],
+				'icons' => $themeSettings['icons'],
+			), $settings);
+		} else {
+			$croogoTheme = new CroogoTheme();
+			$themeData = $croogoTheme->getData();
+			$themeSettings = $themeData['settings'];
+			$settings = Hash::merge($themeSettings, $settings);
+		}
+		parent::__construct($View, $settings);
+	}
+
+/**
+ * Generate bootstrap specific options
+ *
+ * @return array Options array
+ */
 	protected function _bootstrapGenerate($title, $options) {
 		if (isset($options['button'])) {
-			$options['class'] .= $options['button'] != 'default' ? ' btn-' . $options['button'] : '';
+			$class = isset($options['class']) ? $options['class'] : null;
+			if ($options['button'] === 'default') {
+				$options['class'] = 'btn btn-default';
+			} else {
+				$options['class'] = 'btn btn-' . $options['button'];
+			}
+			$options['class'] .= $class ? ' ' . $class : null;
 			unset($options['button']);
 		}
 		if (isset($options['icon'])) {
@@ -104,6 +136,88 @@ class CroogoFormHelper extends FormHelper {
 	}
 
 /**
+ * Generate div options for input
+ *
+ * @param array $options Options list
+ * @return array
+ */
+	protected function _divOptions($options) {
+		$divOptions = parent::_divOptions($options);
+		$divOptions = $this->_divOptionsAddon($options, $divOptions);
+		return $divOptions;
+	}
+
+/**
+ * Generate addon specific options
+ *
+ * @param array $options Options list
+ * @return array
+ */
+	protected function _divOptionsAddon($options, $divOptions) {
+		if (isset($this->_addon) && isset($divOptions['class'])) {
+			$divOptions['class'] .= ' ' . $this->_addon;
+			unset($this->_addon);
+		}
+		return $divOptions;
+	}
+
+/**
+ * Generate input options array
+ *
+ * @param array $options Options list
+ * @return array
+ */
+	protected function _parseOptions($options) {
+		$options = parent::_parseOptions($options);
+		$options = $this->_parseOptionsAddon($options);
+
+		if (isset($options['class'])) {
+			$formInput = $this->_View->Layout->cssClass('formInput');
+			$isMultipleCheckbox = isset($options['multiple']) &&
+				$options['multiple'] === 'checkbox';
+			$isRadioOrCheckbox = isset($options['type']) &&
+				in_array($options['type'], array('checkbox', 'radio'));
+
+			if ($isMultipleCheckbox || $isRadioOrCheckbox) {
+				$options['class'] = str_replace($formInput, '', $options['class']);
+			}
+		}
+
+		return $options;
+	}
+
+/**
+ * Generate addon specific input options array
+ *
+ * @param array $options Options list
+ * @return array
+ */
+	protected function _parseOptionsAddon($options) {
+		if (isset($options['append'])) {
+			$this->_addon = 'input-append';
+		}
+		if (isset($options['prepend'])) {
+			$this->_addon = 'input-prepend';
+		}
+
+		if (isset($this->_addon)) {
+			$options['class'] = $this->_View->Layout->cssClass('columnLeft');
+			if (isset($options['append'])) {
+				$options['between'] = '<div class="addon">';
+				$options['after'] = $options['addon'] . '</div>';
+			}
+			if (isset($options['prepend'])) {
+				$options['between'] = '<div class="addon">' . $options['addon'];
+				$options['after'] = '</div>';
+			}
+		}
+
+		unset($options['append'], $options['prepend'], $options['addon']);
+
+		return $options;
+	}
+
+/**
  * Normalize field name
  *
  * @return array Map of normalized field names and corresponding list of roleIds
@@ -146,6 +260,17 @@ class CroogoFormHelper extends FormHelper {
 			$this->_fieldAccess = $this->_setupFieldAccess($options['fieldAccess']);
 			$this->_currentRoleId = $this->_View->Layout->getRoleId();
 			unset($options['fieldAcess']);
+		}
+		if (!empty($this->settings['inputDefaults'])) {
+			$options = Hash::merge(array(
+				'inputDefaults' => $this->settings['inputDefaults'],
+			), $options);
+		}
+		if (
+			empty($options['inputDefaults']['class']) &&
+			isset($this->_View->viewVars['themeSettings']['css']['formInput'])
+		) {
+			$options['inputDefaults']['class'] = $this->_View->viewVars['themeSettings']['css']['formInput'];
 		}
 		return parent::create($model, $options);
 	}
@@ -267,10 +392,16 @@ class CroogoFormHelper extends FormHelper {
 		$label = isset($options['label']) ? $options['label'] : Inflector::humanize($field);
 
 		$default = isset($autocomplete['default']) ? $autocomplete['default'] : array_shift($defaults);
+		$inputDefaults = $this->_View->Form->inputDefaults();
+		$class = null;
+		if (!empty($inputDefaults['class'])) {
+			$class = $inputDefaults['class'];
+		}
+		$class = $options['class'] ? $options['class'] : $class;
 		$autocomplete = Hash::merge($autocomplete, array(
 			'type' => $options['type'],
 			'label' => $label,
-			'class' => trim($options['class'] . ' typeahead-autocomplete'),
+			'class' => trim($class . ' typeahead-autocomplete'),
 			'default' => $default,
 			'autocomplete' => 'off',
 		));
@@ -281,6 +412,7 @@ class CroogoFormHelper extends FormHelper {
 
 	public function button($title, array $options = []) {
 		$defaults = array('class' => 'btn');
+
 		$options = array_merge($defaults, $options);
 
 		list($title, $options) = $this->_bootstrapGenerate($title, $options);

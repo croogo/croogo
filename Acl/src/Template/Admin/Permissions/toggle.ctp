@@ -4,17 +4,18 @@ use Cake\Core\Configure;
 
 if ($success == 1) {
 	if ($permitted == 1) {
-		echo $this->Html->tag('i', null, array(
-			'class' => 'permission-toggle icon-ok green',
+		echo $this->Html->icon($_icons['check-mark'], array(
+			'class' => 'permission-toggle green',
 			'data-aco_id' => $acoId,
 			'data-aro_id' => $aroId
 		));
 	} else {
-		echo $this->Html->tag('i', null, array(
-			'class' => 'permission-toggle icon-remove red',
+		echo $this->Html->icon($_icons['x-mark'], array(
+			'class' => 'permission-toggle red',
 			'data-aco_id' => $acoId,
 			'data-aro_id' => $aroId
 		));
+
 	}
 } else {
 	echo __d('croogo', 'error');

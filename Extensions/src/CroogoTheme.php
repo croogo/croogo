@@ -6,6 +6,7 @@ use Cake\Core\App;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 
 /**
  * CroogoTheme class
@@ -24,7 +25,6 @@ class CroogoTheme {
  * Constructor
  */
 	public function __construct() {
-		$this->Setting = TableRegistry::get('Settings.Setting');
 	}
 
 /**
@@ -61,19 +61,24 @@ class CroogoTheme {
 				}
 
 				$themeWebroot = $themeRoot . 'webroot' . DS;
-				if (!is_dir($themeWebroot)) {
+				$themeConfig = $themeRoot . 'Config' . DS;
+				if (!is_dir($themeWebroot) && !is_dir($themeConfig)) {
 					continue;
 				}
 
-				$themeJson = $themeWebroot . 'theme.json';
-				$this->folder->path = $themeWebroot;
-				$themeFolderContent = $this->folder->read();
-				if (in_array('theme.json', $themeFolderContent['1'])) {
-					$contents = file_get_contents($themeJson);
-					$json = json_decode($contents, true);
-					$intersect = array_intersect_key($expected, $json);
-					if ($json !== null && $intersect == $expected) {
-						$themes[$themeFolder] = $themeFolder;
+				$paths = array($themeConfig, $themeWebroot);
+				foreach ($paths as $path) {
+					$this->folder->path = $path;
+					$themeFolderContent = $this->folder->read();
+					if (in_array('theme.json', $themeFolderContent['1'])) {
+						$themeJson = $path . 'theme.json';
+						$contents = file_get_contents($themeJson);
+						$json = json_decode($contents, true);
+						$intersect = array_intersect_key($expected, $json);
+						if ($json !== null && $intersect == $expected) {
+							$themes[$themeFolder] = $themeFolder;
+						}
+						continue;
 					}
 				}
 			}
@@ -92,6 +97,71 @@ class CroogoTheme {
 			'name' => $alias,
 			'regions' => array(),
 			'screenshot' => null,
+			'settings' => array(
+				'css' => array(
+					'container' => 'container-fluid',
+					'row' => 'row-fluid',
+					'columnFull' => 'span12',
+					'columnLeft' => 'span8',
+					'columnRight' => 'span4',
+					'formInput' => 'input-block-level',
+					'tableClass' => 'table',
+					'imageClass' => '',
+					'thumbnailClass' => 'img-polaroid',
+				),
+				'iconDefaults' => array(
+					'classDefault' => '',
+					'largeIconClass' => 'icon-large',
+					'smallIconClass' => '',
+					'classPrefix' => 'icon-',
+				),
+				'icons' => array(
+					'check-mark' => 'ok',
+					'x-mark' => 'remove',
+					'power-off' => 'off',
+					'power-on' => 'bolt',
+					'create' => 'plus',
+					'read' => 'eye-open',
+					'update' => 'pencil',
+					'delete' => 'trash',
+					'inspect' => 'zoom-in',
+					'move-up' => 'chevron-up',
+					'move-down' => 'chevron-down',
+					'attach' => 'paper-clip',
+					'info-sign' => 'info-sign',
+					'question-sign' => 'question-sign',
+					'warning-sign' => 'warning-sign',
+					'success-sign' => 'ok-sign',
+					'error-sign' => 'exclamation-sign',
+					'copy' => 'copy',
+					'home' => 'home',
+					'refresh' => 'refresh',
+					'search' => 'search',
+					'link' => 'link',
+					'comment' => 'comment-alt',
+				),
+				'prefixes' => array(
+					'' => array(
+						'helpers' => array(
+							'Html' => array(),
+							'Form' => array(),
+						),
+					),
+					'admin' => array(
+						'helpers' => array(
+							'Html' => array(
+								'className' => 'Croogo.CroogoHtml',
+							),
+							'Form' => array(
+								'className' => 'Croogo.CroogoForm',
+							),
+							'Paginator' => array(
+								'className' => 'Croogo.CroogoPaginator',
+							),
+						),
+					),
+				),
+			),
 		);
 		$default = Plugin::path('Croogo/Croogo') . 'webroot' . DS . 'theme.json';
 
@@ -101,9 +171,14 @@ class CroogoTheme {
 			$viewPaths = App::path('views');
 			foreach ($viewPaths as $viewPath) {
 				$themeRoot = Plugin::path($alias);
-				$themeJson = $themeRoot . 'webroot' . DS . 'theme.json';
+				$themeJson = $themeRoot . 'config' . DS . 'theme.json';
 				if (file_exists($themeJson)) {
 					$manifestFile = $themeJson;
+				} else {
+					$themeJson = $themeRoot . 'webroot' . DS . 'theme.json';
+					if (file_exists($themeJson)) {
+						$manifestFile = $themeJson;
+					}
 				}
 
 				if (file_exists($themeRoot . 'composer.json')) {
@@ -123,7 +198,7 @@ class CroogoTheme {
 		if (isset($manifestFile)) {
 			$json = json_decode(file_get_contents($manifestFile), true);
 			if ($json) {
-				$themeData = array_merge($themeData, $json);
+				$themeData = Hash::merge($themeData, $json);
 			}
 		}
 
@@ -132,7 +207,7 @@ class CroogoTheme {
 			if ($json) {
 				$json['vendor'] = $json['name'];
 				unset($json['name']);
-				$themeData = array_merge($themeData, $json);
+				$themeData = Hash::merge($themeData, $json);
 			}
 		}
 
@@ -160,7 +235,8 @@ class CroogoTheme {
 			$alias = '';
 		}
 		Cache::delete('file_map', '_cake_core_');
-		return $this->Setting->write('Site.theme', $alias);
+		$Setting = ClassRegistry::init('Settings.Setting');
+		return $Setting->write('Site.theme', $alias);
 	}
 
 /**

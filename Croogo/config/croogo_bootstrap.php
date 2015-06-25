@@ -71,6 +71,15 @@ I18n::config('croogo', function ($domain, $locale) {
 });
 
 /**
+ * Timezone
+ */
+$timezone = Configure::read('Site.timezone');
+if (!$timezone) {
+	$timezone = 'UTC';
+}
+date_default_timezone_set($timezone);
+
+/**
  * Assets
  */
 if (Configure::check('Site.asset_timestamp')) {

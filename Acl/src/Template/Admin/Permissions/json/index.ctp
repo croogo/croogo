@@ -4,19 +4,19 @@ if (isset($this->request->query['urls'])) {
 		$aco[key($aco)]['url'] = array(
 			'up' => $this->CroogoHtml->link('',
 				array('controller' => 'Actions', 'action' => 'moveup', $acoId, 'up'),
-				array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'))
+				array('icon' => $_icons['move-up'], 'tooltip' => __d('croogo', 'Move up'))
 			),
 			'down' => $this->CroogoHtml->link('',
 				array('controller' => 'Actions', 'action' => 'movedown', $acoId, 'down'),
-				array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'))
+				array('icon' => $_icons['move-down'], 'tooltip' => __d('croogo', 'Move down'))
 			),
 			'edit' => $this->CroogoHtml->link('',
 				array('controller' => 'Actions', 'action' => 'edit', $acoId),
-				array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
+				array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
 			),
 			'del' => $this->Croogo->adminRowAction('',
 				array('controller' => 'Actions', 'action' => 'delete', $acoId),
-				array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
+				array('icon' => $_icons['delete'], 'tooltip' => __d('croogo', 'Remove this item')),
 				__d('croogo', 'Are you sure?')
 			),
 		);

@@ -71,7 +71,7 @@ class InstallController extends Controller {
 				$generator->generate();
 			} catch (Exception $e) {
 				$this->log($e->getMessage());
-				$this->Session->setFlash('Asset generation failed. Please verify that dependencies exists and readable.', 'default', array('class' => 'error'));
+				$this->Session->setFlash('Asset generation failed. Please verify that dependencies exists and readable.', 'flash', array('class' => 'error'));
 			}
 		}
 	}
@@ -125,7 +125,7 @@ class InstallController extends Controller {
 				'Install' => $this->request->data,
 			));
 			if ($result !== true) {
-				$this->Session->setFlash($result, 'default', array('class' => 'error'));
+				$this->Session->setFlash($result, 'flash', array('class' => 'error'));
 			} else {
 				return $this->redirect(array('action' => 'data'));
 			}
@@ -179,7 +179,7 @@ class InstallController extends Controller {
 			$InstallManager = new InstallManager();
 			$result = $InstallManager->createCroogoFile();
 			if ($result !== true) {
-				return $this->Session->setFlash($result, 'default', array('class' => 'error'));
+				return $this->Session->setFlash($result, 'flash', array('class' => 'error'));
 			}
 
 			return $this->redirect(array('action' => 'adminuser'));
@@ -229,7 +229,7 @@ class InstallController extends Controller {
 		} else {
 			$this->set('title_for_layout', __d('croogo', 'Installation failed'));
 			$msg = __d('croogo', 'Installation failed: Unable to create settings file');
-			$this->Session->setFlash($msg, 'default', array('class' => 'error'));
+			$this->Session->setFlash($msg, 'flash', array('class' => 'error'));
 		}
 
 		$urlBlogAdd = Router::url(array(

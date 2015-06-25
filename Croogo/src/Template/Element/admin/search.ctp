@@ -10,7 +10,7 @@ if (!isset($className)) {
 }
 if (!empty($searchFields)):
 ?>
-<div class="<?php echo $className; ?> filter row-fluid">
+<div class="<?php echo $className; ?> filter">
 <?php
 	echo $this->CroogoForm->create($modelClass, [
 		'class' => 'form-inline',
@@ -37,6 +37,12 @@ if (!empty($searchFields)):
 		if (!empty($fieldOptions)) {
 			$options = Hash::merge($fieldOptions, $options);
 		}
+		$label = $field;
+		if (substr($label, -3) === '_id') {
+			$label = substr($label, 0, -3);
+		}
+		$label = __(Inflector::humanize(Inflector::underscore($label)));
+		$options['label'] = __d('croogo', $label);
 		$this->CroogoForm->unlockField($field);
 		echo $this->CroogoForm->input($field, $options);
 	}

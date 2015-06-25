@@ -5,19 +5,16 @@ $this->Croogo->adminScript('Blocks.admin');
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Blocks'), array('action' => 'index'));
 
-echo $this->Form->create('Block',
+$this->append('form-start', $this->Form->create('Block',
 	array('url' => array('controller' => 'blocks', 'action' => 'process')),
 	array('class' => 'form-inline')
-);
+));
 
 $chooser = isset($this->request->query['chooser']);
-
-?>
-<table class="table table-striped">
-<?php
+$this->start('table-heading');
 	$tableHeaders = $this->Html->tableHeaders(array(
 		$this->Form->checkbox('checkAll'),
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
@@ -27,32 +24,31 @@ $chooser = isset($this->request->query['chooser']);
 		$this->Paginator->sort('status', __d('croogo', 'Status')),
 		__d('croogo', 'Actions'),
 	));
-?>
-	<thead>
-		<?php echo $tableHeaders; ?>
-	</thead>
-<?php
+	echo $this->Html->tag('thead',$tableHeaders);
+$this->end();
+
+$this->append('table-body');
 	$rows = array();
 	foreach ($blocks as $block) {
 		$actions = array();
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'blocks', 'action' => 'moveup', $block['Block']['id']),
-			array('icon' => 'arrow-up', 'tooltip' => __d('croogo', 'Move up'),
+			array('icon' => $_icons['move-up'], 'tooltip' => __d('croogo', 'Move up'),
 		));
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'blocks', 'action' => 'movedown', $block['Block']['id']),
-			array('icon' => 'arrow-down', 'tooltip' => __d('croogo', 'Move down'),
+			array('icon' => $_icons['move-down'], 'tooltip' => __d('croogo', 'Move down'),
 			)
 		);
 		$actions[] = $this->Croogo->adminRowActions($block['Block']['id']);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id']),
-			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Block' . $block['Block']['id'] . 'Id',
 			array(
-				'icon' => 'copy',
+				'icon' => $_icons['copy'],
 				'tooltip' => __d('croogo', 'Create a copy'),
 				'rowAction' => 'copy',
 			),
@@ -60,7 +56,7 @@ $chooser = isset($this->request->query['chooser']);
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Block' . $block['Block']['id'] . 'Id',
-			array('icon' => 'trash', 'class' => 'delete', 'tooltip' => __d('croogo', 'Remove this item'), 'rowAction' => 'delete'),
+			array('icon' => $_icons['delete'], 'class' => 'delete', 'tooltip' => __d('croogo', 'Remove this item'), 'rowAction' => 'delete'),
 			__d('croogo', 'Are you sure?')
 		);
 
@@ -108,26 +104,26 @@ $chooser = isset($this->request->query['chooser']);
 	echo $this->Html->tableCells($rows);
 ?>
 </table>
-
-<?php if (!$chooser): ?>
-<div class="row-fluid">
-	<div id="bulk-action" class="control-group">
-		<?php
-			echo $this->Form->input('Block.action', array(
-				'label' => false,
-				'div' => 'input inline',
-				'options' => array(
-					'publish' => __d('croogo', 'Publish'),
-					'unpublish' => __d('croogo', 'Unpublish'),
-					'delete' => __d('croogo', 'Delete'),
-					'copy' => __d('croogo', 'Copy'),
-				),
-				'empty' => true,
-			));
-		?>
-		<div class="controls">
-			<?php echo $this->Form->end(__d('croogo', 'Submit')); ?>
-		</div>
-	</div>
-</div>
-<?php endif; ?>
+<?php
+$this->end();
+if (!$chooser):
+	$this->start('bulk-action');
+	echo $this->Form->input('Block.action', array(
+		'label' => false,
+		'div' => 'input inline',
+		'options' => array(
+			'publish' => __d('croogo', 'Publish'),
+			'unpublish' => __d('croogo', 'Unpublish'),
+			'delete' => __d('croogo', 'Delete'),
+			'copy' => __d('croogo', 'Copy'),
+		),
+		'empty' => true,
+	));
+	$button = $this->Form->button(__d('croogo', 'Submit'), array(
+		'type' => 'submit',
+		'value' => 'submit'
+	));
+	echo $this->Html->div('controls', $button);
+endif;
+$this->end();
+$this->append('form-end', $this->Form->end());

@@ -127,7 +127,7 @@ class AttachmentsController extends FileManagerAppController {
 			$this->Attachment->create();
 			if ($this->Attachment->save($this->request->data)) {
 
-				$this->Session->setFlash(__d('croogo', 'The Attachment has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Attachment has been saved'), 'flash', array('class' => 'success'));
 
 				if (isset($this->request->params['named']['editor'])) {
 					return $this->redirect(array('action' => 'browse'));
@@ -135,7 +135,7 @@ class AttachmentsController extends FileManagerAppController {
 					return $this->redirect(array('action' => 'index'));
 				}
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Attachment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Attachment could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 	}
@@ -155,15 +155,15 @@ class AttachmentsController extends FileManagerAppController {
 		}
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Attachment'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Attachment'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
 			if ($this->Attachment->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Attachment has been saved'), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'The Attachment has been saved'), 'flash', array('class' => 'success'));
 				return $this->Croogo->redirect(array('action' => 'edit', $this->Attachment->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Attachment could not be saved. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'The Attachment could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 		if (empty($this->request->data)) {
@@ -180,15 +180,15 @@ class AttachmentsController extends FileManagerAppController {
  */
 	public function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Attachment'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Attachment'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 
 		if ($this->Attachment->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Attachment deleted'), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Attachment deleted'), 'flash', array('class' => 'success'));
 			return $this->redirect(array('action' => 'index'));
 		} else {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Attachment'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid id for Attachment'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 	}

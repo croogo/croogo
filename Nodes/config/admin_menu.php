@@ -5,7 +5,7 @@ namespace Croogo\Nodes\Config;
 use Croogo\Croogo\CroogoNav;
 
 CroogoNav::add('sidebar', 'content', array(
-	'icon' => array('edit', 'large'),
+	'icon' => 'edit',
 	'title' => __d('croogo', 'Content'),
 	'url' => array(
 		'prefix' => 'admin',

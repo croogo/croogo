@@ -10,9 +10,17 @@
 	"menus" : [
 		"main",
 		"footer"
-		],
+	],
 
 	"regions" : [
 		"right"
-		]
+	],
+
+	"settings" : {
+		"css" : {
+			"container" : "container-fluid",
+			"row" : "row-fluid",
+			"tableClass" : "table table-stripped"
+		}
+	}
 }

@@ -241,9 +241,9 @@ class SettingData {
 		array(
 			'id' => '29',
 			'key' => 'Site.timezone',
-			'value' => '0',
+			'value' => 'UTC',
 			'title' => '',
-			'description' => 'zero (0) for GMT',
+			'description' => 'Provide a valid timezone identifier as specified in https://php.net/manual/en/timezones.php',
 			'input_type' => '',
 			'editable' => '1',
 			'weight' => '4',

@@ -8,39 +8,35 @@ $this->Croogo->adminscript('Croogo/Menus.admin');
 $this->extend('Croogo/Croogo./Common/admin_index');
 
 $this->CroogoHtml
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Menus'), ['controller' => 'Menus', 'action' => 'index'])
 	->addCrumb(__d('croogo', $menu->title), array(
 		'action' => 'index',
 		'?' => array('menu_id' => $menu->id)));
-?>
 
-<?php $this->start('actions'); ?>
-<?php
+$this->append('actions');
+
 	echo $this->Croogo->adminAction(
 		__d('croogo', 'New link'),
 		array('action' => 'add', $menu->id),
 		array('button' => 'success')
 	);
-?>
-<?php $this->end('actions'); ?>
+$this->end();
 
-<?php
 	if (isset($this->request->params['named'])) {
 		foreach ($this->request->params['named'] as $nn => $nv) {
 			$this->Paginator->options['url'][] = $nn . ':' . $nv;
 		}
 	}
 
-	echo $this->CroogoForm->create(false, array(
+	$this->append('form-start', $this->Form->create('Link', array(
 		'url' => array(
 			'action' => 'process',
 			$menu->id,
 		),
-	));
-?>
-<table class="table table-striped">
-<?php
+	)));
+
+$this->start('table-heading');
 	$tableHeaders = $this->CroogoHtml->tableHeaders(array(
 		$this->CroogoForm->checkbox('checkAll'),
 		__d('croogo', 'Id'),
@@ -48,37 +44,37 @@ $this->CroogoHtml
 		__d('croogo', 'Status'),
 		__d('croogo', 'Actions'),
 	));
-?>
-	<thead>
-		<?php echo $tableHeaders; ?>
-	</thead>
-	<?php
+	echo $this->Html->tag('thead', $tableHeaders);
+$this->end();
+
+$this->append('table-body');
+
 	$rows = array();
 	foreach ($linksTree as $linkId => $linkTitle):
 		$actions = array();
 		$actions[] = $this->Croogo->adminRowAction('', array(
 			'action' => 'moveUp', $linkId
 			), array(
-			'icon' => 'chevron-up',
+			'icon' => $_icons['move-up'],
 			'tooltip' => __d('croogo', 'Move up'),
 		));
 		$actions[] = $this->Croogo->adminRowAction('', array(
 			'action' => 'moveDown', $linkId,
 			), array(
-			'icon' => 'chevron-down',
+			'icon' => $_icons['move-down'],
 			'tooltip' => __d('croogo', 'Move down'),
 		));
 		$actions[] = $this->Croogo->adminRowActions($linkId);
 		$actions[] = $this->Croogo->adminRowAction('', array(
 			'action' => 'edit', $linkId,
 			), array(
-			'icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'),
+			'icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'),
 		));
 
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Link' . $linkId . 'Id',
 			array(
-				'icon' => 'copy',
+				'icon' => $_icons['copy'],
 				'tooltip' => __d('croogo', 'Create a copy'),
 				'rowAction' => 'copy',
 			),
@@ -87,7 +83,7 @@ $this->CroogoHtml
 
 		$actions[] = $this->Croogo->adminRowAction('', '#Link' . $linkId . 'Id',
 			array(
-				'icon' => 'trash',
+				'icon' => $_icons['delete'],
 				'class' => 'delete',
 				'tooltip' => __d('croogo', 'Delete this item'),
 				'rowAction' => 'delete',
@@ -115,31 +111,31 @@ $this->CroogoHtml
 	endforeach;
 
 	echo $this->CroogoHtml->tableCells($rows);
-	?>
 
-</table>
-<div class="row-fluid">
-	<div id="bulk-action" class="control-group">
-		<?php
-			echo $this->CroogoForm->input('Link.action', array(
-				'div' => 'input inline',
-				'label' => false,
-				'options' => array(
-					'publish' => __d('croogo', 'Publish'),
-					'unpublish' => __d('croogo', 'Unpublish'),
-					'delete' => __d('croogo', 'Delete'),
-					'copy' => array(
-						'value' => 'copy',
-						'name' => __d('croogo', 'Copy'),
-						'hidden' => true,
-					),
-				),
-				'empty' => true,
-			));
-		?>
-		<div class="controls">
-			<?php echo $this->CroogoForm->subnmit(__d('croogo', 'Submit')); ?>
-		</div>
-	</div>
-</div>
-<?php echo $this->CroogoForm->end(); ?>
+$this->end();
+
+$this->start('bulk-action');
+	echo $this->CroogoForm->input('Link.action', array(
+		'div' => 'input inline',
+		'label' => false,
+		'options' => array(
+			'publish' => __d('croogo', 'Publish'),
+			'unpublish' => __d('croogo', 'Unpublish'),
+			'delete' => __d('croogo', 'Delete'),
+			'copy' => array(
+				'value' => 'copy',
+				'name' => __d('croogo', 'Copy'),
+				'hidden' => true,
+			),
+		),
+		'empty' => true,
+	));
+	$button = $this->CroogoForm->button(__d('croogo', 'Submit'), array(
+		'type' => 'submit',
+		'value' => 'submit',
+	));
+	echo $this->CroogoHtml->div('controls', $button);
+$this->end();
+
+$this->append('form-end',$this->CroogoForm->end());
+?>

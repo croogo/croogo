@@ -30,7 +30,7 @@
 		}
 
 		// cakephp version
-		$minCakeVersion = '2.5.0';
+		$minCakeVersion = '2.5.4';
 		$cakeVersion = Configure::version();
 		$operator = '>=';
 		if (version_compare($cakeVersion, $minCakeVersion, $operator)) {

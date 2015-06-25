@@ -40,15 +40,10 @@ echo $this->Form->create(false, array(
 	<?php endif; ?>
 
 	<?php
-		$this->Form->inputDefaults(array(
-			'label' => false,
-			'class' => 'span10',
-		));
 		echo $this->Form->input('datasource', array(
 			'placeholder' => __d('croogo', 'Database'),
 			'default' => 'Database/Mysql',
 			'empty' => false,
-			'class' => false,
 			'options' => array(
 				'Database/Mysql' => 'mysql',
 				'Database/Sqlite' => 'sqlite',
@@ -62,6 +57,7 @@ echo $this->Form->create(false, array(
 			'tooltip' => __d('croogo', 'Database hostname or IP Address'),
 			'before' => '<span class="add-on"><i class="icon-home"></i></span>',
 			'div' => 'input input-prepend',
+			'label' => false,
 		));
 		echo $this->Form->input('login', array(
 			'placeholder' => __d('croogo', 'Login'),
@@ -69,12 +65,14 @@ echo $this->Form->create(false, array(
 			'tooltip' => __d('croogo', 'Database login/username'),
 			'before' => '<span class="add-on"><i class="icon-user"></i></span>',
 			'div' => 'input input-prepend',
+			'label' => false,
 		));
 		echo $this->Form->input('password', array(
 			'placeholder' => __d('croogo', 'Password'),
 			'tooltip' => __d('croogo', 'Database password'),
 			'before' => '<span class="add-on"><i class="icon-key"></i></span>',
 			'div' => 'input input-prepend',
+			'label' => false,
 		));
 		echo $this->Form->input('database', array(
 			'placeholder' => __d('croogo', 'Name'),
@@ -82,18 +80,21 @@ echo $this->Form->create(false, array(
 			'tooltip' => __d('croogo', 'Database name'),
 			'before' => '<span class="add-on"><i class="icon-briefcase"></i></span>',
 			'div' => 'input input-prepend',
+			'label' => false,
 		));
 		echo $this->Form->input('prefix', array(
 			'placeholder' => __d('croogo', 'Prefix'),
 			'tooltip' => __d('croogo', 'Table prefix (leave blank if unknown)'),
 			'before' => '<span class="add-on"><i class="icon-minus"></i></span>',
 			'div' => 'input input-prepend',
+			'label' => false,
 		));
 		echo $this->Form->input('port', array(
 			'placeholder' => __d('croogo', 'Port'),
 			'tooltip' => __d('croogo', 'Database port (leave blank if unknown)'),
 			'before' => '<span class="add-on"><i class="icon-asterisk"></i></span>',
 			'div' => 'input input-prepend',
+			'label' => false,
 		));
 	?>
 </div>

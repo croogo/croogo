@@ -92,7 +92,6 @@ class NodesController extends NodesAppController {
 		if (isset($this->request->params['type'])) {
 			$this->request->params['named']['type'] = $this->request->params['type'];
 		}
-//		$this->Security->config('unlockedActions', 'admin_toggle');
 	}
 
 /**
@@ -202,7 +201,7 @@ class NodesController extends NodesAppController {
 			),
 		));
 		if (!isset($term['Term']['id'])) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Term.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid Term.'), 'flash', array('class' => 'error'));
 			return $this->redirect('/');
 		}
 
@@ -245,7 +244,7 @@ class NodesController extends NodesAppController {
 				),
 			));
 			if (!isset($type['Type']['id'])) {
-				$this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'flash', array('class' => 'error'));
 				return $this->redirect('/');
 			}
 			if (isset($type['Params']['nodes_per_page']) && empty($this->request->params['named']['limit'])) {
@@ -375,7 +374,7 @@ class NodesController extends NodesAppController {
 		if ($typeAlias) {
 			$type = $Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
 			if (!isset($type['Type']['id'])) {
-				$this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'flash', array('class' => 'error'));
 				return $this->redirect('/');
 			}
 			if (isset($type['Params']['nodes_per_page'])) {
@@ -417,7 +416,7 @@ class NodesController extends NodesAppController {
 				'roleId' => $this->Croogo->roleId(),
 			))->first();
 		} elseif ($id == null) {
-			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'flash', array('class' => 'error'));
 			return $this->redirect('/');
 		} else {
 			$node = $Node->find('viewById', array(

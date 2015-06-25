@@ -14,6 +14,7 @@ use Cake\Utility\Hash;
 
 use Croogo\Croogo\Croogo;
 use Croogo\Croogo\PropertyHookTrait;
+use Croogo\Extensions\CroogoTheme;
 
 /**
  * Croogo App Controller
@@ -175,6 +176,9 @@ class CroogoAppController extends AppController {
 			$this->helpers[] = 'Croogo/Croogo.CroogoForm';
 			$this->helpers[] = 'Croogo/Croogo.CroogoPaginator';
 		}
+		Croogo::applyHookProperties('Hook.controller_properties', $this);
+		$this->_setupComponents();
+		$this->_setupTheme();
 	}
 
 /**
@@ -239,8 +243,43 @@ class CroogoAppController extends AppController {
 		return $component;
 	}
 
+/**
+ * Setup themes
+ *
+ * @return void
+ */
+	protected function _setupTheme() {
+		$prefix = isset($this->request->params['prefix']) ? $this->request->params['prefix'] : '';
+		if ($prefix === 'admin') {
+			$theme = Configure::read('Site.admin_theme');
+			if ($theme) {
+				App::build(array(
+					'View/Helper' => array(App::themePath($theme) . 'Helper' . DS),
+				));
+			}
+			$this->layout = 'admin';
+		} else {
+			$theme = Configure::read('Site.theme');
+		}
+		$this->theme = $theme;
 
-	/**
+		$croogoTheme = new CroogoTheme();
+		$data = $croogoTheme->getData($theme);
+		$settings = $data['settings'];
+		$this->set('themeSettings', $settings);
+
+		if (empty($settings['prefixes']['admin']['helpers']['Croogo/Croogo.Croogo'])) {
+			$this->helpers[] = 'Croogo/Croogo.Croogo';
+		}
+
+		if (isset($settings['prefixes'][$prefix])) {
+			foreach ($settings['prefixes'][$prefix]['helpers'] as $helper => $settings) {
+				$this->helpers[$helper] = $settings;
+			}
+		}
+	}
+
+/**
  * Allows extending action from component
  *
  * @throws MissingActionException
@@ -293,12 +332,6 @@ class CroogoAppController extends AppController {
 
 		if ($this->request->is('ajax')) {
 			$this->layout = 'ajax';
-		}
-
-		if (Configure::read('Site.theme') && $this->request->param('prefix') !== 'admin') {
-			$this->theme = Configure::read('Site.theme');
-		} elseif (Configure::read('Site.admin_theme') && $this->request->param('prefix') === 'admin') {
-			$this->theme = Configure::read('Site.admin_theme');
 		}
 
 		if (

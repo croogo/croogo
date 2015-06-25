@@ -92,7 +92,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 			try {
 				$Installer->extractPlugin($file['tmp_name']);
 			} catch (CakeException $e) {
-				$this->Session->setFlash($e->getMessage(), 'default', array('class' => 'error'));
+				$this->Session->setFlash($e->getMessage(), 'flash', array('class' => 'error'));
 				return $this->redirect(array('action' => 'add'));
 			}
 			return $this->redirect(array('action' => 'index'));
@@ -107,21 +107,21 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  */
 	public function admin_delete($plugin = null) {
 		if (!$plugin) {
-			$this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if ($this->_CroogoPlugin->isActive($plugin)) {
-			$this->Session->setFlash(__d('croogo', 'You cannot delete a plugin that is currently active.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'You cannot delete a plugin that is currently active.'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 
 		$result = $this->_CroogoPlugin->delete($plugin);
 		if ($result === true) {
-			$this->Session->setFlash(__d('croogo', 'Plugin "%s" deleted successfully.', $plugin), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Plugin "%s" deleted successfully.', $plugin), 'flash', array('class' => 'success'));
 		} elseif (!empty($result[0])) {
-			$this->Session->setFlash($result[0], 'default', array('class' => 'error'));
+			$this->Session->setFlash($result[0], 'flash', array('class' => 'error'));
 		} else {
-			$this->Session->setFlash(__d('croogo', 'Plugin could not be deleted.'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Plugin could not be deleted.'), 'flash', array('class' => 'error'));
 		}
 
 		return $this->redirect(array('action' => 'index'));
@@ -135,32 +135,32 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  */
 	public function admin_toggle($plugin = null) {
 		if (!$plugin) {
-			$this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
 		}
 
 		if ($this->_CroogoPlugin->isActive($plugin)) {
 			$usedBy = $this->_CroogoPlugin->usedBy($plugin);
 			if ($usedBy !== false) {
-				$this->Session->setFlash(__d('croogo', 'Plugin "%s" could not be deactivated since "%s" depends on it.', $plugin, implode(', ', $usedBy)), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Plugin "%s" could not be deactivated since "%s" depends on it.', $plugin, implode(', ', $usedBy)), 'flash', array('class' => 'error'));
 				return $this->redirect(array('action' => 'index'));
 			}
 			$result = $this->_CroogoPlugin->deactivate($plugin);
 			if ($result === true) {
-				$this->Session->setFlash(__d('croogo', 'Plugin "%s" deactivated successfully.', $plugin), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'Plugin "%s" deactivated successfully.', $plugin), 'flash', array('class' => 'success'));
 			} elseif (is_string($result)) {
-				$this->Session->setFlash($result, 'default', array('class' => 'error'));
+				$this->Session->setFlash($result, 'flash', array('class' => 'error'));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'Plugin could not be deactivated. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Plugin could not be deactivated. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		} else {
 			$result = $this->_CroogoPlugin->activate($plugin);
 			if ($result === true) {
-				$this->Session->setFlash(__d('croogo', 'Plugin "%s" activated successfully.', $plugin), 'default', array('class' => 'success'));
+				$this->Session->setFlash(__d('croogo', 'Plugin "%s" activated successfully.', $plugin), 'flash', array('class' => 'success'));
 			} elseif (is_string($result)) {
-				$this->Session->setFlash($result, 'default', array('class' => 'error'));
+				$this->Session->setFlash($result, 'flash', array('class' => 'error'));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'Plugin could not be activated. Please, try again.'), 'default', array('class' => 'error'));
+				$this->Session->setFlash(__d('croogo', 'Plugin could not be activated. Please, try again.'), 'flash', array('class' => 'error'));
 			}
 		}
 		return $this->redirect(array('action' => 'index'));
@@ -173,9 +173,9 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  */
 	public function admin_migrate($plugin = null) {
 		if (!$plugin) {
-			$this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'default', array('class' => 'error'));
+			$this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'flash', array('class' => 'error'));
 		} elseif ($this->_CroogoPlugin->migrate($plugin)) {
-			$this->Session->setFlash(__d('croogo', 'Plugin "%s" migrated successfully.', $plugin), 'default', array('class' => 'success'));
+			$this->Session->setFlash(__d('croogo', 'Plugin "%s" migrated successfully.', $plugin), 'flash', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(
 				__d('croogo', 'Plugin "%s" could not be migrated. Error: %s', $plugin, implode('<br />', $this->_CroogoPlugin->migrationErrors)),
@@ -205,7 +205,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 			$message = $result;
 			$class = 'error';
 		}
-		$this->Session->setFlash($message, 'default', array('class' => $class));
+		$this->Session->setFlash($message, 'flash', array('class' => $class));
 
 		return $this->redirect($this->referer());
 	}
@@ -229,7 +229,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 			$message = $result;
 			$class = 'error';
 		}
-		$this->Session->setFlash($message, 'default', array('class' => $class));
+		$this->Session->setFlash($message, 'flash', array('class' => $class));
 
 		return $this->redirect($this->referer());
 	}

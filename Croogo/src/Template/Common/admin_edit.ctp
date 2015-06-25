@@ -21,62 +21,89 @@ $what = !$entity->isNew() ? __d('croogo', 'Edit') : __d('croogo', 'Add');
 ?>
 </h2>
 
+<?php
+if ($pageHeading = trim($this->fetch('page-heading'))):
+	echo $pageHeading;
+endif;
+?>
+
 <?php if ($actionsBlock = $this->fetch('actions')): ?>
-<div class="row-fluid">
-	<div class="span12 actions">
-		<ul class="nav-buttons">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="actions <?php echo $this->Layout->cssClass('columnFull'); ?>">
+		<div class="btn-group">
 			<?php echo $actionsBlock; ?>
-		</ul>
+		</div>
 	</div>
 </div>
 <?php endif; ?>
 
-<?php if ($contentBlock = $this->fetch('content')): ?>
-	<?php echo $contentBlock; ?>
-<?php else: ?>
-	<?php
-		$tabId = 'tabitem-' . Inflector::slug(strtolower($modelClass), '-');
-		echo $this->CroogoForm->create($entity);
-	?>
-	<div class="row-fluid">
-		<div class="span8">
-			<ul class="nav nav-tabs">
-			<?php
+<?php
+if ($contentBlock = trim($this->fetch('content'))):
+	echo $contentBlock;
+	return;
+endif;
+
+if ($formStart = trim($this->fetch('form-start'))):
+	echo $formStart;
+else:
+	echo $this->Form->create($modelClass);
+	if (isset($this->request->data[$modelClass]['id'])):
+		echo $this->Form->input('id');
+	endif;
+endif;
+
+$tabId = 'tabitem-' . Inflector::slug(strtolower($modelClass), '-');
+
+?>
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnLeft'); ?>">
+
+		<ul class="nav nav-tabs">
+		<?php
+			if ($tabHeading = $this->fetch('tab-heading')):
+				echo $tabHeading;
+			else:
 				echo $this->Croogo->adminTab(__d('croogo', $modelClass), "#$tabId");
 				echo $this->Croogo->adminTabs();
-			?>
-			</ul>
+			endif;
+		?>
+		</ul>
 
-			<?php
-				$content = '';
-				foreach ($editFields as $field => $opts):
-					if (is_string($opts)) {
-						$field = $opts;
-						$opts = array(
-							'class' => 'span10',
-							'label' => false,
-							'tooltip' => ucfirst($field),
-						);
-					} else {
-						$opts = Hash::merge(array('class' => 'span10'), $opts);
-					}
-					$content .= $this->CroogoForm->input($field, $opts);
-				endforeach;
-			?>
-
-			<div class="tab-content">
-			<?php
-				if (!empty($content)):
-					echo $this->CroogoHtml->div('tab-pane', $content, array(
-						'id' => $tabId,
-					));
-				endif;
-				echo $this->Croogo->adminTabs();
-			?>
-			</div>
-		</div>
-		<div class="span4">
 		<?php
+
+		$tabContent = trim($this->fetch('tab-content'));
+		if (!$tabContent):
+			$content = '';
+			foreach ($editFields as $field => $opts):
+				if (is_string($opts)) {
+					$field = $opts;
+					$opts = array(
+						'class' => 'span10',
+						'label' => false,
+						'tooltip' => ucfirst($field),
+					);
+				}
+				$content .= $this->CroogoForm->input($field, $opts);
+			endforeach;
+		endif;
+		?>
+
+		<?php
+		if (empty($tabContent) && !empty($content)):
+			$tabContent = $this->Html->div('tab-pane', $content, array(
+				'id' => $tabId,
+			));
+			$tabContent .= $this->Croogo->adminTabs();
+		endif;
+		echo $this->Html->div('tab-content', $tabContent);
+		?>
+	</div>
+
+	<div class="<?php echo $this->Layout->cssClass('columnRight'); ?>">
+	<?php
+		if ($rightCol = $this->fetch('panels')):
+			echo $rightCol;
+		else:
 			if ($buttonsBlock = $this->fetch('buttons')):
 				echo $buttonsBlock;
 			else :
@@ -84,11 +111,21 @@ $what = !$entity->isNew() ? __d('croogo', 'Edit') : __d('croogo', 'Add');
 					$this->CroogoForm->button(__d('croogo', 'Save'), array('button' => 'primary')) .
 					$this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
 					$this->CroogoHtml->endBox();
-
 			endif;
 			echo $this->Croogo->adminBoxes();
-		?>
-		</div>
+		endif;
+	?>
 	</div>
-	<?php echo $this->CroogoForm->end(); ?>
-<?php endif; ?>
+
+</div>
+<?php
+
+if ($formEnd = trim($this->fetch('form-end'))):
+	echo $formEnd;
+else:
+	echo $this->CroogoForm->end();
+endif;
+
+if ($pageFooter = trim($this->fetch('page-footer'))):
+	echo $pageFooter;
+endif;

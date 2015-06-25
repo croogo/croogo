@@ -5,7 +5,7 @@ $this->name = 'acl_permissions';
 $this->Html->script('Croogo/Acl.acl_permissions', ['block' => true]);
 
 $this->CroogoHtml
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Permissions'), array(
 		'plugin' => 'Croogo/Acl', 'controller' => 'Permissions',
@@ -13,13 +13,14 @@ $this->CroogoHtml
 
 ?>
 <?php $this->start('actions'); ?>
-<li class="btn-group">
+<div class="btn-group">
 <?php
 	echo $this->Html->link(
 		__d('croogo', 'Tools') . ' ' . '<span class="caret"></span>',
 		'#',
 		array(
-			'class' => 'btn dropdown-toggle',
+			'button' => 'default',
+			'class' => 'dropdown-toggle',
 			'data-toggle' => 'dropdown',
 			'escape' => false
 		)
@@ -35,6 +36,7 @@ $this->CroogoHtml
 		$generateUrl,
 		array(
 			'button' => false,
+			'list' => true,
 			'method' => 'post',
 			'tooltip' => array(
 				'data-title' => __d('croogo', 'Create new actions (no removal)'),
@@ -46,6 +48,7 @@ $this->CroogoHtml
 		$generateUrl + array('sync' => 1),
 		array(
 			'button' => false,
+			'list' => true,
 			'method' => 'post',
 			'tooltip' => array(
 				'data-title' => __d('croogo', 'Create new & remove orphaned actions'),
@@ -55,7 +58,7 @@ $this->CroogoHtml
 	);
 	echo $this->Html->tag('ul', $out, array('class' => 'dropdown-menu'));
 ?>
-</li>
+</div>
 <?php
 	echo $this->Croogo->adminAction(__d('croogo', 'Edit Actions'),
 		array('controller' => 'Actions', 'action' => 'index', 'permissions' => 1)
@@ -63,8 +66,8 @@ $this->CroogoHtml
 ?>
 <?php $this->end(); ?>
 
-<div class="row-fluid">
-	<div class="span-16">
+<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
 
 		<ul id="permissions-tab" class="nav nav-tabs">
 		<?php
@@ -79,6 +82,6 @@ $this->CroogoHtml
 	</div>
 </div>
 
-<script>
-AclPermissions.tabSwitcher();
-</script>
+<?php
+
+$this->Js->buffer('AclPermissions.tabSwitcher();');

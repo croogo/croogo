@@ -5,7 +5,7 @@ namespace Croogo\Users\Config;
 use Croogo\Croogo\CroogoNav;
 
 CroogoNav::add('sidebar', 'users', array(
-	'icon' => array('user', 'large'),
+	'icon' => 'user',
 	'title' => __d('croogo', 'Users'),
 	'url' => array(
 		'prefix' => 'admin',

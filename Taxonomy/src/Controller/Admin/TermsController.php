@@ -194,7 +194,7 @@ class TermsController extends TaxonomyAppController {
 			$cssClass = array('class' => 'error');
 		}
 
-		$this->Session->setFlash($messageFlash, 'default', $cssClass);
+		$this->Session->setFlash($messageFlash, 'flash', $cssClass);
 		return $this->redirect($redirectUrl);
 	}
 

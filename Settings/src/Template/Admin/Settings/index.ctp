@@ -3,7 +3,7 @@
 $this->extend('Croogo/Croogo./Common/admin_index');
 
 $this->CroogoHtml
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Settings'), array(
 		'prefix' => 'admin',
 		'plugin' => 'Croogo/Settings',
@@ -13,9 +13,7 @@ $this->CroogoHtml
 if (!empty($this->request->params['named']['p'])) {
 	$this->Html->addCrumb($this->request->params['named']['p']);
 }
-?>
-<table class="table table-striped">
-<?php
+$this->start('table-heading');
 	$tableHeaders = $this->Html->tableHeaders(array(
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		$this->Paginator->sort('key', __d('croogo', 'Key')),
@@ -23,30 +21,29 @@ if (!empty($this->request->params['named']['p'])) {
 		$this->Paginator->sort('editable', __d('croogo', 'Editable')),
 		__d('croogo', 'Actions'),
 	));
-?>
-	<thead>
-	<?php echo $tableHeaders; ?>
-	</thead>
-<?php
+	echo $this->Html->tag('thead', $tableHeaders);
+$this->end();
+
+$this->append('table-body');
 	$rows = array();
 	foreach ($settings as $setting):
 		$actions = array();
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'Settings', 'action' => 'moveup', $setting->id),
-			array('icon' => 'chevron-up', 'tooltip' => __d('croogo', 'Move up'))
+			array('icon' => $_icons['move-up'], 'tooltip' => __d('croogo', 'Move up'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'Settings', 'action' => 'movedown', $setting->id),
-			array('icon' => 'chevron-down', 'tooltip' => __d('croogo', 'Move down'))
+			array('icon' => $_icons['move-down'], 'tooltip' => __d('croogo', 'Move down'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'Settings', 'action' => 'edit', $setting->id),
-			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowActions($setting->id);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'Settings', 'action' => 'delete', $setting->id),
-			array('icon' => 'trash', 'tooltip' => __d('croogo', 'Remove this item')),
+			array('icon' => $_icons['delete'], 'tooltip' => __d('croogo', 'Remove this item')),
 			__d('croogo', 'Are you sure?'));
 
 		$key = $setting->key;
@@ -68,5 +65,4 @@ if (!empty($this->request->params['named']['p'])) {
 	endforeach;
 
 	echo $this->Html->tableCells($rows);
-?>
-</table>
+$this->end();

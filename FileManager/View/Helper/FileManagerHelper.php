@@ -115,7 +115,7 @@ class FileManagerHelper extends AppHelper {
  * adminAction
  */
 	public function adminAction($title, $url, $path, $pathKey = 'path') {
-		return $this->Html->tag('li', $this->link($title, $url, $path, $pathKey));
+		return $this->link($title, $url, $path, $pathKey);
 	}
 
 /**
@@ -131,11 +131,11 @@ class FileManagerHelper extends AppHelper {
 		$class = '';
 		if (isset($url['action'])
 			&& ($url['action'] == 'create_directory' || $url['action'] == 'upload' || $url['action'] == 'create_file')) {
-			$class = 'btn';
+			$class = 'btn btn-default';
 		}
 
 		if (isset($url['action']) && ($url['action'] == 'delete_directory' || $url['action'] == 'delete_file')) {
-			$output = $this->Form->postLink($title, $url, array('data' => compact('path')), __d('croogo', 'Are you sure?'));
+			$output = $this->Form->postLink($title, $url, array('data' => compact('path'), 'escape' => true), __d('croogo', 'Are you sure?'));
 		} else {
 			$output = '<a class="' . $class . '" href="' . $this->Html->url($url) . "?{$pathKey}=" . urlencode($path) . '">' . $title . '</a>';
 		}

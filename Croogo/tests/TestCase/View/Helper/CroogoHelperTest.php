@@ -37,6 +37,11 @@ class CroogoHelperTest extends CroogoTestCase {
 			'named' => array(),
 		);
 		$view = new View($request, new Response());
+		$croogoTheme = new CroogoTheme();
+		$data = $croogoTheme->getData();
+		$settings = $data['settings'];
+		$view->set('themeSettings', $settings);
+
 		$this->Croogo = new CroogoHelper($view);
 		$aclHelper = Configure::read('Site.acl_plugin') . 'Helper';
 		$this->Croogo->Acl = $this->getMock(
@@ -77,7 +82,7 @@ class CroogoHelperTest extends CroogoTestCase {
 			)
 		);
 		$items = CroogoNav::items();
-		$expected = '<ul class="nav nav-stacked"><li><a href="#" class="menu-contents sidebar-item"><i class="icon-white icon-large"></i> <span>Contents</span></a></li></ul>';
+		$expected = '<ul class="nav nav-stacked"><li><a href="#" class="menu-contents sidebar-item"><i class="icon-white icon-large"></i><span>Contents</span></a></li></ul>';
 		$result = $this->Croogo->adminMenus(CroogoNav::items());
 		$this->assertEquals($expected, $result);
 	}
@@ -127,7 +132,7 @@ class CroogoHelperTest extends CroogoTestCase {
 				'class',
 			),
 			'/i',
-			' Title',
+			'Title',
 			'/a',
 		);
 		$this->assertHtml($result, $expected);
@@ -154,7 +159,6 @@ class CroogoHelperTest extends CroogoTestCase {
 				'class' => 'icon-edit icon-large',
 			),
 			'/i',
-			' ',
 			'/a',
 		);
 		$this->assertHtml($result, $expected);
@@ -232,7 +236,7 @@ class CroogoHelperTest extends CroogoTestCase {
 		));
 
 		$result = $this->Croogo->adminBoxes('Title');
-		$this->assertContains('class="box"', $result);
+		$this->assertContains("class='box'", $result);
 	}
 
 	public function testAdminBoxesAlreadyPrinted() {

@@ -82,7 +82,7 @@ class CroogoHelper extends Helper {
  * @return mixed String of <script /> tags or null
  */
 	public function adminScript($url, $options = array()) {
-		$options = Hash::merge(array('block' => true), $options);
+		$options = Hash::merge(array('block' => 'scriptBottom'), $options);
 		if ($this->request->is('ajax') || $this->request->param('prefix') !== 'admin') {
 			return;
 		}
@@ -342,15 +342,23 @@ class CroogoHelper extends Helper {
 		$options = Hash::merge(array(
 			'button' => 'default',
 			'method' => 'get',
+			'list' => false,
 		), $options);
-		if (strcasecmp($options['method'], 'post') == 0) {
-			return $this->CroogoHtml->tag('li',
-				$this->CroogoForm->postLink($title, $url, $options)
-			);
+		if ($options['list'] === true) {
+			$list = true;
+			unset($options['list']);
 		}
-		return $this->CroogoHtml->tag('li',
-			$this->CroogoHtml->link($title, $url, $options)
-		);
+		if (strcasecmp($options['method'], 'post') == 0) {
+			$out = $this->CroogoForm->postLink($title, $url, $options);
+		} else {
+			$out = $this->CroogoHtml->link($title, $url, $options);
+		}
+		if (isset($list)) {
+			$out = $this->CroogoHtml->tag('li', $out);
+		} else {
+			$out = $this->CroogoHtml->div('btn-group', $out);
+		}
+		return $out;
 	}
 
 /**

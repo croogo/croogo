@@ -1,53 +1,47 @@
 <?php
+
+$this->extend('/Common/admin_edit');
+
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Plugins'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Upload'), '/' . $this->request->url);
 
-echo $this->Form->create('Plugin', array(
+$this->append('form-start', $this->Form->create('Plugin', array(
 	'url' => array(
 		'plugin' => 'extensions',
 		'controller' => 'extensions_plugins',
 		'action' => 'add',
 	),
 	'type' => 'file',
-));
+)));
 
-?>
-<h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
-<div class="row-fluid">
-	<div class="span8">
+$this->append('tab-heading');
+	echo $this->Croogo->adminTab(__d('croogo', 'Upload'), '#plugin-upload');
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-		<ul class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTab(__d('croogo', 'Upload'), '#plugin-upload');
-		?>
-		</ul>
+$this->append('tab-content');
+	echo $this->Html->tabStart('plugin-upload') .
+		$this->Form->input('Plugin.file', array(
+			'type' => 'file',
+		));
+	echo $this->Html->tabEnd();
 
-		<div class="tab-content">
-			<div id="plugin-upload" class="tab-pane">
-			<?php
-				echo $this->Form->input('Plugin.file', array(
-					'type' => 'file',
-				));
-			?>
-			</div>
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-			<?php echo $this->Croogo->adminTabs(); ?>
-		</div>
-	</div>
-	<div class="span4">
-	<?php
-		echo $this->Html->beginBox('Publishing') .
-			$this->Form->button(__d('croogo', 'Upload'), array('button' => 'default')) .
-			$this->Form->end() .
-			$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
-			$this->Html->endBox();
+$this->append('panels');
+	echo $this->Html->beginBox('Publishing') .
+		$this->Form->button(__d('croogo', 'Upload')) .
+		$this->Html->link(__d('croogo', 'Cancel'),
+			array('action' => 'index'),
+			array('button' => 'danger')
+		);
+	echo $this->Html->endBox();
 
-		echo $this->Croogo->adminBoxes();
-	?>
-	</div>
+	echo $this->Croogo->adminBoxes();
+$this->end();
 
-</div>
-<?php echo $this->Form->end(); ?>
+$this->append('form-end', $this->Form->end());

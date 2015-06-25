@@ -61,15 +61,11 @@ class BlocksEventHandler implements EventListenerInterface {
 
 		$regex = '/\[(block|b):([A-Za-z0-9_\-]*)(.*?)\]/i';
 		foreach ($parsed as $blockAlias => $config) {
-			$path = '{s}.{n}.Block[alias=' . $blockAlias . ']';
-			$block = Hash::extract($View->viewVars['blocks_for_layout'], $path);
-			if (empty($block[0]['body'])) {
-				continue;
-			}
+			$block = $View->Regions->block($blockAlias);
 			preg_match_all($regex, $body, $matches);
 			if (isset($matches[2][0])) {
 				$replaceRegex = '/' . preg_quote($matches[0][0]) . '/';
-				$body = preg_replace($replaceRegex, $block[0]['body'], $body);
+				$body = preg_replace($replaceRegex, $block, $body);
 			}
 		}
 

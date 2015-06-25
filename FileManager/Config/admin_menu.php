@@ -5,7 +5,7 @@ namespace Croogo\FileManager\Config;
 use Croogo\Croogo\CroogoNav;
 
 CroogoNav::add('sidebar', 'media', array(
-	'icon' => array('picture', 'large'),
+	'icon' => 'picture',
 	'title' => __d('croogo', 'Media'),
 	'url' => array(
 		'admin' => true,

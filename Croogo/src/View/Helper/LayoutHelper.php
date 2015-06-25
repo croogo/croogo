@@ -148,7 +148,7 @@ class LayoutHelper extends Helper {
  * @return string
  */
 	public function js() {
-		$croogo = array();
+		$croogo = $this->_mergeThemeSettings();
 		if ($this->request->param('locale')) {
 			$croogo['basePath'] = Router::url('/' . $this->request->param('locale') . '/');
 		} else {
@@ -172,6 +172,40 @@ class LayoutHelper extends Helper {
 	}
 
 /**
+ * Merge helper and prefix specific settings
+ *
+ * @param array $croogoSetting Croogo JS settings
+ * @return array Merged settings
+ */
+	protected function _mergeThemeSettings($croogoSetting = array()) {
+		if (empty($this->_View->viewVars['themeSettings'])) {
+			return $croogoSetting;
+		}
+		$validKeys = array(
+			'css' => null,
+			'icons' => null,
+			'iconDefaults' => null,
+		);
+		$themeSettings = $this->_View->viewVars['themeSettings'];
+		$croogoSetting['themeSettings'] = array_intersect_key(
+			array_merge($validKeys, $themeSettings),
+			$validKeys
+		);
+
+		if ($this->_View->Helpers->loaded('Html')) {
+			unset($validKeys['css']);
+			$croogoSetting['themeSettings'] = Hash::merge(
+				$croogoSetting['themeSettings'],
+				array_intersect_key(
+					array_merge($validKeys, $this->_View->Html->settings),
+					$validKeys
+				)
+			);
+		}
+		return $croogoSetting;
+	}
+
+/**
  * Status
  *
  * instead of 0/1, show tick/cross
@@ -180,11 +214,16 @@ class LayoutHelper extends Helper {
  * @return string formatted img tag
  */
 	public function status($value) {
+		if (isset($this->_View->viewVars['_icons'])) {
+			$_icons = $this->_View->viewVars['_icons'];
+		} else {
+			$_icons = array('check-mark' => 'ok', 'x-mark' => 'remove');
+		}
 		if ($value == 1) {
-			$icon = 'ok';
+			$icon = $_icons['check-mark'];
 			$class = 'green';
 		} else {
-			$icon = 'remove';
+			$icon = $_icons['x-mark'];
 			$class = 'red';
 		}
 		if (method_exists($this->Html, 'icon')) {
@@ -507,6 +546,29 @@ class LayoutHelper extends Helper {
 		} else {
 			return null;
 		}
+	}
+
+/**
+ * Helper method to retrieve css settings as configured in theme.json
+ *
+ * @param string $class Name of class/configuration to retrieve
+ * @return string
+ */
+	public function cssClass($class = null) {
+		if ($class) {
+			$class = '.' . $class;
+		}
+		return $this->themeSetting('css' . $class);
+	}
+
+/**
+ * Helper method to retrieve theme settings as configured in theme.json
+ *
+ * @param string $class Name of class/configuration to retrieve
+ * @return string
+ */
+	public function themeSetting($key) {
+		return Hash::get($this->_View->viewVars, 'themeSettings.' . $key);
 	}
 
 }

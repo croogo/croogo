@@ -5,7 +5,7 @@ $this->Croogo->adminScript('Contacts.admin');
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
+	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Contacts'), array('controller' => 'contacts', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Messages'), array('action' => 'index'));
 
@@ -31,15 +31,13 @@ $(".comment-view").on("click", function() {
 EOF;
 $this->Js->buffer($script);
 
-echo $this->element('admin/modal', array(
+$this->append('table-footer', $this->element('admin/modal', array(
 	'id' => 'comment-modal',
-	'class' => 'hide',
 	)
-);
-?>
+));
 
-<?php $this->start('actions'); ?>
-<?php
+
+$this->append('actions');
 	echo $this->Croogo->adminAction(__d('croogo', 'Unread'), array(
 		'action' => 'index',
 		'?' => array(
@@ -52,16 +50,11 @@ echo $this->element('admin/modal', array(
 			'status' => '1',
 		),
 	));
-?>
-<?php $this->end(); ?>
+$this->end();
 
-<?php
+$this->append('form-start', $this->Form->create('Message', array('url' => array('controller' => 'messages', 'action' => 'process', 'class' => 'form-inline'))));
 
-echo $this->Form->create('Message', array('url' => array('controller' => 'messages', 'action' => 'process')));
-
-?>
-<table class="table table-striped">
-<?php
+$this->start('table-heading');
 	$tableHeaders = $this->Html->tableHeaders(array(
 		$this->Form->checkbox('checkAll'),
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
@@ -71,25 +64,23 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 		$this->Paginator->sort('title', __d('croogo', 'Title')),
 		__d('croogo', 'Actions'),
 	));
-?>
-	<thead>
-	<?php echo $tableHeaders; ?>
-	</thead>
+	echo $this->Html->tag('thead',$tableHeaders);
+$this->end();
 
-<?php
-	$commentIcon = $this->Html->icon('comment-alt');
+$this->append('table-body');
+	$commentIcon = $this->Html->icon($_icons['comment']);
 	$rows = array();
 	foreach ($messages as $message) {
 		$actions = array();
 
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'edit', $message['Message']['id']),
-			array('icon' => 'pencil', 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			'#Message' . $message['Message']['id'] . 'Id',
 			array(
-				'icon' => 'trash',
+				'icon' => $_icons['delete'],
 				'class' => 'delete',
 				'tooltip' => __d('croogo', 'Remove this item'),
 				'rowAction' => 'delete',
@@ -118,27 +109,24 @@ echo $this->Form->create('Message', array('url' => array('controller' => 'messag
 			$actions,
 		);
 	}
-
 	echo $this->Html->tableCells($rows);
-?>
+$this->end();
 
-</table>
-<div class="row-fluid">
-	<div id="bulk-action" class="control-group">
-		<?php
-			echo $this->Form->input('Message.action', array(
-				'label' => false,
-				'div' => 'input inline',
-				'options' => array(
-					'read' => __d('croogo', 'Mark as read'),
-					'unread' => __d('croogo', 'Mark as unread'),
-					'delete' => __d('croogo', 'Delete'),
-				),
-				'empty' => true,
-			));
-		?>
-		<div class="controls">
-			<?php echo $this->Form->end(__d('croogo', 'Submit')); ?>
-		</div>
-	</div>
-</div>
+$this->start('bulk-action');
+	echo $this->Form->input('Message.action', array(
+		'label' => false,
+		'div' => 'input inline',
+		'options' => array(
+			'read' => __d('croogo', 'Mark as read'),
+			'unread' => __d('croogo', 'Mark as unread'),
+			'delete' => __d('croogo', 'Delete'),
+		),
+		'empty' => true,
+	));
+	$button = $this->Form->button(__d('croogo', 'Submit'), array(
+		'type' => 'submit',
+		'value' => 'submit'
+	));
+	echo $this->Html->div('controls', $button);
+$this->end();
+$this->append('form-end', $this->Form->end());
