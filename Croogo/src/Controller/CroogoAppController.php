@@ -256,7 +256,7 @@ class CroogoAppController extends AppController {
 					'View/Helper' => array(App::themePath($theme) . 'Helper' . DS),
 				));
 			}
-			$this->layout = 'admin';
+			$this->layout = 'Croogo/Croogo.admin';
 		} else {
 			$theme = Configure::read('Site.theme');
 		}
@@ -323,10 +323,6 @@ class CroogoAppController extends AppController {
 			if ($this->request->param('action') == 'delete' && $this->request->param('prefix') == 'admin') {
 				$this->request->allowMethod('post');
 			}
-		}
-
-		if ($this->request->param('prefix') === 'admin') {
-			$this->layout = 'Croogo/Croogo.admin';
 		}
 
 		if ($this->request->is('ajax')) {

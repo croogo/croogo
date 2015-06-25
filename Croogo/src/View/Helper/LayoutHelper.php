@@ -230,7 +230,7 @@ class LayoutHelper extends Helper {
 			return $this->Html->icon($icon, compact('class'));
 		} else {
 			if (empty($this->_View->CroogoHtml)) {
-				$this->_View->Helpers->load('Croogo.CroogoHtml');
+				$this->_View->Helpers->load('Croogo/Croogo.CroogoHtml');
 			}
 			return $this->_View->CroogoHtml->icon($icon, compact('class'));
 		}

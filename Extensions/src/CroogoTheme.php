@@ -149,14 +149,14 @@ class CroogoTheme {
 					),
 					'admin' => array(
 						'helpers' => array(
-							'Html' => array(
-								'className' => 'Croogo.CroogoHtml',
+							'CroogoHtml' => array(
+								'className' => 'Croogo/Croogo.CroogoHtml',
 							),
-							'Form' => array(
-								'className' => 'Croogo.CroogoForm',
+							'CroogoForm' => array(
+								'className' => 'Croogo/Croogo.CroogoForm',
 							),
-							'Paginator' => array(
-								'className' => 'Croogo.CroogoPaginator',
+							'CroogoPaginator' => array(
+								'className' => 'Croogo/Croogo.CroogoPaginator',
 							),
 						),
 					),
