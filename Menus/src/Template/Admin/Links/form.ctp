@@ -73,7 +73,7 @@ $this->append('tab-content');
 		'label' => __d('croogo', 'Link'),
 		'div' => 'input text required input-append',
 		'id' => 'link',
-		'after' => $this->Croogo->linkChooser('#link'),
+		'linkChooser' => true
 	));
 	echo $this->CroogoHtml->tabEnd();
 

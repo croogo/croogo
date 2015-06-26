@@ -17,7 +17,8 @@ class CroogoFormHelper extends FormHelper {
 	public $helpers = [
 		'Html',
 		'Url',
-		'Croogo/Core.Theme'
+		'Croogo/Core.Theme',
+		'Croogo/Core.Croogo'
 	];
 
 /**
@@ -183,6 +184,16 @@ class CroogoFormHelper extends FormHelper {
 			} else {
 				$options['class'] = $class;
 			}
+		}
+
+		if ((array_key_exists('linkChooser', $options)) && ($options['linkChooser'])) {
+			$after = '';
+			if (isset($options['after'])) {
+				$after = $options['after'];
+			}
+
+			$target = '#' . $options['id'];
+			$options['after'] = $this->Croogo->linkChooser($target) . $after;
 		}
 
 		return $options;

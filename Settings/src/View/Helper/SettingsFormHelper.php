@@ -3,6 +3,7 @@
 namespace Croogo\Settings\View\Helper;
 
 use Cake\View\Helper;
+use Cake\Utility\Hash;
 use Croogo\Settings\Model\Entity\Setting;
 
 /**
@@ -85,22 +86,23 @@ class SettingsFormHelper extends Helper {
 				'value' => $setting->value,
 			));
 		} else {
-			$after = '';
-			if ($inputType === 'link') {
-				$inputType = 'text';
-
-				$after = $this->Croogo->linkChooser('#setting-' . $setting->id);
-			}
-
-			$output = $this->CroogoForm->input($setting->id, array(
+			$options = [
 				'type' => $inputType,
 				'id' => 'setting-' . $setting->id,
 				'class' => 'span10',
 				'value' => $setting->value,
 				'help' => $setting->description,
 				'label' => $label,
-				'after' => $after
-			));
+			];
+
+			if ($inputType === 'link') {
+				$options = Hash::merge($options, [
+					'type' => 'text',
+					'linkChooser' => true
+				]);
+			}
+
+			$output = $this->CroogoForm->input($setting->id, $options);
 		}
 		return $output;
 	}
