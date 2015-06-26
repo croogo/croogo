@@ -26,25 +26,25 @@ $this->start('table-body');
 	$actions = array();
 	$actions[] = $this->Croogo->adminRowAction(
 		'',
-		array('controller' => 'links', 'action' => 'index',	'?' => array('menu_id' => $menu['Menu']['id'])),
+		array('controller' => 'Links', 'action' => 'index',	'?' => array('menu_id' => $menu['Menu']['id'])),
 		array('icon' => $this->Theme->getIcon('inspect'), 'tooltip' => __d('croogo', 'View links'))
 	);
 	$actions[] = $this->Croogo->adminRowActions($menu->id);
 	$actions[] = $this->Croogo->adminRowAction(
 		'',
-		array('controller' => 'menus', 'action' => 'edit', $menu->id),
+		array('controller' => 'Menus', 'action' => 'edit', $menu->id),
 		array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 	);
 	$actions[] = $this->Croogo->adminRowAction(
 		'',
-		array('controller' => 'menus', 'action' => 'delete', $menu->id),
+		array('controller' => 'Menus', 'action' => 'delete', $menu->id),
 		array('icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Remove this item')),
 		__d('croogo', 'Are you sure?')
 	);
 	$actions = $this->CroogoHtml->div('item-actions', implode(' ', $actions));
 
 	$title = $this->CroogoHtml->link($menu->title, array(
-		'controller' => 'links',
+		'controller' => 'Links',
 		'?' => array(
 			'menu_id' => $menu->id
 		)
@@ -56,9 +56,9 @@ $this->start('table-body');
 			);
 	}
 
-	$status = $this->element('admin/toggle', array(
+	$status = $this->element('Croogo/Core.admin/toggle', array(
 		'id' => $menu->id,
-		'status' => $menu->status,,
+		'status' => $menu->status,
 	));
 
 	$rows[] = array(

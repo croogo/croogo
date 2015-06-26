@@ -85,6 +85,7 @@ class CroogoAppController extends AppController {
 		'Croogo/Core.Layout',
 		'Croogo/Core.Custom',
 		'Croogo/Core.CroogoForm',
+		'Croogo/Core.Theme',
 	);
 
 /**
