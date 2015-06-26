@@ -18,7 +18,8 @@ use Croogo\Settings\Model\Entity\Setting;
 class SettingsFormHelper extends Helper {
 
 	public $helpers = [
-		'Croogo/Core.CroogoForm'
+		'Croogo/Core.CroogoForm',
+		'Croogo/Core.Croogo',
 	];
 
 /**
@@ -84,12 +85,21 @@ class SettingsFormHelper extends Helper {
 				'value' => $setting->value,
 			));
 		} else {
+			$after = '';
+			if ($inputType === 'link') {
+				$inputType = 'text';
+
+				$after = $this->Croogo->linkChooser('#setting-' . $setting->id);
+			}
+
 			$output = $this->CroogoForm->input($setting->id, array(
 				'type' => $inputType,
+				'id' => 'setting-' . $setting->id,
 				'class' => 'span10',
 				'value' => $setting->value,
 				'help' => $setting->description,
 				'label' => $label,
+				'after' => $after
 			));
 		}
 		return $output;
