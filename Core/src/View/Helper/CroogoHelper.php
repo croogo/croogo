@@ -28,6 +28,7 @@ class CroogoHelper extends Helper {
 		'Html',
 		'Url',
 		'Croogo/Core.Layout',
+		'Croogo/Core.Theme',
 		'Croogo/Core.CroogoForm',
 		'Croogo/Core.CroogoHtml',
 		'Croogo/Menus.Menus',
@@ -478,6 +479,30 @@ class CroogoHelper extends Helper {
 		}
 
 		return $output;
+	}
+
+	public function linkChooser()
+	{
+		$linkChooser = $this->_View->element('Croogo/Core.admin/modal', [
+			'id' => 'link_choosers',
+			'title' => __d('croogo', 'Choose Link'),
+		]);
+		if (!strstr($this->_View->fetch('page-footer'), $linkChooser)) {
+			$this->_View->append('page-footer', $linkChooser);
+		}
+
+		return $this->CroogoHtml->link('', '#link_choosers', [
+			'button' => 'default',
+			'icon' => $this->Theme->getIcon('link'),
+			'iconSize' => 'small',
+			'data-title' => 'Link Chooser',
+			'data-toggle' => 'modal',
+			'data-remote' => $this->Url->build([
+				'plugin' => 'Croogo/Core',
+				'controller' => 'LinkChooser',
+				'action' => 'linkChooser',
+			]),
+		]);
 	}
 
 }

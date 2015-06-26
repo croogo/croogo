@@ -42,11 +42,6 @@ $this->append('form-start', $this->CroogoForm->create($link, array(
 
 $inputDefaults = $this->Form->templates();
 $inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
-$linkChooserUrl = $this->Url->build(array(
-	'plugin' => 'Croogo/Core',
-	'controller' => 'LinkChooser',
-	'action' => 'linkChooser',
-));
 
 $this->append('tab-heading');
 	echo $this->Croogo->adminTab(__d('croogo', 'Link'), '#link-basic');
@@ -77,14 +72,7 @@ $this->append('tab-content');
 	echo $this->CroogoForm->input('link', array(
 		'label' => __d('croogo', 'Link'),
 		'div' => 'input text required input-append',
-		'after' => $this->CroogoHtml->link('', '#link_choosers', array(
-			'button' => 'default',
-			'icon' => array('link'),
-			'iconSize' => 'small',
-			'data-title' => 'Link Chooser',
-			'data-toggle' => 'modal',
-			'data-remote' => $linkChooserUrl,
-		)),
+		'after' => $this->Croogo->linkChooser(),
 	));
 	echo $this->CroogoHtml->tabEnd();
 
@@ -147,10 +135,3 @@ $this->start('panels');
 $this->end();
 
 $this->append('form-end', $this->Form->end());
-
-$this->append('page-footer');
-	echo $this->element('Croogo/Core.admin/modal', array(
-		'id' => 'link_choosers',
-		'title' => __d('croogo', 'Choose Link'),
-	));
-$this->end();
