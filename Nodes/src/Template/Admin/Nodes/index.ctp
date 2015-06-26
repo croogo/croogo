@@ -1,6 +1,6 @@
 <?php
 $this->extend('Croogo/Core./Common/admin_index');
-use Croogo\Core\CroogoStatus;
+use Croogo\Core\Status;
 
 $this->Croogo->adminScript(array('Croogo/Nodes.admin'));
 
@@ -71,7 +71,7 @@ echo $this->Form->create(
 						<?php if ($node->promote == 1): ?>
 						<span class="label label-info"><?php echo __d('croogo', 'promoted'); ?></span>
 						<?php endif ?>
-						<?php if ($node->status == CroogoStatus::PREVIEW): ?>
+						<?php if ($node->status == Status::PREVIEW): ?>
 						<span class="label label-warning"><?php echo __d('croogo', 'preview'); ?></span>
 						<?php endif ?>
 					</td>

@@ -3,13 +3,13 @@
 namespace Croogo\Core\Model\Behavior;
 
 use Cake\ORM\Behavior;
-use Croogo\Core\CroogoStatus;
+use Croogo\Core\Status;
 
 /**
  * Publishable Behavior
  *
  * Provides status and period filtering. Requires the following fields:
- *   - `status` integer value from `CroogoStatus::statuses()
+ *   - `status` integer value from `Status::statuses()
  *   - `publish_start` datetime indicates the start of publishing period
  *   - `publish_end` datetime indicates the end of publishing period
  *
@@ -43,7 +43,7 @@ class PublishableBehavior extends Behavior {
 	public function initialize(array $config) {
 		parent::initialize($config);
 
-		$this->_CroogoStatus = new CroogoStatus();
+		$this->_CroogoStatus = new Status();
 	}
 
 

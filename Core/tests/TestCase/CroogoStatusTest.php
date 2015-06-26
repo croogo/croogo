@@ -4,7 +4,7 @@ namespace Croogo\Core\Test\TestCase;
 
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
-use Croogo\Core\CroogoStatus;
+use Croogo\Core\Status;
 use Croogo\Core\TestSuite\CroogoTestCase;
 class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface {
 
@@ -28,7 +28,7 @@ class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface 
  */
 	public function setUp() {
 		EventManager::instance()->attach($this);
-		$this->CroogoStatus = new CroogoStatus();
+		$this->CroogoStatus = new Status();
 	}
 
 /**
@@ -67,7 +67,7 @@ class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface 
  * testStatus
  */
 	public function testStatus() {
-		$expected = array(CroogoStatus::PUBLISHED);
+		$expected = array(Status::PUBLISHED);
 		$result = $this->CroogoStatus->status();
 		$this->assertEquals($expected, $result);
 	}
@@ -78,8 +78,8 @@ class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface 
 	public function modifyStatus($event) {
 		switch ($event->data['accessType']) {
 			case 'webmaster':
-				if (!in_array(CroogoStatus::PREVIEW, $event->data['values'])) {
-					$event->data['values'][] = CroogoStatus::PREVIEW;
+				if (!in_array(Status::PREVIEW, $event->data['values'])) {
+					$event->data['values'][] = Status::PREVIEW;
 				}
 			break;
 			default:
@@ -97,8 +97,8 @@ class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface 
 		EventManager::instance()->on('Croogo.Status.status', $callback);
 
 		// test status is modified for 'webmaster' type by event handler
-		$expected = array(CroogoStatus::PUBLISHED, CroogoStatus::PREVIEW);
-		$this->CroogoStatus = new CroogoStatus();
+		$expected = array(Status::PUBLISHED, Status::PREVIEW);
+		$this->CroogoStatus = new Status();
 		$result = $this->CroogoStatus->status('publishing', 'webmaster');
 		$this->assertEquals($expected, $result);
 

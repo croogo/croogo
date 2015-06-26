@@ -3,7 +3,7 @@
 namespace Croogo\Comments\Model;
 
 use Croogo\Core\Model\Table\CroogoTable;
-use Croogo\Core\CroogoStatus;
+use Croogo\Core\Status;
 
 /**
  * Comment
@@ -168,7 +168,7 @@ class Comment extends CroogoTable {
 		if (isset($data[$this->alias]['status'])) {
 			$record['status'] = $data[$this->alias]['status'];
 		} else {
-			$record['status'] = CroogoStatus::PENDING;
+			$record['status'] = Status::PENDING;
 		}
 
 		return (bool)$this->save($record);

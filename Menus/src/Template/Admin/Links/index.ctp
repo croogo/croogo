@@ -1,7 +1,7 @@
 <?php
 
 use Cake\Utility\Inflector;
-use Croogo\Core\CroogoStatus;
+use Croogo\Core\Status;
 
 $this->Croogo->adminscript('Croogo/Menus.admin');
 
@@ -92,7 +92,7 @@ $this->append('table-body');
 		);
 		$actions = $this->CroogoHtml->div('item-actions', implode(' ', $actions));
 
-		if ($linksStatus[$linkId] == CroogoStatus::PREVIEW) {
+		if ($linksStatus[$linkId] == Status::PREVIEW) {
 			$linkTitle .= ' ' . $this->CroogoHtml->tag('span', __d('croogo', 'preview'),
 			array('class' => 'label label-warning')
 			);

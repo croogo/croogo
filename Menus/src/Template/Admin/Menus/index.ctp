@@ -1,6 +1,6 @@
 <?php
 
-use Croogo\Core\CroogoStatus;
+use Croogo\Core\Status;
 
 $this->extend('Croogo/Core./Common/admin_index');
 
@@ -50,7 +50,7 @@ $this->start('table-body');
 		)
 	));
 
-	if ($menu->status === CroogoStatus::PREVIEW) {
+	if ($menu->status === Status::PREVIEW) {
 		$title .= ' ' . $this->CroogoHtml->tag('span', __d('croogo', 'preview'),
 			array('class' => 'label label-warning')
 			);

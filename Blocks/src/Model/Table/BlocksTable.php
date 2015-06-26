@@ -3,7 +3,7 @@
 namespace Croogo\Blocks\Model\Table;
 
 use Cake\ORM\Table;
-use Croogo\Core\CroogoStatus;
+use Croogo\Core\Status;
 
 /**
  * Block
@@ -100,7 +100,7 @@ class BlocksTable extends Table {
 			'className' => 'Blocks.Region',
 			'foreignKey' => 'region_id',
 			'counterCache' => true,
-			'counterScope' => array('Block.status >=' => CroogoStatus::PUBLISHED),
+			'counterScope' => array('Block.status >=' => Status::PUBLISHED),
 		),
 	);
 
@@ -111,7 +111,7 @@ class BlocksTable extends Table {
 			'className' => 'Croogo/Blocks.Regions',
 			'foreignKey' => 'region_id',
 			'counterCache' => true,
-			'counterScope' => array('Blocks.status >=' => CroogoStatus::PUBLISHED),
+			'counterScope' => array('Blocks.status >=' => Status::PUBLISHED),
 		]);
 	}
 

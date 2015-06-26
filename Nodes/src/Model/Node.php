@@ -29,7 +29,7 @@ class Node extends NodesAppModel {
  * Publish status
  *
  * @see PublishableBehavior
- * @deprecated Use CroogoStatus::PUBLISHED
+ * @deprecated Use Status::PUBLISHED
  */
 	const STATUS_PUBLISHED = 1;
 
@@ -37,17 +37,17 @@ class Node extends NodesAppModel {
  * Unpublish status
  *
  * @see PublishableBehavior
- * @deprecated Use CroogoStatus::UNPUBLISHED
+ * @deprecated Use Status::UNPUBLISHED
  */
 	const STATUS_UNPUBLISHED = 0;
 
 /**
- * @deprecated Use CroogoStatus::PROMOTED
+ * @deprecated Use Status::PROMOTED
  */
 	const STATUS_PROMOTED = 1;
 
 /**
- * @deprecated Use CroogoStatus::UNPROMOTED
+ * @deprecated Use Status::UNPROMOTED
  */
 	const STATUS_UNPROMOTED = 0;
 

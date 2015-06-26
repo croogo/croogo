@@ -1,6 +1,6 @@
 <?php
 
-use Croogo\Core\CroogoStatus;
+use Croogo\Core\Status;
 
 $this->extend('Croogo/Core./Common/admin_edit');
 $this->Croogo->adminScript('Croogo/Menus.admin');
@@ -125,7 +125,7 @@ $this->start('panels');
 		$this->Form->input('status', array(
 			'type' => 'radio',
 			'legend' => false,
-			'default' => CroogoStatus::UNPUBLISHED,
+			'default' => Status::UNPUBLISHED,
 			'options' => $this->Croogo->statuses(),
 		)) .
 		$this->Html->div('input-daterange',
@@ -150,7 +150,7 @@ $this->start('panels');
 				'type' => 'radio',
 				'legend' => false,
 				'class' => false,
-				'default' => CroogoStatus::UNPUBLISHED,
+				'default' => Status::UNPUBLISHED,
 				'options' => $this->Croogo->statuses(),
 			)) .
 			$this->CroogoHtml->div('input-daterange',

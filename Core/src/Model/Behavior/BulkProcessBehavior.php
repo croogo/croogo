@@ -6,7 +6,7 @@ use App\Model\ModelBehavior;
 use Cake\ORM\Behavior;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
-use Croogo\Core\CroogoStatus;
+use Croogo\Core\Status;
 use InvalidArgumentException;
 
 /**
@@ -112,7 +112,7 @@ class BulkProcessBehavior extends Behavior {
  */
 	public function bulkPublish(Table $table, $ids) {
 		$field = $this->config('fields.status');
-		return $this->_saveStatus($table, $ids, $field, CroogoStatus::PUBLISHED);
+		return $this->_saveStatus($table, $ids, $field, Status::PUBLISHED);
 	}
 
 /**
@@ -124,7 +124,7 @@ class BulkProcessBehavior extends Behavior {
  */
 	public function bulkUnpublish(Table $table, $ids) {
 		$field = $this->config('fields.status');
-		return $this->_saveStatus($table, $ids, $field, CroogoStatus::UNPUBLISHED);
+		return $this->_saveStatus($table, $ids, $field, Status::UNPUBLISHED);
 	}
 
 /**
@@ -136,7 +136,7 @@ class BulkProcessBehavior extends Behavior {
  */
 	public function bulkPromote(Table $table, $ids) {
 		$field = $this->config('fields.promote');
-		return $this->_saveStatus($table, $ids, $field, CroogoStatus::PROMOTED);
+		return $this->_saveStatus($table, $ids, $field, Status::PROMOTED);
 	}
 
 /**
@@ -148,7 +148,7 @@ class BulkProcessBehavior extends Behavior {
  */
 	public function bulkUnpromote(Table $table, $ids) {
 		$field = $this->config('fields.promote');
-		return $this->_saveStatus($table, $ids, $field, CroogoStatus::UNPROMOTED);
+		return $this->_saveStatus($table, $ids, $field, Status::UNPROMOTED);
 	}
 
 /**

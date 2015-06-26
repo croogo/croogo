@@ -1,6 +1,6 @@
 <?php
 
-use Croogo\Core\CroogoStatus;
+use Croogo\Core\Status;
 
 $this->extend('Croogo/Core./Common/admin_edit');
 //$this->Html->script(array('Croogo/Nodes.admin'), false);
@@ -114,7 +114,7 @@ echo $this->CroogoForm->create($node, array(
 				'legend' => false,
 				'type' => 'radio',
 				'class' => false,
-				'default' => CroogoStatus::UNPUBLISHED,
+				'default' => Status::UNPUBLISHED,
 				'options' => $this->Croogo->statuses(),
 			)) .
 			$this->CroogoForm->input('promote', array(

@@ -16,7 +16,7 @@ use Cake\Utility\Inflector;
 use Croogo\Core\Croogo;
 use Croogo\Core\Cache\CroogoCache;
 use Croogo\Core\Configure\CroogoJsonReader;
-use Croogo\Core\CroogoStatus;
+use Croogo\Core\Status;
 use Croogo\Core\Event\CroogoEventManager;
 use Croogo\Extensions\CroogoPlugin;
 

@@ -7,14 +7,14 @@ use ArrayAccess;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Log\Log;
 /**
- * CroogoStatus
+ * Status
  *
  * @package  Croogo.Croogo.Lib
  * @author   Rachman Chavik <rchavik@xintesa.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoStatus implements ArrayAccess {
+class Status implements ArrayAccess {
 
 	const UNPUBLISHED = 0;
 
@@ -111,7 +111,7 @@ class CroogoStatus implements ArrayAccess {
 		$roleId = -1;
 		$allow = false;
 
-		Log::notice('CroogoStatus::_defaultStatus cannot lookup role_id, this needs to be ported to CakePHP 3.0');
+		Log::notice('Status::_defaultStatus cannot lookup role_id, this needs to be ported to CakePHP 3.0');
 
 //		if ($roleId && $roleId != 1) {
 //			if ($Permission === null) {

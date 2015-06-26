@@ -10,7 +10,7 @@ use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
 use Croogo\Core\Croogo;
-use Croogo\Core\CroogoStatus;
+use Croogo\Core\Status;
 /**
  * Croogo Helper
  *
@@ -55,7 +55,7 @@ class CroogoHelper extends Helper {
 	public function __construct(View $View, $settings = array()) {
 		$this->helpers[] = Configure::read('Site.acl_plugin') . '.' . Configure::read('Site.acl_plugin');
 		parent::__construct($View, $settings);
-		$this->_CroogoStatus = new CroogoStatus();
+		$this->_CroogoStatus = new Status();
 	}
 
 /**

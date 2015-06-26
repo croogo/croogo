@@ -6,7 +6,7 @@ use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
-use Croogo\Core\CroogoStatus;
+use Croogo\Core\Status;
 use Croogo\Extensions\CroogoTheme;
 
 /**
@@ -159,8 +159,8 @@ class CroogoHtmlHelper extends HtmlHelper {
 	public function status($value, $url = array()) {
 		$iconDefaults = $this->settings['iconDefaults'];
 		$icons = $this->settings['icons'];
-		$icon = $value == CroogoStatus::PUBLISHED ? $icons['check-mark'] : $icons['x-mark'];
-		$class = $value == CroogoStatus::PUBLISHED ? 'green' : 'red';
+		$icon = $value == Status::PUBLISHED ? $icons['check-mark'] : $icons['x-mark'];
+		$class = $value == Status::PUBLISHED ? 'green' : 'red';
 
 		if (empty($url)) {
 			return $this->icon($icon, array('class' => $class));
