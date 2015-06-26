@@ -122,12 +122,12 @@ $tableFooters = trim($this->fetch('table-footer'));
 	<?php
 		$searchBlock = $this->fetch('search');
 		if (!$searchBlock):
-			$searchBlock = $this->element('admin/search');
+			$searchBlock = $this->element('Croogo/Croogo.admin/search');
 		endif;
 		echo $searchBlock;
 
 		if ($contentBlock = trim($this->fetch('content'))):
-			echo $this->element('admin/search');
+			echo $this->element('Croogo/Croogo.admin/search');
 			echo $contentBlock;
 		else:
 
@@ -175,7 +175,7 @@ $tableFooters = trim($this->fetch('table-footer'));
 			echo $pagingBlock;
 		else:
 			if (isset($this->Paginator) && isset($this->request['paging'])):
-				echo $this->element('admin/pagination');
+				echo $this->element('Croogo/Croogo.admin/pagination');
 			endif;
 		endif;
 		?>
