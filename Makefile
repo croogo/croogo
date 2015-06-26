@@ -14,6 +14,7 @@ UPLOAD_HOST=https://uploads.github.com
 API_HOST=https://api.github.com
 OWNER=cvo-technologies
 REMOTE=origin
+GITHUB_ROOT=~/work/repo/croogo
 
 ifdef GITHUB_TOKEN
 	AUTH=-H 'Authorization: token $(GITHUB_TOKEN)'
@@ -154,6 +155,58 @@ publish: guard-VERSION guard-GITHUB_USER dist/cakephp-$(DASH_VERSION).zip
 	rm id.txt
 
 # Tasks for publishing separate reporsitories out of each cake namespace
+composer-init:
+	for d in Acl Blocks Comments Contacts Core Example Extensions FileManager Install Menus Meta Nodes Settings Taxonomy Translate Users Wysiwyg ; do \
+		p=`basename $$d` ; \
+		( cd $$d && composer init \
+			--name croogo/`echo $$p | awk '{print tolower($$0) }'` \
+			--license MIT \
+			--description "Croogo $$d Plugin" \
+			--author "Croogo Development Team <team@croogo.org>" \
+			--stability dev \
+			--require croogo/core=3.0.x-dev \
+			-n \
+		) ; \
+	done
+
+prepare-repo:
+	for d in ./* ; do \
+		if [ -d $$d ] ; then \
+			r=`basename $$d | awk '{ print tolower($$0) }'` ; \
+			mkdir ${GITHUB_ROOT}/$$r ; \
+			( cd ${GITHUB_ROOT}/$$r && git init --bare ) ; \
+		fi ; \
+	done && \
+	( cd ${GITHUB_ROOT} && \
+		rm -rf config/ src/ test tests/ && \
+		for d in * ; do \
+			( cd $$d && git symbolic-ref HEAD refs/heads/3.0 ) \
+		done \
+	)
+
+plugin-split:
+	git subsplit update
+	git subsplit publish "\
+		Acl:$(GITHUB_ROOT)/acl \
+		Blocks:$(GITHUB_ROOT)/blocks \
+		Comments:$(GITHUB_ROOT)/comments \
+		Contacts:$(GITHUB_ROOT)/contacts \
+		Core:$(GITHUB_ROOT)/core \
+		Example:$(GITHUB_ROOT)/example \
+		Extensions:$(GITHUB_ROOT)/extensions \
+		FileManager:$(GITHUB_ROOT)/filemanager \
+		Install:$(GITHUB_ROOT)/install \
+		Menus:$(GITHUB_ROOT)/menus \
+		Meta:$(GITHUB_ROOT)/meta \
+		Nodes:$(GITHUB_ROOT)/nodes \
+		Settings:$(GITHUB_ROOT)/settings \
+		Taxonomy:$(GITHUB_ROOT)/taxonomy \
+		Translate:$(GITHUB_ROOT)/translate \
+		Users:$(GITHUB_ROOT)/users \
+		Wysiwyg:$(GITHUB_ROOT)/wysiwyg \
+		" \
+		--no-tags \
+		--heads=3.0
 
 plugins: $(foreach plugin, $(PLUGINS), plugin-$(plugin))
 plugins-tag: $(foreach plugin, $(PLUGINS), tag-plugin-$(plugin))
