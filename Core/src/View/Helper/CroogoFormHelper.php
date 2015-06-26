@@ -16,7 +16,8 @@ class CroogoFormHelper extends FormHelper {
 
 	public $helpers = [
 		'Html',
-		'Url'
+		'Url',
+		'Croogo/Core.Theme'
 	];
 
 /**
@@ -394,7 +395,7 @@ class CroogoFormHelper extends FormHelper {
 		$label = isset($options['label']) ? $options['label'] : Inflector::humanize($field);
 
 		$default = isset($autocomplete['default']) ? $autocomplete['default'] : array_shift($defaults);
-		$inputDefaults = $this->_View->Form->inputDefaults();
+		$inputDefaults = $this->_View->Form->templates();
 		$class = null;
 		if (!empty($inputDefaults['class'])) {
 			$class = $inputDefaults['class'];
