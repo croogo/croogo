@@ -43,6 +43,8 @@ $this->append('form-start', $this->CroogoForm->create($link, array(
 $inputDefaults = $this->Form->templates();
 $inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 $linkChooserUrl = $this->Url->build(array(
+	'plugin' => 'Croogo/Core',
+	'controller' => 'LinkChooser',
 	'action' => 'linkChooser',
 ));
 

@@ -65,7 +65,7 @@ class FileManagerEventHandler implements EventListener {
 				)
 			)
 		);
-		Croogo::mergeConfig('Menus.linkChoosers', $linkChoosers);
+		Croogo::mergeConfig('Croogo.linkChoosers', $linkChoosers);
 	}
 
 }

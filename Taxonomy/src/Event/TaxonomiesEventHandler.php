@@ -92,7 +92,7 @@ class TaxonomiesEventHandler implements EventListenerInterface {
 				);
 			}
 		}
-		Croogo::mergeConfig('Menus.linkChoosers', $linkChoosers);
+		Croogo::mergeConfig('Croogo.linkChoosers', $linkChoosers);
 	}
 
 }

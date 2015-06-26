@@ -286,10 +286,4 @@ class LinksController extends CroogoAppController {
 
 	}
 
-	public function linkChooser() {
-		Croogo::dispatchEvent('Controller.Links.setupLinkChooser', $this);
-		$linkChoosers = Configure::read('Menus.linkChoosers');
-		$this->set(compact('linkChoosers'));
-	}
-
 }
