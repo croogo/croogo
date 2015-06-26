@@ -6,7 +6,7 @@ use App\Model\Model;
 use App\Model\User;
 use Cake\ORM\TableRegistry;
 use Croogo\Model\CroogoAppModel;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Users\Model\Table\UsersTable;
 
 /**

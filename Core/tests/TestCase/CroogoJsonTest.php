@@ -1,8 +1,8 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase;
 
-use Croogo\Croogo\CroogoJson;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\CroogoJson;
+use Croogo\Core\TestSuite\CroogoTestCase;
 class CroogoJsonTest extends CroogoTestCase {
 
 	public $fixtures = array(

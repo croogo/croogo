@@ -4,8 +4,8 @@ namespace Croogo\Croogo\Test\TestCase\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
-use Croogo\Croogo\Controller\Component\BaseApiComponent;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\Controller\Component\BaseApiComponent;
+use Croogo\Core\TestSuite\CroogoTestCase;
 class TestApiComponent extends BaseApiComponent {
 
 	protected $_apiVersion = 'v1.0';

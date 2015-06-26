@@ -9,8 +9,8 @@ use Cake\Utility\Inflector;
 use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
-use Croogo\Croogo\Croogo;
-use Croogo\Croogo\CroogoStatus;
+use Croogo\Core\Croogo;
+use Croogo\Core\CroogoStatus;
 /**
  * Croogo Helper
  *

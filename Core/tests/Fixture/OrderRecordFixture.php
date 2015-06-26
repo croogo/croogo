@@ -2,7 +2,7 @@
 
 namespace Croogo\Croogo\Test\Fixture;
 
-use Croogo\Croogo\TestSuite\CroogoTestFixture;
+use Croogo\Core\TestSuite\CroogoTestFixture;
 
 class OrderRecordFixture extends CroogoTestFixture {
 

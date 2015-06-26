@@ -7,9 +7,9 @@ use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\Network\Request;
 use Cake\Utility\Hash;
-use Croogo\Croogo\Controller\CroogoAppController;
-use Croogo\Croogo\Croogo;
-use Croogo\Croogo\TestSuite\CroogoControllerTestCase;
+use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Core\Croogo;
+use Croogo\Core\TestSuite\CroogoControllerTestCase;
 class TestAppController extends CroogoAppController {
 
 	public function admin_edit() {

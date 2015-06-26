@@ -4,7 +4,7 @@ namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
 
 use Cake\Core\Configure;
 use Cake\Network\Session;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Users\Model\User;
 
 //class TrackableUserModel extends User {

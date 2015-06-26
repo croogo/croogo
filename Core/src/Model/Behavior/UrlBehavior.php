@@ -7,7 +7,7 @@ use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
-use Croogo\Croogo\Link;
+use Croogo\Core\Link;
 
 /**
  * Url Behavior

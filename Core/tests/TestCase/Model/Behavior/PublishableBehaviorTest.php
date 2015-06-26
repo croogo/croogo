@@ -2,7 +2,7 @@
 
 namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
 
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\TestSuite\CroogoTestCase;
 class PublishableBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(

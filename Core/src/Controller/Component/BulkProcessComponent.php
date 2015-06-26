@@ -8,7 +8,7 @@ use Cake\Event\Event;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Croogo;
 
 /**
  * BulkProcess Component

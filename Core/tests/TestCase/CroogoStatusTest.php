@@ -4,8 +4,8 @@ namespace Croogo\Croogo\Test\TestCase;
 
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
-use Croogo\Croogo\CroogoStatus;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\CroogoStatus;
+use Croogo\Core\TestSuite\CroogoTestCase;
 class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface {
 
 	public function implementedEvents() {

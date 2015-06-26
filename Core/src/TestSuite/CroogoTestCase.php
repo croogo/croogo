@@ -7,9 +7,9 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Network\Request;
 use Cake\TestSuite\TestCase;
-use Croogo\Croogo\Configure\CroogoJsonReader;
-use Croogo\Croogo\CroogoRouter;
-use Croogo\Croogo\TestSuite\CroogoTestFixture;
+use Croogo\Core\Configure\CroogoJsonReader;
+use Croogo\Core\CroogoRouter;
+use Croogo\Core\TestSuite\CroogoTestFixture;
 /**
  * CroogoTestCase class
  *

@@ -6,8 +6,8 @@ use Cake\Controller\Controller;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\View\View;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
-use Croogo\Croogo\View\Helper\CroogoHtmlHelper;
+use Croogo\Core\TestSuite\CroogoTestCase;
+use Croogo\Core\View\Helper\CroogoHtmlHelper;
 class CroogoHtmlHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(

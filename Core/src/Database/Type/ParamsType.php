@@ -4,7 +4,7 @@ namespace Croogo\Croogo\Database\Type;
 
 use Cake\Database\Driver;
 use Cake\Database\Type;
-use Croogo\Croogo\Utility\StringConverter;
+use Croogo\Core\Utility\StringConverter;
 use PDO;
 
 class ParamsType extends Type {

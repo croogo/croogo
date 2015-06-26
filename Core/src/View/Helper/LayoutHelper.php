@@ -6,7 +6,7 @@ use Cake\View\Helper;
 use Cake\Routing\Router;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Croogo;
 use Cake\Utility\Inflector;
 
 /**

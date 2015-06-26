@@ -11,9 +11,9 @@ use Cake\Core\Plugin;
 use Cake\Event\Event;
 
 use Cake\ORM\Table;
-use Croogo\Croogo\Core\Exception\Exception;
-use Croogo\Croogo\Croogo;
-use Croogo\Croogo\CroogoNav;
+use Croogo\Core\Exception\Exception;
+use Croogo\Core\Croogo;
+use Croogo\Core\CroogoNav;
 use Croogo\Extensions\CroogoPlugin;
 use Croogo\Extensions\CroogoTheme;
 

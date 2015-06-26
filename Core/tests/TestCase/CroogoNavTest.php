@@ -2,9 +2,9 @@
 namespace Croogo\Croogo\Test\TestCase;
 
 use Cake\Utility\Hash;
-use Croogo\Croogo\Croogo;
-use Croogo\Croogo\CroogoNav;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\Croogo;
+use Croogo\Core\CroogoNav;
+use Croogo\Core\TestSuite\CroogoTestCase;
 class CroogoNavTest extends CroogoTestCase {
 
 	public $setupSettings = false;

@@ -3,8 +3,8 @@
 namespace Croogo\Croogo\Configure;
 
 use Cake\Core\Configure\ConfigEngineInterface;
-use Croogo\Croogo\Core\Exception\Exception;
-use Croogo\Croogo\CroogoJson;
+use Croogo\Core\Exception\Exception;
+use Croogo\Core\CroogoJson;
 
 /**
  * CroogoJsonReader

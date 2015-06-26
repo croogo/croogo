@@ -5,8 +5,8 @@ use Cake\Controller\Controller;
 use Cake\Network\Request;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
-use Croogo\Croogo\View\Helper\CroogoPaginatorHelper;
+use Croogo\Core\TestSuite\CroogoTestCase;
+use Croogo\Core\View\Helper\CroogoPaginatorHelper;
 class CroogoPaginatorHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(

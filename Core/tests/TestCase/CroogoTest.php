@@ -4,8 +4,8 @@ namespace Croogo\Croogo\Test\TestCase;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Croogo\Croogo\Croogo;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\Croogo;
+use Croogo\Core\TestSuite\CroogoTestCase;
 class CroogoTest extends CroogoTestCase {
 
 	public $fixtures = array(

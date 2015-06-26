@@ -1,7 +1,7 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
 
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\TestSuite\CroogoTestCase;
 use Taxonomy\Model\Type;
 class ParamsBehaviorTest extends CroogoTestCase {
 

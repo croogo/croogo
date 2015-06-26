@@ -3,7 +3,7 @@ namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\TestSuite\CroogoTestCase;
 class CachedBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(

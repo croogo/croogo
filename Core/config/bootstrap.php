@@ -3,7 +3,7 @@
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Database\Type;
-use Croogo\Croogo;
+use Croogo\Core\Croogo;
 
 // Map our custom types
 Type::map('params', 'Croogo\Croogo\Database\Type\ParamsType');

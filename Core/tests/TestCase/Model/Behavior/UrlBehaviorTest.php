@@ -1,7 +1,7 @@
 <?php
 namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
 
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\TestSuite\CroogoTestCase;
 use Nodes\Model\Node;
 class UrlBehaviorTest extends CroogoTestCase {
 

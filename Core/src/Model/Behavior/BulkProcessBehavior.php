@@ -6,7 +6,7 @@ use App\Model\ModelBehavior;
 use Cake\ORM\Behavior;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
-use Croogo\Croogo\CroogoStatus;
+use Croogo\Core\CroogoStatus;
 use InvalidArgumentException;
 
 /**

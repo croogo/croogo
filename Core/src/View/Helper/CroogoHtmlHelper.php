@@ -6,7 +6,7 @@ use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
-use Croogo\Croogo\CroogoStatus;
+use Croogo\Core\CroogoStatus;
 use Croogo\Extensions\CroogoTheme;
 
 /**

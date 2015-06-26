@@ -3,8 +3,8 @@
 namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
 
 use Cake\Core\Configure;
-use Croogo\Croogo\Test\Fixture\OrderRecordFixture;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\Test\Fixture\OrderRecordFixture;
+use Croogo\Core\TestSuite\CroogoTestCase;
 
 class OrderedBehaviorTest extends CroogoTestCase {
 

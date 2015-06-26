@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo;
+namespace Croogo\Core;
 
 use App\Model\Permission;
 use ArrayAccess;

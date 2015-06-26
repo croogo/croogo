@@ -2,7 +2,7 @@
 	<div class="navbar-inner">
 	<?php
 	use Cake\Cache\Cache;
-	use Croogo\Croogo\CroogoNav;
+	use Croogo\Core\CroogoNav;
 
 	$cacheKey = 'adminnav_' . $this->Layout->getRoleId() . '_' . $this->request->url . '_' . md5(serialize($this->request->query));
 //		$navItems = Cache::read($cacheKey, 'croogo_menus');

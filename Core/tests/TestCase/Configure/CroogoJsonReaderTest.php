@@ -3,8 +3,8 @@
 namespace Croogo\Croogo\Test\TestCase\Configure;
 
 use Cake\Core\Plugin;
-use Croogo\Croogo\Configure\CroogoJsonReader;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\Configure\CroogoJsonReader;
+use Croogo\Core\TestSuite\CroogoTestCase;
 class MockCroogoJsonReader extends CroogoJsonReader {
 
 	public $written = null;

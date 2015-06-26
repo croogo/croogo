@@ -8,9 +8,9 @@ use Cake\Network\Response;
 use Cake\Network\Request;
 use Cake\Network\Session;
 use Cake\View\View;
-use Croogo\Croogo\CroogoNav;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
-use Croogo\Croogo\View\Helper\CroogoHelper;
+use Croogo\Core\CroogoNav;
+use Croogo\Core\TestSuite\CroogoTestCase;
+use Croogo\Core\View\Helper\CroogoHelper;
 
 class CroogoHelperTest extends CroogoTestCase {
 

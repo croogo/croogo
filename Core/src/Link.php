@@ -1,9 +1,9 @@
 <?php
 
-namespace Croogo\Croogo;
+namespace Croogo\Core;
 
 use ArrayObject;
-use Croogo\Croogo\Utility\StringConverter;
+use Croogo\Core\Utility\StringConverter;
 
 class Link extends ArrayObject {
 

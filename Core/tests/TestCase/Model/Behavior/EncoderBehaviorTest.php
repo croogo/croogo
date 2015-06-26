@@ -2,7 +2,7 @@
 namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
 
 use Cake\ORM\TableRegistry;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Nodes\Model\Table\NodesTable;
 class EncoderBehaviorTest extends CroogoTestCase {
 

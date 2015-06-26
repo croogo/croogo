@@ -6,8 +6,8 @@ use Cake\Console\Shell;
 use Cake\Console\ShellDispatcher;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
-use Croogo\Croogo\Shell\InstallShell;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\Shell\InstallShell;
+use Croogo\Core\TestSuite\CroogoTestCase;
 use ReflectionClass;
 
 /**

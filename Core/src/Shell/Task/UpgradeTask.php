@@ -12,7 +12,7 @@
 
 namespace Croogo\Croogo\Shell\Task;
 
-use Croogo\Croogo\Shell\CroogoAppShell;
+use Croogo\Core\Shell\CroogoAppShell;
 
 class UpgradeTask extends CroogoAppShell {
 

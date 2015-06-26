@@ -9,8 +9,8 @@ use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Network\Request;
 use Cake\Network\Response;
-use Croogo\Croogo\Controller\Component\CroogoComponent;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\Controller\Component\CroogoComponent;
+use Croogo\Core\TestSuite\CroogoTestCase;
 class MockCroogoComponent extends CroogoComponent {
 
 	public function startup(Event $event) {

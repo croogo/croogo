@@ -3,8 +3,8 @@ namespace Croogo\Croogo\Test\TestCase\View\Helper;
 
 use Cake\Controller\Controller;
 use Cake\View\View;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
-use Croogo\Croogo\View\Helper\CroogoFormHelper;
+use Croogo\Core\TestSuite\CroogoTestCase;
+use Croogo\Core\View\Helper\CroogoFormHelper;
 class CroogoFormHelperTest extends CroogoTestCase {
 
 	/**

@@ -3,8 +3,8 @@
 namespace Croogo\Croogo\Test\TestCase\Routing\Route;
 
 use Cake\Core\Configure;
-use Croogo\Croogo\Routing\Route\ApiRoute;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\Routing\Route\ApiRoute;
+use Croogo\Core\TestSuite\CroogoTestCase;
 class ApiRouteTest extends CroogoTestCase {
 
 	public $fixtures = array(

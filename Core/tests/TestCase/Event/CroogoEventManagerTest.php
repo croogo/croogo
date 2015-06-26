@@ -5,9 +5,9 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\View\View;
-use Croogo\Croogo\Croogo;
-use Croogo\Croogo\Event\CroogoEventManager;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\Croogo;
+use Croogo\Core\Event\CroogoEventManager;
+use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Extensions\CroogoPlugin;
 
 use Croogo\Nodes\Controller\NodesController;

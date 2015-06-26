@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo;
+namespace Croogo\Core;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;

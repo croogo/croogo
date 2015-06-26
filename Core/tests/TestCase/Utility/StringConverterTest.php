@@ -3,8 +3,8 @@
 namespace Croogo\Croogo\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
-use Croogo\Croogo\Utility\StringConverter;
+use Croogo\Core\TestSuite\CroogoTestCase;
+use Croogo\Core\Utility\StringConverter;
 class StringConverterTest extends CroogoTestCase {
 
 	public $setupSettings = false;

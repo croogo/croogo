@@ -13,11 +13,11 @@ use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
-use Croogo\Croogo\Croogo;
-use Croogo\Croogo\Cache\CroogoCache;
-use Croogo\Croogo\Configure\CroogoJsonReader;
-use Croogo\Croogo\CroogoStatus;
-use Croogo\Croogo\Event\CroogoEventManager;
+use Croogo\Core\Croogo;
+use Croogo\Core\Cache\CroogoCache;
+use Croogo\Core\Configure\CroogoJsonReader;
+use Croogo\Core\CroogoStatus;
+use Croogo\Core\Event\CroogoEventManager;
 use Croogo\Extensions\CroogoPlugin;
 
 /**

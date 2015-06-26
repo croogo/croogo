@@ -5,8 +5,8 @@ namespace Croogo\Croogo\Test\TestCase;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Routing\Router;
-use Croogo\Croogo\CroogoRouter;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\CroogoRouter;
+use Croogo\Core\TestSuite\CroogoTestCase;
 class CroogoRouterTest extends CroogoTestCase {
 
 	public $fixtures = array(

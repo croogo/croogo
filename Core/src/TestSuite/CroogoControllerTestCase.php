@@ -9,8 +9,8 @@ use Cake\Log\Log;
 use Cake\Network\Session;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Hash;
-use Croogo\Croogo\Configure\CroogoJsonReader;
-use Croogo\Croogo\TestSuite\CroogoTestFixture;
+use Croogo\Core\Configure\CroogoJsonReader;
+use Croogo\Core\TestSuite\CroogoTestFixture;
 /**
  * CroogoTestCase class
  *

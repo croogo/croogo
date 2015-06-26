@@ -3,7 +3,7 @@
 namespace Croogo\Croogo\Model\Behavior;
 
 use Cake\ORM\Behavior;
-use Croogo\Croogo\CroogoStatus;
+use Croogo\Core\CroogoStatus;
 
 /**
  * Publishable Behavior

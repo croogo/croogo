@@ -12,8 +12,8 @@ use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\Utility\Hash;
 
-use Croogo\Croogo\Croogo;
-use Croogo\Croogo\PropertyHookTrait;
+use Croogo\Core\Croogo;
+use Croogo\Core\PropertyHookTrait;
 use Croogo\Extensions\CroogoTheme;
 
 /**

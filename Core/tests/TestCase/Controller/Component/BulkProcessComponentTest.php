@@ -4,7 +4,7 @@ namespace Croogo\Croogo\Test\TestCase\Controller\Component;
 
 use Cake\Controller\Controller;
 use Cake\Network\Request;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\TestSuite\CroogoTestCase;
 class BulkProcessComponentTest extends CroogoTestCase {
 
 	public $setupSettings = false;

@@ -6,8 +6,8 @@ use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\Routing\Router;
 use Cake\View\View;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
-use Croogo\Croogo\View\Helper\CroogoAppHelper;
+use Croogo\Core\TestSuite\CroogoTestCase;
+use Croogo\Core\View\Helper\CroogoAppHelper;
 class CroogoAppHelperTest extends CroogoTestCase {
 
 /**
