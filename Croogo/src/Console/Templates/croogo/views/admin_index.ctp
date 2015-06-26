@@ -1,5 +1,5 @@
 <?php
-$underscoredPluginName = Inflector::underscore($plugin);
+$underscoredPluginName = $plugin ? Inflector::underscore($plugin) : 'default';
 $header = <<<EOF
 <?php
 \$this->viewVars['title_for_layout'] = __d('$underscoredPluginName', '$pluralHumanName');
@@ -36,6 +36,7 @@ echo $tableHeaders;
 ?>
 <?php echo "\$this->append('table-body');\n"; ?>
 <?php
+	echo "\t\$rows = array();\n";
 	echo "\tforeach (\${$pluralVar} as \${$singularVar}):\n";
 	echo "\t\t\$row = array();\n";
 		foreach ($fields as $field) {

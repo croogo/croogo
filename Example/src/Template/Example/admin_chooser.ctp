@@ -6,17 +6,13 @@ $this->Html
 	->addCrumb('Example', array('controller' => 'example', 'action' => 'index'))
 	->addCrumb('Chooser Example', array('controller' => 'example', 'action' => 'chooser'));
 
-echo $this->Form->create(null);
+$this->append('form-start', $this->Form->create(null));
 
-?>
-<fieldset>
-<legend>Chooser Example</legend>
-<?php
-
+$this->append('main');
 echo $this->Form->input('node_id', array(
 	'type' => 'text',
-	'class' => $this->Theme->getCssClass('columnLeft'),
-	'after' => ' ' . $this->Html->link('Choose Node',
+	'append' => true,
+	'addon' => $this->Html->link('Choose Node',
 		array(
 			'plugin' => 'nodes',
 			'controller' => 'nodes',
@@ -28,6 +24,7 @@ echo $this->Form->input('node_id', array(
 			),
 		),
 		array(
+			'button' => 'default',
 			'class' => 'action node chooser',
 		)
 	)
@@ -35,8 +32,8 @@ echo $this->Form->input('node_id', array(
 
 echo $this->Form->input('node_url', array(
 	'type' => 'text',
-	'class' => $this->Theme->getCssClass('columnLeft'),
-	'after' => ' ' . $this->Html->link('Choose Node',
+	'append' => true,
+	'addon' => $this->Html->link('Choose Node',
 		array(
 			'plugin' => 'nodes',
 			'controller' => 'nodes',
@@ -48,6 +45,7 @@ echo $this->Form->input('node_url', array(
 			),
 		),
 		array(
+			'button' => 'default',
 			'class' => 'action node chooser',
 		)
 	)
@@ -55,8 +53,8 @@ echo $this->Form->input('node_url', array(
 
 echo $this->Form->input('block_id', array(
 	'type' => 'text',
-	'class' => $this->Theme->getCssClass('columnLeft'),
-	'after' => ' ' . $this->Html->link('Choose Block Id',
+	'append' => true,
+	'addon' => $this->Html->link('Choose Block Id',
 		array(
 			'plugin' => 'blocks',
 			'controller' => 'blocks',
@@ -68,6 +66,7 @@ echo $this->Form->input('block_id', array(
 			),
 		),
 		array(
+			'button' => 'default',
 			'class' => 'action block chooser',
 		)
 	)
@@ -75,8 +74,8 @@ echo $this->Form->input('block_id', array(
 
 echo $this->Form->input('block_title', array(
 	'type' => 'text',
-	'class' => $this->Theme->getCssClass('columnLeft'),
-	'after' => ' ' . $this->Html->link('Choose Block Title',
+	'append' => true,
+	'addon' => $this->Html->link('Choose Block Title',
 		array(
 			'plugin' => 'blocks',
 			'controller' => 'blocks',
@@ -88,6 +87,7 @@ echo $this->Form->input('block_title', array(
 			),
 		),
 		array(
+			'button' => 'default',
 			'class' => 'action block chooser',
 		)
 	)
@@ -95,8 +95,8 @@ echo $this->Form->input('block_title', array(
 
 echo $this->Form->input('user_id', array(
 	'type' => 'text',
-	'class' => $this->Theme->getCssClass('columnLeft'),
-	'after' => ' ' . $this->Html->link('Choose User Id',
+	'append' => true,
+	'addon' => $this->Html->link('Choose User Id',
 		array(
 			'plugin' => 'users',
 			'controller' => 'users',
@@ -108,14 +108,14 @@ echo $this->Form->input('user_id', array(
 			),
 		),
 		array(
+			'button' => 'default',
 			'class' => 'action user chooser',
 		)
 	)
 ));
+$this->end();
 
-?>
-</fieldset>
-<?php
+$this->append('form-end', $this->Form->end());
 
 $script = <<<EOF
 $('.chooser').itemChooser({

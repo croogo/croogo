@@ -79,6 +79,10 @@ class UsersControllerTest extends CroogoControllerTestCase {
 		return false;
 	}
 
+	public function authIdentifyTrue() {
+		return true;
+	}
+
 /**
  * tearDown
  *
@@ -411,6 +415,64 @@ class UsersControllerTest extends CroogoControllerTestCase {
 						'verify_password' => 'banana',
 					)
 				)
+			)
+		);
+	}
+
+/**
+ * Test correct redirection after login in frontend
+ *
+ * @return void
+ */
+	public function testRedirectAfterAdminLogin() {
+		$controller = $this->generate('Users.Users', array(
+			'methods' => array(
+				'redirect',
+			),
+			'components' => array(
+				'Auth' => array('login'),
+			),
+		));
+		$controller->Auth
+			->expects($this->any())
+			->method('login')
+			->will($this->returnCallback(array($this, 'authIdentifyTrue')));
+		$controller->expects($this->once())
+			->method('redirect')
+			->with(Router::url(Configure::read('Croogo.dashboardUrl')));
+		$this->testAction(
+			'/admin/users/users/login',
+			array(
+				'method' => 'POST',
+			)
+		);
+	}
+
+/**
+ * Test correct redirection after login in /admin
+ *
+ * @return void
+ */
+	public function testRedirectAfterLogin() {
+		$controller = $this->generate('Users.Users', array(
+			'methods' => array(
+				'redirect',
+			),
+			'components' => array(
+				'Auth' => array('login'),
+			),
+		));
+		$controller->Auth
+			->expects($this->any())
+			->method('login')
+			->will($this->returnCallback(array($this, 'authIdentifyTrue')));
+		$controller->expects($this->once())
+			->method('redirect')
+			->with(Router::url(Configure::read('Site.homeUrl')));
+		$this->testAction(
+			'/users/users/login',
+			array(
+				'method' => 'POST',
 			)
 		);
 	}

@@ -152,7 +152,11 @@ class FilterComponent extends Component {
 			'controller' => 'Users',
 			'action' => 'login',
 		]);
-		$this->_controller->Auth->config('loginRedirect', Configure::read('Croogo.dashboardUrl'));
+		if ($this->_controller->request->param('admin')) {
+			$this->_controller->Auth->config('loginRedirect', Configure::read('Croogo.dashboardUrl'));
+		} else {
+			$this->_controller->Auth->config('loginRedirect', Configure::read('Croogo.homeUrl'));
+		}
 		$this->_controller->Auth->config('unauthorizedRedirect', [
 			'plugin' => 'Croogo/Users',
 			'controller' => 'Users',
