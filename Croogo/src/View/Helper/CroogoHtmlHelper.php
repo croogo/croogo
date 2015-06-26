@@ -148,7 +148,7 @@ class CroogoHtmlHelper extends HtmlHelper {
  * @return string Icon markup
  */
 	public function icon($name, $options = array()) {
-		$iconDefaults = $this->settings['iconDefaults'];
+		$iconDefaults = $this->config('iconDefaults');
 		$defaults = array('class' => '');
 		$options = array_merge($defaults, $options);
 		$class = $iconDefaults['classDefault'];
