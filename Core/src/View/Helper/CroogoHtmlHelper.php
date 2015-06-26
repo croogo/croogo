@@ -293,7 +293,9 @@ class CroogoHtmlHelper extends HtmlHelper {
 			'id' => $id,
 			'class' => 'tab-pane',
 		), $options);
-		return $this->useTag('blockstart', $options);
+		return $this->formatTemplate('blockstart', [
+			'attrs' => $this->templater()->formatAttributes($options)
+		]);
 	}
 
 /**
@@ -302,7 +304,7 @@ class CroogoHtmlHelper extends HtmlHelper {
  * @return string
  */
 	public function tabEnd() {
-		return $this->useTag('blockend');
+		return $this->formatTemplate('blockend', []);
 	}
 
 }

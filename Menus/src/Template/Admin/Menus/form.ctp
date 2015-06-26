@@ -29,7 +29,7 @@ $this->append('tab-heading');
 $this->end();
 
 $this->append('tab-content');
-    echo $this->Html->tabStart('menu-basic');
+    echo $this->CroogoHtml->tabStart('menu-basic');
         echo $this->CroogoForm->input('id');
         $this->CroogoForm->templates(array(
             'class' => 'span10',
@@ -43,15 +43,15 @@ $this->append('tab-content');
         echo $this->CroogoForm->input('description', array(
             'label' => __d('croogo', 'Description'),
         ));
-    echo $this->Html->tabEnd();
+    echo $this->CroogoHtml->tabEnd();
 $this->end();
 
 $this->append('tab-content');
-    echo $this->Html->tabStart('menu-misc');
+    echo $this->CroogoHtml->tabStart('menu-misc');
         echo $this->CroogoForm->input('params', array(
             'label' => __d('croogo', 'Params'),
         ));
-    echo $this->Html->tabEnd();
+    echo $this->CroogoHtml->tabEnd();
 
     echo $this->Croogo->adminTabs();
 $this->end();
