@@ -26,6 +26,7 @@
 			'Croogo/Core.jquery/thickbox-compressed',
 			'Croogo/Core.underscore-min',
 			'Croogo/Core.admin',
+			'Croogo/Core.sidebar',
 			'Croogo/Core.choose',
 			'Croogo/Core.typeahead_autocomplete',
 			'Croogo/Core.croogo-bootstrap.js',
