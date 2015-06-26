@@ -2,6 +2,6 @@
 
 $config = array(
 	'EventHandlers' => array(
-		'Menus.MenusEventHandler',
+		'Croogo/Menus.MenusEventHandler',
 	),
 );
