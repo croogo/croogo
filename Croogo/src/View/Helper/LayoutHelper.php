@@ -197,7 +197,7 @@ class LayoutHelper extends Helper {
 			$croogoSetting['themeSettings'] = Hash::merge(
 				$croogoSetting['themeSettings'],
 				array_intersect_key(
-					array_merge($validKeys, $this->_View->CroogoHtml->settings),
+					array_merge($validKeys, $this->_View->CroogoHtml->config()),
 					$validKeys
 				)
 			);
