@@ -1,6 +1,6 @@
 {
-    "name": "croogo/nodes",
-    "description": "Croogo Nodes Plugin",
+    "name": "croogo/taxonomy",
+    "description": "Croogo Taxonomy Plugin",
     "require": {
         "croogo/core": "3.0.x-dev"
     },

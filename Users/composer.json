@@ -1,6 +1,6 @@
 {
-    "name": "croogo/nodes",
-    "description": "Croogo Nodes Plugin",
+    "name": "croogo/users",
+    "description": "Croogo Users Plugin",
     "require": {
         "croogo/core": "3.0.x-dev"
     },

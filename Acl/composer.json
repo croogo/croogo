@@ -1,6 +1,6 @@
 {
-    "name": "croogo/nodes",
-    "description": "Croogo Nodes Plugin",
+    "name": "croogo/acl",
+    "description": "Croogo Acl Plugin",
     "require": {
         "croogo/core": "3.0.x-dev"
     },
