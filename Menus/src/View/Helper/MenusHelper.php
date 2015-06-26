@@ -7,6 +7,7 @@ use Cake\Routing\Router;
 use Cake\View\Helper;
 use Cake\View\View;
 use Croogo\Core\Utility\StringConverter;
+use Croogo\Core\Nav;
 
 /**
  * Menus Helper
@@ -52,7 +53,7 @@ class MenusHelper extends Helper {
  * beforeRender
  */
 	public function beforeRender($viewFile) {
-		if (isset($this->request->params['admin']) && !$this->request->is('ajax')) {
+		if (($this->request->param('prefix') === 'admin') && (!$this->request->is('ajax'))) {
 			$this->_adminMenu();
 		}
 	}
@@ -65,17 +66,17 @@ class MenusHelper extends Helper {
 			return;
 		}
 		$menus = $this->_View->viewVars['menus_for_admin_layout'];
-		foreach ($menus as $m) {
-			$weight = 9999 + $m['Menu']['weight'];
-			$htmlAttributes = $this->__isCurrentMenu($m['Menu']['id']) ? array('class' => 'current') : array();
-			CroogoNav::add('sidebar', 'menus.children.' . $m['Menu']['alias'], array(
-				'title' => $m['Menu']['title'],
+		foreach ($menus as $menu) {
+			$weight = 9999 + $menu->weight;
+			$htmlAttributes = $this->__isCurrentMenu($menu->id) ? array('class' => 'current') : array();
+			Nav::add('sidebar', 'menus.children.' . $menu->alias, array(
+				'title' => $menu->title,
 				'url' => array(
-					'plugin' => 'menus',
-					'admin' => true,
-					'controller' => 'links',
+					'prefix' => 'admin',
+					'plugin' => 'Croogo/Menus',
+					'controller' => 'Links',
 					'action' => 'index',
-					'?' => array('menu_id' => $m['Menu']['id'])
+					'?' => array('menu_id' => $menu->id)
 				),
 				'weight' => $weight,
 				'htmlAttributes' => $htmlAttributes
