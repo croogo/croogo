@@ -6,6 +6,7 @@ use Cake\Core\App;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 use Cake\Utility\Hash;
 
 /**

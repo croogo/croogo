@@ -1,7 +1,11 @@
 <?php
 
-App::uses('AppHelper', 'View/Helper');
-App::uses('CroogoTheme', 'Extensions.Lib');
+namespace Croogo\Croogo\View\Helper;
+
+use Cake\Utility\Hash;
+use Cake\View\Helper;
+use Cake\View\View;
+use Croogo\Extensions\CroogoTheme;
 
 /**
  * Theme Helper
@@ -12,7 +16,7 @@ App::uses('CroogoTheme', 'Extensions.Lib');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ThemeHelper extends AppHelper {
+class ThemeHelper extends Helper {
 
 	protected $_themeSettings = array();
 

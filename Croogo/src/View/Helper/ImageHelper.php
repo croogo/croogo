@@ -14,7 +14,7 @@ class ImageHelper extends Helper {
 	public $helpers = array(
 		'Html',
 		'Theme' => array(
-			'className' => 'Croogo.Theme',
+			'className' => 'Croogo/Croogo.Theme',
 		),
 	);
 

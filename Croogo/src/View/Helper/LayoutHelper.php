@@ -28,8 +28,8 @@ class LayoutHelper extends Helper {
  * @access public
  */
 	public $helpers = array(
-		'Croogo.Croogo',
-		'Croogo.Theme',
+		'Croogo/Croogo.Croogo',
+		'Croogo/Croogo.Theme',
 		'Html',
 		'Form',
 		'Flash'

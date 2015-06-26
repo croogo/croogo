@@ -1,21 +1,22 @@
 <?php
 
-$this->extend('Croogo/Croogo./Common/admin_index');
-$this->name = 'acl_permissions';
+$this->name = 'acos';
+
 $this->Html->script('Croogo/Acl.acl_permissions', ['block' => true]);
+$this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentReady(); });", ['block' => true]);
+
+$this->Croogo->adminScript('Acl.acl_permissions');
 
 $this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Permissions'), array(
 		'plugin' => 'Croogo/Acl', 'controller' => 'Permissions',
-	));
+	))
+	->addCrumb(__d('croogo', 'Actions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Actions', 'action' => 'index', 'permission' => 1));
 
-?>
-<?php $this->start('actions'); ?>
-<div class="btn-group">
-<?php
-	echo $this->Html->link(
+$this->append('actions');
+	$toolsButton = $this->Html->link(
 		__d('croogo', 'Tools') . ' ' . '<span class="caret"></span>',
 		'#',
 		array(
@@ -56,32 +57,89 @@ $this->CroogoHtml
 			),
 		)
 	);
-	echo $this->Html->tag('ul', $out, array('class' => 'dropdown-menu'));
-?>
-</div>
-<?php
-	echo $this->Croogo->adminAction(__d('croogo', 'Edit Actions'),
-		array('controller' => 'Actions', 'action' => 'index', 'permissions' => 1)
+	echo $this->Html->div('btn-group',
+		$toolsButton .
+		$this->Html->tag('ul', $out, array('class' => 'dropdown-menu'))
 	);
-?>
-<?php $this->end(); ?>
 
-<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
-	<div class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
+	echo $this->Croogo->adminAction(__d('croogo', 'Edit Actions'),
+		array('controller' => 'acl_actions', 'action' => 'index', 'permissions' => 1)
+	);
+$this->end();
 
-		<ul id="permissions-tab" class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTabs();
-		?>
-		</ul>
+$this->set('tableClass', 'table permission-table');
+$this->start('table-heading');
+	$tableHeaders = $this->Html->tableHeaders(array(
+		__d('croogo', 'Id'),
+		__d('croogo', 'Alias'),
+		__d('croogo', 'Actions'),
+	));
+	echo $this->Html->tag('thead', $tableHeaders);
+$this->end();
 
-		<div class="tab-content">
-			<?php echo $this->Croogo->adminTabs(); ?>
-		</div>
+$this->append('table-body');
+	$currentController = '';
+	$icon = '<i class="icon-none pull-right"></i>';
+	foreach ($acos as $aco) {
+		$id = $aco->id;
+		$alias = $aco->alias;
+		$class = '';
+		if (substr($alias, 0, 1) == '_') {
+			$level = 1;
+			$class .= 'level-' . $level;
+			$oddOptions = array('class' => 'hidden controller-' . $currentController);
+			$evenOptions = array('class' => 'hidden controller-' . $currentController);
+			$alias = substr_replace($alias, '', 0, 1);
+		} else {
+			$level = 0;
+			$class .= ' controller';
+			if ($aco->children > 0) {
+				$class .= ' perm-expand';
+			}
+			$oddOptions = array();
+			$evenOptions = array();
+			$currentController = $alias;
+		}
 
-	</div>
-</div>
+		$actions = array();
+		$actions[] = $this->Croogo->adminRowAction('',
+			array('action' => 'move', $id, 'up'),
+			array('icon' => $this->Theme->getIcon('move-up'), 'tooltip' => __d('croogo', 'Move up'))
+		);
+		$actions[] = $this->Croogo->adminRowAction('',
+			array('action' => 'move', $id, 'down'),
+			array('icon' => $this->Theme->getIcon('move-down'), 'tooltip' => __d('croogo', 'Move down'))
+		);
 
-<?php
+		$actions[] = $this->Croogo->adminRowAction('',
+			array('action' => 'edit', $id),
+			array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
+		);
+		$actions[] = $this->Croogo->adminRowAction('',
+			array('action' => 'delete',	$id),
+			array(
+				'icon' => $this->Theme->getIcon('delete'),
+				'tooltip' => __d('croogo', 'Remove this item'),
+				'escapeTitle' => false,
+				'escape' => true,
+			),
+			__d('croogo', 'Are you sure?')
+		);
 
-$this->Js->buffer('AclPermissions.tabSwitcher();');
+		$actions = $this->CroogoHtml->div('item-actions', implode(' ', $actions));
+		$row = array(
+			$id,
+			$this->Html->div(trim($class), $alias . $icon, array(
+				'data-id' => $id,
+				'data-alias' => $alias,
+				'data-level' => $level,
+			)),
+			$actions,
+		);
+
+		echo $this->Html->tableCells($row, $oddOptions, $evenOptions);
+	}
+	echo $this->Html->tag('thead', $tableHeaders);
+$this->end();
+
+$this->Js->buffer('AclPermissions.documentReady();');

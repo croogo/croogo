@@ -305,12 +305,4 @@ class CroogoHtmlHelper extends HtmlHelper {
 		return $this->useTag('blockend');
 	}
 
-	public function implementedEvents()
-	{
-		return [
-			'View.beforeRender' => 'beforeRender'
-		];
-	}
-
-
 }
