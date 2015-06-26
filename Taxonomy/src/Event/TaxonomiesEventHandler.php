@@ -5,7 +5,7 @@ namespace Croogo\Taxonomy\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Croogo;
-use Croogo\Core\CroogoNav;
+use Croogo\Core\Nav;
 
 /**
  * Taxonomy Event Handler
@@ -44,7 +44,7 @@ class TaxonomiesEventHandler implements EventListenerInterface {
 		}
 		foreach ($vocabularies as $v) {
 			$weight = 9999 + $v->weight;
-			CroogoNav::add('sidebar', 'content.children.taxonomy.children.' . $v->alias, array(
+			Nav::add('sidebar', 'content.children.taxonomy.children.' . $v->alias, array(
 				'title' => $v->title,
 				'url' => array(
 					'prefix' => 'admin',

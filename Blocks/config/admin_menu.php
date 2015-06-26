@@ -2,9 +2,9 @@
 
 namespace Croogo\Blocks\Config;
 
-use Croogo\Core\CroogoNav;
+use Croogo\Core\Nav;
 
-CroogoNav::add('sidebar', 'blocks', array(
+Nav::add('sidebar', 'blocks', array(
 	'icon' => 'columns',
 	'title' => __d('croogo', 'Blocks'),
 	'url' => array(

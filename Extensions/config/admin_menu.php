@@ -2,9 +2,9 @@
 
 namespace Croogo\Extensions\Config;
 
-use Croogo\Core\CroogoNav;
+use Croogo\Core\Nav;
 
-CroogoNav::add('sidebar', 'extensions', array(
+Nav::add('sidebar', 'extensions', array(
 	'icon' => 'magic',
 	'title' => __d('croogo', 'Extensions'),
 	'url' => array(

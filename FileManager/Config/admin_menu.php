@@ -2,9 +2,9 @@
 
 namespace Croogo\FileManager\Config;
 
-use Croogo\Core\CroogoNav;
+use Croogo\Core\Nav;
 
-CroogoNav::add('sidebar', 'media', array(
+Nav::add('sidebar', 'media', array(
 	'icon' => 'picture',
 	'title' => __d('croogo', 'Media'),
 	'url' => array(

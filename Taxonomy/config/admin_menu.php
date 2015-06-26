@@ -2,9 +2,9 @@
 
 namespace Croogo\Taxonomy\Config;
 
-use Croogo\Core\CroogoNav;
+use Croogo\Core\Nav;
 
-CroogoNav::add('sidebar', 'content.children.content_types', array(
+Nav::add('sidebar', 'content.children.content_types', array(
 	'title' => __d('croogo', 'Content Types'),
 	'url' => array(
 		'prefix' => 'admin',
@@ -15,7 +15,7 @@ CroogoNav::add('sidebar', 'content.children.content_types', array(
 	'weight' => 30,
 ));
 
-CroogoNav::add('sidebar', 'content.children.taxonomy', array(
+Nav::add('sidebar', 'content.children.taxonomy', array(
 	'title' => __d('croogo', 'Taxonomy'),
 	'url' => array(
 		'prefix' => 'admin',

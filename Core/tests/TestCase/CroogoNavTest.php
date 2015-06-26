@@ -3,7 +3,7 @@ namespace Croogo\Core\Test\TestCase;
 
 use Cake\Utility\Hash;
 use Croogo\Core\Croogo;
-use Croogo\Core\CroogoNav;
+use Croogo\Core\Nav;
 use Croogo\Core\TestSuite\CroogoTestCase;
 class CroogoNavTest extends CroogoTestCase {
 
@@ -13,65 +13,65 @@ class CroogoNavTest extends CroogoTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		self::$_menus = CroogoNav::items('sidebar');
-		CroogoNav::activeMenu('sidebar');
+		self::$_menus = Nav::items('sidebar');
+		Nav::activeMenu('sidebar');
 	}
 
 	public function tearDown() {
 		parent::tearDown();
-		CroogoNav::clear(null);
-		CroogoNav::items('sidebar', self::$_menus);
+		Nav::clear(null);
+		Nav::items('sidebar', self::$_menus);
 	}
 
 	public function testNav() {
 		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-		$saved = CroogoNav::items();
+		$saved = Nav::items();
 
 		// test clear
-		CroogoNav::clear();
-		$items = CroogoNav::items();
+		Nav::clear();
+		$items = Nav::items();
 		$this->assertEquals($items, array());
 
 		// test first level addition
-		$defaults = CroogoNav::getDefaults();
+		$defaults = Nav::getDefaults();
 		$extensions = array('title' => 'Extensions');
-		CroogoNav::add('extensions', $extensions);
-		$result = CroogoNav::items();
+		Nav::add('extensions', $extensions);
+		$result = Nav::items();
 		$expected = array('extensions' => Hash::merge($defaults, $extensions));
 		$this->assertEquals($result, $expected);
 
 		// tested nested insertion (1 level)
 		$plugins = array('title' => 'Plugins');
-		CroogoNav::add('extensions.children.plugins', $plugins);
-		$result = CroogoNav::items();
+		Nav::add('extensions.children.plugins', $plugins);
+		$result = Nav::items();
 		$expected['extensions']['children']['plugins'] = Hash::merge($defaults, $plugins);
 		$this->assertEquals($result, $expected);
 
 		// 2 levels deep
 		$example = array('title' => 'Example');
-		CroogoNav::add('extensions.children.plugins.children.example', $example);
-		$result = CroogoNav::items();
+		Nav::add('extensions.children.plugins.children.example', $example);
+		$result = Nav::items();
 
 		$expected['extensions']['children']['plugins']['children']['example'] = Hash::merge($defaults, $example);
 		$this->assertEquals($result, $expected);
 
-		CroogoNav::items('sidebar', $saved);
-		$this->assertEquals($saved, CroogoNav::items());
+		Nav::items('sidebar', $saved);
+		$this->assertEquals($saved, Nav::items());
 	}
 
 /**
  * @expectedException UnexpectedValueException
  */
 	public function testNavClearWithException() {
-		CroogoNav::clear('bogus');
+		Nav::clear('bogus');
 	}
 
 /**
  * testNavItemsWithBogusMenu
  */
 	public function testNavItemsWithBogusMenu() {
-		$result = CroogoNav::items('bogus');
+		$result = Nav::items('bogus');
 		$this->assertEquals(array(), $result);
 	}
 
@@ -79,13 +79,13 @@ class CroogoNavTest extends CroogoTestCase {
  * Test Get Menus
  */
 	public function testNavGetMenus() {
-		$result = CroogoNav::menus();
+		$result = Nav::menus();
 		$this->assertEquals(array('sidebar'), $result);
 
-		CroogoNav::activeMenu('top');
-		CroogoNav::add('foo', array('title' => 'foo'));
+		Nav::activeMenu('top');
+		Nav::add('foo', array('title' => 'foo'));
 
-		$result = CroogoNav::menus();
+		$result = Nav::menus();
 		$this->assertEquals(array('sidebar', 'top'), $result);
 	}
 
@@ -93,23 +93,23 @@ class CroogoNavTest extends CroogoTestCase {
  * Test multiple menu
  */
 	public function testNavMultipleMenus() {
-		CroogoNav::activeMenu('top');
-		CroogoNav::add('foo', array('title' => 'foo'));
+		Nav::activeMenu('top');
+		Nav::add('foo', array('title' => 'foo'));
 
-		$menus = array_keys(CroogoNav::items());
+		$menus = array_keys(Nav::items());
 		$this->assertFalse(in_array('foo', $menus), 'foo exists in sidebar');
 
-		$menus = array_keys(CroogoNav::items('top'));
+		$menus = array_keys(Nav::items('top'));
 		$this->assertTrue(in_array('foo', $menus), 'foo missing in top');
 	}
 
 	public function testNavMerge() {
 		$foo = array('title' => 'foo', 'access' => array('public', 'admin'));
 		$bar = array('title' => 'bar', 'access' => array('admin'));
-		CroogoNav::clear();
-		CroogoNav::add('foo', $foo);
-		CroogoNav::add('foo', $bar);
-		$items = CroogoNav::items();
+		Nav::clear();
+		Nav::add('foo', $foo);
+		Nav::add('foo', $bar);
+		$items = Nav::items();
 		$expected = array('admin', 'public');
 		sort($expected);
 		sort($items['foo']['access']);
@@ -120,9 +120,9 @@ class CroogoNavTest extends CroogoTestCase {
 		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
 		Croogo::dispatchEvent('Croogo.setupAdminData', null);
-		$defaults = CroogoNav::getDefaults();
+		$defaults = Nav::getDefaults();
 
-		$items = CroogoNav::items();
+		$items = Nav::items();
 		$expected = Hash::merge($defaults, array(
 			'title' => 'Permissions',
 			'url' => array(
@@ -145,8 +145,8 @@ class CroogoNavTest extends CroogoTestCase {
 			),
 			'weight' => 30,
 		);
-		CroogoNav::add('users.children.permissions', $item);
-		$items = CroogoNav::items();
+		Nav::add('users.children.permissions', $item);
+		$items = Nav::items();
 
 		$expected = Hash::merge($defaults, array(
 			'title' => 'Permissions',

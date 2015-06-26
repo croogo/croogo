@@ -1,7 +1,7 @@
 <?php
 
 use Cake\Core\Configure;
-use Croogo\Core\CroogoNav;
+use Croogo\Core\Nav;
 
 $dashboardUrl = Configure::read('Croogo.dashboardUrl');
 
@@ -22,7 +22,7 @@ $dashboardUrl = Configure::read('Croogo.dashboardUrl');
 			</span>
 			<div class="nav-collapse collapse" style="height: 0px; ">
 			<?php
-			echo $this->Croogo->adminMenus(CroogoNav::items('top-left'), array(
+			echo $this->Croogo->adminMenus(Nav::items('top-left'), array(
 				'type' => 'dropdown',
 				'htmlAttributes' => array(
 					'id' => 'top-left-menu',
@@ -32,7 +32,7 @@ $dashboardUrl = Configure::read('Croogo.dashboardUrl');
 			?>
 			<?php if ($this->request->session()->read('Auth.User.id')): ?>
 				<?php
-				echo $this->Croogo->adminMenus(CroogoNav::items('top-right'), array(
+				echo $this->Croogo->adminMenus(Nav::items('top-right'), array(
 					'type' => 'dropdown',
 					'htmlAttributes' => array(
 						'id' => 'top-right-menu',

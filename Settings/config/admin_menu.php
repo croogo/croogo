@@ -2,9 +2,9 @@
 
 namespace Croogo\Settings\Config;
 
-use Croogo\Core\CroogoNav;
+use Croogo\Core\Nav;
 
-CroogoNav::add('sidebar', 'settings', array(
+Nav::add('sidebar', 'settings', array(
 	'icon' => 'cog',
 	'title' => __d('croogo', 'Settings'),
 	'url' => array(

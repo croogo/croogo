@@ -2,9 +2,9 @@
 
 namespace Croogo\Contacts\Config;
 
-use Croogo\Core\CroogoNav;
+use Croogo\Core\Nav;
 
-CroogoNav::add('sidebar', 'contacts', array(
+Nav::add('sidebar', 'contacts', array(
 	'icon' => 'comments',
 	'title' => __d('croogo', 'Contacts'),
 	'url' => array(

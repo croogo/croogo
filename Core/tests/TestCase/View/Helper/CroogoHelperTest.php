@@ -8,7 +8,7 @@ use Cake\Network\Response;
 use Cake\Network\Request;
 use Cake\Network\Session;
 use Cake\View\View;
-use Croogo\Core\CroogoNav;
+use Croogo\Core\Nav;
 use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Core\View\Helper\CroogoHelper;
 
@@ -53,11 +53,11 @@ class CroogoHelperTest extends CroogoTestCase {
 			->expects($this->any())
 			->method('linkIsAllowedByRoleId')
 			->will($this->returnValue(true));
-		$this->menus = CroogoNav::items();
+		$this->menus = Nav::items();
 
 		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-		CroogoNav::clear();
+		Nav::clear();
 	}
 
 /**
@@ -65,7 +65,7 @@ class CroogoHelperTest extends CroogoTestCase {
  */
 	public function tearDown() {
 //		ClassRegistry::flush();
-		CroogoNav::items('sidebar', $this->menus);
+		Nav::items('sidebar', $this->menus);
 		unset($this->Croogo);
 	}
 
@@ -76,14 +76,14 @@ class CroogoHelperTest extends CroogoTestCase {
 		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
 		Session::write('Auth.User', array('id' => 1, 'role_id' => 1));
-		CroogoNav::add('contents', array(
+		Nav::add('contents', array(
 			'title' => 'Contents',
 			'url' => '#',
 			)
 		);
-		$items = CroogoNav::items();
+		$items = Nav::items();
 		$expected = '<ul class="nav nav-stacked"><li><a href="#" class="menu-contents sidebar-item"><i class="icon-white icon-large"></i><span>Contents</span></a></li></ul>';
-		$result = $this->Croogo->adminMenus(CroogoNav::items());
+		$result = $this->Croogo->adminMenus(Nav::items());
 		$this->assertEquals($expected, $result);
 	}
 

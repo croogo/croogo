@@ -2,9 +2,9 @@
 
 namespace Croogo\Acl\Config;
 
-use Croogo\Core\CroogoNav;
+use Croogo\Core\Nav;
 
-CroogoNav::add('sidebar', 'users.children.permissions', array(
+Nav::add('sidebar', 'users.children.permissions', array(
 	'title' => __d('croogo', 'Permissions'),
 	'url' => array(
 		'prefix' => 'admin',
@@ -15,7 +15,7 @@ CroogoNav::add('sidebar', 'users.children.permissions', array(
 	'weight' => 30,
 ));
 
-CroogoNav::add('sidebar', 'settings.children.acl', array(
+Nav::add('sidebar', 'settings.children.acl', array(
 	'title' => __d('croogo', 'Access Control'),
 	'url' => array(
 		'prefix' => 'admin',

@@ -13,7 +13,7 @@ use Cake\Event\Event;
 use Cake\ORM\Table;
 use Croogo\Core\Exception\Exception;
 use Croogo\Core\Croogo;
-use Croogo\Core\CroogoNav;
+use Croogo\Core\Nav;
 use Croogo\Extensions\CroogoPlugin;
 use Croogo\Extensions\CroogoTheme;
 
@@ -124,7 +124,7 @@ class CroogoComponent extends Component {
  * Setup admin menu
  */
 	protected function _adminMenus() {
-		CroogoNav::add('top-left', 'site', array(
+		Nav::add('top-left', 'site', array(
 			'icon' => false,
 			'title' => __d('croogo', 'Visit website'),
 			'url' => '/',
@@ -136,7 +136,7 @@ class CroogoComponent extends Component {
 
 		$user = $this->request->session()->read('Auth.User');
 		$gravatarUrl = '<img src="//www.gravatar.com/avatar/' . md5($user['email']) . '?s=23" class="img-rounded"/> ';
-		CroogoNav::add('top-right', 'user', array(
+		Nav::add('top-right', 'user', array(
 			'icon' => false,
 			'title' => $user['username'],
 			'before' => $gravatarUrl,

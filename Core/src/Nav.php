@@ -1,7 +1,7 @@
 <?php
 
 /**
- * CroogoNav
+ * Nav
  *
  * @package  Croogo.Croogo.Lib
  * @since    1.4
@@ -15,7 +15,7 @@ use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use UnexpectedValueException;
 
-class CroogoNav {
+class Nav {
 
 /**
  * Current active menu

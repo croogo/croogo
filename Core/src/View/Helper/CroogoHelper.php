@@ -89,7 +89,7 @@ class CroogoHelper extends Helper {
 		return $this->Html->script($url, $options);
 	}
 
-/** Generate Admin menus added by CroogoNav::add()
+/** Generate Admin menus added by Nav::add()
  *
  * @param array $menus
  * @param array $options
