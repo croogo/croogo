@@ -8,8 +8,12 @@ if (empty($modelClass)) {
 if (!isset($className)) {
 	$className = strtolower($this->name);
 }
-$entity = ${Inflector::variable(Inflector::singularize($this->name))};
-$what = !$entity->isNew() ? __d('croogo', 'Edit') : __d('croogo', 'Add');
+
+if (isset(${Inflector::variable(Inflector::singularize($this->name))})):
+	$entity = ${Inflector::variable(Inflector::singularize($this->name))};
+
+	$what = !$entity->isNew() ? __d('croogo', 'Edit') : __d('croogo', 'Add');
+endif;
 
 $cssClass = $this->Theme->getCssClass('row');
 $columnLeft = $this->Theme->getCssClass('columnLeft');

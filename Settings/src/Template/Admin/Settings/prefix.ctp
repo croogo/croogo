@@ -1,66 +1,52 @@
 <?php
+
 use Cake\Utility\Inflector;
-?>
-<h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
-<?php
+
+$this->extend('Croogo/Core./Common/admin_edit');
+
 $this->CroogoHtml->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'Croogo/Settings', 'controller' => 'Settings', 'action' => 'index'))
 	->addCrumb($prefix, '/' . $this->request->url);
-?>
-<?php
 
-echo $this->CroogoForm->create('Settings', array(
+$this->assign('form-start', $this->CroogoForm->create('Settings', array(
 	'url' => array(
 		'controller' => 'Settings',
 		'action' => 'prefix',
 		$prefix,
 	),
 	'class' => 'protected-form',
-));
+)));
 
-?>
-<div class="row-fluid">
+$this->append('tab-heading');
+	echo $this->Croogo->adminTab($prefix, '#settings-main');
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-	<div class="span8">
+$this->append('tab-content');
+	echo $this->CroogoHtml->tabStart('settings-main');
+		foreach ($settings as $setting) :
+			if (!empty($setting['Params']['tab'])) {
+				continue;
+			}
+			$keyE = explode('.', $setting->key);
+			$keyTitle = Inflector::humanize($keyE['1']);
 
-		<ul class="nav nav-tabs">
-		<?php
-			echo $this->Croogo->adminTab($prefix, '#settings-main');
-			echo $this->Croogo->adminTabs();
-		?>
-		</ul>
+			$label = ($setting->title != null) ? $setting->title : $keyTitle;
 
-		<div class="tab-content">
+			echo $this->SettingsForm->input($setting, $label);
+		endforeach;
 
-			<div id="settings-main" class="tab-pane">
-				<?php
-				foreach ($settings as $setting) :
-					if (!empty($setting['Params']['tab'])) {
-						continue;
-					}
-					$keyE = explode('.', $setting->key);
-					$keyTitle = Inflector::humanize($keyE['1']);
+	echo $this->CroogoHtml->tabEnd();
+	echo $this->Croogo->adminTabs();
+$this->end();
 
-					$label = ($setting->title != null) ? $setting->title : $keyTitle;
+$this->start('panels');
+	echo $this->CroogoHtml->beginBox(__d('croogo', 'Saving'));
+		echo $this->CroogoForm->button(__d('croogo', 'Save'));
+		echo $this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'btn btn-danger'));
+	echo $this->CroogoHtml->endBox();
 
-					echo $this->SettingsForm->input($setting, $label);
-				endforeach;
-				?>
-			</div>
+	echo $this->Croogo->adminBoxes();
+$this->end();
 
-			<?php echo $this->Croogo->adminTabs(); ?>
-		</div>
-	</div>
-
-	<div class="span4">
-		<?php
-		echo $this->CroogoHtml->beginBox(__d('croogo', 'Saving')) .
-			$this->CroogoForm->button(__d('croogo', 'Save')) .
-			$this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('class' => 'btn btn-danger')) .
-			$this->CroogoHtml->endBox();
-		echo $this->Croogo->adminBoxes();
-		?>
-	</div>
-
-</div>
-<?php echo $this->CroogoForm->end(); ?>
+$this->assign('form-end', $this->CroogoForm->end());
