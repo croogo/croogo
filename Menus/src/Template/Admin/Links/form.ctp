@@ -72,7 +72,8 @@ $this->append('tab-content');
 	echo $this->CroogoForm->input('link', array(
 		'label' => __d('croogo', 'Link'),
 		'div' => 'input text required input-append',
-		'after' => $this->Croogo->linkChooser(),
+		'id' => 'link',
+		'after' => $this->Croogo->linkChooser('#link'),
 	));
 	echo $this->CroogoHtml->tabEnd();
 
