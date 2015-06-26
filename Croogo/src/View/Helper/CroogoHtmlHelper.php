@@ -2,6 +2,7 @@
 
 namespace Croogo\Croogo\View\Helper;
 
+use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
@@ -66,8 +67,8 @@ class CroogoHtmlHelper extends HtmlHelper {
  * @param string $viewFiele The view file that is going to be rendered
  * @return void
  */
-	public function beforeRender($viewFile) {
-		$this->_View->set('_icons', $this->settings['icons']);
+	public function beforeRender(Event $event, $viewFile) {
+		$this->_View->set('_icons', $this->config('icons'));
 	}
 
 /**
@@ -78,7 +79,7 @@ class CroogoHtmlHelper extends HtmlHelper {
  * @param array $options Options list
  * @return string Completed img tag
  */
-	public function image($path, $options = array()) {
+	public function image($path, array $options = array()) {
 		$class = $this->_View->viewVars['themeSettings']['css']['imageClass'];
 		if (empty($options['class'])) {
 			$options['class'] = $class;
@@ -321,5 +322,13 @@ class CroogoHtmlHelper extends HtmlHelper {
 	public function tabEnd() {
 		return $this->useTag('blockend');
 	}
+
+	public function implementedEvents()
+	{
+		return [
+			'View.beforeRender' => 'beforeRender'
+		];
+	}
+
 
 }
