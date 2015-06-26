@@ -481,7 +481,7 @@ class CroogoHelper extends Helper {
 		return $output;
 	}
 
-	public function linkChooser()
+	public function linkChooser($target)
 	{
 		$linkChooser = $this->_View->element('Croogo/Core.admin/modal', [
 			'id' => 'link_choosers',
@@ -501,6 +501,9 @@ class CroogoHelper extends Helper {
 				'plugin' => 'Croogo/Core',
 				'controller' => 'LinkChooser',
 				'action' => 'linkChooser',
+				'?' => [
+					'target' => $target
+				]
 			]),
 		]);
 	}

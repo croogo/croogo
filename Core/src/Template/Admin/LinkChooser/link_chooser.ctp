@@ -23,9 +23,11 @@ endforeach;
 </table>
 <?php
 
+$target = json_encode($this->request->query('target'));
+
 $script =<<< EOF
 $('.link.chooser').itemChooser({
-	fields: [{ type: "Node", target: "#LinkLink", attr: "rel" }]
+	fields: [{ type: "Node", target: $target, attr: "rel" }]
 });
 $(".link_chooser a").click(function() {
 	$("#link_choosers").modal('hide');
