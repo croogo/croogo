@@ -1,9 +1,13 @@
 <?php
 
-$this->extend('/Common/admin_index');
-$this->Croogo->adminScript(array('Nodes.admin'));
+use Cake\Utility\Hash;
+use Croogo\Core\Status;
 
-$this->Html
+$this->extend('Croogo/Core./Common/admin_index');
+
+$this->Croogo->adminScript('Croogo/Nodes.admin');
+
+$this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Content'), '/' . $this->request->url);
 
@@ -17,17 +21,17 @@ $this->end();
 
 $this->append('search', $this->element('admin/nodes_search'));
 
-$this->append('form-start', $this->Form->create(
+$this->append('form-start', $this->CroogoForm->create(
 	'Node',
 	array(
-		'url' => array('controller' => 'nodes', 'action' => 'process'),
+		'url' => array('action' => 'process'),
 		'class' => 'form-inline'
 	)
 ));
 
 $this->start('table-heading');
-	$tableHeaders = $this->Html->tableHeaders(array(
-		$this->Form->checkbox('checkAll'),
+	$tableHeaders = $this->CroogoHtml->tableHeaders(array(
+		$this->CroogoForm->checkbox('checkAll'),
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		$this->Paginator->sort('title', __d('croogo', 'Title')),
 		$this->Paginator->sort('type', __d('croogo', 'Type')),
@@ -35,7 +39,7 @@ $this->start('table-heading');
 		$this->Paginator->sort('status', __d('croogo', 'Status')),
 		''
 	));
-	echo $this->Html->tag('thead', $tableHeaders);
+	echo $this->CroogoHtml->tag('thead', $tableHeaders);
 $this->end();
 
 $this->append('table-body');
@@ -43,17 +47,16 @@ $this->append('table-body');
 <tbody>
 <?php foreach ($nodes as $node): ?>
 	<tr>
-		<td><?php echo $this->Form->checkbox('Node.' . $node['Node']['id'] . '.id', array('class' => 'row-select')); ?></td>
-		<td><?php echo $node['Node']['id']; ?></td>
+		<td><?php echo $this->CroogoForm->checkbox('Node.' . $node->id . '.id', array('class' => 'row-select')); ?></td>
+		<td><?php echo $node->id; ?></td>
 		<td>
 			<span>
 			<?php
-				echo $this->Html->link($node['Node']['title'], array(
-					'admin' => false,
-					'controller' => 'nodes',
-					'action' => 'view',
-					'type' => $node['Node']['type'],
-					'slug' => $node['Node']['slug']
+				echo $this->CroogoHtml->link($node->title, Hash::merge(
+					$node->url->getArrayCopy(),
+					[
+						'prefix' => false
+					]
 				));
 			?>
 			</span>
@@ -62,41 +65,41 @@ $this->append('table-body');
 			<span class="label label-info"><?php echo __d('croogo', 'promoted'); ?></span>
 			<?php endif ?>
 
-			<?php if ($node['Node']['status'] == CroogoStatus::PREVIEW): ?>
+			<?php if ($node->status == Status::PREVIEW): ?>
 			<span class="label label-warning"><?php echo __d('croogo', 'preview'); ?></span>
 			<?php endif ?>
 		</td>
 		<td>
 		<?php
-			echo $this->Html->link($node['Node']['type'], array(
+			echo $this->CroogoHtml->link($node->type, array(
 				'action' => 'hierarchy',
 				'?' => array(
-					'type' => $node['Node']['type'],
+					'type' => $node->type,
 				),
 			));
 		?>
 		</td>
 		<td>
-			<?php echo $node['User']['username']; ?>
+			<?php echo $node->user->username; ?>
 		</td>
 		<td>
 			<?php
-				echo $this->element('admin/toggle', array(
-					'id' => $node['Node']['id'],
-					'status' => (int)$node['Node']['status'],
+				echo $this->element('Croogo/Core.admin/toggle', array(
+					'id' => $node->id,
+					'status' => (int)$node->status,
 				));
 			?>
 		</td>
 		<td>
 			<div class="item-actions">
 			<?php
-				echo $this->Croogo->adminRowActions($node['Node']['id']);
+				echo $this->Croogo->adminRowActions($node->id);
 				echo ' ' . $this->Croogo->adminRowAction('',
-					array('action' => 'edit', $node['Node']['id']),
+					array('action' => 'edit', $node->id),
 					array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 				);
 				echo ' ' . $this->Croogo->adminRowAction('',
-					'#Node' . $node['Node']['id'] . 'Id',
+					'#Node' . $node->id . 'Id',
 					array(
 						'icon' => $this->Theme->getIcon('copy'),
 						'tooltip' => __d('croogo', 'Create a copy'),
@@ -104,7 +107,7 @@ $this->append('table-body');
 					)
 				);
 				echo ' ' . $this->Croogo->adminRowAction('',
-					'#Node' . $node['Node']['id'] . 'Id',
+					'#Node' . $node->id . 'Id',
 					array(
 						'icon' => $this->Theme->getIcon('delete'),
 						'class' => 'delete',
@@ -123,7 +126,7 @@ $this->append('table-body');
 $this->end();
 
 $this->start('bulk-action');
-	echo $this->Form->input('Node.action', array(
+	echo $this->CroogoForm->input('Node.action', array(
 		'label' => __d('croogo', 'Applying to selected'),
 		'div' => 'input inline',
 		'options' => array(
@@ -142,16 +145,16 @@ $this->start('bulk-action');
 	));
 
 	$jsVarName = uniqid('confirmMessage_');
-	$button = $this->Form->button(__d('croogo', 'Submit'), array(
+	$button = $this->CroogoForm->button(__d('croogo', 'Submit'), array(
 		'type' => 'button',
 		'class' => 'bulk-process',
-		'data-relatedElement' => '#' . $this->Form->domId('Node.action'),
+		'data-relatedElement' => '#' . $this->CroogoForm->domId('Node.action'),
 		'data-confirmMessage' => $jsVarName,
 	));
-	echo $this->Html->div('controls', $button);
-	$this->Js->set($jsVarName, __d('croogo', '%s selected items?'));
-	$this->Js->buffer("$('.bulk-process').on('click', Nodes.confirmProcess);");
+	echo $this->CroogoHtml->div('controls', $button);
+//	$this->Js->set($jsVarName, __d('croogo', '%s selected items?'));
+//	$this->Js->buffer("$('.bulk-process').on('click', Nodes.confirmProcess);");
 
 $this->end();
 
-$this->append('form-end', $this->Form->end());
+$this->append('form-end', $this->CroogoForm->end());
