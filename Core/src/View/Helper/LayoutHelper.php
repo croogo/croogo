@@ -226,8 +226,8 @@ class LayoutHelper extends Helper {
 			$icon = $icons['x-mark'];
 			$class = 'red';
 		}
-		if (method_exists($this->Html, 'icon')) {
-			return $this->Html->icon($icon, compact('class'));
+		if (method_exists($this->CroogoHtml, 'icon')) {
+			return $this->CroogoHtml->icon($icon, compact('class'));
 		} else {
 			if (empty($this->_View->CroogoHtml)) {
 				$this->_View->Helpers->load('Croogo/Core.CroogoHtml');
