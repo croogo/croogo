@@ -40,7 +40,7 @@ $this->append('form-start', $this->CroogoForm->create($link, array(
 	'class' => 'protected-form',
 )));
 
-$inputDefaults = $this->Form->inputDefaults();
+$inputDefaults = $this->Form->templates();
 $inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 $linkChooserUrl = $this->Url->build(array(
 	'action' => 'linkChooser',
@@ -118,53 +118,28 @@ $this->append('tab-content');
 $this->end();
 
 $this->start('panels');
-	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-		$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-		$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
-		$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index', '?' => array('menu_id' => $menuId)), array('button' => 'danger')) .
-		$this->Form->input('status', array(
+	echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing'));
+		echo $this->CroogoForm->button(__d('croogo', 'Apply'), array('name' => 'apply'));
+		echo $this->CroogoForm->button(__d('croogo', 'Save'), array('button' => 'success'));
+		echo $this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index', '?' => array('menu_id' => $menuId)), array('button' => 'danger'));
+		echo $this->CroogoForm->input('status', array(
 			'type' => 'radio',
 			'legend' => false,
+			'class' => false,
 			'default' => Status::UNPUBLISHED,
 			'options' => $this->Croogo->statuses(),
-		)) .
-		$this->Html->div('input-daterange',
-			$this->Form->input('publish_start', array(
+		));
+		echo $this->CroogoHtml->div('input-daterange',
+			$this->CroogoForm->input('publish_start', array(
 				'label' => __d('croogo', 'Publish Start'),
 				'type' => 'text',
-		)) .
-		$this->Form->input('publish_end', array(
-			'label' => __d('croogo', 'Publish End'),
-			'type' => 'text',
-		))
-	);
-	echo $this->Html->endBox();
-
-	<div class="span4">
-	<?php
-		echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing')) .
-			$this->CroogoForm->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-			$this->CroogoForm->button(__d('croogo', 'Save'), array('button' => 'success')) .
-			$this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index', '?' => array('menu_id' => $menuId)), array('button' => 'danger')) .
-			$this->CroogoForm->input('status', array(
-				'type' => 'radio',
-				'legend' => false,
-				'class' => false,
-				'default' => Status::UNPUBLISHED,
-				'options' => $this->Croogo->statuses(),
 			)) .
-			$this->CroogoHtml->div('input-daterange',
-				$this->CroogoForm->input('publish_start', array(
-					'label' => __d('croogo', 'Publish Start'),
-					'type' => 'text',
-				)) .
-				$this->CroogoForm->input('publish_end', array(
-					'label' => __d('croogo', 'Publish End'),
-					'type' => 'text',
-				))
-			) .
-			$this->CroogoHtml->endBox();
-
+			$this->CroogoForm->input('publish_end', array(
+				'label' => __d('croogo', 'Publish End'),
+				'type' => 'text',
+			))
+		);
+		echo $this->CroogoHtml->endBox();
 	echo $this->Croogo->adminBoxes();
 
 $this->end();
