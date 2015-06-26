@@ -11,7 +11,12 @@ use App\View\Helper\Helper;
  */
 class ImageHelper extends Helper {
 
-	public $helpers = array('Html');
+	public $helpers = array(
+		'Html',
+		'Theme' => array(
+			'className' => 'Croogo.Theme',
+		),
+	);
 
 /**
  * Automatically resizes an image and returns formatted IMG tag
@@ -45,7 +50,7 @@ class ImageHelper extends Helper {
 		$uploadsDir = $options['uploadsDir'];
 		$cacheDir = $options['cacheDir'];
 		$resizedInd = $options['resizedInd'];
-		$imgClass = $this->_View->viewVars['themeSettings']['css']['thumbnailClass'];
+		$imgClass = $this->Theme->getCssClass('thumbnailClass');
 
 		if (empty($htmlAttributes['alt'])) {
 			$htmlAttributes['alt'] = 'thumb';

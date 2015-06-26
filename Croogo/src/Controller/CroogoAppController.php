@@ -265,7 +265,6 @@ class CroogoAppController extends AppController {
 		$croogoTheme = new CroogoTheme();
 		$data = $croogoTheme->getData($theme);
 		$settings = $data['settings'];
-		$this->set('themeSettings', $settings);
 
 		if (empty($settings['prefixes']['admin']['helpers']['Croogo/Croogo.Croogo'])) {
 			$this->helpers[] = 'Croogo/Croogo.Croogo';

@@ -54,7 +54,8 @@ class AclExtrasTest extends CroogoTestCase {
 
 	public function testListActions() {
 		$expected = array(
-			'admin_index', 'admin_create', 'admin_add', 'admin_edit',
+			'admin_index', 'admin_movedown', 'admin_moveup',
+			'admin_create', 'admin_add', 'admin_edit', 'admin_hierarchy',
 			'admin_toggle', 'admin_update_paths', 'admin_delete', 'admin_add_meta',
 			'admin_delete_meta', 'admin_process', 'index', 'term', 'promoted',
 			'search', 'view',

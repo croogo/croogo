@@ -22,7 +22,7 @@ class FileManagerController extends FileManagerAppController {
  * @var array
  * @access public
  */
-	public $uses = array('Settings.Setting', 'Users.User');
+	public $uses = array('Settings.Setting', 'Users.User', 'FileManager.FileManager');
 
 /**
  * Helpers used by the Controller
@@ -59,8 +59,9 @@ class FileManagerController extends FileManagerAppController {
  * Checks wether given $path is editable.
  * A file is editable when it resides under the APP directory
  *
- * @param $path string
+ * @param string $path Path to check
  * @return boolean true if file is editable
+ * @deprecated Use FileManager::isEditable()
  */
 	protected function _isEditable($path) {
 		$path = realpath($path);
@@ -73,8 +74,9 @@ class FileManagerController extends FileManagerAppController {
  * A file is deleteable when it resides under directories registered in
  * FileManagerController::deletablePaths
  *
- * @param $path string
+ * @param string $path Path to check
  * @return boolean true when file is deletable
+ * @deprecated Use FileManager::isDeletable()
  */
 	protected function _isDeletable($path) {
 		$path = realpath($path);
@@ -147,7 +149,7 @@ class FileManagerController extends FileManagerAppController {
 		} else {
 			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
-		if (!$this->_isEditable($path)) {
+		if (!$this->FileManager->isEditable($path)) {
 			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'flash', array('class' => 'error'));
 			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
@@ -155,7 +157,6 @@ class FileManagerController extends FileManagerAppController {
 
 		$pathE = explode(DS, $path);
 		$n = count($pathE) - 1;
-		$filename = $pathE[$n];
 		unset($pathE[$n]);
 		$path = implode(DS, $pathE);
 		$this->file = new File($absolutefilepath, true);
@@ -270,27 +271,53 @@ class FileManagerController extends FileManagerAppController {
 	}
 
 /**
- * Admin Rename
+ * Rename a file or directory
  *
  * @return void
  * @access public
  */
 	public function admin_rename() {
-		if (isset($this->request->query['path'])) {
-			$path = $this->request->query['path'];
-		} else {
-			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+		$path = $this->request->query('path');
+		$pathFragments = array_filter(explode(DIRECTORY_SEPARATOR, $path));
+
+		if (!$this->FileManager->isEditable($path)) {
+			$this->Session->setFlash(__d('croogo', 'Path "%s" cannot be renamed', $path), 'flash', array('class' => 'error'));
+			$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		}
 
-		if (isset($this->request->query['newpath'])) {
-			// rename here
-		}
+		if ($this->request->is('post') || $this->request->is('put')) {
+			if (!is_null($this->request->data('FileManager.name')) && !empty($this->request->data['FileManager']['name'])) {
+				$newName = trim($this->request->data['FileManager']['name']);
+				$oldName = array_pop($pathFragments);
+				$newPath = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $pathFragments) . DIRECTORY_SEPARATOR . $newName;
 
-		if (isset($_SERVER['HTTP_REFERER'])) {
-			return $this->redirect($_SERVER['HTTP_REFERER']);
+				$fileExists = file_exists($newPath);
+				if ($oldName !== $newName) {
+					if ($fileExists) {
+						$message = __d('croogo', '%s already exists', $newName);
+						$alertType = 'error';
+					} else {
+						if ($this->FileManager->rename($path, $newPath)) {
+							$message = __d('croogo', '"%s" has been renamed to "%s"', $oldName, $newName);
+							$alertType = 'success';
+						} else {
+							$message = __d('croogo', 'Could not rename "%s" to "%s"', $oldName,$newName);
+							$alertType = 'error';
+						}
+					}
+				} else {
+					$message = __d('croogo', 'Name has not changed');
+					$alertType = 'alert';
+				}
+				$this->Session->setFlash($message, 'flash', array('class' => $alertType));
+			}
+
+			return $this->Croogo->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
 		} else {
-			return $this->redirect(array('controller' => 'file_manager', 'action' => 'index'));
+			$this->Croogo->setReferer();
 		}
+		$this->request->data('FileManager.name', array_pop($pathFragments));
+		$this->set('path', $path);
 	}
 
 /**

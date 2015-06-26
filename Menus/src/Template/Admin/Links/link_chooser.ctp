@@ -3,9 +3,10 @@
 $rows = array();
 foreach ($linkChoosers as $name => $chooser):
 	$link = $this->CroogoHtml->link('', $chooser['url'], array(
-		'icon' => $_icons['search'],
+		'icon' => $this->Theme->getIcon('search'),
 		'iconSize' => 'small',
-		'class' => 'btn btn-small link chooser pull-right',
+		'button' => array('default', 'small'),
+		'class' => 'link chooser pull-right',
 		'data-dismiss' => 'modal',
 		'tooltip' => array(
 			'data-title' => __d('croogo', 'Link to %s', $name),
@@ -27,7 +28,7 @@ $('.link.chooser').itemChooser({
 	fields: [{ type: "Node", target: "#LinkLink", attr: "rel" }]
 });
 $(".link_chooser a").click(function() {
-	    $("#link_choosers").modal('hide');
+	$("#link_choosers").modal('hide');
 });
 EOF;
 

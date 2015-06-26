@@ -3,7 +3,7 @@
 $this->extend('Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $_icons['home']))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Locales'), '/' . $this->request->url);
 
@@ -30,15 +30,15 @@ $this->append('table-body');
 
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'activate', $locale),
-			array('icon' => $_icons['power-on'], 'tooltip' => __d('croogo', 'Activate'), 'method' => 'post')
+			array('icon' => $this->Theme->getIcon('power-on'), 'tooltip' => __d('croogo', 'Activate'), 'method' => 'post')
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'edit', $locale),
-			array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'delete', $locale),
-			array('icon' => $_icons['delete'], 'tooltip' => __d('croogo', 'Remove this item')),
+			array('icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Remove this item')),
 			__d('croogo', 'Are you sure?')
 		);
 

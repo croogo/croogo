@@ -78,6 +78,7 @@ class CroogoPlugin {
 		'Croogo/Blocks',
 		'Croogo/Comments',
 		'Croogo/Contacts',
+		'Croogo/Dashboards',
 		'Croogo/FileManager',
 		'Croogo/Meta',
 		'Croogo/Menus',

@@ -49,7 +49,7 @@ if (!empty($searchFields)):
 		echo $this->CroogoForm->input($field, $options);
 	}
 
-	echo $this->CroogoForm->submit(__d('croogo', 'Filter'));
+	echo $this->CroogoForm->submit(__d('croogo', 'Filter'), ['type' => 'submit', 'label' => false]);
 	echo $this->CroogoForm->end();
 ?>
 </div>

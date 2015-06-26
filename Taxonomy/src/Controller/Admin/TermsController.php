@@ -107,11 +107,12 @@ class TermsController extends TaxonomyAppController {
 		if ($this->request->is('post')) {
 			$term = $this->Terms->patchEntity($term, $this->request->data);
 
-			if ($this->Terms->add($term, $vocabularyId)) {
+			$term = $this->Terms->add($term, $vocabularyId);
+			if ($term) {
 				$this->Flash->success(__d('croogo', 'Term saved successfuly.'));
 				return $this->redirect(array(
-					'action' => 'index',
-					$vocabularyId,
+					'action' => 'edit',
+					$term->id, $vocabularyId,
 				));
 			} else {
 				$this->Flash->error(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'));
@@ -159,10 +160,14 @@ class TermsController extends TaxonomyAppController {
 			$term = $this->Terms->patchEntity($term, $this->request->data);
 			if ($this->Terms->edit($term, $vocabularyId)) {
 				$this->Flash->success(__d('croogo', 'Term saved successfuly.'));
-				return $this->redirect(array(
-					'action' => 'index',
-					$vocabularyId,
-				));
+				if (isset($this->request->data['apply'])) {
+					return $this->redirect(array('action' => 'edit', $id, $vocabularyId));
+				} else {
+					return $this->redirect(array(
+						'action' => 'index',
+						$vocabularyId,
+					));
+				}
 			} else {
 				$this->Flash->error(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'));
 			}

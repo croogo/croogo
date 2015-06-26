@@ -11,10 +11,10 @@ if (!isset($className)) {
 $entity = ${Inflector::variable(Inflector::singularize($this->name))};
 $what = !$entity->isNew() ? __d('croogo', 'Edit') : __d('croogo', 'Add');
 
-$cssClass = $this->Layout->cssClass('row');
-$columnLeft = $this->Layout->cssClass('columnLeft');
-$columnRight = $this->Layout->cssClass('columnRight');
-$columnFull = $this->Layout->cssClass('columnFull');
+$cssClass = $this->Theme->getCssClass('row');
+$columnLeft = $this->Theme->getCssClass('columnLeft');
+$columnRight = $this->Theme->getCssClass('columnRight');
+$columnFull = $this->Theme->getCssClass('columnFull');
 
 ?>
 <h2 class="hidden-desktop">

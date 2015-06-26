@@ -35,10 +35,10 @@
 	<div id="wrap" class="full">
 		<?php echo $this->element('admin/header'); ?>
 		<div id="push"></div>
-		<div id="content-container" class="<?php echo $this->Layout->cssClass('container'); ?>">
-			<div class="<?php echo $this->Layout->cssClass('row'); ?>">
+		<div id="content-container" class="<?php echo $this->Theme->getCssClass('container'); ?>">
+			<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
 				<div id="content" class="clearfix">
-					<div id="inner-content" class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
+					<div id="inner-content" class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
 					<?php
 						echo $this->Layout->sessionFlash();
 						echo $content_for_layout;
@@ -53,6 +53,7 @@
 
 	<?php echo $this->element('admin/footer'); ?>
 	<?php
+		echo $this->element('admin/initializers');
 		echo $this->Blocks->get('scriptBottom');
 		echo $this->Js->writeBuffer();
 	?>

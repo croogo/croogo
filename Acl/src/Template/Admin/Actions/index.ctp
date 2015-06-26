@@ -8,7 +8,7 @@ $this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentR
 $this->Croogo->adminScript('Acl.acl_permissions');
 
 $this->CroogoHtml
-	->addCrumb('', '/admin', array('icon' => $_icons['home']))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Permissions'), array(
 		'plugin' => 'Croogo/Acl', 'controller' => 'Permissions',
@@ -104,21 +104,21 @@ $this->append('table-body');
 		$actions = array();
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'move', $id, 'up'),
-			array('icon' => $_icons['move-up'], 'tooltip' => __d('croogo', 'Move up'))
+			array('icon' => $this->Theme->getIcon('move-up'), 'tooltip' => __d('croogo', 'Move up'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'move', $id, 'down'),
-			array('icon' => $_icons['move-down'], 'tooltip' => __d('croogo', 'Move down'))
+			array('icon' => $this->Theme->getIcon('move-down'), 'tooltip' => __d('croogo', 'Move down'))
 		);
 
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'edit', $id),
-			array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('action' => 'delete',	$id),
 			array(
-				'icon' => $_icons['delete'],
+				'icon' => $this->Theme->getIcon('delete'),
 				'tooltip' => __d('croogo', 'Remove this item'),
 				'escapeTitle' => false,
 				'escape' => true,

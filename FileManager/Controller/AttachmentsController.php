@@ -18,6 +18,24 @@ use FileManager\Controller\FileManagerAppController;
 class AttachmentsController extends FileManagerAppController {
 
 /**
+ * Components
+ *
+ * @var array
+ * @access public
+ */
+	public $components = array(
+		'Search.Prg' => array(
+			'presetForm' => array(
+				'paramType' => 'querystring',
+			),
+			'commonProcess' => array(
+				'paramType' => 'querystring',
+				'filterEmpty' => true,
+			),
+		),
+	);
+
+/**
  * Models used by the Controller
  *
  * @var array
@@ -98,10 +116,34 @@ class AttachmentsController extends FileManagerAppController {
  */
 	public function admin_index() {
 		$this->set('title_for_layout', __d('croogo', 'Attachments'));
+		$this->Prg->commonProcess();
+
+		$isChooser = false;
+		if (isset($this->request->params['named']['links']) || isset($this->request->query['chooser'])) {
+			$isChooser = true;
+		}
 
 		$this->Attachment->recursive = 0;
+
 		$this->paginate['Attachment']['order'] = 'Attachment.created DESC';
-		$this->set('attachments', $this->paginate());
+		$this->paginate['Attachment']['conditions'] = array();
+		if ($isChooser) {
+			if ($this->request->query['chooser_type'] == 'image') {
+				$this->paginate['Attachment']['conditions']['Attachment.mime_type LIKE'] = 'image/%';
+			} else {
+				$this->paginate['Attachment']['conditions']['Attachment.mime_type NOT LIKE'] = 'image/%';
+			}
+		}
+
+		$criteria = $this->Attachment->parseCriteria($this->Prg->parsedParams());
+		$this->set('attachments', $this->paginate($criteria));
+		$this->set('uploadsDir', $this->Attachment->uploadsDir);
+
+		if ($isChooser) {
+			$this->layout = 'admin_popup';
+			$this->render('admin_chooser');
+		}
+
 	}
 
 /**

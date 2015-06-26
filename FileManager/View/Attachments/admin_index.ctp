@@ -3,7 +3,7 @@
 $this->extend('/Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $_icons['home']))
+	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Attachments'), '/' . $this->request->url);
 
 $this->start('table-heading');
@@ -24,11 +24,11 @@ $this->append('table-body');
 		$actions[] = $this->Croogo->adminRowActions($attachment['Attachment']['id']);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'attachments', 'action' => 'edit', $attachment['Attachment']['id']),
-			array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
+			array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
 			array('controller' => 'attachments', 'action' => 'delete', $attachment['Attachment']['id']),
-			array('icon' => $_icons['delete'], 'tooltip' => __d('croogo', 'Remove this item')),
+			array('icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Remove this item')),
 			__d('croogo', 'Are you sure?'));
 
 		$mimeType = explode('/', $attachment['Attachment']['mime_type']);

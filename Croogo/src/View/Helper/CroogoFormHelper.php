@@ -23,18 +23,9 @@ class CroogoFormHelper extends FormHelper {
  * Constructor
  */
 	public function __construct(View $View, $settings = array()) {
-		if (isset($View->viewVars['themeSettings'])) {
-			$themeSettings = $View->viewVars['themeSettings'];
-			$settings = Hash::merge(array(
-				'iconDefaults' => $themeSettings['iconDefaults'],
-				'icons' => $themeSettings['icons'],
-			), $settings);
-		} else {
-			$croogoTheme = new CroogoTheme();
-			$themeData = $croogoTheme->getData();
-			$themeSettings = $themeData['settings'];
-			$settings = Hash::merge($themeSettings, $settings);
-		}
+		$themeConfig = CroogoTheme::config($View->theme);
+		$themeSettings = $themeConfig['settings'];
+		$settings = Hash::merge($themeSettings, $settings);
 		parent::__construct($View, $settings);
 	}
 
@@ -171,15 +162,25 @@ class CroogoFormHelper extends FormHelper {
 		$options = parent::_parseOptions($fieldName, $options);
 		$options = $this->_parseOptionsAddon($options);
 
-		if (isset($options['class'])) {
-			$formInput = $this->_View->Layout->cssClass('formInput');
-			$isMultipleCheckbox = isset($options['multiple']) &&
-				$options['multiple'] === 'checkbox';
-			$isRadioOrCheckbox = isset($options['type']) &&
-				in_array($options['type'], array('checkbox', 'radio'));
+		$formInput = $this->Theme->getCssClass('formInput');
+		$isMultipleCheckbox = isset($options['multiple']) &&
+			$options['multiple'] === 'checkbox';
+		$isRadioOrCheckbox = isset($options['type']) &&
+			in_array($options['type'], array('checkbox', 'radio'));
 
-			if ($isMultipleCheckbox || $isRadioOrCheckbox) {
-				$options['class'] = str_replace($formInput, '', $options['class']);
+		if ($isMultipleCheckbox || $isRadioOrCheckbox) {
+			if ($options['type'] == 'radio') {
+				$class = $this->Theme->getCssClass('radioClass');
+			} elseif ($options['type'] == 'checkbox') {
+				$class = $this->Theme->getCssClass('checkboxClass');
+			}
+			if (empty($class) && isset($options['class'])) {
+				$class = str_replace($formInput, '', $options['class']);
+			}
+			if (empty($class)) {
+				unset($options['class']);
+			} else {
+				$options['class'] = $class;
 			}
 		}
 
@@ -201,7 +202,7 @@ class CroogoFormHelper extends FormHelper {
 		}
 
 		if (isset($this->_addon)) {
-			$options['class'] = $this->_View->Layout->cssClass('columnLeft');
+			$options['class'] = $this->Theme->getCssClass('columnLeft');
 			if (isset($options['append'])) {
 				$options['between'] = '<div class="addon">';
 				$options['after'] = $options['addon'] . '</div>';
@@ -266,11 +267,12 @@ class CroogoFormHelper extends FormHelper {
 				'inputDefaults' => $this->settings['inputDefaults'],
 			), $options);
 		}
+		$formInputClass = $this->Theme->getCssClass('formInput');
 		if (
 			empty($options['inputDefaults']['class']) &&
-			isset($this->_View->viewVars['themeSettings']['css']['formInput'])
+			!empty($formInputClass)
 		) {
-			$options['inputDefaults']['class'] = $this->_View->viewVars['themeSettings']['css']['formInput'];
+			$options['inputDefaults']['class'] = $formInputClass;
 		}
 		return parent::create($model, $options);
 	}

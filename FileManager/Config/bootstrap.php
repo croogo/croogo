@@ -10,3 +10,13 @@ Configure::write('Wysiwyg.attachmentBrowseUrl', array(
 Croogo::mergeConfig('Wysiwyg.actions', array(
 	'Attachments/admin_browse',
 ));
+
+Configure::write('FileManager', array(
+	'editablePaths' => array(
+		APP,
+	),
+	'deletablePaths' => array(
+		APP . 'View' . DS . 'Themed' . DS,
+		WWW_ROOT,
+	),
+));

@@ -120,11 +120,6 @@ Admin.extra = function() {
 	// Activates the first tab in #content
 	$('#content .nav-tabs > li:first-child a').tab('show');
 
-	// Box toggle
-	$('body').on('click', '.box-title', function() {
-		$(this).next().slideToggle();
-	});
-
 	if (typeof $.prototype.tabs == 'function') {
 		$('.tabs').tabs(); // legacy tabs from jquery-ui
 	}
@@ -134,6 +129,24 @@ Admin.extra = function() {
 	$("div.message").addClass("notice");
 	$('#loading p').addClass('ui-corner-bl ui-corner-br');
 }
+
+/**
+ * Initialize boxes to enable to toggling Box content
+ */
+Admin.slideBoxToggle = function() {
+	var iconMinus = Admin.iconClass('minus', false);
+	var iconPlus = Admin.iconClass('plus', false);
+	$('body').on('click', '.box-title', function() {
+		$(this)
+			.next().slideToggle(function() {
+				$(this).trigger('slide.toggle');
+			}).end()
+			.find(iconMinus)
+			.switchClass(iconMinus, iconPlus).end()
+			.find(iconPlus)
+			.switchClass(iconPlus, iconMinus);
+	});
+};
 
 /**
  * Helper callback for toggling record selection
@@ -165,14 +178,3 @@ Admin.iconClass = function(icon, includeDefault) {
 	result += Croogo.themeSettings.iconDefaults['classPrefix'] + icon;
 	return result.trim();
 }
-
-/**
- * Document ready
- *
- * @return void
- */
-$(document).ready(function() {
-	Admin.form();
-	Admin.protectForms();
-	Admin.extra();
-});

@@ -27,15 +27,16 @@
 		?>
 	</head>
 	<body class="popup">
-		<div class="<?php echo $this->Layout->cssClass('container'); ?>">
-			<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-				<div id="content" class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
+		<div class="<?php echo $this->Theme->getCssClass('container'); ?>">
+			<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+				<div id="content" class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
 					<?php echo $this->Layout->sessionFlash(); ?>
 					<?php echo $this->fetch('content'); ?>
 				</div>
 			</div>
 		</div>
 		<?php
+		echo $this->element('admin/initializers');
 		echo $this->Blocks->get('scriptBottom');
 		?>
 	</body>

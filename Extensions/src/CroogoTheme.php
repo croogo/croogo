@@ -108,6 +108,10 @@ class CroogoTheme {
 					'columnFull' => 'span12',
 					'columnLeft' => 'span8',
 					'columnRight' => 'span4',
+					'dashboardFull' => 'span12',
+					'dashboardLeft' => 'span6',
+					'dashboardRight' => 'span6',
+					'dashboardClass' => 'sortable-column',
 					'formInput' => 'input-block-level',
 					'tableClass' => 'table',
 					'imageClass' => '',
@@ -275,6 +279,36 @@ class CroogoTheme {
 			}
 		}
 		throw new UnexpectedValueException(__d('croogo', 'Theme %s not found', $alias));
+	}
+
+/**
+ * Helper method to retrieve given $theme settings
+ *
+ * @param string $theme Theme name
+ * @return array Theme configuration data
+ */
+	public static function config($theme = null) {
+		static $croogoTheme = null;
+		static $themeData = array();
+		if ($croogoTheme === null) {
+			$croogoTheme = new CroogoTheme();
+		}
+
+		if (empty($themeData[$theme])) {
+			$data = $croogoTheme->getData($theme);
+			$request = Router::getRequest();
+			if ($request) {
+				$prefix = $request->param('prefix');
+				if (isset($data['settings']['prefixes'][$prefix]['css'])) {
+					$data['settings']['css'] = Hash::merge($data['settings']['prefixes'][$prefix]['css'],
+						$data['settings']['css']
+					);
+				}
+			}
+			$themeData[$theme] = $data;
+		}
+
+		return $themeData[$theme];
 	}
 
 }

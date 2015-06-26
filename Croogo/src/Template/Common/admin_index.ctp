@@ -8,9 +8,9 @@ if (!isset($className)) {
 	$className = strtolower($this->name);
 }
 
-$rowClass = $this->Layout->cssClass('row');
-$columnFull = $this->Layout->cssClass('columnFull');
-$tableClass = isset($tableClass) ? $tableClass : $this->Layout->cssClass('tableClass');
+$rowClass = $this->Theme->getCssClass('row');
+$columnFull = $this->Theme->getCssClass('columnFull');
+$tableClass = isset($tableClass) ? $tableClass : $this->Theme->getCssClass('tableClass');
 
 $showActions = isset($showActions) ? $showActions : true;
 
@@ -80,7 +80,7 @@ if (!$tableBody && isset($displayFields)):
 			else:
 				$actions[] = $this->Croogo->adminRowAction('',
 					array('action' => 'edit', $item[$modelClass]['id']),
-					array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit this item'))
+					array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 				);
 				$actions[] = $this->Croogo->adminRowActions($item[$modelClass]['id']);
 				$actions[] = $this->Croogo->adminRowAction('',
@@ -89,7 +89,7 @@ if (!$tableBody && isset($displayFields)):
 						$item[$modelClass]['id'],
 					),
 					array(
-						'icon' => $_icons['delete'],
+						'icon' => $this->Theme->getIcon('delete'),
 						'tooltip' => __d('croogo', 'Remove this item')
 					),
 					__d('croogo', 'Are you sure?'));

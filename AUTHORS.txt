@@ -3,10 +3,11 @@ Authors ordered by contribution
 Rachman Chavik <rchavik@xintesa.com>
 Fahad Ibnay Heylaal <fahad19@gmail.com>
 Kyle Robinson Young <kyle@dontkry.com>
-Derbois Aymeric <aymeric@occi-tech.com>
 Damien Biasotto <damien@occi-tech.com>
+Derbois Aymeric <aymeric@occi-tech.com>
 Pierre Martin <pierre@occi-tech.com>
 chadrien <chadrien@chadrien.fr>
+Walther Lalk <emailme@waltherlalk.com>
 mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
 euromark <euromark@web.de>
 Yuan Chavik <yuan@xintesa.com>
@@ -19,6 +20,7 @@ Paul Gardner <phpmagpie@webbedit.co.uk>
 Elias Coronado <ecor.rck@hotmail.com>
 Liam Keily <liam@simplywebsites.com>
 Marlin Cremers <m.cremers@cvo-technologies.com>
+Mike Tallroth <mike.tallroth@gmail.com>
 SCV Geo <scv@scvgeo.com>
 Heiner Gassen <hg@dynweb.net>
 Paulino Calderon <paulino@calder0n.com>
@@ -32,7 +34,6 @@ John <john@midianegocios.com.br>
 Lukas Marks <lukas.marks@lumax-web.de>
 Lukas Strassel <lukasstrassel@googlemail.com>
 Vitor Pacheco <vitor-p.c@hotmail.com>
-Walther Lalk <emailme@waltherlalk.com>
 primeminister <primeminister@mowd.nl>
 ADmad <admad.coder@gmail.com>
 James Sapara <james.sapara@gmail.com>
@@ -61,11 +62,12 @@ Marce Romagnoli <marce.romagnoli@gmail.com>
 Marcin Jóźwikowski <marcin@jozwikowski.pl>
 Marek Sebera <marek.sebera@gmail.com>
 Mike Pagé <mike@nedwave.com>
-Mike Tallroth <mike.tallroth@gmail.com>
+Nicholas Craig <nick@threadgroup.com>
 Paulo Pinto <paulorpinto@gmail.com>
 Robbert Noordzij <robbert@xseeding.nl>
 Sam Bernard <sam@sambernard.net>
 SplicePHP <admin@splicephp.com>
+Walther Lalk <dakota@users.noreply.github.com>
 Wiena Lorentz <lorentz@xintesa.com>
 alevilar <alevilar@gmail.com>
 avra911 <razvan@magnify.ro>

@@ -20,8 +20,14 @@ class Translations {
 			Croogo::hookBehavior($model, 'Translate.CroogoTranslate', $config);
 			Croogo::hookAdminRowAction(
 				Inflector::pluralize($model) . '/admin_index',
-				__d('croogo', 'Translate'),
-				$path . $model
+				__d('croogo', 'Translate'), array(
+				$path . $model => array(
+					'title' => false,
+					'options' => array(
+						'icon' => 'translate',
+						'data-title' => __d('croogo', 'Translate'),
+					),
+				))
 			);
 		}
 	}

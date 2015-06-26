@@ -14,6 +14,6 @@ use Croogo\Croogo\Controller\CroogoAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TaxonomyAppController extends CroogoAppController {
+class TaxonomyAppController extends AppController {
 
 }

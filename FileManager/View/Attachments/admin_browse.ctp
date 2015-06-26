@@ -2,8 +2,8 @@
 
 	<h2><?php echo $title_for_layout; ?></h2>
 
-	<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-		<div class="actions <?php echo $this->Layout->cssClass('columnFull'); ?>">
+	<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+		<div class="actions <?php echo $this->Theme->getCssClass('columnFull'); ?>">
 			<ul class="nav-buttons">
 			<?php
 				echo $this->Croogo->adminAction(
@@ -32,14 +32,14 @@
 			$actions = array();
 			$actions[] = $this->Croogo->adminRowAction('',
 				array('controller' => 'attachments', 'action' => 'edit', $attachment['Attachment']['id'], 'editor' => 1),
-				array('icon' => $_icons['update'], 'tooltip' => __d('croogo', 'Edit'))
+				array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit'))
 			);
 			$actions[] = $this->Croogo->adminRowAction('', array(
 				'controller' => 'attachments',
 				'action' => 'delete',
 				$attachment['Attachment']['id'],
 				'editor' => 1,
-			), array('icon' => $_icons['delete'], 'tooltip' => __d('croogo', 'Delete')), __d('croogo', 'Are you sure?'));
+			), array('icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Delete')), __d('croogo', 'Are you sure?'));
 
 			$mimeType = explode('/', $attachment['Attachment']['mime_type']);
 			$mimeType = $mimeType['0'];
@@ -63,7 +63,7 @@
 			$insertCode = $this->Html->link('', '#', array(
 				'onclick' => "Croogo.Wysiwyg.choose('" . $attachment['Attachment']['slug'] . "');",
 				'escapeTitle' => false,
-				'icon' => $_icons['attach'],
+				'icon' => $this->Theme->getIcon('attach'),
 				'tooltip' => __d('croogo', 'Insert')
 			));
 
@@ -86,8 +86,8 @@
 	</table>
 </div>
 
-<div class="<?php echo $this->Layout->cssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->cssClass('columnFull'); ?>">
+<div class="<?php echo $this->Theme->getCssClass('row'); ?>">
+	<div class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
 		<?php echo $this->element('admin/pagination'); ?>
 	</div>
 </div>

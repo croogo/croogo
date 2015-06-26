@@ -1,0 +1,35 @@
+.move-handle {
+	cursor: move;
+}
+
+.box-placeholder {
+	border: 1px dotted black;
+	background: #efefef;
+}
+
+.sorting {
+	padding: 10px;
+	border: 1px dotted #444;
+	min-height: 100px !important;
+}
+
+.sorting > * {
+	margin: 0px 0px 10px 0px;
+}
+
+.sorting > *:first-child {
+	margin-top: 0;
+}
+
+.sorting > *:last-child {
+	margin-bottom: 0;
+}
+
+.blogfeed h1 {
+	font-size: 100%;
+	line-height: 20px;
+}
+
+.blogfeed p.lead {
+	font-size: 100%;
+}

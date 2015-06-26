@@ -83,6 +83,18 @@ class TermTest extends CroogoTestCase {
 		$this->assertFalse(in_array($termId, $existingIds));
 	}
 
+	public function testSaveAndGetIdShouldShouldUpdateTermsDataWhenSlugExists() {
+		$existingUpdatedTermData = array(
+				'title' => 'Uncategorized update',
+				'slug' => 'uncategorized',
+				'description' => 'A new description'
+		);
+
+		$this->Term->saveAndGetId($existingUpdatedTermData);
+		$termData = $this->Term->read(null , 1);
+		$this->assertEquals($existingUpdatedTermData, array_intersect($existingUpdatedTermData, $termData['Term']));
+	}
+
 	public function testFindByVocabularyWithNoVocabularyIdShouldTriggerError() {
 		$this->setExpectedException('PHPUnit_Framework_error');
 		$this->Term->find('byVocabulary');

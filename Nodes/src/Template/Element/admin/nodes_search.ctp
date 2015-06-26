@@ -47,9 +47,8 @@ $url = isset($url) ? $url : array('action' => 'index');
 
 	endif;
 
-	echo $this->Form->submit(__d('croogo', 'Filter'), array(
-		'button' => 'default',
-		'div' => false,
+	echo $this->Form->input(__d('croogo', 'Filter'), array(
+		'type' => 'submit',
 	));
 	echo $this->Form->end();
 ?>
