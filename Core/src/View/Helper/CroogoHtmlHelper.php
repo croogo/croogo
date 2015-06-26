@@ -18,7 +18,7 @@ class CroogoHtmlHelper extends HtmlHelper {
 
 	public $helpers = [
 		'Url',
-		'Theme' => ['className' => 'Croogo/Core.Theme'],
+		'Croogo/Core.Theme',
 	];
 
 /**
