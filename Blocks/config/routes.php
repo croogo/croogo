@@ -1,6 +1,6 @@
 <?php
 
-use Croogo\Croogo\CroogoRouter;
+use Croogo\Core\CroogoRouter;
 
 CroogoRouter::connect('/admin/blocks/blocks/:action/*', array(
 	'prefix' => 'admin',

@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Controller\Component;
+namespace Croogo\Core\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Core\Configure;
@@ -33,7 +33,7 @@ class RecaptchaComponent extends Component {
 		Configure::write("Recaptcha.privateKey", $this->privatekey);
 
 		$this->controller = $event->subject();
-		$this->controller->helpers[] = 'Croogo/Croogo.Recaptcha';
+		$this->controller->helpers[] = 'Croogo/Core.Recaptcha';
 	}
 
 	public function valid($request) {

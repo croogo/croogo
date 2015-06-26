@@ -7,7 +7,7 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
-use Croogo\Croogo\Controller\Component\CroogoComponent;
+use Croogo\Core\Controller\Component\CroogoComponent;
 
 /**
  * Menus Component

@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\View\Helper;
+namespace Croogo\Core\View\Helper;
 use Cake\ORM\Entity;
 use Cake\View\Helper;
 use Cake\Routing\Router;
@@ -28,8 +28,8 @@ class LayoutHelper extends Helper {
  * @access public
  */
 	public $helpers = array(
-		'Croogo/Croogo.Croogo',
-		'Croogo/Croogo.Theme',
+		'Croogo/Core.Croogo',
+		'Croogo/Core.Theme',
 		'Html',
 		'Form',
 		'Flash'
@@ -230,7 +230,7 @@ class LayoutHelper extends Helper {
 			return $this->Html->icon($icon, compact('class'));
 		} else {
 			if (empty($this->_View->CroogoHtml)) {
-				$this->_View->Helpers->load('Croogo/Croogo.CroogoHtml');
+				$this->_View->Helpers->load('Croogo/Core.CroogoHtml');
 			}
 			return $this->_View->CroogoHtml->icon($icon, compact('class'));
 		}

@@ -3,8 +3,8 @@
 namespace Croogo\Menus\Controller\Admin;
 
 use Cake\Event\Event;
-use Croogo\Croogo\Controller\Component\CroogoComponent;
-use Croogo\Croogo\Controller\CroogoAppController;
+use Croogo\Core\Controller\Component\CroogoComponent;
+use Croogo\Core\Controller\CroogoAppController;
 use Croogo\Menus\Model\Table\MenusTable;
 
 /**

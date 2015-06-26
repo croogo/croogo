@@ -2,7 +2,7 @@
 
 use Cake\Core\Configure;
 use Cake\Cache\Cache;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Croogo;
 
 $configured = Cache::configured();
 if (!in_array('cached_settings', $configured)) {

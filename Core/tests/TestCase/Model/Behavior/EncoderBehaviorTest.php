@@ -1,5 +1,5 @@
 <?php
-namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
+namespace Croogo\Core\Test\TestCase\Model\Behavior;
 
 use Cake\ORM\TableRegistry;
 use Croogo\Core\TestSuite\CroogoTestCase;

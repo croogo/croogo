@@ -3,8 +3,8 @@
 namespace Croogo\Nodes\Model\Table;
 
 use Cake\ORM\Query;
-use Croogo\Croogo\Croogo;
-use Croogo\Croogo\Model\Table\CroogoTable;
+use Croogo\Core\Croogo;
+use Croogo\Core\Model\Table\CroogoTable;
 use Croogo\Nodes\Model\Entity\Node;
 
 class NodesTable extends CroogoTable {
@@ -22,9 +22,9 @@ class NodesTable extends CroogoTable {
 	public function initialize(array $config) {
 		parent::initialize($config);
 
-		$this->addBehavior('Croogo/Croogo.Encoder');
-		$this->addBehavior('Croogo/Croogo.Publishable');
-		$this->addBehavior('Croogo/Croogo.Url');
+		$this->addBehavior('Croogo/Core.Encoder');
+		$this->addBehavior('Croogo/Core.Publishable');
+		$this->addBehavior('Croogo/Core.Url');
 		$this->addBehavior('Search.Searchable');
 		$this->belongsTo('Croogo/Users.Users');
 	}

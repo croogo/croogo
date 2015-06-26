@@ -2,7 +2,7 @@
 
 namespace Croogo\Blocks\Config;
 
-use Croogo\Croogo\CroogoNav;
+use Croogo\Core\CroogoNav;
 
 CroogoNav::add('sidebar', 'blocks', array(
 	'icon' => 'columns',

@@ -2,7 +2,7 @@
 
 namespace Croogo\Taxonomy\Model\Table;
 
-use Croogo\Croogo\Model\Table\CroogoTable;
+use Croogo\Core\Model\Table\CroogoTable;
 
 class TaxonomiesTable extends CroogoTable {
 
@@ -10,7 +10,7 @@ class TaxonomiesTable extends CroogoTable {
 		$this->belongsTo('Croogo/Taxonomy.Terms');
 		$this->belongsTo('Croogo/Taxonomy.Vocabularies');
 		$this->addBehavior('Tree');
-//		$this->addBehavior('Croogo/Croogo.Cached', [
+//		$this->addBehavior('Croogo/Core.Cached', [
 //			'groups' => [
 //				'nodes',
 //				'taxonomy',

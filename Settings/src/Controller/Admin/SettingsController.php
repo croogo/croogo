@@ -2,7 +2,7 @@
 
 namespace Croogo\Settings\Controller\Admin;
 
-use Croogo\Croogo\Controller\CroogoAppController;
+use Croogo\Core\Controller\CroogoAppController;
 
 /**
  * Settings Controller
@@ -154,7 +154,7 @@ class SettingsController extends CroogoAppController {
  * @access public
  */
 	public function prefix($prefix = null) {
-		$this->Settings->addBehavior('Croogo/Croogo.Params');
+		$this->Settings->addBehavior('Croogo/Core.Params');
 
 		if ($this->request->is('post')) {
 			foreach ($this->request->data() as $id => $value) {

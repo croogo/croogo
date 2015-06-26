@@ -1,5 +1,5 @@
 <?php
-$this->extend('Croogo/Croogo./Common/admin_edit');
+$this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Croogo->adminScript('Croogo/Taxonomy.terms');
 

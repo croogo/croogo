@@ -1,7 +1,7 @@
 <?php
 
 namespace Croogo\Users\Test\Fixture;
-use Croogo\Croogo\TestSuite\CroogoTestFixture;
+use Croogo\Core\TestSuite\CroogoTestFixture;
 
 class ArosAcoFixture extends CroogoTestFixture {
 

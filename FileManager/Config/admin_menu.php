@@ -2,7 +2,7 @@
 
 namespace Croogo\FileManager\Config;
 
-use Croogo\Croogo\CroogoNav;
+use Croogo\Core\CroogoNav;
 
 CroogoNav::add('sidebar', 'media', array(
 	'icon' => 'picture',

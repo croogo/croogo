@@ -17,17 +17,17 @@ use Cake\Core\Configure;
 //		echo $this->Meta->meta();
 		echo $this->Layout->feed();
 		echo $this->Html->css(array(
-			'Croogo/Croogo.reset',
-			'Croogo/Croogo.960',
-			'Croogo/Croogo.theme',
+			'Croogo/Core.reset',
+			'Croogo/Core.960',
+			'Croogo/Core.theme',
 		));
 		echo $this->Layout->js();
 		echo $this->Html->script(array(
-			'Croogo/Croogo.jquery/jquery.min',
-			'Croogo/Croogo.jquery/jquery.hoverIntent.minified',
-			'Croogo/Croogo.jquery/superfish',
-			'Croogo/Croogo.jquery/supersubs',
-			'Croogo/Croogo.theme',
+			'Croogo/Core.jquery/jquery.min',
+			'Croogo/Core.jquery/jquery.hoverIntent.minified',
+			'Croogo/Core.jquery/superfish',
+			'Croogo/Core.jquery/supersubs',
+			'Croogo/Core.theme',
 		));
 		echo $this->Blocks->get('css');
 		echo $this->Blocks->get('script');

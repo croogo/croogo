@@ -2,7 +2,7 @@
 
 $this->assign('title', __d('croogo', 'Vocabulary: %s', $vocabulary->title));
 
-$this->extend('Croogo/Croogo./Common/admin_index');
+$this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))

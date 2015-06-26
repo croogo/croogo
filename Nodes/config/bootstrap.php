@@ -2,8 +2,8 @@
 
 use Cake\Core\Configure;
 use Cake\Routing\Router;
-use Croogo\Croogo\Cache\CroogoCache;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Cache\CroogoCache;
+use Croogo\Core\Croogo;
 
 $cacheConfig = array_merge(
 	Configure::read('Croogo.Cache.defaultConfig'),

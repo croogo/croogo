@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\View\Helper;
+namespace Croogo\Core\View\Helper;
 
 use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
@@ -27,9 +27,9 @@ class CroogoHelper extends Helper {
 		'Form',
 		'Html',
 		'Url',
-		'Croogo/Croogo.Layout',
-		'Croogo/Croogo.CroogoForm',
-		'Croogo/Croogo.CroogoHtml',
+		'Croogo/Core.Layout',
+		'Croogo/Core.CroogoForm',
+		'Croogo/Core.CroogoHtml',
 		'Croogo/Menus.Menus',
 	);
 
@@ -306,7 +306,7 @@ class CroogoHelper extends Helper {
 		}
 
 		if ($action == 'delete' || isset($usePost)) {
-			$this->CroogoForm->_helperMap['Html']['class'] = 'Croogo/Croogo.CroogoHtml';
+			$this->CroogoForm->_helperMap['Html']['class'] = 'Croogo/Core.CroogoHtml';
 			$this->CroogoForm->Html = new CroogoHtmlHelper($this->_View);
 			$postLink = $this->CroogoForm->postLink($title, $url, $options);
 			$this->CroogoForm->_helperMap['Html']['class'] = 'Html';

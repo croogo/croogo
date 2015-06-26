@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Test\TestCase\Shell;
+namespace Croogo\Core\Test\TestCase\Shell;
 
 use Cake\Console\Shell;
 use Cake\Console\ShellDispatcher;
@@ -54,7 +54,7 @@ class ExtShellTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 		$Folder = new Folder(APP . 'Plugin' . DS . 'Example');
-		$Folder->copy(Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
+		$Folder->copy(Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
 //		$this->Setting = ClassRegistry::init('Settings.Setting');
 	}
 
@@ -65,7 +65,7 @@ class ExtShellTest extends CroogoTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		$Folder = new Folder(Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
+		$Folder = new Folder(Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
 		$Folder->delete();
 	}
 

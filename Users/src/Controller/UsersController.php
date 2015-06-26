@@ -3,7 +3,7 @@
 namespace Croogo\Users\Controller;
 use Cake\Network\Email\Email;
 use Cake\Network\Exception\SocketException;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Croogo;
 use Cake\Core\Configure;
 
 /**

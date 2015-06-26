@@ -6,7 +6,7 @@ use Cake\Event\Event;
 use Cake\Routing\Router;
 use Cake\View\Helper;
 use Cake\View\View;
-use Croogo\Croogo\Utility\StringConverter;
+use Croogo\Core\Utility\StringConverter;
 
 /**
  * Menus Helper

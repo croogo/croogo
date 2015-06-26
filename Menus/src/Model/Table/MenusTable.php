@@ -4,7 +4,7 @@ namespace Croogo\Menus\Model\Table;
 
 use Cake\Event\Event;
 use Cake\ORM\Entity;
-use Croogo\Croogo\Model\Table\CroogoTable;
+use Croogo\Core\Model\Table\CroogoTable;
 
 /**
  * Menu
@@ -45,14 +45,14 @@ class MenusTable extends CroogoTable {
 	public function initialize(array $config) {
 		parent::initialize($config);
 
-//		$this->addBehavior('Croogo/Croogo.Cached', [
+//		$this->addBehavior('Croogo/Core.Cached', [
 //			'groups' => [
 //				'menus',
 //			],
 //		]);
-		$this->addBehavior('Croogo/Croogo.Params');
-		$this->addBehavior('Croogo/Croogo.Publishable');
-//		$this->addBehavior('Croogo/Croogo.Trackable');
+		$this->addBehavior('Croogo/Core.Params');
+		$this->addBehavior('Croogo/Core.Publishable');
+//		$this->addBehavior('Croogo/Core.Trackable');
 		$this->hasMany('Links', [
 			'className' => 'Menus.Links',
 			'order' => [

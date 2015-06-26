@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Configure;
+namespace Croogo\Core\Configure;
 
 use Cake\Core\Configure\ConfigEngineInterface;
 use Croogo\Core\Exception\Exception;

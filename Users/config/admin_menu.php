@@ -2,7 +2,7 @@
 
 namespace Croogo\Users\Config;
 
-use Croogo\Croogo\CroogoNav;
+use Croogo\Core\CroogoNav;
 
 CroogoNav::add('sidebar', 'users', array(
 	'icon' => 'user',

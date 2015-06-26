@@ -18,7 +18,7 @@ use Croogo\Settings\Model\Entity\Setting;
 class SettingsFormHelper extends Helper {
 
 	public $helpers = [
-		'Croogo/Croogo.CroogoForm'
+		'Croogo/Core.CroogoForm'
 	];
 
 /**

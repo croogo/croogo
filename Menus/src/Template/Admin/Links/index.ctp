@@ -1,11 +1,11 @@
 <?php
 
 use Cake\Utility\Inflector;
-use Croogo\Croogo\CroogoStatus;
+use Croogo\Core\CroogoStatus;
 
 $this->Croogo->adminscript('Croogo/Menus.admin');
 
-$this->extend('Croogo/Croogo./Common/admin_index');
+$this->extend('Croogo/Core./Common/admin_index');
 
 $this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
@@ -102,7 +102,7 @@ $this->append('table-body');
 			$this->CroogoForm->checkbox('Link.' . $linkId . '.id', array('class' => 'row-select')),
 			$linkId,
 			$linkTitle,
-			$this->element('Croogo/Croogo.admin/toggle', array(
+			$this->element('Croogo/Core.admin/toggle', array(
 				'id' => $linkId,
 				'status' => (int)$linksStatus[$linkId],
 			)),

@@ -2,7 +2,7 @@
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Croogo;
 
 if (Configure::read('Site.acl_plugin') == 'Croogo/Acl') {
 

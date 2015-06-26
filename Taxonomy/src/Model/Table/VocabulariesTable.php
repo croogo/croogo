@@ -2,7 +2,7 @@
 
 namespace Croogo\Taxonomy\Model\Table;
 
-use Croogo\Croogo\Model\Table\CroogoTable;
+use Croogo\Core\Model\Table\CroogoTable;
 
 /**
  * @property TaxonomiesTable Taxonomies

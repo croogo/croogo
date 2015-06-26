@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Event;
+namespace Croogo\Core\Event;
 
 use Cake\Cache\Cache;
 use Cake\Core\App;

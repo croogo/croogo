@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Utility;
+namespace Croogo\Core\Utility;
 use Cake\Network\Request;
 use Cake\Utility\Hash;
 use Cake\Routing\Router;

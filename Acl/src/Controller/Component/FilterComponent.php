@@ -9,7 +9,7 @@ use Cake\Controller\Component\AuthComponent;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Croogo;
 
 /**
  * AclFilter Component

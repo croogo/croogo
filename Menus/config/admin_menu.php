@@ -2,7 +2,7 @@
 
 namespace Croogo\Menus\Config;
 
-use Croogo\Croogo\CroogoNav;
+use Croogo\Core\CroogoNav;
 
 CroogoNav::add('sidebar', 'menus', array(
 	'icon' => 'sitemap',

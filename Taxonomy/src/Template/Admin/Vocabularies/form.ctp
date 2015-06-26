@@ -1,7 +1,7 @@
 <?php
 $this->Croogo->adminScript('Croogo/Taxonomy.vocabularies');
 
-$this->extend('Croogo/Croogo./Common/admin_edit');
+$this->extend('Croogo/Core./Common/admin_edit');
 
 $this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => 'home'))

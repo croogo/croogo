@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Shell;
+namespace Croogo\Core\Shell;
 
 use Cake\Console\Exception\ConsoleException;
 use Cake\Utility\Inflector;

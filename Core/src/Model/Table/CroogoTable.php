@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Model\Table;
+namespace Croogo\Core\Model\Table;
 
 use Cake\ORM\Table;
 use Cake\Utility\Hash;

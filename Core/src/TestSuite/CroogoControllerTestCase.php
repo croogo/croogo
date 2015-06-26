@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\TestSuite;
+namespace Croogo\Core\TestSuite;
 
 use Cake\Core\App;
 use Cake\Core\Configure;
@@ -35,7 +35,7 @@ class CroogoControllerTestCase extends TestCase {
 	}
 
 	protected static function _restoreSettings() {
-		$configDir = Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'config' . DS;
+		$configDir = Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS . 'config' . DS;
 		$source = $configDir . 'settings.default';
 		$target = $configDir . 'settings.json';
 		copy($source, $target);
@@ -49,7 +49,7 @@ class CroogoControllerTestCase extends TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$appDir = Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS;
+		$appDir = Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS;
 
 //		App::build(array(
 //			'Plugin' => array($appDir . 'Plugin' . DS),

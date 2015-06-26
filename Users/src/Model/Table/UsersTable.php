@@ -3,7 +3,7 @@
 namespace Croogo\Users\Model\Table;
 
 use Cake\Validation\Validator;
-use Croogo\Croogo\Model\Table\CroogoTable;
+use Croogo\Core\Model\Table\CroogoTable;
 
 class UsersTable extends CroogoTable {
 

@@ -2,7 +2,7 @@
 
 namespace Croogo\Extensions\Config;
 
-use Croogo\Croogo\CroogoNav;
+use Croogo\Core\CroogoNav;
 
 CroogoNav::add('sidebar', 'extensions', array(
 	'icon' => 'magic',

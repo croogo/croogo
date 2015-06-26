@@ -4,7 +4,7 @@ namespace Croogo\Wysiwyg\Event;
 
 use Cake\Event\EventListener;
 use Cake\Event\EventListenerInterface;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Croogo;
 
 /**
  * Wysiwyg Event Handler

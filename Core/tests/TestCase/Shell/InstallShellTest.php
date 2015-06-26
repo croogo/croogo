@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Test\TestCase\Shell;
+namespace Croogo\Core\Test\TestCase\Shell;
 
 use Cake\Console\Shell;
 use Cake\Console\ShellDispatcher;
@@ -79,9 +79,9 @@ class InstallShellTest extends CroogoTestCase {
 		foreach ($files as $file) {
 			unlink(TMP . $file);
 		}
-		$Folder = new Folder(Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'plugins' . DS . 'Example');
+		$Folder = new Folder(Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS . 'plugins' . DS . 'Example');
 		$Folder->delete();
-		$Folder = new Folder(Plugin::path('Croogo/Croogo') . 'tests' . DS . 'test_app' . DS . 'plugins' . DS . 'Minimal');
+		$Folder = new Folder(Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS . 'plugins' . DS . 'Minimal');
 		$Folder->delete();
 	}
 

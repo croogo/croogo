@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\View\Helper;
+namespace Croogo\Core\View\Helper;
 use Cake\View\Helper\PaginatorHelper;
 
 /**

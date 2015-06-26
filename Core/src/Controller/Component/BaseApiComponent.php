@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Controller\Component;
+namespace Croogo\Core\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Event\Event;

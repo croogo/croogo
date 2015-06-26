@@ -4,8 +4,8 @@ namespace Croogo\Nodes\Controller\Admin;
 
 use Cake\Event\Event;
 
-use Croogo\Croogo\Controller\Component\CroogoComponent;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Controller\Component\CroogoComponent;
+use Croogo\Core\Croogo;
 use Croogo\Nodes\Controller\NodesAppController;
 use Croogo\Nodes\Model\Entity\Node;
 use Croogo\Nodes\Model\Table\NodesTable;
@@ -63,8 +63,8 @@ class NodesController extends NodesAppController {
 	public function initialize() {
 		parent::initialize();
 
-		$this->loadComponent('Croogo/Croogo.BulkProcess');
-		$this->loadComponent('Croogo/Croogo.Recaptcha');
+		$this->loadComponent('Croogo/Core.BulkProcess');
+		$this->loadComponent('Croogo/Core.Recaptcha');
 		$this->loadComponent('Search.Prg', [
 			'presetForm' => [
 				'paramType' => 'querystring',
@@ -139,7 +139,7 @@ class NodesController extends NodesAppController {
 		$this->set(compact('nodes', 'types', 'typeAliases', 'nodeTypes'));
 
 		if (isset($this->request->params['named']['links']) || isset($this->request->query['chooser'])) {
-			$this->layout = 'Croogo/Croogo.admin_popup';
+			$this->layout = 'Croogo/Core.admin_popup';
 			$this->view = 'chooser';
 		}
 	}

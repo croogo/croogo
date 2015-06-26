@@ -1,6 +1,6 @@
 <?php
-$this->extend('Croogo/Croogo./Common/admin_index');
-use Croogo\Croogo\CroogoStatus;
+$this->extend('Croogo/Core./Common/admin_index');
+use Croogo\Core\CroogoStatus;
 
 $this->Croogo->adminScript(array('Croogo/Nodes.admin'));
 
@@ -83,7 +83,7 @@ echo $this->Form->create(
 					</td>
 					<td>
 						<?php
-							echo $this->element('Croogo/Croogo.admin/toggle', array(
+							echo $this->element('Croogo/Core.admin/toggle', array(
 								'id' => $node->id,
 								'status' => (int)$node->status,
 							));

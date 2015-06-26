@@ -2,7 +2,7 @@
 
 namespace Croogo\Taxonomy\Controller;
 
-use Croogo\Croogo\Controller\CroogoAppController;
+use Croogo\Core\Controller\CroogoAppController;
 
 /**
  * Taxonomy App Controller

@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Config;
+namespace Croogo\Core\Config;
 
 use Aura\Intl\Package;
 
@@ -94,7 +94,7 @@ if (Configure::check('Site.asset_timestamp')) {
 // CakePHP Acl
 Plugin::load(['Acl' => ['autoload' => true]]);
 
-$croogoPath = Plugin::path('Croogo/Croogo');
+$croogoPath = Plugin::path('Croogo/Core');
 
 /**
  * Extensions

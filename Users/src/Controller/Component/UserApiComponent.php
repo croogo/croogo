@@ -3,7 +3,7 @@
 namespace Croogo\Users\Controller\Component;
 
 use Cake\Controller\Controller;
-use Croogo\Croogo\Controller\Component\BaseApiComponent;
+use Croogo\Core\Controller\Component\BaseApiComponent;
 
 class UserApiComponent extends BaseApiComponent {
 

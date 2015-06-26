@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Routing\Route;
+namespace Croogo\Core\Routing\Route;
 
 use Cake\Core\Configure;
 use Cake\Routing\Route\Route;

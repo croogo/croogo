@@ -19,7 +19,7 @@
  * @copyright      Alex Potsides, {@link http://www.achingbrain.net http://www.achingbrain.net}
  * @license        http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-namespace Croogo\Croogo\Controller\Component;
+namespace Croogo\Core\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Controller\Controller;

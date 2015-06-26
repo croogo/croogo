@@ -1,8 +1,8 @@
 <?php
 
-use Croogo\Croogo\CroogoStatus;
+use Croogo\Core\CroogoStatus;
 
-$this->extend('Croogo/Croogo./Common/admin_edit');
+$this->extend('Croogo/Core./Common/admin_edit');
 $this->Croogo->adminScript('Croogo/Menus.admin');
 
 $this->CroogoHtml
@@ -172,7 +172,7 @@ $this->end();
 $this->append('form-end', $this->Form->end());
 
 $this->append('page-footer');
-	echo $this->element('Croogo/Croogo.admin/modal', array(
+	echo $this->element('Croogo/Core.admin/modal', array(
 		'id' => 'link_choosers',
 		'title' => __d('croogo', 'Choose Link'),
 	));

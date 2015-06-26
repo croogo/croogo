@@ -6,7 +6,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Croogo;
 use Croogo\Nodes\Controller\NodesAppController;
 use Croogo\Nodes\Model\Table\NodesTable;
 
@@ -38,8 +38,8 @@ class NodesController extends NodesAppController {
  * @access public
  */
 	public $components = array(
-		'Croogo/Croogo.BulkProcess',
-		'Croogo/Croogo.Recaptcha',
+		'Croogo/Core.BulkProcess',
+		'Croogo/Core.Recaptcha',
 		'Search.Prg' => array(
 			'presetForm' => array(
 				'paramType' => 'querystring',

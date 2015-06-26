@@ -1,6 +1,6 @@
 <?php
 
-$this->extend('Croogo/Croogo./Common/admin_edit');
+$this->extend('Croogo/Core./Common/admin_edit');
 
 $this->CroogoHtml->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index'))

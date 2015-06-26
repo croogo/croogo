@@ -2,7 +2,7 @@
 
 namespace Croogo\Nodes\Controller;
 
-use Croogo\Croogo\Controller\CroogoAppController;
+use Croogo\Core\Controller\CroogoAppController;
 
 /**
  * Nodes App Controller
@@ -17,9 +17,9 @@ use Croogo\Croogo\Controller\CroogoAppController;
 class NodesAppController extends CroogoAppController {
 
 	public $helpers = [
-		'Croogo/Croogo.Croogo',
-		'Croogo/Croogo.CroogoHtml',
-		'Croogo/Croogo.CroogoApp',
+		'Croogo/Core.Croogo',
+		'Croogo/Core.CroogoHtml',
+		'Croogo/Core.CroogoApp',
 	];
 
 }

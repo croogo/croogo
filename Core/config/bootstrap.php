@@ -6,9 +6,9 @@ use Cake\Database\Type;
 use Croogo\Core\Croogo;
 
 // Map our custom types
-Type::map('params', 'Croogo\Croogo\Database\Type\ParamsType');
-Type::map('encoded', 'Croogo\Croogo\Database\Type\EncodedType');
-Type::map('link', 'Croogo\Croogo\Database\Type\LinkType');
+Type::map('params', 'Croogo\Core\Database\Type\ParamsType');
+Type::map('encoded', 'Croogo\Core\Database\Type\EncodedType');
+Type::map('link', 'Croogo\Core\Database\Type\LinkType');
 
 require_once 'croogo_bootstrap.php';
 
@@ -28,5 +28,5 @@ Configure::write('Croogo.installed',
 	file_exists(APP . 'config' . DS . 'croogo.php')
 );
 if (!Configure::read('Croogo.installed') || !Configure::read('Install.secured')) {
-	Plugin::load('Croogo/Install', ['routes' => true, 'path' => Plugin::path('Croogo/Croogo') . '..' . DS . 'Install' . DS]);
+	Plugin::load('Croogo/Install', ['routes' => true, 'path' => Plugin::path('Croogo/Core') . '..' . DS . 'Install' . DS]);
 }

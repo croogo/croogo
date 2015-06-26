@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Test\TestCase\Routing\Route;
+namespace Croogo\Core\Test\TestCase\Routing\Route;
 
 use Cake\Core\Configure;
 use Croogo\Core\Routing\Route\ApiRoute;

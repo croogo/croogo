@@ -2,7 +2,7 @@
 
 namespace Croogo\Comments\Config;
 
-use Croogo\Croogo\CroogoNav;
+use Croogo\Core\CroogoNav;
 
 CroogoNav::add('sidebar', 'content.children.comments', array(
 	'title' => __d('croogo', 'Comments'),

@@ -2,7 +2,7 @@
 
 namespace Croogo\Blocks\Controller;
 
-use Croogo\Croogo\Controller\CroogoAppController;
+use Croogo\Core\Controller\CroogoAppController;
 
 /**
  * Regions Controller

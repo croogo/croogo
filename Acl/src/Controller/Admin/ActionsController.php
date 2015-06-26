@@ -6,7 +6,7 @@ use Acl\AclExtras;
 use Acl\Controller\AclAppController;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
-use Croogo\Croogo\Controller\CroogoAppController;
+use Croogo\Core\Controller\CroogoAppController;
 
 /**
  * AclActions Controller

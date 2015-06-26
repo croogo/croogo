@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\View\Helper;
+namespace Croogo\Core\View\Helper;
 
 use Cake\Event\Event;
 use Cake\Utility\Hash;
@@ -18,7 +18,7 @@ class CroogoHtmlHelper extends HtmlHelper {
 
 	public $helpers = [
 		'Url',
-		'Theme' => ['className' => 'Croogo/Croogo.Theme'],
+		'Theme' => ['className' => 'Croogo/Core.Theme'],
 	];
 
 /**

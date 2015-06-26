@@ -8,8 +8,8 @@ use Cake\Network\Email\Email;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
-use Croogo\Croogo\Controller\CroogoAppController;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Core\Croogo;
 use Croogo\Users\Model\Entity\User;
 
 /**

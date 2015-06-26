@@ -2,7 +2,7 @@
 
 use Cake\Core\Configure;
 use Cake\Routing\Router;
-use Croogo\Croogo\CroogoRouter;
+use Croogo\Core\CroogoRouter;
 
 CroogoRouter::connect('/admin', Configure::read('Croogo.dashboardUrl'));
 

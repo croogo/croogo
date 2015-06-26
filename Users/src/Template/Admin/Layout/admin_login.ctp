@@ -9,12 +9,12 @@ use Cake\Core\Configure;
 		<title><?php echo $this->fetch('title'); ?> - <?php echo __d('croogo', 'Croogo'); ?></title>
 		<?php
 		echo $this->Html->css(array(
-			'Croogo/Croogo.croogo-bootstrap',
-			'Croogo/Croogo.croogo-bootstrap-responsive',
+			'Croogo/Core.croogo-bootstrap',
+			'Croogo/Core.croogo-bootstrap-responsive',
 		));
 		echo $this->Layout->js();
 		echo $this->Html->script(array(
-			'Croogo/Croogo.html5',
+			'Croogo/Core.html5',
 		));
 
 		echo $this->fetch('script');
@@ -50,6 +50,6 @@ use Cake\Core\Configure;
 			</div>
 
 		</div>
-		<?php echo $this->element('Croogo/Croogo.admin/footer'); ?>
+		<?php echo $this->element('Croogo/Core.admin/footer'); ?>
 	</body>
 </html>

@@ -7,7 +7,7 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
-use Croogo\Croogo\Core\Exception\Exception;
+use Croogo\Core\Core\Exception\Exception;
 use Croogo\Taxonomy\Model\Entity\Type;
 use Croogo\Taxonomy\Model\Entity\Vocabulary;
 use Croogo\Taxonomy\Model\Table\TaxonomiesTable;
@@ -31,7 +31,7 @@ class TaxonomiesComponent extends Component {
  * @access public
  */
 	public $components = array(
-		'Croogo/Croogo.Croogo',
+		'Croogo/Core.Croogo',
 	);
 
 /**

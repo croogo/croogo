@@ -3,7 +3,7 @@
 namespace Croogo\Blocks\Controller;
 
 use Cake\Event\Event;
-use Croogo\Croogo\Controller\CroogoAppController;
+use Croogo\Core\Controller\CroogoAppController;
 
 /**
  * Blocks Controller
@@ -32,7 +32,7 @@ class BlocksController extends CroogoAppController {
  * @access public
  */
 	public $components = array(
-		'Croogo/Croogo.BulkProcess',
+		'Croogo/Core.BulkProcess',
 		'Search.Prg' => array(
 			'presetForm' => array(
 				'paramType' => 'querystring',

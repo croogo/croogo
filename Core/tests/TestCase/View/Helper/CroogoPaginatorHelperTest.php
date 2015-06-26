@@ -1,5 +1,5 @@
 <?php
-namespace Croogo\Croogo\Test\TestCase\View\Helper;
+namespace Croogo\Core\Test\TestCase\View\Helper;
 
 use Cake\Controller\Controller;
 use Cake\Network\Request;

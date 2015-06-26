@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Controller\Component;
+namespace Croogo\Core\Controller\Component;
 
 use Cake\Controller\Controller;
 use Cake\Core\App;
@@ -300,7 +300,7 @@ class CroogoComponent extends Component {
 		$this->_controller->layout = 'ajax';
 		if ($table->save($entity)) {
 			$this->_controller->set(compact('id', 'status'));
-			$this->_controller->render('Croogo/Croogo./Common/admin_toggle');
+			$this->_controller->render('Croogo/Core./Common/admin_toggle');
 		} else {
 			throw new Exception(__d('croogo', 'Failed toggling field %s to %s', $field, $status));
 		}

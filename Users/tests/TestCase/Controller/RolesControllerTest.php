@@ -1,7 +1,7 @@
 <?php
 namespace Croogo\Users\Test\TestCase\Controller;
 
-use Croogo\Croogo\TestSuite\CroogoControllerTestCase;
+use Croogo\Core\TestSuite\CroogoControllerTestCase;
 class RolesControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(

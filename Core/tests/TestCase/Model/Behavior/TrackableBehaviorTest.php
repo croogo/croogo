@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
+namespace Croogo\Core\Test\TestCase\Model\Behavior;
 
 use Cake\Core\Configure;
 use Cake\Network\Session;
@@ -23,7 +23,7 @@ use Croogo\Users\Model\User;
 class TrackableBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.croogo/croogo.trackable',
+		'plugin.Croogo/Core.trackable',
 		'plugin.croogo/users.user',
 		'plugin.croogo/users.role',
 		'plugin.croogo/settings.setting',

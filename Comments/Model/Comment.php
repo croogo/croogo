@@ -2,8 +2,8 @@
 
 namespace Croogo\Comments\Model;
 
-use Croogo\Croogo\Model\Table\CroogoTable;
-use Croogo\Croogo\CroogoStatus;
+use Croogo\Core\Model\Table\CroogoTable;
+use Croogo\Core\CroogoStatus;
 
 /**
  * Comment

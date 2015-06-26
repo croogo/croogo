@@ -5,7 +5,7 @@ namespace Croogo\Menus\Model\Table;
 use Cake\Database\Schema\Table as Schema;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
-use Croogo\Croogo\Model\Table\CroogoTable;
+use Croogo\Core\Model\Table\CroogoTable;
 
 /**
  * Link
@@ -40,10 +40,10 @@ class LinksTable extends CroogoTable {
 		parent::initialize($config);
 
 		$this->addBehavior('Tree');
-//		$this->addBehavior('Croogo/Croogo.Cached');
-		$this->addBehavior('Croogo/Croogo.Params');
-		$this->addBehavior('Croogo/Croogo.Publishable');
-//		$this->addBehavior('Croogo/Croogo.Trackable');
+//		$this->addBehavior('Croogo/Core.Cached');
+		$this->addBehavior('Croogo/Core.Params');
+		$this->addBehavior('Croogo/Core.Publishable');
+//		$this->addBehavior('Croogo/Core.Trackable');
 		$this->belongsTo('Menus', [
 			'className' => 'Croogo/Menus.Menus',
 			'counterCache' => true,

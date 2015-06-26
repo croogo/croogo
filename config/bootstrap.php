@@ -9,7 +9,7 @@ function addCroogoPluginPath($basePluginName) {
 	Configure::write('plugins', $pluginPaths);
 }
 
-addCroogoPluginPath('Croogo');
+addCroogoPluginPath('Core');
 addCroogoPluginPath('Acl');
 addCroogoPluginPath('Settings');
 addCroogoPluginPath('Comments');

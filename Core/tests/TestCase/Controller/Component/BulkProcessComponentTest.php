@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Test\TestCase\Controller\Component;
+namespace Croogo\Core\Test\TestCase\Controller\Component;
 
 use Cake\Controller\Controller;
 use Cake\Network\Request;
@@ -13,7 +13,7 @@ class BulkProcessComponentTest extends CroogoTestCase {
 		$request = new Request();
 		$request->data = $data;
 		$controller = new Controller($request);
-		$controller->loadComponent('Croogo/Croogo.BulkProcess');
+		$controller->loadComponent('Croogo/Core.BulkProcess');
 		$controller->startupProcess();
 		return $controller;
 	}

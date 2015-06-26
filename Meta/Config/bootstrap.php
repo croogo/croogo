@@ -1,6 +1,6 @@
 <?php
 
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Croogo;
 
 Croogo::hookComponent('Nodes', array('Meta.Meta' => array('priority' => 8)));
 

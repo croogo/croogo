@@ -6,8 +6,8 @@ use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\ORM\TableRegistry;
-use Croogo\Croogo\Controller\CroogoAppController;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Core\Croogo;
 
 /**
  * AclPermissions Controller
@@ -111,7 +111,7 @@ class PermissionsController extends CroogoAppController {
 			Croogo::hookAdminTab(
 				'Admin/Permissions/index',
 				__d('croogo', $root->title),
-				'Croogo/Croogo.blank',
+				'Croogo/Core.blank',
 				array(
 					'linkOptions' => array(
 						'data-alias' => $root->alias,

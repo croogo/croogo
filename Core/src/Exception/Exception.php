@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Core\Exception;
+namespace Croogo\Core\Core\Exception;
 
 class Exception extends \Cake\Core\Exception\Exception {
 

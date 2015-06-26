@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Database\Type;
+namespace Croogo\Core\Database\Type;
 
 use Cake\Database\Driver;
 use Cake\Database\Type;

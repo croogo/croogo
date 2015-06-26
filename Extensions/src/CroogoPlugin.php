@@ -11,7 +11,7 @@ use Cake\Filesystem\Folder;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Log\LogTrait;
-use Croogo\Croogo\Event\CroogoEventManager;
+use Croogo\Core\Event\CroogoEventManager;
 use InvalidArgumentException;
 
 /**
@@ -61,7 +61,7 @@ class CroogoPlugin {
  */
 	public $corePlugins = array(
 		'Croogo/Acl',
-		'Croogo/Croogo',
+		'Croogo/Core',
 		'Croogo/Extensions',
 		'Migrations',
 		'Search',
@@ -156,7 +156,7 @@ class CroogoPlugin {
 		if (file_exists($composerFile)) {
 			$pluginData = json_decode(file_get_contents($composerFile), true);
 			if (
-				isset($pluginData['require']['croogo/croogo']) ||
+				isset($pluginData['require']['Croogo/Core']) ||
 				(isset($pluginData['type']) && $pluginData['type'] == 'croogo-plugin')
 			) {
 				return true;
@@ -215,7 +215,7 @@ class CroogoPlugin {
 					$composerData = json_decode(file_get_contents($composerFile), true);
 					$type = isset($composerData['type']) ? $composerData['type'] : null;
 					$isCroogoPlugin =
-						isset($composerData['require']['croogo/croogo']) ||
+						isset($composerData['require']['Croogo/Core']) ||
 						$type == 'croogo-plugin';
 
 					if ($isCroogoPlugin) {
@@ -809,7 +809,7 @@ class CroogoPlugin {
 	public static function path($plugin)
 	{
 		if (strstr($plugin, 'Croogo/')) {
-			return realpath(Plugin::path('Croogo/Croogo') . '..' . DS . substr($plugin, 7) . DS) . DS;
+			return realpath(Plugin::path('Croogo/Core') . '..' . DS . substr($plugin, 7) . DS) . DS;
 		}
 
 		return Plugin::path($plugin);

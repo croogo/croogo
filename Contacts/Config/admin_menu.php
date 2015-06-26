@@ -2,7 +2,7 @@
 
 namespace Croogo\Contacts\Config;
 
-use Croogo\Croogo\CroogoNav;
+use Croogo\Core\CroogoNav;
 
 CroogoNav::add('sidebar', 'contacts', array(
 	'icon' => 'comments',

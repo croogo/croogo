@@ -5,7 +5,7 @@ namespace Croogo\Settings\Model\Table;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\Query;
-use Croogo\Croogo\Model\Table\CroogoTable;
+use Croogo\Core\Model\Table\CroogoTable;
 
 /**
  * Setting

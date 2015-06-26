@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Test\TestCase\Utility;
+namespace Croogo\Core\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
 use Croogo\Core\TestSuite\CroogoTestCase;

@@ -1,7 +1,7 @@
 <?php
 
 namespace Croogo\Settings\Test\Fixture;
-use Croogo\Croogo\TestSuite\CroogoTestFixture;
+use Croogo\Core\TestSuite\CroogoTestFixture;
 
 class LanguageFixture extends CroogoTestFixture {
 

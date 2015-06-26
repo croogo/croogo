@@ -1,8 +1,8 @@
 <?php
 
-use Croogo\Croogo\CroogoStatus;
+use Croogo\Core\CroogoStatus;
 
-$this->extend('Croogo/Croogo./Common/admin_edit');
+$this->extend('Croogo/Core./Common/admin_edit');
 //$this->Html->script(array('Croogo/Nodes.admin'), false);
 
 $this->Html

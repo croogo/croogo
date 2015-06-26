@@ -162,20 +162,20 @@ class CroogoTheme {
 					'admin' => array(
 						'helpers' => array(
 							'CroogoHtml' => array(
-								'className' => 'Croogo/Croogo.CroogoHtml',
+								'className' => 'Croogo/Core.CroogoHtml',
 							),
 							'CroogoForm' => array(
-								'className' => 'Croogo/Croogo.CroogoForm',
+								'className' => 'Croogo/Core.CroogoForm',
 							),
 							'CroogoPaginator' => array(
-								'className' => 'Croogo/Croogo.CroogoPaginator',
+								'className' => 'Croogo/Core.CroogoPaginator',
 							),
 						),
 					),
 				),
 			),
 		);
-		$default = Plugin::path('Croogo/Croogo') . 'webroot' . DS . 'theme.json';
+		$default = Plugin::path('Croogo/Core') . 'webroot' . DS . 'theme.json';
 
 		if ($alias == null || $alias == 'default') {
 			$manifestFile = $default;

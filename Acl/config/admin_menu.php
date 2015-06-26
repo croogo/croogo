@@ -2,7 +2,7 @@
 
 namespace Croogo\Acl\Config;
 
-use Croogo\Croogo\CroogoNav;
+use Croogo\Core\CroogoNav;
 
 CroogoNav::add('sidebar', 'users.children.permissions', array(
 	'title' => __d('croogo', 'Permissions'),

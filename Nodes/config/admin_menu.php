@@ -2,7 +2,7 @@
 
 namespace Croogo\Nodes\Config;
 
-use Croogo\Croogo\CroogoNav;
+use Croogo\Core\CroogoNav;
 
 CroogoNav::add('sidebar', 'content', array(
 	'icon' => 'edit',

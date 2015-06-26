@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Model\Behavior;
+namespace Croogo\Core\Model\Behavior;
 
 use App\Model\ModelBehavior;
 /**

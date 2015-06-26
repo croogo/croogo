@@ -5,8 +5,8 @@ namespace Croogo\Nodes\View\Helper;
 use Cake\Event\Event;
 use Cake\View\Helper;
 use Cake\View\View;
-use Croogo\Croogo\Croogo;
-use Croogo\Croogo\Utility\StringConverter;
+use Croogo\Core\Croogo;
+use Croogo\Core\Utility\StringConverter;
 
 /**
  * Nodes Helper

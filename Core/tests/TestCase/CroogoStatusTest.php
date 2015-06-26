@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Test\TestCase;
+namespace Croogo\Core\Test\TestCase;
 
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;

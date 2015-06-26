@@ -1,5 +1,5 @@
 <?php
-namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
+namespace Croogo\Core\Test\TestCase\Model\Behavior;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;

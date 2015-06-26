@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Cache;
+namespace Croogo\Core\Cache;
 
 use Cake\Core\Configure;
 use Cake\Cache\Cache;

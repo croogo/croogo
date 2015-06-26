@@ -1,8 +1,8 @@
 <?php
 
 use Cake\Core\Configure;
-use Croogo\Croogo\Cache\CroogoCache;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Cache\CroogoCache;
+use Croogo\Core\Croogo;
 
 CroogoCache::config('contacts_view', array_merge(
 	Configure::read('Cache.defaultConfig'),

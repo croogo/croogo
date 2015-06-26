@@ -2,7 +2,7 @@
 
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
-use Croogo\Croogo\CroogoRouter;
+use Croogo\Core\CroogoRouter;
 
 Router::plugin('Croogo/Users', function (RouteBuilder $routeBuilder) {
 	$routeBuilder->fallbacks();
@@ -17,7 +17,7 @@ Router::connect('/:api/:prefix/users/lookup', array(
 	'controller' => 'users',
 	'action' => 'lookup',
 ), array(
-	'routeClass' => 'Croogo\Croogo\Routing\Route\ApiRoute',
+	'routeClass' => 'Croogo\Core\Routing\Route\ApiRoute',
 ));
 
 // Users

@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Controller\Component;
+namespace Croogo\Core\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
@@ -124,7 +124,7 @@ class BulkProcessComponent extends Component {
 		}
 
 		if (!$table->hasBehavior('BulkProcess')) {
-			$table->addBehavior('Croogo/Croogo.BulkProcess');
+			$table->addBehavior('Croogo/Core.BulkProcess');
 		}
 
 		$processed = $table->processAction($action, $ids);

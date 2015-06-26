@@ -1,5 +1,5 @@
 <?php
-namespace Croogo\Croogo\Test\TestCase\Model;
+namespace Croogo\Core\Test\TestCase\Model;
 
 use App\Controller\Component\AuthComponent;
 use App\Model\Model;

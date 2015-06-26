@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Controller;
+namespace Croogo\Core\Controller;
 
 use App\Controller\AppController;
 use Cake\Controller\ErrorController;
@@ -37,7 +37,7 @@ class CroogoAppController extends AppController {
  * @access public
  */
 	protected $_defaultComponents = array(
-		'Croogo/Croogo.Croogo',
+		'Croogo/Core.Croogo',
 		'Croogo/Acl.Filter',
 		'Security',
 		'Acl.Acl',
@@ -82,9 +82,9 @@ class CroogoAppController extends AppController {
 		'Form',
 		'Text',
 		'Time',
-		'Croogo/Croogo.Layout',
-		'Croogo/Croogo.Custom',
-		'Croogo/Croogo.CroogoForm',
+		'Croogo/Core.Layout',
+		'Croogo/Core.Custom',
+		'Croogo/Core.CroogoForm',
 	);
 
 /**
@@ -171,10 +171,10 @@ class CroogoAppController extends AppController {
  */
 	public function afterConstruct() {
 		if ($this->request->param('prefix') == 'admin') {
-			$this->helpers[] = 'Croogo/Croogo.Croogo';
-			$this->helpers[] = 'Croogo/Croogo.CroogoHtml';
-			$this->helpers[] = 'Croogo/Croogo.CroogoForm';
-			$this->helpers[] = 'Croogo/Croogo.CroogoPaginator';
+			$this->helpers[] = 'Croogo/Core.Croogo';
+			$this->helpers[] = 'Croogo/Core.CroogoHtml';
+			$this->helpers[] = 'Croogo/Core.CroogoForm';
+			$this->helpers[] = 'Croogo/Core.CroogoPaginator';
 		}
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
 		$this->_setupComponents();
@@ -256,7 +256,7 @@ class CroogoAppController extends AppController {
 					'View/Helper' => array(App::themePath($theme) . 'Helper' . DS),
 				));
 			}
-			$this->layout = 'Croogo/Croogo.admin';
+			$this->layout = 'Croogo/Core.admin';
 		} else {
 			$theme = Configure::read('Site.theme');
 		}
@@ -266,8 +266,8 @@ class CroogoAppController extends AppController {
 		$data = $croogoTheme->getData($theme);
 		$settings = $data['settings'];
 
-		if (empty($settings['prefixes']['admin']['helpers']['Croogo/Croogo.Croogo'])) {
-			$this->helpers[] = 'Croogo/Croogo.Croogo';
+		if (empty($settings['prefixes']['admin']['helpers']['Croogo/Core.Croogo'])) {
+			$this->helpers[] = 'Croogo/Core.Croogo';
 		}
 
 		if (isset($settings['prefixes'][$prefix])) {
@@ -336,11 +336,11 @@ class CroogoAppController extends AppController {
 			$this->Auth->user('role_id') != 1
 		) {
 			if (!$this->request->is('whitelisted')) {
-				$this->layout = 'Croogo/Croogo.maintenance';
+				$this->layout = 'Croogo/Core.maintenance';
 				$this->response->statusCode(503);
 				$this->set('title_for_layout', __d('croogo', 'Site down for maintenance'));
 				$this->viewPath = 'Maintenance';
-				$this->render('Croogo/Croogo.blank');
+				$this->render('Croogo/Core.blank');
 			}
 		}
 

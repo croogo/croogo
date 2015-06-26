@@ -1,8 +1,8 @@
 <?php
 
 use Cake\Core\Configure;
-use Croogo\Croogo\Cache\CroogoCache;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Cache\CroogoCache;
+use Croogo\Core\Croogo;
 
 CroogoCache::config('croogo_blocks', array_merge(
 	Configure::read('Croogo.Cache.defaultConfig'),

@@ -1,5 +1,5 @@
 <?php
-namespace Croogo\Croogo\Test\TestCase;
+namespace Croogo\Core\Test\TestCase;
 
 use Croogo\Core\CroogoJson;
 use Croogo\Core\TestSuite\CroogoTestCase;

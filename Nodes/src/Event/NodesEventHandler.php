@@ -6,7 +6,7 @@ use Cake\Core\Plugin;
 
 use Cake\Event\EventListenerInterface;
 use Cake\ORM\TableRegistry;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Croogo;
 use Croogo\Comments\Model\Comment;
 
 /**

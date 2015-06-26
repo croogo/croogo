@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\TestSuite;
+namespace Croogo\Core\TestSuite;
 
 use Cake\Database\Connection;
 use Cake\Database\Driver\Postgres;

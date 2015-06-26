@@ -1,5 +1,5 @@
 <?php
-namespace Croogo\Croogo\Test\TestCase\Event;
+namespace Croogo\Core\Test\TestCase\Event;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;

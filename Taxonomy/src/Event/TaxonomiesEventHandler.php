@@ -4,8 +4,8 @@ namespace Croogo\Taxonomy\Event;
 
 use Cake\Event\EventListenerInterface;
 use Cake\ORM\TableRegistry;
-use Croogo\Croogo\Croogo;
-use Croogo\Croogo\CroogoNav;
+use Croogo\Core\Croogo;
+use Croogo\Core\CroogoNav;
 
 /**
  * Taxonomy Event Handler

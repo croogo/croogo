@@ -5,8 +5,8 @@ namespace Croogo\Blocks\Event;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Utility\Hash;
-use Croogo\Croogo\Croogo;
-use Croogo\Croogo\Utility\StringConverter;
+use Croogo\Core\Croogo;
+use Croogo\Core\Utility\StringConverter;
 
 /**
  * BlocksEventHandler

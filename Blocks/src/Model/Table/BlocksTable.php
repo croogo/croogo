@@ -3,7 +3,7 @@
 namespace Croogo\Blocks\Model\Table;
 
 use Cake\ORM\Table;
-use Croogo\Croogo\CroogoStatus;
+use Croogo\Core\CroogoStatus;
 
 /**
  * Block

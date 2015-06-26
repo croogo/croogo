@@ -4,7 +4,7 @@ namespace Croogo\Blocks\View\Helper;
 
 use Cake\Utility\Hash;
 use Cake\View\Helper;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Croogo;
 
 /**
  * Regions Helper
@@ -34,7 +34,7 @@ class RegionsHelper extends Helper {
 			return true;
 		}
 	}
-	
+
 /**
  * Show Block
  *

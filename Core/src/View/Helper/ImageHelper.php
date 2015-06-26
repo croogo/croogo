@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\View\Helper;
+namespace Croogo\Core\View\Helper;
 
 use App\View\Helper\Helper;
 /**
@@ -14,7 +14,7 @@ class ImageHelper extends Helper {
 	public $helpers = array(
 		'Html',
 		'Theme' => array(
-			'className' => 'Croogo/Croogo.Theme',
+			'className' => 'Croogo/Core.Theme',
 		),
 	);
 

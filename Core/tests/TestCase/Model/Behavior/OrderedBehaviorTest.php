@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
+namespace Croogo\Core\Test\TestCase\Model\Behavior;
 
 use Cake\Core\Configure;
 use Croogo\Core\Test\Fixture\OrderRecordFixture;
@@ -12,7 +12,7 @@ class OrderedBehaviorTest extends CroogoTestCase {
  * Fixtures
  */
 	public $fixtures = array(
-		'plugin.croogo/croogo.order_record',
+		'plugin.Croogo/Core.order_record',
 //		'plugin.blocks.block',
 //		'plugin.blocks.region',
 	);

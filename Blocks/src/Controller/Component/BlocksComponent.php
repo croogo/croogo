@@ -6,8 +6,8 @@ use Cake\Controller\Component;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 
-use Croogo\Croogo\Utility\StringConverter;
-use Croogo\Croogo\Utility\VisibilityFilter;
+use Croogo\Core\Utility\StringConverter;
+use Croogo\Core\Utility\VisibilityFilter;
 /**
  * Blocks Component
  *

@@ -2,7 +2,7 @@
 namespace Croogo\Users\Test\TestCase\Model;
 
 use Cake\Controller\Component\AuthComponent;
-use Croogo\Croogo\TestSuite\CroogoTestCase;
+use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Users\Model\User;
 
 /**

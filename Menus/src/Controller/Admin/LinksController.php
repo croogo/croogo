@@ -4,9 +4,9 @@ namespace Croogo\Menus\Controller\Admin;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Croogo\Croogo\Controller\Component\CroogoComponent;
-use Croogo\Croogo\Controller\CroogoAppController;
-use Croogo\Croogo\Croogo;
+use Croogo\Core\Controller\Component\CroogoComponent;
+use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Core\Croogo;
 use Croogo\Menus\Controller\MenusAppController;
 use Croogo\Menus\Model\Table\LinksTable;
 
@@ -39,7 +39,7 @@ class LinksController extends CroogoAppController {
 	public function initialize() {
 		parent::initialize();
 
-		$this->loadComponent('Croogo/Croogo.BulkProcess');
+		$this->loadComponent('Croogo/Core.BulkProcess');
 		$this->loadModel('Croogo/Users.Roles');
 	}
 

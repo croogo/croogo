@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Controller;
+namespace Croogo\Core\Controller;
 
 use App\Controller\AppController;
 use Cake\Core\Configure;

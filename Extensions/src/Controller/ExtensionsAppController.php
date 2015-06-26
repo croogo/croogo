@@ -3,7 +3,7 @@
 namespace Croogo\Extensions\Controller;
 
 use Cake\Event\Event;
-use Croogo\Croogo\Controller\CroogoAppController;
+use Croogo\Core\Controller\CroogoAppController;
 
 /**
  * ExtensionsApp Controller
@@ -18,7 +18,7 @@ use Croogo\Croogo\Controller\CroogoAppController;
 class ExtensionsAppController extends CroogoAppController {
 
 	public $helpers = [
-		'Croogo/Croogo.Croogo'
+		'Croogo/Core.Croogo'
 	];
 
 /**

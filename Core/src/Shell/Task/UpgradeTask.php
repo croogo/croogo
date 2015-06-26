@@ -10,7 +10,7 @@
  * @link     http://www.croogo.org
  */
 
-namespace Croogo\Croogo\Shell\Task;
+namespace Croogo\Core\Shell\Task;
 
 use Croogo\Core\Shell\CroogoAppShell;
 

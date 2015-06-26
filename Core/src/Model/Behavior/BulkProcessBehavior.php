@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Model\Behavior;
+namespace Croogo\Core\Model\Behavior;
 
 use App\Model\ModelBehavior;
 use Cake\ORM\Behavior;
@@ -173,7 +173,7 @@ class BulkProcessBehavior extends Behavior {
  */
 	public function bulkCopy(Table $table, $ids) {
 		if (!$table->hasBehavior('Copyable')) {
-			$table->addBehavior('Croogo/Croogo.Copyable');
+			$table->addBehavior('Croogo/Core.Copyable');
 		}
 
 		foreach ($ids as $id) {

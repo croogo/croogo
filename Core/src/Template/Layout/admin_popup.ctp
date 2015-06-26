@@ -7,18 +7,18 @@
 		<?php
 
 		echo $this->Html->css(array(
-			'Croogo/Croogo.croogo-bootstrap',
-			'Croogo/Croogo.croogo-bootstrap-responsive',
+			'Croogo/Core.croogo-bootstrap',
+			'Croogo/Core.croogo-bootstrap-responsive',
 			'admin',
 		));
 		echo $this->Layout->js();
 		echo $this->Html->script(array(
-			'Croogo/Croogo.html5',
-			'Croogo/Croogo.jquery/jquery.min',
-			'Croogo/Croogo.jquery/jquery.slug',
-			'Croogo/Croogo.croogo-bootstrap.js',
-			'Croogo/Croogo.underscore-min',
-			'Croogo/Croogo.admin',
+			'Croogo/Core.html5',
+			'Croogo/Core.jquery/jquery.min',
+			'Croogo/Core.jquery/jquery.slug',
+			'Croogo/Core.croogo-bootstrap.js',
+			'Croogo/Core.underscore-min',
+			'Croogo/Core.admin',
 		));
 
 		echo $this->fetch('script');

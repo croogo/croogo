@@ -1,13 +1,13 @@
 <?php
 
-namespace Croogo\Croogo\Test\TestCase\Model\Behavior;
+namespace Croogo\Core\Test\TestCase\Model\Behavior;
 
 use Croogo\Core\TestSuite\CroogoTestCase;
 class PublishableBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
 		'plugin.croogo\settings.setting',
-		'plugin.croogo\croogo.order_record',
+		'plugin.Croogo\Core.order_record',
 	);
 
 /**

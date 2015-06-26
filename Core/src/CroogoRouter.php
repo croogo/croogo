@@ -118,7 +118,7 @@ class CroogoRouter {
 	public static function mapResources($controller, $options = array()) {
 		$options = array_merge(array(
 			'connectOptions' => [
-				'Croogo\Croogo\Routing\Route\ApiRoute',
+				'Croogo\Core\Routing\Route\ApiRoute',
 			],
 		), $options);
 		return Router::mapResources($controller, $options);

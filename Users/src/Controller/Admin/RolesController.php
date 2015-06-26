@@ -2,7 +2,7 @@
 
 namespace Croogo\Users\Controller\Admin;
 
-use Croogo\Croogo\Controller\CroogoAppController;
+use Croogo\Core\Controller\CroogoAppController;
 
 /**
  * Roles Controller

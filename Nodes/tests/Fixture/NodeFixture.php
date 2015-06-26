@@ -1,7 +1,7 @@
 <?php
 
 namespace Croogo\Nodes\Test\Fixture;
-use Croogo\Croogo\TestSuite\CroogoTestFixture;
+use Croogo\Core\TestSuite\CroogoTestFixture;
 
 class NodeFixture extends CroogoTestFixture {
 

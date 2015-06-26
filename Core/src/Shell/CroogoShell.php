@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Croogo\Shell;
+namespace Croogo\Core\Shell;
 
 use Cake\Utility\Security;
 use Croogo\Install\AssetGenerator;
@@ -17,7 +17,7 @@ use Croogo\Install\AssetGenerator;
 class CroogoShell extends CroogoAppShell {
 
 	public $tasks = array(
-		'Croogo/Croogo.Upgrade',
+		'Croogo/Core.Upgrade',
 	);
 
 /**
