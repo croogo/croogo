@@ -9,7 +9,7 @@
 		echo $this->Html->css(array(
 			'Croogo/Core.croogo-bootstrap',
 			'Croogo/Core.croogo-bootstrap-responsive',
-			'admin',
+			'Croogo/Core.admin',
 		));
 		echo $this->Layout->js();
 		echo $this->Html->script(array(
@@ -36,7 +36,7 @@
 			</div>
 		</div>
 		<?php
-		echo $this->element('admin/initializers');
+		echo $this->element('Croogo/Core.admin/initializers');
 		echo $this->Blocks->get('scriptBottom');
 		?>
 	</body>

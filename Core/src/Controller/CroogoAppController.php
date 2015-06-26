@@ -325,11 +325,11 @@ class CroogoAppController extends AppController {
 			}
 		}
 
+		$this->_setupTheme();
+
 		if ($this->request->is('ajax')) {
 			$this->layout = 'ajax';
 		}
-
-		$this->_setupTheme();
 
 		if (
 			$this->request->param('prefix') !== 'admin' &&

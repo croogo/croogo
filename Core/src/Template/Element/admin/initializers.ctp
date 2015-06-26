@@ -6,4 +6,5 @@ $adminThemeScripts =<<<EOF
 	Admin.extra();
 	Admin.slideBoxToggle();
 EOF;
-$this->Js->buffer($adminThemeScripts);
+
+$this->Html->scriptBlock($adminThemeScripts, ['block' => 'scriptBottom']);
