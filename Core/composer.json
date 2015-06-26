@@ -2,8 +2,26 @@
     "name": "croogo/core",
     "description": "Croogo Core Plugin",
     "require": {
-        "croogo/core": "3.0.x-dev"
+        "cakephp/cakephp": "~3.0",
+        "croogo/acl": "3.0.x-dev",
+        "croogo/blocks": "3.0.x-dev",
+        "croogo/comments": "3.0.x-dev",
+        "croogo/contacts": "3.0.x-dev",
+        "croogo/extensions": "3.0.x-dev",
+        "croogo/filemanager": "3.0.x-dev",
+        "croogo/install": "3.0.x-dev",
+        "croogo/menus": "3.0.x-dev",
+        "croogo/meta": "3.0.x-dev",
+        "croogo/nodes": "3.0.x-dev",
+        "croogo/settings": "3.0.x-dev",
+        "croogo/taxonomy": "3.0.x-dev",
+        "croogo/translate": "3.0.x-dev",
+        "croogo/users": "3.0.x-dev",
+        "croogo/wysiwyg": "3.0.x-dev"
     },
+    "suggest": [
+        "croogo/example"
+    ],
     "license": "MIT",
     "authors": [
         {
