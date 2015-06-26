@@ -1,8 +1,10 @@
 <?php
+
 namespace Croogo\Meta\Test\TestCase\Model\Behavior;
 
 use Croogo\TestSuite\CroogoTestCase;
 use Nodes\Model\Node;
+
 class MetaBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(

@@ -358,7 +358,7 @@ class CroogoHelper extends Helper {
 			$options['block'] = 'scriptBottom';
 			$out = $this->CroogoForm->postLink($title, $url, $options, $confirmMessage);
 		} else {
-			$out = $this->CroogoHtml->link($title, $url, $options);
+			$out = $this->CroogoHtml->link($title, $url, $options, $confirmMessage);
 		}
 		if (isset($list)) {
 			$out = $this->CroogoHtml->tag('li', $out);
