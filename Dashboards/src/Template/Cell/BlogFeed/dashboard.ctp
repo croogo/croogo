@@ -29,4 +29,4 @@ $.get(feedUrl, { utm_source: "admin-dashboard" }, function(data) {
 });
 EOF;
 
-$this->Html->scriptBlock($script, ['block' => 'scriptBottom']);
+echo $this->Html->scriptBlock($script);

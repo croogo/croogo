@@ -7,6 +7,7 @@
 		</div>
 	</div>
 	<div class="box-content" <?php echo ($dashboard['collapsed'] ? 'style="display:none;"' : '')?>>
-		<?php echo $this->element($dashboard['element'], compact('alias', 'dashboard'), array('cache' => $dashboard['cache']));?>
+		<?php $cell = $this->cell($dashboard['cell'], $dashboard['arguments'], ['cache' => $dashboard['cache'], 'alias' => $alias, 'dashboard' => $dashboard]); ?>
+		<?= $cell; ?>
 	</div>
 </div>
