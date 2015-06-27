@@ -10,6 +10,11 @@ Type::map('params', 'Croogo\Core\Database\Type\ParamsType');
 Type::map('encoded', 'Croogo\Core\Database\Type\EncodedType');
 Type::map('link', 'Croogo\Core\Database\Type\LinkType');
 
+Configure::write(
+	'DebugKit.panels',
+	array_merge((array)Configure::read('DebugKit.panels'), ['Croogo/Core.Plugins'])
+);
+
 require_once 'croogo_bootstrap.php';
 
 if (Configure::read('Croogo.installed')) {
