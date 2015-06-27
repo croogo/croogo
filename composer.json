@@ -44,7 +44,7 @@
 			"Croogo\\": "src",
 			"Croogo\\Core\\": "Core/src",
 			"Croogo\\Core\\Test\\": "Core/tests",
-			"App\\": "Croogo/tests/test_app/src"
+			"App\\": "Core/tests/test_app/src"
 		}
 	},
 	"scripts": {

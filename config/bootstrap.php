@@ -4,6 +4,10 @@ use Cake\Core\Configure;
 
 function addCroogoPluginPath($basePluginName) {
 	$pluginPaths = Configure::read('plugins');
+	if (!isset($pluginPaths['Croogo'])) {
+		$pluginPaths['Croogo'] = realpath('..') . DS;
+	}
+
 	$pluginPaths['Croogo/' . $basePluginName] = $pluginPaths['Croogo'] . $basePluginName . DS;
 
 	Configure::write('plugins', $pluginPaths);
