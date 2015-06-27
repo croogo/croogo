@@ -83,7 +83,11 @@ $cache = [
 ];
 
 Cake\Cache\Cache::config($cache);
-Cake\Core\Plugin::load('Croogo/Core', ['bootstrap' => true, 'autoload' => true, 'path' => __DIR__ . DS . '..' . DS . 'Croogo' . DS]);
+Cake\Core\Plugin::load('Croogo', ['bootstrap' => true, 'autoload' => true, 'path' => __DIR__ . DS . '..' . DS . '..' . DS]);
+Cake\Core\Plugin::load('Croogo/Core', ['bootstrap' => true, 'routes' => true, 'autoload' => true]);
+Cake\Core\Plugin::load('Croogo/Users', ['bootstrap' => true, 'routes' => true, 'autoload' => true]);
+Cake\Core\Plugin::load('Croogo/Nodes', ['bootstrap' => true, 'routes' => true, 'autoload' => true]);
+Cake\Core\Plugin::load('Croogo/Settings', ['bootstrap' => true, 'routes' => true, 'autoload' => true]);
 
 // Ensure default test connection is defined
 if (!getenv('db_class')) {
