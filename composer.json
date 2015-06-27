@@ -43,8 +43,8 @@
 	"autoload": {
 		"psr-4": {
 			"Croogo\\": "src",
-			"Croogo\\Croogo\\": "Croogo/src",
-			"Croogo\\Croogo\\Test\\": "Croogo/tests",
+			"Croogo\\Core\\": "Core/src",
+			"Croogo\\Core\\Test\\": "Core/tests",
 			"App\\": "Croogo/tests/test_app/src"
 		}
 	},
