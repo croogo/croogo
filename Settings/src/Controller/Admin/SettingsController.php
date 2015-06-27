@@ -2,7 +2,8 @@
 
 namespace Croogo\Settings\Controller\Admin;
 
-use Croogo\Core\Controller\CroogoAppController;
+use App\Controller\AppController;
+use Croogo\Core\PropertyHookTrait;
 
 /**
  * Settings Controller
@@ -14,7 +15,9 @@ use Croogo\Core\Controller\CroogoAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class SettingsController extends CroogoAppController {
+class SettingsController extends AppController {
+
+	use PropertyHookTrait;
 
 /**
  * Initialize
@@ -22,6 +25,7 @@ class SettingsController extends CroogoAppController {
 	public function initialize() {
 		parent::initialize();
 
+		$this->loadComponent('Croogo/Core.Admin');
 		$this->loadComponent('Search.Prg', [
 			'presetForm' => [
 				'paramType' => 'querystring',

@@ -2,9 +2,10 @@
 
 namespace Croogo\Menus\Controller\Admin;
 
+use App\Controller\AppController;
 use Cake\Event\Event;
 use Croogo\Core\Controller\Component\CroogoComponent;
-use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Core\PropertyHookTrait;
 use Croogo\Menus\Model\Table\MenusTable;
 
 /**
@@ -19,7 +20,9 @@ use Croogo\Menus\Model\Table\MenusTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MenusController extends CroogoAppController {
+class MenusController extends AppController {
+
+	use PropertyHookTrait;
 
 /**
  * Controller name
@@ -29,7 +32,15 @@ class MenusController extends CroogoAppController {
  */
 	public $name = 'Menus';
 
-/**
+	public function initialize()
+	{
+		parent::initialize();
+
+		$this->loadComponent('Croogo/Core.Admin');
+	}
+
+
+	/**
  * beforeFilter
  *
  */
