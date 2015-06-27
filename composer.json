@@ -54,6 +54,7 @@
 	"suggest": {
 		"croogo/locale": "Localization for Croogo"
 	},
+	"minimum-stability": "dev",
 	"replace": {
 		"croogo/acl": "dev-master",
 		"croogo/settings": "dev-master",
