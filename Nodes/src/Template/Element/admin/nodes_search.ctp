@@ -5,18 +5,18 @@ $url = isset($url) ? $url : array('action' => 'index');
 ?>
 <div class="clearfix filter">
 <?php
-	echo $this->Form->create(false, array(
+	echo $this->CroogoForm->create(false, array(
 		'class' => 'form-inline',
 		'url' => $url
 	));
 
-	$this->Form->templates(array(
+	$this->CroogoForm->templates(array(
 		'label' => false,
 		'class' => 'span11',
 		'submitContainer' => '<div class="input submit span2">{{content}}</div>'
 	));
 
-	echo $this->Form->input('filter', array(
+	echo $this->CroogoForm->input('filter', array(
 		'title' => __d('croogo', 'Search'),
 		'placeholder' => __d('croogo', 'Search...'),
 		'tooltip' => false,
@@ -24,12 +24,12 @@ $url = isset($url) ? $url : array('action' => 'index');
 
 	if (!isset($this->request->query['chooser'])):
 
-		echo $this->Form->input('type', array(
+		echo $this->CroogoForm->input('type', array(
 			'options' => $nodeTypes,
 			'empty' => __d('croogo', 'Type'),
 		));
 
-		echo $this->Form->input('status', array(
+		echo $this->CroogoForm->input('status', array(
 			'options' => array(
 				'1' => __d('croogo', 'Published'),
 				'0' => __d('croogo', 'Unpublished'),
@@ -37,7 +37,7 @@ $url = isset($url) ? $url : array('action' => 'index');
 			'empty' => __d('croogo', 'Status'),
 		));
 
-		echo $this->Form->input('promote', array(
+		echo $this->CroogoForm->input('promote', array(
 			'options' => array(
 				'1' => __d('croogo', 'Yes'),
 				'0' => __d('croogo', 'No'),
@@ -47,9 +47,9 @@ $url = isset($url) ? $url : array('action' => 'index');
 
 	endif;
 
-	echo $this->Form->input(__d('croogo', 'Filter'), array(
-		'type' => 'submit',
-	));
-	echo $this->Form->end();
+	echo $this->CroogoForm->input(__d('croogo', 'Filter'), [
+		'type' => 'submit'
+	]);
+	echo $this->CroogoForm->end();
 ?>
 </div>
