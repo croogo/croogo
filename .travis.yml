@@ -41,7 +41,7 @@ before_script:
   - set +H
 
 script:
-  - sh -c "cd Croogo; vendor/bin/phpunit"
+  - sh -c "cd Core; vendor/bin/phpunit"
 
 notifications:
   email: false
