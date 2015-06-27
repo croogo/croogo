@@ -4,6 +4,7 @@ namespace Croogo\Core\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
+use Cake\Event\Event;
 use Cake\Utility\Hash;
 use Croogo\Core\Croogo;
 
@@ -37,11 +38,28 @@ class HooksComponent extends ControllerPreparingComponent
 
 	public function prepareController(Controller $controller)
 	{
+		$event = new Event('Controller.afterConstruct', $controller);
+		$controller->eventManager()->dispatch($event);
+
+		$this->afterConstruct($event);
+
 		$controller->_appComponents = [];
 		$controller->_apiComponents = [];
+	}
+
+	public function implementedEvents()
+	{
+		return parent::implementedEvents() + [
+			'Controller.afterConstruct' => 'afterConstruct',
+		];
+	}
+
+	public function afterConstruct(Event $event)
+	{
+		/** @var Controller $controller */
+		$controller = $event->subject();
 
 		Croogo::applyHookProperties('Hook.controller_properties', $controller);
-
 		$this->_setupComponents($controller);
 	}
 
