@@ -3,6 +3,7 @@
 namespace Croogo\Acl\Controller\Component;
 
 use Cake\Cache\Cache;
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Controller\Component;
 use Cake\Controller\Component\AuthComponent;
@@ -73,6 +74,7 @@ class FilterComponent extends Component {
 		if (!$this->_registry->loaded('Cookie')) {
 			$this->_registry->load('Cookie');
 		}
+
 		//Configure AuthComponent
 		$this->_controller->Auth->authenticate = array(
 			AuthComponent::ALL => array(

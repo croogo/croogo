@@ -2,8 +2,9 @@
 
 namespace Croogo\Dashboards\Controller\Admin;
 
+use App\Controller\AppController;
 use Cake\Event\Event;
-use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Core\PropertyHookTrait;
 
 /**
  * DashboardsDashboards Controller
@@ -15,12 +16,22 @@ use Croogo\Core\Controller\CroogoAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class DashboardsDashboardsController extends CroogoAppController
+class DashboardsDashboardsController extends AppController
 {
+
+	use PropertyHookTrait;
 
 	public $helpers = [
 		'Croogo/Dashboards.Dashboards',
 	];
+
+	public function initialize()
+	{
+		parent::initialize();
+
+		$this->loadComponent('Croogo/Core.Admin');
+	}
+
 
 	/**
 	 * beforeFilter

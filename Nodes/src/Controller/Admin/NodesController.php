@@ -6,6 +6,7 @@ use Cake\Event\Event;
 
 use Croogo\Core\Controller\Component\CroogoComponent;
 use Croogo\Core\Croogo;
+use Croogo\Core\PropertyHookTrait;
 use Croogo\Nodes\Controller\NodesAppController;
 use Croogo\Nodes\Model\Entity\Node;
 use Croogo\Nodes\Model\Table\NodesTable;
@@ -25,6 +26,8 @@ use Croogo\Taxonomy\Controller\Component\TaxonomiesComponent;
  * @link     http://www.croogo.org
  */
 class NodesController extends NodesAppController {
+
+	use PropertyHookTrait;
 
 	/**
 	 * Controller name
@@ -63,6 +66,7 @@ class NodesController extends NodesAppController {
 	public function initialize() {
 		parent::initialize();
 
+		$this->loadComponent('Croogo/Core.Admin');
 		$this->loadComponent('Croogo/Core.BulkProcess');
 		$this->loadComponent('Croogo/Core.Recaptcha');
 		$this->loadComponent('Search.Prg', [
