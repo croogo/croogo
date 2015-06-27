@@ -1,5 +1,5 @@
 <div class="blogfeed">
-	<?php echo $this->Html->icon(array('spin', 'spinner')); ?>
+	<?php echo $this->CroogoHtml->icon(array('spin', 'spinner')); ?>
 </div>
 <?php
 
@@ -29,4 +29,4 @@ $.get(feedUrl, { utm_source: "admin-dashboard" }, function(data) {
 });
 EOF;
 
-$this->Js->buffer($script);
+$this->Html->scriptBlock($script, ['block' => 'scriptBottom']);

@@ -1,16 +1,18 @@
 <?php
 
-CroogoRouter::connect('/admin/dashboards', array(
-	'admin' => true,
-	'plugin' => 'dashboards',
-	'controller' => 'dashboards_dashboards',
-	'action' => 'dashboard',
-));
+use Croogo\Core\CroogoRouter;
 
-CroogoRouter::connect('/admin/dashboards/:action/*', array(
-	'admin' => true,
-	'plugin' => 'dashboards',
-	'controller' => 'dashboards_dashboards',
-), array(
+CroogoRouter::connect('/admin/dashboards', [
+	'prefix' => 'admin',
+	'plugin' => 'Croogo/Dashboards',
+	'controller' => 'DashboardsDashboards',
+	'action' => 'dashboard',
+]);
+
+CroogoRouter::connect('/admin/dashboards/:action/*', [
+	'prefix' => 'admin',
+	'plugin' => 'Croogo/Dashboards',
+	'controller' => 'DashboardsDashboards',
+], [
 	'action' => '[a-zA-Z0-9_-]+',
-));
+]);

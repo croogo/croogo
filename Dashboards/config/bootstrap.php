@@ -3,13 +3,14 @@
 /**
  * Dashboard URL
  */
-Configure::write('Croogo.dashboardUrl', array(
-	'admin' => true,
-	'plugin' => 'dashboards',
-	'controller' => 'dashboards_dashboards',
-	'action' => 'dashboard',
-));
+use Cake\Core\Configure;
+use Croogo\Dashboards\Configure\DashboardsConfigReader;
 
-App::uses('CroogoDashboard', 'Dashboards.Lib');
-App::uses('DashboardsConfigReader', 'Dashboards.Configure');
+Configure::write('Croogo.dashboardUrl', [
+	'prefix' => 'admin',
+	'plugin' => 'Croogo/Dashboards',
+	'controller' => 'DashboardsDashboards',
+	'action' => 'dashboard',
+]);
+
 Configure::config('dashboards', new DashboardsConfigReader());

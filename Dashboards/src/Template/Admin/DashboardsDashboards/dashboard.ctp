@@ -1,14 +1,15 @@
-<h2 class="hidden-desktop"><?php echo $title_for_layout; ?></h2>
+<?php $this->assign('title', __d('croogo', 'Dashboards')); ?>
+<h2 class="hidden-desktop"><?= h($this->fetch('title')); ?></h2>
 <?php
-$this->Croogo->adminScript('Dashboards.admin');
-$this->Html->css('Dashboards.admin', array('inline' => false));
+$this->Croogo->adminScript('Croogo/Dashboards.admin');
+$this->CroogoHtml->css('Croogo/Dashboards.admin', array('block' => true));
 
-$this->Html
+$this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Dashboard'), '/' . $this->request->url);
 
 echo $this->Dashboards->dashboards();
 
-$this->Js->buffer('Dashboard.init();');
+$this->CroogoHtml->scriptBlock('Dashboard.init();', ['block' => 'scriptBottom']);
 ?>
-<div id="dashboard-url" class="hidden"><?php echo $this->Html->url(array('action' => 'save'));?></div>
+<div id="dashboard-url" class="hidden"><?php echo $this->CroogoHtml->url(array('action' => 'save'));?></div>

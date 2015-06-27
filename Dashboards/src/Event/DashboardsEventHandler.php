@@ -1,6 +1,9 @@
 <?php
 
-App::uses('CakeEventListener', 'Event');
+namespace Croogo\Dashboards\Event;
+use Cake\Event\EventListenerInterface;
+use Cake\Core\Plugin;
+use Cake\Core\Configure;
 
 /**
  * DashboardsEventHandler
@@ -10,7 +13,7 @@ App::uses('CakeEventListener', 'Event');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class DashboardsEventHandler implements CakeEventListener {
+class DashboardsEventHandler implements EventListenerInterface {
 
 /**
  * implementedEvents
@@ -27,10 +30,10 @@ class DashboardsEventHandler implements CakeEventListener {
  * Setup admin data
  */
 	public function onSetupAdminDashboardData($event) {
-		$plugins = CakePlugin::loaded();
-		$config = 'Config' . DS . 'admin_dashboard.php';
+		$plugins = Plugin::loaded();
+		$config = 'config' . DS . 'admin_dashboard.php';
 		foreach ($plugins as $plugin) {
-			$file = CakePlugin::path($plugin) . $config;
+			$file = Plugin::path($plugin) . $config;
 			if (file_exists($file)) {
 				Configure::load($plugin .'.' . 'admin_dashboard', 'dashboards');
 			}

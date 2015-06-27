@@ -1,7 +1,11 @@
 <?php
 
-App::uses('PhpReader', 'Configure');
-App::uses('ConfigReaderInterface', 'Configure');
+namespace Croogo\Dashboards\Configure;
+
+use Cake\Core\Configure\ConfigEngineInterface;
+use Cake\Core\Configure\Engine\PhpConfig;
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 
 /**
  * DashboardsConfigReader
@@ -12,7 +16,7 @@ App::uses('ConfigReaderInterface', 'Configure');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class DashboardsConfigReader extends PhpReader implements ConfigReaderInterface
+class DashboardsConfigReader extends PhpConfig implements ConfigEngineInterface
 {
 
 	protected $_settingKey = 'Dashboards';
@@ -44,4 +48,15 @@ class DashboardsConfigReader extends PhpReader implements ConfigReaderInterface
 		return $result;
 	}
 
+	/**
+	 * Dumps the configure data into source.
+	 *
+	 * @param string $key The identifier to write to.
+	 * @param array $data The data to dump.
+	 * @return bool True on success or false on failure.
+	 */
+	public function dump($key, array $data)
+	{
+		// TODO: Implement dump() method.
+	}
 }

@@ -1,7 +1,13 @@
 <?php
 
-App::uses('AppHelper', 'View/Helper');
-App::uses('CroogoDashboard', 'Dashboards.Lib');
+namespace Croogo\Dashboards\View\Helper;
+use Cake\View\Helper;
+use Cake\Utility\Hash;
+use Cake\Core\Configure;
+use Cake\View\View;
+use Croogo\Core\Croogo;
+use Croogo\Dashboards\CroogoDashboard;
+use Cake\ORM\TableRegistry;
 
 /**
  * Dashboards Helper
@@ -13,12 +19,12 @@ App::uses('CroogoDashboard', 'Dashboards.Lib');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class DashboardsHelper extends AppHelper {
+class DashboardsHelper extends Helper {
 
-	public $helpers = array(
-		'Croogo.Layout',
-		'Html' => array('className' => 'Croogo.CroogoHtml'),
-	);
+	public $helpers = [
+		'Croogo/Core.Layout',
+		'Croogo/Core.CroogoHtml'
+	];
 
 /**
  * Constructor
@@ -27,6 +33,7 @@ class DashboardsHelper extends AppHelper {
 		$settings = Hash::merge(array(
 			'dashboardTag' => 'div',
 		), $settings);
+
 		parent::__construct($View, $settings);
 	}
 
@@ -34,7 +41,7 @@ class DashboardsHelper extends AppHelper {
  * Before Render callback
  */
 	public function beforeRender($viewFile) {
-		if (isset($this->request->params['admin'])) {
+		if ($this->request->param('prefix') === 'admin') {
 			Croogo::dispatchEvent('Croogo.setupAdminDashboardData', $this->_View);
 		}
 	}
@@ -46,7 +53,7 @@ class DashboardsHelper extends AppHelper {
  */
 	public function dashboards() {
 		$registered = Configure::read('Dashboards');
-		$userId = AuthComponent::user('id');
+		$userId = $this->_View->get('loggedInUser')['id'];
 		if (empty($userId)) {
 			return '';
 		}
@@ -56,16 +63,16 @@ class DashboardsHelper extends AppHelper {
 			CroogoDashboard::RIGHT => array(),
 			CroogoDashboard::FULL => array(),
 		);
-		if (empty($this->Role)) {
-			$this->Role = ClassRegistry::init('Users.Role');
-			$this->Role->Behaviors->attach('Croogo.Aliasable');
+		if (empty($this->Roles)) {
+			$this->Roles = TableRegistry::get('Croogo/Users.Roles');
+			$this->Roles->addBehavior('Croogo/Core.Aliasable');
 		}
-		$currentRole = $this->Role->byId($this->Layout->getRoleId());
+		$currentRole = $this->Roles->byId($this->Layout->getRoleId());
 
 		$cssSetting = $this->Layout->themeSetting('css');
 
 		if (!empty($this->_View->viewVars['boxes_for_dashboard'])) {
-			$boxesForLayout = Hash::combine($this->_View->viewVars['boxes_for_dashboard'], '{n}.DashboardsDashboard.alias', '{n}.DashboardsDashboard');
+			$boxesForLayout = collection($this->_View->viewVars['boxes_for_dashboard'])->combine('{n}.DashboardsDashboard.alias', '{n}.DashboardsDashboard')->toArray();
 			$dashboards = array();
 			$registeredUnsaved = array_diff_key($registered, $boxesForLayout);
 			foreach ($boxesForLayout as $alias => $userBox) {
@@ -89,7 +96,7 @@ class DashboardsHelper extends AppHelper {
 				'dashboard' => $dashboard,
 			);
 			Croogo::dispatchEvent('Croogo.beforeRenderDashboard', $this->_View, compact('alias', 'dashboard'));
-			$dashboardBox = $this->_View->element('Extensions.admin/dashboard', $opt);
+			$dashboardBox = $this->_View->element('Croogo/Dashboards.admin/dashboard', $opt);
 			Croogo::dispatchEvent('Croogo.afterRenderDashboard', $this->_View, compact('alias', 'dashboard', 'dashboardBox'));
 
 			if ($dashboard['column'] === false) {
@@ -101,22 +108,22 @@ class DashboardsHelper extends AppHelper {
 
 		$dashboardTag = $this->settings['dashboardTag'];
 		$columnDivs = array(
-			0 => $this->Html->tag($dashboardTag, implode('', $columns[CroogoDashboard::LEFT]), array(
+			0 => $this->CroogoHtml->tag($dashboardTag, implode('', $columns[CroogoDashboard::LEFT]), array(
 				'class' => $cssSetting['dashboardLeft'] . ' ' . $cssSetting['dashboardClass'],
 				'id' => 'column-0',
 			)),
-			1 => $this->Html->tag($dashboardTag, implode('', $columns[CroogoDashboard::RIGHT]), array(
+			1 => $this->CroogoHtml->tag($dashboardTag, implode('', $columns[CroogoDashboard::RIGHT]), array(
 				'class' => $cssSetting['dashboardRight'] . ' ' . $cssSetting['dashboardClass'],
 				'id' => 'column-1'
 			)),
 		);
-		$fullDiv = $this->Html->tag($dashboardTag, implode('', $columns[CroogoDashboard::FULL]), array(
+		$fullDiv = $this->CroogoHtml->tag($dashboardTag, implode('', $columns[CroogoDashboard::FULL]), array(
 			'class' => $cssSetting['dashboardFull'] . ' ' . $cssSetting['dashboardClass'],
 			'id' => 'column-2',
 		));
 
-		return $this->Html->tag('div', $fullDiv, array('class' => $cssSetting['row'])) .
-			$this->Html->tag('div', implode('', $columnDivs), array('class' => $cssSetting['row']));
+		return $this->CroogoHtml->tag('div', $fullDiv, array('class' => $cssSetting['row'])) .
+			$this->CroogoHtml->tag('div', implode('', $columnDivs), array('class' => $cssSetting['row']));
 	}
 
 /**

@@ -1,6 +1,7 @@
 <?php
 
-App::uses('DashboardsAppModel', 'Dashboards.Model');
+namespace Croogo\Dashboards\Model\Table;
+use Cake\ORM\Table;
 
 /**
  * Dashboard Model
@@ -12,37 +13,21 @@ App::uses('DashboardsAppModel', 'Dashboards.Model');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class DashboardsDashboard extends DashboardsAppModel {
+class DashboardsDashboardsTable extends Table
+{
 
-/**
- * Physical table name
- */
-	public $useTable = 'dashboards';
+	public function initialize(array $config)
+	{
+		parent::initialize($config);
 
-/**
- * Behaviors
- */
-	public $actsAs = array(
-		'Croogo.Ordered' => array(
-			'field' => 'weight',
-			'foreign_key' => 'user_id',
-		),
-	);
-
-/**
- * Model associations: belongsTo
- *
- * @var array
- * @access public
- */
-	public $belongsTo = array(
-		'User' => array(
-			'className' => 'Users.User',
-			'foreignKey' => 'user_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-		),
-	);
+		$this->table('dashboards');
+//		$this->addBehavior('Croogo/Core.Ordered', [
+//			'field' => 'weight',
+//			'foreign_key' => 'user_id',
+//		]);
+		$this->belongsTo('Users', [
+			'className' => 'Croogo/Users.Users'
+		]);
+	}
 
 }
