@@ -33,7 +33,6 @@
 		"cakephp/plugin-installer": "*",
 		"cakephp/migrations": "~1.0",
 		"cakephp/acl": "dev-master",
-		"croogo/Ckeditor": "3.0.*@dev",
 		"cakedc/search": "3.0.x-dev",
 		"admad/cakephp-sequence": "dev-master"
 	},
