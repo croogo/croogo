@@ -91,6 +91,8 @@ class InstallShellTest extends CroogoTestCase {
  * @return void
  */
 	public function testInstallPlugin() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$Shell = $this->getMock('\\Croogo\\Croogo\\Shell\\InstallShell', array('out', 'err', '_shellExec', 'dispatchShell'));
 		$Shell->expects($this->once())
 			->method('_shellExec')
@@ -114,6 +116,8 @@ class InstallShellTest extends CroogoTestCase {
  * @return void
  */
 	public function testInstallTheme() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$Shell = $this->getMock('\\Croogo\\Croogo\\Shell\\InstallShell', array('out', 'err', '_shellExec', 'dispatchShell'));
 		$Shell->expects($this->once())
 			->method('_shellExec')

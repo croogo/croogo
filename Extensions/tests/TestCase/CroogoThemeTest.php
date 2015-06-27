@@ -2,8 +2,9 @@
 
 namespace Croogo\Extensions\Test\TestCase;
 
-use Croogo\Lib\TestSuite\CroogoTestCase;
-use Extensions\Lib\CroogoTheme;
+use Croogo\Core\TestSuite\CroogoTestCase;
+use Croogo\Extensions\CroogoTheme;
+
 class CroogoThemeTest extends CroogoTestCase {
 
 /**

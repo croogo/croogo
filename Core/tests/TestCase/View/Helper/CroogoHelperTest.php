@@ -11,6 +11,7 @@ use Cake\View\View;
 use Croogo\Core\Nav;
 use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Core\View\Helper\CroogoHelper;
+use Croogo\Extensions\CroogoTheme;
 
 class CroogoHelperTest extends CroogoTestCase {
 

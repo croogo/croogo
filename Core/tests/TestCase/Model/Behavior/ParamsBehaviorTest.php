@@ -132,6 +132,8 @@ class ParamsBehaviorTest extends CroogoTestCase {
 	}
 
 	public function testBoolean() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->Type->save(array(
 			'title' => 'Article',
 			'alias' => 'article',
@@ -157,6 +159,8 @@ class ParamsBehaviorTest extends CroogoTestCase {
 	}
 
 	public function testNumeric() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->Type->save(array(
 			'title' => 'Article',
 			'alias' => 'article',
