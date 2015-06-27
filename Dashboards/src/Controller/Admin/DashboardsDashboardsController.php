@@ -41,15 +41,12 @@ class DashboardsDashboardsController extends CroogoAppController
 	 *
 	 * @return void
 	 */
-	public function admin_index()
+	public function index()
 	{
-		$Dashboard = $this->DashboardsDashboard;
-		$this->paginate = array(
-			'conditions' => array(
-				$Dashboard->escapeField('user_id') => $this->Auth->user('id'),
-			),
-		);
-		$dashboards = $this->paginate();
+		$dashboards = $this->paginate($this->DashboardsDashboards->find()->where([
+			'user_id' => $this->Auth->user('id')
+		]));
+
 		$this->set(compact('dashboards'));
 	}
 
