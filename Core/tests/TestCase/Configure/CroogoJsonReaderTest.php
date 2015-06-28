@@ -32,7 +32,7 @@ class CroogoJsonReaderTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->CroogoJsonReader = $this->getMock('\\Croogo\\Croogo\\Test\\TestCase\\Configure\\MockCroogoJsonReader',
+		$this->CroogoJsonReader = $this->getMock('\\Croogo\\Core\\Test\\TestCase\\Configure\\MockCroogoJsonReader',
 			null,
 			array(Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS . 'config' . DS)
 		);

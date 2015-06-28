@@ -157,8 +157,8 @@ class CroogoHtmlHelper extends HtmlHelper {
  * @param array $url Url in array format
  */
 	public function status($value, $url = array()) {
-		$iconDefaults = $this->settings['iconDefaults'];
-		$icons = $this->settings['icons'];
+		$iconDefaults = $this->config('iconDefaults');
+		$icons = $this->config('icons');
 		$icon = $value == Status::PUBLISHED ? $icons['check-mark'] : $icons['x-mark'];
 		$class = $value == Status::PUBLISHED ? 'green' : 'red';
 
@@ -196,7 +196,7 @@ class CroogoHtmlHelper extends HtmlHelper {
 		$defaults = array('escape' => false);
 		$options = is_null($options) ? array() : $options;
 		$options = array_merge($defaults, $options);
-		$iconDefaults = $this->settings['iconDefaults'];
+		$iconDefaults = $this->config('iconDefaults');
 
 		if (!empty($options['button'])) {
 			if (!empty($options['class'])) {

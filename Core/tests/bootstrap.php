@@ -19,8 +19,8 @@ function find_app() {
 		return 'vendor/cakephp/app/App';
 	}
 
-	if (is_dir(dirname(__DIR__) . '/Croogo/tests/test_app')) {
-		return dirname(__DIR__) . '/Croogo/tests/test_app';
+	if (is_dir(dirname(dirname(__DIR__)) . '/Core/tests/test_app')) {
+		return dirname(dirname(__DIR__)) . '/Core/tests/test_app';
 	}
 }
 

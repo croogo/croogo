@@ -18,7 +18,8 @@ class CroogoFormHelper extends FormHelper {
 		'Html',
 		'Url',
 		'Croogo/Core.Theme',
-		'Croogo/Core.Croogo'
+		'Croogo/Core.Croogo',
+		'Croogo/Core.CroogoHtml',
 	];
 
 /**
@@ -39,16 +40,25 @@ class CroogoFormHelper extends FormHelper {
 	protected function _bootstrapGenerate($title, $options) {
 		if (isset($options['button'])) {
 			$class = isset($options['class']) ? $options['class'] : null;
+
+			$classes = explode(' ', $class);
+			if (($key = array_search('btn', $classes)) !== false) {
+				unset($classes[$key]);
+			}
+
+			$class = implode(' ', $classes);
+
 			if ($options['button'] === 'default') {
 				$options['class'] = 'btn btn-default';
 			} else {
 				$options['class'] = 'btn btn-' . $options['button'];
 			}
 			$options['class'] .= $class ? ' ' . $class : null;
+
 			unset($options['button']);
 		}
 		if (isset($options['icon'])) {
-			$title = $this->Html->icon($options['icon']) . ' ' . $title;
+			$title = $this->CroogoHtml->icon($options['icon']) . ' ' . $title;
 			unset($options['icon']);
 		}
 		return array($title, $options);
@@ -56,7 +66,7 @@ class CroogoFormHelper extends FormHelper {
 
 	protected function _helpText($options) {
 		$helpClass = isset($options['helpInline']) ? 'help-inline' : 'help-block';
-		$helpText = $this->Html->tag('span', $options['help'], array(
+		$helpText = $this->CroogoHtml->tag('span', $options['help'], array(
 			'class' => $helpClass,
 		));
 		$options['after'] = isset($options['after']) ? $options['after'] . $helpText : $helpText;

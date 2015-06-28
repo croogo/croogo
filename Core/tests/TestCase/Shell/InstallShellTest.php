@@ -157,6 +157,8 @@ class InstallShellTest extends CroogoTestCase {
  * testComposerInstall
  */
 	public function testComposerInstall() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->skipIf(version_compare(PHP_VERSION, '5.3.0', '<'), 'PHP >= 5.3.0 required to run this test.');
 
 		$Shell = new ReflectionClass('\\Croogo\\Croogo\\Shell\\InstallShell');

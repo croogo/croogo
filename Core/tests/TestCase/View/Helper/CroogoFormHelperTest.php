@@ -155,7 +155,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 		$result = $this->CroogoForm->button('Button');
 		$expected = array(
 			'button' => array(
-				'class' => 'btn btn-default',
+				'class' => 'btn',
 				'type' => 'submit'
 			),
 			'Button',
@@ -183,7 +183,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 
 		$expected = array(
 			'button' => array(
-				'class' => 'btn btn-default',
+				'class' => 'btn',
 				'type' => 'submit'
 			),
 			array(
@@ -207,7 +207,7 @@ class CroogoFormHelperTest extends CroogoTestCase {
 			),
 			array(
 				'input' => array(
-					'class' => 'btn btn-default',
+					'class' => 'btn',
 					'type' => 'submit',
 					'value' => 'Send'
 				)
@@ -512,6 +512,8 @@ class CroogoFormHelperTest extends CroogoTestCase {
  * Test radio button class
  */
 	public function testInputRadioButtonClass() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$result = $this->CroogoForm->input('Node.promote', array(
 			'type' => 'radio',
 			'class' => 'super-radio-button',
