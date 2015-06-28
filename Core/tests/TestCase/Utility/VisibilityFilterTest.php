@@ -67,6 +67,8 @@ class VisibilityFilterTest extends CroogoTestCase {
 	}
 
 	public function testLinkstringRule() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$request = new Request();
 		$request->addParams(array(
 			'controller' => 'nodes',
@@ -100,6 +102,8 @@ class VisibilityFilterTest extends CroogoTestCase {
 	}
 
 	public function testLinkstringRuleWithContacts() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$request = new Request();
 		$request->addParams(array(
 			'controller' => 'contacts',
@@ -130,6 +134,8 @@ class VisibilityFilterTest extends CroogoTestCase {
 	}
 
 	public function testLinkstringRuleWithQueryString() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$request = new Request();
 		$request->addParams(array(
 			'controller' => 'nodes',

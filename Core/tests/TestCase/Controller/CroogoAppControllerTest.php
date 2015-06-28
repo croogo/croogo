@@ -150,6 +150,8 @@ class CroogoAppControllerTest extends CroogoControllerTestCase {
  * testSetFlashDefaults
  */
 	public function testSetFlashDefaults() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->controller->viewVars = array(
 			'displayFields' => array(),
 		);
@@ -164,6 +166,8 @@ class CroogoAppControllerTest extends CroogoControllerTestCase {
  * testSetFlashUnescaped
  */
 	public function testSetFlashUnescaped() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$this->controller->viewVars = array(
 			'displayFields' => array(),
 		);
