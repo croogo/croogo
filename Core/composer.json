@@ -29,5 +29,10 @@
             "email": "team@croogo.org"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Croogo\\Core\\": "src"
+        }
+    },
     "minimum-stability": "dev"
 }

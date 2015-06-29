@@ -11,5 +11,10 @@
             "email": "team@croogo.org"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Croogo\\Blocks\\": "src"
+        }
+    },
     "minimum-stability": "dev"
 }

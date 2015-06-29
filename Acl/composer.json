@@ -11,5 +11,10 @@
             "email": "team@croogo.org"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Croogo\\Acl\\": "src"
+        }
+    },
     "minimum-stability": "dev"
 }
