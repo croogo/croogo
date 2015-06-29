@@ -14,7 +14,7 @@ UPLOAD_HOST=https://uploads.github.com
 API_HOST=https://api.github.com
 OWNER=cvo-technologies
 REMOTE=origin
-GITHUB_ROOT=~/work/repo/croogo
+GITHUB_ROOT=git@github.com:croogo
 
 ifdef GITHUB_TOKEN
 	AUTH=-H 'Authorization: token $(GITHUB_TOKEN)'
