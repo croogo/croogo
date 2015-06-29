@@ -11,6 +11,7 @@
             "email": "team@croogo.org"
         }
     ],
+    "type": "cakephp-plugin",
     "autoload": {
         "psr-4": {
             "Croogo\\Blocks\\": "src"
