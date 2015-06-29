@@ -1,0 +1,15 @@
+{
+    "name": "croogo/dashboards",
+    "description": "Croogo Dashboards Plugin",
+    "require": {
+        "croogo/core": "3.0.x-dev"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Croogo Development Team",
+            "email": "team@croogo.org"
+        }
+    ],
+    "minimum-stability": "dev"
+}
