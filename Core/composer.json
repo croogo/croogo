@@ -7,6 +7,7 @@
         "croogo/blocks": "3.0.x-dev",
         "croogo/comments": "3.0.x-dev",
         "croogo/contacts": "3.0.x-dev",
+        "croogo/dashboards": "3.0.x-dev",
         "croogo/extensions": "3.0.x-dev",
         "croogo/filemanager": "3.0.x-dev",
         "croogo/install": "3.0.x-dev",
