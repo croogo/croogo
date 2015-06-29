@@ -156,7 +156,7 @@ publish: guard-VERSION guard-GITHUB_USER dist/cakephp-$(DASH_VERSION).zip
 
 # Tasks for publishing separate reporsitories out of each cake namespace
 composer-init:
-	for d in Acl Blocks Comments Contacts Core Example Extensions FileManager Install Menus Meta Nodes Settings Taxonomy Translate Users Wysiwyg ; do \
+	for d in Acl Blocks Comments Contacts Core Example Extensions FileManager Install Menus Meta Nodes Dashboards Settings Taxonomy Translate Users Wysiwyg ; do \
 		p=`basename $$d` ; \
 		( cd $$d && composer init \
 			--name croogo/`echo $$p | awk '{print tolower($$0) }'` \
@@ -192,6 +192,7 @@ plugin-split:
 		Comments:$(GITHUB_ROOT)/comments \
 		Contacts:$(GITHUB_ROOT)/contacts \
 		Core:$(GITHUB_ROOT)/core \
+		Dashboards:$(GITHUB_ROOT)/dashboards \
 		Example:$(GITHUB_ROOT)/example \
 		Extensions:$(GITHUB_ROOT)/extensions \
 		FileManager:$(GITHUB_ROOT)/filemanager \
