@@ -19,9 +19,9 @@
         "croogo/users": "3.0.x-dev",
         "croogo/wysiwyg": "3.0.x-dev"
     },
-    "suggest": [
-        "croogo/example"
-    ],
+    "suggest": {
+        "croogo/example": "Example Croogo plugin"
+    },
     "license": "MIT",
     "authors": [
         {
