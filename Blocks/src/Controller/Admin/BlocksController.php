@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Blocks\Controller;
+namespace Croogo\Blocks\Controller\Admin;
 
 use Cake\Event\Event;
 use Croogo\Core\Controller\CroogoAppController;
@@ -98,7 +98,7 @@ class BlocksController extends CroogoAppController {
  * @access public
  * $searchField : Identify fields for search
  */
-	public function admin_index() {
+	public function index() {
 		$this->set('title_for_layout', __d('croogo', 'Blocks'));
 		$this->Prg->commonProcess();
 		$searchFields = array('region_id', 'title');
