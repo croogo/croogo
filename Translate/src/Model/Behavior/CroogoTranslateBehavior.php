@@ -3,7 +3,8 @@
 namespace Croogo\Translate\Model\Behavior;
 
 use App\Model\AppModel;
-use App\Model\ModelBehavior;
+use Cake\ORM\Behavior;
+
 /**
  * CroogoTranslate Behavior
  *
@@ -18,7 +19,7 @@ use App\Model\ModelBehavior;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoTranslateBehavior extends ModelBehavior {
+class CroogoTranslateBehavior extends Behavior {
 
 /**
  * Used for runtime configuration of model

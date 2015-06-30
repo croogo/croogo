@@ -2,7 +2,8 @@
 
 namespace Croogo\Core\Model\Behavior;
 
-use App\Model\Behavior\AclBehavior;
+use Acl\Model\Behavior\AclBehavior;
+
 /**
  * CroogoAcl Behavior
  *

@@ -2,7 +2,6 @@
 
 namespace Croogo\Core\Model\Behavior;
 
-use App\Model\ModelBehavior;
 use Cake\ORM\Behavior;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;

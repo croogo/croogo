@@ -2,7 +2,8 @@
 
 namespace Croogo\Nodes\Model\Behavior;
 
-use App\Model\ModelBehavior;
+use Cake\ORM\Behavior;
+
 /**
  * Node Api Result Formatter
  *
@@ -11,7 +12,7 @@ use App\Model\ModelBehavior;
  * @license http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link http://www.croogo.org
  */
-class NodeApiResultFormatterBehavior extends ModelBehavior {
+class NodeApiResultFormatterBehavior extends Behavior {
 
 /**
  * afterFind

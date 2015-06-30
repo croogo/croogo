@@ -2,7 +2,8 @@
 
 namespace Croogo\Core\Model\Behavior;
 
-use App\Model\ModelBehavior;
+use Cake\ORM\Behavior;
+
 /**
  * OrderedBehavior
  *
