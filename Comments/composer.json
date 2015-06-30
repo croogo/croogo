@@ -2,6 +2,7 @@
     "name": "croogo/comments",
     "description": "Croogo Comments Plugin",
     "require": {
+        "cakedc/search": "3.0.x-dev",
         "croogo/core": "3.0.x-dev"
     },
     "license": "MIT",
@@ -11,5 +12,11 @@
             "email": "team@croogo.org"
         }
     ],
+    "type": "cakephp-plugin",
+    "autoload": {
+        "psr-4": {
+            "Croogo\\Comments\\": "src"
+        }
+    },
     "minimum-stability": "dev"
 }

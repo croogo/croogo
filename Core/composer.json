@@ -7,6 +7,7 @@
         "croogo/blocks": "3.0.x-dev",
         "croogo/comments": "3.0.x-dev",
         "croogo/contacts": "3.0.x-dev",
+        "croogo/dashboards": "3.0.x-dev",
         "croogo/extensions": "3.0.x-dev",
         "croogo/filemanager": "3.0.x-dev",
         "croogo/install": "3.0.x-dev",
@@ -19,9 +20,9 @@
         "croogo/users": "3.0.x-dev",
         "croogo/wysiwyg": "3.0.x-dev"
     },
-    "suggest": [
-        "croogo/example"
-    ],
+    "suggest": {
+        "croogo/example": "Example Croogo plugin"
+    },
     "license": "MIT",
     "authors": [
         {
@@ -29,5 +30,11 @@
             "email": "team@croogo.org"
         }
     ],
+    "type": "cakephp-plugin",
+    "autoload": {
+        "psr-4": {
+            "Croogo\\Core\\": "src"
+        }
+    },
     "minimum-stability": "dev"
 }
