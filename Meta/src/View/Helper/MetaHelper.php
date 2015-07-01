@@ -2,7 +2,7 @@
 
 namespace Croogo\Meta\View\Helper;
 
-use App\View\Helper\AppHelper;
+use Cake\View\Helper;
 
 /**
  * Meta Helper
@@ -14,7 +14,7 @@ use App\View\Helper\AppHelper;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MetaHelper extends AppHelper {
+class MetaHelper extends Helper {
 
 /**
  * Helpers
