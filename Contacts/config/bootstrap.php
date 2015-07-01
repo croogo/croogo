@@ -5,7 +5,7 @@ use Croogo\Core\Cache\CroogoCache;
 use Croogo\Core\Croogo;
 
 CroogoCache::config('contacts_view', array_merge(
-	Configure::read('Cache.defaultConfig'),
+	Configure::read('Croogo.Cache.defaultConfig'),
 	array('groups' => array('contacts'))
 ));
 
