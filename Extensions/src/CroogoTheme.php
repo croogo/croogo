@@ -167,9 +167,10 @@ class CroogoTheme {
 							'CroogoForm' => array(
 								'className' => 'Croogo/Core.CroogoForm',
 							),
-							'CroogoPaginator' => array(
-								'className' => 'Croogo/Core.CroogoPaginator',
-							),
+// FIXME:
+//							'CroogoPaginator' => array(
+//								'className' => 'Croogo/Core.CroogoPaginator',
+//							),
 						),
 					),
 				),

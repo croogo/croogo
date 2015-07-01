@@ -171,11 +171,8 @@ class CroogoAppController extends AppController {
  * behavior.
  */
 	public function afterConstruct() {
-		if ($this->request->param('prefix') == 'admin') {
-			$this->helpers[] = 'Croogo/Core.Croogo';
-			$this->helpers[] = 'Croogo/Core.CroogoHtml';
-			$this->helpers[] = 'Croogo/Core.CroogoForm';
-			$this->helpers[] = 'Croogo/Core.CroogoPaginator';
+		if (empty($this->viewClass)) {
+			$this->viewClass = 'Croogo/Core.Croogo';
 		}
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
 		$this->_setupComponents();
