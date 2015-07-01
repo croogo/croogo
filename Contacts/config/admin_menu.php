@@ -9,8 +9,8 @@ Nav::add('sidebar', 'contacts', array(
 	'title' => __d('croogo', 'Contacts'),
 	'url' => array(
 		'admin' => true,
-		'plugin' => 'contacts',
-		'controller' => 'contacts',
+		'plugin' => 'Croogo/Contacts',
+		'controller' => 'Contacts',
 		'action' => 'index',
 	),
 	'weight' => 50,
@@ -19,8 +19,8 @@ Nav::add('sidebar', 'contacts', array(
 			'title' => __d('croogo', 'Contacts'),
 			'url' => array(
 				'admin' => true,
-				'plugin' => 'contacts',
-				'controller' => 'contacts',
+				'plugin' => 'Croogo/Contacts',
+				'controller' => 'Contacts',
 				'action' => 'index',
 			),
 		),
@@ -28,8 +28,8 @@ Nav::add('sidebar', 'contacts', array(
 			'title' => __d('croogo', 'Messages'),
 			'url' => array(
 				'admin' => true,
-				'plugin' => 'contacts',
-				'controller' => 'messages',
+				'plugin' => 'Croogo/Contacts',
+				'controller' => 'Messages',
 				'action' => 'index',
 			),
 		),

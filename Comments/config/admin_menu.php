@@ -8,8 +8,8 @@ Nav::add('sidebar', 'content.children.comments', array(
 	'title' => __d('croogo', 'Comments'),
 	'url' => array(
 		'admin' => true,
-		'plugin' => 'comments',
-		'controller' => 'comments',
+		'plugin' => 'Croogo/comments',
+		'controller' => 'Comments',
 		'action' => 'index',
 	),
 	'children' => array(
@@ -17,8 +17,8 @@ Nav::add('sidebar', 'content.children.comments', array(
 			'title' => __d('croogo', 'Published'),
 			'url' => array(
 				'admin' => true,
-				'plugin' => 'comments',
-				'controller' => 'comments',
+				'plugin' => 'Croogo/Comments',
+				'controller' => 'Comments',
 				'action' => 'index',
 				'?' => array(
 					'status' => '1',
@@ -29,8 +29,8 @@ Nav::add('sidebar', 'content.children.comments', array(
 			'title' => __d('croogo', 'Approval'),
 			'url' => array(
 				'admin' => true,
-				'plugin' => 'comments',
-				'controller' => 'comments',
+				'plugin' => 'Croogo/Comments',
+				'controller' => 'Comments',
 				'action' => 'index',
 				'?' => array(
 					'status' => '0',

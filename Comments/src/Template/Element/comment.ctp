@@ -17,8 +17,8 @@
 	<?php
 		if ($level <= Configure::read('Comment.level')) {
 			echo $this->Html->link(__d('croogo', 'Reply'), array(
-				'plugin' => 'comments',
-				'controller' => 'comments',
+				'plugin' => 'Croogo/Comments',
+				'controller' => 'Comments',
 				'action' => 'add',
 				'Node',
 				$node['Node']['id'],

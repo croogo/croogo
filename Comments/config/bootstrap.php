@@ -9,4 +9,4 @@ CroogoCache::config('croogo_comments', array_merge(
 	array('groups' => array('comments'))
 ));
 
-Croogo::hookHelper('*', 'Comments.Comments');
+Croogo::hookHelper('*', 'Croogo/Comments.Comments');

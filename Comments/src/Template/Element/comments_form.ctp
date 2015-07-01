@@ -9,8 +9,8 @@
 		}
 
 		$formUrl = array(
-			'plugin' => 'comments',
-			'controller' => 'comments',
+			'plugin' => 'Croogo/Comments',
+			'controller' => 'Comments',
 			'action' => 'add',
 			'Node',
 			$data[$model]['id'],

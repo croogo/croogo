@@ -3,5 +3,10 @@
 use Croogo\Core\CroogoRouter;
 
 CroogoRouter::connect('/contact/*', array(
-	'plugin' => 'contacts', 'controller' => 'contacts', 'action' => 'view',
+	'plugin' => 'Croogo/Contacts', 'controller' => 'Contacts', 'action' => 'view',
 ));
+
+CroogoRouter::connect('/admin/contacts/:controller/:action/*', [
+	'prefix' => 'admin',
+	'plugin' => 'Croogo/Contacts',
+]);

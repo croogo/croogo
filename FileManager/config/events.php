@@ -2,6 +2,6 @@
 
 $config = array(
 	'EventHandlers' => array(
-		'FileManager.FileManagerEventHandler',
+		'Croogo/FileManager.FileManagerEventHandler',
 	),
 );

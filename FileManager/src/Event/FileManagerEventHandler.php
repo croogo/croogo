@@ -2,7 +2,8 @@
 
 namespace Croogo\FileManager\Event;
 
-use Cake\Event\EventListener;
+use Cake\Event\EventListenerInterface;
+
 /**
  * FileManagerEventHandler
  *
@@ -11,7 +12,7 @@ use Cake\Event\EventListener;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class FileManagerEventHandler implements EventListener {
+class FileManagerEventHandler implements EventListenerInterface {
 
 /**
  * implementedEvents
@@ -35,8 +36,8 @@ class FileManagerEventHandler implements EventListener {
 			'title' => 'Images',
 			'description' => 'Attachments with an image mime type.',
 			'url' => array(
-				'plugin' => 'file_manager',
-				'controller' => 'attachments',
+				'plugin' => 'Croogo/FileManager',
+				'controller' => 'Attachments',
 				'action' => 'index',
 				'?' => array(
 					'chooser_type' => 'image',
@@ -52,8 +53,8 @@ class FileManagerEventHandler implements EventListener {
 			'title' => 'Files',
 			'description' => 'Attachments with other mime types, ie. pdf, xls, doc, etc.',
 			'url' => array(
-				'plugin' => 'file_manager',
-				'controller' => 'attachments',
+				'plugin' => 'Croogo/FileManager',
+				'controller' => 'Attachments',
 				'action' => 'index',
 				'?' => array(
 					'chooser_type' => 'file',
