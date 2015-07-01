@@ -1,8 +1,8 @@
 <?php
 
-namespace Croogo\Blocks\Model;
+namespace Croogo\Blocks\Model\Table;
 
-use Cake\ORM\Table;
+use Croogo\Core\Model\Table\CroogoTable;
 
 /**
  * Region
@@ -14,31 +14,7 @@ use Cake\ORM\Table;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class RegionsTable extends Table {
-
-/**
- * Model name
- *
- * @var string
- * @access public
- */
-	public $name = 'Region';
-
-/**
- * Behaviors used by the Model
- *
- * @var array
- * @access public
- */
-	public $actsAs = array(
-		'Search.Searchable',
-		'Croogo.Cached' => array(
-			'groups' => array(
-				'blocks',
-			),
-		),
-		'Croogo.Trackable',
-	);
+class RegionsTable extends CroogoTable {
 
 /**
  * Validation
@@ -74,21 +50,6 @@ class RegionsTable extends Table {
 	);
 
 /**
- * Model associations: hasMany
- *
- * @var array
- * @access public
- */
-	public $hasMany = array(
-		'Block' => array(
-			'className' => 'Blocks.Block',
-			'foreignKey' => 'region_id',
-			'dependent' => false,
-			'limit' => 3,
-		),
-	);
-
-/**
  * Display fields for this model
  *
  * @var array
@@ -105,6 +66,31 @@ class RegionsTable extends Table {
 	public $findMethods = array(
 		'active' => true,
 	);
+
+	public function initialize(array $config) {
+		parent::initialize($config);
+		$this->entityClass('Croogo/Blocks.Region');
+		$this->addAssociations([
+			'hasMany' => [
+				'Blocks' => [
+					'className' => 'Blocks.Blocks',
+					'foreignKey' => 'region_id',
+					'dependent' => false,
+					'limit' => 3,
+				],
+			],
+		]);
+
+		$this->addBehavior('Search.Searchable');
+		/* TODO: Enable after behaviors have been updated to 3.x
+		$this->addBehavior('Croogo.Cached', [
+			'groups' => [
+				'blocks',
+			],
+		]);
+		$this->addBehavior('Croogo.Trackable');
+		*/
+	}
 
 /**
  * Find Regions currently in use

@@ -3,6 +3,7 @@
 namespace Croogo\Blocks\Controller\Admin;
 
 use Cake\Event\Event;
+use Croogo\Blocks\Model\Entity\Block;
 use Croogo\Core\Controller\CroogoAppController;
 
 /**
@@ -16,14 +17,6 @@ use Croogo\Core\Controller\CroogoAppController;
  * @link     http://www.croogo.org
  */
 class BlocksController extends CroogoAppController {
-
-/**
- * Controller name
- *
- * @var string
- * @access public
- */
-	public $name = 'Blocks';
 
 /**
  * Components
@@ -53,20 +46,20 @@ class BlocksController extends CroogoAppController {
 	public $presetVars = true;
 
 /**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
-	public $uses = array('Blocks.Block', 'Users.Role');
-
-/**
  * afterConstruct
  * @see AppController::afterConstruct()
  */
 	public function afterConstruct() {
 		parent::afterConstruct();
 		$this->_setupAclComponent();
+	}
+
+/**
+ * Initialize
+ */
+	public function initialize() {
+		parent::initialize();
+		$this->loadModel('Croogo/Users.Roles');
 	}
 
 /**
@@ -77,7 +70,7 @@ class BlocksController extends CroogoAppController {
  */
 	public function beforeFilter(Event $event) {
 		parent::beforeFilter($event);
-		$this->Security->unlockedActions[] = 'admin_toggle';
+		$this->Security->config('unlockedActions', 'toggle');
 	}
 
 /**
@@ -87,7 +80,7 @@ class BlocksController extends CroogoAppController {
  * @param $status integer Current Block status
  * @return void
  */
-	public function admin_toggle($id = null, $status = null) {
+	public function toggle($id = null, $status = null) {
 		$this->Croogo->fieldToggle($this->Block, $id, $status);
 	}
 
@@ -103,12 +96,18 @@ class BlocksController extends CroogoAppController {
 		$this->Prg->commonProcess();
 		$searchFields = array('region_id', 'title');
 
-		$this->Block->recursive = 0;
-		$this->paginate['Block']['order'] = array('Block.weight' => 'ASC');
+		$this->paginate = [
+			'order' => [
+				'weight' => 'ASC',
+			],
+			'contain' => [
+				'Regions',
+			],
+		];
 
-		$criteria = $this->Block->parseCriteria($this->Prg->parsedParams());
-		$this->set('blocks', $this->paginate($criteria));
-		$this->set('regions', $this->Block->Region->find('list'));
+		$query = $this->Blocks->find('searchable', $this->Prg->parsedParams());
+		$this->set('blocks', $this->paginate($query));
+		$this->set('regions', $this->Blocks->Regions->find('list'));
 		$this->set('searchFields', $searchFields);
 		if (isset($this->request->query['chooser'])) {
 			$this->layout = 'admin_popup';
@@ -121,23 +120,23 @@ class BlocksController extends CroogoAppController {
  * @return void
  * @access public
  */
-	public function admin_add() {
+	public function add() {
 		$this->set('title_for_layout', __d('croogo', 'Add Block'));
 
+		$block = $this->Blocks->newEntity();
 		if (!empty($this->request->data)) {
-			$this->Block->create();
-			$this->request->data['Block']['visibility_roles'] = $this->Block->encodeData($this->request->data['Role']['Role']);
-			$this->request->data['Block']['visibility_paths'] = $this->Block->encodeData(explode("\n", $this->request->data['Block']['visibility_paths']));
-			if ($this->Block->saveAll($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Block has been saved'), 'flash', array('class' => 'success'));
-				$this->Croogo->redirect(array('action' => 'edit', $this->Block->id));
+			$block = $this->Blocks->patchEntity($block, $this->request->data);
+			$block = $this->Blocks->save($block);
+			if ($block->id) {
+				$this->Flash->success(__d('croogo', 'The Block has been saved'));
+				$this->Croogo->redirect(array('action' => 'edit', $block->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Block could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'The Block could not be saved. Please, try again.'));
 			}
 		}
-		$regions = $this->Block->Region->find('list');
-		$roles = $this->Role->find('list');
-		$this->set(compact('regions', 'roles'));
+		$regions = $this->Blocks->Regions->find('list');
+		$roles = $this->Roles->find('list');
+		$this->set(compact('block', 'regions', 'roles'));
 	}
 
 /**
@@ -147,7 +146,7 @@ class BlocksController extends CroogoAppController {
  * @return void
  * @access public
  */
-	public function admin_edit($id = null) {
+	public function edit($id = null) {
 		$this->set('title_for_layout', __d('croogo', 'Edit Block'));
 
 		if (!$id && empty($this->request->data)) {
@@ -155,25 +154,25 @@ class BlocksController extends CroogoAppController {
 			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
-			$this->request->data['Block']['visibility_roles'] = $this->Block->encodeData($this->request->data['Role']['Role']);
-			$this->request->data['Block']['visibility_paths'] = $this->Block->encodeData(explode("\n", $this->request->data['Block']['visibility_paths']));
-			if ($this->Block->saveAll($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Block has been saved'), 'flash', array('class' => 'success'));
+			$block = $this->Blocks->get($id);
+			$block = $this->Blocks->patchEntity($block, $this->request->data);
+			if ($this->Blocks->save($block)) {
+				$this->Flash->success(__d('croogo', 'The Block has been saved'));
 				$this->Croogo->redirect(array('action' => 'edit', $id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Block could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'The Block could not be saved. Please, try again.'));
 			}
 		}
 		if (empty($this->request->data)) {
-			$data = $this->Block->read(null, $id);
-			$data['Role']['Role'] = $this->Block->decodeData($data['Block']['visibility_roles']);
-			if ($data['Block']['visibility_paths'] != '') {
-				$data['Block']['visibility_paths'] = implode("\n", $this->Block->decodeData($data['Block']['visibility_paths']));
-			}
-			$this->request->data = $data;
+			$block = $this->Blocks->get($id, [
+				'contain' => [
+					'Regions',
+				],
+			]);
 		}
-		$regions = $this->Block->Region->find('list');
-		$roles = $this->Role->find('list');
+		$this->set(compact('block'));
+		$regions = $this->Blocks->Regions->find('list');
+		$roles = $this->Roles->find('list');
 		$this->set(compact('regions', 'roles'));
 	}
 
@@ -184,13 +183,14 @@ class BlocksController extends CroogoAppController {
  * @return void
  * @access public
  */
-	public function admin_delete($id = null) {
+	public function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Block'), 'flash', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Invalid id for Block'));
 			return $this->redirect(array('action' => 'index'));
 		}
-		if ($this->Block->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Block deleted'), 'flash', array('class' => 'success'));
+		$block = new Block(['id' => $id], ['markNew' => false]);
+		if ($this->Blocks->delete($block)) {
+			$this->Flash->success(__d('croogo', 'Block deleted'));
 			return $this->redirect(array('action' => 'index'));
 		}
 	}
@@ -203,8 +203,8 @@ class BlocksController extends CroogoAppController {
  * @return void
  * @access public
  */
-	public function admin_moveup($id, $step = 1) {
-		if ($this->Block->moveUp($id, $step)) {
+	public function moveup($id, $step = 1) {
+		if ($this->Blocks->moveUp($id, $step)) {
 			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'flash', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'flash', array('class' => 'error'));
@@ -221,8 +221,8 @@ class BlocksController extends CroogoAppController {
  * @return void
  * @access public
  */
-	public function admin_movedown($id, $step = 1) {
-		if ($this->Block->moveDown($id, $step)) {
+	public function movedown($id, $step = 1) {
+		if ($this->Blocks->moveDown($id, $step)) {
 			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'flash', array('class' => 'success'));
 		} else {
 			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'flash', array('class' => 'error'));
@@ -237,7 +237,7 @@ class BlocksController extends CroogoAppController {
  * @return void
  * @access public
  */
-	public function admin_process() {
+	public function process() {
 		$Block = $this->{$this->modelClass};
 		list($action, $ids) = $this->BulkProcess->getRequestVars($Block->alias);
 
