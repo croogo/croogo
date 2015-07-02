@@ -20,6 +20,9 @@ class EncodedType extends Type {
 
 	public function marshal($value)
 	{
+		if (is_string($value)) {
+			$value = explode("\n", $value);
+		}
 		if (is_array($value) || $value === null) {
 			return $value;
 		}
