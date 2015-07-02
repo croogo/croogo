@@ -26,6 +26,15 @@ class CroogoFormHelper extends FormHelper {
  * Constructor
  */
 	public function __construct(View $View, $settings = array()) {
+		$settings = Hash::merge([
+			'widgets' => [
+				'stringlist' => [
+					'Croogo/Core.StringList',
+					'textarea',
+					'label',
+				],
+			],
+		], $settings);
 		$themeConfig = CroogoTheme::config($View->theme);
 		$themeSettings = $themeConfig['settings'];
 		$settings = Hash::merge($themeSettings, $settings);
