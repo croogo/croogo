@@ -1,6 +1,8 @@
 <?php
 
-$this->extend('/Common/admin_edit');
+use Croogo\Core\Status;
+
+$this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Html
 	->addCrumb($this->Html->icon('home'), '/admin')
@@ -13,10 +15,9 @@ if ($this->request->params['action'] == 'admin_add') {
 	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
-$this->append('form-start', $this->Form->create('Block', array(
+$this->append('form-start', $this->Form->create($block, array(
 	'class' => 'protected-form',
 )));
-
 
 $this->append('tab-heading');
 	echo $this->Croogo->adminTab(__d('croogo', 'Block'), '#block-basic');
@@ -53,20 +54,24 @@ $this->append('tab-content');
 	echo $this->Html->tabEnd();
 
 	echo $this->Html->tabStart('block-access') .
-		$this->Form->input('Role.Role', array(
+		$this->Form->input('visibility_roles', array(
 			'label' => __d('croogo', 'Role'),
+			'multiple' => true,
+			'options' => $roles,
 		));
 	echo $this->Html->tabEnd();
 
 	echo $this->Html->tabStart('block-visibilities') .
-		$this->Form->input('Block.visibility_paths', array(
+		$this->Form->input('visibility_paths', array(
+			'type' => 'stringlist',
 			'label' => __d('croogo', 'Visibility Paths'),
 			'help' => __d('croogo', 'Enter one URL per line. Leave blank if you want this Block to appear in all pages.')
 		));
 	echo $this->Html->tabEnd();
 
 	echo $this->Html->tabStart('block-params') .
-		$this->Form->input('Block.params', array(
+		$this->Form->input('params', array(
+			'type' => 'stringlist',
 			'label' => __d('croogo', 'Params'),
 		));
 	echo $this->Html->tabEnd();
@@ -82,8 +87,8 @@ $this->append('panels');
 		$this->Form->input('status', array(
 			'legend' => false,
 			'type' => 'radio',
-			'label' => true,
-			'default' => CroogoStatus::UNPUBLISHED,
+			'label' => false,
+			'default' => Status::UNPUBLISHED,
 			'options' => $this->Croogo->statuses(),
 		)) .
 		$this->Form->input('show_title', array(

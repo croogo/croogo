@@ -3,7 +3,7 @@ use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
 if (empty($modelClass)) {
-	$modelClass = Inflector::singularize($this->name);
+	$modelClass = $this->name;
 }
 if (!isset($className)) {
 	$className = strtolower($this->name);

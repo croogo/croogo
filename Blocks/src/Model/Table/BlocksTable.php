@@ -2,7 +2,8 @@
 
 namespace Croogo\Blocks\Model\Table;
 
-use Cake\ORM\Table;
+use Cake\Database\Schema\Table as Schema;
+use Croogo\Core\Model\Table\CroogoTable;
 use Croogo\Core\Status;
 
 /**
@@ -15,38 +16,7 @@ use Croogo\Core\Status;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class BlocksTable extends Table {
-
-/**
- * Model name
- *
- * @var string
- * @access public
- */
-	public $name = 'Block';
-
-/**
- * Behaviors used by the Model
- *
- * @var array
- * @access public
- */
-	public $actsAs = array(
-		'Croogo.Encoder',
-		'Croogo.Ordered' => array(
-			'field' => 'weight',
-			'foreign_key' => false,
-		),
-		'Croogo.Publishable',
-		'Croogo.Cached' => array(
-			'groups' => array(
-				'blocks',
-			),
-		),
-		'Croogo.Params',
-		'Croogo.Trackable',
-		'Search.Searchable',
-	);
+class BlocksTable extends CroogoTable {
 
 /**
  * Validation
@@ -78,7 +48,7 @@ class BlocksTable extends Table {
  * @access public
  */
 	public $filterArgs = array(
-		'title' => array('type' => 'like', 'field' => array('Block.title', 'Block.alias')),
+		'title' => array('type' => 'like', 'field' => array('title', 'alias')),
 		'region_id' => array('type' => 'value'),
 	);
 
@@ -89,23 +59,9 @@ class BlocksTable extends Table {
 		'published' => true,
 	);
 
-/**
- * Model associations: belongsTo
- *
- * @var array
- * @access public
- */
-	public $belongsTo = array(
-		'Region' => array(
-			'className' => 'Blocks.Region',
-			'foreignKey' => 'region_id',
-			'counterCache' => true,
-			'counterScope' => array('Block.status >=' => Status::PUBLISHED),
-		),
-	);
-
 	public function initialize(array $config) {
 		parent::initialize($config);
+		$this->entityClass('Croogo/Blocks.Block');
 
 		$this->belongsTo('Regions', [
 			'className' => 'Croogo/Blocks.Regions',
@@ -113,8 +69,26 @@ class BlocksTable extends Table {
 			'counterCache' => true,
 			'counterScope' => array('Blocks.status >=' => Status::PUBLISHED),
 		]);
+
+		$this->addBehavior('Croogo/Core.Publishable');
+		/* TODO: Enable after behaviors have been updated to 3.x
+		$this->addBehavior('Croogo/Core.Cached', [
+			'groups' => [
+				'blocks',
+			]
+		]);
+		$this->addBehavior('Croogo/Core.Trackable');
+		*/
+		$this->addBehavior('Search.Searchable');
 	}
 
+	protected function _initializeSchema(Schema $table) {
+		$table->columnType('visibility_roles', 'encoded');
+		$table->columnType('visibility_paths', 'encoded');
+		$table->columnType('params', 'params');
+
+		return parent::_initializeSchema($table);
+	}
 
 /**
  * Find Published blocks

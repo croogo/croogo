@@ -1,15 +1,17 @@
 <?php
 
-$this->Croogo->adminScript('Blocks.admin');
+use Croogo\Core\Status;
 
-$this->extend('/Common/admin_index');
+$this->Croogo->adminScript('Croogo/Blocks.admin');
+
+$this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Blocks'), array('action' => 'index'));
 
 $this->append('form-start', $this->Form->create('Block', array(
-	'url' => array('controller' => 'blocks', 'action' => 'process'),
+	'url' => array('action' => 'process'),
 )));
 
 $chooser = isset($this->request->query['chooser']);
@@ -31,21 +33,21 @@ $this->append('table-body');
 	foreach ($blocks as $block) {
 		$actions = array();
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('controller' => 'blocks', 'action' => 'moveup', $block['Block']['id']),
+			array('action' => 'moveup', $block->id),
 			array('icon' => $this->Theme->getIcon('move-up'), 'tooltip' => __d('croogo', 'Move up'),
 		));
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('controller' => 'blocks', 'action' => 'movedown', $block['Block']['id']),
+			array('action' => 'movedown', $block->id),
 			array('icon' => $this->Theme->getIcon('move-down'), 'tooltip' => __d('croogo', 'Move down'),
 			)
 		);
-		$actions[] = $this->Croogo->adminRowActions($block['Block']['id']);
+		$actions[] = $this->Croogo->adminRowActions($block->id);
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('controller' => 'blocks', 'action' => 'edit', $block['Block']['id']),
+			array('action' => 'edit', $block->id),
 			array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
-			'#Block' . $block['Block']['id'] . 'Id',
+			'#Block' . $block->id . 'Id',
 			array(
 				'icon' => $this->Theme->getIcon('copy'),
 				'tooltip' => __d('croogo', 'Create a copy'),
@@ -54,7 +56,7 @@ $this->append('table-body');
 			__d('croogo', 'Create a copy of this Block?')
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
-			'#Block' . $block['Block']['id'] . 'Id',
+			'#Block' . $block->id . 'Id',
 			array('icon' => $this->Theme->getIcon('delete'), 'class' => 'delete', 'tooltip' => __d('croogo', 'Remove this item'), 'rowAction' => 'delete'),
 			__d('croogo', 'Are you sure?')
 		);
@@ -65,22 +67,21 @@ $this->append('table-body');
 				$this->Croogo->adminRowAction(__d('croogo', 'Choose'), '#', array(
 					'class' => 'item-choose',
 					'data-chooser_type' => 'Block',
-					'data-chooser_id' => $block['Block']['id'],
-					'data-chooser_title' => $block['Block']['title'],
+					'data-chooser_id' => $block->id,
+					'data-chooser_title' => $block->title,
 				)),
 			);
 		} else {
-			$checkbox = $this->Form->checkbox('Block.' . $block['Block']['id'] . '.id', array('class' => 'row-select'));
+			$checkbox = $this->Form->checkbox('Block.' . $block->id . '.id', array('class' => 'row-select'));
 		}
 
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
-		$title = $this->Html->link($block['Block']['title'], array(
-			'controller' => 'blocks',
+		$title = $this->Html->link($block->title, array(
 			'action' => 'edit',
-			$block['Block']['id'],
+			$block->id,
 		));
 
-		if ($block['Block']['status'] == CroogoStatus::PREVIEW) {
+		if ($block->status == Status::PREVIEW) {
 			$title .= ' ' . $this->Html->tag('span', __d('croogo', 'preview'),
 				array('class' => 'label label-warning')
 			);
@@ -88,13 +89,13 @@ $this->append('table-body');
 
 		$rows[] = array(
 			$checkbox,
-			$block['Block']['id'],
+			$block->id,
 			$title,
-			$block['Block']['alias'],
-			$block['Region']['title'],
-			$this->element('admin/toggle', array(
+			$block->alias,
+			$block->region->title,
+			$this->element('Croogo/Core.admin/toggle', array(
 				'id' => $block['Block']['id'],
-				'status' => (int)$block['Block']['status'],
+				'status' => (int)$block->status,
 			)),
 			$actions,
 		);

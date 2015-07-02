@@ -4,7 +4,8 @@ namespace Croogo\Core\Model\Behavior;
 
 use App\Controller\Component\AuthComponent;
 use App\Model\Datasource\Session;
-use App\Model\ModelBehavior;
+use Cake\ORM\Behavior;
+
 /**
  * Trackable Behavior
  *
@@ -16,7 +17,7 @@ use App\Model\ModelBehavior;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TrackableBehavior extends ModelBehavior {
+class TrackableBehavior extends Behavior {
 
 /**
  * Default settings

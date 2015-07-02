@@ -15,7 +15,6 @@ use Cake\ORM\Behavior;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-
 class AliasableBehavior extends Behavior {
 
 	protected $_defaultConfig = [

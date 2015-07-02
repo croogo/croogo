@@ -1,8 +1,9 @@
 <?php
 
-namespace Croogo\Blocks\Controller;
+namespace Croogo\Blocks\Controller\Admin;
 
 use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Blocks\Model\Entity\Region;
 
 /**
  * Regions Controller
@@ -15,14 +16,6 @@ use Croogo\Core\Controller\CroogoAppController;
  * @link     http://www.croogo.org
  */
 class RegionsController extends CroogoAppController {
-
-/**
- * Controller name
- *
- * @var string
- * @access public
- */
-	public $name = 'Regions';
 
 /**
  * Components
@@ -51,29 +44,24 @@ class RegionsController extends CroogoAppController {
 	public $presetVars = true;
 
 /**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
-	public $uses = array('Blocks.Region');
-
-/**
  * Admin index
  *
  * @return void
  * @access public
  */
-	public function admin_index() {
+	public function index() {
 		$this->set('title_for_layout', __d('croogo', 'Region'));
 		$this->Prg->commonProcess();
 		$searchFields = array('title');
 
-		$this->Region->recursive = 0;
-		$this->paginate['Region']['order'] = 'Region.title ASC';
-		$criteria = $this->Region->parseCriteria($this->Prg->parsedParams());
-		$this->set('regions', $this->paginate($criteria));
-		$this->set('displayFields', $this->Region->displayFields());
+		$this->paginate = [
+			'order' => [
+				'title' => 'ASC',
+			],
+		];
+		$query = $this->Regions->find('searchable', $this->Prg->parsedParams());
+		$this->set('regions', $this->paginate($query));
+		$this->set('displayFields', $this->Regions->displayFields());
 		$this->set('searchFields', $searchFields);
 	}
 
@@ -83,18 +71,21 @@ class RegionsController extends CroogoAppController {
  * @return void
  * @access public
  */
-	public function admin_add() {
+	public function add() {
 		$this->set('title_for_layout', __d('croogo', 'Add Region'));
 
+		$region = $this->Regions->newEntity();
 		if (!empty($this->request->data)) {
-			$this->Region->create();
-			if ($this->Region->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Region has been saved'), 'flash', array('class' => 'success'));
-				return $this->redirect(array('action' => 'index'));
+			$region = $this->Regions->patchEntity($region, $this->request->data);
+			$region = $this->Regions->save($region);
+			if ($region) {
+				$this->Flash->success(__d('croogo', 'The Region has been saved'));
+				return $this->Croogo->redirect(array('action' => 'edit', $region->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Region could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'The Region could not be saved. Please, try again.'));
 			}
 		}
+		$this->set(compact('region'));
 	}
 
 /**
@@ -104,23 +95,25 @@ class RegionsController extends CroogoAppController {
  * @return void
  * @access public
  */
-	public function admin_edit($id = null) {
+	public function edit($id = null) {
 		$this->set('title_for_layout', __d('croogo', 'Edit Region'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Region'), 'flash', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Invalid Region'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
-			if ($this->Region->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Region has been saved'), 'flash', array('class' => 'success'));
+			$region = $this->Regions->newEntity($this->request->data);
+			if ($this->Regions->save($region)) {
+				$this->Flash->success(__d('croogo', 'The Region has been saved'));
 				return $this->Croogo->redirect(array('action' => 'edit', $id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Region could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'The Region could not be saved. Please, try again.'));
 			}
 		}
 		if (empty($this->request->data)) {
-			$this->request->data = $this->Region->read(null, $id);
+			$region = $this->Regions->get($id);
+			$this->set(compact('region'));
 		}
 	}
 
@@ -131,13 +124,14 @@ class RegionsController extends CroogoAppController {
  * @return void
  * @access public
  */
-	public function admin_delete($id = null) {
+	public function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Region'), 'flash', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Invalid id for Region'));
 			return $this->redirect(array('action' => 'index'));
 		}
-		if ($this->Region->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Region deleted'), 'flash', array('class' => 'success'));
+		$region = new Region(['id' => $id], ['markNew' => false]);
+		if ($this->Regions->delete($region)) {
+			$this->Flash->success(__d('croogo', 'Region deleted'));
 			return $this->redirect(array('action' => 'index'));
 		}
 	}
