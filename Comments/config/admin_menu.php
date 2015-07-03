@@ -8,7 +8,7 @@ Nav::add('sidebar', 'content.children.comments', array(
 	'title' => __d('croogo', 'Comments'),
 	'url' => array(
 		'admin' => true,
-		'plugin' => 'Croogo/comments',
+		'plugin' => 'Croogo/Comments',
 		'controller' => 'Comments',
 		'action' => 'index',
 	),
