@@ -89,7 +89,7 @@ class MenusComponent extends Component {
 		if (isset($themeData['menus']) && is_array($themeData['menus'])) {
 			$menus = Hash::merge($menus, $themeData['menus']);
 		}
-		$menus = Hash::merge($menus, array_keys($this->controller->Blocks->blocksData['menus']));
+		$menus = Hash::merge($menus, array_keys($this->controller->BlocksHook->blocksData['menus']));
 
 		$roleId = $this->controller->Croogo->roleId();
 		$status = $this->Links->status();

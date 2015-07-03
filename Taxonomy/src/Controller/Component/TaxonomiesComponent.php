@@ -130,38 +130,38 @@ class TaxonomiesComponent extends Component {
 		if (isset($themeData['vocabularies']) && is_array($themeData['vocabularies'])) {
 			$vocabularies = Hash::merge($vocabularies, $themeData['vocabularies']);
 		}
-		$vocabularies = Hash::merge($vocabularies, array_keys($this->controller->Blocks->blocksData['vocabularies']));
+		$vocabularies = Hash::merge($vocabularies, array_keys($this->controller->BlocksHook->blocksData['vocabularies']));
 		$vocabularies = array_unique($vocabularies);
-		foreach ($vocabularies as $vocabularyAlias) {
-			$vocabulary = $this->Taxonomies->Vocabularies->find('first', array(
-				'conditions' => array(
-					'Vocabulary.alias' => $vocabularyAlias,
-				),
-				'cache' => array(
-					'name' => 'vocabulary_' . $vocabularyAlias,
-					'config' => 'croogo_vocabularies',
-				),
-				'recursive' => '-1',
-			));
-			if (isset($vocabulary['Vocabulary']['id'])) {
-				$threaded = $this->Taxonomies->find('threaded', array(
-					'conditions' => array(
-						'Taxonomy.vocabulary_id' => $vocabulary['Vocabulary']['id'],
-					),
-					'contain' => array(
-						'Term',
-					),
-					'cache' => array(
-						'name' => 'vocabulary_threaded_' . $vocabularyAlias,
-						'config' => 'croogo_vocabularies',
-					),
-					'order' => 'Taxonomy.lft ASC',
-				));
-				$this->vocabulariesForLayout[$vocabularyAlias] = array();
-				$this->vocabulariesForLayout[$vocabularyAlias]['Vocabulary'] = $vocabulary['Vocabulary'];
-				$this->vocabulariesForLayout[$vocabularyAlias]['threaded'] = $threaded;
-			}
-		}
+//		foreach ($vocabularies as $vocabularyAlias) {
+//			$vocabulary = $this->Taxonomies->Vocabularies->find('first', array(
+//				'conditions' => array(
+//					'Vocabulary.alias' => $vocabularyAlias,
+//				),
+//				'cache' => array(
+//					'name' => 'vocabulary_' . $vocabularyAlias,
+//					'config' => 'croogo_vocabularies',
+//				),
+//				'recursive' => '-1',
+//			));
+//			if (isset($vocabulary['Vocabulary']['id'])) {
+//				$threaded = $this->Taxonomies->find('threaded', array(
+//					'conditions' => array(
+//						'Taxonomy.vocabulary_id' => $vocabulary['Vocabulary']['id'],
+//					),
+//					'contain' => array(
+//						'Term',
+//					),
+//					'cache' => array(
+//						'name' => 'vocabulary_threaded_' . $vocabularyAlias,
+//						'config' => 'croogo_vocabularies',
+//					),
+//					'order' => 'Taxonomy.lft ASC',
+//				));
+//				$this->vocabulariesForLayout[$vocabularyAlias] = array();
+//				$this->vocabulariesForLayout[$vocabularyAlias]['Vocabulary'] = $vocabulary['Vocabulary'];
+//				$this->vocabulariesForLayout[$vocabularyAlias]['threaded'] = $threaded;
+//			}
+//		}
 	}
 
 /**

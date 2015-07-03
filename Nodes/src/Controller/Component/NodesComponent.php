@@ -78,7 +78,7 @@ class NodesComponent extends Component {
 	public function nodes() {
 		$roleId = $this->controller->Croogo->roleId();
 
-		$nodes = $this->controller->Blocks->blocksData['nodes'];
+		$nodes = $this->controller->BlocksHook->blocksData['nodes'];
 		$_nodeOptions = array(
 			'find' => 'all',
 			'conditions' => array(
