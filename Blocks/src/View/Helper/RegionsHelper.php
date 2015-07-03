@@ -2,8 +2,10 @@
 
 namespace Croogo\Blocks\View\Helper;
 
+use Cake\Log\LogTrait;
 use Cake\Utility\Hash;
 use Cake\View\Helper;
+use Croogo\Blocks\Model\Entity\Block;
 use Croogo\Core\Croogo;
 
 /**
@@ -17,6 +19,8 @@ use Croogo\Core\Croogo;
  * @link     http://www.croogo.org
  */
 class RegionsHelper extends Helper {
+
+	use LogTrait;
 
 /**
  * Region is empty
@@ -43,34 +47,26 @@ class RegionsHelper extends Helper {
  * it inside the Blocks.block container. You disable the wrapping by setting
  * `enclosure=false` in the `params` field.
  *
- * @param string $blockAlias Block alias
+ * @param Block $block Block
  * @param array $options
  * @return string
  */
-	public function block($blockAlias, $options = array()) {
+	public function block(Block $block, $options = array()) {
 		$output = '';
-		if (!$blockAlias) {
-			return $output;
-		}
 
 		$options = Hash::merge(array(
 			'elementOptions' => array(),
 		), $options);
 		$elementOptions = $options['elementOptions'];
 
-		$defaultElement = 'Blocks.block';
-		$blocks = Hash::combine($this->_View->viewVars['blocks_for_layout'], '{s}.{n}.Block.alias', '{s}.{n}');
-		if (!isset($blocks[$blockAlias])) {
-			return $output;
-		}
-		$block = $blocks[$blockAlias];
+		$defaultElement = 'Croogo/Blocks.block';
 
-		$element = $block['Block']['element'];
+		$element = $block->element;
 		$exists = $this->_View->elementExists($element);
 		$blockOutput = '';
 
 		Croogo::dispatchEvent('Helper.Regions.beforeSetBlock', $this->_View, array(
-			'content' => &$block['Block']['body'],
+			'content' => &$block->body,
 		));
 
 		if ($exists) {
@@ -78,9 +74,9 @@ class RegionsHelper extends Helper {
 		} else {
 			if (!empty($element)) {
 				$this->log(sprintf('Missing element `%s` in block `%s` (%s)',
-					$block['Block']['element'],
-					$block['Block']['alias'],
-					$block['Block']['id']
+					$block->element,
+					$block->alias,
+					$block->id
 				), LOG_WARNING);
 			}
 			$blockOutput = $this->_View->element($defaultElement, compact('block'), array('ignoreMissing' => true) + $elementOptions);
@@ -92,8 +88,8 @@ class RegionsHelper extends Helper {
 
 		$enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
 		if ($exists && $element != $defaultElement && $enclosure) {
-			$block['Block']['body'] = $blockOutput;
-			$block['Block']['element'] = null;
+			$block->body = $blockOutput;
+			$block->element = null;
 			$output .= $this->_View->element($defaultElement, compact('block'), $elementOptions);
 		} else {
 			$output .= $blockOutput;
@@ -124,10 +120,10 @@ class RegionsHelper extends Helper {
 			'elementOptions' => array(),
 		), $options);
 
-		$defaultElement = 'Blocks.block';
+		$defaultElement = 'Croogo/Blocks.block';
 		$blocks = $this->_View->viewVars['blocks_for_layout'][$regionAlias];
 		foreach ($blocks as $block) {
-			$output .= $this->block($block['Block']['alias'], $options);
+			$output .= $this->block($block, $options);
 		}
 
 		return $output;
