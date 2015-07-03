@@ -1,9 +1,16 @@
 <?php
 
 namespace Croogo\Core\Utility;
+use Cake\Collection\CollectionInterface;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Log\LogTrait;
 use Cake\Network\Request;
+use Cake\ORM\Entity;
+use Cake\ORM\Query;
 use Cake\Utility\Hash;
 use Cake\Routing\Router;
+use Croogo\Blocks\Model\Entity\Block;
+use Psr\Log\LogLevel;
 
 /**
  * VisibilityFilter
@@ -14,6 +21,8 @@ use Cake\Routing\Router;
  * @link     http://www.croogo.org
  */
 class VisibilityFilter {
+
+	use LogTrait;
 
 /**
  * StringConverter instance
@@ -122,34 +131,28 @@ class VisibilityFilter {
  * Remove values based on rules in visibility_path field.
  *
  * Options:
- *   - model Model alias in $values
  *   - field Field name containing the visibility path rules
  *
- * @param array $values Array of data to filter
+ * @param array $query Array of data to filter
  */
-	public function remove($values, $options = array()) {
+	public function remove(\Traversable $traversable, $options = array()) {
 		$options = Hash::merge(array(
-			'model' => null,
 			'field' => null,
 		), $options);
-		$model = $options['model'];
 		$field = $options['field'];
-		$results = array();
 
-		foreach ($values as $value) {
-			if (empty($value[$model][$field])) {
-				$results[] = $value;
-				continue;
-			}
-			if (!is_array($value[$model][$field])) {
-				Log::error('Invalid visibility_path rule');
+		return collection($traversable)->filter(function (Entity $entity) use ($field) {
+			$rules = $entity->get($field);
+			if (empty($rules)) {
+				return true;
 			}
 
-			if ($this->_isVisible($value[$model][$field])) {
-				$results[] = $value;
+			if (!is_array($rules)) {
+				$this->log('Invalid visibility_path rule', LogLevel::ERROR);
 			}
-		}
-		return $results;
+
+			return $this->_isVisible($rules);
+		});
 	}
 
 }

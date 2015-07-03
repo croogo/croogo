@@ -3,6 +3,7 @@
 namespace Croogo\Blocks\Model\Table;
 
 use Cake\Database\Schema\Table as Schema;
+use Cake\ORM\Query;
 use Croogo\Core\Model\Table\CroogoTable;
 use Croogo\Core\Status;
 
@@ -99,44 +100,30 @@ class BlocksTable extends CroogoTable {
  * - roleId Role Id
  * - cacheKey Cache key (optional)
  */
-	protected function _findPublished($state, $query, $results = array()) {
-		if ($state === 'after') {
-			return $results;
-		}
+	public function findPublished(Query $query, array $options = []) {
+		$status = isset($options['status']) ? $options['status'] : $this->status();
+		$regionId = isset($options['regionId']) ? $options['regionId'] : null;
+		$roleId = isset($options['roleId']) ? $options['roleId'] : 3;
+		$cacheKey = isset($options['cacheKey']) ? $options['cacheKey'] : $regionId . '_' . $roleId;
+		unset($options['status'], $options['regionId'], $options['roleId'], $options['cacheKey']);
 
-		$status = isset($query['status']) ? $query['status'] : $this->status();
-		$regionId = isset($query['regionId']) ? $query['regionId'] : null;
-		$roleId = isset($query['roleId']) ? $query['roleId'] : 3;
-		$cacheKey = isset($query['cacheKey']) ? $query['cacheKey'] : $regionId . '_' . $roleId;
-		unset($query['status'], $query['regionId'], $query['roleId'], $query['cacheKey']);
-
-		$visibilityRolesField = $this->escapeField('visibility_roles');
-
-		$default = array(
-			'conditions' => array(
-				$this->escapeField('status') => $status,
-				$this->escapeField('region_id') => $regionId,
-				'AND' => array(
-					array(
-						'OR' => array(
-							$visibilityRolesField => '',
-							$visibilityRolesField . ' LIKE' => '%"' . $roleId . '"%',
-						),
+		return $query->where([
+			'status' => $status,
+			'region_id' => $regionId,
+			'AND' => array(
+				array(
+					'OR' => array(
+						'visibility_roles' => '',
+						'visibility_roles' . ' LIKE' => '%"' . $roleId . '"%',
 					),
 				),
 			),
-			'order' => array(
-				$this->escapeField('weight') => 'ASC'
-			),
-			'cache' => array(
-				'prefix' => 'blocks_' . $cacheKey,
-				'config' => 'croogo_blocks',
-			),
-			'recursive' => '-1',
-		);
-
-		$query = Hash::merge($query, $default);
-		return $query;
+		])->order([
+			'weight' => 'ASC'
+		])->applyOptions([
+			'prefix' => 'blocks_' . $cacheKey,
+			'config' => 'croogo_blocks',
+		]);
 	}
 
 }

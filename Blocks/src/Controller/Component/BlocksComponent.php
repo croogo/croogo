@@ -2,10 +2,16 @@
 
 namespace Croogo\Blocks\Controller\Component;
 
+use Cake\Cache\Cache;
+use Cake\Collection\Collection;
 use Cake\Controller\Component;
 use Cake\Event\Event;
+use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
+use Croogo\Blocks\Model\Entity\Block;
 use Croogo\Core\Utility\StringConverter;
 use Croogo\Core\Utility\VisibilityFilter;
 /**
@@ -35,9 +41,9 @@ class BlocksComponent extends Component {
 		'nodes' => array(),
 	);
 
-/**
- * StringConverter instance
- */
+	/**
+	 * @var StringConverter
+	 */
 	protected $_stringConverter = null;
 
 /**
@@ -86,12 +92,11 @@ class BlocksComponent extends Component {
  */
 	public function blocks() {
 		$this->blocksForLayout = [];
-		return;
-		$regions = $this->Blocks->Regions->find('active');
+		$regions = collection($this->Blocks->Regions->find('active'))->combine('id', 'alias');
 
-		$alias = $this->Block->alias;
+		$alias = $this->Blocks->alias();
 		$roleId = $this->controller->Croogo->roleId();
-		$status = $this->Block->status();
+		$status = $this->Blocks->status();
 		$request = $this->controller->request;
 		$slug = Inflector::slug(strtolower($request->url));
 		$Filter = new VisibilityFilter($request);
@@ -102,51 +107,51 @@ class BlocksComponent extends Component {
 			$visibilityCachePrefix = 'visibility_' .  $slug . '_' . $cacheKey;
 			$blocks = Cache::read($visibilityCachePrefix, 'croogo_blocks');
 			if ($blocks === false) {
-
-				$blocks = $this->Block->find('published', array(
+				/** @var Query $blocks */
+				$blocks = $this->Blocks->find('published', array(
 					'regionId' => $regionId,
 					'roleId' => $roleId,
 					'cacheKey' => $cacheKey,
 				));
-				foreach ($blocks as &$block) {
-					$block[$alias]['visibility_paths'] = $this->Block->decodeData($block[$alias]['visibility_paths']);
-				}
 
-				$blocks = $Filter->remove($blocks, array(
-					'model' => $alias,
+				$blocks = $Filter->remove($blocks->all(), array(
 					'field' => 'visibility_paths',
 					'cache' => array(
 						'prefix' => $visibilityCachePrefix,
 						'config' => 'croogo_blocks',
 					),
 				));
-				Cache::write($visibilityCachePrefix, $blocks, 'croogo_blocks');
+
+				Cache::write($visibilityCachePrefix, $blocks->toArray(), 'croogo_blocks');
 			}
+			/** @var Collection $blocks */
+			$blocks = collection($blocks);
 			$this->processBlocksData($blocks);
-			$this->blocksForLayout[$regionAlias] = $blocks;
+			$this->blocksForLayout[$regionAlias] = $blocks->toArray();
 		}
 	}
 
 /**
  * Process blocks for bb-code like strings
  *
- * @param array $blocks
+ * @param Collection $blocks
  * @return void
  */
-	public function processBlocksData($blocks) {
+	public function processBlocksData(Collection $blocks) {
 		$converter = $this->_stringConverter;
+		/** @var Block $block */
 		foreach ($blocks as $block) {
 			$this->blocksData['menus'] = Hash::merge(
 				$this->blocksData['menus'],
-				$converter->parseString('menu|m', $block['Block']['body'])
+				$converter->parseString('menu|m', $block->body)
 			);
 			$this->blocksData['vocabularies'] = Hash::merge(
 				$this->blocksData['vocabularies'],
-				$converter->parseString('vocabulary|v', $block['Block']['body'])
+				$converter->parseString('vocabulary|v', $block->body)
 			);
 			$this->blocksData['nodes'] = Hash::merge(
 				$this->blocksData['nodes'],
-				$converter->parseString('node|n', $block['Block']['body'],
+				$converter->parseString('node|n', $block->body,
 				array('convertOptionsToArray' => true)
 			));
 		}
