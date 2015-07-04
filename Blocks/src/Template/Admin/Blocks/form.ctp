@@ -50,6 +50,9 @@ $this->append('tab-content');
 		)) .
 		$this->Form->input('element', array(
 			'label' => __d('croogo', 'Element')
+		)) .
+		$this->Form->input('cell', array(
+			'label' => __d('croogo', 'Cell')
 		));
 	echo $this->Html->tabEnd();
 

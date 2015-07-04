@@ -5,6 +5,7 @@ namespace Croogo\Blocks\View\Helper;
 use Cake\Log\LogTrait;
 use Cake\Utility\Hash;
 use Cake\View\Helper;
+use Croogo\Blocks\Catalog;
 use Croogo\Blocks\Model\Entity\Block;
 use Croogo\Core\Croogo;
 
@@ -94,7 +95,7 @@ class RegionsHelper extends Helper
 				list($pluginAndCell, $action) = [$parts[0], $regionAlias];
 			}
 
-			$blockOutput = $this->_View->cell($pluginAndCell . '::' . $action);
+			$blockOutput = (string) $this->_View->cell($pluginAndCell . '::' . $action);
 		}
 
 		Croogo::dispatchEvent('Helper.Regions.afterSetBlock', $this->_View, array(
