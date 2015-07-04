@@ -50,57 +50,68 @@ class RegionsHelper extends Helper
  * `enclosure=false` in the `params` field.
  *
  * @param Block $block Block
+ * @param string $regionAlias Alias of the region
  * @param array $options
  * @return string
  */
-    public function block(Block $block, $options = [])
-    {
-        $output = '';
+	public function block(Block $block, $regionAlias, $options = array()) {
+		$output = '';
 
-        $options = Hash::merge([
-            'elementOptions' => [],
-        ], $options);
-        $elementOptions = $options['elementOptions'];
+		$options = Hash::merge(array(
+			'elementOptions' => array(),
+		), $options);
+		$elementOptions = $options['elementOptions'];
 
-        $defaultElement = 'Croogo/Blocks.block';
+		$defaultElement = 'Croogo/Blocks.block';
 
-        $element = $block->element;
-        $exists = $this->_View->elementExists($element);
-        $blockOutput = '';
+		$element = $block->element;
+		$exists = $this->_View->elementExists($element);
+		$blockOutput = '';
 
-        Croogo::dispatchEvent('Helper.Regions.beforeSetBlock', $this->_View, [
-            'content' => &$block->body,
-        ]);
+		Croogo::dispatchEvent('Helper.Regions.beforeSetBlock', $this->_View, array(
+			'content' => &$block->body,
+		));
 
-        if ($exists) {
-            $blockOutput = $this->_View->element($element, compact('block'), $elementOptions);
-        } else {
-            if (!empty($element)) {
-                $this->log(sprintf(
-                    'Missing element `%s` in block `%s` (%s)',
-                    $block->element,
-                    $block->alias,
-                    $block->id
-                ), LOG_WARNING);
-            }
-            $blockOutput = $this->_View->element($defaultElement, compact('block'), ['ignoreMissing' => true] + $elementOptions);
-        }
+		if ($exists) {
+			$blockOutput = $this->_View->element($element, compact('block'), $elementOptions);
+		} else {
+			if (!empty($element)) {
+				$this->log(sprintf('Missing element `%s` in block `%s` (%s)',
+					$block->element,
+					$block->alias,
+					$block->id
+				), LOG_WARNING);
+			}
+			$blockOutput = $this->_View->element($defaultElement, compact('block'), array('ignoreMissing' => true) + $elementOptions);
+		}
 
-        Croogo::dispatchEvent('Helper.Regions.afterSetBlock', $this->_View, [
-            'content' => &$blockOutput,
-        ]);
+		if ($block->get('cell')) {
+			$parts = explode('::', $block->get('cell'));
 
-        $enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
-        if ($exists && $element != $defaultElement && $enclosure) {
-            $block->body = $blockOutput;
-            $block->element = null;
-            $output .= $this->_View->element($defaultElement, compact('block'), $elementOptions);
-        } else {
-            $output .= $blockOutput;
-        }
+			if (count($parts) === 2) {
+				list($pluginAndCell, $action) = [$parts[0], $parts[1]];
+			} else {
+				list($pluginAndCell, $action) = [$parts[0], $regionAlias];
+			}
 
-        return $output;
-    }
+			$blockOutput = $this->_View->cell($pluginAndCell . '::' . $action);
+		}
+
+		Croogo::dispatchEvent('Helper.Regions.afterSetBlock', $this->_View, array(
+			'content' => &$blockOutput,
+		));
+
+		$enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
+		if ($exists && $element != $defaultElement && $enclosure) {
+			$block->body = $blockOutput;
+			$block->element = null;
+			$output .= $this->_View->element($defaultElement, compact('block'), $elementOptions);
+		} else {
+			$output .= $blockOutput;
+		}
+
+		return $output;
+	}
 
 /**
  * Show Blocks for a particular Region
@@ -128,7 +139,7 @@ class RegionsHelper extends Helper
         $defaultElement = 'Croogo/Blocks.block';
         $blocks = $this->_View->viewVars['blocks_for_layout'][$regionAlias];
         foreach ($blocks as $block) {
-            $output .= $this->block($block, $options);
+            $output .= $this->block($block, $regionAlias, $options);
         }
 
         return $output;
