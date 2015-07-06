@@ -1,6 +1,6 @@
 <?php
 
-$this->extend('/Common/admin_index');
+$this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
@@ -12,15 +12,15 @@ $this->Html
 <div class="btn-group">
 <?php
 	echo $this->FileManager->adminAction(__d('croogo', 'Upload here'),
-		array('controller' => 'file_manager', 'action' => 'upload'),
+		array('controller' => 'FileManager', 'action' => 'upload'),
 		$path
 	);
 	echo $this->FileManager->adminAction(__d('croogo', 'Create directory'),
-		array('controller' => 'file_manager', 'action' => 'create_directory'),
+		array('controller' => 'FileManager', 'action' => 'create_directory'),
 		$path
 	);
 	echo $this->FileManager->adminAction(__d('croogo', 'Create file'),
-		array('controller' => 'file_manager', 'action' => 'create_file'),
+		array('controller' => 'FileManager', 'action' => 'create_file'),
 		$path
 	);
 ?>
@@ -59,17 +59,17 @@ $this->Html
 			$actions[] = $this->FileManager->linkDirectory(__d('croogo', 'Open'), $fullpath . DS);
 			if ($this->FileManager->inPath($deletablePaths, $fullpath)) {
 				$actions[] = $this->FileManager->link(__d('croogo', 'Delete'), array(
-					'controller' => 'file_manager',
+					'controller' => 'FileManager',
 					'action' => 'delete_directory',
 				), $fullpath);
 			}
 			$actions[] = $this->FileManager->link(__d('croogo', 'Rename'), array(
-				'controller' => 'file_manager',
+				'controller' => 'FileManager',
 				'action' => 'rename',
 			), $fullpath);
 			$actions = $this->Html->div('item-actions', implode(' ', $actions));
 			$rows[] = array(
-				$this->Html->image('/croogo/img/icons/folder.png'),
+				$this->Html->image('/croogo/core/img/icons/folder.png'),
 				$this->FileManager->linkDirectory($directory, $fullpath . DS),
 				$actions,
 			);
@@ -96,25 +96,27 @@ $this->Html
 				$linkFile = $this->FileManager->linkFile($file, $fullpath);
 				$actions[] = $this->FileManager->link(__d('croogo', 'Edit'),
 					array(
-						'plugin' => 'file_manager',
-						'controller' => 'file_manager', 'action' => 'editfile'
+						'plugin' => 'Croogo/FileManager',
+						'controller' => 'FileManager', 'action' => 'edit_file'
 					),
 					$fullpath
 				);
 			endif;
 			if ($this->FileManager->inPath($deletablePaths, $fullpath)) {
 				$actions[] = $this->FileManager->link(__d('croogo', 'Delete'), array(
-					'controller' => 'file_manager',
+					'plugin' => 'Croogo/FileManager',
+					'controller' => 'FileManager',
 					'action' => 'delete_file',
 				), $fullpath);
 			}
 			$actions[] = $this->FileManager->link(__d('croogo', 'Rename'), array(
-				'controller' => 'file_manager',
+				'plugin' => 'Croogo/FileManager',
+				'controller' => 'FileManager',
 				'action' => 'rename',
 			), $fullpath);
 			$actions = $this->Html->div('item-actions', implode(' ', $actions));
 			$rows[] = array(
-				$this->Html->image('/croogo/img/icons/' . $icon),
+				$this->Html->image('/croogo/core/img/icons/' . $icon),
 				$linkFile,
 				$actions,
 			);

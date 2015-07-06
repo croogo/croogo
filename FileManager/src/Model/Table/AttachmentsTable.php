@@ -1,8 +1,11 @@
 <?php
 
-namespace Croogo\FileManager\Model;
+namespace Croogo\FileManager\Model\Table;
 
-use Nodes\Model\Node;
+use Cake\Datasource\EntityInterface;
+use Cake\Utility\Text;
+use Croogo\Nodes\Model\Table\NodesTable;
+
 /**
  * Attachment Model
  *
@@ -13,17 +16,9 @@ use Nodes\Model\Node;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Attachment extends Node {
+class AttachmentsTable extends NodesTable {
 
-/**
- * alias
- */
-	public $alias = 'Attachment';
-
-/**
- * useTable
- */
-	public $useTable = 'nodes';
+	use \Cake\Log\LogTrait;
 
 /**
  * type
@@ -40,6 +35,11 @@ class Attachment extends Node {
  */
 	public $uploadsDir = 'uploads';
 
+	public function initialize(array $config) {
+		parent::initialize($config);
+		$this->table('nodes');
+	}
+
 /**
  * Save uploaded file
  *
@@ -47,13 +47,12 @@ class Attachment extends Node {
  * @return array|boolean false for errors or array containing fields to save
  */
 	protected function _saveUploadedFile($data) {
-		$file = $data[$this->alias]['file'];
-		unset($data[$this->alias]['file']);
+		$file = $data->file;
 
 		// check if file with same path exists
 		$destination = WWW_ROOT . $this->uploadsDir . DS . $file['name'];
 		if (file_exists($destination)) {
-			$newFileName = String::uuid() . '-' . $file['name'];
+			$newFileName = Text::uuid() . '-' . $file['name'];
 			$destination = WWW_ROOT . $this->uploadsDir . DS . $newFileName;
 		} else {
 			$newFileName = $file['name'];
@@ -68,12 +67,12 @@ class Attachment extends Node {
 			$fileTitle = $file['name'];
 		}
 
-		$data[$this->alias]['title'] = $fileTitle;
-		$data[$this->alias]['slug'] = $newFileName;
-		$data[$this->alias]['body'] = '';
-		$data[$this->alias]['mime_type'] = $file['type'];
-		$data[$this->alias]['type'] = $this->type;
-		$data[$this->alias]['path'] = '/' . $this->uploadsDir . '/' . $newFileName;
+		$data->title = $fileTitle;
+		$data->slug = $newFileName;
+		$data->body = '';
+		$data->mime_type = $file['type'];
+		$data->type = $this->type;
+		$data->path = '/' . $this->uploadsDir . '/' . $newFileName;
 		// move the file
 		$moved = move_uploaded_file($file['tmp_name'], $destination);
 		if ($moved) {
@@ -88,14 +87,14 @@ class Attachment extends Node {
  *
  * @see Model::save()
  */
-	public function save($data = null, $validate = true, $fieldList = array()) {
-		if (isset($data[$this->alias]['file']['tmp_name'])) {
+	public function save(EntityInterface $data, $options = []) {
+		if (isset($data->file['tmp_name'])) {
 			$data = $this->_saveUploadedFile($data);
 		}
 		if (!$data) {
-			return $this->invalidate('file', __d('croogo', 'Error during file upload'));
+			return $entity->errors(['file' => __d('croogo', 'Error during file upload')]);
 		}
-		return parent::save($data, $validate, $fieldList);
+		return parent::save($data, $options);
 	}
 
 /**
@@ -103,15 +102,15 @@ class Attachment extends Node {
  *
  * @see Model::delete()
  */
-	public function delete($id = null, $cascade = true) {
-		$attachment = $this->find('first', array(
-			'conditions' => array(
-				$this->alias . '.id' => $id,
-				$this->alias . '.type' => $this->type,
-			),
-		));
+	public function delete(EntityInterface $data, $options = []) {
+		$attachment = $this->find()
+			->where([
+				'id' => $data->id,
+				'type' => $this->type,
+			])
+			->first();
 
-		$filename = $attachment[$this->alias]['slug'];
+		$filename = $attachment->slug;
 		$uploadsDir = WWW_ROOT . $this->uploadsDir . DS;
 		$fullpath = $uploadsDir . DS . $filename;
 		if (file_exists($fullpath)) {
@@ -121,12 +120,12 @@ class Attachment extends Node {
 				array_map('unlink', glob(
 					$uploadsDir . DS . 'resized' . DS . $info['filename'] . '.resized-*.' . $info['extension']
 				));
-				return parent::delete($id, $cascade);
+				return parent::delete($attachment, $options);
 			} else {
 				return false;
 			}
 		} else {
-			return parent::delete($id, $cascade);
+			return parent::delete($attachment, $options);
 		}
 	}
 

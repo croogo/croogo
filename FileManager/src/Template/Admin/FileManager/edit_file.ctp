@@ -1,6 +1,8 @@
 <?php
 
-$this->extend('/Common/admin_edit');
+use Cake\Routing\Router;
+
+$this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
@@ -22,9 +24,9 @@ $this->append('page-heading');
 $this->end();
 
 $this->append('form-start', $this->Form->create('FileManager', array(
-	'url' => $this->Html->url(array(
-		'controller' => 'file_manager',
-		'action' => 'editfile',
+	'url' => Router::url(array(
+		'controller' => 'FileManager',
+		'action' => 'editFile',
 	), true) . '?path=' . urlencode($absolutefilepath),
 )));
 

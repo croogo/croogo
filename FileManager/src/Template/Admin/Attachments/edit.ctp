@@ -1,15 +1,15 @@
 <?php
 
-$this->extend('/Common/admin_edit');
+$this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Attachments'), array('plugin' => 'file_manager', 'controller' => 'attachments', 'action' => 'index'))
-	->addCrumb($this->request->data['Attachment']['title'], '/' . $this->request->url);
+	->addCrumb($attachment->title, '/' . $this->request->url);
 
-$this->append('form-start', $this->Form->create('Attachment', array(
+$this->append('form-start', $this->Form->create($attachment, array(
 	'url' => array(
-		'controller' => 'attachments',
+		'controller' => 'Attachments',
 		'action' => 'edit',
 	)
 )));
@@ -30,12 +30,12 @@ $this->append('tab-content');
 		)) .
 		$this->Form->input('file_url', array(
 			'label' => __d('croogo', 'File URL'),
-			'value' => Router::url($this->request->data['Attachment']['path'], true),
+			'value' => $this->Url->build($attachment->path, true),
 			'readonly' => 'readonly',
 		)) .
 		$this->Form->input('file_type', array(
 			'label' => __d('croogo', 'Mime Type'),
-			'value' => $this->request->data['Attachment']['mime_type'],
+			'value' => $attachment->mime_type,
 			'readonly' => 'readonly')
 		);
 	echo $this->Html->tabEnd();
@@ -45,8 +45,9 @@ $this->end();
 
 $this->append('panels');
 	$redirect = array('action' => 'index');
-	if ($this->Session->check('Wysiwyg.redirect')) {
-		$redirect = $this->Session->read('Wysiwyg.redirect');
+	$session = $this->request->session();
+	if ($session->check('Wysiwyg.redirect')) {
+		$redirect = $session->read('Wysiwyg.redirect');
 	}
 	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 		$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
@@ -58,14 +59,14 @@ $this->append('panels');
 		);
 	echo $this->Html->endBox();
 
-	$fileType = explode('/', $this->request->data['Attachment']['mime_type']);
+	$fileType = explode('/', $attachment->mime_type);
 	$fileType = $fileType['0'];
 	if ($fileType == 'image'):
-		$imgUrl = $this->Image->resize('/uploads/' . $this->request->data['Attachment']['slug'], 200, 300, true);
+		$imgUrl = $this->Image->resize('/uploads/' . $attachment->slug, 200, 300, true);
 	else:
-		$imgUrl = $this->Html->thumbnail('/croogo/img/icons/' . $this->Filemanager->mimeTypeToImage($this->request->data['Attachment']['mime_type'])) . ' ' . $this->request->data['Attachment']['mime_type'];
+		$imgUrl = $this->Html->thumbnail('/croogo/core/img/icons/' . $this->Filemanager->mimeTypeToImage($attachment->mime_type)) . ' ' . $attachment->mime_type;
 	endif;
-	$preview = $this->Html->link($imgUrl, $this->request->data['Attachment']['path'], array(
+	$preview = $this->Html->link($imgUrl, $attachment->path, array(
 		'class' => 'thickbox',
 	));
 	echo $this->Html->beginBox(__d('croogo', 'Preview')) .
