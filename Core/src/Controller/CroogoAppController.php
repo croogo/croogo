@@ -415,7 +415,7 @@ class CroogoAppController extends AppController {
 
 		$fallbackView = $this->__getDefaultFallbackView();
 		if (is_null($view) && in_array($this->request->action, array('edit', 'add'))) {
-			$viewPaths = App::path('View', $this->plugin);
+			$viewPaths = App::path('Template', $this->plugin);
 			$themePath = $this->theme ? App::themePath($this->theme) : null;
 			$searchPaths = array_merge((array)$themePath, $viewPaths);
 			$view = $this->__findRequestedView($searchPaths);
