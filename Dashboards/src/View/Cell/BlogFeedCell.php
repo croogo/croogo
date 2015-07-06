@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Core\View\Cell;
+namespace Croogo\Dashboards\View\Cell;
 
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
