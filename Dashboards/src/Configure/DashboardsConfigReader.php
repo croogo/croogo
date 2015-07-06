@@ -32,7 +32,8 @@ class DashboardsConfigReader extends PhpConfig implements ConfigEngineInterface
 		$defaults = array(
 			'title' => false,
 			'weight' => 9999,
-			'element' => false,
+			'cell' => false,
+			'arguments' => [],
 			'cache' => true,
 			'access' => array(),
 			'column' => false,

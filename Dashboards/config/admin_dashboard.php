@@ -5,7 +5,7 @@ use Croogo\Dashboards\CroogoDashboard;
 $config = array(
 	'dashboards.blogfeed' => array(
 		'title' => __d('croogo', 'Croogo News'),
-		'element' => 'Croogo/Dashboards.dashboard/blog_feed',
+		'cell' => 'Croogo/Dashboards.BlogFeed::dashboard',
 		'column' => CroogoDashboard::RIGHT,
 	),
 );
