@@ -23,6 +23,7 @@ namespace Croogo\Core\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
+use Cake\Event\Event;
 use Cake\Core\Configure;
 
 /**
@@ -92,7 +93,8 @@ class AkismetComponent extends Component
 	 *    @param    string    $blogURL            The URL of your blog.
 	 *    @param    string    $wordPressAPIKey    WordPress API key.
 	 */
-	public function startup(Controller $controller) {
+	public function startup(Event $event) {
+
 		$this->blogURL = Configure::read('Service.akismet_url');
 		$this->wordPressAPIKey = Configure::read('Service.akismet_key');
 
