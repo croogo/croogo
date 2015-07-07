@@ -1,6 +1,6 @@
 <?php
 
-$this->extend('/Common/admin_edit');
+$this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
@@ -14,7 +14,7 @@ if ($this->request->params['action'] == 'admin_add') {
 	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
-$this->append('form-start', $this->Form->create('Contact'));
+$this->append('form-start', $this->Form->create($contact));
 
 $this->append('tab-heading');
 	echo $this->Croogo->adminTab(__d('croogo', 'Contact'), '#contact-basic');
@@ -89,8 +89,8 @@ $this->append('tab-content');
 		));
 
 		echo $this->Html->link(__d('croogo', 'You can manage your API keys here.'), array(
-			'plugin' => 'settings',
-			'controller' => 'settings',
+			'plugin' => 'Croogo/Settings',
+			'controller' => 'Settings',
 			'action' => 'prefix',
 			'Service',
 		));
