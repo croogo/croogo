@@ -1,6 +1,7 @@
 {
 	"name": "croogo/croogo",
 	"description": "Croogo - Open Source CMS built for everyone",
+	"type": "cakephp-plugin",
 	"homepage": "http://github.com/croogo/croogo",
 	"license": "MIT",
 	"authors": [
@@ -25,22 +26,89 @@
 			"homepage": "https://cvo-technologies.com"
 		}
 	],
-	"config": {
-		"vendor-dir": "Vendor"
-	},
 	"require": {
 		"php": ">=5.3.10",
 		"composer/installers": "~1.0",
-		"croogo/Ckeditor": "~2.0",
-		"cakedc/search": "~2.5",
-		"cakedc/migrations": "~2.3"
+		"cakephp/cakephp": "~3.0",
+		"cakephp/plugin-installer": "*",
+		"cakephp/migrations": "~1.0",
+		"cakephp/acl": "dev-master",
+		"cakedc/search": "3.0.x-dev",
+		"admad/cakephp-sequence": "dev-master"
 	},
-	"extra": {
-		"branch-alias": {
-			"dev-master": "2.0.x-dev"
+	"require-dev": {
+		"phpunit/phpunit": "~4.8@dev"
+	},
+	"autoload": {
+		"psr-4": {
+			"Croogo\\": "src",
+			"Croogo\\Acl\\": "Acl/src",
+			"Croogo\\Blocks\\": "Blocks/src",
+			"Croogo\\Comments\\": "Comments/src",
+			"Croogo\\Contacts\\": "Contacts/src",
+			"Croogo\\Contacts\\Test\\": "Contacts/tests",
+			"Croogo\\Core\\": "Core/src",
+			"Croogo\\Dashboards\\": "Dashboards/src",
+			"Croogo\\Example\\": "Example/src",
+			"Croogo\\Extensions\\": "Extensions/src",
+			"Croogo\\FileManager\\": "FileManager/src",
+			"Croogo\\Install\\": "Install/src",
+			"Croogo\\Menus\\": "Menus/src",
+			"Croogo\\Meta\\": "Meta/src",
+			"Croogo\\Nodes\\": "Nodes/src",
+			"Croogo\\Settings\\": "Settings/src",
+			"Croogo\\Taxonomy\\": "Taxonomy/src",
+			"Croogo\\Translate\\": "Translate/src",
+			"Croogo\\Users\\": "Users/src",
+			"Croogo\\Wysiwyg\\": "Wysiwyg/src"
 		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Croogo\\Acl\\Test\\": "Acl/tests",
+			"Croogo\\Blocks\\Test\\": "Blocks/tests",
+			"Croogo\\Comments\\Test\\": "Comments/tests",
+			"Croogo\\Core\\Test\\": "Core/tests",
+			"Croogo\\Dashboards\\Test\\": "Dashboards/tests",
+			"Croogo\\Example\\Test\\": "Example/tests",
+			"Croogo\\Extensions\\Test\\": "Extensions/tests",
+			"Croogo\\FileManager\\Test\\": "FileManager/tests",
+			"Croogo\\Install\\Test\\": "Install/tests",
+			"Croogo\\Menus\\Test\\": "Menus/tests",
+			"Croogo\\Meta\\Test\\": "Meta/tests",
+			"Croogo\\Nodes\\Test\\": "Nodes/tests",
+			"Croogo\\Settings\\Test\\": "Settings/tests",
+			"Croogo\\Taxonomy\\Test\\": "Taxonomy/tests",
+			"Croogo\\Translate\\Test\\": "Translate/tests",
+			"Croogo\\Users\\Test\\": "Users/tests",
+			"Croogo\\Wysiwyg\\Test\\": "Wysiwyg/tests",
+			"App\\": "Core/tests/test_app/src"
+		}
+	},
+	"scripts": {
+		"post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
 	},
 	"suggest": {
 		"croogo/locale": "Localization for Croogo"
+	},
+	"minimum-stability": "dev",
+	"replace": {
+		"croogo/acl": "self.version",
+		"croogo/blocks": "self.version",
+		"croogo/comments": "self.version",
+		"croogo/contacts": "self.version",
+		"croogo/core": "self.version",
+		"croogo/dashboards": "self.version",
+		"croogo/example": "self.version",
+		"croogo/extensions": "self.version",
+		"croogo/filemanaer": "self.version",
+		"croogo/install": "self.version",
+		"croogo/menus": "self.version",
+		"croogo/meta": "self.version",
+		"croogo/nodes": "self.version",
+		"croogo/settings": "self.version",
+		"croogo/taxonomy": "self.version",
+		"croogo/users": "self.version",
+		"croogo/wysiwyg": "self.version"
 	}
 }

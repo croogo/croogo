@@ -1,0 +1,18 @@
+<?php
+
+App::uses('AppController', 'Controller');
+
+/**
+ * FileManager App Controller
+ *
+ * @category FileManager.Controller
+ * @package  Croogo.FileManager.Controller
+ * @version  1.4
+ * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
+ * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link     http://www.croogo.org
+ */
+namespace Croogo\FileManager\Controller;
+class FileManagerAppController extends AppController {
+
+}

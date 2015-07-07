@@ -33,9 +33,9 @@ The preferred way to install Croogo is by using [composer](http://getcomposer.or
 
   * Extract the archive. Upload the content to your server.
   * Locate your `app` directory, and rename the following files:
-    * `Config/database.php.install` to `database.php`, and edit the details.
-    * `Config/croogo.php.install` to `croogo.php`, and edit the details.
-    * `Config/settings.json.install` to `settings.json`
+    * `config/database.php.install` to `database.php`, and edit the details.
+    * `config/croogo.php.install` to `croogo.php`, and edit the details.
+    * `config/settings.json.install` to `settings.json`
   * You can access your admin panel at http://your-site.com/admin. The installer should
     display a page for you to create the administrative user.
 
