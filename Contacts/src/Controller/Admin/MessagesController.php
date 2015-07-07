@@ -2,7 +2,7 @@
 
 namespace Croogo\Contacts\Controller\Admin;
 
-use Contacts\Controller\ContactsAppController;
+use Croogo\Contacts\Controller\ContactsAppController;
 
 /**
  * Messages Controller
@@ -17,29 +17,13 @@ use Contacts\Controller\ContactsAppController;
 class MessagesController extends ContactsAppController {
 
 /**
- * Controller name
- *
- * @var string
- * @access public
- */
-	public $name = 'Messages';
-
-/**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
-	public $uses = array('Contacts.Message');
-
-/**
  * Components
  *
  * @var array
  * @access public
  */
 	public $components = array(
-		'Croogo.BulkProcess',
+		'Croogo/Core.BulkProcess',
 		'Search.Prg' => array(
 			'presetForm' => array(
 				'paramType' => 'querystring',
@@ -66,15 +50,14 @@ class MessagesController extends ContactsAppController {
 		$this->set('title_for_layout', __d('croogo', 'Messages'));
 		$this->Prg->commonProcess();
 
-		$this->Message->recursive = 0;
-		$criteria = $this->Message->parseCriteria($this->Prg->parsedParams());
-		$contacts = $this->Message->Contact->find('list');
-		$messages = $this->paginate($criteria);
+		$query = $this->Messages->find('searchable', $this->Prg->parsedParams());
+		$messages = $this->paginate($query);
+		$contacts = $this->Messages->Contacts->find('list');
 		$searchFields = array('contact_id', 'status' => array(
 			'label' => __d('croogo', 'Read'),
 			'type' => 'hidden',
 		));
-		$this->set(compact('criteria', 'messages', 'contacts', 'searchFields'));
+		$this->set(compact('messages', 'contacts', 'searchFields'));
 	}
 
 /**
