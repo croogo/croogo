@@ -2,20 +2,21 @@
 
 namespace Croogo\Core\View\Helper;
 
-use App\View\Helper\Helper;
+use Cake\View\Helper\HtmlHelper;
+use Cake\Utility\Hash;
+
 /**
  * @package Croogo.Croogo.View.Helper
  * @version 1.1
  * @author Josh Hundley
  * @author Jorge Orpinel <jop@levogiro.net> (changes)
  */
-class ImageHelper extends Helper {
+class ImageHelper extends HtmlHelper {
 
 	public $helpers = array(
 		'Html',
-		'Theme' => array(
-			'className' => 'Croogo/Core.Theme',
-		),
+		'Theme',
+		'Url',
 	);
 
 /**
@@ -130,7 +131,11 @@ class ImageHelper extends Helper {
 			//copy($url, $cachefile);
 		}
 
-		return $this->output(sprintf($this->Html->_tags['image'], $this->webroot($relfile), $this->Html->_parseAttributes($htmlAttributes, null, '', ' ')), $return);
+		$templater = $this->templater();
+		return $templater->format('image', [
+			'url' => $this->Url->webroot($relfile),
+			'attrs' => $templater->formatAttributes($htmlAttributes),
+		]);
 	}
 
 /**
