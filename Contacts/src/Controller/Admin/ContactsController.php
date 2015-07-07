@@ -85,6 +85,7 @@ class ContactsController extends ContactsAppController {
 			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
+			$contact = $this->Contacts->get($id);
 			$contact = $this->Contacts->newEntity($this->request->data);
 			if ($this->Contacts->save($contact)) {
 				$this->Flash->success(__d('croogo', 'The Contact has been saved'));
