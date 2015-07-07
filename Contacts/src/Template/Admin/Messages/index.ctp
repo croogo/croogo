@@ -1,8 +1,8 @@
 <?php
 
-$this->Croogo->adminScript('Contacts.admin');
+$this->Croogo->adminScript('Croogo/Contacts.admin');
 
-$this->extend('/Common/admin_index');
+$this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
@@ -19,6 +19,7 @@ if (isset($criteria['Message.status'])) {
 	}
 }
 
+/* TODO: replace JsHelper that have been removed
 $script = <<<EOF
 $(".comment-view").on("click", function() {
 	var el= \$(this)
@@ -35,6 +36,7 @@ $this->append('table-footer', $this->element('admin/modal', array(
 	'id' => 'comment-modal',
 	)
 ));
+*/
 
 
 $this->append('actions');
@@ -52,7 +54,13 @@ $this->append('actions');
 	));
 $this->end();
 
-$this->append('form-start', $this->Form->create('Message', array('url' => array('controller' => 'messages', 'action' => 'process', 'class' => 'form-inline'))));
+$this->append('form-start', $this->CroogoForm->create(
+	'Message',
+	array(
+		'url' => array('action' => 'process'),
+		'class' => 'form-inline'
+	)
+));
 
 $this->start('table-heading');
 	$tableHeaders = $this->Html->tableHeaders(array(

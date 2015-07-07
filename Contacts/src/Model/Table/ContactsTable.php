@@ -58,27 +58,27 @@ class ContactsTable extends CroogoTable {
 		),
 	);
 
-/**
- * Model associations: hasMany
- *
- * @var array
- * @access public
- */
-	public $hasMany = array(
-		'Message' => array(
-			'className' => 'Contacts.Message',
-			'foreignKey' => 'contact_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '3',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => '',
-		),
-	);
+	public function initialize(array $config) {
+		parent::initialize($config);
+		$this->entityClass('Croogo/Contacts.Contact');
+		$this->addAssociations([
+			'hasMany' => [
+				'Message' => [
+					'className' => 'Croogo/Contacts.Messages',
+					'foreignKey' => 'contact_id',
+					'dependent' => false,
+					'conditions' => '',
+					'fields' => '',
+					'order' => '',
+					'limit' => '3',
+					'offset' => '',
+					'exclusive' => '',
+					'finderQuery' => '',
+					'counterQuery' => '',
+				],
+			],
+		]);
+	}
 
 /**
  * Display fields for this model
