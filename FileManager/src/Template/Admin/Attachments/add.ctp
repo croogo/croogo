@@ -1,6 +1,6 @@
 <?php
 
-$this->extend('/Common/admin_edit');
+$this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
@@ -12,7 +12,7 @@ if (isset($this->request->params['named']['editor'])) {
 	$formUrl['editor'] = 1;
 }
 
-$this->append('form-start', $this->Form->create('Attachment', array(
+$this->append('form-start', $this->Form->create($attachment, array(
 	'url' => $formUrl,
 	'type' => 'file',
 )));
@@ -35,8 +35,9 @@ $this->end();
 
 $this->start('panels');
 	$redirect = array('action' => 'index');
-	if ($this->Session->check('Wysiwyg.redirect')) {
-		$redirect = $this->Session->read('Wysiwyg.redirect');
+	$session = $this->request->session();
+	if ($session->check('Wysiwyg.redirect')) {
+		$redirect = $ession->read('Wysiwyg.redirect');
 	}
 	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 		$this->Form->button(__d('croogo', 'Upload')) .

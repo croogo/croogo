@@ -1,10 +1,10 @@
 <?php
 
-$this->extend('/Common/admin_edit');
+$this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
-	->addCrumb(__d('croogo', 'File Manager'), array('plugin' => 'file_manager', 'controller' => 'file_manager', 'action' => 'browse'))
+	->addCrumb(__d('croogo', 'File Manager'), array('plugin' => 'Croogo/FileManager', 'controller' => 'FileManager', 'action' => 'browse'))
 	->addCrumb(__d('croogo', 'Create File'), '/' . $this->request->url);
 
 $this->append('page-heading');
@@ -23,8 +23,8 @@ $this->append('page-heading');
 $this->end();
 
 $this->append('form-start', $this->Form->create('FileManager', array(
-	'url' => $this->Html->url(array(
-		'controller' => 'file_manager',
+	'url' => $this->Url->build(array(
+		'controller' => 'FileManager',
 		'action' => 'create_file',
 	), true) . '?path=' . urlencode($path),
 )));

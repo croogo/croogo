@@ -1,7 +1,10 @@
 <?php
 
-App::uses('FileManagerAppModel', 'FileManager.Model');
-App::uses('File', 'Utility');
+namespace Croogo\FileManager\Utility;
+
+use Cake\Core\Configure;
+use Cake\Filesystem\File;
+
 /**
  * FileManager Model
  *
@@ -12,9 +15,7 @@ App::uses('File', 'Utility');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class FileManager extends FileManagerAppModel {
-
-	public $useTable = false;
+class FileManager {
 
 /**
  * Checks wether given $path is editable

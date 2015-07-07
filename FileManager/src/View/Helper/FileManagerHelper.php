@@ -2,7 +2,9 @@
 
 namespace Croogo\FileManager\View\Helper;
 
-use App\View\Helper\AppHelper;
+use Cake\View\Helper;
+use Cake\Routing\Router;
+
 /**
  * FileManager Helper
  *
@@ -13,7 +15,7 @@ use App\View\Helper\AppHelper;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class FileManagerHelper extends AppHelper {
+class FileManagerHelper extends Helper {
 
 /**
  * Other helpers used by this helper
@@ -154,7 +156,7 @@ class FileManagerHelper extends AppHelper {
 		if (isset($url['action']) && in_array($url['action'], $this->__postLinkActions)) {
 			$output = $this->Form->postLink($title, $url, array('data' => compact('path'), 'escape' => true), __d('croogo', 'Are you sure?'));
 		} else {
-			$output = '<a class="' . $class . '" href="' . $this->Html->url($url) . "?{$pathKey}=" . urlencode($path) . '">' . $title . '</a>';
+			$output = '<a class="' . $class . '" href="' . Router::url($url) . "?{$pathKey}=" . urlencode($path) . '">' . $title . '</a>';
 		}
 		return $output;
 	}
@@ -168,8 +170,8 @@ class FileManagerHelper extends AppHelper {
  */
 	public function linkDirectory($title, $path) {
 		$output = $this->link($title, array(
-			'plugin' => 'file_manager',
-			'controller' => 'file_manager',
+			'plugin' => 'Croogo/FileManager',
+			'controller' => 'FileManager',
 			'action' => 'browse',
 		), $path);
 		return $output;
@@ -183,8 +185,13 @@ class FileManagerHelper extends AppHelper {
  * @return string
  */
 	public function linkFile($title, $path) {
-		$output = "<a href='" . $this->Html->url(array('controller' => 'file_manager', 'action' => 'editfile')) . "?path=" . urlencode($path) . "'>{$title}</a>";
-		return $output;
+		return $this->Html->link($title, [
+			'controller' => 'FileManager',
+			'action' => 'editFile',
+			'?' => [
+				'path' => $path,
+			],
+		]);
 	}
 
 /**
@@ -195,7 +202,7 @@ class FileManagerHelper extends AppHelper {
  * @return string
  */
 	public function linkUpload($title, $path) {
-		$output = $this->link($title, array('controller' => 'file_manager', 'action' => 'upload'), $path);
+		$output = $this->link($title, array('controller' => 'FileManager', 'action' => 'upload'), $path);
 		return $output;
 	}
 
@@ -207,7 +214,7 @@ class FileManagerHelper extends AppHelper {
  * @return string
  */
 	public function linkCreateDirectory($title, $path) {
-		$output = $this->link($title, array('controller' => 'file_manager', 'action' => 'new'), $path);
+		$output = $this->link($title, array('controller' => 'FileManager', 'action' => 'new'), $path);
 		return $output;
 	}
 

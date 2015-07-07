@@ -1,6 +1,6 @@
 <?php
 
-$this->extend('/Common/admin_edit');
+$this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
@@ -22,7 +22,7 @@ $this->end();
 
 $this->append('form-start', $this->Form->create('FileManager', array(
 	'type' => 'file',
-	'url' => $this->Html->url(array(
+	'url' => $this->Url->build(array(
 		'controller' => 'file_manager',
 		'action' => 'upload',
 	), true) . '?path=' . urlencode($path),

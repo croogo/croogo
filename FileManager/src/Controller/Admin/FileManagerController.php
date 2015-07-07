@@ -2,8 +2,12 @@
 
 namespace Croogo\FileManager\Controller\Admin;
 
-use Cake\Utility\File;
+use Cake\Event\Event;
+use Cake\Filesystem\File;
+use Cake\Filesystem\Folder;
+use Cake\Routing\Router;
 use Croogo\FileManager\Controller\FileManagerAppController;
+use Croogo\FileManager\Utility\FileManager;
 
 /**
  * FileManager Controller
@@ -31,7 +35,12 @@ class FileManagerController extends FileManagerAppController {
  * @var array
  * @access public
  */
-	public $helpers = array('Html', 'Form', 'FileManager.FileManager');
+	public $helpers = [
+		'Html',
+		'Form',
+		'Croogo/Core.Image',
+		'Croogo/FileManager.FileManager',
+	];
 
 /**
  * Deletable Paths
@@ -41,14 +50,19 @@ class FileManagerController extends FileManagerAppController {
  */
 	public $deletablePaths = array();
 
+	public function initialize() {
+		parent::initialize();
+		$this->FileManager = new FileManager();
+	}
+
 /**
  * beforeFilter
  *
  * @return void
  * @access public
  */
-	public function beforeFilter() {
-		parent::beforeFilter();
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
 		$this->deletablePaths = array(
 			APP . 'View' . DS . 'Themed' . DS,
 			WWW_ROOT,
@@ -90,6 +104,22 @@ class FileManagerController extends FileManagerAppController {
 	}
 
 /**
+ * Helper to generate a browse url for $path
+ *
+ * @param string $path Path
+ * @return string
+ */
+	protected function _browsePathUrl($path) {
+		return Router::url([
+			'controller' => 'FileManager',
+			'action' => 'browse',
+			'?' => [
+				'path' => $path,
+			]
+		], true);
+	}
+
+/**
  * Admin index
  *
  * @return void
@@ -119,14 +149,14 @@ class FileManagerController extends FileManagerAppController {
 		$path = realpath($path) . DS;
 		$regex = '/^' . preg_quote(realpath(APP), '/') . '/';
 		if (preg_match($regex, $path) == false) {
-			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'flash', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
 			$path = APP;
 		}
 
 		$blacklist = array('.git', '.svn', '.CVS');
 		$regex = '/(' . preg_quote(implode('|', $blacklist), '.') . ')/';
 		if (in_array(basename($path), $blacklist) || preg_match($regex, $path)) {
-			$this->Session->setFlash(__d('croogo', sprintf('Path %s is restricted', $path)), 'flash', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', sprintf('Path %s is restricted', $path)));
 			$path = dirname($path);
 		}
 
@@ -143,16 +173,16 @@ class FileManagerController extends FileManagerAppController {
  * @return void
  * @access public
  */
-	public function edit_file() {
+	public function editFile() {
 		if (isset($this->request->query['path'])) {
 			$path = $this->request->query['path'];
 			$absolutefilepath = $path;
 		} else {
-			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			return $this->redirect(array('controller' => 'FileManager', 'action' => 'browse'));
 		}
 		if (!$this->FileManager->isEditable($path)) {
-			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'flash', array('class' => 'error'));
-			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			$this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
+			return $this->redirect(array('controller' => 'FileManager', 'action' => 'browse'));
 		}
 		$this->set('title_for_layout', __d('croogo', 'Edit file: %s', $path));
 
@@ -164,7 +194,7 @@ class FileManagerController extends FileManagerAppController {
 
 		if (!empty($this->request->data) ) {
 			if ($this->file->write($this->request->data['FileManager']['content'])) {
-				$this->Session->setFlash(__d('croogo', 'File saved successfully'), 'flash', array('class' => 'success'));
+				$this->Flash->success(__d('croogo', 'File saved successfully'));
 			}
 		}
 
@@ -190,7 +220,7 @@ class FileManagerController extends FileManagerAppController {
 		$this->set(compact('path'));
 
 		if (isset($path) && !$this->_isDeletable($path)) {
-			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'flash', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
 			return $this->redirect($this->referer());
 		}
 
@@ -198,9 +228,8 @@ class FileManagerController extends FileManagerAppController {
 			is_uploaded_file($this->request->data['FileManager']['file']['tmp_name'])) {
 			$destination = $path . $this->request->data['FileManager']['file']['name'];
 			move_uploaded_file($this->request->data['FileManager']['file']['tmp_name'], $destination);
-			$this->Session->setFlash(__d('croogo', 'File uploaded successfully.'), 'flash', array('class' => 'success'));
-			$redirectUrl = Router::url(array('controller' => 'file_manager', 'action' => 'browse'), true) . '?path=' . urlencode($path);
-
+			$this->Flash->success(__d('croogo', 'File uploaded successfully.'));
+			$redirectUrl = $this->_browsePathUrl($path);
 			return $this->redirect($redirectUrl);
 		}
 	}
@@ -211,28 +240,28 @@ class FileManagerController extends FileManagerAppController {
  * @return void
  * @access public
  */
-	public function delete_file() {
+	public function deleteFile() {
 		if (!empty($this->request->data['path'])) {
 			$path = $this->request->data['path'];
 		} else {
-			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			return $this->redirect(array('controller' => 'FileManager', 'action' => 'browse'));
 		}
 
 		if (!$this->_isDeletable($path)) {
-			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'flash', array('class' => 'error'));
-			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			$this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
+			return $this->redirect(array('controller' => 'FileManager', 'action' => 'browse'));
 		}
 
 		if (file_exists($path) && unlink($path)) {
-			$this->Session->setFlash(__d('croogo', 'File deleted'), 'flash', array('class' => 'success'));
+			$this->Flash->success(__d('croogo', 'File deleted'));
 		} else {
-			$this->Session->setFlash(__d('croogo', 'An error occured'), 'flash', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'An error occured'));
 		}
 
 		if (isset($_SERVER['HTTP_REFERER'])) {
 			return $this->redirect($_SERVER['HTTP_REFERER']);
 		} else {
-			return $this->redirect(array('controller' => 'file_manager', 'action' => 'index'));
+			return $this->redirect(array('controller' => 'FileManager', 'action' => 'index'));
 		}
 
 		exit();
@@ -244,28 +273,28 @@ class FileManagerController extends FileManagerAppController {
  * @return void
  * @access public
  */
-	public function delete_directory() {
+	public function deleteDirectory() {
 		if (!empty($this->request->data['path'])) {
 			$path = $this->request->data['path'];
 		} else {
-			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			return $this->redirect(array('controller' => 'FileManager', 'action' => 'browse'));
 		}
 
 		if (isset($path) && !$this->_isDeletable($path)) {
-			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'flash', array('class' => 'error'));
-			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			$this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
+			return $this->redirect(array('controller' => 'FileManager', 'action' => 'browse'));
 		}
 
 		if (is_dir($path) && rmdir($path)) {
-			$this->Session->setFlash(__d('croogo', 'Directory deleted'), 'flash', array('class' => 'success'));
+			$this->Flash->success(__d('croogo', 'Directory deleted'));
 		} else {
-			$this->Session->setFlash(__d('croogo', 'An error occured'), 'flash', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'An error occured'));
 		}
 
 		if (isset($_SERVER['HTTP_REFERER'])) {
 			return $this->redirect($_SERVER['HTTP_REFERER']);
 		} else {
-			return $this->redirect(array('controller' => 'file_manager', 'action' => 'index'));
+			return $this->redirect(array('controller' => 'FileManager', 'action' => 'index'));
 		}
 
 		exit;
@@ -282,8 +311,8 @@ class FileManagerController extends FileManagerAppController {
 		$pathFragments = array_filter(explode(DIRECTORY_SEPARATOR, $path));
 
 		if (!$this->FileManager->isEditable($path)) {
-			$this->Session->setFlash(__d('croogo', 'Path "%s" cannot be renamed', $path), 'flash', array('class' => 'error'));
-			$this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			$this->Flash->error(__d('croogo', 'Path "%s" cannot be renamed', $path));
+			return $this->redirect(array('controller' => 'FileManager', 'action' => 'browse'));
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
@@ -310,10 +339,15 @@ class FileManagerController extends FileManagerAppController {
 					$message = __d('croogo', 'Name has not changed');
 					$alertType = 'alert';
 				}
-				$this->Session->setFlash($message, 'flash', array('class' => $alertType));
+				$this->Flash->set($message, [
+					'element' => 'Croogo/Core.flash',
+					'params' => [
+						'class' => $alertType,
+					],
+				]);
 			}
 
-			return $this->Croogo->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			return $this->Croogo->redirect(array('controller' => 'FileManager', 'action' => 'browse'));
 		} else {
 			$this->Croogo->setReferer();
 		}
@@ -327,28 +361,28 @@ class FileManagerController extends FileManagerAppController {
  * @return void
  * @access public
  */
-	public function create_directory() {
+	public function createDirectory() {
 		$this->set('title_for_layout', __d('croogo', 'Create Directory'));
 
 		if (isset($this->request->query['path'])) {
 			$path = $this->request->query['path'];
 		} else {
-			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			return $this->redirect(array('controller' => 'FileManager', 'action' => 'browse'));
 		}
 
 		if (isset($path) && !$this->_isDeletable($path)) {
-			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'flash', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
 			return $this->redirect($this->referer());
 		}
 
 		if (!empty($this->request->data)) {
 			$this->folder = new Folder;
 			if ($this->folder->create($path . $this->request->data['FileManager']['name'])) {
-				$this->Session->setFlash(__d('croogo', 'Directory created successfully.'), 'flash', array('class' => 'success'));
-				$redirectUrl = Router::url(array('controller' => 'file_manager', 'action' => 'browse'), true) . '?path=' . urlencode($path);
+				$this->Flash->success(__d('croogo', 'Directory created successfully.'));
+				$redirectUrl = $this->_browsePathUrl($path);
 				return $this->redirect($redirectUrl);
 			} else {
-				$this->Session->setFlash(__d('croogo', 'An error occured'), 'flash', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'An error occured'));
 			}
 		}
 
@@ -361,27 +395,27 @@ class FileManagerController extends FileManagerAppController {
  * @return void
  * @access public
  */
-	public function create_file() {
+	public function createFile() {
 		$this->set('title_for_layout', __d('croogo', 'Create File'));
 
 		if (isset($this->request->query['path'])) {
 			$path = $this->request->query['path'];
 		} else {
-			return $this->redirect(array('controller' => 'file_manager', 'action' => 'browse'));
+			return $this->redirect(array('controller' => 'FileManager', 'action' => 'browse'));
 		}
 
 		if (isset($path) && !$this->_isEditable($path)) {
-			$this->Session->setFlash(__d('croogo', 'Path %s is restricted', $path), 'flash', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
 			return $this->redirect($this->referer());
 		}
 
 		if (!empty($this->request->data)) {
 			if (touch($path . $this->request->data['FileManager']['name'])) {
-				$this->Session->setFlash(__d('croogo', 'File created successfully.'), 'flash', array('class' => 'success'));
-				$redirectUrl = Router::url(array('controller' => 'file_manager', 'action' => 'browse'), true) . '?path=' . urlencode($path);
+				$this->Flash->success(__d('croogo', 'File created successfully.'));
+				$redirectUrl = $this->_browsePathUrl($path);
 				return $this->redirect($redirectUrl);
 			} else {
-				$this->Session->setFlash(__d('croogo', 'An error occured'), 'flash', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'An error occured'));
 			}
 		}
 
