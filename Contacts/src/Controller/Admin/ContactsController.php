@@ -3,7 +3,8 @@
 namespace Croogo\Contacts\Controller\Admin;
 
 use App\Network\Email\Email;
-use Contacts\Controller\ContactsAppController;
+use Croogo\Contacts\Controller\ContactsAppController;
+use Croogo\Contacts\Model\Entity\Contact;
 
 /**
  * Contacts Controller
@@ -18,31 +19,15 @@ use Contacts\Controller\ContactsAppController;
 class ContactsController extends ContactsAppController {
 
 /**
- * Controller name
- *
- * @var string
- * @access public
- */
-	public $name = 'Contacts';
-
-/**
  * Components
  *
  * @var array
  * @access public
  */
 	public $components = array(
-		'Croogo.Akismet',
-		'Croogo.Recaptcha',
+		'Croogo/Core.Akismet',
+		'Croogo/Core.Recaptcha',
 	);
-
-/**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
-	public $uses = array('Contacts.Contact', 'Contacts.Message');
 
 /**
  * Admin index
@@ -50,13 +35,16 @@ class ContactsController extends ContactsAppController {
  * @return void
  * @access public
  */
-	public function admin_index() {
+	public function index() {
 		$this->set('title_for_layout', __d('croogo', 'Contacts'));
 
-		$this->Contact->recursive = 0;
-		$this->paginate['Contact']['order'] = 'Contact.title ASC';
+		$this->paginate = [
+			'order' => [
+				'title' => 'ASC'
+			]
+		];
 		$this->set('contacts', $this->paginate());
-		$this->set('displayFields', $this->Contact->displayFields());
+		$this->set('displayFields', $this->Contacts->displayFields());
 	}
 
 /**
@@ -65,18 +53,21 @@ class ContactsController extends ContactsAppController {
  * @return void
  * @access public
  */
-	public function admin_add() {
+	public function add() {
 		$this->set('title_for_layout', __d('croogo', 'Add Contact'));
 
+		$contact = $this->Contacts->newEntity();
 		if (!empty($this->request->data)) {
-			$this->Contact->create();
-			if ($this->Contact->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Contact has been saved'), 'flash', array('class' => 'success'));
-				$this->Croogo->redirect(array('action' => 'edit', $this->Contact->id));
+			$contact = $this->Contacts->patchEntity($contact, $this->request->data);
+			$contact = $this->Contacts->save($contact);
+			if ($contact) {
+				$this->Flash->success(__d('croogo', 'The Contact has been saved'));
+				return $this->Croogo->redirect(array('action' => 'edit', $contact->id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Contact could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'The Contact could not be saved. Please, try again.'));
 			}
 		}
+		$this->set(compact('contact'));
 	}
 
 /**
@@ -86,23 +77,26 @@ class ContactsController extends ContactsAppController {
  * @return void
  * @access public
  */
-	public function admin_edit($id = null) {
+	public function edit($id = null) {
 		$this->set('title_for_layout', __d('croogo', 'Edit Contact'));
 
 		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Contact'), 'flash', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Invalid Contact'));
 			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
-			if ($this->Contact->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Contact has been saved'), 'flash', array('class' => 'success'));
-				$this->Croogo->redirect(array('action' => 'edit', $this->Contact->id));
+			$contact = $this->Contacts->get($id);
+			$contact = $this->Contacts->newEntity($this->request->data);
+			if ($this->Contacts->save($contact)) {
+				$this->Flash->success(__d('croogo', 'The Contact has been saved'));
+				return $this->Croogo->redirect(array('action' => 'edit', $id));
 			} else {
-				$this->Session->setFlash(__d('croogo', 'The Contact could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', 'The Contact could not be saved. Please, try again.'));
 			}
 		}
 		if (empty($this->request->data)) {
-			$this->request->data = $this->Contact->read(null, $id);
+			$contact = $this->Contacts->get($id);
+			$this->set(compact('contact'));
 		}
 	}
 
@@ -113,13 +107,14 @@ class ContactsController extends ContactsAppController {
  * @return void
  * @access public
  */
-	public function admin_delete($id = null) {
+	public function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Contact'), 'flash', array('class' => 'error'));
+			$this->Flash->error(__d('croogo', 'Invalid id for Contact'));
 			return $this->redirect(array('action' => 'index'));
 		}
-		if ($this->Contact->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Contact deleted'), 'flash', array('class' => 'success'));
+		$contact = new Contact(['id' => $id], ['markNew' => false]);
+		if ($this->Contacts->delete($contact)) {
+			$this->Flash->success(__d('croogo', 'Contact deleted'));
 			return $this->redirect(array('action' => 'index'));
 		}
 	}
@@ -193,11 +188,11 @@ class ContactsController extends ContactsAppController {
  * @access protected
  */
 	protected function _validation($continue, $contact) {
-		if ($this->Contact->Message->set($this->request->data) &&
-			$this->Contact->Message->validates() &&
+		if ($this->Contacts->Message->set($this->request->data) &&
+			$this->Contacts->Message->validates() &&
 			$continue === true) {
 			if ($contact['Contact']['message_archive'] &&
-				!$this->Contact->Message->save($this->request->data['Message'])) {
+				!$this->Contacts->Message->save($this->request->data['Message'])) {
 				$continue = false;
 			}
 		} else {

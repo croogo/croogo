@@ -2,7 +2,7 @@
 
 namespace Croogo\Contacts\Model\Table;
 
-use Contacts\Model\ContactsAppModel;
+use Croogo\Core\Model\Table\CroogoTable;
 
 /**
  * Message
@@ -14,15 +14,7 @@ use Contacts\Model\ContactsAppModel;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MessagesTable extends ContactsAppModel {
-
-/**
- * Model name
- *
- * @var string
- * @access public
- */
-	public $name = 'Message';
+class MessagesTable extends CroogoTable {
 
 /**
  * Behaviors
@@ -66,22 +58,19 @@ class MessagesTable extends ContactsAppModel {
 		),
 	);
 
-/**
- * Model associations: belongsTo
- *
- * @var array
- * @access public
- */
-	public $belongsTo = array(
-		'Contact' => array(
-			'className' => 'Contacts.Contact',
+	public function initialize(array $config) {
+		parent::initialize($config);
+		$this->entityClass('Croogo/Contacts.Message');
+		$this->belongsTo('Contacts', [
+			'className' => 'Croogo/Contacts.Contacts',
 			'foreignKey' => 'contact_id',
-			'conditions' => '',
 			'fields' => '',
 			'order' => '',
 			'counterCache' => true,
-		),
-	);
+		]);
+
+		$this->addBehavior('Search.Searchable');
+	}
 
 /**
  * Filter fields
