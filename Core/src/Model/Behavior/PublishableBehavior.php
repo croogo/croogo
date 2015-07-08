@@ -2,7 +2,10 @@
 
 namespace Croogo\Core\Model\Behavior;
 
+use Cake\Event\Event;
 use Cake\ORM\Behavior;
+use Cake\ORM\Query;
+use Cake\Utility\Hash;
 use Croogo\Core\Status;
 
 /**
@@ -61,51 +64,50 @@ class PublishableBehavior extends Behavior {
  *
  * @return array Options passed to Model::find()
  */
-	public function beforeFind(Model $model, $query = array()) {
-		$settings = $this->settings[$model->alias];
-		if (!$model->Behaviors->enabled('Publishable')) {
+	public function beforeFind(Event $event, Query $query, $options) {
+		$table = $this->_table;
+		$config = $this->config();
+		if (!empty($config['enabled'])) {
 			return $query;
 		}
 
-		if ($settings['admin'] === false) {
-			if (AuthComponent::user('role_id') == 1) {
+		if ($config['admin'] === false) {
+			// FIXME Avoid superglobals
+			$roleId = Hash::get($_SESSION, 'Auth.User.role_id');
+			if ($roleId == 1) {
 				return $query;
 			}
 		}
 
-		if (!$model->hasField($settings['fields']['publish_start']) ||
-			!$model->hasField($settings['fields']['publish_end'])
+		if (!$table->hasField($config['fields']['publish_start']) ||
+			!$table->hasField($config['fields']['publish_end'])
 		) {
 			return $query;
 		}
 
-		$date = isset($query['date']) ? $query['date'] : date('Y-m-d H:i:s');
-		$start = $model->escapeField($settings['fields']['publish_start']);
-		$end = $model->escapeField($settings['fields']['publish_end']);
+		$date = isset($options['date']) ? $options['date'] : new \DateTime();
+		$start = $table->aliasField($config['fields']['publish_start']);
+		$end = $table->aliasField($config['fields']['publish_end']);
 
-		if (is_string($query['conditions'])) {
-			$query['conditions'] = (array)$query['conditions'];
-		}
-
-		$query['conditions'][] = array(
-			'OR' => array(
-				$start => null,
-				array(
-					$start . ' <> ' => null,
+		$query = $query->where([
+			'OR' => [
+				$start . ' IS' => null,
+				[
+					$start . ' IS NOT' => null,
 					$start . ' <=' => $date,
-				),
-			),
-		);
+				],
+			],
+		]);
 
-		$query['conditions'][] = array(
-			'OR' => array(
-				$end => null,
-				array(
-					$end . ' <> ' => null,
+		$query = $query->andWhere([
+			'OR' => [
+				$end . ' IS' => null,
+				[
+					$end . ' IS NOT' => null,
 					$end . ' >=' => $date,
-				),
-			),
-		);
+				],
+			],
+		]);
 
 		return $query;
 	}
