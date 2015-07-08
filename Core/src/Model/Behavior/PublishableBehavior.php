@@ -61,53 +61,53 @@ class PublishableBehavior extends Behavior {
  *
  * @return array Options passed to Model::find()
  */
-//	public function beforeFind(Model $model, $query = array()) {
-//		$settings = $this->settings[$model->alias];
-//		if (!$model->Behaviors->enabled('Publishable')) {
-//			return $query;
-//		}
-//
-//		if ($settings['admin'] === false) {
-//			if (AuthComponent::user('role_id') == 1) {
-//				return $query;
-//			}
-//		}
-//
-//		if (!$model->hasField($settings['fields']['publish_start']) ||
-//			!$model->hasField($settings['fields']['publish_end'])
-//		) {
-//			return $query;
-//		}
-//
-//		$date = isset($query['date']) ? $query['date'] : date('Y-m-d H:i:s');
-//		$start = $model->escapeField($settings['fields']['publish_start']);
-//		$end = $model->escapeField($settings['fields']['publish_end']);
-//
-//		if (is_string($query['conditions'])) {
-//			$query['conditions'] = (array)$query['conditions'];
-//		}
-//
-//		$query['conditions'][] = array(
-//			'OR' => array(
-//				$start => null,
-//				array(
-//					$start . ' <> ' => null,
-//					$start . ' <=' => $date,
-//				),
-//			),
-//		);
-//
-//		$query['conditions'][] = array(
-//			'OR' => array(
-//				$end => null,
-//				array(
-//					$end . ' <> ' => null,
-//					$end . ' >=' => $date,
-//				),
-//			),
-//		);
-//
-//		return $query;
-//	}
+	public function beforeFind(Model $model, $query = array()) {
+		$settings = $this->settings[$model->alias];
+		if (!$model->Behaviors->enabled('Publishable')) {
+			return $query;
+		}
+
+		if ($settings['admin'] === false) {
+			if (AuthComponent::user('role_id') == 1) {
+				return $query;
+			}
+		}
+
+		if (!$model->hasField($settings['fields']['publish_start']) ||
+			!$model->hasField($settings['fields']['publish_end'])
+		) {
+			return $query;
+		}
+
+		$date = isset($query['date']) ? $query['date'] : date('Y-m-d H:i:s');
+		$start = $model->escapeField($settings['fields']['publish_start']);
+		$end = $model->escapeField($settings['fields']['publish_end']);
+
+		if (is_string($query['conditions'])) {
+			$query['conditions'] = (array)$query['conditions'];
+		}
+
+		$query['conditions'][] = array(
+			'OR' => array(
+				$start => null,
+				array(
+					$start . ' <> ' => null,
+					$start . ' <=' => $date,
+				),
+			),
+		);
+
+		$query['conditions'][] = array(
+			'OR' => array(
+				$end => null,
+				array(
+					$end . ' <> ' => null,
+					$end . ' >=' => $date,
+				),
+			),
+		);
+
+		return $query;
+	}
 
 }
