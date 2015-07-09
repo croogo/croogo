@@ -2,7 +2,7 @@
 
 namespace Croogo\Core\Model\Behavior;
 
-use Cake\Datasource\ResultSetInterface;
+use Cake\Collection\CollectionInterface;
 use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
@@ -35,7 +35,7 @@ class UrlBehavior extends Behavior {
 	];
 
 	public function beforeFind(Event $event, Query $query, $options) {
-		$query->formatResults(function (ResultSetInterface $results) {
+		$query->formatResults(function (CollectionInterface $results) {
 			return $results->map(function (Entity $row) {
 				$url = $this->config('url');
 				$fields = $this->config('fields');
