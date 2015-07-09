@@ -7,6 +7,7 @@ use Cake\Controller\ErrorController;
 use Cake\Controller\Exception\MissingComponentException;
 use Cake\Core\App;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Network\Request;
 use Cake\Network\Response;
@@ -416,7 +417,7 @@ class CroogoAppController extends AppController {
 		$fallbackView = $this->__getDefaultFallbackView();
 		if (is_null($view) && in_array($this->request->action, array('edit', 'add'))) {
 			$viewPaths = App::path('Template', $this->plugin);
-			$themePath = $this->theme ? App::themePath($this->theme) : null;
+			$themePath = $this->theme ? Plugin::path($this->theme) : null;
 			$searchPaths = array_merge((array)$themePath, $viewPaths);
 			$view = $this->__findRequestedView($searchPaths);
 			if (empty($view)) {
