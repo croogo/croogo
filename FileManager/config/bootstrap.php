@@ -4,6 +4,7 @@ use Cake\Core\Configure;
 use Croogo\Core\Croogo;
 
 Configure::write('Wysiwyg.attachmentBrowseUrl', array(
+	'prefix' => 'admin',
 	'plugin' => 'Croogo/FileManager',
 	'controller' => 'Attachments',
 	'action' => 'browse',
