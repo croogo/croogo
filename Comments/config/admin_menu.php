@@ -16,7 +16,7 @@ Nav::add('sidebar', 'content.children.comments', array(
 		'published' => array(
 			'title' => __d('croogo', 'Published'),
 			'url' => array(
-				'admin' => true,
+				'prefix' => 'admin',
 				'plugin' => 'Croogo/Comments',
 				'controller' => 'Comments',
 				'action' => 'index',
@@ -28,7 +28,7 @@ Nav::add('sidebar', 'content.children.comments', array(
 		'approval' => array(
 			'title' => __d('croogo', 'Approval'),
 			'url' => array(
-				'admin' => true,
+				'prefix' => 'admin',
 				'plugin' => 'Croogo/Comments',
 				'controller' => 'Comments',
 				'action' => 'index',

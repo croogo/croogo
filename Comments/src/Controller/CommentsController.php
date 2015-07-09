@@ -3,7 +3,10 @@
 namespace Croogo\Comments\Controller;
 
 use App\Network\Email\Email;
-use Comments\Controller\CommentsAppController;
+use Cake\Event\Event;
+use Croogo\Comments\Model\Entity\Comment;
+use Croogo\Core\Controller\CroogoAppController;
+
 /**
  * Comments Controller
  *
@@ -14,15 +17,7 @@ use Comments\Controller\CommentsAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CommentsController extends CommentsAppController {
-
-/**
- * Controller name
- *
- * @var string
- * @access public
- */
-	public $name = 'Comments';
+class CommentsController extends CroogoAppController {
 
 /**
  * Components
@@ -31,9 +26,9 @@ class CommentsController extends CommentsAppController {
  * @access public
  */
 	public $components = array(
-		'Croogo.Akismet',
-		'Croogo.BulkProcess',
-		'Croogo.Recaptcha',
+		'Croogo/Core.Akismet',
+		'Croogo/Core.BulkProcess',
+		'Croogo/Core.Recaptcha',
 		'Search.Prg' => array(
 			'presetForm' => array(
 				'paramType' => 'querystring',
@@ -46,121 +41,10 @@ class CommentsController extends CommentsAppController {
 	);
 
 /**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
-	public $uses = array('Comments.Comment');
-
-/**
  * Preset Variable Search
  * @var array
  */
 	public $presetVars = true;
-
-/**
- * beforeFilter
- *
- * @return void
- * @access public
- */
-	public function beforeFilter() {
-		parent::beforeFilter();
-		if ($this->action == 'admin_edit') {
-			$this->Security->disabledFields = array('ip');
-		}
-	}
-
-/**
- * Admin index
- *
- * @return void
- * @access public
- */
-	public function admin_index() {
-		$this->set('title_for_layout', __d('croogo', 'Comments'));
-		$this->Prg->commonProcess();
-
-		$this->Comment->recursive = 0;
-		$this->paginate['Comment']['conditions'] = array(
-			'Comment.status' => $this->Comment->status('approval'),
-			'Comment.comment_type' => 'comment',
-		);
-
-		$criteria = $this->Comment->parseCriteria($this->Prg->parsedParams());
-		if (array_key_exists('Comment.status', $criteria)) {
-			$criteria = array_merge($this->paginate['Comment']['conditions'], $criteria);
-		}
-
-		$comments = $this->paginate($criteria);
-		$this->set(compact('comments', 'criteria'));
-	}
-
-/**
- * Admin edit
- *
- * @param integer $id
- * @return void
- * @access public
- */
-	public function admin_edit($id = null) {
-		$this->set('title_for_layout', __d('croogo', 'Edit Comment'));
-
-		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Comment'), 'flash', array('class' => 'error'));
-			return $this->redirect(array('action' => 'index'));
-		}
-		if (!empty($this->request->data)) {
-			if ($this->Comment->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Comment has been saved'), 'flash', array('class' => 'success'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__d('croogo', 'The Comment could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
-			}
-		}
-		if (empty($this->request->data)) {
-			$this->request->data = $this->Comment->read(null, $id);
-		}
-	}
-
-/**
- * Admin delete
- *
- * @param integer $id
- * @return void
- * @access public
- */
-	public function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Comment'), 'flash', array('class' => 'error'));
-			return $this->redirect(array('action' => 'index'));
-		}
-		if ($this->Comment->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Comment deleted'), 'flash', array('class' => 'success'));
-			return $this->redirect(array('action' => 'index'));
-		}
-	}
-
-/**
- * Admin process
- *
- * @return void
- * @access public
- */
-	public function admin_process() {
-		$Comment = $this->{$this->modelClass};
-		list($action, $ids) = $this->BulkProcess->getRequestVars($Comment->alias);
-
-		$options = array(
-			'messageMap' => array(
-				'delete' => __d('croogo', 'Comments deleted'),
-				'publish' => __d('croogo', 'Comments published'),
-				'unpublish' => __d('croogo', 'Comments unpublished'),
-			),
-		);
-		return $this->BulkProcess->process($Comment, $action, $ids, $options);
-	}
 
 /**
  * index
@@ -176,13 +60,17 @@ class CommentsController extends CommentsAppController {
 			return $this->redirect('/');
 		}
 
-		$this->paginate['Comment']['order'] = 'Comment.created DESC';
-		$this->paginate['Comment']['limit'] = Configure::read('Comment.feed_limit');
-		$this->paginate['Comment']['conditions'] = array(
-			'Comment.status' => $this->Comment->status('approval'),
-		);
-		$comments = $this->paginate();
-		$this->set(compact('comments'));
+		$this->paginate = [
+			'conditions' => [
+				'status' => $this->Comment->status('approval')
+			],
+			'order' => [
+				'weight' => 'DESC',
+			],
+			'limit' => Configure::read('Comment.feed_limit')
+		];
+
+		$this->set('comments', $this->paginate($query));
 	}
 
 /**

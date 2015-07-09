@@ -1,13 +1,16 @@
 <?php
 
-$this->Croogo->adminScript('Comments.admin');
+use Croogo\Core\Status;
 
-$this->extend('/Common/admin_index');
+$this->Croogo->adminScript('Croogo/Comments.admin');
+
+$this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
 	->addCrumb($this->Html->icon('home'), '/admin')
-	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Comments'), array('plugin' => 'comments', 'controller' => 'comments', 'action' => 'index'));
+	->addCrumb(__d('croogo', 'Content'), array('action' => 'index'))
+	->addCrumb(__d('croogo', 'Comments'), array('action' => 'index'));
+
 
 if (isset($criteria['Comment.status'])) {
 	if ($criteria['Comment.status'] == '1') {
@@ -19,10 +22,14 @@ if (isset($criteria['Comment.status'])) {
 	}
 }
 
-$this->append('table-footer', $this->element('admin/modal', array(
+/**
+ * Fixme: load element Croogo admin/modal
+ *
+$this->append('table-footer', $this->element('Croogo/Core.admin/modal', array(
 	'id' => 'comment-modal',
 	'class' => 'hide',
 )));
+*/
 
 $this->append('actions');
 	echo $this->Croogo->adminAction(
@@ -35,7 +42,11 @@ $this->append('actions');
 	);
 $this->end();
 
-$this->append('form-start', $this->Form->create('Comment', array('url' => array('controller' => 'comments', 'action' => 'process', 'class' => 'form-inline'))));
+
+$this->append('form-start', $this->Form->create($comments, [
+	'url' => ['action' => 'process']
+]));
+
 $this->start('table-heading');
 	$tableHeaders = $this->Html->tableHeaders(array(
 		$this->Form->checkbox('checkAll'),
@@ -54,13 +65,13 @@ $this->append('table-body');
 	$rows = array();
 	foreach ($comments as $comment) {
 		$actions = array();
-		$actions[] = $this->Croogo->adminRowActions($comment['Comment']['id']);
+		$actions[] = $this->Croogo->adminRowActions($comment->id);
 		$actions[] = $this->Croogo->adminRowAction('',
-			array('action' => 'edit', $comment['Comment']['id']),
+			array('action' => 'edit', $comment->id),
 			array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
-			'#Comment' . $comment['Comment']['id'] . 'Id',
+			'#Comment' . $comment->id . 'Id',
 			array(
 				'icon' => $this->Theme->getIcon('delete'),
 				'class' => 'delete',
@@ -72,25 +83,22 @@ $this->append('table-body');
 
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
-		$title = empty($comment['Comment']['title']) ? 'Comment' : $comment['Comment']['title'];
+		$title = empty($comment->title) ? 'Comment' : $comment->title;
 		$rows[] = array(
-			$this->Form->checkbox('Comment.' . $comment['Comment']['id'] . '.id', array('class' => 'row-select')),
-			$comment['Comment']['id'],
-			$comment['Comment']['name'],
-			$comment['Comment']['email'],
-			$this->Html->link($comment['Node']['title'], array(
-				'admin' => false,
-				'plugin' => 'nodes',
-				'controller' => 'nodes',
+			$this->Form->checkbox('Comment.' . $comment->id . '.id', array('class' => 'row-select')),
+			$comment->id,
+			$comment->name,
+			$comment->email,
+			$this->Html->link($comment->title, array(
 				'action' => 'view',
-				'type' => $comment['Node']['type'],
-				'slug' => $comment['Node']['slug'],
+				'type' => $comment->type,
+				'slug' => $comment->slug,
 			)),
 			$this->Html->link($this->Html->image('/croogo/img/icons/comment.png'), '#',
 				array(
 					'class' => 'comment-view',
 					'data-title' => $title,
-					'data-content' => $comment['Comment']['body'],
+					'data-content' => $comment->body,
 					'escape' => false
 				)),
 			$comment['Comment']['created'],
