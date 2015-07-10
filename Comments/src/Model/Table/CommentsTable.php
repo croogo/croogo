@@ -44,9 +44,6 @@ class CommentsTable extends CroogoTable {
 				'nodes',
 			),
 		),
-		'Croogo.Publishable',
-		'Croogo.Trackable',
-		'Search.Searchable',
 	);
 */
 
@@ -101,6 +98,8 @@ class CommentsTable extends CroogoTable {
 			'className' => 'Croogo\Users.Users',
 			'foreignKey' => 'user_id',
 		]);
+		$this->addBehavior('Croogo/Core.Publishable');
+		$this->addBehavior('Croogo/Core.Trackable');
 		$this->addBehavior('Search.Searchable');
 	}
 

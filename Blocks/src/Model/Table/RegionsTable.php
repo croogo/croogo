@@ -74,7 +74,7 @@ class RegionsTable extends CroogoTable {
 		$this->addAssociations([
 			'hasMany' => [
 				'Blocks' => [
-					'className' => 'Blocks.Blocks',
+					'className' => 'Croogo/Blocks.Blocks',
 					'foreignKey' => 'region_id',
 					'dependent' => false,
 					'limit' => 3,
@@ -89,8 +89,8 @@ class RegionsTable extends CroogoTable {
 				'blocks',
 			],
 		]);
-		$this->addBehavior('Croogo.Trackable');
 		*/
+		$this->addBehavior('Croogo/Core.Trackable');
 	}
 
 /**

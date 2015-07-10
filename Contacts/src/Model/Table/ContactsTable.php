@@ -28,7 +28,6 @@ class ContactsTable extends CroogoTable {
 				'contacts',
 			),
 		),
-		'Croogo.Trackable',
 	);
 
 /**
@@ -78,6 +77,7 @@ class ContactsTable extends CroogoTable {
 				],
 			],
 		]);
+		$this->addBehavior('Croogo/Core.Trackable');
 	}
 
 /**

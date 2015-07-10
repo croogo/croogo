@@ -78,8 +78,8 @@ class BlocksTable extends CroogoTable {
 				'blocks',
 			]
 		]);
-		$this->addBehavior('Croogo/Core.Trackable');
 		*/
+		$this->addBehavior('Croogo/Core.Trackable');
 		$this->addBehavior('Search.Searchable');
 	}
 

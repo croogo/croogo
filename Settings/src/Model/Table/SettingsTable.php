@@ -42,8 +42,6 @@ class SettingsTable extends CroogoTable {
 				'settings',
 			),
 		),
-		'Croogo.Trackable',
-		'Search.Searchable',
 	);
 
 /**
@@ -78,6 +76,7 @@ class SettingsTable extends CroogoTable {
 	public function initialize(array $config) {
 		parent::initialize($config);
 
+		$this->addBehavior('Croogo/Core.Trackable');
 		$this->addBehavior('Search.Searchable');
 
 		$this->settingsPath = APP . 'config' . DS . 'settings.json';

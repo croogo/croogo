@@ -17,23 +17,6 @@ use Croogo\Core\Model\Table\CroogoTable;
 class MessagesTable extends CroogoTable {
 
 /**
- * Behaviors
- *
- * @var array
- * @access public
- */
-	public $actsAs = array(
-		'Croogo.BulkProcess' => array(
-			'actionsMap' => array(
-				'read' => 'bulkRead',
-				'unread' => 'bulkUnread',
-			),
-		),
-		'Croogo.Trackable',
-		'Search.Searchable',
-	);
-
-/**
  * Validation
  *
  * @var array
@@ -69,6 +52,14 @@ class MessagesTable extends CroogoTable {
 			'counterCache' => true,
 		]);
 
+
+		$this->addBehavior('Croogo/Core.BulkProcess', [
+			'actionsMap' => [
+				'read' => 'bulkRead',
+				'unread' => 'bulkUnread',
+			],
+		]);
+		$this->addBehavior('Croogo/Core.Trackable');
 		$this->addBehavior('Search.Searchable');
 	}
 

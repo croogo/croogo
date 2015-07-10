@@ -32,7 +32,6 @@ class LanguagesTable extends CroogoTable {
  */
 	public $actsAs = array(
 		'Croogo.Ordered' => array('field' => 'weight', 'foreign_key' => null),
-		'Croogo.Trackable',
 	);
 
 /**
@@ -57,5 +56,13 @@ class LanguagesTable extends CroogoTable {
 			),
 		),
 	);
+
+/**
+ * Initialize
+ */
+	public function initialize(array $config) {
+		parent::initialize($config):
+		$this->addBehavior('Croogo/Core.Trackable');
+	}
 
 }

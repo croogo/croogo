@@ -50,9 +50,8 @@ class MenusTable extends CroogoTable {
 //				'menus',
 //			],
 //		]);
-		$this->addBehavior('Croogo/Core.Params');
 		$this->addBehavior('Croogo/Core.Publishable');
-//		$this->addBehavior('Croogo/Core.Trackable');
+		$this->addBehavior('Croogo/Core.Trackable');
 		$this->hasMany('Links', [
 			'className' => 'Menus.Links',
 			'order' => [
