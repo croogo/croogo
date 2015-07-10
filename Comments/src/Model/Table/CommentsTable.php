@@ -1,7 +1,9 @@
 <?php
 
-namespace Croogo\Comments\Model;
+namespace Croogo\Comments\Model\Table;
 
+use Cake\Database\Schema\Table as Schema;
+use Cake\ORM\Query;
 use Croogo\Core\Model\Table\CroogoTable;
 use Croogo\Core\Status;
 
@@ -15,15 +17,7 @@ use Croogo\Core\Status;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Comment extends CroogoTable {
-
-/**
- * Model name
- *
- * @var string
- * @access public
- */
-	public $name = 'Comment';
+class CommentsTable extends CroogoTable {
 
 /**
  * @deprecated
@@ -41,6 +35,7 @@ class Comment extends CroogoTable {
  * @var array
  * @access public
  */
+/*
 	public $actsAs = array(
 		'Tree',
 		'Croogo.Cached' => array(
@@ -53,6 +48,7 @@ class Comment extends CroogoTable {
 		'Croogo.Trackable',
 		'Search.Searchable',
 	);
+*/
 
 /**
  * Validation
@@ -96,6 +92,17 @@ class Comment extends CroogoTable {
 	public $filterArgs = array(
 		'status' => array('type' => 'value'),
 	);
+
+	public function initialize(array $config) {
+		parent::initialize($config);
+		$this->entityClass('Croogo/Comments.Comment');
+
+		$this->belongsTo('Users', [
+			'className' => 'Croogo\Users.Users',
+			'foreignKey' => 'user_id',
+		]);
+		$this->addBehavior('Search.Searchable');
+	}
 
 /**
  * Add a new Comment
