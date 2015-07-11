@@ -155,34 +155,6 @@ publish: guard-VERSION guard-GITHUB_USER dist/cakephp-$(DASH_VERSION).zip
 	rm id.txt
 
 # Tasks for publishing separate reporsitories out of each cake namespace
-composer-init:
-	for d in Acl Blocks Comments Contacts Core Example Extensions FileManager Install Menus Meta Nodes Dashboards Settings Taxonomy Translate Users Wysiwyg ; do \
-		p=`basename $$d` ; \
-		( cd $$d && composer init \
-			--name croogo/`echo $$p | awk '{print tolower($$0) }'` \
-			--license MIT \
-			--description "Croogo $$d Plugin" \
-			--author "Croogo Development Team <team@croogo.org>" \
-			--stability dev \
-			--require croogo/core=3.0.x-dev \
-			-n \
-		) ; \
-	done
-
-prepare-repo:
-	for d in ./* ; do \
-		if [ -d $$d ] ; then \
-			r=`basename $$d | awk '{ print tolower($$0) }'` ; \
-			mkdir ${GITHUB_ROOT}/$$r ; \
-			( cd ${GITHUB_ROOT}/$$r && git init --bare ) ; \
-		fi ; \
-	done && \
-	( cd ${GITHUB_ROOT} && \
-		rm -rf config/ src/ test tests/ && \
-		for d in * ; do \
-			( cd $$d && git symbolic-ref HEAD refs/heads/3.0 ) \
-		done \
-	)
 
 plugin-split:
 	git subsplit update
