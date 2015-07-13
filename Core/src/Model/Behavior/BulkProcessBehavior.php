@@ -49,7 +49,6 @@ class BulkProcessBehavior extends Behavior {
 /**
  * Bulk process using $action for each $ids
  *
- * @param Table $table Table object
  * @param $action string actionToPerfom
  * @param $ids array nodes ids to perform action upon
  * @return bool True when successful, false otherwise
@@ -78,23 +77,22 @@ class BulkProcessBehavior extends Behavior {
 			return $table->{$mappedAction}($ids);
 		}
 
-		return $this->{$mappedAction}($table, $ids);
+		return $this->{$mappedAction}($ids);
 	}
 
 /**
  * Internal helper method to save status fields
  *
- * @param Table $table Model object
  * @param array $ids Array of IDs
  * @param string $field Field to update
  * @param mixed $status Value to update
  * @return boolean True on success, false on failure
  */
-	protected function _saveStatus(Table $table, $ids, $field, $status) {
+	protected function _saveStatus($ids, $field, $status) {
 		foreach ($ids as $id) {
-			$entity = $table->get($id);
+			$entity = $this->_table->get($id);
 			$entity->{$field} = $status;
-			if (!$table->save($entity)) {
+			if (!$this->_table->save($entity)) {
 				return false;
 			}
 		}
@@ -105,59 +103,54 @@ class BulkProcessBehavior extends Behavior {
 /**
  * Bulk Publish
  *
- * @param Table $table Model object
  * @param array $ids Array of IDs
  * @return boolean True on success, false on failure
  */
-	public function bulkPublish(Table $table, $ids) {
+	public function bulkPublish($ids) {
 		$field = $this->config('fields.status');
-		return $this->_saveStatus($table, $ids, $field, Status::PUBLISHED);
+		return $this->_saveStatus($ids, $field, Status::PUBLISHED);
 	}
 
 /**
  * Bulk Publish
  *
- * @param Table $table Model object
  * @param array $ids Array of IDs
  * @return boolean True on success, false on failure
  */
-	public function bulkUnpublish(Table $table, $ids) {
+	public function bulkUnpublish($ids) {
 		$field = $this->config('fields.status');
-		return $this->_saveStatus($table, $ids, $field, Status::UNPUBLISHED);
+		return $this->_saveStatus($ids, $field, Status::UNPUBLISHED);
 	}
 
 /**
  * Bulk Promote
  *
- * @param Table $table Model object
  * @param array $ids Array of IDs
  * @return boolean True on success, false on failure
  */
-	public function bulkPromote(Table $table, $ids) {
+	public function bulkPromote($ids) {
 		$field = $this->config('fields.promote');
-		return $this->_saveStatus($table, $ids, $field, Status::PROMOTED);
+		return $this->_saveStatus($ids, $field, Status::PROMOTED);
 	}
 
 /**
  * Bulk Unpromote
  *
- * @param Table $table Model object
  * @param array $ids Array of IDs
  * @return boolean True on success, false on failure
  */
-	public function bulkUnpromote(Table $table, $ids) {
+	public function bulkUnpromote($ids) {
 		$field = $this->config('fields.promote');
-		return $this->_saveStatus($table, $ids, $field, Status::UNPROMOTED);
+		return $this->_saveStatus($ids, $field, Status::UNPROMOTED);
 	}
 
 /**
  * Bulk Delete
  *
- * @param Table $table Model object
  * @param array $ids Array of IDs
  * @return boolean True on success, false on failure
  */
-	public function bulkDelete(Table $table, $ids) {
+	public function bulkDelete($ids) {
 		return $table->deleteAll([
 			'id IN' => $ids
 		]);
@@ -166,11 +159,10 @@ class BulkProcessBehavior extends Behavior {
 /**
  * Bulk Copy
  *
- * @param Table $model Model object
  * @param array $ids Array of IDs
  * @return boolean True on success, false on failure
  */
-	public function bulkCopy(Table $table, $ids) {
+	public function bulkCopy($ids) {
 		if (!$table->hasBehavior('Copyable')) {
 			$table->addBehavior('Croogo/Core.Copyable');
 		}
