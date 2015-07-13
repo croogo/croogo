@@ -1,6 +1,7 @@
 <?php
+use Cake\Core\Configure;
 
-$this->extend('/Common/admin_index');
+$this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
@@ -25,7 +26,6 @@ $this->Html
 			<div class="screenshot <?php echo $this->Theme->getCssClass('columnRight'); ?>">
 				<h3><?php echo __d('croogo', 'Current Theme'); ?></h3>
 				<?php
-					$currentTheme = Sanitize::clean($currentTheme);
 					if (isset($currentTheme['screenshot'])):
 						if (!Configure::read('Site.theme')) :
 							$file = $currentTheme['screenshot'];
@@ -67,7 +67,6 @@ $this->Html
 			<ul>
 			<?php
 				$hasAvailable = false;
-				$themesData = Sanitize::clean($themesData);
 				foreach ($themesData as $themeAlias => $theme):
 					$isAdminOnly = (!isset($theme['adminOnly']) || $theme['adminOnly'] != 'true');
 					$isDefault = !($themeAlias == 'default' && !Configure::read('Site.theme'));
