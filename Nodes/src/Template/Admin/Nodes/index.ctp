@@ -61,7 +61,7 @@ $this->append('table-body');
 			?>
 			</span>
 
-			<?php if ($node['Node']['promote'] == 1): ?>
+			<?php if ($node->promoted == 1): ?>
 			<span class="label label-info"><?php echo __d('croogo', 'promoted'); ?></span>
 			<?php endif ?>
 
@@ -135,9 +135,9 @@ $this->start('bulk-action');
 			'promote' => __d('croogo', 'Promote'),
 			'unpromote' => __d('croogo', 'Unpromote'),
 			'delete' => __d('croogo', 'Delete'),
-			'copy' => array(
+			array(
 				'value' => 'copy',
-				'name' => __d('croogo', 'Copy'),
+				'text' => __d('croogo', 'Copy'),
 				'hidden' => true,
 			),
 		),
