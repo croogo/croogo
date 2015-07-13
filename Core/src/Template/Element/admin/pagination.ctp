@@ -2,7 +2,7 @@
 	<p>
 	<?php
 		echo $this->Paginator->counter(array(
-			'format' => __d('croogo', 'Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}'),
+			'format' => __d('croogo', 'Page {{page}} of {{pages}}, showing {{current}} records out of {{count}} total, starting on record {{start}}, ending on {{end}}'),
 		));
 	?>
 	</p>
