@@ -118,5 +118,5 @@ $(document).ready(function() {
 		}
 	}
 
-	Admin.toggleRowSelection('#NodeCheckAll');
+	Admin.toggleRowSelection('#NodesCheckAll');
 });

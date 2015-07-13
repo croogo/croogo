@@ -2,11 +2,10 @@
 
 namespace Croogo\Nodes\Event;
 
+use Cake\Cache\Cache;
 use Cake\Core\Plugin;
-
 use Cake\Event\EventListenerInterface;
 use Cake\ORM\TableRegistry;
-use Cake\Cache\Cache;
 use Croogo\Core\Croogo;
 use Croogo\Comments\Model\Comment;
 
