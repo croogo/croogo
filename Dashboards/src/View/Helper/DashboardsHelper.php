@@ -22,8 +22,9 @@ use Cake\ORM\TableRegistry;
 class DashboardsHelper extends Helper {
 
 	public $helpers = [
+		'Croogo/Core.CroogoHtml',
 		'Croogo/Core.Layout',
-		'Croogo/Core.CroogoHtml'
+		'Croogo/Core.Theme',
 	];
 
 /**
@@ -69,7 +70,7 @@ class DashboardsHelper extends Helper {
 		}
 		$currentRole = $this->Roles->byId($this->Layout->getRoleId());
 
-		$cssSetting = $this->Layout->themeSetting('css');
+		$cssSetting = $this->Theme->settings('css');
 
 		if (!empty($this->_View->viewVars['boxes_for_dashboard'])) {
 			$boxesForLayout = collection($this->_View->viewVars['boxes_for_dashboard'])->combine('{n}.DashboardsDashboard.alias', '{n}.DashboardsDashboard')->toArray();
