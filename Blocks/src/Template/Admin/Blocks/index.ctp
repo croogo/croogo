@@ -10,14 +10,14 @@ $this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Blocks'), array('action' => 'index'));
 
-$this->append('form-start', $this->Form->create('Block', array(
+$this->append('form-start', $this->Form->create('Blocks', array(
 	'url' => array('action' => 'process'),
 )));
 
 $chooser = isset($this->request->query['chooser']);
 $this->start('table-heading');
 	$tableHeaders = $this->Html->tableHeaders(array(
-		$this->Form->checkbox('checkAll'),
+		$this->Form->checkbox('checkAll', ['id' => 'BlocksCheckAll']),
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		$this->Paginator->sort('title', __d('croogo', 'Title')),
 		$this->Paginator->sort('alias', __d('croogo', 'Alias')),
@@ -47,7 +47,7 @@ $this->append('table-body');
 			array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
-			'#Block' . $block->id . 'Id',
+			'#Blocks' . $block->id . 'Id',
 			array(
 				'icon' => $this->Theme->getIcon('copy'),
 				'tooltip' => __d('croogo', 'Create a copy'),
@@ -56,7 +56,7 @@ $this->append('table-body');
 			__d('croogo', 'Create a copy of this Block?')
 		);
 		$actions[] = $this->Croogo->adminRowAction('',
-			'#Block' . $block->id . 'Id',
+			'#Blocks' . $block->id . 'Id',
 			array('icon' => $this->Theme->getIcon('delete'), 'class' => 'delete', 'tooltip' => __d('croogo', 'Remove this item'), 'rowAction' => 'delete'),
 			__d('croogo', 'Are you sure?')
 		);
@@ -72,7 +72,7 @@ $this->append('table-body');
 				)),
 			);
 		} else {
-			$checkbox = $this->Form->checkbox('Block.' . $block->id . '.id', array('class' => 'row-select'));
+			$checkbox = $this->Form->checkbox('Blocks.' . $block->id . '.id', array('class' => 'row-select'));
 		}
 
 		$actions = $this->Html->div('item-actions', implode(' ', $actions));
@@ -94,7 +94,7 @@ $this->append('table-body');
 			$block->alias,
 			$block->region->title,
 			$this->element('Croogo/Core.admin/toggle', array(
-				'id' => $block['Block']['id'],
+				'id' => $block->id,
 				'status' => (int)$block->status,
 			)),
 			$actions,
@@ -108,7 +108,7 @@ $this->append('table-body');
 $this->end();
 if (!$chooser):
 	$this->start('bulk-action');
-	echo $this->Form->input('Block.action', array(
+	echo $this->Form->input('Blocks.action', array(
 		'label' => false,
 		'div' => 'input inline',
 		'options' => array(
@@ -124,6 +124,6 @@ if (!$chooser):
 		'value' => 'submit'
 	));
 	echo $this->Html->div('controls', $button);
+	$this->end();
 endif;
-$this->end();
 $this->append('form-end', $this->Form->end());
