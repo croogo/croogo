@@ -263,17 +263,17 @@ class LinksController extends CroogoAppController {
  * @return void
  * @access public
  */
-	public function admin_process($menuId = null) {
-		$Link = $this->{$this->modelClass};
-		list($action, $ids) = $this->BulkProcess->getRequestVars($Link->alias);
+	public function process($menuId = null) {
+		$Links = $this->Links;
+		list($action, $ids) = $this->BulkProcess->getRequestVars($Links->alias());
 
 		$redirect = array('action' => 'index');
 
-		$menu = $this->Link->Menu->findById($menuId);
-		if (isset($menu['Menu']['id'])) {
+		$menu = $this->Links->Menus->get($menuId);
+		if (isset($menu->id)) {
 			$redirect['?'] = array('menu_id' => $menuId);
 		}
-		$this->Link->setTreeScope($menuId);
+		$this->Links->setTreeScope($menuId);
 
 		$multiple = array('copy' => false);
 		$messageMap = array(
@@ -282,7 +282,7 @@ class LinksController extends CroogoAppController {
 			'unpublish' => __d('croogo', 'Links unpublished'),
 		);
 		$options = compact('multiple', 'redirect', 'messageMap');
-		return $this->BulkProcess->process($this->Link, $action, $ids, $options);
+		return $this->BulkProcess->process($this->Links, $action, $ids, $options);
 
 	}
 
