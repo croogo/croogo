@@ -2,6 +2,7 @@
 
 namespace Croogo\Blocks\Event;
 
+use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Utility\Hash;
