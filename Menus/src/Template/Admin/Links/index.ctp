@@ -29,7 +29,7 @@ $this->end();
 		}
 	}
 
-	$this->append('form-start', $this->Form->create('Link', array(
+	$this->append('form-start', $this->Form->create('Links', array(
 		'url' => array(
 			'action' => 'process',
 			$menu->id,
@@ -38,7 +38,7 @@ $this->end();
 
 $this->start('table-heading');
 	$tableHeaders = $this->CroogoHtml->tableHeaders(array(
-		$this->CroogoForm->checkbox('checkAll'),
+		$this->CroogoForm->checkbox('checkAll', ['id' => 'LinksCheckAll']),
 		__d('croogo', 'Id'),
 		__d('croogo', 'Title'),
 		__d('croogo', 'Status'),
@@ -99,7 +99,7 @@ $this->append('table-body');
 		}
 
 		$rows[] = array(
-			$this->CroogoForm->checkbox('Link.' . $linkId . '.id', array('class' => 'row-select')),
+			$this->CroogoForm->checkbox('Links.' . $linkId . '.id', array('class' => 'row-select')),
 			$linkId,
 			$linkTitle,
 			$this->element('Croogo/Core.admin/toggle', array(
@@ -115,16 +115,16 @@ $this->append('table-body');
 $this->end();
 
 $this->start('bulk-action');
-	echo $this->CroogoForm->input('Link.action', array(
+	echo $this->CroogoForm->input('Links.action', array(
 		'div' => 'input inline',
 		'label' => false,
 		'options' => array(
 			'publish' => __d('croogo', 'Publish'),
 			'unpublish' => __d('croogo', 'Unpublish'),
 			'delete' => __d('croogo', 'Delete'),
-			'copy' => array(
+			array(
 				'value' => 'copy',
-				'name' => __d('croogo', 'Copy'),
+				'text' => __d('croogo', 'Copy'),
 				'hidden' => true,
 			),
 		),

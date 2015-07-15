@@ -81,7 +81,7 @@ class BlocksController extends CroogoAppController {
  * @return void
  */
 	public function toggle($id = null, $status = null) {
-		$this->Croogo->fieldToggle($this->Block, $id, $status);
+		$this->Croogo->fieldToggle($this->Blocks, $id, $status);
 	}
 
 /**
@@ -238,8 +238,8 @@ class BlocksController extends CroogoAppController {
  * @access public
  */
 	public function process() {
-		$Block = $this->{$this->modelClass};
-		list($action, $ids) = $this->BulkProcess->getRequestVars($Block->alias);
+		$Blocks = $this->Blocks;
+		list($action, $ids) = $this->BulkProcess->getRequestVars($Blocks->alias());
 
 		$options = array(
 			'messageMap' => array(
@@ -250,7 +250,7 @@ class BlocksController extends CroogoAppController {
 			),
 		);
 
-		return $this->BulkProcess->process($Block, $action, $ids, $options);
+		return $this->BulkProcess->process($Blocks, $action, $ids, $options);
 	}
 
 }

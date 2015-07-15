@@ -55,12 +55,12 @@ class MenusTable extends CroogoTable {
 		$this->hasMany('Links', [
 			'className' => 'Menus.Links',
 			'order' => [
-				'Links.lft' => 'ASC'
+				'lft' => 'ASC'
 			],
 		]);
 	}
 
-	/**
+/**
  * beforeDelete callback
  */
 	public function beforeDelete(Event $event, Entity $entity, $options) {

@@ -61,5 +61,5 @@ $(function() {
 
 	$('#LinkMenuId').on('change', Links.reloadParents);
 
-	Admin.toggleRowSelection('#LinkCheckAll');
+	Admin.toggleRowSelection('#LinksCheckAll');
 });

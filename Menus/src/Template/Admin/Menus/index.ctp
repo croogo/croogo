@@ -26,7 +26,7 @@ $this->start('table-body');
 	$actions = array();
 	$actions[] = $this->Croogo->adminRowAction(
 		'',
-		array('controller' => 'Links', 'action' => 'index',	'?' => array('menu_id' => $menu['Menu']['id'])),
+		array('controller' => 'Links', 'action' => 'index',	'?' => array('menu_id' => $menu->id)),
 		array('icon' => $this->Theme->getIcon('inspect'), 'tooltip' => __d('croogo', 'View links'))
 	);
 	$actions[] = $this->Croogo->adminRowActions($menu->id);

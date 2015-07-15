@@ -83,6 +83,7 @@ class CroogoAppController extends AppController {
 		'Form',
 		'Text',
 		'Time',
+		'Croogo/Core.Js',
 		'Croogo/Core.Layout',
 		'Croogo/Core.Custom',
 		'Croogo/Core.CroogoForm',

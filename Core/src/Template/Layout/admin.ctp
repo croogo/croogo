@@ -59,7 +59,7 @@
 		<?php
 		echo $this->element('Croogo/Core.admin/initializers');
 		echo $this->Blocks->get('scriptBottom');
-//		echo $this->Js->writeBuffer();
+		echo $this->Js->writeBuffer();
 		?>
 	</body>
 </html>

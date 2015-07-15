@@ -22,7 +22,7 @@ $this->end();
 $this->append('search', $this->element('admin/nodes_search'));
 
 $this->append('form-start', $this->CroogoForm->create(
-	'Node',
+	'Nodes',
 	array(
 		'url' => array('action' => 'process'),
 		'class' => 'form-inline'
@@ -31,7 +31,7 @@ $this->append('form-start', $this->CroogoForm->create(
 
 $this->start('table-heading');
 	$tableHeaders = $this->CroogoHtml->tableHeaders(array(
-		$this->CroogoForm->checkbox('checkAll'),
+		$this->CroogoForm->checkbox('checkAll', ['id' => 'NodesCheckAll']),
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		$this->Paginator->sort('title', __d('croogo', 'Title')),
 		$this->Paginator->sort('type', __d('croogo', 'Type')),
@@ -47,7 +47,7 @@ $this->append('table-body');
 <tbody>
 <?php foreach ($nodes as $node): ?>
 	<tr>
-		<td><?php echo $this->CroogoForm->checkbox('Node.' . $node->id . '.id', array('class' => 'row-select')); ?></td>
+		<td><?php echo $this->CroogoForm->checkbox('Nodes.' . $node->id . '.id', array('class' => 'row-select')); ?></td>
 		<td><?php echo $node->id; ?></td>
 		<td>
 			<span>
@@ -99,7 +99,7 @@ $this->append('table-body');
 					array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 				);
 				echo ' ' . $this->Croogo->adminRowAction('',
-					'#Node' . $node->id . 'Id',
+					'#Nodes' . $node->id . 'Id',
 					array(
 						'icon' => $this->Theme->getIcon('copy'),
 						'tooltip' => __d('croogo', 'Create a copy'),
@@ -107,7 +107,7 @@ $this->append('table-body');
 					)
 				);
 				echo ' ' . $this->Croogo->adminRowAction('',
-					'#Node' . $node->id . 'Id',
+					'#Nodes' . $node->id . 'Id',
 					array(
 						'icon' => $this->Theme->getIcon('delete'),
 						'class' => 'delete',
@@ -126,7 +126,7 @@ $this->append('table-body');
 $this->end();
 
 $this->start('bulk-action');
-	echo $this->CroogoForm->input('Node.action', array(
+	echo $this->CroogoForm->input('Nodes.action', array(
 		'label' => __d('croogo', 'Applying to selected'),
 		'div' => 'input inline',
 		'options' => array(
@@ -148,12 +148,13 @@ $this->start('bulk-action');
 	$button = $this->CroogoForm->button(__d('croogo', 'Submit'), array(
 		'type' => 'button',
 		'class' => 'bulk-process',
-		'data-relatedElement' => '#' . $this->CroogoForm->domId('Node.action'),
+		'data-relatedElement' => '#nodes-action',
 		'data-confirmMessage' => $jsVarName,
+		'escape' => true,
 	));
 	echo $this->CroogoHtml->div('controls', $button);
-//	$this->Js->set($jsVarName, __d('croogo', '%s selected items?'));
-//	$this->Js->buffer("$('.bulk-process').on('click', Nodes.confirmProcess);");
+	$this->Js->set($jsVarName, __d('croogo', '%s selected items?'));
+	$this->Js->buffer("$('.bulk-process').on('click', Nodes.confirmProcess);");
 
 $this->end();
 
