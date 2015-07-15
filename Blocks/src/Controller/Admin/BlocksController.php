@@ -4,7 +4,7 @@ namespace Croogo\Blocks\Controller\Admin;
 
 use Cake\Event\Event;
 use Croogo\Blocks\Model\Entity\Block;
-use Croogo\Core\Controller\Admin\Controller;
+use Croogo\Blocks\Controller\Admin\Controller;
 
 /**
  * Blocks Controller

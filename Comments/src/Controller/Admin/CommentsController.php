@@ -4,8 +4,8 @@ namespace Croogo\Comments\Controller\Admin;
 
 use App\Network\Email\Email;
 use Cake\Event\Event;
+use Croogo\Comments\Controller\Admin\Controller;
 use Croogo\Comments\Model\Entity\Comment;
-use Croogo\Core\Controller\Admin\Controller;
 
 /**
  * Comments Controller

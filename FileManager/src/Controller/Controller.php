@@ -2,7 +2,7 @@
 
 namespace Croogo\FileManager\Controller;
 
-use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Core\Controller\Controller as CroogoController;
 
 /**
  * FileManager App Controller
@@ -14,6 +14,6 @@ use Croogo\Core\Controller\CroogoAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class FileManagerAppController extends CroogoAppController {
+class Controller extends CroogoController {
 
 }

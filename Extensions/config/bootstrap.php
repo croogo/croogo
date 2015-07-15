@@ -10,7 +10,7 @@ use Croogo\Extensions\CroogoPlugin;
 Configure::write('Croogo.dashboardUrl', array(
 	'prefix' => 'admin',
 	'plugin' => 'Croogo/Extensions',
-	'controller' => 'ExtensionsDashboard',
+	'controller' => 'Dashboard',
 	'action' => 'index',
 ));
 

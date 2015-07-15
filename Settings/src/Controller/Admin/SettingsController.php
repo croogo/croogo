@@ -2,7 +2,7 @@
 
 namespace Croogo\Settings\Controller\Admin;
 
-use Croogo\Core\Controller\Admin\Controller;
+use Croogo\Settings\Controller\Admin\Controller;
 
 /**
  * Settings Controller

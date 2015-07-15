@@ -2,7 +2,7 @@
 
 namespace Croogo\Blocks\Controller\Admin;
 
-use Croogo\Core\Controller\Admin\Controller;
+use Croogo\Blocks\Controller\Admin\Controller;
 use Croogo\Blocks\Model\Entity\Region;
 
 /**

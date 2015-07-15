@@ -2,10 +2,12 @@
 
 namespace Croogo\Settings\Controller\Admin;
 
-use Croogo\Core\Controller\Admin\Controller;
+use Croogo\Settings\Controller\Admin\Controller;
 
 /**
  * Languages Controller
+ *
+ * FIXME: Port to 3.x
  *
  * @category Settings.Controller
  * @package  Croogo.Settings
