@@ -2,7 +2,7 @@
 
 namespace Croogo\Extensions\Controller\Admin;
 
-use Croogo\Extensions\Controller\ExtensionsAppController;
+use Croogo\Extensions\Controller\Admin\Controller as CroogoController;
 class ExtensionsDashboardController extends ExtensionsAppController {
 
 /**

@@ -27,7 +27,7 @@ use Croogo\Extensions\CroogoTheme;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoAppController extends AppController {
+class Controller extends AppController {
 
 	use PropertyHookTrait;
 

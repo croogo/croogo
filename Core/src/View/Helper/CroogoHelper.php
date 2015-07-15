@@ -29,8 +29,6 @@ class CroogoHelper extends Helper {
 		'Url',
 		'Croogo/Core.Layout',
 		'Croogo/Core.Theme',
-		'Croogo/Core.CroogoForm',
-		'Croogo/Core.CroogoHtml',
 		'Croogo/Menus.Menus',
 	);
 
@@ -200,7 +198,7 @@ class CroogoHelper extends Helper {
 
 			$menu['htmlAttributes']['escape'] = false;
 
-			$link = $this->CroogoHtml->link($title, $menu['url'], $menu['htmlAttributes']);
+			$link = $this->Html->link($title, $menu['url'], $menu['htmlAttributes']);
 			$liOptions = array();
 			if ($sidebar && !empty($children) && $depth > 0) {
 				$liOptions['class'] = ' dropdown-submenu';
@@ -307,15 +305,15 @@ class CroogoHelper extends Helper {
 		}
 
 		if ($action == 'delete' || isset($usePost)) {
-			$this->CroogoForm->_helperMap['Html']['class'] = 'Croogo/Core.CroogoHtml';
-			$this->CroogoForm->Html = new CroogoHtmlHelper($this->_View);
-			$postLink = $this->CroogoForm->postLink($title, $url, $options);
-			$this->CroogoForm->_helperMap['Html']['class'] = 'Html';
-			$this->CroogoForm->Html = new HtmlHelper($this->_View);
+			$this->Form->_helperMap['Html']['class'] = 'Croogo/Core.Html';
+			$this->Form->Html = new HtmlHelper($this->_View);
+			$postLink = $this->Form->postLink($title, $url, $options);
+			$this->Form->_helperMap['Html']['class'] = 'Html';
+			$this->Form->Html = new HtmlHelper($this->_View);
 			return $postLink;
 		}
 
-		return $this->CroogoHtml->link($title, $url, $options);
+		return $this->Html->link($title, $url, $options);
 	}
 
 /**
@@ -332,7 +330,7 @@ class CroogoHelper extends Helper {
 		if (isset($options['icon'])) {
 			$options['iconInline'] = false;
 		}
-		$output = $this->CroogoHtml->link($title, $url, $options);
+		$output = $this->Html->link($title, $url, $options);
 		return $output;
 	}
 
@@ -357,14 +355,14 @@ class CroogoHelper extends Helper {
 		}
 		if (strcasecmp($options['method'], 'post') == 0) {
 			$options['block'] = 'scriptBottom';
-			$out = $this->CroogoForm->postLink($title, $url, $options, $confirmMessage);
+			$out = $this->Form->postLink($title, $url, $options, $confirmMessage);
 		} else {
-			$out = $this->CroogoHtml->link($title, $url, $options, $confirmMessage);
+			$out = $this->Html->link($title, $url, $options, $confirmMessage);
 		}
 		if (isset($list)) {
-			$out = $this->CroogoHtml->tag('li', $out);
+			$out = $this->Html->tag('li', $out);
 		} else {
-			$out = $this->CroogoHtml->div('btn-group', $out);
+			$out = $this->Html->div('btn-group', $out);
 		}
 		return $out;
 	}
@@ -373,8 +371,8 @@ class CroogoHelper extends Helper {
  * Create a tab title/link
  */
 	public function adminTab($title, $url, $options = array()) {
-		return $this->CroogoHtml->tag('li',
-			$this->CroogoHtml->link($title, $url, Hash::merge(array(
+		return $this->Html->tag('li',
+			$this->Html->link($title, $url, Hash::merge(array(
 				'data-toggle' => 'tab',
 				), $options)
 			)
@@ -491,7 +489,7 @@ class CroogoHelper extends Helper {
 			$this->_View->append('page-footer', $linkChooser);
 		}
 
-		return $this->CroogoHtml->link('', '#link_choosers', [
+		return $this->Html->link('', '#link_choosers', [
 			'button' => 'default',
 			'icon' => $this->Theme->getIcon('link'),
 			'iconSize' => 'small',

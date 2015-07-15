@@ -4,7 +4,7 @@ namespace Croogo\Menus\Controller\Admin;
 
 use Cake\Event\Event;
 use Croogo\Core\Controller\Component\CroogoComponent;
-use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Core\Controller\Admin\Controller;
 use Croogo\Menus\Model\Table\MenusTable;
 
 /**
@@ -19,7 +19,7 @@ use Croogo\Menus\Model\Table\MenusTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MenusController extends CroogoAppController {
+class MenusController extends Controller {
 
 /**
  * Controller name

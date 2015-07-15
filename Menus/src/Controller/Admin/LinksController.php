@@ -5,7 +5,7 @@ namespace Croogo\Menus\Controller\Admin;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Croogo\Core\Controller\Component\CroogoComponent;
-use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Core\Controller\Admin\Controller;
 use Croogo\Core\Croogo;
 use Croogo\Menus\Controller\MenusAppController;
 use Croogo\Menus\Model\Table\LinksTable;
@@ -22,7 +22,7 @@ use Croogo\Menus\Model\Table\LinksTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class LinksController extends CroogoAppController {
+class LinksController extends Controller {
 
 /**
  * beforeFilter

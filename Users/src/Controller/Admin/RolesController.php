@@ -2,7 +2,7 @@
 
 namespace Croogo\Users\Controller\Admin;
 
-use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Core\Controller\Admin\Controller;
 
 /**
  * Roles Controller
@@ -14,7 +14,7 @@ use Croogo\Core\Controller\CroogoAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class RolesController extends CroogoAppController {
+class RolesController extends Controller {
 
 /**
  * Admin index
