@@ -3,6 +3,7 @@
 namespace Croogo\FileManager\Model\Table;
 
 use Cake\Datasource\EntityInterface;
+use Cake\Utility\Hash;
 use Cake\Utility\Text;
 use Croogo\Nodes\Model\Table\NodesTable;
 
@@ -35,9 +36,14 @@ class AttachmentsTable extends NodesTable {
  */
 	public $uploadsDir = 'uploads';
 
-	public function initialize(array $config) {
-		parent::initialize($config);
-		$this->table('nodes');
+/**
+ * Constructor
+ */
+	public function __construct(array $config = []) {
+		$config = Hash::merge([
+			'table' => 'nodes',
+		], $config);
+		parent::__construct($config);
 	}
 
 /**
