@@ -93,7 +93,7 @@ Nav::add('sidebar', 'settings', array(
 			'url' => array(
 				'prefix' => 'admin',
 				'plugin' => 'Croogo/Settings',
-				'controller' => 'Settings',
+				'controller' => 'Languages',
 				'action' => 'index',
 			),
 			'weight' => 70,
