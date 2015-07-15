@@ -225,16 +225,18 @@ class CroogoAppController extends AppController {
  * @return void
  */
 	protected function _setupTheme() {
-		$prefix = $this->request->param('prefix');
-		if ($prefix === 'admin') {
-			$theme = Configure::read('Site.admin_theme');
-
-			$this->viewBuilder()->layout('Croogo/Core.admin');
-		} else {
-			$theme = Configure::read('Site.theme');
-		}
+		$theme = Configure::read('Site.theme');
 		$this->viewBuilder()->theme($theme);
+		$this->_loadThemeSettings($theme);
+	}
 
+/**
+ * Load theme settings
+ *
+ * @return void
+ */
+	protected function _loadThemeSettings($theme) {
+		$prefix = $this->request->param('prefix');
 		$croogoTheme = new CroogoTheme();
 		$settings = $croogoTheme->getData($theme)['settings'];
 
@@ -304,8 +306,6 @@ class CroogoAppController extends AppController {
 			'Time',
 			'Croogo/Core.Js',
 			'Croogo/Core.Layout',
-			'Croogo/Core.Custom',
-			'Croogo/Core.CroogoForm',
 			'Croogo/Core.Theme',
 		]);
 
@@ -315,26 +315,8 @@ class CroogoAppController extends AppController {
 			$this->viewBuilder()->layout('ajax');
 		}
 
-		if (
-			$this->request->param('prefix') !== 'admin' &&
-			Configure::read('Site.status') == 0 &&
-			$this->Auth->user('role_id') != 1
-		) {
-			if (!$this->request->is('whitelisted')) {
-				$this->layout = 'Croogo/Core.maintenance';
-				$this->response->statusCode(503);
-				$this->set('title_for_layout', __d('croogo', 'Site down for maintenance'));
-				$this->viewPath = 'Maintenance';
-				$this->render('Croogo/Core.blank');
-			}
-		}
-
 		if (isset($this->request->params['locale'])) {
 			Configure::write('Config.language', $this->request->params['locale']);
-		}
-
-		if (isset($this->request->params['admin'])) {
-			Croogo::dispatchEvent('Croogo.beforeSetupAdminData', $this);
 		}
 	}
 
