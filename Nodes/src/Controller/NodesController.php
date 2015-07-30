@@ -412,11 +412,16 @@ class NodesController extends NodesAppController {
 			])->where([
 					'alias' => $this->request->params['named']['type'],
 			])->first();
-			$node = $this->Nodes->find('viewBySlug', array(
-				'slug' => $this->request->params['named']['slug'],
-				'type' => $this->request->params['named']['type'],
-				'roleId' => $this->Croogo->roleId(),
-			))->first();
+			$node = $this->Nodes->find('viewBySlug', [
+					'slug' => $this->request->params['named']['slug'],
+					'type' => $this->request->params['named']['type'],
+					'roleId' => $this->Croogo->roleId(),
+				])
+				->find('byAccess', [
+					'roleId' => $this->Croogo->roleId()
+				])
+				->find('published')
+				->first();
 		} elseif ($id == null) {
 			$this->Session->setFlash(__d('croogo', 'Invalid content'), 'flash', array('class' => 'error'));
 			return $this->redirect('/');

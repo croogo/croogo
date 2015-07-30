@@ -92,14 +92,10 @@ class NodesTable extends CroogoTable {
 		$keys = array('slug' => null, 'type' => null, 'roleId' => null);
 		$args = array_merge($keys, array_intersect_key($options, $keys));
 		$options = array_diff_key($options, $args);
+
 		$query->where(array(
 			'slug' => $args['slug'],
 			'type' => $args['type'],
-			$this->alias() . '.status IN' => $this->status(),
-			'OR' => array(
-				'visibility_roles' => '',
-				'visibility_roles LIKE' => '%"' . $args['roleId'] . '"%',
-			),
 		));
 		$query->contain([
 //			'Metas',
@@ -117,6 +113,26 @@ class NodesTable extends CroogoTable {
 		]);
 
 		return $query;
+	}
+
+	public function findByAccess(Query $query, array $options = [])
+	{
+		$keys = ['roleId' => null];
+		$args = array_merge($keys, array_intersect_key($options, $keys));
+
+		return $query->andWhere([
+			'OR' => [
+				'visibility_roles' => '',
+				'visibility_roles LIKE' => '%"' . $args['roleId'] . '"%',
+			],
+		]);
+	}
+
+	public function findPublished(Query $query, array $options = [])
+	{
+		return $query->andWhere([
+			$this->alias() . '.status IN' => $this->status()
+		]);
 	}
 
 }
