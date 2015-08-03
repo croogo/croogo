@@ -3,6 +3,7 @@
 namespace Croogo\Users\Model\Table;
 
 use Cake\Mailer\MailerAwareTrait;
+use Cake\ORM\Query;
 use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
 use Croogo\Users\Model\Entity\User;
@@ -50,7 +51,7 @@ class UsersTable extends CroogoTable {
 	public function resetPassword(User $user)
 	{
 		// Generate a unique activation key
-		$user->activationKey = md5(uniqid());
+		$user->activation_key = md5(uniqid());
 
 		$user = $this->save($user);
 		if (!$user) {
@@ -66,6 +67,31 @@ class UsersTable extends CroogoTable {
 		}
 
 		return true;
+	}
+
+	public function changePasswordFromReset(User $user, array $data)
+	{
+		$user = $this->patchEntity($user, $data, [
+			'fieldList' => [
+				'password',
+				'verify_password',
+			]
+		]);
+		if ($user->errors()) {
+			return $user;
+		}
+
+		$user->activation_key = null;
+
+		return $user;
+	}
+
+	public function findByActivationKey(Query $query, array $options)
+	{
+		return $query->where([
+			'username' => $options['username'],
+			'activation_key' => $options['activationKey'],
+		]);
 	}
 
 	public function validationDefault(Validator $validator) {

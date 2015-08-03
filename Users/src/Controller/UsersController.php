@@ -5,10 +5,12 @@ use Cake\Network\Email\Email;
 use Cake\Network\Exception\SocketException;
 use Croogo\Core\Croogo;
 use Cake\Core\Configure;
+use Croogo\Users\Model\Table\UsersTable;
 
 /**
  * Users Controller
  *
+ * @property UsersTable Users
  * @category Controller
  * @package  Croogo.Users.Controller
  * @version  1.0
@@ -203,50 +205,42 @@ class UsersController extends UsersAppController {
  * Reset
  *
  * @param string $username
- * @param string $key
+ * @param string $activationKey
  * @return void
  * @access public
  */
-	public function reset($username = null, $key = null) {
-		$this->set('title_for_layout', __d('croogo', 'Reset Password'));
+	public function reset($username, $activationKey) {
+		// Get the user with the activation key from the database
+		$user = $this->Users->find('byActivationKey', [
+			'username' => $username,
+			'activationKey' => $activationKey
+		])->first();
+		if (!$user) {
+			$this->Flash->error(__d('croogo', 'An error occurred.'));
 
-		if ($username == null || $key == null) {
-			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', ['class' => 'error']);
 			return $this->redirect(['action' => 'login']);
 		}
 
-		$user = $this->User->find('first', [
-			'conditions' => [
-				'User.username' => $username,
-				'User.activation_key' => $key,
-			],
-		]);
-		if (!isset($user['User']['id'])) {
-			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', ['class' => 'error']);
-			return $this->redirect(['action' => 'login']);
+		$this->set('user', $user);
+
+		if (!$this->request->is('put')) {
+			return;
 		}
 
-		if (!empty($this->request->data) && isset($this->request->data['User']['password'])) {
-			$this->User->id = $user['User']['id'];
-			$user['User']['activation_key'] = md5(uniqid());
-			$user['User']['password'] = $this->request->data['User']['password'];
-			$user['User']['verify_password'] = $this->request->data['User']['verify_password'];
-			$options = [
-				'fieldList' => [
-					'password',
-					'verify_password',
-					'activation_key'
-				]
-			];
-			if ($this->User->save($user['User'], $options)) {
-				$this->Session->setFlash(__d('croogo', 'Your password has been reset successfully.'), 'default', ['class' => 'success']);
-				return $this->redirect(['action' => 'login']);
-			} else {
-				$this->Session->setFlash(__d('croogo', 'An error occurred. Please try again.'), 'default', ['class' => 'error']);
-			}
+		// Change the password of the user entity
+		$user = $this->Users->changePasswordFromReset($user, $this->request->data());
+
+		// Save the user with changed password
+		$user = $this->Users->save($user);
+		if (!$user) {
+			$this->Flash->error(__d('croogo', 'An error occurred. Please try again.'));
+
+			return;
 		}
 
-		$this->set(compact('user', 'username', 'key'));
+		$this->Flash->success(__d('croogo', 'Your password has been reset successfully.'));
+
+		return $this->redirect(['action' => 'login']);
 	}
 
 /**

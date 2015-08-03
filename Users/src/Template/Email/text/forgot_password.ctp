@@ -3,12 +3,14 @@
 echo __d('croogo', 'Hello %s', $user->name); ?>,
 
 <?php
-	$url = Router::url(array(
-		'controller' => 'users',
+	$url = Router::url([
+		'prefix' => false,
+		'plugin' => 'Croogo/Users',
+		'controller' => 'Users',
 		'action' => 'reset',
 		$user->username,
 		$user->activationKey,
-	), true);
+	], true);
 	echo __d('croogo', 'Please visit this link to reset your password: %s', $url);
 ?>
 
