@@ -2,10 +2,14 @@
 
 namespace Croogo\Users\Model\Table;
 
+use Cake\Mailer\MailerAwareTrait;
 use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
+use Croogo\Users\Model\Entity\User;
 
 class UsersTable extends CroogoTable {
+
+	use MailerAwareTrait;
 
 	protected $_displayFields = [
 		'id',
@@ -35,6 +39,33 @@ class UsersTable extends CroogoTable {
 
 		$this->belongsTo('Croogo/Users.Roles');
 		$this->addBehavior('Search.Searchable');
+	}
+
+	/**
+	 * Starts an password reset procedure and sets out an email to the user
+	 *
+	 * @param User $user User to run the procedure for
+	 * @return bool Returns true when successful, false if not
+	 */
+	public function resetPassword(User $user)
+	{
+		// Generate a unique activation key
+		$user->activationKey = md5(uniqid());
+
+		$user = $this->save($user);
+		if (!$user) {
+			return false;
+		}
+
+		// Send out an password reset email
+		$email = $this
+			->getMailer('Croogo/Users.User')
+			->send('resetPassword', [$user]);
+		if (!$email) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public function validationDefault(Validator $validator) {

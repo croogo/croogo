@@ -174,37 +174,29 @@ class UsersController extends UsersAppController {
  * @access public
  */
 	public function forgot() {
-		$this->set('title_for_layout', __d('croogo', 'Forgot Password'));
-
-		if (!empty($this->request->data) && isset($this->request->data['User']['username'])) {
-			$user = $this->User->findByUsername($this->request->data['User']['username']);
-			if (!isset($user['User']['id'])) {
-				$this->Session->setFlash(__d('croogo', 'Invalid username.'), 'default', ['class' => 'error']);
-				return $this->redirect(['action' => 'login']);
-			}
-
-			$this->User->id = $user['User']['id'];
-			$activationKey = md5(uniqid());
-			$this->User->saveField('activation_key', $activationKey);
-			$this->set(compact('user', 'activationKey'));
-
-			$emailSent = $this->_sendEmail(
-				[Configure::read('Site.title'), $this->_getSenderEmail()],
-				$user['User']['email'],
-				__d('croogo', '[%s] Reset Password', Configure::read('Site.title')),
-				'Users.forgot_password',
-				'reset password',
-				$this->theme,
-				compact('user', 'activationKey')
-			);
-
-			if ($emailSent) {
-				$this->Session->setFlash(__d('croogo', 'An email has been sent with instructions for resetting your password.'), 'default', ['class' => 'success']);
-				return $this->redirect(['action' => 'login']);
-			} else {
-				$this->Session->setFlash(__d('croogo', 'An error occurred. Please try again.'), 'default', ['class' => 'error']);
-			}
+		if (!$this->request->is('post')) {
+			return;
 		}
+
+		$user = $this->Users
+			->findByUsername($this->request->data('username'))
+			->first();
+		if (!$user) {
+			$this->Flash->error(__d('croogo', 'Invalid username.'));
+
+			return $this->redirect(['action' => 'forgot']);
+		}
+
+		$success = $this->Users->resetPassword($user);
+		if (!$success) {
+			$this->Flash->error(__d('croogo', 'An error occurred. Please try again.'));
+
+			return;
+		}
+
+		$this->Flash->success(__d('croogo', 'An email has been sent with instructions for resetting your password.'));
+
+		return $this->redirect(['action' => 'login']);
 	}
 
 /**

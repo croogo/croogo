@@ -1,11 +1,13 @@
-<?php echo __d('croogo', 'Hello %s', $user['User']['name']); ?>,
+<?php use Cake\Routing\Router;
+
+echo __d('croogo', 'Hello %s', $user->name); ?>,
 
 <?php
 	$url = Router::url(array(
 		'controller' => 'users',
 		'action' => 'reset',
-		$user['User']['username'],
-		$activationKey,
+		$user->username,
+		$user->activationKey,
 	), true);
 	echo __d('croogo', 'Please visit this link to reset your password: %s', $url);
 ?>
