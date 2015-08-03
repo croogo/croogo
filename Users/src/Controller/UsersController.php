@@ -264,35 +264,41 @@ class UsersController extends UsersAppController {
  * @access public
  */
 	public function login() {
-		$this->set('title_for_layout', __d('croogo', 'Log in'));
-		if ($this->request->is('post')) {
-			Croogo::dispatchEvent('Controller.Users.beforeLogin', $this);
-			$user = $this->Auth->identify();
-			if ($user) {
-				$this->Auth->setUser($user);
-
-				Croogo::dispatchEvent('Controller.Users.loginSuccessful', $this);
-				return $this->redirect($this->Auth->redirectUrl());
-			} else {
-				Croogo::dispatchEvent('Controller.Users.loginFailure', $this);
-				$this->Flash->error($this->Auth->authError);
-				return $this->redirect($this->Auth->loginAction);
-			}
+		if (!$this->request->is('post')) {
+			return;
 		}
+
+		Croogo::dispatchEvent('Controller.Users.beforeLogin', $this);
+
+		$user = $this->Auth->identify();
+		if (!$user) {
+			Croogo::dispatchEvent('Controller.Users.loginFailure', $this);
+
+			$this->Flash->error($this->Auth->config('authError'));
+
+			return $this->redirect($this->Auth->loginAction);
+		}
+
+		$this->Auth->setUser($user);
+
+		Croogo::dispatchEvent('Controller.Users.loginSuccessful', $this);
+
+		return $this->redirect($this->Auth->redirectUrl());
 	}
 
 /**
  * Logout
  *
- * @return void
  * @access public
  */
 	public function logout() {
 		Croogo::dispatchEvent('Controller.Users.beforeLogout', $this);
-		$this->Session->setFlash(__d('croogo', 'Log out successful.'), 'default', ['class' => 'success']);
-		$redirect = $this->Auth->logout();
+
+		$this->Flash->success(__d('croogo', 'Log out successful.'), 'auth');
+
+		$logoutUrl = $this->Auth->logout();
 		Croogo::dispatchEvent('Controller.Users.afterLogout', $this);
-		return $this->redirect($redirect);
+		return $this->redirect($logoutUrl);
 	}
 
 /**
