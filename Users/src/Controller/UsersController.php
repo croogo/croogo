@@ -31,76 +31,30 @@ class UsersController extends UsersAppController {
 	}
 
 /**
- * Convenience method to send email
- *
- * @param string $from Sender email
- * @param string $to Receiver email
- * @param string $subject Subject
- * @param string $template Template to use
- * @param string $theme Theme to use
- * @param array  $viewVars Vars to use inside template
- * @param string $emailType user activation, reset password, used in log message when failing.
- * @return boolean True if email was sent, False otherwise.
- */
-	protected function _sendEmail($from, $to, $subject, $template, $emailType, $theme = null, $viewVars = null) {
-		if (is_null($theme)) {
-			$theme = $this->theme;
-		}
-		$success = false;
-
-		try {
-			$email = new Email();
-			$email->from($from[1], $from[0]);
-			$email->to($to);
-			$email->subject($subject);
-			$email->template($template);
-			$email->viewVars($viewVars);
-			$email->theme($theme);
-			$success = $email->send();
-		} catch (SocketException $e) {
-			$this->log(sprintf('Error sending %s notification : %s', $emailType, $e->getMessage()));
-		}
-
-		return $success;
-	}
-
-/**
  * Add
  *
  * @return void
  * @access public
  */
 	public function add() {
-		$this->set('title_for_layout', __d('croogo', 'Register'));
-		if (!empty($this->request->data)) {
-			$this->User->create();
-			$this->request->data['User']['role_id'] = 2; // Registered
-			$this->request->data['User']['activation_key'] = md5(uniqid());
-			$this->request->data['User']['status'] = 0;
-			$this->request->data['User']['username'] = htmlspecialchars($this->request->data['User']['username']);
-			$this->request->data['User']['website'] = htmlspecialchars($this->request->data['User']['website']);
-			$this->request->data['User']['name'] = htmlspecialchars($this->request->data['User']['name']);
-			if ($this->User->save($this->request->data)) {
-				Croogo::dispatchEvent('Controller.Users.registrationSuccessful', $this);
-				$this->request->data['User']['password'] = null;
+		$user = $this->Users->newEntity();
 
-				$this->_sendEmail(
-					[Configure::read('Site.title'), $this->_getSenderEmail()],
-					$this->request->data['User']['email'],
-					__d('croogo', '[%s] Please activate your account', Configure::read('Site.title')),
-					'Users.register',
-					'user activation',
-					$this->theme,
-					['user' => $this->request->data]
-				);
+		$this->set('user', $user);
 
-				$this->Session->setFlash(__d('croogo', 'You have successfully registered an account. An email has been sent with further instructions.'), 'default', ['class' => 'success']);
-				return $this->redirect(['action' => 'login']);
-			} else {
-				Croogo::dispatchEvent('Controller.Users.registrationFailure', $this);
-				$this->Session->setFlash(__d('croogo', 'The User could not be saved. Please, try again.'), 'default', ['class' => 'error']);
-			}
+		if (!$this->request->is('post')) {
+			return;
 		}
+
+		$user = $this->Users->register($user, $this->request->data());
+		if (!$user) {
+			$this->Flash->error(__d('croogo', 'The User could not be saved. Please, try again.'));
+
+			return;
+		}
+
+		$this->Flash->success(__d('croogo', 'You have successfully registered an account. An email has been sent with further instructions.'));
+
+		return $this->redirect(['action' => 'login']);
 	}
 
 /**
@@ -111,53 +65,29 @@ class UsersController extends UsersAppController {
  * @return void
  * @access public
  */
-	public function activate($username = null, $key = null) {
-		if ($username == null || $key == null) {
+	public function activate($username, $activationKey) {
+		// Get the user with the activation key from the database
+		$user = $this->Users->find('byActivationKey', [
+			'username' => $username,
+			'activationKey' => $activationKey
+		])->first();
+		if (!$user) {
+			$this->Flash->error(__d('croogo', 'An error occurred.'));
+
 			return $this->redirect(['action' => 'login']);
 		}
 
-		if ($this->Auth->user('id')) {
-			$this->Session->setFlash(
-				__d('croogo', 'You are currently logged in as:') . ' ' .
-				$this->Auth->user('username')
-			);
-			return $this->redirect($this->referer());
+		// Activate the user
+		$user = $this->Users->activate($user);
+		if (!$user) {
+			$this->Flash->error(__d('croogo', 'Could not activate your account'));
+
+			return $this->redirect(['action' => 'login']);
 		}
 
-		$redirect = ['action' => 'login'];
-		if (
-			$this->User->hasAny([
-				'User.username' => $username,
-				'User.activation_key' => $key,
-				'User.status' => 0,
-			])
-		) {
-			$user = $this->User->findByUsername($username);
-			$this->User->id = $user['User']['id'];
+		$this->Flash->success(__d('croogo', 'Account activated successfully.'));
 
-			$db = $this->User->getDataSource();
-			$key = md5(uniqid());
-			$this->User->updateAll([
-				$this->User->escapeField('status') => $db->value(1),
-				$this->User->escapeField('activation_key') => $db->value($key),
-			], [
-				$this->User->escapeField('id') => $this->User->id
-			]);
-
-			if (isset($user) && empty($user['User']['password'])) {
-				$redirect = ['action' => 'reset', $username, $key];
-			}
-
-			Croogo::dispatchEvent('Controller.Users.activationSuccessful', $this);
-			$this->Session->setFlash(__d('croogo', 'Account activated successfully.'), 'default', ['class' => 'success']);
-		} else {
-			Croogo::dispatchEvent('Controller.Users.activationFailure', $this);
-			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'default', ['class' => 'error']);
-		}
-
-		if ($redirect) {
-			return $this->redirect($redirect);
-		}
+		return $this->redirect(['action' => 'login']);
 	}
 
 /**

@@ -40,6 +40,64 @@ class UsersTable extends CroogoTable {
 
 		$this->belongsTo('Croogo/Users.Roles');
 		$this->addBehavior('Search.Searchable');
+
+		$this->eventManager()->on($this->getMailer('Croogo/Users.User'));
+	}
+
+	/**
+	 * Used to register a new user
+	 *
+	 * @param User $user
+	 * @param array $data
+	 * @return bool|User
+	 */
+	public function register(User $user, array $data)
+	{
+		$user = $this->patchEntity($user, $data, [
+			'fieldList' => [
+				'username',
+				'website',
+				'name',
+				'password',
+				'email'
+			]
+		]);
+
+		$user->set([
+			'role_id' => RolesTable::ROLE_REGISTERED,
+			'activation_key' => $this->activationKey(),
+		]);
+
+		if (!$this->save($user)) {
+			return false;
+		}
+
+		$this->dispatchEvent('Users.registered', [
+			'user' => $user
+		]);
+
+		return $user;
+	}
+
+	/**
+	 * Activate the user
+	 *
+	 * @param User $user
+	 * @return bool|User
+	 */
+	public function activate(User $user)
+	{
+		$user->activation_key = null;
+
+		if (!$this->save($user)) {
+			return false;
+		}
+
+		$this->dispatchEvent('Users.activated', [
+			'user' => $user
+		]);
+
+		return $user;
 	}
 
 	/**
@@ -51,7 +109,7 @@ class UsersTable extends CroogoTable {
 	public function resetPassword(User $user)
 	{
 		// Generate a unique activation key
-		$user->activation_key = md5(uniqid());
+		$user->activation_key = $this->activationKey();
 
 		$user = $this->save($user);
 		if (!$user) {
@@ -92,6 +150,11 @@ class UsersTable extends CroogoTable {
 			'username' => $options['username'],
 			'activation_key' => $options['activationKey'],
 		]);
+	}
+
+	public function activationKey()
+	{
+		return md5(uniqid());
 	}
 
 	public function validationDefault(Validator $validator) {
