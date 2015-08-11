@@ -18,5 +18,10 @@
             "Croogo\\Nodes\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Croogo\\Nodes\\Test\\": "tests"
+        }
+    },
     "minimum-stability": "dev"
 }

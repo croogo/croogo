@@ -36,5 +36,10 @@
             "Croogo\\Core\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Croogo\\Core\\Test\\": "tests"
+        }
+    },
     "minimum-stability": "dev"
 }
