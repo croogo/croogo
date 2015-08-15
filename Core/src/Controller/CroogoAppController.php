@@ -114,14 +114,6 @@ class CroogoAppController extends AppController {
 //	public $viewClass = 'Theme';
 
 /**
- * Theme
- *
- * @var string
- * @access public
- */
-	public $theme;
-
-/**
  * Constructor
  *
  * @access public
@@ -248,31 +240,31 @@ class CroogoAppController extends AppController {
  * @return void
  */
 	protected function _setupTheme() {
-		$prefix = isset($this->request->params['prefix']) ? $this->request->params['prefix'] : '';
+		$prefix = $this->request->param('prefix');
 		if ($prefix === 'admin') {
 			$theme = Configure::read('Site.admin_theme');
-			if ($theme) {
-				App::build(array(
-					'View/Helper' => array(App::themePath($theme) . 'Helper' . DS),
-				));
-			}
+
 			$this->layout = 'Croogo/Core.admin';
 		} else {
 			$theme = Configure::read('Site.theme');
 		}
-		$this->theme = $theme;
+		$this->getView()->theme($theme);
 
 		$croogoTheme = new CroogoTheme();
-		$data = $croogoTheme->getData($theme);
-		$settings = $data['settings'];
+		$settings = $croogoTheme->getData($theme)['settings'];
 
 		if (empty($settings['prefixes']['admin']['helpers']['Croogo/Core.Croogo'])) {
-			$this->helpers[] = 'Croogo/Core.Croogo';
+			$this->getView()->loadHelper('Croogo/Core.Croogo');
 		}
 
-		if (isset($settings['prefixes'][$prefix])) {
-			foreach ($settings['prefixes'][$prefix]['helpers'] as $helper => $settings) {
-				$this->helpers[$helper] = $settings;
+		$themePrefix = ($prefix) ? $prefix : '';
+		if (isset($settings['prefixes'][$themePrefix])) {
+			foreach ($settings['prefixes'][$themePrefix]['helpers'] as $helper => $options) {
+				if ($this->getView()->helpers()->has($helper)) {
+					$this->getView()->helpers()->unload($helper);
+				}
+
+				$this->getView()->loadHelper($helper, $options);
 			}
 		}
 	}
@@ -415,11 +407,16 @@ class CroogoAppController extends AppController {
 			return parent::render($view, $layout);
 		}
 
+		// Set the view path
+		$this->_viewPath();
+
 		$fallbackView = $this->__getDefaultFallbackView();
-		if (is_null($view) && in_array($this->request->action, array('edit', 'add'))) {
-			$viewPaths = App::path('Template', $this->plugin);
-			$themePath = $this->theme ? Plugin::path($this->theme) : null;
-			$searchPaths = array_merge((array)$themePath, $viewPaths);
+		if (is_null($view) && in_array($this->request->action, ['edit', 'add'])) {
+			$searchPaths = App::path('Template', $this->plugin);
+			if ($this->getView()->theme()) {
+				$searchPaths = array_merge(App::path('Template', $this->getView()->theme()), $searchPaths);
+			}
+
 			$view = $this->__findRequestedView($searchPaths);
 			if (empty($view)) {
 				$view = $fallbackView;
@@ -468,8 +465,9 @@ class CroogoAppController extends AppController {
 		if (empty($viewPaths)) {
 			return false;
 		}
+
 		foreach ($viewPaths as $path) {
-			$file = $this->viewPath . DS . $this->request->action . '.ctp';
+			$file = $this->getView()->viewPath() . DS . $this->request->action . '.ctp';
 			$requested = $path . $file;
 			if (file_exists($requested)) {
 				return $requested;
