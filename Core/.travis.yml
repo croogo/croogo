@@ -43,7 +43,7 @@ matrix:
 
 before_script:
   - composer self-update
-  - cd Core; composer install --prefer-dist --no-interaction
+  - composer install --prefer-dist --no-interaction
 
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test;'; fi"
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test2;'; fi"
@@ -63,16 +63,17 @@ before_script:
   - set +H
 
 script:
-  - sh -c "if [ '$DEFAULT' = '1' ]; then cd Core; phpunit; fi"
+  - sh -c "if [ '$DEFAULT' = '1' ]; then phpunit; fi"
 
-  - sh -c "if [ '$PHPCS' = '1' ]; then cd Core; vendor/bin/phpcs -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests; fi"
+  - sh -c "if [ '$PHPCS' = '1' ]; then vendor/bin/phpcs -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests; fi"
 
-  - sh -c "if [ '$COVERALLS' = '1' ]; then cd Core; phpunit --coverage-clover build/logs/clover.xml; fi"
-  - sh -c "if [ '$COVERALLS' = '1' ]; then cd Core; vendor/bin/coveralls -c .coveralls.yml -v; fi"
+  - sh -c "if [ '$COVERALLS' = '1' ]; then phpunit --coverage-clover build/logs/clover.xml; fi"
+  - sh -c "if [ '$COVERALLS' = '1' ]; then vendor/bin/coveralls -c .coveralls.yml -v; fi"
 
 notifications:
   email: false
+  irc: "irc.freenode.net#webshop"
 
 cache:
   directories:
-  - Core/vendor
+  - vendor
