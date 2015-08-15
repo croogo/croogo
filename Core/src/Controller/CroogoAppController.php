@@ -169,6 +169,9 @@ class CroogoAppController extends AppController {
 			$this->viewClass = 'Croogo/Core.Croogo';
 		}
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
+
+		$this->viewBuilder()->helpers(Croogo::options('Hook.view_builder_options', $this, 'helpers'));
+
 		$this->_setupComponents();
 	}
 
@@ -248,25 +251,21 @@ class CroogoAppController extends AppController {
 		} else {
 			$theme = Configure::read('Site.theme');
 		}
-		$this->getView()->theme($theme);
+		$this->viewBuilder()->theme($theme);
 
 		$croogoTheme = new CroogoTheme();
 		$settings = $croogoTheme->getData($theme)['settings'];
 
-		if (empty($settings['prefixes']['admin']['helpers']['Croogo/Core.Croogo'])) {
-			$this->getView()->loadHelper('Croogo/Core.Croogo');
-		}
-
 		$themePrefix = ($prefix) ? $prefix : '';
+
+		$themeHelpers = [];
 		if (isset($settings['prefixes'][$themePrefix])) {
 			foreach ($settings['prefixes'][$themePrefix]['helpers'] as $helper => $options) {
-				if ($this->getView()->helpers()->has($helper)) {
-					$this->getView()->helpers()->unload($helper);
-				}
-
-				$this->getView()->loadHelper($helper, $options);
+				$themeHelpers[$helper] = $options;
 			}
 		}
+
+		$this->viewBuilder()->helpers($themeHelpers);
 	}
 
 /**
@@ -407,14 +406,11 @@ class CroogoAppController extends AppController {
 			return parent::render($view, $layout);
 		}
 
-		// Set the view path
-		$this->_viewPath();
-
 		$fallbackView = $this->__getDefaultFallbackView();
 		if (is_null($view) && in_array($this->request->action, ['edit', 'add'])) {
 			$searchPaths = App::path('Template', $this->plugin);
-			if ($this->getView()->theme()) {
-				$searchPaths = array_merge(App::path('Template', $this->getView()->theme()), $searchPaths);
+			if ($this->viewBuilder()->theme()) {
+				$searchPaths = array_merge(App::path('Template', $this->viewBuilder()->theme()), $searchPaths);
 			}
 
 			$view = $this->__findRequestedView($searchPaths);
@@ -424,23 +420,6 @@ class CroogoAppController extends AppController {
 		}
 
 		return parent::render($view, $layout);
-	}
-
-/**
- * Croogo uses this callback to load Paginator helper when one is not supplied.
- * This is required so that pagination variables are correctly set with caching
- * is used.
- *
- * @return void
- * @see Controller::beforeRender()
- */
-	public function beforeRender(Event $event) {
-		if (!$this->usePaginationCache) {
-			return;
-		}
-		if (!isset($this->helpers['Paginator']) && !in_array('Paginator', $this->helpers)) {
-			$this->helpers[] = 'Paginator';
-		}
 	}
 
 /**
@@ -467,7 +446,7 @@ class CroogoAppController extends AppController {
 		}
 
 		foreach ($viewPaths as $path) {
-			$file = $this->getView()->viewPath() . DS . $this->request->action . '.ctp';
+			$file = $this->viewBuilder()->templatePath() . DS . $this->request->action . '.ctp';
 			$requested = $path . $file;
 			if (file_exists($requested)) {
 				return $requested;

@@ -96,7 +96,7 @@ class Croogo {
 		if (is_string($helperName)) {
 			$helperName = array($helperName);
 		}
-		self::hookControllerProperty($controllerName, 'helpers', $helperName);
+		self::hookViewBuilderOption($controllerName, 'helpers', $helperName);
 	}
 
 /**
@@ -191,6 +191,18 @@ class Croogo {
 		self::_hookProperty($configKeyPrefix, $controllerName, $property, $value);
 	}
 
+	/**
+	 * Hook controller property
+	 *
+	 * @param string $controllerName Controller name (for e.g., Nodes)
+	 * @param string $option       for e.g., components
+	 * @param string $value          array or string
+	 */
+	public static function hookViewBuilderOption($controllerName, $option, $value) {
+		$configKeyPrefix = 'Hook.view_builder_options';
+		self::_hookProperty($configKeyPrefix, $controllerName, $option, $value);
+	}
+
 /**
  * Hook property
  *
@@ -216,6 +228,21 @@ class Croogo {
 		Configure::write($configKeyPrefix . '.' . $name . '.' . $property, $propertyValue);
 	}
 
+	public static function options($configKey, &$object, $option = null) {
+		$objectName = get_class($object);
+
+		$options = Configure::read($configKey . '.' . $objectName);
+		if (is_array(Configure::read($configKey . '.*'))) {
+			$options = Hash::merge(Configure::read($configKey . '.*'), $options);
+		}
+
+		if ($option) {
+			return $options[$option];
+		}
+
+		return $options;
+	}
+
 /**
  * Applies properties set from hooks to an object in __construct()
  *
@@ -225,11 +252,8 @@ class Croogo {
 		if (empty($object)) {
 			$object = self;
 		}
-		$objectName = get_class($object);
-		$hookProperties = Configure::read($configKey . '.' . $objectName);
-		if (is_array(Configure::read($configKey . '.*'))) {
-			$hookProperties = Hash::merge(Configure::read($configKey . '.*'), $hookProperties);
-		}
+
+		$hookProperties = self::options($configKey, $object);
 		if (is_array($hookProperties)) {
 			foreach ($hookProperties as $property => $value) {
 				if (!$object->getProperty($property)) {
