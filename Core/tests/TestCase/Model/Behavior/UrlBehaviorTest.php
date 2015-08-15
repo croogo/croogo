@@ -6,14 +6,14 @@ use Nodes\Model\Node;
 class UrlBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.croogo\users.aco',
-		'plugin.croogo\users.aro',
-		'plugin.croogo\users.aros_aco',
+//		'plugin.croogo\users.aco',
+//		'plugin.croogo\users.aro',
+//		'plugin.croogo\users.aros_aco',
 //		'plugin.blocks.block',
 //		'plugin.comments.comment',
 //		'plugin.contacts.contact',
 //		'plugin.translate.i18n',
-		'plugin.croogo\settings.language',
+//		'plugin.croogo\settings.language',
 //		'plugin.menus.link',
 //		'plugin.menus.menu',
 //		'plugin.contacts.message',
@@ -21,13 +21,13 @@ class UrlBehaviorTest extends CroogoTestCase {
 //		'plugin.meta.meta',
 //		'plugin.taxonomy.model_taxonomy',
 //		'plugin.blocks.region',
-		'plugin.croogo\users.role',
-		'plugin.croogo\settings.setting',
+//		'plugin.croogo\users.role',
+//		'plugin.croogo\settings.setting',
 //		'plugin.taxonomy.taxonomy',
 //		'plugin.taxonomy.term',
 //		'plugin.taxonomy.type',
 //		'plugin.taxonomy.types_vocabulary',
-		'plugin.croogo\users.user',
+//		'plugin.croogo\users.user',
 //		'plugin.taxonomy.vocabulary',
 	);
 

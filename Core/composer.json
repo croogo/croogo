@@ -20,6 +20,11 @@
         "croogo/users": "3.0.x-dev",
         "croogo/wysiwyg": "3.0.x-dev"
     },
+    "require-dev": {
+        "cakephp/cakephp-codesniffer": "dev-master",
+        "phpunit/phpunit": "4.1.*",
+        "friendsofcake/cakephp-test-utilities": "dev-master"
+    },
     "suggest": {
         "croogo/example": "Example Croogo plugin"
     },
@@ -41,7 +46,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Croogo\\Core\\Test\\": "tests"
+            "Croogo\\Core\\Test\\": "tests",
+            "Croogo\\Core\\Test\\App\\": "tests/test_app/src",
+            "App\\": "tests/test_app/src"
         }
     },
     "minimum-stability": "dev"

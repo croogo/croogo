@@ -14,9 +14,9 @@ use Croogo\Core\View\Helper\LayoutHelper;
 class LayoutHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.croogo\users.user',
-		'plugin.croogo\users.role',
-		'plugin.croogo\settings.setting',
+//		'plugin.croogo\users.user',
+//		'plugin.croogo\users.role',
+//		'plugin.croogo\settings.setting',
 //		'plugin.taxonomy.type',
 //		'plugin.taxonomy.vocabulary',
 //		'plugin.taxonomy.types_vocabulary',

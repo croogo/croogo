@@ -16,11 +16,11 @@ use Croogo\Extensions\CroogoTheme;
 class CroogoHelperTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.croogo\users.aco',
-		'plugin.croogo\users.aro',
-		'plugin.croogo\users.aros_aco',
-		'plugin.croogo\settings.setting',
-		'plugin.croogo\users.role',
+//		'plugin.croogo\users.aco',
+//		'plugin.croogo\users.aro',
+//		'plugin.croogo\users.aros_aco',
+//		'plugin.croogo\settings.setting',
+//		'plugin.croogo\users.role',
 //		'plugin.taxonomy.type',
 	);
 

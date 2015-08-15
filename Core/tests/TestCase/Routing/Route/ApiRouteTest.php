@@ -8,7 +8,7 @@ use Croogo\Core\TestSuite\CroogoTestCase;
 class ApiRouteTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.croogo\settings.setting',
+//		'plugin.croogo\settings.setting',
 	);
 
 	public function testParse() {

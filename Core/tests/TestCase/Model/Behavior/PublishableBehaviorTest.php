@@ -6,8 +6,8 @@ use Croogo\Core\TestSuite\CroogoTestCase;
 class PublishableBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.croogo\settings.setting',
-		'plugin.Croogo\Core.order_record',
+//		'plugin.croogo\settings.setting',
+//		'plugin.Croogo\Core.order_record',
 	);
 
 /**

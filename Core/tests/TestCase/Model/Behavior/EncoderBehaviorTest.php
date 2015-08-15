@@ -19,6 +19,8 @@ class EncoderBehaviorTest extends CroogoTestCase {
 	public function setUp() {
 		parent::setUp();
 
+		$this->markTestIncomplete('This hasn\'t been ported yet');
+
 		$this->nodesTable = TableRegistry::get('Croogo/Nodes.Nodes');
 	}
 

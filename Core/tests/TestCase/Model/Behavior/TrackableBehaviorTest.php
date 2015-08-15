@@ -23,14 +23,17 @@ use Croogo\Users\Model\User;
 class TrackableBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.Croogo/Core.trackable',
-		'plugin.croogo/users.user',
-		'plugin.croogo/users.role',
-		'plugin.croogo/settings.setting',
+//		'plugin.Croogo/Core.trackable',
+//		'plugin.croogo/users.user',
+//		'plugin.croogo/users.role',
+//		'plugin.croogo/settings.setting',
 	);
 
 	public function setUp() {
 		parent::setUp();
+
+		$this->markTestIncomplete('This hasn\'t been ported yet');
+
 		$this->loadFixtures('Trackable');
 //		$this->model = ClassRegistry::init(array(
 //			'class' => 'TestModel',

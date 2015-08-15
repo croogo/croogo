@@ -9,7 +9,7 @@ use Croogo\Core\TestSuite\CroogoTestCase;
 class CroogoTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.croogo/settings.setting',
+//		'plugin.croogo/settings.setting',
 	);
 
 	public function testCrossPluginHooks() {

@@ -21,11 +21,13 @@ class TestNodesEventController extends NodesController {
 class CroogoEventManagerTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.croogo/settings.setting',
+//		'plugin.croogo/settings.setting',
 	);
 
 	public function setUp() {
 		parent::setUp();
+
+		$this->markTestIncomplete('This hasn\'t been ported yet');
 
 		CroogoPlugin::unload('Example');
 		CroogoPlugin::load('Shops', ['autoload' => true]);

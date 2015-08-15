@@ -32,9 +32,9 @@ class TestAppController extends CroogoAppController {
 class CroogoAppControllerTest extends CroogoControllerTestCase {
 
 	public $fixtures = array(
-		'plugin.croogo/settings.setting',
+//		'plugin.croogo/settings.setting',
 //		'plugin.taxonomy.type',
-		'plugin.croogo/nodes.node',
+//		'plugin.croogo/nodes.node',
 	);
 
 	public function setUp() {

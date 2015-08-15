@@ -7,9 +7,9 @@ use Croogo\Core\TestSuite\CroogoTestCase;
 class CachedBehaviorTest extends CroogoTestCase {
 
 	public $fixtures = array(
-		'plugin.croogo/users.role',
-		'plugin.croogo/users.user',
-		'plugin.croogo/settings.setting',
+//		'plugin.croogo/users.role',
+//		'plugin.croogo/users.user',
+//		'plugin.croogo/settings.setting',
 	);
 
 /**

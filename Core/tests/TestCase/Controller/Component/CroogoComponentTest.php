@@ -28,14 +28,14 @@ class CroogoComponentTest extends CroogoTestCase {
 //		'plugin.croogo/users.aco',
 //		'plugin.croogo/users.aro',
 //		'plugin.croogo/users.aros_aco',
-		'plugin.croogo/settings.setting',
+//		'plugin.croogo/settings.setting',
 //		'plugin.croogo/menus.menu',
 //		'plugin.croogo/menus.link',
 //		'plugin.croogo/users.role',
-//		'plugin.croogo/taxonomy.type',
+//		'plugin.croogo/taxonomy.type',n
 //		'plugin.croogo/taxonomy.vocabulary',
 //		'plugin.croogo/taxonomy.types_vocabulary',
-		'plugin.croogo/nodes.node',
+//		'plugin.croogo/nodes.node',
 	);
 
 	public function setUp() {
