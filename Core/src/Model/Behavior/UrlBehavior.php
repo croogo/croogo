@@ -22,22 +22,18 @@ use Croogo\Core\Link;
 class UrlBehavior extends Behavior {
 
 	protected $_defaultConfig = [
-		'url' => [
-			'prefix' => false,
-			'plugin' => 'Croogo/Nodes',
-			'controller' => 'Nodes',
-			'action' => 'view',
-		],
-		'fields' => [
-			'type',
-			'slug',
-		],
+		'url' => [],
+		'fields' => [],
+		'pass' => []
 	];
 
 	public function beforeFind(Event $event, Query $query, $options) {
 		$query->formatResults(function (CollectionInterface $results) {
 			return $results->map(function (Entity $row) {
+				// Base URL
 				$url = $this->config('url');
+
+				// Add named fields
 				$fields = $this->config('fields');
 				if (is_array($fields)) {
 					foreach ($fields as $field) {
@@ -46,6 +42,17 @@ class UrlBehavior extends Behavior {
 						}
 					}
 				}
+
+				// Add passed fields
+				$passed = $this->config('pass');
+				if (is_array($passed)) {
+					foreach ($passed as $field) {
+						if ($row->get($field)) {
+							$url[] = $row->get($field);
+						}
+					}
+				}
+
 				$row->set('url', new Link($url));
 				$row->dirty('url', false);
 

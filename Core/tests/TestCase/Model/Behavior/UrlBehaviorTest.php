@@ -1,37 +1,16 @@
 <?php
+
 namespace Croogo\Core\Test\TestCase\Model\Behavior;
 
+use Cake\ORM\TableRegistry;
+use Croogo\Core\Link;
 use Croogo\Core\TestSuite\CroogoTestCase;
-use Nodes\Model\Node;
+
 class UrlBehaviorTest extends CroogoTestCase {
 
-	public $fixtures = array(
-//		'plugin.croogo\users.aco',
-//		'plugin.croogo\users.aro',
-//		'plugin.croogo\users.aros_aco',
-//		'plugin.blocks.block',
-//		'plugin.comments.comment',
-//		'plugin.contacts.contact',
-//		'plugin.translate.i18n',
-//		'plugin.croogo\settings.language',
-//		'plugin.menus.link',
-//		'plugin.menus.menu',
-//		'plugin.contacts.message',
-//		'plugin.croogo\nodes.node',
-//		'plugin.meta.meta',
-//		'plugin.taxonomy.model_taxonomy',
-//		'plugin.blocks.region',
-//		'plugin.croogo\users.role',
-//		'plugin.croogo\settings.setting',
-//		'plugin.taxonomy.taxonomy',
-//		'plugin.taxonomy.term',
-//		'plugin.taxonomy.type',
-//		'plugin.taxonomy.types_vocabulary',
-//		'plugin.croogo\users.user',
-//		'plugin.taxonomy.vocabulary',
-	);
-
-	public $Node = null;
+	public $fixtures = [
+		'plugin.croogo\core.things'
+	];
 
 /**
  * setUp
@@ -40,44 +19,32 @@ class UrlBehaviorTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-//		$this->Node = ClassRegistry::init('Nodes.Node');
-	}
 
-/**
- * tearDown
- *
- * @return void
- */
-	public function tearDown() {
-		parent::tearDown();
-		unset($this->Node);
-//		ClassRegistry::flush();
+		$this->Things = TableRegistry::get('Things');
 	}
 
 	public function testSingle() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+		$thing = $this->Things->findByTitle('First Article')->first();
 
-		$helloWorld = $this->Node->findBySlug('hello-world');
-		$this->assertEqual($helloWorld['Node']['url'], array(
-			'plugin' => 'nodes',
-			'controller' => 'nodes',
+		$this->assertEquals(new Link([
+			'controller' => 'Things',
 			'action' => 'view',
-			'type' => 'blog',
-			'slug' => 'hello-world',
-		));
+			1
+		]), $thing->url);
 	}
 
 	public function testMultiple() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+		$things = $this->Things->find('all')->toArray();
 
-		$result = $this->Node->find('all');
-		$this->assertEqual($result['0']['Node']['url'], array(
-			'plugin' => 'nodes',
-			'controller' => 'nodes',
+		$this->assertEquals(new Link([
+			'controller' => 'Things',
 			'action' => 'view',
-			'type' => $result['0']['Node']['type'],
-			'slug' => $result['0']['Node']['slug'],
-		));
+			1
+		]), $things[0]->url);
+		$this->assertEquals(new Link([
+			'controller' => 'Things',
+			'action' => 'view',
+			2
+		]), $things[1]->url);
 	}
-
 }
