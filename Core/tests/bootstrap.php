@@ -38,7 +38,12 @@ define('CAKE', CORE_PATH . 'src' . DS);
 require ROOT . '/vendor/autoload.php';
 require CORE_PATH . 'config/bootstrap.php';
 
-Cake\Core\Configure::write('App', ['namespace' => 'Croogo\Core\Test\App']);
+Cake\Core\Configure::write('App', [
+	'namespace' => 'Croogo\Core\Test\App',
+	'paths' => [
+		'plugins' => [APP . 'plugins' . DS],
+	]
+]);
 Cake\Core\Configure::write('debug', true);
 
 $TMP = new \Cake\Filesystem\Folder(TMP);

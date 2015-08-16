@@ -4,8 +4,10 @@ namespace Croogo\Core\Test\TestCase;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\ORM\TableRegistry;
 use Croogo\Core\Croogo;
 use Croogo\Core\TestSuite\CroogoTestCase;
+
 class CroogoTest extends CroogoTestCase {
 
 	public $fixtures = array(
@@ -13,13 +15,12 @@ class CroogoTest extends CroogoTestCase {
 	);
 
 	public function testCrossPluginHooks() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
 		Plugin::load(array('Shops', 'Suppliers'), array(
 			'bootstrap' => true,
 		));
-		$Order = ClassRegistry::init('Shops.Order');
-		$this->assertTrue($Order->monitored);
+
+		$Orders = TableRegistry::get('Shops.Orders');
+		$this->assertTrue($Orders->monitored);
 	}
 
 /**

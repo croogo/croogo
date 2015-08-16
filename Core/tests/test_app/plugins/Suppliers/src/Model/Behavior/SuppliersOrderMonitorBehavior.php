@@ -2,11 +2,14 @@
 
 namespace Suppliers\Model\Behavior;
 
-use App\Model\ModelBehavior;
-class SuppliersOrderMonitorBehavior extends ModelBehavior {
+use Cake\ORM\Behavior;
 
-	public function setup(Model $model, $config = array()) {
-		$model->monitored = true;
+class SuppliersOrderMonitorBehavior extends Behavior {
+
+	public function initialize(array $config)
+	{
+		parent::initialize($config);
+
+		$this->_table->monitored = true;
 	}
-
 }

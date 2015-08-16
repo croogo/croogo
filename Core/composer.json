@@ -32,7 +32,9 @@
         "psr-4": {
             "Croogo\\Core\\Test\\": "tests",
             "Croogo\\Core\\Test\\App\\": "tests/test_app/src",
-            "App\\": "tests/test_app/src"
+            "App\\": "tests/test_app/src",
+            "Shops\\": "tests/test_app/plugins/Shops/src",
+            "Suppliers\\": "tests/test_app/plugins/Suppliers/src"
         }
     },
     "minimum-stability": "dev"

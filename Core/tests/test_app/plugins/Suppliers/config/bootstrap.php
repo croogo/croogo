@@ -1,4 +1,7 @@
 <?php
 
 namespace Croogo\Suppliers\Config;
-Croogo::hookBehavior('Order', 'Suppliers.SuppliersOrderMonitor');
+
+use Croogo\Core\Croogo;
+
+Croogo::hookBehavior('Shops.Orders', 'Suppliers.SuppliersOrderMonitor');
