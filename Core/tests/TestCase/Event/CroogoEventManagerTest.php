@@ -12,11 +12,11 @@ use Croogo\Extensions\CroogoPlugin;
 
 use Croogo\Nodes\Controller\NodesController;
 use Croogo\Users\Controller\UsersController;
-class TestUsersEventController extends UsersController {
-}
-
-class TestNodesEventController extends NodesController {
-}
+//class TestUsersEventController extends UsersController {
+//}
+//
+//class TestNodesEventController extends NodesController {
+//}
 
 class CroogoEventManagerTest extends CroogoTestCase {
 
@@ -45,7 +45,8 @@ class CroogoEventManagerTest extends CroogoTestCase {
  */
 	public function tearDown() {
 		parent::tearDown();
-		CroogoPlugin::unload('Shops');
+
+//		CroogoPlugin::unload('Shops');
 	}
 
 /**

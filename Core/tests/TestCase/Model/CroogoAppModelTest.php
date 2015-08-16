@@ -56,6 +56,9 @@ class CroogoAppModelTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 //		$this->User = ClassRegistry::init('Users.User');
 		$this->usersTable = TableRegistry::get('Croogo/Users.Users');
 	}

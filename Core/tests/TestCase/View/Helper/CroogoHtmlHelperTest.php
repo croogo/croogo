@@ -20,6 +20,8 @@ class CroogoHtmlHelperTest extends CroogoTestCase {
 	private $CroogoHtml;
 
 	public function setUp() {
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 		$controller = null;
 		$this->View = new View(new Request, new Response);
 		$this->CroogoHtml = new CroogoHtmlHelper($this->View);

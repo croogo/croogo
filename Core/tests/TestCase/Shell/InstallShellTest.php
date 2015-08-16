@@ -61,6 +61,9 @@ class InstallShellTest extends CroogoTestCase {
  */
 	public function setUp() {
 		parent::setUp();
+
+		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+
 //		App::build(array(
 //			'Plugin' => array(Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
 //			'View' => array(Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'View' . DS),
