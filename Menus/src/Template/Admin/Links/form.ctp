@@ -35,7 +35,7 @@ if ($this->request->params['action'] == 'edit') {
 	);
 }
 
-$this->append('form-start', $this->CroogoForm->create($link, array(
+$this->append('form-start', $this->Form->create($link, array(
 	'url' => $formUrl,
 	'class' => 'protected-form',
 )));
@@ -53,23 +53,23 @@ $this->end();
 $this->append('tab-content');
 
 	echo $this->CroogoHtml->tabStart('link-basic');
-	echo $this->CroogoForm->input('id');
-	echo $this->CroogoForm->input('menu_id', array(
+	echo $this->Form->input('id');
+	echo $this->Form->input('menu_id', array(
 		'selected' => $menuId,
 	));
-	echo $this->CroogoForm->input('parent_id', array(
+	echo $this->Form->input('parent_id', array(
 		'title' => __d('croogo', 'Parent'),
 		'options' => $parentLinks,
 		'empty' => true,
 	));
-	$this->CroogoForm->templates(array(
+	$this->Form->templates(array(
 		'class' => 'span10',
 	));
-	echo $this->CroogoForm->input('title', array(
+	echo $this->Form->input('title', array(
 		'label' => __d('croogo', 'Title'),
 	));
 
-	echo $this->CroogoForm->input('link', array(
+	echo $this->Form->input('link', array(
 		'label' => __d('croogo', 'Link'),
 		'div' => 'input text required input-append',
 		'id' => 'link',
@@ -78,7 +78,7 @@ $this->append('tab-content');
 	echo $this->CroogoHtml->tabEnd();
 
 	echo $this->CroogoHtml->tabStart('link-access');
-	echo $this->CroogoForm->input('visibility_roles', array(
+	echo $this->Form->input('visibility_roles', array(
 		'class' => false,
 		'options' => $roles,
 		'multiple' => true
@@ -86,20 +86,20 @@ $this->append('tab-content');
 	echo $this->CroogoHtml->tabEnd();
 
 	echo $this->CroogoHtml->tabStart('link-misc');
-	echo $this->CroogoForm->input('class', array(
+	echo $this->Form->input('class', array(
 		'label' => __d('croogo', 'Class'),
 		'class' => 'span10 class',
 	));
-	echo $this->CroogoForm->input('description', array(
+	echo $this->Form->input('description', array(
 		'label' => __d('croogo', 'Description'),
 	));
-	echo $this->CroogoForm->input('rel', array(
+	echo $this->Form->input('rel', array(
 		'label' => __d('croogo', 'Rel'),
 	));
-	echo $this->CroogoForm->input('target', array(
+	echo $this->Form->input('target', array(
 		'label' => __d('croogo', 'Target'),
 	));
-	echo $this->CroogoForm->input('params', array(
+	echo $this->Form->input('params', array(
 		'label' => __d('croogo', 'Params'),
 	));
 	echo $this->CroogoHtml->tabEnd();
@@ -110,10 +110,10 @@ $this->end();
 
 $this->start('panels');
 	echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing'));
-		echo $this->CroogoForm->button(__d('croogo', 'Apply'), array('name' => 'apply'));
-		echo $this->CroogoForm->button(__d('croogo', 'Save'), array('button' => 'success'));
+		echo $this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply'));
+		echo $this->Form->button(__d('croogo', 'Save'), array('button' => 'success'));
 		echo $this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index', '?' => array('menu_id' => $menuId)), array('button' => 'danger'));
-		echo $this->CroogoForm->input('status', array(
+		echo $this->Form->input('status', array(
 			'type' => 'radio',
 			'legend' => false,
 			'class' => false,
@@ -121,11 +121,11 @@ $this->start('panels');
 			'options' => $this->Croogo->statuses(),
 		));
 		echo $this->CroogoHtml->div('input-daterange',
-			$this->CroogoForm->input('publish_start', array(
+			$this->Form->input('publish_start', array(
 				'label' => __d('croogo', 'Publish Start'),
 				'type' => 'text',
 			)) .
-			$this->CroogoForm->input('publish_end', array(
+			$this->Form->input('publish_end', array(
 				'label' => __d('croogo', 'Publish End'),
 				'type' => 'text',
 			))
