@@ -259,7 +259,7 @@ class UsersController extends CroogoAppController {
  * @access public
  */
 	public function login() {
-		$this->layout = 'admin_login';
+		$this->viewBuilder()->layout('admin_login');
 
 		if ($this->Auth->user('id')) {
 			if (!$this->request->session()->check('Message.auth')) {

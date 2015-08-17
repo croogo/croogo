@@ -247,7 +247,7 @@ class CroogoAppController extends AppController {
 		if ($prefix === 'admin') {
 			$theme = Configure::read('Site.admin_theme');
 
-			$this->layout = 'Croogo/Core.admin';
+			$this->viewBuilder()->layout('Croogo/Core.admin');
 		} else {
 			$theme = Configure::read('Site.theme');
 		}
@@ -318,7 +318,7 @@ class CroogoAppController extends AppController {
 		$this->_setupTheme();
 
 		if ($this->request->is('ajax')) {
-			$this->layout = 'ajax';
+			$this->viewBuilder()->layout('ajax');
 		}
 
 		if (
