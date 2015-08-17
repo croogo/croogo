@@ -123,6 +123,7 @@ class NodesTable extends CroogoTable {
 		return $query->andWhere([
 			'OR' => [
 				'visibility_roles' => '',
+				'visibility_roles IS NULL',
 				'visibility_roles LIKE' => '%"' . $args['roleId'] . '"%',
 			],
 		]);
