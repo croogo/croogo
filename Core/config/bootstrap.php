@@ -12,7 +12,10 @@ Type::map('link', 'Croogo\Core\Database\Type\LinkType');
 
 Configure::write(
 	'DebugKit.panels',
-	array_merge((array)Configure::read('DebugKit.panels'), ['Croogo/Core.Plugins'])
+	array_merge((array)Configure::read('DebugKit.panels'), [
+		'Croogo/Core.Plugins',
+		'Croogo/Core.ViewHelpers',
+	])
 );
 
 require_once 'croogo_bootstrap.php';
