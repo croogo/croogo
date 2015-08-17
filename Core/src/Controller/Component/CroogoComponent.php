@@ -411,22 +411,24 @@ class CroogoComponent extends Component {
  * @return array A list of view paths
  */
 	protected function _setupViewPaths(Controller $controller) {
-		$defaultViewPaths = App::path('View');
-		$pos = array_search(APP . 'View' . DS, $defaultViewPaths);
+		$defaultViewPaths = App::path('Template');
+		$pos = array_search(APP . 'Template' . DS, $defaultViewPaths);
 		if ($pos !== false) {
 			$viewPaths = array_splice($defaultViewPaths, 0, $pos + 1);
 		} else {
 			$viewPaths = $defaultViewPaths;
 		}
-		if ($controller->theme) {
-			$themePath = Plugin::path($controller->theme);
-			$viewPaths[] = $themePath;
-			if ($controller->plugin) {
-				$viewPaths[] = $themePath . 'Plugin' . DS . $controller->plugin . DS;
+		if ($controller->viewBuilder()->theme()) {
+			$themePaths = App::path('Template', $controller->viewBuilder()->theme());
+			foreach ($themePaths as $themePath) {
+				$viewPaths[] = $themePath;
+				if ($controller->plugin) {
+					$viewPaths[] = $themePath . 'Plugin' . DS . $controller->plugin . DS;
+				}
 			}
 		}
 		if ($controller->plugin) {
-			$viewPaths = array_merge($viewPaths, App::path('View', $controller->plugin));
+			$viewPaths = array_merge($viewPaths, App::path('Template', $controller->plugin));
 		}
 		$viewPaths = array_merge($viewPaths, $defaultViewPaths);
 		return $viewPaths;
@@ -438,24 +440,36 @@ class CroogoComponent extends Component {
  * Looks for view file through the available view paths.  If the view is found,
  * set Controller::$view variable.
  *
- * @param string|array $views view path or array of view paths
+ * @param string|array $templates view path or array of view paths
  * @return void
  */
-	public function viewFallback($views) {
-		if (is_string($views)) {
-			$views = array($views);
+	public function viewFallback($templates) {
+		if (is_string($templates)) {
+			$templates = array($templates);
 		}
 		$controller = $this->_controller;
-		$viewPaths = $this->_setupViewPaths($controller);
-		foreach ($views as $view) {
-			foreach ($viewPaths as $viewPath) {
-				$viewPath = $viewPath . $controller->viewPath . DS . $view . $controller->ext;
-				if (file_exists($viewPath)) {
-					$controller->view = $viewPath;
+		$templatePaths = $this->_setupViewPaths($controller);
+		foreach ($templates as $template) {
+			foreach ($templatePaths as $templatePath) {
+				$templatePath = $templatePath . $this->_viewPath() . DS . $template . '.ctp';
+				if (file_exists($templatePath)) {
+					$controller->viewBuilder()->template($templatePath);
 					return;
 				}
 			}
 		}
 	}
 
+	protected function _viewPath()
+	{
+		$viewPath = $this->_controller->name;
+		if (!empty($this->request->params['prefix'])) {
+			$prefixes = array_map(
+				'Cake\Utility\Inflector::camelize',
+				explode('/', $this->_controller->request->params['prefix'])
+			);
+			$viewPath = implode(DS, $prefixes) . DS . $viewPath;
+		}
+		return $viewPath;
+	}
 }
