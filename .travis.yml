@@ -46,7 +46,7 @@ matrix:
 
 before_script:
   - composer self-update
-  - cd $PLUGIN; composer install --prefer-dist --no-interaction
+  - sh -c "if [ -z '$PLUGIN' ]; then composer install --prefer-dist --no-interaction; else cd $PLUGION; composer install --prefer-dist --no-interaction; fi"
 
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test;'; fi"
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test2;'; fi"
@@ -68,7 +68,7 @@ before_script:
 script:
   - sh -c "if [ '$DEFAULT' = '1' ]; then cd $PLUGIN; phpunit; fi"
 
-  - sh -c "if [ '$PHPCS' = '1' ]; then cd $PLUGIN; vendor/bin/phpcs -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests; fi"
+  - sh -c "if [ '$PHPCS' = '1' ]; then vendor/bin/phpcs -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./Core/src ./Core/tests; fi"
 
   - sh -c "if [ '$COVERALLS' = '1' ]; then cd $PLUGIN; phpunit --coverage-clover build/logs/clover.xml; fi"
   - sh -c "if [ '$COVERALLS' = '1' ]; then cd $PLUGIN; vendor/bin/coveralls -c .coveralls.yml -v; fi"

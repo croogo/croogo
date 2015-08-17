@@ -37,7 +37,9 @@
 		"admad/cakephp-sequence": "dev-master"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "~4.8@dev"
+		"cakephp/cakephp-codesniffer": "dev-master",
+		"phpunit/phpunit": "4.1.*",
+		"friendsofcake/cakephp-test-utilities": "dev-master"
 	},
 	"autoload": {
 		"psr-4": {
@@ -61,7 +63,10 @@
 			"Croogo\\Translate\\": "Translate/src",
 			"Croogo\\Users\\": "Users/src",
 			"Croogo\\Wysiwyg\\": "Wysiwyg/src"
-		}
+		},
+		"files": [
+			"Core/src/functions.php"
+		]
 	},
 	"autoload-dev": {
 		"psr-4": {
