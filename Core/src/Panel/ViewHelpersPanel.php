@@ -17,6 +17,10 @@ class ViewHelpersPanel extends DebugPanel
 	public function afterFilter(Event $event)
 	{
 		/* @var HelperRegistry $helperRegistry */
+		if (!isset($event->subject()->View)) {
+			return;
+		}
+
 		$helperRegistry = $event->subject()->View->helpers();
 
 		$viewHelperNames = $helperRegistry->loaded();
