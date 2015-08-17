@@ -347,6 +347,7 @@ class NodesController extends NodesAppController {
 		} else {
 			$nodes = $this->paginate($query);
 		}
+
 		$this->set(compact('nodes'));
 	}
 

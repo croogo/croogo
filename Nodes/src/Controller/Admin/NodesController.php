@@ -238,8 +238,6 @@ class NodesController extends NodesAppController {
 		}
 		if (empty($this->request->data)) {
 			$this->Croogo->setReferer();
-			$node->role = $this->Nodes->decodeData($node->visibility_roles);
-//			$this->request->data = $node;
 		}
 
 		$this->set(compact('node'));
