@@ -73,24 +73,6 @@ class CroogoAppController extends AppController {
 	protected $_apiComponents = array();
 
 /**
- * Helpers
- *
- * @var array
- * @access public
- */
-	public $helpers = array(
-		'Html',
-		'Form',
-		'Text',
-		'Time',
-		'Croogo/Core.Js',
-		'Croogo/Core.Layout',
-		'Croogo/Core.Custom',
-		'Croogo/Core.CroogoForm',
-		'Croogo/Core.Theme',
-	);
-
-/**
  * Pagination
  */
 	public $paginate = array(
@@ -314,6 +296,18 @@ class CroogoAppController extends AppController {
 				$this->request->allowMethod('post');
 			}
 		}
+
+		$this->viewBuilder()->helpers([
+			'Html',
+			'Form',
+			'Text',
+			'Time',
+			'Croogo/Core.Js',
+			'Croogo/Core.Layout',
+			'Croogo/Core.Custom',
+			'Croogo/Core.CroogoForm',
+			'Croogo/Core.Theme',
+		]);
 
 		$this->_setupTheme();
 
