@@ -4,7 +4,7 @@ $this->extend('/Common/admin_edit');
 
 $this->Html->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'index'))
-	->addCrumb($prefix, '/' . $this->request->url);
+	->addCrumb(__d('croogo', $prefix), '/' . $this->request->url);
 
 $this->append('form-start', $this->Form->create('Setting', array(
 	'url' => array(
