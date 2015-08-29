@@ -22,6 +22,7 @@ $this->start('table-heading');
 		'',
 		__d('croogo', 'Locale'),
 		__d('croogo', 'Default'),
+		__d('croogo', 'Status'),
 		__d('croogo', 'Actions'),
 	));
 	echo $this->Html->tag('thead', $tableHeaders);
