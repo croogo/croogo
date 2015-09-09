@@ -19,9 +19,6 @@ class MockCroogoComponent extends CroogoComponent {
 
 }
 
-class CroogoTestController extends AppController {
-}
-
 class CroogoComponentTest extends CroogoTestCase {
 
 	public $fixtures = array(
@@ -38,16 +35,31 @@ class CroogoComponentTest extends CroogoTestCase {
 //		'plugin.croogo/nodes.node',
 	);
 
+	public $component = null;
+	public $controller = null;
+
 	public function setUp() {
 		parent::setUp();
 
-		$this->Controller = new CroogoTestController(new Request(), new Response());
-//		$this->Controller->constructClasses();
-		$this->Controller->Croogo = new MockCroogoComponent($this->Controller->components());
-		$this->Controller->components()->unload('Blocks');
-		$this->Controller->components()->unload('Menus');
-		$this->Controller->components()->set('Croogo', $this->Controller->Croogo);
-		$this->Controller->startupProcess();
+		// Setup our component and fake test controller
+		$request = new Request();
+		$response = new Response();
+		$this->controller = $this->getMock(
+			'Cake\Controller\Controller',
+			[],
+			[$request, $response]
+		);
+
+		$registry = new ComponentRegistry($this->controller);
+		$this->component = new CroogoComponent($registry);
+
+//		$this->Controller = new CroogoTestController(new Request(), new Response());
+////		$this->Controller->constructClasses();
+//		$this->Controller->Croogo = new MockCroogoComponent($this->Controller->components());
+//		$this->Controller->components()->unload('Blocks');
+//		$this->Controller->components()->unload('Menus');
+//		$this->Controller->components()->set('Croogo', $this->Controller->Croogo);
+//		$this->Controller->startupProcess();
 	}
 
 	public function testAddRemoveAcos() {
@@ -92,15 +104,12 @@ class CroogoComponentTest extends CroogoTestCase {
  * @dataProvider redirectData
  */
 	public function testRedirect($expected, $url, $data = array(), $indexUrl = array()) {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
-		$Controller = $this->getMock('Croogo\\Croogo\\Test\\TestCase\\Controller\\Component\\CroogoTestController', array('redirect'), array(new Request(), new Response()));
-		$Controller->request->data = $data;
-		$Controller->expects($this->once())
+		$this->controller->request->data = $data;
+		$this->controller->expects($this->once())
 			->method('redirect')
 			->with($this->equalTo($expected));
 		$CroogoComponent = new CroogoComponent(new ComponentRegistry());
-		$CroogoComponent->startup($Controller);
+		$CroogoComponent->startup($this->controller);
 		$CroogoComponent->redirect($url, null, true, $indexUrl);
 	}
 
@@ -119,4 +128,11 @@ class CroogoComponentTest extends CroogoTestCase {
 		);
 	}
 
+	public function tearDown()
+	{
+		parent::tearDown();
+
+		// Clean up after we're done
+		unset($this->component, $this->controller);
+	}
 }
