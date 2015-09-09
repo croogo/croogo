@@ -20,7 +20,8 @@ class MetaHelper extends Helper {
  * Helpers
  */
 	public $helpers = array(
-		'Croogo.Layout',
+		'Croogo/Core.Layout',
+		'Croogo/Core.Croogo',
 		'Html',
 		'Form',
 	);
@@ -37,7 +38,7 @@ class MetaHelper extends Helper {
  */
 	public function beforeRender($viewFile) {
 		if ($this->_View->Layout->isLoggedIn()) {
-			return $this->_View->Croogo->adminScript('Meta.admin');
+			return $this->Croogo->adminScript('Meta.admin');
 		}
 	}
 
