@@ -67,7 +67,7 @@ Admin.protectForms = function() {
 				})
 				.on('click', whitelist, function(e) {
 					$form.data('dirty', false);
-					if (Croogo.Wysiwyg) {
+					if (Croogo.Wysiwyg && Croogo.Wysiwyg.resetDirty) {
 						Croogo.Wysiwyg.resetDirty();
 					}
 				});
@@ -82,8 +82,10 @@ Admin.protectForms = function() {
 				}
 			}
 			var Wysiwyg = Croogo.Wysiwyg;
-			if (!dirty && (Wysiwyg.checkDirty && !Wysiwyg.checkDirty())) {
-				return;
+			if (!dirty) {
+				if (!Wysiwyg.checkDirty || (Wysiwyg.checkDirty && !Wysiwyg.checkDirty())) {
+					return;
+				}
 			}
 
 			var confirmationMessage = 'Please save your changes';
