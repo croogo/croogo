@@ -56,7 +56,7 @@ endif;
 if ($formStart = trim($this->fetch('form-start'))):
 	echo $formStart;
 else:
-	echo $this->Form->create($modelClass);
+	echo $this->Form->create($entity);
 	if (isset($this->request->data[$modelClass]['id'])):
 		echo $this->Form->input('id');
 	endif;
@@ -93,7 +93,7 @@ $tabId = 'tabitem-' . Inflector::slug(strtolower($modelClass), '-');
 						'tooltip' => ucfirst($field),
 					);
 				}
-				$content .= $this->CroogoForm->input($field, $opts);
+				$content .= $this->Form->input($field, $opts);
 			endforeach;
 		endif;
 		?>
