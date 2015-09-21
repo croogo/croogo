@@ -1,11 +1,12 @@
 <?php
 
+$this->extend('Croogo/Core./Common/admin_index');
+
 $this->name = 'acos';
 
 $this->Html->script('Croogo/Acl.acl_permissions', ['block' => true]);
-$this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentReady(); });", ['block' => true]);
 
-$this->Croogo->adminScript('Acl.acl_permissions');
+$this->Croogo->adminScript('Croogo/Acl.acl_permissions');
 
 $this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))

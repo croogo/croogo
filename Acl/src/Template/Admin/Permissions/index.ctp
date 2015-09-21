@@ -1,19 +1,19 @@
 <?php
 
+$this->extend('Croogo/Core./Common/admin_index');
+
 $this->name = 'acos';
 
 $this->Html->script('Croogo/Acl.acl_permissions', ['block' => true]);
-$this->Html->scriptBlock("$(document).ready(function(){ AclPermissions.documentReady(); });", ['block' => true]);
 
-$this->Croogo->adminScript('Acl.acl_permissions');
+$this->Croogo->adminScript('Croogo/Acl.acl_permissions');
 
 $this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Permissions'), array(
 		'plugin' => 'Croogo/Acl', 'controller' => 'Permissions',
-	))
-	->addCrumb(__d('croogo', 'Actions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Actions', 'action' => 'index', 'permission' => 1));
+	));
 
 $this->append('actions');
 	$toolsButton = $this->Html->link(
@@ -63,18 +63,21 @@ $this->append('actions');
 	);
 
 	echo $this->Croogo->adminAction(__d('croogo', 'Edit Actions'),
-		array('controller' => 'acl_actions', 'action' => 'index', 'permissions' => 1)
+		array('controller' => 'Actions', 'action' => 'index', 'permissions' => 1)
 	);
 $this->end();
 
 $this->set('tableClass', 'table permission-table');
 $this->start('table-heading');
-	$tableHeaders = $this->Html->tableHeaders(array(
+	$roleTitles = array_values($roles->toArray());
+	$roleIds = array_keys($roles->toArray());
+
+	$tableHeaders = array(
 		__d('croogo', 'Id'),
 		__d('croogo', 'Alias'),
-		__d('croogo', 'Actions'),
-	));
-	echo $this->Html->tag('thead', $tableHeaders);
+	);
+	$tableHeaders = array_merge($tableHeaders, $roleTitles);
+	$tableHeaders = $this->Html->tableHeaders($tableHeaders);
 $this->end();
 
 $this->append('table-body');
@@ -101,32 +104,6 @@ $this->append('table-body');
 			$currentController = $alias;
 		}
 
-		$actions = array();
-		$actions[] = $this->Croogo->adminRowAction('',
-			array('action' => 'move', $id, 'up'),
-			array('icon' => $this->Theme->getIcon('move-up'), 'tooltip' => __d('croogo', 'Move up'))
-		);
-		$actions[] = $this->Croogo->adminRowAction('',
-			array('action' => 'move', $id, 'down'),
-			array('icon' => $this->Theme->getIcon('move-down'), 'tooltip' => __d('croogo', 'Move down'))
-		);
-
-		$actions[] = $this->Croogo->adminRowAction('',
-			array('action' => 'edit', $id),
-			array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
-		);
-		$actions[] = $this->Croogo->adminRowAction('',
-			array('action' => 'delete',	$id),
-			array(
-				'icon' => $this->Theme->getIcon('delete'),
-				'tooltip' => __d('croogo', 'Remove this item'),
-				'escapeTitle' => false,
-				'escape' => true,
-			),
-			__d('croogo', 'Are you sure?')
-		);
-
-		$actions = $this->CroogoHtml->div('item-actions', implode(' ', $actions));
 		$row = array(
 			$id,
 			$this->Html->div(trim($class), $alias . $icon, array(
@@ -134,8 +111,11 @@ $this->append('table-body');
 				'data-alias' => $alias,
 				'data-level' => $level,
 			)),
-			$actions,
 		);
+
+		foreach ($roles as $roleId => $roleTitle) {
+			$row[] = '';
+		}
 
 		echo $this->Html->tableCells($row, $oddOptions, $evenOptions);
 	}
