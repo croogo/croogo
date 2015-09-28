@@ -35,6 +35,7 @@ before_script:
   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE SCHEMA croogo_test;' -U postgres -d croogo_test; fi"
   - cp app/Config/settings.json.install app/Config/settings.json
   - cp app/Config/croogo.php.install app/Config/croogo.php
+  - sed -i "s/E_DEPRECATED,$/E_DEPRECATED \& ~E_USER_DEPRECATED,/" app/Config/croogo.php
   - set +H
   - echo "<?php
     class DATABASE_CONFIG {
