@@ -1,9 +1,10 @@
 <?php
 
-namespace Croogo\Extensions\Controller;
+namespace Croogo\Extensions\Controller\Admin;
 use Croogo\Extensions\CroogoTheme;
 use Cake\Core\Configure;
 use Croogo\Extensions\ExtensionsInstaller;
+use Croogo\Extensions\Controller\ExtensionsAppController;
 
 /**
  * Extensions Themes Controller
@@ -16,14 +17,6 @@ use Croogo\Extensions\ExtensionsInstaller;
  * @link     http://www.croogo.org
  */
 class ExtensionsThemesController extends ExtensionsAppController {
-
-/**
- * Controller name
- *
- * @var string
- * @access public
- */
-	public $name = 'ExtensionsThemes';
 
 /**
  * Models used by the Controller
@@ -54,7 +47,7 @@ class ExtensionsThemesController extends ExtensionsAppController {
  *
  * @return void
  */
-	public function admin_index() {
+	public function index() {
 		$this->set('title_for_layout', __d('croogo', 'Themes'));
 
 		$themes = $this->_CroogoTheme->getThemes();
@@ -74,7 +67,7 @@ class ExtensionsThemesController extends ExtensionsAppController {
  * @param string $alias
  * @return void
  */
-	public function admin_activate($alias = null) {
+	public function activate($alias = null) {
 		if ($this->_CroogoTheme->activate($alias)) {
 			$this->Session->setFlash(__d('croogo', 'Theme activated.'), 'flash', array('class' => 'success'));
 		} else {
@@ -89,7 +82,7 @@ class ExtensionsThemesController extends ExtensionsAppController {
  *
  * @return void
  */
-	public function admin_add() {
+	public function add() {
 		$this->set('title_for_layout', __d('croogo', 'Upload a new theme'));
 
 		if (!empty($this->request->data)) {
@@ -112,7 +105,7 @@ class ExtensionsThemesController extends ExtensionsAppController {
  *
  * @return void
  */
-	public function admin_editor() {
+	public function editor() {
 		$this->set('title_for_layout', __d('croogo', 'Theme Editor'));
 	}
 
@@ -121,7 +114,7 @@ class ExtensionsThemesController extends ExtensionsAppController {
  *
  * @return void
  */
-	public function admin_save() {
+	public function save() {
 	}
 
 /**
@@ -130,7 +123,7 @@ class ExtensionsThemesController extends ExtensionsAppController {
  * @param string $alias
  * @return void
  */
-	public function admin_delete($alias = null) {
+	public function delete($alias = null) {
 		if ($alias == null) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Theme.'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
