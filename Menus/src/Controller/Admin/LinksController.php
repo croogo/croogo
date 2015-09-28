@@ -33,12 +33,12 @@ class LinksController extends CroogoAppController {
 		$this->loadComponent('Crud.Crud', [
 			'actions' => [
 				'toggle' => [
-					'className' => 'Crud.Bulk/Toggle',
-					'field' => 'status',
+					'className' => 'Croogo/Core.Toggle',
+					'enabled' => true
 				]
 			]
 		]);
-		$this->loadComponent('Croogo/Croogo.BulkProcess');
+		$this->loadComponent('Croogo/Core.BulkProcess');
 		$this->loadModel('Croogo/Users.Roles');
 	}
 
