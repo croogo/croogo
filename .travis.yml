@@ -3,6 +3,7 @@ language: php
 php:
   - 5.3
   - 5.4
+  - 5.5
 
 env:
   - DB=mysql
@@ -25,8 +26,7 @@ before_install:
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.2' ] ; then git clone --depth 1 git://github.com/croogo/Ckeditor -b master app/Plugin/Ckeditor ; fi"
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.2' ]; then composer global require 'phpunit/phpunit=3.7.33'; fi"
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.2' ]; then ln -s ~/.composer/vendor/phpunit/phpunit/PHPUnit app/Vendor/PHPUnit; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.3' ] ; then composer -n -vv install ; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.4' ] ; then composer -n -vv install ; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.2' ] ; then composer -n -vv install ; fi"
   - for d in Plugin/* ; do if [ ! -f $app/$d ] ; then ln -s `pwd`/$d app/$d; fi ; done
 
 before_script:
