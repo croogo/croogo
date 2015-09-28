@@ -176,7 +176,7 @@ class AclActionsController extends AclAppController {
 			$class = 'error';
 		}
 
-		$this->Session->setFlash(join('<br>', $output), 'flash', array('class' => $class));
+		$this->Session->setFlash(join('<br>', $output), 'flash', array('class' => $class, 'escape' => false));
 
 		if (isset($this->request->params['named']['permissions'])) {
 			return $this->redirect(array('plugin' => 'acl', 'controller' => 'acl_permissions', 'action' => 'index'));

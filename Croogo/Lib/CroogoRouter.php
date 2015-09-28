@@ -2,6 +2,7 @@
 
 App::uses('ApiRoute', 'Croogo.Routing/Route');
 App::uses('Router', 'Routing');
+App::uses('StringConverter', 'Croogo.Utility');
 
 /**
  * CroogoRouter
