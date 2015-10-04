@@ -63,7 +63,7 @@ class CroogoErrorController extends AppController {
 		if (isset($this->Security)) {
 			$eventManager->off($this->Security);
 		}
-		$this->viewPath = 'Error';
+		$this->templatePath = 'Error';
 	}
 
 /**
