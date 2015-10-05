@@ -62,10 +62,6 @@ $this->append('actions');
 		$toolsButton .
 		$this->Html->tag('ul', $out, array('class' => 'dropdown-menu'))
 	);
-
-	echo $this->Croogo->adminAction(__d('croogo', 'Edit Actions'),
-		array('controller' => 'acl_actions', 'action' => 'index', 'permissions' => 1)
-	);
 $this->end();
 
 $this->set('tableClass', 'table permission-table');
