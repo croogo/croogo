@@ -48,7 +48,8 @@ class CroogoAppController extends AppController {
 					'passwordHasher' => [
 						'className' => 'Fallback',
 						'hashers' => ['Default', 'Weak']
-					]
+					],
+					'userModel' => 'Croogo/Users.Users'
 				]
 			]
 		],
