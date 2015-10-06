@@ -2,7 +2,8 @@
 
 namespace Croogo\Acl\Controller\Component\Auth;
 
-use App\Controller\Component\Auth\BaseAuthorize;
+use Acl\Auth\BaseAuthorize;
+
 /**
  * An authentication adapter for AuthComponent. Provides similar functionality
  * to ActionsAuthorize class from CakePHP core _with_ caching capability.

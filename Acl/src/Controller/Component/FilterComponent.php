@@ -109,15 +109,15 @@ class FilterComponent extends Component {
 		}
 
 		$actionPath = $this->_controller->request->is('api') ? 'api' : 'controllers';
-		$this->_controller->Auth->authorize = array(
+		$this->_controller->Auth->config('authorize', array(
 			AuthComponent::ALL => array(
 				'actionPath' => 'controllers',
-				'userModel' => 'Users.User',
+				'userModel' => 'Croogo/Users.User',
 			),
-			'Acl.AclCached' => array(
+			'Croogo/Acl.AclCached' => array(
 				'actionPath' => $actionPath,
 			),
-		);
+		));
 
 		if (isset($this->_controller->request->params['admin']) &&
 			!$this->_controller->Auth->loggedIn()) {
