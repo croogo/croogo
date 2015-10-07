@@ -201,7 +201,7 @@ class FilterComponent extends Component {
 		// public access authorization
 		$cacheName = 'permissions_public';
 		if (($perms = Cache::read($cacheName, 'permissions')) === false) {
-			$perms = $this->getPermissions('Croogo/Users.Roles', 3);
+			$perms = $this->getPermissions('Roles', 3);
 			Cache::write($cacheName, $perms, 'permissions');
 		}
 		$actionPath = $this->_controller->request->is('api') ? 'api' : 'controllers';
