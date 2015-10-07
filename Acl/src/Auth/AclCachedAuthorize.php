@@ -145,12 +145,12 @@ class AclCachedAuthorize extends BaseAuthorize {
 		$action = $this->action($request);
 
 		$cacheName = 'permissions_' . strval($user['id']);
-//		if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
+		if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
 			$permissions = array();
-//			Cache::write($cacheName, $permissions, 'permissions');
-//		}
+			Cache::write($cacheName, $permissions, 'permissions');
+		}
 
-		if (!isset($permissions[$action]) || true) {
+		if (!isset($permissions[$action])) {
 			$userTable = TableRegistry::get($this->config('userModel'));
 			$user = $userTable->get($user['id']);
 			$allowed = $Acl->check($user, $action);
