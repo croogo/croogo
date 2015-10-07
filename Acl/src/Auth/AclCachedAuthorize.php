@@ -1,8 +1,17 @@
 <?php
 
-namespace Croogo\Acl\Controller\Component\Auth;
+namespace Croogo\Acl\Auth;
 
 use Acl\Auth\BaseAuthorize;
+use Cake\Cache\Cache;
+use Cake\Controller\ComponentRegistry;
+use Cake\Core\Configure;
+use Cake\Core\Exception\Exception;
+use Cake\Log\Log;
+use Cake\Network\Request;
+use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
+use Cake\Utility\Inflector;
 
 /**
  * An authentication adapter for AuthComponent. Provides similar functionality
@@ -80,8 +89,8 @@ class AclCachedAuthorize extends BaseAuthorize {
 		}
 		if (empty($this->_adminRole)) {
 			if (empty($Role)) {
-				$Role = ClassRegistry::init('Users.Role');
-				$Role->Behaviors->attach('Croogo.Aliasable');
+				$Role = TableRegistry::get('Croogo/Users.Roles');
+				$Role->addBehavior('Croogo/Core.Aliasable');
 			}
 			$this->_adminRole = $Role->byAlias('admin');
 		}
@@ -93,13 +102,9 @@ class AclCachedAuthorize extends BaseAuthorize {
  *
  * @see BaseAuthorize::action()
  */
-	public function action(Request $request, $path = '/:plugin/:controller/:action') {
+	public function action(Request $request, $path = '/:plugin/:prefix/:controller/:action') {
 		$apiPath = Configure::read('Croogo.Api.path');
 		if (!$request->is('api')) {
-			$path = str_replace(
-				array($apiPath, ':prefix/'),
-				array(null, null),
-				$path);
 			return parent::action($request, $path);
 		}
 
@@ -135,24 +140,20 @@ class AclCachedAuthorize extends BaseAuthorize {
 
 		$allowed = false;
 		$Acl = $this->_registry->load('Acl');
-		list($plugin, $userModel) = pluginSplit($this->settings['userModel']);
+		list($plugin, $userModel) = pluginSplit($this->config('userModel'));
 
-		$path = '/:plugin/:controller/:action';
-		if ($request->is('api')) {
-			$path = '/:prefix' . $path;
-		}
-		$action = $this->action($request, $path);
+		$action = $this->action($request);
 
 		$cacheName = 'permissions_' . strval($user['id']);
-		if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
+//		if (($permissions = Cache::read($cacheName, 'permissions')) === false) {
 			$permissions = array();
-			Cache::write($cacheName, $permissions, 'permissions');
-		}
+//			Cache::write($cacheName, $permissions, 'permissions');
+//		}
 
-		if (!isset($permissions[$action])) {
-			$User = ClassRegistry::init($this->settings['userModel']);
-			$User->id = $user['id'];
-			$allowed = $Acl->check($User, $action);
+		if (!isset($permissions[$action]) || true) {
+			$userTable = TableRegistry::get($this->config('userModel'));
+			$user = $userTable->get($user['id']);
+			$allowed = $Acl->check($user, $action);
 			$permissions[$action] = $allowed;
 			Cache::write($cacheName, $permissions, 'permissions');
 			$hit = false;
@@ -200,7 +201,7 @@ class AclCachedAuthorize extends BaseAuthorize {
 			if (is_numeric($id)) {
 				try {
 					$allowed = $this->_authorizeByContent($user, $request, $id);
-				} catch (CakeException $e) {
+				} catch (Exception $e) {
 					$allowed = false;
 				}
 			} else {
@@ -221,7 +222,7 @@ class AclCachedAuthorize extends BaseAuthorize {
  */
 	protected function _authorizeByContent($user, Request $request, $id) {
 		if (!isset($this->settings['actionMap'][$request->params['action']])) {
-			throw new CakeException(
+			throw new Exception(
 				__d('croogo', '_authorizeByContent() - Access of un-mapped action "%1$s" in controller "%2$s"',
 				$request->action,
 				$request->controller

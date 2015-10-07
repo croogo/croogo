@@ -74,18 +74,22 @@ class FilterComponent extends Component {
 			$this->_registry->load('Cookie');
 		}
 		//Configure AuthComponent
-		$this->_controller->Auth->authenticate = array(
-			AuthComponent::ALL => array(
-				'userModel' => 'Users.User',
-				'fields' => array(
+		$this->_controller->Auth->config('authenticate', [
+			AuthComponent::ALL => [
+				'userModel' => 'Croogo/Users.Users',
+				'fields' => [
 					'username' => 'username',
 					'password' => 'password',
-				),
-				'scope' => array(
+				],
+				'passwordHasher' => [
+					'className' => 'Fallback',
+					'hashers' => ['Default', 'Weak']
+				],
+				'scope' => [
 					'User.status' => 1,
-				),
-			),
-		);
+				],
+			],
+		]);
 		if ($this->_config('autoLoginDuration')) {
 			if (!function_exists('mcrypt_encrypt')) {
 				$notice = __d('croogo', '"AutoLogin" (Remember Me) disabled since mcrypt_encrypt is not available');
@@ -100,23 +104,22 @@ class FilterComponent extends Component {
 				}
 				$Setting->write('Access Control.autoLoginDuration', '');
 			}
-			$this->_controller->Auth->authenticate[] = 'Acl.Cookie';
+			$this->_controller->Auth->config('authenticate', 'Acl.Cookie');
 		}
 		if ($this->_config('multiColumn')) {
-			$this->_controller->Auth->authenticate[] = 'Acl.MultiColumn';
+			$this->_controller->Auth->config('authenticate', 'Acl.MultiColumn');
 		} else {
-			$this->_controller->Auth->authenticate[] = 'Form';
+			$this->_controller->Auth->config('authenticate', 'Form');
 		}
 
-		$actionPath = $this->_controller->request->is('api') ? 'api' : 'controllers';
 		$this->_controller->Auth->config('authorize', array(
-			AuthComponent::ALL => array(
+			AuthComponent::ALL => [
 				'actionPath' => 'controllers',
-				'userModel' => 'Croogo/Users.User',
-			),
-			'Croogo/Acl.AclCached' => array(
-				'actionPath' => $actionPath,
-			),
+				'userModel' => 'Croogo/Users.Users',
+			],
+			'Croogo/Acl.AclCached' => [
+				'actionPath' => 'controllers',
+			]
 		));
 
 		if (isset($this->_controller->request->params['admin']) &&
@@ -152,7 +155,7 @@ class FilterComponent extends Component {
 			'controller' => 'Users',
 			'action' => 'login',
 		]);
-		if ($this->_controller->request->param('admin')) {
+		if ($this->_controller->request->param('prefix') == 'admin') {
 			$this->_controller->Auth->config('loginRedirect', Configure::read('Croogo.dashboardUrl'));
 		} else {
 			$this->_controller->Auth->config('loginRedirect', Configure::read('Croogo.homeUrl'));
@@ -176,7 +179,7 @@ class FilterComponent extends Component {
 				if (!is_string($value) && $isAdminRequest !== $isAdminRoute && $isAuthAction) {
 					continue;
 				}
-				$this->_controller->Auth->{$property} = $value;
+				$this->_controller->Auth->config($property, $value);
 			}
 		}
 	}
