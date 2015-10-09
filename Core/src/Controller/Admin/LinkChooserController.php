@@ -2,6 +2,7 @@
 
 namespace Croogo\Core\Controller\Admin;
 
+use Cake\Event\Event;
 use Croogo\Core\Controller\CroogoAppController;
 use Croogo\Core\Croogo;
 use Cake\Core\Configure;

@@ -34,4 +34,4 @@ $(".link_chooser a").click(function() {
 });
 EOF;
 
-echo $this->CroogoHtml->scriptBlock($script);
+echo $this->Html->scriptBlock($script);

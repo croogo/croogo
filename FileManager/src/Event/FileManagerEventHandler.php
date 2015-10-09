@@ -3,6 +3,7 @@
 namespace Croogo\FileManager\Event;
 
 use Cake\Event\EventListenerInterface;
+use Croogo\Core\Croogo;
 
 /**
  * FileManagerEventHandler

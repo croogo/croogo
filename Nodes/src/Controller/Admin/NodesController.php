@@ -139,8 +139,8 @@ class NodesController extends NodesAppController {
 		$this->set(compact('nodes', 'types', 'typeAliases', 'nodeTypes'));
 
 		if (isset($this->request->params['named']['links']) || isset($this->request->query['chooser'])) {
-			$this->layout = 'Croogo/Core.admin_popup';
-			$this->view = 'chooser';
+			$this->viewBuilder()->layout('Croogo/Core.admin_popup');
+			$this->viewBuilder()->template('chooser');
 		}
 	}
 

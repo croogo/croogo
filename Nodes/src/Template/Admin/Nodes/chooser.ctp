@@ -32,7 +32,7 @@
 				'data-chooser_type' => 'Node',
 				'data-chooser_id' => $node->id,
 				'data-chooser_title' => $node->title,
-				'rel' => $node->url,
+				'rel' => $node->url->toLinkString(),
 			));
 
 			$popup = array();
