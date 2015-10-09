@@ -29,7 +29,16 @@ class NodesTable extends CroogoTable {
 			],
 		]);
 		$this->addBehavior('Croogo/Core.Publishable');
-		$this->addBehavior('Croogo/Core.Url');
+		$this->addBehavior('Croogo/Core.Url', [
+			'url' => [
+				'plugin' => 'Croogo/Nodes',
+				'controller' => 'Nodes',
+				'action' => 'view'
+			],
+			'fields' => [
+				'type', 'slug'
+			]
+		]);
 		$this->addBehavior('Croogo/Core.Trackable');
 		$this->addBehavior('Search.Searchable');
 		$this->belongsTo('Croogo/Users.Users');
