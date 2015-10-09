@@ -42,16 +42,7 @@ class CroogoAppController extends AppController {
 		'Croogo/Acl.Filter',
 		'Security',
 		'Acl.Acl',
-		'Auth' => [
-			'authenticate' => [
-				'Form' => [
-					'passwordHasher' => [
-						'className' => 'Fallback',
-						'hashers' => ['Default', 'Weak']
-					]
-				]
-			]
-		],
+		'Auth',
 		'Flash',
 		'RequestHandler',
 	);

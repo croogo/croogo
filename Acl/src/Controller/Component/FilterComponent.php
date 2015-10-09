@@ -76,11 +76,15 @@ class FilterComponent extends Component {
 		//Configure AuthComponent
 		$this->_controller->Auth->authenticate = array(
 			AuthComponent::ALL => array(
-				'userModel' => 'Users.User',
+				'userModel' => 'Croogo/Users.Users',
 				'fields' => array(
 					'username' => 'username',
 					'password' => 'password',
 				),
+				'passwordHasher' => [
+					'className' => 'Fallback',
+					'hashers' => ['Default', 'Weak']
+				],
 				'scope' => array(
 					'User.status' => 1,
 				),
