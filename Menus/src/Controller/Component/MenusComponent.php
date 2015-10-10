@@ -115,17 +115,9 @@ class MenusComponent extends Component {
 						'name' => $menu->alias . '_links_' . $roleId,
 						'config' => 'croogo_menus',
 					)
-				])->where([
+				])->find('visibilityRole', ['role_id' => $roleId])->where([
 					'Links.menu_id' => $menu->id,
 					'Links.status' => $status,
-					'AND' => [
-						[
-							'OR' => [
-								'Links.visibility_roles' => '',
-								'Links.visibility_roles LIKE' => '%"' . $roleId . '"%',
-							],
-						],
-					],
 				])->order([
 					'Links.lft' => 'ASC',
 				]);
