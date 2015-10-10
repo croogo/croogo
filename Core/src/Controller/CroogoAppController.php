@@ -224,6 +224,10 @@ class CroogoAppController extends AppController {
 		} else {
 			$theme = Configure::read('Site.theme');
 		}
+		if (!$theme) {
+			return;
+		}
+
 		$this->viewBuilder()->theme($theme);
 
 		$croogoTheme = new CroogoTheme();
@@ -297,10 +301,13 @@ class CroogoAppController extends AppController {
 			'Croogo/Core.Layout',
 			'Croogo/Core.Custom',
 			'Croogo/Core.CroogoForm',
-			'Croogo/Core.Theme',
 		]);
 
 		$this->_setupTheme();
+
+		if ($this->viewBuilder()->theme()) {
+			$this->viewBuilder()->helpers(['Croogo/Core.Theme']);
+		}
 
 		if ($this->request->is('ajax')) {
 			$this->viewBuilder()->layout('ajax');

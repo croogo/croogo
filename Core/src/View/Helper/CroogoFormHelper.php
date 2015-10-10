@@ -35,9 +35,13 @@ class CroogoFormHelper extends FormHelper {
 				],
 			],
 		], $settings);
-		$themeConfig = CroogoTheme::config($View->theme);
-		$themeSettings = $themeConfig['settings'];
-		$settings = Hash::merge($themeSettings, $settings);
+
+		if ($View->theme) {
+			$themeConfig = CroogoTheme::config($View->theme);
+			$themeSettings = $themeConfig['settings'];
+			$settings = Hash::merge($themeSettings, $settings);
+		}
+
 		parent::__construct($View, $settings);
 	}
 

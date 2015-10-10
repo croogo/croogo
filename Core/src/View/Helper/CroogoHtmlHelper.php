@@ -25,10 +25,17 @@ class CroogoHtmlHelper extends HtmlHelper {
  * Constructor
  */
 	public function __construct(View $View, $settings = array()) {
-		$themeConfig = CroogoTheme::config($View->theme);
-		$themeSettings = $themeConfig['settings'];
-		$settings = Hash::merge($themeSettings, $settings);
+		if ($View->theme) {
+			$themeConfig = CroogoTheme::config($View->theme);
+			$themeSettings = $themeConfig['settings'];
+			$settings = Hash::merge($themeSettings, $settings);
+		}
+
 		parent::__construct($View, $settings);
+
+		if (!$View->theme) {
+			return;
+		}
 
 		$themeCss = $themeSettings['css'];
 		$boxIconClass = trim(

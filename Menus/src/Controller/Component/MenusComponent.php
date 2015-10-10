@@ -84,11 +84,15 @@ class MenusComponent extends Component {
  * @return void
  */
 	public function menus() {
-		$menus = array();
-		$themeData = $this->Croogo->getThemeData(Configure::read('Site.theme'));
-		if (isset($themeData['menus']) && is_array($themeData['menus'])) {
-			$menus = Hash::merge($menus, $themeData['menus']);
+		$menus = array('main');
+
+		if (Configure::read('Site.theme')) {
+			$themeData = $this->Croogo->getThemeData(Configure::read('Site.theme'));
+			if (isset($themeData['menus']) && is_array($themeData['menus'])) {
+				$menus = Hash::merge($menus, $themeData['menus']);
+			}
 		}
+
 		$menus = Hash::merge($menus, array_keys($this->controller->BlocksHook->blocksData['menus']));
 
 		$roleId = $this->controller->Croogo->roleId();
