@@ -14,8 +14,8 @@ class VisibilityBehavior extends Behavior
 			'AND' => [
 				[
 					'OR' => [
-						'Links.visibility_roles IS NULL',
-						'Links.visibility_roles LIKE' => '%"' . $options['role_id'] . '"%',
+						$this->_table->alias() . '.visibility_roles IS NULL',
+						$this->_table->alias() . '.visibility_roles LIKE' => '%"' . $options['role_id'] . '"%',
 					],
 				],
 			],
