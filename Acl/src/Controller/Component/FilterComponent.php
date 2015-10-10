@@ -6,6 +6,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Controller\Component;
 use Cake\Controller\Component\AuthComponent;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
@@ -201,7 +202,7 @@ class FilterComponent extends Component {
 		// public access authorization
 		$cacheName = 'permissions_public';
 		if (($perms = Cache::read($cacheName, 'permissions')) === false) {
-			$perms = $this->getPermissions('Roles', 3);
+			$perms = $this->getPermissions('Croogo/Users.Roles', 3);
 			Cache::write($cacheName, $perms, 'permissions');
 		}
 		$actionPath = $this->_controller->request->is('api') ? 'api' : 'controllers';
@@ -232,7 +233,7 @@ class FilterComponent extends Component {
 
 		$permissions = TableRegistry::get('Acl.Permissions')->find('all', array(
 			'conditions' => array(
-				'Permissions.aro_id' => $aros,
+				'Permissions.aro_id IN' => $aros,
 				'Permissions._create' => 1,
 				'Permissions._read' => 1,
 				'Permissions._update' => 1,
@@ -242,34 +243,43 @@ class FilterComponent extends Component {
 
 		$authorized = $allowedActions = array();
 		foreach ($permissions as $permission) {
-			$path = $Acl->Aco->getPath($permission['Permission']['aco_id']);
+			try {
+				$path = $Acl->Aco->find('path', ['for' => $permission->aco_id])->toArray();
+			} catch (RecordNotFoundException $exception) {
+				$this->log(__d('croogo', 'Could not get path for non existing aco with id %d', $permission->aco_id));
+
+				continue;
+			}
+
 			if (empty($path)) {
 				continue;
 			}
+
 			$acos = count($path);
-			if ($acos == 5) {
+			if ($acos == 6) {
 				// api controller/action
-				$controller = $path[3]['Aco']['alias'];
-				$action = $path[1]['Aco']['alias'] . '_' . $path[4]['Aco']['alias'];
-			} elseif ($acos == 4) {
+				$controller = $path[3]->alias;
+				$action = $path[1]->alias . '_' . $path[4]->alias;
+			} elseif ($acos == 5) {
 				// plugin controller/action
-				$controller = $path[2]['Aco']['alias'];
-				$action = $path[3]['Aco']['alias'];
-			} elseif ($acos == 3) {
+				$controller = $path[3]->alias;
+				$action = $path[4]->alias;
+			} elseif ($acos == 4) {
 				// app controller/action
-				$controller = $path[1]['Aco']['alias'];
-				$action = $path[2]['Aco']['alias'];
+				$controller = $path[1]->alias;
+				$action = $path[2]->alias;
 			} else {
 				$this->log(sprintf(
 					'Incomplete path for aco_id = %s:',
-					$permission['Permission']['id']
+					$permission->id
 				));
 				$this->log($path);
 			}
-			$actionPath = $path[0]['Aco']['alias'];
+			$actionPath = $path[0]->alias;
 			$allowedActions[$actionPath][$controller][] = $action;
 			$authorized[] = implode('/', Hash::extract($path, '{n}.Aco.alias'));
 		}
+
 		return array('authorized' => $authorized, 'allowed' => $allowedActions);
 	}
 
