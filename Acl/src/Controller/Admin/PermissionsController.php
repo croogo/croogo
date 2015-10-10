@@ -6,7 +6,7 @@ use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\ORM\TableRegistry;
-use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Core\Controller\Admin\Controller;
 use Croogo\Core\Croogo;
 
 /**
@@ -19,7 +19,7 @@ use Croogo\Core\Croogo;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class PermissionsController extends CroogoAppController {
+class PermissionsController extends Controller {
 
 	private $Acos;
 	private $Aros;

@@ -2,7 +2,7 @@
 
 namespace Croogo\Contacts\Controller\Admin;
 
-use Croogo\Contacts\Controller\ContactsAppController;
+use Croogo\Contacts\Controller\Admin\Controller;
 
 /**
  * Messages Controller
@@ -14,7 +14,7 @@ use Croogo\Contacts\Controller\ContactsAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MessagesController extends ContactsAppController {
+class MessagesController extends Controller {
 
 /**
  * Components

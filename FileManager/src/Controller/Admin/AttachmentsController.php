@@ -3,7 +3,7 @@
 namespace Croogo\FileManager\Controller\Admin;
 
 use Cake\Event\Event;
-use Croogo\FileManager\Controller\FileManagerAppController;
+use Croogo\FileManager\Controller\Admin\Controller;
 use Croogo\FileManager\Model\Entity\Attachment;
 
 /**
@@ -18,7 +18,7 @@ use Croogo\FileManager\Model\Entity\Attachment;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AttachmentsController extends FileManagerAppController {
+class AttachmentsController extends Controller {
 
 /**
  * Components

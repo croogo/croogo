@@ -1,19 +1,19 @@
 <?php
 
-namespace Croogo\Taxonomy\Controller;
+namespace Croogo\Taxonomy\Controller\Admin;
 
-use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Core\Controller\Admin\Controller as CroogoController;
 
 /**
- * Taxonomy App Controller
+ * Taxonomy Admin Controller
  *
  * @category Taxonomy.Controller
- * @package  Croogo
- * @version  1.4
+ * @package  Croogo.Taxonomy
+ * @since  1.5
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TaxonomyAppController extends CroogoAppController {
+class Controller extends CroogoController {
 
 }

@@ -2,7 +2,7 @@
 
 namespace Croogo\Blocks\Controller\Admin;
 
-use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Blocks\Controller\Admin\Controller;
 use Croogo\Blocks\Model\Entity\Region;
 
 /**
@@ -15,7 +15,7 @@ use Croogo\Blocks\Model\Entity\Region;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class RegionsController extends CroogoAppController {
+class RegionsController extends Controller {
 
 /**
  * Components

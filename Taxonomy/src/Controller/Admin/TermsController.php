@@ -5,7 +5,7 @@ namespace Croogo\Taxonomy\Controller\Admin;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\Network\Response;
-use Croogo\Taxonomy\Controller\TaxonomyAppController;
+use Croogo\Taxonomy\Controller\Admin\Controller;
 use Croogo\Taxonomy\Model\Table\TermsTable;
 
 /**
@@ -19,7 +19,7 @@ use Croogo\Taxonomy\Model\Table\TermsTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TermsController extends TaxonomyAppController {
+class TermsController extends Controller {
 
 /**
  * Controller name

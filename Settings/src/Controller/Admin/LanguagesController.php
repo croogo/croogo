@@ -2,10 +2,12 @@
 
 namespace Croogo\Settings\Controller\Admin;
 
-use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Settings\Controller\Admin\Controller;
 
 /**
  * Languages Controller
+ *
+ * FIXME: Port to 3.x
  *
  * @category Settings.Controller
  * @package  Croogo.Settings
@@ -14,7 +16,7 @@ use Croogo\Core\Controller\CroogoAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class LanguagesController extends CroogoAppController {
+class LanguagesController extends Controller {
 
 /**
  * Admin index

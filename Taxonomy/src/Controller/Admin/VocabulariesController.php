@@ -2,7 +2,7 @@
 
 namespace Croogo\Taxonomy\Controller\Admin;
 
-use Croogo\Taxonomy\Controller\TaxonomyAppController;
+use Croogo\Taxonomy\Controller\Admin\Controller;
 use Croogo\Taxonomy\Model\Table\VocabulariesTable;
 
 /**
@@ -16,7 +16,7 @@ use Croogo\Taxonomy\Model\Table\VocabulariesTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class VocabulariesController extends TaxonomyAppController {
+class VocabulariesController extends Controller {
 
 /**
  * Controller name

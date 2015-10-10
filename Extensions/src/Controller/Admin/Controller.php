@@ -1,12 +1,12 @@
 <?php
 
-namespace Croogo\Extensions\Controller;
+namespace Croogo\Extensions\Controller\Admin;
 
 use Cake\Event\Event;
-use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Core\Controller\Admin\Controller as CroogoController;
 
 /**
- * ExtensionsApp Controller
+ * Extensions Admin Controller
  *
  * @category Controller
  * @package  Croogo.Extensions.Controller
@@ -15,7 +15,7 @@ use Croogo\Core\Controller\CroogoAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtensionsAppController extends CroogoAppController {
+class Controller extends CroogoController {
 
 	public $helpers = [
 		'Croogo/Core.Croogo'

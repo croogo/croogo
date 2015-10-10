@@ -8,8 +8,8 @@ use Cake\Network\Email\Email;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
-use Croogo\Core\Controller\CroogoAppController;
 use Croogo\Core\Croogo;
+use Croogo\Users\Controller\Admin\Controller;
 use Croogo\Users\Model\Entity\User;
 
 /**
@@ -22,7 +22,7 @@ use Croogo\Users\Model\Entity\User;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class UsersController extends CroogoAppController {
+class UsersController extends Controller {
 
 /**
  * Initialize

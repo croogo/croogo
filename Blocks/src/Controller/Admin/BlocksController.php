@@ -4,7 +4,7 @@ namespace Croogo\Blocks\Controller\Admin;
 
 use Cake\Event\Event;
 use Croogo\Blocks\Model\Entity\Block;
-use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Blocks\Controller\Admin\Controller;
 
 /**
  * Blocks Controller
@@ -16,7 +16,7 @@ use Croogo\Core\Controller\CroogoAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class BlocksController extends CroogoAppController {
+class BlocksController extends Controller {
 
 /**
  * Components

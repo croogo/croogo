@@ -7,7 +7,7 @@ $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Croogo->adminScript('Croogo/Nodes.admin');
 
-$this->CroogoHtml
+$this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Content'), '/' . $this->request->url);
 
@@ -30,7 +30,7 @@ $this->append('form-start', $this->CroogoForm->create(
 ));
 
 $this->start('table-heading');
-	$tableHeaders = $this->CroogoHtml->tableHeaders(array(
+	$tableHeaders = $this->Html->tableHeaders(array(
 		$this->CroogoForm->checkbox('checkAll', ['id' => 'NodesCheckAll']),
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		$this->Paginator->sort('title', __d('croogo', 'Title')),
@@ -39,7 +39,7 @@ $this->start('table-heading');
 		$this->Paginator->sort('status', __d('croogo', 'Status')),
 		''
 	));
-	echo $this->CroogoHtml->tag('thead', $tableHeaders);
+	echo $this->Html->tag('thead', $tableHeaders);
 $this->end();
 
 $this->append('table-body');
@@ -52,7 +52,7 @@ $this->append('table-body');
 		<td>
 			<span>
 			<?php
-				echo $this->CroogoHtml->link($node->title, Hash::merge(
+				echo $this->Html->link($node->title, Hash::merge(
 					$node->url->getArrayCopy(),
 					[
 						'prefix' => false
@@ -71,7 +71,7 @@ $this->append('table-body');
 		</td>
 		<td>
 		<?php
-			echo $this->CroogoHtml->link($node->type, array(
+			echo $this->Html->link($node->type, array(
 				'action' => 'hierarchy',
 				'?' => array(
 					'type' => $node->type,
@@ -152,7 +152,7 @@ $this->start('bulk-action');
 		'data-confirmMessage' => $jsVarName,
 		'escape' => true,
 	));
-	echo $this->CroogoHtml->div('controls', $button);
+	echo $this->Html->div('controls', $button);
 	$this->Js->set($jsVarName, __d('croogo', '%s selected items?'));
 	$this->Js->buffer("$('.bulk-process').on('click', Nodes.confirmProcess);");
 

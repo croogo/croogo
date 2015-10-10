@@ -3,7 +3,7 @@
 namespace Croogo\Taxonomy\Controller\Admin;
 
 use Cake\Event\Event;
-use Croogo\Taxonomy\Controller\TaxonomyAppController;
+use Croogo\Taxonomy\Controller\Admin\Controller;
 use Croogo\Taxonomy\Model\Table\TypesTable;
 
 /**
@@ -17,7 +17,7 @@ use Croogo\Taxonomy\Model\Table\TypesTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TypesController extends TaxonomyAppController {
+class TypesController extends Controller {
 
 /**
  * beforeFilter
