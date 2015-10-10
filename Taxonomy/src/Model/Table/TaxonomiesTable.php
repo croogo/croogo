@@ -10,6 +10,14 @@ class TaxonomiesTable extends CroogoTable {
 		$this->belongsTo('Croogo/Taxonomy.Terms');
 		$this->belongsTo('Croogo/Taxonomy.Vocabularies');
 		$this->addBehavior('Tree');
+		$this->addBehavior('Timestamp', [
+			'events' => [
+				'Model.beforeSave' => [
+					'created' => 'new',
+					'updated' => 'always'
+				]
+			]
+		]);
 //		$this->addBehavior('Croogo/Core.Cached', [
 //			'groups' => [
 //				'nodes',

@@ -48,6 +48,15 @@ class LinksTable extends CroogoTable {
 			'className' => 'Croogo/Menus.Menus',
 			'counterCache' => true,
 		]);
+
+		$this->addBehavior('Timestamp', [
+			'events' => [
+				'Model.beforeSave' => [
+					'created' => 'new',
+					'updated' => 'always'
+				]
+			]
+		]);
 	}
 
 	protected function _initializeSchema(Schema $table) {

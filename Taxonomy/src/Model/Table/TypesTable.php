@@ -20,6 +20,15 @@ class TypesTable extends CroogoTable {
 	];
 
 	public function initialize(array $config) {
+		$this->addBehavior('Timestamp', [
+			'events' => [
+				'Model.beforeSave' => [
+					'created' => 'new',
+					'updated' => 'always'
+				]
+			]
+		]);
+
 		$this->belongsToMany('Croogo/Taxonomy.Vocabularies', [
 			'joinTable' => 'types_vocabularies',
 		]);

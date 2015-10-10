@@ -78,6 +78,14 @@ class ContactsTable extends CroogoTable {
 			],
 		]);
 		$this->addBehavior('Croogo/Core.Trackable');
+		$this->addBehavior('Timestamp', [
+			'events' => [
+				'Model.beforeSave' => [
+					'created' => 'new',
+					'updated' => 'always'
+				]
+			]
+		]);
 	}
 
 /**

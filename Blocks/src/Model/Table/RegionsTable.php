@@ -90,6 +90,15 @@ class RegionsTable extends CroogoTable {
 			],
 		]);
 		*/
+
+		$this->addBehavior('Timestamp', [
+			'events' => [
+				'Model.beforeSave' => [
+					'created' => 'new',
+					'updated' => 'always'
+				]
+			]
+		]);
 		$this->addBehavior('Croogo/Core.Trackable');
 	}
 

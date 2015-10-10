@@ -13,6 +13,16 @@ class VocabulariesTable extends CroogoTable {
 		$this->addBehavior('Sequence.Sequence', [
 			'order' => 'weight',
 		]);
+
+		$this->addBehavior('Timestamp', [
+			'events' => [
+				'Model.beforeSave' => [
+					'created' => 'new',
+					'updated' => 'always'
+				]
+			]
+		]);
+
 		$this->belongsToMany('Croogo/Taxonomy.Types', [
 			'joinTable' => 'types_vocabularies',
 		]);

@@ -42,6 +42,14 @@ class NodesTable extends CroogoTable {
 		$this->addBehavior('Croogo/Core.Trackable');
 		$this->addBehavior('Search.Searchable');
 		$this->belongsTo('Croogo/Users.Users');
+		$this->addBehavior('Timestamp', [
+			'events' => [
+				'Model.beforeSave' => [
+					'created' => 'new',
+					'updated' => 'always'
+				]
+			]
+		]);
 	}
 
 /**

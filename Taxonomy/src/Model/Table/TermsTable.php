@@ -83,6 +83,15 @@ class TermsTable extends CroogoTable {
 	public function initialize(array $config) {
 		parent::initialize($config);
 
+		$this->addBehavior('Timestamp', [
+			'events' => [
+				'Model.beforeSave' => [
+					'created' => 'new',
+					'updated' => 'always'
+				]
+			]
+		]);
+
 		$this->belongsToMany('Croogo/Taxonomy.Vocabularies', [
 			'through' => 'Croogo/Taxonomy.Taxonomies',
 			'foreignKey' => 'term_id',

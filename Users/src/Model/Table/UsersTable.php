@@ -40,6 +40,14 @@ class UsersTable extends CroogoTable {
 
 		$this->belongsTo('Croogo/Users.Roles');
 		$this->addBehavior('Search.Searchable');
+		$this->addBehavior('Timestamp', [
+			'events' => [
+				'Model.beforeSave' => [
+					'created' => 'new',
+					'updated' => 'always'
+				]
+			]
+		]);
 
 		$this->eventManager()->on($this->getMailer('Croogo/Users.User'));
 	}

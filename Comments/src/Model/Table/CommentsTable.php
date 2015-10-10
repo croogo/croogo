@@ -101,6 +101,15 @@ class CommentsTable extends CroogoTable {
 		$this->addBehavior('Croogo/Core.Publishable');
 		$this->addBehavior('Croogo/Core.Trackable');
 		$this->addBehavior('Search.Searchable');
+
+		$this->addBehavior('Timestamp', [
+			'events' => [
+				'Model.beforeSave' => [
+					'created' => 'new',
+					'updated' => 'always'
+				]
+			]
+		]);
 	}
 
 /**
