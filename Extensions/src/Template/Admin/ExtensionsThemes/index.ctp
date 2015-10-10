@@ -1,6 +1,8 @@
 <?php
 
-$this->extend('/Common/admin_index');
+use Cake\Core\Configure;
+
+$this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
@@ -25,12 +27,11 @@ $this->Html
 			<div class="screenshot <?php echo $this->Theme->getCssClass('columnRight'); ?>">
 				<h3><?php echo __d('croogo', 'Current Theme'); ?></h3>
 				<?php
-					$currentTheme = Sanitize::clean($currentTheme);
 					if (isset($currentTheme['screenshot'])):
 						if (!Configure::read('Site.theme')) :
 							$file = $currentTheme['screenshot'];
 						else:
-							$file = '/theme/' . Configure::read('Site.theme') . '/img/' . $currentTheme['screenshot'];
+                            $file = $this->Url->assetUrl(Configure::read('Site.theme') . '.' . $currentTheme['screenshot']);
 						endif;
 						$imgUrl = $this->Html->thumbnail($file);
 						$link = $this->Html->link($imgUrl, $file, array(
@@ -67,7 +68,6 @@ $this->Html
 			<ul>
 			<?php
 				$hasAvailable = false;
-				$themesData = Sanitize::clean($themesData);
 				foreach ($themesData as $themeAlias => $theme):
 					$isAdminOnly = (!isset($theme['adminOnly']) || $theme['adminOnly'] != 'true');
 					$isDefault = !($themeAlias == 'default' && !Configure::read('Site.theme'));
@@ -76,30 +76,21 @@ $this->Html
 						continue;
 					endif;
 					echo '<li class="' . $this->Theme->getCssClass('columnFull') . '">';
-					if ($themeAlias == 'default') {
-						$imgUrl = $this->Html->thumbnail($theme['screenshot']);
-						$link = $this->Html->link($imgUrl, $theme['screenshot'], array(
-							'escape' => false,
-							'class' => 'thickbox',
-						));
-						echo $this->Html->tag('div', $link, array('class' => 'screenshot ' . $this->Theme->getCssClass('columnRight')));
-					} else {
-						if (!empty($theme['screenshot'])):
-							$file = '/theme/' . $themeAlias . '/img/' . $theme['screenshot'];
-							$imgUrl = $this->Html->thumbnail($file);
-							$link = $this->Html->link($imgUrl, $file, array(
-								'escape' => false,
-								'class' => 'thickbox',
-							));
-							echo $this->Html->tag('div', $link, array(
-								'class' => 'screenshot ' . $this->Theme->getCssClass('columnRight'),
-							));
-						else:
-							echo $this->Html->tag('div', '', array(
-								'class' => $this->Theme->getCssClass('columnRight'),
-							));
-						endif;
-					}
+                    if (!empty($theme['screenshot'])):
+                        $file = $this->Url->assetUrl($themeAlias . '.' . $theme['screenshot']);
+                        $imgUrl = $this->Html->thumbnail($file);
+                        $link = $this->Html->link($imgUrl, $file, array(
+                            'escape' => false,
+                            'class' => 'thickbox',
+                        ));
+                        echo $this->Html->tag('div', $link, array(
+                            'class' => 'screenshot ' . $this->Theme->getCssClass('columnRight'),
+                        ));
+                    else:
+                        echo $this->Html->tag('div', '', array(
+                            'class' => $this->Theme->getCssClass('columnRight'),
+                        ));
+                    endif;
 					$author = isset($theme['author']) ? $theme['author'] : null;
 					if (isset($theme['authorUrl']) && strlen($theme['authorUrl']) > 0) {
 						$author = $this->Html->link($author, $theme['authorUrl']);
@@ -113,14 +104,14 @@ $this->Html
 					$out .= $this->Html->tag('div',
 						$this->Form->postLink(__d('croogo', 'Activate'), array(
 							'action' => 'activate',
-							$themeAlias,
+							urlencode($themeAlias),
 						), array(
 							'button' => 'default',
 							'icon' => $this->Theme->getIcon('power-on'),
 						)) .
 						$this->Form->postLink(__d('croogo', 'Delete'), array(
 							'action' => 'delete',
-							$themeAlias,
+							urlencode($themeAlias),
 						), array(
 							'button' => 'danger',
 							'escape' => true,

@@ -2,12 +2,15 @@
 
 namespace Croogo\Extensions;
 
+use Cake\Cache\Cache;
 use Cake\Core\App;
+use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
+use Croogo\Extensions\Exception\MissingThemeException;
 
 /**
  * CroogoTheme class
@@ -34,72 +37,52 @@ class CroogoTheme {
  * @return array
  */
 	public function getThemes() {
-		$themes = array(
-			'default' => 'default',
-		);
-		$this->folder = new Folder();
-		$viewPaths = App::path('views');
-		$expected = array('name' => '', 'description' => '');
-		foreach ($viewPaths as $viewPath) {
-			$this->folder->path = $viewPath . 'Themed';
-			if (!is_dir($this->folder->path)) {
-				continue;
-			}
-			$themeFolders = $this->folder->read();
-			foreach ($themeFolders['0'] as $themeFolder) {
-				$themeRoot = $viewPath . 'Themed' . DS . $themeFolder . DS;
+        $themeConfigs = [
+            'config' . DS . 'theme.json',
+            'webroot' . DS . 'theme.json'
+        ];
 
-				$composerJson = $themeRoot . 'composer.json';
-				$this->folder->path = $themeRoot;
-				$themeRootFolderContent = $this->folder->read();
-				if (in_array('composer.json', $themeRootFolderContent['1'])) {
-					$contents = file_get_contents($composerJson);
-					$json = json_decode($contents, true);
-					if (isset($json['type']) && $json['type'] === 'croogo-theme') {
-						$themes[$themeFolder] = $themeFolder;
-						continue;
-					}
-				}
+        $themes = [];
+        foreach (Plugin::loaded() as $plugin) {
+            $path = Plugin::path($plugin);
 
-				$themeWebroot = $themeRoot . 'webroot' . DS;
-				$themeConfig = $themeRoot . 'Config' . DS;
-				if (!is_dir($themeWebroot) && !is_dir($themeConfig)) {
-					continue;
-				}
+            foreach ($themeConfigs as $themeManifestFile) {
+                if (!file_exists($path . $themeManifestFile)) {
+                    continue;
+                }
 
-				$paths = array($themeConfig, $themeWebroot);
-				foreach ($paths as $path) {
-					$this->folder->path = $path;
-					$themeFolderContent = $this->folder->read();
-					if (in_array('theme.json', $themeFolderContent['1'])) {
-						$themeJson = $path . 'theme.json';
-						$contents = file_get_contents($themeJson);
-						$json = json_decode($contents, true);
-						if ($json === null) {
-							$this->log('Invalid theme manifest:' . $themeJson);
-							$json = array();
-						}
-						$intersect = array_intersect_key($expected, $json);
-						if ($json !== null && $intersect == $expected) {
-							$themes[$themeFolder] = $themeFolder;
-						}
-						continue;
-					}
-				}
-			}
-		}
-		return $themes;
+                $manifestFile = $path . $themeManifestFile;
+            }
+
+            if (file_exists($path . 'composer.json')) {
+                $composerConfig = json_decode(file_get_contents($path . 'composer.json'));
+                if ($composerConfig->type === 'croogo-theme') {
+                    $composerJson = $path . 'composer.json';
+                }
+            }
+
+            if (!isset($manifestFile) && !isset($composerJson)) {
+                continue;
+            }
+
+            $themes[] = $plugin;
+
+            unset($manifestFile);
+            unset($composerJson);
+        }
+
+        return $themes;
 	}
 
 /**
  * Get the content of theme.json or composer.json file from a theme
  *
- * @param string $alias theme folder name
+ * @param string $theme theme plugin name
  * @return array
  */
-	public function getData($alias = null) {
+	public function getData($theme = null) {
 		$themeData = array(
-			'name' => $alias,
+			'name' => $theme,
 			'regions' => array(),
 			'screenshot' => null,
 			'settings' => array(
@@ -176,33 +159,30 @@ class CroogoTheme {
 				),
 			),
 		);
-		$default = Plugin::path('Croogo/Core') . 'webroot' . DS . 'theme.json';
 
-		if ($alias == null || $alias == 'default') {
-			$manifestFile = $default;
-		} else {
-			$viewPaths = App::path('views');
-			foreach ($viewPaths as $viewPath) {
-				$themeRoot = Plugin::path($alias);
-				$themeJson = $themeRoot . 'config' . DS . 'theme.json';
-				if (file_exists($themeJson)) {
-					$manifestFile = $themeJson;
-				} else {
-					$themeJson = $themeRoot . 'webroot' . DS . 'theme.json';
-					if (file_exists($themeJson)) {
-						$manifestFile = $themeJson;
-					}
-				}
+        $themeConfigs = [
+            'config' . DS . 'theme.json',
+            'webroot' . DS . 'theme.json'
+        ];
 
-				if (file_exists($themeRoot . 'composer.json')) {
-					$composerJson = $themeRoot . 'composer.json';
-				}
+        try {
+            $path = Plugin::path($theme);
+        } catch (MissingPluginException $exception) {
+            throw new MissingThemeException([$theme], $exception->getCode(), $exception);
+        }
 
-				if (isset($manifestFile) || isset($composerJson)) {
-					break;
-				}
-			}
-		}
+
+        foreach ($themeConfigs as $themeManifestFile) {
+            if (!file_exists($path . $themeManifestFile)) {
+                continue;
+            }
+
+            $manifestFile = $path . $themeManifestFile;
+        }
+
+        if (file_exists($path . 'composer.json')) {
+            $composerJson = $path . 'composer.json';
+        }
 
 		if (!isset($manifestFile) && !isset($composerJson)) {
 			return array();
@@ -240,16 +220,17 @@ class CroogoTheme {
 
 /**
  * Activate theme $alias
- * @param $alias theme alias
+ * @param $theme theme alias
  * @return mixed On success Setting::$data or true, false on failure
  */
-	public function activate($alias) {
-		if ($alias == 'default' || $alias == null) {
-			$alias = '';
-		}
+	public function activate($theme) {
+        if (!$this->getData($theme)) {
+            return false;
+        }
+
 		Cache::delete('file_map', '_cake_core_');
-		$Setting = ClassRegistry::init('Settings.Setting');
-		return $Setting->write('Site.theme', $alias);
+		$settings = TableRegistry::get('Croogo/Settings.Settings');
+		return $settings->write('Site.theme', $theme);
 	}
 
 /**

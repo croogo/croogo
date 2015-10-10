@@ -1,8 +1,10 @@
 <?php
 
-namespace Croogo\Extensions\Controller;
+namespace Croogo\Extensions\Controller\Admin;
+use Croogo\Extensions\Controller\ExtensionsAppController;
 use Croogo\Extensions\CroogoTheme;
 use Cake\Core\Configure;
+use Croogo\Extensions\Exception\MissingThemeException;
 use Croogo\Extensions\ExtensionsInstaller;
 
 /**
@@ -54,12 +56,11 @@ class ExtensionsThemesController extends ExtensionsAppController {
  *
  * @return void
  */
-	public function admin_index() {
+	public function index() {
 		$this->set('title_for_layout', __d('croogo', 'Themes'));
 
 		$themes = $this->_CroogoTheme->getThemes();
 		$themesData = array();
-		$themesData[] = $this->_CroogoTheme->getData();
 		foreach ($themes as $theme) {
 			$themesData[$theme] = $this->_CroogoTheme->getData($theme);
 		}
@@ -71,17 +72,18 @@ class ExtensionsThemesController extends ExtensionsAppController {
 /**
  * admin_activate
  *
- * @param string $alias
- * @return void
+ * @param string $theme
  */
-	public function admin_activate($alias = null) {
-		if ($this->_CroogoTheme->activate($alias)) {
-			$this->Session->setFlash(__d('croogo', 'Theme activated.'), 'flash', array('class' => 'success'));
-		} else {
-			$this->Session->setFlash(__d('croogo', 'Theme activation failed.'), 'flash', array('class' => 'success'));
-		}
+	public function activate($theme = null) {
+        try {
+            $this->_CroogoTheme->activate($theme);
 
-		return $this->redirect(array('action' => 'index'));
+            $this->Flash->success(__d('croogo', 'Theme activated.'));
+        } catch (MissingThemeException $exception) {
+            $this->Flash->error(__d('croogo', 'Theme activation failed: %s', $exception->getMessage()));
+        }
+
+		return $this->redirect(['action' => 'index']);
 	}
 
 /**
