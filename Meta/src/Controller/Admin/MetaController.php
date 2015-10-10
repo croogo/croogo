@@ -2,7 +2,7 @@
 
 namespace Croogo\Meta\Controller\Admin;
 
-use Meta\Controller\MetaAppController;
+use Croogo\Meta\Controller\MetaAppController;
 
 /**
  * Meta Controller

@@ -18,4 +18,14 @@ class RolesTable extends CroogoTable {
         'title',
         'alias',
     );
+
+	public function initialize(array $config)
+	{
+		parent::initialize($config);
+
+		$this->addBehavior('Acl.Acl', [
+			'className' => 'Croogo/Core.CroogoAcl',
+			'type' => 'requester'
+		]);
+	}
 }
