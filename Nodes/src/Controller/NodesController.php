@@ -38,15 +38,6 @@ class NodesController extends NodesAppController
     public $components = [
         'Croogo/Core.BulkProcess',
         'Croogo/Core.Recaptcha',
-        'Search.Prg' => [
-            'presetForm' => [
-                'paramType' => 'querystring',
-            ],
-            'commonProcess' => [
-                'paramType' => 'querystring',
-                'filterEmpty' => true,
-            ],
-        ],
     ];
 
     /**
@@ -64,6 +55,16 @@ class NodesController extends NodesAppController
     {
         parent::afterConstruct();
         $this->_setupAclComponent();
+    }
+
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->loadComponent('Paginator', [
+            'limit' =>  Configure::read('Reading.nodes_per_page')
+        ]);
+        $this->loadComponent('Search.Prg');
     }
 
     /**
@@ -180,7 +181,7 @@ class NodesController extends NodesAppController
     /**
      * Term
      *
-     * @return null|\Core\Network\Response
+     * @return null|\Cake\Network\Response
      *
      * @access public
      */
@@ -286,68 +287,21 @@ class NodesController extends NodesAppController
     /**
      * Promoted
      *
-     * @return null|\Cake\Network\Response
+     * @return void
      *
      * @access public
      */
     public function promoted()
     {
-        $this->set('title_for_layout', __d('croogo', 'Home'));
+        $this->Prg->commonProcess();
 
-        $roleId = $this->Croogo->roleId();
-        $this->paginate['type'] = 'promoted';
-        $query = $this->Nodes->find()->where([
-            'OR' => [
-                'visibility_roles' => '',
-                'visibility_roles LIKE' => '%"' . $roleId . '"%',
-            ],
-        ]);
+        $query = $this->Nodes->find('published')
+            ->find('visibilityRole', [
+                'role_id' => $this->Croogo->roleId()
+            ])
+            ->find('searchable', $this->Prg->parsedParams());
 
-        if (isset($this->request->params['named']['limit'])) {
-            $limit = $this->request->params['named']['limit'];
-        } else {
-            $limit = Configure::read('Reading.nodes_per_page');
-        }
-
-        if (isset($this->request->params['named']['type'])) {
-            $type = $this->Nodes->Taxonomies->Vocabularies->Types->findByAlias($this->request->params['named']['type']);
-            if (!$type) {
-                $this->Flash->error(__d('croogo', 'Invalid content type.'));
-                return $this->redirect('/');
-            }
-            if (isset($type['Params']['nodes_per_page']) && empty($this->request->params['named']['limit'])) {
-                $limit = $type['Params']['nodes_per_page'];
-            }
-            $query->where(['type' => $type->alias]);
-            $this->set('title_for_layout', $type->title);
-            $this->set(compact('type'));
-        }
-
-        $this->paginate['limit'] = $limit;
-
-        if ($this->usePaginationCache) {
-            $cacheNamePrefix = 'nodes_promoted_' . $this->Croogo->roleId() . '_' . Configure::read('Config.language');
-            if (isset($type)) {
-                $cacheNamePrefix .= '_' . $type->alias;
-            }
-            $this->paginate['page'] = isset($this->request->params['named']['page']) ? $this->request->params['named']['page'] : 1;
-            $cacheName = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $limit;
-            $cacheNamePaging = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $limit . '_paging';
-            $cacheConfig = 'nodes_promoted';
-            $nodes = Cache::read($cacheName, $cacheConfig);
-            if (!$nodes) {
-                $nodes = $this->paginate($this->Nodes->alias());
-                Cache::write($cacheName, $nodes, $cacheConfig);
-                Cache::write($cacheNamePaging, $this->request->params['paging'], $cacheConfig);
-            } else {
-                $paging = Cache::read($cacheNamePaging, $cacheConfig);
-                $this->request->params['paging'] = $paging;
-            }
-        } else {
-            $nodes = $this->paginate($query);
-        }
-
-        $this->set(compact('nodes'));
+        $this->set('nodes', $this->Paginator->paginate($query));
     }
 
     /**
