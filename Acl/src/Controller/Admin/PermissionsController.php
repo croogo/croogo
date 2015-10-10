@@ -135,12 +135,12 @@ class PermissionsController extends CroogoAppController {
 		}
 
 		// see if acoId and aroId combination exists
-		$aro = $this->Aros->get($aroId)->toArray();
+		$aro = $this->Aros->get($aroId);
 		$path = $this->Acos->find('path', ['for' => $acoId]);
 		$path = join('/', collection($path)->extract('alias')->toArray());
 
-		$permitted = !$this->Permissions->check($aro, $path);
-		$success = $this->Permissions->allow($aro, $path, '*', $permitted ? 1 : -1);
+		$permitted = !$this->Permissions->check(['model' => $aro->model, 'foreign_key' => $aro->foreign_key], $path);
+		$success = $this->Permissions->allow(['model' => $aro->model, 'foreign_key' => $aro->foreign_key], $path, '*', $permitted ? 1 : -1);
 		if ($success) {
 			$aco = $this->Acos->get($acoId);
 			$cacheName = 'permissions_aco_' . $aco->parent_id;

@@ -23,7 +23,7 @@ class ArosTable extends \Acl\Model\Table\ArosTable {
 	public function getRoles($roles) {
 		$aros = $this->find('all', array(
 			'conditions' => array(
-				'Aros.model' => 'Roles',
+				'Aros.model' => 'Croogo/Users.Roles',
 				'Aros.foreign_key IN' => array_keys($roles->toArray()),
 			),
 		));
