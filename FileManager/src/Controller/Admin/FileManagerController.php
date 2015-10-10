@@ -6,7 +6,6 @@ use Cake\Event\Event;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Routing\Router;
-use Croogo\FileManager\Controller\Admin\Controller;
 use Croogo\FileManager\Utility\FileManager;
 
 /**
@@ -19,7 +18,7 @@ use Croogo\FileManager\Utility\FileManager;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class FileManagerController extends Controller {
+class FileManagerController extends AppController {
 
 /**
  * Models used by the Controller

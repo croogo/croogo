@@ -1,11 +1,11 @@
 <?php
 
-namespace Croogo\Nodes\Controller;
+namespace Croogo\Nodes\Controller\Admin;
 
-use Croogo\Core\Controller\Controller as CroogoController;
+use Croogo\Core\Controller\Admin\AppController as CroogoController;
 
 /**
- * Nodes App Controller
+ * Nodes Admin Controller
  *
  * @category Nodes.Controller
  * @package  Croogo.Nodes
@@ -14,6 +14,6 @@ use Croogo\Core\Controller\Controller as CroogoController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Controller extends CroogoController {
+class AppController extends CroogoController {
 
 }

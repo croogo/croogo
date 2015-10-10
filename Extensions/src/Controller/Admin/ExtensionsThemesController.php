@@ -1,7 +1,7 @@
 <?php
 
 namespace Croogo\Extensions\Controller\Admin;
-use Croogo\Extensions\Controller\ExtensionsAppController;
+
 use Croogo\Extensions\CroogoTheme;
 use Cake\Core\Configure;
 use Croogo\Extensions\Exception\MissingThemeException;
@@ -17,7 +17,7 @@ use Croogo\Extensions\ExtensionsInstaller;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtensionsThemesController extends ExtensionsAppController {
+class ExtensionsThemesController extends AppController {
 
 /**
  * Controller name

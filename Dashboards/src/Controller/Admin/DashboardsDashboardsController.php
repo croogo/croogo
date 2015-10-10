@@ -3,7 +3,7 @@
 namespace Croogo\Dashboards\Controller\Admin;
 
 use Cake\Event\Event;
-use Croogo\Core\Controller\Admin\Controller;
+use Croogo\Core\Controller\Admin\AppController;
 
 /**
  * DashboardsDashboards Controller
@@ -15,7 +15,7 @@ use Croogo\Core\Controller\Admin\Controller;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class DashboardsDashboardsController extends Controller
+class DashboardsDashboardsController extends AppController
 {
 
 	public $helpers = [

@@ -4,7 +4,6 @@ namespace Croogo\Comments\Controller\Admin;
 
 use App\Network\Email\Email;
 use Cake\Event\Event;
-use Croogo\Comments\Controller\Admin\Controller;
 use Croogo\Comments\Model\Entity\Comment;
 
 /**
@@ -17,7 +16,7 @@ use Croogo\Comments\Model\Entity\Comment;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CommentsController extends Controller {
+class CommentsController extends AppController {
 
 /**
  * Components

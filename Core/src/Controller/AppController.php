@@ -2,7 +2,6 @@
 
 namespace Croogo\Core\Controller;
 
-use App\Controller\AppController;
 use Cake\Controller\ErrorController;
 use Cake\Controller\Exception\MissingComponentException;
 use Cake\Core\App;
@@ -27,7 +26,7 @@ use Croogo\Extensions\CroogoTheme;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Controller extends AppController {
+class AppController extends \App\Controller\AppController {
 
 	use PropertyHookTrait;
 

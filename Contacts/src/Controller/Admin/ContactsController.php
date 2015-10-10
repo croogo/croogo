@@ -3,7 +3,6 @@
 namespace Croogo\Contacts\Controller\Admin;
 
 use App\Network\Email\Email;
-use Croogo\Contacts\Controller\Admin\Controller;
 use Croogo\Contacts\Model\Entity\Contact;
 
 /**
@@ -16,7 +15,7 @@ use Croogo\Contacts\Model\Entity\Contact;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ContactsController extends Controller {
+class ContactsController extends AppController {
 
 /**
  * Components

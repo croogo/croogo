@@ -18,7 +18,7 @@ use Croogo\Users\Model\Table\UsersTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class UsersController extends Controller {
+class UsersController extends AppController {
 
 /**
  * Index

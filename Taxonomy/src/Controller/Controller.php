@@ -2,7 +2,7 @@
 
 namespace Croogo\Taxonomy\Controller;
 
-use Croogo\Core\Controller\Controller as CroogoController;
+use Croogo\Core\Controller\AppController as CroogoController;
 
 /**
  * Taxonomy App Controller
@@ -14,6 +14,6 @@ use Croogo\Core\Controller\Controller as CroogoController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Controller extends CroogoController {
+class AppController extends CroogoController {
 
 }

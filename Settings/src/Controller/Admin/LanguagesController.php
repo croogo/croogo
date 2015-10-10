@@ -2,8 +2,6 @@
 
 namespace Croogo\Settings\Controller\Admin;
 
-use Croogo\Settings\Controller\Admin\Controller;
-
 /**
  * Languages Controller
  *
@@ -16,7 +14,7 @@ use Croogo\Settings\Controller\Admin\Controller;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class LanguagesController extends Controller {
+class LanguagesController extends AppController {
 
 /**
  * Admin index

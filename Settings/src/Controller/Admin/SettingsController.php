@@ -2,8 +2,6 @@
 
 namespace Croogo\Settings\Controller\Admin;
 
-use Croogo\Settings\Controller\Admin\Controller;
-
 /**
  * Settings Controller
  *
@@ -14,7 +12,7 @@ use Croogo\Settings\Controller\Admin\Controller;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class SettingsController extends Controller {
+class SettingsController extends AppController {
 
 /**
  * Initialize

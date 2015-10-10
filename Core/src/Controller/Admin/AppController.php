@@ -2,13 +2,11 @@
 
 namespace Croogo\Core\Controller\Admin;
 
-use App\Controller\AppController;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-
 use Croogo\Core\Croogo;
-use Croogo\Core\Controller\Controller as CroogoController;
+use Croogo\Core\Controller\AppController as CroogoAppController;
 
 /**
  * Croogo App Controller
@@ -20,7 +18,7 @@ use Croogo\Core\Controller\Controller as CroogoController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Controller extends CroogoController {
+class AppController extends CroogoAppController {
 
 /**
  * Helpers

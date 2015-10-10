@@ -1,11 +1,11 @@
 <?php
 
-namespace Croogo\Comments\Controller;
+namespace Croogo\Comments\Controller\Admin;
 
-use Cake\Core\Controller\Controller as CroogoController;
+use Croogo\Core\Controller\Admin\AppController as CroogoController;
 
 /**
- * Comments Controller
+ * Comments Admin Controller
  *
  * @category Comments.Controller
  * @package  Croogo.Comments.Controller
@@ -14,6 +14,6 @@ use Cake\Core\Controller\Controller as CroogoController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Controller extends CroogoController {
+class AppController extends CroogoController {
 
 }
