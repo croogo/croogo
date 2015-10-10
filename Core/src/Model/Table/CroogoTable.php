@@ -32,9 +32,9 @@ class CroogoTable extends Table {
 /**
  * Default behaviors
  */
-	public $actsAs = array(
+	public $actsAs = [
 		'Containable',
-	);
+	];
 
 	public $hookedBehaviors = [];
 
@@ -44,7 +44,7 @@ class CroogoTable extends Table {
  * @var array
  * @access protected
  */
-	protected $_displayFields = array();
+	protected $_displayFields = [];
 
 /**
  * Edit fields for admin_edit. Use editFields()
@@ -52,7 +52,7 @@ class CroogoTable extends Table {
  * @var array
  * @access protected
  */
-	protected $_editFields = array();
+	protected $_editFields = [];
 
 /**
  * Constructor
@@ -130,24 +130,24 @@ class CroogoTable extends Table {
 		if (isset($displayFields)) {
 			$this->_displayFields = $displayFields;
 		}
-		$out = array();
-		$defaults = array('sort' => true, 'type' => 'text', 'url' => array(), 'options' => array());
+		$out = [];
+		$defaults = ['sort' => true, 'type' => 'text', 'url' => [], 'options' => []];
 		foreach ($this->_displayFields as $field => $label) {
 			if (is_int($field)) {
 				$field = $label;
 				list(, $label) = pluginSplit($label);
-				$out[$field] = Hash::merge($defaults, array(
+				$out[$field] = Hash::merge($defaults, [
 					'label' => Inflector::humanize($label),
-				));
+				]);
 			} elseif (is_array($label)) {
 				$out[$field] = Hash::merge($defaults, $label);
 				if (!isset($out[$field]['label'])) {
 					$out[$field]['label'] = Inflector::humanize($field);
 				}
 			} else {
-				$out[$field] = Hash::merge($defaults, array(
+				$out[$field] = Hash::merge($defaults, [
 					'label' => $label,
-				));
+				]);
 			}
 		}
 		return $out;
@@ -170,16 +170,16 @@ class CroogoTable extends Table {
 				unset($this->_editFields[$id]);
 			}
 		}
-		$out = array();
+		$out = [];
 		foreach ($this->_editFields as $field => $label) {
 			if (is_int($field)) {
-				$out[$label] = array();
+				$out[$label] = [];
 			} elseif (is_array($label)) {
 				$out[$field] = $label;
 			} else {
-				$out[$field] = array(
+				$out[$field] = [
 					'label' => $label,
-				);
+				];
 			}
 		}
 		return $out;

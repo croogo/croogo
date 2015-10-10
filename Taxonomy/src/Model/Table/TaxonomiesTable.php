@@ -10,6 +10,14 @@ class TaxonomiesTable extends CroogoTable {
 		$this->belongsTo('Croogo/Taxonomy.Terms');
 		$this->belongsTo('Croogo/Taxonomy.Vocabularies');
 		$this->addBehavior('Tree');
+		$this->addBehavior('Timestamp', [
+			'events' => [
+				'Model.beforeSave' => [
+					'created' => 'new',
+					'updated' => 'always'
+				]
+			]
+		]);
 //		$this->addBehavior('Croogo/Core.Cached', [
 //			'groups' => [
 //				'nodes',
@@ -25,13 +33,13 @@ class TaxonomiesTable extends CroogoTable {
 	 * @param  array  $options
 	 * @return array
 	 */
-	public function getTree($alias, $options = array()) {
-		$_options = array(
+	public function getTree($alias, $options = []) {
+		$_options = [
 			'key' => 'slug', // Term.slug
 			'value' => 'title', // Term.title
 			'taxonomyId' => false,
 			'cache' => false,
-		);
+		];
 		$options = array_merge($_options, $options);
 
 		// Check if cached
@@ -61,9 +69,9 @@ class TaxonomiesTable extends CroogoTable {
 				$this->alias() . '.vocabulary_id' => $vocabulary->id,
 			]
 		]);
-		$treeConditions = array(
+		$treeConditions = [
 			$this->alias() . '.vocabulary_id' => $vocabulary->id,
-		);
+		];
 		$tree = $this->find('treeList', [
 			'keyPath' => 'term_id',
 			'valuePath' => 'id'
@@ -75,7 +83,7 @@ class TaxonomiesTable extends CroogoTable {
 			'groupField' => 'id',
 		])->where(['id IN' => $termsIds])->toArray();
 
-		$termsTree = array();
+		$termsTree = [];
 		foreach ($tree as $termId => $tvId) {
 			if (isset($terms[$termId])) {
 				$term = $terms[$termId];

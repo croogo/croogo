@@ -13,11 +13,11 @@ class RolesTable extends CroogoTable {
  *
  * @var array
  */
-    protected $_displayFields = array(
+    protected $_displayFields = [
         'id',
         'title',
         'alias',
-    );
+    ];
 
 	public function initialize(array $config)
 	{

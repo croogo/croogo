@@ -22,24 +22,24 @@ class MessagesTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $validate = array(
-		'name' => array(
+	public $validate = [
+		'name' => [
 			'rule' => 'notEmpty',
 			'message' => 'This field cannot be left blank.',
-		),
-		'email' => array(
+		],
+		'email' => [
 			'rule' => 'email',
 			'message' => 'Please provide a valid email address.',
-		),
-		'title' => array(
+		],
+		'title' => [
 			'rule' => 'notEmpty',
 			'message' => 'This field cannot be left blank.',
-		),
-		'body' => array(
+		],
+		'body' => [
 			'rule' => 'notEmpty',
 			'message' => 'This field cannot be left blank.',
-		),
-	);
+		],
+	];
 
 	public function initialize(array $config) {
 		parent::initialize($config);
@@ -61,6 +61,14 @@ class MessagesTable extends CroogoTable {
 		]);
 		$this->addBehavior('Croogo/Core.Trackable');
 		$this->addBehavior('Search.Searchable');
+		$this->addBehavior('Timestamp', [
+			'events' => [
+				'Model.beforeSave' => [
+					'created' => 'new',
+					'updated' => 'always'
+				]
+			]
+		]);
 	}
 
 /**
@@ -69,14 +77,14 @@ class MessagesTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $filterArgs = array(
-		'contact_id' => array(
+	public $filterArgs = [
+		'contact_id' => [
 			'type' => 'value',
-		),
-		'status' => array(
+		],
+		'status' => [
 			'type' => 'value',
-		),
-	);
+		],
+	];
 
 /**
  * Mark messages as read in bulk
@@ -86,8 +94,8 @@ class MessagesTable extends CroogoTable {
  */
 	public function bulkRead($ids) {
 		return $this->updateAll(
-			array($this->escapeField('status') => 1),
-			array($this->escapeField() => $ids)
+			[$this->escapeField('status') => 1],
+			[$this->escapeField() => $ids]
 		);
 	}
 
@@ -99,8 +107,8 @@ class MessagesTable extends CroogoTable {
  */
 	public function bulkUnread($ids) {
 		return $this->updateAll(
-			array($this->escapeField('status') => 0),
-			array($this->escapeField() => $ids)
+			[$this->escapeField('status') => 0],
+			[$this->escapeField() => $ids]
 		);
 	}
 

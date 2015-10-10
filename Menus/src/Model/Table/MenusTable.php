@@ -25,22 +25,22 @@ class MenusTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $validate = array(
-		'title' => array(
-			'rule' => array('minLength', 1),
+	public $validate = [
+		'title' => [
+			'rule' => ['minLength', 1],
 			'message' => 'Title cannot be empty.',
-		),
-		'alias' => array(
-			'isUnique' => array(
+		],
+		'alias' => [
+			'isUnique' => [
 				'rule' => 'isUnique',
 				'message' => 'This alias has already been taken.',
-			),
-			'minLength' => array(
-				'rule' => array('minLength', 1),
+			],
+			'minLength' => [
+				'rule' => ['minLength', 1],
 				'message' => 'Alias cannot be empty.',
-			),
-		),
-	);
+			],
+		],
+	];
 
 	public function initialize(array $config) {
 		parent::initialize($config);
@@ -52,6 +52,15 @@ class MenusTable extends CroogoTable {
 //		]);
 		$this->addBehavior('Croogo/Core.Publishable');
 		$this->addBehavior('Croogo/Core.Trackable');
+
+		$this->addBehavior('Timestamp', [
+			'events' => [
+				'Model.beforeSave' => [
+					'created' => 'new',
+					'updated' => 'always'
+				]
+			]
+		]);
 		$this->hasMany('Links', [
 			'className' => 'Menus.Links',
 			'order' => [
@@ -65,9 +74,9 @@ class MenusTable extends CroogoTable {
  */
 	public function beforeDelete(Event $event, Entity $entity, $options) {
 		// Set tree scope for Links association
-		$settings = array(
-			'scope' => array($this->Links->alias() . '.menu_id' => $entity->id),
-		);
+		$settings = [
+			'scope' => [$this->Links->alias() . '.menu_id' => $entity->id],
+		];
 		if ($this->Links->hasBehavior('Tree')) {
 			$this->Links->behaviors()->get('Tree')->config($settings);
 		} else {
