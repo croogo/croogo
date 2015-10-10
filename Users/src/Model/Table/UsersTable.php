@@ -39,6 +39,11 @@ class UsersTable extends CroogoTable {
 		parent::initialize($config);
 
 		$this->belongsTo('Croogo/Users.Roles');
+
+		$this->addBehavior('Acl.Acl', [
+			'className' => 'Croogo/Core.CroogoAcl',
+			'type' => 'requester'
+		]);
 		$this->addBehavior('Search.Searchable');
 		$this->addBehavior('Timestamp', [
 			'events' => [
@@ -73,7 +78,7 @@ class UsersTable extends CroogoTable {
 
 		$user->set([
 			'role_id' => RolesTable::ROLE_REGISTERED,
-			'activation_key' => $this->activationKey(),
+			'activation_key' => Text::uuid(),
 		]);
 
 		if (!$this->save($user)) {
@@ -117,7 +122,7 @@ class UsersTable extends CroogoTable {
 	public function resetPassword(User $user)
 	{
 		// Generate a unique activation key
-		$user->activation_key = $this->activationKey();
+		$user->activation_key = Text::uuid();
 
 		$user = $this->save($user);
 		if (!$user) {
@@ -158,11 +163,6 @@ class UsersTable extends CroogoTable {
 			'username' => $options['username'],
 			'activation_key' => $options['activationKey'],
 		]);
-	}
-
-	public function activationKey()
-	{
-		return md5(uniqid());
 	}
 
 	public function validationDefault(Validator $validator) {
@@ -237,4 +237,29 @@ class UsersTable extends CroogoTable {
 			]);
 	}
 
+
+	/**
+	 * afterSave
+	 *
+	 * @param Model $model
+	 * @param boolean $created
+	 * @return void
+	 */
+	public function afterSave(Event $event, Entity $entity, ArrayObject $options) {
+		// update ACO alias
+		if (!empty($model->data['User']['username'])) {
+			$node = $model->node();
+			$aro = $node[0];
+			$model->Aro->id = $aro['Aro']['id'];
+			$model->Aro->saveField('alias', $model->data['User']['username']);
+		}
+		Cache::clearGroup('acl', 'permissions');
+	}
+
+	/**
+	 * afterDelete
+	 */
+	public function afterDelete(Model $model) {
+		Cache::clearGroup('acl', 'permissions');
+	}
 }

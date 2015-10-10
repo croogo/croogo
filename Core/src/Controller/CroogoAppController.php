@@ -157,38 +157,10 @@ class CroogoAppController extends AppController {
 	protected function _setupComponents() {
 		$components = [];
 
-		if ($this->request && !$this->request->is('api')) {
-			$components = Hash::merge(
-				$this->_defaultComponents,
-				$this->_appComponents
-			);
-		} else {
-			$components = Hash::merge(
-				[
-					'Acl.Acl',
-					'Auth',
-					'Security',
-					'Flash',
-					'RequestHandler',
-					'Croogo/Acl.AclFilter'
-				],
-				$this->_apiComponents
-			);
-
-			$apiComponents = array();
-			$priority = 8;
-			foreach ($this->_apiComponents as $component => $setting) {
-				if (is_string($setting)) {
-					$component = $setting;
-					$setting = array();
-				}
-				$className = $component;
-				list(, $apiComponent) = pluginSplit($component);
-				$setting = Hash::merge(compact('className', 'priority'), $setting);
-				$apiComponents[$apiComponent] = $setting;
-			}
-			$this->_apiComponents = $apiComponents;
-		}
+		$components = Hash::merge(
+			$this->_defaultComponents,
+			$this->_appComponents
+		);
 
 		foreach ($components as $component => $config) {
 			if (!is_array($config)) {

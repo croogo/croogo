@@ -1,6 +1,8 @@
 <?php
 
-App::uses('CroogoAppController', 'Croogo.Controller');
+namespace Croogo\Dashboards\Controller;
+
+use Croogo\Core\Controller\CroogoAppController;
 
 /**
  * DashboardsApp Controller
