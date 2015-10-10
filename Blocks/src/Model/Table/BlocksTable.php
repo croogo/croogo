@@ -25,22 +25,22 @@ class BlocksTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $validate = array(
-		'title' => array(
-			'rule' => array('minLength', 1),
+	public $validate = [
+		'title' => [
+			'rule' => ['minLength', 1],
 			'message' => 'Title cannot be empty.',
-		),
-		'alias' => array(
-			'isUnique' => array(
+		],
+		'alias' => [
+			'isUnique' => [
 				'rule' => 'isUnique',
 				'message' => 'This alias has already been taken.',
-			),
-			'minLength' => array(
-				'rule' => array('minLength', 1),
+			],
+			'minLength' => [
+				'rule' => ['minLength', 1],
 				'message' => 'Alias cannot be empty.',
-			),
-		),
-	);
+			],
+		],
+	];
 
 /**
  * Filter search fields
@@ -48,10 +48,10 @@ class BlocksTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $filterArgs = array(
-		'title' => array('type' => 'like', 'field' => array('title', 'alias')),
-		'region_id' => array('type' => 'value'),
-	);
+	public $filterArgs = [
+		'title' => ['type' => 'like', 'field' => ['title', 'alias']],
+		'region_id' => ['type' => 'value'],
+	];
 
 /**
  * Find methods
@@ -68,7 +68,7 @@ class BlocksTable extends CroogoTable {
 			'className' => 'Croogo/Blocks.Regions',
 			'foreignKey' => 'region_id',
 			'counterCache' => true,
-			'counterScope' => array('Blocks.status >=' => Status::PUBLISHED),
+			'counterScope' => ['Blocks.status >=' => Status::PUBLISHED],
 		]);
 
 		$this->addBehavior('Croogo/Core.Publishable');
@@ -110,14 +110,14 @@ class BlocksTable extends CroogoTable {
 		return $query->where([
 			'status' => $status,
 			'region_id' => $regionId,
-			'AND' => array(
-				array(
-					'OR' => array(
+			'AND' => [
+				[
+					'OR' => [
 						'visibility_roles' => '',
 						'visibility_roles' . ' LIKE' => '%"' . $roleId . '"%',
-					),
-				),
-			),
+					],
+				],
+			],
 		])->order([
 			'weight' => 'ASC'
 		])->applyOptions([

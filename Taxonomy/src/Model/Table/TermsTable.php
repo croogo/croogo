@@ -34,15 +34,15 @@ class TermsTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $actsAs = array(
-		'Croogo.Cached' => array(
-			'groups' => array(
+	public $actsAs = [
+		'Croogo.Cached' => [
+			'groups' => [
 				'taxonomy',
 				'nodes',
-			),
-		),
+			],
+		],
 		'Croogo.Trackable',
-	);
+	];
 
 /**
  * Validation
@@ -50,18 +50,18 @@ class TermsTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $validate = array(
-		'slug' => array(
-			'isUnique' => array(
+	public $validate = [
+		'slug' => [
+			'isUnique' => [
 				'rule' => 'isUnique',
 				'message' => 'This slug has already been taken.',
-			),
-			'minLength' => array(
-				'rule' => array('minLength', 1),
+			],
+			'minLength' => [
+				'rule' => ['minLength', 1],
 				'message' => 'Slug cannot be empty.',
-			),
-		),
-	);
+			],
+		],
+	];
 
 /**
  * Model associations: hasAndBelongsToMany
@@ -69,16 +69,16 @@ class TermsTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $hasAndBelongsToMany = array(
-		'Vocabulary' => array(
+	public $hasAndBelongsToMany = [
+		'Vocabulary' => [
 			'className' => 'Taxonomy.Vocabulary',
 			'with' => 'Taxonomy',
 			'joinTable' => 'taxonomy',
 			'foreignKey' => 'term_id',
 			'associationForeignKey' => 'vocabulary_id',
 			'unique' => true,
-		),
-	);
+		],
+	];
 
 	public function initialize(array $config) {
 		parent::initialize($config);
@@ -126,12 +126,12 @@ class TermsTable extends CroogoTable {
  */
 	public function beforeDelete($cascade = true) {
 		$Taxonomy = ClassRegistry::init('Taxonomy.Taxonomy');
-		$count = $Taxonomy->find('count', array(
+		$count = $Taxonomy->find('count', [
 			'recursive' => -1,
-			'conditions' => array(
+			'conditions' => [
 				$Taxonomy->escapeField('term_id') => $this->id,
-			),
-		));
+			],
+		]);
 		return $count === 0;
 	}
 

@@ -30,9 +30,9 @@ class LanguagesTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $actsAs = array(
-		'Croogo.Ordered' => array('field' => 'weight', 'foreign_key' => null),
-	);
+	public $actsAs = [
+		'Croogo.Ordered' => ['field' => 'weight', 'foreign_key' => null],
+	];
 
 /**
  * Validation
@@ -40,22 +40,22 @@ class LanguagesTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $validate = array(
-		'title' => array(
-			'rule' => array('minLength', 1),
+	public $validate = [
+		'title' => [
+			'rule' => ['minLength', 1],
 			'message' => 'Title cannot be empty.',
-		),
-		'alias' => array(
-			'isUnique' => array(
+		],
+		'alias' => [
+			'isUnique' => [
 				'rule' => 'isUnique',
 				'message' => 'This alias has already been taken.',
-			),
-			'minLength' => array(
-				'rule' => array('minLength', 1),
+			],
+			'minLength' => [
+				'rule' => ['minLength', 1],
 				'message' => 'Alias cannot be empty.',
-			),
-		),
-	);
+			],
+		],
+	];
 
 /**
  * Initialize

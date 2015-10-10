@@ -53,21 +53,21 @@ class CommentsTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $validate = array(
-		'body' => array(
+	public $validate = [
+		'body' => [
 			'rule' => 'notEmpty',
 			'message' => 'This field cannot be left blank.',
-		),
-		'name' => array(
+		],
+		'name' => [
 			'rule' => 'notEmpty',
 			'message' => 'This field cannot be left blank.',
-		),
-		'email' => array(
+		],
+		'email' => [
 			'rule' => 'email',
 			'required' => true,
 			'message' => 'Please enter a valid email address.',
-		),
-	);
+		],
+	];
 
 /**
  * Model associations: belongsTo
@@ -75,20 +75,20 @@ class CommentsTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $belongsTo = array(
-		'User' => array(
+	public $belongsTo = [
+		'User' => [
 			'className' => 'Users.User',
-		),
-	);
+		],
+	];
 
 /**
  * Filter fields
  *
  * @var array
  */
-	public $filterArgs = array(
-		'status' => array('type' => 'value'),
-	);
+	public $filterArgs = [
+		'status' => ['type' => 'value'],
+	];
 
 	public function initialize(array $config) {
 		parent::initialize($config);
@@ -117,13 +117,13 @@ class CommentsTable extends CroogoTable {
  * @return bool true if comment was added, false otherwise.
  * @throws NotFoundException
  */
-	public function add($data, $model, $foreignKey, $options = array()) {
-		$options = Hash::merge(array(
+	public function add($data, $model, $foreignKey, $options = []) {
+		$options = Hash::merge([
 			'parentId' => null,
-			'userData' => array(),
-		), $options);
-		$record = array();
-		$node = array();
+			'userData' => [],
+		], $options);
+		$record = [];
+		$node = [];
 
 		$foreignKey = (int)$foreignKey;
 		$parentId = is_null($options['parentId']) ? null : (int)$options['parentId'];
@@ -188,12 +188,12 @@ class CommentsTable extends CroogoTable {
  * @return boolean true if comment is approved
  */
 	public function isApproved($commentId, $model, $foreignKey) {
-		return $this->hasAny(array(
+		return $this->hasAny([
 			$this->escapeField() => $commentId,
 			$this->escapeField('model') => $model,
 			$this->escapeField('foreign_key') => $foreignKey,
 			$this->escapeField('status') => 1,
-		));
+		]);
 	}
 
 /**
@@ -207,7 +207,7 @@ class CommentsTable extends CroogoTable {
 			throw new NotFoundException(__d('croogo', 'Invalid Comment id'));
 		}
 
-		$path = $this->getPath($commentId, array($this->escapeField()));
+		$path = $this->getPath($commentId, [$this->escapeField()]);
 		$level = count($path);
 
 		return Configure::read('Comment.level') > $level;
@@ -222,14 +222,14 @@ class CommentsTable extends CroogoTable {
  * @see Model::saveMany()
  */
 	public function changeStatus($ids, $status) {
-		$dataArray = array();
+		$dataArray = [];
 		foreach ($ids as $id) {
-			$dataArray[] = array(
+			$dataArray[] = [
 				$this->primaryKey => $id,
 				'status' => $status
-			);
+			];
 		}
-		return $this->saveMany($dataArray, array('validate' => false));
+		return $this->saveMany($dataArray, ['validate' => false]);
 	}
 
 /**

@@ -11,13 +11,13 @@ class TypesTable extends CroogoTable {
  *
  * @var array
  */
-	protected $_displayFields = array(
+	protected $_displayFields = [
 		'id',
 		'title',
 		'alias',
 		'description',
 		'plugin',
-	);
+	];
 
 	public function initialize(array $config) {
 		$this->belongsToMany('Croogo/Taxonomy.Vocabularies', [
@@ -30,16 +30,16 @@ class TypesTable extends CroogoTable {
  */
 	public function pluginTypes($plugin = null) {
 		if ($plugin === null) {
-			$conditions = array();
+			$conditions = [];
 		} elseif ($plugin) {
-			$conditions = array('plugin' => $plugin);
+			$conditions = ['plugin' => $plugin];
 		} else {
-			$conditions = array(
-				'OR' => array(
+			$conditions = [
+				'OR' => [
 					'plugin LIKE' => '',
 					'plugin' => null,
-				),
-			);
+				],
+			];
 		}
 		return $this->find('list', compact('conditions'));
 	}

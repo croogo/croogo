@@ -25,16 +25,16 @@ class LinksTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $validate = array(
-		'title' => array(
-			'rule' => array('minLength', 1),
+	public $validate = [
+		'title' => [
+			'rule' => ['minLength', 1],
 			'message' => 'Title cannot be empty.',
-		),
-		'link' => array(
-			'rule' => array('minLength', 1),
+		],
+		'link' => [
+			'rule' => ['minLength', 1],
 			'message' => 'Link cannot be empty.',
-		),
-	);
+		],
+	];
 
 	public function initialize(array $config) {
 		parent::initialize($config);
@@ -64,9 +64,9 @@ class LinksTable extends CroogoTable {
  * @return void
  */
 	public function setTreeScope($menuId) {
-		$settings = array(
+		$settings = [
 			'scope' => [$this->alias() . '.menu_id' => $menuId],
-		);
+		];
 		if ($this->hasBehavior('Tree')) {
 			$this->behaviors()->get('Tree')->config($settings);
 		} else {

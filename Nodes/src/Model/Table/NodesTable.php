@@ -9,14 +9,14 @@ use Croogo\Nodes\Model\Entity\Node;
 
 class NodesTable extends CroogoTable {
 
-	public $filterArgs = array(
-		'q' => array('type' => 'query', 'method' => 'filterPublishedNodes'),
-		'filter' => array('type' => 'query', 'method' => 'filterNodes'),
-		'title' => array('type' => 'like'),
-		'type' => array('type' => 'value'),
-		'status' => array('type' => 'value'),
-		'promote' => array('type' => 'value'),
-	);
+	public $filterArgs = [
+		'q' => ['type' => 'query', 'method' => 'filterPublishedNodes'],
+		'filter' => ['type' => 'query', 'method' => 'filterNodes'],
+		'title' => ['type' => 'like'],
+		'type' => ['type' => 'value'],
+		'status' => ['type' => 'value'],
+		'promote' => ['type' => 'value'],
+	];
 
 
 	public function initialize(array $config) {
@@ -71,10 +71,10 @@ class NodesTable extends CroogoTable {
  * @throws InvalidArgumentException
  */
 	public function formatNode($data, $typeAlias = self::DEFAULT_TYPE) {
-		$roles = $type = array();
+		$roles = $type = [];
 
 		if (!array_key_exists($this->alias, $data)) {
-			$data = array($this->alias => $data);
+			$data = [$this->alias => $data];
 		} else {
 			$data = $data;
 		}
@@ -98,27 +98,27 @@ class NodesTable extends CroogoTable {
  * Find a single node by slug
  */
 	public function findViewBySlug(Query $query, array $options = array()) {
-		$keys = array('slug' => null, 'type' => null, 'roleId' => null);
+		$keys = ['slug' => null, 'type' => null, 'roleId' => null];
 		$args = array_merge($keys, array_intersect_key($options, $keys));
 		$options = array_diff_key($options, $args);
 
-		$query->where(array(
+		$query->where([
 			'slug' => $args['slug'],
 			'type' => $args['type'],
-		));
+		]);
 		$query->contain([
 //			'Metas',
-			'Taxonomies' => array(
+			'Taxonomies' => [
 				'Terms',
 				'Vocabularies',
-			),
+			],
 			'Users',
 		]);
 		$query->applyOptions([
-			'cache' => array(
+			'cache' => [
 				'name' => 'node_' . $args['roleId'] . '_' . $args['type'] . '_' . $args['slug'],
 				'config' => 'nodes_view',
-			),
+			],
 		]);
 
 		return $query;

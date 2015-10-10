@@ -22,13 +22,13 @@ class ContactsTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $actsAs = array(
-		'Croogo.Cached' => array(
-			'groups' => array(
+	public $actsAs = [
+		'Croogo.Cached' => [
+			'groups' => [
 				'contacts',
-			),
-		),
-	);
+			],
+		],
+	];
 
 /**
  * Validation
@@ -36,26 +36,26 @@ class ContactsTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $validate = array(
-		'title' => array(
+	public $validate = [
+		'title' => [
 			'rule' => 'notEmpty',
 			'message' => 'This field cannot be left blank.',
-		),
-		'alias' => array(
-			'isUnique' => array(
+		],
+		'alias' => [
+			'isUnique' => [
 				'rule' => 'isUnique',
 				'message' => 'This alias has already been taken.',
-			),
-			'minLength' => array(
-				'rule' => array('minLength', 1),
+			],
+			'minLength' => [
+				'rule' => ['minLength', 1],
 				'message' => 'Alias cannot be empty.',
-			),
-		),
-		'email' => array(
+			],
+		],
+		'email' => [
 			'rule' => 'email',
 			'message' => 'Please provide a valid email address.',
-		),
-	);
+		],
+	];
 
 	public function initialize(array $config) {
 		parent::initialize($config);
@@ -85,10 +85,10 @@ class ContactsTable extends CroogoTable {
  *
  * @var array
  */
-	protected $_displayFields = array(
+	protected $_displayFields = [
 		'id',
 		'title',
 		'alias',
 		'email',
-	);
+	];
 }
