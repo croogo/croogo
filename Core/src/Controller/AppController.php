@@ -265,15 +265,6 @@ class AppController extends \App\Controller\AppController {
 			}
 		}
 
-		$this->viewBuilder()->helpers([
-			'Html',
-			'Form',
-			'Text',
-			'Time',
-			'Croogo/Core.Js',
-			'Croogo/Core.Layout',
-		]);
-
 		$this->_setupTheme();
 
 		if ($this->viewBuilder()->theme()) {

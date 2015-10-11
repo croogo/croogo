@@ -20,6 +20,9 @@ Configure::write(
 
 require_once 'croogo_bootstrap.php';
 
+Croogo::hookHelper('*', 'Croogo/Core.Js');
+Croogo::hookHelper('*', 'Croogo/Core.Layout');
+
 if (Configure::read('Croogo.installed')) {
 	return;
 }
