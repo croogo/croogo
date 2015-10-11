@@ -23,6 +23,8 @@ require_once 'croogo_bootstrap.php';
 Croogo::hookHelper('*', 'Croogo/Core.Js');
 Croogo::hookHelper('*', 'Croogo/Core.Layout');
 
+Croogo::hookComponent('*', 'Croogo/Core.Theme');
+
 if (Configure::read('Croogo.installed')) {
 	return;
 }

@@ -30,20 +30,31 @@ class AppController extends CroogoAppController {
 		'Croogo/Core.Croogo',
 	);
 
-/**
- * Setup themes
- *
- * @return void
- */
-	protected function _setupTheme() {
-		$viewBuilder = $this->viewBuilder();
-		$viewBuilder->layout('Croogo/Core.admin');
-		$theme = Configure::read('Site.admin_theme');
-		$viewBuilder->theme($theme);
-		$this->_loadThemeSettings($theme);
+	/**
+	 * Load the theme component with the admin theme specified
+	 *
+	 * @return void
+	 */
+	public function initialize()
+	{
+		parent::initialize();
+
+		$this->Theme->config('theme', Configure::read('Site.admin_theme'));
 	}
 
-/**
+	/**
+	 * Change the admin layout
+	 *
+	 * @param Event $event The event that's handled
+	 */
+	public function beforeRender(Event $event)
+	{
+		parent::beforeRender($event);
+
+		$this->viewBuilder()->layout('Croogo/Core.admin');
+	}
+
+	/**
  * beforeFilter
  *
  * @return void
@@ -66,5 +77,4 @@ class AppController extends CroogoAppController {
 
 		Croogo::dispatchEvent('Croogo.beforeSetupAdminData', $this);
 	}
-
 }

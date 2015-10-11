@@ -182,43 +182,6 @@ class AppController extends \App\Controller\AppController {
 	}
 
 /**
- * Setup themes
- *
- * @return void
- */
-	protected function _setupTheme() {
-		$theme = Configure::read('Site.theme');
-		if (!$theme) {
-			return;
-		}
-
-		$this->viewBuilder()->theme($theme);
-		$this->_loadThemeSettings($theme);
-	}
-
-/**
- * Load theme settings
- *
- * @return void
- */
-	protected function _loadThemeSettings($theme) {
-		$prefix = $this->request->param('prefix');
-		$croogoTheme = new CroogoTheme();
-		$settings = $croogoTheme->getData($theme)['settings'];
-
-		$themePrefix = ($prefix) ? $prefix : '';
-
-		$themeHelpers = [];
-		if (isset($settings['prefixes'][$themePrefix])) {
-			foreach ($settings['prefixes'][$themePrefix]['helpers'] as $helper => $options) {
-				$themeHelpers[$helper] = $options;
-			}
-		}
-
-		$this->viewBuilder()->helpers($themeHelpers);
-	}
-
-/**
  * Allows extending action from component
  *
  * @throws MissingActionException
@@ -263,12 +226,6 @@ class AppController extends \App\Controller\AppController {
 			if ($this->request->param('action') == 'delete' && $this->request->param('prefix') == 'admin') {
 				$this->request->allowMethod('post');
 			}
-		}
-
-		$this->_setupTheme();
-
-		if ($this->viewBuilder()->theme()) {
-			$this->viewBuilder()->helpers(['Croogo/Core.Theme']);
 		}
 
 		if ($this->request->is('ajax')) {
