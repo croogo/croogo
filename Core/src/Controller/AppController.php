@@ -13,7 +13,8 @@ use Cake\Network\Response;
 use Cake\Utility\Hash;
 
 use Croogo\Core\Croogo;
-use Croogo\Core\PropertyHookTrait;
+use Croogo\Extensions\Controller\HookableComponentInterface;
+use Croogo\Extensions\Controller\HookableComponentTrait;
 use Croogo\Extensions\CroogoTheme;
 
 /**
@@ -26,33 +27,9 @@ use Croogo\Extensions\CroogoTheme;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AppController extends \App\Controller\AppController {
+class AppController extends \App\Controller\AppController implements HookableComponentInterface {
 
-	use PropertyHookTrait;
-
-/**
- * Default Components
- *
- * @var array
- * @access public
- */
-	protected $_defaultComponents = array(
-		'Croogo/Core.Croogo',
-		'Croogo/Acl.Filter',
-		'Security',
-		'Acl.Acl',
-		'Auth',
-		'Flash',
-		'RequestHandler',
-	);
-
-/**
- * List of registered Application Components
- *g
- * These components are typically hooked into the application during bootstrap.
- * @see Croogo::hookComponent
- */
-	protected $_appComponents = array();
+	use HookableComponentTrait;
 
 /**
  * List of registered API Components
@@ -107,17 +84,15 @@ class AppController extends \App\Controller\AppController {
 		$this->afterConstruct();
 	}
 
-/**
- * Initialize
- */
-	public function initialize() {
-		parent::initialize();
+	public function initialize()
+	{
+		$this->dispatchBeforeInitialize();
 
-		Croogo::applyHookProperties('Hook.controller_properties', $this);
-		$this->_setupComponents();
+		parent::initialize();
 	}
 
-/**
+
+	/**
  * implementedEvents
  */
 	public function implementedEvents() {
@@ -140,45 +115,8 @@ class AppController extends \App\Controller\AppController {
 		if (empty($this->viewClass)) {
 			$this->viewClass = 'Croogo/Core.Croogo';
 		}
-		Croogo::applyHookProperties('Hook.controller_properties', $this);
 
 		$this->viewBuilder()->helpers(Croogo::options('Hook.view_builder_options', $this, 'helpers'));
-
-		$this->_setupComponents();
-	}
-
-/**
- * Setup the components array
- *
- * @param void
- * @return void
- */
-	protected function _setupComponents() {
-		$components = [];
-
-		$components = Hash::merge(
-			$this->_defaultComponents,
-			$this->_appComponents
-		);
-
-		foreach ($components as $component => $config) {
-			if (!is_array($config)) {
-				$component = $config;
-				$config = [];
-			}
-
-			$this->loadComponent($component, $config);
-		}
-	}
-
-	public function loadComponent($name, array $config = []) {
-		list(, $prop) = pluginSplit($name);
-		list(, $modelProp) = pluginSplit($this->modelClass);
-		$component = $this->components()->load($name, $config);
-		if ($prop !== $modelProp) {
-			$this->{$prop} = $component;
-		}
-		return $component;
 	}
 
 /**

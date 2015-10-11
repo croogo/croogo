@@ -18,12 +18,19 @@ Configure::write(
 	])
 );
 
+Croogo::hookComponent('*', 'Croogo/Core.Croogo');
+Croogo::hookComponent('*', 'Croogo/Acl.Filter');
+Croogo::hookComponent('*', 'Security');
+Croogo::hookComponent('*', 'Acl.Acl');
+Croogo::hookComponent('*', 'Auth');
+Croogo::hookComponent('*', 'Flash');
+Croogo::hookComponent('*', 'RequestHandler');
+Croogo::hookComponent('*', 'Croogo/Core.Theme');
+
 require_once 'croogo_bootstrap.php';
 
 Croogo::hookHelper('*', 'Croogo/Core.Js');
 Croogo::hookHelper('*', 'Croogo/Core.Layout');
-
-Croogo::hookComponent('*', 'Croogo/Core.Theme');
 
 if (Configure::read('Croogo.installed')) {
 	return;

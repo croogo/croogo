@@ -8,5 +8,10 @@ $config = array(
 				'priority' => 5,
 			),
 		),
+		'Croogo/Extensions.HookableComponentEventHandler' => array(
+			'options' => array(
+				'priority' => 5,
+			),
+		),
 	),
 );
