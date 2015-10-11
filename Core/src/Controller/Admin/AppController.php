@@ -43,24 +43,14 @@ class AppController extends CroogoAppController {
 	}
 
 	/**
-	 * Change the admin layout
-	 *
-	 * @param Event $event The event that's handled
-	 */
-	public function beforeRender(Event $event)
-	{
-		parent::beforeRender($event);
-
-		$this->viewBuilder()->layout('Croogo/Core.admin');
-	}
-
-	/**
  * beforeFilter
  *
  * @return void
  */
 	public function beforeFilter(Event $event) {
 		parent::beforeFilter($event);
+
+		$this->viewBuilder()->layout('Croogo/Core.admin');
 
 		if (
 			Configure::read('Site.status') == 0 &&
