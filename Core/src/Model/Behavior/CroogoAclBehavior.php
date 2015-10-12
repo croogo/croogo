@@ -5,6 +5,7 @@ namespace Croogo\Core\Model\Behavior;
 use Acl\Model\Behavior\AclBehavior;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Inflector;
 
 /**
  * CroogoAcl Behavior
@@ -21,28 +22,30 @@ class CroogoAclBehavior extends AclBehavior {
 /**
  * setup
  *
- * @param Model $model
+ * @param Model $table
  * @param array $config
  */
-	public function __construct(Table $model, array $config = [])
+	public function __construct(Table $table, array $config = [])
 	{
-		parent::__construct($model, $config);
+		parent::__construct($table, $config);
 
 		if (isset($config[0])) {
 			$config['type'] = $config[0];
 			unset($config[0]);
 		}
 
-		$this->config($model->alias(), array_merge(array('type' => 'controlled'), $config));
-		$this->config($model->alias() . '.type', strtolower($this->config($model->alias() . '.type')));
+		$this->config($table->alias(), array_merge(array('type' => 'controlled'), $config));
+		$this->config($table->alias() . '.type', strtolower($this->config($table->alias() . '.type')));
 
-		$types = $this->_typeMaps[$this->config($model->alias() . '.type')];
+		$types = $this->_typeMaps[$this->config($table->alias() . '.type')];
 
 		if (!is_array($types)) {
 			$types = array($types);
 		}
+
 		foreach ($types as $type) {
-			$model->{$type} = TableRegistry::get($type);
+			$alias = Inflector::pluralize($type);;
+			$table->hasOne($alias);
 		}
 	}
 }

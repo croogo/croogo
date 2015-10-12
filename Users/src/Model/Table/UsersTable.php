@@ -2,8 +2,13 @@
 
 namespace Croogo\Users\Model\Table;
 
+use Cake\Cache\Cache;
+use Cake\Event\Event;
 use Cake\Mailer\MailerAwareTrait;
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
+use Cake\ORM\TableRegistry;
+use Cake\Utility\Text;
 use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
 use Croogo\Users\Model\Entity\User;
@@ -245,13 +250,18 @@ class UsersTable extends CroogoTable {
 	 * @param boolean $created
 	 * @return void
 	 */
-	public function afterSave(Event $event, Entity $entity, ArrayObject $options) {
+	public function afterSave(Event $event, Entity $entity) {
+
 		// update ACO alias
-		if (!empty($model->data['User']['username'])) {
-			$node = $model->node();
-			$aro = $node[0];
-			$model->Aro->id = $aro['Aro']['id'];
-			$model->Aro->saveField('alias', $model->data['User']['username']);
+		if (!empty($entity->username)) {
+			$arosTable = TableRegistry::get('Aros');
+
+			$node = $this->node($entity);
+			$aro = $node->firstOrFail();
+
+			$aro->alias = $entity->username;
+
+			$arosTable->save($aro);
 		}
 		Cache::clearGroup('acl', 'permissions');
 	}
