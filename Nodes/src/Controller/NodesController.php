@@ -5,6 +5,8 @@ namespace Croogo\Nodes\Controller;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+
+use Croogo\Core\Croogo;
 use Croogo\Nodes\Model\Table\NodesTable;
 
 /**
