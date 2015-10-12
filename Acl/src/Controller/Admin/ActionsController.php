@@ -3,10 +3,8 @@
 namespace Croogo\Acl\Controller\Admin;
 
 use Acl\AclExtras;
-use Acl\Controller\AclAppController;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
-use Croogo\Core\Controller\Admin\Controller;
 
 /**
  * AclActions Controller
@@ -18,7 +16,7 @@ use Croogo\Core\Controller\Admin\Controller;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ActionsController extends Controller {
+class ActionsController extends AppController {
 
 	private $Acos;
 

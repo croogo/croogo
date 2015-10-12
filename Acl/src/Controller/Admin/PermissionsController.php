@@ -6,9 +6,7 @@ use Cake\Cache\Cache;
 use Cake\Event\Event;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\ORM\TableRegistry;
-use Croogo\Core\Controller\Admin\Controller;
 use Croogo\Core\Croogo;
-use Croogo\Extensions\Controller\Admin\AppController;
 
 /**
  * AclPermissions Controller
