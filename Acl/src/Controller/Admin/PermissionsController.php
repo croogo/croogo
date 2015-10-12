@@ -8,6 +8,7 @@ use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Controller\Admin\Controller;
 use Croogo\Core\Croogo;
+use Croogo\Extensions\Controller\Admin\AppController;
 
 /**
  * AclPermissions Controller
@@ -19,7 +20,7 @@ use Croogo\Core\Croogo;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class PermissionsController extends Controller {
+class PermissionsController extends AppController {
 
 	private $Acos;
 	private $Aros;
@@ -147,6 +148,8 @@ class PermissionsController extends Controller {
 			Cache::delete($cacheName, 'permissions');
 			Cache::delete('permissions_public', 'permissions');
 		}
+
+		$this->viewBuilder()->autoLayout(false);
 
 		$this->set(compact('acoId', 'aroId', 'data', 'success', 'permitted'));
 	}
