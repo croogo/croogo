@@ -123,7 +123,7 @@ class PermissionsTable extends \Acl\Model\Table\PermissionsTable {
  */
 	public function format($acos, $aros, $options = array()) {
 		$options = Hash::merge(array(
-			'model' => 'Croogo/Users.Roles',
+			'model' => 'Roles',
 			'perms' => true
 		), $options);
 		extract($options);
