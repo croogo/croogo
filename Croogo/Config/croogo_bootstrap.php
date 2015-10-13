@@ -21,15 +21,6 @@ Configure::write('Croogo.Api.path', 'api');
  * Cache configuration
  */
 App::uses('CroogoCache', 'Croogo.Cache');
-$defaultEngine = Configure::read('Cache.defaultEngine');
-$defaultPrefix = Configure::read('Cache.defaultPrefix');
-$cacheConfig = array(
-	'duration' => '+1 hour',
-	'path' => CACHE . 'queries' . DS,
-	'engine' => $defaultEngine,
-	'prefix' => $defaultPrefix,
-);
-Configure::write('Cache.defaultConfig', $cacheConfig);
 
 /**
  * Settings
