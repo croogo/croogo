@@ -77,10 +77,6 @@ Wiena Lorentz <lorentz@xintesa.com>
 alevilar <alevilar@gmail.com>
 avra911 <razvan@magnify.ro>
 damarev <damarev@gmail.com>
-<<<<<<< HEAD
-elbakai <m.elbakai@gmail.com>
-=======
->>>>>>> croogo/master
 eryw <kristeryw@gmail.com>
 ingvaar <igorpletenev@gmail.com>
 joseph-d <joseph.d@nirada.co.th>
