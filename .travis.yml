@@ -1,8 +1,11 @@
 language: php
 
+sudo: false
+
 php:
   - 5.3
   - 5.4
+  - 5.5
 
 env:
   - DB=mysql
@@ -18,15 +21,14 @@ matrix:
 before_install:
   - git clone --depth 1 git://github.com/croogo/app -b master app
   - mkdir -p app/Vendor/cakephp app/Vendor/croogo
-  - git clone --depth 1 git://github.com/cakephp/cakephp -b master app/Vendor/cakephp/cakephp
+  - git clone --depth 1 git://github.com/cakephp/cakephp -b 2.7 app/Vendor/cakephp/cakephp
   - ln -s `pwd` app/Vendor/croogo/croogo
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.2' ] ; then git clone --depth 1 git://github.com/CakeDC/search -b master app/Plugin/Search ; fi"
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.2' ] ; then git clone --depth 1 git://github.com/CakeDC/migrations -b master app/Plugin/Migrations ; fi"
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.2' ] ; then git clone --depth 1 git://github.com/croogo/Ckeditor -b master app/Plugin/Ckeditor ; fi"
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.2' ]; then composer global require 'phpunit/phpunit=3.7.33'; fi"
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.2' ]; then ln -s ~/.composer/vendor/phpunit/phpunit/PHPUnit app/Vendor/PHPUnit; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.3' ] ; then composer -n -vv install ; fi"
-  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.4' ] ; then composer -n -vv install ; fi"
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.2' ] ; then composer -n -vv install ; fi"
   - for d in Plugin/* ; do if [ ! -f $app/$d ] ; then ln -s `pwd`/$d app/$d; fi ; done
 
 before_script:
@@ -35,6 +37,7 @@ before_script:
   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE SCHEMA croogo_test;' -U postgres -d croogo_test; fi"
   - cp app/Config/settings.json.install app/Config/settings.json
   - cp app/Config/croogo.php.install app/Config/croogo.php
+  - sed -i "s/E_DEPRECATED,$/E_DEPRECATED \& ~E_USER_DEPRECATED,/" app/Config/croogo.php
   - set +H
   - echo "<?php
     class DATABASE_CONFIG {

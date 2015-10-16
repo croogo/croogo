@@ -1,6 +1,8 @@
 <?php
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+ini_set('error_reporting', ini_get('error_reporting') & ~E_USER_DEPRECATED);
+
 class AllCroogoTestsTest extends PHPUnit_Framework_TestSuite {
 
 /**

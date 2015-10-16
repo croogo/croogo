@@ -69,7 +69,7 @@ class TypesController extends AppController {
 
 		if (!empty($this->request->data)) {
 			$this->Type->create();
-			if ($this->Type->save($this->request->data)) {
+			if ($this->Type->saveAssociated($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Type has been saved'), 'flash', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Type->id));
 			} else {
@@ -96,7 +96,7 @@ class TypesController extends AppController {
 			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
-			if ($this->Type->save($this->request->data)) {
+			if ($this->Type->saveAssociated($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Type has been saved'), 'flash', array('class' => 'success'));
 				$this->Croogo->redirect(array('action' => 'edit', $this->Type->id));
 			} else {

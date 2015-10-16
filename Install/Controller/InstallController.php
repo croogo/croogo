@@ -200,6 +200,8 @@ class InstallController extends Controller {
 			}
 			$this->loadModel('Users.User');
 			$this->User->set($this->request->data);
+
+			Configure::write('debug', 0);
 			if ($this->User->validates()) {
 				$user = $this->Install->addAdminUser($this->request->data);
 				if ($user) {

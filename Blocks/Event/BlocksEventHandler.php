@@ -2,6 +2,7 @@
 
 App::uses('CakeEventListener', 'Event');
 App::uses('StringConverter', 'Croogo.Lib/Utility');
+App::uses('Cache', 'Cache');
 
 /**
  * BlocksEventHandler
@@ -26,6 +27,20 @@ class BlocksEventHandler implements CakeEventListener {
 			'Helper.Regions.afterSetBlock' => array(
 				'callable' => 'filterBlockShortcode',
 			),
+
+			'Controller.Blocks.afterPublish' => array(
+				'callable' => 'onAfterBulkProcess',
+			),
+			'Controller.Blocks.afterUnpublish' => array(
+				'callable' => 'onAfterBulkProcess',
+			),
+			'Controller.Blocks.afterDelete' => array(
+				'callable' => 'onAfterBulkProcess',
+			),
+			'Controller.Blocks.afterCopy' => array(
+				'callable' => 'onAfterBulkProcess',
+			),
+
 		);
 	}
 
@@ -68,6 +83,16 @@ class BlocksEventHandler implements CakeEventListener {
 			'content' => &$body,
 			'options' => array(),
 		));
+	}
+
+/**
+ * Clear Blocks related cache after bulk operation
+ *
+ * @param CakeEvent $event
+ * @return void
+ */
+	public function onAfterBulkProcess($event) {
+		Cache::clearGroup('blocks', 'croogo_blocks');
 	}
 
 }

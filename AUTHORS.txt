@@ -9,6 +9,7 @@ Pierre Martin <pierre@occi-tech.com>
 chadrien <chadrien@chadrien.fr>
 Walther Lalk <emailme@waltherlalk.com>
 mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
+Paul Gardner <phpmagpie@webbedit.co.uk>
 euromark <euromark@web.de>
 Yuan Chavik <yuan@xintesa.com>
 Appsbender <regz24@gmail.com>
@@ -17,14 +18,13 @@ Dimas Abdul Aziiz <dimas@xintesa.com>
 AD7six <andydawson76@gmail.com>
 Eko Tristiyono <eko@xintesa.com>
 Marlin Cremers <m.cremers@cvo-technologies.com>
-Paul Gardner <phpmagpie@webbedit.co.uk>
 Elias Coronado <ecor.rck@hotmail.com>
+Jonas <fwd_github@jonas-hartmann.com>
 Liam Keily <liam@simplywebsites.com>
 Mike Tallroth <mike.tallroth@gmail.com>
 SCV Geo <scv@scvgeo.com>
 Heiner Gassen <hg@dynweb.net>
 Paulino Calderon <paulino@calder0n.com>
-phpMagpie <phpmagpie@webbedit.co.uk>
 pinchsoftware <contact@pinchsoft.com>
 Ceeram <c33ram@gmail.com>
 Grégory Salvan <gregory@occi-tech.com>
@@ -34,6 +34,7 @@ John <john@midianegocios.com.br>
 Lukas Marks <lukas.marks@lumax-web.de>
 Lukas Strassel <lukasstrassel@googlemail.com>
 Vitor Pacheco <vitor-p.c@hotmail.com>
+elbakai <m.elbakai@gmail.com>
 primeminister <primeminister@mowd.nl>
 ADmad <admad.coder@gmail.com>
 James Sapara <james.sapara@gmail.com>
@@ -41,6 +42,7 @@ Matt Curry <matt@pseudocoder.com>
 Mischa ter Smitten <mischa@tersmitten.nl>
 thoth <thomas.rader@tigerclawtech.com>
 Josué Silva Santos <josue.silva.santos@gmail.com>
+Marek Rodkiewicz <marek.rodkiewicz@infraredgroup.pl>
 cdbruin <casper@ectrader.nl>
 daniel <daniel@daniels-MacBook-Air.local>
 roland-w <roland-w@users.noreply.github.com>
@@ -54,6 +56,7 @@ Cezary Nowak <korpirkor@users.noreply.github.com>
 Dirk Brünsicke <d1rk@gmx.de>
 DirtyF <frank.taillandier@gmail.com>
 Gilles Bedel <gilles@occi-tech.com>
+HT-Studios <github@ht-studios.de>
 Jeremy Harris <jeremy@42pixels.com>
 Joachim Nyqvist <Joachim@JNyqvist.se>
 Kory Marks <kory.marks@mac.com>
@@ -74,7 +77,10 @@ Wiena Lorentz <lorentz@xintesa.com>
 alevilar <alevilar@gmail.com>
 avra911 <razvan@magnify.ro>
 damarev <damarev@gmail.com>
+<<<<<<< HEAD
 elbakai <m.elbakai@gmail.com>
+=======
+>>>>>>> croogo/master
 eryw <kristeryw@gmail.com>
 ingvaar <igorpletenev@gmail.com>
 joseph-d <joseph.d@nirada.co.th>
