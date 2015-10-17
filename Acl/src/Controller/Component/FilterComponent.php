@@ -87,7 +87,7 @@ class FilterComponent extends Component {
 					'hashers' => ['Default', 'Weak']
 				],
 				'scope' => [
-					'User.status' => 1,
+					'Users.status' => 1,
 				],
 			],
 		]);
@@ -105,12 +105,12 @@ class FilterComponent extends Component {
 				}
 				$Setting->write('Access Control.autoLoginDuration', '');
 			}
-			$this->_controller->Auth->config('authenticate', 'Acl.Cookie');
+			$this->_controller->Auth->config('authenticate', ['Acl.Cookie']);
 		}
 		if ($this->_config('multiColumn')) {
-			$this->_controller->Auth->config('authenticate', 'Acl.MultiColumn');
+			$this->_controller->Auth->config('authenticate', ['Acl.MultiColumn']);
 		} else {
-			$this->_controller->Auth->config('authenticate', 'Form');
+			$this->_controller->Auth->config('authenticate', ['Form']);
 		}
 
 		$this->_controller->Auth->config('authorize', array(
