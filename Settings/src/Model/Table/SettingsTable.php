@@ -20,13 +20,6 @@ use Croogo\Core\Model\Table\CroogoTable;
 class SettingsTable extends CroogoTable {
 
 /**
- * Path to settings file
- *
- * @var string
- */
-	public $settingsPath = '';
-
-/**
  * Behaviors used by the Model
  *
  * @var array
@@ -95,19 +88,6 @@ class SettingsTable extends CroogoTable {
  */
 	public function afterSave() {
 		$this->connection()->driver()->autoQuoting(false);
-
-		$this->updateJson();
-		$this->writeConfiguration();
-	}
-
-/**
- * afterDelete callback
- *
- * @return void
- */
-	public function afterDelete() {
-		$this->updateJson();
-		$this->writeConfiguration();
 	}
 
 /**
@@ -169,44 +149,5 @@ class SettingsTable extends CroogoTable {
 			return true;
 		}
 		return false;
-	}
-
-/**
- * All key/value pairs are made accessible from Configure class
- *
- * @return void
- */
-	public function writeConfiguration() {
-		Configure::load('settings', 'settings');
-	}
-
-/**
- * Find list and save yaml dump in app/Config/settings.json file.
- * Data required in bootstrap.
- *
- * @return void
- */
-	public function updateJson() {
-		$settings = $this->find('all', array(
-			'fields' => array(
-				'key',
-				'value',
-			),
-			'order' => array(
-				'Settings.key' => 'ASC',
-			),
-		));
-
-		$settings = array_combine(
-			collection($settings)->extract('key')->toArray(),
-			collection($settings)->extract('value')->toArray()
-		);
-		Configure::write($settings);
-		foreach ($settings as $key => $setting) {
-			list($key, $ignore) = explode('.', $key, 2);
-			$keys[] = $key;
-		}
-		$keys = array_unique($keys);
-		Configure::dump('settings.json', 'settings', $keys);
 	}
 }
