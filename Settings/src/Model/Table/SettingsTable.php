@@ -3,8 +3,8 @@
 namespace Croogo\Settings\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\Event\Event;
-use Cake\ORM\Query;
+use Cake\Database\Schema\Table;
+use Cake\Form\Schema;
 use Croogo\Core\Model\Table\CroogoTable;
 
 /**
@@ -75,6 +75,15 @@ class SettingsTable extends CroogoTable {
 		$this->settingsPath = APP . 'config' . DS . 'settings.json';
 	}
 
+	/**
+	 * @param Table $schema
+	 * @return Table
+	 */
+	protected function _initializeSchema(Table $schema)
+	{
+		$schema->columnType('params', 'params');
+		return $schema;
+	}
 
 /**
  * beforeSave callback
