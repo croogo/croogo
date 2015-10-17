@@ -16,14 +16,13 @@ namespace Croogo\Settings\Controller\Admin;
  */
 class LanguagesController extends AppController {
 
-	/**
-	 * Admin index
-	 *
-	 * @return void
-	 * @access public
-	 */
-	public function index()
-	{
+/**
+ * Admin index
+ *
+ * @return void
+ * @access public
+ */
+	public function index() {
 		$this->set('title_for_layout', __d('croogo', 'Languages'));
 
 		$this->paginate = [
@@ -35,14 +34,13 @@ class LanguagesController extends AppController {
 		$this->set('languages', $this->paginate());
 	}
 
-	/**
-	 * Admin add
-	 *
-	 * @return void
-	 * @access public
-	 */
-	public function add()
-	{
+/**
+ * Admin add
+ *
+ * @return void
+ * @access public
+ */
+	public function add() {
 		$this->set('title_for_layout', __d('croogo', "Add Language"));
 
 		$language = $this->Languages->newEntity();
@@ -61,15 +59,14 @@ class LanguagesController extends AppController {
 		$this->set(compact('language'));
 	}
 
-	/**
-	 * Admin edit
-	 *
-	 * @param integer $id
-	 * @return void
-	 * @access public
-	 */
-	public function edit($id = null)
-	{
+/**
+ * Admin edit
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
+	public function edit($id = null) {
 		$this->set('title_for_layout', __d('croogo', "Edit Language"));
 
 		if (!$id && empty($this->request->data)) {
@@ -91,15 +88,14 @@ class LanguagesController extends AppController {
 		}
 	}
 
-	/**
-	 * Admin delete
-	 *
-	 * @param integer $id
-	 * @return void
-	 * @access public
-	 */
-	public function delete($id = null)
-	{
+/**
+ * Admin delete
+ *
+ * @param integer $id
+ * @return void
+ * @access public
+ */
+	public function delete($id = null) {
 		if (!$id) {
 			$this->Flash->error(__d('croogo', 'Invalid id for Language'));
 			return $this->redirect(['action' => 'index']);
@@ -110,16 +106,15 @@ class LanguagesController extends AppController {
 		}
 	}
 
-	/**
-	 * Admin moveup
-	 *
-	 * @param integer $id
-	 * @param integer $step
-	 * @return void
-	 * @access public
-	 */
-	public function moveup($id, $step = 1)
-	{
+/**
+ * Admin moveup
+ *
+ * @param integer $id
+ * @param integer $step
+ * @return void
+ * @access public
+ */
+	public function moveup($id, $step = 1) {
 		if ($this->Languages->moveUp($id, $step)) {
 			$this->Flash->success(__d('croogo', 'Moved up successfully'));
 		} else {
@@ -129,16 +124,15 @@ class LanguagesController extends AppController {
 		return $this->redirect(array('action' => 'index'));
 	}
 
-	/**
-	 * Admin movedown
-	 *
-	 * @param integer $id
-	 * @param integer $step
-	 * @return void
-	 * @access public
-	 */
-	public function movedown($id, $step = 1)
-	{
+/**
+ * Admin movedown
+ *
+ * @param integer $id
+ * @param integer $step
+ * @return void
+ * @access public
+ */
+	public function movedown($id, $step = 1) {
 		if ($this->Languages->moveDown($id, $step)) {
 			$this->Flash->success(__d('croogo', 'Moved down successfully'));
 		} else {
@@ -148,16 +142,15 @@ class LanguagesController extends AppController {
 		return $this->redirect(array('action' => 'index'));
 	}
 
-	/**
-	 * Admin select
-	 *
-	 * @param integer $id
-	 * @param string $modelAlias
-	 * @return void
-	 * @access public
-	 */
-	public function select($id = null, $modelAlias = null)
-		{
+/**
+ * Admin select
+ *
+ * @param integer $id
+ * @param string $modelAlias
+ * @return void
+ * @access public
+ */
+	public function select($id = null, $modelAlias = null) {
 		if ($id == null ||
 			$modelAlias == null) {
 			return $this->redirect(array('action' => 'index'));
@@ -172,5 +165,4 @@ class LanguagesController extends AppController {
 		));
 		$this->set(compact('id', 'modelAlias', 'languages'));
 	}
-
 }
