@@ -60,7 +60,7 @@ class UsersController extends AppController {
  * @return bool
  */
 	public function onBeforeAdminLogin() {
-		$field = $this->Auth->authenticate['all']['fields']['username'];
+		$field = $this->Auth->config('authenticate.all.fields.username');
 		if (empty($this->request->data)) {
 			return true;
 		}
@@ -80,7 +80,7 @@ class UsersController extends AppController {
  * @access public
  */
 	public function onAdminLoginFailure() {
-		$field = $this->Auth->authenticate['all']['fields']['username'];
+		$field = $this->Auth->config('authenticate.all.fields.username');
 		if (empty($this->request->data)) {
 			return true;
 		}
