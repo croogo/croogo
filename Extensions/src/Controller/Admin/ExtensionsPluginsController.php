@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Extensions\Controller;
+namespace Croogo\Extensions\Controller\Admin;
 
 use Cake\Event\Event;
 use Croogo\Extensions\CroogoPlugin;
@@ -17,7 +17,7 @@ use Cake\Core\Exception\Exception;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtensionsPluginsController extends ExtensionsAppController {
+class ExtensionsPluginsController extends AppController {
 
 /**
  * Controller name
@@ -34,8 +34,8 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  * @access public
  */
 	public $uses = array(
-		'Settings.Setting',
-		'Users.User',
+		'Croogo/Settings.Setting',
+		'Croogo/Users.User',
 	);
 
 /**
@@ -57,17 +57,14 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 
 		$this->_CroogoPlugin = new CroogoPlugin();
 		$this->_CroogoPlugin->setController($this);
-
-		$this->Security->requirePost[] = 'admin_moveup';
-		$this->Security->requirePost[] = 'admin_movedown';
 	}
 
 /**
- * admin_index
+ * Admin index
  *
  * @return void
  */
-	public function admin_index() {
+	public function index() {
 		$this->set('title_for_layout', __d('croogo', 'Plugins'));
 
 		$plugins = $this->_CroogoPlugin->plugins();
@@ -77,11 +74,11 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 	}
 
 /**
- * admin_add
+ * Admin add
  *
  * @return void
  */
-	public function admin_add() {
+	public function add() {
 		$this->set('title_for_layout', __d('croogo', 'Upload a new plugin'));
 
 		if (!empty($this->request->data)) {
@@ -100,12 +97,12 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 	}
 
 /**
- * admin_delete
+ * Admin delete
  *
  * @param string $plugin
  * @return void
  */
-	public function admin_delete($plugin = null) {
+	public function delete($plugin = null) {
 		if (!$plugin) {
 			$this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
@@ -128,12 +125,12 @@ class ExtensionsPluginsController extends ExtensionsAppController {
 	}
 
 /**
- * admin_toggle
+ * Admin toggle
  *
  * @param string $plugin
  * @return void
  */
-	public function admin_toggle($plugin = null) {
+	public function toggle($plugin = null) {
 		if (!$plugin) {
 			$this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));
@@ -171,7 +168,7 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  *
  * @param type $plugin
  */
-	public function admin_migrate($plugin = null) {
+	public function migrate($plugin = null) {
 		if (!$plugin) {
 			$this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'flash', array('class' => 'error'));
 		} elseif ($this->_CroogoPlugin->migrate($plugin)) {
@@ -192,7 +189,9 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  * @param string $plugin
  * @throws CakeException
  */
-	public function admin_moveup($plugin = null) {
+	public function moveup($plugin = null) {
+		$this->request->allowMethod('post');
+
 		if ($plugin === null) {
 			throw new Exception(__d('croogo', 'Invalid plugin'));
 		}
@@ -216,7 +215,9 @@ class ExtensionsPluginsController extends ExtensionsAppController {
  * @param string $plugin
  * @throws CakeException
  */
-	public function admin_movedown($plugin = null) {
+	public function movedown($plugin = null) {
+		$this->request->allowMethod('post');
+
 		if ($plugin === null) {
 			throw new Exception(__d('croogo', 'Invalid plugin'));
 		}

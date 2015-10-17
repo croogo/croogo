@@ -1,10 +1,10 @@
 <?php
 
-$this->extend('Common/admin_index');
+$this->extend('Croogo/Core./Common/admin_index');
 
-$this->Html
+$this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
-	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'Croogo/Extensions', 'controller' => 'ExtensionsPlugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Locales'), '/' . $this->request->url);
 
 $this->append('actions');

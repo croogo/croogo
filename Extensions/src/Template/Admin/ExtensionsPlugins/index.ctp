@@ -1,12 +1,12 @@
 <?php
 
-$this->extend('/Common/admin_index');
+$this->extend('Croogo/Core./Common/admin_index');
 
 $this->name = 'extensions-plugins';
 
-$this->Html
+$this->CroogoHtml
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
-	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
+	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'Croogo/Extensions', 'controller' => 'ExtensionsPlugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Plugins'), '/' . $this->request->url);
 
 ?>
@@ -36,7 +36,6 @@ $this->Html
 
 <?php
 	$rows = array();
-	$plugins = Sanitize::clean($plugins);
 	foreach ($plugins as $pluginAlias => $pluginData):
 		$toggleText = $pluginData['active'] ? __d('croogo', 'Deactivate') : __d('croogo', 'Activate');
 		$statusIcon = $this->Html->status($pluginData['active']);

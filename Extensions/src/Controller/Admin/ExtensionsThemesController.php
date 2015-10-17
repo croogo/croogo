@@ -52,7 +52,7 @@ class ExtensionsThemesController extends AppController {
 	}
 
 /**
- * admin_index
+ * Admin index
  *
  * @return void
  */
@@ -70,7 +70,7 @@ class ExtensionsThemesController extends AppController {
 	}
 
 /**
- * admin_activate
+ * Admin activate
  *
  * @param string $theme
  */
@@ -87,11 +87,11 @@ class ExtensionsThemesController extends AppController {
 	}
 
 /**
- * admin_add
+ * Admin add
  *
  * @return void
  */
-	public function admin_add() {
+	public function add() {
 		$this->set('title_for_layout', __d('croogo', 'Upload a new theme'));
 
 		if (!empty($this->request->data)) {
@@ -110,29 +110,29 @@ class ExtensionsThemesController extends AppController {
 	}
 
 /**
- * admin_editor
+ * Admin editor
  *
  * @return void
  */
-	public function admin_editor() {
+	public function editor() {
 		$this->set('title_for_layout', __d('croogo', 'Theme Editor'));
 	}
 
 /**
- * admin_save
+ * Admin save
  *
  * @return void
  */
-	public function admin_save() {
+	public function save() {
 	}
 
 /**
- * admin_delete
+ * Admin delete
  *
  * @param string $alias
  * @return void
  */
-	public function admin_delete($alias = null) {
+	public function delete($alias = null) {
 		if ($alias == null) {
 			$this->Session->setFlash(__d('croogo', 'Invalid Theme.'), 'flash', array('class' => 'error'));
 			return $this->redirect(array('action' => 'index'));

@@ -1,6 +1,7 @@
 <?php
 
-namespace Croogo\Extensions\Controller;
+namespace Croogo\Extensions\Controller\Admin;
+use Cake\Core\App;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 
@@ -14,7 +15,7 @@ use Cake\Filesystem\File;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtensionsLocalesController extends ExtensionsAppController {
+class ExtensionsLocalesController extends AppController {
 
 /**
  * Controller name
@@ -31,16 +32,16 @@ class ExtensionsLocalesController extends ExtensionsAppController {
  * @access public
  */
 	public $uses = array(
-		'Settings.Setting',
-		'Users.User',
+		'Croogo/Settings.Setting',
+		'Croogo/Users.User',
 	);
 
 /**
- * admin_index
+ * Admin index
  *
  * @return void
  */
-	public function admin_index() {
+	public function index() {
 		$this->set('title_for_layout', __d('croogo', 'Locales'));
 
 		$locales = array();
@@ -65,12 +66,12 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 	}
 
 /**
- * admin_activate
+ * Admin activate
  *
  * @param string $locale
  * @return void
  */
-	public function admin_activate($locale = null) {
+	public function activate($locale = null) {
 		$poFile = $this->__getPoFile($locale);
 		if ($locale == null || !$poFile) {
 			$this->Session->setFlash(__d('croogo', 'Locale does not exist.'), 'flash', array('class' => 'error'));
@@ -87,11 +88,11 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 	}
 
 /**
- * admin_add
+ * Admin add
  *
  * @return void
  */
-	public function admin_add() {
+	public function add() {
 		$this->set('title_for_layout', __d('croogo', 'Upload a new locale'));
 
 		if ($this->request->is('post') && !empty($this->request->data)) {
@@ -164,12 +165,12 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 	}
 
 /**
- * admin_edit
+ * Admin edit
  *
  * @param string $locale
  * @return void
  */
-	public function admin_edit($locale = null) {
+	public function edit($locale = null) {
 		$this->set('title_for_layout', sprintf(__d('croogo', 'Edit locale: %s'), $locale));
 
 		if (!$locale) {
@@ -199,12 +200,12 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 	}
 
 /**
- * admin_delete
+ * Admin delete
  *
  * @param string $locale
  * @return void
  */
-	public function admin_delete($locale = null) {
+	public function delete($locale = null) {
 		$poFile = $this->__getPoFile($locale);
 
 		if (!$poFile) {
