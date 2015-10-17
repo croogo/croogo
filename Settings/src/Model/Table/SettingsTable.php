@@ -19,60 +19,59 @@ use Croogo\Core\Model\Table\CroogoTable;
  */
 class SettingsTable extends CroogoTable {
 
-/**
- * Behaviors used by the Model
- *
- * @var array
- * @access public
- */
-	public $actsAs = array(
-		'Croogo.Ordered' => array(
+	/**
+	 * Behaviors used by the Model
+	 *
+	 * @var array
+	 * @access public
+	 */
+	public $actsAs = [
+		'Croogo.Ordered' => [
 			'field' => 'weight',
 			'foreign_key' => false,
-		),
-		'Croogo.Cached' => array(
-			'groups' => array(
+		],
+		'Croogo.Cached' => [
+			'groups' => [
 				'settings',
-			),
-		),
-	);
+			],
+		],
+	];
 
-/**
- * Validation
- *
- * @var array
- * @access public
- */
-	public $validate = array(
-		'key' => array(
-			'isUnique' => array(
+	/**
+	 * Validation
+	 *
+	 * @var array
+	 * @access public
+	 */
+	public $validate = [
+		'key' => [
+			'isUnique' => [
 				'rule' => 'isUnique',
 				'message' => 'This key has already been taken.',
-			),
-			'minLength' => array(
-				'rule' => array('minLength', 1),
+			],
+			'minLength' => [
+				'rule' => ['minLength', 1],
 				'message' => 'Key cannot be empty.',
-			),
-		),
-	);
+			],
+		],
+	];
 
-/**
- * Filter search fields
- */
-	public $filterArgs = array(
-		'key' => array('type' => 'like', 'field' => 'Settings.key'),
-	);
+	/**
+	 * Filter search fields
+	 */
+	public $filterArgs = [
+		'key' => ['type' => 'like', 'field' => 'Settings.key'],
+	];
 
 	/**
 	 * @param array $config
-     */
-	public function initialize(array $config) {
+	 */
+	public function initialize(array $config)
+	{
 		parent::initialize($config);
 
 		$this->addBehavior('Croogo/Core.Trackable');
 		$this->addBehavior('Search.Searchable');
-
-		$this->settingsPath = APP . 'config' . DS . 'settings.json';
 	}
 
 	/**
@@ -85,29 +84,32 @@ class SettingsTable extends CroogoTable {
 		return $schema;
 	}
 
-/**
- * beforeSave callback
- */
-	public function beforeSave() {
+	/**
+	 * beforeSave callback
+	 */
+	public function beforeSave()
+	{
 		$this->connection()->driver()->autoQuoting(true);
 	}
 
-/**
- * afterSave callback
- */
-	public function afterSave() {
+	/**
+	 * afterSave callback
+	 */
+	public function afterSave()
+	{
 		$this->connection()->driver()->autoQuoting(false);
 	}
 
-/**
- * Creates a new record with key/value pair if key does not exist.
- *
- * @param string $key
- * @param string $value
- * @param array $options
- * @return boolean
- */
-	public function write($key, $value, $options = array()) {
+	/**
+	 * Creates a new record with key/value pair if key does not exist.
+	 *
+	 * @param string $key
+	 * @param string $value
+	 * @param array $options
+	 * @return boolean
+	 */
+	public function write($key, $value, $options = [])
+	{
 		$setting = $this->findByKey($key)->first();
 		if ($setting) {
 			$setting->value = $value;
@@ -116,14 +118,14 @@ class SettingsTable extends CroogoTable {
 
 		} else {
 
-			$options = array_merge(array(
+			$options = array_merge([
 				'title' => '',
 				'description' => '',
 				'input_type' => '',
 				'editable' => 0,
 				'weight' => 0,
 				'params' => '',
-			), $options);
+			], $options);
 
 			$setting = $this->newEntity([
 				'key' => $key,
@@ -145,13 +147,14 @@ class SettingsTable extends CroogoTable {
 		}
 	}
 
-/**
- * Deletes setting record for given key
- *
- * @param string $key
- * @return boolean
- */
-	public function deleteKey($key) {
+	/**
+	 * Deletes setting record for given key
+	 *
+	 * @param string $key
+	 * @return boolean
+	 */
+	public function deleteKey($key)
+	{
 		$setting = $this->findByKey($key);
 		if (isset($setting['Setting']['id']) &&
 			$this->delete($setting['Setting']['id'])) {
