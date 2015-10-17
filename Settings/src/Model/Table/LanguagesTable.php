@@ -61,7 +61,7 @@ class LanguagesTable extends CroogoTable {
  * Initialize
  */
 	public function initialize(array $config) {
-		parent::initialize($config):
+		parent::initialize($config);
 		$this->addBehavior('Croogo/Core.Trackable');
 	}
 

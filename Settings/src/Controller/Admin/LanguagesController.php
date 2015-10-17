@@ -25,8 +25,12 @@ class LanguagesController extends AppController {
 	public function index() {
 		$this->set('title_for_layout', __d('croogo', 'Languages'));
 
-		$this->Language->recursive = 0;
-		$this->paginate['Language']['order'] = 'Language.weight ASC';
+		$this->paginate = [
+			'order' => [
+				'weight' => 'ASC'
+			]
+		];
+
 		$this->set('languages', $this->paginate());
 	}
 

@@ -1,9 +1,9 @@
 <?php
 
-$this->extend('/Common/admin_index');
+$this->extend('Croogo/Core./Common/admin_index');
 
-$this->Html->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
-	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'prefix', 'Site'))
+$this->CroogoHtml->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
+	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'Croogo/Settings', 'controller' => 'Settings', 'action' => 'prefix', 'Site'))
 	->addCrumb(__d('croogo', 'Languages'), '/' . $this->request->url);
 
 ?>
@@ -28,21 +28,21 @@ $this->Html->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home'
 				$rows = array();
 				foreach ($languages as $language) {
 					$actions = array();
-					$actions[] = $this->Croogo->adminRowActions($language['Language']['id']);
+					$actions[] = $this->Croogo->adminRowActions($language->id);
 					$actions[] = $this->Croogo->adminRowAction('',
-						array('action' => 'moveup', $language['Language']['id']),
+						array('action' => 'moveup', $language->id),
 						array('icon' => $this->Theme->getIcon('move-up'), 'tooltip' => __d('croogo', 'Move up'))
 					);
 					$actions[] = $this->Croogo->adminRowAction('',
-						array('action' => 'movedown', $language['Language']['id']),
+						array('action' => 'movedown', $language->id),
 						array('icon' => $this->Theme->getIcon('move-down'), 'tooltip' => __d('croogo', 'Move down'))
 					);
 					$actions[] = $this->Croogo->adminRowAction('',
-						array('action' => 'edit', $language['Language']['id']),
+						array('action' => 'edit', $language->id),
 						array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 					);
 					$actions[] = $this->Croogo->adminRowAction('',
-						array('action' => 'delete', $language['Language']['id']),
+						array('action' => 'delete', $language->id),
 						array('icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Remove this item')),
 						__d('croogo', 'Are you sure?')
 					);
@@ -50,11 +50,11 @@ $this->Html->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home'
 					$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
 					$rows[] = array(
-						$language['Language']['id'],
-						$language['Language']['title'],
-						$language['Language']['native'],
-						$language['Language']['alias'],
-						$this->Html->status($language['Language']['status']),
+						$language->id,
+						$language->title,
+						$language->native,
+						$language->alias,
+						$this->Html->status($language->status),
 						$actions,
 					);
 				}
