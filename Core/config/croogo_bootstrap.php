@@ -15,10 +15,10 @@ use Cake\Utility\Inflector;
 
 use Croogo\Core\Croogo;
 use Croogo\Core\Cache\CroogoCache;
-use Croogo\Core\Configure\CroogoJsonReader;
 use Croogo\Core\Status;
 use Croogo\Core\Event\CroogoEventManager;
 use Croogo\Extensions\CroogoPlugin;
+use Croogo\Settings\Configure\Engine\DatabaseConfig;
 
 /**
  * Default Acl plugin.  Custom Acl plugin should override this value.
@@ -54,10 +54,8 @@ Configure::write('Croogo.Cache.defaultConfig', $cacheConfig);
 /**
  * Settings
  */
-Configure::config('settings', new CroogoJsonReader());
-if (file_exists(CONFIG . 'settings.json')) {
-	Configure::load('settings', 'settings');
-}
+Configure::config('settings', new DatabaseConfig());
+Configure::load('settings', 'settings');
 
 /**
  * Locale

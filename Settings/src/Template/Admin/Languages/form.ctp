@@ -15,7 +15,7 @@ if ($this->request->params['action'] == 'admin_add') {
 	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
-echo $this->Form->create('Language');
+echo $this->Form->create($language);
 
 ?>
 <div class="<?php echo $this->Theme->getCssClass('row'); ?>">

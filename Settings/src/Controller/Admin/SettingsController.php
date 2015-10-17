@@ -152,8 +152,6 @@ class SettingsController extends AppController {
  * @access public
  */
 	public function prefix($prefix = null) {
-		$this->Settings->addBehavior('Croogo/Core.Params');
-
 		if ($this->request->is('post')) {
 			foreach ($this->request->data() as $id => $value) {
 				$setting = $this->Settings->get($id);
