@@ -46,7 +46,7 @@ matrix:
 
 before_script:
   - composer self-update
-  - sh -c "if [ -z '$PLUGIN' ]; then composer install --prefer-dist --no-interaction; else cd $PLUGION; composer install --prefer-dist --no-interaction; fi"
+  - sh -c "if [ -z '$PLUGIN' ]; then composer install --prefer-dist --no-interaction; else cd $PLUGIN; composer install --prefer-dist --no-interaction; fi"
 
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test;'; fi"
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test2;'; fi"
