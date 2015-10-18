@@ -6,7 +6,7 @@ use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Croogo\Core\Croogo;
-use Croogo\Extensions\Controller\HookableComponentInterface;
+use Croogo\Core\Controller\HookableComponentInterface;
 
 class HookableComponentEventHandler implements EventListenerInterface
 {
@@ -23,7 +23,7 @@ class HookableComponentEventHandler implements EventListenerInterface
 
 	public function initialize(Event $event)
 	{
-		/* @var \Cake\Controller\Controller|HookableComponentInterface $controller */
+		/* @var \Cake\Controller\Controller|\Croogo\Core\Controller\HookableComponentInterface $controller */
 		$controller = $event->subject();
 
 		if (!$controller instanceof HookableComponentInterface) {
