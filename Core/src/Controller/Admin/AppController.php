@@ -30,19 +30,18 @@ class AppController extends CroogoAppController {
 		'Croogo/Core.Croogo',
 	);
 
-	/**
-	 * Load the theme component with the admin theme specified
-	 *
-	 * @return void
-	 */
-	public function initialize()
-	{
+/**
+ * Load the theme component with the admin theme specified
+ *
+ * @return void
+ */
+	public function initialize() {
 		parent::initialize();
 
 		$this->Theme->config('theme', Configure::read('Site.admin_theme'));
 	}
 
-	/**
+/**
  * beforeFilter
  *
  * @return void
