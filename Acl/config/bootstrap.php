@@ -6,12 +6,12 @@ use Croogo\Core\Croogo;
 
 if (Configure::read('Site.acl_plugin') == 'Croogo/Acl') {
 
-	// activate AclFilter component only until after a succesful install
-	if (file_exists(APP . 'config' . DS . 'settings.json')) {
-		Croogo::hookComponent('*', 'Croogo/Acl.AclFilter');
+	// activate AclFilter component only until after a succesfull install
+	if (Configure::read('Site.status')) {
+		Croogo::hookComponent('*', 'Croogo/Acl.Filter');
 		Croogo::hookComponent('*', array(
 			'CroogoAccess' => array(
-				'className' => 'Croogo/Acl.AclAccess',
+				'className' => 'Croogo/Acl.Access',
 			),
 		));
 	}
