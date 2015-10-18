@@ -1,9 +1,8 @@
 <?php
 
-namespace Croogo\Extensions\Controller;
+namespace Croogo\Core\Controller;
 
 use Cake\Event\Event;
-use Croogo\Core\PropertyHookTrait;
 
 trait HookableComponentTrait
 {

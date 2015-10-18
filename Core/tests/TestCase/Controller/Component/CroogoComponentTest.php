@@ -46,7 +46,7 @@ class CroogoComponentTest extends CroogoTestCase {
 		$response = new Response();
 		$this->controller = $this->getMock(
 			'Cake\Controller\Controller',
-			[],
+			['redirect'],
 			[$request, $response]
 		);
 
@@ -63,8 +63,6 @@ class CroogoComponentTest extends CroogoTestCase {
 	}
 
 	public function testAddRemoveAcos() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
 		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
 		$Aco = ClassRegistry::init('Aco');
@@ -109,7 +107,7 @@ class CroogoComponentTest extends CroogoTestCase {
 			->method('redirect')
 			->with($this->equalTo($expected));
 		$CroogoComponent = new CroogoComponent(new ComponentRegistry());
-		$CroogoComponent->startup($this->controller);
+		$CroogoComponent->startup(new Event(null, $this->controller));
 		$CroogoComponent->redirect($url, null, true, $indexUrl);
 	}
 

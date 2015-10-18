@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Extensions\Controller;
+namespace Croogo\Core\Controller;
 
 interface HookableComponentInterface
 {

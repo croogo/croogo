@@ -13,8 +13,6 @@ use Cake\Network\Response;
 use Cake\Utility\Hash;
 
 use Croogo\Core\Croogo;
-use Croogo\Extensions\Controller\HookableComponentInterface;
-use Croogo\Extensions\Controller\HookableComponentTrait;
 use Croogo\Extensions\CroogoTheme;
 
 /**

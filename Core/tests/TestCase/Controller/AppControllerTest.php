@@ -6,11 +6,12 @@ use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Filesystem\File;
 use Cake\Network\Request;
+use Cake\TestSuite\IntegrationTestCase;
 use Cake\Utility\Hash;
-use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Core\Controller\AppController;
 use Croogo\Core\Croogo;
-use Croogo\Core\TestSuite\CroogoControllerTestCase;
-class TestAppController extends CroogoAppController {
+
+class TestAppController extends AppController {
 
 	public function admin_edit() {
 	}
@@ -29,7 +30,7 @@ class TestAppController extends CroogoAppController {
 
 }
 
-class CroogoAppControllerTest extends CroogoControllerTestCase {
+class CroogoAppControllerTest extends IntegrationTestCase {
 
 	public $fixtures = array(
 //		'plugin.croogo/settings.setting',
