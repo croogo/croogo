@@ -68,7 +68,7 @@ before_script:
 script:
   - sh -c "if [ '$DEFAULT' = '1' ]; then cd $PLUGIN; phpunit; fi"
 
-  - sh -c "if [ '$PHPCS' = '1' ]; then vendor/bin/phpcs -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./Core/src ./Core/tests; fi"
+  - sh -c "if [ '$PHPCS' = '1' ]; then vendor/bin/phpcs -p --extensions=php --standard=Croogo ./Core/src ./Core/tests; fi"
 
   - sh -c "if [ '$COVERALLS' = '1' ]; then cd $PLUGIN; phpunit --coverage-clover build/logs/clover.xml; fi"
   - sh -c "if [ '$COVERALLS' = '1' ]; then cd $PLUGIN; vendor/bin/coveralls -c .coveralls.yml -v; fi"
