@@ -23,12 +23,12 @@ if ($this->request->params['action'] == 'edit') {
 	$this->Html->addCrumb($node->title, '/' . $this->request->url);
 }
 
-$lookupUrl = $this->CroogoApp->apiUrl(array(
+$lookupUrl = $this->Croogo->apiUrl(array(
 	'action' => 'lookup',
 ));
 
 $parentTitle = isset($parentTitle) ? $parentTitle : null;
-$apiUrl = $this->CroogoApp->apiUrl(array(
+$apiUrl = $this->Croogo->apiUrl(array(
 	'action' => 'lookup',
 	'?' => array(
 		'type' => $type->alias,
