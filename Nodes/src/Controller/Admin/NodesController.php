@@ -62,6 +62,7 @@ class NodesController extends AppController {
 	public function initialize() {
 		parent::initialize();
 
+		$this->loadComponent('RequestHandler');
 		$this->loadComponent('Croogo/Core.BulkProcess');
 		$this->loadComponent('Croogo/Core.Recaptcha');
 		$this->loadComponent('Search.Prg', [
@@ -342,6 +343,26 @@ class NodesController extends AppController {
 			),
 		);
 		return $this->BulkProcess->process($this->Nodes, $action, $ids, $options);
+	}
+
+	public function lookup() {
+		$this->Prg->commonProcess();
+
+		/* @var \Cake\Orm\Query $lookup */
+		$lookup = $this->Nodes->find('searchable', $this->Prg->parsedParams());
+		$lookup->contain([
+			'Users', /*'Meta', */'Taxonomies',
+		]);
+		$lookup->select([
+			'id', 'parent_id', 'type', 'user_id', 'title', 'slug',
+			'body', 'excerpt', 'status', 'promote', 'path', 'terms',
+			'created', 'updated', 'publish_start', 'publish_end',
+		]);
+
+		$nodes = $this->paginate($lookup);
+
+		$this->set('node', $nodes);
+		$this->set('_serialize', 'node');
 	}
 
 	/**

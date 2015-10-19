@@ -31,12 +31,13 @@ $lookupUrl = $this->Url->build([
 ]);
 
 $parentTitle = isset($parentTitle) ? $parentTitle : null;
-$apiUrl = $this->Croogo->apiUrl(array(
+$apiUrl = $this->Url->build([
 	'action' => 'lookup',
-	'?' => array(
+	'_ext' => 'json',
+	'?' => [
 		'type' => $type->alias,
-	),
-));
+	]
+]);
 
 echo $this->Form->create($node, array(
 	'url' => $formUrl,
