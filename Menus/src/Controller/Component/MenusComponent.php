@@ -104,7 +104,7 @@ class MenusComponent extends Component {
 					'config' => 'croogo_menus',
 				],
 			])->where(array(
-				'Menus.status' => $status,
+				'Menus.status IN' => $status,
 				'Menus.alias' => $menuAlias,
 				'Menus.link_count >' => 0,
 			))->first();
@@ -117,7 +117,7 @@ class MenusComponent extends Component {
 					)
 				])->find('visibilityRole', ['role_id' => $roleId])->where([
 					'Links.menu_id' => $menu->id,
-					'Links.status' => $status,
+					'Links.status IN' => $status,
 				])->order([
 					'Links.lft' => 'ASC',
 				]);

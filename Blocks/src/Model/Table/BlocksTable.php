@@ -117,7 +117,7 @@ class BlocksTable extends CroogoTable {
 		unset($options['status'], $options['regionId'], $options['roleId'], $options['cacheKey']);
 
 		return $query->where([
-			'status' => $status,
+			'status IN' => $status,
 			'region_id' => $regionId,
 			'AND' => [
 				[
