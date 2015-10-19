@@ -2,7 +2,9 @@
 
 namespace Croogo\Comments\View\Helper;
 
+use Cake\Utility\Inflector;
 use Cake\View\Helper;
+use Croogo\Core\Croogo;
 
 /**
  * Comments Helper
@@ -20,7 +22,7 @@ class CommentsHelper extends Helper {
  * beforeRender
  */
 	public function beforeRender($viewFile) {
-		if (isset($this->request->params['admin']) && !$this->request->is('ajax')) {
+		if (isset($this->request->params['prefix']) && $this->request->params['prefix'] == 'admin' && !$this->request->is('ajax')) {
 			$this->_adminTabs();
 		}
 	}
@@ -29,7 +31,8 @@ class CommentsHelper extends Helper {
  * Hook admin tabs when type allows commenting
  */
 	protected function _adminTabs() {
-		if (empty($this->_View->viewVars['type']['Type']['comment_status'])) {
+//		debug($this->_View->viewVars['type']);exit();
+		if (empty($this->_View->viewVars['type']->comment_status)) {
 			return;
 		}
 		$controller = Inflector::camelize($this->request->params['controller']);

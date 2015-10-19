@@ -86,6 +86,13 @@ class CroogoTheme {
 			'regions' => array(),
 			'screenshot' => null,
 			'settings' => array(
+				'templates' => [
+					'input' => '<input type="{{type}}" class="input-block-level" name="{{name}}"{{attrs}}/>',
+					'select' => '<select name="{{name}}" class="input-block-level"{{attrs}}>{{content}}</select>',
+					'selectMultiple' => '<select name="{{name}}[]" class="input-block-level" multiple="multiple"{{attrs}}>{{content}}</select>',
+					'radio' => '<input type="radio" name="{{name}}" class="input-block-level" value="{{value}}"{{attrs}}>',
+					'textarea' => '<textarea name="{{name}}" class="input-block-level"{{attrs}}>{{value}}</textarea>',
+				],
 				'css' => array(
 					'columnFull' => 'span12',
 					'columnLeft' => 'span8',
