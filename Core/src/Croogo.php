@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 
 /**
  * Croogo
@@ -17,7 +18,8 @@ use Cake\Utility\Hash;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Croogo {
+class Croogo
+{
 
 /**
  * Loads plugin's routes.php from app/config/routes.php.
@@ -25,12 +27,16 @@ class Croogo {
  * Plugin name is added to Hook.routes key of Configure object.
  *
  * @param string $pluginName plugin name
+ *
+ * @return void
+ *
  * @deprecated Will be removed in the future.
  */
-	public static function hookRoutes($pluginName) {
+	public static function hookRoutes($pluginName)
+	{
 		$hooks = Configure::read('Hook.routes');
 		if (!$hooks || !is_array($hooks)) {
-			$hooks = array();
+			$hooks = [];
 		}
 		$hooks[] = $pluginName;
 		Configure::write('Hook.routes', $hooks);
@@ -41,10 +47,13 @@ class Croogo {
  *
  * @param string $controllerName Controller Name
  * @param mixed $componentName  Component name or array of Component and settings
+ *
+ * @return void
  */
-	public static function hookComponent($controllerName, $componentName) {
+	public static function hookComponent($controllerName, $componentName)
+	{
 		if (is_string($componentName)) {
-			$componentName = array($componentName);
+			$componentName = [$componentName];
 		}
 		self::hookControllerProperty($controllerName, '_appComponents', $componentName);
 	}
@@ -54,17 +63,20 @@ class Croogo {
  *
  * @param string $controllerName Controller Name
  * @param mixed $componentName  Component name or array of Component and settings
+ *
+ * @return void
  */
-	public static function hookApiComponent($controllerName, $componentName) {
-		$defaults = array(
+	public static function hookApiComponent($controllerName, $componentName)
+	{
+		$defaults = [
 			'priority' => 8,
-		);
+		];
 		if (is_string($componentName)) {
-			$component = array($componentName => $defaults);
+			$component = [$componentName => $defaults];
 		} else {
 			$cName = key($componentName);
 			$settings = Hash::merge($defaults, $componentName[$cName]);
-			$component = array($cName => $settings);
+			$component = [$cName => $settings];
 		}
 		self::hookControllerProperty($controllerName, '_apiComponents', $component);
 	}
@@ -75,8 +87,11 @@ class Croogo {
  * @param string $tableName
  * @param string $behaviorName
  * @param array  $config
+ *
+ * @return void
  */
-	public static function hookBehavior($tableName, $behaviorName, $config = array()) {
+	public static function hookBehavior($tableName, $behaviorName, $config = [])
+	{
 		self::hookTableProperty(
 			App::className($tableName, 'Model/Table', 'Table'),
 			'hookedBehaviors',
@@ -91,10 +106,13 @@ class Croogo {
  *
  * @param string $controllerName
  * @param mixed $helperName Helper name or array of Helper and settings
+ *
+ * @return void
  */
-	public static function hookHelper($controllerName, $helperName) {
+	public static function hookHelper($controllerName, $helperName)
+	{
 		if (is_string($helperName)) {
-			$helperName = array($helperName);
+			$helperName = [$helperName];
 		}
 		self::hookViewBuilderOption($controllerName, 'helpers', $helperName);
 	}
@@ -103,8 +121,11 @@ class Croogo {
  * Shows plugin's admin_menu element in admin navigation under Extensions.
  *
  * @param string $pluginName
+ *
+ * @return void
  */
-	public static function hookAdminMenu($pluginName) {
+	public static function hookAdminMenu($pluginName)
+	{
 		$pluginName = Inflector::underscore($pluginName);
 		Configure::write('Admin.menus.' . $pluginName, 1);
 	}
@@ -115,14 +136,17 @@ class Croogo {
  * @param string $action in the format ControllerName/action_name
  * @param string $title Link title
  * @param string $url
+ *
+ * @return void
  */
-	public static function hookAdminRowAction($action, $title, $url) {
+	public static function hookAdminRowAction($action, $title, $url)
+	{
 		$rowActions = Configure::read('Admin.rowActions');
 		if (!is_array($rowActions)) {
-			$rowActions = array();
+			$rowActions = [];
 		}
 		if (!isset($rowActions[$action])) {
-			$rowActions[$action] = array();
+			$rowActions[$action] = [];
 		}
 		$rowActions[$action][$title] = $url;
 		Configure::write('Admin.rowActions', $rowActions);
@@ -135,8 +159,11 @@ class Croogo {
  * @param string $title   Tab title
  * @param string $element element name, like plugin_name.element_name
  * @param array  $options array with options for the hook to take effect
+ *
+ * @return void
  */
-	public static function hookAdminTab($action, $title, $element, $options = array()) {
+	public static function hookAdminTab($action, $title, $element, $options = [])
+	{
 		self::_hookAdminBlock('Admin.tabs', $action, $title, $element, $options);
 	}
 
@@ -147,18 +174,22 @@ class Croogo {
  * @param string $title   Box title
  * @param string $element element name, like plugin_name.element_name
  * @param array  $options array with options for the hook to take effect
+ *
+ * @return void
  */
-	public static function hookAdminBox($action, $title, $element, $options = array()) {
+	public static function hookAdminBox($action, $title, $element, $options = [])
+	{
 		self::_hookAdminBlock('Admin.boxes', $action, $title, $element, $options);
 	}
 
-	protected static function _hookAdminBlock($key, $action, $title, $element, $options = array()) {
+	protected static function _hookAdminBlock($key, $action, $title, $element, $options = [])
+	{
 		$tabs = Configure::read($key);
 		if (!is_array($tabs)) {
-			$tabs = array();
+			$tabs = [];
 		}
 		if (!isset($tabs[$action])) {
-			$tabs[$action] = array();
+			$tabs[$action] = [];
 		}
 		$tabs[$action][$title]['element'] = $element;
 		$tabs[$action][$title]['options'] = $options;
@@ -173,8 +204,11 @@ class Croogo {
  * @param string $tableName Table name (for e.g., Nodes)
  * @param string $property  for e.g., actsAs
  * @param string $value     array or string
+ *
+ * @return void
  */
-	public static function hookTableProperty($tableName, $property, $value) {
+	public static function hookTableProperty($tableName, $property, $value)
+	{
 		$configKeyPrefix = 'Hook.table_properties';
 		self::_hookProperty($configKeyPrefix, $tableName, $property, $value);
 	}
@@ -185,20 +219,26 @@ class Croogo {
  * @param string $controllerName Controller name (for e.g., Nodes)
  * @param string $property       for e.g., components
  * @param string $value          array or string
+ *
+ * @return void
  */
-	public static function hookControllerProperty($controllerName, $property, $value) {
+	public static function hookControllerProperty($controllerName, $property, $value)
+	{
 		$configKeyPrefix = 'Hook.controller_properties';
 		self::_hookProperty($configKeyPrefix, $controllerName, $property, $value);
 	}
 
-	/**
-	 * Hook controller property
-	 *
-	 * @param string $controllerName Controller name (for e.g., Nodes)
-	 * @param string $option       for e.g., components
-	 * @param string $value          array or string
-	 */
-	public static function hookViewBuilderOption($controllerName, $option, $value) {
+/**
+ * Hook controller property
+ *
+ * @param string $controllerName Controller name (for e.g., Nodes)
+ * @param string $option       for e.g., components
+ * @param string $value          array or string
+ *
+ * @return void
+ */
+	public static function hookViewBuilderOption($controllerName, $option, $value)
+	{
 		$configKeyPrefix = 'Hook.view_builder_options';
 		self::_hookProperty($configKeyPrefix, $controllerName, $option, $value);
 	}
@@ -210,8 +250,11 @@ class Croogo {
  * @param string $name
  * @param string $property
  * @param string $value
+ *
+ * @return void
  */
-	protected static function _hookProperty($configKeyPrefix, $name, $property, $value) {
+	protected static function _hookProperty($configKeyPrefix, $name, $property, $value)
+	{
 		$propertyValue = Configure::read($configKeyPrefix . '.' . $name . '.' . $property);
 		if (!is_array($propertyValue)) {
 			$propertyValue = null;
@@ -228,7 +271,17 @@ class Croogo {
 		Configure::write($configKeyPrefix . '.' . $name . '.' . $property, $propertyValue);
 	}
 
-	public static function options($configKey, &$object, $option = null) {
+/**
+ * Returns the options defined for the given class
+ *
+ * @param string $configKey
+ * @param object $object
+ * @param null $option
+ *
+ * @return array|mixed
+ */
+	public static function options($configKey, &$object, $option = null)
+	{
 		$objectName = get_class($object);
 
 		$options = Configure::read($configKey . '.' . $objectName);
@@ -247,8 +300,12 @@ class Croogo {
  * Applies properties set from hooks to an object in __construct()
  *
  * @param string $configKey
+ * @param null $object
+ *
+ * @return void
  */
-	public static function applyHookProperties($configKey, &$object = null) {
+	public static function applyHookProperties($configKey, &$object = null)
+	{
 		if (empty($object)) {
 			$object = self;
 		}
@@ -283,8 +340,11 @@ class Croogo {
  * @param string $name Name of the event
  * @param object $subject the object that this event applies to
  * @param mixed $data any value you wish to be transported with this event
+ *
+ * @return \Cake\Event\Event
  */
-	public static function dispatchEvent($name, $subject = null, $data = null) {
+	public static function dispatchEvent($name, $subject = null, $data = null)
+	{
 		$event = new Event($name, $subject, $data);
 		if ($subject) {
 			$event = $subject->eventManager()->dispatch($event);
@@ -297,10 +357,12 @@ class Croogo {
 /**
  * Get URL relative to the app
  *
- * @param array $url
- * @return array
+ * @param string|array $url
+ *
+ * @return string
  */
-	public static function getRelativePath($url = '/') {
+	public static function getRelativePath($url = '/')
+	{
 		if (is_array($url)) {
 			$absoluteUrl = Router::url($url, true);
 		} else {
@@ -315,13 +377,14 @@ class Croogo {
  *
  * @param string $key Configure key
  * @param array $config New configuration to merge
- * @param return array Array of merged configurations
+ *
+ * @return array Array of merged configurations
  */
-	public static function mergeConfig($key, $config) {
+	public static function mergeConfig($key, $config)
+	{
 		$values = Configure::read($key);
 		$values = Hash::merge((array)$values, $config);
 		Configure::write($key, $values);
 		return $values;
 	}
-
 }

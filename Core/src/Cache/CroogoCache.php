@@ -2,8 +2,8 @@
 
 namespace Croogo\Core\Cache;
 
-use Cake\Core\Configure;
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 
 /**
  * CroogoCache
@@ -17,19 +17,24 @@ use Cake\Cache\Cache;
  * @license  MIT
  * @link     http://www.croogo.org
  */
-class CroogoCache extends Cache {
+class CroogoCache extends Cache
+{
 
 /**
  * Groups to Config mapping
  */
-	protected static $_groups = array();
+	protected static $_groups = [];
 
 /**
  * Configure cache config
  *
- * @throws CacheException
+ * @param string|null $name
+ * @param array $settings
+ *
+ * @return array|null
  */
-	public static function config($name = null, $settings = array()) {
+	public static function config($name = null, $settings = [])
+	{
 		if (version_compare(Configure::version(), '2.4', '>=')) {
 			return parent::config($name, $settings);
 		}
@@ -46,10 +51,14 @@ class CroogoCache extends Cache {
 /**
  * Returns an array of group -> config map
  *
+ * @param string|null $group
+ *
  * @return array Array of group to config map
+ *
  * @throws CacheException
  */
-	public static function groupConfigs($group = null) {
+	public static function groupConfigs($group = null)
+	{
 		if (version_compare(Configure::version(), '2.4', '>=')) {
 			return parent::groupConfigs($group);
 		}
@@ -58,10 +67,9 @@ class CroogoCache extends Cache {
 			return self::$_groups;
 		}
 		if (isset(self::$_groups[$group])) {
-			return array($group => self::$_groups[$group]);
+			return [$group => self::$_groups[$group]];
 		} else {
 			throw new CacheException(sprintf('Invalid cache group %s', $group));
 		}
 	}
-
 }
