@@ -83,76 +83,82 @@ class CroogoTheme
  * @param string $theme theme plugin name
  * @return array
  */
-    public function getData($theme = null)
-    {
-        $themeData = [
-            'name' => $theme,
-            'regions' => [],
-            'screenshot' => null,
-            'settings' => [
-                'css' => [
-                    'columnFull' => 'span12',
-                    'columnLeft' => 'span8',
-                    'columnRight' => 'span4',
-                    'container' => 'container-fluid',
-                    'dashboardFull' => 'span12',
-                    'dashboardLeft' => 'span6',
-                    'dashboardRight' => 'span6',
-                    'dashboardClass' => 'sortable-column',
-                    'formInput' => 'input-block-level',
-                    'imageClass' => '',
-                    'row' => 'row-fluid',
-                    'tableClass' => 'table',
-                    'thumbnailClass' => 'img-polaroid',
+	public function getData($theme = null) {
+		$themeData = [
+			'name' => $theme,
+			'regions' => [],
+			'screenshot' => null,
+			'settings' => [
+				'templates' => [
+					'input' => '<input type="{{type}}" class="input-block-level" name="{{name}}"{{attrs}}/>',
+					'select' => '<select name="{{name}}" class="input-block-level"{{attrs}}>{{content}}</select>',
+					'selectMultiple' => '<select name="{{name}}[]" class="input-block-level" multiple="multiple"{{attrs}}>{{content}}</select>',
+					'radio' => '<input type="radio" name="{{name}}" class="input-block-level" value="{{value}}"{{attrs}}>',
+					'textarea' => '<textarea name="{{name}}" class="input-block-level"{{attrs}}>{{value}}</textarea>',
+				],
+				'css' => [
+					'columnFull' => 'span12',
+					'columnLeft' => 'span8',
+					'columnRight' => 'span4',
+					'container' => 'container-fluid',
+					'dashboardFull' => 'span12',
+					'dashboardLeft' => 'span6',
+					'dashboardRight' => 'span6',
+					'dashboardClass' => 'sortable-column',
+					'formInput' => 'input-block-level',
+					'imageClass' => '',
+					'row' => 'row-fluid',
+					'tableClass' => 'table',
+					'thumbnailClass' => 'img-polaroid',
                 ],
-                'iconDefaults' => [
-                    'classDefault' => '',
-                    'classPrefix' => 'icon-',
-                    'largeIconClass' => 'icon-large',
-                    'smallIconClass' => '',
+				'iconDefaults' => [
+					'classDefault' => '',
+					'classPrefix' => 'icon-',
+					'largeIconClass' => 'icon-large',
+					'smallIconClass' => '',
                 ],
-                'icons' => [
-                    'attach' => 'paper-clip',
-                    'check-mark' => 'ok',
-                    'comment' => 'comment-alt',
-                    'copy' => 'copy',
-                    'create' => 'plus',
-                    'delete' => 'trash',
-                    'error-sign' => 'exclamation-sign',
-                    'home' => 'home',
-                    'info-sign' => 'info-sign',
-                    'inspect' => 'zoom-in',
-                    'link' => 'link',
-                    'move-down' => 'chevron-down',
-                    'move-up' => 'chevron-up',
-                    'power-off' => 'off',
-                    'power-on' => 'bolt',
-                    'question-sign' => 'question-sign',
-                    'read' => 'eye-open',
-                    'refresh' => 'refresh',
-                    'resize' => 'resize-small',
-                    'search' => 'search',
-                    'success-sign' => 'ok-sign',
-                    'translate' => 'flag',
-                    'update' => 'pencil',
-                    'upload' => 'upload-alt',
-                    'warning-sign' => 'warning-sign',
-                    'x-mark' => 'remove',
+				'icons' => [
+					'attach' => 'paper-clip',
+					'check-mark' => 'ok',
+					'comment' => 'comment-alt',
+					'copy' => 'copy',
+					'create' => 'plus',
+					'delete' => 'trash',
+					'error-sign' => 'exclamation-sign',
+					'home' => 'home',
+					'info-sign' => 'info-sign',
+					'inspect' => 'zoom-in',
+					'link' => 'link',
+					'move-down' => 'chevron-down',
+					'move-up' => 'chevron-up',
+					'power-off' => 'off',
+					'power-on' => 'bolt',
+					'question-sign' => 'question-sign',
+					'read' => 'eye-open',
+					'refresh' => 'refresh',
+					'resize' => 'resize-small',
+					'search' => 'search',
+					'success-sign' => 'ok-sign',
+					'translate' => 'flag',
+					'update' => 'pencil',
+					'upload' => 'upload-alt',
+					'warning-sign' => 'warning-sign',
+					'x-mark' => 'remove',
                 ],
-                'prefixes' => [
-                    '' => [
-                        'helpers' => [
-                            'Html' => [],
-                            'Form' => [],
+				'prefixes' => [
+					'' => [
+						'helpers' => [
+							'Html' => [],
+							'Form' => [],
                         ],
                     ],
-                    'admin' => [
-                        'helpers' => [
-                            'CroogoHtml' => [
-                                'className' => 'Croogo/Core.CroogoHtml',
+					'admin' => [
+						'helpers' => [
+							'CroogoHtml' => [
+								'className' => 'Croogo/Core.CroogoHtml',
                             ],
-                            'CroogoForm' => [
-                                'className' => 'Croogo/Core.CroogoForm',
+							'CroogoForm' => [
+								'className' => 'Croogo/Core.CroogoForm',
                             ],
 // FIXME:
 //							'CroogoPaginator' => array(
