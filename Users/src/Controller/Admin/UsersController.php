@@ -5,6 +5,7 @@ namespace Croogo\Users\Controller\Admin;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Network\Email\Email;
+use Cake\ORM\Query;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
@@ -33,6 +34,7 @@ class UsersController extends AppController
     {
         parent::initialize();
 
+        $this->loadComponent('RequestHandler');
         $this->loadComponent('Search.Prg', [
             'presetForm' => [
                 'paramType' => 'querystring',
@@ -312,6 +314,28 @@ class UsersController extends AppController
         Croogo::dispatchEvent('Controller.Users.adminLogoutSuccessful', $this);
         $this->Flash->success(__d('croogo', 'Log out successful.'), ['key' => 'auth']);
         return $this->redirect($this->Auth->logout());
+    }
+
+    public function lookup()
+    {
+        $this->Prg->commonProcess();
+
+        /* @var Query $lookup */
+        $lookup = $this->Users->find('searchable', $this->Prg->parsedParams());
+        $lookup->contain([
+            'Roles' => [
+                'fields' => ['id', 'title', 'alias'],
+            ],
+        ]);
+        $lookup->select([
+            'id', 'username', 'name', 'website', 'image', 'bio', 'timezone',
+            'status', 'created', 'updated',
+        ]);
+
+        $users = $this->paginate($lookup);
+
+        $this->set('user', $users);
+        $this->set('_serialize', 'user');
     }
 
     protected function _getSenderEmail()

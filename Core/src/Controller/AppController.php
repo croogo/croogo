@@ -114,12 +114,20 @@ class AppController extends \App\Controller\AppController implements HookableCom
  */
     public function afterConstruct()
     {
+        $this->viewBuilder()->helpers(Croogo::options('Hook.view_builder_options', $this, 'helpers'));
+    }
+
+/**
+ * {@inheritdoc}
+ */
+    public function beforeRender(Event $event)
+    {
+        parent::beforeRender($event);
+
         if (empty($this->viewClass)) {
             $this->viewClass = 'Croogo/Core.Croogo';
         }
-
-        $this->viewBuilder()->helpers(Croogo::options('Hook.view_builder_options', $this, 'helpers'));
-    }
+	}
 
 /**
  * Allows extending action from component
