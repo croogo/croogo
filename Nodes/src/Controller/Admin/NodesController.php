@@ -48,9 +48,9 @@ class NodesController extends AppController
      * @var array
      * @access public
      */
-    public $uses = [
+    public $uses = array(
         'Nodes.Node',
-    ];
+    );
 
     /**
      * afterConstruct
@@ -65,6 +65,7 @@ class NodesController extends AppController
     {
         parent::initialize();
 
+        $this->loadComponent('RequestHandler');
         $this->loadComponent('Croogo/Core.BulkProcess');
         $this->loadComponent('Croogo/Core.Recaptcha');
         $this->loadComponent('Search.Prg', [
@@ -101,7 +102,7 @@ class NodesController extends AppController
      * Toggle Node status
      *
      * @param string $id Node id
-     * @param int$statusCurrent Node status
+     * @param integer $status Current Node status
      * @return void
      */
     public function toggle($id = null, $status = null)
@@ -157,11 +158,11 @@ class NodesController extends AppController
      */
     public function create()
     {
-        $types = $this->Nodes->Taxonomies->Vocabularies->Types->find('all', [
-            'order' => [
+        $types = $this->Nodes->Taxonomies->Vocabularies->Types->find('all', array(
+            'order' => array(
                 'Types.alias' => 'ASC',
-            ],
-        ]);
+            ),
+        ));
         $this->set(compact('types'));
     }
 
@@ -177,7 +178,7 @@ class NodesController extends AppController
         $type = $this->Nodes->Taxonomies->Vocabularies->Types->findByAlias($typeAlias)->contain('Vocabularies')->first();
         if (!isset($type->alias)) {
             $this->Flash->error(__d('croogo', 'Content type does not exist.'));
-            return $this->redirect(['action' => 'create']);
+            return $this->redirect(array('action' => 'create'));
         }
 
         /** @var Node $node */
@@ -216,7 +217,7 @@ class NodesController extends AppController
     /**
      * Admin edit
      *
-     * @param int$id
+     * @param integer $id
      * @return void
      * @access public
      */
@@ -239,7 +240,7 @@ class NodesController extends AppController
             if ($this->Nodes->saveNode($node, $typeAlias)) {
                 Croogo::dispatchEvent('Controller.Nodes.afterEdit', $this, compact('data'));
                 $this->Flash->success(__d('croogo', '%s has been saved', $type->title));
-                $this->Croogo->redirect(['action' => 'edit', $node->id]);
+                $this->Croogo->redirect(array('action' => 'edit', $node->id));
             } else {
                 $this->Flash->error(__d('croogo', '%s could not be saved. Please, try again.', $type['Type']['title']));
             }
@@ -278,7 +279,7 @@ class NodesController extends AppController
     /**
      * Admin delete
      *
-     * @param int$id
+     * @param integer $id
      * @return void
      * @access public
      */
@@ -299,7 +300,7 @@ class NodesController extends AppController
     /**
      * Admin delete meta
      *
-     * @param int$id
+     * @param integer $id
      * @return void
      * @access public
      * @deprecated Use MetaController::admin_delete_meta()
@@ -316,7 +317,7 @@ class NodesController extends AppController
             }
         }
 
-        $success = ['success' => $success];
+        $success = array('success' => $success);
         $this->set(compact('success'));
         $this->set('_serialize', 'success');
     }
@@ -344,18 +345,40 @@ class NodesController extends AppController
         list($action, $ids) = $this->BulkProcess->getRequestVars($this->Nodes->alias());
 
 
-        $options = [
-            'multiple' => ['copy' => false],
-            'messageMap' => [
+        $options = array(
+            'multiple' => array('copy' => false),
+            'messageMap' => array(
                 'delete' => __d('croogo', 'Nodes deleted'),
                 'publish' => __d('croogo', 'Nodes published'),
                 'unpublish' => __d('croogo', 'Nodes unpublished'),
                 'promote' => __d('croogo', 'Nodes promoted'),
                 'unpromote' => __d('croogo', 'Nodes unpromoted'),
                 'copy' => __d('croogo', 'Nodes copied'),
-            ],
-        ];
+            ),
+        );
         return $this->BulkProcess->process($this->Nodes, $action, $ids, $options);
+    }
+
+    public function lookup()
+    {
+        $this->Prg->commonProcess();
+
+        /* @var \Cake\Orm\Query $lookup */
+        $lookup = $this->Nodes->find('searchable', $this->Prg->parsedParams());
+        $lookup->contain([
+            'Users', /*'Meta', */
+            'Taxonomies',
+        ]);
+        $lookup->select([
+            'id', 'parent_id', 'type', 'user_id', 'title', 'slug',
+            'body', 'excerpt', 'status', 'promote', 'path', 'terms',
+            'created', 'updated', 'publish_start', 'publish_end',
+        ]);
+
+        $nodes = $this->paginate($lookup);
+
+        $this->set('node', $nodes);
+        $this->set('_serialize', 'node');
     }
 
     /**
