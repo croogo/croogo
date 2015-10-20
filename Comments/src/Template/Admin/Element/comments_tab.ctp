@@ -1,5 +1,5 @@
 <?php
-echo $this->Form->input('comment_status', array(
+echo $this->CroogoForm->input('comment_status', array(
 	'type' => 'radio',
 	'options' => array(
 		'0' => __d('croogo', 'Disabled'),
