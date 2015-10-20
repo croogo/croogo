@@ -3,8 +3,10 @@
 namespace Croogo\Taxonomy\View\Helper;
 
 use Cake\Event\Event;
+use Cake\Utility\Inflector;
 use Cake\View\Helper;
 use Cake\View\View;
+use Croogo\Core\Croogo;
 
 /**
  * Taxonomies Helper
@@ -53,7 +55,7 @@ class TaxonomiesHelper extends Helper
  */
     public function beforeRender($viewFile)
     {
-        if (isset($this->request->params['admin']) && !$this->request->is('ajax')) {
+        if ($this->request->param('prefix') === 'admin' && !$this->request->is('ajax')) {
             $this->_adminTabs();
         }
     }
@@ -68,9 +70,9 @@ class TaxonomiesHelper extends Helper
             return;
         }
         $title = __d('croogo', 'Terms');
-        $element = 'Taxonomy.admin/terms_tab';
-        Croogo::hookAdminTab("$controller/admin_add", $title, $element);
-        Croogo::hookAdminTab("$controller/admin_edit", $title, $element);
+        $element = 'Croogo/Taxonomy.terms_tab';
+        Croogo::hookAdminTab('Admin/' . $controller . '/add', $title, $element);
+        Croogo::hookAdminTab('Admin/' . $controller . '/edit', $title, $element);
     }
 
 /**
