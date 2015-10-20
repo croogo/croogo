@@ -6,8 +6,7 @@ echo $this->Form->input('comment_status', array(
 		'1' => __d('croogo', 'Read only'),
 		'2' => __d('croogo', 'Read/Write'),
 	),
-	'default' => $type['Type']['comment_status'],
+	'default' => $type->comment_status,
 	'legend' => false,
-	'label' => true
+	'label' => false
 ));
-?>
