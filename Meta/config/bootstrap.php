@@ -2,6 +2,6 @@
 
 use Croogo\Core\Croogo;
 
-Croogo::hookComponent('Nodes', array('Meta.Meta' => array('priority' => 8)));
+Croogo::hookComponent('Croogo\Nodes\Controller\Admin\NodesController', array('Croogo/Meta.Meta' => array('priority' => 8)));
 
-Croogo::hookHelper('*', 'Croogo/Meta.Meta');
+Croogo::hookBehavior('Croogo/Nodes.Nodes', 'Croogo/Meta.Meta');

@@ -3,7 +3,8 @@
     "description": "Croogo Meta Plugin",
     "require": {
         "cakedc/search": "3.0.x-dev",
-        "croogo/core": "3.0.x-dev"
+        "croogo/core": "3.0.x-dev",
+        "quickapps-plugins/eav": "*"
     },
     "license": "MIT",
     "authors": [

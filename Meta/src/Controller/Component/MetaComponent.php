@@ -3,6 +3,9 @@
 namespace Croogo\Meta\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Controller\Controller;
+use Cake\Event\Event;
+use Croogo\Core\Croogo;
 
 /**
  * Meta Component
@@ -12,45 +15,26 @@ use Cake\Controller\Component;
 class MetaComponent extends Component {
 
 /**
- * @var Controller
- */
-	protected $_controller;
-
-/**
  * startup
  */
-	public function startup(Controller $controller) {
-		$this->_controller = $controller;
-		if (isset($controller->request->params['admin'])) {
-			$this->_adminTabs();
-
-			if (empty($controller->request->data['Meta'])) {
-				return;
-			}
-			$unlockedFields = array();
-			foreach ($controller->request->data['Meta'] as $uuid => $fields) {
-				foreach ($fields as $field => $vals) {
-					$unlockedFields[] = 'Meta.' . $uuid . '.' . $field;
-				}
-			}
-			$controller->Security->unlockedFields += $unlockedFields;
-		}
+	public function startup(Event $event) {
+		$this->_adminTabs($event->subject());
 	}
 
 /**
  * Hook admin tabs for controllers whom its primary model has MetaBehavior attached.
  */
-	protected function _adminTabs() {
-		$Model = $this->_controller->{$this->_controller->modelClass};
-		if ($Model && !$Model->Behaviors->attached('Meta')) {
+	protected function _adminTabs(Controller $controller) {
+		list(, $modelName) = pluginSplit($controller->modelClass, true);
+		$table = $controller->{$modelName};
+		if ((!$table) || (!$table->hasBehavior('Meta'))) {
 			return;
 		}
-		$controller = $this->_controller->name;
-		$title = __d('croogo', 'Custom Fields');
-		$element = 'Meta.admin/meta_tab';
-		Croogo::hookAdminBox("$controller/admin_add", $title, $element);
-		Croogo::hookAdminBox("$controller/admin_edit", $title, $element);
-	}
 
+		$title = __d('croogo', 'Meta');
+		$element = 'Croogo/Meta.admin/meta_tab';
+		Croogo::hookAdminTab('Admin/' . $controller->name . '/add', $title, $element);
+		Croogo::hookAdminTab('Admin/' . $controller->name . '/edit', $title, $element);
+	}
 }
 
