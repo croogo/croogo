@@ -324,12 +324,24 @@ class UsersController extends AppController
         $lookup = $this->Users->find('searchable', $this->Prg->parsedParams());
         $lookup->contain([
             'Roles' => [
-                'fields' => ['id', 'title', 'alias'],
+                'fields' => [
+                    'id',
+                    'title',
+                    'alias'
+                ],
             ],
         ]);
         $lookup->select([
-            'id', 'username', 'name', 'website', 'image', 'bio', 'timezone',
-            'status', 'created', 'updated',
+            'id',
+            'username',
+            'name',
+            'website',
+            'image',
+            'bio',
+            'timezone',
+            'status',
+            'created',
+            'updated',
         ]);
 
         $users = $this->paginate($lookup);

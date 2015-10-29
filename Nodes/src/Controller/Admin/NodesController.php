@@ -344,7 +344,6 @@ class NodesController extends AppController
     {
         list($action, $ids) = $this->BulkProcess->getRequestVars($this->Nodes->alias());
 
-
         $options = array(
             'multiple' => array('copy' => false),
             'messageMap' => array(
@@ -366,13 +365,27 @@ class NodesController extends AppController
         /* @var \Cake\Orm\Query $lookup */
         $lookup = $this->Nodes->find('searchable', $this->Prg->parsedParams());
         $lookup->contain([
-            'Users', /*'Meta', */
+            'Users',
+            /*'Meta', */
             'Taxonomies',
         ]);
         $lookup->select([
-            'id', 'parent_id', 'type', 'user_id', 'title', 'slug',
-            'body', 'excerpt', 'status', 'promote', 'path', 'terms',
-            'created', 'updated', 'publish_start', 'publish_end',
+            'id',
+            'parent_id',
+            'type',
+            'user_id',
+            'title',
+            'slug',
+            'body',
+            'excerpt',
+            'status',
+            'promote',
+            'path',
+            'terms',
+            'created',
+            'updated',
+            'publish_start',
+            'publish_end',
         ]);
 
         $nodes = $this->paginate($lookup);
