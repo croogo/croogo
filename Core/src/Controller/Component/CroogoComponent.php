@@ -297,7 +297,7 @@ class CroogoComponent extends Component {
 
 		$entity = $table->get($id);
 		$entity->{$field} = $status;
-		$this->_controller->layout = 'ajax';
+		$this->_controller->viewBuilder()->layout('Croogo/Core./ajax');
 		if ($table->save($entity)) {
 			$this->_controller->set(compact('id', 'status'));
 			$this->_controller->render('Croogo/Core./Common/admin_toggle');
