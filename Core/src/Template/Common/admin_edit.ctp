@@ -118,7 +118,7 @@ $tabId = 'tabitem-' . Inflector::slug(strtolower($modelClass), '-');
 				echo $buttonsBlock;
 			else :
 				echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing')) .
-					$this->CroogoForm->button(__d('croogo', 'Save'), array('button' => 'primary')) .
+					$this->Form->button(__d('croogo', 'Save'), array('button' => 'primary')) .
 					$this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
 					$this->CroogoHtml->endBox();
 			endif;
@@ -133,7 +133,7 @@ $tabId = 'tabitem-' . Inflector::slug(strtolower($modelClass), '-');
 if ($formEnd = trim($this->fetch('form-end'))):
 	echo $formEnd;
 else:
-	echo $this->CroogoForm->end();
+	echo $this->Form->end();
 endif;
 
 if ($pageFooter = trim($this->fetch('page-footer'))):
