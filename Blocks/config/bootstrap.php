@@ -12,7 +12,7 @@ CroogoCache::config('croogo_blocks', array_merge(
 Croogo::hookComponent('*', array(
 	'BlocksHook' => array(
 		'className' => 'Croogo/Blocks.Blocks',
-		'priority' => 5,
+		'priority' => 9,
 	)
 ));
 

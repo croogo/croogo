@@ -85,7 +85,7 @@ class NodesHelper extends Helper {
 			'plugin' => 'nodes',
 			'controller' => 'nodes',
 			'action' => 'view',
-			'element' => 'Nodes.node_list',
+			'element' => 'Croogo/Nodes.node_list',
 		);
 		$options = array_merge($_options, $options);
 		$output = '';
