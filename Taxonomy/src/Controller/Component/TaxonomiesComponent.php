@@ -136,36 +136,32 @@ class TaxonomiesComponent extends Component {
 
 		$vocabularies = Hash::merge($vocabularies, array_keys($this->controller->BlocksHook->blocksData['vocabularies']));
 		$vocabularies = array_unique($vocabularies);
-//		foreach ($vocabularies as $vocabularyAlias) {
-//			$vocabulary = $this->Taxonomies->Vocabularies->find('first', array(
-//				'conditions' => array(
-//					'Vocabulary.alias' => $vocabularyAlias,
-//				),
-//				'cache' => array(
-//					'name' => 'vocabulary_' . $vocabularyAlias,
-//					'config' => 'croogo_vocabularies',
-//				),
-//				'recursive' => '-1',
-//			));
-//			if (isset($vocabulary['Vocabulary']['id'])) {
-//				$threaded = $this->Taxonomies->find('threaded', array(
-//					'conditions' => array(
-//						'Taxonomy.vocabulary_id' => $vocabulary['Vocabulary']['id'],
-//					),
-//					'contain' => array(
-//						'Term',
-//					),
-//					'cache' => array(
-//						'name' => 'vocabulary_threaded_' . $vocabularyAlias,
-//						'config' => 'croogo_vocabularies',
-//					),
-//					'order' => 'Taxonomy.lft ASC',
-//				));
-//				$this->vocabulariesForLayout[$vocabularyAlias] = array();
-//				$this->vocabulariesForLayout[$vocabularyAlias]['Vocabulary'] = $vocabulary['Vocabulary'];
-//				$this->vocabulariesForLayout[$vocabularyAlias]['threaded'] = $threaded;
-//			}
-//		}
+		foreach ($vocabularies as $vocabularyAlias) {
+			$vocabulary = $this->Taxonomies->Vocabularies->find()
+				->where([
+					'Vocabularies.alias' => $vocabularyAlias,
+				])->applyOptions([
+					'name' => 'vocabulary_' . $vocabularyAlias,
+					'config' => 'croogo_vocabularies',
+				])->first();
+			if (isset($vocabulary->id)) {
+				$threaded = $this->Taxonomies->find('threaded')
+					->where([
+						'Taxonomies.vocabulary_id' => $vocabulary->id,
+					])->order([
+						'Taxonomies.lft ASC'
+					])->applyOptions([
+						'name' => 'vocabulary_threaded_' . $vocabularyAlias,
+						'config' => 'croogo_vocabularies',
+					])->contain([
+						'Terms'
+					]);
+
+				$this->vocabulariesForLayout[$vocabularyAlias] = [];
+				$this->vocabulariesForLayout[$vocabularyAlias]['vocabulary'] = $vocabulary;
+				$this->vocabulariesForLayout[$vocabularyAlias]['threaded'] = $threaded;
+			}
+		}
 	}
 
 /**
