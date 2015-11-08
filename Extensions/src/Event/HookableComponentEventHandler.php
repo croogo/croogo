@@ -5,6 +5,7 @@ namespace Croogo\Extensions\Event;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
+use Cake\Utility\Hash;
 use Croogo\Core\Croogo;
 use Croogo\Core\Controller\HookableComponentInterface;
 
@@ -81,8 +82,23 @@ class HookableComponentEventHandler implements EventListenerInterface
 				$config = [];
 			}
 
+			$config = Hash::merge([
+				'priority' => 10
+			], $config);
+
 			$components[$component] = $config;
 		}
+
+		uasort($components, function ($previous, $next) {
+			$previousPriority = $previous['priority'];
+			$nextPriority = $next['priority'];
+
+			if ($previousPriority === $nextPriority) {
+				return 0;
+			}
+
+			return ($previousPriority < $nextPriority) ? -1 : 1;
+		});
 
 		return $components;
 	}
