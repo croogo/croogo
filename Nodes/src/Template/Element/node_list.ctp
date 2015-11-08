@@ -1,19 +1,13 @@
 <div id="node-list-<?php echo $alias; ?>" class="node-list">
 	<ul>
 	<?php
-		foreach ($nodesList as $n) {
+		foreach ($nodesList as $node) {
 			if ($options['link']) {
 				echo '<li>';
-				echo $this->Html->link($n['Node']['title'], array(
-					'plugin' => $options['plugin'],
-					'controller' => $options['controller'],
-					'action' => $options['action'],
-					'type' => $n['Node']['type'],
-					'slug' => $n['Node']['slug'],
-				));
+				echo $this->Html->link($node->title, $node->url->getUrl(0));
 				echo '</li>';
 			} else {
-				echo '<li>' . $n['Node']['title'] . '</li>';
+				echo '<li>' . $node->title . '</li>';
 			}
 		}
 	?>

@@ -7,6 +7,7 @@ use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 
 /**
  * Nodes Component
@@ -79,31 +80,27 @@ class NodesComponent extends Component {
 		$roleId = $this->controller->Croogo->roleId();
 
 		$nodes = $this->controller->BlocksHook->blocksData['nodes'];
-		$_nodeOptions = array(
+		$_nodeOptions = [
 			'find' => 'all',
-			'conditions' => array(
-				'Node.status' => 1,
-				'OR' => array(
-					'Node.visibility_roles' => '',
-					'Node.visibility_roles LIKE' => '%"' . $roleId . '"%',
-				),
-			),
-			'order' => 'Node.created DESC',
+			'conditions' => [],
+			'order' => 'Nodes.created DESC',
 			'limit' => 5,
-		);
+		];
 
 		foreach ($nodes as $alias => $options) {
 			$options = Hash::merge($_nodeOptions, $options);
 			$options['limit'] = str_replace('"', '', $options['limit']);
-			$node = $this->Node->find($options['find'], array(
-				'conditions' => $options['conditions'],
-				'order' => $options['order'],
-				'limit' => $options['limit'],
-				'cache' => array(
+			$node = $this->Nodes->find($options['find'])
+				->where($options['conditions'])
+				->order($options['order'])
+				->limit($options['limit'])
+				->applyOptions([
 					'prefix' => 'nodes_' . $alias,
 					'config' => 'croogo_nodes',
-				),
-			));
+				])->find('byAccess', [
+					'roleId' => $roleId
+				])->find('published');
+
 			$this->nodesForLayout[$alias] = $node;
 		}
 	}

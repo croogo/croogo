@@ -18,7 +18,12 @@ Configure::write(
 	])
 );
 
-Croogo::hookComponent('*', 'Croogo/Core.Croogo');
+Croogo::hookComponent('*', [
+	'Croogo' => [
+		'className' => 'Croogo/Core.Croogo',
+		'priority' => 5
+	]
+]);
 Croogo::hookComponent('*', 'Croogo/Acl.Filter');
 Croogo::hookComponent('*', 'Security');
 Croogo::hookComponent('*', 'Acl.Acl');

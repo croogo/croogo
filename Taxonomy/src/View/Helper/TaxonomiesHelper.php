@@ -104,10 +104,10 @@ class TaxonomiesHelper extends Helper {
 			'tagAttributes' => array(),
 			'type' => null,
 			'link' => true,
-			'plugin' => 'nodes',
-			'controller' => 'nodes',
+			'plugin' => 'Croogo/Nodes',
+			'controller' => 'Nodes',
 			'action' => 'term',
-			'element' => 'Taxonomy.vocabulary',
+			'element' => 'Croogo/Taxonomy.vocabulary',
 		);
 		$options = array_merge($_options, $options);
 
@@ -137,17 +137,17 @@ class TaxonomiesHelper extends Helper {
 		foreach ($terms as $term) {
 			if ($options['link']) {
 				$termAttr = array(
-					'id' => 'term-' . $term['Term']['id'],
+					'id' => 'term-' . $term->term->id,
 				);
-				$termOutput = $this->Html->link($term['Term']['title'], array(
+				$termOutput = $this->Html->link($term->term->title, array(
 					'plugin' => $options['plugin'],
 					'controller' => $options['controller'],
 					'action' => $options['action'],
 					'type' => $options['type'],
-					'slug' => $term['Term']['slug'],
+					'slug' => $term->term->slug,
 				), $termAttr);
 			} else {
-				$termOutput = $term['Term']['title'];
+				$termOutput = $term->term->title;
 			}
 			if (isset($term['children']) && count($term['children']) > 0) {
 				$termOutput .= $this->nestedTerms($term['children'], $options, $depth + 1);
@@ -179,12 +179,12 @@ class TaxonomiesHelper extends Helper {
 		$typeLink[] = ' (';
 
 		foreach ($typeData as $type) {
-			$typeLink[] = $this->Html->link($type['title'], array(
+			$typeLink[] = $this->Html->link($type->title, array(
 				'prefix' => false,
 				'plugin' => 'Croogo/Nodes',
 				'controller' => 'Nodes',
 				'action' => 'term',
-				'type' => $type['alias'],
+				'type' => $type->alias,
 				'slug' => $termData['Term']['slug']
 			), array(
 				'target' => '_blank',
