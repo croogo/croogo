@@ -71,7 +71,7 @@ class PublishableBehavior extends Behavior {
 			return $query;
 		}
 
-		if ($config['admin'] === false) {
+		if ($config['admin'] === false && isset($_SESSION)) {
 			// FIXME Avoid superglobals
 			$roleId = Hash::get($_SESSION, 'Auth.User.role_id');
 			if ($roleId == 1) {
