@@ -3,7 +3,6 @@
 namespace Croogo\Dashboards\Controller\Admin;
 
 use Cake\Event\Event;
-use Croogo\Core\Controller\Admin\AppController;
 
 /**
  * DashboardsDashboards Controller

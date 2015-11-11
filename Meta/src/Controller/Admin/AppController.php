@@ -1,8 +1,8 @@
 <?php
 
-namespace Croogo\Meta\Controller;
+namespace Croogo\Meta\Controller\Admin;
 
-use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Meta\Controller\AppController as BaseController;
 /**
  * Meta App Controller
  *
@@ -11,6 +11,6 @@ use Croogo\Core\Controller\CroogoAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MetaAppController extends CroogoAppController {
+class AppController extends BaseController {
 
 }

@@ -2,7 +2,7 @@
 
 namespace Croogo\Dashboards\Controller;
 
-use Croogo\Core\Controller\CroogoAppController;
+use Croogo\Core\Controller\AppController as BaseController;
 
 /**
  * DashboardsApp Controller
@@ -14,6 +14,6 @@ use Croogo\Core\Controller\CroogoAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class DashboardsAppController extends CroogoAppController {
+class AppController extends BaseController {
 
 }
