@@ -216,7 +216,7 @@ class UsersController extends AppController {
  * @return void
  * @access public
  */
-	public function reset_password($id = null) {
+	public function resetPassword($id = null) {
 		$user = $this->Users->get($id);
 
 		if ($this->request->is('put')) {
