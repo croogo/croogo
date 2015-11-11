@@ -2,7 +2,7 @@
 
 namespace Croogo\Core\Controller;
 
-use App\Controller\AppController;
+use App\Controller\AppController as BaseController;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Event\Event;
@@ -26,7 +26,7 @@ use Cake\Routing\Router;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoErrorController extends AppController {
+class CroogoErrorController extends BaseController {
 
 /**
  * Models
