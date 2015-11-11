@@ -38,7 +38,7 @@ use Cake\Core\Configure;
 			<div id="content" class="grid_16">
 			<?php
 				echo $this->Layout->sessionFlash();
-				echo $content_for_layout;
+				echo $this->fetch('content');
 			?>
 			</div>
 

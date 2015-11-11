@@ -34,7 +34,7 @@
 				<div id="install" class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
 				<?php
 					echo $this->Layout->sessionFlash();
-					echo $content_for_layout;
+					echo $this->fetch('content');
 				?>
 				</div>
 			</div>
