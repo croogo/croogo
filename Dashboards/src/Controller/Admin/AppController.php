@@ -2,7 +2,7 @@
 
 namespace Croogo\Dashboards\Controller\Admin;
 
-use Croogo\Dashboards\Controller\AppController as BaseController;
+use Croogo\Core\Controller\Admin\AppController as BaseController;
 
 /**
  * DashboardsApp Controller
