@@ -56,8 +56,8 @@ class CroogoHelper extends AppHelper {
 		}
 	}
 
-	public function statuses() {
-		return $this->_CroogoStatus->statuses();
+	public function statuses($type = 'publishing') {
+		return $this->_CroogoStatus->statuses($type);
 	}
 
 /**
