@@ -62,10 +62,10 @@ class StringConverter {
 /**
  * Converts formatted string to array
  *
- * A string formatted like 'Node.type:blog;' will be converted to
- * array('Node.type' => 'blog');
+ * A string formatted like 'Nodes.type:blog;' will be converted to
+ * array('Nodes.type' => 'blog');
  *
- * @param string $string in this format: Node.type:blog;Node.user_id:1;
+ * @param string $string in this format: Nodes.type:blog;Nodes.user_id:1;
  * @return array
  */
 	public function stringToArray($string) {
