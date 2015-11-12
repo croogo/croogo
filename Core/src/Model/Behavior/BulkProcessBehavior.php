@@ -151,7 +151,7 @@ class BulkProcessBehavior extends Behavior {
  * @return boolean True on success, false on failure
  */
 	public function bulkDelete($ids) {
-		return $table->deleteAll([
+		return $this->_table->deleteAll([
 			'id IN' => $ids
 		]);
 	}
@@ -163,12 +163,12 @@ class BulkProcessBehavior extends Behavior {
  * @return boolean True on success, false on failure
  */
 	public function bulkCopy($ids) {
-		if (!$table->hasBehavior('Copyable')) {
-			$table->addBehavior('Croogo/Core.Copyable');
+		if (!$this->_table->hasBehavior('Copyable')) {
+			$this->_table->addBehavior('Croogo/Core.Copyable');
 		}
 
 		foreach ($ids as $id) {
-			if (!$table->copy($id)) {
+			if (!$this->_table->copy($id)) {
 				return false;
 			}
 		}

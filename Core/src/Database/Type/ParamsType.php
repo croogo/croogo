@@ -7,31 +7,55 @@ use Cake\Database\Type;
 use Croogo\Core\Utility\StringConverter;
 use PDO;
 
+/**
+ * ParamsType
+ *
+ * @package  Croogo.Core.Database.Type
+ * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @link     http://www.croogo.org
+ */
 class ParamsType extends Type {
 
+/**
+ * @param $value
+ * @param Driver $driver
+ * @return array
+ */
 	public function toPHP($value, Driver $driver)
 	{
 		if (empty($value) || $value === null) {
 			return $value;
 		}
-
 		return $this->paramsToArray($value);
 	}
 
+/**
+ * @param $value
+ * @return array
+ */
 	public function marshal($value)
 	{
 		if (is_array($value) || $value === null) {
 			return $value;
 		}
-
 		return $this->paramsToArray($value);
 	}
 
+/**
+ * @param $value
+ * @param Driver $driver
+ * @return array
+ */
 	public function toDatabase($value, Driver $driver)
 	{
 		return $this->arrayToParams($value);
 	}
 
+/**
+ * @param $value
+ * @param Driver $driver
+ * @return int
+ */
 	public function toStatement($value, Driver $driver)
 	{
 		if ($value === null) {
@@ -39,7 +63,6 @@ class ParamsType extends Type {
 		}
 		return PDO::PARAM_STR;
 	}
-
 
 /**
  * Converts a string of params to an array of formatted key/value pairs
@@ -88,9 +111,8 @@ class ParamsType extends Type {
  */
 	public function arrayToParams($array) {
 		$params = '';
-
 		$i = 0;
-		foreach ($array as $key => $value) {
+		foreach ((array)$array as $key => $value) {
 			$params .= $key . '=' . $value;
 
 			if ($i != (count($array) - 1)) {
@@ -99,7 +121,6 @@ class ParamsType extends Type {
 
 			$i++;
 		}
-
 		return $params;
 	}
 }
