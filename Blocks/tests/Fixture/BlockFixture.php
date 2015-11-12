@@ -127,7 +127,7 @@ class BlockFixture extends CroogoTestFixture {
 			'region_id' => 4,
 			'title' => 'Recent Posts',
 			'alias' => 'recent_posts',
-			'body' => '[node:recent_posts conditions=\"Node.type:blog\" order=\"Node.id DESC\" limit=\"5\"]',
+			'body' => '[node:recent_posts conditions=\"Nodes.type:blog\" order=\"Nodes.id DESC\" limit=\"5\"]',
 			'show_title' => 1,
 			'class' => '',
 			'status' => 1,

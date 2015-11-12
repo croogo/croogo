@@ -38,10 +38,10 @@ class NodesHelperTest extends CroogoTestCase {
  * Test [node] shortcode
  */
 	public function testNodeShortcode() {
-		$content = '[node:recent_posts conditions="Node.type:blog" order="Node.id DESC" limit="5"]';
+		$content = '[node:recent_posts conditions="Nodes.type:blog" order="Nodes.id DESC" limit="5"]';
 		$this->View->viewVars['nodes_for_layout']['recent_posts'] = array(
 			array(
-				'Node' => array(
+				'Nodes' => array(
 					'id' => 1,
 					'title' => 'Hello world',
 					'slug' => 'hello-world',
