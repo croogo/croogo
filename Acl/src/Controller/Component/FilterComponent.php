@@ -205,88 +205,12 @@ class FilterComponent extends Component
             return;
         }
 
-        // public access authorization
-        $cacheName = 'permissions_public';
-        if (($perms = Cache::read($cacheName, 'permissions')) === false) {
-            $perms = $this->getPermissions('Roles', 3);
-            Cache::write($cacheName, $perms, 'permissions');
-        }
-        $actionPath = $this->_controller->request->is('api') ? 'api' : 'controllers';
-        if (!empty($perms['allowed'][$actionPath][$this->_controller->name])) {
+        $authorizer = $this->_controller->Auth->getAuthorize('Croogo/Acl.AclCached');
+
+        if ($this->_controller->Acl->check('Role-public', $authorizer->action($this->_controller->request))) {
             $this->_controller->Auth->allow(
-                $perms['allowed'][$actionPath][$this->_controller->name]
+                $this->_controller->request->action
             );
         }
-    }
-
-/**
- * getPermissions
- * retrieve list of permissions from database
- * @param string $model model name
- * @param string $id model id
- * @return array list of authorized and allowed actions
- */
-    public function getPermissions($model, $id)
-    {
-        $Acl =& $this->_controller->Acl;
-        $aro = ['model' => $model, 'foreign_key' => $id];
-        $node = $Acl->Aro->node($aro)->all();
-        $nodes = $Acl->Aro->find('path', ['for' => $id])->all();
-
-        $aros = collection($node)->extract('id')->toArray();
-        if (!empty($nodes)) {
-            $aros = Hash::merge($aros, collection($nodes)->extract('id')->toArray());
-        }
-
-        $permissions = TableRegistry::get('Acl.Permissions')->find('all', [
-            'conditions' => [
-                'Permissions.aro_id IN' => $aros,
-                'Permissions._create' => 1,
-                'Permissions._read' => 1,
-                'Permissions._update' => 1,
-                'Permissions._delete' => 1,
-            ]
-        ]);
-
-        $authorized = $allowedActions = [];
-        foreach ($permissions as $permission) {
-            try {
-                $path = $Acl->Aco->find('path', ['for' => $permission->aco_id])->toArray();
-            } catch (RecordNotFoundException $exception) {
-                $this->log(__d('croogo', 'Could not get path for non existing aco with id %d', $permission->aco_id));
-
-                continue;
-            }
-
-            if (empty($path)) {
-                continue;
-            }
-
-            $acos = count($path);
-            if ($acos == 6) {
-                // api controller/action
-                $controller = $path[3]->alias;
-                $action = $path[1]->alias . '_' . $path[4]->alias;
-            } elseif ($acos == 5) {
-                // plugin controller/action
-                $controller = $path[3]->alias;
-                $action = $path[4]->alias;
-            } elseif ($acos == 4) {
-                // app controller/action
-                $controller = $path[1]->alias;
-                $action = $path[2]->alias;
-            } else {
-                $this->log(sprintf(
-                    'Incomplete path for aco_id = %s:',
-                    $permission->id
-                ));
-                $this->log($path);
-            }
-            $actionPath = $path[0]->alias;
-            $allowedActions[$actionPath][$controller][] = $action;
-            $authorized[] = implode('/', Hash::extract($path, '{n}.Aco.alias'));
-        }
-
-        return ['authorized' => $authorized, 'allowed' => $allowedActions];
     }
 }
