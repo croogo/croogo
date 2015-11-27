@@ -45,7 +45,7 @@ class Role extends UsersAppModel {
 	public $validate = array(
 		'title' => array(
 			'notEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Alias cannot be empty.',
 				'last' => true,
 			),
@@ -62,7 +62,7 @@ class Role extends UsersAppModel {
 				'last' => true,
 			),
 			'notEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Alias cannot be empty.',
 				'last' => true,
 			),
