@@ -45,10 +45,13 @@ class LinksTable extends CroogoTable {
 		$this->addBehavior('Croogo/Core.Trackable');
 		$this->addBehavior('Croogo/Core.Visibility');
 		$this->belongsTo('Menus', [
-			'className' => 'Croogo/Menus.Menus',
-			'counterCache' => true,
+			'className' => 'Croogo/Menus.Menus'
 		]);
-
+		
+		$this->addBehavior('CounterCache', [
+			'Menus' => ['link_count']
+		]);
+		
 		$this->addBehavior('Timestamp', [
 			'events' => [
 				'Model.beforeSave' => [
