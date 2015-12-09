@@ -5,6 +5,7 @@
  * example_routes.php will be loaded in main app/config/routes.php file.
  */
 namespace Croogo\Example\Config;
+
 Croogo::hookRoutes('Example');
 
 /**
@@ -12,7 +13,7 @@ Croogo::hookRoutes('Example');
  *
  * This plugin's Example behavior will be attached whenever Node model is loaded.
  */
-Croogo::hookBehavior('Node', 'Example.Example', array());
+Croogo::hookBehavior('Node', 'Example.Example', []);
 
 /**
  * Component
@@ -31,89 +32,89 @@ Croogo::hookHelper('Nodes', 'Example.Example');
 /**
  * Admin menu (navigation)
  */
-CroogoNav::add('sidebar', 'extensions.children.example', array(
-	'title' => 'Example',
-	'url' => '#',
-	'children' => array(
-		'example1' => array(
-			'title' => 'Example 1',
-			'url' => array(
-				'admin' => true,
-				'plugin' => 'example',
-				'controller' => 'example',
-				'action' => 'index',
-			),
-		),
-		'example2' => array(
-			'title' => 'Example 2 with a title that won\'t fit in the sidebar',
-			'url' => '#',
-			'children' => array(
-				'example-2-1' => array(
-					'title' => 'Example 2-1',
-					'url' => '#',
-					'children' => array(
-						'example-2-1-1' => array(
-							'title' => 'Example 2-1-1',
-							'url' => '#',
-							'children' => array(
-								'example-2-1-1-1' => array(
-									'title' => 'Example 2-1-1-1',
-								),
-							),
-						),
-					),
-				),
-			),
-		),
-		'example3' => array(
-			'title' => 'Chooser Example',
-			'url' => array(
-				'admin' => true,
-				'plugin' => 'example',
-				'controller' => 'example',
-				'action' => 'chooser',
-			),
-		),
-		'example4' => array(
-			'title' => 'RTE Example',
-			'url' => array(
-				'admin' => true,
-				'plugin' => 'example',
-				'controller' => 'example',
-				'action' => 'rte_example',
-			),
-		),
-	),
-));
+CroogoNav::add('sidebar', 'extensions.children.example', [
+    'title' => 'Example',
+    'url' => '#',
+    'children' => [
+        'example1' => [
+            'title' => 'Example 1',
+            'url' => [
+                'admin' => true,
+                'plugin' => 'example',
+                'controller' => 'example',
+                'action' => 'index',
+            ],
+        ],
+        'example2' => [
+            'title' => 'Example 2 with a title that won\'t fit in the sidebar',
+            'url' => '#',
+            'children' => [
+                'example-2-1' => [
+                    'title' => 'Example 2-1',
+                    'url' => '#',
+                    'children' => [
+                        'example-2-1-1' => [
+                            'title' => 'Example 2-1-1',
+                            'url' => '#',
+                            'children' => [
+                                'example-2-1-1-1' => [
+                                    'title' => 'Example 2-1-1-1',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+        'example3' => [
+            'title' => 'Chooser Example',
+            'url' => [
+                'admin' => true,
+                'plugin' => 'example',
+                'controller' => 'example',
+                'action' => 'chooser',
+            ],
+        ],
+        'example4' => [
+            'title' => 'RTE Example',
+            'url' => [
+                'admin' => true,
+                'plugin' => 'example',
+                'controller' => 'example',
+                'action' => 'rte_example',
+            ],
+        ],
+    ],
+]);
 
 $Localization = new L10n();
-Croogo::mergeConfig('Wysiwyg.actions', array(
-	'Example/admin_rte_example' => array(
-		array(
-			'elements' => 'ExampleBasic',
-			'preset' => 'basic',
-		),
-		array(
-			'elements' => 'ExampleStandard',
-			'preset' => 'standard',
-			'language' => 'ja',
-		),
-		array(
-			'elements' => 'ExampleFull',
-			'preset' => 'full',
-			'language' => $Localization->map(Configure::read('Site.locale')),
-		),
-		array(
-			'elements' => 'ExampleCustom',
-			'toolbar' => array(
-				array('Format', 'Bold', 'Italic'),
-				array('Copy', 'Paste'),
-			),
-			'uiColor' => '#ffe79a',
-			'language' => 'fr',
-		),
-	),
-));
+Croogo::mergeConfig('Wysiwyg.actions', [
+    'Example/admin_rte_example' => [
+        [
+            'elements' => 'ExampleBasic',
+            'preset' => 'basic',
+        ],
+        [
+            'elements' => 'ExampleStandard',
+            'preset' => 'standard',
+            'language' => 'ja',
+        ],
+        [
+            'elements' => 'ExampleFull',
+            'preset' => 'full',
+            'language' => $Localization->map(Configure::read('Site.locale')),
+        ],
+        [
+            'elements' => 'ExampleCustom',
+            'toolbar' => [
+                ['Format', 'Bold', 'Italic'],
+                ['Copy', 'Paste'],
+            ],
+            'uiColor' => '#ffe79a',
+            'language' => 'fr',
+        ],
+    ],
+]);
 
 /**
  * Admin row action
@@ -124,40 +125,40 @@ Croogo::mergeConfig('Wysiwyg.actions', array(
 Croogo::hookAdminRowAction('Nodes/admin_index', 'Example', 'plugin:example/controller:example/action:index/:id');
 
 /* Row action with link options */
-Croogo::hookAdminRowAction('Nodes/admin_index', 'Button with Icon', array(
-	'plugin:example/controller:example/action:index/:id' => array(
-		'options' => array(
-			'icon' => 'key',
-			'button' => 'success',
-		),
-	),
-));
+Croogo::hookAdminRowAction('Nodes/admin_index', 'Button with Icon', [
+    'plugin:example/controller:example/action:index/:id' => [
+        'options' => [
+            'icon' => 'key',
+            'button' => 'success',
+        ],
+    ],
+]);
 
 /* Row action with icon */
-Croogo::hookAdminRowAction('Nodes/admin_index', 'Icon Only', array(
-	'plugin:example/controller:example/action:index/:id' => array(
-		'title' => false,
-		'options' => array(
-			'icon' => 'picture',
-			'tooltip' => array(
-				'data-title' => 'A nice and simple action with tooltip',
-				'data-placement' => 'left',
-			),
-		),
-	),
-));
+Croogo::hookAdminRowAction('Nodes/admin_index', 'Icon Only', [
+    'plugin:example/controller:example/action:index/:id' => [
+        'title' => false,
+        'options' => [
+            'icon' => 'picture',
+            'tooltip' => [
+                'data-title' => 'A nice and simple action with tooltip',
+                'data-placement' => 'left',
+            ],
+        ],
+    ],
+]);
 
 /* Row action with confirm message */
-Croogo::hookAdminRowAction('Nodes/admin_index', 'Reload Page', array(
-	'admin:true/plugin:nodes/controller:nodes/action:index' => array(
-		'title' => false,
-		'options' => array(
-			'icon' => 'refresh',
-			'tooltip' => 'Reload page',
-		),
-		'confirmMessage' => 'Reload this page?',
-	),
-));
+Croogo::hookAdminRowAction('Nodes/admin_index', 'Reload Page', [
+    'admin:true/plugin:nodes/controller:nodes/action:index' => [
+        'title' => false,
+        'options' => [
+            'icon' => 'refresh',
+            'tooltip' => 'Reload page',
+        ],
+        'confirmMessage' => 'Reload this page?',
+    ],
+]);
 
 /**
  * Admin tab

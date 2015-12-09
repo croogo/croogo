@@ -3,23 +3,23 @@
 use Cake\Core\Configure;
 use Croogo\Core\Croogo;
 
-Configure::write('Wysiwyg.attachmentBrowseUrl', array(
-	'prefix' => 'admin',
-	'plugin' => 'Croogo/FileManager',
-	'controller' => 'Attachments',
-	'action' => 'browse',
-));
+Configure::write('Wysiwyg.attachmentBrowseUrl', [
+    'prefix' => 'admin',
+    'plugin' => 'Croogo/FileManager',
+    'controller' => 'Attachments',
+    'action' => 'browse',
+]);
 
-Croogo::mergeConfig('Wysiwyg.actions', array(
-	'Croogo\FileManager\Controller\Admin\Attachments.browse',
-));
+Croogo::mergeConfig('Wysiwyg.actions', [
+    'Croogo\FileManager\Controller\Admin\Attachments.browse',
+]);
 
-Configure::write('FileManager', array(
-	'editablePaths' => array(
-		APP,
-	),
-	'deletablePaths' => array(
-		APP . 'View' . DS . 'Themed' . DS,
-		WWW_ROOT,
-	),
-));
+Configure::write('FileManager', [
+    'editablePaths' => [
+        APP,
+    ],
+    'deletablePaths' => [
+        APP . 'View' . DS . 'Themed' . DS,
+        WWW_ROOT,
+    ],
+]);

@@ -15,7 +15,8 @@ use Croogo\Core\Controller\Component\CroogoComponent;
  * @property CroogoComponent Croogo
  * @package Croogo.Menus.Controller.Component
  */
-class MenusComponent extends Component {
+class MenusComponent extends Component
+{
 
 /**
  * Other components used by this component
@@ -23,9 +24,9 @@ class MenusComponent extends Component {
  * @var array
  * @access public
  */
-	public $components = array(
-		'Croogo.Croogo',
-	);
+    public $components = [
+        'Croogo.Croogo',
+    ];
 
 /**
  * Menus for layout
@@ -33,7 +34,7 @@ class MenusComponent extends Component {
  * @var string
  * @access public
  */
-	public $menusForLayout = array();
+    public $menusForLayout = [];
 
 /**
  * Startup
@@ -41,40 +42,43 @@ class MenusComponent extends Component {
  * @param object $controller instance of controller
  * @return void
  */
-	public function startup(Event $event) {
-		$this->controller = $event->subject();
-		if (isset($this->controller->Link)) {
-			$this->Links = $this->controller->Links;
-		} else {
-			$this->Links = TableRegistry::get('Croogo/Menus.Links');
-		}
+    public function startup(Event $event)
+    {
+        $this->controller = $event->subject();
+        if (isset($this->controller->Link)) {
+            $this->Links = $this->controller->Links;
+        } else {
+            $this->Links = TableRegistry::get('Croogo/Menus.Links');
+        }
 
-		$controller = $event->subject();
-		if (($controller->request->param('prefix') !== 'admin')  && !isset($controller->request->params['requested'])) {
-			$this->menus();
+        $controller = $event->subject();
+        if (($controller->request->param('prefix') !== 'admin') && !isset($controller->request->params['requested'])) {
+            $this->menus();
 
-		} else {
-			$this->_adminData();
-		}
-	}
+        } else {
+            $this->_adminData();
+        }
+    }
 
-	protected function _adminData() {
-		// menus
-		$menus = $this->Links->Menus->find('all', array(
-			'recursive' => '-1',
-			'order' => 'Menus.id ASC',
-		));
-		$this->controller->set('menus_for_admin_layout', $menus);
-	}
+    protected function _adminData()
+    {
+        // menus
+        $menus = $this->Links->Menus->find('all', [
+            'recursive' => '-1',
+            'order' => 'Menus.id ASC',
+        ]);
+        $this->controller->set('menus_for_admin_layout', $menus);
+    }
 
-	/**
-	 * beforeRender
-	 *
-	 * @param Event $event
-	 */
-	public function beforeRender(Event $event) {
-		$event->subject()->set('menus_for_layout', $this->menusForLayout);
-	}
+    /**
+     * beforeRender
+     *
+     * @param Event $event
+     */
+    public function beforeRender(Event $event)
+    {
+        $event->subject()->set('menus_for_layout', $this->menusForLayout);
+    }
 
 /**
  * Menus
@@ -83,47 +87,47 @@ class MenusComponent extends Component {
  *
  * @return void
  */
-	public function menus() {
-		$menus = array('main');
+    public function menus()
+    {
+        $menus = ['main'];
 
-		if (Configure::read('Site.theme')) {
-			$themeData = $this->Croogo->getThemeData(Configure::read('Site.theme'));
-			if (isset($themeData['menus']) && is_array($themeData['menus'])) {
-				$menus = Hash::merge($menus, $themeData['menus']);
-			}
-		}
+        if (Configure::read('Site.theme')) {
+            $themeData = $this->Croogo->getThemeData(Configure::read('Site.theme'));
+            if (isset($themeData['menus']) && is_array($themeData['menus'])) {
+                $menus = Hash::merge($menus, $themeData['menus']);
+            }
+        }
 
-		$menus = Hash::merge($menus, array_keys($this->controller->BlocksHook->blocksData['menus']));
+        $menus = Hash::merge($menus, array_keys($this->controller->BlocksHook->blocksData['menus']));
 
-		$roleId = $this->controller->Croogo->roleId();
-		$status = $this->Links->status();
-		foreach ($menus as $menuAlias) {
-			$menu = $this->Links->Menus->find('all', [
-				'cache' => [
-					'name' => $menuAlias,
-					'config' => 'croogo_menus',
-				],
-			])->where(array(
-				'Menus.status IN' => $status,
-				'Menus.alias' => $menuAlias,
-				'Menus.link_count >' => 0,
-			))->first();
-			if ($menu) {
-				$this->menusForLayout[$menuAlias] = $menu;
-				$links = $this->Links->find('threaded', [
-					'cache' => array(
-						'name' => $menu->alias . '_links_' . $roleId,
-						'config' => 'croogo_menus',
-					)
-				])->find('visibilityRole', ['role_id' => $roleId])->where([
-					'Links.menu_id' => $menu->id,
-					'Links.status IN' => $status,
-				])->order([
-					'Links.lft' => 'ASC',
-				]);
-				$this->menusForLayout[$menuAlias]['threaded'] = $links;
-			}
-		}
-	}
-
+        $roleId = $this->controller->Croogo->roleId();
+        $status = $this->Links->status();
+        foreach ($menus as $menuAlias) {
+            $menu = $this->Links->Menus->find('all', [
+                'cache' => [
+                    'name' => $menuAlias,
+                    'config' => 'croogo_menus',
+                ],
+            ])->where([
+                'Menus.status IN' => $status,
+                'Menus.alias' => $menuAlias,
+                'Menus.link_count >' => 0,
+            ])->first();
+            if ($menu) {
+                $this->menusForLayout[$menuAlias] = $menu;
+                $links = $this->Links->find('threaded', [
+                    'cache' => [
+                        'name' => $menu->alias . '_links_' . $roleId,
+                        'config' => 'croogo_menus',
+                    ]
+                ])->find('visibilityRole', ['role_id' => $roleId])->where([
+                    'Links.menu_id' => $menu->id,
+                    'Links.status IN' => $status,
+                ])->order([
+                    'Links.lft' => 'ASC',
+                ]);
+                $this->menusForLayout[$menuAlias]['threaded'] = $links;
+            }
+        }
+    }
 }

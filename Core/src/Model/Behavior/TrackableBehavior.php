@@ -20,71 +20,76 @@ use Cake\Utility\Hash;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TrackableBehavior extends Behavior {
+class TrackableBehavior extends Behavior
+{
 
 /**
  * Default settings
  */
-	protected $_defaults = array(
-		'userModel' => 'Croogo/Users.Users',
-		'fields' => array(
-			'created_by' => 'created_by',
-			'updated_by' => 'updated_by',
-			),
-		);
+    protected $_defaults = [
+        'userModel' => 'Croogo/Users.Users',
+        'fields' => [
+            'created_by' => 'created_by',
+            'updated_by' => 'updated_by',
+            ],
+        ];
 
 /**
  * Constructor
  */
-	public function __construct(Table $table, array $config = []) {
-		$config = Hash::merge($this->_defaults, $config);
-		parent::__construct($table, $config);
-	}
+    public function __construct(Table $table, array $config = [])
+    {
+        $config = Hash::merge($this->_defaults, $config);
+        parent::__construct($table, $config);
+    }
 
 /**
  * Setup
  */
-	public function initialize(array $config) {
-		parent::initialize($config);
-		if ($this->_hasTrackableFields()) {
-			$this->_setupBelongsTo();
-		}
-	}
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        if ($this->_hasTrackableFields()) {
+            $this->_setupBelongsTo();
+        }
+    }
 
 /**
  * Checks wether model has the required fields
  *
  * @return bool True if $model has the required fields
  */
-	protected function _hasTrackableFields() {
-		$fields = $this->config('fields');
-		return
-			$this->_table->hasField($fields['created_by']) &&
-			$this->_table->hasField($fields['updated_by']);
-	}
+    protected function _hasTrackableFields()
+    {
+        $fields = $this->config('fields');
+        return
+            $this->_table->hasField($fields['created_by']) &&
+            $this->_table->hasField($fields['updated_by']);
+    }
 
 /**
  * Bind relationship on the fly
  */
-	protected function _setupBelongsTo() {
-		if (!$this->_table->associations()->has('TrackableCreator')) {
-			return;
-		}
+    protected function _setupBelongsTo()
+    {
+        if (!$this->_table->associations()->has('TrackableCreator')) {
+            return;
+        }
 
-		$config = $this->config();
-		$this->_table->addAssociations([
-			'belongsTo' => [
-				'TrackableCreator' => [
-					'className' => $config['userModel'],
-					'foreignKey' => $config['fields']['created_by'],
-				],
-				'TrackableUpdater' => [
-					'className' => $config['userModel'],
-					'foreignKey' => $config['fields']['updated_by'],
-				],
-			],
-		]);
-	}
+        $config = $this->config();
+        $this->_table->addAssociations([
+            'belongsTo' => [
+                'TrackableCreator' => [
+                    'className' => $config['userModel'],
+                    'foreignKey' => $config['fields']['created_by'],
+                ],
+                'TrackableUpdater' => [
+                    'className' => $config['userModel'],
+                    'foreignKey' => $config['fields']['updated_by'],
+                ],
+            ],
+        ]);
+    }
 
 /**
  * Fill the created_by and updated_by fields
@@ -97,41 +102,41 @@ class TrackableBehavior extends Behavior {
  *
  * Note that value stored in this variable overrides session data.
  */
-	public function beforeSave(Event $event, $options = array()) {
-		if (!$this->_hasTrackableFields()) {
-			return true;
-		}
-		$config = $this->config();
+    public function beforeSave(Event $event, $options = [])
+    {
+        if (!$this->_hasTrackableFields()) {
+            return true;
+        }
+        $config = $this->config();
 
-		$User = TableRegistry::get($config['userModel']);
-		$userAlias = $User->alias();
-		$userPk = $User->primaryKey();
+        $User = TableRegistry::get($config['userModel']);
+        $userAlias = $User->alias();
+        $userPk = $User->primaryKey();
 
-		$user = Configure::read('Trackable.Auth.User');
-		if (!$user && session_status() === \PHP_SESSION_ACTIVE) {
-			$user = Hash::get($_SESSION, 'Auth.User');
-		}
+        $user = Configure::read('Trackable.Auth.User');
+        if (!$user && session_status() === \PHP_SESSION_ACTIVE) {
+            $user = Hash::get($_SESSION, 'Auth.User');
+        }
 
-		if ($user && array_key_exists($userPk, $user)) {
-			$userId = $user[$userPk];
-		}
+        if ($user && array_key_exists($userPk, $user)) {
+            $userId = $user[$userPk];
+        }
 
-		if (empty($user) || empty($userId)) {
-			return true;
-		}
+        if (empty($user) || empty($userId)) {
+            return true;
+        }
 
-		$createdByField = $config['fields']['created_by'];
-		$updatedByField = $config['fields']['updated_by'];
+        $createdByField = $config['fields']['created_by'];
+        $updatedByField = $config['fields']['updated_by'];
 
-		$entity = $event->data['entity'];
-		if (empty($entity->{$createdByField})) {
-			if (!$entity->isNew()) {
-				$entity->{$createdByField} = $user[$userPk];
-			}
-		}
-		$entity->{$updatedByField} = $userId;
+        $entity = $event->data['entity'];
+        if (empty($entity->{$createdByField})) {
+            if (!$entity->isNew()) {
+                $entity->{$createdByField} = $user[$userPk];
+            }
+        }
+        $entity->{$updatedByField} = $userId;
 
-		return true;
-	}
-
+        return true;
+    }
 }

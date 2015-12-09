@@ -1,7 +1,9 @@
 <?php
 
 namespace Croogo\Nodes\Config\Migration;
-class NodesPublishingFields extends CakeMigration {
+
+class NodesPublishingFields extends CakeMigration
+{
 
 /**
  * Migration description
@@ -9,7 +11,7 @@ class NodesPublishingFields extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = 'Adding/modifying publishing related fields';
+    public $description = 'Adding/modifying publishing related fields';
 
 /**
  * Actions to be performed
@@ -17,45 +19,45 @@ class NodesPublishingFields extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-			'alter_field' => array(
-				'nodes' => array(
-					'status' => array(
-						'type' => 'integer',
-						'length' => 1,
-					),
-				),
-			),
-			'create_field' => array(
-				'nodes' => array(
-					'publish_start' => array(
-						'type' => 'datetime',
-						'after' => 'type',
-					),
-					'publish_end' => array(
-						'type' => 'datetime',
-						'after' => 'publish_start',
-					),
-				),
-			),
-		),
-		'down' => array(
-			'alter_field' => array(
-				'nodes' => array(
-					'status' => array(
-						'type' => 'boolean',
-					),
-				),
-			),
-			'drop_field' => array(
-				'nodes' => array(
-					'publish_start',
-					'publish_end',
-				),
-			),
-		),
-	);
+    public $migration = [
+        'up' => [
+            'alter_field' => [
+                'nodes' => [
+                    'status' => [
+                        'type' => 'integer',
+                        'length' => 1,
+                    ],
+                ],
+            ],
+            'create_field' => [
+                'nodes' => [
+                    'publish_start' => [
+                        'type' => 'datetime',
+                        'after' => 'type',
+                    ],
+                    'publish_end' => [
+                        'type' => 'datetime',
+                        'after' => 'publish_start',
+                    ],
+                ],
+            ],
+        ],
+        'down' => [
+            'alter_field' => [
+                'nodes' => [
+                    'status' => [
+                        'type' => 'boolean',
+                    ],
+                ],
+            ],
+            'drop_field' => [
+                'nodes' => [
+                    'publish_start',
+                    'publish_end',
+                ],
+            ],
+        ],
+    ];
 
 /**
  * Before migration callback
@@ -64,12 +66,13 @@ class NodesPublishingFields extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		if ($direction == 'down') {
-			return Configure::read('debug') > 0;
-		}
-		return true;
-	}
+    public function before($direction)
+    {
+        if ($direction == 'down') {
+            return Configure::read('debug') > 0;
+        }
+        return true;
+    }
 
 /**
  * After migration callback
@@ -78,7 +81,8 @@ class NodesPublishingFields extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
+    public function after($direction)
+    {
+        return true;
+    }
 }

@@ -1,7 +1,9 @@
 <?php
 
 namespace Croogo\Comments\Config\Migration;
-class AddCommentsForeignKeys extends CakeMigration {
+
+class AddCommentsForeignKeys extends CakeMigration
+{
 
 /**
  * Migration description
@@ -9,7 +11,7 @@ class AddCommentsForeignKeys extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = 'Add comments foreign keys';
+    public $description = 'Add comments foreign keys';
 
 /**
  * Actions to be performed
@@ -17,44 +19,44 @@ class AddCommentsForeignKeys extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-			'create_field' => array(
-				'comments' => array(
-					'model' => array(
-						'type' => 'string',
-						'length' => 50,
-						'after' => 'parent_id',
-						'null' => false,
-						'default' => 'Node',
-					),
-					'indexes' => array(
-						'comments_fk' => array(
-							'column' => array('model', 'foreign_key'),
-						),
-					),
-				),
-			),
-			'rename_field' => array(
-				'comments' => array(
-					'node_id' => 'foreign_key',
-				),
-			),
-		),
-		'down' => array(
-			'drop_field' => array(
-				'comments' => array(
-					'model',
-					'indexes' => array('comments_fk'),
-				),
-			),
-			'rename_field' => array(
-				'comments' => array(
-					'foreign_key' => 'node_id',
-				),
-			),
-		),
-	);
+    public $migration = [
+        'up' => [
+            'create_field' => [
+                'comments' => [
+                    'model' => [
+                        'type' => 'string',
+                        'length' => 50,
+                        'after' => 'parent_id',
+                        'null' => false,
+                        'default' => 'Node',
+                    ],
+                    'indexes' => [
+                        'comments_fk' => [
+                            'column' => ['model', 'foreign_key'],
+                        ],
+                    ],
+                ],
+            ],
+            'rename_field' => [
+                'comments' => [
+                    'node_id' => 'foreign_key',
+                ],
+            ],
+        ],
+        'down' => [
+            'drop_field' => [
+                'comments' => [
+                    'model',
+                    'indexes' => ['comments_fk'],
+                ],
+            ],
+            'rename_field' => [
+                'comments' => [
+                    'foreign_key' => 'node_id',
+                ],
+            ],
+        ],
+    ];
 
 /**
  * Before migration callback
@@ -63,9 +65,10 @@ class AddCommentsForeignKeys extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		return true;
-	}
+    public function before($direction)
+    {
+        return true;
+    }
 
 /**
  * After migration callback
@@ -74,7 +77,8 @@ class AddCommentsForeignKeys extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
+    public function after($direction)
+    {
+        return true;
+    }
 }

@@ -12,6 +12,7 @@ App::uses('AppModel', 'Model');
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class DashboardsAppModel extends AppModel {
+class DashboardsAppModel extends AppModel
+{
 
 }

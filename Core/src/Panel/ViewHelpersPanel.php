@@ -10,42 +10,42 @@ use DebugKit\DebugPanel;
 class ViewHelpersPanel extends DebugPanel
 {
 
-	public $plugin = 'Croogo/Core';
+    public $plugin = 'Croogo/Core';
 
-	protected $_loadedViewHelpers = [];
+    protected $_loadedViewHelpers = [];
 
-	public function afterFilter(Event $event)
-	{
-		/* @var HelperRegistry $helperRegistry */
-		if (!isset($event->subject()->View)) {
-			return;
-		}
+    public function afterFilter(Event $event)
+    {
+        /* @var HelperRegistry $helperRegistry */
+        if (!isset($event->subject()->View)) {
+            return;
+        }
 
-		$helperRegistry = $event->subject()->View->helpers();
+        $helperRegistry = $event->subject()->View->helpers();
 
-		$viewHelperNames = $helperRegistry->loaded();
+        $viewHelperNames = $helperRegistry->loaded();
 
-		foreach ($viewHelperNames as $name) {
-			$this->_loadedViewHelpers[$name] = $helperRegistry->get($name)->config();
-		}
-	}
+        foreach ($viewHelperNames as $name) {
+            $this->_loadedViewHelpers[$name] = $helperRegistry->get($name)->config();
+        }
+    }
 
-	public function data()
-	{
-		return [
-			'loaded' => $this->_loadedViewHelpers
-		];
-	}
+    public function data()
+    {
+        return [
+            'loaded' => $this->_loadedViewHelpers
+        ];
+    }
 
-	public function summary()
-	{
-		return count($this->_loadedViewHelpers);
-	}
+    public function summary()
+    {
+        return count($this->_loadedViewHelpers);
+    }
 
-	public function implementedEvents()
-	{
-		return [
-			'Controller.shutdown' => 'afterFilter'
-		];
-	}
+    public function implementedEvents()
+    {
+        return [
+            'Controller.shutdown' => 'afterFilter'
+        ];
+    }
 }

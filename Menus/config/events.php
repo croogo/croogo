@@ -1,7 +1,7 @@
 <?php
 
-$config = array(
-	'EventHandlers' => array(
-		'Croogo/Menus.MenusEventHandler',
-	),
-);
+$config = [
+    'EventHandlers' => [
+        'Croogo/Menus.MenusEventHandler',
+    ],
+];

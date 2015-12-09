@@ -1,7 +1,9 @@
 <?php
 
 namespace Croogo\Users\Config\Migration;
-class UsersEnlargeTimezone extends CakeMigration {
+
+class UsersEnlargeTimezone extends CakeMigration
+{
 
 /**
  * Migration description
@@ -9,7 +11,7 @@ class UsersEnlargeTimezone extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = 'Updating User timezone';
+    public $description = 'Updating User timezone';
 
 /**
  * Actions to be performed
@@ -17,29 +19,29 @@ class UsersEnlargeTimezone extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-			'alter_field' => array(
-				'users' => array(
-					'timezone' => array(
-						'type' => 'string',
-						'length' => 40,
-						'after' => 'created',
-					),
-				),
-			),
-		),
-		'down' => array(
-			'alter_field' => array(
-				'users' => array(
-					'timezone' => array(
-						'type' => 'string',
-						'length' => 10,
-					),
-				),
-			),
-		),
-	);
+    public $migration = [
+        'up' => [
+            'alter_field' => [
+                'users' => [
+                    'timezone' => [
+                        'type' => 'string',
+                        'length' => 40,
+                        'after' => 'created',
+                    ],
+                ],
+            ],
+        ],
+        'down' => [
+            'alter_field' => [
+                'users' => [
+                    'timezone' => [
+                        'type' => 'string',
+                        'length' => 10,
+                    ],
+                ],
+            ],
+        ],
+    ];
 
 /**
  * Before migration callback
@@ -48,9 +50,10 @@ class UsersEnlargeTimezone extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		return true;
-	}
+    public function before($direction)
+    {
+        return true;
+    }
 
 /**
  * After migration callback
@@ -59,7 +62,8 @@ class UsersEnlargeTimezone extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
+    public function after($direction)
+    {
+        return true;
+    }
 }

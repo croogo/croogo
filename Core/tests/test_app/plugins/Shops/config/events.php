@@ -1,13 +1,14 @@
 <?php
 
 namespace Croogo\Shops\Config;
-$config = array(
-	'EventHandlers' => array(
-		'Shops.ShopsNodesEventHandler',
-		'Shops.ShopsEventHandler' => array(
-			'options' => array(
-				'priority' => 1,
-			),
-		),
-	),
-);
+
+$config = [
+    'EventHandlers' => [
+        'Shops.ShopsNodesEventHandler',
+        'Shops.ShopsEventHandler' => [
+            'options' => [
+                'priority' => 1,
+            ],
+        ],
+    ],
+];

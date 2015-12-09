@@ -1,7 +1,7 @@
 <?php
 
-$config = array(
-	'EventHandlers' => array(
-		'Croogo/FileManager.FileManagerEventHandler',
-	),
-);
+$config = [
+    'EventHandlers' => [
+        'Croogo/FileManager.FileManagerEventHandler',
+    ],
+];

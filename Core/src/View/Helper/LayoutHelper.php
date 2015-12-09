@@ -1,6 +1,7 @@
 <?php
 
 namespace Croogo\Core\View\Helper;
+
 use Cake\ORM\Entity;
 use Cake\View\Helper;
 use Cake\Routing\Router;
@@ -19,7 +20,8 @@ use Cake\Utility\Inflector;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class LayoutHelper extends Helper {
+class LayoutHelper extends Helper
+{
 
 /**
  * Other helpers used by this helper
@@ -27,13 +29,13 @@ class LayoutHelper extends Helper {
  * @var array
  * @access public
  */
-	public $helpers = array(
-		'Croogo/Core.Croogo',
-		'Croogo/Core.Theme',
-		'Html',
-		'Form',
-		'Flash'
-	);
+    public $helpers = [
+        'Croogo/Core.Croogo',
+        'Croogo/Core.Theme',
+        'Html',
+        'Form',
+        'Flash'
+    ];
 
 /**
  * Core helpers
@@ -44,24 +46,24 @@ class LayoutHelper extends Helper {
  * @var array
  * @access public
  */
-	public $coreHelpers = array(
-		// CakePHP
-		'Cache',
-		'Form',
-		'Html',
-		'Number',
-		'Paginator',
-		'Rss',
-		'Text',
-		'Time',
-		'Xml',
+    public $coreHelpers = [
+        // CakePHP
+        'Cache',
+        'Form',
+        'Html',
+        'Number',
+        'Paginator',
+        'Rss',
+        'Text',
+        'Time',
+        'Xml',
 
-		// Croogo
-		'Filemanager',
-		'Image',
-		'Layout',
-		'Recaptcha',
-	);
+        // Croogo
+        'Filemanager',
+        'Image',
+        'Layout',
+        'Recaptcha',
+    ];
 
 /**
  * Javascript variables
@@ -74,29 +76,30 @@ class LayoutHelper extends Helper {
  *
  * @return string
  */
-	public function js() {
-		$croogo = $this->_mergeThemeSettings();
-		if ($this->request->param('locale')) {
-			$croogo['basePath'] = Router::url('/' . $this->request->param('locale') . '/');
-		} else {
-			$croogo['basePath'] = Router::url('/');
-		}
-		$validKeys = array(
-			'plugin' => null,
-			'controller' => null,
-			'action' => null,
-			'prefix' => null,
-			'named' => null,
-		);
-		$croogo['params'] = array_intersect_key(
-			array_merge($validKeys, $this->request->params),
-			$validKeys
-		);
-		if (is_array(Configure::read('Js'))) {
-			$croogo = Hash::merge($croogo, Configure::read('Js'));
-		}
-		return $this->Html->scriptBlock('var Croogo = ' . json_encode($croogo) . ';');
-	}
+    public function js()
+    {
+        $croogo = $this->_mergeThemeSettings();
+        if ($this->request->param('locale')) {
+            $croogo['basePath'] = Router::url('/' . $this->request->param('locale') . '/');
+        } else {
+            $croogo['basePath'] = Router::url('/');
+        }
+        $validKeys = [
+            'plugin' => null,
+            'controller' => null,
+            'action' => null,
+            'prefix' => null,
+            'named' => null,
+        ];
+        $croogo['params'] = array_intersect_key(
+            array_merge($validKeys, $this->request->params),
+            $validKeys
+        );
+        if (is_array(Configure::read('Js'))) {
+            $croogo = Hash::merge($croogo, Configure::read('Js'));
+        }
+        return $this->Html->scriptBlock('var Croogo = ' . json_encode($croogo) . ';');
+    }
 
 /**
  * Merge helper and prefix specific settings
@@ -104,63 +107,65 @@ class LayoutHelper extends Helper {
  * @param array $croogoSetting Croogo JS settings
  * @return array Merged settings
  */
-	protected function _mergeThemeSettings($croogoSetting = array()) {
-		$themeSettings = $this->Theme->settings();
-		if (empty($themeSettings)) {
-			return $croogoSetting;
-		}
-		$validKeys = array(
-			'css' => null,
-			'icons' => null,
-			'iconDefaults' => null,
-		);
-		$croogoSetting['themeSettings'] = array_intersect_key(
-			array_merge($validKeys, $themeSettings),
-			$validKeys
-		);
+    protected function _mergeThemeSettings($croogoSetting = [])
+    {
+        $themeSettings = $this->Theme->settings();
+        if (empty($themeSettings)) {
+            return $croogoSetting;
+        }
+        $validKeys = [
+            'css' => null,
+            'icons' => null,
+            'iconDefaults' => null,
+        ];
+        $croogoSetting['themeSettings'] = array_intersect_key(
+            array_merge($validKeys, $themeSettings),
+            $validKeys
+        );
 
-		if ($this->_View->helpers()->has('CroogoHtml')) {
-			unset($validKeys['css']);
-			$croogoSetting['themeSettings'] = Hash::merge(
-				$croogoSetting['themeSettings'],
-				array_intersect_key(
-					array_merge($validKeys, $this->_View->CroogoHtml->config()),
-					$validKeys
-				)
-			);
-		}
-		return $croogoSetting;
-	}
+        if ($this->_View->helpers()->has('CroogoHtml')) {
+            unset($validKeys['css']);
+            $croogoSetting['themeSettings'] = Hash::merge(
+                $croogoSetting['themeSettings'],
+                array_intersect_key(
+                    array_merge($validKeys, $this->_View->CroogoHtml->config()),
+                    $validKeys
+                )
+            );
+        }
+        return $croogoSetting;
+    }
 
 /**
  * Status
  *
  * instead of 0/1, show tick/cross
  *
- * @param integer $value 0 or 1
+ * @param int$value0 or 1
  * @return string formatted img tag
  */
-	public function status($value) {
-		$icons = $this->Theme->settings('icons');
-		if (empty($icons)) {
-			$icons = array('check-mark' => 'ok', 'x-mark' => 'remove');
-		}
-		if ($value == 1) {
-			$icon = $icons['check-mark'];
-			$class = 'green';
-		} else {
-			$icon = $icons['x-mark'];
-			$class = 'red';
-		}
-		if (method_exists($this->CroogoHtml, 'icon')) {
-			return $this->CroogoHtml->icon($icon, compact('class'));
-		} else {
-			if (empty($this->_View->CroogoHtml)) {
-				$this->_View->Helpers->load('Croogo/Core.CroogoHtml');
-			}
-			return $this->_View->CroogoHtml->icon($icon, compact('class'));
-		}
-	}
+    public function status($value)
+    {
+        $icons = $this->Theme->settings('icons');
+        if (empty($icons)) {
+            $icons = ['check-mark' => 'ok', 'x-mark' => 'remove'];
+        }
+        if ($value == 1) {
+            $icon = $icons['check-mark'];
+            $class = 'green';
+        } else {
+            $icon = $icons['x-mark'];
+            $class = 'red';
+        }
+        if (method_exists($this->CroogoHtml, 'icon')) {
+            return $this->CroogoHtml->icon($icon, compact('class'));
+        } else {
+            if (empty($this->_View->CroogoHtml)) {
+                $this->_View->Helpers->load('Croogo/Core.CroogoHtml');
+            }
+            return $this->_View->CroogoHtml->icon($icon, compact('class'));
+        }
+    }
 
 /**
  * Display value from $item array
@@ -171,51 +176,53 @@ class LayoutHelper extends Helper {
  * @param $options array
  * @return string
  */
-	public function displayField(Entity $item, $model, $field, $options = array()) {
-		extract(array_intersect_key($options, array(
-			'type' => null,
-			'url' => array(),
-			'options' => array(),
-		)));
-		switch ($type) {
-			case 'boolean':
-				$out = $this->status($item->{$field});
-			break;
-			default:
-				$out = h((!isset($item->{$model})) ? $item->{$field} : $item->{$model}->{$field});
-			break;
-		}
+    public function displayField(Entity $item, $model, $field, $options = [])
+    {
+        extract(array_intersect_key($options, [
+            'type' => null,
+            'url' => [],
+            'options' => [],
+        ]));
+        switch ($type) {
+            case 'boolean':
+                $out = $this->status($item->{$field});
+                break;
+            default:
+                $out = h((!isset($item->{$model})) ? $item->{$field} : $item->{$model}->{$field});
+                break;
+        }
 
-		if (!empty($url)) {
-			if (isset($url['pass'])) {
-				$passVars = is_string($url['pass']) ? array($url['pass']) : $url['pass'];
-				foreach ($passVars as $passField) {
-					$url[] = $item->get($passField);
-				}
-				unset($url['pass']);
-			}
+        if (!empty($url)) {
+            if (isset($url['pass'])) {
+                $passVars = is_string($url['pass']) ? [$url['pass']] : $url['pass'];
+                foreach ($passVars as $passField) {
+                    $url[] = $item->get($passField);
+                }
+                unset($url['pass']);
+            }
 
-			if (isset($url['named'])) {
-				$namedVars = is_string($url['named']) ? array($url['named']) : $url['named'];
-				foreach ($namedVars as $namedField) {
-					$url[$namedField] = $item->get($namedField);
-				}
-				unset($url['named']);
-			}
+            if (isset($url['named'])) {
+                $namedVars = is_string($url['named']) ? [$url['named']] : $url['named'];
+                foreach ($namedVars as $namedField) {
+                    $url[$namedField] = $item->get($namedField);
+                }
+                unset($url['named']);
+            }
 
-			$out = $this->Html->link($out, $url, $options);
-		}
-		return $out;
-	}
+            $out = $this->Html->link($out, $url, $options);
+        }
+        return $out;
+    }
 
 /**
  * Show flash message
  *
  * @return string
  */
-	public function sessionFlash() {
-		return $this->Flash->render();
-	}
+    public function sessionFlash()
+    {
+        return $this->Flash->render();
+    }
 
 /**
  * isLoggedIn
@@ -224,60 +231,63 @@ class LayoutHelper extends Helper {
  *
  * @return boolean
  */
-	public function isLoggedIn() {
-		if ($this->request->session()->check('Auth.User.id')) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    public function isLoggedIn()
+    {
+        if ($this->request->session()->check('Auth.User.id')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 /**
  * Feed
  *
  * RSS feeds
  *
- * @param boolean $returnUrl if true, only the URL will be returned
+ * @param bool$returnUrlif true, only the URL will be returned
  * @return string
  */
-	public function feed($returnUrl = false) {
-		if (Configure::read('Site.feed_url')) {
-			$url = Configure::read('Site.feed_url');
-		} else {
-			/*$url = Router::url(array(
+    public function feed($returnUrl = false)
+    {
+        if (Configure::read('Site.feed_url')) {
+            $url = Configure::read('Site.feed_url');
+        } else {
+            /*$url = Router::url(array(
 				'controller' => 'nodes',
 				'action' => 'index',
 				'type' => 'blog',
 				'ext' => 'rss',
 			));*/
-			$url = '/promoted.rss';
-		}
+            $url = '/promoted.rss';
+        }
 
-		if ($returnUrl) {
-			$output = $url;
-		} else {
-			$url = Router::url($url);
-			$output = '<link href="' . $url . '" type="application/rss+xml" rel="alternate" title="RSS 2.0" />';
-			return $output;
-		}
+        if ($returnUrl) {
+            $output = $url;
+        } else {
+            $url = Router::url($url);
+            $output = '<link href="' . $url . '" type="application/rss+xml" rel="alternate" title="RSS 2.0" />';
+            return $output;
+        }
 
-		return $output;
-	}
+        return $output;
+    }
 
 /**
  * Get Role ID
  *
  * @return integer
  */
-	public function getRoleId() {
-		if ($this->isLoggedIn()) {
-			$roleId = $this->request->session()->read('Auth.User.role_id');
-		} else {
-			// Public
-			$roleId = 3;
-		}
-		return $roleId;
-	}
+    public function getRoleId()
+    {
+        if ($this->isLoggedIn()) {
+            $roleId = $this->request->session()->read('Auth.User.role_id');
+        } else {
+            // Public
+            $roleId = 3;
+        }
+        return $roleId;
+    }
 
 /**
  * Filter content
@@ -287,18 +297,19 @@ class LayoutHelper extends Helper {
  * @param string $content content
  * @return string
  */
-	public function filter($content, $options = array()) {
-		Croogo::dispatchEvent('Helper.Layout.beforeFilter', $this->_View, array(
-			'content' => &$content,
-			'options' => $options,
-		));
-		$content = $this->filterElements($content, $options);
-		Croogo::dispatchEvent('Helper.Layout.afterFilter', $this->_View, array(
-			'content' => &$content,
-			'options' => $options,
-		));
-		return $content;
-	}
+    public function filter($content, $options = [])
+    {
+        Croogo::dispatchEvent('Helper.Layout.beforeFilter', $this->_View, [
+            'content' => &$content,
+            'options' => $options,
+        ]);
+        $content = $this->filterElements($content, $options);
+        Croogo::dispatchEvent('Helper.Layout.afterFilter', $this->_View, [
+            'content' => &$content,
+            'options' => $options,
+        ]);
+        return $content;
+    }
 
 /**
  * Filter content for elements
@@ -309,28 +320,29 @@ class LayoutHelper extends Helper {
  * @param string $content
  * @return string
  */
-	public function filterElements($content, $options = array()) {
-		preg_match_all('/\[(element|e):([A-Za-z0-9_\-\/]*)(.*?)\]/i', $content, $tagMatches);
-		$validOptions = array('plugin', 'cache', 'callbacks');
-		for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
-			$regex = '/([\w-]+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))*.)[\'"]?/i';
-			preg_match_all($regex, $tagMatches[3][$i], $attributes);
-			$element = $tagMatches[2][$i];
-			$data = $options = array();
-			for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
-				if (in_array($attributes[1][$j], $validOptions)) {
-					$options = Hash::merge($options, array($attributes[1][$j] => $attributes[2][$j]));
-				} else {
-					$data[$attributes[1][$j]] = $attributes[2][$j];
-				}
-			}
-			if (!empty($this->_View->viewVars['block'])) {
-				$data['block'] = $this->_View->viewVars['block'];
-			}
-			$content = str_replace($tagMatches[0][$i], $this->_View->element($element, $data, $options), $content);
-		}
-		return $content;
-	}
+    public function filterElements($content, $options = [])
+    {
+        preg_match_all('/\[(element|e):([A-Za-z0-9_\-\/]*)(.*?)\]/i', $content, $tagMatches);
+        $validOptions = ['plugin', 'cache', 'callbacks'];
+        for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
+            $regex = '/([\w-]+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))*.)[\'"]?/i';
+            preg_match_all($regex, $tagMatches[3][$i], $attributes);
+            $element = $tagMatches[2][$i];
+            $data = $options = [];
+            for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
+                if (in_array($attributes[1][$j], $validOptions)) {
+                    $options = Hash::merge($options, [$attributes[1][$j] => $attributes[2][$j]]);
+                } else {
+                    $data[$attributes[1][$j]] = $attributes[2][$j];
+                }
+            }
+            if (!empty($this->_View->viewVars['block'])) {
+                $data['block'] = $this->_View->viewVars['block'];
+            }
+            $content = str_replace($tagMatches[0][$i], $this->_View->element($element, $data, $options), $content);
+        }
+        return $content;
+    }
 
 /**
  * Hook
@@ -340,19 +352,20 @@ class LayoutHelper extends Helper {
  * @param string $methodName
  * @return string
  */
-	public function hook($methodName) {
-		$output = '';
-		foreach ($this->_View->helpers as $helper => $settings) {
-			if (!is_string($helper) || in_array($helper, $this->coreHelpers)) {
-				continue;
-			}
-			list(, $helper) = pluginSplit($helper);
-			if (isset($this->_View->{$helper}) && method_exists($this->_View->{$helper}, $methodName)) {
-				$output .= $this->_View->{$helper}->$methodName();
-			}
-		}
-		return $output;
-	}
+    public function hook($methodName)
+    {
+        $output = '';
+        foreach ($this->_View->helpers as $helper => $settings) {
+            if (!is_string($helper) || in_array($helper, $this->coreHelpers)) {
+                continue;
+            }
+            list(, $helper) = pluginSplit($helper);
+            if (isset($this->_View->{$helper}) && method_exists($this->_View->{$helper}, $methodName)) {
+                $output .= $this->_View->{$helper}->$methodName();
+            }
+        }
+        return $output;
+    }
 
 /**
  * Gets a value of view variables based on path
@@ -361,15 +374,16 @@ class LayoutHelper extends Helper {
  * @param string $path Extraction path following the Hash path syntax
  * @return array
  */
-	public function valueOf($name, $path, $options = array()) {
-		if (!isset($this->_View->viewVars[$name])) {
-			$this->log(sprintf('Invalid viewVars "%s"', $name));
-			return array();
-		}
-		$result = Hash::extract($this->_View->viewVars[$name], $path);
-		$result = isset($result[0]) ? $result[0] : $result;
-		return $result;
-	}
+    public function valueOf($name, $path, $options = [])
+    {
+        if (!isset($this->_View->viewVars[$name])) {
+            $this->log(sprintf('Invalid viewVars "%s"', $name));
+            return [];
+        }
+        $result = Hash::extract($this->_View->viewVars[$name], $path);
+        $result = isset($result[0]) ? $result[0] : $result;
+        return $result;
+    }
 
 /**
  * Compute default options for snippet()
@@ -377,32 +391,33 @@ class LayoutHelper extends Helper {
  * @param string $type Type
  * @return array Array of options
  */
-	private function __snippetDefaults($type) {
-		$varName = strtolower(Inflector::pluralize($type)) . '_for_layout';
-		$modelAlias = Inflector::classify($type);
-		$checkField = 'alias';
-		$valueField = 'body';
-		$filter = true;
-		$format = '{s}.{n}.%s[%s=%s].%s';
-		switch ($type) {
-			case 'type':
-				$valueField = 'description';
-				$format = '{s}.%s[%s=%s].%s';
-			break;
-			case 'vocabulary':
-				$valueField = 'title';
-				$format = '{s}.%s[%s=%s].%s';
-			break;
-			case 'menu':
-				$valueField = 'title';
-				$format = '{s}.%s[%s=%s].%s';
-			break;
-			case 'node':
-				$checkField = 'slug';
-			break;
-		}
-		return compact('checkField', 'filter', 'format', 'modelAlias', 'valueField', 'varName');
-	}
+    private function __snippetDefaults($type)
+    {
+        $varName = strtolower(Inflector::pluralize($type)) . '_for_layout';
+        $modelAlias = Inflector::classify($type);
+        $checkField = 'alias';
+        $valueField = 'body';
+        $filter = true;
+        $format = '{s}.{n}.%s[%s=%s].%s';
+        switch ($type) {
+            case 'type':
+                $valueField = 'description';
+                $format = '{s}.%s[%s=%s].%s';
+                break;
+            case 'vocabulary':
+                $valueField = 'title';
+                $format = '{s}.%s[%s=%s].%s';
+                break;
+            case 'menu':
+                $valueField = 'title';
+                $format = '{s}.%s[%s=%s].%s';
+                break;
+            case 'node':
+                $checkField = 'slug';
+                break;
+        }
+        return compact('checkField', 'filter', 'format', 'modelAlias', 'valueField', 'varName');
+    }
 
 /**
  * Simple method to retrieve value from view variables using Hash path format
@@ -438,20 +453,20 @@ class LayoutHelper extends Helper {
  * @param array $options Options array
  * @return string
  */
-	public function snippet($name, $type = 'block', $options = array()) {
-		$options = array_merge($this->__snippetDefaults($type), $options);
-		extract($options);
-		$path = sprintf($format, $modelAlias, $checkField, $name, $valueField);
-		$result = $this->valueOf($options['varName'], $path);
-		if ($result) {
-			if ($options['filter'] === true && is_string($result)) {
-				return $this->filter($result, $options);
-			} else {
-				return $result;
-			}
-		} else {
-			return null;
-		}
-	}
-
+    public function snippet($name, $type = 'block', $options = [])
+    {
+        $options = array_merge($this->__snippetDefaults($type), $options);
+        extract($options);
+        $path = sprintf($format, $modelAlias, $checkField, $name, $valueField);
+        $result = $this->valueOf($options['varName'], $path);
+        if ($result) {
+            if ($options['filter'] === true && is_string($result)) {
+                return $this->filter($result, $options);
+            } else {
+                return $result;
+            }
+        } else {
+            return null;
+        }
+    }
 }

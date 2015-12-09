@@ -3,6 +3,7 @@
 namespace Croogo\Example\Controller;
 
 use Example\Controller\ExampleAppController;
+
 /**
  * Example Controller
  *
@@ -13,7 +14,8 @@ use Example\Controller\ExampleAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExampleController extends ExampleAppController {
+class ExampleController extends ExampleAppController
+{
 
 /**
  * Controller name
@@ -21,7 +23,7 @@ class ExampleController extends ExampleAppController {
  * @var string
  * @access public
  */
-	public $name = 'Example';
+    public $name = 'Example';
 
 /**
  * Models used by the Controller
@@ -29,42 +31,46 @@ class ExampleController extends ExampleAppController {
  * @var array
  * @access public
  */
-	public $uses = array('Setting');
+    public $uses = ['Setting'];
 
 /**
  * admin_index
  *
  * @return void
  */
-	public function admin_index() {
-		$this->set('title_for_layout', 'Example');
-	}
+    public function admin_index()
+    {
+        $this->set('title_for_layout', 'Example');
+    }
 
 /**
  * admin_chooser
  *
  * @return void
  */
-	public function admin_chooser() {
-		$this->set('title_for_layout', 'Chooser Example');
-	}
+    public function admin_chooser()
+    {
+        $this->set('title_for_layout', 'Chooser Example');
+    }
 
 /**
  * index
  *
  * @return void
  */
-	public function index() {
-		$this->set('title_for_layout', 'Example');
-		$this->set('exampleVariable', 'value here');
-	}
+    public function index()
+    {
+        $this->set('title_for_layout', 'Example');
+        $this->set('exampleVariable', 'value here');
+    }
 
-	public function admin_add() {
-	}
+    public function admin_add()
+    {
+    }
 
-	public function admin_rte_example() {
-		$notice = 'If editors are not displayed correctly, check that `Ckeditor` plugin is loaded after `Example` plugin.';
-		$this->Session->setFlash($notice, 'flash', array('class' => 'success'));
-	}
-
+    public function admin_rte_example()
+    {
+        $notice = 'If editors are not displayed correctly, check that `Ckeditor` plugin is loaded after `Example` plugin.';
+        $this->Session->setFlash($notice, 'flash', ['class' => 'success']);
+    }
 }

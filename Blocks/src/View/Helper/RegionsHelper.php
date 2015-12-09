@@ -18,9 +18,10 @@ use Croogo\Core\Croogo;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class RegionsHelper extends Helper {
+class RegionsHelper extends Helper
+{
 
-	use LogTrait;
+    use LogTrait;
 
 /**
  * Region is empty
@@ -30,14 +31,15 @@ class RegionsHelper extends Helper {
  * @param string $regionAlias Region alias
  * @return boolean
  */
-	public function isEmpty($regionAlias) {
-		if (isset($this->_View->viewVars['blocks_for_layout'][$regionAlias]) &&
-			count($this->_View->viewVars['blocks_for_layout'][$regionAlias]) > 0) {
-			return false;
-		} else {
-			return true;
-		}
-	}
+    public function isEmpty($regionAlias)
+    {
+        if (isset($this->_View->viewVars['blocks_for_layout'][$regionAlias]) &&
+            count($this->_View->viewVars['blocks_for_layout'][$regionAlias]) > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
 /**
  * Show Block
@@ -51,52 +53,54 @@ class RegionsHelper extends Helper {
  * @param array $options
  * @return string
  */
-	public function block(Block $block, $options = array()) {
-		$output = '';
+    public function block(Block $block, $options = [])
+    {
+        $output = '';
 
-		$options = Hash::merge(array(
-			'elementOptions' => array(),
-		), $options);
-		$elementOptions = $options['elementOptions'];
+        $options = Hash::merge([
+            'elementOptions' => [],
+        ], $options);
+        $elementOptions = $options['elementOptions'];
 
-		$defaultElement = 'Croogo/Blocks.block';
+        $defaultElement = 'Croogo/Blocks.block';
 
-		$element = $block->element;
-		$exists = $this->_View->elementExists($element);
-		$blockOutput = '';
+        $element = $block->element;
+        $exists = $this->_View->elementExists($element);
+        $blockOutput = '';
 
-		Croogo::dispatchEvent('Helper.Regions.beforeSetBlock', $this->_View, array(
-			'content' => &$block->body,
-		));
+        Croogo::dispatchEvent('Helper.Regions.beforeSetBlock', $this->_View, [
+            'content' => &$block->body,
+        ]);
 
-		if ($exists) {
-			$blockOutput = $this->_View->element($element, compact('block'), $elementOptions);
-		} else {
-			if (!empty($element)) {
-				$this->log(sprintf('Missing element `%s` in block `%s` (%s)',
-					$block->element,
-					$block->alias,
-					$block->id
-				), LOG_WARNING);
-			}
-			$blockOutput = $this->_View->element($defaultElement, compact('block'), array('ignoreMissing' => true) + $elementOptions);
-		}
+        if ($exists) {
+            $blockOutput = $this->_View->element($element, compact('block'), $elementOptions);
+        } else {
+            if (!empty($element)) {
+                $this->log(sprintf(
+                    'Missing element `%s` in block `%s` (%s)',
+                    $block->element,
+                    $block->alias,
+                    $block->id
+                ), LOG_WARNING);
+            }
+            $blockOutput = $this->_View->element($defaultElement, compact('block'), ['ignoreMissing' => true] + $elementOptions);
+        }
 
-		Croogo::dispatchEvent('Helper.Regions.afterSetBlock', $this->_View, array(
-			'content' => &$blockOutput,
-		));
+        Croogo::dispatchEvent('Helper.Regions.afterSetBlock', $this->_View, [
+            'content' => &$blockOutput,
+        ]);
 
-		$enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
-		if ($exists && $element != $defaultElement && $enclosure) {
-			$block->body = $blockOutput;
-			$block->element = null;
-			$output .= $this->_View->element($defaultElement, compact('block'), $elementOptions);
-		} else {
-			$output .= $blockOutput;
-		}
+        $enclosure = isset($block['Params']['enclosure']) ? $block['Params']['enclosure'] === "true" : true;
+        if ($exists && $element != $defaultElement && $enclosure) {
+            $block->body = $blockOutput;
+            $block->element = null;
+            $output .= $this->_View->element($defaultElement, compact('block'), $elementOptions);
+        } else {
+            $output .= $blockOutput;
+        }
 
-		return $output;
-	}
+        return $output;
+    }
 
 /**
  * Show Blocks for a particular Region
@@ -110,23 +114,23 @@ class RegionsHelper extends Helper {
  * @param array $options
  * @return string
  */
-	public function blocks($regionAlias, $options = array()) {
-		$output = '';
-		if ($this->isEmpty($regionAlias)) {
-			return $output;
-		}
+    public function blocks($regionAlias, $options = [])
+    {
+        $output = '';
+        if ($this->isEmpty($regionAlias)) {
+            return $output;
+        }
 
-		$options = Hash::merge(array(
-			'elementOptions' => array(),
-		), $options);
+        $options = Hash::merge([
+            'elementOptions' => [],
+        ], $options);
 
-		$defaultElement = 'Croogo/Blocks.block';
-		$blocks = $this->_View->viewVars['blocks_for_layout'][$regionAlias];
-		foreach ($blocks as $block) {
-			$output .= $this->block($block, $options);
-		}
+        $defaultElement = 'Croogo/Blocks.block';
+        $blocks = $this->_View->viewVars['blocks_for_layout'][$regionAlias];
+        foreach ($blocks as $block) {
+            $output .= $this->block($block, $options);
+        }
 
-		return $output;
-	}
-
+        return $output;
+    }
 }

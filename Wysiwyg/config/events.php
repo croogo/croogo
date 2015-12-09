@@ -2,8 +2,8 @@
 
 namespace Croogo\Wysiwyg\Config;
 
-$config = array(
-	'EventHandlers' => array(
-		'Croogo/Wysiwyg.WysiwygEventHandler',
-	),
-);
+$config = [
+    'EventHandlers' => [
+        'Croogo/Wysiwyg.WysiwygEventHandler',
+    ],
+];

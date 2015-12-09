@@ -26,7 +26,8 @@ use Cake\Console\Shell;
  *
  * @package     Croogo.Acl.Console.Command
  */
-class ExtrasShell extends Shell {
+class ExtrasShell extends Shell
+{
 
 /**
  * Contains arguments parsed from the command line.
@@ -34,120 +35,126 @@ class ExtrasShell extends Shell {
  * @var array
  * @access public
  */
-	public $args;
+    public $args;
 
 /**
  * AclExtras instance
  */
-	public $AclExtras;
+    public $AclExtras;
 
 /**
  * Constructor
  */
-	public function __construct($stdout = null, $stderr = null, $stdin = null) {
-		parent::__construct($stdout, $stderr, $stdin);
-		$this->AclExtras = new AclExtras();
-	}
+    public function __construct($stdout = null, $stderr = null, $stdin = null)
+    {
+        parent::__construct($stdout, $stderr, $stdin);
+        $this->AclExtras = new AclExtras();
+    }
 
 /**
  * Start up And load Acl Component / Aco model
  *
  * @return void
  **/
-	public function startup() {
-		parent::startup();
-		$this->AclExtras->startup();
-		$this->AclExtras->Shell = $this;
-	}
+    public function startup()
+    {
+        parent::startup();
+        $this->AclExtras->startup();
+        $this->AclExtras->Shell = $this;
+    }
 
 /**
  * Sync the ACO table
  *
  * @return void
  **/
-	public function aco_sync() {
-		$this->AclExtras->aco_sync($this->params);
-	}
+    public function aco_sync()
+    {
+        $this->AclExtras->aco_sync($this->params);
+    }
 
 /**
  * Sync the ACO table for contents
  *
  * @return void
  */
-	public function aco_sync_contents() {
-		$this->AclExtras->args = $this->args;
-		$this->AclExtras->aco_update_contents($this->params);
-	}
+    public function aco_sync_contents()
+    {
+        $this->AclExtras->args = $this->args;
+        $this->AclExtras->aco_update_contents($this->params);
+    }
 
 /**
  * Updates the Aco Tree with new controller actions.
  *
  * @return void
  **/
-	public function aco_update() {
-		$this->AclExtras->aco_update($this->params);
-		return true;
-	}
+    public function aco_update()
+    {
+        $this->AclExtras->aco_update($this->params);
+        return true;
+    }
 
-	public function getOptionParser() {
-		$plugin = array(
-			'short' => 'p',
-			'help' => __d('croogo', 'Plugin to process'),
-		);
-		return parent::getOptionParser()
-			->description(__d('croogo', "Better manage, and easily synchronize you application's ACO tree"))
-			->addSubcommand('aco_update', array(
-				'parser' => array(
-					'options' => compact('plugin'),
-				),
-				'help' => __d('croogo', 'Add new ACOs for new controllers and actions. Does not remove nodes from the ACO table.')
-			))
-			->addSubcommand('aco_sync', array(
-				'parser' => array(
-					'options' => compact('plugin'),
-				),
-				'help' => __d('croogo', 'Perform a full sync on the ACO table.' .
-					'Will create new ACOs or missing controllers and actions.' .
-					'Will also remove orphaned entries that no longer have a matching controller/action')
-			))
-			->addSubcommand('aco_sync_contents', array(
-				'help' => __d('croogo', 'Perform a full content sync on the ACO table.' .
-					'Will create new ACOs or missing contents.' .
-					'Will also remove orphaned entries that no longer have a matching contents'),
-				'parser' => array(
-					'arguments' => array(
-						'model' => array(
-							'required' => true,
-							'help' => __d('croogo', 'The content model name '),
-						)
-					),
-				),
-			))
-			->addSubcommand('verify', array(
-				'help' => __d('croogo', 'Verify the tree structure of either your Aco or Aro Trees'),
-				'parser' => array(
-					'arguments' => array(
-						'type' => array(
-							'required' => true,
-							'help' => __d('croogo', 'The type of tree to verify'),
-							'choices' => array('aco', 'aro')
-						)
-					)
-				)
-			))
-			->addSubcommand('recover', array(
-				'help' => __d('croogo', 'Recover a corrupted Tree'),
-				'parser' => array(
-					'arguments' => array(
-						'type' => array(
-							'required' => true,
-							'help' => __d('croogo', 'The type of tree to recover'),
-							'choices' => array('aco', 'aro')
-						)
-					)
-				)
-			));
-	}
+    public function getOptionParser()
+    {
+        $plugin = [
+            'short' => 'p',
+            'help' => __d('croogo', 'Plugin to process'),
+        ];
+        return parent::getOptionParser()
+            ->description(__d('croogo', "Better manage, and easily synchronize you application's ACO tree"))
+            ->addSubcommand('aco_update', [
+                'parser' => [
+                    'options' => compact('plugin'),
+                ],
+                'help' => __d('croogo', 'Add new ACOs for new controllers and actions. Does not remove nodes from the ACO table.')
+            ])
+            ->addSubcommand('aco_sync', [
+                'parser' => [
+                    'options' => compact('plugin'),
+                ],
+                'help' => __d('croogo', 'Perform a full sync on the ACO table.' .
+                    'Will create new ACOs or missing controllers and actions.' .
+                    'Will also remove orphaned entries that no longer have a matching controller/action')
+            ])
+            ->addSubcommand('aco_sync_contents', [
+                'help' => __d('croogo', 'Perform a full content sync on the ACO table.' .
+                    'Will create new ACOs or missing contents.' .
+                    'Will also remove orphaned entries that no longer have a matching contents'),
+                'parser' => [
+                    'arguments' => [
+                        'model' => [
+                            'required' => true,
+                            'help' => __d('croogo', 'The content model name '),
+                        ]
+                    ],
+                ],
+            ])
+            ->addSubcommand('verify', [
+                'help' => __d('croogo', 'Verify the tree structure of either your Aco or Aro Trees'),
+                'parser' => [
+                    'arguments' => [
+                        'type' => [
+                            'required' => true,
+                            'help' => __d('croogo', 'The type of tree to verify'),
+                            'choices' => ['aco', 'aro']
+                        ]
+                    ]
+                ]
+            ])
+            ->addSubcommand('recover', [
+                'help' => __d('croogo', 'Recover a corrupted Tree'),
+                'parser' => [
+                    'arguments' => [
+                        'type' => [
+                            'required' => true,
+                            'help' => __d('croogo', 'The type of tree to recover'),
+                            'choices' => ['aco', 'aro']
+                        ]
+                    ]
+                ]
+            ]);
+    }
 
 /**
  * Verify a Acl Tree
@@ -156,10 +163,11 @@ class ExtrasShell extends Shell {
  * @access public
  * @return void
  */
-	public function verify() {
-		$this->AclExtras->args = $this->args;
-		return $this->AclExtras->verify();
-	}
+    public function verify()
+    {
+        $this->AclExtras->args = $this->args;
+        return $this->AclExtras->verify();
+    }
 /**
  * Recover an Acl Tree
  *
@@ -167,9 +175,9 @@ class ExtrasShell extends Shell {
  * @access public
  * @return void
  */
-	public function recover() {
-		$this->AclExtras->args = $this->args;
-		$this->AclExtras->recover();
-	}
-
+    public function recover()
+    {
+        $this->AclExtras->args = $this->args;
+        $this->AclExtras->recover();
+    }
 }

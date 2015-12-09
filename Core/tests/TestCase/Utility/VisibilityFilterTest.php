@@ -7,155 +7,160 @@ use Cake\Network\Request;
 use Cake\Utility\Hash;
 use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Core\Utility\VisibilityFilter;
-class VisibilityFilterTest extends CroogoTestCase {
 
-	public $setupSettings = false;
+class VisibilityFilterTest extends CroogoTestCase
+{
 
-	protected function _testData() {
-		return array(
-			array(
-				'Block' => array(
-					'id' => 1,
-					'visibility_paths' => array(
-						'plugin:nodes',
-						'-plugin:contacts/controller:contacts/action:view',
-					),
-				),
-			),
-			array(
-				'Block' => array(
-					'id' => 2,
-					'visibility_paths' => array(
-						'plugin:nodes/controller:nodes/action:promoted',
-						'plugin:contacts/controller:contacts/action:view',
-					),
-				),
-			),
-			array(
-				'Block' => array(
-					'id' => 3,
-					'visibility_paths' => array(
-						'-plugin:nodes/controller:nodes/action:promoted',
-						'-plugin:contacts/controller:contacts/action:view/contact',
-					),
-				),
-			),
-			array(
-				'Block' => array(
-					'id' => 4,
-					'visibility_paths' => ''
-				),
-			),
-			array(
-				'Block' => array(
-					'id' => 5,
-					'visibility_paths' => array(
-						'plugin:nodes/controller:bogus_nodes',
-						'plugin:contacts/controller:contacts',
-					),
-				),
-			),
-			array(
-				'Block' => array(
-					'id' => 6,
-					'visibility_paths' => array(
-						'plugin:nodes/controller:nodes/action:index/type:blog?page=8',
-					),
-				),
-			),
-		);
-	}
+    public $setupSettings = false;
 
-	public function testLinkstringRule() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+    protected function _testData()
+    {
+        return [
+            [
+                'Block' => [
+                    'id' => 1,
+                    'visibility_paths' => [
+                        'plugin:nodes',
+                        '-plugin:contacts/controller:contacts/action:view',
+                    ],
+                ],
+            ],
+            [
+                'Block' => [
+                    'id' => 2,
+                    'visibility_paths' => [
+                        'plugin:nodes/controller:nodes/action:promoted',
+                        'plugin:contacts/controller:contacts/action:view',
+                    ],
+                ],
+            ],
+            [
+                'Block' => [
+                    'id' => 3,
+                    'visibility_paths' => [
+                        '-plugin:nodes/controller:nodes/action:promoted',
+                        '-plugin:contacts/controller:contacts/action:view/contact',
+                    ],
+                ],
+            ],
+            [
+                'Block' => [
+                    'id' => 4,
+                    'visibility_paths' => ''
+                ],
+            ],
+            [
+                'Block' => [
+                    'id' => 5,
+                    'visibility_paths' => [
+                        'plugin:nodes/controller:bogus_nodes',
+                        'plugin:contacts/controller:contacts',
+                    ],
+                ],
+            ],
+            [
+                'Block' => [
+                    'id' => 6,
+                    'visibility_paths' => [
+                        'plugin:nodes/controller:nodes/action:index/type:blog?page=8',
+                    ],
+                ],
+            ],
+        ];
+    }
 
-		$request = new Request();
-		$request->addParams(array(
-			'controller' => 'nodes',
-			'plugin' => 'nodes',
-			'action' => 'promoted',
-		));
-		$Filter = new VisibilityFilter($request);
-		$blocks = $this->_testData();
-		$results = $Filter->remove($blocks, array(
-			'model' => 'Block',
-			'field' => 'visibility_paths',
-		));
+    public function testLinkstringRule()
+    {
+        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-		// partial match
-		$this->assertTrue(Hash::check($results, '{n}.Block[id=1]'));
+        $request = new Request();
+        $request->addParams([
+            'controller' => 'nodes',
+            'plugin' => 'nodes',
+            'action' => 'promoted',
+        ]);
+        $Filter = new VisibilityFilter($request);
+        $blocks = $this->_testData();
+        $results = $Filter->remove($blocks, [
+            'model' => 'Block',
+            'field' => 'visibility_paths',
+        ]);
 
-		// exact match
-		$this->assertTrue(Hash::check($results, '{n}.Block[id=2]'));
+        // partial match
+        $this->assertTrue(Hash::check($results, '{n}.Block[id=1]'));
 
-		// negation
-		$this->assertFalse(Hash::check($results, '{n}.Block[id=3]'));
+        // exact match
+        $this->assertTrue(Hash::check($results, '{n}.Block[id=2]'));
 
-		// empty rule
-		$this->assertTrue(Hash::check($results, '{n}.Block[id=4]'));
+        // negation
+        $this->assertFalse(Hash::check($results, '{n}.Block[id=3]'));
 
-		// same plugin, different controller
-		$this->assertFalse(Hash::check($results, '{n}.Block[id=5]'));
+        // empty rule
+        $this->assertTrue(Hash::check($results, '{n}.Block[id=4]'));
 
-		// with query string
-		$this->assertFalse(Hash::check($results, '{n}.Block[id=6]'));
-	}
+        // same plugin, different controller
+        $this->assertFalse(Hash::check($results, '{n}.Block[id=5]'));
 
-	public function testLinkstringRuleWithContacts() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+        // with query string
+        $this->assertFalse(Hash::check($results, '{n}.Block[id=6]'));
+    }
 
-		$request = new Request();
-		$request->addParams(array(
-			'controller' => 'contacts',
-			'plugin' => 'contacts',
-			'action' => 'view',
-		));
-		$Filter = new VisibilityFilter($request);
-		$blocks = $this->_testData();
-		$results = $Filter->remove($blocks, array(
-			'model' => 'Block',
-			'field' => 'visibility_paths',
-		));
+    public function testLinkstringRuleWithContacts()
+    {
+        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-		// exact match
-		$this->assertTrue(Hash::check($results, '{n}.Block[id=2]'));
+        $request = new Request();
+        $request->addParams([
+            'controller' => 'contacts',
+            'plugin' => 'contacts',
+            'action' => 'view',
+        ]);
+        $Filter = new VisibilityFilter($request);
+        $blocks = $this->_testData();
+        $results = $Filter->remove($blocks, [
+            'model' => 'Block',
+            'field' => 'visibility_paths',
+        ]);
 
-		// negation rule with passedArgs
-		$this->assertTrue(Hash::check($results, '{n}.Block[id=3]'));
+        // exact match
+        $this->assertTrue(Hash::check($results, '{n}.Block[id=2]'));
 
-		// empty rule
-		$this->assertTrue(Hash::check($results, '{n}.Block[id=4]'));
+        // negation rule with passedArgs
+        $this->assertTrue(Hash::check($results, '{n}.Block[id=3]'));
 
-		// partial rule
-		$this->assertTrue(Hash::check($results, '{n}.Block[id=5]'));
+        // empty rule
+        $this->assertTrue(Hash::check($results, '{n}.Block[id=4]'));
 
-		// with query string
-		$this->assertFalse(Hash::check($results, '{n}.Block[id=6]'));
-	}
+        // partial rule
+        $this->assertTrue(Hash::check($results, '{n}.Block[id=5]'));
 
-	public function testLinkstringRuleWithQueryString() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+        // with query string
+        $this->assertFalse(Hash::check($results, '{n}.Block[id=6]'));
+    }
 
-		$request = new Request();
-		$request->addParams(array(
-			'controller' => 'nodes',
-			'plugin' => 'nodes',
-			'action' => 'index',
-			'type' => 'blog',
-		));
-		$request->query = array(
-			'page' => '8',
-		);
-		$Filter = new VisibilityFilter($request);
-		$blocks = $this->_testData();
-		Configure::write('foo', true);
-		$results = $Filter->remove($blocks, array(
-			'model' => 'Block',
-			'field' => 'visibility_paths',
-		));
+    public function testLinkstringRuleWithQueryString()
+    {
+        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-		// exact match with query string
-		$this->assertTrue(Hash::check($results, '{n}.Block[id=6]'));
-	}
+        $request = new Request();
+        $request->addParams([
+            'controller' => 'nodes',
+            'plugin' => 'nodes',
+            'action' => 'index',
+            'type' => 'blog',
+        ]);
+        $request->query = [
+            'page' => '8',
+        ];
+        $Filter = new VisibilityFilter($request);
+        $blocks = $this->_testData();
+        Configure::write('foo', true);
+        $results = $Filter->remove($blocks, [
+            'model' => 'Block',
+            'field' => 'visibility_paths',
+        ]);
 
+        // exact match with query string
+        $this->assertTrue(Hash::check($results, '{n}.Block[id=6]'));
+    }
 }

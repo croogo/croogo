@@ -4,110 +4,125 @@ namespace Shops\Event;
 
 use Cake\Event\EventListenerInterface;
 
-class ShopsEventHandler implements EventListenerInterface {
+class ShopsEventHandler implements EventListenerInterface
+{
 
-	public function implementedEvents() {
-		return array(
-			'Controller.Users.activationFailure' => array(
-				'callable' => 'onActivationFailure',
-			),
-			'Controller.Users.activationSuccessful' => array(
-				'callable' => 'onActivationSuccessful',
-			),
-			'Controller.Users.adminLoginSuccessful' => array(
-				'callable' => 'onAdminLoginSuccessful',
-			),
-			'Controller.Users.adminLoginFailure' => array(
-				'callable' => 'onAdminLoginFailure',
-			),
-			'Controller.Users.adminLogoutSuccessful' => array(
-				'callable' => 'onAdminLogoutSuccessful',
-			),
-			'Controller.Users.afterLogout' => array(
-				'callable' => 'onAfterLogout',
-			),
-			'Controller.Users.beforeLogin' => array(
-				'callable' => 'onBeforeLogin',
-			),
-			'Controller.Users.beforeLogout' => array(
-				'callable' => 'onBeforeLogout',
-			),
-			'Controller.Users.loginFailure' => array(
-				'callable' => 'onLoginFailure',
-			),
-			'Controller.Users.loginSuccessful' => array(
-				'callable' => 'onLoginSuccessful',
-			),
-			'Controller.Users.registrationFailure' => array(
-				'callable' => 'onRegistrationFailure',
-			),
-			'Controller.Users.registrationSuccessful' => array(
-				'callable' => 'onRegistrationSuccessful',
-			),
+    public function implementedEvents()
+    {
+        return [
+            'Controller.Users.activationFailure' => [
+                'callable' => 'onActivationFailure',
+            ],
+            'Controller.Users.activationSuccessful' => [
+                'callable' => 'onActivationSuccessful',
+            ],
+            'Controller.Users.adminLoginSuccessful' => [
+                'callable' => 'onAdminLoginSuccessful',
+            ],
+            'Controller.Users.adminLoginFailure' => [
+                'callable' => 'onAdminLoginFailure',
+            ],
+            'Controller.Users.adminLogoutSuccessful' => [
+                'callable' => 'onAdminLogoutSuccessful',
+            ],
+            'Controller.Users.afterLogout' => [
+                'callable' => 'onAfterLogout',
+            ],
+            'Controller.Users.beforeLogin' => [
+                'callable' => 'onBeforeLogin',
+            ],
+            'Controller.Users.beforeLogout' => [
+                'callable' => 'onBeforeLogout',
+            ],
+            'Controller.Users.loginFailure' => [
+                'callable' => 'onLoginFailure',
+            ],
+            'Controller.Users.loginSuccessful' => [
+                'callable' => 'onLoginSuccessful',
+            ],
+            'Controller.Users.registrationFailure' => [
+                'callable' => 'onRegistrationFailure',
+            ],
+            'Controller.Users.registrationSuccessful' => [
+                'callable' => 'onRegistrationSuccessful',
+            ],
 
-			'Helper.Layout.beforeFilter' => array(
-				'callable' => 'onLayoutBeforeFilter',
-			),
-			'Helper.Layout.afterFilter' => array(
-				'callable' => 'onLayoutAfterFilter',
-			),
-		);
-	}
+            'Helper.Layout.beforeFilter' => [
+                'callable' => 'onLayoutBeforeFilter',
+            ],
+            'Helper.Layout.afterFilter' => [
+                'callable' => 'onLayoutAfterFilter',
+            ],
+        ];
+    }
 
-	public function onActivationFailure($event) {
-		return true;
-	}
+    public function onActivationFailure($event)
+    {
+        return true;
+    }
 
-	public function onActivationSuccessful($event) {
-		return true;
-	}
+    public function onActivationSuccessful($event)
+    {
+        return true;
+    }
 
-	public function onAfterLogout($event) {
-		return true;
-	}
+    public function onAfterLogout($event)
+    {
+        return true;
+    }
 
-	public function onBeforeLogin($event) {
-		return true;
-	}
+    public function onBeforeLogin($event)
+    {
+        return true;
+    }
 
-	public function onBeforeLogout($event) {
-		return true;
-	}
+    public function onBeforeLogout($event)
+    {
+        return true;
+    }
 
-	public function onLoginFailure($event) {
-		return true;
-	}
+    public function onLoginFailure($event)
+    {
+        return true;
+    }
 
-	public function onLoginSuccessful($event) {
-		return true;
-	}
+    public function onLoginSuccessful($event)
+    {
+        return true;
+    }
 
-	public function onAdminLoginSuccessful($event) {
-		return true;
-	}
+    public function onAdminLoginSuccessful($event)
+    {
+        return true;
+    }
 
-	public function onAdminLoginFailure($event) {
-		return true;
-	}
+    public function onAdminLoginFailure($event)
+    {
+        return true;
+    }
 
-	public function onAdminLogoutSuccessful($event) {
-		return true;
-	}
+    public function onAdminLogoutSuccessful($event)
+    {
+        return true;
+    }
 
-	public function onRegistrationFailure($event) {
-		return true;
-	}
+    public function onRegistrationFailure($event)
+    {
+        return true;
+    }
 
-	public function onRegistrationSuccessful($event) {
-		return true;
-	}
+    public function onRegistrationSuccessful($event)
+    {
+        return true;
+    }
 
-	public function onLayoutBeforeFilter($event) {
-		return true;
-	}
+    public function onLayoutBeforeFilter($event)
+    {
+        return true;
+    }
 
-	public function onLayoutAfterFilter($event) {
-		return true;
-	}
-
+    public function onLayoutAfterFilter($event)
+    {
+        return true;
+    }
 }

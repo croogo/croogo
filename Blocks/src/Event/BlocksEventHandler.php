@@ -16,38 +16,40 @@ use Croogo\Core\Utility\StringConverter;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class BlocksEventHandler implements EventListenerInterface {
+class BlocksEventHandler implements EventListenerInterface
+{
 
 /**
  * implementedEvents
  */
-	public function implementedEvents() {
-		return array(
-			'Helper.Nodes.beforeSetNode' => array(
-				'callable' => 'filterBlockShortcode',
-			),
-			'Helper.Regions.beforeSetBlock' => array(
-				'callable' => 'filterBlockShortcode',
-			),
-			'Helper.Regions.afterSetBlock' => array(
-				'callable' => 'filterBlockShortcode',
-			),
+    public function implementedEvents()
+    {
+        return [
+            'Helper.Nodes.beforeSetNode' => [
+                'callable' => 'filterBlockShortcode',
+            ],
+            'Helper.Regions.beforeSetBlock' => [
+                'callable' => 'filterBlockShortcode',
+            ],
+            'Helper.Regions.afterSetBlock' => [
+                'callable' => 'filterBlockShortcode',
+            ],
 
-			'Controller.Blocks.afterPublish' => array(
-				'callable' => 'onAfterBulkProcess',
-			),
-			'Controller.Blocks.afterUnpublish' => array(
-				'callable' => 'onAfterBulkProcess',
-			),
-			'Controller.Blocks.afterDelete' => array(
-				'callable' => 'onAfterBulkProcess',
-			),
-			'Controller.Blocks.afterCopy' => array(
-				'callable' => 'onAfterBulkProcess',
-			),
+            'Controller.Blocks.afterPublish' => [
+                'callable' => 'onAfterBulkProcess',
+            ],
+            'Controller.Blocks.afterUnpublish' => [
+                'callable' => 'onAfterBulkProcess',
+            ],
+            'Controller.Blocks.afterDelete' => [
+                'callable' => 'onAfterBulkProcess',
+            ],
+            'Controller.Blocks.afterCopy' => [
+                'callable' => 'onAfterBulkProcess',
+            ],
 
-		);
-	}
+        ];
+    }
 
 /**
  * Filter block shortcode in node body, eg [block:snippet] and replace it with
@@ -56,39 +58,40 @@ class BlocksEventHandler implements EventListenerInterface {
  * @param Event $event
  * @return void
  */
-	public function filterBlockShortcode(Event $event) {
-		static $converter = null;
-		if (!$converter) {
-			$converter = new StringConverter();
-		}
+    public function filterBlockShortcode(Event $event)
+    {
+        static $converter = null;
+        if (!$converter) {
+            $converter = new StringConverter();
+        }
 
-		$View = $event->subject;
-		$body = null;
-		if (isset($event->data['content'])) {
-			$body =& $event->data['content'];
-		} elseif (isset($event->data['node'])) {
-			$body =& $event->data['node']->body;
-		}
+        $View = $event->subject;
+        $body = null;
+        if (isset($event->data['content'])) {
+            $body =& $event->data['content'];
+        } elseif (isset($event->data['node'])) {
+            $body =& $event->data['node']->body;
+        }
 
-		$parsed = $converter->parseString('block|b', $body, array(
-			'convertOptionsToArray' => true,
-		));
+        $parsed = $converter->parseString('block|b', $body, [
+            'convertOptionsToArray' => true,
+        ]);
 
-		$regex = '/\[(block|b):([A-Za-z0-9_\-]*)(.*?)\]/i';
-		foreach ($parsed as $blockAlias => $config) {
-			$block = $View->Regions->block($blockAlias);
-			preg_match_all($regex, $body, $matches);
-			if (isset($matches[2][0])) {
-				$replaceRegex = '/' . preg_quote($matches[0][0]) . '/';
-				$body = preg_replace($replaceRegex, $block, $body);
-			}
-		}
+        $regex = '/\[(block|b):([A-Za-z0-9_\-]*)(.*?)\]/i';
+        foreach ($parsed as $blockAlias => $config) {
+            $block = $View->Regions->block($blockAlias);
+            preg_match_all($regex, $body, $matches);
+            if (isset($matches[2][0])) {
+                $replaceRegex = '/' . preg_quote($matches[0][0]) . '/';
+                $body = preg_replace($replaceRegex, $block, $body);
+            }
+        }
 
-		Croogo::dispatchEvent('Helper.Layout.beforeFilter', $View, array(
-			'content' => &$body,
-			'options' => array(),
-		));
-	}
+        Croogo::dispatchEvent('Helper.Layout.beforeFilter', $View, [
+            'content' => &$body,
+            'options' => [],
+        ]);
+    }
 
 /**
  * Clear Blocks related cache after bulk operation
@@ -96,8 +99,8 @@ class BlocksEventHandler implements EventListenerInterface {
  * @param CakeEvent $event
  * @return void
  */
-	public function onAfterBulkProcess($event) {
-		Cache::clearGroup('blocks', 'croogo_blocks');
-	}
-
+    public function onAfterBulkProcess($event)
+    {
+        Cache::clearGroup('blocks', 'croogo_blocks');
+    }
 }

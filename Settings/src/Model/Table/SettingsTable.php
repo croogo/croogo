@@ -17,7 +17,8 @@ use Croogo\Core\Model\Table\CroogoTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class SettingsTable extends CroogoTable {
+class SettingsTable extends CroogoTable
+{
 
 /**
  * Behaviors used by the Model
@@ -25,17 +26,17 @@ class SettingsTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $actsAs = [
-		'Croogo.Ordered' => [
-			'field' => 'weight',
-			'foreign_key' => false,
-		],
-		'Croogo.Cached' => [
-			'groups' => [
-				'settings',
-			],
-		],
-	];
+    public $actsAs = [
+        'Croogo.Ordered' => [
+            'field' => 'weight',
+            'foreign_key' => false,
+        ],
+        'Croogo.Cached' => [
+            'groups' => [
+                'settings',
+            ],
+        ],
+    ];
 
 /**
  * Validation
@@ -43,58 +44,62 @@ class SettingsTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $validate = [
-		'key' => [
-			'isUnique' => [
-				'rule' => 'isUnique',
-				'message' => 'This key has already been taken.',
-			],
-			'minLength' => [
-				'rule' => ['minLength', 1],
-				'message' => 'Key cannot be empty.',
-			],
-		],
-	];
+    public $validate = [
+        'key' => [
+            'isUnique' => [
+                'rule' => 'isUnique',
+                'message' => 'This key has already been taken.',
+            ],
+            'minLength' => [
+                'rule' => ['minLength', 1],
+                'message' => 'Key cannot be empty.',
+            ],
+        ],
+    ];
 
 /**
  * Filter search fields
  */
-	public $filterArgs = [
-		'key' => ['type' => 'like', 'field' => 'Settings.key'],
-	];
+    public $filterArgs = [
+        'key' => ['type' => 'like', 'field' => 'Settings.key'],
+    ];
 
 /**
  * @param array $config
  */
-	public function initialize(array $config) {
-		parent::initialize($config);
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
 
-		$this->addBehavior('Croogo/Core.Trackable');
-		$this->addBehavior('Search.Searchable');
-	}
+        $this->addBehavior('Croogo/Core.Trackable');
+        $this->addBehavior('Search.Searchable');
+    }
 
 /**
  * @param Table $schema
  * @return Table
  */
-	protected function _initializeSchema(Table $schema) {
-		$schema->columnType('params', 'params');
-		return $schema;
-	}
+    protected function _initializeSchema(Table $schema)
+    {
+        $schema->columnType('params', 'params');
+        return $schema;
+    }
 
 /**
  * beforeSave callback
  */
-	public function beforeSave() {
-		$this->connection()->driver()->autoQuoting(true);
-	}
+    public function beforeSave()
+    {
+        $this->connection()->driver()->autoQuoting(true);
+    }
 
 /**
  * afterSave callback
  */
-	public function afterSave() {
-		$this->connection()->driver()->autoQuoting(false);
-	}
+    public function afterSave()
+    {
+        $this->connection()->driver()->autoQuoting(false);
+    }
 
 /**
  * Creates a new record with key/value pair if key does not exist.
@@ -104,43 +109,43 @@ class SettingsTable extends CroogoTable {
  * @param array $options
  * @return boolean
  */
-	public function write($key, $value, $options = []) {
-		$setting = $this->findByKey($key)->first();
-		if ($setting) {
-			$setting->value = $value;
+    public function write($key, $value, $options = [])
+    {
+        $setting = $this->findByKey($key)->first();
+        if ($setting) {
+            $setting->value = $value;
 
-			$setting = $this->patchEntity($setting, $options);
+            $setting = $this->patchEntity($setting, $options);
 
-		} else {
+        } else {
+            $options = array_merge([
+                'title' => '',
+                'description' => '',
+                'input_type' => '',
+                'editable' => 0,
+                'weight' => 0,
+                'params' => '',
+            ], $options);
 
-			$options = array_merge([
-				'title' => '',
-				'description' => '',
-				'input_type' => '',
-				'editable' => 0,
-				'weight' => 0,
-				'params' => '',
-			], $options);
+            $setting = $this->newEntity([
+                'key' => $key,
+                'value' => $value,
+                'title' => $options['title'],
+                'description' => $options['description'],
+                'input_type' => $options['input_type'],
+                'editable' => $options['editable'],
+                'weight' => $options['weight'],
+                'params' => $options['params'],
+            ]);
+        }
 
-			$setting = $this->newEntity([
-				'key' => $key,
-				'value' => $value,
-				'title' => $options['title'],
-				'description' => $options['description'],
-				'input_type' => $options['input_type'],
-				'editable' => $options['editable'],
-				'weight' => $options['weight'],
-				'params' => $options['params'],
-			]);
-		}
-
-		if ($this->save($setting)) {
-			Configure::write($key, $value);
-			return true;
-		} else {
-			return false;
-		}
-	}
+        if ($this->save($setting)) {
+            Configure::write($key, $value);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 /**
  * Deletes setting record for given key
@@ -148,12 +153,13 @@ class SettingsTable extends CroogoTable {
  * @param string $key
  * @return boolean
  */
-	public function deleteKey($key) {
-		$setting = $this->findByKey($key);
-		if (isset($setting['Setting']['id']) &&
-			$this->delete($setting['Setting']['id'])) {
-			return true;
-		}
-		return false;
-	}
+    public function deleteKey($key)
+    {
+        $setting = $this->findByKey($key);
+        if (isset($setting['Setting']['id']) &&
+            $this->delete($setting['Setting']['id'])) {
+            return true;
+        }
+        return false;
+    }
 }

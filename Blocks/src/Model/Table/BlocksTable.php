@@ -17,7 +17,8 @@ use Croogo\Core\Status;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class BlocksTable extends CroogoTable {
+class BlocksTable extends CroogoTable
+{
 
 /**
  * Validation
@@ -25,22 +26,22 @@ class BlocksTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $validate = [
-		'title' => [
-			'rule' => ['minLength', 1],
-			'message' => 'Title cannot be empty.',
-		],
-		'alias' => [
-			'isUnique' => [
-				'rule' => 'isUnique',
-				'message' => 'This alias has already been taken.',
-			],
-			'minLength' => [
-				'rule' => ['minLength', 1],
-				'message' => 'Alias cannot be empty.',
-			],
-		],
-	];
+    public $validate = [
+        'title' => [
+            'rule' => ['minLength', 1],
+            'message' => 'Title cannot be empty.',
+        ],
+        'alias' => [
+            'isUnique' => [
+                'rule' => 'isUnique',
+                'message' => 'This alias has already been taken.',
+            ],
+            'minLength' => [
+                'rule' => ['minLength', 1],
+                'message' => 'Alias cannot be empty.',
+            ],
+        ],
+    ];
 
 /**
  * Filter search fields
@@ -48,31 +49,32 @@ class BlocksTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $filterArgs = [
-		'title' => ['type' => 'like', 'field' => ['title', 'alias']],
-		'region_id' => ['type' => 'value'],
-	];
+    public $filterArgs = [
+        'title' => ['type' => 'like', 'field' => ['title', 'alias']],
+        'region_id' => ['type' => 'value'],
+    ];
 
 /**
  * Find methods
  */
-	public $findMethods = array(
-		'published' => true,
-	);
+    public $findMethods = [
+        'published' => true,
+    ];
 
-	public function initialize(array $config) {
-		parent::initialize($config);
-		$this->entityClass('Croogo/Blocks.Block');
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        $this->entityClass('Croogo/Blocks.Block');
 
-		$this->belongsTo('Regions', [
-			'className' => 'Croogo/Blocks.Regions',
-			'foreignKey' => 'region_id',
-			'counterCache' => true,
-			'counterScope' => ['Blocks.status >=' => Status::PUBLISHED],
-		]);
+        $this->belongsTo('Regions', [
+            'className' => 'Croogo/Blocks.Regions',
+            'foreignKey' => 'region_id',
+            'counterCache' => true,
+            'counterScope' => ['Blocks.status >=' => Status::PUBLISHED],
+        ]);
 
-		$this->addBehavior('Croogo/Core.Publishable');
-		/* TODO: Enable after behaviors have been updated to 3.x
+        $this->addBehavior('Croogo/Core.Publishable');
+        /* TODO: Enable after behaviors have been updated to 3.x
 		$this->addBehavior('Croogo/Core.Cached', [
 			'groups' => [
 				'blocks',
@@ -80,25 +82,26 @@ class BlocksTable extends CroogoTable {
 		]);
 		*/
 
-		$this->addBehavior('Timestamp', [
-			'events' => [
-				'Model.beforeSave' => [
-					'created' => 'new',
-					'updated' => 'always'
-				]
-			]
-		]);
-		$this->addBehavior('Croogo/Core.Trackable');
-		$this->addBehavior('Search.Searchable');
-	}
+        $this->addBehavior('Timestamp', [
+            'events' => [
+                'Model.beforeSave' => [
+                    'created' => 'new',
+                    'updated' => 'always'
+                ]
+            ]
+        ]);
+        $this->addBehavior('Croogo/Core.Trackable');
+        $this->addBehavior('Search.Searchable');
+    }
 
-	protected function _initializeSchema(Schema $table) {
-		$table->columnType('visibility_roles', 'encoded');
-		$table->columnType('visibility_paths', 'encoded');
-		$table->columnType('params', 'params');
+    protected function _initializeSchema(Schema $table)
+    {
+        $table->columnType('visibility_roles', 'encoded');
+        $table->columnType('visibility_paths', 'encoded');
+        $table->columnType('params', 'params');
 
-		return parent::_initializeSchema($table);
-	}
+        return parent::_initializeSchema($table);
+    }
 
 /**
  * Find Published blocks
@@ -109,30 +112,30 @@ class BlocksTable extends CroogoTable {
  * - roleId Role Id
  * - cacheKey Cache key (optional)
  */
-	public function findPublished(Query $query, array $options = []) {
-		$status = isset($options['status']) ? $options['status'] : $this->status();
-		$regionId = isset($options['regionId']) ? $options['regionId'] : null;
-		$roleId = isset($options['roleId']) ? $options['roleId'] : 3;
-		$cacheKey = isset($options['cacheKey']) ? $options['cacheKey'] : $regionId . '_' . $roleId;
-		unset($options['status'], $options['regionId'], $options['roleId'], $options['cacheKey']);
+    public function findPublished(Query $query, array $options = [])
+    {
+        $status = isset($options['status']) ? $options['status'] : $this->status();
+        $regionId = isset($options['regionId']) ? $options['regionId'] : null;
+        $roleId = isset($options['roleId']) ? $options['roleId'] : 3;
+        $cacheKey = isset($options['cacheKey']) ? $options['cacheKey'] : $regionId . '_' . $roleId;
+        unset($options['status'], $options['regionId'], $options['roleId'], $options['cacheKey']);
 
-		return $query->where([
-			'status IN' => $status,
-			'region_id' => $regionId,
-			'AND' => [
-				[
-					'OR' => [
-						'visibility_roles' => '',
-						'visibility_roles' . ' LIKE' => '%"' . $roleId . '"%',
-					],
-				],
-			],
-		])->order([
-			'weight' => 'ASC'
-		])->applyOptions([
-			'prefix' => 'blocks_' . $cacheKey,
-			'config' => 'croogo_blocks',
-		]);
-	}
-
+        return $query->where([
+            'status IN' => $status,
+            'region_id' => $regionId,
+            'AND' => [
+                [
+                    'OR' => [
+                        'visibility_roles' => '',
+                        'visibility_roles' . ' LIKE' => '%"' . $roleId . '"%',
+                    ],
+                ],
+            ],
+        ])->order([
+            'weight' => 'ASC'
+        ])->applyOptions([
+            'prefix' => 'blocks_' . $cacheKey,
+            'config' => 'croogo_blocks',
+        ]);
+    }
 }

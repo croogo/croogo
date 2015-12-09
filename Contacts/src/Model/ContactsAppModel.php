@@ -3,6 +3,7 @@
 namespace Croogo\Contacts\Model;
 
 use App\Model\AppModel;
+
 /**
  * Contacts App Model
  *
@@ -13,6 +14,7 @@ use App\Model\AppModel;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ContactsAppModel extends AppModel {
+class ContactsAppModel extends AppModel
+{
 
 }

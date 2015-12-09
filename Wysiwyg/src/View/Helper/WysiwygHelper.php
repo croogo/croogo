@@ -17,7 +17,8 @@ use Cake\Core\App;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class WysiwygHelper extends Helper {
+class WysiwygHelper extends Helper
+{
 
 /**
  * Other helpers used by this helper
@@ -25,10 +26,10 @@ class WysiwygHelper extends Helper {
  * @var array
  * @access public
  */
-	public $helpers = [
-		'Html',
-		'Url'
-	];
+    public $helpers = [
+        'Html',
+        'Url'
+    ];
 
 /**
  * beforeRender
@@ -36,41 +37,43 @@ class WysiwygHelper extends Helper {
  * @param string $viewFile
  * @return void
  */
-	public function beforeRender($viewFile) {
-		$uploadsPath = Configure::read('Wysiwyg.uploadsPath');
-		if ($uploadsPath) {
-			$uploadsPath = Router::url($uploadsPath);
-		}
-		Configure::write('Js.Wysiwyg.uploadsPath', $uploadsPath);
-		Configure::write('Js.Wysiwyg.attachmentsPath',
-			$this->Url->build(Configure::read('Wysiwyg.attachmentBrowseUrl'))
-		);
+    public function beforeRender($viewFile)
+    {
+        $uploadsPath = Configure::read('Wysiwyg.uploadsPath');
+        if ($uploadsPath) {
+            $uploadsPath = Router::url($uploadsPath);
+        }
+        Configure::write('Js.Wysiwyg.uploadsPath', $uploadsPath);
+        Configure::write(
+            'Js.Wysiwyg.attachmentsPath',
+            $this->Url->build(Configure::read('Wysiwyg.attachmentBrowseUrl'))
+        );
 
-		$namespace = 'Controller';
-		$pluginPath = $this->request->param('plugin') . '.';
-		$controller = $this->request->param('controller');
+        $namespace = 'Controller';
+        $pluginPath = $this->request->param('plugin') . '.';
+        $controller = $this->request->param('controller');
 
-		if ($this->request->param('prefix')) {
-			$prefixes = array_map(
-				'Cake\Utility\Inflector::camelize',
-				explode('/', $this->request->param('prefix'))
-			);
-			$namespace .= '/' . implode('/', $prefixes);
-		}
+        if ($this->request->param('prefix')) {
+            $prefixes = array_map(
+                'Cake\Utility\Inflector::camelize',
+                explode('/', $this->request->param('prefix'))
+            );
+            $namespace .= '/' . implode('/', $prefixes);
+        }
 
-		$actions = array();
-		foreach (Configure::read('Wysiwyg.actions') as $key => $value) {
-			if (is_string($value)) {
-				$actions[] = $value;
-			} else {
-				$actions[] = $key;
-			}
-		}
+        $actions = [];
+        foreach (Configure::read('Wysiwyg.actions') as $key => $value) {
+            if (is_string($value)) {
+                $actions[] = $value;
+            } else {
+                $actions[] = $key;
+            }
+        }
 
-		$currentAction = App::classname($pluginPath . $controller, $namespace, 'Controller') . '.' . $this->request->param('action');
-		$included = in_array($currentAction, $actions, true);
-		if ($included) {
-			$this->Html->script('Croogo/Wysiwyg.wysiwyg', ['block' => true]);
-		}
-	}
+        $currentAction = App::classname($pluginPath . $controller, $namespace, 'Controller') . '.' . $this->request->param('action');
+        $included = in_array($currentAction, $actions, true);
+        if ($included) {
+            $this->Html->script('Croogo/Wysiwyg.wysiwyg', ['block' => true]);
+        }
+    }
 }

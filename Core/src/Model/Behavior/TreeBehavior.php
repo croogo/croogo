@@ -11,14 +11,15 @@ use Cake\ORM\Query;
  *
  * @see Cake\ORM\Behavior\TreeBehavior
  */
-class TreeBehavior extends CakeTree {
+class TreeBehavior extends CakeTree
+{
 
-	public function beforeFind(Event $event, Query $query, $options) {
-		$scope = $this->config('scope');
-		if ($scope) {
-			$this->_scope($query);
-		}
-		return $query;
-	}
-
+    public function beforeFind(Event $event, Query $query, $options)
+    {
+        $scope = $this->config('scope');
+        if ($scope) {
+            $this->_scope($query);
+        }
+        return $query;
+    }
 }

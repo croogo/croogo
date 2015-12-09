@@ -26,7 +26,8 @@ use Cake\Routing\Router;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoErrorController extends BaseController {
+class CroogoErrorController extends BaseController
+{
 
 /**
  * Models
@@ -34,7 +35,7 @@ class CroogoErrorController extends BaseController {
  * @var array
  * @access public
  */
-	public $uses = array();
+    public $uses = [];
 
 /**
  * View
@@ -42,7 +43,7 @@ class CroogoErrorController extends BaseController {
  * @var string
  * @access public
  */
-	public $viewClass = 'Theme';
+    public $viewClass = 'Theme';
 
 /**
  * __construct
@@ -50,52 +51,54 @@ class CroogoErrorController extends BaseController {
  * @param Request $request
  * @param Response $response
  */
-	public function __construct($request = null, $response = null) {
-		parent::__construct($request, $response);
-		if (count(Router::extensions()) && !isset($this->RequestHandler)
-		) {
-			$this->loadComponent('RequestHandler');
-		}
-		$eventManager = $this->eventManager();
-		if (isset($this->Auth)) {
-			$eventManager->off($this->Auth);
-		}
-		if (isset($this->Security)) {
-			$eventManager->off($this->Security);
-		}
-		$this->templatePath = 'Error';
-	}
+    public function __construct($request = null, $response = null)
+    {
+        parent::__construct($request, $response);
+        if (count(Router::extensions()) && !isset($this->RequestHandler)
+        ) {
+            $this->loadComponent('RequestHandler');
+        }
+        $eventManager = $this->eventManager();
+        if (isset($this->Auth)) {
+            $eventManager->off($this->Auth);
+        }
+        if (isset($this->Security)) {
+            $eventManager->off($this->Security);
+        }
+        $this->templatePath = 'Error';
+    }
 
 /**
  * beforeFilter
  *
  * @return void
  */
-	public function beforeFilter(Event $event) {
-		parent::beforeFilter($event);
-		if (Configure::read('Site.theme') && !isset($this->request->params['admin'])) {
-			$this->theme = Configure::read('Site.theme');
-		} elseif (isset($this->request->params['admin'])) {
-			$adminTheme = Configure::read('Site.admin_theme');
-			if ($adminTheme) {
-				$this->theme = $adminTheme;
-			}
-			$this->layout = 'admin_full';
-		}
-	}
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        if (Configure::read('Site.theme') && !isset($this->request->params['admin'])) {
+            $this->theme = Configure::read('Site.theme');
+        } elseif (isset($this->request->params['admin'])) {
+            $adminTheme = Configure::read('Site.admin_theme');
+            if ($adminTheme) {
+                $this->theme = $adminTheme;
+            }
+            $this->layout = 'admin_full';
+        }
+    }
 
 /**
  * Escapes the viewVars.
  *
  * @return void
  */
-	public function beforeRender(Event $event) {
-		parent::beforeRender($event);
-		foreach ($this->viewVars as $key => $value) {
-			if (!is_object($value)) {
-				$this->viewVars[$key] = h($value);
-			}
-		}
-	}
-
+    public function beforeRender(Event $event)
+    {
+        parent::beforeRender($event);
+        foreach ($this->viewVars as $key => $value) {
+            if (!is_object($value)) {
+                $this->viewVars[$key] = h($value);
+            }
+        }
+    }
 }

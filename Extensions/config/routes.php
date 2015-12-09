@@ -6,7 +6,7 @@ use Croogo\Core\CroogoRouter;
 
 CroogoRouter::connect('/admin', Configure::read('Croogo.dashboardUrl'));
 
-CroogoRouter::connect('/admin/extensions/:controller/:action/*', array(
-	'prefix' => 'admin',
-	'plugin' => 'Croogo/Extensions'
-));
+CroogoRouter::connect('/admin/extensions/:controller/:action/*', [
+    'prefix' => 'admin',
+    'plugin' => 'Croogo/Extensions'
+]);

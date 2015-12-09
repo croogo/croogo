@@ -1,32 +1,33 @@
 <?php
-class AddWysisygEnableField extends CakeMigration {
+class AddWysisygEnableField extends CakeMigration
+{
 
 /**
  * Migration description
  *
  * @var string
  */
-	public $description = '';
+    public $description = '';
 
 /**
  * Actions to be performed
  *
  * @var array $migration
  */
-	public $migration = array(
-		'up' => array(
-			'create_field' => array(
-				'types' => array(
-					'format_use_wysiwyg' => array('type' => 'boolean', 'null' => false, 'default' => '1', 'after' => 'format_show_date'),
-				),
-			),
-		),
-		'down' => array(
-			'drop_field' => array(
-				'types' => array('format_use_wysiwyg',),
-			),
-		),
-	);
+    public $migration = [
+        'up' => [
+            'create_field' => [
+                'types' => [
+                    'format_use_wysiwyg' => ['type' => 'boolean', 'null' => false, 'default' => '1', 'after' => 'format_show_date'],
+                ],
+            ],
+        ],
+        'down' => [
+            'drop_field' => [
+                'types' => ['format_use_wysiwyg',],
+            ],
+        ],
+    ];
 
 /**
  * Before migration callback
@@ -34,9 +35,10 @@ class AddWysisygEnableField extends CakeMigration {
  * @param string $direction, up or down direction of migration process
  * @return boolean Should process continue
  */
-	public function before($direction) {
-		return true;
-	}
+    public function before($direction)
+    {
+        return true;
+    }
 
 /**
  * After migration callback
@@ -44,7 +46,8 @@ class AddWysisygEnableField extends CakeMigration {
  * @param string $direction, up or down direction of migration process
  * @return boolean Should process continue
  */
-	public function after($direction) {
-		return true;
-	}
+    public function after($direction)
+    {
+        return true;
+    }
 }

@@ -22,7 +22,8 @@ use Croogo\Taxonomy\Model\Table\TaxonomiesTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TaxonomiesComponent extends Component {
+class TaxonomiesComponent extends Component
+{
 
 /**
  * Other components used by this component
@@ -30,9 +31,9 @@ class TaxonomiesComponent extends Component {
  * @var array
  * @access public
  */
-	public $components = array(
-		'Croogo/Core.Croogo',
-	);
+    public $components = [
+        'Croogo/Core.Croogo',
+    ];
 
 /**
  * Types for layout
@@ -40,7 +41,7 @@ class TaxonomiesComponent extends Component {
  * @var string
  * @access public
  */
-	public $typesForLayout = array();
+    public $typesForLayout = [];
 
 /**
  * Vocabularies for layout
@@ -48,7 +49,7 @@ class TaxonomiesComponent extends Component {
  * @var string
  * @access public
  */
-	public $vocabulariesForLayout = array();
+    public $vocabulariesForLayout = [];
 
 /**
  * Startup
@@ -56,52 +57,55 @@ class TaxonomiesComponent extends Component {
  * @param object $controller instance of controller
  * @return void
  */
-	public function startup(Event $event) {
-		$this->controller = $event->subject();
-		if ((isset($this->controller->Taxonomies)) && ($this->controller->Taxonomies instanceof TaxonomiesTable)) {
-			$this->Taxonomies = $this->controller->Taxonomies;
-		} else {
-			$this->Taxonomies = TableRegistry::get('Croogo/Taxonomy.Taxonomies');
-		}
+    public function startup(Event $event)
+    {
+        $this->controller = $event->subject();
+        if ((isset($this->controller->Taxonomies)) && ($this->controller->Taxonomies instanceof TaxonomiesTable)) {
+            $this->Taxonomies = $this->controller->Taxonomies;
+        } else {
+            $this->Taxonomies = TableRegistry::get('Croogo/Taxonomy.Taxonomies');
+        }
 
-		if ($this->controller->request->param('prefix') != 'admin' && !isset($this->controller->request->params['requested'])) {
-			$this->types();
-			$this->vocabularies();
-		} else {
-			$this->_adminData();
-		}
-	}
+        if ($this->controller->request->param('prefix') != 'admin' && !isset($this->controller->request->params['requested'])) {
+            $this->types();
+            $this->vocabularies();
+        } else {
+            $this->_adminData();
+        }
+    }
 
-	public function beforeRender(Event $event) {
-		$this->controller = $event->subject();
-		$this->controller->set('types_for_layout', $this->typesForLayout);
-		$this->controller->set('vocabularies_for_layout', $this->vocabulariesForLayout);
-	}
+    public function beforeRender(Event $event)
+    {
+        $this->controller = $event->subject();
+        $this->controller->set('types_for_layout', $this->typesForLayout);
+        $this->controller->set('vocabularies_for_layout', $this->vocabulariesForLayout);
+    }
 
 /**
  * Set variables for admin layout
  *
  * @return void
  */
-	protected function _adminData() {
-		// types
-		$types = $this->Taxonomies->Vocabularies->Types->find('all', array(
-			'conditions' => array(
-				'Types.plugin' => null,
-			),
-			'order' => 'Types.alias ASC',
-		));
-		$this->controller->set('types_for_admin_layout', $types);
+    protected function _adminData()
+    {
+        // types
+        $types = $this->Taxonomies->Vocabularies->Types->find('all', [
+            'conditions' => [
+                'Types.plugin' => null,
+            ],
+            'order' => 'Types.alias ASC',
+        ]);
+        $this->controller->set('types_for_admin_layout', $types);
 
-		// vocabularies
-		$vocabularies = $this->Taxonomies->Vocabularies->find('all', array(
-			'conditions' => array(
-				'Vocabularies.plugin IS NULL',
-			),
-			'order' => 'Vocabularies.alias ASC',
-		));
-		$this->controller->set('vocabularies_for_admin_layout', $vocabularies);
-	}
+        // vocabularies
+        $vocabularies = $this->Taxonomies->Vocabularies->find('all', [
+            'conditions' => [
+                'Vocabularies.plugin IS NULL',
+            ],
+            'order' => 'Vocabularies.alias ASC',
+        ]);
+        $this->controller->set('vocabularies_for_admin_layout', $vocabularies);
+    }
 
 /**
  * Types
@@ -110,12 +114,13 @@ class TaxonomiesComponent extends Component {
  *
  * @return void
  */
-	public function types() {
-		$types = $this->Taxonomies->Vocabularies->Types->find('all');
-		foreach ($types as $type) {
-			$this->typesForLayout[$type->alias] = $type;
-		}
-	}
+    public function types()
+    {
+        $types = $this->Taxonomies->Vocabularies->Types->find('all');
+        foreach ($types as $type) {
+            $this->typesForLayout[$type->alias] = $type;
+        }
+    }
 
 /**
  * Vocabularies
@@ -124,45 +129,46 @@ class TaxonomiesComponent extends Component {
  *
  * @return void
  */
-	public function vocabularies() {
-		$vocabularies = array();
+    public function vocabularies()
+    {
+        $vocabularies = [];
 
-		if (Configure::read('Site.theme')) {
-			$themeData = $this->Croogo->getThemeData(Configure::read('Site.theme'));
-			if (isset($themeData['vocabularies']) && is_array($themeData['vocabularies'])) {
-				$vocabularies = Hash::merge($vocabularies, $themeData['vocabularies']);
-			}
-		}
+        if (Configure::read('Site.theme')) {
+            $themeData = $this->Croogo->getThemeData(Configure::read('Site.theme'));
+            if (isset($themeData['vocabularies']) && is_array($themeData['vocabularies'])) {
+                $vocabularies = Hash::merge($vocabularies, $themeData['vocabularies']);
+            }
+        }
 
-		$vocabularies = Hash::merge($vocabularies, array_keys($this->controller->BlocksHook->blocksData['vocabularies']));
-		$vocabularies = array_unique($vocabularies);
-		foreach ($vocabularies as $vocabularyAlias) {
-			$vocabulary = $this->Taxonomies->Vocabularies->find()
-				->where([
-					'Vocabularies.alias' => $vocabularyAlias,
-				])->applyOptions([
-					'name' => 'vocabulary_' . $vocabularyAlias,
-					'config' => 'croogo_vocabularies',
-				])->first();
-			if (isset($vocabulary->id)) {
-				$threaded = $this->Taxonomies->find('threaded')
-					->where([
-						'Taxonomies.vocabulary_id' => $vocabulary->id,
-					])->order([
-						'Taxonomies.lft ASC'
-					])->applyOptions([
-						'name' => 'vocabulary_threaded_' . $vocabularyAlias,
-						'config' => 'croogo_vocabularies',
-					])->contain([
-						'Terms'
-					]);
+        $vocabularies = Hash::merge($vocabularies, array_keys($this->controller->BlocksHook->blocksData['vocabularies']));
+        $vocabularies = array_unique($vocabularies);
+        foreach ($vocabularies as $vocabularyAlias) {
+            $vocabulary = $this->Taxonomies->Vocabularies->find()
+                ->where([
+                    'Vocabularies.alias' => $vocabularyAlias,
+                ])->applyOptions([
+                    'name' => 'vocabulary_' . $vocabularyAlias,
+                    'config' => 'croogo_vocabularies',
+                ])->first();
+            if (isset($vocabulary->id)) {
+                $threaded = $this->Taxonomies->find('threaded')
+                    ->where([
+                        'Taxonomies.vocabulary_id' => $vocabulary->id,
+                    ])->order([
+                        'Taxonomies.lft ASC'
+                    ])->applyOptions([
+                        'name' => 'vocabulary_threaded_' . $vocabularyAlias,
+                        'config' => 'croogo_vocabularies',
+                    ])->contain([
+                        'Terms'
+                    ]);
 
-				$this->vocabulariesForLayout[$vocabularyAlias] = [];
-				$this->vocabulariesForLayout[$vocabularyAlias]['vocabulary'] = $vocabulary;
-				$this->vocabulariesForLayout[$vocabularyAlias]['threaded'] = $threaded;
-			}
-		}
-	}
+                    $this->vocabulariesForLayout[$vocabularyAlias] = [];
+                    $this->vocabulariesForLayout[$vocabularyAlias]['vocabulary'] = $vocabulary;
+                    $this->vocabulariesForLayout[$vocabularyAlias]['threaded'] = $threaded;
+            }
+        }
+    }
 
 /**
  * Prepare required taxonomy baseline data for use in views
@@ -172,37 +178,41 @@ class TaxonomiesComponent extends Component {
  * @return void
  * @throws Exception
  */
-	public function prepareCommonData(Type $type, $options = array()) {
-		$options = Hash::merge(array(
-			'modelClass' => $this->controller->modelClass,
-		), $options);
-		$typeAlias = $type->alias;
-		list(, $modelClass) = pluginSplit($options['modelClass']);
+    public function prepareCommonData(Type $type, $options = [])
+    {
+        $options = Hash::merge([
+            'modelClass' => $this->controller->modelClass,
+        ], $options);
+        $typeAlias = $type->alias;
+        list(, $modelClass) = pluginSplit($options['modelClass']);
 
-		if (isset($this->controller->{$modelClass})) {
-			$Model = $this->controller->{$modelClass};
-		} else {
-			throw new Exception(sprintf(
-				'Model %s not found in controller %s',
-				$modelClass, $this->controller->name
-			));
-		}
-		$Model->type = $typeAlias;
-		$vocabularies = [];
-		collection($type->vocabularies)->each(function (Vocabulary $vocabulary) use (&$vocabularies) {
-			$vocabularies[$vocabulary->id] = $vocabulary;
-		});
-		$taxonomy = array();
-		foreach ($type->vocabularies as $vocabulary) {
-			$vocabularyId = $vocabulary->id;
-			$taxonomy[$vocabularyId] = $Model->Taxonomies->getTree(
-				$vocabulary->alias,
-				array('taxonomyId' => true)
-			);
-		}
-		$this->controller->set(compact(
-			'type', 'typeAlias', 'taxonomy', 'vocabularies'
-		));
-	}
-
+        if (isset($this->controller->{$modelClass})) {
+            $Model = $this->controller->{$modelClass};
+        } else {
+            throw new Exception(sprintf(
+                'Model %s not found in controller %s',
+                $modelClass,
+                $this->controller->name
+            ));
+        }
+        $Model->type = $typeAlias;
+        $vocabularies = [];
+        collection($type->vocabularies)->each(function (Vocabulary $vocabulary) use (&$vocabularies) {
+            $vocabularies[$vocabulary->id] = $vocabulary;
+        });
+        $taxonomy = [];
+        foreach ($type->vocabularies as $vocabulary) {
+            $vocabularyId = $vocabulary->id;
+            $taxonomy[$vocabularyId] = $Model->Taxonomies->getTree(
+                $vocabulary->alias,
+                ['taxonomyId' => true]
+            );
+        }
+        $this->controller->set(compact(
+            'type',
+            'typeAlias',
+            'taxonomy',
+            'vocabularies'
+        ));
+    }
 }

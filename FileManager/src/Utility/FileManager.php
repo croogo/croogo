@@ -15,7 +15,8 @@ use Cake\Filesystem\File;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class FileManager {
+class FileManager
+{
 
 /**
  * Checks wether given $path is editable
@@ -26,19 +27,20 @@ class FileManager {
  * @param string $path Path to check
  * @return boolean true if file is editable
  */
-	public function isEditable($path) {
-		$editablePaths = Configure::check('FileManager.editablePaths') ?
-			Configure::read('FileManager.editablePaths') :
-			array();
+    public function isEditable($path)
+    {
+        $editablePaths = Configure::check('FileManager.editablePaths') ?
+            Configure::read('FileManager.editablePaths') :
+            [];
 
-		foreach ($editablePaths as $editablePath) {
-			if ($this->_isWithinPath($editablePath, $path)) {
-				return true;
-			}
-		}
+        foreach ($editablePaths as $editablePath) {
+            if ($this->_isWithinPath($editablePath, $path)) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
 /**
  * Checks wether given $path is deletable
@@ -49,19 +51,20 @@ class FileManager {
  * @param string $path Path to check
  * @return boolean true when file is deletable
  */
-	public function isDeletable($path) {
-		$deletablePaths = Configure::check('FileManager.deletablePaths') ?
-			Configure::read('FileManager.deletablePaths') :
-			array();
+    public function isDeletable($path)
+    {
+        $deletablePaths = Configure::check('FileManager.deletablePaths') ?
+            Configure::read('FileManager.deletablePaths') :
+            [];
 
-		foreach ($deletablePaths as $deletablePath) {
-			if ($this->_isWithinPath($deletablePath, $path)) {
-				return true;
-			}
-		}
+        foreach ($deletablePaths as $deletablePath) {
+            if ($this->_isWithinPath($deletablePath, $path)) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
 /**
  * Rename $oldPath to $newPath
@@ -70,14 +73,15 @@ class FileManager {
  * @param string $newPath New filename/directory
  * @return bool True if rename was successful
  */
-	public function rename($oldPath, $newPath) {
-		if (is_dir($oldPath)) {
-			$Folder = new Folder($oldPath);
-			return $Folder->move(array('from' => $oldPath, 'to' => $newPath));
-		} else {
-			return rename($oldPath, $newPath);
-		}
-	}
+    public function rename($oldPath, $newPath)
+    {
+        if (is_dir($oldPath)) {
+            $Folder = new Folder($oldPath);
+            return $Folder->move(['from' => $oldPath, 'to' => $newPath]);
+        } else {
+            return rename($oldPath, $newPath);
+        }
+    }
 
 /**
  * Checks that $pathToCheck resides under $referencePath
@@ -86,10 +90,10 @@ class FileManager {
  * @param string $pathToCheck Path to check
  * @return boolean True if $pathToCheck resides under $referencePath
  */
-	protected function _isWithinPath($referencePath, $pathToCheck) {
-		$path = realpath($pathToCheck);
-		$regex = '/^' . preg_quote(realpath($referencePath), '/') . '/';
-		return preg_match($regex, $path) > 0;
-	}
-
+    protected function _isWithinPath($referencePath, $pathToCheck)
+    {
+        $path = realpath($pathToCheck);
+        $regex = '/^' . preg_quote(realpath($referencePath), '/') . '/';
+        return preg_match($regex, $path) > 0;
+    }
 }

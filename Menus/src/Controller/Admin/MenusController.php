@@ -18,7 +18,8 @@ use Croogo\Menus\Model\Table\MenusTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MenusController extends AppController {
+class MenusController extends AppController
+{
 
 /**
  * Controller name
@@ -26,17 +27,18 @@ class MenusController extends AppController {
  * @var string
  * @access public
  */
-	public $name = 'Menus';
+    public $name = 'Menus';
 
 /**
  * beforeFilter
  *
  */
-	public function beforeFilter(Event $event) {
-		parent::beforeFilter($event);
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
 
 //		$this->Security->unlockedActions[] = 'toggle';
-	}
+    }
 
 /**
  * Toggle Link status
@@ -45,9 +47,10 @@ class MenusController extends AppController {
  * @param $status integer Current Link status
  * @return void
  */
-	public function Toggle($id = null, $status = null) {
-		$this->Croogo->fieldToggle($this->Menus, $id, $status);
-	}
+    public function Toggle($id = null, $status = null)
+    {
+        $this->Croogo->fieldToggle($this->Menus, $id, $status);
+    }
 
 /**
  * Admin index
@@ -55,82 +58,85 @@ class MenusController extends AppController {
  * @return void
  * @access public
  */
-	public function index() {
-		$this->set('title_for_layout', __d('croogo', 'Menus'));
+    public function index()
+    {
+        $this->set('title_for_layout', __d('croogo', 'Menus'));
 
-		$this->paginate = [
-			'order' => [
-				'Menus.id' => 'ASC'
-			]
-		];
-		$this->set('menus', $this->paginate());
-	}
+        $this->paginate = [
+            'order' => [
+                'Menus.id' => 'ASC'
+            ]
+        ];
+        $this->set('menus', $this->paginate());
+    }
 
 /**
  * Admin add
  */
-	public function add() {
-		$menu = $this->Menus->newEntity();
+    public function add()
+    {
+        $menu = $this->Menus->newEntity();
 
-		$this->set(compact('menu'));
+        $this->set(compact('menu'));
 
-		if (!$this->request->is('post')) {
-			return;
-		}
+        if (!$this->request->is('post')) {
+            return;
+        }
 
-		$menu = $this->Menus->patchEntity($menu, $this->request->data);
-		if (!$this->Menus->save($menu)) {
-			$this->Flash->error(__d('croogo', 'The Menu could not be saved. Please, try again.'));
+        $menu = $this->Menus->patchEntity($menu, $this->request->data);
+        if (!$this->Menus->save($menu)) {
+            $this->Flash->error(__d('croogo', 'The Menu could not be saved. Please, try again.'));
 
-			return;
-		}
+            return;
+        }
 
-		$this->Flash->success(__d('croogo', 'The Menu has been saved'));
-		return $this->Croogo->redirect(['action' => 'edit', $menu->id]);
-	}
+        $this->Flash->success(__d('croogo', 'The Menu has been saved'));
+        return $this->Croogo->redirect(['action' => 'edit', $menu->id]);
+    }
 
 /**
  * Admin edit
  *
- * @param integer $id
+ * @param int$id
  */
-	public function edit($id = null) {
-		$menu = $this->Menus->get($id);
+    public function edit($id = null)
+    {
+        $menu = $this->Menus->get($id);
 
-		$this->set(compact('menu'));
+        $this->set(compact('menu'));
 
-		if (!$this->request->is('put')) {
-			return;
-		}
+        if (!$this->request->is('put')) {
+            return;
+        }
 
-		$menu = $this->Menus->patchEntity($menu, $this->request->data);
+        $menu = $this->Menus->patchEntity($menu, $this->request->data);
 
-		if (!$this->Menus->save($menu)) {
-			$this->Flash->error(__d('croogo', 'The Menu could not be saved. Please, try again.'));
+        if (!$this->Menus->save($menu)) {
+            $this->Flash->error(__d('croogo', 'The Menu could not be saved. Please, try again.'));
 
-			return;
-		}
+            return;
+        }
 
-		$this->Flash->success(__d('croogo', 'The Menu has been saved'));
-		return $this->Croogo->redirect(['action' => 'edit', $menu->id]);
-	}
+        $this->Flash->success(__d('croogo', 'The Menu has been saved'));
+        return $this->Croogo->redirect(['action' => 'edit', $menu->id]);
+    }
 
 /**
  * Admin delete
  *
- * @param integer $id
+ * @param int$id
  */
-	public function delete($id = null) {
-		$menu = $this->Menus->get($id);
+    public function delete($id = null)
+    {
+        $menu = $this->Menus->get($id);
 
-		if (!$this->Menus->delete($menu)) {
-			$this->Flash->error(__d('croogo', 'The menu could not be deleted. Please, try again.'));
+        if (!$this->Menus->delete($menu)) {
+            $this->Flash->error(__d('croogo', 'The menu could not be deleted. Please, try again.'));
 
-			return;
-		}
+            return;
+        }
 
-		$this->Flash->success(__d('croogo', 'Menu deleted'));
-		return $this->redirect(['action' => 'index']);
-	}
-
+        $this->Flash->success(__d('croogo', 'Menu deleted'));
+        return $this->redirect(['action' => 'index']);
+    }
 }

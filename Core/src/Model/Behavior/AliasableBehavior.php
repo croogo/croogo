@@ -15,60 +15,64 @@ use Cake\ORM\Behavior;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AliasableBehavior extends Behavior {
+class AliasableBehavior extends Behavior
+{
 
-	protected $_defaultConfig = [
-		'id' => 'id',
-		'alias' => 'alias',
-	];
+    protected $_defaultConfig = [
+        'id' => 'id',
+        'alias' => 'alias',
+    ];
 
 /**
  * _byIds
  *
  * @var array
  */
-	protected $_byIds = array();
+    protected $_byIds = [];
 
 /**
  * _byAlias
  *
  * @var array
  */
-	protected $_byAlias = array();
+    protected $_byAlias = [];
 
-	public function initialize(array $config) {
-		parent::initialize($config);
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
 
-		$this->reload();
-	}
+        $this->reload();
+    }
 
 
-	/**
- * reload
- *
- * @return void
- */
-	public function reload() {
-		$this->_byIds = $this->_table->find('list', [
-			'keyField' => $this->config('id'),
-			'valueField' => $this->config('alias'),
-		])->where([$this->config('alias') . ' !=' => ''])->toArray();
-		$this->_byAlias = array_flip($this->_byIds);
-	}
+    /**
+     * reload
+     *
+     * @return void
+     */
+    public function reload()
+    {
+        $this->_byIds = $this->_table->find('list', [
+            'keyField' => $this->config('id'),
+            'valueField' => $this->config('alias'),
+        ])->where([$this->config('alias') . ' !=' => ''])->toArray();
+        $this->_byAlias = array_flip($this->_byIds);
+    }
 
 /**
  * byId
  *
  * @param
- * @param integer $id
+ * @param int$id
  * @return boolean
  */
-	public function byId($id) {
-		if (!empty($this->_byIds[$id])) {
-			return $this->_byIds[$id];
-		}
-		return false;
-	}
+    public function byId($id)
+    {
+        if (!empty($this->_byIds[$id])) {
+            return $this->_byIds[$id];
+        }
+        return false;
+    }
 
 /**
  * byAlias
@@ -76,21 +80,23 @@ class AliasableBehavior extends Behavior {
  * @param string $alias
  * @return boolean
  */
-	public function byAlias($alias) {
-		if (!empty($this->_byAlias[$alias])) {
-			return $this->_byAlias[$alias];
-		}
-		return false;
-	}
+    public function byAlias($alias)
+    {
+        if (!empty($this->_byAlias[$alias])) {
+            return $this->_byAlias[$alias];
+        }
+        return false;
+    }
 
 /**
  * listById
  *
  * @return string
  */
-	public function listById() {
-		return $this->_byIds;
-	}
+    public function listById()
+    {
+        return $this->_byIds;
+    }
 
 /**
  * listByAlias
@@ -98,8 +104,8 @@ class AliasableBehavior extends Behavior {
  * @param
  * @return string
  */
-	public function listByAlias() {
-		return $this->_byAlias;
-	}
-
+    public function listByAlias()
+    {
+        return $this->_byAlias;
+    }
 }

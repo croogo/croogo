@@ -4,34 +4,34 @@ namespace Croogo\Contacts\Config;
 
 use Croogo\Core\Nav;
 
-Nav::add('sidebar', 'contacts', array(
-	'icon' => 'comments',
-	'title' => __d('croogo', 'Contacts'),
-	'url' => array(
-		'prefix' => 'admin',
-		'plugin' => 'Croogo/Contacts',
-		'controller' => 'Contacts',
-		'action' => 'index',
-	),
-	'weight' => 50,
-	'children' => array(
-		'contacts' => array(
-			'title' => __d('croogo', 'Contacts'),
-			'url' => array(
-				'prefix' => 'admin',
-				'plugin' => 'Croogo/Contacts',
-				'controller' => 'Contacts',
-				'action' => 'index',
-			),
-		),
-		'messages' => array(
-			'title' => __d('croogo', 'Messages'),
-			'url' => array(
-				'prefix' => 'admin',
-				'plugin' => 'Croogo/Contacts',
-				'controller' => 'Messages',
-				'action' => 'index',
-			),
-		),
-	),
-));
+Nav::add('sidebar', 'contacts', [
+    'icon' => 'comments',
+    'title' => __d('croogo', 'Contacts'),
+    'url' => [
+        'prefix' => 'admin',
+        'plugin' => 'Croogo/Contacts',
+        'controller' => 'Contacts',
+        'action' => 'index',
+    ],
+    'weight' => 50,
+    'children' => [
+        'contacts' => [
+            'title' => __d('croogo', 'Contacts'),
+            'url' => [
+                'prefix' => 'admin',
+                'plugin' => 'Croogo/Contacts',
+                'controller' => 'Contacts',
+                'action' => 'index',
+            ],
+        ],
+        'messages' => [
+            'title' => __d('croogo', 'Messages'),
+            'url' => [
+                'prefix' => 'admin',
+                'plugin' => 'Croogo/Contacts',
+                'controller' => 'Messages',
+                'action' => 'index',
+            ],
+        ],
+    ],
+]);

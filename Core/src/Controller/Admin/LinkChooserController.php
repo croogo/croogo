@@ -8,10 +8,10 @@ use Cake\Core\Configure;
 class LinkChooserController extends AppController
 {
 
-	public function linkChooser() {
-		Croogo::dispatchEvent('Controller.Links.setupLinkChooser', $this);
-		$linkChoosers = Configure::read('Croogo.linkChoosers');
-		$this->set(compact('linkChoosers'));
-	}
-
+    public function linkChooser()
+    {
+        Croogo::dispatchEvent('Controller.Links.setupLinkChooser', $this);
+        $linkChoosers = Configure::read('Croogo.linkChoosers');
+        $this->set(compact('linkChoosers'));
+    }
 }

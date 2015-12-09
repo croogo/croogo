@@ -3,6 +3,7 @@
 namespace Croogo\Blocks\Model;
 
 use App\Model\AppModel;
+
 /**
  * Blocks App Model
  *
@@ -13,6 +14,7 @@ use App\Model\AppModel;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class BlocksAppModel extends AppModel {
+class BlocksAppModel extends AppModel
+{
 
 }

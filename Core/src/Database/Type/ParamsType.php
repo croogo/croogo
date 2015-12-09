@@ -14,55 +14,56 @@ use PDO;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ParamsType extends Type {
+class ParamsType extends Type
+{
 
 /**
  * @param $value
  * @param Driver $driver
  * @return array
  */
-	public function toPHP($value, Driver $driver)
-	{
-		if (empty($value) || $value === null) {
-			return $value;
-		}
-		return $this->paramsToArray($value);
-	}
+    public function toPHP($value, Driver $driver)
+    {
+        if (empty($value) || $value === null) {
+            return $value;
+        }
+        return $this->paramsToArray($value);
+    }
 
 /**
  * @param $value
  * @return array
  */
-	public function marshal($value)
-	{
-		if (is_array($value) || $value === null) {
-			return $value;
-		}
-		return $this->paramsToArray($value);
-	}
+    public function marshal($value)
+    {
+        if (is_array($value) || $value === null) {
+            return $value;
+        }
+        return $this->paramsToArray($value);
+    }
 
 /**
  * @param $value
  * @param Driver $driver
  * @return array
  */
-	public function toDatabase($value, Driver $driver)
-	{
-		return $this->arrayToParams($value);
-	}
+    public function toDatabase($value, Driver $driver)
+    {
+        return $this->arrayToParams($value);
+    }
 
 /**
  * @param $value
  * @param Driver $driver
  * @return int
  */
-	public function toStatement($value, Driver $driver)
-	{
-		if ($value === null) {
-			return PDO::PARAM_NULL;
-		}
-		return PDO::PARAM_STR;
-	}
+    public function toStatement($value, Driver $driver)
+    {
+        if ($value === null) {
+            return PDO::PARAM_NULL;
+        }
+        return PDO::PARAM_STR;
+    }
 
 /**
  * Converts a string of params to an array of formatted key/value pairs
@@ -74,34 +75,35 @@ class ParamsType extends Type {
  * @param string $params
  * @return array
  */
-	public function paramsToArray($params) {
-		$converter = new StringConverter();
-		$output = [];
-		$params = preg_split('/[\r\n]+/', $params);
-		foreach ($params as $param) {
-			if (strlen($param) == 0) {
-				continue;
-			}
+    public function paramsToArray($params)
+    {
+        $converter = new StringConverter();
+        $output = [];
+        $params = preg_split('/[\r\n]+/', $params);
+        foreach ($params as $param) {
+            if (strlen($param) == 0) {
+                continue;
+            }
 
-			if ($param[0] === '[') {
-				$options = $converter->parseString('options', $param, [
-					'convertOptionsToArray' => true,
-				]);
-				if (!empty($options)) {
-					$output = array_merge($output, $options);
-				}
-				continue;
-			}
+            if ($param[0] === '[') {
+                $options = $converter->parseString('options', $param, [
+                    'convertOptionsToArray' => true,
+                ]);
+                if (!empty($options)) {
+                    $output = array_merge($output, $options);
+                }
+                continue;
+            }
 
-			$paramE = explode('=', $param);
-			if (count($paramE) == 2) {
-				$key = $paramE['0'];
-				$value = $paramE['1'];
-				$output[$key] = trim($value);
-			}
-		}
-		return $output;
-	}
+            $paramE = explode('=', $param);
+            if (count($paramE) == 2) {
+                $key = $paramE['0'];
+                $value = $paramE['1'];
+                $output[$key] = trim($value);
+            }
+        }
+        return $output;
+    }
 
 /**
  * Converts a array of formatted key/value pairs to an string of params
@@ -109,18 +111,19 @@ class ParamsType extends Type {
  * @param $array
  * @return array
  */
-	public function arrayToParams($array) {
-		$params = '';
-		$i = 0;
-		foreach ((array)$array as $key => $value) {
-			$params .= $key . '=' . $value;
+    public function arrayToParams($array)
+    {
+        $params = '';
+        $i = 0;
+        foreach ((array)$array as $key => $value) {
+            $params .= $key . '=' . $value;
 
-			if ($i != (count($array) - 1)) {
-				$params .= "\r\n";
-			}
+            if ($i != (count($array) - 1)) {
+                $params .= "\r\n";
+            }
 
-			$i++;
-		}
-		return $params;
-	}
+            $i++;
+        }
+        return $params;
+    }
 }

@@ -3,6 +3,7 @@
 namespace Croogo\Menus\Model;
 
 use App\Model\AppModel;
+
 /**
  * Menus App Model
  *
@@ -13,6 +14,7 @@ use App\Model\AppModel;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MenusAppModel extends AppModel {
+class MenusAppModel extends AppModel
+{
 
 }

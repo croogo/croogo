@@ -21,28 +21,31 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 namespace Croogo\Core\Config\Schema;
+
 /*
  *
  * Using the Schema command line utility
  * cake schema run create Sessions
  *
  */
-class SessionsSchema extends CakeSchema {
+class SessionsSchema extends CakeSchema
+{
 
-	public $name = 'Sessions';
+    public $name = 'Sessions';
 
-	public function before($event = array()) {
-		return true;
-	}
+    public function before($event = [])
+    {
+        return true;
+    }
 
-	public function after($event = array()) {
-	}
+    public function after($event = [])
+    {
+    }
 
-	public $cake_sessions = array(
-		'id' => array('type' => 'string', 'null' => false, 'key' => 'primary'),
-		'data' => array('type' => 'text', 'null' => true, 'default' => null),
-		'expires' => array('type' => 'integer', 'null' => true, 'default' => null),
-		'indexes' => array('PRIMARY' => array('column' => 'id', 'unique' => 1))
-	);
-
+    public $cake_sessions = [
+        'id' => ['type' => 'string', 'null' => false, 'key' => 'primary'],
+        'data' => ['type' => 'text', 'null' => true, 'default' => null],
+        'expires' => ['type' => 'integer', 'null' => true, 'default' => null],
+        'indexes' => ['PRIMARY' => ['column' => 'id', 'unique' => 1]]
+    ];
 }

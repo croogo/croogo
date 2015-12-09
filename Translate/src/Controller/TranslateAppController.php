@@ -3,6 +3,7 @@
 namespace Croogo\Translate\Controller;
 
 use App\Controller\AppController;
+
 /**
  * Translate App Controller
  *
@@ -13,6 +14,7 @@ use App\Controller\AppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TranslateAppController extends AppController {
+class TranslateAppController extends AppController
+{
 
 }

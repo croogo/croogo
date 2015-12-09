@@ -12,6 +12,7 @@ namespace Croogo\Acl\Model\Entity;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Aco extends \Acl\Model\Entity\Aco {
+class Aco extends \Acl\Model\Entity\Aco
+{
 
 }

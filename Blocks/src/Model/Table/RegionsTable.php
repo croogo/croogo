@@ -15,7 +15,8 @@ use Croogo\Core\Model\Table\CroogoTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class RegionsTable extends CroogoTable {
+class RegionsTable extends CroogoTable
+{
 
 /**
  * Validation
@@ -23,22 +24,22 @@ class RegionsTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $validate = [
-		'title' => [
-			'rule' => ['minLength', 1],
-			'message' => 'Title cannot be empty.',
-		],
-		'alias' => [
-			'isUnique' => [
-				'rule' => 'isUnique',
-				'message' => 'This alias has already been taken.',
-			],
-			'minLength' => [
-				'rule' => ['minLength', 1],
-				'message' => 'Alias cannot be empty.',
-			],
-		],
-	];
+    public $validate = [
+        'title' => [
+            'rule' => ['minLength', 1],
+            'message' => 'Title cannot be empty.',
+        ],
+        'alias' => [
+            'isUnique' => [
+                'rule' => 'isUnique',
+                'message' => 'This alias has already been taken.',
+            ],
+            'minLength' => [
+                'rule' => ['minLength', 1],
+                'message' => 'Alias cannot be empty.',
+            ],
+        ],
+    ];
 
 /**
  * Filter search fields
@@ -46,44 +47,45 @@ class RegionsTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $filterArgs = [
-		'title' => ['type' => 'like', 'field' => ['Region.title']]
-	];
+    public $filterArgs = [
+        'title' => ['type' => 'like', 'field' => ['Region.title']]
+    ];
 
 /**
  * Display fields for this model
  *
  * @var array
  */
-	protected $_displayFields = [
-		'id',
-		'title',
-		'alias',
-	];
+    protected $_displayFields = [
+        'id',
+        'title',
+        'alias',
+    ];
 
 /**
  * Find methods
  */
-	public $findMethods = [
-		'active' => true,
-	];
+    public $findMethods = [
+        'active' => true,
+    ];
 
-	public function initialize(array $config) {
-		parent::initialize($config);
-		$this->entityClass('Croogo/Blocks.Region');
-		$this->addAssociations([
-			'hasMany' => [
-				'Blocks' => [
-					'className' => 'Croogo/Blocks.Blocks',
-					'foreignKey' => 'region_id',
-					'dependent' => false,
-					'limit' => 3,
-				],
-			],
-		]);
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        $this->entityClass('Croogo/Blocks.Region');
+        $this->addAssociations([
+            'hasMany' => [
+                'Blocks' => [
+                    'className' => 'Croogo/Blocks.Blocks',
+                    'foreignKey' => 'region_id',
+                    'dependent' => false,
+                    'limit' => 3,
+                ],
+            ],
+        ]);
 
-		$this->addBehavior('Search.Searchable');
-		/* TODO: Enable after behaviors have been updated to 3.x
+        $this->addBehavior('Search.Searchable');
+        /* TODO: Enable after behaviors have been updated to 3.x
 		$this->addBehavior('Croogo.Cached', [
 			'groups' => [
 				'blocks',
@@ -91,32 +93,32 @@ class RegionsTable extends CroogoTable {
 		]);
 		*/
 
-		$this->addBehavior('Timestamp', [
-			'events' => [
-				'Model.beforeSave' => [
-					'created' => 'new',
-					'updated' => 'always'
-				]
-			]
-		]);
-		$this->addBehavior('Croogo/Core.Trackable');
-	}
+        $this->addBehavior('Timestamp', [
+            'events' => [
+                'Model.beforeSave' => [
+                    'created' => 'new',
+                    'updated' => 'always'
+                ]
+            ]
+        ]);
+        $this->addBehavior('Croogo/Core.Trackable');
+    }
 
 /**
  * Find Regions currently in use
  */
-	public function findActive(Query $query) {
-		return $query->where([
-			'block_count >' => 0
-		])->select([
-			'id',
-			'alias'
-		])->applyOptions([
-			'cache' => [
-				'name' => 'regions',
-				'config' => 'croogo_blocks',
-			],
-		]);
-	}
-
+    public function findActive(Query $query)
+    {
+        return $query->where([
+            'block_count >' => 0
+        ])->select([
+            'id',
+            'alias'
+        ])->applyOptions([
+            'cache' => [
+                'name' => 'regions',
+                'config' => 'croogo_blocks',
+            ],
+        ]);
+    }
 }

@@ -1,7 +1,9 @@
 <?php
 
 namespace Croogo\Blocks\Config\Migration;
-class BlocksPublishingFields extends CakeMigration {
+
+class BlocksPublishingFields extends CakeMigration
+{
 
 /**
  * Migration description
@@ -9,7 +11,7 @@ class BlocksPublishingFields extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = 'Adding/modifying publishing related fields';
+    public $description = 'Adding/modifying publishing related fields';
 
 /**
  * Actions to be performed
@@ -17,45 +19,45 @@ class BlocksPublishingFields extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-			'alter_field' => array(
-				'blocks' => array(
-					'status' => array(
-						'type' => 'integer',
-						'length' => 1,
-					),
-				),
-			),
-			'create_field' => array(
-				'blocks' => array(
-					'publish_start' => array(
-						'type' => 'datetime',
-						'after' => 'params',
-					),
-					'publish_end' => array(
-						'type' => 'datetime',
-						'after' => 'publish_start',
-					),
-				),
-			),
-		),
-		'down' => array(
-			'alter_field' => array(
-				'blocks' => array(
-					'status' => array(
-						'type' => 'boolean',
-					),
-				),
-			),
-			'drop_field' => array(
-				'blocks' => array(
-					'publish_start',
-					'publish_end',
-				),
-			),
-		),
-	);
+    public $migration = [
+        'up' => [
+            'alter_field' => [
+                'blocks' => [
+                    'status' => [
+                        'type' => 'integer',
+                        'length' => 1,
+                    ],
+                ],
+            ],
+            'create_field' => [
+                'blocks' => [
+                    'publish_start' => [
+                        'type' => 'datetime',
+                        'after' => 'params',
+                    ],
+                    'publish_end' => [
+                        'type' => 'datetime',
+                        'after' => 'publish_start',
+                    ],
+                ],
+            ],
+        ],
+        'down' => [
+            'alter_field' => [
+                'blocks' => [
+                    'status' => [
+                        'type' => 'boolean',
+                    ],
+                ],
+            ],
+            'drop_field' => [
+                'blocks' => [
+                    'publish_start',
+                    'publish_end',
+                ],
+            ],
+        ],
+    ];
 
 /**
  * Before migration callback
@@ -64,12 +66,13 @@ class BlocksPublishingFields extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		if ($direction == 'down') {
-			return Configure::read('debug') > 0;
-		}
-		return true;
-	}
+    public function before($direction)
+    {
+        if ($direction == 'down') {
+            return Configure::read('debug') > 0;
+        }
+        return true;
+    }
 
 /**
  * After migration callback
@@ -78,7 +81,8 @@ class BlocksPublishingFields extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
+    public function after($direction)
+    {
+        return true;
+    }
 }

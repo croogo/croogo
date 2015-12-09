@@ -8,18 +8,17 @@ use DebugKit\DebugPanel;
 class PluginsPanel extends DebugPanel
 {
 
-	public $plugin = 'Croogo/Core';
+    public $plugin = 'Croogo/Core';
 
-	public function data()
-	{
-		return [
-			'loaded' => Plugin::loaded()
-		];
-	}
+    public function data()
+    {
+        return [
+            'loaded' => Plugin::loaded()
+        ];
+    }
 
-	public function summary()
-	{
-		return count(Plugin::loaded());
-	}
-
+    public function summary()
+    {
+        return count(Plugin::loaded());
+    }
 }

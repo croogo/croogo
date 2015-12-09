@@ -7,6 +7,7 @@ use Cake\Console\ShellDispatcher;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
 use Croogo\Core\TestSuite\CroogoTestCase;
+
 /**
  * Ext Shell Test
  *
@@ -17,14 +18,15 @@ use Croogo\Core\TestSuite\CroogoTestCase;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtShellTest extends CroogoTestCase {
+class ExtShellTest extends CroogoTestCase
+{
 
 /**
  * fixtures
  *
  * @var array
  */
-	public $fixtures = array(
+    public $fixtures = [
 //		'plugin.comments.comment',
 //		'plugin.menus.menu',
 //		'plugin.blocks.block',
@@ -44,141 +46,146 @@ class ExtShellTest extends CroogoTestCase {
 //		'plugin.croogo\users.aro',
 //		'plugin.croogo\users.aco',
 //		'plugin.croogo\users.aros_aco',
-	);
+    ];
 
 /**
  * setUp method
  *
  * @return void
  */
-	public function setUp() {
-		parent::setUp();
-		$Folder = new Folder(APP . 'Plugin' . DS . 'Example');
-		$Folder->copy(Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
+    public function setUp()
+    {
+        parent::setUp();
+        $Folder = new Folder(APP . 'Plugin' . DS . 'Example');
+        $Folder->copy(Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
 //		$this->Setting = ClassRegistry::init('Settings.Setting');
-	}
+    }
 
 /**
  * tearDown
  *
  * @return void
  */
-	public function tearDown() {
-		parent::tearDown();
-		$Folder = new Folder(Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
-		$Folder->delete();
-	}
+    public function tearDown()
+    {
+        parent::tearDown();
+        $Folder = new Folder(Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS . 'Plugin' . DS . 'Example');
+        $Folder->delete();
+    }
 
 /**
  * testPlugin
  *
  * @return void
  */
-	public function testPlugin() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+    public function testPlugin()
+    {
+        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-		$Link = ClassRegistry::init('Menus.Link');
-		$Shell = $this->getMock('ExtShell', array('out', 'err'));
+        $Link = ClassRegistry::init('Menus.Link');
+        $Shell = $this->getMock('ExtShell', ['out', 'err']);
 
-		$Shell->args = array('deactivate', 'plugin', 'Example');
-		$Shell->params = array('force' => false);
-		$Shell->main();
-		$result = $this->Setting->findByKey('Hook.bootstraps');
-		$this->assertFalse(in_array('Example', explode(',', $result['Setting']['value'])));
-		$result = $Link->findByTitle('Example');
-		$this->assertFalse(!empty($result));
+        $Shell->args = ['deactivate', 'plugin', 'Example'];
+        $Shell->params = ['force' => false];
+        $Shell->main();
+        $result = $this->Setting->findByKey('Hook.bootstraps');
+        $this->assertFalse(in_array('Example', explode(',', $result['Setting']['value'])));
+        $result = $Link->findByTitle('Example');
+        $this->assertFalse(!empty($result));
 
-		$Shell->args = array('activate', 'plugin', 'Example');
-		$Shell->main();
-		$result = $this->Setting->findByKey('Hook.bootstraps');
-		$this->assertTrue(in_array('Example', explode(',', $result['Setting']['value'])));
-		$result = $Link->findByTitle('Example');
-		$this->assertTrue(!empty($result));
+        $Shell->args = ['activate', 'plugin', 'Example'];
+        $Shell->main();
+        $result = $this->Setting->findByKey('Hook.bootstraps');
+        $this->assertTrue(in_array('Example', explode(',', $result['Setting']['value'])));
+        $result = $Link->findByTitle('Example');
+        $this->assertTrue(!empty($result));
 
-		$bogusPlugin = 'Bogus';
-		$Shell->args = array('activate', 'plugin', $bogusPlugin);
-		$Shell->main();
-		$result = $this->Setting->findByKey('Hook.bootstraps');
-		$this->assertFalse(in_array($bogusPlugin, explode(',', $result['Setting']['value'])));
-	}
+        $bogusPlugin = 'Bogus';
+        $Shell->args = ['activate', 'plugin', $bogusPlugin];
+        $Shell->main();
+        $result = $this->Setting->findByKey('Hook.bootstraps');
+        $this->assertFalse(in_array($bogusPlugin, explode(',', $result['Setting']['value'])));
+    }
 
 /**
  * testForceActivation
  */
-	public function testForceActivation() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+    public function testForceActivation()
+    {
+        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-		$Shell = $this->getMock('ExtShell', array('out', 'err'));
+        $Shell = $this->getMock('ExtShell', ['out', 'err']);
 
-		$Shell->args = array('activate', 'plugin', 'TestPlugin');
-		$Shell->main();
-		$result = $this->Setting->findByKey('Hook.bootstraps');
-		$this->assertFalse(in_array('TestPlugin', explode(',', $result['Setting']['value'])));
+        $Shell->args = ['activate', 'plugin', 'TestPlugin'];
+        $Shell->main();
+        $result = $this->Setting->findByKey('Hook.bootstraps');
+        $this->assertFalse(in_array('TestPlugin', explode(',', $result['Setting']['value'])));
 
-		$Shell->args = array('activate', 'plugin', 'TestPlugin');
-		$Shell->params = array('force' => true);
-		$Shell->main();
-		$result = $this->Setting->findByKey('Hook.bootstraps');
-		$this->assertTrue(in_array('TestPlugin', explode(',', $result['Setting']['value'])));
-	}
+        $Shell->args = ['activate', 'plugin', 'TestPlugin'];
+        $Shell->params = ['force' => true];
+        $Shell->main();
+        $result = $this->Setting->findByKey('Hook.bootstraps');
+        $this->assertTrue(in_array('TestPlugin', explode(',', $result['Setting']['value'])));
+    }
 
 /**
  * testForceDeactivation
  */
-	public function testForceDeactivation() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+    public function testForceDeactivation()
+    {
+        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-		$Shell = $this->getMock('ExtShell', array('out', 'err'));
+        $Shell = $this->getMock('ExtShell', ['out', 'err']);
 
-		$result = $this->Setting->findByKey('Hook.bootstraps');
-		$bogus = $result['Setting']['value'] . ',Bogus';
-		$this->Setting->write('Hook.bootstraps', $bogus);
+        $result = $this->Setting->findByKey('Hook.bootstraps');
+        $bogus = $result['Setting']['value'] . ',Bogus';
+        $this->Setting->write('Hook.bootstraps', $bogus);
 
-		$Shell->args = array('deactivate', 'plugin', 'Bogus');
-		$Shell->params['force'] = true;
-		$Shell->main();
+        $Shell->args = ['deactivate', 'plugin', 'Bogus'];
+        $Shell->params['force'] = true;
+        $Shell->main();
 
-		$result = $this->Setting->findByKey('Hook.bootstraps');
-		$this->assertFalse(in_array('Bogus', explode(',', $result['Setting']['value'])));
-	}
+        $result = $this->Setting->findByKey('Hook.bootstraps');
+        $this->assertFalse(in_array('Bogus', explode(',', $result['Setting']['value'])));
+    }
 
 /**
  * testTheme
  *
  * @return void
  */
-	public function testTheme() {
-		$this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
+    public function testTheme()
+    {
+        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-		$Shell = $this->getMock('ExtShell', array('out', 'err'));
-		$Shell->args = array('activate', 'theme', 'Mytheme');
-		$Shell->main();
-		$result = $this->Setting->findByKey('Site.theme');
-		$this->assertEquals('Mytheme', $result['Setting']['value']);
-		$this->assertEquals('Mytheme', Configure::read('Site.theme'));
+        $Shell = $this->getMock('ExtShell', ['out', 'err']);
+        $Shell->args = ['activate', 'theme', 'Mytheme'];
+        $Shell->main();
+        $result = $this->Setting->findByKey('Site.theme');
+        $this->assertEquals('Mytheme', $result['Setting']['value']);
+        $this->assertEquals('Mytheme', Configure::read('Site.theme'));
 
-		$Shell->args = array('activate', 'theme', 'Bogus');
-		$Shell->main();
-		$result = $this->Setting->findByKey('Site.theme');
-		$this->assertEquals('Mytheme', $result['Setting']['value']);
-		$this->assertEquals('Mytheme', Configure::read('Site.theme'));
+        $Shell->args = ['activate', 'theme', 'Bogus'];
+        $Shell->main();
+        $result = $this->Setting->findByKey('Site.theme');
+        $this->assertEquals('Mytheme', $result['Setting']['value']);
+        $this->assertEquals('Mytheme', Configure::read('Site.theme'));
 
-		$Shell->args = array('deactivate', 'theme');
-		$Shell->main();
-		$result = $this->Setting->findByKey('Site.theme');
-		$this->assertEquals('Mytheme', $result['Setting']['value']);
+        $Shell->args = ['deactivate', 'theme'];
+        $Shell->main();
+        $result = $this->Setting->findByKey('Site.theme');
+        $this->assertEquals('Mytheme', $result['Setting']['value']);
 
-		$Shell->args = array('deactivate', 'theme', 'Mytheme');
-		$Shell->main();
-		$result = $this->Setting->findByKey('Site.theme');
-		$this->assertEquals('Mytheme', $result['Setting']['value']);
+        $Shell->args = ['deactivate', 'theme', 'Mytheme'];
+        $Shell->main();
+        $result = $this->Setting->findByKey('Site.theme');
+        $this->assertEquals('Mytheme', $result['Setting']['value']);
 
-		$Shell->args = array('activate', 'theme', 'Mytheme');
-		$Shell->main();
-		$Shell->args = array('activate', 'theme', 'default');
-		$Shell->main();
-		$result = $this->Setting->findByKey('Site.theme');
-		$this->assertEquals('', $result['Setting']['value']);
-	}
-
+        $Shell->args = ['activate', 'theme', 'Mytheme'];
+        $Shell->main();
+        $Shell->args = ['activate', 'theme', 'default'];
+        $Shell->main();
+        $result = $this->Setting->findByKey('Site.theme');
+        $this->assertEquals('', $result['Setting']['value']);
+    }
 }

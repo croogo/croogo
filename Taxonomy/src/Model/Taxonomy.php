@@ -3,6 +3,7 @@
 namespace Croogo\Taxonomy\Model;
 
 use Taxonomy\Model\TaxonomyAppModel;
+
 /**
  * Taxonomy
  *
@@ -13,7 +14,8 @@ use Taxonomy\Model\TaxonomyAppModel;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Taxonomy extends TaxonomyAppModel {
+class Taxonomy extends TaxonomyAppModel
+{
 
 /**
  * Model name
@@ -21,7 +23,7 @@ class Taxonomy extends TaxonomyAppModel {
  * @var string
  * @access public
  */
-	public $name = 'Taxonomy';
+    public $name = 'Taxonomy';
 
 /**
  * Behaviors used by the Model
@@ -29,15 +31,15 @@ class Taxonomy extends TaxonomyAppModel {
  * @var array
  * @access public
  */
-	public $actsAs = array(
-		'Tree',
-		'Croogo.Cached' => array(
-			'groups' => array(
-				'nodes',
-				'taxonomy',
-			),
-		),
-	);
+    public $actsAs = [
+        'Tree',
+        'Croogo.Cached' => [
+            'groups' => [
+                'nodes',
+                'taxonomy',
+            ],
+        ],
+    ];
 
 /**
  * Model associations: belongsTo
@@ -45,22 +47,22 @@ class Taxonomy extends TaxonomyAppModel {
  * @var array
  * @access public
  */
-	public $belongsTo = array(
-		'Term' => array(
-			'className' => 'Taxonomy.Term',
-			'foreignKey' => 'term_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-		),
-		'Vocabulary' => array(
-			'className' => 'Taxonomy.Vocabulary',
-			'foreignKey' => 'vocabulary_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-		),
-	);
+    public $belongsTo = [
+        'Term' => [
+            'className' => 'Taxonomy.Term',
+            'foreignKey' => 'term_id',
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+        ],
+        'Vocabulary' => [
+            'className' => 'Taxonomy.Vocabulary',
+            'foreignKey' => 'vocabulary_id',
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+        ],
+    ];
 
 /**
  * Generates a tree of terms for a vocabulary
@@ -69,85 +71,86 @@ class Taxonomy extends TaxonomyAppModel {
  * @param  array  $options
  * @return array
  */
-	public function getTree($alias, $options = array()) {
-		$_options = array(
-			'key' => 'slug', // Term.slug
-			'value' => 'title', // Term.title
-			'taxonomyId' => false,
-			'cache' => false,
-		);
-		$options = array_merge($_options, $options);
+    public function getTree($alias, $options = [])
+    {
+        $_options = [
+            'key' => 'slug', // Term.slug
+            'value' => 'title', // Term.title
+            'taxonomyId' => false,
+            'cache' => false,
+        ];
+        $options = array_merge($_options, $options);
 
-		// Check if cached
-		if ($this->useCache && isset($options['cache']['config'])) {
-			if (isset($options['cache']['prefix'])) {
-				$cacheName = $options['cache']['prefix'] . '_' . md5($alias . serialize($options));
-			} elseif (isset($options['cache']['name'])) {
-				$cacheName = $options['cache']['name'];
-			}
+        // Check if cached
+        if ($this->useCache && isset($options['cache']['config'])) {
+            if (isset($options['cache']['prefix'])) {
+                $cacheName = $options['cache']['prefix'] . '_' . md5($alias . serialize($options));
+            } elseif (isset($options['cache']['name'])) {
+                $cacheName = $options['cache']['name'];
+            }
 
-			if (isset($cacheName)) {
-				$cacheName .= '_' . Configure::read('Config.language');
-				$cachedResult = Cache::read($cacheName, $options['cache']['config']);
-				if ($cachedResult) {
-					return $cachedResult;
-				}
-			}
-		}
+            if (isset($cacheName)) {
+                $cacheName .= '_' . Configure::read('Config.language');
+                $cachedResult = Cache::read($cacheName, $options['cache']['config']);
+                if ($cachedResult) {
+                    return $cachedResult;
+                }
+            }
+        }
 
-		$vocabulary = $this->Vocabulary->findByAlias($alias);
-		if (!isset($vocabulary['Vocabulary']['id'])) {
-			return false;
-		}
-		$this->Behaviors->attach('Tree', array(
-			'scope' => array(
-				$this->alias . '.vocabulary_id' => $vocabulary['Vocabulary']['id'],
-			),
-		));
-		$treeConditions = array(
-			$this->alias . '.vocabulary_id' => $vocabulary['Vocabulary']['id'],
-		);
-		$tree = $this->generateTreeList($treeConditions, '{n}.' . $this->alias . '.term_id', '{n}.' . $this->alias . '.id');
-		$termsIds = array_keys($tree);
-		$terms = $this->Term->find('list', array(
-			'conditions' => array(
-				'Term.id' => $termsIds,
-			),
-			'fields' => array(
-				$options['key'],
-				$options['value'],
-				'id',
-			),
-		));
+        $vocabulary = $this->Vocabulary->findByAlias($alias);
+        if (!isset($vocabulary['Vocabulary']['id'])) {
+            return false;
+        }
+        $this->Behaviors->attach('Tree', [
+            'scope' => [
+                $this->alias . '.vocabulary_id' => $vocabulary['Vocabulary']['id'],
+            ],
+        ]);
+        $treeConditions = [
+            $this->alias . '.vocabulary_id' => $vocabulary['Vocabulary']['id'],
+        ];
+        $tree = $this->generateTreeList($treeConditions, '{n}.' . $this->alias . '.term_id', '{n}.' . $this->alias . '.id');
+        $termsIds = array_keys($tree);
+        $terms = $this->Term->find('list', [
+            'conditions' => [
+                'Term.id' => $termsIds,
+            ],
+            'fields' => [
+                $options['key'],
+                $options['value'],
+                'id',
+            ],
+        ]);
 
-		$termsTree = array();
-		foreach ($tree as $termId => $tvId) {
-			if (isset($terms[$termId])) {
-				$term = $terms[$termId];
-				$key = array_keys($term);
-				$key = $key['0'];
-				$value = $term[$key];
-				if (strstr($tvId, '_')) {
-					$tvIdN = str_replace('_', '', $tvId);
-					$tvIdE = explode($tvIdN, $tvId);
-					$value = $tvIdE['0'] . $value;
-				}
+        $termsTree = [];
+        foreach ($tree as $termId => $tvId) {
+            if (isset($terms[$termId])) {
+                $term = $terms[$termId];
+                $key = array_keys($term);
+                $key = $key['0'];
+                $value = $term[$key];
+                if (strstr($tvId, '_')) {
+                    $tvIdN = str_replace('_', '', $tvId);
+                    $tvIdE = explode($tvIdN, $tvId);
+                    $value = $tvIdE['0'] . $value;
+                }
 
-				if (!$options['taxonomyId']) {
-					$termsTree[$key] = $value;
-				} else {
-					$termsTree[str_replace('_', '', $tvId)] = $value;
-				}
-			}
-		}
+                if (!$options['taxonomyId']) {
+                    $termsTree[$key] = $value;
+                } else {
+                    $termsTree[str_replace('_', '', $tvId)] = $value;
+                }
+            }
+        }
 
-		// Write cache
-		if (isset($cacheName)) {
-			Cache::write($cacheName, $termsTree, $options['cache']['config']);
-		}
+        // Write cache
+        if (isset($cacheName)) {
+            Cache::write($cacheName, $termsTree, $options['cache']['config']);
+        }
 
-		return $termsTree;
-	}
+        return $termsTree;
+    }
 
 /**
  * Check if Term HABTM Vocabulary.
@@ -155,20 +158,21 @@ class Taxonomy extends TaxonomyAppModel {
  * If yes, return Taxonomy ID
  * otherwise, return false
  *
- * @param integer $termId
- * @param integer $vocabularyId
+ * @param int$termId
+ * @param int$vocabularyId
  * @return boolean
  */
-	public function termInVocabulary($termId, $vocabularyId) {
-		$taxonomy = $this->find('first', array(
-			'conditions' => array(
-				$this->alias . '.term_id' => $termId,
-				$this->alias . '.vocabulary_id' => $vocabularyId,
-			),
-		));
-		if (isset($taxonomy[$this->alias]['id'])) {
-			return $taxonomy[$this->alias]['id'];
-		}
-		return false;
-	}
+    public function termInVocabulary($termId, $vocabularyId)
+    {
+        $taxonomy = $this->find('first', [
+            'conditions' => [
+                $this->alias . '.term_id' => $termId,
+                $this->alias . '.vocabulary_id' => $vocabularyId,
+            ],
+        ]);
+        if (isset($taxonomy[$this->alias]['id'])) {
+            return $taxonomy[$this->alias]['id'];
+        }
+        return false;
+    }
 }

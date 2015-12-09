@@ -4,6 +4,7 @@ namespace Croogo\Translate\Event;
 
 use Cake\Event\EventListener;
 use Translate\Lib\Translations;
+
 /**
  * TranslateEventHandler
  *
@@ -12,18 +13,20 @@ use Translate\Lib\Translations;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TranslateEventHandler implements EventListener {
+class TranslateEventHandler implements EventListener
+{
 
-	public function implementedEvents() {
-		return array(
-			'Croogo.bootstrapComplete' => array(
-				'callable' => 'onCroogoBootstrapComplete',
-			),
-		);
-	}
+    public function implementedEvents()
+    {
+        return [
+            'Croogo.bootstrapComplete' => [
+                'callable' => 'onCroogoBootstrapComplete',
+            ],
+        ];
+    }
 
-	public function onCroogoBootstrapComplete($event) {
-		Translations::translateModels();
-	}
-
+    public function onCroogoBootstrapComplete($event)
+    {
+        Translations::translateModels();
+    }
 }

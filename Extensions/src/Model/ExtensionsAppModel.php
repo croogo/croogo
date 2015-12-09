@@ -3,6 +3,7 @@
 namespace Croogo\Extensions\Model;
 
 use App\Model\AppModel;
+
 /**
  * Extensions App Model
  *
@@ -13,6 +14,7 @@ use App\Model\AppModel;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtensionsAppModel extends AppModel {
+class ExtensionsAppModel extends AppModel
+{
 
 }

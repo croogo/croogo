@@ -14,7 +14,8 @@ use Croogo\Core\Model\Table\CroogoTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class LanguagesTable extends CroogoTable {
+class LanguagesTable extends CroogoTable
+{
 
 /**
  * Model name
@@ -22,7 +23,7 @@ class LanguagesTable extends CroogoTable {
  * @var string
  * @access public
  */
-	public $name = 'Language';
+    public $name = 'Language';
 
 /**
  * Behaviors used by the Model
@@ -30,9 +31,9 @@ class LanguagesTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $actsAs = [
-		'Croogo.Ordered' => ['field' => 'weight', 'foreign_key' => null],
-	];
+    public $actsAs = [
+        'Croogo.Ordered' => ['field' => 'weight', 'foreign_key' => null],
+    ];
 
 /**
  * Validation
@@ -40,29 +41,29 @@ class LanguagesTable extends CroogoTable {
  * @var array
  * @access public
  */
-	public $validate = [
-		'title' => [
-			'rule' => ['minLength', 1],
-			'message' => 'Title cannot be empty.',
-		],
-		'alias' => [
-			'isUnique' => [
-				'rule' => 'isUnique',
-				'message' => 'This alias has already been taken.',
-			],
-			'minLength' => [
-				'rule' => ['minLength', 1],
-				'message' => 'Alias cannot be empty.',
-			],
-		],
-	];
+    public $validate = [
+        'title' => [
+            'rule' => ['minLength', 1],
+            'message' => 'Title cannot be empty.',
+        ],
+        'alias' => [
+            'isUnique' => [
+                'rule' => 'isUnique',
+                'message' => 'This alias has already been taken.',
+            ],
+            'minLength' => [
+                'rule' => ['minLength', 1],
+                'message' => 'Alias cannot be empty.',
+            ],
+        ],
+    ];
 
 /**
  * Initialize
  */
-	public function initialize(array $config) {
-		parent::initialize($config);
-		$this->addBehavior('Croogo/Core.Trackable');
-	}
-
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+        $this->addBehavior('Croogo/Core.Trackable');
+    }
 }

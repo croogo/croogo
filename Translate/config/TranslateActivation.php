@@ -8,7 +8,9 @@
  * @link     http://www.croogo.org
  */
 namespace Croogo\Translate\Config;
-class TranslateActivation {
+
+class TranslateActivation
+{
 
 /**
  * onActivate will be called if this returns true
@@ -16,9 +18,10 @@ class TranslateActivation {
  * @param  object $controller Controller
  * @return boolean
  */
-	public function beforeActivation(&$controller) {
-		return true;
-	}
+    public function beforeActivation(&$controller)
+    {
+        return true;
+    }
 
 /**
  * Called after activating the plugin in ExtensionsPluginsController::admin_toggle()
@@ -26,13 +29,14 @@ class TranslateActivation {
  * @param object $controller Controller
  * @return void
  */
-	public function onActivation(&$controller) {
-		$controller->Croogo->addAco('Translate/Translate/admin_index');
-		$controller->Croogo->addAco('Translate/Translate/admin_edit');
-		$controller->Croogo->addAco('Translate/Translate/admin_delete');
-				$CroogoPlugin = new CroogoPlugin();
-		$CroogoPlugin->migrate('Translate');
-	}
+    public function onActivation(&$controller)
+    {
+        $controller->Croogo->addAco('Translate/Translate/admin_index');
+        $controller->Croogo->addAco('Translate/Translate/admin_edit');
+        $controller->Croogo->addAco('Translate/Translate/admin_delete');
+                $CroogoPlugin = new CroogoPlugin();
+        $CroogoPlugin->migrate('Translate');
+    }
 
 /**
  * onDeactivate will be called if this returns true
@@ -40,9 +44,10 @@ class TranslateActivation {
  * @param  object $controller Controller
  * @return boolean
  */
-	public function beforeDeactivation(&$controller) {
-		return true;
-	}
+    public function beforeDeactivation(&$controller)
+    {
+        return true;
+    }
 
 /**
  * Called after deactivating the plugin in ExtensionsPluginsController::admin_toggle()
@@ -50,7 +55,8 @@ class TranslateActivation {
  * @param object $controller Controller
  * @return void
  */
-	public function onDeactivation(&$controller) {
-		$controller->Croogo->removeAco('Translate');
-	}
+    public function onDeactivation(&$controller)
+    {
+        $controller->Croogo->removeAco('Translate');
+    }
 }
