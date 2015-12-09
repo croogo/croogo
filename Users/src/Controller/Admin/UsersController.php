@@ -5,7 +5,6 @@ namespace Croogo\Users\Controller\Admin;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Network\Email\Email;
-use Cake\ORM\Query;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
@@ -320,7 +319,7 @@ class UsersController extends AppController
     {
         $this->Prg->commonProcess();
 
-        /* @var Query $lookup */
+        /* @var \Cake\ORM\Query $lookup */
         $lookup = $this->Users->find('searchable', $this->Prg->parsedParams());
         $lookup->contain([
             'Roles' => [
