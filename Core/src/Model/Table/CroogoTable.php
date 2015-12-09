@@ -39,6 +39,8 @@ class CroogoTable extends Table
 
     public $hookedBehaviors = [];
 
+	public $hookedAssociations = [];
+
 /**
  * Display fields for admin_index. Use displayFields()
  *
@@ -76,6 +78,8 @@ class CroogoTable extends Table
         foreach ($this->hookedBehaviors as $behavior => $config) {
             $this->behaviors()->load($behavior, $config);
         }
+
+        $this->addBehavior('Croogo/Core.Associable');
     }
 
 /**
@@ -229,5 +233,13 @@ class CroogoTable extends Table
     public function validName($check)
     {
         return (preg_match('/^[\p{Ll}\p{Lm}\p{Lo}\p{Lt}\p{Lu}\p{Nd}-_\[\]\(\) ]+$/mu', $check[key($check)]) == 1);
+    }
+
+    public function __debugInfo()
+    {
+        return parent::__debugInfo() + [
+            'hookedBehaviors' => $this->hookedBehaviors,
+            'hookedAssociations' => $this->hookedAssociations,
+        ];
     }
 }

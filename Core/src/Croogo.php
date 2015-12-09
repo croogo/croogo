@@ -6,6 +6,7 @@ use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
+use Cake\ORM\Table;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
@@ -106,6 +107,26 @@ class Croogo
         self::hookViewBuilderOption($controllerName, 'helpers', $helperName);
     }
 
+    /**
+     * Hooks a association to a table
+     *
+     * @param Table $table
+     * @param string $type The association type
+     * @param string $association The table to association with
+     * @param array $options The association options
+     */
+	public static function hookAssociation(Table $table, $type, $association, $options = [])
+	{
+		self::hookTableProperty(
+			App::className($table, 'Model/Table', 'Table'),
+			'hookedAssociations',
+			[
+				$type => [
+					$association => $options
+				]
+			]
+		);
+	}
     /**
      * Shows plugin's admin_menu element in admin navigation under Extensions.
      *
