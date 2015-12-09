@@ -12,6 +12,13 @@ if (!in_array('cached_settings', $configured)) {
 	));
 }
 
+Configure::write(
+	'DebugKit.panels',
+	array_merge((array)Configure::read('DebugKit.panels'), [
+		'Croogo/Settings.Settings',
+	])
+);
+
 Croogo::hookComponent('*', [
 	'SettingsComponent' => [
 		'className' => 'Croogo/Settings.Settings'
