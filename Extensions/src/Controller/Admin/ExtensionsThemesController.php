@@ -17,7 +17,8 @@ use Croogo\Extensions\ExtensionsInstaller;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtensionsThemesController extends AppController {
+class ExtensionsThemesController extends AppController
+{
 
 /**
  * Controller name
@@ -25,7 +26,7 @@ class ExtensionsThemesController extends AppController {
  * @var string
  * @access public
  */
-	public $name = 'ExtensionsThemes';
+    public $name = 'ExtensionsThemes';
 
 /**
  * Models used by the Controller
@@ -33,48 +34,51 @@ class ExtensionsThemesController extends AppController {
  * @var array
  * @access public
  */
-	public $uses = array(
-		'Settings.Setting',
-		'Users.User',
-	);
+    public $uses = [
+        'Settings.Setting',
+        'Users.User',
+    ];
 
 /**
  * CroogoTheme instance
  */
-	protected $_CroogoTheme = false;
+    protected $_CroogoTheme = false;
 
 /**
  * Constructor
  */
-	public function __construct($request = null, $response = null) {
-		$this->_CroogoTheme = new CroogoTheme();
-		parent::__construct($request, $response);
-	}
+    public function __construct($request = null, $response = null)
+    {
+        $this->_CroogoTheme = new CroogoTheme();
+        parent::__construct($request, $response);
+    }
 
 /**
  * Admin index
  *
  * @return void
  */
-	public function index() {
-		$this->set('title_for_layout', __d('croogo', 'Themes'));
+    public function index()
+    {
+        $this->set('title_for_layout', __d('croogo', 'Themes'));
 
-		$themes = $this->_CroogoTheme->getThemes();
-		$themesData = array();
-		foreach ($themes as $theme) {
-			$themesData[$theme] = $this->_CroogoTheme->getData($theme);
-		}
+        $themes = $this->_CroogoTheme->getThemes();
+        $themesData = [];
+        foreach ($themes as $theme) {
+            $themesData[$theme] = $this->_CroogoTheme->getData($theme);
+        }
 
-		$currentTheme = $this->_CroogoTheme->getData(Configure::read('Site.theme'));
-		$this->set(compact('themes', 'themesData', 'currentTheme'));
-	}
+        $currentTheme = $this->_CroogoTheme->getData(Configure::read('Site.theme'));
+        $this->set(compact('themes', 'themesData', 'currentTheme'));
+    }
 
 /**
  * Admin activate
  *
  * @param string $theme
  */
-	public function activate($theme = null) {
+    public function activate($theme = null)
+    {
         try {
             $this->_CroogoTheme->activate($theme);
 
@@ -83,48 +87,51 @@ class ExtensionsThemesController extends AppController {
             $this->Flash->error(__d('croogo', 'Theme activation failed: %s', $exception->getMessage()));
         }
 
-		return $this->redirect(['action' => 'index']);
-	}
+        return $this->redirect(['action' => 'index']);
+    }
 
 /**
  * Admin add
  *
  * @return void
  */
-	public function add() {
-		$this->set('title_for_layout', __d('croogo', 'Upload a new theme'));
+    public function add()
+    {
+        $this->set('title_for_layout', __d('croogo', 'Upload a new theme'));
 
-		if (!empty($this->request->data)) {
-			$file = $this->request->data['Theme']['file'];
-			unset($this->request->data['Theme']['file']);
+        if (!empty($this->request->data)) {
+            $file = $this->request->data['Theme']['file'];
+            unset($this->request->data['Theme']['file']);
 
-			$Installer = new ExtensionsInstaller;
-			try {
-				$Installer->extractTheme($file['tmp_name']);
-				$this->Session->setFlash(__d('croogo', 'Theme uploaded successfully.'), 'flash', array('class' => 'success'));
-			} catch (CakeException $e) {
-				$this->Session->setFlash($e->getMessage(), 'flash', array('class' => 'error'));
-			}
-			return $this->redirect(array('action' => 'index'));
-		}
-	}
+            $Installer = new ExtensionsInstaller;
+            try {
+                $Installer->extractTheme($file['tmp_name']);
+                $this->Session->setFlash(__d('croogo', 'Theme uploaded successfully.'), 'flash', ['class' => 'success']);
+            } catch (CakeException $e) {
+                $this->Session->setFlash($e->getMessage(), 'flash', ['class' => 'error']);
+            }
+            return $this->redirect(['action' => 'index']);
+        }
+    }
 
 /**
  * Admin editor
  *
  * @return void
  */
-	public function editor() {
-		$this->set('title_for_layout', __d('croogo', 'Theme Editor'));
-	}
+    public function editor()
+    {
+        $this->set('title_for_layout', __d('croogo', 'Theme Editor'));
+    }
 
 /**
  * Admin save
  *
  * @return void
  */
-	public function save() {
-	}
+    public function save()
+    {
+    }
 
 /**
  * Admin delete
@@ -132,31 +139,31 @@ class ExtensionsThemesController extends AppController {
  * @param string $alias
  * @return void
  */
-	public function delete($alias = null) {
-		if ($alias == null) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Theme.'), 'flash', array('class' => 'error'));
-			return $this->redirect(array('action' => 'index'));
-		}
+    public function delete($alias = null)
+    {
+        if ($alias == null) {
+            $this->Session->setFlash(__d('croogo', 'Invalid Theme.'), 'flash', ['class' => 'error']);
+            return $this->redirect(['action' => 'index']);
+        }
 
-		if ($alias == 'default') {
-			$this->Session->setFlash(__d('croogo', 'Default theme cannot be deleted.'), 'flash', array('class' => 'error'));
-			return $this->redirect(array('action' => 'index'));
-		} elseif ($alias == Configure::read('Site.theme')) {
-			$this->Session->setFlash(__d('croogo', 'You cannot delete a theme that is currently active.'), 'flash', array('class' => 'error'));
-			return $this->redirect(array('action' => 'index'));
-		}
+        if ($alias == 'default') {
+            $this->Session->setFlash(__d('croogo', 'Default theme cannot be deleted.'), 'flash', ['class' => 'error']);
+            return $this->redirect(['action' => 'index']);
+        } elseif ($alias == Configure::read('Site.theme')) {
+            $this->Session->setFlash(__d('croogo', 'You cannot delete a theme that is currently active.'), 'flash', ['class' => 'error']);
+            return $this->redirect(['action' => 'index']);
+        }
 
-		$result = $this->_CroogoTheme->delete($alias);
+        $result = $this->_CroogoTheme->delete($alias);
 
-		if ($result === true) {
-			$this->Session->setFlash(__d('croogo', 'Theme deleted successfully.'), 'flash', array('class' => 'success'));
-		} elseif (!empty($result[0])) {
-			$this->Session->setFlash($result[0], 'flash', array('class' => 'error'));
-		} else {
-			$this->Session->setFlash(__d('croogo', 'An error occurred.'), 'flash', array('class' => 'error'));
-		}
+        if ($result === true) {
+            $this->Session->setFlash(__d('croogo', 'Theme deleted successfully.'), 'flash', ['class' => 'success']);
+        } elseif (!empty($result[0])) {
+            $this->Session->setFlash($result[0], 'flash', ['class' => 'error']);
+        } else {
+            $this->Session->setFlash(__d('croogo', 'An error occurred.'), 'flash', ['class' => 'error']);
+        }
 
-		return $this->redirect(array('action' => 'index'));
-	}
-
+        return $this->redirect(['action' => 'index']);
+    }
 }

@@ -12,29 +12,31 @@ namespace Croogo\Settings\Controller\Admin;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class SettingsController extends AppController {
+class SettingsController extends AppController
+{
 
 /**
  * Initialize
  */
-	public function initialize() {
-		parent::initialize();
+    public function initialize()
+    {
+        parent::initialize();
 
-		$this->loadComponent('Search.Prg', [
-			'presetForm' => [
-				'paramType' => 'querystring',
-			],
-			'commonProcess' => [
-				'paramType' => 'querystring',
-				'filterEmpty' => true,
-			],
-		]);
-	}
+        $this->loadComponent('Search.Prg', [
+            'presetForm' => [
+                'paramType' => 'querystring',
+            ],
+            'commonProcess' => [
+                'paramType' => 'querystring',
+                'filterEmpty' => true,
+            ],
+        ]);
+    }
 
 /**
  * Preset Variables Search
  */
-	public $presetVars = true;
+    public $presetVars = true;
 
 /**
  * Admin index
@@ -42,19 +44,20 @@ class SettingsController extends AppController {
  * @return void
  * @access public
  */
-	public function index() {
-		$this->Prg->commonProcess();
+    public function index()
+    {
+        $this->Prg->commonProcess();
 
-		$this->paginate = [
-			'order' => [
-				'Settings.weight' => 'DESC'
-			]
-		];
+        $this->paginate = [
+            'order' => [
+                'Settings.weight' => 'DESC'
+            ]
+        ];
 
-		$criteria = $this->Settings->find('searchable', $this->Prg->parsedParams());
+        $criteria = $this->Settings->find('searchable', $this->Prg->parsedParams());
 
-		$this->set('settings', $this->paginate($criteria));
-	}
+        $this->set('settings', $this->paginate($criteria));
+    }
 
 /**
  * Admin view
@@ -63,13 +66,14 @@ class SettingsController extends AppController {
  * @return void
  * @access public
  */
-	public function view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Setting.'), 'default', array('class' => 'error'));
-			return $this->redirect(array('action' => 'index'));
-		}
-		$this->set('setting', $this->Setting->read(null, $id));
-	}
+    public function view($id = null)
+    {
+        if (!$id) {
+            $this->Session->setFlash(__d('croogo', 'Invalid Setting.'), 'default', ['class' => 'error']);
+            return $this->redirect(['action' => 'index']);
+        }
+        $this->set('setting', $this->Setting->read(null, $id));
+    }
 
 /**
  * Admin add
@@ -77,72 +81,75 @@ class SettingsController extends AppController {
  * @return void
  * @access public
  */
-	public function add() {
-		$setting = $this->Settings->newEntity();
+    public function add()
+    {
+        $setting = $this->Settings->newEntity();
 
-		if ($this->request->is('post')) {
-			$setting = $this->Settings->patchEntity($setting, $this->request->data());
+        if ($this->request->is('post')) {
+            $setting = $this->Settings->patchEntity($setting, $this->request->data());
 
-			if ($this->Settings->save($setting)) {
-				$this->Flash->success(__d('croogo', 'The Setting has been saved'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Flash->error(__d('croogo', 'The Setting could not be saved. Please, try again.'));
-			}
-		}
+            if ($this->Settings->save($setting)) {
+                $this->Flash->success(__d('croogo', 'The Setting has been saved'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__d('croogo', 'The Setting could not be saved. Please, try again.'));
+            }
+        }
 
-		$this->set(compact('setting'));
-	}
+        $this->set(compact('setting'));
+    }
 
 /**
  * Admin edit
  *
- * @param integer $id
+ * @param int$id
  * @return void
  * @access public
  */
-	public function edit($id = null) {
-		if (!$id) {
-			$this->Flash->error(__d('croogo', 'Invalid Setting'));
-			return $this->redirect(array('action' => 'index'));
-		}
+    public function edit($id = null)
+    {
+        if (!$id) {
+            $this->Flash->error(__d('croogo', 'Invalid Setting'));
+            return $this->redirect(['action' => 'index']);
+        }
 
-		$setting = $this->Settings->get($id);
+        $setting = $this->Settings->get($id);
 
-		if ($this->request->is('put')) {
-			$setting = $this->Settings->patchEntity($setting, $this->request->data());
+        if ($this->request->is('put')) {
+            $setting = $this->Settings->patchEntity($setting, $this->request->data());
 
-			if ($this->Settings->save($setting)) {
-				$this->Flash->success(__d('croogo', 'The Setting has been saved'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Flash->error(__d('croogo', 'The Setting could not be saved. Please, try again.'));
-			}
-		}
+            if ($this->Settings->save($setting)) {
+                $this->Flash->success(__d('croogo', 'The Setting has been saved'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__d('croogo', 'The Setting could not be saved. Please, try again.'));
+            }
+        }
 
-		$this->set(compact('setting'));
-	}
+        $this->set(compact('setting'));
+    }
 
 /**
  * Admin delete
  *
- * @param integer $id
+ * @param int$id
  * @return void
  * @access public
  */
-	public function delete($id = null) {
-		if (!$id) {
-			$this->Flash->error(__d('croogo', 'Invalid Setting'));
-			return $this->redirect(array('action' => 'index'));
-		}
+    public function delete($id = null)
+    {
+        if (!$id) {
+            $this->Flash->error(__d('croogo', 'Invalid Setting'));
+            return $this->redirect(['action' => 'index']);
+        }
 
-		$setting = $this->Settings->get($id);
+        $setting = $this->Settings->get($id);
 
-		if ($this->Settings->delete($setting)) {
-			$this->Flash->success(__d('croogo', 'Setting deleted'));
-			return $this->redirect(array('action' => 'index'));
-		}
-	}
+        if ($this->Settings->delete($setting)) {
+            $this->Flash->success(__d('croogo', 'Setting deleted'));
+            return $this->redirect(['action' => 'index']);
+        }
+    }
 
 /**
  * Admin prefix
@@ -151,74 +158,76 @@ class SettingsController extends AppController {
  * @return void
  * @access public
  */
-	public function prefix($prefix = null) {
-		if ($this->request->is('post')) {
-			foreach ($this->request->data() as $id => $value) {
-				$setting = $this->Settings->get($id);
-				$setting->value = $value;
-				$this->Settings->save($setting);
-			}
-			$this->Flash->success(__d('croogo', 'Settings updated successfully'));
-			return $this->redirect(['action' => 'prefix', $prefix]);
-		}
+    public function prefix($prefix = null)
+    {
+        if ($this->request->is('post')) {
+            foreach ($this->request->data() as $id => $value) {
+                $setting = $this->Settings->get($id);
+                $setting->value = $value;
+                $this->Settings->save($setting);
+            }
+            $this->Flash->success(__d('croogo', 'Settings updated successfully'));
+            return $this->redirect(['action' => 'prefix', $prefix]);
+        }
 
-		$settings = $this->Settings->find('all', [
-			'order' => 'Settings.weight ASC',
-			'conditions' => [
-				'Settings.key LIKE' => $prefix . '.%',
-				'Settings.editable' => 1,
-			],
-		]);
+        $settings = $this->Settings->find('all', [
+            'order' => 'Settings.weight ASC',
+            'conditions' => [
+                'Settings.key LIKE' => $prefix . '.%',
+                'Settings.editable' => 1,
+            ],
+        ]);
 
-		if ($settings->count() == 0) {
-			$this->Flash->error(__d('croogo', 'Invalid Setting key'));
-		}
+        if ($settings->count() == 0) {
+            $this->Flash->error(__d('croogo', 'Invalid Setting key'));
+        }
 
-		$this->set(compact('prefix', 'settings'));
-	}
-
-/**
- * Admin moveup
- *
- * @param integer $id
- * @param integer $step
- * @return void
- * @access public
- */
-	public function moveup($id, $step = 1) {
-		if ($this->Setting->moveUp($id, $step)) {
-			$this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'default', array('class' => 'success'));
-		} else {
-			$this->Session->setFlash(__d('croogo', 'Could not move up'), 'default', array('class' => 'error'));
-		}
-
-		if (!$redirect = $this->referer()) {
-			$redirect = array(
-				'admin' => true,
-				'plugin' => 'settings',
-				'controller' => 'settings',
-				'action' => 'index'
-			);
-		}
-		return $this->redirect($redirect);
-	}
+        $this->set(compact('prefix', 'settings'));
+    }
 
 /**
  * Admin moveup
  *
- * @param integer $id
- * @param integer $step
+ * @param int$id
+ * @param int$step
  * @return void
  * @access public
  */
-	public function movedown($id, $step = 1) {
-		if ($this->Setting->moveDown($id, $step)) {
-			$this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'default', array('class' => 'success'));
-		} else {
-			$this->Session->setFlash(__d('croogo', 'Could not move down'), 'default', array('class' => 'error'));
-		}
+    public function moveup($id, $step = 1)
+    {
+        if ($this->Setting->moveUp($id, $step)) {
+            $this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'default', ['class' => 'success']);
+        } else {
+            $this->Session->setFlash(__d('croogo', 'Could not move up'), 'default', ['class' => 'error']);
+        }
 
-		return $this->redirect(array('admin' => true, 'controller' => 'settings', 'action' => 'index'));
-	}
+        if (!$redirect = $this->referer()) {
+            $redirect = [
+                'admin' => true,
+                'plugin' => 'settings',
+                'controller' => 'settings',
+                'action' => 'index'
+            ];
+        }
+        return $this->redirect($redirect);
+    }
 
+/**
+ * Admin moveup
+ *
+ * @param int$id
+ * @param int$step
+ * @return void
+ * @access public
+ */
+    public function movedown($id, $step = 1)
+    {
+        if ($this->Setting->moveDown($id, $step)) {
+            $this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'default', ['class' => 'success']);
+        } else {
+            $this->Session->setFlash(__d('croogo', 'Could not move down'), 'default', ['class' => 'error']);
+        }
+
+        return $this->redirect(['admin' => true, 'controller' => 'settings', 'action' => 'index']);
+    }
 }

@@ -3,7 +3,9 @@
 namespace Croogo\Settings\Config\Migration;
 
 use Extensions\Utility\DataMigration;
-class AddedAssetTimestampSetting extends CakeMigration {
+
+class AddedAssetTimestampSetting extends CakeMigration
+{
 
 /**
  * Migration description
@@ -11,7 +13,7 @@ class AddedAssetTimestampSetting extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = '';
+    public $description = '';
 
 /**
  * Actions to be performed
@@ -19,14 +21,14 @@ class AddedAssetTimestampSetting extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-		),
-		'down' => array(
-		),
-	);
+    public $migration = [
+        'up' => [
+        ],
+        'down' => [
+        ],
+    ];
 
-	protected $_assetTimestamp = 'Site.asset_timestamp';
+    protected $_assetTimestamp = 'Site.asset_timestamp';
 
 /**
  * Before migration callback
@@ -35,26 +37,27 @@ class AddedAssetTimestampSetting extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		$success = true;
+    public function before($direction)
+    {
+        $success = true;
 
-		if ($direction === 'up') {
-			if (Configure::read('Croogo.installed')) {
-				Plugin::load('Install');
-				$dm = new DataMigration();
-				$dir = Plugin::path('Install') . 'Config' . DS . 'Data' . DS;
-				$dm->loadFile($dir . 'SettingData.php', array(
-					'extract' => sprintf('{n}[key=%s]',$this->_assetTimestamp),
-				));
-				Plugin::unload('Install');
-			}
-		} else {
-			$Setting = ClassRegistry::init('Settings.Setting');
-			$success = $Setting->deleteKey($this->_assetTimestamp);
-		}
+        if ($direction === 'up') {
+            if (Configure::read('Croogo.installed')) {
+                Plugin::load('Install');
+                $dm = new DataMigration();
+                $dir = Plugin::path('Install') . 'Config' . DS . 'Data' . DS;
+                $dm->loadFile($dir . 'SettingData.php', [
+                    'extract' => sprintf('{n}[key=%s]', $this->_assetTimestamp),
+                ]);
+                Plugin::unload('Install');
+            }
+        } else {
+            $Setting = ClassRegistry::init('Settings.Setting');
+            $success = $Setting->deleteKey($this->_assetTimestamp);
+        }
 
-		return $success;
-	}
+        return $success;
+    }
 
 /**
  * After migration callback
@@ -63,7 +66,8 @@ class AddedAssetTimestampSetting extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
+    public function after($direction)
+    {
+        return true;
+    }
 }

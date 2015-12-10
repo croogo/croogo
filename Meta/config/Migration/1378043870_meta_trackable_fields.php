@@ -1,7 +1,9 @@
 <?php
 
 namespace Croogo\Meta\Config\Migration;
-class MetaTrackableFields extends CakeMigration {
+
+class MetaTrackableFields extends CakeMigration
+{
 
 /**
  * Migration description
@@ -9,7 +11,7 @@ class MetaTrackableFields extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = 'Adding Trackable Fields';
+    public $description = 'Adding Trackable Fields';
 
 /**
  * Actions to be performed
@@ -17,44 +19,44 @@ class MetaTrackableFields extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-			'create_field' => array(
-				'meta' => array(
-					'created' => array(
-						'type' => 'datetime',
-						'after' => 'weight',
-						'null' => true,
-					),
-					'created_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'created',
-					),
-					'updated' => array(
-						'type' => 'datetime',
-						'after' => 'created_by',
-						'null' => true,
-					),
-					'updated_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'updated',
-					),
-				),
-			),
-		),
-		'down' => array(
-			'drop_field' => array(
-				'meta' => array(
-					'created',
-					'created_by',
-					'updated',
-					'updated_by',
-				),
-			),
-		),
-	);
+    public $migration = [
+        'up' => [
+            'create_field' => [
+                'meta' => [
+                    'created' => [
+                        'type' => 'datetime',
+                        'after' => 'weight',
+                        'null' => true,
+                    ],
+                    'created_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'created',
+                    ],
+                    'updated' => [
+                        'type' => 'datetime',
+                        'after' => 'created_by',
+                        'null' => true,
+                    ],
+                    'updated_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'updated',
+                    ],
+                ],
+            ],
+        ],
+        'down' => [
+            'drop_field' => [
+                'meta' => [
+                    'created',
+                    'created_by',
+                    'updated',
+                    'updated_by',
+                ],
+            ],
+        ],
+    ];
 
 /**
  * Before migration callback
@@ -63,9 +65,10 @@ class MetaTrackableFields extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		return true;
-	}
+    public function before($direction)
+    {
+        return true;
+    }
 
 /**
  * After migration callback
@@ -74,7 +77,8 @@ class MetaTrackableFields extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
+    public function after($direction)
+    {
+        return true;
+    }
 }

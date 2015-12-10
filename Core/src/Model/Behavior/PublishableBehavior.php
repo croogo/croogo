@@ -23,93 +23,96 @@ use Croogo\Core\Status;
  * @link     http://www.croogo.org
  * @see      CroogoStatus
  */
-class PublishableBehavior extends Behavior {
+class PublishableBehavior extends Behavior
+{
 
-	protected $_defaultConfig = [
-		'admin' => false,
-		'fields' => [
-			'publish_start' => 'publish_start',
-			'publish_end' => 'publish_end',
-		],
-	];
+    protected $_defaultConfig = [
+        'admin' => false,
+        'fields' => [
+            'publish_start' => 'publish_start',
+            'publish_end' => 'publish_end',
+        ],
+    ];
 
 /**
-* Setup
-*
-* Valid options:
-*
-*   `admin`: Enable/disable date filtering for users with Admin roles
-*   `fields`: Specifies the physical field name to use
+ * Setup
+ *
+ * Valid options:
+ *
+ *   `admin`: Enable/disable date filtering for users with Admin roles
+ *   `fields`: Specifies the physical field name to use
  *
  * @return void
  */
-	public function initialize(array $config) {
-		parent::initialize($config);
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
 
-		$this->_CroogoStatus = new Status();
-	}
+        $this->_CroogoStatus = new Status();
+    }
 
 
-	/**
- * Get status for conditions in query based on current user's role id
- *
- * @return array Array of status
- */
-	public function status($statusType = 'publishing', $accessType = 'public') {
-		return $this->_CroogoStatus->status($statusType, $accessType);
-	}
+    /**
+     * Get status for conditions in query based on current user's role id
+     *
+     * @return array Array of status
+     */
+    public function status($statusType = 'publishing', $accessType = 'public')
+    {
+        return $this->_CroogoStatus->status($statusType, $accessType);
+    }
 
 /**
  * Filter records based on period
  *
  * @return array Options passed to Model::find()
  */
-	public function beforeFind(Event $event, Query $query, $options) {
-		$table = $this->_table;
-		$config = $this->config();
-		if (!empty($config['enabled'])) {
-			return $query;
-		}
+    public function beforeFind(Event $event, Query $query, $options)
+    {
+        $table = $this->_table;
+        $config = $this->config();
+        if (!empty($config['enabled'])) {
+            return $query;
+        }
 
-		if ($config['admin'] === false && isset($_SESSION)) {
-			// FIXME Avoid superglobals
-			$roleId = Hash::get($_SESSION, 'Auth.User.role_id');
-			if ($roleId == 1) {
-				return $query;
-			}
-		}
+        if ($config['admin'] === false && isset($_SESSION)) {
+            // FIXME Avoid superglobals
+            $roleId = Hash::get($_SESSION, 'Auth.User.role_id');
+            if ($roleId == 1) {
+                return $query;
+            }
+        }
 
-		if (!$table->hasField($config['fields']['publish_start']) ||
-			!$table->hasField($config['fields']['publish_end'])
-		) {
-			return $query;
-		}
+        if (!$table->hasField($config['fields']['publish_start']) ||
+            !$table->hasField($config['fields']['publish_end'])
+        ) {
+            return $query;
+        }
 
-		$date = isset($options['date']) ? $options['date'] : new \DateTime();
-		$start = $table->aliasField($config['fields']['publish_start']);
-		$end = $table->aliasField($config['fields']['publish_end']);
+        $date = isset($options['date']) ? $options['date'] : new \DateTime();
+        $start = $table->aliasField($config['fields']['publish_start']);
+        $end = $table->aliasField($config['fields']['publish_end']);
 
-		$query = $query->where([
-			'OR' => [
-				$start . ' IS' => null,
-				[
-					$start . ' IS NOT' => null,
-					$start . ' <=' => $date,
-				],
-			],
-		]);
+        $query = $query->where([
+            'OR' => [
+                $start . ' IS' => null,
+                [
+                    $start . ' IS NOT' => null,
+                    $start . ' <=' => $date,
+                ],
+            ],
+        ]);
 
-		$query = $query->andWhere([
-			'OR' => [
-				$end . ' IS' => null,
-				[
-					$end . ' IS NOT' => null,
-					$end . ' >=' => $date,
-				],
-			],
-		]);
+        $query = $query->andWhere([
+            'OR' => [
+                $end . ' IS' => null,
+                [
+                    $end . ' IS NOT' => null,
+                    $end . ' >=' => $date,
+                ],
+            ],
+        ]);
 
-		return $query;
-	}
-
+        return $query;
+    }
 }

@@ -17,7 +17,8 @@ use Cake\TestSuite\Fixture\TestFixture;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoTestFixture extends TestFixture {
+class CroogoTestFixture extends TestFixture
+{
 
 /**
  * _fixSequence
@@ -45,5 +46,4 @@ class CroogoTestFixture extends TestFixture {
 //		}
 //		return $result;
 //	}
-
 }

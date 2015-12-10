@@ -20,41 +20,42 @@ namespace Croogo\Acl\Test\Fixture;
 
 use App\TestSuite\Fixture\CakeTestFixture;
 
-class AclAroFixture extends CakeTestFixture {
+class AclAroFixture extends CakeTestFixture
+{
 
-	public $name = 'Aro';
+    public $name = 'Aro';
 
 /**
  * fields property
  *
  * @var array
  */
-	public $fields = array(
-		'id' => ['type' => 'integer'],
-		'parent_id' => ['type' => 'integer', 'length' => 10, 'null' => true],
-		'model' => ['type' => 'string', 'null' => true],
-		'foreign_key' => ['type' => 'integer', 'length' => 10, 'null' => true],
-		'alias' => ['type' => 'string', 'default' => ''],
-		'lft' => ['type' => 'integer', 'length' => 10, 'null' => true],
-		'rght' => ['type' => 'integer', 'length' => 10, 'null' => true],
-		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]]
-	);
+    public $fields = [
+        'id' => ['type' => 'integer'],
+        'parent_id' => ['type' => 'integer', 'length' => 10, 'null' => true],
+        'model' => ['type' => 'string', 'null' => true],
+        'foreign_key' => ['type' => 'integer', 'length' => 10, 'null' => true],
+        'alias' => ['type' => 'string', 'default' => ''],
+        'lft' => ['type' => 'integer', 'length' => 10, 'null' => true],
+        'rght' => ['type' => 'integer', 'length' => 10, 'null' => true],
+        '_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]]
+    ];
 
 /**
  * records property
  *
  * @var array
  */
-	public $records = array(
-		array('parent_id' => null, 'model' => null, 'foreign_key' => null, 'alias' => 'ROOT', 'lft' => 1, 'rght' => 20),
-		array('parent_id' => '1', 'model' => 'Department', 'foreign_key' => '1', 'alias' => '', 'lft' => 2, 'rght' => 3),
-		array('parent_id' => '1', 'model' => 'Department', 'foreign_key' => '2', 'alias' => '', 'lft' => 4, 'rght' => 7),
-		array('parent_id' => '1', 'model' => 'Department', 'foreign_key' => '3', 'alias' => '', 'lft' => 8, 'rght' => 9),
-		array('parent_id' => '1', 'model' => 'Department', 'foreign_key' => '4', 'alias' => '', 'lft' => 10, 'rght' => 11),
-		array('parent_id' => '1', 'model' => 'Department', 'foreign_key' => '5', 'alias' => '', 'lft' => 12, 'rght' => 13),
-		array('parent_id' => '3', 'model' => 'Employee', 'foreign_key' => '1', 'alias' => '', 'lft' => 5, 'rght' => 6),
-		array('parent_id' => '1', 'model' => 'Employee', 'foreign_key' => '2', 'alias' => '', 'lft' => 14, 'rght' => 15),
-		array('parent_id' => '1', 'model' => 'Employee', 'foreign_key' => '3', 'alias' => '', 'lft' => 16, 'rght' => 17),
-		array('parent_id' => '1', 'model' => 'Employee', 'foreign_key' => '4', 'alias' => '', 'lft' => 18, 'rght' => 19),
-	);
+    public $records = [
+        ['parent_id' => null, 'model' => null, 'foreign_key' => null, 'alias' => 'ROOT', 'lft' => 1, 'rght' => 20],
+        ['parent_id' => '1', 'model' => 'Department', 'foreign_key' => '1', 'alias' => '', 'lft' => 2, 'rght' => 3],
+        ['parent_id' => '1', 'model' => 'Department', 'foreign_key' => '2', 'alias' => '', 'lft' => 4, 'rght' => 7],
+        ['parent_id' => '1', 'model' => 'Department', 'foreign_key' => '3', 'alias' => '', 'lft' => 8, 'rght' => 9],
+        ['parent_id' => '1', 'model' => 'Department', 'foreign_key' => '4', 'alias' => '', 'lft' => 10, 'rght' => 11],
+        ['parent_id' => '1', 'model' => 'Department', 'foreign_key' => '5', 'alias' => '', 'lft' => 12, 'rght' => 13],
+        ['parent_id' => '3', 'model' => 'Employee', 'foreign_key' => '1', 'alias' => '', 'lft' => 5, 'rght' => 6],
+        ['parent_id' => '1', 'model' => 'Employee', 'foreign_key' => '2', 'alias' => '', 'lft' => 14, 'rght' => 15],
+        ['parent_id' => '1', 'model' => 'Employee', 'foreign_key' => '3', 'alias' => '', 'lft' => 16, 'rght' => 17],
+        ['parent_id' => '1', 'model' => 'Employee', 'foreign_key' => '4', 'alias' => '', 'lft' => 18, 'rght' => 19],
+    ];
 }

@@ -1,7 +1,9 @@
 <?php
 
 namespace Croogo\Taxonomy\Config\Migration;
-class FirstMigrationTaxonomy extends CakeMigration {
+
+class FirstMigrationTaxonomy extends CakeMigration
+{
 
 /**
  * Migration description
@@ -9,7 +11,7 @@ class FirstMigrationTaxonomy extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = '';
+    public $description = '';
 
 /**
  * Actions to be performed
@@ -17,91 +19,91 @@ class FirstMigrationTaxonomy extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-			'create_table' => array(
-				'taxonomies' => array(
-					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'primary'),
-					'parent_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 20),
-					'term_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10),
-					'vocabulary_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10),
-					'lft' => array('type' => 'integer', 'null' => true, 'default' => null),
-					'rght' => array('type' => 'integer', 'null' => true, 'default' => null),
-					'indexes' => array(
-						'PRIMARY' => array('column' => 'id', 'unique' => 1)
-					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
-				),
-				'terms' => array(
-					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
-					'title' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'slug' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'description' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
-					'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
-					'indexes' => array(
-						'PRIMARY' => array('column' => 'id', 'unique' => 1),
-						'slug' => array('column' => 'slug', 'unique' => 1)
-					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
-				),
-				'types' => array(
-					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
-					'title' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'alias' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'description' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'format_show_author' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-					'format_show_date' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-					'comment_status' => array('type' => 'integer', 'null' => false, 'default' => '1', 'length' => 1),
-					'comment_approve' => array('type' => 'boolean', 'null' => false, 'default' => '1'),
-					'comment_spam_protection' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-					'comment_captcha' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-					'params' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'plugin' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
-					'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
-					'indexes' => array(
-						'PRIMARY' => array('column' => 'id', 'unique' => 1),
-						'type_alias' => array('column' => 'alias', 'unique' => 1)
-					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
-				),
-				'types_vocabularies' => array(
-					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
-					'type_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10),
-					'vocabulary_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10),
-					'weight' => array('type' => 'integer', 'null' => true, 'default' => null),
-					'indexes' => array(
-						'PRIMARY' => array('column' => 'id', 'unique' => 1)
-					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
-				),
-				'vocabularies' => array(
-					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
-					'title' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'alias' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'description' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'required' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-					'multiple' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-					'tags' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
-					'plugin' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'weight' => array('type' => 'integer', 'null' => true, 'default' => null),
-					'updated' => array('type' => 'datetime', 'null' => false, 'default' => null),
-					'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
-					'indexes' => array(
-						'PRIMARY' => array('column' => 'id', 'unique' => 1),
-						'vocabulary_alias' => array('column' => 'alias', 'unique' => 1)
-					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
-				),
-			),
-		),
-		'down' => array(
-			'drop_table' => array(
-				'taxonomies', 'terms', 'types', 'types_vocabularies', 'vocabularies'
-			),
-		),
-	);
+    public $migration = [
+        'up' => [
+            'create_table' => [
+                'taxonomies' => [
+                    'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'primary'],
+                    'parent_id' => ['type' => 'integer', 'null' => true, 'default' => null, 'length' => 20],
+                    'term_id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+                    'vocabulary_id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+                    'lft' => ['type' => 'integer', 'null' => true, 'default' => null],
+                    'rght' => ['type' => 'integer', 'null' => true, 'default' => null],
+                    'indexes' => [
+                        'PRIMARY' => ['column' => 'id', 'unique' => 1]
+                    ],
+                    'tableParameters' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
+                ],
+                'terms' => [
+                    'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'],
+                    'title' => ['type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'slug' => ['type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'description' => ['type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'updated' => ['type' => 'datetime', 'null' => false, 'default' => null],
+                    'created' => ['type' => 'datetime', 'null' => false, 'default' => null],
+                    'indexes' => [
+                        'PRIMARY' => ['column' => 'id', 'unique' => 1],
+                        'slug' => ['column' => 'slug', 'unique' => 1]
+                    ],
+                    'tableParameters' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
+                ],
+                'types' => [
+                    'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'],
+                    'title' => ['type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'alias' => ['type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'description' => ['type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'format_show_author' => ['type' => 'boolean', 'null' => false, 'default' => '1'],
+                    'format_show_date' => ['type' => 'boolean', 'null' => false, 'default' => '1'],
+                    'comment_status' => ['type' => 'integer', 'null' => false, 'default' => '1', 'length' => 1],
+                    'comment_approve' => ['type' => 'boolean', 'null' => false, 'default' => '1'],
+                    'comment_spam_protection' => ['type' => 'boolean', 'null' => false, 'default' => '0'],
+                    'comment_captcha' => ['type' => 'boolean', 'null' => false, 'default' => '0'],
+                    'params' => ['type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'plugin' => ['type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'updated' => ['type' => 'datetime', 'null' => false, 'default' => null],
+                    'created' => ['type' => 'datetime', 'null' => false, 'default' => null],
+                    'indexes' => [
+                        'PRIMARY' => ['column' => 'id', 'unique' => 1],
+                        'type_alias' => ['column' => 'alias', 'unique' => 1]
+                    ],
+                    'tableParameters' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
+                ],
+                'types_vocabularies' => [
+                    'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'],
+                    'type_id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+                    'vocabulary_id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10],
+                    'weight' => ['type' => 'integer', 'null' => true, 'default' => null],
+                    'indexes' => [
+                        'PRIMARY' => ['column' => 'id', 'unique' => 1]
+                    ],
+                    'tableParameters' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
+                ],
+                'vocabularies' => [
+                    'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'],
+                    'title' => ['type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'alias' => ['type' => 'string', 'null' => false, 'default' => null, 'key' => 'unique', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'description' => ['type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'required' => ['type' => 'boolean', 'null' => false, 'default' => '0'],
+                    'multiple' => ['type' => 'boolean', 'null' => false, 'default' => '0'],
+                    'tags' => ['type' => 'boolean', 'null' => false, 'default' => '0'],
+                    'plugin' => ['type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'weight' => ['type' => 'integer', 'null' => true, 'default' => null],
+                    'updated' => ['type' => 'datetime', 'null' => false, 'default' => null],
+                    'created' => ['type' => 'datetime', 'null' => false, 'default' => null],
+                    'indexes' => [
+                        'PRIMARY' => ['column' => 'id', 'unique' => 1],
+                        'vocabulary_alias' => ['column' => 'alias', 'unique' => 1]
+                    ],
+                    'tableParameters' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
+                ],
+            ],
+        ],
+        'down' => [
+            'drop_table' => [
+                'taxonomies', 'terms', 'types', 'types_vocabularies', 'vocabularies'
+            ],
+        ],
+    ];
 
 /**
  * Before migration callback
@@ -110,12 +112,13 @@ class FirstMigrationTaxonomy extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		if ($direction === 'down') {
-			return false;
-		}
-		return true;
-	}
+    public function before($direction)
+    {
+        if ($direction === 'down') {
+            return false;
+        }
+        return true;
+    }
 
 /**
  * After migration callback
@@ -124,8 +127,8 @@ class FirstMigrationTaxonomy extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
-
+    public function after($direction)
+    {
+        return true;
+    }
 }

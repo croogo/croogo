@@ -1,8 +1,9 @@
 <?php
 
 namespace Croogo\Taxonomy\Config;
-$config = array(
-	'EventHandlers' => array(
-		'Croogo/Taxonomy.TaxonomiesEventHandler',
-	),
-);
+
+$config = [
+    'EventHandlers' => [
+        'Croogo/Taxonomy.TaxonomiesEventHandler',
+    ],
+];

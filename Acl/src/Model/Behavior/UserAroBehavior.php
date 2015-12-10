@@ -16,34 +16,34 @@ use Cake\ORM\Table;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class UserAroBehavior extends Behavior {
+class UserAroBehavior extends Behavior
+{
 
 /**
  * Setup
  */
-	public function initialize(array $config)
-	{
-		parent::initialize($config);
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
 
-		$this->_setupMultirole($this->_table);
-	}
+        $this->_setupMultirole($this->_table);
+    }
 
 /**
  * Enable Multiple Role, dynamically bind User Habtm Role
  */
-	protected function _setupMultirole(Table $model) {
-		if (!Configure::read('Access Control.multiRole')) {
-			return;
-		}
-		$model->bindModel(array(
-			'hasAndBelongsToMany' => array(
-				'Role' => array(
-					'className' => 'Users.Role',
-					'unique' => 'keepExisting',
-				),
-			)
-		), false);
-	}
-
-
+    protected function _setupMultirole(Table $model)
+    {
+        if (!Configure::read('Access Control.multiRole')) {
+            return;
+        }
+        $model->bindModel([
+            'hasAndBelongsToMany' => [
+                'Role' => [
+                    'className' => 'Users.Role',
+                    'unique' => 'keepExisting',
+                ],
+            ]
+        ], false);
+    }
 }

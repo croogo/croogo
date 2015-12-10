@@ -12,7 +12,8 @@ use Croogo\Meta\Controller\MetaAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MetaController extends MetaAppController {
+class MetaController extends MetaAppController
+{
 
 /**
  * Components
@@ -20,17 +21,17 @@ class MetaController extends MetaAppController {
  * @var array
  * @access public
  */
-	public $components = array(
-		'Search.Prg' => array(
-			'presetForm' => array(
-				'paramType' => 'querystring',
-			),
-			'commonProcess' => array(
-				'paramType' => 'querystring',
-				'filterEmpty' => true,
-			),
-		),
-	);
+    public $components = [
+        'Search.Prg' => [
+            'presetForm' => [
+                'paramType' => 'querystring',
+            ],
+            'commonProcess' => [
+                'paramType' => 'querystring',
+                'filterEmpty' => true,
+            ],
+        ],
+    ];
 
 /**
  * Preset Variable Search
@@ -38,30 +39,31 @@ class MetaController extends MetaAppController {
  * @var array
  * @access public
  */
-	public $presetVars = true;
+    public $presetVars = true;
 
 /**
  * Admin delete meta
  *
- * @param integer $id
+ * @param int$id
  * @return void
  * @access public
  */
-	public function delete_meta($id = null) {
-		$Meta = ClassRegistry::init('Meta.Meta');
-		$success = false;
-		if ($id != null && $Meta->delete($id)) {
-			$success = true;
-		} else {
-			if (!$Meta->exists($id)) {
-				$success = true;
-			}
-		}
+    public function delete_meta($id = null)
+    {
+        $Meta = ClassRegistry::init('Meta.Meta');
+        $success = false;
+        if ($id != null && $Meta->delete($id)) {
+            $success = true;
+        } else {
+            if (!$Meta->exists($id)) {
+                $success = true;
+            }
+        }
 
-		$success = array('success' => $success);
-		$this->set(compact('success'));
-		$this->set('_serialize', 'success');
-	}
+        $success = ['success' => $success];
+        $this->set(compact('success'));
+        $this->set('_serialize', 'success');
+    }
 
 /**
  * Admin add meta
@@ -69,8 +71,8 @@ class MetaController extends MetaAppController {
  * @return void
  * @access public
  */
-	public function add_meta() {
-		$this->layout = 'ajax';
-	}
-
+    public function add_meta()
+    {
+        $this->layout = 'ajax';
+    }
 }

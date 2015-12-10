@@ -1,6 +1,7 @@
 <?php
 
 namespace Croogo\Dashboards\Model\Table;
+
 use Cake\ORM\Table;
 
 /**
@@ -16,18 +17,17 @@ use Cake\ORM\Table;
 class DashboardsDashboardsTable extends Table
 {
 
-	public function initialize(array $config)
-	{
-		parent::initialize($config);
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
 
-		$this->table('dashboards');
+        $this->table('dashboards');
 //		$this->addBehavior('Croogo/Core.Ordered', [
 //			'field' => 'weight',
 //			'foreign_key' => 'user_id',
 //		]);
-		$this->belongsTo('Users', [
-			'className' => 'Croogo/Users.Users'
-		]);
-	}
-
+        $this->belongsTo('Users', [
+            'className' => 'Croogo/Users.Users'
+        ]);
+    }
 }

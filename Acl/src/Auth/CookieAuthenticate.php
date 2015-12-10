@@ -4,7 +4,8 @@ namespace Croogo\Acl\Controller\Component\Auth;
 use App\Controller\Component\AuthComponent;
 use App\Controller\Component\Auth\BaseAuthenticate;
 use Cake\Routing\Router;
-use type rijndael, mcrypt_encrypt() is required');
+use type rijndael;
+use mcrypt_encrypt() is required');
 /**
  * An authentication adapter for AuthComponent.  Provides the ability to authenticate using COOKIE
  *
@@ -95,86 +96,88 @@ class CookieAuthenticate extends BaseAuthenticate {
 
 		$this->settings = array_merge(array('crypt' => 'rijndael'), $this->settings);
 		if ($this->settings['crypt'] == 'rijndael' && !function_exists('mcrypt_encrypt')) {
-			throw new CakeException('Cannot 		}
-		$this->_registry->Cookie->type($this->settings['crypt']);
+			throw new CakeException('Cannot         }
+        $this->_registry->Cookie->type($this->settings['crypt']);
 
-		list(, $model) = pluginSplit($this->settings['userModel']);
+        list(, $model) = pluginSplit($this->settings['userModel']);
 
-		$this->_registry->Cookie->name = $this->settings['cookie']['name'];
-		$cookie = $this->_registry->Cookie->read($model);
-		$data = $this->_verify($cookie);
-		if (!$data) {
-			return false;
-		}
+        $this->_registry->Cookie->name = $this->settings['cookie']['name'];
+        $cookie = $this->_registry->Cookie->read($model);
+        $data = $this->_verify($cookie);
+if (!$data) {
+    return false;
+}
 
-		extract($this->settings['fields']);
-		if (empty($data[$username])) {
-			return false;
-		}
+        extract($this->settings['fields']);
+if (empty($data[$username])) {
+    return false;
+}
 
-		$user = $this->_findUser($data[$username]);
-		if ($user) {
-			$this->_registry->Session->write(AuthComponent::$sessionKey, $user);
-			return $user;
-		}
-		return false;
-	}
+        $user = $this->_findUser($data[$username]);
+if ($user) {
+    $this->_registry->Session->write(AuthComponent::$sessionKey, $user);
+    return $user;
+}
+        return false;
+    }
 
 /**
  * Find a user record
  *
  * @see BaseAuthenticate::_findUser()
  */
-	protected function _findUser($conditions, $password = null) {
-		$userModel = $this->settings['userModel'];
-		list(, $model) = pluginSplit($userModel);
-		$fields = $this->settings['fields'];
+protected function _findUser($conditions, $password = null)
+{
+    $userModel = $this->settings['userModel'];
+    list(, $model) = pluginSplit($userModel);
+    $fields = $this->settings['fields'];
 
-		if (!is_array($conditions)) {
-			$username = $conditions;
-			$conditions = array(
-				$model . '.' . $fields['username'] => $username,
-			);
-		}
-		if (!empty($this->settings['scope'])) {
-			$conditions = array_merge($conditions, $this->settings['scope']);
-		}
-		$result = ClassRegistry::init($userModel)->find('first', array(
-			'conditions' => $conditions,
-			'recursive' => $this->settings['recursive'],
-			'contain' => $this->settings['contain'],
-		));
-		if (empty($result) || empty($result[$model])) {
-			return false;
-		}
-		$user = $result[$model];
-		if (
-			isset($conditions[$model . '.' . $fields['password']]) ||
-			isset($conditions[$fields['password']])
-		) {
-			unset($user[$fields['password']]);
-		}
-		unset($result[$model]);
-		return array_merge($user, $result);
-	}
+    if (!is_array($conditions)) {
+        $username = $conditions;
+        $conditions = [
+            $model . '.' . $fields['username'] => $username,
+        ];
+    }
+    if (!empty($this->settings['scope'])) {
+        $conditions = array_merge($conditions, $this->settings['scope']);
+    }
+    $result = ClassRegistry::init($userModel)->find('first', [
+        'conditions' => $conditions,
+        'recursive' => $this->settings['recursive'],
+        'contain' => $this->settings['contain'],
+    ]);
+    if (empty($result) || empty($result[$model])) {
+        return false;
+    }
+    $user = $result[$model];
+    if (isset($conditions[$model . '.' . $fields['password']]) ||
+        isset($conditions[$fields['password']])
+    ) {
+        unset($user[$fields['password']]);
+    }
+    unset($result[$model]);
+    return array_merge($user, $result);
+}
 
 /**
  * Authenticate a user based on the request information
  *
  * @see BaseAuthenticate::authenticate()
  */
-	public function authenticate(Request $request, Response $response) {
-		if (!empty($request->data) || $request->is('post')) {
-			return false;
-		}
-		return $this->getUser($request);
-	}
+public function authenticate(Request $request, Response $response)
+{
+    if (!empty($request->data) || $request->is('post')) {
+        return false;
+    }
+    return $this->getUser($request);
+}
 
 /**
  * Logout
  */
-	public function logout($user) {
-		$this->_registry->Cookie->destroy();
-	}
+public function logout($user)
+{
+    $this->_registry->Cookie->destroy();
+}
 
 }

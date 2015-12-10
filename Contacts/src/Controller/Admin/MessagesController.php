@@ -12,7 +12,8 @@ namespace Croogo\Contacts\Controller\Admin;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MessagesController extends AppController {
+class MessagesController extends AppController
+{
 
 /**
  * Components
@@ -20,23 +21,23 @@ class MessagesController extends AppController {
  * @var array
  * @access public
  */
-	public $components = array(
-		'Croogo/Core.BulkProcess',
-		'Search.Prg' => array(
-			'presetForm' => array(
-				'paramType' => 'querystring',
-			),
-			'commonProcess' => array(
-				'paramType' => 'querystring',
-				'filterEmpty' => true,
-			),
-		),
-	);
+    public $components = [
+        'Croogo/Core.BulkProcess',
+        'Search.Prg' => [
+            'presetForm' => [
+                'paramType' => 'querystring',
+            ],
+            'commonProcess' => [
+                'paramType' => 'querystring',
+                'filterEmpty' => true,
+            ],
+        ],
+    ];
 
 /**
  * Preset Search Variables
  */
-	public $presetVars = true;
+    public $presetVars = true;
 
 /**
  * Admin index
@@ -44,64 +45,67 @@ class MessagesController extends AppController {
  * @return void
  * @access public
  */
-	public function index() {
-		$this->set('title_for_layout', __d('croogo', 'Messages'));
-		$this->Prg->commonProcess();
+    public function index()
+    {
+        $this->set('title_for_layout', __d('croogo', 'Messages'));
+        $this->Prg->commonProcess();
 
-		$query = $this->Messages->find('searchable', $this->Prg->parsedParams());
-		$messages = $this->paginate($query);
-		$contacts = $this->Messages->Contacts->find('list');
-		$searchFields = array('contact_id', 'status' => array(
-			'label' => __d('croogo', 'Read'),
-			'type' => 'hidden',
-		));
-		$this->set(compact('messages', 'contacts', 'searchFields'));
-	}
+        $query = $this->Messages->find('searchable', $this->Prg->parsedParams());
+        $messages = $this->paginate($query);
+        $contacts = $this->Messages->Contacts->find('list');
+        $searchFields = ['contact_id', 'status' => [
+            'label' => __d('croogo', 'Read'),
+            'type' => 'hidden',
+        ]];
+        $this->set(compact('messages', 'contacts', 'searchFields'));
+    }
 
 /**
  * Admin edit
  *
- * @param integer $id
+ * @param int$id
  * @return void
  * @access public
  */
-	public function edit($id = null) {
-		$this->set('title_for_layout', __d('croogo', 'Edit Message'));
+    public function edit($id = null)
+    {
+        $this->set('title_for_layout', __d('croogo', 'Edit Message'));
 
-		if (!$id && empty($this->request->data)) {
-			$this->Session->setFlash(__d('croogo', 'Invalid Message'));
-			return $this->redirect(array('action' => 'index'));
-		}
-		if (!empty($this->request->data)) {
-			if ($this->Message->save($this->request->data)) {
-				$this->Session->setFlash(__d('croogo', 'The Message has been saved'), 'flash', array('class' => 'success'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__d('croogo', 'The Message could not be saved. Please, try again.'), 'flash', array('class' => 'error'));
-			}
-		}
-		if (empty($this->request->data)) {
-			$this->request->data = $this->Message->read(null, $id);
-		}
-	}
+        if (!$id && empty($this->request->data)) {
+            $this->Session->setFlash(__d('croogo', 'Invalid Message'));
+            return $this->redirect(['action' => 'index']);
+        }
+        if (!empty($this->request->data)) {
+            if ($this->Message->save($this->request->data)) {
+                $this->Session->setFlash(__d('croogo', 'The Message has been saved'), 'flash', ['class' => 'success']);
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Session->setFlash(__d('croogo', 'The Message could not be saved. Please, try again.'), 'flash', ['class' => 'error']);
+            }
+        }
+        if (empty($this->request->data)) {
+            $this->request->data = $this->Message->read(null, $id);
+        }
+    }
 
 /**
  * Admin delete
  *
- * @param integer $id
+ * @param int$id
  * @return void
  * @access public
  */
-	public function delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__d('croogo', 'Invalid id for Message'), 'flash', array('class' => 'error'));
-			return $this->redirect(array('action' => 'index'));
-		}
-		if ($this->Message->delete($id)) {
-			$this->Session->setFlash(__d('croogo', 'Message deleted'), 'flash', array('class' => 'success'));
-			return $this->redirect(array('action' => 'index'));
-		}
-	}
+    public function delete($id = null)
+    {
+        if (!$id) {
+            $this->Session->setFlash(__d('croogo', 'Invalid id for Message'), 'flash', ['class' => 'error']);
+            return $this->redirect(['action' => 'index']);
+        }
+        if ($this->Message->delete($id)) {
+            $this->Session->setFlash(__d('croogo', 'Message deleted'), 'flash', ['class' => 'success']);
+            return $this->redirect(['action' => 'index']);
+        }
+    }
 
 /**
  * Admin process
@@ -109,16 +113,16 @@ class MessagesController extends AppController {
  * @return void
  * @access public
  */
-	public function process() {
-		$Message = $this->{$this->modelClass};
-		list($action, $ids) = $this->BulkProcess->getRequestVars($Message->alias);
+    public function process()
+    {
+        $Message = $this->{$this->modelClass};
+        list($action, $ids) = $this->BulkProcess->getRequestVars($Message->alias);
 
-		$messageMap = array(
-			'delete' => __d('croogo', 'Messages deleted'),
-			'read' => __d('croogo', 'Messages marked as read'),
-			'unread' => __d('croogo', 'Messages marked as unread'),
-		);
-		return $this->BulkProcess->process($Message, $action, $ids, $messageMap);
-	}
-
+        $messageMap = [
+            'delete' => __d('croogo', 'Messages deleted'),
+            'read' => __d('croogo', 'Messages marked as read'),
+            'unread' => __d('croogo', 'Messages marked as unread'),
+        ];
+        return $this->BulkProcess->process($Message, $action, $ids, $messageMap);
+    }
 }

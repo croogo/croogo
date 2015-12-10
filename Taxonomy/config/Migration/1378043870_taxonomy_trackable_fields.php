@@ -1,7 +1,9 @@
 <?php
 
 namespace Croogo\Taxonomy\Config\Migration;
-class TaxonomyTrackableFields extends CakeMigration {
+
+class TaxonomyTrackableFields extends CakeMigration
+{
 
 /**
  * Migration description
@@ -9,7 +11,7 @@ class TaxonomyTrackableFields extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = 'Adding Trackable Fields';
+    public $description = 'Adding Trackable Fields';
 
 /**
  * Actions to be performed
@@ -17,64 +19,64 @@ class TaxonomyTrackableFields extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-			'create_field' => array(
-				'terms' => array(
-					'created_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'created',
-					),
-					'updated_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'updated',
-					),
-				),
-				'types' => array(
-					'created_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'created',
-					),
-					'updated_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'updated',
-					),
-				),
-				'vocabularies' => array(
-					'created_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'created',
-					),
-					'updated_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'updated',
-					),
-				),
-			),
-		),
-		'down' => array(
-			'drop_field' => array(
-				'terms' => array(
-					'created_by',
-					'updated_by',
-				),
-				'types' => array(
-					'created_by',
-					'updated_by',
-				),
-				'vocabularies' => array(
-					'created_by',
-					'updated_by',
-				),
-			),
-		),
-	);
+    public $migration = [
+        'up' => [
+            'create_field' => [
+                'terms' => [
+                    'created_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'created',
+                    ],
+                    'updated_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'updated',
+                    ],
+                ],
+                'types' => [
+                    'created_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'created',
+                    ],
+                    'updated_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'updated',
+                    ],
+                ],
+                'vocabularies' => [
+                    'created_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'created',
+                    ],
+                    'updated_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'updated',
+                    ],
+                ],
+            ],
+        ],
+        'down' => [
+            'drop_field' => [
+                'terms' => [
+                    'created_by',
+                    'updated_by',
+                ],
+                'types' => [
+                    'created_by',
+                    'updated_by',
+                ],
+                'vocabularies' => [
+                    'created_by',
+                    'updated_by',
+                ],
+            ],
+        ],
+    ];
 
 /**
  * Before migration callback
@@ -83,9 +85,10 @@ class TaxonomyTrackableFields extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		return true;
-	}
+    public function before($direction)
+    {
+        return true;
+    }
 
 /**
  * After migration callback
@@ -94,7 +97,8 @@ class TaxonomyTrackableFields extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
+    public function after($direction)
+    {
+        return true;
+    }
 }

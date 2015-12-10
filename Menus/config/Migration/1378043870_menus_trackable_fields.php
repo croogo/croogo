@@ -1,7 +1,9 @@
 <?php
 
 namespace Croogo\Menus\Config\Migration;
-class MenusTrackableFields extends CakeMigration {
+
+class MenusTrackableFields extends CakeMigration
+{
 
 /**
  * Migration description
@@ -9,7 +11,7 @@ class MenusTrackableFields extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = 'Adding Trackable Fields';
+    public $description = 'Adding Trackable Fields';
 
 /**
  * Actions to be performed
@@ -17,48 +19,48 @@ class MenusTrackableFields extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-			'create_field' => array(
-				'menus' => array(
-					'created_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'created',
-					),
-					'updated_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'updated',
-					),
-				),
-				'links' => array(
-					'created_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'created',
-					),
-					'updated_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'updated',
-					),
-				),
-			),
-		),
-		'down' => array(
-			'drop_field' => array(
-				'menus' => array(
-					'created_by',
-					'updated_by',
-				),
-				'links' => array(
-					'created_by',
-					'updated_by',
-				),
-			),
-		),
-	);
+    public $migration = [
+        'up' => [
+            'create_field' => [
+                'menus' => [
+                    'created_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'created',
+                    ],
+                    'updated_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'updated',
+                    ],
+                ],
+                'links' => [
+                    'created_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'created',
+                    ],
+                    'updated_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'updated',
+                    ],
+                ],
+            ],
+        ],
+        'down' => [
+            'drop_field' => [
+                'menus' => [
+                    'created_by',
+                    'updated_by',
+                ],
+                'links' => [
+                    'created_by',
+                    'updated_by',
+                ],
+            ],
+        ],
+    ];
 
 /**
  * Before migration callback
@@ -67,9 +69,10 @@ class MenusTrackableFields extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		return true;
-	}
+    public function before($direction)
+    {
+        return true;
+    }
 
 /**
  * After migration callback
@@ -78,7 +81,8 @@ class MenusTrackableFields extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
+    public function after($direction)
+    {
+        return true;
+    }
 }

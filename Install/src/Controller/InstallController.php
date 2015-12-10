@@ -19,7 +19,8 @@ use Install\InstallManager;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class InstallController extends Controller {
+class InstallController extends Controller
+{
 
 /**
  * Components
@@ -27,7 +28,7 @@ class InstallController extends Controller {
  * @var array
  * @access public
  */
-	public $components = array('Session');
+    public $components = ['Session'];
 
 /**
  * Helpers
@@ -35,15 +36,15 @@ class InstallController extends Controller {
  * @var array
  * @access public
  */
-	public $helpers = array(
-		'Html' => array(
-			'className' => 'CroogoHtml',
-		),
-		'Form' => array(
-			'className' => 'CroogoForm',
-		),
-		'Croogo.Layout',
-	);
+    public $helpers = [
+        'Html' => [
+            'className' => 'CroogoHtml',
+        ],
+        'Form' => [
+            'className' => 'CroogoForm',
+        ],
+        'Croogo.Layout',
+    ];
 
 /**
  * beforeFilter
@@ -51,45 +52,48 @@ class InstallController extends Controller {
  * @return void
  * @access public
  */
-	public function beforeFilter(Event $event) {
-		parent::beforeFilter($event);
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
 
-		$this->layout = 'install';
+        $this->layout = 'install';
 
-		$croogoTheme = new CroogoTheme();
-		$data = $croogoTheme->getData($this->theme);
-		$settings = $data['settings'];
-		$this->set('themeSettings', $settings);
-		$this->_generateAssets();
-	}
+        $croogoTheme = new CroogoTheme();
+        $data = $croogoTheme->getData($this->theme);
+        $settings = $data['settings'];
+        $this->set('themeSettings', $settings);
+        $this->_generateAssets();
+    }
 
 /**
  * Generate assets
  */
-	protected function _generateAssets() {
-		$file = Plugin::path('Croogo') . 'webroot' . DS . 'css' . DS . 'croogo-bootstrap.css';
-		if (!file_exists($file)) {
-						$generator = new AssetGenerator();
-			try {
-				$generator->generate();
-			} catch (Exception $e) {
-				$this->log($e->getMessage());
-				$this->Session->setFlash('Asset generation failed. Please verify that dependencies exists and readable.', 'flash', array('class' => 'error'));
-			}
-		}
-	}
+    protected function _generateAssets()
+    {
+        $file = Plugin::path('Croogo') . 'webroot' . DS . 'css' . DS . 'croogo-bootstrap.css';
+        if (!file_exists($file)) {
+                        $generator = new AssetGenerator();
+            try {
+                $generator->generate();
+            } catch (Exception $e) {
+                $this->log($e->getMessage());
+                $this->Session->setFlash('Asset generation failed. Please verify that dependencies exists and readable.', 'flash', ['class' => 'error']);
+            }
+        }
+    }
 
 /**
  * If settings.json exists, app is already installed
  *
  * @return void
  */
-	protected function _check() {
-		if (Configure::read('Croogo.installed') && Configure::read('Install.secured')) {
-			$this->Session->setFlash('Already Installed');
-			return $this->redirect('/');
-		}
-	}
+    protected function _check()
+    {
+        if (Configure::read('Croogo.installed') && Configure::read('Install.secured')) {
+            $this->Session->setFlash('Already Installed');
+            return $this->redirect('/');
+        }
+    }
 
 /**
  * Step 0: welcome
@@ -99,10 +103,11 @@ class InstallController extends Controller {
  * @return void
  * @access public
  */
-	public function index() {
-		$this->_check();
-		$this->set('title_for_layout', __d('croogo', 'Installation: Welcome'));
-	}
+    public function index()
+    {
+        $this->_check();
+        $this->set('title_for_layout', __d('croogo', 'Installation: Welcome'));
+    }
 
 /**
  * Step 1: database
@@ -114,45 +119,46 @@ class InstallController extends Controller {
  * @return void
  * @access public
  */
-	public function database() {
-		$this->_check();
-		$this->set('title_for_layout', __d('croogo', 'Step 1: Database'));
+    public function database()
+    {
+        $this->_check();
+        $this->set('title_for_layout', __d('croogo', 'Step 1: Database'));
 
-		if (Configure::read('Croogo.installed')) {
-			return $this->redirect(array('action' => 'adminuser'));
-		}
+        if (Configure::read('Croogo.installed')) {
+            return $this->redirect(['action' => 'adminuser']);
+        }
 
-		if (!empty($this->request->data)) {
-			$InstallManager = new InstallManager();
-			$result = $InstallManager->createDatabaseFile(array(
-				'Install' => $this->request->data,
-			));
-			if ($result !== true) {
-				$this->Session->setFlash($result, 'flash', array('class' => 'error'));
-			} else {
-				return $this->redirect(array('action' => 'data'));
-			}
-		}
+        if (!empty($this->request->data)) {
+            $InstallManager = new InstallManager();
+            $result = $InstallManager->createDatabaseFile([
+                'Install' => $this->request->data,
+            ]);
+            if ($result !== true) {
+                $this->Session->setFlash($result, 'flash', ['class' => 'error']);
+            } else {
+                return $this->redirect(['action' => 'data']);
+            }
+        }
 
-		$currentConfiguration = array(
-			'exists' => false,
-			'valid' => false,
-		);
-		if (file_exists(APP . 'config' . DS . 'database.php')) {
-			$currentConfiguration['exists'] = true;
-		}
-		if ($currentConfiguration['exists']) {
-			try {
-				$this->loadModel('Install.Install');
-				$ds = $this->Install->getDataSource();
-				$ds->cacheSources = false;
-				$sources = $ds->listSources();
-				$currentConfiguration['valid'] = true;
-			} catch (Exception $e) {
-			}
-		}
-		$this->set(compact('currentConfiguration'));
-	}
+        $currentConfiguration = [
+            'exists' => false,
+            'valid' => false,
+        ];
+        if (file_exists(APP . 'config' . DS . 'database.php')) {
+            $currentConfiguration['exists'] = true;
+        }
+        if ($currentConfiguration['exists']) {
+            try {
+                $this->loadModel('Install.Install');
+                $ds = $this->Install->getDataSource();
+                $ds->cacheSources = false;
+                $sources = $ds->listSources();
+                $currentConfiguration['valid'] = true;
+            } catch (Exception $e) {
+            }
+        }
+        $this->set(compact('currentConfiguration'));
+    }
 
 /**
  * Step 2: Run the initial sql scripts to create the db and seed it with data
@@ -160,58 +166,61 @@ class InstallController extends Controller {
  * @return void
  * @access public
  */
-	public function data() {
-		$this->_check();
-		$this->set('title_for_layout', __d('croogo', 'Step 2: Build database'));
+    public function data()
+    {
+        $this->_check();
+        $this->set('title_for_layout', __d('croogo', 'Step 2: Build database'));
 
-		$this->loadModel('Install.Install');
-		$ds = $this->Install->getDataSource();
-		$ds->cacheSources = false;
-		$sources = $ds->listSources();
-		if (!empty($sources)) {
-			$this->Session->setFlash(
-				__d('croogo', 'Warning: Database "%s" is not empty.', $ds->config['database']),
-				'default', array('class' => 'error')
-			);
-		}
+        $this->loadModel('Install.Install');
+        $ds = $this->Install->getDataSource();
+        $ds->cacheSources = false;
+        $sources = $ds->listSources();
+        if (!empty($sources)) {
+            $this->Session->setFlash(
+                __d('croogo', 'Warning: Database "%s" is not empty.', $ds->config['database']),
+                'default',
+                ['class' => 'error']
+            );
+        }
 
-		if ($this->request->query('run')) {
-			set_time_limit(10 * MINUTE);
-			$this->Install->setupDatabase();
+        if ($this->request->query('run')) {
+            set_time_limit(10 * MINUTE);
+            $this->Install->setupDatabase();
 
-			$InstallManager = new InstallManager();
-			$result = $InstallManager->createCroogoFile();
-			if ($result !== true) {
-				return $this->Session->setFlash($result, 'flash', array('class' => 'error'));
-			}
+            $InstallManager = new InstallManager();
+            $result = $InstallManager->createCroogoFile();
+            if ($result !== true) {
+                return $this->Session->setFlash($result, 'flash', ['class' => 'error']);
+            }
 
-			return $this->redirect(array('action' => 'adminuser'));
-		}
-	}
+            return $this->redirect(['action' => 'adminuser']);
+        }
+    }
 
 /**
  * Step 3: get username and passwords for administrative user
  */
-	public function adminuser() {
-		if (!file_exists(APP . 'config' . DS . 'database.php')) {
-			return $this->redirect('/');
-		}
+    public function adminuser()
+    {
+        if (!file_exists(APP . 'config' . DS . 'database.php')) {
+            return $this->redirect('/');
+        }
 
-		if ($this->request->is('post')) {
-			if (!Plugin::loaded('Users')) {
-				Plugin::load('Users');
-			}
-			$this->loadModel('Users.User');
-			$this->User->set($this->request->data);
-			if ($this->User->validates()) {
-				$user = $this->Install->addAdminUser($this->request->data);
-				if ($user) {
-					$this->Session->write('Install.user', $user);
-					return $this->redirect(array('action' => 'finish'));
-				}
-			}
-		}
-	}
+        if ($this->request->is('post')) {
+            if (!Plugin::loaded('Users')) {
+                Plugin::load('Users');
+            }
+            $this->loadModel('Users.User');
+            $this->User->set($this->request->data);
+            if ($this->User->validates()) {
+                $user = $this->Install->addAdminUser($this->request->data);
+                if ($user) {
+                    $this->Session->write('Install.user', $user);
+                    return $this->redirect(['action' => 'finish']);
+                }
+            }
+        }
+    }
 
 /**
  * Step 4: finish
@@ -221,40 +230,40 @@ class InstallController extends Controller {
  * @return void
  * @access public
  */
-	public function finish($token = null) {
-		$this->set('title_for_layout', __d('croogo', 'Installation successful'));
-		$this->_check();
+    public function finish($token = null)
+    {
+        $this->set('title_for_layout', __d('croogo', 'Installation successful'));
+        $this->_check();
 
-		$InstallManager = new InstallManager();
-		$installed = $InstallManager->createSettingsFile();
-		if ($installed === true) {
-			$InstallManager->installCompleted();
-		} else {
-			$this->set('title_for_layout', __d('croogo', 'Installation failed'));
-			$msg = __d('croogo', 'Installation failed: Unable to create settings file');
-			$this->Session->setFlash($msg, 'flash', array('class' => 'error'));
-		}
+        $InstallManager = new InstallManager();
+        $installed = $InstallManager->createSettingsFile();
+        if ($installed === true) {
+            $InstallManager->installCompleted();
+        } else {
+            $this->set('title_for_layout', __d('croogo', 'Installation failed'));
+            $msg = __d('croogo', 'Installation failed: Unable to create settings file');
+            $this->Session->setFlash($msg, 'flash', ['class' => 'error']);
+        }
 
-		$urlBlogAdd = Router::url(array(
-			'plugin' => 'nodes',
-			'admin' => true,
-			'controller' => 'nodes',
-			'action' => 'add',
-			'blog',
-		));
-		$urlSettings = Router::url(array(
-			'plugin' => 'settings',
-			'admin' => true,
-			'controller' => 'settings',
-			'action' => 'prefix',
-			'Site',
-		));
+        $urlBlogAdd = Router::url([
+            'plugin' => 'nodes',
+            'admin' => true,
+            'controller' => 'nodes',
+            'action' => 'add',
+            'blog',
+        ]);
+        $urlSettings = Router::url([
+            'plugin' => 'settings',
+            'admin' => true,
+            'controller' => 'settings',
+            'action' => 'prefix',
+            'Site',
+        ]);
 
-		$this->set('user', $this->Session->read('Install.user'));
-		if ($installed) {
-			$this->Session->destroy();
-		}
-		$this->set(compact('urlBlogAdd', 'urlSettings', 'installed'));
-	}
-
+        $this->set('user', $this->Session->read('Install.user'));
+        if ($installed) {
+            $this->Session->destroy();
+        }
+        $this->set(compact('urlBlogAdd', 'urlSettings', 'installed'));
+    }
 }

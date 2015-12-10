@@ -2,6 +2,7 @@
 namespace Croogo\Example\View\Helper;
 
 use App\View\Helper\AppHelper;
+
 /**
  * Example Helper
  *
@@ -14,7 +15,8 @@ use App\View\Helper\AppHelper;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExampleHelper extends AppHelper {
+class ExampleHelper extends AppHelper
+{
 
 /**
  * Other helpers used by this helper
@@ -22,19 +24,20 @@ class ExampleHelper extends AppHelper {
  * @var array
  * @access public
  */
-	public $helpers = array(
-		'Html',
-		'Croogo.Layout',
-		'Nodes' => array('className' => 'Nodes.Nodes'),
-	);
+    public $helpers = [
+        'Html',
+        'Croogo.Layout',
+        'Nodes' => ['className' => 'Nodes.Nodes'],
+    ];
 
 /**
  * Before render callback. Called before the view file is rendered.
  *
  * @return void
  */
-	public function beforeRender($viewFile) {
-	}
+    public function beforeRender($viewFile)
+    {
+    }
 
 /**
  * After render callback. Called after the view file is rendered
@@ -42,86 +45,96 @@ class ExampleHelper extends AppHelper {
  *
  * @return void
  */
-	public function afterRender($viewFile) {
-	}
+    public function afterRender($viewFile)
+    {
+    }
 
 /**
  * Before layout callback. Called before the layout is rendered.
  *
  * @return void
  */
-	public function beforeLayout($layoutFile) {
-	}
+    public function beforeLayout($layoutFile)
+    {
+    }
 
 /**
  * After layout callback. Called after the layout has rendered.
  *
  * @return void
  */
-	public function afterLayout($layoutFile) {
-	}
+    public function afterLayout($layoutFile)
+    {
+    }
 
 /**
  * Called after LayoutHelper::setNode()
  *
  * @return void
  */
-	public function afterSetNode() {
-		// field values can be changed from hooks
-		$this->Nodes->field('title', $this->Nodes->field('title') . ' [Modified by ExampleHelper]');
-	}
+    public function afterSetNode()
+    {
+        // field values can be changed from hooks
+        $this->Nodes->field('title', $this->Nodes->field('title') . ' [Modified by ExampleHelper]');
+    }
 
 /**
  * Called before LayoutHelper::nodeInfo()
  *
  * @return string
  */
-	public function beforeNodeInfo() {
-		return '<p>beforeNodeInfo</p>';
-	}
+    public function beforeNodeInfo()
+    {
+        return '<p>beforeNodeInfo</p>';
+    }
 
 /**
  * Called after LayoutHelper::nodeInfo()
  *
  * @return string
  */
-	public function afterNodeInfo() {
-		return '<p>afterNodeInfo</p>';
-	}
+    public function afterNodeInfo()
+    {
+        return '<p>afterNodeInfo</p>';
+    }
 
 /**
  * Called before LayoutHelper::nodeBody()
  *
  * @return string
  */
-	public function beforeNodeBody() {
-		return '<p>beforeNodeBody</p>';
-	}
+    public function beforeNodeBody()
+    {
+        return '<p>beforeNodeBody</p>';
+    }
 
 /**
  * Called after LayoutHelper::nodeBody()
  *
  * @return string
  */
-	public function afterNodeBody() {
-		return '<p>afterNodeBody</p>';
-	}
+    public function afterNodeBody()
+    {
+        return '<p>afterNodeBody</p>';
+    }
 
 /**
  * Called before LayoutHelper::nodeMoreInfo()
  *
  * @return string
  */
-	public function beforeNodeMoreInfo() {
-		return '<p>beforeNodeMoreInfo</p>';
-	}
+    public function beforeNodeMoreInfo()
+    {
+        return '<p>beforeNodeMoreInfo</p>';
+    }
 
 /**
  * Called after LayoutHelper::nodeMoreInfo()
  *
  * @return string
  */
-	public function afterNodeMoreInfo() {
-		return '<p>afterNodeMoreInfo</p>';
-	}
+    public function afterNodeMoreInfo()
+    {
+        return '<p>afterNodeMoreInfo</p>';
+    }
 }

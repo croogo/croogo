@@ -3,6 +3,7 @@
 namespace Croogo\Meta\Model;
 
 use Meta\Model\MetaAppModel;
+
 /**
  * Meta
  *
@@ -13,7 +14,8 @@ use Meta\Model\MetaAppModel;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Meta extends MetaAppModel {
+class Meta extends MetaAppModel
+{
 
 /**
  * Model name
@@ -21,7 +23,7 @@ class Meta extends MetaAppModel {
  * @var string
  * @access public
  */
-	public $name = 'Meta';
+    public $name = 'Meta';
 
 /**
  * Table name
@@ -29,16 +31,16 @@ class Meta extends MetaAppModel {
  * @var string
  * @access public
  */
-	public $useTable = 'meta';
+    public $useTable = 'meta';
 
 /**
  * Behaviors
  *
  * @var array
  */
-	public $actsAs = array(
-		'Croogo.Trackable',
-	);
+    public $actsAs = [
+        'Croogo.Trackable',
+    ];
 
 /**
  * Model associations: belongsTo
@@ -46,14 +48,13 @@ class Meta extends MetaAppModel {
  * @var array
  * @access public
  */
-	public $belongsTo = array(
-		'Node' => array(
-			'className' => 'Node',
-			'foreignKey' => 'foreign_key',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-		),
-	);
-
+    public $belongsTo = [
+        'Node' => [
+            'className' => 'Node',
+            'foreignKey' => 'foreign_key',
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+        ],
+    ];
 }

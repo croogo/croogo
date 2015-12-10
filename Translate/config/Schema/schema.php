@@ -1,30 +1,33 @@
 <?php
 
 namespace Croogo\Translate\Config\Schema;
-class TranslateSchema extends CakeSchema {
 
-	public function before($event = array()) {
-		return true;
-	}
+class TranslateSchema extends CakeSchema
+{
 
-	public function after($event = array()) {
-	}
+    public function before($event = [])
+    {
+        return true;
+    }
 
-	public $i18n = array(
-		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
-		'locale' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 6, 'key' => 'index', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-		'model' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'index', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-		'foreign_key' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'index'),
-		'field' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'index', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-		'content' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-		'indexes' => array(
-			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'locale' => array('column' => 'locale', 'unique' => 0),
-			'model' => array('column' => 'model', 'unique' => 0),
-			'row_id' => array('column' => 'foreign_key', 'unique' => 0),
-			'field' => array('column' => 'field', 'unique' => 0)
-		),
-		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
-	);
+    public function after($event = [])
+    {
+    }
 
+    public $i18n = [
+        'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'],
+        'locale' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 6, 'key' => 'index', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+        'model' => ['type' => 'string', 'null' => false, 'default' => null, 'key' => 'index', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+        'foreign_key' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'index'],
+        'field' => ['type' => 'string', 'null' => false, 'default' => null, 'key' => 'index', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+        'content' => ['type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+        'indexes' => [
+            'PRIMARY' => ['column' => 'id', 'unique' => 1],
+            'locale' => ['column' => 'locale', 'unique' => 0],
+            'model' => ['column' => 'model', 'unique' => 0],
+            'row_id' => ['column' => 'foreign_key', 'unique' => 0],
+            'field' => ['column' => 'field', 'unique' => 0]
+        ],
+        'tableParameters' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
+    ];
 }

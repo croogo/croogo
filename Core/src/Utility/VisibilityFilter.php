@@ -1,6 +1,7 @@
 <?php
 
 namespace Croogo\Core\Utility;
+
 use Cake\Collection\CollectionInterface;
 use Cake\Datasource\ResultSetInterface;
 use Cake\Log\LogTrait;
@@ -20,40 +21,42 @@ use Psr\Log\LogLevel;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class VisibilityFilter {
+class VisibilityFilter
+{
 
-	use LogTrait;
+    use LogTrait;
 
 /**
  * StringConverter instance
  */
-	protected $_converter = null;
+    protected $_converter = null;
 
 /**
  * Known url keys
  */
-	protected $_urlKeys = array(
-		'admin' => false,
-		'plugin' => false,
-		'controller' => false,
-		'action' => false,
-		'named' => false,
-		'pass' => false,
-	);
+    protected $_urlKeys = [
+        'admin' => false,
+        'plugin' => false,
+        'controller' => false,
+        'action' => false,
+        'named' => false,
+        'pass' => false,
+    ];
 
 /**
  * Constructor
  *
  * @param Request $request
  */
-	public function __construct(Request $request = null) {
-		if ($request) {
-			$this->_request = $request;
-		} else {
-			$this->_request = new Request();
-		}
-		$this->_converter = new StringConverter();
-	}
+    public function __construct(Request $request = null)
+    {
+        if ($request) {
+            $this->_request = $request;
+        } else {
+            $this->_request = new Request();
+        }
+        $this->_converter = new StringConverter();
+    }
 
 /**
  * Check that request (passed in the constructor) is visible based on list of
@@ -69,34 +72,35 @@ class VisibilityFilter {
  * @return bool True if the rules are satisfied
  * @see StringConverter::linkStringToArray()
  */
-	protected function _isVisible($rules) {
-		$negativeRules = array_filter($rules, function($value) {
-			if ($value[0] === '-') {
-				return true;
-			}
-			return false;
-		});
-		foreach ($negativeRules as $rule) {
-			if ($this->_ruleMatch(substr($rule, 1))) {
-				return false;
-			}
-		}
+    protected function _isVisible($rules)
+    {
+        $negativeRules = array_filter($rules, function ($value) {
+            if ($value[0] === '-') {
+                return true;
+            }
+            return false;
+        });
+        foreach ($negativeRules as $rule) {
+            if ($this->_ruleMatch(substr($rule, 1))) {
+                return false;
+            }
+        }
 
-		$positiveRules = array_diff($rules, $negativeRules);
-		if (empty($positiveRules)) {
-			return true;
-		}
-		foreach ($positiveRules as $rule) {
-			if ($rule[0] == '+') {
-				$rule = substr($rule, 1);
-			}
-			if ($this->_ruleMatch($rule)) {
-				return true;
-			}
-		}
+        $positiveRules = array_diff($rules, $negativeRules);
+        if (empty($positiveRules)) {
+            return true;
+        }
+        foreach ($positiveRules as $rule) {
+            if ($rule[0] == '+') {
+                $rule = substr($rule, 1);
+            }
+            if ($this->_ruleMatch($rule)) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
 /**
  * Check that request matches a single rule
@@ -104,28 +108,29 @@ class VisibilityFilter {
  * @param string $rule Rule in link string or plain URL fragment
  * @return bool True if request satisfies the rule
  */
-	protected function _ruleMatch($rule) {
-		if (strpos($rule, ':') !== false) {
-			$url = array_filter($this->_converter->linkStringToArray($rule));
-			if (isset($url['?'])) {
-				$queryString = $url['?'];
-				unset($url['?']);
-			}
-		} else {
-			$url = Router::parse($rule);
-			$named = array_diff_key($url, $this->_urlKeys);
-			$url['named'] = $named;
-		}
+    protected function _ruleMatch($rule)
+    {
+        if (strpos($rule, ':') !== false) {
+            $url = array_filter($this->_converter->linkStringToArray($rule));
+            if (isset($url['?'])) {
+                $queryString = $url['?'];
+                unset($url['?']);
+            }
+        } else {
+            $url = Router::parse($rule);
+            $named = array_diff_key($url, $this->_urlKeys);
+            $url['named'] = $named;
+        }
 
-		$intersect = array_intersect_key($this->_request->params, $url);
-		$matched = $intersect == $url;
+        $intersect = array_intersect_key($this->_request->params, $url);
+        $matched = $intersect == $url;
 
-		if ($matched && isset($queryString)) {
-			$matched = $this->_request->query == $queryString;
-		}
+        if ($matched && isset($queryString)) {
+            $matched = $this->_request->query == $queryString;
+        }
 
-		return $matched;
-	}
+        return $matched;
+    }
 
 /**
  * Remove values based on rules in visibility_path field.
@@ -135,24 +140,24 @@ class VisibilityFilter {
  *
  * @param array $query Array of data to filter
  */
-	public function remove(\Traversable $traversable, $options = array()) {
-		$options = Hash::merge(array(
-			'field' => null,
-		), $options);
-		$field = $options['field'];
+    public function remove(\Traversable $traversable, $options = [])
+    {
+        $options = Hash::merge([
+            'field' => null,
+        ], $options);
+        $field = $options['field'];
 
-		return collection($traversable)->filter(function (Entity $entity) use ($field) {
-			$rules = $entity->get($field);
-			if (empty($rules)) {
-				return true;
-			}
+        return collection($traversable)->filter(function (Entity $entity) use ($field) {
+            $rules = $entity->get($field);
+            if (empty($rules)) {
+                return true;
+            }
 
-			if (!is_array($rules)) {
-				$this->log('Invalid visibility_path rule', LogLevel::ERROR);
-			}
+            if (!is_array($rules)) {
+                $this->log('Invalid visibility_path rule', LogLevel::ERROR);
+            }
 
-			return $this->_isVisible($rules);
-		});
-	}
-
+            return $this->_isVisible($rules);
+        });
+    }
 }

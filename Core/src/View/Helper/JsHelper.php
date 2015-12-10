@@ -17,21 +17,22 @@ use Cake\View\Helper;
  *
  * Note: onDomReady always defaults to false now, you will to add this yourself.
  */
-class JsHelper extends Helper {
+class JsHelper extends Helper
+{
 
 /**
  * Whether or not you want scripts to be buffered or output.
  *
  * @var bool
  */
-	public $bufferScripts = true;
+    public $bufferScripts = true;
 
 /**
  * Helper dependencies
  *
  * @var array
  */
-	public $helpers = ['Html', 'Form'];
+    public $helpers = ['Html', 'Form'];
 
 /**
  * Variables to pass to Javascript.
@@ -39,7 +40,7 @@ class JsHelper extends Helper {
  * @var array
  * @see JsHelper::set()
  */
-	protected $_jsVars = [];
+    protected $_jsVars = [];
 
 /**
  * Scripts that are queued for output
@@ -47,14 +48,14 @@ class JsHelper extends Helper {
  * @var array
  * @see JsHelper::buffer()
  */
-	protected $_bufferedScripts = [];
+    protected $_bufferedScripts = [];
 
 /**
  * The javascript variable created by set() variables.
  *
  * @var string
  */
-	public $setVariable = 'app';
+    public $setVariable = 'app';
 
 /**
  * Generates a JavaScript object in JavaScript Object Notation (JSON)
@@ -69,14 +70,15 @@ class JsHelper extends Helper {
  * @param array $options Set of options, see above.
  * @return string A JSON code block
  */
-	public function object($data = [], $options = []) {
-		$defaultOptions = [
-			'prefix' => '', 'postfix' => '',
-		];
-		$options += $defaultOptions;
+    public function object($data = [], $options = [])
+    {
+        $defaultOptions = [
+            'prefix' => '', 'postfix' => '',
+        ];
+        $options += $defaultOptions;
 
-		return $options['prefix'] . json_encode($data) . $options['postfix'];
-	}
+        return $options['prefix'] . json_encode($data) . $options['postfix'];
+    }
 
 /**
  * Writes all Javascript generated so far to a code block or
@@ -98,27 +100,28 @@ class JsHelper extends Helper {
  *   scripts null will be returned.
  * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/js.html#JsHelper::writeBuffer
  */
-	public function writeBuffer($options = []) {
-		$defaults = [
-			'cache' => false, 'clear' => true, 'safe' => true
-		];
-		$options += $defaults;
-		$script = implode("\n", $this->getBuffer($options['clear']));
+    public function writeBuffer($options = [])
+    {
+        $defaults = [
+            'cache' => false, 'clear' => true, 'safe' => true
+        ];
+        $options += $defaults;
+        $script = implode("\n", $this->getBuffer($options['clear']));
 
-		if (empty($script)) {
-			return null;
-		}
+        if (empty($script)) {
+            return null;
+        }
 
-		$opts = $options;
-		unset($opts['cache'], $opts['clear']);
+        $opts = $options;
+        unset($opts['cache'], $opts['clear']);
 
-		if (isset($opts['inline'])) {
-			unset($opts['inline']);
-		}
-		$return = $this->Html->scriptBlock($script, $opts);
+        if (isset($opts['inline'])) {
+            unset($opts['inline']);
+        }
+        $return = $this->Html->scriptBlock($script, $opts);
 
-		return $return;
-	}
+        return $return;
+    }
 
 /**
  * Write a script to the buffered scripts.
@@ -129,13 +132,14 @@ class JsHelper extends Helper {
  * @return void
  * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/js.html#JsHelper::buffer
  */
-	public function buffer($script, $top = false) {
-		if ($top) {
-			array_unshift($this->_bufferedScripts, $script);
-		} else {
-			$this->_bufferedScripts[] = $script;
-		}
-	}
+    public function buffer($script, $top = false)
+    {
+        if ($top) {
+            array_unshift($this->_bufferedScripts, $script);
+        } else {
+            $this->_bufferedScripts[] = $script;
+        }
+    }
 
 /**
  * Get all the buffered scripts
@@ -144,27 +148,29 @@ class JsHelper extends Helper {
  * @return array Array of scripts added to the request.
  * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/js.html#JsHelper::getBuffer
  */
-	public function getBuffer($clear = true) {
-		$this->_createVars();
-		$scripts = $this->_bufferedScripts;
-		if ($clear) {
-			$this->_bufferedScripts = [];
-			$this->_jsVars = [];
-		}
-		return $scripts;
-	}
+    public function getBuffer($clear = true)
+    {
+        $this->_createVars();
+        $scripts = $this->_bufferedScripts;
+        if ($clear) {
+            $this->_bufferedScripts = [];
+            $this->_jsVars = [];
+        }
+        return $scripts;
+    }
 
 /**
  * Generates the object string for variables passed to javascript and adds to buffer
  *
  * @return void
  */
-	protected function _createVars() {
-		if (!empty($this->_jsVars)) {
-			$setVar = (strpos($this->setVariable, '.')) ? $this->setVariable : 'window.' . $this->setVariable;
-			$this->buffer($setVar . ' = ' . $this->object($this->_jsVars) . ';', true);
-		}
-	}
+    protected function _createVars()
+    {
+        if (!empty($this->_jsVars)) {
+            $setVar = (strpos($this->setVariable, '.')) ? $this->setVariable : 'window.' . $this->setVariable;
+            $this->buffer($setVar . ' = ' . $this->object($this->_jsVars) . ';', true);
+        }
+    }
 
 /**
  * Pass variables into Javascript. Allows you to set variables that will be
@@ -176,21 +182,21 @@ class JsHelper extends Helper {
  * @return void
  * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/js.html#JsHelper::set
  */
-	public function set($one, $two = null) {
-		$data = null;
-		if (is_array($one)) {
-			if (is_array($two)) {
-				$data = array_combine($one, $two);
-			} else {
-				$data = $one;
-			}
-		} else {
-			$data = [$one => $two];
-		}
-		if (!$data) {
-			return false;
-		}
-		$this->_jsVars = array_merge($this->_jsVars, $data);
-	}
-
+    public function set($one, $two = null)
+    {
+        $data = null;
+        if (is_array($one)) {
+            if (is_array($two)) {
+                $data = array_combine($one, $two);
+            } else {
+                $data = $one;
+            }
+        } else {
+            $data = [$one => $two];
+        }
+        if (!$data) {
+            return false;
+        }
+        $this->_jsVars = array_merge($this->_jsVars, $data);
+    }
 }

@@ -9,27 +9,30 @@
  * @link     http://www.croogo.org
  */
 namespace Croogo\Translate;
-class Translations {
+
+class Translations
+{
 
 /**
  * Read configured Translate.models and hook the appropriate behaviors
  */
-	public static function translateModels() {
-		$path ='admin:true/plugin:translate/controller:translate/action:index/:id/';
-		foreach (Configure::read('Translate.models') as $model => $config) {
-			Croogo::hookBehavior($model, 'Translate.CroogoTranslate', $config);
-			Croogo::hookAdminRowAction(
-				Inflector::pluralize($model) . '/admin_index',
-				__d('croogo', 'Translate'), array(
-				$path . $model => array(
-					'title' => false,
-					'options' => array(
-						'icon' => 'translate',
-						'data-title' => __d('croogo', 'Translate'),
-					),
-				))
-			);
-		}
-	}
-
+    public static function translateModels()
+    {
+        $path ='admin:true/plugin:translate/controller:translate/action:index/:id/';
+        foreach (Configure::read('Translate.models') as $model => $config) {
+            Croogo::hookBehavior($model, 'Translate.CroogoTranslate', $config);
+            Croogo::hookAdminRowAction(
+                Inflector::pluralize($model) . '/admin_index',
+                __d('croogo', 'Translate'),
+                [
+                $path . $model => [
+                    'title' => false,
+                    'options' => [
+                        'icon' => 'translate',
+                        'data-title' => __d('croogo', 'Translate'),
+                    ],
+                ]]
+            );
+        }
+    }
 }

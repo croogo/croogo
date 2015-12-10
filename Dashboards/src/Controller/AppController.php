@@ -14,6 +14,7 @@ use Croogo\Core\Controller\AppController as BaseController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AppController extends BaseController {
+class AppController extends BaseController
+{
 
 }

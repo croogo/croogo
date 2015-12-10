@@ -5,33 +5,33 @@ use Cake\Routing\Router;
 use Croogo\Core\CroogoRouter;
 
 Router::plugin('Croogo/Users', function (RouteBuilder $routeBuilder) {
-	$routeBuilder->fallbacks();
+    $routeBuilder->fallbacks();
 });
 
-CroogoRouter::mapResources('Users.Users', array(
-	'prefix' => '/:api/:prefix/',
-));
+CroogoRouter::mapResources('Users.Users', [
+    'prefix' => '/:api/:prefix/',
+]);
 
-Router::connect('/:api/:prefix/users/lookup', array(
-	'plugin' => 'users',
-	'controller' => 'users',
-	'action' => 'lookup',
-), array(
-	'routeClass' => 'Croogo\Core\Routing\Route\ApiRoute',
-));
+Router::connect('/:api/:prefix/users/lookup', [
+    'plugin' => 'users',
+    'controller' => 'users',
+    'action' => 'lookup',
+], [
+    'routeClass' => 'Croogo\Core\Routing\Route\ApiRoute',
+]);
 
 // Users
-CroogoRouter::connect('/register', array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'add'));
+CroogoRouter::connect('/register', ['plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'add']);
 
-CroogoRouter::connect('/user/:username', array(
-	'plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'view'), array('pass' => array('username')
-));
+CroogoRouter::connect('/user/:username', [
+    'plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'view'], ['pass' => ['username']
+    ]);
 
-CroogoRouter::connect('/users/:controller/:action/*', array(
-	'plugin' => 'Croogo/Users'
-));
+    CroogoRouter::connect('/users/:controller/:action/*', [
+    'plugin' => 'Croogo/Users'
+    ]);
 
-CroogoRouter::connect('/admin/users/:controller/:action/*', [
-	'prefix' => 'admin',
-	'plugin' => 'Croogo/Users'
-]);
+    CroogoRouter::connect('/admin/users/:controller/:action/*', [
+    'prefix' => 'admin',
+    'plugin' => 'Croogo/Users'
+    ]);

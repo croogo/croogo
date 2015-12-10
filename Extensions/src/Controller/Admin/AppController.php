@@ -15,23 +15,24 @@ use Croogo\Core\Controller\Admin\AppController as CroogoController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AppController extends CroogoController {
+class AppController extends CroogoController
+{
 
-	public $helpers = [
-		'Croogo/Core.Croogo'
-	];
+    public $helpers = [
+        'Croogo/Core.Croogo'
+    ];
 
 /**
  * beforeFilter
  *
  * @return void
  */
-	public function initialize() {
-		parent::initialize();
+    public function initialize()
+    {
+        parent::initialize();
 
-		if (in_array($this->request->param('action'), array('admin_delete', 'admin_toggle', 'admin_activate'))) {
-			$this->request->allowMethod('post');
-		}
-	}
-
+        if (in_array($this->request->param('action'), ['admin_delete', 'admin_toggle', 'admin_activate'])) {
+            $this->request->allowMethod('post');
+        }
+    }
 }

@@ -17,7 +17,8 @@ use Cake\Utility\Inflector;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoAclBehavior extends AclBehavior {
+class CroogoAclBehavior extends AclBehavior
+{
 
 /**
  * setup
@@ -25,27 +26,28 @@ class CroogoAclBehavior extends AclBehavior {
  * @param Model $table
  * @param array $config
  */
-	public function __construct(Table $table, array $config = [])
-	{
-		parent::__construct($table, $config);
+    public function __construct(Table $table, array $config = [])
+    {
+        parent::__construct($table, $config);
 
-		if (isset($config[0])) {
-			$config['type'] = $config[0];
-			unset($config[0]);
-		}
+        if (isset($config[0])) {
+            $config['type'] = $config[0];
+            unset($config[0]);
+        }
 
-		$this->config($table->alias(), array_merge(array('type' => 'controlled'), $config));
-		$this->config($table->alias() . '.type', strtolower($this->config($table->alias() . '.type')));
+        $this->config($table->alias(), array_merge(['type' => 'controlled'], $config));
+        $this->config($table->alias() . '.type', strtolower($this->config($table->alias() . '.type')));
 
-		$types = $this->_typeMaps[$this->config($table->alias() . '.type')];
+        $types = $this->_typeMaps[$this->config($table->alias() . '.type')];
 
-		if (!is_array($types)) {
-			$types = array($types);
-		}
+        if (!is_array($types)) {
+            $types = [$types];
+        }
 
-		foreach ($types as $type) {
-			$alias = Inflector::pluralize($type);;
-			$table->hasOne($alias);
-		}
-	}
+        foreach ($types as $type) {
+            $alias = Inflector::pluralize($type);
+            ;
+            $table->hasOne($alias);
+        }
+    }
 }

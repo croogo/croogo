@@ -13,24 +13,26 @@ use Cake\Event\EventListenerInterface;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MenusEventHandler implements EventListenerInterface {
+class MenusEventHandler implements EventListenerInterface
+{
 
 /**
  * implementedEvents
  */
-	public function implementedEvents() {
-		return array(
-			'Controller.Links.afterPublish' => array(
-				'callable' => 'onAfterBulkProcess',
-			),
-			'Controller.Links.afterUnpublish' => array(
-				'callable' => 'onAfterBulkProcess',
-			),
-			'Controller.Links.afterDelete' => array(
-				'callable' => 'onAfterBulkProcess',
-			),
-		);
-	}
+    public function implementedEvents()
+    {
+        return [
+            'Controller.Links.afterPublish' => [
+                'callable' => 'onAfterBulkProcess',
+            ],
+            'Controller.Links.afterUnpublish' => [
+                'callable' => 'onAfterBulkProcess',
+            ],
+            'Controller.Links.afterDelete' => [
+                'callable' => 'onAfterBulkProcess',
+            ],
+        ];
+    }
 
 /**
  * Clear Links related cache after bulk operation
@@ -38,8 +40,8 @@ class MenusEventHandler implements EventListenerInterface {
  * @param Event $event
  * @return void
  */
-	public function onAfterBulkProcess(Event $event) {
-		Cache::clearGroup('menus', 'croogo_menus');
-	}
-
+    public function onAfterBulkProcess(Event $event)
+    {
+        Cache::clearGroup('menus', 'croogo_menus');
+    }
 }

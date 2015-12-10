@@ -4,6 +4,7 @@ namespace Croogo\Core\Shell;
 
 use Cake\Utility\Security;
 use Croogo\Install\AssetGenerator;
+
 /**
  * Croogo Shell
  *
@@ -14,64 +15,67 @@ use Croogo\Install\AssetGenerator;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoShell extends CroogoAppShell {
+class CroogoShell extends CroogoAppShell
+{
 
-	public $tasks = array(
-		'Croogo/Core.Upgrade',
-	);
+    public $tasks = [
+        'Croogo/Core.Upgrade',
+    ];
 
 /**
  * Display help/options
  */
-	public function getOptionParser() {
-		$parser = parent::getOptionParser();
-		$parser->description(__d('croogo', 'Croogo Utilities'))
-			->addSubCommand('make', array(
-				'help' => __d('croogo', 'Compile/Generate CSS'),
-			))
-			->addSubCommand('upgrade', array(
-				'help' => __d('croogo', 'Upgrade Croogo'),
-				'parser' => $this->Upgrade->getOptionParser(),
-			))
-			->addSubcommand('password', array(
-				'help' => 'Get hashed password',
-				'parser' => array(
-					'description' => 'Get hashed password',
-					'arguments' => array(
-						'password' => array(
-							'required' => true,
-							'help' => 'Password to hash',
-						),
-					),
-				),
-			));
-		return $parser;
-	}
+    public function getOptionParser()
+    {
+        $parser = parent::getOptionParser();
+        $parser->description(__d('croogo', 'Croogo Utilities'))
+            ->addSubCommand('make', [
+                'help' => __d('croogo', 'Compile/Generate CSS'),
+            ])
+            ->addSubCommand('upgrade', [
+                'help' => __d('croogo', 'Upgrade Croogo'),
+                'parser' => $this->Upgrade->getOptionParser(),
+            ])
+            ->addSubcommand('password', [
+                'help' => 'Get hashed password',
+                'parser' => [
+                    'description' => 'Get hashed password',
+                    'arguments' => [
+                        'password' => [
+                            'required' => true,
+                            'help' => 'Password to hash',
+                        ],
+                    ],
+                ],
+            ]);
+        return $parser;
+    }
 
 /**
  * Get hashed password
  *
  * Usage: ./Console/cake croogo password myPasswordHere
  */
-	public function password() {
-		$value = trim($this->args['0']);
-		$this->out(Security::hash($value, null, true));
-	}
+    public function password()
+    {
+        $value = trim($this->args['0']);
+        $this->out(Security::hash($value, null, true));
+    }
 
 /**
  * Compile assets for admin ui
  */
-	public function make() {
-				if (!Plugin::loaded('Install')) {
-			Plugin::load('Install');
-		}
-		$generator = new AssetGenerator();
-		try {
-			$generator->generate(array('clone' => true));
-		} catch (Exception $e) {
-			$this->err('<error>' . $e->getMessage() . '</error>');
-		}
-		Plugin::unload('Install');
-	}
-
+    public function make()
+    {
+        if (!Plugin::loaded('Install')) {
+            Plugin::load('Install');
+        }
+        $generator = new AssetGenerator();
+        try {
+            $generator->generate(['clone' => true]);
+        } catch (Exception $e) {
+            $this->err('<error>' . $e->getMessage() . '</error>');
+        }
+        Plugin::unload('Install');
+    }
 }

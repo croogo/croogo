@@ -1,7 +1,9 @@
 <?php
 
 namespace Croogo\Nodes\Config\Migration;
-class NodesTrackableFields extends CakeMigration {
+
+class NodesTrackableFields extends CakeMigration
+{
 
 /**
  * Migration description
@@ -9,7 +11,7 @@ class NodesTrackableFields extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = 'Adding Trackable Fields';
+    public $description = 'Adding Trackable Fields';
 
 /**
  * Actions to be performed
@@ -17,30 +19,30 @@ class NodesTrackableFields extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-			'create_field' => array(
-				'nodes' => array(
-					'created_by' => array(
-						'type' => 'integer',
-						'after' => 'created',
-					),
-					'updated_by' => array(
-						'type' => 'integer',
-						'after' => 'updated',
-					),
-				),
-			),
-		),
-		'down' => array(
-			'drop_field' => array(
-				'nodes' => array(
-					'created_by',
-					'updated_by',
-				),
-			),
-		),
-	);
+    public $migration = [
+        'up' => [
+            'create_field' => [
+                'nodes' => [
+                    'created_by' => [
+                        'type' => 'integer',
+                        'after' => 'created',
+                    ],
+                    'updated_by' => [
+                        'type' => 'integer',
+                        'after' => 'updated',
+                    ],
+                ],
+            ],
+        ],
+        'down' => [
+            'drop_field' => [
+                'nodes' => [
+                    'created_by',
+                    'updated_by',
+                ],
+            ],
+        ],
+    ];
 
 /**
  * Before migration callback
@@ -49,9 +51,10 @@ class NodesTrackableFields extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		return true;
-	}
+    public function before($direction)
+    {
+        return true;
+    }
 
 /**
  * After migration callback
@@ -60,7 +63,8 @@ class NodesTrackableFields extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
+    public function after($direction)
+    {
+        return true;
+    }
 }

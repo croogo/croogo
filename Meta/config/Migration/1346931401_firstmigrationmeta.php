@@ -1,7 +1,9 @@
 <?php
 
 namespace Croogo\Meta\Config\Migration;
-class FirstMigrationMeta extends CakeMigration {
+
+class FirstMigrationMeta extends CakeMigration
+{
 
 /**
  * Migration description
@@ -9,7 +11,7 @@ class FirstMigrationMeta extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = '';
+    public $description = '';
 
 /**
  * Actions to be performed
@@ -17,29 +19,29 @@ class FirstMigrationMeta extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-			'create_table' => array(
-				'meta' => array(
-					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'primary'),
-					'model' => array('type' => 'string', 'null' => false, 'default' => 'Node', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'foreign_key' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 20),
-					'key' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'value' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'weight' => array('type' => 'integer', 'null' => true, 'default' => null),
-					'indexes' => array(
-						'PRIMARY' => array('column' => 'id', 'unique' => 1)
-					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
-				),
-			),
-		),
-		'down' => array(
-			'drop_table' => array(
-				'meta'
-			),
-		),
-	);
+    public $migration = [
+        'up' => [
+            'create_table' => [
+                'meta' => [
+                    'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 20, 'key' => 'primary'],
+                    'model' => ['type' => 'string', 'null' => false, 'default' => 'Node', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'foreign_key' => ['type' => 'integer', 'null' => true, 'default' => null, 'length' => 20],
+                    'key' => ['type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'value' => ['type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'weight' => ['type' => 'integer', 'null' => true, 'default' => null],
+                    'indexes' => [
+                        'PRIMARY' => ['column' => 'id', 'unique' => 1]
+                    ],
+                    'tableParameters' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
+                ],
+            ],
+        ],
+        'down' => [
+            'drop_table' => [
+                'meta'
+            ],
+        ],
+    ];
 
 /**
  * Before migration callback
@@ -48,12 +50,13 @@ class FirstMigrationMeta extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		if ($direction === 'down') {
-			return false;
-		}
-		return true;
-	}
+    public function before($direction)
+    {
+        if ($direction === 'down') {
+            return false;
+        }
+        return true;
+    }
 
 /**
  * After migration callback
@@ -62,8 +65,8 @@ class FirstMigrationMeta extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
-
+    public function after($direction)
+    {
+        return true;
+    }
 }

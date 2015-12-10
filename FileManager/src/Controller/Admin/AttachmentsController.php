@@ -17,7 +17,8 @@ use Croogo\FileManager\Model\Entity\Attachment;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class AttachmentsController extends AppController {
+class AttachmentsController extends AppController
+{
 
 /**
  * Components
@@ -25,17 +26,17 @@ class AttachmentsController extends AppController {
  * @var array
  * @access public
  */
-	public $components = array(
-		'Search.Prg' => array(
-			'presetForm' => array(
-				'paramType' => 'querystring',
-			),
-			'commonProcess' => array(
-				'paramType' => 'querystring',
-				'filterEmpty' => true,
-			),
-		),
-	);
+    public $components = [
+        'Search.Prg' => [
+            'presetForm' => [
+                'paramType' => 'querystring',
+            ],
+            'commonProcess' => [
+                'paramType' => 'querystring',
+                'filterEmpty' => true,
+            ],
+        ],
+    ];
 
 /**
  * Models used by the Controller
@@ -43,7 +44,7 @@ class AttachmentsController extends AppController {
  * @var array
  * @access public
  */
-	public $uses = array('FileManager.Attachment');
+    public $uses = ['FileManager.Attachment'];
 
 /**
  * Helpers used by the Controller
@@ -51,7 +52,7 @@ class AttachmentsController extends AppController {
  * @var array
  * @access public
  */
-	public $helpers = array('Croogo/FileManager.FileManager', 'Text', 'Croogo/Core.Image');
+    public $helpers = ['Croogo/FileManager.FileManager', 'Text', 'Croogo/Core.Image'];
 
 /**
  * Before executing controller actions
@@ -59,26 +60,27 @@ class AttachmentsController extends AppController {
  * @return void
  * @access public
  */
-	public function beforeFilter(Event $event) {
-		parent::beforeFilter($event);
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
 
-		// Comment, Category, Tag not needed
-		//$this->Attachments->unbindModel(array(
-		//	'hasMany' => array('Comment'),
-		//	'hasAndBelongsToMany' => array('Category', 'Tag'))
-		//);
+        // Comment, Category, Tag not needed
+        //$this->Attachments->unbindModel(array(
+        //	'hasMany' => array('Comment'),
+        //	'hasAndBelongsToMany' => array('Category', 'Tag'))
+        //);
 
-		$this->Attachments->addBehavior('Croogo/Core.Tree', [
-			'scope' => [
-				'type' => $this->Attachments->type,
-			],
-		]);
-		$this->set('type', $this->Attachments->type);
+        $this->Attachments->addBehavior('Croogo/Core.Tree', [
+            'scope' => [
+                'type' => $this->Attachments->type,
+            ],
+        ]);
+        $this->set('type', $this->Attachments->type);
 
-		if ($this->action == 'admin_add') {
-			$this->Security->csrfCheck = false;
-		}
-	}
+        if ($this->action == 'admin_add') {
+            $this->Security->csrfCheck = false;
+        }
+    }
 
 /**
  * Admin index
@@ -86,38 +88,39 @@ class AttachmentsController extends AppController {
  * @return void
  * @access public
  */
-	public function index() {
-		$this->set('title_for_layout', __d('croogo', 'Attachments'));
-		$this->Prg->commonProcess();
+    public function index()
+    {
+        $this->set('title_for_layout', __d('croogo', 'Attachments'));
+        $this->Prg->commonProcess();
 
-		$isChooser = false;
-		if (isset($this->request->params['named']['links']) || $this->request->query('chooser')) {
-			$isChooser = true;
-		}
+        $isChooser = false;
+        if (isset($this->request->params['named']['links']) || $this->request->query('chooser')) {
+            $isChooser = true;
+        }
 
-		$this->paginate = [
-			'order' => [
-				'created' => 'DESC',
-			],
-		];
-		if ($isChooser) {
-			if ($this->request->query['chooser_type'] == 'image') {
-				$this->paginate['mime_type LIKE'] = 'image/%';
-			} else {
-				$this->paginate['mime_type NOT LIKE'] = 'image/%';
-			}
-		}
+        $this->paginate = [
+            'order' => [
+                'created' => 'DESC',
+            ],
+        ];
+        if ($isChooser) {
+            if ($this->request->query['chooser_type'] == 'image') {
+                $this->paginate['mime_type LIKE'] = 'image/%';
+            } else {
+                $this->paginate['mime_type NOT LIKE'] = 'image/%';
+            }
+        }
 
-		$query = $this->Attachments->find('searchable', $this->Prg->parsedParams());
-		$this->set('attachments', $this->paginate($query));
-		$this->set('uploadsDir', $this->Attachments->uploadsDir);
+        $query = $this->Attachments->find('searchable', $this->Prg->parsedParams());
+        $this->set('attachments', $this->paginate($query));
+        $this->set('uploadsDir', $this->Attachments->uploadsDir);
 
-		if ($isChooser) {
-			$this->layout = 'admin_popup';
-			$this->render('admin_chooser');
-		}
+        if ($isChooser) {
+            $this->layout = 'admin_popup';
+            $this->render('admin_chooser');
+        }
 
-	}
+    }
 
 /**
  * Admin add
@@ -125,37 +128,38 @@ class AttachmentsController extends AppController {
  * @return void
  * @access public
  */
-	public function add() {
-		$this->set('title_for_layout', __d('croogo', 'Add Attachment'));
+    public function add()
+    {
+        $this->set('title_for_layout', __d('croogo', 'Add Attachment'));
 
-		if (isset($this->request->params['named']['editor'])) {
-			$this->layout = 'admin_popup';
-		}
+        if (isset($this->request->params['named']['editor'])) {
+            $this->layout = 'admin_popup';
+        }
 
-		$attachment = $this->Attachments->newEntity($this->request->data);
-		if ($this->request->is('post')) {
-			if (empty($attachment)) {
-				$attachment->errors(['file' => __d('croogo', 'Upload failed. Please ensure size does not exceed the server limit.')]);
-				$this->set(compact('attachment'));
-				return;
-			}
+        $attachment = $this->Attachments->newEntity($this->request->data);
+        if ($this->request->is('post')) {
+            if (empty($attachment)) {
+                $attachment->errors(['file' => __d('croogo', 'Upload failed. Please ensure size does not exceed the server limit.')]);
+                $this->set(compact('attachment'));
+                return;
+            }
 
-			$attachment = $this->Attachments->save($attachment);
-			if ($attachment) {
-				$this->Flash->success(__d('croogo', 'The Attachment has been saved'));
+            $attachment = $this->Attachments->save($attachment);
+            if ($attachment) {
+                $this->Flash->success(__d('croogo', 'The Attachment has been saved'));
 
-				if (isset($this->request->params['named']['editor'])) {
-					return $this->redirect(array('action' => 'browse'));
-				} else {
-					return $this->redirect(array('action' => 'index'));
-				}
-			} else {
-				$this->Flash->error(__d('croogo', 'The Attachment could not be saved. Please, try again.'));
-			}
-		}
+                if (isset($this->request->params['named']['editor'])) {
+                    return $this->redirect(['action' => 'browse']);
+                } else {
+                    return $this->redirect(['action' => 'index']);
+                }
+            } else {
+                $this->Flash->error(__d('croogo', 'The Attachment could not be saved. Please, try again.'));
+            }
+        }
 
-		$this->set(compact('attachment'));
-	}
+        $this->set(compact('attachment'));
+    }
 
 /**
  * Admin edit
@@ -164,33 +168,34 @@ class AttachmentsController extends AppController {
  * @return void
  * @access public
  */
-	public function edit($id = null) {
-		$this->set('title_for_layout', __d('croogo', 'Edit Attachment'));
+    public function edit($id = null)
+    {
+        $this->set('title_for_layout', __d('croogo', 'Edit Attachment'));
 
-		if (isset($this->request->params['named']['editor'])) {
-			$this->layout = 'admin_popup';
-		}
+        if (isset($this->request->params['named']['editor'])) {
+            $this->layout = 'admin_popup';
+        }
 
-		if (!$id && empty($this->request->data)) {
-			$this->Flash->error(__d('croogo', 'Invalid Attachment'));
-			return $this->redirect(array('action' => 'index'));
-		}
-		if (!empty($this->request->data)) {
-			$attachment = $this->Attachments->get($id);
-			$attachment = $this->Attachments->patchEntity($attachment, $this->request->data);
-			$attachment = $this->Attachments->save($attachment);
-			if ($attachment) {
-				$this->Flash->success(__d('croogo', 'The Attachment has been saved'));
-				return $this->Croogo->redirect(array('action' => 'edit', $attachment->id));
-			} else {
-				$this->Flash->error(__d('croogo', 'The Attachment could not be saved. Please, try again.'));
-			}
-		}
-		if (empty($this->request->data)) {
-			$attachment = $this->Attachments->get($id);
-			$this->set(compact('attachment'));
-		}
-	}
+        if (!$id && empty($this->request->data)) {
+            $this->Flash->error(__d('croogo', 'Invalid Attachment'));
+            return $this->redirect(['action' => 'index']);
+        }
+        if (!empty($this->request->data)) {
+            $attachment = $this->Attachments->get($id);
+            $attachment = $this->Attachments->patchEntity($attachment, $this->request->data);
+            $attachment = $this->Attachments->save($attachment);
+            if ($attachment) {
+                $this->Flash->success(__d('croogo', 'The Attachment has been saved'));
+                return $this->Croogo->redirect(['action' => 'edit', $attachment->id]);
+            } else {
+                $this->Flash->error(__d('croogo', 'The Attachment could not be saved. Please, try again.'));
+            }
+        }
+        if (empty($this->request->data)) {
+            $attachment = $this->Attachments->get($id);
+            $this->set(compact('attachment'));
+        }
+    }
 
 /**
  * Admin delete
@@ -199,21 +204,22 @@ class AttachmentsController extends AppController {
  * @return void
  * @access public
  */
-	public function delete($id = null) {
-		if (!$id) {
-			$this->Flash->error(__d('croogo', 'Invalid id for Attachment'));
-			return $this->redirect(array('action' => 'index'));
-		}
+    public function delete($id = null)
+    {
+        if (!$id) {
+            $this->Flash->error(__d('croogo', 'Invalid id for Attachment'));
+            return $this->redirect(['action' => 'index']);
+        }
 
-		$attachment = new Attachment(compact('id'), ['markNew' => false]);
-		if ($this->Attachments->delete($attachment)) {
-			$this->Flash->success(__d('croogo', 'Attachment deleted'));
-			return $this->redirect(array('action' => 'index'));
-		} else {
-			$this->Flash->error(__d('croogo', 'Invalid id for Attachment'));
-			return $this->redirect(array('action' => 'index'));
-		}
-	}
+        $attachment = new Attachment(compact('id'), ['markNew' => false]);
+        if ($this->Attachments->delete($attachment)) {
+            $this->Flash->success(__d('croogo', 'Attachment deleted'));
+            return $this->redirect(['action' => 'index']);
+        } else {
+            $this->Flash->error(__d('croogo', 'Invalid id for Attachment'));
+            return $this->redirect(['action' => 'index']);
+        }
+    }
 
 /**
  * Admin browse
@@ -221,9 +227,9 @@ class AttachmentsController extends AppController {
  * @return void
  * @access public
  */
-	public function browse() {
-		$this->layout = 'admin_popup';
-		$this->setAction('index');
-	}
-
+    public function browse()
+    {
+        $this->layout = 'admin_popup';
+        $this->setAction('index');
+    }
 }

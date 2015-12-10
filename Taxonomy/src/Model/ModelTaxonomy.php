@@ -3,6 +3,7 @@
 namespace Croogo\Taxonomy\Model;
 
 use Taxonomy\Model\TaxonomyAppModel;
+
 /**
  * ModelTaxonomy
  *
@@ -11,8 +12,8 @@ use Taxonomy\Model\TaxonomyAppModel;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ModelTaxonomy extends TaxonomyAppModel {
+class ModelTaxonomy extends TaxonomyAppModel
+{
 
-	public $useTable = 'model_taxonomies';
-
+    public $useTable = 'model_taxonomies';
 }

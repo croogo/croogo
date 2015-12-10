@@ -1,10 +1,11 @@
 <?php
 namespace Croogo\Install\Config\Data;
-class UserData {
 
-	public $table = 'users';
+class UserData
+{
 
-	public $records = array(
-	);
+    public $table = 'users';
 
+    public $records = [
+    ];
 }

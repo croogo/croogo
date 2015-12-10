@@ -1,7 +1,9 @@
 <?php
 
 namespace Croogo\Translate\Config\Migration;
-class FirstMigrationTranslate extends CakeMigration {
+
+class FirstMigrationTranslate extends CakeMigration
+{
 
 /**
  * Migration description
@@ -9,7 +11,7 @@ class FirstMigrationTranslate extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = '';
+    public $description = '';
 
 /**
  * Actions to be performed
@@ -17,33 +19,33 @@ class FirstMigrationTranslate extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-			'create_table' => array(
-				'i18n' => array(
-					'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'),
-					'locale' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 6, 'key' => 'index', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'model' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'index', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'foreign_key' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'index'),
-					'field' => array('type' => 'string', 'null' => false, 'default' => null, 'key' => 'index', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'content' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
-					'indexes' => array(
-						'PRIMARY' => array('column' => 'id', 'unique' => 1),
-						'locale' => array('column' => 'locale', 'unique' => 0),
-						'model' => array('column' => 'model', 'unique' => 0),
-						'row_id' => array('column' => 'foreign_key', 'unique' => 0),
-						'field' => array('column' => 'field', 'unique' => 0)
-					),
-					'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB')
-				),
-			),
-		),
-		'down' => array(
-			'drop_table' => array(
-				'i18n'
-			),
-		),
-	);
+    public $migration = [
+        'up' => [
+            'create_table' => [
+                'i18n' => [
+                    'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'primary'],
+                    'locale' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 6, 'key' => 'index', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'model' => ['type' => 'string', 'null' => false, 'default' => null, 'key' => 'index', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'foreign_key' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 10, 'key' => 'index'],
+                    'field' => ['type' => 'string', 'null' => false, 'default' => null, 'key' => 'index', 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'content' => ['type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+                    'indexes' => [
+                        'PRIMARY' => ['column' => 'id', 'unique' => 1],
+                        'locale' => ['column' => 'locale', 'unique' => 0],
+                        'model' => ['column' => 'model', 'unique' => 0],
+                        'row_id' => ['column' => 'foreign_key', 'unique' => 0],
+                        'field' => ['column' => 'field', 'unique' => 0]
+                    ],
+                    'tableParameters' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'InnoDB']
+                ],
+            ],
+        ],
+        'down' => [
+            'drop_table' => [
+                'i18n'
+            ],
+        ],
+    ];
 
 /**
  * Before migration callback
@@ -52,12 +54,13 @@ class FirstMigrationTranslate extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		if ($direction === 'down') {
-			return false;
-		}
-		return true;
-	}
+    public function before($direction)
+    {
+        if ($direction === 'down') {
+            return false;
+        }
+        return true;
+    }
 
 /**
  * After migration callback
@@ -66,8 +69,8 @@ class FirstMigrationTranslate extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
-
+    public function after($direction)
+    {
+        return true;
+    }
 }

@@ -2,16 +2,18 @@
 namespace Croogo\Test\TestCase;
 
 use Croogo\TestSuite\CroogoTestCase;
-class CroogoComponentsTest extends PHPUnit_Framework_TestSuite {
+
+class CroogoComponentsTest extends PHPUnit_Framework_TestSuite
+{
 
 /**
  * suite
  */
-	public static function suite() {
-		$suite = new CakeTestSuite('Croogo components tests');
-		$path = APP . 'Vendor' . DS . 'croogo' . DS . 'croogo' . DS . 'Croogo' . DS . 'Test' . DS . 'Case' . DS . 'Controller' . DS . 'Component' . DS;
-		$suite->addTestDirectory($path);
-		return $suite;
-	}
-
+    public static function suite()
+    {
+        $suite = new CakeTestSuite('Croogo components tests');
+        $path = APP . 'Vendor' . DS . 'croogo' . DS . 'croogo' . DS . 'Croogo' . DS . 'Test' . DS . 'Case' . DS . 'Controller' . DS . 'Component' . DS;
+        $suite->addTestDirectory($path);
+        return $suite;
+    }
 }

@@ -5,70 +5,77 @@ namespace Croogo\Extensions\Test\TestCase;
 use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Extensions\CroogoTheme;
 
-class CroogoThemeTest extends CroogoTestCase {
+class CroogoThemeTest extends CroogoTestCase
+{
 
 /**
  * CroogoTheme class
  * @var CroogoTheme
  */
-	public $CroogoTheme;
+    public $CroogoTheme;
 
-	public function setUp() {
-		parent::setUp();
-		$this->CroogoTheme = $this->getMock('CroogoTheme', null);
-	}
+    public function setUp()
+    {
+        parent::setUp();
+        $this->CroogoTheme = $this->getMock('CroogoTheme', null);
+    }
 
-	public function tearDown() {
-		parent::tearDown();
-		unset($this->CroogoTheme);
-	}
+    public function tearDown()
+    {
+        parent::tearDown();
+        unset($this->CroogoTheme);
+    }
 
 /**
  * testDeleteEmptyTheme
  * @expectedException InvalidArgumentException
  */
-	public function testDeleteEmptyTheme() {
-		$this->CroogoTheme->delete(null);
-	}
+    public function testDeleteEmptyTheme()
+    {
+        $this->CroogoTheme->delete(null);
+    }
 
 /**
  * testDeleteBogusTheme
  * @expectedException UnexpectedValueException
  */
-	public function testDeleteBogusTheme() {
-		$this->CroogoTheme->delete('Bogus');
-	}
+    public function testDeleteBogusTheme()
+    {
+        $this->CroogoTheme->delete('Bogus');
+    }
 
 /**
  * testGetThemes
  */
-	public function testGetThemes() {
-		$themes = $this->CroogoTheme->getThemes();
-		$this->assertTrue(array_key_exists('Mytheme', $themes));
-	}
+    public function testGetThemes()
+    {
+        $themes = $this->CroogoTheme->getThemes();
+        $this->assertTrue(array_key_exists('Mytheme', $themes));
+    }
 
 /**
  * testGetDataBogusTheme
  */
-	public function testGetDataBogusTheme() {
-		$data = $this->CroogoTheme->getData('BogusTheme');
-		$this->assertSame(array(), $data);
-	}
+    public function testGetDataBogusTheme()
+    {
+        $data = $this->CroogoTheme->getData('BogusTheme');
+        $this->assertSame([], $data);
+    }
 
 /**
  * testGetDataMixedManifest
  */
-	public function testGetDataMixedManifest() {
-		$data = $this->CroogoTheme->getData('MixedManifest');
+    public function testGetDataMixedManifest()
+    {
+        $data = $this->CroogoTheme->getData('MixedManifest');
 
-		$keys = array_keys($data);
-		sort($keys);
+        $keys = array_keys($data);
+        sort($keys);
 
-		$expected = array('name', 'regions', 'screenshot', 'settings', 'type', 'vendor');
-		$this->assertEquals($expected, $keys);
+        $expected = ['name', 'regions', 'screenshot', 'settings', 'type', 'vendor'];
+        $this->assertEquals($expected, $keys);
 
-		$this->assertEquals('MixedManifest', $data['name']);
-		$this->assertEquals('croogo/mixed-manifest-theme', $data['vendor']);
-	}
-
+        $this->assertEquals('MixedManifest', $data['name']);
+        $this->assertEquals('croogo/mixed-manifest-theme', $data['vendor']);
+    }
 }

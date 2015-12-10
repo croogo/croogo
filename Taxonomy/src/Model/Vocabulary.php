@@ -3,6 +3,7 @@
 namespace Croogo\Taxonomy\Model;
 
 use Taxonomy\Model\TaxonomyAppModel;
+
 /**
  * Vocabulary
  *
@@ -13,7 +14,8 @@ use Taxonomy\Model\TaxonomyAppModel;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class Vocabulary extends TaxonomyAppModel {
+class Vocabulary extends TaxonomyAppModel
+{
 
 /**
  * Model name
@@ -21,7 +23,7 @@ class Vocabulary extends TaxonomyAppModel {
  * @var string
  * @access public
  */
-	public $name = 'Vocabulary';
+    public $name = 'Vocabulary';
 
 /**
  * Behaviors used by the Model
@@ -29,18 +31,18 @@ class Vocabulary extends TaxonomyAppModel {
  * @var array
  * @access public
  */
-	public $actsAs = array(
-		'Croogo.Ordered' => array(
-			'field' => 'weight',
-			'foreign_key' => false,
-		),
-		'Croogo.Cached' => array(
-			'groups' => array(
-				'taxonomy',
-			),
-		),
-		'Croogo.Trackable',
-	);
+    public $actsAs = [
+        'Croogo.Ordered' => [
+            'field' => 'weight',
+            'foreign_key' => false,
+        ],
+        'Croogo.Cached' => [
+            'groups' => [
+                'taxonomy',
+            ],
+        ],
+        'Croogo.Trackable',
+    ];
 
 /**
  * Validation
@@ -48,22 +50,22 @@ class Vocabulary extends TaxonomyAppModel {
  * @var array
  * @access public
  */
-	public $validate = array(
-		'title' => array(
-			'rule' => array('minLength', 1),
-			'message' => 'Title cannot be empty.',
-		),
-		'alias' => array(
-			'isUnique' => array(
-				'rule' => 'isUnique',
-				'message' => 'This alias has already been taken.',
-			),
-			'minLength' => array(
-				'rule' => array('minLength', 1),
-				'message' => 'Alias cannot be empty.',
-			),
-		),
-	);
+    public $validate = [
+        'title' => [
+            'rule' => ['minLength', 1],
+            'message' => 'Title cannot be empty.',
+        ],
+        'alias' => [
+            'isUnique' => [
+                'rule' => 'isUnique',
+                'message' => 'This alias has already been taken.',
+            ],
+            'minLength' => [
+                'rule' => ['minLength', 1],
+                'message' => 'Alias cannot be empty.',
+            ],
+        ],
+    ];
 
 /**
  * Model associations: hasAndBelongsToMany
@@ -71,32 +73,31 @@ class Vocabulary extends TaxonomyAppModel {
  * @var array
  * @access public
  */
-	public $hasAndBelongsToMany = array(
-		'Type' => array(
-			'className' => 'Taxonomy.Type',
-			'joinTable' => 'types_vocabularies',
-			'foreignKey' => 'vocabulary_id',
-			'associationForeignKey' => 'type_id',
-			'unique' => true,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => '',
-		),
-	);
+    public $hasAndBelongsToMany = [
+        'Type' => [
+            'className' => 'Taxonomy.Type',
+            'joinTable' => 'types_vocabularies',
+            'foreignKey' => 'vocabulary_id',
+            'associationForeignKey' => 'type_id',
+            'unique' => true,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'finderQuery' => '',
+            'deleteQuery' => '',
+            'insertQuery' => '',
+        ],
+    ];
 
 /**
  * Model associations: hasMany
  */
-	public $hasMany = array(
-		'Taxonomy' => array(
-			'className' => 'Taxonomy.Taxonomy',
-			'dependent' => true,
-		),
-	);
-
+    public $hasMany = [
+        'Taxonomy' => [
+            'className' => 'Taxonomy.Taxonomy',
+            'dependent' => true,
+        ],
+    ];
 }

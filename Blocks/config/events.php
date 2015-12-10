@@ -1,8 +1,9 @@
 <?php
 
 namespace Croogo\Blocks\Config;
-$config = array(
-	'EventHandlers' => array(
-		'Croogo/Blocks.BlocksEventHandler',
-	),
-);
+
+$config = [
+    'EventHandlers' => [
+        'Croogo/Blocks.BlocksEventHandler',
+    ],
+];

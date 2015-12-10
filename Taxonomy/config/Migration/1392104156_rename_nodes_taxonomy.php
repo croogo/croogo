@@ -1,7 +1,9 @@
 <?php
 
 namespace Croogo\Taxonomy\Config\Migration;
-class RenameNodesTaxonomy extends CakeMigration {
+
+class RenameNodesTaxonomy extends CakeMigration
+{
 
 /**
  * Migration description
@@ -9,7 +11,7 @@ class RenameNodesTaxonomy extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = 'Rename nodes_taxonomies';
+    public $description = 'Rename nodes_taxonomies';
 
 /**
  * Actions to be performed
@@ -17,18 +19,18 @@ class RenameNodesTaxonomy extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-			'rename_table' => array(
-				'nodes_taxonomies' => 'model_taxonomies',
-			),
-		),
-		'down' => array(
-			'rename_table' => array(
-				'model_taxonomies' => 'nodes_taxonomies',
-			),
-		),
-	);
+    public $migration = [
+        'up' => [
+            'rename_table' => [
+                'nodes_taxonomies' => 'model_taxonomies',
+            ],
+        ],
+        'down' => [
+            'rename_table' => [
+                'model_taxonomies' => 'nodes_taxonomies',
+            ],
+        ],
+    ];
 
 /**
  * Before migration callback
@@ -37,9 +39,10 @@ class RenameNodesTaxonomy extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		return true;
-	}
+    public function before($direction)
+    {
+        return true;
+    }
 
 /**
  * After migration callback
@@ -48,7 +51,8 @@ class RenameNodesTaxonomy extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
+    public function after($direction)
+    {
+        return true;
+    }
 }

@@ -1,7 +1,9 @@
 <?php
 
 namespace Croogo\Users\Config\Migration;
-class UsersTrackableFields extends CakeMigration {
+
+class UsersTrackableFields extends CakeMigration
+{
 
 /**
  * Migration description
@@ -9,7 +11,7 @@ class UsersTrackableFields extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = 'Adding Trackable Fields';
+    public $description = 'Adding Trackable Fields';
 
 /**
  * Actions to be performed
@@ -17,51 +19,51 @@ class UsersTrackableFields extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-			'create_field' => array(
+    public $migration = [
+        'up' => [
+            'create_field' => [
 
-				'users' => array(
-					'created_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'created',
-					),
-					'updated_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'updated',
-					),
-				),
+                'users' => [
+                    'created_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'created',
+                    ],
+                    'updated_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'updated',
+                    ],
+                ],
 
-				'roles' => array(
-					'created_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'created',
-					),
-					'updated_by' => array(
-						'type' => 'integer',
-						'length' => 20,
-						'after' => 'updated',
-					),
-				),
+                'roles' => [
+                    'created_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'created',
+                    ],
+                    'updated_by' => [
+                        'type' => 'integer',
+                        'length' => 20,
+                        'after' => 'updated',
+                    ],
+                ],
 
-			),
-		),
-		'down' => array(
-			'drop_field' => array(
-				'users' => array(
-					'created_by',
-					'updated_by',
-				),
-				'roles' => array(
-					'created_by',
-					'updated_by',
-				),
-			),
-		),
-	);
+            ],
+        ],
+        'down' => [
+            'drop_field' => [
+                'users' => [
+                    'created_by',
+                    'updated_by',
+                ],
+                'roles' => [
+                    'created_by',
+                    'updated_by',
+                ],
+            ],
+        ],
+    ];
 
 /**
  * Before migration callback
@@ -70,9 +72,10 @@ class UsersTrackableFields extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		return true;
-	}
+    public function before($direction)
+    {
+        return true;
+    }
 
 /**
  * After migration callback
@@ -81,7 +84,8 @@ class UsersTrackableFields extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
+    public function after($direction)
+    {
+        return true;
+    }
 }

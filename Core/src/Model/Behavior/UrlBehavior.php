@@ -19,46 +19,47 @@ use Croogo\Core\Link;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class UrlBehavior extends Behavior {
+class UrlBehavior extends Behavior
+{
 
-	protected $_defaultConfig = [
-		'url' => [],
-		'fields' => [],
-		'pass' => []
-	];
+    protected $_defaultConfig = [
+        'url' => [],
+        'fields' => [],
+        'pass' => []
+    ];
 
-	public function beforeFind(Event $event, Query $query, $options) {
-		$query->formatResults(function (CollectionInterface $results) {
-			return $results->map(function (Entity $row) {
-				// Base URL
-				$url = $this->config('url');
+    public function beforeFind(Event $event, Query $query, $options)
+    {
+        $query->formatResults(function (CollectionInterface $results) {
+            return $results->map(function (Entity $row) {
+                // Base URL
+                $url = $this->config('url');
 
-				// Add named fields
-				$fields = $this->config('fields');
-				if (is_array($fields)) {
-					foreach ($fields as $field) {
-						if ($row->get($field)) {
-							$url[$field] = $row->get($field);
-						}
-					}
-				}
+                // Add named fields
+                $fields = $this->config('fields');
+                if (is_array($fields)) {
+                    foreach ($fields as $field) {
+                        if ($row->get($field)) {
+                            $url[$field] = $row->get($field);
+                        }
+                    }
+                }
 
-				// Add passed fields
-				$passed = $this->config('pass');
-				if (is_array($passed)) {
-					foreach ($passed as $field) {
-						if ($row->get($field)) {
-							$url[] = $row->get($field);
-						}
-					}
-				}
+                // Add passed fields
+                $passed = $this->config('pass');
+                if (is_array($passed)) {
+                    foreach ($passed as $field) {
+                        if ($row->get($field)) {
+                            $url[] = $row->get($field);
+                        }
+                    }
+                }
 
-				$row->set('url', new Link($url));
-				$row->dirty('url', false);
+                $row->set('url', new Link($url));
+                $row->dirty('url', false);
 
-				return $row;
-			});
-		});
-	}
-
+                return $row;
+            });
+        });
+    }
 }

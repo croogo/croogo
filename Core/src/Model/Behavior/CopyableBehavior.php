@@ -26,27 +26,28 @@ use Croogo\Core\Croogo;
  * @package Croogo.Croogo.Model.Behavior
  * @author Jamie Nay
  * @copyright Jamie Nay
- * @license	http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @license     http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link http://github.com/jamienay/copyable_behavior
  * @link http://www.croogo.org
  */
-class CopyableBehavior extends Behavior {
+class CopyableBehavior extends Behavior
+{
 
 /**
  * Behavior settings
  */
-	public $settings = array();
+    public $settings = [];
 
 /**
  * Array of contained models.
  */
-	public $contain = array();
+    public $contain = [];
 
 /**
  * The full results of Model::find() that are modified and saved
  * as a new copy.
  */
-	public $record = array();
+    public $record = [];
 
 /**
  * Default values for settings.
@@ -57,40 +58,41 @@ class CopyableBehavior extends Behavior {
  * - ignore: aliases of any associations that should be ignored, using dot (.) notation.
  * will look in the $this->contain array.
  */
-	protected $_defaults = array(
-		'recursive' => false,
-		'habtm' => false,
-		'autoFields' => array(
-			'title',
-			'slug',
-			'alias',
-		),
-		'stripFields' => array(
-			'id',
-			'created',
-			'modified',
-			'updated',
-			'lft',
-			'status',
-			'rght'
-		),
-		'ignore' => array(
-		),
-		'masterKey' => null
-	);
+    protected $_defaults = [
+        'recursive' => false,
+        'habtm' => false,
+        'autoFields' => [
+            'title',
+            'slug',
+            'alias',
+        ],
+        'stripFields' => [
+            'id',
+            'created',
+            'modified',
+            'updated',
+            'lft',
+            'status',
+            'rght'
+        ],
+        'ignore' => [
+        ],
+        'masterKey' => null
+    ];
 
 /**
  * Holds the value of the original id
  */
-	protected $_originalId;
+    protected $_originalId;
 
 /**
  * Constructor
  */
-	public function __construct(Table $table, array $config = []) {
-		$config = Hash::merge($this->_defaults, $config);
-		parent::__construct($table, $config);
-	}
+    public function __construct(Table $table, array $config = [])
+    {
+        $config = Hash::merge($this->_defaults, $config);
+        parent::__construct($table, $config);
+    }
 
 /**
  * Copy method.
@@ -99,32 +101,33 @@ class CopyableBehavior extends Behavior {
  * @param mixed $id String or integer model ID
  * @return boolean
  */
-	public function copy($id) {
-		$this->_originalId = $id;
-		$table = $this->_table;
-		$this->contain = $this->generateContain();
-		$this->record = $table->find()->where([
-				$table->aliasField($table->primaryKey()) => $id
-			])
-			->contain($this->contain)
-			->first();
+    public function copy($id)
+    {
+        $this->_originalId = $id;
+        $table = $this->_table;
+        $this->contain = $this->generateContain();
+        $this->record = $table->find()->where([
+                $table->aliasField($table->primaryKey()) => $id
+            ])
+            ->contain($this->contain)
+            ->first();
 
-		if (empty($this->record)) {
-			return false;
-		}
+        if (empty($this->record)) {
+            return false;
+        }
 
-		if (!$this->_convertData()) {
-			return false;
-		}
+        if (!$this->_convertData()) {
+            return false;
+        }
 
-		$result = false;
-		try {
-			$result = $this->_copyRecord();
-		} catch (PDOException $e) {
-			$this->log('Error executing _copyRecord: ' . $e->getMessage());
-		}
-		return $result;
-	}
+        $result = false;
+        try {
+            $result = $this->_copyRecord();
+        } catch (PDOException $e) {
+            $this->log('Error executing _copyRecord: ' . $e->getMessage());
+        }
+        return $result;
+    }
 
 /**
  * Wrapper method that combines the results of _recursiveChildContain()
@@ -133,17 +136,18 @@ class CopyableBehavior extends Behavior {
  * @param object $Model Model object
  * @return array
  */
-	public function generateContain() {
-		$contain = [];
-		$table = $this->_table;
-		$belongsToMany = $table->associations()->type('BelongsToMany');
-		foreach ($belongsToMany as $assoc) {
-			$contain[$assoc->junction()->alias()] = [];
-		}
-		$contain = array_merge($this->_recursiveChildContain($table), $contain);
-		$contain = $this->_removeIgnored($contain);
-		return $contain;
-	}
+    public function generateContain()
+    {
+        $contain = [];
+        $table = $this->_table;
+        $belongsToMany = $table->associations()->type('BelongsToMany');
+        foreach ($belongsToMany as $assoc) {
+            $contain[$assoc->junction()->alias()] = [];
+        }
+        $contain = array_merge($this->_recursiveChildContain($table), $contain);
+        $contain = $this->_removeIgnored($contain);
+        return $contain;
+    }
 
 /**
  * Removes any ignored associations, as defined in the model settings, from
@@ -152,17 +156,18 @@ class CopyableBehavior extends Behavior {
  * @param object $Model Model object
  * @return boolean
  */
-	protected function _removeIgnored($contain) {
-		$table = $this->_table;
-		$ignore = array_unique($this->config('ignore'));
-		if (!$ignore) {
-			return $contain;
-		}
-		foreach ($ignore as $path) {
-			$contain = Hash::remove($contain, $path);
-		}
-		return $contain;
-	}
+    protected function _removeIgnored($contain)
+    {
+        $table = $this->_table;
+        $ignore = array_unique($this->config('ignore'));
+        if (!$ignore) {
+            return $contain;
+        }
+        foreach ($ignore as $path) {
+            $contain = Hash::remove($contain, $path);
+        }
+        return $contain;
+    }
 
 /**
  * Strips primary keys and other unwanted fields
@@ -172,41 +177,42 @@ class CopyableBehavior extends Behavior {
  * @param array $record
  * @return array $record
  */
-	protected function _convertChildren(Table $table, Entity $record) {
-		$assocs = $table->associations();
-		$children = array_merge($assocs->type('HasMany'), $assocs->type('HasOne'));
-		foreach ($children as $key => $val) {
-			$property = $val->property();
-			if (!$record->has($property)) {
-				continue;
-			}
-			$child = $record->{$property};
+    protected function _convertChildren(Table $table, Entity $record)
+    {
+        $assocs = $table->associations();
+        $children = array_merge($assocs->type('HasMany'), $assocs->type('HasOne'));
+        foreach ($children as $key => $val) {
+            $property = $val->property();
+            if (!$record->has($property)) {
+                continue;
+            }
+            $child = $record->{$property};
 
-			if (isset($child[0])) {
-				foreach ($child as $innerKey => $innerVal) {
-					$child[$innerKey] = $this->_stripFields($innerVal);
+            if (isset($child[0])) {
+                foreach ($child as $innerKey => $innerVal) {
+                    $child[$innerKey] = $this->_stripFields($innerVal);
 
-					$foreignKey = $val->foreignKey();
-					if ($innerVal->has($foreignKey)) {
-						$innerVal->unsetProperty($foreignKey);
-					}
+                    $foreignKey = $val->foreignKey();
+                    if ($innerVal->has($foreignKey)) {
+                        $innerVal->unsetProperty($foreignKey);
+                    }
 
-					$child[$innerKey] = $this->_convertChildren($val->target(), $child[$innerKey]);
-				}
-			} else {
-				$child = $this->_stripFields($child);
+                    $child[$innerKey] = $this->_convertChildren($val->target(), $child[$innerKey]);
+                }
+            } else {
+                $child = $this->_stripFields($child);
 
-				$foreignKey = $val->foreignKey();
-				if ($child->has($foreignKey)) {
-					$child->unsetProperty($foreignKey);
-				}
+                $foreignKey = $val->foreignKey();
+                if ($child->has($foreignKey)) {
+                    $child->unsetProperty($foreignKey);
+                }
 
-				$child = $this->_convertChildren($val->target(), $child);
-			}
-		}
+                $child = $this->_convertChildren($val->target(), $child);
+            }
+        }
 
-		return $record;
-	}
+        return $record;
+    }
 
 /**
  * Strips primary and parent foreign keys (where applicable)
@@ -221,35 +227,36 @@ class CopyableBehavior extends Behavior {
  * @param object $Model Model object
  * @return array $this->record
  */
-	protected function _convertData() {
-		$table = $this->_table;
-		$this->record = clone $this->record;
-		$this->_stripFields($this->record);
+    protected function _convertData()
+    {
+        $table = $this->_table;
+        $this->record = clone $this->record;
+        $this->_stripFields($this->record);
 
-		$this->record = $this->_convertHabtm($this->_table, $this->record);
-		$this->record = $this->_convertChildren($this->_table, $this->record);
+        $this->record = $this->_convertHabtm($this->_table, $this->record);
+        $this->record = $this->_convertChildren($this->_table, $this->record);
 
-		$autoFields = (array)$this->config('autoFields');
-		$slugFields = array('slug', 'alias');
-		foreach ($autoFields as $field) {
-			if (!$this->record->has($field)) {
-				continue;
-			}
-			if (in_array($field, $slugFields)) {
-				$this->record->{$field} .= '-copy';
-			} else {
-				$this->record->{$field} .= ' (copy)';
-			}
-		}
+        $autoFields = (array)$this->config('autoFields');
+        $slugFields = ['slug', 'alias'];
+        foreach ($autoFields as $field) {
+            if (!$this->record->has($field)) {
+                continue;
+            }
+            if (in_array($field, $slugFields)) {
+                $this->record->{$field} .= '-copy';
+            } else {
+                $this->record->{$field} .= ' (copy)';
+            }
+        }
 
-		$eventName = 'Behavior.Copyable.convertData';
-		$event = Croogo::dispatchEvent($eventName, $this->_table, array(
-			'record' => $this->record,
-		));
+        $eventName = 'Behavior.Copyable.convertData';
+        $event = Croogo::dispatchEvent($eventName, $this->_table, [
+            'record' => $this->record,
+        ]);
 
-		$this->record = $event->data['record'];
-		return $this->record;
-	}
+        $this->record = $event->data['record'];
+        return $this->record;
+    }
 
 /**
  * Loops through any HABTM results in $this->record and plucks out
@@ -263,33 +270,33 @@ class CopyableBehavior extends Behavior {
  * @param array $record
  * @return array modified $record
  */
-	protected function _convertHabtm(Table $table, $record) {
-		if (!$this->config('habtm')) {
-			return $record;
-		}
+    protected function _convertHabtm(Table $table, $record)
+    {
+        if (!$this->config('habtm')) {
+            return $record;
+        }
 
-		$belongsToMany = $table->associations()->type('BelongsToMany');
-		foreach ($belongsToMany as $key => $val) {
+        $belongsToMany = $table->associations()->type('BelongsToMany');
+        foreach ($belongsToMany as $key => $val) {
+            // retrieve the reverse association
+            $hasMany = $val->target()->association($val->junction()->alias());
+            $property = $hasMany->property();
 
-			// retrieve the reverse association
-			$hasMany = $val->target()->association($val->junction()->alias());
-			$property = $hasMany->property();
+            if (!$record->has($property) || empty($record->{$property})) {
+                continue;
+            }
 
-			if (!$record->has($property) || empty($record->{$property})) {
-				continue;
-			}
+            foreach ($record->{$property} as $joinKey => $joinVal) {
+                $joinVal = $this->_stripFields($joinVal);
+                $foreignKey = $val->foreignKey();
+                if ($joinVal->has($foreignKey)) {
+                    $joinVal->unsetProperty($foreignKey);
+                }
+            }
+        }
 
-			foreach ($record->{$property} as $joinKey => $joinVal) {
-				$joinVal = $this->_stripFields($joinVal);
-				$foreignKey = $val->foreignKey();
-				if ($joinVal->has($foreignKey)) {
-					$joinVal->unsetProperty($foreignKey);
-				}
-			}
-		}
-
-		return $record;
-	}
+        return $record;
+    }
 
 /**
  * Performs the actual creation and save.
@@ -297,19 +304,20 @@ class CopyableBehavior extends Behavior {
  * @param object $Model Model object
  * @return mixed
  */
-	protected function _copyRecord() {
+    protected function _copyRecord()
+    {
 
-		$saved = $this->_table->save($this->record);
+        $saved = $this->_table->save($this->record);
 
-		if ($this->config('masterKey')) {
-			$record = $this->_updateMasterKey();
-			$saved = $this->_table->save($record, [
-				'associated' => true,
-				'checkRules' => false,
-			]);
-		}
-		return $saved;
-	}
+        if ($this->config('masterKey')) {
+            $record = $this->_updateMasterKey();
+            $saved = $this->_table->save($record, [
+                'associated' => true,
+                'checkRules' => false,
+            ]);
+        }
+        return $saved;
+    }
 
 /**
  * Runs through to update the master key for deep copying.
@@ -317,51 +325,53 @@ class CopyableBehavior extends Behavior {
  * @param Model $Model
  * @return array
  */
-	protected function _updateMasterKey() {
-		$table = $this->_table;
-		$record = $this->_table->find()
-			->where([
-				$table->aliasField('id') => $this->record->id
-			])
-			->contain($this->contain)
-			->first();
+    protected function _updateMasterKey()
+    {
+        $table = $this->_table;
+        $record = $this->_table->find()
+            ->where([
+                $table->aliasField('id') => $this->record->id
+            ])
+            ->contain($this->contain)
+            ->first();
 
-		$this->_masterKey = $this->config('masterKey');
-		$record = $this->_masterKeyLoop($record, $this->_originalId);
-		return $record;
-	}
+        $this->_masterKey = $this->config('masterKey');
+        $record = $this->_masterKeyLoop($record, $this->_originalId);
+        return $record;
+    }
 
 /**
  * Called by _updateMasterKey as part of the copying process for deep recursion.
  *
  * @param Model $Model
  * @param array $record
- * @param integer $id
+ * @param int$id
  * @return array
  */
-	protected function _masterKeyLoop($record, $id) {
-		$properties = $record->visibleProperties();
+    protected function _masterKeyLoop($record, $id)
+    {
+        $properties = $record->visibleProperties();
 
-		foreach ($properties as $property) {
-			if (is_array($record->{$property})) {
-				foreach ($record->{$property} as $innerKey => $innerVal) {
-					if ($innerVal instanceof Entity) {
-						$innerVal = $this->_masterKeyLoop($innerVal, $id);
-					}
-				}
-			}
+        foreach ($properties as $property) {
+            if (is_array($record->{$property})) {
+                foreach ($record->{$property} as $innerKey => $innerVal) {
+                    if ($innerVal instanceof Entity) {
+                        $innerVal = $this->_masterKeyLoop($innerVal, $id);
+                    }
+                }
+            }
 
-			if ($record->{$property} instanceof Entity) {
-				$record->{$property} = $this->_masterKeyLoop($record->{$property}, $id);
-			}
+            if ($record->{$property} instanceof Entity) {
+                $record->{$property} = $this->_masterKeyLoop($record->{$property}, $id);
+            }
 
-			if ($this->_masterKey == $property) {
-				$record->set($property, $id);
-			}
+            if ($this->_masterKey == $property) {
+                $record->set($property, $id);
+            }
 
-		}
-		return $record;
-	}
+        }
+        return $record;
+    }
 
 /**
  * Generates a contain array for Containable behavior by
@@ -371,24 +381,25 @@ class CopyableBehavior extends Behavior {
  * @param object $Model Model object
  * @return array
  */
-	protected function _recursiveChildContain(Table $table) {
-		$contain = array();
-		if (!$this->config('recursive')) {
-			return $contain;
-		}
+    protected function _recursiveChildContain(Table $table)
+    {
+        $contain = [];
+        if (!$this->config('recursive')) {
+            return $contain;
+        }
 
-		$assocs = $table->associations();
-		$children = array_merge($assocs->type('HasMany'), $assocs->type('HasOne'));
-		foreach ($children as $child) {
-			$target = $child->target();
-			if ($table->alias() == $target->alias()) {
-				continue;
-			}
-			$contain[$target->alias()] = $this->_recursiveChildContain($target);
-		}
+        $assocs = $table->associations();
+        $children = array_merge($assocs->type('HasMany'), $assocs->type('HasOne'));
+        foreach ($children as $child) {
+            $target = $child->target();
+            if ($table->alias() == $target->alias()) {
+                continue;
+            }
+            $contain[$target->alias()] = $this->_recursiveChildContain($target);
+        }
 
-		return $contain;
-	}
+        return $contain;
+    }
 
 /**
  * Strips unwanted fields from $record, taken from
@@ -398,16 +409,16 @@ class CopyableBehavior extends Behavior {
  * @param array $record
  * @return array
  */
-	protected function _stripFields($record) {
-		$stripFields = (array)$this->config('stripFields');
-		foreach ($stripFields as $field) {
-			if ($record->has($field)) {
-				$record->unsetProperty($field);
-				$record->isNew(true);
-			}
-		}
+    protected function _stripFields($record)
+    {
+        $stripFields = (array)$this->config('stripFields');
+        foreach ($stripFields as $field) {
+            if ($record->has($field)) {
+                $record->unsetProperty($field);
+                $record->isNew(true);
+            }
+        }
 
-		return $record;
-	}
-
+        return $record;
+    }
 }

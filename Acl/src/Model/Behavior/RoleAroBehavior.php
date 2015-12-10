@@ -14,7 +14,8 @@ use Cake\ORM\Behavior;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class RoleAroBehavior extends Behavior {
+class RoleAroBehavior extends Behavior
+{
 
 /**
  * parentNode
@@ -22,107 +23,113 @@ class RoleAroBehavior extends Behavior {
  * @param Model $model
  * @return $mixed
  */
-	public function parentNode($model) {
-		if (!$model->id && empty($model->data)) {
-			return null;
-		} else {
-			$id = $model->id ? $model->id : $model->data[$model->alias]['id'];
-			$aro = $model->Aro->node('first', array(
-				'conditions' => array(
-					'model' => $model->alias,
-					'foreign_key' => $id,
-					)
-				));
-			if (!empty($aro['Aro']['foreign_key'])) {
-				$return = array(
-					$aro[0]['Aro']['model'] => array(
-						'id' => $aro['Aro']['foreign_key']
-					));
-			} else {
-				$return = null;
-			}
-			return $return;
-		}
-	}
+    public function parentNode($model)
+    {
+        if (!$model->id && empty($model->data)) {
+            return null;
+        } else {
+            $id = $model->id ? $model->id : $model->data[$model->alias]['id'];
+            $aro = $model->Aro->node('first', [
+                'conditions' => [
+                    'model' => $model->alias,
+                    'foreign_key' => $id,
+                    ]
+                ]);
+            if (!empty($aro['Aro']['foreign_key'])) {
+                $return = [
+                    $aro[0]['Aro']['model'] => [
+                        'id' => $aro['Aro']['foreign_key']
+                    ]];
+            } else {
+                $return = null;
+            }
+            return $return;
+        }
+    }
 
 /**
  * afterSave
  *
  * Update the corresponding ACO record alias
  */
-	public function afterSave(Model $model, $created, $options = array()) {
-		$node = $model->node();
-		$aro = $node[0];
-		if (!empty($model->data[$model->alias]['alias'])) {
-			$aro['Aro']['alias'] = sprintf('Role-%s',
-				Inflector::slug($model->data[$model->alias]['alias'])
-			);
-		}
-		if (!empty($model->data[$model->alias]['parent_id'])) {
-			$aro['Aro']['parent_id'] = $model->data['Role']['parent_id'];
-		}
-		$model->Aro->save($aro);
-		Cache::clearGroup('acl', 'permissions');
-	}
+    public function afterSave(Model $model, $created, $options = [])
+    {
+        $node = $model->node();
+        $aro = $node[0];
+        if (!empty($model->data[$model->alias]['alias'])) {
+            $aro['Aro']['alias'] = sprintf(
+                'Role-%s',
+                Inflector::slug($model->data[$model->alias]['alias'])
+            );
+        }
+        if (!empty($model->data[$model->alias]['parent_id'])) {
+            $aro['Aro']['parent_id'] = $model->data['Role']['parent_id'];
+        }
+        $model->Aro->save($aro);
+        Cache::clearGroup('acl', 'permissions');
+    }
 
 /**
  * bindAro
  *
  * binds Aro model so that it gets retrieved during admin_[edit|add].
  */
-	public function bindAro(Model $model) {
-		$model->bindModel(array(
-			'hasOne' => array(
-				'Aro' => array(
-					'foreignKey' => false,
-					'conditions' => array(
-						sprintf("model = '%s'", $model->alias),
-						sprintf('foreign_key = %s.%s', $model->alias, $model->primaryKey),
-					),
-				),
-			),
-		), false);
-	}
+    public function bindAro(Model $model)
+    {
+        $model->bindModel([
+            'hasOne' => [
+                'Aro' => [
+                    'foreignKey' => false,
+                    'conditions' => [
+                        sprintf("model = '%s'", $model->alias),
+                        sprintf('foreign_key = %s.%s', $model->alias, $model->primaryKey),
+                    ],
+                ],
+            ],
+        ], false);
+    }
 
 /**
  * afterFind
  *
  * When 'parent_id' is present, copy its value from Aro to Role data.
  */
-	public function afterFind(Model $model, $results, $primary = false) {
-		if (!empty($results[0]['Aro']['parent_id'])) {
-			$results[0][$model->alias]['parent_id'] = $results[0]['Aro']['parent_id'];
-			return $results;
-		}
-	}
+    public function afterFind(Model $model, $results, $primary = false)
+    {
+        if (!empty($results[0]['Aro']['parent_id'])) {
+            $results[0][$model->alias]['parent_id'] = $results[0]['Aro']['parent_id'];
+            return $results;
+        }
+    }
 
 /**
  * Retrieve a list of allowed parent roles
  *
  * @paraam integer $roleId
- * @param integer $id Role id
+ * @param int$idRole id
  * @return array list of allowable parent roles in 'list' format
  */
-	public function allowedParents(Model $model, $id = null) {
-		if (!$model->Behaviors->enabled('Croogo.Aliasable')) {
-			$model->Behaviors->load('Croogo.Aliasable');
-		}
-		if ($id == $model->byAlias('public')) {
-			return array();
-		}
-		$adminRoleId = $model->byAlias('admin');
-		$excludes = Hash::filter(array_values(array($adminRoleId, $id)));
-		$options = array('conditions' => array(
-			'NOT' => array($model->alias . '.id' => $excludes),
-		));
-		return $model->find('list', $options);
-	}
+    public function allowedParents(Model $model, $id = null)
+    {
+        if (!$model->Behaviors->enabled('Croogo.Aliasable')) {
+            $model->Behaviors->load('Croogo.Aliasable');
+        }
+        if ($id == $model->byAlias('public')) {
+            return [];
+        }
+        $adminRoleId = $model->byAlias('admin');
+        $excludes = Hash::filter(array_values([$adminRoleId, $id]));
+        $options = ['conditions' => [
+            'NOT' => [$model->alias . '.id' => $excludes],
+        ]];
+        return $model->find('list', $options);
+    }
 
 /**
  * afterDelete
  */
-	public function afterDelete(Model $model) {
-		Cache::clearGroup('acl', 'permissions');
-	}
-
+    public function afterDelete(Model $model)
+    {
+        Cache::clearGroup('acl', 'permissions');
+    }
 }

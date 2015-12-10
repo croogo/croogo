@@ -1,7 +1,9 @@
 <?php
 
 namespace Croogo\Taxonomy\Config\Migration;
-class AddModelTaxonomyForeignKey extends CakeMigration {
+
+class AddModelTaxonomyForeignKey extends CakeMigration
+{
 
 /**
  * Migration description
@@ -9,7 +11,7 @@ class AddModelTaxonomyForeignKey extends CakeMigration {
  * @var string
  * @access public
  */
-	public $description = 'Add model_taxonomies foreign keys';
+    public $description = 'Add model_taxonomies foreign keys';
 
 /**
  * Actions to be performed
@@ -17,38 +19,38 @@ class AddModelTaxonomyForeignKey extends CakeMigration {
  * @var array $migration
  * @access public
  */
-	public $migration = array(
-		'up' => array(
-			'create_field' => array(
-				'model_taxonomies' => array(
-					'model' => array(
-						'type' => 'string',
-						'length' => 50,
-						'after' => 'id',
-						'null' => false,
-						'default' => 'Node',
-					),
-				),
-			),
-			'rename_field' => array(
-				'model_taxonomies' => array(
-					'node_id' => 'foreign_key',
-				),
-			),
-		),
-		'down' => array(
-			'drop_field' => array(
-				'model_taxonomies' => array(
-					'model',
-				),
-			),
-			'rename_field' => array(
-				'model_taxonomies' => array(
-					'foreign_key' => 'node_id',
-				),
-			),
-		),
-	);
+    public $migration = [
+        'up' => [
+            'create_field' => [
+                'model_taxonomies' => [
+                    'model' => [
+                        'type' => 'string',
+                        'length' => 50,
+                        'after' => 'id',
+                        'null' => false,
+                        'default' => 'Node',
+                    ],
+                ],
+            ],
+            'rename_field' => [
+                'model_taxonomies' => [
+                    'node_id' => 'foreign_key',
+                ],
+            ],
+        ],
+        'down' => [
+            'drop_field' => [
+                'model_taxonomies' => [
+                    'model',
+                ],
+            ],
+            'rename_field' => [
+                'model_taxonomies' => [
+                    'foreign_key' => 'node_id',
+                ],
+            ],
+        ],
+    ];
 
 /**
  * Before migration callback
@@ -57,17 +59,18 @@ class AddModelTaxonomyForeignKey extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function before($direction) {
-		$this->generateModel('Type', 'types')->updateAll(
-			array('plugin' => null),
-			array('plugin' => '')
-		);
-		$this->generateModel('Vocabulary', 'vocabularies')->updateAll(
-			array('plugin' => null),
-			array('plugin' => '')
-		);
-		return true;
-	}
+    public function before($direction)
+    {
+        $this->generateModel('Type', 'types')->updateAll(
+            ['plugin' => null],
+            ['plugin' => '']
+        );
+        $this->generateModel('Vocabulary', 'vocabularies')->updateAll(
+            ['plugin' => null],
+            ['plugin' => '']
+        );
+        return true;
+    }
 
 /**
  * After migration callback
@@ -76,7 +79,8 @@ class AddModelTaxonomyForeignKey extends CakeMigration {
  * @return boolean Should process continue
  * @access public
  */
-	public function after($direction) {
-		return true;
-	}
+    public function after($direction)
+    {
+        return true;
+    }
 }

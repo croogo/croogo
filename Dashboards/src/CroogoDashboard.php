@@ -11,12 +11,12 @@ namespace Croogo\Dashboards;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoDashboard {
+class CroogoDashboard
+{
 
-	const LEFT = 0;
+    const LEFT = 0;
 
-	const RIGHT = 1;
+    const RIGHT = 1;
 
-	const FULL = 2;
-
+    const FULL = 2;
 }

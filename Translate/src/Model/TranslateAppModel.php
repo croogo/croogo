@@ -3,6 +3,7 @@
 namespace Croogo\Translate\Model;
 
 use App\Model\AppModel;
+
 /**
  * Translate App Model
  *
@@ -13,6 +14,7 @@ use App\Model\AppModel;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class TranslateAppModel extends AppModel {
+class TranslateAppModel extends AppModel
+{
 
 }

@@ -2,27 +2,29 @@
 namespace Croogo\Acl\Controller\Component\Auth;
 
 use App\Controller\Component\Auth\FormAuthenticate;
+
 /**
  * An authentication adapter for AuthComponent.  Provides the ability to authenticate using POST
  * data. The username form input can be checked against multiple table columns, for instance username and email
  *
  * {{{
- *	$this->Auth->authenticate = array(
- *		'Authenticate.MultiColumn' => array(
- *			'fields' => array(
- *				'username' => 'username',
- *				'password' => 'password'
- *			),
- *			'columns' => array('username', 'email'),
- *			'userModel' => 'User',
- *			'scope' => array('User.active' => 1)
- *		)
- *	)
+ *  $this->Auth->authenticate = array(
+ *      'Authenticate.MultiColumn' => array(
+ *          'fields' => array(
+ *              'username' => 'username',
+ *              'password' => 'password'
+ *          ),
+ *          'columns' => array('username', 'email'),
+ *          'userModel' => 'User',
+ *          'scope' => array('User.active' => 1)
+ *      )
+ *  )
  * }}}
  *
  * @package Croogo.Acl.Controller.Component.Auth
  */
-class MultiColumnAuthenticate extends FormAuthenticate {
+class MultiColumnAuthenticate extends FormAuthenticate
+{
 
 /**
  * Settings for this object.
@@ -35,15 +37,15 @@ class MultiColumnAuthenticate extends FormAuthenticate {
  *
  * @var array
  */
-	public $settings = array(
-		'fields' => array(
-			'username' => 'username',
-			'password' => 'password'
-		),
-		'columns' => array('username', 'email'),
-		'userModel' => 'User',
-		'scope' => array()
-	);
+    public $settings = [
+        'fields' => [
+            'username' => 'username',
+            'password' => 'password'
+        ],
+        'columns' => ['username', 'email'],
+        'userModel' => 'User',
+        'scope' => []
+    ];
 
 /**
  * constructor
@@ -51,10 +53,11 @@ class MultiColumnAuthenticate extends FormAuthenticate {
  * Change the default use of Hash::merge() to array_merge() since Hash::merge()
  * 'combines' the 'column' values instead of replacing them
  */
-	public function __construct(ComponentRegistry $collection, $settings) {
-		$this->_registry = $collection;
-		$this->settings = array_merge($this->settings, $settings);
-	}
+    public function __construct(ComponentRegistry $collection, $settings)
+    {
+        $this->_registry = $collection;
+        $this->settings = array_merge($this->settings, $settings);
+    }
 
 /**
  * Find a user record using the standard options.
@@ -63,37 +66,37 @@ class MultiColumnAuthenticate extends FormAuthenticate {
  * @param string $password The unhashed password.
  * @return Mixed Either false on failure, or an array of user data.
  */
-	protected function _findUser($conditions, $password = null) {
-		$userModel = $this->settings['userModel'];
-		list($plugin, $model) = pluginSplit($userModel);
-		$fields = $this->settings['fields'];
-		if (!is_array($conditions)) {
-			if (!$password) {
-				return false;
-			}
-			$username = $conditions;
-			$conditions = array($model . '.' . $fields['username'] => $username);
-		}
-		if ($this->settings['columns'] && is_array($this->settings['columns'])) {
-			$columns = array();
-			foreach ($this->settings['columns'] as $column) {
-				$columns[] = array($model . '.' . $column => $username);
-			}
-			$conditions = array('OR' => $columns);
-		}
-		$conditions = array_merge($conditions, array($model . '.' . $fields['password'] => $this->_password($password)));
-		if (!empty($this->settings['scope'])) {
-			$conditions = array_merge($conditions, $this->settings['scope']);
-		}
-		$result = ClassRegistry::init($userModel)->find('first', array(
-			'conditions' => $conditions,
-			'recursive' => 0
-		));
-		if (empty($result) || empty($result[$model])) {
-			return false;
-		}
-		unset($result[$model][$fields['password']]);
-		return $result[$model];
-	}
-
+    protected function _findUser($conditions, $password = null)
+    {
+        $userModel = $this->settings['userModel'];
+        list($plugin, $model) = pluginSplit($userModel);
+        $fields = $this->settings['fields'];
+        if (!is_array($conditions)) {
+            if (!$password) {
+                return false;
+            }
+            $username = $conditions;
+            $conditions = [$model . '.' . $fields['username'] => $username];
+        }
+        if ($this->settings['columns'] && is_array($this->settings['columns'])) {
+            $columns = [];
+            foreach ($this->settings['columns'] as $column) {
+                $columns[] = [$model . '.' . $column => $username];
+            }
+            $conditions = ['OR' => $columns];
+        }
+        $conditions = array_merge($conditions, [$model . '.' . $fields['password'] => $this->_password($password)]);
+        if (!empty($this->settings['scope'])) {
+            $conditions = array_merge($conditions, $this->settings['scope']);
+        }
+        $result = ClassRegistry::init($userModel)->find('first', [
+            'conditions' => $conditions,
+            'recursive' => 0
+        ]);
+        if (empty($result) || empty($result[$model])) {
+            return false;
+        }
+        unset($result[$model][$fields['password']]);
+        return $result[$model];
+    }
 }

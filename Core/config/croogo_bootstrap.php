@@ -41,12 +41,12 @@ Configure::write('Croogo.Api.path', 'api');
 //debug(Configure::read());exit();
 $defaultEngine = Cache::config('default')['className'];
 $defaultPrefix = Configure::read('Cache.defaultPrefix');
-$cacheConfig = array(
-	'duration' => '+1 hour',
-	'path' => CACHE . 'queries' . DS,
-	'engine' => $defaultEngine,
-	'prefix' => $defaultPrefix,
-);
+$cacheConfig = [
+    'duration' => '+1 hour',
+    'path' => CACHE . 'queries' . DS,
+    'engine' => $defaultEngine,
+    'prefix' => $defaultPrefix,
+];
 Configure::write('Croogo.Cache.defaultEngine', $defaultEngine);
 Configure::write('Croogo.Cache.defaultPrefix', $defaultPrefix);
 Configure::write('Croogo.Cache.defaultConfig', $cacheConfig);
@@ -63,9 +63,9 @@ Configure::load('settings', 'settings');
 Configure::write('Config.language', Configure::read('Site.locale'));
 
 I18n::config('croogo', function ($domain, $locale) {
-	return new Package(
-		'sprintf'
-	);
+    return new Package(
+        'sprintf'
+    );
 });
 
 /**
@@ -73,7 +73,7 @@ I18n::config('croogo', function ($domain, $locale) {
  */
 $timezone = Configure::read('Site.timezone');
 if (!$timezone) {
-	$timezone = 'UTC';
+    $timezone = 'UTC';
 }
 date_default_timezone_set($timezone);
 
@@ -81,12 +81,12 @@ date_default_timezone_set($timezone);
  * Assets
  */
 if (Configure::check('Site.asset_timestamp')) {
-	$timestamp = Configure::read('Site.asset_timestamp');
-	Configure::write(
-		'Asset.timestamp',
-		is_numeric($timestamp) ? (bool) $timestamp : $timestamp
-	);
-	unset($timestamp);
+    $timestamp = Configure::read('Site.asset_timestamp');
+    Configure::write(
+        'Asset.timestamp',
+        is_numeric($timestamp) ? (bool)$timestamp : $timestamp
+    );
+    unset($timestamp);
 }
 
 // CakePHP Acl
@@ -98,9 +98,9 @@ $croogoPath = Plugin::path('Croogo/Core');
  * Extensions
  */
 Plugin::load(['Croogo/Extensions' => [
-	'autoload' => true,
-	'bootstrap' => true,
-	'routes' => true,
+    'autoload' => true,
+    'bootstrap' => true,
+    'routes' => true,
 ]]);
 Configure::load('Croogo/Extensions.events');
 
@@ -108,8 +108,8 @@ Configure::load('Croogo/Extensions.events');
  * List of core plugins
  */
 $corePlugins = [
-	'Croogo/Settings', 'Croogo/Acl', 'Croogo/Blocks', 'Croogo/Comments', 'Croogo/Contacts', 'Croogo/Menus', 'Croogo/Meta',
-	'Croogo/Nodes', 'Croogo/Taxonomy', 'Croogo/Users', 'Croogo/Wysiwyg', 'Croogo/Ckeditor',  'Croogo/Users', 'Croogo/Dashboards',
+    'Croogo/Settings', 'Croogo/Acl', 'Croogo/Blocks', 'Croogo/Comments', 'Croogo/Contacts', 'Croogo/Menus', 'Croogo/Meta',
+    'Croogo/Nodes', 'Croogo/Taxonomy', 'Croogo/Users', 'Croogo/Wysiwyg', 'Croogo/Ckeditor',  'Croogo/Users', 'Croogo/Dashboards',
 ];
 Configure::write('Core.corePlugins', $corePlugins);
 
@@ -121,33 +121,33 @@ $pluginBootstraps = Configure::read('Hook.bootstraps');
 $plugins = array_filter(explode(',', $pluginBootstraps));
 
 if (!in_array($aclPlugin, $plugins)) {
-	$plugins = Hash::merge((array)$aclPlugin, $plugins);
+    $plugins = Hash::merge((array)$aclPlugin, $plugins);
 }
 foreach ($plugins as $plugin) {
-	$pluginName = Inflector::camelize($plugin);
-	$pluginPath = APP . 'Plugin' . DS . $pluginName;
-	if ((!file_exists($pluginPath)) && (!strstr($plugin, 'Croogo/'))) {
-		$pluginFound = false;
-		foreach (App::path('Plugin') as $path) {
-			if (is_dir($path . $pluginName)) {
-				$pluginFound = true;
-				break;
-			}
-		}
-		if (!$pluginFound) {
-			Log::error('Plugin not found during bootstrap: ' . $pluginName);
-			continue;
-		}
-	}
-	$option = array(
-		$pluginName => array(
-			'autoload' => true,
-			'bootstrap' => true,
-			'ignoreMissing' => true,
-			'routes' => true,
-		)
-	);
-	CroogoPlugin::load($option);
+    $pluginName = Inflector::camelize($plugin);
+    $pluginPath = APP . 'Plugin' . DS . $pluginName;
+    if ((!file_exists($pluginPath)) && (!strstr($plugin, 'Croogo/'))) {
+        $pluginFound = false;
+        foreach (App::path('Plugin') as $path) {
+            if (is_dir($path . $pluginName)) {
+                $pluginFound = true;
+                break;
+            }
+        }
+        if (!$pluginFound) {
+            Log::error('Plugin not found during bootstrap: ' . $pluginName);
+            continue;
+        }
+    }
+    $option = [
+        $pluginName => [
+            'autoload' => true,
+            'bootstrap' => true,
+            'ignoreMissing' => true,
+            'routes' => true,
+        ]
+    ];
+    CroogoPlugin::load($option);
 }
 CroogoEventManager::loadListeners();
 Croogo::dispatchEvent('Croogo.bootstrapComplete');

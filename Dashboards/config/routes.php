@@ -3,16 +3,16 @@
 use Croogo\Core\CroogoRouter;
 
 CroogoRouter::connect('/admin/dashboards', [
-	'prefix' => 'admin',
-	'plugin' => 'Croogo/Dashboards',
-	'controller' => 'DashboardsDashboards',
-	'action' => 'dashboard',
+    'prefix' => 'admin',
+    'plugin' => 'Croogo/Dashboards',
+    'controller' => 'DashboardsDashboards',
+    'action' => 'dashboard',
 ]);
 
 CroogoRouter::connect('/admin/dashboards/:action/*', [
-	'prefix' => 'admin',
-	'plugin' => 'Croogo/Dashboards',
-	'controller' => 'DashboardsDashboards',
+    'prefix' => 'admin',
+    'plugin' => 'Croogo/Dashboards',
+    'controller' => 'DashboardsDashboards',
 ], [
-	'action' => '[a-zA-Z0-9_-]+',
+    'action' => '[a-zA-Z0-9_-]+',
 ]);
