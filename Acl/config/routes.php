@@ -1,8 +1,12 @@
 <?php
 
-use Croogo\Core\CroogoRouter;
+use Cake\Routing\RouteBuilder;
+use Cake\Routing\Router;
 
-CroogoRouter::connect('/admin/acl/:controller/:action/*', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/Acl'
-]);
+Router::plugin('Croogo/Acl', ['path' => '/'], function (RouteBuilder $routeBuilder) {
+    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
+        $routeBuilder->extensions(['json']);
+
+        $routeBuilder->connect('/acl/:controller/:action/*', [ ]);
+    });
+});
