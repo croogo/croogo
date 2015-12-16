@@ -1,12 +1,14 @@
 <?php
 
 use Cake\Core\Configure;
+use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
-use Croogo\Core\CroogoRouter;
 
-CroogoRouter::connect('/admin', Configure::read('Croogo.dashboardUrl'));
+Router::plugin('Croogo/Extensions', ['path' => '/'], function (RouteBuilder $routeBuilder) {
+    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
+        $routeBuilder->extensions(['json']);
 
-CroogoRouter::connect('/admin/extensions/:controller/:action/*', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/Extensions'
-]);
+        $routeBuilder->connect('/', Configure::read('Croogo.dashboardUrl'));
+        $routeBuilder->connect('/extensions/:controller/:action/*', [ ]);
+    });
+});
