@@ -1,8 +1,12 @@
 <?php
 
-use Croogo\Core\CroogoRouter;
+use Cake\Routing\RouteBuilder;
+use Cake\Routing\Router;
 
-CroogoRouter::connect('/admin/comments/:controller/:action/*', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/Comments',
-]);
+Router::plugin('Croogo/Comments', ['path' => '/'], function (RouteBuilder $routeBuilder) {
+    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
+        $routeBuilder->extensions(['json']);
+
+        $routeBuilder->connect('/comments/:controller/:action/*', [ ]);
+    });
+});
