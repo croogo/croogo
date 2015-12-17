@@ -2,7 +2,7 @@
 
 namespace Croogo\Dashboards\Model\Table;
 
-use Cake\ORM\Table;
+use Croogo\Core\Model\Table\CroogoTable;
 
 /**
  * Dashboard Model
@@ -14,7 +14,7 @@ use Cake\ORM\Table;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class DashboardsDashboardsTable extends Table
+class DashboardsTable extends CroogoTable
 {
 
     public function initialize(array $config)

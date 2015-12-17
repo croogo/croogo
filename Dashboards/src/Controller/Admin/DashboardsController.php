@@ -2,10 +2,12 @@
 
 namespace Croogo\Dashboards\Controller\Admin;
 
+use Cake\Core\Exception\Exception;
 use Cake\Event\Event;
+use Cake\Utility\Hash;
 
 /**
- * DashboardsDashboards Controller
+ * Dashboards Controller
  *
  * @category Controller
  * @package  Croogo.Dashboards.Controller
@@ -14,26 +16,12 @@ use Cake\Event\Event;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class DashboardsDashboardsController extends AppController
+class DashboardsController extends AppController
 {
 
     public $helpers = [
         'Croogo/Dashboards.Dashboards',
     ];
-
-    /**
-     * beforeFilter
-     *
-     * @return void
-     * @access public
-     */
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-
-//		$this->Security->unlockedActions[] = 'admin_save';
-//		$this->Security->unlockedActions[] = 'admin_toggle';
-    }
 
     /**
      * Dashboard index
@@ -42,7 +30,7 @@ class DashboardsDashboardsController extends AppController
      */
     public function index()
     {
-        $dashboards = $this->paginate($this->DashboardsDashboards->find()->where([
+        $dashboards = $this->paginate($this->Dashboards->find()->where([
             'user_id' => $this->Auth->user('id')
         ]));
 
@@ -56,7 +44,7 @@ class DashboardsDashboardsController extends AppController
      */
     public function dashboard()
     {
-        $this->set('boxes_for_dashboard', $this->DashboardsDashboards->find('all')->select([
+        $this->set('boxes_for_dashboard', $this->Dashboards->find('all')->select([
             'alias',
             'collapsed',
             'status',
@@ -72,17 +60,20 @@ class DashboardsDashboardsController extends AppController
     /**
      * Saves dashboard setting
      *
+     * @throws \Cake\Core\Exception\Exception
      * @return void
      */
-    public function admin_save()
+    public function save()
     {
         $userId = $this->Auth->user('id');
         if (!$userId) {
-            throw new CakeException('You must be logged in');
+            throw new Exception('You must be logged in');
         }
+        var_dump($this->request->data);
         $data = Hash::insert($this->request->data['dashboard'], '{n}.user_id', $userId);
-        $this->DashboardsDashboard->deleteAll(['user_id' => $userId]);
-        $this->DashboardsDashboard->saveMany($data);
+        var_dump($data);
+        $this->Dashboards->deleteAll(['user_id' => $userId]);
+        $this->Dashboards->saveMany($data);
     }
 
     /**
@@ -91,7 +82,7 @@ class DashboardsDashboardsController extends AppController
      * @param int $id Dashboard id
      * @return void
      */
-    public function admin_delete($id = null)
+    public function delete($id = null)
     {
         if (!$id) {
             $this->Flash->error(__d('croogo', 'Invalid id for Dashboard'));
@@ -110,7 +101,7 @@ class DashboardsDashboardsController extends AppController
      * @param int $status Status
      * @return void
      */
-    public function admin_toggle($id = null, $status = null)
+    public function toggle($id = null, $status = null)
     {
         $this->Croogo->fieldToggle($this->{$this->modelClass}, $id, $status);
     }
@@ -122,7 +113,7 @@ class DashboardsDashboardsController extends AppController
      * @param int$stepStep
      * @return void
      */
-    public function admin_moveup($id, $step = 1)
+    public function moveup($id, $step = 1)
     {
         if ($this->DashboardsDashboard->moveUp($id, $step)) {
             $this->Flash->success(__d('croogo', 'Moved up successfully'));
@@ -135,11 +126,11 @@ class DashboardsDashboardsController extends AppController
     /**
      * Admin movedown
      *
-     * @param int$idDashboard Id
-     * @param int$stepStep
+     * @param int $idDashboard Id
+     * @param int $stepStep
      * @return void
      */
-    public function admin_movedown($id, $step = 1)
+    public function movedown($id, $step = 1)
     {
         if ($this->DashboardsDashboard->moveDown($id, $step)) {
             $this->Flash->success(__d('croogo', 'Moved down successfully'));
