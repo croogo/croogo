@@ -1,8 +1,12 @@
 <?php
 
-use Croogo\Core\CroogoRouter;
+use Cake\Routing\RouteBuilder;
+use Cake\Routing\Router;
 
-CroogoRouter::connect('/admin/settings/:controller/:action/*', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/Settings',
-]);
+Router::plugin('Croogo/Settings', ['path' => '/'], function (RouteBuilder $routeBuilder) {
+    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
+        $routeBuilder->extensions(['json']);
+
+        $routeBuilder->connect('/settings/:controller/:action/*', [ ]);
+    });
+});

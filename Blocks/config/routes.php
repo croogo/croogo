@@ -1,13 +1,13 @@
 <?php
 
-use Croogo\Core\CroogoRouter;
+use Cake\Routing\RouteBuilder;
+use Cake\Routing\Router;
 
-CroogoRouter::connect('/admin/blocks/blocks/:action/*', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/Blocks', 'controller' => 'Blocks',
-]);
+Router::plugin('Croogo/Blocks', ['path' => '/'], function (RouteBuilder $routeBuilder) {
+    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
+        $routeBuilder->extensions(['json']);
 
-CroogoRouter::connect('/admin/blocks/regions/:action/*', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/Blocks', 'controller' => 'Regions',
-]);
+        $routeBuilder->connect('/blocks/blocks/:action/*', ['controller' => 'Blocks']);
+        $routeBuilder->connect('/blocks/regions/:action/*', ['controller' => 'Regions']);
+    });
+});

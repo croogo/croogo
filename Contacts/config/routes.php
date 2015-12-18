@@ -1,17 +1,15 @@
 <?php
 
-use Croogo\Core\CroogoRouter;
+use Cake\Routing\RouteBuilder;
+use Cake\Routing\Router;
 
-CroogoRouter::connect('/contact/*', [
-    'plugin' => 'Croogo/Contacts', 'controller' => 'Contacts', 'action' => 'view',
-]);
+Router::plugin('Croogo/Contacts', ['path' => '/'], function (RouteBuilder $routeBuilder) {
+    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
+        $routeBuilder->extensions(['json']);
 
-CroogoRouter::connect('/admin/contacts/contacts/:action/*', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/Contacts', 'controller' => 'Contacts',
-]);
+        $routeBuilder->connect('/contacts/contacts/:action/*', ['controller' => 'Contacts']);
+        $routeBuilder->connect('/contacts/messages/:action/*', ['controller' => 'Messages']);
+    });
 
-CroogoRouter::connect('/admin/contacts/messages/:action/*', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/Contacts', 'controller' => 'Messages',
-]);
+    $routeBuilder->connect('/contact/*', ['controller' => 'Contacts', 'action' => 'view']);
+});

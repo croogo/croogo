@@ -1,16 +1,14 @@
 <?php
 
-use Croogo\Core\CroogoRouter;
+use Cake\Routing\RouteBuilder;
+use Cake\Routing\Router;
 
-CroogoRouter::connect('/admin/terms/:action/*', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/Taxonomy', 'controller' => 'Terms',
-]);
-CroogoRouter::connect('/admin/types/:action/*', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/Taxonomy', 'controller' => 'Types',
-]);
-CroogoRouter::connect('/admin/vocabularies/:action/*', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/Taxonomy', 'controller' => 'Vocabularies',
-]);
+Router::plugin('Croogo/Taxonomy', ['path' => '/'], function (RouteBuilder $routeBuilder) {
+    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
+        $routeBuilder->extensions(['json']);
+
+        $routeBuilder->connect('/terms/:action/*', ['controller' => 'Terms']);
+        $routeBuilder->connect('/types/:action/*', ['controller' => 'Types']);
+        $routeBuilder->connect('/vocabularies/:action/*', ['controller' => 'Vocabularies']);
+    });
+});

@@ -1,13 +1,12 @@
 <?php
 
-use Croogo\Core\CroogoRouter;
+use Cake\Routing\RouteBuilder;
+use Cake\Routing\Router;
 
-CroogoRouter::connect('/admin/menus/menus/:action/*', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/Menus', 'controller' => 'Menus',
-]);
+Router::plugin('Croogo/Menus', ['path' => '/'], function (RouteBuilder $routeBuilder) {
+    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
+        $routeBuilder->extensions(['json']);
 
-CroogoRouter::connect('/admin/menus/links/:action/*', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/Menus', 'controller' => 'Links',
-]);
+        $routeBuilder->connect('/menus/:controller/:action/*', [ ]);
+    });
+});

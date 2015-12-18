@@ -1,10 +1,17 @@
 <?php
 
-use Croogo\Core\CroogoRouter;
+use Cake\Core\Configure;
+use Cake\Routing\RouteBuilder;
+use Cake\Routing\Router;
 
-CroogoRouter::connect('/admin/link-chooser/*', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/Core',
-    'controller' => 'LinkChooser',
-    'action' => 'linkChooser'
-]);
+Router::prefix('admin', function (RouteBuilder $routeBuilder) {
+    $routeBuilder->connect('/', Configure::read('Croogo.dashboardUrl'));
+});
+
+Router::plugin('Croogo/Core', ['path' => '/'], function (RouteBuilder $routeBuilder) {
+    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
+        $routeBuilder->extensions(['json']);
+
+        $routeBuilder->connect('/link-chooser/*', ['controller' => 'LinkChooser', 'action' => 'linkChooser']);
+    });
+});

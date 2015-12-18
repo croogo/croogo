@@ -1,12 +1,14 @@
 <?php
 
-use Croogo\Core\CroogoRouter;
+use Cake\Routing\RouteBuilder;
+use Cake\Routing\Router;
 
-CroogoRouter::connect('/admin/filemanager/:controller/:action/*', [
-    'prefix' => 'admin',
-    'plugin' => 'Croogo/FileManager',
-]);
+Router::plugin('Croogo/FileManager', ['path' => '/'], function (RouteBuilder $routeBuilder) {
+    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
+        $routeBuilder->extensions(['json']);
 
-CroogoRouter::connect('/filemanager/:controller/:action/*', [
-    'plugin' => 'Croogo/FileManager',
-]);
+        $routeBuilder->connect('/filemanager/:controller/:action/*', [ ]);
+    });
+
+    $routeBuilder->connect('/filemanager/:controller/:action/*', [ ]);
+});
