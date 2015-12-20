@@ -60,7 +60,7 @@ class User extends UsersAppModel {
 				'last' => true,
 			),
 			'notEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'This field cannot be left blank.',
 				'last' => true,
 			),
@@ -91,7 +91,7 @@ class User extends UsersAppModel {
 		),
 		'name' => array(
 			'notEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'This field cannot be left blank.',
 				'last' => true,
 			),

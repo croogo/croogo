@@ -118,7 +118,7 @@ class Node extends NodesAppModel {
  */
 	public $validate = array(
 		'title' => array(
-			'rule' => 'notEmpty',
+			'rule' => 'notBlank',
 			'message' => 'This field cannot be left blank.',
 		),
 		'slug' => array(
