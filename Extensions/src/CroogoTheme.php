@@ -90,11 +90,11 @@ class CroogoTheme
 			'screenshot' => null,
 			'settings' => [
 				'templates' => [
-					'input' => '<input type="{{type}}" class="input-block-level" name="{{name}}"{{attrs}}/>',
-					'select' => '<select name="{{name}}" class="input-block-level"{{attrs}}>{{content}}</select>',
-					'selectMultiple' => '<select name="{{name}}[]" class="input-block-level" multiple="multiple"{{attrs}}>{{content}}</select>',
-					'radio' => '<input type="radio" name="{{name}}" class="input-block-level" value="{{value}}"{{attrs}}>',
-					'textarea' => '<textarea name="{{name}}" class="input-block-level"{{attrs}}>{{value}}</textarea>',
+					'input' => '<input type="{{type}}" name="{{name}}"{{attrs}}/>',
+					'select' => '<select name="{{name}}"{{attrs}}>{{content}}</select>',
+					'selectMultiple' => '<select name="{{name}}[]" multiple="multiple"{{attrs}}>{{content}}</select>',
+					'radio' => '<input type="radio" name="{{name}}" value="{{value}}"{{attrs}}>',
+					'textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>',
 				],
 				'css' => [
 					'columnFull' => 'span12',

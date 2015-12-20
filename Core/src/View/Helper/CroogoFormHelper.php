@@ -311,17 +311,6 @@ class CroogoFormHelper extends FormHelper
             $this->_currentRoleId = $this->_View->Layout->getRoleId();
             unset($options['fieldAcess']);
         }
-        if (!empty($this->settings['inputDefaults'])) {
-            $options = Hash::merge([
-                'inputDefaults' => $this->settings['inputDefaults'],
-            ], $options);
-        }
-        $formInputClass = $this->Theme->getCssClass('formInput');
-        if (empty($options['inputDefaults']['class']) &&
-            !empty($formInputClass)
-        ) {
-            $options['inputDefaults']['class'] = $formInputClass;
-        }
         return parent::create($model, $options);
     }
 
@@ -347,6 +336,15 @@ class CroogoFormHelper extends FormHelper
 
         if (array_key_exists('tooltip', $options)) {
             $options = $this->_tooltip($options);
+        }
+
+        $formInputClass = $this->Theme->getCssClass('formInput');
+        if (!empty($formInputClass)) {
+            if (isset($options['class'])) {
+                $options['class'] .= ' ' . $formInputClass;
+            } else {
+                $options['class'] = $formInputClass;
+            }
         }
 
         return parent::input($fieldName, $options);
