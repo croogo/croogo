@@ -4,8 +4,11 @@ namespace Croogo\Core\Shell;
 
 use App\Controller\AppController;
 use Cake\Controller\Controller;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Network\Request;
 use Cake\Network\Response;
+use Cake\Utility\Inflector;
 use Croogo\Extensions\CroogoPlugin;
 use Croogo\Extensions\CroogoTheme;
 
@@ -72,7 +75,6 @@ class ExtShell extends CroogoAppShell
         $Request = new Request();
         $Response = new Response();
         $this->_Controller = new AppController($Request, $Response);
-        $this->_Controller->constructClasses();
         $this->_Controller->startupProcess();
         $this->_CroogoPlugin->setController($this->_Controller);
         $this->initialize();
@@ -107,7 +109,7 @@ class ExtShell extends CroogoAppShell
             $this->err(__d('croogo', 'Theme cannot be deactivated, instead activate another theme.'));
             return false;
         }
-        if (!empty($ext) && !in_array($ext, $extensions) && !$active && !$force) {
+        if (!empty($ext) && !isset($extensions[$ext]) && !$active && !$force) {
             $this->err(__d('croogo', '%s "%s" not found.', ucfirst($type), $ext));
             return false;
         }
@@ -236,8 +238,8 @@ class ExtShell extends CroogoAppShell
  */
     public function plugins($plugin = null)
     {
-                $all = $this->params['all'];
-        $plugins = $plugin == null ? App::objects('plugins') : [$plugin];
+        $all = $this->params['all'];
+        $plugins = $plugin == null ? array_keys(Configure::read('plugins')) : [$plugin];
         $loaded = Plugin::loaded();
         $CroogoPlugin = new CroogoPlugin();
         $this->out(__d('croogo', 'Plugins:'), 2);
