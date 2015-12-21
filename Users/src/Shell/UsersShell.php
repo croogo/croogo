@@ -1,22 +1,33 @@
 <?php
 
+namespace Croogo\Users\Shell;
+
+use Cake\Console\Shell;
+
 /**
  * UsersShell
  *
- * @package Croogo.Users.Console.Command
+ * @package Croogo.Users.Shell
  */
-namespace Croogo\Users\Console\Command;
-
-class UsersShell extends AppShell
+class UsersShell extends Shell
 {
 
     public $uses = [
         'Users.User',
     ];
 
-/**
- * getOptionParser
- */
+    /**
+     * Initialize
+     */
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadModel('Croogo/Users.Users');
+    }
+
+    /**
+     * getOptionParser
+     */
     public function getOptionParser()
     {
         return parent::getOptionParser()
@@ -37,22 +48,24 @@ class UsersShell extends AppShell
             ]);
     }
 
-/**
- * reset
- */
+    /**
+     * reset
+     */
     public function reset()
     {
         $username = $this->args[0];
         $password = $this->args[1];
 
-        $user = $this->User->findByUsername($username);
-        if (empty($user['User']['id'])) {
+        $user = $this->Users->findByUsername($username)->first();
+        if (empty($user)) {
             return $this->warn(__d('croogo', 'User \'%s\' not found', $username));
         }
-        $this->User->id = $user['User']['id'];
-        $result = $this->User->saveField('password', $password);
+        $user->clean();
+        $user->password = $password;
+        $result = $this->Users->save($user);
         if ($result) {
             $this->success(__d('croogo', 'Password for \'%s\' has been changed', $username));
         }
     }
+
 }
