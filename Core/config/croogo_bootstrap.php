@@ -23,7 +23,7 @@ use Croogo\Settings\Configure\Engine\DatabaseConfig;
 /**
  * Default Acl plugin.  Custom Acl plugin should override this value.
  */
-Configure::write('Site.acl_plugin', 'Acl');
+Configure::write('Site.acl_plugin', 'Croogo/Acl');
 
 /**
  * Default API Route Prefix. This can be overriden in settings.
@@ -33,12 +33,11 @@ Configure::write('Croogo.Api.path', 'api');
 /**
  * Admin theme
  */
-//Configure::write('Site.admin_theme', 'sample');
+Configure::write('Site.admin_theme', 'Croogo/Core');
 
 /**
  * Cache configuration
  */
-//debug(Configure::read());exit();
 $defaultEngine = Cache::config('default')['className'];
 $defaultPrefix = Configure::read('Cache.defaultPrefix');
 $cacheConfig = [
@@ -90,7 +89,7 @@ if (Configure::check('Site.asset_timestamp')) {
 }
 
 // CakePHP Acl
-Plugin::load(['Acl' => ['autoload' => true]]);
+Plugin::load('Acl', ['bootstrap' => true]);
 
 $croogoPath = Plugin::path('Croogo/Core');
 
