@@ -1,5 +1,9 @@
 <?php
 
+namespace Croogo\Settings\Shell;
+
+use Cake\Console\Shell;
+
 /**
  * Settings Shell
  *
@@ -15,19 +19,21 @@
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-namespace Croogo\Settings\Console\Command;
-
-class SettingsShell extends AppShell
+class SettingsShell extends Shell
 {
 
-/**
- * models
- */
-    public $uses = ['Settings.Setting'];
+    /**
+     * Initialize
+     */
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadModel('Croogo/Settings.Settings');
+    }
 
-/**
- * getOptionParser
- */
+    /**
+     * getOptionParser
+     */
     public function getOptionParser()
     {
         return parent::getOptionParser()
@@ -104,12 +110,12 @@ class SettingsShell extends AppShell
             ]);
     }
 
-/**
- * Read setting
- *
- * @param string $key
- * @return void
- */
+    /**
+     * Read setting
+     *
+     * @param string $key
+     * @return void
+     */
     public function read()
     {
         if (empty($this->args)) {
@@ -122,42 +128,42 @@ class SettingsShell extends AppShell
         } else {
             $key = $this->args[0];
         }
-        $settings = $this->Setting->find('all', [
+        $settings = $this->Settings->find('all', [
             'conditions' => [
-                'Setting.key like' => '%' . $key . '%',
+                'Settings.key like' => '%' . $key . '%',
             ],
-            'order' => 'Setting.weight asc',
+            'order' => 'Settings.weight asc',
         ]);
         $this->out("Settings: ", 2);
         foreach ($settings as $data) {
-            $this->out(__d('croogo', "    %-30s: %s", $data['Setting']['key'], $data['Setting']['value']));
+            $this->out(__d('croogo', "    %-30s: %s", $data->key, $data->value));
         }
         $this->out();
     }
 
-/**
- * Write setting
- *
- * @param string $key
- * @param string $val
- * @return void
- */
+    /**
+     * Write setting
+     *
+     * @param string $key
+     * @param string $val
+     * @return void
+     */
     public function write()
     {
         $key = $this->args[0];
         $val = $this->args[1];
-        $setting = $this->Setting->find('first', [
-            'fields' => ['id', 'key', 'value'],
-            'conditions' => [
-                'Setting.key' => $key,
-            ],
-        ]);
+        $setting = $this->Settings->find()
+            ->select(['id', 'key', 'value'])
+            ->where([
+                'Settings.key' => $key,
+            ])
+            ->first();
         $this->out(__d('croogo', 'Updating %s', $key), 2);
         $ask = __d('croogo', "Confirm update");
         if ($setting || $this->params['create']) {
             $text = '-';
             if ($setting) {
-                $text = __d('croogo', '- %s', $setting['Setting']['value']);
+                $text = __d('croogo', '- %s', $setting->value);
             }
             $this->warn($text);
             $this->success(__d('croogo', '+ %s', $val));
@@ -167,7 +173,7 @@ class SettingsShell extends AppShell
                     'input_type' => null, 'editable' => null, 'params' => null,
                 ];
                 $options = array_intersect_key($this->params, $keys);
-                $this->Setting->write($key, $val, $options);
+                $this->Settings->write($key, $val, $options);
                 $this->success(__d('croogo', 'Setting updated'));
             } else {
                 $this->warn(__d('croogo', 'Cancelled'));
@@ -186,17 +192,17 @@ class SettingsShell extends AppShell
     public function delete()
     {
         $key = $this->args[0];
-        $setting = $this->Setting->find('first', [
-            'fields' => ['id', 'key', 'value'],
-            'conditions' => [
-                'Setting.key' => $key,
-            ],
-        ]);
+        $setting = $this->Settings->find()
+            ->select(['id', 'key', 'value'])
+            ->where([
+                'Settings.key' => $key,
+            ])
+            ->first();
         $this->out(__d('croogo', 'Deleting %s', $key), 2);
         $ask = __d('croogo', 'Delete?');
         if ($setting) {
             if ('y' == $this->in($ask, ['y', 'n'], 'n')) {
-                $this->Setting->deleteKey($setting['Setting']['key']);
+                $this->Settings->deleteKey($setting->key);
                 $this->success(__d('croogo', 'Setting deleted'));
             } else {
                 $this->warn(__d('croogo', 'Cancelled'));

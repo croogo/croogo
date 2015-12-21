@@ -155,9 +155,8 @@ class SettingsTable extends CroogoTable
  */
     public function deleteKey($key)
     {
-        $setting = $this->findByKey($key);
-        if (isset($setting['Setting']['id']) &&
-            $this->delete($setting['Setting']['id'])) {
+        $setting = $this->findByKey($key)->first();
+        if ($setting && $this->delete($setting)) {
             return true;
         }
         return false;
