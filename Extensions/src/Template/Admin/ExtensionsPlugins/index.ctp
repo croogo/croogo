@@ -41,14 +41,15 @@ $this->CroogoHtml
 		$statusIcon = $this->Html->status($pluginData['active']);
 
 		$actions = array();
+		$queryString = ['name' => $pluginAlias];
 		if (!in_array($pluginAlias, $bundledPlugins) && !in_array($pluginAlias, $corePlugins)):
 			$icon = $pluginData['active'] ? $this->Theme->getIcon('power-off') : $this->Theme->getIcon('power-on');
 			$actions[] = $this->Croogo->adminRowAction('',
-				array('action' => 'toggle',	$pluginAlias),
+				array('action' => 'toggle', '?' => $queryString),
 				array('icon' => $icon, 'tooltip' => $toggleText, 'method' => 'post')
 			);
 			$actions[] = $this->Croogo->adminRowAction('',
-				array('action' => 'delete', $pluginAlias),
+				array('action' => 'delete', '?' => $queryString),
 				array('icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Delete')),
 				__d('croogo', 'Are you sure?')
 			);
@@ -56,13 +57,13 @@ $this->CroogoHtml
 
 		if ($pluginData['active'] && !in_array($pluginAlias, $bundledPlugins) && !in_array($pluginAlias, $corePlugins)) {
 			$actions[] = $this->Croogo->adminRowAction('',
-				array('action' => 'moveup', $pluginAlias),
+				array('action' => 'moveup', '?' => $queryString),
 				array('icon' => $this->Theme->getIcon('move-up'), 'tooltip' => __d('croogo', 'Move up'), 'method' => 'post'),
 				__d('croogo', 'Are you sure?')
 			);
 
 			$actions[] = $this->Croogo->adminRowAction('',
-				array('action' => 'movedown', $pluginAlias),
+				array('action' => 'movedown', '?' => $queryString),
 				array('icon' => $this->Theme->getIcon('move-down'), 'tooltip' => __d('croogo', 'Move down'), 'method' => 'post'),
 				__d('croogo', 'Are you sure?')
 			);
@@ -71,7 +72,7 @@ $this->CroogoHtml
 		if ($pluginData['needMigration']) {
 			$actions[] = $this->Croogo->adminRowAction(__d('croogo', 'Migrate'), array(
 				'action' => 'migrate',
-				$pluginAlias,
+				'?' => $queryString,
 			), array(), __d('croogo', 'Are you sure?'));
 		}
 

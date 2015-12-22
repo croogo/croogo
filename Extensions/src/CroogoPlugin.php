@@ -11,6 +11,7 @@ use Cake\Filesystem\Folder;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Log\LogTrait;
+use Cake\ORM\TableRegistry;
 use Croogo\Core\Event\CroogoEventManager;
 use InvalidArgumentException;
 
@@ -129,7 +130,8 @@ class CroogoPlugin
     {
         $plugins = [];
         $this->folder = new Folder;
-        $pluginPaths = App::path('plugins');
+        $registered = Configure::read('plugins');
+        $pluginPaths = Hash::merge(App::path('plugins'), $registered);
         foreach ($pluginPaths as $pluginPath) {
             $this->folder->path = $pluginPath;
             if (!file_exists($this->folder->path)) {
@@ -141,7 +143,11 @@ class CroogoPlugin
                     if (!$this->_isCroogoPlugin($pluginPath, $pluginFolder)) {
                         continue;
                     }
-                    $plugins[$pluginFolder] = $pluginFolder;
+
+                    $pluginName = array_search($pluginPath, $registered);
+                    if ($pluginName) {
+                        $plugins[$pluginName] = $pluginPath;
+                    }
                 }
             }
         }
@@ -167,7 +173,7 @@ class CroogoPlugin
                 return true;
             }
         }
-        if (file_exists($dir . 'config' . DS . 'plugin.json')) {
+        if (file_exists($dir . 'plugin.json')) {
             return true;
         }
         return false;
@@ -194,11 +200,15 @@ class CroogoPlugin
  */
     public function getData($alias = null)
     {
-        $pluginPaths = App::path('plugins');
-        foreach ($pluginPaths as $pluginPath) {
+        // fixme: rewrite this to use key lookup instead of loop
+        $pluginPaths = Configure::read('plugins');
+        foreach ($pluginPaths as $pluginAlias => $pluginPath) {
+            if ($pluginAlias !== $alias) {
+                continue;
+            }
             $active = $this->isActive($alias);
             $isCroogoPlugin = false;
-            $manifestFile = $pluginPath . $alias . DS . 'config' . DS . 'plugin.json';
+            $manifestFile = $pluginPath . DS . 'config' . DS . 'plugin.json';
             $hasManifest = file_exists($manifestFile);
             $composerFile = $pluginPath . $alias . DS . 'composer.json';
             $hasComposer = file_exists($composerFile);
@@ -245,13 +255,13 @@ class CroogoPlugin
                  * @todo Port to the official Migrations plugin
                  */
 //				if ($this->needMigration($alias, $active)) {
-//					$pluginData = array(
-//						'name' => $alias,
-//						'description' => "Croogo $alias plugin",
-//						'active' => true,
-//						'needMigration' => true,
-//					);
-//					return $pluginData;
+                    $pluginData = [
+                        'name' => $alias,
+                        'description' => "Croogo $alias plugin",
+                        'active' => true,
+                        'needMigration' => true,
+                    ];
+                    return $pluginData;
 //				}
             }
         }
@@ -280,7 +290,7 @@ class CroogoPlugin
     {
         $pluginAliases = $this->getPlugins();
         $allPlugins = [];
-        foreach ($pluginAliases as $pluginAlias) {
+        foreach ($pluginAliases as $pluginAlias => $pluginPath) {
             $allPlugins[$pluginAlias] = $this->getData($pluginAlias);
         }
 
@@ -807,9 +817,9 @@ class CroogoPlugin
             if (!Configure::read('Croogo.installed')) {
                 throw new CakeException('Unable to save Hook.bootstraps when Croogo is not fully installed');
             }
-            $Setting = ClassRegistry::init('Settings.Setting');
+            $Settings = TableRegistry::get('Croogo/Settings.Settings');
         }
-        return $Setting->write('Hook.bootstraps', implode(',', $bootstraps));
+        return $Settings->write('Hook.bootstraps', implode(',', $bootstraps));
     }
 
 /**
