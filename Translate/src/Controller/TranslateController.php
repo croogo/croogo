@@ -46,7 +46,7 @@ class TranslateController extends TranslateAppController
     public function admin_index($id = null, $modelAlias = null)
     {
         if ($id == null || $modelAlias == null) {
-            $this->Session->setFlash(__d('croogo', 'Invalid ID.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid ID.'));
             return $this->redirect([
                 'plugin' => null,
                 'controller' => Inflector::pluralize($modelAlias),
@@ -58,7 +58,7 @@ class TranslateController extends TranslateAppController
         list($plugin, $modelAlias) = pluginSplit($config['translateModel']);
 
         if (!is_array($config)) {
-            $this->Session->setFlash(__d('croogo', 'Invalid model.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid model.'));
             return $this->redirect([
                 'plugin' => $plugin,
                 'controller' => Inflector::pluralize($modelAlias),
@@ -70,7 +70,7 @@ class TranslateController extends TranslateAppController
         $displayField = $model->displayField;
         $record = $model->findById($id);
         if (!isset($record[$modelAlias]['id'])) {
-            $this->Session->setFlash(__d('croogo', 'Invalid record.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid record.'));
             return $this->redirect([
                 'plugin' => $plugin,
                 'controller' => Inflector::pluralize($modelAlias),
@@ -109,7 +109,7 @@ class TranslateController extends TranslateAppController
     public function admin_edit($id = null, $modelAlias = null)
     {
         if (!$id && empty($this->request->data)) {
-            $this->Session->setFlash(__d('croogo', 'Invalid ID.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid ID.'));
             return $this->redirect([
                 'plugin' => null,
                 'controller' => Inflector::pluralize($modelAlias),
@@ -118,7 +118,7 @@ class TranslateController extends TranslateAppController
         }
 
         if (!isset($this->request->params['named']['locale'])) {
-            $this->Session->setFlash(__d('croogo', 'Invalid locale'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid locale'));
             return $this->redirect([
                 'plugin' => null,
                 'controller' => Inflector::pluralize($modelAlias),
@@ -136,7 +136,7 @@ class TranslateController extends TranslateAppController
             ],
         ]);
         if (!isset($language['Language']['id'])) {
-            $this->Session->setFlash(__d('croogo', 'Invalid Language'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid Language'));
             return $this->redirect([
                 'plugin' => $plugin,
                 'controller' => Inflector::pluralize($modelAlias),
@@ -148,7 +148,7 @@ class TranslateController extends TranslateAppController
         $displayField = $model->displayField;
         $record = $model->findById($id);
         if (!isset($record[$modelAlias]['id'])) {
-            $this->Session->setFlash(__d('croogo', 'Invalid record.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid record.'));
             return $this->redirect([
                 'plugin' => $plugin,
                 'controller' => Inflector::pluralize($modelAlias),
@@ -162,7 +162,7 @@ class TranslateController extends TranslateAppController
         $fields = $model->getTranslationFields();
         if (!empty($this->request->data)) {
             if ($model->saveTranslation($this->request->data)) {
-                $this->Session->setFlash(__d('croogo', 'Record has been translated'), 'flash', ['class' => 'success']);
+                $this->Flash->success(__d('croogo', 'Record has been translated'));
                 $redirect = [
                     'action' => 'index',
                     $id,
@@ -174,7 +174,7 @@ class TranslateController extends TranslateAppController
                 }
                 return $this->redirect($redirect);
             } else {
-                $this->Session->setFlash(__d('croogo', 'Record could not be translated. Please, try again.'), 'flash', ['class' => 'error']);
+                $this->Flash->error(__d('croogo', 'Record could not be translated. Please, try again.'));
             }
         }
         if (empty($this->request->data)) {
@@ -194,7 +194,7 @@ class TranslateController extends TranslateAppController
     public function admin_delete($id = null, $modelAlias = null, $locale = null)
     {
         if ($locale == null || $id == null) {
-            $this->Session->setFlash(__d('croogo', 'Invalid Locale or ID'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid Locale or ID'));
             return $this->redirect([
                 'plugin' => null,
                 'controller' => Inflector::pluralize($modelAlias),
@@ -206,7 +206,7 @@ class TranslateController extends TranslateAppController
         list($plugin, $modelAlias) = pluginSplit($config['translateModel']);
 
         if (!is_array($config)) {
-            $this->Session->setFlash(__d('croogo', 'Invalid model.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid model.'));
             return $this->redirect([
                 'plugin' => $plugin,
                 'controller' => Inflector::pluralize($modelAlias),
@@ -217,7 +217,7 @@ class TranslateController extends TranslateAppController
         $model = ClassRegistry::init($config['translateModel']);
         $record = $model->findById($id);
         if (!isset($record[$modelAlias]['id'])) {
-            $this->Session->setFlash(__d('croogo', 'Invalid record.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid record.'));
             return $this->redirect([
                 'plugin' => $plugin,
                 'controller' => Inflector::pluralize($modelAlias),
@@ -232,9 +232,9 @@ class TranslateController extends TranslateAppController
                 $runtimeModelAlias . '.foreign_key' => $id,
                 $runtimeModelAlias . '.locale' => $locale,
             ])) {
-            $this->Session->setFlash(__d('croogo', 'Translation for the locale deleted successfully.'), 'flash', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Translation for the locale deleted successfully.'));
         } else {
-            $this->Session->setFlash(__d('croogo', 'Translation for the locale could not be deleted.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Translation for the locale could not be deleted.'));
         }
 
         return $this->redirect([

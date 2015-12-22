@@ -157,7 +157,7 @@ class BlocksController extends AppController
         $this->set('title_for_layout', __d('croogo', 'Edit Block'));
 
         if (!$id && empty($this->request->data)) {
-            $this->Session->setFlash(__d('croogo', 'Invalid Block'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid Block'));
             return $this->redirect(['action' => 'index']);
         }
         if (!empty($this->request->data)) {
@@ -214,9 +214,9 @@ class BlocksController extends AppController
     public function moveup($id, $step = 1)
     {
         if ($this->Blocks->moveUp($id, $step)) {
-            $this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'flash', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Moved up successfully'));
         } else {
-            $this->Session->setFlash(__d('croogo', 'Could not move up'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Could not move up'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -233,9 +233,9 @@ class BlocksController extends AppController
     public function movedown($id, $step = 1)
     {
         if ($this->Blocks->moveDown($id, $step)) {
-            $this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'flash', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Moved down successfully'));
         } else {
-            $this->Session->setFlash(__d('croogo', 'Could not move down'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Could not move down'));
         }
 
         return $this->redirect(['action' => 'index']);

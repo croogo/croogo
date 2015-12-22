@@ -94,7 +94,7 @@ class ExtensionsPluginsController extends AppController
             try {
                 $Installer->extractPlugin($file['tmp_name']);
             } catch (CakeException $e) {
-                $this->Session->setFlash($e->getMessage(), 'flash', ['class' => 'error']);
+                $this->Flash->error($e->getMessage());
                 return $this->redirect(['action' => 'add']);
             }
             return $this->redirect(['action' => 'index']);
@@ -110,21 +110,21 @@ class ExtensionsPluginsController extends AppController
     {
         $plugin = $this->request->query('name');
         if (!$plugin) {
-            $this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid plugin'));
             return $this->redirect(['action' => 'index']);
         }
         if ($this->_CroogoPlugin->isActive($plugin)) {
-            $this->Session->setFlash(__d('croogo', 'You cannot delete a plugin that is currently active.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'You cannot delete a plugin that is currently active.'));
             return $this->redirect(['action' => 'index']);
         }
 
         $result = $this->_CroogoPlugin->delete($plugin);
         if ($result === true) {
-            $this->Session->setFlash(__d('croogo', 'Plugin "%s" deleted successfully.', $plugin), 'flash', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Plugin "%s" deleted successfully.', $plugin));
         } elseif (!empty($result[0])) {
-            $this->Session->setFlash($result[0], 'flash', ['class' => 'error']);
+            $this->Flash->error($result[0]);
         } else {
-            $this->Session->setFlash(__d('croogo', 'Plugin could not be deleted.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Plugin could not be deleted.'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -139,32 +139,32 @@ class ExtensionsPluginsController extends AppController
     {
         $plugin = $this->request->query('name');
         if (!$plugin) {
-            $this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid plugin'));
             return $this->redirect(['action' => 'index']);
         }
 
         if ($this->_CroogoPlugin->isActive($plugin)) {
             $usedBy = $this->_CroogoPlugin->usedBy($plugin);
             if ($usedBy !== false) {
-                $this->Session->setFlash(__d('croogo', 'Plugin "%s" could not be deactivated since "%s" depends on it.', $plugin, implode(', ', $usedBy)), 'flash', ['class' => 'error']);
+                $this->Flash->error(__d('croogo', 'Plugin "%s" could not be deactivated since "%s" depends on it.', $plugin, implode(', ', $usedBy)));
                 return $this->redirect(['action' => 'index']);
             }
             $result = $this->_CroogoPlugin->deactivate($plugin);
             if ($result === true) {
-                $this->Session->setFlash(__d('croogo', 'Plugin "%s" deactivated successfully.', $plugin), 'flash', ['class' => 'success']);
+                $this->Flash->success(__d('croogo', 'Plugin "%s" deactivated successfully.', $plugin));
             } elseif (is_string($result)) {
-                $this->Session->setFlash($result, 'flash', ['class' => 'error']);
+                $this->Flash->error($result);
             } else {
-                $this->Session->setFlash(__d('croogo', 'Plugin could not be deactivated. Please, try again.'), 'flash', ['class' => 'error']);
+                $this->Flash->error(__d('croogo', 'Plugin could not be deactivated. Please, try again.'));
             }
         } else {
             $result = $this->_CroogoPlugin->activate($plugin);
             if ($result === true) {
-                $this->Session->setFlash(__d('croogo', 'Plugin "%s" activated successfully.', $plugin), 'flash', ['class' => 'success']);
+                $this->Flash->success(__d('croogo', 'Plugin "%s" activated successfully.', $plugin));
             } elseif (is_string($result)) {
-                $this->Session->setFlash($result, 'flash', ['class' => 'error']);
+                $this->Flash->error($result);
             } else {
-                $this->Session->setFlash(__d('croogo', 'Plugin could not be activated. Please, try again.'), 'flash', ['class' => 'error']);
+                $this->Flash->error(__d('croogo', 'Plugin could not be activated. Please, try again.'));
             }
         }
         return $this->redirect(['action' => 'index']);
@@ -179,14 +179,12 @@ class ExtensionsPluginsController extends AppController
     {
         $plugin = $this->request->query('name');
         if (!$plugin) {
-            $this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid plugin'));
         } elseif ($this->_CroogoPlugin->migrate($plugin)) {
-            $this->Session->setFlash(__d('croogo', 'Plugin "%s" migrated successfully.', $plugin), 'flash', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Plugin "%s" migrated successfully.', $plugin));
         } else {
-            $this->Session->setFlash(
-                __d('croogo', 'Plugin "%s" could not be migrated. Error: %s', $plugin, implode('<br />', $this->_CroogoPlugin->migrationErrors)),
-                'flash',
-                ['class' => 'success']
+            $this->Flash->error(
+                __d('croogo', 'Plugin "%s" could not be migrated. Error: %s', $plugin, implode('<br />', $this->_CroogoPlugin->migrationErrors))
             );
         }
         return $this->redirect(['action' => 'index']);
@@ -214,7 +212,7 @@ class ExtensionsPluginsController extends AppController
             $message = $result;
             $class = 'error';
         }
-        $this->Session->setFlash($message, 'flash', ['class' => $class]);
+        $this->Flash->set($message, ['params' => compact('class')]);
 
         return $this->redirect($this->referer());
     }
@@ -241,7 +239,7 @@ class ExtensionsPluginsController extends AppController
             $message = $result;
             $class = 'error';
         }
-        $this->Session->setFlash($message, 'flash', ['class' => $class]);
+        $this->Flash->set($message, ['params' => compact('class')]);
 
         return $this->redirect($this->referer());
     }

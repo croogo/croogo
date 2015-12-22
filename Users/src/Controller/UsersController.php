@@ -241,7 +241,7 @@ class UsersController extends AppController
         }
         $user = $this->User->findByUsername($username);
         if (!isset($user['User']['id'])) {
-            $this->Session->setFlash(__d('croogo', 'Invalid User.'), 'default', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid User.'));
             return $this->redirect('/');
         }
 

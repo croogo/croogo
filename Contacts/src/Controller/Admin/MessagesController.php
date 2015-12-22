@@ -72,15 +72,15 @@ class MessagesController extends AppController
         $this->set('title_for_layout', __d('croogo', 'Edit Message'));
 
         if (!$id && empty($this->request->data)) {
-            $this->Session->setFlash(__d('croogo', 'Invalid Message'));
+            $this->Flash->error(__d('croogo', 'Invalid Message'));
             return $this->redirect(['action' => 'index']);
         }
         if (!empty($this->request->data)) {
             if ($this->Message->save($this->request->data)) {
-                $this->Session->setFlash(__d('croogo', 'The Message has been saved'), 'flash', ['class' => 'success']);
+                $this->Flash->success(__d('croogo', 'The Message has been saved'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Session->setFlash(__d('croogo', 'The Message could not be saved. Please, try again.'), 'flash', ['class' => 'error']);
+                $this->Flash->error(__d('croogo', 'The Message could not be saved. Please, try again.'));
             }
         }
         if (empty($this->request->data)) {
@@ -98,11 +98,11 @@ class MessagesController extends AppController
     public function delete($id = null)
     {
         if (!$id) {
-            $this->Session->setFlash(__d('croogo', 'Invalid id for Message'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid id for Message'));
             return $this->redirect(['action' => 'index']);
         }
         if ($this->Message->delete($id)) {
-            $this->Session->setFlash(__d('croogo', 'Message deleted'), 'flash', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Message deleted'));
             return $this->redirect(['action' => 'index']);
         }
     }

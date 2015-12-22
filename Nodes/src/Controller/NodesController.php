@@ -140,7 +140,7 @@ class NodesController extends AppController
 //				),
 //			));
 //			if (!isset($type['Type']['id'])) {
-//				$this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'default', array('class' => 'error'));
+//				$this->Flash->error(__d('croogo', 'Invalid content type.'));
 //				return $this->redirect('/');
 //			}
 //			if (isset($type['Params']['nodes_per_page']) && empty($this->request->params['named']['limit'])) {
@@ -200,7 +200,7 @@ class NodesController extends AppController
             ],
         ]);
         if (!isset($term['Term']['id'])) {
-            $this->Session->setFlash(__d('croogo', 'Invalid Term.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid Term.'));
             return $this->redirect('/');
         }
 
@@ -243,7 +243,7 @@ class NodesController extends AppController
                 ],
             ]);
             if (!isset($type['Type']['id'])) {
-                $this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'flash', ['class' => 'error']);
+                $this->Flash->error(__d('croogo', 'Invalid content type.'));
                 return $this->redirect('/');
             }
             if (isset($type['Params']['nodes_per_page']) && empty($this->request->params['named']['limit'])) {
@@ -335,7 +335,7 @@ class NodesController extends AppController
         if ($typeAlias) {
             $type = $Node->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
             if (!isset($type['Type']['id'])) {
-                $this->Session->setFlash(__d('croogo', 'Invalid content type.'), 'flash', ['class' => 'error']);
+                $this->Flash->error(__d('croogo', 'Invalid content type.'));
                 return $this->redirect('/');
             }
             if (isset($type['Params']['nodes_per_page'])) {
@@ -385,7 +385,7 @@ class NodesController extends AppController
                 ->find('published')
                 ->first();
         } elseif ($id == null) {
-            $this->Session->setFlash(__d('croogo', 'Invalid content'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid content'));
             return $this->redirect('/');
         } else {
             $node = $Node->find('viewById', [

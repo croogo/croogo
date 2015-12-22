@@ -94,7 +94,7 @@ class CommentsController extends AppController
         $this->set('title_for_layout', __d('croogo', 'Edit Comment'));
 
         if (!$id && empty($this->request->data)) {
-            $this->Session->setFlash(__d('croogo', 'Invalid Comment'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid Comment'));
             return $this->redirect(['action' => 'index']);
         }
         if (!empty($this->request->data)) {

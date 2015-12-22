@@ -170,7 +170,7 @@ class ContactsController extends AppController
             $this->set(compact('continue'));
             if ($continue === true) {
                 Croogo::dispatchEvent('Controller.Contacts.afterMessage', $this);
-                $this->Session->setFlash(__d('croogo', 'Your message has been received...'), 'flash', ['class' => 'success']);
+                $this->Flash->success(__d('croogo', 'Your message has been received...'));
                 return $this->Croogo->redirect('/');
             }
         } else {
@@ -226,7 +226,7 @@ class ContactsController extends AppController
             $this->Akismet->setCommentContent($this->request->data['Message']['body']);
             if ($this->Akismet->isCommentSpam()) {
                 $continue = false;
-                $this->Session->setFlash(__d('croogo', 'Sorry, the message appears to be spam.'), 'flash', ['class' => 'error']);
+                $this->Flash->error(__d('croogo', 'Sorry, the message appears to be spam.'));
             }
         }
 
@@ -248,7 +248,7 @@ class ContactsController extends AppController
             $continue === true &&
             !$this->Recaptcha->valid($this->request)) {
             $continue = false;
-            $this->Session->setFlash(__d('croogo', 'Invalid captcha entry'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid captcha entry'));
         }
 
         return $continue;

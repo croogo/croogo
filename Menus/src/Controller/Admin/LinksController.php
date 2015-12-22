@@ -210,7 +210,7 @@ class LinksController extends AppController
     {
         $link = $this->Link->findById($id);
         if (!isset($link['Link']['id'])) {
-            $this->Session->setFlash(__d('croogo', 'Invalid id for Link'), 'default', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid id for Link'));
             return $this->redirect([
                 'controller' => 'menus',
                 'action' => 'index',
@@ -219,9 +219,9 @@ class LinksController extends AppController
         $this->Link->setTreeScope($link['Link']['menu_id']);
         if ($this->Link->moveUp($id, $step)) {
             Cache::clearGroup('menus', 'croogo_menus');
-            $this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'default', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Moved up successfully'));
         } else {
-            $this->Session->setFlash(__d('croogo', 'Could not move up'), 'default', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Could not move up'));
         }
         return $this->redirect([
             'action' => 'index',
@@ -243,7 +243,7 @@ class LinksController extends AppController
     {
         $link = $this->Link->findById($id);
         if (!isset($link['Link']['id'])) {
-            $this->Session->setFlash(__d('croogo', 'Invalid id for Link'), 'default', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid id for Link'));
             return $this->redirect([
                 'controller' => 'menus',
                 'action' => 'index',
@@ -252,9 +252,9 @@ class LinksController extends AppController
         $this->Link->setTreeScope($link['Link']['menu_id']);
         if ($this->Link->moveDown($id, $step)) {
             Cache::clearGroup('menus', 'croogo_menus');
-            $this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'default', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Moved down successfully'));
         } else {
-            $this->Session->setFlash(__d('croogo', 'Could not move down'), 'default', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Could not move down'));
         }
         return $this->redirect([
             'action' => 'index',
