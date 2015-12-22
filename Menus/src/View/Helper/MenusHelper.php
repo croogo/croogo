@@ -217,7 +217,7 @@ class MenusHelper extends Helper
                 $currentUrl = $this->_View->request->url;
             }
 
-            if (Router::url($link->link->getArrayCopy()) == Router::url('/' . $currentUrl)) {
+            if (Router::url($link->link->getUrl()) == Router::url('/' . $currentUrl)) {
                 if (!isset($linkAttr['class'])) {
                     $linkAttr['class'] = '';
                 }

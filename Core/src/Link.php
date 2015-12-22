@@ -26,7 +26,10 @@ class Link extends ArrayObject
 
     public function getUrl()
     {
-        return (isset($this->controller)) ? $this->getArrayCopy() : $this->url;
+        $copy = array_map(function($val) {
+            return urldecode($val);
+        }, $this->getArrayCopy());
+        return (isset($this->controller)) ? $copy : $this->url;
     }
 
     public function toLinkString()
