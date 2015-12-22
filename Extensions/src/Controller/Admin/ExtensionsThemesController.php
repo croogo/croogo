@@ -106,9 +106,9 @@ class ExtensionsThemesController extends AppController
             $Installer = new ExtensionsInstaller;
             try {
                 $Installer->extractTheme($file['tmp_name']);
-                $this->Session->setFlash(__d('croogo', 'Theme uploaded successfully.'), 'flash', ['class' => 'success']);
+                $this->Flash->success(__d('croogo', 'Theme uploaded successfully.'));
             } catch (CakeException $e) {
-                $this->Session->setFlash($e->getMessage(), 'flash', ['class' => 'error']);
+                $this->Flash->error($e->getMessage());
             }
             return $this->redirect(['action' => 'index']);
         }
@@ -142,26 +142,26 @@ class ExtensionsThemesController extends AppController
     public function delete($alias = null)
     {
         if ($alias == null) {
-            $this->Session->setFlash(__d('croogo', 'Invalid Theme.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid Theme.'));
             return $this->redirect(['action' => 'index']);
         }
 
         if ($alias == 'default') {
-            $this->Session->setFlash(__d('croogo', 'Default theme cannot be deleted.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Default theme cannot be deleted.'));
             return $this->redirect(['action' => 'index']);
         } elseif ($alias == Configure::read('Site.theme')) {
-            $this->Session->setFlash(__d('croogo', 'You cannot delete a theme that is currently active.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'You cannot delete a theme that is currently active.'));
             return $this->redirect(['action' => 'index']);
         }
 
         $result = $this->_CroogoTheme->delete($alias);
 
         if ($result === true) {
-            $this->Session->setFlash(__d('croogo', 'Theme deleted successfully.'), 'flash', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Theme deleted successfully.'));
         } elseif (!empty($result[0])) {
-            $this->Session->setFlash($result[0], 'flash', ['class' => 'error']);
+            $this->Flash->error($result[0]);
         } else {
-            $this->Session->setFlash(__d('croogo', 'An error occurred.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'An error occurred.'));
         }
 
         return $this->redirect(['action' => 'index']);

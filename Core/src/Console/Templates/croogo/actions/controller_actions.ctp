@@ -54,7 +54,7 @@
 			$this-><?php echo $currentModelName; ?>->create();
 			if ($this-><?php echo $currentModelName; ?>->saveAssociated($this->request->data)) {
 <?php if ($wannaUseSession): ?>
-				$this->Session->setFlash(__d('croogo', '%s has been saved', __d('<?php echo $i18nDomain; ?>', '<?php echo strtolower($singularHumanName); ?>')), 'default', array('class' => 'success'));
+				$this->Flash->success(__d('croogo', '%s has been saved', __d('<?php echo $i18nDomain; ?>', '<?php echo strtolower($singularHumanName); ?>')));
 				$redirectTo = array('action' => 'index');
 				if (isset($this->request->data['apply'])) {
 					$redirectTo = array('action' => 'edit', $this-><?php echo $currentModelName; ?>->id);
@@ -68,7 +68,7 @@
 <?php endif; ?>
 			} else {
 <?php if ($wannaUseSession): ?>
-				$this->Session->setFlash(__d('croogo', '%s could not be saved. Please, try again.', __d('<?php echo $i18nDomain; ?>', '<?php echo strtolower($singularHumanName); ?>')), 'default', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', '%s could not be saved. Please, try again.', __d('<?php echo $i18nDomain; ?>', '<?php echo strtolower($singularHumanName); ?>')));
 <?php endif; ?>
 			}
 		}
@@ -104,7 +104,7 @@
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this-><?php echo $currentModelName; ?>->saveAssociated($this->request->data)) {
 <?php if ($wannaUseSession): ?>
-				$this->Session->setFlash(__d('croogo', '%s has been saved', __d('<?php echo $i18nDomain; ?>', '<?php echo strtolower($singularHumanName); ?>')), 'default', array('class' => 'success'));
+				$this->Flash->success(__d('croogo', '%s has been saved', __d('<?php echo $i18nDomain; ?>', '<?php echo strtolower($singularHumanName); ?>')));
 				$redirectTo = array('action' => 'index');
 				if (isset($this->request->data['apply'])) {
 					$redirectTo = array('action' => 'edit', $id);
@@ -118,7 +118,7 @@
 <?php endif; ?>
 			} else {
 <?php if ($wannaUseSession): ?>
-				$this->Session->setFlash(__d('croogo', '%s could not be saved. Please, try again.', __d('<?php echo $i18nDomain; ?>', '<?php echo strtolower($singularHumanName); ?>')), 'default', array('class' => 'error'));
+				$this->Flash->error(__d('croogo', '%s could not be saved. Please, try again.', __d('<?php echo $i18nDomain; ?>', '<?php echo strtolower($singularHumanName); ?>')));
 <?php endif; ?>
 			}
 		} else {
@@ -158,14 +158,14 @@
 		$this->request->onlyAllow('post', 'delete');
 		if ($this-><?php echo $currentModelName; ?>->delete()) {
 <?php if ($wannaUseSession): ?>
-			$this->Session->setFlash(__d('croogo', '%s deleted', __d('<?php echo $i18nDomain; ?>', '<?php echo ucfirst(strtolower($singularHumanName)); ?>')), 'default', array('class' => 'success'));
+			$this->Flash->success(__d('croogo', '%s deleted', __d('<?php echo $i18nDomain; ?>', '<?php echo ucfirst(strtolower($singularHumanName)); ?>')));
 			return $this->redirect(array('action' => 'index'));
 <?php else: ?>
 			$this->flash((__d('croogo', '%s deleted', __d('<?php echo $i18nDomain; ?>', '<?php echo ucfirst(strtolower($singularHumanName)); ?>')), array('action' => 'index'));
 <?php endif; ?>
 		}
 <?php if ($wannaUseSession): ?>
-		$this->Session->setFlash(__d('croogo', '%s was not deleted', __d('<?php echo $i18nDomain; ?>', '<?php echo ucfirst(strtolower($singularHumanName)); ?>')), 'default', array('class' => 'error'));
+		$this->Flash->error(__d('croogo', '%s was not deleted', __d('<?php echo $i18nDomain; ?>', '<?php echo ucfirst(strtolower($singularHumanName)); ?>')));
 <?php else: ?>
 		$this->flash(__d('croogo', '%s was not deleted', __d('<?php echo $i18nDomain; ?>', '<?php echo ucfirst(strtolower($singularHumanName)); ?>')), array('action' => 'index'));
 <?php endif; ?>

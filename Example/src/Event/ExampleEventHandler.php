@@ -47,7 +47,7 @@ class ExampleEventHandler extends Object implements EventListener
     {
         $Controller = $event->subject();
         $message = sprintf('Welcome %s.  Have a nice day', $Controller->Auth->user('name'));
-        $Controller->Session->setFlash($message);
+        $Controller->Flash->success($message);
         $Controller->redirect([
             'admin' => true,
             'plugin' => 'example',

@@ -69,7 +69,7 @@ class SettingsController extends AppController
     public function view($id = null)
     {
         if (!$id) {
-            $this->Session->setFlash(__d('croogo', 'Invalid Setting.'), 'default', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid Setting.'));
             return $this->redirect(['action' => 'index']);
         }
         $this->set('setting', $this->Setting->read(null, $id));
@@ -196,9 +196,9 @@ class SettingsController extends AppController
     public function moveup($id, $step = 1)
     {
         if ($this->Setting->moveUp($id, $step)) {
-            $this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'default', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Moved up successfully'));
         } else {
-            $this->Session->setFlash(__d('croogo', 'Could not move up'), 'default', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Could not move up'));
         }
 
         if (!$redirect = $this->referer()) {
@@ -223,9 +223,9 @@ class SettingsController extends AppController
     public function movedown($id, $step = 1)
     {
         if ($this->Setting->moveDown($id, $step)) {
-            $this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'default', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Moved down successfully'));
         } else {
-            $this->Session->setFlash(__d('croogo', 'Could not move down'), 'default', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Could not move down'));
         }
 
         return $this->redirect(['admin' => true, 'controller' => 'settings', 'action' => 'index']);

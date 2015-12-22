@@ -78,15 +78,15 @@ class ExtensionsLocalesController extends AppController
     {
         $poFile = $this->__getPoFile($locale);
         if ($locale == null || !$poFile) {
-            $this->Session->setFlash(__d('croogo', 'Locale does not exist.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Locale does not exist.'));
             return $this->redirect(['action' => 'index']);
         }
 
         $result = $this->Setting->write('Site.locale', $locale);
         if ($result) {
-            $this->Session->setFlash(sprintf(__d('croogo', "Locale '%s' set as default"), $locale), 'flash', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', "Locale '%s' set as default", $locale));
         } else {
-            $this->Session->setFlash(__d('croogo', 'Could not save Locale setting.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Could not save Locale setting.'));
         }
         return $this->redirect(['action' => 'index']);
     }
@@ -124,12 +124,12 @@ class ExtensionsLocalesController extends AppController
             zip_close($zip);
 
             if (!$locale) {
-                $this->Session->setFlash(__d('croogo', 'Invalid locale.'), 'flash', ['class' => 'error']);
+                $this->Flash->error(__d('croogo', 'Invalid locale.'));
                 return $this->redirect(['action' => 'add']);
             }
 
             if (is_dir(APP . 'Locale' . DS . $locale)) {
-                $this->Session->setFlash(__d('croogo', 'Locale already exists.'), 'flash', ['class' => 'error']);
+                $this->Flash->error(__d('croogo', 'Locale already exists.'));
                 return $this->redirect(['action' => 'add']);
             }
 
@@ -180,14 +180,14 @@ class ExtensionsLocalesController extends AppController
         $this->set('title_for_layout', sprintf(__d('croogo', 'Edit locale: %s'), $locale));
 
         if (!$locale) {
-            $this->Session->setFlash(__d('croogo', 'Invalid locale.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid locale.'));
             return $this->redirect(['action' => 'index']);
         }
 
         $poFile = $this->__getPoFile($locale);
 
         if (!$poFile) {
-            $this->Session->setFlash(__d('croogo', 'The file %s does not exist.', 'croogo.po'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'The file %s does not exist.', 'croogo.po'));
             return $this->redirect(['action' => 'index']);
         }
 
@@ -197,7 +197,7 @@ class ExtensionsLocalesController extends AppController
         if (!empty($this->request->data)) {
             // save
             if ($file->write($this->request->data['Locale']['content'])) {
-                $this->Session->setFlash(__d('croogo', 'Locale updated successfully'), 'flash', ['class' => 'success']);
+                $this->Flash->success(__d('croogo', 'Locale updated successfully'));
                 return $this->redirect(['action' => 'index']);
             }
         }
@@ -216,15 +216,15 @@ class ExtensionsLocalesController extends AppController
         $poFile = $this->__getPoFile($locale);
 
         if (!$poFile) {
-            $this->Session->setFlash(__d('croogo', 'The file %s does not exist.', 'croogo.po'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'The file %s does not exist.', 'croogo.po'));
             return $this->redirect(['action' => 'index']);
         }
 
         $file =& new File($poFile, true);
         if ($file->delete()) {
-            $this->Session->setFlash(__d('croogo', 'Locale deleted successfully.'), 'flash', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Locale deleted successfully.'));
         } else {
-            $this->Session->setFlash(__d('croogo', 'Local could not be deleted.'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Local could not be deleted.'));
         }
 
         return $this->redirect(['action' => 'index']);

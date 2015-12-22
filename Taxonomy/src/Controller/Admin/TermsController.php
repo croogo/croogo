@@ -203,8 +203,12 @@ class TermsController extends AppController
             $messageFlash = __d('croogo', 'Term could not be deleted. Please, try again.');
             $cssClass = ['class' => 'error'];
         }
+        $options = [
+            'element' => 'flash',
+            'params' => $cssClass,
+        ];
 
-        $this->Session->setFlash($messageFlash, 'flash', $cssClass);
+        $this->Flash->set($messageFlash, $options);
         return $this->redirect($redirectUrl);
     }
 

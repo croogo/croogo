@@ -141,13 +141,13 @@ class BulkProcessComponent extends Component
             } else {
                 $message = __d('croogo', '%s processed', Inflector::humanize($table->alias));
             }
-            $setFlashOptions = ['class' => 'success'];
+            $flashMethod = 'success';
             Croogo::dispatchEvent($eventName, $Controller, compact($ids));
         } else {
             $message = __d('croogo', 'An error occured');
-            $setFlashOptions = ['class' => 'error'];
+            $flashMethod = 'error';
         }
-        $this->Flash->{$setFlashOptions['class']}($message);
+        $this->Flash->{$flashMethod}($message);
 
         return $Controller->redirect($options['redirect']);
     }

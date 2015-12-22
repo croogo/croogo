@@ -94,11 +94,11 @@ class DashboardsDashboardsController extends AppController
     public function admin_delete($id = null)
     {
         if (!$id) {
-            $this->Session->setFlash(__d('croogo', 'Invalid id for Dashboard'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid id for Dashboard'));
             return $this->redirect(['action' => 'index']);
         }
         if ($this->DashboardsDashboard->delete($id)) {
-            $this->Session->setFlash(__d('croogo', 'Dashboard deleted'), 'flash', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Dashboard deleted'));
             return $this->redirect($this->referer());
         }
     }
@@ -125,9 +125,9 @@ class DashboardsDashboardsController extends AppController
     public function admin_moveup($id, $step = 1)
     {
         if ($this->DashboardsDashboard->moveUp($id, $step)) {
-            $this->Session->setFlash(__d('croogo', 'Moved up successfully'), 'flash', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Moved up successfully'));
         } else {
-            $this->Session->setFlash(__d('croogo', 'Could not move up'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Could not move up'));
         }
         return $this->redirect(['action' => 'index']);
     }
@@ -142,9 +142,9 @@ class DashboardsDashboardsController extends AppController
     public function admin_movedown($id, $step = 1)
     {
         if ($this->DashboardsDashboard->moveDown($id, $step)) {
-            $this->Session->setFlash(__d('croogo', 'Moved down successfully'), 'flash', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Moved down successfully'));
         } else {
-            $this->Session->setFlash(__d('croogo', 'Could not move down'), 'flash', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Could not move down'));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -223,7 +223,7 @@ class NodesController extends AppController
     public function edit($id = null)
     {
         if (!$id && empty($this->request->data)) {
-            $this->Session->setFlash(__d('croogo', 'Invalid content'), 'default', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid content'));
             return $this->redirect(['action' => 'index']);
         }
         $node = $this->Nodes->get($id, [
@@ -271,7 +271,7 @@ class NodesController extends AppController
             $class = 'error';
         }
 
-        $this->Session->setFlash($messageFlash, 'default', compact('class'));
+        $this->Flash->set($messageFlash, ['element' => 'flash', 'param' => compact('class')]);
         return $this->redirect(['action' => 'index']);
     }
 
@@ -285,13 +285,13 @@ class NodesController extends AppController
     public function delete($id = null)
     {
         if (!$id) {
-            $this->Session->setFlash(__d('croogo', 'Invalid id for Node'), 'default', ['class' => 'error']);
+            $this->Flash->error(__d('croogo', 'Invalid id for Node'));
             return $this->redirect(['action' => 'index']);
         }
 
         $Node = $this->{$this->modelClass};
         if ($Node->delete($id)) {
-            $this->Session->setFlash(__d('croogo', 'Node deleted'), 'default', ['class' => 'success']);
+            $this->Flash->success(__d('croogo', 'Node deleted'));
             return $this->redirect(['action' => 'index']);
         }
     }
