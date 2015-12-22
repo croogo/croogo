@@ -315,11 +315,7 @@ class CroogoHelper extends Helper
         }
 
         if ($action == 'delete' || isset($usePost)) {
-            $this->Form->_helperMap['Html']['class'] = 'Croogo/Core.Html';
-            $this->Form->Html = new HtmlHelper($this->_View);
             $postLink = $this->Form->postLink($title, $url, $options);
-            $this->Form->_helperMap['Html']['class'] = 'Html';
-            $this->Form->Html = new HtmlHelper($this->_View);
             return $postLink;
         }
 
