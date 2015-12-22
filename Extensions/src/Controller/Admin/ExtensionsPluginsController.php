@@ -104,11 +104,11 @@ class ExtensionsPluginsController extends AppController
 /**
  * Admin delete
  *
- * @param string $plugin
  * @return void
  */
-    public function delete($plugin = null)
+    public function delete()
     {
+        $plugin = $this->request->query('name');
         if (!$plugin) {
             $this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'flash', ['class' => 'error']);
             return $this->redirect(['action' => 'index']);
@@ -133,11 +133,11 @@ class ExtensionsPluginsController extends AppController
 /**
  * Admin toggle
  *
- * @param string $plugin
  * @return void
  */
-    public function toggle($plugin = null)
+    public function toggle()
     {
+        $plugin = $this->request->query('name');
         if (!$plugin) {
             $this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'flash', ['class' => 'error']);
             return $this->redirect(['action' => 'index']);
@@ -173,10 +173,11 @@ class ExtensionsPluginsController extends AppController
 /**
  * Migrate a plugin (database)
  *
- * @param type $plugin
+ * @return void
  */
-    public function migrate($plugin = null)
+    public function migrate()
     {
+        $plugin = $this->request->query('name');
         if (!$plugin) {
             $this->Session->setFlash(__d('croogo', 'Invalid plugin'), 'flash', ['class' => 'error']);
         } elseif ($this->_CroogoPlugin->migrate($plugin)) {
@@ -194,11 +195,11 @@ class ExtensionsPluginsController extends AppController
 /**
  * Move up a plugin in bootstrap order
  *
- * @param string $plugin
  * @throws CakeException
  */
-    public function moveup($plugin = null)
+    public function moveup()
     {
+        $plugin = $this->request->query('name');
         $this->request->allowMethod('post');
 
         if ($plugin === null) {
@@ -221,11 +222,11 @@ class ExtensionsPluginsController extends AppController
 /**
  * Move down a plugin in bootstrap order
  *
- * @param string $plugin
  * @throws CakeException
  */
-    public function movedown($plugin = null)
+    public function movedown()
     {
+        $plugin = $this->request->query('name');
         $this->request->allowMethod('post');
 
         if ($plugin === null) {
