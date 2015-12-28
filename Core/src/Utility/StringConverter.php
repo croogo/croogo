@@ -122,7 +122,7 @@ class StringConverter
             parse_str(substr($link, $pos + 1), $query);
             $link = substr($link, 0, $pos);
         }
-        $link = explode('|', $link);
+        $link = explode('/', $link);
         $linkArr = [];
         foreach ($link as $linkElement) {
             if ($linkElement != null) {
@@ -131,7 +131,7 @@ class StringConverter
                     if (in_array($linkElementE['1'], ['true', 'false'])) {
                         $linkArr[$linkElementE['0']] = ($linkElementE['0'] === 'true') ? true : false;
                     } else {
-                        $linkArr[$linkElementE['0']] = urldecode($linkElementE['1']);
+                        $linkArr[$linkElementE['0']] = $linkElementE['1'];
                     }
                 } else {
                     $linkArr[] = $linkElement;
@@ -182,7 +182,7 @@ class StringConverter
                 $result[] = $val;
             }
         }
-        return join('|', $result) . $queryString;
+        return join('/', $result) . $queryString;
     }
 
 /**
