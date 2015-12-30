@@ -1,9 +1,15 @@
 <?php
 namespace Croogo\Acl\Auth;
 
-use Cake\Controller\Component\AuthComponent;
 use Cake\Auth\BaseAuthenticate;
+use Cake\Controller\Component\AuthComponent;
+use Cake\Controller\ComponentRegistry;
+use Cake\Core\Configure;
+use Cake\Core\Exception\Exception;
+use Cake\Network\Request;
+use Cake\Network\Response;
 use Cake\Routing\Router;
+use Cake\ORM\TableRegistry;
 
 /**
  * An authentication adapter for AuthComponent.  Provides the ability to authenticate using COOKIE
@@ -33,23 +39,23 @@ use Cake\Routing\Router;
  */
 class CookieAuthenticate extends BaseAuthenticate {
 
-/**
- * Constructor
- */
-    public function __construct(ComponentRegistry $collection, $settings) {
-        $this->settings['cookie'] = array(
+    /**
+     * Cookie configuration
+     *
+     * FIXME: This config should be centralized/shared with AutoLoginComponent
+     */
+    protected $_defaultConfig = [
+        'cookie' => [
             'name' => 'CAL',
             'time' => '+2 weeks',
-        );
-        $this->settings['crypt'] = 'rijndael';
-        parent::__construct($collection, $settings);
-    }
+        ],
+    ];
 
-/**
- * Verify cookie data
- *
- * return boolean|array User data or boolean False when data is invalid
- */
+    /**
+     * Verify cookie data
+     *
+     * return boolean|array User data or boolean False when data is invalid
+     */
     protected function _verify($cookie) {
         if (empty($cookie['data'])) {
             return false;
@@ -62,7 +68,7 @@ class CookieAuthenticate extends BaseAuthenticate {
         }
 
         $data = json_decode($cookie['data'], true);
-        $settings = $this->settings;
+        $settings = $this->config();
         $fields = $settings['fields'];
         if (empty($data['hash']) ||
             empty($data['time']) ||
@@ -72,7 +78,7 @@ class CookieAuthenticate extends BaseAuthenticate {
         }
 
         $username = $data[$fields['username']] . $data['time'];
-        if ($data['hash'] === $this->_registry->Auth->password($username)) {
+        if ($this->passwordHasher()->check($username, $data['hash'])) {
             return $data;
         }
 
@@ -89,33 +95,36 @@ class CookieAuthenticate extends BaseAuthenticate {
      * @throws CakeException
      */
     public function getUser(Request $request) {
-        if (!isset($this->_registry->Cookie) || !$this->_registry->Cookie instanceof CookieComponent) {
-            throw new CakeException('CookieComponent is not loaded');
+        if (!$this->_registry->has('Cookie')) {
+            throw new Exception('CookieComponent is not loaded');
         }
 
-        $this->settings = array_merge(array('crypt' => 'rijndael'), $this->settings);
-        if ($this->settings['crypt'] == 'rijndael' && !function_exists('mcrypt_encrypt')) {
-            throw new CakeException('Cannot use type rijndael, mcrypt_encrypt() is required');
+        $config = $this->config();
+        if (!function_exists('mcrypt_encrypt')) {
+            throw new Exception('Cannot use encryption, mcrypt_encrypt() is required');
         }
-        $this->_registry->Cookie->type($this->settings['crypt']);
 
-        list(, $model) = pluginSplit($this->settings['userModel']);
+        list(, $model) = pluginSplit($config['userModel']);
 
-        $this->_registry->Cookie->name = $this->settings['cookie']['name'];
-        $cookie = $this->_registry->Cookie->read($model);
+        $cookieName = $config['cookie']['name'];
+        unset($config['cookie']['name']);
+        $this->_registry->Cookie->configKey($cookieName, [
+            'httpOnly' => true,
+        ]);
+        $cookie = $this->_registry->Cookie->read($cookieName);
         $data = $this->_verify($cookie);
         if (!$data) {
             return false;
         }
 
-        extract($this->settings['fields']);
+        extract($config['fields']);
         if (empty($data[$username])) {
             return false;
         }
 
         $user = $this->_findUser($data[$username]);
         if ($user) {
-            $this->_registry->Session->write(AuthComponent::$sessionKey, $user);
+            $this->_registry->Auth->setUser($user);
             return $user;
         }
         return false;
@@ -128,9 +137,10 @@ class CookieAuthenticate extends BaseAuthenticate {
      */
     protected function _findUser($conditions, $password = null)
     {
-        $userModel = $this->settings['userModel'];
+        $config = $this->config();
+        $userModel = $config['userModel'];
         list(, $model) = pluginSplit($userModel);
-        $fields = $this->settings['fields'];
+        $fields = $config['fields'];
 
         if (!is_array($conditions)) {
             $username = $conditions;
@@ -141,22 +151,24 @@ class CookieAuthenticate extends BaseAuthenticate {
         if (!empty($this->settings['scope'])) {
             $conditions = array_merge($conditions, $this->settings['scope']);
         }
-        $result = ClassRegistry::init($userModel)->find('first', [
-            'conditions' => $conditions,
-            'recursive' => $this->settings['recursive'],
-            'contain' => $this->settings['contain'],
-        ]);
-        if (empty($result) || empty($result[$model])) {
+
+        $query = TableRegistry::get($userModel)->find()
+            ->where($conditions);
+
+        if (!empty($config['contain'])) {
+            $query->contain($config['contain']);
+        }
+
+        $user = $query->first()->toArray();
+        if (empty($user) || empty($user[$fields['username']])) {
             return false;
         }
-        $user = $result[$model];
         if (isset($conditions[$model . '.' . $fields['password']]) ||
             isset($conditions[$fields['password']])
         ) {
             unset($user[$fields['password']]);
         }
-        unset($result[$model]);
-        return array_merge($user, $result);
+        return $user;
     }
 
     /**
@@ -170,14 +182,6 @@ class CookieAuthenticate extends BaseAuthenticate {
             return false;
         }
         return $this->getUser($request);
-    }
-
-    /**
-     * Logout
-     */
-    public function logout($user)
-    {
-        $this->_registry->Cookie->destroy();
     }
 
 }

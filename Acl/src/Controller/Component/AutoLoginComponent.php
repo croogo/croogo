@@ -4,6 +4,8 @@ namespace Croogo\Acl\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
+use Cake\Core\Configure;
+use Cake\Event\Event;
 use Cake\Utility\Hash;
 
 /**
@@ -21,46 +23,35 @@ use Cake\Utility\Hash;
 class AutoLoginComponent extends Component
 {
 
-/**
- * components
- */
-    public $components = [
-        'Cookie',
-        'Auth',
+    protected $_defaultConfig = [
+        'cookieName' => 'CAL',
+        'cookieConfig' => [
+            'expires' => '+1 day',
+            'httpOnly' => true,
+        ],
     ];
 
-/**
- * Controller instance
- */
+    /**
+     * Controller instance
+     */
     protected $_Controller;
 
-/**
- * User Model to use (retrieved from AuthComponent)
- */
+    /**
+     * User Model to use (retrieved from AuthComponent)
+     */
     protected $_userModel;
 
-/**
- * Field setting (retrieved from AuthComponent)
- */
+    /**
+     * Field setting (retrieved from AuthComponent)
+     */
     protected $_fields;
 
-/**
- * Constructor
- */
-    public function __construct(ComponentRegistry $collection, $settings = [])
+    /**
+     * Component startup
+     */
+    public function startup(Event $event)
     {
-        $settings = Hash::merge([
-            'cookieName' => 'CAL',
-        ], $settings);
-        return parent::__construct($collection, $settings);
-    }
-
-/**
- * Component startup
- */
-    public function startup(Controller $controller)
-    {
-        $this->_Controller = $controller;
+        $this->_Controller = $controller = $event->subject();
         $controller->eventManager()->attach(
             [$this, 'onAdminLogoutSuccessful'],
             'Controller.Users.adminLogoutSuccessful'
@@ -71,9 +62,9 @@ class AutoLoginComponent extends Component
             return;
         }
 
-        $this->Cookie->encryption('rijndael');
+        $this->_registry->Cookie->configKey($this->config('cookieName'), $this->config('cookieConfig'));
 
-        $setting = $this->Auth->authenticate['all'];
+        $setting = $this->_registry->Auth->config('authenticate.all');
         list(, $this->_userModel) = pluginSplit($setting['userModel']);
         $this->_fields = $setting['fields'];
 
@@ -83,17 +74,18 @@ class AutoLoginComponent extends Component
         );
     }
 
-/**
- * Prepare cookie data based on request
- *
- * @return array cookie data
- */
+    /**
+     * Prepare cookie data based on request
+     *
+     * @return array cookie data
+     */
     protected function _cookie($request)
     {
         $time = time();
-        $username = $request->data[$this->_userModel][$this->_fields['username']];
+        $username = $request->data($this->_fields['username']);
+        $hasher = $this->_registry->Auth->passwordHasher();
         $data = json_encode([
-            'hash' => $this->Auth->password($username . $time),
+            'hash' => $hasher->hash($username . $time),
             'time' => $time,
             'username' => $username,
         ]);
@@ -102,82 +94,35 @@ class AutoLoginComponent extends Component
         return compact('mac', 'data');
     }
 
-/**
- * Helper method to write autologin cookie
- *
- * @see CookieComponent::write()
- * @return void
- */
-    protected function _writeCookie($key, $value = null, $encrypt = true, $expires = null)
+    /**
+     * onAdminLoginSuccessful
+     *
+     * @return bool
+     */
+    public function onAdminLoginSuccessful(Event $event)
     {
-        $this->Cookie->name = $this->settings['cookieName'];
-        $this->Cookie->write($key, $value, $encrypt, $expires);
-    }
-
-/**
- * Helper method to read autologin cookie
- *
- * @see CookieComponent::read()
- * @return string or null, value for specified key
- */
-    protected function _readCookie($key = null)
-    {
-        $this->Cookie->name = $this->settings['cookieName'];
-        return $this->Cookie->read($key);
-    }
-
-/**
- * Helper method to check autologin cookie
- *
- * @see CookieComponent::check()
- * @return boolean True if variable is there
- */
-    protected function _checkCookie($key)
-    {
-        $this->Cookie->name = $this->settings['cookieName'];
-        return $this->Cookie->check($key);
-    }
-
-/**
- * Helper method to delete autologin cookie
- *
- * @see CookieComponent::delete()
- * @return void
- */
-    protected function _deleteCookie($key)
-    {
-        $this->Cookie->name = $this->settings['cookieName'];
-        $this->Cookie->delete($key);
-    }
-
-/**
- * onAdminLoginSuccessful
- *
- * @return bool
- */
-    public function onAdminLoginSuccessful($event)
-    {
-        $request = $event->subject->request;
-        $remember = !empty($request->data[$this->_userModel]['remember']);
+        $request = $event->subject()->request;
+        $remember = $request->data('remember');
         $expires = Configure::read('Access Control.autoLoginDuration');
         if (strtotime($expires) === false) {
             $expires = '+1 week';
         }
         if ($request->is('post') && $remember) {
             $data = $this->_cookie($request);
-            $this->_writeCookie($this->_userModel, $data, true, $expires);
+            $this->_registry->Cookie->write($this->config('cookieName'), $data);
         }
         return true;
     }
 
-/**
- * onAdminLogoutSuccessful
- *
- * @return bool
- */
+    /**
+     * onAdminLogoutSuccessful
+     *
+     * @return bool
+     */
     public function onAdminLogoutSuccessful($event)
     {
-        $this->_deleteCookie($this->_userModel);
+        $this->_registry->Cookie->delete($this->config('cookieName'));
         return true;
     }
+
 }
