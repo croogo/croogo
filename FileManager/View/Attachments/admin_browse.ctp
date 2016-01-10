@@ -41,9 +41,9 @@
 				'editor' => 1,
 			), array('icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Delete')), __d('croogo', 'Are you sure?'));
 
-			$mimeType = explode('/', $attachment['Attachment']['mime_type']);
-			$mimeType = $mimeType['0'];
-			$imageType = $mimeType[1];
+			$mime_type = explode('/', $attachment['Attachment']['mime_type']);
+			$mimeType = $mime_type[0];
+			$imageType = $mime_type[1];
 			$imagecreatefrom = array('gif', 'jpeg', 'png', 'string', 'wbmp', 'webp', 'xbm', 'xpm');
 			if ($mimeType == 'image' && in_array($imageType, $imagecreatefrom)) {
 				$thumbnail = $this->Html->link($this->Image->resize($attachment['Attachment']['path'], 100, 200), $attachment['Attachment']['path'], array(
