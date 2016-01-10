@@ -45,7 +45,7 @@ class Contact extends ContactsAppModel {
  */
 	public $validate = array(
 		'title' => array(
-			'rule' => 'notEmpty',
+			'rule' => 'notBlank',
 			'message' => 'This field cannot be left blank.',
 		),
 		'alias' => array(

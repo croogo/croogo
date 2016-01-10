@@ -60,11 +60,11 @@ class Comment extends AppModel {
  */
 	public $validate = array(
 		'body' => array(
-			'rule' => 'notEmpty',
+			'rule' => 'notBlank',
 			'message' => 'This field cannot be left blank.',
 		),
 		'name' => array(
-			'rule' => 'notEmpty',
+			'rule' => 'notBlank',
 			'message' => 'This field cannot be left blank.',
 		),
 		'email' => array(
