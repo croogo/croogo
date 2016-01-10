@@ -270,7 +270,9 @@ class CroogoAppController extends Controller {
 			}
 		}
 
-		if (isset($this->request->params['locale'])) {
+		// we should add Configure::write('localeLanguages', array('fra', 'eng', 'ara')); on Config/croogo.php
+		if (isset($this->request->params['locale']) && in_array($this->request->params['locale'], Configure::read('localeLanguages')))
+		{
 			Configure::write('Config.language', $this->request->params['locale']);
 		}
 
