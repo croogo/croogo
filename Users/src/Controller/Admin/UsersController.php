@@ -33,6 +33,7 @@ class UsersController extends AppController
     {
         parent::initialize();
 
+        $this->loadComponent('RequestHandler');
         $this->loadComponent('Search.Prg', [
             'presetForm' => [
                 'paramType' => 'querystring',
@@ -312,6 +313,40 @@ class UsersController extends AppController
         Croogo::dispatchEvent('Controller.Users.adminLogoutSuccessful', $this);
         $this->Flash->success(__d('croogo', 'Log out successful.'), ['key' => 'auth']);
         return $this->redirect($this->Auth->logout());
+    }
+
+    public function lookup()
+    {
+        $this->Prg->commonProcess();
+
+        /* @var \Cake\ORM\Query $lookup */
+        $lookup = $this->Users->find('searchable', $this->Prg->parsedParams());
+        $lookup->contain([
+            'Roles' => [
+                'fields' => [
+                    'id',
+                    'title',
+                    'alias'
+                ],
+            ],
+        ]);
+        $lookup->select([
+            'id',
+            'username',
+            'name',
+            'website',
+            'image',
+            'bio',
+            'timezone',
+            'status',
+            'created',
+            'updated',
+        ]);
+
+        $users = $this->paginate($lookup);
+
+        $this->set('user', $users);
+        $this->set('_serialize', 'user');
     }
 
     protected function _getSenderEmail()

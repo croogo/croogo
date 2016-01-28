@@ -1,13 +1,12 @@
 <?php
-echo $this->Form->input('comment_status', array(
+echo $this->CroogoForm->input('comment_status', array(
 	'type' => 'radio',
 	'options' => array(
 		'0' => __d('croogo', 'Disabled'),
 		'1' => __d('croogo', 'Read only'),
 		'2' => __d('croogo', 'Read/Write'),
 	),
-	'default' => $type['Type']['comment_status'],
+	'default' => $type->comment_status,
 	'legend' => false,
-	'label' => true
+	'label' => false
 ));
-?>

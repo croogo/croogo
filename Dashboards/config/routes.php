@@ -7,7 +7,7 @@ Router::plugin('Croogo/Dashboards', ['path' => '/'], function (RouteBuilder $rou
     $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
         $routeBuilder->extensions(['json']);
 
-        $routeBuilder->connect('/dashboards', ['controller' => 'DashboardsDashboards', 'action' => 'dashboard']);
-        $routeBuilder->connect('/dashboards/:action/*', ['controller' => 'DashboardsDashboards']);
+        $routeBuilder->connect('/dashboards', ['controller' => 'Dashboards', 'action' => 'dashboard']);
+        $routeBuilder->connect('/dashboards/:action/*', ['controller' => 'Dashboards']);
     });
 });

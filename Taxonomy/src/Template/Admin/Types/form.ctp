@@ -47,7 +47,7 @@ $this->end();
 
 $this->append('tab-content');
 	echo $this->CroogoHtml->tabStart('type-taxonomy');
-		echo $this->Form->input('Vocabulary.Vocabulary', array(
+		echo $this->CroogoForm->input('Vocabulary.Vocabulary', array(
 			'class' => false,
 		));
 	echo $this->CroogoHtml->tabEnd();
