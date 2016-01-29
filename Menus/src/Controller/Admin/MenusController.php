@@ -21,43 +21,32 @@ use Croogo\Menus\Model\Table\MenusTable;
 class MenusController extends AppController
 {
 
-/**
- * Controller name
- *
- * @var string
- * @access public
- */
+    /**
+     * Controller name
+     *
+     * @var string
+     * @access public
+     */
     public $name = 'Menus';
 
-/**
- * beforeFilter
- *
- */
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-
-//		$this->Security->unlockedActions[] = 'toggle';
-    }
-
-/**
- * Toggle Link status
- *
- * @param $id string Link id
- * @param $status integer Current Link status
- * @return void
- */
+    /**
+     * Toggle Link status
+     *
+     * @param $id string Link id
+     * @param $status integer Current Link status
+     * @return void
+     */
     public function Toggle($id = null, $status = null)
     {
         $this->Croogo->fieldToggle($this->Menus, $id, $status);
     }
 
-/**
- * Admin index
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin index
+     *
+     * @return void
+     * @access public
+     */
     public function index()
     {
         $this->set('title_for_layout', __d('croogo', 'Menus'));
@@ -70,9 +59,9 @@ class MenusController extends AppController
         $this->set('menus', $this->paginate());
     }
 
-/**
- * Admin add
- */
+    /**
+     * Admin add
+     */
     public function add()
     {
         $menu = $this->Menus->newEntity();
@@ -94,11 +83,13 @@ class MenusController extends AppController
         return $this->Croogo->redirect(['action' => 'edit', $menu->id]);
     }
 
-/**
- * Admin edit
- *
- * @param int$id
- */
+    /**
+     * Admin edit
+     *
+     * @param int $id ID to edit
+     *
+     * @return \Cake\Network\Response|void
+     */
     public function edit($id = null)
     {
         $menu = $this->Menus->get($id);
@@ -121,11 +112,13 @@ class MenusController extends AppController
         return $this->Croogo->redirect(['action' => 'edit', $menu->id]);
     }
 
-/**
- * Admin delete
- *
- * @param int$id
- */
+    /**
+     * Admin delete
+     *
+     * @param int $id
+     *
+     * @return \Cake\Network\Response|null|void
+     */
     public function delete($id = null)
     {
         $menu = $this->Menus->get($id);
