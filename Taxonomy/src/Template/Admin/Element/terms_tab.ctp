@@ -1,4 +1,6 @@
 <?php
+use Cake\Utility\Hash;
+
 if (count($taxonomy) > 0):
 	$taxonomyIds = Hash::extract($this->request->data, 'Taxonomy.{n}.id');
 
