@@ -57,12 +57,18 @@ class AttachmentsTable extends NodesTable
     protected function _saveUploadedFile($data)
     {
         $file = $data->file;
+        $dir = WWW_ROOT . $this->uploadsDir;
+
+        // Check if dir exists
+        if (!file_exists($dir)) {
+            mkdir($dir);
+        }
 
         // check if file with same path exists
-        $destination = WWW_ROOT . $this->uploadsDir . DS . $file['name'];
+        $destination = $dir . DS . $file['name'];
         if (file_exists($destination)) {
             $newFileName = Text::uuid() . '-' . $file['name'];
-            $destination = WWW_ROOT . $this->uploadsDir . DS . $newFileName;
+            $destination = $dir . DS . $newFileName;
         } else {
             $newFileName = $file['name'];
         }
