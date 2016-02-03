@@ -21,19 +21,14 @@ use Croogo\Core\Croogo;
 class PermissionsController extends AppController
 {
 
-    private $Acos;
-    private $Aros;
-    private $Roles;
-    private $Permissions;
-
     public function initialize()
     {
         parent::initialize();
 
-        $this->Acos = TableRegistry::get('Croogo/Acl.Acos');
-        $this->Aros = TableRegistry::get('Croogo/Acl.Aros');
-        $this->Roles = TableRegistry::get('Croogo/Users.Roles');
-        $this->Permissions = TableRegistry::get('Croogo/Acl.Permissions');
+        $this->loadModel('Croogo/Acl.Acos');
+        $this->loadModel('Croogo/Acl.Aros');
+        $this->loadModel('Croogo/Users.Roles');
+        $this->loadModel('Croogo/Acl.Permissions');
     }
 
     /**
