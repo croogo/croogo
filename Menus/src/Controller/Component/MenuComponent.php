@@ -15,7 +15,7 @@ use Croogo\Core\Controller\Component\CroogoComponent;
  * @property CroogoComponent Croogo
  * @package Croogo.Menus.Controller.Component
  */
-class MenusComponent extends Component
+class MenuComponent extends Component
 {
 
 /**
