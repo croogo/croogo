@@ -19,9 +19,19 @@ use Cake\Utility\Hash;
 class DashboardsController extends AppController
 {
 
-    public $helpers = [
-        'Croogo/Dashboards.Dashboards',
-    ];
+    /**
+     * {@inheritDoc}
+     *
+     * Load the dashboards helper
+     */
+    public function beforeRender(Event $event)
+    {
+        parent::beforeRender($event);
+
+        $this->viewBuilder()->helpers([
+            'Croogo/Dashboards.Dashboards',
+        ]);
+    }
 
     /**
      * Dashboard index
