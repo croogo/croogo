@@ -8,6 +8,7 @@ use Cake\Event\EventListenerInterface;
 use Cake\Utility\Hash;
 use Croogo\Core\Croogo;
 use Croogo\Core\Controller\HookableComponentInterface;
+use Croogo\Extensions\Exception\ControllerNotHookableException;
 
 class HookableComponentEventHandler implements EventListenerInterface
 {
@@ -28,7 +29,7 @@ class HookableComponentEventHandler implements EventListenerInterface
         $controller = $event->subject();
 
         if (!$controller instanceof HookableComponentInterface) {
-            return;
+            throw new ControllerNotHookableException([get_class($controller)]);
         }
 
         $components = $this->_getComponents($controller);
