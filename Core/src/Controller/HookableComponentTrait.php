@@ -14,14 +14,6 @@ trait HookableComponentTrait
 
     public function loadHookableComponent($name, array $config)
     {
-        list(, $prop) = pluginSplit($name);
-        list(, $modelProp) = pluginSplit($this->modelClass);
-
-        $component = $this->components()->load($name, $config);
-        if ($prop !== $modelProp) {
-            $this->{$prop} = $component;
-        }
-
-        return $component;
+        return $this->loadComponent($name, $config);
     }
 }

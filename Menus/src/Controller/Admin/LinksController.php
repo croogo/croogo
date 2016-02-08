@@ -2,6 +2,7 @@
 
 namespace Croogo\Menus\Controller\Admin;
 
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Croogo\Core\Controller\Component\CroogoComponent;
@@ -23,19 +24,9 @@ use Croogo\Menus\Model\Table\LinksTable;
 class LinksController extends AppController
 {
 
-/**
- * beforeFilter
- *
- * @return void
- * @access public
- */
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-
-//		$this->Security->unlockedActions[] = 'admin_toggle';
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     public function initialize()
     {
         parent::initialize();
@@ -44,12 +35,12 @@ class LinksController extends AppController
         $this->loadModel('Croogo/Users.Roles');
     }
 
-
     /**
      * Toggle Link status
      *
      * @param $id string Link id
      * @param $status integer Current Link status
+     *
      * @return void
      */
     public function toggle($id = null, $status = null)
@@ -57,9 +48,9 @@ class LinksController extends AppController
         $this->Croogo->fieldToggle($this->Links, $id, $status);
     }
 
-/**
- * Admin index
- */
+    /**
+     * Admin index
+     */
     public function index()
     {
         $menuId = $this->request->query('menu_id');
@@ -80,11 +71,13 @@ class LinksController extends AppController
         $this->set('_serialize', ['linksTree', 'menu', 'linksStatus']);
     }
 
-/**
- * Admin add
- *
- * @param int$menuId
- */
+    /**
+     * Admin add
+     *
+     * @param int $menuId
+     *
+     * @return \Cake\Network\Response|null|void
+     */
     public function add($menuId = null)
     {
         $this->set('title_for_layout', __d('croogo', 'Add Link'));
@@ -96,8 +89,8 @@ class LinksController extends AppController
         $menus = $this->Links->Menus->find('list');
         $menu = $this->Links->Menus->get($link->menu_id);
         $roles = $this->Roles->find('list');
-        $parentLinks = $this->Links->find('treeList', [
-            'Links.menu_id' => $menuId,
+        $parentLinks = $this->Links->find('treeList')->where([
+            'menu_id' => $menu->id,
         ]);
         $this->set(compact('link', 'menu', 'menus', 'roles', 'parentLinks', 'menuId'));
 
@@ -131,11 +124,13 @@ class LinksController extends AppController
 
     }
 
-/**
- * Admin edit
- *
- * @param int$id
- */
+    /**
+     * Admin edit
+     *
+     * @param int $id
+     *
+     * @return \Cake\Network\Response|null|void
+     */
     public function edit($id = null)
     {
         $this->set('title_for_layout', __d('croogo', 'Edit Link'));
@@ -145,11 +140,10 @@ class LinksController extends AppController
         $menus = $this->Links->Menus->find('list');
         $roles = $this->Roles->find('list');
         $menu = $this->Links->Menus->get($link->menu_id);
-        $parentLinks = $this->Links->find('treeList', [
-            'Link.menu_id' => $menu->id,
+        $parentLinks = $this->Links->find('treeList')->where([
+            'menu_id' => $menu->id,
         ]);
-        $menuId = $menu->id;
-        $this->set(compact('link', 'menu', 'menus', 'roles', 'parentLinks', 'menuId'));
+        $this->set(compact('link', 'menu', 'menus', 'roles', 'parentLinks'));
 
         if (!$this->request->is('put')) {
             return;
@@ -175,11 +169,13 @@ class LinksController extends AppController
         }
     }
 
-/**
- * Admin delete
- *
- * @param int$id
- */
+    /**
+     * Admin delete
+     *
+     * @param int $id
+     *
+     * @return \Cake\Network\Response|null|void
+     */
     public function delete($id = null)
     {
         $link = $this->Links->get($id);
@@ -198,14 +194,14 @@ class LinksController extends AppController
         ]);
     }
 
-/**
- * Admin moveup
- *
- * @param int$id
- * @param int$step
- * @return void
- * @access public
- */
+    /**
+     * Admin moveup
+     *
+     * @param int $id
+     * @param int $step
+     *
+     * @return \Cake\Network\Response|null
+     */
     public function admin_moveup($id, $step = 1)
     {
         $link = $this->Link->findById($id);
@@ -231,14 +227,14 @@ class LinksController extends AppController
         ]);
     }
 
-/**
- * Admin movedown
- *
- * @param int$id
- * @param int$step
- * @return void
- * @access public
- */
+    /**
+     * Admin movedown
+     *
+     * @param int $id
+     * @param int $step
+     *
+     * @return \Cake\Network\Response|null
+     */
     public function admin_movedown($id, $step = 1)
     {
         $link = $this->Link->findById($id);
@@ -264,13 +260,13 @@ class LinksController extends AppController
         ]);
     }
 
-/**
- * Admin process
- *
- * @param int$menuId
- * @return void
- * @access public
- */
+    /**
+     * Admin process
+     *
+     * @param int $menuId
+     *
+     * @return null
+     */
     public function process($menuId = null)
     {
         $Links = $this->Links;
@@ -292,6 +288,5 @@ class LinksController extends AppController
         ];
         $options = compact('multiple', 'redirect', 'messageMap');
         return $this->BulkProcess->process($this->Links, $action, $ids, $options);
-
     }
 }

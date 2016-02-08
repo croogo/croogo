@@ -2,6 +2,7 @@
 
 namespace Croogo\FileManager\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
@@ -57,12 +58,25 @@ class AttachmentsTable extends NodesTable
     protected function _saveUploadedFile($data)
     {
         $file = $data->file;
+        $dir = WWW_ROOT . $this->uploadsDir;
+
+        // Check if dir exists
+        if (!file_exists($dir)) {
+
+            // Check if debug is enabled, to be consistent on only creating
+            // folders when debug is enabled across the whole framework.
+            if (Configure::read('debug')) {
+                mkdir($dir);
+            } else {
+                return false;
+            }
+        }
 
         // check if file with same path exists
-        $destination = WWW_ROOT . $this->uploadsDir . DS . $file['name'];
+        $destination = $dir . DS . $file['name'];
         if (file_exists($destination)) {
             $newFileName = Text::uuid() . '-' . $file['name'];
-            $destination = WWW_ROOT . $this->uploadsDir . DS . $newFileName;
+            $destination = $dir . DS . $newFileName;
         } else {
             $newFileName = $file['name'];
         }

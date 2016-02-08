@@ -20,12 +20,12 @@ use Croogo\FileManager\Model\Entity\Attachment;
 class AttachmentsController extends AppController
 {
 
-/**
- * Components
- *
- * @var array
- * @access public
- */
+    /**
+     * Components
+     *
+     * @var array
+     * @access public
+     */
     public $components = [
         'Search.Prg' => [
             'presetForm' => [
@@ -38,37 +38,31 @@ class AttachmentsController extends AppController
         ],
     ];
 
-/**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
+    /**
+     * Models used by the Controller
+     *
+     * @var array
+     * @access public
+     */
     public $uses = ['FileManager.Attachment'];
 
-/**
- * Helpers used by the Controller
- *
- * @var array
- * @access public
- */
+    /**
+     * Helpers used by the Controller
+     *
+     * @var array
+     * @access public
+     */
     public $helpers = ['Croogo/FileManager.FileManager', 'Text', 'Croogo/Core.Image'];
 
-/**
- * Before executing controller actions
- *
- * @return void
- * @access public
- */
+    /**
+     * Before executing controller actions
+     *
+     * @return void
+     * @access public
+     */
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-
-        // Comment, Category, Tag not needed
-        //$this->Attachments->unbindModel(array(
-        //	'hasMany' => array('Comment'),
-        //	'hasAndBelongsToMany' => array('Category', 'Tag'))
-        //);
 
         $this->Attachments->addBehavior('Croogo/Core.Tree', [
             'scope' => [
@@ -82,12 +76,12 @@ class AttachmentsController extends AppController
         }
     }
 
-/**
- * Admin index
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin index
+     *
+     * @return void
+     * @access public
+     */
     public function index()
     {
         $this->set('title_for_layout', __d('croogo', 'Attachments'));
@@ -122,12 +116,12 @@ class AttachmentsController extends AppController
 
     }
 
-/**
- * Admin add
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin add
+     *
+     * @return void
+     * @access public
+     */
     public function add()
     {
         $this->set('title_for_layout', __d('croogo', 'Add Attachment'));
@@ -161,13 +155,13 @@ class AttachmentsController extends AppController
         $this->set(compact('attachment'));
     }
 
-/**
- * Admin edit
- *
- * @param int $id
- * @return void
- * @access public
- */
+    /**
+     * Admin edit
+     *
+     * @param int $id
+     * @return void
+     * @access public
+     */
     public function edit($id = null)
     {
         $this->set('title_for_layout', __d('croogo', 'Edit Attachment'));
@@ -197,13 +191,13 @@ class AttachmentsController extends AppController
         }
     }
 
-/**
- * Admin delete
- *
- * @param int $id
- * @return void
- * @access public
- */
+    /**
+     * Admin delete
+     *
+     * @param int $id
+     * @return void
+     * @access public
+     */
     public function delete($id = null)
     {
         if (!$id) {
@@ -221,12 +215,12 @@ class AttachmentsController extends AppController
         }
     }
 
-/**
- * Admin browse
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin browse
+     *
+     * @return void
+     * @access public
+     */
     public function browse()
     {
         $this->layout = 'admin_popup';

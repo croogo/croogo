@@ -1,6 +1,6 @@
 <?php
 $this->assign('title', __d('croogo', 'Create content'));
-?>`
+?>
 <h2 class="hidden-desktop"><?php echo $this->fetch('title'); ?></h2>
 <?php
 

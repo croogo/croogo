@@ -50,9 +50,9 @@ class AppController extends CroogoAppController
  */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
-
         $this->viewBuilder()->layout('Croogo/Core.admin');
+
+        parent::beforeFilter($event);
 
         if (Configure::read('Site.status') == 0 &&
             $this->Auth->user('role_id') != 1

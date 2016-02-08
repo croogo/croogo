@@ -30,7 +30,7 @@ if ($this->request->params['action'] == 'edit') {
 	$formUrl = array(
 		'action' => 'edit',
 		'?' => array(
-			'menu_id' => $menuId,
+			'menu_id' => $menu->id,
 		),
 	);
 }
@@ -55,7 +55,7 @@ $this->append('tab-content');
 	echo $this->CroogoHtml->tabStart('link-basic');
 	echo $this->Form->input('id');
 	echo $this->Form->input('menu_id', array(
-		'selected' => $menuId,
+		'selected' => $menu->id,
 	));
 	echo $this->Form->input('parent_id', array(
 		'title' => __d('croogo', 'Parent'),
@@ -112,7 +112,7 @@ $this->start('panels');
 	echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing'));
 		echo $this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply'));
 		echo $this->Form->button(__d('croogo', 'Save'), array('button' => 'success'));
-		echo $this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index', '?' => array('menu_id' => $menuId)), array('button' => 'danger'));
+		echo $this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index', '?' => array('menu_id' => $menu->id)), array('button' => 'danger'));
 		echo $this->Form->input('status', array(
 			'type' => 'radio',
 			'legend' => false,
