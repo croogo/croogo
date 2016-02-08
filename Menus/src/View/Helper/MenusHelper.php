@@ -140,6 +140,8 @@ class MenusHelper extends Helper
         $_options = [
             'tag' => 'ul',
             'tagAttributes' => [],
+            'subTag' => 'li',
+			'subTagAttributes' => array(),
             'selected' => 'selected',
             'dropdown' => false,
             'dropdownClass' => 'sf-menu',
@@ -229,7 +231,8 @@ class MenusHelper extends Helper
                 $linkOutput .= $this->nestedLinks($link['children'], $options, $depth + 1);
             }
             $liAttr = $this->_mergeLinkParams($link, 'liAttr');
-            $linkOutput = $this->Html->tag('li', $linkOutput, $liAttr);
+            $liAttr = !empty($liAttr) ? $liAttr : $options['subTagAttributes'];
+			$linkOutput = $this->Html->tag($options['subTag'], $linkOutput, $liAttr);
             $output .= $linkOutput;
         }
         if ($output != null) {
