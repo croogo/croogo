@@ -2,6 +2,7 @@
 
 namespace Croogo\FileManager\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
@@ -61,7 +62,14 @@ class AttachmentsTable extends NodesTable
 
         // Check if dir exists
         if (!file_exists($dir)) {
-            mkdir($dir);
+
+            // Check if debug is enabled, to be consistent on only creating
+            // folders when debug is enabled across the whole framework.
+            if (Configure::read('debug')) {
+                mkdir($dir);
+            } else {
+                return false;
+            }
         }
 
         // check if file with same path exists
