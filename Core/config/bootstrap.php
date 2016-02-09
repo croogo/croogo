@@ -15,6 +15,7 @@ Configure::write(
     array_merge((array)Configure::read('DebugKit.panels'), [
         'Croogo/Core.Plugins',
         'Croogo/Core.ViewHelpers',
+        'Croogo/Core.Components',
     ])
 );
 
