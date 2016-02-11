@@ -12,7 +12,7 @@ class VocabulariesTable extends CroogoTable
 
     public function initialize(array $config)
     {
-        $this->addBehavior('Sequence.Sequence', [
+        $this->addBehavior('ADmad/Sequence.Sequence', [
             'order' => 'weight',
         ]);
 
