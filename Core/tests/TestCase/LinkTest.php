@@ -10,7 +10,7 @@ class LinkTest extends TestCase
 
     public function testCreateFromLinkString()
     {
-        $link = Link::createFromLinkString('plugin:Croogo/Nodes|controller:Nodes|action:promoted');
+        $link = Link::createFromLinkString('plugin:Croogo%2FNodes/controller:Nodes/action:promoted');
 
         $this->assertEquals('Croogo/Nodes', $link['plugin']);
         $this->assertEquals('Nodes', $link['controller']);
@@ -25,7 +25,7 @@ class LinkTest extends TestCase
             'action' => 'promoted'
         ]);
 
-        $this->assertEquals('plugin:Croogo/Nodes/controller:Nodes/action:promoted', $link->toLinkString());
+        $this->assertEquals('plugin:Croogo%2FNodes/controller:Nodes/action:promoted', $link->toLinkString());
     }
 
     public function testGetUrl()
@@ -55,7 +55,7 @@ class LinkTest extends TestCase
             'action' => 'promoted'
         ]);
 
-        $this->assertEquals('plugin:Croogo/Nodes/controller:Nodes/action:promoted', (string)$link);
+        $this->assertEquals('plugin:Croogo%2FNodes/controller:Nodes/action:promoted', (string)$link);
 
         $linkExample = new Link('http://example.com');
 
