@@ -200,7 +200,7 @@ class StringConverterTest extends CroogoTestCase
             'slug' => 'ハローワールド',
         ];
         $result = $this->Converter->linkStringToArray(
-            'prefix:false|plugin:nodes|controller:nodes|action:view|type:blog|slug:%E3%83%8F%E3%83%AD%E3%83%BC%E3%83%AF%E3%83%BC%E3%83%AB%E3%83%89'
+            'prefix:false/plugin:nodes/controller:nodes/action:view/type:blog/slug:%E3%83%8F%E3%83%AD%E3%83%BC%E3%83%AF%E3%83%BC%E3%83%AB%E3%83%89'
         );
         $this->assertEquals($expected, $result);
     }
