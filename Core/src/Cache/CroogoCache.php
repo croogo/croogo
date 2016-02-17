@@ -2,8 +2,8 @@
 
 namespace Croogo\Core\Cache;
 
-use Cake\Core\Configure;
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 
 /**
  * CroogoCache
@@ -20,16 +20,19 @@ use Cake\Cache\Cache;
 class CroogoCache extends Cache
 {
 
-/**
- * Groups to Config mapping
- */
+    /**
+     * Groups to Config mapping
+     */
     protected static $_groups = [];
 
-/**
- * Configure cache config
- *
- * @throws CacheException
- */
+    /**
+     * Configure cache config
+     *
+     * @param string|array $key The name of the configuration, or an array of multiple configs.
+     * @param array $config An array of name => configuration data for adapter.
+     * @return array|null Null when adding configuration or an array of configuration data when reading.
+     * @throws CacheException
+     */
     public static function config($name = null, $settings = [])
     {
         if (version_compare(Configure::version(), '2.4', '>=')) {
@@ -45,12 +48,13 @@ class CroogoCache extends Cache
         return $return;
     }
 
-/**
- * Returns an array of group -> config map
- *
- * @return array Array of group to config map
- * @throws CacheException
- */
+    /**
+     * Returns an array of group -> config map
+     *
+     * @param string|null $group group name or null to retrieve all group mappings
+     * @return array map of group and all configuration that has the same group
+     * @throws CacheException
+     */
     public static function groupConfigs($group = null)
     {
         if (version_compare(Configure::version(), '2.4', '>=')) {
