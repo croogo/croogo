@@ -31,26 +31,26 @@ class StringConverterTest extends CroogoTestCase
             'plugin' => null,
             'controller' => 'nodes',
             'action' => 'index',
-        ], $this->Converter->linkStringToArray('controller:nodes|action:index'));
+        ], $this->Converter->linkStringToArray('controller:nodes/action:index'));
         $this->assertEquals([
             'plugin' => null,
             'controller' => 'nodes',
             'action' => 'index',
             'pass',
             'pass2',
-        ], $this->Converter->linkStringToArray('controller:nodes|action:index|pass|pass2'));
+        ], $this->Converter->linkStringToArray('controller:nodes/action:index/pass/pass2'));
         $this->assertEquals([
             'plugin' => null,
             'controller' => 'nodes',
             'action' => 'index',
             'param' => 'value',
-        ], $this->Converter->linkStringToArray('controller:nodes|action:index|param:value'));
+        ], $this->Converter->linkStringToArray('controller:nodes/action:index/param:value'));
         $this->assertEquals([
             'plugin' => null,
             'controller' => 'nodes',
             'action' => 'index',
             'with-slash',
-        ], $this->Converter->linkStringToArray('controller:nodes|action:index|with-slash|'));
+        ], $this->Converter->linkStringToArray('controller:nodes/action:index/with-slash/'));
 
         $expected = [
             'plugin' => 'contacts',
@@ -58,10 +58,10 @@ class StringConverterTest extends CroogoTestCase
             'action' => 'view',
             'contact'
         ];
-        $string = 'plugin:contacts|controller:contacts|action:view|contact';
+        $string = 'plugin:contacts/controller:contacts/action:view/contact';
         $this->assertEquals($expected, $this->Converter->linkStringToArray($string));
 
-        $string = '|plugin:contacts|controller:contacts|action:view|contact';
+        $string = '/plugin:contacts/controller:contacts/action:view/contact';
         $this->assertEquals($expected, $this->Converter->linkStringToArray($string));
     }
 
