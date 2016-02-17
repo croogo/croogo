@@ -131,7 +131,7 @@ class StringConverter
                     if (in_array($linkElementE['1'], ['true', 'false'])) {
                         $linkArr[$linkElementE['0']] = ($linkElementE['0'] === 'true') ? true : false;
                     } else {
-                        $linkArr[$linkElementE['0']] = $linkElementE['1'];
+                        $linkArr[$linkElementE['0']] = urldecode($linkElementE['1']);
                     }
                 } else {
                     $linkArr[] = $linkElement;
@@ -176,7 +176,7 @@ class StringConverter
                 } elseif ($key == '?') {
                     $queryString = '?' . http_build_query($val);
                 } else {
-                    $result[] = $key . ':' . $val;
+                    $result[] = $key . ':' . urlencode($val);
                 }
             } else {
                 $result[] = $val;
