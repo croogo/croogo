@@ -176,7 +176,7 @@ class StringConverter
                 } elseif ($key == '?') {
                     $queryString = '?' . http_build_query($val);
                 } else {
-                    $result[] = $key . ':' . $val;
+                    $result[] = $key . ':' . urlencode($val);
                 }
             } else {
                 $result[] = $val;
