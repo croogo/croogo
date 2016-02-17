@@ -291,7 +291,7 @@ class StringConverterTest extends CroogoTestCase
                 'page' => '8',
             ],
         ];
-        $expected = 'plugin:contacts|controller:contacts|action:view?slug=contact&page=8';
+        $expected = 'plugin:contacts/controller:contacts/action:view?slug=contact&page=8';
         $this->assertEquals($expected, $this->Converter->urlToLinkString($url));
 
         $url = [
@@ -303,7 +303,7 @@ class StringConverterTest extends CroogoTestCase
                 'slug' => 'uncategorized',
             ],
         ];
-        $expected = 'plugin:nodes|controller:nodes|action:term|type:page?slug=uncategorized';
+        $expected = 'plugin:nodes/controller:nodes/action:term/type:page?slug=uncategorized';
         $this->assertEquals($expected, $this->Converter->urlToLinkString($url));
     }
 
