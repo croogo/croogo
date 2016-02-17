@@ -80,7 +80,7 @@ class StringConverterTest extends CroogoTestCase
             ],
         ];
         $result = $this->Converter->linkStringToArray(
-            'prefix:admin|plugin:nodes|controller:nodes|action:index?foo=bar'
+            'prefix:admin/plugin:nodes/controller:nodes/action:index?foo=bar'
         );
         $this->assertEquals($expected, $result);
     }
@@ -101,7 +101,7 @@ class StringConverterTest extends CroogoTestCase
             ],
         ];
         $result = $this->Converter->linkStringToArray(
-            'prefix:admin|plugin:settings|controller:settings|action:prefix|Site?key=Site.title'
+            'prefix:admin/plugin:settings/controller:settings/action:prefix/Site?key=Site.title'
         );
         $this->assertEquals($expected, $result);
     }
@@ -122,7 +122,7 @@ class StringConverterTest extends CroogoTestCase
             ],
         ];
         $result = $this->Converter->linkStringToArray(
-            'prefix:false|plugin:nodes|controller:nodes|action:index|type:blog?slug=hello-world'
+            'prefix:false/plugin:nodes/controller:nodes/action:index/type:blog?slug=hello-world'
         );
         $this->assertEquals($expected, $result);
     }
@@ -141,7 +141,7 @@ class StringConverterTest extends CroogoTestCase
             'slug' => 'ハローワールド',
         ];
         $result = $this->Converter->linkStringToArray(
-            'prefix:false|plugin:nodes|controller:nodes|action:view|type:blog|slug:ハローワールド'
+            'prefix:false/plugin:nodes/controller:nodes/action:view/type:blog/slug:ハローワールド'
         );
         $this->assertEquals($expected, $result);
     }
@@ -160,7 +160,7 @@ class StringConverterTest extends CroogoTestCase
             '좋은 아침',
         ];
         $result = $this->Converter->linkStringToArray(
-            'prefix:false|plugin:nodes|controller:nodes|action:view|ハローワールド|좋은 아침'
+            'prefix:false/plugin:nodes/controller:nodes/action:view/ハローワールド/좋은 아침'
         );
         $this->assertEquals($expected, $result);
     }
@@ -181,7 +181,7 @@ class StringConverterTest extends CroogoTestCase
             ],
         ];
         $result = $this->Converter->linkStringToArray(
-            'prefix:false|plugin:nodes|controller:nodes|action:view|?slug=ハローワールド&page=8'
+            'prefix:false/plugin:nodes/controller:nodes/action:view/?slug=ハローワールド&page=8'
         );
         $this->assertEquals($expected, $result);
     }
