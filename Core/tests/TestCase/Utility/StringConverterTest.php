@@ -216,7 +216,7 @@ class StringConverterTest extends CroogoTestCase
             'contact',
             'plugin' => 'contacts',
         ];
-        $expected = 'plugin:contacts|controller:contacts|action:view|contact';
+        $expected = 'plugin:contacts/controller:contacts/action:view/contact';
         $this->assertEquals($expected, $this->Converter->urlToLinkString($url));
 
         $url = [
@@ -225,7 +225,7 @@ class StringConverterTest extends CroogoTestCase
             'action' => 'view',
             'contact',
         ];
-        $expected = 'plugin:contacts|controller:contacts|action:view|contact';
+        $expected = 'plugin:contacts/controller:contacts/action:view/contact';
         $this->assertEquals($expected, $this->Converter->urlToLinkString($url));
 
         $url = [
@@ -235,7 +235,7 @@ class StringConverterTest extends CroogoTestCase
             'type' => 'blog',
             'hello'
         ];
-        $expected = 'plugin:nodes|controller:nodes|action:view|type:blog|hello';
+        $expected = 'plugin:nodes/controller:nodes/action:view/type:blog/hello';
         $this->assertEquals($expected, $this->Converter->urlToLinkString($url));
 
         $url = [
@@ -247,7 +247,7 @@ class StringConverterTest extends CroogoTestCase
             'and',
             'prosper',
         ];
-        $expected = 'plugin:nodes|controller:nodes|action:view|live|long|and|prosper';
+        $expected = 'plugin:nodes/controller:nodes/action:view/live/long/and/prosper';
         $this->assertEquals($expected, $this->Converter->urlToLinkString($url));
 
         $url = [
@@ -258,7 +258,7 @@ class StringConverterTest extends CroogoTestCase
             'and',
             'prosper',
         ];
-        $expected = 'controller:nodes|action:view|live|long|and|prosper';
+        $expected = 'controller:nodes/action:view/live/long/and/prosper';
         $this->assertEquals($expected, $this->Converter->urlToLinkString($url));
 
         $url = [
@@ -268,14 +268,14 @@ class StringConverterTest extends CroogoTestCase
             1,
             'type' => 'blog',
         ];
-        $expected = 'admin|controller:nodes|action:edit|1|type:blog';
+        $expected = 'admin/controller:nodes/action:edit/1/type:blog';
         $this->assertEquals($expected, $this->Converter->urlToLinkString($url));
 
         $url = [];
         $this->assertEquals('', $this->Converter->urlToLinkString($url));
 
         $url = ['some' => 'random', 1, 2, 'array' => 'must', 'work'];
-        $expected = 'some:random|1|2|array:must|work';
+        $expected = 'some:random/1/2/array:must/work';
         $this->assertEquals($expected, $this->Converter->urlToLinkString($url));
     }
 
