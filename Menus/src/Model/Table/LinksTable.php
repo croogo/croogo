@@ -20,12 +20,12 @@ use Croogo\Core\Model\Table\CroogoTable;
 class LinksTable extends CroogoTable
 {
 
-/**
- * Validation
- *
- * @var array
- * @access public
- */
+    /**
+     * Validation
+     *
+     * @var array
+     * @access public
+     */
     public $validate = [
         'title' => [
             'rule' => ['minLength', 1],
@@ -42,23 +42,25 @@ class LinksTable extends CroogoTable
         parent::initialize($config);
 
         $this->addBehavior('Tree');
-//		$this->addBehavior('Croogo/Core.Cached');
+        //		$this->addBehavior('Croogo/Core.Cached');
         $this->belongsTo('Menus', [
             'className' => 'Croogo/Menus.Menus',
         ]);
         $this->addBehavior('CounterCache', [
-			'Menus' => ['link_count']
-		]);
-
+            'Menus' => ['link_count'],
+        ]);
 
         $this->addBehavior('Timestamp', [
             'events' => [
                 'Model.beforeSave' => [
                     'created' => 'new',
-                    'updated' => 'always'
-                ]
-            ]
+                    'updated' => 'always',
+                ],
+            ],
         ]);
+
+        $this->addBehavior('Croogo/Core.Publishable');
+        $this->addBehavior('Croogo/Core.Visibility');
     }
 
     protected function _initializeSchema(Schema $table)
@@ -81,15 +83,17 @@ class LinksTable extends CroogoTable
             'scope' => [$this->alias() . '.menu_id' => $menuId],
         ];
         if ($this->hasBehavior('Tree')) {
-            $this->behaviors()->get('Tree')->config($settings);
+            $this->behaviors()
+                ->get('Tree')
+                ->config($settings);
         } else {
             $this->addBehavior('Tree', $settings);
         }
     }
 
-/**
- * Calls TreeBehavior::recover when we are changing scope
- */
+    /**
+     * Calls TreeBehavior::recover when we are changing scope
+     */
     public function afterSave(Event $event, Entity $entity, $options = [])
     {
         if ($entity->isNew()) {
