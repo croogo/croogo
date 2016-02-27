@@ -58,10 +58,10 @@ class AppController extends CroogoAppController
             $this->Auth->user('role_id') != 1
         ) {
             if (!$this->request->is('whitelisted')) {
-                $this->layout = 'Croogo/Core.maintenance';
+                $this->viewBuilder()->layout('Croogo/Core.maintenance');
                 $this->response->statusCode(503);
                 $this->set('title_for_layout', __d('croogo', 'Site down for maintenance'));
-                $this->viewPath = 'Maintenance';
+                $this->viewBuilder()->templatePath('Maintenance');
                 $this->render('Croogo/Core.blank');
             }
         }

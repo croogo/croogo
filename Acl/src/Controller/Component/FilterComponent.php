@@ -59,7 +59,7 @@ class FilterComponent extends Component
         if (empty($config)) {
             $config = Configure::read('Access Control');
         }
-        if (array_key_exists($key, $config)) {
+        if (array_key_exists($key, (array)$config)) {
             return $config[$key];
         }
         return null;
