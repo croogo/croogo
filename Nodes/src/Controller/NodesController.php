@@ -32,17 +32,6 @@ class NodesController extends AppController
     public $name = 'Nodes';
 
     /**
-     * Components
-     *
-     * @var array
-     * @access public
-     */
-    public $components = [
-        'Croogo/Core.BulkProcess',
-        'Croogo/Core.Recaptcha',
-    ];
-
-    /**
      * Preset Variable Search
      *
      * @var array
@@ -67,6 +56,8 @@ class NodesController extends AppController
             'limit' =>  Configure::read('Reading.nodes_per_page')
         ]);
         $this->loadComponent('Search.Prg');
+        $this->loadComponent('Croogo/Core.BulkProcess');
+        $this->loadComponent('Croogo/Core.Recaptcha');
     }
 
     /**

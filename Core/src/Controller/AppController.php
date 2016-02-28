@@ -244,4 +244,29 @@ class AppController extends \App\Controller\AppController implements HookableCom
             $this->Components->load(Configure::read('Site.acl_plugin') . '.RowLevelAcl');
         }
     }
+
+    protected function _setupPrg()
+    {
+        $this->loadComponent('Search.Prg', [
+            'presetForm' => [
+                'paramType' => 'querystring',
+            ],
+            'commonProcess' => [
+                'paramType' => 'querystring',
+                'filterEmpty' => true,
+            ],
+        ]);
+    }
+
+    public function loadCroogoComponents(array $components)
+    {
+        foreach ($components as $component => $options)
+        {
+            if (is_string($options)) {
+                $component = $options;
+                $options = [];
+            }
+            $this->loadComponent('Croogo/Core.' . $component, $options);
+        }
+    }
 }

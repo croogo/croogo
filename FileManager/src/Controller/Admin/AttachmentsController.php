@@ -21,24 +21,6 @@ class AttachmentsController extends AppController
 {
 
     /**
-     * Components
-     *
-     * @var array
-     * @access public
-     */
-    public $components = [
-        'Search.Prg' => [
-            'presetForm' => [
-                'paramType' => 'querystring',
-            ],
-            'commonProcess' => [
-                'paramType' => 'querystring',
-                'filterEmpty' => true,
-            ],
-        ],
-    ];
-
-    /**
      * Models used by the Controller
      *
      * @var array
@@ -53,6 +35,20 @@ class AttachmentsController extends AppController
      * @access public
      */
     public $helpers = ['Croogo/FileManager.FileManager', 'Text', 'Croogo/Core.Image'];
+
+    public function initialize()
+    {
+        $this->loadComponent('Search.Prg', [
+            'presetForm' => [
+                'paramType' => 'querystring',
+            ],
+            'commonProcess' => [
+                'paramType' => 'querystring',
+                'filterEmpty' => true,
+            ],
+        ]);
+        parent::initialize();
+    }
 
     /**
      * Before executing controller actions

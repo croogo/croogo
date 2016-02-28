@@ -18,30 +18,19 @@ class RegionsController extends AppController
 {
 
 /**
- * Components
- *
- * @var array
- * @access public
- */
-    public $components = [
-        'Search.Prg' => [
-            'presetForm' => [
-                'paramType' => 'querystring',
-            ],
-            'commonProcess' => [
-                'paramType' => 'querystring',
-                'filterEmpty' => true,
-            ],
-        ],
-    ];
-
-/**
  * Preset Variables Search
  *
  * @var array
  * @access public
  */
     public $presetVars = true;
+
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->_setupPrg();
+    }
 
 /**
  * Admin index

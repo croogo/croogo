@@ -2,7 +2,7 @@
 
 namespace Croogo\Meta\Controller\Admin;
 
-use Croogo\Meta\Controller\MetaAppController;
+use Croogo\Meta\Controller\AppController;
 
 /**
  * Meta Controller
@@ -12,26 +12,8 @@ use Croogo\Meta\Controller\MetaAppController;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class MetaController extends MetaAppController
+class MetaController extends AppController
 {
-
-/**
- * Components
- *
- * @var array
- * @access public
- */
-    public $components = [
-        'Search.Prg' => [
-            'presetForm' => [
-                'paramType' => 'querystring',
-            ],
-            'commonProcess' => [
-                'paramType' => 'querystring',
-                'filterEmpty' => true,
-            ],
-        ],
-    ];
 
 /**
  * Preset Variable Search
@@ -40,6 +22,13 @@ class MetaController extends MetaAppController
  * @access public
  */
     public $presetVars = true;
+
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->_setupPrg();
+    }
 
 /**
  * Admin delete meta

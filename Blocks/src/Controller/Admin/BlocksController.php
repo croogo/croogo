@@ -19,25 +19,6 @@ class BlocksController extends AppController
 {
 
 /**
- * Components
- *
- * @var array
- * @access public
- */
-    public $components = [
-        'Croogo/Core.BulkProcess',
-        'Search.Prg' => [
-            'presetForm' => [
-                'paramType' => 'querystring',
-            ],
-            'commonProcess' => [
-                'paramType' => 'querystring',
-                'filterEmpty' => true,
-            ],
-        ],
-    ];
-
-/**
  * Preset Variables Search
  *
  * @var array
@@ -62,6 +43,9 @@ class BlocksController extends AppController
     {
         parent::initialize();
         $this->loadModel('Croogo/Users.Roles');
+
+        $this->loadCroogoComponents(['BulkProcess']);
+        $this->_setupPrg();
     }
 
 /**

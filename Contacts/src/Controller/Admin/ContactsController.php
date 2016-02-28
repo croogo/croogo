@@ -18,16 +18,12 @@ use Croogo\Contacts\Model\Entity\Contact;
 class ContactsController extends AppController
 {
 
-/**
- * Components
- *
- * @var array
- * @access public
- */
-    public $components = [
-        'Croogo/Core.Akismet',
-        'Croogo/Core.Recaptcha',
-    ];
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->loadCroogoComponents(['Akismet', 'Recaptcha']);
+    }
 
 /**
  * Admin index

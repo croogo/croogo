@@ -16,30 +16,18 @@ class MessagesController extends AppController
 {
 
 /**
- * Components
- *
- * @var array
- * @access public
- */
-    public $components = [
-        'Croogo/Core.BulkProcess',
-        'Search.Prg' => [
-            'presetForm' => [
-                'paramType' => 'querystring',
-            ],
-            'commonProcess' => [
-                'paramType' => 'querystring',
-                'filterEmpty' => true,
-            ],
-        ],
-    ];
-
-/**
  * Preset Search Variables
  */
     public $presetVars = true;
 
-/**
+    public function initialize()
+    {
+        parent::initialize();
+        $this->_setupPrg();
+        $this->loadCroogoComponents(['BulkProcess']);
+    }
+
+    /**
  * Admin index
  *
  * @return void

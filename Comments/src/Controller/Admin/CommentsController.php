@@ -20,27 +20,6 @@ class CommentsController extends AppController
 {
 
 /**
- * Components
- *
- * @var array
- * @access public
- */
-    public $components = [
-        'Croogo/Core.Akismet',
-        'Croogo/Core.BulkProcess',
-        'Croogo/Core.Recaptcha',
-        'Search.Prg' => [
-            'presetForm' => [
-                'paramType' => 'querystring',
-            ],
-            'commonProcess' => [
-                'paramType' => 'querystring',
-                'filterEmpty' => true,
-            ],
-        ],
-    ];
-
-/**
  * Preset Variable Search
  * @var array
  */
@@ -60,7 +39,15 @@ class CommentsController extends AppController
         }
     }
 
-/**
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->loadCroogoComponents(['Akismet', 'BulkProcess', 'Recaptcha']);
+        $this->_setupPrg();
+    }
+
+    /**
  * Admin index
  *
  * @return void
