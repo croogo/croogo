@@ -14,6 +14,7 @@ use Cake\Log\LogTrait;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Event\CroogoEventManager;
 use InvalidArgumentException;
+use Migrations\Migrations;
 
 /**
  * Plugin utility class
@@ -49,9 +50,9 @@ class CroogoPlugin
 /**
  * MigrationVersion class
  *
- * @var MigrationVersion
+ * @var \Migrations\Migrations
  */
-    protected $_MigrationVersion = null;
+    protected $_Migrations = null;
 
 /**
  * Core plugins
@@ -92,10 +93,10 @@ class CroogoPlugin
 /**
  * __construct
  */
-    public function __construct($migrationVersion = null)
+    public function __construct($migrations = null)
     {
-        if (!is_null($migrationVersion)) {
-            $this->_MigrationVersion = $migrationVersion;
+        if (!is_null($migrations)) {
+            $this->_Migrations = $migrations;
         }
     }
 
@@ -244,17 +245,10 @@ class CroogoPlugin
                     }
                 }
 
-                /**
-                 * @todo Port to the official Migrations plugin
-                 */
-//				$pluginData['needMigration'] = $this->needMigration($alias, $active);
-                $pluginData['needMigration'] = true;
+				$pluginData['needMigration'] = $this->needMigration($alias, $active);
                 return $pluginData;
             } elseif ($this->_isBuiltin($alias)) {
-                /**
-                 * @todo Port to the official Migrations plugin
-                 */
-//				if ($this->needMigration($alias, $active)) {
+				if ($this->needMigration($alias, $active)) {
                     $pluginData = [
                         'name' => $alias,
                         'description' => "Croogo $alias plugin",
@@ -262,7 +256,7 @@ class CroogoPlugin
                         'needMigration' => true,
                     ];
                     return $pluginData;
-//				}
+				}
             }
         }
         return false;
@@ -409,20 +403,19 @@ class CroogoPlugin
  *
  * @param string $plugin Plugin name
  * @param string $isActive If the plugin is active
- * @return boolean
+ * @return bool
  */
     public function needMigration($plugin, $isActive)
     {
-        $needMigration = false;
-        if ($isActive) {
-            $mapping = $this->_getMigrationVersion()->getMapping($plugin);
-            $currentVersion = $this->_getMigrationVersion()->getVersion($plugin);
-            if ($mapping) {
-                $lastVersion = max(array_keys($mapping));
-                $needMigration = ($lastVersion - $currentVersion != 0);
-            }
+        if (!$isActive) {
+            return false;
         }
-        return $needMigration;
+        $status = (new Migrations())->status(['plugin' => $plugin]);
+        if ($status) {
+            return Hash::check($status, '{n}[status=down]');
+        }
+
+        return false;
     }
 
 /**
@@ -434,10 +427,11 @@ class CroogoPlugin
     public function migrate($plugin)
     {
         $success = false;
-        $mapping = $this->_getMigrationVersion()->getMapping($plugin);
+        $mapping = $this->_getMigrations()->getMapping($plugin);
+
         if ($mapping) {
             $lastVersion = max(array_keys($mapping));
-            $executionResult = $this->_MigrationVersion->run([
+            $executionResult = $this->_Migrations->run([
                 'version' => $lastVersion,
                 'type' => $plugin
             ]);
@@ -453,8 +447,8 @@ class CroogoPlugin
     public function unmigrate($plugin)
     {
         $success = false;
-        if ($this->_getMigrationVersion()->getMapping($plugin)) {
-            $success = $this->_getMigrationVersion()->run([
+        if ($this->_getMigrations()->getMapping($plugin)) {
+            $success = $this->_getMigrations()->run([
                 'version' => 0,
                 'type' => $plugin,
                 'direction' => 'down'
@@ -463,12 +457,15 @@ class CroogoPlugin
         return $success;
     }
 
-    protected function _getMigrationVersion()
+    /**
+     * @return \Migrations\Migrations
+     */
+    protected function _getMigrations()
     {
-        if (!($this->_MigrationVersion instanceof MigrationVersion)) {
-            $this->_MigrationVersion = new MigrationVersion();
+        if (!($this->_Migrations instanceof Migrations)) {
+            $this->_Migrations = new Migrations();
         }
-        return $this->_MigrationVersion;
+        return $this->_Migrations;
     }
 
 /**

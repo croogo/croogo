@@ -21,25 +21,6 @@ class ExtensionsPluginsController extends AppController
 {
 
 /**
- * Controller name
- *
- * @var string
- * @access public
- */
-    public $name = 'ExtensionsPlugins';
-
-/**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
-    public $uses = [
-        'Croogo/Settings.Setting',
-        'Croogo/Users.User',
-    ];
-
-/**
  * BC compatibility
  */
     public function __get($name)
