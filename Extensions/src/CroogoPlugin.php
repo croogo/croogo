@@ -152,6 +152,7 @@ class CroogoPlugin
                 }
             }
         }
+
         return $plugins;
     }
 
@@ -410,7 +411,8 @@ class CroogoPlugin
         if (!$isActive) {
             return false;
         }
-        $status = (new Migrations())->status(['plugin' => $plugin]);
+
+        $status = $this->_getMigrations()->status(['plugin' => $plugin]);
         if ($status) {
             return Hash::check($status, '{n}[status=down]');
         }
@@ -426,35 +428,17 @@ class CroogoPlugin
  */
     public function migrate($plugin)
     {
-        $success = false;
-        $mapping = $this->_getMigrations()->getMapping($plugin);
-
-        if ($mapping) {
-            $lastVersion = max(array_keys($mapping));
-            $executionResult = $this->_Migrations->run([
-                'version' => $lastVersion,
-                'type' => $plugin
-            ]);
-
-            $success = $executionResult === true;
-            if (!$success) {
-                array_push($this->migrationErrors, $executionResult);
-            }
+        if (!$this->needMigration($plugin, true)) {
+            return true;
         }
-        return $success;
+
+        return $this->_getMigrations()->migrate(['plugin' => $plugin]);
     }
 
     public function unmigrate($plugin)
     {
-        $success = false;
-        if ($this->_getMigrations()->getMapping($plugin)) {
-            $success = $this->_getMigrations()->run([
-                'version' => 0,
-                'type' => $plugin,
-                'direction' => 'down'
-            ]);
-        }
-        return $success;
+        return $this->_getMigrations()->rollback(['plugin' => $plugin, 'target' => 0]);
+
     }
 
     /**
