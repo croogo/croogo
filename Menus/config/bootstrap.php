@@ -6,7 +6,7 @@ use Croogo\Core\Croogo;
 
 CroogoCache::config('croogo_menus', array_merge(
     Configure::read('Croogo.Cache.defaultConfig'),
-    ['groups' => ['menus']]
+    ['groups' => ['menus'], 'prefix' => 'menus_']
 ));
 
 Croogo::hookComponent('*', 'Croogo/Menus.Menu');

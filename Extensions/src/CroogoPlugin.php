@@ -604,6 +604,8 @@ class CroogoPlugin
             if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
                 $pluginActivation->onActivation($this->_Controller);
             }
+
+            Cache::clear(false, 'croogo_menus');
             Cache::delete('file_map', '_cake_core_');
 
             return true;
@@ -647,6 +649,8 @@ class CroogoPlugin
                 $pluginActivation->onDeactivation($this->_Controller);
             }
             CroogoPlugin::unload($plugin);
+
+            Cache::clear(false, 'croogo_menus');
             Cache::delete('file_map', '_cake_core_');
             return true;
         } else {

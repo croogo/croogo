@@ -5,16 +5,13 @@
         use Croogo\Core\Nav;
 
         $cacheKey = 'adminnav_' . $this->Layout->getRoleId() . '_' . $this->request->url . '_' . md5(serialize($this->request->query));
-        $navItems = Cache::read($cacheKey, 'croogo_menus');
-        if ($navItems === false) {
-            $navItems = $this->Croogo->adminMenus(Nav::items(), array(
-                'htmlAttributes' => array(
+        echo Cache::remember($cacheKey, function () {
+            return $this->Croogo->adminMenus(Nav::items(), [
+                'htmlAttributes' => [
                     'id' => 'sidebar-menu',
-                ),
-            ));
-            Cache::write($cacheKey, $navItems, 'croogo_menus');
-        }
-        echo $navItems;
+                ],
+            ]);
+        }, 'croogo_menus');
         ?>
     </div>
 </nav>
