@@ -5,6 +5,7 @@ namespace Croogo\Extensions;
 use App\Controller\AppController;
 use Cake\Cache\Cache;
 use Cake\Core\App;
+use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
@@ -12,6 +13,7 @@ use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Log\LogTrait;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Text;
 use Croogo\Core\Event\CroogoEventManager;
 use InvalidArgumentException;
 use Migrations\Migrations;
@@ -556,38 +558,55 @@ class CroogoPlugin
  * @param string $plugin Plugin name
  * @return boolean true when successful, false or error message when failed
  */
-    public function activate($plugin)
+    public function activate($plugin, $dependencyList = [])
     {
         if (Plugin::loaded($plugin)) {
-            return __d('croogo', 'Plugin "%s" is already active.', $plugin);
+            return true;
         }
         $pluginActivation = $this->getActivator($plugin);
         if (!isset($pluginActivation) ||
-            (isset($pluginActivation) && method_exists($pluginActivation, 'beforeActivation') && $pluginActivation->beforeActivation($this->_Controller))) {
+            (
+                isset($pluginActivation) &&
+                method_exists($pluginActivation, 'beforeActivation') &&
+                $pluginActivation->beforeActivation($this->_Controller)
+            )
+        ) {
             $pluginData = $this->getData($plugin);
-            $dependencies = true;
+            $missingPlugins = [];
             if (!empty($pluginData['dependencies']['plugins'])) {
                 foreach ($pluginData['dependencies']['plugins'] as $requiredPlugin) {
                     $requiredPlugin = ucfirst($requiredPlugin);
                     if (!Plugin::loaded($requiredPlugin)) {
-                        $dependencies = false;
-                        $missingPlugin = $requiredPlugin;
-                        break;
+                        $dependencyList[] = $plugin;
+                        if ($this->activate($requiredPlugin, $dependencyList) !== true) {
+                            $missingPlugins[] = $requiredPlugin;
+                        }
                     }
                 }
             }
-            if ($dependencies) {
-                $this->addBootstrap($plugin);
-                CroogoPlugin::load($plugin);
-                if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
-                    $pluginActivation->onActivation($this->_Controller);
-                }
-                Cache::delete('file_map', '_cake_core_');
-                return true;
-            } else {
-                return __d('croogo', 'Plugin "%s" depends on "%s" plugin.', $plugin, $missingPlugin);
+            if (!empty($missingPlugins)) {
+                return __dn('croogo',
+                    'Plugin "%2$s" requires the "%3$s" plugin to be installed.',
+                    'Plugin "%2$s" requires the %3$s plugins to be installed.',
+                    count($missingPlugins),
+                    $plugin,
+                    Text::toList($missingPlugins)
+                );
             }
-            return __d('croogo', 'Plugin "%s" could not be activated. Please, try again.', $plugin);
+
+            try {
+                CroogoPlugin::load($plugin);
+            } catch (MissingPluginException $e) {
+                return __d('Plugin "%s" could not be actived.', $plugin);
+            }
+
+            $this->addBootstrap($plugin);
+            if (isset($pluginActivation) && method_exists($pluginActivation, 'onActivation')) {
+                $pluginActivation->onActivation($this->_Controller);
+            }
+            Cache::delete('file_map', '_cake_core_');
+
+            return true;
         }
     }
 
