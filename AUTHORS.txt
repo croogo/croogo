@@ -15,9 +15,9 @@ Yuan Chavik <yuan@xintesa.com>
 Appsbender <regz24@gmail.com>
 Damien Biasotto <damien@occitech.fr>
 Dimas Abdul Aziiz <dimas@xintesa.com>
+Marlin Cremers <m.cremers@cvo-technologies.com>
 AD7six <andydawson76@gmail.com>
 Eko Tristiyono <eko@xintesa.com>
-Marlin Cremers <m.cremers@cvo-technologies.com>
 Elias Coronado <ecor.rck@hotmail.com>
 Jonas <fwd_github@jonas-hartmann.com>
 Liam Keily <liam@simplywebsites.com>
@@ -41,6 +41,7 @@ James Sapara <james.sapara@gmail.com>
 Matt Curry <matt@pseudocoder.com>
 Mischa ter Smitten <mischa@tersmitten.nl>
 thoth <thomas.rader@tigerclawtech.com>
+Jeremy Harris <jeremy@someguyjeremy.com>
 Josué Silva Santos <josue.silva.santos@gmail.com>
 Marek Rodkiewicz <marek.rodkiewicz@infraredgroup.pl>
 cdbruin <casper@ectrader.nl>
@@ -57,7 +58,6 @@ Dirk Brünsicke <d1rk@gmx.de>
 DirtyF <frank.taillandier@gmail.com>
 Gilles Bedel <gilles@occi-tech.com>
 HT-Studios <github@ht-studios.de>
-Jeremy Harris <jeremy@42pixels.com>
 Joachim Nyqvist <Joachim@JNyqvist.se>
 Kory Marks <kory.marks@mac.com>
 Léo Haddad <scoup001@gmail.com>
@@ -74,6 +74,7 @@ Sam Bernard <sam@sambernard.net>
 SplicePHP <admin@splicephp.com>
 Walther Lalk <dakota@users.noreply.github.com>
 Wiena Lorentz <lorentz@xintesa.com>
+Wouter van Os <wouter@wouter0100.nl>
 alevilar <alevilar@gmail.com>
 avra911 <razvan@magnify.ro>
 damarev <damarev@gmail.com>
@@ -81,6 +82,7 @@ eryw <kristeryw@gmail.com>
 ingvaar <igorpletenev@gmail.com>
 joseph-d <joseph.d@nirada.co.th>
 kareypowell <kareyp9@gmail.com>
+mustapha elbakai <m.elbakai@gmail.com>
 romaing <pourri@dixit-productions.com>
 sherwinrobles <sherwinrobles@gmail.com>
 stefanozoffoli <stefano.zoffoli@librasoftsnc.it>
