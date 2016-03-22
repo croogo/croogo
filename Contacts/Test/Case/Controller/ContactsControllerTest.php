@@ -150,6 +150,7 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 			->will($this->returnValue(true));
 		$this->controller->request->params['action'] = 'view';
 		$this->controller->request->params['url']['url'] = 'contacts/contacts/view/contact';
+		$this->controller->startupProcess();
 		$this->controller->request->data = array(
 			'Message' => array(
 				'name' => 'John Smith',
@@ -158,7 +159,6 @@ class ContactsControllerTest extends CroogoControllerTestCase {
 				'body' => 'text here',
 			),
 		);
-		$this->controller->startupProcess();
 		$this->controller->view('contact');
 		$this->assertEqual($this->controller->viewVars['continue'], true);
 

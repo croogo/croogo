@@ -326,6 +326,10 @@ class Node extends NodesAppModel {
 		$data = $this->formatData($data, $typeAlias);
 		$event = Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, compact('data', 'typeAlias'));
 
+		if (!$event->result) {
+			return $event->result;
+		}
+
 		if (empty($event->data['data'][$this->alias]['path'])) {
 			$event->data['data'][$this->alias]['path'] = $this->_getNodeRelativePath($event->data['data']);
 		}

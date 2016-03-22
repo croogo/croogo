@@ -403,14 +403,14 @@ class CroogoAppController extends Controller {
 			$file = $this->viewPath . DS . $this->request->action . '.ctp';
 			$requested = $path . $file;
 			if (file_exists($requested)) {
-				return $requested;
+				return $this->request->action;
 			} else {
 				if (!$this->plugin) {
 					continue;
 				}
 				$requested = $path . 'Plugin' . DS . $this->plugin . DS . $file;
 				if (file_exists($requested)) {
-					return $requested;
+					return $this->request->action;
 				}
 			}
 		}
