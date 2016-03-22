@@ -286,7 +286,6 @@ class FileManagerControllerTest extends CroogoControllerTestCase {
 			'named' => array(),
 			'pass' => array(),
 		));
-		$this->FileManager->request->data['path'] = APP . '../../..';
 		$this->FileManager->constructClasses();
 		$this->FileManager->Components->unload('Croogo.Croogo');
 		$this->FileManager->Session->write('Auth.User', array(
@@ -295,6 +294,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase {
 			'username' => 'admin',
 		));
 		$this->FileManager->startupProcess();
+		$this->FileManager->request->data['path'] = APP . '../../..';
 		$this->FileManager->invokeAction($this->FileManager->request);
 		$message = $this->FileManager->Session->read('Message.flash.message');
 		$this->assertContains('is restricted', $message);
