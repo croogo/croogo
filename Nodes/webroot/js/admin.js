@@ -78,7 +78,7 @@ Nodes.filter = function() {
  * @return void
  */
 Nodes.slug = function() {
-	$("#NodeTitle").slug({
+	$("#title").slug({
 		slug:'slug',
 		hide: false
 	});
@@ -111,9 +111,10 @@ Nodes.confirmProcess = function(event) {
  * @return void
  */
 $(document).ready(function() {
-	if (Croogo.params.controller == 'nodes') {
+	if (Croogo.params.controller == 'Nodes') {
 		Nodes.documentReady();
-		if (Croogo.params.action == 'admin_add') {
+
+        if (Croogo.params.action == 'add' && Croogo.params.prefix == 'admin') {
 			Nodes.slug();
 		}
 	}
