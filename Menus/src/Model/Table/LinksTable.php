@@ -80,7 +80,7 @@ class LinksTable extends CroogoTable
     public function setTreeScope($menuId)
     {
         $settings = [
-            'scope' => [$this->alias() . '.menu_id' => $menuId],
+            'scope' => ['menu_id' => $menuId],
         ];
         if ($this->hasBehavior('Tree')) {
             $this->behaviors()
