@@ -29,14 +29,14 @@ class SettingsFormHelper extends Helper
  *
  * @see SettingsFormHelper::input()
  */
-    protected function _inputCheckbox($setting, $label)
+    protected function _inputCheckbox(Setting $setting, $label)
     {
         $tooltip = [
             'data-trigger' => 'hover',
             'data-placement' => 'right',
             'data-title' => $setting->description,
         ];
-        if ($setting['Setting']['value'] == 1) {
+        if ($setting->value == 1) {
             $output = $this->CroogoForm->input($setting->id, [
                 'type' => $setting->input_type,
                 'checked' => 'checked',
