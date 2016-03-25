@@ -71,7 +71,7 @@ class SettingsFormHelper extends Helper
                 $multiple = $setting->params['multiple'];
             };
             $selected = json_decode($setting->value);
-            $options = json_decode($setting->params['options'], true);
+            $options = $setting->options;
             $output = $this->CroogoForm->input($setting->id, [
                 'label' => $setting->title,
                 'multiple' => $multiple,
@@ -81,7 +81,7 @@ class SettingsFormHelper extends Helper
         } elseif ($setting->input_type == 'checkbox') {
             $output = $this->_inputCheckbox($setting, $label);
         } elseif ($setting->input_type == 'radio') {
-            $options = json_decode($setting->params['options'], true);
+            $options = $setting->options;
             $output = $this->CroogoForm->input($setting->id, [
                 'label' => $setting->title,
                 'type' => 'radio',
@@ -103,6 +103,10 @@ class SettingsFormHelper extends Helper
                     'type' => 'text',
                     'linkChooser' => true
                 ]);
+            }
+
+            if ($inputType === 'select') {
+                $options['options'] = $setting->options;
             }
 
             $output = $this->CroogoForm->input($setting->id, $options);

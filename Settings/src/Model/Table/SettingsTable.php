@@ -19,25 +19,6 @@ use Croogo\Core\Model\Table\CroogoTable;
  */
 class SettingsTable extends CroogoTable
 {
-
-/**
- * Behaviors used by the Model
- *
- * @var array
- * @access public
- */
-    public $actsAs = [
-        'Croogo.Ordered' => [
-            'field' => 'weight',
-            'foreign_key' => false,
-        ],
-        'Croogo.Cached' => [
-            'groups' => [
-                'settings',
-            ],
-        ],
-    ];
-
 /**
  * Validation
  *
@@ -72,6 +53,15 @@ class SettingsTable extends CroogoTable
         parent::initialize($config);
 
         $this->addBehavior('Croogo/Core.Trackable');
+//        $this->addBehavior('Croogo/Core.Ordered', [
+//            'field' => 'weight',
+//            'foreign_key' => false,
+//        ]);
+//        $this->addBehavior('Croogo/Core.Cached', [
+//            'groups' => [
+//                'settings',
+//            ],
+//        ]);
         $this->addBehavior('Search.Searchable');
     }
 
