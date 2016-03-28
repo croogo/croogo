@@ -10,7 +10,7 @@ use Cake\Core\Configure;
         <title><?php echo $this->fetch('title'); ?> - <?php echo __d('croogo', 'Croogo'); ?></title>
         <?php
         echo $this->Html->css([
-            'Croogo/Core.admin',
+            'Croogo/Core.croogo-admin',
         ]);
         echo $this->Layout->js();
         echo $this->Html->script([
@@ -22,21 +22,17 @@ use Cake\Core\Configure;
     </head>
     <body class="admin-login">
         <div id="wrap">
-
-            <header class="navbar navbar-inverse navbar-fixed-top">
-                <div class="navbar-inner">
-                    <div class="<?php echo $this->Theme->getCssClass('container'); ?>">
-                        <?php echo $this->Html->link(__d('croogo', 'Back to') . ' ' . Configure::read('Site.title'),
-                            '/', ['class' => 'brand']);
-                        ?>
-                    </div>
+            <header class="navbar navbar-dark bg-inverse navbar-full">
+                <div class="<?php echo $this->Theme->getCssClass('container'); ?>">
+                    <?php echo $this->Html->link(__d('croogo', 'Back to') . ' ' . Configure::read('Site.title'),
+                        '/', ['class' => 'navbar-brand']);
+                    ?>
                 </div>
             </header>
 
-            <div id="push"></div>
             <div id="content-container" class="<?php echo $this->Theme->getCssClass('container'); ?>">
                 <div class="<?php echo $this->Theme->getCssClass('row'); ?>">
-                    <div id="admin-login">
+                    <div class="admin-login-box">
                         <?php
                         echo $this->Flash->render('auth');
                         echo $this->fetch('content');
@@ -44,7 +40,6 @@ use Cake\Core\Configure;
                     </div>
                 </div>
             </div>
-
         </div>
         <?php echo $this->element('Croogo/Core.admin/footer'); ?>
     </body>

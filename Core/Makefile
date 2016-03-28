@@ -4,13 +4,13 @@ FONTAWESOME_TAG=v4.5.0
 REPO_FONTAWESOME=git://github.com/FortAwesome/Font-Awesome.git
 REPO_BOOTSTRAP=git://github.com/twbs/bootstrap
 
-CROOGO_SASS = ./webroot/scss/admin.scss
+CROOGO_SASS = ./webroot/scss/croogo-admin.scss
 
 CSS_DIR=$(CURDIR)/webroot/css
 JS_DIR=$(CURDIR)/webroot/js
 FONT_DIR=$(CURDIR)/webroot/font
 
-CROOGO_CSS=admin.css
+CROOGO_CSS=croogo-admin.css
 BOOTSTRAP_JS=admin.js
 
 DATE=$(shell date +%I:%M%p)
@@ -52,10 +52,10 @@ assets:
 	@if [ ! -d ${FONT_DIR} ] ; then \
 		mkdir "${FONT_DIR}"; \
 	fi
-	@for file in webroot/fontAwesome/font/* ; do \
-		cp $${file} webroot/font/ ; \
-		chmod 644 webroot/font/`basename $${file}` ; \
-		echo "Copied: webroot/font/`basename $${file}` ${CHECK}" ;\
+	@for file in webroot/fontAwesome/fonts/* ; do \
+		cp $${file} webroot/fonts/ ; \
+		chmod 644 webroot/fonts/`basename $${file}` ; \
+		echo "Copied: webroot/fonts/`basename $${file}` ${CHECK}" ;\
 	done
 
 clean:

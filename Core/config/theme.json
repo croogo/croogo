@@ -22,7 +22,7 @@
 		},
 		"css" : {
 			"container" : "container-fluid",
-			"row" : "row-fluid",
+			"row" : "row",
 			"tableClass" : "table table-stripped"
 		}
 	}

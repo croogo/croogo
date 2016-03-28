@@ -1,13 +1,5 @@
 @import  "../../fontAwesome/scss/font-awesome.scss";
 
-$fontAwesomePath: '../font';
-
-// remove bootstrap defined background-image to avoid conflict with fontAwesome
-[class^="icon-"],
-[class*=" icon-"] {
-	background-image: none;
-}
-
-.icon-white {
+.fa-white {
 	color: lighten($gray-light, 20);
 }

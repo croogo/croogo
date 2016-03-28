@@ -1,9 +1,9 @@
 .content {
-	padding: 0px $crContentPadding;
+	padding: 0px $croogo-content-padding;
 	margin-top: $crContainerMarginTop; // For breadcrumb when it is fixed
 
 	table {
-		margin: $crGeneralMargin 0px;
+		margin: $croogo-general-margin 0px;
 	}
 }
 
@@ -45,7 +45,7 @@ h2.hidden-desktop {
 	margin-bottom: $crBoxMarginVertical;
 	@include border-radius(2px);
 	.box-title {
-		padding-left: $crContentPadding;
+		padding-left: $croogo-content-padding;
 		font-weight: bold;
 		color: lighten($gray, 2%);
 		color: $black;
@@ -53,21 +53,21 @@ h2.hidden-desktop {
 	}
 
 	.box-content {
-		margin: $crGeneralMargin;
+		margin: $croogo-general-margin;
 		.submit {
 			display: inline-block;
 		}
 
 		.input {
 			clear: both;
-			margin-top: $crGeneralMargin;
+			margin-top: $croogo-general-margin;
 		}
 	}
 }
 
 // Actions in admin_index
 .actions {
-	margin: $crGeneralMargin 0px;
+	margin: $croogo-general-margin 0px;
 }
 
 .tab-content {

@@ -7,9 +7,9 @@ $black: #000;
 $white: #fff;
 
 // Croogo
-$crGeneralMargin: 10px;
-$crContentPadding: 10px;
-$crBackgroundColor: lighten($gray-lighter, 5);
+$croogo-general-margin: 10px;
+$croogo-content-padding: 10px;
+$croogo-background-color: lighten($gray-lighter, 5);
 $crMainBackgroundColor: #444;
 $crNavWidth: 170px;
 $crNavWidth767: 50px;
@@ -29,4 +29,4 @@ $actionsButtonsWidth: 70px; // ~= size of 2 buttons with only an icon inside (Fo
 $crFilterBackground: $crTableTheadBackground;
 
 // Login
-$crLoginBox: 350px;
+$croogo-login-box-width: 350px;

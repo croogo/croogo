@@ -90,6 +90,7 @@ if (Configure::check('Site.asset_timestamp')) {
 
 // CakePHP Acl
 Plugin::load('Acl', ['bootstrap' => true]);
+Plugin::load('BootstrapUI');
 
 $croogoPath = Plugin::path('Croogo/Core');
 

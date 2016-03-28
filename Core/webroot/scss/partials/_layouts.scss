@@ -5,128 +5,120 @@
 // For top and bottom navbar
 html,
 body {
-	padding: 0;
-	margin: 0;
-	height: 100%;
-	background-color: $crBackgroundColor;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    background-color: $croogo-background-color;
 
-	&.admin-login {
-		#content-container {
-			background-color: $body-bg
-		}
-	}
+    &.admin-login {
+        #content-container {
+            background-color: $gray-lighter;
+        }
+    }
 }
 
 #wrap {
-	overflow: hidden;
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;
-	/* Negative indent footer by it's height */
-	//margin-bottom: -($navbarHeight + 2);
+    overflow: hidden;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    //margin-bottom: -($navbarHeight + 2);
 
-	.full  {
-		#content {
-			margin: 0 $crGeneralMargin;
-		}
-	}
+    .full {
+        #content {
+            margin: 0 $croogo-general-margin;
+        }
+    }
 }
 
 #push {
-	//height: $navbarHeight;
+    //height: $navbarHeight;
 }
 
 #content-container {
-	padding: 0;
-	// expands downwards for matching background color
-	background: $crMainBackgroundColor;
-	padding: 20px 0px 99999px 0px;
-	margin-bottom: -99999px;
+    padding: 0;
+    // expands downwards for matching background color
+    background: $crMainBackgroundColor;
+    padding: 20px 0px 99999px 0px;
+    margin-bottom: -99999px;
 }
 
 #content {
-	background: #fff;
-	border: 1px solid #fff;
-	border-top-left-radius: 8px;
-	border-bottom-left-radius: 8px;
-	margin-left: 170px;
-	margin-bottom: $crGeneralMargin;
-	padding: 20px;
-	min-height: 400px;
+    background: #fff;
+    border: 1px solid #fff;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    margin-left: 170px;
+    margin-bottom: $croogo-general-margin;
+    padding: 20px;
+    min-height: 400px;
 }
 
 #inner-content {
-	margin: 20px 0 0 0;
+    margin: 20px 0 0 0;
 }
 
 .content {
-	padding: 0px $crContentPadding;
+    padding: 0px $croogo-content-padding;
 
-	table {
-		margin: $crGeneralMargin 0px;
-	}
+    table {
+        margin: $croogo-general-margin 0px;
+    }
 }
 
-#admin-login {
-	//margin: $navbarHeight * 3 auto 0;
-	max-width: $crLoginBox + 2;
+.admin-login-box {
+    @extend .center-block;
+    margin-top: 5%;
+    max-width: $croogo-login-box-width + 2;
 
-	#authMessage {
-		margin-bottom: $crContentPadding;
-	}
+    #authMessage {
+        margin-bottom: $croogo-content-padding;
+    }
 
-	.box {
-		margin-top: $crGeneralMargin;
-		margin: auto;
-		max-width: $crLoginBox;
+    .input-prepend {
+        margin-bottom: $croogo-content-padding;
+    }
 
-		.box-content {
-			padding: $crContentPadding * 2;
-		}
-	}
-
-	.input-prepend {
-		margin-bottom: $crContentPadding;
-	}
-
-	.forgot {
-		vertical-align: middle;
-		margin: 0 $crContentPadding * 2;
-	}
+    .forgot {
+        vertical-align: middle;
+        margin: 0 $croogo-content-padding * 2;
+    }
 
 }
 
 header {
-	border-bottom: 1px solid #707070;
+    border-bottom: 1px solid #707070;
 }
 
 footer {
-	background: $gray-dark;
-	.navbar-inner {
-		@include border-radius(0);
-		margin: 0 auto;
-		padding: 0;
-	}
+    margin-top: -40px;
 
-	.footer-content {
-		padding: 10px;
-		text-align: center;
-		color: #fff;
-		font-size: 13px;
-	}
+    background: $gray-dark;
+    .navbar-inner {
+        @include border-radius(0);
+        margin: 0 auto;
+        padding: 0;
+    }
 
-	border-top: 1px solid #707070;
+    .footer-content {
+        padding: 10px;
+        text-align: center;
+        color: #fff;
+        font-size: 13px;
+    }
 
-	color: #fff;
-	a {
-		color: #fff;
-	}
-	a:hover {
-		color: #fff;
-	}
-}
+    border-top: 1px solid #707070;
 
+    color: #fff;
+    a {
+        color: #fff;
+    }
+    a:hover {
+        color: #fff;
+    }
 
-.footer.navbar-inverse {
-	background: $gray-dark;
+    &.navbar-inverse {
+        background: $gray-dark;
+    }
 }

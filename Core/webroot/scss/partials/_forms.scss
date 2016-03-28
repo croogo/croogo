@@ -9,7 +9,7 @@ form.inline {
 	&.inline {
 		float: left;
 		label, input, select {
-			margin-right: $crGeneralMargin;
+			margin-right: $croogo-general-margin;
 			width: auto;
 			display: inline-block;
 		}
@@ -31,7 +31,7 @@ form.inline {
 	&.stringlist,
 	&.textarea,
 	&.text {
-		margin: $crGeneralMargin;
+		margin: $croogo-general-margin;
 	}
 
 	&.radio,

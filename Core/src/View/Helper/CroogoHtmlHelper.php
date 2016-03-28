@@ -4,7 +4,7 @@ namespace Croogo\Core\View\Helper;
 
 use Cake\Event\Event;
 use Cake\Utility\Hash;
-use Cake\View\Helper\HtmlHelper;
+use BootstrapUI\View\Helper\HtmlHelper;
 use Cake\View\View;
 use Croogo\Core\Status;
 use Croogo\Extensions\CroogoTheme;
@@ -40,10 +40,7 @@ class CroogoHtmlHelper extends HtmlHelper
         }
 
         $themeCss = $themeSettings['css'];
-        $boxIconClass = trim(
-            $settings['iconDefaults']['classDefault'] . ' ' .
-            $settings['iconDefaults']['classPrefix'] . 'list'
-        );
+        $boxIconClass = '';
 
         $this->_defaultConfig['templates']['beginbox'] =
             "<div class='$themeCss[row]'>
@@ -142,26 +139,15 @@ class CroogoHtmlHelper extends HtmlHelper
  * @param array $options Icon html attributes
  * @return string Icon markup
  */
-    public function icon($name, $options = [])
+    public function icon($name, array $options = [])
     {
         $iconDefaults = $this->config('iconDefaults');
-        $defaults = ['class' => ''];
-        $options = array_merge($defaults, $options);
-        $class = $iconDefaults['classDefault'];
-        foreach ((array)$name as $iconName) {
-            $class .= ' ' . $iconDefaults['classPrefix'] . $this->Theme->getIcon($iconName);
-        }
-        $class .= ' ' . $options['class'];
-        $class = trim($class);
-        unset($options['class']);
-        $attributes = '';
-        foreach ($options as $attr => $value) {
-            $attributes .= $attr . '="' . $value . '" ';
-        }
-        if ($attributes) {
-            $attributes = ' ' . $attributes;
-        }
-        return sprintf($this->_defaultConfig['templates']['icon'], $class, $attributes);
+
+        $defaults = [
+            'iconSet' => $iconDefaults['iconSet'],
+        ];
+        $options += $defaults;
+        return parent::icon($this->Theme->getIcon($name), $options);
     }
 
 /**

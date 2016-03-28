@@ -47,21 +47,6 @@ class ThemeHelper extends Helper
         }
 
         parent::__construct($View);
-
-        $this->__setupDeprecatedViewVars();
-    }
-
-/**
- * Setup deprecated view variables
- *
- * @param string $viewFile The view file that is going to be rendered
- * @return void
- */
-    private function __setupDeprecatedViewVars()
-    {
-        // TODO: Remove in 2.3
-        $this->_View->set('_icons', $this->_iconMap);
-        $this->_View->set('themeSettings', $this->_themeSettings);
     }
 
 /**

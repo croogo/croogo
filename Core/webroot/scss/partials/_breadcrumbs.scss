@@ -10,7 +10,7 @@
 .breadcrumb {
 	@include border-radius(4px);
 	list-style: none;
-	padding: $crContentPadding;
+	padding: $croogo-content-padding;
 	margin: $crBreadCrumbMargin 0 0;
 	z-index: $zindex-dropdown;
 

@@ -2,7 +2,7 @@
 
 namespace Croogo\Core\View\Helper;
 
-use Cake\View\Helper\FormHelper;
+use BootstrapUI\View\Helper\FormHelper;
 use Cake\Utility\Inflector;
 use Cake\Utility\Hash;
 use Cake\View\View;

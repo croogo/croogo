@@ -26,23 +26,23 @@ use Croogo\Extensions\Exception\MissingThemeException;
 class CroogoTheme
 {
 
-/**
- * Constructor
- */
+    /**
+     * Constructor
+     */
     public function __construct()
     {
     }
 
-/**
- * Get theme aliases (folder names)
- *
- * @return array
- */
+    /**
+     * Get theme aliases (folder names)
+     *
+     * @return array
+     */
     public function getThemes()
     {
         $themeConfigs = [
             'config' . DS . 'theme.json',
-            'webroot' . DS . 'theme.json'
+            'webroot' . DS . 'theme.json',
         ];
 
         $themes = [];
@@ -77,93 +77,95 @@ class CroogoTheme
         return $themes;
     }
 
-/**
- * Get the content of theme.json or composer.json file from a theme
- *
- * @param string $theme theme plugin name
- * @return array
- */
-	public function getData($theme = null) {
-		$themeData = [
-			'name' => $theme,
-			'regions' => [],
-			'screenshot' => null,
-			'settings' => [
-				'templates' => [
-					'input' => '<input type="{{type}}" name="{{name}}"{{attrs}}/>',
-					'select' => '<select name="{{name}}"{{attrs}}>{{content}}</select>',
-					'selectMultiple' => '<select name="{{name}}[]" multiple="multiple"{{attrs}}>{{content}}</select>',
-					'radio' => '<input type="radio" name="{{name}}" value="{{value}}"{{attrs}}>',
-					'textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>',
-				],
-				'css' => [
-					'columnFull' => 'span12',
-					'columnLeft' => 'span8',
-					'columnRight' => 'span4',
-					'container' => 'container-fluid',
-					'dashboardFull' => 'span12',
-					'dashboardLeft' => 'span6',
-					'dashboardRight' => 'span6',
-					'dashboardClass' => 'sortable-column',
-					'formInput' => 'input-block-level',
-					'imageClass' => '',
-					'row' => 'row-fluid',
-					'tableClass' => 'table',
-					'thumbnailClass' => 'img-polaroid',
+    /**
+     * Get the content of theme.json or composer.json file from a theme
+     *
+     * @param string $theme theme plugin name
+     * @return array
+     */
+    public function getData($theme = null)
+    {
+        $themeData = [
+            'name' => $theme,
+            'regions' => [],
+            'screenshot' => null,
+            'settings' => [
+                'templates' => [
+                    'input' => '<input type="{{type}}" name="{{name}}"{{attrs}}/>',
+                    'select' => '<select name="{{name}}"{{attrs}}>{{content}}</select>',
+                    'selectMultiple' => '<select name="{{name}}[]" multiple="multiple"{{attrs}}>{{content}}</select>',
+                    'radio' => '<input type="radio" name="{{name}}" value="{{value}}"{{attrs}}>',
+                    'textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>',
                 ],
-				'iconDefaults' => [
-					'classDefault' => '',
-					'classPrefix' => 'icon-',
-					'largeIconClass' => 'icon-large',
-					'smallIconClass' => '',
+                'css' => [
+                    'columnFull' => 'span12',
+                    'columnLeft' => 'span8',
+                    'columnRight' => 'span4',
+                    'container' => 'container-fluid',
+                    'dashboardFull' => 'span12',
+                    'dashboardLeft' => 'span6',
+                    'dashboardRight' => 'span6',
+                    'dashboardClass' => 'sortable-column',
+                    'formInput' => 'input-block-level',
+                    'imageClass' => '',
+                    'row' => 'row-fluid',
+                    'tableClass' => 'table',
+                    'thumbnailClass' => 'img-polaroid',
                 ],
-				'icons' => [
-					'attach' => 'paper-clip',
-					'check-mark' => 'ok',
-					'comment' => 'comment-alt',
-					'copy' => 'copy',
-					'create' => 'plus',
-					'delete' => 'trash',
-					'error-sign' => 'exclamation-sign',
-					'home' => 'home',
-					'info-sign' => 'info-sign',
-					'inspect' => 'zoom-in',
-					'link' => 'link',
-					'move-down' => 'chevron-down',
-					'move-up' => 'chevron-up',
-					'power-off' => 'off',
-					'power-on' => 'bolt',
-					'question-sign' => 'question-sign',
-					'read' => 'eye-open',
-					'refresh' => 'refresh',
-					'resize' => 'resize-small',
-					'search' => 'search',
-					'success-sign' => 'ok-sign',
-					'translate' => 'flag',
-					'update' => 'pencil',
-					'upload' => 'upload-alt',
-					'warning-sign' => 'warning-sign',
-					'x-mark' => 'remove',
+                'iconDefaults' => [
+                    'iconSet' => 'fa',
+                    'largeIconClass' => 'fa-xl',
+                    'smallIconClass' => 'fa-sm',
                 ],
-				'prefixes' => [
-					'' => [
-						'helpers' => [
-							'Html' => [],
-							'Form' => [],
+                'icons' => [
+                    'attach' => 'paper-clip',
+                    'check-mark' => 'ok',
+                    'comment' => 'comment-alt',
+                    'copy' => 'copy',
+                    'create' => 'plus',
+                    'delete' => 'trash',
+                    'error-sign' => 'exclamation-sign',
+                    'home' => 'home',
+                    'info-sign' => 'info-sign',
+                    'inspect' => 'zoom-in',
+                    'link' => 'link',
+                    'move-down' => 'chevron-down',
+                    'move-up' => 'chevron-up',
+                    'power-off' => 'off',
+                    'power-on' => 'bolt',
+                    'question-sign' => 'question-sign',
+                    'read' => 'eye-open',
+                    'refresh' => 'refresh',
+                    'resize' => 'resize-small',
+                    'search' => 'search',
+                    'success-sign' => 'ok-sign',
+                    'translate' => 'flag',
+                    'update' => 'pencil',
+                    'upload' => 'upload-alt',
+                    'warning-sign' => 'warning-sign',
+                    'x-mark' => 'remove',
+                    'user' => 'user',
+                    'key' => 'key',
+                ],
+                'prefixes' => [
+                    '' => [
+                        'helpers' => [
+                            'Html' => [],
+                            'Form' => [],
                         ],
                     ],
-					'admin' => [
-						'helpers' => [
-							'CroogoHtml' => [
-								'className' => 'Croogo/Core.CroogoHtml',
+                    'admin' => [
+                        'helpers' => [
+                            'CroogoHtml' => [
+                                'className' => 'Croogo/Core.CroogoHtml',
                             ],
-							'CroogoForm' => [
-								'className' => 'Croogo/Core.CroogoForm',
+                            'CroogoForm' => [
+                                'className' => 'Croogo/Core.CroogoForm',
                             ],
-// FIXME:
-//							'CroogoPaginator' => array(
-//								'className' => 'Croogo/Core.CroogoPaginator',
-//							),
+                            // FIXME:
+                            //							'CroogoPaginator' => array(
+                            //								'className' => 'Croogo/Core.CroogoPaginator',
+                            //							),
                         ],
                     ],
                 ],
@@ -172,7 +174,7 @@ class CroogoTheme
 
         $themeConfigs = [
             'config' . DS . 'theme.json',
-            'webroot' . DS . 'theme.json'
+            'webroot' . DS . 'theme.json',
         ];
 
         try {
@@ -180,7 +182,6 @@ class CroogoTheme
         } catch (MissingPluginException $exception) {
             throw new MissingThemeException([$theme], $exception->getCode(), $exception);
         }
-
 
         foreach ($themeConfigs as $themeManifestFile) {
             if (!file_exists($path . $themeManifestFile)) {
@@ -217,23 +218,24 @@ class CroogoTheme
         return $themeData;
     }
 
-/**
- * Get the content of theme.json file from a theme
- *
- * @param string $alias theme folder name
- * @return array
- * @deprecated use getData()
- */
+    /**
+     * Get the content of theme.json file from a theme
+     *
+     * @param string $alias theme folder name
+     * @return array
+     * @deprecated use getData()
+     */
     public function getThemeData($alias = null)
     {
         return $this->getData($alias);
     }
 
-/**
- * Activate theme $alias
- * @param $theme theme alias
- * @return mixed On success Setting::$data or true, false on failure
- */
+    /**
+     * Activate theme $alias
+     *
+     * @param $theme theme alias
+     * @return mixed On success Setting::$data or true, false on failure
+     */
     public function activate($theme)
     {
         if (!$this->getData($theme)) {
@@ -242,17 +244,18 @@ class CroogoTheme
 
         Cache::delete('file_map', '_cake_core_');
         $settings = TableRegistry::get('Croogo/Settings.Settings');
+
         return $settings->write('Site.theme', $theme);
     }
 
-/**
- * Delete theme
- *
- * @param string $alias Theme alias
- * @return boolean true when successful, false or array or error messages when failed
- * @throws InvalidArgumentException
- * @throws UnexpectedValueException
- */
+    /**
+     * Delete theme
+     *
+     * @param string $alias Theme alias
+     * @return boolean true when successful, false or array or error messages when failed
+     * @throws InvalidArgumentException
+     * @throws UnexpectedValueException
+     */
     public function delete($alias)
     {
         if (empty($alias)) {
@@ -280,12 +283,12 @@ class CroogoTheme
         throw new UnexpectedValueException(__d('croogo', 'Theme %s not found', $alias));
     }
 
-/**
- * Helper method to retrieve given $theme settings
- *
- * @param string $theme Theme name
- * @return array Theme configuration data
- */
+    /**
+     * Helper method to retrieve given $theme settings
+     *
+     * @param string $theme Theme name
+     * @return array Theme configuration data
+     */
     public static function config($theme = null)
     {
         static $croogoTheme = null;
@@ -300,10 +303,8 @@ class CroogoTheme
             if ($request) {
                 $prefix = $request->param('prefix');
                 if (isset($data['settings']['prefixes'][$prefix]['css'])) {
-                    $data['settings']['css'] = Hash::merge(
-                        $data['settings']['prefixes'][$prefix]['css'],
-                        $data['settings']['css']
-                    );
+                    $data['settings']['css'] = Hash::merge($data['settings']['prefixes'][$prefix]['css'],
+                        $data['settings']['css']);
                 }
             }
             $themeData[$theme] = $data;
