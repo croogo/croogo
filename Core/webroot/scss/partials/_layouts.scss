@@ -23,7 +23,7 @@ body {
     height: auto !important;
     height: 100%;
     /* Negative indent footer by it's height */
-    //margin-bottom: -($navbarHeight + 2);
+    margin-bottom: -42px;
 
     .full {
         #content {
@@ -39,9 +39,10 @@ body {
 #content-container {
     padding: 0;
     // expands downwards for matching background color
-    background: $crMainBackgroundColor;
+    background: $croogo-main-bg;
     padding: 20px 0px 99999px 0px;
     margin-bottom: -99999px;
+    margin-top: $croogo-navbar-height;
 }
 
 #content {
@@ -89,10 +90,15 @@ body {
 
 header {
     border-bottom: 1px solid #707070;
+
+    &.navbar {
+        height: $croogo-navbar-height;
+    }
 }
 
 footer {
     margin-top: -40px;
+    height: 40px;
 
     background: $gray-dark;
     .navbar-inner {

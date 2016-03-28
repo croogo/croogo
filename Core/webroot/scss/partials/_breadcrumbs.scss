@@ -11,7 +11,7 @@
 	@include border-radius(4px);
 	list-style: none;
 	padding: $croogo-content-padding;
-	margin: $crBreadCrumbMargin 0 0;
+	margin: $croogo-breadcrumb-margin 0 0;
 	z-index: $zindex-dropdown;
 
 	a {

@@ -98,7 +98,7 @@ class CroogoTheme
                     'textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>',
                 ],
                 'css' => [
-                    'columnFull' => 'span12',
+                    'columnFull' => 'col-xs-12',
                     'columnLeft' => 'span8',
                     'columnRight' => 'span4',
                     'container' => 'container-fluid',

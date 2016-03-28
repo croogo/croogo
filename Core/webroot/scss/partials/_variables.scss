@@ -1,21 +1,33 @@
+@import "../../bootstrap/scss/variables";
 // Override bootstrap vars
 $sansFontFamily:  "Helvetica Neue", "Ubuntu", Helvetica, Arial, sans-serif;
 $serifFontFamily: Georgia, "Ubuntu", "Times New Roman", Times, serif;
 $monoFontFamily:  Monaco, Menlo, Consolas, "Ubuntu Mono", "Courier New", monospace;
 
+//Colors
 $black: #000;
 $white: #fff;
+
+$gray-base: #000;
+$gray-darker: lighten($gray-base, 13.5);
+$gray-dark: lighten($gray-base, 20);
+$gray: lighten($gray-base, 33.5);
+$gray-light: lighten($gray-base, 46.7);
+$gray-lighter: lighten($gray-base, 65);
+$gray-lightest: lighten($gray-base, 93.5);
+$nearly-black: #1b1b1b;
 
 // Croogo
 $croogo-general-margin: 10px;
 $croogo-content-padding: 10px;
 $croogo-background-color: lighten($gray-lighter, 5);
-$crMainBackgroundColor: #444;
-$crNavWidth: 170px;
-$crNavWidth767: 50px;
-$crContainerMarginTop: 50px;
-$crNavBorderColor: darken($gray-light, 25);
-$crBreadCrumbMargin: 8px;
+$croogo-main-bg: $gray;
+$croogo-nav-width: 170px;
+$croogo-sm-nav-width: 50px;
+$croogo-container-margin-top: 50px;
+$croogo-nav-border-color: darken($gray-light, 25);
+$croogo-breadcrumb-margin: 8px;
+$croogo-navbar-height: 56px;
 
 // Box
 $crBoxMarginVertical: 10px;

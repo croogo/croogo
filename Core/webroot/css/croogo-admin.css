@@ -567,7 +567,7 @@ mark,
 
 .figure-caption {
   font-size: 90%;
-  color: #818a91; }
+  color: #777777; }
 
 code,
 kbd,
@@ -1537,21 +1537,21 @@ pre {
 
 .thead-inverse th {
   color: #fff;
-  background-color: #373a3c; }
+  background-color: #333333; }
 
 .thead-default th {
-  color: #55595c;
-  background-color: #eceeef; }
+  color: #555555;
+  background-color: #a6a6a6; }
 
 .table-inverse {
-  color: #eceeef;
-  background-color: #373a3c; }
+  color: #a6a6a6;
+  background-color: #333333; }
   .table-inverse.table-bordered {
     border: 0; }
   .table-inverse th,
   .table-inverse td,
   .table-inverse thead th {
-    border-color: #55595c; }
+    border-color: #555555; }
 
 .table-reflow thead {
   float: left; }
@@ -3425,7 +3425,7 @@ div .error {
 
   .progress[width^="0"] {
     min-width: 2rem;
-    color: #818a91;
+    color: #777777;
     background-color: transparent;
     background-image: none; }
 
@@ -4384,11 +4384,11 @@ a.text-danger:focus, a.text-danger:hover {
   color: #c9302c; }
 
 .bg-inverse {
-  color: #eceeef;
-  background-color: #373a3c; }
+  color: #a6a6a6;
+  background-color: #333333; }
 
 .bg-faded {
-  background-color: #f7f7f9; }
+  background-color: #eeeeee; }
 
 .bg-primary {
   color: #fff !important;
@@ -6755,7 +6755,7 @@ a.bg-danger:focus, a.bg-danger:hover {
   content: ""; }
 
 .fa-white {
-  color: #b7bdc1; }
+  color: #aaaaaa; }
 
 .btn:focus {
   outline: none; }
@@ -6832,25 +6832,27 @@ body {
   padding: 0;
   margin: 0;
   height: 100%;
-  background-color: #fafafb; }
+  background-color: #b3b3b3; }
   html.admin-login #content-container,
   body.admin-login #content-container {
-    background-color: #eceeef; }
+    background-color: #a6a6a6; }
 
 #wrap {
   overflow: hidden;
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  /* Negative indent footer by it's height */ }
+  /* Negative indent footer by it's height */
+  margin-bottom: -42px; }
   #wrap .full #content {
     margin: 0 10px; }
 
 #content-container {
   padding: 0;
-  background: #444;
+  background: #555555;
   padding: 20px 0px 99999px 0px;
-  margin-bottom: -99999px; }
+  margin-bottom: -99999px;
+  margin-top: 56px; }
 
 #content {
   background: #fff;
@@ -6883,10 +6885,13 @@ body {
 
 header {
   border-bottom: 1px solid #707070; }
+  header.navbar {
+    height: 56px; }
 
 footer {
   margin-top: -40px;
-  background: #373a3c;
+  height: 40px;
+  background: #333333;
   border-top: 1px solid #707070;
   color: #fff; }
   footer .navbar-inner {
@@ -6903,7 +6908,7 @@ footer {
   footer a:hover {
     color: #fff; }
   footer.navbar-inverse {
-    background: #373a3c; }
+    background: #333333; }
 
 .popup #content {
   background: #fff;
@@ -6923,8 +6928,7 @@ footer {
     margin-right: 10px; }
 
 #wrap > nav {
-  margin-top: 30px;
-  background: #444; }
+  margin-top: 86px; }
 
 .sidebar {
   font-family: "Helvetica Neue", "Ubuntu", Helvetica, Arial, sans-serif;
@@ -6963,7 +6967,6 @@ footer {
     background: none; }
   .sidebar .sub-nav {
     width: 170px;
-    z-index: 1050;
     margin-bottom: 0px;
     display: none; }
     .sidebar .sub-nav .sidebar-item.current:hover {
@@ -6979,42 +6982,50 @@ footer {
     color: rgba(255, 255, 255, 0.5); }
     .sidebar .nav-stacked > li > a:hover {
       color: rgba(255, 255, 255, 0.75); }
-  .sidebar .navbar-inner {
+  .sidebar .nav {
     padding: 0;
-    border-color: none;
     border-radius: 0;
     border: none; }
-  .sidebar.navbar-inverse {
-    background: #444; }
-    .sidebar.navbar-inverse .navbar-inner {
-      background: #373a3c; }
-    .sidebar.navbar-inverse .nav-stacked > li:first-child > a {
-      border-top: 1px solid #373a3c; }
-    .sidebar.navbar-inverse .nav-stacked > li > a {
-      color: #373a3c;
-      border-bottom: 1px solid #373a3c; }
-      .sidebar.navbar-inverse .nav-stacked > li > a:hover {
-        color: #373a3c; }
-    .sidebar.navbar-inverse .sub-nav {
-      background: #4f5457; }
-      .sidebar.navbar-inverse .sub-nav .sub-nav .sidebar-item.current {
-        color: #1f2021; }
-        .sidebar.navbar-inverse .sub-nav .sub-nav .sidebar-item.current:hover {
-          color: #373a3c; }
+  .sidebar.bg-black .nav-stacked > li > a {
+    display: block;
+    color: #a6a6a6;
+    text-decoration: none;
+    border-bottom: 1px solid #333333; }
+    .sidebar.bg-black .nav-stacked > li > a:hover {
+      color: #eeeeee;
+      text-decoration: none; }
+  .sidebar.bg-black .sub-nav {
+    background: #333333; }
+    .sidebar.bg-black .sub-nav a {
+      display: block;
+      color: #a6a6a6;
+      text-decoration: none;
+      border-bottom: 1px solid #1b1b1b; }
+      .sidebar.bg-black .sub-nav a:hover {
+        color: #eeeeee;
+        text-decoration: none; }
+    .sidebar.bg-black .sub-nav .sub-nav .sidebar-item.current {
+      color: #1a1a1a; }
+      .sidebar.bg-black .sub-nav .sub-nav .sidebar-item.current:hover {
+        color: #333333; }
 
 .pagination {
   text-align: center; }
 
 .pagination ul > li > a:hover,
 .pagination ul > li > a {
-  text-shadow: 0 1px 0 #f7f7f9;
-  color: #55595c; }
+  text-shadow: 0 1px 0 #eeeeee;
+  color: #555555; }
 
 .green {
   color: #5cb85c; }
 
 .red {
   color: #d9534f; }
+
+.bg-black {
+  color: #a6a6a6;
+  background-color: #1b1b1b; }
 
 form.inline div {
   float: left; }
@@ -7048,7 +7059,7 @@ form .span8 + .span4 {
 
 .text-info {
   text-decoration: none;
-  color: #818a91; }
+  color: #777777; }
 
 .content {
   padding: 0px 10px;
@@ -7060,7 +7071,7 @@ h2.hidden-desktop {
   margin-top: 0; }
 
 .filter {
-  background-color: #eceeef;
+  background-color: #a6a6a6;
   border-top-right-radius: 0.2rem;
   border-top-left-radius: 0.2rem;
   text-align: left; }
@@ -7087,7 +7098,7 @@ h2.hidden-desktop {
   .box .box-title {
     padding-left: 10px;
     font-weight: bold;
-    color: #5a5e61;
+    color: #5b5b5b;
     color: #000;
     cursor: pointer; }
   .box .box-content {
@@ -7156,7 +7167,7 @@ a.action:hover {
 .permission-toggle:hover {
   cursor: pointer; }
 .permission-toggle.permission-disabled {
-  color: #55595c;
+  color: #555555;
   cursor: text; }
 
 .perm-collapse {
@@ -7175,14 +7186,14 @@ td .controller {
 
 .controller-row {
   background: #6f6f6f;
-  background-color: #55595c;
+  background-color: #555555;
   color: #fff; }
   .controller-row a {
     color: #efefef; }
     .controller-row a:hover {
       color: #fff; }
   .controller-row.level-1 {
-    background: #818a91;
+    background: #777777;
     color: #f1f1f1; }
   .controller-row td {
     border-top: 1px solid #7e7e7e; }

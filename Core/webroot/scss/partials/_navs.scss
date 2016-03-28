@@ -17,6 +17,5 @@
 }
 
 #wrap > nav {
-	margin-top: 30px;
-	background: $crMainBackgroundColor;
+    margin-top: 30px + $croogo-navbar-height;
 }

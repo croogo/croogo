@@ -109,6 +109,8 @@ class CroogoHelper extends Helper
             'htmlAttributes' => [
                 'class' => 'nav nav-stacked',
             ],
+            'itemTag' => 'li',
+            'listTag' => 'ul'
         ], $options);
 
 //		$aclPlugin = Configure::read('Site.acl_plugin');
@@ -129,8 +131,13 @@ class CroogoHelper extends Helper
 
         foreach ($sorted as $menu) {
             if (isset($menu['separator'])) {
-                $liOptions['class'] = 'divider';
-                $out .= $this->Html->tag('li', null, $liOptions);
+                if ($options['itemTag'] === false) {
+                    $liOptions['class'] = 'dropdown-divider';
+                    $out .= $this->Html->tag('div', '', $liOptions);
+                } else {
+                    $liOptions['class'] = 'divider';
+                    $out .= $this->Html->tag($options['itemTag'], '', $liOptions);
+                }
                 continue;
             }
 //			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByUserId($userId, $menu['url'])) {
@@ -159,6 +166,8 @@ class CroogoHelper extends Helper
             if (!empty($menu['children'])) {
                 $childClass = '';
                 if ($sidebar) {
+                    $itemTag = 'li';
+                    $listTag = 'ul';
                     $childClass = 'nav nav-stacked sub-nav ';
                     $childClass .= ' submenu-' . Inflector::slug(strtolower($menu['title']), '-');
                     if ($depth > 0) {
@@ -168,16 +177,19 @@ class CroogoHelper extends Helper
                     if ($depth == 0) {
                         $childClass = 'dropdown-menu';
                     }
+                    $itemTag = false;
+                    $listTag = 'div';
                 }
                 $children = $this->adminMenus($menu['children'], [
                     'type' => $options['type'],
                     'children' => true,
                     'htmlAttributes' => ['class' => $childClass],
+                    'itemTag' => $itemTag,
+                    'listTag' => $listTag,
                 ], $depth + 1);
 
                 $menu['htmlAttributes']['class'] .= ' hasChild dropdown-close';
             }
-            $menu['htmlAttributes']['class'] .= ' sidebar-item';
 
             $menuUrl = $this->Url->build($menu['url']);
             if ($menuUrl == env('REQUEST_URI')) {
@@ -196,6 +208,14 @@ class CroogoHelper extends Helper
                 $menu['htmlAttributes']['data-toggle'] = 'dropdown';
             }
 
+            if (!$sidebar && $depth == 0) {
+                $menu['htmlAttributes']['class'] .= ' nav-link';
+            } elseif (!$sidebar && $depth > 0) {
+                $menu['htmlAttributes']['class'] .= ' dropdown-item';
+            } else {
+                $menu['htmlAttributes']['class'] .= ' sidebar-item';
+            }
+
             if (isset($menu['before'])) {
                 $title = $menu['before'] . $title;
             }
@@ -207,25 +227,33 @@ class CroogoHelper extends Helper
             $menu['htmlAttributes']['escape'] = false;
 
             $link = $this->Html->link($title, $menu['url'], $menu['htmlAttributes']);
-            $liOptions = [];
+            if ($options['itemTag'] === false) {
+                $out .= $link;
+                continue;
+            }
+
+            $liOptions = [
+                'class' => 'nav-item',
+            ];
             if ($sidebar && !empty($children) && $depth > 0) {
-                $liOptions['class'] = ' dropdown-submenu';
+                $liOptions['class'] .= ' dropdown-submenu';
             }
             if (!$sidebar && !empty($children)) {
                 if ($depth > 0) {
-                    $liOptions['class'] = ' dropdown-submenu';
+                    $liOptions['class'] .= ' dropdown-submenu';
                 } else {
-                    $liOptions['class'] = ' dropdown';
+                    $liOptions['class'] .= ' dropdown';
                 }
             }
-            $out .= $this->Html->tag('li', $link . $children, $liOptions);
+
+            $out .= $this->Html->tag($options['itemTag'], $link . $children, $liOptions);
         }
 
         if (!$sidebar && $depth > 0) {
             $htmlAttributes['class'] = 'dropdown-menu';
         }
 
-        return $this->Html->tag('ul', $out, $htmlAttributes);
+        return $this->Html->tag($options['listTag'], $out, $htmlAttributes);
     }
 
 /**

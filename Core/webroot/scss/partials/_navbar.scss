@@ -1,158 +1,159 @@
-
 // Sidebar
 .sidebar {
-	font-family: $sansFontFamily;
-	width: $crNavWidth;
-	//padding-top: $navbarHeight;
-	margin-bottom: 10px;
-	float: left;
+    font-family: $sansFontFamily;
+    width: $croogo-nav-width;
+    //padding-top: $navbarHeight;
+    margin-bottom: 10px;
+    float: left;
 
-	.nav {
-		margin-bottom: 0px;
-	}
+    .nav {
+        margin-bottom: 0px;
+    }
 
-	a {
-		// no annoying outline
-		&:focus {
-			outline: none;
-		}
-	}
+    a {
+        // no annoying outline
+        &:focus {
+            outline: none;
+        }
+    }
 
-	.sidebar-item {
-		padding: 10px 15px;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		overflow: hidden;
+    .sidebar-item {
+        padding: 10px 15px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
 
-		// fix width for large icons
-		[class^="icon-large-"]:before,
-		[class*=" icon-large"]:before {
-			width: 1em;
-		}
+        // fix width for large icons
+        [class^="icon-large-"]:before,
+        [class*=" icon-large"]:before {
+            width: 1em;
+        }
 
-		&.current {
-			@include sidebarActiveBackground;
+        &.current {
+            @include sidebarActiveBackground;
 
-			&.dropdown-close {
-				@include sidebarActiveBackground;
-			}
+            &.dropdown-close {
+                @include sidebarActiveBackground;
+            }
 
-			&.dropdown-open {
-				background: none;
-			}
-		}
+            &.dropdown-open {
+                background: none;
+            }
+        }
 
-		span {
-			margin: 0 8px;
-		}
+        span {
+            margin: 0 8px;
+        }
 
-	}
+    }
 
-	.dropdown-submenu {
-		&:hover {
-			.sidebar-item {
-				[class^="icon-"],
-				[class*=" icon-"] {
-					background-image: none; // no glyphicons
-				}
-			}
-		}
-		.sidebar-item {
-			&.current:after {
-				display: none;
-			}
-		}
-	}
+    .dropdown-submenu {
+        &:hover {
+            .sidebar-item {
+                [class^="icon-"],
+                [class*=" icon-"] {
+                    background-image: none; // no glyphicons
+                }
+            }
+        }
+        .sidebar-item {
+            &.current:after {
+                display: none;
+            }
+        }
+    }
 
-	.dropdown-submenu {
-		&:hover {
-			.sidebar-item {
-				[class^="icon-"],
-				[class*=" icon-"] {
-					background-image: none; // no glyphicons
-				}
-				&.current {
-					background: none; // hide active background when hovered
-				}
-			}
-		}
-	}
+    .dropdown-submenu {
+        &:hover {
+            .sidebar-item {
+                [class^="icon-"],
+                [class*=" icon-"] {
+                    background-image: none; // no glyphicons
+                }
+                &.current {
+                    background: none; // hide active background when hovered
+                }
+            }
+        }
+    }
 
-	.sub-nav {
-		width: $crNavWidth;
-		z-index: $zindex-modal;
-		margin-bottom: 0px;
-		display: none;
+    .sub-nav {
+        width: $croogo-nav-width;
+        margin-bottom: 0px;
+        display: none;
 
-		.sidebar-item {
-			&.current {
-				&:hover {
-					background: none;
-				}
-			}
-		}
+        .sidebar-item {
+            &.current {
+                &:hover {
+                    background: none;
+                }
+            }
+        }
 
-		.sub-nav {
-			position: absolute;
-			margin-left: 0;
+        .sub-nav {
+            position: absolute;
+            margin-left: 0;
 
-			&.dropdown-menu {
-				li:first-child > a {
-					border-top: none;
-				}
-				li:last-child > a {
-					border-bottom: none;
-				}
-			}
-		}
-	}
+            &.dropdown-menu {
+                li:first-child > a {
+                    border-top: none;
+                }
+                li:last-child > a {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
 
-	.nav-stacked > li > a {
+    .nav-stacked > li > a {
         color: $navbar-dark-color;
-		&:hover {
-			color: $navbar-dark-hover-color;
-		}
-	}
+        &:hover {
+            color: $navbar-dark-hover-color;
+        }
+    }
 
-	.navbar-inner {
-		padding: 0;
-		border-color: none;
-		@include border-radius(0);
-		border: none;
-	}
+    .nav {
+        padding: 0;
+        @include border-radius(0);
+        border: none;
+    }
 
-	&.navbar-inverse {
-		background: $crMainBackgroundColor;
+    &.bg-black {
+        .nav-stacked {
+            > li {
+                > a {
+                    display: block;
+                    color: $gray-lighter;
+                    text-decoration: none;
+                    border-bottom: 1px solid $gray-dark;
+                    &:hover {
+                        color: $gray-lightest;
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
 
-		.navbar-inner {
-			background: $gray-dark;
-		}
-
-		.nav-stacked {
-			> li {
-				&:first-child > a {
-					border-top: 1px solid $gray-dark;
-				}
-				> a {
-					color: $gray-dark;
-					&:hover {
-						color: $gray-dark;
-					}
-					border-bottom: 1px solid $gray-dark;
-				}
-			}
-		}
-
-		.sub-nav {
-			background: lighten($gray-dark, 10%);
-			.sub-nav {
-				.sidebar-item.current {
-					color: darken($gray-dark, 10%);
-					&:hover {
-						color: $gray-dark;
-					}
-				}
-			}
-		}
-	}
+        .sub-nav {
+            background: $gray-dark;
+            a {
+                display: block;
+                color: $gray-lighter;
+                text-decoration: none;
+                border-bottom: 1px solid $nearly-black;
+                &:hover {
+                    color: $gray-lightest;
+                    text-decoration: none;
+                }
+            }
+            .sub-nav {
+                .sidebar-item.current {
+                    color: darken($gray-dark, 10%);
+                    &:hover {
+                        color: $gray-dark;
+                    }
+                }
+            }
+        }
+    }
 }

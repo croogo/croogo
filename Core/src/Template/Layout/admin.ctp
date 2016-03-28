@@ -7,8 +7,7 @@
         <?php
 
         echo $this->Html->css([
-            'Croogo/Core.admin',
-            'Croogo/Core.thickbox',
+            'Croogo/Core.croogo-admin',
             'https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/css/tether.min.css',
         ]);
         echo $this->Layout->js();
@@ -40,17 +39,13 @@
         <div id="wrap">
             <?php echo $this->element('Croogo/Core.admin/header'); ?>
             <?php echo $this->element('Croogo/Core.admin/navigation'); ?>
-            <div id="push"></div>
-            <div id="content-container" class="container-fluid">
-                <div class="row-fluid">
-                    <div id="content" class="clearfix">
-                        <?php echo $this->element('Croogo/Core.admin/breadcrumb'); ?>
-                        <div id="inner-content" class="span12">
-                            <?php echo $this->Flash->render(); ?>
-                            <?php echo $this->fetch('content'); ?>
-                        </div>
+            <div id="content-container" class="<?= $this->Theme->getCssClass('container') ?>">
+                <div id="content" class="clearfix">
+                    <?php echo $this->element('Croogo/Core.admin/breadcrumb'); ?>
+                    <div id="inner-content" class="<?= $this->Theme->getCssClass('columnFull') ?>">
+                        <?php echo $this->Flash->render(); ?>
+                        <?php echo $this->fetch('content'); ?>
                     </div>
-                    &nbsp;
                 </div>
             </div>
         </div>
