@@ -6910,6 +6910,9 @@ footer {
   footer.navbar-inverse {
     background: #333333; }
 
+.hidden {
+  display: none; }
+
 .popup #content {
   background: #fff;
   border: 0px solid none;
