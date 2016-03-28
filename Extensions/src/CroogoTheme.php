@@ -109,7 +109,7 @@ class CroogoTheme
                     'formInput' => 'input-block-level',
                     'imageClass' => '',
                     'row' => 'row-fluid',
-                    'tableClass' => 'table',
+                    'tableClass' => 'table table-striped',
                     'thumbnailClass' => 'img-polaroid',
                 ],
                 'iconDefaults' => [
@@ -119,7 +119,7 @@ class CroogoTheme
                 ],
                 'icons' => [
                     'attach' => 'paper-clip',
-                    'check-mark' => 'ok',
+                    'check-mark' => 'check',
                     'comment' => 'comment-alt',
                     'copy' => 'copy',
                     'create' => 'plus',

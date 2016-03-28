@@ -158,22 +158,17 @@ class CroogoHtmlHelper extends HtmlHelper
  */
     public function status($value, $url = [])
     {
-        $iconDefaults = $this->config('iconDefaults');
-        $icons = $this->config('icons');
-        $icon = $value == Status::PUBLISHED ? $icons['check-mark'] : $icons['x-mark'];
+        $icon = $value == Status::PUBLISHED ? $this->Theme->getIcon('check-mark') : $this->Theme->getIcon('x-mark');
         $class = $value == Status::PUBLISHED ? 'green' : 'red';
+        $iconTag = $this->icon($icon, ['class' => $class]);
 
         if (empty($url)) {
-            return $this->icon($icon, ['class' => $class]);
+            return $iconTag;
         } else {
-            return $this->link('', 'javascript:void(0);', [
+            return $this->link($iconTag, 'javascript:void(0);', [
+                'escape' => false,
                 'data-url' => $this->Url->build($url),
-                'class' => trim(implode(' ', [
-                    $iconDefaults['classDefault'],
-                    $iconDefaults['classPrefix'] . $icon,
-                    $class,
-                    'ajax-toggle',
-                ]))
+                'class' => "$class ajax-toggle"
             ]);
         }
     }

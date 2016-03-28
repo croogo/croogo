@@ -4198,7 +4198,7 @@ button.close {
   display: table;
   clear: both; }
 
-.center-block, .admin-login-box {
+.center-block, .admin-login-box, .pagination-wrapper {
   display: block;
   margin-left: auto;
   margin-right: auto; }
@@ -6865,7 +6865,7 @@ body {
   min-height: 400px; }
 
 #inner-content {
-  margin: 20px 0 0 0; }
+  margin: 0; }
 
 .content {
   padding: 0px 10px; }
@@ -7012,13 +7012,14 @@ footer {
       .sidebar.bg-black .sub-nav .sub-nav .sidebar-item.current:hover {
         color: #333333; }
 
-.pagination {
-  text-align: center; }
-
-.pagination ul > li > a:hover,
-.pagination ul > li > a {
-  text-shadow: 0 1px 0 #eeeeee;
-  color: #555555; }
+.pagination-wrapper {
+  text-align: center;
+  margin-top: 20px; }
+  .pagination-wrapper p {
+    margin: 0;
+    font-size: 0.875rem; }
+  .pagination-wrapper a:hover {
+    text-decoration: none; }
 
 .green {
   color: #5cb85c; }
@@ -7030,30 +7031,14 @@ footer {
   color: #a6a6a6;
   background-color: #1b1b1b; }
 
-form.inline div {
-  float: left; }
-
-.input.inline {
-  float: left; }
-  .input.inline label, .input.inline input, .input.inline select {
-    margin-right: 10px;
-    width: auto;
-    display: inline-block; }
-.input.submit, .input.select, .input.radio, .input.checkbox, .input.password, .input.datetime, .input.date, .input.email, .input.file, .input.tel, .input.time, .input.number, .input.stringlist, .input.textarea, .input.text {
-  margin: 10px; }
-.input.radio, .input.checkbox {
-  display: table; }
-  .input.radio .input-block-level, .input.checkbox .input-block-level {
-    min-height: inherit;
-    margin-top: 0px; }
-.input.date select, .input.time select, .input.datetime select {
-  width: auto; }
-
 .label-hidden label {
   display: none; }
 
 form .span8 + .span4 {
   margin-top: 37px; }
+
+.form-inline .form-control {
+  margin-right: 5px; }
 
 .text-important {
   text-decoration: none;

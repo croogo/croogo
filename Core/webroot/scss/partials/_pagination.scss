@@ -1,11 +1,16 @@
-.pagination {
-	text-align: center;
-}
+.pagination-wrapper {
+    @extend .center-block;
 
-.pagination ul > li {
-	> a:hover,
-	> a {
-		text-shadow: 0 1px 0 $gray-lightest;
-		color: $gray;
-	}
+    text-align: center;
+    margin-top: 20px;
+    p {
+        margin: 0;
+        font-size: $font-size-sm;
+    }
+
+    a {
+        &:hover {
+            text-decoration: none;
+        }
+    }
 }

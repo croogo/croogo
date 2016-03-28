@@ -48,50 +48,6 @@ class CroogoFormHelper extends FormHelper
         parent::__construct($View, $settings);
     }
 
-/**
- * Generate bootstrap specific options
- *
- * @return array Options array
- */
-    protected function _bootstrapGenerate($title, $options)
-    {
-        if (isset($options['button'])) {
-            $class = isset($options['class']) ? $options['class'] : null;
-
-            $classes = explode(' ', $class);
-            if (($key = array_search('btn', $classes)) !== false) {
-                unset($classes[$key]);
-            }
-
-            $class = implode(' ', $classes);
-
-            if ($options['button'] === 'default') {
-                $options['class'] = 'btn btn-default';
-            } else {
-                $options['class'] = 'btn btn-' . $options['button'];
-            }
-            $options['class'] .= $class ? ' ' . $class : null;
-
-            unset($options['button']);
-        }
-        if (isset($options['icon'])) {
-            $title = $this->CroogoHtml->icon($options['icon']) . ' ' . $title;
-            unset($options['icon']);
-        }
-        return [$title, $options];
-    }
-
-    protected function _helpText($options)
-    {
-        $helpClass = isset($options['helpInline']) ? 'help-inline' : 'help-block';
-        $helpText = $this->CroogoHtml->tag('span', $options['help'], [
-            'class' => $helpClass,
-        ]);
-        $options['after'] = isset($options['after']) ? $options['after'] . $helpText : $helpText;
-        unset($options['help'], $options['helpInline']);
-        return $options;
-    }
-
     protected function _tooltip($options)
     {
         if ($options['tooltip'] === false) {
@@ -159,34 +115,6 @@ class CroogoFormHelper extends FormHelper
     }
 
 /**
- * Generate div options for input
- *
- * @param array $options Options list
- * @return array
- */
-    protected function _divOptions($options)
-    {
-        $divOptions = parent::_divOptions($options);
-        $divOptions = $this->_divOptionsAddon($options, $divOptions);
-        return $divOptions;
-    }
-
-/**
- * Generate addon specific options
- *
- * @param array $options Options list
- * @return array
- */
-    protected function _divOptionsAddon($options, $divOptions)
-    {
-        if (isset($this->_addon) && isset($divOptions['class'])) {
-            $divOptions['class'] .= ' ' . $this->_addon;
-            unset($this->_addon);
-        }
-        return $divOptions;
-    }
-
-/**
  * Generate input options array
  *
  * @param array $options Options list
@@ -228,38 +156,6 @@ class CroogoFormHelper extends FormHelper
             $target = '#' . $options['id'];
             $options['after'] = $this->Croogo->linkChooser($target) . $after;
         }
-
-        return $options;
-    }
-
-/**
- * Generate addon specific input options array
- *
- * @param array $options Options list
- * @return array
- */
-    protected function _parseOptionsAddon($options)
-    {
-        if (isset($options['append'])) {
-            $this->_addon = 'input-append';
-        }
-        if (isset($options['prepend'])) {
-            $this->_addon = 'input-prepend';
-        }
-
-        if (isset($this->_addon)) {
-            $options['class'] = $this->Theme->getCssClass('columnLeft');
-            if (isset($options['append'])) {
-                $options['between'] = '<div class="addon">';
-                $options['after'] = $options['addon'] . '</div>';
-            }
-            if (isset($options['prepend'])) {
-                $options['between'] = '<div class="addon">' . $options['addon'];
-                $options['after'] = '</div>';
-            }
-        }
-
-        unset($options['append'], $options['prepend'], $options['addon']);
 
         return $options;
     }
@@ -321,45 +217,11 @@ class CroogoFormHelper extends FormHelper
         }
         $options = $this->_placeholderOptions($fieldName, $options);
 
-        // Automatic tooltip when label is 'false'. Leftover from 1.5.0.
-        //
-        // TODO:
-        // Remove this behavior in 1.6.x, ie: tooltip needs to be implicitly
-        // requested by caller.
-        if (empty($options['title']) && empty($options['label']) && !empty($options['placeholder']) && !isset($options['tooltip'])) {
-            $options['tooltip'] = $options['placeholder'];
-        }
-
-        if (!empty($options['help'])) {
-            $options = $this->_helpText($options);
-        }
-
         if (array_key_exists('tooltip', $options)) {
             $options = $this->_tooltip($options);
         }
 
-        $formInputClass = $this->Theme->getCssClass('formInput');
-        if (!empty($formInputClass)) {
-            if (isset($options['class'])) {
-                $options['class'] .= ' ' . $formInputClass;
-            } else {
-                $options['class'] = $formInputClass;
-            }
-        }
-
         return parent::input($fieldName, $options);
-    }
-
-    protected function _inputContainerTemplate($options)
-    {
-        if (isset($options['options']['before'])) {
-            $options['content'] = $options['options']['before'] . $options['content'];
-        }
-        if (isset($options['options']['after'])) {
-            $options['content'] =  $options['content'] . $options['options']['after'];
-        }
-
-        return parent::_inputContainerTemplate($options);
     }
 
 /**
@@ -460,26 +322,5 @@ class CroogoFormHelper extends FormHelper
         $out .= $this->input("autocomplete_${field}", $autocomplete);
 
         return $out;
-    }
-
-    public function button($title, array $options = [])
-    {
-        $defaults = ['class' => 'btn'];
-
-        $options = array_merge($defaults, $options);
-
-        list($title, $options) = $this->_bootstrapGenerate($title, $options);
-
-        return parent::button($title, $options);
-    }
-
-    public function submit($caption = null, array $options = [])
-    {
-        $defaults = ['class' => 'btn', 'escape' => false];
-        $options = array_merge($defaults, $options);
-
-        list($caption, $options) = $this->_bootstrapGenerate($caption, $options);
-
-        return parent::submit($caption, $options);
     }
 }

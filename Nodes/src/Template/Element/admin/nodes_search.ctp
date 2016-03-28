@@ -1,55 +1,53 @@
 <?php
-
-$url = isset($url) ? $url : array('action' => 'index');
-
+$url = isset($url) ? $url : ['action' => 'index'];
 ?>
-<div class="clearfix filter">
 <?php
-	echo $this->CroogoForm->create(false, array(
-		'class' => 'form-inline',
-		'url' => $url
-	));
+echo $this->CroogoForm->create(false, [
+    'align' => 'inline',
+    'url' => $url,
+]);
 
-	$this->CroogoForm->templates(array(
-		'label' => false,
-		'class' => 'span11',
-		'submitContainer' => '<div class="input submit span2">{{content}}</div>'
-	));
+$this->CroogoForm->templates([
+    'label' => false,
+    'submitContainer' => '{{content}}',
+]);
 
-	echo $this->CroogoForm->input('filter', array(
-		'title' => __d('croogo', 'Search'),
-		'placeholder' => __d('croogo', 'Search...'),
-		'tooltip' => false,
-	));
+echo $this->CroogoForm->input('filter', [
+    'title' => __d('croogo', 'Search'),
+    'placeholder' => __d('croogo', 'Search...'),
+    'tooltip' => false,
+]);
 
-	if (!isset($this->request->query['chooser'])):
+if (!isset($this->request->query['chooser'])):
 
-		echo $this->CroogoForm->input('type', array(
-			'options' => $nodeTypes,
-			'empty' => __d('croogo', 'Type'),
-		));
+    echo $this->CroogoForm->input('type', [
+        'options' => $nodeTypes,
+        'empty' => __d('croogo', 'Type'),
+        'class' => 'c-select',
+    ]);
 
-		echo $this->CroogoForm->input('status', array(
-			'options' => array(
-				'1' => __d('croogo', 'Published'),
-				'0' => __d('croogo', 'Unpublished'),
-			),
-			'empty' => __d('croogo', 'Status'),
-		));
+    echo $this->CroogoForm->input('status', [
+        'options' => [
+            '1' => __d('croogo', 'Published'),
+            '0' => __d('croogo', 'Unpublished'),
+        ],
+        'empty' => __d('croogo', 'Status'),
+        'class' => 'c-select',
+    ]);
 
-		echo $this->CroogoForm->input('promote', array(
-			'options' => array(
-				'1' => __d('croogo', 'Yes'),
-				'0' => __d('croogo', 'No'),
-			),
-			'empty' => __d('croogo', 'Promoted'),
-		));
+    echo $this->CroogoForm->input('promote', [
+        'options' => [
+            '1' => __d('croogo', 'Yes'),
+            '0' => __d('croogo', 'No'),
+        ],
+        'empty' => __d('croogo', 'Promoted'),
+        'class' => 'c-select',
+    ]);
 
-	endif;
+endif;
 
-	echo $this->CroogoForm->input(__d('croogo', 'Filter'), [
-		'type' => 'submit'
-	]);
-	echo $this->CroogoForm->end();
+echo $this->CroogoForm->submit(__d('croogo', 'Filter'), [
+    'class' => 'btn-success-outline',
+]);
+echo $this->CroogoForm->end();
 ?>
-</div>
