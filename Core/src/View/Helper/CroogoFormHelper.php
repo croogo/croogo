@@ -195,7 +195,7 @@ class CroogoFormHelper extends FormHelper
     protected function _parseOptions($fieldName, $options)
     {
         $options = parent::_parseOptions($fieldName, $options);
-        $options = $this->_parseOptionsAddon($options);
+//        $options = $this->_parseOptionsAddon($options);
 
         $formInput = $this->Theme->getCssClass('formInput');
         $isMultipleCheckbox = isset($options['multiple']) &&

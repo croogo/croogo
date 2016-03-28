@@ -1,0 +1,158 @@
+
+// Sidebar
+.sidebar {
+	font-family: $sansFontFamily;
+	width: $crNavWidth;
+	//padding-top: $navbarHeight;
+	margin-bottom: 10px;
+	float: left;
+
+	.nav {
+		margin-bottom: 0px;
+	}
+
+	a {
+		// no annoying outline
+		&:focus {
+			outline: none;
+		}
+	}
+
+	.sidebar-item {
+		padding: 10px 15px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+
+		// fix width for large icons
+		[class^="icon-large-"]:before,
+		[class*=" icon-large"]:before {
+			width: 1em;
+		}
+
+		&.current {
+			@include sidebarActiveBackground;
+
+			&.dropdown-close {
+				@include sidebarActiveBackground;
+			}
+
+			&.dropdown-open {
+				background: none;
+			}
+		}
+
+		span {
+			margin: 0 8px;
+		}
+
+	}
+
+	.dropdown-submenu {
+		&:hover {
+			.sidebar-item {
+				[class^="icon-"],
+				[class*=" icon-"] {
+					background-image: none; // no glyphicons
+				}
+			}
+		}
+		.sidebar-item {
+			&.current:after {
+				display: none;
+			}
+		}
+	}
+
+	.dropdown-submenu {
+		&:hover {
+			.sidebar-item {
+				[class^="icon-"],
+				[class*=" icon-"] {
+					background-image: none; // no glyphicons
+				}
+				&.current {
+					background: none; // hide active background when hovered
+				}
+			}
+		}
+	}
+
+	.sub-nav {
+		width: $crNavWidth;
+		z-index: $zindex-modal;
+		margin-bottom: 0px;
+		display: none;
+
+		.sidebar-item {
+			&.current {
+				&:hover {
+					background: none;
+				}
+			}
+		}
+
+		.sub-nav {
+			position: absolute;
+			margin-left: 0;
+
+			&.dropdown-menu {
+				li:first-child > a {
+					border-top: none;
+				}
+				li:last-child > a {
+					border-bottom: none;
+				}
+			}
+		}
+	}
+
+	.nav-stacked > li > a {
+        color: $navbar-dark-color;
+		&:hover {
+			color: $navbar-dark-hover-color;
+		}
+	}
+
+	.navbar-inner {
+		padding: 0;
+		border-color: none;
+		@include border-radius(0);
+		border: none;
+	}
+
+	&.navbar-inverse {
+		background: $crMainBackgroundColor;
+
+		.navbar-inner {
+			background: $gray-dark;
+		}
+
+		.nav-stacked {
+			> li {
+				&:first-child > a {
+					border-top: 1px solid $gray-dark;
+				}
+				> a {
+					color: $gray-dark;
+					&:hover {
+						color: $gray-dark;
+					}
+					border-bottom: 1px solid $gray-dark;
+				}
+			}
+		}
+
+		.sub-nav {
+			background: lighten($gray-dark, 10%);
+			.sub-nav {
+				.sidebar-item.current {
+					color: darken($gray-dark, 10%);
+					&:hover {
+						color: $gray-dark;
+					}
+				}
+			}
+		}
+	}
+}
