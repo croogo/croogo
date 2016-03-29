@@ -148,6 +148,7 @@ class TermsController extends TaxonomyAppController {
 		} else {
 			$this->request->data['Taxonomy'] = $taxonomy['Taxonomy'];
 			$this->request->data['Term'] = $term['Term'];
+			$this->request->data['Params'] = $term['Params'];
 		}
 		$parentTree = $this->Term->Taxonomy->getTree($vocabulary['Vocabulary']['alias'], array('taxonomyId' => true));
 		$this->set(compact('vocabulary', 'parentTree', 'term', 'taxonomy', 'vocabularyId'));

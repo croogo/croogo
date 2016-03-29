@@ -39,6 +39,7 @@ class Term extends TaxonomyAppModel {
 				'nodes',
 			),
 		),
+		'Croogo.Params',
 		'Croogo.Trackable',
 	);
 

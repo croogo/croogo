@@ -27,6 +27,7 @@ $inputClass = isset($inputDefaults['class']) ? $inputDefaults['class'] : null;
 
 $this->append('tab-heading');
 	echo $this->Croogo->adminTab(__d('croogo', 'Term'), '#term-basic');
+	echo $this->Croogo->adminTab(__d('croogo', 'Params'), '#term-params');
 	echo $this->Croogo->adminTabs();
 $this->end();
 
@@ -52,7 +53,13 @@ $this->append('tab-content');
 		));
 	echo $this->Html->tabEnd();
 
-	echo $this->Croogo->adminTabs();
+	echo $this->Html->tabStart('term-params') .
+		$this->Form->input('params', array(
+			'label' => __d('croogo', 'Params'),
+		));
+	echo $this->Html->tabEnd();
+
+	$this->Croogo->adminTabs();
 
 $this->end();
 
