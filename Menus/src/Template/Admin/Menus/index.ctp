@@ -5,7 +5,6 @@ use Croogo\Core\Status;
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Menus'), '/' . $this->request->url);
 
 $this->start('table-heading');

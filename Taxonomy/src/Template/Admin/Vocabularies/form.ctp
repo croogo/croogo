@@ -4,8 +4,7 @@ $this->Croogo->adminScript('Croogo/Taxonomy.vocabularies');
 $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index'));
+		->addCrumb(__d('croogo', 'Content'), array('plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'edit') {
 	$this->assign('title', __d('croogo', 'Edit Vocabulary'));

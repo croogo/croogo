@@ -3,7 +3,6 @@
 $this->extend('/Common/admin_edit');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Plugins'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Upload'), '/' . $this->request->url);

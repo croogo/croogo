@@ -7,7 +7,6 @@ $this->Croogo->adminScript('Croogo/Blocks.admin');
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Blocks'), array('action' => 'index'));
 
 $this->append('form-start', $this->Form->create('Blocks', array(

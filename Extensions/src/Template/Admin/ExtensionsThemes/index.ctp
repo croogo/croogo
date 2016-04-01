@@ -5,7 +5,6 @@ use Cake\Core\Configure;
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Themes'), '/' . $this->request->url);
 

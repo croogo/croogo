@@ -4,7 +4,6 @@ $this->extend('/Common/admin_index');
 $this->Croogo->adminScript(array('Nodes.admin'));
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Content'), array(
 		'admin' => true,
 		'plugin' => 'nodes',

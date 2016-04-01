@@ -5,7 +5,6 @@ $this->assign('title', __d('croogo', 'Vocabulary: %s', $vocabulary->title));
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'nodes', 'controller' => 'nodes', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Vocabularies'), array('plugin' => 'taxonomy', 'controller' => 'vocabularies', 'action' => 'index'))
 	->addCrumb($vocabulary->title, array('plugin' => 'taxonomy', 'controller' => 'terms', 'action' => 'index', $vocabulary->id));

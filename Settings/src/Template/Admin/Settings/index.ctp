@@ -3,7 +3,6 @@
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Settings'), array(
 		'prefix' => 'admin',
 		'plugin' => 'Croogo/Settings',

@@ -8,7 +8,6 @@ $this->Croogo->adminscript('Croogo/Menus.admin');
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Menus'), ['controller' => 'Menus', 'action' => 'index'])
 	->addCrumb(__d('croogo', $menu->title), array(
 		'action' => 'index',

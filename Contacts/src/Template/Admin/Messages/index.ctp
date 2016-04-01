@@ -5,7 +5,6 @@ $this->Croogo->adminScript('Croogo/Contacts.admin');
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Contacts'), array('controller' => 'contacts', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Messages'), array('action' => 'index'));
 

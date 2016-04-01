@@ -7,8 +7,7 @@ $header = <<<EOF
 \$this->viewVars['title_for_layout'] = sprintf('%s: %s', __d('croogo', '$pluralHumanName'), h(\${$singularVar}['$modelClass']['$displayField']));
 
 \$this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', '${pluralHumanName}'), array('action' => 'index'));
+		->addCrumb(__d('croogo', '${pluralHumanName}'), array('action' => 'index'));
 
 if (isset(\${$singularVar}['$modelClass']['$displayField'])):
 	\$this->Html->addCrumb(\${$singularVar}['$modelClass']['$displayField'], '/' . \$this->request->url);

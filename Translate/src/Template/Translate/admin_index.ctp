@@ -10,7 +10,6 @@ if (isset($this->request->params['models'][$modelAlias])):
 endif;
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(
 		Inflector::pluralize($modelAlias),
 		array(

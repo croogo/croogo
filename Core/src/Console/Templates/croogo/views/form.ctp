@@ -6,8 +6,7 @@ $header = <<<EOF
 \$this->extend('/Common/admin_edit');
 
 \$this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('$i18nDomain', '${pluralHumanName}'), array('action' => 'index'));
+		->addCrumb(__d('$i18nDomain', '${pluralHumanName}'), array('action' => 'index'));
 
 if (\$this->action == 'admin_edit') {
 	\$this->Html->addCrumb(\$this->request->data['$modelClass']['$displayField'], '/' . \$this->request->url);

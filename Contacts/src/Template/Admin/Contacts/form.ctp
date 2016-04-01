@@ -3,7 +3,6 @@
 $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Contacts'), array('controller' => 'contacts', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_edit') {

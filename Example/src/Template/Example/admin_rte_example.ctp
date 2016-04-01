@@ -2,7 +2,6 @@
 
 $this->extend('/Common/admin_index');
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb('Example', array('controller' => 'example', 'action' => 'index'))
 	->addCrumb('RTE Example', '/' . $this->request->url);
 

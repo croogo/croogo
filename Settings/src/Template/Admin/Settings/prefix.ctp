@@ -4,8 +4,7 @@ use Cake\Utility\Inflector;
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Html->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'Croogo/Settings', 'controller' => 'Settings', 'action' => 'index'))
+$this->Html	->addCrumb(__d('croogo', 'Settings'), array('plugin' => 'Croogo/Settings', 'controller' => 'Settings', 'action' => 'index'))
 	->addCrumb($prefix, '/' . $this->request->url);
 
 $this->assign('form-start', $this->Form->create('Settings', array(

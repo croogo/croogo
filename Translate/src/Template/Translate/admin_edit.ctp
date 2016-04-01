@@ -3,7 +3,6 @@ $this->extend('/Common/admin_edit');
 $this->set('className', 'translate');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(Inflector::humanize(Inflector::pluralize($modelAlias)))
 	->addCrumb($this->data[$modelAlias][$displayField])
 	->addCrumb(

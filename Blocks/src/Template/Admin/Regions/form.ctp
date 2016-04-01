@@ -3,7 +3,6 @@
 $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Blocks'), array(
 		'plugin' => 'blocks', 'controller' => 'blocks', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Regions'), array(
