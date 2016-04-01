@@ -16,14 +16,14 @@ $this->end();
 
 $this->append('search', $this->element('admin/nodes_search'));
 
-$this->append('form-start', $this->CroogoForm->create(null, [
+$this->append('form-start', $this->Form->create(null, [
     'url' => ['action' => 'process'],
     'align' => 'inline',
 ]));
 
 $this->start('table-heading');
 $tableHeaders = $this->Html->tableHeaders([
-    $this->CroogoForm->checkbox('checkAll', ['id' => 'NodesCheckAll']),
+    $this->Form->checkbox('checkAll', ['id' => 'NodesCheckAll']),
     $this->Paginator->sort('title', __d('croogo', 'Title')),
     $this->Paginator->sort('type', __d('croogo', 'Type')),
     $this->Paginator->sort('user_id', __d('croogo', 'User')),
@@ -38,7 +38,7 @@ $this->append('table-body');
     <tbody>
         <?php foreach ($nodes as $node): ?>
             <tr>
-                <td><?php echo $this->CroogoForm->checkbox('Nodes.' . $node->id . '.id',
+                <td><?php echo $this->Form->checkbox('Nodes.' . $node->id . '.id',
                         ['class' => 'row-select']); ?></td>
                 <td>
                     <span>
@@ -107,7 +107,7 @@ $this->append('table-body');
 $this->end();
 
 $this->start('bulk-action');
-echo $this->CroogoForm->input('Nodes.action', [
+echo $this->Form->input('Nodes.action', [
     'label' => __d('croogo', 'Bulk actions'),
     'class' => 'c-select',
     'options' => [
@@ -126,7 +126,7 @@ echo $this->CroogoForm->input('Nodes.action', [
 ]);
 
 $jsVarName = uniqid('confirmMessage_');
-echo $this->CroogoForm->button(__d('croogo', 'Apply'), [
+echo $this->Form->button(__d('croogo', 'Apply'), [
     'type' => 'button',
     'class' => 'bulk-process btn-primary-outline',
     'data-relatedElement' => '#nodes-action',
@@ -139,4 +139,4 @@ $this->Js->buffer("$('.bulk-process').on('click', Nodes.confirmProcess);");
 
 $this->end();
 
-$this->append('form-end', $this->CroogoForm->end());
+$this->append('form-end', $this->Form->end());

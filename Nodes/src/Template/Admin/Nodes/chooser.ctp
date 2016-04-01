@@ -20,7 +20,7 @@
 	<?php foreach ($nodes as $node) { ?>
 		<li>
 		<?php
-			echo $this->CroogoHtml->link($node->title, array(
+			echo $this->Html->link($node->title, array(
 				'prefix' => 'admin',
 				'plugin' => 'Croogo/Nodes',
 				'controller' => 'Nodes',
@@ -41,8 +41,8 @@
 			);
 			$popup[] = array(__d('croogo', 'Status'), $this->Layout->status($node->status));
 			$popup[] = array(__d('croogo', 'Created'), $node->created);
-			$popup = $this->CroogoHtml->tag('table', $this->CroogoHtml->tableCells($popup));
-			$a = $this->CroogoHtml->link('', '#', array(
+			$popup = $this->Html->tag('table', $this->Html->tableCells($popup));
+			$a = $this->Html->link('', '#', array(
 				'class' => 'popovers action',
 				'icon' => 'info-sign',
 				'data-title' => $type,
@@ -60,4 +60,4 @@
 </div>
 <?php
 
-$this->CroogoHtml->scriptBlock('$(\'.popovers\').popover().on(\'click\', function() { return false; });', ['block' => 'scriptBottom']);
+$this->Html->scriptBlock('$(\'.popovers\').popover().on(\'click\', function() { return false; });', ['block' => 'scriptBottom']);

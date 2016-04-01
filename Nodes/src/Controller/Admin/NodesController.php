@@ -163,6 +163,11 @@ class NodesController extends AppController
                 'Types.alias' => 'ASC',
             ),
         ));
+
+        if ($types->count() === 1) {
+            return $this->redirect(['action' => 'add', $types->first()->alias]);
+        }
+
         $this->set(compact('types'));
     }
 

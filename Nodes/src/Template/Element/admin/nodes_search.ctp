@@ -2,17 +2,17 @@
 $url = isset($url) ? $url : ['action' => 'index'];
 ?>
 <?php
-echo $this->CroogoForm->create(false, [
+echo $this->Form->create(false, [
     'align' => 'inline',
     'url' => $url,
 ]);
 
-$this->CroogoForm->templates([
+$this->Form->templates([
     'label' => false,
     'submitContainer' => '{{content}}',
 ]);
 
-echo $this->CroogoForm->input('filter', [
+echo $this->Form->input('filter', [
     'title' => __d('croogo', 'Search'),
     'placeholder' => __d('croogo', 'Search...'),
     'tooltip' => false,
@@ -20,13 +20,13 @@ echo $this->CroogoForm->input('filter', [
 
 if (!isset($this->request->query['chooser'])):
 
-    echo $this->CroogoForm->input('type', [
+    echo $this->Form->input('type', [
         'options' => $nodeTypes,
         'empty' => __d('croogo', 'Type'),
         'class' => 'c-select',
     ]);
 
-    echo $this->CroogoForm->input('status', [
+    echo $this->Form->input('status', [
         'options' => [
             '1' => __d('croogo', 'Published'),
             '0' => __d('croogo', 'Unpublished'),
@@ -35,7 +35,7 @@ if (!isset($this->request->query['chooser'])):
         'class' => 'c-select',
     ]);
 
-    echo $this->CroogoForm->input('promote', [
+    echo $this->Form->input('promote', [
         'options' => [
             '1' => __d('croogo', 'Yes'),
             '0' => __d('croogo', 'No'),
@@ -46,8 +46,8 @@ if (!isset($this->request->query['chooser'])):
 
 endif;
 
-echo $this->CroogoForm->submit(__d('croogo', 'Filter'), [
+echo $this->Form->submit(__d('croogo', 'Filter'), [
     'class' => 'btn-success-outline',
 ]);
-echo $this->CroogoForm->end();
+echo $this->Form->end();
 ?>
