@@ -7124,19 +7124,9 @@ h2.hidden-md-up {
   margin: 10px 0px; }
 
 .tab-content {
-  border-radius: 0px 0px 2px 2px;
   background-color: #fff;
-  min-height: 200px;
-  margin-top: -20px;
-  padding: 0px;
-  border: 0px;
+  padding: 20px;
   min-height: 200px; }
-  .tab-content fieldset {
-    padding: 0px; }
-    .tab-content fieldset legend {
-      margin: 0;
-      line-height: 35px;
-      font-size: 100%; }
 
 .navbar-inverse .brand,
 .navbar-inverse .nav > li > a.brand {

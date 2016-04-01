@@ -422,11 +422,11 @@ class NodesController extends AppController
         if (isset($this->Taxonomies)) {
             $this->Taxonomies->prepareCommonData($type);
         }
-        if (($node) && (!empty($node->parent_id))) {
-            $parentNode = $this->Nodes->get($node->parent_id);
-            $parentTitle = $parentNode->title;
-        }
         $roles = $this->Nodes->Users->Roles->find('list');
-        $this->set(compact('parentTitle', 'roles'));
+        $parents = $this->Nodes->find('list')->where([
+            'type' => $type->id
+        ])->toArray();
+        $users = $this->Nodes->Users->find('list')->toArray();
+        $this->set(compact('roles', 'parents', 'users'));
     }
 }

@@ -27,7 +27,9 @@ class CroogoHelper extends Helper
 
     public $helpers = [
         'Form',
-        'Html',
+        'Html' => [
+            'className' => 'Croogo/Core.CroogoHtml'
+        ],
         'Url',
         'Croogo/Core.Layout',
         'Croogo/Core.Theme',
@@ -428,23 +430,7 @@ class CroogoHelper extends Helper
             'class' => 'nav-item',
         ]);
     }
-
-    /**
-     * Creates a tab pane
-     *
-     * @param string $content Content to put into the tab
-     * @param string $domId Id for the tab
-     * @param array $options Array of options for the tab pane
-     * @return string
-     */
-    public function adminTabPane($content, $domId, $options = [])
-    {
-        $options = $this->addClass($options, 'tab-pane fade');
-        $options['id'] = $domId;
-
-        return $this->Html->tag('div', $content, $options);
-    }
-
+    
     /**
      * Show tabs
      *
@@ -481,8 +467,9 @@ class CroogoHelper extends Helper
                         '-' .
                         strtolower(Inflector::slug($title, '-'));
                     if ($this->adminTabs) {
-                        $content = $this->_View->element($tab['element'], $tab['options']['elementData'], $tab['options']['elementOptions']);
-                        $output .= $this->adminTabPane($content, $domId);
+                        $output .= $this->Html->startTabPane($domId);
+                        $output .= $this->_View->element($tab['element'], $tab['options']['elementData'], $tab['options']['elementOptions']);
+                        $output .= $this->Html->endTabPane();
                     } else {
                         $output .= $this->adminTab(__d('croogo', $title), '#' . $domId, $tab['options']['linkOptions']);
                     }
