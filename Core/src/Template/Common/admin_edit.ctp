@@ -21,7 +21,7 @@ $columnRight = $this->Theme->getCssClass('columnRight');
 $columnFull = $this->Theme->getCssClass('columnFull');
 
 ?>
-<h2 class="hidden-desktop">
+<h2 class="hidden-md-up">
 <?php
 	if ($titleBlock = $this->fetch('title')):
 		echo $titleBlock;

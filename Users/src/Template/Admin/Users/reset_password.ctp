@@ -1,4 +1,4 @@
-<h2 class="hidden-desktop"><?php echo __d('croogo', 'Reset password'); ?>: <?php echo $user->username; ?></h2>
+<h2 class="hidden-md-up"><?php echo __d('croogo', 'Reset password'); ?>: <?php echo $user->username; ?></h2>
 <?php
 $this->CroogoHtml
 	->addCrumb($this->CroogoHtml->icon('home'), '/admin')

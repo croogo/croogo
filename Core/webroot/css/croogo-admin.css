@@ -6833,9 +6833,13 @@ body {
   margin: 0;
   height: 100%;
   background-color: #b3b3b3; }
-  html.admin-login #content-container,
-  body.admin-login #content-container {
-    background-color: #a6a6a6; }
+  html.admin-login,
+  body.admin-login {
+    background-color: #eeeeee; }
+    html.admin-login #content-container,
+    body.admin-login #content-container {
+      margin-top: 0;
+      background-color: #eeeeee; }
 
 #wrap {
   overflow: hidden;
@@ -7055,7 +7059,7 @@ form .span8 + .span4 {
   .content table {
     margin: 10px 0px; }
 
-h2.hidden-desktop {
+h2.hidden-md-up {
   margin-top: 0; }
 
 .filter {

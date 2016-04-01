@@ -11,8 +11,10 @@ body {
     background-color: $croogo-background-color;
 
     &.admin-login {
+        background-color: $gray-lightest;
         #content-container {
-            background-color: $gray-lighter;
+            margin-top: 0;
+            background-color: $gray-lightest;
         }
     }
 }

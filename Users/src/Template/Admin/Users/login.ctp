@@ -27,7 +27,7 @@ echo $this->Form->create(false, ['url' => ['action' => 'login']]); ?>
                 'default' => false,
             ]);
         endif;
-        echo $this->Form->button(__d('croogo', 'Log In'), ['class' => 'btn btn-default']);
+        echo $this->Form->button(__d('croogo', 'Log In'), ['class' => 'btn btn-primary']);
         echo $this->Html->link(__d('croogo', 'Forgot password?'), [
             'prefix' => null,
             'controller' => 'users',
