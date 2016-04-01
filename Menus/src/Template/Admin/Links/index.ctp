@@ -7,7 +7,7 @@ $this->Croogo->adminscript('Croogo/Menus.admin');
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->CroogoHtml
+$this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Menus'), ['controller' => 'Menus', 'action' => 'index'])
 	->addCrumb(__d('croogo', $menu->title), array(
@@ -37,8 +37,8 @@ $this->end();
 	)));
 
 $this->start('table-heading');
-	$tableHeaders = $this->CroogoHtml->tableHeaders(array(
-		$this->CroogoForm->checkbox('checkAll', ['id' => 'LinksCheckAll']),
+	$tableHeaders = $this->Html->tableHeaders(array(
+		$this->Form->checkbox('checkAll', ['id' => 'LinksCheckAll']),
 		__d('croogo', 'Id'),
 		__d('croogo', 'Title'),
 		__d('croogo', 'Status'),
@@ -90,16 +90,16 @@ $this->append('table-body');
 			),
 			__d('croogo', 'Are you sure?')
 		);
-		$actions = $this->CroogoHtml->div('item-actions', implode(' ', $actions));
+		$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
 		if ($linksStatus[$linkId] == Status::PREVIEW) {
-			$linkTitle .= ' ' . $this->CroogoHtml->tag('span', __d('croogo', 'preview'),
+			$linkTitle .= ' ' . $this->Html->tag('span', __d('croogo', 'preview'),
 			array('class' => 'label label-warning')
 			);
 		}
 
 		$rows[] = array(
-			$this->CroogoForm->checkbox('Links.' . $linkId . '.id', array('class' => 'row-select')),
+			$this->Form->checkbox('Links.' . $linkId . '.id', array('class' => 'row-select')),
 			$linkId,
 			$linkTitle,
 			$this->element('Croogo/Core.admin/toggle', array(
@@ -110,12 +110,12 @@ $this->append('table-body');
 		);
 	endforeach;
 
-	echo $this->CroogoHtml->tableCells($rows);
+	echo $this->Html->tableCells($rows);
 
 $this->end();
 
 $this->start('bulk-action');
-	echo $this->CroogoForm->input('Links.action', array(
+	echo $this->Form->input('Links.action', array(
 		'div' => 'input inline',
 		'label' => false,
 		'options' => array(
@@ -130,12 +130,12 @@ $this->start('bulk-action');
 		),
 		'empty' => true,
 	));
-	$button = $this->CroogoForm->button(__d('croogo', 'Submit'), array(
+	$button = $this->Form->button(__d('croogo', 'Submit'), array(
 		'type' => 'submit',
 		'value' => 'submit',
 	));
-	echo $this->CroogoHtml->div('controls', $button);
+	echo $this->Html->div('controls', $button);
 $this->end();
 
-$this->append('form-end',$this->CroogoForm->end());
+$this->append('form-end',$this->Form->end());
 ?>

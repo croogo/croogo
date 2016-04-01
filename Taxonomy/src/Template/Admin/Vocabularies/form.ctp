@@ -3,14 +3,14 @@ $this->Croogo->adminScript('Croogo/Taxonomy.vocabularies');
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->CroogoHtml
+$this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Content'), array('plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'edit') {
 	$this->assign('title', __d('croogo', 'Edit Vocabulary'));
 
-	$this->CroogoHtml
+	$this->Html
 		->addCrumb(__d('croogo', 'Vocabularies'), array('action' => 'index', $vocabulary->id))
 		->addCrumb($vocabulary->title, '/' . $this->request->url);
 }
@@ -18,12 +18,12 @@ if ($this->request->params['action'] == 'edit') {
 if ($this->request->params['action'] == 'add') {
 	$this->assign('title', __d('croogo', 'Add Vocabulary'));
 
-	$this->CroogoHtml
+	$this->Html
 		->addCrumb(__d('croogo', 'Vocabularies'), array('action' => 'index'))
 		->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
-echo $this->CroogoForm->create($vocabulary);
+echo $this->Form->create($vocabulary);
 
 ?>
 <div class="row-fluid">
@@ -41,21 +41,21 @@ echo $this->CroogoForm->create($vocabulary);
 
 			<div id="vocabulary-basic" class="tab-pane">
 			<?php
-				echo $this->CroogoForm->input('id');
-				$this->CroogoForm->templates(array(
+				echo $this->Form->input('id');
+				$this->Form->templates(array(
 					'class' => 'span10',
 				));
-				echo $this->CroogoForm->input('title', array(
+				echo $this->Form->input('title', array(
 					'label' => __d('croogo', 'Title'),
 				));
-				echo $this->CroogoForm->input('alias', array(
+				echo $this->Form->input('alias', array(
 					'class' => 'alias span10',
 					'label' => __d('croogo', 'Alias'),
 				));
-				echo $this->CroogoForm->input('description', array(
+				echo $this->Form->input('description', array(
 					'label' => __d('croogo', 'Description'),
 				));
-				echo $this->CroogoForm->input('Type.Type', array(
+				echo $this->Form->input('Type.Type', array(
 					'label' => __d('croogo', 'Type'),
 				));
 			?>
@@ -63,15 +63,15 @@ echo $this->CroogoForm->create($vocabulary);
 
 			<div id="vocabulary-options" class="tab-pane">
 			<?php
-				echo $this->CroogoForm->input('required', array(
+				echo $this->Form->input('required', array(
 					'label' => __d('croogo', 'Required'),
 					'class' => false,
 				));
-				echo $this->CroogoForm->input('multiple', array(
+				echo $this->Form->input('multiple', array(
 					'label' => __d('croogo', 'Multiple'),
 					'class' => false,
 				));
-				echo $this->CroogoForm->input('tags', array(
+				echo $this->Form->input('tags', array(
 					'label' => __d('croogo', 'Tags'),
 					'class' => false,
 				));
@@ -84,17 +84,17 @@ echo $this->CroogoForm->create($vocabulary);
 
 	<div class="span4">
 	<?php
-		echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing')) .
-			$this->CroogoForm->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
-			$this->CroogoForm->button(__d('croogo', 'Save'), array('button' => 'success')) .
-			$this->CroogoHtml->link(
+		echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
+			$this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
+			$this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
+			$this->Html->link(
 				__d('croogo', 'Cancel'),
 				array('action' => 'index'),
 				array('button' => 'danger')
 			) .
-			$this->CroogoHtml->endBox();
+			$this->Html->endBox();
 	?>
 	</div>
 
 </div>
-<?php echo $this->CroogoForm->end(); ?>
+<?php echo $this->Form->end(); ?>

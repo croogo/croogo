@@ -8,7 +8,7 @@ $this->Html->script('Croogo/Acl.acl_permissions', ['block' => true]);
 
 $this->Croogo->adminScript('Croogo/Acl.acl_permissions');
 
-$this->CroogoHtml
+$this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
 	->addCrumb(__d('croogo', 'Permissions'), array(

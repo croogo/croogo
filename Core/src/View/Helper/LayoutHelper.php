@@ -128,7 +128,7 @@ class LayoutHelper extends Helper
             $croogoSetting['themeSettings'] = Hash::merge(
                 $croogoSetting['themeSettings'],
                 array_intersect_key(
-                    array_merge($validKeys, $this->_View->CroogoHtml->config()),
+                    array_merge($validKeys, $this->_View->Html->config()),
                     $validKeys
                 )
             );
@@ -157,13 +157,13 @@ class LayoutHelper extends Helper
             $icon = $icons['x-mark'];
             $class = 'red';
         }
-        if (method_exists($this->CroogoHtml, 'icon')) {
-            return $this->CroogoHtml->icon($icon, compact('class'));
+        if (method_exists($this->Html, 'icon')) {
+            return $this->Html->icon($icon, compact('class'));
         } else {
-            if (empty($this->_View->CroogoHtml)) {
+            if (empty($this->_View->Html)) {
                 $this->_View->Helpers->load('Croogo/Core.CroogoHtml');
             }
-            return $this->_View->CroogoHtml->icon($icon, compact('class'));
+            return $this->_View->Html->icon($icon, compact('class'));
         }
     }
 

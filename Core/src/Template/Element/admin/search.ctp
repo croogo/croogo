@@ -12,7 +12,7 @@ if (!empty($searchFields)):
 ?>
 <div class="<?php echo $className; ?> filter">
 <?php
-	echo $this->CroogoForm->create($modelClass, [
+	echo $this->Form->create($modelClass, [
 		'class' => 'form-inline',
 		'novalidate' => true,
 		'url' => [
@@ -21,11 +21,11 @@ if (!empty($searchFields)):
 			'action' => $this->request->params['action'],
 		],
 	]);
-	$this->CroogoForm->templates([
+	$this->Form->templates([
 		'submitContainer' => '<div class="input submit">{{content}}</div>'
 	]);
 	if (isset($this->request->query['chooser'])):
-		echo $this->CroogoForm->input('chooser', [
+		echo $this->Form->input('chooser', [
 			'type' => 'hidden',
 			'value' => isset($this->request->query['chooser']),
 		]);
@@ -45,12 +45,12 @@ if (!empty($searchFields)):
 		}
 		$label = __(Inflector::humanize(Inflector::underscore($label)));
 		$options['label'] = __d('croogo', $label);
-		$this->CroogoForm->unlockField($field);
-		echo $this->CroogoForm->input($field, $options);
+		$this->Form->unlockField($field);
+		echo $this->Form->input($field, $options);
 	}
 
-	echo $this->CroogoForm->submit(__d('croogo', 'Filter'), ['type' => 'submit', 'label' => false]);
-	echo $this->CroogoForm->end();
+	echo $this->Form->submit(__d('croogo', 'Filter'), ['type' => 'submit', 'label' => false]);
+	echo $this->Form->end();
 ?>
 </div>
 <?php endif; ?>

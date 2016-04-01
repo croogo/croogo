@@ -4,12 +4,12 @@ use Croogo\Core\Status;
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->CroogoHtml
+$this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Menus'), '/' . $this->request->url);
 
 $this->start('table-heading');
-	$tableHeaders = $this->CroogoHtml->tableHeaders(array(
+	$tableHeaders = $this->Html->tableHeaders(array(
 		$this->Paginator->sort('id', __d('croogo', 'Id')),
 		$this->Paginator->sort('title', __d('croogo', 'Title')),
 		$this->Paginator->sort('alias', __d('croogo', 'Alias')),
@@ -17,7 +17,7 @@ $this->start('table-heading');
 		$this->Paginator->sort('status', __d('croogo', 'Status')),
 		__d('croogo', 'Actions'),
 	));
-	echo $this->CroogoHtml->tag('thead', $tableHeaders);
+	echo $this->Html->tag('thead', $tableHeaders);
 $this->end();
 
 $this->start('table-body');
@@ -41,9 +41,9 @@ $this->start('table-body');
 		array('icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Remove this item')),
 		__d('croogo', 'Are you sure?')
 	);
-	$actions = $this->CroogoHtml->div('item-actions', implode(' ', $actions));
+	$actions = $this->Html->div('item-actions', implode(' ', $actions));
 
-	$title = $this->CroogoHtml->link($menu->title, array(
+	$title = $this->Html->link($menu->title, array(
 		'controller' => 'Links',
 		'?' => array(
 			'menu_id' => $menu->id
@@ -51,7 +51,7 @@ $this->start('table-body');
 	));
 
 	if ($menu->status === Status::PREVIEW) {
-		$title .= ' ' . $this->CroogoHtml->tag('span', __d('croogo', 'preview'),
+		$title .= ' ' . $this->Html->tag('span', __d('croogo', 'preview'),
 			array('class' => 'label label-warning')
 			);
 	}
@@ -67,10 +67,10 @@ $this->start('table-body');
 		$menu->alias,
 		$menu->link_account,
 		$status,
-		$this->CroogoHtml->div('item-actions', $actions),
+		$this->Html->div('item-actions', $actions),
 	);
 endforeach;
 
-echo $this->CroogoHtml->tableCells($rows);
+echo $this->Html->tableCells($rows);
 
 $this->end();

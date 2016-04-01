@@ -54,7 +54,7 @@ $this->append('actions');
 	));
 $this->end();
 
-$this->append('form-start', $this->CroogoForm->create(
+$this->append('form-start', $this->Form->create(
 	'Message',
 	array(
 		'url' => array('action' => 'process'),

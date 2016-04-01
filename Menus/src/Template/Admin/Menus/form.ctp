@@ -4,18 +4,18 @@ use Croogo\Core\Status;
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->CroogoHtml
+$this->Html
 	->addCrumb('', '/admin', ['icon' => $_icons['home']])
 	->addCrumb(__d('croogo', 'Menus'), ['action' => 'index']);
 
 if ($this->request->params['action'] == 'edit') {
-	$this->CroogoHtml->addCrumb($menu->title, '/' . $this->request->url);
+	$this->Html->addCrumb($menu->title, '/' . $this->request->url);
 
 	$this->assign('title', __d('croogo', 'Edit Menu'));
 }
 
 if ($this->request->params['action'] == 'add') {
-	$this->CroogoHtml->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
+	$this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
 
 	$this->assign('title', __d('croogo', 'Add Menu'));
 }
@@ -29,7 +29,7 @@ $this->append('tab-heading');
 $this->end();
 
 $this->append('tab-content');
-    echo $this->CroogoHtml->tabStart('menu-basic');
+    echo $this->Html->tabStart('menu-basic');
         echo $this->Form->input('id');
         $this->Form->templates(array(
             'class' => 'span10',
@@ -43,24 +43,24 @@ $this->append('tab-content');
         echo $this->Form->input('description', array(
             'label' => __d('croogo', 'Description'),
         ));
-    echo $this->CroogoHtml->tabEnd();
+    echo $this->Html->tabEnd();
 $this->end();
 
 $this->append('tab-content');
-    echo $this->CroogoHtml->tabStart('menu-misc');
+    echo $this->Html->tabStart('menu-misc');
         echo $this->Form->input('params', array(
             'label' => __d('croogo', 'Params'),
         ));
-    echo $this->CroogoHtml->tabEnd();
+    echo $this->Html->tabEnd();
 
     echo $this->Croogo->adminTabs();
 $this->end();
 
 $this->start('panels');
-    echo $this->CroogoHtml->beginBox('Publishing') .
+    echo $this->Html->beginBox('Publishing') .
         $this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply')) .
         $this->Form->button(__d('croogo', 'Save'), array('button' => 'success')) .
-        $this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
+        $this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
         $this->Form->input('status', array(
             'type' => 'radio',
             'legend' => false,
@@ -68,7 +68,7 @@ $this->start('panels');
             'default' => Status::UNPUBLISHED,
             'options' => $this->Croogo->statuses(),
         )) .
-        $this->CroogoHtml->div('input-daterange',
+        $this->Html->div('input-daterange',
             $this->Form->input('publish_start', array(
                 'label' => __d('croogo', 'Publish Start'),
                 'type' => 'text',
@@ -78,7 +78,7 @@ $this->start('panels');
                 'type' => 'text',
             ))
         ) .
-        $this->CroogoHtml->endBox();
+        $this->Html->endBox();
 
 		$this->Croogo->adminBoxes();
 echo $this->end('panels');

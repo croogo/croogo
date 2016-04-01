@@ -2,7 +2,7 @@
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->CroogoHtml
+$this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Users'), '/' . $this->request->url);
 ?>

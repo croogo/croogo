@@ -2,7 +2,7 @@
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->CroogoHtml
+$this->Html
 	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Settings'), array(
 		'prefix' => 'admin',
@@ -59,7 +59,7 @@ $this->append('table-body');
 			$setting->id,
 			$this->Html->link($keyPrefix, array('controller' => 'Settings', 'action' => 'index', '?' => array('key' => $keyPrefix))) . $keyTitle,
 			$this->Text->truncate($setting->value, 20),
-			$this->CroogoHtml->status($setting->editable),
+			$this->Html->status($setting->editable),
 			$actions,
 		);
 	endforeach;

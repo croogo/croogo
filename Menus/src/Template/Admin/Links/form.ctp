@@ -5,12 +5,12 @@ use Croogo\Core\Status;
 $this->extend('Croogo/Core./Common/admin_edit');
 $this->Croogo->adminScript('Croogo/Menus.admin');
 
-$this->CroogoHtml
+$this->Html
 	->addCrumb('', '/admin', array('icon' => $_icons['home']))
 	->addCrumb(__d('croogo', 'Menus'), array('controller' => 'Menus', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'add') {
-	$this->CroogoHtml
+	$this->Html
 		->addCrumb($menu->title, array(
 			'action' => 'index',
 			'?' => array('menu_id' => $menu->id))
@@ -22,7 +22,7 @@ if ($this->request->params['action'] == 'add') {
 }
 
 if ($this->request->params['action'] == 'edit') {
-	$this->CroogoHtml
+	$this->Html
 		->addCrumb($menu->title, array(
 			'action' => 'index',
 			'?' => array('menu_id' => $menu->id)))
@@ -52,7 +52,7 @@ $this->end();
 
 $this->append('tab-content');
 
-	echo $this->CroogoHtml->tabStart('link-basic');
+	echo $this->Html->tabStart('link-basic');
 	echo $this->Form->input('id');
 	echo $this->Form->input('menu_id', array(
 		'selected' => $menu->id,
@@ -75,17 +75,17 @@ $this->append('tab-content');
 		'id' => 'link',
 		'linkChooser' => true
 	));
-	echo $this->CroogoHtml->tabEnd();
+	echo $this->Html->tabEnd();
 
-	echo $this->CroogoHtml->tabStart('link-access');
+	echo $this->Html->tabStart('link-access');
 	echo $this->Form->input('visibility_roles', array(
 		'class' => false,
 		'options' => $roles,
 		'multiple' => true
 	));
-	echo $this->CroogoHtml->tabEnd();
+	echo $this->Html->tabEnd();
 
-	echo $this->CroogoHtml->tabStart('link-misc');
+	echo $this->Html->tabStart('link-misc');
 	echo $this->Form->input('class', array(
 		'label' => __d('croogo', 'Class'),
 		'class' => 'span10 class',
@@ -102,17 +102,17 @@ $this->append('tab-content');
 	echo $this->Form->input('params', array(
 		'label' => __d('croogo', 'Params'),
 	));
-	echo $this->CroogoHtml->tabEnd();
+	echo $this->Html->tabEnd();
 
 	echo $this->Croogo->adminTabs();
 
 $this->end();
 
 $this->start('panels');
-	echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing'));
+	echo $this->Html->beginBox(__d('croogo', 'Publishing'));
 		echo $this->Form->button(__d('croogo', 'Apply'), array('name' => 'apply'));
 		echo $this->Form->button(__d('croogo', 'Save'), array('button' => 'success'));
-		echo $this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index', '?' => array('menu_id' => $menu->id)), array('button' => 'danger'));
+		echo $this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index', '?' => array('menu_id' => $menu->id)), array('button' => 'danger'));
 		echo $this->Form->input('status', array(
 			'type' => 'radio',
 			'legend' => false,
@@ -120,7 +120,7 @@ $this->start('panels');
 			'default' => Status::UNPUBLISHED,
 			'options' => $this->Croogo->statuses(),
 		));
-		echo $this->CroogoHtml->div('input-daterange',
+		echo $this->Html->div('input-daterange',
 			$this->Form->input('publish_start', array(
 				'label' => __d('croogo', 'Publish Start'),
 				'type' => 'text',
@@ -130,7 +130,7 @@ $this->start('panels');
 				'type' => 'text',
 			))
 		);
-		echo $this->CroogoHtml->endBox();
+		echo $this->Html->endBox();
 	echo $this->Croogo->adminBoxes();
 
 $this->end();

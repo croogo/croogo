@@ -3,14 +3,14 @@ $this->assign('title', __d('croogo', 'Dashboards'));
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->CroogoHtml
+$this->Html
 	->addCrumb('', '/admin', array('icon' => 'home'))
 	->addCrumb(__d('croogo', 'Dashboards'), array('action' => 'index'));
 
 $this->set('showActions', false);
 
 $this->append('table-heading');
-	$tableHeaders = $this->CroogoHtml->tableHeaders(array(
+	$tableHeaders = $this->Html->tableHeaders(array(
 		$this->Paginator->sort('id'),
 		$this->Paginator->sort('alias'),
 		$this->Paginator->sort('column'),
@@ -20,7 +20,7 @@ $this->append('table-heading');
 		$this->Paginator->sort('created'),
 		__d('croogo', 'Actions'),
 	));
-	echo $this->CroogoHtml->tag('thead', $tableHeaders);
+	echo $this->Html->tag('thead', $tableHeaders);
 $this->end();
 
 $this->append('table-body');

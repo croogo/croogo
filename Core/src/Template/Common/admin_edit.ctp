@@ -117,10 +117,10 @@ $tabId = 'tabitem-' . Inflector::slug(strtolower($modelClass), '-');
 			if ($buttonsBlock = $this->fetch('buttons')):
 				echo $buttonsBlock;
 			else :
-				echo $this->CroogoHtml->beginBox(__d('croogo', 'Publishing')) .
+				echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
 					$this->Form->button(__d('croogo', 'Save'), array('button' => 'primary')) .
-					$this->CroogoHtml->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
-					$this->CroogoHtml->endBox();
+					$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger')) .
+					$this->Html->endBox();
 			endif;
 			echo $this->Croogo->adminBoxes();
 		endif;

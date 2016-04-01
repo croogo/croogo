@@ -1,5 +1,5 @@
 <?php
-$crumbs = $this->CroogoHtml->getCrumbs(
+$crumbs = $this->Html->getCrumbs(
 	$this->Html->tag('span', '/', array(
 		'class' => 'divider',
 	))
