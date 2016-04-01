@@ -6,7 +6,6 @@ $this->extend('Croogo/Core./Common/admin_edit');
 $this->Html->script(array('Croogo/Nodes.admin'), ['block' => true]);
 
 $this->Html
-    ->addCrumb('', '/admin', ['icon' => 'home'])
     ->addCrumb(__d('croogo', 'Content'), ['action' => 'index']);
 
 if ($this->request->params['action'] == 'add') {
@@ -14,7 +13,7 @@ if ($this->request->params['action'] == 'add') {
 
     $formUrl = ['action' => 'add', $typeAlias];
     $this->Html->addCrumb(__d('croogo', 'Create'), ['action' => 'create'])
-        ->addCrumb($type->title, '/' . $this->request->url);
+        ->addCrumb($type->title);
 }
 
 if ($this->request->params['action'] == 'edit') {

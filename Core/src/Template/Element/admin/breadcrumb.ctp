@@ -1,14 +1,17 @@
 <?php
-$crumbs = $this->Html->getCrumbs(
-	$this->Html->tag('span', '/', array(
-		'class' => 'divider',
-	))
-);
+$crumbs = $this->Html->getCrumbList([
+    'firstClass' => '',
+    'lastClass' => ''
+], [
+    'text' => '',
+    'text' => '',
+    'url' => '/admin',
+    'icon' => 'home',
+    'escape' => false
+]);
 ?>
 <?php if ($crumbs): ?>
-<div id="breadcrumb-container" class="span12 visible-desktop">
-	<div class="breadcrumb">
-		<?php echo $crumbs; ?>
-	</div>
+<div id="breadcrumb-container" class="col-xs-12 visible-md-up">
+    <?php echo $crumbs; ?>
 </div>
 <?php endif; ?>

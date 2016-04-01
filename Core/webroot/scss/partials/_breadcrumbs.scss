@@ -3,28 +3,14 @@
 // --------------------------------------------------
 
 #breadcrumb-container {
-	background: $body-bg;
-	float: left;
+    background: $body-bg;
+    float: left;
 }
 
 .breadcrumb {
-	@include border-radius(4px);
-	list-style: none;
-	padding: $croogo-content-padding;
-	margin: $croogo-breadcrumb-margin 0 0;
-	z-index: $zindex-dropdown;
+    z-index: $zindex-dropdown;
 
-	a {
-		text-decoration: none;
-		text-shadow: 0 1px 0 white;
-	}
-
-	a:last-child {
-		color: #999;
-	}
-
-	.divider {
-		color: #ccc;
-		padding: 0px 8px;
-	}
+    li:last-child {
+        @extend .active;
+    }
 }
