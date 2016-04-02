@@ -101,7 +101,7 @@ class CroogoHtmlHelper extends HtmlHelper
      * @param bool $isLabelHidden true, container will have 'label-hidden' class
      * @returns string Start of box markup
      */
-    public function beginBox($title, $isHidden = false, $isLabelHidden = false, $icon = 'list')
+    public function beginBox($title = '', $isHidden = false, $isLabelHidden = false, $icon = 'list')
     {
         $isHidden = $isHidden ? 'hidden' : '';
         $isLabelHidden = $isLabelHidden ? 'label-hidden' : '';

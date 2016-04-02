@@ -7063,6 +7063,10 @@ form .span8 + .span4 {
 .form-inline .form-control {
   margin-right: 5px; }
 
+span.slug {
+  font-weight: bold;
+  margin: 10px; }
+
 .text-important {
   text-decoration: none;
   color: #000;
@@ -7125,7 +7129,7 @@ h2.hidden-md-up {
 
 .tab-content {
   background-color: #fff;
-  padding: 20px;
+  padding: 20px 0;
   min-height: 200px; }
 
 .navbar-inverse .brand,

@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \Croogo\Core\View\CroogoView $this
+ */
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
@@ -15,7 +18,7 @@ if (isset(${Inflector::variable(Inflector::singularize($this->name))})):
     $what = !$entity->isNew() ? __d('croogo', 'Edit') : __d('croogo', 'Add');
 endif;
 
-$cssClass = $this->Theme->getCssClass('row');
+$rowClass = $this->Theme->getCssClass('row');
 $columnLeft = $this->Theme->getCssClass('columnLeft');
 $columnRight = $this->Theme->getCssClass('columnRight');
 $columnFull = $this->Theme->getCssClass('columnFull');
@@ -38,7 +41,7 @@ endif;
 
 ?>
 <?php if ($actionsBlock = $this->fetch('actions')): ?>
-    <div class="<?php echo $cssClass; ?>">
+    <div class="<?php echo $rowClass; ?>">
         <div class="actions <?php echo $columnFull; ?>">
             <div class="btn-group">
                 <?php echo $actionsBlock; ?>
@@ -65,71 +68,64 @@ endif;
 
 $tabId = 'tabitem-' . Inflector::slug(strtolower($modelClass), '-');
 
-?>
-    <div class="<?php echo $cssClass; ?>">
-        <div class="<?php echo $columnLeft; ?>">
+if (!$this->exists('left-column')):
+    $tabHeading = $this->fetch('tab-heading');
+    if (empty($tabHeading)):
+        $tabHeading = $this->Croogo->adminTab(__d('croogo', $modelClass), "#$tabId");
+    endif;
+    $tabHeading .= $this->Croogo->adminTabs();
 
-            <ul class="nav nav-tabs">
-                <?php
-                if ($tabHeading = $this->fetch('tab-heading')):
-                    echo $tabHeading;
-                else:
-                    echo $this->Croogo->adminTab(__d('croogo', $modelClass), "#$tabId");
-                    echo $this->Croogo->adminTabs();
-                endif;
-                ?>
-            </ul>
+    $tabContent = trim($this->fetch('tab-content'));
+    if (!$tabContent):
+        $content = '';
+        foreach ($editFields as $field => $opts):
+            if (is_string($opts)) {
+                $field = $opts;
+                $opts = [
+                    'class' => 'span10',
+                    'label' => false,
+                    'tooltip' => ucfirst($field),
+                ];
+            }
+            $content .= $this->Form->input($field, $opts);
+        endforeach;
+    endif;
 
-            <?php
+    if (empty($tabContent) && !empty($content)):
+        $tabContent = $this->Html->div('tab-pane', $content, [
+            'id' => $tabId,
+        ]);
+    endif;
+    $tabContent .= $this->Croogo->adminTabs();
 
-            $tabContent = trim($this->fetch('tab-content'));
-            if (!$tabContent):
-                $content = '';
-                foreach ($editFields as $field => $opts):
-                    if (is_string($opts)) {
-                        $field = $opts;
-                        $opts = [
-                            'class' => 'span10',
-                            'label' => false,
-                            'tooltip' => ucfirst($field),
-                        ];
-                    }
-                    $content .= $this->Form->input($field, $opts);
-                endforeach;
-            endif;
-            ?>
+    $this->start('left-column');
+    echo $this->Html->tag('ul', $tabHeading, ['class' => 'nav nav-tabs']);
+    echo $this->Html->div('tab-content', $tabContent);
+    $this->end();
+endif;
 
-            <?php
-            if (empty($tabContent) && !empty($content)):
-                $tabContent = $this->Html->div('tab-pane', $content, [
-                    'id' => $tabId,
-                ]);
-                $tabContent .= $this->Croogo->adminTabs();
-            endif;
-            echo $this->Html->div('tab-content', $tabContent);
-            ?>
-        </div>
+if (!$this->exists('right-column')):
+    $this->start('right-column');
+    if ($this->exists('panels')):
+        echo $this->fetch('panels');
+    else:
+        if ($buttonsBlock = $this->fetch('buttons')):
+            echo $buttonsBlock;
+        else :
+            echo $this->Html->beginBox(__d('croogo', 'Publishing'));
+            echo $this->element('Croogo/Core.admin/buttons', ['type' => $modelClass]);
+            echo $this->Html->endBox();
+        endif;
+    endif;
 
-        <div class="<?php echo $columnRight; ?>">
-            <?php
-            if ($rightCol = $this->fetch('panels')):
-                echo $rightCol;
-            else:
-                if ($buttonsBlock = $this->fetch('buttons')):
-                    echo $buttonsBlock;
-                else :
-                    echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-                        $this->Form->button(__d('croogo', 'Save'), ['button' => 'primary']) .
-                        $this->Html->link(__d('croogo', 'Cancel'), ['action' => 'index'], ['button' => 'danger']) .
-                        $this->Html->endBox();
-                endif;
-                echo $this->Croogo->adminBoxes();
-            endif;
-            ?>
-        </div>
+    echo $this->Croogo->adminBoxes();
+    $this->end();
+endif;
 
-    </div>
-<?php
+$output = '';
+$output .= $this->Html->tag('div', $this->fetch('left-column'), ['class' => $columnLeft]);
+$output .= $this->Html->tag('div', $this->fetch('right-column'), ['class' => $columnRight]);
+echo $this->Html->tag('div', $output, ['class' => $rowClass]);
 
 if ($formEnd = trim($this->fetch('form-end'))):
     echo $formEnd;

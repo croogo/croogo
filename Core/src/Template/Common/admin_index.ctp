@@ -116,14 +116,17 @@ $tableFooters = trim($this->fetch('table-footer'));
             if (!$searchBlock):
                 $searchBlock = $this->element('Croogo/Core.admin/search');
             endif;
+
+            if (!empty($searchBlock)) :
             ?>
             <div class="navbar navbar-light bg-faded">
                 <div class="pull-right">
                     <?= $searchBlock; ?>
                 </div>
             </div>
-
             <?php
+            endif;
+
             if ($contentBlock = trim($this->fetch('content'))):
                 echo $this->element('Croogo/Core.admin/search');
                 echo $contentBlock;
@@ -134,14 +137,14 @@ $tableFooters = trim($this->fetch('table-footer'));
 
                 if ($mainBlock = trim($this->fetch('main'))):
                     echo $mainBlock;
-                else:
+                elseif ($tableBody):
                     ?>
                     <table class="<?php echo $tableClass; ?>">
                         <?php
-                        echo $tableHeaders;
-                        echo $tableBody;
+                        echo $this->Html->tag('thead', $tableHeaders);
+                        echo $this->Html->tag('tbody', $tableBody);
                         if ($tableFooters):
-                            echo $tableFooters;
+                            echo $this->Html->tag('tfoot', $tableFooters);
                         endif;
                         ?>
                     </table>
