@@ -109,7 +109,7 @@ echo $this->Html->div('input-daterange', $this->Form->input('publish_start', [
     ]));
 echo $this->Html->endBox();
 
-echo $this->Html->beginBox(__d('croogo', 'Acces control'));
+echo $this->Html->beginBox(__d('croogo', 'Access control'));
 echo $this->Form->input('visibility_roles', [
     'class' => 'c-select',
     'options' => $roles,
