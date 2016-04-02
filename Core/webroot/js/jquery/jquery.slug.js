@@ -263,7 +263,7 @@
         hide: true,
         editable: true,
         editLabel: 'Edit',
-        editClass: ''
+        editClass: 'btn btn-secondary btn-sm'
       };
 
       if (options) {
@@ -287,6 +287,13 @@
         }
         if (settings.editable || $target.data('slugEditable')) {
           $slugSpan.after($slugEdit);
+        }
+
+        if ($slugInput.val()) {
+          $slugSpan.text($slugInput.val());
+          if (settings.editable) {
+            $slugEdit.show();
+          }
         }
 
         $target.on('keyup.slugger', function() {

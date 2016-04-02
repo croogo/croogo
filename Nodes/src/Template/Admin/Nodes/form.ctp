@@ -40,7 +40,11 @@ $this->start('tab-content');
         echo $this->Form->input('slug', [
             'class' => 'slug',
             'label' => __d('croogo', 'Permalink'),
-            'prepend' => $this->Url->build('/', ['fullbase' => true])
+            'prepend' => $this->Url->build([
+                'prefix' => false,
+                'action' => 'view',
+                'type' => $type->slug
+            ], ['fullbase' => true])
         ]);
         echo $this->Form->input('body', [
             'label' => __d('croogo', 'Body'),

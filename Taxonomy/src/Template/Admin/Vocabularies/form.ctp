@@ -33,8 +33,6 @@ echo $this->Html->beginTabPane('vocabulary-basic');
 echo $this->Form->input('title', [
     'label' => __d('croogo', 'Title'),
     'data-slug' => '#alias',
-    'data-slug-editable' => true,
-    'data-slug-edit-class' => 'btn btn-secondary btn-sm',
 ]);
 echo $this->Form->input('alias', [
     'label' => __d('croogo', 'Alias'),

@@ -28,6 +28,7 @@ Router::plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $routeBui
     // Page
     $routeBuilder->connect('/about', ['controller' => 'Nodes', 'action' => 'view', 'type' => 'page', 'slug' => 'about']);
     $routeBuilder->connect('/page/:slug', ['controller' => 'Nodes', 'action' => 'view', 'type' => 'page']);
+    $routeBuilder->connect('/page/term/:slug/*', ['controller' => 'Nodes', 'action' => 'term', 'type' => 'page']);
 
     // Node view
     $routeBuilder->connect('/nodes/view/:type/:slug', ['controller' => 'Nodes', 'action' => 'view']);

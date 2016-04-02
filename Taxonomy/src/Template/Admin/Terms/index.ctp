@@ -16,7 +16,6 @@ $this->end();
 
 $this->start('table-heading');
 $tableHeaders = $this->Html->tableHeaders([
-    '',
     __d('croogo', 'Title'),
     __d('croogo', 'Slug'),
     __d('croogo', 'Actions'),
@@ -49,7 +48,7 @@ foreach ($terms as $term):
             'plugin' => 'Croogo/Nodes',
             'controller' => 'Nodes',
             'action' => 'term',
-            'type' => $defaultType['alias'],
+            'type' => $defaultType->alias,
             'slug' => $term->slug,
         ], [
             'target' => '_blank',
@@ -67,7 +66,6 @@ foreach ($terms as $term):
     }
 
     $rows[] = [
-        '',
         $titleCol,
         $term->slug,
         $actions,
