@@ -79,6 +79,9 @@ class TaxonomiesTable extends CroogoTable
             'keyPath' => 'term_id',
             'valuePath' => 'id'
         ])->where($treeConditions)->toArray();
+        if (empty($tree)) {
+            return [];
+        }
         $termsIds = array_keys($tree);
         $terms = $this->Terms->find('list', [
             'keyField' => $options['key'],

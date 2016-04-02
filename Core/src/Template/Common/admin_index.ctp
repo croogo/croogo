@@ -38,7 +38,7 @@ endif;
             echo $actionsBlock;
         else:
             echo $this->Croogo->adminAction(__d('croogo', 'New %s', __d($i18nDomain, $humanName)), ['action' => 'add'],
-                ['button' => 'success']);
+                ['button' => 'btn btn-success']);
         endif;
         ?>
     </div>

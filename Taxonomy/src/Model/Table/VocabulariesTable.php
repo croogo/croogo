@@ -2,6 +2,8 @@
 
 namespace Croogo\Taxonomy\Model\Table;
 
+use Cake\ORM\RulesChecker;
+use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
 
 /**
@@ -31,5 +33,28 @@ class VocabulariesTable extends CroogoTable
         $this->hasMany('Croogo/Taxonomy.Taxonomies', [
             'dependent' => true,
         ]);
+    }
+
+    /**
+     * @param \Cake\Validation\Validator $validator
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->notBlank('title', __d('croogo', 'The title cannot be empty'))
+            ->notBlank('alias', __d('croogo', 'The alias cannot be empty'));
+
+        return parent::validationDefault($validator);
+    }
+
+    /**
+     * @param \Cake\ORM\RulesChecker $rules
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->isUnique(['alias'], __d('croogo', 'That alias is already taken'));
+        return parent::buildRules($rules);
     }
 }
