@@ -150,13 +150,13 @@ class CroogoFormHelper extends FormHelper
         }
 
         if ((array_key_exists('linkChooser', $options)) && ($options['linkChooser'])) {
-            $after = '';
-            if (isset($options['after'])) {
-                $after = $options['after'];
+            $append = [];
+            if (isset($options['append'])) {
+                $append = (array)$options['append'];
             }
 
             $target = '#' . $options['id'];
-            $options['after'] = $this->Croogo->linkChooser($target) . $after;
+            $options['append'] = [$this->Croogo->linkChooser($target)] + $append;
         }
 
         return $options;
