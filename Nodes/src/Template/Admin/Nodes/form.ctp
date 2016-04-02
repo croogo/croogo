@@ -40,11 +40,12 @@ $this->start('tab-content');
         echo $this->Form->input('slug', [
             'class' => 'slug',
             'label' => __d('croogo', 'Permalink'),
-            'prepend' => $this->Url->build([
+            'prepend' => str_replace('_placeholder', '', $this->Url->build([
                 'prefix' => false,
                 'action' => 'view',
-                'type' => $type->slug
-            ], ['fullbase' => true])
+                'type' => $type->slug,
+                'slug' => '_placeholder'
+            ], ['fullbase' => true]))
         ]);
         echo $this->Form->input('body', [
             'label' => __d('croogo', 'Body'),

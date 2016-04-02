@@ -128,12 +128,12 @@ class CroogoHtmlHelper extends HtmlHelper
 
     public function beginTabPane($domId)
     {
-        echo '<div class="tab-pane fade" id="' . $domId . '">';
+        return '<div class="tab-pane fade" id="' . $domId . '">';
     }
 
     public function endTabPane()
     {
-        echo '</div>';
+        return '</div>';
     }
 
     /**

@@ -430,7 +430,7 @@ class CroogoHelper extends Helper
             'class' => 'nav-item',
         ]);
     }
-    
+
     /**
      * Show tabs
      *
@@ -467,7 +467,7 @@ class CroogoHelper extends Helper
                         '-' .
                         strtolower(Inflector::slug($title, '-'));
                     if ($this->adminTabs) {
-                        $output .= $this->Html->startTabPane($domId);
+                        $output .= $this->Html->beginTabPane($domId);
                         $output .= $this->_View->element($tab['element'], $tab['options']['elementData'], $tab['options']['elementOptions']);
                         $output .= $this->Html->endTabPane();
                     } else {

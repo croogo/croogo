@@ -3,7 +3,7 @@
  * @var \Croogo\Core\View\CroogoView $this
  */
 
-$cancelUrl = $cancelUrl ?: ['action' => 'index'];
+$cancelUrl = isset($cancelUrl) ? $cancelUrl : ['action' => 'index'];
 
 echo '<div class="clearfix"><div class="pull-left">';
 echo $this->Form->button(__d('croogo', 'Save %s', lcfirst($type)),
