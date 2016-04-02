@@ -35,74 +35,72 @@ $this->end();
 
 $this->append('table-body');
 ?>
-    <tbody>
-        <?php foreach ($nodes as $node): ?>
-            <tr>
-                <td><?php echo $this->Form->checkbox('Nodes.' . $node->id . '.id',
-                        ['class' => 'row-select']); ?></td>
-                <td>
-                    <span>
-                    <?php
-                    echo $this->Html->link($node->title, Hash::merge($node->url->getArrayCopy(), [
-                        'prefix' => false,
-                    ]));
-                    ?>
-                    </span>
+    <?php foreach ($nodes as $node): ?>
+        <tr>
+            <td><?php echo $this->Form->checkbox('Nodes.' . $node->id . '.id',
+                    ['class' => 'row-select']); ?></td>
+            <td>
+                <span>
+                <?php
+                echo $this->Html->link($node->title, Hash::merge($node->url->getArrayCopy(), [
+                    'prefix' => false,
+                ]));
+                ?>
+                </span>
 
-                    <?php if ($node->promoted == 1): ?>
-                        <span class="label label-info"><?php echo __d('croogo', 'promoted'); ?></span>
-                    <?php endif ?>
+                <?php if ($node->promoted == 1): ?>
+                    <span class="label label-info"><?php echo __d('croogo', 'promoted'); ?></span>
+                <?php endif ?>
 
-                    <?php if ($node->status == Status::PREVIEW): ?>
-                        <span class="label label-warning"><?php echo __d('croogo', 'preview'); ?></span>
-                    <?php endif ?>
-                </td>
-                <td>
+                <?php if ($node->status == Status::PREVIEW): ?>
+                    <span class="label label-warning"><?php echo __d('croogo', 'preview'); ?></span>
+                <?php endif ?>
+            </td>
+            <td>
+                <?php
+                echo $this->Html->link($node->type, [
+                    'action' => 'hierarchy',
+                    '?' => [
+                        'type' => $node->type,
+                    ],
+                ]);
+                ?>
+            </td>
+            <td>
+                <?php echo $node->user->username; ?>
+            </td>
+            <td>
+                <?php
+                echo $this->element('Croogo/Core.admin/toggle', [
+                    'id' => $node->id,
+                    'status' => (int)$node->status,
+                ]);
+                ?>
+            </td>
+            <td>
+                <div class="item-actions">
                     <?php
-                    echo $this->Html->link($node->type, [
-                        'action' => 'hierarchy',
-                        '?' => [
-                            'type' => $node->type,
-                        ],
-                    ]);
+                    echo $this->Croogo->adminRowActions($node->id);
+                    echo ' ' . $this->Croogo->adminRowAction('', ['action' => 'edit', $node->id], [
+                            'icon' => $this->Theme->getIcon('update'),
+                            'tooltip' => __d('croogo', 'Edit this item'),
+                        ]);
+                    echo ' ' . $this->Croogo->adminRowAction('', '#Nodes' . $node->id . 'Id', [
+                            'icon' => $this->Theme->getIcon('copy'),
+                            'tooltip' => __d('croogo', 'Create a copy'),
+                            'rowAction' => 'copy',
+                        ]);
+                    echo ' ' . $this->Croogo->adminRowAction('', '#Nodes' . $node->id . 'Id', [
+                            'icon' => $this->Theme->getIcon('delete'),
+                            'class' => 'delete',
+                            'tooltip' => __d('croogo', 'Remove this item'),
+                            'rowAction' => 'delete',
+                        ], __d('croogo', 'Are you sure?'));
                     ?>
-                </td>
-                <td>
-                    <?php echo $node->user->username; ?>
-                </td>
-                <td>
-                    <?php
-                    echo $this->element('Croogo/Core.admin/toggle', [
-                        'id' => $node->id,
-                        'status' => (int)$node->status,
-                    ]);
-                    ?>
-                </td>
-                <td>
-                    <div class="item-actions">
-                        <?php
-                        echo $this->Croogo->adminRowActions($node->id);
-                        echo ' ' . $this->Croogo->adminRowAction('', ['action' => 'edit', $node->id], [
-                                'icon' => $this->Theme->getIcon('update'),
-                                'tooltip' => __d('croogo', 'Edit this item'),
-                            ]);
-                        echo ' ' . $this->Croogo->adminRowAction('', '#Nodes' . $node->id . 'Id', [
-                                'icon' => $this->Theme->getIcon('copy'),
-                                'tooltip' => __d('croogo', 'Create a copy'),
-                                'rowAction' => 'copy',
-                            ]);
-                        echo ' ' . $this->Croogo->adminRowAction('', '#Nodes' . $node->id . 'Id', [
-                                'icon' => $this->Theme->getIcon('delete'),
-                                'class' => 'delete',
-                                'tooltip' => __d('croogo', 'Remove this item'),
-                                'rowAction' => 'delete',
-                            ], __d('croogo', 'Are you sure?'));
-                        ?>
-                    </div>
-                </td>
-            </tr>
-        <?php endforeach ?>
-    </tbody>
+                </div>
+            </td>
+        </tr>
+    <?php endforeach ?>
 <?php
 $this->end();
 

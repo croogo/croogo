@@ -32,7 +32,7 @@ endif;
     </h2>
 
 <?php if ($showActions): ?>
-    <div class="actions pull-md-right pull-lg-right">
+    <div class="actions pull-md-right pull-lg-right btn-group">
         <?php
         if ($actionsBlock = $this->fetch('actions')):
             echo $actionsBlock;

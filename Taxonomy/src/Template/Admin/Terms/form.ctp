@@ -29,7 +29,7 @@ $this->start('tab-heading');
 echo $this->Croogo->adminTab(__d('croogo', 'Term'), '#term-basic');
 $this->end();
 $this->start('tab-content');
-echo $this->Html->beginTabPane('term-basic');
+echo $this->Html->tabStart('term-basic');
 echo $this->Form->input('title', [
     'label' => __d('croogo', 'Title'),
     'data-slug' => '#slug',
@@ -48,6 +48,6 @@ echo $this->Form->hidden('taxonomies.0.id');
 echo $this->Form->input('description', [
     'label' => __d('croogo', 'Description'),
 ]);
-echo $this->Html->endTabPane();
+echo $this->Html->tabEnd();
 $this->end();
 $this->assign('form-end', $this->Form->end());

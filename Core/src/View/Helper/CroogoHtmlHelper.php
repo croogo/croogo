@@ -32,29 +32,19 @@ class CroogoHtmlHelper extends HtmlHelper
             $themeSettings = $themeConfig['settings'];
             $settings = Hash::merge($themeSettings, $settings);
         }
+        $this->_defaultConfig['templates']['beginbox'] = "<div class=\"card\">
+						<div class='card-header'>
+							{{icon}} {{title}}
+						</div>
+						<div class='card-block'>";
+        $this->_defaultConfig['templates']['endbox'] = '</div>
+			</div>';
 
         parent::__construct($View, $settings);
 
         if (!$View->theme) {
             return;
         }
-
-        $themeCss = $themeSettings['css'];
-        $boxIconClass = '';
-
-        $this->_defaultConfig['templates']['beginbox'] = "<div class='$themeCss[row]'>
-				<div class='$themeCss[columnFull]'>
-					<div class='box'>
-						<div class='box-title'>
-							<i class='$boxIconClass'></i>
-							%s
-						</div>
-						<div class='box-content %s'>";
-        $this->_defaultConfig['templates']['endbox'] = '</div>
-					</div>
-				</div>
-			</div>';
-        $this->_defaultConfig['templates']['icon'] = '<i class="%s"%s></i>';
     }
 
     /**
@@ -97,23 +87,23 @@ class CroogoHtmlHelper extends HtmlHelper
      * Create a string representing the start of a box container
      *
      * @param string $title Box title
-     * @param bool $isHidden true, container will have 'hidden' class
-     * @param bool $isLabelHidden true, container will have 'label-hidden' class
+     * @param options $options Option array
      * @returns string Start of box markup
      */
-    public function beginBox($title = '', $isHidden = false, $isLabelHidden = false, $icon = 'list')
+    public function beginBox($title = '', array $options = [])
     {
-        $isHidden = $isHidden ? 'hidden' : '';
-        $isLabelHidden = $isLabelHidden ? 'label-hidden' : '';
-        $class = $isHidden . ' ' . $isLabelHidden;
+        $options = Hash::merge([
+            'icon' => 'list',
+        ], $options);
 
-        $output = '<div class="card">';
+        $icon = $this->icon($options['icon']);
+        unset($options['icon']);
 
-        $output .= $this->div('card-header', $this->icon($icon) . ' ' . $title, ['escape' => false]);
-
-        $output .= '<div class="card-block ' . $class . '">';
-
-        return $output;
+        return $this->formatTemplate('beginbox', [
+            'attrs' => $this->templater()->formatAttributes($options),
+            'icon' => $icon,
+            'title' => $title
+        ]);
     }
 
     /**
@@ -123,17 +113,7 @@ class CroogoHtmlHelper extends HtmlHelper
      */
     public function endBox()
     {
-        return '</div></div>';
-    }
-
-    public function beginTabPane($domId)
-    {
-        return '<div class="tab-pane fade" id="' . $domId . '">';
-    }
-
-    public function endTabPane()
-    {
-        return '</div>';
+        return $this->formatTemplate('endbox', []);;
     }
 
     /**
@@ -300,7 +280,7 @@ class CroogoHtmlHelper extends HtmlHelper
     {
         $options = Hash::merge([
             'id' => $id,
-            'class' => 'tab-pane',
+            'class' => 'tab-pane fade',
         ], $options);
 
         return $this->formatTemplate('blockstart', [

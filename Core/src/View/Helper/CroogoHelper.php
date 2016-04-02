@@ -467,9 +467,9 @@ class CroogoHelper extends Helper
                         '-' .
                         strtolower(Inflector::slug($title, '-'));
                     if ($this->adminTabs) {
-                        $output .= $this->Html->beginTabPane($domId);
+                        $output .= $this->Html->tabStart($domId);
                         $output .= $this->_View->element($tab['element'], $tab['options']['elementData'], $tab['options']['elementOptions']);
-                        $output .= $this->Html->endTabPane();
+                        $output .= $this->Html->tabEnd();
                     } else {
                         $output .= $this->adminTab(__d('croogo', $title), '#' . $domId, $tab['options']['linkOptions']);
                     }

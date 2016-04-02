@@ -29,7 +29,7 @@ echo $this->Croogo->adminTab(__d('croogo', 'Vocabulary'), '#vocabulary-basic');
 $this->end();
 
 $this->start('tab-content');
-echo $this->Html->beginTabPane('vocabulary-basic');
+echo $this->Html->tabStart('vocabulary-basic');
 echo $this->Form->input('title', [
     'label' => __d('croogo', 'Title'),
     'data-slug' => '#alias',
@@ -46,7 +46,7 @@ echo $this->Form->input('types._ids', [
     'class' => 'c-select',
     'help' => __d('croogo', 'Select which content types will use this vocabulary')
 ]);
-echo $this->Html->endTabPane();
+echo $this->Html->tabEnd();
 $this->end();
 
 $this->start('panels');

@@ -28,7 +28,7 @@ $this->start('tab-heading');
 $this->end();
 
 $this->start('tab-content');
-    echo $this->Html->beginTabPane('node-main');
+    echo $this->Html->tabStart('node-main');
         echo $this->Form->input('id');
         echo $this->Form->input('title', [
             'label' => false,
@@ -54,7 +54,7 @@ $this->start('tab-content');
         echo $this->Form->input('excerpt', [
             'label' => __d('croogo', 'Excerpt'),
         ]);
-    echo $this->Html->endTabPane();
+    echo $this->Html->tabEnd();
 $this->end();
 
 $this->start('panels');
