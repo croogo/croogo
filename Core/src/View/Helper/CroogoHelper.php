@@ -392,7 +392,7 @@ class CroogoHelper extends Helper
     public function adminAction($title, $url, $options = [], $confirmMessage = false)
     {
         $options = Hash::merge([
-            'button' => 'default',
+            'button' => 'secondary',
             'method' => 'get',
             'list' => false,
         ], $options);

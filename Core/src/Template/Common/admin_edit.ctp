@@ -41,12 +41,8 @@ endif;
 
 ?>
 <?php if ($actionsBlock = $this->fetch('actions')): ?>
-    <div class="<?php echo $rowClass; ?>">
-        <div class="actions <?php echo $columnFull; ?>">
-            <div class="btn-group">
-                <?php echo $actionsBlock; ?>
-            </div>
-        </div>
+    <div class="actions pull-md-right pull-lg-right btn-group">
+            <?php echo $actionsBlock; ?>
     </div>
 <?php endif; ?>
 <?php
