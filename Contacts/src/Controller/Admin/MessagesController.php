@@ -38,12 +38,15 @@ class MessagesController extends AppController
         $this->set('title_for_layout', __d('croogo', 'Messages'));
         $this->Prg->commonProcess();
 
-        $query = $this->Messages->find('searchable', $this->Prg->parsedParams());
+        $query = $this->Messages
+            ->find('searchable', $this->Prg->parsedParams())
+            ->contain(['Contacts']);
         $messages = $this->paginate($query);
         $contacts = $this->Messages->Contacts->find('list');
         $searchFields = ['contact_id', 'status' => [
             'label' => __d('croogo', 'Read'),
             'type' => 'hidden',
+            'options' => $contacts->toArray()
         ]];
         $this->set(compact('messages', 'contacts', 'searchFields'));
     }
@@ -57,23 +60,18 @@ class MessagesController extends AppController
  */
     public function edit($id = null)
     {
-        $this->set('title_for_layout', __d('croogo', 'Edit Message'));
+        $message = $this->Messages->get($id);
 
-        if (!$id && empty($this->request->data)) {
-            $this->Flash->error(__d('croogo', 'Invalid Message'));
-            return $this->redirect(['action' => 'index']);
-        }
-        if (!empty($this->request->data)) {
-            if ($this->Message->save($this->request->data)) {
+        if ($this->request->is(['post', 'put'])) {
+            $message = $this->Messages->patchEntity($message, $this->request->data);
+            if ($this->Messages->save($message)) {
                 $this->Flash->success(__d('croogo', 'The Message has been saved'));
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__d('croogo', 'The Message could not be saved. Please, try again.'));
             }
         }
-        if (empty($this->request->data)) {
-            $this->request->data = $this->Message->read(null, $id);
-        }
+        $this->set('message', $message);
     }
 
 /**
@@ -85,14 +83,14 @@ class MessagesController extends AppController
  */
     public function delete($id = null)
     {
-        if (!$id) {
-            $this->Flash->error(__d('croogo', 'Invalid id for Message'));
-            return $this->redirect(['action' => 'index']);
-        }
-        if ($this->Message->delete($id)) {
+        $message = $this->Messages->get($id);
+        if ($this->Message->delete($message)) {
             $this->Flash->success(__d('croogo', 'Message deleted'));
-            return $this->redirect(['action' => 'index']);
+        } else {
+            $this->Flash->error(__d('croogo', 'The Message could not be deleted. Please, try again.'));
         }
+
+        return $this->redirect(['action' => 'index']);
     }
 
 /**

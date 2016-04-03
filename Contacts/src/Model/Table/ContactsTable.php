@@ -96,7 +96,6 @@ class ContactsTable extends CroogoTable
  * @var array
  */
     protected $_displayFields = [
-        'id',
         'title',
         'alias',
         'email',

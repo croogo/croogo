@@ -20,7 +20,9 @@ class SettingsFormHelper extends Helper
 {
 
     public $helpers = [
-        'Croogo/Core.CroogoForm',
+        'Form' => [
+            'className' => 'Croogo/Core.CroogoForm'
+        ],
         'Croogo/Core.Croogo',
     ];
 
