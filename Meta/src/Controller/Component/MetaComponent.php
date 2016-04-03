@@ -3,6 +3,9 @@
 namespace Croogo\Meta\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
+use Croogo\Core\Croogo;
 
 /**
  * Meta Component
@@ -11,19 +14,13 @@ use Cake\Controller\Component;
  */
 class MetaComponent extends Component
 {
-
-/**
- * @var Controller
- */
-    protected $_controller;
-
 /**
  * startup
  */
-    public function startup(Controller $controller)
+    public function beforeFilter()
     {
-        $this->_controller = $controller;
-        if (isset($controller->request->params['admin'])) {
+        $controller = $this->_registry->getController();
+        if ($controller->request->params['prefix'] === 'admin') {
             $this->_adminTabs();
 
             if (empty($controller->request->data['Meta'])) {
@@ -44,14 +41,15 @@ class MetaComponent extends Component
  */
     protected function _adminTabs()
     {
-        $Model = $this->_controller->{$this->_controller->modelClass};
-        if ($Model && !$Model->Behaviors->attached('Meta')) {
+        $controller = $this->_registry->getController();
+        $table = TableRegistry::get($controller->modelClass);
+        if ($table && !$table->behaviors()->has('Meta')) {
             return;
         }
-        $controller = $this->_controller->name;
         $title = __d('croogo', 'Custom Fields');
-        $element = 'Meta.admin/meta_tab';
-        Croogo::hookAdminBox("$controller/admin_add", $title, $element);
-        Croogo::hookAdminBox("$controller/admin_edit", $title, $element);
+        $element = 'Croogo/Meta.admin/meta_tab';
+        $controllerName = $controller->request->param('controller');
+        Croogo::hookAdminBox("admin/$controllerName/add", $title, $element);
+        Croogo::hookAdminBox("admin/$controllerName/edit", $title, $element);
     }
 }

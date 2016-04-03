@@ -44,6 +44,8 @@ class NodesTable extends CroogoTable
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Croogo/Core.Visibility');
         $this->addBehavior('Search.Searchable');
+        $this->addBehavior('Croogo/Meta.Meta');
+
         $this->belongsTo('Croogo/Users.Users');
         $this->addBehavior('Timestamp', [
             'events' => [

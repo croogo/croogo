@@ -494,10 +494,11 @@ class CroogoHelper extends Helper
         }
 
         $output = '';
-        $allBoxes = Configure::read('Admin.boxes.' .
-            Inflector::camelize($this->request->param('controller')) .
-            '/' .
-            $this->request->param('action'));
+        $box = $this->request->param('controller') . '/' . $this->request->param('action');
+        if ($this->request->param('prefix')) {
+            $box = $this->request->param('prefix') . '/' . $box;
+        }
+        $allBoxes = Configure::read('Admin.boxes.' . $box);
         $allBoxes = empty($allBoxes) ? [] : $allBoxes;
         $boxNames = [];
 
@@ -524,12 +525,8 @@ class CroogoHelper extends Helper
             $issetType = isset($box['options']['type']);
             $typeInTypeAlias = $issetType && in_array($this->_View->viewVars['typeAlias'], $box['options']['type']);
             if (!$issetType || $typeInTypeAlias) {
-                list($plugin, $element) = pluginSplit($box['element']);
-                $elementOptions = Hash::merge([
-                    'plugin' => $plugin,
-                ], $box['options']['elementOptions']);
                 $output .= $this->Html->beginBox($title);
-                $output .= $this->_View->element($element, $box['options']['elementData'], $elementOptions);
+                $output .= $this->_View->element($box['element'], $box['options']['elementData'], $box['options']['elementOptions']);
                 $output .= $this->Html->endBox();
                 $this->boxAlreadyPrinted[] = $title;
             }
