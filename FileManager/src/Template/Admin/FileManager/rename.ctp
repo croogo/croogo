@@ -2,54 +2,35 @@
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Html
-	->addCrumb(__d('croogo', 'File Manager'), array('plugin' => 'Croogo/FileManager', 'controller' => 'FileManager', 'action' => 'browse'))
-	->addCrumb(__d('croogo', 'Rename'), '/' . $this->request->url);
+$this->Html->addCrumb(__d('croogo', 'File Manager'),
+    ['plugin' => 'Croogo/FileManager', 'controller' => 'fileManager', 'action' => 'browse'])
+    ->addCrumb(__d('croogo', 'Rename'));
 
-$this->append('page-heading');
-?>
-<div class="breadcrumb">
-	<a href="#"><?php echo __d('croogo', 'You are here') . ' '; ?> </a> <span class="divider"> &gt; </span>
-	<?php
-	$breadcrumb = $this->FileManager->breadcrumb($path);
-	foreach ($breadcrumb as $pathname => $p):
-		echo $this->FileManager->linkDirectory($pathname, $p);
-		echo $this->Html->tag('span', DS, array('class' => 'divider'));
-	endforeach;
-	?>
-</div> &nbsp;
-<?php
+$this->start('page-heading');
+echo $this->element('Croogo/FileManager.admin/breadcrumbs');
 $this->end();
 
-$this->append('form-start', $this->Form->create('FileManager', array(
-	'url' => $this->Url->build(array(
-		'plugin' => 'Croogo/FileManager',
-		'controller' => 'FileManager',
-		'action' => 'rename',
-	), true) . '?path=' . urlencode($path),
-)));
+$this->append('form-start', $this->Form->create(null));
 
 $this->append('tab-heading');
-	echo $this->Croogo->adminTab(__d('croogo', 'File'), '#filemanager-rename');
-	echo $this->Croogo->adminTabs();
+echo $this->Croogo->adminTab(__d('croogo', 'File'), '#filemanager-rename');
 $this->end();
 
 $this->append('tab-content');
-	echo $this->Html->tabStart('filemanager-rename') .
-		$this->Form->input('FileManager.name', array(
-			'type' => 'text',
-			'label' => __d('croogo', 'New name'),
-		));
-	echo $this->Html->tabEnd();
+echo $this->Html->tabStart('filemanager-rename');
+echo $this->Form->input('name', [
+    'type' => 'text',
+    'label' => __d('croogo', 'New name'),
+]);
+echo $this->Html->tabEnd();
 
-	echo $this->Croogo->adminTabs();
+echo $this->Croogo->adminTabs();
 $this->end();
 
 $this->append('panels');
-	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-		$this->Form->button(__d('croogo', 'Save')) .
-		$this->Html->link(__d('croogo', 'Cancel'), array('action' => 'index'), array('button' => 'danger'));
-	echo $this->Html->endBox();
+echo $this->Html->beginBox(__d('croogo', 'Publishing'));
+echo $this->element('Croogo/Core.admin/buttons', ['saveText' => __d('croogo', 'Rename file')]);
+echo $this->Html->endBox();
 $this->end();
 
 $this->append('form-end', $this->Form->end());

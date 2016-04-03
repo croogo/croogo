@@ -157,7 +157,7 @@ class FileManagerHelper extends Helper
     {
         $class = '';
         if (isset($url['action']) && in_array($url['action'], $this->__actionsAsButton)) {
-            $class = 'btn btn-default';
+            $class = 'btn btn-secondary';
         }
 
         if (isset($url['action']) && in_array($url['action'], $this->__postLinkActions)) {

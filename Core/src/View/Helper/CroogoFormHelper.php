@@ -46,6 +46,7 @@ class CroogoFormHelper extends FormHelper
         }
 
         $this->_templates['dateWidget'] = '<ul class="list-inline"><li class="year list-inline-item">{{year}}</li><li class="month list-inline-item">{{month}}</li><li class="day list-inline-item">{{day}}</li><li class="hour list-inline-item">{{hour}}</li><li class="minute list-inline-item">{{minute}}</li><li class="second list-inline-item">{{second}}</li><li class="meridian list-inline-item">{{meridian}}</li></ul>';
+        $this->_templates['file'] = '<input type="file" name="{{name}}"{{attrs}}><span class="file-custom"></span>';
 
         parent::__construct($View, $settings);
     }

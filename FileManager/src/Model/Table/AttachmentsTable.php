@@ -4,6 +4,7 @@ namespace Croogo\FileManager\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
+use Cake\Log\LogTrait;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
 use Croogo\Nodes\Model\Table\NodesTable;
@@ -20,8 +21,7 @@ use Croogo\Nodes\Model\Table\NodesTable;
  */
 class AttachmentsTable extends NodesTable
 {
-
-    use \Cake\Log\LogTrait;
+    use LogTrait;
 
 /**
  * type
@@ -38,18 +38,18 @@ class AttachmentsTable extends NodesTable
  */
     public $uploadsDir = 'uploads';
 
-/**
- * Constructor
- */
-    public function __construct(array $config = [])
+    public function initialize(array $config)
     {
-        $config = Hash::merge([
-            'table' => 'nodes',
-        ], $config);
-        parent::__construct($config);
+        $this->table('nodes');
+        $this->addBehavior('Croogo/Core.Tree', [
+            'scope' => [
+                'type' => $this->type,
+            ],
+        ]);
+        parent::initialize($config);
     }
 
-/**
+    /**
  * Save uploaded file
  *
  * @param array $data data as POSTed from form

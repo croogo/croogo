@@ -2,57 +2,40 @@
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Html
-	->addCrumb(__d('croogo', 'File Manager'), array('plugin' => 'file_manager', 'controller' => 'file_manager', 'action' => 'browse'))
-	->addCrumb(__d('croogo', 'Upload'), '/' . $this->request->url);
+$this->Html->addCrumb(__d('croogo', 'File Manager'),
+    ['plugin' => 'Croogo/FileManager', 'controller' => 'fileManager', 'action' => 'browse'])
+    ->addCrumb(__d('croogo', 'Upload'));
 
-$this->append('page-heading');
-?>
-<div class="breadcrumb">
-	<a href="#"><?php echo __d('croogo', 'You are here') . ' '; ?> </a> <span class="divider"> &gt; </span>
-	<?php $breadcrumb = $this->FileManager->breadcrumb($path); ?>
-	<?php foreach ($breadcrumb as $pathname => $p) : ?>
-		<?php echo $this->FileManager->linkDirectory($pathname, $p); ?>
-			<span class="divider"> <?php echo DS; ?> </span>
-	<?php endforeach; ?>
-</div> &nbsp;
-<?php
+$this->start('page-heading');
+echo $this->element('Croogo/FileManager.admin/breadcrumbs');
 $this->end();
 
-$this->append('form-start', $this->Form->create('FileManager', array(
-	'type' => 'file',
-	'url' => $this->Url->build(array(
-		'controller' => 'file_manager',
-		'action' => 'upload',
-	), true) . '?path=' . urlencode($path),
-)));
+$this->append('form-start', $this->Form->create(null, [
+    'type' => 'file'
+]));
 
 $this->append('tab-heading');
-	echo $this->Croogo->adminTab(__d('croogo', 'Upload'), '#filemanager-upload');
-	echo $this->Croogo->adminTabs();
+echo $this->Croogo->adminTab(__d('croogo', 'Upload'), '#filemanager-upload');
 $this->end();
 
 $this->append('tab-content');
-	echo $this->Html->tabStart('filemanager-upload') .
-		$this->Form->input('FileManager.file', array(
-			'type' => 'file',
-			'label' => '',
-		));
-	echo $this->Html->tabEnd();
+echo $this->Html->tabStart('filemanager-upload');
+echo $this->Form->input('file', [
+    'type' => 'file',
+    'label' => '',
+    'class' => 'file'
+]);
+echo $this->Html->tabEnd();
 
-	echo $this->Croogo->adminTabs();
+echo $this->Croogo->adminTabs();
 $this->end();
 
 $this->append('panels');
-	echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-		$this->Form->button(__d('croogo', 'Save')) .
-		$this->Html->link(__d('croogo', 'Cancel'),
-			array('action' => 'index'),
-			array('button' => 'danger',
-		));
-	echo $this->Html->endBox();
+echo $this->Html->beginBox(__d('croogo', 'Publishing'));
+echo $this->element('Croogo/Core.admin/buttons', ['saveText' => __d('croogo', 'Upload file')]);
+echo $this->Html->endBox();
 
-	echo $this->Croogo->adminBoxes();
+echo $this->Croogo->adminBoxes();
 $this->end();
 
 $this->append('form-end', $this->Form->end());
