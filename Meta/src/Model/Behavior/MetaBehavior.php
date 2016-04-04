@@ -4,9 +4,11 @@ namespace Croogo\Meta\Model\Behavior;
 
 use Cake\Event\Event;
 use Cake\ORM\Behavior;
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\ResultSet;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 
 /**
  * Meta Behavior
@@ -40,25 +42,16 @@ class MetaBehavior extends Behavior
                 'Meta.model' => $this->_table->alias(),
             ],
             'order' => 'Meta.key ASC',
-        ], false);
+        ]);
 
         TableRegistry::get('Croogo/Meta.Meta')
             ->belongsTo($this->_table->alias(), [
                 'targetTable' => $this->_table,
-                'foreignKey' => 'foreign_key'
+                'foreignKey' => 'foreign_key',
+                'conditions' => [
+                    'Meta.model' => $this->_table->alias(),
+                ],
             ]);
-    }
-
-    /**
-     * @return array
-     */
-    public function implementedEvents()
-    {
-        $implementedEvents = parent::implementedEvents();
-
-        $implementedEvents['Model.Node.beforeSaveNode'] = 'onBeforeSaveNode';
-
-        return $implementedEvents;
     }
 
     /**
@@ -91,7 +84,7 @@ class MetaBehavior extends Behavior
      * @param array $data
      * @return array
      */
-    public function prepareData(Model $model, $data)
+    public function prepareData($data)
     {
         return $this->_prepareMeta($data);
     }
@@ -103,50 +96,35 @@ class MetaBehavior extends Behavior
      * @param array $data
      * @return array
      */
-    protected function _prepareMeta($data)
+    protected function _prepareMeta(\ArrayObject $data, \ArrayObject $options)
     {
-        if (isset($data['Meta']) &&
-            is_array($data['Meta']) &&
-            count($data['Meta']) > 0 &&
-            !Hash::numeric(array_keys($data['Meta']))
+        if (isset($data['meta']) &&
+            is_array($data['meta']) &&
+            count($data['meta']) > 0 &&
+            !Hash::numeric(array_keys($data['meta']))
         ) {
-            $meta = $data['Meta'];
-            $data['Meta'] = [];
+            $meta = $data['meta'];
+            $data['meta'] = [];
             $i = 0;
             foreach ($meta as $metaArray) {
-                $data['Meta'][$i] = $metaArray;
+                $data['meta'][$i] = $metaArray;
                 $i++;
             }
+
+            if (isset($options['associated']) && !(isset($options['associated']['meta']) || in_array('meta', $options['associated']))) {
+                $options['associated'][] = 'meta';
+            }
         }
-
-        return $data;
     }
 
     /**
-     * Handle Model.Node.beforeSaveNode event
+     * Handle Model.beforeMarshal event
      *
-     * @param Event $event
-     */
-    public function onBeforeSaveNode($event)
-    {
-        $event->data['data'] = $this->_prepareMeta($event->data['data']);
-
-        return true;
-    }
-
-    /**
-     * Save with meta
-     *
-     * @param Model $model
-     * @param array $data
-     * @param array $options
+     * @param Event $event Event object
      * @return void
-     * @deprecated Use standard Model::saveAll()
      */
-    public function saveWithMeta(Model $model, $data, $options = [])
+    public function beforeMarshal($event)
     {
-        $data = $this->_prepareMeta($data);
-
-        return $model->saveAll($data, $options);
+        $this->_prepareMeta($event->data['data'], $event->data['options']);
     }
 }

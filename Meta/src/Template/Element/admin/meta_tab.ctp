@@ -1,8 +1,8 @@
 <div class="meta-fields">
     <?php
-    if (!empty($this->request->data['Meta'])) {
-        $fields = Hash::combine($this->request->data['Meta'], '{n}.key', '{n}.value');
-        $fieldsKeyToId = Hash::combine($this->request->data['Meta'], '{n}.key', '{n}.id');
+    if ($entity->has('meta')) {
+        $fields = \Cake\Utility\Hash::combine($entity->meta, '{n}.key', '{n}.value');
+        $fieldsKeyToId = \Cake\Utility\Hash::combine($entity->meta, '{n}.key', '{n}.id');
     } else {
         $fields = $fieldsKeyToId = [];
     }

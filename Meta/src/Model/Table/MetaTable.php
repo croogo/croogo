@@ -16,11 +16,37 @@ use Croogo\Core\Model\Table\CroogoTable;
  */
 class MetaTable extends CroogoTable
 {
+    protected $_quoted;
+
     public function initialize(array $config)
     {
         $this->table('meta');
+        $this->addBehavior('Timestamp');
         $this->addBehavior('Croogo/Core.Trackable');
 
         parent::initialize($config);
+    }
+
+    /**
+     * @return void
+     */
+    public function beforeSave()
+    {
+        $this->_quoted = $this->connection()
+            ->driver()
+            ->autoQuoting();
+        $this->connection()
+            ->driver()
+            ->autoQuoting(true);
+    }
+
+    /**
+     * @return void
+     */
+    public function afterSave()
+    {
+        $this->connection()
+            ->driver()
+            ->autoQuoting($this->_quoted);
     }
 }

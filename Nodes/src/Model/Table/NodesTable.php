@@ -123,7 +123,6 @@ class NodesTable extends CroogoTable
             'type' => $args['type'],
         ]);
         $query->contain([
-//			'Metas',
             'Taxonomies' => [
                 'Terms',
                 'Vocabularies',

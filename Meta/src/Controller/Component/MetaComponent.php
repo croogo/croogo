@@ -14,36 +14,39 @@ use Croogo\Core\Croogo;
  */
 class MetaComponent extends Component
 {
-/**
- * startup
- */
-    public function beforeFilter()
+    /**
+     * startup
+     */
+    public function startup()
     {
         $controller = $this->_registry->getController();
         if ($controller->request->params['prefix'] === 'admin') {
             $this->_adminTabs();
 
-            if (empty($controller->request->data['Meta'])) {
+            if (empty($controller->request->data['meta'])) {
                 return;
             }
             $unlockedFields = [];
-            foreach ($controller->request->data['Meta'] as $uuid => $fields) {
+            foreach ($controller->request->data['meta'] as $uuid => $fields) {
                 foreach ($fields as $field => $vals) {
-                    $unlockedFields[] = 'Meta.' . $uuid . '.' . $field;
+                    $unlockedFields[] = 'meta.' . $uuid . '.' . $field;
                 }
             }
-            $controller->Security->unlockedFields += $unlockedFields;
+            $controller->Security->config('unlockedFields', $unlockedFields);
         }
     }
 
-/**
- * Hook admin tabs for controllers whom its primary model has MetaBehavior attached.
- */
+    /**
+     * Hook admin tabs for controllers whom its primary model has MetaBehavior attached.
+     */
     protected function _adminTabs()
     {
         $controller = $this->_registry->getController();
         $table = TableRegistry::get($controller->modelClass);
-        if ($table && !$table->behaviors()->has('Meta')) {
+        if ($table &&
+            !$table->behaviors()
+                ->has('Meta')
+        ) {
             return;
         }
         $title = __d('croogo', 'Custom Fields');

@@ -29,7 +29,6 @@ $this->end();
 
 $this->start('tab-content');
     echo $this->Html->tabStart('node-main');
-        echo $this->Form->input('id');
         echo $this->Form->input('title', [
             'label' => false,
             'placeholder' => __d('croogo', '%s title', $type->title),
@@ -98,12 +97,8 @@ $this->start('panels');
     echo $this->Html->endBox();
 
     echo $this->Html->beginBox(__d('croogo', 'Access control'));
-    echo $this->Form->input('Role.Role', [
+    echo $this->Form->input('roles', [
         'multiple' => 'checkbox'
     ]);
     echo $this->Html->endBox();
-
-    echo $this->Croogo->adminBoxes();
 $this->end();
-
-$this->assign('form-end', $this->Form->end());
