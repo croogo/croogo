@@ -3,6 +3,7 @@
 namespace Croogo\Core\View\Helper;
 
 use Cake\View\Helper\PaginatorHelper;
+use Cake\View\View;
 
 /**
  * Croogo Paginator Helper
@@ -12,81 +13,36 @@ use Cake\View\Helper\PaginatorHelper;
 class CroogoPaginatorHelper extends PaginatorHelper
 {
 
-    public $helpers = [
-        'Html',
-        'Url'
-    ];
+    /**
+     * Constructor. Overridden to merge passed args with URL options.
+     *
+     * @param \Cake\View\View $View The View this helper is being attached to.
+     * @param array $config Configuration settings for the helper.
+     */
+    public function __construct(View $View, array $config = [])
+    {
+        $this->_defaultConfig['templates'] = [
+                'nextActive' => '<li class="next page-item"><a rel="next" aria-label="Next" href="{{url}}" class="page-link">' .
+                    '<span aria-hidden="true">{{text}}</span></a></li>',
+                'nextDisabled' => '<li class="next page-item disabled"><a class="page-link"><span aria-hidden="true">{{text}}</span></a></li>',
+                'prevActive' => '<li class="prev page-item"><a rel="prev" aria-label="Previous" href="{{url}}" class="page-link">' .
+                    '<span aria-hidden="true">{{text}}</span></a></li>',
+                'prevDisabled' => '<li class="prev page-item disabled"><a class="page-link"><span aria-hidden="true">{{text}}</span></a></li>',
+                'current' => '<li class="page-item active"><a class="page-link">{{text}} <span class="sr-only">(current)</span></a></li>',
+                'number' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>',
+                'first' => '<li class="first page-item"><a href="{{url}}" class="page-link">{{text}}</a></li>',
+                'last' => '<li class="last page-item"><a href="{{url}}" class="page-link">{{text}}</a></li>',
+            ] + $this->_defaultConfig['templates'];
+
+        parent::__construct($View, $config);
+    }
 
 /**
- * doesn't use parent::numbers()
- *
  * @param array $options
  * @return boolean
  */
     public function numbers(array $options = [])
     {
-        $defaults = [
-            'tag' => 'li',
-            'model' => $this->defaultModel(),
-            'modulus' => '8',
-            'class' => null
-        ];
-        $options = array_merge($defaults, $options);
-        extract($options);
-
-        $params = $this->params($options['model']);
-        extract($params);
-
-        $begin = $page - floor($modulus / 2);
-        $end = $begin + $modulus;
-        if ($end > $pageCount) {
-            $end = $pageCount + 1;
-            $begin = $pageCount - $modulus;
-        }
-        $begin = $begin <= 0 ? 1 : $begin;
-
-        $output = '';
-        for ($i = $begin; $i < $end; $i++) {
-            $class = ($i == $page) ? 'active' : '';
-            $output .= $this->Html->tag($tag, $this->Html->link($i, ['page' => $i], compact('class')));
-        }
-        return $output;
-    }
-
-    protected function _defaultOptions($options)
-    {
-        if (!isset($options['tag'])) {
-            $options['tag'] = 'li';
-        }
-
-        return $options;
-    }
-
-    public function prev($title = '<< Previous', array $options = [])
-    {
-        $options['escape'] = isset($options['escape']) ? $options['escape'] : false;
-        $options = $this->_defaultOptions($options, false);
-        return parent::prev($title = '<< Previous', $options = []);
-    }
-
-    public function next($title = '<< Previous', array $options = [])
-    {
-        $options['escape'] = isset($options['escape']) ? $options['escape'] : false;
-        $options = $this->_defaultOptions($options, false);
-        return parent::next($title = 'Next >>', $options = []);
-    }
-
-    public function first($first = '<< first', array $options = [])
-    {
-        $options['escape'] = isset($options['escape']) ? $options['escape'] : true;
-        $options = $this->_defaultOptions($options);
-        return parent::first($first, $options);
-    }
-
-    public function last($last = 'last >>', array $options = [])
-    {
-        $options['escape'] = isset($options['escape']) ? $options['escape'] : true;
-        $options = $this->_defaultOptions($options);
-        return parent::last($last, $options);
+        return parent::numbers($options);
     }
 }

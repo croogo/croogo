@@ -37,8 +37,6 @@ Dashboard.saveDashboard = function(e, ui) {
 		.removeClass('icon-move')
 		.addClass('icon-spinner icon-spin');
 
-    console.log(dashboard);
-
 	$.post($('#dashboard-url').text(), {dashboard: dashboard}, function() {
 		box
 			.find('.move-handle')

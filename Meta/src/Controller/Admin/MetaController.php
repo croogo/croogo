@@ -2,6 +2,7 @@
 
 namespace Croogo\Meta\Controller\Admin;
 
+use Cake\ORM\TableRegistry;
 use Croogo\Meta\Controller\AppController;
 
 /**
@@ -37,16 +38,15 @@ class MetaController extends AppController
  * @return void
  * @access public
  */
-    public function delete_meta($id = null)
+    public function deleteMeta($id = null)
     {
-        $Meta = ClassRegistry::init('Meta.Meta');
+        $Meta = TableRegistry::get('Croogo/Meta.Meta');
         $success = false;
-        if ($id != null && $Meta->delete($id)) {
+        $meta = $Meta->findById($id)->first();
+        if ($meta !== null && $Meta->delete($meta)) {
             $success = true;
-        } else {
-            if (!$Meta->exists($id)) {
-                $success = true;
-            }
+        } elseif ($meta === null) {
+            $success = true;
         }
 
         $success = ['success' => $success];
@@ -60,8 +60,8 @@ class MetaController extends AppController
  * @return void
  * @access public
  */
-    public function add_meta()
+    public function addMeta()
     {
-        $this->layout = 'ajax';
+        $this->viewBuilder()->layout('ajax');
     }
 }

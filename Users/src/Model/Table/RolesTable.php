@@ -15,7 +15,6 @@ class RolesTable extends CroogoTable
      * @var array
      */
     protected $_displayFields = [
-        'id',
         'title',
         'alias',
     ];

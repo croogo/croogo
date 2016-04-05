@@ -27,16 +27,18 @@ class CroogoHelper extends Helper
 
     public $helpers = [
         'Form',
-        'Html',
+        'Html' => [
+            'className' => 'Croogo/Core.CroogoHtml'
+        ],
         'Url',
         'Croogo/Core.Layout',
         'Croogo/Core.Theme',
         'Croogo/Menus.Menus',
     ];
 
-/**
- * Provides backward compatibility for deprecated methods
- */
+    /**
+     * Provides backward compatibility for deprecated methods
+     */
     public function __call($method, $params)
     {
         if ($method == 'settingsInput') {
@@ -44,16 +46,17 @@ class CroogoHelper extends Helper
                 $this->_View->Helpers->load('Settings.SettingsForm');
             }
             $callable = [$this->_View->SettingsForm, 'input'];
+
             return call_user_func_array($callable, $params);
         }
     }
 
-/**
- * Default Constructor
- *
- * @param View $View The View this helper is being attached to.
- * @param array $settings Configuration settings for the helper.
- */
+    /**
+     * Default Constructor
+     *
+     * @param View $View The View this helper is being attached to.
+     * @param array $settings Configuration settings for the helper.
+     */
     public function __construct(View $View, $settings = [])
     {
         $this->helpers[] = Configure::read('Site.acl_plugin') . '.' . Configure::read('Site.acl_plugin');
@@ -61,9 +64,9 @@ class CroogoHelper extends Helper
         $this->_CroogoStatus = new Status();
     }
 
-/**
- * Before Render callback
- */
+    /**
+     * Before Render callback
+     */
     public function beforeRender($viewFile)
     {
         if ($this->request->param('prefix') === 'admin') {
@@ -76,31 +79,32 @@ class CroogoHelper extends Helper
         return $this->_CroogoStatus->statuses();
     }
 
-/**
- * Convenience method to Html::script() for admin views
- *
- * This method does nothing if request is ajax or not in admin prefix.
- *
- * @see HtmlHelper::script()
- * @param $url string|array Javascript files to include
- * @param array|boolean Options or Html attributes
- * @return mixed String of <script /> tags or null
- */
+    /**
+     * Convenience method to Html::script() for admin views
+     *
+     * This method does nothing if request is ajax or not in admin prefix.
+     *
+     * @see HtmlHelper::script()
+     * @param $url string|array Javascript files to include
+     * @param array|boolean Options or Html attributes
+     * @return mixed String of <script /> tags or null
+     */
     public function adminScript($url, $options = [])
     {
         $options = Hash::merge(['block' => 'scriptBottom'], $options);
         if ($this->request->is('ajax') || $this->request->param('prefix') !== 'admin') {
             return;
         }
+
         return $this->Html->script($url, $options);
     }
 
-/** Generate Admin menus added by Nav::add()
- *
- * @param array $menus
- * @param array $options
- * @return string menu html tags
- */
+    /** Generate Admin menus added by Nav::add()
+     *
+     * @param array $menus
+     * @param array $options
+     * @return string menu html tags
+     */
     public function adminMenus($menus, $options = [], $depth = 0)
     {
         $options = Hash::merge([
@@ -109,38 +113,45 @@ class CroogoHelper extends Helper
             'htmlAttributes' => [
                 'class' => 'nav nav-stacked',
             ],
+            'itemTag' => 'li',
+            'listTag' => 'ul',
         ], $options);
 
-//		$aclPlugin = Configure::read('Site.acl_plugin');
-//		$userId = AuthComponent::user('id');
-//		if (empty($userId)) {
-//			return '';
-//		}
+        //		$aclPlugin = Configure::read('Site.acl_plugin');
+        //		$userId = AuthComponent::user('id');
+        //		if (empty($userId)) {
+        //			return '';
+        //		}
 
         $sidebar = $options['type'] === 'sidebar';
         $htmlAttributes = $options['htmlAttributes'];
         $out = null;
         $sorted = Hash::sort($menus, '{s}.weight', 'ASC');
-//		if (empty($this->Role)) {
-//			$this->Role = ClassRegistry::init('Users.Role');
-//			$this->Role->Behaviors->attach('Croogo.Aliasable');
-//		}
-//		$currentRole = $this->Role->byId($this->Layout->getRoleId());
+        //		if (empty($this->Role)) {
+        //			$this->Role = ClassRegistry::init('Users.Role');
+        //			$this->Role->Behaviors->attach('Croogo.Aliasable');
+        //		}
+        //		$currentRole = $this->Role->byId($this->Layout->getRoleId());
 
         foreach ($sorted as $menu) {
             if (isset($menu['separator'])) {
-                $liOptions['class'] = 'divider';
-                $out .= $this->Html->tag('li', null, $liOptions);
+                if ($options['itemTag'] === false) {
+                    $liOptions['class'] = 'dropdown-divider';
+                    $out .= $this->Html->tag('div', '', $liOptions);
+                } else {
+                    $liOptions['class'] = 'divider';
+                    $out .= $this->Html->tag($options['itemTag'], '', $liOptions);
+                }
                 continue;
             }
-//			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByUserId($userId, $menu['url'])) {
-//				continue;
-//			}
+            //			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByUserId($userId, $menu['url'])) {
+            //				continue;
+            //			}
 
             if (empty($menu['htmlAttributes']['class'])) {
                 $menuClass = Inflector::slug(strtolower('menu-' . $menu['title']), '-');
                 $menu['htmlAttributes'] = Hash::merge([
-                    'class' => $menuClass
+                    'class' => $menuClass,
                 ], $menu['htmlAttributes']);
             }
             $title = '';
@@ -159,6 +170,8 @@ class CroogoHelper extends Helper
             if (!empty($menu['children'])) {
                 $childClass = '';
                 if ($sidebar) {
+                    $itemTag = 'li';
+                    $listTag = 'ul';
                     $childClass = 'nav nav-stacked sub-nav ';
                     $childClass .= ' submenu-' . Inflector::slug(strtolower($menu['title']), '-');
                     if ($depth > 0) {
@@ -168,16 +181,19 @@ class CroogoHelper extends Helper
                     if ($depth == 0) {
                         $childClass = 'dropdown-menu';
                     }
+                    $itemTag = false;
+                    $listTag = 'div';
                 }
                 $children = $this->adminMenus($menu['children'], [
                     'type' => $options['type'],
                     'children' => true,
                     'htmlAttributes' => ['class' => $childClass],
+                    'itemTag' => $itemTag,
+                    'listTag' => $listTag,
                 ], $depth + 1);
 
                 $menu['htmlAttributes']['class'] .= ' hasChild dropdown-close';
             }
-            $menu['htmlAttributes']['class'] .= ' sidebar-item';
 
             $menuUrl = $this->Url->build($menu['url']);
             if ($menuUrl == env('REQUEST_URI')) {
@@ -196,6 +212,14 @@ class CroogoHelper extends Helper
                 $menu['htmlAttributes']['data-toggle'] = 'dropdown';
             }
 
+            if (!$sidebar && $depth == 0) {
+                $menu['htmlAttributes']['class'] .= ' nav-link';
+            } elseif (!$sidebar && $depth > 0) {
+                $menu['htmlAttributes']['class'] .= ' dropdown-item';
+            } else {
+                $menu['htmlAttributes']['class'] .= ' sidebar-item';
+            }
+
             if (isset($menu['before'])) {
                 $title = $menu['before'] . $title;
             }
@@ -207,38 +231,49 @@ class CroogoHelper extends Helper
             $menu['htmlAttributes']['escape'] = false;
 
             $link = $this->Html->link($title, $menu['url'], $menu['htmlAttributes']);
-            $liOptions = [];
+            if ($options['itemTag'] === false) {
+                $out .= $link;
+                continue;
+            }
+
+            $liOptions = [
+                'class' => 'nav-item',
+            ];
             if ($sidebar && !empty($children) && $depth > 0) {
-                $liOptions['class'] = ' dropdown-submenu';
+                $liOptions['class'] .= ' dropdown-submenu';
             }
             if (!$sidebar && !empty($children)) {
                 if ($depth > 0) {
-                    $liOptions['class'] = ' dropdown-submenu';
+                    $liOptions['class'] .= ' dropdown-submenu';
                 } else {
-                    $liOptions['class'] = ' dropdown';
+                    $liOptions['class'] .= ' dropdown';
                 }
             }
-            $out .= $this->Html->tag('li', $link . $children, $liOptions);
+
+            $out .= $this->Html->tag($options['itemTag'], $link . $children, $liOptions);
         }
 
         if (!$sidebar && $depth > 0) {
             $htmlAttributes['class'] = 'dropdown-menu';
         }
 
-        return $this->Html->tag('ul', $out, $htmlAttributes);
+        return $this->Html->tag($options['listTag'], $out, $htmlAttributes);
     }
 
-/**
- * Show links under Actions column
- *
- * @param int$id
- * @param array $options
- * @return string
- */
+    /**
+     * Show links under Actions column
+     *
+     * @param int $id
+     * @param array $options
+     * @return string
+     */
     public function adminRowActions($id, $options = [])
     {
         $output = '';
-        $rowActions = Configure::read('Admin.rowActions.' . Inflector::camelize($this->request->param('controller')) . '/' . $this->request->param('action'));
+        $rowActions = Configure::read('Admin.rowActions.' .
+            Inflector::camelize($this->request->param('controller')) .
+            '/' .
+            $this->request->param('action'));
         if (is_array($rowActions)) {
             foreach ($rowActions as $title => $link) {
                 $linkOptions = $options;
@@ -261,24 +296,25 @@ class CroogoHelper extends Helper
                 $output .= $this->adminRowAction($title, $link, $linkOptions, $confirmMessage);
             }
         }
+
         return $output;
     }
 
-/**
- * Show link under Actions column
- *
- * ### Options:
- *
- * - `method` - when 'POST' is specified, the FormHelper::postLink() will be
- *              used instead of HtmlHelper::link()
- * - `rowAction` when bulk submissions is used, defines which action to use.
- *
- * @param string $title The content to be wrapped by <a> tags.
- * @param string|array $url Cake-relative URL or array of URL parameters, or external URL (starts with http://)
- * @param array $options Array of HTML attributes.
- * @param string $confirmMessage JavaScript confirmation message.
- * @return string An `<a />` element
- */
+    /**
+     * Show link under Actions column
+     *
+     * ### Options:
+     *
+     * - `method` - when 'POST' is specified, the FormHelper::postLink() will be
+     *              used instead of HtmlHelper::link()
+     * - `rowAction` when bulk submissions is used, defines which action to use.
+     *
+     * @param string $title The content to be wrapped by <a> tags.
+     * @param string|array $url Cake-relative URL or array of URL parameters, or external URL (starts with http://)
+     * @param array $options Array of HTML attributes.
+     * @param string $confirmMessage JavaScript confirmation message.
+     * @return string An `<a />` element
+     */
     public function adminRowAction($title, $url = null, $options = [], $confirmMessage = false)
     {
         $action = false;
@@ -306,6 +342,7 @@ class CroogoHelper extends Helper
         if (!empty($options['rowAction'])) {
             $options['data-row-action'] = $options['rowAction'];
             unset($options['rowAction']);
+
             return $this->_bulkRowAction($title, $url, $options);
         }
 
@@ -316,19 +353,20 @@ class CroogoHelper extends Helper
 
         if ($action == 'delete' || isset($usePost)) {
             $postLink = $this->Form->postLink($title, $url, $options);
+
             return $postLink;
         }
 
         return $this->Html->link($title, $url, $options);
     }
 
-/**
- * Creates a special type of link for use in admin area.
- *
- * Clicking the link will automatically check a corresponding checkbox
- * where element id is equal to $url parameter and immediately submit the form
- * it's on.  This works in tandem with Admin.processLink() in javascript.
- */
+    /**
+     * Creates a special type of link for use in admin area.
+     *
+     * Clicking the link will automatically check a corresponding checkbox
+     * where element id is equal to $url parameter and immediately submit the form
+     * it's on.  This works in tandem with Admin.processLink() in javascript.
+     */
     protected function _bulkRowAction($title, $url = null, $options = [], $confirmMessage = false)
     {
         if (!empty($confirmMessage)) {
@@ -338,22 +376,23 @@ class CroogoHelper extends Helper
             $options['iconInline'] = false;
         }
         $output = $this->Html->link($title, $url, $options);
+
         return $output;
     }
 
-/**
- * Create an action button
- *
- * @param string $title Button title
- * @param url|string $url URL
- * @param array $options Options array
- * @param string $confirmMessage Confirmation message
- * @return string
- */
+    /**
+     * Create an action button
+     *
+     * @param string $title Button title
+     * @param url|string $url URL
+     * @param array $options Options array
+     * @param string $confirmMessage Confirmation message
+     * @return string
+     */
     public function adminAction($title, $url, $options = [], $confirmMessage = false)
     {
         $options = Hash::merge([
-            'button' => 'default',
+            'button' => 'secondary',
             'method' => 'get',
             'list' => false,
         ], $options);
@@ -372,27 +411,31 @@ class CroogoHelper extends Helper
         } else {
             $out = $this->Html->div('btn-group', $out);
         }
+
         return $out;
     }
 
-/**
- * Create a tab title/link
- */
+    /**
+     * Create a tab title/link
+     */
     public function adminTab($title, $url, $options = [])
     {
-        return $this->Html->tag(
-            'li',
-            $this->Html->link($title, $url, Hash::merge([
-                'data-toggle' => 'tab',
-                ], $options))
-        );
+        $options = Hash::merge([
+            'data-toggle' => 'tab',
+        ], $options);
+
+        $options = $this->addClass($options, 'nav-link');
+
+        return $this->Html->tag('li', $this->Html->link($title, $url, $options), [
+            'class' => 'nav-item',
+        ]);
     }
 
-/**
- * Show tabs
- *
- * @return string
- */
+    /**
+     * Show tabs
+     *
+     * @return string
+     */
     public function adminTabs($show = null)
     {
         if (!isset($this->adminTabs)) {
@@ -416,12 +459,17 @@ class CroogoHelper extends Helper
                     ],
                 ], $tab);
 
-                if (!isset($tab['options']['type']) || (isset($tab['options']['type']) && (in_array($this->_View->viewVars['typeAlias'], $tab['options']['type'])))) {
-                    $domId = strtolower(Inflector::singularize($this->request->params['controller'])) . '-' . strtolower(Inflector::slug($title, '-'));
+                if (!isset($tab['options']['type']) ||
+                    (isset($tab['options']['type']) &&
+                        (in_array($this->_View->viewVars['typeAlias'], $tab['options']['type'])))
+                ) {
+                    $domId = strtolower(Inflector::singularize($this->request->params['controller'])) .
+                        '-' .
+                        strtolower(Inflector::slug($title, '-'));
                     if ($this->adminTabs) {
-                        $output .= '<div id="' . $domId . '" class="tab-pane">';
+                        $output .= $this->Html->tabStart($domId);
                         $output .= $this->_View->element($tab['element'], $tab['options']['elementData'], $tab['options']['elementOptions']);
-                        $output .= '</div>';
+                        $output .= $this->Html->tabEnd();
                     } else {
                         $output .= $this->adminTab(__d('croogo', $title), '#' . $domId, $tab['options']['linkOptions']);
                     }
@@ -430,14 +478,15 @@ class CroogoHelper extends Helper
         }
 
         $this->adminTabs = true;
+
         return $output;
     }
 
-/**
- * Show Boxes
- *
- * @param array $boxNames
- */
+    /**
+     * Show Boxes
+     *
+     * @param array $boxNames
+     */
     public function adminBoxes($boxName = null)
     {
         if (!isset($this->boxAlreadyPrinted)) {
@@ -445,7 +494,11 @@ class CroogoHelper extends Helper
         }
 
         $output = '';
-        $allBoxes = Configure::read('Admin.boxes.' . Inflector::camelize($this->request->param('controller')) . '/' . $this->request->param('action'));
+        $box = $this->request->param('controller') . '/' . $this->request->param('action');
+        if ($this->request->param('prefix')) {
+            $box = $this->request->param('prefix') . '/' . $box;
+        }
+        $allBoxes = Configure::read('Admin.boxes.' . $box);
         $allBoxes = empty($allBoxes) ? [] : $allBoxes;
         $boxNames = [];
 
@@ -472,16 +525,10 @@ class CroogoHelper extends Helper
             $issetType = isset($box['options']['type']);
             $typeInTypeAlias = $issetType && in_array($this->_View->viewVars['typeAlias'], $box['options']['type']);
             if (!$issetType || $typeInTypeAlias) {
-                list($plugin, $element) = pluginSplit($box['element']);
-                $elementOptions = Hash::merge([
-                    'plugin' => $plugin,
-                ], $box['options']['elementOptions']);
+                $entity = $this->_View->viewVars[$this->_View->viewVars['viewVar']];
+                $box['options']['elementData']['entity'] = $entity;
                 $output .= $this->Html->beginBox($title);
-                $output .= $this->_View->element(
-                    $element,
-                    $box['options']['elementData'],
-                    $elementOptions
-                );
+                $output .= $this->_View->element($box['element'], $box['options']['elementData'], $box['options']['elementOptions']);
                 $output .= $this->Html->endBox();
                 $this->boxAlreadyPrinted[] = $title;
             }
@@ -501,9 +548,8 @@ class CroogoHelper extends Helper
         }
 
         return $this->Html->link('', '#link_choosers', [
-            'button' => 'default',
+            'class' => 'btn btn-primary-outline',
             'icon' => $this->Theme->getIcon('link'),
-            'iconSize' => 'small',
             'data-title' => 'Link Chooser',
             'data-toggle' => 'modal',
             'data-remote' => $this->Url->build([
@@ -511,8 +557,8 @@ class CroogoHelper extends Helper
                 'controller' => 'LinkChooser',
                 'action' => 'linkChooser',
                 '?' => [
-                    'target' => $target
-                ]
+                    'target' => $target,
+                ],
             ]),
         ]);
     }

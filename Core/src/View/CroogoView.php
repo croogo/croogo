@@ -14,7 +14,7 @@ class CroogoView extends AppView
             $this->loadHelper('Croogo/Core.Croogo');
             $this->loadHelper('Html', ['className' => 'Croogo/Core.CroogoHtml']);
             $this->loadHelper('Form', ['className' => 'Croogo/Core.CroogoForm']);
-            $this->loadHelper('Croogo/Core.CroogoPaginator');
+            $this->loadHelper('Paginator', ['className' => 'Croogo/Core.CroogoPaginator']);
         }
     }
 }

@@ -4,7 +4,6 @@ $this->extend('Croogo/Core./Common/admin_edit');
 $this->Html->script(array('Croogo/Nodes.admin'), false);
 
 $this->Html
-	->addCrumb('', '/admin', array('icon' => $this->Theme->getIcon('home')))
 	->addCrumb(__d('croogo', 'Content'), array('controller' => 'nodes', 'action' => 'index'));
 
 if ($this->request->params['action'] == 'admin_add') {

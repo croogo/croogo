@@ -18,3 +18,6 @@ tmp/
 !./Plugin/Example
 !./Plugin/Install
 !./Plugin/Translate
+Core/webroot/bootstrap/
+Core/webroot/fontAwesome/
+Core/.sass-cache/

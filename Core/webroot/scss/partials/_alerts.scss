@@ -1,0 +1,21 @@
+///
+/// Alerts with default CakePHP behavior
+///
+
+#authMessage,
+div {
+	.message {
+		@extend .alert;
+		@extend .alert-danger;
+	}
+
+	.error {
+        @extend .alert;
+        @extend .alert-danger;
+	}
+
+	.success {
+        @extend .alert;
+        @extend .alert-success;
+	}
+}

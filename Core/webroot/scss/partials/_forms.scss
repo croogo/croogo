@@ -1,0 +1,20 @@
+.label-hidden {
+    label {
+        display: none;
+    }
+}
+
+form .span8 + .span4 {
+    margin-top: 37px;
+}
+
+.form-inline {
+    .form-control {
+        margin-right: 5px;
+    }
+}
+
+span.slug {
+    font-weight: bold;
+    margin: 0 10px;
+}

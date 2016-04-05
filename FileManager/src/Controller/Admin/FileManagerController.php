@@ -20,48 +20,31 @@ use Croogo\FileManager\Utility\FileManager;
  */
 class FileManagerController extends AppController
 {
-
-/**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
-    public $uses = ['Settings.Setting', 'Users.User', 'FileManager.FileManager'];
-
-/**
- * Helpers used by the Controller
- *
- * @var array
- * @access public
- */
-    public $helpers = [
-        'Html',
-        'Form',
-        'Croogo/Core.Image',
-        'Croogo/FileManager.FileManager',
-    ];
-
-/**
- * Deletable Paths
- *
- * @var array
- * @access public
- */
+    /**
+     * Deletable Paths
+     *
+     * @var array
+     * @access public
+     */
     public $deletablePaths = [];
 
     public function initialize()
     {
         parent::initialize();
         $this->FileManager = new FileManager();
+        $this->viewBuilder()
+            ->helpers([
+                'Croogo/Core.Image',
+                'Croogo/FileManager.FileManager',
+            ]);
     }
 
-/**
- * beforeFilter
- *
- * @return void
- * @access public
- */
+    /**
+     * beforeFilter
+     *
+     * @return void
+     * @access public
+     */
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
@@ -72,30 +55,31 @@ class FileManagerController extends AppController
         $this->set('deletablePaths', $this->deletablePaths);
     }
 
-/**
- * Checks wether given $path is editable.
- * A file is editable when it resides under the APP directory
- *
- * @param string $path Path to check
- * @return boolean true if file is editable
- * @deprecated Use FileManager::isEditable()
- */
+    /**
+     * Checks wether given $path is editable.
+     * A file is editable when it resides under the APP directory
+     *
+     * @param string $path Path to check
+     * @return boolean true if file is editable
+     * @deprecated Use FileManager::isEditable()
+     */
     protected function _isEditable($path)
     {
         $path = realpath($path);
-        $regex = '/^' . preg_quote(realpath(APP), '/') . '/';
+        $regex = '/^' . preg_quote(realpath(ROOT), '/') . '/';
+
         return preg_match($regex, $path) > 0;
     }
 
-/**
- * Checks wether given $path is editable.
- * A file is deleteable when it resides under directories registered in
- * FileManagerController::deletablePaths
- *
- * @param string $path Path to check
- * @return boolean true when file is deletable
- * @deprecated Use FileManager::isDeletable()
- */
+    /**
+     * Checks wether given $path is editable.
+     * A file is deleteable when it resides under directories registered in
+     * FileManagerController::deletablePaths
+     *
+     * @param string $path Path to check
+     * @return boolean true when file is deletable
+     * @deprecated Use FileManager::isDeletable()
+     */
     protected function _isDeletable($path)
     {
         $path = realpath($path);
@@ -104,15 +88,16 @@ class FileManagerController extends AppController
             $regex[] = '(^' . preg_quote(realpath($this->deletablePaths[$i]), '/') . ')';
         }
         $regex = '/' . join($regex, '|') . '/';
+
         return preg_match($regex, $path) > 0;
     }
 
-/**
- * Helper to generate a browse url for $path
- *
- * @param string $path Path
- * @return string
- */
+    /**
+     * Helper to generate a browse url for $path
+     *
+     * @param string $path Path
+     * @return string
+     */
     protected function _browsePathUrl($path)
     {
         return Router::url([
@@ -120,27 +105,27 @@ class FileManagerController extends AppController
             'action' => 'browse',
             '?' => [
                 'path' => $path,
-            ]
+            ],
         ], true);
     }
 
-/**
- * Admin index
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin index
+     *
+     * @return void
+     * @access public
+     */
     public function index()
     {
         return $this->redirect(['action' => 'browse']);
     }
 
-/**
- * Admin browse
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin browse
+     *
+     * @return void
+     * @access public
+     */
     public function browse()
     {
         $this->folder = new Folder;
@@ -151,10 +136,8 @@ class FileManagerController extends AppController
             $path = APP;
         }
 
-        $this->set('title_for_layout', __d('croogo', 'File Manager'));
-
         $path = realpath($path) . DS;
-        $regex = '/^' . preg_quote(realpath(APP), '/') . '/';
+        $regex = '/^' . preg_quote(realpath(ROOT), '/') . '/';
         if (preg_match($regex, $path) == false) {
             $this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
             $path = APP;
@@ -174,12 +157,12 @@ class FileManagerController extends AppController
         $this->set('path', $path);
     }
 
-/**
- * Admin edit file
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin edit file
+     *
+     * @return void
+     * @access public
+     */
     public function editFile()
     {
         if (isset($this->request->query['path'])) {
@@ -190,9 +173,9 @@ class FileManagerController extends AppController
         }
         if (!$this->FileManager->isEditable($path)) {
             $this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
+
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
-        $this->set('title_for_layout', __d('croogo', 'Edit file: %s', $path));
 
         $pathE = explode(DS, $path);
         $n = count($pathE) - 1;
@@ -201,7 +184,7 @@ class FileManagerController extends AppController
         $this->file = new File($absolutefilepath, true);
 
         if (!empty($this->request->data)) {
-            if ($this->file->write($this->request->data['FileManager']['content'])) {
+            if ($this->file->write($this->request->data['content'])) {
                 $this->Flash->success(__d('croogo', 'File saved successfully'));
             }
         }
@@ -211,12 +194,12 @@ class FileManagerController extends AppController
         $this->set(compact('content', 'path', 'absolutefilepath'));
     }
 
-/**
- * Admin upload
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin upload
+     *
+     * @return void
+     * @access public
+     */
     public function upload()
     {
         $this->set('title_for_layout', __d('croogo', 'Upload'));
@@ -228,27 +211,30 @@ class FileManagerController extends AppController
         }
         $this->set(compact('path'));
 
-        if (isset($path) && !$this->_isDeletable($path)) {
+        if (isset($path) && !$this->FileManager->isDeletable($path)) {
             $this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
+
             return $this->redirect($this->referer());
         }
 
-        if (isset($this->request->data['FileManager']['file']['tmp_name']) &&
-            is_uploaded_file($this->request->data['FileManager']['file']['tmp_name'])) {
-            $destination = $path . $this->request->data['FileManager']['file']['name'];
-            move_uploaded_file($this->request->data['FileManager']['file']['tmp_name'], $destination);
+        if (isset($this->request->data['file']['tmp_name']) &&
+            is_uploaded_file($this->request->data['file']['tmp_name'])
+        ) {
+            $destination = $path . $this->request->data['file']['name'];
+            move_uploaded_file($this->request->data['file']['tmp_name'], $destination);
             $this->Flash->success(__d('croogo', 'File uploaded successfully.'));
             $redirectUrl = $this->_browsePathUrl($path);
+
             return $this->redirect($redirectUrl);
         }
     }
 
-/**
- * Admin Delete File
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin Delete File
+     *
+     * @return void
+     * @access public
+     */
     public function deleteFile()
     {
         if (!empty($this->request->data['path'])) {
@@ -257,8 +243,9 @@ class FileManagerController extends AppController
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
 
-        if (!$this->_isDeletable($path)) {
+        if (!$this->FileManager->isDeletable($path)) {
             $this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
+
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
 
@@ -277,12 +264,12 @@ class FileManagerController extends AppController
         exit();
     }
 
-/**
- * Admin Delete Directory
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin Delete Directory
+     *
+     * @return void
+     * @access public
+     */
     public function deleteDirectory()
     {
         if (!empty($this->request->data['path'])) {
@@ -291,8 +278,9 @@ class FileManagerController extends AppController
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
 
-        if (isset($path) && !$this->_isDeletable($path)) {
+        if (isset($path) && !$this->FileManager->isDeletable($path)) {
             $this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
+
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
 
@@ -311,12 +299,12 @@ class FileManagerController extends AppController
         exit;
     }
 
-/**
- * Rename a file or directory
- *
- * @return void
- * @access public
- */
+    /**
+     * Rename a file or directory
+     *
+     * @return void
+     * @access public
+     */
     public function rename()
     {
         $path = $this->request->query('path');
@@ -324,14 +312,20 @@ class FileManagerController extends AppController
 
         if (!$this->FileManager->isEditable($path)) {
             $this->Flash->error(__d('croogo', 'Path "%s" cannot be renamed', $path));
+
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
 
         if ($this->request->is('post') || $this->request->is('put')) {
-            if (!is_null($this->request->data('FileManager.name')) && !empty($this->request->data['FileManager']['name'])) {
-                $newName = trim($this->request->data['FileManager']['name']);
+            if (!is_null($this->request->data('name')) &&
+                !empty($this->request->data['name'])
+            ) {
+                $newName = trim($this->request->data['name']);
                 $oldName = array_pop($pathFragments);
-                $newPath = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $pathFragments) . DIRECTORY_SEPARATOR . $newName;
+                $newPath = DIRECTORY_SEPARATOR .
+                    implode(DIRECTORY_SEPARATOR, $pathFragments) .
+                    DIRECTORY_SEPARATOR .
+                    $newName;
 
                 $fileExists = file_exists($newPath);
                 if ($oldName !== $newName) {
@@ -363,36 +357,36 @@ class FileManagerController extends AppController
         } else {
             $this->Croogo->setReferer();
         }
-        $this->request->data('FileManager.name', array_pop($pathFragments));
+        $this->request->data('name', array_pop($pathFragments));
         $this->set('path', $path);
     }
 
-/**
- * Admin Create Directory
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin Create Directory
+     *
+     * @return void
+     * @access public
+     */
     public function createDirectory()
     {
-        $this->set('title_for_layout', __d('croogo', 'Create Directory'));
-
         if (isset($this->request->query['path'])) {
             $path = $this->request->query['path'];
         } else {
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
 
-        if (isset($path) && !$this->_isDeletable($path)) {
+        if (isset($path) && !$this->FileManager->isDeletable($path)) {
             $this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
+
             return $this->redirect($this->referer());
         }
 
         if (!empty($this->request->data)) {
             $this->folder = new Folder;
-            if ($this->folder->create($path . $this->request->data['FileManager']['name'])) {
+            if ($this->folder->create($path . $this->request->data['name'])) {
                 $this->Flash->success(__d('croogo', 'Directory created successfully.'));
                 $redirectUrl = $this->_browsePathUrl($path);
+
                 return $this->redirect($redirectUrl);
             } else {
                 $this->Flash->error(__d('croogo', 'An error occured'));
@@ -402,31 +396,31 @@ class FileManagerController extends AppController
         $this->set(compact('path'));
     }
 
-/**
- * Admin Create File
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin Create File
+     *
+     * @return void
+     * @access public
+     */
     public function createFile()
     {
-        $this->set('title_for_layout', __d('croogo', 'Create File'));
-
         if (isset($this->request->query['path'])) {
             $path = $this->request->query['path'];
         } else {
             return $this->redirect(['controller' => 'FileManager', 'action' => 'browse']);
         }
 
-        if (isset($path) && !$this->_isEditable($path)) {
+        if (isset($path) && !$this->FileManager->isEditable($path)) {
             $this->Flash->error(__d('croogo', 'Path %s is restricted', $path));
+
             return $this->redirect($this->referer());
         }
 
         if (!empty($this->request->data)) {
-            if (touch($path . $this->request->data['FileManager']['name'])) {
+            if (file_put_contents($path . $this->request->data['name'], $this->request->data['content'])) {
                 $this->Flash->success(__d('croogo', 'File created successfully.'));
                 $redirectUrl = $this->_browsePathUrl($path);
+
                 return $this->redirect($redirectUrl);
             } else {
                 $this->Flash->error(__d('croogo', 'An error occured'));
@@ -436,12 +430,12 @@ class FileManagerController extends AppController
         $this->set(compact('path'));
     }
 
-/**
- * Admin chmod
- *
- * @return void
- * @access public
- */
+    /**
+     * Admin chmod
+     *
+     * @return void
+     * @access public
+     */
     public function chmod()
     {
     }

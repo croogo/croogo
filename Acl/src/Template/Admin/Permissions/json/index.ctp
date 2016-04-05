@@ -2,15 +2,15 @@
 if (isset($this->request->query['urls'])) {
 	foreach ($permissions as $acoId => &$aco) {
 		$aco[key($aco)]['url'] = array(
-			'up' => $this->CroogoHtml->link('',
+			'up' => $this->Html->link('',
 				array('controller' => 'Actions', 'action' => 'moveup', $acoId, 'up'),
 				array('icon' => $this->Theme->getIcon('move-up'), 'tooltip' => __d('croogo', 'Move up'))
 			),
-			'down' => $this->CroogoHtml->link('',
+			'down' => $this->Html->link('',
 				array('controller' => 'Actions', 'action' => 'movedown', $acoId, 'down'),
 				array('icon' => $this->Theme->getIcon('move-down'), 'tooltip' => __d('croogo', 'Move down'))
 			),
-			'edit' => $this->CroogoHtml->link('',
+			'edit' => $this->Html->link('',
 				array('controller' => 'Actions', 'action' => 'edit', $acoId),
 				array('icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item'))
 			),

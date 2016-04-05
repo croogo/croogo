@@ -7,4 +7,4 @@ $url = array(
 	$id,
 	$status,
 );
-echo $this->CroogoHtml->status($status, $url);
+echo $this->Html->status($status, $url);

@@ -4,6 +4,8 @@ namespace Croogo\Taxonomy\Model\Table;
 
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
+use Cake\Validation\Validator;
 use Croogo\Core\Model\Table\CroogoTable;
 
 /**
@@ -20,30 +22,6 @@ use Croogo\Core\Model\Table\CroogoTable;
  */
 class TermsTable extends CroogoTable
 {
-
-/**
- * Model name
- *
- * @var string
- * @access public
- */
-    public $name = 'Term';
-
-/**
- * Behaviors used by the Model
- *
- * @var array
- * @access public
- */
-    public $actsAs = [
-        'Croogo.Cached' => [
-            'groups' => [
-                'taxonomy',
-                'nodes',
-            ],
-        ],
-        'Croogo.Trackable',
-    ];
 
 /**
  * Validation
@@ -64,23 +42,6 @@ class TermsTable extends CroogoTable
         ],
     ];
 
-/**
- * Model associations: hasAndBelongsToMany
- *
- * @var array
- * @access public
- */
-    public $hasAndBelongsToMany = [
-        'Vocabulary' => [
-            'className' => 'Taxonomy.Vocabulary',
-            'with' => 'Taxonomy',
-            'joinTable' => 'taxonomy',
-            'foreignKey' => 'term_id',
-            'associationForeignKey' => 'vocabulary_id',
-            'unique' => true,
-        ],
-    ];
-
     public function initialize(array $config)
     {
         parent::initialize($config);
@@ -93,6 +54,7 @@ class TermsTable extends CroogoTable
                 ]
             ]
         ]);
+        $this->addBehavior('Croogo/Core.Trackable');
 
         $this->belongsToMany('Croogo/Taxonomy.Vocabularies', [
             'through' => 'Croogo/Taxonomy.Taxonomies',
@@ -102,7 +64,30 @@ class TermsTable extends CroogoTable
         $this->hasMany('Croogo/Taxonomy.Taxonomies');
     }
 
-/**
+    /**
+     * @param \Cake\Validation\Validator $validator
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator)
+    {
+        $validator->notBlank('title', __d('croogo', 'The title cannot be empty'))
+            ->notBlank('slug', __d('croogo', 'The slug cannot be empty'));
+
+        return parent::validationDefault($validator);
+    }
+
+    /**
+     * @param \Cake\ORM\RulesChecker $rules
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->isUnique(['alias'], __d('croogo', 'That slug is already taken'));
+
+        return parent::buildRules($rules);
+    }
+
+    /**
  * Save Term and return ID.
  * If another Term with same slug exists, return ID of that Term without saving.
  *
@@ -230,9 +215,15 @@ class TermsTable extends CroogoTable
             'key' => 'id', 'value' => 'title'
         ]);
 
-        $query->where([
-            $this->primaryKey() .' IN' => array_keys($termsId)
-        ]);
+        if (empty($termsId)) {
+            $query->where([
+                '1 = 0'
+            ]);
+        } else {
+            $query->where([
+                $this->primaryKey() . ' IN' => array_keys($termsId)
+            ]);
+        }
 
         return $query;
     }

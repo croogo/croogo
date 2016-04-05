@@ -19,12 +19,11 @@ class UsersTable extends CroogoTable
     use MailerAwareTrait;
 
     protected $_displayFields = [
-        'id',
-        'role.title' => 'Role',
         'username',
         'name',
-        'status' => ['type' => 'boolean'],
+        'role.title' => 'Role',
         'email',
+        'status' => ['type' => 'boolean'],
     ];
 
     protected $_editFields = [

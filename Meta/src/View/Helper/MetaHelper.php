@@ -2,6 +2,8 @@
 
 namespace Croogo\Meta\View\Helper;
 
+use Cake\Utility\Hash;
+use Cake\Utility\Text;
 use Cake\View\Helper;
 
 /**
@@ -23,14 +25,18 @@ class MetaHelper extends Helper
     public $helpers = [
         'Croogo/Core.Layout',
         'Croogo/Core.Croogo',
-        'Html',
-        'Form',
+        'Html' => [
+            'className' => 'Croogo/Core.CroogoHtml'
+        ],
+        'Form' => [
+            'className' => 'Croogo/Core.CroogoForm'
+        ],
     ];
 
     public $settings = [
         'deleteUrl' => [
-            'admin' => true, 'plugin' => 'meta',
-            'controller' => 'meta', 'action' => 'delete_meta',
+            'prefix' => 'admin', 'plugin' => 'Croogo/Meta',
+            'controller' => 'Meta', 'action' => 'deleteMeta',
         ],
     ];
 
@@ -40,7 +46,7 @@ class MetaHelper extends Helper
     public function beforeRender($viewFile)
     {
         if ($this->_View->Layout->isLoggedIn()) {
-            return $this->Croogo->adminScript('Meta.admin');
+            return $this->Croogo->adminScript('Croogo/Meta.admin');
         }
     }
 
@@ -98,7 +104,6 @@ class MetaHelper extends Helper
  */
     public function field($key = '', $value = null, $id = null, $options = [])
     {
-        $inputClass = $this->Layout->cssClass('formInput');
         $_options = [
             'key' => [
                 'label' => __d('croogo', 'Key'),
@@ -111,21 +116,18 @@ class MetaHelper extends Helper
                 'rows' => 2,
             ],
         ];
-        if ($inputClass) {
-            $_options['key']['class'] = $_options['value']['class'] = $inputClass;
-        }
         $options = Hash::merge($_options, $options);
-        $uuid = String::uuid();
+        $uuid = Text::uuid();
 
         $fields = '';
         if ($id != null) {
-            $fields .= $this->Form->input('Meta.' . $uuid . '.id', ['type' => 'hidden', 'value' => $id]);
-            $this->Form->unlockField('Meta.' . $uuid . '.id');
+            $fields .= $this->Form->input('meta.' . $uuid . '.id', ['type' => 'hidden', 'value' => $id]);
+            $this->Form->unlockField('meta.' . $uuid . '.id');
         }
-        $fields .= $this->Form->input('Meta.' . $uuid . '.key', $options['key']);
-        $fields .= $this->Form->input('Meta.' . $uuid . '.value', $options['value']);
-        $this->Form->unlockField('Meta.' . $uuid . '.key');
-        $this->Form->unlockField('Meta.' . $uuid . '.value');
+        $fields .= $this->Form->input('meta.' . $uuid . '.key', $options['key']);
+        $fields .= $this->Form->input('meta.' . $uuid . '.value', $options['value']);
+        $this->Form->unlockField('meta.' . $uuid . '.key');
+        $this->Form->unlockField('meta.' . $uuid . '.value');
         $fields = $this->Html->tag('div', $fields, ['class' => 'fields']);
 
         $id = is_null($id) ? $uuid : $id;
@@ -134,11 +136,11 @@ class MetaHelper extends Helper
         $actions = $this->Html->link(
             __d('croogo', 'Remove'),
             $deleteUrl,
-            ['class' => 'remove-meta', 'rel' => $id]
+            ['class' => 'btn btn-danger-outline remove-meta', 'rel' => $id]
         );
         $actions = $this->Html->tag('div', $actions, ['class' => 'actions']);
 
-        $output = $this->Html->tag('div', $actions . $fields, ['class' => 'meta']);
+        $output = $this->Html->tag('div',  $fields . $actions, ['class' => 'meta']);
         return $output;
     }
 }

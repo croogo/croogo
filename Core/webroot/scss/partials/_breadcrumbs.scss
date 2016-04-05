@@ -1,0 +1,16 @@
+//
+// Breadcrumbs
+// --------------------------------------------------
+
+#breadcrumb-container {
+    background: $body-bg;
+    float: left;
+}
+
+.breadcrumb {
+    z-index: $zindex-dropdown;
+
+    li:last-child {
+        @extend .active;
+    }
+}

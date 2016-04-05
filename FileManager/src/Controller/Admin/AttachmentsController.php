@@ -20,22 +20,6 @@ use Croogo\FileManager\Model\Entity\Attachment;
 class AttachmentsController extends AppController
 {
 
-    /**
-     * Models used by the Controller
-     *
-     * @var array
-     * @access public
-     */
-    public $uses = ['FileManager.Attachment'];
-
-    /**
-     * Helpers used by the Controller
-     *
-     * @var array
-     * @access public
-     */
-    public $helpers = ['Croogo/FileManager.FileManager', 'Text', 'Croogo/Core.Image'];
-
     public function initialize()
     {
         $this->loadComponent('Search.Prg', [
@@ -47,6 +31,7 @@ class AttachmentsController extends AppController
                 'filterEmpty' => true,
             ],
         ]);
+        $this->viewBuilder()->helpers(['Croogo/FileManager.FileManager', 'Croogo/Core.Image']);
         parent::initialize();
     }
 
@@ -59,15 +44,10 @@ class AttachmentsController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-
-        $this->Attachments->addBehavior('Croogo/Core.Tree', [
-            'scope' => [
-                'type' => $this->Attachments->type,
-            ],
-        ]);
+        
         $this->set('type', $this->Attachments->type);
 
-        if ($this->action == 'admin_add') {
+        if ($this->action == 'add') {
             $this->Security->csrfCheck = false;
         }
     }
@@ -80,11 +60,10 @@ class AttachmentsController extends AppController
      */
     public function index()
     {
-        $this->set('title_for_layout', __d('croogo', 'Attachments'));
         $this->Prg->commonProcess();
 
         $isChooser = false;
-        if (isset($this->request->params['named']['links']) || $this->request->query('chooser')) {
+        if (isset($this->request->params['links']) || $this->request->query('chooser')) {
             $isChooser = true;
         }
 
@@ -120,14 +99,13 @@ class AttachmentsController extends AppController
      */
     public function add()
     {
-        $this->set('title_for_layout', __d('croogo', 'Add Attachment'));
-
         if (isset($this->request->params['named']['editor'])) {
             $this->layout = 'admin_popup';
         }
 
-        $attachment = $this->Attachments->newEntity($this->request->data);
+        $attachment = $this->Attachments->newEntity();
         if ($this->request->is('post')) {
+            $attachment = $this->Attachments->patchEntity($attachment, $this->request->data);
             if (empty($attachment)) {
                 $attachment->errors(['file' => __d('croogo', 'Upload failed. Please ensure size does not exceed the server limit.')]);
                 $this->set(compact('attachment'));
@@ -138,7 +116,7 @@ class AttachmentsController extends AppController
             if ($attachment) {
                 $this->Flash->success(__d('croogo', 'The Attachment has been saved'));
 
-                if (isset($this->request->params['named']['editor'])) {
+                if (isset($this->request->params['editor'])) {
                     return $this->redirect(['action' => 'browse']);
                 } else {
                     return $this->redirect(['action' => 'index']);

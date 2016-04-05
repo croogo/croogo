@@ -6,8 +6,7 @@ $header = <<<EOF
 \$this->extend('/Common/$action');
 
 \$this->Html
-	->addCrumb('', '/admin', array('icon' => 'home'))
-	->addCrumb(__d('$underscoredPluginName', '${pluralHumanName}'), array('action' => 'index'));
+		->addCrumb(__d('$underscoredPluginName', '${pluralHumanName}'), array('action' => 'index'));
 
 \$this->set('tableClass', 'table table-striped');
 

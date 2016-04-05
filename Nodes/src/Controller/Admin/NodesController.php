@@ -163,6 +163,11 @@ class NodesController extends AppController
                 'Types.alias' => 'ASC',
             ),
         ));
+
+        if ($types->count() === 1) {
+            return $this->redirect(['action' => 'add', $types->first()->alias]);
+        }
+
         $this->set(compact('types'));
     }
 
@@ -189,7 +194,6 @@ class NodesController extends AppController
 
         if (!empty($this->request->data)) {
             $this->Nodes->patchEntity($node, $this->request->data);
-
             $node = $this->Nodes->saveNode($node, $typeAlias);
             if ($node) {
                 Croogo::dispatchEvent('Controller.Nodes.afterAdd', $this, compact('node'));
@@ -203,6 +207,7 @@ class NodesController extends AppController
         }
 
         $this->set(compact('node'));
+        $this->set('viewVar', 'node');
 
         $this->Nodes->removeBehavior('Tree');
         $this->Nodes->addBehavior('Tree', [
@@ -250,6 +255,7 @@ class NodesController extends AppController
         }
 
         $this->set(compact('node'));
+        $this->set('viewVar', 'node');
 
         $this->set('title_for_layout', __d('croogo', 'Edit %s: %s', $type->title, $node->title));
         $this->_setCommonVariables($type, $node);
@@ -417,11 +423,11 @@ class NodesController extends AppController
         if (isset($this->Taxonomies)) {
             $this->Taxonomies->prepareCommonData($type);
         }
-        if (($node) && (!empty($node->parent_id))) {
-            $parentNode = $this->Nodes->get($node->parent_id);
-            $parentTitle = $parentNode->title;
-        }
         $roles = $this->Nodes->Users->Roles->find('list');
-        $this->set(compact('parentTitle', 'roles'));
+        $parents = $this->Nodes->find('list')->where([
+            'type' => $type->id
+        ])->toArray();
+        $users = $this->Nodes->Users->find('list')->toArray();
+        $this->set(compact('roles', 'parents', 'users'));
     }
 }

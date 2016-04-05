@@ -55,7 +55,13 @@ class UsersController extends AppController
         return parent::implementedEvents() + [
             'Controller.Users.beforeAdminLogin' => 'onBeforeAdminLogin',
             'Controller.Users.adminLoginFailure' => 'onAdminLoginFailure',
+            'Croogo.beforeSetupAdminData' => 'beforeSetupAdminData'
         ];
+    }
+
+    public function beforeSetupAdminData()
+    {
+        $this->Auth->allow('resetPassword');
     }
 
 /**

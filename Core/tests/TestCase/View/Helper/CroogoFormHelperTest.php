@@ -20,20 +20,20 @@ class CroogoFormHelperTest extends CroogoTestCase
 
         $controller = null;
         $this->View = new View($controller);
-        $this->CroogoForm = new CroogoFormHelper($this->View);
+        $this->Form = new CroogoFormHelper($this->View);
     }
 
     public function tearDown()
     {
         unset($this->View);
-        unset($this->CroogoHtml);
+        unset($this->Html);
     }
 
     public function testInputTooltips()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-        $result = $this->CroogoForm->input('username', [
+        $result = $this->Form->input('username', [
             'tooltip' => 'Username',
         ]);
         $expected = [
@@ -55,7 +55,7 @@ class CroogoFormHelperTest extends CroogoTestCase
         ];
         $this->assertHtml($expected, $result);
 
-        $result = $this->CroogoForm->input('username', [
+        $result = $this->Form->input('username', [
             'tooltip' => [
                 'data-title' => 'Username',
                 'data-placement' => 'left',
@@ -81,7 +81,7 @@ class CroogoFormHelperTest extends CroogoTestCase
         ];
         $this->assertHtml($expected, $result);
 
-        $result = $this->CroogoForm->input('username', [
+        $result = $this->Form->input('username', [
             'hiddenField' => false,
             'type' => 'checkbox',
             'tooltip' => [
@@ -117,7 +117,7 @@ class CroogoFormHelperTest extends CroogoTestCase
     public function testInputAutoTooltips()
     {
         // automatic tooltips
-        $result = $this->CroogoForm->input('username', [
+        $result = $this->Form->input('username', [
             'label' => false,
             'placeholder' => 'Username',
         ]);
@@ -139,7 +139,7 @@ class CroogoFormHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
 
         // disable auto tooltips
-        $result = $this->CroogoForm->input('username', [
+        $result = $this->Form->input('username', [
             'label' => false,
             'placeholder' => 'Username',
             'tooltip' => false,
@@ -161,7 +161,7 @@ class CroogoFormHelperTest extends CroogoTestCase
 
     public function testButtonDefault()
     {
-        $result = $this->CroogoForm->button('Button');
+        $result = $this->Form->button('Button');
         $expected = [
             'button' => [
                 'class' => 'btn',
@@ -175,7 +175,7 @@ class CroogoFormHelperTest extends CroogoTestCase
 
     public function testButtonDanger()
     {
-        $result = $this->CroogoForm->button('Button', ['button' => 'danger']);
+        $result = $this->Form->button('Button', ['button' => 'danger']);
 
         $expected = [
             'button' => [
@@ -190,7 +190,7 @@ class CroogoFormHelperTest extends CroogoTestCase
 
     public function testButtonWithIcon()
     {
-        $result = $this->CroogoForm->button('Button', ['icon' => 'pencil']);
+        $result = $this->Form->button('Button', ['icon' => 'pencil']);
 
         $expected = [
             'button' => [
@@ -211,7 +211,7 @@ class CroogoFormHelperTest extends CroogoTestCase
 
     public function testSubmitDefault()
     {
-        $result = $this->CroogoForm->submit('Send');
+        $result = $this->Form->submit('Send');
 
         $expected = [
             'div' => [
@@ -231,7 +231,7 @@ class CroogoFormHelperTest extends CroogoTestCase
 
     public function testSubmitDanger()
     {
-        $result = $this->CroogoForm->submit('Send', ['button' => 'danger']);
+        $result = $this->Form->submit('Send', ['button' => 'danger']);
 
         $expected = [
             'div' => [
@@ -251,7 +251,7 @@ class CroogoFormHelperTest extends CroogoTestCase
 
     public function testInputPlaceholders()
     {
-        $result = $this->CroogoForm->input('username', [
+        $result = $this->Form->input('username', [
             'placeholder' => true,
         ]);
         $expected = [
@@ -274,7 +274,7 @@ class CroogoFormHelperTest extends CroogoTestCase
         ];
         $this->assertHtml($expected, $result);
 
-        $result = $this->CroogoForm->input('username', [
+        $result = $this->Form->input('username', [
             'placeholder' => 'User/Email',
         ]);
         $expected = [
@@ -298,7 +298,7 @@ class CroogoFormHelperTest extends CroogoTestCase
         $this->assertHtml($expected, $result);
 
         $tip = 'Enter your username or email address';
-        $result = $this->CroogoForm->input('username', [
+        $result = $this->Form->input('username', [
             'placeholder' => 'User/Email',
             'tooltip' => $tip,
         ]);
@@ -322,7 +322,7 @@ class CroogoFormHelperTest extends CroogoTestCase
         ];
         $this->assertHtml($expected, $result);
 
-        $result = $this->CroogoForm->input('username', [
+        $result = $this->Form->input('username', [
             'placeholder' => false,
             'tooltip' => $tip,
         ]);
@@ -353,7 +353,7 @@ class CroogoFormHelperTest extends CroogoTestCase
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-        $result = $this->CroogoForm->autocomplete('user_id', [
+        $result = $this->Form->autocomplete('user_id', [
             'autocomplete' => [
                 'data-relatedField' => '#user_id',
                 'data-url' => 'http://croogo.org',
@@ -397,7 +397,7 @@ class CroogoFormHelperTest extends CroogoTestCase
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
         $this->skipIf(env('TRAVIS') == 'true');
-        $result = $this->CroogoForm->autocomplete('user_id', [
+        $result = $this->Form->autocomplete('user_id', [
             'default' => 3,
             'autocomplete' => [
                 'default' => 'yvonne',
@@ -445,7 +445,7 @@ class CroogoFormHelperTest extends CroogoTestCase
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
         $this->skipIf(env('TRAVIS') == 'true');
-        $this->CroogoForm->defaultModel = 'Node';
+        $this->Form->defaultModel = 'Node';
         $this->View->set('users', [
             3 => 'yvonne',
         ]);
@@ -455,7 +455,7 @@ class CroogoFormHelperTest extends CroogoTestCase
                 'user_id' => 3,
             ],
         ];
-        $result = $this->CroogoForm->autocomplete('Node.user_id', [
+        $result = $this->Form->autocomplete('Node.user_id', [
             'autocomplete' => [
                 'data-relatedField' => '#NodeUserId',
                 'data-displayField' => 'username',
@@ -520,7 +520,7 @@ class CroogoFormHelperTest extends CroogoTestCase
             '/select',
             '/div',
         ];
-        $result = $this->CroogoForm->input('User.Comment.node_id', [
+        $result = $this->Form->input('User.Comment.node_id', [
             'placeholder' => true,
         ]);
         $this->assertHtml($expected, $result);
@@ -533,7 +533,7 @@ class CroogoFormHelperTest extends CroogoTestCase
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-        $result = $this->CroogoForm->input('Node.promote', [
+        $result = $this->Form->input('Node.promote', [
             'type' => 'radio',
             'class' => 'super-radio-button',
             'options' => [
@@ -550,7 +550,7 @@ class CroogoFormHelperTest extends CroogoTestCase
  */
     public function testInputCheckboxClass()
     {
-        $result = $this->CroogoForm->input('Node.promote', [
+        $result = $this->Form->input('Node.promote', [
             'type' => 'checkbox',
             'class' => 'super-checkbox-button',
         ]);
