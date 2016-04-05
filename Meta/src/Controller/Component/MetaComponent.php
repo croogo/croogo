@@ -20,7 +20,7 @@ class MetaComponent extends Component
     public function startup()
     {
         $controller = $this->_registry->getController();
-        if ($controller->request->params['prefix'] === 'admin') {
+        if ($controller->request->param('prefix') === 'admin') {
             $this->_adminTabs();
 
             if (empty($controller->request->data['meta'])) {
