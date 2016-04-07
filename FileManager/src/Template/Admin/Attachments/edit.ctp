@@ -1,5 +1,6 @@
 <?php
 
+$this->assign('title', __d('croogo', 'Edit Attachment'));
 $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Html->addCrumb(__d('croogo', 'Attachments'),

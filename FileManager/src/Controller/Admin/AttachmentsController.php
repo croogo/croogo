@@ -44,7 +44,7 @@ class AttachmentsController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        
+
         $this->set('type', $this->Attachments->type);
 
         if ($this->action == 'add') {
@@ -138,31 +138,32 @@ class AttachmentsController extends AppController
      */
     public function edit($id = null)
     {
-        $this->set('title_for_layout', __d('croogo', 'Edit Attachment'));
-
-        if (isset($this->request->params['named']['editor'])) {
-            $this->layout = 'admin_popup';
+        if ($this->request->query('editor')) {
+            $this->viewBuilder()->layout('admin_popup');
         }
 
         if (!$id && empty($this->request->data)) {
             $this->Flash->error(__d('croogo', 'Invalid Attachment'));
             return $this->redirect(['action' => 'index']);
         }
-        if (!empty($this->request->data)) {
-            $attachment = $this->Attachments->get($id);
+        $attachment = $this->Attachments->get($id);
+
+        if ($this->request->is(['post', 'put'])) {
             $attachment = $this->Attachments->patchEntity($attachment, $this->request->data);
             $attachment = $this->Attachments->save($attachment);
             if ($attachment) {
                 $this->Flash->success(__d('croogo', 'The Attachment has been saved'));
-                return $this->Croogo->redirect(['action' => 'edit', $attachment->id]);
+                if ($this->request->query('editor')) {
+                    return $this->Croogo->redirect(['action' => 'browse']);
+                } else {
+                    return $this->Croogo->redirect(['action' => 'edit', $attachment->id]);
+                }
             } else {
                 $this->Flash->error(__d('croogo', 'The Attachment could not be saved. Please, try again.'));
             }
         }
-        if (empty($this->request->data)) {
-            $attachment = $this->Attachments->get($id);
-            $this->set(compact('attachment'));
-        }
+        $viewVar = 'attachment';
+        $this->set(compact('attachment', 'viewVar'));
     }
 
     /**
@@ -197,7 +198,8 @@ class AttachmentsController extends AppController
      */
     public function browse()
     {
-        $this->layout = 'admin_popup';
+        $this->viewBuilder()->layout('admin_popup');
         $this->setAction('index');
+        return $this->render('browse');
     }
 }

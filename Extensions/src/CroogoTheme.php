@@ -118,7 +118,7 @@ class CroogoTheme
                     'smallIconClass' => 'fa-sm',
                 ],
                 'icons' => [
-                    'attach' => 'paper-clip',
+                    'attach' => 'paperclip',
                     'check-mark' => 'check',
                     'comment' => 'comment-alt',
                     'copy' => 'copy',

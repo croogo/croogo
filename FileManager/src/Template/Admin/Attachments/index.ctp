@@ -1,5 +1,4 @@
 <?php
-
 $this->assign('title', __d('croogo', 'Attachments'));
 $this->extend('Croogo/Core./Common/admin_index');
 

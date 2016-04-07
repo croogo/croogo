@@ -6936,6 +6936,22 @@ footer {
 .hidden {
   display: none; }
 
+.selector {
+  position: relative;
+  cursor: pointer; }
+  .selector::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(150, 150, 150, 0.5);
+    opacity: 0;
+    transition: opacity .1s linear; }
+  .selector:hover:before {
+    opacity: 1; }
+
 .popup #content {
   background: #fff;
   border: 0px solid none;
@@ -7065,7 +7081,7 @@ form .span8 + .span4 {
 
 span.slug {
   font-weight: bold;
-  margin: 10px; }
+  margin: 0 10px; }
 
 .text-important {
   text-decoration: none;
