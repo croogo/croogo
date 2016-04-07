@@ -200,6 +200,7 @@ class AttachmentsController extends AppController
     {
         $this->viewBuilder()->layout('admin_popup');
         $this->setAction('index');
+        $this->request->params['action'] = 'browse'; //Reset the action value
         return $this->render('browse');
     }
 }
