@@ -548,7 +548,7 @@ class CroogoHelper extends Helper
         }
 
         return $this->Html->link('', '#link_choosers', [
-            'class' => 'btn btn-primary-outline',
+            'class' => 'btn btn-primary',
             'icon' => $this->Theme->getIcon('link'),
             'data-title' => 'Link Chooser',
             'data-toggle' => 'modal',

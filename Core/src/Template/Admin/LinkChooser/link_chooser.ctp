@@ -1,36 +1,26 @@
 <?php
 
-$rows = array();
+$rows = [];
 foreach ($linkChoosers as $name => $chooser):
-	$link = $this->Html->link('', $chooser['url'], array(
-		'icon' => $this->Theme->getIcon('search'),
-		'iconSize' => 'small',
-		'button' => array('default', 'small'),
-		'class' => 'link chooser pull-right',
-		'data-dismiss' => 'modal',
-		'tooltip' => array(
-			'data-title' => __d('croogo', 'Link to %s', $name),
-			'data-placement' => 'left',
-		),
-	));
-	$title = $this->Html->tag('h5', $name . $link);
-	$div = $this->Html->div('link_chooser', $title . $this->Html->tag('small', $chooser['description']));
-	$rows[] = '<tr><td>' . $div . '</td></tr>';
+    $title = $this->Html->tag('h4', $name, ['class' => 'list-group-item-heading']);
+    $description = $this->Html->tag('small', $chooser['description'], ['class' => 'list-group-item-text']);
+    $link = $this->Html->link($title . $description, $chooser['url'], [
+        'class' => 'list-group-item',
+        'escape' => false
+    ]);
+    $rows[] = $link;
 endforeach;
 ?>
-<table class="table table-striped">
-	<?php echo implode(' ', $rows); ?>
-</table>
+    <div class="list-group">
+        <?php echo implode(' ', $rows); ?>
+    </div>
 <?php
 
 $target = json_encode($this->request->query('target'));
 
-$script =<<< EOF
+$script = <<< EOF
 $('.link.chooser').itemChooser({
 	fields: [{ type: "Node", target: $target, attr: "rel" }]
-});
-$(".link_chooser a").click(function() {
-	$("#link_choosers").modal('hide');
 });
 EOF;
 
