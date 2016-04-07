@@ -2,7 +2,7 @@
 
 namespace Croogo\Extensions\Config;
 
-$config = [
+return [
     'EventHandlers' => [
         'Croogo/Extensions.ExtensionsEventHandler' => [
             'options' => [

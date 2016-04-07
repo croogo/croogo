@@ -2,7 +2,7 @@
 
 namespace Croogo\Blocks\Config;
 
-$config = [
+return [
     'EventHandlers' => [
         'Croogo/Blocks.BlocksEventHandler',
     ],

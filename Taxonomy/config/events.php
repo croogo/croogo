@@ -2,7 +2,7 @@
 
 namespace Croogo\Taxonomy\Config;
 
-$config = [
+return [
     'EventHandlers' => [
         'Croogo/Taxonomy.TaxonomiesEventHandler',
     ],

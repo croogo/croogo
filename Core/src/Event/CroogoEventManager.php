@@ -47,7 +47,7 @@ class CroogoEventManager extends EventManager
  * Plugins can add their own custom EventHandler in Config/events.php
  * with the following format:
  *
- * $config = array(
+ * return array(
  *     'EventHandlers' => array(
  *         'Example.ExampleEventHandler' => array(
  *             'eventKey' => null,

@@ -2,7 +2,7 @@
 
 namespace Croogo\Nodes\Config;
 
-$config = [
+return [
     'EventHandlers' => [
         'Croogo/Nodes.NodesEventHandler',
     ],

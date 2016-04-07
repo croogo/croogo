@@ -2,7 +2,7 @@
 
 namespace Croogo\Wysiwyg\Config;
 
-$config = [
+return [
     'EventHandlers' => [
         'Croogo/Wysiwyg.WysiwygEventHandler',
     ],

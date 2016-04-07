@@ -2,7 +2,7 @@
 
 namespace Croogo\Shops\Config;
 
-$config = [
+return [
     'EventHandlers' => [
         'Shops.ShopsNodesEventHandler',
         'Shops.ShopsEventHandler' => [

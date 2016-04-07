@@ -2,7 +2,7 @@
 
 namespace Croogo\Translate\Config;
 
-$config = [
+return [
     'EventHandlers' => [
         'Translate.TranslateEventHandler' => [
             'options' => [

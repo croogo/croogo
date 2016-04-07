@@ -1,6 +1,6 @@
 <?php
 
-$config = [
+return [
     'EventHandlers' => [
         'Croogo/FileManager.FileManagerEventHandler',
     ],
