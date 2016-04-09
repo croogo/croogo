@@ -210,13 +210,7 @@ class Croogo
     {
         $configKeyPrefix = 'Hook.controller_properties';
 
-        if ($controllerName != '*') {
-            $controllerClass = App::classname($controllerName, 'Controller', 'Controller');
-        } else {
-            $controllerClass = '*';
-        }
-
-        self::_hookProperty($configKeyPrefix, $controllerClass, $property, $value);
+        self::_hookProperty($configKeyPrefix, $controllerName, $property, $value);
     }
 
     /**
@@ -230,13 +224,7 @@ class Croogo
     {
         $configKeyPrefix = 'Hook.view_builder_options';
 
-        if ($controllerName != '*') {
-            $controllerClass = App::classname($controllerName, 'Controller', 'Controller');
-        } else {
-            $controllerClass = '*';
-        }
-
-        self::_hookProperty($configKeyPrefix, $controllerClass, $option, $value);
+        self::_hookProperty($configKeyPrefix, $controllerName, $option, $value);
     }
 
     /**
@@ -268,9 +256,13 @@ class Croogo
         Configure::write($configKeyPrefix . '.' . $name . '.' . $property, $propertyValue);
     }
 
-    public static function options($configKey, &$object, $option = null)
+    public static function options($configKey, $object, $option = null)
     {
-        $objectName = get_class($object);
+        if (is_string($object)) {
+            $objectName = $object;
+        } else {
+            $objectName = get_class($object);
+        }
 
         $options = Configure::read($configKey . '.' . $objectName);
 

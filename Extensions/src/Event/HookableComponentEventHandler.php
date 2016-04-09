@@ -6,6 +6,7 @@ use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 use Croogo\Core\Croogo;
 use Croogo\Core\Controller\HookableComponentInterface;
 use Croogo\Extensions\Exception\ControllerNotHookableException;
@@ -76,7 +77,14 @@ class HookableComponentEventHandler implements EventListenerInterface
 
     private function _getComponents(Controller $controller)
     {
-        $properties = Croogo::options('Hook.controller_properties', $controller);
+        $controllerName = Inflector::camelize($controller->request->param('controller'));
+        $properties = Croogo::options('Hook.controller_properties', $controllerName);
+
+        if ($controller->request->param('prefix')) {
+            $controllerName = Inflector::camelize($controller->request->param('prefix')) . '/' . $controllerName;
+            $prefixProperties = Croogo::options('Hook.controller_properties', $controller->request->param('controller'));
+            $properties = Hash::merge($properties, $prefixProperties);
+        }
 
         $components = [];
         foreach ($properties['_appComponents'] as $component => $config) {
