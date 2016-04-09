@@ -82,7 +82,7 @@ class HookableComponentEventHandler implements EventListenerInterface
 
         if ($controller->request->param('prefix')) {
             $controllerName = Inflector::camelize($controller->request->param('prefix')) . '/' . $controllerName;
-            $prefixProperties = Croogo::options('Hook.controller_properties', $controller->request->param('controller'));
+            $prefixProperties = Croogo::options('Hook.controller_properties', $controllerName);
             $properties = Hash::merge($properties, $prefixProperties);
         }
 

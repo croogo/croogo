@@ -5,14 +5,14 @@ namespace Croogo\Extensions;
 use App\Controller\AppController;
 use Cake\Cache\Cache;
 use Cake\Core\App;
+use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
-use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
-use Cake\Utility\Hash;
-use Cake\Utility\Inflector;
 use Cake\Log\LogTrait;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Croogo\Core\Event\CroogoEventManager;
 use InvalidArgumentException;
@@ -34,36 +34,36 @@ class CroogoPlugin
 
     use LogTrait;
 
-/**
- * List of migration errors
- * Updated in case of errors when running migrations
- *
- * @var array
- */
+    /**
+     * List of migration errors
+     * Updated in case of errors when running migrations
+     *
+     * @var array
+     */
     public $migrationErrors = [];
 
-/**
- * PluginActivation class
- *
- * @var object
- */
+    /**
+     * PluginActivation class
+     *
+     * @var object
+     */
     protected $_PluginActivation = null;
 
-/**
- * MigrationVersion class
- *
- * @var \Migrations\Migrations
- */
+    /**
+     * MigrationVersion class
+     *
+     * @var \Migrations\Migrations
+     */
     protected $_Migrations = null;
 
-/**
- * Core plugins
- *
- * Typically these plugins must be active and should not be deactivated
- *
- * @var array
- * @access public
- */
+    /**
+     * Core plugins
+     *
+     * Typically these plugins must be active and should not be deactivated
+     *
+     * @var array
+     * @access public
+     */
     public $corePlugins = [
         'Croogo/Acl',
         'Croogo/Core',
@@ -73,12 +73,12 @@ class CroogoPlugin
         'Croogo/Settings',
     ];
 
-/**
- * Bundled plugins providing core functionalities but could be deactivated
- *
- * @var array
- * @access public
- */
+    /**
+     * Bundled plugins providing core functionalities but could be deactivated
+     *
+     * @var array
+     * @access public
+     */
     public $bundledPlugins = [
         'Croogo/Blocks',
         'Croogo/Comments',
@@ -92,9 +92,9 @@ class CroogoPlugin
         'Croogo/Users',
     ];
 
-/**
- * __construct
- */
+    /**
+     * __construct
+     */
     public function __construct($migrations = null)
     {
         if (!is_null($migrations)) {
@@ -102,39 +102,40 @@ class CroogoPlugin
         }
     }
 
-/**
- * Get instance
- */
+    /**
+     * Get instance
+     */
     public static function instance()
     {
         static $self = null;
         if ($self === null) {
             $self = new CroogoPlugin();
         }
+
         return $self;
     }
 
-/**
- * AppController setter
- *
- * @return void
- */
+    /**
+     * AppController setter
+     *
+     * @return void
+     */
     public function setController(AppController $controller)
     {
         $this->_Controller = $controller;
     }
 
-/**
- * Get plugin aliases (folder names)
- *
- * @return array
- */
+    /**
+     * Get plugin aliases (folder names)
+     *
+     * @return array
+     */
     public function getPlugins()
     {
         $plugins = [];
         $this->folder = new Folder;
         $registered = Configure::read('plugins');
-        $pluginPaths = Hash::merge(App::path('plugins'), $registered);
+        $pluginPaths = Hash::merge(App::path('Plugin'), $registered);
         foreach ($pluginPaths as $pluginPath) {
             $this->folder->path = $pluginPath;
             if (!file_exists($this->folder->path)) {
@@ -150,6 +151,8 @@ class CroogoPlugin
                     $pluginName = array_search($pluginPath, $registered);
                     if ($pluginName) {
                         $plugins[$pluginName] = $pluginPath;
+                    } else {
+                        $plugins[$pluginFolder] = $pluginPath . $pluginFolder;
                     }
                 }
             }
@@ -158,13 +161,13 @@ class CroogoPlugin
         return $plugins;
     }
 
-/**
- * Checks wether $pluginDir/$path is a Croogo plugin
- *
- * @param string $pluginDir plugin directory
- * @param string $path plugin alias
- * @return bool true if path is a Croogo plugin
- */
+    /**
+     * Checks wether $pluginDir/$path is a Croogo plugin
+     *
+     * @param string $pluginDir plugin directory
+     * @param string $path plugin alias
+     * @return bool true if path is a Croogo plugin
+     */
     protected function _isCroogoPlugin($pluginDir, $path)
     {
         $dir = $pluginDir . $path . DS;
@@ -172,123 +175,153 @@ class CroogoPlugin
         if (file_exists($composerFile)) {
             $pluginData = json_decode(file_get_contents($composerFile), true);
             if (isset($pluginData['require']['Croogo/Core']) ||
+                isset($pluginData['require']['croogo/croogo']) ||
                 (isset($pluginData['type']) && $pluginData['type'] == 'croogo-plugin')
             ) {
                 return true;
             }
         }
-        if (file_exists($dir . 'plugin.json')) {
+        if (file_exists($dir . 'config' . DS . 'plugin.json')) {
             return true;
         }
+
         return false;
     }
 
-/**
- * Checks whether $plugin is builtin
- *
- * @param string $plugin plugin alias
- * @return boolean true if $plugin is builtin
- */
-    protected function _isBuiltin($plugin)
+    protected function _pluginName($pluginDir, $path)
     {
-        return
-            in_array($plugin, $this->bundledPlugins) ||
-            in_array($plugin, $this->corePlugins);
-    }
+        $pluginPath = $pluginDir . $path . DS;
+        $manifestFile = $pluginPath . DS . 'config' . DS . 'plugin.json';
 
-/**
- * Get the content of plugin.json file of a plugin
- *
- * @param string $alias plugin folder name
- * @return array|bool array of plugin manifest or boolean false
- */
-    public function getData($alias = null)
-    {
-        // fixme: rewrite this to use key lookup instead of loop
-        $pluginPaths = Configure::read('plugins');
-        foreach ($pluginPaths as $pluginAlias => $pluginPath) {
-            if ($pluginAlias !== $alias) {
-                continue;
-            }
-            $active = $this->isActive($alias);
-            $isCroogoPlugin = false;
-            $manifestFile = $pluginPath . DS . 'config' . DS . 'plugin.json';
-            $hasManifest = file_exists($manifestFile);
-            $composerFile = $pluginPath . $alias . DS . 'composer.json';
-            $hasComposer = file_exists($composerFile);
-            if ($hasManifest || $hasComposer) {
-                $pluginData = [
-                    'name' => $alias,
-                    'needMigration' => false,
-                    'active' => $active,
-                ];
-
-                if ($hasManifest) {
-                    $manifestData = json_decode(file_get_contents($manifestFile), true);
-                    if (empty($manifestData)) {
-                        $this->log($alias . 'plugin.json exists but cannot be decoded.');
-                        return $pluginData;
-                    }
-                    $pluginData = array_merge($manifestData, $pluginData);
-                }
-
-                if ($hasComposer) {
-                    $composerData = json_decode(file_get_contents($composerFile), true);
-                    $type = isset($composerData['type']) ? $composerData['type'] : null;
-                    $isCroogoPlugin =
-                        isset($composerData['require']['Croogo/Core']) ||
-                        $type == 'croogo-plugin';
-
-                    if ($isCroogoPlugin) {
-                        if (isset($composerData['name'])) {
-                            $composerData['vendor'] = $composerData['name'];
-                            unset($composerData['name']);
-                        }
-                        $pluginData = Hash::merge($pluginData, $composerData);
-                    }
-                }
-
-				$pluginData['needMigration'] = $this->needMigration($alias, $active);
-                return $pluginData;
-            } elseif ($this->_isBuiltin($alias)) {
-				if ($this->needMigration($alias, $active)) {
-                    $pluginData = [
-                        'name' => $alias,
-                        'description' => "Croogo $alias plugin",
-                        'active' => true,
-                        'needMigration' => true,
-                    ];
-                    return $pluginData;
-				}
+        if (file_exists($manifestFile)) {
+            $manifestData = json_decode(file_get_contents($manifestFile), true);
+            if (isset($manifestData['name'])) {
+                return $manifestData['name'];
             }
         }
+        $composerFile = $pluginPath . $alias . DS . 'composer.json';
+
+        if (file_exists($composerFile)) {
+            $composerData = json_decode(file_get_contents($composerFile), true);
+            if (isset($composerData['name'])) {
+                return $composerData['name'];
+            }
+        }
+
         return false;
     }
 
-/**
- * Get the content of plugin.json file of a plugin
- *
- * @param string $alias plugin folder name
- * @return array
- * @deprecated use getData()
- */
+    /**
+     * Checks whether $plugin is builtin
+     *
+     * @param string $plugin plugin alias
+     * @return boolean true if $plugin is builtin
+     */
+    protected function _isBuiltin($plugin)
+    {
+        return in_array($plugin, $this->bundledPlugins) || in_array($plugin, $this->corePlugins);
+    }
+
+    protected function _loadData($alias, $pluginPath)
+    {
+        $active = $this->isActive($alias);
+        $manifestFile = $pluginPath . DS . 'config' . DS . 'plugin.json';
+        $hasManifest = file_exists($manifestFile);
+        $composerFile = $pluginPath . $alias . DS . 'composer.json';
+        $hasComposer = file_exists($composerFile);
+        if ($hasManifest || $hasComposer) {
+            $pluginData = [
+                'name' => $alias,
+                'needMigration' => false,
+                'active' => $active,
+            ];
+
+            if ($hasManifest) {
+                $manifestData = json_decode(file_get_contents($manifestFile), true);
+                if (empty($manifestData)) {
+                    $this->log($alias . 'plugin.json exists but cannot be decoded.');
+
+                    return $pluginData;
+                }
+                $pluginData = array_merge($manifestData, $pluginData);
+            }
+
+            if ($hasComposer) {
+                $composerData = json_decode(file_get_contents($composerFile), true);
+                $type = isset($composerData['type']) ? $composerData['type'] : null;
+                $isCroogoPlugin = isset($composerData['require']['Croogo/Core']) || $type == 'croogo-plugin';
+
+                if ($isCroogoPlugin) {
+                    if (isset($composerData['name'])) {
+                        $composerData['vendor'] = $composerData['name'];
+                        unset($composerData['name']);
+                    }
+                    $pluginData = Hash::merge($pluginData, $composerData);
+                }
+            }
+
+            $pluginData['needMigration'] = $this->needMigration($alias, $active);
+
+            return $pluginData;
+        } elseif ($this->_isBuiltin($alias)) {
+            if ($this->needMigration($alias, $active)) {
+                $pluginData = [
+                    'name' => $alias,
+                    'description' => "Croogo $alias plugin",
+                    'active' => true,
+                    'needMigration' => true,
+                ];
+
+                return $pluginData;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get the content of plugin.json file of a plugin
+     *
+     * @param string $alias plugin folder name
+     * @return array|bool array of plugin manifest or boolean false
+     */
+    public function getData($alias = null)
+    {
+        $pluginPath = Configure::read('plugins.' . $alias);
+        if (!$pluginPath) {
+            return false;
+        }
+        return $this->_loadData($alias, $pluginPath);
+    }
+
+    /**
+     * Get the content of plugin.json file of a plugin
+     *
+     * @param string $alias plugin folder name
+     * @return array
+     * @deprecated use getData()
+     */
     public function getPluginData($alias = null)
     {
         return $this->getData($alias);
     }
 
-/**
- * Get a list of plugins available with all available meta data.
- * Plugin without metadata are excluded.
- *
- * @return array array of plugins, listed according to bootstrap order
- */
+    /**
+     * Get a list of plugins available with all available meta data.
+     * Plugin without metadata are excluded.
+     *
+     * @return array array of plugins, listed according to bootstrap order
+     */
     public function plugins()
     {
         $pluginAliases = $this->getPlugins();
         $allPlugins = [];
         foreach ($pluginAliases as $pluginAlias => $pluginPath) {
-            $allPlugins[$pluginAlias] = $this->getData($pluginAlias);
+            $pluginData = $this->getData($pluginAlias);
+            if (!$pluginData) {
+                $pluginData = $this->_loadData($pluginAlias, $pluginPath);
+            }
+            $allPlugins[$pluginAlias] = $pluginData;
         }
 
         $activePlugins = [];
@@ -304,16 +337,17 @@ class CroogoPlugin
             $plugins[$plugin] = $pluginData;
         }
         $plugins = Hash::merge($plugins, $allPlugins);
+
         return $plugins;
     }
 
-/**
- * Check if plugin is dependent on any other plugin.
- * If yes, check if that plugin is available in plugins directory.
- *
- * @param  string $plugin plugin alias
- * @return boolean
- */
+    /**
+     * Check if plugin is dependent on any other plugin.
+     * If yes, check if that plugin is available in plugins directory.
+     *
+     * @param  string $plugin plugin alias
+     * @return boolean
+     */
     public function checkDependency($plugin = null)
     {
         $dependencies = $this->getDependencies($plugin);
@@ -329,15 +363,16 @@ class CroogoPlugin
                 return false;
             }
         }
+
         return true;
     }
 
-/**
- * getDependencies
- *
- * @param  string $plugin plugin alias (underscrored)
- * @return array list of plugin that $plugin depends on
- */
+    /**
+     * getDependencies
+     *
+     * @param  string $plugin plugin alias (underscrored)
+     * @return array list of plugin that $plugin depends on
+     */
     public function getDependencies($plugin)
     {
         $pluginData = $this->getData($plugin);
@@ -348,27 +383,28 @@ class CroogoPlugin
         foreach ($pluginData['dependencies']['plugins'] as $i => $plugin) {
             $dependencies[] = Inflector::camelize($plugin);
         }
+
         return $dependencies;
     }
 
-/**
- * Check if plugin is dependent on any other plugin.
- * If yes, check if that plugin is available in plugins directory.
- *
- * @param  string $plugin plugin alias (underscrored)
- * @return boolean
- */
+    /**
+     * Check if plugin is dependent on any other plugin.
+     * If yes, check if that plugin is available in plugins directory.
+     *
+     * @param  string $plugin plugin alias (underscrored)
+     * @return boolean
+     */
     public function checkPluginDependency($plugin = null)
     {
         return $this->checkDependency($plugin);
     }
 
-/**
- * Check if plugin is active
- *
- * @param  string $plugin Plugin name (underscored)
- * @return boolean
- */
+    /**
+     * Check if plugin is active
+     *
+     * @param  string $plugin Plugin name (underscored)
+     * @return boolean
+     */
     public function isActive($plugin)
     {
         $configureKeys = [
@@ -389,32 +425,33 @@ class CroogoPlugin
         return false;
     }
 
-/**
- * Check if plugin is active
- *
- * @param  string $plugin Plugin name (underscored)
- * @return boolean
- * @deprecated use isActive()
- */
+    /**
+     * Check if plugin is active
+     *
+     * @param  string $plugin Plugin name (underscored)
+     * @return boolean
+     * @deprecated use isActive()
+     */
     public function pluginIsActive($plugin)
     {
         return $this->isActive($plugin);
     }
 
-/**
- * Check if a plugin need a database migration
- *
- * @param string $plugin Plugin name
- * @param string $isActive If the plugin is active
- * @return bool
- */
+    /**
+     * Check if a plugin need a database migration
+     *
+     * @param string $plugin Plugin name
+     * @param string $isActive If the plugin is active
+     * @return bool
+     */
     public function needMigration($plugin, $isActive)
     {
         if (!$isActive) {
             return false;
         }
 
-        $status = $this->_getMigrations()->status(['plugin' => $plugin]);
+        $status = $this->_getMigrations()
+            ->status(['plugin' => $plugin]);
         if ($status) {
             return Hash::check($status, '{n}[status=down]');
         }
@@ -422,25 +459,26 @@ class CroogoPlugin
         return false;
     }
 
-/**
- * Migrate a plugin
- *
- * @param string $plugin Plugin name
- * @return boolean Success of the migration
- */
+    /**
+     * Migrate a plugin
+     *
+     * @param string $plugin Plugin name
+     * @return boolean Success of the migration
+     */
     public function migrate($plugin)
     {
         if (!$this->needMigration($plugin, true)) {
             return true;
         }
 
-        return $this->_getMigrations()->migrate(['plugin' => $plugin]);
+        return $this->_getMigrations()
+            ->migrate(['plugin' => $plugin]);
     }
 
     public function unmigrate($plugin)
     {
-        return $this->_getMigrations()->rollback(['plugin' => $plugin, 'target' => 0]);
-
+        return $this->_getMigrations()
+            ->rollback(['plugin' => $plugin, 'target' => 0]);
     }
 
     /**
@@ -451,15 +489,16 @@ class CroogoPlugin
         if (!($this->_Migrations instanceof Migrations)) {
             $this->_Migrations = new Migrations();
         }
+
         return $this->_Migrations;
     }
 
-/**
- * Loads plugin's bootstrap.php file
- *
- * @param string $plugin Plugin name
- * @return void
- */
+    /**
+     * Loads plugin's bootstrap.php file
+     *
+     * @param string $plugin Plugin name
+     * @return void
+     */
     public function addBootstrap($plugin)
     {
         $hookBootstraps = Configure::read('Hook.bootstraps');
@@ -481,24 +520,24 @@ class CroogoPlugin
         $this->_saveBootstraps($plugins);
     }
 
-/**
- * Loads plugin's bootstrap.php file
- *
- * @param string $plugin Plugin name
- * @return void
- * @deprecated use addBootstrap($plugin)
- */
+    /**
+     * Loads plugin's bootstrap.php file
+     *
+     * @param string $plugin Plugin name
+     * @return void
+     * @deprecated use addBootstrap($plugin)
+     */
     public function addPluginBootstrap($plugin)
     {
         $this->addBootstrap($plugin);
     }
 
-/**
- * Plugin name will be removed from Hook.bootstraps
- *
- * @param string $plugin Plugin name
- * @return void
- */
+    /**
+     * Plugin name will be removed from Hook.bootstraps
+     *
+     * @param string $plugin Plugin name
+     * @return void
+     */
     public function removeBootstrap($plugin)
     {
         $hookBootstraps = Configure::read('Hook.bootstraps');
@@ -517,24 +556,24 @@ class CroogoPlugin
         $this->_saveBootstraps($plugins);
     }
 
-/**
- * Plugin name will be removed from Hook.bootstraps
- *
- * @param string $plugin Plugin name
- * @return void
- * @deprecated use removeBootstrap()
- */
+    /**
+     * Plugin name will be removed from Hook.bootstraps
+     *
+     * @param string $plugin Plugin name
+     * @return void
+     * @deprecated use removeBootstrap()
+     */
     public function removePluginBootstrap($plugin)
     {
         $this->removeBootstrap($plugin);
     }
 
-/**
- * Get PluginActivation class
- *
- * @param string $plugin
- * @return object
- */
+    /**
+     * Get PluginActivation class
+     *
+     * @param string $plugin
+     * @return object
+     */
     public function getActivator($plugin = null)
     {
         $plugin = Inflector::camelize($plugin);
@@ -549,15 +588,16 @@ class CroogoPlugin
                 }
             }
         }
+
         return $this->_PluginActivation;
     }
 
-/**
- * Activate plugin
- *
- * @param string $plugin Plugin name
- * @return boolean true when successful, false or error message when failed
- */
+    /**
+     * Activate plugin
+     *
+     * @param string $plugin Plugin name
+     * @return boolean true when successful, false or error message when failed
+     */
     public function activate($plugin, $dependencyList = [])
     {
         if (Plugin::loaded($plugin)) {
@@ -565,11 +605,9 @@ class CroogoPlugin
         }
         $pluginActivation = $this->getActivator($plugin);
         if (!isset($pluginActivation) ||
-            (
-                isset($pluginActivation) &&
+            (isset($pluginActivation) &&
                 method_exists($pluginActivation, 'beforeActivation') &&
-                $pluginActivation->beforeActivation($this->_Controller)
-            )
+                $pluginActivation->beforeActivation($this->_Controller))
         ) {
             $pluginData = $this->getData($plugin);
             $missingPlugins = [];
@@ -585,13 +623,9 @@ class CroogoPlugin
                 }
             }
             if (!empty($missingPlugins)) {
-                return __dn('croogo',
-                    'Plugin "%2$s" requires the "%3$s" plugin to be installed.',
-                    'Plugin "%2$s" requires the %3$s plugins to be installed.',
-                    count($missingPlugins),
-                    $plugin,
-                    Text::toList($missingPlugins)
-                );
+                return __dn('croogo', 'Plugin "%2$s" requires the "%3$s" plugin to be installed.',
+                    'Plugin "%2$s" requires the %3$s plugins to be installed.', count($missingPlugins), $plugin,
+                    Text::toList($missingPlugins));
             }
 
             try {
@@ -612,11 +646,11 @@ class CroogoPlugin
         }
     }
 
-/**
- * Return a list of plugins that uses $plugin
- *
- * @return array|bool Boolean false or Array of plugin names
- */
+    /**
+     * Return a list of plugins that uses $plugin
+     *
+     * @return array|bool Boolean false or Array of plugin names
+     */
     public function usedBy($plugin)
     {
         $deps = Configure::read('pluginDeps');
@@ -627,15 +661,16 @@ class CroogoPlugin
         if (!empty($usedBy)) {
             return $usedBy;
         }
+
         return false;
     }
 
-/**
- * Deactivate plugin
- *
- * @param string $plugin Plugin name
- * @return boolean true when successful, false or error message when failed
- */
+    /**
+     * Deactivate plugin
+     *
+     * @param string $plugin Plugin name
+     * @return boolean true when successful, false or error message when failed
+     */
     public function deactivate($plugin)
     {
         if (!Plugin::loaded($plugin)) {
@@ -643,7 +678,10 @@ class CroogoPlugin
         }
         $pluginActivation = $this->getActivator($plugin);
         if (!isset($pluginActivation) ||
-            (isset($pluginActivation) && method_exists($pluginActivation, 'beforeDeactivation') && $pluginActivation->beforeDeactivation($this->_Controller))) {
+            (isset($pluginActivation) &&
+                method_exists($pluginActivation, 'beforeDeactivation') &&
+                $pluginActivation->beforeDeactivation($this->_Controller))
+        ) {
             $this->removeBootstrap($plugin);
             if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
                 $pluginActivation->onDeactivation($this->_Controller);
@@ -652,15 +690,16 @@ class CroogoPlugin
 
             Cache::clear(false, 'croogo_menus');
             Cache::delete('file_map', '_cake_core_');
+
             return true;
         } else {
             return __d('croogo', 'Plugin could not be deactivated. Please, try again.');
         }
     }
 
-/**
- * Cache plugin dependency list
- */
+    /**
+     * Cache plugin dependency list
+     */
     public static function cacheDependencies()
     {
         $pluginDeps = Cache::read('pluginDeps', 'cached_settings');
@@ -680,16 +719,16 @@ class CroogoPlugin
         Configure::write('pluginDeps', $pluginDeps);
     }
 
-/**
- * Loads a plugin and optionally loads bootstrapping and routing files.
- *
- * This method is identical to Plugin::load() with extra functionality
- * that loads event configuration when Plugin/Config/events.php is present.
- *
- * @see Plugin::load()
- * @param mixed $plugin name of plugin, or array of plugin and its config
- * @return void
- */
+    /**
+     * Loads a plugin and optionally loads bootstrapping and routing files.
+     *
+     * This method is identical to Plugin::load() with extra functionality
+     * that loads event configuration when Plugin/Config/events.php is present.
+     *
+     * @see Plugin::load()
+     * @param mixed $plugin name of plugin, or array of plugin and its config
+     * @return void
+     */
     public static function load($plugin, $config = [])
     {
         Plugin::load($plugin, $config);
@@ -706,16 +745,16 @@ class CroogoPlugin
         }
     }
 
-/**
- * Forgets a loaded plugin or all of them if first parameter is null
- *
- * This method is identical to Plugin::load() with extra functionality
- * that unregister event listeners when a plugin in unloaded.
- *
- * @see Plugin::unload()
- * @param string $plugin name of the plugin to forget
- * @return void
- */
+    /**
+     * Forgets a loaded plugin or all of them if first parameter is null
+     *
+     * This method is identical to Plugin::load() with extra functionality
+     * that unregister event listeners when a plugin in unloaded.
+     *
+     * @see Plugin::unload()
+     * @param string $plugin name of the plugin to forget
+     * @return void
+     */
     public static function unload($plugin)
     {
         $eventManager = CroogoEventManager::instance();
@@ -733,13 +772,13 @@ class CroogoPlugin
         Cache::delete('EventHandlers', 'cached_settings');
     }
 
-/**
- * Delete plugin
- *
- * @param string $plugin Plugin name
- * @return boolean true when successful, false or array of error messages when failed
- * @throws InvalidArgumentException
- */
+    /**
+     * Delete plugin
+     *
+     * @param string $plugin Plugin name
+     * @return boolean true when successful, false or array of error messages when failed
+     * @throws InvalidArgumentException
+     */
     public function delete($plugin)
     {
         if (empty($plugin)) {
@@ -754,17 +793,18 @@ class CroogoPlugin
         if ($result !== true) {
             return $folder->errors();
         }
+
         return true;
     }
 
-/**
- * Move plugin up or down in the bootstrap order
- *
- * @param string $dir valid values 'up' or 'down'
- * @param string $plugin plugin alias
- * @param array $bootstraps current bootstrap order
- * @return array|string array when successful, string contains error message
- */
+    /**
+     * Move plugin up or down in the bootstrap order
+     *
+     * @param string $dir valid values 'up' or 'down'
+     * @param string $plugin plugin alias
+     * @param array $bootstraps current bootstrap order
+     * @return array|string array when successful, string contains error message
+     */
     protected function _move($dir, $plugin, $bootstraps)
     {
         $index = array_search($plugin, $bootstraps);
@@ -807,13 +847,13 @@ class CroogoPlugin
         return $reordered;
     }
 
-/**
- * Write Hook.bootstraps settings to database and json file
- *
- * @param array $bootstrap array of plugin aliases
- * @return boolean
- * @throws CakeException
- */
+    /**
+     * Write Hook.bootstraps settings to database and json file
+     *
+     * @param array $bootstrap array of plugin aliases
+     * @return boolean
+     * @throws CakeException
+     */
     protected function _saveBootstraps($bootstraps)
     {
         static $Setting = null;
@@ -823,17 +863,18 @@ class CroogoPlugin
             }
             $Settings = TableRegistry::get('Croogo/Settings.Settings');
         }
+
         return $Settings->write('Hook.bootstraps', implode(',', $bootstraps));
     }
 
-/**
- * Move plugin in the bootstrap order
- *
- * @param string $dir direction 'up' or 'down'
- * @param string $plugin plugin alias
- * @param array $bootstraps array of plugin aliases
- * @return string|bool true when successful, string contains error message
- */
+    /**
+     * Move plugin in the bootstrap order
+     *
+     * @param string $dir direction 'up' or 'down'
+     * @param string $plugin plugin alias
+     * @param array $bootstraps array of plugin aliases
+     * @return string|bool true when successful, string contains error message
+     */
     public function move($dir, $plugin, $bootstraps = null)
     {
         if (empty($bootstraps)) {
@@ -843,6 +884,7 @@ class CroogoPlugin
         if (is_string($reordered)) {
             return $reordered;
         }
+
         return $this->_saveBootstraps($reordered);
     }
 
@@ -851,7 +893,8 @@ class CroogoPlugin
      *
      * @param string $plugin name of the plugin in CamelCase format
      * @return string path to the plugin folder
-     * @throws \Cake\Core\Exception\MissingPluginException if the folder for plugin was not found or plugin has not been loaded
+     * @throws \Cake\Core\Exception\MissingPluginException if the folder for plugin was not found or plugin has not
+     *     been loaded
      */
     public static function path($plugin)
     {

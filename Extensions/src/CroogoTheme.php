@@ -131,7 +131,7 @@ class CroogoTheme
                     'link' => 'link',
                     'move-down' => 'chevron-down',
                     'move-up' => 'chevron-up',
-                    'power-off' => 'off',
+                    'power-off' => 'power-off',
                     'power-on' => 'bolt',
                     'question-sign' => 'question-sign',
                     'read' => 'eye-open',
