@@ -39,7 +39,7 @@ class MetaBehavior extends Behavior
             'foreignKey' => 'foreign_key',
             'dependent' => true,
             'conditions' => [
-                'Meta.model' => $this->_table->alias(),
+                'Meta.model' => $this->_table->registryAlias(),
             ],
             'order' => 'Meta.key ASC',
         ]);
@@ -49,7 +49,7 @@ class MetaBehavior extends Behavior
                 'targetTable' => $this->_table,
                 'foreignKey' => 'foreign_key',
                 'conditions' => [
-                    'Meta.model' => $this->_table->alias(),
+                    'Meta.model' => $this->_table->registryAlias(),
                 ],
             ]);
     }
@@ -65,12 +65,12 @@ class MetaBehavior extends Behavior
             ->contain(['Meta'])
             ->formatResults(function ($resultSet) {
                 return $resultSet->map(function (Entity $entity) {
+                    $this->_table->dispatchEvent('Model.Meta.formatFields', compact('entity'));
                     $customFields = [];
                     if (!empty($entity->meta)) {
                         $customFields = Hash::combine($entity->meta, '{n}.key', '{n}.value');
                     }
                     $entity->custom_fields = $customFields;
-                    $this->_table->dispatchEvent('Model.Meta.formatFields', compact('entity'));
                     return $entity;
                 });
             });
@@ -131,13 +131,20 @@ class MetaBehavior extends Behavior
         $this->_prepareMeta($event->data['data'], $event->data['options']);
     }
 
-    public function beforeSave(Event $event)
+    public function beforeSave(Event $event, Entity $entity, \ArrayObject $options)
     {
-        $options = $event->data['options'];
+        if (!$entity->has('meta')) {
+            return;
+        }
+
         if (isset($options['associated']) &&
             !(isset($options['associated']['meta']) || in_array('meta', $options['associated']))
         ) {
             $options['associated'][] = 'meta';
+        }
+
+        foreach ($entity->meta as &$meta) {
+            $meta->model = $entity->source();
         }
     }
 }
