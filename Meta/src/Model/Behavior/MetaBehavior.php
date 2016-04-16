@@ -44,7 +44,7 @@ class MetaBehavior extends Behavior
             'order' => 'Meta.key ASC',
         ]);
 
-        TableRegistry::get('Croogo/Meta.Meta')
+        $this->_table->Meta
             ->belongsTo($this->_table->alias(), [
                 'targetTable' => $this->_table,
                 'foreignKey' => 'foreign_key',

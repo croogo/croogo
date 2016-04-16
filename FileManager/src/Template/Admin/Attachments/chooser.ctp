@@ -1,77 +1,55 @@
-<div class="<?php echo $this->Layout->Theme->getCssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->Theme->getCssClass('columnFull'); ?>">
-	<?php
-		echo __d('croogo', 'Sort by:');
-		echo ' ' . $this->Paginator->sort('id', __d('croogo', 'Id'), array('class' => 'sort'));
-		echo ', ' . $this->Paginator->sort('title', __d('croogo', 'Title'), array('class' => 'sort'));
-		echo ', ' . $this->Paginator->sort('created', __d('croogo', 'Created'), array('class' => 'sort'));
-	?>
-	</div>
+<div class="navbar navbar-light bg-faded">
+    <div class="pull-left">
+        <?php
+        echo __d('croogo', 'Sort by:');
+        echo ' ' . $this->Paginator->sort('id', __d('croogo', 'Id'), ['class' => 'sort']);
+        echo ', ' . $this->Paginator->sort('title', __d('croogo', 'Title'), ['class' => 'sort']);
+        echo ', ' . $this->Paginator->sort('created', __d('croogo', 'Created'), ['class' => 'sort']);
+        ?>
+    </div>
+    <div class="pull-right">
+        <?php echo $this->element('Croogo/Nodes.admin/nodes_search'); ?>
+    </div>
 </div>
 
 <div class="<?php echo $this->Layout->Theme->getCssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->Theme->getCssClass('columnFull'); ?>">
-		<?php echo $this->element('FileManager.admin/attachments_search'); ?>
-		<hr />
-	</div>
+    <div class="<?php echo $this->Layout->Theme->getCssClass('columnFull'); ?>">
+        <div class="card-deck-wrapper">
+            <div class="card-deck">
+                <?php
+                $rows = [];
+                foreach ($attachments as $attachment):
+                    list($mimeType, $imageType) = explode('/', $attachment->mime_type);
+                    $imagecreatefrom = ['gif', 'jpeg', 'png', 'string', 'wbmp', 'webp', 'xbm', 'xpm'];
+                    if ($mimeType == 'image' && in_array($imageType, $imagecreatefrom)) {
+                        $thumbnail = $this->Image->resize($attachment->path, 400, 200, [], ['class' => 'thumbnail card-img-top']);
+                    } else {
+                        $thumbnail = $this->Html->image(
+                            '/croogo/img/icons/page_white.png',
+                            ['class' => 'card-img-top']
+                        );
+                    }
+
+                    $footerText = $attachment->title .
+                        '<br>' .
+                        $this->Html->tag('small', $attachment->slug, ['class' => 'text-muted']);
+                    $cardHeader = $this->Html->div('card-header', $footerText);
+                    $card = $this->Html->div(
+                        'card text-xs-center selector item-choose',
+                        $cardHeader . $thumbnail,
+                        [
+                            'data-slug' => $attachment->slug,
+                            'data-chooser-type' => 'Node',
+                            'data-chooser-id' => $attachment->id,
+                            'data-chooser-title' => $attachment->title,
+                            'rel' => $attachment->path,
+                        ]
+                    );
+                    echo $card;
+                endforeach;
+                ?>
+            </div>
+        </div>
+        <?php echo $this->element('Croogo/Core.admin/pagination'); ?>
+    </div>
 </div>
-
-<div class="<?php echo $this->Layout->Theme->getCssClass('row'); ?>">
-	<div class="<?php echo $this->Layout->Theme->getCssClass('columnFull'); ?>">
-		<ul id="attachments-for-links">
-		<?php foreach ($attachments as $attachment) { ?>
-			<li>
-			<?php
-				echo $this->Html->link($attachment['Attachment']['title'],
-					"/{$uploadsDir}/" . $attachment['Attachment']['slug'],
-				array(
-					'class' => 'item-choose',
-					'data-chooser_type' => 'Node',
-					'data-chooser_id' => $attachment['Attachment']['id'],
-					'data-chooser_title' => $attachment['Attachment']['title'],
-					'rel' => sprintf(
-						"/{$uploadsDir}/%s",
-						$attachment['Attachment']['slug']
-					),
-				));
-
-				$popup = array();
-				$type = __d('croogo', $attachment['Attachment']['mime_type']);
-				$popup[] = array(
-					__d('croogo', 'Promoted'),
-					$this->Layout->status($attachment['Attachment']['promote'])
-				);
-				$popup[] = array(
-					__d('croogo', 'Status'),
-					$this->Layout->status($attachment['Attachment']['status'])
-				);
-				$popup[] = array(
-					__d('croogo', 'Created'),
-					array($this->Time->niceShort($attachment['Attachment']['created']), array('class' => 'nowrap'))
-				);
-				$popup = $this->Html->tag('table', $this->Html->tableCells($popup), array(
-					'class' => 'table table-condensed',
-				));
-				$a = $this->Html->link('', '#', array(
-					'class' => 'popovers action',
-					'icon' => $this->Theme->getIcon('info-sign'),
-					'data-title' => $type,
-					'data-trigger' => 'click',
-					'data-placement' => 'right',
-					'data-html' => true,
-					'data-content' => h($popup),
-				));
-				echo $a;
-			?>
-			</li>
-		<?php } ?>
-		</ul>
-		<?php echo $this->element('admin/pagination'); ?>
-	</div>
-</div>
-<?php
-
-$script =<<<EOF
-$('.popovers').popover().on('click', function() { return false; });;
-EOF;
-$this->Js->buffer($script);
