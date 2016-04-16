@@ -5,7 +5,6 @@ namespace Croogo\Taxonomy\View\Helper;
 use Cake\Event\Event;
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
-use Cake\View\View;
 use Croogo\Core\Croogo;
 
 /**
@@ -25,34 +24,16 @@ class TaxonomiesHelper extends Helper
         'Html',
     ];
 
-/**
- * constructor
- */
-    public function __construct(View $view, $settings = [])
+    public function implementedEvents()
     {
-        parent::__construct($view, $settings);
-        $this->_setupEvents();
-    }
-
-/**
- * setup events
- */
-    protected function _setupEvents()
-    {
-        $events = [
-            'Helper.Layout.beforeFilter' => [
-                'callable' => 'filter', 'passParams' => true,
-            ],
+        return parent::implementedEvents() + [
+            'Helper.Layout.beforeFilter' => 'filter',
         ];
-        $eventManager = $this->_View->eventManager();
-        foreach ($events as $name => $config) {
-            $eventManager->attach([$this, 'filter'], $name, $config);
-        }
     }
 
-/**
- * beforeRender
- */
+    /**
+     * beforeRender
+     */
     public function beforeRender($viewFile)
     {
         if ($this->request->param('prefix') === 'admin' && !$this->request->is('ajax')) {
@@ -60,9 +41,9 @@ class TaxonomiesHelper extends Helper
         }
     }
 
-/**
- * Hook admin tabs when $taxonomy is set
- */
+    /**
+     * Hook admin tabs when $taxonomy is set
+     */
     protected function _adminTabs()
     {
         $controller = Inflector::camelize($this->request->params['controller']);
@@ -75,14 +56,14 @@ class TaxonomiesHelper extends Helper
         Croogo::hookAdminTab('Admin/' . $controller . '/edit', $title, $element);
     }
 
-/**
- * Filter content for Vocabularies
- *
- * Replaces [vocabulary:vocabulary_alias] or [v:vocabulary_alias] with Terms list
- *
- * @param Event $event
- * @return string
- */
+    /**
+     * Filter content for Vocabularies
+     *
+     * Replaces [vocabulary:vocabulary_alias] or [v:vocabulary_alias] with Terms list
+     *
+     * @param Event $event
+     * @return string
+     */
     public function filter(Event $event, $options = [])
     {
         preg_match_all('/\[(vocabulary|v):([A-Za-z0-9_\-]*)(.*?)\]/i', $event->data['content'], $tagMatches);
@@ -94,18 +75,23 @@ class TaxonomiesHelper extends Helper
             for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
                 $options[$attributes[1][$j]] = $attributes[2][$j];
             }
-            $event->data['content'] = str_replace($tagMatches[0][$i], $this->vocabulary($vocabularyAlias, $options), $event->data['content']);
+            $event->data['content'] = str_replace(
+                $tagMatches[0][$i],
+                $this->vocabulary($vocabularyAlias, $options),
+                $event->data['content']
+            );
         }
+
         return $event->data;
     }
 
-/**
- * Show Vocabulary by Alias
- *
- * @param string $vocabularyAlias Vocabulary alias
- * @param array $options (optional)
- * @return string
- */
+    /**
+     * Show Vocabulary by Alias
+     *
+     * @param string $vocabularyAlias Vocabulary alias
+     * @param array $options (optional)
+     * @return string
+     */
     public function vocabulary($vocabularyAlias, $options = [])
     {
         $_options = [
@@ -123,21 +109,25 @@ class TaxonomiesHelper extends Helper
         $output = '';
         if (isset($this->_View->viewVars['vocabularies_for_layout'][$vocabularyAlias]['threaded'])) {
             $vocabulary = $this->_View->viewVars['vocabularies_for_layout'][$vocabularyAlias];
-            $output .= $this->_View->element($options['element'], [
-                'vocabulary' => $vocabulary,
-                'options' => $options,
-            ]);
+            $output .= $this->_View->element(
+                $options['element'],
+                [
+                    'vocabulary' => $vocabulary,
+                    'options' => $options,
+                ]
+            );
         }
+
         return $output;
     }
 
-/**
- * Nested Terms
- *
- * @param array   $terms
- * @param array   $options
- * @param int$depth
- */
+    /**
+     * Nested Terms
+     *
+     * @param array $terms
+     * @param array $options
+     * @param int $depth
+     */
     public function nestedTerms($terms, $options, $depth = 1)
     {
         $_options = [];
@@ -149,13 +139,17 @@ class TaxonomiesHelper extends Helper
                 $termAttr = [
                     'id' => 'term-' . $term->term->id,
                 ];
-                $termOutput = $this->Html->link($term->term->title, [
-                    'plugin' => $options['plugin'],
-                    'controller' => $options['controller'],
-                    'action' => $options['action'],
-                    'type' => $options['type'],
-                    'slug' => $term->term->slug,
-                ], $termAttr);
+                $termOutput = $this->Html->link(
+                    $term->term->title,
+                    [
+                        'plugin' => $options['plugin'],
+                        'controller' => $options['controller'],
+                        'action' => $options['action'],
+                        'type' => $options['type'],
+                        'slug' => $term->term->slug,
+                    ],
+                    $termAttr
+                );
             } else {
                 $termOutput = $term->term->title;
             }
@@ -172,13 +166,13 @@ class TaxonomiesHelper extends Helper
         return $output;
     }
 
-/**
- * Generate string of type links
- *
- * @param array $typeData Array of Type records
- * @param array $termData Array of Term records
- * @return string
- */
+    /**
+     * Generate string of type links
+     *
+     * @param array $typeData Array of Type records
+     * @param array $termData Array of Term records
+     * @return string
+     */
     public function generateTypeLinks($typeData, $termData)
     {
         $typeLinks = '';
@@ -190,16 +184,20 @@ class TaxonomiesHelper extends Helper
         $typeLink[] = ' (';
 
         foreach ($typeData as $type) {
-            $typeLink[] = $this->Html->link($type->title, [
-                'prefix' => false,
-                'plugin' => 'Croogo/Nodes',
-                'controller' => 'Nodes',
-                'action' => 'term',
-                'type' => $type->alias,
-                'slug' => $termData['Term']['slug']
-            ], [
-                'target' => '_blank',
-            ]);
+            $typeLink[] = $this->Html->link(
+                $type->title,
+                [
+                    'prefix' => false,
+                    'plugin' => 'Croogo/Nodes',
+                    'controller' => 'Nodes',
+                    'action' => 'term',
+                    'type' => $type->alias,
+                    'slug' => $termData['Term']['slug'],
+                ],
+                [
+                    'target' => '_blank',
+                ]
+            );
         }
 
         $typeLink[] = ')';
