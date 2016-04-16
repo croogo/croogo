@@ -29,7 +29,7 @@ if (!isset($body)) {
                 <?= $body ?>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">
+                <button class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">
                     <?= __d('croogo', 'Close'); ?>
                 </button>
             </div>

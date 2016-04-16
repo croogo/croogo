@@ -525,8 +525,10 @@ class CroogoHelper extends Helper
             $issetType = isset($box['options']['type']);
             $typeInTypeAlias = $issetType && in_array($this->_View->viewVars['typeAlias'], $box['options']['type']);
             if (!$issetType || $typeInTypeAlias) {
-                $entity = $this->_View->viewVars[$this->_View->viewVars['viewVar']];
-                $box['options']['elementData']['entity'] = $entity;
+                if (isset($this->_View->viewVars['viewVar'])) {
+                    $entity = $this->_View->viewVars[$this->_View->viewVars['viewVar']];
+                    $box['options']['elementData']['entity'] = $entity;
+                }
                 $output .= $this->Html->beginBox($title);
                 $output .= $this->_View->element($box['element'], $box['options']['elementData'], $box['options']['elementOptions']);
                 $output .= $this->Html->endBox();

@@ -1,10 +1,6 @@
 <?php
-$url = isset($url) ? $url : ['action' => 'index'];
-?>
-<?php
-echo $this->Form->create(false, [
+echo $this->Form->create(null, [
     'align' => 'inline',
-    'url' => $url,
 ]);
 
 $this->Form->templates([
@@ -50,4 +46,3 @@ echo $this->Form->submit(__d('croogo', 'Filter'), [
     'class' => 'btn-success-outline',
 ]);
 echo $this->Form->end();
-?>

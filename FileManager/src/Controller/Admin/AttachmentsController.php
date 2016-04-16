@@ -72,21 +72,20 @@ class AttachmentsController extends AppController
                 'created' => 'DESC',
             ],
         ];
-        if ($isChooser) {
-            if ($this->request->query['chooser_type'] == 'image') {
-                $this->paginate['mime_type LIKE'] = 'image/%';
-            } else {
-                $this->paginate['mime_type NOT LIKE'] = 'image/%';
-            }
-        }
 
         $query = $this->Attachments->find('searchable', $this->Prg->parsedParams());
+        if ($isChooser) {
+            if ($this->request->query['chooser_type'] == 'image') {
+                $query->where(['mime_type LIKE' => 'image/%']);
+            } else {
+                $query->where(['mime_type NOT LIKE' => 'image/%']);
+            }
+        }
         $this->set('attachments', $this->paginate($query));
         $this->set('uploadsDir', $this->Attachments->uploadsDir);
 
         if ($isChooser) {
-            $this->layout = 'admin_popup';
-            $this->render('admin_chooser');
+            $this->render('chooser');
         }
 
     }

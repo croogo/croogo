@@ -108,7 +108,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
      */
     public function afterConstruct()
     {
-        $this->viewBuilder()->helpers(Croogo::options('Hook.view_builder_options', $this, 'helpers'));
+        $this->viewBuilder()->helpers(Croogo::options('Hook.view_builder_options', $this->request->param('controller'), 'helpers'));
     }
 
     /**
@@ -118,8 +118,8 @@ class AppController extends \App\Controller\AppController implements HookableCom
     {
         parent::beforeRender($event);
 
-        if (empty($this->viewClass)) {
-            $this->viewClass = 'Croogo/Core.Croogo';
+        if (empty($this->viewBuilder()->className())) {
+            $this->viewBuilder()->className('Croogo/Core.Croogo');
         }
 	}
 

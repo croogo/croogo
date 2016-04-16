@@ -7,7 +7,7 @@ $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Croogo->adminScript('Croogo/Nodes.admin');
 
-$this->Html->addCrumb('', '/admin', ['icon' => $this->Theme->getIcon('home')])
+$this->Html
     ->addCrumb(__d('croogo', 'Content'), '/' . $this->request->url);
 
 $this->append('actions');

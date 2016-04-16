@@ -126,7 +126,7 @@ class CroogoTheme
                     'delete' => 'trash',
                     'error-sign' => 'exclamation-sign',
                     'home' => 'home',
-                    'info-sign' => 'info-sign',
+                    'info-sign' => 'info-circle',
                     'inspect' => 'zoom-in',
                     'link' => 'link',
                     'move-down' => 'chevron-down',

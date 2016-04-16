@@ -36,7 +36,7 @@ foreach ($attachments as $attachment) {
         $thumbnail = $this->Html->link($imgUrl, $attachment->path,
             ['escape' => false, 'class' => 'thickbox', 'title' => $attachment->title]);
     } else {
-        $thumbnail = $this->Html->thumbnail('/croogo/img/icons/page_white.png', ['alt' => $attachment->mime_type]) .
+        $thumbnail = $this->Html->thumbnail('/croogo/core/img/icons/page_white.png', ['alt' => $attachment->mime_type]) .
             ' ' .
             $attachment->mime_type .
             ' (' .
