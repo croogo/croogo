@@ -55,7 +55,7 @@ class MetaBehavior extends Behavior
     }
 
     /**
-     * afterFind callback
+     * beforeFind callback
      *
      * @return array
      */
@@ -70,6 +70,7 @@ class MetaBehavior extends Behavior
                         $customFields = Hash::combine($entity->meta, '{n}.key', '{n}.value');
                     }
                     $entity->custom_fields = $customFields;
+                    $this->_table->dispatchEvent('Model.Meta.formatFields', compact('entity'));
                     return $entity;
                 });
             });
@@ -115,6 +116,8 @@ class MetaBehavior extends Behavior
                 $options['associated'][] = 'meta';
             }
         }
+
+        $this->_table->dispatchEvent('Model.Meta.prepareFields', compact('data', 'options'));
     }
 
     /**
@@ -123,8 +126,18 @@ class MetaBehavior extends Behavior
      * @param Event $event Event object
      * @return void
      */
-    public function beforeMarshal($event)
+    public function beforeMarshal(Event $event)
     {
         $this->_prepareMeta($event->data['data'], $event->data['options']);
+    }
+
+    public function beforeSave(Event $event)
+    {
+        $options = $event->data['options'];
+        if (isset($options['associated']) &&
+            !(isset($options['associated']['meta']) || in_array('meta', $options['associated']))
+        ) {
+            $options['associated'][] = 'meta';
+        }
     }
 }
