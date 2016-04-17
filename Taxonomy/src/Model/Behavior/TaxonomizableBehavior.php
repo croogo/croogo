@@ -29,6 +29,17 @@ class TaxonomizableBehavior extends Behavior
     }
 
     /**
+     * Setup Event handlers
+     */
+    public function implementedEvents()
+    {
+        $events = parent::implementedEvents();
+        $events['Model.Node.beforeSaveNode'] = 'beforeSaveNode';
+
+        return $events;
+    }
+
+    /**
      * Setup relationships
      *
      * @return void
@@ -64,12 +75,10 @@ class TaxonomizableBehavior extends Behavior
     /**
      * Get selected terms from data
      */
-    protected function _getSelectedTerms($data)
+    protected function _getSelectedTerms(Entity $entity)
     {
-        if (isset($data['Taxonomy']['Taxonomy'])) {
-            return array_filter($data['Taxonomy']['Taxonomy']);
-        } elseif (isset($data['Taxonomy'])) {
-            return Hash::extract($data['Taxonomy'], '{n}.taxonomy_id');
+        if ($entity->has('taxonomies')) {
+            return Hash::extract($entity->taxonomies, '{n}.id');
         } else {
             return [];
         }
@@ -78,35 +87,45 @@ class TaxonomizableBehavior extends Behavior
     /**
      * Validate Taxonomy data
      */
-    public function validateTaxonomyData(Model $model)
+    public function validateTaxonomyData(Entity $entity)
     {
         $typeField = 'type';
-        $data =& $model->data;
 
-        if (isset($data[$model->alias][$typeField])) {
-            $typeAlias = $data[$model->alias][$typeField];
-        } elseif (isset($model->type)) {
-            $typeAlias = $model->type;
+        if ($entity->has($typeField)) {
+            $typeAlias = $entity->{$typeField};
         } else {
-            Log::error('Unable to determine type for model ' . $model->alias);
+            Log::error('Unable to determine type for model ' . $this->_table->alias());
 
             return false;
         }
 
-        $type = $this->Taxonomies->Vocabulary->Type->find(
-            'first',
-            [
-                'fields' => ['id', 'title', 'alias'],
-                'contain' => [
-                    'Vocabulary' => [
-                        'fields' => ['id', 'title', 'alias', 'required', 'multiple'],
-                    ],
-                ],
-                'conditions' => [
-                    'alias' => $typeAlias,
-                ],
-            ]
-        );
+        $type = $this->_table->Taxonomies->Vocabularies->Types->find()
+            ->select(
+                [
+                    'id',
+                    'title',
+                    'alias',
+                ]
+            )
+            ->contain(
+                [
+                    'Vocabularies' => function (Query $q) {
+                        return $q->select(
+                            [
+                                'id',
+                                'title',
+                                'alias',
+                                'required',
+                                'multiple',
+                            ]
+                        )->contain(['Taxonomies']);
+                    },
+                ]
+            )
+            ->where([
+                'alias' => $typeAlias
+            ])
+            ->first();
 
         if (empty($type)) {
             Log::error('Type ' . $typeAlias . ' cannot be found');
@@ -114,95 +133,68 @@ class TaxonomizableBehavior extends Behavior
             return true;
         }
 
-        $selectedTerms = $this->_getSelectedTerms($data);
+        $selectedTerms = $this->_getSelectedTerms($entity);
 
-        $result = true;
         $requiredError = __d('croogo', 'Please select at least 1 value');
         $multipleError = __d('croogo', 'Please select at most 1 value');
-        foreach ($type['Vocabulary'] as $vocabulary) {
-            $fieldName = 'TaxonomyData.' . $vocabulary['id'];
-            $terms = $this->Taxonomies->find(
-                'all',
-                [
-                    'recursive' => -1,
-                    'fields' => 'term_id',
-                    'conditions' => [
-                        'vocabulary_id' => $vocabulary['id'],
-                    ],
-                ]
-            );
-            $terms = Hash::extract($terms, '{n}.Taxonomy.term_id');
+        foreach ($type->vocabularies as $vocabulary) {
+            $fieldName = 'taxonomy_data.' . $vocabulary->id;
+            $terms = Hash::extract($vocabulary, 'taxonomies.{n}.id');
             $selected = count(array_intersect($selectedTerms, $terms));
-            if ($vocabulary['required']) {
-                if ($selected == 0) {
-                    $model->invalidate($fieldName, $requiredError);
-                    $result = false;
-                }
+            if ($vocabulary->required && $selected == 0) {
+                $entity->errors($fieldName, $requiredError);
             }
-            if (!$vocabulary['multiple']) {
-                if ($selected > 1) {
-                    $model->invalidate($fieldName, $multipleError);
-                    $result = false;
-                }
+            if (!$vocabulary->multiple && $selected > 1) {
+                $entity->errors($fieldName, $multipleError);
             }
         }
-
-        return $result;
     }
 
     /**
      * Transform TaxonomyData array to a format that can be used for save operation
      *
-     * @param array $data Array containing relevant Taxonomy data
+     * @param \Cake\ORM\Entity $entity Entity being saved
      * @param string $typeAlias string Node type alias
-     * @return array Formatted data
+     * @return void
      * @throws InvalidArgumentException
      */
-    public function formatTaxonomyData(Model $model, &$data, $typeAlias)
+    public function formatTaxonomyData(Entity $entity, $typeAlias)
     {
-        $type = $model->Taxonomy->Vocabulary->Type->findByAlias($typeAlias);
+        $type = $this->_table->Taxonomies->Vocabularies->Types->findByAlias($typeAlias)
+            ->first();
         if (empty($type)) {
             throw new InvalidArgumentException(__d('croogo', 'Invalid Content Type'));
         }
-        if (empty($data[$model->alias]['type'])) {
-            $data[$model->alias]['type'] = $typeAlias;
-        }
-        $model->type = $type['Type']['alias'];
-
-        if (!$model->Behaviors->enabled('Tree')) {
-            $model->Behaviors->attach(
+        $entity->type = $type->alias;
+        if (!$this->_table->behaviors()
+            ->has('Tree')
+        ) {
+            $this->_table->addBehavior(
                 'Tree',
                 [
                     'scope' => [
-                        $model->escapeField('type') => $model->type,
+                        $this->_table->aliasField('type') => $entity->type,
                     ],
                 ]
             );
         }
-
-        if (array_key_exists('TaxonomyData', $data)) {
-            $foreignKey = $model->id;
-            if (isset($data[$model->alias][$model->primaryKey])) {
-                $foreignKey = $data[$model->alias][$model->primaryKey];
-            }
-            $data['Taxonomy'] = [];
-            foreach ($data['TaxonomyData'] as $vocabularyId => $taxonomyIds) {
+        if ($entity->has('taxonomy_data')) {
+            $taxonomies = [];
+            foreach ($entity->taxonomy_data as $vocabularyId => $taxonomyIds) {
                 if (empty($taxonomyIds)) {
                     continue;
                 }
                 foreach ((array)$taxonomyIds as $taxonomyId) {
-                    $join = [
-                        'model' => $model->alias,
-                        'foreign_key' => $foreignKey,
-                        'taxonomy_id' => $taxonomyId,
+                    $taxonomies[] = [
+                        'id' => $taxonomyId,
+                        '_joinData' => [
+                            'model' => $entity->source(),
+                        ],
                     ];
-                    $data['Taxonomy'][] = $join;
                 }
             }
-            unset($data['TaxonomyData']);
+            $this->_table->patchEntity($entity, compact('taxonomies'));
         }
-
-        $this->cacheTerms($model, $data);
     }
 
     /**
@@ -210,37 +202,10 @@ class TaxonomizableBehavior extends Behavior
      *
      * @param Event $event Event containing `data` and `typeAlias`
      */
-    public function beforeMarshal($event)
+    public function beforeSaveNode(Event $event, Entity $entity, $typeAlias)
     {
-//        $data = $event->data['data'];
-//        $typeAlias = $event->data['typeAlias'];
-//        $this->formatTaxonomyData($event->subject, $data, $typeAlias);
-//        $event->data['data'] = $data;
-    }
-
-    /**
-     * Handle Model.Node.afterSaveNode event
-     *
-     * @param CakeEvent $event Event containing `data` and `typeAlias`
-     */
-    public function onAfterSaveNode($event)
-    {
-//        $model = $event->subject;
-//        $data = $event->data['data'];
-//        if (isset($model->id)) {
-//            $id = $model->id;
-//        }
-//        if (isset($data[$model->alias][$model->primaryKey])) {
-//            $id = $data[$model->alias][$model->primaryKey];
-//        }
-//        if ($id && array_key_exists('Taxonomy', $data) && empty($data['Taxonomy'])) {
-//            $model->Taxonomy->ModelTaxonomy->deleteAll(
-//                [
-//                    'model' => $model->alias,
-//                    'foreign_key' => $id,
-//                ]
-//            );
-//        }
+        $this->formatTaxonomyData($entity, $typeAlias);
+        $this->validateTaxonomyData($entity);
     }
 
     /**
@@ -253,12 +218,6 @@ class TaxonomizableBehavior extends Behavior
         if (!$entity->has('taxonomies')) {
             return;
         }
-        foreach ($entity->taxonomies as $key => $taxonomy) {
-            if (!$taxonomy->has('_joinData')) {
-                $taxonomy->_joinData = new Entity();
-            }
-            $taxonomy->_joinData->model = $entity->source();
-        }
 
         if (isset($options['associated']) &&
             !(isset($options['associated']['Taxonomies']) || in_array('Taxonomies', $options['associated']))
@@ -270,36 +229,5 @@ class TaxonomizableBehavior extends Behavior
     public function beforeFind(Event $event, Query $query)
     {
         $query->contain(['Taxonomies']);
-    }
-
-    /**
-     * Caches Term in `terms` field
-     *
-     * @param Model model
-     * @param array $data
-     * @return void
-     */
-    public function cacheTerms(Model $model, &$data = null)
-    {
-        if ($data === null) {
-            $data =& $model->data;
-        }
-        $taxonomyIds = $this->_getSelectedTerms($data);
-        $taxonomies = $model->Taxonomy->find(
-            'all',
-            [
-                'conditions' => [
-                    'Taxonomy.id' => $taxonomyIds,
-                ],
-            ]
-        );
-        $terms = Hash::combine($taxonomies, '{n}.Term.id', '{n}.Term.slug');
-        $data[$model->alias]['terms'] = $model->encodeData(
-            $terms,
-            [
-                'trim' => false,
-                'json' => true,
-            ]
-        );
     }
 }

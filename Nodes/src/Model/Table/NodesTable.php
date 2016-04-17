@@ -65,11 +65,13 @@ class NodesTable extends CroogoTable
  */
     public function saveNode(Node $node, $typeAlias = self::DEFAULT_TYPE)
     {
-        $result = false;
-
 //		$node = $this->formatNode($node, $typeAlias);
         $event = Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, compact('node', 'typeAlias'));
-        $result = $this->save($event->data['node']);
+        if ($event->isStopped()) {
+            return $event->result;
+        }
+
+        $result = $this->save($node);
         Croogo::dispatchEvent('Model.Node.afterSaveNode', $this, $event->data);
 
         return $result;
