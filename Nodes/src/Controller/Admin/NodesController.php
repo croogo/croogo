@@ -9,6 +9,7 @@ use Croogo\Core\Croogo;
 use Croogo\Nodes\Model\Entity\Node;
 use Croogo\Nodes\Model\Table\NodesTable;
 use Croogo\Taxonomy\Controller\Component\TaxonomiesComponent;
+use Croogo\Taxonomy\Model\Entity\Type;
 
 /**
  * Nodes Controller
@@ -418,7 +419,7 @@ class NodesController extends AppController
      * @param array $type Type data
      * @return void
      */
-    protected function _setCommonVariables($type, Node $node = null)
+    protected function _setCommonVariables(Type $type)
     {
         if (isset($this->Taxonomies)) {
             $this->Taxonomies->prepareCommonData($type);

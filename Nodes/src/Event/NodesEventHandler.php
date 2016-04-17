@@ -8,6 +8,7 @@ use Cake\Event\EventListenerInterface;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Croogo;
 use Croogo\Comments\Model\Comment;
+use Croogo\Core\Nav;
 
 /**
  * Nodes Event Handler
@@ -60,23 +61,19 @@ class NodesEventHandler implements EventListenerInterface
     {
         $View = $event->subject;
 
-        if (empty($View->viewVars['typesForAdminLayout'])) {
-            $types = [];
-        } else {
-            $types = $View->viewVars['typesForAdminLayout'];
-        }
-        foreach ($types as $t) {
-            if (!empty($t['Type']['plugin'])) {
+        $types = $View->viewVars['typesForAdminLayout'] ?: [];
+        foreach ($types as $type) {
+            if (!empty($type->plugin)) {
                 continue;
             }
-            CroogoNav::add('sidebar', 'content.children.create.children.' . $t['Type']['alias'], [
-                'title' => $t['Type']['title'],
+            Nav::add('sidebar', 'content.children.create.children.' . $type->alias, [
+                'title' => $type->title,
                 'url' => [
-                    'plugin' => 'nodes',
+                    'plugin' => 'Croogo/Nodes',
                     'admin' => true,
-                    'controller' => 'nodes',
+                    'controller' => 'Nodes',
                     'action' => 'add',
-                    $t['Type']['alias'],
+                    $type->alias,
                 ],
             ]);
         };
@@ -105,8 +102,8 @@ class NodesEventHandler implements EventListenerInterface
         if (Plugin::loaded('Croogo/Taxonomy')) {
             Croogo::hookBehavior('Croogo/Nodes.Nodes', 'Croogo/Taxonomy.Taxonomizable');
         }
-        if (Plugin::loaded('Meta')) {
-            Croogo::hookBehavior('Node', 'Meta.Meta');
+        if (Plugin::loaded('Croogo/Meta')) {
+            Croogo::hookBehavior('Croogo/Nodes.Nodes', 'Croogo/Meta.Meta');
         }
     }
 

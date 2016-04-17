@@ -467,6 +467,10 @@ class CroogoHelper extends Helper
                         '-' .
                         strtolower(Inflector::slug($title, '-'));
                     if ($this->adminTabs) {
+                        if (isset($this->_View->viewVars['viewVar'])) {
+                            $entity = $this->_View->viewVars[$this->_View->viewVars['viewVar']];
+                            $tab['options']['elementData']['entity'] = $entity;
+                        }
                         $output .= $this->Html->tabStart($domId);
                         $output .= $this->_View->element($tab['element'], $tab['options']['elementData'], $tab['options']['elementOptions']);
                         $output .= $this->Html->tabEnd();

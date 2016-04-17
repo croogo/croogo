@@ -2,8 +2,11 @@
 
 namespace Croogo\Taxonomy\Model\Behavior;
 
+use Cake\Event\Event;
 use Cake\Log\Log;
 use Cake\ORM\Behavior;
+use Cake\ORM\Entity;
+use Cake\ORM\Query;
 use Cake\Utility\Hash;
 
 /**
@@ -39,7 +42,6 @@ class TaxonomizableBehavior extends Behavior
                 'through' => 'Croogo/Taxonomy.ModelTaxonomies',
                 'foreignKey' => 'foreign_key',
                 'associationForeignKey' => 'taxonomy_id',
-                'unique' => true,
                 'conditions' => [
                     'model' => $this->_table->registryAlias(),
                 ],
@@ -52,25 +54,11 @@ class TaxonomizableBehavior extends Behavior
                 'through' => 'Croogo/Taxonomy.ModelTaxonomy',
                 'foreignKey' => 'foreign_key',
                 'associationForeignKey' => 'taxonomy_id',
-                'unique' => true,
                 'conditions' => [
                     'model' => $this->_table->registryAlias(),
                 ],
             ]
         );
-    }
-
-    /**
-     * Setup Event handlers
-     */
-    public function implementedEvents()
-    {
-        $events = parent::implementedEvents();
-
-        $events['Model.Node.beforeSaveNode'] = 'onBeforeSaveNode';
-        $events['Model.Node.afterSaveNode'] = 'onAfterSaveNode';
-
-        return $events;
     }
 
     /**
@@ -222,12 +210,12 @@ class TaxonomizableBehavior extends Behavior
      *
      * @param Event $event Event containing `data` and `typeAlias`
      */
-    public function onBeforeSaveNode($event)
+    public function beforeMarshal($event)
     {
-        $data = $event->data['data'];
-        $typeAlias = $event->data['typeAlias'];
-        $this->formatTaxonomyData($event->subject, $data, $typeAlias);
-        $event->data['data'] = $data;
+//        $data = $event->data['data'];
+//        $typeAlias = $event->data['typeAlias'];
+//        $this->formatTaxonomyData($event->subject, $data, $typeAlias);
+//        $event->data['data'] = $data;
     }
 
     /**
@@ -237,22 +225,22 @@ class TaxonomizableBehavior extends Behavior
      */
     public function onAfterSaveNode($event)
     {
-        $model = $event->subject;
-        $data = $event->data['data'];
-        if (isset($model->id)) {
-            $id = $model->id;
-        }
-        if (isset($data[$model->alias][$model->primaryKey])) {
-            $id = $data[$model->alias][$model->primaryKey];
-        }
-        if ($id && array_key_exists('Taxonomy', $data) && empty($data['Taxonomy'])) {
-            $model->Taxonomy->ModelTaxonomy->deleteAll(
-                [
-                    'model' => $model->alias,
-                    'foreign_key' => $id,
-                ]
-            );
-        }
+//        $model = $event->subject;
+//        $data = $event->data['data'];
+//        if (isset($model->id)) {
+//            $id = $model->id;
+//        }
+//        if (isset($data[$model->alias][$model->primaryKey])) {
+//            $id = $data[$model->alias][$model->primaryKey];
+//        }
+//        if ($id && array_key_exists('Taxonomy', $data) && empty($data['Taxonomy'])) {
+//            $model->Taxonomy->ModelTaxonomy->deleteAll(
+//                [
+//                    'model' => $model->alias,
+//                    'foreign_key' => $id,
+//                ]
+//            );
+//        }
     }
 
     /**
@@ -260,17 +248,28 @@ class TaxonomizableBehavior extends Behavior
      *
      * @return bool
      */
-    public function beforeSave(Model $model, $options = [])
+    public function beforeSave(Event $event, Entity $entity)
     {
-        if (!empty($options['fieldList'])) {
-            return true;
+        if (!$entity->has('taxonomies')) {
+            return;
         }
-        $result = $this->validateTaxonomyData($model);
-        if ($result !== true) {
-            return $result;
+        foreach ($entity->taxonomies as $key => $taxonomy) {
+            if (!$taxonomy->has('_joinData')) {
+                $taxonomy->_joinData = new Entity();
+            }
+            $taxonomy->_joinData->model = $entity->source();
         }
 
-        return true;
+        if (isset($options['associated']) &&
+            !(isset($options['associated']['Taxonomies']) || in_array('Taxonomies', $options['associated']))
+        ) {
+            $options['associated'][] = 'Taxonomies';
+        }
+    }
+
+    public function beforeFind(Event $event, Query $query)
+    {
+        $query->contain(['Taxonomies']);
     }
 
     /**

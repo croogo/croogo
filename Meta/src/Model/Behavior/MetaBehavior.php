@@ -112,8 +112,8 @@ class MetaBehavior extends Behavior
                 $i++;
             }
 
-            if (isset($options['associated']) && !(isset($options['associated']['meta']) || in_array('meta', $options['associated']))) {
-                $options['associated'][] = 'meta';
+            if (isset($options['associated']) && !(isset($options['associated']['Meta']) || in_array('Meta', $options['associated']))) {
+                $options['associated'][] = 'Meta';
             }
         }
 
