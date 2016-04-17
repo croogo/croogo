@@ -1,6 +1,6 @@
 <div class="node-more-info">
 <?php
-	$type = $types_for_layout[$this->Nodes->field('type')];
+	$type = $typesForLayout[$this->Nodes->field('type')];
 
 	if (is_array($this->Nodes->node['Taxonomy']) && count($this->Nodes->node['Taxonomy']) > 0) {
 		$nodeTerms = Hash::combine($this->Nodes->node, 'Taxonomy.{n}.Term.slug', 'Taxonomy.{n}.Term.title');

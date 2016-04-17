@@ -107,8 +107,8 @@ class TaxonomiesHelper extends Helper
         $options = array_merge($_options, $options);
 
         $output = '';
-        if (isset($this->_View->viewVars['vocabularies_for_layout'][$vocabularyAlias]['threaded'])) {
-            $vocabulary = $this->_View->viewVars['vocabularies_for_layout'][$vocabularyAlias];
+        if (isset($this->_View->viewVars['vocabulariesForLayout'][$vocabularyAlias]['threaded'])) {
+            $vocabulary = $this->_View->viewVars['vocabulariesForLayout'][$vocabularyAlias];
             $output .= $this->_View->element(
                 $options['element'],
                 [

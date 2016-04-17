@@ -1,7 +1,7 @@
 <div class="comment-form">
 	<h3><?php echo __d('croogo', 'Add new comment'); ?></h3>
 	<?php
-		$type = $types_for_layout[$data[$model]['type']];
+		$type = $typesForLayout[$data[$model]['type']];
 
 		if ($this->request->params['controller'] == 'comments') {
 			$backLink = $this->Html->link(__d('croogo', 'Go back to original post') . ': ' . $data[$model]['title'], $data[$model]['url']);

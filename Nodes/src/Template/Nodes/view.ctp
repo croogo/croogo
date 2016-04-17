@@ -15,7 +15,7 @@ $this->Nodes->set($node);
 <?php if (Plugin::loaded('Comments')): ?>
 <div id="comments" class="node-comments">
 <?php
-	$type = $types_for_layout[$this->Nodes->field('type')];
+	$type = $typesForLayout[$this->Nodes->field('type')];
 
 	if ($type['Type']['comment_status'] > 0 && $this->Nodes->field('comment_status') > 0) {
 		echo $this->element('Comments.comments', array('model' => 'Nodes', 'data' => $node));

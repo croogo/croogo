@@ -60,10 +60,10 @@ class NodesEventHandler implements EventListenerInterface
     {
         $View = $event->subject;
 
-        if (empty($View->viewVars['types_for_admin_layout'])) {
+        if (empty($View->viewVars['typesForAdminLayout'])) {
             $types = [];
         } else {
-            $types = $View->viewVars['types_for_admin_layout'];
+            $types = $View->viewVars['typesForAdminLayout'];
         }
         foreach ($types as $t) {
             if (!empty($t['Type']['plugin'])) {

@@ -77,8 +77,8 @@ class TaxonomiesComponent extends Component
     public function beforeRender(Event $event)
     {
         $this->controller = $event->subject();
-        $this->controller->set('types_for_layout', $this->typesForLayout);
-        $this->controller->set('vocabularies_for_layout', $this->vocabulariesForLayout);
+        $this->controller->set('typesForLayout', $this->typesForLayout);
+        $this->controller->set('vocabulariesForLayout', $this->vocabulariesForLayout);
     }
 
 /**
@@ -95,7 +95,7 @@ class TaxonomiesComponent extends Component
             ],
             'order' => 'Types.alias ASC',
         ]);
-        $this->controller->set('types_for_admin_layout', $types);
+        $this->controller->set('typesForAdminLayout', $types);
 
         // vocabularies
         $vocabularies = $this->Taxonomies->Vocabularies->find('all', [
@@ -104,13 +104,13 @@ class TaxonomiesComponent extends Component
             ],
             'order' => 'Vocabularies.alias ASC',
         ]);
-        $this->controller->set('vocabularies_for_admin_layout', $vocabularies);
+        $this->controller->set('vocabulariesForAdminLayout', $vocabularies);
     }
 
 /**
  * Types
  *
- * Types will be available in this variable in views: $types_for_layout
+ * Types will be available in this variable in views: $typesForLayout
  *
  * @return void
  */
@@ -125,7 +125,7 @@ class TaxonomiesComponent extends Component
 /**
  * Vocabularies
  *
- * Vocabularies will be available in this variable in views: $vocabularies_for_layout
+ * Vocabularies will be available in this variable in views: $vocabulariesForLayout
  *
  * @return void
  */

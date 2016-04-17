@@ -40,10 +40,10 @@ class TaxonomiesEventHandler implements EventListenerInterface
     {
         $View = $event->subject;
 
-        if (empty($View->viewVars['vocabularies_for_admin_layout'])) {
+        if (empty($View->viewVars['vocabulariesForAdminLayout'])) {
             $vocabularies = [];
         } else {
-            $vocabularies = $View->viewVars['vocabularies_for_admin_layout'];
+            $vocabularies = $View->viewVars['vocabulariesForAdminLayout'];
         }
         foreach ($vocabularies as $v) {
             $weight = 9999 + $v->weight;

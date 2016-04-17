@@ -44,7 +44,7 @@ class TaxonomiesHelperTest extends CroogoTestCase
     public function testVocabularyShortcode()
     {
         $content = '[vocabulary:categories type="blog"]';
-        $this->View->viewVars['vocabularies_for_layout']['categories'] = [
+        $this->View->viewVars['vocabulariesForLayout']['categories'] = [
             'Vocabulary' => [
                 'id' => 1,
                 'title' => 'Categories',

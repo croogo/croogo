@@ -1,6 +1,6 @@
 <div class="node-info">
 <?php
-	$type = $types_for_layout[$this->Nodes->field('type')];
+	$type = $typesForLayout[$this->Nodes->field('type')];
 
 	if ($type['Type']['format_show_author'] || $type['Type']['format_show_date']) {
 		echo __d('croogo', 'Posted');
