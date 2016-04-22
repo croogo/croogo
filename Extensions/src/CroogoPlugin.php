@@ -130,27 +130,42 @@ class CroogoPlugin
      *
      * @return array
      */
-    public function getPlugins()
+    public function getPlugins($type = 'plugin')
     {
         $plugins = [];
         $this->folder = new Folder;
         $registered = Configure::read('plugins');
         $pluginPaths = Hash::merge(App::path('Plugin'), $registered);
-        foreach ($pluginPaths as $pluginPath) {
+        unset($pluginPaths['Croogo']); //Otherwise we get croogo plugins twice!
+        foreach ($pluginPaths as $pluginName => $pluginPath) {
             $this->folder->path = $pluginPath;
             if (!file_exists($this->folder->path)) {
                 continue;
             }
+            if ((
+                    $type === 'plugin' && $this->_isCroogoPlugin($pluginPath)
+                ) || (
+                    $type === 'theme' && $this->_isCroogoTheme($pluginPath)
+                )
+            )
+            {
+                $plugins[$pluginName] = $pluginPath;
+                continue;
+            }
+
             $pluginFolders = $this->folder->read();
             foreach ($pluginFolders[0] as $pluginFolder) {
                 if (substr($pluginFolder, 0, 1) != '.') {
-                    if (!$this->_isCroogoPlugin($pluginPath, $pluginFolder)) {
+                    if ($type === 'plugin' && !$this->_isCroogoPlugin($pluginPath, $pluginFolder)) {
+                        continue;
+                    }
+                    if ($type === 'theme' && !$this->_isCroogoTheme($pluginPath, $pluginFolder)) {
                         continue;
                     }
 
-                    $pluginName = array_search($pluginPath, $registered);
+                    $pluginName = array_search($pluginPath . $pluginFolder, $registered);
                     if ($pluginName) {
-                        $plugins[$pluginName] = $pluginPath;
+                        $plugins[$pluginName] = $pluginPath . $pluginFolder;
                     } else {
                         $plugins[$pluginFolder] = $pluginPath . $pluginFolder;
                     }
@@ -162,21 +177,45 @@ class CroogoPlugin
     }
 
     /**
+     * Checks wether $pluginDir/$path is a Croogo theme
+     *
+     * @param string $pluginDir plugin directory
+     * @param string $path plugin alias
+     * @return bool true if path is a Croogo plugin
+     */
+    protected function _isCroogoTheme($pluginDir, $path = '')
+    {
+        $dir = $pluginDir . $path . DS;
+        $themeConfigs = [
+            'config' . DS . 'theme.json',
+            'webroot' . DS . 'theme.json',
+        ];
+        foreach ($themeConfigs as $themeManifestFile) {
+            if (!file_exists($dir . $themeManifestFile)) {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Checks wether $pluginDir/$path is a Croogo plugin
      *
      * @param string $pluginDir plugin directory
      * @param string $path plugin alias
      * @return bool true if path is a Croogo plugin
      */
-    protected function _isCroogoPlugin($pluginDir, $path)
+    protected function _isCroogoPlugin($pluginDir, $path = '')
     {
         $dir = $pluginDir . $path . DS;
         $composerFile = $dir . 'composer.json';
         if (file_exists($composerFile)) {
             $pluginData = json_decode(file_get_contents($composerFile), true);
             if (isset($pluginData['require']['Croogo/Core']) ||
-                isset($pluginData['require']['croogo/croogo']) ||
-                (isset($pluginData['type']) && $pluginData['type'] == 'croogo-plugin')
+                isset($pluginData['require']['croogo/croogo'])
             ) {
                 return true;
             }

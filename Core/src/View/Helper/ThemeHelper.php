@@ -2,6 +2,7 @@
 
 namespace Croogo\Core\View\Helper;
 
+use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Cake\View\Helper;
 use Cake\View\View;
@@ -46,7 +47,7 @@ class ThemeHelper extends Helper
             );
         }
 
-        parent::__construct($View);
+        parent::__construct($View, $settings);
     }
 
 /**
@@ -73,7 +74,7 @@ class ThemeHelper extends Helper
     {
         $theme = $this->_View->theme ? $this->_View->theme : 'default';
         if (empty($this->_themeSettings)) {
-            $this->log(sprintf('Invalid settings for theme "%s"', $theme));
+            Log::debug(sprintf('Invalid settings for theme "%s"', $theme));
             return [];
         }
         if ($key === null) {

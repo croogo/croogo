@@ -4,6 +4,7 @@ namespace Croogo\Extensions;
 
 use Cake\Cache\Cache;
 use Cake\Core\App;
+use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
 use Cake\Filesystem\Folder;
@@ -40,41 +41,7 @@ class CroogoTheme
      */
     public function getThemes()
     {
-        $themeConfigs = [
-            'config' . DS . 'theme.json',
-            'webroot' . DS . 'theme.json',
-        ];
-
-        $themes = [];
-        foreach (Plugin::loaded() as $plugin) {
-            $path = Plugin::path($plugin);
-
-            foreach ($themeConfigs as $themeManifestFile) {
-                if (!file_exists($path . $themeManifestFile)) {
-                    continue;
-                }
-
-                $manifestFile = $path . $themeManifestFile;
-            }
-
-            if (file_exists($path . 'composer.json')) {
-                $composerConfig = json_decode(file_get_contents($path . 'composer.json'));
-                if ($composerConfig->type === 'croogo-theme') {
-                    $composerJson = $path . 'composer.json';
-                }
-            }
-
-            if (!isset($manifestFile) && !isset($composerJson)) {
-                continue;
-            }
-
-            $themes[] = $plugin;
-
-            unset($manifestFile);
-            unset($composerJson);
-        }
-
-        return $themes;
+        return CroogoPlugin::instance()->getPlugins('theme');
     }
 
     /**
@@ -83,7 +50,7 @@ class CroogoTheme
      * @param string $theme theme plugin name
      * @return array
      */
-    public function getData($theme = null)
+    public function getData($theme = null, $path = null)
     {
         $themeData = [
             'name' => $theme,
@@ -173,14 +140,16 @@ class CroogoTheme
         ];
 
         $themeConfigs = [
-            'config' . DS . 'theme.json',
-            'webroot' . DS . 'theme.json',
+            DS . 'config' . DS . 'theme.json',
+            DS . 'webroot' . DS . 'theme.json',
         ];
 
-        try {
-            $path = Plugin::path($theme);
-        } catch (MissingPluginException $exception) {
-            throw new MissingThemeException([$theme], $exception->getCode(), $exception);
+        if (empty($path)) {
+            try {
+                $path = Plugin::path($theme);
+            } catch (MissingPluginException $exception) {
+                throw new MissingThemeException([$theme], $exception->getCode(), $exception);
+            }
         }
 
         foreach ($themeConfigs as $themeManifestFile) {

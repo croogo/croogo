@@ -2,8 +2,8 @@
 
 namespace Croogo\Extensions\Controller\Admin;
 
-use Croogo\Extensions\CroogoTheme;
 use Cake\Core\Configure;
+use Croogo\Extensions\CroogoTheme;
 use Croogo\Extensions\Exception\MissingThemeException;
 use Croogo\Extensions\ExtensionsInstaller;
 
@@ -20,63 +20,45 @@ use Croogo\Extensions\ExtensionsInstaller;
 class ExtensionsThemesController extends AppController
 {
 
-/**
- * Controller name
- *
- * @var string
- * @access public
- */
-    public $name = 'ExtensionsThemes';
-
-/**
- * Models used by the Controller
- *
- * @var array
- * @access public
- */
-    public $uses = [
-        'Settings.Setting',
-        'Users.User',
-    ];
-
-/**
- * CroogoTheme instance
- */
+    /**
+     * CroogoTheme instance
+     * @var \Croogo\Extensions\CroogoTheme
+     */
     protected $_CroogoTheme = false;
 
-/**
- * Constructor
- */
-    public function __construct($request = null, $response = null)
+    /**
+     * Constructor
+     */
+    public function initialize(array $config = [])
     {
+        parent::initialize($config);
         $this->_CroogoTheme = new CroogoTheme();
-        parent::__construct($request, $response);
     }
 
-/**
- * Admin index
- *
- * @return void
- */
+    /**
+     * Admin index
+     *
+     * @return void
+     */
     public function index()
     {
         $this->set('title_for_layout', __d('croogo', 'Themes'));
 
         $themes = $this->_CroogoTheme->getThemes();
         $themesData = [];
-        foreach ($themes as $theme) {
-            $themesData[$theme] = $this->_CroogoTheme->getData($theme);
+        foreach ($themes as $theme => $path) {
+            $themesData[$theme] = $this->_CroogoTheme->getData($theme, $path);
         }
-
+        
         $currentTheme = $this->_CroogoTheme->getData(Configure::read('Site.theme'));
         $this->set(compact('themes', 'themesData', 'currentTheme'));
     }
 
-/**
- * Admin activate
- *
- * @param string $theme
- */
+    /**
+     * Admin activate
+     *
+     * @param string $theme
+     */
     public function activate($theme = null)
     {
         try {
@@ -90,11 +72,11 @@ class ExtensionsThemesController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-/**
- * Admin add
- *
- * @return void
- */
+    /**
+     * Admin add
+     *
+     * @return void
+     */
     public function add()
     {
         $this->set('title_for_layout', __d('croogo', 'Upload a new theme'));
@@ -110,47 +92,51 @@ class ExtensionsThemesController extends AppController
             } catch (CakeException $e) {
                 $this->Flash->error($e->getMessage());
             }
+
             return $this->redirect(['action' => 'index']);
         }
     }
 
-/**
- * Admin editor
- *
- * @return void
- */
+    /**
+     * Admin editor
+     *
+     * @return void
+     */
     public function editor()
     {
         $this->set('title_for_layout', __d('croogo', 'Theme Editor'));
     }
 
-/**
- * Admin save
- *
- * @return void
- */
+    /**
+     * Admin save
+     *
+     * @return void
+     */
     public function save()
     {
     }
 
-/**
- * Admin delete
- *
- * @param string $alias
- * @return void
- */
+    /**
+     * Admin delete
+     *
+     * @param string $alias
+     * @return void
+     */
     public function delete($alias = null)
     {
         if ($alias == null) {
             $this->Flash->error(__d('croogo', 'Invalid Theme.'));
+
             return $this->redirect(['action' => 'index']);
         }
 
         if ($alias == 'default') {
             $this->Flash->error(__d('croogo', 'Default theme cannot be deleted.'));
+
             return $this->redirect(['action' => 'index']);
         } elseif ($alias == Configure::read('Site.theme')) {
             $this->Flash->error(__d('croogo', 'You cannot delete a theme that is currently active.'));
+
             return $this->redirect(['action' => 'index']);
         }
 
