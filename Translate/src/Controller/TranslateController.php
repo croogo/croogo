@@ -2,8 +2,6 @@
 
 namespace Croogo\Translate\Controller;
 
-use Translate\Controller\TranslateAppController;
-
 /**
  * Translate Controller
  *

@@ -260,8 +260,10 @@ class Croogo
     {
         if (is_string($object)) {
             $objectName = $object;
-        } else {
+        } elseif (is_object($object)) {
             $objectName = get_class($object);
+        } else {
+            return;
         }
 
         $options = Configure::read($configKey . '.' . $objectName);

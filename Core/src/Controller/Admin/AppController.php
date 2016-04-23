@@ -22,16 +22,6 @@ class AppController extends CroogoAppController
 {
 
 /**
- * Helpers
- *
- * @var array
- * @access public
- */
-    public $helpers = [
-        'Croogo/Core.Croogo',
-    ];
-
-/**
  * Load the theme component with the admin theme specified
  *
  * @return void

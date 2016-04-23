@@ -75,7 +75,6 @@ class AppController extends \App\Controller\AppController implements HookableCom
             ]);
         }
         $this->eventManager()->dispatch(new Event('Controller.afterConstruct', $this));
-        $this->afterConstruct();
     }
 
     public function initialize()
@@ -83,32 +82,6 @@ class AppController extends \App\Controller\AppController implements HookableCom
         $this->dispatchBeforeInitialize();
 
         parent::initialize();
-    }
-
-
-    /**
-     * implementedEvents
-     */
-    public function implementedEvents()
-    {
-        return parent::implementedEvents() + [
-            'Controller.afterConstruct' => 'afterConstruct',
-        ];
-    }
-
-    /**
-     * afterConstruct
-     *
-     * called when Controller::__construct() is complete.
-     * Override this method to perform class configuration/initialization that
-     * needs to be performed earlier from Controller::beforeFilter().
-     *
-     * You still need to call parent::afterConstruct() method to ensure correct
-     * behavior.
-     */
-    public function afterConstruct()
-    {
-        $this->viewBuilder()->helpers(Croogo::options('Hook.view_builder_options', $this->request->param('controller'), 'helpers'));
     }
 
     /**

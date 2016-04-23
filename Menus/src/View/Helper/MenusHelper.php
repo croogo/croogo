@@ -6,8 +6,8 @@ use Cake\Event\Event;
 use Cake\Routing\Router;
 use Cake\View\Helper;
 use Cake\View\View;
-use Croogo\Core\Utility\StringConverter;
 use Croogo\Core\Nav;
+use Croogo\Core\Utility\StringConverter;
 
 /**
  * Menus Helper
@@ -21,17 +21,16 @@ use Croogo\Core\Nav;
  */
 class MenusHelper extends Helper
 {
-
     public $helpers = [
-        'Html',
+        'Html'
     ];
-
+    
 /**
  * constructor
  */
     public function __construct(View $view, $settings = [])
     {
-        parent::__construct($view);
+        parent::__construct($view, $settings);
         $this->_setupEvents();
         $this->_converter = new StringConverter();
     }
@@ -48,7 +47,7 @@ class MenusHelper extends Helper
         ];
         $eventManager = $this->_View->eventManager();
         foreach ($events as $name => $config) {
-            $eventManager->attach([$this, 'filter'], $name, $config);
+            $eventManager->on($name, $config, [$this, 'filter']);
         }
     }
 
@@ -141,7 +140,8 @@ class MenusHelper extends Helper
             'tag' => 'ul',
             'tagAttributes' => [],
             'subTag' => 'li',
-			'subTagAttributes' => array(),
+            'subTagAttributes' => [],
+            'linkAttributes' => [],
             'selected' => 'selected',
             'dropdown' => false,
             'dropdownClass' => 'sf-menu',
@@ -197,12 +197,14 @@ class MenusHelper extends Helper
  */
     public function nestedLinks($links, $options = [], $depth = 1)
     {
-        $_options = [];
+        $_options = [
+            'linkAttributes' => []
+        ];
         $options = array_merge($_options, $options);
 
         $output = '';
         foreach ($links as $link) {
-            $linkAttr = [
+            $linkAttr = $options['linkAttributes'] + [
                 'id' => 'link-' . $link->id,
                 'rel' => $link->rel,
                 'target' => $link->target,
@@ -212,9 +214,13 @@ class MenusHelper extends Helper
 
             $linkAttr = $this->_mergeLinkParams($link, 'linkAttr', $linkAttr);
 
+            if (!empty($link->class) && strpos($linkAttr['class'], $link->class)) {
+                $linkAttr['class'] = $this->addClass($linkAttr['class'], $link->class);
+            }
+
             // Remove locale part before comparing links
-            if (!empty($this->_View->request->params['locale'])) {
-                $currentUrl = substr($this->_View->request->url, strlen($this->_View->request->params['locale'] . '/'));
+            if ($this->_View->request->param('locale')) {
+                $currentUrl = substr($this->_View->request->url, strlen($this->_View->request->param('locale') . '/'));
             } else {
                 $currentUrl = $this->_View->request->url;
             }
