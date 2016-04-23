@@ -207,7 +207,8 @@ class CroogoTheme
      */
     public function activate($theme)
     {
-        if (!$this->getData($theme)) {
+        $themes = $this->getThemes();
+        if (!$this->getData($theme, isset($themes[$theme]) ? $themes[$theme] : null)) {
             return false;
         }
 

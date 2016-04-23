@@ -92,7 +92,7 @@ if (Configure::check('Site.asset_timestamp')) {
 Plugin::load('Acl', ['bootstrap' => true]);
 Plugin::load('BootstrapUI');
 
-$croogoPath = Plugin::path('Croogo/Core');
+Plugin::path('Croogo/Core');
 
 /**
  * Extensions
@@ -149,5 +149,15 @@ foreach ($plugins as $plugin) {
     ];
     CroogoPlugin::load($option);
 }
+$theme = Configure::read('Site.theme');
+if (!Plugin::loaded($theme)) {
+    CroogoPlugin::load($theme, [
+        'autoload' => true,
+        'bootstrap' => true,
+        'routes' => true,
+        'ignoreMissing' => true
+    ]);
+}
+
 CroogoEventManager::loadListeners();
 Croogo::dispatchEvent('Croogo.bootstrapComplete');

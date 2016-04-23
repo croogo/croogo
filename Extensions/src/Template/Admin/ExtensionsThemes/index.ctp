@@ -99,7 +99,7 @@ $this->end(); ?>
                             'action' => 'activate',
                             urlencode($themeAlias),
                         ], [
-                            'button' => 'default',
+                            'button' => 'secondary',
                             'icon' => $this->Theme->getIcon('power-on'),
                         ]) . $this->Form->postLink(__d('croogo', 'Delete'), [
                             'action' => 'delete',
