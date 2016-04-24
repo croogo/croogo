@@ -68,13 +68,13 @@ class BlocksComponentTest extends CroogoControllerTestCase
         ]);
 
         $result = Hash::extract(
-            $vars['blocks_for_layout'],
+            $vars['blocksForLayout'],
             'right.{n}.Block[title=Block Visible by Admin or Registered]'
         );
         $this->assertEmpty($result);
 
         $result = Hash::extract(
-            $vars['blocks_for_layout'],
+            $vars['blocksForLayout'],
             'right.{n}.Block[title=Block Visible by Public]'
         );
         $this->assertNotEmpty($result);
@@ -92,13 +92,13 @@ class BlocksComponentTest extends CroogoControllerTestCase
         ]);
 
         $result = Hash::extract(
-            $vars['blocks_for_layout'],
+            $vars['blocksForLayout'],
             'right.{n}.Block[title=Block Visible by Public]'
         );
         $this->assertEmpty($result);
 
         $result = Hash::extract(
-            $vars['blocks_for_layout'],
+            $vars['blocksForLayout'],
             'right.{n}.Block[title=Block Visible by Admin or Registered]'
         );
         $this->assertNotEmpty($result);
@@ -117,13 +117,13 @@ class BlocksComponentTest extends CroogoControllerTestCase
         ]);
 
         $result = Hash::extract(
-            $vars['blocks_for_layout'],
+            $vars['blocksForLayout'],
             'right.{n}.Block[title=Block Visible by Public]'
         );
         $this->assertEmpty($result);
 
         $result = Hash::extract(
-            $vars['blocks_for_layout'],
+            $vars['blocksForLayout'],
             'right.{n}.Block[title=Block Visible by Admin or Registered]'
         );
         $this->assertNotEmpty($result);

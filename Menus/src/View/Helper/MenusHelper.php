@@ -22,9 +22,9 @@ use Croogo\Core\Utility\StringConverter;
 class MenusHelper extends Helper
 {
     public $helpers = [
-        'Html'
+        'Html',
     ];
-    
+
 /**
  * constructor
  */
@@ -149,10 +149,10 @@ class MenusHelper extends Helper
         ];
         $options = array_merge($_options, $options);
 
-        if (!isset($this->_View->viewVars['menus_for_layout'][$menuAlias])) {
+        if (!isset($this->_View->viewVars['menusForLayout'][$menuAlias])) {
             return false;
         }
-        $menu = $this->_View->viewVars['menus_for_layout'][$menuAlias];
+        $menu = $this->_View->viewVars['menusForLayout'][$menuAlias];
         $output = $this->_View->element($options['element'], [
             'menu' => $menu,
             'options' => $options,

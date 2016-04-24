@@ -22,7 +22,7 @@ $this->append('form-start', $this->Form->create(null, [
 ]));
 
 $this->start('table-heading');
-$tableHeaders = $this->Html->tableHeaders([
+echo $this->Html->tableHeaders([
     $this->Form->checkbox('checkAll', ['id' => 'NodesCheckAll']),
     $this->Paginator->sort('title', __d('croogo', 'Title')),
     $this->Paginator->sort('type', __d('croogo', 'Type')),
@@ -30,7 +30,6 @@ $tableHeaders = $this->Html->tableHeaders([
     $this->Paginator->sort('status', __d('croogo', 'Status')),
     '',
 ]);
-echo $this->Html->tag('thead', $tableHeaders);
 $this->end();
 
 $this->append('table-body');

@@ -77,13 +77,13 @@ class MenuComponent extends Component
      */
     public function beforeRender(Event $event)
     {
-        $event->subject()->set('menus_for_layout', $this->menusForLayout);
+        $event->subject()->set('menusForLayout', $this->menusForLayout);
     }
 
 /**
  * Menus
  *
- * Menus will be available in this variable in views: $menus_for_layout
+ * Menus will be available in this variable in views: $menusForLayout
  *
  * @return void
  */

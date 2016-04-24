@@ -2,6 +2,7 @@
 
 namespace Croogo\Blocks\Model\Table;
 
+use Cake\Cache\Cache;
 use Cake\Database\Schema\Table as Schema;
 use Cake\ORM\Query;
 use Croogo\Core\Model\Table\CroogoTable;
@@ -20,12 +21,12 @@ use Croogo\Core\Status;
 class BlocksTable extends CroogoTable
 {
 
-/**
- * Validation
- *
- * @var array
- * @access public
- */
+    /**
+     * Validation
+     *
+     * @var array
+     * @access public
+     */
     public $validate = [
         'title' => [
             'rule' => ['minLength', 1],
@@ -43,20 +44,20 @@ class BlocksTable extends CroogoTable
         ],
     ];
 
-/**
- * Filter search fields
- *
- * @var array
- * @access public
- */
+    /**
+     * Filter search fields
+     *
+     * @var array
+     * @access public
+     */
     public $filterArgs = [
         'title' => ['type' => 'like', 'field' => ['title', 'alias']],
         'region_id' => ['type' => 'value'],
     ];
 
-/**
- * Find methods
- */
+    /**
+     * Find methods
+     */
     public $findMethods = [
         'published' => true,
     ];
@@ -73,22 +74,23 @@ class BlocksTable extends CroogoTable
             'counterScope' => ['Blocks.status >=' => Status::PUBLISHED],
         ]);
 
+        $this->addBehavior('CounterCache', [
+            'Regions' => ['block_count']
+        ]);
         $this->addBehavior('Croogo/Core.Publishable');
-        /* TODO: Enable after behaviors have been updated to 3.x
-		$this->addBehavior('Croogo/Core.Cached', [
-			'groups' => [
-				'blocks',
-			]
-		]);
-		*/
+//        $this->addBehavior('Croogo/Core.Cached', [
+//            'groups' => [
+//                'blocks',
+//            ],
+//        ]);
 
         $this->addBehavior('Timestamp', [
             'events' => [
                 'Model.beforeSave' => [
                     'created' => 'new',
-                    'updated' => 'always'
-                ]
-            ]
+                    'updated' => 'always',
+                ],
+            ],
         ]);
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Search.Searchable');
@@ -103,15 +105,20 @@ class BlocksTable extends CroogoTable
         return parent::_initializeSchema($table);
     }
 
-/**
- * Find Published blocks
- *
- * Query options:
- * - status Status
- * - regionId Region Id
- * - roleId Role Id
- * - cacheKey Cache key (optional)
- */
+    public function afterSave()
+    {
+        Cache::clear(false, 'croogo_blocks');
+    }
+
+    /**
+     * Find Published blocks
+     *
+     * Query options:
+     * - status Status
+     * - regionId Region Id
+     * - roleId Role Id
+     * - cacheKey Cache key (optional)
+     */
     public function findPublished(Query $query, array $options = [])
     {
         $status = isset($options['status']) ? $options['status'] : $this->status();
@@ -131,11 +138,9 @@ class BlocksTable extends CroogoTable
                     ],
                 ],
             ],
-        ])->order([
-            'weight' => 'ASC'
-        ])->applyOptions([
-            'prefix' => 'blocks_' . $cacheKey,
-            'config' => 'croogo_blocks',
-        ]);
+        ])
+            ->order([
+                'weight' => 'ASC',
+            ]);
     }
 }

@@ -68,7 +68,7 @@ class RegionsHelperTest extends CroogoTestCase
     public function testIsEmpty()
     {
         $this->assertTrue($this->Regions->isEmpty('right'));
-        $this->Regions->_View->viewVars['blocks_for_layout'] = [
+        $this->Regions->_View->viewVars['blocksForLayout'] = [
             'right' => [
                 '0' => ['block here'],
                 '1' => ['block here'],
@@ -97,7 +97,7 @@ class RegionsHelperTest extends CroogoTestCase
                 ],
             ],
         ];
-        $this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
+        $this->Regions->_View->viewVars['blocksForLayout'] = $blocksForLayout;
         $this->Regions
             ->expects($this->never())
             ->method('log');
@@ -132,7 +132,7 @@ class RegionsHelperTest extends CroogoTestCase
                 ],
             ],
         ];
-        $this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
+        $this->Regions->_View->viewVars['blocksForLayout'] = $blocksForLayout;
         $this->View
             ->expects($this->once())
             ->method('elementExists')
@@ -171,7 +171,7 @@ class RegionsHelperTest extends CroogoTestCase
                 ],
             ],
         ];
-        $this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
+        $this->Regions->_View->viewVars['blocksForLayout'] = $blocksForLayout;
         $this->Regions
             ->expects($this->once())
             ->method('log')
@@ -202,7 +202,7 @@ class RegionsHelperTest extends CroogoTestCase
                 ],
             ],
         ];
-        $this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
+        $this->Regions->_View->viewVars['blocksForLayout'] = $blocksForLayout;
         $this->Regions
             ->expects($this->never())
             ->method('log');
@@ -238,7 +238,7 @@ class RegionsHelperTest extends CroogoTestCase
                 ],
             ],
         ];
-        $this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
+        $this->Regions->_View->viewVars['blocksForLayout'] = $blocksForLayout;
         $this->View->expects($this->once())
             ->method('elementExists')
             ->will($this->returnValue(false));
@@ -275,7 +275,7 @@ class RegionsHelperTest extends CroogoTestCase
                 ],
             ],
         ];
-        $this->Regions->_View->viewVars['blocks_for_layout'] = $blocksForLayout;
+        $this->Regions->_View->viewVars['blocksForLayout'] = $blocksForLayout;
         $this->Regions
             ->expects($this->once())
             ->method('log')

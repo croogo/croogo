@@ -11,6 +11,7 @@ use Cake\ORM\TableRegistry;
 
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
+use Cake\Utility\Text;
 use Croogo\Blocks\Model\Entity\Block;
 use Croogo\Core\Utility\StringConverter;
 use Croogo\Core\Utility\VisibilityFilter;
@@ -72,7 +73,7 @@ class BlocksComponent extends Component
  */
     public function startup(Event $event)
     {
-        if (!isset($event->subject()->request->params['admin']) && !isset($event->subject()->request->params['requested'])) {
+        if ($this->request->param('prefix') !== 'admin' && !$this->request->param('requested')) {
             $this->blocks();
         }
     }
@@ -85,26 +86,28 @@ class BlocksComponent extends Component
  */
     public function beforeRender(Event $event)
     {
-        $event->subject()->set('blocks_for_layout', $this->blocksForLayout);
+        $event->subject()->set('blocksForLayout', $this->blocksForLayout);
     }
 
 /**
  * Blocks
  *
- * Blocks will be available in this variable in views: $blocks_for_layout
+ * Blocks will be available in this variable in views: $blocksForLayout
  *
  * @return void
  */
     public function blocks()
     {
         $this->blocksForLayout = [];
-        $regions = collection($this->Blocks->Regions->find('active'))->combine('id', 'alias');
+        $regions = $this->Blocks->Regions->find('active')->find('list', [
+            'valueField' => 'alias'
+        ]);
 
         $alias = $this->Blocks->alias();
         $roleId = $this->controller->Croogo->roleId();
         $status = $this->Blocks->status();
         $request = $this->controller->request;
-        $slug = Inflector::slug(strtolower($request->url));
+        $slug = Text::slug(strtolower($request->url));
         $Filter = new VisibilityFilter($request);
         foreach ($regions as $regionId => $regionAlias) {
             $cacheKey = $regionAlias . '_' . $roleId;

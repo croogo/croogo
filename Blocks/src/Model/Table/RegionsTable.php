@@ -18,12 +18,12 @@ use Croogo\Core\Model\Table\CroogoTable;
 class RegionsTable extends CroogoTable
 {
 
-/**
- * Validation
- *
- * @var array
- * @access public
- */
+    /**
+     * Validation
+     *
+     * @var array
+     * @access public
+     */
     public $validate = [
         'title' => [
             'rule' => ['minLength', 1],
@@ -41,30 +41,30 @@ class RegionsTable extends CroogoTable
         ],
     ];
 
-/**
- * Filter search fields
- *
- * @var array
- * @access public
- */
+    /**
+     * Filter search fields
+     *
+     * @var array
+     * @access public
+     */
     public $filterArgs = [
-        'title' => ['type' => 'like', 'field' => ['Region.title']]
+        'title' => ['type' => 'like', 'field' => ['Region.title']],
     ];
 
-/**
- * Display fields for this model
- *
- * @var array
- */
+    /**
+     * Display fields for this model
+     *
+     * @var array
+     */
     protected $_displayFields = [
         'id',
         'title',
         'alias',
     ];
 
-/**
- * Find methods
- */
+    /**
+     * Find methods
+     */
     public $findMethods = [
         'active' => true,
     ];
@@ -85,40 +85,30 @@ class RegionsTable extends CroogoTable
         ]);
 
         $this->addBehavior('Search.Searchable');
-        /* TODO: Enable after behaviors have been updated to 3.x
-		$this->addBehavior('Croogo.Cached', [
-			'groups' => [
-				'blocks',
-			],
-		]);
-		*/
+//        $this->addBehavior('Croogo.Cached', [
+//            'groups' => [
+//                'blocks',
+//            ],
+//        ]);
 
         $this->addBehavior('Timestamp', [
             'events' => [
                 'Model.beforeSave' => [
                     'created' => 'new',
-                    'updated' => 'always'
-                ]
-            ]
+                    'updated' => 'always',
+                ],
+            ],
         ]);
         $this->addBehavior('Croogo/Core.Trackable');
     }
 
-/**
- * Find Regions currently in use
- */
+    /**
+     * Find Regions currently in use
+     */
     public function findActive(Query $query)
     {
         return $query->where([
-            'block_count >' => 0
-        ])->select([
-            'id',
-            'alias'
-        ])->applyOptions([
-            'cache' => [
-                'name' => 'regions',
-                'config' => 'croogo_blocks',
-            ],
+            'block_count >' => 0,
         ]);
     }
 }

@@ -59,7 +59,7 @@ class MenusHelperTest extends CroogoTestCase
     public function testMenuShortcode()
     {
         $content = '[menu:blogroll]';
-        $this->View->viewVars['menus_for_layout']['blogroll'] = [
+        $this->View->viewVars['menusForLayout']['blogroll'] = [
             'Menu' => [
                 'id' => 6,
                 'title' => 'Blogroll',

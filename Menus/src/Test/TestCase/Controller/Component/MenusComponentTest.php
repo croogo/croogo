@@ -67,7 +67,7 @@ class MenusComponentTest extends CroogoControllerTestCase
             'return' => 'vars',
         ]);
         $result = Hash::extract(
-            $vars['menus_for_layout'],
+            $vars['menusForLayout'],
             'footer.threaded.{n}.Link[title=Public Link Only]'
         );
         $this->assertNotEmpty($result);
@@ -83,7 +83,7 @@ class MenusComponentTest extends CroogoControllerTestCase
             'return' => 'vars',
         ]);
         $result = Hash::extract(
-            $vars['menus_for_layout'],
+            $vars['menusForLayout'],
             'footer.threaded.{n}.Link[title=Public Link Only]'
         );
         $this->assertEmpty($result);
