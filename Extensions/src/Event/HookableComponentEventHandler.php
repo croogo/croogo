@@ -77,14 +77,7 @@ class HookableComponentEventHandler implements EventListenerInterface
 
     private function _getComponents(Controller $controller)
     {
-        $controllerName = Inflector::camelize($controller->request->param('controller'));
-        $properties = Croogo::options('Hook.controller_properties', $controllerName);
-
-        if ($controller->request->param('prefix')) {
-            $controllerName = Inflector::camelize($controller->request->param('prefix')) . '/' . $controllerName;
-            $prefixProperties = Croogo::options('Hook.controller_properties', $controllerName);
-            $properties = Hash::merge($properties, $prefixProperties);
-        }
+        $properties = Croogo::options('Hook.controller_properties', $controller->request);
 
         $components = [];
         foreach ($properties['_appComponents'] as $component => $config) {

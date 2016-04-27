@@ -500,7 +500,7 @@ class CroogoHelper extends Helper
         $output = '';
         $box = $this->request->param('controller') . '/' . $this->request->param('action');
         if ($this->request->param('prefix')) {
-            $box = $this->request->param('prefix') . '/' . $box;
+            $box = Inflector::camelize($this->request->param('prefix')) . '/' . $box;
         }
         $allBoxes = Configure::read('Admin.boxes.' . $box);
         $allBoxes = empty($allBoxes) ? [] : $allBoxes;

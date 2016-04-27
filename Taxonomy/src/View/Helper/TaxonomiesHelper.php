@@ -46,7 +46,7 @@ class TaxonomiesHelper extends Helper
      */
     protected function _adminTabs()
     {
-        $controller = Inflector::camelize($this->request->params['controller']);
+        $controller = $this->request->params['controller'];
         if (empty($this->_View->viewVars['taxonomies']) || $controller == 'Terms') {
             return;
         }

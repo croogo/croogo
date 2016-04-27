@@ -6,8 +6,8 @@ use Cake\Cache\Cache;
 use Cake\Core\Plugin;
 use Cake\Event\EventListenerInterface;
 use Cake\ORM\TableRegistry;
-use Croogo\Core\Croogo;
 use Croogo\Comments\Model\Comment;
+use Croogo\Core\Croogo;
 use Croogo\Core\Nav;
 
 /**
@@ -21,9 +21,9 @@ use Croogo\Core\Nav;
 class NodesEventHandler implements EventListenerInterface
 {
 
-/**
- * implementedEvents
- */
+    /**
+     * implementedEvents
+     */
     public function implementedEvents()
     {
         return [
@@ -54,9 +54,9 @@ class NodesEventHandler implements EventListenerInterface
         ];
     }
 
-/**
- * Setup admin data
- */
+    /**
+     * Setup admin data
+     */
     public function onSetupAdminData($event)
     {
         $View = $event->subject;
@@ -83,21 +83,21 @@ class NodesEventHandler implements EventListenerInterface
         };
     }
 
-/**
- * onBootstrapComplete
- */
+    /**
+     * onBootstrapComplete
+     */
     public function onBootstrapComplete($event)
     {
         if (Plugin::loaded('Comments')) {
-                        Croogo::hookBehavior('Node', 'Comments.Commentable');
-            Croogo::hookComponent('Nodes', 'Comments.Comments');
-            Croogo::hookModelProperty('Comment', 'belongsTo', [
-                'Node' => [
-                    'className' => 'Nodes.Node',
+            Croogo::hookBehavior('Croogo/Nodes.Nodes', 'Comments.Commentable');
+            Croogo::hookComponent('Croogo/Nodes.Nodes', 'Comments.Comments');
+            Croogo::hookModelProperty('Croogo/Comments.Comments', 'belongsTo', [
+                'Nodes' => [
+                    'className' => 'Croogo/Nodes.Nodes',
                     'foreignKey' => 'foreign_key',
                     'counterCache' => true,
                     'counterScope' => [
-                        'Comment.model' => 'Node',
+                        'Comment.model' => 'Croogo/Nodes.Nodes',
                         'Comment.status' => Comment::STATUS_APPROVED,
                     ],
                 ],
@@ -111,11 +111,11 @@ class NodesEventHandler implements EventListenerInterface
         }
     }
 
-/**
- * Setup Link chooser values
- *
- * @return void
- */
+    /**
+     * Setup Link chooser values
+     *
+     * @return void
+     */
     public function onSetupLinkChooser($event)
     {
         $typesTable = TableRegistry::get('Croogo/Taxonomy.Types');
@@ -137,20 +137,20 @@ class NodesEventHandler implements EventListenerInterface
                         'KeepThis' => true,
                         'TB_iframe' => true,
                         'height' => 400,
-                        'width' => 600
-                    ]
-                ]
+                        'width' => 600,
+                    ],
+                ],
             ];
         }
         Croogo::mergeConfig('Croogo.linkChoosers', $linkChoosers);
     }
 
-/**
- * Clear Nodes related cache after bulk operation
- *
- * @param CakeEvent $event
- * @return void
- */
+    /**
+     * Clear Nodes related cache after bulk operation
+     *
+     * @param CakeEvent $event
+     * @return void
+     */
     public function onAfterBulkProcess($event)
     {
         Cache::clearGroup('nodes', 'nodes');

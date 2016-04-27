@@ -6,6 +6,7 @@ use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
+use Cake\Network\Request;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
@@ -71,6 +72,7 @@ class Croogo
             $settings = Hash::merge($defaults, $componentName[$cName]);
             $component = [$cName => $settings];
         }
+
         self::hookControllerProperty($controllerName, '_apiComponents', $component);
     }
 
@@ -177,6 +179,15 @@ class Croogo
         Configure::write($key, $tabs);
     }
 
+    protected static function _getClassName($name, $type, $suffix)
+    {
+        if ($name !== '*') {
+            return App::classname($name, $type, $suffix);
+        }
+
+        return '*';
+    }
+
     /**
      * Hook table property
      *
@@ -190,13 +201,11 @@ class Croogo
     {
         $configKeyPrefix = 'Hook.table_properties';
 
-        if ($tableName != '*') {
-            $tableClass = App::classname($tableName, 'Model/Table', 'Table');
-        } else {
-            $tableClass = '*';
-        }
+        $tableClass = self::_getClassName($tableName, 'Model/Table', 'Table');
 
-        self::_hookProperty($configKeyPrefix, $tableClass, $property, $value);
+        if ($tableClass) {
+            self::_hookProperty($configKeyPrefix, $tableClass, $property, $value);
+        }
     }
 
     /**
@@ -209,8 +218,11 @@ class Croogo
     public static function hookControllerProperty($controllerName, $property, $value)
     {
         $configKeyPrefix = 'Hook.controller_properties';
+        $controllerClass = self::_getClassName($controllerName, 'Controller', 'Controller');
 
-        self::_hookProperty($configKeyPrefix, $controllerName, $property, $value);
+        if ($controllerClass) {
+            self::_hookProperty($configKeyPrefix, $controllerClass, $property, $value);
+        }
     }
 
     /**
@@ -223,8 +235,11 @@ class Croogo
     public static function hookViewBuilderOption($controllerName, $option, $value)
     {
         $configKeyPrefix = 'Hook.view_builder_options';
+        $controllerClass = self::_getClassName($controllerName, 'Controller', 'Controller');
 
-        self::_hookProperty($configKeyPrefix, $controllerName, $option, $value);
+        if ($controllerClass) {
+            self::_hookProperty($configKeyPrefix, $controllerClass, $option, $value);
+        }
     }
 
     /**
@@ -260,6 +275,21 @@ class Croogo
     {
         if (is_string($object)) {
             $objectName = $object;
+        } elseif ($object instanceof Request) {
+            $pluginPath = $controller = null;
+            $namespace = 'Controller';
+            if (!empty($object->params['plugin'])) {
+                $pluginPath = $object->params['plugin'] . '.';
+            }
+            if (!empty($object->params['controller'])) {
+                $controller = $object->params['controller'];
+            }
+            if (!empty($object->params['prefix'])) {
+                $prefixes = array_map('Cake\Utility\Inflector::camelize',
+                    explode('/', $object->params['prefix']));
+                $namespace .= '/' . implode('/', $prefixes);
+            }
+            $objectName = App::className($pluginPath . $controller, $namespace, 'Controller');
         } elseif (is_object($object)) {
             $objectName = get_class($object);
         } else {
@@ -284,7 +314,7 @@ class Croogo
      *
      * @param string $configKey
      */
-    public static function applyHookProperties($configKey, &$object = null)
+    public static function applyHookProperties($configKey, $object = null)
     {
         if (empty($object)) {
             $object = self;

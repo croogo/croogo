@@ -15,7 +15,7 @@ CroogoCache::config('nodes_promoted', $cacheConfig);
 CroogoCache::config('nodes_term', $cacheConfig);
 CroogoCache::config('nodes_index', $cacheConfig);
 
-Croogo::hookApiComponent('Nodes', 'Nodes.NodeApi');
+Croogo::hookApiComponent('Croogo/Nodes.Nodes', 'Nodes.NodeApi');
 Croogo::hookComponent('*', [
     'NodesHook' => [
         'className' => 'Croogo/Nodes.Nodes'
@@ -26,17 +26,17 @@ Croogo::hookHelper('*', 'Croogo/Nodes.Nodes');
 
 // Configure Wysiwyg
 Croogo::mergeConfig('Wysiwyg.actions', [
-    'Croogo\\Nodes\\Controller\\Admin\\NodesController.add' => [
+    'Croogo/Nodes.Admin/Nodes.add' => [
         [
             'elements' => 'NodeBody',
         ],
     ],
-    'Croogo\\Nodes\\Controller\\Admin\\NodesController.edit' => [
+    'Croogo/Nodes.Admin/Nodes.edit' => [
         [
             'elements' => 'NodeBody',
         ],
     ],
-    'Croogo\\Translate\\Controller\\Admin\\TranslateController.edit' => [
+    'Croogo/Translate.Admin/Translate.edit' => [
         [
             'elements' => 'NodeBody',
         ],

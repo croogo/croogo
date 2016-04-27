@@ -3,6 +3,8 @@
 namespace Croogo\Core\View;
 
 use App\View\AppView;
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 use Croogo\Core\Croogo;
 use Croogo\Extensions\CroogoTheme;
 
@@ -28,7 +30,8 @@ class CroogoView extends AppView
             $this->loadHelperList($themeConfig['settings']['prefixes'][$prefix]['helpers']);
         }
 
-        $hookHelpers = Croogo::options('Hook.view_builder_options', $this->request->param('controller'), 'helpers');
+        $hookHelpers = Croogo::options('Hook.view_builder_options', $this->request, 'helpers');
+
         $this->loadHelperList($hookHelpers);
     }
 

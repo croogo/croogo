@@ -11,7 +11,6 @@ if (count($taxonomies) > 0):
             $allTemplates = $this->Form->templates();
             $templates['inputContainer'] = $allTemplates['inputContainerError'];
         }
-        debug($templates);
         $hasEmpty = !$vocabularies[$vocabularyId]->multiple;
         echo $this->Form->input('taxonomy_data.' . $vocabularyId, [
             'label' => $vocabularies[$vocabularyId]->title,

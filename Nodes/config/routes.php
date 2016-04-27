@@ -23,15 +23,10 @@ Router::plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $routeBui
     });
 
     // Content types
-    $routeBuilder->connect('/blog', ['controller' => 'Nodes', 'action' => 'index', 'type' => 'blog']);
-    $routeBuilder->connect('/blog/archives/*', ['controller' => 'Nodes', 'action' => 'index', 'type' => 'blog']);
-    $routeBuilder->connect('/blog/:slug', ['controller' => 'Nodes', 'action' => 'view', 'type' => 'blog']);
-    $routeBuilder->connect('/blog/term/:slug/*', ['controller' => 'Nodes', 'action' => 'term', 'type' => 'blog']);
-
-    $routeBuilder->connect('/node', ['controller' => 'Nodes', 'action' => 'index', 'type' => 'node']);
-    $routeBuilder->connect('/node/archives/*', ['controller' => 'Nodes', 'action' => 'index', 'type' => 'node']);
-    $routeBuilder->connect('/node/:slug', ['controller' => 'Nodes', 'action' => 'view', 'type' => 'node']);
-    $routeBuilder->connect('/node/term/:slug/*', ['controller' => 'Nodes', 'action' => 'term', 'type' => 'node']);
+    $routeBuilder->connect('/node', ['controller' => 'Nodes', 'action' => 'index']);
+    $routeBuilder->connect('/node/archives/*', ['controller' => 'Nodes', 'action' => 'index']);
+    $routeBuilder->connect('/node/:slug', ['controller' => 'Nodes', 'action' => 'view']);
+    $routeBuilder->connect('/node/term/:slug/*', ['controller' => 'Nodes', 'action' => 'term']);
 
     // Page
     $routeBuilder->connect('/about', ['controller' => 'Nodes', 'action' => 'view', 'type' => 'page', 'slug' => 'about']);

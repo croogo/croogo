@@ -43,8 +43,8 @@ class FilterComponent extends Component
         $this->_controller = $event->subject();
 
         if ($this->_config('multiRole')) {
-            Croogo::hookAdminTab('Users/admin_add', 'Roles', 'Acl.admin/roles');
-            Croogo::hookAdminTab('Users/admin_edit', 'Roles', 'Acl.admin/roles');
+            Croogo::hookAdminTab('Admin/Users/add', 'Roles', 'Acl.admin/roles');
+            Croogo::hookAdminTab('Admin/Users/edit', 'Roles', 'Acl.admin/roles');
         }
     }
 

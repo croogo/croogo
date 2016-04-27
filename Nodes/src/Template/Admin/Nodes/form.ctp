@@ -42,7 +42,7 @@ $this->start('tab-content');
             'prepend' => str_replace('_placeholder', '', $this->Url->build([
                 'prefix' => false,
                 'action' => 'view',
-                'type' => $type->slug,
+                'type' => $type->alias,
                 'slug' => '_placeholder'
             ], ['fullbase' => true]))
         ]);

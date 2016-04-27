@@ -37,9 +37,9 @@ class CommentsHelper extends Helper
         if (empty($this->_View->viewVars['type']->comment_status)) {
             return;
         }
-        $controller = Inflector::camelize($this->request->param('controller'));
         $title = __d('croogo', 'Comments');
         $element = 'Croogo/Comments.comments_tab';
+        $controller = $this->request->param('controller');
         Croogo::hookAdminTab('Admin/' . $controller . '/add', $title, $element);
         Croogo::hookAdminTab('Admin/' . $controller . '/edit', $title, $element);
     }

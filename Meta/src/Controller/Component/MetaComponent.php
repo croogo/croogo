@@ -51,8 +51,8 @@ class MetaComponent extends Component
         }
         $title = __d('croogo', 'Custom Fields');
         $element = 'Croogo/Meta.admin/meta_tab';
-        $controllerName = $controller->request->param('controller');
-        Croogo::hookAdminBox("admin/$controllerName/add", $title, $element);
-        Croogo::hookAdminBox("admin/$controllerName/edit", $title, $element);
+        $controllerName = $this->request->param('controller');
+        Croogo::hookAdminBox("Admin/$controllerName/add", $title, $element);
+        Croogo::hookAdminBox("Admin/$controllerName/edit", $title, $element);
     }
 }

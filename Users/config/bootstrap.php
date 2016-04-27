@@ -4,7 +4,7 @@ use Cake\Core\Configure;
 use Croogo\Core\Cache\CroogoCache;
 use Croogo\Core\Croogo;
 
-Croogo::hookApiComponent('Users', 'Users.UserApi');
+Croogo::hookApiComponent('Croogo/Users.Users', 'Users.UserApi');
 
 /**
  * Failed login attempts
@@ -23,7 +23,7 @@ CroogoCache::config('users_login', array_merge($cacheConfig, [
     'groups' => ['users'],
 ]));
 
-Croogo::hookAdminRowAction('Users/admin_index', 'Reset Password', [
+Croogo::hookAdminRowAction('Croogo/Users.Admin/Users/index', 'Reset Password', [
     'admin:true/plugin:users/controller:users/action:reset_password/:id' => [
         'title' => false,
         'options' => [
