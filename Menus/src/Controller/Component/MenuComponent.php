@@ -8,6 +8,7 @@ use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Croogo\Core\Controller\Component\CroogoComponent;
+use Croogo\Extensions\CroogoTheme;
 
 /**
  * Menus Component
@@ -92,7 +93,7 @@ class MenuComponent extends Component
         $menus = ['main'];
 
         if (Configure::read('Site.theme')) {
-            $themeData = $this->Croogo->getThemeData(Configure::read('Site.theme'));
+            $themeData = CroogoTheme::getData(Configure::read('Site.theme'));
             if (isset($themeData['menus']) && is_array($themeData['menus'])) {
                 $menus = Hash::merge($menus, $themeData['menus']);
             }
