@@ -1,63 +1,80 @@
-<div class="row-fluid">
-	<div class="span12">
-	<?php
-		echo __d('croogo', 'Sort by:');
-		echo ' ' . $this->Paginator->sort('id', __d('croogo', 'Id'), array('class' => 'sort'));
-		echo ', ' . $this->Paginator->sort('title', __d('croogo', 'Title'), array('class' => 'sort'));
-		echo ', ' . $this->Paginator->sort('created', __d('croogo', 'Created'), array('class' => 'sort'));
-	?>
-	</div>
+<div class="navbar navbar-light bg-faded">
+    <div class="pull-left">
+        <?php
+        echo __d('croogo', 'Sort by:');
+        echo ' ' . $this->Paginator->sort('id', __d('croogo', 'Id'), ['class' => 'sort']);
+        echo ', ' . $this->Paginator->sort('title', __d('croogo', 'Title'), ['class' => 'sort']);
+        echo ', ' . $this->Paginator->sort('created', __d('croogo', 'Created'), ['class' => 'sort']);
+        ?>
+    </div>
+    <div class="pull-right">
+        <?php echo $this->element('Croogo/Nodes.admin/nodes_search'); ?>
+    </div>
 </div>
+<hr>
+<div class="row">
+    <ul id="nodes-for-links">
+        <?php if (isset($type)) : ?>
+        <li>
+            <?php
+            echo $this->Html->link(__d('croogo', '%s archive/index', $type->title), [
+                'prefix' => 'admin',
+                'plugin' => 'Croogo/Nodes',
+                'controller' => 'Nodes',
+                'action' => 'hierarchy',
+                'type' => $type->alias,
+            ], [
+                'class' => 'item-choose',
+                'data-chooser-type' => 'Node',
+                'data-chooser-id' => $type->id,
+                'data-chooser-title' => $type->title,
+                'rel' => $type->url->toLinkString(),
+            ]);
+            ?>
+        </li>
+        <?php endif; ?>
+        <?php foreach ($nodes as $node) : ?>
+            <li>
+                <?php
+                echo $this->Html->link($node->title, [
+                    'prefix' => 'admin',
+                    'plugin' => 'Croogo/Nodes',
+                    'controller' => 'Nodes',
+                    'action' => 'view',
+                    'type' => $node->type,
+                    'slug' => $node->slug,
+                ], [
+                    'class' => 'item-choose',
+                    'data-chooser-type' => 'Node',
+                    'data-chooser-id' => $node->id,
+                    'data-chooser-title' => $node->title,
+                    'rel' => $node->url->toLinkString(),
+                ]);
 
-<div class="row-fluid">
-	<?php
-		echo $this->element('Croogo/Nodes.admin/nodes_search');
-	?>
-
-	<hr />
-
-	<ul id="nodes-for-links">
-	<?php foreach ($nodes as $node) { ?>
-		<li>
-		<?php
-			echo $this->Html->link($node->title, array(
-				'prefix' => 'admin',
-				'plugin' => 'Croogo/Nodes',
-				'controller' => 'Nodes',
-				'action' => 'view',
-				'type' => $node->type,
-				'slug' => $node->slug,
-			), array(
-				'class' => 'item-choose',
-				'data-chooser_type' => 'Node',
-				'data-chooser_id' => $node->id,
-				'data-chooser_title' => $node->title,
-				'rel' => $node->url->toLinkString(),
-			));
-
-			$popup = array();
-			$type = __d('croogo', $nodeTypes[$node->type]);
-			$popup[] = array(__d('croogo', 'Promoted'), $this->Layout->status($node->promote)
-			);
-			$popup[] = array(__d('croogo', 'Status'), $this->Layout->status($node->status));
-			$popup[] = array(__d('croogo', 'Created'), $node->created);
-			$popup = $this->Html->tag('table', $this->Html->tableCells($popup));
-			$a = $this->Html->link('', '#', array(
-				'class' => 'popovers action',
-				'icon' => 'info-sign',
-				'data-title' => $type,
-				'data-trigger' => 'click',
-				'data-placement' => 'right',
-				'data-html' => true,
-				'data-content' => h($popup),
-			));
-			echo $a;
-		?>
-		</li>
-	<?php } ?>
-	</ul>
-	<div class="pagination"><ul><?php echo $this->Paginator->numbers(); ?></ul></div>
+                $popup = [];
+                $type = __d('croogo', $nodeTypes[$node->type]);
+                $popup[] = [
+                    __d('croogo', 'Promoted'),
+                    $this->Layout->status($node->promote),
+                ];
+                $popup[] = [__d('croogo', 'Status'), $this->Layout->status($node->status)];
+                $popup[] = [__d('croogo', 'Created'), $node->created];
+                $popup = $this->Html->tag('table', $this->Html->tableCells($popup));
+                $a = $this->Html->link('', '#', [
+                    'class' => 'popovers action',
+                    'icon' => 'info-sign',
+                    'data-title' => $type,
+                    'data-trigger' => 'click',
+                    'data-placement' => 'right',
+                    'data-html' => true,
+                    'data-content' => h($popup),
+                ]);
+                echo $a;
+                ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    <div class="pagination">
+        <ul><?php echo $this->Paginator->numbers(); ?></ul>
+    </div>
 </div>
-<?php
-
-$this->Html->scriptBlock('$(\'.popovers\').popover().on(\'click\', function() { return false; });', ['block' => 'scriptBottom']);

@@ -1,59 +1,48 @@
 <table class="table table-striped">
-<?php
-	$tableHeaders = $this->Html->tableHeaders(array(
-		'',
-		__d('croogo', 'Id'),
-		__d('croogo', 'Title'),
-		__d('croogo', 'Slug'),
-	));
-?>
-<thead>
-	<?php echo $tableHeaders; ?>
-</thead>
-<?php
-	$rows = array();
+    <?php
+    $tableHeaders = $this->Html->tableHeaders([
+        '',
+        __d('croogo', 'Id'),
+        __d('croogo', 'Title'),
+        __d('croogo', 'Slug'),
+    ]);
+    ?>
+    <thead>
+        <?php echo $tableHeaders; ?>
+    </thead>
+    <?php
+    $rows = [];
 
-	foreach ($terms as $term):
-		$titleCol = $term['Term']['title'];
-		if (isset($defaultType)) {
-			$titleCol = $this->Html->link($term['Term']['title'], array(
-				'plugin' => 'nodes',
-				'controller' => 'nodes',
-				'action' => 'term',
-				'type' => $defaultType['alias'],
-				'slug' => $term['Term']['slug'],
-				'admin' => false
-			), array(
-				'class' => 'item-choose',
-				'data-chooser_type' => 'Node',
-				'data-chooser_id' => $term['Term']['id'],
-				'rel' => sprintf(
-					'plugin:%s/controller:%s/action:%s/type:%s/slug:%s',
-					'nodes',
-					'nodes',
-					'term',
-					$defaultType['alias'],
-					$term['Term']['slug']
-				),
-			));
-		}
+    foreach ($terms as $term):
+        $titleCol = $term->title;
+        if (isset($defaultType)) {
+            $titleCol = $this->Html->link($term->title, [
+                'plugin' => 'Croogo/Nodes',
+                'controller' => 'Nodes',
+                'action' => 'term',
+                'type' => $defaultType['alias'],
+                'slug' => $term->slug,
+                'prefix' => false,
+            ], [
+                'class' => 'item-choose',
+                'data-chooser-type' => 'Node',
+                'data-chooser-id' => $term->id,
+                'data-chooser-title' => $term->title,
+                'rel' => sprintf('plugin:%s/controller:%s/action:%s/type:%s/slug:%s', 'Croogo/Nodes', 'Nodes', 'term',
+                    $defaultType['alias'], $term->slug),
+            ]);
+        }
 
-		$rows[] = array(
-			'',
-			$term['Term']['id'],
-			$titleCol,
-			$term['Term']['slug'],
-		);
+        $rows[] = [
+            '',
+            $term->id,
+            $titleCol,
+            $term->slug,
+        ];
 
-	endforeach;
+    endforeach;
 
-	echo $this->Html->tableCells($rows);
+    echo $this->Html->tableCells($rows);
 
-?>
+    ?>
 </table>
-<?php
-
-$script =<<<EOF
-$('.popovers').popover().on('click', function() { return false; });;
-EOF;
-$this->Js->buffer($script);

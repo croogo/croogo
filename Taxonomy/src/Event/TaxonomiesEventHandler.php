@@ -80,6 +80,7 @@ class TaxonomiesEventHandler implements EventListenerInterface
                 $linkChoosers[$title] = [
                     'description' => $vocabulary->description,
                     'url' => [
+                        'prefix' => 'admin',
                         'plugin' => 'Croogo/Taxonomy',
                         'controller' => 'Terms',
                         'action' => 'index',
@@ -87,10 +88,6 @@ class TaxonomiesEventHandler implements EventListenerInterface
                         '?' => [
                             'type' => $type->alias,
                             'chooser' => 1,
-                            'KeepThis' => true,
-                            'TB_iframe' => true,
-                            'height' => 400,
-                            'width' => 600,
                         ],
                     ],
                 ];

@@ -84,8 +84,7 @@ class TermsController extends AppController
         $this->set(compact('vocabulary', 'terms', 'defaultType'));
 
         if (isset($this->request->params['named']['links']) || isset($this->request->query['chooser'])) {
-            $this->layout = 'admin_popup';
-            $this->render('admin_chooser');
+            $this->render('chooser');
         }
     }
 

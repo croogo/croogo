@@ -546,26 +546,13 @@ class CroogoHelper extends Helper
     public function linkChooser($target)
     {
         $linkChooser = $this->_View->element('Croogo/Core.admin/modal', [
-            'id' => 'link_choosers',
-            'title' => __d('croogo', 'Choose Link'),
+            'id' => 'link-chooser',
+            'modalSize' => 'modal-lg'
         ]);
         if (!strstr($this->_View->fetch('page-footer'), $linkChooser)) {
             $this->_View->append('page-footer', $linkChooser);
         }
 
-        return $this->Html->link('', '#link_choosers', [
-            'class' => 'btn btn-primary',
-            'icon' => $this->Theme->getIcon('link'),
-            'data-title' => 'Link Chooser',
-            'data-toggle' => 'modal',
-            'data-remote' => $this->Url->build([
-                'plugin' => 'Croogo/Core',
-                'controller' => 'LinkChooser',
-                'action' => 'linkChooser',
-                '?' => [
-                    'target' => $target,
-                ],
-            ]),
-        ]);
+        return $this->_View->cell('Croogo/Core.Admin/LinkChooser', [$target]);
     }
 }

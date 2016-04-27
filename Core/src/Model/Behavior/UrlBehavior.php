@@ -31,16 +31,22 @@ class UrlBehavior extends Behavior
     public function beforeFind(Event $event, Query $query, $options)
     {
         $query->formatResults(function (CollectionInterface $results) {
-            return $results->map(function (Entity $row) {
+            return $results->map(function ($row) {
+                if (!$row instanceof Entity) {
+                    return $row;
+                }
                 // Base URL
                 $url = $this->config('url');
 
                 // Add named fields
                 $fields = $this->config('fields');
                 if (is_array($fields)) {
-                    foreach ($fields as $field) {
+                    foreach ($fields as $named => $field) {
+                        if (is_numeric($named)) {
+                            $named = $field;
+                        }
                         if ($row->get($field)) {
-                            $url[$field] = $row->get($field);
+                            $url[$named] = $row->get($field);
                         }
                     }
                 }

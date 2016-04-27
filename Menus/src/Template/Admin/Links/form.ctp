@@ -70,10 +70,6 @@ echo $this->Form->input('link', [
 echo $this->Html->tabEnd();
 
 echo $this->Html->tabStart('link-misc');
-echo $this->Form->input('class', [
-    'label' => __d('croogo', 'Class'),
-    'class' => 'span10 class',
-]);
 echo $this->Form->input('description', [
     'label' => __d('croogo', 'Description'),
 ]);

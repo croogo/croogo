@@ -4,18 +4,13 @@
     var pluginName = 'itemChooser';
 
     var defaults = {
-      // selector that triggers chooser_select event
-      itemSelector: 'a.item-choose',
-
-      // field configuration:
-      // eg:
-      //	{ type: "Node", target: "id", attr: "data-id" },
-      //	{ type: "Block", target: "title", attr: "data-title" }
-      fields: []
+      itemSelector: '.item-choose'
     };
 
     function Plugin(element, options) {
-      this.element = element;
+      this.element = $(element);
+      this.modal = $(this.element.data('target'));
+      this.target = $(this.element.data('chooserTarget'));
 
       this.options = $.extend({}, defaults, options);
 
@@ -28,54 +23,62 @@
     Plugin.prototype = {
 
       init: function () {
-        $(this.element).on('click', this.openThickbox);
+        this.element.on('click', $.proxy(this.loadChooser, this));
       },
 
       clickCallback: function (e, data) {
-        var $this = $(this);
-        var attr = $this.data('chooserAttr');
-        var type = $this.data('chooserType');
-        if (type != $(data).attr('data-chooser_type')) {
+        this.modal.modal('hide');
+        var $target = $(e.target);
+        var attr = $target.data('chooserAttr');
+        var type = $target.data('chooserType');
+        if (type !== $(data).data('chooserType')) {
           return;
         }
-        $this.val($(data).attr(attr));
-        tb_remove();
+        $target.val($(data).attr(attr));
       },
 
-      openThickbox: function (e) {
-        var $this = $(this);
-        var $plugin = $this.data('plugin_' + pluginName);
-        var options = $plugin.options;
+      loadChooser: function (e) {
+        e.preventDefault();
+        var plugin = this;
+        var options = plugin.options;
+        var events = 'chooserSelect';
+        var $link = $(e.target);
 
-        for (var i in options.fields) {
-          var config = options.fields[i];
-          var $el = $(config.target);
-          var attr = config.attr;
-          var events = 'chooser_select';
-          $el.data('chooserAttr', config.attr);
-          $el.data('chooserType', config.type);
-          if ($el.data('chooserAttached') === true) {
-            continue;
-          }
-          if (typeof config.callback == 'function') {
-            $el.on(events, config.callback);
+        plugin.target.data('chooserAttr', plugin.element.data('attr'));
+        plugin.target.data('chooserType', plugin.element.data('type'));
+        if (plugin.target.data('chooserAttached') !== true) {
+          if (typeof options.callback == 'function') {
+            plugin.target.on(events, $.proxy(options.callback, plugin));
           } else {
-            $el.on(events, $plugin.clickCallback);
+            plugin.target.on(events, $.proxy(plugin.clickCallback, plugin));
           }
-          $el.data('chooserAttached', true);
+          plugin.target.data('chooserAttached', true);
         }
-        ;
 
-        tb_show(null, $this.attr('href'));
-
-        var $iframe = $('#TB_iframeContent').on('load', function () {
-          $iframe.contents().on('click', options.itemSelector, function (e) {
-            parent.$('body *').trigger('chooser_select', this);
-            return false;
+        plugin.modal
+          .find('.modal-title').html($link.data('title')).end()
+          .find('.modal-body').html('Loading...');
+        $.ajax({
+          url: $link.attr('href'),
+          datatype: 'html'
+        })
+          .done(function (response) {
+            var $response = $(response)
+            plugin.modal.find('.modal-body').html($response);
+            $response.on('click', options.itemSelector, function (e) {
+              e.preventDefault();
+              plugin.target.trigger('chooserSelect', this);
+            })
           });
-        });
 
-        return false;
+//        tb_show(null, $this.attr('href'));
+//
+//        var $iframe = $('#TB_iframeContent').on('load', function () {
+//          $iframe.contents().on('click', options.itemSelector, function (e) {
+//            parent.$('body *').trigger('chooser_select', this);
+//            return false;
+//          });
+//        });
       }
 
     };
@@ -87,6 +90,10 @@
         }
       });
     };
+
+    $(function() {
+      $('[data-chooser]')[pluginName]();
+    });
 
   }
 )(jQuery, window, document)

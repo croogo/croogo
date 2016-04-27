@@ -145,8 +145,13 @@ class NodesController extends AppController
         ])->toArray();
         $this->set(compact('nodes', 'types', 'typeAliases', 'nodeTypes'));
 
-        if (isset($this->request->params['named']['links']) || isset($this->request->query['chooser'])) {
-            $this->viewBuilder()->layout('Croogo/Core.admin_popup');
+        if ($this->request->query('type')) {
+            $type = $this->Nodes->Taxonomies->Vocabularies->Types->findByAlias($this->request->query('type'))
+                ->first();
+            $this->set('type', $type);
+        }
+
+        if (!empty($this->request->query('links')) || isset($this->request->query['chooser'])) {
             $this->viewBuilder()->template('chooser');
         }
     }

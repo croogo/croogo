@@ -38,7 +38,16 @@ class TypesTable extends CroogoTable
                 ]
             ]
         ]);
-
+        $this->addBehavior('Croogo/Core.Url', [
+            'url' => [
+                'plugin' => 'Croogo/Nodes',
+                'controller' => 'Nodes',
+                'action' => 'index'
+            ],
+            'fields' => [
+                'type' => 'alias'
+            ]
+        ]);
         $this->belongsToMany('Croogo/Taxonomy.Vocabularies', [
             'joinTable' => 'types_vocabularies',
         ]);

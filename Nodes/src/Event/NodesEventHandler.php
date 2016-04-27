@@ -124,20 +124,17 @@ class NodesEventHandler implements EventListenerInterface
         ]);
         $linkChoosers = [];
         foreach ($types as $type) {
-            $linkChoosers[$type->title] = [
+            $linkChoosers[$type->title ] = [
                 'title' => $type->title,
                 'description' => $type->description,
                 'url' => [
+                    'prefix' => 'admin',
                     'plugin' => 'Croogo/Nodes',
                     'controller' => 'Nodes',
                     'action' => 'index',
                     '?' => [
                         'type' => $type->alias,
                         'chooser' => 1,
-                        'KeepThis' => true,
-                        'TB_iframe' => true,
-                        'height' => 400,
-                        'width' => 600,
                     ],
                 ],
             ];
