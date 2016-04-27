@@ -91,7 +91,8 @@ class AppController extends \App\Controller\AppController implements HookableCom
     {
         parent::beforeRender($event);
 
-        if (empty($this->viewBuilder()->className())) {
+        if (empty($this->viewBuilder()->className()) || $this->viewBuilder()->className() === 'App\View\AjaxView') {
+            unset($this->viewClass);
             $this->viewBuilder()->className('Croogo/Core.Croogo');
         }
 	}
