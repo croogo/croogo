@@ -1,7 +1,7 @@
 //
 //  jQuery Slug Plugin by Perry Trinier (perrytrinier@gmail.com)
 //  MIT License: http://www.opensource.org/licenses/mit-license.php
-
+//@TODO: This should rather load the slug using AJAX to ensure that an accurate slug is generated.
 ;(
   function ($) {
     function transliterate(str) {

@@ -202,9 +202,11 @@ class LayoutHelper extends Helper
             }
 
             if (isset($url['named'])) {
-                $namedVars = is_string($url['named']) ? [$url['named']] : $url['named'];
-                foreach ($namedVars as $namedField) {
-                    $url[$namedField] = $item->get($namedField);
+                foreach ((array)$url['named'] as $namedField => $namedRoute) {
+                    if (is_numeric($namedField)) {
+                        $namedField = $namedRoute;
+                    }
+                    $url[$namedRoute] = $item->get($namedField);
                 }
                 unset($url['named']);
             }

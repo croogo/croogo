@@ -13,9 +13,17 @@ class TypesTable extends CroogoTable
  * @var array
  */
     protected $_displayFields = [
-        'id',
-        'title',
-        'alias',
+        'title' => [
+            'url' => [
+                'prefix' => false,
+                'plugin' => 'Croogo/Nodes',
+                'controller' => 'Nodes',
+                'action' => 'index',
+                'named' => [
+                    'alias' => 'type'
+                ],
+            ]
+        ],
         'description',
         'plugin',
     ];
