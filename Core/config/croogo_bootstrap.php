@@ -12,6 +12,7 @@ use Cake\I18n\I18n;
 use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
+use Cake\Routing\DispatcherFactory;
 
 use Croogo\Core\Croogo;
 use Croogo\Core\Cache\CroogoCache;
@@ -158,6 +159,8 @@ if (!Plugin::loaded($theme)) {
         'ignoreMissing' => true
     ]);
 }
+
+DispatcherFactory::add('Croogo/Core.HomePage');
 
 CroogoEventManager::loadListeners();
 Croogo::dispatchEvent('Croogo.bootstrapComplete');
