@@ -27,12 +27,4 @@ Router::plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $routeBui
     $routeBuilder->connect('/node/archives/*', ['controller' => 'Nodes', 'action' => 'index']);
     $routeBuilder->connect('/node/:slug', ['controller' => 'Nodes', 'action' => 'view']);
     $routeBuilder->connect('/node/term/:slug/*', ['controller' => 'Nodes', 'action' => 'term']);
-
-    // Page
-    $routeBuilder->connect('/about', ['controller' => 'Nodes', 'action' => 'view', 'type' => 'page', 'slug' => 'about']);
-    $routeBuilder->connect('/page/:slug', ['controller' => 'Nodes', 'action' => 'view', 'type' => 'page']);
-    $routeBuilder->connect('/page/term/:slug/*', ['controller' => 'Nodes', 'action' => 'term', 'type' => 'page']);
-
-    // Node view
-    $routeBuilder->connect('/nodes/view/:type/:slug', ['controller' => 'Nodes', 'action' => 'view']);
 });

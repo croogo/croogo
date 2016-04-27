@@ -11,6 +11,39 @@ use Cake\Routing\Route\Route;
 class TypeRoute extends Route
 {
     /**
+     * @param string $type The type to check
+     * @return bool
+     */
+    protected function _checkType($type)
+    {
+        $typeCount = TableRegistry::get('Croogo/Taxonomy.Types')
+            ->findByAlias($type)
+            ->cache(sprintf('%s_count', $type), 'croogo_types')
+            ->count();
+
+        return $typeCount !== 0;
+    }
+
+    /**
+     * Checks to see if the given URL can be parsed by this route.
+     *
+     * If the route can be parsed an array of parameters will be returned; if not
+     * false will be returned. String URLs are parsed if they match a routes regular expression.
+     *
+     * @param string $url The URL to attempt to parse.
+     * @return array|false An array of request parameters, or false on failure.
+     */
+    public function parse($url)
+    {
+        $url = parent::parse($url);
+        if ($this->_checkType($url['type'])) {
+            return $url;
+        }
+
+        return false;
+    }
+
+    /**
      * Check if a URL array matches this route instance.
      *
      * If the URL matches the route parameters and settings, then
@@ -34,17 +67,10 @@ class TypeRoute extends Route
             return parent::match($url, $context);
         }
 
-        $typeCount = TableRegistry::get('Croogo/Taxonomy.Types')
-            ->findByAlias($url['type'])
-            ->cache(sprintf('%s_count', $url['type']), 'croogo_types')
-            ->count();
-
-        if ($typeCount === 0) {
-            return false;
+        if ($this->_checkType($url['type'])) {
+            return parent::match($url, $context);
         }
-
-        $matchedUrl = parent::match($url, $context);
-        return $matchedUrl;
+        return false;
     }
 
 }

@@ -6,6 +6,7 @@ use App\Model\Permission;
 use ArrayAccess;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Log\Log;
+use Cake\ORM\TableRegistry;
 
 /**
  * Status
@@ -34,9 +35,9 @@ class Status implements ArrayAccess
 
     protected $_statuses = [];
 
-/**
- * Constructor
- */
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->_statuses = [
@@ -64,6 +65,7 @@ class Status implements ArrayAccess
         if (isset($this->_statuses[$offset])) {
             $result =& $this->_statuses[$offset];
         }
+
         return $result;
     }
 
@@ -79,25 +81,26 @@ class Status implements ArrayAccess
         }
     }
 
-/**
- * Returns a list of status id and its descriptions
- *
- * @return array List of status id and its descriptions
- */
+    /**
+     * Returns a list of status id and its descriptions
+     *
+     * @return array List of status id and its descriptions
+     */
     public function statuses($type = 'publishing')
     {
         if (array_key_exists($type, $this->_statuses)) {
             return $this->_statuses[$type];
         }
+
         return [];
     }
 
-/**
- * Gets valid statuses based on type
- *
- * @param string $type Status type if applicable
- * @return array Array of statuses
- */
+    /**
+     * Gets valid statuses based on type
+     *
+     * @param string $type Status type if applicable
+     * @return array Array of statuses
+     */
     public function status($statusType = 'publishing', $accessType = 'public')
     {
         $values = $this->_defaultStatus($statusType);
@@ -110,32 +113,29 @@ class Status implements ArrayAccess
         }
     }
 
-/**
- * Default status
- */
+    /**
+     * Default status
+     */
     protected function _defaultStatus($statusType)
     {
         static $Permission = null;
         $status[$statusType] = [self::PUBLISHED];
-//		$roleId = AuthComponent::user('role_id');
+//        $roleId = AuthComponent::user('role_id');
         $roleId = -1;
         $allow = false;
 
         Log::notice('Status::_defaultStatus cannot lookup role_id, this needs to be ported to CakePHP 3.0');
 
-//		if ($roleId && $roleId != 1) {
-//			if ($Permission === null) {
-//				$Permission = ClassRegistry::init('Permission');
-//			}
-//			try {
-//				$allow = $Permission->check(
-//					array('model' => 'Role', 'foreign_key' => $roleId),
-//					'controllers/Nodes/Nodes/admin_edit'
-//				);
-//			} catch (CakeException $e) {
-//				Log::error($e->getMessage());
-//			}
-//		}
+//        if ($roleId && $roleId != 1) {
+//            if ($Permission === null) {
+//                $Permission = TableRegistry::get('Permission');
+//            }
+//            try {
+//                $allow = $Permission->check(['model' => 'Role', 'foreign_key' => $roleId], 'controllers/Croogo\Nodes/Admin/Nodes/edit');
+//            } catch (CakeException $e) {
+//                Log::error($e->getMessage());
+//            }
+//        }
 
         switch ($statusType) {
             case 'publishing':
@@ -144,32 +144,35 @@ class Status implements ArrayAccess
                 }
                 break;
         }
+
         return $status[$statusType];
     }
 
-/**
- * Get the status id from description
- *
- * @return int|mixed Status Id
- */
+    /**
+     * Get the status id from description
+     *
+     * @return int|mixed Status Id
+     */
     public function byDescription($title, $statusType = 'publishing', $strict = true)
     {
         if (array_key_exists($statusType, $this->_statuses)) {
             return array_search($title, $this->_statuses[$statusType], $strict);
         }
+
         return false;
     }
 
-/**
- * Get the description from id
- *
- * @return string|null Status Description
- */
+    /**
+     * Get the description from id
+     *
+     * @return string|null Status Description
+     */
     public function byId($id, $statusType = 'publishing')
     {
         if (isset($this->_statuses[$statusType][$id])) {
             return $this->_statuses[$statusType][$id];
         }
+
         return null;
     }
 }
