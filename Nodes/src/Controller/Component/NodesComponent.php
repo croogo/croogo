@@ -75,7 +75,7 @@ class NodesComponent extends Component
 /**
  * Nodes
  *
- * Nodes will be available in this variable in views: $nodes_for_layout
+ * Nodes will be available in this variable in views: $nodesForLayout
  *
  * @return void
  */
@@ -117,6 +117,6 @@ class NodesComponent extends Component
  */
     public function beforeRender(Event $event)
     {
-        $event->subject()->set('nodes_for_layout', $this->nodesForLayout);
+        $event->subject()->set('nodesForLayout', $this->nodesForLayout);
     }
 }

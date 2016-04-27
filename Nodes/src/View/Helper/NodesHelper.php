@@ -93,11 +93,11 @@ class NodesHelper extends Helper
         ];
         $options = array_merge($_options, $options);
         $output = '';
-        if (isset($this->_View->viewVars['nodes_for_layout'][$alias])) {
-            $nodes = $this->_View->viewVars['nodes_for_layout'][$alias];
+        if (isset($this->_View->viewVars['nodesForLayout'][$alias])) {
+            $nodes = $this->_View->viewVars['nodesForLayout'][$alias];
             $output = $this->_View->element($options['element'], [
                 'alias' => $alias,
-                'nodesList' => $this->_View->viewVars['nodes_for_layout'][$alias],
+                'nodesList' => $this->_View->viewVars['nodesForLayout'][$alias],
                 'options' => $options,
             ]);
         }
