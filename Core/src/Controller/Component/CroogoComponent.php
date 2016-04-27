@@ -467,16 +467,15 @@ class CroogoComponent extends Component
  */
     public function viewFallback($templates)
     {
-        if (is_string($templates)) {
-            $templates = [$templates];
-        }
+        $templates = (array)$templates;
         $controller = $this->_controller;
         $templatePaths = $this->_setupViewPaths($controller);
         foreach ($templates as $template) {
             foreach ($templatePaths as $templatePath) {
-                $templatePath = $templatePath . $this->_viewPath() . DS . $template . '.ctp';
-                if (file_exists($templatePath)) {
-                    $controller->viewBuilder()->template($templatePath);
+                $templatePath = $templatePath . $this->_viewPath() . DS . $template;
+                if (file_exists($templatePath . '.ctp')) {
+                    $controller->viewBuilder()
+                        ->template($this->_viewPath() . DS . $template);
                     return;
                 }
             }

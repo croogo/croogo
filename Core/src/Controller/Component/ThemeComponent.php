@@ -25,7 +25,7 @@ class ThemeComponent extends Component
         parent::__construct($registry, $config);
     }
 
-    public function beforeRender(Event $event)
+    public function beforeFilter(Event $event)
     {
         $theme = $this->config('theme');
         if (!$theme) {

@@ -5,6 +5,7 @@ namespace Croogo\Nodes\Controller;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Utility\Inflector;
 use Croogo\Nodes\Model\Table\NodesTable;
 
 /**
@@ -156,7 +157,7 @@ class NodesController extends AppController
         $this->set(compact('type', 'nodes'));
         if ($type) {
             $this->Croogo->viewFallback([
-                'index_' . $type->alias,
+                Inflector::camelize($type->alias, '-') . '/index',
             ]);
         }
     }
