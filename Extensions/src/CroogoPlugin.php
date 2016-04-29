@@ -190,6 +190,16 @@ class CroogoPlugin
             'config' . DS . 'theme.json',
             'webroot' . DS . 'theme.json',
         ];
+
+        $composerFile = $dir . 'composer.json';
+        if (file_exists($composerFile)) {
+            $json = json_decode(file_get_contents($composerFile));
+
+            if ($json->type === 'croogo-theme') {
+                return true;
+            }
+        }
+
         foreach ($themeConfigs as $themeManifestFile) {
             if (!file_exists($dir . $themeManifestFile)) {
                 continue;
