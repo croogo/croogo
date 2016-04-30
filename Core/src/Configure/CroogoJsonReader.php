@@ -3,6 +3,7 @@
 namespace Croogo\Core\Configure;
 
 use Cake\Core\Configure\ConfigEngineInterface;
+use Cake\Core\Plugin;
 use Croogo\Core\CroogoJson;
 use Croogo\Core\Exception\Exception;
 
@@ -59,7 +60,7 @@ class CroogoJsonReader implements ConfigEngineInterface
         $file .= '.json';
         if (!is_file($file)) {
             if (!is_file(substr($file, 0, -4))) {
-                throw new Exception(__d('croogo', 'Could not load configuration files: %s or %s', $file, substr($file, 0, -4)));
+                throw new Exception(__d('croogo', 'Could not load configuration files: {0) or {1}', $file, substr($file, 0, -4)));
             }
         }
         $config = json_decode(file_get_contents($file), true);

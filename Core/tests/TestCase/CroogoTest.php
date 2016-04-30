@@ -33,15 +33,15 @@ class CroogoTest extends CroogoTestCase
         $hooks = Configure::read('Hook.controller_properties');
         Configure::write('Hook.controller_properties', []);
 
-        Croogo::hookApiComponent('Example', 'Example.ExampleApi');
-        Croogo::hookApiComponent('Example', [
+        Croogo::hookApiComponent('Croogo/Example.Example', 'Example.ExampleApi');
+        Croogo::hookApiComponent('Croogo/Example.Example', [
             'Users.UserApi' => [
                 'priority' => 2,
             ],
         ]);
 
         $expected = [
-            'Example' => [
+            'Croogo\Example\Controller\ExampleController' => [
                 '_apiComponents' => [
                     'Example.ExampleApi' => [
                         'priority' => 8,

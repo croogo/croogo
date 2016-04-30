@@ -39,7 +39,7 @@ require ROOT . '/vendor/autoload.php';
 require CORE_PATH . 'config/bootstrap.php';
 
 Cake\Core\Configure::write('App', [
-	'namespace' => 'Croogo\Core\Test\App',
+	'namespace' => 'App',
 	'paths' => [
 		'plugins' => [APP . 'plugins' . DS],
 	]
@@ -90,3 +90,5 @@ Cake\Datasource\ConnectionManager::config('test', [
 	'url' => getenv('db_dsn'),
 	'timezone' => 'UTC'
 ]);
+
+class_alias('Croogo\Core\TestSuite\TestCase', 'Croogo\Core\TestSuite\CroogoTestCase');

@@ -6,7 +6,7 @@ use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Network\Request;
-use Cake\TestSuite\TestCase;
+use Cake\TestSuite\TestCase as CakeTestCase;
 use Croogo\Core\Configure\CroogoJsonReader;
 use Croogo\Core\CroogoRouter;
 use Croogo\Core\TestSuite\CroogoTestFixture;
@@ -22,7 +22,7 @@ use Croogo\Core\TestSuite\CroogoTestFixture;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoTestCase extends TestCase
+class TestCase extends CakeTestCase
 {
 
     protected $_paths = [];
@@ -35,22 +35,12 @@ class CroogoTestCase extends TestCase
 
     public static function setUpBeforeClass()
     {
-        self::_restoreSettings();
         Configure::write('Config.language', 'eng');
     }
 
     public static function tearDownAfterClass()
     {
-        self::_restoreSettings();
         Configure::write('Config.language', Configure::read('Site.locale'));
-    }
-
-    protected static function _restoreSettings()
-    {
-        $configDir = Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS . 'config' . DS;
-        $source = $configDir . 'settings.default';
-        $target = $configDir . 'settings.json';
-        copy($source, $target);
     }
 
 /**

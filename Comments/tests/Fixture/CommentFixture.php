@@ -2,6 +2,8 @@
 
 namespace Croogo\Comments\Test\Fixture;
 
+use Croogo\Core\TestSuite\CroogoTestFixture;
+
 class CommentFixture extends CroogoTestFixture
 {
 
@@ -38,7 +40,7 @@ class CommentFixture extends CroogoTestFixture
         [
             'id' => 1,
             'parent_id' => null,
-            'model' => 'Node',
+            'model' => 'Croogo/Nodes.Nodes',
             'foreign_key' => 1,
             'user_id' => 0,
             'name' => 'Mr Croogo',
@@ -60,7 +62,7 @@ class CommentFixture extends CroogoTestFixture
         [
             'id' => 2,
             'parent_id' => null,
-            'model' => 'Node',
+            'model' => 'Croogo/Nodes.Nodes',
             'foreign_key' => 1,
             'user_id' => 0,
             'name' => 'Mrs Croogo',

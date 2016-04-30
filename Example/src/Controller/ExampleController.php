@@ -2,7 +2,7 @@
 
 namespace Croogo\Example\Controller;
 
-use Example\Controller\ExampleAppController;
+use Croogo\Example\Controller\ExampleAppController;
 
 /**
  * Example Controller

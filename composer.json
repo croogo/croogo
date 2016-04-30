@@ -87,7 +87,11 @@
 			"Croogo\\Translate\\Test\\": "Translate/tests",
 			"Croogo\\Users\\Test\\": "Users/tests",
 			"Croogo\\Wysiwyg\\Test\\": "Wysiwyg/tests",
-			"App\\": "Core/tests/test_app/src"
+			"App\\": "tests/test_app/src",
+			"Nodes\\": "tests/test_app/plugins/Nodes/src",
+			"Shops\\": "tests/test_app/plugins/Shops/src",
+			"Suppliers\\": "tests/test_app/plugins/Suppliers/src",
+			"TestPlugin\\": "tests/test_app/plugins/TestPlugin/src"
 		}
 	},
 	"scripts": {

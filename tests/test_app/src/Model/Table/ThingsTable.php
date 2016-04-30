@@ -1,6 +1,6 @@
 <?php
 
-namespace Croogo\Core\Test\App\Model\Table;
+namespace App\Model\Table;
 
 use Cake\ORM\Table;
 
