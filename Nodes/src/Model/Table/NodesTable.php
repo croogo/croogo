@@ -110,54 +110,82 @@ class NodesTable extends CroogoTable
         return $data;
     }
 
+    public function findView(Query $query, array $options = [])
+    {
+        if (isset($options['roleId'])) {
+            $query->find('byAccess', [
+                'roleId' => $options['roleId'],
+            ]);
+        }
+        $query
+            ->find('published')
+            ->contain([
+                'Taxonomies' => [
+                    'Terms',
+                    'Vocabularies',
+                ],
+                'Users',
+            ]);
+        return $query;
+    }
+
     /**
      * Find a single node by slug
      */
     public function findViewBySlug(Query $query, array $options = [])
     {
-        $keys = ['slug' => null, 'type' => null, 'roleId' => null];
-        $args = array_merge($keys, array_intersect_key($options, $keys));
-        $options = array_diff_key($options, $args);
+        $defaults = ['slug' => null, 'type' => null, 'roleId' => null];
+        $options += $defaults;
+        $cacheKey = 'node_' . $options['roleId'] . '_' . $options['type'] . '_' . $options['slug'];
 
-        $query->where([
-            'slug' => $args['slug'],
-            'type' => $args['type'],
-        ]);
-        $query->contain([
-            'Taxonomies' => [
-                'Terms',
-                'Vocabularies',
-            ],
-            'Users',
-        ]);
-        $query->applyOptions([
-            'cache' => [
-                'name' => 'node_' . $args['roleId'] . '_' . $args['type'] . '_' . $args['slug'],
-                'config' => 'nodes_view',
-            ],
-        ]);
+        $query
+            ->find('view', $options)
+            ->where([
+                $this->aliasField('slug') => $options['slug'],
+                $this->aliasField('type') => $options['type'],
+            ])
+            ->cache($cacheKey, 'nodes_view');
+
+        return $query;
+    }
+
+    /**
+     * @param \Cake\ORM\Query $query The query object
+     * @param array $options Finder options
+     * @return \Cake\ORM\Query
+     */
+    public function findViewById(Query $query, array $options = [])
+    {
+        $defaults = ['id' => null, 'roleId' => null];
+        $options += $defaults;
+        $cacheKey = 'node_' . $options['roleId'] . '_' . $options['id'];
+        $query->find('view', $options)
+            ->where([
+                $this->aliasField('id') => $options['id'],
+            ])
+            ->cache($cacheKey, 'nodes_view');
 
         return $query;
     }
 
     public function findByAccess(Query $query, array $options = [])
     {
-        $keys = ['roleId' => null];
-        $args = array_merge($keys, array_intersect_key($options, $keys));
+        $options += ['roleId' => null];
+        $visibilityRolesField = $this->aliasField('visibility_roles');
 
         return $query->andWhere([
             'OR' => [
-                'visibility_roles' => '',
-                'visibility_roles IS NULL',
-                'visibility_roles LIKE' => '%"' . $args['roleId'] . '"%',
+                $visibilityRolesField => '',
+                $visibilityRolesField . ' IS NULL',
+                $visibilityRolesField . ' LIKE' => '%"' . $options['roleId'] . '"%',
             ],
         ]);
     }
 
-    public function findPublished(Query $query, array $options = [])
+    public function findPublished(Query $query)
     {
         return $query->andWhere([
-            $this->alias() . '.status IN' => $this->status(),
+            $this->aliasField('status') . ' IN' => $this->status(),
         ]);
     }
 }
