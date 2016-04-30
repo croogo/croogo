@@ -61,6 +61,8 @@ class ExtensionsThemesController extends AppController
      */
     public function activate($theme = null)
     {
+        $theme = str_replace('.', '/', $theme);
+
         try {
             $this->_CroogoTheme->activate($theme);
 
@@ -124,6 +126,8 @@ class ExtensionsThemesController extends AppController
      */
     public function delete($alias = null)
     {
+        $theme = str_replace('.', '/', $alias);
+
         if ($alias == null) {
             $this->Flash->error(__d('croogo', 'Invalid Theme.'));
 

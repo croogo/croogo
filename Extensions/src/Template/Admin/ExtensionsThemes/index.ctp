@@ -97,13 +97,13 @@ $this->end(); ?>
                     endif;
                     $out .= $this->Html->tag('div', $this->Form->postLink(__d('croogo', 'Activate'), [
                             'action' => 'activate',
-                            urlencode($themeAlias),
+                            str_replace('/', '.', $themeAlias),
                         ], [
                             'button' => 'secondary',
                             'icon' => $this->Theme->getIcon('power-on'),
                         ]) . $this->Form->postLink(__d('croogo', 'Delete'), [
                             'action' => 'delete',
-                            urlencode($themeAlias),
+                            str_replace('/', '.', $themeAlias),
                         ], [
                             'button' => 'danger',
                             'escape' => true,
