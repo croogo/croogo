@@ -8,7 +8,7 @@
 	}
 	echo $this->Html->tag('h3', $commentHeading);
 
-	foreach ($comments as $comment) {
+	foreach ($node->comments as $comment) {
 		echo $this->element('Comments.comment', array('comment' => $comment, 'level' => 1));
 	}
 ?>

@@ -1,38 +1,33 @@
-<div id="comment-<?php echo $comment['Comment']['id']; ?>" class="comment<?php if ($node['Node']['user_id'] == $comment['Comment']['user_id']) { echo ' author'; } ?>">
+<?php
+use Cake\Core\Configure;
+?>
+<div id="comment-<?= $comment->id; ?>" class="comment<?php if ($node['Node']['user_id'] == $comment->user_id) { echo ' author'; } ?>">
 	<div class="comment-info">
-		<span class="avatar"><?php echo $this->Html->image('http://www.gravatar.com/avatar/' . md5(strtolower($comment['Comment']['email'])) . '?s=32') ?></span>
+		<span class="avatar"><?= $this->Html->image('http://www.gravatar.com/avatar/' . md5(strtolower($comment->email)) . '?s=32'); ?></span>
 		<span class="name">
-		<?php
-			if ($comment['Comment']['website'] != null) {
-				echo $this->Html->link($comment['Comment']['name'], $comment['Comment']['website'], array('target' => '_blank'));
-			} else {
-				echo $comment['Comment']['name'];
-			}
-		?>
+            <?php if ($comment->website): ?>
+                <?= $this->Html->link($comment->name, $comment->website, ['target' => '_blank']); ?>
+            <?php else: ?>
+                <?= h($comment->name); ?>
+            <?php endif; ?>
 		</span>
-		<span class="date"><?php echo __d('croogo', 'said on %s', $this->Time->format(Configure::read('Comment.date_time_format'), $comment['Comment']['created'], null, Configure::read('Site.timezone'))); ?></span>
+		<span class="date"><?= h(__d('croogo', 'said on %s', $comment->created->i18nFormat())); ?></span>
 	</div>
-	<div class="comment-body"><?php echo nl2br($this->Text->autoLink($comment['Comment']['body'])); ?></div>
+	<div class="comment-body"><?= $this->Text->autoParagraph($this->Text->autoLink($comment->body)); ?></div>
 	<div class="comment-reply">
-	<?php
-		if ($level <= Configure::read('Comment.level')) {
-			echo $this->Html->link(__d('croogo', 'Reply'), array(
-				'plugin' => 'Croogo/Comments',
-				'controller' => 'Comments',
-				'action' => 'add',
-				'Node',
-				$node['Node']['id'],
-				$comment['Comment']['id'],
-			));
-		}
-	?>
+        <?php if ($level <= Configure::read('Comment.level')): ?>
+            <?= $this->Html->link(__d('croogo', 'Reply'), array(
+                'plugin' => 'Croogo/Comments',
+                'controller' => 'Comments',
+                'action' => 'add',
+                $comment->model,
+                $comment->foreign_key,
+                $comment->id,
+            )); ?>
+        <?php endif; ?>
 	</div>
 
-	<?php
-		if (isset($comment['children']) && count($comment['children']) > 0) {
-			foreach ($comment['children'] as $childComment) {
-				echo $this->element('Comments.comment', array('comment' => $childComment, 'level' => $level + 1));
-			}
-		}
-	?>
+    <?php foreach ($comment->children as $childComment): ?>
+        <?= $this->element('Croogo/Comments.comment', ['comment' => $childComment, 'level' => $level + 1]); ?>
+    <?php endforeach; ?>
 </div>

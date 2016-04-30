@@ -10,3 +10,5 @@ CroogoCache::config('croogo_comments', array_merge(
 ));
 
 Croogo::hookHelper('*', 'Croogo/Comments.Comments');
+
+Croogo::hookBehavior('Croogo/Nodes.Nodes', 'Croogo/Comments.Commentable');

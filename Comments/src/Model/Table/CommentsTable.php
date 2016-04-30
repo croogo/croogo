@@ -3,9 +3,14 @@
 namespace Croogo\Comments\Model\Table;
 
 use Cake\Database\Schema\Table as Schema;
+use Cake\Mailer\MailerAwareTrait;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\Query;
+use Cake\Utility\Hash;
+use Croogo\Comments\Model\Entity\Comment;
 use Croogo\Core\Model\Table\CroogoTable;
 use Croogo\Core\Status;
+use UnexpectedValueException;
 
 /**
  * Comment
@@ -19,6 +24,7 @@ use Croogo\Core\Status;
  */
 class CommentsTable extends CroogoTable
 {
+    use MailerAwareTrait;
 
 /**
  * @deprecated
@@ -97,12 +103,13 @@ class CommentsTable extends CroogoTable
         $this->entityClass('Croogo/Comments.Comment');
 
         $this->belongsTo('Users', [
-            'className' => 'Croogo\Users.Users',
+            'className' => 'Croogo/Users.Users',
             'foreignKey' => 'user_id',
         ]);
         $this->addBehavior('Croogo/Core.Publishable');
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Search.Searchable');
+        $this->addBehavior('Tree');
 
         $this->addBehavior('Timestamp', [
             'events' => [
@@ -112,6 +119,8 @@ class CommentsTable extends CroogoTable
                 ]
             ]
         ]);
+
+        $this->eventManager()->on($this->getMailer('Croogo/Comments.Comment'));
     }
 
 /**
@@ -128,14 +137,12 @@ class CommentsTable extends CroogoTable
  * @return bool true if comment was added, false otherwise.
  * @throws NotFoundException
  */
-    public function add($data, $model, $foreignKey, $options = [])
+    public function add(Comment $comment, $model, $foreignKey, $options = [])
     {
         $options = Hash::merge([
             'parentId' => null,
             'userData' => [],
         ], $options);
-        $record = [];
-        $node = [];
 
         $foreignKey = (int)$foreignKey;
         $parentId = is_null($options['parentId']) ? null : (int)$options['parentId'];
@@ -145,50 +152,37 @@ class CommentsTable extends CroogoTable
             throw new UnexpectedValueException(sprintf('%s not configured for Comments', $model));
         }
 
-        $node = $this->{$model}->findById($foreignKey);
-        if (empty($node)) {
-            throw new NotFoundException(__d('croogo', 'Invalid Node id'));
-        }
+        $entity = $this->{$model}->findById($foreignKey)->firstOrFail();
 
         if (!is_null($parentId)) {
             if ($this->isValidLevel($parentId) &&
                 $this->isApproved($parentId, $model, $foreignKey)
             ) {
-                $record['parent_id'] = $parentId;
+                $comment->parent_id = $parentId;
             } else {
                 return false;
             }
         }
 
-        if (!empty($userData) && is_array($userData)) {
-            $record['user_id'] = $userData['User']['id'];
-            $record['name'] = $userData['User']['name'];
-            $record['email'] = $userData['User']['email'];
-            $record['website'] = $userData['User']['website'];
-        } else {
-            $record['name'] = $data[$this->alias]['name'];
-            $record['email'] = $data[$this->alias]['email'];
-            $record['website'] = $data[$this->alias]['website'];
+        if (is_array($userData)) {
+            $comment->user_id = $userData['User']['id'];
+            $comment->name = $userData['User']['name'];
+            $comment->email = $userData['User']['email'];
+            $comment->website = $userData['User']['website'];
         }
 
-        $record['ip'] = $data[$this->alias]['ip'];
-        $record['model'] = $model;
-        $record['foreign_key'] = $node[$this->{$model}->alias]['id'];
-        $record['body'] = h($data[$this->alias]['body']);
+        $comment->model = $model;
+        $comment->foreign_key = $entity->id;
 
-        if (isset($node[$this->{$model}->alias]['type'])) {
-            $record['type'] = $node[$this->{$model}->alias]['type'];
-        } else {
-            $record['type'] = '';
+        if ($entity->has('type')) {
+            $comment['type'] = $entity->type;
         }
 
-        if (isset($data[$this->alias]['status'])) {
-            $record['status'] = $data[$this->alias]['status'];
-        } else {
-            $record['status'] = Status::PENDING;
+        if ($comment->status === null) {
+            $comment->status = Status::PENDING;
         }
 
-        return (bool)$this->save($record);
+        return (bool)$this->save($comment);
     }
 
 /**
@@ -236,14 +230,11 @@ class CommentsTable extends CroogoTable
  */
     public function changeStatus($ids, $status)
     {
-        $dataArray = [];
-        foreach ($ids as $id) {
-            $dataArray[] = [
-                $this->primaryKey => $id,
-                'status' => $status
-            ];
-        }
-        return $this->saveMany($dataArray, ['validate' => false]);
+        return $this->updateAll([
+            'status' => $status,
+        ], [
+            $this->primaryKey() . ' IN' => $ids
+        ]);
     }
 
 /**

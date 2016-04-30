@@ -3,8 +3,12 @@
 namespace Croogo\Comments\Controller;
 
 use App\Network\Email\Email;
+use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Routing\Router;
 use Croogo\Comments\Model\Entity\Comment;
+use Croogo\Core\Status;
+use UnexpectedValueException;
 
 /**
  * Comments Controller
@@ -66,7 +70,7 @@ class CommentsController extends AppController
  *
  * @param int$foreignKey
  * @param int$parentId
- * @return void
+ * @return \Cake\Network\Response|null
  * @access public
  * @throws UnexpectedValueException
  */
@@ -77,39 +81,37 @@ class CommentsController extends AppController
             return $this->redirect('/');
         }
 
-        if (empty($this->Comment->{$model})) {
+        if (empty($this->Comments->{$model})) {
             throw new UnexpectedValueException(
                 sprintf('%s not configured for Comments', $model)
             );
         }
 
-        $Model = $this->Comment->{$model};
-        $data = $Model->find('first', [
-            'conditions' => [
-                $Model->escapeField($Model->primaryKey) => $foreignKey,
-                $Model->escapeField('status') => $Model->status('approval'),
-            ],
-        ]);
+        $Model = $this->Comments->{$model};
+        $entity = $Model->find()->where([
+            $Model->aliasField($Model->primaryKey()) => $foreignKey,
+            $Model->aliasField('status') . ' IN' => $Model->status('approval'),
+        ])->first();
 
-        if (isset($data[$Model->alias]['path'])) {
-            $redirectUrl = $data[$Model->alias]['path'];
+        if (isset($entity->path)) {
+            $redirectUrl = $entity->path;
         } else {
             $redirectUrl = $this->referer();
         }
 
-        if (!is_null($parentId) && !$this->Comment->isValidLevel($parentId)) {
+        if (!is_null($parentId) && !$this->Comments->isValidLevel($parentId)) {
             $this->Flash->error(__d('croogo', 'Maximum level reached. You cannot reply to that comment.'));
             return $this->redirect($redirectUrl);
         }
 
-        $typeSetting = $Model->getTypeSetting($data);
+        $typeSetting = $Model->getTypeSetting($entity);
         extract(array_intersect_key($typeSetting, [
             'commentable' => null,
             'autoApprove' => null,
             'spamProtection' => null,
             'captchaProtection' => null,
             ]));
-        $continue = $commentable && $data[$Model->alias]['comment_status'];
+        $continue = $commentable && $entity->comment_status;
 
         if (!$continue) {
             $this->Flash->error(__d('croogo', 'Comments are not allowed.'));
@@ -117,13 +119,14 @@ class CommentsController extends AppController
         }
 
         // spam protection and captcha
-        $continue = $this->_spamProtection($continue, $spamProtection, $data);
-        $continue = $this->_captcha($continue, $captchaProtection, $data);
+        $continue = $this->_spamProtection($continue, $spamProtection, $entity);
+        $continue = $this->_captcha($continue, $captchaProtection, $entity);
         $success = false;
         if (!empty($this->request->data) && $continue === true) {
-            $comment = $this->request->data;
-            $comment['Comment']['ip'] = env('REMOTE_ADDR');
-            $comment['Comment']['status'] = $autoApprove ? CroogoStatus::APPROVED : CroogoStatus::PENDING;
+            $comment = $this->Comments->newEntity($this->request->data);
+            $comment->ip = $this->request->clientIp();
+            $comment->status = $autoApprove ? Status::APPROVED : Status::PENDING;
+
             $userData = [];
             if ($this->Auth->user()) {
                 $userData['User'] = $this->Auth->user();
@@ -133,7 +136,7 @@ class CommentsController extends AppController
                 'parentId' => $parentId,
                 'userData' => $userData,
             ];
-            $success = $this->Comment->add($comment, $model, $foreignKey, $options);
+            $success = $this->Comments->add($comment, $model, $foreignKey, $options);
             if ($success) {
                 if ($autoApprove) {
                     $messageFlash = __d('croogo', 'Your comment has been added successfully.');
@@ -142,15 +145,11 @@ class CommentsController extends AppController
                 }
                 $this->Flash->success($messageFlash);
 
-                if (Configure::read('Comment.email_notification')) {
-                    $this->_sendEmail($data, $comment);
-                }
-
-                return $this->redirect(Router::url($data[$Model->alias]['url'], true) . '#comment-' . $this->Comment->id);
+                return $this->redirect(Router::url($entity->url->getUrl()) . '#comment-' . $comment->id);
             }
         }
 
-        $this->set(compact('success', 'data', 'type', 'model', 'foreignKey', 'parentId'));
+        $this->set(compact('success', 'entity', 'type', 'model', 'foreignKey', 'parentId'));
     }
 
 /**
@@ -201,35 +200,6 @@ class CommentsController extends AppController
         }
 
         return $continue;
-    }
-
-/**
- * sendEmail
- *
- * @param array $node Node data
- * @param array $comment Comment data
- * @return void
- * @access protected
- */
-    protected function _sendEmail($node, $data)
-    {
-        $email = new Email();
-        $commentId = $this->Comment->id;
-        try {
-            $email->from(Configure::read('Site.title') . ' ' .
-                '<croogo@' . preg_replace('#^www\.#', '', strtolower($_SERVER['SERVER_NAME'])) . '>')
-                ->to(Configure::read('Site.email'))
-                ->subject('[' . Configure::read('Site.title') . '] ' .
-                    __d('croogo', 'New comment posted under') . ' ' . $node['Node']['title'])
-                ->viewVars(compact('node', 'data', 'commentId'))
-                ->template('Comments.comment');
-            if ($this->theme) {
-                $email->theme($this->theme);
-            }
-            return $email->send();
-        } catch (SocketException $e) {
-            $this->log(sprintf('Error sending comment notification: %s', $e->getMessage()));
-        }
     }
 
 /**

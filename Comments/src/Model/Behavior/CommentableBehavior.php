@@ -2,7 +2,11 @@
 
 namespace Croogo\Comments\Model\Behavior;
 
-use App\Model\Behavior\ModelBehavior;
+use Cake\Core\App;
+use Cake\Core\Plugin;
+use Cake\ORM\Behavior;
+use Cake\ORM\TableRegistry;
+use Croogo\Nodes\Model\Entity\Node;
 
 /**
  * CommentableBehavior
@@ -12,10 +16,27 @@ use App\Model\Behavior\ModelBehavior;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CommentableBehavior extends ModelBehavior
+class CommentableBehavior extends Behavior
 {
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
 
-/**
+        $this->_table->hasMany('Comments', [
+            'className' => 'Croogo/Comments.Comments',
+            'foreignKey' => 'foreign_key',
+            'conditions' => [
+                'model' => $this->_table->alias(),
+                'status' => 1
+            ]
+        ]);
+        $this->_table->Comments->belongsTo($this->_table->alias(), [
+            'className' => App::shortName(get_class($this->_table), 'Model/Table', 'Table'),
+            'foreignKey' => 'foreign_key'
+        ]);
+    }
+
+    /**
  * Setup behavior
  *
  * @return void
@@ -72,7 +93,7 @@ class CommentableBehavior extends ModelBehavior
  * @param array $data Model data to check
  * @return bool
  */
-    public function getTypeSetting(Model $model, $data)
+    public function getTypeSetting(Node $node)
     {
         $defaultSetting = [
             'commentable' => false,
@@ -80,28 +101,27 @@ class CommentableBehavior extends ModelBehavior
             'spamProtection' => false,
             'captchaProtection' => false,
         ];
-        if (!Plugin::loaded('Taxonomy')) {
+        if (!Plugin::loaded('Croogo/Taxonomy')) {
             return $defaultSetting;
         }
-        if (empty($data[$model->alias]['type'])) {
+        if (empty($node->type)) {
             return $defaultSetting;
         }
-        $Type = ClassRegistry::init('Taxonomy.Type');
-        $type = $Type->find('first', [
-            'recursive' => -1,
-            'conditions' => [
-                $Type->escapeField('alias') => $data[$model->alias]['type'],
-            ],
-        ]);
-        if ($type) {
-            return [
-                'commentable' => $type['Type']['comment_status'] == 2,
-                'autoApprove' => $type['Type']['comment_approve'] == 1,
-                'spamProtection' => $type['Type']['comment_spam_protection'],
-                'captchaProtection' => $type['Type']['comment_captcha'],
-            ];
+
+        $types = TableRegistry::get('Croogo/Taxonomy.Types');
+        $type = $types->find()->where([
+            $types->aliasField('alias') => $node->type,
+        ])->first();
+        if (!$type) {
+            return $defaultSetting;
         }
-        return $defaultSetting;
+
+        return [
+            'commentable' => $type->comment_status == 2,
+            'autoApprove' => $type->comment_approve == 1,
+            'spamProtection' => $type->comment_spam_protection,
+            'captchaProtection' => $type->comment_captcha,
+        ];
     }
 
 /**

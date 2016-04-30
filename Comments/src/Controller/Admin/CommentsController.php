@@ -58,13 +58,6 @@ class CommentsController extends AppController
         $this->set('title_for_layout', __d('croogo', 'Comments'));
         $this->Prg->commonProcess();
 
-        $this->paginate = [
-            'conditions' => [
-                'status' => 1,
-                'comment_type' => 'comment'
-            ]
-        ];
-
         $query = $this->Comments->find('searchable', $this->Prg->parsedParams());
         $this->set('comments', $this->paginate($query));
     }
@@ -128,8 +121,7 @@ class CommentsController extends AppController
  */
     public function process()
     {
-        $Comment = $this->{$this->modelClass};
-        list($action, $ids) = $this->BulkProcess->getRequestVars($Comment->alias);
+        list($action, $ids) = $this->BulkProcess->getRequestVars($this->Comments->alias());
 
         $options = [
             'messageMap' => [
@@ -139,6 +131,6 @@ class CommentsController extends AppController
             ]
         ];
 
-        return $this->BulkProcess->process($Comment, $action, $ids, $options);
+        $this->BulkProcess->process($this->Comments, $action, $ids, $options);
     }
 }

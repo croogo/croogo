@@ -77,7 +77,7 @@ foreach ($comments as $comment) {
 
     $title = empty($comment->title) ? 'Comment' : $comment->title;
     $rows[] = [
-        $this->Form->checkbox('Comment.' . $comment->id . '.id', ['class' => 'row-select']),
+        $this->Form->checkbox('Comments.' . $comment->id . '.id', ['class' => 'row-select']),
         $comment->name,
         $comment->email,
         $this->Html->link($comment->title, [
@@ -91,7 +91,7 @@ foreach ($comments as $comment) {
                 'data-content' => $comment->body,
                 'escape' => false,
             ]),
-        $comment['Comment']['created'],
+        $comment->created,
         $actions,
     ];
 }
@@ -100,7 +100,7 @@ echo $this->Html->tableCells($rows);
 $this->end();
 
 $this->start('bulk-action');
-echo $this->Form->input('Comment.action', [
+echo $this->Form->input('Comments.action', [
     'label' => __d('croogo', 'Bulk actions'),
     'div' => 'input inline',
     'class' => 'c-select',

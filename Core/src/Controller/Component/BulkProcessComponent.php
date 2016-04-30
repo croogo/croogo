@@ -139,7 +139,7 @@ class BulkProcessComponent extends Component
             if (!empty($messageMap[$action])) {
                 $message = $messageMap[$action];
             } else {
-                $message = __d('croogo', '%s processed', Inflector::humanize($table->alias));
+                $message = __d('croogo', '%s processed', Inflector::humanize($table->alias()));
             }
             $flashMethod = 'success';
             Croogo::dispatchEvent($eventName, $Controller, compact($ids));
