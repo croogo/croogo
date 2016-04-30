@@ -21,15 +21,6 @@ use Croogo\Nodes\Model\Table\NodesTable;
  */
 class NodesController extends AppController
 {
-
-    /**
-     * Controller name
-     *
-     * @var string
-     * @access public
-     */
-    public $name = 'Nodes';
-
     /**
      * Preset Variable Search
      *
@@ -60,27 +51,6 @@ class NodesController extends AppController
     }
 
     /**
-     * beforeFilter
-     *
-     * @param Event $event The event to handle
-     *
-     * @return void
-     *
-     * @access public
-     */
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-
-        if (isset($this->request->params['slug'])) {
-            $this->request->params['named']['slug'] = $this->request->params['slug'];
-        }
-        if (isset($this->request->params['type'])) {
-            $this->request->params['named']['type'] = $this->request->params['type'];
-        }
-    }
-
-    /**
      * Index
      *
      * @return void
@@ -88,8 +58,8 @@ class NodesController extends AppController
      */
     public function index()
     {
-        if (!isset($this->request->params['named']['type'])) {
-            $this->request->params['named']['type'] = 'node';
+        if (!$this->request->param('type')) {
+            $this->request->params['type'] = 'node';
         }
 
         $this->paginate = [
