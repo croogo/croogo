@@ -19,7 +19,6 @@ class NodesTable extends CroogoTable
         'promote' => ['type' => 'value'],
     ];
 
-
     public function initialize(array $config)
     {
         parent::initialize($config);
@@ -35,11 +34,12 @@ class NodesTable extends CroogoTable
             'url' => [
                 'plugin' => 'Croogo/Nodes',
                 'controller' => 'Nodes',
-                'action' => 'view'
+                'action' => 'view',
             ],
             'fields' => [
-                'type', 'slug'
-            ]
+                'type',
+                'slug',
+            ],
         ]);
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Croogo/Core.Visibility');
@@ -50,22 +50,22 @@ class NodesTable extends CroogoTable
             'events' => [
                 'Model.beforeSave' => [
                     'created' => 'new',
-                    'updated' => 'always'
-                ]
-            ]
+                    'updated' => 'always',
+                ],
+            ],
         ]);
     }
 
-/**
- * Create/update a Node record
- *
- * @param $node array Node data
- * @param $typeAlias string Node type alias
- * @return mixed see Model::saveAll()
- */
+    /**
+     * Create/update a Node record
+     *
+     * @param $node array Node data
+     * @param $typeAlias string Node type alias
+     * @return mixed see Model::saveAll()
+     */
     public function saveNode(Node $node, $typeAlias = self::DEFAULT_TYPE)
     {
-//		$node = $this->formatNode($node, $typeAlias);
+        //		$node = $this->formatNode($node, $typeAlias);
         $event = Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, compact('node', 'typeAlias'));
         if ($event->isStopped()) {
             return $event->result;
@@ -77,14 +77,14 @@ class NodesTable extends CroogoTable
         return $result;
     }
 
-/**
- * Format data for saving
- *
- * @param array $data Node and related data, eg Taxonomy and Role
- * @param string $typeAlias string Node type alias
- * @return array formatted data
- * @throws InvalidArgumentException
- */
+    /**
+     * Format data for saving
+     *
+     * @param array $data Node and related data, eg Taxonomy and Role
+     * @param string $typeAlias string Node type alias
+     * @return array formatted data
+     * @throws InvalidArgumentException
+     */
     public function formatNode($data, $typeAlias = self::DEFAULT_TYPE)
     {
         $roles = $type = [];
@@ -110,9 +110,9 @@ class NodesTable extends CroogoTable
         return $data;
     }
 
-/**
- * Find a single node by slug
- */
+    /**
+     * Find a single node by slug
+     */
     public function findViewBySlug(Query $query, array $options = [])
     {
         $keys = ['slug' => null, 'type' => null, 'roleId' => null];
@@ -157,7 +157,7 @@ class NodesTable extends CroogoTable
     public function findPublished(Query $query, array $options = [])
     {
         return $query->andWhere([
-            $this->alias() . '.status IN' => $this->status()
+            $this->alias() . '.status IN' => $this->status(),
         ]);
     }
 }
