@@ -58,7 +58,9 @@ class CommentsController extends AppController
         $this->set('title_for_layout', __d('croogo', 'Comments'));
         $this->Prg->commonProcess();
 
-        $query = $this->Comments->find('searchable', $this->Prg->parsedParams());
+        $query = $this->Comments->find('searchable', $this->Prg->parsedParams())
+            ->find('relatedEntity');
+
         $this->set('comments', $this->paginate($query));
     }
 

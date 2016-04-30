@@ -80,11 +80,7 @@ foreach ($comments as $comment) {
         $this->Form->checkbox('Comments.' . $comment->id . '.id', ['class' => 'row-select']),
         $comment->name,
         $comment->email,
-        $this->Html->link($comment->title, [
-            'action' => 'view',
-            'type' => $comment->type,
-            'slug' => $comment->slug,
-        ]),
+        $this->Html->link($comment->related->title, $comment->related->url),
         $this->Html->link($this->Html->image('/croogo/img/icons/comment.png'), '#', [
                 'class' => 'comment-view',
                 'data-title' => $title,

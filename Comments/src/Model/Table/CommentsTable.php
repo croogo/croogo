@@ -6,6 +6,8 @@ use Cake\Database\Schema\Table as Schema;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\Query;
+use Cake\ORM\ResultSet;
+use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Croogo\Comments\Model\Entity\Comment;
 use Croogo\Core\Model\Table\CroogoTable;
@@ -108,6 +110,7 @@ class CommentsTable extends CroogoTable
         ]);
         $this->addBehavior('Croogo/Core.Publishable');
         $this->addBehavior('Croogo/Core.Trackable');
+        $this->addBehavior('Croogo/Core.LinkedModel');
         $this->addBehavior('Search.Searchable');
         $this->addBehavior('Tree');
 

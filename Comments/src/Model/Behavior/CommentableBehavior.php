@@ -26,7 +26,7 @@ class CommentableBehavior extends Behavior
             'className' => 'Croogo/Comments.Comments',
             'foreignKey' => 'foreign_key',
             'conditions' => [
-                'model' => $this->_table->alias(),
+                'model' => App::shortName(get_class($this->_table), 'Model/Table', 'Table'),
                 'status' => 1
             ]
         ]);
