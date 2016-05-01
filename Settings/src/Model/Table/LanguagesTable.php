@@ -16,31 +16,12 @@ use Croogo\Core\Model\Table\CroogoTable;
  */
 class LanguagesTable extends CroogoTable
 {
-
-/**
- * Model name
- *
- * @var string
- * @access public
- */
-    public $name = 'Language';
-
-/**
- * Behaviors used by the Model
- *
- * @var array
- * @access public
- */
-    public $actsAs = [
-        'Croogo.Ordered' => ['field' => 'weight', 'foreign_key' => null],
-    ];
-
-/**
- * Validation
- *
- * @var array
- * @access public
- */
+    /**
+     * Validation
+     *
+     * @var array
+     * @access public
+     */
     public $validate = [
         'title' => [
             'rule' => ['minLength', 1],
@@ -64,6 +45,12 @@ class LanguagesTable extends CroogoTable
     public function initialize(array $config)
     {
         parent::initialize($config);
+
         $this->addBehavior('Croogo/Core.Trackable');
+        $this->addBehavior('ADmad/Sequence.Sequence', [
+            'order' => 'weight',
+        ]);
+        $this->addBehavior('Search.Search');
+        $this->addBehavior('Timestamp');
     }
 }
