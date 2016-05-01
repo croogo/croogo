@@ -34,7 +34,9 @@
 		"cakephp/migrations": "~1.0",
 		"cakephp/acl": "dev-master",
 		"cakedc/search": "3.0.x-dev",
-		"admad/cakephp-sequence": "dev-master"
+		"admad/cakephp-sequence": "dev-master",
+		"friendsofcake/crud": "^4.3",
+		"friendsofcake/search": "^1.2"
 	},
 	"require-dev": {
 		"cakephp/cakephp-codesniffer": "dev-master",
