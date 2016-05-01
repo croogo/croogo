@@ -62,7 +62,7 @@ class MessagesTable extends CroogoTable
             ],
         ]);
         $this->addBehavior('Croogo/Core.Trackable');
-        $this->addBehavior('Search.Searchable');
+        $this->addBehavior('Search.Search');
         $this->addBehavior('Timestamp', [
             'events' => [
                 'Model.beforeSave' => [

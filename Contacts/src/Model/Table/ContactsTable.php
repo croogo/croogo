@@ -88,6 +88,7 @@ class ContactsTable extends CroogoTable
                 ]
             ]
         ]);
+        $this->addBehavior('Search.Search');
     }
 
 /**
