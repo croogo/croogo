@@ -17,12 +17,15 @@ class Role extends Entity
         if (!$this->id) {
             return null;
         } else {
-            $aro = TableRegistry::get('Aro')->node('first', [
+            $aro = TableRegistry::get('Croogo/Acl.Aros')->node('first', [
                 'conditions' => [
                     'model' => $this->alias,
                     'foreign_key' => $this->id,
                 ]
             ]);
+            if (!$aro) {
+                return null;
+            }
             if (!empty($aro->get('foreign_key'))) {
                 $return = [
                     $aro->get('model') => [

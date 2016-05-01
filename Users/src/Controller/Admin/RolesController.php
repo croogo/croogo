@@ -14,94 +14,12 @@ namespace Croogo\Users\Controller\Admin;
  */
 class RolesController extends AppController
 {
-
-/**
- * Admin index
- *
- * @return void
- * @access public
- */
-    public function index()
+    public function initialize()
     {
-        $this->set('roles', $this->Roles->find('all'));
-        $this->set('displayFields', $this->Roles->displayFields());
-    }
+        parent::initialize();
 
-/**
- * Admin add
- *
- * @return void
- * @access public
- */
-    public function add()
-    {
-        $role = $this->Roles->newEntity();
-
-        if ($this->request->is('post')) {
-            $role = $this->Roles->patchEntity($role, $this->request->data());
-
-            if ($this->Roles->save($role)) {
-                $this->Flash->success(__d('croogo', 'The Role has been saved'));
-
-                if ($this->request->data('apply') === null) {
-                    return $this->redirect(['action' => 'index']);
-                } else {
-                    return $this->redirect(['action' => 'edit', $role->id]);
-                }
-            } else {
-                $this->Flash->error(__d('croogo', 'The Role could not be saved. Please, try again.'));
-            }
-        }
-
-        $this->set('role', $role);
-    }
-
-/**
- * Admin edit
- *
- * @param int$id
- * @return void
- * @access public
- */
-    public function edit($id = null)
-    {
-        $role = $this->Roles->get($id);
-
-        if ($this->request->is('put')) {
-            $this->Roles->patchEntity($role, $this->request->data());
-
-            if ($this->Roles->save($role)) {
-                $this->Flash->success(__d('croogo', 'The Role has been saved'));
-
-                if ($this->request->data('apply') === null) {
-                    return $this->redirect(['action' => 'index']);
-                } else {
-                    return $this->redirect(['action' => 'edit', $role->id]);
-                }
-            } else {
-                $this->Flash->error(__d('croogo', 'The Role could not be saved. Please, try again.'));
-            }
-        }
-
-        $this->set('role', $role);
-    }
-
-/**
- * Admin delete
- *
- * @param int$id
- * @return void
- * @access public
- */
-    public function delete($id = null)
-    {
-        $role = $this->Roles->get($id);
-
-        if ($this->Roles->delete($role)) {
-            $this->Flash->success(__d('croogo', 'Role deleted'));
-        } else {
-            $this->Flash->error(__d('croogo', 'Role cannot be deleted'));
-        }
-        return $this->redirect(['action' => 'index']);
+        $this->Crud->config('actions.index', [
+            'displayFields' => $this->Roles->displayFields()
+        ]);
     }
 }
