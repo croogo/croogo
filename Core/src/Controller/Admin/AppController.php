@@ -41,6 +41,9 @@ class AppController extends CroogoAppController
                     'className' => 'Crud.Lookup',
                     'findMethod' => 'all'
                 ],
+                'view' => [
+                    'className' => 'Crud.View'
+                ],
                 'add' => [
                     'className' => 'Croogo/Core.Admin/Add'
                 ],
