@@ -26,42 +26,6 @@ use Croogo\Taxonomy\Model\Entity\Type;
  */
 class NodesController extends AppController
 {
-
-    /**
-     * Controller name
-     *
-     * @var string
-     * @access public
-     */
-    public $name = 'Nodes';
-
-    /**
-     * Preset Variable Search
-     *
-     * @var array
-     * @access public
-     */
-    public $presetVars = true;
-
-    /**
-     * Models used by the Controller
-     *
-     * @var array
-     * @access public
-     */
-    public $uses = array(
-        'Nodes.Node',
-    );
-
-    /**
-     * afterConstruct
-     */
-    public function afterConstruct()
-    {
-        parent::afterConstruct();
-        $this->_setupAclComponent();
-    }
-
     public function initialize()
     {
         parent::initialize();
@@ -69,91 +33,8 @@ class NodesController extends AppController
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Croogo/Core.BulkProcess');
         $this->loadComponent('Croogo/Core.Recaptcha');
-        $this->loadComponent('Search.Prg', [
-            'presetForm' => [
-                'paramType' => 'querystring',
-            ],
-            'commonProcess' => [
-                'paramType' => 'querystring',
-                'filterEmpty' => true,
-            ],
-        ]);
-    }
 
-    /**
-     * beforeFilter
-     *
-     * @return void
-     * @access public
-     */
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-
-        if (isset($this->request->params['slug'])) {
-            $this->request->params['named']['slug'] = $this->request->params['slug'];
-        }
-        if (isset($this->request->params['type'])) {
-            $this->request->params['named']['type'] = $this->request->params['type'];
-        }
-        $this->Security->config('unlockedActions', 'admin_toggle');
-    }
-
-    /**
-     * Toggle Node status
-     *
-     * @param string $id Node id
-     * @param integer $status Current Node status
-     * @return void
-     */
-    public function toggle($id = null, $status = null)
-    {
-        $this->Croogo->fieldToggle($this->Nodes, $id, $status);
-    }
-
-    /**
-     * Admin index
-     *
-     * @return void
-     * @access public
-     */
-    public function index()
-    {
-        $this->set('title_for_layout', __d('croogo', 'Content'));
-        $this->Prg->commonProcess();
-
-        $this->paginate = [
-            'order' => [
-                'created' => 'DESC'
-            ],
-            'contain' => [
-                'Users'
-            ]
-        ];
-
-        $findQuery = $this->Nodes->find('searchable', $this->Prg->parsedParams());
-
-        $types = $this->Nodes->Taxonomies->Vocabularies->Types->find('all');
-        $typeAliases = collection($types)->extract('alias');
-        $findQuery->where(['type IN' => $typeAliases->toArray()]);
-
-        $nodes = $this->paginate($findQuery);
-
-        $nodeTypes = $this->Nodes->Taxonomies->Vocabularies->Types->find('list', [
-            'keyField' => 'alias',
-            'valueField' => 'title'
-        ])->toArray();
-        $this->set(compact('nodes', 'types', 'typeAliases', 'nodeTypes'));
-
-        if ($this->request->query('type')) {
-            $type = $this->Nodes->Taxonomies->Vocabularies->Types->findByAlias($this->request->query('type'))
-                ->first();
-            $this->set('type', $type);
-        }
-
-        if (!empty($this->request->query('links')) || isset($this->request->query['chooser'])) {
-            $this->viewBuilder()->template('chooser');
-        }
+        $this->_setupPrg();
     }
 
     /**
@@ -178,96 +59,6 @@ class NodesController extends AppController
     }
 
     /**
-     * Admin add
-     *
-     * @param string $typeAlias
-     * @return void
-     * @access public
-     */
-    public function add($typeAlias = 'node')
-    {
-        $type = $this->Nodes->Taxonomies->Vocabularies->Types->findByAlias($typeAlias)->contain('Vocabularies')->first();
-        if (!isset($type->alias)) {
-            $this->Flash->error(__d('croogo', 'Content type does not exist.'));
-            return $this->redirect(array('action' => 'create'));
-        }
-
-        /** @var Node $node */
-        $node = $this->Nodes->newEntity([
-            'type' => $type->alias,
-            'user_id' => $this->Auth->user('id')
-        ]);
-
-        if (!empty($this->request->data)) {
-            $this->Nodes->patchEntity($node, $this->request->data);
-            $node = $this->Nodes->saveNode($node, $typeAlias);
-            if ($node) {
-                Croogo::dispatchEvent('Controller.Nodes.afterAdd', $this, compact('node'));
-                $this->Flash->success(__d('croogo', '%s has been saved', $type->title));
-                $this->Croogo->redirect(['action' => 'edit', $node->id]);
-            } else {
-                $this->Flash->error(__d('croogo', '%s could not be saved. Please, try again.', $type->title));
-            }
-        } else {
-            $this->Croogo->setReferer();
-        }
-
-        $this->set(compact('node'));
-        $this->set('viewVar', 'node');
-
-        $this->Nodes->removeBehavior('Tree');
-        $this->Nodes->addBehavior('Tree', [
-            'scope' => [
-                'Nodes.type' => $node->type,
-            ],
-        ]);
-
-        $this->_setCommonVariables($type, $node);
-    }
-
-    /**
-     * Admin edit
-     *
-     * @param integer $id
-     * @return void
-     * @access public
-     */
-    public function edit($id = null)
-    {
-        if (!$id && empty($this->request->data)) {
-            $this->Flash->error(__d('croogo', 'Invalid content'));
-            return $this->redirect(['action' => 'index']);
-        }
-        $node = $this->Nodes->get($id, [
-            'contain' => [
-                'Users'
-            ]
-        ]);
-        $typeAlias = $node->type;
-        $type = $this->Nodes->Taxonomies->Vocabularies->Types->findByAlias($typeAlias)->contain('Vocabularies')->first();
-
-        if (!empty($this->request->data)) {
-            $node = $this->Nodes->patchEntity($node, $this->request->data);
-            if ($this->Nodes->saveNode($node, $typeAlias)) {
-                Croogo::dispatchEvent('Controller.Nodes.afterEdit', $this, compact('data'));
-                $this->Flash->success(__d('croogo', '%s has been saved', $type->title));
-                $this->Croogo->redirect(array('action' => 'edit', $node->id));
-            } else {
-                $this->Flash->error(__d('croogo', '%s could not be saved. Please, try again.', $type['Type']['title']));
-            }
-        }
-        if (empty($this->request->data)) {
-            $this->Croogo->setReferer();
-        }
-
-        $this->set(compact('node'));
-        $this->set('viewVar', 'node');
-
-        $this->set('title_for_layout', __d('croogo', 'Edit %s: %s', $type->title, $node->title));
-        $this->_setCommonVariables($type, $node);
-    }
-
-    /**
      * Admin update paths
      *
      * @return void
@@ -286,27 +77,6 @@ class NodesController extends AppController
 
         $this->Flash->set($messageFlash, ['element' => 'flash', 'param' => compact('class')]);
         return $this->redirect(['action' => 'index']);
-    }
-
-    /**
-     * Admin delete
-     *
-     * @param integer $id
-     * @return void
-     * @access public
-     */
-    public function delete($id = null)
-    {
-        if (!$id) {
-            $this->Flash->error(__d('croogo', 'Invalid id for Node'));
-            return $this->redirect(['action' => 'index']);
-        }
-
-        $Node = $this->{$this->modelClass};
-        if ($Node->delete($id)) {
-            $this->Flash->success(__d('croogo', 'Node deleted'));
-            return $this->redirect(['action' => 'index']);
-        }
     }
 
     /**
@@ -367,62 +137,90 @@ class NodesController extends AppController
                 'copy' => __d('croogo', 'Nodes copied'),
             ),
         );
-        return $this->BulkProcess->process($this->Nodes, $action, $ids, $options);
+        $this->BulkProcess->process($this->Nodes, $action, $ids, $options);
     }
 
-    public function lookup()
+    public function beforePaginate(Event $event)
     {
-        $this->Prg->commonProcess();
+        /** @var \Cake\ORM\Query $query */
+        $query = $event->subject()->query;
 
-        /* @var \Cake\Orm\Query $lookup */
-        $lookup = $this->Nodes->find('searchable', $this->Prg->parsedParams());
-        $lookup->contain([
-            'Users',
-            /*'Meta', */
-            'Taxonomies',
-        ]);
-        $lookup->select([
-            'id',
-            'parent_id',
-            'type',
-            'user_id',
-            'title',
-            'slug',
-            'body',
-            'excerpt',
-            'status',
-            'promote',
-            'path',
-            'terms',
-            'created',
-            'updated',
-            'publish_start',
-            'publish_end',
+        $query->contain([
+            'Users'
         ]);
 
-        $nodes = $this->paginate($lookup);
+        $types = $this->Nodes->Taxonomies->Vocabularies->Types->find('all');
+        $typeAliases = collection($types)->extract('alias');
+        $this->set([
+            'types' => $types,
+            'typeAliases' => $typeAliases
+        ]);
 
-        $this->set('node', $nodes);
-        $this->set('_serialize', 'node');
+        $nodeTypes = $this->Nodes->Taxonomies->Vocabularies->Types->find('list', [
+            'keyField' => 'alias',
+            'valueField' => 'title'
+        ])->toArray();
+        $this->set('nodeTypes', $nodeTypes);
+
+        if ($this->request->query('type')) {
+            $type = $this->Nodes->Taxonomies->Vocabularies->Types->findByAlias($this->request->query('type'))
+                ->first();
+            $this->set('type', $type);
+        }
+
+        if (!empty($this->request->query('links')) || isset($this->request->query['chooser'])) {
+            $this->Crud->action()->view('chooser');
+        }
     }
 
-    /**
-     * View Fallback
-     *
-     * @param mixed $views
-     * @return string
-     * @access protected
-     * @deprecated Use CroogoComponent::viewFallback()
-     */
-    protected function _viewFallback($views)
+    public function beforeLookup(Event $event)
     {
-        return $this->Croogo->viewFallback($views);
+        /** @var \Cake\ORM\Query $query */
+        $query = $event->subject()->query;
+
+        $query->contain([
+            'Users'
+        ]);
+    }
+
+    public function beforeCrudRender(Event $event)
+    {
+        if (!isset($event->subject()->entity)) {
+            return;
+        }
+
+        $entity = $event->subject()->entity;
+
+        switch ($this->request->action) {
+            case 'add':
+                $typeAlias = $this->request->param('pass.0');
+                break;
+            case 'edit':
+                $typeAlias = $entity->type;
+                break;
+            default:
+                return;
+        }
+
+        $type = $this->Nodes->Taxonomies->Vocabularies->Types->findByAlias($typeAlias)->contain('Vocabularies')->first();
+
+        $this->set('type', $type);
+
+        $this->_setCommonVariables($type);
+    }
+
+    public function implementedEvents()
+    {
+        return parent::implementedEvents() + [
+            'Crud.beforePaginate' => 'beforePaginate',
+            'Crud.beforeLookup' => 'beforeLookup',
+            'Crud.beforeRender' => 'beforeCrudRender',
+        ];
     }
 
     /**
      * Set common form variables to views
-     * @param array $type Type data
-     * @return void
+     * @param array|Type $type Type data
      */
     protected function _setCommonVariables(Type $type)
     {

@@ -48,6 +48,8 @@ class TypesTable extends CroogoTable
                 'type' => 'alias'
             ]
         ]);
+        $this->addBehavior('Search.Search');
+
         $this->belongsToMany('Croogo/Taxonomy.Vocabularies', [
             'joinTable' => 'types_vocabularies',
         ]);

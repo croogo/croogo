@@ -61,6 +61,12 @@ class LinksTable extends CroogoTable
 
         $this->addBehavior('Croogo/Core.Publishable');
         $this->addBehavior('Croogo/Core.Visibility');
+        $this->addBehavior('Search.Search');
+
+        $this->searchManager()
+            ->add('menu_id', 'Search.Value', [
+                'field' => 'menu_id'
+            ]);
     }
 
     protected function _initializeSchema(Schema $table)

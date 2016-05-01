@@ -23,145 +23,15 @@ use Croogo\Menus\Model\Table\LinksTable;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class LinksController extends CroogoAppController {
-
-	use \Crud\Controller\ControllerTrait;
-
-	public function initialize() {
+class LinksController extends AppController
+{
+	public function initialize()
+    {
 		parent::initialize();
 
-		$this->loadComponent('Crud.Crud', [
-			'actions' => [
-				'toggle' => [
-					'className' => 'Croogo/Core.Toggle',
-					'enabled' => true
-				]
-			]
-		]);
 		$this->loadComponent('Croogo/Core.BulkProcess');
 		$this->loadModel('Croogo/Users.Roles');
 	}
-
-/**
- * Admin index
- */
-	public function index() {
-		$menuId = $this->request->query('menu_id');
-
-        $menu = $this->Links->Menus->get($menuId);
-
-        $this->set('title_for_layout', __d('croogo', 'Links: %s', $menu->title));
-
-        $linksTree = $this->Links->find('treeList')->where([
-            'Links.menu_id' => $menuId,
-        ]);
-        $linksStatus = $this->Links->find('list', [
-            'valueField' => 'status',
-        ])->where([
-            'Links.menu_id' => $menuId,
-        ])->toArray();
-        $this->set(compact('linksTree', 'linksStatus', 'menu'));
-        $this->set('_serialize', ['linksTree', 'menu', 'linksStatus']);
-    }
-
-    /**
-     * Admin add
-     *
-     * @param int $menuId
-     *
-     * @return \Cake\Network\Response|null|void
-     */
-    public function add($menuId = null)
-    {
-        $this->set('title_for_layout', __d('croogo', 'Add Link'));
-
-        $link = $this->Links->newEntity([
-            'menu_id' => $menuId
-        ]);
-
-        $menus = $this->Links->Menus->find('list');
-        $menu = $this->Links->Menus->get($link->menu_id);
-        $roles = $this->Roles->find('list');
-        $parentLinks = $this->Links->find('treeList')->where([
-            'menu_id' => $menu->id,
-        ]);
-        $this->set(compact('link', 'menu', 'menus', 'roles', 'parentLinks', 'menuId'));
-
-        if (!$this->request->is('post')) {
-            return;
-        }
-
-
-
-        $link = $this->Links->patchEntity($link, $this->request->data);
-        $this->Links->setTreeScope($link->menu_id);
-        $link = $this->Links->save($link);
-        if (!$link) {
-            $this->Flash->error(__d('croogo', 'The Link could not be saved. Please, try again.'));
-
-            return;
-        }
-
-        $this->Flash->success(__d('croogo', 'The Link has been saved'));
-
-        if (isset($this->request->data['apply'])) {
-            return $this->redirect(['action' => 'edit', $link->id]);
-        } else {
-            return $this->redirect([
-                'action' => 'index',
-                '?' => [
-                    'menu_id' => $menuId
-                ]
-            ]);
-        }
-
-    }
-
-    /**
-     * Admin edit
-     *
-     * @param int $id
-     *
-     * @return \Cake\Network\Response|null|void
-     */
-    public function edit($id = null)
-    {
-        $this->set('title_for_layout', __d('croogo', 'Edit Link'));
-
-        $link = $this->Links->get($id);
-
-        $menus = $this->Links->Menus->find('list');
-        $roles = $this->Roles->find('list');
-        $menu = $this->Links->Menus->get($link->menu_id);
-        $parentLinks = $this->Links->find('treeList')->where([
-            'menu_id' => $menu->id,
-        ]);
-        $this->set(compact('link', 'menu', 'menus', 'roles', 'parentLinks'));
-
-        if (!$this->request->is('put')) {
-            return;
-        }
-
-        $link = $this->Links->patchEntity($link, $this->request->data);
-        if (!$this->Links->save($link)) {
-            $this->Flash->error(__d('croogo', 'The Link could not be saved. Please, try again.'));
-
-            return;
-        }
-
-        $this->Flash->success(__d('croogo', 'The Link has been saved'));
-        if (isset($this->request->data['apply'])) {
-            return $this->redirect(['action' => 'edit', $id]);
-        } else {
-            return $this->redirect([
-                'action' => 'index',
-                '?' => [
-                    'menu_id' => $menu->id
-                ]
-            ]);
-        }
-    }
-
     /**
      * Admin delete
      *
@@ -281,5 +151,42 @@ class LinksController extends CroogoAppController {
         ];
         $options = compact('multiple', 'redirect', 'messageMap');
         return $this->BulkProcess->process($this->Links, $action, $ids, $options);
+    }
+
+    public function beforeCrudRender(Event $event)
+    {
+        $menuId = null;
+        if (isset($event->subject()->entity)) {
+            $menuId = $event->subject()->entity->menu_id;
+        }
+        if ($this->request->query('menu_id')) {
+            $menuId = $this->request->query('menu_id');
+        }
+        if (!$menuId) {
+            return;
+        }
+
+        $menu = $this->Links->Menus->get($menuId);
+
+        $this->set('menu', $menu);
+        $this->set('roles', $this->Roles->find('list'));
+        $this->set('parentLinks', $this->Links->find('treeList')->where([
+            'menu_id' => $menu->id,
+        ]));
+    }
+
+    public function beforeCrudRedirect(Event $event)
+    {
+        $entity = $event->subject()->entity;
+
+        $event->subject()->url['menu_id'] = $entity->menu_id;
+    }
+
+    public function implementedEvents()
+    {
+        return parent::implementedEvents() + [
+            'Crud.beforeRender' => 'beforeCrudRender',
+            'Crud.beforeRedirect' => 'beforeCrudRedirect'
+        ];
     }
 }

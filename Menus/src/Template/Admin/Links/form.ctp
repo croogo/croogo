@@ -73,6 +73,9 @@ echo $this->Html->tabStart('link-misc');
 echo $this->Form->input('description', [
     'label' => __d('croogo', 'Description'),
 ]);
+echo $this->Form->input('class', [
+    'label' => __d('croogo', 'Class'),
+]);
 echo $this->Form->input('rel', [
     'label' => __d('croogo', 'Rel'),
 ]);

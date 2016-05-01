@@ -9,16 +9,6 @@ use Croogo\Nodes\Model\Entity\Node;
 
 class NodesTable extends CroogoTable
 {
-
-    public $filterArgs = [
-        'q' => ['type' => 'query', 'method' => 'filterPublishedNodes'],
-        'filter' => ['type' => 'query', 'method' => 'filterNodes'],
-        'title' => ['type' => 'like'],
-        'type' => ['type' => 'value'],
-        'status' => ['type' => 'value'],
-        'promote' => ['type' => 'value'],
-    ];
-
     public function initialize(array $config)
     {
         parent::initialize($config);
@@ -43,9 +33,7 @@ class NodesTable extends CroogoTable
         ]);
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Croogo/Core.Visibility');
-        $this->addBehavior('Search.Searchable');
-
-        $this->belongsTo('Croogo/Users.Users');
+        $this->addBehavior('Search.Search');
         $this->addBehavior('Timestamp', [
             'events' => [
                 'Model.beforeSave' => [
@@ -54,6 +42,30 @@ class NodesTable extends CroogoTable
                 ],
             ],
         ]);
+
+        $this->belongsTo('Croogo/Users.Users');
+
+        $this->searchManager()
+            ->add('q', 'Search.Finder', [
+                'finder' => 'filterPublishedNodes'
+            ])
+            ->add('filter', 'Search.Finder', [
+                'finder' => 'filterNodes'
+            ])
+            ->add('title', 'Search.Like', [
+                'field' => $this->aliasField('title'),
+                'before' => true,
+                'after' => true
+            ])
+            ->add('type', 'Search.Value', [
+                'field' => $this->aliasField('type')
+            ])
+            ->add('status', 'Search.Value', [
+                'field' => $this->aliasField('status')
+            ])
+            ->add('promote', 'Search.Value', [
+                'field' => $this->aliasField('promote')
+            ]);
     }
 
     /**

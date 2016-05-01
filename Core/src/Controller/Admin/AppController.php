@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Croogo\Core\Croogo;
 use Croogo\Core\Controller\AppController as CroogoAppController;
+use Crud\Controller\ControllerTrait;
 
 /**
  * Croogo App Controller
@@ -20,6 +21,7 @@ use Croogo\Core\Controller\AppController as CroogoAppController;
  */
 class AppController extends CroogoAppController
 {
+    use ControllerTrait;
 
 /**
  * Load the theme component with the admin theme specified
@@ -29,6 +31,34 @@ class AppController extends CroogoAppController
     public function initialize()
     {
         parent::initialize();
+
+        $this->loadComponent('Crud.Crud', [
+            'actions' => [
+                'index' => [
+                    'className' => 'Croogo/Core.Admin/Index'
+                ],
+                'lookup' => [
+                    'className' => 'Crud.Lookup',
+                    'findMethod' => 'all'
+                ],
+                'add' => [
+                    'className' => 'Croogo/Core.Admin/Add'
+                ],
+                'edit' => [
+                    'className' => 'Croogo/Core.Admin/Edit'
+                ],
+                'toggle' => [
+                    'className' => 'Croogo/Core.Admin/Toggle'
+                ],
+                'delete' => [
+                    'className' => 'Crud.Delete'
+                ]
+            ],
+            'listeners' => [
+                'Crud.Search',
+                'Crud.RelatedModels'
+            ]
+        ]);
 
         $this->Theme->config('theme', Configure::read('Site.admin_theme'));
     }

@@ -62,7 +62,7 @@ class SettingsTable extends CroogoTable
 //                'settings',
 //            ],
 //        ]);
-        $this->addBehavior('Search.Searchable');
+        $this->addBehavior('Search.Search');
     }
 
 /**
