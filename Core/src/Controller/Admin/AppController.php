@@ -18,6 +18,8 @@ use Crud\Controller\ControllerTrait;
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
+ *
+ * @property \Crud\Controller\Component\CrudComponent $Crud
  */
 class AppController extends CroogoAppController
 {
