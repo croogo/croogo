@@ -8,6 +8,7 @@ use Cake\Event\Event;
 use Cake\Network\Email\Email;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
+use Cake\Utility\Security;
 use Cake\Utility\Text;
 use Croogo\Core\Croogo;
 use Croogo\Users\Model\Entity\User;
@@ -60,7 +61,9 @@ class UsersController extends AppController
             'Controller.Users.beforeAdminLogin' => 'onBeforeAdminLogin',
             'Controller.Users.adminLoginFailure' => 'onAdminLoginFailure',
             'Croogo.beforeSetupAdminData' => 'beforeSetupAdminData',
-            'Crud.beforePaginate' => 'beforePaginate'
+            'Crud.beforePaginate' => 'beforePaginate',
+            'Crud.beforeLookup' => 'beforeLookup',
+            'Crud.beforeSave' => 'beforeCrudSave'
         ];
     }
 
@@ -107,47 +110,29 @@ class UsersController extends AppController
         return true;
     }
 
-/**
- * Admin index
- *
- * @return void
- * @access public
- * $searchField : Identify fields for search
- */
-
-/**
- * Admin add
- *
- * @return void
- * @access public
- */
-    public function add()
+    /**
+     * @param \Cake\Event\Event $event Event object
+     * @return void
+     */
+    public function beforeCrudSave(Event $event)
     {
-        $user = $this->Users->newEntity();
-
-        if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, Hash::merge($this->request->data(), ['activation_key' => Text::uuid()]));
-
-            if ($this->Users->save($user)) {
-                if ($this->request->data('notification') != null) {
-                    $this->__sendActivationEmail($user);
-                }
-
-                $this->Flash->success(__d('croogo', 'The User has been saved'));
-
-                if ($this->request->data('apply') === null) {
-                    return $this->redirect(['action' => 'index']);
-                } else {
-                    return $this->redirect(['action' => 'edit', $user->id]);
-                }
-            } else {
-                $this->Flash->error(__d('croogo', 'The User could not be saved. Please, try again.'));
-            }
+        /**
+         * @var \Croogo\Users\Model\Entity\User
+         */
+        $entity = $event->subject()->entity;
+        if (!$entity->isNew() && $entity->has('activation_key')) {
+            return;
         }
 
-        $this->set('user', $user);
-        $this->set('roles', $this->Users->Roles->find('list'));
-        $this->set('editFields', $this->Users->editFields());
+        $entity->activation_key = Security::randomBytes(20);
+    }
+
+    public function afterCrudSave(Event $event) {
+        if ($event->subject()->success && $event->subject()->created) {
+            if ($this->request->data('notification') != null) {
+                $this->__sendActivationEmail($event->subject()->entity);
+            }
+        }
     }
 
 /**
@@ -252,13 +237,25 @@ class UsersController extends AppController
         return $this->redirect($this->Auth->logout());
     }
 
-    public function lookup()
+    public function beforeLookup(Event $event)
     {
-        $this->Prg->commonProcess();
+        /** @var \Cake\ORM\Query $query */
+        $query = $event->subject()->query;
 
-        /* @var \Cake\ORM\Query $lookup */
-        $lookup = $this->Users->find('searchable', $this->Prg->parsedParams());
-        $lookup->contain([
+        $query
+            ->select([
+                'id',
+                'username',
+                'name',
+                'website',
+                'image',
+                'bio',
+                'timezone',
+                'status',
+                'created',
+                'updated',
+            ])
+            ->contain([
             'Roles' => [
                 'fields' => [
                     'id',
@@ -267,23 +264,6 @@ class UsersController extends AppController
                 ],
             ],
         ]);
-        $lookup->select([
-            'id',
-            'username',
-            'name',
-            'website',
-            'image',
-            'bio',
-            'timezone',
-            'status',
-            'created',
-            'updated',
-        ]);
-
-        $users = $this->paginate($lookup);
-
-        $this->set('user', $users);
-        $this->set('_serialize', 'user');
     }
 
     public function beforePaginate(Event $event)

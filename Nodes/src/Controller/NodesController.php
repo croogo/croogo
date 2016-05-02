@@ -211,13 +211,12 @@ class NodesController extends AppController
      */
     public function promoted()
     {
-        $this->Prg->commonProcess();
 
         $query = $this->Nodes->find('published')
             ->find('visibilityRole', [
                 'role_id' => $this->Croogo->roleId(),
             ])
-            ->find('searchable', $this->Prg->parsedParams());
+            ->find('search', $this->Nodes->filterParams($this->request->query));
 
         $this->set('nodes', $this->Paginator->paginate($query));
     }

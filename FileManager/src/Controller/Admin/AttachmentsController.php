@@ -3,7 +3,6 @@
 namespace Croogo\FileManager\Controller\Admin;
 
 use Cake\Event\Event;
-use Croogo\FileManager\Model\Entity\Attachment;
 
 /**
  * Attachments Controller
@@ -22,17 +21,9 @@ class AttachmentsController extends AppController
 
     public function initialize()
     {
-        $this->loadComponent('Search.Prg', [
-            'presetForm' => [
-                'paramType' => 'querystring',
-            ],
-            'commonProcess' => [
-                'paramType' => 'querystring',
-                'filterEmpty' => true,
-            ],
-        ]);
-        $this->viewBuilder()->helpers(['Croogo/FileManager.FileManager', 'Croogo/Core.Image']);
         parent::initialize();
+        $this->loadComponent('Search.Prg', ['actions' => 'index']);
+        $this->viewBuilder()->helpers(['Croogo/FileManager.FileManager', 'Croogo/Core.Image']);
     }
 
     /**
@@ -50,6 +41,20 @@ class AttachmentsController extends AppController
         if ($this->action == 'add') {
             $this->Security->csrfCheck = false;
         }
+
+        $this->paginate = [
+            'order' => [
+                'created' => 'DESC',
+            ],
+        ];
+    }
+
+    public function implementedEvents()
+    {
+        return parent::implementedEvents() + [
+            'Crud.beforePaginate' => 'beforePaginate',
+            'Crud.beforeRedirect' => 'beforeCrudRedirect',
+        ];
     }
 
     /**
@@ -58,134 +63,27 @@ class AttachmentsController extends AppController
      * @return void
      * @access public
      */
-    public function index()
+    public function beforePaginate(Event $event)
     {
-        $this->Prg->commonProcess();
-
         $isChooser = false;
         if (isset($this->request->params['links']) || $this->request->query('chooser')) {
             $isChooser = true;
         }
 
-        $this->paginate = [
-            'order' => [
-                'created' => 'DESC',
-            ],
-        ];
-
-        $query = $this->Attachments->find('searchable', $this->Prg->parsedParams());
         if ($isChooser) {
             if ($this->request->query['chooser_type'] == 'image') {
-                $query->where(['mime_type LIKE' => 'image/%']);
+                $event->subject()->query->where(['mime_type LIKE' => 'image/%']);
             } else {
-                $query->where(['mime_type NOT LIKE' => 'image/%']);
+                $event->subject()->query->where(['mime_type NOT LIKE' => 'image/%']);
             }
         }
-        $this->set('attachments', $this->paginate($query));
         $this->set('uploadsDir', $this->Attachments->uploadsDir);
-
-        if ($isChooser) {
-            $this->render('chooser');
-        }
-
     }
 
-    /**
-     * Admin add
-     *
-     * @return void
-     * @access public
-     */
-    public function add()
+    public function beforeCrudRedirect(Event $event)
     {
-        if (isset($this->request->params['named']['editor'])) {
-            $this->layout = 'admin_popup';
-        }
-
-        $attachment = $this->Attachments->newEntity();
-        if ($this->request->is('post')) {
-            $attachment = $this->Attachments->patchEntity($attachment, $this->request->data);
-            if (empty($attachment)) {
-                $attachment->errors(['file' => __d('croogo', 'Upload failed. Please ensure size does not exceed the server limit.')]);
-                $this->set(compact('attachment'));
-                return;
-            }
-
-            $attachment = $this->Attachments->save($attachment);
-            if ($attachment) {
-                $this->Flash->success(__d('croogo', 'The Attachment has been saved'));
-
-                if (isset($this->request->params['editor'])) {
-                    return $this->redirect(['action' => 'browse']);
-                } else {
-                    return $this->redirect(['action' => 'index']);
-                }
-            } else {
-                $this->Flash->error(__d('croogo', 'The Attachment could not be saved. Please, try again.'));
-            }
-        }
-
-        $this->set(compact('attachment'));
-    }
-
-    /**
-     * Admin edit
-     *
-     * @param int $id
-     * @return void
-     * @access public
-     */
-    public function edit($id = null)
-    {
-        if ($this->request->query('editor')) {
-            $this->viewBuilder()->layout('admin_popup');
-        }
-
-        if (!$id && empty($this->request->data)) {
-            $this->Flash->error(__d('croogo', 'Invalid Attachment'));
-            return $this->redirect(['action' => 'index']);
-        }
-        $attachment = $this->Attachments->get($id);
-
-        if ($this->request->is(['post', 'put'])) {
-            $attachment = $this->Attachments->patchEntity($attachment, $this->request->data);
-            $attachment = $this->Attachments->save($attachment);
-            if ($attachment) {
-                $this->Flash->success(__d('croogo', 'The Attachment has been saved'));
-                if ($this->request->query('editor')) {
-                    return $this->Croogo->redirect(['action' => 'browse']);
-                } else {
-                    return $this->Croogo->redirect(['action' => 'edit', $attachment->id]);
-                }
-            } else {
-                $this->Flash->error(__d('croogo', 'The Attachment could not be saved. Please, try again.'));
-            }
-        }
-        $viewVar = 'attachment';
-        $this->set(compact('attachment', 'viewVar'));
-    }
-
-    /**
-     * Admin delete
-     *
-     * @param int $id
-     * @return void
-     * @access public
-     */
-    public function delete($id = null)
-    {
-        if (!$id) {
-            $this->Flash->error(__d('croogo', 'Invalid id for Attachment'));
-            return $this->redirect(['action' => 'index']);
-        }
-
-        $attachment = new Attachment(compact('id'), ['markNew' => false]);
-        if ($this->Attachments->delete($attachment)) {
-            $this->Flash->success(__d('croogo', 'Attachment deleted'));
-            return $this->redirect(['action' => 'index']);
-        } else {
-            $this->Flash->error(__d('croogo', 'Invalid id for Attachment'));
-            return $this->redirect(['action' => 'index']);
+        if (isset($this->request->params['editor'])) {
+            $event->subject()->url = $this->redirect(['action' => 'browse']);
         }
     }
 

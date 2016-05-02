@@ -13,6 +13,8 @@ class ChooserListener extends BaseListener
             return;
         }
 
-        $this->_controller()->viewBuilder()->layout('Croogo/Core.admin_popup');
+        $this->_controller()->viewBuilder()
+            ->layout('Croogo/Core.admin_popup')
+            ->template('chooser');
     }
 }
