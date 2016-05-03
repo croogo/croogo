@@ -23,7 +23,8 @@ class AttachmentsController extends AppController
     {
         parent::initialize();
         $this->loadComponent('Search.Prg', ['actions' => 'index']);
-        $this->viewBuilder()->helpers(['Croogo/FileManager.FileManager', 'Croogo/Core.Image']);
+        $this->viewBuilder()
+            ->helpers(['Croogo/FileManager.FileManager', 'Croogo/Core.Image']);
     }
 
     /**
@@ -65,17 +66,14 @@ class AttachmentsController extends AppController
      */
     public function beforePaginate(Event $event)
     {
-        $isChooser = false;
         if (isset($this->request->params['links']) || $this->request->query('chooser')) {
-            $isChooser = true;
-        }
-
-        if ($isChooser) {
             if ($this->request->query['chooser_type'] == 'image') {
                 $event->subject()->query->where(['mime_type LIKE' => 'image/%']);
             } else {
                 $event->subject()->query->where(['mime_type NOT LIKE' => 'image/%']);
             }
+            $this->Crud->action()
+                ->view('chooser');
         }
         $this->set('uploadsDir', $this->Attachments->uploadsDir);
     }
@@ -95,7 +93,8 @@ class AttachmentsController extends AppController
      */
     public function browse()
     {
-        $this->viewBuilder()->layout('admin_popup');
+        $this->viewBuilder()
+            ->layout('admin_popup');
         $this->setAction('index');
         $this->request->params['action'] = 'browse'; //Reset the action value
         return $this->render('browse');

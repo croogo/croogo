@@ -7,13 +7,7 @@ $this->Html->addCrumb(__d('croogo', 'Attachments'),
         ['plugin' => 'Croogo/FileManager', 'controller' => 'attachments', 'action' => 'index'])
     ->addCrumb(__d('croogo', 'Upload'));
 
-$formUrl = ['controller' => 'attachments', 'action' => 'add'];
-if (isset($this->request->params['named']['editor'])) {
-    $formUrl['editor'] = 1;
-}
-
 $this->append('form-start', $this->Form->create($attachment, [
-    'url' => $formUrl,
     'type' => 'file',
 ]));
 
@@ -22,11 +16,13 @@ echo $this->Croogo->adminTab(__d('croogo', 'Upload'), '#attachment-upload');
 $this->end();
 
 $this->append('tab-content');
-echo $this->Html->tabStart('attachment-upload') . $this->Form->input('file', [
+echo $this->Html->tabStart('attachment-upload');
+echo $this->Form->input('file', [
         'type' => 'file',
         'label' => __d('croogo', 'Upload'),
+        'nestedInput' => true,
         'templates' => [
-            ''
+            'formGroup' => '{{label}}',
         ]
     ]);
 echo $this->Html->tabEnd();

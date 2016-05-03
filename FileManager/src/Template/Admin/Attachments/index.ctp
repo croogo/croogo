@@ -4,6 +4,26 @@ $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html->addCrumb(__d('croogo', 'Attachments'));
 
+$this->Html->script([
+    'Croogo/FileManager.lib/dropzone',
+    'Croogo/FileManager.attachments/index'
+], ['block' => 'scriptBottom']);
+
+$this->start('body-footer');
+echo $this->Html->tag('span', $this->Url->build(['action' => 'add']), ['id' => 'dropzone-url', 'class' => 'hidden']);
+echo $this->Html->tag('div', $this->Html->tag('p', __d('croogo', 'Drop files here to upload')), ['id' => 'dropzone-target']);
+//echo $this->Form->create(null, [
+//    'type' => 'file',
+//    'class' => 'dropzone',
+//    'id' => 'upload-dropzone',
+//    'url' => [
+//        'action' => 'add'
+//    ]
+//]);
+//echo $this->Html->div('dz-message', '');
+//echo $this->Form->end();
+$this->end();
+
 $this->start('table-heading');
 $tableHeaders = $this->Html->tableHeaders([
     $this->Paginator->sort('id', __d('croogo', 'Id')),
