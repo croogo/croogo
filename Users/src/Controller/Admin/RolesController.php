@@ -14,6 +14,8 @@ namespace Croogo\Users\Controller\Admin;
  */
 class RolesController extends AppController
 {
+    public $modelClass = 'Croogo/Users.Roles';
+
     public function initialize()
     {
         parent::initialize();

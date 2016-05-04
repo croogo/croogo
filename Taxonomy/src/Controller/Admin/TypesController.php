@@ -16,6 +16,8 @@ namespace Croogo\Taxonomy\Controller\Admin;
  */
 class TypesController extends AppController
 {
+    public $modelClass = 'Croogo/Taxonomy.Types';
+
     public function initialize()
     {
         parent::initialize();
