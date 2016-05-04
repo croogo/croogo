@@ -42,6 +42,7 @@ class RecaptchaHelper extends AppHelper {
 		);
 		$options = array_merge($_defaults, $options);
 
+		$this->_View->Form->unlockField('g-recaptcha-response');
 		$div = $this->Html->div('g-recaptcha', '&nbsp;', $options);
 		return $div;
 	}
