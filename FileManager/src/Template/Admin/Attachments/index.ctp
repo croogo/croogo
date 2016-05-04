@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \Croogo\Core\View\CroogoView $this
+ */
+
 $this->assign('title', __d('croogo', 'Attachments'));
 $this->extend('Croogo/Core./Common/admin_index');
 
@@ -11,17 +15,12 @@ $this->Html->script([
 
 $this->start('body-footer');
 echo $this->Html->tag('span', $this->Url->build(['action' => 'add']), ['id' => 'dropzone-url', 'class' => 'hidden']);
+echo $this->Html->tag('span', $this->Url->build('/', true), ['id' => 'base-url', 'class' => 'hidden']);
 echo $this->Html->tag('div', $this->Html->tag('p', __d('croogo', 'Drop files here to upload')), ['id' => 'dropzone-target']);
-//echo $this->Form->create(null, [
-//    'type' => 'file',
-//    'class' => 'dropzone',
-//    'id' => 'upload-dropzone',
-//    'url' => [
-//        'action' => 'add'
-//    ]
-//]);
-//echo $this->Html->div('dz-message', '');
-//echo $this->Form->end();
+echo $this->Html->tag('script', $this->element('Croogo/FileManager.admin/dropzone_preview'), ['id' => 'dropzone-preview', 'type' => 'text/html']);
+$this->Form->create(null, ['url' => ['action' => 'add']]);
+$this->Form->unlockField('file');
+echo $this->Html->tag('div', $this->Form->secure([]), ['id' => 'tokens']);
 $this->end();
 
 $this->start('table-heading');
@@ -76,7 +75,5 @@ foreach ($attachments as $attachment) {
         $actions,
     ];
 }
-
 echo $this->Html->tableCells($rows);
-
 $this->end();

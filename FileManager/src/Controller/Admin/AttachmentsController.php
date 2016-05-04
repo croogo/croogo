@@ -22,6 +22,9 @@ class AttachmentsController extends AppController
     public function initialize()
     {
         parent::initialize();
+
+        $this->Crud->addListener('Crud.Api');
+
         $this->loadComponent('Search.Prg', ['actions' => 'index']);
         $this->viewBuilder()
             ->helpers(['Croogo/FileManager.FileManager', 'Croogo/Core.Image']);
@@ -98,5 +101,16 @@ class AttachmentsController extends AppController
         $this->setAction('index');
         $this->request->params['action'] = 'browse'; //Reset the action value
         return $this->render('browse');
+    }
+
+    public function add()
+    {
+        $this->Crud->action()
+            ->config('api.success.data.entity', [
+                'title',
+                'path'
+            ]);
+
+        return $this->Crud->execute();
     }
 }
