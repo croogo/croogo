@@ -31,7 +31,9 @@ class ContactsController extends ContactsAppController {
  */
 	public $components = array(
 		'Croogo.Akismet',
-		'Croogo.Recaptcha',
+		'Croogo.Recaptcha' => array(
+			'actions' => array('view')
+		)
 	);
 
 /**
@@ -241,7 +243,7 @@ class ContactsController extends ContactsAppController {
 		if (!empty($this->request->data) &&
 			$contact['Contact']['message_captcha'] &&
 			$continue === true &&
-			!$this->Recaptcha->valid($this->request)) {
+			!$this->Recaptcha->verify()) {
 			$continue = false;
 			$this->Session->setFlash(__d('croogo', 'Invalid captcha entry'), 'flash', array('class' => 'error'));
 		}
