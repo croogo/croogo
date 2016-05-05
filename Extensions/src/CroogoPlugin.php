@@ -222,16 +222,16 @@ class CroogoPlugin
     {
         $dir = $pluginDir . $path . DS;
         $composerFile = $dir . 'composer.json';
-        if (file_exists($composerFile)) {
+        if (file_exists($dir . 'config' . DS . 'plugin.json')) {
+            return true;
+        }
+        if (file_exists($composerFile) && !$this->_isCroogoTheme($pluginDir, $path)) {
             $pluginData = json_decode(file_get_contents($composerFile), true);
             if (isset($pluginData['require']['Croogo/Core']) ||
                 isset($pluginData['require']['croogo/croogo'])
             ) {
                 return true;
             }
-        }
-        if (file_exists($dir . 'config' . DS . 'plugin.json')) {
-            return true;
         }
 
         return false;
