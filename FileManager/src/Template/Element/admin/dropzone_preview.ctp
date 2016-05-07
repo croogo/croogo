@@ -4,6 +4,7 @@
  */
 ?>
 <tr class="dz-preview">
+    <td></td>
     <td class="dz-id"><span data-dz-id></span></td>
     <td class="dz-thumbnail">
         <img data-dz-thumbnail/>

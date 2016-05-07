@@ -8,23 +8,31 @@ $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html->addCrumb(__d('croogo', 'Attachments'));
 
+$this->Croogo->adminScript('Croogo/FileManager.admin');
 $this->Html->script([
     'Croogo/FileManager.lib/dropzone',
     'Croogo/FileManager.attachments/index'
 ], ['block' => 'scriptBottom']);
 
 $this->start('body-footer');
-echo $this->Html->tag('span', $this->Url->build(['action' => 'add']), ['id' => 'dropzone-url', 'class' => 'hidden']);
+echo $this->Html->tag('span', $this->Url->build(['action' => 'add', 'prefix' => 'admin']), ['id' => 'dropzone-url', 'class' => 'hidden']);
 echo $this->Html->tag('span', $this->Url->build('/', true), ['id' => 'base-url', 'class' => 'hidden']);
 echo $this->Html->tag('div', $this->Html->tag('p', __d('croogo', 'Drop files here to upload')), ['id' => 'dropzone-target']);
 echo $this->Html->tag('script', $this->element('Croogo/FileManager.admin/dropzone_preview'), ['id' => 'dropzone-preview', 'type' => 'text/html']);
-$this->Form->create(null, ['url' => ['action' => 'add']]);
+$this->Form->create(null, ['url' => ['action' => 'add', 'prefix' => 'admin']]);
 $this->Form->unlockField('file');
 echo $this->Html->tag('div', $this->Form->secure([]), ['id' => 'tokens']);
+$this->Form->end();
 $this->end();
+
+$this->append('form-start', $this->Form->create(null, [
+    'url' => ['action' => 'process'],
+    'align' => 'inline',
+]));
 
 $this->start('table-heading');
 $tableHeaders = $this->Html->tableHeaders([
+    $this->Form->checkbox('checkAll', ['id' => 'AttachmentsCheckAll']),
     $this->Paginator->sort('id', __d('croogo', 'Id')),
     '&nbsp;',
     $this->Paginator->sort('title', __d('croogo', 'Title')),
@@ -66,6 +74,7 @@ foreach ($attachments as $attachment) {
     $actions = $this->Html->div('item-actions', implode(' ', $actions));
 
     $rows[] = [
+        $this->Form->checkbox('Attachments.' . $attachment->id . '.id', ['class' => 'row-select']),
         $attachment->id,
         $thumbnail,
         $this->Html->tag('div', $attachment->title, ['class' => 'ellipsis']),
@@ -77,3 +86,29 @@ foreach ($attachments as $attachment) {
 }
 echo $this->Html->tableCells($rows);
 $this->end();
+
+$this->start('bulk-action');
+echo $this->Form->input('Attachments.action', [
+    'label' => __d('croogo', 'Bulk actions'),
+    'class' => 'c-select',
+    'options' => [
+        'delete' => __d('croogo', 'Delete'),
+    ],
+    'empty' => 'Bulk actions',
+]);
+
+$jsVarName = uniqid('confirmMessage_');
+echo $this->Form->button(__d('croogo', 'Apply'), [
+    'type' => 'button',
+    'class' => 'bulk-process btn-primary-outline',
+    'data-relatedElement' => '#attachments-action',
+    'data-confirmMessage' => $jsVarName,
+    'escape' => true,
+]);
+
+$this->Js->set($jsVarName, __d('croogo', '%s selected items?'));
+$this->Js->buffer("$('.bulk-process').on('click', Attachments.confirmProcess);");
+
+$this->end();
+
+$this->append('form-end', $this->Form->end());

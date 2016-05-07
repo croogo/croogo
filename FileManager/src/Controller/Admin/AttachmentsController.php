@@ -26,6 +26,7 @@ class AttachmentsController extends AppController
         $this->Crud->addListener('Crud.Api');
 
         $this->loadComponent('Search.Prg', ['actions' => 'index']);
+        $this->loadComponent('Croogo/Core.BulkProcess');
         $this->viewBuilder()
             ->helpers(['Croogo/FileManager.FileManager', 'Croogo/Core.Image']);
     }
@@ -103,6 +104,9 @@ class AttachmentsController extends AppController
         return $this->render('browse');
     }
 
+    /**
+     * @return \Cake\Network\Response
+     */
     public function add()
     {
         $this->Crud->action()
@@ -112,5 +116,24 @@ class AttachmentsController extends AppController
             ]);
 
         return $this->Crud->execute();
+    }
+
+    /**
+     * Admin process
+     *
+     * @return void
+     * @access public
+     */
+    public function process()
+    {
+        list($action, $ids) = $this->BulkProcess->getRequestVars($this->Attachments->alias());
+
+        $options = [
+            'multiple' => ['copy' => false],
+            'messageMap' => [
+                'delete' => __d('croogo', 'Attachments deleted'),
+            ],
+        ];
+        $this->BulkProcess->process($this->Attachments, $action, $ids, $options);
     }
 }
