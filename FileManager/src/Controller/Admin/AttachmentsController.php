@@ -97,11 +97,11 @@ class AttachmentsController extends AppController
      */
     public function browse()
     {
-        $this->viewBuilder()
-            ->layout('admin_popup');
-        $this->setAction('index');
-        $this->request->params['action'] = 'browse'; //Reset the action value
-        return $this->render('browse');
+        $this
+            ->viewBuilder()
+            ->layout('Croogo/Core.admin_popup');
+        $this->Crud->action('index')->config('template', 'browse');
+        return $this->Crud->execute('index');
     }
 
     /**
