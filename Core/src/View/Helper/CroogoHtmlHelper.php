@@ -48,6 +48,43 @@ class CroogoHtmlHelper extends HtmlHelper
     }
 
     /**
+     * @return array
+     */
+    public function implementedEvents()
+    {
+        $events = parent::implementedEvents();
+        $events['Helper.Layout.beforeFilter'] = [
+            'callable' => 'filter',
+            'passParams' => true,
+        ];
+        return $events;
+    }
+
+    /**
+     * Filter content for Scripts and css tags
+     *
+     * Replaces [script url] or [css url] with Menu list
+     *
+     * @param Event $event
+     * @return string
+     */
+    public function filter(Event $event, $options = [])
+    {
+        preg_match_all('/\[(script|css):([^]]*)\]/i', $event->data['content'], $tagMatches);
+        for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
+            if ($tagMatches[1][$i] === 'script') {
+                $this->script($tagMatches[2][$i], ['block' => true]);
+            } elseif ($tagMatches[1][$i] === 'css') {
+                $this->css($tagMatches[2][$i], ['block' => true]);
+            }
+
+            $event->data['content'] = str_replace($tagMatches[0][$i], '', $event->data['content']);
+        }
+
+        return $event->data;
+    }
+
+    /**
      * Creates a formatted IMG element.
      *
      * @see HtmlHelper::image()
@@ -100,9 +137,10 @@ class CroogoHtmlHelper extends HtmlHelper
         unset($options['icon']);
 
         return $this->formatTemplate('beginbox', [
-            'attrs' => $this->templater()->formatAttributes($options),
+            'attrs' => $this->templater()
+                ->formatAttributes($options),
             'icon' => $icon,
-            'title' => $title
+            'title' => $title,
         ]);
     }
 
