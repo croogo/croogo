@@ -4,6 +4,7 @@ namespace Croogo\Menus\View\Helper;
 
 use Cake\Event\Event;
 use Cake\Routing\Router;
+use Cake\Utility\Hash;
 use Cake\View\Helper;
 use Cake\View\View;
 use Croogo\Core\Nav;
@@ -122,6 +123,7 @@ class MenusHelper extends Helper
             for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
                 $options[$attributes[1][$j]] = $attributes[2][$j];
             }
+            $options = Hash::expand($options);
             $event->data['content'] = str_replace($tagMatches[0][$i], $this->menu($menuAlias, $options), $event->data['content']);
         }
         return $event->data;
