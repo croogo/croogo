@@ -63,7 +63,7 @@ class CroogoHtmlHelper extends HtmlHelper
     /**
      * Filter content for Scripts and css tags
      *
-     * Replaces [script url] or [css url] with Menu list
+     * Replaces [script:url] or [css:url] with script/css tags
      *
      * @param Event $event
      * @return string
