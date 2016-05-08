@@ -1,6 +1,6 @@
 <div class="meta-fields">
     <?php
-    if (isset($entity) && $entity->has('meta')) {
+    if (isset($entity) && !empty($entity->meta)) {
         $fields = \Cake\Utility\Hash::combine($entity->meta, '{n}.key', '{n}.value');
         $fieldsKeyToId = \Cake\Utility\Hash::combine($entity->meta, '{n}.key', '{n}.id');
     } else {

@@ -100,10 +100,14 @@ class NodesTable extends CroogoTable
      */
     public function isUniquePerType(Entity $entity)
     {
-        return $this->exists([
+        $conditions = [
             $this->aliasField('slug') => $entity->slug,
             $this->aliasField('type') => $entity->type
-        ]);
+        ];
+        if (!$entity->isNew()) {
+            $conditions[$this->aliasField('id') . ' !='] = $entity->id;
+        }
+        return !$this->exists($conditions);
     }
 
     /**
