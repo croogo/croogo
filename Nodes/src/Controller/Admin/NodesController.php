@@ -209,12 +209,24 @@ class NodesController extends AppController
         $this->_setCommonVariables($type);
     }
 
+    /**
+     * @param \Cake\Event\Event $event
+     * @return void
+     */
+    public function beforeCrudSave(Event $event)
+    {
+        if ($this->request->action === 'add') {
+            $event->subject()->entity->type = $this->request->param('pass.0');
+        }
+    }
+
     public function implementedEvents()
     {
         return parent::implementedEvents() + [
             'Crud.beforePaginate' => 'beforePaginate',
             'Crud.beforeLookup' => 'beforeLookup',
             'Crud.beforeRender' => 'beforeCrudRender',
+            'Crud.beforeSave' => 'beforeCrudSave'
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace Croogo\Meta\Model\Behavior;
 
+use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
@@ -64,7 +65,10 @@ class MetaBehavior extends Behavior
         $query
             ->contain(['Meta'])
             ->formatResults(function ($resultSet) {
-                return $resultSet->map(function (Entity $entity) {
+                return $resultSet->map(function ($entity) {
+                    if (!$entity instanceof EntityInterface) {
+                        return $entity;
+                    }
                     $this->_table->dispatchEvent('Model.Meta.formatFields', compact('entity'));
                     $customFields = [];
                     if (!empty($entity->meta)) {
