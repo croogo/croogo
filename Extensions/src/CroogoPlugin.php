@@ -271,7 +271,7 @@ class CroogoPlugin
         return in_array($plugin, $this->bundledPlugins) || in_array($plugin, $this->corePlugins);
     }
 
-    protected function _loadData($alias, $pluginPath)
+    protected function _loadData($alias, $pluginPath, $ignoreMigration = true)
     {
         $active = $this->isActive($alias);
         $manifestFile = $pluginPath . DS . 'config' . DS . 'plugin.json';
@@ -309,11 +309,13 @@ class CroogoPlugin
                 }
             }
 
-            $pluginData['needMigration'] = $this->needMigration($alias, $active);
+            if (!$ignoreMigration) {
+                $pluginData['needMigration'] = $this->needMigration($alias, $active);
+            }
 
             return $pluginData;
         } elseif ($this->_isBuiltin($alias)) {
-            if ($this->needMigration($alias, $active)) {
+            if (!$ignoreMigration && $this->needMigration($alias, $active)) {
                 $pluginData = [
                     'name' => $alias,
                     'description' => "Croogo $alias plugin",
@@ -334,13 +336,13 @@ class CroogoPlugin
      * @param string $alias plugin folder name
      * @return array|bool array of plugin manifest or boolean false
      */
-    public function getData($alias = null)
+    public function getData($alias = null, $ignoreMigrations = true)
     {
         $pluginPath = Configure::read('plugins.' . $alias);
         if (!$pluginPath) {
             return false;
         }
-        return $this->_loadData($alias, $pluginPath);
+        return $this->_loadData($alias, $pluginPath, $ignoreMigrations);
     }
 
     /**
@@ -356,19 +358,19 @@ class CroogoPlugin
     }
 
     /**
-     * Get a list of plugins available with all available meta data.
+     * Get a list of plugins available with all available meta data including migration status.
      * Plugin without metadata are excluded.
      *
      * @return array array of plugins, listed according to bootstrap order
      */
-    public function plugins()
+    public function plugins($ignoreMigrations = true)
     {
         $pluginAliases = $this->getPlugins();
         $allPlugins = [];
         foreach ($pluginAliases as $pluginAlias => $pluginPath) {
-            $pluginData = $this->getData($pluginAlias);
+            $pluginData = $this->getData($pluginAlias, $ignoreMigrations);
             if (!$pluginData) {
-                $pluginData = $this->_loadData($pluginAlias, $pluginPath);
+                $pluginData = $this->_loadData($pluginAlias, $pluginPath, $ignoreMigrations);
             }
             $allPlugins[$pluginAlias] = $pluginData;
         }
@@ -376,7 +378,7 @@ class CroogoPlugin
         $activePlugins = [];
         $bootstraps = explode(',', Configure::read('Hook.bootstraps'));
         foreach ($bootstraps as $pluginAlias) {
-            if ($pluginData = $this->getData($pluginAlias)) {
+            if ($pluginData = $this->getData($pluginAlias, $ignoreMigrations)) {
                 $activePlugins[$pluginAlias] = $pluginData;
             }
         }
