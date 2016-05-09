@@ -194,11 +194,12 @@ class NodesController extends AppController
         $nodes = $this->paginate($query);
 
         $this->set(compact('term', 'type', 'nodes'));
+        $camelizedType = Inflector::camelize($type->alias, '-');
         $this->Croogo->viewFallback([
             'term_' . $term->id,
             'term_' . $term->slug,
-            $type->alias . '/term_' . $term['Term']['slug'],
-            $type->alias . '/term',
+            $camelizedType . '/term_' . $term['Term']['slug'],
+            $camelizedType . '/term',
         ]);
     }
 
@@ -263,9 +264,10 @@ class NodesController extends AppController
         $criteria = $Node->parseCriteria($this->Prg->parsedParams());
         $nodes = $this->paginate($criteria);
         $this->set(compact('q', 'nodes'));
-        if ($typeAlias) {
+        if ($type) {
+            $camelizedType = Inflector::camelize($type->alias, '-');
             $this->Croogo->viewFallback([
-                'search_' . $typeAlias,
+                $camelizedType . '/search',
             ]);
         }
     }
@@ -318,10 +320,12 @@ class NodesController extends AppController
 
         $this->set('title_for_layout', $node->title);
         $this->set(compact('node', 'type'));
+
+        $camelizedType = Inflector::camelize($type->alias, '-');
         $this->Croogo->viewFallback([
             'view_' . $node->id,
-            $type->alias . '/view_' . $node->slug,
-            $type->alias . '/view',
+            $camelizedType . '/view_' . $node->slug,
+            $camelizedType . '/view',
         ]);
     }
 
