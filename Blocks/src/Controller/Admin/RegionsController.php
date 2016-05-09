@@ -14,6 +14,8 @@ namespace Croogo\Blocks\Controller\Admin;
  */
 class RegionsController extends AppController
 {
+    public $modelClass = 'Croogo/Blocks.Regions';
+
     public function initialize()
     {
         parent::initialize();

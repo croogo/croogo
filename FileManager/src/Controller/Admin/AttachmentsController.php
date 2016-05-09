@@ -22,8 +22,13 @@ class AttachmentsController extends AppController
     public function initialize()
     {
         parent::initialize();
+
+        $this->Crud->addListener('Crud.Api');
+
         $this->loadComponent('Search.Prg', ['actions' => 'index']);
-        $this->viewBuilder()->helpers(['Croogo/FileManager.FileManager', 'Croogo/Core.Image']);
+        $this->loadComponent('Croogo/Core.BulkProcess');
+        $this->viewBuilder()
+            ->helpers(['Croogo/FileManager.FileManager', 'Croogo/Core.Image']);
     }
 
     /**
@@ -65,17 +70,14 @@ class AttachmentsController extends AppController
      */
     public function beforePaginate(Event $event)
     {
-        $isChooser = false;
         if (isset($this->request->params['links']) || $this->request->query('chooser')) {
-            $isChooser = true;
-        }
-
-        if ($isChooser) {
             if ($this->request->query['chooser_type'] == 'image') {
                 $event->subject()->query->where(['mime_type LIKE' => 'image/%']);
             } else {
                 $event->subject()->query->where(['mime_type NOT LIKE' => 'image/%']);
             }
+            $this->Crud->action()
+                ->view('chooser');
         }
         $this->set('uploadsDir', $this->Attachments->uploadsDir);
     }
@@ -95,9 +97,43 @@ class AttachmentsController extends AppController
      */
     public function browse()
     {
-        $this->viewBuilder()->layout('admin_popup');
-        $this->setAction('index');
-        $this->request->params['action'] = 'browse'; //Reset the action value
-        return $this->render('browse');
+        $this
+            ->viewBuilder()
+            ->layout('Croogo/Core.admin_popup');
+        $this->Crud->action('index')->config('template', 'browse');
+        return $this->Crud->execute('index');
+    }
+
+    /**
+     * @return \Cake\Network\Response
+     */
+    public function add()
+    {
+        $this->Crud->action()
+            ->config('api.success.data.entity', [
+                'title',
+                'path'
+            ]);
+
+        return $this->Crud->execute();
+    }
+
+    /**
+     * Admin process
+     *
+     * @return void
+     * @access public
+     */
+    public function process()
+    {
+        list($action, $ids) = $this->BulkProcess->getRequestVars($this->Attachments->alias());
+
+        $options = [
+            'multiple' => ['copy' => false],
+            'messageMap' => [
+                'delete' => __d('croogo', 'Attachments deleted'),
+            ],
+        ];
+        $this->BulkProcess->process($this->Attachments, $action, $ids, $options);
     }
 }

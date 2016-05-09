@@ -14,6 +14,8 @@ namespace Croogo\Contacts\Controller\Admin;
  */
 class ContactsController extends AppController
 {
+    public $modelClass = 'Croogo/Contacts.Contacts';
+
     public function initialize()
     {
         parent::initialize();

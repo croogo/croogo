@@ -151,6 +151,8 @@ class NodesController extends AppController
 
         $types = $this->Nodes->Taxonomies->Vocabularies->Types->find('all');
         $typeAliases = collection($types)->extract('alias');
+        $query->where(['type IN' => $typeAliases->toArray()]);
+
         $this->set([
             'types' => $types,
             'typeAliases' => $typeAliases

@@ -11,7 +11,7 @@ Configure::write('Wysiwyg.attachmentBrowseUrl', [
 ]);
 
 Croogo::mergeConfig('Wysiwyg.actions', [
-    'Admin/Attachments.browse',
+    'Croogo/FileManager.Admin/Attachments.browse',
 ]);
 
 Configure::write('FileManager', [

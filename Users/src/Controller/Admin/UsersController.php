@@ -25,6 +25,7 @@ use Croogo\Users\Model\Entity\User;
  */
 class UsersController extends AppController
 {
+    public $modelClass = 'Croogo/Users.Users';
 
 /**
  * Initialize
