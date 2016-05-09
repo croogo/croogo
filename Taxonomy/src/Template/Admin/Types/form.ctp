@@ -100,6 +100,11 @@ echo $this->Html->beginBox(__d('croogo', 'Publishing'));
         'label' => __d('croogo', 'Show date'),
         'class' => false,
     ]);
+    echo $this->Form->input('format_use_wysiwyg', [
+        'label' => __d('croogo', 'Use rich editor'),
+        'class' => false,
+        'default' => true
+    ]);
     echo $this->Html->endBox();
 $this->end();
 
