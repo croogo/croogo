@@ -55,7 +55,7 @@ class RegionsHelper extends Helper
      * @param array $options
      * @return string
      */
-    public function block(Block $block, $regionAlias, $options = [])
+    public function block(Block $block, $regionAlias = null, $options = [])
     {
         $output = '';
 
