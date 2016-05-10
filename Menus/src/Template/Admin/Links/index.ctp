@@ -33,57 +33,52 @@ echo $this->Html->tag('thead', $tableHeaders);
 $this->end();
 
 $this->append('table-body');
-
 $rows = [];
-foreach ($links as $link):
+foreach ($linksTree as $linkId => $linkTitle):
     $actions = [];
     $actions[] = $this->Croogo->adminRowAction('', [
         'action' => 'moveUp',
-        $link->id,
+        $linkId,
     ], [
         'icon' => $this->Theme->getIcon('move-up'),
         'tooltip' => __d('croogo', 'Move up'),
     ]);
     $actions[] = $this->Croogo->adminRowAction('', [
         'action' => 'moveDown',
-        $link->id,
+        $linkId,
     ], [
         'icon' => $this->Theme->getIcon('move-down'),
         'tooltip' => __d('croogo', 'Move down'),
     ]);
-    $actions[] = $this->Croogo->adminRowActions($link->id);
+    $actions[] = $this->Croogo->adminRowActions($linkId);
     $actions[] = $this->Croogo->adminRowAction('', [
         'action' => 'edit',
-        $link->id,
+        $linkId,
     ], [
         'icon' => $this->Theme->getIcon('update'),
         'tooltip' => __d('croogo', 'Edit this item'),
     ]);
-
-    $actions[] = $this->Croogo->adminRowAction('', '#Link' . $link->id . 'Id', [
-            'icon' => $this->Theme->getIcon('copy'),
-            'tooltip' => __d('croogo', 'Create a copy'),
-            'rowAction' => 'copy',
-        ], __d('croogo', 'Create a copy of this Link?'));
-
-    $actions[] = $this->Croogo->adminRowAction('', '#Link' . $link->id . 'Id', [
-            'icon' => $this->Theme->getIcon('delete'),
-            'class' => 'delete',
-            'tooltip' => __d('croogo', 'Delete this item'),
-            'rowAction' => 'delete',
-        ], __d('croogo', 'Are you sure?'));
+    $actions[] = $this->Croogo->adminRowAction('', '#Link' . $linkId . 'Id', [
+        'icon' => $this->Theme->getIcon('copy'),
+        'tooltip' => __d('croogo', 'Create a copy'),
+        'rowAction' => 'copy',
+    ], __d('croogo', 'Create a copy of this Link?'));
+    $actions[] = $this->Croogo->adminRowAction('', '#Link' . $linkId . 'Id', [
+        'icon' => $this->Theme->getIcon('delete'),
+        'class' => 'delete',
+        'tooltip' => __d('croogo', 'Delete this item'),
+        'rowAction' => 'delete',
+    ], __d('croogo', 'Are you sure?'));
     $actions = $this->Html->div('item-actions', implode(' ', $actions));
-
-    if ($link->status == Status::PREVIEW) {
-        $link->title .= ' ' . $this->Html->tag('span', __d('croogo', 'preview'), ['class' => 'label label-warning']);
+    if ($linksStatus[$linkId] == Status::PREVIEW) {
+        $linkTitle .= ' ' . $this->Html->tag('span', __d('croogo', 'preview'), ['class' => 'label label-warning']);
     }
-
     $rows[] = [
-        $this->Form->checkbox('Links.' . $link->id . '.id', ['class' => 'row-select']),
-        $link->title,
+        $this->Form->checkbox('Links.' . $linkId . '.id', ['class' => 'row-select']),
+        $linkTitle,
         $this->element('Croogo/Core.admin/toggle', [
-            'id' => $link->id,
-            'status' => (int)$link->status,
+            'id' => $linkId,
+            'status' => (int)$linksStatus[$linkId],
         ]),
         $actions,
     ];

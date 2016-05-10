@@ -7,7 +7,6 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Croogo\Core\Controller\Component\CroogoComponent;
 use Croogo\Core\Controller\CroogoAppController;
-use Croogo\Core\Croogo;
 use Croogo\Menus\Controller\MenusAppController;
 use Croogo\Menus\Model\Table\LinksTable;
 
@@ -25,13 +24,34 @@ use Croogo\Menus\Model\Table\LinksTable;
  */
 class LinksController extends AppController
 {
-	public function initialize()
+    public function initialize()
     {
-		parent::initialize();
+        parent::initialize();
 
-		$this->loadComponent('Croogo/Core.BulkProcess');
-		$this->loadModel('Croogo/Users.Roles');
-	}
+        $this->loadComponent('Croogo/Core.BulkProcess');
+        $this->loadModel('Croogo/Users.Roles');
+    }
+
+    public function index()
+    {
+        $menuId = $this->request->query('menu_id');
+        $menu = $this->Links->Menus->get($menuId);
+        $this->set('title_for_layout', __d('croogo', 'Links: %s', $menu->title));
+        $linksTree = $this->Links->find('treeList')
+            ->where([
+                'Links.menu_id' => $menuId,
+            ]);
+        $linksStatus = $this->Links->find('list', [
+            'valueField' => 'status',
+        ])
+            ->where([
+                'Links.menu_id' => $menuId,
+            ])
+            ->toArray();
+        $this->set(compact('linksTree', 'linksStatus', 'menu'));
+        $this->set('_serialize', ['linksTree', 'menu', 'linksStatus']);
+    }
+
     /**
      * Admin delete
      *
@@ -49,6 +69,7 @@ class LinksController extends AppController
         }
 
         $this->Flash->success(__d('croogo', 'Link deleted'));
+
         return $this->redirect([
             'action' => 'index',
             '?' => [
@@ -65,11 +86,12 @@ class LinksController extends AppController
      *
      * @return \Cake\Network\Response|null
      */
-    public function admin_moveup($id, $step = 1)
+    public function moveup($id, $step = 1)
     {
         $link = $this->Link->findById($id);
         if (!isset($link['Link']['id'])) {
             $this->Flash->error(__d('croogo', 'Invalid id for Link'));
+
             return $this->redirect([
                 'controller' => 'menus',
                 'action' => 'index',
@@ -82,6 +104,7 @@ class LinksController extends AppController
         } else {
             $this->Flash->error(__d('croogo', 'Could not move up'));
         }
+
         return $this->redirect([
             'action' => 'index',
             '?' => [
@@ -98,11 +121,12 @@ class LinksController extends AppController
      *
      * @return \Cake\Network\Response|null
      */
-    public function admin_movedown($id, $step = 1)
+    public function movedown($id, $step = 1)
     {
         $link = $this->Link->findById($id);
         if (!isset($link['Link']['id'])) {
             $this->Flash->error(__d('croogo', 'Invalid id for Link'));
+
             return $this->redirect([
                 'controller' => 'menus',
                 'action' => 'index',
@@ -115,6 +139,7 @@ class LinksController extends AppController
         } else {
             $this->Flash->error(__d('croogo', 'Could not move down'));
         }
+
         return $this->redirect([
             'action' => 'index',
             '?' => [
@@ -150,14 +175,17 @@ class LinksController extends AppController
             'unpublish' => __d('croogo', 'Links unpublished'),
         ];
         $options = compact('multiple', 'redirect', 'messageMap');
+
         return $this->BulkProcess->process($this->Links, $action, $ids, $options);
     }
 
     public function beforeCrudRender(Event $event)
     {
         $menuId = null;
+        $conditions = [];
         if (isset($event->subject()->entity)) {
             $menuId = $event->subject()->entity->menu_id;
+            $conditions['id !='] = $event->subject()->entity->id;
         }
         if ($this->request->query('menu_id')) {
             $menuId = $this->request->query('menu_id');
@@ -167,12 +195,12 @@ class LinksController extends AppController
         }
 
         $menu = $this->Links->Menus->get($menuId);
+        $conditions['menu_id'] = $menu->id;
 
         $this->set('menu', $menu);
         $this->set('roles', $this->Roles->find('list'));
-        $this->set('parentLinks', $this->Links->find('treeList')->where([
-            'menu_id' => $menu->id,
-        ]));
+        $this->set('parentLinks', $this->Links->find('treeList')
+            ->where($conditions));
     }
 
     public function beforeCrudRedirect(Event $event)
@@ -186,7 +214,7 @@ class LinksController extends AppController
     {
         return parent::implementedEvents() + [
             'Crud.beforeRender' => 'beforeCrudRender',
-            'Crud.beforeRedirect' => 'beforeCrudRedirect'
+            'Crud.beforeRedirect' => 'beforeCrudRedirect',
         ];
     }
 }
