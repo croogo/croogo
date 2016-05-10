@@ -1,12 +1,13 @@
 <?php
 
+ksort($linkChoosers);
 $rows = [];
 foreach ($linkChoosers as $name => $chooser):
-    $link = $this->Html->link($name, $chooser['url'], [
+    $link = $this->Html->link($chooser['title'], $chooser['url'], [
         'class' => 'dropdown-item link-chooser',
         'escape' => false,
         'title' => $chooser['description'],
-        'data-title' => $name,
+        'data-title' => $chooser['title'],
         'data-chooser-target' => $target,
         'data-type' => 'Node',
         'data-attr' => 'rel',

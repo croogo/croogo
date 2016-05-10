@@ -70,15 +70,6 @@
               plugin.target.trigger('chooserSelect', this);
             })
           });
-
-//        tb_show(null, $this.attr('href'));
-//
-//        var $iframe = $('#TB_iframeContent').on('load', function () {
-//          $iframe.contents().on('click', options.itemSelector, function (e) {
-//            parent.$('body *').trigger('chooser_select', this);
-//            return false;
-//          });
-//        });
       }
 
     };
