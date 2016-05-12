@@ -331,8 +331,9 @@ class OrderedBehavior extends ModelBehavior {
 				$conditions[$Model->alias . '.' . $this->settings[$Model->alias]['field'] . ' >='] = $newWeight;
 				$conditions[$Model->alias . '.' . $this->settings[$Model->alias]['field'] . ' <'] = $oldWeight;
 				// increase weight of all where weight > new weight and id != Model.id
+				
 				$Model->updateAll(array(
-						$this->settings[$Model->alias]['field'] => $Model->alias . '.' . $this->settings[$Model->alias]['field'] . ' + 1'), $conditions);
+						$Model->alias . '.' . $this->settings[$Model->alias]['field'] => $Model->alias . '.' . $this->settings[$Model->alias]['field'] . ' + 1'), $conditions);
 
 				// set Model weight to new weight and save it
 				$Model->data[$Model->alias][$this->settings[$Model->alias]['field']] = $newWeight;
@@ -471,7 +472,7 @@ class OrderedBehavior extends ModelBehavior {
 				$conditions[$Model->alias . '.' . $this->settings[$Model->alias]['field'] . ' >'] = $oldWeight;
 
 				$Model->updateAll(array(
-						$this->settings[$Model->alias]['field'] => $this->settings[$Model->alias]['field'] . ' - 1'), $conditions);
+						$Model->alias . '.' . $this->settings[$Model->alias]['field'] => $Model->alias . '.' . $this->settings[$Model->alias]['field'] . ' - 1'), $conditions);
 
 				// set Model weight to new weight and save it
 				$Model->data[$Model->alias][$this->settings[$Model->alias]['field']] = $newWeight;
