@@ -631,7 +631,7 @@ class CroogoPlugin
         if (!isset($this->_PluginActivation)) {
             $className = $plugin . 'Activation';
 
-            $pluginPaths = App::path('plugins');
+            $pluginPaths = App::path('Plugin');
             foreach ($pluginPaths as $path) {
                 $configFile = $path . DS . $plugin . DS . 'config' . DS . $className . '.php';
                 if (file_exists($configFile) && include $configFile) {
