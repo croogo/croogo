@@ -20,7 +20,7 @@
 		echo $this->Form->input('Message.title', array('label' => __d('croogo', 'Subject')));
 		echo $this->Form->input('Message.body', array('label' => __d('croogo', 'Message')));
 		if ($contact['Contact']['message_captcha']):
-			echo $this->Recaptcha->display_form();
+			echo $this->Recaptcha->display();
 		endif;
 		echo $this->Form->end(__d('croogo', 'Send'));
 	?>
