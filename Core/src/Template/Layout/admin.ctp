@@ -52,6 +52,7 @@
         echo $this->element('Croogo/Core.admin/initializers');
         echo $this->fetch('body-footer');
 
+        echo $this->fetch('postLink');
         echo $this->fetch('scriptBottom');
         echo $this->Js->writeBuffer();
         ?>
