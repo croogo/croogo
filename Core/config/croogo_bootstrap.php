@@ -7,6 +7,7 @@ use Aura\Intl\Package;
 use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\Core\Configure;
+use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
 use Cake\I18n\I18n;
 use Cake\Log\Log;
@@ -124,31 +125,20 @@ $plugins = array_filter(explode(',', $pluginBootstraps));
 if (!in_array($aclPlugin, $plugins)) {
     $plugins = Hash::merge((array)$aclPlugin, $plugins);
 }
+$option = [
+    'autoload' => true,
+    'bootstrap' => true,
+    'ignoreMissing' => true,
+    'routes' => true,
+];
 foreach ($plugins as $plugin) {
     $pluginName = Inflector::camelize($plugin);
-    $pluginPath = APP . 'Plugin' . DS . $pluginName;
-    if ((!file_exists($pluginPath)) && (!strstr($plugin, 'Croogo/'))) {
-        $pluginFound = false;
-        foreach (App::path('Plugin') as $path) {
-            if (is_dir($path . $pluginName)) {
-                $pluginFound = true;
-                break;
-            }
-        }
-        if (!$pluginFound) {
-            Log::error('Plugin not found during bootstrap: ' . $pluginName);
-            continue;
-        }
+    try {
+        CroogoPlugin::load($pluginName, $option);
+    } catch (MissingPluginException $e) {
+        Log::error('Plugin not found during bootstrap: ' . $pluginName);
+        continue;
     }
-    $option = [
-        $pluginName => [
-            'autoload' => true,
-            'bootstrap' => true,
-            'ignoreMissing' => true,
-            'routes' => true,
-        ]
-    ];
-    CroogoPlugin::load($option);
 }
 $theme = Configure::read('Site.theme');
 if (!Plugin::loaded($theme)) {

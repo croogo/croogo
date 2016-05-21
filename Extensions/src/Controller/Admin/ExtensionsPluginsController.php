@@ -52,7 +52,7 @@ class ExtensionsPluginsController extends AppController
     {
         $this->set('title_for_layout', __d('croogo', 'Plugins'));
 
-        $plugins = $this->_CroogoPlugin->plugins();
+        $plugins = $this->_CroogoPlugin->plugins(false);
         $this->set('corePlugins', $this->_CroogoPlugin->corePlugins);
         $this->set('bundledPlugins', $this->_CroogoPlugin->bundledPlugins);
         $this->set(compact('plugins'));

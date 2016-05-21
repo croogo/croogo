@@ -324,7 +324,7 @@ class LayoutHelper extends Helper
  */
     public function filterElements($content, $options = [])
     {
-        preg_match_all('/\[(element|e):([A-Za-z0-9_\-\/]*)(.*?)\]/i', $content, $tagMatches);
+        preg_match_all('/\[(element|e|cell|c):([A-Za-z0-9_\-\/]*)(.*?)\]/i', $content, $tagMatches);
         $validOptions = ['plugin', 'cache', 'callbacks'];
         for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
             $regex = '/([\w-]+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))*.)[\'"]?/i';
@@ -341,7 +341,16 @@ class LayoutHelper extends Helper
             if (!empty($this->_View->viewVars['block'])) {
                 $data['block'] = $this->_View->viewVars['block'];
             }
-            $content = str_replace($tagMatches[0][$i], $this->_View->element($element, $data, $options), $content);
+            if (!empty($options['plugin'])) {
+                $element = $options['plugin'] . '.' . $element;
+                unset($options['plugin']);
+            }
+            if ($tagMatches[1][$i] === 'cell' || $tagMatches[1][$i] === 'c') {
+                $element = $this->_View->cell($element, $data, $options);
+            } else {
+                $element = $this->_View->element($element, $data, $options);
+            }
+            $content = str_replace($tagMatches[0][$i], $element, $content);
         }
         return $content;
     }

@@ -8,6 +8,8 @@ use Cake\ORM\Entity;
 class User extends Entity
 {
 
+    protected $_hidden = ['password', 'activation_key'];
+
     /**
      * Hashes password when setting
      *

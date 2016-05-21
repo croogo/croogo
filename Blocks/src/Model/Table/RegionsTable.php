@@ -84,7 +84,7 @@ class RegionsTable extends CroogoTable
             ],
         ]);
 
-        $this->addBehavior('Search.Searchable');
+        $this->addBehavior('Search.Search');
 //        $this->addBehavior('Croogo.Cached', [
 //            'groups' => [
 //                'blocks',

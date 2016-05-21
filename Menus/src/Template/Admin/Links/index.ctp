@@ -11,7 +11,7 @@ $this->Html->addCrumb(__d('croogo', 'Menus'), ['controller' => 'Menus', 'action'
     ->addCrumb(__d('croogo', $menu->title));
 
 $this->append('actions');
-echo $this->Croogo->adminAction(__d('croogo', 'New link'), ['action' => 'add', $menu->id], ['button' => 'success']);
+echo $this->Croogo->adminAction(__d('croogo', 'New link'), ['action' => 'add', 'menu_id' => $menu->id], ['button' => 'success']);
 $this->end();
 
 $this->append('form-start', $this->Form->create(null, [
@@ -33,7 +33,6 @@ echo $this->Html->tag('thead', $tableHeaders);
 $this->end();
 
 $this->append('table-body');
-
 $rows = [];
 foreach ($linksTree as $linkId => $linkTitle):
     $actions = [];
@@ -59,25 +58,21 @@ foreach ($linksTree as $linkId => $linkTitle):
         'icon' => $this->Theme->getIcon('update'),
         'tooltip' => __d('croogo', 'Edit this item'),
     ]);
-
     $actions[] = $this->Croogo->adminRowAction('', '#Link' . $linkId . 'Id', [
-            'icon' => $this->Theme->getIcon('copy'),
-            'tooltip' => __d('croogo', 'Create a copy'),
-            'rowAction' => 'copy',
-        ], __d('croogo', 'Create a copy of this Link?'));
-
+        'icon' => $this->Theme->getIcon('copy'),
+        'tooltip' => __d('croogo', 'Create a copy'),
+        'rowAction' => 'copy',
+    ], __d('croogo', 'Create a copy of this Link?'));
     $actions[] = $this->Croogo->adminRowAction('', '#Link' . $linkId . 'Id', [
-            'icon' => $this->Theme->getIcon('delete'),
-            'class' => 'delete',
-            'tooltip' => __d('croogo', 'Delete this item'),
-            'rowAction' => 'delete',
-        ], __d('croogo', 'Are you sure?'));
+        'icon' => $this->Theme->getIcon('delete'),
+        'class' => 'delete',
+        'tooltip' => __d('croogo', 'Delete this item'),
+        'rowAction' => 'delete',
+    ], __d('croogo', 'Are you sure?'));
     $actions = $this->Html->div('item-actions', implode(' ', $actions));
-
     if ($linksStatus[$linkId] == Status::PREVIEW) {
         $linkTitle .= ' ' . $this->Html->tag('span', __d('croogo', 'preview'), ['class' => 'label label-warning']);
     }
-
     $rows[] = [
         $this->Form->checkbox('Links.' . $linkId . '.id', ['class' => 'row-select']),
         $linkTitle,

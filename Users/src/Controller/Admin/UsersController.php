@@ -4,9 +4,11 @@ namespace Croogo\Users\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Event\Event;
 use Cake\Network\Email\Email;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
+use Cake\Utility\Security;
 use Cake\Utility\Text;
 use Croogo\Core\Croogo;
 use Croogo\Users\Model\Entity\User;
@@ -23,6 +25,7 @@ use Croogo\Users\Model\Entity\User;
  */
 class UsersController extends AppController
 {
+    public $modelClass = 'Croogo/Users.Users';
 
 /**
  * Initialize
@@ -34,15 +37,18 @@ class UsersController extends AppController
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
-        $this->loadComponent('Search.Prg', [
-            'presetForm' => [
-                'paramType' => 'querystring',
-            ],
-            'commonProcess' => [
-                'paramType' => 'querystring',
-                'filterEmpty' => true,
-            ],
+
+        $this->Crud->config('actions.index', [
+            'displayFields' => $this->Users->displayFields(),
+            'searchFields' => ['role_id', 'name']
         ]);
+        $this->Crud->config('actions.edit', [
+            'editfields' => $this->Users->editFields(),
+        ]);
+
+        $this->Crud->addListener('Croogo/Core.Chooser');
+
+        $this->_setupPrg();
     }
 
 /**
@@ -55,7 +61,10 @@ class UsersController extends AppController
         return parent::implementedEvents() + [
             'Controller.Users.beforeAdminLogin' => 'onBeforeAdminLogin',
             'Controller.Users.adminLoginFailure' => 'onAdminLoginFailure',
-            'Croogo.beforeSetupAdminData' => 'beforeSetupAdminData'
+            'Croogo.beforeSetupAdminData' => 'beforeSetupAdminData',
+            'Crud.beforePaginate' => 'beforePaginate',
+            'Crud.beforeLookup' => 'beforeLookup',
+            'Crud.beforeSave' => 'beforeCrudSave'
         ];
     }
 
@@ -102,70 +111,29 @@ class UsersController extends AppController
         return true;
     }
 
-/**
- * Admin index
- *
- * @return void
- * @access public
- * $searchField : Identify fields for search
- */
-    public function index()
+    /**
+     * @param \Cake\Event\Event $event Event object
+     * @return void
+     */
+    public function beforeCrudSave(Event $event)
     {
-        $this->Prg->commonProcess();
-        $searchFields = ['role_id', 'name'];
-
-        $this->paginate = [
-            'contain' => [
-                'Roles'
-            ]
-        ];
-
-        $criteria = $this->Users->find('searchable', $this->Prg->parsedParams());
-
-        $this->set('users', $this->paginate($criteria));
-        $this->set('roles', $this->Users->Roles->find('list'));
-        $this->set('displayFields', $this->Users->displayFields());
-        $this->set('searchFields', $searchFields);
-
-        if (isset($this->request->query['chooser'])) {
-            $this->layout = 'admin_popup';
+        /**
+         * @var \Croogo\Users\Model\Entity\User
+         */
+        $entity = $event->subject()->entity;
+        if (!$entity->isNew() && $entity->has('activation_key')) {
+            return;
         }
+
+        $entity->activation_key = Security::randomBytes(20);
     }
 
-
-/**
- * Admin add
- *
- * @return void
- * @access public
- */
-    public function add()
-    {
-        $user = $this->Users->newEntity();
-
-        if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, Hash::merge($this->request->data(), ['activation_key' => Text::uuid()]));
-
-            if ($this->Users->save($user)) {
-                if ($this->request->data('notification') != null) {
-                    $this->__sendActivationEmail($user);
-                }
-
-                $this->Flash->success(__d('croogo', 'The User has been saved'));
-
-                if ($this->request->data('apply') === null) {
-                    return $this->redirect(['action' => 'index']);
-                } else {
-                    return $this->redirect(['action' => 'edit', $user->id]);
-                }
-            } else {
-                $this->Flash->error(__d('croogo', 'The User could not be saved. Please, try again.'));
+    public function afterCrudSave(Event $event) {
+        if ($event->subject()->success && $event->subject()->created) {
+            if ($this->request->data('notification') != null) {
+                $this->__sendActivationEmail($event->subject()->entity);
             }
         }
-
-        $this->set('user', $user);
-        $this->set('roles', $this->Users->Roles->find('list'));
-        $this->set('editFields', $this->Users->editFields());
     }
 
 /**
@@ -193,38 +161,6 @@ class UsersController extends AppController
     }
 
 /**
- * Admin edit
- *
- * @param int$id
- * @return void
- * @access public
- */
-    public function edit($id = null)
-    {
-        $user = $this->Users->get($id);
-
-        if ($this->request->is('put')) {
-            $this->Users->patchEntity($user, $this->request->data());
-
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__d('croogo', 'The User has been saved'));
-
-                if ($this->request->data('apply') === null) {
-                    return $this->redirect(['action' => 'index']);
-                } else {
-                    return $this->redirect(['action' => 'edit', $user->id]);
-                }
-            } else {
-                $this->Flash->error(__d('croogo', 'The User could not be saved. Please, try again.'));
-            }
-        }
-
-        $this->set('user', $user);
-        $this->set('roles', $this->Users->Roles->find('list'));
-        $this->set('editFields', $this->Users->editFields());
-    }
-
-/**
  * Admin reset password
  *
  * @param int$id
@@ -247,25 +183,6 @@ class UsersController extends AppController
         }
 
         $this->set('user', $user);
-    }
-
-/**
- * Admin delete
- *
- * @param int$id
- * @return void
- * @access public
- */
-    public function delete($id = null)
-    {
-        $user = $this->Users->get($id);
-
-        if ($this->Users->delete($user)) {
-            $this->Flash->success(__d('croogo', 'User deleted'));
-        } else {
-            $this->Flash->error(__d('croogo', 'User cannot be deleted'));
-        }
-        return $this->redirect(['action' => 'index']);
     }
 
 /**
@@ -321,13 +238,25 @@ class UsersController extends AppController
         return $this->redirect($this->Auth->logout());
     }
 
-    public function lookup()
+    public function beforeLookup(Event $event)
     {
-        $this->Prg->commonProcess();
+        /** @var \Cake\ORM\Query $query */
+        $query = $event->subject()->query;
 
-        /* @var \Cake\ORM\Query $lookup */
-        $lookup = $this->Users->find('searchable', $this->Prg->parsedParams());
-        $lookup->contain([
+        $query
+            ->select([
+                'id',
+                'username',
+                'name',
+                'website',
+                'image',
+                'bio',
+                'timezone',
+                'status',
+                'created',
+                'updated',
+            ])
+            ->contain([
             'Roles' => [
                 'fields' => [
                     'id',
@@ -336,23 +265,18 @@ class UsersController extends AppController
                 ],
             ],
         ]);
-        $lookup->select([
-            'id',
-            'username',
-            'name',
-            'website',
-            'image',
-            'bio',
-            'timezone',
-            'status',
-            'created',
-            'updated',
+    }
+
+    public function beforePaginate(Event $event)
+    {
+        /** @var \Cake\ORM\Query $query */
+        $query = $event->subject()->query;
+
+        $query->contain([
+            'Roles'
         ]);
 
-        $users = $this->paginate($lookup);
-
-        $this->set('user', $users);
-        $this->set('_serialize', 'user');
+        $this->set('roles', $this->Users->Roles->find('list'));
     }
 
     protected function _getSenderEmail()

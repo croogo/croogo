@@ -50,7 +50,7 @@ class UsersTable extends CroogoTable
             'className' => 'Croogo/Core.CroogoAcl',
             'type' => 'requester'
         ]);
-        $this->addBehavior('Search.Searchable');
+        $this->addBehavior('Search.Search');
         $this->addBehavior('Timestamp', [
             'events' => [
                 'Model.beforeSave' => [
@@ -61,6 +61,12 @@ class UsersTable extends CroogoTable
         ]);
 
         $this->eventManager()->on($this->getMailer('Croogo/Users.User'));
+
+        $this->searchManager()
+            ->add('name', 'Search.Like', [
+                'field' => ['Users.name', 'Users.username']
+            ])
+            ->value('role_id');
     }
 
     /**

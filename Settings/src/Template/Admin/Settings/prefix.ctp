@@ -19,7 +19,7 @@ $this->end();
 $this->append('tab-content');
 echo $this->Html->tabStart('settings-main');
 foreach ($settings as $setting) :
-    if (!empty($setting['Params']['tab'])) {
+    if (!empty($setting->params['tab'])) {
         continue;
     }
     $keyE = explode('.', $setting->key);

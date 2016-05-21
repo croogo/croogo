@@ -85,8 +85,8 @@ if ($this->request->param('action') == 'add'):
         'type' => 'password',
     ]);
 
-    $this->Form->unlockField('User.password');
-    $this->Form->unlockField('User.verify_password');
+    $this->Form->unlockField('password');
+    $this->Form->unlockField('verify_password');
 
     echo $this->Html->div(null, $out, [
         'id' => 'passwords',

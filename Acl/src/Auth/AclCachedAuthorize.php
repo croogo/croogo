@@ -30,9 +30,9 @@ class AclCachedAuthorize extends BaseAuthorize
 /**
  * Constructor
  */
-    public function __construct(ComponentRegistry $collection, $settings = [])
+    public function __construct(ComponentRegistry $registry, $config = [])
     {
-        parent::__construct($collection, $settings);
+        parent::__construct($registry, $config);
         $this->_setPrefixMappings();
     }
 
@@ -121,13 +121,13 @@ class AclCachedAuthorize extends BaseAuthorize
             $prefix = null;
             $action = $request['action'];
         }
-        $plugin = empty($request['plugin']) ? null : Inflector::camelize($request['plugin']);
+        $plugin = empty($request['plugin']) ? null : str_replace('/', '\\', Inflector::camelize($request['plugin']));
         $controller = Inflector::camelize($request['controller']);
 
         $path = str_replace(
             [$apiPath, ':prefix', ':plugin', ':controller', ':action'],
             [$api, $prefix, $plugin, $controller, $action],
-            $this->settings['actionPath'] . $path
+            $this->config('actionPath') . $path
         );
         $path = str_replace('//', '/', $path);
         return trim($path, '/');
@@ -228,7 +228,7 @@ class AclCachedAuthorize extends BaseAuthorize
  */
     protected function _authorizeByContent($user, Request $request, $id)
     {
-        if (!isset($this->settings['actionMap'][$request->params['action']])) {
+        if (!isset($this->config('actionMap')[$request->params['action']])) {
             throw new Exception(
                 __d(
                     'croogo',
@@ -239,13 +239,13 @@ class AclCachedAuthorize extends BaseAuthorize
             );
         }
 
-        list($plugin, $userModel) = pluginSplit($this->settings['userModel']);
+        list($plugin, $userModel) = pluginSplit($this->config('userModel'));
         $acoNode = [
             'model' => $this->_Controller->modelClass,
             'foreign_key' => $id,
         ];
         $alias = sprintf('%s.%s', $acoNode['model'], $acoNode['foreign_key']);
-        $action = $this->settings['actionMap'][$request->params['action']];
+        $action = $this->config('actionMap')[$request->params['action']];
 
         $cacheName = 'permissions_content_' . strval($user['id']);
         if (($permissions = Cache::read($cacheName, 'permissions')) === false) {

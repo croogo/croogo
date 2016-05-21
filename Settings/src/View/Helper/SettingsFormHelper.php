@@ -94,7 +94,6 @@ class SettingsFormHelper extends Helper
             $options = [
                 'type' => $inputType,
                 'id' => 'setting-' . $setting->id,
-                'class' => 'span10',
                 'value' => $setting->value,
                 'help' => $setting->description,
                 'label' => $label,

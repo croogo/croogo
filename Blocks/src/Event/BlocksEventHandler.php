@@ -3,8 +3,10 @@
 namespace Croogo\Blocks\Event;
 
 use Cake\Cache\Cache;
+use Cake\Datasource\ModelAwareTrait;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\Utility\Hash;
 use Croogo\Core\Croogo;
 use Croogo\Core\Utility\StringConverter;
@@ -18,8 +20,18 @@ use Croogo\Core\Utility\StringConverter;
  */
 class BlocksEventHandler implements EventListenerInterface
 {
+    use LocatorAwareTrait;
+    use ModelAwareTrait;
 
-/**
+    /**
+     * BlocksEventHandler constructor.
+     */
+    public function __construct()
+    {
+        $this->modelFactory('Table', [$this->tableLocator(), 'get']);
+    }
+
+    /**
  * implementedEvents
  */
     public function implementedEvents()
@@ -60,6 +72,7 @@ class BlocksEventHandler implements EventListenerInterface
  */
     public function filterBlockShortcode(Event $event)
     {
+        $this->loadModel('Croogo/Blocks.Blocks');
         static $converter = null;
         if (!$converter) {
             $converter = new StringConverter();
@@ -79,7 +92,11 @@ class BlocksEventHandler implements EventListenerInterface
 
         $regex = '/\[(block|b):([A-Za-z0-9_\-]*)(.*?)\]/i';
         foreach ($parsed as $blockAlias => $config) {
-            $block = $View->Regions->block($blockAlias);
+            $block = $this->Blocks->findByAlias($blockAlias)->first();
+            if (!$block) {
+                continue;
+            }
+            $block = $View->Regions->block($block);
             preg_match_all($regex, $body, $matches);
             if (isset($matches[2][0])) {
                 $replaceRegex = '/' . preg_quote($matches[0][0]) . '/';

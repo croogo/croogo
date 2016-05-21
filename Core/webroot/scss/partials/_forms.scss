@@ -12,6 +12,14 @@ form .span8 + .span4 {
     .form-control {
         margin-right: 5px;
     }
+
+}
+
+.file {
+    .form-control {
+        display: inline-block;
+        width: auto;
+    }
 }
 
 span.slug {

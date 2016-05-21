@@ -48,6 +48,7 @@ class ImageHelper extends HtmlHelper
             'uploadsDir' => 'uploads',
             'cacheDir' => 'resized',
             'resizedInd' => '.resized-',
+            'templates' => []
         ], $options);
         $aspect = $options['aspect'];
         $uploadsDir = $options['uploadsDir'];
@@ -134,6 +135,15 @@ class ImageHelper extends HtmlHelper
         }
 
         $templater = $this->templater();
+        $newTemplates = $options['templates'];
+
+        if ($newTemplates) {
+            $templater->push();
+            $templateMethod = is_string($options['templates']) ? 'load' : 'add';
+            $templater->{$templateMethod}($options['templates']);
+        }
+        unset($options['templates']);
+
         return $templater->format('image', [
             'url' => $this->Url->webroot($relfile),
             'attrs' => $templater->formatAttributes($htmlAttributes),

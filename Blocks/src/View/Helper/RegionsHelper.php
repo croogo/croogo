@@ -2,6 +2,7 @@
 
 namespace Croogo\Blocks\View\Helper;
 
+use Cake\Event\Event;
 use Cake\Log\LogTrait;
 use Cake\Utility\Hash;
 use Cake\View\Helper;
@@ -54,7 +55,7 @@ class RegionsHelper extends Helper
      * @param array $options
      * @return string
      */
-    public function block(Block $block, $regionAlias, $options = [])
+    public function block(Block $block, $regionAlias = null, $options = [])
     {
         $output = '';
 
@@ -141,5 +142,45 @@ class RegionsHelper extends Helper
         }
 
         return $output;
+    }
+
+    /**
+     * @return array
+     */
+    public function implementedEvents()
+    {
+        $events = parent::implementedEvents();
+        $events['Helper.Layout.beforeFilter'] = [
+            'callable' => 'filter',
+            'passParams' => true,
+        ];
+
+        return $events;
+    }
+
+    /**
+     * Filter content for Scripts and css tags
+     *
+     * Replaces [region:alias]
+     *
+     * @param Event $event
+     * @return string
+     */
+    public function filter(Event $event)
+    {
+        preg_match_all('/\[(region):([A-Za-z0-9_\-]*)(.*?)\]/i', $event->data['content'], $tagMatches);
+        for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
+            $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
+            preg_match_all($regex, $tagMatches[3][$i], $attributes);
+            $regionAlias = $tagMatches[2][$i];
+            $options = [];
+            for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
+                $options[$attributes[1][$j]] = $attributes[2][$j];
+            }
+            $options = Hash::expand($options);
+            $event->data['content'] = str_replace($tagMatches[0][$i], $this->blocks($regionAlias, $options), $event->data['content']);
+        }
+
+        return $event->data;
     }
 }

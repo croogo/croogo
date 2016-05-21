@@ -7079,6 +7079,10 @@ form .span8 + .span4 {
 .form-inline .form-control {
   margin-right: 5px; }
 
+.file .form-control {
+  display: inline-block;
+  width: auto; }
+
 span.slug {
   font-weight: bold;
   margin: 0 10px; }
@@ -7184,6 +7188,37 @@ a.action:hover {
   overflow: hidden;
   white-space: nowrap;
   max-width: 250px; }
+
+#dropzone-target {
+  position: fixed;
+  left: -10000px;
+  top: -10000px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 5px dashed;
+  opacity: 0;
+  z-index: 10000;
+  overflow: hidden;
+  transition: opacity 0.5s ease-in-out; }
+  #dropzone-target p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 800;
+    max-width: 500px;
+    height: 60px;
+    margin: -30px 0 0 -250px; }
+
+.dragging {
+  overflow: hidden; }
+  .dragging #dropzone-target {
+    opacity: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; }
 
 .permission-toggle:hover {
   cursor: pointer; }

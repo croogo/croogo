@@ -111,7 +111,7 @@ class CommentsTable extends CroogoTable
         $this->addBehavior('Croogo/Core.Publishable');
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Croogo/Core.LinkedModel');
-        $this->addBehavior('Search.Searchable');
+        $this->addBehavior('Search.Search');
         $this->addBehavior('Tree');
 
         $this->addBehavior('Timestamp', [
@@ -122,6 +122,11 @@ class CommentsTable extends CroogoTable
                 ]
             ]
         ]);
+
+        $this->searchManager()
+            ->add('status', 'Search.Value', [
+                'field' => 'status'
+            ]);
 
         $this->eventManager()->on($this->getMailer('Croogo/Comments.Comment'));
     }

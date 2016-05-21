@@ -93,7 +93,7 @@ class BlocksTable extends CroogoTable
             ],
         ]);
         $this->addBehavior('Croogo/Core.Trackable');
-        $this->addBehavior('Search.Searchable');
+        $this->addBehavior('Search.Search');
     }
 
     protected function _initializeSchema(Schema $table)

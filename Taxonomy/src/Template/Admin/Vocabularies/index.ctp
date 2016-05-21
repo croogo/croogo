@@ -23,10 +23,10 @@ foreach ($vocabularies as $vocabulary) :
     $actions = [];
     $actions[] = $this->Croogo->adminRowAction('', ['controller' => 'Terms', 'action' => 'index', $vocabulary->id],
         ['icon' => $this->Theme->getIcon('inspect'), 'tooltip' => __d('croogo', 'View terms')]);
-    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveup', $vocabulary->id],
-        ['icon' => $this->Theme->getIcon('move-up'), 'tooltip' => __d('croogo', 'Move up')]);
-    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'movedown', $vocabulary->id],
-        ['icon' => $this->Theme->getIcon('move-down'), 'tooltip' => __d('croogo', 'Move down')]);
+    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveUp', $vocabulary->id],
+        ['icon' => $this->Theme->getIcon('move-up'), 'tooltip' => __d('croogo', 'Move up'), 'method' => 'post']);
+    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveDown', $vocabulary->id],
+        ['icon' => $this->Theme->getIcon('move-down'), 'tooltip' => __d('croogo', 'Move down'), 'method' => 'post']);
     $actions[] = $this->Croogo->adminRowActions($vocabulary->id);
     $actions[] = $this->Croogo->adminRowAction('', ['action' => 'edit', $vocabulary->id],
         ['icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item')]);

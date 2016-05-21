@@ -63,6 +63,8 @@ class MenusTable extends CroogoTable
                 ]
             ]
         ]);
+        $this->addBehavior('Search.Search');
+
         $this->hasMany('Links', [
             'className' => 'Menus.Links',
             'order' => [

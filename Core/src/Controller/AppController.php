@@ -222,13 +222,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
     protected function _setupPrg()
     {
         $this->loadComponent('Search.Prg', [
-            'presetForm' => [
-                'paramType' => 'querystring',
-            ],
-            'commonProcess' => [
-                'paramType' => 'querystring',
-                'filterEmpty' => true,
-            ],
+            'actions' => ['index']
         ]);
     }
 

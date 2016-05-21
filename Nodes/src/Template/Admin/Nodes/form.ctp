@@ -49,6 +49,7 @@ $this->start('tab-content');
         echo $this->Form->input('body', [
             'label' => __d('croogo', 'Body'),
             'id' => 'NodeBody',
+            'class' => !$type->format_use_wysiwyg ? 'no-wysiwyg' : ''
         ]);
         echo $this->Form->input('excerpt', [
             'label' => __d('croogo', 'Excerpt'),

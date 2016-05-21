@@ -27,6 +27,9 @@ class Link extends ArrayObject
     public function getUrl()
     {
         $copy = array_map(function($val) {
+            if (is_array($val)) {
+                return $val;
+            }
             return urldecode($val);
         }, $this->getArrayCopy());
         return (isset($this->controller)) ? $copy : $this->url;

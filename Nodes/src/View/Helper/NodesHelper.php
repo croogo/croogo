@@ -71,7 +71,7 @@ class NodesHelper extends Helper
         ];
         $eventManager = $this->_View->eventManager();
         foreach ($events as $name => $config) {
-            $eventManager->attach([$this, 'filter'], $name, $config);
+            $eventManager->on($name, $config, [$this, 'filter']);
         }
     }
 

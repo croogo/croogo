@@ -12,7 +12,7 @@ $this->Html->addCrumb(__d('croogo', 'Blocks'), [
     ]);
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Html->addCrumb($this->request->data['Region']['title']);
+    $this->Html->addCrumb($region->title);
 }
 
 if ($this->request->params['action'] == 'add') {
