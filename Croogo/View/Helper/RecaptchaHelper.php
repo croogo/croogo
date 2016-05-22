@@ -39,11 +39,14 @@ class RecaptchaHelper extends AppHelper {
 	public function display_form($options = array()) {
 		$_defaults = array(
 			'data-sitekey' => Configure::read('Service.recaptcha_public_key'),
+			'div' => 'input',
 		);
 		$options = array_merge($_defaults, $options);
+		$divClass = $options['div'] . ' g-recaptcha';
+		unset($options['div']);
 
 		$this->_View->Form->unlockField('g-recaptcha-response');
-		$div = $this->Html->div('g-recaptcha', '&nbsp;', $options);
+		$div = $this->Html->div($divClass, '&nbsp;', $options);
 		return $div;
 	}
 }
