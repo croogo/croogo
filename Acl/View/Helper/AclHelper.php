@@ -74,12 +74,12 @@ class AclHelper extends Helper {
  * @return array
  */
 	public function getAllowedActionsByRoleId($roleId) {
-		if (!empty($this->allowedActions[$roleId])) {
-			return $this->allowedActions[$roleId];
+		if (!empty($this->allowedActions['role'][$roleId])) {
+			return $this->allowedActions['role'][$roleId];
 		}
 
-		$this->allowedActions[$roleId] = $this->AclPermission->getAllowedActionsByRoleId($roleId);
-		return $this->allowedActions[$roleId];
+		$this->allowedActions['role'][$roleId] = $this->AclPermission->getAllowedActionsByRoleId($roleId);
+		return $this->allowedActions['role'][$roleId];
 	}
 
 /**
@@ -113,16 +113,16 @@ class AclHelper extends Helper {
 /**
  * Returns an array of allowed actions for current logged in User
  *
- * @param integer $userId Role id
+ * @param integer $userId User id
  * @return array
  */
 	public function getAllowedActionsByUserId($userId) {
-		if (!empty($this->allowedActions[$userId])) {
-			return $this->allowedActions[$userId];
+		if (!empty($this->allowedActions['user'][$userId])) {
+			return $this->allowedActions['user'][$userId];
 		}
 
-		$this->allowedActions[$userId] = $this->AclPermission->getAllowedActionsByUserId($userId);
-		return $this->allowedActions[$userId];
+		$this->allowedActions['user'][$userId] = $this->AclPermission->getAllowedActionsByUserId($userId);
+		return $this->allowedActions['user'][$userId];
 	}
 
 /**
