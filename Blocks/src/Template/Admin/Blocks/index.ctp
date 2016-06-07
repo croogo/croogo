@@ -30,13 +30,15 @@ $this->append('table-body');
 $rows = [];
 foreach ($blocks as $block) {
     $actions = [];
-    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveup', $block->id], [
+    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveUp', $block->id], [
             'icon' => $this->Theme->getIcon('move-up'),
             'tooltip' => __d('croogo', 'Move up'),
+            'method' => 'post',
         ]);
-    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'movedown', $block->id], [
+    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveDown', $block->id], [
             'icon' => $this->Theme->getIcon('move-down'),
             'tooltip' => __d('croogo', 'Move down'),
+            'method' => 'post',
         ]);
     $actions[] = $this->Croogo->adminRowActions($block->id);
     $actions[] = $this->Croogo->adminRowAction('', ['action' => 'edit', $block->id],

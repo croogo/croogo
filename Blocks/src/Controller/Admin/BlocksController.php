@@ -17,6 +17,13 @@ use Croogo\Blocks\Model\Entity\Block;
  */
 class BlocksController extends AppController
 {
+    public $paginate = [
+        'order' => [
+            'region_id' => 'asc',
+            'weight' => 'asc',
+        ]
+    ];
+
     public function initialize()
     {
         parent::initialize();
@@ -28,44 +35,12 @@ class BlocksController extends AppController
         $this->Crud->config('actions.index', [
             'searchFields' => ['region_id', 'title']
         ]);
-    }
-
-/**
- * Admin moveup
- *
- * @param int$id
- * @param int$step
- * @return void
- * @access public
- */
-    public function moveup($id, $step = 1)
-    {
-        if ($this->Blocks->moveUp($id, $step)) {
-            $this->Flash->success(__d('croogo', 'Moved up successfully'));
-        } else {
-            $this->Flash->error(__d('croogo', 'Could not move up'));
-        }
-
-        return $this->redirect(['action' => 'index']);
-    }
-
-/**
- * Admin movedown
- *
- * @param int$id
- * @param int$step
- * @return void
- * @access public
- */
-    public function movedown($id, $step = 1)
-    {
-        if ($this->Blocks->moveDown($id, $step)) {
-            $this->Flash->success(__d('croogo', 'Moved down successfully'));
-        } else {
-            $this->Flash->error(__d('croogo', 'Could not move down'));
-        }
-
-        return $this->redirect(['action' => 'index']);
+        $this->Crud->config('actions.moveUp', [
+            'className' => 'Croogo/Core.Admin/MoveUp'
+        ]);
+        $this->Crud->config('actions.moveDown', [
+            'className' => 'Croogo/Core.Admin/MoveDown'
+        ]);
     }
 
 /**

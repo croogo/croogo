@@ -78,6 +78,10 @@ class BlocksTable extends CroogoTable
             'Regions' => ['block_count']
         ]);
         $this->addBehavior('Croogo/Core.Publishable');
+        $this->addBehavior('ADmad/Sequence.Sequence', [
+            'order' => 'weight',
+            'scope' => ['region_id']
+        ]);
 //        $this->addBehavior('Croogo/Core.Cached', [
 //            'groups' => [
 //                'blocks',
