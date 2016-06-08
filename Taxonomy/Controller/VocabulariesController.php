@@ -55,7 +55,7 @@ class VocabulariesController extends TaxonomyAppController {
 
 		if (!empty($this->request->data)) {
 			$this->Vocabulary->create();
-			if ($this->Vocabulary->save($this->request->data)) {
+			if ($this->Vocabulary->saveAssociated($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Vocabulary has been saved'), 'flash', array('class' => 'success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
@@ -82,7 +82,7 @@ class VocabulariesController extends TaxonomyAppController {
 			return $this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->request->data)) {
-			if ($this->Vocabulary->save($this->request->data)) {
+			if ($this->Vocabulary->saveAssociated($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Vocabulary has been saved'), 'flash', array('class' => 'success'));
 				return $this->Croogo->redirect(array('action' => 'edit', $this->Vocabulary->id));
 			} else {
