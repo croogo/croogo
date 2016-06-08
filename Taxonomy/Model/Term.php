@@ -97,7 +97,7 @@ class Term extends TaxonomyAppModel {
 		if ($termId) {
 			$this->id = $termId;
 		}
-		if ($this->save($data)) {
+		if ($this->saveAssociated($data)) {
 			return $this->id;
 		}
 
