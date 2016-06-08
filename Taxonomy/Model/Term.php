@@ -235,7 +235,7 @@ class Term extends TaxonomyAppModel {
 			trigger_error(__d('croogo', '"vocabulary_id" key not found'));
 		}
 		if ($state == 'before') {
-			$vocabularyAlias = $this->Vocabulary->field('alias', array('id' => $query['vocabulary_id']));
+			$vocabularyAlias = $this->Vocabulary->field('alias', array('Vocabulary.id' => $query['vocabulary_id']));
 			$termsId = $this->Vocabulary->Taxonomy->getTree($vocabularyAlias, array('key' => 'id', 'value' => 'title'));
 			$defaultQuery = array(
 				'conditions' => array(
