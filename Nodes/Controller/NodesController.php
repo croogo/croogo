@@ -470,6 +470,9 @@ class NodesController extends NodesAppController {
 			if (isset($type['Params']['nodes_per_page']) && empty($this->request->params['named']['limit'])) {
 				$limit = $type['Params']['nodes_per_page'];
 			}
+			if (isset($type['Params']['order']) && empty($this->request->params['named']['order'])) {
+				$this->paginate[$Node->alias]['order'] = $type['Params']['order'];
+			}
 			$this->paginate[$Node->alias]['conditions']['Node.type'] = $type['Type']['alias'];
 			$this->set('title_for_layout', $type['Type']['title']);
 		}
