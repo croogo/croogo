@@ -93,7 +93,7 @@ class MenuComponent extends Component
         $menus = ['main'];
 
         if (Configure::read('Site.theme')) {
-            $themeData = CroogoTheme::getData(Configure::read('Site.theme'));
+            $themeData = (new CroogoTheme)->getData(Configure::read('Site.theme'));
             if (isset($themeData['menus']) && is_array($themeData['menus'])) {
                 $menus = Hash::merge($menus, $themeData['menus']);
             }
