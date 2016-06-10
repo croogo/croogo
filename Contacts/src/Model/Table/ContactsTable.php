@@ -17,26 +17,12 @@ use Croogo\Core\Model\Table\CroogoTable;
 class ContactsTable extends CroogoTable
 {
 
-/**
- * Behaviors used by the Model
- *
- * @var array
- * @access public
- */
-    public $actsAs = [
-        'Croogo.Cached' => [
-            'groups' => [
-                'contacts',
-            ],
-        ],
-    ];
-
-/**
- * Validation
- *
- * @var array
- * @access public
- */
+    /**
+     * Validation
+     *
+     * @var array
+     * @access public
+     */
     public $validate = [
         'title' => [
             'rule' => 'notEmpty',
@@ -62,40 +48,30 @@ class ContactsTable extends CroogoTable
     {
         parent::initialize($config);
         $this->entityClass('Croogo/Contacts.Contact');
-        $this->addAssociations([
-            'hasMany' => [
-                'Message' => [
-                    'className' => 'Croogo/Contacts.Messages',
-                    'foreignKey' => 'contact_id',
-                    'dependent' => false,
-                    'conditions' => '',
-                    'fields' => '',
-                    'order' => '',
-                    'limit' => '3',
-                    'offset' => '',
-                    'exclusive' => '',
-                    'finderQuery' => '',
-                    'counterQuery' => '',
-                ],
-            ],
+        $this->hasMany('Messages', [
+            'className' => 'Croogo/Contacts.Messages',
+            'foreignKey' => 'contact_id',
+            'dependent' => false,
+            'limit' => '3',
         ]);
+
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Timestamp', [
             'events' => [
                 'Model.beforeSave' => [
                     'created' => 'new',
-                    'updated' => 'always'
-                ]
-            ]
+                    'updated' => 'always',
+                ],
+            ],
         ]);
         $this->addBehavior('Search.Search');
     }
 
-/**
- * Display fields for this model
- *
- * @var array
- */
+    /**
+     * Display fields for this model
+     *
+     * @var array
+     */
     protected $_displayFields = [
         'title',
         'alias',
