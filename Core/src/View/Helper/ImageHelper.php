@@ -131,7 +131,7 @@ class ImageHelper extends HtmlHelper
         if ($resize) {
             $this->_resize($sourcefile, $size, $cachefile, $width, $height);
         } else {
-            //copy($url, $cachefile);
+            copy($sourcefile, $cachefile);
         }
 
         $templater = $this->templater();
