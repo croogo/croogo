@@ -49,11 +49,10 @@ class MessagesTable extends CroogoTable
         $this->belongsTo('Contacts', [
             'className' => 'Croogo/Contacts.Contacts',
             'foreignKey' => 'contact_id',
-            'fields' => '',
-            'order' => '',
-            'counterCache' => true,
         ]);
-
+        $this->addBehavior('CounterCache', [
+            'Contacts' => ['message_count']
+        ]);
 
         $this->addBehavior('Croogo/Core.BulkProcess', [
             'actionsMap' => [
