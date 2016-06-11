@@ -68,14 +68,22 @@ class CroogoHtmlHelper extends HtmlHelper
      * @param Event $event
      * @return string
      */
-    public function filter(Event $event, $options = [])
+    public function filter(Event $event)
     {
-        preg_match_all('/\[(script|css):([^]]*)\]/i', $event->data['content'], $tagMatches);
+        preg_match_all('/\[(script|css):([^] ]*)(.*?)\]/i', $event->data['content'], $tagMatches);
         for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
+            $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
+            preg_match_all($regex, $tagMatches[3][$i], $attributes);
+            $options = [];
+            for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
+                $options[$attributes[1][$j]] = $attributes[2][$j];
+            }
+            $options = Hash::expand($options) + ['block' => true];
+
             if ($tagMatches[1][$i] === 'script') {
-                $this->script($tagMatches[2][$i], ['block' => true]);
+                $this->script($tagMatches[2][$i], $options);
             } elseif ($tagMatches[1][$i] === 'css') {
-                $this->css($tagMatches[2][$i], ['block' => true]);
+                $this->css($tagMatches[2][$i], $options);
             }
 
             $event->data['content'] = str_replace($tagMatches[0][$i], '', $event->data['content']);
