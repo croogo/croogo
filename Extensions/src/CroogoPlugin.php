@@ -631,11 +631,24 @@ class CroogoPlugin
         if (!isset($this->_PluginActivation)) {
             $className = $plugin . 'Activation';
 
-            $pluginPaths = App::path('Plugin');
+            $registered = Configure::read('plugins');
+            $pluginPaths = Hash::merge(App::path('Plugin'), $registered);
+            unset($pluginPaths['Croogo']); //Otherwise we get croogo plugins twice!
+
+            if (isset($pluginPaths[$plugin])) {
+                $configFile = $pluginPaths[$plugin] . DS . 'config' . DS . $className . '.php';
+                if (file_exists($configFile) && include $configFile) {
+                    $this->_PluginActivation = new $className;
+
+                    return $this->_PluginActivation;
+                }
+            }
             foreach ($pluginPaths as $path) {
                 $configFile = $path . DS . $plugin . DS . 'config' . DS . $className . '.php';
                 if (file_exists($configFile) && include $configFile) {
                     $this->_PluginActivation = new $className;
+
+                    return $this->_PluginActivation;
                 }
             }
         }
