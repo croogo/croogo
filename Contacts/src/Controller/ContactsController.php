@@ -13,6 +13,22 @@ use Croogo\Core\Croogo;
 class ContactsController extends AppController
 {
     /**
+     * {@inheritDoc}
+     */
+    public function afterConstruct()
+    {
+        parent::afterConstruct();
+        $this->_setupAclComponent();
+    }
+
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->loadComponent('Croogo/Core.Recaptcha');
+    }
+
+    /**
      * View
      *
      * @param string $alias
