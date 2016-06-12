@@ -3,7 +3,6 @@
 namespace Croogo\Extensions;
 
 use Cake\Cache\Cache;
-use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
@@ -41,7 +40,8 @@ class CroogoTheme
      */
     public function getThemes()
     {
-        return CroogoPlugin::instance()->getPlugins('theme');
+        return CroogoPlugin::instance()
+            ->getPlugins('theme');
     }
 
     /**
@@ -129,9 +129,9 @@ class CroogoTheme
                             'Form' => [
                                 'className' => 'Croogo/Core.CroogoForm',
                             ],
-                            'Paginator' => array(
+                            'Paginator' => [
                                 'className' => 'Croogo/Core.CroogoPaginator',
-                            ),
+                            ],
                         ],
                     ],
                 ],

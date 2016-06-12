@@ -73,9 +73,7 @@ class NodesController extends AppController
             'roleId' => $this->Croogo->roleId()
         ]);
 
-        if ($this->request->query('limit')) {
-            $limit = $this->request->query('limit');
-        } else {
+        if (!$this->request->query('limit')) {
             $limit = Configure::read('Reading.nodes_per_page');
         }
 
@@ -96,21 +94,21 @@ class NodesController extends AppController
             $this->set('title', $type);
         }
 
-        $this->paginate['limit'] = $limit;
+        if (isset($limit)) {
+            $this->paginate['limit'] = $limit;
+        }
 
         if ($this->usePaginationCache) {
             $cacheNamePrefix = 'nodes_index_' . $this->Croogo->roleId() . '_' . Configure::read('Config.language');
             if (isset($type)) {
                 $cacheNamePrefix .= '_' . $type->alias;
             }
-            $this->paginate['page'] = $this->request->query('page') ?: 1;
             $cacheName = $cacheNamePrefix .
                 '_' .
                 $this->request->param('type') .
+                '_' . ($this->request->query('page') ?: 1) .
                 '_' .
-                $this->paginate['page'] .
-                '_' .
-                $limit;
+                ($this->request->query('limit') ? $this->request->query('limit') : $limit);
             $cacheConfig = 'nodes_index';
             $query->cache($cacheName, $cacheConfig);
         }
