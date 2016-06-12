@@ -2,6 +2,7 @@
 
 namespace Croogo\Meta\View\Helper;
 
+use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
 use Cake\View\Helper;
@@ -63,10 +64,10 @@ class MetaHelper extends Helper
         }
 
         if (count($metaForLayout) == 0 &&
-            isset($this->_View->viewVars['node']['CustomFields']) &&
-            count($this->_View->viewVars['node']['CustomFields']) > 0) {
+            isset($this->_View->viewVars['node']['custom_fields']) &&
+            count($this->_View->viewVars['node']['custom_fields']) > 0) {
             $metaForLayout = [];
-            foreach ($this->_View->viewVars['node']['CustomFields'] as $key => $value) {
+            foreach ($this->_View->viewVars['node']['custom_fields'] as $key => $value) {
                 if (strstr($key, 'meta_')) {
                     $key = str_replace('meta_', '', $key);
                     $metaForLayout[$key] = $value;
