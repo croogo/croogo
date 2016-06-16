@@ -9,6 +9,7 @@
         echo $this->Html->css([
             'Croogo/Core.croogo-admin',
             'Croogo/Core.tether.min.css',
+            'Croogo/Core.bootstrap-datetimepicker.min',
         ]);
         echo $this->Layout->js();
         echo $this->Html->script([
@@ -25,6 +26,8 @@
             'Croogo/Core.admin',
             'Croogo/Core.sidebar',
             'Croogo/Core.choose',
+            'Croogo/Core.moment-with-locales',
+            'Croogo/Core.bootstrap-datetimepicker.min',
             //'Croogo/Core.typeahead_autocomplete',
         ]);
 

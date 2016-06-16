@@ -36,6 +36,7 @@ class CroogoFormHelper extends FormHelper
                     'textarea',
                     'label',
                 ],
+                'datetime' => ['Croogo/Core.DateTime', 'select']
             ],
         ], $settings);
 

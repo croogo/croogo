@@ -194,3 +194,40 @@ Admin.iconClass = function (icon, includeDefault) {
   result += Croogo.themeSettings.iconDefaults['iconSet'] + '-' + icon;
   return result.trim();
 }
+
+Admin.dateTimeFields = function() {
+  $('[role=datetime-picker]').each(function () {
+
+    var picker = $(this);
+    var date = null;
+
+    if (picker.data('timestamp') && picker.data('timezone-offset')) {
+      var timezoneOffset = picker.data('timezone-offset');
+      date = new Date(picker.data('timestamp') * 1000);
+
+      picker.parents('form').on('submit', function () {
+        var timezoneDiff = timezoneOffset + date.getTimezoneOffset();
+        var currentDate = picker.data('DateTimePicker').date();
+        var convertedDate = currentDate.add(timezoneDiff, 'minutes');
+        picker.data('DateTimePicker').date(convertedDate);
+      });
+    }
+
+    picker.datetimepicker({
+      locale: $(this).data('locale'),
+      format: $(this).data('format'),
+      date: date ? date : picker.val(),
+      icons: {
+        time: 'fa fa-clock-o',
+        date: 'fa fa-calendar',
+        up: 'fa fa-chevron-up',
+        down: 'fa fa-chevron-down',
+        previous: 'fa fa-chevron-left',
+        next: 'fa fa-chevron-right',
+        today: 'fa fa-screenshot',
+        clear: 'fa fa-trash',
+        close: 'fa fa-remove'
+      }
+    });
+  });
+}
