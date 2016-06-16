@@ -35,7 +35,8 @@
 		"cakephp/acl": "dev-master",
 		"admad/cakephp-sequence": "dev-master",
 		"friendsofcake/crud": "^4.3",
-		"friendsofcake/search": "^1.2"
+		"friendsofcake/search": "^1.2",
+        "friendsofcake/bootstrap-ui": "^0.5"
 	},
 	"require-dev": {
 		"cakephp/cakephp-codesniffer": "dev-master",
