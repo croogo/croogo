@@ -1,7 +1,5 @@
 <?php
 
-use Croogo\Core\Status;
-
 $this->extend('Croogo/Core./Common/admin_edit');
 $this->Html->script(array('Croogo/Nodes.admin'), ['block' => true]);
 
@@ -62,25 +60,12 @@ $this->start('panels');
         ->read('Auth.User.username');
     echo $this->Html->beginBox(__d('croogo', 'Publishing'));
     echo $this->element('Croogo/Core.admin/buttons', ['type' => $type->title]);
-    echo $this->Form->input('status', [
-            'label' => __d('croogo', 'Status'),
-            'class' => 'c-select',
-            'default' => Status::UNPUBLISHED,
-            'options' => $this->Croogo->statuses(),
-        ]);
+    echo $this->element('Croogo/Core.admin/publishable');
+
     echo $this->Form->input('promote', [
-            'label' => __d('croogo', 'Promoted to front page'),
-            'class' => false,
-        ]);
-
-    echo $this->Html->div('input-daterange', $this->Form->input('publish_start', [
-                'label' => __d('croogo', 'Publish on'),
-                'empty' =>  true,
-            ]) . $this->Form->input('publish_end', [
-                'label' => __d('croogo', 'Un-publish on'),
-                'empty' => true,
-            ]));
-
+        'label' => __d('croogo', 'Promoted to front page'),
+        'class' => false,
+    ]);
     echo $this->Html->endBox();
 
     echo $this->Html->beginBox(__d('croogo', '%s attributes', $type->title));
