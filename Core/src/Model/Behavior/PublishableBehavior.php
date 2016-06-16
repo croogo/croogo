@@ -57,9 +57,9 @@ class PublishableBehavior extends Behavior
      *
      * @return array Array of status
      */
-    public function status($statusType = 'publishing', $accessType = 'public')
+    public function status($roleId = null, $statusType = 'publishing', $accessType = 'public')
     {
-        return $this->_CroogoStatus->status($statusType, $accessType);
+        return $this->_CroogoStatus->status($roleId, $statusType, $accessType);
     }
 
 /**

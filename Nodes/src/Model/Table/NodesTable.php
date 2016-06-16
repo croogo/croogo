@@ -172,7 +172,7 @@ class NodesTable extends CroogoTable
             ]);
         }
         $query
-            ->find('published')
+            ->find('published', $options)
             ->contain([
                 'Taxonomies' => [
                     'Terms',
@@ -251,10 +251,11 @@ class NodesTable extends CroogoTable
         ]);
     }
 
-    public function findPublished(Query $query)
+    public function findPublished(Query $query, array $options = [])
     {
+        $options += ['roleId' => null];
         return $query->andWhere([
-            $this->aliasField('status') . ' IN' => $this->status(),
+            $this->aliasField('status') . ' IN' => $this->status($options['roleId']),
         ]);
     }
 }

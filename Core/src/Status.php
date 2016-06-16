@@ -101,9 +101,9 @@ class Status implements ArrayAccess
      * @param string $type Status type if applicable
      * @return array Array of statuses
      */
-    public function status($statusType = 'publishing', $accessType = 'public')
+    public function status($roleId = null, $statusType = 'publishing', $accessType = 'public')
     {
-        $values = $this->_defaultStatus($statusType);
+        $values = $this->_defaultStatus($roleId, $statusType);
         $data = compact('statusType', 'accessType', 'values');
         $event = Croogo::dispatchEvent('Croogo.Status.status', null, $data);
         if (array_key_exists('values', $event->data)) {
@@ -116,30 +116,23 @@ class Status implements ArrayAccess
     /**
      * Default status
      */
-    protected function _defaultStatus($statusType)
+    protected function _defaultStatus($roleId = null, $statusType)
     {
-        static $Permission = null;
         $status[$statusType] = [self::PUBLISHED];
-//        $roleId = AuthComponent::user('role_id');
-        $roleId = -1;
         $allow = false;
 
-        Log::notice('Status::_defaultStatus cannot lookup role_id, this needs to be ported to CakePHP 3.0');
-
-//        if ($roleId && $roleId != 1) {
-//            if ($Permission === null) {
-//                $Permission = TableRegistry::get('Permission');
-//            }
-//            try {
-//                $allow = $Permission->check(['model' => 'Role', 'foreign_key' => $roleId], 'controllers/Croogo\Nodes/Admin/Nodes/edit');
-//            } catch (CakeException $e) {
-//                Log::error($e->getMessage());
-//            }
-//        }
+        if ($roleId && $roleId !== 1) {
+            $Permission = TableRegistry::get('Acl.Permissions');
+            try {
+                $allow = $Permission->check(['model' => 'Roles', 'foreign_key' => $roleId], 'controllers/Croogo\Nodes/Admin/Nodes/edit');
+            } catch (CakeException $e) {
+                Log::error($e->getMessage());
+            }
+        }
 
         switch ($statusType) {
             case 'publishing':
-                if ($roleId == 1 || $allow) {
+                if ($roleId === 1 || $allow) {
                     $status[$statusType][] = self::PREVIEW;
                 }
                 break;
