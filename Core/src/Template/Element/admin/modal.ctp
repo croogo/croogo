@@ -15,6 +15,9 @@ if (!isset($modalSize)) {
 if (!isset($body)) {
     $body = '';
 }
+if (!isset($footer)) {
+    $footer = '';
+}
 ?>
 <div id="<?php echo $id; ?>" class="<?php echo trim($class); ?>">
     <div class="modal-dialog <?= trim($modalSize) ?>">
@@ -32,6 +35,7 @@ if (!isset($body)) {
                 <button class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">
                     <?= __d('croogo', 'Close'); ?>
                 </button>
+                <?= $footer ?>
             </div>
         </div>
     </div>
