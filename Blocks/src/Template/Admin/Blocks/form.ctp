@@ -66,21 +66,10 @@ $this->end();
 $this->append('panels');
 echo $this->Html->beginBox(__d('croogo', 'Publishing'));
 echo $this->element('Croogo/Core.admin/buttons', ['type' => 'block']);
-echo $this->Form->input('status', [
-    'class' => 'c-select',
-    'default' => Status::UNPUBLISHED,
-    'options' => $this->Croogo->statuses(),
-]);
+echo $this->element('Croogo/Core.admin/publishable');
 echo $this->Form->input('show_title', [
     'label' => __d('croogo', 'Show title ?'),
 ]);
-echo $this->Html->div('input-daterange', $this->Form->input('publish_start', [
-        'label' => __d('croogo', 'Publish Start'),
-        'type' => 'text',
-    ]) . $this->Form->input('publish_end', [
-        'label' => __d('croogo', 'Publish End'),
-        'type' => 'text',
-    ]));
 echo $this->Html->endBox();
 
 echo $this->Html->beginBox(__d('croogo', 'Access control'));
