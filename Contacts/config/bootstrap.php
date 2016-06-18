@@ -16,3 +16,17 @@ Croogo::mergeConfig('Translate.models.Contact', [
     ],
     'translateModel' => 'Contacts.Contact',
 ]);
+
+// Configure Wysiwyg
+Croogo::mergeConfig('Wysiwyg.actions', [
+    'Croogo/Contacts.Admin/Contacts.add' => [
+        [
+            'elements' => 'body',
+        ],
+    ],
+    'Croogo/Contacts.Admin/Contacts.edit' => [
+        [
+            'elements' => 'body',
+        ],
+    ],
+]);
