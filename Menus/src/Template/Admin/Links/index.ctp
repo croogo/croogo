@@ -74,7 +74,7 @@ foreach ($linksTree as $linkId => $linkTitle):
         $linkTitle .= ' ' . $this->Html->tag('span', __d('croogo', 'preview'), ['class' => 'label label-warning']);
     }
     $rows[] = [
-        $this->Form->checkbox('Links.' . $linkId . '.id', ['class' => 'row-select']),
+        $this->Form->checkbox('Links.' . $linkId . '.id', ['class' => 'row-select', 'id' => 'Link' . $linkId . 'Id']),
         $linkTitle,
         $this->element('Croogo/Core.admin/toggle', [
             'id' => $linkId,
