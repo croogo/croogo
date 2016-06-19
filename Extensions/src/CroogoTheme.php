@@ -113,6 +113,7 @@ class CroogoTheme
                     'x-mark' => 'remove',
                     'user' => 'user',
                     'key' => 'key',
+                    'view' => 'eye'
                 ],
                 'prefixes' => [
                     '' => [
