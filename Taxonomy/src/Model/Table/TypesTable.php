@@ -2,6 +2,7 @@
 
 namespace Croogo\Taxonomy\Model\Table;
 
+use Cake\Database\Schema\Table as Schema;
 use Croogo\Core\Model\Table\CroogoTable;
 
 class TypesTable extends CroogoTable
@@ -27,6 +28,11 @@ class TypesTable extends CroogoTable
         'description',
         'plugin',
     ];
+
+    protected function _initializeSchema(Schema $table) {
+        $table->columnType('params', 'params');
+        return parent::_initializeSchema($table);
+    }
 
     public function initialize(array $config)
     {
