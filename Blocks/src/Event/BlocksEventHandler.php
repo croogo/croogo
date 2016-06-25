@@ -99,8 +99,7 @@ class BlocksEventHandler implements EventListenerInterface
             $block = $View->Regions->block($block);
             preg_match_all($regex, $body, $matches);
             if (isset($matches[2][0])) {
-                $replaceRegex = '/' . preg_quote($matches[0][0]) . '/';
-                $body = preg_replace($replaceRegex, $block, $body);
+                $body = str_replace($matches[0][0], $block, $body);
             }
         }
 
