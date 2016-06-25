@@ -5,7 +5,6 @@ namespace Croogo\Core\Config;
 use Aura\Intl\Package;
 
 use Cake\Cache\Cache;
-use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
@@ -16,8 +15,6 @@ use Cake\Utility\Inflector;
 use Cake\Routing\DispatcherFactory;
 
 use Croogo\Core\Croogo;
-use Croogo\Core\Cache\CroogoCache;
-use Croogo\Core\Status;
 use Croogo\Core\Event\CroogoEventManager;
 use Croogo\Extensions\CroogoPlugin;
 use Croogo\Settings\Configure\Engine\DatabaseConfig;

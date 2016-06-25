@@ -39,24 +39,6 @@ class CommentsTable extends CroogoTable
     const STATUS_PENDING = 0;
 
 /**
- * Behaviors used by the Model
- *
- * @var array
- * @access public
- */
-/*
-	public $actsAs = array(
-		'Tree',
-		'Croogo.Cached' => array(
-			'groups' => array(
-				'comments',
-				'nodes',
-			),
-		),
-	);
-*/
-
-/**
  * Validation
  *
  * @var array
@@ -113,7 +95,9 @@ class CommentsTable extends CroogoTable
         $this->addBehavior('Croogo/Core.LinkedModel');
         $this->addBehavior('Search.Search');
         $this->addBehavior('Tree');
-
+        $this->addBehavior('Croogo/Core.Cached', [
+            'groups' => ['comments', 'nodes']
+        ]);
         $this->addBehavior('Timestamp', [
             'events' => [
                 'Model.beforeSave' => [

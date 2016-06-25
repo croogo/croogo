@@ -27,7 +27,9 @@ class VocabulariesTable extends CroogoTable
             ]
         ]);
         $this->addBehavior('Search.Search');
-
+        $this->addBehavior('Croogo/Core.Cached', [
+            'groups' => ['taxonomy']
+        ]);
         $this->belongsToMany('Croogo/Taxonomy.Types', [
             'joinTable' => 'types_vocabularies',
         ]);

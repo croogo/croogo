@@ -57,11 +57,11 @@ class SettingsTable extends CroogoTable
 //            'field' => 'weight',
 //            'foreign_key' => false,
 //        ]);
-//        $this->addBehavior('Croogo/Core.Cached', [
-//            'groups' => [
-//                'settings',
-//            ],
-//        ]);
+        $this->addBehavior('Croogo/Core.Cached', [
+            'groups' => [
+                'settings',
+            ],
+        ]);
         $this->addBehavior('Search.Search');
     }
 

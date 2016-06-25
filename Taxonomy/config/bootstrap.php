@@ -1,15 +1,15 @@
 <?php
 
 use Cake\Core\Configure;
-use Croogo\Core\Cache\CroogoCache;
+use Cake\Cache\Cache;
 use Croogo\Core\Croogo;
 
 $cacheConfig = array_merge(
     Configure::read('Croogo.Cache.defaultConfig'),
     ['groups' => ['taxonomy']]
 );
-CroogoCache::config('croogo_types', $cacheConfig);
-CroogoCache::config('croogo_vocabularies', $cacheConfig);
+Cache::config('croogo_types', $cacheConfig);
+Cache::config('croogo_vocabularies', $cacheConfig);
 
 Croogo::hookComponent('*', 'Croogo/Taxonomy.Taxonomies');
 

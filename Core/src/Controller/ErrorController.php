@@ -4,8 +4,6 @@ namespace Croogo\Core\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Network\Request;
-use Cake\Network\Response;
 use Cake\Routing\Router;
 
 /**
@@ -48,7 +46,6 @@ class ErrorController extends AppController
  */
     public function beforeFilter(Event $event)
     {
-        parent::beforeFilter($event);
         if (Configure::read('Site.theme') && !isset($this->request->params['admin'])) {
             $this->viewBuilder()->theme(Configure::read('Site.theme'));
         } elseif (isset($this->request->params['admin'])) {

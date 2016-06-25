@@ -36,6 +36,9 @@ class NodesTable extends CroogoTable
         ]);
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Croogo/Core.Visibility');
+        $this->addBehavior('Croogo/Core.Cached', [
+            'groups' => ['nodes']
+        ]);
         $this->addBehavior('Search.Search');
         $this->addBehavior('Timestamp', [
             'events' => [

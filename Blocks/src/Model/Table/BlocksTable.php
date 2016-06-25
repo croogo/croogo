@@ -75,18 +75,18 @@ class BlocksTable extends CroogoTable
         ]);
 
         $this->addBehavior('CounterCache', [
-            'Regions' => ['block_count']
+            'Regions' => ['block_count'],
         ]);
         $this->addBehavior('Croogo/Core.Publishable');
         $this->addBehavior('ADmad/Sequence.Sequence', [
             'order' => 'weight',
-            'scope' => ['region_id']
+            'scope' => ['region_id'],
         ]);
-//        $this->addBehavior('Croogo/Core.Cached', [
-//            'groups' => [
-//                'blocks',
-//            ],
-//        ]);
+        $this->addBehavior('Croogo/Core.Cached', [
+            'groups' => [
+                'blocks',
+            ],
+        ]);
 
         $this->addBehavior('Timestamp', [
             'events' => [

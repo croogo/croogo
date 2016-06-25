@@ -54,7 +54,9 @@ class ContactsTable extends CroogoTable
             'dependent' => false,
             'limit' => '3',
         ]);
-
+        $this->addBehavior('Croogo/Core.Cached', [
+            'groups' => ['contacts']
+        ]);
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Timestamp', [
             'events' => [

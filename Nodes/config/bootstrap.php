@@ -2,18 +2,18 @@
 
 use Cake\Core\Configure;
 use Cake\Routing\Router;
-use Croogo\Core\Cache\CroogoCache;
+use Cake\Cache\Cache;
 use Croogo\Core\Croogo;
 
 $cacheConfig = array_merge(
     Configure::read('Croogo.Cache.defaultConfig'),
     ['groups' => ['nodes']]
 );
-CroogoCache::config('nodes', $cacheConfig);
-CroogoCache::config('nodes_view', $cacheConfig);
-CroogoCache::config('nodes_promoted', $cacheConfig);
-CroogoCache::config('nodes_term', $cacheConfig);
-CroogoCache::config('nodes_index', $cacheConfig);
+Cache::config('nodes', $cacheConfig);
+Cache::config('nodes_view', $cacheConfig);
+Cache::config('nodes_promoted', $cacheConfig);
+Cache::config('nodes_term', $cacheConfig);
+Cache::config('nodes_index', $cacheConfig);
 
 Croogo::hookApiComponent('Croogo/Nodes.Nodes', 'Nodes.NodeApi');
 Croogo::hookComponent('*', [

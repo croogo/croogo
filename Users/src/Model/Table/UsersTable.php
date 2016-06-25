@@ -59,6 +59,9 @@ class UsersTable extends CroogoTable
                 ]
             ]
         ]);
+        $this->addBehavior('Croogo/Core.Cached', [
+            'groups' => ['users']
+        ]);
 
         $this->eventManager()->on($this->getMailer('Croogo/Users.User'));
 

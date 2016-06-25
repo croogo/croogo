@@ -1,7 +1,7 @@
 <?php
 
 use Cake\Core\Configure;
-use Croogo\Core\Cache\CroogoCache;
+use Cake\Cache\Cache;
 use Croogo\Core\Croogo;
 
 Croogo::hookApiComponent('Croogo/Users.Users', 'Users.UserApi');
@@ -18,7 +18,7 @@ $cacheConfig = array_merge(
 $failedLoginDuration = 300;
 Configure::write('User.failed_login_limit', 5);
 Configure::write('User.failed_login_duration', $failedLoginDuration);
-CroogoCache::config('users_login', array_merge($cacheConfig, [
+Cache::config('users_login', array_merge($cacheConfig, [
     'duration' => '+' . $failedLoginDuration . ' seconds',
     'groups' => ['users'],
 ]));

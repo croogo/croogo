@@ -47,11 +47,11 @@ class MenusTable extends CroogoTable
     {
         parent::initialize($config);
 
-//		$this->addBehavior('Croogo/Core.Cached', [
-//			'groups' => [
-//				'menus',
-//			],
-//		]);
+		$this->addBehavior('Croogo/Core.Cached', [
+			'groups' => [
+				'menus',
+			],
+		]);
         $this->addBehavior('Croogo/Core.Publishable');
         $this->addBehavior('Croogo/Core.Trackable');
 
