@@ -15,14 +15,7 @@ $this->Html->script([
 ], ['block' => 'scriptBottom']);
 
 $this->start('body-footer');
-echo $this->Html->tag('span', $this->Url->build(['action' => 'add', 'prefix' => 'admin']), ['id' => 'dropzone-url', 'class' => 'hidden']);
-echo $this->Html->tag('span', $this->Url->build('/', true), ['id' => 'base-url', 'class' => 'hidden']);
-echo $this->Html->tag('div', $this->Html->tag('p', __d('croogo', 'Drop files here to upload')), ['id' => 'dropzone-target']);
-echo $this->Html->tag('script', $this->element('Croogo/FileManager.admin/dropzone_preview'), ['id' => 'dropzone-preview', 'type' => 'text/html']);
-$this->Form->create(null, ['url' => ['action' => 'add', 'prefix' => 'admin']]);
-$this->Form->unlockField('file');
-echo $this->Html->tag('div', $this->Form->secure([]), ['id' => 'tokens']);
-$this->Form->end();
+    echo $this->element('Croogo/FileManager.admin/dropzone_setup', ['type' => 'table']);
 $this->end();
 
 $this->append('form-start', $this->Form->create(null, [
