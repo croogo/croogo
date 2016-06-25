@@ -2,11 +2,8 @@
 
 namespace Croogo\Core\Controller;
 
-use App\Controller\AppController as BaseController;
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
 use Cake\Event\Event;
-use Cake\Log\Log;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\Routing\Router;
@@ -26,36 +23,12 @@ use Cake\Routing\Router;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoErrorController extends BaseController
+class ErrorController extends AppController
 {
-
-/**
- * Models
- *
- * @var array
- * @access public
- */
-    public $uses = [];
-
-/**
- * View
- *
- * @var string
- * @access public
- */
-    public $viewClass = 'Theme';
-
-/**
- * __construct
- *
- * @param Request $request
- * @param Response $response
- */
-    public function __construct($request = null, $response = null)
+    public function initialize()
     {
-        parent::__construct($request, $response);
-        if (count(Router::extensions()) && !isset($this->RequestHandler)
-        ) {
+        parent::initialize();
+        if (count(Router::extensions()) && !isset($this->RequestHandler)) {
             $this->loadComponent('RequestHandler');
         }
         $eventManager = $this->eventManager();
@@ -68,7 +41,7 @@ class CroogoErrorController extends BaseController
         $this->templatePath = 'Error';
     }
 
-/**
+    /**
  * beforeFilter
  *
  * @return void
@@ -77,28 +50,13 @@ class CroogoErrorController extends BaseController
     {
         parent::beforeFilter($event);
         if (Configure::read('Site.theme') && !isset($this->request->params['admin'])) {
-            $this->theme = Configure::read('Site.theme');
+            $this->viewBuilder()->theme(Configure::read('Site.theme'));
         } elseif (isset($this->request->params['admin'])) {
             $adminTheme = Configure::read('Site.admin_theme');
             if ($adminTheme) {
-                $this->theme = $adminTheme;
+                $this->viewBuilder()->theme($adminTheme);
             }
-            $this->layout = 'admin_full';
-        }
-    }
-
-/**
- * Escapes the viewVars.
- *
- * @return void
- */
-    public function beforeRender(Event $event)
-    {
-        parent::beforeRender($event);
-        foreach ($this->viewVars as $key => $value) {
-            if (!is_object($value)) {
-                $this->viewVars[$key] = h($value);
-            }
+            $this->viewBuilder()->layout('admin_full');
         }
     }
 }

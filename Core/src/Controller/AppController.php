@@ -103,7 +103,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
     public function render($view = null, $layout = null)
     {
         // Just render normal when we aren't in a edit or add action
-        if (!in_array($this->request->action, ['edit', 'add'])) {
+        if (!in_array($this->request->param('action'), ['edit', 'add'])) {
             return parent::render($view, $layout);
         }
 
