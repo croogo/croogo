@@ -17,7 +17,11 @@ echo $this->Html->tag('script',
     $this->element('Croogo/FileManager.admin/dropzone_' . $type . '_preview'),
     ['id' => 'dropzone-preview', 'type' => 'text/html']
 );
-$this->Form->create(null, ['url' => ['action' => 'add', 'prefix' => 'admin']]);
+$this->Form->create(null, ['url' => [
+    'action' => 'add',
+    'prefix' => 'admin',
+    'controller' => 'Attachments',
+    'plugin' => 'Croogo/FileManager']]);
 $this->Form->unlockField('file');
 echo $this->Html->tag('div', $this->Form->secure([]), ['id' => 'tokens']);
 $this->Form->end();
