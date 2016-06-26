@@ -21,7 +21,7 @@
         list($mimeType, $imageType) = explode('/', $attachment->mime_type);
         $imagecreatefrom = ['gif', 'jpeg', 'png', 'string', 'wbmp', 'webp', 'xbm', 'xpm'];
         if ($mimeType == 'image' && in_array($imageType, $imagecreatefrom)) {
-            $thumbnail = $this->Image->resize($attachment->path, 400, 200, [], ['class' => 'thumbnail card-img-bottom img-fluid']);
+            $thumbnail = $this->Image->resize($attachment->path, 500, 500, [], ['class' => 'thumbnail card-img-bottom img-fluid']);
         } else {
             $thumbnail = $this->Html->image(
                 '/croogo/img/icons/page_white.png',
