@@ -29,7 +29,8 @@ class TypesTable extends CroogoTable
         'plugin',
     ];
 
-    protected function _initializeSchema(Schema $table) {
+    protected function _initializeSchema(Schema $table) 
+    {
         $table->columnType('params', 'params');
         return parent::_initializeSchema($table);
     }
