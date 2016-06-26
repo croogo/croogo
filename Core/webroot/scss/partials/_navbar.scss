@@ -48,12 +48,21 @@
     }
 
     .dropdown-submenu {
+        position: relative;
+
         &:hover {
             .sidebar-item {
-                [class^="icon-"],
-                [class*=" icon-"] {
+                .fa {
                     background-image: none; // no glyphicons
                 }
+
+                &.current {
+                    background: none; // hide active background when hovered
+                }
+            }
+
+            > .dropdown-menu {
+                display: block;
             }
         }
         .sidebar-item {
@@ -61,22 +70,31 @@
                 display: none;
             }
         }
-    }
 
-    .dropdown-submenu {
-        &:hover {
-            .sidebar-item {
-                [class^="icon-"],
-                [class*=" icon-"] {
-                    background-image: none; // no glyphicons
-                }
-                &.current {
-                    background: none; // hide active background when hovered
-                }
-            }
+        > a:after {
+            display: block;
+            float: right;
+            width: 0;
+            height: 0;
+            margin-top: 5px;
+            margin-right: -10px;
+            border-color: transparent;
+            border-left-color: #ccc;
+            border-style: solid;
+            border-width: 5px 0 5px 5px;
+            content: " ";
+        }
+
+        > .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -6px;
+            margin-left: -1px;
+            border-radius: 0 6px 6px 0;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
     }
-
     .sub-nav {
         width: $croogo-nav-width;
         margin-bottom: 0px;

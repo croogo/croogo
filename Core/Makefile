@@ -1,5 +1,5 @@
 BOOTSTRAP_TAG=v4.0.0-alpha.2
-FONTAWESOME_TAG=v4.5.0
+FONTAWESOME_TAG=v4.6.3
 
 REPO_FONTAWESOME=git://github.com/FortAwesome/Font-Awesome.git
 REPO_BOOTSTRAP=git://github.com/twbs/bootstrap
