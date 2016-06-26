@@ -3,7 +3,12 @@
  * @var \uAfrica\View\AppView $this
  */
 
-echo $this->Html->tag('span', $this->Url->build(['action' => 'add', 'prefix' => 'admin']),
+echo $this->Html->tag('span', $this->Url->build([
+    'action' => 'add',
+    'prefix' => 'admin',
+    'controller' => 'Attachments',
+    'plugin' => 'Croogo/FileManager'
+]),
     ['id' => 'dropzone-url', 'class' => 'hidden']);
 echo $this->Html->tag('span', $this->Url->build('/', true), ['id' => 'base-url', 'class' => 'hidden']);
 echo $this->Html->tag('div', $this->Html->tag('p', __d('croogo', 'Drop files here to upload')),
