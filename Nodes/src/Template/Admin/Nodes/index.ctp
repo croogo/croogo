@@ -37,7 +37,7 @@ $this->append('table-body');
     <?php foreach ($nodes as $node): ?>
         <tr>
             <td><?php echo $this->Form->checkbox('Nodes.' . $node->id . '.id',
-                    ['class' => 'row-select']); ?></td>
+                    ['class' => 'row-select', 'id' => 'Nodes' . $node->id . 'Id']); ?></td>
             <td>
                 <span>
                 <?php
