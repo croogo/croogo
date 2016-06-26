@@ -18,7 +18,7 @@ class TypeData
             'comment_approve' => '1',
             'comment_spam_protection' => '0',
             'comment_captcha' => '0',
-            'params' => '',
+            'params' => 'routes=true',
             'plugin' => null,
             'updated' => '2009-09-09 00:23:24',
             'created' => '2009-09-02 18:06:27'
@@ -34,7 +34,7 @@ class TypeData
             'comment_approve' => '1',
             'comment_spam_protection' => '0',
             'comment_captcha' => '0',
-            'params' => '',
+            'params' => 'routes=true',
             'plugin' => null,
             'updated' => '2009-09-15 12:15:43',
             'created' => '2009-09-02 18:20:44'
@@ -50,7 +50,7 @@ class TypeData
             'comment_approve' => '1',
             'comment_spam_protection' => '0',
             'comment_captcha' => '0',
-            'params' => '',
+            'params' => 'routes=true',
             'plugin' => null,
             'updated' => '2009-10-06 21:53:15',
             'created' => '2009-09-05 23:51:56'
