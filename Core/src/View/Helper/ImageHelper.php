@@ -130,7 +130,7 @@ class ImageHelper extends HtmlHelper
 
         if ($resize) {
             $this->_resize($sourcefile, $size, $cachefile, $width, $height);
-        } else {
+        } elseif (!file_exists($cachefile)) {
             copy($sourcefile, $cachefile);
         }
 
