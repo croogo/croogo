@@ -321,8 +321,8 @@ class NodesController extends AppController
 
         $camelizedType = Inflector::camelize($type->alias, '-');
         $this->Croogo->viewFallback([
-            'view_' . $node->id,
-            $camelizedType . '/view_' . $node->slug,
+            'view/node_' . $node->id,
+            'view/' . str_replace('-', '_', $node->slug),
             $camelizedType . '/view',
         ]);
     }
