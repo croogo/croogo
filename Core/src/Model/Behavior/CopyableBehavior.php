@@ -2,6 +2,7 @@
 
 namespace Croogo\Core\Model\Behavior;
 
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Behavior;
 use Cake\ORM\Table;
 use Cake\ORM\Entity;
@@ -47,7 +48,7 @@ class CopyableBehavior extends Behavior
  * The full results of Model::find() that are modified and saved
  * as a new copy.
  */
-    public $record = [];
+    public $record;
 
 /**
  * Default values for settings.
@@ -158,7 +159,6 @@ class CopyableBehavior extends Behavior
  */
     protected function _removeIgnored($contain)
     {
-        $table = $this->_table;
         $ignore = array_unique($this->config('ignore'));
         if (!$ignore) {
             return $contain;
@@ -188,7 +188,7 @@ class CopyableBehavior extends Behavior
             }
             $child = $record->{$property};
 
-            if (isset($child[0])) {
+            if (is_array($child)) {
                 foreach ($child as $innerKey => $innerVal) {
                     $child[$innerKey] = $this->_stripFields($innerVal);
 
@@ -199,7 +199,7 @@ class CopyableBehavior extends Behavior
 
                     $child[$innerKey] = $this->_convertChildren($val->target(), $child[$innerKey]);
                 }
-            } else {
+            } elseif ($child instanceof EntityInterface) {
                 $child = $this->_stripFields($child);
 
                 $foreignKey = $val->foreignKey();
@@ -209,6 +209,7 @@ class CopyableBehavior extends Behavior
 
                 $child = $this->_convertChildren($val->target(), $child);
             }
+            $record->{$property} = $child;
         }
 
         return $record;
@@ -229,7 +230,6 @@ class CopyableBehavior extends Behavior
  */
     protected function _convertData()
     {
-        $table = $this->_table;
         $this->record = clone $this->record;
         $this->_stripFields($this->record);
 
