@@ -346,6 +346,9 @@ class LayoutHelper extends AppHelper {
 	public function filter($content) {
 		Croogo::dispatchEvent('Helper.Layout.beforeFilter', $this->_View, array('content' => &$content));
 		$content = $this->filterElements($content);
+		$content = $this->filterMenus($content);
+		$content = $this->filterVocabularies($content);
+		$content = $this->filterNodes($content);
 		Croogo::dispatchEvent('Helper.Layout.afterFilter', $this->_View, array('content' => &$content));
 		return $content;
 	}
@@ -381,6 +384,77 @@ class LayoutHelper extends AppHelper {
 		}
 		return $content;
 	}
+	
+/**
+ * Filter content for Menus
+ *
+ * Replaces [menu:menu_alias] or [m:menu_alias] with Menu list
+ *
+ * @param string $content
+ * @return string
+ */
+	public function filterMenus($content) {
+		preg_match_all('/\[(menu|m):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
+		for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
+			$regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
+			preg_match_all($regex, $tagMatches[3][$i], $attributes);
+			$menuAlias = $tagMatches[2][$i];
+			$options = array();
+			for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
+				$options[$attributes[1][$j]] = $attributes[2][$j];
+			}
+			$content = str_replace($tagMatches[0][$i], $this->menu($menuAlias,$options), $content);
+		}
+		return $content;
+	}
+
+/**
+ * Filter content for Vocabularies
+ *
+ * Replaces [vocabulary:vocabulary_alias] or [v:vocabulary_alias] with Terms list
+ *
+ * @param string $content
+ * @return string
+ */
+	public function filterVocabularies($content) {
+		preg_match_all('/\[(vocabulary|v):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
+		for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
+			$regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
+			preg_match_all($regex, $tagMatches[3][$i], $attributes);
+			$vocabularyAlias = $tagMatches[2][$i];
+			$options = array();
+			for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
+				$options[$attributes[1][$j]] = $attributes[2][$j];
+			}
+			$content = str_replace($tagMatches[0][$i], $this->vocabulary($vocabularyAlias,$options), $content);
+		}
+		return $content;
+	}
+
+/**
+ * Filter content for Nodes
+ *
+ * Replaces [node:unique_name_for_query] or [n:unique_name_for_query] with Nodes list
+ *
+ * @param string $content
+ * @return string
+ */
+	public function filterNodes($content) {
+		preg_match_all('/\[(node|n):([A-Za-z0-9_\-]*)(.*?)\]/i', $content, $tagMatches);
+		for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
+			$regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
+			preg_match_all($regex, $tagMatches[3][$i], $attributes);
+			$alias = $tagMatches[2][$i];
+			$options = array();
+			for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
+				$options[$attributes[1][$j]] = $attributes[2][$j];
+			}
+			$content = str_replace($tagMatches[0][$i], $this->nodeList($alias,$options), $content);
+		}
+		return $content;
+	}
+
+
 
 /**
  * Hook
