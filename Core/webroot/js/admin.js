@@ -91,6 +91,16 @@ Admin.protectForms = function () {
   }
 }
 
+Admin.formFeedback = function () {
+  $('body').on('submit', 'form', function () {
+    var submitButtons = $(this).find('[type=submit]');
+    submitButtons
+      .addClass('disabled')
+      .prepend(' ')
+      .prepend($('<i>').addClass(Admin.spinnerClass()));
+  });
+}
+
 /**
  * Helper to process row action links
  */
