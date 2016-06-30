@@ -46,14 +46,16 @@ class ErrorController extends AppController
  */
     public function beforeFilter(Event $event)
     {
-        if (Configure::read('Site.theme') && !isset($this->request->params['admin'])) {
-            $this->viewBuilder()->theme(Configure::read('Site.theme'));
-        } elseif (isset($this->request->params['admin'])) {
+        parent::beforeFilter($event);
+         if ($this->request->param('prefix') === 'admin') {
             $adminTheme = Configure::read('Site.admin_theme');
             if ($adminTheme) {
                 $this->viewBuilder()->theme($adminTheme);
             }
             $this->viewBuilder()->layout('admin_full');
+        } elseif (Configure::read('Site.theme')) {
+            $this->viewBuilder()
+                ->theme(Configure::read('Site.theme'));
         }
     }
 }
