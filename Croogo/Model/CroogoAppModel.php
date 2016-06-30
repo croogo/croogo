@@ -29,6 +29,13 @@ class CroogoAppModel extends Model {
 	);
 
 /**
+ * The name of the validation string domain to use when translating validation errors.
+ *
+ * Overwrite the default domain used in translating of model validation errors
+ */
+	public $validationDomain = "croogo";
+
+/**
  * Display fields for admin_index. Use displayFields()
  *
  * @var array

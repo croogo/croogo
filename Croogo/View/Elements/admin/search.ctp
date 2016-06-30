@@ -7,7 +7,7 @@ if (!isset($className)) {
 }
 if (!empty($searchFields)):
 ?>
-<div class="<?php echo $className; ?> filter">
+<div class="<?php echo $className; ?> clearfix filter">
 <?php
 	echo $this->Form->create($modelClass, array(
 		'class' => 'form-inline',

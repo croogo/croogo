@@ -253,6 +253,26 @@ class NodesController extends NodesAppController {
 				$typeAlias = $this->request->data[$Node->alias]['type'];
 				$Node->type = $typeAlias;
 			}
+
+			if (Configure::read('Site.post_id_slug') == 1){
+				// Get the last post ID
+				$last_id = $Node->find('first', array(
+						'fields' => array('id'),
+						'order' => array('Node.id' => 'DESC'),
+						'recursive' => '-1',
+					)
+				);
+				
+				// Next id	
+				$next_id = $last_id['Node']['id'] + 1;
+
+				// concat with user ID to prevent duplicate poste ID if two users save post in the same time
+				$post_id = $this->Session->read('Auth.User.id').$next_id;
+
+				// Set the new slug
+				$this->request->data[$Node->alias]['slug'] = $post_id;
+			}// End edited
+			
 			if ($Node->saveNode($this->request->data, $typeAlias)) {
 				Croogo::dispatchEvent('Controller.Nodes.afterAdd', $this, array('data' => $this->request->data));
 				$this->Session->setFlash(__d('croogo', '%s has been saved', $type['Type']['title']), 'flash', array('class' => 'success'));
@@ -540,7 +560,7 @@ class NodesController extends NodesAppController {
 		$visibilityRolesField = $Node->escapeField('visibility_roles');
 		$this->paginate[$Node->alias]['conditions'] = array(
 			$Node->escapeField('status') => $Node->status(),
-			$Node->escapeField('terms') . ' LIKE' => '%"' . $this->request->params['named']['slug'] . '"%',
+			$Node->escapeField('terms') . ' LIKE' => '%' . $this->request->params['named']['slug'] . '%',
 			'OR' => array(
 				$visibilityRolesField => '',
 				$visibilityRolesField . ' LIKE' => '%"' . $this->Croogo->roleId() . '"%',
@@ -773,6 +793,9 @@ class NodesController extends NodesAppController {
 		$event = new CakeEvent('Controller.Nodes.view', $this, compact('data'));
 		$this->getEventManager()->dispatch($event);
 
+        	$this->Node->id = $node['Node']['id'];
+        	$this->Node->saveField('visite_count', $node['Node']['visite_count'] + 1);
+        
 		$this->set('title_for_layout', $node[$Node->alias]['title']);
 		$this->set(compact('node', 'type', 'comments'));
 		$this->Croogo->viewFallback(array(
