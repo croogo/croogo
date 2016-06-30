@@ -40,6 +40,14 @@ if (file_exists(APP . 'Config' . DS . 'settings.json')) {
 	Configure::load('settings', 'settings');
 }
 
+
+/**
+ * Locale inclusion
+ */
+App::build(array(
+	'Locale' => array(APP . 'Vendor' . DS . 'croogo' . DS . 'locale' . DS ),
+), App::APPEND);
+
 /**
  * Locale
  */
