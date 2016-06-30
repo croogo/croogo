@@ -90,27 +90,8 @@ class NodesTable extends CroogoTable
 
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add([$this, 'isUniquePerType'], 'isUniquePerType', [
-            'field' => 'slug',
-            'message' => __d('croogo', 'The slug has already been taken.')
-        ]);
+        $rules->isUnique(['slug', 'type'], __d('croogo', 'The slug has already been taken.'));
         return parent::buildRules($rules);
-    }
-
-    /**
-     * @param \Cake\ORM\Entity $entity Entity
-     * @return bool
-     */
-    public function isUniquePerType(Entity $entity)
-    {
-        $conditions = [
-            $this->aliasField('slug') => $entity->slug,
-            $this->aliasField('type') => $entity->type
-        ];
-        if (!$entity->isNew()) {
-            $conditions[$this->aliasField('id') . ' !='] = $entity->id;
-        }
-        return !$this->exists($conditions);
     }
 
     /**
