@@ -19,7 +19,7 @@
 		}
 	}
 
-	if ($this->request->params['action'] != 'view' && $type['Type']['comment_status']) {
+	if ($this->request->params['action'] != 'view' && $type['Type']['comment_status'] && CakePlugin::loaded('Comments')) {
 		if (isset($nodeTerms) && count($nodeTerms) > 0) {
 			echo ' | ';
 		}

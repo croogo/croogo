@@ -75,4 +75,21 @@ class UrlBehaviorTest extends CroogoTestCase {
 		));
 	}
 
+	public function testPassId() {
+		$this->Node->Behaviors->Url->setup($this->Node, array(
+			'fields' => array(
+			),
+			'pass' => array(
+				'id'
+			)
+		));
+		$helloWorld = $this->Node->findBySlug('hello-world');
+		$this->assertEqual($helloWorld['Node']['url'], array(
+			'plugin' => 'nodes',
+			'controller' => 'nodes',
+			'action' => 'view',
+			1
+		));
+	}
+
 }

@@ -15,7 +15,26 @@ class AclEventHandler implements CakeEventListener {
  * implementedEvents
  */
 	public function implementedEvents() {
-		return array();
+		return array(
+			'Dispatcher.beforeDispatch' => array(
+				'callable' => 'onBeforeDispatch',
+				'priority' => 11,
+			),
+		);
+	}
+
+/**
+ * Dispatcher.beforeDispatch handler
+ */
+	public function onBeforeDispatch($event) {
+		if (!Configure::read('Access Control.splitSession')) {
+			return;
+		}
+		$request = $event->data['request'];
+		$cookiePath = $request->base . '/' . $request->param('prefix');
+		Croogo::mergeConfig('Session.ini', array(
+			'session.cookie_path' => $cookiePath,
+		));
 	}
 
 }

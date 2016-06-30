@@ -134,7 +134,6 @@ class CroogoAppController extends Controller {
 	public function afterConstruct() {
 		Croogo::applyHookProperties('Hook.controller_properties', $this);
 		$this->_setupComponents();
-		$this->_setupTheme();
 	}
 
 /**
@@ -181,7 +180,10 @@ class CroogoAppController extends Controller {
 	protected function _setupTheme() {
 		$prefix = isset($this->request->params['prefix']) ? $this->request->params['prefix'] : '';
 		if ($prefix === 'admin') {
-			$theme = Configure::read('Site.admin_theme');
+			// Check if a theme has been defined already, if so use that otherwise use the configured one
+			// This can be useful if a controller provides a theme on its own. This stops that theme from beiing
+			// overridden.
+			$theme = ($this->theme) ? $this->theme : Configure::read('Site.admin_theme');
 			if ($theme) {
 				App::build(array(
 					'View/Helper' => array(App::themePath($theme) . 'Helper' . DS),
@@ -241,6 +243,9 @@ class CroogoAppController extends Controller {
  */
 	public function beforeFilter() {
 		parent::beforeFilter();
+
+		$this->_setupTheme();
+
 		$aclFilterComponent = Configure::read('Site.acl_plugin') . 'Filter';
 		if (empty($this->{$aclFilterComponent})) {
 			throw new MissingComponentException(array('class' => $aclFilterComponent));
