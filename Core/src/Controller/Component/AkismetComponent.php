@@ -22,7 +22,7 @@
 namespace Croogo\Core\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\Controller\Controller;
+use Cake\Core\Exception\Exception;
 use Cake\Event\Event;
 use Cake\Core\Configure;
 
@@ -68,7 +68,7 @@ use Cake\Core\Configure;
 class AkismetComponent extends Component
 {
     private $version = '0.4';
-    private $wordPressAPIKey;
+    private $akismetAPIKey;
     private $blogURL;
     private $comment;
     private $apiPort;
@@ -95,9 +95,8 @@ class AkismetComponent extends Component
      */
     public function startup(Event $event)
     {
-
         $this->blogURL = Configure::read('Service.akismet_url');
-        $this->wordPressAPIKey = Configure::read('Service.akismet_key');
+        $this->akismetAPIKey = Configure::read('Service.akismet_key');
 
         // Set some default values
         $this->apiPort = 80;
@@ -106,21 +105,13 @@ class AkismetComponent extends Component
 
         // Start to populate the comment data
         $this->comment['blog'] = $this->blogURL;
-        $this->comment['user_agent'] = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'Unknown';
+        $this->comment['user_agent'] = $this->request->header('user-agent') ?: 'Unknown';
 
-        if (isset($_SERVER['HTTP_REFERER'])) {
-            $this->comment['referrer'] = $_SERVER['HTTP_REFERER'];
+        if ($this->request->referer()) {
+            $this->comment['referrer'] = $this->request->referer();
         }
 
-        /*
-         * This is necessary if the server PHP5 is running on has been set up to run PHP4 and
-         * PHP5 concurently and is actually running through a separate proxy al a these instructions:
-         * http://www.schlitt.info/applications/blog/archives/83_How_to_run_PHP4_and_PHP_5_parallel.html
-         * and http://wiki.coggeshall.org/37.html
-         * Otherwise the user_ip appears as the IP address of the PHP4 server passing the requests to the
-         * PHP5 one...
-         */
-        $this->comment['user_ip'] = $_SERVER['REMOTE_ADDR'] != getenv('SERVER_ADDR') ? $_SERVER['REMOTE_ADDR'] : getenv('HTTP_X_FORWARDED_FOR');
+        $this->comment['user_ip'] = $this->request->clientIp();
     }
 
     /**
@@ -133,7 +124,7 @@ class AkismetComponent extends Component
     public function isKeyValid()
     {
         // Check to see if the key is valid
-        $response = $this->sendRequest('key=' . $this->wordPressAPIKey . '&blog=' . $this->blogURL, $this->akismetServer, '/' . $this->akismetVersion . '/verify-key');
+        $response = $this->sendRequest('key=' . $this->akismetAPIKey . '&blog=' . $this->blogURL, $this->akismetServer, '/' . $this->akismetVersion . '/verify-key');
         return $response[1] == 'valid';
     }
 
@@ -188,10 +179,10 @@ class AkismetComponent extends Component
      */
     public function isCommentSpam()
     {
-        $response = $this->sendRequest($this->getQueryString(), $this->wordPressAPIKey . '.rest.akismet.com', '/' . $this->akismetVersion . '/comment-check');
+        $response = $this->sendRequest($this->getQueryString(), $this->akismetAPIKey . '.rest.akismet.com', '/' . $this->akismetVersion . '/comment-check');
 
         if ($response[1] == 'invalid' && !$this->isKeyValid()) {
-            throw new exception('The Wordpress API key passed to the Akismet constructor is invalid.  Please obtain a valid one from http://wordpress.com/api-keys/');
+            throw new Exception('The API key passed to the Akismet constructor is invalid.  Please obtain a valid one from http://akismet.com/');
         }
 
         return ($response[1] == 'true');
@@ -204,7 +195,7 @@ class AkismetComponent extends Component
      */
     public function submitSpam()
     {
-        $this->sendRequest($this->getQueryString(), $this->wordPressAPIKey . '.' . $this->akismetServer, '/' . $this->akismetVersion . '/submit-spam');
+        $this->sendRequest($this->getQueryString(), $this->akismetAPIKey . '.' . $this->akismetServer, '/' . $this->akismetVersion . '/submit-spam');
     }
 
     /**
@@ -214,7 +205,7 @@ class AkismetComponent extends Component
      */
     public function submitHam()
     {
-        $this->sendRequest($this->getQueryString(), $this->wordPressAPIKey . '.' . $this->akismetServer, '/' . $this->akismetVersion . '/submit-ham');
+        $this->sendRequest($this->getQueryString(), $this->akismetAPIKey . '.' . $this->akismetServer, '/' . $this->akismetVersion . '/submit-ham');
     }
 
     /**
