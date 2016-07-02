@@ -25,7 +25,9 @@ class ContactsController extends AppController
     {
         parent::initialize();
 
-        $this->loadComponent('Croogo/Core.Recaptcha');
+        $this->loadComponent('Croogo/Core.Recaptcha', [
+            'actions' => ['view']
+        ]);
     }
 
     /**
@@ -140,7 +142,7 @@ class ContactsController extends AppController
             return $continue;
         }
 
-        if (!$this->Recaptcha->valid($this->request)) {
+        if (!$this->Recaptcha->verify()) {
             $this->Flash->error(__d('croogo', 'Invalid captcha entry'));
             return false;
         }

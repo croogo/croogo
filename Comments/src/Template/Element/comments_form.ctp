@@ -16,7 +16,7 @@ $captcha = (isset($captcha)) ? $captcha : false;
     <?php endif; ?>
     <?= $this->Form->input('body'); ?>
     <?php if ($captcha): ?>
-        <?= $this->Recaptcha->display_form(); ?>
+        <?= $this->Recaptcha->display(); ?>
     <?php endif; ?>
     <?= $this->Form->submit(__d('croogo', 'Post comment')); ?>
     <?= $this->Form->end(); ?>

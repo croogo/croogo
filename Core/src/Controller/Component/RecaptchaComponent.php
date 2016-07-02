@@ -1,163 +1,133 @@
 <?php
-
 namespace Croogo\Core\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Network\Http\Client;
 
 /**
  * Recaptcha Component
  *
  * @package Croogo.Croogo.Controller.Component
  * @category Component
- * @link http://bakery.cakephp.org/articles/view/recaptcha-component-helper-for-cakephp
  */
 class RecaptchaComponent extends Component
 {
-    public $publickey = '';
-    public $privatekey= '';
 
-    public $is_valid = false;
-    public $error = "";
+    const SITE_VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
 
-    protected $controller = null;
+    const VERSION = 'php_1.1.2';
 
-    public function startup(Event $event)
+    public $Controller = null;
+
+    private $_publicKey = '';
+    private $_privateKey = '';
+
+    protected $_defaultConfig = [
+        'actions' => []
+    ];
+
+    /**
+     * Constructor
+     */
+    public function __construct(ComponentRegistry $registry, array $config = [])
     {
-        $this->publickey = Configure::read('Service.recaptcha_public_key');
-        $this->privatekey = Configure::read('Service.recaptcha_private_key');
-
-        Configure::write("Recaptcha.apiServer", "http://api.recaptcha.net");
-        Configure::write("Recaptcha.apiSecureServer", "https://api-secure.recaptcha.net");
-        Configure::write("Recaptcha.verifyServer", "api-verify.recaptcha.net");
-        Configure::write("Recaptcha.pubKey", $this->publickey);
-        Configure::write("Recaptcha.privateKey", $this->privatekey);
-
-        $this->controller = $event->subject();
-        $this->controller->helpers[] = 'Croogo/Core.Recaptcha';
+        $this->_defaultConfig['modelClass'] = $registry->getController()->modelClass;
+        parent::__construct($registry, $config);
     }
 
-    public function valid($request)
+    /**
+     * initialize
+     */
+    public function initialize(array $config)
     {
-        if (isset($request->data['recaptcha_challenge_field']) && isset($request->data['recaptcha_response_field'])) {
-            if ($this->recaptcha_check_answer(
-                $this->privatekey,
-                $_SERVER["REMOTE_ADDR"],
-                $request->data['recaptcha_challenge_field'],
-                $request->data['recaptcha_response_field']
-            ) == 0) {
+        $controller = $this->_registry->getController();
+        if ($controller->name === 'CakeError') {
+            return;
+        }
+
+        if (in_array($this->request->param('action'), $this->config('actions'))) {
+            $controller->Security->validatePost = false;
+        }
+
+        $controller->viewBuilder()->helpers(['Croogo/Core.Recaptcha']);
+    }
+
+    /**
+     * startup
+     */
+    public function startup()
+    {
+        $this->_publicKey = Configure::read('Service.recaptcha_public_key');
+        $this->_privateKey = Configure::read('Service.recaptcha_private_key');
+
+        Configure::write('Recaptcha.pubKey', $this->_publicKey);
+        Configure::write('Recaptcha.privateKey', $this->_privateKey);
+    }
+
+    /**
+     * verify reCAPTCHA
+     */
+    public function verify()
+    {
+        if (isset($this->request->data['g-recaptcha-response'])) {
+            $captcha = $this->request->data['g-recaptcha-response'];
+            $response = $this->_getApiResponse($captcha);
+
+            if (!$response->success) {
+                $this->Flash->error($this->_errorMsg($response->{'error-codes'}));
+
                 return false;
             }
 
-            if ($this->is_valid) {
-                return true;
-            }
+            return true;
         }
-        return false;
     }
 
     /**
-     * Calls an HTTP POST function to verify if the user's guess was correct
-     * @param string $privkey
-     * @param string $remoteip
-     * @param string $challenge
-     * @param string $response
-     * @param array $extra_params an array of extra variables to post to the server
-     * @return ReCaptchaResponse
+     * Get reCAPTCHA response
+     *
+     * @return array Body of the reCAPTCHA response
      */
-    public function recaptcha_check_answer($privkey, $remoteip, $challenge, $response, $extra_params = [])
+    protected function _getApiResponse($captcha)
     {
-        if ($privkey == null || $privkey == '') {
-            die("To use reCAPTCHA you must get an API key from <a href='http://recaptcha.net/api/getkey'>http://recaptcha.net/api/getkey</a>");
-        }
+        $data = [
+            'secret' => $this->_privateKey,
+            'response' => $captcha,
+            'remoteip' => env('REMOTE_ADDR'),
+            'version' => self::VERSION
+        ];
+        $HttpSocket = new Client();
+        $request = $HttpSocket->post(self::SITE_VERIFY_URL, $data);
 
-        if ($remoteip == null || $remoteip == '') {
-            die("For security reasons, you must pass the remote ip to reCAPTCHA");
-        }
-
-            //discard spam submissions
-        if ($challenge == null || strlen($challenge) == 0 || $response == null || strlen($response) == 0) {
-                $this->is_valid = false;
-                $this->error = 'incorrect-captcha-sol';
-                return 0;
-        }
-
-            $response = $this->_recaptcha_http_post(
-                Configure::read('Recaptcha.verifyServer'),
-                "/verify",
-                [
-                                                     'privatekey' => $privkey,
-                                                     'remoteip' => $remoteip,
-                                                     'challenge' => $challenge,
-                                                     'response' => $response
-                                                     ] + $extra_params
-            );
-
-            $answers = explode("\n", $response[1]);
-
-        if (trim($answers[0]) == 'true') {
-                $this->is_valid = true;
-                return 1;
-        } else {
-                $this->is_valid = false;
-                $this->error = $answers[1];
-                return 0;
-        }
+        return json_decode($request->body());
     }
-
 
     /**
-     * Submits an HTTP POST to a reCAPTCHA server
-     * @param string $host
-     * @param string $path
-     * @param array $data
-     * @param int port
-     * @return array response
+     * Error message
      */
-    protected function _recaptcha_http_post($host, $path, $data, $port = 80)
+    protected function _errorMsg($errorCodes = null)
     {
-
-        $req = $this->_recaptcha_qsencode($data);
-
-        $http_request  = "POST $path HTTP/1.0\r\n";
-        $http_request .= "Host: $host\r\n";
-        $http_request .= "Content-Type: application/x-www-form-urlencoded;\r\n";
-        $http_request .= "Content-Length: " . strlen($req) . "\r\n";
-        $http_request .= "User-Agent: reCAPTCHA/PHP\r\n";
-        $http_request .= "\r\n";
-        $http_request .= $req;
-
-        $response = '';
-        if (false == ( $fs = @fsockopen($host, $port, $errno, $errstr, 10) )) {
-                die('Could not open socket');
+        switch ($errorCodes) {
+            case 'missing-input-secret':
+                $msg = 'The secret parameter is missing.';
+                break;
+            case 'invaid-input-secret':
+                $msg = 'The secret parameter is invalid or malformed.';
+                break;
+            case 'missing-input-response':
+                $msg = 'The response parameter is missing.';
+                break;
+            case 'invalid-input-response':
+                $msg = 'The response parameter is invalid or malformed.';
+                break;
+            default:
+                $msg = null;
+                break;
         }
 
-        fwrite($fs, $http_request);
-
-        while (!feof($fs)) {
-            $response .= fgets($fs, 1160); // One TCP-IP packet
-        }        fclose($fs);
-        $response = explode("\r\n\r\n", $response, 2);
-
-        return $response;
+        return $msg;
     }
 
-
-    /**
-     * Encodes the given data into a query string format
-     * @param $data - array of string elements to be encoded
-     * @return string - encoded request
-     */
-    protected function _recaptcha_qsencode($data)
-    {
-        $req = "";
-        foreach ($data as $key => $value) {
-                $req .= $key . '=' . urlencode(stripslashes($value)) . '&';
-        }
-
-        // Cut the last '&'
-        $req=substr($req, 0, strlen($req)-1);
-        return $req;
-    }
 }

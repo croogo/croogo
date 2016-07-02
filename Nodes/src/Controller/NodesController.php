@@ -48,7 +48,9 @@ class NodesController extends AppController
         ]);
         $this->loadComponent('Search.Prg');
         $this->loadComponent('Croogo/Core.BulkProcess');
-        $this->loadComponent('Croogo/Core.Recaptcha');
+        $this->loadComponent('Croogo/Core.Recaptcha', [
+            'actions' => ['view']
+        ]);
     }
 
     /**

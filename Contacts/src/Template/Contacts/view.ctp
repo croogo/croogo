@@ -13,7 +13,7 @@
             echo $this->Form->input('title', ['label' => __d('croogo', 'Subject')]);
             echo $this->Form->input('body', ['label' => __d('croogo', 'Message')]);
             if ($contact->message_captcha):
-                echo $this->Recaptcha->display_form();
+                echo $this->Recaptcha->display();
             endif;
             echo $this->Form->submit();
             echo $this->Form->end();
