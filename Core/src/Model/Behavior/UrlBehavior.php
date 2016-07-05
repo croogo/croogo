@@ -30,7 +30,7 @@ class UrlBehavior extends Behavior
 
     public function beforeFind(Event $event, Query $query, $options)
     {
-        $query->formatResults(function (CollectionInterface $results) {
+        $query->formatResults(function ($results) {
             return $results->map(function ($row) {
                 if (!$row instanceof Entity) {
                     return $row;

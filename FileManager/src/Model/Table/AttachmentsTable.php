@@ -43,7 +43,7 @@ class AttachmentsTable extends NodesTable
         $this->table('nodes');
         $this->addBehavior('Croogo/Core.Tree', [
             'scope' => [
-                'type' => $this->type,
+                $this->aliasField('type') => $this->type,
             ],
         ]);
         parent::initialize($config);
