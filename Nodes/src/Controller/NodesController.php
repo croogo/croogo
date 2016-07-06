@@ -51,6 +51,13 @@ class NodesController extends AppController
         $this->loadComponent('Croogo/Core.Recaptcha', [
             'actions' => ['view']
         ]);
+
+        $this->paginate = [
+            'order' => [
+                $this->Nodes->aliasField('publish_start') => 'DESC',
+                $this->Nodes->aliasField('created') => 'DESC',
+            ],
+        ];
     }
 
     /**
@@ -64,12 +71,6 @@ class NodesController extends AppController
         if (!$this->request->param('type')) {
             $this->request->params['type'] = 'node';
         }
-
-        $this->paginate = [
-            'order' => [
-                $this->Nodes->aliasField('created') => 'DESC',
-            ],
-        ];
 
         $query = $this->Nodes->find('view', [
             'roleId' => $this->Croogo->roleId()
@@ -149,8 +150,6 @@ class NodesController extends AppController
         } else {
             $limit = Configure::read('Reading.nodes_per_page');
         }
-
-        $this->paginate['order'] = [$this->Nodes->aliasField('created') => 'DESC'];
 
         $query = $this->Nodes->find('view', ['roleId' => $this->Croogo->roleId()]);
 
