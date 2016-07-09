@@ -161,3 +161,8 @@ a {
         bottom: 0;
     }
 }
+
+.dropdown-scrollable {
+    overflow-y: auto;
+    max-height: 200px;
+}

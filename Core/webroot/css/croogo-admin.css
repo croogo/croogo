@@ -9345,6 +9345,11 @@ a.action:hover {
     right: 0;
     bottom: 0; }
 
+/* line 165, webroot/scss/partials/_styles.scss */
+.dropdown-scrollable {
+  overflow-y: auto;
+  max-height: 200px; }
+
 /* line 3, webroot/scss/partials/_plugin-acl.scss */
 .permission-toggle:hover {
   cursor: pointer; }

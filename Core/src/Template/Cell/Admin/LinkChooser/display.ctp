@@ -26,4 +26,4 @@ echo $this->Form->button($this->Html->icon('link'), [
     'aria-expanded' => false,
     'escape' => false,
 ]);
-echo $this->Html->div('dropdown-menu dropdown-menu-right', implode($dropdowns));
+echo $this->Html->div('dropdown-menu dropdown-menu-right dropdown-scrollable', implode($dropdowns));
