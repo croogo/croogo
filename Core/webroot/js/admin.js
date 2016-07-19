@@ -205,8 +205,10 @@ Admin.iconClass = function (icon, includeDefault) {
   return result.trim();
 }
 
-Admin.dateTimeFields = function() {
-  $('[role=datetime-picker]').each(function () {
+Admin.dateTimeFields = function(datePickers) {
+  datePickers = typeof datePickers !== 'undefined' ? datePickers : $('[role=datetime-picker]');
+
+  datePickers.each(function () {
 
     var picker = $(this);
     var date = null;
