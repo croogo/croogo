@@ -96,27 +96,19 @@ class TaxonomiesComponent extends Component
     protected function _adminData()
     {
         // types
-        $types = $this->Taxonomies->Vocabularies->Types->find(
-            'all',
-            [
-                'conditions' => [
-                    'Types.plugin IS' => null,
-                ],
-                'order' => 'Types.alias ASC',
-            ]
-        );
+        $types = $this->Taxonomies->Vocabularies->Types->find()
+            ->where([
+                'Types.plugin IS' => null
+            ])
+            ->orderAsc('Types.alias');
         $this->controller->set('typesForAdminLayout', $types);
 
         // vocabularies
-        $vocabularies = $this->Taxonomies->Vocabularies->find(
-            'all',
-            [
-                'conditions' => [
-                    'Vocabularies.plugin IS' => null,
-                ],
-                'order' => 'Vocabularies.alias ASC',
-            ]
-        );
+        $vocabularies = $this->Taxonomies->Vocabularies->find()
+            ->where([
+                'Vocabularies.plugin IS' => null
+            ])
+            ->orderAsc('Vocabularies.alias');
         $this->controller->set('vocabulariesForAdminLayout', $vocabularies);
     }
 

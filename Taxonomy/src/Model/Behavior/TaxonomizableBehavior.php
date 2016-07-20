@@ -198,17 +198,6 @@ class TaxonomizableBehavior extends Behavior
     }
 
     /**
-     * Handle Model.Node.beforeSaveNode event
-     *
-     * @param Event $event Event containing `data` and `typeAlias`
-     */
-    public function beforeSaveNode(Event $event, Entity $entity, $typeAlias)
-    {
-        $this->formatTaxonomyData($entity, $typeAlias);
-        $this->validateTaxonomyData($entity);
-    }
-
-    /**
      * beforeSave
      *
      * @return bool
@@ -224,6 +213,8 @@ class TaxonomizableBehavior extends Behavior
         ) {
             $options['associated'][] = 'Taxonomies';
         }
+        $this->formatTaxonomyData($entity, $entity->type);
+        $this->validateTaxonomyData($entity);
     }
 
     public function beforeFind(Event $event, Query $query)
