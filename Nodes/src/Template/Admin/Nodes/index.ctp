@@ -58,7 +58,7 @@ $this->append('table-body');
             <td>
                 <?php
                 echo $this->Html->link($node->type, [
-                    'action' => 'hierarchy',
+                    'action' => 'index',
                     '?' => [
                         'type' => $node->type,
                     ],
