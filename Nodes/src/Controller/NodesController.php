@@ -6,6 +6,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
+use Cake\ORM\Query;
 use Cake\Utility\Inflector;
 use Croogo\Nodes\Model\Table\NodesTable;
 
@@ -51,13 +52,6 @@ class NodesController extends AppController
         $this->loadComponent('Croogo/Core.Recaptcha', [
             'actions' => ['view']
         ]);
-
-        $this->paginate = [
-            'order' => [
-                $this->Nodes->aliasField('publish_start') => 'DESC',
-                $this->Nodes->aliasField('created') => 'DESC',
-            ],
-        ];
     }
 
     /**
@@ -116,6 +110,12 @@ class NodesController extends AppController
             $query->cache($cacheName, $cacheConfig);
         }
 
+        $query
+            ->order([
+                $this->Nodes->aliasField('publish_start') => 'DESC',
+                $this->Nodes->aliasField('created') => 'DESC',
+            ]);
+
         $nodes = $this->paginate($query);
         $this->set(compact('type', 'nodes'));
         if ($type) {
@@ -135,11 +135,11 @@ class NodesController extends AppController
     public function term()
     {
         $term = $this->Nodes->Taxonomies->Terms->find()
-        ->where([
-            'Terms.slug' => $this->request->param('slug')
-        ])
-        ->cache('term_' . $this->request->param('slug'), 'nodes_term')
-        ->firstOrFail();
+            ->where([
+                'Terms.slug' => $this->request->param('slug')
+            ])
+            ->cache('term_' . $this->request->param('slug'), 'nodes_term')
+            ->firstOrFail();
 
         if (!$this->request->param('type')) {
             $this->request->param('type', 'node');
@@ -168,7 +168,6 @@ class NodesController extends AppController
                 ->where([
                     $this->Nodes->aliasField('type') => $type->alias
                 ]);
-            $this->set('title_for_layout', $term->title);
         }
 
         $this->paginate['limit'] = $limit;
@@ -186,11 +185,17 @@ class NodesController extends AppController
             $this->paginate['page'] = $this->request->param('page') ?: 1;
             $cacheName = $cacheNamePrefix . '_' . $this->paginate['page'] . '_' . $limit;
             $cacheConfig = 'nodes_term';
-            $query
-                ->cache($cacheName, $cacheConfig);
+            $query->cache($cacheName, $cacheConfig);
         }
 
+        $query->find('withTerm', ['term' => $term]);
+        $query->order([
+                $this->Nodes->aliasField('publish_start') => 'DESC',
+                $this->Nodes->aliasField('created') => 'DESC',
+            ]);
         $nodes = $this->paginate($query);
+
+        $this->set('title_for_layout', $term->title);
 
         $this->set(compact('term', 'type', 'nodes'));
         $camelizedType = Inflector::camelize($type->alias, '-');

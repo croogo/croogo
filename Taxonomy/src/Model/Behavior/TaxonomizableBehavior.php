@@ -221,4 +221,22 @@ class TaxonomizableBehavior extends Behavior
     {
         $query->contain(['Taxonomies']);
     }
+
+    public function findWithTerm(Query $query, array $options)
+    {
+        if (empty($options['term'])) {
+            return $query;
+        }
+        $term = $options['term'];
+
+        $query
+            ->matching('Taxonomies', function (Query $q) use ($term) {
+               return $q
+                   ->where([
+                       'term_id' => $term->id
+                   ]);
+            });
+
+        return $query;
+    }
 }
