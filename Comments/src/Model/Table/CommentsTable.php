@@ -186,11 +186,11 @@ class CommentsTable extends CroogoTable
  */
     public function isApproved($commentId, $model, $foreignKey)
     {
-        return $this->hasAny([
-            $this->escapeField() => $commentId,
-            $this->escapeField('model') => $model,
-            $this->escapeField('foreign_key') => $foreignKey,
-            $this->escapeField('status') => 1,
+        return $this->exists([
+            $this->aliasField('id') => $commentId,
+            $this->aliasField('model') => $model,
+            $this->aliasField('foreign_key') => $foreignKey,
+            $this->aliasField('status') => 1,
         ]);
     }
 

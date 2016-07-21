@@ -185,7 +185,7 @@ class TermsTable extends CroogoTable
  */
     public function slugExists($slug)
     {
-        return $this->hasAny(compact('slug'));
+        return $this->exists(compact('slug'));
     }
 
 /**
