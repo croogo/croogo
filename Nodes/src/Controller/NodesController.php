@@ -4,6 +4,7 @@ namespace Croogo\Nodes\Controller;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Database\Expression\IdentifierExpression;
 use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\Query;
@@ -110,11 +111,14 @@ class NodesController extends AppController
             $query->cache($cacheName, $cacheConfig);
         }
 
-        $query
-            ->order([
-                $this->Nodes->aliasField('publish_start') => 'DESC',
-                $this->Nodes->aliasField('created') => 'DESC',
-            ]);
+        $query->orderDesc($query->newExpr()
+            ->addCase([
+                $query->newExpr()
+                    ->isNotNull($this->Nodes->aliasField('publish_start'))
+            ], [
+                new IdentifierExpression($this->Nodes->aliasField('publish_start')),
+                new IdentifierExpression($this->Nodes->aliasField('created')),
+            ]));
 
         $nodes = $this->paginate($query);
         $this->set(compact('type', 'nodes'));
@@ -189,10 +193,14 @@ class NodesController extends AppController
         }
 
         $query->find('withTerm', ['term' => $term]);
-        $query->order([
-                $this->Nodes->aliasField('publish_start') => 'DESC',
-                $this->Nodes->aliasField('created') => 'DESC',
-            ]);
+        $query->orderDesc($query->newExpr()
+            ->addCase([
+                $query->newExpr()
+                    ->isNotNull($this->Nodes->aliasField('publish_start'))
+            ], [
+                new IdentifierExpression($this->Nodes->aliasField('publish_start')),
+                new IdentifierExpression($this->Nodes->aliasField('created')),
+            ]));
         $nodes = $this->paginate($query);
 
         $this->set('title_for_layout', $term->title);
