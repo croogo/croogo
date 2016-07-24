@@ -9350,6 +9350,11 @@ a.action:hover {
   overflow-y: auto;
   max-height: 200px; }
 
+/* line 170, webroot/scss/partials/_styles.scss */
+.bootstrap-datetimepicker-widget.dropdown-menu {
+  min-width: 19em;
+  width: inherit !important; }
+
 /* line 3, webroot/scss/partials/_plugin-acl.scss */
 .permission-toggle:hover {
   cursor: pointer; }

@@ -166,3 +166,8 @@ a {
     overflow-y: auto;
     max-height: 200px;
 }
+
+.bootstrap-datetimepicker-widget.dropdown-menu {
+    min-width: 19em;
+    width: inherit !important;
+}
