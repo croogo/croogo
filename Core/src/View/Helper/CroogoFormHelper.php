@@ -50,7 +50,7 @@ class CroogoFormHelper extends FormHelper
         $this->_templates['file'] = '<input type="file" name="{{name}}"{{attrs}}><span class="file-custom"></span>';
         $this->_templates['inputContainerError'] = '<div class="form-group {{type}}{{required}} has-danger">{{content}}{{help}}{{error}}</div>';
         $this->_templates['error'] = '<p class="text-danger">{{content}}</p>';
-        $this->_templates['help'] = '<small class="text-muted">{{content}}</small>';
+        $this->_templates['help'] = '<small class="text-muted help-text">{{content}}</small>';
 
         parent::__construct($View, $settings);
     }
