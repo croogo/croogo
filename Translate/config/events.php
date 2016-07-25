@@ -4,7 +4,7 @@ namespace Croogo\Translate\Config;
 
 return [
     'EventHandlers' => [
-        'Translate.TranslateEventHandler' => [
+        'Croogo/Translate.TranslateEventHandler' => [
             'options' => [
                 'priority' => 20,
             ],

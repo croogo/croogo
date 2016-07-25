@@ -10,6 +10,10 @@
  */
 namespace Croogo\Translate;
 
+use Cake\Core\Configure;
+use Cake\Utility\Inflector;
+use Croogo\Core\Croogo;
+
 class Translations
 {
 
