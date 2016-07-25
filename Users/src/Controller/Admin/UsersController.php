@@ -125,7 +125,7 @@ class UsersController extends AppController
             return;
         }
 
-        $entity->activation_key = Security::randomBytes(20);
+        $entity->activation_key = substr(bin2hex(Security::randomBytes(20)), 0, 60);
     }
 
     public function afterCrudSave(Event $event) {
