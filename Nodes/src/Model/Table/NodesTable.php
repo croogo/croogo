@@ -75,22 +75,56 @@ class NodesTable extends CroogoTable
     }
 
     /**
+     * @param \Cake\ORM\Query $query
+     * @param array $options
+     * @return \Cake\ORM\Query
+     */
+    public function findFilterNodes(Query $query, array $options = [])
+    {
+        if (!empty($options['filter'])) {
+            $filter = '%' . $options['filter'] . '%';
+            $query->andWhere([
+                'or' => [
+                    $this->aliasField('title') . ' like' => $filter,
+                    $this->aliasField('excerpt') . ' like' => $filter,
+                    $this->aliasField('body') . ' like' => $filter,
+                    $this->aliasField('terms') . ' like' => $filter,
+                ],
+            ]);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Cake\ORM\Query $query
+     * @param array $options
+     * @return \Cake\ORM\Query
+     */
+    public function findFilterPublishedNodes(Query $query, array $options = [])
+    {
+        return $query
+            ->find('filterNodes', ['filter' => $options['q']])
+            ->find('published');
+    }
+
+    /**
      * @param \Cake\Validation\Validator $validator Validator
      * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator)
     {
-        $validator
-            ->notBlank('title', __d('croogo', 'Please supply a title.'));
+        $validator->notBlank('title', __d('croogo', 'Please supply a title.'));
 
-        $validator
-            ->minLength('slug', 1, __d('croogo', 'Slug cannot be empty.'));
+        $validator->minLength('slug', 1, __d('croogo', 'Slug cannot be empty.'));
+
         return $validator;
     }
 
     public function buildRules(RulesChecker $rules)
     {
         $rules->isUnique(['slug', 'type'], __d('croogo', 'The slug has already been taken.'));
+
         return parent::buildRules($rules);
     }
 
@@ -155,8 +189,7 @@ class NodesTable extends CroogoTable
                 'roleId' => $options['roleId'],
             ]);
         }
-        $query
-            ->find('published', $options)
+        $query->find('published', $options)
             ->contain([
                 'Taxonomies' => [
                     'Terms',
@@ -164,6 +197,7 @@ class NodesTable extends CroogoTable
                 ],
                 'Users',
             ]);
+
         return $query;
     }
 
@@ -180,9 +214,9 @@ class NodesTable extends CroogoTable
         $options += $defaults;
 
         return $query->where([
-                $this->aliasField('slug') => $options['slug'],
-                $this->aliasField('type') => $options['type'],
-            ]);
+            $this->aliasField('slug') => $options['slug'],
+            $this->aliasField('type') => $options['type'],
+        ]);
     }
 
     /**
@@ -194,8 +228,7 @@ class NodesTable extends CroogoTable
         $options += $defaults;
         $cacheKey = 'node_' . $options['roleId'] . '_' . $options['type'] . '_' . $options['slug'];
 
-        $query
-            ->find('view', $options)
+        $query->find('view', $options)
             ->find('bySlug', $options)
             ->cache($cacheKey, 'nodes_view');
 
@@ -238,6 +271,7 @@ class NodesTable extends CroogoTable
     public function findPublished(Query $query, array $options = [])
     {
         $options += ['roleId' => null];
+
         return $query->andWhere([
             $this->aliasField('status') . ' IN' => $this->status($options['roleId']),
         ]);
