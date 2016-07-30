@@ -47,10 +47,38 @@ class AppController extends CroogoAppController
                     'className' => 'Crud.View'
                 ],
                 'add' => [
-                    'className' => 'Croogo/Core.Admin/Add'
+                    'className' => 'Croogo/Core.Admin/Add',
+                    'messages' => [
+                        'success' => [
+                            'params' => [
+                                'type' => 'success',
+                                'class' => ''
+                            ]
+                        ],
+                        'error' => [
+                            'params' => [
+                                'type' => 'error',
+                                'class' => ''
+                            ]
+                        ]
+                    ]
                 ],
                 'edit' => [
-                    'className' => 'Croogo/Core.Admin/Edit'
+                    'className' => 'Croogo/Core.Admin/Edit',
+                    'messages' => [
+                        'success' => [
+                            'params' => [
+                                'type' => 'success',
+                                'class' => ''
+                            ]
+                        ],
+                        'error' => [
+                            'params' => [
+                                'type' => 'error',
+                                'class' => ''
+                            ]
+                        ]
+                    ]
                 ],
                 'toggle' => [
                     'className' => 'Croogo/Core.Admin/Toggle'
