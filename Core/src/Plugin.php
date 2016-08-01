@@ -1,20 +1,20 @@
 <?php
 
-namespace Croogo\Extensions;
+namespace Croogo\Core;
 
 use App\Controller\AppController;
 use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
-use Cake\Core\Plugin;
+use Cake\Core\Plugin as CakePlugin;
 use Cake\Filesystem\Folder;
 use Cake\Log\LogTrait;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
-use Croogo\Core\Event\CroogoEventManager;
+use Croogo\Core\Event\EventManager;
 use InvalidArgumentException;
 use Migrations\Migrations;
 
@@ -29,7 +29,7 @@ use Migrations\Migrations;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoPlugin
+class Plugin extends CakePlugin
 {
 
     use LogTrait;
@@ -109,7 +109,7 @@ class CroogoPlugin
     {
         static $self = null;
         if ($self === null) {
-            $self = new CroogoPlugin();
+            $self = new static();
         }
 
         return $self;
@@ -456,7 +456,7 @@ class CroogoPlugin
      * @param  string $plugin Plugin name (underscored)
      * @return boolean
      */
-    public function isActive($plugin)
+    public static function isActive($plugin)
     {
         $configureKeys = [
             'Hook.bootstraps',
@@ -693,7 +693,7 @@ class CroogoPlugin
             }
 
             try {
-                CroogoPlugin::load($plugin);
+                static::load($plugin);
             } catch (MissingPluginException $e) {
                 return __d('Plugin "%s" could not be actived.', $plugin);
             }
@@ -750,7 +750,7 @@ class CroogoPlugin
             if (isset($pluginActivation) && method_exists($pluginActivation, 'onDeactivation')) {
                 $pluginActivation->onDeactivation($this->_Controller);
             }
-            CroogoPlugin::unload($plugin);
+            static::unload($plugin);
 
             Cache::clear(false, 'croogo_menus');
             Cache::delete('file_map', '_cake_core_');
@@ -793,19 +793,22 @@ class CroogoPlugin
      * @param mixed $plugin name of plugin, or array of plugin and its config
      * @return void
      */
-    public static function load($plugin, $config = [])
+    public static function load($plugin, array $config = [])
     {
-        Plugin::load($plugin, $config);
-        if (is_string($plugin)) {
-            $plugin = [$plugin => $config];
+        if (is_array($plugin)) {
+            parent::load($plugin, $config);
+
+            return;
         }
-        Cache::delete('EventHandlers', 'cached_settings');
-        foreach ($plugin as $name => $conf) {
-            list($name, $conf) = (is_numeric($name)) ? [$conf, $config] : [$name, $conf];
-            $file = Plugin::path($name) . 'config' . DS . 'events.php';
-            if (file_exists($file)) {
-                Configure::load($name . '.events');
-            }
+
+        $config += [
+            'events' => false,
+        ];
+
+        parent::load($plugin, $config);
+
+        if (in_array('cached_settings', Cache::configured())) {
+            Cache::delete('EventHandlers', 'cached_settings');
         }
     }
 
@@ -819,12 +822,12 @@ class CroogoPlugin
      * @param string $plugin name of the plugin to forget
      * @return void
      */
-    public static function unload($plugin)
+    public static function unload($plugin = null)
     {
-        $eventManager = CroogoEventManager::instance();
-        if ($eventManager instanceof CroogoEventManager) {
+        $eventManager = EventManager::instance();
+        if ($eventManager instanceof EventManager) {
             if ($plugin == null) {
-                $activePlugins = Plugin::loaded();
+                $activePlugins = static::loaded();
                 foreach ($activePlugins as $activePlugin) {
                     $eventManager->detachPluginSubscribers($activePlugin);
                 }
@@ -832,7 +835,7 @@ class CroogoPlugin
                 $eventManager->detachPluginSubscribers($plugin);
             }
         }
-        Plugin::unload($plugin);
+        parent::unload($plugin);
         Cache::delete('EventHandlers', 'cached_settings');
     }
 
@@ -963,9 +966,36 @@ class CroogoPlugin
     public static function path($plugin)
     {
         if (strstr($plugin, 'Croogo/')) {
-            return realpath(Plugin::path('Croogo/Core') . '..' . DS . substr($plugin, 7) . DS) . DS;
+            return realpath(parent::path('Croogo/Core') . '..' . DS . substr($plugin, 7) . DS) . DS;
         }
 
-        return Plugin::path($plugin);
+        return parent::path($plugin);
+    }
+
+    /**
+     * Loads the events file for a plugin, or all plugins configured to load their respective events file
+     *
+     * @param string|null $plugin name of the plugin, if null will operate on all plugins having enabled the
+     * loading of events files
+     * @return bool
+     */
+    public static function events($plugin = null)
+    {
+        if ($plugin === null) {
+            foreach (static::loaded() as $p) {
+                static::events($p);
+            }
+            return true;
+        }
+        $config = static::$_plugins[$plugin];
+        if ((!isset($config['events'])) || ($config['events'] === false)) {
+            return false;
+        }
+
+        if (($config['ignoreMissing']) && (!file_exists($config['configPath'] . 'events.php'))) {
+            return false;
+        }
+
+        return Configure::load($plugin . '.events');
     }
 }

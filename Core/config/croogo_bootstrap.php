@@ -7,7 +7,6 @@ use Aura\Intl\Package;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
-use Cake\Core\Plugin;
 use Cake\I18n\I18n;
 use Cake\Log\Log;
 use Cake\Utility\Hash;
@@ -16,7 +15,7 @@ use Cake\Routing\DispatcherFactory;
 
 use Croogo\Core\Croogo;
 use Croogo\Core\Event\CroogoEventManager;
-use Croogo\Extensions\CroogoPlugin;
+use Croogo\Core\Plugin;
 use Croogo\Settings\Configure\Engine\DatabaseConfig;
 
 /**
@@ -91,8 +90,6 @@ if (Configure::check('Site.asset_timestamp')) {
 Plugin::load('Acl', ['bootstrap' => true]);
 Plugin::load('BootstrapUI');
 
-Plugin::path('Croogo/Core');
-
 /**
  * Extensions
  */
@@ -100,8 +97,8 @@ Plugin::load(['Croogo/Extensions' => [
     'autoload' => true,
     'bootstrap' => true,
     'routes' => true,
+    'events' => true
 ]]);
-Configure::load('Croogo/Extensions.events');
 
 /**
  * List of core plugins
@@ -127,19 +124,21 @@ $option = [
     'bootstrap' => true,
     'ignoreMissing' => true,
     'routes' => true,
+    'events' => true
 ];
 foreach ($plugins as $plugin) {
     $pluginName = Inflector::camelize($plugin);
     try {
-        CroogoPlugin::load($pluginName, $option);
+        Plugin::load($pluginName, $option);
     } catch (MissingPluginException $e) {
         Log::error('Plugin not found during bootstrap: ' . $pluginName);
         continue;
     }
 }
+
 $theme = Configure::read('Site.theme');
 if (!Plugin::loaded($theme)) {
-    CroogoPlugin::load($theme, [
+    Plugin::load($theme, [
         'autoload' => true,
         'bootstrap' => true,
         'routes' => true,
@@ -149,5 +148,6 @@ if (!Plugin::loaded($theme)) {
 
 DispatcherFactory::add('Croogo/Core.HomePage');
 
+Plugin::events();
 CroogoEventManager::loadListeners();
 Croogo::dispatchEvent('Croogo.bootstrapComplete');

@@ -23,3 +23,5 @@ if (!Plugin::loaded('Croogo/Settings')) {
 if (!Plugin::loaded('Search')) {
     Plugin::load('Search', ['autoload' => true, 'classBase' => false]);
 }
+
+class_alias('Croogo\Core\Plugin', 'Croogo\Extensions\CroogoPlugin');
