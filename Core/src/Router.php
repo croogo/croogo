@@ -3,20 +3,18 @@
 namespace Croogo\Core;
 
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\Database\Exception\MissingConnectionException;
 use Cake\Log\Log;
+use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\Router;
+use Cake\Routing\Router as CakeRouter;
 use Cake\Utility\Hash;
 
-use Croogo\Routing\Route\ApiRoute;
-
 /**
- * CroogoRouter
+ * Router
  *
  * NOTE: Do not use this class as a substitute of Router class.
- * Use it only for CroogoRouter::connect()
+ * Use it only for Router::connect()
  *
  * @package  Croogo.Croogo.Lib
  * @version  1.0
@@ -24,7 +22,7 @@ use Croogo\Routing\Route\ApiRoute;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoRouter
+class Router extends CakeRouter
 {
 
 /**
@@ -48,28 +46,14 @@ class CroogoRouter
  */
     public static function connect($route, $default = [], $params = [], $options = [])
     {
-        return self::__connect($route, $default, $params, $options);
-    }
-
-/**
- *
- * @see Router::connect()
- */
-    private static function __connect($route, $default = [], $params = [], $options = [])
-    {
-        $options = Hash::merge(['promote' => false], $options);
         $localizedRoute = $route == '/' ? '' : $route;
-        if (Plugin::loaded('Translate')) {
-            Router::connect('/:locale' . $localizedRoute, $default, array_merge(['locale' => '[a-z]{3}'], $params));
-            if ($options['promote']) {
-                Router::promote();
-            }
+        if (Plugin::loaded('Croogo/Translate')) {
+            static::connect('/:locale' . $localizedRoute, $default, array_merge(['locale' => '[a-z]{3}'], $params));
         }
-        $return = Router::connect($route, $default, $params);
-        if ($options['promote']) {
-            Router::promote();
-        }
-        return $return;
+
+        parent::connect($route, $default, $params);
+
+        return Router::routes();
     }
 
 /**
@@ -105,6 +89,7 @@ class CroogoRouter
         if (!$request) {
             return false;
         }
+
         $clientIp = $request->clientIp();
         $whitelist = array_map(
             'trim',
@@ -127,7 +112,8 @@ class CroogoRouter
                 'Croogo\Core\Routing\Route\ApiRoute',
             ],
         ], $options);
-        return Router::mapResources($controller, $options);
+
+        return static::mapResources($controller, $options);
     }
 
 /**
@@ -138,30 +124,9 @@ class CroogoRouter
  */
     public static function localize()
     {
-        if (Plugin::loaded('Translate')) {
-            Router::connect('/:locale/:plugin/:controller/:action/*', [], ['locale' => '[a-z]{3}']);
-            Router::connect('/:locale/:controller/:action/*', [], ['locale' => '[a-z]{3}']);
-        }
-    }
-
-/**
- * Load plugin routes
- *
- * @return void
- */
-    public static function plugins()
-    {
-        $pluginRoutes = Configure::read('Hook.routes');
-        if (!$pluginRoutes || !is_array(Configure::read('Hook.routes'))) {
-            return;
-        }
-
-        $plugins = Configure::read('Hook.routes');
-        foreach ($plugins as $plugin) {
-            $path = App::pluginPath($plugin) . 'config' . DS . 'routes.php';
-            if (file_exists($path)) {
-                include $path;
-            }
+        if (Plugin::loaded('Croogo/Translate')) {
+            static::connect('/:locale/:plugin/:controller/:action/*', [], ['locale' => '[a-z]{3}']);
+            static::connect('/:locale/:controller/:action/*', [], ['locale' => '[a-z]{3}']);
         }
     }
 
@@ -173,19 +138,19 @@ class CroogoRouter
  */
     public static function contentType($alias)
     {
-        CroogoRouter::connect('/' . $alias, [
+        Router::connect('/' . $alias, [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'index', 'type' => $alias
         ]);
-        CroogoRouter::connect('/' . $alias . '/archives/*', [
+        Router::connect('/' . $alias . '/archives/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'index', 'type' => $alias
         ]);
-        CroogoRouter::connect('/' . $alias . '/:slug', [
+        Router::connect('/' . $alias . '/:slug', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'view', 'type' => $alias
         ]);
-        CroogoRouter::connect('/' . $alias . '/term/:slug/*', [
+        Router::connect('/' . $alias . '/term/:slug/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'term', 'type' => $alias
         ]);
@@ -206,8 +171,8 @@ class CroogoRouter
                 ],
             ]);
             foreach ($types as $type) {
-                if (isset($type['Params']['routes']) && $type['Params']['routes']) {
-                    CroogoRouter::contentType($type['Type']['alias']);
+                if (isset($type->params['routes']) && $type->params['routes'] === '1') {
+                    static::contentType($type->alias);
                 }
             }
         } catch (MissingConnectionException $e) {
@@ -220,14 +185,14 @@ class CroogoRouter
  *
  * @return void
  */
-    public static function routes()
-    {
-        $homeUrl = Configure::read('Site.home_url');
-        if ($homeUrl && strpos($homeUrl, ':') !== false) {
-            $converter = new StringConverter();
-            $url = $converter->linkStringToArray($homeUrl);
-            CroogoRouter::connect('/', $url, [], ['promote' => true]);
-        }
-        Plugin::routes();
-    }
+//    public static function routes()
+//    {
+//        $homeUrl = Configure::read('Site.home_url');
+//        if ($homeUrl && strpos($homeUrl, ':') !== false) {
+//            $converter = new StringConverter();
+//            $url = $converter->linkStringToArray($homeUrl);
+//            Router::connect('/', $url, [], ['promote' => true]);
+//        }
+//        Plugin::routes();
+//    }
 }
