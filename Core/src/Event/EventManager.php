@@ -6,7 +6,7 @@ use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\Core\Plugin;
 use Cake\Core\Configure;
-use Cake\Event\EventManager;
+use Cake\Event\EventManager as CakeEventManager;
 use Cake\Log\Log;
 
 /**
@@ -21,7 +21,7 @@ use Cake\Log\Log;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class CroogoEventManager extends EventManager
+class EventManager extends CakeEventManager
 {
 
 /**
@@ -30,13 +30,13 @@ class CroogoEventManager extends EventManager
     protected $_listenersMap = [];
 
 /**
- * Returns the globally available instance of a CroogoEventManager
- * @return CroogoEventManager the global event manager
+ * Returns the globally available instance of a EventManager
+ * @return EventManager the global event manager
  */
     public static function instance($manager = null)
     {
         if (empty(self::$_generalManager)) {
-            return parent::instance(new CroogoEventManager());
+            return parent::instance(new EventManager());
         }
         return parent::instance($manager);
     }
@@ -61,7 +61,7 @@ class CroogoEventManager extends EventManager
  */
     public static function loadListeners()
     {
-        $eventManager = CroogoEventManager::instance();
+        $eventManager = EventManager::instance();
         $cached = Cache::read('EventHandlers', 'cached_settings');
         if ($cached === false) {
             $eventHandlers = Configure::read('EventHandlers');

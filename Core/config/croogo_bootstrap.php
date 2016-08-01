@@ -14,9 +14,12 @@ use Cake\Utility\Inflector;
 use Cake\Routing\DispatcherFactory;
 
 use Croogo\Core\Croogo;
-use Croogo\Core\Event\CroogoEventManager;
+use Croogo\Core\Event\EventManager;
 use Croogo\Core\Plugin;
 use Croogo\Settings\Configure\Engine\DatabaseConfig;
+
+// Make sure that the Croogo event manager is the global one
+EventManager::instance();
 
 /**
  * Default Acl plugin.  Custom Acl plugin should override this value.
@@ -149,5 +152,5 @@ if (!Plugin::loaded($theme)) {
 DispatcherFactory::add('Croogo/Core.HomePage');
 
 Plugin::events();
-CroogoEventManager::loadListeners();
+EventManager::loadListeners();
 Croogo::dispatchEvent('Croogo.bootstrapComplete');
