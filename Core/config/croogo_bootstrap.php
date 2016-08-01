@@ -140,11 +140,12 @@ foreach ($plugins as $plugin) {
 }
 
 $theme = Configure::read('Site.theme');
-if (!Plugin::loaded($theme)) {
+if (($theme) && (!Plugin::loaded($theme)) && (Plugin::available($theme))) {
     Plugin::load($theme, [
         'autoload' => true,
         'bootstrap' => true,
         'routes' => true,
+        'events' => true,
         'ignoreMissing' => true
     ]);
 }

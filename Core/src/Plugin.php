@@ -8,6 +8,9 @@ use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin as CakePlugin;
+use Cake\Datasource\ConnectionInterface;
+use Cake\Datasource\ConnectionManager;
+use Cake\Datasource\Exception\MissingDatasourceConfigException;
 use Cake\Filesystem\Folder;
 use Cake\Log\LogTrait;
 use Cake\ORM\TableRegistry;
@@ -276,7 +279,7 @@ class Plugin extends CakePlugin
         $active = $this->isActive($alias);
         $manifestFile = $pluginPath . DS . 'config' . DS . 'plugin.json';
         $hasManifest = file_exists($manifestFile);
-        $composerFile = $pluginPath . $alias . DS . 'composer.json';
+        $composerFile = $pluginPath . DS . 'composer.json';
         $hasComposer = file_exists($composerFile);
         if ($hasManifest || $hasComposer) {
             $pluginData = [
@@ -333,16 +336,15 @@ class Plugin extends CakePlugin
     /**
      * Get the content of plugin.json file of a plugin
      *
-     * @param string $alias plugin folder name
+     * @param string $plugin name of plugin
      * @return array|bool array of plugin manifest or boolean false
      */
-    public function getData($alias = null, $ignoreMigrations = true)
+    public function getData($plugin = null, $ignoreMigrations = true)
     {
-        $pluginPath = Configure::read('plugins.' . $alias);
-        if (!$pluginPath) {
+        if (!static::available($plugin)) {
             return false;
         }
-        return $this->_loadData($alias, $pluginPath, $ignoreMigrations);
+        return $this->_loadData($plugin, static::path($plugin), $ignoreMigrations);
     }
 
     /**
@@ -491,7 +493,7 @@ class Plugin extends CakePlugin
     /**
      * Check if a plugin need a database migration
      *
-     * @param string $plugin Plugin name
+     * @param string $plugin Plugin name or 'app'
      * @param string $isActive If the plugin is active
      * @return bool
      */
@@ -500,9 +502,17 @@ class Plugin extends CakePlugin
         if (!$isActive) {
             return false;
         }
+        if (($plugin !== 'app') && (!static::available($plugin))) {
+            return false;
+        }
 
-        $status = $this->_getMigrations()
-            ->status(['plugin' => $plugin]);
+        $options = [
+            'connection' => static::migrationConnectionName()
+        ];
+        if ($plugin !== 'app') {
+            $options['plugin'] = $plugin;
+        }
+        $status = $this->_getMigrations()->status($options);
         if ($status) {
             return Hash::check($status, '{n}[status=down]');
         }
@@ -518,18 +528,38 @@ class Plugin extends CakePlugin
      */
     public function migrate($plugin)
     {
+        if (($plugin !== 'app') && (!static::available($plugin))) {
+            return false;
+        }
         if (!$this->needMigration($plugin, true)) {
             return true;
         }
 
+        $options = [
+            'connection' => static::migrationConnectionName()
+        ];
+        if ($plugin !== 'app') {
+            $options['plugin'] = $plugin;
+        }
         return $this->_getMigrations()
-            ->migrate(['plugin' => $plugin]);
+            ->migrate($options);
     }
 
     public function unmigrate($plugin)
     {
+        if (($plugin !== 'app') && (!static::available($plugin))) {
+            return false;
+        }
+
+        $options = [
+            'connection' => static::migrationConnectionName(),
+            'target' => 0
+        ];
+        if ($plugin !== 'app') {
+            $options['plugin'] = $plugin;
+        }
         return $this->_getMigrations()
-            ->rollback(['plugin' => $plugin, 'target' => 0]);
+            ->rollback($options);
     }
 
     /**
@@ -721,7 +751,7 @@ class Plugin extends CakePlugin
         if (empty($deps['usedBy'][$plugin])) {
             return false;
         }
-        $usedBy = array_filter($deps['usedBy'][$plugin], ['Plugin', 'loaded']);
+        $usedBy = array_filter($deps['usedBy'][$plugin], ['Croogo\\Core\\Plugin', 'loaded']);
         if (!empty($usedBy)) {
             return $usedBy;
         }
@@ -824,6 +854,14 @@ class Plugin extends CakePlugin
      */
     public static function unload($plugin = null)
     {
+        if (is_array($plugin)) {
+            foreach ($plugin as $name) {
+                static::unload($name);
+            }
+
+            return;
+        }
+
         $eventManager = EventManager::instance();
         if ($eventManager instanceof EventManager) {
             if ($plugin == null) {
@@ -969,6 +1007,21 @@ class Plugin extends CakePlugin
             return realpath(parent::path('Croogo/Core') . '..' . DS . substr($plugin, 7) . DS) . DS;
         }
 
+        $path = Configure::read('plugins.' . $plugin);
+        if ($path) {
+            return $path;
+        }
+
+        $paths = App::path('Plugin');
+        $pluginPath = str_replace('/', DIRECTORY_SEPARATOR, $plugin);
+        foreach ($paths as $path) {
+            if (!is_dir($path . $pluginPath)) {
+                continue;
+            }
+
+            return $path . $pluginPath;
+        }
+
         return parent::path($plugin);
     }
 
@@ -997,5 +1050,44 @@ class Plugin extends CakePlugin
         }
 
         return Configure::load($plugin . '.events');
+    }
+
+    /**
+     * Check whether a plugin can be loaded without the having to specify the path as an option.
+     *
+     * @param string $plugin name of the plugin
+     * @return bool
+     */
+    public static function available($plugin)
+    {
+        try {
+            if (!static::path($plugin)) {
+                return false;
+            }
+
+            return true;
+        } catch (MissingPluginException $exception) {
+        }
+
+        return false;
+    }
+
+    protected static function migrationConnectionName()
+    {
+        if (static::getConnectionConfiguration('default', false)) {
+            return 'default';
+        }
+
+        return static::getConnectionConfiguration('default')['name'];
+    }
+
+    protected static function getConnectionConfiguration($connectionName, $useAliases = true)
+    {
+        try {
+            return ConnectionManager::get($connectionName, $useAliases)->config();
+        } catch (MissingDatasourceConfigException $exception) {
+        }
+
+        return false;
     }
 }

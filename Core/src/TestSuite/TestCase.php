@@ -4,10 +4,11 @@ namespace Croogo\Core\TestSuite;
 
 use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\Network\Request;
 use Cake\TestSuite\TestCase as CakeTestCase;
+use Cake\Utility\Hash;
 use Croogo\Core\Configure\CroogoJsonReader;
+use Croogo\Core\Plugin;
 use Croogo\Core\Router;
 use Croogo\Core\Event\EventManager;
 use Croogo\Core\TestSuite\CroogoTestFixture;
@@ -34,6 +35,8 @@ class TestCase extends CakeTestCase
  */
     public $setupSettings = true;
 
+    protected $previousPlugins = [];
+
     public static function setUpBeforeClass()
     {
         Configure::write('Config.language', 'eng');
@@ -54,6 +57,7 @@ class TestCase extends CakeTestCase
         parent::setUp();
 
         EventManager::instance(new EventManager);
+        Configure::write('EventHandlers', []);
 
         $appDir = Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS;
 
@@ -67,6 +71,8 @@ class TestCase extends CakeTestCase
         Plugin::load('Croogo/Example', ['autoload' => true, 'path' => '../Example/']);
         Configure::write('Acl.database', 'test');
         $this->setupSettings($appDir);
+
+        $this->previousPlugins = Plugin::loaded();
     }
 
     public function setupSettings($appDir)
@@ -87,6 +93,9 @@ class TestCase extends CakeTestCase
         parent::tearDown();
 
 //		App::build($this->_paths);
+
+        // Unload all plugins that were loaded while running tests
+        Plugin::unload(array_diff(Plugin::loaded(), $this->previousPlugins));
     }
 
 /**

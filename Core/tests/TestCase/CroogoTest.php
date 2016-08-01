@@ -7,8 +7,9 @@ use Cake\Core\Plugin;
 use Cake\ORM\TableRegistry;
 use Croogo\Core\Croogo;
 use Croogo\Core\TestSuite\CroogoTestCase;
+use Croogo\Core\TestSuite\TestCase;
 
-class CroogoTest extends CroogoTestCase
+class CroogoTest extends TestCase
 {
 
     public $fixtures = [
