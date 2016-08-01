@@ -6,12 +6,8 @@ use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Network\Request;
 use Cake\TestSuite\TestCase as CakeTestCase;
-use Cake\Utility\Hash;
-use Croogo\Core\Configure\CroogoJsonReader;
 use Croogo\Core\Plugin;
-use Croogo\Core\Router;
 use Croogo\Core\Event\EventManager;
-use Croogo\Core\TestSuite\CroogoTestFixture;
 
 /**
  * CroogoTestCase class
@@ -26,15 +22,6 @@ use Croogo\Core\TestSuite\CroogoTestFixture;
  */
 class TestCase extends CakeTestCase
 {
-
-    protected $_paths = [];
-
-/**
- * Setup settings.json file for the test application. Tests not requiring
- * settings fixture can turn it off by setting this to false.
- */
-    public $setupSettings = true;
-
     protected $previousPlugins = [];
 
     public static function setUpBeforeClass()
@@ -59,40 +46,16 @@ class TestCase extends CakeTestCase
         EventManager::instance(new EventManager);
         Configure::write('EventHandlers', []);
 
-        $appDir = Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS;
-
-//		App::build(array(
-//			'Plugin' => array($appDir . 'Plugin' . DS),
-//			'View' => array($appDir . 'View' . DS),
-//		), App::PREPEND);
-//		$this->_paths = App::paths();
-
         Plugin::unload('Croogo/Install');
         Plugin::load('Croogo/Example', ['autoload' => true, 'path' => '../Example/']);
         Configure::write('Acl.database', 'test');
-        $this->setupSettings($appDir);
 
         $this->previousPlugins = Plugin::loaded();
-    }
-
-    public function setupSettings($appDir)
-    {
-        if (!$this->setupSettings) {
-            return;
-        }
-
-//		$Setting = ClassRegistry::init('Settings.Setting');
-//		$Setting->settingsPath = $appDir . 'Config' . DS . 'settings.json';
-//		Configure::drop('settings');
-//		Configure::config('settings', new CroogoJsonReader(dirname($Setting->settingsPath) . DS));
-//		$Setting->writeConfiguration();
     }
 
     public function tearDown()
     {
         parent::tearDown();
-
-//		App::build($this->_paths);
 
         // Unload all plugins that were loaded while running tests
         Plugin::unload(array_diff(Plugin::loaded(), $this->previousPlugins));
