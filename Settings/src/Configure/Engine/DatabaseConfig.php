@@ -34,14 +34,12 @@ class DatabaseConfig implements ConfigEngineInterface
  */
     public function read($key)
     {
-        $settings = $this->_table->find('all');
-        $config = [];
+        $settings = $this->_table->find('list', [
+            'keyField' => 'key',
+            'valueField' => 'value'
+        ])->toArray();
 
-        foreach ($settings as $setting) {
-            $config = Hash::insert($config, $setting->key, $setting->value);
-        }
-
-        return $config;
+        return Hash::expand($settings);
     }
 
 /**
