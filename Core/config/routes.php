@@ -5,7 +5,12 @@ use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
 Router::prefix('admin', function (RouteBuilder $routeBuilder) {
-    $routeBuilder->connect('/', Configure::read('Croogo.dashboardUrl'));
+    $dashboardUrl = Configure::read('Croogo.dashboardUrl');
+    if (!$dashboardUrl) {
+        return;
+    }
+
+    $routeBuilder->connect('/', $dashboardUrl);
 });
 
 Router::plugin('Croogo/Core', ['path' => '/'], function (RouteBuilder $routeBuilder) {
