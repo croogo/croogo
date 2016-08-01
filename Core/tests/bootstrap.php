@@ -1,6 +1,9 @@
 <?php
 // @codingStandardsIgnoreFile
 
+use Cake\Core\Plugin;
+use Cake\Routing\Router;
+
 $findRoot = function () {
 	$root = dirname(__DIR__);
 	if (is_dir($root . '/vendor/cakephp/cakephp')) {
@@ -76,19 +79,52 @@ Cake\Core\Configure::write('Session', [
 	'defaults' => 'php'
 ]);
 
-Cake\Core\Plugin::load('Croogo/Core', ['path' => ROOT . DS, 'autoload' => true]);
+\Cake\Core\Configure::write('plugins', [
+    'Acl' => ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'acl' . DS,
+    'BootstrapUI' => ROOT . DS . 'vendor' . DS .  'friendsofcake' . DS . 'boostrap-ui' . DS,
+    'Croogo/Acl' => ROOT . DS . 'Acl' . DS,
+    'Croogo/Blocks' => ROOT . DS . 'Blocks' . DS,
+    'Croogo/Comments' => ROOT . DS . 'Comments' . DS,
+    'Croogo/Contacts' => ROOT . DS . 'Contacts' . DS,
+    'Croogo/Core' => ROOT . DS . 'Core' . DS,
+    'Croogo/Dashboards' => ROOT . DS . 'Dashboards' . DS,
+    'Croogo/Example' => ROOT . DS . 'Example' . DS,
+    'Croogo/Extensions' => ROOT . DS . 'Extensions' . DS,
+    'Croogo/FileManager' => ROOT . DS . 'FileManager' . DS,
+    'Croogo/Install' => ROOT . DS . 'Install' . DS,
+    'Croogo/Menus' => ROOT . DS . 'Menus' . DS,
+    'Croogo/Meta' => ROOT . DS . 'Meta' . DS,
+    'Croogo/Nodes' => ROOT . DS . 'Nodes' . DS,
+    'Croogo/Settings' => ROOT . DS . 'Settings' . DS,
+    'Croogo/Taxonomy' => ROOT . DS . 'Taxonomy' . DS,
+    'Croogo/Translate' => ROOT . DS . 'Translate' . DS,
+    'Croogo/Users' => ROOT . DS . 'Users' . DS,
+    'Croogo/Wysiwyg' => ROOT . DS . 'Wysiwyg' . DS,
+    'Migrations' => ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'migrations' . DS,
+    'Search' => ROOT . DS . 'vendor' . DS . 'friendsofcake' . DS . 'search' . DS,
+]);
+
+
+// Ensure default test connection is defined
+if (!getenv('db_dsn')) {
+    putenv('db_dsn=sqlite:///:memory:');
+}
+
+Cake\Datasource\ConnectionManager::config('test', [
+    'url' => getenv('db_dsn'),
+    'timezone' => 'UTC'
+]);
+
+$settingsFixture = new \Croogo\Core\Test\Fixture\SettingsFixture();
+
+\Cake\Datasource\ConnectionManager::alias('test', 'default');
+$settingsFixture->create(\Cake\Datasource\ConnectionManager::get('default'));
+$settingsFixture->insert(\Cake\Datasource\ConnectionManager::get('default'));
+Plugin::load('Croogo/Core', ['bootstrap' => true, 'routes' => true, 'path' => ROOT . DS . 'Core' . DS]);
 
 Cake\Routing\DispatcherFactory::add('Routing');
 Cake\Routing\DispatcherFactory::add('ControllerFactory');
 
-// Ensure default test connection is defined
-if (!getenv('db_dsn')) {
-	putenv('db_dsn=sqlite:///:memory:');
-}
-
-Cake\Datasource\ConnectionManager::config('test', [
-	'url' => getenv('db_dsn'),
-	'timezone' => 'UTC'
-]);
-
 class_alias('Croogo\Core\TestSuite\TestCase', 'Croogo\Core\TestSuite\CroogoTestCase');
+
+Plugin::routes();

@@ -2,6 +2,8 @@
 
 namespace Croogo\Taxonomy\Test\Fixture;
 
+use Croogo\Core\TestSuite\CroogoTestFixture;
+
 class ModelTaxonomyFixture extends CroogoTestFixture
 {
 

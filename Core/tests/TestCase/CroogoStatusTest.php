@@ -9,7 +9,6 @@ use Croogo\Core\TestSuite\CroogoTestCase;
 
 class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface
 {
-
     public function implementedEvents()
     {
         return [
@@ -111,12 +110,12 @@ class CroogoStatusTest extends CroogoTestCase implements EventListenerInterface
         // test status is modified for 'webmaster' type by event handler
         $expected = [Status::PUBLISHED, Status::PREVIEW];
         $this->CroogoStatus = new Status();
-        $result = $this->CroogoStatus->status('publishing', 'webmaster');
+        $result = $this->CroogoStatus->status(1, 'publishing', 'webmaster');
         $this->assertEquals($expected, $result);
 
         // test status is emptied for unknown type
         $expected = [null];
-        $result = $this->CroogoStatus->status('publishing', 'bogus');
+        $result = $this->CroogoStatus->status(1, 'publishing', 'bogus');
         $this->assertEquals($expected, $result);
 
         EventManager::instance()->on('Croogo.Status.status', $callback);

@@ -27,7 +27,7 @@ class AroFixture extends CroogoTestFixture
         [
             'id' => 1,
             'parent_id' => 2,
-            'model' => 'Role',
+            'model' => 'Roles',
             'foreign_key' => 1,
             'alias' => 'Role-admin',
             'lft' => 3,
@@ -36,7 +36,7 @@ class AroFixture extends CroogoTestFixture
         [
             'id' => 2,
             'parent_id' => 3,
-            'model' => 'Role',
+            'model' => 'Roles',
             'foreign_key' => 2,
             'alias' => 'Role-registered',
             'lft' => 2,
@@ -45,7 +45,7 @@ class AroFixture extends CroogoTestFixture
         [
             'id' => 3,
             'parent_id' => null,
-            'model' => 'Role',
+            'model' => 'Roles',
             'foreign_key' => 3,
             'alias' => 'Role-public',
             'lft' => 1,
@@ -54,7 +54,7 @@ class AroFixture extends CroogoTestFixture
         [
             'id' => 4,
             'parent_id' => 1,
-            'model' => 'User',
+            'model' => 'Users',
             'foreign_key' => 1,
             'alias' => 'admin',
             'lft' => 4,
@@ -63,7 +63,7 @@ class AroFixture extends CroogoTestFixture
         [
             'id' => 5,
             'parent_id' => 1,
-            'model' => 'User',
+            'model' => 'Users',
             'foreign_key' => 2,
             'alias' => 'rchavik',
             'lft' => 6,
@@ -72,7 +72,7 @@ class AroFixture extends CroogoTestFixture
         [
             'id' => 6,
             'parent_id' => 3,
-            'model' => 'User',
+            'model' => 'Users',
             'foreign_key' => 3,
             'alias' => 'yvonne',
             'lft' => 9,

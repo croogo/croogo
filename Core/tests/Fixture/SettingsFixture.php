@@ -1,14 +1,11 @@
 <?php
 
-namespace Croogo\Settings\Test\Fixture;
+namespace Croogo\Core\Test\Fixture;
 
 use Croogo\Core\TestSuite\CroogoTestFixture;
 
-class SettingFixture extends CroogoTestFixture
+class SettingsFixture extends CroogoTestFixture
 {
-
-    public $name = 'Setting';
-
     public $fields = [
         'id' => ['type' => 'integer', 'null' => false, 'default' => null],
         'key' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 64],
@@ -272,7 +269,7 @@ class SettingFixture extends CroogoTestFixture
         [
             'id' => 32,
             'key' => 'Hook.bootstraps',
-            'value' => 'Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Example',
+            'value' => 'Croogo/Settings,Croogo/Comments,Croogo/Contacts,Croogo/Nodes,Croogo/Meta,Croogo/Menus,Croogo/Users,Croogo/Blocks,Croogo/Taxonomy,Croogo/FileManager',
             'title' => '',
             'description' => '',
             'input_type' => '',
@@ -294,12 +291,23 @@ class SettingFixture extends CroogoTestFixture
         [
             'id' => 34,
             'key' => 'Site.acl_plugin',
-            'value' => 'Acl',
+            'value' => 'Croogo/Acl',
             'title' => 'Acl Plugin',
             'description' => '',
             'input_type' => '',
             'editable' => 0,
             'weight' => 25,
+            'params' => ''
+        ],
+        [
+            'id' => 35,
+            'key' => 'Croogo.installed',
+            'value' => '1',
+            'title' => 'Whether Croogo is installed',
+            'description' => '',
+            'input_type' => '',
+            'editable' => 0,
+            'weight' => 26,
             'params' => ''
         ],
     ];

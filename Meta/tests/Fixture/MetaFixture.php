@@ -2,6 +2,8 @@
 
 namespace Croogo\Meta\Test\Fixture;
 
+use Croogo\Core\TestSuite\CroogoTestFixture;
+
 class MetaFixture extends CroogoTestFixture
 {
 

@@ -3,42 +3,43 @@ namespace Croogo\Core\Test\TestCase\Event;
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
+use Cake\Network\Request;
+use Cake\Network\Response;
 use Cake\View\View;
 use Croogo\Core\Croogo;
-use Croogo\Core\Event\CroogoEventManager;
+use Croogo\Core\Event\EventManager;
+use Croogo\Core\Plugin;
 use Croogo\Core\TestSuite\CroogoTestCase;
-use Croogo\Extensions\CroogoPlugin;
+use Croogo\Core\TestSuite\TestCase;
+use Croogo\Nodes\Controller\Admin\NodesController;
+use Croogo\Users\Controller\Admin\UsersController;
 
-use Croogo\Nodes\Controller\NodesController;
-use Croogo\Users\Controller\UsersController;
 
-//class TestUsersEventController extends UsersController {
-//}
-//
-//class TestNodesEventController extends NodesController {
-//}
+class TestUsersEventController extends UsersController {
+}
 
-class CroogoEventManagerTest extends CroogoTestCase
+class TestNodesEventController extends NodesController {
+}
+
+class EventManagerTest extends TestCase
 {
 
     public $fixtures = [
-//		'plugin.croogo/settings.setting',
+		'plugin.croogo/core.settings',
     ];
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->markTestIncomplete('This hasn\'t been ported yet');
-
-        CroogoPlugin::unload('Example');
-        CroogoPlugin::load('Shops', ['autoload' => true]);
-        CroogoEventManager::loadListeners();
-        $request = $this->getMock('\\Cake\\Network\\Request');
-        $response = $this->getMock('\\Cake\\Network\\Response');
-//		$this->Users = new TestUsersEventController($request, $response);
-//		$this->Nodes = new TestNodesEventController($request, $response);
+        Plugin::unload('Example');
+        Plugin::load('Shops', ['events' => true, 'autoload' => true]);
+        Plugin::events();
+        EventManager::loadListeners();
+        $request = new Request();
+        $response = new Response();
+		$this->Users = new TestUsersEventController($request, $response);
+		$this->Nodes = new TestNodesEventController($request, $response);
     }
 
 /**
@@ -50,17 +51,15 @@ class CroogoEventManagerTest extends CroogoTestCase
     {
         parent::tearDown();
 
-//		CroogoPlugin::unload('Shops');
+		Plugin::unload('Shops');
     }
 
 /**
- * Indirectly test CroogoEventManager::detachPluginSubscribers()
- * triggerred by calling CroogoPlugin::unload(null)
+ * Indirectly test EventManager::detachPluginSubscribers()
+ * triggerred by calling Plugin::unload(null)
  */
     public function testDetachPluginSubscribers()
     {
-        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
         $loaded = Plugin::loaded('Shops');
         $this->assertNotEmpty($loaded);
 
@@ -68,7 +67,7 @@ class CroogoEventManagerTest extends CroogoTestCase
         $event = Croogo::dispatchEvent($eventName, $this->Users);
         $this->assertTrue($event->result, sprintf('Event: %s', $eventName));
 
-        CroogoPlugin::unload('Shops');
+        Plugin::unload('Shops');
 
         $eventName = 'Controller.Users.activationFailure';
         $event = Croogo::dispatchEvent($eventName, $this->Users);
@@ -80,9 +79,7 @@ class CroogoEventManagerTest extends CroogoTestCase
  */
     public function testAliasingEventListener()
     {
-        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
-        $eventManager = CroogoEventManager::instance();
+        $eventManager = EventManager::instance();
         $listeners = $eventManager->listeners('Controller.Nodes.afterAdd');
         foreach ($listeners as $listener) {
             $eventManager->detach($listener['callable']);
@@ -97,7 +94,7 @@ class CroogoEventManagerTest extends CroogoTestCase
         ];
         Configure::write('EventHandlers', $handlers);
         Cache::delete('EventHandlers', 'cached_settings');
-        CroogoEventManager::loadListeners();
+        EventManager::loadListeners();
 
         $listeners = $eventManager->listeners('Controller.Nodes.afterAdd');
         foreach ($listeners as $listener) {
@@ -110,8 +107,6 @@ class CroogoEventManagerTest extends CroogoTestCase
  */
     public function testDispatchUsersEvents()
     {
-        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
         $eventNames = [
             'Controller.Users.activationFailure',
             'Controller.Users.activationSuccessful',
@@ -130,7 +125,7 @@ class CroogoEventManagerTest extends CroogoTestCase
         $Auth = $this->getMock('\\Cake\\Controller\\Component\\AuthComponent', [], [$this->Users->components()]);
         $Auth->authenticate = [
             'all' => [
-                'userModel' => 'User',
+                'userModel' => 'Users',
                 'fields' => ['username' => 'username', 'password' => 'password'],
             ],
         ];
@@ -138,7 +133,7 @@ class CroogoEventManagerTest extends CroogoTestCase
         foreach ($eventNames as $name) {
             $event = Croogo::dispatchEvent($name, $this->Users);
             $this->assertTrue($event->result, sprintf('Event: %s', $name));
-            $this->assertInstanceOf('\\Croogo\\Croogo\\Test\\TestCase\\Event\\TestUsersEventController', $event->subject());
+            $this->assertInstanceOf('\\Croogo\\Core\\Test\\TestCase\\Event\\TestUsersEventController', $event->subject());
         }
     }
 
@@ -147,8 +142,6 @@ class CroogoEventManagerTest extends CroogoTestCase
  */
     public function testDispatchNodesEvents()
     {
-        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
         $eventNames = [
             'Controller.Nodes.afterAdd',
             'Controller.Nodes.afterDelete',
@@ -161,7 +154,7 @@ class CroogoEventManagerTest extends CroogoTestCase
         foreach ($eventNames as $name) {
             $event = Croogo::dispatchEvent($name, $this->Nodes);
             $this->assertTrue($event->result, sprintf('Event: %s', $name));
-            $this->assertInstanceOf('\\Croogo\\Croogo\\Test\\TestCase\\Event\\TestNodesEventController', $event->subject());
+            $this->assertInstanceOf('\\Croogo\\Core\\Test\\TestCase\\Event\\TestNodesEventController', $event->subject());
         }
     }
 
@@ -170,8 +163,6 @@ class CroogoEventManagerTest extends CroogoTestCase
  */
     public function testDispatchHelperEvents()
     {
-        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
         $eventNames = [
             'Helper.Layout.afterFilter',
             'Helper.Layout.beforeFilter',

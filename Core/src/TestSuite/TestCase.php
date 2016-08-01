@@ -8,7 +8,8 @@ use Cake\Core\Plugin;
 use Cake\Network\Request;
 use Cake\TestSuite\TestCase as CakeTestCase;
 use Croogo\Core\Configure\CroogoJsonReader;
-use Croogo\Core\CroogoRouter;
+use Croogo\Core\Router;
+use Croogo\Core\Event\EventManager;
 use Croogo\Core\TestSuite\CroogoTestFixture;
 
 /**
@@ -52,6 +53,8 @@ class TestCase extends CakeTestCase
     {
         parent::setUp();
 
+        EventManager::instance(new EventManager);
+
         $appDir = Plugin::path('Croogo/Core') . 'tests' . DS . 'test_app' . DS;
 
 //		App::build(array(
@@ -94,7 +97,7 @@ class TestCase extends CakeTestCase
         $request = new Request();
         $request->addParams($params);
         $request->addDetector('api', [
-            'callback' => ['CroogoRouter', 'isApiRequest'],
+            'callback' => ['Croogo\\Core\\Router', 'isApiRequest'],
         ]);
         return $request;
     }

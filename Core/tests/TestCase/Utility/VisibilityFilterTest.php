@@ -4,6 +4,7 @@ namespace Croogo\Core\Test\TestCase\Utility;
 
 use Cake\Core\Configure;
 use Cake\Network\Request;
+use Cake\ORM\Entity;
 use Cake\Utility\Hash;
 use Croogo\Core\TestSuite\CroogoTestCase;
 use Croogo\Core\Utility\VisibilityFilter;
@@ -15,64 +16,50 @@ class VisibilityFilterTest extends CroogoTestCase
 
     protected function _testData()
     {
-        return [
-            [
-                'Block' => [
-                    'id' => 1,
-                    'visibility_paths' => [
-                        'plugin:nodes',
-                        '-plugin:contacts/controller:contacts/action:view',
-                    ],
+        return collection([
+            new Entity([
+                'id' => 1,
+                'visibility_paths' => [
+                    'plugin:nodes',
+                    '-plugin:contacts/controller:contacts/action:view',
                 ],
-            ],
-            [
-                'Block' => [
-                    'id' => 2,
-                    'visibility_paths' => [
-                        'plugin:nodes/controller:nodes/action:promoted',
-                        'plugin:contacts/controller:contacts/action:view',
-                    ],
+            ]),
+            new Entity([
+                'id' => 2,
+                'visibility_paths' => [
+                    'plugin:nodes/controller:nodes/action:promoted',
+                    'plugin:contacts/controller:contacts/action:view',
                 ],
-            ],
-            [
-                'Block' => [
-                    'id' => 3,
-                    'visibility_paths' => [
-                        '-plugin:nodes/controller:nodes/action:promoted',
-                        '-plugin:contacts/controller:contacts/action:view/contact',
-                    ],
+            ]),
+            new Entity([
+                'id' => 3,
+                'visibility_paths' => [
+                    '-plugin:nodes/controller:nodes/action:promoted',
+                    '-plugin:contacts/controller:contacts/action:view/contact',
                 ],
-            ],
-            [
-                'Block' => [
-                    'id' => 4,
-                    'visibility_paths' => ''
+            ]),
+            new Entity([
+                'id' => 4,
+                'visibility_paths' => []
+            ]),
+            new Entity([
+                'id' => 5,
+                'visibility_paths' => [
+                    'plugin:nodes/controller:bogus_nodes',
+                    'plugin:contacts/controller:contacts',
                 ],
-            ],
-            [
-                'Block' => [
-                    'id' => 5,
-                    'visibility_paths' => [
-                        'plugin:nodes/controller:bogus_nodes',
-                        'plugin:contacts/controller:contacts',
-                    ],
+            ]),
+            new Entity([
+                'id' => 6,
+                'visibility_paths' => [
+                    'plugin:nodes/controller:nodes/action:index/type:blog?page=8',
                 ],
-            ],
-            [
-                'Block' => [
-                    'id' => 6,
-                    'visibility_paths' => [
-                        'plugin:nodes/controller:nodes/action:index/type:blog?page=8',
-                    ],
-                ],
-            ],
-        ];
+            ]),
+        ]);
     }
 
     public function testLinkstringRule()
     {
-        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
         $request = new Request();
         $request->addParams([
             'controller' => 'nodes',
@@ -82,33 +69,36 @@ class VisibilityFilterTest extends CroogoTestCase
         $Filter = new VisibilityFilter($request);
         $blocks = $this->_testData();
         $results = $Filter->remove($blocks, [
-            'model' => 'Block',
             'field' => 'visibility_paths',
         ]);
 
-        // partial match
-        $this->assertTrue(Hash::check($results, '{n}.Block[id=1]'));
+        $this->assertTrue(!$results->match([
+            'id' => 1
+        ])->isEmpty(), 'partial match');
 
-        // exact match
-        $this->assertTrue(Hash::check($results, '{n}.Block[id=2]'));
+        $this->assertTrue(!$results->match([
+            'id' => 2
+        ])->isEmpty(), 'exact match');
 
-        // negation
-        $this->assertFalse(Hash::check($results, '{n}.Block[id=3]'));
+        $this->assertFalse(!$results->match([
+            'id' => 3
+        ])->isEmpty(), 'negation');
 
-        // empty rule
-        $this->assertTrue(Hash::check($results, '{n}.Block[id=4]'));
+        $this->assertTrue(!$results->match([
+            'id' => 4
+        ])->isEmpty(), 'empty rule');
 
-        // same plugin, different controller
-        $this->assertFalse(Hash::check($results, '{n}.Block[id=5]'));
+        $this->assertFalse(!$results->match([
+            'id' => 5
+        ])->isEmpty(), 'same plugin, different controller');
 
-        // with query string
-        $this->assertFalse(Hash::check($results, '{n}.Block[id=6]'));
+        $this->assertFalse(!$results->match([
+            'id' => 6
+        ])->isEmpty(), 'with query string');
     }
 
     public function testLinkstringRuleWithContacts()
     {
-        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
         $request = new Request();
         $request->addParams([
             'controller' => 'contacts',
@@ -118,30 +108,32 @@ class VisibilityFilterTest extends CroogoTestCase
         $Filter = new VisibilityFilter($request);
         $blocks = $this->_testData();
         $results = $Filter->remove($blocks, [
-            'model' => 'Block',
             'field' => 'visibility_paths',
         ]);
 
-        // exact match
-        $this->assertTrue(Hash::check($results, '{n}.Block[id=2]'));
+        $this->assertTrue(!$results->match([
+            'id' => 2
+        ])->isEmpty(), 'exact match');
 
-        // negation rule with passedArgs
-        $this->assertTrue(Hash::check($results, '{n}.Block[id=3]'));
+        $this->assertTrue(!$results->match([
+            'id' => 3
+        ])->isEmpty(), 'negation rule with passedArgs');
 
-        // empty rule
-        $this->assertTrue(Hash::check($results, '{n}.Block[id=4]'));
+        $this->assertTrue(!$results->match([
+            'id' => 4
+        ])->isEmpty(), 'empty rule');
 
-        // partial rule
-        $this->assertTrue(Hash::check($results, '{n}.Block[id=5]'));
+        $this->assertTrue(!$results->match([
+            'id' => 5
+        ])->isEmpty(), 'partial rule');
 
-        // with query string
-        $this->assertFalse(Hash::check($results, '{n}.Block[id=6]'));
+        $this->assertFalse(!$results->match([
+            'id' => 6
+        ])->isEmpty(), 'with query string');
     }
 
     public function testLinkstringRuleWithQueryString()
     {
-        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
         $request = new Request();
         $request->addParams([
             'controller' => 'nodes',
@@ -156,11 +148,11 @@ class VisibilityFilterTest extends CroogoTestCase
         $blocks = $this->_testData();
         Configure::write('foo', true);
         $results = $Filter->remove($blocks, [
-            'model' => 'Block',
             'field' => 'visibility_paths',
         ]);
 
-        // exact match with query string
-        $this->assertTrue(Hash::check($results, '{n}.Block[id=6]'));
+        $this->assertTrue(!$results->match([
+            'id' => 6
+        ])->isEmpty(), 'exact match with query string');
     }
 }

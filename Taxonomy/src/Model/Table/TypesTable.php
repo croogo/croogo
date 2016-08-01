@@ -2,6 +2,7 @@
 
 namespace Croogo\Taxonomy\Model\Table;
 
+use Cake\Database\Schema\Table as Schema;
 use Croogo\Core\Model\Table\CroogoTable;
 
 class TypesTable extends CroogoTable
@@ -57,7 +58,7 @@ class TypesTable extends CroogoTable
         ]);
     }
 
-/**
+    /**
  * Get a list of relevant types for given plugin
  */
     public function pluginTypes($plugin = null)
@@ -75,5 +76,12 @@ class TypesTable extends CroogoTable
             ];
         }
         return $this->find('list', compact('conditions'));
+    }
+
+    protected function _initializeSchema(Schema $table)
+    {
+        $table->columnType('params', 'params');
+
+        return $table;
     }
 }

@@ -57,7 +57,7 @@ class CroogoComponentTest extends CroogoTestCase
         $registry = new ComponentRegistry($this->controller);
         $this->component = new CroogoComponent($registry);
 
-//		$this->Controller = new CroogoTestController(new Request(), new Response());
+//		$this->Controller = new Controller(new Request(), new Response());
 ////		$this->Controller->constructClasses();
 //		$this->Controller->Croogo = new MockCroogoComponent($this->Controller->components());
 //		$this->Controller->components()->unload('Blocks');
@@ -87,18 +87,6 @@ class CroogoComponentTest extends CroogoTestCase
         $this->Controller->Croogo->removeAco('CroogoTestController');
         $parent = $Aco->findByAlias('CroogoTestController');
         $this->assertEmpty($parent);
-    }
-
-    public function testPluginIsActive()
-    {
-        $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
-
-        $result = $this->Controller->Croogo->pluginIsActive('Example');
-        $this->assertTrue($result);
-        $result = $this->Controller->Croogo->pluginIsActive('example');
-        $this->assertTrue($result);
-        $result = $this->Controller->Croogo->pluginIsActive('Shops');
-        $this->assertFalse($result);
     }
 
 /**

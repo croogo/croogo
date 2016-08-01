@@ -403,18 +403,6 @@ class CroogoComponent extends Component
     }
 
 /**
- * Check if plugin is active
- *
- * @param  string $plugin Plugin name (underscored)
- * @return boolean
- * @deprecated use CroogoPlugin::isActive
- */
-    public function pluginIsActive($plugin)
-    {
-        return $this->_CroogoPlugin->isActive($plugin);
-    }
-
-/**
  * Get a list of possible view paths for current request
  *
  * The default view paths are retrieved view App::path('View').  This method

@@ -132,14 +132,16 @@ class VisibilityFilter
         return $matched;
     }
 
-/**
- * Remove values based on rules in visibility_path field.
- *
- * Options:
- *   - field Field name containing the visibility path rules
- *
- * @param array $query Array of data to filter
- */
+    /**
+     * Remove values based on rules in visibility_path field.
+     *
+     * Options:
+     *   - field Field name containing the visibility path rules
+     *
+     * @param \Traversable $traversable
+     * @param array $options
+     * @return \Cake\Collection\Collection
+     */
     public function remove(\Traversable $traversable, $options = [])
     {
         $options = Hash::merge([

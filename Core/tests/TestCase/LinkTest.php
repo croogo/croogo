@@ -7,7 +7,6 @@ use Croogo\Core\Link;
 
 class LinkTest extends TestCase
 {
-
     public function testCreateFromLinkString()
     {
         $link = Link::createFromLinkString('plugin:Croogo%2FNodes/controller:Nodes/action:promoted');

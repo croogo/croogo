@@ -68,10 +68,10 @@ class AppController extends \App\Controller\AppController implements HookableCom
         parent::__construct($request, $response, $name);
         if ($request) {
             $request->addDetector('api', [
-                'callback' => ['CroogoRouter', 'isApiRequest'],
+                'callback' => ['Croogo\\Core\\Router', 'isApiRequest'],
             ]);
             $request->addDetector('whitelisted', [
-                'callback' => ['CroogoRouter', 'isWhitelistedRequest'],
+                'callback' => ['Croogo\\Core\\Router', 'isWhitelistedRequest'],
             ]);
         }
         $this->eventManager()->dispatch(new Event('Controller.afterConstruct', $this));
