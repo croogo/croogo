@@ -1,6 +1,7 @@
 <?php
 namespace Croogo\Settings\Configure\Engine;
 
+use Cake\Cache\Cache;
 use Cake\Core\Configure\ConfigEngineInterface;
 use Cake\Log\Log;
 use Cake\ORM\Table;
@@ -9,21 +10,6 @@ use Cake\Utility\Hash;
 
 class DatabaseConfig implements ConfigEngineInterface
 {
-
-    private $_table;
-
-/**
- * @param Table $table
- */
-    function __construct(Table $table = null)
-    {
-        if (!$table) {
-            $table = TableRegistry::get('Croogo/Settings.Settings');
-        }
-
-        $this->_table = $table;
-    }
-
 /**
  * Read method is used for reading configuration information from sources.
  * These sources can either be static resources like files, or dynamic ones like
@@ -34,12 +20,20 @@ class DatabaseConfig implements ConfigEngineInterface
  */
     public function read($key)
     {
-        $settings = $this->_table->find('list', [
-            'keyField' => 'key',
-            'valueField' => 'value'
-        ])->toArray();
+        \Croogo\Core\timerStart('Loading settings from database');
 
-        return Hash::expand($settings);
+        $values = Cache::remember('configure-settings-' . $key, function () use ($key) {
+            $settings = TableRegistry::get('Croogo/Settings.Settings')->find('list', [
+                'keyField' => 'key',
+                'valueField' => 'value'
+            ])->cache('configure-settings-query-' . $key, 'cached_settings')->toArray();
+
+            return Hash::expand($settings);
+        }, 'cached_settings');
+
+        \Croogo\Core\timerStop('Loading settings from database');
+
+        return $values;
     }
 
 /**
