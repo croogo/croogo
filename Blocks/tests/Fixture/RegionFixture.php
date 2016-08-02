@@ -2,6 +2,8 @@
 
 namespace Croogo\Blocks\Test\Fixture;
 
+use Croogo\Core\TestSuite\CroogoTestFixture;
+
 class RegionFixture extends CroogoTestFixture
 {
 

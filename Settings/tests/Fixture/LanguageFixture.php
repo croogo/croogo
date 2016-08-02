@@ -16,8 +16,8 @@ class LanguageFixture extends CroogoTestFixture
         'alias' => ['type' => 'string', 'null' => false, 'default' => null],
         'status' => ['type' => 'boolean', 'null' => false, 'default' => '1'],
         'weight' => ['type' => 'integer', 'null' => true, 'default' => null],
-        'updated' => ['type' => 'datetime', 'null' => false, 'default' => null],
-        'created' => ['type' => 'datetime', 'null' => false, 'default' => null],
+        'modified' => ['type' => 'timestamp', 'null' => false, 'default' => null],
+        'created' => ['type' => 'timestamp', 'null' => false, 'default' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id']],
         ],
@@ -32,7 +32,7 @@ class LanguageFixture extends CroogoTestFixture
             'alias' => 'eng',
             'status' => 1,
             'weight' => 1,
-            'updated' => '2009-11-02 21:37:38',
+            'modified' => '2009-11-02 21:37:38',
             'created' => '2009-11-02 20:52:00'
         ],
     ];

@@ -2,6 +2,8 @@
 
 namespace Croogo\Contacts\Test\Fixture;
 
+use Croogo\Core\TestSuite\CroogoTestFixture;
+
 class ContactFixture extends CroogoTestFixture
 {
 

@@ -2,10 +2,10 @@
 
 namespace Croogo\Blocks\Test\Fixture;
 
+use Croogo\Core\TestSuite\CroogoTestFixture;
+
 class BlockFixture extends CroogoTestFixture
 {
-
-    public $name = 'Block';
 
     public $fields = [
         'id' => ['type' => 'integer', 'null' => false, 'default' => null, 'length' => 20],

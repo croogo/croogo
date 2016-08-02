@@ -19,9 +19,9 @@ $rows = [];
 foreach ($languages as $language) {
     $actions = [];
     $actions[] = $this->Croogo->adminRowActions($language->id);
-    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveup', $language->id],
+    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveUp', $language->id],
         ['icon' => $this->Theme->getIcon('move-up'), 'tooltip' => __d('croogo', 'Move up')]);
-    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'movedown', $language->id],
+    $actions[] = $this->Croogo->adminRowAction('', ['action' => 'moveDown', $language->id],
         ['icon' => $this->Theme->getIcon('move-down'), 'tooltip' => __d('croogo', 'Move down')]);
     $actions[] = $this->Croogo->adminRowAction('', ['action' => 'edit', $language->id],
         ['icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item')]);

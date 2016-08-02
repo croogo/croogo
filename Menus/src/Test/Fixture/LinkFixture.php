@@ -2,6 +2,8 @@
 
 namespace Croogo\Menus\Test\Fixture;
 
+use Croogo\Core\TestSuite\CroogoTestFixture;
+
 class LinkFixture extends CroogoTestFixture
 {
 

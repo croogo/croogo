@@ -24,15 +24,18 @@ class LanguagesController extends AppController
  * @return void
  * @access public
  */
-    public function moveup($id, $step = 1)
+    public function moveUp($id, $step = 1)
     {
-        if ($this->Languages->moveUp($id, $step)) {
-            $this->Flash->success(__d('croogo', 'Moved up successfully'));
-        } else {
+        $language = $this->Languages->get($id);
+
+        $language->weight -= $step;
+        if (!$this->Languages->save($language)) {
             $this->Flash->error(__d('croogo', 'Could not move up'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->Flash->success(__d('croogo', 'Successfully moved language up'));
+
+        $this->redirect(['action' => 'index']);
     }
 
 /**
@@ -43,15 +46,18 @@ class LanguagesController extends AppController
  * @return void
  * @access public
  */
-    public function movedown($id, $step = 1)
+    public function moveDown($id, $step = 1)
     {
-        if ($this->Languages->moveDown($id, $step)) {
-            $this->Flash->success(__d('croogo', 'Moved down successfully'));
-        } else {
+        $language = $this->Languages->get($id);
+
+        $language->weight += $step;
+        if (!$this->Languages->save($language)) {
             $this->Flash->error(__d('croogo', 'Could not move down'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->Flash->success(__d('croogo', 'Successfully moved language down'));
+
+        $this->redirect(['action' => 'index']);
     }
 
 /**

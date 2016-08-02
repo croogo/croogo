@@ -16,6 +16,7 @@ use Croogo\Core\Model\Table\CroogoTable;
  * @author   Fahad Ibnay Heylaal <contact@fahad19.com>
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
+ * @method \Cake\ORM\Query findByKey(string $key)
  */
 class SettingsTable extends CroogoTable
 {
