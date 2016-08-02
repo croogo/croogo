@@ -5,6 +5,8 @@ use Cake\Core\Plugin;
 use Cake\Database\Type;
 use Croogo\Core\Croogo;
 
+\Croogo\Core\timerStart('Croogo boostrap');
+
 // Map our custom types
 Type::map('params', 'Croogo\Core\Database\Type\ParamsType');
 Type::map('encoded', 'Croogo\Core\Database\Type\EncodedType');
@@ -38,6 +40,8 @@ require_once 'croogo_bootstrap.php';
 Croogo::hookHelper('*', 'Croogo/Core.Js');
 Croogo::hookHelper('*', 'Croogo/Core.Layout');
 Croogo::hookHelper('*', 'Croogo/Core.CroogoApp');
+
+\Croogo\Core\timerStop('Croogo boostrap');
 
 if (Configure::read('Croogo.installed')) {
     return;
