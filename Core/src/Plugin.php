@@ -826,8 +826,10 @@ class Plugin extends CakePlugin
     public static function load($plugin, array $config = [])
     {
         if (is_array($plugin)) {
-            parent::load($plugin, $config);
-
+            foreach ($plugin as $name => $conf) {
+                list($name, $conf) = (is_numeric($name)) ? [$conf, $config] : [$name, $conf];
+                static::load($name, $conf);
+            }
             return;
         }
 
@@ -1060,6 +1062,10 @@ class Plugin extends CakePlugin
      */
     public static function available($plugin)
     {
+        if (static::loaded($plugin)) {
+            return true;
+        }
+
         try {
             if (!static::path($plugin)) {
                 return false;
