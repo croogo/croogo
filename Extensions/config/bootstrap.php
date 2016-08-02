@@ -18,7 +18,7 @@ if (!Plugin::loaded('Migrations')) {
     Plugin::load('Migrations', ['autoload' => true, 'classBase' => false]);
 }
 if (!Plugin::loaded('Croogo/Settings')) {
-    Plugin::load('Croogo/Settings', ['bootstrap' => true]);
+    Plugin::load('Croogo/Settings', ['bootstrap' => true, 'routes' => true]);
 }
 if (!Plugin::loaded('Search')) {
     Plugin::load('Search', ['autoload' => true, 'classBase' => false]);
