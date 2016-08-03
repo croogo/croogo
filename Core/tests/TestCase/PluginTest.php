@@ -25,10 +25,12 @@ class PluginTest extends TestCase
     {
         parent::setUp();
 
-        $this->plugin = $this->getMock('Croogo\\Core\\Plugin', [
-            '_writeSetting',
-            'needMigration',
-        ]);
+        $this->plugin = $this->getMockBuilder(Plugin::class)
+            ->setMethods([
+                '_writeSetting',
+                'needMigration',
+            ])
+            ->getMock();
 
         $this->_mapping = [
             1346748762 => [
@@ -66,8 +68,12 @@ class PluginTest extends TestCase
     protected function _getMockMigrationVersion()
     {
         return $this->getMockBuilder('MigrationVersion')
+            ->setMethods([
+                'getMapping',
+                'run'
+            ])
             ->disableOriginalConstructor()
-            ->createMock();
+            ->getMock();
     }
 
     public function testGetDataPluginNotActive()

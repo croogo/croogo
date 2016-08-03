@@ -4,7 +4,7 @@ namespace Croogo\Core\Test\TestCase\Configure;
 
 use Cake\Core\Plugin;
 use Croogo\Core\Configure\CroogoJsonReader;
-use Croogo\Core\TestSuite\CroogoTestCase;
+use Croogo\Core\TestSuite\TestCase;
 
 class MockCroogoJsonReader extends CroogoJsonReader
 {
@@ -17,7 +17,7 @@ class MockCroogoJsonReader extends CroogoJsonReader
     }
 }
 
-class CroogoJsonReaderTest extends CroogoTestCase
+class CroogoJsonReaderTest extends TestCase
 {
 
     /**
@@ -36,11 +36,12 @@ class CroogoJsonReaderTest extends CroogoTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->CroogoJsonReader = $this->getMock(
-            '\\Croogo\\Core\\Test\\TestCase\\Configure\\MockCroogoJsonReader',
-            null,
-            [Plugin::path('Croogo/Core') . '..' . DS . 'tests' . DS . 'test_app' . DS . 'config' . DS]
-        );
+        $this->CroogoJsonReader = $this->getMockBuilder(MockCroogoJsonReader::class)
+            ->setMethods(null)
+            ->setConstructorArgs([
+                Plugin::path('Croogo/Core') . '..' . DS . 'tests' . DS . 'test_app' . DS . 'config' . DS
+            ])
+            ->getMock();
         $this->testFile = $this->CroogoJsonReader->getPath() . 'test.json';
     }
 

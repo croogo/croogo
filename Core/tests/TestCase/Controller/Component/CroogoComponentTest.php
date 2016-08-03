@@ -11,6 +11,7 @@ use Cake\Network\Request;
 use Cake\Network\Response;
 use Croogo\Core\Controller\Component\CroogoComponent;
 use Croogo\Core\TestSuite\CroogoTestCase;
+use Croogo\Core\TestSuite\TestCase;
 
 class MockCroogoComponent extends CroogoComponent
 {
@@ -21,7 +22,7 @@ class MockCroogoComponent extends CroogoComponent
     }
 }
 
-class CroogoComponentTest extends CroogoTestCase
+class CroogoComponentTest extends TestCase
 {
 
     public $fixtures = [
@@ -46,13 +47,10 @@ class CroogoComponentTest extends CroogoTestCase
         parent::setUp();
 
         // Setup our component and fake test controller
-        $request = new Request();
-        $response = new Response();
-        $this->controller = $this->getMock(
-            'Cake\Controller\Controller',
-            ['redirect'],
-            [$request, $response]
-        );
+        $this->controller = $this->getMockBuilder(Controller::class)
+            ->setMethods(['redirect'])
+            ->setConstructorArgs([new Request, new Response])
+            ->getMock();
 
         $registry = new ComponentRegistry($this->controller);
         $this->component = new CroogoComponent($registry);

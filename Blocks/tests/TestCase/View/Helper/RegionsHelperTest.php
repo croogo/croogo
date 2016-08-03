@@ -3,6 +3,7 @@ namespace Croogo\Blocks\Test\TestCase\View\Helper;
 
 use Cake\ORM\TableRegistry;
 use Cake\View\View;
+use Croogo\Blocks\View\Helper\RegionsHelper;
 use Croogo\Core\TestSuite\TestCase;
 
 class RegionsHelperTest extends TestCase
@@ -29,16 +30,21 @@ class RegionsHelperTest extends TestCase
     {
         parent::setUp();
 
-        $this->view = $this->getMock('Cake\View\View', [
-            'element',
-            'elementExists'
-        ]);
+        $this->view = $this->getMockBuilder(View::class)
+            ->setMethods([
+                'element',
+                'elementExists'
+            ])
+            ->getMock();
 
-        $this->helper = $this->getMock('Croogo\Blocks\View\Helper\RegionsHelper', [
-            'log'
-        ], [
-            $this->view
-        ]);
+        $this->helper = $this->getMockBuilder(RegionsHelper::class)
+            ->setMethods([
+                'log'
+            ])
+            ->setConstructorArgs([
+                $this->view
+            ])
+            ->getMock();
     }
 
 /**

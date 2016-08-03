@@ -2,6 +2,7 @@
 namespace Croogo\Core\Test\TestCase\Event;
 
 use Cake\Cache\Cache;
+use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
 use Cake\Network\Request;
 use Cake\Network\Response;
@@ -122,7 +123,9 @@ class EventManagerTest extends TestCase
             'Controller.Users.registrationFailure',
             'Controller.Users.registrationSuccessful',
         ];
-        $Auth = $this->getMock('\\Cake\\Controller\\Component\\AuthComponent', [], [$this->Users->components()]);
+        $Auth = $this->getMockBuilder(AuthComponent::class)
+            ->setConstructorArgs([$this->Users->components()])
+            ->getMock();
         $Auth->authenticate = [
             'all' => [
                 'userModel' => 'Users',
