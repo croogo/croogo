@@ -69,9 +69,10 @@ class RegionsHelper extends Helper
         $element = $block->element;
         $exists = $this->_View->elementExists($element);
 
-        Croogo::dispatchEvent('Helper.Regions.beforeSetBlock', $this->_View, [
-            'content' => &$block->body,
+        $event = Croogo::dispatchEvent('Helper.Regions.beforeSetBlock', $this->_View, [
+            'content' => $block->body,
         ]);
+        $block->body = $event->data()['content'];
 
         if ($exists) {
             $blockOutput = $this->_View->element($element, compact('block'), $elementOptions);

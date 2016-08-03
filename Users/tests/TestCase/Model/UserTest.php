@@ -18,11 +18,11 @@ class UserTest extends CroogoTestCase
  * @var array
  */
     public $fixtures = [
+        'plugin.croogo/users.role',
+        'plugin.croogo/users.user',
         'plugin.croogo/users.aco',
         'plugin.croogo/users.aro',
         'plugin.croogo/users.aros_aco',
-        'plugin.croogo/users.role',
-        'plugin.croogo/users.user',
     ];
 
 /**

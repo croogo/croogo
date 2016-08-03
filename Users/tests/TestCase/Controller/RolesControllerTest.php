@@ -7,6 +7,8 @@ class RolesControllerTest extends CroogoControllerTestCase
 {
 
     public $fixtures = [
+        'plugin.croogo/users.role',
+        'plugin.croogo/users.user',
         'plugin.croogo/users.aco',
         'plugin.croogo/users.aro',
         'plugin.croogo/users.aros_aco',
@@ -22,13 +24,12 @@ class RolesControllerTest extends CroogoControllerTestCase
         'plugin.croogo/nodes.node',
 //		'plugin.taxonomy.model_taxonomy',
 //		'plugin.blocks.region',
-        'plugin.croogo/users.role',
+
         'plugin.croogo/settings.setting',
 //		'plugin.taxonomy.taxonomy',
 //		'plugin.taxonomy.term',
 //		'plugin.taxonomy.type',
 //		'plugin.taxonomy.types_vocabulary',
-        'plugin.croogo/users.user',
 //		'plugin.taxonomy.vocabulary',
     ];
 

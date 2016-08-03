@@ -11,6 +11,8 @@ use Croogo\Core\TestSuite\IntegrationTestCase;
 class RegionsControllerTest extends IntegrationTestCase
 {
     public $fixtures = [
+        'plugin.croogo/users.role',
+        'plugin.croogo/users.user',
         'plugin.croogo/users.aco',
         'plugin.croogo/users.aro',
         'plugin.croogo/users.aros_aco',
@@ -26,13 +28,11 @@ class RegionsControllerTest extends IntegrationTestCase
         'plugin.croogo/nodes.node',
         'plugin.croogo/taxonomy.model_taxonomy',
         'plugin.croogo/blocks.region',
-        'plugin.croogo/users.role',
         'plugin.croogo/core.settings',
         'plugin.croogo/taxonomy.taxonomy',
         'plugin.croogo/taxonomy.term',
         'plugin.croogo/taxonomy.type',
         'plugin.croogo/taxonomy.types_vocabulary',
-        'plugin.croogo/users.user',
         'plugin.croogo/taxonomy.vocabulary',
     ];
 
