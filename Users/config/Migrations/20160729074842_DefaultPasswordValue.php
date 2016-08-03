@@ -13,7 +13,7 @@ class DefaultPasswordValue extends AbstractMigration
     public function change()
     {
         $table = $this->table('users');
-        $table->addColumn('password', 'string', [
+        $table->changeColumn('password', 'string', [
                 'default' => '',
                 'limit' => 100,
                 'null' => false,
