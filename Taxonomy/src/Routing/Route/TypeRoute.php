@@ -31,11 +31,12 @@ class TypeRoute extends Route
      * false will be returned. String URLs are parsed if they match a routes regular expression.
      *
      * @param string $url The URL to attempt to parse.
+     * @param string $method The HTTP method of the request being parsed.
      * @return array|false An array of request parameters, or false on failure.
      */
-    public function parse($url)
+    public function parse($url, $method = '')
     {
-        $url = parent::parse($url);
+        $url = parent::parse($url, $method);
         if ($this->_checkType($url['type'])) {
             return $url;
         }

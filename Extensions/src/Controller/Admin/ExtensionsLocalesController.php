@@ -48,7 +48,7 @@ class ExtensionsLocalesController extends AppController
         $this->set('title_for_layout', __d('croogo', 'Locales'));
 
         $locales = [];
-        $folder =& new Folder;
+        $folder = new Folder;
         $paths = App::path('Locale');
         foreach ($paths as $path) {
             $folder->path = $path;
@@ -191,7 +191,7 @@ class ExtensionsLocalesController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $file =& new File($poFile, true);
+        $file = new File($poFile, true);
         $content = $file->read();
 
         if (!empty($this->request->data)) {
@@ -220,7 +220,7 @@ class ExtensionsLocalesController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $file =& new File($poFile, true);
+        $file = new File($poFile, true);
         if ($file->delete()) {
             $this->Flash->success(__d('croogo', 'Locale deleted successfully.'));
         } else {
