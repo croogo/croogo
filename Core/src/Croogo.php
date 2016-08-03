@@ -285,8 +285,10 @@ class Croogo
                 $controller = $object->params['controller'];
             }
             if (!empty($object->params['prefix'])) {
-                $prefixes = array_map('Cake\Utility\Inflector::camelize',
-                    explode('/', $object->params['prefix']));
+                $prefixes = array_map(
+                    'Cake\Utility\Inflector::camelize',
+                    explode('/', $object->params['prefix'])
+                );
                 $namespace .= '/' . implode('/', $prefixes);
             }
             $objectName = App::className($pluginPath . $controller, $namespace, 'Controller');

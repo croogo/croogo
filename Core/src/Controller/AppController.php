@@ -95,7 +95,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
             unset($this->viewClass);
             $this->viewBuilder()->className('Croogo/Core.Croogo');
         }
-	}
+    }
 
     /**
      * {@inheritDoc}
@@ -228,8 +228,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
 
     public function loadCroogoComponents(array $components)
     {
-        foreach ($components as $component => $options)
-        {
+        foreach ($components as $component => $options) {
             if (is_string($options)) {
                 $component = $options;
                 $options = [];

@@ -754,7 +754,7 @@ class lessc
 
                 break;
             case "import_mixin":
-                list(,$importId) = $prop;
+                list(, $importId) = $prop;
                 $import = $this->env->imports[$importId];
                 if ($import[0] === false) {
                     $out->lines[] = $import[1];
@@ -896,7 +896,7 @@ class lessc
 
         return sprintf(
             "#%02x%02x%02x%02x",
-            isset($color[4]) ? $color[4]*255 : 255,
+            isset($color[4]) ? $color[4] * 255 : 255,
             $color[1],
             $color[2],
             $color[3]
@@ -1050,14 +1050,14 @@ class lessc
     protected function lib_fadeout($args)
     {
         list($color, $delta) = $this->colorArgs($args);
-        $color[4] = $this->clamp((isset($color[4]) ? $color[4] : 1) - $delta/100);
+        $color[4] = $this->clamp((isset($color[4]) ? $color[4] : 1) - $delta / 100);
         return $color;
     }
 
     protected function lib_fadein($args)
     {
         list($color, $delta) = $this->colorArgs($args);
-        $color[4] = $this->clamp((isset($color[4]) ? $color[4] : 1) + $delta/100);
+        $color[4] = $this->clamp((isset($color[4]) ? $color[4] : 1) + $delta / 100);
         return $color;
     }
 
@@ -1099,7 +1099,7 @@ class lessc
     protected function lib_percentage($arg)
     {
         $num = $this->assertNumber($arg);
-        return ["number", $num*100, "%"];
+        return ["number", $num * 100, "%"];
     }
 
     // mixes two colors by weight
@@ -1115,14 +1115,14 @@ class lessc
         $first = $this->assertColor($first);
         $second = $this->assertColor($second);
 
-        $first_a = $this->lib_alpha($first);
-        $second_a = $this->lib_alpha($second);
+        $firstA = $this->lib_alpha($first);
+        $secondA = $this->lib_alpha($second);
         $weight = $weight[1] / 100.0;
 
         $w = $weight * 2 - 1;
-        $a = $first_a - $second_a;
+        $a = $firstA - $secondA;
 
-        $w1 = (($w * $a == -1 ? $w : ($w + $a)/(1 + $w * $a)) + 1) / 2.0;
+        $w1 = (($w * $a == -1 ? $w : ($w + $a) / (1 + $w * $a)) + 1) / 2.0;
         $w2 = 1.0 - $w1;
 
         $new = ['color',
@@ -1131,8 +1131,8 @@ class lessc
             $w1 * $first[3] + $w2 * $second[3],
         ];
 
-        if ($first_a != 1.0 || $second_a != 1.0) {
-            $new[] = $first_a * $weight + $second_a * ($weight - 1);
+        if ($firstA != 1.0 || $secondA != 1.0) {
+            $new[] = $firstA * $weight + $secondA * ($weight - 1);
         }
 
         return $this->fixColor($new);
@@ -1193,22 +1193,24 @@ class lessc
             $S = $H = 0;
         } else {
             if ($L < 0.5) {
-                $S = ($max - $min)/($max + $min);
+                $S = ($max - $min) / ($max + $min);
             } else {
-                $S = ($max - $min)/(2.0 - $max - $min);
+                $S = ($max - $min) / (2.0 - $max - $min);
             }
 
             if ($r == $max) {
-                $H = ($g - $b)/($max - $min);
-            } elseif ($g == $max) $H = 2.0 + ($b - $r)/($max - $min);
-            elseif ($b == $max) $H = 4.0 + ($r - $g)/($max - $min);
-
+                $H = ($g - $b) / ($max - $min);
+            } elseif ($g == $max) {
+                $H = 2.0 + ($b - $r) / ($max - $min);
+            } elseif ($b == $max) {
+                $H = 4.0 + ($r - $g) / ($max - $min);
+            }
         }
 
         $out = ['hsl',
-            ($H < 0 ? $H + 6 : $H)*60,
-            $S*100,
-            $L*100,
+            ($H < 0 ? $H + 6 : $H) * 60,
+            $S * 100,
+            $L * 100,
         ];
 
         if (count($color) > 4) {
@@ -1220,7 +1222,9 @@ class lessc
     {
         if ($comp < 0) {
             $comp += 1.0;
-        } elseif ($comp > 1) $comp -= 1.0;
+        } elseif ($comp > 1) {
+            $comp -= 1.0;
+        }
 
         if (6 * $comp < 1) {
             return $temp1 + ($temp2 - $temp1) * 6 * $comp;
@@ -1229,7 +1233,7 @@ class lessc
             return $temp2;
         }
         if (3 * $comp < 2) {
-            return $temp1 + ($temp2 - $temp1)*((2/3) - $comp) * 6;
+            return $temp1 + ($temp2 - $temp1) * ((2 / 3) - $comp) * 6;
         }
 
         return $temp1;
@@ -1253,18 +1257,18 @@ class lessc
             $r = $g = $b = $L;
         } else {
             $temp2 = $L < 0.5 ?
-                $L*(1.0 + $S) :
+                $L * (1.0 + $S) :
                 $L + $S - $L * $S;
 
             $temp1 = 2.0 * $L - $temp2;
 
-            $r = $this->toRGB_helper($H + 1/3, $temp1, $temp2);
+            $r = $this->toRGB_helper($H + 1 / 3, $temp1, $temp2);
             $g = $this->toRGB_helper($H, $temp1, $temp2);
-            $b = $this->toRGB_helper($H - 1/3, $temp1, $temp2);
+            $b = $this->toRGB_helper($H - 1 / 3, $temp1, $temp2);
         }
 
         // $out = array('color', round($r*255), round($g*255), round($b*255));
-        $out = ['color', $r*255, $g*255, $b*255];
+        $out = ['color', $r * 255, $g * 255, $b * 255];
         if (count($color) > 4) {
             $out[] = $color[4]; // copy alpha
         }        return $out;
@@ -1295,8 +1299,9 @@ class lessc
 
                 if ($i == 0) {
                     $clamp = 360;
-                } elseif ($i < 3) $clamp = 100;
-                else {
+                } elseif ($i < 3) {
+                    $clamp = 100;
+                } else {
                     $clamp = 1;
                 }
 
@@ -1308,7 +1313,6 @@ class lessc
                 $hsl[] = 0;
             }
             return $this->toRGB($hsl);
-
         } elseif ($fname == 'rgb' || $fname == 'rgba') {
             $components = [];
             $i = 1;
@@ -1381,7 +1385,7 @@ class lessc
                 }
                 return $value;
             case "escape":
-                list(,$inner) = $value;
+                list(, $inner) = $value;
                 return $this->lib_e($this->reduce($inner));
             case "function":
                 $color = $this->funcToColor($value);
@@ -1412,7 +1416,9 @@ class lessc
                     // convert to a typed value if the result is a php primitive
                     if (is_numeric($ret)) {
                         $ret = ['number', $ret, ""];
-                    } elseif (!is_array($ret)) $ret = ['keyword', $ret];
+                    } elseif (!is_array($ret)) {
+                        $ret = ['keyword', $ret];
+                    }
 
                     return $ret;
                 }
@@ -1468,7 +1474,7 @@ class lessc
                     $t = $num % $width;
                     $num /= $width;
 
-                    $c[$i] = $t * (256/$width) + $t * floor(16/$width);
+                    $c[$i] = $t * (256 / $width) + $t * floor(16 / $width);
                 }
 
                 return $c;
@@ -2886,7 +2892,7 @@ class lessc_parser
 
             $tok = $m[2];
 
-            $this->count-= strlen($tok);
+            $this->count -= strlen($tok);
             if ($tok == $end) {
                 if ($nestingLevel == 0) {
                     break;
@@ -2912,7 +2918,7 @@ class lessc_parser
 
 
             $content[] = $tok;
-            $this->count+= strlen($tok);
+            $this->count += strlen($tok);
         }
 
         $this->eatWhiteDefault = $oldWhite;
@@ -3754,7 +3760,6 @@ class lessc_formatter_classic
                 echo $this->open . $this->break;
                 $inner = $this->indentStr();
             }
-
         }
 
         if (!empty($block->lines)) {

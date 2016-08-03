@@ -90,7 +90,7 @@ class AkismetComponent extends Component
                             'PHP_SELF' ];
 
     /**
-     * @param    string    $blogURL            The URL of your blog.
+     * @param    string    $event            The URL of your blog.
      * @param    string    $wordPressAPIKey    WordPress API key.
      */
     public function startup(Event $event)
@@ -131,15 +131,15 @@ class AkismetComponent extends Component
     // makes a request to the Akismet service
     private function sendRequest($request, $host, $path)
     {
-        $http_request  = "POST " . $path . " HTTP/1.0\r\n";
-        $http_request .= "Host: " . $host . "\r\n";
-        $http_request .= "Content-Type: application/x-www-form-urlencoded; charset=utf-8\r\n";
-        $http_request .= "Content-Length: " . strlen($request) . "\r\n";
-        $http_request .= "User-Agent: Akismet PHP5 Class " . $this->version . " | Akismet/1.11\r\n";
-        $http_request .= "\r\n";
-        $http_request .= $request;
+        $httpRequest  = "POST " . $path . " HTTP/1.0\r\n";
+        $httpRequest .= "Host: " . $host . "\r\n";
+        $httpRequest .= "Content-Type: application/x-www-form-urlencoded; charset=utf-8\r\n";
+        $httpRequest .= "Content-Length: " . strlen($request) . "\r\n";
+        $httpRequest .= "User-Agent: Akismet PHP5 Class " . $this->version . " | Akismet/1.11\r\n";
+        $httpRequest .= "\r\n";
+        $httpRequest .= $request;
 
-        $socketWriteRead = new SocketWriteRead($host, $this->apiPort, $http_request);
+        $socketWriteRead = new SocketWriteRead($host, $this->apiPort, $httpRequest);
         $socketWriteRead->send();
 
         return explode("\r\n\r\n", $socketWriteRead->getResponse(), 2);
@@ -158,15 +158,15 @@ class AkismetComponent extends Component
             }
         }
 
-        $query_string = '';
+        $queryString = '';
 
         foreach ($this->comment as $key => $data) {
             if (!is_array($data)) {
-                $query_string .= $key . '=' . urlencode(stripslashes($data)) . '&';
+                $queryString .= $key . '=' . urlencode(stripslashes($data)) . '&';
             }
         }
 
-        return $query_string;
+        return $queryString;
     }
 
     /**

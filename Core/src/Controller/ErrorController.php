@@ -62,15 +62,15 @@ class ErrorController extends \Cake\Controller\ErrorController implements Hookab
     }
 
     /**
- * beforeFilter
- *
- * @return void
- */
+     * beforeFilter
+     *
+     * @return void
+     */
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
         $this->viewBuilder()->className('Croogo/Core.Croogo');
-         if ($this->request->param('prefix') === 'admin') {
+        if ($this->request->param('prefix') === 'admin') {
             $adminTheme = Configure::read('Site.admin_theme');
             if ($adminTheme) {
                 $this->viewBuilder()->theme($adminTheme);
@@ -78,7 +78,7 @@ class ErrorController extends \Cake\Controller\ErrorController implements Hookab
             $this->viewBuilder()->layout('admin_full');
         } elseif (Configure::read('Site.theme')) {
             $this->viewBuilder()
-                ->theme(Configure::read('Site.theme'));
+               ->theme(Configure::read('Site.theme'));
         }
     }
 }

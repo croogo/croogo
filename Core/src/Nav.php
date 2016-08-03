@@ -92,8 +92,8 @@ class Nav
 /**
  * Add a menu item
  *
- * @param string $path dot separated path in the array.
- * @param array $options menu options array
+ * @param string $menu dot separated path in the array.
+ * @param array $path menu options array
  * @return void
  */
     public static function add($menu, $path, $options = [])

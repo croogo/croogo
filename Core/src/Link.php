@@ -26,7 +26,7 @@ class Link extends ArrayObject
 
     public function getUrl()
     {
-        $copy = array_map(function($val) {
+        $copy = array_map(function ($val) {
             if (is_array($val)) {
                 return $val;
             }

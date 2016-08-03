@@ -1,6 +1,7 @@
 <?php
 
 namespace Croogo\Core\View\Helper;
+
 use Cake\Core\Configure;
 use Cake\View\Helper;
 

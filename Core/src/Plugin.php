@@ -150,8 +150,7 @@ class Plugin extends CakePlugin
                 ) || (
                     $type === 'theme' && $this->_isCroogoTheme($pluginPath)
                 )
-            )
-            {
+            ) {
                 $plugins[$pluginName] = $pluginPath;
                 continue;
             }
@@ -717,9 +716,14 @@ class Plugin extends CakePlugin
                 }
             }
             if (!empty($missingPlugins)) {
-                return __dn('croogo', 'Plugin "%2$s" requires the "%3$s" plugin to be installed.',
-                    'Plugin "%2$s" requires the %3$s plugins to be installed.', count($missingPlugins), $plugin,
-                    Text::toList($missingPlugins));
+                return __dn(
+                    'croogo',
+                    'Plugin "%2$s" requires the "%3$s" plugin to be installed.',
+                    'Plugin "%2$s" requires the %3$s plugins to be installed.',
+                    count($missingPlugins),
+                    $plugin,
+                    Text::toList($missingPlugins)
+                );
             }
 
             try {
@@ -957,7 +961,7 @@ class Plugin extends CakePlugin
     /**
      * Write Hook.bootstraps settings to database and json file
      *
-     * @param array $bootstrap array of plugin aliases
+     * @param array $bootstraps array of plugin aliases
      * @return boolean
      * @throws CakeException
      */

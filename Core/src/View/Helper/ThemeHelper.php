@@ -67,7 +67,7 @@ class ThemeHelper extends Helper
 /**
  * Helper method to retrieve theme settings as configured in theme.json
  *
- * @param string $class Name of class/configuration to retrieve
+ * @param string $key Name of class/configuration to retrieve
  * @return string
  */
     public function settings($key = null)

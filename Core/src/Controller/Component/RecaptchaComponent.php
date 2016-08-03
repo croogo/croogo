@@ -129,5 +129,4 @@ class RecaptchaComponent extends Component
 
         return $msg;
     }
-
 }

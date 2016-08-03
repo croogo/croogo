@@ -159,7 +159,8 @@ class CroogoHtmlHelper extends HtmlHelper
      */
     public function endBox()
     {
-        return $this->formatTemplate('endbox', []);;
+        return $this->formatTemplate('endbox', []);
+        ;
     }
 
     /**

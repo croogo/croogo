@@ -86,7 +86,7 @@ class CroogoComponent extends Component
 /**
  * Startup
  *
- * @param object $controller instance of controller
+ * @param object $event instance of controller
  * @return void
  */
     public function startup(Event $event)

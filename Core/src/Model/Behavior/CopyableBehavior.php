@@ -98,7 +98,7 @@ class CopyableBehavior extends Behavior
 /**
  * Copy method.
  *
- * @param Table $table model object
+ * @param Table $id model object
  * @param mixed $id String or integer model ID
  * @return boolean
  */
@@ -154,7 +154,7 @@ class CopyableBehavior extends Behavior
  * Removes any ignored associations, as defined in the model settings, from
  * the $this->contain array.
  *
- * @param object $Model Model object
+ * @param object $contain Model object
  * @return boolean
  */
     protected function _removeIgnored($contain)
@@ -173,7 +173,7 @@ class CopyableBehavior extends Behavior
  * Strips primary keys and other unwanted fields
  * from hasOne and hasMany records.
  *
- * @param object $Model model object
+ * @param object $table model object
  * @param array $record
  * @return array $record
  */
@@ -266,7 +266,7 @@ class CopyableBehavior extends Behavior
  * HABTM join tables may contain extra information (sorting
  * order, etc).
  *
- * @param Model $Model Model object
+ * @param Model $table Model object
  * @param array $record
  * @return array modified $record
  */
@@ -343,8 +343,8 @@ class CopyableBehavior extends Behavior
 /**
  * Called by _updateMasterKey as part of the copying process for deep recursion.
  *
- * @param Model $Model
- * @param array $record
+ * @param Model $record
+ * @param array $id
  * @param int$id
  * @return array
  */
@@ -368,7 +368,6 @@ class CopyableBehavior extends Behavior
             if ($this->_masterKey == $property) {
                 $record->set($property, $id);
             }
-
         }
         return $record;
     }
@@ -378,7 +377,7 @@ class CopyableBehavior extends Behavior
  * recursively looping through $Model->hasMany and
  * $Model->hasOne associations.
  *
- * @param object $Model Model object
+ * @param object $table Model object
  * @return array
  */
     protected function _recursiveChildContain(Table $table)
@@ -405,7 +404,7 @@ class CopyableBehavior extends Behavior
  * Strips unwanted fields from $record, taken from
  * the 'stripFields' setting.
  *
- * @param object $Model Model object
+ * @param object $record Model object
  * @param array $record
  * @return array
  */

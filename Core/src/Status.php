@@ -98,7 +98,7 @@ class Status implements ArrayAccess
     /**
      * Gets valid statuses based on type
      *
-     * @param string $type Status type if applicable
+     * @param string $roleId Status type if applicable
      * @return array Array of statuses
      */
     public function status($roleId = null, $statusType = 'publishing', $accessType = 'public')

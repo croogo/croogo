@@ -16,7 +16,7 @@ class CroogoRouterTest extends TestCase
     public $fixtures = [
 //		'plugin.croogo/settings.setting',
 //		'plugin.taxonomy.vocabulary',
-		'plugin.croogo/taxonomy.type',
+        'plugin.croogo/taxonomy.type',
 //		'plugin.taxonomy.types_vocabulary',
     ];
 

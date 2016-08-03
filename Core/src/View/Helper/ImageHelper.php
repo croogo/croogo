@@ -30,11 +30,11 @@ class ImageHelper extends HtmlHelper
  * - resizeInd: String to check in filename indicating that it was resized
  *
  * @param string $path Path to the image file, relative to the webroot/img/ directory.
- * @param int$widthImage of returned image
- * @param int$heightHeight of returned image
+ * @param int$width of returned image
+ * @param int$height of returned image
  * @param array $options Options
  * @param array $htmlAttributes Array of HTML attributes.
- * @param bool$returnWhether this method should return a value or output it. This overrides AUTO_OUTPUT.
+ * @param bool$return this method should return a value or output it. This overrides AUTO_OUTPUT.
  * @return mixed Either string or echoes the value, depends on AUTO_OUTPUT and $return.
  * @access public
  */
@@ -75,10 +75,10 @@ class ImageHelper extends HtmlHelper
         $size = getimagesize($sourcefile);
 
         if ($aspect) {
-            if (($size[1]/$height) > ($size[0]/$width)) {
-                $width = ceil(($size[0]/$size[1]) * $height);
+            if (($size[1] / $height) > ($size[0] / $width)) {
+                $width = ceil(($size[0] / $size[1]) * $height);
             } else {
-                $height = ceil($width / ($size[0]/$size[1]));
+                $height = ceil($width / ($size[0] / $size[1]));
             }
         }
 

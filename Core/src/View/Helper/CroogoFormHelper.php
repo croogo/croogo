@@ -124,7 +124,7 @@ class CroogoFormHelper extends FormHelper
 /**
  * Generate input options array
  *
- * @param array $options Options list
+ * @param array $fieldName Options list
  * @return array
  */
     protected function _parseOptions($fieldName, $options)

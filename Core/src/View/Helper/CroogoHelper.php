@@ -489,7 +489,7 @@ class CroogoHelper extends Helper
     /**
      * Show Boxes
      *
-     * @param array $boxNames
+     * @param array $boxName
      */
     public function adminBoxes($boxName = null)
     {

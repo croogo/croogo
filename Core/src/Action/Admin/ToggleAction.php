@@ -20,8 +20,8 @@ class ToggleAction extends BaseAction
      * @throws Exception
      * @return void
      */
-	protected function _post($id = null, $status = null)
-	{
+    protected function _post($id = null, $status = null)
+    {
         if (empty($id) || $status === null) {
             throw new Exception(__d('croogo', 'Invalid content'));
         }
@@ -38,5 +38,5 @@ class ToggleAction extends BaseAction
         }
 
         $this->_controller()->set(compact('id', 'status'));
-	}
+    }
 }

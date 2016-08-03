@@ -15,18 +15,19 @@ use Croogo\Core\TestSuite\TestCase;
 use Croogo\Nodes\Controller\Admin\NodesController;
 use Croogo\Users\Controller\Admin\UsersController;
 
-
-class TestUsersEventController extends UsersController {
+class TestUsersEventController extends UsersController
+{
 }
 
-class TestNodesEventController extends NodesController {
+class TestNodesEventController extends NodesController
+{
 }
 
 class EventManagerTest extends TestCase
 {
 
     public $fixtures = [
-		'plugin.croogo/core.settings',
+        'plugin.croogo/core.settings',
     ];
 
     public function setUp()
@@ -39,8 +40,8 @@ class EventManagerTest extends TestCase
         EventManager::loadListeners();
         $request = new Request();
         $response = new Response();
-		$this->Users = new TestUsersEventController($request, $response);
-		$this->Nodes = new TestNodesEventController($request, $response);
+        $this->Users = new TestUsersEventController($request, $response);
+        $this->Nodes = new TestNodesEventController($request, $response);
     }
 
 /**
@@ -52,7 +53,7 @@ class EventManagerTest extends TestCase
     {
         parent::tearDown();
 
-		Plugin::unload('Shops');
+        Plugin::unload('Shops');
     }
 
 /**
