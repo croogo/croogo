@@ -14,6 +14,7 @@ class ComposerInstaller extends PluginInstaller
         $composer = $event->getComposer();
         $config = $composer->getConfig();
         $vendorDir = realpath($config->get('vendor-dir'));
+        $croogoDir = dirname(dirname(__DIR__));
         $packages = $composer->getRepositoryManager()->getLocalRepository()->getPackages();
         $pluginsDir = dirname($vendorDir) . DIRECTORY_SEPARATOR . 'plugins';
         $plugins = static::determinePlugins($packages, $pluginsDir, $vendorDir);
@@ -24,7 +25,7 @@ class ComposerInstaller extends PluginInstaller
             'Wysiwyg',
         ];
         foreach ($corePlugins as $plugin) {
-            $plugins['Croogo\\' . $plugin] = $vendorDir . DIRECTORY_SEPARATOR . 'croogo' . DIRECTORY_SEPARATOR . 'croogo' . DIRECTORY_SEPARATOR . $plugin;
+            $plugins['Croogo\\' . $plugin] = $croogoDir . DIRECTORY_SEPARATOR . $plugin;
         }
         $configFile = static::_configFile($vendorDir);
         static::writeConfigFile($configFile, $plugins);

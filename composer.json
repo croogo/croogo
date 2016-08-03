@@ -32,6 +32,7 @@
         "cakephp/cakephp": "^3.2.12",
         "cakephp/migrations": "~1.6",
         "cakephp/acl": "^0.2",
+        "cakephp/plugin-installer": "~0.0.15",
         "admad/cakephp-sequence": "dev-master",
         "friendsofcake/crud": "^4.3",
         "friendsofcake/search": "^1.2",
@@ -96,7 +97,10 @@
         }
     },
     "scripts": {
-        "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
+        "post-autoload-dump": [
+            "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump",
+            "Croogo\\Install\\ComposerInstaller::postAutoloadDump"
+        ]
     },
     "suggest": {
         "croogo/locale": "Localization for Croogo"

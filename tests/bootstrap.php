@@ -6,6 +6,11 @@ use Cake\Routing\Router;
 use Croogo\Core\Plugin;
 
 $findVendor = function () {
+    $root = dirname(__DIR__);
+    if (is_dir($root . '/vendor/cakephp/cakephp')) {
+        return $root . DS. 'vendor' . DS;
+    }
+
     $root = dirname(dirname(dirname(dirname(__DIR__))));
     if (is_dir($root . '/vendor/cakephp/cakephp')) {
         return $root . DS. 'vendor' . DS;
