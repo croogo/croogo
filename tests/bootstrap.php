@@ -1,6 +1,7 @@
 <?php
 // @codingStandardsIgnoreFile
 
+use Cake\Datasource\ConnectionManager;
 use Cake\Routing\Router;
 use Croogo\Core\Plugin;
 
@@ -71,23 +72,32 @@ $cache = [
 		'duration' => '+10 seconds'
 	]
 ];
-
 Cake\Cache\Cache::config($cache);
 Cake\Core\Configure::write('Session', [
-	'defaults' => 'php'
+    'defaults' => 'php'
 ]);
 
 // Ensure default test connection is defined
-if (!getenv('db_dsn')) {
-    putenv('db_dsn=sqlite:///:memory:');
+if (!getenv('db_class')) {
+    putenv('db_class=Cake\Database\Driver\Sqlite');
+    putenv('db_dsn=sqlite::memory:');
 }
-
-Cake\Datasource\ConnectionManager::config('test', [
-    'url' => getenv('db_dsn'),
+ConnectionManager::config('test', [
+    'className' => 'Cake\Database\Connection',
+    'driver' => getenv('db_class'),
+    'dsn' => getenv('db_dsn'),
+    'database' => getenv('db_database'),
+    'username' => getenv('db_login'),
+    'password' => getenv('db_password'),
     'timezone' => 'UTC'
 ]);
-Cake\Datasource\ConnectionManager::config('test_migrations', [
-    'url' => getenv('db_dsn'),
+ConnectionManager::config('test_migrations', [
+    'className' => 'Cake\Database\Connection',
+    'driver' => getenv('db_class'),
+    'dsn' => getenv('db_dsn'),
+    'database' => getenv('db_database'),
+    'username' => getenv('db_login'),
+    'password' => getenv('db_password'),
     'timezone' => 'UTC'
 ]);
 
