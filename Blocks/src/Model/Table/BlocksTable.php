@@ -98,6 +98,14 @@ class BlocksTable extends CroogoTable
         ]);
         $this->addBehavior('Croogo/Core.Trackable');
         $this->addBehavior('Search.Search');
+
+        $this->searchManager()
+            ->value('region_id')
+            ->add('title', 'Search.Like', [
+                'before' => true,
+                'after' => true,
+                'field' => $this->aliasField('title')
+            ]);
     }
 
     protected function _initializeSchema(Schema $table)

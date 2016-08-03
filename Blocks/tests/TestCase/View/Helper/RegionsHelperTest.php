@@ -1,65 +1,44 @@
 <?php
 namespace Croogo\Blocks\Test\TestCase\View\Helper;
 
-use App\Controller\Component\SessionComponent;
-use Blocks\View\Helper\RegionsHelper;
-use Cake\Controller\Controller;
-use Croogo\TestSuite\CroogoTestCase;
-use Croogo\View\Helper\LayoutHelper;
+use Cake\ORM\TableRegistry;
+use Cake\View\View;
+use Croogo\Core\TestSuite\TestCase;
 
-class TheRegionsTestController extends Controller
-{
-
-    public $components = [];
-
-    public $uses = null;
-}
-
-class RegionsHelperTest extends CroogoTestCase
+class RegionsHelperTest extends TestCase
 {
 
     public $fixtures = [
-        'plugin.settings.setting',
+        'plugin.croogo/blocks.block',
     ];
 
-/**
+    /**
+     * @var \Cake\View\View
+     */
+    public $view;
+
+    /**
+     * @var \Croogo\Blocks\View\Helper\RegionsHelper
+     */
+    public $helper;
+
+    /**
  * setUp
  */
     public function setUp()
     {
         parent::setUp();
-        $this->ComponentRegistry = new ComponentRegistry();
 
-        $request = new Request('nodes/nodes/index');
-        $request->params = [
-            'plugin' => 'nodes',
-            'controller' => 'nodes',
-            'action' => 'index',
-            'named' => [],
-        ];
-        $controller = new TheRegionsTestController($request, new Response());
-        $this->View = $this->getMock(
-            'View',
-            ['element', 'elementExists'],
-            [$controller]
-        );
-        $this->View->loadHelper('Croogo.Layout');
-        $this->Regions = $this->getMock('RegionsHelper', ['log'], [$this->View]);
-        $this->_appEncoding = Configure::read('App.encoding');
-        $this->_asset = Configure::read('Asset');
-        $this->_debug = Configure::read('debug');
-    }
+        $this->view = $this->getMock('Cake\View\View', [
+            'element',
+            'elementExists'
+        ]);
 
-/**
- * tearDown
- */
-    public function tearDown()
-    {
-        Configure::write('App.encoding', $this->_appEncoding);
-        Configure::write('Asset', $this->_asset);
-        Configure::write('debug', $this->_debug);
-        ClassRegistry::flush();
-        unset($this->Regions);
+        $this->helper = $this->getMock('Croogo\Blocks\View\Helper\RegionsHelper', [
+            'log'
+        ], [
+            $this->view
+        ]);
     }
 
 /**
@@ -67,223 +46,150 @@ class RegionsHelperTest extends CroogoTestCase
  */
     public function testIsEmpty()
     {
-        $this->assertTrue($this->Regions->isEmpty('right'));
-        $this->Regions->_View->viewVars['blocksForLayout'] = [
+        $this->assertTrue($this->helper->isEmpty('right'));
+        $this->view->viewVars['blocksForLayout'] = [
             'right' => [
                 '0' => ['block here'],
                 '1' => ['block here'],
                 '2' => ['block here'],
             ],
         ];
-        $this->assertFalse($this->Regions->isEmpty('right'));
+        $this->assertFalse($this->helper->isEmpty('right'));
     }
-    
-/**
- * testBlock
- */
+
     public function testBlock()
     {
-        $blocksForLayout = [
-            'right' => [
-                0 => [
-                    'Block' => [
-                        'id' => 1,
-                        'alias' => 'hello-world',
-                        'body' => 'hello world',
-                        'show_title' => false,
-                        'class' => null,
-                        'element' => null,
-                    ]
-                ],
-            ],
-        ];
-        $this->Regions->_View->viewVars['blocksForLayout'] = $blocksForLayout;
-        $this->Regions
-            ->expects($this->never())
-            ->method('log');
-        $this->View
+        $search = TableRegistry::get('Croogo/Blocks.Blocks')->findByAlias('search')->first();
+
+        $this->view
             ->expects($this->once())->method('element')
             ->with(
-                'Blocks.block',
-                ['block' => $blocksForLayout['right'][0]]
+                'Croogo/Blocks.block',
+                ['block' => $search]
             );
-        $result = $this->Regions->block('hello-world');
+
+        $this->helper->block($search);
     }
 
-/**
- * testBlockOptions
- */
     public function testBlockOptions()
     {
-        $blocksForLayout = [
-            'right' => [
-                0 => [
-                    'Block' => [
-                        'id' => 1,
-                        'alias' => 'hello-world',
-                        'body' => 'hello world',
-                        'show_title' => false,
-                        'class' => null,
-                        'element' => null,
-                    ],
-                    'Params' => [
-                        'enclosure' => false,
-                    ],
-                ],
-            ],
-        ];
-        $this->Regions->_View->viewVars['blocksForLayout'] = $blocksForLayout;
-        $this->View
+        $search = TableRegistry::get('Croogo/Blocks.Blocks')->findByAlias('search')->first();
+
+        $this->view
             ->expects($this->once())
             ->method('elementExists')
             ->will($this->returnValue(false));
 
-        $this->View
-            ->expects($this->once())->method('element')
+        $this->view
+            ->expects($this->once())
+            ->method('element')
             ->with(
-                'Blocks.block',
-                ['block' => $blocksForLayout['right'][0]],
+                'Croogo/Blocks.block',
+                ['block' => $search],
                 ['class' => 'some-class', 'ignoreMissing' => true]
             );
 
-        $result = $this->Regions->block('hello-world', [
+        $this->helper->block($search, 'right', [
             'elementOptions' => ['class' => 'some-class']
         ]);
     }
 
 
-/**
- * testBlock with invalid/missing element
- */
+    /**
+     * testBlock with invalid/missing element
+     */
     public function testBlockWithInvalidElement()
     {
+        $search = TableRegistry::get('Croogo/Blocks.Blocks')->findByAlias('search')->first();
+
         $blocksForLayout = [
             'right' => [
-                0 => [
-                    'Block' => [
-                        'id' => 1,
-                        'alias' => 'hello-world',
-                        'body' => 'hello world',
-                        'show_title' => false,
-                        'class' => null,
-                        'element' => 'non-existent',
-                    ]
-                ],
+                $search,
             ],
         ];
-        $this->Regions->_View->viewVars['blocksForLayout'] = $blocksForLayout;
-        $this->Regions
+        $this->view->viewVars['blocksForLayout'] = $blocksForLayout;
+        $this->helper
             ->expects($this->once())
             ->method('log')
-            ->with('Missing element `non-existent` in block `hello-world` (1)');
-        $this->View
+            ->with('Missing element `Nodes.search` in block `search` (8)');
+        $this->view
             ->expects($this->once())
             ->method('element')
-            ->with('Blocks.block', ['block' => $blocksForLayout['right'][0]]);
-        $result = $this->Regions->block('hello-world');
+            ->with('Croogo/Blocks.block', ['block' => $search]);
+        $result = $this->helper->block($search);
     }
 
-/**
- * testBlocks
- */
     public function testBlocks()
     {
+        $search = TableRegistry::get('Croogo/Blocks.Blocks')->findByAlias('search')->first();
+
         $blocksForLayout = [
             'right' => [
-                0 => [
-                    'Block' => [
-                        'id' => 1,
-                        'alias' => 'hello-world',
-                        'body' => 'hello world',
-                        'show_title' => false,
-                        'class' => null,
-                        'element' => null,
-                    ]
-                ],
+                $search,
             ],
         ];
-        $this->Regions->_View->viewVars['blocksForLayout'] = $blocksForLayout;
-        $this->Regions
-            ->expects($this->never())
-            ->method('log');
-        $this->View
+        $this->view->viewVars['blocksForLayout'] = $blocksForLayout;
+        $this->view
             ->expects($this->once())
             ->method('element')
             ->with(
-                'Blocks.block',
-                ['block' => $blocksForLayout['right'][0]]
+                'Croogo/Blocks.block',
+                ['block' => $search]
             );
-        $result = $this->Regions->blocks('right');
+        $this->helper->blocks('right');
     }
 
-/**
- * testBlocksOptions
- */
     public function testBlocksOptions()
     {
+        $search = TableRegistry::get('Croogo/Blocks.Blocks')->findByAlias('search')->first();
+        $search->params = [
+            'enclosure' => true
+        ];
+
         $blocksForLayout = [
             'right' => [
-                0 => [
-                    'Block' => [
-                        'id' => 1,
-                        'alias' => 'hello-world',
-                        'body' => 'hello world',
-                        'show_title' => false,
-                        'class' => null,
-                        'element' => null,
-                    ],
-                    'Params' => [
-                        'enclosure' => false,
-                    ],
-                ],
+                $search,
             ],
         ];
-        $this->Regions->_View->viewVars['blocksForLayout'] = $blocksForLayout;
-        $this->View->expects($this->once())
+        $this->view->viewVars['blocksForLayout'] = $blocksForLayout;
+        $this->view->expects($this->once())
             ->method('elementExists')
             ->will($this->returnValue(false));
 
-        $this->View->expects($this->once())
+        $this->view->expects($this->once())
             ->method('element')
             ->with(
-                'Blocks.block',
-                ['block' => $blocksForLayout['right'][0]],
+                'Croogo/Blocks.block',
+                ['block' => $search],
                 ['class' => 'some-class', 'ignoreMissing' => true]
             );
 
-        $result = $this->Regions->blocks('right', [
+        $this->helper->blocks('right', [
             'elementOptions' => ['class' => 'some-class']
         ]);
     }
 
-/**
- * testBlocks with invalid/missing element
- */
+    /**
+     * testBlocks with invalid/missing element
+     */
     public function testBlocksWithInvalidElement()
     {
+        $search = TableRegistry::get('Croogo/Blocks.Blocks')->findByAlias('search')->first();
+
         $blocksForLayout = [
             'right' => [
-                0 => [
-                    'Block' => [
-                        'id' => 1,
-                        'alias' => 'hello-world',
-                        'body' => 'hello world',
-                        'show_title' => false,
-                        'class' => null,
-                        'element' => 'non-existent',
-                    ]
-                ],
+                $search
             ],
         ];
-        $this->Regions->_View->viewVars['blocksForLayout'] = $blocksForLayout;
-        $this->Regions
+        $this->view->viewVars['blocksForLayout'] = $blocksForLayout;
+        $this->helper
             ->expects($this->once())
             ->method('log')
-            ->with('Missing element `non-existent` in block `hello-world` (1)');
-        $this->View
+            ->with('Missing element `Nodes.search` in block `search` (8)');
+        $this->view
             ->expects($this->once())
             ->method('element')
-            ->with('Blocks.block', ['block' => $blocksForLayout['right'][0]]);
-        $result = $this->Regions->blocks('right');
+            ->with('Croogo/Blocks.block', ['block' => $search]);
+        $result = $this->helper->blocks('right');
     }
 }

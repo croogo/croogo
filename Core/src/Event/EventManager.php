@@ -142,7 +142,7 @@ class EventManager extends CakeEventManager
             return;
         }
         $eventHandlers = array_keys($eventHandlers);
-        $eventHandlers = preg_grep('/^' . $plugin . '/', $eventHandlers);
+        $eventHandlers = preg_grep('/^' . preg_quote($plugin, '/') . '/', $eventHandlers);
         foreach ($eventHandlers as $eventHandler) {
             $className = App::className($eventHandler, 'Event');
             if (isset($this->_listenersMap[$className])) {

@@ -5,7 +5,7 @@ use Cake\Routing\Router;
 use Croogo\Core\Plugin;
 
 $findVendor = function () {
-    $root = dirname(dirname(dirname(dirname(dirname(__DIR__)))));
+    $root = dirname(dirname(dirname(dirname(__DIR__))));
     if (is_dir($root . '/vendor/cakephp/cakephp')) {
         return $root . DS. 'vendor' . DS;
     }
@@ -21,7 +21,7 @@ define('VENDOR', $findVendor());
  * Configure paths required to find CakePHP + general filepath
  * constants
  */
-require dirname(dirname(__DIR__)) . DS . 'tests' . DS . 'test_app' . DS . 'config' . DS . '/paths.php';
+require dirname(__DIR__) . DS . 'tests' . DS . 'test_app' . DS . 'config' . DS . '/paths.php';
 
 // Use composer to load the autoloader.
 require VENDOR . 'autoload.php';
@@ -83,6 +83,10 @@ if (!getenv('db_dsn')) {
 }
 
 Cake\Datasource\ConnectionManager::config('test', [
+    'url' => getenv('db_dsn'),
+    'timezone' => 'UTC'
+]);
+Cake\Datasource\ConnectionManager::config('test_migrations', [
     'url' => getenv('db_dsn'),
     'timezone' => 'UTC'
 ]);

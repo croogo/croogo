@@ -81,5 +81,21 @@ class UserFixture extends CroogoTestFixture
             'updated' => '2011-04-25 18:50:27',
             'created' => '2011-04-25 18:50:27'
         ],
+        [
+            'id' => 4,
+            'role_id' => 2,
+            'username' => 'registered-user',
+            'password' => 'ec84aaa5d1a656a1b4d78cf9ad9fdfe3',
+            'name' => 'Registered',
+            'email' => 'registered@your-site.com',
+            'website' => '/about',
+            'activation_key' => '92e35177eba73c6524d4561d3047c0c2',
+            'image' => '',
+            'bio' => '',
+            'timezone' => '0',
+            'status' => 1,
+            'updated' => '2016-08-02 22:30:51',
+            'created' => '2016-08-02 22:30:51'
+        ],
     ];
 }

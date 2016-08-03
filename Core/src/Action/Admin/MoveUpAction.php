@@ -45,7 +45,7 @@ class MoveUpAction extends BaseAction
         'saveOptions' => [],
         'messages' => [
             'success' => [
-                'text' => 'Moved {name} up successfully'
+                'text' => 'Successfully moved {name} up'
             ],
             'error' => [
                 'text' => 'Could not move {name} up'

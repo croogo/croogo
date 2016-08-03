@@ -5,6 +5,8 @@ namespace Croogo\Core\TestSuite;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Network\Request;
+use Cake\ORM\Query;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase as CakeIntegrationTestCase;
 use Croogo\Core\Plugin;
 use Croogo\Core\Event\EventManager;
@@ -76,6 +78,26 @@ class IntegrationTestCase extends CakeIntegrationTestCase
             'callback' => ['Croogo\\Core\\Router', 'isApiRequest'],
         ]);
         return $request;
+    }
+
+    /**
+     * @param \Croogo\Users\Model\Entity\User|\Cake\ORM\Query|string $user
+     */
+    public function user($user)
+    {
+        if (is_string($user)) {
+            $user = TableRegistry::get('Croogo/Users.Users')
+                ->findByUsername($user);
+        }
+        if ($user instanceof Query) {
+            $user = $user->firstOrFail();
+        }
+
+        $this->session([
+            'Auth' => [
+                'User' => $user->toArray()
+            ]
+        ]);
     }
 
     /**

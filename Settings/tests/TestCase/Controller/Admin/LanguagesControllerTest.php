@@ -1,4 +1,5 @@
 <?php
+
 namespace Croogo\Settings\Test\TestCase\Controller\Admin;
 
 use Cake\ORM\TableRegistry;
@@ -9,6 +10,7 @@ class LanguagesControllerTest extends IntegrationTestCase
     public $fixtures = [
         'plugin.croogo/blocks.block',
         'plugin.croogo/comments.comment',
+        'plugin.croogo/core.settings',
         'plugin.croogo/settings.language',
         'plugin.croogo/menus.menu',
         'plugin.croogo/meta.meta',
@@ -59,7 +61,7 @@ class LanguagesControllerTest extends IntegrationTestCase
         $language = TableRegistry::get('Croogo/Settings.Languages')
             ->findByAlias('ben')
             ->first();
-        $this->assertEquals($language->title, 'Bengali');
+        $this->assertEquals('Bengali', $language->title);
     }
 
     public function testAdminEdit()
@@ -78,7 +80,7 @@ class LanguagesControllerTest extends IntegrationTestCase
         $language = TableRegistry::get('Croogo/Settings.Languages')
             ->findByAlias('eng')
             ->first();
-        $this->assertEquals($language->title, 'English [modified]');
+        $this->assertEquals('English [modified]', $language->title);
     }
 
     public function testAdminDelete()
@@ -110,14 +112,12 @@ class LanguagesControllerTest extends IntegrationTestCase
         $this->assertRedirect();
         $this->assertFlash('Successfully moved language up');
 
-        $list = TableRegistry::get('Croogo/Settings.Languages')->find('list', [
-            'order' => 'Languages.weight ASC',
-        ])->toArray();
-        $this->assertEquals($list, [
+        $list = TableRegistry::get('Croogo/Settings.Languages')->find('list')->toArray();
+        $this->assertEquals([
             1 => 'English',
             3 => 'German',
             2 => 'Bengali',
-        ]);
+        ], $list);
     }
 
     public function testAdminMoveUpWithSteps()
@@ -129,14 +129,12 @@ class LanguagesControllerTest extends IntegrationTestCase
         $this->assertRedirect();
         $this->assertFlash('Successfully moved language up');
 
-        $list = TableRegistry::get('Croogo/Settings.Languages')->find('list', [
-            'order' => 'Languages.weight ASC',
-        ])->toArray();
-        $this->assertEquals($list, [
+        $list = TableRegistry::get('Croogo/Settings.Languages')->find('list')->toArray();
+        $this->assertEquals([
             3 => 'German',
             2 => 'Bengali',
             1 => 'English',
-        ]);
+        ], $list);
     }
 
     public function testAdminMoveDown()
@@ -148,14 +146,12 @@ class LanguagesControllerTest extends IntegrationTestCase
         $this->assertRedirect();
         $this->assertFlash('Successfully moved language up');
 
-        $list = TableRegistry::get('Croogo/Settings.Languages')->find('list', [
-            'order' => 'Languages.weight ASC',
-        ])->toArray();
-        $this->assertEquals($list, [
+        $list = TableRegistry::get('Croogo/Settings.Languages')->find('list')->toArray();
+        $this->assertEquals([
             2 => 'Bengali',
             3 => 'German',
             1 => 'English',
-        ]);
+        ], $list);
     }
 
     public function testAdminMoveDownWithSteps()
@@ -167,14 +163,12 @@ class LanguagesControllerTest extends IntegrationTestCase
         $this->assertRedirect();
         $this->assertFlash('Successfully moved language up');
 
-        $list = TableRegistry::get('Croogo/Settings.Languages')->find('list', [
-            'order' => 'Languages.weight ASC',
-        ])->toArray();
-        $this->assertEquals($list, [
+        $list = TableRegistry::get('Croogo/Settings.Languages')->find('list')->toArray();
+        $this->assertEquals([
             3 => 'German',
             2 => 'Bengali',
             1 => 'English',
-        ]);
+        ], $list);
     }
 
 /**

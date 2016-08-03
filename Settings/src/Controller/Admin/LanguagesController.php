@@ -2,10 +2,10 @@
 
 namespace Croogo\Settings\Controller\Admin;
 
+use Croogo\Core\Event\EventManager;
+
 /**
  * Languages Controller
- *
- * FIXME: Port to 3.x
  *
  * @category Settings.Controller
  * @package  Croogo.Settings
@@ -16,48 +16,16 @@ namespace Croogo\Settings\Controller\Admin;
  */
 class LanguagesController extends AppController
 {
-/**
- * Admin moveup
- *
- * @param int$id
- * @param int$step
- * @return void
- * @access public
- */
-    public function moveUp($id, $step = 1)
+    public function initialize()
     {
-        $language = $this->Languages->get($id);
+        parent::initialize();
 
-        $language->weight -= $step;
-        if (!$this->Languages->save($language)) {
-            $this->Flash->error(__d('croogo', 'Could not move up'));
-        }
-
-        $this->Flash->success(__d('croogo', 'Successfully moved language up'));
-
-        $this->redirect(['action' => 'index']);
-    }
-
-/**
- * Admin movedown
- *
- * @param int$id
- * @param int$step
- * @return void
- * @access public
- */
-    public function moveDown($id, $step = 1)
-    {
-        $language = $this->Languages->get($id);
-
-        $language->weight += $step;
-        if (!$this->Languages->save($language)) {
-            $this->Flash->error(__d('croogo', 'Could not move down'));
-        }
-
-        $this->Flash->success(__d('croogo', 'Successfully moved language down'));
-
-        $this->redirect(['action' => 'index']);
+        $this->Crud->config('actions.moveUp', [
+            'className' => 'Croogo/Core.Admin/MoveUp'
+        ]);
+        $this->Crud->config('actions.moveDown', [
+            'className' => 'Croogo/Core.Admin/MoveDown'
+        ]);
     }
 
 /**

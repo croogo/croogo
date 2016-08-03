@@ -1,418 +1,305 @@
 <?php
+
 namespace Croogo\Blocks\Test\TestCase\Controller;
 
-use Blocks\Controller\BlocksController;
-use Croogo\TestSuite\CroogoControllerTestCase;
-
-class BlocksControllerTest extends CroogoControllerTestCase
-{
-
-    public $fixtures = [
-        'plugin.users.aco',
-        'plugin.users.aro',
-        'plugin.users.aros_aco',
-        'plugin.blocks.block',
-        'plugin.comments.comment',
-        'plugin.contacts.contact',
-        'plugin.translate.i18n',
-        'plugin.settings.language',
-        'plugin.menus.link',
-        'plugin.menus.menu',
-        'plugin.contacts.message',
-        'plugin.meta.meta',
-        'plugin.nodes.node',
-        'plugin.taxonomy.model_taxonomy',
-        'plugin.blocks.region',
-        'plugin.users.role',
-        'plugin.settings.setting',
-        'plugin.taxonomy.taxonomy',
-        'plugin.taxonomy.term',
-        'plugin.taxonomy.type',
-        'plugin.taxonomy.types_vocabulary',
-        'plugin.users.user',
-        'plugin.taxonomy.vocabulary',
-    ];
+use Cake\ORM\TableRegistry;
+use Croogo\Core\Status;
+use Croogo\Core\TestSuite\IntegrationTestCase;
 
 /**
- * setUp
- *
- * @return void
+ * @property \Croogo\Blocks\Model\Table\BlocksTable Blocks
  */
+class BlocksControllerTest extends IntegrationTestCase
+{
+    public $fixtures = [
+        'plugin.croogo/users.aco',
+        'plugin.croogo/users.aro',
+        'plugin.croogo/users.aros_aco',
+        'plugin.croogo/blocks.block',
+        'plugin.croogo/comments.comment',
+        'plugin.croogo/contacts.contact',
+        'plugin.croogo/translate.i18n',
+        'plugin.croogo/settings.language',
+        'plugin.croogo/menus.link',
+        'plugin.croogo/menus.menu',
+        'plugin.croogo/contacts.message',
+        'plugin.croogo/meta.meta',
+        'plugin.croogo/nodes.node',
+        'plugin.croogo/taxonomy.model_taxonomy',
+        'plugin.croogo/blocks.region',
+        'plugin.croogo/users.role',
+        'plugin.croogo/core.settings',
+        'plugin.croogo/taxonomy.taxonomy',
+        'plugin.croogo/taxonomy.term',
+        'plugin.croogo/taxonomy.type',
+        'plugin.croogo/taxonomy.types_vocabulary',
+        'plugin.croogo/users.user',
+        'plugin.croogo/taxonomy.vocabulary',
+    ];
+
     public function setUp()
     {
         parent::setUp();
-        App::build([
-            'View' => [Plugin::path('Blocks') . 'View' . DS]
-        ], App::APPEND);
-        $this->BlocksController = $this->generate('Blocks.Blocks', [
-            'methods' => [
-                'redirect',
-            ],
-            'components' => [
-                'Auth' => ['user'],
-                'Session',
-            ],
-        ]);
-        $this->BlocksController->Auth
-            ->staticExpects($this->any())
-            ->method('user')
-            ->will($this->returnCallback([$this, 'authUserCallback']));
+
+        $this->user('admin');
+
+        $this->Blocks = TableRegistry::get('Croogo/Blocks.Blocks');
     }
 
-/**
- * tearDown
- *
- * @return void
- */
-    public function tearDown()
-    {
-        parent::tearDown();
-        unset($this->BlocksController);
-    }
-
-/**
- * testAdminIndex
- *
- * @return void
- */
     public function testAdminIndex()
     {
-        $this->testAction('/admin/blocks/blocks/index');
-        $this->assertNotEmpty($this->vars['blocks']);
+        $this->get('/admin/blocks/blocks/index');
+
+        $this->assertNotEmpty($this->viewVariable('blocks'));
     }
 
-/**
- * testAdminIndexSearch
- *
- * @return void
- */
     public function testAdminIndexSearch()
     {
-        $this->testAction('/admin/blocks/blocks/index?title=Recent');
-        $this->assertNotEmpty($this->vars['blocks']);
-        $this->assertEquals(1, count($this->vars['blocks']));
-        $this->assertEquals(9, $this->vars['blocks'][0]['Block']['id']);
+        $this->get('/admin/blocks/blocks/index?title=Recent');
+
+        $this->assertNotEmpty($this->viewVariable('blocks'));
+        $this->assertEquals(1, $this->viewVariable('blocks')->count());
+        $this->assertEquals(9, $this->viewVariable('blocks')->first()->id);
     }
 
-/**
- * testAdminAdd
- *
- * @return void
- */
     public function testAdminAdd()
     {
-        $this->expectFlashAndRedirect('The Block has been saved');
-        $this->testAction('/admin/blocks/blocks/add', [
-            'data' => [
-                'Block' => [
-                    'title' => 'Test block',
-                    'alias' => 'test_block',
-                    'class' => 'test-block',
-                    'show_title' => 'test_block',
-                    'region_id' => 4, // right
-                    'body' => 'text here',
-                    'visibility_paths' => '',
-                    'status' => 1,
-                ],
-                'Role' => [
-                    'Role' => [],
-                ],
-            ],
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $this->post('/admin/blocks/blocks/add', [
+            'title' => 'Test block',
+            'alias' => 'test_block',
+            'class' => 'test-block',
+            'show_title' => 'test_block',
+            'region_id' => 4, // right
+            'body' => 'text here',
+            'visibility_paths' => '',
+            'status' => 1,
         ]);
-        $result = $this->BlocksController->Block->findByAlias('test_block');
-        $this->assertEqual($result['Block']['title'], 'Test block');
+
+        $this->assertRedirect();
+        $this->assertFlash('Successfully created block');
+
+        $block = $this->Blocks
+            ->findByAlias('test_block')
+            ->first();
+        $this->assertEquals('Test block', $block->title);
     }
 
-/**
- * testAdminEdit
- *
- * @return void
- */
     public function testAdminEdit()
     {
-        $this->expectFlashAndRedirect('The Block has been saved');
-        $this->testAction('/admin/blocks/blocks/edit/1', [
-            'data' => [
-                'Block' => [
-                    'id' => 3, // About
-                    'title' => 'About [modified]',
-                    'visibility_paths' => '',
-                ],
-                'Role' => [
-                    'Role' => [],
-                ],
-            ],
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $this->post('/admin/blocks/blocks/edit/3', [
+            'id' => 3, // About
+            'title' => 'About [modified]',
+            'visibility_paths' => '',
         ]);
-        $result = $this->BlocksController->Block->findByAlias('about');
-        $this->assertEquals('About [modified]', $result['Block']['title']);
+
+        $this->assertRedirect();
+        $this->assertFlash('Successfully updated block');
+
+        $block = $this->Blocks
+            ->findByAlias('about')
+            ->first();
+        $this->assertEquals('About [modified]', $block->title);
     }
 
-/**
- * testAdminDelete
- *
- * @return void
- */
     public function testAdminDelete()
     {
-        $this->expectFlashAndRedirect('Block deleted');
-        $this->testAction('/admin/blocks/blocks/delete/8');
-        $hasAny = $this->BlocksController->Block->hasAny([
-            'Block.alias' => 'search',
-        ]);
-        $this->assertFalse($hasAny);
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $this->post('/admin/blocks/blocks/delete/8');
+
+        $this->assertRedirect();
+        $this->assertFlash('Successfully deleted block');
+
+        $block = (bool)$this->Blocks
+            ->findByAlias('search')
+            ->count();
+        $this->assertFalse($block);
     }
 
-/**
- * testAdminMoveUp
- *
- * @return void
- */
     public function testAdminMoveUp()
     {
-        $this->expectFlashAndRedirect('Moved up successfully');
-        $this->testAction('/admin/blocks/blocks/moveup/3');
-        $list = $this->BlocksController->Block->find('list', [
-            'fields' => [
-                'id',
-                'alias',
-            ],
-            'order' => 'Block.weight ASC',
-        ]);
-        $blockAliases = array_values($list);
-        $this->assertEqual($blockAliases, [
-            'about',
-            'search',
-            'categories',
-            'blogroll',
-            'recent_posts',
-            'meta',
-            'block-visible-by-public',
-            'block-visible-by-admin-or-registered',
-        ]);
+        $this->post('/admin/blocks/blocks/moveUp/3');
+
+        $this->assertRedirect();
+        $this->assertFlash('Successfully moved block up');
+
+        $list = $this->Blocks->find('list')->toArray();
+        $this->assertEquals([
+            3 => 'About',
+            5 => 'Meta',
+            6 => 'Blogroll',
+            7 => 'Categories',
+            8 => 'Search',
+            9 => 'Recent Posts',
+            10 => 'Block Visible by Public',
+            11 => 'Block Visible by Admin or Registered'
+        ], $list);
     }
 
-/**
- * testAdminMoveUpWithSteps
- *
- * @return void
- */
     public function testAdminMoveUpWithSteps()
     {
-        $this->expectFlashAndRedirect('Moved up successfully');
-        $this->testAction('/admin/blocks/blocks/moveup/6/3');
-        $list = $this->BlocksController->Block->find('list', [
-            'fields' => [
-                'id',
-                'alias',
-            ],
-            'order' => 'Block.weight ASC',
-        ]);
-        $blockAliases = array_values($list);
-        $this->assertEqual($blockAliases, [
-            'blogroll',
-            'search',
-            'about',
-            'categories',
-            'recent_posts',
-            'meta',
-            'block-visible-by-public',
-            'block-visible-by-admin-or-registered',
-        ]);
+        $this->post('/admin/blocks/blocks/moveUp/6/3');
+
+        $this->assertRedirect();
+        $this->assertFlash('Successfully moved block up');
+
+        $list = $this->Blocks->find('list')->toArray();
+        $this->assertEquals([
+            6 => 'Blogroll',
+            3 => 'About',
+            5 => 'Meta',
+            7 => 'Categories',
+            8 => 'Search',
+            9 => 'Recent Posts',
+            10 => 'Block Visible by Public',
+            11 => 'Block Visible by Admin or Registered'
+        ], $list);
     }
 
-/**
- * testAdminMoveDown
- *
- * @return void
- */
     public function testAdminMoveDown()
     {
-        $this->expectFlashAndRedirect('Moved down successfully');
-        $this->testAction('/admin/blocks/blocks/movedown/3');
-        $list = $this->BlocksController->Block->find('list', [
-            'fields' => [
-                'id',
-                'alias',
-            ],
-            'order' => 'Block.weight ASC',
-        ]);
-        $blockAliases = array_values($list);
-        $this->assertEqual($blockAliases, [
-            'search',
-            'categories',
-            'about',
-            'blogroll',
-            'recent_posts',
-            'meta',
-            'block-visible-by-public',
-            'block-visible-by-admin-or-registered',
-        ]);
+        $this->post('/admin/blocks/blocks/moveDown/3');
+
+        $this->assertRedirect();
+        $this->assertFlash('Successfully moved block down');
+
+        $list = $this->Blocks->find('list')->toArray();
+        $this->assertEquals([
+            6 => 'Blogroll',
+            5 => 'Meta',
+            3 => 'About',
+            7 => 'Categories',
+            8 => 'Search',
+            9 => 'Recent Posts',
+            10 => 'Block Visible by Public',
+            11 => 'Block Visible by Admin or Registered'
+        ], $list);
     }
 
-/**
- * testAdminMoveDownWithSteps
- *
- * @return void
- */
     public function testAdminMoveDownWithSteps()
     {
-        $this->expectFlashAndRedirect('Moved down successfully');
-        $this->testAction('/admin/blocks/blocks/movedown/8/3');
-        $list = $this->BlocksController->Block->find('list', [
-            'fields' => [
-                'id',
-                'alias',
-            ],
-            'order' => 'Block.weight ASC',
-        ]);
-        $blockAliases = array_values($list);
-        $this->assertEqual($blockAliases, [
-            'about',
-            'categories',
-            'blogroll',
-            'search',
-            'recent_posts',
-            'meta',
-            'block-visible-by-public',
-            'block-visible-by-admin-or-registered',
-        ]);
+        $this->post('/admin/blocks/blocks/moveDown/8/3');
+
+        $this->assertRedirect();
+        $this->assertFlash('Successfully moved block down');
+
+        $list = $this->Blocks->find('list')->toArray();
+        $this->assertEquals([
+            6 => 'Blogroll',
+            5 => 'Meta',
+            3 => 'About',
+            7 => 'Categories',
+            8 => 'Search',
+            9 => 'Recent Posts',
+            10 => 'Block Visible by Public',
+            11 => 'Block Visible by Admin or Registered'
+        ], $list);
     }
 
-/**
- * testAdminProcessDelete
- *
- * @return void
- */
     public function testAdminProcessDelete()
     {
-        $this->expectFlashAndRedirect('Blocks deleted');
-        $this->testAction('/admin/blocks/blocks/process', [
-            'data' => [
-                'Block' => [
-                    'action' => 'delete',
-                    '8' => ['id' => 0], // Search
-                    '3' => ['id' => 1], // About
-                    '7' => ['id' => 0], // Categories
-                    '6' => ['id' => 1], // Blogroll
-                    '9' => ['id' => 0], // Recent Posts
-                    '5' => ['id' => 1], // Meta
-                ],
-            ],
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $this->post('/admin/blocks/blocks/process', [
+            'Blocks' => [
+                'action' => 'delete',
+                '8' => ['id' => 0], // Search
+                '3' => ['id' => 1], // About
+                '7' => ['id' => 0], // Categories
+                '6' => ['id' => 1], // Blogroll
+                '9' => ['id' => 0], // Recent Posts
+                '5' => ['id' => 1], // Meta
+            ]
         ]);
-        $list = $this->BlocksController->Block->find('list', [
-            'fields' => [
-                'id',
-                'alias',
-            ],
-            'order' => 'Block.weight ASC',
-        ]);
-        $blockAliases = array_values($list);
-        $this->assertEqual($blockAliases, [
-            'search',
-            'categories',
-            'recent_posts',
-            'block-visible-by-public',
-            'block-visible-by-admin-or-registered',
-        ]);
+
+        $this->assertRedirect();
+        $this->assertFlash('Successfully deleted blocks');
+
+        $list = $this->Blocks->find('list')->toArray();
+        $this->assertEquals([
+            7 => 'Categories',
+            8 => 'Search',
+            9 => 'Recent Posts',
+            10 => 'Block Visible by Public',
+            11 => 'Block Visible by Admin or Registered'
+        ], $list);
     }
 
-/**
- * testAdminProcessPublish
- *
- * @return void
- */
     public function testAdminProcessPublish()
     {
-        // unpublish a Block for testing
-        $this->BlocksController->Block->id = 3; // About
-        $this->BlocksController->Block->save([
-            'id' => 3,
-            'status' => CroogoStatus::UNPUBLISHED,
-        ]);
-        $this->BlocksController->Block->id = false;
-        $about = $this->BlocksController->Block->hasAny([
-            'id' => 3,
-            'status' => 0,
-        ]);
-        $this->assertTrue($about);
+        $about = $this->Blocks->get(3);
+        $about->status = Status::UNPUBLISHED;
+        $this->Blocks->save($about);
 
-        $this->expectFlashAndRedirect('Blocks published');
-
-        $this->testAction('/admin/blocks/blocks/process', [
-            'data' => [
-                'Block' => [
-                    'action' => 'publish',
-                    '8' => ['id' => 1], // Search
-                    '3' => ['id' => 1], // About
-                    '7' => ['id' => 1], // Categories
-                    '6' => ['id' => 1], // Blogroll
-                    '9' => ['id' => 1], // Recent Posts
-                    '5' => ['id' => 1], // Meta
-                ],
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $this->post('/admin/blocks/blocks/process', [
+            'Blocks' => [
+                'action' => 'publish',
+                '8' => ['id' => 1], // Search
+                '3' => ['id' => 1], // About
+                '7' => ['id' => 1], // Categories
+                '6' => ['id' => 1], // Blogroll
+                '9' => ['id' => 1], // Recent Posts
+                '5' => ['id' => 1], // Meta
             ],
         ]);
 
-        $list = $this->BlocksController->Block->find('list', [
-            'conditions' => [
-                'Block.status' => true,
-            ],
-            'fields' => [
-                'id',
-                'alias',
-            ],
-            'order' => 'Block.weight ASC',
-        ]);
-        $blockAliases = array_values($list);
-        $this->assertEqual($blockAliases, [
-            'search',
-            'about',
-            'categories',
-            'blogroll',
-            'recent_posts',
-            'meta',
-            'block-visible-by-public',
-            'block-visible-by-admin-or-registered',
-        ]);
+        $this->assertRedirect();
+        $this->assertFlash('Successfully published blocks');
+
+        $list = $this->Blocks
+            ->find('list')
+            ->where([
+                'status' => true
+            ])
+            ->toArray();
+        $this->assertEquals([
+            7 => 'Categories',
+            8 => 'Search',
+            9 => 'Recent Posts',
+            10 => 'Block Visible by Public',
+            11 => 'Block Visible by Admin or Registered',
+            3 => 'About',
+            6 => 'Blogroll',
+            5 => 'Meta'
+        ], $list);
     }
 
-/**
- * testAdminProcessUnpublish
- *
- * @return void
- */
     public function testAdminProcessUnpublish()
     {
-        $this->expectFlashAndRedirect('Blocks unpublished');
-        $this->testAction('/admin/blocks/blocks/process', [
-            'data' => [
-                'Block' => [
-                    'action' => 'unpublish',
-                    '8' => ['id' => 1], // Search
-                    '3' => ['id' => 1], // About
-                    '7' => ['id' => 0], // Categories
-                    '6' => ['id' => 1], // Blogroll
-                    '9' => ['id' => 0], // Recent Posts
-                    '5' => ['id' => 1], // Meta
-                ],
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $this->post('/admin/blocks/blocks/process', [
+            'Blocks' => [
+                'action' => 'unpublish',
+                '8' => ['id' => 1], // Search
+                '3' => ['id' => 1], // About
+                '7' => ['id' => 0], // Categories
+                '6' => ['id' => 1], // Blogroll
+                '9' => ['id' => 0], // Recent Posts
+                '5' => ['id' => 1], // Meta
             ],
         ]);
 
-        $list = $this->BlocksController->Block->find('list', [
-            'conditions' => [
-                'Block.status' => 1,
-            ],
-            'fields' => [
-                'id',
-                'alias',
-            ],
-            'order' => 'Block.weight ASC',
-        ]);
-        $blockAliases = array_values($list);
-        $this->assertEqual($blockAliases, [
-            'categories',
-            'recent_posts',
-            'block-visible-by-public',
-            'block-visible-by-admin-or-registered',
-        ]);
+        $this->assertRedirect();
+        $this->assertFlash('Successfully unpublished blocks');
+
+        $list = $this->Blocks
+            ->find('list')
+            ->where([
+                'status' => true
+            ])
+            ->toArray();
+        $this->assertEquals([
+            7 => 'Categories',
+            9 => 'Recent Posts',
+            10 => 'Block Visible by Public',
+            11 => 'Block Visible by Admin or Registered',
+        ], $list);
     }
 }

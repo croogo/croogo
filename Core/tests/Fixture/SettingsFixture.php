@@ -159,7 +159,7 @@ class SettingsFixture extends CroogoTestFixture
         [
             'id' => 20,
             'key' => 'Site.theme',
-            'value' => '',
+            'value' => 'Croogo/Core',
             'title' => '',
             'description' => '',
             'input_type' => '',
@@ -308,6 +308,17 @@ class SettingsFixture extends CroogoTestFixture
             'input_type' => '',
             'editable' => 0,
             'weight' => 26,
+            'params' => ''
+        ],
+        [
+            'id' => 36,
+            'key' => 'Site.admin_theme',
+            'value' => 'Croogo/Core',
+            'title' => '',
+            'description' => '',
+            'input_type' => '',
+            'editable' => 0,
+            'weight' => 14,
             'params' => ''
         ],
     ];

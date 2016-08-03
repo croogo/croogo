@@ -1,140 +1,118 @@
 <?php
+
 namespace Croogo\Blocks\Test\TestCase\Controller;
 
-use Blocks\Controller\RegionsController;
-use Croogo\TestSuite\CroogoControllerTestCase;
-
-class RegionsControllerTest extends CroogoControllerTestCase
-{
-
-    public $fixtures = [
-        'plugin.users.aco',
-        'plugin.users.aro',
-        'plugin.users.aros_aco',
-        'plugin.blocks.block',
-        'plugin.comments.comment',
-        'plugin.contacts.contact',
-        'plugin.translate.i18n',
-        'plugin.settings.language',
-        'plugin.menus.link',
-        'plugin.menus.menu',
-        'plugin.contacts.message',
-        'plugin.meta.meta',
-        'plugin.nodes.node',
-        'plugin.taxonomy.model_taxonomy',
-        'plugin.blocks.region',
-        'plugin.users.role',
-        'plugin.settings.setting',
-        'plugin.taxonomy.taxonomy',
-        'plugin.taxonomy.term',
-        'plugin.taxonomy.type',
-        'plugin.taxonomy.types_vocabulary',
-        'plugin.users.user',
-        'plugin.taxonomy.vocabulary',
-    ];
+use Cake\ORM\TableRegistry;
+use Croogo\Core\TestSuite\IntegrationTestCase;
 
 /**
- * setUp
- *
- * @return void
+ * @property \Croogo\Blocks\Model\Table\RegionsTable Regions
  */
+class RegionsControllerTest extends IntegrationTestCase
+{
+    public $fixtures = [
+        'plugin.croogo/users.aco',
+        'plugin.croogo/users.aro',
+        'plugin.croogo/users.aros_aco',
+        'plugin.croogo/blocks.block',
+        'plugin.croogo/comments.comment',
+        'plugin.croogo/contacts.contact',
+        'plugin.croogo/translate.i18n',
+        'plugin.croogo/settings.language',
+        'plugin.croogo/menus.link',
+        'plugin.croogo/menus.menu',
+        'plugin.croogo/contacts.message',
+        'plugin.croogo/meta.meta',
+        'plugin.croogo/nodes.node',
+        'plugin.croogo/taxonomy.model_taxonomy',
+        'plugin.croogo/blocks.region',
+        'plugin.croogo/users.role',
+        'plugin.croogo/core.settings',
+        'plugin.croogo/taxonomy.taxonomy',
+        'plugin.croogo/taxonomy.term',
+        'plugin.croogo/taxonomy.type',
+        'plugin.croogo/taxonomy.types_vocabulary',
+        'plugin.croogo/users.user',
+        'plugin.croogo/taxonomy.vocabulary',
+    ];
+
     public function setUp()
     {
         parent::setUp();
-        App::build([
-            'View' => [Plugin::path('Blocks') . 'View' . DS]
-        ], App::APPEND);
-        $this->RegionsController = $this->generate('Blocks.Regions', [
-            'methods' => [
-                'redirect',
-            ],
-            'components' => [
-                'Auth' => ['user'],
-                'Session',
-            ],
+
+        $this->session([
+            'Auth' => [
+                'User' => [
+                    'id' => 1,
+                    'username' => 'admin',
+                    'role_id' => 1,
+                    'name' => 'Administrator',
+                    'email' => 'you@your-site.com',
+                    'website' => '/about'
+                ]
+            ]
         ]);
-        $this->RegionsController->Auth
-            ->staticExpects($this->any())
-            ->method('user')
-            ->will($this->returnCallback([$this, 'authUserCallback']));
+
+        $this->Regions = TableRegistry::get('Croogo/Blocks.Regions');
     }
 
-/**
- * tearDown
- *
- * @return void
- */
-    public function tearDown()
-    {
-        parent::tearDown();
-        unset($this->RegionsController);
-    }
-
-/**
- * testAdminIndex
- *
- * @return void
- */
     public function testAdminIndex()
     {
-        $this->testAction('/admin/blocks/regions/index');
-        $this->assertNotEmpty($this->vars['displayFields']);
-        $this->assertNotEmpty($this->vars['regions']);
+        $this->get('/admin/blocks/regions/index');
+
+        $this->assertNotEmpty($this->viewVariable('displayFields'));
+        $this->assertNotEmpty($this->viewVariable('regions'));
     }
 
-/**
- * testAdminAdd
- *
- * @return void
- */
     public function testAdminAdd()
     {
-        $this->expectFlashAndRedirect('The Region has been saved');
-        $this->testAction('/admin/blocks/regions/add', [
-            'data' => [
-                'Region' => [
-                    'title' => 'new_region',
-                    'alias' => 'new_region',
-                    'description' => 'A new region',
-                ],
-            ],
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $this->post('/admin/blocks/regions/add', [
+            'title' => 'new_region',
+            'alias' => 'new_region',
+            'description' => 'A new region',
         ]);
-        $newRegion = $this->RegionsController->Region->findByAlias('new_region');
-        $this->assertEqual($newRegion['Region']['title'], 'new_region');
+
+        $this->assertRedirect();
+        $this->assertFlash('Successfully created region');
+
+        $region = $this->Regions
+            ->findByAlias('new_region')
+            ->first();
+        $this->assertEquals('new_region', $region->title);
     }
 
-/**
- * testAdminEdit
- *
- * @return void
- */
     public function testAdminEdit()
     {
-        $this->expectFlashAndRedirect('The Region has been saved');
-        $this->testAction('/admin/blocks/regions/edit/1', [
-            'data' => [
-                'Region' => [
-                    'id' => 4, // right
-                    'title' => 'right_modified',
-                ],
-            ],
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $this->post('/admin/blocks/regions/edit/4', [
+            'id' => 4, // right
+            'title' => 'right_modified',
         ]);
-        $right = $this->RegionsController->Region->findByAlias('right');
-        $this->assertEquals('right_modified', $right['Region']['title']);
+
+        $this->assertRedirect();
+        $this->assertFlash('Successfully updated region');
+
+        $region = $this->Regions
+            ->findByAlias('right')
+            ->first();
+        $this->assertEquals('right_modified', $region->title);
     }
 
-/**
- * testAdminDelete
- *
- * @return void
- */
     public function testAdminDelete()
     {
-        $this->expectFlashAndRedirect('Region deleted');
-        $this->testAction('/admin/blocks/regions/delete/4');
-        $hasAny = $this->RegionsController->Region->hasAny([
-            'Region.alias' => 'right',
-        ]);
-        $this->assertFalse($hasAny);
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $this->post('/admin/blocks/regions/delete/4');
+
+        $this->assertRedirect();
+        $this->assertFlash('Successfully deleted region');
+
+        $region = (bool)$this->Regions
+            ->findByAlias('right')
+            ->count();
+        $this->assertFalse($region);
     }
 }

@@ -45,7 +45,7 @@ class MoveDownAction extends BaseAction
         'saveOptions' => [],
         'messages' => [
             'success' => [
-                'text' => 'Moved {name} down successfully'
+                'text' => 'Successfully moved {name} down'
             ],
             'error' => [
                 'text' => 'Could not move {name} down'

@@ -5,9 +5,9 @@ namespace Croogo\Core\Test\TestCase;
 use Cake\Cache\Cache;
 use Cake\Core\App;
 use Cake\Core\Configure;
+use Cake\Datasource\ConnectionManager;
 use Croogo\Core\Plugin;
 use Croogo\Core\TestSuite\TestCase;
-
 
 class PluginTest extends TestCase
 {
@@ -15,6 +15,11 @@ class PluginTest extends TestCase
      * @var \Croogo\Core\Plugin
      */
     public $plugin;
+
+    /**
+     * @var \PDO Backup connection instance
+     */
+    public $connection;
 
     public function setUp()
     {
@@ -41,6 +46,11 @@ class PluginTest extends TestCase
                 'migrated' => '2012-09-04 10:55:33'
             ]
         ];
+
+        // Backup the PDO connection instance as the Migrations CakeAdapter replaces it with Phinx's.
+        $this->connection = ConnectionManager::get('test')
+            ->driver()
+            ->connection();
     }
 
     public function tearDown()
@@ -48,6 +58,9 @@ class PluginTest extends TestCase
         parent::tearDown();
 
         unset($this->plugin);
+
+        // Restore the PDO connection instance
+        ConnectionManager::get('test')->driver()->connection($this->connection);
     }
 
     protected function _getMockMigrationVersion()
@@ -405,12 +418,12 @@ class PluginTest extends TestCase
     {
         return [
             // Internal Croogo plugins based on Croogo/Core path
-            ['Croogo/Core', ROOT . DS . 'Core' . DS],
-            ['Croogo/Nodes', ROOT . DS . 'Nodes' . DS],
+            ['Croogo/Core', CROOGO_INCLUDE_PATH  . 'Core' . DS],
+            ['Croogo/Nodes', CROOGO_INCLUDE_PATH . 'Nodes' . DS],
             // Plugin paths from the 'plugins' Configure key
-            ['BootstrapUI', ROOT . DS . 'vendor' . DS .  'friendsofcake' . DS . 'boostrap-ui' . DS],
+            ['BootstrapUI', VENDOR .  'friendsofcake' . DS . 'bootstrap-ui' . DS],
             // Plugin path from the plugins directory
-            ['Shops', App::path('plugins')[0] . 'Shops'],
+            ['Shops', App::path('Plugin')[0] . 'Shops'],
             // A non existing plugin
             ['NonExisting', false, 'Cake\\Core\\Exception\\MissingPluginException']
         ];
