@@ -67,7 +67,7 @@ class PluginTest extends TestCase
     {
         return $this->getMockBuilder('MigrationVersion')
             ->disableOriginalConstructor()
-            ->createMock();
+            ->getMock();
     }
 
     public function testGetDataPluginNotActive()
