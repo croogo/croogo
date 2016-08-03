@@ -90,7 +90,7 @@ class CroogoTranslateBehaviorTest extends CroogoTestCase
     public function testSaveTranslationShouldFlushCacheOfModelBeingTranslated()
     {
         $translationData = ['Node' => ['title' => 'Some french content']];
-        $Behaviors = $this->createMock('Behaviors', ['trigger', 'dispatchMethod']);
+        $Behaviors = $this->getMock('Behaviors', ['trigger', 'dispatchMethod']);
         $Behaviors->expects($this->any())
             ->method('trigger')
             ->with(

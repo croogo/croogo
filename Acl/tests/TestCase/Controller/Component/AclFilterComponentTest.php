@@ -36,7 +36,7 @@ class AclFilterComponentTest extends CroogoTestCase
             'controller' => 'users',
             'action' => 'view',
         ]);
-        $response = $this->createMock('Response');
+        $response = $this->getMock('Response');
         $this->Controller = new AclFilterTestController($request, $response);
         $this->Controller->name = 'Users';
         $this->Controller->constructClasses();
@@ -55,7 +55,7 @@ class AclFilterComponentTest extends CroogoTestCase
             'action' => 'admin_add',
             3,
         ]);
-        $response = $this->createMock('Request');
+        $response = $this->getMock('Request');
         $this->Controller = new AclFilterTestController($request, $response);
         $this->Controller->constructClasses();
         $user = [
@@ -83,8 +83,8 @@ class AclFilterComponentTest extends CroogoTestCase
     public function testLoginActionOverrides()
     {
         $this->Controller = new AclFilterTestController(
-            $this->createMock('Request'),
-            $this->createMock('Response')
+            $this->getMock('Request'),
+            $this->getMock('Response')
         );
         $this->Controller->constructClasses();
         $this->Controller->startupProcess();

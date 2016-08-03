@@ -22,8 +22,8 @@ class NodesHelperTest extends CroogoTestCase
     {
         parent::setUp();
 
-        $request = $this->createMock('Request');
-        $response = $this->createMock('Response');
+        $request = $this->getMock('Request');
+        $response = $this->getMock('Response');
 
         $this->View = new View(new TheNodesTestController($request, $response));
         $this->Nodes = new NodesHelper($this->View);

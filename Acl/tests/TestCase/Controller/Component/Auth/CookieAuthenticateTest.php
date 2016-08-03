@@ -44,7 +44,7 @@ class CookieAuthenticateTest extends CakeTestCase
     public function setUp()
     {
         $this->skipIf(!function_exists('mcrypt_decrypt'), 'mcrypt not found');
-        $this->controller = $this->createMock('Controller', null);
+        $this->controller = $this->getMock('Controller', null);
         $collection = $this->controller->Components;
         $this->autoLogin = new TestAclAutoLoginComponent($collection, null);
         $this->cookieAuth = new TestCookieAuthenticate($collection, null);
@@ -93,11 +93,11 @@ class CookieAuthenticateTest extends CakeTestCase
  */
     public function testIgnoreRequestWithData()
     {
-        $request = $this->createMock('Request', null);
-        $response = $this->createMock('Response');
+        $request = $this->getMock('Request', null);
+        $response = $this->getMock('Response');
         $request->data = ['User' => ['somedata']];
         $collection = $this->controller->Components;
-        $cookieAuth = $this->createMock(
+        $cookieAuth = $this->getMock(
             'TestCookieAuthenticate',
             ['getUser'],
             [$collection, null]
@@ -112,11 +112,11 @@ class CookieAuthenticateTest extends CakeTestCase
  */
     public function testIgnorePostRequest()
     {
-        $request = $this->createMock('Request', null);
-        $response = $this->createMock('Response');
+        $request = $this->getMock('Request', null);
+        $response = $this->getMock('Response');
         $collection = $this->controller->Components;
         $_SERVER['REQUEST_METHOD'] = 'POST';
-        $cookieAuth = $this->createMock(
+        $cookieAuth = $this->getMock(
             'TestCookieAuthenticate',
             ['getUser'],
             [$collection, null]

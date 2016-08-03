@@ -44,7 +44,7 @@ class TokenAuthenticateTest extends CakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Collection = $this->createMock('ComponentRegistry');
+        $this->Collection = $this->getMock('ComponentRegistry');
         $this->auth = new TokenAuthenticate($this->Collection, [
             'fields' => [
                 'username' => 'user',
@@ -56,7 +56,7 @@ class TokenAuthenticateTest extends CakeTestCase
         $password = Security::hash('password', null, true);
         $User = ClassRegistry::init('MultiUser');
         $User->updateAll(['password' => $User->getDataSource()->value($password)]);
-        $this->response = $this->createMock('Response');
+        $this->response = $this->getMock('Response');
     }
 
 /**

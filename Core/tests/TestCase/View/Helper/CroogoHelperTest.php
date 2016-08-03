@@ -50,7 +50,7 @@ class CroogoHelperTest extends CroogoTestCase
 
         $this->Croogo = new CroogoHelper($view);
         $aclHelper = Configure::read('Site.acl_plugin') . 'Helper';
-        $this->Croogo->Acl = $this->createMock(
+        $this->Croogo->Acl = $this->getMock(
             $aclHelper,
             ['linkIsAllowedByRoleId']
             //			array($view)

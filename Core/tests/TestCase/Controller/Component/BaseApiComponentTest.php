@@ -54,7 +54,7 @@ class BaseApiComponentTest extends CroogoTestCase
             'api' => 'api', 'prefix' => 'v1.0',
             'controller' => 'users', 'action' => 'index',
         ]);
-        $response = $this->createMock('\\Cake\\Network\\Response');
+        $response = $this->getMock('\\Cake\\Network\\Response');
 
         $this->Controller = new TestBaseApiController($request, $response);
 //		$this->Controller->constructClasses();

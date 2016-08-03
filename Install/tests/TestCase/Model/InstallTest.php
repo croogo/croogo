@@ -24,7 +24,7 @@ class InstallTest extends CroogoTestCase
 
     public function testRunMigrationsOk()
     {
-        $croogoPlugin = $this->createMock('CroogoPlugin');
+        $croogoPlugin = $this->getMock('CroogoPlugin');
         $croogoPlugin->expects($this->any())
                 ->method('migrate')
                 ->will($this->returnValue(true));
@@ -34,7 +34,7 @@ class InstallTest extends CroogoTestCase
 
     public function testRunMigrationsFailed()
     {
-        $croogoPlugin = $this->createMock('CroogoPlugin');
+        $croogoPlugin = $this->getMock('CroogoPlugin');
         $croogoPlugin->expects($this->any())
                 ->method('migrate')
                 ->will($this->returnValue(false));

@@ -52,7 +52,7 @@ class TranslateControllerTest extends CroogoControllerTestCase
             ->staticExpects($this->any())
             ->method('user')
             ->will($this->returnCallback([$this, 'authUserCallback']));
-        $this->TranslateController->Security->Session = $this->createMock('Session');
+        $this->TranslateController->Security->Session = $this->getMock('Session');
     }
 
 /**

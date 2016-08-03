@@ -25,7 +25,7 @@ class PluginTest extends TestCase
     {
         parent::setUp();
 
-        $this->plugin = $this->createMock('Croogo\\Core\\Plugin', [
+        $this->plugin = $this->getMock('Croogo\\Core\\Plugin', [
             '_writeSetting',
             'needMigration',
         ]);
