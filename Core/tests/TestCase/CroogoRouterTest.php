@@ -147,7 +147,7 @@ class CroogoRouterTest extends TestCase
  */
     public function testWhitelistedDetectorWithInvalidIp()
     {
-        $request = $this->getMock('Cake\\Network\\Request', ['clientIp']);
+        $request = $this->createMock('Cake\\Network\\Request', ['clientIp']);
         $request->addDetector('whitelisted', ['Croogo\\Core\\Router', 'isWhitelistedRequest']);
 
         Configure::write('Site.ipWhitelist', '127.0.0.2');
@@ -162,7 +162,7 @@ class CroogoRouterTest extends TestCase
  */
     public function testWhitelistedDetectorWithValidIp()
     {
-        $request = $this->getMock('Cake\\Network\\Request', ['clientIp']);
+        $request = $this->createMock('Cake\\Network\\Request', ['clientIp']);
         $request->addDetector('whitelisted', ['Croogo\\Core\\Router', 'isWhitelistedRequest']);
 
         Configure::write('Site.ipWhitelist', '127.0.0.2');

@@ -188,7 +188,7 @@ class ExtensionsInstallerTest extends CroogoTestCase
         $prop->setAccessible(true);
         $ExtensionsInstallerMock = new ExtensionsInstaller();
 
-        $CroogoComposer = $this->getMock('CroogoComposer', [
+        $CroogoComposer = $this->createMock('CroogoComposer', [
             'getComposer', 'setConfig', 'runComposer',
         ]);
         $prop->setValue($ExtensionsInstallerMock, $CroogoComposer);

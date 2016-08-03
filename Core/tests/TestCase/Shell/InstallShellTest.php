@@ -103,7 +103,7 @@ class InstallShellTest extends CroogoTestCase
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-        $Shell = $this->getMock('\\Croogo\\Croogo\\Shell\\InstallShell', ['out', 'err', '_shellExec', 'dispatchShell']);
+        $Shell = $this->createMock('\\Croogo\\Croogo\\Shell\\InstallShell', ['out', 'err', '_shellExec', 'dispatchShell']);
         $Shell->expects($this->once())
             ->method('_shellExec')
             ->will($this->returnCallback([$this, 'callbackDownloadPlugin']));
@@ -129,7 +129,7 @@ class InstallShellTest extends CroogoTestCase
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-        $Shell = $this->getMock('\\Croogo\\Croogo\\Shell\\InstallShell', ['out', 'err', '_shellExec', 'dispatchShell']);
+        $Shell = $this->createMock('\\Croogo\\Croogo\\Shell\\InstallShell', ['out', 'err', '_shellExec', 'dispatchShell']);
         $Shell->expects($this->once())
             ->method('_shellExec')
             ->will($this->returnCallback([$this, 'callbackDownloadTheme']));
@@ -177,9 +177,9 @@ class InstallShellTest extends CroogoTestCase
         $Shell = new ReflectionClass('\\Croogo\\Croogo\\Shell\\InstallShell');
         $prop = $Shell->getProperty('_ExtensionsInstaller');
         $prop->setAccessible(true);
-        $ShellMock = $this->getMock('\\Croogo\\Croogo\\Shell\\InstallShell', ['dispatchShell', 'out', 'err']);
+        $ShellMock = $this->createMock('\\Croogo\\Croogo\\Shell\\InstallShell', ['dispatchShell', 'out', 'err']);
 
-        $ExtensionsInstaller = $this->getMock('ExtensionsInstaller', ['composerInstall']);
+        $ExtensionsInstaller = $this->createMock('ExtensionsInstaller', ['composerInstall']);
         $prop->setValue($ShellMock, $ExtensionsInstaller);
 
         $ExtensionsInstaller->expects($this->once())
@@ -195,7 +195,7 @@ class InstallShellTest extends CroogoTestCase
 
         $prop = $Shell->getProperty('_CroogoPlugin');
         $prop->setAccessible(true);
-        $CroogoPlugin = $this->getMock('\\Croogo\Extensions\\CroogoPlugin');
+        $CroogoPlugin = $this->createMock('\\Croogo\Extensions\\CroogoPlugin');
         $prop->setValue($ShellMock, $CroogoPlugin);
 
         $CroogoPlugin->expects($this->once())

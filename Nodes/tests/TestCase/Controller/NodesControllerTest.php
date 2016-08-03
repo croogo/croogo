@@ -104,7 +104,7 @@ class NodesControllerTest extends CroogoControllerTestCase
             ->staticExpects($this->any())
             ->method('read')
             ->will($this->returnValue(['id' => 1, 'role_id' => 1]));
-        $this->NodesController->Security->Session = $this->getMock('Session');
+        $this->NodesController->Security->Session = $this->createMock('Session');
     }
 
 /**
@@ -453,7 +453,7 @@ class NodesControllerTest extends CroogoControllerTestCase
     public function testViewFallbackInPlugins()
     {
         Plugin::load('TestPlugin');
-        $this->Nodes = $this->getMock(
+        $this->Nodes = $this->createMock(
             'TestNodesController',
             ['render'],
             [new Request(), new Response()]
@@ -477,7 +477,7 @@ class NodesControllerTest extends CroogoControllerTestCase
     public function testViewFallbackInPluginsWithTheme()
     {
         Plugin::load('TestPlugin');
-        $this->Nodes = $this->getMock(
+        $this->Nodes = $this->createMock(
             'TestNodesController',
             null,
             [new Request(), new Response()]
@@ -499,7 +499,7 @@ class NodesControllerTest extends CroogoControllerTestCase
     public function testViewFallbackToCorePlugins()
     {
         Plugin::load('TestPlugin');
-        $this->Nodes = $this->getMock(
+        $this->Nodes = $this->createMock(
             'TestNodesController',
             ['render'],
             [new Request(), new Response()]
@@ -527,7 +527,7 @@ class NodesControllerTest extends CroogoControllerTestCase
             'View' => [Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Nodes' . DS . 'View' . DS],
         ], App::APPEND);
 
-        $this->Nodes = $this->getMock(
+        $this->Nodes = $this->createMock(
             'TestNodesController',
             ['render'],
             [new Request(), new Response()]

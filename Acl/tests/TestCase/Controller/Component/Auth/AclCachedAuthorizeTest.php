@@ -26,7 +26,7 @@ class AclCachedAuthorizeTest extends CroogoTestCase
             $this->apiPath
         );
         $request = new Request();
-        $response = $this->getMock('Response');
+        $response = $this->createMock('Response');
         $Controller = new AclCachedAuthorizeController($request, $response);
         $Controller->constructClasses();
         $Controller->startupProcess();

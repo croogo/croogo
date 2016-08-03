@@ -29,12 +29,12 @@ class RegionsHelperTest extends TestCase
     {
         parent::setUp();
 
-        $this->view = $this->getMock('Cake\View\View', [
+        $this->view = $this->createMock('Cake\View\View', [
             'element',
             'elementExists'
         ]);
 
-        $this->helper = $this->getMock('Croogo\Blocks\View\Helper\RegionsHelper', [
+        $this->helper = $this->createMock('Croogo\Blocks\View\Helper\RegionsHelper', [
             'log'
         ], [
             $this->view

@@ -23,8 +23,8 @@ class TaxonomiesHelperTest extends CroogoTestCase
         parent::setUp();
         $this->ComponentRegistry = new ComponentRegistry();
 
-        $request = $this->getMock('Request');
-        $response = $this->getMock('Response');
+        $request = $this->createMock('Request');
+        $response = $this->createMock('Response');
         $this->View = new View(new TheTaxonomyTestController($request, $response));
         $this->Taxonomies = new TaxonomiesHelper($this->View);
     }

@@ -48,7 +48,7 @@ class CroogoComponentTest extends CroogoTestCase
         // Setup our component and fake test controller
         $request = new Request();
         $response = new Response();
-        $this->controller = $this->getMock(
+        $this->controller = $this->createMock(
             'Cake\Controller\Controller',
             ['redirect'],
             [$request, $response]

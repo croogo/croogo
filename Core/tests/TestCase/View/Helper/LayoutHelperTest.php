@@ -282,7 +282,7 @@ class LayoutHelperTest extends CroogoTestCase
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
         $content = 'Lorem [element:element_name] ipsum';
-        $View = $this->getMock('\\Cake\\View\\View');
+        $View = $this->createMock('\\Cake\\View\\View');
         $Layout = new LayoutHelper($View);
 
         $View
@@ -308,7 +308,7 @@ class LayoutHelperTest extends CroogoTestCase
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
         $content = 'Lorem [e:element_name] ipsum';
-        $View = $this->getMock('\\Cake\\View\\View');
+        $View = $this->createMock('\\Cake\\View\\View');
         $Layout = new LayoutHelper($View);
 
         $View
@@ -334,7 +334,7 @@ class LayoutHelperTest extends CroogoTestCase
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
         $content = 'Lorem [element:first] ipsum [element:second] dolor sit.';
-        $View = $this->getMock('\\Cake\\View\\View');
+        $View = $this->createMock('\\Cake\\View\\View');
         $Layout = new LayoutHelper($View);
 
         $View
@@ -361,7 +361,7 @@ class LayoutHelperTest extends CroogoTestCase
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
         $content = 'Lorem [element:first id=123 cache=var1 nextvar="with quotes" and=\'simple quotes\'] ipsum';
-        $View = $this->getMock('\\Cake\\View\\View');
+        $View = $this->createMock('\\Cake\\View\\View');
         $View->viewVars['block'] = ['title' => 'Hello world'];
         $Layout = new LayoutHelper($View);
 
@@ -389,7 +389,7 @@ class LayoutHelperTest extends CroogoTestCase
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
         $content = 'Lorem [element:issue_list issuesToShow="5"]';
-        $View = $this->getMock('\\Cake\\View\\View');
+        $View = $this->createMock('\\Cake\\View\\View');
         $Layout = new LayoutHelper($View);
 
         $View
@@ -411,7 +411,7 @@ class LayoutHelperTest extends CroogoTestCase
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
         $content = 'Lorem [element:map plugin="plugandrent" tricky-query="te=st" ]';
-        $View = $this->getMock('\\Cake\\View\\View');
+        $View = $this->createMock('\\Cake\\View\\View');
         $Layout = new LayoutHelper($View);
 
         $View

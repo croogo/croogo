@@ -167,7 +167,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase
         $url = '/admin/file_manager/file_manager/upload?path=' . urlencode(APP . '../../..');
         $request = new CakeRequest($url);
         $response = new CakeResponse();
-        $this->FileManager = $this->getMock(
+        $this->FileManager = $this->createMock(
             'FileManagerController',
             ['redirect'],
             [$request, $response]
@@ -207,7 +207,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase
         $url = '/admin/file_manager/file_manager/create_file?path=' . urlencode(APP . '../../..');
         $request = new CakeRequest($url);
         $response = new CakeResponse();
-        $this->FileManager = $this->getMock(
+        $this->FileManager = $this->createMock(
             'FileManagerController',
             ['redirect'],
             [$request, $response]
@@ -247,7 +247,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase
         $url = '/admin/file_manager/file_manager/create_directory?path=' . urlencode(APP . '../../..');
         $request = new CakeRequest($url);
         $response = new CakeResponse();
-        $this->FileManager = $this->getMock(
+        $this->FileManager = $this->createMock(
             'FileManagerController',
             ['redirect'],
             [$request, $response]
@@ -287,7 +287,7 @@ class FileManagerControllerTest extends CroogoControllerTestCase
         $url = '/admin/file_manager/file_manager/delete_directory';
         $request = new CakeRequest($url);
         $response = new CakeResponse();
-        $this->FileManager = $this->getMock(
+        $this->FileManager = $this->createMock(
             'FileManagerController',
             ['redirect'],
             [$request, $response]

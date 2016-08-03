@@ -122,7 +122,7 @@ class EventManagerTest extends TestCase
             'Controller.Users.registrationFailure',
             'Controller.Users.registrationSuccessful',
         ];
-        $Auth = $this->getMock('\\Cake\\Controller\\Component\\AuthComponent', [], [$this->Users->components()]);
+        $Auth = $this->createMock('\\Cake\\Controller\\Component\\AuthComponent', [], [$this->Users->components()]);
         $Auth->authenticate = [
             'all' => [
                 'userModel' => 'Users',

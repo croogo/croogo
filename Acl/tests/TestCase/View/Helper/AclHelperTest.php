@@ -20,8 +20,8 @@ class AclHelperTest extends CroogoTestCase
     public function setUp()
     {
         parent::setUp();
-        $View = $this->getMock('View');
-        $this->AclHelper = $this->getMock('AclHelper', null, [$View]);
+        $View = $this->createMock('View');
+        $this->AclHelper = $this->createMock('AclHelper', null, [$View]);
     }
 
 /**

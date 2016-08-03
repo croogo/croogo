@@ -83,7 +83,7 @@ class ExtShellTest extends CroogoTestCase
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
         $Link = ClassRegistry::init('Menus.Link');
-        $Shell = $this->getMock('ExtShell', ['out', 'err']);
+        $Shell = $this->createMock('ExtShell', ['out', 'err']);
 
         $Shell->args = ['deactivate', 'plugin', 'Example'];
         $Shell->params = ['force' => false];
@@ -114,7 +114,7 @@ class ExtShellTest extends CroogoTestCase
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-        $Shell = $this->getMock('ExtShell', ['out', 'err']);
+        $Shell = $this->createMock('ExtShell', ['out', 'err']);
 
         $Shell->args = ['activate', 'plugin', 'TestPlugin'];
         $Shell->main();
@@ -135,7 +135,7 @@ class ExtShellTest extends CroogoTestCase
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-        $Shell = $this->getMock('ExtShell', ['out', 'err']);
+        $Shell = $this->createMock('ExtShell', ['out', 'err']);
 
         $result = $this->Setting->findByKey('Hook.bootstraps');
         $bogus = $result['Setting']['value'] . ',Bogus';
@@ -158,7 +158,7 @@ class ExtShellTest extends CroogoTestCase
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
 
-        $Shell = $this->getMock('ExtShell', ['out', 'err']);
+        $Shell = $this->createMock('ExtShell', ['out', 'err']);
         $Shell->args = ['activate', 'theme', 'Mytheme'];
         $Shell->main();
         $result = $this->Setting->findByKey('Site.theme');

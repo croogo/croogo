@@ -55,7 +55,7 @@ class AclAutoLoginComponentTest extends CakeTestCase
     public function setUp()
     {
         $this->skipIf(!function_exists('mcrypt_decrypt'), 'mcrypt not found');
-        $this->controller = $this->getMock('Controller', null);
+        $this->controller = $this->createMock('Controller', null);
         $collection = $this->controller->Components;
         $this->autoLogin = new TestAclAutoLoginComponent($collection, null);
         $this->autoLogin->setupTestVars();

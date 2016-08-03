@@ -17,7 +17,7 @@ class CroogoThemeTest extends CroogoTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->CroogoTheme = $this->getMock('CroogoTheme', null);
+        $this->CroogoTheme = $this->createMock('CroogoTheme', null);
     }
 
     public function tearDown()

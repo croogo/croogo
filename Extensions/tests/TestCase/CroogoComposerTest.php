@@ -61,7 +61,7 @@ class CroogoComposerTest extends CroogoTestCase
  */
     public function testGetComposer()
     {
-        $CroogoComposer = $this->getMock('CroogoComposer', ['_shellExec']);
+        $CroogoComposer = $this->createMock('CroogoComposer', ['_shellExec']);
         $CroogoComposer->appPath = $this->CroogoComposer->appPath;
         $CroogoComposer->expects($this->any())
             ->method('_shellExec')
@@ -79,7 +79,7 @@ class CroogoComposerTest extends CroogoTestCase
  */
     public function testRunComposer()
     {
-        $CroogoComposer = $this->getMock('CroogoComposer', ['_shellExec']);
+        $CroogoComposer = $this->createMock('CroogoComposer', ['_shellExec']);
         $CroogoComposer->appPath = $this->CroogoComposer->appPath;
         $CroogoComposer->getComposer();
         $CroogoComposer->expects($this->once())
