@@ -34,7 +34,7 @@ class EncodedType extends Type
     public function toDatabase($value, Driver $driver)
     {
         // Make it possible to do LIKE checks like %"1"%
-        if (preg_match('/\%\".*\"\%/', $value)) {
+        if ((is_string($value)) && (preg_match('/\%\".*\"\%/', $value))) {
             return $value;
         }
 
