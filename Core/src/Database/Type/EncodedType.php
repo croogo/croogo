@@ -33,6 +33,11 @@ class EncodedType extends Type
 
     public function toDatabase($value, Driver $driver)
     {
+        // Make it possible to do LIKE checks like %"1"%
+        if (preg_match('/\%\".*\"\%/', $value)) {
+            return $value;
+        }
+
         return $this->encodeData($value);
     }
 
@@ -84,10 +89,10 @@ class EncodedType extends Type
                     $output = '[' . implode(',', $elements) . ']';
                 }
             } else {
-                $output = '';
+                $output = null;
             }
         } else {
-            $output = '';
+            $output = null;
         }
 
         return $output;

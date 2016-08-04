@@ -127,7 +127,7 @@ class AppController extends CroogoAppController
         return $this->Crud->execute();
     }
 
-    public function view()
+    public function view($id)
     {
         return $this->Crud->execute();
     }
@@ -137,12 +137,12 @@ class AppController extends CroogoAppController
         return $this->Crud->execute();
     }
 
-    public function edit()
+    public function edit($id)
     {
         return $this->Crud->execute();
     }
 
-    public function delete()
+    public function delete($id)
     {
         return $this->Crud->execute();
     }

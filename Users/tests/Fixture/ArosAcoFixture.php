@@ -36,6 +36,7 @@ class ArosAcoFixture extends CroogoTestFixture
 
         $acl = new AclComponent(new ComponentRegistry);
         $acl->allow($admin, 'controllers');
+        $acl->allow($registered, 'controllers');
         $acl->allow($public, 'controllers');
 
         return true;

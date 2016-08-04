@@ -136,8 +136,6 @@ class BlocksTable extends CroogoTable
         $status = isset($options['status']) ? $options['status'] : $this->status();
         $regionId = isset($options['regionId']) ? $options['regionId'] : null;
         $roleId = isset($options['roleId']) ? $options['roleId'] : 3;
-        $cacheKey = isset($options['cacheKey']) ? $options['cacheKey'] : $regionId . '_' . $roleId;
-        unset($options['status'], $options['regionId'], $options['roleId'], $options['cacheKey']);
 
         return $query->where([
             'status IN' => $status,
@@ -145,14 +143,11 @@ class BlocksTable extends CroogoTable
             'AND' => [
                 [
                     'OR' => [
-                        'visibility_roles' => '',
-                        'visibility_roles' . ' LIKE' => '%"' . $roleId . '"%',
+                        'visibility_roles IS NULL',
+                        'visibility_roles LIKE' => '%"' . $roleId . '"%',
                     ],
                 ],
             ],
-        ])
-            ->order([
-                'weight' => 'ASC',
-            ]);
+        ]);
     }
 }
