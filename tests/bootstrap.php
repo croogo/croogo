@@ -53,10 +53,11 @@ Cake\Core\Configure::write('App', [
 ]);
 Cake\Core\Configure::write('debug', true);
 
-$TMP = new \Cake\Filesystem\Folder(TMP);
-$TMP->create(TMP . 'cache/models', 0777);
-$TMP->create(TMP . 'cache/persistent', 0777);
-$TMP->create(TMP . 'cache/views', 0777);
+$tmpDirectory = new \Cake\Filesystem\Folder(TMP);
+$tmpDirectory->delete(TMP . 'cache');
+$tmpDirectory->create(TMP . 'cache/models', 0777);
+$tmpDirectory->create(TMP . 'cache/persistent', 0777);
+$tmpDirectory->create(TMP . 'cache/views', 0777);
 
 $cache = [
 	'default' => [
