@@ -28,7 +28,6 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "composer/installers": "~1.0",
         "cakephp/cakephp": "^3.2.12",
         "cakephp/migrations": "~1.6",
         "cakephp/acl": "^0.2",
