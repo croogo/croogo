@@ -2,9 +2,12 @@
 
 namespace Croogo\Nodes\Model\Table;
 
+use Cake\Database\Schema\Table as Schema;
+use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 use Croogo\Core\Croogo;
 use Croogo\Core\Model\Table\CroogoTable;
@@ -16,6 +19,7 @@ class NodesTable extends CroogoTable
     {
         parent::initialize($config);
 
+        $this->addBehavior('Tree');
         $this->addBehavior('Croogo/Core.BulkProcess', [
             'actionsMap' => [
                 'promote' => 'bulkPromote',
@@ -74,6 +78,13 @@ class NodesTable extends CroogoTable
             ]);
     }
 
+    protected function _initializeSchema(Schema $table)
+    {
+        $table->columnType('visibility_roles', 'encoded');
+
+        return parent::_initializeSchema($table);
+    }
+
     /**
      * @param \Cake\ORM\Query $query
      * @param array $options
@@ -124,6 +135,18 @@ class NodesTable extends CroogoTable
     public function buildRules(RulesChecker $rules)
     {
         $rules->isUnique(['slug', 'type'], __d('croogo', 'The slug has already been taken.'));
+        $rules->add(function (Node $node) {
+            if (($node->type === '') || ($node->type === null)) {
+                $node->type = 'node';
+            }
+            if ($node->type === 'node') {
+                return true;
+            }
+
+            return (bool)TableRegistry::get('Croogo/Taxonomy.Types')
+                ->findByAlias($node->type)
+                ->count();
+        }, 'validType');
 
         return parent::buildRules($rules);
     }
@@ -275,5 +298,36 @@ class NodesTable extends CroogoTable
         return $query->andWhere([
             $this->aliasField('status') . ' IN' => $this->status($options['roleId']),
         ]);
+    }
+
+    public function findPromoted(Query $query)
+    {
+        return $query->andWhere([
+            $this->aliasField('promote') => true,
+        ]);
+    }
+
+    public function beforeSave(Event $event)
+    {
+        $node = $event->data()['entity'];
+        $event = Croogo::dispatchEvent('Model.Node.beforeSaveNode', $this, [
+            'node' => $node,
+            'typeAlias' => $node->type
+        ]);
+        if ($event->isStopped()) {
+            return $event->result;
+        }
+    }
+
+    public function afterSave(Event $event)
+    {
+        $node = $event->data()['entity'];
+        $event = Croogo::dispatchEvent('Model.Node.afterSaveNode', $this, [
+            'node' => $node,
+            'typeAlias' => $node->type
+        ]);
+        if ($event->isStopped()) {
+            return $event->result;
+        }
     }
 }

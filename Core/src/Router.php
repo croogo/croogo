@@ -180,7 +180,16 @@ class Router extends CakeRouter
         }
     }
 
-/**
+    public static function url($url = null, $full = false)
+    {
+        if ($url instanceof Link) {
+            $url = $url->getUrl();
+        }
+
+        return parent::url($url, $full);
+    }
+
+    /**
  * Setup Site.home_url
  *
  * @return void

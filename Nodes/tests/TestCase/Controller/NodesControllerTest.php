@@ -1,543 +1,100 @@
 <?php
 namespace Croogo\Nodes\Test\TestCase\Controller;
 
-use Croogo\TestSuite\CroogoControllerTestCase;
-use Nodes\Controller\NodesController;
-
-class TestNodesController extends NodesController
-{
-
-    public $name = 'Nodes';
-
-    public $autoRender = false;
-
-    public $testView = false;
-
-    public $blackholed = false;
-
-    public function redirect($url, $status = null, $exit = true)
-    {
-        $this->redirectUrl = $url;
-    }
-
-    public function render($action = null, $layout = null, $file = null)
-    {
-        if (!$this->testView) {
-            $this->renderedAction = $action;
-        } else {
-            return parent::render($action, $layout, $file);
-        }
-    }
-
-    protected function _stop($status = 0)
-    {
-        $this->stopped = $status;
-    }
-
-    public function viewFallback($views)
-    {
-        $this->testView = true;
-        return $this->_viewFallback($views);
-    }
-
-    public function securityError($type)
-    {
-        $this->blackholed = true;
-    }
-}
-
-class NodesControllerTest extends CroogoControllerTestCase
-{
-
-    public $fixtures = [
-        'plugin.users.aco',
-        'plugin.users.aro',
-        'plugin.users.aros_aco',
-        'plugin.blocks.block',
-        'plugin.comments.comment',
-        'plugin.contacts.contact',
-        'plugin.translate.i18n',
-        'plugin.settings.language',
-        'plugin.menus.link',
-        'plugin.menus.menu',
-        'plugin.contacts.message',
-        'plugin.meta.meta',
-        'plugin.nodes.node',
-        'plugin.taxonomy.model_taxonomy',
-        'plugin.blocks.region',
-        'plugin.users.role',
-        'plugin.settings.setting',
-        'plugin.taxonomy.taxonomy',
-        'plugin.taxonomy.term',
-        'plugin.taxonomy.type',
-        'plugin.taxonomy.types_vocabulary',
-        'plugin.users.user',
-        'plugin.taxonomy.vocabulary',
-    ];
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+use Croogo\Core\Event\EventManager;
+use Croogo\Core\Plugin;
+use Croogo\Core\TestSuite\IntegrationTestCase;
 
 /**
- * setUp
- *
- * @return void
+ * @property \Croogo\Nodes\Model\Table\NodesTable Nodes
  */
+class NodesControllerTest extends IntegrationTestCase
+{
+    public $fixtures = [
+        'plugin.croogo/users.role',
+        'plugin.croogo/users.user',
+        'plugin.croogo/users.aco',
+        'plugin.croogo/users.aro',
+        'plugin.croogo/users.aros_aco',
+        'plugin.croogo/blocks.block',
+        'plugin.croogo/comments.comment',
+        'plugin.croogo/contacts.contact',
+        'plugin.croogo/translate.i18n',
+        'plugin.croogo/settings.language',
+        'plugin.croogo/menus.link',
+        'plugin.croogo/menus.menu',
+        'plugin.croogo/contacts.message',
+        'plugin.croogo/meta.meta',
+        'plugin.croogo/nodes.node',
+        'plugin.croogo/taxonomy.model_taxonomy',
+        'plugin.croogo/blocks.region',
+        'plugin.croogo/core.settings',
+        'plugin.croogo/taxonomy.taxonomy',
+        'plugin.croogo/taxonomy.term',
+        'plugin.croogo/taxonomy.type',
+        'plugin.croogo/taxonomy.types_vocabulary',
+        'plugin.croogo/taxonomy.vocabulary',
+    ];
+
     public function setUp()
     {
         parent::setUp();
-        $this->NodesController = $this->generate('Nodes.Nodes', [
-            'methods' => [
-                'redirect',
-                'is',
-            ],
-            'components' => [
-                'Auth' => ['user'],
-                'Session' => ['read', 'setFlash'],
-                'Security' => ['blackHole'],
-            ],
-        ]);
 
-        $this->NodesController->Node->Behaviors->detach('Acl');
-        $this->NodesController->Auth
-            ->staticExpects($this->any())
-            ->method('user')
-            ->will($this->returnCallback([$this, 'authUserCallback']));
-        $this->NodesController->Session
-            ->staticExpects($this->any())
-            ->method('read')
-            ->will($this->returnValue(['id' => 1, 'role_id' => 1]));
-        $this->NodesController->Security->Session = $this->getMock('Session');
+        Plugin::routes();
+        Plugin::events();
+        EventManager::loadListeners();
+
+        $this->Nodes = TableRegistry::get('Croogo/Nodes.Nodes');
     }
 
-/**
- * tearDown
- *
- * @return void
- */
-    public function tearDown()
-    {
-        parent::tearDown();
-        unset($this->NodesController);
-    }
-
-/**
- * testAdminIndex
- *
- * @return void
- */
-    public function testAdminIndex()
-    {
-        $this->testAction('/admin/nodes/index');
-        $this->assertNotEmpty($this->vars['nodes']);
-        $this->assertEquals(3, count($this->vars['nodes']));
-        $this->assertNotEmpty($this->vars['nodes'][0]['Node']);
-        $this->assertNotEmpty($this->vars['nodes'][0]['User']);
-        $this->assertArrayHasKey('CustomFields', $this->vars['nodes'][0]);
-    }
-
-/**
- * testPromotedWithVisibilityRole
- *
- * @return void
- */
     public function testPromotedWithVisibilityRole()
     {
-        Session::write('Auth.User', [
-            'id' => 1,
-            'role_id' => 1,
-        ]);
-        $this->testAction('/nodes/nodes/promoted');
-        $this->assertTrue(count($this->vars['nodes']) === 2);
+        $this->user('admin');
+
+        $this->get('/promoted');
+
+        $this->assertEquals(2, $this->viewVariable('nodes')->count());
     }
 
-/**
- * testIndexWithVisibilityRole
- *
- * @return void
- */
     public function testIndexWithVisibilityRole()
     {
-        Session::write('Auth.User', [
-            'id' => 1,
-            'role_id' => 1,
-        ]);
-        $this->testAction('/nodes/nodes/index/type:page', [
-            'return' => 'vars',
-        ]);
-        $this->assertTrue(count($this->vars['nodes']) === 2);
+        $this->user('admin');
+
+        $this->get('/node?type=page');
+
+        $this->assertEquals(2, $this->viewVariable('nodes')->count());
     }
 
-/**
- * testAdminIndexSearch
- *
- * @return void
- */
-    public function testAdminIndexSearch()
-    {
-        $this->testAction('/admin/nodes/index?filter=about');
-        $this->assertEquals(1, count($this->vars['nodes']));
-        $this->assertEquals(2, $this->vars['nodes'][0]['Node']['id']);
-        $this->assertArrayHasKey('CustomFields', $this->vars['nodes'][0]);
-    }
-
-/**
- * testAdminIndex - from popups
- *
- * @return void
- */
-    public function testAdminLinks()
-    {
-        $this->controller->set('_icons');
-        $this->testAction('/admin/nodes/nodes/index/links:1/filter:about');
-        $this->assertEquals('admin_popup', $this->controller->View->layout);
-        $this->assertNotEmpty($this->vars['nodes']);
-
-        $about = $this->vars['nodes'][1];
-        $this->assertNotEmpty($this->vars['nodes'][0]['Node']);
-        $this->assertEquals('about', $about['Node']['slug']);
-        $this->assertNotEmpty($about['User']);
-        $this->assertArrayHasKey('CustomFields', $about);
-    }
-
-/**
- * testAdminAdd
- *
- * @return void
- */
-    public function testAdminAdd()
-    {
-        $this->expectFlashAndRedirect('Node has been saved');
-        $this->testAction('/admin/nodes/nodes/add', [
-            'data' => [
-                'Node' => [
-                    'title' => 'New Node',
-                    'slug' => 'new-node',
-                    'token_key' => 1,
-                    'body' => '',
-                    'created' => '',
-                ],
-                'Role' => [
-                    'Role' => [],
-                ],
-                'TaxonomyData' => [
-                    1 => [1],
-                ],
-            ],
-        ]);
-        $newBlog = $this->NodesController->Node->findBySlug('new-node');
-        $this->assertEqual($newBlog['Node']['title'], 'New Node');
-        $this->assertNotEmpty($newBlog['Node']['created']);
-        $this->assertEqual($newBlog['Node']['type'], 'node');
-        $this->assertNotEquals('0000-00-00 00:00:00', $newBlog['Node']['created']);
-    }
-
-/**
- * testAdminAddBlog
- *
- * @return void
- */
-    public function testAdminAddBlog()
-    {
-        $this->expectFlashAndRedirect('Blog has been saved');
-        $this->testAction('/admin/nodes/nodes/add/blog', [
-            'data' => [
-                'Node' => [
-                    'title' => 'New Blog',
-                    'slug' => 'new-blog',
-                    'token_key' => 1,
-                    'body' => '',
-                    'created' => '',
-                ],
-                'Role' => [
-                    'Role' => [],
-                ],
-                'TaxonomyData' => [
-                    1 => [1],
-                ],
-            ],
-        ]);
-        $newBlog = $this->NodesController->Node->findBySlug('new-blog');
-        $this->assertEqual($newBlog['Node']['title'], 'New Blog');
-        $this->assertNotEmpty($newBlog['Node']['created']);
-        $this->assertEqual($newBlog['Node']['type'], 'blog');
-        $this->assertNotEquals('0000-00-00 00:00:00', $newBlog['Node']['created']);
-    }
-
-/**
- * testAdminAddCustomCreated
- *
- * @return void
- */
-    public function testAdminAddCustomCreated()
-    {
-        $this->expectFlashAndRedirect('Node has been saved');
-        $title = 'New Blog (custom created value)';
-        $slug = 'new-blog-custom-created-value';
-        $this->testAction('/admin/nodes/nodes/add', [
-            'data' => [
-                'Node' => [
-                    'title' => $title,
-                    'slug' => $slug,
-                    'type' => 'blog',
-                    'token_key' => 1,
-                    'body' => '',
-                    'created' => '2012-03-24 01:02:03',
-                ],
-                'Role' => [
-                    'Role' => [],
-                ],
-                'TaxonomyData' => [
-                    1 => [1],
-                ],
-            ],
-        ]);
-        $this->NodesController->Node->type = 'blog';
-        $newBlog = $this->NodesController->Node->findBySlug($slug);
-        $this->assertEqual($newBlog['Node']['title'], $title);
-        $this->assertNotEmpty($newBlog['Node']['created'], '2012-03-24 01:02:03');
-    }
-
-/**
- * testAdminProcessWithInvalidAction
- *
- * @return void
- */
-    public function testAdminProcessWithInvalidAction()
-    {
-        $this->setExpectedException('InvalidArgumentException');
-        $this->testAction('/admin/nodes/nodes/process', [
-            'data' => [
-                'Node' => [
-                    'action' => 'avadakadavra',
-                    '1' => ['id' => 0],
-                    '2' => ['id' => 1],
-                ],
-            ],
-        ]);
-    }
-
-/**
- * testAdminProcessDataFormat
- *
- * @return void
- */
-    public function testAdminProcessDataFormat()
-    {
-        $this->testAction('/admin/nodes/nodes/process', [
-            'data' => [
-                'Node' => [
-                    'checkAll' => '0',
-                    'action' => 'unpublish',
-                    '1' => ['id' => 0],
-                    '2' => ['id' => 1],
-                ],
-            ],
-        ]);
-        $Node = $this->NodesController->Node;
-
-        $Node->id = 1;
-        $result = $Node->field('status');
-        $this->assertEquals('1', $result);
-
-        $Node->id = 2;
-        $result = $Node->field('status');
-        $this->assertEquals('0', $result);
-    }
-
-/**
- * testAdminEdit
- *
- * @return void
- */
-    public function testAdminEdit()
-    {
-        $this->expectFlashAndRedirect('Blog has been saved');
-        $this->testAction('/admin/nodes/nodes/edit/1', [
-            'data' => [
-                'Node' => [
-                    'id' => 1,
-                    'title' => 'Hello World [modified]',
-                    'slug' => 'hello-world',
-                    'type' => 'blog',
-                    'token_key' => 1,
-                ],
-                'Role' => [
-                    'Role' => [],
-                ],
-                'TaxonomyData' => [
-                    1 => [1],
-                ],
-            ],
-        ]);
-        $result = $this->NodesController->Node->findBySlug('hello-world');
-        $this->assertEquals('Hello World [modified]', $result['Node']['title']);
-    }
-
-/**
- * testAdminDelete
- *
- * @return void
- */
-    public function testAdminDelete()
-    {
-        $this->expectFlashAndRedirect('Node deleted');
-        $this->NodesController->Security
-            ->expects($this->never())
-            ->method('blackHole');
-        $this->testAction('/admin/nodes/nodes/delete/1');
-        $hasAny = $this->NodesController->Node->hasAny([
-            'Node.slug' => 'hello-world',
-        ]);
-        $this->assertFalse($hasAny);
-    }
-
-/**
- * testBlackholedRequest
- *
- * @return void
- */
-    public function testBlackholedRequest()
-    {
-        $request = new Request('/admin/nodes/nodes/delete/1');
-        $response = new Response();
-        $this->Nodes = new TestNodesController($request, $response);
-        $this->Nodes->constructClasses();
-        $this->Nodes->request->params['plugin'] = 'nodes';
-        $this->Nodes->request->params['controller'] = 'nodes';
-        $this->Nodes->request->params['action'] = 'admin_delete';
-        $this->Nodes->request->params['prefix'] = 'admin';
-        $this->Nodes->request->params['pass'] = [];
-        $this->Nodes->request->params['named'] = [];
-        $this->Nodes->startupProcess();
-        $this->Nodes->Node->Behaviors->detach('Tree');
-        $this->Nodes->invokeAction($request);
-        $this->assertTrue($this->Nodes->blackholed);
-        $hasAny = $this->Nodes->Node->hasAny([
-            'Node.id' => 1,
-        ]);
-        $this->assertTrue($hasAny);
-    }
-
-/**
- * testViewFallback
- *
- * @return void
- */
     public function testViewFallback()
     {
-        App::build([
-            'View' => [Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'View' . DS . 'Themed' . DS . 'Mytheme' . DS],
-        ], App::PREPEND);
+        Plugin::load('Mytheme');
+        Configure::write('Site.theme', 'Mytheme');
 
-        $request = new Request('/admin/nodes/nodes/delete/1');
-        $response = new Response();
-        $this->Nodes = new TestNodesController($request, $response);
-        $this->Nodes->constructClasses();
-        $this->Nodes->startupProcess();
-        $this->Nodes->Node->Behaviors->detach('Tree');
+        $this->get('/node');
 
-        $this->Nodes->theme = 'Mytheme';
-        $this->Nodes->plugin = 'Nodes';
-        $this->Nodes->viewFallback(['index_blog']);
-        $this->assertContains('index_blog', $this->Nodes->view);
-        $this->assertContains('Mytheme', $this->Nodes->view);
+        $this->_controller->Croogo->viewFallback(['index_blog']);
+        $this->assertContains('index_blog', $this->_controller->viewBuilder()->template());
+        $this->assertContains('Mytheme', $this->_controller->viewBuilder()->template());
 
-        $this->Nodes->viewFallback(['view_1', 'view_blog']);
-        $this->assertContains('view_1.ctp', $this->Nodes->view);
-        $this->assertContains('Mytheme', $this->Nodes->view);
+        $this->get('/blog/hello-world');
+
+        $this->_controller->Croogo->viewFallback(['view_1', 'view_blog']);
+        $this->assertContains('view_1.ctp', $this->_controller->viewBuilder()->template());
+        $this->assertContains('Mytheme', $this->_controller->viewBuilder()->template());
     }
 
-/**
- * testViewFallback from plugin controller that extends NodesController
- *
- * @return void
- */
-    public function testViewFallbackInPlugins()
-    {
-        Plugin::load('TestPlugin');
-        $this->Nodes = $this->getMock(
-            'TestNodesController',
-            ['render'],
-            [new Request(), new Response()]
-        );
-        $this->Nodes = new TestNodesController(new Request(), new Response);
-        $this->Nodes->constructClasses();
-        $this->Nodes->startupProcess();
-        $this->Nodes->theme = null;
-        $this->Nodes->plugin = 'TestPlugin';
-        $this->Nodes->viewFallback(['index_event']);
-        $this->assertContains('index_event.ctp', $this->Nodes->view);
-        unset($this->Nodes);
-    }
-
-/**
- * testViewFallback from plugin controller that extends NodesController
- * with an active theme
- *
- * @return void
- */
-    public function testViewFallbackInPluginsWithTheme()
-    {
-        Plugin::load('TestPlugin');
-        $this->Nodes = $this->getMock(
-            'TestNodesController',
-            null,
-            [new Request(), new Response()]
-        );
-        $this->Nodes->constructClasses();
-        $this->Nodes->startupProcess();
-        $this->Nodes->theme = 'OurTheme';
-        $this->Nodes->plugin = 'TestPlugin';
-        $this->Nodes->viewFallback(['index_event']);
-        $this->assertContains('index_event.ctp', $this->Nodes->view);
-        unset($this->Nodes);
-    }
-
-/**
- * testViewFallback correctly use views from Nodes plugin
- *
- * @return void
- */
-    public function testViewFallbackToCorePlugins()
-    {
-        Plugin::load('TestPlugin');
-        $this->Nodes = $this->getMock(
-            'TestNodesController',
-            ['render'],
-            [new Request(), new Response()]
-        );
-        $this->Nodes->theme = null;
-        $this->Nodes->plugin = 'TestPlugin';
-        $this->Nodes->constructClasses();
-        $this->Nodes->startupProcess();
-        $this->Nodes
-            ->expects($this->never())
-            ->method('render');
-        $this->Nodes->viewFallback(['view_1', 'view_blog']);
-        $this->assertNull($this->Nodes->view);
-        unset($this->Nodes);
-    }
-
-/**
- * testViewFallback for core NodesController with default theme
- *
- * @return void
- */
+    /**
+     * testViewFallback for core NodesController with default theme
+     *
+     * @return void
+     */
     public function testViewFallbackWithDefaultTheme()
     {
-        App::build([
-            'View' => [Plugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Nodes' . DS . 'View' . DS],
-        ], App::APPEND);
+        $this->get('/');
 
-        $this->Nodes = $this->getMock(
-            'TestNodesController',
-            ['render'],
-            [new Request(), new Response()]
-        );
-        $this->Nodes->constructClasses();
-        $this->Nodes->startupProcess();
-        $this->Nodes->theme = null;
-        $this->Nodes->plugin = null;
-        $this->Nodes->viewFallback(['index_node']);
-        $this->assertContains('index_node.ctp', $this->Nodes->view);
-        unset($this->Nodes);
+        $this->_controller->Croogo->viewFallback('index_node');
+        $this->assertContains('index_node.ctp', $this->_controller->viewBuilder()->template());
     }
 }

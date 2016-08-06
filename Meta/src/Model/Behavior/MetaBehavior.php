@@ -43,6 +43,7 @@ class MetaBehavior extends Behavior
                 'Meta.model' => $this->_table->registryAlias(),
             ],
             'order' => 'Meta.key ASC',
+            'cascadeCallbacks' => true
         ]);
 
         $this->_table->Meta

@@ -5,9 +5,12 @@ namespace Croogo\Core\TestSuite;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Network\Request;
+use Cake\ORM\Query;
 use Cake\TestSuite\TestCase as CakeTestCase;
 use Croogo\Core\Plugin;
 use Croogo\Core\Event\EventManager;
+use Croogo\Core\TestSuite\Constraint\QueryCount;
+use PHPUnit_Util_InvalidArgumentHelper;
 
 /**
  * CroogoTestCase class
@@ -59,6 +62,17 @@ class TestCase extends CakeTestCase
 
         // Unload all plugins that were loaded while running tests
         Plugin::unload(array_diff(Plugin::loaded(), $this->previousPlugins));
+    }
+
+    public function assertQueryCount($count, Query $query, $message = '')
+    {
+        if (!is_int($count)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'integer');
+        }
+
+        $constraint = new QueryCount($count);
+
+        static::assertThat($query, $constraint, $message);
     }
 
 /**

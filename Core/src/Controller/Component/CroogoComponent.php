@@ -463,7 +463,7 @@ class CroogoComponent extends Component
                 $templatePath = $templatePath . $this->_viewPath() . DS . $template;
                 if (file_exists($templatePath . '.ctp')) {
                     $controller->viewBuilder()
-                        ->template($this->_viewPath() . DS . $template);
+                        ->template($templatePath . '.ctp');
                     return;
                 }
             }

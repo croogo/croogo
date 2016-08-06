@@ -4,6 +4,10 @@ namespace Croogo\Nodes\Model\Entity;
 
 use Cake\ORM\Entity;
 
+/**
+ * @property string type Type of node
+ * @property \Croogo\Core\Link url
+ */
 class Node extends Entity
 {
 

@@ -7,6 +7,7 @@ use Cake\View\Helper;
 use Cake\View\View;
 use Croogo\Core\Croogo;
 use Croogo\Core\Utility\StringConverter;
+use Croogo\Nodes\Model\Entity\Node;
 
 /**
  * Nodes Helper
@@ -28,16 +29,14 @@ class NodesHelper extends Helper
  * @access public
  */
     public $helpers = [
-        'Html',
-        'Form',
-        'Session',
-        'Croogo.Layout',
+        'Croogo/Core.Url',
+        'Croogo/Core.Layout',
     ];
 
 /**
  * Current Node
  *
- * @var array
+ * @var \Croogo\Nodes\Model\Entity\Node
  * @access public
  */
     public $node = null;
@@ -250,29 +249,19 @@ class NodesHelper extends Helper
         return $output;
     }
 
-/**
- * Convenience method to generate url to a node or current node
- *
- * @param array $node Node data
- * @return string
- */
-    public function url($url = null, $full = false)
+    /**
+     * Convenience method to generate url to a node or current node
+     *
+     * @param \Croogo\Nodes\Model\Entity\Node $node Node data
+     * @param bool $full
+     * @return string
+     */
+    public function url(Node $node = null, $full = false)
     {
-        if ($url === null && $this->node) {
-            $url = $this->node;
+        if ($node === null) {
+            $node = $this->node;
         }
-        $alias = is_array($url) ? key($url) : null;
-        if (isset($url[$alias]['url'])) {
-            $url = $url[$alias]['url'];
-        } elseif (isset($url[$alias]['type']) && isset($url[$alias]['slug'])) {
-            $url = [
-                'plugin' => 'nodes',
-                'controller' => 'nodes',
-                'action' => 'view',
-                'type' => $url[$alias]['type'],
-                'slug' => $url[$alias]['slug']
-            ];
-        }
-        return parent::url($url, $full);
+
+        return $this->Url->build($node->url, $full);
     }
 }

@@ -4,12 +4,15 @@ namespace Croogo\Core\TestSuite;
 
 use Cake\Core\App;
 use Cake\Core\Configure;
+use Cake\Datasource\EntityInterface;
 use Cake\Network\Request;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase as CakeIntegrationTestCase;
 use Croogo\Core\Plugin;
 use Croogo\Core\Event\EventManager;
+use Croogo\Core\TestSuite\Constraint\EntityHasProperty;
+use PHPUnit_Util_InvalidArgumentHelper;
 
 /**
  * CroogoTestCase class
@@ -111,5 +114,22 @@ class IntegrationTestCase extends CakeIntegrationTestCase
     public function assertFlash($expected, $key = 'flash', $index = 0, $message = '')
     {
         $this->assertSession($expected, 'Flash.' . $key . '.' . $index . '.message', 'Flash message did not match. ' . $message);
+    }
+
+    public function assertEntityHasProperty($propertyName, EntityInterface $entity, $message = '')
+    {
+        if (!is_string($propertyName)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
+        }
+
+        if (!preg_match('/[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*/', $propertyName)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'valid property name');
+        }
+
+        $constraint = new EntityHasProperty(
+            $propertyName
+        );
+
+        static::assertThat($entity, $constraint, $message);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Croogo\Core\Model\Behavior;
 
+use Cake\Database\Exception;
 use Cake\ORM\Behavior;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
@@ -159,9 +160,25 @@ class BulkProcessBehavior extends Behavior
  */
     public function bulkDelete($ids)
     {
-        return $this->_table->deleteAll([
-            'id IN' => $ids
-        ]);
+        try {
+            return $this->_table->connection()->transactional(function () use ($ids) {
+                $nodes = $this->_table
+                    ->find()
+                    ->where([
+                        'id IN' => $ids
+                    ])
+                    ->toArray();
+                foreach ($nodes as $node) {
+                    if (!$this->_table->delete($node)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
+        } catch (Exception $exception) {
+            return false;
+        }
     }
 
 /**

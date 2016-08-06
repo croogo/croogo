@@ -28,7 +28,18 @@ class CommentableBehavior extends Behavior
             'conditions' => [
                 'model' => App::shortName(get_class($this->_table), 'Model/Table', 'Table'),
                 'status' => 1
-            ]
+            ],
+            'dependent' => true,
+            'cascadeCallbacks' => true
+        ]);
+        $this->_table->hasMany('AllComments', [
+            'className' => 'Croogo/Comments.Comments',
+            'foreignKey' => 'foreign_key',
+            'conditions' => [
+                'model' => App::shortName(get_class($this->_table), 'Model/Table', 'Table'),
+            ],
+            'dependent' => true,
+            'cascadeCallbacks' => true
         ]);
         $this->_table->Comments->belongsTo($this->_table->alias(), [
             'className' => App::shortName(get_class($this->_table), 'Model/Table', 'Table'),
@@ -69,21 +80,6 @@ class CommentableBehavior extends Behavior
                 ],
             ],
         ], false);
-    }
-
-/**
- * beforeDelete callback
- *
- * @return boolean
- */
-    public function beforeDelete(Model $model, $cascade = true)
-    {
-        if ($cascade) {
-            if (isset($model->hasMany['Comment'])) {
-                $model->hasMany['Comment']['conditions'] = '';
-            }
-        }
-        return true;
     }
 
 /**

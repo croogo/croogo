@@ -34,7 +34,7 @@ class TaxonomizableBehavior extends Behavior
     public function implementedEvents()
     {
         $events = parent::implementedEvents();
-        $events['Model.Node.beforeSaveNode'] = 'beforeSaveNode';
+//        $events['Model.Node.beforeSaveNode'] = 'beforeSaveNode';
 
         return $events;
     }

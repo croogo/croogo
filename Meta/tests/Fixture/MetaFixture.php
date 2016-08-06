@@ -27,7 +27,7 @@ class MetaFixture extends CroogoTestFixture
     public $records = [
         [
             'id' => 1,
-            'model' => 'Node',
+            'model' => 'Croogo/Nodes.Nodes',
             'foreign_key' => 1,
             'key' => 'meta_keywords',
             'value' => 'key1, key2',

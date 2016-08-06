@@ -19,6 +19,9 @@
 		<testsuite name="Core Test Suite">
             <directory>./Core/tests/TestCase</directory>
 		</testsuite>
+        <testsuite name="Nodes Test Suite">
+            <directory>./Nodes/tests/TestCase</directory>
+        </testsuite>
         <testsuite name="Settings Test Suite">
             <directory>./Settings/tests/TestCase</directory>
         </testsuite>
@@ -37,6 +40,7 @@
         <whitelist>
             <directory suffix=".php">./Blocks/src/</directory>
             <directory suffix=".php">./Core/src/</directory>
+            <directory suffix=".php">./Nodes/src/</directory>
             <directory suffix=".php">./Settings/src/</directory>
         </whitelist>
     </filter>

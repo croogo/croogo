@@ -171,6 +171,7 @@ class NodesController extends AppController
         }
 
         if (!empty($this->request->query('links')) || isset($this->request->query['chooser'])) {
+            $this->viewBuilder()->layout('admin_popup');
             $this->Crud->action()->view('chooser');
         }
     }
@@ -203,8 +204,17 @@ class NodesController extends AppController
             default:
                 return;
         }
+        if (!$typeAlias) {
+            $typeAlias = 'node';
+        }
 
-        $type = $this->Nodes->Taxonomies->Vocabularies->Types->findByAlias($typeAlias)->contain('Vocabularies')->first();
+        $type = $this->Nodes
+            ->Taxonomies
+            ->Vocabularies
+            ->Types
+            ->findByAlias($typeAlias)
+            ->contain('Vocabularies')
+            ->first();
 
         $this->set('type', $type);
 
@@ -217,9 +227,11 @@ class NodesController extends AppController
      */
     public function beforeCrudSave(Event $event)
     {
-        if ($this->request->action === 'add') {
+        if (($this->request->action === 'add') && ($this->request->param('pass.0'))) {
             $event->subject()->entity->type = $this->request->param('pass.0');
         }
+
+        $this->Crud->action()->config('name', $event->subject()->entity->type);
     }
 
     public function implementedEvents()
