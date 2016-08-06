@@ -43,6 +43,8 @@ require VENDOR . 'autoload.php';
  */
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
+date_default_timezone_set('UTC');
+
 Cake\Core\Configure::write('App', [
 	'namespace' => 'App',
 	'paths' => [

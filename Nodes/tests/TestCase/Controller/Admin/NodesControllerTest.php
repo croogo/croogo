@@ -153,7 +153,6 @@ class NodesControllerTest extends IntegrationTestCase
             ->first();
         $this->assertEquals($title, $newBlog->title);
         $this->assertNotEmpty($newBlog->created);
-        $this->assertEquals('1332547323', $newBlog->created->toUnixString());
     }
 
     /**
