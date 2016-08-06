@@ -94,7 +94,7 @@ class RegionsHelper extends Helper
                 list($pluginAndCell, $action) = [$parts[0], $regionAlias];
             }
 
-            $blockOutput = (string)$this->_View->cell($pluginAndCell . '::' . $action);
+            $blockOutput = (string)$this->_View->cell($pluginAndCell . '::' . $action, [], $block->params);
         }
 
         Croogo::dispatchEvent('Helper.Regions.afterSetBlock', $this->_View, [
