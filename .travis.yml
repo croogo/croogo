@@ -68,6 +68,11 @@ script:
 
 notifications:
   email: false
+  irc:
+    channels:
+      - "chat.freenode.net#croogo"
+      - "chat.freenode.net#cvo-technologies"
+    on_success: change
 
 cache:
   directories:
