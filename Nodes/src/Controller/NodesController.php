@@ -228,8 +228,8 @@ class NodesController extends AppController
         $query = $this->Nodes
             ->find('published')
             ->find('promoted')
-            ->find('visibilityRole', [
-                'role_id' => $this->Croogo->roleId(),
+            ->find('byAccess', [
+                'roleId' => $this->Croogo->roleId(),
             ])
             ->find('search', $this->Nodes->filterParams($this->request->query));
 

@@ -8,19 +8,18 @@ use Cake\ORM\Behavior;
 class VisibilityBehavior extends Behavior
 {
 
-    public function findVisibilityRole(Query $query, array $options = [])
+    public function findByAccess(Query $query, array $options = [])
     {
-        $query->where([
-            'AND' => [
-                [
-                    'OR' => [
-                        $this->_table->alias() . '.visibility_roles IS NULL',
-                        $this->_table->alias() . '.visibility_roles LIKE' => '%"' . $options['role_id'] . '"%',
-                    ],
-                ],
+        $options += ['roleId' => null];
+        $visibilityRolesField = $this->_table->aliasField('visibility_roles');
+
+        return $query->andWhere([
+            'OR' => [
+                $visibilityRolesField => $query->newExpr()
+                    ->add('\'\''),
+                $visibilityRolesField . ' IS NULL',
+                $visibilityRolesField . ' LIKE' => '%"' . $options['roleId'] . '"%',
             ],
         ]);
-
-        return $query;
     }
 }
