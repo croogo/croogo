@@ -63,8 +63,8 @@ class NodesController extends AppController
      */
     public function index()
     {
-        if (!$this->request->query('type')) {
-            $this->request->query['type'] = 'node';
+        if (!$this->request->param('type')) {
+            $this->request->params['type'] = 'node';
         }
 
         $query = $this->Nodes->find('view', [
@@ -75,12 +75,12 @@ class NodesController extends AppController
             $limit = Configure::read('Reading.nodes_per_page');
         }
 
-        if ($this->request->query('type')) {
+        if ($this->request->param('type')) {
             $type = $this->Nodes->Taxonomies->Vocabularies->Types->find()
                 ->where([
-                    'Types.alias' => $this->request->query('type'),
+                    'Types.alias' => $this->request->param('type'),
                 ])
-                ->cache('type_' . $this->request->query('type'), 'nodes_index')
+                ->cache('type_' . $this->request->param('type'), 'nodes_index')
                 ->firstOrFail();
             if (isset($type->params['nodes_per_page']) && !$this->request->query('limit')) {
                 $limit = $type->params['nodes_per_page'];
