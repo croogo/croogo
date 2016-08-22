@@ -153,23 +153,27 @@ class NodesController extends AppController
             'Users'
         ]);
 
-        $types = $this->Nodes->Taxonomies->Vocabularies->Types->find('all');
+        $types = $this->Nodes->Taxonomies->Vocabularies->Types
+            ->find()
+            ->where([
+                'plugin is' => null,
+            ]);
         $typeAliases = collection($types)->extract('alias');
-        $query->where(['type IN' => $typeAliases->toArray()]);
+        $query->where([
+            'type IN' => $typeAliases->toArray()
+        ]);
 
         $this->set([
             'types' => $types,
             'typeAliases' => $typeAliases
         ]);
 
-        $nodeTypes = $this->Nodes->Taxonomies->Vocabularies->Types->find('list', [
-            'keyField' => 'alias',
-            'valueField' => 'title'
-        ])->toArray();
+        $nodeTypes = $types->combine('alias', 'title')->toArray();
         $this->set('nodeTypes', $nodeTypes);
 
         if ($this->request->query('type')) {
-            $type = $this->Nodes->Taxonomies->Vocabularies->Types->findByAlias($this->request->query('type'))
+            $type = $this->Nodes->Taxonomies->Vocabularies->Types
+                ->findByAlias($this->request->query('type'))
                 ->first();
             $this->set('type', $type);
         }
