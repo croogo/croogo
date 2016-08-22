@@ -15,7 +15,9 @@ class AddAttachmentType extends AbstractMigration
         $this->insert('types', [
             'title' => 'Attachment',
             'alias' => 'attachment',
-            'plugin' => 'Croogo/FileManager'
+            'plugin' => 'Croogo/FileManager',
+            'updated' => date('Y-m-d H:i:s'),
+            'created' => date('Y-m-d H:i:s'),
         ]);
     }
 }
