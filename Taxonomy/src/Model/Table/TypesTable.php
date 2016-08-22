@@ -26,7 +26,6 @@ class TypesTable extends CroogoTable
             ]
         ],
         'description',
-        'plugin',
     ];
 
     public function initialize(array $config)
