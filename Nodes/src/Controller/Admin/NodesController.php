@@ -142,6 +142,10 @@ class NodesController extends AppController
 
     public function beforePaginate(Event $event)
     {
+        $this->paginate = [
+            'order' => ['created' => 'DESC']
+        ];
+
         /** @var \Cake\ORM\Query $query */
         $query = $event->subject()->query;
 
