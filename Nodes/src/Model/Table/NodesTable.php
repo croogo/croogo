@@ -146,7 +146,10 @@ class NodesTable extends CroogoTable
             return (bool)TableRegistry::get('Croogo/Taxonomy.Types')
                 ->findByAlias($node->type)
                 ->count();
-        }, 'validType');
+        }, 'validType', [
+            'errorField' => 'type',
+            'message' => 'Invalid type'
+        ]);
 
         return parent::buildRules($rules);
     }
