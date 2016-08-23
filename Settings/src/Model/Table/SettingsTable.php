@@ -105,6 +105,7 @@ class SettingsTable extends CroogoTable
         $setting = $this->findByKey($key)->first();
         if ($setting) {
             $setting->value = $value;
+            $setting->type = gettype($value);
 
             $setting = $this->patchEntity($setting, $options);
 
@@ -121,6 +122,7 @@ class SettingsTable extends CroogoTable
             $setting = $this->newEntity([
                 'key' => $key,
                 'value' => $value,
+                'type' => gettype($value),
                 'title' => $options['title'],
                 'description' => $options['description'],
                 'input_type' => $options['input_type'],

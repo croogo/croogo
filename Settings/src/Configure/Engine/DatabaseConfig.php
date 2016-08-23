@@ -7,6 +7,7 @@ use Cake\Log\Log;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use Croogo\Settings\Model\Entity\Setting;
 
 class DatabaseConfig implements ConfigEngineInterface
 {
@@ -25,7 +26,13 @@ class DatabaseConfig implements ConfigEngineInterface
         $values = Cache::remember('configure-settings-' . $key, function () use ($key) {
             $settings = TableRegistry::get('Croogo/Settings.Settings')->find('list', [
                 'keyField' => 'key',
-                'valueField' => 'value'
+                'valueField' => function (Setting $setting) {
+                    if ($setting->type === 'integer') {
+                        return (int)$setting->value;
+                    }
+
+                    return $setting->value;
+                }
             ])->cache('configure-settings-query-' . $key, 'cached_settings')->toArray();
 
             return Hash::expand($settings);
