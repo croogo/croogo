@@ -123,5 +123,10 @@
         "croogo/taxonomy": "self.version",
         "croogo/users": "self.version",
         "croogo/wysiwyg": "self.version"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-3.0": "3.0.x-dev"
+        }
     }
 }
