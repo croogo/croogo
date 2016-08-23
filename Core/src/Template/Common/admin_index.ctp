@@ -5,7 +5,7 @@ if (empty($modelClass)) {
     $modelClass = Inflector::singularize($this->name);
 }
 if (!isset($className)) {
-    $className = strtolower($this->name);
+    $className = lcfirst($this->name);
 }
 $humanName = Inflector::humanize(Inflector::underscore($modelClass));
 $i18nDomain = $this->request->param('plugin') ? 'croogo' : $this->request->param('plugin');
@@ -63,8 +63,9 @@ endif;
 $tableBody = trim($this->fetch('table-body'));
 if (!$tableBody && isset($displayFields)):
     $rows = [];
-    if (!empty(${strtolower($this->name)})):
-        foreach (${strtolower($this->name)} as $item):
+    if (!empty(${lcfirst($this->name)})):
+
+        foreach (${lcfirst($this->name)} as $item):
             $actions = [];
 
             if (isset($this->request->query['chooser'])):
