@@ -52,12 +52,12 @@ class AttachmentsTable extends NodesTable
     /**
  * Save uploaded file
  *
- * @param array $data data as POSTed from form
+ * @param array $entity data as POSTed from form
  * @return array|boolean false for errors or array containing fields to save
  */
-    protected function _saveUploadedFile($data)
+    protected function _saveUploadedFile($entity)
     {
-        $file = $data->file;
+        $file = $entity->file;
         $dir = WWW_ROOT . $this->uploadsDir;
 
         // Check if dir exists
@@ -90,16 +90,16 @@ class AttachmentsTable extends NodesTable
             $fileTitle = $file['name'];
         }
 
-        $data->title = $fileTitle;
-        $data->slug = $newFileName;
-        $data->body = '';
-        $data->mime_type = $file['type'];
-        $data->type = $this->type;
-        $data->path = '/' . $this->uploadsDir . '/' . $newFileName;
+        $entity->title = $fileTitle;
+        $entity->slug = $newFileName;
+        $entity->body = '';
+        $entity->mime_type = $file['type'];
+        $entity->type = $this->type;
+        $entity->path = '/' . $this->uploadsDir . '/' . $newFileName;
         // move the file
         $moved = move_uploaded_file($file['tmp_name'], $destination);
         if ($moved) {
-            return $data;
+            return $entity;
         }
 
         return false;
@@ -110,15 +110,15 @@ class AttachmentsTable extends NodesTable
  *
  * @see Model::save()
  */
-    public function save(EntityInterface $data, $options = [])
+    public function save(EntityInterface $entity, $options = [])
     {
-        if (isset($data->file['tmp_name'])) {
-            $data = $this->_saveUploadedFile($data);
+        if (isset($entity->file['tmp_name'])) {
+            $data = $this->_saveUploadedFile($entity);
         }
         if (!$data) {
             return $entity->errors(['file' => __d('croogo', 'Error during file upload')]);
         }
-        return parent::save($data, $options);
+        return parent::save($entity, $options);
     }
 
 /**

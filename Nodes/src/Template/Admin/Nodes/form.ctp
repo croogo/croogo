@@ -73,6 +73,7 @@ $this->start('panels');
             'label' => __d('croogo', 'Author'),
             'options' => $users,
             'class' => 'c-select',
+            'default' => $loggedInUser['id']
         ]);
         echo $this->Form->input('parent_id', [
             'label' => __d('croogo', 'Parent'),

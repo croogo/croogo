@@ -121,7 +121,7 @@ class MenuComponent extends Component
                         'name' => $menu->alias . '_links_' . $roleId,
                         'config' => 'croogo_menus',
                     ]
-                ])->find('visibilityRole', ['role_id' => $roleId])->where([
+                ])->find('byAccess', ['roleId' => $roleId])->where([
                     'Links.menu_id' => $menu->id,
                     'Links.status IN' => $status,
                 ])->order([

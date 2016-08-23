@@ -146,7 +146,10 @@ class NodesTable extends CroogoTable
             return (bool)TableRegistry::get('Croogo/Taxonomy.Types')
                 ->findByAlias($node->type)
                 ->count();
-        }, 'validType');
+        }, 'validType', [
+            'errorField' => 'type',
+            'message' => 'Invalid type'
+        ]);
 
         return parent::buildRules($rules);
     }
@@ -277,20 +280,12 @@ class NodesTable extends CroogoTable
         return $query;
     }
 
-    public function findByAccess(Query $query, array $options = [])
-    {
-        $options += ['roleId' => null];
-        $visibilityRolesField = $this->aliasField('visibility_roles');
-
-        return $query->andWhere([
-            'OR' => [
-                $visibilityRolesField => '',
-                $visibilityRolesField . ' IS NULL',
-                $visibilityRolesField . ' LIKE' => '%"' . $options['roleId'] . '"%',
-            ],
-        ]);
-    }
-
+    /**
+     * @param \Cake\ORM\Query $query
+     * @param array $options
+     * @return \Cake\ORM\Query
+     * @todo Extract this into a behaviour
+     */
     public function findPublished(Query $query, array $options = [])
     {
         $options += ['roleId' => null];

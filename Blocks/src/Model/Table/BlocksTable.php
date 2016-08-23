@@ -78,6 +78,7 @@ class BlocksTable extends CroogoTable
             'Regions' => ['block_count'],
         ]);
         $this->addBehavior('Croogo/Core.Publishable');
+        $this->addBehavior('Croogo/Core.Visibility');
         $this->addBehavior('ADmad/Sequence.Sequence', [
             'order' => 'weight',
             'scope' => ['region_id'],
@@ -122,6 +123,15 @@ class BlocksTable extends CroogoTable
         Cache::clear(false, 'croogo_blocks');
     }
 
+    public function findPublished(Query $query, array $options = [])
+    {
+        $options += ['roleId' => null];
+
+        return $query->andWhere([
+            $this->aliasField('status') . ' IN' => $this->status($options['roleId']),
+        ]);
+    }
+
     /**
      * Find Published blocks
      *
@@ -131,23 +141,17 @@ class BlocksTable extends CroogoTable
      * - roleId Role Id
      * - cacheKey Cache key (optional)
      */
-    public function findPublished(Query $query, array $options = [])
+    public function findRegionPublished(Query $query, array $options = [])
     {
-        $status = isset($options['status']) ? $options['status'] : $this->status();
-        $regionId = isset($options['regionId']) ? $options['regionId'] : null;
-        $roleId = isset($options['roleId']) ? $options['roleId'] : 3;
+        $options += [
+            'regionId' => null,
+        ];
 
-        return $query->where([
-            'status IN' => $status,
-            'region_id' => $regionId,
-            'AND' => [
-                [
-                    'OR' => [
-                        'visibility_roles IS NULL',
-                        'visibility_roles LIKE' => '%"' . $roleId . '"%',
-                    ],
-                ],
-            ],
-        ]);
+        return $query
+            ->find('published', $options)
+            ->find('byAccess', $options)
+            ->where([
+                'region_id IN' => $options['regionId']
+            ]);
     }
 }

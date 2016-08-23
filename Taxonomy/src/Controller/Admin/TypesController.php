@@ -26,4 +26,22 @@ class TypesController extends AppController
             'displayFields' => $this->Types->displayFields(),
         ]);
     }
+
+    public function implementedEvents()
+    {
+        return parent::implementedEvents() + [
+            'Crud.beforePaginate' => 'beforePaginate',
+        ];
+    }
+
+    public function beforePaginate(Event $event)
+    {
+        /** @var \Cake\ORM\Query $query */
+        $query = $event->subject()->query;
+
+        $query->where([
+            'plugin IS' => null
+        ]);
+    }
+
 }
