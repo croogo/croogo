@@ -1,7 +1,7 @@
 <?php
 
 App::uses('AppHelper', 'View/Helper');
-App::uses('String', 'Utility');
+App::uses('CakeText', 'Utility');
 
 /**
  * Meta Helper
@@ -109,7 +109,7 @@ class MetaHelper extends AppHelper {
 			$_options['key']['class'] = $_options['value']['class'] = $inputClass;
 		}
 		$options = Hash::merge($_options, $options);
-		$uuid = String::uuid();
+		$uuid = CakeText::uuid();
 
 		$fields = '';
 		if ($id != null) {

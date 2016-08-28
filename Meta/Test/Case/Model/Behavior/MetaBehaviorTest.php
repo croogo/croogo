@@ -1,7 +1,7 @@
 <?php
 App::uses('Node', 'Nodes.Model');
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
-App::uses('String', 'Utility');
+App::uses('CakeText', 'Utility');
 
 class MetaBehaviorTest extends CroogoTestCase {
 
@@ -69,11 +69,11 @@ class MetaBehaviorTest extends CroogoTestCase {
 	public function testPrepareMeta() {
 		$data = array(
 			'Meta' => array(
-				String::uuid() => array(
+				CakeText::uuid() => array(
 					'key' => 'key1',
 					'value' => 'value1',
 				),
-				String::uuid() => array(
+				CakeText::uuid() => array(
 					'key' => 'key2',
 					'value' => 'value2',
 				),
