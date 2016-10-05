@@ -2,6 +2,8 @@
 
 namespace Croogo\Taxonomy\Controller\Admin;
 
+use Cake\Event\Event;
+
 /**
  * Types Controller
  *
