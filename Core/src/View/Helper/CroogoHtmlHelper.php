@@ -33,12 +33,12 @@ class CroogoHtmlHelper extends HtmlHelper
             $settings = Hash::merge($themeSettings, $settings);
         }
         $this->_defaultConfig['templates']['beginbox'] = "<div class=\"card\">
-						<div class='card-header'>
-							{{icon}} {{title}}
-						</div>
-						<div class='card-block'>";
+                        <div class='card-header'>
+                            {{icon}} {{title}}
+                        </div>
+                        <div class='card-block'>";
         $this->_defaultConfig['templates']['endbox'] = '</div>
-			</div>';
+            </div>';
 
         parent::__construct($View, $settings);
 
