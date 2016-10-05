@@ -45,6 +45,21 @@ class TermsController extends AppController
     public $uses = ['Taxonomy.Term'];
 
     /**
+     * Initialize
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->Crud->config('actions.add', [
+            'className' => 'Croogo/Taxonomy.Admin/TermAdd',
+        ]);
+        $this->Crud->config('actions.edit', [
+            'className' => 'Croogo/Taxonomy.Admin/TermEdit',
+        ]);
+    }
+
+    /**
      * beforeFilter
      *
      * @return void
@@ -68,7 +83,7 @@ class TermsController extends AppController
      */
     public function index($vocabularyId = null)
     {
-        $response = $this->__ensureVocabularyIdExists($vocabularyId);
+        $response = $this->_ensureVocabularyIdExists($vocabularyId);
         if ($response instanceof Response) {
             return $response;
         }
@@ -89,101 +104,6 @@ class TermsController extends AppController
     }
 
     /**
-     * Admin add
-     *
-     * @param int $vocabularyId
-     * @access public
-     */
-    public function add($vocabularyId)
-    {
-        $response = $this->__ensureVocabularyIdExists($vocabularyId);
-        if ($response instanceof Response) {
-            return $response;
-        }
-
-        $vocabulary = $this->Terms->Vocabularies->get($vocabularyId);
-
-        $term = $this->Terms->newEntity();
-        $this->set('term', $term);
-
-        if ($this->request->is('post')) {
-            $term = $this->Terms->patchEntity($term, $this->request->data);
-
-            $taxonomy = $this->Terms->add($term, $vocabularyId);
-            if ($taxonomy) {
-                $this->Flash->success(__d('croogo', 'Term saved successfuly.'));
-
-                return $this->redirect([
-                    'action' => 'edit',
-                    $taxonomy->term_id,
-                    $vocabularyId,
-                ]);
-            } else {
-                $this->Flash->error(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'));
-            }
-        }
-        $parentTree = $this->Terms->Taxonomies->getTree($vocabulary->alias, ['taxonomyId' => true]);
-        $this->set(compact('vocabulary', 'parentTree', 'vocabularyId'));
-    }
-
-    /**
-     * Admin edit
-     *
-     * @param int $id
-     * @param int $vocabularyId
-     * @access public
-     */
-    public function edit($id, $vocabularyId)
-    {
-        $response = $this->__ensureVocabularyIdExists($vocabularyId);
-        if ($response instanceof Response) {
-            return $response;
-        }
-        $response = $this->__ensureTermExists($id);
-        if ($response instanceof Response) {
-            return $response;
-        }
-        $response = $this->__ensureTaxonomyExists($id, $vocabularyId);
-        if ($response instanceof Response) {
-            return $response;
-        }
-
-        $vocabulary = $this->Terms->Vocabularies->get($vocabularyId);
-        $term = $this->Terms->get($id, [
-            'contain' => [
-                'Taxonomies',
-            ],
-        ]);
-        $taxonomy = $this->Terms->Taxonomies->find()
-            ->where([
-                'Taxonomies.term_id' => $id,
-                'Taxonomies.vocabulary_id' => $vocabularyId,
-            ])
-            ->first();
-
-        $this->set('title_for_layout', __d('croogo', '%s: Edit Term', $vocabulary->title));
-
-        if ($this->request->is('post') || $this->request->is('put')) {
-            $term = $this->Terms->patchEntity($term, $this->request->data);
-            if ($this->Terms->edit($term, $vocabularyId)) {
-                $this->Flash->success(__d('croogo', 'Term saved successfuly.'));
-                if (isset($this->request->data['apply'])) {
-                    return $this->redirect(['action' => 'edit', $term->id, $vocabularyId]);
-                } else {
-                    return $this->redirect([
-                        'action' => 'index',
-                        $vocabularyId,
-                    ]);
-                }
-            } else {
-                $this->Flash->error(__d('croogo', 'Term could not be added to the vocabulary. Please try again.'));
-            }
-        }
-        $parentTree = $this->Terms->Taxonomies->getTree($vocabulary->alias, ['taxonomyId' => true]);
-        $this->set(compact('vocabulary', 'parentTree', 'term', 'taxonomy', 'vocabularyId'));
-    }
-
-    /**
      * Admin delete
      *
      * @param int $id
@@ -194,10 +114,10 @@ class TermsController extends AppController
     public function delete($id = null, $vocabularyId = null)
     {
         $redirectUrl = ['action' => 'index', $vocabularyId];
-        $this->__ensureVocabularyIdExists($vocabularyId, $redirectUrl);
-        $this->__ensureTermExists($id, $redirectUrl);
+        $this->_ensureVocabularyIdExists($vocabularyId, $redirectUrl);
+        $this->_ensureTermExists($id, $redirectUrl);
         $taxonomyId = $this->Term->Taxonomy->termInVocabulary($id, $vocabularyId);
-        $this->__ensureVocabularyIdExists($vocabularyId, $redirectUrl);
+        $this->_ensureVocabularyIdExists($vocabularyId, $redirectUrl);
 
         if ($this->Term->remove($id, $vocabularyId)) {
             $messageFlash = __d('croogo', 'Term deleted');
@@ -256,16 +176,16 @@ class TermsController extends AppController
     private function __move($direction, $id, $vocabularyId, $step)
     {
         $redirectUrl = ['action' => 'index', $vocabularyId];
-        $response = $this->__ensureVocabularyIdExists($vocabularyId, $redirectUrl);
+        $response = $this->_ensureVocabularyIdExists($vocabularyId, $redirectUrl);
         if ($response instanceof Response) {
             return $response;
         }
-        $response = $this->__ensureTermExists($id, $redirectUrl);
+        $response = $this->_ensureTermExists($id, $redirectUrl);
         if ($response instanceof Response) {
             return $response;
         }
         $taxonomyId = $this->Terms->Taxonomies->termInVocabulary($id, $vocabularyId);
-        $response = $this->__ensureVocabularyIdExists($vocabularyId, $redirectUrl);
+        $response = $this->_ensureVocabularyIdExists($vocabularyId, $redirectUrl);
         if ($response instanceof Response) {
             return $response;
         }
@@ -310,7 +230,7 @@ class TermsController extends AppController
      * @param string $url Redirect Url
      * @return bool True if Term exists
      */
-    private function __ensureTermExists($id, $url = null)
+    public function _ensureTermExists($id, $url = null)
     {
         $redirectUrl = is_null($url) ? $this->_redirectUrl : $url;
         try {
@@ -330,7 +250,7 @@ class TermsController extends AppController
      * @param string $url Redirect Url
      * @return bool True if Term exists
      */
-    private function __ensureTaxonomyExists($id, $vocabularyId, $url = null)
+    public function _ensureTaxonomyExists($id, $vocabularyId, $url = null)
     {
         $redirectUrl = is_null($url) ? $this->_redirectUrl : $url;
         $count = $this->Terms->Taxonomies->find()
@@ -350,7 +270,7 @@ class TermsController extends AppController
      * @param string $url Redirect Url
      * @return bool True if Term exists
      */
-    private function __ensureVocabularyIdExists($vocabularyId, $url = null)
+    public function _ensureVocabularyIdExists($vocabularyId, $url = null)
     {
         $redirectUrl = is_null($url) ? $this->_redirectUrl : $url;
         if (!$vocabularyId) {
