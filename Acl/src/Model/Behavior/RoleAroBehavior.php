@@ -2,7 +2,11 @@
 
 namespace Croogo\Acl\Model\Behavior;
 
+use Cake\Cache\Cache;
 use Cake\ORM\Behavior;
+use Cake\Event\Event;
+use Cake\ORM\Entity;
+use Cake\Utility\Inflector;
 
 /**
  * RoleAro Behavior
@@ -52,18 +56,19 @@ class RoleAroBehavior extends Behavior
  *
  * Update the corresponding ACO record alias
  */
-    public function afterSave(Model $model, $created, $options = [])
+    public function afterSave(Event $event, Entity $entity)
     {
-        $node = $model->node();
-        $aro = $node[0];
-        if (!empty($model->data[$model->alias]['alias'])) {
-            $aro['Aro']['alias'] = sprintf(
+        $model = $event->subject();
+        $ref = ['model' => $model->alias(), 'foreign_key' => $entity->id];
+        $aro = $model->node($ref)->firstOrFail();
+        if (!empty($entity->alias)) {
+            $aro->alias = sprintf(
                 'Role-%s',
-                Inflector::slug($model->data[$model->alias]['alias'])
+                Inflector::slug($entity->alias)
             );
         }
-        if (!empty($model->data[$model->alias]['parent_id'])) {
-            $aro['Aro']['parent_id'] = $model->data['Role']['parent_id'];
+        if (!empty($entity->parent_id)) {
+            $aro->parent_id = $entity->parent_id;
         }
         $model->Aro->save($aro);
         Cache::clearGroup('acl', 'permissions');
@@ -128,7 +133,7 @@ class RoleAroBehavior extends Behavior
 /**
  * afterDelete
  */
-    public function afterDelete(Model $model)
+    public function afterDelete(Event $event)
     {
         Cache::clearGroup('acl', 'permissions');
     }
