@@ -1,7 +1,8 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class VocabularyData
+use Phinx\Seed\AbstractSeed;
+
+class VocabulariesSeed extends AbstractSeed
 {
 
     public $table = 'vocabularies';
@@ -34,4 +35,11 @@ class VocabularyData
             'created' => '2009-07-22 02:16:34'
         ],
     ];
+
+    public function run()
+    {
+        $Table = $this->table('vocabularies');
+        $Table->insert($this->records)->save();
+    }
+
 }

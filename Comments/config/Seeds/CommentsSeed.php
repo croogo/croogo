@@ -1,16 +1,15 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class CommentData
+use Phinx\Seed\AbstractSeed;
+
+class CommentsSeed extends AbstractSeed
 {
-
-    public $table = 'comments';
 
     public $records = [
         [
             'id' => '1',
-            'parent_id' => '',
-            'model' => 'Node',
+            'parent_id' => null,
+            'model' => 'Croogo/Nodes',
             'foreign_key' => '1',
             'user_id' => '0',
             'name' => 'Mr Croogo',
@@ -19,7 +18,7 @@ class CommentData
             'ip' => '127.0.0.1',
             'title' => '',
             'body' => 'Hi, this is the first comment.',
-            'rating' => '',
+            'rating' => null,
             'status' => '1',
             'notify' => '0',
             'type' => 'blog',
@@ -30,4 +29,11 @@ class CommentData
             'created' => '2009-12-25 12:00:00'
         ],
     ];
+
+    public function run()
+    {
+        $Table = $this->table('comments');
+        $Table->insert($this->records)->save();
+    }
+
 }

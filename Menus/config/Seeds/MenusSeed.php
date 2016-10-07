@@ -1,10 +1,9 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class MenuData
+use Phinx\Seed\AbstractSeed;
+
+class MenusSeed extends AbstractSeed
 {
-
-    public $table = 'menus';
 
     public $records = [
         [
@@ -14,7 +13,7 @@ class MenuData
             'class' => '',
             'description' => '',
             'status' => '1',
-            'weight' => '',
+            'weight' => null,
             'link_count' => '4',
             'params' => '',
             'updated' => '2009-08-19 12:21:06',
@@ -27,7 +26,7 @@ class MenuData
             'class' => '',
             'description' => '',
             'status' => '1',
-            'weight' => '',
+            'weight' => null,
             'link_count' => '2',
             'params' => '',
             'updated' => '2009-08-19 12:22:42',
@@ -40,7 +39,7 @@ class MenuData
             'class' => '',
             'description' => '',
             'status' => '1',
-            'weight' => '',
+            'weight' => null,
             'link_count' => '4',
             'params' => '',
             'updated' => '2009-09-12 06:33:29',
@@ -53,11 +52,18 @@ class MenuData
             'class' => '',
             'description' => '',
             'status' => '1',
-            'weight' => '',
+            'weight' => null,
             'link_count' => '2',
             'params' => '',
             'updated' => '2009-09-12 23:30:24',
             'created' => '2009-09-12 23:30:24'
         ],
     ];
+
+    public function run()
+    {
+        $Table = $this->table('menus');
+        $Table->insert($this->records)->save();
+    }
+
 }

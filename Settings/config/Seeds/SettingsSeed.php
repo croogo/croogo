@@ -1,12 +1,9 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class SettingData
+use Phinx\Seed\AbstractSeed;
+
+class SettingsSeed extends AbstractSeed
 {
-
-    public $table = 'settings';
-
-    public $uniqueFields = 'key';
 
     public $records = [
         [
@@ -144,7 +141,7 @@ class SettingData
         [
             'id' => '20',
             'key' => 'Site.theme',
-            'value' => '',
+            'value' => 'Croogo/Core',
             'title' => '',
             'description' => '',
             'input_type' => '',
@@ -254,7 +251,7 @@ class SettingData
         [
             'id' => '32',
             'key' => 'Hook.bootstraps',
-            'value' => 'Settings,Comments,Contacts,Nodes,Meta,Menus,Users,Blocks,Taxonomy,FileManager,Wysiwyg,Ckeditor',
+            'value' => 'Croogo/Settings,Croogo/Contacts,Croogo/Nodes,Croogo/Meta,Croogo/Menus,Croogo/Users,Croogo/Blocks,Croogo/Taxonomy,Croogo/FileManager,Croogo/Wysiwyg,Croogo/Dashboards',
             'title' => '',
             'description' => '',
             'input_type' => '',
@@ -341,7 +338,7 @@ options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "M
         ],
         [
             'key' => 'Site.admin_theme',
-            'value' => '',
+            'value' => 'Croogo/Core',
             'title' => 'Administration Theme',
             'description' => '',
             'input_type' => 'text',
@@ -360,4 +357,11 @@ options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "M
             'params' => ''
         ],
     ];
+
+    public function run()
+    {
+        $Table = $this->table('settings');
+        $Table->insert($this->records)->save();
+    }
+
 }

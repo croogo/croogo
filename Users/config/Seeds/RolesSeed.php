@@ -1,10 +1,9 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class RoleData
+use Phinx\Seed\AbstractSeed;
+
+class RolesSeed extends AbstractSeed
 {
-
-    public $table = 'roles';
 
     public $records = [
         [
@@ -29,4 +28,11 @@ class RoleData
             'updated' => '2009-04-07 01:41:45'
         ],
     ];
+
+    public function run()
+    {
+        $Table = $this->table('roles');
+        $Table->insert($this->records)->save();
+    }
+
 }

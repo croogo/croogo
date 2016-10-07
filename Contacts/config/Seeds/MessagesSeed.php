@@ -1,11 +1,11 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class MessageData
+use Phinx\Seed\AbstractSeed;
+
+class MessagesSeed extends AbstractSeed
 {
-
-    public $table = 'messages';
 
     public $records = [
     ];
+
 }

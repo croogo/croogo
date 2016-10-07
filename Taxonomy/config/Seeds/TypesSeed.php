@@ -1,7 +1,8 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class TypeData
+use Phinx\Seed\AbstractSeed;
+
+class TypesSeed extends AbstractSeed
 {
 
     public $table = 'types';
@@ -56,4 +57,11 @@ class TypeData
             'created' => '2009-09-05 23:51:56'
         ],
     ];
+
+    public function run()
+    {
+        $Table = $this->table('types');
+        $Table->insert($this->records)->save();
+    }
+
 }

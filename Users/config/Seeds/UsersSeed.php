@@ -1,11 +1,11 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class UserData
+use Phinx\Seed\AbstractSeed;
+
+class UsersSeed extends AbstractSeed
 {
-
-    public $table = 'users';
 
     public $records = [
     ];
+
 }
