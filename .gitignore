@@ -4,6 +4,7 @@ Config/settings.json
 Vendor/Simpletest/
 View/Themed/
 webroot/uploads/
+*/config/Migrations/*.lock
 *.bak
 *.swp
 
