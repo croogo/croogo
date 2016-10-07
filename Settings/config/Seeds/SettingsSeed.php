@@ -243,10 +243,10 @@ class SettingsSeed extends AbstractSeed
             'value' => 'UTC',
             'title' => '',
             'description' => 'Provide a valid timezone identifier as specified in https://php.net/manual/en/timezones.php',
-            'input_type' => '',
+            'input_type' => 'select',
             'editable' => '1',
             'weight' => '4',
-            'params' => ''
+            'params' => 'optionClass=Croogo/Settings.Timezones'
         ],
         [
             'id' => '32',

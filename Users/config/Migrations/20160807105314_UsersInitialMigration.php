@@ -112,7 +112,7 @@ class UsersInitialMigration extends AbstractMigration
                 'null' => false,
             ])
             ->addColumn('timezone', 'string', [
-                'default' => 0,
+                'default' => 'UTC',
                 'limit' => 40,
                 'null' => false,
             ])

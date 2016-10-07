@@ -7,10 +7,11 @@ use Cake\ORM\Entity;
 
 class Setting extends Entity
 {
+
     protected function _getOptions()
     {
-        if ($this->has('option_class')) {
-            $className = App::className($this->option_class, 'Setting', 'Setting');
+        if (!empty($this->params['optionClass'])) {
+            $className = App::className($this->params['optionClass'], 'Setting', 'Setting');
             if (!$className) {
                 return [];
             }
