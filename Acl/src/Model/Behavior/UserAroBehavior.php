@@ -2,9 +2,13 @@
 
 namespace Croogo\Acl\Model\Behavior;
 
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Event\Event;
 use Cake\ORM\Behavior;
+use Cake\ORM\Entity;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 
 /**
  * UserAro Behavior
@@ -39,11 +43,45 @@ class UserAroBehavior extends Behavior
         }
         $model->bindModel([
             'hasAndBelongsToMany' => [
-                'Role' => [
-                    'className' => 'Users.Role',
+                'Roles' => [
+                    'className' => 'Croogo/Users.Roles',
                     'unique' => 'keepExisting',
                 ],
             ]
         ], false);
     }
+
+    /**
+     * afterSave
+     *
+     * @param Model $model
+     * @param bool$created
+     * @return void
+     */
+    public function afterSave(Event $event, Entity $entity)
+    {
+        // update ACO alias
+        if (!empty($entity->username)) {
+            $model = $event->subject();
+            $arosTable = TableRegistry::get('Aros');
+
+            $ref = ['model' => $model->alias(), 'foreign_key' => $entity->id];
+            $node = $model->node($ref);
+            $aro = $node->firstOrFail();
+
+            $aro->alias = $entity->username;
+
+            $arosTable->save($aro);
+        }
+        Cache::clearGroup('acl', 'permissions');
+    }
+
+    /**
+     * afterDelete
+     */
+    public function afterDelete(Model $model)
+    {
+        Cache::clearGroup('acl', 'permissions');
+    }
+
 }
