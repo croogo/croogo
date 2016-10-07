@@ -1,10 +1,9 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class LanguageData
+use Phinx\Seed\AbstractSeed;
+
+class LanguagesSeed extends AbstractSeed
 {
-
-    public $table = 'languages';
 
     public $records = [
         [
@@ -18,4 +17,11 @@ class LanguageData
             'created' => '2009-11-02 20:52:00'
         ],
     ];
+
+    public function run()
+    {
+        $Table = $this->table('languages');
+        $Table->insert($this->records)->save();
+    }
+
 }

@@ -1,7 +1,8 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class ModelTaxonomyData
+use Phinx\Seed\AbstractSeed;
+
+class ModelTaxonomiesSeed extends AbstractSeed
 {
 
     public $table = 'model_taxonomies';
@@ -14,4 +15,11 @@ class ModelTaxonomyData
             'taxonomy_id' => '1'
         ],
     ];
+
+    public function run()
+    {
+        $Table = $this->table('model_taxonomies');
+        $Table->insert($this->records)->save();
+    }
+
 }

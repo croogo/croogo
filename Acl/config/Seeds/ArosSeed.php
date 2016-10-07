@@ -1,16 +1,15 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class AroData
+use Phinx\Seed\AbstractSeed;
+
+class ArosSeed extends AbstractSeed
 {
-
-    public $table = 'aros';
 
     public $records = [
         [
             'id' => '1',
             'parent_id' => '2',
-            'model' => 'Role',
+            'model' => 'Roles',
             'foreign_key' => '1',
             'alias' => 'Role-admin',
             'lft' => '3',
@@ -19,7 +18,7 @@ class AroData
         [
             'id' => '2',
             'parent_id' => '3',
-            'model' => 'Role',
+            'model' => 'Roles',
             'foreign_key' => '2',
             'alias' => 'Role-registered',
             'lft' => '2',
@@ -27,12 +26,19 @@ class AroData
         ],
         [
             'id' => '3',
-            'parent_id' => '',
-            'model' => 'Role',
+            'parent_id' => null,
+            'model' => 'Roles',
             'foreign_key' => '3',
             'alias' => 'Role-public',
             'lft' => '1',
             'rght' => '6'
         ],
     ];
+
+    public function run()
+    {
+        $Table = $this->table('aros');
+        $Table->insert($this->records)->save();
+    }
+
 }

@@ -1,10 +1,9 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class ContactData
+use Phinx\Seed\AbstractSeed;
+
+class ContactsSeed extends AbstractSeed
 {
-
-    public $table = 'contacts';
 
     public $records = [
         [
@@ -33,4 +32,11 @@ class ContactData
             'created' => '2009-09-16 01:45:17'
         ],
     ];
+
+    public function run()
+    {
+        $Table = $this->table('contacts');
+        $Table->insert($this->records)->save();
+    }
+
 }

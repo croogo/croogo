@@ -15,7 +15,7 @@ if (Configure::read('Site.acl_plugin') == 'Croogo/Acl') {
         ]);
     }
 
-//	Croogo::hookBehavior('Croogo/Users.Users', 'Croogo/Acl.UserAro');
+    Croogo::hookBehavior('Croogo/Users.Users', 'Croogo/Acl.UserAro', ['priority' => 20]);
 //	Croogo::hookBehavior('Croogo/Users.Roles', 'Croogo/Acl.RoleAro');
 
     Cache::config('permissions', [

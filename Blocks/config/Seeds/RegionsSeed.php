@@ -1,10 +1,9 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class RegionData
+use Phinx\Seed\AbstractSeed;
+
+class RegionsSeed extends AbstractSeed
 {
-
-    public $table = 'regions';
 
     public $records = [
         [
@@ -106,4 +105,11 @@ class RegionData
             'block_count' => '0'
         ],
     ];
+
+    public function run()
+    {
+        $Table = $this->table('regions');
+        $Table->insert($this->records)->save();
+    }
+
 }

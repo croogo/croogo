@@ -1,10 +1,9 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class BlockData
+use Phinx\Seed\AbstractSeed;
+
+class BlocksSeed extends AbstractSeed
 {
-
-    public $table = 'blocks';
 
     public $records = [
         [
@@ -35,7 +34,7 @@ class BlockData
             'class' => '',
             'status' => '1',
             'weight' => '1',
-            'element' => 'Nodes.search',
+            'element' => 'Croogo/Nodes.search',
             'visibility_roles' => '',
             'visibility_paths' => '',
             'visibility_php' => '',
@@ -116,4 +115,11 @@ class BlockData
             'created' => '2009-12-22 05:17:32'
         ],
     ];
+
+    public function run()
+    {
+        $Table = $this->table('blocks');
+        $Table->insert($this->records)->save();
+    }
+
 }

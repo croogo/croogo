@@ -1,7 +1,8 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class TermData
+use Phinx\Seed\AbstractSeed;
+
+class TermsSeed extends AbstractSeed
 {
 
     public $table = 'terms';
@@ -32,4 +33,11 @@ class TermData
             'created' => '2009-08-26 14:42:43'
         ],
     ];
+
+    public function run()
+    {
+        $Table = $this->table('terms');
+        $Table->insert($this->records)->save();
+    }
+
 }

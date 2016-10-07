@@ -1,20 +1,19 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class LinkData
+use Phinx\Seed\AbstractSeed;
+
+class LinksSeed extends AbstractSeed
 {
-
-    public $table = 'links';
 
     public $records = [
         [
             'id' => '5',
-            'parent_id' => '',
+            'parent_id' => null,
             'menu_id' => '4',
             'title' => 'About',
             'class' => 'about',
             'description' => '',
-            'link' => 'plugin:nodes/controller:nodes/action:view/type:page/slug:about',
+            'link' => 'plugin:Croogo%2fNodes/controller:Nodes/action:view/type:page/slug:about',
             'target' => '',
             'rel' => '',
             'status' => '1',
@@ -27,12 +26,12 @@ class LinkData
         ],
         [
             'id' => '6',
-            'parent_id' => '',
+            'parent_id' => null,
             'menu_id' => '4',
             'title' => 'Contact',
             'class' => 'contact',
             'description' => '',
-            'link' => 'plugin:contacts/controller:contacts/action:view/contact',
+            'link' => 'plugin:Croogo/Contacts/controller:Contacts/action:view/contact',
             'target' => '',
             'rel' => '',
             'status' => '1',
@@ -45,12 +44,12 @@ class LinkData
         ],
         [
             'id' => '7',
-            'parent_id' => '',
+            'parent_id' => null,
             'menu_id' => '3',
             'title' => 'Home',
             'class' => 'home',
             'description' => '',
-            'link' => 'plugin:nodes/controller:nodes/action:promoted',
+            'link' => 'plugin:Croogo%2fNodes/controller:Nodes/action:promoted',
             'target' => '',
             'rel' => '',
             'status' => '1',
@@ -63,12 +62,12 @@ class LinkData
         ],
         [
             'id' => '8',
-            'parent_id' => '',
+            'parent_id' => null,
             'menu_id' => '3',
             'title' => 'About',
             'class' => 'about',
             'description' => '',
-            'link' => 'plugin:nodes/controller:nodes/action:view/type:page/slug:about',
+            'link' => 'plugin:Croogo%2fNodes/controller:Nodes/action:view/type:page/slug:about',
             'target' => '',
             'rel' => '',
             'status' => '1',
@@ -99,7 +98,7 @@ class LinkData
         ],
         [
             'id' => '10',
-            'parent_id' => '',
+            'parent_id' => null,
             'menu_id' => '5',
             'title' => 'Site Admin',
             'class' => 'site-admin',
@@ -117,12 +116,12 @@ class LinkData
         ],
         [
             'id' => '11',
-            'parent_id' => '',
+            'parent_id' => null,
             'menu_id' => '5',
             'title' => 'Log out',
             'class' => 'log-out',
             'description' => '',
-            'link' => '/plugin:users/controller:users/action:logout',
+            'link' => '/plugin:Croogo%2fUsers/controller:Users/action:logout',
             'target' => '',
             'rel' => '',
             'status' => '1',
@@ -135,7 +134,7 @@ class LinkData
         ],
         [
             'id' => '12',
-            'parent_id' => '',
+            'parent_id' => null,
             'menu_id' => '6',
             'title' => 'Croogo',
             'class' => 'croogo',
@@ -153,7 +152,7 @@ class LinkData
         ],
         [
             'id' => '14',
-            'parent_id' => '',
+            'parent_id' => null,
             'menu_id' => '6',
             'title' => 'CakePHP',
             'class' => 'cakephp',
@@ -171,12 +170,12 @@ class LinkData
         ],
         [
             'id' => '15',
-            'parent_id' => '',
+            'parent_id' => null,
             'menu_id' => '3',
             'title' => 'Contact',
             'class' => 'contact',
             'description' => '',
-            'link' => '/plugin:contacts/controller:contacts/action:view/contact',
+            'link' => '/plugin:Croogo%2fContacts/controller:Contacts/action:view/contact',
             'target' => '',
             'rel' => '',
             'status' => '1',
@@ -189,7 +188,7 @@ class LinkData
         ],
         [
             'id' => '16',
-            'parent_id' => '',
+            'parent_id' => null,
             'menu_id' => '5',
             'title' => 'Entries (RSS)',
             'class' => 'entries-rss',
@@ -207,7 +206,7 @@ class LinkData
         ],
         [
             'id' => '17',
-            'parent_id' => '',
+            'parent_id' => null,
             'menu_id' => '5',
             'title' => 'Comments (RSS)',
             'class' => 'comments-rss',
@@ -224,4 +223,11 @@ class LinkData
             'created' => '2009-10-27 17:46:54'
         ],
     ];
+
+    public function run()
+    {
+        $Table = $this->table('links');
+        $Table->insert($this->records)->save();
+    }
+
 }

@@ -1,15 +1,14 @@
 <?php
-namespace Croogo\Install\Config\Data;
 
-class NodeData
+use Phinx\Seed\AbstractSeed;
+
+class NodesSeed extends AbstractSeed
 {
-
-    public $table = 'nodes';
 
     public $records = [
         [
             'id' => '1',
-            'parent_id' => '',
+            'parent_id' => null,
             'user_id' => '1',
             'title' => 'Hello World',
             'slug' => 'hello-world',
@@ -32,7 +31,7 @@ class NodeData
         ],
         [
             'id' => '2',
-            'parent_id' => '',
+            'parent_id' => null,
             'user_id' => '1',
             'title' => 'About',
             'slug' => 'about',
@@ -54,4 +53,11 @@ class NodeData
             'created' => '2009-12-25 22:00:00'
         ],
     ];
+
+    public function run()
+    {
+        $Table = $this->table('nodes');
+        $Table->insert($this->records)->save();
+    }
+
 }
