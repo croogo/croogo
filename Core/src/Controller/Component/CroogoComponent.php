@@ -97,7 +97,6 @@ class CroogoComponent extends Component
             if (!isset($this->_controller->request->params['requested'])) {
                 $this->_adminData();
             }
-            $this->_adminMenus();
         }
     }
 
