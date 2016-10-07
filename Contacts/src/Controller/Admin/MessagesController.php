@@ -22,7 +22,7 @@ class MessagesController extends AppController
 
         $this->_setupPrg();
 
-        $this->loadCroogoComponents(['BulkProcess']);
+        $this->_loadCroogoComponents(['BulkProcess']);
     }
 
 /**

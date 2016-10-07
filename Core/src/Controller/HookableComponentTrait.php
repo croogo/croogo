@@ -7,12 +7,12 @@ use Cake\Event\Event;
 trait HookableComponentTrait
 {
 
-    public function dispatchBeforeInitialize()
+    public function _dispatchBeforeInitialize()
     {
         $this->eventManager()->dispatch(new Event('Controller.beforeInitialize', $this));
     }
 
-    public function loadHookableComponent($name, array $config)
+    public function _loadHookableComponent($name, array $config)
     {
         return $this->loadComponent($name, $config);
     }

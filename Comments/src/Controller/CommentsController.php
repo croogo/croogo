@@ -33,7 +33,7 @@ class CommentsController extends AppController
     {
         parent::initialize();
 
-        $this->loadCroogoComponents(['Akismet', 'BulkProcess', 'Recaptcha' => [
+        $this->_loadCroogoComponents(['Akismet', 'BulkProcess', 'Recaptcha' => [
             'actions' => ['add']
         ]]);
         $this->_setupPrg();

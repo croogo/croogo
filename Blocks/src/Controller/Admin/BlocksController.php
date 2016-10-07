@@ -29,7 +29,7 @@ class BlocksController extends AppController
         parent::initialize();
         $this->loadModel('Croogo/Users.Roles');
 
-        $this->loadCroogoComponents(['BulkProcess']);
+        $this->_loadCroogoComponents(['BulkProcess']);
         $this->_setupPrg();
 
         $this->Crud->config('actions.index', [

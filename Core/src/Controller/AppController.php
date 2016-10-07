@@ -79,7 +79,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
 
     public function initialize()
     {
-        $this->dispatchBeforeInitialize();
+        $this->_dispatchBeforeInitialize();
 
         parent::initialize();
     }
@@ -159,7 +159,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
         $this->{$aclFilterComponent}->auth();
 
         if (!$this->request->is('api')) {
-            $this->Security->blackHoleCallback = 'securityError';
+            $this->Security->blackHoleCallback = '_securityError';
             if ($this->request->param('action') == 'delete' && $this->request->param('prefix') == 'admin') {
                 $this->request->allowMethod('post');
             }
@@ -179,7 +179,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
      *
      * @return void
      */
-    public function securityError($type)
+    public function _securityError($type)
     {
         switch ($type) {
             case 'auth':
@@ -226,7 +226,7 @@ class AppController extends \App\Controller\AppController implements HookableCom
         ]);
     }
 
-    public function loadCroogoComponents(array $components)
+    public function _loadCroogoComponents(array $components)
     {
         foreach ($components as $component => $options) {
             if (is_string($options)) {
