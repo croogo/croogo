@@ -136,21 +136,21 @@ class Router extends CakeRouter
  * @param string $alias
  * @return void
  */
-    public static function contentType($alias)
+    public static function contentType($alias, $routeBuilder)
     {
-        Router::connect('/' . $alias, [
+        $routeBuilder->connect('/' . $alias, [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'index', 'type' => $alias
         ]);
-        Router::connect('/' . $alias . '/archives/*', [
+        $routeBuilder->connect('/' . $alias . '/archives/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'index', 'type' => $alias
         ]);
-        Router::connect('/' . $alias . '/:slug', [
+        $routeBuilder->connect('/' . $alias . '/:slug', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'view', 'type' => $alias
         ]);
-        Router::connect('/' . $alias . '/term/:slug/*', [
+        $routeBuilder->connect('/' . $alias . '/term/:slug/*', [
             'plugin' => 'Croogo/Nodes', 'controller' => 'Nodes',
             'action' => 'term', 'type' => $alias
         ]);
@@ -161,7 +161,7 @@ class Router extends CakeRouter
  *
  * @return void
  */
-    public static function routableContentTypes()
+    public static function routableContentTypes($routeBuilder)
     {
         try {
             $types = TableRegistry::get('Croogo/Taxonomy.Types')->find('all', [
@@ -171,8 +171,8 @@ class Router extends CakeRouter
                 ],
             ]);
             foreach ($types as $type) {
-                if (isset($type->params['routes']) && $type->params['routes'] === '1') {
-                    static::contentType($type->alias);
+                if (isset($type->params['routes']) && $type->params['routes']) {
+                    static::contentType($type->alias, $routeBuilder);
                 }
             }
         } catch (MissingConnectionException $e) {
