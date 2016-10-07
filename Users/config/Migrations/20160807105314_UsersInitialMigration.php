@@ -59,7 +59,7 @@ class UsersInitialMigration extends AbstractMigration
             ->addColumn('password', 'string', [
                 'default' => null,
                 'limit' => 100,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('name', 'string', [
                 'default' => null,
@@ -122,11 +122,45 @@ class UsersInitialMigration extends AbstractMigration
                 'null' => true,
             ])
             ->create();
+
+        $this->table('roles_users')
+            ->addColumn('user_id', 'integer', [
+                'default' => null,
+                'limit' => 11,
+                'null' => false,
+            ])
+            ->addColumn('role_id', 'integer', [
+                'default' => null,
+                'limit' => 11,
+                'null' => false,
+            ])
+            ->addColumn('granted_by', 'integer', [
+                'default' => null,
+                'limit' => 11,
+                'null' => false,
+            ])
+            ->addColumn('created', 'datetime', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addColumn('updated', 'datetime', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addIndex(
+                [
+                    'user_id',
+                ]
+            )
+            ->create();
     }
 
     public function down()
     {
         $this->dropTable('roles');
         $this->dropTable('users');
+        $this->dropTable('roles_users');
     }
 }

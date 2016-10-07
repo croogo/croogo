@@ -5,7 +5,6 @@ class TaxonomyInitialMigration extends AbstractMigration
 {
     public function up()
     {
-
         $this->table('taxonomies')
             ->addColumn('parent_id', 'integer', [
                 'default' => null,
@@ -235,6 +234,54 @@ class TaxonomyInitialMigration extends AbstractMigration
                 ['unique' => true]
             )
             ->create();
+
+        $this->table('types_vocabularies')
+            ->addColumn('type_id', 'integer', [
+                'default' => null,
+                'limit' => 20,
+                'null' => false,
+            ])
+            ->addColumn('vocabulary_id', 'integer', [
+                'default' => null,
+                'limit' => 20,
+                'null' => false,
+            ])
+            ->addColumn('weight', 'integer', [
+                'default' => null,
+                'limit' => null,
+                'null' => true,
+            ])
+            ->addIndex(
+                [
+                    'type_id', 'vocabulary_id',
+                ],
+                ['unique' => true]
+            )
+            ->create();
+
+        $this->table('model_taxonomies')
+            ->addColumn('model', 'string', [
+                'default' => null,
+                'limit' => 50,
+                'null' => false,
+            ])
+            ->addColumn('foreign_key', 'integer', [
+                'default' => null,
+                'limit' => 20,
+                'null' => false,
+            ])
+            ->addColumn('taxonomy_id', 'integer', [
+                'default' => null,
+                'limit' => 20,
+                'null' => false,
+            ])
+            ->addIndex(
+                [
+                    'model', 'foreign_key', 'taxonomy_id',
+                ],
+                ['unique' => true]
+            )
+            ->create();
     }
 
     public function down()
@@ -243,5 +290,7 @@ class TaxonomyInitialMigration extends AbstractMigration
         $this->dropTable('terms');
         $this->dropTable('types');
         $this->dropTable('vocabularies');
+        $this->dropTable('types_vocabularies');
+        $this->dropTable('model_taxonomies');
     }
 }
