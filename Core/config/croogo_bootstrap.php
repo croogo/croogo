@@ -48,7 +48,7 @@ EventManager::instance();
     $cacheConfig = [
         'duration' => '+1 hour',
         'path' => CACHE . 'queries' . DS,
-        'engine' => $defaultEngine,
+        'className' => $defaultEngine,
         'prefix' => $defaultPrefix,
     ];
     Configure::write('Croogo.Cache.defaultEngine', $defaultEngine);
