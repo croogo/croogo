@@ -1,5 +1,7 @@
 <?php
 
+namespace Croogo\Install\Controller;
+
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 
@@ -21,14 +23,6 @@ use Install\InstallManager;
  */
 class InstallController extends Controller
 {
-
-/**
- * Components
- *
- * @var array
- * @access public
- */
-    public $components = ['Session'];
 
 /**
  * Helpers

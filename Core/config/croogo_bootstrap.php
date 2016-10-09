@@ -67,7 +67,13 @@ EventManager::instance();
      * Settings
      */
     Configure::config('settings', new DatabaseConfig());
-    Configure::load('settings', 'settings');
+    try {
+        Configure::load('settings', 'settings');
+    }
+    catch (\Exception $e) {
+        Log::error($e->getMessage());
+        Log::error('You can ignore the above error during installation');
+    }
 
     /**
      * Locale
