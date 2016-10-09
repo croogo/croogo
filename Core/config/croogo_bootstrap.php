@@ -91,7 +91,7 @@ EventManager::instance();
      */
     $corePlugins = [
         'Croogo/Settings', 'Croogo/Acl', 'Croogo/Blocks', 'Croogo/Comments', 'Croogo/Contacts', 'Croogo/Menus', 'Croogo/Meta',
-        'Croogo/Nodes', 'Croogo/Taxonomy', 'Croogo/Users', 'Croogo/Wysiwyg', 'Croogo/Ckeditor',  'Croogo/Users', 'Croogo/Dashboards',
+        'Croogo/Nodes', 'Croogo/Taxonomy', 'Croogo/Users', 'Croogo/Wysiwyg', 'Croogo/Ckeditor',  'Croogo/Dashboards',
     ];
     Configure::write('Core.corePlugins', $corePlugins);
 }, 'Setting base configuration');
