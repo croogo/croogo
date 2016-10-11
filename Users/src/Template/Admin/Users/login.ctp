@@ -29,7 +29,7 @@ echo $this->Form->create(false, ['url' => ['action' => 'login']]); ?>
         endif;
         echo $this->Form->button(__d('croogo', 'Log In'), ['class' => 'btn btn-primary']);
         echo $this->Html->link(__d('croogo', 'Forgot password?'), [
-            'prefix' => null,
+            'prefix' => false,
             'controller' => 'users',
             'action' => 'forgot',
         ], [
