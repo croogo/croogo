@@ -182,7 +182,7 @@ class MenusHelper extends Helper
                 unset($options[$key]);
             }
             if (is_string($val) && in_array(strtolower($val), $booleans)) {
-                $options[$key] = (bool)$val;
+                $options[$key] = ($val === 'true');
             }
         }
 
