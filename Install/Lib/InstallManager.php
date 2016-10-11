@@ -71,7 +71,7 @@ class InstallManager {
 			return $msg;
 		}
 
-		$File =& new File($croogoConfigFile);
+		$File = new File($croogoConfigFile);
 		$salt = Security::generateAuthKey();
 		$seed = mt_rand() . mt_rand();
 		$contents = $File->read();
