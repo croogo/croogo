@@ -3,9 +3,16 @@
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Database\Type;
+use Cake\Datasource\ConnectionManager;
 use Croogo\Core\Croogo;
 
 \Croogo\Core\timerStart('Croogo bootstrap');
+$dbConfigExists = file_exists(ROOT . DS . 'config' . DS . 'database.php');
+
+if ($dbConfigExists) {
+    Configure::load('database', 'default');
+    ConnectionManager::config(Configure::consume('Datasources'));
+}
 
 // Map our custom types
 Type::map('params', 'Croogo\Core\Database\Type\ParamsType');
@@ -50,7 +57,7 @@ if (Configure::read('Croogo.installed')) {
 // Load Install plugin
 Configure::write(
     'Croogo.installed',
-    file_exists(ROOT . 'config' . DS . 'database.php')
+    $dbConfigExists
 );
 if (!Configure::read('Croogo.installed')) {
     Plugin::load('Croogo/Install', ['routes' => true]);

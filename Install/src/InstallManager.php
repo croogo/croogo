@@ -52,6 +52,9 @@ class InstallManager
             return __d('croogo', 'Could not write database.php file.');
         }
 
+        Configure::load('database', 'default');
+        ConnectionManager::config(Configure::consume('Datasources'));
+
         try {
             $db = ConnectionManager::get('default');
         } catch (MissingConnectionException $e) {
