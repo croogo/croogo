@@ -247,9 +247,7 @@ class NodesController extends AppController
      */
     public function search($typeAlias = null)
     {
-        $this->Prg->commonProcess();
-
-        $Node = $this->{$this->modelClass};
+        $Node = $this->Nodes;
 
         $this->paginate = [
             'published',
@@ -275,10 +273,10 @@ class NodesController extends AppController
             $this->paginate['typeAlias'] = $typeAlias;
         }
 
-        $criteria = $Node->parseCriteria($this->Prg->parsedParams());
+        $criteria = $Node->find('search', ['filter' => $q]);
         $nodes = $this->paginate($criteria);
         $this->set(compact('q', 'nodes'));
-        if ($type) {
+        if (isset($type)) {
             $camelizedType = Inflector::camelize($type->alias, '-');
             $this->Croogo->viewFallback([
                 $camelizedType . '/search',
