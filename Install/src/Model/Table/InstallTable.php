@@ -40,9 +40,6 @@ class InstallTable extends Table
  */
     public function addAdminUser($user)
     {
-        if (!Plugin::loaded('Croogo/Users')) {
-            Plugin::load('Croogo/Users');
-        }
         $Users = TableRegistry::get('Croogo/Users.Users');
         $Users->removeBehavior('Cached');
         $Roles = TableRegistry::get('Croogo/Users.Roles');
@@ -70,7 +67,19 @@ class InstallTable extends Table
  */
     public function setupDatabase()
     {
-        $plugins = Configure::read('Core.corePlugins');
+        $plugins = [
+            'Croogo/Users',
+            'Croogo/Acl',
+            'Croogo/Blocks',
+            'Croogo/Taxonomy',
+            'Croogo/Meta',
+            'Croogo/Nodes',
+            'Croogo/Comments',
+            'Croogo/Contacts',
+            'Croogo/Menus',
+            'Croogo/Dashboards',
+            'Croogo/Settings',
+        ];
 
         $migrationsSucceed = true;
         foreach ($plugins as $plugin) {

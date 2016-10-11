@@ -6,6 +6,7 @@ use App\Controller\Component\AuthComponent;
 use Cake\Controller\ComponentRegistry;
 use Cake\Console\Shell;
 use Cake\ORM\TableRegistry;
+use Croogo\Core\Plugin;
 use Croogo\Install\InstallManager;
 use Croogo\Install\Model\Table\InstallTable;
 
@@ -21,6 +22,19 @@ use Croogo\Install\Model\Table\InstallTable;
  */
 class InstallShell extends Shell
 {
+
+    public function startup()
+    {
+        if (!Plugin::loaded('Acl')) {
+            Plugin::load('Acl', ['bootstrap' => true]);
+        }
+        if (!Plugin::loaded('Croogo/Core')) {
+            Plugin::load('Croogo/Core', ['bootstrap' => true]);
+        }
+        if (!Plugin::loaded('Croogo/Users')) {
+            Plugin::load('Croogo/Users');
+        }
+    }
 
 /**
  * Display help/options
