@@ -5,7 +5,9 @@ namespace Croogo\Install\Shell;
 use App\Controller\Component\AuthComponent;
 use Cake\Controller\ComponentRegistry;
 use Cake\Console\Shell;
+use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
+use Croogo\Acl\AclGenerator;
 use Croogo\Core\Plugin;
 use Croogo\Install\InstallManager;
 use Croogo\Install\Model\Table\InstallTable;
@@ -152,14 +154,25 @@ class InstallShell extends Shell
                 $this->err($result);
                 return $this->_stop();
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->err($e->getMessage());
             $this->err('Please verify you have the correct credentials');
             return $this->_stop();
         }
 
-        $this->out();
+        try {
+            $this->out('Setting up access control objects. Please wait...');
+            $generator = new AclGenerator();
+            $generator->insertAcos(ConnectionManager::get('default'));
+            $this->setupAcos();
+        } catch (\Exception $e) {
+            $this->err('Error installing access control objects');
+            $this->err($e->getMessage());
+            return $this->_stop();
+        }
+
         if (empty($this->args)) {
+            $this->out();
             $this->out('Create Admin user:');
         }
 
@@ -189,8 +202,13 @@ class InstallShell extends Shell
 
         $user = ['username' => $username, 'password' => $password];
 
-        $Install->addAdminUser($user);
-        $InstallManager->installCompleted();
+        try {
+            $this->out('Setting up admin user. Please wait...');
+            $Install->addAdminUser($user);
+            $InstallManager->installCompleted();
+        } catch (\Exception $e) {
+            $this->err('Error creating admin user: ' . $e->getMessage());
+        }
 
         $this->out();
         $this->success('Congratulations, Croogo has been installed successfully.');
