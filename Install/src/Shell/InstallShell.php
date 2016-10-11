@@ -182,45 +182,47 @@ class InstallShell extends Shell
         $this->success('Congratulations, Croogo has been installed successfully.');
     }
 
-    public function setup_acos()
+    public function setupAcos()
     {
-        $Role = ClassRegistry::init('Users.Role');
-        $Role->Behaviors->attach('Croogo.Aliasable');
-        $public = $Role->byAlias('public');
-        $registered = $Role->byAlias('registered');
+        $Roles = TableRegistry::get('Croogo/Users.Roles');
+        $Roles->addBehavior('Croogo/Core.Aliasable');
 
-        $Permission = ClassRegistry::init('Acl.AclPermission');
+        $Permission = TableRegistry::get('Croogo/Acl.Permissions');
+        $public = 'Role-public';
+        $registered = 'Role-registered';
 
         $setup = [
-            'controllers/Comments/Comments/index' => [$public],
-            'controllers/Comments/Comments/add' => [$public],
-            'controllers/Comments/Comments/delete' => [$registered],
-            'controllers/Contacts/Contacts/view' => [$public],
-            'controllers/Nodes/Nodes/index' => [$public],
-            'controllers/Nodes/Nodes/term' => [$public],
-            'controllers/Nodes/Nodes/promoted' => [$public],
-            'controllers/Nodes/Nodes/search' => [$public],
-            'controllers/Nodes/Nodes/view' => [$public],
-            'controllers/Users/Users/index' => [$registered],
-            'controllers/Users/Users/add' => [$public],
-            'controllers/Users/Users/activate' => [$public],
-            'controllers/Users/Users/edit' => [$registered],
-            'controllers/Users/Users/forgot' => [$public],
-            'controllers/Users/Users/reset' => [$public],
-            'controllers/Users/Users/login' => [$public],
-            'controllers/Users/Users/logout' => [$registered],
-            'controllers/Users/Users/admin_logout' => [$registered],
-            'controllers/Users/Users/view' => [$registered],
+//            'controllers/Croogo\Comments/Comments/index' => [$public],
+//            'controllers/Croogo\Comments/Comments/add' => [$public],
+//            'controllers/Croogo\Comments/Comments/delete' => [$registered],
+            'controllers/Croogo\Contacts/Contacts/view' => [$public],
+            'controllers/Croogo\Nodes/Nodes/index' => [$public],
+            'controllers/Croogo\Nodes/Nodes/term' => [$public],
+            'controllers/Croogo\Nodes/Nodes/promoted' => [$public],
+            'controllers/Croogo\Nodes/Nodes/search' => [$public],
+            'controllers/Croogo\Nodes/Nodes/view' => [$public],
+            'controllers/Croogo\Users/Users/index' => [$registered],
+            'controllers/Croogo\Users/Users/add' => [$public],
+            'controllers/Croogo\Users/Users/activate' => [$public],
+            'controllers/Croogo\Users/Users/edit' => [$registered],
+            'controllers/Croogo\Users/Users/forgot' => [$public],
+            'controllers/Croogo\Users/Users/reset' => [$public],
+            'controllers/Croogo\Users/Users/login' => [$public],
+            'controllers/Croogo\Users/Users/logout' => [$registered],
+            'controllers/Croogo\Users/Admin/Users/logout' => [$registered],
+            'controllers/Croogo\Users/Users/view' => [$registered],
         ];
 
         foreach ($setup as $aco => $roles) {
-            foreach ($roles as $roleId) {
-                $aro = [
-                    'model' => 'Role',
-                    'foreign_key' => $roleId,
-                ];
-                if ($Permission->allow($aro, $aco)) {
-                    $this->success(__d('croogo', 'Permission %s granted to %s', $aco, $Role->byId($roleId)));
+            foreach ($roles as $aro) {
+                try {
+                    $result = $Permission->allow($aro, $aco);
+                    if ($result) {
+                        $this->success(__d('croogo', 'Permission %s granted to %s', $aco, $aro));
+                    }
+                }
+                catch (\Exception $e) {
+                    $this->error($e->getMessage());
                 }
             }
         }
