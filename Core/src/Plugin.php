@@ -544,6 +544,17 @@ class Plugin extends CakePlugin
             ->migrate($options);
     }
 
+    public function seed($plugin) {
+        $options = [
+            'connection' => static::migrationConnectionName()
+        ];
+        if ($plugin !== 'app') {
+            $options['plugin'] = $plugin;
+        }
+        return $this->_getMigrations()
+            ->seed($options);
+    }
+
     public function unmigrate($plugin)
     {
         if (($plugin !== 'app') && (!static::available($plugin))) {

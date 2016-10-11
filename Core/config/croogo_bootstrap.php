@@ -48,7 +48,7 @@ EventManager::instance();
     $cacheConfig = [
         'duration' => '+1 hour',
         'path' => CACHE . 'queries' . DS,
-        'engine' => $defaultEngine,
+        'className' => $defaultEngine,
         'prefix' => $defaultPrefix,
     ];
     Configure::write('Croogo.Cache.defaultEngine', $defaultEngine);
@@ -67,7 +67,13 @@ EventManager::instance();
      * Settings
      */
     Configure::config('settings', new DatabaseConfig());
-    Configure::load('settings', 'settings');
+    try {
+        Configure::load('settings', 'settings');
+    }
+    catch (\Exception $e) {
+        Log::error($e->getMessage());
+        Log::error('You can ignore the above error during installation');
+    }
 
     /**
      * Locale
@@ -91,7 +97,7 @@ EventManager::instance();
      */
     $corePlugins = [
         'Croogo/Settings', 'Croogo/Acl', 'Croogo/Blocks', 'Croogo/Comments', 'Croogo/Contacts', 'Croogo/Menus', 'Croogo/Meta',
-        'Croogo/Nodes', 'Croogo/Taxonomy', 'Croogo/Users', 'Croogo/Wysiwyg', 'Croogo/Ckeditor',  'Croogo/Users', 'Croogo/Dashboards',
+        'Croogo/Nodes', 'Croogo/Taxonomy', 'Croogo/Users', 'Croogo/Wysiwyg', 'Croogo/Ckeditor',  'Croogo/Dashboards',
     ];
     Configure::write('Core.corePlugins', $corePlugins);
 }, 'Setting base configuration');

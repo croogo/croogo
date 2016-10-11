@@ -1,12 +1,13 @@
 <?php
 
-namespace Croogo\Install\Console\Command;
+namespace Croogo\Install\Shell;
 
-use App\Console\Command\AppShell;
 use App\Controller\Component\AuthComponent;
 use Cake\Controller\ComponentRegistry;
-use Install\Lib\InstallManager;
-use Install\Model\Install;
+use Cake\Console\Shell;
+use Cake\ORM\TableRegistry;
+use Croogo\Install\InstallManager;
+use Croogo\Install\Model\Table\InstallTable;
 
 /**
  * Install Shell
@@ -18,7 +19,7 @@ use Install\Model\Install;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class InstallShell extends AppShell
+class InstallShell extends Shell
 {
 
 /**
@@ -30,9 +31,9 @@ class InstallShell extends AppShell
         $parser = parent::getOptionParser();
         $parser->description(__d('croogo', 'Install Utilities'))
             ->addSubcommand('main', [
-                'help' => 'Generate croogo.php, database.php, settings.json and create admin user.',
+                'help' => 'Generate database.php and create admin user.',
                 'parser' => [
-                    'description' => 'Generate croogo.php, database.php, settings.json and create admin user.',
+                    'description' => 'Generate database.php and create admin user.',
                 ]
             ])
             ->addSubcommand('setup_acos', [
@@ -52,9 +53,9 @@ class InstallShell extends AppShell
                 'short' => 'h',
                 'required' => true,
             ])
-            ->addOption('login', [
+            ->addOption('username', [
                 'help' => 'Database User',
-                'short' => 'l',
+                'short' => 'u',
                 'required' => true,
             ])
             ->addOption('password', [
@@ -72,11 +73,11 @@ class InstallShell extends AppShell
                 'short' => 't',
                 'required' => true,
             ])
-            ->addOption('prefix', [
-                'help' => 'Table Prefix',
-                'short' => 'x',
-                'required' => true,
-            ])
+            //->addOption('prefix', [
+                //'help' => 'Table Prefix',
+                //'short' => 'x',
+                //'required' => true,
+            //])
             ->addArgument('admin-user', [
                 'help' => 'Admin username',
             ])
@@ -102,7 +103,7 @@ class InstallShell extends AppShell
  */
     protected function _args($prompt, $options = null, $default = null, $index = null)
     {
-        if (isset($this->args[$index])) {
+        if (!empty($this->args[$index])) {
             return $this->args[$index];
         }
         return $this->in($prompt, $options, $default);
@@ -118,19 +119,19 @@ class InstallShell extends AppShell
             'Postgres',
             'Sqlserver'
         ], 'Mysql', 'datasource');
-        $install['Install']['datasource'] = 'Database/' . $install['Install']['datasource'];
+        $install['Install']['driver'] = 'Cake\Database\Driver\\' . $install['Install']['datasource'];
         $install['Install']['host'] = $this->_in(__d('croogo', 'Host'), null, 'localhost', 'host');
-        $install['Install']['login'] = $this->_in(__d('croogo', 'Login'), null, 'root', 'login');
+        $install['Install']['username'] = $this->_in(__d('croogo', 'Login'), null, 'root', 'username');
         $install['Install']['password'] = $this->_in(__d('croogo', 'Password'), null, '', 'password');
         $install['Install']['database'] = $this->_in(__d('croogo', 'Database'), null, 'croogo', 'database-name');
-        $install['Install']['prefix'] = $this->_in(__d('croogo', 'Prefix'), null, '', 'prefix');
+        //$install['Install']['prefix'] = $this->_in(__d('croogo', 'Prefix'), null, '', 'prefix');
         $install['Install']['port'] = $this->_in(__d('croogo', 'Port'), null, null, 'port');
 
         $InstallManager = new InstallManager();
         $InstallManager->createDatabaseFile($install);
 
         $this->out('Setting up database objects. Please wait...');
-        $Install = ClassRegistry::init('Install.Install');
+        $Install = TableRegistry::get('Croogo/Install.Install');
         try {
             $result = $Install->setupDatabase();
             if ($result !== true) {
@@ -142,7 +143,6 @@ class InstallShell extends AppShell
             $this->err('Please verify you have the correct credentials');
             return $this->_stop();
         }
-        $InstallManager->createCroogoFile();
 
         $this->out();
         if (empty($this->args)) {
@@ -173,56 +173,56 @@ class InstallShell extends AppShell
             }
         } while (empty($password) || !$passwordsMatched);
 
-        $user['User']['username'] = $username;
-        $user['User']['password'] = $password;
+        $user = ['username' => $username, 'password' => $password];
 
         $Install->addAdminUser($user);
-        $InstallManager->createSettingsFile();
         $InstallManager->installCompleted();
 
         $this->out();
         $this->success('Congratulations, Croogo has been installed successfully.');
     }
 
-    public function setup_acos()
+    public function setupAcos()
     {
-        $Role = ClassRegistry::init('Users.Role');
-        $Role->Behaviors->attach('Croogo.Aliasable');
-        $public = $Role->byAlias('public');
-        $registered = $Role->byAlias('registered');
+        $Roles = TableRegistry::get('Croogo/Users.Roles');
+        $Roles->addBehavior('Croogo/Core.Aliasable');
 
-        $Permission = ClassRegistry::init('Acl.AclPermission');
+        $Permission = TableRegistry::get('Croogo/Acl.Permissions');
+        $public = 'Role-public';
+        $registered = 'Role-registered';
 
         $setup = [
-            'controllers/Comments/Comments/index' => [$public],
-            'controllers/Comments/Comments/add' => [$public],
-            'controllers/Comments/Comments/delete' => [$registered],
-            'controllers/Contacts/Contacts/view' => [$public],
-            'controllers/Nodes/Nodes/index' => [$public],
-            'controllers/Nodes/Nodes/term' => [$public],
-            'controllers/Nodes/Nodes/promoted' => [$public],
-            'controllers/Nodes/Nodes/search' => [$public],
-            'controllers/Nodes/Nodes/view' => [$public],
-            'controllers/Users/Users/index' => [$registered],
-            'controllers/Users/Users/add' => [$public],
-            'controllers/Users/Users/activate' => [$public],
-            'controllers/Users/Users/edit' => [$registered],
-            'controllers/Users/Users/forgot' => [$public],
-            'controllers/Users/Users/reset' => [$public],
-            'controllers/Users/Users/login' => [$public],
-            'controllers/Users/Users/logout' => [$registered],
-            'controllers/Users/Users/admin_logout' => [$registered],
-            'controllers/Users/Users/view' => [$registered],
+//            'controllers/Croogo\Comments/Comments/index' => [$public],
+//            'controllers/Croogo\Comments/Comments/add' => [$public],
+//            'controllers/Croogo\Comments/Comments/delete' => [$registered],
+            'controllers/Croogo\Contacts/Contacts/view' => [$public],
+            'controllers/Croogo\Nodes/Nodes/index' => [$public],
+            'controllers/Croogo\Nodes/Nodes/term' => [$public],
+            'controllers/Croogo\Nodes/Nodes/promoted' => [$public],
+            'controllers/Croogo\Nodes/Nodes/search' => [$public],
+            'controllers/Croogo\Nodes/Nodes/view' => [$public],
+            'controllers/Croogo\Users/Users/index' => [$registered],
+            'controllers/Croogo\Users/Users/add' => [$public],
+            'controllers/Croogo\Users/Users/activate' => [$public],
+            'controllers/Croogo\Users/Users/edit' => [$registered],
+            'controllers/Croogo\Users/Users/forgot' => [$public],
+            'controllers/Croogo\Users/Users/reset' => [$public],
+            'controllers/Croogo\Users/Users/login' => [$public],
+            'controllers/Croogo\Users/Users/logout' => [$registered],
+            'controllers/Croogo\Users/Admin/Users/logout' => [$registered],
+            'controllers/Croogo\Users/Users/view' => [$registered],
         ];
 
         foreach ($setup as $aco => $roles) {
-            foreach ($roles as $roleId) {
-                $aro = [
-                    'model' => 'Role',
-                    'foreign_key' => $roleId,
-                ];
-                if ($Permission->allow($aro, $aco)) {
-                    $this->success(__d('croogo', 'Permission %s granted to %s', $aco, $Role->byId($roleId)));
+            foreach ($roles as $aro) {
+                try {
+                    $result = $Permission->allow($aro, $aco);
+                    if ($result) {
+                        $this->success(__d('croogo', 'Permission %s granted to %s', $aco, $aro));
+                    }
+                }
+                catch (\Exception $e) {
+                    $this->error($e->getMessage());
                 }
             }
         }
