@@ -53,6 +53,7 @@ class InstallManager
         }
 
         Configure::load('database', 'default');
+        ConnectionManager::drop('default');
         ConnectionManager::config(Configure::consume('Datasources'));
 
         try {

@@ -11,6 +11,7 @@ $dbConfigExists = file_exists(ROOT . DS . 'config' . DS . 'database.php');
 
 if ($dbConfigExists) {
     Configure::load('database', 'default');
+    ConnectionManager::drop('default');
     ConnectionManager::config(Configure::consume('Datasources'));
 }
 
