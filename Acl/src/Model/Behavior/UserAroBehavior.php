@@ -79,7 +79,7 @@ class UserAroBehavior extends Behavior
     /**
      * afterDelete
      */
-    public function afterDelete(Model $model)
+    public function afterDelete(Event $event)
     {
         Cache::clearGroup('acl', 'permissions');
     }
