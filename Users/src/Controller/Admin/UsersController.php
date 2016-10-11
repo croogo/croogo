@@ -64,7 +64,8 @@ class UsersController extends AppController
             'Croogo.beforeSetupAdminData' => 'beforeSetupAdminData',
             'Crud.beforePaginate' => 'beforePaginate',
             'Crud.beforeLookup' => 'beforeLookup',
-            'Crud.beforeSave' => 'beforeCrudSave'
+            'Crud.beforeSave' => 'beforeCrudSave',
+            'Crud.afterSave' => 'afterCrudSave',
         ];
     }
 
