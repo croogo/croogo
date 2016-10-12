@@ -50,8 +50,8 @@ class InstallShell extends Shell
                     'description' => 'Generate database.php and create admin user.',
                 ]
             ])
-            ->addSubcommand('setup_acos', [
-                'help' => 'Setup default ACOs for roles',
+            ->addSubcommand('setup_grants', [
+                'help' => 'Setup default grants (ACOs) for roles',
                 'parser' => [
                     'description' => 'Generate default role settings during release',
                 ]
@@ -162,7 +162,7 @@ class InstallShell extends Shell
             $this->out('Setting up access control objects. Please wait...');
             $generator = new AclGenerator();
             $generator->insertAcos(ConnectionManager::get('default'));
-            $this->setupAcos();
+            $this->setupGrants();
         } catch (\Exception $e) {
             $this->err('Error installing access control objects');
             $this->err($e->getMessage());
@@ -212,7 +212,7 @@ class InstallShell extends Shell
         $this->success('Congratulations, Croogo has been installed successfully.');
     }
 
-    public function setupAcos()
+    public function setupGrants()
     {
         $Roles = TableRegistry::get('Croogo/Users.Roles');
         $Roles->addBehavior('Croogo/Core.Aliasable');
