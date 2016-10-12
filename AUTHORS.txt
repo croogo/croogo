@@ -2,22 +2,28 @@ Authors ordered by contribution
 
 Rachman Chavik <rchavik@xintesa.com>
 Fahad Ibnay Heylaal <fahad19@gmail.com>
+Marlin Cremers <m.cremers@cvo-technologies.com>
+Walther Lalk <waltherlalk@gmail.com>
+Wouter van Os <wouter@wouter0100.nl>
+Wouter0100 <wouter@wouter0100.nl>
 Kyle Robinson Young <kyle@dontkry.com>
 Damien Biasotto <damien@occi-tech.com>
 Derbois Aymeric <aymeric@occi-tech.com>
 Pierre Martin <pierre@occi-tech.com>
 chadrien <chadrien@chadrien.fr>
-Walther Lalk <emailme@waltherlalk.com>
+Walther Lalk <dakota@users.noreply.github.com>
 mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
 Paul Gardner <phpmagpie@webbedit.co.uk>
+Christopher M. Depré <mail@chris-depre.de>
+Damien Biasotto <damien@occitech.fr>
+Jose Diaz-Gonzalez <josegonzalez@users.noreply.github.com>
 euromark <euromark@web.de>
+Eko Tristiyono <eko@xintesa.com>
 Yuan Chavik <yuan@xintesa.com>
 Appsbender <regz24@gmail.com>
-Damien Biasotto <damien@occitech.fr>
 Dimas Abdul Aziiz <dimas@xintesa.com>
+Wouter van Os <wouter0100@gmail.com>
 AD7six <andydawson76@gmail.com>
-Eko Tristiyono <eko@xintesa.com>
-Marlin Cremers <m.cremers@cvo-technologies.com>
 Elias Coronado <ecor.rck@hotmail.com>
 Jonas <fwd_github@jonas-hartmann.com>
 Liam Keily <liam@simplywebsites.com>
@@ -40,7 +46,9 @@ ADmad <admad.coder@gmail.com>
 James Sapara <james.sapara@gmail.com>
 Matt Curry <matt@pseudocoder.com>
 Mischa ter Smitten <mischa@tersmitten.nl>
+dimas <dimas@xintesa.com>
 thoth <thomas.rader@tigerclawtech.com>
+Jeremy Harris <jeremy@someguyjeremy.com>
 Josué Silva Santos <josue.silva.santos@gmail.com>
 Marek Rodkiewicz <marek.rodkiewicz@infraredgroup.pl>
 cdbruin <casper@ectrader.nl>
@@ -57,7 +65,6 @@ Dirk Brünsicke <d1rk@gmx.de>
 DirtyF <frank.taillandier@gmail.com>
 Gilles Bedel <gilles@occi-tech.com>
 HT-Studios <github@ht-studios.de>
-Jeremy Harris <jeremy@42pixels.com>
 Joachim Nyqvist <Joachim@JNyqvist.se>
 Kory Marks <kory.marks@mac.com>
 Léo Haddad <scoup001@gmail.com>
@@ -72,8 +79,8 @@ Rakesh Tembhurne <rakesh@tembhurne.com>
 Robbert Noordzij <robbert@xseeding.nl>
 Sam Bernard <sam@sambernard.net>
 SplicePHP <admin@splicephp.com>
-Walther Lalk <dakota@users.noreply.github.com>
 Wiena Lorentz <lorentz@xintesa.com>
+Zuhair AlSader <zuhair.alsadder@hotmail.com>
 alevilar <alevilar@gmail.com>
 avra911 <razvan@magnify.ro>
 damarev <damarev@gmail.com>
