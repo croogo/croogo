@@ -27,14 +27,12 @@ class InstallShell extends Shell
 
     public function startup()
     {
-        if (!Plugin::loaded('Acl')) {
-            Plugin::load('Acl', ['bootstrap' => true]);
-        }
-        if (!Plugin::loaded('Croogo/Core')) {
-            Plugin::load('Croogo/Core', ['bootstrap' => true]);
-        }
-        if (!Plugin::loaded('Croogo/Users')) {
-            Plugin::load('Croogo/Users');
+        $options = ['bootstrap' => true, 'routes' => true];
+        $plugins = array_merge(Plugin::$corePlugins, Plugin::$bundledPlugins);
+        foreach ($plugins as $plugin) {
+            if (!Plugin::loaded($plugin)) {
+                Plugin::load($plugin, $options);
+            }
         }
     }
 

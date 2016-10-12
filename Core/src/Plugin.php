@@ -67,7 +67,7 @@ class Plugin extends CakePlugin
      * @var array
      * @access public
      */
-    public $corePlugins = [
+    public static $corePlugins = [
         'Croogo/Acl',
         'Croogo/Core',
         'Croogo/Extensions',
@@ -82,7 +82,7 @@ class Plugin extends CakePlugin
      * @var array
      * @access public
      */
-    public $bundledPlugins = [
+    public static $bundledPlugins = [
         'Croogo/Blocks',
         'Croogo/Comments',
         'Croogo/Contacts',
