@@ -69,7 +69,7 @@ class InstallController extends Controller
                         $generator = new AssetGenerator();
             try {
                 $generator->generate();
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->log($e->getMessage());
                 $this->Flash->error('Asset generation failed. Please verify that dependencies exists and readable.');
             }
@@ -148,7 +148,7 @@ class InstallController extends Controller
                 $ds->cacheSources = false;
                 $sources = $ds->listSources();
                 $currentConfiguration['valid'] = true;
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
             }
         }
         $this->set(compact('currentConfiguration'));

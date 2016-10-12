@@ -25,7 +25,7 @@ class ExceptionRenderer extends CakeExceptionRenderer
             $controller = new $class($request, $response);
             $controller->startupProcess();
             $startup = true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $startup = false;
         }
 

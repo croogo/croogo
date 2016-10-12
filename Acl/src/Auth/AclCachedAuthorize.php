@@ -207,7 +207,7 @@ class AclCachedAuthorize extends BaseAuthorize
             if (is_numeric($id)) {
                 try {
                     $allowed = $this->_authorizeByContent($user, $request, $id);
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     $allowed = false;
                 }
             } else {
@@ -257,7 +257,7 @@ class AclCachedAuthorize extends BaseAuthorize
             $Acl = $this->_registry->load('Acl');
             try {
                 $allowed = $Acl->check([$userModel => $user], $acoNode, $action);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 Log::warning('authorizeByContent: ' . $e->getMessage());
                 $allowed = false;
             }

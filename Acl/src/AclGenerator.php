@@ -37,7 +37,7 @@ class AclGenerator extends AclExtras
     {
         try {
             return parent::_checkMethods($className, $controllerName, $node, $pluginPath, $prefixPath);
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
         }
 
         return false;

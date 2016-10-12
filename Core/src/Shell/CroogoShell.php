@@ -73,7 +73,7 @@ class CroogoShell extends CroogoAppShell
         $generator = new AssetGenerator();
         try {
             $generator->generate(['clone' => true]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->err('<error>' . $e->getMessage() . '</error>');
         }
         Plugin::unload('Install');
