@@ -37,7 +37,13 @@ endif;
         if ($actionsBlock = $this->fetch('actions')):
             echo $actionsBlock;
         else:
-            echo $this->Croogo->adminAction(__d('croogo', 'New %s', __d($i18nDomain, $humanName)), ['action' => 'add'],
+            if ($i18nDomain):
+                $entityName = __d($i18nDomain, $humanName);
+            else:
+                $entityName = __($humanName);
+            endif;
+            $actionTitle = __d('croogo', 'New %s', $entityName);
+            echo $this->Croogo->adminAction($actionTitle, ['action' => 'add'],
                 ['button' => 'btn btn-success']);
         endif;
         ?>
