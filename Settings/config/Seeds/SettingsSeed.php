@@ -356,6 +356,16 @@ options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "M
             'weight' => '30',
             'params' => ''
         ],
+        [
+            'key' => 'Croogo.version',
+            'value' => '',
+            'title' => 'Croogo Version',
+            'description' => '',
+            'input_type' => 'text',
+            'editable' => '0',
+            'weight' => '31',
+            'params' => ''
+        ],
     ];
 
     public function run()

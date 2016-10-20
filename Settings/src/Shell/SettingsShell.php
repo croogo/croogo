@@ -3,6 +3,7 @@
 namespace Croogo\Settings\Shell;
 
 use Cake\Console\Shell;
+use Croogo\Core\Plugin;
 
 /**
  * Settings Shell
@@ -215,9 +216,9 @@ class SettingsShell extends Shell
 /**
  * Update Croogo.version in settings.json
  */
-    public function update_version_info()
+    public function updateVersionInfo()
     {
-        $gitDir = realpath(CakePlugin::path('Croogo') . '..') . DS . '.git';
+        $gitDir = realpath(Plugin::path('Croogo/Core') . '..') . DS . '.git';
         if (!file_exists($gitDir)) {
             $this->err('Git repository not found');
             return false;
@@ -235,7 +236,7 @@ class SettingsShell extends Shell
         chdir($gitDir);
         $version = trim(shell_exec('git describe --tags'));
         if ($version) {
-            $this->runCommand('write', ['write', 'Croogo.version', $version]);
+            $this->runCommand(['write', 'Croogo.version', $version]);
         }
     }
 }
