@@ -215,6 +215,19 @@ class Nav
         return self::$_items[$menu];
     }
 
+    /**
+     * Check menu existence by path
+     * @param string $menu Menu name
+     * @param string $path Path for Hash::extract()
+     * @return boolean
+     */
+    public static function check($menu, $path) {
+        if (!isset(static::$_items[$menu])) {
+            return false;
+        }
+        return Hash::check(self::$_items[$menu], $path);
+    }
+
 /**
  * Gets default settings for menu items
  * @return array
