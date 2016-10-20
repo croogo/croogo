@@ -71,6 +71,9 @@ class MenusHelper extends Helper
             return;
         }
         $menus = $this->_View->viewVars['menus_for_admin_layout'];
+        if (!Nav::check('sidebar', 'menus')) {
+            return;
+        }
         foreach ($menus as $menu) {
             $weight = 9999 + $menu->weight;
             $htmlAttributes = $this->__isCurrentMenu($menu->id) ? ['class' => 'current'] : [];
