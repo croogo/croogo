@@ -319,6 +319,7 @@ options={"Nodes.Node": "Node", "Blocks.Block": "Block", "Menus.Menu": "Menu", "M
 			'key' => 'Access Control.splitSession',
 			'value' => '',
 			'title' => 'Separate front-end and admin session',
+			'description' => '',
 			'input_type' => 'checkbox',
 			'editable' => '1',
 			'weight' => '27',
