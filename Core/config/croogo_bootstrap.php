@@ -152,8 +152,8 @@ $plugins = array_filter(explode(',', $pluginBootstraps));
 if (!in_array($aclPlugin, $plugins)) {
     $plugins = Hash::merge((array)$aclPlugin, $plugins);
 }
-$theme = Configure::read('Site.theme');
-\Croogo\Core\time(function () use ($plugins, $theme) {
+$themes = [Configure::read('Site.theme'), Configure::read('Site.admin_theme')];
+\Croogo\Core\time(function () use ($plugins, $themes) {
     $option = [
         'autoload' => true,
         'bootstrap' => true,
@@ -176,16 +176,18 @@ $theme = Configure::read('Site.theme');
     }
 
 
-    if (($theme) && (!Plugin::loaded($theme)) && (Plugin::available($theme))) {
-        Plugin::load($theme, [
-            'autoload' => true,
-            'bootstrap' => true,
-            'routes' => true,
-            'events' => true,
-            'ignoreMissing' => true
-        ]);
+    foreach ($themes as $theme) {
+        if ($theme && !Plugin::loaded($theme) && Plugin::available($theme)) {
+            Plugin::load($theme, [
+                'autoload' => true,
+                'bootstrap' => true,
+                'routes' => true,
+                'events' => true,
+                'ignoreMissing' => true
+            ]);
+        }
     }
-}, 'plugins-loading-configured', 'Loading configured plugins: ' . implode(', ', $plugins + [$theme]));
+}, 'plugins-loading-configured', 'Loading configured plugins: ' . implode(', ', $plugins + $themes));
 
 DispatcherFactory::add('Croogo/Core.HomePage');
 
