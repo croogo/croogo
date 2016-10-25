@@ -34,7 +34,7 @@ class DashboardsHelper extends Helper
  */
     public function __construct(View $View, $settings = [])
     {
-        $settings = Hash::merge([
+        $this->settings = Hash::merge([
             'dashboardTag' => 'div',
         ], $settings);
 
