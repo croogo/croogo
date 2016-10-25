@@ -198,6 +198,11 @@ AclPermissions.tableToggle = function() {
 			var children = $('tr[data-parent_id=' + id + ']');
 			children.each(function() {
 				var childId = $('.controller', this).data('id')
+				var grandchildren = $('tr[data-parent_id=' + childId + ']');
+				grandchildren.each(function() {
+					var grandchildId = $('.controller', this).data('id');
+					$('tr[data-parent_id=' + grandchildId + ']').remove();
+				})
 				$('tr[data-parent_id=' + childId + ']').remove();
 			}).remove();
 			$el.removeClass('perm-collapse').addClass('perm-expand')
