@@ -8778,6 +8778,10 @@ a.bg-danger:focus, a.bg-danger:hover {
   margin: 0;
   width: 100%; }
 
+/* line 20, webroot/scss/partials/_buttons.scss */
+.toggle-icon {
+  cursor: pointer; }
+
 /* line 2, webroot/scss/partials/_tables.scss */
 .table tr:last-child {
   border-bottom: 1px solid 1px; }
@@ -9131,6 +9135,9 @@ footer {
       /* line 170, webroot/scss/partials/_navbar.scss */
       .sidebar.bg-black .sub-nav .sub-nav .sidebar-item.current:hover {
         color: #333333; }
+  /* line 178, webroot/scss/partials/_navbar.scss */
+  .sidebar .fa {
+    min-width: 18px; }
 
 /* line 1, webroot/scss/partials/_pagination.scss */
 .pagination-wrapper {
@@ -9407,13 +9414,16 @@ td .controller {
 /* line 59, webroot/scss/partials/_plugin-acl.scss */
 .permission-table .level-2 {
   margin-left: 60px; }
-/* line 64, webroot/scss/partials/_plugin-acl.scss */
+/* line 62, webroot/scss/partials/_plugin-acl.scss */
+.permission-table .level-3 {
+  margin-left: 90px; }
+/* line 67, webroot/scss/partials/_plugin-acl.scss */
 .permission-table .item-actions a {
   margin-right: 10px; }
-  /* line 66, webroot/scss/partials/_plugin-acl.scss */
+  /* line 69, webroot/scss/partials/_plugin-acl.scss */
   .permission-table .item-actions a .icon-trash {
     color: #e44; }
-    /* line 68, webroot/scss/partials/_plugin-acl.scss */
+    /* line 71, webroot/scss/partials/_plugin-acl.scss */
     .permission-table .item-actions a .icon-trash:hover {
       color: #a40f0f; }
 
