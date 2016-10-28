@@ -184,6 +184,7 @@ class LinksController extends MenusAppController {
 		if (!empty($this->request->data)) {
 			$this->request->data['Link']['visibility_roles'] = $this->Link->encodeData($this->request->data['Role']['Role']);
 
+			$this->Link->setTreeScope($this->request->data['Link']['menu_id']);
 			if ($this->Link->save($this->request->data)) {
 				$this->Session->setFlash(__d('croogo', 'The Link has been saved'), 'flash', array('class' => 'success'));
 				if (isset($this->request->data['apply'])) {
