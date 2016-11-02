@@ -3,7 +3,7 @@
 namespace Croogo\Extensions\Controller\Admin;
 
 use Cake\Event\Event;
-use Croogo\Extensions\CroogoPlugin;
+use Croogo\Core\Plugin;
 use Croogo\Extensions\ExtensionsInstaller;
 use Cake\Core\Exception\Exception;
 
@@ -26,7 +26,7 @@ class ExtensionsPluginsController extends AppController
     public function __get($name)
     {
         if ($name == 'corePlugins') {
-            return $this->_CroogoPlugin->corePlugins;
+            return Plugin::$corePlugins;
         }
     }
 
@@ -39,7 +39,7 @@ class ExtensionsPluginsController extends AppController
     {
         parent::beforeFilter($event);
 
-        $this->_CroogoPlugin = new CroogoPlugin();
+        $this->_CroogoPlugin = new Plugin();
         $this->_CroogoPlugin->setController($this);
     }
 
@@ -53,8 +53,8 @@ class ExtensionsPluginsController extends AppController
         $this->set('title_for_layout', __d('croogo', 'Plugins'));
 
         $plugins = $this->_CroogoPlugin->plugins(false);
-        $this->set('corePlugins', $this->_CroogoPlugin->corePlugins);
-        $this->set('bundledPlugins', $this->_CroogoPlugin->bundledPlugins);
+        $this->set('corePlugins', Plugin::$corePlugins);
+        $this->set('bundledPlugins', Plugin::$bundledPlugins);
         $this->set(compact('plugins'));
     }
 
