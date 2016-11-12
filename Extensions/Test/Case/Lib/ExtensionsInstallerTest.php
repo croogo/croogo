@@ -80,7 +80,8 @@ class ExtensionsInstallerTest extends CroogoTestCase {
 		$dir = CakePlugin::path('Extensions') . 'Test' . DS . 'test_files' . DS;
 		chdir($dir);
 		$zip = new ZipArchive();
-		$zip->open($zipPath, ZipArchive::OVERWRITE);
+		$zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
 		$this->_addDirectoryToZip($zip, $dirName, $dir);
 		$zip->close();
 		$this->assertTrue(file_exists($zipPath), 'Test zip not created');
