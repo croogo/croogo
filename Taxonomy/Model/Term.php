@@ -80,7 +80,6 @@ class Term extends TaxonomyAppModel {
 
 /**
  * Save Term and return ID.
- * If another Term with same slug exists, return ID of that Term without saving.
  *
  * @param  array $data
  * @return integer
@@ -96,8 +95,11 @@ class Term extends TaxonomyAppModel {
 		$this->id = false;
 		if ($termId) {
 			$this->id = $termId;
+			if (empty($data[$this->alias][$this->primaryKey])) {
+				$data[$this->alias][$this->primaryKey] = $this->id;
+			}
 		}
-		if ($this->save($data)) {
+		if ($this->saveAssociated($data)) {
 			return $this->id;
 		}
 
@@ -235,7 +237,7 @@ class Term extends TaxonomyAppModel {
 			trigger_error(__d('croogo', '"vocabulary_id" key not found'));
 		}
 		if ($state == 'before') {
-			$vocabularyAlias = $this->Vocabulary->field('alias', array('id' => $query['vocabulary_id']));
+			$vocabularyAlias = $this->Vocabulary->field('alias', array('Vocabulary.id' => $query['vocabulary_id']));
 			$termsId = $this->Vocabulary->Taxonomy->getTree($vocabularyAlias, array('key' => 'id', 'value' => 'title'));
 			$defaultQuery = array(
 				'conditions' => array(

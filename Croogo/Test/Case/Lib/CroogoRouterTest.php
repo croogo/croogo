@@ -29,9 +29,13 @@ class CroogoRouterTest extends CroogoTestCase {
 			'controller' => 'nodes',
 			'action' => 'promoted',
 		);
+
 		$result = CroogoRouter::connect('/', $promoted);
 
-		$this->assertEquals(1, count($result));
+		$translateLoaded = CakePlugin::loaded('Translate');
+		$expected = $translateLoaded ? 2 : 1;
+
+		$this->assertEquals($expected, count($result));
 		$this->assertNotEmpty($result[0]);
 		$this->assertInstanceOf('CakeRoute', $result[0]);
 		$reversed = Router::parse('/');
@@ -44,7 +48,8 @@ class CroogoRouterTest extends CroogoTestCase {
 			'action' => 'index',
 		);
 		$result = CroogoRouter::connect('/nodes', $index);
-		$this->assertEquals(2, count($result));
+		$expected = $translateLoaded ? 4 : 2;
+		$this->assertEquals($expected, count($result));
 		$reversed = Router::parse('/');
 		$this->assertEquals($promoted, array_intersect_key($promoted, $reversed));
 
@@ -54,7 +59,8 @@ class CroogoRouterTest extends CroogoTestCase {
 			'action' => 'terms',
 		);
 		$result = CroogoRouter::connect('/', $terms);
-		$this->assertEquals(3, count($result));
+		$expected = $translateLoaded ? 6 : 3;
+		$this->assertEquals($expected, count($result));
 
 		// override '/' route
 		Router::promote();

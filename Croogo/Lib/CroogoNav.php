@@ -188,7 +188,7 @@ class CroogoNav {
 		if (!is_string($menu)) {
 			throw new UnexpectedValueException('Menu id is not a string');
 		}
-		if (!empty($items)) {
+		if ($items !== null) {
 			self::$_items[$menu] = $items;
 		}
 		if (!array_key_exists($menu, self::$_items)) {

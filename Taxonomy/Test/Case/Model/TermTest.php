@@ -82,7 +82,7 @@ class TermTest extends CroogoTestCase {
 		$this->assertFalse(in_array($termId, $existingIds));
 	}
 
-	public function testSaveAndGetIdShouldShouldUpdateTermsDataWhenSlugExists() {
+	public function testSaveAndGetIdShouldUpdateTermsDataWhenSlugExists() {
 		$existingUpdatedTermData = array(
 				'title' => 'Uncategorized update',
 				'slug' => 'uncategorized',

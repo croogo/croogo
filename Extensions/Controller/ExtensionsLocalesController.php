@@ -44,7 +44,7 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 		$this->set('title_for_layout', __d('croogo', 'Locales'));
 
 		$locales = array();
-		$folder =& new Folder;
+		$folder = new Folder;
 		$paths = App::path('Locale');
 		$L10n = new L10n();
 		foreach ($paths as $path) {
@@ -202,7 +202,7 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 			return $this->redirect(array('action' => 'index'));
 		}
 
-		$file =& new File($poFile, true);
+		$file = new File($poFile, true);
 		$content = $file->read();
 
 		if (!empty($this->request->data)) {
@@ -230,7 +230,7 @@ class ExtensionsLocalesController extends ExtensionsAppController {
 			return $this->redirect(array('action' => 'index'));
 		}
 
-		$file =& new File($poFile, true);
+		$file = new File($poFile, true);
 		if ($file->delete()) {
 			$this->Session->setFlash(__d('croogo', 'Locale deleted successfully.'), 'flash', array('class' => 'success'));
 		} else {

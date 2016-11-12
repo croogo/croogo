@@ -1,1 +1,1 @@
-Nodes/index_event in TestPlugin
+Nodes/index_event.ctp in TestPlugin
