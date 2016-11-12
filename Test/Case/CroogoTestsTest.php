@@ -1,6 +1,12 @@
 <?php
 App::uses('CroogoTestCase', 'Croogo.TestSuite');
 
+CroogoPlugin::load(array(
+	'Comments' =>  array('routes' => true, 'bootstrap' => true))
+);
+CroogoEventManager::loadListeners();
+Croogo::dispatchEvent('Croogo.bootstrapComplete');
+
 class CroogoTestsTest extends PHPUnit_Framework_TestSuite {
 
 /**
