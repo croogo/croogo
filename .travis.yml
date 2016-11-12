@@ -9,7 +9,6 @@ php:
 
 env:
   - DB=mysql
-  - DB=sqlite
   - DB=pgsql
 
 matrix:
