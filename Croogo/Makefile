@@ -58,7 +58,7 @@ js: webroot/bootstrap
 	cat js/bootstrap-transition.js js/bootstrap-alert.js js/bootstrap-button.js js/bootstrap-carousel.js js/bootstrap-collapse.js js/bootstrap-dropdown.js js/bootstrap-modal.js js/bootstrap-tooltip.js js/bootstrap-popover.js js/bootstrap-scrollspy.js js/bootstrap-tab.js js/bootstrap-typeahead.js js/bootstrap-affix.js > "${JS_DIR}"/"${BOOTSTRAP_JS}" \
 	)
 	@if [ ! -z "${RELEASE}" ]; then \
-		uglifyjs --overwrite -nc "${JS_DIR}"/"${BOOTSTRAP_JS}" ;\
+		uglifyjs "${JS_DIR}"/"${BOOTSTRAP_JS}" -m -c -o "${JS_DIR}"/"${BOOTSTRAP_JS}" ;\
 	fi
 	@DIR=${JS_DIR} && echo "File: $${DIR#${CURDIR}/}/${BOOTSTRAP_JS} ${CHECK}"
 
