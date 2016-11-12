@@ -80,7 +80,6 @@ class Term extends TaxonomyAppModel {
 
 /**
  * Save Term and return ID.
- * If another Term with same slug exists, return ID of that Term without saving.
  *
  * @param  array $data
  * @return integer
@@ -96,6 +95,9 @@ class Term extends TaxonomyAppModel {
 		$this->id = false;
 		if ($termId) {
 			$this->id = $termId;
+			if (empty($data[$this->alias][$this->primaryKey])) {
+				$data[$this->alias][$this->primaryKey] = $this->id;
+			}
 		}
 		if ($this->saveAssociated($data)) {
 			return $this->id;
