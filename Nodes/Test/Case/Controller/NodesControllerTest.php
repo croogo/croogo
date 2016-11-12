@@ -30,7 +30,7 @@ class TestNodesController extends NodesController {
 
 	public function viewFallback($views) {
 		$this->testView = true;
-		return $this->_viewFallback($views);
+		return $this->Croogo->viewFallback($views);
 	}
 
 	public function securityError($type) {
@@ -412,13 +412,18 @@ class NodesControllerTest extends CroogoControllerTestCase {
 
 		$this->Nodes->theme = 'Mytheme';
 		$this->Nodes->plugin = 'Nodes';
+
 		$this->Nodes->viewFallback(array('index_blog'));
-		$this->assertContains('index_blog', $this->Nodes->view);
-		$this->assertContains('Mytheme', $this->Nodes->view);
+		$response = $this->Nodes->render();
+		$output = $response->body();
+		$this->assertContains('index_blog.ctp', $output);
+		$this->assertContains('Mytheme', $output);
 
 		$this->Nodes->viewFallback(array('view_1', 'view_blog'));
-		$this->assertContains('view_1.ctp', $this->Nodes->view);
-		$this->assertContains('Mytheme', $this->Nodes->view);
+		$response = $this->Nodes->render();
+		$output = $response->body();
+		$this->assertContains('view_1.ctp', $output);
+		$this->assertContains('Mytheme', $output);
 	}
 
 /**
@@ -428,16 +433,16 @@ class NodesControllerTest extends CroogoControllerTestCase {
  */
 	public function testViewFallbackInPlugins() {
 		CakePlugin::load('TestPlugin');
-		$this->Nodes = $this->getMock('TestNodesController',
-			array('render'), array(new CakeRequest(), new CakeResponse())
-		);
 		$this->Nodes = new TestNodesController(new CakeRequest(), new CakeResponse);
 		$this->Nodes->constructClasses();
 		$this->Nodes->startupProcess();
 		$this->Nodes->theme = null;
 		$this->Nodes->plugin = 'TestPlugin';
 		$this->Nodes->viewFallback(array('index_event'));
-		$this->assertContains('index_event.ctp', $this->Nodes->view);
+		$response = $this->Nodes->render();
+		$output = $response->body();
+		$this->assertContains('index_event.ctp', $output);
+		$this->assertContains('TestPlugin', $output);
 		unset($this->Nodes);
 	}
 
@@ -457,7 +462,10 @@ class NodesControllerTest extends CroogoControllerTestCase {
 		$this->Nodes->theme = 'OurTheme';
 		$this->Nodes->plugin = 'TestPlugin';
 		$this->Nodes->viewFallback(array('index_event'));
-		$this->assertContains('index_event.ctp', $this->Nodes->view);
+		$response = $this->Nodes->render();
+		$output = $response->body();
+		$this->assertContains('index_event.ctp', $output);
+		$this->assertContains('TestPlugin', $output);
 		unset($this->Nodes);
 	}
 
@@ -493,15 +501,15 @@ class NodesControllerTest extends CroogoControllerTestCase {
 			'View' => array(CakePlugin::path('Croogo') . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS . 'Nodes' . DS . 'View' . DS),
 		), App::APPEND);
 
-		$this->Nodes = $this->getMock('TestNodesController',
-			array('render'), array(new CakeRequest(), new CakeResponse())
-		);
+		$this->Nodes = new TestNodesController(new CakeRequest(), new CakeResponse);
 		$this->Nodes->constructClasses();
 		$this->Nodes->startupProcess();
 		$this->Nodes->theme = null;
 		$this->Nodes->plugin = null;
 		$this->Nodes->viewFallback(array('index_node'));
-		$this->assertContains('index_node.ctp', $this->Nodes->view);
+		$response = $this->Nodes->render();
+		$output = $response->body();
+		$this->assertContains('index_node', $output);
 		unset($this->Nodes);
 	}
 
