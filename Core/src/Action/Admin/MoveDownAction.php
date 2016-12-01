@@ -126,7 +126,12 @@ class MoveDownAction extends BaseAction
 
         $this->setFlash('success', $subject);
 
-        return $this->_redirect($subject, ['action' => 'index']);
+        $redirect = ['action' => 'index'];
+        if ($this->_controller()->request->referer()) {
+            $redirect = $this->_controller()->request->referer();
+        }
+
+        return $this->_redirect($subject, $redirect);
     }
 
     /**
