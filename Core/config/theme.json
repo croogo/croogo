@@ -23,7 +23,7 @@
 		"css" : {
 			"container" : "container-fluid",
 			"row" : "row",
-			"tableClass" : "table table-stripped"
+			"tableClass" : "table table-striped"
 		}
 	}
 }
