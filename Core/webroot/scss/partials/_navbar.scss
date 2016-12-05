@@ -179,3 +179,13 @@
         min-width: 18px;
     }
 }
+
+@media (max-width: map-get($grid-breakpoints, md)) {
+    .sidebar {
+        width: $croogo-md-nav-width;
+    }
+
+    #content {
+        margin-left: $croogo-md-nav-width;
+    }
+}
