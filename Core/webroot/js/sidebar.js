@@ -69,7 +69,7 @@ Admin.navigation = function () {
       }
 
       if (window.innerWidth <= 979) {
-        $ul.hide('fade', 'fast', onComplete);
+        $ul.removeAttr('z-index').fadeOut('fast');
       } else {
         $ul.slideUp('fast', onComplete);
       }
@@ -81,7 +81,7 @@ Admin.navigation = function () {
       if (window.innerWidth <= 979) {
         $ul.css(
           {'position': 'absolute', 'margin-left': sidebarWidth + 1 + 'px', 'margin-top': '-42px'});
-        $ul.show('fade', 'fast');
+        $ul.css({'z-index': 99}).fadeIn('fast');
       } else {
         $ul.css({'margin-left': 0, 'position': 'relative'});
         $ul.slideDown('fast');
