@@ -1,5 +1,4 @@
 <?php $this->assign('title', __d('croogo', 'Dashboards')); ?>
-<h2 class="hidden-md-up"><?= h($this->fetch('title')); ?></h2>
 <?php
 $this->Croogo->adminScript('Croogo/Dashboards.admin');
 $this->Html->css('Croogo/Dashboards.admin', array('block' => true));

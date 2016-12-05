@@ -8,15 +8,11 @@ $dashboardUrl = Configure::read('Croogo.dashboardUrl');
 ?>
 <header class="navbar navbar-dark bg-black navbar-fixed-top">
     <div class="<?php echo $this->Theme->getCssClass('container'); ?>">
-        <span class="hidden-xs">
-        <?php echo $this->Html->link(Configure::read('Site.title'), $dashboardUrl,
+        <?= $this->Html->link(Configure::read('Site.title'), $dashboardUrl,
             ['class' => 'navbar-brand']); ?>
-        </span>
-        <span class="hidden-sm-up">
-            <?php echo $this->Html->link(__d('croogo', 'Dashboard'), $dashboardUrl, ['class' => 'navbar-brand']); ?>
-        </span>
-        <?php
-        echo $this->Croogo->adminMenus(Nav::items('top-left'), [
+
+        <span class="hidden-xs-down">
+        <?= $this->Croogo->adminMenus(Nav::items('top-left'), [
             'type' => 'dropdown',
             'htmlAttributes' => [
                 'id' => 'top-left-menu',
@@ -24,10 +20,9 @@ $dashboardUrl = Configure::read('Croogo.dashboardUrl');
             ],
         ]);
         ?>
-        <?php if ($this->request->session()
-            ->read('Auth.User.id')
-        ): ?>
-            <?php
+        </span>
+        <?php if ($this->request->session()->read('Auth.User.id')): ?>
+        <?php
             echo $this->Croogo->adminMenus(Nav::items('top-right'), [
                 'type' => 'dropdown',
                 'htmlAttributes' => [
@@ -35,7 +30,7 @@ $dashboardUrl = Configure::read('Croogo.dashboardUrl');
                     'class' => 'nav navbar-nav pull-right',
                 ],
             ]);
-            ?>
+        ?>
         <?php endif; ?>
     </div>
 </header>
