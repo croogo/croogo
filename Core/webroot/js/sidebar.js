@@ -83,7 +83,7 @@ Admin.navigation = function () {
           {'position': 'absolute', 'margin-left': sidebarWidth + 1 + 'px', 'margin-top': '-42px'});
         $ul.css({'z-index': 99}).fadeIn('fast');
       } else {
-        $ul.css({'margin-left': 0, 'position': 'relative'});
+        $ul.css({'margin-left': 0, 'position': 'relative', 'margin-top': '0px'});
         $ul.slideDown('fast');
       }
     }
@@ -93,7 +93,7 @@ Admin.navigation = function () {
 
   $(window).on('resize', function () {
     $('#sidebar-menu > li ul:visible').each(function () {
-      $(this).toggle();
+      $(this).css({'position': 'relative', 'margin-top': '0px'}).toggle();
       dropdownClose.call(this);
     });
   });
