@@ -65,7 +65,9 @@ class UsersTable extends CroogoTable
 
         $this->searchManager()
             ->add('name', 'Search.Like', [
-                'field' => ['Users.name', 'Users.username']
+                'field' => ['Users.name', 'Users.username', 'Users.email'],
+                'before' => true,
+                'after' => true,
             ])
             ->value('role_id');
     }
