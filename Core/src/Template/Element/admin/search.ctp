@@ -26,7 +26,7 @@ if (!empty($searchFields)):
         ]);
     endif;
     foreach ($searchFields as $field => $fieldOptions) {
-        $options = ['empty' => '', 'required' => false];
+        $options = ['empty' => true, 'required' => false];
         if (is_numeric($field) && is_string($fieldOptions)) {
             $field = $fieldOptions;
             $fieldOptions = [];
