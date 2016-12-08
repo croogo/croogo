@@ -111,6 +111,16 @@ class CroogoNavTest extends CroogoTestCase {
 		$this->assertEquals($expected, $items['foo']['access']);
 	}
 
+	public function testNavMergeSameArray() {
+		CroogoNav::clear();
+		$foo = array('url' => array('action' => 'index', 'hi'));
+		CroogoNav::add('foo', $foo);
+		CroogoNav::add('foo', $foo);
+		$items = CroogoNav::items();
+		$expected = array('action' => 'index', 'hi');
+		$this->assertEquals($expected, $items['foo']['url']);
+	}
+
 	public function testNavOverwrite() {
 		Croogo::dispatchEvent('Croogo.setupAdminData', null);
 		$defaults = CroogoNav::getDefaults();
