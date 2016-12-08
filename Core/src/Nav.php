@@ -155,6 +155,9 @@ class Nav
  */
     protected static function _merge($firstArray, $secondArray)
     {
+        if ($firstArray == $secondArray) {
+            return $secondArray;
+        }
         $merged = Hash::merge($firstArray, $secondArray);
         foreach ($merged as $key => $val) {
             if (is_array($val) && is_int(key($val))) {

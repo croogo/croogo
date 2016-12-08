@@ -126,6 +126,17 @@ class CroogoNavTest extends CroogoTestCase
         $this->assertEquals($expected, $items['foo']['access']);
     }
 
+    public function testNavMergeSameArray()
+    {
+        Nav::clear();
+        $foo = array('url' => array('action' => 'index', 'hi'));
+        Nav::add('foo', $foo);
+        Nav::add('foo', $foo);
+        $items = Nav::items();
+        $expected = array('action' => 'index', 'hi');
+        $this->assertEquals($expected, $items['foo']['url']);
+    }
+
     public function testNavOverwrite()
     {
         $this->markTestIncomplete('This test needs to be ported to CakePHP 3.0');
