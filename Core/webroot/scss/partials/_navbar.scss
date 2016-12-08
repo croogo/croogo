@@ -163,12 +163,16 @@
                     color: $gray-lightest;
                     text-decoration: none;
                 }
+
+                &.current {
+                    color: $gray-lightest;
+                }
             }
             .sub-nav {
                 .sidebar-item.current {
-                    color: darken($gray-dark, 10%);
+                    color: $gray-lightest;
                     &:hover {
-                        color: $gray-dark;
+                        color: $gray-lightest;
                     }
                 }
             }
