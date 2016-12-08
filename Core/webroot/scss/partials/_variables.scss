@@ -1,8 +1,7 @@
-@import "../../bootstrap/scss/variables";
 // Override bootstrap vars
-$sansFontFamily:  "Helvetica Neue", "Ubuntu", Helvetica, Arial, sans-serif;
-$serifFontFamily: Georgia, "Ubuntu", "Times New Roman", Times, serif;
-$monoFontFamily:  Monaco, Menlo, Consolas, "Ubuntu Mono", "Courier New", monospace;
+$font-family-sans-serif:  "Helvetica Neue", "Ubuntu", Helvetica, Arial, sans-serif;
+$font-family-serif: Georgia, "Ubuntu", "Times New Roman", Times, serif;
+$font-family-monospace:  Monaco, Menlo, Consolas, "Ubuntu Mono", "Courier New", monospace;
 
 //Colors
 $black: #000;
