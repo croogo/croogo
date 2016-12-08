@@ -27,18 +27,6 @@ $columnLeft = $this->Theme->getCssClass('columnLeft');
 $columnRight = $this->Theme->getCssClass('columnRight');
 $columnFull = $this->Theme->getCssClass('columnFull');
 
-?>
-    <h2 class="hidden-md-up">
-        <?php
-        if ($titleBlock = $this->fetch('title')):
-            echo $titleBlock;
-        else:
-            echo !empty($title_for_layout) ? $title_for_layout : $what . ' ' . $modelClass;
-        endif;
-        ?>
-    </h2>
-<?php
-
 if ($pageHeading = trim($this->fetch('page-heading'))):
     echo $pageHeading;
 endif;

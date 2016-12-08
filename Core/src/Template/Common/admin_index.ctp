@@ -23,18 +23,8 @@ endif;
 if ($pageHeading = trim($this->fetch('page-heading'))):
     echo $pageHeading;
 endif;
+
 ?>
-
-    <h2 class="hidden-md-up">
-        <?php if ($titleBlock = $this->fetch('title')): ?>
-            <?php echo $titleBlock; ?>
-        <?php else: ?>
-            <?php
-            echo !empty($title_for_layout) ? $title_for_layout : $this->name;
-            ?>
-        <?php endif; ?>
-    </h2>
-
 <?php if ($showActions): ?>
     <div class="actions pull-md-right pull-lg-right btn-group">
         <?php
