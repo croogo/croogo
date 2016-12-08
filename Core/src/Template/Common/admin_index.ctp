@@ -16,6 +16,10 @@ $tableClass = isset($tableClass) ? $tableClass : $this->Theme->getCssClass('tabl
 
 $showActions = isset($showActions) ? $showActions : true;
 
+if (empty($title)):
+    $this->assign('title', $this->name);
+endif;
+
 if ($pageHeading = trim($this->fetch('page-heading'))):
     echo $pageHeading;
 endif;

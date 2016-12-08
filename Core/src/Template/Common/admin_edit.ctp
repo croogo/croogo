@@ -18,6 +18,10 @@ if (isset(${Inflector::variable(Inflector::singularize($this->name))})):
     $what = !$entity->isNew() ? __d('croogo', 'Edit') : __d('croogo', 'Add');
 endif;
 
+if (empty($title)):
+    $this->assign('title', $this->name);
+endif;
+
 $rowClass = $this->Theme->getCssClass('row');
 $columnLeft = $this->Theme->getCssClass('columnLeft');
 $columnRight = $this->Theme->getCssClass('columnRight');
