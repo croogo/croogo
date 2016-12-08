@@ -10,14 +10,14 @@ chadrien <chadrien@chadrien.fr>
 Paul Gardner <phpmagpie@webbedit.co.uk>
 Walther Lalk <dakota@users.noreply.github.com>
 mohammadsaleh <mohammadsaleh.sayari@hotmail.com>
+Marlin Cremers <m.cremers@cvo-technologies.com>
 euromark <euromark@web.de>
+Eko Tristiyono <eko@xintesa.com>
 Yuan Chavik <yuan@xintesa.com>
 Appsbender <regz24@gmail.com>
 Damien Biasotto <damien@occitech.fr>
 Dimas Abdul Aziiz <dimas@xintesa.com>
-Marlin Cremers <m.cremers@cvo-technologies.com>
 AD7six <andydawson76@gmail.com>
-Eko Tristiyono <eko@xintesa.com>
 Mike Tallroth <mike.tallroth@gmail.com>
 Elias Coronado <ecor.rck@hotmail.com>
 Jonas <fwd_github@jonas-hartmann.com>
