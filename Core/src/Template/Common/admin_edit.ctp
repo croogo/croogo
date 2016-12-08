@@ -18,6 +18,7 @@ if (isset(${Inflector::variable(Inflector::singularize($this->name))})):
     $what = !$entity->isNew() ? __d('croogo', 'Edit') : __d('croogo', 'Add');
 endif;
 
+$title = $this->fetch('title');
 if (empty($title)):
     $this->assign('title', $this->name);
 endif;

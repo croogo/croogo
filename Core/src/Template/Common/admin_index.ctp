@@ -16,6 +16,7 @@ $tableClass = isset($tableClass) ? $tableClass : $this->Theme->getCssClass('tabl
 
 $showActions = isset($showActions) ? $showActions : true;
 
+$title = $this->fetch('title');
 if (empty($title)):
     $this->assign('title', $this->name);
 endif;
