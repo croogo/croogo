@@ -270,7 +270,7 @@ class Plugin extends CakePlugin
      */
     protected function _isBuiltin($plugin)
     {
-        return in_array($plugin, $this->bundledPlugins) || in_array($plugin, $this->corePlugins);
+        return in_array($plugin, static::$bundledPlugins) || in_array($plugin, static::$corePlugins);
     }
 
     protected function _loadData($alias, $pluginPath, $ignoreMigration = true)
