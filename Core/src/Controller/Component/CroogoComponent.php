@@ -120,6 +120,8 @@ class CroogoComponent extends Component
                 }
             }
         }
+        $_siteTitle = Configure::read('Site.title');
+        $this->_controller->set(compact('_siteTitle'));
         $this->_adminMenus();
     }
 

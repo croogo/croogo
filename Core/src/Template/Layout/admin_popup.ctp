@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
-        <title><?php echo $this->fetch('title'); ?> - <?php echo __d('croogo', 'Croogo'); ?></title>
+        <title><?= $this->fetch('title'); ?> - <?= $_siteTitle ?></title>
         <?php
 
         echo $this->Html->css([
