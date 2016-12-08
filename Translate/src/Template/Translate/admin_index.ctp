@@ -1,7 +1,6 @@
 <?php
 
 $this->extend('/Common/admin_index');
-$this->name = 'translate';
 
 $plugin = $controller = 'nodes';
 if (isset($this->request->params['models'][$modelAlias])):

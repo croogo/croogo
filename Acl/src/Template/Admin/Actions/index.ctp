@@ -2,8 +2,6 @@
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->name = 'acos';
-
 $this->Html->script('Croogo/Acl.acl_permissions', ['block' => true]);
 
 $this->Croogo->adminScript('Croogo/Acl.acl_permissions');

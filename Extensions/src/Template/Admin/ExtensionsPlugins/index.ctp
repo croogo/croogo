@@ -2,8 +2,6 @@
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->name = 'extensions-plugins';
-
 $this->Html->addCrumb(__d('croogo', 'Extensions'),
         ['plugin' => 'Croogo/Extensions', 'controller' => 'ExtensionsPlugins', 'action' => 'index'])
     ->addCrumb(__d('croogo', 'Plugins'));
