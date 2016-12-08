@@ -1,6 +1,8 @@
 <?php
 use Cake\Core\Configure;
 
+$this->assign('title', __d('croogo', 'Login'));
+
 echo $this->Form->create(false, ['url' => ['action' => 'login']]); ?>
 <div class="card">
     <div class="card-block">
