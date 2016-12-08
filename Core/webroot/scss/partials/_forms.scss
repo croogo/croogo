@@ -9,8 +9,9 @@ form .span8 + .span4 {
 }
 
 .form-inline {
+    .btn,
     .form-control {
-        margin-right: 5px;
+        margin: 2px 2px 2px 0;
     }
 
 }
@@ -25,4 +26,23 @@ form .span8 + .span4 {
 span.slug {
     font-weight: bold;
     margin: 0 10px;
+}
+
+.radio,
+.checkbox {
+    input {
+        margin-right: 0.25rem;
+    }
+    label {
+        width: 100%;
+    }
+}
+
+.input-group-addon {
+    background: $gray-lightest;
+}
+
+.form-control:focus {
+    border: 1px solid darken($gray-lightest, 25);
+    box-shadow: 2px 2px 2px $gray;
 }

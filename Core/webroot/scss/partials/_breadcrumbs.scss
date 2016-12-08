@@ -9,6 +9,9 @@
 
 .breadcrumb {
     z-index: $zindex-dropdown;
+    margin-bottom: $croogo-breadcrumb-margin;
+
+    background-color: $gray-lightest;
 
     li:last-child {
         @extend .active;
