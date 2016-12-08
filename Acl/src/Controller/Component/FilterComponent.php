@@ -128,9 +128,9 @@ class FilterComponent extends Component
             ]
         ]);
 
-        if (isset($this->_controller->request->params['admin']) &&
-            !$this->_controller->Auth->loggedIn()) {
-            $this->_controller->Auth->authError = false;
+        if ($this->_controller->request->param('prefix') == 'admin' &&
+            !$this->_controller->Auth->user()) {
+            $this->_controller->Auth->config('authError', false);
         }
 
         $this->configureLoginActions();
