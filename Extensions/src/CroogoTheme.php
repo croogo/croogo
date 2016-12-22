@@ -101,7 +101,7 @@ class CroogoTheme
                     'power-off' => 'power-off',
                     'power-on' => 'bolt',
                     'question-sign' => 'question-sign',
-                    'read' => 'eye-open',
+                    'read' => 'eye',
                     'refresh' => 'refresh',
                     'resize' => 'resize-small',
                     'search' => 'search',
