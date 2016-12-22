@@ -31,17 +31,15 @@ endif;
     </h2>
 
 <?php if ($showActions): ?>
-    <div class="<?php echo $rowClass; ?>">
-        <div class="actions <?php echo $columnFull; ?>">
-            <?php
-            if ($actionsBlock = $this->fetch('actions')):
-                echo $actionsBlock;
-            else:
-                echo $this->Croogo->adminAction(__d('croogo', 'New %s',
-                    __d('croogo', Inflector::singularize($this->name))), ['action' => 'add'], ['button' => 'success']);
-            endif;
-            ?>
-        </div>
+    <div class="actions pull-md-right pull-lg-right btn-group">
+    <?php
+        if ($actionsBlock = $this->fetch('actions')):
+            echo $actionsBlock;
+        else:
+            echo $this->Croogo->adminAction(__d('croogo', 'New %s',
+                __d('croogo', Inflector::singularize($this->name))), ['action' => 'add'], ['button' => 'success']);
+        endif;
+    ?>
     </div>
 <?php endif; ?>
 
