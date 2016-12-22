@@ -5,7 +5,7 @@ use Cake\Cache\Cache;
 use Croogo\Core\Croogo;
 
 Cache::config('croogo_blocks', array_merge(
-    Configure::read('Croogo.Cache.defaultConfig'),
+    Cache::config('default'),
     ['groups' => ['blocks']]
 ));
 

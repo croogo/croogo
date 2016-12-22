@@ -44,7 +44,7 @@ EventManager::instance();
      * Cache configuration
      */
     $defaultEngine = Cache::config('default')['className'];
-    $defaultPrefix = Configure::read('Cache.defaultPrefix');
+    $defaultPrefix = Cache::config('default')['prefix'];
     $cacheConfig = [
         'duration' => '+1 hour',
         'path' => CACHE . 'queries' . DS,
