@@ -31,8 +31,8 @@ $this->append('actions');
         foreach ($data as $alias => $details):
             if (!empty($details['navLink']) && $details['controller'] !== $this->name && !in_array($details['controller'], $done)):
 %>
-        <?= $this->Croogo->adminAction(__('List <%= $this->_pluralHumanName($alias) %>'), ['controller' => '<%= $details['controller'] %>', 'action' => 'index']) ?>
-        <?= $this->Croogo->adminAction(__('New <%= $this->_singularHumanName($alias) %>'), ['controller' => '<%= $details['controller'] %>', 'action' => 'add']) ?>
+        echo $this->Croogo->adminAction(__('List <%= $this->_pluralHumanName($alias) %>'), ['controller' => '<%= $details['controller'] %>', 'action' => 'index']);
+        echo $this->Croogo->adminAction(__('New <%= $this->_singularHumanName($alias) %>'), ['controller' => '<%= $details['controller'] %>', 'action' => 'add']);
 <%
                 $done[] = $details['controller'];
             endif;
