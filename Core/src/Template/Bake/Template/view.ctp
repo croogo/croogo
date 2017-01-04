@@ -60,8 +60,8 @@ $this->append('actions');
         foreach ($data as $alias => $details) {
             if ($details['controller'] !== $this->name && !in_array($details['controller'], $done)) {
 %>
-        <?= $this->Croogo->adminAction(__('List <%= $this->_pluralHumanName($alias) %>'), ['controller' => '<%= $details['controller'] %>', 'action' => 'index']) ?>
-        <?= $this->Croogo->adminAction(__('New <%= Inflector::humanize(Inflector::singularize(Inflector::underscore($alias))) %>'), ['controller' => '<%= $details['controller'] %>', 'action' => 'add']) ?>
+        echo $this->Croogo->adminAction(__('List <%= $this->_pluralHumanName($alias) %>'), ['controller' => '<%= $details['controller'] %>', 'action' => 'index']);
+        echo $this->Croogo->adminAction(__('New <%= Inflector::humanize(Inflector::singularize(Inflector::underscore($alias))) %>'), ['controller' => '<%= $details['controller'] %>', 'action' => 'add']);
 <%
                 $done[] = $details['controller'];
             }
