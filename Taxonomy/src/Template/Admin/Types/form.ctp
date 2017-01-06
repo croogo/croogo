@@ -83,7 +83,7 @@ echo $this->Html->link(__d('croogo', 'You can manage your API keys here.'), [
 ]);
 echo $this->Html->tabEnd();
 echo $this->Html->tabStart('type-params');
-echo $this->Form->input('Type.params', [
+echo $this->Form->input('params', [
     'label' => __d('croogo', 'Params'),
 ]);
 echo $this->Html->tabEnd();

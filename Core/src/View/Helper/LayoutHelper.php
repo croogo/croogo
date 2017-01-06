@@ -3,6 +3,7 @@
 namespace Croogo\Core\View\Helper;
 
 use Cake\ORM\Entity;
+use Cake\Routing\Exception\MissingRouteException;
 use Cake\View\Helper;
 use Cake\Routing\Router;
 use Cake\Core\Configure;
@@ -211,7 +212,11 @@ class LayoutHelper extends Helper
                 unset($url['named']);
             }
 
-            $out = $this->Html->link($out, $url, $options);
+            try {
+                $out = $this->Html->link($out, $url, $options);
+            } catch (MissingRouteException $e) {
+                $out = $out; //If the route doesn't exist then act gracefully
+            }
         }
         return $out;
     }

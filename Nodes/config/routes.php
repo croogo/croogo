@@ -16,4 +16,5 @@ Router::plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $routeBui
 
     // Content types
     Router::routableContentTypes($routeBuilder);
+    Router::contentType('_placeholder', $routeBuilder);
 });
