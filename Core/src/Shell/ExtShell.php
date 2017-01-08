@@ -4,6 +4,7 @@ namespace Croogo\Core\Shell;
 
 use App\Controller\AppController;
 use Cake\Controller\Controller;
+use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Network\Request;
@@ -100,7 +101,7 @@ class ExtShell extends CroogoAppShell
         } elseif ($type == 'plugin') {
             $extensions = $this->_CroogoPlugin->getPlugins();
             if ($force) {
-                $plugins = array_combine($p = App::objects('plugins'), $p);
+                $plugins = array_combine($p = Plugin::loaded(), $p);
                 $extensions += $plugins;
             }
             $active = Plugin::loaded($ext);
