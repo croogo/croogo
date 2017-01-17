@@ -228,7 +228,14 @@ class LayoutHelper extends Helper
  */
     public function sessionFlash()
     {
-        return $this->Flash->render();
+        $messages = $this->request->session()->read('Flash');
+        $output = '';
+        if (is_array($messages)) {
+            foreach (array_keys($messages) as $key) {
+                $output .= $this->Flash->render($key);
+            }
+        }
+        return $output;
     }
 
 /**

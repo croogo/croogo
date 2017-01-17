@@ -197,7 +197,7 @@ class UsersController extends AppController
         $this->viewBuilder()->layout('admin_login');
 
         if ($this->Auth->user('id')) {
-            if (!$this->request->session()->check('Message.auth')) {
+            if (!$this->request->session()->check('Flash.auth')) {
                 $this->Flash->error(__d('croogo', 'You are already logged in'), ['key' => 'auth']);
             }
             return $this->redirect($this->Auth->redirectUrl());
