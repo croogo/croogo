@@ -117,6 +117,7 @@ class SettingsTable extends CroogoTable
                 'editable' => 0,
                 'weight' => 0,
                 'params' => '',
+                'option_class' => '',
             ], $options);
 
             $setting = $this->newEntity([
@@ -129,6 +130,7 @@ class SettingsTable extends CroogoTable
                 'editable' => $options['editable'],
                 'weight' => $options['weight'],
                 'params' => $options['params'],
+                'option_class' => $options['option_class']
             ]);
         }
 
