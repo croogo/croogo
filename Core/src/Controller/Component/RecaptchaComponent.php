@@ -19,7 +19,7 @@ class RecaptchaComponent extends Component
 
     const VERSION = 'php_1.1.2';
 
-    public $Controller = null;
+    private $_controller = null;
 
     private $_publicKey = '';
     private $_privateKey = '';
@@ -43,6 +43,7 @@ class RecaptchaComponent extends Component
     public function initialize(array $config)
     {
         $controller = $this->_registry->getController();
+        $this->_controller = $controller;
         if ($controller->name === 'CakeError') {
             return;
         }
@@ -76,7 +77,7 @@ class RecaptchaComponent extends Component
             $response = $this->_getApiResponse($captcha);
 
             if (!$response->success) {
-                $this->Flash->error($this->_errorMsg($response->{'error-codes'}));
+                $this->_controller->Flash->error($this->_errorMsg($response->{'error-codes'}));
 
                 return false;
             }
