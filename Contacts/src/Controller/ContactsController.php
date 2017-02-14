@@ -68,8 +68,7 @@ class ContactsController extends AppController
 
             if ($continue === true) {
                 Croogo::dispatchEvent('Controller.Contacts.afterMessage', $this);
-                $this->Session->setFlash(__d('croogo', 'Your message has been received...'), 'flash',
-                    ['class' => 'success']);
+                $this->Flash->success(__d('croogo', 'Your message has been received...'));
 
                 return $this->Croogo->redirect('/');
             }
