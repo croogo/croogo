@@ -79,7 +79,7 @@ if (!$tableBody && isset($displayFields)):
             else:
                 $actions[] = $this->Croogo->adminRowAction('', ['action' => 'edit', $item->id],
                     ['icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item')]);
-                $actions[] = $this->Croogo->adminRowActions($item[$modelClass]['id']);
+                $actions[] = $this->Croogo->adminRowActions($item->id);
                 $actions[] = $this->Croogo->adminRowAction('', [
                     'action' => 'delete',
                     $item->id,
