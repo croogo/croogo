@@ -24,7 +24,7 @@ Cache::config('users_login', array_merge($cacheConfig, [
 ]));
 
 Croogo::hookAdminRowAction('Croogo/Users.Admin/Users/index', 'Reset Password', [
-    'admin:true/plugin:users/controller:users/action:reset_password/:id' => [
+    'prefix:admin/plugin:Croogo%2fUsers/controller:users/action:reset_password/:id' => [
         'title' => false,
         'options' => [
             'icon' => 'unlock',

@@ -128,6 +128,7 @@ class Croogo
      */
     public static function hookAdminRowAction($action, $title, $url)
     {
+        $action = base64_encode($action);
         $rowActions = Configure::read('Admin.rowActions');
         if (!is_array($rowActions)) {
             $rowActions = [];

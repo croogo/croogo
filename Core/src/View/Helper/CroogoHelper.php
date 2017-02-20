@@ -269,11 +269,19 @@ class CroogoHelper extends Helper
      */
     public function adminRowActions($id, $options = [])
     {
-        $output = '';
-        $rowActions = Configure::read('Admin.rowActions.' .
-            Inflector::camelize($this->request->param('controller')) .
-            '/' .
-            $this->request->param('action'));
+        $key = $output = '';
+        $plugin = $this->request->param('plugin');
+        if ($plugin) {
+            $key .= $plugin . '.';
+        }
+        $prefix = $this->request->param('prefix');
+        if ($prefix) {
+            $key .= Inflector::camelize($prefix) . '/';
+        }
+        $key .= Inflector::camelize($this->request->param('controller')) . '/';
+        $key .= $this->request->param('action');
+        $encodedKey = base64_encode($key);
+        $rowActions = Configure::read('Admin.rowActions.' . $encodedKey);
         if (is_array($rowActions)) {
             foreach ($rowActions as $title => $link) {
                 $linkOptions = $options;
