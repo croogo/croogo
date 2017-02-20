@@ -72,7 +72,7 @@ class TrackableBehavior extends Behavior
  */
     protected function _setupBelongsTo()
     {
-        if (!$this->_table->associations()->has('TrackableCreator')) {
+        if ($this->_table->associations()->has('TrackableCreator')) {
             return;
         }
 
