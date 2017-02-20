@@ -131,7 +131,7 @@ class TrackableBehavior extends Behavior
 
         $entity = $event->data['entity'];
         if (empty($entity->{$createdByField})) {
-            if (!$entity->isNew()) {
+            if ($entity->isNew()) {
                 $entity->{$createdByField} = $user[$userPk];
             }
         }
