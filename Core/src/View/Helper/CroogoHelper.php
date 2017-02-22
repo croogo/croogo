@@ -4,6 +4,7 @@ namespace Croogo\Core\View\Helper;
 
 use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
@@ -34,6 +35,7 @@ class CroogoHelper extends Helper
         'Croogo/Core.Layout',
         'Croogo/Core.Theme',
         'Croogo/Menus.Menus',
+        'Croogo/Acl.Acl',
     ];
 
     /**
@@ -122,16 +124,20 @@ class CroogoHelper extends Helper
         //		if (empty($userId)) {
         //			return '';
         //		}
+        $userId = $this->request->session()->read('Auth.User.id');
+        if (empty($userId)) {
+            return '';
+        }
 
         $sidebar = $options['type'] === 'sidebar';
         $htmlAttributes = $options['htmlAttributes'];
         $out = null;
         $sorted = Hash::sort($menus, '{s}.weight', 'ASC');
-        //		if (empty($this->Role)) {
-        //			$this->Role = ClassRegistry::init('Users.Role');
-        //			$this->Role->Behaviors->attach('Croogo.Aliasable');
-        //		}
-        //		$currentRole = $this->Role->byId($this->Layout->getRoleId());
+        if (empty($this->Role)) {
+            $this->Role = TableRegistry::get('Croogo/Users.Roles');
+            $this->Role->addBehavior('Croogo/Core.Aliasable');
+        }
+        $currentRole = $this->Role->byId($this->Layout->getRoleId());
 
         foreach ($sorted as $menu) {
             if (isset($menu['separator'])) {
@@ -144,9 +150,9 @@ class CroogoHelper extends Helper
                 }
                 continue;
             }
-            //			if ($currentRole != 'admin' && !$this->{$aclPlugin}->linkIsAllowedByUserId($userId, $menu['url'])) {
-            //				continue;
-            //			}
+            if ($currentRole != 'admin' && !$this->Acl->linkIsAllowedByUserId($userId, $menu['url'])) {
+                continue;
+            }
 
             if (empty($menu['htmlAttributes']['class'])) {
                 $menuClass = Inflector::slug(strtolower('menu-' . $menu['title']), '-');

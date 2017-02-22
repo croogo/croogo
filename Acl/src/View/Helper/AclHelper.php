@@ -2,7 +2,12 @@
 
 namespace Croogo\Acl\View\Helper;
 
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 use Cake\View\Helper;
+use Cake\View\View;
 
 /**
  * Acl Helper
@@ -35,13 +40,13 @@ class AclHelper extends Helper
  */
     public function __construct(View $View, $settings = [])
     {
-        $settings = Hash::merge([
+        $this->settings = Hash::merge([
             'pathWhitelist' => $this->_pathWhitelist
         ], $settings);
         parent::__construct($View, $settings);
-        $plugin = Configure::read('Site.acl_plugin');
+        $plugin = 'Croogo/Acl';
         /* TODO: App::uses('AclPermission', $plugin . '.Model'); */
-        $this->AclPermission = ClassRegistry::init($plugin . '.AclPermission');
+        $this->Permissions = TableRegistry::get($plugin . '.Permissions');
     }
 
 /**
@@ -52,7 +57,7 @@ class AclHelper extends Helper
  */
     protected function _isWhitelist($url)
     {
-        return in_array($url, $this->settings['pathWhitelist']);
+        return in_array($url, (array)$this->settings['pathWhitelist']);
     }
 
 /**
@@ -85,7 +90,7 @@ class AclHelper extends Helper
             return $this->allowedActions[$roleId];
         }
 
-        $this->allowedActions[$roleId] = $this->AclPermission->getAllowedActionsByRoleId($roleId);
+        $this->allowedActions[$roleId] = $this->Permissions->getAllowedActionsByRoleId($roleId);
         return $this->allowedActions[$roleId];
     }
 
@@ -121,7 +126,7 @@ class AclHelper extends Helper
 /**
  * Returns an array of allowed actions for current logged in User
  *
- * @param int$userIdRole id
+ * @param int $userId User Id
  * @return array
  */
     public function getAllowedActionsByUserId($userId)
@@ -130,14 +135,14 @@ class AclHelper extends Helper
             return $this->allowedActions[$userId];
         }
 
-        $this->allowedActions[$userId] = $this->AclPermission->getAllowedActionsByUserId($userId);
+        $this->allowedActions[$userId] = $this->Permissions->getAllowedActionsByUserId($userId);
         return $this->allowedActions[$userId];
     }
 
 /**
  * Check if url is allowed for the User
  *
- * @param int$userIdUser Id
+ * @param int $userId User Id
  * @param array|string $url link/url to check
  * @return boolean
  */
@@ -147,11 +152,17 @@ class AclHelper extends Helper
             if (isset($url['admin']) && $url['admin'] == true && strpos($url['action'], 'admin_') === false) {
                 $url['action'] = 'admin_' . $url['action'];
             }
-            $plugin = empty($url['plugin']) ? null : Inflector::camelize($url['plugin']) . '/';
-            $path = '/:plugin/:controller/:action';
+            $prefix = isset($url['prefix']) ? $url['prefix'] : null;
+            $plugin = empty($url['plugin']) ? null : str_replace('/', '\\', Inflector::camelize($url['plugin'])) . '/';
+            $path = '/:plugin/:prefix/:controller/:action';
             $path = str_replace(
-                [':controller', ':action', ':plugin/'],
-                [Inflector::camelize($url['controller']), $url['action'], $plugin],
+                [ ':plugin/', ':prefix', ':controller', ':action' ],
+                [
+                    $plugin,
+                    Inflector::camelize($prefix),
+                    Inflector::camelize($url['controller']),
+                    $url['action'],
+                ],
                 'controllers/' . $path
             );
         } else {
@@ -162,13 +173,21 @@ class AclHelper extends Helper
         }
         $linkAction = str_replace('//', '/', $path);
 
+        // FIXME: need to convert from plain string url to acl format
+        if ($linkAction == '/') {
+            $linkAction = 'controllers/Croogo\\Nodes/Nodes/promoted';
+        }
+        if ($linkAction == '/admin') {
+            $linkAction = 'controllers/Croogo\\Dashboards/Admin/Dashboards/dashboard';
+        }
+
         if (in_array($linkAction, $this->getAllowedActionsByUserId($userId))) {
             return true;
         } else {
-            $userAro = ['model' => 'User', 'foreign_key' => $userId];
-            $nodes = $this->AclPermission->Aro->node($userAro);
-            if (isset($nodes[0]['Aro'])) {
-                if ($this->AclPermission->check($nodes[0]['Aro'], $linkAction)) {
+            $userAro = ['model' => 'Users', 'foreign_key' => $userId];
+            $nodes = $this->Permissions->Aro->node($userAro)->toArray();
+            if (isset($nodes[0])) {
+                if ($this->Permissions->check($userAro, $linkAction)) {
                     return true;
                 }
             }
