@@ -51,7 +51,7 @@ Croogo::hookHelper('*', 'Croogo/Core.CroogoApp');
 
 \Croogo\Core\timerStop('Croogo bootstrap');
 
-if (Configure::read('Croogo.installed')) {
+if (Configure::read('Croogo.installed') && $dbConfigExists) {
     return;
 }
 
@@ -60,6 +60,6 @@ Configure::write(
     'Croogo.installed',
     $dbConfigExists
 );
-if (!Configure::read('Croogo.installed')) {
+if (!Configure::read('Croogo.installed') || !$dbConfigExists) {
     Plugin::load('Croogo/Install', ['routes' => true]);
 }
