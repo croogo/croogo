@@ -155,7 +155,7 @@ class CroogoComponent extends Component
                         'prefix' => 'admin',
                         'plugin' => 'Croogo/Users',
                         'controller' => 'Users',
-                        'action' => 'edit',
+                        'action' => 'view',
                         $user['id'],
                     ],
                 ],
