@@ -233,6 +233,15 @@ class NodesController extends AppController
      * @param \Cake\Event\Event $event
      * @return void
      */
+    public function beforeCrudFind(Event $event)
+    {
+        $event->subject()->query->contain(['Users']);
+    }
+
+    /**
+     * @param \Cake\Event\Event $event
+     * @return void
+     */
     public function beforeCrudSave(Event $event)
     {
         if (($this->request->action === 'add') && ($this->request->param('pass.0'))) {
@@ -245,6 +254,7 @@ class NodesController extends AppController
     public function implementedEvents()
     {
         return parent::implementedEvents() + [
+            'Crud.beforeFind' => 'beforeCrudFind',
             'Crud.beforePaginate' => 'beforePaginate',
             'Crud.beforeLookup' => 'beforeLookup',
             'Crud.beforeRender' => 'beforeCrudRender',

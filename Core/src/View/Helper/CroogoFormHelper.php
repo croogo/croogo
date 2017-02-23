@@ -291,13 +291,7 @@ class CroogoFormHelper extends FormHelper
             ],
         ], $options);
 
-        if (strpos($fieldName, '.') !== false) {
-            list($model, $field) = explode('.', $fieldName);
-            $unlockField = $model . '.' . $field;
-        } else {
-            $field = $fieldName;
-            $unlockField = $this->defaultModel . '.' . $field;
-        }
+        $field = $fieldName;
         $defaults = $this->_acDefaults($field, $options['autocomplete']);
 
         $default = isset($options['default']) ? $options['default'] : key($defaults);
@@ -307,7 +301,7 @@ class CroogoFormHelper extends FormHelper
         ]);
         $out = $this->input($fieldName, $hiddenOptions);
 
-        $this->unlockField($unlockField);
+        $this->unlockField($fieldName);
 
         $autocomplete = $options['autocomplete'];
         $label = isset($options['label']) ? $options['label'] : Inflector::humanize($field);

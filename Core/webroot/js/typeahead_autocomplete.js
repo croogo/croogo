@@ -113,8 +113,8 @@
 						}
 					}
 					param[options.queryField] = q;
-					$.get(options.url, $.param(param), function (data) {
-						$.each(data, function (i, result) {
+					$.get(options.url, $.param(param), function (json) {
+						$.each(json.data, function (i, result) {
 							if (typeof map[result[options.displayField]] == 'undefined') {
 								map[result[options.displayField]] = result[options.primaryKey];
 								results.push(result[options.displayField]);

@@ -53,7 +53,11 @@ echo $this->Form->input('timezone', [
     'label' => __d('croogo', 'Timezone'),
     'class' => 'c-select',
 ]);
-echo $this->Form->input('role_id', ['label' => __d('croogo', 'Role'), 'class' => 'c-select']);
+echo $this->Form->input('role_id', [
+    'label' => __d('croogo', 'Role'),
+    'class' => 'c-select',
+    'empty' => true,
+]);
 echo $this->Html->tabEnd();
 $this->end();
 
