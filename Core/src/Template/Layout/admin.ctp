@@ -46,7 +46,7 @@
                 <div id="content" class="clearfix">
                     <?php echo $this->element('Croogo/Core.admin/breadcrumb'); ?>
                     <div id="inner-content" class="<?= $this->Theme->getCssClass('columnFull') ?>">
-                        <?php echo $this->Flash->render(); ?>
+                        <?php echo $this->Layout->sessionFlash(); ?>
                         <?php echo $this->fetch('content'); ?>
                     </div>
                 </div>

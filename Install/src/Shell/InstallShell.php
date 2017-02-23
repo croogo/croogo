@@ -220,6 +220,7 @@ class InstallShell extends Shell
         $Permission = TableRegistry::get('Croogo/Acl.Permissions');
         $public = 'Role-public';
         $registered = 'Role-registered';
+        $editor = 'Role-editor';
 
         $setup = [
 //            'controllers/Croogo\Comments/Comments/index' => [$public],
@@ -241,6 +242,8 @@ class InstallShell extends Shell
             'controllers/Croogo\Users/Users/logout' => [$registered],
             'controllers/Croogo\Users/Admin/Users/logout' => [$registered],
             'controllers/Croogo\Users/Users/view' => [$registered],
+
+            'controllers/Croogo\Dashboards/Admin/Dashboards' => [$editor],
         ];
 
         foreach ($setup as $aco => $roles) {

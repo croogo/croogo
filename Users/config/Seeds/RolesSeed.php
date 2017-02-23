@@ -1,5 +1,6 @@
 <?php
 
+use Cake\ORM\TableRegistry;
 use Phinx\Seed\AbstractSeed;
 
 class RolesSeed extends AbstractSeed
@@ -27,12 +28,29 @@ class RolesSeed extends AbstractSeed
             'created' => '2009-04-05 00:12:38',
             'updated' => '2009-04-07 01:41:45'
         ],
+        [
+            'id' => '4',
+            'title' => 'Editor',
+            'alias' => 'editor',
+            'parent_id' => 2,
+            'created' => '2017-01-18 01:39:00',
+            'updated' => '2017-01-18 01:39:00',
+        ],
+        [
+            'id' => '5',
+            'title' => 'Manager',
+            'alias' => 'manager',
+            'parent_id' => 4,
+            'created' => '2017-01-18 01:39:00',
+            'updated' => '2017-01-18 01:39:00',
+        ],
     ];
 
     public function run()
     {
-        $Table = $this->table('roles');
-        $Table->insert($this->records)->save();
+        $Roles = TableRegistry::get('Croogo/Users.Roles');
+        $entities = $Roles->newEntities($this->records);
+        $result = $Roles->saveMany($entities);
     }
 
 }
