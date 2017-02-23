@@ -149,8 +149,8 @@ class AclHelper extends Helper
     public function linkIsAllowedByUserId($userId, $url)
     {
         if (is_array($url)) {
-            if (isset($url['admin']) && $url['admin'] == true && strpos($url['action'], 'admin_') === false) {
-                $url['action'] = 'admin_' . $url['action'];
+            if (isset($url['admin']) && $url['admin'] == true && empty($url['prefix'])) {
+                $url['prefix'] = 'admin';
             }
             $prefix = isset($url['prefix']) ? $url['prefix'] : null;
             $plugin = empty($url['plugin']) ? null : str_replace('/', '\\', Inflector::camelize($url['plugin'])) . '/';

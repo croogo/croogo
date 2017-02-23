@@ -96,7 +96,7 @@ class AclCachedAuthorize extends BaseAuthorize
                 $Role = TableRegistry::get('Croogo/Users.Roles');
                 $Role->addBehavior('Croogo/Core.Aliasable');
             }
-            $this->_adminRole = $Role->byAlias('admin');
+            $this->_adminRole = $Role->byAlias('superadmin');
         }
         return $user['role_id'] == $this->_adminRole;
     }

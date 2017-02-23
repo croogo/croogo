@@ -48,7 +48,7 @@ class InstallTable extends Table
         $user['name'] = $user['username'];
         $user['email'] = '';
         $user['timezone'] = 'UTC';
-        $user['role_id'] = $Roles->byAlias('admin');
+        $user['role_id'] = $Roles->byAlias('superadmin');
         $user['status'] = true;
         $user['activation_key'] = md5(uniqid());
         $data = $Users->newEntity($user);

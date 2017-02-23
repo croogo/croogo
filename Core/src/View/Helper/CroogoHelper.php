@@ -150,7 +150,7 @@ class CroogoHelper extends Helper
                 }
                 continue;
             }
-            if ($currentRole != 'admin' && !$this->Acl->linkIsAllowedByUserId($userId, $menu['url'])) {
+            if ($currentRole != 'superadmin' && !$this->Acl->linkIsAllowedByUserId($userId, $menu['url'])) {
                 continue;
             }
 
