@@ -46,6 +46,7 @@ class UsersController extends AppController
             'editfields' => $this->Users->editFields(),
         ]);
 
+        $this->Crud->addListener('Crud.Api');
         $this->Crud->addListener('Croogo/Core.Chooser');
 
         $this->_setupPrg();

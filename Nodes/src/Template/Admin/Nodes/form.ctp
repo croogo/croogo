@@ -1,5 +1,7 @@
 <?php
 
+use Cake\Routing\Router;
+
 $this->extend('Croogo/Core./Common/admin_edit');
 $this->Html->script(array('Croogo/Nodes.admin'), ['block' => true]);
 
@@ -69,11 +71,23 @@ $this->start('panels');
     echo $this->Html->endBox();
 
     echo $this->Html->beginBox(__d('croogo', '%s attributes', $type->title));
-        echo $this->Form->input('user_id', [
+        echo $this->Form->autocomplete('user_id', [
             'label' => __d('croogo', 'Author'),
             'options' => $users,
-            'class' => 'c-select',
-            'default' => $loggedInUser['id']
+            'default' => $loggedInUser['id'],
+            'autocomplete' => [
+                'default' => $username,
+                'data-displayField' => 'username',
+                'data-queryField' => 'name',
+                'data-relatedElement' => '#user-id',
+                'data-url' => Router::url([
+                    'prefix' => 'admin',
+                    'plugin' => 'Croogo/Users',
+                    'controller' => 'Users',
+                    'action' => 'lookup',
+                    '_ext' => 'json',
+                ]),
+            ],
         ]);
         echo $this->Form->input('parent_id', [
             'label' => __d('croogo', 'Parent'),

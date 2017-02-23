@@ -10,6 +10,7 @@
             'Croogo/Core.croogo-admin',
             'Croogo/Core.tether.min.css',
             'Croogo/Core.bootstrap-datetimepicker.min',
+            'Croogo/Core.typeaheadjs',
         ]);
         echo $this->Layout->js();
         echo $this->Html->script([
@@ -23,12 +24,13 @@
             'Croogo/Core.jquery/supersubs',
             'Croogo/Core.jquery/jquery.elastic-1.6.1.js',
             'Croogo/Core.underscore-min',
+            'Croogo/Core.bootstrap3-typeahead.min',
             'Croogo/Core.admin',
             'Croogo/Core.sidebar',
             'Croogo/Core.choose',
             'Croogo/Core.moment-with-locales',
             'Croogo/Core.bootstrap-datetimepicker.min',
-            //'Croogo/Core.typeahead_autocomplete',
+            'Croogo/Core.typeahead_autocomplete',
         ]);
 
         echo $this->fetch('script');
