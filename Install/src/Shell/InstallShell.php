@@ -218,9 +218,10 @@ class InstallShell extends Shell
         $Roles->addBehavior('Croogo/Core.Aliasable');
 
         $Permission = TableRegistry::get('Croogo/Acl.Permissions');
+        $admin = 'Role-admin';
         $public = 'Role-public';
         $registered = 'Role-registered';
-        $editor = 'Role-editor';
+        $publisher = 'Role-publisher';
 
         $setup = [
 //            'controllers/Croogo\Comments/Comments/index' => [$public],
@@ -243,7 +244,16 @@ class InstallShell extends Shell
             'controllers/Croogo\Users/Admin/Users/logout' => [$registered],
             'controllers/Croogo\Users/Users/view' => [$registered],
 
-            'controllers/Croogo\Dashboards/Admin/Dashboards' => [$editor],
+            'controllers/Croogo\Dashboards/Admin/Dashboards' => [$admin],
+            'controllers/Croogo\Nodes/Admin/Nodes' => [$publisher],
+            'controllers/Croogo\Menus/Admin/Menus' => [$publisher],
+            'controllers/Croogo\Menus/Admin/Links' => [$publisher],
+            'controllers/Croogo\Blocks/Admin/Blocks' => [$publisher],
+            'controllers/Croogo\FileManager/Admin/Attachments' => [$publisher],
+            'controllers/Croogo\FileManager/Admin/FileManager' => [$publisher],
+            'controllers/Croogo\Contacts/Admin/Contacts' => [$publisher],
+            'controllers/Croogo\Contacts/Admin/Messages' => [$publisher],
+            'controllers/Croogo\Users/Admin/Users/view' => [$admin],
         ];
 
         foreach ($setup as $aco => $roles) {

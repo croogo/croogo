@@ -122,7 +122,7 @@ class RoleAroBehavior extends Behavior
         if ($id == $model->byAlias('public')) {
             return [];
         }
-        $adminRoleId = $model->byAlias('admin');
+        $adminRoleId = $model->byAlias('superadmin');
         $excludes = Hash::filter(array_values([$adminRoleId, $id]));
         $options = ['conditions' => [
             'NOT' => [$model->alias . '.id' => $excludes],

@@ -36,32 +36,37 @@ class PermissionsTable extends \Acl\Model\Table\PermissionsTable
  */
     public function getAllowedActionsByRoleId($roleId)
     {
-        $aro = $this->Aro->node([
-            'model' => 'Role',
+        $aroIds = $this->Aro->node([
+            'model' => 'Roles',
             'foreign_key' => $roleId,
-        ]);
-        if (empty($aro[0]['Aro']['id'])) {
+        ])->extract('id')->toArray();
+        if (empty($aroIds[0])) {
             return [];
         }
-        $aroId = $aro[0]['Aro']['id'];
+        $aroId = $aroIds[0];
 
         $permissionsForCurrentRole = $this->find('list', [
             'conditions' => [
-                'Permission.aro_id' => $aroId,
-                'Permission._create' => 1,
-                'Permission._read' => 1,
-                'Permission._update' => 1,
-                'Permission._delete' => 1,
+                'Permissions.aro_id' => $aroId,
+                'Permissions._create' => 1,
+                'Permissions._read' => 1,
+                'Permissions._update' => 1,
+                'Permissions._delete' => 1,
             ],
             'fields' => [
-                'Permission.id',
-                'Permission.aco_id',
+                'Permissions.id',
+                'Permissions.aco_id',
             ],
-        ]);
+            'keyField' => 'id',
+            'valueField' => 'aco_id',
+        ])->toArray();
         $permissionsByActions = [];
         foreach ($permissionsForCurrentRole as $acoId) {
-            $path = $this->Aco->getPath($acoId);
-            $path = join('/', Hash::extract($path, '{n}.Aco.alias'));
+            $pathQuery = $this->Aco->find('path', ['for' => $acoId]);
+            if (!$pathQuery) {
+                continue;
+            }
+            $path = join('/', $pathQuery->extract('alias')->toArray());
             $permissionsByActions[] = $path;
         }
 
@@ -76,40 +81,43 @@ class PermissionsTable extends \Acl\Model\Table\PermissionsTable
  */
     public function getAllowedActionsByUserId($userId)
     {
-        $aro = $this->Aro->node([
-            'model' => 'User',
+        $aroIds = $this->Aro->node([
+            'model' => 'Users',
             'foreign_key' => $userId,
-        ]);
-        if (empty($aro[0]['Aro']['id'])) {
+        ])->extract('id')->toArray();
+        if (empty($aroIds[0])) {
             return [];
         }
-        $aroIds = Hash::extract($aro, '{n}.Aro.id');
+        $aroId = $aroIds[0];
+
         if (Configure::read('Access Control.multiRole')) {
-            $RolesUser = TableRegistry::get('Users.RolesUser');
+            $RolesUser = TableRegistry::get('Croogo/Users.RolesUser');
             $rolesAro = $RolesUser->getRolesAro($userId);
             $aroIds = array_unique(Hash::merge($aroIds, $rolesAro));
         }
 
         $permissionsForCurrentUser = $this->find('list', [
             'conditions' => [
-                'Permission.aro_id' => $aroIds,
-                'Permission._create' => 1,
-                'Permission._read' => 1,
-                'Permission._update' => 1,
-                'Permission._delete' => 1,
+                'Permissions.aro_id IN' => $aroIds,
+                'Permissions._create' => 1,
+                'Permissions._read' => 1,
+                'Permissions._update' => 1,
+                'Permissions._delete' => 1,
             ],
             'fields' => [
-                'Permission.id',
-                'Permission.aco_id',
+                'Permissions.id',
+                'Permissions.aco_id',
             ],
-        ]);
+            'keyField' => 'id',
+            'valueField' => 'aco_id',
+        ])->toArray();
         $permissionsByActions = [];
         foreach ($permissionsForCurrentUser as $acoId) {
-            $path = $this->Aco->getPath($acoId);
-            if (!$path) {
+            $pathQuery = $this->Aco->find('path', ['for' => $acoId]);
+            if (!$pathQuery) {
                 continue;
             }
-            $path = join('/', Hash::extract($path, '{n}.Aco.alias'));
+            $path = join('/', $pathQuery->extract('alias')->toArray());
             if (!in_array($path, $permissionsByActions)) {
                 $permissionsByActions[] = $path;
             }
