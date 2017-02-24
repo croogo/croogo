@@ -154,14 +154,16 @@ class AclHelper extends Helper
             }
             $prefix = isset($url['prefix']) ? $url['prefix'] : null;
             $plugin = empty($url['plugin']) ? null : str_replace('/', '\\', Inflector::camelize($url['plugin'])) . '/';
+            $controller = empty($url['controller']) ? null : $url['controller'];
+            $action = empty($url['action']) ? null : $url['action'];
             $path = '/:plugin/:prefix/:controller/:action';
             $path = str_replace(
                 [ ':plugin/', ':prefix', ':controller', ':action' ],
                 [
                     $plugin,
                     Inflector::camelize($prefix),
-                    Inflector::camelize($url['controller']),
-                    $url['action'],
+                    Inflector::camelize($controller),
+                    $action,
                 ],
                 'controllers/' . $path
             );
