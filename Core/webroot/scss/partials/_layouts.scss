@@ -10,6 +10,9 @@ body {
     height: 100%;
     background-color: $croogo-background-color;
 
+    /* Negative indent footer by it's height */
+    margin-bottom: -42px;
+
     &.admin-login {
         background-color: $gray-lightest;
         #content-container {
@@ -24,8 +27,6 @@ body {
     min-height: 100%;
     height: auto !important;
     height: 100%;
-    /* Negative indent footer by it's height */
-    margin-bottom: -42px;
 
     .full {
         #content {
@@ -99,8 +100,9 @@ header {
 }
 
 footer {
-    margin-top: -40px;
     height: 40px;
+    position: absolute;
+    width: 100%;
 
     background: $gray-dark;
     .navbar-inner {
