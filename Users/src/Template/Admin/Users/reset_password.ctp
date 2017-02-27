@@ -8,7 +8,7 @@ $this->Html
         'action' => 'edit',
         $user->id,
     ])
-    ->addCrumb(__d('croogo', 'Reset Password'));
+    ->addCrumb(__d('croogo', 'Reset Password'), $this->request->here());
 $this->assign('form-start', $this->Form->create($user));
 
 $this->start('tab-heading');

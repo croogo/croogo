@@ -2,11 +2,10 @@
 
 $this->extend('/Common/admin_edit');
 
-$this->Html->addCrumb(__d('croogo', 'Extensions'),
-    ['plugin' => 'Croogo/Extensions', 'controller' => 'extensions_plugins', 'action' => 'index'])
+$this->Html->addCrumb(__d('croogo', 'Extensions'))
     ->addCrumb(__d('croogo', 'Plugins'),
         ['plugin' => 'Croogo/Extensions', 'controller' => 'extensions_plugins', 'action' => 'index'])
-    ->addCrumb(__d('croogo', 'Upload'));
+    ->addCrumb(__d('croogo', 'Upload'), $this->request->here());
 
 $this->append('form-start', $this->Form->create(null, [
     'url' => [

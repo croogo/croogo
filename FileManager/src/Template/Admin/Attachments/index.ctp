@@ -6,7 +6,7 @@
 $this->assign('title', __d('croogo', 'Attachments'));
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->Html->addCrumb(__d('croogo', 'Attachments'));
+$this->Html->addCrumb(__d('croogo', 'Attachments'), $this->request->here());
 
 $this->Croogo->adminScript('Croogo/FileManager.admin');
 $this->Html->script([

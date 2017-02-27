@@ -5,7 +5,8 @@ $this->assign('title', __d('croogo', 'Create content'));
 <?php
 $this->Html
     ->addCrumb(__d('croogo', 'Content'), ['action' => 'index'])
-    ->addCrumb(__d('croogo', 'Create'));
+    ->addCrumb(__d('croogo', 'Create'), $this->request->here());
+
 ?>
 <div class="<?= $this->Theme->getCssClass('row') ?>">
     <div class="<?= $this->Theme->getCssClass('columnFull') ?>">

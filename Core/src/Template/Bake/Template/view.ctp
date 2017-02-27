@@ -46,7 +46,7 @@ $this->Html
     ->addCrumb(__d('croogo', '<%= $pluralHumanName %>'), ['action' => 'index']);
 
 <% if (isset($displayField)): %>
-    $this->Html->addCrumb($<%= $singularVar %>-><%= $displayField %>, $this->request->url);
+    $this->Html->addCrumb($<%= $singularVar %>-><%= $displayField %>, $this->request->here());
 <% endif; %>
 
 $this->append('actions');

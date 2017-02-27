@@ -6,17 +6,19 @@ $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html->addCrumb(__d('croogo', 'Contacts'), ['controller' => 'contacts', 'action' => 'index']);
 
-if (isset($criteria['Message.status'])) {
+$status = $this->request->query('status');
+
+if (isset($status)) {
     $this->Html->addCrumb(__d('croogo', 'Messages'), ['action' => 'index']);
-    if ($criteria['Message.status'] == '1') {
-        $this->Html->addCrumb(__d('croogo', 'Read'));
+    if ($status == '1') {
+        $this->Html->addCrumb(__d('croogo', 'Read'), $this->request->here());
         $this->assign('title', __d('croogo', 'Messages: Read'));
     } else {
-        $this->Html->addCrumb(__d('croogo', 'Unread'));
+        $this->Html->addCrumb(__d('croogo', 'Unread'), $this->request->here());
         $this->assign('title', __d('croogo', 'Messages: Unread'));
     }
 } else {
-    $this->Html->addCrumb(__d('croogo', 'Messages'));
+    $this->Html->addCrumb(__d('croogo', 'Messages'), $this->request->here());
 }
 
 $this->append('table-footer', $this->element('admin/modal', [

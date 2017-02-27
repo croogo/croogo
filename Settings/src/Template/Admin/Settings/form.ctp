@@ -9,11 +9,11 @@ $this->Html
     ]);
 
 if ($this->request->param('action') == 'edit') {
-    $this->Html->addCrumb($setting->key);
+    $this->Html->addCrumb($setting->key, $this->request->here());
 }
 
 if ($this->request->param('action') == 'add') {
-    $this->Html->addCrumb(__d('croogo', 'Add'));
+    $this->Html->addCrumb(__d('croogo', 'Add'), $this->request->here());
 }
 
 $this->append('form-start', $this->Form->create($setting, [

@@ -6,7 +6,7 @@ $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Html->addCrumb(__d('croogo', 'Settings'),
     ['plugin' => 'Croogo/Settings', 'controller' => 'Settings', 'action' => 'index'])
-    ->addCrumb($prefix);
+    ->addCrumb($prefix, $this->request->here());
 
 $this->assign('form-start', $this->Form->create(null, [
     'class' => 'protected-form',

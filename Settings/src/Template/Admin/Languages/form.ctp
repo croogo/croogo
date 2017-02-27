@@ -7,12 +7,12 @@ $this->Html->addCrumb(__d('croogo', 'Settings'),
     ->addCrumb(__d('croogo', 'Language'),
         ['plugin' => 'Croogo/Settings', 'controller' => 'languages', 'action' => 'index']);
 
-if ($this->request->params['action'] == 'admin_edit') {
-    $this->Html->addCrumb($language->title);
+if ($this->request->params['action'] == 'edit') {
+    $this->Html->addCrumb($language->title, $this->request->here());
 }
 
-if ($this->request->params['action'] == 'admin_add') {
-    $this->Html->addCrumb(__d('croogo', 'Add'));
+if ($this->request->params['action'] == 'add') {
+    $this->Html->addCrumb(__d('croogo', 'Add'), $this->request->here());
 }
 
 $this->append('form-start', $this->Form->create($language));

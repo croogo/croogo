@@ -7,11 +7,11 @@ $this->Html->addCrumb(__d('croogo', 'Users'),
         ['plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index']);
 
 if ($this->request->param('action') == 'edit') {
-    $this->Html->addCrumb($user->name);
+    $this->Html->addCrumb($user->name, $this->request->here());
     $this->assign('title', __d('croogo', 'Edit user %s', $user->username));
 } else {
     $this->assign('title', __d('croogo', 'New user'));
-    $this->Html->addCrumb(__d('croogo', 'New user'));
+    $this->Html->addCrumb(__d('croogo', 'New user'), $this->request->here());
 }
 
 $this->start('actions');

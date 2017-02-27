@@ -5,11 +5,11 @@ $this->Html
     ->addCrumb(__d('croogo', 'Roles'), ['plugin' => 'Croogo/Users', 'controller' => 'Roles', 'action' => 'index']);
 
 if ($this->request->param('action') == 'edit') {
-    $this->Html->addCrumb($role->title);
+    $this->Html->addCrumb($role->title, $this->request->here());
 }
 
 if ($this->request->param('action') == 'add') {
-    $this->Html->addCrumb(__d('croogo', 'Add'));
+    $this->Html->addCrumb(__d('croogo', 'Add'), $this->request->here());
 }
 
 $this->assign('form-start', $this->Form->create($role));

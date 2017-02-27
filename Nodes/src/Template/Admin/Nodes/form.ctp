@@ -12,11 +12,11 @@ if ($this->request->params['action'] == 'add') {
     $this->assign('title', __d('croogo', 'Create content: %s', $type->title));
 
     $this->Html->addCrumb(__d('croogo', 'Create'), ['action' => 'create'])
-        ->addCrumb($type->title);
+        ->addCrumb($type->title, $this->request->here());
 }
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Html->addCrumb($node->title);
+    $this->Html->addCrumb($node->title, $this->request->here());
 }
 
 $this->append('form-start', $this->Form->create($node, [

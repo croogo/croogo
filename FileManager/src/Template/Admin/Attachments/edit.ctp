@@ -5,7 +5,7 @@ $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Html->addCrumb(__d('croogo', 'Attachments'),
         ['plugin' => 'Croogo/FileManager', 'controller' => 'attachments', 'action' => 'index'])
-    ->addCrumb($attachment->title);
+    ->addCrumb($attachment->title, $this->request->here());
 
 $this->append('form-start', $this->Form->create($attachment));
 
