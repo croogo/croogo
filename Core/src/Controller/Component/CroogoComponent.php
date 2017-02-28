@@ -253,6 +253,7 @@ class CroogoComponent extends Component
  *
  * @return void
  * @see CroogoComponent::redirect()
+ * @deprecated Use Crud.beforeRedirect event and AppController::redirectToSelf
  */
     public function setReferer()
     {
@@ -275,6 +276,7 @@ class CroogoComponent extends Component
  * @param array $indexUrl
  * @return void|\Cake\Network\Response
  * @see CroogoComponent::setReferer()
+ * @deprecated Use Crud.beforeRedirect event and AppController::redirectToSelf
  */
     public function redirect($url, $status = null, $exit = true, $indexUrl = [])
     {
@@ -282,7 +284,7 @@ class CroogoComponent extends Component
         $this->_controller->request->session()->delete('Croogo.referer');
         if (is_array($url)) {
             if (isset($url['action']) && $url['action'] === 'edit') {
-                if (!isset($this->_controller->request->data['apply'])) {
+                if (!isset($this->_controller->request->data['_apply'])) {
                     $url = !empty($indexUrl) ? $indexUrl : ['action' => 'index'];
                 }
             } elseif (isset($referer['url'])) {

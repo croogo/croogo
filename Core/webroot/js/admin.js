@@ -92,12 +92,21 @@ Admin.protectForms = function () {
 }
 
 Admin.formFeedback = function () {
-  $('body').on('submit', 'form', function () {
+  $('body').on('submit', 'form', function (el) {
     var submitButtons = $(this).find('[type=submit]');
     submitButtons
-      .addClass('disabled')
-      .prepend(' ')
-      .prepend($('<i>').addClass(Admin.spinnerClass()));
+      .addClass('disabled');
+
+    if (el.originalEvent.explicitOriginalTarget) {
+      var $button = $(el.originalEvent.explicitOriginalTarget);
+      if ($button.find('i').length == 0) {
+        $button
+          .prepend(' ')
+          .prepend($('i').addClass(Admin.spinnerClass()));
+      } else {
+        $button.find('i').attr('class', Admin.spinnerClass());
+      }
+    }
   });
 }
 
