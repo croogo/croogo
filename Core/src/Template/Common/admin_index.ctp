@@ -153,7 +153,7 @@ $tableFooters = trim($this->fetch('table-footer'));
                 <?php endif; ?>
 
                 <?php if ($bulkAction = trim($this->fetch('bulk-action'))): ?>
-                <div class="<?php echo $rowClass; ?>" id="bulk-action">
+                <div id="bulk-action">
                     <?php echo $bulkAction; ?>
                 </div>
             <?php endif; ?>
