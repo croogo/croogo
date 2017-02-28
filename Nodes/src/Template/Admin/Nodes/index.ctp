@@ -47,7 +47,7 @@ $this->append('table-body');
                 ?>
                 </span>
 
-                <?php if ($node->promoted == 1): ?>
+                <?php if ($node->promote == 1): ?>
                     <span class="label label-info"><?php echo __d('croogo', 'promoted'); ?></span>
                 <?php endif ?>
 
