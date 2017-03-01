@@ -3,10 +3,12 @@
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
-Router::plugin('Croogo/Acl', ['path' => '/'], function (RouteBuilder $routeBuilder) {
-    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
-        $routeBuilder->extensions(['json']);
+Router::plugin('Croogo/Acl', ['path' => '/'], function (RouteBuilder $route) {
+    $route->prefix('admin', function (RouteBuilder $route) {
+        $route->extensions(['json']);
 
-        $routeBuilder->connect('/acl/:controller/:action/*', [ ]);
+        $route->scope('/acl', [], function (RouteBuilder $route) {
+            $route->fallbacks();
+        });
     });
 });

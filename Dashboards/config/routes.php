@@ -3,11 +3,12 @@
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
-Router::plugin('Croogo/Dashboards', ['path' => '/'], function (RouteBuilder $routeBuilder) {
-    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
-        $routeBuilder->extensions(['json']);
+Router::plugin('Croogo/Dashboards', ['path' => '/'], function (RouteBuilder $route) {
+    $route->prefix('admin', function (RouteBuilder $route) {
+        $route->extensions(['json']);
 
-        $routeBuilder->connect('/dashboards', ['controller' => 'Dashboards', 'action' => 'dashboard']);
-        $routeBuilder->connect('/dashboards/:action/*', ['controller' => 'Dashboards']);
+        $route->scope('/dashboards', [], function (RouteBuilder $route) {
+            $route->fallbacks();
+        });
     });
 });

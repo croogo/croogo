@@ -3,12 +3,14 @@
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
-Router::plugin('Croogo/Comments', function (RouteBuilder $routeBuilder) {
-    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
-        $routeBuilder->extensions(['json']);
+Router::plugin('Croogo/Comments', ['path' => '/'], function (RouteBuilder $route) {
+    $route->prefix('admin', function (RouteBuilder $route) {
+        $route->extensions(['json']);
 
-        $routeBuilder->connect('/comments/:controller/:action/*', [ ]);
+        $route->scope('/comments', [], function (RouteBuilder $route) {
+            $route->fallbacks();
+        });
+
+        $route->fallbacks();
     });
-
-    $routeBuilder->fallbacks();
 });

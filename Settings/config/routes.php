@@ -3,10 +3,12 @@
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
-Router::plugin('Croogo/Settings', ['path' => '/'], function (RouteBuilder $routeBuilder) {
-    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
-        $routeBuilder->extensions(['json']);
+Router::plugin('Croogo/Settings', ['path' => '/'], function (RouteBuilder $route) {
+    $route->prefix('admin', function (RouteBuilder $route) {
+        $route->extensions(['json']);
 
-        $routeBuilder->connect('/settings/:controller/:action/*', [ ]);
+        $route->scope('/settings', [], function (RouteBuilder $route) {
+            $route->fallbacks();
+        });
     });
 });

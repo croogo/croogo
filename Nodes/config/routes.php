@@ -3,18 +3,20 @@
 use Cake\Routing\RouteBuilder;
 use Croogo\Core\Router;
 
-Router::plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $routeBuilder) {
-    $routeBuilder->prefix('admin', function (RouteBuilder $routeBuilder) {
-        $routeBuilder->extensions(['json']);
+Router::plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $route) {
+    $route->prefix('admin', function (RouteBuilder $route) {
+        $route->extensions(['json']);
 
-        $routeBuilder->connect('/nodes/:action/*', ['controller' => 'Nodes']);
+        $route->scope('/nodes', [], function (RouteBuilder $route) {
+            $route->fallbacks();
+        });
     });
 
-    $routeBuilder->connect('/', ['controller' => 'Nodes', 'action' => 'promoted']);
-    $routeBuilder->connect('/promoted/*', ['controller' => 'Nodes', 'action' => 'promoted']);
-    $routeBuilder->connect('/search/*', ['controller' => 'Nodes', 'action' => 'search']);
+    $route->connect('/', ['controller' => 'Nodes', 'action' => 'promoted']);
+    $route->connect('/promoted/*', ['controller' => 'Nodes', 'action' => 'promoted']);
+    $route->connect('/search/*', ['controller' => 'Nodes', 'action' => 'search']);
 
     // Content types
-    Router::routableContentTypes($routeBuilder);
-    Router::contentType('_placeholder', $routeBuilder);
+    Router::routableContentTypes($route);
+    Router::contentType('_placeholder', $route);
 });
