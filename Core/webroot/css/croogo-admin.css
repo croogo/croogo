@@ -8779,6 +8779,13 @@ a.bg-danger:focus, a.bg-danger:hover {
   width: 100%; }
 
 /* line 20, webroot/scss/partials/_buttons.scss */
+.card-buttons {
+  margin-bottom: 10px; }
+  /* line 21, webroot/scss/partials/_buttons.scss */
+  .card-buttons .btn {
+    margin-right: 4px; }
+
+/* line 27, webroot/scss/partials/_buttons.scss */
 .toggle-icon {
   cursor: pointer; }
 
@@ -8857,30 +8864,30 @@ body {
   padding: 0;
   margin: 0;
   height: 100%;
-  background-color: #cccccc; }
-  /* line 13, webroot/scss/partials/_layouts.scss */
+  background-color: #cccccc;
+  /* Negative indent footer by it's height */
+  margin-bottom: -42px; }
+  /* line 16, webroot/scss/partials/_layouts.scss */
   html.admin-login,
   body.admin-login {
     background-color: #eeeeee; }
-    /* line 15, webroot/scss/partials/_layouts.scss */
+    /* line 18, webroot/scss/partials/_layouts.scss */
     html.admin-login #content-container,
     body.admin-login #content-container {
       margin-top: 0;
       background-color: #eeeeee; }
 
-/* line 22, webroot/scss/partials/_layouts.scss */
+/* line 25, webroot/scss/partials/_layouts.scss */
 #wrap {
   overflow: hidden;
   min-height: 100%;
   height: auto !important;
-  height: 100%;
-  /* Negative indent footer by it's height */
-  margin-bottom: -42px; }
-  /* line 31, webroot/scss/partials/_layouts.scss */
+  height: 100%; }
+  /* line 32, webroot/scss/partials/_layouts.scss */
   #wrap .full #content {
     margin: 0 10px; }
 
-/* line 41, webroot/scss/partials/_layouts.scss */
+/* line 42, webroot/scss/partials/_layouts.scss */
 #content-container {
   padding: 0;
   background: #555555;
@@ -8888,7 +8895,7 @@ body {
   margin-bottom: -99999px;
   margin-top: 56px; }
 
-/* line 50, webroot/scss/partials/_layouts.scss */
+/* line 51, webroot/scss/partials/_layouts.scss */
 #content {
   background: #fff;
   border: 1px solid #fff;
@@ -8899,76 +8906,77 @@ body {
   padding: 20px;
   min-height: 400px; }
 
-/* line 61, webroot/scss/partials/_layouts.scss */
+/* line 62, webroot/scss/partials/_layouts.scss */
 #inner-content {
   margin: 0; }
 
-/* line 65, webroot/scss/partials/_layouts.scss */
+/* line 66, webroot/scss/partials/_layouts.scss */
 .content {
   padding: 0px 10px; }
-  /* line 68, webroot/scss/partials/_layouts.scss */
+  /* line 69, webroot/scss/partials/_layouts.scss */
   .content table {
     margin: 10px 0px; }
 
-/* line 73, webroot/scss/partials/_layouts.scss */
+/* line 74, webroot/scss/partials/_layouts.scss */
 .admin-login-box {
   margin-top: 5%;
   max-width: 352px; }
-  /* line 78, webroot/scss/partials/_layouts.scss */
+  /* line 79, webroot/scss/partials/_layouts.scss */
   .admin-login-box #authMessage {
     margin-bottom: 10px; }
-  /* line 82, webroot/scss/partials/_layouts.scss */
+  /* line 83, webroot/scss/partials/_layouts.scss */
   .admin-login-box .input-prepend {
     margin-bottom: 10px; }
-  /* line 86, webroot/scss/partials/_layouts.scss */
+  /* line 87, webroot/scss/partials/_layouts.scss */
   .admin-login-box .forgot {
     vertical-align: middle;
     margin: 0 20px; }
 
-/* line 93, webroot/scss/partials/_layouts.scss */
+/* line 94, webroot/scss/partials/_layouts.scss */
 header {
   border-bottom: 1px solid #707070; }
-  /* line 96, webroot/scss/partials/_layouts.scss */
+  /* line 97, webroot/scss/partials/_layouts.scss */
   header.navbar {
     height: 56px; }
 
-/* line 101, webroot/scss/partials/_layouts.scss */
+/* line 102, webroot/scss/partials/_layouts.scss */
 footer {
-  margin-top: -40px;
   height: 40px;
+  position: absolute;
+  width: 100%;
   background: #333333;
   border-top: 1px solid #707070;
   color: #fff; }
-  /* line 106, webroot/scss/partials/_layouts.scss */
+  /* line 108, webroot/scss/partials/_layouts.scss */
   footer .navbar-inner {
     border-radius: 0;
     margin: 0 auto;
     padding: 0; }
-  /* line 112, webroot/scss/partials/_layouts.scss */
+  /* line 114, webroot/scss/partials/_layouts.scss */
   footer .footer-content {
     padding: 10px;
     text-align: center;
     color: #fff;
     font-size: 13px; }
-  /* line 122, webroot/scss/partials/_layouts.scss */
+  /* line 124, webroot/scss/partials/_layouts.scss */
   footer a {
     color: #fff; }
-  /* line 125, webroot/scss/partials/_layouts.scss */
+  /* line 127, webroot/scss/partials/_layouts.scss */
   footer a:hover {
     color: #fff; }
-  /* line 129, webroot/scss/partials/_layouts.scss */
+  /* line 131, webroot/scss/partials/_layouts.scss */
   footer.navbar-inverse {
     background: #333333; }
 
-/* line 134, webroot/scss/partials/_layouts.scss */
+/* line 136, webroot/scss/partials/_layouts.scss */
 .hidden {
   display: none; }
 
-/* line 138, webroot/scss/partials/_layouts.scss */
+/* line 140, webroot/scss/partials/_layouts.scss */
 .selector {
   position: relative;
   cursor: pointer; }
-  /* line 142, webroot/scss/partials/_layouts.scss */
+  /* line 144, webroot/scss/partials/_layouts.scss */
   .selector::before {
     content: '';
     position: absolute;
@@ -8979,7 +8987,7 @@ footer {
     background: rgba(150, 150, 150, 0.5);
     opacity: 0;
     transition: opacity .1s linear; }
-  /* line 153, webroot/scss/partials/_layouts.scss */
+  /* line 155, webroot/scss/partials/_layouts.scss */
   .selector:hover:before {
     opacity: 1; }
 
