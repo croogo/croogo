@@ -31,7 +31,9 @@ $this->end();
 
 $this->append('panels');
 echo $this->Html->beginBox(__d('croogo', 'Publishing'));
-echo $this->element('Croogo/Core.admin/buttons', ['type' => 'file']);
+echo $this->element('Croogo/Core.admin/buttons', [
+    'applyText' => false,
+]);
 echo $this->Html->endBox();
 $this->end();
 

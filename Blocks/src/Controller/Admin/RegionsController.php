@@ -2,6 +2,8 @@
 
 namespace Croogo\Blocks\Controller\Admin;
 
+use Cake\Event\Event;
+
 /**
  * Regions Controller
  *
@@ -27,4 +29,19 @@ class RegionsController extends AppController
             'searchFields' => ['title']
         ]);
     }
+
+    public function implementedEvents()
+    {
+        return parent::implementedEvents() + [
+            'Crud.beforeRedirect' => 'beforeCrudRedirect',
+        ];
+    }
+
+    public function beforeCrudRedirect(Event $event)
+    {
+        if ($this->redirectToSelf($event)) {
+            return;
+        }
+    }
+
 }

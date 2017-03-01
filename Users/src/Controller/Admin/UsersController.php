@@ -65,6 +65,7 @@ class UsersController extends AppController
             'Croogo.beforeSetupAdminData' => 'beforeSetupAdminData',
             'Crud.beforePaginate' => 'beforePaginate',
             'Crud.beforeLookup' => 'beforeLookup',
+            'Crud.beforeRedirect' => 'beforeCrudRedirect',
             'Crud.beforeSave' => 'beforeCrudSave',
             'Crud.afterSave' => 'afterCrudSave',
         ];
@@ -135,6 +136,13 @@ class UsersController extends AppController
             if ($this->request->data('notification') != null) {
                 $this->__sendActivationEmail($event->subject()->entity);
             }
+        }
+    }
+
+    public function beforeCrudRedirect(Event $event)
+    {
+        if ($this->redirectToSelf($event)) {
+            return;
         }
     }
 

@@ -50,4 +50,11 @@ echo $this->Form->input('description', [
 ]);
 echo $this->Html->tabEnd();
 $this->end();
+
+$this->start('buttons');
+    echo $this->Html->beginBox(__d('croogo', 'Publishing'));
+    echo $this->element('Croogo/Core.admin/buttons', ['type' => 'Terms']);
+    echo $this->Html->endBox();
+$this->end();
+
 $this->assign('form-end', $this->Form->end());

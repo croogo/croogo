@@ -11,6 +11,7 @@ use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
 use Croogo\Core\Croogo;
+use Croogo\Core\Database\Type\ParamsType;
 use Croogo\Core\Status;
 
 /**
@@ -39,6 +40,13 @@ class CroogoHelper extends Helper
     ];
 
     /**
+     * ParamsType instance
+     *
+     * @var Croogo\Core\Database\Type\ParamsType;
+     */
+    protected $_ParamsType;
+
+    /**
      * Provides backward compatibility for deprecated methods
      */
     public function __call($method, $params)
@@ -64,6 +72,7 @@ class CroogoHelper extends Helper
         $this->helpers[] = Configure::read('Site.acl_plugin') . '.' . Configure::read('Site.acl_plugin');
         parent::__construct($View, $settings);
         $this->_CroogoStatus = new Status();
+        $this->_ParamsType = new ParamsType;
     }
 
     /**
@@ -569,4 +578,14 @@ class CroogoHelper extends Helper
 
         return $this->_View->cell('Croogo/Core.Admin/LinkChooser', [$target]);
     }
+
+    /**
+     * Helper method to convert a params array for display in <input>
+     * @return string Formatted params string
+     */
+    public function paramsAsString($paramsArray)
+    {
+        return $this->_ParamsType->arrayToParams($paramsArray);
+    }
+
 }

@@ -33,4 +33,8 @@ endforeach;
 echo $this->Html->tabEnd();
 $this->end();
 
-$this->assign('form-end', $this->Form->end());
+$this->start('buttons');
+    echo $this->Html->beginBox(__d('croogo', 'Publishing'));
+    echo $this->element('Croogo/Core.admin/buttons', ['applyText' => false]);
+    echo $this->Html->endBox();
+$this->end();

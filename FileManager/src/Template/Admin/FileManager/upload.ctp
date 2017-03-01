@@ -32,7 +32,10 @@ $this->end();
 
 $this->append('panels');
 echo $this->Html->beginBox(__d('croogo', 'Publishing'));
-echo $this->element('Croogo/Core.admin/buttons', ['saveText' => __d('croogo', 'Upload file')]);
+echo $this->element('Croogo/Core.admin/buttons', [
+    'saveText' => __d('croogo', 'Upload file'),
+    'applyText' => false,
+]);
 echo $this->Html->endBox();
 
 echo $this->Croogo->adminBoxes();

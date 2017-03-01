@@ -29,5 +29,3 @@ echo $this->Form->input('alias', [
 ]);
 echo $this->Html->tabEnd();
 $this->end();
-
-$this->assign('form-end', $this->Form->end());

@@ -29,7 +29,10 @@ $this->end();
 
 $this->append('panels');
 echo $this->Html->beginBox(__d('croogo', 'Publishing'));
-echo $this->element('Croogo/Core.admin/buttons', ['saveText' => __d('croogo', 'Rename file')]);
+echo $this->element('Croogo/Core.admin/buttons', [
+    'saveText' => __d('croogo', 'Rename file'),
+    'applyText' => false,
+]);
 echo $this->Html->endBox();
 $this->end();
 

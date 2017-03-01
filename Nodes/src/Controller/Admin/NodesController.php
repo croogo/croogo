@@ -251,6 +251,17 @@ class NodesController extends AppController
         $this->Crud->action()->config('name', $event->subject()->entity->type);
     }
 
+    /**
+     * @param \Cake\Event\Event $event
+     * @return void
+     */
+    public function beforeCrudRedirect(Event $event)
+    {
+        if ($this->redirectToSelf($event)) {
+            return;
+        }
+    }
+
     public function implementedEvents()
     {
         return parent::implementedEvents() + [
@@ -258,7 +269,8 @@ class NodesController extends AppController
             'Crud.beforePaginate' => 'beforePaginate',
             'Crud.beforeLookup' => 'beforeLookup',
             'Crud.beforeRender' => 'beforeCrudRender',
-            'Crud.beforeSave' => 'beforeCrudSave'
+            'Crud.beforeSave' => 'beforeCrudSave',
+            'Crud.beforeRedirect' => 'beforeCrudRedirect',
         ];
     }
 

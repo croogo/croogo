@@ -2,6 +2,8 @@
 
 namespace Croogo\Contacts\Controller\Admin;
 
+use Cake\Event\Event;
+
 /**
  * Contacts Controller
  *
@@ -24,4 +26,19 @@ class ContactsController extends AppController
             'displayFields' => $this->Contacts->displayFields()
         ]);
     }
+
+    public function implementedEvents()
+    {
+        return parent::implementedEvents() + [
+            'Crud.beforeRedirect' => 'beforeCrudRedirect',
+        ];
+    }
+
+    public function beforeCrudRedirect(Event $event)
+    {
+        if ($this->redirectToSelf($event)) {
+            return;
+        }
+    }
+
 }

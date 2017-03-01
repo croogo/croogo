@@ -34,5 +34,3 @@ echo $this->Html->tabStart('message-main') . $this->Form->input('name', [
     ]);
 echo $this->Html->tabEnd();
 $this->end();
-
-$this->append('form-end', $this->Form->end());

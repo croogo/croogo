@@ -53,10 +53,18 @@ class MessagesController extends AppController
         ]);
     }
 
+    public function beforeCrudRedirect(Event $event)
+    {
+        if ($this->redirectToSelf($event)) {
+            return;
+        }
+    }
+
     public function implementedEvents()
     {
         return parent::implementedEvents() + [
-            'Crud.beforePaginate' => 'beforePaginate'
+            'Crud.beforePaginate' => 'beforePaginate',
+            'Crud.beforeRedirect' => 'beforeCrudRedirect',
         ];
     }
 }

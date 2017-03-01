@@ -86,6 +86,15 @@ class BlocksController extends AppController
         return parent::implementedEvents() + [
             'Crud.beforePaginate' => 'beforePaginate',
             'Crud.beforeRender' => 'beforeCrudRender',
+            'Crud.beforeRedirect' => 'beforeCrudRedirect',
         ];
     }
+
+    public function beforeCrudRedirect(Event $event)
+    {
+        if ($this->redirectToSelf($event)) {
+            return;
+        }
+    }
+
 }
