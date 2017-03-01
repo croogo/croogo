@@ -9,11 +9,11 @@ $this->Html
 if ($this->request->params['action'] == 'edit') {
     $this->assign('title', __d('croogo', 'Edit Type'));
 
-    $this->Html->addCrumb($type->title);
+    $this->Html->addCrumb($type->title, $this->request->here());
 }
 
 if ($this->request->params['action'] == 'add') {
-    $this->Html->addCrumb(__d('croogo', 'Add'));
+    $this->Html->addCrumb(__d('croogo', 'Add'), $this->request->here());
 }
 
 $this->append('form-start', $this->Form->create($type));
@@ -84,7 +84,9 @@ echo $this->Html->link(__d('croogo', 'You can manage your API keys here.'), [
 echo $this->Html->tabEnd();
 echo $this->Html->tabStart('type-params');
 echo $this->Form->input('params', [
+    'type' => 'textarea',
     'label' => __d('croogo', 'Params'),
+    'value' => $this->Croogo->paramsAsString($type->params),
 ]);
 echo $this->Html->tabEnd();
 $this->end();

@@ -146,4 +146,16 @@ class AppController extends CroogoAppController
     {
         return $this->Crud->execute();
     }
+
+    public function redirectToSelf(Event $event)
+    {
+        $subject = $event->subject();
+        if ($subject->success) {
+            if (isset($this->request->data['_apply'])) {
+                $entity = $subject->entity;
+                return $this->redirect(['action' => 'edit', $entity->id]);
+            }
+        }
+    }
+
 }

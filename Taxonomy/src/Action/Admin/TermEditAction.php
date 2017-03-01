@@ -59,7 +59,7 @@ class TermEditAction extends BaseAction
             $term = $controller->Terms->patchEntity($term, $request->data);
             if ($controller->Terms->edit($term, $vocabularyId)) {
                 $controller->Flash->success(__d('croogo', 'Term saved successfuly.'));
-                if (isset($request->data['apply'])) {
+                if (isset($request->data['_apply'])) {
                     return $controller->redirect(['action' => 'edit', $term->id, $vocabularyId]);
                 } else {
                     return $controller->redirect([

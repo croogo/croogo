@@ -48,5 +48,3 @@ echo $this->Html->tabStart('setting-misc') . $this->Form->input('title', [
 
 echo $this->Croogo->adminTabs();
 $this->end();
-
-$this->append('form-end', $this->Form->end());

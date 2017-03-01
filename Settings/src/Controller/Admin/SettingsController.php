@@ -2,6 +2,8 @@
 
 namespace Croogo\Settings\Controller\Admin;
 
+use Cake\Event\Event;
+
 /**
  * Settings Controller
  *
@@ -21,6 +23,20 @@ class SettingsController extends AppController
         $this->_setupPrg();
     }
 
+    public function implementedEvents()
+    {
+        return parent::implementedEvents() + [
+            'Crud.beforeRedirect' => 'beforeCrudRedirect',
+        ];
+    }
+
+    public function beforeCrudRedirect(Event $event)
+    {
+        if ($this->redirectToSelf($event)) {
+            return;
+        }
+    }
+
 /**
  * Admin prefix
  *
@@ -32,6 +48,9 @@ class SettingsController extends AppController
     {
         if ($this->request->is('post')) {
             foreach ($this->request->data() as $id => $value) {
+                if ($id == '_apply') {
+                    continue;
+                }
                 $setting = $this->Settings->get($id);
                 $setting->value = $value;
                 $this->Settings->save($setting);

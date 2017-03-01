@@ -209,8 +209,11 @@ class LinksController extends AppController
 
     public function beforeCrudRedirect(Event $event)
     {
-        $entity = $event->subject()->entity;
+        if ($this->redirectToSelf($event)) {
+            return;
+        }
 
+        $entity = $event->subject()->entity;
         $event->subject()->url['menu_id'] = $entity->menu_id;
     }
 

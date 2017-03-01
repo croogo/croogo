@@ -35,5 +35,3 @@ echo $this->Html->tabStart('region-main') . $this->Form->input('title', [
     ]);
 echo $this->Html->tabEnd();
 $this->end();
-
-$this->append('form-end', $this->Form->end());

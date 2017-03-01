@@ -33,6 +33,7 @@ class TypesController extends AppController
     {
         return parent::implementedEvents() + [
             'Crud.beforePaginate' => 'beforePaginate',
+            'Crud.beforeRedirect' => 'beforeCrudRedirect',
         ];
     }
 
@@ -44,6 +45,13 @@ class TypesController extends AppController
         $query->where([
             'plugin IS' => null
         ]);
+    }
+
+    public function beforeCrudRedirect(Event $event)
+    {
+        if ($this->redirectToSelf($event)) {
+            return;
+        }
     }
 
 }

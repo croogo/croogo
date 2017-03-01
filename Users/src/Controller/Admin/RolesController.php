@@ -2,6 +2,8 @@
 
 namespace Croogo\Users\Controller\Admin;
 
+use Cake\Event\Event;
+
 /**
  * Roles Controller
  *
@@ -24,4 +26,19 @@ class RolesController extends AppController
             'displayFields' => $this->Roles->displayFields()
         ]);
     }
+
+    public function implementedEvents()
+    {
+        return parent::implementedEvents() + [
+            'Crud.beforeRedirect' => 'beforeCrudRedirect',
+        ];
+    }
+
+    public function beforeCrudRedirect(Event $event)
+    {
+        if ($this->redirectToSelf($event)) {
+            return;
+        }
+    }
+
 }
