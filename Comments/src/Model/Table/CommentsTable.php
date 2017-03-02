@@ -68,7 +68,7 @@ class CommentsTable extends CroogoTable
  */
     public $belongsTo = [
         'User' => [
-            'className' => 'Users.User',
+            'className' => 'Croogo/Users.Users',
         ],
     ];
 

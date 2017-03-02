@@ -56,7 +56,16 @@ class CommentsController extends AppController
     public function implementedEvents()
     {
         return parent::implementedEvents() + [
-            'Crud.beforePaginate' => 'beforePaginate'
+            'Crud.beforePaginate' => 'beforePaginate',
+            'Crud.beforeRedirect' => 'beforeCrudRedirect',
         ];
     }
+
+    public function beforeCrudRedirect(Event $event)
+    {
+        if ($this->redirectToSelf($event)) {
+            return;
+        }
+    }
+
 }

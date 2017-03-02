@@ -76,17 +76,20 @@ foreach ($comments as $comment) {
     $actions = $this->Html->div('item-actions', implode(' ', $actions));
 
     $title = empty($comment->title) ? 'Comment' : $comment->title;
+    $relatedUrl = $comment->related ?
+        $this->Html->link($comment->related->title, $comment->related->url->getUrl() + ['prefix' => false], ['target' => '_blank']) :
+        null;
     $rows[] = [
         $this->Form->checkbox('Comments.' . $comment->id . '.id', ['class' => 'row-select']),
         $comment->name,
         $comment->email,
-        $this->Html->link($comment->related->title, $comment->related->url),
-        $this->Html->link($this->Html->image('/croogo/img/icons/comment.png'), '#', [
-                'class' => 'comment-view',
-                'data-title' => $title,
-                'data-content' => $comment->body,
-                'escape' => false,
-            ]),
+        $relatedUrl,
+        $this->Html->link($this->Html->image('Croogo/Core./img/icons/comment.png'), '#', [
+            'class' => 'comment-view',
+            'data-title' => $title,
+            'data-content' => $comment->body,
+            'escape' => false,
+        ]),
         $comment->created,
         $actions,
     ];
