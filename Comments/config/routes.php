@@ -13,7 +13,11 @@ Router::plugin('Croogo/Comments', ['path' => '/'], function (RouteBuilder $route
 
     });
 
+    $route->extensions(['rss']);
+
     $route->scope('/comments', [], function (RouteBuilder $route) {
+        $route->connect('/', ['controller' => 'Comments']);
+
         $route->fallbacks();
     });
 });

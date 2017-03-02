@@ -49,14 +49,16 @@ class CommentsController extends AppController
     {
         $this->set('title_for_layout', __d('croogo', 'Comments'));
 
-        if (!isset($this->request['ext']) ||
-            $this->request['ext'] != 'rss') {
+        if (!isset($this->request['_ext']) ||
+            $this->request['_ext'] != 'rss') {
             return $this->redirect('/');
         }
 
+        $roleId = $this->Croogo->roleId();
         $this->paginate = [
+            'contain' => ['Nodes', 'Users'],
             'conditions' => [
-                'status' => $this->Comment->status('approval')
+                $this->Comments->aliasField('status') .' IN' => $this->Comments->status($roleId, 'approval'),
             ],
             'order' => [
                 'weight' => 'DESC',
@@ -64,7 +66,7 @@ class CommentsController extends AppController
             'limit' => Configure::read('Comment.feed_limit')
         ];
 
-        $this->set('comments', $this->paginate($query));
+        $this->set('comments', $this->paginate());
     }
 
 /**

@@ -12,6 +12,7 @@ Router::plugin('Croogo/Nodes', ['path' => '/'], function (RouteBuilder $route) {
         });
     });
 
+    $route->extensions(['rss']);
     $route->connect('/', ['controller' => 'Nodes', 'action' => 'promoted']);
     $route->connect('/promoted/*', ['controller' => 'Nodes', 'action' => 'promoted']);
     $route->connect('/search/*', ['controller' => 'Nodes', 'action' => 'search']);

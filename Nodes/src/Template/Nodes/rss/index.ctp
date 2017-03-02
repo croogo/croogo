@@ -1,14 +1,14 @@
 <?php
 
-function rss_transform($item) {
-	return array(
-		'title' => $item['Node']['title'],
-		'link' => Router::url($item['Node']['url'], true),
-		'guid' => Router::url($item['Node']['url'], true),
-		'description' => $item['Node']['body'],
-		'pubDate' => $item['Node']['created'],
-	);
-}
+$Url = $this->Url;
+$items = $this->Rss->items($nodes->toArray(), function($item) use ($Url) {
+    return [
+        'title' => $item->title,
+        'link' => $Url->build($item->url->getUrl(), true),
+        'guid' => $Url->build($item->url->getUrl(), true),
+        'description' => $item->body,
+        'pubDate' => $item->created,
+    ];
+});
 
-$this->set('items', $rss->items($nodes, 'rss_transform'));
-?>
+$this->set('items', $items);
