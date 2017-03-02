@@ -155,9 +155,6 @@ Admin.extra = function () {
     form.attr('action', action + activeTab.replace('#', '#tab_'));
   });
 
-  if (typeof $.prototype.tabs == 'function') {
-    $('.tabs').tabs(); // legacy tabs from jquery-ui
-  }
   if (typeof $.prototype.elastic == 'function') {
     $('textarea').not('.content').elastic();
   }
