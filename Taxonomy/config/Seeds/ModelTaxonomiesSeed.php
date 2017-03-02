@@ -10,7 +10,7 @@ class ModelTaxonomiesSeed extends AbstractSeed
     public $records = [
         [
             'id' => '1',
-            'model' => 'Node',
+            'model' => 'Croogo/Nodes.Nodes',
             'foreign_key' => '1',
             'taxonomy_id' => '1'
         ],

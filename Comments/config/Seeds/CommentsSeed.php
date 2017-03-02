@@ -9,7 +9,7 @@ class CommentsSeed extends AbstractSeed
         [
             'id' => '1',
             'parent_id' => null,
-            'model' => 'Croogo/Nodes',
+            'model' => 'Croogo/Nodes.Nodes',
             'foreign_key' => '1',
             'user_id' => '0',
             'name' => 'Mr Croogo',
