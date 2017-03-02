@@ -41,9 +41,12 @@ $this->append('table-body');
             <td>
                 <span>
                 <?php
-                echo $this->Html->link($node->title, Hash::merge($node->url->getArrayCopy(), [
-                    'prefix' => false,
-                ]));
+                echo $this->Html->link($node->title,
+                    Hash::merge($node->url->getArrayCopy(), [
+                        'prefix' => false,
+                    ]),
+                    ['target' => '_blank']
+                );
                 ?>
                 </span>
 
