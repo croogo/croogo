@@ -84,7 +84,6 @@ class Plugin extends CakePlugin
      */
     public static $bundledPlugins = [
         'Croogo/Blocks',
-        'Croogo/Comments',
         'Croogo/Contacts',
         'Croogo/Dashboards',
         'Croogo/FileManager',
@@ -229,7 +228,7 @@ class Plugin extends CakePlugin
         }
         if (file_exists($composerFile) && !$this->_isCroogoTheme($pluginDir, $path)) {
             $pluginData = json_decode(file_get_contents($composerFile), true);
-            if (isset($pluginData['require']['Croogo/Core']) ||
+            if (isset($pluginData['require']['croogo/core']) ||
                 isset($pluginData['require']['croogo/croogo'])
             ) {
                 return true;
