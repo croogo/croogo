@@ -3,6 +3,7 @@
 namespace Croogo\Nodes\Controller\Admin;
 
 use Cake\Event\Event;
+use Cake\Routing\Router;
 
 use Croogo\Core\Controller\Component\CroogoComponent;
 use Croogo\Core\Croogo;
@@ -244,11 +245,20 @@ class NodesController extends AppController
      */
     public function beforeCrudSave(Event $event)
     {
+        $entity = $event->subject()->entity;
         if (($this->request->action === 'add') && ($this->request->param('pass.0'))) {
-            $event->subject()->entity->type = $this->request->param('pass.0');
+            $entity->type = $this->request->param('pass.0');
+            $entity->path = Router::url([
+                'prefix' => false,
+                'plugin' => 'Croogo/Nodes',
+                'controller' => 'Nodes',
+                'action' => 'view',
+                'type' => $entity->type,
+                'slug' => $entity->slug
+            ]);
         }
 
-        $this->Crud->action()->config('name', $event->subject()->entity->type);
+        $this->Crud->action()->config('name', $entity->type);
     }
 
     /**
