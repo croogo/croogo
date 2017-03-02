@@ -100,6 +100,14 @@ class RegionsTable extends CroogoTable
             ],
         ]);
         $this->addBehavior('Croogo/Core.Trackable');
+        $this->addBehavior('Search.Search');
+
+        $this->searchManager()
+            ->add('title', 'Search.Like', [
+                'field' => $this->aliasField('title'),
+                'before' => true,
+                'after' => true,
+            ]);
     }
 
     /**
