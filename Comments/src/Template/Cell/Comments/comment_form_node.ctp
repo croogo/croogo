@@ -3,9 +3,9 @@ $captcha = (isset($captcha)) ? $captcha : false;
 ?>
 <div class="comment-form">
     <h3><?= h(__d('croogo', 'Add new comment')); ?></h3>
-    <?php if ($this->request->params['controller'] == 'comments'): ?>
+    <?php if ($this->request->params['controller'] == 'Comments'): ?>
         <p class="back">
-            <?= $this->Html->link(__d('croogo', 'Go back to original post: {s}', $title), $url); ?>
+            <?= $this->Html->link(__d('croogo', 'Go back to original post: %s', $title), $url->getUrl()); ?>
         </p>
     <?php endif; ?>
     <?= $this->Form->create($comment, ['url' => $formUrl]); ?>

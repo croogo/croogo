@@ -83,16 +83,19 @@ class CommentsController extends AppController
             return $this->redirect('/');
         }
 
-        if (empty($this->Comments->{$model})) {
+        list($plugin, $modelAlias) = pluginSplit($model);
+
+        if (empty($this->Comments->{$modelAlias})) {
             throw new UnexpectedValueException(
-                sprintf('%s not configured for Comments', $model)
+                sprintf('%s not configured for Comments', $modelAlias)
             );
         }
 
-        $Model = $this->Comments->{$model};
+        $roleId = $this->Croogo->roleId();
+        $Model = $this->Comments->{$modelAlias};
         $entity = $Model->find()->where([
             $Model->aliasField($Model->primaryKey()) => $foreignKey,
-            $Model->aliasField('status') . ' IN' => $Model->status('approval'),
+            $Model->aliasField('status') . ' IN' => $Model->status($roleId, 'approval'),
         ])->first();
 
         if (isset($entity->path)) {

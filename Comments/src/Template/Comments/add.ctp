@@ -1,3 +1,8 @@
 <div class="form">
-	<?php echo $this->element('comments_form'); ?>
+    <?=
+        $this->cell('Croogo/Comments.Comments::commentFormNode', [
+            'node' => $entity,
+            'type' => $typesForLayout[$entity->type],
+        ]);
+    ?>
 </div>

@@ -28,15 +28,19 @@ class CommentsCell extends Cell
 
     public function commentFormNode(Node $node, Type $type)
     {
-        $this->loadModel('Croogo/Commments.Comments');
+        $this->loadModel('Croogo/Comments.Comments');
 
         $formUrl = [
             'plugin' => 'Croogo/Comments',
             'controller' => 'Comments',
             'action' => 'add',
-            'Nodes',
+            urlencode('Croogo/Nodes.Nodes'),
             $node->id,
         ];
+
+        if (isset($this->request->params['pass'][2])) {
+            $formUrl[] = $this->request->params['pass'][2];
+        }
 
         $this->set('title', $node->title);
         $this->set('url', $node->url);

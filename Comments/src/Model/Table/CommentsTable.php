@@ -2,6 +2,7 @@
 
 namespace Croogo\Comments\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\Database\Schema\Table as Schema;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Network\Exception\NotFoundException;
@@ -136,15 +137,17 @@ class CommentsTable extends CroogoTable
             'userData' => [],
         ], $options);
 
+        list($plugin, $modelAlias) = pluginSplit($model);
+
         $foreignKey = (int)$foreignKey;
         $parentId = is_null($options['parentId']) ? null : (int)$options['parentId'];
         $userData = $options['userData'];
 
-        if (empty($this->{$model})) {
+        if (empty($this->{$modelAlias})) {
             throw new UnexpectedValueException(sprintf('%s not configured for Comments', $model));
         }
 
-        $entity = $this->{$model}->findById($foreignKey)->firstOrFail();
+        $entity = $this->{$modelAlias}->findById($foreignKey)->firstOrFail();
 
         if (!is_null($parentId)) {
             if ($this->isValidLevel($parentId) &&
@@ -202,12 +205,13 @@ class CommentsTable extends CroogoTable
  */
     public function isValidLevel($commentId)
     {
-        if (!$this->exists($commentId)) {
+        if (!$this->exists(['id' => $commentId])) {
             throw new NotFoundException(__d('croogo', 'Invalid Comment id'));
         }
 
-        $path = $this->getPath($commentId, [$this->escapeField()]);
-        $level = count($path);
+        $level = $this->find('path', ['for' => $commentId])
+            ->select([$this->aliasField($this->primaryKey())])
+            ->count();
 
         return Configure::read('Comment.level') > $level;
     }

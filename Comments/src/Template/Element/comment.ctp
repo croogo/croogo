@@ -20,7 +20,7 @@ use Cake\Core\Configure;
                 'plugin' => 'Croogo/Comments',
                 'controller' => 'Comments',
                 'action' => 'add',
-                $comment->model,
+                urlencode($comment->model),
                 $comment->foreign_key,
                 $comment->id,
             )); ?>

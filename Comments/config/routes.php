@@ -11,6 +11,9 @@ Router::plugin('Croogo/Comments', ['path' => '/'], function (RouteBuilder $route
             $route->fallbacks();
         });
 
+    });
+
+    $route->scope('/comments', [], function (RouteBuilder $route) {
         $route->fallbacks();
     });
 });
