@@ -3,7 +3,6 @@
     "description": "Croogo FileManager Plugin",
     "require": {
         "ext-gd": "*",
-        "cakedc/search": "3.0.x-dev",
         "croogo/core": "3.0.x-dev"
     },
     "license": "MIT",

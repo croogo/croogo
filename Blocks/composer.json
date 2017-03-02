@@ -2,7 +2,6 @@
     "name": "croogo/blocks",
     "description": "Croogo Blocks Plugin",
     "require": {
-        "cakedc/search": "3.0.x-dev",
         "croogo/core": "3.0.x-dev"
     },
     "license": "MIT",

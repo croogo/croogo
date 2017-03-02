@@ -28,14 +28,14 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "cakephp/cakephp": "^3.2.12",
+        "cakephp/cakephp": "^3.3.15",
         "cakephp/migrations": "~1.6",
         "cakephp/acl": "^0.2",
         "cakephp/plugin-installer": "^0.0.15",
         "admad/cakephp-sequence": "^2.0.2",
         "friendsofcake/crud": "^4.3",
         "friendsofcake/search": "^1.2",
-        "friendsofcake/bootstrap-ui": "^0.5"
+        "friendsofcake/bootstrap-ui": "^0.6"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^2.1.3",
