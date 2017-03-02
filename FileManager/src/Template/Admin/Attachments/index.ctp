@@ -44,7 +44,11 @@ foreach ($attachments as $attachment) {
         ['icon' => $this->Theme->getIcon('update'), 'tooltip' => __d('croogo', 'Edit this item')]);
     $actions[] = $this->Croogo->adminRowAction('',
         ['controller' => 'attachments', 'action' => 'delete', $attachment->id],
-        ['icon' => $this->Theme->getIcon('delete'), 'tooltip' => __d('croogo', 'Remove this item')],
+        [
+            'icon' => $this->Theme->getIcon('delete'),
+            'tooltip' => __d('croogo', 'Remove this item'),
+            'method' => 'post',
+        ],
         __d('croogo', 'Are you sure?'));
 
     $mimeType = explode('/', $attachment->mime_type);

@@ -112,6 +112,7 @@ class AttachmentsTable extends NodesTable
  */
     public function save(EntityInterface $entity, $options = [])
     {
+        $data = true;
         if (isset($entity->file['tmp_name'])) {
             $data = $this->_saveUploadedFile($entity);
         }

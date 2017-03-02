@@ -375,6 +375,7 @@ class CroogoHelper extends Helper
         }
 
         if ($action == 'delete' || isset($usePost)) {
+            $options['block'] = true;
             $postLink = $this->Form->postLink($title, $url, $options);
 
             return $postLink;
