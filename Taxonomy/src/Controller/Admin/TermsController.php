@@ -83,6 +83,7 @@ class TermsController extends AppController
      */
     public function index($vocabularyId = null)
     {
+        $vocabularyId = $this->request->query('vocabulary_id');
         $response = $this->_ensureVocabularyIdExists($vocabularyId);
         if ($response instanceof Response) {
             return $response;

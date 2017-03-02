@@ -8,7 +8,7 @@ $this->Html->addCrumb(__d('croogo', 'Content'),
         ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index'])
     ->addCrumb(__d('croogo', 'Vocabularies'),
         ['plugin' => 'Croogo/Taxonomy', 'controller' => 'Vocabularies', 'action' => 'index'])
-    ->addCrumb($vocabulary->title);
+    ->addCrumb($vocabulary->title, $this->request->here());
 
 $this->append('actions');
 echo $this->Croogo->adminAction(__d('croogo', 'Create term'), ['action' => 'add', $vocabulary->id], ['class' => 'btn btn-success']);

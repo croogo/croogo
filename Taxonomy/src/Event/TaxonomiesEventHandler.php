@@ -54,7 +54,9 @@ class TaxonomiesEventHandler implements EventListenerInterface
                     'plugin' => 'Croogo/Taxonomy',
                     'controller' => 'Terms',
                     'action' => 'index',
-                    $v->id,
+                    '?' => [
+                        'vocabulary_id' => $v->id,
+                    ],
                 ],
                 'weight' => $weight,
             ]);
