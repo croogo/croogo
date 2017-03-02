@@ -8,7 +8,7 @@ $this->assign('title', __d('croogo', 'Themes'));
 
 $this->Html->addCrumb(__d('croogo', 'Extensions'),
         ['plugin' => 'Croogo/Extensions', 'controller' => 'extensionsPlugins', 'action' => 'index'])
-    ->addCrumb(__d('croogo', 'Themes'), $this->request->here());
+    ->addCrumb(__d('croogo', 'Themes'), $this->request->url);
 
 $this->start('actions');
 echo $this->Croogo->adminAction(__d('croogo', 'Upload'), ['action' => 'add'], ['class' => 'btn btn-success']);

@@ -5,7 +5,7 @@ $this->extend('Croogo/Core./Common/admin_index');
 $this->assign('title', __d('croogo', 'Plugins'));
 
 $this->Html->addCrumb(__d('croogo', 'Extensions'))
-    ->addCrumb(__d('croogo', 'Plugins'), $this->request->here());
+    ->addCrumb(__d('croogo', 'Plugins'), $this->request->url);
 
 $this->start('actions');
 echo $this->Croogo->adminAction(__d('croogo', 'Upload'), ['action' => 'add'], ['class' => 'btn btn-success']);

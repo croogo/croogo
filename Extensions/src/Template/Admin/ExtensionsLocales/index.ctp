@@ -6,7 +6,7 @@ $this->assign('title', __d('croogo', 'Locales'));
 
 $this->Html
 	->addCrumb(__d('croogo', 'Extensions'), array('plugin' => 'Croogo/Extensions', 'controller' => 'ExtensionsPlugins', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Locales'), $this->request->here());
+	->addCrumb(__d('croogo', 'Locales'), $this->request->url);
 
 $this->append('actions');
 	echo $this->Croogo->adminAction(__d('croogo', 'Upload'),
