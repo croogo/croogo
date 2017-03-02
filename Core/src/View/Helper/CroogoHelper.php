@@ -580,13 +580,4 @@ class CroogoHelper extends Helper
         return $this->_View->cell('Croogo/Core.Admin/LinkChooser', [$target]);
     }
 
-    /**
-     * Helper method to convert a params array for display in <input>
-     * @return string Formatted params string
-     */
-    public function paramsAsString($paramsArray)
-    {
-        return $this->_ParamsType->arrayToParams($paramsArray);
-    }
-
 }
