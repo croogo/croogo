@@ -72,6 +72,7 @@ class InstallTable extends Table
             'Croogo/Acl',
             'Croogo/Blocks',
             'Croogo/Taxonomy',
+            'Croogo/FileManager',
             'Croogo/Meta',
             'Croogo/Nodes',
             'Croogo/Comments',
