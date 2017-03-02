@@ -15,10 +15,10 @@ $this->Html
 
 $this->append('actions');
 	$toolsButton = $this->Html->link(
-		__d('croogo', 'Tools') . ' ' . '<span class="caret"></span>',
+		__d('croogo', 'Tools'),
 		'#',
 		array(
-			'button' => 'default',
+			'button' => 'secondary',
 			'class' => 'dropdown-toggle',
 			'data-toggle' => 'dropdown',
 			'escape' => false
@@ -37,6 +37,7 @@ $this->append('actions');
 			'button' => false,
 			'list' => true,
 			'method' => 'post',
+			'class' => 'dropdown-item',
 			'tooltip' => array(
 				'data-title' => __d('croogo', 'Create new actions (no removal)'),
 				'data-placement' => 'right',
@@ -49,6 +50,7 @@ $this->append('actions');
 			'button' => false,
 			'list' => true,
 			'method' => 'post',
+			'class' => 'dropdown-item',
 			'tooltip' => array(
 				'data-title' => __d('croogo', 'Create new & remove orphaned actions'),
 				'data-placement' => 'right',
