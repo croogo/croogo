@@ -102,7 +102,7 @@ Admin.formFeedback = function () {
       if ($button.find('i').length == 0) {
         $button
           .prepend(' ')
-          .prepend($('i').addClass(Admin.spinnerClass()));
+          .prepend($('<i />').addClass(Admin.spinnerClass()));
       } else {
         $button.find('i').attr('class', Admin.spinnerClass());
       }
