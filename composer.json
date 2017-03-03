@@ -114,7 +114,7 @@
         "croogo/dashboards": "self.version",
         "croogo/example": "self.version",
         "croogo/extensions": "self.version",
-        "croogo/filemanaer": "self.version",
+        "croogo/filemanager": "self.version",
         "croogo/install": "self.version",
         "croogo/menus": "self.version",
         "croogo/meta": "self.version",
