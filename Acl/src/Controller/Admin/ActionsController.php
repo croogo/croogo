@@ -104,7 +104,11 @@ class ActionsController extends AppController
 
             if ($this->Acos->save($aco)) {
                 $this->Flash->success(sprintf(__d('croogo', 'The %s has been saved'), $acoType));
-                return $this->Croogo->redirect(['action' => 'index']);
+                if (isset($this->request->data['_apply'])) {
+                    return $this->redirect(['action' => 'edit', $id]);
+                } else {
+                    return $this->redirect(['action' => 'index']);
+                }
             } else {
                 $this->Flash->error(sprintf(__d('croogo', 'The %s could not be saved. Please, try again.'), $acoType));
             }

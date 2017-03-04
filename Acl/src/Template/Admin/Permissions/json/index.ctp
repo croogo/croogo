@@ -1,4 +1,6 @@
 <?php
+
+$this->loadHelper('Croogo/Core.Croogo');
 if (isset($this->request->query['urls'])) {
 	foreach ($permissions as $acoId => &$aco) {
 		$aco[key($aco)]['url'] = array(
