@@ -66,7 +66,10 @@ foreach ($blocks as $block) {
             ]),
         ];
     } else {
-        $checkbox = $this->Form->checkbox('Blocks.' . $block->id . '.id', ['class' => 'row-select']);
+        $checkbox = $this->Form->checkbox('Blocks.' . $block->id . '.id', [
+            'class' => 'row-select',
+            'id' => 'Blocks' . $block->id . 'Id',
+        ]);
     }
 
     $actions = $this->Html->div('item-actions', implode(' ', $actions));
