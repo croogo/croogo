@@ -31,6 +31,8 @@ class DateTimeWidget extends CakeDateTimeWidget
         $type = $data['type'];
         $required = $data['required'] ? 'required' : '';
         $role = isset($data['role']) ? $data['role'] : 'datetime-picker';
+        $minDate = isset($data['data-mindate']) ? $data['data-mindate'] : null;
+        $maxDate = isset($data['data-maxdate']) ? $data['data-maxdate'] : null;
         $format = null;
         $locale = I18n::locale();
 
@@ -64,6 +66,8 @@ class DateTimeWidget extends CakeDateTimeWidget
                     role="$role"
                     data-locale="$locale"
                     data-format="$format"
+                    data-minDate="$minDate"
+                    data-maxDate="$maxDate"
                     $required
                 />
                 <label for="$id" class="input-group-addon">

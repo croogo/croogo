@@ -231,9 +231,9 @@ Admin.dateTimeFields = function(datePickers) {
       });
     }
 
-    picker.datetimepicker({
-      locale: $(this).data('locale'),
-      format: $(this).data('format'),
+    var dpOptions = {
+      locale: picker.data('locale'),
+      format: picker.data('format'),
       date: date ? date : picker.val(),
       icons: {
         time: 'fa fa-clock-o',
@@ -246,6 +246,13 @@ Admin.dateTimeFields = function(datePickers) {
         clear: 'fa fa-trash',
         close: 'fa fa-remove'
       }
-    });
+    }
+    if (picker.data('mindate')) {
+      dpOptions.minDate = picker.data('mindate');
+    }
+    if (picker.data('maxdate')) {
+      dpOptions.maxDate =  picker.data('maxdate');
+    }
+    picker.datetimepicker(dpOptions);
   });
 }
