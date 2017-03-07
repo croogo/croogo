@@ -73,7 +73,7 @@ $this->end();
 $this->append('main');
 ?>
 <div class="<%= $pluralVar %> view large-9 medium-8 columns">
-    <table class="vertical-table">
+    <table class="table vertical-table">
 <% if ($groupedFields['string']) : %>
 <% foreach ($groupedFields['string'] as $field) : %>
 <% if (isset($associationFields[$field])) :
