@@ -1,6 +1,8 @@
 <?php
 $this->Html->script('Croogo/Users.admin', ['block' => true]);
 
+use Cake\I18n\Time;
+
 $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Html->addCrumb(__d('croogo', 'Users'),
@@ -49,7 +51,7 @@ echo $this->Form->input('website', [
 echo $this->Form->input('timezone', [
     'type' => 'select',
     'empty' => true,
-    'options' => DateTimeZone::listIdentifiers(),
+    'options' => Time::listTimezones(),
     'label' => __d('croogo', 'Timezone'),
     'class' => 'c-select',
 ]);
