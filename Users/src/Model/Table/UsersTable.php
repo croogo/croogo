@@ -172,14 +172,6 @@ class UsersTable extends CroogoTable
         return $user;
     }
 
-    public function findByActivationKey(Query $query, array $options)
-    {
-        return $query->where([
-            'username' => $options['username'],
-            'activation_key' => $options['activationKey'],
-        ]);
-    }
-
     public function validationDefault(Validator $validator)
     {
         return $validator
