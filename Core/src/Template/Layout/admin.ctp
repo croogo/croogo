@@ -39,11 +39,13 @@
         ?>
     </head>
     <body>
+        <?php echo $this->element('Croogo/Core.admin/header'); ?>
         <div id="wrap">
-            <?php echo $this->element('Croogo/Core.admin/header'); ?>
-            <?php echo $this->element('Croogo/Core.admin/navigation'); ?>
-            <div id="content-container" class="<?= $this->Theme->getCssClass('container') ?>">
-                <div id="content" class="clearfix">
+            <div>
+                <?php echo $this->element('Croogo/Core.admin/navigation'); ?>
+            </div>
+            <div id="content-container" class="content-container <?= $this->Theme->getCssClass('container') ?>">
+                <div id="content" class="content <?= $this->Theme->getCssClass('row') ?>">
                     <?php echo $this->element('Croogo/Core.admin/breadcrumb'); ?>
                     <div id="inner-content" class="<?= $this->Theme->getCssClass('columnFull') ?>">
                         <?php echo $this->Layout->sessionFlash(); ?>

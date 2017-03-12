@@ -3,15 +3,13 @@
 // --------------------------------------------------
 
 // For top and bottom navbar
-html,
 body {
     padding: 0;
     margin: 0;
-    height: 100%;
     background-color: $croogo-background-color;
-
-    /* Negative indent footer by it's height */
-    margin-bottom: -42px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 
     &.admin-login {
         background-color: $gray-lightest;
@@ -24,9 +22,10 @@ body {
 
 #wrap {
     overflow: hidden;
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    background: $croogo-main-bg;
 
     .full {
         #content {
@@ -35,17 +34,11 @@ body {
     }
 }
 
-#push {
-    //height: $navbarHeight;
-}
-
 #content-container {
     padding: 0;
     // expands downwards for matching background color
-    background: $croogo-main-bg;
-    padding: 20px 0px 99999px 0px;
-    margin-bottom: -99999px;
-    margin-top: $croogo-navbar-height;
+    padding: 20px 0 0;
+    flex: 1;
 }
 
 #content {
@@ -53,7 +46,6 @@ body {
     border: 1px solid #fff;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
-    margin-left: 170px;
     margin-bottom: $croogo-general-margin;
     padding: 20px;
     min-height: 400px;
@@ -101,7 +93,6 @@ header {
 
 footer {
     height: 40px;
-    position: absolute;
     width: 100%;
 
     background: $gray-dark;

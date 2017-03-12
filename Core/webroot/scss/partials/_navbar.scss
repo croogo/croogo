@@ -1,10 +1,10 @@
 // Sidebar
-.sidebar {
+.nav-sidebar {
     font-family: $font-family-sans-serif;
     width: $croogo-nav-width;
     //padding-top: $navbarHeight;
     margin-bottom: 10px;
-    float: left;
+    margin-top: 30px + $croogo-navbar-height;
 
     .nav {
         margin-bottom: 0px;
@@ -137,7 +137,7 @@
     }
 
     &.bg-black {
-        .nav-stacked {
+        .nav {
             > li {
                 > a {
                     display: block;

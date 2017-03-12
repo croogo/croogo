@@ -6,7 +6,7 @@ use Croogo\Core\Nav;
 $dashboardUrl = Configure::read('Croogo.dashboardUrl');
 
 ?>
-<header class="navbar navbar-toggleable navbar-inverse bg-black navbar-fixed-top">
+<header class="navbar navbar-toggleable navbar-inverse bg-black fixed-top">
     <?= $this->Html->link(Configure::read('Site.title'), $dashboardUrl,
         ['class' => 'navbar-brand']); ?>
 

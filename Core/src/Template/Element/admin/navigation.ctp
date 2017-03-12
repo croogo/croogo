@@ -1,4 +1,4 @@
-<nav class="navbar-inverse bg-black sidebar">
+<nav class="navbar-inverse bg-black nav-sidebar">
     <?php
     use Cake\Cache\Cache;
     use Croogo\Core\Nav;
