@@ -106,7 +106,7 @@ echo $this->Form->input('action', [
 echo $this->Form->button(__d('croogo', 'Apply'), [
     'type' => 'submit',
     'value' => 'submit',
-    'class' => 'bulk-process btn-primary-outline',
+    'class' => 'bulk-process btn-outline-primary',
 ]);
 $this->end();
 $this->append('form-end', $this->Form->end());

@@ -15,7 +15,7 @@ $this->Html
 			$modelAlias,
 		)
 	)
-	->add(__d('croogo', 'Translate'), '/' . $this->request->url);
+	->add(__d('croogo', 'Translate'));
 
 $this->append('form-start', $this->Form->create($modelAlias, array(
 	'url' => array(

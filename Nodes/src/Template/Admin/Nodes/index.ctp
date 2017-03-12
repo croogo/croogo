@@ -128,7 +128,7 @@ echo $this->Form->input('Nodes.action', [
 $jsVarName = uniqid('confirmMessage_');
 echo $this->Form->button(__d('croogo', 'Apply'), [
     'type' => 'button',
-    'class' => 'bulk-process btn-primary-outline',
+    'class' => 'bulk-process btn-outline-primary',
     'data-relatedElement' => '#nodes-action',
     'data-confirmMessage' => $jsVarName,
     'escape' => true,

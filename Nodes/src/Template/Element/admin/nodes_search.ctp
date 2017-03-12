@@ -43,6 +43,6 @@ if (!isset($this->request->query['chooser'])):
 endif;
 
 echo $this->Form->submit(__d('croogo', 'Filter'), [
-    'class' => 'btn-success-outline',
+    'class' => 'btn-outline-success',
 ]);
 echo $this->Form->end();

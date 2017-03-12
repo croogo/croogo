@@ -109,7 +109,7 @@ echo $this->Form->input('Links.action', [
 echo $this->Form->button(__d('croogo', 'Apply'), [
     'type' => 'submit',
     'value' => 'submit',
-    'class' => 'btn-primary-outline'
+    'class' => 'btn-outline-primary'
 ]);
 $this->end();
 
