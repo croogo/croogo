@@ -7,8 +7,8 @@ $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Croogo->adminScript('Croogo/Nodes.admin');
 
-$this->Html
-    ->add(__d('croogo', 'Content'), $this->request->url);
+$this->Breadcrumbs
+    ->add(__d('croogo', 'Content'));
 
 $this->append('actions');
 echo $this->Croogo->adminAction(__d('croogo', 'Create content'), ['action' => 'create'], ['button' => 'success']);

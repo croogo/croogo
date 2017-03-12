@@ -24,9 +24,9 @@ $this->Breadcrumbs->add(__('<%= $pluralHumanName %>'), ['action' => 'index']);
 $action = $this->request->param('action');
 
 if ($action == 'edit'):
-    $this->Breadcrumbs->add($<%= $singularVar %>-><%= $displayField %>, $this->request->here());
+    $this->Breadcrumbs->add($<%= $singularVar %>-><%= $displayField %>);
 else:
-    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'));
 endif;
 
 $this->append('actions');

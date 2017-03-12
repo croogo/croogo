@@ -5,7 +5,7 @@ $this->extend('/Common/admin_edit');
 $this->Breadcrumbs->add(__d('croogo', 'Extensions'))
     ->add(__d('croogo', 'Plugins'),
         ['plugin' => 'Croogo/Extensions', 'controller' => 'extensions_plugins', 'action' => 'index'])
-    ->add(__d('croogo', 'Upload'), $this->request->here());
+    ->add(__d('croogo', 'Upload'));
 
 $this->append('form-start', $this->Form->create(null, [
     'url' => [

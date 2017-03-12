@@ -2,18 +2,18 @@
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Html
+$this->Breadcrumbs
     ->add(__d('croogo', 'Content'), ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index'])
     ->add(__d('croogo', 'Types'), ['plugin' => 'Croogo/Taxonomy', 'controller' => 'Types', 'action' => 'index']);
 
 if ($this->request->params['action'] == 'edit') {
     $this->assign('title', __d('croogo', 'Edit Type'));
 
-    $this->Breadcrumbs->add($type->title, $this->request->here());
+    $this->Breadcrumbs->add($type->title);
 }
 
 if ($this->request->params['action'] == 'add') {
-    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'));
 }
 
 $this->append('form-start', $this->Form->create($type));

@@ -1,17 +1,17 @@
 <?php
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Html
-        ->add(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
+$this->Breadcrumbs
+    ->add(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
     ->add(__d('croogo', 'Permissions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Permissions'))
     ->add(__d('croogo', 'Actions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Actions', 'action' => 'index'));
 
 if ($this->request->param('action') == 'edit') {
-    $this->Breadcrumbs->add($aco->id . ': ' . $aco->alias, '/' . $this->request->url);
+    $this->Breadcrumbs->add($aco->id . ': ' . $aco->alias);
 }
 
 if ($this->request->param('action') == 'add') {
-    $this->Breadcrumbs->add(__d('croogo', 'Add'), '/' . $this->request->url);
+    $this->Breadcrumbs->add(__d('croogo', 'Add'));
 }
 
 $this->assign('form-start', $this->Form->create($aco));

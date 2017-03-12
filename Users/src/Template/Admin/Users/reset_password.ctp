@@ -2,13 +2,13 @@
 $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->assign('title', __d('croogo', 'Reset password: %s', $user->username));
-$this->Html
+$this->Breadcrumbs
     ->add(__d('croogo', 'Users'), ['plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'])
     ->add($user->name, [
         'action' => 'edit',
         $user->id,
     ])
-    ->add(__d('croogo', 'Reset Password'), $this->request->here());
+    ->add(__d('croogo', 'Reset Password'));
 $this->assign('form-start', $this->Form->create($user));
 
 $this->start('tab-heading');

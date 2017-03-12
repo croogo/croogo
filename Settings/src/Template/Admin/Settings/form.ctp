@@ -1,7 +1,7 @@
 <?php
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Html
+$this->Breadcrumbs
     ->add(__d('croogo', 'Settings'), [
         'plugin' => 'Croogo/Settings',
         'controller' => 'Settings',
@@ -9,11 +9,11 @@ $this->Html
     ]);
 
 if ($this->request->param('action') == 'edit') {
-    $this->Breadcrumbs->add($setting->key, $this->request->here());
+    $this->Breadcrumbs->add($setting->key);
 }
 
 if ($this->request->param('action') == 'add') {
-    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'));
 }
 
 $this->append('form-start', $this->Form->create($setting, [

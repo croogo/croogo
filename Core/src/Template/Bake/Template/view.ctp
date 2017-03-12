@@ -42,11 +42,11 @@ $pk = "\$$singularVar->{$primaryKey[0]}";
 
 $this->extend('Croogo/Core./Common/admin_view');
 
-$this->Html
+$this->Breadcrumbs
     ->add(__d('croogo', '<%= $pluralHumanName %>'), ['action' => 'index']);
 
 <% if (isset($displayField)): %>
-    $this->Breadcrumbs->add($<%= $singularVar %>-><%= $displayField %>, $this->request->here());
+    $this->Breadcrumbs->add($<%= $singularVar %>-><%= $displayField %>);
 <% endif; %>
 
 $this->append('actions');

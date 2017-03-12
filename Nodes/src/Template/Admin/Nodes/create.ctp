@@ -3,9 +3,9 @@ $this->assign('title', __d('croogo', 'Create content'));
 ?>
 <h2 class="hidden-md-up"><?php echo $this->fetch('title'); ?></h2>
 <?php
-$this->Html
+$this->Breadcrumbs
     ->add(__d('croogo', 'Content'), ['action' => 'index'])
-    ->add(__d('croogo', 'Create'), $this->request->here());
+    ->add(__d('croogo', 'Create'));
 
 ?>
 <div class="<?= $this->Theme->getCssClass('row') ?>">

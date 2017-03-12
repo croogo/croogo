@@ -8,7 +8,7 @@ $this->Breadcrumbs->add(__d('croogo', 'Content'),
         ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index'])
     ->add(__d('croogo', 'Vocabularies'),
         ['plugin' => 'Croogo/Taxonomy', 'controller' => 'Vocabularies', 'action' => 'index'])
-    ->add($vocabulary->title, $this->request->here());
+    ->add($vocabulary->title);
 
 $this->append('actions');
 echo $this->Croogo->adminAction(__d('croogo', 'Create term'), ['action' => 'add', $vocabulary->id], ['class' => 'btn btn-success']);

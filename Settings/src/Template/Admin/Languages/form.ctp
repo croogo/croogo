@@ -8,11 +8,11 @@ $this->Breadcrumbs->add(__d('croogo', 'Settings'),
         ['plugin' => 'Croogo/Settings', 'controller' => 'languages', 'action' => 'index']);
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Breadcrumbs->add($language->title, $this->request->here());
+    $this->Breadcrumbs->add($language->title);
 }
 
 if ($this->request->params['action'] == 'add') {
-    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'));
 }
 
 $this->append('form-start', $this->Form->create($language));
