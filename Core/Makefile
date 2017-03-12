@@ -57,6 +57,8 @@ assets:
 		chmod 644 webroot/fonts/`basename $${file}` ; \
 		echo "Copied: webroot/fonts/`basename $${file}` ${CHECK}" ;\
 	done
+	@cp webroot/bootstrap/dist/js/bootstrap.min.js ${JS_DIR}/bootstrap.min.js
+	@echo "Copied: webroot/js/bootstrap.min.js ${CHECK}"
 
 clean:
 	@rm -f "${CSS_DIR}"/"${CROOGO_CSS}" "${CSS_DIR}"/"${CROOGO_RESPONSIVE_CSS}"
