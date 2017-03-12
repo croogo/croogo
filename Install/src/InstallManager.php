@@ -3,19 +3,24 @@
 namespace Croogo\Install;
 
 use Cake\Core\Configure;
-use Cake\Core\Configure\Engine\PhpConfig;
+use Cake\Database\Exception\MissingConnectionException;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
+use Croogo\Acl\AclGenerator;
+use Croogo\Core\Plugin;
 
 class InstallManager
 {
+    const PHP_VERSION = '5.5.9';
+    const CAKE_VERSION = '3.3.0';
 
-/**
- * Default configuration
- *
- * @var array
- * @access public
- */
+    const DATASOURCE_REGEX = "/(\'Datasources'\s\=\>\s\[\n\s*\'default\'\s\=\>\s\[\n\X*\'__FIELD__\'\s\=\>\s\').*(\'\,)(?=\X*\'test\'\s\=\>\s)/";
+    /**
+     * Default configuration
+     *
+     * @var array
+     * @access public
+     */
     public $defaultConfig = [
         'name' => 'default',
         'className' => 'Cake\Database\Connection',
@@ -35,44 +40,66 @@ class InstallManager
         'quoteIdentifiers' => false,
     ];
 
-    public function createDatabaseFile($data)
+    /**
+     *
+     * @var \Croogo\Core\Plugin
+     */
+    protected $_croogoPlugin;
+
+    public static function versionCheck()
     {
-        $config = $this->defaultConfig;
+        return [
+            'php' => version_compare(phpversion(), static::PHP_VERSION, '>='),
+            'cake' => version_compare(Configure::version(), static::CAKE_VERSION, '>='),
+        ];
+    }
 
-        foreach ($data['Install'] as $key => $value) {
-            if (isset($data['Install'][$key])) {
-                $config[$key] = $value;
-            }
-        }
+    protected function _updateDatasourceConfig($path, $field, $value)
+    {
+        $config = file_get_contents($path);
+        $config = preg_replace(
+            str_replace('__FIELD__', $field, InstallManager::DATASOURCE_REGEX),
+            '$1' . addslashes($value) . '$2',
+            $config
+        );
 
-        Configure::write('Datasources', ['default' => $config ]);
+        return file_put_contents($path, $config);
+    }
 
-        Configure::config('dbConfig', new PhpConfig(ROOT . DS . 'config' . DS));
-        if (!Configure::dump('database', 'dbConfig', ['Datasources'])) {
-            return __d('croogo', 'Could not write database.php file.');
-        }
+    public function createDatabaseFile($config)
+    {
+        $config += $this->defaultConfig;
 
-        Configure::load('database', 'default');
         ConnectionManager::drop('default');
-        ConnectionManager::config(Configure::consume('Datasources'));
+        ConnectionManager::config('default', $config);
 
         try {
             $db = ConnectionManager::get('default');
+            $db->connect();
         } catch (MissingConnectionException $e) {
+            ConnectionManager::drop('default');
             return __d('croogo', 'Could not connect to database: ') . $e->getMessage();
         }
         if (!$db->isConnected()) {
+            ConnectionManager::drop('default');
             return __d('croogo', 'Could not connect to database.');
+        }
+
+        $configPath = ROOT . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'app.php';
+        foreach (['host', 'username', 'password', 'database', 'driver'] as $field) {
+            if (isset($config[$field]) && !empty($config[$field])) {
+                $this->_updateDatasourceConfig($configPath, $field, $config[$field]);
+            }
         }
 
         return true;
     }
 
-/**
- * Mark installation as complete
- *
- * @return bool true when successful
- */
+    /**
+     * Mark installation as complete
+     *
+     * @return bool true when successful
+     */
     public function installCompleted()
     {
         $Setting = TableRegistry::get('Croogo/Settings.Settings');
@@ -80,6 +107,180 @@ class InstallManager
         if (!function_exists('mcrypt_decrypt')) {
             $Setting->write('Access Control.autoLoginDuration', '');
         }
+
         return $Setting->write('Croogo.installed', 1);
+    }
+
+    /**
+     * Run Migrations and add data in table
+     *
+     * @return bool True if migrations have succeeded
+     */
+    public function setupDatabase()
+    {
+        $plugins = [
+            'Croogo/Users',
+            'Croogo/Acl',
+            'Croogo/Blocks',
+            'Croogo/Taxonomy',
+            'Croogo/FileManager',
+            'Croogo/Meta',
+            'Croogo/Nodes',
+            'Croogo/Comments',
+            'Croogo/Contacts',
+            'Croogo/Menus',
+            'Croogo/Dashboards',
+            'Croogo/Settings',
+        ];
+
+        $migrationsSucceed = true;
+        foreach ($plugins as $plugin) {
+            $migrationsSucceed = $this->runMigrations($plugin);
+            if (!$migrationsSucceed) {
+                $this->log('Migrations failed for ' . $plugin, LOG_CRIT);
+                break;
+            }
+        }
+
+        foreach ($plugins as $plugin) {
+            $migrationsSucceed = $this->seedTables($plugin);
+            if (!$migrationsSucceed) {
+                break;
+            }
+        }
+
+        return $migrationsSucceed;
+    }
+
+    protected function _getCroogoPlugin()
+    {
+        if (!($this->_croogoPlugin instanceof Plugin)) {
+            $this->_setCroogoPlugin(new Plugin());
+        }
+
+        return $this->_croogoPlugin;
+    }
+
+    protected function _setCroogoPlugin($croogoPlugin)
+    {
+        unset($this->_croogoPlugin);
+        $this->_croogoPlugin = $croogoPlugin;
+    }
+
+    public function runMigrations($plugin)
+    {
+        if (!Plugin::loaded($plugin)) {
+            Plugin::load($plugin);
+        }
+        $croogoPlugin = $this->_getCroogoPlugin();
+        $result = $croogoPlugin->migrate($plugin);
+        if (!$result) {
+            $this->log($croogoPlugin->migrationErrors);
+        }
+
+        return $result;
+    }
+
+    public function seedTables($plugin)
+    {
+        if (!Plugin::loaded($plugin)) {
+            Plugin::load($plugin);
+        }
+        $croogoPlugin = $this->_getCroogoPlugin();
+
+        return $croogoPlugin->seed($plugin);
+    }
+
+    /**
+     * Create admin user
+     *
+     * @var array $user User datas
+     * @return If user is created
+     */
+    public function createAdminUser($user)
+    {
+        $Users = TableRegistry::get('Croogo/Users.Users');
+        $Roles = TableRegistry::get('Croogo/Users.Roles');
+        $Roles->addBehavior('Croogo/Core.Aliasable');
+
+        if (is_array($user)) {
+            $user = $Users->newEntity($user);
+        }
+
+        $user->name = $user['username'];
+        $user->email = '';
+        $user->timezone = 'UTC';
+        $user->role_id = $Roles->byAlias('superadmin');
+        $user->status = true;
+        $user->activation_key = md5(uniqid());
+        if ($user->errors()) {
+            return __d('croogo', 'Unable to create administrative user. Validation errors:');
+        }
+
+        return $Users->save($user) !== false;
+    }
+
+    public function setupAcos()
+    {
+        $generator = new AclGenerator();
+        $generator->insertAcos(ConnectionManager::get('default'));
+    }
+
+    public function setupGrants($success, $error)
+    {
+        $Roles = TableRegistry::get('Croogo/Users.Roles');
+        $Roles->addBehavior('Croogo/Core.Aliasable');
+
+        $Permission = TableRegistry::get('Croogo/Acl.Permissions');
+        $admin = 'Role-admin';
+        $public = 'Role-public';
+        $registered = 'Role-registered';
+        $publisher = 'Role-publisher';
+
+        $setup = [
+            //            'controllers/Croogo\Comments/Comments/index' => [$public],
+            //            'controllers/Croogo\Comments/Comments/add' => [$public],
+            //            'controllers/Croogo\Comments/Comments/delete' => [$registered],
+            'controllers/Croogo\Contacts/Contacts/view' => [$public],
+            'controllers/Croogo\Nodes/Nodes/index' => [$public],
+            'controllers/Croogo\Nodes/Nodes/term' => [$public],
+            'controllers/Croogo\Nodes/Nodes/promoted' => [$public],
+            'controllers/Croogo\Nodes/Nodes/search' => [$public],
+            'controllers/Croogo\Nodes/Nodes/view' => [$public],
+            'controllers/Croogo\Users/Users/index' => [$registered],
+            'controllers/Croogo\Users/Users/add' => [$public],
+            'controllers/Croogo\Users/Users/activate' => [$public],
+            'controllers/Croogo\Users/Users/edit' => [$registered],
+            'controllers/Croogo\Users/Users/forgot' => [$public],
+            'controllers/Croogo\Users/Users/reset' => [$public],
+            'controllers/Croogo\Users/Users/login' => [$public],
+            'controllers/Croogo\Users/Users/logout' => [$registered],
+            'controllers/Croogo\Users/Admin/Users/logout' => [$registered],
+            'controllers/Croogo\Users/Users/view' => [$registered],
+
+            'controllers/Croogo\Dashboards/Admin/Dashboards' => [$admin],
+            'controllers/Croogo\Nodes/Admin/Nodes' => [$publisher],
+            'controllers/Croogo\Menus/Admin/Menus' => [$publisher],
+            'controllers/Croogo\Menus/Admin/Links' => [$publisher],
+            'controllers/Croogo\Blocks/Admin/Blocks' => [$publisher],
+            'controllers/Croogo\FileManager/Admin/Attachments' => [$publisher],
+            'controllers/Croogo\FileManager/Admin/FileManager' => [$publisher],
+            'controllers/Croogo\Contacts/Admin/Contacts' => [$publisher],
+            'controllers/Croogo\Contacts/Admin/Messages' => [$publisher],
+            'controllers/Croogo\Users/Admin/Users/view' => [$admin],
+        ];
+
+        foreach ($setup as $aco => $roles) {
+            foreach ($roles as $aro) {
+                try {
+                    $result = $Permission->allow($aro, $aco);
+                    if ($result) {
+                        $success(__d('croogo', 'Permission %s granted to %s', $aco, $aro));
+                    }
+                } catch (\Exception $e) {
+                    $error($e->getMessage());
+                }
+            }
+        }
     }
 }

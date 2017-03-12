@@ -61,5 +61,5 @@ Configure::write(
     $dbConfigExists
 );
 if (!Configure::read('Croogo.installed') || !$dbConfigExists) {
-    Plugin::load('Croogo/Install', ['routes' => true]);
+    Plugin::load('Croogo/Install', ['routes' => true, 'bootstrap' => true]);
 }

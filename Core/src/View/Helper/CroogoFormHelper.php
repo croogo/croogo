@@ -24,6 +24,48 @@ class CroogoFormHelper extends FormHelper
         'Croogo/Core.CroogoHtml',
     ];
 
+    /**
+     * Default Bootstrap string templates.
+     *
+     * @var array
+     */
+    protected $_templates = [
+        'dateWidget' => '<ul class="list-inline"><li class="year">{{year}}</li><li class="month">{{month}}</li><li class="day">{{day}}</li><li class="hour">{{hour}}</li><li class="minute">{{minute}}</li><li class="second">{{second}}</li><li class="meridian">{{meridian}}</li></ul>',
+        'error' => '<div class="help-block">{{content}}</div>',
+        'help' => '<div class="help-block">{{content}}</div>',
+        'inputContainer' => '<div class="form-group {{type}}{{required}}">{{content}}{{help}}</div>',
+        'inputContainerError' => '<div class="form-group {{type}}{{required}} has-error">{{content}}{{error}}{{help}}</div>',
+        'radioInlineFormGroup' => '{{label}}<div class="radio-inline-wrapper">{{input}}</div>',
+        'radioNestingLabel' => '<div class="radio">{{hidden}}<label{{attrs}}>{{input}}{{text}}</label></div>',
+        'staticControl' => '<p class="form-control-static">{{content}}</p>',
+        'inputGroupAddon' => '<span class="{{class}}">{{content}}</span>',
+        'inputGroupContainer' => '<div class="input-group">{{prepend}}{{content}}{{append}}</div>',
+    ];
+
+    /**
+     * Templates set per alignment type
+     *
+     * @var array
+     */
+    protected $_templateSet = [
+        'default' => [
+            'checkboxContainer' => '<div class="checkbox">{{content}}{{help}}</div>',
+            'checkboxContainerError' => '<div class="checkbox has-error">{{content}}{{error}}{{help}}</div>',
+        ],
+        'inline' => [
+            'label' => '<label class="sr-only"{{attrs}}>{{text}}</label>',
+            'inputContainer' => '{{content}}'
+        ],
+        'horizontal' => [
+            'label' => '<label class="control-label %s"{{attrs}}>{{text}}</label>',
+            'formGroup' => '{{label}}<div class="%s">{{input}}{{error}}{{help}}</div>',
+            'checkboxFormGroup' => '<div class="%s"><div class="checkbox">{{label}}</div>{{error}}{{help}}</div>',
+            'submitContainer' => '<div class="%s">{{content}}</div>',
+            'inputContainer' => '<div class="form-group row {{type}}{{required}}">{{content}}</div>',
+            'inputContainerError' => '<div class="form-group row {{type}}{{required}} has-error">{{content}}</div>',
+        ]
+    ];
+
 /**
  * Constructor
  */
@@ -323,5 +365,18 @@ class CroogoFormHelper extends FormHelper
         $out .= $this->input("autocomplete_${field}", $autocomplete);
 
         return $out;
+    }
+
+    /**
+     * @param string $fieldName Field Name
+     * @param array $options Options
+     * @param array $attributes Attributes
+     * @return string
+     */
+    public function select($fieldName, $options = [], array $attributes = [])
+    {
+        $attributes = $this->addClass($attributes, 'custom-select');
+
+        return parent::select($fieldName, $options, $attributes);
     }
 }

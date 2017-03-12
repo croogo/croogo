@@ -17,9 +17,10 @@ use Croogo\Extensions\CroogoTheme;
 class CroogoView extends AppView
 {
 
-    public function initialize()
+    public function loadHelpers()
     {
-        parent::initialize();
+        parent::loadHelpers();
+
         $prefix = $this->request->param('prefix') ?: '';
         if ($prefix === 'admin') {
             $this->loadHelper('Croogo/Core.Croogo');
