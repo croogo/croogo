@@ -123,7 +123,7 @@
         }
     }
 
-    .nav-stacked > li > a {
+    .nav > li > a {
         color: $navbar-dark-color;
         &:hover {
             color: $navbar-dark-hover-color;
@@ -136,7 +136,7 @@
         border: none;
     }
 
-    &.bg-black {
+    .bg-black {
         .nav {
             > li {
                 > a {

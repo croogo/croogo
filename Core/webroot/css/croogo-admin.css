@@ -9251,37 +9251,37 @@ footer {
         border-top: none; }
       .nav-sidebar .sub-nav .sub-nav.dropdown-menu li:last-child > a {
         border-bottom: none; }
-  .nav-sidebar .nav-stacked > li > a {
+  .nav-sidebar .nav > li > a {
     color: #555555; }
-    .nav-sidebar .nav-stacked > li > a:hover {
+    .nav-sidebar .nav > li > a:hover {
       color: #222222; }
   .nav-sidebar .nav {
     padding: 0;
     border-radius: 0;
     border: none; }
-  .nav-sidebar.bg-black .nav > li > a {
+  .nav-sidebar .bg-black .nav > li > a {
     display: block;
     color: #bfbfbf;
     text-decoration: none;
     border-bottom: 1px solid #333333; }
-    .nav-sidebar.bg-black .nav > li > a:hover {
+    .nav-sidebar .bg-black .nav > li > a:hover {
       color: #eeeeee;
       text-decoration: none; }
-  .nav-sidebar.bg-black .sub-nav {
+  .nav-sidebar .bg-black .sub-nav {
     background: #333333; }
-    .nav-sidebar.bg-black .sub-nav a {
+    .nav-sidebar .bg-black .sub-nav a {
       display: block;
       color: #bfbfbf;
       text-decoration: none;
       border-bottom: 1px solid #1b1b1b; }
-      .nav-sidebar.bg-black .sub-nav a:hover {
+      .nav-sidebar .bg-black .sub-nav a:hover {
         color: #eeeeee;
         text-decoration: none; }
-      .nav-sidebar.bg-black .sub-nav a.current {
+      .nav-sidebar .bg-black .sub-nav a.current {
         color: #eeeeee; }
-    .nav-sidebar.bg-black .sub-nav .sub-nav .sidebar-item.current {
+    .nav-sidebar .bg-black .sub-nav .sub-nav .sidebar-item.current {
       color: #eeeeee; }
-      .nav-sidebar.bg-black .sub-nav .sub-nav .sidebar-item.current:hover {
+      .nav-sidebar .bg-black .sub-nav .sub-nav .sidebar-item.current:hover {
         color: #eeeeee; }
   .nav-sidebar .fa {
     min-width: 18px; }
