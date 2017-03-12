@@ -72,7 +72,7 @@ body {
 }
 
 .admin-login-box {
-    @extend .center-block;
+    @extend .mx-auto;
     margin-top: 5%;
     max-width: $croogo-login-box-width + 2;
 
