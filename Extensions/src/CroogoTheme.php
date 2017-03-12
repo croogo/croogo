@@ -133,6 +133,7 @@ class CroogoTheme
                             'Paginator' => [
                                 'className' => 'Croogo/Core.CroogoPaginator',
                             ],
+                            'Breadcrumbs'
                         ],
                     ],
                 ],

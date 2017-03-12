@@ -20,7 +20,7 @@ if (!empty($indexColumns)) {
 <?php
 
 $this->extend('Croogo/Core./Common/admin_index');
-$this->Html->addCrumb(__('<%= $pluralHumanName %>'), ['action' => 'index']);
+$this->Breadcrumbs->add(__('<%= $pluralHumanName %>'), ['action' => 'index']);
 
 $this->append('actions');
     echo $this->Croogo->adminAction(__('New <%= $singularHumanName %>'), ['action' => 'add']);

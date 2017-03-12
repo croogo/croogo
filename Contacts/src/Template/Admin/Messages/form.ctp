@@ -2,13 +2,13 @@
 $this->assign('title', __d('croogo', 'Edit Message'));
 $this->extend('/Common/admin_edit');
 
-$this->Html->addCrumb(__d('croogo', 'Contacts'),
+$this->Breadcrumbs->add(__d('croogo', 'Contacts'),
     ['plugin' => 'Croogo/Contacts', 'controller' => 'Contacts', 'action' => 'index'])
-    ->addCrumb(__d('croogo', 'Messages'),
+    ->add(__d('croogo', 'Messages'),
         ['plugin' => 'Croogo/Contacts', 'controller' => 'Messages', 'action' => 'index']);
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Html->addCrumb($message->title);
+    $this->Breadcrumbs->add($message->title);
 }
 
 $this->append('form-start', $this->Form->create($message));

@@ -4,7 +4,7 @@ $this->assign('title', __d('croogo', 'Dashboards'));
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
-		->addCrumb(__d('croogo', 'Dashboards'), array('action' => 'index'));
+		->add(__d('croogo', 'Dashboards'), array('action' => 'index'));
 
 $this->set('showActions', false);
 

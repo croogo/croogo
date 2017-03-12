@@ -9,7 +9,7 @@ if (isset($this->request->params['models'][$modelAlias])):
 endif;
 
 $this->Html
-	->addCrumb(
+	->add(
 		Inflector::pluralize($modelAlias),
 		array(
 			'plugin' => Inflector::underscore($plugin),
@@ -17,7 +17,7 @@ $this->Html
 			'action' => 'index',
 		)
 	)
-	->addCrumb(
+	->add(
 		$record[$modelAlias][$displayField],
 		array(
 			'plugin' => Inflector::underscore($plugin),
@@ -26,7 +26,7 @@ $this->Html
 			$record[$modelAlias]['id'],
 		)
 	)
-	->addCrumb(__d('croogo', 'Translations'), '/' . $this->request->url);
+	->add(__d('croogo', 'Translations'), '/' . $this->request->url);
 
 $this->start('actions');
 	echo '<div class="btn-group">';

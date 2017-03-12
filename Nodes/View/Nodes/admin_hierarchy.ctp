@@ -4,7 +4,7 @@ $this->extend('/Common/admin_index');
 $this->Croogo->adminScript(array('Nodes.admin'));
 
 $this->Html
-	->addCrumb(__d('croogo', 'Content'), array(
+	->add(__d('croogo', 'Content'), array(
 		'admin' => true,
 		'plugin' => 'nodes',
 		'controller' => 'nodes',
@@ -14,7 +14,7 @@ $this->Html
 if (isset($type) && $this->request->query):
 	$typeUrl = '/' . $this->request->url;
 	$typeUrl .= '?' . http_build_query($this->request->query);
-	$this->Html->addCrumb($type['Type']['title'], $typeUrl);
+	$this->Breadcrumbs->add($type['Type']['title'], $typeUrl);
 endif;
 
 $this->set('showActions', false);

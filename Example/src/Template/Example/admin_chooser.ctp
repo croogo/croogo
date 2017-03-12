@@ -2,8 +2,8 @@
 
 $this->extend('/Common/admin_index');
 $this->Html
-	->addCrumb('Example', array('controller' => 'example', 'action' => 'index'))
-	->addCrumb('Chooser Example', array('controller' => 'example', 'action' => 'chooser'));
+	->add('Example', array('controller' => 'example', 'action' => 'index'))
+	->add('Chooser Example', array('controller' => 'example', 'action' => 'chooser'));
 
 $this->append('form-start', $this->Form->create(null));
 

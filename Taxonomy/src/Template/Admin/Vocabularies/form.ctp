@@ -3,21 +3,21 @@ $this->Croogo->adminScript('Croogo/Taxonomy.vocabularies');
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Html->addCrumb(__d('croogo', 'Content'),
+$this->Breadcrumbs->add(__d('croogo', 'Content'),
     ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index']);
 
 if ($this->request->params['action'] == 'edit') {
     $this->assign('title', __d('croogo', 'Edit Vocabulary'));
 
-    $this->Html->addCrumb(__d('croogo', 'Vocabularies'), ['action' => 'index', $vocabulary->id])
-        ->addCrumb($vocabulary->title);
+    $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'), ['action' => 'index', $vocabulary->id])
+        ->add($vocabulary->title);
 }
 
 if ($this->request->params['action'] == 'add') {
     $this->assign('title', __d('croogo', 'Add Vocabulary'));
 
-    $this->Html->addCrumb(__d('croogo', 'Vocabularies'), ['action' => 'index'])
-        ->addCrumb(__d('croogo', 'Add'));
+    $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'), ['action' => 'index'])
+        ->add(__d('croogo', 'Add'));
 }
 
 $this->append('form-start', $this->Form->create($vocabulary, [

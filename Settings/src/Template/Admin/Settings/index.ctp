@@ -3,14 +3,14 @@
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Html
-	->addCrumb(__d('croogo', 'Settings'), array(
+	->add(__d('croogo', 'Settings'), array(
 		'prefix' => 'admin',
 		'plugin' => 'Croogo/Settings',
 		'controller' => 'Settings',
 		'action' => 'index',
 	));
 if (!empty($this->request->params['named']['p'])) {
-	$this->Html->addCrumb($this->request->params['named']['p']);
+	$this->Breadcrumbs->add($this->request->params['named']['p']);
 }
 $this->start('table-heading');
 	$tableHeaders = $this->Html->tableHeaders(array(

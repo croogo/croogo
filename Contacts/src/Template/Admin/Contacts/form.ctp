@@ -2,14 +2,14 @@
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Html->addCrumb(__d('croogo', 'Contacts'), ['controller' => 'contacts', 'action' => 'index']);
+$this->Breadcrumbs->add(__d('croogo', 'Contacts'), ['controller' => 'contacts', 'action' => 'index']);
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Html->addCrumb($contact->title, $this->request->here());
+    $this->Breadcrumbs->add($contact->title, $this->request->here());
 }
 
 if ($this->request->params['action'] == 'add') {
-    $this->Html->addCrumb(__d('croogo', 'Add'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
 }
 
 $this->append('form-start', $this->Form->create($contact));

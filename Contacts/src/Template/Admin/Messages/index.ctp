@@ -4,21 +4,21 @@ $this->Croogo->adminScript('Croogo/Contacts.admin');
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->Html->addCrumb(__d('croogo', 'Contacts'), ['controller' => 'contacts', 'action' => 'index']);
+$this->Breadcrumbs->add(__d('croogo', 'Contacts'), ['controller' => 'contacts', 'action' => 'index']);
 
 $status = $this->request->query('status');
 
 if (isset($status)) {
-    $this->Html->addCrumb(__d('croogo', 'Messages'), ['action' => 'index']);
+    $this->Breadcrumbs->add(__d('croogo', 'Messages'), ['action' => 'index']);
     if ($status == '1') {
-        $this->Html->addCrumb(__d('croogo', 'Read'), $this->request->url);
+        $this->Breadcrumbs->add(__d('croogo', 'Read'), $this->request->url);
         $this->assign('title', __d('croogo', 'Messages: Read'));
     } else {
-        $this->Html->addCrumb(__d('croogo', 'Unread'), $this->request->url);
+        $this->Breadcrumbs->add(__d('croogo', 'Unread'), $this->request->url);
         $this->assign('title', __d('croogo', 'Messages: Unread'));
     }
 } else {
-    $this->Html->addCrumb(__d('croogo', 'Messages'), $this->request->url);
+    $this->Breadcrumbs->add(__d('croogo', 'Messages'), $this->request->url);
 }
 
 $this->append('table-footer', $this->element('admin/modal', [

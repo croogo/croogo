@@ -4,13 +4,13 @@ use Croogo\Core\Status;
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Html->addCrumb(__d('croogo', 'Blocks'), ['action' => 'index']);
+$this->Breadcrumbs->add(__d('croogo', 'Blocks'), ['action' => 'index']);
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Html->addCrumb($block->title, $this->request->here());
+    $this->Breadcrumbs->add($block->title, $this->request->here());
 }
 if ($this->request->params['action'] == 'add') {
-    $this->Html->addCrumb(__d('croogo', 'Add'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
 }
 
 $this->append('form-start', $this->Form->create($block, [

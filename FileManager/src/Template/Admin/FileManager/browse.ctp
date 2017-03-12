@@ -3,7 +3,7 @@
 $this->extend('Croogo/Core./Common/admin_index');
 
 $this->assign('title', __d('croogo', 'File Manager'));
-$this->Html->addCrumb(__d('croogo', 'File Manager'), $this->request->here());
+$this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->request->here());
 
 ?>
 

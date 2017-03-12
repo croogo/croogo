@@ -3,9 +3,9 @@ $this->extend('/Common/admin_edit');
 $this->set('className', 'translate');
 
 $this->Html
-	->addCrumb(Inflector::humanize(Inflector::pluralize($modelAlias)))
-	->addCrumb($this->data[$modelAlias][$displayField])
-	->addCrumb(
+	->add(Inflector::humanize(Inflector::pluralize($modelAlias)))
+	->add($this->data[$modelAlias][$displayField])
+	->add(
 		__d('croogo', 'Translations'),
 		array(
 			'plugin' => 'translate',
@@ -15,7 +15,7 @@ $this->Html
 			$modelAlias,
 		)
 	)
-	->addCrumb(__d('croogo', 'Translate'), '/' . $this->request->url);
+	->add(__d('croogo', 'Translate'), '/' . $this->request->url);
 
 $this->append('form-start', $this->Form->create($modelAlias, array(
 	'url' => array(

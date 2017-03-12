@@ -3,22 +3,22 @@ $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Croogo->adminScript('Croogo/Taxonomy.terms');
 
-$this->Html->addCrumb(__d('croogo', 'Content'),
+$this->Breadcrumbs->add(__d('croogo', 'Content'),
     ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index']);
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Html->addCrumb(__d('croogo', 'Vocabularies'), ['controller' => 'Vocabularies', 'action' => 'index'])
-        ->addCrumb($vocabulary->title, ['action' => 'index', $vocabulary->id])
-        ->addCrumb($term->title);
+    $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'), ['controller' => 'Vocabularies', 'action' => 'index'])
+        ->add($vocabulary->title, ['action' => 'index', $vocabulary->id])
+        ->add($term->title);
 }
 
 if ($this->request->params['action'] == 'add') {
     $this->assign('title', __d('croogo', '%s: Add Term', $vocabulary->title));
 
-    $this->Html->addCrumb(__d('croogo', 'Vocabularies'),
+    $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'),
         ['controller' => 'Vocabularies', 'action' => 'index', $vocabulary->id])
-        ->addCrumb($vocabulary->title, ['action' => 'index'])
-        ->addCrumb(__d('croogo', 'Add'));
+        ->add($vocabulary->title, ['action' => 'index'])
+        ->add(__d('croogo', 'Add'));
 }
 
 $this->set('cancelUrl', ['action' => 'index', $vocabularyId]);

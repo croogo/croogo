@@ -2,16 +2,16 @@
 $this->extend('Croogo/Core./Common/admin_edit');
 
 $this->Html
-        ->addCrumb(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
-    ->addCrumb(__d('croogo', 'Permissions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Permissions'))
-    ->addCrumb(__d('croogo', 'Actions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Actions', 'action' => 'index'));
+        ->add(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
+    ->add(__d('croogo', 'Permissions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Permissions'))
+    ->add(__d('croogo', 'Actions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Actions', 'action' => 'index'));
 
 if ($this->request->param('action') == 'edit') {
-    $this->Html->addCrumb($aco->id . ': ' . $aco->alias, '/' . $this->request->url);
+    $this->Breadcrumbs->add($aco->id . ': ' . $aco->alias, '/' . $this->request->url);
 }
 
 if ($this->request->param('action') == 'add') {
-    $this->Html->addCrumb(__d('croogo', 'Add'), '/' . $this->request->url);
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), '/' . $this->request->url);
 }
 
 $this->assign('form-start', $this->Form->create($aco));

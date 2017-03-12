@@ -5,14 +5,14 @@ use Croogo\Core\Status;
 $this->extend('Croogo/Core./Common/admin_edit');
 $this->Croogo->adminScript('Croogo/Menus.admin');
 
-$this->Html->addCrumb(__d('croogo', 'Menus'), ['controller' => 'Menus', 'action' => 'index']);
+$this->Breadcrumbs->add(__d('croogo', 'Menus'), ['controller' => 'Menus', 'action' => 'index']);
 
 if ($this->request->params['action'] == 'add') {
-    $this->Html->addCrumb($menu->title, [
+    $this->Breadcrumbs->add($menu->title, [
                 'action' => 'index',
                 '?' => ['menu_id' => $menu->id],
             ])
-        ->addCrumb(__d('croogo', 'Add'), $this->request->here());
+        ->add(__d('croogo', 'Add'), $this->request->here());
     $formUrl = [
         'action' => 'add',
         $menu->id,
@@ -20,11 +20,11 @@ if ($this->request->params['action'] == 'add') {
 }
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Html->addCrumb($menu->title, [
+    $this->Breadcrumbs->add($menu->title, [
             'action' => 'index',
             '?' => ['menu_id' => $menu->id],
         ])
-        ->addCrumb($link->title, $this->request->here());
+        ->add($link->title, $this->request->here());
     $formUrl = [
         'action' => 'edit',
         '?' => [

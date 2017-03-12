@@ -2,8 +2,8 @@
 
 $this->extend('/Common/admin_index');
 $this->Html
-	->addCrumb('Example', array('controller' => 'example', 'action' => 'index'))
-	->addCrumb('RTE Example', '/' . $this->request->url);
+	->add('Example', array('controller' => 'example', 'action' => 'index'))
+	->add('RTE Example', '/' . $this->request->url);
 
 echo $this->Form->create('Example');
 

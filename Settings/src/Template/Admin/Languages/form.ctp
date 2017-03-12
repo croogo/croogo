@@ -2,17 +2,17 @@
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Html->addCrumb(__d('croogo', 'Settings'),
+$this->Breadcrumbs->add(__d('croogo', 'Settings'),
     ['plugin' => 'Croogo/Settings', 'controller' => 'settings', 'action' => 'prefix', 'Site'])
-    ->addCrumb(__d('croogo', 'Language'),
+    ->add(__d('croogo', 'Language'),
         ['plugin' => 'Croogo/Settings', 'controller' => 'languages', 'action' => 'index']);
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Html->addCrumb($language->title, $this->request->here());
+    $this->Breadcrumbs->add($language->title, $this->request->here());
 }
 
 if ($this->request->params['action'] == 'add') {
-    $this->Html->addCrumb(__d('croogo', 'Add'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
 }
 
 $this->append('form-start', $this->Form->create($language));

@@ -20,13 +20,13 @@ if (isset($modelObject) && $modelObject->behaviors()->has('Tree')) {
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Html->addCrumb(__('<%= $pluralHumanName %>'), ['action' => 'index']);
+$this->Breadcrumbs->add(__('<%= $pluralHumanName %>'), ['action' => 'index']);
 $action = $this->request->param('action');
 
 if ($action == 'edit'):
-    $this->Html->addCrumb($<%= $singularVar %>-><%= $displayField %>, $this->request->here());
+    $this->Breadcrumbs->add($<%= $singularVar %>-><%= $displayField %>, $this->request->here());
 else:
-    $this->Html->addCrumb(__d('croogo', 'Add'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
 endif;
 
 $this->append('actions');

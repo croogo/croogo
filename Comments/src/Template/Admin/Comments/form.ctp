@@ -2,8 +2,8 @@
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Html->addCrumb($this->Html->icon('home'), '/admin')
-    ->addCrumb(__d('croogo', 'Comments'), ['action' => 'index']);
+$this->Breadcrumbs->add($this->Html->icon('home'), '/admin')
+    ->add(__d('croogo', 'Comments'), ['action' => 'index']);
 
 $this->append('form-start', $this->Form->create($comment));
 
