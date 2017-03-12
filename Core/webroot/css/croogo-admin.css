@@ -9340,7 +9340,7 @@ span.slug {
 
 .form-control:focus {
   border: 1px solid #afafaf;
-  box-shadow: 2px 2px 2px #555555; }
+  box-shadow: 2px 2px 2px rgba(85, 85, 85, 0.3); }
 
 .text-important {
   text-decoration: none;

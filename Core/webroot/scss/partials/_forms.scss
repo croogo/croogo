@@ -44,5 +44,5 @@ span.slug {
 
 .form-control:focus {
     border: 1px solid darken($gray-lightest, 25);
-    box-shadow: 2px 2px 2px $gray;
+    box-shadow: 2px 2px 2px rgba($gray, 0.3);
 }
