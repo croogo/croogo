@@ -220,9 +220,6 @@ class CroogoHelper extends Helper
             }
 
             if (!$sidebar && !empty($children)) {
-                if ($depth == 0) {
-                    $title .= ' <b class="caret"></b>';
-                }
                 $menu['htmlAttributes']['class'] = 'dropdown-toggle';
                 $menu['htmlAttributes']['data-toggle'] = 'dropdown';
             }
