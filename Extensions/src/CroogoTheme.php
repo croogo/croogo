@@ -65,11 +65,11 @@ class CroogoTheme
                     'textarea' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>',
                 ],
                 'css' => [
-                    'columnFull' => 'col-xs-12',
+                    'columnFull' => 'col-12',
                     'columnLeft' => 'col-md-8',
                     'columnRight' => 'col-md-4',
                     'container' => 'container-fluid',
-                    'dashboardFull' => 'col-xs-12',
+                    'dashboardFull' => 'col-12',
                     'dashboardLeft' => 'col-sm-6',
                     'dashboardRight' => 'col-sm-6',
                     'dashboardClass' => 'sortable-column',

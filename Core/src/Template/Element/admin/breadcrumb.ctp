@@ -11,7 +11,7 @@ $crumbs = $this->Html->getCrumbList([
 ]);
 ?>
 <?php if ($crumbs): ?>
-<div id="breadcrumb-container" class="col-xs-12 visible-md-up">
+<div id="breadcrumb-container" class="col-12 visible-md-up">
     <?php echo $crumbs; ?>
 </div>
 <?php endif; ?>
