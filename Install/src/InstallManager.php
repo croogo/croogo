@@ -237,14 +237,14 @@ class InstallManager
             };
         }
 
-        $roles = TableRegistry::get('Croogo/Users.Roles');
-        $roles->addBehavior('Croogo/Core.Aliasable');
+        $Roles = TableRegistry::get('Croogo/Users.Roles');
+        $Roles->addBehavior('Croogo/Core.Aliasable');
 
         $Permission = TableRegistry::get('Croogo/Acl.Permissions');
-        $superAdmin = $roles->byAlias('admin');
-        $public = $roles->byAlias('public');
-        $registered = $roles->byAlias('registered');
-        $publisher = $roles->byAlias('publisher');
+        $admin = 'Role-admin';
+        $public = 'Role-public';
+        $registered = 'Role-registered';
+        $publisher = 'Role-publisher';
 
         $setup = [
             //            'controllers/Croogo\Comments/Comments/index' => [$public],
@@ -267,7 +267,7 @@ class InstallManager
             'controllers/Croogo\Users/Admin/Users/logout' => [$registered],
             'controllers/Croogo\Users/Users/view' => [$registered],
 
-            'controllers/Croogo\Dashboards/Admin/Dashboards' => [$superAdmin],
+            'controllers/Croogo\Dashboards/Admin/Dashboards' => [$admin],
             'controllers/Croogo\Nodes/Admin/Nodes' => [$publisher],
             'controllers/Croogo\Menus/Admin/Menus' => [$publisher],
             'controllers/Croogo\Menus/Admin/Links' => [$publisher],
@@ -276,7 +276,7 @@ class InstallManager
             'controllers/Croogo\FileManager/Admin/FileManager' => [$publisher],
             'controllers/Croogo\Contacts/Admin/Contacts' => [$publisher],
             'controllers/Croogo\Contacts/Admin/Messages' => [$publisher],
-            'controllers/Croogo\Users/Admin/Users/view' => [$superAdmin],
+            'controllers/Croogo\Users/Admin/Users/view' => [$admin],
         ];
 
         foreach ($setup as $aco => $roles) {
