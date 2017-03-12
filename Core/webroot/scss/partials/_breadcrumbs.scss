@@ -4,7 +4,8 @@
 
 #breadcrumb-container {
     background: $body-bg;
-    float: left;
+    flex: 1;
+    margin-right: 15px;
 }
 
 .breadcrumb {

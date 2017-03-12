@@ -25,28 +25,16 @@ if ($pageHeading = trim($this->fetch('page-heading'))):
     echo $pageHeading;
 endif;
 
-?>
-<?php if ($showActions): ?>
-    <div class="actions pull-md-right pull-lg-right btn-group">
-        <?php
-        if ($actionsBlock = $this->fetch('actions')):
-            echo $actionsBlock;
-        else:
-            if ($i18nDomain):
-                $entityName = __d($i18nDomain, $humanName);
-            else:
-                $entityName = __($humanName);
-            endif;
-            $actionTitle = __d('croogo', 'New %s', $entityName);
-            echo $this->Croogo->adminAction($actionTitle, ['action' => 'add'],
-                ['button' => 'btn btn-success']);
-        endif;
-        ?>
-    </div>
-<?php endif; ?>
+if (empty($this->fetch('action-buttons'))) {
+    if ($i18nDomain) {
+        $entityName = __d($i18nDomain, $humanName);
+    } else {
+        $entityName = __($humanName);
+    }
+    $actionTitle = __d('croogo', 'New %s', $entityName);
+    $this->assign('action-buttons', $this->Croogo->adminAction($actionTitle, ['action' => 'add'], ['button' => 'btn btn-success']));
+}
 
-
-<?php
 $tableHeaders = trim($this->fetch('table-heading'));
 if (!$tableHeaders && isset($displayFields)):
     $tableHeaders = [];
@@ -122,7 +110,7 @@ $tableFooters = trim($this->fetch('table-footer'));
             if (!empty($searchBlock)) :
             ?>
             <div class="navbar navbar-light bg-faded">
-                <div class="pull-right">
+                <div class="float-right">
                     <?= $searchBlock; ?>
                 </div>
             </div>

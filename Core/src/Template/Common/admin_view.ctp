@@ -29,19 +29,17 @@ endif;
             ?>
         <?php endif; ?>
     </h2>
-
-<?php if ($showActions): ?>
-    <div class="actions pull-md-right pull-lg-right btn-group">
-    <?php
-        if ($actionsBlock = $this->fetch('actions')):
-            echo $actionsBlock;
-        else:
-            echo $this->Croogo->adminAction(__d('croogo', 'New %s',
-                __d('croogo', Inflector::singularize($this->name))), ['action' => 'add'], ['button' => 'success']);
-        endif;
-    ?>
-    </div>
-<?php endif; ?>
+<?php
+if (empty($this->fetch('action-buttons'))) {
+    if ($i18nDomain) {
+        $entityName = __d($i18nDomain, $humanName);
+    } else {
+        $entityName = __($humanName);
+    }
+    $actionTitle = __d('croogo', 'New %s', $entityName);
+    $this->assign('action-buttons', $this->Croogo->adminAction(__d('croogo', 'New %s', __d('croogo', Inflector::singularize($this->name))), ['action' => 'add'], ['button' => 'success']);
+}
+?>
 
     <div class="<?php echo $rowClass; ?>">
         <div class="<?php echo $columnFull; ?>">

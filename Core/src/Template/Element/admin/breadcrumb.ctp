@@ -11,5 +11,5 @@ if (!empty($this->Breadcrumbs->getCrumbs()))
         'class' => 'breadcrumb',
     ]);
 
-    echo $this->Html->div('col-12 visible-md-up', $crumbs, ['id' => 'breadcrumb-container']);
+    echo $this->Html->div('visible-md-up', $crumbs, ['id' => 'breadcrumb-container']);
 }

@@ -32,14 +32,6 @@ if ($pageHeading = trim($this->fetch('page-heading'))):
     echo $pageHeading;
 endif;
 
-?>
-<?php if ($actionsBlock = $this->fetch('actions')): ?>
-    <div class="actions pull-md-right pull-lg-right btn-group">
-            <?php echo $actionsBlock; ?>
-    </div>
-<?php endif; ?>
-<?php
-
 if ($contentBlock = trim($this->fetch('content'))):
     echo $contentBlock;
 

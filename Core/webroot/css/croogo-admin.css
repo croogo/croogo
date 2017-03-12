@@ -9057,7 +9057,8 @@ table .item-actions {
 
 #breadcrumb-container {
   background: #fff;
-  float: left; }
+  flex: 1;
+  margin-right: 15px; }
 
 .breadcrumb {
   z-index: 1000;

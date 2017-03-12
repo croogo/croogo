@@ -75,7 +75,7 @@ $this->end();
 
 $this->append('table-body');
 	$currentController = '';
-	$icon = '<i class="icon-none pull-right"></i>';
+	$icon = '<i class="icon-none float-right"></i>';
 	foreach ($acos as $aco) {
 		$id = $aco->id;
 		$alias = $aco->alias;

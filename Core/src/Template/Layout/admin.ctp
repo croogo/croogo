@@ -1,3 +1,6 @@
+<?php
+$showActions = isset($showActions) ? $showActions : true;
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -46,7 +49,14 @@
             </div>
             <div id="content-container" class="content-container <?= $this->Theme->getCssClass('container') ?>">
                 <div id="content" class="content <?= $this->Theme->getCssClass('row') ?>">
-                    <?php echo $this->element('Croogo/Core.admin/breadcrumb'); ?>
+                    <div class="col-12 my-0 d-flex justify-content-between align-items-center">
+                        <?= $this->element('Croogo/Core.admin/breadcrumb') ?>
+                        <?php if ($showActions && $actionsBlock = $this->fetch('action-buttons')): ?>
+                            <div class="actions">
+                                <?php echo $actionsBlock; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
                     <div id="inner-content" class="<?= $this->Theme->getCssClass('columnFull') ?>">
                         <?php echo $this->Layout->sessionFlash(); ?>
                         <?php echo $this->fetch('content'); ?>
