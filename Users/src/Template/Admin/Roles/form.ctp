@@ -1,15 +1,15 @@
 <?php
 $this->extend('Croogo/Core./Common/admin_edit');
-$this->Html
-    ->addCrumb(__d('croogo', 'Users'), ['plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'])
-    ->addCrumb(__d('croogo', 'Roles'), ['plugin' => 'Croogo/Users', 'controller' => 'Roles', 'action' => 'index']);
+$this->Breadcrumbs
+    ->add(__d('croogo', 'Users'), ['plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'])
+    ->add(__d('croogo', 'Roles'), ['plugin' => 'Croogo/Users', 'controller' => 'Roles', 'action' => 'index']);
 
 if ($this->request->param('action') == 'edit') {
-    $this->Html->addCrumb($role->title, $this->request->here());
+    $this->Breadcrumbs->add($role->title, $this->request->here());
 }
 
 if ($this->request->param('action') == 'add') {
-    $this->Html->addCrumb(__d('croogo', 'Add'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
 }
 
 $this->assign('form-start', $this->Form->create($role));

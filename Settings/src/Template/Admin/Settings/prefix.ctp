@@ -4,9 +4,9 @@ use Cake\Utility\Inflector;
 
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Html->addCrumb(__d('croogo', 'Settings'),
+$this->Breadcrumbs->add(__d('croogo', 'Settings'),
     ['plugin' => 'Croogo/Settings', 'controller' => 'Settings', 'action' => 'index'])
-    ->addCrumb($prefix, $this->request->here());
+    ->add($prefix, $this->request->here());
 
 $this->assign('form-start', $this->Form->create(null, [
     'class' => 'protected-form',

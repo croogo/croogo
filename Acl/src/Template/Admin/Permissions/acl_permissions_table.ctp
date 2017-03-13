@@ -16,7 +16,7 @@
 	</thead>
 
 	<?php
-	$icon = '<i class="pull-right"></i>';
+	$icon = '<i class="float-right"></i>';
 	$currentController = '';
 	foreach ($acos as $index => $aco) {
 		$id = $aco->id;

@@ -44,6 +44,10 @@ class InstallController extends Controller
 //        'Croogo.Layout',
 //    ];
 
+    const STEPS = [
+        'Welcome', 'Database', 'Admin user', 'Completed'
+    ];
+
     public function initialize()
     {
         $this->loadComponent('Flash');
@@ -118,7 +122,8 @@ class InstallController extends Controller
     public function index()
     {
         $this->_check();
-        $this->set('title_for_layout', __d('croogo', 'Installation: Welcome'));
+
+        $this->set('onStep', 1);
     }
 
 /**
@@ -161,6 +166,7 @@ class InstallController extends Controller
         } catch (\Exception $e) {
         }
         $this->set(compact('currentConfiguration'));
+        $this->set('onStep', 2);
     }
 
 /**
@@ -248,6 +254,7 @@ class InstallController extends Controller
         }
 
         $this->set('user', $user);
+        $this->set('onStep', 3);
     }
 
 /**
@@ -267,5 +274,6 @@ class InstallController extends Controller
 
         $this->set('user', $this->request->session()->read('Install.user'));
         $this->request->session()->destroy();
+        $this->set('onStep', 4);
     }
 }

@@ -7,11 +7,11 @@ $this->Html->script('Croogo/Acl.acl_permissions', ['block' => true]);
 $this->Croogo->adminScript('Croogo/Acl.acl_permissions');
 
 $this->Html
-	->addCrumb(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
-	->addCrumb(__d('croogo', 'Permissions'), array(
+	->add(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
+	->add(__d('croogo', 'Permissions'), array(
 		'plugin' => 'Croogo/Acl', 'controller' => 'Permissions',
 	))
-	->addCrumb(__d('croogo', 'Actions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Actions', 'action' => 'index', 'permission' => 1));
+	->add(__d('croogo', 'Actions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Actions', 'action' => 'index', 'permission' => 1));
 
 $this->append('actions');
 	$toolsButton = $this->Html->link(
@@ -75,7 +75,7 @@ $this->end();
 
 $this->append('table-body');
 	$currentController = '';
-	$icon = '<i class="icon-none pull-right"></i>';
+	$icon = '<i class="icon-none float-right"></i>';
 	foreach ($acos as $aco) {
 		$id = $aco->id;
 		$alias = $aco->alias;

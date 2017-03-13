@@ -122,7 +122,7 @@ class CroogoHelper extends Helper
             'type' => 'sidebar',
             'children' => true,
             'htmlAttributes' => [
-                'class' => 'nav nav-stacked',
+                'class' => 'nav flex-column',
             ],
             'itemTag' => 'li',
             'listTag' => 'ul',
@@ -187,7 +187,7 @@ class CroogoHelper extends Helper
                 if ($sidebar) {
                     $itemTag = 'li';
                     $listTag = 'ul';
-                    $childClass = 'nav nav-stacked sub-nav ';
+                    $childClass = 'nav flex-column sub-nav ';
                     $childClass .= ' submenu-' . Inflector::slug(strtolower($menu['title']), '-');
                     if ($depth > 0) {
                         $childClass .= ' dropdown-menu';
@@ -220,9 +220,6 @@ class CroogoHelper extends Helper
             }
 
             if (!$sidebar && !empty($children)) {
-                if ($depth == 0) {
-                    $title .= ' <b class="caret"></b>';
-                }
                 $menu['htmlAttributes']['class'] = 'dropdown-toggle';
                 $menu['htmlAttributes']['data-toggle'] = 'dropdown';
             }

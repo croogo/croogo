@@ -4,19 +4,19 @@ $this->Croogo->adminScript('Croogo/Comments.admin');
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->Html->addCrumb(__d('croogo', 'Content'), ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index']);
+$this->Breadcrumbs->add(__d('croogo', 'Content'), ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index']);
 
 if (isset($criteria['Comment.status'])) {
-    $this->Html->addCrumb(__d('croogo', 'Comments'), ['action' => 'index']);
+    $this->Breadcrumbs->add(__d('croogo', 'Comments'), ['action' => 'index']);
     if ($criteria['Comment.status'] == '1') {
-        $this->Html->addCrumb(__d('croogo', 'Published'));
+        $this->Breadcrumbs->add(__d('croogo', 'Published'), $this->request->here());
         $this->assign('title', __d('croogo', 'Comments: Published'));
     } else {
-        $this->Html->addCrumb(__d('croogo', 'Awaiting approval'));
+        $this->Breadcrumbs->add(__d('croogo', 'Awaiting approval'), $this->request->here());
         $this->assign('title', __d('croogo', 'Comments: Published'));
     }
 } else {
-    $this->Html->addCrumb(__d('croogo', 'Comments'));
+    $this->Breadcrumbs->add(__d('croogo', 'Comments'), $this->request->here());
 }
 
 /**

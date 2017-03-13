@@ -44,6 +44,6 @@ if (!empty($searchFields)):
         echo $this->Form->input($field, $options);
     }
 
-    echo $this->Form->submit(__d('croogo', 'Filter'), ['type' => 'submit', 'class' => 'btn-success-outline']);
+    echo $this->Form->submit(__d('croogo', 'Filter'), ['type' => 'submit', 'class' => 'btn-outline-success']);
     echo $this->Form->end();
 endif;

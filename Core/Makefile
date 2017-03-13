@@ -1,5 +1,5 @@
-BOOTSTRAP_TAG=v4.0.0-alpha.2
-FONTAWESOME_TAG=v4.6.3
+BOOTSTRAP_TAG=v4.0.0-alpha.6
+FONTAWESOME_TAG=v4.7.0
 
 REPO_FONTAWESOME=git://github.com/FortAwesome/Font-Awesome.git
 REPO_BOOTSTRAP=git://github.com/twbs/bootstrap
@@ -15,7 +15,7 @@ BOOTSTRAP_JS=admin.js
 
 DATE=$(shell date +%I:%M%p)
 ifeq ($(RELEASE), true)
-	COMPILE=scss
+	COMPILE=scss -t compressed
 else
 	COMPILE=scss -l # for debugging as it provides better error messages
 endif
@@ -43,7 +43,7 @@ css: deps
 	@[ "$$?" -eq 0 ] && echo "bootstrap branch/tag: ${BOOTSTRAP_TAG} ${CHECK}"
 	@echo "${HR}"
 	@echo "Compiling..."
-	@${COMPILE} ${CROOGO_SASS} > "${CSS_DIR}"/"${CROOGO_CSS}"
+	@${COMPILE} ${CROOGO_SASS}:"${CSS_DIR}"/"${CROOGO_CSS}"
 	@DIR=${CSS_DIR} && echo "File: $${DIR#${CURDIR}/}/${CROOGO_CSS} ${CHECK}"
 
 assets:
@@ -57,6 +57,8 @@ assets:
 		chmod 644 webroot/fonts/`basename $${file}` ; \
 		echo "Copied: webroot/fonts/`basename $${file}` ${CHECK}" ;\
 	done
+	@cp webroot/bootstrap/dist/js/bootstrap.min.js ${JS_DIR}/bootstrap.min.js
+	@echo "Copied: webroot/js/bootstrap.min.js ${CHECK}"
 
 clean:
 	@rm -f "${CSS_DIR}"/"${CROOGO_CSS}" "${CSS_DIR}"/"${CROOGO_RESPONSIVE_CSS}"

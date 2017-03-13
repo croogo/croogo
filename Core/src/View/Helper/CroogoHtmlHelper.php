@@ -292,28 +292,11 @@ class CroogoHtmlHelper extends HtmlHelper
         foreach ($path as $p) {
             if (!is_null($p)) {
                 $currentPath .= $p . $separator;
-                $this->addCrumb($p, $currentPath);
+                $this->add($p, $currentPath);
             }
         }
 
         return $this;
-    }
-
-    public function addCrumb($name, $link = null, array $options = [])
-    {
-        parent::addCrumb($name, $link, $options);
-
-        return $this;
-    }
-
-    /**
-     * Checks that crumbs has been added/initialied
-     *
-     * @return boolean True if crumbs has been populated
-     */
-    public function hasCrumbs()
-    {
-        return !empty($this->_crumbs);
     }
 
     /**

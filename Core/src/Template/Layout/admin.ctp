@@ -1,3 +1,6 @@
+<?php
+$showActions = isset($showActions) ? $showActions : true;
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -39,12 +42,21 @@
         ?>
     </head>
     <body>
+        <?php echo $this->element('Croogo/Core.admin/header'); ?>
         <div id="wrap">
-            <?php echo $this->element('Croogo/Core.admin/header'); ?>
-            <?php echo $this->element('Croogo/Core.admin/navigation'); ?>
-            <div id="content-container" class="<?= $this->Theme->getCssClass('container') ?>">
-                <div id="content" class="clearfix">
-                    <?php echo $this->element('Croogo/Core.admin/breadcrumb'); ?>
+            <div class="nav-sidebar">
+                <?php echo $this->element('Croogo/Core.admin/navigation'); ?>
+            </div>
+            <div id="content-container" class="content-container <?= $this->Theme->getCssClass('container') ?>">
+                <div id="content" class="content">
+                    <div class="col-12 d-flex justify-content-between align-items-center">
+                        <?= $this->element('Croogo/Core.admin/breadcrumb') ?>
+                        <?php if ($showActions && $actionsBlock = $this->fetch('action-buttons')): ?>
+                            <div class="actions">
+                                <?php echo $actionsBlock; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
                     <div id="inner-content" class="<?= $this->Theme->getCssClass('columnFull') ?>">
                         <?php echo $this->Layout->sessionFlash(); ?>
                         <?php echo $this->fetch('content'); ?>

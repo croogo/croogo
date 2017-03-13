@@ -7,7 +7,7 @@
         ]);
         ?>
     </p>
-    <ul class="pagination pagination-sm">
+    <ul class="pagination justify-content-center pagination-sm">
         <?php echo $this->Paginator->first('< ' . __d('croogo', 'first')); ?>
         <?php echo $this->Paginator->prev('< ' . __d('croogo', 'prev')); ?>
         <?php echo $this->Paginator->numbers(); ?>

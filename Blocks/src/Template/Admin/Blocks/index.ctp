@@ -6,7 +6,7 @@ $this->Croogo->adminScript('Croogo/Blocks.admin');
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->Html->addCrumb(__d('croogo', 'Blocks'), $this->request->url);
+$this->Breadcrumbs->add(__d('croogo', 'Blocks'), $this->request->here());
 
 $this->append('form-start', $this->Form->create(null, [
     'url' => ['action' => 'process'],

@@ -17,16 +17,16 @@ endif;
 
 ?>
 <div class="clearfix">
-    <div class="pull-left card-buttons">
+    <div class="card-buttons d-flex justify-content-center">
     <?php
-        echo $this->Form->button($saveText, ['class' => 'btn-success-outline']);
+        echo $this->Form->button($saveText, ['class' => 'btn-outline-success']);
         if ($applyText):
-            echo $this->Form->button($applyText, ['class' => 'btn-primary-outline',
+            echo $this->Form->button($applyText, ['class' => 'btn-outline-primary',
                 'name' => '_apply',
             ]);
         endif;
         echo $this->Html->link(__d('croogo', 'Cancel'), $cancelUrl, [
-            'class' => 'cancel btn btn-danger-outline'
+            'class' => 'cancel btn btn-outline-danger'
         ]);
     ?>
     </div>

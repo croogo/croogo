@@ -7,8 +7,8 @@ $this->extend('Croogo/Core./Common/admin_index');
 
 $this->Croogo->adminScript('Croogo/Nodes.admin');
 
-$this->Html
-    ->addCrumb(__d('croogo', 'Content'), $this->request->url);
+$this->Breadcrumbs
+    ->add(__d('croogo', 'Content'), $this->request->here());
 
 $this->append('actions');
 echo $this->Croogo->adminAction(__d('croogo', 'Create content'), ['action' => 'create'], ['button' => 'success']);
@@ -51,11 +51,11 @@ $this->append('table-body');
                 </span>
 
                 <?php if ($node->promote == 1): ?>
-                    <span class="label label-info"><?php echo __d('croogo', 'promoted'); ?></span>
+                    <span class="badge badge-info"><?php echo __d('croogo', 'promoted'); ?></span>
                 <?php endif ?>
 
                 <?php if ($node->status == Status::PREVIEW): ?>
-                    <span class="label label-warning"><?php echo __d('croogo', 'preview'); ?></span>
+                    <span class="badge badge-warning"><?php echo __d('croogo', 'preview'); ?></span>
                 <?php endif ?>
             </td>
             <td>
@@ -128,7 +128,7 @@ echo $this->Form->input('Nodes.action', [
 $jsVarName = uniqid('confirmMessage_');
 echo $this->Form->button(__d('croogo', 'Apply'), [
     'type' => 'button',
-    'class' => 'bulk-process btn-primary-outline',
+    'class' => 'bulk-process btn-outline-primary',
     'data-relatedElement' => '#nodes-action',
     'data-confirmMessage' => $jsVarName,
     'escape' => true,

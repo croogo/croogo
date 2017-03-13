@@ -1,16 +1,16 @@
 .pagination-wrapper {
-    @extend .center-block;
+  @extend .mx-auto;
 
-    text-align: center;
-    margin-top: 20px;
-    p {
-        margin: 0;
-        font-size: $font-size-sm;
-    }
+  text-align: center;
+  margin-top: 20px;
+  p {
+    margin: 0;
+    font-size: $font-size-sm;
+  }
 
-    a {
-        &:hover {
-            text-decoration: none;
-        }
+  a {
+    &:hover {
+      text-decoration: none;
     }
+  }
 }

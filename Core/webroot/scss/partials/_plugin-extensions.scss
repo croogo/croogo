@@ -1,23 +1,24 @@
-div.extensions-themes  {
-	.current-theme {
-		.screenshot {
-			float: left;
-		}
-	}
+div.extensions-themes {
+  .current-theme {
+    .screenshot {
+      float: left;
+    }
+  }
 
-	.available-themes {
-		ul {
-			margin: 0;
-			li {
-				margin-left: 0;
-				margin-bottom: 20px;
-				list-style: none;
-			}
-		}
-		.actions a {
-			margin-right: 10px;
-		}
-		border-top: 1px dashed #ccc; margin: 50px 0px 0px 0px;
-	}
+  .available-themes {
+    ul {
+      margin: 0;
+      li {
+        margin-left: 0;
+        margin-bottom: 20px;
+        list-style: none;
+      }
+    }
+    .actions a {
+      margin-right: 10px;
+    }
+    border-top: 1px dashed #ccc;
+    margin: 50px 0 0 0;
+  }
 
 }

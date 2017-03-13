@@ -3,12 +3,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width">
-        <title><?php echo $this->fetch('title'); ?> - <?php echo __d('croogo', 'Croogo'); ?></title>
+        <title><?= __d('croogo', 'Installation: %s', $this->fetch('title')) ?> - <?php echo __d('croogo', 'Croogo'); ?></title>
         <?php
         echo $this->Html->css([
             'Croogo/Core.croogo-admin',
         ]);
-        echo $this->element('Croogo/Install.styles');
         echo $this->Html->script([
             'Croogo/Core.jquery/jquery.min',
             'Croogo/Core.croogo-admin',
@@ -16,27 +15,31 @@
         echo $this->fetch('script');
         ?>
     </head>
+    <body class="installer">
+        <header class="navbar navbar-inverse bg-black navbar-fixed-top">
+            <span class="navbar-brand"><?php echo __d('croogo', 'Install Croogo'); ?></span>
+        </header>
 
-    <body>
-
-        <div id="wrap" class="install">
-            <header class="navbar navbar-inverse bg-inverse navbar-fixed-top">
-                <div class="<?php echo $this->Theme->getCssClass('container'); ?>">
-                    <span class="navbar-brand"><?php echo __d('croogo', 'Install Croogo'); ?></span>
+        <div id="wrap">
+            <div class="card">
+                <?= $this->fetch('before') ?>
+                <h3 class="card-header">
+                    <?= __d('croogo', 'Installation: %s', $this->fetch('title')) ?>
+                </h3>
+                <div class="card-block">
+                    <?php
+                    echo $this->element('installer_steps');
+                    echo $this->Layout->sessionFlash();
+                    echo $this->fetch('content');
+                    ?>
                 </div>
-            </header>
-
-            <div id="main" class="<?php echo $this->Theme->getCssClass('container'); ?>">
-                <div class="<?php echo $this->Theme->getCssClass('row'); ?>">
-                    <div id="install" class="<?php echo $this->Theme->getCssClass('columnFull'); ?>">
-                        <?php
-                        echo $this->Layout->sessionFlash();
-                        echo $this->fetch('content');
-                        ?>
-                    </div>
-                </div>
+                <?php
+                if ($buttons = $this->fetch('buttons')) {
+                    echo $this->Html->div('card-footer text-right', $buttons);
+                }
+                echo $this->fetch('after');
+                ?>
             </div>
-
         </div>
 
         <?php echo $this->element('admin/footer'); ?>

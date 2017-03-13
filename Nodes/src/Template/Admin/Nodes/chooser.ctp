@@ -1,5 +1,5 @@
 <div class="navbar navbar-light bg-faded">
-    <div class="pull-left">
+    <div class="float-left">
         <?php
         echo __d('croogo', 'Sort by:');
         echo ' ' . $this->Paginator->sort('id', __d('croogo', 'Id'), ['class' => 'sort']);
@@ -7,7 +7,7 @@
         echo ', ' . $this->Paginator->sort('created', __d('croogo', 'Created'), ['class' => 'sort']);
         ?>
     </div>
-    <div class="pull-right">
+    <div class="float-right">
         <?php echo $this->element('Croogo/Nodes.admin/nodes_search'); ?>
     </div>
 </div>

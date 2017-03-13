@@ -2,11 +2,11 @@
 
 $this->extend('/Common/admin_edit');
 
-$this->Html->addCrumb(__d('croogo', 'Extensions'),
+$this->Breadcrumbs->add(__d('croogo', 'Extensions'),
     ['plugin' => 'Croogo/Extensions', 'controller' => 'extensions_plugins', 'action' => 'index'])
-    ->addCrumb(__d('croogo', 'Locales'),
+    ->add(__d('croogo', 'Locales'),
         ['plugin' => 'Croogo/Extensions', 'controller' => 'extensions_locales', 'action' => 'index'])
-    ->addCrumb(__d('croogo', 'Upload'), $this->request->here());
+    ->add(__d('croogo', 'Upload'), $this->request->here());
 
 $this->append('form-start', $this->Form->create(null, [
     'url' => [
@@ -31,9 +31,9 @@ $this->end();
 
 $this->append('panels');
 echo $this->Html->beginBox(__d('croogo', 'Publishing')) .
-    '<div class="clearfix"><div class="pull-left">' .
+    '<div class="clearfix"><div class="float-left">' .
     $this->Form->button(__d('croogo', 'Upload'), ['button' => 'success']) .
-    '</div><div class="pull-right">' .
+    '</div><div class="float-right">' .
     $this->Html->link(__d('croogo', 'Cancel'), ['action' => 'index'], ['button' => 'danger']) .
     '</div></div>';
 echo $this->Html->endBox();

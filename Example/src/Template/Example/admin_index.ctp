@@ -1,7 +1,7 @@
 <?php
 $this->extend('/Common/admin_index');
 $this->Html
-	->addCrumb('Example', array('controller' => 'example', 'action' => 'index'));
+	->add('Example', array('controller' => 'example', 'action' => 'index'));
 ?>
 <?php $this->start('actions'); ?>
 <?php

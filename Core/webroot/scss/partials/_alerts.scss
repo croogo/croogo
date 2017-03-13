@@ -4,18 +4,18 @@
 
 #authMessage,
 div {
-	.message {
-		@extend .alert;
-		@extend .alert-danger;
-	}
+  .message {
+    @extend .alert;
+    @extend .alert-danger;
+  }
 
-	.error {
-        @extend .alert;
-        @extend .alert-danger;
-	}
+  .error {
+    @extend .alert;
+    @extend .alert-danger;
+  }
 
-	.success {
-        @extend .alert;
-        @extend .alert-success;
-	}
+  .success {
+    @extend .alert;
+    @extend .alert-success;
+  }
 }

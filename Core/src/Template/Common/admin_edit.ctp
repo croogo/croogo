@@ -32,14 +32,6 @@ if ($pageHeading = trim($this->fetch('page-heading'))):
     echo $pageHeading;
 endif;
 
-?>
-<?php if ($actionsBlock = $this->fetch('actions')): ?>
-    <div class="actions pull-md-right pull-lg-right btn-group">
-            <?php echo $actionsBlock; ?>
-    </div>
-<?php endif; ?>
-<?php
-
 if ($contentBlock = trim($this->fetch('content'))):
     echo $contentBlock;
 
@@ -113,7 +105,7 @@ endif;
 
 $output = '';
 $output .= $this->Html->tag('div', $this->fetch('left-column'), ['class' => $columnLeft]);
-$output .= $this->Html->tag('div', $this->fetch('right-column'), ['class' => $columnRight]);
+$output .= $this->Html->tag('div', $this->fetch('right-column'), ['class' => $columnRight . ' card-column']);
 echo $this->Html->tag('div', $output, ['class' => $rowClass]);
 
 if ($formEnd = trim($this->fetch('form-end'))):

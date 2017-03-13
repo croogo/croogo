@@ -2,7 +2,7 @@
     <div class="card-header">
         <i class="fa fa-move move-handle"></i>
         <?php echo $dashboard['title'] ?>
-        <a class="toggle-icon pull-right" data-toggle="collapse" data-target="#<?php echo $alias ?>-content">
+        <a class="toggle-icon float-right" data-toggle="collapse" data-target="#<?php echo $alias ?>-content">
             <?php echo($dashboard['collapsed'] ? '<i class="fa fa-plus"></i>' : '<i class="fa fa-minus"></i>') ?>
         </a>
     </div>

@@ -4,11 +4,11 @@ $this->assign('title', __d('croogo', 'Vocabulary: %s', $vocabulary->title));
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->Html->addCrumb(__d('croogo', 'Content'),
+$this->Breadcrumbs->add(__d('croogo', 'Content'),
         ['plugin' => 'Croogo/Nodes', 'controller' => 'Nodes', 'action' => 'index'])
-    ->addCrumb(__d('croogo', 'Vocabularies'),
+    ->add(__d('croogo', 'Vocabularies'),
         ['plugin' => 'Croogo/Taxonomy', 'controller' => 'Vocabularies', 'action' => 'index'])
-    ->addCrumb($vocabulary->title, $this->request->here());
+    ->add($vocabulary->title, $this->request->here());
 
 $this->append('actions');
 echo $this->Croogo->adminAction(__d('croogo', 'Create term'), ['action' => 'add', $vocabulary->id], ['class' => 'btn btn-success']);

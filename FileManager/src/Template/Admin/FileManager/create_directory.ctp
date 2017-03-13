@@ -5,9 +5,9 @@ use Cake\Routing\Router;
 $this->assign('title', __d('croogo', 'Create Directory'));
 $this->extend('Croogo/Core./Common/admin_edit');
 
-$this->Html->addCrumb(__d('croogo', 'File Manager'),
+$this->Breadcrumbs->add(__d('croogo', 'File Manager'),
     ['plugin' => 'Croogo/FileManager', 'controller' => 'fileManager', 'action' => 'browse'])
-    ->addCrumb(__d('croogo', 'Create Directory'), $this->request->here());
+    ->add(__d('croogo', 'Create Directory'), $this->request->here());
 
 $this->append('form-start', $this->Form->create(null));
 

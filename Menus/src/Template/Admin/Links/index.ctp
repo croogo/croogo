@@ -7,8 +7,8 @@ $this->Croogo->adminscript('Croogo/Menus.admin');
 
 $this->extend('Croogo/Core./Common/admin_index');
 
-$this->Html->addCrumb(__d('croogo', 'Menus'), ['controller' => 'Menus', 'action' => 'index'])
-    ->addCrumb(__d('croogo', $menu->title), $this->request->here());
+$this->Breadcrumbs->add(__d('croogo', 'Menus'), ['controller' => 'Menus', 'action' => 'index'])
+    ->add(__d('croogo', $menu->title), $this->request->here());
 
 $this->append('actions');
 echo $this->Croogo->adminAction(__d('croogo', 'New link'), ['action' => 'add', 'menu_id' => $menu->id], ['button' => 'success']);
@@ -109,7 +109,7 @@ echo $this->Form->input('Links.action', [
 echo $this->Form->button(__d('croogo', 'Apply'), [
     'type' => 'submit',
     'value' => 'submit',
-    'class' => 'btn-primary-outline'
+    'class' => 'btn-outline-primary'
 ]);
 $this->end();
 

@@ -1,7 +1,7 @@
 // Override bootstrap vars
-$font-family-sans-serif:  "Helvetica Neue", "Ubuntu", Helvetica, Arial, sans-serif;
+$font-family-sans-serif: "Helvetica Neue", "Ubuntu", Helvetica, Arial, sans-serif;
 $font-family-serif: Georgia, "Ubuntu", "Times New Roman", Times, serif;
-$font-family-monospace:  Monaco, Menlo, Consolas, "Ubuntu Mono", "Courier New", monospace;
+$font-family-monospace: Monaco, Menlo, Consolas, "Ubuntu Mono", "Courier New", monospace;
 
 //Colors
 $black: #000;
@@ -41,3 +41,6 @@ $crFilterBackground: $crTableTheadBackground;
 
 // Login
 $croogo-login-box-width: 350px;
+
+$navbar-dark-color: $gray;
+$navbar-dark-hover-color: $gray-darker;

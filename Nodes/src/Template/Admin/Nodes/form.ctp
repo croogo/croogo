@@ -5,18 +5,17 @@ use Cake\Routing\Router;
 $this->extend('Croogo/Core./Common/admin_edit');
 $this->Html->script(array('Croogo/Nodes.admin'), ['block' => true]);
 
-$this->Html
-    ->addCrumb(__d('croogo', 'Content'), ['action' => 'index']);
+$this->Breadcrumbs->add(__d('croogo', 'Content'), ['action' => 'index']);
 
 if ($this->request->params['action'] == 'add') {
     $this->assign('title', __d('croogo', 'Create content: %s', $type->title));
 
-    $this->Html->addCrumb(__d('croogo', 'Create'), ['action' => 'create'])
-        ->addCrumb($type->title, $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Create'), ['action' => 'create'])
+        ->add($type->title, $this->request->here());
 }
 
 if ($this->request->params['action'] == 'edit') {
-    $this->Html->addCrumb($node->title, $this->request->here());
+    $this->Breadcrumbs->add($node->title, $this->request->here());
 }
 
 $this->append('form-start', $this->Form->create($node, [
