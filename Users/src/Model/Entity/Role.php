@@ -38,4 +38,12 @@ class Role extends Entity
             return $return;
         }
     }
+
+    /**
+     * @return string
+     */
+    public function nodeAlias()
+    {
+        return 'Role-' . $this->alias;
+    }
 }

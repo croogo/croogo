@@ -2,8 +2,7 @@
 
 use Cake\Routing\Router;
 
-$request = Router::getRequest();
-if ($request && strpos($request->url, 'install') === false) {
-    $url = ['plugin' => 'Croogo/Install', 'controller' => 'Install'];
-    Router::redirect('/*', $url, ['status' => 307]);
-}
+Router::scope('/install', ['plugin' => 'Croogo/Install', 'controller' => 'Install'], function (\Cake\Routing\RouteBuilder $routeBuilder) {
+    $routeBuilder->connect('/', ['action' => 'index']);
+    $routeBuilder->connect('/:action');
+});

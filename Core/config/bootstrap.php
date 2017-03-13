@@ -7,12 +7,20 @@ use Cake\Datasource\ConnectionManager;
 use Croogo\Core\Croogo;
 
 \Croogo\Core\timerStart('Croogo bootstrap');
-$dbConfigExists = file_exists(ROOT . DS . 'config' . DS . 'database.php');
+$dbConfigFileExists = file_exists(ROOT . DS . 'config' . DS . 'database.php');
+$dbConfigExists = false;
 
-if ($dbConfigExists) {
+if ($dbConfigFileExists) {
     Configure::load('database', 'default');
     ConnectionManager::drop('default');
     ConnectionManager::config(Configure::consume('Datasources'));
+}
+
+try {
+    $defaultConnection = ConnectionManager::get('default');
+    $dbConfigExists = $defaultConnection->connect();
+} catch (\Exception $e) {
+    $dbConfigExists = false;
 }
 
 // Map our custom types
@@ -43,12 +51,11 @@ Croogo::hookComponent('*', 'Flash');
 Croogo::hookComponent('*', 'RequestHandler');
 Croogo::hookComponent('*', 'Croogo/Core.Theme');
 
-require_once 'croogo_bootstrap.php';
+require_once __DIR__ . DS . 'croogo_bootstrap.php';
 
 Croogo::hookHelper('*', 'Croogo/Core.Js');
 Croogo::hookHelper('*', 'Croogo/Core.Layout');
 Croogo::hookHelper('*', 'Croogo/Core.CroogoApp');
-
 \Croogo\Core\timerStop('Croogo bootstrap');
 
 if (Configure::read('Croogo.installed') && $dbConfigExists) {
@@ -56,10 +63,6 @@ if (Configure::read('Croogo.installed') && $dbConfigExists) {
 }
 
 // Load Install plugin
-Configure::write(
-    'Croogo.installed',
-    $dbConfigExists
-);
 if (!Configure::read('Croogo.installed') || !$dbConfigExists) {
-    Plugin::load('Croogo/Install', ['routes' => true]);
+    Plugin::load('Croogo/Install', ['routes' => true, 'bootstrap' => true]);
 }
