@@ -49,7 +49,7 @@ $showActions = isset($showActions) ? $showActions : true;
             </div>
             <div id="content-container" class="content-container <?= $this->Theme->getCssClass('container') ?>">
                 <div id="content" class="content">
-                    <div class="my-0 d-flex justify-content-between align-items-center">
+                    <div class="col-12 d-flex justify-content-between align-items-center">
                         <?= $this->element('Croogo/Core.admin/breadcrumb') ?>
                         <?php if ($showActions && $actionsBlock = $this->fetch('action-buttons')): ?>
                             <div class="actions">

@@ -63,11 +63,11 @@ $this->append('table-body');
 			</span>
 
 			<?php if ($node['Node']['promote'] == 1): ?>
-			<span class="label label-info"><?php echo __d('croogo', 'promoted'); ?></span>
+			<span class="badge badge-info"><?php echo __d('croogo', 'promoted'); ?></span>
 			<?php endif ?>
 
 			<?php if ($node['Node']['status'] == CroogoStatus::PREVIEW): ?>
-			<span class="label label-warning"><?php echo __d('croogo', 'preview'); ?></span>
+			<span class="badge badge-warning"><?php echo __d('croogo', 'preview'); ?></span>
 			<?php endif ?>
 		</td>
 		<td>
