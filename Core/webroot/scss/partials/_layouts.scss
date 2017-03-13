@@ -11,11 +11,14 @@ body {
     flex-direction: column;
     min-height: 100vh;
 
-    &.admin-login {
-        background-color: $gray-lightest;
+    &.admin-login, &.installer {
+        background-color: $gray-light;
         #wrap {
+            @extend .d-flex;
+            @extend .justify-content-center;
+            @extend .align-items-center;
             margin-top: 0;
-            background-color: $gray-lightest;
+            background-color: $gray-light;
         }
     }
 }
@@ -137,8 +140,10 @@ footer {
     }
 }
 
-.admin-login {
+.admin-login, .installer {
     .card {
+        max-width: 800px;
+        min-width: 500px;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
         0 1px 5px 0 rgba(0, 0, 0, .12),
         0 3px 1px -2px rgba(0, 0, 0, .2);

@@ -171,3 +171,39 @@ a {
     min-width: 19em;
     width: inherit !important;
 }
+
+.wizard-row {
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+
+    &:before {
+        top: 14px;
+        bottom: 0;
+        position: absolute;
+        content: " ";
+        width: 100%;
+        height: 1px;
+        background-color: #ccc;
+        z-order: 0;
+    }
+
+    .wizard-step {
+        text-align: center;
+        position: relative;
+
+        p {
+            margin-top: 10px;
+        }
+    }
+
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+    }
+}

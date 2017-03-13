@@ -4291,7 +4291,7 @@ a.bg-inverse:focus, a.bg-inverse:hover {
 .d-table-cell {
   display: table-cell !important; }
 
-.d-flex {
+.d-flex, body.admin-login #wrap, body.installer #wrap {
   display: flex !important; }
 
 .d-inline-flex {
@@ -4429,7 +4429,7 @@ a.bg-inverse:focus, a.bg-inverse:hover {
 .justify-content-end {
   justify-content: flex-end !important; }
 
-.justify-content-center {
+.justify-content-center, body.admin-login #wrap, body.installer #wrap {
   justify-content: center !important; }
 
 .justify-content-between {
@@ -4444,7 +4444,7 @@ a.bg-inverse:focus, a.bg-inverse:hover {
 .align-items-end {
   align-items: flex-end !important; }
 
-.align-items-center {
+.align-items-center, body.admin-login #wrap, body.installer #wrap {
   align-items: center !important; }
 
 .align-items-baseline {
@@ -9074,11 +9074,11 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh; }
-  body.admin-login {
-    background-color: #eeeeee; }
-    body.admin-login #wrap {
+  body.admin-login, body.installer {
+    background-color: #777777; }
+    body.admin-login #wrap, body.installer #wrap {
       margin-top: 0;
-      background-color: #eeeeee; }
+      background-color: #777777; }
 
 #wrap {
   overflow: hidden;
@@ -9161,13 +9161,15 @@ footer {
   margin-bottom: 0.75rem;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
 
-.admin-login .card {
+.admin-login .card, .installer .card {
+  max-width: 800px;
+  min-width: 500px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
-.admin-login #authMessage {
+.admin-login #authMessage, .installer #authMessage {
   margin-bottom: 10px; }
-.admin-login .input-prepend {
+.admin-login .input-prepend, .installer .input-prepend {
   margin-bottom: 10px; }
-.admin-login .forgot {
+.admin-login .forgot, .installer .forgot {
   vertical-align: middle;
   margin: 0 20px; }
 
@@ -9491,6 +9493,33 @@ a.action:hover {
 .bootstrap-datetimepicker-widget.dropdown-menu {
   min-width: 19em;
   width: inherit !important; }
+
+.wizard-row {
+  display: flex;
+  justify-content: space-around;
+  position: relative; }
+  .wizard-row:before {
+    top: 14px;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    z-order: 0; }
+  .wizard-row .wizard-step {
+    text-align: center;
+    position: relative; }
+    .wizard-row .wizard-step p {
+      margin-top: 10px; }
+  .wizard-row .btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px; }
 
 .permission-toggle:hover {
   cursor: pointer; }
