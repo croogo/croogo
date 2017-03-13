@@ -1,68 +1,68 @@
 .table {
-	tr:last-child {
-		border-bottom: 1px solid $table-border-width;
-	}
-	td:last-child {
-		min-width: $actionsButtonsWidth;
-	}
-	th {
-		a {
-			@include sortDirections();
-		}
-	}
+  tr:last-child {
+    border-bottom: 1px solid $table-border-width;
+  }
+  td:last-child {
+    min-width: $actionsButtonsWidth;
+  }
+  th {
+    a {
+      @include sortDirections();
+    }
+  }
 }
 
 td {
-	&.level-1 {
-		padding-left: 20px;
-	}
+  &.level-1 {
+    padding-left: 20px;
+  }
 
-	&.level-2 {
-		padding-left: 40px;
-	}
+  &.level-2 {
+    padding-left: 40px;
+  }
 
-	&.level-3 {
-		padding-left: 60px;
-	}
+  &.level-3 {
+    padding-left: 60px;
+  }
 
-	&.level-4 {
-		padding-left: 80px;
-	}
+  &.level-4 {
+    padding-left: 80px;
+  }
 
-	&.level-5 {
-		padding-left: 100px;
-	}
+  &.level-5 {
+    padding-left: 100px;
+  }
 }
 
 table {
-	.center {
-		text-align: center;
-		vertical-align: middle;
-	}
+  .center {
+    text-align: center;
+    vertical-align: middle;
+  }
 
-	.item-actions {
-		white-space: nowrap;
-		a {
-			margin-right: $croogo-general-margin;
-			&:focus {
-				outline: none;
-			}
-			&:hover {
-				text-decoration: none;
-			}
-			&.icon-trash,
-			&.delete {
-				color: $brand-danger;
-				&:hover {
-					color: darken($brand-danger, 25%);
-				}
-			}
-		}
-		a [class^="icon-"],
-		a [class*=" icon-"] {
-			vertical-align: middle;
-			text-align: center;
-			width: 1.25em;
-		}
-	}
+  .item-actions {
+    white-space: nowrap;
+    a {
+      margin-right: $croogo-general-margin;
+      &:focus {
+        outline: none;
+      }
+      &:hover {
+        text-decoration: none;
+      }
+      &.icon-trash,
+      &.delete {
+        color: $brand-danger;
+        &:hover {
+          color: darken($brand-danger, 25%);
+        }
+      }
+    }
+    a [class^="icon-"],
+    a [class*=" icon-"] {
+      vertical-align: middle;
+      text-align: center;
+      width: 1.25em;
+    }
+  }
 }

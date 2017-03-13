@@ -3,21 +3,21 @@
 // --------------------------------------------------
 
 #breadcrumb-container {
-    background: $body-bg;
-    flex: 1;
+  background: $body-bg;
+  flex: 1;
 }
 
 .actions + #breadcrumb-container {
-    margin-left: 15px;
+  margin-left: 15px;
 }
 
 .breadcrumb {
-    z-index: $zindex-dropdown;
-    margin-bottom: $croogo-breadcrumb-margin;
+  z-index: $zindex-dropdown;
+  margin-bottom: $croogo-breadcrumb-margin;
 
-    background-color: $gray-lightest;
+  background-color: $gray-lightest;
 
-    li:last-child {
-        @extend .active;
-    }
+  li:last-child {
+    @extend .active;
+  }
 }

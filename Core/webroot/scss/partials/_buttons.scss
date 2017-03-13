@@ -1,29 +1,29 @@
 .btn {
-	&:focus {
-		outline: none;
-	}
+  &:focus {
+    outline: none;
+  }
 }
 
 .box .btn {
-	margin: 4px 4px 0px 4px;
+  margin: 4px 4px 0 4px;
 }
 
 .nav-buttons {
-	.btn-group {
-		li {
-			margin: 0;
-			width: 100%;
-		}
-	}
+  .btn-group {
+    li {
+      margin: 0;
+      width: 100%;
+    }
+  }
 }
 
 .card-buttons {
-    .btn {
-        margin-right: 4px;
-    }
-    margin-bottom: 10px;
+  margin-bottom: 10px;
+  .btn {
+    margin-right: 4px;
+  }
 }
 
 .toggle-icon {
-    cursor: pointer;
+  cursor: pointer;
 }

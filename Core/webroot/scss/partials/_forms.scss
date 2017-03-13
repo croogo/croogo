@@ -1,54 +1,54 @@
 .label-hidden {
-    label {
-        display: none;
-    }
+  label {
+    display: none;
+  }
 }
 
 form .span8 + .span4 {
-    margin-top: 37px;
+  margin-top: 37px;
 }
 
 .form-inline {
-    .btn,
-    .form-control {
-        margin: 2px 2px 2px 0;
-    }
+  .btn,
+  .form-control {
+    margin: 2px 2px 2px 0;
+  }
 
 }
 
 .file {
-    .form-control {
-        display: inline-block;
-        width: auto;
-    }
+  .form-control {
+    display: inline-block;
+    width: auto;
+  }
 }
 
 span.slug {
-    font-weight: bold;
-    margin: 0 10px;
+  font-weight: bold;
+  margin: 0 10px;
 }
 
 .radio,
 .checkbox {
-    input {
-        margin-right: 0.25rem;
-    }
-    label {
-        width: 100%;
-    }
+  input {
+    margin-right: .25rem;
+  }
+  label {
+    width: 100%;
+  }
 }
 
 .input-group-addon {
-    background: $gray-lightest;
+  background: $gray-lightest;
 }
 
 .form-control {
-    transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1);
+  transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1);
 }
 
 .form-control:focus {
-    border: 1px solid darken($gray-lightest, 25);
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
-    0 1px 5px 0 rgba(0, 0, 0, .12),
-    0 3px 1px -2px rgba(0, 0, 0, .2);
+  border: 1px solid darken($gray-lightest, 25);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+  0 1px 5px 0 rgba(0, 0, 0, .12),
+  0 3px 1px -2px rgba(0, 0, 0, .2);
 }
