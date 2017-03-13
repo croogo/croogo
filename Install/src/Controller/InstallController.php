@@ -2,6 +2,7 @@
 
 namespace Croogo\Install\Controller;
 
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 
@@ -259,8 +260,6 @@ class InstallController extends Controller
  */
     public function finish($token = null)
     {
-        Plugin::load('Croogo/Settings', ['routes' => true]);
-
         $this->_check();
 
         $install = new InstallManager();
