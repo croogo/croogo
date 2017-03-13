@@ -105,7 +105,7 @@ endif;
 
 $output = '';
 $output .= $this->Html->tag('div', $this->fetch('left-column'), ['class' => $columnLeft]);
-$output .= $this->Html->tag('div', $this->fetch('right-column'), ['class' => $columnRight]);
+$output .= $this->Html->tag('div', $this->fetch('right-column'), ['class' => $columnRight . ' card-column']);
 echo $this->Html->tag('div', $output, ['class' => $rowClass]);
 
 if ($formEnd = trim($this->fetch('form-end'))):

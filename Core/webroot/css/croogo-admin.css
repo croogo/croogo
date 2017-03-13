@@ -5276,7 +5276,7 @@ a.bg-inverse:focus, a.bg-inverse:hover {
 .ml-auto {
   margin-left: auto !important; }
 
-.mx-auto, .admin-login-box, .pagination-wrapper {
+.mx-auto, .pagination-wrapper {
   margin-right: auto !important;
   margin-left: auto !important; }
 
@@ -9057,8 +9057,10 @@ table .item-actions {
 
 #breadcrumb-container {
   background: #fff;
-  flex: 1;
-  margin-right: 15px; }
+  flex: 1; }
+
+.actions + #breadcrumb-container {
+  margin-left: 15px; }
 
 .breadcrumb {
   z-index: 1000;
@@ -9074,7 +9076,7 @@ body {
   min-height: 100vh; }
   body.admin-login {
     background-color: #eeeeee; }
-    body.admin-login #content-container {
+    body.admin-login #wrap {
       margin-top: 0;
       background-color: #eeeeee; }
 
@@ -9108,17 +9110,6 @@ body {
   padding: 0px 10px; }
   .content table {
     margin: 10px 0px; }
-
-.admin-login-box {
-  margin-top: 5%;
-  max-width: 352px; }
-  .admin-login-box #authMessage {
-    margin-bottom: 10px; }
-  .admin-login-box .input-prepend {
-    margin-bottom: 10px; }
-  .admin-login-box .forgot {
-    vertical-align: middle;
-    margin: 0 20px; }
 
 header {
   border-bottom: 1px solid #707070; }
@@ -9165,6 +9156,20 @@ footer {
     transition: opacity .1s linear; }
   .selector:hover:before {
     opacity: 1; }
+
+.card-column .card {
+  margin-bottom: 0.75rem;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
+
+.admin-login .card {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
+.admin-login #authMessage {
+  margin-bottom: 10px; }
+.admin-login .input-prepend {
+  margin-bottom: 10px; }
+.admin-login .forgot {
+  vertical-align: middle;
+  margin: 0 20px; }
 
 .popup #content {
   background: #fff;
@@ -9339,9 +9344,12 @@ span.slug {
 .input-group-addon {
   background: #eeeeee; }
 
+.form-control {
+  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1); }
+
 .form-control:focus {
   border: 1px solid #afafaf;
-  box-shadow: 2px 2px 2px rgba(85, 85, 85, 0.3); }
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
 
 .text-important {
   text-decoration: none;

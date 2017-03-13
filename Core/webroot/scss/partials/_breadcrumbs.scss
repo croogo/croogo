@@ -5,7 +5,10 @@
 #breadcrumb-container {
     background: $body-bg;
     flex: 1;
-    margin-right: 15px;
+}
+
+.actions + #breadcrumb-container {
+    margin-left: 15px;
 }
 
 .breadcrumb {

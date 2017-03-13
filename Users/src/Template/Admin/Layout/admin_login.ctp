@@ -24,15 +24,13 @@ use Cake\Core\Configure;
             <?= $this->Html->link(__d('croogo', 'Back to') . ' ' . Configure::read('Site.title'), '/', ['class' => 'navbar-brand']); ?>
         </header>
 
-        <div id="wrap">
-            <div id="content-container" class="<?php echo $this->Theme->getCssClass('container'); ?>">
-                <div class="<?php echo $this->Theme->getCssClass('row'); ?>">
-                    <div class="admin-login-box">
-                        <?php
-                        echo $this->Flash->render('auth');
-                        echo $this->fetch('content');
-                        ?>
-                    </div>
+        <div id="wrap" class="d-flex justify-content-center align-items-center">
+            <div class="card">
+                <div class="card-block">
+                <?php
+                echo $this->Flash->render('auth');
+                echo $this->fetch('content');
+                ?>
                 </div>
             </div>
         </div>

@@ -13,7 +13,7 @@ body {
 
     &.admin-login {
         background-color: $gray-lightest;
-        #content-container {
+        #wrap {
             margin-top: 0;
             background-color: $gray-lightest;
         }
@@ -61,26 +61,6 @@ body {
     table {
         margin: $croogo-general-margin 0px;
     }
-}
-
-.admin-login-box {
-    @extend .mx-auto;
-    margin-top: 5%;
-    max-width: $croogo-login-box-width + 2;
-
-    #authMessage {
-        margin-bottom: $croogo-content-padding;
-    }
-
-    .input-prepend {
-        margin-bottom: $croogo-content-padding;
-    }
-
-    .forgot {
-        vertical-align: middle;
-        margin: 0 $croogo-content-padding * 2;
-    }
-
 }
 
 header {
@@ -145,5 +125,35 @@ footer {
     }
     &:hover:before {
         opacity: 1;
+    }
+}
+
+.card-column {
+    .card {
+        margin-bottom: $card-columns-margin;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+        0 1px 5px 0 rgba(0, 0, 0, .12),
+        0 3px 1px -2px rgba(0, 0, 0, .2);
+    }
+}
+
+.admin-login {
+    .card {
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+        0 1px 5px 0 rgba(0, 0, 0, .12),
+        0 3px 1px -2px rgba(0, 0, 0, .2);
+    }
+
+    #authMessage {
+        margin-bottom: $croogo-content-padding;
+    }
+
+    .input-prepend {
+        margin-bottom: $croogo-content-padding;
+    }
+
+    .forgot {
+        vertical-align: middle;
+        margin: 0 $croogo-content-padding * 2;
     }
 }
