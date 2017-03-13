@@ -4,7 +4,7 @@ $this->extend('Croogo/Core./Common/admin_index');
 
 $this->assign('title', __d('croogo', 'Locales'));
 
-$this->Html
+$this->Breadcrumbs
 	->add(__d('croogo', 'Extensions'), array('plugin' => 'Croogo/Extensions', 'controller' => 'ExtensionsPlugins', 'action' => 'index'))
 	->add(__d('croogo', 'Locales'), $this->request->here());
 
