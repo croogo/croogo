@@ -3,7 +3,7 @@
 namespace Croogo\Blocks\Model\Table;
 
 use Cake\Cache\Cache;
-use Cake\Database\Schema\Table as Schema;
+use Cake\Database\Schema\TableSchema;
 use Cake\ORM\Query;
 use Croogo\Core\Model\Table\CroogoTable;
 use Croogo\Core\Status;
@@ -109,7 +109,7 @@ class BlocksTable extends CroogoTable
             ]);
     }
 
-    protected function _initializeSchema(Schema $table)
+    protected function _initializeSchema(TableSchema $table)
     {
         $table->columnType('visibility_roles', 'encoded');
         $table->columnType('visibility_paths', 'encoded');

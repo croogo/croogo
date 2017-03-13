@@ -2,7 +2,7 @@
 
 namespace Croogo\Nodes\Model\Table;
 
-use Cake\Database\Schema\Table as Schema;
+use Cake\Database\Schema\TableSchema;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
@@ -78,7 +78,7 @@ class NodesTable extends CroogoTable
             ]);
     }
 
-    protected function _initializeSchema(Schema $table)
+    protected function _initializeSchema(TableSchema $table)
     {
         $table->columnType('visibility_roles', 'encoded');
 

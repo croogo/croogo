@@ -2,7 +2,7 @@
 
 namespace Croogo\Menus\Model\Table;
 
-use Cake\Database\Schema\Table as Schema;
+use Cake\Database\Schema\TableSchema;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
 use Croogo\Core\Model\Table\CroogoTable;
@@ -71,7 +71,7 @@ class LinksTable extends CroogoTable
             ]);
     }
 
-    protected function _initializeSchema(Schema $table)
+    protected function _initializeSchema(TableSchema $table)
     {
         $table->columnType('visibility_roles', 'encoded');
         $table->columnType('link', 'link');
