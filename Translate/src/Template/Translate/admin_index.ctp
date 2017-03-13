@@ -26,7 +26,7 @@ $this->Html
 			$record[$modelAlias]['id'],
 		)
 	)
-	->add(__d('croogo', 'Translations'));
+	->add(__d('croogo', 'Translations'), $this->request->here());
 
 $this->start('actions');
 	echo '<div class="btn-group">';

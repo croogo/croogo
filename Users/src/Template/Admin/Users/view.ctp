@@ -4,7 +4,7 @@ $this->extend('Croogo/Core./Common/admin_view');
 
 $this->Breadcrumbs
     ->add(__d('croogo', 'Users'), ['action' => 'index'])
-    ->add($user->name);
+    ->add($user->name, $this->request->here());
 
 $this->append('actions');
     echo $this->Croogo->adminAction(__('Edit User'), ['action' => 'edit', $user->id]);

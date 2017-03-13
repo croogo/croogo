@@ -7,11 +7,11 @@ $this->Breadcrumbs
     ->add(__d('croogo', 'Actions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Actions', 'action' => 'index'));
 
 if ($this->request->param('action') == 'edit') {
-    $this->Breadcrumbs->add($aco->id . ': ' . $aco->alias);
+    $this->Breadcrumbs->add($aco->id . ': ' . $aco->alias, $this->request->here());
 }
 
 if ($this->request->param('action') == 'add') {
-    $this->Breadcrumbs->add(__d('croogo', 'Add'));
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
 }
 
 $this->assign('form-start', $this->Form->create($aco));

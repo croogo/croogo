@@ -9,14 +9,14 @@ $this->Breadcrumbs->add(__d('croogo', 'Content'), ['plugin' => 'Croogo/Nodes', '
 if (isset($criteria['Comment.status'])) {
     $this->Breadcrumbs->add(__d('croogo', 'Comments'), ['action' => 'index']);
     if ($criteria['Comment.status'] == '1') {
-        $this->Breadcrumbs->add(__d('croogo', 'Published'));
+        $this->Breadcrumbs->add(__d('croogo', 'Published'), $this->request->here());
         $this->assign('title', __d('croogo', 'Comments: Published'));
     } else {
-        $this->Breadcrumbs->add(__d('croogo', 'Awaiting approval'));
+        $this->Breadcrumbs->add(__d('croogo', 'Awaiting approval'), $this->request->here());
         $this->assign('title', __d('croogo', 'Comments: Published'));
     }
 } else {
-    $this->Breadcrumbs->add(__d('croogo', 'Comments'));
+    $this->Breadcrumbs->add(__d('croogo', 'Comments'), $this->request->here());
 }
 
 /**

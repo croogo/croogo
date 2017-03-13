@@ -6,7 +6,7 @@ $this->assign('title', __d('croogo', 'Locales'));
 
 $this->Html
 	->add(__d('croogo', 'Extensions'), array('plugin' => 'Croogo/Extensions', 'controller' => 'ExtensionsPlugins', 'action' => 'index'))
-	->add(__d('croogo', 'Locales'));
+	->add(__d('croogo', 'Locales'), $this->request->here());
 
 $this->append('actions');
 	echo $this->Croogo->adminAction(__d('croogo', 'Upload'),

@@ -3,7 +3,7 @@
 $this->extend('/Common/admin_index');
 $this->Html
 	->add('Example', array('controller' => 'example', 'action' => 'index'))
-	->add('RTE Example');
+	->add('RTE Example', $this->request->here());
 
 echo $this->Form->create('Example');
 

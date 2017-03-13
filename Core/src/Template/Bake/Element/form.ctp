@@ -26,7 +26,7 @@ $action = $this->request->param('action');
 if ($action == 'edit'):
     $this->Breadcrumbs->add($<%= $singularVar %>-><%= $displayField %>);
 else:
-    $this->Breadcrumbs->add(__d('croogo', 'Add'));
+    $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
 endif;
 
 $this->append('actions');

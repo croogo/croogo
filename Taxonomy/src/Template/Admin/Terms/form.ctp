@@ -18,7 +18,7 @@ if ($this->request->params['action'] == 'add') {
     $this->Breadcrumbs->add(__d('croogo', 'Vocabularies'),
         ['controller' => 'Vocabularies', 'action' => 'index', $vocabulary->id])
         ->add($vocabulary->title, ['action' => 'index'])
-        ->add(__d('croogo', 'Add'));
+        ->add(__d('croogo', 'Add'), $this->request->here());
 }
 
 $this->set('cancelUrl', ['action' => 'index', $vocabularyId]);
