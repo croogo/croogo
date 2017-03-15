@@ -9,6 +9,9 @@ if (!isset($className)) {
     $className = strtolower($this->name);
 }
 
+$humanName = Inflector::humanize(Inflector::underscore($modelClass));
+$i18nDomain = $this->request->param('plugin') ? 'croogo' : $this->request->param('plugin');
+
 $rowClass = $this->Theme->getCssClass('row');
 $columnFull = $this->Theme->getCssClass('columnFull');
 $tableClass = isset($tableClass) ? $tableClass : $this->Theme->getCssClass('tableClass');
@@ -37,7 +40,7 @@ if (empty($this->fetch('action-buttons'))) {
         $entityName = __($humanName);
     }
     $actionTitle = __d('croogo', 'New %s', $entityName);
-    $this->assign('action-buttons', $this->Croogo->adminAction(__d('croogo', 'New %s', __d('croogo', Inflector::singularize($this->name))), ['action' => 'add'], ['button' => 'success']);
+    $this->assign('action-buttons', $this->Croogo->adminAction(__d('croogo', 'New %s', __d('croogo', Inflector::singularize($this->name))), ['action' => 'add'], ['button' => 'success']));
 }
 ?>
 
