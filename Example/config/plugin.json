@@ -9,7 +9,7 @@
 	"dependencies": {
 		"plugins": [
 			"acl",
-			"extensions"
+			"Croogo/Extensions"
 		]
 	}
 }
