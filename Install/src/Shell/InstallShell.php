@@ -127,19 +127,19 @@ class InstallShell extends Shell
     {
         $this->out();
         $this->out('Database settings:');
-        $install['Install']['datasource'] = $this->_in(__d('croogo', 'DataSource'), [
+        $install['datasource'] = $this->_in(__d('croogo', 'DataSource'), [
             'Mysql',
             'Sqlite',
             'Postgres',
             'Sqlserver'
         ], 'Mysql', 'datasource');
-        $install['Install']['driver'] = 'Cake\Database\Driver\\' . $install['Install']['datasource'];
-        $install['Install']['host'] = $this->_in(__d('croogo', 'Host'), null, 'localhost', 'host');
-        $install['Install']['username'] = $this->_in(__d('croogo', 'Login'), null, 'root', 'username');
-        $install['Install']['password'] = $this->_in(__d('croogo', 'Password'), null, '', 'password');
-        $install['Install']['database'] = $this->_in(__d('croogo', 'Database'), null, 'croogo', 'database-name');
-        //$install['Install']['prefix'] = $this->_in(__d('croogo', 'Prefix'), null, '', 'prefix');
-        $install['Install']['port'] = $this->_in(__d('croogo', 'Port'), null, null, 'port');
+        $install['driver'] = 'Cake\Database\Driver\\' . $install['datasource'];
+        $install['host'] = $this->_in(__d('croogo', 'Host'), null, 'localhost', 'host');
+        $install['username'] = $this->_in(__d('croogo', 'Login'), null, 'root', 'username');
+        $install['password'] = $this->_in(__d('croogo', 'Password'), null, '', 'password');
+        $install['database'] = $this->_in(__d('croogo', 'Database'), null, 'croogo', 'database-name');
+        //$install['prefix'] = $this->_in(__d('croogo', 'Prefix'), null, '', 'prefix');
+        $install['port'] = $this->_in(__d('croogo', 'Port'), null, null, 'port');
 
         $InstallManager = new InstallManager();
         $InstallManager->createDatabaseFile($install);
@@ -147,7 +147,7 @@ class InstallShell extends Shell
         $this->out('Setting up database objects. Please wait...');
         $Install = TableRegistry::get('Croogo/Install.Install');
         try {
-            $result = $Install->setupDatabase();
+            $result = $InstallManager->setupDatabase();
             if ($result !== true) {
                 $this->err($result);
                 return $this->_stop();
@@ -162,7 +162,7 @@ class InstallShell extends Shell
             $this->out('Setting up access control objects. Please wait...');
             $generator = new AclGenerator();
             $generator->insertAcos(ConnectionManager::get('default'));
-            $this->setupGrants();
+            $InstallManager->setupGrants();
         } catch (\Exception $e) {
             $this->err('Error installing access control objects');
             $this->err($e->getMessage());
