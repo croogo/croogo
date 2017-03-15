@@ -87,7 +87,7 @@ class InstallManager
 
         $configPath = ROOT . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'app.php';
         foreach (['host', 'username', 'password', 'database', 'driver'] as $field) {
-            if (isset($config[$field]) && !empty($config[$field])) {
+            if (isset($config[$field]) && (!empty($config[$field] || $field == 'password'))) {
                 $this->_updateDatasourceConfig($configPath, $field, $config[$field]);
             }
         }
