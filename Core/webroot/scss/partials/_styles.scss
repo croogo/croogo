@@ -67,7 +67,9 @@ h2.hidden-md-up {
 
 // Actions in admin_index
 .actions {
-  margin: 0 0 $croogo-general-margin;
+  margin-top: -$croogo-breadcrumb-margin;
+  padding: 5px;
+  background-color: $gray-lightest;
 }
 
 .tab-content {

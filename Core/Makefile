@@ -39,7 +39,7 @@ css: deps
 	@echo "Setup dependencies..."
 	@( cd webroot/fontAwesome && git checkout -f ${FONTAWESOME_TAG} > /dev/null 2>&1 )
 	@[ "$$?" -eq 0 ] && echo "fontAwesome branch/tag: ${FONTAWESOME_TAG} ${CHECK}"
-	@( cd webroot/bootstrap && git checkout -f ${BOOTSTRAP_TAG} > /dev/null 2>&1 )
+	@( cd webroot/bootstrap && git fetch --all && git checkout -f ${BOOTSTRAP_TAG} > /dev/null 2>&1 )
 	@[ "$$?" -eq 0 ] && echo "bootstrap branch/tag: ${BOOTSTRAP_TAG} ${CHECK}"
 	@echo "${HR}"
 	@echo "Compiling..."
