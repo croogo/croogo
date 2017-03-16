@@ -24,12 +24,11 @@
   }
 }
 
-.actions {
+#breadcrumb-container + .actions {
   .btn-group,
   .btn {
     margin-right: 2px;
   }
-  border-radius: 0 0.25rem 0.25rem 0;
 }
 
 .toggle-icon {

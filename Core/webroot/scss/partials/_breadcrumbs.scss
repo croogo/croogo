@@ -13,13 +13,7 @@
 
   background-color: $gray-lightest;
 
-  border-radius: 0.25rem 0 0 0.25rem;
-
   li:last-child {
     @extend .active;
   }
-}
-
-.breadcrumb:last-child {
-  border-radius: 0.25rem;
 }

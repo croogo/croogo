@@ -66,10 +66,12 @@ h2.hidden-md-up {
 }
 
 // Actions in admin_index
-.actions {
+#breadcrumb-container + .actions {
   margin-top: -$croogo-breadcrumb-margin;
-  padding: 5px;
+  margin-left: -$croogo-breadcrumb-margin * 2;
+  padding: 5px 5px 6px;
   background-color: $gray-lightest;
+  border-radius: 0.25rem;
 }
 
 .tab-content {
