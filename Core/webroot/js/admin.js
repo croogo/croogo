@@ -27,7 +27,7 @@ Admin.form = function () {
   var ajaxToggle = function (e) {
     var $this = $(this);
     var spinnerClass = Admin.spinnerClass();
-    $this.addClass(spinnerClass).find('i').attr('class', 'icon-none');
+    $this.find('i').attr('class', spinnerClass)
     var url = $this.data('url');
     $.post(url, function (data) {
       $this.parent().html(data);
