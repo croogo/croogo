@@ -6,7 +6,7 @@ $this->Html
 	->add(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'index'))
 	->add(__d('croogo', 'Languages'), array('plugin' => 'settings', 'controller' => 'languages', 'action' => 'index'));
 
-$this->append('actions');
+$this->append('action-buttons');
 	echo $this->Html->link(
 		__d('croogo', 'New Language'),
 		array('action' => 'add'),

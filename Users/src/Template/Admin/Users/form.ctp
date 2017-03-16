@@ -16,7 +16,7 @@ if ($this->request->param('action') == 'edit') {
     $this->Breadcrumbs->add(__d('croogo', 'New user'), $this->request->here());
 }
 
-$this->start('actions');
+$this->start('action-buttons');
 if ($this->request->param('action') == 'edit'):
     echo $this->Croogo->adminAction(__d('croogo', 'Reset password'), ['action' => 'reset_password', $user->id]);
 endif;

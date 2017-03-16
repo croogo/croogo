@@ -7,7 +7,7 @@ $this->Breadcrumbs->add(__d('croogo', 'File Manager'), $this->request->here());
 
 ?>
 
-<?php $this->start('actions'); ?>
+<?php $this->start('action-buttons'); ?>
 <div class="btn-group">
     <?php
     echo $this->FileManager->adminAction(__d('croogo', 'Upload here'),

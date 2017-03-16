@@ -49,7 +49,7 @@ $this->Breadcrumbs
     $this->Breadcrumbs->add($<%= $singularVar %>-><%= $displayField %>, $this->request->here());
 <% endif; %>
 
-$this->append('actions');
+$this->append('action-buttons');
     echo $this->Croogo->adminAction(__('Edit <%= $singularHumanName %>'), ['action' => 'edit', <%= $pk %>]);
     echo $this->Croogo->adminAction(__('Delete <%= $singularHumanName %>'), ['action' => 'delete', <%= $pk %>], ['confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>)]);
     echo $this->Croogo->adminAction(__('List <%= $pluralHumanName %>'), ['action' => 'index']);

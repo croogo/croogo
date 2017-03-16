@@ -6,7 +6,7 @@ $this->Breadcrumbs
     ->add(__d('croogo', 'Users'), ['action' => 'index'])
     ->add($user->name, $this->request->here());
 
-$this->append('actions');
+$this->append('action-buttons');
     echo $this->Croogo->adminAction(__('Edit User'), ['action' => 'edit', $user->id]);
 $this->end();
 

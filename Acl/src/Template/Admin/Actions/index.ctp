@@ -13,7 +13,7 @@ $this->Html
 	))
 	->add(__d('croogo', 'Actions'), array('plugin' => 'Croogo/Acl', 'controller' => 'Actions', 'action' => 'index', 'permission' => 1));
 
-$this->append('actions');
+$this->append('action-buttons');
 	$toolsButton = $this->Html->link(
 		__d('croogo', 'Tools'),
 		'#',

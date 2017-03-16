@@ -25,7 +25,7 @@ $this->append('table-footer', $this->element('admin/modal', [
         'id' => 'comment-modal',
     ]));
 
-$this->append('actions');
+$this->append('action-buttons');
 echo $this->Croogo->adminAction(__d('croogo', 'Unread'), [
     'action' => 'index',
     '?' => [

@@ -10,7 +10,7 @@ $this->Croogo->adminScript('Croogo/Nodes.admin');
 $this->Breadcrumbs
     ->add(__d('croogo', 'Content'), $this->request->here());
 
-$this->append('actions');
+$this->append('action-buttons');
 echo $this->Croogo->adminAction(__d('croogo', 'Create content'), ['action' => 'create'], ['button' => 'success']);
 $this->end();
 

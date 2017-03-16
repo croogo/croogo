@@ -28,7 +28,7 @@ if (isset($criteria['Comment.status'])) {
  * )));
  */
 
-$this->append('actions');
+$this->append('action-buttons');
 echo $this->Croogo->adminAction(
     __d('croogo', 'Published'),
     ['action' => 'index', '?' => ['status' => '1']],

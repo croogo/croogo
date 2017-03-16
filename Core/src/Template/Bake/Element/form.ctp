@@ -29,7 +29,7 @@ else:
     $this->Breadcrumbs->add(__d('croogo', 'Add'), $this->request->here());
 endif;
 
-$this->append('actions');
+$this->append('action-buttons');
 <% if (strpos($action, 'add') === false): %>
     echo $this->Croogo->adminAction(__('Delete'),
         ['action' => 'delete', $<%= $singularVar %>-><%= $primaryKey[0] %>],

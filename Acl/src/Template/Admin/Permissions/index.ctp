@@ -10,7 +10,7 @@ $this->Breadcrumbs->add(__d('croogo', 'Users'),
         ['plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'])
     ->add(__d('croogo', 'Permissions'), $this->request->here());
 
-$this->append('actions');
+$this->append('action-buttons');
 $toolsButton = $this->Html->link(__d('croogo', 'Tools'), '#', [
         'button' => 'secondary',
         'class' => 'dropdown-toggle',
