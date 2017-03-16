@@ -376,7 +376,9 @@ class CroogoFormHelper extends FormHelper
      */
     public function select($fieldName, $options = [], array $attributes = [])
     {
-        $attributes = $this->addClass($attributes, 'custom-select');
+        if (empty($attributes['multiple'])) {
+            $attributes = $this->addClass($attributes, 'custom-select');
+        }
 
         return parent::select($fieldName, $options, $attributes);
     }
