@@ -1,7 +1,7 @@
 <?php
 
 $this->extend('/Common/admin_index');
-$this->Html
+$this->Breadcrumbs
 	->add('Example', array('controller' => 'example', 'action' => 'index'))
 	->add('RTE Example', $this->request->here());
 

@@ -1,6 +1,6 @@
 <?php
 $this->extend('/Common/admin_index');
-$this->Html
+$this->Breadcrumbs
 	->add('Example', array('controller' => 'example', 'action' => 'index'));
 ?>
 <?php $this->start('actions'); ?>

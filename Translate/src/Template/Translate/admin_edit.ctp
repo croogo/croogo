@@ -2,7 +2,7 @@
 $this->extend('/Common/admin_edit');
 $this->set('className', 'translate');
 
-$this->Html
+$this->Breadcrumbs
 	->add(Inflector::humanize(Inflector::pluralize($modelAlias)))
 	->add($this->data[$modelAlias][$displayField])
 	->add(

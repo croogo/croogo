@@ -2,7 +2,7 @@
 
 $this->extend('/Common/admin_index');
 
-$this->Html
+$this->Breadcrumbs
 	->add(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'index'))
 	->add(__d('croogo', 'Languages'), array('plugin' => 'settings', 'controller' => 'languages', 'action' => 'index'));
 

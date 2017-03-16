@@ -8,7 +8,7 @@ if (isset($this->request->params['models'][$modelAlias])):
 	$controller = strtolower(Inflector::pluralize($modelAlias));
 endif;
 
-$this->Html
+$this->Breadcrumbs
 	->add(
 		Inflector::pluralize($modelAlias),
 		array(

@@ -2,7 +2,7 @@
 
 $this->extend('/Common/admin_edit');
 
-$this->Html
+$this->Breadcrumbs
 	->add(__d('croogo', 'Extensions'), array('plugin' => 'extensions', 'controller' => 'extensions_plugins', 'action' => 'index'))
 	->add(__d('croogo', 'Locales'), array('plugin' => 'extensions', 'controller' => 'extensions_locales', 'action' => 'index'))
 	->add($this->request->params['pass'][0], $this->request->here());

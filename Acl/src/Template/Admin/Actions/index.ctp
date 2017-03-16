@@ -6,7 +6,7 @@ $this->Html->script('Croogo/Acl.acl_permissions', ['block' => true]);
 
 $this->Croogo->adminScript('Croogo/Acl.acl_permissions');
 
-$this->Html
+$this->Breadcrumbs
 	->add(__d('croogo', 'Users'), array('plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'))
 	->add(__d('croogo', 'Permissions'), array(
 		'plugin' => 'Croogo/Acl', 'controller' => 'Permissions',
