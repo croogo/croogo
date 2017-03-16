@@ -63,6 +63,10 @@ class InstallManager
             $config
         );
 
+        if (function_exists('opcache_reset')) {
+            opcache_reset();
+        }
+
         return file_put_contents($path, $config);
     }
 
