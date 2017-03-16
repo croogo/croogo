@@ -78,7 +78,7 @@ Admin.protectForms = function () {
           break;
         }
       }
-      if (!dirty && !Croogo.Wysiwyg.checkDirty()) {
+      if (!dirty && !Croogo.Wysiwyg.isDirty()) {
         return;
       }
 
