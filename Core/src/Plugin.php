@@ -473,6 +473,13 @@ class Plugin extends CakePlugin
             }
         }
 
+        // check for manually loaded plugins
+        foreach ($plugin as $item) {
+            if ($loaded = static::loaded($item)) {
+                return $loaded;
+            }
+        }
+
         return false;
     }
 
