@@ -4,8 +4,6 @@ use Cake\Core\Configure;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
-Router::connect('/', []);
-
 Router::prefix('admin', function (RouteBuilder $routeBuilder) {
     $dashboardUrl = Configure::read('Croogo.dashboardUrl');
     if (!$dashboardUrl) {
