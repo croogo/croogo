@@ -184,12 +184,8 @@
   }
 }
 
-@media (max-width: map-get($grid-breakpoints, md)) {
-  .sidebar {
+@include media-breakpoint-down(sm) {
+  .nav-sidebar {
     width: $croogo-md-nav-width;
-  }
-
-  #content {
-    margin-left: $croogo-md-nav-width;
   }
 }

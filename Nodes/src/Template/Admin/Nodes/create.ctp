@@ -18,7 +18,7 @@ $this->Breadcrumbs
                     continue;
                 endif;
                 ?>
-                <a href="<?= $this->Url->build(['action' => 'add', $type->alias]) ?>" class="list-group-item">
+                <a href="<?= $this->Url->build(['action' => 'add', $type->alias]) ?>" class="list-group-item flex-column align-items-start">
                     <h4 class="list-group-item-heading"><?= h($type->title) ?></h4>
                     <p class="list-group-item-text"><?= h($type->description) ?></p>
                 </a>

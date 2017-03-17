@@ -71,6 +71,11 @@ header {
 
   &.navbar {
     height: $croogo-navbar-height;
+    flex-flow: row;
+  }
+
+  .navbar-nav:last-child {
+    text-align: right;
   }
 }
 

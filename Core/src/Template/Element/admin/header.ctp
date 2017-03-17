@@ -24,7 +24,7 @@ $dashboardUrl = Configure::read('Croogo.dashboardUrl');
             'type' => 'dropdown',
             'htmlAttributes' => [
                 'id' => 'top-right-menu',
-                'class' => 'navbar-nav',
+                'class' => 'navbar-nav ml-auto',
             ],
         ]);
     ?>
