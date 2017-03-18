@@ -4,7 +4,7 @@ namespace Croogo\Example\Config;
 
 return [
     'EventHandlers' => [
-        'Example.ExampleEventHandler' => [
+        'Croogo/Example.ExampleEventHandler' => [
             'options' => [
                 'priority' => 1,
             ],

@@ -2,7 +2,7 @@
 
 namespace Croogo\Example\Event;
 
-use Cake\Event\EventListener;
+use Cake\Event\EventListenerInterface;
 
 /**
  * Example Event Handler
@@ -14,7 +14,7 @@ use Cake\Event\EventListener;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExampleEventHandler extends Object implements EventListener
+class ExampleEventHandler implements EventListenerInterface
 {
 
 /**
@@ -50,8 +50,8 @@ class ExampleEventHandler extends Object implements EventListener
         $Controller->Flash->success($message);
         $Controller->redirect([
             'admin' => true,
-            'plugin' => 'example',
-            'controller' => 'example',
+            'plugin' => 'Croogo/Example',
+            'controller' => 'Example',
             'action' => 'index',
         ]);
     }

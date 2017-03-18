@@ -394,9 +394,15 @@ class Croogo
      *
      * @return array|mixed
      */
-    public static function mergeConfig($key, $config)
+    public static function mergeConfig($key, $config, $encode = false)
     {
         $values = Configure::read($key);
+        if ($encode) {
+            foreach ($config as $k => $v) {
+                $tmp[base64_encode($k)] = $v;
+            }
+            $config = $tmp;
+        }
         $values = Hash::merge((array)$values, $config);
         Configure::write($key, $values);
         return $values;

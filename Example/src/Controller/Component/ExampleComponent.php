@@ -3,6 +3,7 @@
 namespace Croogo\Example\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Event\Event;
 
 /**
  * Example Component
@@ -25,8 +26,9 @@ class ExampleComponent extends Component
  * @param object $controller Controller with components to startup
  * @return void
  */
-    public function startup(Controller $controller)
+    public function startup(Event $event)
     {
+        $controller = $this->_registry->getController();
         $controller->set('exampleComponent', 'ExampleComponent startup');
     }
 
@@ -37,7 +39,7 @@ class ExampleComponent extends Component
  * @param object $controller Controller with components to beforeRender
  * @return void
  */
-    public function beforeRender(Controller $controller)
+    public function beforeRender(Event $event)
     {
     }
 
@@ -47,7 +49,7 @@ class ExampleComponent extends Component
  * @param object $controller Controller with components to shutdown
  * @return void
  */
-    public function shutdown(Controller $controller)
+    public function shutdown(Event $event)
     {
     }
 }

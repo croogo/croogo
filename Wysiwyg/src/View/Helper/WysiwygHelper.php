@@ -3,9 +3,9 @@
 namespace Croogo\Wysiwyg\View\Helper;
 
 use Cake\Core\Configure;
-use Cake\Routing\Router;
 use Cake\View\Helper;
 use Cake\Core\App;
+use Croogo\Core\Router;
 
 /**
  * Wysiwyg Helper
@@ -49,31 +49,12 @@ class WysiwygHelper extends Helper
             $this->Url->build(Configure::read('Wysiwyg.attachmentBrowseUrl'))
         );
 
-        $namespace = 'Controller';
-        $pluginPath = $this->request->param('plugin') . '.';
-        $controller = $this->request->param('controller');
-
-        if ($this->request->param('prefix')) {
-            $prefixes = array_map(
-                'Cake\Utility\Inflector::camelize',
-                explode('/', $this->request->param('prefix'))
-            );
-            $namespace .= '/' . implode('/', $prefixes);
-        }
-
-        $actions = [];
-        foreach (Configure::read('Wysiwyg.actions') as $key => $value) {
-            if (is_string($value)) {
-                $actions[] = $value;
-            } else {
-                $actions[] = $key;
-            }
-        }
-
-        $currentAction = App::classname($pluginPath . $controller, $namespace, 'Controller') . '.' . $this->request->param('action');
-        $included = in_array($currentAction, $actions, true);
+        $actions = Configure::read('Wysiwyg.actions');
+        $currentAction = Router::getActionPath($this->request, true);
+        $included = in_array($currentAction, $actions);
         if ($included) {
-            $this->Html->script('Croogo/Wysiwyg.wysiwyg', ['block' => true]);
+            $this->Html->script('Croogo/Wysiwyg.wysiwyg', ['block' => 'script']);
         }
     }
+
 }

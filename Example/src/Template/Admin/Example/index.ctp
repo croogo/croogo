@@ -1,5 +1,5 @@
 <?php
-$this->extend('/Common/admin_index');
+$this->extend('Croogo/Core./Common/admin_index');
 $this->Breadcrumbs
 	->add('Example', array('controller' => 'example', 'action' => 'index'));
 ?>
