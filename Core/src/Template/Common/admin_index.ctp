@@ -61,8 +61,8 @@ if (!$tableBody && isset($displayFields)):
                 $title = isset($item->title) ? $item->title : null;
                 $actions[] = $this->Croogo->adminRowAction(__d('croogo', 'Choose'), '#', [
                     'class' => 'item-choose',
-                    'data-chooser_type' => $modelClass,
-                    'data-chooser_id' => $item->id,
+                    'data-chooser-type' => $modelClass,
+                    'data-chooser-id' => $item->id,
                 ]);
             else:
                 $actions[] = $this->Croogo->adminRowAction('', ['action' => 'edit', $item->id],
