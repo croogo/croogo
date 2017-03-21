@@ -18,7 +18,6 @@
             'Croogo/Core.underscore-min',
             'Croogo/Core.admin',
             'https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js',
-            'https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js',
         ]);
 
         echo $this->fetch('script');
