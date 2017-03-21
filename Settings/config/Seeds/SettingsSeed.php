@@ -207,7 +207,7 @@ class SettingsSeed extends AbstractSeed
         [
             'id' => '26',
             'key' => 'Site.locale',
-            'value' => 'eng',
+            'value' => 'en_US',
             'title' => '',
             'description' => '',
             'input_type' => 'text',

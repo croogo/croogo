@@ -26,22 +26,22 @@ Croogo::hookHelper('*', 'Croogo/Nodes.Nodes');
 
 // Configure Wysiwyg
 Croogo::mergeConfig('Wysiwyg.actions', [
-    'Croogo/Nodes.Admin/Nodes.add' => [
+    'Croogo/Nodes.Admin/Nodes/add' => [
         [
             'elements' => 'NodeBody',
         ],
     ],
-    'Croogo/Nodes.Admin/Nodes.edit' => [
+    'Croogo/Nodes.Admin/Nodes/edit' => [
         [
             'elements' => 'NodeBody',
         ],
     ],
-    'Croogo/Translate.Admin/Translate.edit' => [
+    'Croogo/Translate.Admin/Translate/edit' => [
         [
             'elements' => 'NodeBody',
         ],
     ],
-]);
+], true);
 
 Croogo::mergeConfig('Translate.models.Node', [
     'fields' => [

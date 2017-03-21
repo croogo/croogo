@@ -6,21 +6,24 @@
  */
 namespace Croogo\Example\Config;
 
-Croogo::hookRoutes('Example');
+use Cake\Core\Configure;
+use Cake\I18n\I18n;
+use Croogo\Core\Croogo;
+use Croogo\Core\Nav as CroogoNav;
 
 /**
  * Behavior
  *
  * This plugin's Example behavior will be attached whenever Node model is loaded.
  */
-Croogo::hookBehavior('Node', 'Example.Example', []);
+Croogo::hookBehavior('Croogo/Nodes.Nodes', 'Croogo/Example.Example', []);
 
 /**
  * Component
  *
  * This plugin's Example component will be loaded in ALL controllers.
  */
-Croogo::hookComponent('*', 'Example.Example');
+Croogo::hookComponent('*', 'Croogo/Example.Example');
 
 /**
  * Helper
@@ -40,8 +43,8 @@ CroogoNav::add('sidebar', 'extensions.children.example', [
             'title' => 'Example 1',
             'url' => [
                 'admin' => true,
-                'plugin' => 'example',
-                'controller' => 'example',
+                'plugin' => 'Croogo/Example',
+                'controller' => 'Example',
                 'action' => 'index',
             ],
         ],
@@ -69,27 +72,26 @@ CroogoNav::add('sidebar', 'extensions.children.example', [
         'example3' => [
             'title' => 'Chooser Example',
             'url' => [
-                'admin' => true,
-                'plugin' => 'example',
-                'controller' => 'example',
+                'prefix' => 'admin',
+                'plugin' => 'Croogo/Example',
+                'controller' => 'Example',
                 'action' => 'chooser',
             ],
         ],
         'example4' => [
             'title' => 'RTE Example',
             'url' => [
-                'admin' => true,
-                'plugin' => 'example',
-                'controller' => 'example',
+                'prefix' => 'admin',
+                'plugin' => 'Croogo/Example',
+                'controller' => 'Example',
                 'action' => 'rte_example',
             ],
         ],
     ],
 ]);
 
-$Localization = new L10n();
 Croogo::mergeConfig('Wysiwyg.actions', [
-    'Example/admin_rte_example' => [
+    'Croogo/Example.Admin/Example/rteExample' => [
         [
             'elements' => 'ExampleBasic',
             'preset' => 'basic',
@@ -102,7 +104,7 @@ Croogo::mergeConfig('Wysiwyg.actions', [
         [
             'elements' => 'ExampleFull',
             'preset' => 'full',
-            'language' => $Localization->map(Configure::read('Site.locale')),
+            'language' => Configure::read('Site.locale'),
         ],
         [
             'elements' => 'ExampleCustom',
@@ -114,7 +116,7 @@ Croogo::mergeConfig('Wysiwyg.actions', [
             'language' => 'fr',
         ],
     ],
-]);
+], true);
 
 /**
  * Admin row action
@@ -122,11 +124,11 @@ Croogo::mergeConfig('Wysiwyg.actions', [
  * When browsing the content list in admin panel (Content > List),
  * an extra link called 'Example' will be placed under 'Actions' column.
  */
-Croogo::hookAdminRowAction('Nodes/admin_index', 'Example', 'plugin:example/controller:example/action:index/:id');
+Croogo::hookAdminRowAction('Croogo/Nodes.Admin/Nodes/index', 'Example', 'prefix:admin/plugin:Croogo%2fExample/controller:Example/action:index/:id');
 
 /* Row action with link options */
-Croogo::hookAdminRowAction('Nodes/admin_index', 'Button with Icon', [
-    'plugin:example/controller:example/action:index/:id' => [
+Croogo::hookAdminRowAction('Croogo/Nodes.Admin/Nodes/index', 'Button with Icon', [
+    'plugin:Croogo%2fExample/controller:Example/action:index/:id' => [
         'options' => [
             'icon' => 'key',
             'button' => 'success',
@@ -135,11 +137,11 @@ Croogo::hookAdminRowAction('Nodes/admin_index', 'Button with Icon', [
 ]);
 
 /* Row action with icon */
-Croogo::hookAdminRowAction('Nodes/admin_index', 'Icon Only', [
-    'plugin:example/controller:example/action:index/:id' => [
+Croogo::hookAdminRowAction('Croogo/Nodes.Admin/Nodes/index', 'Icon Only', [
+    'plugin:Croogo%2fExample/controller:Example/action:index/:id' => [
         'title' => false,
         'options' => [
-            'icon' => 'picture',
+            'icon' => 'picture-o',
             'tooltip' => [
                 'data-title' => 'A nice and simple action with tooltip',
                 'data-placement' => 'left',
@@ -149,8 +151,8 @@ Croogo::hookAdminRowAction('Nodes/admin_index', 'Icon Only', [
 ]);
 
 /* Row action with confirm message */
-Croogo::hookAdminRowAction('Nodes/admin_index', 'Reload Page', [
-    'admin:true/plugin:nodes/controller:nodes/action:index' => [
+Croogo::hookAdminRowAction('Croogo/Nodes.Admin/Nodes/index', 'Reload Page', [
+    'prefix:admin/plugin:Croogo%2fNodes/controller:Nodes/action:index' => [
         'title' => false,
         'options' => [
             'icon' => 'refresh',
@@ -168,5 +170,5 @@ Croogo::hookAdminRowAction('Nodes/admin_index', 'Reload Page', [
  *
  * Useful for adding form extra form fields if necessary.
  */
-Croogo::hookAdminTab('Nodes/admin_add', 'Example', 'example.admin_tab_node');
-Croogo::hookAdminTab('Nodes/admin_edit', 'Example', 'example.admin_tab_node');
+Croogo::hookAdminTab('Admin/Nodes/add', 'Example', 'Croogo/Example.admin_tab_node');
+Croogo::hookAdminTab('Admin/Nodes/edit', 'Example', 'Croogo/Example.admin_tab_node');

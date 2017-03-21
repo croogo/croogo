@@ -35,7 +35,6 @@ Croogo.Wysiwyg.resetDirty = function() {
  * This function is responsible for integrating attachments/file browser in the editor.
  */
 Croogo.Wysiwyg.browser = function() {
-
 };
 
 if (typeof jQuery != 'undefined') {

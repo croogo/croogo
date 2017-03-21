@@ -60,9 +60,9 @@ foreach ($blocks as $block) {
         $actions = [
             $this->Croogo->adminRowAction(__d('croogo', 'Choose'), '#', [
                 'class' => 'item-choose',
-                'data-chooser_type' => 'Block',
-                'data-chooser_id' => $block->id,
-                'data-chooser_title' => $block->title,
+                'data-chooser-type' => 'Block',
+                'data-chooser-id' => $block->id,
+                'data-chooser-title' => $block->title,
             ]),
         ];
     } else {

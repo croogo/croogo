@@ -9,6 +9,7 @@ use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router as CakeRouter;
 use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 
 /**
  * Router
@@ -187,6 +188,19 @@ class Router extends CakeRouter
         }
 
         return parent::url($url, $full);
+    }
+
+    public static function getActionPath(Request $request, $encode = false)
+    {
+        $plugin = $request->param('plugin');
+        $prefix = $request->param('prefix');
+        $val  = $plugin ? $plugin . '.' : null;
+        $val .= $prefix ? Inflector::camelize($prefix) . '/' : null;
+        $val .= $request->param('controller') . '/' . $request->param('action');
+        if ($encode) {
+            $val = base64_encode($val);
+        }
+        return $val;
     }
 
     /**

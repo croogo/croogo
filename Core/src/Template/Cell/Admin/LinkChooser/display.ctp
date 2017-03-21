@@ -1,8 +1,15 @@
 <?php
 
+use Cake\Utility\Hash;
+
 ksort($linkChoosers);
 $rows = [];
 foreach ($linkChoosers as $name => $chooser):
+    $chooser = Hash::merge([
+        'title' => null,
+        'description' => null,
+        'url' => null,
+    ], $chooser);
     $link = $this->Html->link($chooser['title'], $chooser['url'], [
         'class' => 'dropdown-item link-chooser',
         'escape' => false,

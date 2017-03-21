@@ -3,8 +3,8 @@
 $config = [
     'example.welcome' => [
         'title' => __d('croogo', 'Welcome'),
-        'element' => 'Example.dashboard/welcome',
+        'element' => 'Croogo/Example.dashboard/welcome',
         'weight' => 1,
-        'column' => CroogoDashboard::FULL,
+        'column' => \Croogo\Dashboards\CroogoDashboard::FULL,
     ],
 ];
