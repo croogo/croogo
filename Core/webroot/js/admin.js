@@ -80,8 +80,12 @@ Admin.protectForms = function () {
           break;
         }
       }
-      if (!dirty && typeof Croogo.Wysiwyg.isDirty == 'function' && !Croogo.Wysiwyg.isDirty()) {
-        return;
+      if (!dirty) {
+        if (typeof Croogo.Wysiwyg.isDirty == 'function' && !Croogo.Wysiwyg.isDirty()) {
+          return;
+        } else {
+          return;
+        }
       }
 
       var confirmationMessage = 'Please save your changes';
