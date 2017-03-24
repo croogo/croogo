@@ -11,14 +11,14 @@ $status = $this->request->query('status');
 if (isset($status)) {
     $this->Breadcrumbs->add(__d('croogo', 'Messages'), ['action' => 'index']);
     if ($status == '1') {
-        $this->Breadcrumbs->add(__d('croogo', 'Read'), $this->request->here());
+        $this->Breadcrumbs->add(__d('croogo', 'Read'), $this->request->url);
         $this->assign('title', __d('croogo', 'Messages: Read'));
     } else {
-        $this->Breadcrumbs->add(__d('croogo', 'Unread'), $this->request->here());
+        $this->Breadcrumbs->add(__d('croogo', 'Unread'), $this->request->url);
         $this->assign('title', __d('croogo', 'Messages: Unread'));
     }
 } else {
-    $this->Breadcrumbs->add(__d('croogo', 'Messages'), $this->request->here());
+    $this->Breadcrumbs->add(__d('croogo', 'Messages'), $this->request->url);
 }
 
 $this->append('table-footer', $this->element('admin/modal', [

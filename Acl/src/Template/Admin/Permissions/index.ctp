@@ -8,7 +8,7 @@ $this->Croogo->adminScript('Croogo/Acl.acl_permissions');
 
 $this->Breadcrumbs->add(__d('croogo', 'Users'),
         ['plugin' => 'Croogo/Users', 'controller' => 'Users', 'action' => 'index'])
-    ->add(__d('croogo', 'Permissions'), $this->request->here());
+    ->add(__d('croogo', 'Permissions'), $this->request->url);
 
 $this->append('action-buttons');
 $toolsButton = $this->Html->link(__d('croogo', 'Tools'), '#', [

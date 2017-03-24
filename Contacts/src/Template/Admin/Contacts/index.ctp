@@ -1,3 +1,3 @@
 <?php
 $this->extend('Croogo/Core./Common/admin_index');
-$this->Breadcrumbs->add(__d('croogo', 'Contacts'), $this->request->here());
+$this->Breadcrumbs->add(__d('croogo', 'Contacts'), $this->request->url);
