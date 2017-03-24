@@ -147,8 +147,6 @@ footer {
 
 .admin-login, .installer {
   .card {
-    max-width: 800px;
-    min-width: 500px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
     0 1px 5px 0 rgba(0, 0, 0, .12),
     0 3px 1px -2px rgba(0, 0, 0, .2);
@@ -166,4 +164,15 @@ footer {
     vertical-align: middle;
     margin: 0 $croogo-content-padding * 2;
   }
+}
+
+@include media-breakpoint-up(sm) {
+
+  .admin-login, .installer {
+    .card {
+      max-width: 800px;
+      min-width: 500px;
+    }
+  }
+
 }
