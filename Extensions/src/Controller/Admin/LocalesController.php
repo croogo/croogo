@@ -16,16 +16,8 @@ use Cake\Filesystem\File;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtensionsLocalesController extends AppController
+class LocalesController extends AppController
 {
-
-/**
- * Controller name
- *
- * @var string
- * @access public
- */
-    public $name = 'ExtensionsLocales';
 
 /**
  * Models used by the Controller

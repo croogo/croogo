@@ -4,5 +4,5 @@
 
 <p>
 	You can remove this box by disabling the <em>Example</em> plugin from the <?php echo $this->Html->link('Plugin',
-		array('plugin' => 'Croogo/Extensions', 'controller' => 'ExtensionsPlugins', 'action' => 'index'));?> page.
+		array('plugin' => 'Croogo/Extensions', 'controller' => 'Plugins', 'action' => 'index'));?> page.
 </p>

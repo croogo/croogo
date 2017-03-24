@@ -17,7 +17,7 @@ use Croogo\Extensions\ExtensionsInstaller;
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     http://www.croogo.org
  */
-class ExtensionsThemesController extends AppController
+class ThemesController extends AppController
 {
 
     /**
@@ -49,7 +49,7 @@ class ExtensionsThemesController extends AppController
         foreach ($themes as $theme => $path) {
             $themesData[$theme] = $this->_CroogoTheme->getData($theme, $path);
         }
-        
+
         $currentTheme = $this->_CroogoTheme->getData(Configure::read('Site.theme'));
         $this->set(compact('themes', 'themesData', 'currentTheme'));
     }
