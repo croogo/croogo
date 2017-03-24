@@ -163,7 +163,7 @@ class CroogoComponent extends Component
                     'separator' => true,
                 ],
                 'logout' => [
-                    'icon' => 'off',
+                    'icon' => 'power-off',
                     'title' => __d('croogo', 'Logout'),
                     'url' => [
                         'prefix' => 'admin',
