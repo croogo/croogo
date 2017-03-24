@@ -89,7 +89,8 @@ class AppController extends CroogoAppController
             ],
             'listeners' => [
                 'Crud.Search',
-                'Crud.RelatedModels'
+                'Crud.RelatedModels',
+                'Croogo/Core.Flash',
             ]
         ]);
 
