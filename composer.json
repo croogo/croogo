@@ -31,7 +31,7 @@
         "cakephp/cakephp": "^3.3.6",
         "cakephp/migrations": "~1.6",
         "cakephp/acl": "^0.2",
-        "cakephp/plugin-installer": "^0.0.15",
+        "cakephp/plugin-installer": "~1.0",
         "admad/cakephp-sequence": "^2.0.2",
         "friendsofcake/crud": "^4.3",
         "friendsofcake/search": "^1.2",
