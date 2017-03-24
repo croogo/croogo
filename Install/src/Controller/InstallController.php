@@ -2,6 +2,7 @@
 
 namespace Croogo\Install\Controller;
 
+use App\Console\Installer;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
@@ -14,6 +15,7 @@ use Croogo\Acl\AclGenerator;
 use Croogo\Core\Router;
 use Croogo\Install\AssetGenerator;
 use Croogo\Install\InstallManager;
+use Composer\IO\BufferIO;
 
 /**
  * Install Controller
@@ -143,6 +145,8 @@ class InstallController extends Controller
         if (Configure::read('Croogo.installed')) {
             return $this->redirect(['action' => 'adminuser']);
         }
+
+        Installer::setSecuritySalt(ROOT, new BufferIO());
 
         if ($this->request->is('post')) {
             $InstallManager = new InstallManager();

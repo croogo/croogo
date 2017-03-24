@@ -2,6 +2,7 @@
 
 namespace Croogo\Install\Shell;
 
+use App\Console\Installer;
 use App\Controller\Component\AuthComponent;
 use Cake\Controller\ComponentRegistry;
 use Cake\Console\Shell;
@@ -11,6 +12,7 @@ use Croogo\Acl\AclGenerator;
 use Croogo\Core\Plugin;
 use Croogo\Install\InstallManager;
 use Croogo\Install\Model\Table\InstallTable;
+use Composer\IO\BufferIO;
 
 /**
  * Install Shell
@@ -125,6 +127,7 @@ class InstallShell extends Shell
 
     public function main()
     {
+        Installer::setSecuritySalt(ROOT, new BufferIO());
         $this->out();
         $this->out('Database settings:');
         $install['datasource'] = $this->_in(__d('croogo', 'DataSource'), [
