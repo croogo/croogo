@@ -34,6 +34,9 @@ class CroogoView extends AppView
         $hookHelpers = Croogo::options('Hook.view_builder_options', $this->request, 'helpers');
 
         $this->loadHelperList($hookHelpers);
+        $this->loadHelper('Time', [
+            'outputTimezone' => $this->request->session()->read('Auth.User.timezone'),
+        ]);
     }
 
     public function loadHelperList($list)

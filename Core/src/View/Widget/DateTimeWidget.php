@@ -8,6 +8,7 @@ namespace Croogo\Core\View\Widget;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
 use Cake\I18n\Time;
+use Cake\Routing\Router;
 use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\DateTimeWidget as CakeDateTimeWidget;
 use DateTime;
@@ -45,10 +46,13 @@ class DateTimeWidget extends CakeDateTimeWidget
 
         if (!($val instanceof DateTime) && !empty($val)) {
             $val = $type === 'date' ? Time::parseDate($val) : Time::parseDateTime($val);
+            $timestamp = $val->format('U');
         }
 
-        if (!empty($val)) {
-            $val = $val->format($type === 'date' ? 'Y-m-d' : 'Y-m-d H:i:s');
+        $request = Router::getRequest();
+        $timezone = $request->session()->read('Auth.User.timezone');
+        if (!$timezone) {
+            $timezone = 'UTC';
         }
 
         if (!$format) {
@@ -58,12 +62,21 @@ class DateTimeWidget extends CakeDateTimeWidget
         $widget = <<<html
             <div class="input-group $type">
                 <input
-                    type="text"
-                    class="form-control"
-                    name="$name"
+                    type="hidden"
+                    name="${name}"
                     value="$val"
                     id="$id"
+                />
+                <input
+                    type="text"
+                    class="form-control"
+                    name="${name}_dp"
+                    value="$val"
+                    id="${id}_dp"
                     role="$role"
+                    data-related="{$id}"
+                    data-timestamp="$timestamp"
+                    data-timezone="$timezone"
                     data-locale="$locale"
                     data-format="$format"
                     data-minDate="$minDate"
@@ -146,6 +159,6 @@ html;
             return [];
         }
 
-        return [$data['name']];
+        return [$data['name'], $data['name'] . '_dp'];
     }
 }

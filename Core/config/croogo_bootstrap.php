@@ -78,7 +78,8 @@ EventManager::instance();
     /**
      * Locale
      */
-    Configure::write('Config.language', Configure::read('Site.locale'));
+    Configure::write('App.defaultLocale', Configure::read('Site.locale'));
+    I18n::locale(Configure::read('App.defaultLocale'));
 
     /**
      * Assets
