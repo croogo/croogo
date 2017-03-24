@@ -19,6 +19,7 @@ if (!$this->request->is('ajax')):
         'Croogo/Core.sidebar',
         'Croogo/Core.choose',
         'Croogo/Core.moment-with-locales',
+        'Croogo/Core.moment-timezone-with-data',
         'Croogo/Core.bootstrap-datetimepicker.min',
         'Croogo/Core.typeahead_autocomplete',
     ]);

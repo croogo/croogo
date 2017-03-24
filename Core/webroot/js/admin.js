@@ -225,17 +225,23 @@ Admin.dateTimeFields = function(datePickers) {
     var picker = $(this);
     var date = null;
 
-    if (picker.data('timestamp') && picker.data('timezone-offset')) {
-      var timezoneOffset = picker.data('timezone-offset');
-      date = new Date(picker.data('timestamp') * 1000);
-
-      picker.parents('form').on('submit', function () {
-        var timezoneDiff = timezoneOffset + date.getTimezoneOffset();
-        var currentDate = picker.data('DateTimePicker').date();
-        var convertedDate = currentDate.add(timezoneDiff, 'minutes');
-        picker.data('DateTimePicker').date(convertedDate);
-      });
+    if (picker.data('timestamp') && picker.data('timezone')) {
+      var timezone = picker.data('timezone');
+      date = moment(picker.data('timestamp') * 1000);
+      date = date.tz(timezone)
     }
+
+    var sDate = date ? date : picker.val()
+
+    picker.on('dp.change', function(e) {
+      var sDate = ""
+      date = moment(e.date);
+      if (date.isValid()) {
+        date.tz('UTC').locale('UTC');
+        sDate = date.format('YYYY-MM-DD HH:mm:ss');
+      }
+      $('#' + picker.data('related')).val(sDate);
+    });
 
     var dpOptions = {
       locale: picker.data('locale'),
