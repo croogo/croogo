@@ -3,7 +3,7 @@
 namespace Croogo\Settings\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\Database\Schema\Table;
+use Cake\Database\Schema\TableSchema;
 use Cake\Form\Schema;
 use Croogo\Core\Model\Table\CroogoTable;
 
@@ -70,7 +70,7 @@ class SettingsTable extends CroogoTable
  * @param Table $schema
  * @return Table
  */
-    protected function _initializeSchema(Table $schema)
+    protected function _initializeSchema(TableSchema $schema)
     {
         $schema->columnType('params', 'params');
         return $schema;
