@@ -2,6 +2,7 @@
 
 use Cake\Core\Configure;
 use Croogo\Core\Croogo;
+use Croogo\Wysiwyg\Wysiwyg;
 
 Configure::write('Wysiwyg.attachmentBrowseUrl', [
     'prefix' => 'admin',
@@ -10,9 +11,9 @@ Configure::write('Wysiwyg.attachmentBrowseUrl', [
     'action' => 'browse',
 ]);
 
-Croogo::mergeConfig('Wysiwyg.actions', [
+Wysiwyg::setActions([
     'Croogo/FileManager.Admin/Attachments/browse' => [],
-], true);
+]);
 
 Configure::write('FileManager', [
     'editablePaths' => [

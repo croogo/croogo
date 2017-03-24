@@ -10,6 +10,7 @@ use Cake\Core\Configure;
 use Cake\I18n\I18n;
 use Croogo\Core\Croogo;
 use Croogo\Core\Nav as CroogoNav;
+use Croogo\Wysiwyg\Wysiwyg;
 
 /**
  * Behavior
@@ -90,7 +91,7 @@ CroogoNav::add('sidebar', 'extensions.children.example', [
     ],
 ]);
 
-Croogo::mergeConfig('Wysiwyg.actions', [
+Wysiwyg::setActions([
     'Croogo/Example.Admin/Example/rteExample' => [
         [
             'elements' => 'ExampleBasic',
@@ -116,7 +117,7 @@ Croogo::mergeConfig('Wysiwyg.actions', [
             'language' => 'fr',
         ],
     ],
-], true);
+]);
 
 /**
  * Admin row action

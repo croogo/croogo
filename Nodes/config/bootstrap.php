@@ -4,6 +4,7 @@ use Cake\Core\Configure;
 use Cake\Routing\Router;
 use Cake\Cache\Cache;
 use Croogo\Core\Croogo;
+use Croogo\Wysiwyg\Wysiwyg;
 
 $cacheConfig = array_merge(
     Configure::read('Croogo.Cache.defaultConfig'),
@@ -25,7 +26,7 @@ Croogo::hookComponent('*', [
 Croogo::hookHelper('*', 'Croogo/Nodes.Nodes');
 
 // Configure Wysiwyg
-Croogo::mergeConfig('Wysiwyg.actions', [
+Wysiwyg::setActions([
     'Croogo/Nodes.Admin/Nodes/add' => [
         [
             'elements' => 'NodeBody',
@@ -41,7 +42,7 @@ Croogo::mergeConfig('Wysiwyg.actions', [
             'elements' => 'NodeBody',
         ],
     ],
-], true);
+]);
 
 Croogo::mergeConfig('Translate.models.Node', [
     'fields' => [

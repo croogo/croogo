@@ -3,6 +3,7 @@
 use Cake\Core\Configure;
 use Cake\Cache\Cache;
 use Croogo\Core\Croogo;
+use Croogo\Wysiwyg\Wysiwyg;
 
 Cache::config('contacts_view', array_merge(
     Configure::read('Croogo.Cache.defaultConfig'),
@@ -18,7 +19,7 @@ Croogo::mergeConfig('Translate.models.Contact', [
 ]);
 
 // Configure Wysiwyg
-Croogo::mergeConfig('Wysiwyg.actions', [
+Wysiwyg::setActions([
     'Croogo/Contacts.Admin/Contacts/add' => [
         [
             'elements' => 'body',
@@ -29,4 +30,4 @@ Croogo::mergeConfig('Wysiwyg.actions', [
             'elements' => 'body',
         ],
     ],
-], true);
+]);
