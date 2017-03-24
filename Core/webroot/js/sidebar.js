@@ -15,7 +15,7 @@ Admin.navigation = function () {
   var $topLevelMenus = $('#sidebar-menu > li > .hasChild');
 
   // no item is current, fallback to current controller index
-  var $current = $('.sidebar .current');
+  var $current = $('.nav-sidebar .current');
   if ($current.length == 0) {
     var selector = _.template('a.sidebar-item[href^="<%= basePath %>admin/' +
       '<%= params.plugin %>/' +
@@ -27,7 +27,7 @@ Admin.navigation = function () {
     }
   }
   // traverse parent elements and mark as current
-  $($current.selector).parentsUntil('.sidebar', 'ul').each(function () {
+  $($current.selector).parentsUntil('.nav-sidebar', 'ul').each(function () {
     $(this).siblings('a.sidebar-item').addClass('current')
   });
   if (window.innerWidth >= 979) {
