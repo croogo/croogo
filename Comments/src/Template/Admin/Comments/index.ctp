@@ -19,14 +19,10 @@ if (isset($criteria['Comment.status'])) {
     $this->Breadcrumbs->add(__d('croogo', 'Comments'), $this->request->here());
 }
 
-/**
- * Fixme: load element Croogo admin/modal
- *
- * $this->append('table-footer', $this->element('Croogo/Core.admin/modal', array(
- * 'id' => 'comment-modal',
- * 'class' => 'hide',
- * )));
- */
+$this->append('table-footer', $this->element('Croogo/Core.admin/modal', array(
+    'id' => 'comment-modal',
+    'class' => 'hide',
+    )));
 
 $this->append('action-buttons');
 echo $this->Croogo->adminAction(

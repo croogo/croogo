@@ -214,7 +214,7 @@ class LinksSeed extends AbstractSeed
             'link' => '/comments.rss',
             'target' => '',
             'rel' => '',
-            'status' => '1',
+            'status' => '0',
             'lft' => '5',
             'rght' => '6',
             'visibility_roles' => '',

@@ -4,6 +4,7 @@ namespace Croogo\Example\Model\Behavior;
 
 use Cake\Event\Event;
 use Cake\ORM\Behavior;
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 
 /**
@@ -31,7 +32,9 @@ class ExampleBehavior extends Behavior
 
         $query->formatResults(function ($results) {
             return $results->map(function($result) {
-                $result->body .= '<p>[Modified by ExampleBehavior]</p>';
+                if ($result instanceof Entity) {
+                    $result->body .= '<p>[Modified by ExampleBehavior]</p>';
+                }
                 return $result;
             });
         });
