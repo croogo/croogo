@@ -66,7 +66,8 @@ class TaxonomiesHelper extends Helper
      */
     public function filter(Event $event, $options = [])
     {
-        preg_match_all('/\[(vocabulary|v):([A-Za-z0-9_\-]*)(.*?)\]/i', $event->data['content'], $tagMatches);
+        $data = $event->getData();
+        preg_match_all('/\[(vocabulary|v):([A-Za-z0-9_\-]*)(.*?)\]/i', $data['content'], $tagMatches);
         for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
             $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
             preg_match_all($regex, $tagMatches[3][$i], $attributes);
@@ -75,10 +76,10 @@ class TaxonomiesHelper extends Helper
             for ($j = 0, $jj = count($attributes[0]); $j < $jj; $j++) {
                 $options[$attributes[1][$j]] = $attributes[2][$j];
             }
-            $event->data['content'] = str_replace(
+            $data['content'] = str_replace(
                 $tagMatches[0][$i],
                 $this->vocabulary($vocabularyAlias, $options),
-                $event->data['content']
+                $data['content']
             );
         }
 

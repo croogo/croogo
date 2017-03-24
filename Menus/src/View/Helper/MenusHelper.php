@@ -117,7 +117,8 @@ class MenusHelper extends Helper
  */
     public function filter(Event $event, $options = [])
     {
-        preg_match_all('/\[(menu|m):([A-Za-z0-9_\-]*)(.*?)\]/i', $event->data['content'], $tagMatches);
+        $data = $event->getData();
+        preg_match_all('/\[(menu|m):([A-Za-z0-9_\-]*)(.*?)\]/i', $data['content'], $tagMatches);
         for ($i = 0, $ii = count($tagMatches[1]); $i < $ii; $i++) {
             $regex = '/(\S+)=[\'"]?((?:.(?![\'"]?\s+(?:\S+)=|[>\'"]))+.)[\'"]?/i';
             preg_match_all($regex, $tagMatches[3][$i], $attributes);
@@ -127,7 +128,7 @@ class MenusHelper extends Helper
                 $options[$attributes[1][$j]] = $attributes[2][$j];
             }
             $options = Hash::expand($options);
-            $event->data['content'] = str_replace($tagMatches[0][$i], $this->menu($menuAlias, $options), $event->data['content']);
+            $data['content'] = str_replace($tagMatches[0][$i], $this->menu($menuAlias, $options), $data['content']);
         }
         return $event->data;
     }

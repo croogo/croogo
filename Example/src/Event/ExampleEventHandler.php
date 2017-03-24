@@ -65,10 +65,11 @@ class ExampleEventHandler implements EventListenerInterface
     public function onLayoutBeforeFilter($event)
     {
         $search = 'This is the content of your block.';
-        $event->data['content'] = str_replace(
+        $data = $event->getData();
+        $data['content'] = str_replace(
             $search,
             '<p style="font-size: 16px; color: green">' . $search . '</p>',
-            $event->data['content']
+            $data['content']
         );
     }
 
@@ -80,8 +81,9 @@ class ExampleEventHandler implements EventListenerInterface
  */
     public function onLayoutAfterFilter($event)
     {
-        if (strpos($event->data['content'], 'This is') !== false) {
-            $event->data['content'] .= '<blockquote>This is added by ExampleEventHandler::onLayoutAfterFilter()</blockquote>';
+        $data = $event->getData();
+        if (strpos($data['content'], 'This is') !== false) {
+            $data['content'] .= '<blockquote>This is added by ExampleEventHandler::onLayoutAfterFilter()</blockquote>';
         }
     }
 }
