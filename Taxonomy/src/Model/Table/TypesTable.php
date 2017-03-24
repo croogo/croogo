@@ -2,7 +2,7 @@
 
 namespace Croogo\Taxonomy\Model\Table;
 
-use Cake\Database\Schema\Table as Schema;
+use Cake\Database\Schema\TableSchema;
 use Croogo\Core\Model\Table\CroogoTable;
 
 class TypesTable extends CroogoTable
@@ -77,7 +77,7 @@ class TypesTable extends CroogoTable
         return $this->find('list', compact('conditions'));
     }
 
-    protected function _initializeSchema(Schema $table)
+    protected function _initializeSchema(TableSchema $table)
     {
         $table->columnType('params', 'params');
         return parent::_initializeSchema($table);
