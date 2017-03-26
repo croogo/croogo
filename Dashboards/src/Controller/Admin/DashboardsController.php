@@ -19,6 +19,16 @@ use Cake\Utility\Hash;
 class DashboardsController extends AppController
 {
 
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+
+        if ($event->subject()->request->param('action') === 'save') {
+            $this->components()->unload('Csrf');
+            $this->components()->unload('Security');
+        }
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -40,9 +50,12 @@ class DashboardsController extends AppController
      */
     public function index()
     {
-        $dashboards = $this->paginate($this->Dashboards->find()->where([
-            'user_id' => $this->Auth->user('id')
-        ]));
+        $query = $this->Dashboards->find()
+            ->where([
+                'user_id' => $this->Auth->user('id')
+            ])
+            ->order(['column' => 'asc', 'weight' => 'asc']);
+        $dashboards = $this->paginate($query);
 
         $this->set(compact('dashboards'));
     }
@@ -54,7 +67,7 @@ class DashboardsController extends AppController
      */
     public function dashboard()
     {
-        $this->set('boxes_for_dashboard', $this->Dashboards->find('all')->select([
+        $boxesForDashboard = $this->Dashboards->find('all')->select([
             'alias',
             'collapsed',
             'status',
@@ -64,7 +77,8 @@ class DashboardsController extends AppController
             'user_id' => $this->Auth->user('id'),
         ])->order([
             'weight',
-        ]));
+        ]);
+        $this->set('boxes_for_dashboard', $boxesForDashboard);
     }
 
     /**
@@ -79,11 +93,11 @@ class DashboardsController extends AppController
         if (!$userId) {
             throw new Exception('You must be logged in');
         }
-        var_dump($this->request->data);
         $data = Hash::insert($this->request->data['dashboard'], '{n}.user_id', $userId);
-        var_dump($data);
         $this->Dashboards->deleteAll(['user_id' => $userId]);
-        $this->Dashboards->saveMany($data);
+        $entities = $this->Dashboards->newEntities($data);
+        $this->Dashboards->connection()->getDriver()->enableAutoQuoting();
+        $this->Dashboards->saveMany($entities);
     }
 
     /**
@@ -98,7 +112,8 @@ class DashboardsController extends AppController
             $this->Flash->error(__d('croogo', 'Invalid id for Dashboard'));
             return $this->redirect(['action' => 'index']);
         }
-        if ($this->DashboardsDashboard->delete($id)) {
+        $entity = $this->Dashboards->get($id);
+        if ($this->Dashboards->delete($entity)) {
             $this->Flash->success(__d('croogo', 'Dashboard deleted'));
             return $this->redirect($this->referer());
         }
@@ -119,13 +134,15 @@ class DashboardsController extends AppController
     /**
      * Admin moveup
      *
-     * @param int$idDashboard Id
-     * @param int$stepStep
+     * @param int $id Dashboard Id
+     * @param int $step Step
      * @return void
      */
     public function moveup($id, $step = 1)
     {
-        if ($this->DashboardsDashboard->moveUp($id, $step)) {
+        $dashboard = $this->Dashboards->get($id);
+        $dashboard->weight = $dashboard->weight - $step;
+        if ($this->Dashboards->save($dashboard)) {
             $this->Flash->success(__d('croogo', 'Moved up successfully'));
         } else {
             $this->Flash->error(__d('croogo', 'Could not move up'));
@@ -136,13 +153,15 @@ class DashboardsController extends AppController
     /**
      * Admin movedown
      *
-     * @param int $idDashboard Id
-     * @param int $stepStep
+     * @param int $id Dashboard Id
+     * @param int $step Step
      * @return void
      */
     public function movedown($id, $step = 1)
     {
-        if ($this->DashboardsDashboard->moveDown($id, $step)) {
+        $dashboard = $this->Dashboards->get($id);
+        $dashboard->weight = $dashboard->weight + $step;
+        if ($this->Dashboards->save($dashboard)) {
             $this->Flash->success(__d('croogo', 'Moved down successfully'));
         } else {
             $this->Flash->error(__d('croogo', 'Could not move down'));
@@ -150,4 +169,5 @@ class DashboardsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

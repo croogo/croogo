@@ -5,6 +5,7 @@ if (!$this->request->is('ajax')):
     echo $this->Layout->js();
     echo $this->Html->script([
         'Croogo/Core.jquery/jquery.min.js',
+        'Croogo/Core.jquery/jquery-ui.min.js',
         'Croogo/Core.tether.min.js',
         'Croogo/Core.bootstrap.min.js',
         'Croogo/Core.jquery/jquery.slug',

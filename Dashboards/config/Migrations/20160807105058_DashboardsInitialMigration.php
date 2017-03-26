@@ -40,12 +40,12 @@ class DashboardsInitialMigration extends AbstractMigration
             ->addColumn('updated', 'datetime', [
                 'default' => null,
                 'limit' => null,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('created', 'datetime', [
                 'default' => null,
                 'limit' => null,
-                'null' => false,
+                'null' => true,
             ])
             ->create();
     }
