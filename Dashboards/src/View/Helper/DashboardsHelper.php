@@ -78,12 +78,14 @@ class DashboardsHelper extends Helper
         $cssSetting = $this->Theme->settings('css');
 
         if (!empty($this->_View->viewVars['boxes_for_dashboard'])) {
-            $boxesForLayout = collection($this->_View->viewVars['boxes_for_dashboard'])->combine('{n}.DashboardsDashboard.alias', '{n}.DashboardsDashboard')->toArray();
+            $boxesForLayout = collection($this->_View->viewVars['boxes_for_dashboard'])->combine('alias', function($entity) {
+                return $entity;
+            })->toArray();
             $dashboards = [];
             $registeredUnsaved = array_diff_key($registered, $boxesForLayout);
             foreach ($boxesForLayout as $alias => $userBox) {
                 if (isset($registered[$alias]) && $userBox['status']) {
-                    $dashboards[$alias] = array_merge($registered[$alias], $userBox);
+                    $dashboards[$alias] = array_merge($registered[$alias], $userBox->toArray());
                 }
             }
             $dashboards = Hash::merge($dashboards, $registeredUnsaved);
@@ -93,7 +95,7 @@ class DashboardsHelper extends Helper
         }
 
         foreach ($dashboards as $alias => $dashboard) {
-            if ($currentRole != 'admin' && !in_array($currentRole, $dashboard['access'])) {
+            if ($currentRole != 'superadmin' && !in_array($currentRole, $dashboard['access'])) {
                 continue;
             }
 

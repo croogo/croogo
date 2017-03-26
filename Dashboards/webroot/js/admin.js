@@ -8,40 +8,36 @@ Dashboard.saveDashboard = function(e, ui) {
 			return function(index) {
 				dashboard.push({
 					'column': column,
-					'order': index,
+					'weight': index,
 					'alias': this.id,
-					'collapsed': !$(this).find('.box-content').is(':visible') ? 1 : 0
+					'collapsed': !$(this).find('.card-block').is(':visible') ? 1 : 0
 				});
 			}
 		};
 
-	$('#column-0').find('.box')
+	$('#column-0').find('.dashboard-card')
 		.each(serialize(0));
-	$('#column-1').find('.box')
+	$('#column-1').find('.dashboard-card')
 		.each(serialize(1));
-	$('#column-2').find('.box')
+	$('#column-2').find('.dashboard-card')
 		.each(serialize(2));
 
 	if (ui) {
 		box = ui.item;
 	} else {
-		box = $(this).closest('.box');
+		box = $(this).closest('.dashboard-card');
 	}
 
 	if (!box) {
 		return;
 	}
 
-	box
-		.find('.move-handle')
-		.removeClass('icon-move')
-		.addClass('icon-spinner icon-spin');
-
+	var collapsed = !box.find('.card-block').is(':visible') ? 1 : 0;
 	$.post($('#dashboard-url').text(), {dashboard: dashboard}, function() {
 		box
-			.find('.move-handle')
-			.removeClass('icon-spinner icon-spin')
-			.addClass('icon-move');
+			.find('.toggle-icon .fa')
+			.removeClass('fa-spinner fa-spin')
+			.addClass(collapsed ? 'fa-plus' : 'fa-minus')
 	});
 };
 
@@ -66,7 +62,24 @@ Dashboard.sortable = function(selector, saveDashboard) {
 };
 
 Dashboard.collapsable = function (saveDashboard) {
-	$('body').on('slide.toggle', '.dashboard-box .box-content', saveDashboard);
+	var selector = '.dashboard-card .card-block';
+	$('body')
+    .on('show.bs.collapse hide.bs.collapse', selector, function(e, ui) {
+			if (ui) {
+				box = ui.item;
+			} else {
+					box = $(this).closest('.dashboard-card');
+			}
+
+			var collapsed = !box.find('.card-block').is(':visible') ? 1 : 0;
+			box
+				.find('.toggle-icon .fa')
+				.removeClass(collapsed ? 'fa-plus' : 'fa-minus')
+				.addClass('fa-spinner fa-spin');
+		});
+
+	$('body')
+		.on('shown.bs.collapse hidden.bs.collapse', selector, saveDashboard);
 };
 
 Dashboard.init = function() {

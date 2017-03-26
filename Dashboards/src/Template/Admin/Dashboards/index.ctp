@@ -44,20 +44,20 @@ foreach ($dashboards as $dashboard):
 				));
 			?>
 		</td>
-		<td><?php echo h($dashboard['DashboardsDashboard']['updated']); ?>&nbsp;</td>
-		<td><?php echo h($dashboard['DashboardsDashboard']['created']); ?>&nbsp;</td>
+		<td><?php echo h($dashboard->updated); ?>&nbsp;</td>
+		<td><?php echo h($dashboard->created); ?>&nbsp;</td>
 		<td class="item-actions">
 		<?php
 			$actions = array();
 			$actions[] = $this->Croogo->adminRowAction('',
-				array('controller' => 'dashboards_dashboards', 'action' => 'moveup', $dashboard->id),
+				array('controller' => 'Dashboards', 'action' => 'moveup', $dashboard->id),
 				array(
 					'icon' => $this->Theme->getIcon('move-up'),
 					'tooltip' => __d('croogo', 'Move up'),
 				)
 			);
 			$actions[] = $this->Croogo->adminRowAction('',
-				array('controller' => 'dashboards_dashboards', 'action' => 'movedown', $dashboard->id),
+				array('controller' => 'Dashboards', 'action' => 'movedown', $dashboard->id),
 				array(
 					'icon' => $this->Theme->getIcon('move-down'),
 					'tooltip' => __d('croogo', 'Move down'),
@@ -65,7 +65,11 @@ foreach ($dashboards as $dashboard):
 			);
 			$actions[] = $this->Croogo->adminRowAction('',
 				array('action' => 'delete', $dashboard->id),
-				array('icon' => $this->Theme->getIcon('delete'), 'escape' => true),
+				array(
+					'icon' => $this->Theme->getIcon('delete'),
+					'escape' => true,
+					'method' => 'post',
+				),
 				__d('croogo', 'Are you sure you want to delete # %s?', $dashboard->id)
 			);
 			echo implode(' ', $actions);
