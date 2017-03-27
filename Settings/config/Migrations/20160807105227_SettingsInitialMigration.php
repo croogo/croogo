@@ -22,6 +22,11 @@ class SettingsInitialMigration extends AbstractMigration
                 'limit' => 255,
                 'null' => false,
             ])
+            ->addColumn('locale', 'string', [
+                'default' => null,
+                'limit' => 5,
+                'null' => false,
+            ])
             ->addColumn('status', 'boolean', [
                 'default' => true,
                 'limit' => null,
@@ -35,7 +40,7 @@ class SettingsInitialMigration extends AbstractMigration
             ->addColumn('updated', 'datetime', [
                 'default' => null,
                 'limit' => null,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('updated_by', 'integer', [
                 'default' => null,
@@ -45,7 +50,7 @@ class SettingsInitialMigration extends AbstractMigration
             ->addColumn('created', 'datetime', [
                 'default' => null,
                 'limit' => null,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('created_by', 'integer', [
                 'default' => null,

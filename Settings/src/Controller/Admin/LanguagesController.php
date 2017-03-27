@@ -36,8 +36,10 @@ class LanguagesController extends AppController
  * @return void
  * @access public
  */
-    public function select($id = null, $modelAlias = null)
+    public function select()
     {
+        $id = $this->request->query('id');
+        $modelAlias = $this->request->query('model');
         if ($id == null ||
             $modelAlias == null) {
             return $this->redirect(['action' => 'index']);
@@ -46,9 +48,9 @@ class LanguagesController extends AppController
         $this->set('title_for_layout', __d('croogo', 'Select a language'));
         $languages = $this->Languages->find('all', [
             'conditions' => [
-                'Language.status' => 1,
+                'status' => 1,
             ],
-            'order' => 'Language.weight ASC',
+            'order' => 'weight ASC',
         ]);
         $this->set(compact('id', 'modelAlias', 'languages'));
     }

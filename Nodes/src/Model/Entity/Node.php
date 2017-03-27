@@ -2,6 +2,7 @@
 
 namespace Croogo\Nodes\Model\Entity;
 
+use Cake\ORM\Behavior\Translate\TranslateTrait;
 use Cake\ORM\Entity;
 
 /**
@@ -10,5 +11,7 @@ use Cake\ORM\Entity;
  */
 class Node extends Entity
 {
+
+    use TranslateTrait;
 
 }

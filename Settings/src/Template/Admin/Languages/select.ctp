@@ -3,28 +3,30 @@
 $this->extend('/Common/admin_index');
 
 $this->Breadcrumbs
-    ->add(__d('croogo', 'Settings'), array('plugin' => 'settings', 'controller' => 'settings', 'action' => 'index'))
-    ->add(__d('croogo', 'Languages'), array('plugin' => 'settings', 'controller' => 'languages', 'action' => 'index'));
-
-$this->append('action-buttons');
-    echo $this->Html->link(
-        __d('croogo', 'New Language'),
-        array('action' => 'add'),
-        array('button' => 'default')
-    );
-$this->end();
+    ->add(__d('croogo', 'Settings'), [
+        'plugin' => 'Croogo/Settings',
+        'controller' => 'Settings',
+        'action' => 'index',
+    ])
+    ->add(__d('croogo', 'Languages'), [
+        'plugin' => 'Croogo/Settings',
+        'controller' => 'Languages',
+        'action' => 'index'
+    ]);
 
 $this->append('main');
     $html = null;
     foreach ($languages as $language):
-        $title = $language['Language']['title'] . ' (' . $language['Language']['native'] . ')';
+        $title = $language->title . ' (' . $language->native . ')';
         $link = $this->Html->link($title, array(
-            'plugin' => 'translate',
-            'controller' => 'translate',
+            'plugin' => 'Croogo/Translate',
+            'controller' => 'Translate',
             'action' => 'edit',
-            $id,
-            $modelAlias,
-            'locale' => $language['Language']['alias'],
+            '?' => [
+                'id' => $id,
+                'model' => $modelAlias,
+                'locale' => $language->alias,
+            ],
         ));
         $html .= '<li>' . $link . '</li>';
     endforeach;

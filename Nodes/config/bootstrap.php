@@ -44,11 +44,10 @@ Wysiwyg::setActions([
     ],
 ]);
 
-Croogo::mergeConfig('Translate.models.Node', [
+Croogo::translateModel('Croogo/Nodes.Nodes', [
     'fields' => [
-        'title' => 'titleTranslation',
-        'excerpt' => 'excerptTranslation',
-        'body' => 'bodyTranslation',
+        'title',
+        'excerpt',
+        'body',
     ],
-    'translateModel' => 'Nodes.Node',
 ]);

@@ -18,7 +18,7 @@ class TranslateInitialMigration extends AbstractMigration
             ->addPrimaryKey(['id'])
             ->addColumn('locale', 'string', [
                 'default' => null,
-                'limit' => 3,
+                'limit' => 5,
                 'null' => false,
             ])
             ->addColumn('model', 'string', [
@@ -44,7 +44,7 @@ class TranslateInitialMigration extends AbstractMigration
             ->addColumn('updated', 'datetime', [
                 'default' => null,
                 'limit' => null,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('updated_by', 'integer', [
                 'default' => null,
@@ -54,7 +54,7 @@ class TranslateInitialMigration extends AbstractMigration
             ->addColumn('created', 'datetime', [
                 'default' => null,
                 'limit' => null,
-                'null' => false,
+                'null' => true,
             ])
             ->addColumn('created_by', 'integer', [
                 'default' => null,

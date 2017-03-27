@@ -27,37 +27,6 @@ class Router extends CakeRouter
 {
 
 /**
- * If Translate plugin is active,
- * an extra Route will be created for locale-based URLs
- *
- * For example,
- * http://yoursite.com/blog/post-title, and
- * http://yoursite.com/eng/blog/post-title
- *
- * Returns this object's routes array. Returns false if there are no routes available.
- *
- * @param string $route         An empty string, or a route string "/"
- * @param array $default        NULL or an array describing the default route
- * @param array $params         An array matching the named elements in the
- *                              route to regular expressions which that element
- *                              should match.
- * @return array                Array of routes
- * @see Router::connect()
- * @throws RouterException
- */
-    public static function connect($route, $default = [], $params = [], $options = [])
-    {
-        $localizedRoute = $route == '/' ? '' : $route;
-        if (Plugin::loaded('Croogo/Translate')) {
-            static::connect('/:locale' . $localizedRoute, $default, array_merge(['locale' => '[a-z]{3}'], $params));
-        }
-
-        parent::connect($route, $default, $params);
-
-        return Router::routes();
-    }
-
-/**
  * Check wether request is a API call.
  *
  * @see Request::addDetector()

@@ -1,16 +1,17 @@
 <?php
 
+use Cake\Utility\Inflector;
+
 $this->extend('/Common/admin_index');
 
-$plugin = $controller = 'nodes';
-if (isset($this->request->params['models'][$modelAlias])):
-    $plugin = $this->request->params['models'][$modelAlias]['plugin'];
-    $controller = strtolower(Inflector::pluralize($modelAlias));
-endif;
+$plugin = 'Croogo/Nodes'; $controller = 'Nodes';
+$modelPath = $this->request->query('model');
+list($plugin, $model) = pluginSplit($modelPath);
+$controller = $model;
 
 $this->Breadcrumbs
     ->add(
-        Inflector::pluralize($modelAlias),
+        Inflector::pluralize($model),
         array(
             'plugin' => Inflector::underscore($plugin),
             'controller' => Inflector::underscore($controller),
@@ -18,29 +19,30 @@ $this->Breadcrumbs
         )
     )
     ->add(
-        $record[$modelAlias][$displayField],
+        $record->get($displayField),
         array(
             'plugin' => Inflector::underscore($plugin),
             'controller' =>  Inflector::underscore($controller),
             'action' => 'edit',
-            $record[$modelAlias]['id'],
+            $record->id,
         )
     )
     ->add(__d('croogo', 'Translations'), $this->request->here());
 
-$this->start('actions');
-    echo '<div class="btn-group">';
-    echo $this->Html->link(
-        __d('croogo', 'Translate in a new language') . ' <span class="caret"></span>',
+$this->start('action-buttons');
+    $translateButton = $this->Html->link(
+        __d('croogo', 'Translate in a new language'),
         array(
-            'plugin' => 'settings',
-            'controller' => 'languages',
+            'plugin' => 'Croogo/Settings',
+            'controller' => 'Languages',
             'action' => 'select',
-            $record[$modelAlias]['id'],
-            $modelAlias
+            '?' => [
+                'id' => $record->id,
+                'model' => $modelAlias,
+            ],
         ),
         array(
-            'button' => 'default',
+            'button' => 'secondary',
             'class' => 'dropdown-toggle',
             'data-toggle' => 'dropdown',
         )
@@ -49,21 +51,26 @@ $this->start('actions');
         $out = null;
         foreach ($languages as $languageAlias => $languageDisplay):
             $out .= $this->Croogo->adminAction($languageDisplay, array(
-                'admin' => true,
-                'plugin' => 'translate',
-                'controller' => 'translate',
+                'prefix' => 'admin',
+                'plugin' => 'Croogo/Translate',
+                'controller' => 'Translate',
                 'action' => 'edit',
-                $id,
-                $modelAlias,
-                'locale' => $languageAlias,
+                '?' => [
+                    'id' => $id,
+                    'model' => urlencode($modelAlias),
+                    'locale' => $languageAlias,
+                ],
             ), array(
                 'button' => false,
                 'list' => true,
+                'class' => 'dropdown-item',
             ));
         endforeach;
-        echo $this->Html->tag('ul', $out, array('class' => 'dropdown-menu'));
+        echo $this->Html->div('btn-group',
+            $translateButton .
+            $this->Html->tag('ul', $out, array('class' => 'dropdown-menu'))
+        );
     endif;
-    echo '</div>';
 $this->end();
 
 if (count($translations) == 0):
@@ -74,6 +81,7 @@ endif;
 $this->append('table-heading');
     $tableHeaders = $this->Html->tableHeaders(array(
         '',
+        __d('croogo', 'Original'),
         __d('croogo', 'Title'),
         __d('croogo', 'Locale'),
         __d('croogo', 'Actions'),
@@ -83,13 +91,15 @@ $this->end();
 
 $this->append('table-body');
     $rows = array();
-    foreach ($translations as $translation):
+    foreach ($translations->_translations as $locale => $entity):
         $actions = array();
         $actions[] = $this->Croogo->adminRowAction('', array(
             'action' => 'edit',
-            $id,
-            $modelAlias,
-            'locale' => $translation[$runtimeModelAlias]['locale'],
+            '?' => [
+                'id' => $id,
+                'model' => $modelAlias,
+                'locale' => $locale,
+            ],
         ), array(
             'icon' => $this->Theme->getIcon('update'),
             'tooltip' => __d('croogo', 'Edit this item'),
@@ -97,18 +107,20 @@ $this->append('table-body');
         $actions[] = $this->Croogo->adminRowAction('', array(
             'action' => 'delete',
             $id,
-            $modelAlias,
-            $translation[$runtimeModelAlias]['locale'],
+            urlencode($modelAlias),
+            $locale,
         ), array(
             'icon' => $this->Theme->getIcon('delete'),
             'tooltip' => __d('croogo', 'Remove this item'),
+            'method' => 'post',
         ), __d('croogo', 'Are you sure?'));
 
         $actions = $this->Html->div('item-actions', implode(' ', $actions));
         $rows[] = array(
             '',
-            $translation[$runtimeModelAlias]['content'],
-            $translation[$runtimeModelAlias]['locale'],
+            $translations->title,
+            $entity->title,
+            $locale,
             $actions,
         );
     endforeach;

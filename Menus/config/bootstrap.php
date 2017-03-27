@@ -13,10 +13,9 @@ Croogo::hookComponent('*', 'Croogo/Menus.Menu');
 
 Croogo::hookHelper('*', 'Croogo/Menus.Menus');
 
-Croogo::mergeConfig('Translate.models.Link', [
+Croogo::translateModel('Croogo/Menus.Links', [
     'fields' => [
-        'title' => 'titleTranslation',
-        'description' => 'descriptionTranslation',
+        'title',
+        'description',
     ],
-    'translateModel' => 'Croogo/Menus.Link',
 ]);

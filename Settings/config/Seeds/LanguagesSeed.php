@@ -11,6 +11,7 @@ class LanguagesSeed extends AbstractSeed
             'title' => 'English',
             'native' => 'English',
             'alias' => 'eng',
+            'locale' => 'en_US',
             'status' => '1',
             'weight' => '1',
             'updated' => '2009-11-02 21:37:38',
