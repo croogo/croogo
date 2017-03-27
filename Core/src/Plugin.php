@@ -71,9 +71,10 @@ class Plugin extends CakePlugin
         'Croogo/Acl',
         'Croogo/Core',
         'Croogo/Extensions',
+        'Croogo/Install',
+        'Croogo/Settings',
         'Migrations',
         'Search',
-        'Croogo/Settings',
     ];
 
     /**
