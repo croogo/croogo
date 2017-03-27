@@ -4,5 +4,5 @@
  * @return void
  */
 $(function() {
-	Admin.toggleRowSelection('#BlocksCheckAll');
+  Admin.toggleRowSelection('#BlocksCheckAll');
 });
