@@ -6,8 +6,8 @@ use Cake\Utility\Inflector;
 
 $this->extend('Croogo/Core./Common/admin_index');
 $this->Breadcrumbs
-	->add('Example', array('controller' => 'example', 'action' => 'index'))
-	->add('RTE Example', $this->request->here());
+    ->add('Example', array('controller' => 'example', 'action' => 'index'))
+    ->add('RTE Example', $this->request->here());
 
 echo $this->Form->create('Example');
 
@@ -16,13 +16,13 @@ $rteConfigs = Configure::read('Wysiwyg.actions.' . base64_encode('Croogo/Example
 
 $para = '<p>This editor was configured with the following setting:</p>';
 foreach (array('basic', 'standard', 'full', 'custom') as $preset):
-	$query = sprintf('{n}[elements=Example%s]', Inflector::camelize($preset));
-	$presetConfig = Hash::extract($rteConfigs, $query);
-	$pre = '<blockquote><pre>' . print_r($presetConfig[0], true) . '</pre></blockquote>';
-	echo $this->Form->input($preset, Hash::merge(array(
-		'id' => 'Example' . ucfirst($preset),
-		'value' => $para . $pre,
-	), $options));
+    $query = sprintf('{n}[elements=Example%s]', Inflector::camelize($preset));
+    $presetConfig = Hash::extract($rteConfigs, $query);
+    $pre = '<blockquote><pre>' . print_r($presetConfig[0], true) . '</pre></blockquote>';
+    echo $this->Form->input($preset, Hash::merge(array(
+        'id' => 'Example' . ucfirst($preset),
+        'value' => $para . $pre,
+    ), $options));
 endforeach;
 
 echo $this->Form->end();

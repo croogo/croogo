@@ -3,11 +3,11 @@
 use Cake\Core\Configure;
 
 if (!isset($channel)) {
-	$channel = array();
+    $channel = array();
 }
 
 if (!isset($channel['title'])) {
-	$channel['title'] = $this->fetch('title') . ' - ' . Configure::read('Site.title');
+    $channel['title'] = $this->fetch('title') . ' - ' . Configure::read('Site.title');
 }
 
 ?>
