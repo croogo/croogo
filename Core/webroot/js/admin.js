@@ -20,9 +20,6 @@ Admin.spinnerClass = function () {
 Admin.form = function () {
   // Tooltips activation
   $('[rel=tooltip],*[data-title]:not([data-content]),input[title],textarea[title]').tooltip();
-  if (typeof $.prototype.tipsy == 'function') {
-    $('a.tooltip').tipsy({gravity: 's', html: false}); // Legacy tooltip
-  }
 
   var ajaxToggle = function (e) {
     var $this = $(this);
